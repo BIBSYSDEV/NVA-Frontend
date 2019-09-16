@@ -1,0 +1,22 @@
+.App {
+  height: 100vh;
+  width: 100vw;
+  display: grid;
+  grid-template-areas:
+    'Header'
+    'Body'
+    'Footer';
+  grid-template-rows: 100px auto 100px;
+}
+
+.Header {
+  grid-area: 'Header';
+}
+
+.Body {
+  grid-area: 'Body';
+}
+
+.Footer {
+  grid-area: 'Footer';
+}
