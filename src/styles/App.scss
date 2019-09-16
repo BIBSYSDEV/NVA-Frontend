@@ -12,10 +12,10 @@
 }
 
 .header {
+  grid-area: header;
   background-color: $secondary-color;
 
   .login__button {
-    grid-area: header;
     background-color: $primary-color;
     float: right;
     margin: 1em;
