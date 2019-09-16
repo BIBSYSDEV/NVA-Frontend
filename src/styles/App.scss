@@ -1,3 +1,5 @@
+@import './variables.scss';
+
 .App {
   height: 100vh;
   width: 100vw;
@@ -11,6 +13,7 @@
 
 .Header {
   grid-area: 'Header';
+  background-color: $primary-color;
 }
 
 .Body {
