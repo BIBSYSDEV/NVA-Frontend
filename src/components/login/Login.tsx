@@ -9,7 +9,11 @@ const Login: React.FC<LoginProps> = ({ buttonText }) => {
   const handleLogin = (event: React.MouseEvent<any>) => {
     console.log('Clicked login');
   };
-  return <Button onClick={handleLogin}>{buttonText}</Button>;
+  return (
+    <Button className="login__button" onClick={handleLogin}>
+      {buttonText}
+    </Button>
+  );
 };
 
 export default Login;

@@ -8,18 +8,32 @@
     'header'
     'body'
     'footer';
-  grid-template-rows: 100px auto 100px;
+  grid-template-rows: 4em auto 4em;
 }
 
 .header {
-  grid-area: 'header';
-  background-color: $primary-color;
+  background-color: $secondary-color;
+
+  .login__button {
+    grid-area: header;
+    background-color: $primary-color;
+    float: right;
+    margin: 1em;
+  }
 }
 
 .body {
-  grid-area: 'body';
+  grid-area: body;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $primary-color;
 }
 
 .footer {
-  grid-area: 'footer';
+  grid-area: footer;
+  display: flex;
+  background-color: $secondary-color;
+  justify-content: center;
+  align-items: center;
 }
