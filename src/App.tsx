@@ -1,6 +1,10 @@
 import React from 'react';
 import './styles/App.scss';
 import Login from './components/login/Login';
+import Amplify from 'aws-amplify';
+import { withAuthenticator } from 'aws-amplify-react';
+import config from './aws-exports';
+Amplify.configure(config);
 
 const App: React.FC = () => {
   return (
@@ -15,4 +19,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+export default withAuthenticator(App, true);
