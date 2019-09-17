@@ -1,15 +1,12 @@
 import React from 'react';
 import './styles/App.scss';
 import Login from './components/login/Login';
-// import Amplify from 'aws-amplify';
-// import { withAuthenticator } from 'aws-amplify-react';
-// import config from './aws-exports';
-//
-// Amplify.configure(config);
+import AWSLogin from './AWSLogin';
 
 const App: React.FC = () => {
   return (
     <div className="app">
+      <AWSLogin />
       <div className="header">
         header
         <Login buttonText="login" />
@@ -20,5 +17,4 @@ const App: React.FC = () => {
   );
 };
 
-// export default withAuthenticator(App, true);
 export default App;
