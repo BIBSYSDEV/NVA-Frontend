@@ -13,4 +13,4 @@ deploy:
   domain: nva-frontend.surge.sh
   project: ./build/
 on:
-  branch: master
+  branch: amplify
