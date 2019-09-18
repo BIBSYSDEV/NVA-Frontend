@@ -38,7 +38,5 @@ amplify/backend/awscloudformation
 build/
 dist/
 node_modules/
-aws-exports.js
-awsconfiguration.json
 
 .env
