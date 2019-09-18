@@ -6,25 +6,23 @@ import Dashboard from './components/dashboard/Dashboard';
 import NotFound from './components/errorpages/NotFound';
 import User from './components/user/User';
 
-const App: React.FC = () => {
-  return (
-    <BrowserRouter>
-      <div className="app">
-        <div className="header">
-          header
-          <Login buttonText="login" />
-        </div>
-        <div className="body">
-          <Switch>
-            <Route exact path="/" component={Dashboard} />
-            <Route exact path="/user" component={User} />
-            <Route path="*" component={NotFound} />
-          </Switch>
-        </div>
-        <div className="footer">footer</div>
+const App: React.FC = () => (
+  <BrowserRouter>
+    <div className="app">
+      <div className="header">
+        header
+        <Login buttonText="login" />
       </div>
-    </BrowserRouter>
-  );
-};
+      <div className="body">
+        <Switch>
+          <Route exact path="/" component={Dashboard} />
+          <Route exact path="/user" component={User} />
+          <Route path="*" component={NotFound} />
+        </Switch>
+      </div>
+      <div className="footer">footer</div>
+    </div>
+  </BrowserRouter>
+);
 
 export default App;
