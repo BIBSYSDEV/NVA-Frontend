@@ -4,21 +4,26 @@
   height: 100vh;
   width: 100vw;
   display: grid;
-  grid-template-areas:
-    'header'
-    'body'
-    'footer';
+  grid-template-areas: 'header' 'body' 'footer';
   grid-template-rows: 4em auto 4em;
 }
 
 .header {
   grid-area: header;
   background-color: $secondary-color;
+  color: $primary-color;
+  font-weight: bold;
+
+  .login__wrapper {
+    float: right;
+    margin: 1em;
+  }
+
+  .username {
+  }
 
   .login__button {
     background-color: $primary-color;
-    float: right;
-    margin: 1em;
   }
 }
 

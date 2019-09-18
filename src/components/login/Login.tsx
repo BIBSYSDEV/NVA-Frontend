@@ -23,15 +23,16 @@ const Login: React.FC<LoginProps & ReduxStateProps & ReduxDispatchProps> = ({ bu
     setUser({ firstName: 'Gregor', lastName: 'Gabriel' });
   };
 
-  console.log(user);
-
   return (
-    <React.Fragment>
-      {user && <h1>Hello {user.firstName}</h1>}
-      <Button className="login__button" onClick={handleLogin}>
-        {buttonText}
-      </Button>
-    </React.Fragment>
+    <div className="login__wrapper">
+      {user.firstName ? (
+        <div className="username">Hello {user.firstName}</div>
+      ) : (
+        <Button className="login__button" onClick={handleLogin}>
+          {buttonText}
+        </Button>
+      )}
+    </div>
   );
 };
 

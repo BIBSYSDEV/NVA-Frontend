@@ -10,7 +10,6 @@ const App: React.FC = () => (
   <BrowserRouter>
     <div className="app">
       <div className="header">
-        header
         <Login buttonText="login" />
       </div>
       <div className="body">
