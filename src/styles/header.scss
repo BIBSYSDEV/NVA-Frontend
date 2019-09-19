@@ -1,0 +1,17 @@
+@import './variables.scss';
+
+.header {
+  display: grid;
+  grid-template-areas: 'logo login';
+  grid-template-columns: 3fr 100px;
+  grid-area: header;
+  color: $primary-color;
+  font-weight: bold;
+  align-items: center;
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
+.logo {
+  grid-area: logo;
+}

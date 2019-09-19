@@ -1,0 +1,15 @@
+@import './variables.scss';
+
+.login {
+  grid-area: login;
+  justify-self: right;
+
+  &__username {
+    color: $primary-color;
+  }
+
+  &__button {
+    border-radius: 4px;
+    background-color: white;
+  }
+}

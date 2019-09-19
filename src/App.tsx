@@ -1,17 +1,16 @@
 import React from 'react';
-import './styles/app.scss';
-import Login from './components/login/Login';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+
+import './styles/app.scss';
 import Dashboard from './components/dashboard/Dashboard';
 import NotFound from './components/errorpages/NotFound';
 import User from './components/user/User';
+import Header from './components/header/Header';
 
 const App: React.FC = () => (
   <BrowserRouter>
     <div className="app">
-      <div className="header">
-        <Login buttonText="login" />
-      </div>
+      <Header />
       <div className="body">
         <Switch>
           <Route exact path="/" component={Dashboard} />
