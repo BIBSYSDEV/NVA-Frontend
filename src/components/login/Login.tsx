@@ -1,9 +1,11 @@
 import React from 'react';
 import { Button } from '@material-ui/core';
 import { connect } from 'react-redux';
-import User from '../../types/user.types';
 import { Dispatch } from 'redux';
+
+import User from '../../types/user.types';
 import { setUser } from '../../actions/userActions';
+import '../../styles/login.scss';
 
 interface LoginProps {
   buttonText: string;
@@ -24,13 +26,13 @@ const Login: React.FC<LoginProps & ReduxStateProps & ReduxDispatchProps> = ({ bu
   };
 
   return (
-    <div className="login__wrapper">
-      {user.firstName ? (
-        <div className="username">Hello {user.firstName}</div>
+    <div className="login">
+      {user && user.firstName ? (
+        <div className="login__username">Hello {user.firstName}</div>
       ) : (
-        <Button className="login__button" onClick={handleLogin}>
-          {buttonText}
-        </Button>
+        <div className="login__button">
+          <Button onClick={handleLogin}>{buttonText}</Button>
+        </div>
       )}
     </div>
   );
