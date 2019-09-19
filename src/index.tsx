@@ -8,10 +8,11 @@ import thunk from 'redux-thunk';
 import './styles/index.scss';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import rootReducer from './reducers/rootReducer';
 import { userReducer } from './reducers/userReducer';
 
 const store = createStore(
-  userReducer,
+  rootReducer,
   composeWithDevTools(
     applyMiddleware(thunk)
     // other store enhancers if any

@@ -1,10 +1,8 @@
 import { UserActions, SET_USER } from '../actions/userActions';
 
 const initialState = {
-  user: {
-    firstName: '',
-    lastName: '',
-  },
+  firstName: '',
+  lastName: '',
 };
 
 export const userReducer = (state: any = initialState, action: UserActions) => {
@@ -12,7 +10,7 @@ export const userReducer = (state: any = initialState, action: UserActions) => {
     case SET_USER:
       return {
         ...state,
-        user: action.user,
+        ...action.user,
       };
     default:
       return state;
