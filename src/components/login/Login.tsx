@@ -4,13 +4,14 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { setUser } from '../../actions/userActions';
 import '../../styles/login.scss';
+import { RootStore } from '../../reducers/rootReducer';
 
 interface LoginProps {
   buttonText: string;
 }
 
 const Login: React.FC<LoginProps> = ({ buttonText }) => {
-  const user = useSelector((state: any) => state.user);
+  const user = useSelector((state: RootStore) => state.user);
   const dispatch = useDispatch();
 
   const handleLogin = (event: React.MouseEvent<any>) => {
