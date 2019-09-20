@@ -2,10 +2,9 @@ import React from 'react';
 import { Button } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { setUser } from '../../actions/userActions';
 import '../../styles/login.scss';
 import { RootStore } from '../../reducers/rootReducer';
-import testUser from '../../testfiles/user.json';
+import { getLoggedInUser } from '../../api/user';
 
 interface LoginProps {
   buttonText: string;
@@ -17,7 +16,7 @@ const Login: React.FC<LoginProps> = ({ buttonText }) => {
 
   const handleLogin = (event: React.MouseEvent<any>) => {
     // TODO connect with FEIDE with real data
-    dispatch(setUser(testUser));
+    dispatch(getLoggedInUser());
   };
 
   return (
