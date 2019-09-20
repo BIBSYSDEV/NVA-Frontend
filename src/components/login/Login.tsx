@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setUser } from '../../actions/userActions';
 import '../../styles/login.scss';
 import { RootStore } from '../../reducers/rootReducer';
+import testUser from '../../testfiles/user.json';
 
 interface LoginProps {
   buttonText: string;
@@ -16,13 +17,13 @@ const Login: React.FC<LoginProps> = ({ buttonText }) => {
 
   const handleLogin = (event: React.MouseEvent<any>) => {
     // TODO connect with FEIDE with real data
-    dispatch(setUser({ firstName: 'Gregor', lastName: 'Gabriel' }));
+    dispatch(setUser(testUser));
   };
 
   return (
     <div className="login">
-      {user && user.firstName ? (
-        <div className="login__username">Hello {user.firstName}</div>
+      {user && user.name ? (
+        <div className="login__username">Hello {user.name}</div>
       ) : (
         <div className="login__button">
           <Button onClick={handleLogin}>{buttonText}</Button>
