@@ -5,8 +5,9 @@
   width: 100vw;
   display: grid;
   grid-template-areas: 'header' 'body' 'footer';
-  grid-template-rows: 4em auto 4em;
+  grid-template-rows: 4rem auto 3rem;
   background-color: $secondary-color;
+  font-size: 62.5%;
 }
 
 .body {
@@ -15,6 +16,7 @@
   justify-content: center;
   align-items: center;
   background-color: $primary-color;
+  font-size: 1.6rem;
 }
 
 .footer {

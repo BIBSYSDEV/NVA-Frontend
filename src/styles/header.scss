@@ -3,13 +3,13 @@
 .header {
   display: grid;
   grid-template-areas: 'logo menu login';
-  grid-template-columns: 100px auto 100px;
+  grid-template-columns: 5rem auto 10rem;
   grid-area: header;
   color: $primary-color;
   font-weight: bold;
   align-items: center;
-  padding-left: 1em;
-  padding-right: 1em;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
 .logo {
