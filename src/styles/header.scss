@@ -2,8 +2,8 @@
 
 .header {
   display: grid;
-  grid-template-areas: 'logo login';
-  grid-template-columns: 3fr 100px;
+  grid-template-areas: 'logo menu login';
+  grid-template-columns: 100px auto 100px;
   grid-area: header;
   color: $primary-color;
   font-weight: bold;
@@ -14,4 +14,8 @@
 
 .logo {
   grid-area: logo;
+}
+
+.menu {
+  grid-area: menu;
 }
