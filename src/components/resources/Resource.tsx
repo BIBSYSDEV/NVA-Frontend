@@ -5,6 +5,7 @@ import * as Yup from 'yup';
 import { Button, Typography } from '@material-ui/core';
 
 import '../../styles/resource.scss';
+import { useTranslation } from 'react-i18next';
 
 const Resource: React.FC = () => {
   const ResourceSchema = Yup.object().shape({
@@ -14,10 +15,12 @@ const Resource: React.FC = () => {
     password: Yup.string().required('Påkrevd'),
   });
 
+  const { t } = useTranslation();
+
   return (
     <div className="resource">
       <Typography className="resource__heading" variant="h4">
-        Registrer ny ressurs
+        {t('Register new resource')}
       </Typography>
       <Formik
         initialValues={{ email: '', password: '' }}
@@ -40,21 +43,21 @@ const Resource: React.FC = () => {
           /* and other goodies */
         }) => (
           <Form className="resource__form">
-            <Field name="email" label="Epost" type="email" component={TextField} fullWidth />
+            <Field name="email" label={t('Email')} type="email" component={TextField} fullWidth />
             <br />
             <br />
-            <Field name="password" label="Passord" type="password" component={TextField} fullWidth />
+            <Field name="password" label={t('Password')} type="password" component={TextField} fullWidth />
 
             <div className="button-group">
               <Button className="button-group__reset" type="button" color="secondary" onClick={handleReset}>
-                Reset
+                {t('Reset')}
               </Button>
               <Button
                 className="button-group__submit"
                 type="submit"
                 color="primary"
                 disabled={isSubmitting || !!errors.email || !!errors.password}>
-                Opprett
+                {t('Create')}
               </Button>
             </div>
           </Form>
