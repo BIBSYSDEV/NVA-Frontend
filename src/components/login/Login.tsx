@@ -2,7 +2,7 @@ import { Button, Typography } from '@material-ui/core';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { setUser } from '../../actions/userActions';
+import { getLoggedInUser } from '../../api/user';
 import { RootStore } from '../../reducers/rootReducer';
 import '../../styles/login.scss';
 
@@ -18,15 +18,15 @@ const Login: React.FC<LoginProps> = ({ buttonText }) => {
 
   const handleLogin = (event: React.MouseEvent<any>) => {
     // TODO connect with FEIDE with real data
-    dispatch(setUser({ firstName: 'Gregor', lastName: 'Gabriel' }));
+    dispatch(getLoggedInUser());
   };
 
   return (
     <div className="login">
-      {user && user.firstName ? (
+      {user && user.name ? (
         <div className="login__username">
           <Typography variant="h6">
-            {t('Hello')} {user.firstName}
+            {t('Hello')} {user.name}
           </Typography>
         </div>
       ) : (

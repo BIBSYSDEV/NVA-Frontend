@@ -2,8 +2,11 @@ import { UserActions, SET_USER } from '../actions/userActions';
 import User from '../types/user.types';
 
 const initialState: User = {
-  firstName: '',
-  lastName: '',
+  name: '',
+  email: '',
+  id: '',
+  institution: '',
+  issuer: '',
 };
 
 export const userReducer = (state: User = initialState, action: UserActions) => {

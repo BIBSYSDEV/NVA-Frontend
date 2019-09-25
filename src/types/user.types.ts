@@ -1,4 +1,7 @@
 export default interface User {
-  firstName: string;
-  lastName: string;
+  id: string;
+  issuer: string;
+  email: string;
+  name: string;
+  institution: string;
 }
