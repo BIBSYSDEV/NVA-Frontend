@@ -15,6 +15,8 @@ i18n.use(LanguageDetector).init({
         Password: 'Password',
         'Register new resource': 'Register new resource',
         Reset: 'Reset',
+        Results: 'Results',
+        Search: 'Search',
       },
     },
     nb: {
@@ -29,6 +31,8 @@ i18n.use(LanguageDetector).init({
         Password: 'Passord',
         'Register new resource': 'Registrer ny ressurs',
         Reset: 'Reset',
+        Results: 'Resultater',
+        Search: 'Søk',
       },
     },
   },
