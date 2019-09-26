@@ -1,19 +1,21 @@
+import '../../styles/search.scss';
+
 import React from 'react';
-import { List, ListItem, ListItemIcon, ListItemText, Typography } from '@material-ui/core';
-import ImageIcon from '@material-ui/icons/Image';
 import { useTranslation } from 'react-i18next';
 
-import { Resource } from '../../types/resource.types';
-import '../../styles/resource.scss';
+import { List, ListItem, ListItemIcon, ListItemText, Typography } from '@material-ui/core';
+import ImageIcon from '@material-ui/icons/Image';
 
-export interface ResourceListProps {
+import { Resource } from '../../types/resource.types';
+
+export interface SearchResultsProps {
   resources: Resource[];
 }
 
-const ResourceList: React.FC<ResourceListProps> = ({ resources }) => {
+const SearchResults: React.FC<SearchResultsProps> = ({ resources }) => {
   const { t } = useTranslation();
   return (
-    <div className="resource-list">
+    <div className="search-results">
       {t('Results')}
       <List>
         {resources &&
@@ -38,4 +40,4 @@ const ResourceList: React.FC<ResourceListProps> = ({ resources }) => {
   );
 };
 
-export default ResourceList;
+export default SearchResults;
