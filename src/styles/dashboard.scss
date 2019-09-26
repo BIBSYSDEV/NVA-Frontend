@@ -1,5 +1,43 @@
 @import './variables.scss';
 
 .dashboard {
+  width: 100vw;
+  height: 100vh;
   color: green;
+  display: grid;
+  grid-template-areas: 'search' 'results';
+  grid-template-rows: 4fr 10fr;
+}
+
+.paper {
+  display: grid;
+  max-width: 65vw;
+  justify-self: center;
+  grid-area: search;
+  padding: 0.2rem 0.4rem;
+  align-items: center;
+}
+
+.search-container {
+  display: grid;
+  grid-template-areas: 'input button';
+  align-items: center;
+}
+
+.input {
+  display: inline-block;
+  grid-area: input;
+  margin-left: 1rem;
+  width: 35rem;
+}
+
+.search-button {
+  display: inline-block;
+  grid-area: button;
+  justify-self: right;
+}
+
+.search-results {
+  grid-area: results;
+  justify-self: center;
 }
