@@ -6,6 +6,7 @@ import Dashboard from './components/dashboard/Dashboard';
 import NotFound from './components/errorpages/NotFound';
 import User from './components/user/User';
 import Header from './components/header/Header';
+import Resource from './components/resources/Resource';
 
 const App: React.FC = () => (
   <BrowserRouter>
@@ -15,6 +16,7 @@ const App: React.FC = () => (
         <Switch>
           <Route exact path="/" component={Dashboard} />
           <Route exact path="/user" component={User} />
+          <Route exact path="/resources/new" component={Resource} />
           <Route path="*" component={NotFound} />
         </Switch>
       </div>
