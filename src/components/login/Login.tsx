@@ -1,28 +1,22 @@
 import React from 'react';
 import { Button } from '@material-ui/core';
-import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
+import { useSelector, useDispatch } from 'react-redux';
 
-import User from '../../types/user.types';
 import { setUser } from '../../actions/userActions';
 import '../../styles/login.scss';
+import { RootStore } from '../../reducers/rootReducer';
 
 interface LoginProps {
   buttonText: string;
 }
 
-interface ReduxStateProps {
-  user: User;
-}
+const Login: React.FC<LoginProps> = ({ buttonText }) => {
+  const user = useSelector((state: RootStore) => state.user);
+  const dispatch = useDispatch();
 
-interface ReduxDispatchProps {
-  setUser: (user: User) => void;
-}
-
-const Login: React.FC<LoginProps & ReduxStateProps & ReduxDispatchProps> = ({ buttonText, user, setUser }) => {
   const handleLogin = (event: React.MouseEvent<any>) => {
     // TODO connect with FEIDE with real data
-    setUser({ firstName: 'Gregor', lastName: 'Gabriel' });
+    dispatch(setUser({ firstName: 'Gregor', lastName: 'Gabriel' }));
   };
 
   return (
@@ -38,15 +32,4 @@ const Login: React.FC<LoginProps & ReduxStateProps & ReduxDispatchProps> = ({ bu
   );
 };
 
-const mapStateToProps = (state: any) => ({
-  user: state.user,
-});
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  setUser: (user: User) => dispatch(setUser(user)),
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Login);
+export default Login;
