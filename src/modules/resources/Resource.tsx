@@ -1,21 +1,22 @@
-import React from 'react';
-import { Formik, Form, Field } from 'formik';
+import '../../styles/resource.scss';
+
+import { Field, Form, Formik } from 'formik';
 import { TextField } from 'formik-material-ui';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
+
 import { Button, Typography } from '@material-ui/core';
 
-import '../../styles/resource.scss';
-import { useTranslation } from 'react-i18next';
-
 const Resource: React.FC = () => {
+  const { t } = useTranslation();
+
   const ResourceSchema = Yup.object().shape({
     email: Yup.string()
-      .email('Ugyldig epost')
-      .required('Påkrevd'),
-    password: Yup.string().required('Påkrevd'),
+      .email(t('Invalid email'))
+      .required(t('Required field')),
+    password: Yup.string().required(t('Required field')),
   });
-
-  const { t } = useTranslation();
 
   return (
     <div className="resource">
