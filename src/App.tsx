@@ -3,12 +3,12 @@ import './styles/app.scss';
 import React from 'react';
 import { BrowserRouter, Route, RouteComponentProps, Switch } from 'react-router-dom';
 
-import Dashboard from './components/dashboard/Dashboard';
-import NotFound from './components/errorpages/NotFound';
-import Header from './components/header/Header';
-import Resource from './components/resources/Resource';
-import Search from './components/search/Search';
-import User from './components/user/User';
+import Dashboard from './modules/dashboard/Dashboard';
+import NotFound from './modules/errorpages/NotFound';
+import Header from './modules/header/Header';
+import Resource from './modules/resources/Resource';
+import Search from './modules/search/Search';
+import User from './modules/user/User';
 
 const App: React.FC = () => (
   <BrowserRouter>

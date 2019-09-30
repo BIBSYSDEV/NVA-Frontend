@@ -7,9 +7,9 @@ import { useDispatch } from 'react-redux';
 import SearchIcon from '@material-ui/icons/Search';
 
 import { getResources } from '../../api/resource';
-import IconButton from '../IconButton';
-import InputBase from '../InputBase';
-import Paper from '../Paper';
+import IconButton from '../../components/IconButton';
+import InputBase from '../../components/InputBase';
+import Paper from '../../components/Paper';
 
 export interface SearchBarProps {
   history: any;
