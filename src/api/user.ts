@@ -2,9 +2,9 @@ import fetchMock from 'fetch-mock';
 import { Dispatch } from 'redux';
 
 import { setUser } from '../actions/userActions';
-import user from '../testfiles/user.json';
 import User from '../types/user.types';
 import { useMockData } from '../utils/constants';
+import user from '../utils/testfiles/user.json';
 
 export const getLoggedInUser = () => {
   return async (dispatch: Dispatch) => {
