@@ -1,0 +1,16 @@
+@import './variables.scss';
+
+.dashboard {
+  width: 100vw;
+  height: 100vh;
+  color: green;
+  display: grid;
+  grid-template-areas: 'search' 'other-content';
+  grid-template-rows: 15rem auto;
+  justify-items: center;
+  align-items: center;
+}
+
+.other-content {
+  grid-area: other-content;
+}

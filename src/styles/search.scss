@@ -1,0 +1,36 @@
+.search {
+  grid-area: search;
+  display: grid;
+  grid-template-areas: 'search-bar' 'results';
+  grid-template-rows: 15rem auto;
+  max-width: 65vw;
+  height: 100vh;
+}
+
+.search-bar {
+  align-self: center;
+  max-width: 65vw;
+
+  &__search-container {
+    display: grid;
+    grid-template-areas: 'input button';
+    align-items: center;
+  }
+
+  &__input {
+    display: inline-block;
+    grid-area: input;
+    margin-left: 1rem;
+    width: 35rem;
+  }
+
+  &__search-button {
+    display: inline-block;
+    grid-area: button;
+    justify-self: right;
+  }
+}
+
+.search-results {
+  grid-area: results;
+}

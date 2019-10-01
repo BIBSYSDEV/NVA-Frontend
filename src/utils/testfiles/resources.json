@@ -1,0 +1,44 @@
+[
+  {
+    "identifier": "d68e8a2e-7d0d-4782-aa41-e492ad2da03e",
+    "access": "private",
+    "content": "IMAG5099.jpg",
+    "content_type": "file",
+    "description": "Bilde fra den gangen vi hadde releaseparty med kake og gode greier.",
+    "identifier_handle": "https://hdl.handle.net/11250/2582825",
+    "published": "true",
+    "submitter_email": "test@unit.no",
+    "time_created": "2019-01-29T13:32:06.066+01:00",
+    "time_published": "2019-01-29T13:32:30.567+01:00",
+    "title": "DLR releaseparty",
+    "type": "Image"
+  },
+  {
+    "identifier": "d68e8a2e-7d0d-4782-aa41-e492a11da03e",
+    "access": "public",
+    "content": "IMAG5099.jpg",
+    "content_type": "file",
+    "description": "Beskrivelse av filen ligger her.",
+    "identifier_handle": "https://hdl.handle.net/11250/2582811",
+    "published": "true",
+    "submitter_email": "test@unit.no",
+    "time_created": "2019-01-29T13:32:06.066+01:00",
+    "time_published": "2019-01-29T13:32:30.567+01:00",
+    "title": "Hva er egentlig en fil?",
+    "type": "Image"
+  },
+  {
+    "identifier": "d68e8a2e-7d0d-4782-aa41-e492a22da03e",
+    "access": "private",
+    "content": "IMAG5099.jpg",
+    "content_type": "file",
+    "description": "En introduksjon til en dypere avhandling om komponenter i varierende tilstand og som viser at denne teksten blir wrappet.",
+    "identifier_handle": "https://hdl.handle.net/11250/2582822",
+    "published": "true",
+    "submitter_email": "test@unit.no",
+    "time_created": "2019-01-29T13:32:06.066+01:00",
+    "time_published": "2019-01-29T13:32:30.567+01:00",
+    "title": "Komponenter: en avhandling",
+    "type": "Image"
+  }
+]

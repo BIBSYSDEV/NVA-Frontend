@@ -5,18 +5,23 @@
   "dependencies": {
     "@material-ui/core": "^4.4.2",
     "@material-ui/icons": "^4.4.1",
-    "@types/jest": "24.0.18",
-    "@types/material-ui": "^0.21.7",
-    "@types/node": "12.7.5",
-    "@types/react": "16.9.2",
-    "@types/react-dom": "16.9.0",
-    "aws-amplify": "^1.1.40",
-    "aws-amplify-react": "^2.4.4",
+    "formik": "^1.5.8",
+    "formik-material-ui": "0.0.22",
+    "i18next": "^17.0.16",
+    "i18next-browser-languagedetector": "^3.0.3",
     "node-sass": "^4.12.0",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
+    "react-i18next": "^10.12.5",
+    "react-redux": "^7.1.1",
+    "react-router-dom": "^5.0.1",
     "react-scripts": "3.1.1",
-    "typescript": "3.6.3"
+    "redux": "^4.0.4",
+    "redux-devtools-extension": "^2.13.8",
+    "redux-thunk": "^2.3.0",
+    "yup": "^0.27.0",
+    "aws-amplify": "^1.1.40",
+    "aws-amplify-react": "^2.4.4"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -51,10 +56,22 @@
     ]
   },
   "devDependencies": {
+    "@types/fetch-mock": "^7.3.1",
+    "@types/jest": "24.0.18",
+    "@types/material-ui": "^0.21.7",
+    "@types/node": "12.7.5",
+    "@types/react": "16.9.2",
+    "@types/react-dom": "16.9.0",
+    "@types/react-redux": "^7.1.2",
+    "@types/react-router-dom": "^4.3.5",
+    "@types/yup": "^0.26.24",
     "@types/node-sass": "^4.11.0",
+    "@typescript-eslint/parser": "^2.3.1",
     "eslint-plugin-prettier": "^3.1.0",
+    "fetch-mock": "^7.3.9",
     "husky": "^3.0.5",
     "prettier": "^1.18.2",
-    "pretty-quick": "^1.11.1"
+    "pretty-quick": "^1.11.1",
+    "typescript": "^3.5.2"
   }
 }
