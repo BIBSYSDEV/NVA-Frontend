@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Amplify, { Auth, Hub } from 'aws-amplify';
-import awsconfig from './aws-exports';
+import awsConfig from './aws-config';
 
-Amplify.configure(awsconfig);
+Amplify.configure(awsConfig);
 
 const AWSLogin: React.FC = () => {
   const [user, setUser] = useState<any>(null);
@@ -19,11 +19,6 @@ const AWSLogin: React.FC = () => {
         default:
           setUser(null);
       }
-    });
-
-    Auth.currentSession().then(data => {
-      console.log('currentSession');
-      console.log(data);
     });
 
     Auth.currentAuthenticatedUser()
