@@ -1,9 +1,0 @@
-{
-  "auth": {
-    "nvafrontend2b052f63": {
-      "service": "Cognito",
-      "providerPlugin": "awscloudformation",
-      "dependsOn": []
-    }
-  }
-}

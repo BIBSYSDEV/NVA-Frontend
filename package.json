@@ -5,6 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^4.4.2",
     "@material-ui/icons": "^4.4.1",
+    "aws-amplify": "^1.1.40",
     "formik": "^1.5.8",
     "formik-material-ui": "0.0.22",
     "i18next": "^17.0.16",
@@ -19,9 +20,7 @@
     "redux": "^4.0.4",
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0",
-    "yup": "^0.27.0",
-    "aws-amplify": "^1.1.40",
-    "aws-amplify-react": "^2.4.4"
+    "yup": "^0.27.0"
   },
   "scripts": {
     "start": "react-scripts start",

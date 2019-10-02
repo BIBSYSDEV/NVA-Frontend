@@ -2,12 +2,13 @@
 
 const awsmobile = {
   aws_project_region: 'eu-west-1',
-  aws_cognito_identity_pool_id: 'eu-west-1:6afdf2ee-af71-459e-97ca-6073adfc9a29',
+  aws_cognito_identity_pool_id: 'eu-west-1:4ad26e8d-9549-4cda-82e5-29bc4e3939d4',
   aws_cognito_region: 'eu-west-1',
-  aws_user_pools_id: 'eu-west-1_E7gc1PzR2',
-  aws_user_pools_web_client_id: 'jlkel8sdu61v19ughlm7sc0la',
+  aws_user_pools_id: 'eu-west-1_uhKzlCZfT',
+  aws_user_pools_web_client_id: '78b6opjourcak7gvr1c9r8u5re', //svenn-nva2
+  //aws_user_pools_web_client_id: '59fug4072l4qevqhrguois8dn7',// svenn-nva
   oauth: {
-    domain: 'nva-test-user-pool.auth.eu-west-1.amazoncognito.com',
+    domain: 'svenn-nva.auth.eu-west-1.amazoncognito.com',
     scope: ['openid'],
     redirectSignIn: 'http://localhost:3000/',
     redirectSignOut: 'http://localhost:3000/',

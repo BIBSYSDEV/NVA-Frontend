@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import Amplify, { Auth, Hub } from 'aws-amplify';
-//import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth/lib/types';
 import awsconfig from './aws-exports';
+
 Amplify.configure(awsconfig);
 
 const AWSLogin: React.FC = () => {
   const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
-    console.log('creds:', Auth.currentCredentials());
-
     Hub.listen('auth', ({ payload: { event, data } }) => {
       switch (event) {
         case 'signIn':
@@ -23,9 +21,21 @@ const AWSLogin: React.FC = () => {
       }
     });
 
+    Auth.currentSession().then(data => {
+      console.log('currentSession');
+      console.log(data);
+    });
+
     Auth.currentAuthenticatedUser()
       .then(user => {
         setUser(user);
+        console.log('currentAuthenticatedUser:');
+        console.log(
+          user
+            .getSignInUserSession()
+            .getIdToken()
+            .decodePayload().name
+        );
       })
       .catch(err => console.log('Not signed in: ' + err));
   }, []);
@@ -33,7 +43,17 @@ const AWSLogin: React.FC = () => {
   return (
     <div className="App">
       <button onClick={() => Auth.federatedSignIn()}>Login</button>
-      {user && <button onClick={() => Auth.signOut()}>Sign Out {user.getUsername()}</button>}
+      {user && (
+        <button onClick={() => Auth.signOut()}>
+          Sign Out{' '}
+          {
+            user
+              .getSignInUserSession()
+              .getIdToken()
+              .decodePayload().name
+          }
+        </button>
+      )}
     </div>
   );
 };
