@@ -11,6 +11,7 @@ import './styles/index.scss';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import rootReducer from './reducers/rootReducer';
+import AWSLogin from './AWSLogin';
 
 const store = createStore(
   rootReducer,
@@ -23,6 +24,7 @@ const store = createStore(
 ReactDOM.render(
   <I18nextProvider i18n={i18n}>
     <Provider store={store}>
+      <AWSLogin />
       <App />
     </Provider>
   </I18nextProvider>,
