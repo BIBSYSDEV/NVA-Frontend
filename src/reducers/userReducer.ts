@@ -1,14 +1,9 @@
 import { Auth } from 'aws-amplify';
 
 import { LOG_IN, LOG_OUT, SET_USER, UserActions } from '../actions/userActions';
-import User from '../types/user.types';
+import User, { emptyUser } from '../types/user.types';
 
-const initialState: User = {
-  name: '',
-  email: '',
-};
-
-export const userReducer = (state: User = initialState, action: UserActions) => {
+export const userReducer = (state: User = emptyUser, action: UserActions) => {
   switch (action.type) {
     case LOG_IN:
       Auth.federatedSignIn();

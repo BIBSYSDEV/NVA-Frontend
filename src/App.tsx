@@ -14,11 +14,10 @@ import Resource from './modules/resources/Resource';
 import Search from './modules/search/Search';
 import User from './modules/user/User';
 import { getUserDataFromCognitoAndSetUser } from './utils/getUserDataFromCognitoAndSetUser';
+import { emptyUser } from './types/user.types';
 
 const App: React.FC = () => {
   Amplify.configure(awsConfig);
-
-  const emptyUser = { email: '', name: '' };
 
   const dispatch = useDispatch();
 
