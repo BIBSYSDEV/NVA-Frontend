@@ -21,26 +21,6 @@ const App: React.FC = () => {
 
   const dispatch = useDispatch();
 
-  Hub.listen('auth', ({ payload: { event, data } }) => {
-    console.log('event', event);
-    switch (event) {
-      case 'signIn':
-        dispatch(getUserDataFromCognitoAndSetUser(data));
-        console.log('signin hub');
-        break;
-      case 'signOut':
-        dispatch(setUser(emptyUser));
-        console.log('signout hub');
-        break;
-      // case 'signIn_failure':
-      // case 'cognitoHostedUI_failure':
-      // case 'customState_failure':
-      default:
-        console.log('default hub');
-      // setUser(null);
-    }
-  });
-
   useEffect(() => {
     const updateUser = async () => {
       try {
@@ -50,7 +30,9 @@ const App: React.FC = () => {
         dispatch(setUser(emptyUser));
       }
     };
+    Hub.listen('auth', updateUser);
     updateUser();
+    return () => Hub.remove('auth', updateUser);
   }, []);
 
   return (
