@@ -1,15 +1,21 @@
 @import './variables.scss';
 
 .login {
+  display: grid;
+  grid-template-areas: 'username button';
   grid-area: login;
   justify-self: right;
+  align-items: center;
 
   &__username {
+    grid-area: username;
     color: $primary-color;
   }
 
   &__button {
+    grid-area: button;
     border-radius: 4px;
     background-color: white;
+    margin-left: 1rem;
   }
 }
