@@ -1,17 +1,19 @@
+import './styles/index.scss';
+
+import Amplify from 'aws-amplify';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { I18nextProvider } from 'react-i18next';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
+import { applyMiddleware, createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
-import { I18nextProvider } from 'react-i18next';
 
-import i18n from './i18n';
-import './styles/index.scss';
 import App from './App';
-import * as serviceWorker from './serviceWorker';
+import awsConfig from './aws-config';
+import i18n from './i18n';
 import rootReducer from './reducers/rootReducer';
-import AWSLogin from './AWSLogin';
+import * as serviceWorker from './serviceWorker';
 
 const store = createStore(
   rootReducer,
@@ -24,7 +26,6 @@ const store = createStore(
 ReactDOM.render(
   <I18nextProvider i18n={i18n}>
     <Provider store={store}>
-      <AWSLogin />
       <App />
     </Provider>
   </I18nextProvider>,

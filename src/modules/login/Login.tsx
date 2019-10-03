@@ -1,13 +1,15 @@
-import { Button, Typography } from '@material-ui/core';
-import React, { useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
-import { getLoggedInUser } from '../../api/user';
-import { RootStore } from '../../reducers/rootReducer';
 import '../../styles/login.scss';
 
-import Amplify, { Auth } from 'aws-amplify';
+import Amplify from 'aws-amplify';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { Button, Typography } from '@material-ui/core';
+
+import { login, logout } from '../../actions/userActions';
 import awsConfig from '../../aws-config';
+import { RootStore } from '../../reducers/rootReducer';
 
 Amplify.configure(awsConfig);
 interface LoginProps {
@@ -21,22 +23,27 @@ const Login: React.FC<LoginProps> = ({ buttonText }) => {
   console.log('awsconfig', awsConfig);
   const { t } = useTranslation();
 
-  useEffect(() => {
-    Auth.currentAuthenticatedUser()
-      .then(user => {
-        console.log('user', user);
-        const user2 = user
-          .getSignInUserSession()
-          .getIdToken()
-          .decodePayload();
-        console.log('user:', user2);
-      })
-      .catch(err => console.log('Not signed in: ' + err));
-  }, []);
+  // useEffect(() => {
+  //   Auth.currentAuthenticatedUser()
+  //     .then(user => {
+  //       console.log('user', user);
+  //       const user2 = user
+  //         .getSignInUserSession()
+  //         .getIdToken()
+  //         .decodePayload();
+  //       console.log('user:', user2);
+  //     })
+  //     .catch(err => console.log('Not signed in: ' + err));
+  // }, []);
 
   const handleLogin = (event: React.MouseEvent<any>) => {
-    Auth.federatedSignIn();
-    // dispatch(getLoggedInUser());
+    // Auth.federatedSignIn();
+    dispatch(login());
+  };
+
+  const handleLogout = (event: React.MouseEvent<any>) => {
+    // Auth.federatedSignIn();
+    dispatch(logout());
   };
 
   return (
@@ -46,6 +53,7 @@ const Login: React.FC<LoginProps> = ({ buttonText }) => {
           <Typography variant="h6">
             {t('Hello')} {user.name}
           </Typography>
+          <Button onClick={handleLogout}>Logout</Button>
         </div>
       ) : (
         <div className="login__button">
