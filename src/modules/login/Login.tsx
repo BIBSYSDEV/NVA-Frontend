@@ -1,16 +1,12 @@
 import '../../styles/login.scss';
 
-import Amplify from 'aws-amplify';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Button, Typography } from '@material-ui/core';
 
 import { login, logout } from '../../actions/userActions';
-import awsConfig from '../../aws-config';
 import { RootStore } from '../../reducers/rootReducer';
-
-Amplify.configure(awsConfig);
 
 interface LoginProps {
   buttonText: string;
