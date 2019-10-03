@@ -19,30 +19,13 @@ interface LoginProps {
 const Login: React.FC<LoginProps> = ({ buttonText }) => {
   const user = useSelector((state: RootStore) => state.user);
   const dispatch = useDispatch();
-
-  console.log('awsconfig', awsConfig);
   const { t } = useTranslation();
 
-  // useEffect(() => {
-  //   Auth.currentAuthenticatedUser()
-  //     .then(user => {
-  //       console.log('user', user);
-  //       const user2 = user
-  //         .getSignInUserSession()
-  //         .getIdToken()
-  //         .decodePayload();
-  //       console.log('user:', user2);
-  //     })
-  //     .catch(err => console.log('Not signed in: ' + err));
-  // }, []);
-
   const handleLogin = (event: React.MouseEvent<any>) => {
-    // Auth.federatedSignIn();
     dispatch(login());
   };
 
   const handleLogout = (event: React.MouseEvent<any>) => {
-    // Auth.federatedSignIn();
     dispatch(logout());
   };
 

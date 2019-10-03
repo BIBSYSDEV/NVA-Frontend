@@ -1,7 +1,7 @@
 import './styles/app.scss';
 
-import Amplify, { Hub } from 'aws-amplify';
-import React from 'react';
+import Amplify, { Auth, Hub } from 'aws-amplify';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { BrowserRouter, Route, RouteComponentProps, Switch } from 'react-router-dom';
 
@@ -13,10 +13,12 @@ import Header from './modules/header/Header';
 import Resource from './modules/resources/Resource';
 import Search from './modules/search/Search';
 import User from './modules/user/User';
-import { getUserDataFromCognitoUser } from './utils/getUserDataFromCognitoUser';
+import { getUserDataFromCognitoAndSetUser } from './utils/getUserDataFromCognitoAndSetUser';
 
 const App: React.FC = () => {
   Amplify.configure(awsConfig);
+
+  const emptyUser = { email: '', name: '' };
 
   const dispatch = useDispatch();
 
@@ -24,24 +26,33 @@ const App: React.FC = () => {
     console.log('event', event);
     switch (event) {
       case 'signIn':
-        dispatch(getUserDataFromCognitoUser(data));
+        dispatch(getUserDataFromCognitoAndSetUser(data));
         console.log('signin hub');
         break;
       case 'signOut':
-        dispatch(setUser({ email: '', name: '' }));
+        dispatch(setUser(emptyUser));
         console.log('signout hub');
-        // setUser(null);
         break;
       // case 'signIn_failure':
       // case 'cognitoHostedUI_failure':
       // case 'customState_failure':
-      //   setUser(null);
-      //   break;
       default:
         console.log('default hub');
       // setUser(null);
     }
   });
+
+  useEffect(() => {
+    const updateUser = async () => {
+      try {
+        const user = await Auth.currentAuthenticatedUser();
+        dispatch(getUserDataFromCognitoAndSetUser(user));
+      } catch (e) {
+        dispatch(setUser(emptyUser));
+      }
+    };
+    updateUser();
+  }, []);
 
   return (
     <BrowserRouter>
