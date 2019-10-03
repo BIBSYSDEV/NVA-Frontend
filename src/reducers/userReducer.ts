@@ -2,7 +2,6 @@ import { Auth } from 'aws-amplify';
 
 import { LOG_IN, LOG_OUT, SET_USER, UserActions } from '../actions/userActions';
 import User from '../types/user.types';
-import { getUserDataFromCognitoUser } from '../utils/getUserDataFromCognitoUser';
 
 const initialState: User = {
   name: '',
@@ -18,10 +17,9 @@ export const userReducer = (state: User = initialState, action: UserActions) => 
       Auth.signOut();
       return state;
     case SET_USER:
-      const decodedUserData = getUserDataFromCognitoUser(action.user);
       return {
         ...state,
-        ...decodedUserData,
+        ...action.user,
       };
     default:
       return state;

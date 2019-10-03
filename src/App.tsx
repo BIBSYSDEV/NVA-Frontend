@@ -1,7 +1,7 @@
 import './styles/app.scss';
 
 import Amplify, { Hub } from 'aws-amplify';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import { BrowserRouter, Route, RouteComponentProps, Switch } from 'react-router-dom';
 
@@ -13,36 +13,35 @@ import Header from './modules/header/Header';
 import Resource from './modules/resources/Resource';
 import Search from './modules/search/Search';
 import User from './modules/user/User';
+import { getUserDataFromCognitoUser } from './utils/getUserDataFromCognitoUser';
 
 const App: React.FC = () => {
   Amplify.configure(awsConfig);
+
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    Hub.listen('auth', ({ payload: { event, data } }) => {
-      console.log('event', event);
-      switch (event) {
-        case 'signIn':
-          dispatch(setUser(data));
-          // setUser(data);
-          console.log('signin hub');
-          break;
-        case 'signOut':
-          dispatch(setUser({ email: '', name: '' }));
-          console.log('signout hub');
-          // setUser(null);
-          break;
-        // case 'signIn_failure':
-        // case 'cognitoHostedUI_failure':
-        // case 'customState_failure':
-        //   setUser(null);
-        //   break;
-        default:
-          console.log('default hub');
+  Hub.listen('auth', ({ payload: { event, data } }) => {
+    console.log('event', event);
+    switch (event) {
+      case 'signIn':
+        dispatch(getUserDataFromCognitoUser(data));
+        console.log('signin hub');
+        break;
+      case 'signOut':
+        dispatch(setUser({ email: '', name: '' }));
+        console.log('signout hub');
         // setUser(null);
-      }
-    });
-  }, []);
+        break;
+      // case 'signIn_failure':
+      // case 'cognitoHostedUI_failure':
+      // case 'customState_failure':
+      //   setUser(null);
+      //   break;
+      default:
+        console.log('default hub');
+      // setUser(null);
+    }
+  });
 
   return (
     <BrowserRouter>

@@ -1,14 +1,12 @@
-import User from '../types/user.types';
+import { Dispatch } from 'redux';
+import { setUser } from '../actions/userActions';
+import { Auth } from 'aws-amplify';
 
-export const getUserDataFromCognitoUser = (user: any): User => {
-  const awsuser = user
-    .getSignInUserSession()
-    .getIdToken()
-    .decodePayload();
-
-  const { email, name } = awsuser;
-  return {
-    name,
-    email,
+export const getUserDataFromCognitoUser = (user: any) => {
+  return async (dispatch: Dispatch) => {
+    await Auth.currentSession();
+    const session = await user.getSignInUserSession();
+    const payload = session.getIdToken().decodePayload();
+    dispatch(setUser(payload));
   };
 };
