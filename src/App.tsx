@@ -3,7 +3,7 @@ import './styles/app.scss';
 import Amplify, { Auth, Hub } from 'aws-amplify';
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { BrowserRouter, Route, RouteComponentProps, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import { setUser } from './actions/userActions';
 import awsConfig from './aws-config';
@@ -41,17 +41,9 @@ const App: React.FC = () => {
         <Header />
         <div className="body">
           <Switch>
-            <Route
-              exact
-              path="/"
-              render={(routeProps: RouteComponentProps) => <Dashboard history={routeProps.history} />}
-            />
+            <Route exact path="/" component={Dashboard} />
             <Route exact path="/resources/new" component={Resource} />
-            <Route
-              exact
-              path="/search"
-              render={(routeProps: RouteComponentProps) => <Search history={routeProps.history} />}
-            />
+            <Route exact path="/search" component={Search} />
             <Route exact path="/user" component={User} />
             <Route path="*" component={NotFound} />
           </Switch>
