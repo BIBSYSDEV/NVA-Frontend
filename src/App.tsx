@@ -14,7 +14,6 @@ import Resource from './modules/resources/Resource';
 import Search from './modules/search/Search';
 import User from './modules/user/User';
 import { emptyUser } from './types/user.types';
-import { getUserDataFromCognitoAndSetUser } from './utils/getUserDataFromCognitoAndSetUser';
 
 const App: React.FC = () => {
   Amplify.configure(awsConfig);
@@ -24,8 +23,9 @@ const App: React.FC = () => {
   useEffect(() => {
     const updateUser = async () => {
       try {
-        const user = await Auth.currentAuthenticatedUser();
-        dispatch(getUserDataFromCognitoAndSetUser(user));
+        const cognitoUser = await Auth.currentAuthenticatedUser();
+        const { name, email } = await cognitoUser.attributes;
+        dispatch(setUser({ name, email }));
       } catch (e) {
         dispatch(setUser(emptyUser));
       }
