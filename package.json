@@ -5,6 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^4.4.2",
     "@material-ui/icons": "^4.4.1",
+    "aws-amplify": "^1.1.40",
     "formik": "^1.5.8",
     "formik-material-ui": "0.0.22",
     "i18next": "^17.0.16",
