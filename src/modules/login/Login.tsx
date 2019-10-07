@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { Button, Typography } from '@material-ui/core';
 
-import { login, logout } from '../../actions/userActions';
+import { login, logout } from '../../api/user';
 import { RootStore } from '../../reducers/rootReducer';
 
 interface LoginProps {
@@ -16,11 +16,11 @@ const Login: React.FC<LoginProps> = ({ buttonText }) => {
   const user = useSelector((state: RootStore) => state.user);
   const dispatch = useDispatch();
 
-  const handleLogin = (event: React.MouseEvent<any>) => {
+  const handleLogin = () => {
     dispatch(login());
   };
 
-  const handleLogout = (event: React.MouseEvent<any>) => {
+  const handleLogout = () => {
     dispatch(logout());
   };
 

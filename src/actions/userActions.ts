@@ -2,21 +2,21 @@ import User from '../types/user.types';
 
 // ACTION TYPES
 export const SET_USER = 'set user';
-export const LOG_IN = 'log in';
-export const LOG_OUT = 'log out';
+export const INIT_LOGIN = 'initiate login';
+export const INIT_LOGOUT = 'initiate logout';
 
 // ACTION CREATORS
-export const setUser = (user: User) => ({
+export const setUserAction = (user: User) => ({
   type: SET_USER,
   user,
 });
 
-export const login = () => ({
-  type: LOG_IN,
+export const initLoginAction = () => ({
+  type: INIT_LOGIN,
 });
 
-export const logout = () => ({
-  type: LOG_OUT,
+export const initLogoutAction = () => ({
+  type: INIT_LOGOUT,
 });
 
 export interface SetUserAction {
@@ -24,12 +24,12 @@ export interface SetUserAction {
   user: User;
 }
 
-export interface LoginAction {
-  type: typeof LOG_IN;
+export interface InitLoginAction {
+  type: typeof INIT_LOGIN;
 }
 
-export interface LogoutAction {
-  type: typeof LOG_OUT;
+export interface InitLogoutAction {
+  type: typeof INIT_LOGOUT;
 }
 
-export type UserActions = SetUserAction | LoginAction | LogoutAction;
+export type UserActions = SetUserAction | InitLoginAction | InitLogoutAction;
