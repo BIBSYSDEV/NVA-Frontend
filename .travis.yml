@@ -21,4 +21,5 @@ install:
 script:
   - npm test
   - npm run build
+  - npm start
   - $(npm bin)/cypress run --record
