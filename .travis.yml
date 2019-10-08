@@ -3,11 +3,18 @@ node_js:
   - 'stable'
 cache:
   npm: true
+  directories:
+    - ~/.cache
 env:
   global:
     - REACT_APP_USE_MOCK=true
+addons:
+  apt:
+    packages:
+      # Ubuntu 16+ does not install this dependency by default, so we need to install it ourselves
+      - libgconf-2-4
 install:
   - npm ci
 script:
-  - npm test
   - npm run build
+  - npm run test:cypress
