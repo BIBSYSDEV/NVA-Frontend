@@ -5,7 +5,6 @@ import { loginSuccessAction, logoutSuccessAction } from '../actions/userActions'
 import { getCurrentAuthenticatedUser } from '../api/user';
 
 export const hubListener = (data: any, dispatch: Dispatch<any>) => {
-  console.log('hub', data.payload.event);
   switch (data.payload.event) {
     case 'signIn':
       dispatch(getCurrentAuthenticatedUser());

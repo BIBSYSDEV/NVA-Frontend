@@ -39,16 +39,13 @@ export const refreshToken = () => {
     try {
       const currentSession = await Auth.currentSession();
       const cognitoUser = await Auth.currentAuthenticatedUser();
-      console.log('idToken', currentSession.getIdToken().getExpiration());
-      console.log('accessToken', currentSession.getAccessToken().getExpiration());
       if (!currentSession.isValid()) {
-        cognitoUser.refreshSession(currentSession.getRefreshToken(), (error: any, session: any) => {
+        cognitoUser.refreshSession(currentSession.getRefreshToken(), (error: any) => {
           if (error) {
             dispatch(refreshTokenFailureAction(error));
+          } else {
+            dispatch(refreshTokenSuccessAction());
           }
-          // const { idToken, refreshToken, accessToken } = session;
-          // console.log('idtoken', idToken, 'refreshToken', refreshToken, 'accessToken', accessToken);
-          dispatch(refreshTokenSuccessAction());
         });
       }
     } catch (e) {
