@@ -5,7 +5,7 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { BrowserRouter, Route, RouteComponentProps, Switch } from 'react-router-dom';
 
-import { getCurrentAuthenticatedUser } from './api/user';
+import { getCurrentAuthenticatedUser, refreshToken } from './api/user';
 import awsConfig from './aws-config';
 import Dashboard from './modules/dashboard/Dashboard';
 import NotFound from './modules/errorpages/NotFound';
@@ -26,6 +26,10 @@ const App: React.FC = () => {
     Hub.listen('auth', updateUser);
     updateUser();
     return () => Hub.remove('auth', updateUser);
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(refreshToken());
   }, [dispatch]);
 
   return (
