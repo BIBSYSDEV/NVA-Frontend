@@ -19,7 +19,7 @@ export const login = () => {
 };
 
 export const getCurrentAuthenticatedUser = () => {
-  return async (dispatch: Dispatch) => {
+  return async (dispatch: Dispatch<any>) => {
     if (useMockData) {
       mockSetUser(dispatch);
     } else {
@@ -27,6 +27,7 @@ export const getCurrentAuthenticatedUser = () => {
         const cognitoUser = await Auth.currentAuthenticatedUser();
         const { name, email } = await cognitoUser.attributes;
         dispatch(setUserAction({ name, email }));
+        dispatch(refreshToken());
       } catch (e) {
         dispatch(setUserAction(emptyUser));
       }

@@ -2,12 +2,10 @@ import { Dispatch } from 'redux';
 
 import { loginFailureAction } from '../actions/errorActions';
 import { loginSuccessAction, logoutSuccessAction } from '../actions/userActions';
-import { getCurrentAuthenticatedUser } from '../api/user';
 
 export const hubListener = (data: any, dispatch: Dispatch<any>) => {
   switch (data.payload.event) {
     case 'signIn':
-      dispatch(getCurrentAuthenticatedUser());
       dispatch(loginSuccessAction());
       break;
     case 'signOut':
