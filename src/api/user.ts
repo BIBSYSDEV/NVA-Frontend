@@ -1,13 +1,8 @@
 import { Auth } from 'aws-amplify';
 import { Dispatch } from 'redux';
 
-import {
-  initLoginAction,
-  initLogoutAction,
-  refreshTokenAction,
-  refreshTokenFailedAction,
-  setUserAction,
-} from '../actions/userActions';
+import { refreshTokenFailureAction } from '../actions/errorActions';
+import { initLoginAction, initLogoutAction, refreshTokenSuccessAction, setUserAction } from '../actions/userActions';
 import { emptyUser } from '../types/user.types';
 import { useMockData } from '../utils/constants';
 import { mockSetUser } from './mock-api';
@@ -49,15 +44,15 @@ export const refreshToken = () => {
       if (!currentSession.isValid()) {
         cognitoUser.refreshSession(currentSession.getRefreshToken(), (error: any, session: any) => {
           if (error) {
-            dispatch(refreshTokenFailedAction());
+            dispatch(refreshTokenFailureAction(error));
           }
           // const { idToken, refreshToken, accessToken } = session;
           // console.log('idtoken', idToken, 'refreshToken', refreshToken, 'accessToken', accessToken);
-          dispatch(refreshTokenAction());
+          dispatch(refreshTokenSuccessAction());
         });
       }
     } catch (e) {
-      dispatch(refreshTokenFailedAction());
+      dispatch(refreshTokenFailureAction(e));
     }
   };
 };

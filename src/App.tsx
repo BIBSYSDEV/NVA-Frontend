@@ -2,7 +2,7 @@ import './styles/app.scss';
 
 import Amplify, { Hub } from 'aws-amplify';
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Route, RouteComponentProps, Switch } from 'react-router-dom';
 
 import { getCurrentAuthenticatedUser, refreshToken } from './api/user';
@@ -13,24 +13,26 @@ import Header from './modules/header/Header';
 import Resource from './modules/resources/Resource';
 import Search from './modules/search/Search';
 import User from './modules/user/User';
+import { RootStore } from './reducers/rootReducer';
+import { hubListener } from './utils/hub-listener';
 
 const App: React.FC = () => {
   Amplify.configure(awsConfig);
 
   const dispatch = useDispatch();
+  const user = useSelector((state: RootStore) => state.user);
 
   useEffect(() => {
-    const updateUser = async () => {
-      dispatch(getCurrentAuthenticatedUser());
-    };
-    Hub.listen('auth', updateUser);
-    updateUser();
-    return () => Hub.remove('auth', updateUser);
+    Hub.listen('auth', data => hubListener(data, dispatch));
+    dispatch(getCurrentAuthenticatedUser());
+    return () => Hub.remove('auth', data => hubListener(data, dispatch));
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(refreshToken());
-  }, [dispatch]);
+    if (user && user.name) {
+      dispatch(refreshToken());
+    }
+  }, [dispatch, user]);
 
   return (
     <BrowserRouter>
