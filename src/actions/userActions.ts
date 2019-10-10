@@ -2,21 +2,36 @@ import User from '../types/user.types';
 
 // ACTION TYPES
 export const SET_USER = 'set user';
-export const LOG_IN = 'log in';
-export const LOG_OUT = 'log out';
+export const INIT_LOGIN = 'initiate login';
+export const INIT_LOGOUT = 'initiate logout';
+export const REFRESH_TOKEN_SUCCESS = 'refresh token success';
+export const LOGIN_SUCCESS = 'login success';
+export const LOGOUT_SUCCESS = 'logout success';
 
 // ACTION CREATORS
-export const setUser = (user: User) => ({
+export const setUserAction = (user: User) => ({
   type: SET_USER,
   user,
 });
 
-export const login = () => ({
-  type: LOG_IN,
+export const initLoginAction = () => ({
+  type: INIT_LOGIN,
 });
 
-export const logout = () => ({
-  type: LOG_OUT,
+export const initLogoutAction = () => ({
+  type: INIT_LOGOUT,
+});
+
+export const refreshTokenSuccessAction = () => ({
+  type: REFRESH_TOKEN_SUCCESS,
+});
+
+export const loginSuccessAction = () => ({
+  type: LOGIN_SUCCESS,
+});
+
+export const logoutSuccessAction = () => ({
+  type: LOGOUT_SUCCESS,
 });
 
 export interface SetUserAction {
@@ -24,12 +39,30 @@ export interface SetUserAction {
   user: User;
 }
 
-export interface LoginAction {
-  type: typeof LOG_IN;
+export interface InitLoginAction {
+  type: typeof INIT_LOGIN;
 }
 
-export interface LogoutAction {
-  type: typeof LOG_OUT;
+export interface InitLogoutAction {
+  type: typeof INIT_LOGOUT;
 }
 
-export type UserActions = SetUserAction | LoginAction | LogoutAction;
+export interface RefreshTokenSuccessAction {
+  type: typeof REFRESH_TOKEN_SUCCESS;
+}
+
+export interface LoginSuccessAction {
+  type: typeof LOGIN_SUCCESS;
+}
+
+export interface LogoutSuccessAction {
+  type: typeof LOGOUT_SUCCESS;
+}
+
+export type UserActions =
+  | SetUserAction
+  | InitLoginAction
+  | InitLogoutAction
+  | LoginSuccessAction
+  | LogoutSuccessAction
+  | RefreshTokenSuccessAction;
