@@ -1,4 +1,4 @@
-@import './variables.scss';
+@import './colors.scss';
 
 .menu {
   grid-area: menu;
@@ -19,7 +19,4 @@
   background-color: $primary-button-color;
   border-radius: 4px;
   color: $primary-color;
-  a {
-    color: $primary-color;
-  }
 }
