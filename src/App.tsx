@@ -13,6 +13,7 @@ import Header from './modules/header/Header';
 import Resource from './modules/resources/Resource';
 import Search from './modules/search/Search';
 import User from './modules/user/User';
+import { hubListener } from './utils/hub-listener';
 
 const App: React.FC = () => {
   Amplify.configure(awsConfig);
@@ -26,6 +27,11 @@ const App: React.FC = () => {
     Hub.listen('auth', updateUser);
     updateUser();
     return () => Hub.remove('auth', updateUser);
+  }, [dispatch]);
+
+  useEffect(() => {
+    Hub.listen('auth', data => hubListener(data, dispatch));
+    return () => Hub.remove('auth', data => hubListener(data, dispatch));
   }, [dispatch]);
 
   return (

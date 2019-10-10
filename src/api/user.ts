@@ -1,7 +1,8 @@
 import { Auth } from 'aws-amplify';
 import { Dispatch } from 'redux';
 
-import { initLoginAction, initLogoutAction, setUserAction } from '../actions/userActions';
+import { refreshTokenFailureAction } from '../actions/errorActions';
+import { initLoginAction, initLogoutAction, refreshTokenSuccessAction, setUserAction } from '../actions/userActions';
 import { emptyUser } from '../types/user.types';
 import { useMockData } from '../utils/constants';
 import { mockSetUser } from './mock-api';
@@ -18,7 +19,7 @@ export const login = () => {
 };
 
 export const getCurrentAuthenticatedUser = () => {
-  return async (dispatch: Dispatch) => {
+  return async (dispatch: Dispatch<any>) => {
     if (useMockData) {
       mockSetUser(dispatch);
     } else {
@@ -26,9 +27,30 @@ export const getCurrentAuthenticatedUser = () => {
         const cognitoUser = await Auth.currentAuthenticatedUser();
         const { name, email } = await cognitoUser.attributes;
         dispatch(setUserAction({ name, email }));
+        dispatch(refreshToken());
       } catch (e) {
         dispatch(setUserAction(emptyUser));
       }
+    }
+  };
+};
+
+export const refreshToken = () => {
+  return async (dispatch: Dispatch) => {
+    try {
+      const currentSession = await Auth.currentSession();
+      const cognitoUser = await Auth.currentAuthenticatedUser();
+      if (!currentSession.isValid()) {
+        cognitoUser.refreshSession(currentSession.getRefreshToken(), (error: any) => {
+          if (error) {
+            dispatch(refreshTokenFailureAction(error));
+          } else {
+            dispatch(refreshTokenSuccessAction());
+          }
+        });
+      }
+    } catch (e) {
+      dispatch(refreshTokenFailureAction(e));
     }
   };
 };
