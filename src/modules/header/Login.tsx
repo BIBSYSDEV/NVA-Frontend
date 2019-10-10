@@ -28,7 +28,9 @@ const Login: React.FC = () => {
       {user && user.name ? (
         <Menu menuButtonLabel={user.name} handleLogout={handleLogout} />
       ) : (
-        <Button onClick={handleLogin}>{t('Login')}</Button>
+        <Button onClick={handleLogin} data-cy="login-button">
+          {t('Login')}
+        </Button>
       )}
     </div>
   );

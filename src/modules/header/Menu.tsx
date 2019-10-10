@@ -32,7 +32,7 @@ const Menu: React.FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
 
   return (
     <div className="menu">
-      <Button aria-controls="menu" aria-haspopup="true" onClick={handleClick}>
+      <Button aria-controls="menu" aria-haspopup="true" onClick={handleClick} data-cy="menu">
         {menuButtonLabel}
         {menuOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
       </Button>
@@ -68,7 +68,9 @@ const Menu: React.FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
             {t('My profile')}
           </MenuItem>
 
-          <MenuItem onClick={handleLogout}>{t('Logout')}</MenuItem>
+          <MenuItem onClick={handleLogout} data-cy="logout-button">
+            {t('Logout')}
+          </MenuItem>
         </div>
       </MUIMenu>
     </div>
