@@ -1,42 +1,75 @@
-import { Menu as MUIMenu } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
-import MenuItem from '@material-ui/core/MenuItem';
-import React from 'react';
-import { useTranslation } from 'react-i18next';
-import { NavLink } from 'react-router-dom';
 import '../../styles/menu.scss';
 
-const Menu: React.FC = () => {
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router';
+
+import { Button, Menu as MUIMenu } from '@material-ui/core';
+import MenuItem from '@material-ui/core/MenuItem';
+import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+
+export interface MenuProps {
+  handleLogout: () => void;
+  menuButtonLabel: string;
+}
+
+const Menu: React.FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [menuOpen, setMenuOpen] = React.useState(false);
   const { t } = useTranslation();
+  const history = useHistory();
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
+    setMenuOpen(!menuOpen);
   };
 
   const handleClose = () => {
     setAnchorEl(null);
+    setMenuOpen(false);
   };
 
   return (
     <div className="menu">
-      <div className="menu__button">
-        <Button aria-controls="menu" aria-haspopup="true" onClick={handleClick}>
-          {t('Menu')}
-        </Button>
-      </div>
-      <MUIMenu anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
-        <MenuItem onClick={handleClose}>
-          <NavLink to="/">{t('Dashboard')}</NavLink>
-        </MenuItem>
+      <Button aria-controls="menu" aria-haspopup="true" onClick={handleClick}>
+        {menuButtonLabel}
+        {menuOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+      </Button>
+      <MUIMenu
+        anchorEl={anchorEl}
+        elevation={0}
+        getContentAnchorEl={null}
+        keepMounted
+        open={!!anchorEl}
+        onClose={handleClose}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'left',
+        }}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}>
+        <div className="menu-list">
+          <MenuItem
+            onClick={() => {
+              handleClose();
+              history.push('/');
+            }}>
+            {t('Dashboard')}
+          </MenuItem>
 
-        <MenuItem onClick={handleClose}>
-          <NavLink to="/user">{t('My profile')}</NavLink>
-        </MenuItem>
+          <MenuItem
+            onClick={() => {
+              handleClose();
+              history.push('/user');
+            }}>
+            {t('My profile')}
+          </MenuItem>
 
-        <MenuItem onClick={handleClose}>
-          <NavLink to="/resources/new">{t('New resource')}</NavLink>
-        </MenuItem>
+          <MenuItem onClick={handleLogout}>{t('Logout')}</MenuItem>
+        </div>
       </MUIMenu>
     </div>
   );

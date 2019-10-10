@@ -2,11 +2,24 @@
 
 .menu {
   grid-area: menu;
-  justify-self: left;
 
-  &__button {
-    border-radius: 4px;
-    background-color: white;
-    color: white;
+  .MuiButton-root {
+    width: 15rem;
+    background-color: $primary-button-color;
+    color: $primary-color;
+  }
+
+  .MuiButton-root:hover {
+    background-color: darken($primary-button-color, 3%);
+  }
+}
+
+.menu-list {
+  width: 15rem;
+  background-color: $primary-button-color;
+  border-radius: 4px;
+  color: $primary-color;
+  a {
+    color: $primary-color;
   }
 }

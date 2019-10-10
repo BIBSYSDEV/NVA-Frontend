@@ -1,14 +1,16 @@
+@import './variables.scss';
+
 .search {
   grid-area: search;
   display: grid;
   grid-template-areas: 'search-bar' 'results';
   grid-template-rows: 15rem auto;
-  max-width: 65vw;
   height: 100vh;
 }
 
 .search-bar {
   align-self: center;
+  min-width: 50vw;
   max-width: 65vw;
 
   &__search-container {
@@ -21,7 +23,6 @@
     display: inline-block;
     grid-area: input;
     margin-left: 1rem;
-    width: 35rem;
   }
 
   &__search-button {

@@ -1,20 +1,22 @@
-import React from 'react';
-
 import '../../styles/header.scss';
-import Login from '../login/Login';
-import Menu from './Menu';
-import { Typography } from '@material-ui/core';
+
+import React from 'react';
 import { Link } from 'react-router-dom';
+
+import { Typography } from '@material-ui/core';
+
+import Login from './Login';
 
 const Header: React.FC = () => (
   <div className="header">
     <Link to="/">
       <div className="logo">
-        <Typography variant="h6">NVA</Typography>
+        <Typography variant="h6">
+          <b>NVA</b>
+        </Typography>
       </div>
     </Link>
-    <Login buttonText="login" />
-    <Menu />
+    <Login />
   </div>
 );
 
