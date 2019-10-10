@@ -25,18 +25,18 @@ const Login: React.FC<LoginProps> = ({ buttonText }) => {
   };
 
   return (
-    <div className="login">
+    <div className="auth">
       {user && user.name ? (
         <>
-          <div className="login__username">
+          <div className="auth__username">
             <Typography variant="subtitle1">{user.name}</Typography>
           </div>
-          <div className="login__button">
+          <div className="auth__logout__button">
             <Button onClick={handleLogout}>Logout</Button>
           </div>
         </>
       ) : (
-        <div className="login__button">
+        <div className="auth__login__button">
           <Button onClick={handleLogin}>{buttonText}</Button>
         </div>
       )}

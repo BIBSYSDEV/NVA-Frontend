@@ -1,9 +1,9 @@
 @import './variables.scss';
 
-.login {
+.auth {
   display: grid;
   grid-template-areas: 'username button';
-  grid-area: login;
+  grid-area: auth;
   justify-self: right;
   align-items: center;
 
@@ -12,7 +12,8 @@
     color: $primary-color;
   }
 
-  &__button {
+  &__login__button,
+  &__logout__button {
     grid-area: button;
     border-radius: 4px;
     background-color: white;
