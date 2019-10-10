@@ -1,17 +1,19 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Environment variables
+# Environment variables
 
-We are using environment variables in this project.
-To be able to run this app with mock data, you need to create a .env file containing `REACT_APP_USE_MOCK=true`
-Also add:
-REACT_APP_AWS_COGNITO_IDENTITY_POOL_ID=eu-west-1:XXXXXXXXXXXXXXXXXXXXXXX
-REACT_APP_AWS_REGION=eu-west-1
-REACT_APP_AWS_USER_POOLS_ID=eu-west-1_XXXXXXXXXXXX
-REACT_APP_AWS_USER_POOLS_WEB_CLIENT_ID=XXXXXXXXXXXXXXXXXXXXXXXXx
-REACT_APP_DOMAIN=XXXXXXXXX.auth.eu-west-1.amazoncognito.com
+We are using environment variables in this project.<br>
+To be able to run this app, you need to create a .env file with the following fields:<br>
+`REACT_APP_AWS_COGNITO_IDENTITY_POOL_ID=eu-west-1:XXXXXXXXXXXXXXXXXXXXXXX`<br>
+`REACT_APP_AWS_REGION=eu-west-1`<br>
+`REACT_APP_AWS_USER_POOLS_ID=eu-west-1_XXXXXXXXXXXX`<br>
+`REACT_APP_AWS_USER_POOLS_WEB_CLIENT_ID=XXXXXXXXXXXXXXXXXXXXXXXXX`<br>
+`REACT_APP_DOMAIN=XXXXXXXXX.auth.eu-west-1.amazoncognito.com`<br>
 
-## Available Scripts
+To use mock data, you need to add this variable to the .env file:<br>
+`REACT_APP_USE_MOCK=true`
+
+# Available Scripts
 
 In the project directory, you can run:
 
