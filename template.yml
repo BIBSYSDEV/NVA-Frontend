@@ -1,0 +1,59 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Parameters:
+  NvaFrontendBucketName:
+    Description: Name of S3 bucket for frontend
+    Type: String
+Resources:
+  NvaFrontendBucketPolicy: 
+    Type: AWS::S3::BucketPolicy
+    Properties: 
+      Bucket: 
+        !Ref NvaFrontendBucketName
+      PolicyDocument: 
+        Statement: 
+          Action: 
+            - 's3:GetObject'
+          Effect: 'Allow'
+          Resource: 
+            !Join ['', ['arn:aws:s3:::', !Ref NvaFrontendBucketName, '/*']]
+          Principal: 
+            AWS: !Join ['', ['arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity ', !Ref CloudFrontOriginAccessIdentity]]
+  CloudFrontOriginAccessIdentity:
+      Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
+      Properties:
+        CloudFrontOriginAccessIdentityConfig:
+          Comment: 'Some comment'
+  NvaFrontendBucket:
+    Type: 'AWS::S3::Bucket'
+    Properties:
+      BucketName: !Ref NvaFrontendBucketName
+  NvaCloudFrontDistribution:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        Origins:
+        - DomainName: !Join ['', [!Ref NvaFrontendBucketName, '.s3.amazonaws.com']]
+          Id: !Join ['', ['S3-', !Ref NvaFrontendBucketName]]
+          S3OriginConfig:
+            OriginAccessIdentity:  !Join [ "", [ "origin-access-identity/cloudfront/", !Ref CloudFrontOriginAccessIdentity]]
+        Enabled: true
+        Comment: Some comment
+        DefaultRootObject: index.html
+        DefaultCacheBehavior:
+          AllowedMethods:
+          - GET
+          - HEAD
+          TargetOriginId: 
+            !Join ['', ['S3-', !Ref NvaFrontendBucketName]]
+          ForwardedValues:
+            QueryString: false
+            Cookies:
+              Forward: none
+          ViewerProtocolPolicy: allow-all
+        PriceClass: PriceClass_200
+        Restrictions:
+          GeoRestriction:
+            RestrictionType:
+              none
+        ViewerCertificate:
+          CloudFrontDefaultCertificate: true
