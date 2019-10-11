@@ -55,14 +55,6 @@ const Menu: React.FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
           <MenuItem
             onClick={() => {
               handleClose();
-              history.push('/');
-            }}>
-            {t('Dashboard')}
-          </MenuItem>
-
-          <MenuItem
-            onClick={() => {
-              handleClose();
               history.push('/user');
             }}>
             {t('My profile')}

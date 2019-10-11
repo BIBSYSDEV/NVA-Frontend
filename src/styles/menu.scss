@@ -20,3 +20,15 @@
   border-radius: 4px;
   color: $primary-color;
 }
+
+@media only screen and (max-width: 600px) {
+  .menu {
+    .MuiButton-root {
+      width: 10rem;
+    }
+  }
+
+  .menu-list {
+    width: 10rem;
+  }
+}
