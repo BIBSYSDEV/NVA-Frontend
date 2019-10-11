@@ -1,22 +1,17 @@
-@import './variables.scss';
+@import './colors.scss';
 
 .auth {
-  display: grid;
-  grid-template-areas: 'username button';
   grid-area: auth;
   justify-self: right;
   align-items: center;
 
-  &__username {
-    grid-area: username;
+  .MuiButton-root {
+    width: 8rem;
+    background-color: $primary-button-color;
     color: $primary-color;
   }
 
-  &__login__button,
-  &__logout__button {
-    grid-area: button;
-    border-radius: 4px;
-    background-color: white;
-    margin-left: 1rem;
+  .MuiButton-root:hover {
+    background-color: darken($primary-button-color, 3%);
   }
 }

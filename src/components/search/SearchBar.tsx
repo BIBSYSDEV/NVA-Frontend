@@ -3,6 +3,7 @@ import '../../styles/search.scss';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router';
 
 import SearchIcon from '@material-ui/icons/Search';
 
@@ -11,13 +12,10 @@ import IconButton from '../IconButton';
 import InputBase from '../InputBase';
 import Paper from '../Paper';
 
-export interface SearchBarProps {
-  history: any;
-}
-
-const SearchBar: React.FC<SearchBarProps> = ({ history }) => {
+const SearchBar: React.FC = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const handleSearch = () => {
     dispatch(getResources());

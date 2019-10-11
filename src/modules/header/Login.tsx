@@ -1,20 +1,19 @@
 import '../../styles/login.scss';
 
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Button, Typography } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 
 import { login, logout } from '../../api/user';
 import { RootStore } from '../../reducers/rootReducer';
+import Menu from './Menu';
 
-interface LoginProps {
-  buttonText: string;
-}
-
-const Login: React.FC<LoginProps> = ({ buttonText }) => {
+const Login: React.FC = () => {
   const user = useSelector((state: RootStore) => state.user);
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const handleLogin = () => {
     dispatch(login());
@@ -27,18 +26,11 @@ const Login: React.FC<LoginProps> = ({ buttonText }) => {
   return (
     <div className="auth">
       {user && user.name ? (
-        <>
-          <div className="auth__username">
-            <Typography variant="subtitle1">{user.name}</Typography>
-          </div>
-          <div className="auth__logout__button">
-            <Button onClick={handleLogout}>Logout</Button>
-          </div>
-        </>
+        <Menu menuButtonLabel={user.name} handleLogout={handleLogout} />
       ) : (
-        <div className="auth__login__button">
-          <Button onClick={handleLogin}>{buttonText}</Button>
-        </div>
+        <Button onClick={handleLogin} data-cy="login-button">
+          {t('Login')}
+        </Button>
       )}
     </div>
   );

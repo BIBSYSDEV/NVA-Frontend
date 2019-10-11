@@ -1,12 +1,34 @@
-@import './variables.scss';
+@import './colors.scss';
 
 .menu {
   grid-area: menu;
-  justify-self: left;
 
-  &__button {
-    border-radius: 4px;
-    background-color: white;
-    color: white;
+  .MuiButton-root {
+    width: 15rem;
+    background-color: $primary-button-color;
+    color: $primary-color;
+  }
+
+  .MuiButton-root:hover {
+    background-color: darken($primary-button-color, 3%);
+  }
+}
+
+.menu-list {
+  width: 15rem;
+  background-color: $primary-button-color;
+  border-radius: 4px;
+  color: $primary-color;
+}
+
+@media only screen and (max-width: 600px) {
+  .menu {
+    .MuiButton-root {
+      width: 10rem;
+    }
+  }
+
+  .menu-list {
+    width: 10rem;
   }
 }
