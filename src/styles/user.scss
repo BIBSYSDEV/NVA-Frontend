@@ -13,6 +13,7 @@
     grid-area: secondary-info;
     grid-template-areas: 'profile-image' 'contact-info' 'language' 'author-info';
     grid-row-gap: 3rem;
+    min-width: 20rem;
   }
 
   .primary-info {
@@ -24,6 +25,17 @@
   .card {
     background-color: $box-color;
     padding: 2rem;
+
+    &__header {
+      font-size: 1.5rem;
+      font-weight: bold;
+      padding-bottom: 0.5rem;
+    }
+
+    &__sub-header {
+      font-size: 1.3rem;
+      padding-bottom: 1.5rem;
+    }
   }
 
   &__profile-image {
@@ -36,7 +48,12 @@
   }
 
   &__language {
-    height: 10rem;
+    padding: 0;
+    .MuiFormControl-root {
+      padding-top: 1rem;
+      width: -webkit-fill-available;
+      max-width: 15rem;
+    }
   }
 
   &__author-info {
@@ -48,6 +65,9 @@
     .label {
       display: inline-block;
       width: 10rem;
+    }
+    .line {
+      padding-bottom: 0.5rem;
     }
     .value {
       display: inline-block;

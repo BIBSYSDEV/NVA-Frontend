@@ -1,16 +1,28 @@
-import { Button, Typography } from '@material-ui/core';
-import React from 'react';
-import { useTranslation } from 'react-i18next';
 import '../../styles/user.scss';
-import { Language } from '../../types/settings.types';
+
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
+
+import { FormControl, MenuItem, Select } from '@material-ui/core';
+
 import { RootStore } from '../../reducers/rootReducer';
+import { defaultLanguage, languages } from '../../translations/i18n';
+import LabelTextLine from './LabelTextLine';
 import UserCard from './UserCard';
 
 const User: React.FC = () => {
   const { t, i18n } = useTranslation();
 
   const user = useSelector((state: RootStore) => state.user);
+
+  const [languageSelected, setLanguageSelected] = useState(defaultLanguage);
+
+  const handleLanguageChange = (event: React.ChangeEvent<any>) => {
+    const language = event.target.value;
+    setLanguageSelected(language);
+    i18n.changeLanguage(language);
+  };
 
   return (
     <div className="user">
@@ -20,8 +32,15 @@ const User: React.FC = () => {
         <UserCard headerLabel={t('Contact')} className="user__contact-info"></UserCard>
 
         <UserCard headerLabel={t('Language')} className="user__language">
-          <Button onClick={() => i18n.changeLanguage(Language.NORWEGIAN_BOKMAL)}>Skifte til norsk språk</Button>
-          <Button onClick={() => i18n.changeLanguage(Language.ENGLISH)}>Change language to english</Button>
+          <FormControl variant="outlined">
+            <Select value={languageSelected} onChange={handleLanguageChange}>
+              {languages.map(language => (
+                <MenuItem value={language.code} key={language.code}>
+                  {language.name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
         </UserCard>
 
         <UserCard headerLabel={t('Author information')} className="user__author-info" />
@@ -32,32 +51,14 @@ const User: React.FC = () => {
           headerLabel={t('User information')}
           subHeaderLabel={t('Info from Feide')}
           className="user__feide-info">
-          <p>
-            <div className="label">{t('Name')}:</div>
-            <div className="value">{user.name}</div>
-          </p>
-          <p>
-            <div className="label">{t('ID')}:</div>
-            <div className="value">{user.id}</div>
-          </p>
-          <p>
-            <div className="label">{t('Email')}:</div>
-            <div className="value">{user.email}</div>
-          </p>
-          <p>
-            <div className="label">{t('Institution')}:</div>
-            <div className="value">{user.institution}</div>
-          </p>
+          <LabelTextLine label={t('Name')} textValue={user.name} />
+          <LabelTextLine label={t('ID')} textValue={user.id} />
+          <LabelTextLine label={t('Email')} textValue={user.email} />
+          <LabelTextLine label={t('Institution')} textValue={user.institution} />
         </UserCard>
-        <div className="user__roles box">
-          <h2>{t('Roles')}</h2>
-        </div>
-        <div className="user__organizations box">
-          <h2>{t('Organizations')}</h2>
-        </div>
-        <div className="user__orcid-info box">
-          <h2>{t('ORCID')}</h2>
-        </div>
+        <UserCard headerLabel={t('Roles')} className="user__roles" />
+        <UserCard headerLabel={t('Organizations')} className="user__organizations" />
+        <UserCard headerLabel={t('ORCID')} className="user__orcid-info" />
       </div>
     </div>
   );
