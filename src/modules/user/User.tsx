@@ -9,12 +9,20 @@ const User: React.FC = () => {
 
   return (
     <div className="user">
-      {t('My profile')}
-      <div>
-        <Button onClick={() => i18n.changeLanguage(Language.NORWEGIAN_BOKMAL)}>Skifte til norsk språk</Button>
+      <div className="secondary-info">
+        <div className="user__profile-image box">Bilde</div>
+        <div className="user__contact-info  box">Kontakt</div>
+        <div className="user__language  box">
+          <Button onClick={() => i18n.changeLanguage(Language.NORWEGIAN_BOKMAL)}>Skifte til norsk språk</Button>
+          <Button onClick={() => i18n.changeLanguage(Language.ENGLISH)}>Change language to english</Button>
+        </div>
+        <div className="user__author-info box">Forfatter-info</div>
       </div>
-      <div>
-        <Button onClick={() => i18n.changeLanguage(Language.ENGLISH)}>Change language to english</Button>
+      <div className="primary-info">
+        <div className="user__feide-info box">Feide-info</div>
+        <div className="user__roles box">Roller</div>
+        <div className="user__organizations box">Tilhørighet</div>
+        <div className="user__orcid-info box">Orcid</div>
       </div>
     </div>
   );
