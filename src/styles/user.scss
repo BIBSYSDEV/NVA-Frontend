@@ -5,6 +5,8 @@
   grid-template-areas: 'secondary-info primary-info';
   grid-template-columns: 1fr 3fr;
   grid-gap: 3rem;
+  font-size: 1rem;
+  padding: 2rem;
 
   .secondary-info {
     display: grid;
@@ -21,10 +23,12 @@
 
   .box {
     background-color: $box-color;
+    padding: 2rem;
   }
 
   &__profile-image {
     height: 10rem;
+    border-radius: 50%;
   }
 
   &__contact-info {
@@ -40,7 +44,16 @@
   }
 
   &__feide-info {
-    height: 10rem;
+    display: block;
+    .label {
+      display: inline-block;
+      width: 10rem;
+    }
+    .value {
+      display: inline-block;
+      width: 20rem;
+      font-weight: bold;
+    }
   }
 
   &__roles {
