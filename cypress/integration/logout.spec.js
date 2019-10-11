@@ -9,8 +9,6 @@ describe('A user logs out from NVA application', () => {
   });
   it('Then they are logged out of the NVA application', () => {
     cy.get('[data-cy=login-button]').should('be.visible');
-    cy.get('[data-cy=menu]')
-      .contains('Test User')
-      .should('not.exist');
+    cy.get('[data-cy=menu]').should('not.exist');
   });
 });
