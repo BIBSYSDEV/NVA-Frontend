@@ -25,8 +25,8 @@ export const getCurrentAuthenticatedUser = () => {
     } else {
       try {
         const cognitoUser = await Auth.currentAuthenticatedUser();
-        const { name, email } = await cognitoUser.attributes;
-        dispatch(setUserAction({ name, email }));
+        const user = await cognitoUser.attributes;
+        dispatch(setUserAction(user));
         dispatch(refreshToken());
       } catch (e) {
         dispatch(setUserAction(emptyUser));

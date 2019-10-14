@@ -1,17 +1,36 @@
 {
+  "Applications": "Applications",
+  "Author information": "Author information",
+  "Contact": "Contact",
   "Create": "Create",
+  "Curator": "Curator",
   "Dashboard": "Dashboard",
   "Email": "Email",
+  "Id": "ID",
+  "Info from Feide": "Info retrieved from Feide",
+  "Info from NVA": "Info retrieved from NVA",
+  "Institution": "Institution",
   "Invalid email": "Invalid email",
+  "Language": "Language",
   "Login": "Log in",
   "Logout": "Log out",
   "Menu": "Menu",
   "My profile": "My profile",
+  "Name": "Name",
   "New resource": "New resource",
+  "ORCID": "ORCID",
+  "Organizations": "Organizations",
   "Password": "Password",
+  "Publisher": "Publisher",
   "Register new resource": "Register new resource",
+  "Required field": "Required field",
   "Reset": "Reset",
   "Results": "Results",
+  "RoleDescription": {
+    "Curator": "Kurator er tilgangen alle som kan godkjenne og publisere for andre har",
+    "Publisher": "Utgiver er den tilgangen ansatte på institusjonen har. Gir tilgang til å registrere egne publikasjoner"
+  },
+  "Roles": "Roles",
   "Search": "Search",
-  "Required field": "Required field"
+  "User information": "User information"
 }

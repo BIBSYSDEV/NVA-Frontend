@@ -8,6 +8,7 @@
     "@material-ui/icons": "^4.4.1",
     "@types/react-router": "^5.1.1",
     "aws-amplify": "^1.1.40",
+    "classnames": "^2.2.6",
     "cypress": "^3.4.1",
     "formik": "^1.5.8",
     "formik-material-ui": "0.0.22",
@@ -62,6 +63,7 @@
     ]
   },
   "devDependencies": {
+    "@types/classnames": "^2.2.9",
     "@types/fetch-mock": "^7.3.1",
     "@types/jest": "24.0.18",
     "@types/material-ui": "^0.21.7",

@@ -1,20 +1,34 @@
-import { Button } from '@material-ui/core';
+import '../../styles/user.scss';
+
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import '../../styles/user.scss';
-import { Language } from '../../types/settings.types';
+import { useSelector } from 'react-redux';
+
+import { RootStore } from '../../reducers/rootReducer';
+import UserCard from './UserCard';
+import UserInfo from './UserInfo';
+import UserLanguage from './UserLanguage';
+import UserRoles from './UserRoles';
 
 const User: React.FC = () => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
+
+  const user = useSelector((state: RootStore) => state.user);
 
   return (
     <div className="user">
-      {t('My profile')}
-      <div>
-        <Button onClick={() => i18n.changeLanguage(Language.NORWEGIAN_BOKMAL)}>Skifte til norsk språk</Button>
+      <div className="secondary-info">
+        <UserCard headerLabel="Bilde" className="user__profile-image" />
+        <UserCard headerLabel={t('Contact')} className="user__contact-info" />
+        <UserLanguage />
+        <UserCard headerLabel={t('Author information')} className="user__author-info" />
       </div>
-      <div>
-        <Button onClick={() => i18n.changeLanguage(Language.ENGLISH)}>Change language to english</Button>
+
+      <div className="primary-info">
+        <UserInfo user={user} />
+        <UserRoles user={user} />
+        <UserCard headerLabel={t('Organizations')} className="user__organizations" />
+        <UserCard headerLabel={t('ORCID')} className="user__orcid-info" />
       </div>
     </div>
   );
