@@ -1,0 +1,34 @@
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+
+import { FormControl, MenuItem, Select } from '@material-ui/core';
+
+import i18n, { defaultLanguage, languages } from '../../translations/i18n';
+import UserCard from './UserCard';
+
+const UserLanguage: React.FC = () => {
+  const [languageSelected, setLanguageSelected] = useState(defaultLanguage);
+  const { t } = useTranslation();
+
+  const handleLanguageChange = (event: React.ChangeEvent<any>) => {
+    const language = event.target.value;
+    setLanguageSelected(language);
+    i18n.changeLanguage(language);
+  };
+
+  return (
+    <UserCard headerLabel={t('Language')} className="user__language">
+      <FormControl variant="outlined">
+        <Select value={languageSelected} onChange={handleLanguageChange}>
+          {languages.map(language => (
+            <MenuItem value={language.code} key={language.code}>
+              {language.name}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+    </UserCard>
+  );
+};
+
+export default UserLanguage;

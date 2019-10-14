@@ -20,7 +20,6 @@ i18n.use(LanguageDetector).init({
   debug: true,
   ns: ['translations'],
   defaultNS: 'translations',
-  keySeparator: false,
   interpolation: {
     formatSeparator: ',',
   },

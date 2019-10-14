@@ -39,8 +39,7 @@
   }
 
   &__profile-image {
-    height: 10rem;
-    border-radius: 50%;
+    height: 14rem;
   }
 
   &__contact-info {
@@ -64,19 +63,19 @@
   &__feide-info {
     display: block;
 
-    .label {
-      display: inline-block;
-      width: 10rem;
-    }
-
     .line {
       padding-bottom: 0.5rem;
-    }
 
-    .value {
-      display: inline-block;
-      width: 20rem;
-      font-weight: bold;
+      .label {
+        display: inline-block;
+        width: 10rem;
+      }
+
+      .text {
+        display: inline-block;
+        width: 20rem;
+        font-weight: bold;
+      }
     }
   }
 
@@ -93,9 +92,9 @@
       display: flex;
       border-bottom: 1px solid $secondary-color;
 
-      .icon {
+      .MuiIcon-root {
         display: inline-block;
-        width: 2rem;
+        width: 3rem;
       }
 
       .label {
@@ -104,7 +103,7 @@
         width: 6rem;
       }
 
-      .value {
+      .text {
         display: inline-block;
         width: 20rem;
       }

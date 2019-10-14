@@ -1,18 +1,16 @@
-import '../../styles/user.scss';
-
 import React from 'react';
 
 export interface LabelTextLineProps {
   label: string;
-  textValue: string;
+  text: string;
   dataCy?: string;
 }
 
-const LabelTextLine: React.FC<LabelTextLineProps> = ({ label, textValue, dataCy }) => (
+const LabelTextLine: React.FC<LabelTextLineProps> = ({ label, text, dataCy }) => (
   <div className="line">
     <div className="label">{label}:</div>
-    <div className="value" data-cy={dataCy}>
-      {textValue}
+    <div className="text" data-cy={dataCy}>
+      {text}
     </div>
   </div>
 );
