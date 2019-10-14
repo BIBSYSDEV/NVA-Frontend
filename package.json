@@ -32,7 +32,7 @@
     "build": "react-scripts build",
     "test:cypress": "REACT_APP_USE_MOCK=true start-server-and-test http://localhost:3000",
     "test": "cypress run",
-    "deploy": "aws s3 sync build/ s3://nva-frontend-test",
+    "deploy": "aws s3 sync build/ s3://stack-to-bucket",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
