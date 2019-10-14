@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import { Resource } from '../types/resource.types';
+import { SearchResults } from '../types/search.types';
 import User from '../types/user.types';
 import { errorReducer } from './errorReducer';
 import { resourceReducer } from './resourceReducer';
@@ -8,8 +8,8 @@ import { userReducer } from './userReducer';
 
 export interface RootStore {
   error: string | null;
-  resources: Resource[];
+  results: SearchResults;
   user: User;
 }
 
-export default combineReducers({ user: userReducer, resources: resourceReducer, error: errorReducer });
+export default combineReducers({ user: userReducer, results: resourceReducer, error: errorReducer });

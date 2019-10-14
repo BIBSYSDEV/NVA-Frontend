@@ -10,13 +10,16 @@ import { Resource } from '../../types/resource.types';
 
 export interface SearchResultsProps {
   resources: Resource[];
+  searchTerm: string;
 }
 
-const SearchResults: React.FC<SearchResultsProps> = ({ resources }) => {
+const SearchResults: React.FC<SearchResultsProps> = ({ resources, searchTerm }) => {
   const { t } = useTranslation();
+
+  const numberOfResults: number = resources.length;
   return (
     <div className="search-results">
-      {t('Results')}
+      {t('Results', { count: numberOfResults, term: searchTerm })}
       <List>
         {resources &&
           resources.map(resource => (

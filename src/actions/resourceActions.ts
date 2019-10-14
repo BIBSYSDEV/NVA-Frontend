@@ -1,15 +1,17 @@
 import { Resource } from '../types/resource.types';
 
-export const FETCH_RESOURCES = 'fetch resources';
+export const SEARCH_FOR_RESOURCES = 'search for resources';
 
-export const fetchResources = (resources: Resource[]) => ({
-  type: FETCH_RESOURCES,
+export const searchForResources = (resources: Resource[], searchTerm: string) => ({
+  type: SEARCH_FOR_RESOURCES,
   resources,
+  searchTerm,
 });
 
-export interface FetchResourcesAction {
-  type: typeof FETCH_RESOURCES;
+export interface SearchForResourcesAction {
+  type: typeof SEARCH_FOR_RESOURCES;
   resources: Resource[];
+  searchTerm: string;
 }
 
-export type ResourceActions = FetchResourcesAction;
+export type ResourceActions = SearchForResourcesAction;

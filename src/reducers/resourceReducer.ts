@@ -1,10 +1,13 @@
-import { FETCH_RESOURCES, ResourceActions } from '../actions/resourceActions';
-import { Resource } from '../types/resource.types';
+import { ResourceActions, SEARCH_FOR_RESOURCES } from '../actions/resourceActions';
+import { emptySearchResults, SearchResults } from '../types/search.types';
 
-export const resourceReducer = (state: Resource[] = [], action: ResourceActions) => {
+export const resourceReducer = (state: SearchResults = emptySearchResults, action: ResourceActions) => {
   switch (action.type) {
-    case FETCH_RESOURCES:
-      return [...action.resources];
+    case SEARCH_FOR_RESOURCES:
+      return {
+        resources: [...action.resources],
+        searchTerm: action.searchTerm,
+      };
     default:
       return state;
   }

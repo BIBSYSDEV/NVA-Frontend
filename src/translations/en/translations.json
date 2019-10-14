@@ -25,7 +25,8 @@
   "Register new resource": "Register new resource",
   "Required field": "Required field",
   "Reset": "Reset",
-  "Results": "Results",
+  "Results": "{{count}} result for {{term}}",
+  "Results_plural": "{{count}} results for {{term}}",
   "RoleDescription": {
     "Curator": "Kurator er tilgangen alle som kan godkjenne og publisere for andre har",
     "Publisher": "Utgiver er den tilgangen ansatte på institusjonen har. Gir tilgang til å registrere egne publikasjoner"
