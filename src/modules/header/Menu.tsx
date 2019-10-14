@@ -53,6 +53,7 @@ const Menu: React.FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
         }}>
         <div className="menu-list">
           <MenuItem
+            data-cy="user-profile-button"
             onClick={() => {
               handleClose();
               history.push('/user');

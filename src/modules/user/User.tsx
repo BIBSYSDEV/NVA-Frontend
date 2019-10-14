@@ -51,10 +51,10 @@ const User: React.FC = () => {
           headerLabel={t('User information')}
           subHeaderLabel={t('Info from Feide')}
           className="user__feide-info">
-          <LabelTextLine label={t('Name')} textValue={user.name} />
-          <LabelTextLine label={t('ID')} textValue={user.id} />
-          <LabelTextLine label={t('Email')} textValue={user.email} />
-          <LabelTextLine label={t('Institution')} textValue={user.institution} />
+          <LabelTextLine dataCy="user-name" label={t('Name')} textValue={user.name} />
+          <LabelTextLine dataCy="user-id" label={t('ID')} textValue={user.id} />
+          <LabelTextLine dataCy="user-email" label={t('Email')} textValue={user.email} />
+          <LabelTextLine dataCy="user-institution" label={t('Institution')} textValue={user.institution} />
         </UserCard>
         <UserCard headerLabel={t('Roles')} className="user__roles" />
         <UserCard headerLabel={t('Organizations')} className="user__organizations" />
