@@ -4,5 +4,6 @@
   "email": "testuser@unit.no",
   "name": "Test User",
   "institution": "unit",
-  "roles": ["Publisher", "Curator"]
+  "roles": ["Publisher", "Curator"],
+  "applications": ["NVA", "DLR"]
 }

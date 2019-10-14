@@ -3,6 +3,12 @@ export enum RoleName {
   CURATOR = 'Curator',
 }
 
+export enum ApplicationName {
+  NVA = 'NVA',
+  DLR = 'DLR',
+  BIRD = 'BIRD',
+}
+
 export interface Role {
   name: RoleName;
   description: string;
@@ -14,6 +20,7 @@ export default interface User {
   id: string;
   institution: string;
   roles: RoleName[];
+  applications: ApplicationName[];
 }
 
 export const emptyUser: User = {
@@ -22,4 +29,5 @@ export const emptyUser: User = {
   id: '',
   institution: '',
   roles: [],
+  applications: [],
 };

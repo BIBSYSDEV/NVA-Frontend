@@ -1,6 +1,6 @@
 import '../../styles/user.scss';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 
@@ -19,6 +19,11 @@ const User: React.FC = () => {
   const user = useSelector((state: RootStore) => state.user);
 
   const [languageSelected, setLanguageSelected] = useState(defaultLanguage);
+  const [applications, setApplications] = useState('');
+
+  useEffect(() => {
+    user.applications.length > 0 && setApplications(user.applications.join(', '));
+  }, [user]);
 
   const handleLanguageChange = (event: React.ChangeEvent<any>) => {
     const language = event.target.value;
@@ -57,6 +62,7 @@ const User: React.FC = () => {
           <LabelTextLine dataCy="user-id" label={t('ID')} textValue={user.id} />
           <LabelTextLine dataCy="user-email" label={t('Email')} textValue={user.email} />
           <LabelTextLine dataCy="user-institution" label={t('Institution')} textValue={user.institution} />
+          <LabelTextLine dataCy="user-applications" label={t('Applications')} textValue={applications} />
         </UserCard>
         <UserCard headerLabel={t('Roles')} subHeaderLabel={t('Info from NVA')} className="user__roles">
           {user &&
