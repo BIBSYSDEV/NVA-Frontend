@@ -14,5 +14,6 @@ describe('A user logs in with Feide', () => {
     cy.get('[data-cy=user-id]').contains('testuser@unit.no');
     cy.get('[data-cy=user-email]').contains('testuser@unit.no');
     cy.get('[data-cy=user-institution]').contains('unit');
+    cy.get('[data-cy=user-role]').contains('Publisher');
   });
 });

@@ -10,6 +10,8 @@ import { RootStore } from '../../reducers/rootReducer';
 import { defaultLanguage, languages } from '../../translations/i18n';
 import LabelTextLine from './LabelTextLine';
 import UserCard from './UserCard';
+import { RoleName } from '../../types/user.types';
+import IconLabelTextLine from './IconLabelTextLine';
 
 const User: React.FC = () => {
   const { t, i18n } = useTranslation();
@@ -56,7 +58,11 @@ const User: React.FC = () => {
           <LabelTextLine dataCy="user-email" label={t('Email')} textValue={user.email} />
           <LabelTextLine dataCy="user-institution" label={t('Institution')} textValue={user.institution} />
         </UserCard>
-        <UserCard headerLabel={t('Roles')} className="user__roles" />
+        <UserCard headerLabel={t('Roles')} subHeaderLabel={t('Info from NVA')} className="user__roles">
+          {user &&
+            user.roles &&
+            user.roles.map((role: RoleName) => <IconLabelTextLine dataCy="user-role" role={role} key={role} />)}
+        </UserCard>
         <UserCard headerLabel={t('Organizations')} className="user__organizations" />
         <UserCard headerLabel={t('ORCID')} className="user__orcid-info" />
       </div>

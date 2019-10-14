@@ -49,6 +49,7 @@
 
   &__language {
     padding: 0;
+
     .MuiFormControl-root {
       padding-top: 1rem;
       width: -webkit-fill-available;
@@ -62,13 +63,16 @@
 
   &__feide-info {
     display: block;
+
     .label {
       display: inline-block;
       width: 10rem;
     }
+
     .line {
       padding-bottom: 0.5rem;
     }
+
     .value {
       display: inline-block;
       width: 20rem;
@@ -77,7 +81,34 @@
   }
 
   &__roles {
-    height: 10rem;
+    display: block;
+
+    .line:first-of-type {
+      border-top: 1px solid $secondary-color;
+    }
+
+    .line {
+      padding-bottom: 0.8rem;
+      padding-top: 0.8rem;
+      display: flex;
+      border-bottom: 1px solid $secondary-color;
+
+      .icon {
+        display: inline-block;
+        width: 2rem;
+      }
+
+      .label {
+        display: inline-block;
+        font-weight: bold;
+        width: 6rem;
+      }
+
+      .value {
+        display: inline-block;
+        width: 20rem;
+      }
+    }
   }
 
   &__organizations {

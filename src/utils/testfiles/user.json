@@ -3,5 +3,6 @@
   "issuer": "feide",
   "email": "testuser@unit.no",
   "name": "Test User",
-  "institution": "unit"
+  "institution": "unit",
+  "roles": ["Publisher", "Curator"]
 }
