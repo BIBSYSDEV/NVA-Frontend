@@ -15,11 +15,7 @@ const Search: React.FC = () => {
     <div className="search">
       <div className="search-container">
         <SearchBar />
-        {resources && resources.length > 0 && (
-          <>
-            <SearchResults resources={resources} searchTerm={searchTerm} />
-          </>
-        )}
+        {resources && resources.length > 0 && <SearchResults resources={resources} searchTerm={searchTerm} />}
       </div>
       <div className="filter-container">filter</div>
     </div>
