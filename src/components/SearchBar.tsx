@@ -37,7 +37,6 @@ const SearchBar: React.FC = () => {
       <Paper>
         <form className="search-bar__search-container" onSubmit={handleSubmit}>
           <InputBase
-            autoFocus
             data-cy="search-input"
             className="search-bar__input"
             placeholder={t('Search')}
