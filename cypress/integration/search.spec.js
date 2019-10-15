@@ -13,7 +13,9 @@ describe('A user searches for a resource', () => {
     cy.get('[data-cy=search-input] .MuiInputBase-input').type('Norway');
   });
   it('And clicks Search', () => {
-    cy.get('[data-cy=search-button]').click();
+    cy.get('[data-cy=search-button]')
+      .focus()
+      .click();
   });
   it('Then the user sees hits for Norway displayed in the search display', () => {
     cy.get('[data-cy=search-results]')
