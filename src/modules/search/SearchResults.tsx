@@ -18,7 +18,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ resources, searchTerm }) 
 
   const numberOfResults: number = resources.length;
   return (
-    <div className="search-results">
+    <div className="search-results" data-cy="search-results">
       {t('Results', { count: numberOfResults, term: searchTerm })}
       <List>
         {resources &&
@@ -28,6 +28,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ resources, searchTerm }) 
                 <ImageIcon />
               </ListItemIcon>
               <ListItemText
+                data-cy="result-list-item"
                 primary={resource.title}
                 secondary={
                   <React.Fragment>

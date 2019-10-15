@@ -3,7 +3,7 @@ import '../../styles/search.scss';
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import SearchBar from '../../components/search/SearchBar';
+import SearchBar from '../../components/SearchBar';
 import { RootStore } from '../../reducers/rootReducer';
 import SearchResults from './SearchResults';
 

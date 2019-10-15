@@ -1,6 +1,6 @@
 [
   {
-    "identifier": "d68e8a2e-7d0d-4782-aa41-e492ad2da03e",
+    "identifier": "d68e8a2e-7g0d-4782-aa41-e492ad2da03e",
     "access": "private",
     "content": "IMAG5099.jpg",
     "content_type": "file",
@@ -10,11 +10,11 @@
     "submitter_email": "test@unit.no",
     "time_created": "2019-01-29T13:32:06.066+01:00",
     "time_published": "2019-01-29T13:32:30.567+01:00",
-    "title": "DLR releaseparty",
+    "title": "DLR releaseparty in Norway",
     "type": "Image"
   },
   {
-    "identifier": "d68e8a2e-7d0d-4782-aa41-e492a11da03e",
+    "identifier": "d68e8a2e-7d0d-4782-aa41-e49ba11da03e",
     "access": "public",
     "content": "IMAG5099.jpg",
     "content_type": "file",
@@ -24,11 +24,11 @@
     "submitter_email": "test@unit.no",
     "time_created": "2019-01-29T13:32:06.066+01:00",
     "time_published": "2019-01-29T13:32:30.567+01:00",
-    "title": "Hva er egentlig en fil?",
+    "title": "Hva er egentlig en Norway-fil?",
     "type": "Image"
   },
   {
-    "identifier": "d68e8a2e-7d0d-4782-aa41-e492a22da03e",
+    "identifier": "d68e8a2e-7d0d-4782-aa41-e492aa2da03e",
     "access": "private",
     "content": "IMAG5099.jpg",
     "content_type": "file",
@@ -38,7 +38,7 @@
     "submitter_email": "test@unit.no",
     "time_created": "2019-01-29T13:32:06.066+01:00",
     "time_published": "2019-01-29T13:32:30.567+01:00",
-    "title": "Komponenter: en avhandling",
+    "title": "Komponenter: en avhandling om Norway",
     "type": "Image"
   }
 ]

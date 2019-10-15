@@ -1,16 +1,14 @@
-import '../../styles/search.scss';
+import '../styles/search.scss';
 
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 
-import { InputBase } from '@material-ui/core';
+import { IconButton, InputBase, Paper } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 
-import { search } from '../../api/resource';
-import IconButton from '../IconButton';
-import Paper from '../Paper';
+import { search } from '../api/resource';
 
 const SearchBar: React.FC = () => {
   const { t } = useTranslation();
@@ -19,8 +17,10 @@ const SearchBar: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
 
   const handleSearch = () => {
-    dispatch(search(searchTerm));
-    history.push(`/Search/${searchTerm}`);
+    if (searchTerm.length > 0) {
+      dispatch(search(searchTerm));
+      history.push(`/Search/${searchTerm}`);
+    }
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -36,8 +36,14 @@ const SearchBar: React.FC = () => {
     <div className="search-bar">
       <Paper>
         <form className="search-bar__search-container" onSubmit={handleSubmit}>
-          <InputBase autoFocus className="search-bar__input" placeholder={t('Search')} onChange={handleChange} />
-          <IconButton className="search-bar__search-button" onClick={handleSearch}>
+          <InputBase
+            autoFocus
+            data-cy="search-input"
+            className="search-bar__input"
+            placeholder={t('Search')}
+            onChange={handleChange}
+          />
+          <IconButton data-cy="search-button" className="search-bar__search-button" onClick={handleSearch}>
             <SearchIcon />
           </IconButton>
         </form>
