@@ -9,7 +9,7 @@
     "@types/react-router": "^5.1.1",
     "aws-amplify": "^1.1.40",
     "classnames": "^2.2.6",
-    "cypress": "^3.4.1",
+    "cypress": "3.3.2",
     "formik": "^1.5.8",
     "formik-material-ui": "0.0.22",
     "i18next": "^17.0.16",
