@@ -36,7 +36,7 @@ const SearchBar: React.FC = () => {
     <div className="search-bar">
       <Paper>
         <form className="search-bar__search-container" onSubmit={handleSubmit}>
-          <InputBase className="search-bar__input" placeholder={t('Search')} onChange={handleChange} />
+          <InputBase autoFocus className="search-bar__input" placeholder={t('Search')} onChange={handleChange} />
           <IconButton className="search-bar__search-button" onClick={handleSearch}>
             <SearchIcon />
           </IconButton>
