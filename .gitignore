@@ -29,8 +29,3 @@ yarn-error.log*
 
 # vscode
 .vscode
-
-# cypress
-cypress/screenshots
-cypress/videos
-cypress/support
