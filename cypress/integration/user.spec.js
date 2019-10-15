@@ -7,7 +7,7 @@ describe('A user logs in and views their user details', () => {
     cy.get('[data-cy=menu]').click();
   });
   it('And they select Profile', () => {
-    cy.get('[data-cy=user-profile-button]').click();
+    cy.get('[data-cy=user-profile-button]').click({ force: true });
   });
   it('Then they see their details', () => {
     cy.get('[data-cy=user-name]').contains('Test User');
