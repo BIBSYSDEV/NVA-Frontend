@@ -3,15 +3,32 @@
 .search {
   grid-area: search;
   display: grid;
-  grid-template-areas: 'search-bar' 'results';
-  grid-template-rows: 15rem auto;
+  grid-template-areas: 'filter-container search-container';
+  grid-template-columns: 10rem auto;
   height: 100vh;
+  width: 100vw;
+  justify-items: center;
+  padding-top: 5rem;
+}
+
+.filter-container {
+  grid-area: filter-container;
+}
+
+.search-container {
+  grid-area: search-container;
 }
 
 .search-bar {
+  grid-area: search-bar;
   align-self: center;
   min-width: 50vw;
   max-width: 65vw;
+  padding-bottom: 3rem;
+
+  .MuiInputBase-root {
+    min-width: 50vw;
+  }
 
   &__search-container {
     display: grid;

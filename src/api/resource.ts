@@ -1,12 +1,13 @@
 import { Dispatch } from 'redux';
 
 import { useMockData } from '../utils/constants';
-import { mockGetResources } from './mock-api';
+import { mockSearch } from './mock-api';
 
-export const getResources = () => {
+export const search = (searchTerm: string) => {
   return async (dispatch: Dispatch) => {
+    // make api call to search endpoint
     if (useMockData) {
-      mockGetResources(dispatch);
+      mockSearch(dispatch, searchTerm);
     }
   };
 };

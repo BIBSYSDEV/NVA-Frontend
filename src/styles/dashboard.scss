@@ -5,10 +5,14 @@
   height: 85vh;
   color: $secondary-color;
   display: grid;
-  grid-template-areas: 'search' 'other-content';
+  grid-template-areas: 'search-bar' 'other-content';
   grid-template-rows: 15rem auto;
   justify-items: center;
   align-items: center;
+}
+
+.search-bar {
+  grid-area: search-bar;
 }
 
 .other-content {

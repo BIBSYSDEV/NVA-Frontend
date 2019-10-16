@@ -1,7 +1,7 @@
 import fetchMock from 'fetch-mock';
 import { Dispatch } from 'redux';
 
-import { fetchResources } from '../actions/resourceActions';
+import { searchForResources } from '../actions/resourceActions';
 import { setUserAction } from '../actions/userActions';
 import { Resource } from '../types/resource.types';
 import User from '../types/user.types';
@@ -20,12 +20,12 @@ export const mockSetUser = async (dispatch: Dispatch) => {
     });
 };
 
-export const mockGetResources = async (dispatch: Dispatch) => {
-  fetchMock.mock('http://example.com/resources', resources);
-  return await fetch('http://example.com/resources')
+export const mockSearch = async (dispatch: Dispatch, searchTerm: string) => {
+  fetchMock.mock(`http://example.com/resources/${searchTerm}`, resources);
+  return await fetch(`http://example.com/resources/${searchTerm}`)
     .then(data => data.json())
     .then((data: Resource[]) => {
-      dispatch(fetchResources(data));
+      dispatch(searchForResources(data, searchTerm));
     })
     .then(() => {
       fetchMock.reset();

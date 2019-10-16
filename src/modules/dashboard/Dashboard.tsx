@@ -2,7 +2,7 @@ import '../../styles/dashboard.scss';
 
 import React from 'react';
 
-import SearchBar from '../../components/search/SearchBar';
+import SearchBar from '../../components/SearchBar';
 
 const Dashboard: React.FC = () => (
   <div className="dashboard">
