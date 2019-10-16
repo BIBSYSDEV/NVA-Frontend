@@ -14,5 +14,3 @@ export const emptySearchResults: SearchResults = {
   offset: 0,
   totalNumberOfHits: 0,
 };
-
-export const RESULTS_PR_PAGE = 10;

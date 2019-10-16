@@ -24,6 +24,28 @@ describe('A user searches for a resource', () => {
   });
 });
 
+describe('A user searches for a resource and gets more than 10 hits', () => {
+  it('Given that a user is on the start page and is not logged in', () => {
+    cy.visit('/');
+    cy.get('[data-cy=menu]').click();
+    cy.get('[data-cy=logout-button]').click();
+    cy.get('[data-cy=login-button]').should('be.visible');
+    cy.get('[data-cy=menu]').should('not.exist');
+  });
+  it('When the user enters Norway into the search input', () => {
+    cy.get('[data-cy=search-input] .MuiInputBase-input').type('Norway');
+  });
+  it('And clicks Search', () => {
+    cy.get('[data-cy=search-button]').click({ force: true });
+  });
+  it('And there is more than 10 results', () => {
+    cy.get('[data-cy=search-results]').contains('25 results');
+  });
+  it('Then pagination is shown', () => {
+    cy.get('[data-cy=pagination]').contains('2');
+  });
+});
+
 describe('A user searches for a resource and uses pagination', () => {
   it('Given that a user is on the start page and is not logged in', () => {
     cy.visit('/');
@@ -38,11 +60,8 @@ describe('A user searches for a resource and uses pagination', () => {
   it('And clicks Search', () => {
     cy.get('[data-cy=search-button]').click({ force: true });
   });
-  it('And there is more then 10 results', () => {
+  it('And there is more than 10 results', () => {
     cy.get('[data-cy=search-results]').contains('25 results');
-  });
-  it('And pagination should show', () => {
-    cy.get('[data-cy=pagination]').contains('2');
   });
   it('And user clicks on ">" in pagination', () => {
     cy.get('[data-cy=pagination]')

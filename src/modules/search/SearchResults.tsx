@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootStore } from '../../reducers/rootReducer';
 import { search } from '../../api/resource';
 import { useHistory } from 'react-router';
-import { RESULTS_PR_PAGE } from '../../types/search.types';
+import { SEARCH_RESULTS_PER_PAGE } from '../../utils/constants';
 
 export interface SearchResultsProps {
   resources: Resource[];
@@ -22,20 +22,15 @@ const SearchResults: React.FC<SearchResultsProps> = ({ resources, searchTerm }) 
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const history = useHistory();
-
-  const handleSearch = (offset: number) => {
-    if (searchTerm.length > 0) {
-      dispatch(search(searchTerm, offset));
-      history.push(`/Search/${searchTerm}`);
-    }
-  };
-
   const results = useSelector((state: RootStore) => state.results);
   const [offset, setOffset] = useState(0);
 
-  const updateOffset = (offset: number) => {
+  const updateSearch = (offset: number) => {
     setOffset(offset);
-    handleSearch(offset);
+    if (searchTerm.length > 0) {
+      dispatch(search(searchTerm, offset));
+      history.push(`/Search/${searchTerm}/${offset}`);
+    }
   };
 
   return (
@@ -44,8 +39,8 @@ const SearchResults: React.FC<SearchResultsProps> = ({ resources, searchTerm }) 
       )
       <List>
         {resources &&
-          resources.map((resource, index) => (
-            <ListItem key={index}>
+          resources.map((resource) => (
+            <ListItem key={resource.identifier}>
               <ListItemIcon>
                 <ImageIcon />
               </ListItemIcon>
@@ -66,10 +61,10 @@ const SearchResults: React.FC<SearchResultsProps> = ({ resources, searchTerm }) 
       </List>
       <Pagination
         data-cy="pagination"
-        limit={RESULTS_PR_PAGE}
+        limit={SEARCH_RESULTS_PER_PAGE}
         offset={offset}
         total={results.totalNumberOfHits}
-        onClick={(e, offset) => updateOffset(offset)}
+        onClick={(_, offset) => updateSearch(offset)}
       />
     </div>
   );

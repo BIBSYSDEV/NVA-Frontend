@@ -43,6 +43,7 @@ const App: React.FC = () => {
             <Route exact path="/" component={Dashboard} />
             <Route exact path="/resources/new" component={Resource} />
             <Route exact path="/search/:searchTerm" component={Search} />
+            <Route exact path="/search/:searchTerm/:offset" component={Search} />
             <Route exact path="/user" component={User} />
             <Route path="*" component={NotFound} />
           </Switch>
