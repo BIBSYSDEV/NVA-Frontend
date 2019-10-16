@@ -5,7 +5,7 @@ import { searchForResources } from '../actions/resourceActions';
 import { setUserAction } from '../actions/userActions';
 import { Resource } from '../types/resource.types';
 import User from '../types/user.types';
-import resources from '../utils/testfiles/resources.json';
+import resources from '../utils/testfiles/resources_45_random_results_generated.json';
 import user from '../utils/testfiles/user.json';
 import { SEARCH_RESULTS_PER_PAGE } from '../utils/constants';
 

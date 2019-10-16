@@ -1,0 +1,18 @@
+[
+  {
+    "repeat(45)": {
+      "identifier": "{{guid()}}",
+      "access": "{{random('public', 'private')}}",
+      "content": "{{lorem(1, 'words')}}.{{random('pdf', 'jpg','mp4')}}",
+      "content_type": "file",
+      "description": "{{lorem(1, 'paragraphs')}}",
+      "identifier_handle": "https://hdl.handle.net/{{integer(10000, 999999)}}/{{integer(10000, 100000)}}",
+      "published": "{{bool()}}",
+      "submitter_email": "{{lorem(1, 'words')}}@{{company()}}{{domainZone()}}",
+      "time_created": "{{date(new Date(2014, 0, 1), new Date()).getTime()}}",
+      "time_published": "{{date(new Date(2014, 0, 1), new Date()).getTime()}}",
+      "title": "{{lorem(1, 'sentences')}}",
+      "type": "{{random('Audiovisual', 'DataPaper', 'Text', 'PhysicalObject')}}"
+    }
+  }
+]
