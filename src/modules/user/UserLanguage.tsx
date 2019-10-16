@@ -18,7 +18,6 @@ const UserLanguage: React.FC = () => {
 
   const handleLanguageChange = (event: React.ChangeEvent<any>) => {
     const language = event.target.value;
-    setLanguageSelected(language);
     i18n.changeLanguage(language);
   };
 
