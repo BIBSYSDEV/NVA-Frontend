@@ -47,7 +47,7 @@ describe('A user searches for a resource and uses pagination', () => {
   it('And user clicks on ">" in pagination', () => {
     cy.get('[data-cy=pagination]')
       .contains('>')
-      .click();
+      .click({ force: true });
   });
   it('Then the result-title should show "(11 - 20)"', () => {
     cy.get('[data-cy=search-results]').contains('(11 - 20)');
