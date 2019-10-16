@@ -14,6 +14,7 @@
     "formik-material-ui": "0.0.22",
     "i18next": "^17.0.16",
     "i18next-browser-languagedetector": "^3.0.3",
+    "material-ui-flat-pagination": "^4.0.0",
     "node-sass": "^4.12.0",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
@@ -33,7 +34,7 @@
     "build": "react-scripts build",
     "test:cypress": "REACT_APP_USE_MOCK=true start-server-and-test http://localhost:3000",
     "test": "cypress run",
-    "deploy": "aws s3 sync build/ s3://stack-to-bucket",
+    "deploy": "aws s3 sync build/ s3://demo-stack-bucket",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
