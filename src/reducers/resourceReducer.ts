@@ -7,6 +7,8 @@ export const resourceReducer = (state: SearchResults = emptySearchResults, actio
       return {
         resources: [...action.resources],
         searchTerm: action.searchTerm,
+        totalNumberOfHits: action.totalNumberOfResults,
+        offset: action.offset,
       };
     default:
       return state;

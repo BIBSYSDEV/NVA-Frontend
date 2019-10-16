@@ -7,6 +7,7 @@ import { Resource } from '../types/resource.types';
 import User from '../types/user.types';
 import resources from '../utils/testfiles/resources.json';
 import user from '../utils/testfiles/user.json';
+import { RESULTS_PR_PAGE } from '../types/search.types';
 
 export const mockSetUser = async (dispatch: Dispatch) => {
   fetchMock.mock('http://example.com/user', user);
@@ -20,12 +21,13 @@ export const mockSetUser = async (dispatch: Dispatch) => {
     });
 };
 
-export const mockSearch = async (dispatch: Dispatch, searchTerm: string) => {
+export const mockSearch = async (dispatch: Dispatch, searchTerm: string, offset: number) => {
   fetchMock.mock(`http://example.com/resources/${searchTerm}`, resources);
   return await fetch(`http://example.com/resources/${searchTerm}`)
     .then(data => data.json())
     .then((data: Resource[]) => {
-      dispatch(searchForResources(data, searchTerm));
+      const result = data.slice(offset, offset + RESULTS_PR_PAGE);
+      dispatch(searchForResources(result, searchTerm, offset, data.length));
     })
     .then(() => {
       fetchMock.reset();

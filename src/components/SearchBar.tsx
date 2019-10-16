@@ -18,7 +18,7 @@ const SearchBar: React.FC = () => {
 
   const handleSearch = () => {
     if (searchTerm.length > 0) {
-      dispatch(search(searchTerm));
+      dispatch(search(searchTerm, 0));
       history.push(`/Search/${searchTerm}`);
     }
   };
