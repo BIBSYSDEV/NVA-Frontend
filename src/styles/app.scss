@@ -12,6 +12,7 @@
 
 .body {
   grid-area: body;
+  display: flex;
   justify-content: center;
   align-items: center;
   background-color: white;
@@ -20,6 +21,7 @@
 
 .footer {
   grid-area: footer;
+  display: flex;
   background-color: $secondary-color;
   justify-content: center;
   align-items: center;
