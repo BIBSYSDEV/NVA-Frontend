@@ -39,19 +39,19 @@ const SearchResults: React.FC<SearchResultsProps> = ({ resources, searchTerm }) 
       )
       <List>
         {resources &&
-          resources.map((resource) => (
-            <ListItem key={resource.identifier}>
+          resources.map(resource => (
+            <ListItem key={resource.handle}>
               <ListItemIcon>
                 <ImageIcon />
               </ListItemIcon>
               <ListItemText
                 data-cy="result-list-item"
-                primary={resource.title}
+                primary={resource.titles.en}
                 secondary={
                   <React.Fragment>
-                    <Typography component="span">{resource.identifier_handle}</Typography>
+                    <Typography component="span">{resource.creators}</Typography>
                     <br />
-                    {resource.description}
+                    {resource.publisher}
                   </React.Fragment>
                 }>
                 {' '}
