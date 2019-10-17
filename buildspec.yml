@@ -6,8 +6,6 @@ phases:
     commands:
       - npm install
   build:
-    runtime-versions:
-      nodejs: 10
     commands:
       - npm run build
 artifacts:
