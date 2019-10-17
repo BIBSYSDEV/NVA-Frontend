@@ -1,4 +1,4 @@
-import { Resource, resourceType } from '../../types/resource.types';
+import { Resource, ResourceType } from '../../types/resource.types';
 
 const faker = require('faker');
 const fs = require('fs');
@@ -6,7 +6,7 @@ const fs = require('fs');
 const NUMBER_OF_RESOURCES = 45;
 
 const generateRandomResourceType = () =>
-  faker.helpers.replaceSymbolWithNumber(faker.random.arrayElement(Object.getOwnPropertyNames(resourceType)));
+  faker.helpers.replaceSymbolWithNumber(faker.random.arrayElement(Object.getOwnPropertyNames(ResourceType)));
 
 const convertToSentence = (sentence: string) => sentence.charAt(0).toUpperCase() + sentence.slice(1);
 

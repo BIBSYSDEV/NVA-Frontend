@@ -1,9 +1,9 @@
-export enum resourceType {
+export enum ResourceType {
   TEXT = 'text',
   FILE = 'file',
 }
 
-export interface titleType {
+export interface TitleType {
   en: string;
   no: string;
 }
@@ -14,6 +14,6 @@ export interface Resource {
   license: string;
   publicationYear: number;
   publisher: string;
-  titles: titleType;
-  type: resourceType;
+  titles: TitleType;
+  type: ResourceType;
 }
