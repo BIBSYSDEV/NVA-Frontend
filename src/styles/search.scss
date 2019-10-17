@@ -36,13 +36,11 @@
   }
 
   &__input {
-    display: inline-block;
     grid-area: input;
     margin-left: 1rem;
   }
 
   &__search-button {
-    display: inline-block;
     grid-area: button;
     justify-self: right;
   }
