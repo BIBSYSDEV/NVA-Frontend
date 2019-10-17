@@ -20,7 +20,6 @@
 }
 
 .search-bar {
-  grid-area: search-bar;
   align-self: center;
   min-width: 50vw;
   max-width: 65vw;
@@ -50,5 +49,10 @@
 }
 
 .search-results {
-  grid-area: results;
+  padding-bottom: 1rem;
+
+  .MuiFlatPagination-root {
+    display: flex;
+    justify-content: center;
+  }
 }
