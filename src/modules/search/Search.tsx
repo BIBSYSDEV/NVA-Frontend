@@ -14,21 +14,21 @@ const Search: React.FC = () => {
   const { resources, searchTerm } = searchResults;
   const dispatch = useDispatch();
   const history = useHistory();
-  const [resetSearch, setResetSearch] = useState(false);
+  const [resetSearchInput, setResetSearchInput] = useState(false);
 
   useEffect(() => {
     if (history.location.pathname === '/search') {
       dispatch(clearSearch());
-      setResetSearch(true);
+      setResetSearchInput(true);
     } else {
-      setResetSearch(false);
+      setResetSearchInput(false);
     }
   }, [dispatch, history.location.pathname]);
 
   return (
     <div className="search">
       <div className="search-container">
-        <SearchBar resetSearch={resetSearch} />
+        <SearchBar resetSearchInput={resetSearchInput} />
         {resources && resources.length > 0 && <SearchResults resources={resources} searchTerm={searchTerm} />}
       </div>
       <div className="filter-container">filter</div>

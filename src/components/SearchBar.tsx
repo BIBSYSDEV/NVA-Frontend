@@ -11,10 +11,10 @@ import SearchIcon from '@material-ui/icons/Search';
 import { search } from '../api/resource';
 
 export interface SearchBarProps {
-  resetSearch: boolean;
+  resetSearchInput: boolean;
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({ resetSearch }) => {
+const SearchBar: React.FC<SearchBarProps> = ({ resetSearchInput: resetSearch }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const history = useHistory();
