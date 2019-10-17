@@ -1,4 +1,5 @@
 import { ContentType } from './content.types';
+import { string } from 'yup';
 
 export enum Access {
   PUBLIC = 'public',
@@ -37,3 +38,14 @@ export interface Resource {
   title: string;
   type: ResourceType;
 }
+
+export const emptyResource: Resource = {
+  identifier: '',
+  access: Access.PRIVATE,
+  content: '',
+  content_type: ContentType.FILE,
+  published: false,
+  time_created: new Date(),
+  title: '',
+  type: ResourceType.COLLECTION,
+};

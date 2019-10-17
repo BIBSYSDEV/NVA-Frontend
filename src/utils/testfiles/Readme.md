@@ -2,9 +2,10 @@
 
 NB!
 
-Test-files is tightly bund to the cypress-tests. Do not change without thinking of the usage in the tests.
+Test-files might be tightly coupled to the cypress-tests. Do not change without thinking of the usage in the tests.
 
 ## Test-file generation
 
-Generate new testfiles by pasting the content of the template-files to
-https://next.json-generator.com
+Run the following command from this folder(!):
+
+`tsc && ts-node generateResultList.ts`
