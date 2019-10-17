@@ -17,7 +17,7 @@ const Search: React.FC = () => {
   const [resetSearch, setResetSearch] = useState(false);
 
   useEffect(() => {
-    if (history.location.pathname === '/Search') {
+    if (history.location.pathname === '/search') {
       dispatch(clearSearch());
       setResetSearch(true);
     } else {

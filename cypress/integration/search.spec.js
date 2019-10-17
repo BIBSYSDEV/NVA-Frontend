@@ -20,7 +20,7 @@ describe('A user searches for a resource', () => {
       .find('[data-cy=result-list-item] ')
       .should('have.length.greaterThan', 1);
     cy.get('[data-cy=search-results]').contains('Norway');
-    cy.url().should('include', '/Search/Norway');
+    cy.url().should('include', '/search/Norway');
   });
 });
 

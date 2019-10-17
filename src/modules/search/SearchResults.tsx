@@ -30,7 +30,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ resources, searchTerm }) 
     setOffset(offset);
     if (searchTerm.length > 0) {
       dispatch(search(searchTerm, offset));
-      history.push(`/Search/${searchTerm}/${offset}`);
+      history.push(`/search/${searchTerm}/${offset}`);
     }
   };
 

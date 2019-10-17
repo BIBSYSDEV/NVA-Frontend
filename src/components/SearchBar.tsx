@@ -29,7 +29,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ resetSearch }) => {
   const handleSearch = () => {
     if (searchTerm.length > 0) {
       dispatch(search(searchTerm));
-      history.push(`/Search/${searchTerm}`);
+      history.push(`/search/${searchTerm}`);
     }
   };
 
