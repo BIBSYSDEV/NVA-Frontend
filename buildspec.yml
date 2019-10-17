@@ -7,5 +7,3 @@ phases:
       npm run build
   deploy:
     commands:
-artifacts:
-  secondary-artifacts:
