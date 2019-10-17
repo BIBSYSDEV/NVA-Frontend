@@ -5,5 +5,3 @@ phases:
   build:
     commands:
       npm run build
-  deploy:
-    commands:
