@@ -4,15 +4,14 @@
   height: 100vh;
   width: 100vw;
   display: grid;
-  grid-template-areas: 'header' 'body' 'footer';
-  grid-template-rows: 4rem auto 3rem;
+  grid-template-areas: 'header' 'breadcrumbs' 'body' 'footer';
+  grid-template-rows: 4rem 2.5rem auto 3rem;
   background-color: $secondary-color;
   font-size: 62.5%;
 }
 
 .body {
   grid-area: body;
-  display: flex;
   justify-content: center;
   align-items: center;
   background-color: white;
@@ -21,7 +20,6 @@
 
 .footer {
   grid-area: footer;
-  display: flex;
   background-color: $secondary-color;
   justify-content: center;
   align-items: center;

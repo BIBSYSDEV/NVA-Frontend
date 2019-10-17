@@ -7,6 +7,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import { getCurrentAuthenticatedUser } from './api/user';
 import awsConfig from './aws-config';
+import Breadcrumbs from './modules/breadcrumbs/Breadcrumbs';
 import Dashboard from './modules/dashboard/Dashboard';
 import NotFound from './modules/errorpages/NotFound';
 import Header from './modules/header/Header';
@@ -38,10 +39,12 @@ const App: React.FC = () => {
     <BrowserRouter>
       <div className="app">
         <Header />
+        <Breadcrumbs />
         <div className="body">
           <Switch>
             <Route exact path="/" component={Dashboard} />
             <Route exact path="/resources/new" component={Resource} />
+            <Route exact path="/search" component={Search} />
             <Route exact path="/search/:searchTerm" component={Search} />
             <Route exact path="/search/:searchTerm/:offset" component={Search} />
             <Route exact path="/user" component={User} />
