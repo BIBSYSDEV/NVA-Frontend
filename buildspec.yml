@@ -11,3 +11,4 @@ phases:
 artifacts:
   files:
     - build/*
+    - template.yml
