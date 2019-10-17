@@ -1,0 +1,11 @@
+phases:
+  install:
+    commands:
+      npm install
+  build:
+    commands:
+      npm run build
+  deploy:
+    commands:
+artifacts:
+  secondary-artifacts:
