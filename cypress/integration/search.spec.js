@@ -16,7 +16,7 @@ describe('A user searches for resources and browses through the result-pages', (
     cy.get('[data-cy=search-results]')
       .find('[data-cy=result-list-item] ')
       .should('have.length.greaterThan', 1);
-    cy.get('[data-cy=search-results]').contains('45 results');
+    cy.get('[data-cy=search-results]').contains('45');
   });
   it('Then pagination is shown', () => {
     cy.get('[data-cy=pagination]').contains('2');
