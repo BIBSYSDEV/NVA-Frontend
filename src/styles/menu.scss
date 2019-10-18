@@ -13,7 +13,7 @@
     background-color: darken($primary-button-color, 3%);
   }
 }
-.MuiList-root {
+.MuiMenu-list {
   width: 15rem;
   border-radius: 4px;
   color: $secondary-color;
@@ -30,7 +30,7 @@
     }
   }
 
-  .MuiList-root {
+  .MuiMenu-list {
     width: 10rem;
   }
 }
