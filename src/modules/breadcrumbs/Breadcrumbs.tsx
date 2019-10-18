@@ -18,23 +18,25 @@ const Breadcrumbs: React.FC = () => {
 
   return (
     <div className="breadcrumbs">
-      <MuiBreadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
-        <Link to="/">{t('Home')}</Link>
-        {pathNames.map((value, index) => {
-          const translatedValue = mapBreadcrumbName(value);
-          const lastBreadcrumb = index === pathNames.length - 1;
-          const to = `/${pathNames.slice(0, index + 1).join('/')}`;
-          return lastBreadcrumb ? (
-            <Link to={to} key={to}>
-              <b>{translatedValue}</b>
-            </Link>
-          ) : (
-            <Link to={to} key={to}>
-              {translatedValue}
-            </Link>
-          );
-        })}
-      </MuiBreadcrumbs>
+      {pathNames.length > 0 && (
+        <MuiBreadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
+          <Link to="/">{t('Home')}</Link>
+          {pathNames.map((value, index) => {
+            const translatedValue = mapBreadcrumbName(value);
+            const lastBreadcrumb = index === pathNames.length - 1;
+            const to = `/${pathNames.slice(0, index + 1).join('/')}`;
+            return lastBreadcrumb ? (
+              <Link to={to} key={to}>
+                <b>{translatedValue}</b>
+              </Link>
+            ) : (
+              <Link to={to} key={to}>
+                {translatedValue}
+              </Link>
+            );
+          })}
+        </MuiBreadcrumbs>
+      )}
     </div>
   );
 };
