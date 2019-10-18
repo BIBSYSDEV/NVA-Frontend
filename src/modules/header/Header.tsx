@@ -10,7 +10,7 @@ import Login from './Login';
 const Header: React.FC = () => (
   <div className="header">
     <Link to="/">
-      <div className="logo" data-cy="logo">
+      <div className="logo">
         <Typography variant="h6">
           <b>NVA</b>
         </Typography>
