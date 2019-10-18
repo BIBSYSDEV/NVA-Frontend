@@ -1,16 +1,17 @@
 import '../../styles/search.scss';
 
+import Pagination from 'material-ui-flat-pagination';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
 
 import { List, ListItem, ListItemIcon, ListItemText, Typography } from '@material-ui/core';
 import ImageIcon from '@material-ui/icons/Image';
-import Pagination from 'material-ui-flat-pagination';
-import { Resource } from '../../types/resource.types';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootStore } from '../../reducers/rootReducer';
+
 import { search } from '../../api/resource';
-import { useHistory } from 'react-router';
+import { RootStore } from '../../reducers/rootReducer';
+import { Resource } from '../../types/resource.types';
 import { SEARCH_RESULTS_PER_PAGE } from '../../utils/constants';
 
 export interface SearchResultsProps {
@@ -29,7 +30,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ resources, searchTerm }) 
     setOffset(offset);
     if (searchTerm.length > 0) {
       dispatch(search(searchTerm, offset));
-      history.push(`/Search/${searchTerm}/${offset}`);
+      history.push(`/search/${searchTerm}/${offset}`);
     }
   };
 

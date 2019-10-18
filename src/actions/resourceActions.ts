@@ -1,6 +1,7 @@
 import { Resource } from '../types/resource.types';
 
 export const SEARCH_FOR_RESOURCES = 'search for resources';
+export const CLEAR_SEARCH = 'clear search';
 
 export const searchForResources = (
   resources: Resource[],
@@ -15,6 +16,10 @@ export const searchForResources = (
   offset: offset ? offset : 0,
 });
 
+export const clearSearch = () => ({
+  type: CLEAR_SEARCH,
+});
+
 export interface SearchForResourcesAction {
   type: typeof SEARCH_FOR_RESOURCES;
   resources: Resource[];
@@ -23,4 +28,8 @@ export interface SearchForResourcesAction {
   offset?: number;
 }
 
-export type ResourceActions = SearchForResourcesAction;
+export interface ClearSearchAction {
+  type: typeof CLEAR_SEARCH;
+}
+
+export type ResourceActions = SearchForResourcesAction | ClearSearchAction;
