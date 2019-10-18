@@ -51,20 +51,18 @@ const Menu: React.FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
           vertical: 'bottom',
           horizontal: 'left',
         }}>
-        <div className="menu-list">
-          <MenuItem
-            data-cy="user-profile-button"
-            onClick={() => {
-              handleClose();
-              history.push('/user');
-            }}>
-            {t('My profile')}
-          </MenuItem>
+        <MenuItem
+          data-cy="user-profile-button"
+          onClick={() => {
+            handleClose();
+            history.push('/user');
+          }}>
+          {t('My profile')}
+        </MenuItem>
 
-          <MenuItem onClick={handleLogout} data-cy="logout-button">
-            {t('Logout')}
-          </MenuItem>
-        </div>
+        <MenuItem onClick={handleLogout} data-cy="logout-button">
+          {t('Logout')}
+        </MenuItem>
       </MUIMenu>
     </div>
   );
