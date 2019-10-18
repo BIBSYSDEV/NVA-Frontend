@@ -53,6 +53,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ resetSearchInput: resetSearch }) 
             placeholder={t('Search')}
             onChange={handleChange}
             value={searchTerm}
+            inputProps={{ 'data-testid': 'search-input' }}
           />
           <IconButton data-cy="search-button" className="search-bar__search-button" onClick={handleSearch}>
             <SearchIcon />

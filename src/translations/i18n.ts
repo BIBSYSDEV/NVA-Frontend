@@ -17,7 +17,7 @@ i18n.use(LanguageDetector).init({
     },
   },
   fallbackLng: defaultLanguage,
-  debug: true,
+  debug: false,
   ns: ['translations'],
   defaultNS: 'translations',
   interpolation: {
