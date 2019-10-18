@@ -35,7 +35,8 @@
     "test:cypress": "REACT_APP_USE_MOCK=true start-server-and-test http://localhost:3000",
     "test": "cypress run",
     "deploy": "aws s3 sync build/ s3://demo-stack-bucket",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "generateTestFiles": "sh generateTestFiles.sh"
   },
   "eslintConfig": {
     "extends": "react-app",
@@ -77,11 +78,14 @@
     "@types/yup": "^0.26.24",
     "@typescript-eslint/parser": "^2.3.1",
     "eslint-plugin-prettier": "^3.1.0",
+    "faker": "^4.1.0",
     "fetch-mock": "^7.3.9",
+    "fs": "0.0.1-security",
     "husky": "^3.0.5",
     "prettier": "^1.18.2",
     "pretty-quick": "^1.11.1",
     "start-server-and-test": "^1.10.4",
+    "ts-node": "^8.4.1",
     "typescript": "^3.6.3"
   }
 }
