@@ -6,6 +6,7 @@
   "Curator": "Kurator",
   "Dashboard": "Dashboard",
   "Email": "Epost",
+  "Home": "Hjem",
   "ID": "ID",
   "Info from Feide": "Info hentet fra Feide",
   "Info from NVA": "Info hentet fra NVA",
@@ -25,8 +26,8 @@
   "Register new resource": "Registrer ny ressurs",
   "Required field": "Påkrevd felt",
   "Reset": "Reset",
-  "Results": "{{count}} resultat for {{term}}",
-  "Results_plural": "{{count}} resultater for {{term}}",
+  "Results": "{{count}} resultat for '{{term}}'",
+  "Results_plural": "{{count}} resultater for '{{term}}'",
   "RoleDescription": {
     "Curator": "Kurator er tilgangen alle som kan godkjenne og publisere for andre har",
     "Publisher": "Utgiver er den tilgangen ansatte på institusjonen har. Gir tilgang til å registrere egne publikasjoner"

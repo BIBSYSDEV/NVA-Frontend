@@ -20,7 +20,7 @@ describe('A user searches for a resource', () => {
       .find('[data-cy=result-list-item] ')
       .should('have.length.greaterThan', 1);
     cy.get('[data-cy=search-results]').contains('Norway');
-    cy.url().should('include', '/Search/Norway');
+    cy.url().should('include', '/search/Norway');
   });
 });
 
@@ -39,7 +39,7 @@ describe('A user searches for a resource and gets more than 10 hits', () => {
     cy.get('[data-cy=search-button]').click({ force: true });
   });
   it('And there is more than 10 results', () => {
-    cy.get('[data-cy=search-results]').contains('25 results');
+    cy.get('[data-cy=search-results]').contains('25');
   });
   it('Then pagination is shown', () => {
     cy.get('[data-cy=pagination]').contains('2');
@@ -61,7 +61,7 @@ describe('A user searches for a resource and uses pagination', () => {
     cy.get('[data-cy=search-button]').click({ force: true });
   });
   it('And there is more than 10 results', () => {
-    cy.get('[data-cy=search-results]').contains('25 results');
+    cy.get('[data-cy=search-results]').contains('25');
   });
   it('And user clicks on ">" in pagination', () => {
     cy.get('[data-cy=pagination]')
