@@ -29,8 +29,7 @@
     "yup": "^0.27.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "start:cypress": "react-scripts -r @cypress/instrument-cra start",
+    "start": "react-scripts -r @cypress/instrument-cra start",
     "build": "react-scripts build",
     "test:cypress": "REACT_APP_USE_MOCK=true start-server-and-test http://localhost:3000",
     "test": "cypress run",
