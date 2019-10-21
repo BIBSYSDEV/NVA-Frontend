@@ -5,13 +5,12 @@ describe('A user searches for resources and browses through the result-pages', (
     cy.get('[data-cy=logout-button]').click();
     cy.get('[data-cy=login-button]').should('be.visible');
     cy.get('[data-cy=menu]').should('not.exist');
-    cy.get('[data-cy=logo]').click();
   });
   it('When the user enters "test" into the search input', () => {
     cy.get('[data-cy=search-input] .MuiInputBase-input').type('test');
   });
   it('And clicks Search', () => {
-    cy.get('[data-cy=search-button]').click();
+    cy.get('[data-cy=search-button]').click({ force: true });
   });
   it('And there is 45 results', () => {
     cy.get('[data-cy=search-results]')
@@ -25,7 +24,7 @@ describe('A user searches for resources and browses through the result-pages', (
   it('And user clicks on ">" in pagination', () => {
     cy.get('[data-cy=pagination]')
       .contains('>')
-      .click();
+      .click({ force: true });
   });
   it('Then the result-title should show "(11 - 20)"', () => {
     cy.get('[data-cy=search-results]').contains('(11 - 20)');
