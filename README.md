@@ -13,9 +13,15 @@ To be able to run this app, you need to create a .env file with the following fi
 To use mock data, you need to add this variable to the .env file:<br>
 `REACT_APP_USE_MOCK=true`
 
-# Available Scripts
+# Generate code coverage
 
-In the project directory, you can run:
+`npm run start:cypress`
+
+`npm run test:cypress --coverage`
+
+coverage report: `coverage/lcov-report/index.html`
+
+# Available Scripts
 
 ### `npm start`
 
@@ -27,8 +33,7 @@ You will also see any lint errors in the console.
 
 ### `npm test`
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Runs cypress
 
 ### `npm run build`
 
