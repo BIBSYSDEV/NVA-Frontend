@@ -15,8 +15,6 @@ To use mock data, you need to add this variable to the .env file:<br>
 
 # Generate code coverage
 
-`npm run start:cypress`
-
 `npm run test:cypress --coverage`
 
 coverage report: `coverage/lcov-report/index.html`
