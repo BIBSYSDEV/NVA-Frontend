@@ -26,9 +26,9 @@ const UserOrcid: React.FC = () => {
         buttonText={t('Create or Connect to your ORCID')}
         startIcon={<img src="https://orcid.org/sites/default/files/images/orcid_24x24.png" alt="ORCID iD icon" />}>
         <div className="orcid-modal">
-          <h5>Registrering 2/2</h5>
-          <h3>Opprett eller velg din ORCID</h3>
-          <p>Logg inn på din ORCID eller lag ny dersom du ikke har.</p>
+          <h5>{t('Registration')} 2/2</h5>
+          <h3>{t('Create or Connect to your ORCID')}</h3>
+          <p>{t('Log in to your ORCID account or create new ORCID account')}</p>
           <div className="orcid-button">
             <Button
               onClick={openORCID}
@@ -41,22 +41,19 @@ const UserOrcid: React.FC = () => {
             </Button>
           </div>
           <b>
-            <h4>Hvorfor ber vi om ORCID?</h4>
+            <h4>{t('Why should I connect to ORCID?')}</h4>
           </b>
-          <p>
-            Med ORCID blir det enklere å identifisere deg som forfatter. Vi kan også hente informasjon fra ORCID, som
-            kan gjøre det raskere for deg å registrere dine publikasjoner
-          </p>
+          <p>{t('description_why_ORCID')}</p>
           <b>
-            <h4>Hva er ORCID?</h4>
+            <h4>{'What is ORCID?'}</h4>
           </b>
           <p>
-            ORCID is an independent non-profit effort to provide an open registry of unique researcher identifiers and
-            open services to link research activities and organizations to these identifiers. Learn more at{' '}
-            <a href="https://orcid.org">orcid.org</a>
+            {t('description_what_is_ORCID')}
+            <br />
+            {t('Learn more at ')} <a href="https://orcid.org">orcid.org</a>
           </p>
           <div className="skip">
-            <Link to="/">Hopp over nå (kan gjøres under "profil" senere)</Link>
+            <Link to="/">{t("Skip this step (can be configured in 'profile' later)")}</Link>
           </div>
         </div>
       </ButtonModal>
