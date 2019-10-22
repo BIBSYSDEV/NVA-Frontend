@@ -118,3 +118,24 @@
     height: 15rem;
   }
 }
+
+.orcid-modal {
+  h5 {
+    border-bottom: 1px solid black;
+    text-align: right;
+  }
+
+  a {
+    color: $primary-button-color;
+  }
+
+  .orcid-button {
+    padding: 3rem 0;
+    text-align: center;
+  }
+
+  .skip {
+    padding-top: 5rem;
+    text-align: center;
+  }
+}
