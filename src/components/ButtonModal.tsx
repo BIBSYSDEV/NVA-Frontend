@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect } from 'react';
+import React, { ReactNode } from 'react';
 
 import { Backdrop, Button, Fade, Modal } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
@@ -22,8 +22,7 @@ export interface ButtonModalProps {
   ariaDescribedBy?: string;
   ariaLabelledBy?: string;
   buttonText: string;
-  children: ReactNode;
-  openModal?: boolean;
+  children: (props: any) => ReactNode;
   startIcon?: ReactNode;
 }
 
@@ -32,19 +31,10 @@ const ButtonModal: React.FC<ButtonModalProps> = ({
   ariaLabelledBy,
   buttonText,
   children,
-  openModal,
   startIcon,
 }) => {
   const [open, setOpen] = React.useState(false);
   const classes = useStyles(() => {});
-
-  useEffect(() => {
-    if (openModal) {
-      setOpen(true);
-    } else {
-      setOpen(false);
-    }
-  }, [openModal]);
 
   const handleOpen = () => {
     setOpen(true);
@@ -71,7 +61,7 @@ const ButtonModal: React.FC<ButtonModalProps> = ({
           timeout: 500,
         }}>
         <Fade in={open}>
-          <div className={classes.paper}>{children}</div>
+          <div className={classes.paper}>{children({ setOpen })}</div>
         </Fade>
       </Modal>
     </>

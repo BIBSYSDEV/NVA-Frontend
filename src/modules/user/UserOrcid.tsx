@@ -2,7 +2,6 @@ import '../../styles/user.scss';
 
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
 
 import { Button } from '@material-ui/core';
 
@@ -25,37 +24,44 @@ const UserOrcid: React.FC = () => {
       <ButtonModal
         buttonText={t('Create or Connect to your ORCID')}
         startIcon={<img src="https://orcid.org/sites/default/files/images/orcid_24x24.png" alt="ORCID iD icon" />}>
-        <div className="orcid-modal">
-          <h5>{t('Registration')} 2/2</h5>
-          <h3>{t('Create or Connect to your ORCID')}</h3>
-          <p>{t('Log in to your ORCID account or create new ORCID account')}</p>
-          <div className="orcid-button">
-            <Button
-              onClick={openORCID}
-              variant="outlined"
-              size="large"
-              startIcon={
-                <img src="https://orcid.org/sites/default/files/images/orcid_24x24.png" alt="ORCID iD icon" />
-              }>
-              {t('Create or Connect to your ORCID')}
-            </Button>
+        {({ setOpen }: any) => (
+          <div className="orcid-modal">
+            <h5>{t('Registration')} 2/2</h5>
+            <h3>{t('Create or Connect to your ORCID')}</h3>
+            <p>{t('Log in to your ORCID account or create new ORCID account')}</p>
+            <div className="orcid-button">
+              <Button
+                onClick={openORCID}
+                variant="outlined"
+                size="large"
+                startIcon={
+                  <img src="https://orcid.org/sites/default/files/images/orcid_24x24.png" alt="ORCID iD icon" />
+                }>
+                {t('Create or Connect to your ORCID')}
+              </Button>
+            </div>
+            <b>
+              <h4>{t('Why should I connect to ORCID?')}</h4>
+            </b>
+            <p>{t('description_why_ORCID')}</p>
+            <b>
+              <h4>{'What is ORCID?'}</h4>
+            </b>
+            <p>
+              {t('description_what_is_ORCID')}
+              <br />
+              {t('Learn more at ')} <a href="https://orcid.org">orcid.org</a>
+            </p>
+            <div className="skip">
+              <Button
+                onClick={() => {
+                  setOpen(false);
+                }}>
+                {t("Skip this step (can be configured in 'profile' later)")}
+              </Button>
+            </div>
           </div>
-          <b>
-            <h4>{t('Why should I connect to ORCID?')}</h4>
-          </b>
-          <p>{t('description_why_ORCID')}</p>
-          <b>
-            <h4>{'What is ORCID?'}</h4>
-          </b>
-          <p>
-            {t('description_what_is_ORCID')}
-            <br />
-            {t('Learn more at ')} <a href="https://orcid.org">orcid.org</a>
-          </p>
-          <div className="skip">
-            <Link to="/">{t("Skip this step (can be configured in 'profile' later)")}</Link>
-          </div>
-        </div>
+        )}
       </ButtonModal>
     </UserCard>
   );
