@@ -4,7 +4,6 @@
   display: grid;
   grid-template-areas: 'logo auth';
   grid-template-columns: 5rem auto;
-  grid-area: header;
   color: $primary-color;
   font-weight: bold;
   align-items: center;
@@ -12,6 +11,7 @@
   padding-right: 1rem;
   background-color: $primary-color;
   border-bottom: 2px solid $tertiary-color;
+  min-height: 4rem;
 }
 
 .logo {
