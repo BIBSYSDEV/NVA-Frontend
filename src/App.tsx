@@ -16,7 +16,6 @@ import Search from './modules/search/Search';
 import User from './modules/user/User';
 import { hubListener } from './utils/hub-listener';
 import AdminMenu from './modules/dashboard/AdminMenu';
-import { RootStore } from './reducers/rootReducer';
 
 const App: React.FC = () => {
   Amplify.configure(awsConfig);
@@ -37,13 +36,11 @@ const App: React.FC = () => {
     return () => Hub.remove('auth', data => hubListener(data, dispatch));
   }, [dispatch]);
 
-  let isAdmin = true;
-
   return (
     <BrowserRouter>
       <div className="app">
         <Header />
-        {isAdmin && <AdminMenu />}
+        <AdminMenu />
         <Breadcrumbs />
         <div className="body">
           <Switch>

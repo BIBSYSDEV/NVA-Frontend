@@ -6,7 +6,7 @@
   display: grid;
   grid-template-areas: 'header' 'admin-menu' 'breadcrumbs' 'body' 'footer';
   grid-template-rows: 4rem 4rem 2.5rem auto 3rem;
-  background-color: $text-color;
+  background-color: $primary-color;
   font-size: 62.5%;
 }
 
