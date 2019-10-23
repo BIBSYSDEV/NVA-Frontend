@@ -3,16 +3,24 @@
 .dashboard {
   width: 100vw;
   height: 85vh;
-  color: $secondary-color;
+  color: $text-color;
   display: grid;
-  grid-template-areas: 'search-bar' 'other-content';
-  grid-template-rows: 15rem auto;
+  grid-template-areas: 'admin-menu' 'search-bar' 'other-content';
+  grid-template-rows: 4rem 15rem auto;
   justify-items: center;
-  align-items: center;
+  //align-items: center;
 }
 
 .search-bar {
   grid-area: search-bar;
+
+  justify-content: end;
+}
+
+.admin-menu {
+  grid-area: admin-menu;
+  background-color: $secondary-color;
+  width: 100%;
 }
 
 .other-content {

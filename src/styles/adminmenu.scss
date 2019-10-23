@@ -1,0 +1,18 @@
+@import './colors.scss';
+
+.title {
+  display: inline-block;
+  padding: 1rem;
+}
+
+.admin-menu {
+  .MuiButton-root {
+    width: 10rem;
+    background-color: $primary-button-color;
+    color: $primary-color;
+  }
+
+  .MuiButton-root:hover {
+    background-color: darken($primary-button-color, 3%);
+  }
+}
