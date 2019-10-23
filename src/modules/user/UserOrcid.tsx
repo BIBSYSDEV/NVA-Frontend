@@ -2,21 +2,28 @@ import '../../styles/user.scss';
 
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router';
 
 import { Button } from '@material-ui/core';
 
 import ButtonModal from '../../components/ButtonModal';
+import { useMockData } from '../../utils/constants';
 import UserCard from './UserCard';
 
 const UserOrcid: React.FC = () => {
   const { t } = useTranslation();
+  const history = useHistory();
 
   const openORCID = () => {
-    window.open(
-      'https://sandbox.orcid.org/signin?oauth&client_id=0000-0002-1223-3173&response_type=code&scope=/authenticate&redirect_uri=http://localhost:3000',
-      '_blank',
-      'toolbar=no, scrollbars=yes, width=500, height=600, top=500, left=500, rel="noopener noreferrer"'
-    );
+    if (useMockData) {
+      history.push('/user?code=123456');
+    } else {
+      window.open(
+        'https://sandbox.orcid.org/signin?oauth&client_id=0000-0002-1223-3173&response_type=code&scope=/authenticate&redirect_uri=http://localhost:3000',
+        '_blank',
+        'toolbar=no, scrollbars=yes, width=500, height=600, top=500, left=500, rel="noopener noreferrer"'
+      );
+    }
   };
 
   return (
@@ -31,7 +38,10 @@ const UserOrcid: React.FC = () => {
             <p>{t('Log in to your ORCID account or create new ORCID account')}</p>
             <div className="orcid-button">
               <Button
-                onClick={openORCID}
+                onClick={() => {
+                  openORCID();
+                  setOpen(false);
+                }}
                 variant="outlined"
                 size="large"
                 startIcon={
