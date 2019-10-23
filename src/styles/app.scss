@@ -4,8 +4,8 @@
   height: 100vh;
   width: 100vw;
   display: grid;
-  grid-template-areas: 'header' 'breadcrumbs' 'body' 'footer';
-  grid-template-rows: 4rem 2.5rem auto 3rem;
+  grid-template-areas: 'header' 'admin-menu' 'breadcrumbs' 'body' 'footer';
+  grid-template-rows: 4rem 4rem 2.5rem auto 3rem;
   background-color: $text-color;
   font-size: 62.5%;
 }
@@ -22,7 +22,11 @@
 .footer {
   grid-area: footer;
   display: flex;
-  background-color: $text-color;
+  background-color: $primary-color;
+  color: $primary-button-color;
+  font-size: 1rem;
+  font-weight: bold;
   justify-content: center;
   align-items: center;
+  border-top: 2px solid $tertiary-color;
 }

@@ -2,7 +2,7 @@ import './styles/app.scss';
 
 import Amplify, { Hub } from 'aws-amplify';
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import { getCurrentAuthenticatedUser } from './api/user';
@@ -15,6 +15,8 @@ import Resource from './modules/resources/Resource';
 import Search from './modules/search/Search';
 import User from './modules/user/User';
 import { hubListener } from './utils/hub-listener';
+import AdminMenu from './modules/dashboard/AdminMenu';
+import { RootStore } from './reducers/rootReducer';
 
 const App: React.FC = () => {
   Amplify.configure(awsConfig);
@@ -35,10 +37,13 @@ const App: React.FC = () => {
     return () => Hub.remove('auth', data => hubListener(data, dispatch));
   }, [dispatch]);
 
+  let isAdmin = true;
+
   return (
     <BrowserRouter>
       <div className="app">
         <Header />
+        {isAdmin && <AdminMenu />}
         <Breadcrumbs />
         <div className="body">
           <Switch>
@@ -51,7 +56,7 @@ const App: React.FC = () => {
             <Route path="*" component={NotFound} />
           </Switch>
         </div>
-        <div className="footer">footer</div>
+        <div className="footer">Footer</div>
       </div>
     </BrowserRouter>
   );
