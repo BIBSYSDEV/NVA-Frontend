@@ -16,9 +16,9 @@
   .MuiButton-root {
     margin-left: 1rem;
     margin-right: 1rem;
-    width: 10rem;
     background-color: $primary-button-color;
     color: $primary-color;
+    text-transform: none;
   }
 
   .MuiButton-root:hover {
