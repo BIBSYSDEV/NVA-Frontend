@@ -17,27 +17,29 @@ const Breadcrumbs: React.FC = () => {
   const pathNames = location.pathname.split('/').filter(x => x);
 
   return (
-    <div className="breadcrumbs">
+    <>
       {pathNames.length > 0 && (
-        <MuiBreadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
-          <Link to="/">{t('Home')}</Link>
-          {pathNames.map((value, index) => {
-            const translatedValue = mapBreadcrumbName(value);
-            const lastBreadcrumb = index === pathNames.length - 1;
-            const to = `/${pathNames.slice(0, index + 1).join('/')}`;
-            return lastBreadcrumb ? (
-              <Link to={to} key={to}>
-                <b>{translatedValue}</b>
-              </Link>
-            ) : (
-              <Link to={to} key={to}>
-                {translatedValue}
-              </Link>
-            );
-          })}
-        </MuiBreadcrumbs>
+        <div className="breadcrumbs">
+          <MuiBreadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
+            <Link to="/">{t('Home')}</Link>
+            {pathNames.map((value, index) => {
+              const translatedValue = mapBreadcrumbName(value);
+              const lastBreadcrumb = index === pathNames.length - 1;
+              const to = `/${pathNames.slice(0, index + 1).join('/')}`;
+              return lastBreadcrumb ? (
+                <Link to={to} key={to}>
+                  <b>{translatedValue}</b>
+                </Link>
+              ) : (
+                <Link to={to} key={to}>
+                  {translatedValue}
+                </Link>
+              );
+            })}
+          </MuiBreadcrumbs>
+        </div>
       )}
-    </div>
+    </>
   );
 };
 

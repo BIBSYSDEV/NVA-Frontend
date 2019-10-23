@@ -15,6 +15,7 @@ import Resource from './modules/resources/Resource';
 import Search from './modules/search/Search';
 import User from './modules/user/User';
 import { hubListener } from './utils/hub-listener';
+import AdminMenu from './modules/dashboard/AdminMenu';
 
 const App: React.FC = () => {
   Amplify.configure(awsConfig);
@@ -39,6 +40,7 @@ const App: React.FC = () => {
     <BrowserRouter>
       <div className="app">
         <Header />
+        <AdminMenu />
         <Breadcrumbs />
         <div className="body">
           <Switch>
@@ -51,7 +53,7 @@ const App: React.FC = () => {
             <Route path="*" component={NotFound} />
           </Switch>
         </div>
-        <div className="footer">footer</div>
+        <div className="footer">Footer</div>
       </div>
     </BrowserRouter>
   );
