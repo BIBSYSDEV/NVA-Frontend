@@ -4,20 +4,20 @@ Parameters:
     Description: Name of S3 bucket for frontend
     Type: String
 Resources:
-  NvaFrontendBucketPolicy: 
-    Type: AWS::S3::BucketPolicy
-    Properties: 
-      Bucket: 
-        !Ref NvaFrontendBucketName
-      PolicyDocument: 
-        Statement: 
-          Action: 
-            - 's3:GetObject'
-          Effect: 'Allow'
-          Resource: 
-            !Sub 'arn:aws:s3:::${NvaFrontendBucketName}/*'
-          Principal: 
-            AWS: !Sub 'arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity ${CloudFrontOriginAccessIdentity}'
+#  NvaFrontendBucketPolicy: 
+#    Type: AWS::S3::BucketPolicy
+#    Properties: 
+#      Bucket: 
+#        !Ref NvaFrontendBucketName
+#      PolicyDocument: 
+#        Statement: 
+#          Action: 
+#            - 's3:GetObject'
+#          Effect: 'Allow'
+#          Resource: 
+#            !Sub 'arn:aws:s3:::${NvaFrontendBucketName}/*'
+#          Principal: 
+#            AWS: !Sub 'arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity ${CloudFrontOriginAccessIdentity}'
   CloudFrontOriginAccessIdentity:
       Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
       Properties:

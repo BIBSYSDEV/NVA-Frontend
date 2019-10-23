@@ -114,7 +114,6 @@ Resources:
               Configuration:
                 BucketName: !Ref FrontendBucketName
                 Extract: true
-                CannedACL: bucket-owner-full-control
               RunOrder: 2
                 
   PipelineRole:
@@ -140,6 +139,7 @@ Resources:
               - Action:
                   - 's3:ListBucket'
                   - 's3:GetBucketVersioning'
+                  - 's3:PutObject'
                 Effect: Allow
                 Resource:
                   - !Sub ${ArtifactStoreBucket.Arn}
