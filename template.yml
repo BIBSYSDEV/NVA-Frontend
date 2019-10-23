@@ -15,14 +15,14 @@ Resources:
             - 's3:GetObject'
           Effect: 'Allow'
           Resource: 
-            !Join ['', ['arn:aws:s3:::', !Ref NvaFrontendBucketName, '/*']]
+            !Sub 'arn:aws:s3:::${NvaFrontendBucketName}/*'
           Principal: 
-            AWS: !Join ['', ['arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity ', !Ref CloudFrontOriginAccessIdentity]]
+            AWS: !Sub 'arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity ${CloudFrontOriginAccessIdentity}'
   CloudFrontOriginAccessIdentity:
       Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
       Properties:
         CloudFrontOriginAccessIdentityConfig:
-          Comment: !Join ['', [!Ref NvaFrontendBucketName, '-access-identity']]
+          Comment: !Sub '${NvaFrontendBucketName}-access-identity'
   NvaFrontendBucket:
     Type: 'AWS::S3::Bucket'
     Properties:
@@ -32,10 +32,10 @@ Resources:
     Properties:
       DistributionConfig:
         Origins:
-        - DomainName: !Join ['', [!Ref NvaFrontendBucketName, '.s3.amazonaws.com']]
-          Id: !Join ['', ['S3-', !Ref NvaFrontendBucketName]]
+        - DomainName: !Sub '${NvaFrontendBucketName}.s3.amazonaws.com'
+          Id: !Sub 'S3-${NvaFrontendBucketName}'
           S3OriginConfig:
-            OriginAccessIdentity:  !Join [ "", [ "origin-access-identity/cloudfront/", !Ref CloudFrontOriginAccessIdentity]]
+            OriginAccessIdentity:  !Sub 'origin-access-identity/cloudfront/${CloudFrontOriginAccessIdentity}'
         Enabled: true
         Comment: NVA frontend distribution
         DefaultCacheBehavior:
@@ -43,7 +43,7 @@ Resources:
           - GET
           - HEAD
           TargetOriginId: 
-            !Join ['', ['S3-', !Ref NvaFrontendBucketName]]
+            !Sub 'S3-${NvaFrontendBucketName}'
           ForwardedValues:
             QueryString: false
             Cookies:

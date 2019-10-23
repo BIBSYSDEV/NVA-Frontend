@@ -20,6 +20,9 @@ Parameters:
     Description: GitHub repo branch name. It defaults to master if not specified.
     Type: String
     Default: master
+  FrontendBucketName:
+    Description: Bucket name for frontend. Must be all lower case, numbers and '-', '_'
+    Type: String
 
 Resources:
   CodeBuildProject:
@@ -75,7 +78,6 @@ Resources:
                 Version: '1'
               Configuration:
                 ProjectName: !GetAtt CodeBuildProject.Arn
-                PrimarySource: SourceArtifact
               InputArtifacts:
                 - Name: SourceArtifact
               OutputArtifacts:
@@ -95,11 +97,11 @@ Resources:
                   - 'nva-frontend-cloudfront-stack-${branch}'
                   - branch: !Ref GitHubBranch
                 Capabilities: CAPABILITY_IAM
-                RoleArn: !GetAtt PipelineRole.Arn
-                TemplatePath: template.yml
-                ParameterOverrides: '{"NvaFrontendBucketName": "nva-frontend-test-pipeline-bucket"}'
+                RoleArn: !GetAtt CloudFrontDeployRole.Arn
+                TemplatePath: BuildArtifact::template.yml
+                ParameterOverrides: !Sub '{ "NvaFrontendBucketName": "${FrontendBucketName}" }' 
               InputArtifacts: 
-                - Name: SourceArtifact
+                - Name: BuildArtifact
               RunOrder: 1
             - Name: MoveApplicationtoS3
               ActionTypeId:
@@ -110,8 +112,9 @@ Resources:
               InputArtifacts: 
                 - Name: BuildArtifact
               Configuration:
-                BucketName: !Join ['nva-frontend-stack-bucket-', [!Ref GitHubBranch]]
+                BucketName: !Ref FrontendBucketName
                 Extract: true
+                CannedACL: bucket-owner-full-control
               RunOrder: 2
                 
   PipelineRole:
@@ -152,6 +155,45 @@ Resources:
                   - 'codebuild:BatchGetBuilds'
                 Effect: Allow
                 Resource: '*'
+              - Action:
+                  - 'cloudformation:*'
+                Effect: Allow
+                Resource: '*'
+  CloudFrontDeployRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action: ['sts:AssumeRole']
+            Effect: Allow
+            Principal:
+              Service: [cloudfront.amazonaws.com, cloudformation.amazonaws.com]
+        Version: '2012-10-17'
+      Path: /
+      Policies:
+        - PolicyName: CloudFormationAccess
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Action:
+                  - 'iam:PassRole'
+                Effect: Allow
+                Resource: '*'
+              - Action:
+                  - 'cloudformation:*'
+                Effect: Allow
+                Resource: '*'
+              - Action:
+                  - 'cloudfront:*'
+                  - 's3:CreateBucket'
+                Effect: Allow
+                Resource: '*'
+              - Action:
+                  - 's3:ListAllMyBuckets'
+                  - 's3:PutBucketPolicy'
+                  - 's3:PutObject'
+                Effect: Allow
+                Resource: arn:aws:s3:::*
   CodeBuildServiceRole:
     Type: AWS::IAM::Role
     Properties:
