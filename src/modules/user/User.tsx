@@ -3,7 +3,7 @@ import '../../styles/user.scss';
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation } from 'react-router';
+import { useHistory, useLocation } from 'react-router';
 
 import { getOrcidInfo } from '../../api/user';
 import { RootStore } from '../../reducers/rootReducer';
@@ -16,6 +16,7 @@ import UserRoles from './UserRoles';
 const User: React.FC = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const location = useLocation();
   useEffect(() => {
@@ -23,6 +24,7 @@ const User: React.FC = () => {
     const orcidCode = query.get('code') || '';
     if (orcidCode) {
       dispatch(getOrcidInfo(orcidCode));
+      history.push('/user');
     }
   }, [location.search, dispatch]);
 
