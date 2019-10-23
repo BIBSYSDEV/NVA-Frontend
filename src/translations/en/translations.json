@@ -1,4 +1,5 @@
 {
+  "Admin panel": "Admin panel",
   "Applications": "Applications",
   "Author information": "Author information",
   "Contact": "Contact",
@@ -18,6 +19,7 @@
   "Menu": "Menu",
   "My profile": "My profile",
   "Name": "Name",
+  "New registration": "+ New registration",
   "New resource": "New resource",
   "ORCID": "ORCID",
   "Organizations": "Organizations",

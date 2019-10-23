@@ -1,4 +1,5 @@
 {
+  "Admin panel": "Admin panel",
   "Applications": "Applikasjoner",
   "Author information": "Forfatter-informasjon",
   "Contact": "Kontaktinformasjon",
@@ -18,6 +19,7 @@
   "Menu": "Meny",
   "My profile": "Min profil",
   "Name": "Navn",
+  "New registration": "+ Ny registrering",
   "New resource": "Ny ressurs",
   "ORCID": "ORCID",
   "Organizations": "Tilhørighet",

@@ -83,14 +83,14 @@
     display: block;
 
     .line:first-of-type {
-      border-top: 1px solid $secondary-color;
+      border-top: 1px solid $text-color;
     }
 
     .line {
       padding-bottom: 0.8rem;
       padding-top: 0.8rem;
       display: flex;
-      border-bottom: 1px solid $secondary-color;
+      border-bottom: 1px solid $text-color;
 
       .MuiIcon-root {
         display: inline-block;
