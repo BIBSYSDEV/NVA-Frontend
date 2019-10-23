@@ -8,6 +8,7 @@ import { RootStore } from '../../reducers/rootReducer';
 import UserCard from './UserCard';
 import UserInfo from './UserInfo';
 import UserLanguage from './UserLanguage';
+import UserOrcid from './UserOrcid';
 import UserRoles from './UserRoles';
 
 const User: React.FC = () => {
@@ -28,7 +29,7 @@ const User: React.FC = () => {
         <UserInfo user={user} />
         <UserRoles user={user} />
         <UserCard headerLabel={t('Organizations')} className="user__organizations" />
-        <UserCard headerLabel={t('ORCID')} className="user__orcid-info" />
+        <UserOrcid />
       </div>
     </div>
   );
