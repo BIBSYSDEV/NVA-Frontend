@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router';
 
+import { orcidSignInFailureAction } from '../../actions/errorActions';
 import { getOrcidInfo } from '../../api/user';
 import { RootStore } from '../../reducers/rootReducer';
 import UserCard from './UserCard';
@@ -24,13 +25,13 @@ const User: React.FC = () => {
     const orcidCode = query.get('code') || '';
     const error = query.get('error') || '';
     if (error) {
-      alert('Connection to Orcid failed');
+      dispatch(orcidSignInFailureAction(t('OCID login failed')));
       history.push('/user');
     } else if (orcidCode) {
       dispatch(getOrcidInfo(orcidCode));
       history.push('/user');
     }
-  }, [history, location.search, dispatch]);
+  }, [t, history, location.search, dispatch]);
 
   const user = useSelector((state: RootStore) => state.user);
 

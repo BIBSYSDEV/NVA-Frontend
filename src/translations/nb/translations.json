@@ -1,5 +1,5 @@
 {
-  "Admin panel": "Admin panel",
+  "Admin panel": "Adminpanel",
   "Applications": "Applikasjoner",
   "Author information": "Forfatter-informasjon",
   "Create or Connect to your ORCID": "Opprett eller Koble til din ORCID",
@@ -27,6 +27,7 @@
   "New registration": "+ Ny registrering",
   "New resource": "Ny ressurs",
   "ORCID": "ORCID",
+  "ORCID login failed": "Kunne ikke logge inn på ORCID",
   "Organizations": "Tilhørighet",
   "Password": "Passord",
   "Publisher": "Utgiver",
@@ -45,5 +46,6 @@
   "Skip this step (can be configured in 'profile' later)": "Hopp over nå (kan gjøres under 'profil' senere)",
   "User information": "Brukerinformasjon",
   "What is ORCID?": "Hva er ORCID?",
-  "Why should I connect to ORCID?": "Hvorfor ber vi om ORCID?"
+  "Why should I connect to ORCID?": "Hvorfor ber vi om ORCID?",
+  "Your ORCID": "Din ORCID"
 }

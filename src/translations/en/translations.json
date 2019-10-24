@@ -27,6 +27,7 @@
   "New registration": "+ New registration",
   "New resource": "New resource",
   "ORCID": "ORCID",
+  "ORCID login failed": "ORCID login failed",
   "Organizations": "Organizations",
   "Password": "Password",
   "Publisher": "Publisher",
@@ -45,5 +46,6 @@
   "Skip this step (can be configured in 'profile' later)": "Skip this step (can be configured in 'profile' later)",
   "User information": "User information",
   "What is ORCID?": "What is ORCID?",
-  "Why should I connect to ORCID?": "Why should I connect to ORCID?"
+  "Why should I connect to ORCID?": "Why should I connect to ORCID?",
+  "Your ORCID": "Your ORCID"
 }

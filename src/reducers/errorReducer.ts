@@ -1,24 +1,20 @@
 import {
   ErrorActions,
   LOGIN_FAILURE,
-  ORCID_REQUEST_ERROR,
-  ORCID_SIGNIN_ERROR,
+  ORCID_REQUEST_FAILURE,
+  ORCID_SIGNIN_FAILURE,
   REFRESH_TOKEN_FAILURE,
 } from '../actions/errorActions';
-import { LOGIN_SUCCESS, LOGOUT_SUCCESS, REFRESH_TOKEN_SUCCESS, SET_USER, UserActions } from '../actions/userActions';
+import { UserActions } from '../actions/userActions';
+import { ErrorMessageType } from '../types/error.types';
 
-export const errorReducer = (state: string | null = null, action: ErrorActions | UserActions) => {
+export const errorReducer = (state: ErrorMessageType[] = [], action: ErrorActions | UserActions) => {
   switch (action.type) {
     case LOGIN_FAILURE:
-    case ORCID_SIGNIN_ERROR:
-    case ORCID_REQUEST_ERROR:
+    case ORCID_SIGNIN_FAILURE:
+    case ORCID_REQUEST_FAILURE:
     case REFRESH_TOKEN_FAILURE:
-      return action.message;
-    case LOGIN_SUCCESS:
-    case SET_USER:
-    case LOGOUT_SUCCESS:
-    case REFRESH_TOKEN_SUCCESS:
-      return null;
+      return [...state, action];
     default:
       return state;
   }

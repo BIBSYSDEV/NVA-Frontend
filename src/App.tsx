@@ -1,26 +1,38 @@
 import './styles/app.scss';
 
 import Amplify, { Hub } from 'aws-amplify';
+import { useSnackbar } from 'notistack';
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import { getCurrentAuthenticatedUser } from './api/user';
 import awsConfig from './aws-config';
 import Breadcrumbs from './modules/breadcrumbs/Breadcrumbs';
+import AdminMenu from './modules/dashboard/AdminMenu';
 import Dashboard from './modules/dashboard/Dashboard';
 import NotFound from './modules/errorpages/NotFound';
 import Header from './modules/header/Header';
 import Resource from './modules/resources/Resource';
 import Search from './modules/search/Search';
 import User from './modules/user/User';
+import { RootStore } from './reducers/rootReducer';
 import { hubListener } from './utils/hub-listener';
-import AdminMenu from './modules/dashboard/AdminMenu';
 
 const App: React.FC = () => {
   Amplify.configure(awsConfig);
 
   const dispatch = useDispatch();
+  const { enqueueSnackbar } = useSnackbar();
+  const errors = useSelector((state: RootStore) => state.errors);
+
+  useEffect(() => {
+    if (errors) {
+      errors.map(error => {
+        enqueueSnackbar(error.message, { variant: error.variant, persist: true });
+      });
+    }
+  }, [errors]);
 
   useEffect(() => {
     const updateUser = async () => {
@@ -53,7 +65,7 @@ const App: React.FC = () => {
             <Route path="*" component={NotFound} />
           </Switch>
         </div>
-        <div className="footer">Footer</div>
+        <div className="footer">footer</div>
       </div>
     </BrowserRouter>
   );
