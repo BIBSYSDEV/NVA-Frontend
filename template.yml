@@ -19,9 +19,8 @@ Resources:
             !Sub 'arn:aws:s3:::${NvaFrontendBucketName}/*'
           Principal: 
 #            AWS: !Sub 'arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity ${CloudFrontOriginAccessIdentity}'
-            AWS:
-              - cloudformation.amazonaws.com
-              - cloudfront.amazonaws.com
+            Service: [ cloudformation.amazonaws.com, cloudfront.amazonaws.com ]
+              
   CloudFrontOriginAccessIdentity:
       Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
       Properties:
