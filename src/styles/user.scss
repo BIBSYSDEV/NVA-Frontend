@@ -62,20 +62,20 @@
 
   &__feide-info {
     display: block;
+  }
 
-    .line {
-      padding-bottom: 0.5rem;
+  .line {
+    padding-bottom: 0.5rem;
 
-      .label {
-        display: inline-block;
-        width: 10rem;
-      }
+    .label {
+      display: inline-block;
+      width: 10rem;
+    }
 
-      .text {
-        display: inline-block;
-        width: 20rem;
-        font-weight: bold;
-      }
+    .text {
+      display: inline-block;
+      width: 30rem;
+      font-weight: bold;
     }
   }
 
@@ -83,14 +83,14 @@
     display: block;
 
     .line:first-of-type {
-      border-top: 1px solid $secondary-color;
+      border-top: 1px solid $text-color;
     }
 
     .line {
       padding-bottom: 0.8rem;
       padding-top: 0.8rem;
       display: flex;
-      border-bottom: 1px solid $secondary-color;
+      border-bottom: 1px solid $text-color;
 
       .MuiIcon-root {
         display: inline-block;
@@ -116,5 +116,26 @@
 
   &__orcid-info {
     height: 15rem;
+  }
+}
+
+.orcid-modal {
+  h5 {
+    border-bottom: 1px solid black;
+    text-align: right;
+  }
+
+  a {
+    color: $primary-button-color;
+  }
+
+  .orcid-button {
+    padding: 3rem 0;
+    text-align: center;
+  }
+
+  .skip {
+    padding-top: 5rem;
+    text-align: center;
   }
 }
