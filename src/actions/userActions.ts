@@ -1,3 +1,5 @@
+import { VariantType } from 'notistack';
+
 import User from '../types/user.types';
 
 // ACTION TYPES
@@ -29,6 +31,8 @@ export const refreshTokenSuccessAction = () => ({
 
 export const loginSuccessAction = () => ({
   type: LOGIN_SUCCESS,
+  message: 'login success',
+  variant: 'success',
 });
 
 export const logoutSuccessAction = () => ({
@@ -60,6 +64,8 @@ export interface RefreshTokenSuccessAction {
 
 export interface LoginSuccessAction {
   type: typeof LOGIN_SUCCESS;
+  message: string;
+  variant: VariantType;
 }
 
 export interface LogoutSuccessAction {

@@ -6,6 +6,13 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
+import {
+  LOGIN_FAILURE,
+  loginFailureAction,
+  ORCID_REQUEST_FAILURE,
+  orcidRequestFailureAction,
+} from './actions/errorActions';
+import { loginSuccessAction } from './actions/userActions';
 import { getCurrentAuthenticatedUser } from './api/user';
 import awsConfig from './aws-config';
 import Breadcrumbs from './modules/breadcrumbs/Breadcrumbs';
@@ -23,14 +30,30 @@ const App: React.FC = () => {
   Amplify.configure(awsConfig);
 
   const dispatch = useDispatch();
-  const { enqueueSnackbar } = useSnackbar();
-  const errors = useSelector((state: RootStore) => state.errors);
+  const { closeSnackbar, enqueueSnackbar } = useSnackbar();
+  const feedback = useSelector((store: RootStore) => store.feedback);
 
   useEffect(() => {
-    if (errors) {
-      errors.map(error => enqueueSnackbar(error.message, { variant: error.variant, persist: true }));
+    console.log('feedback', feedback);
+    if (feedback.length > 0) {
+      feedback.map(fb =>
+        fb.variant === 'error'
+          ? enqueueSnackbar(fb.message, { variant: fb.variant, persist: true })
+          : enqueueSnackbar(fb.message, { variant: fb.variant })
+      );
     }
-  }, [errors, enqueueSnackbar]);
+    return () => {
+      closeSnackbar();
+    };
+  }, [feedback, enqueueSnackbar, closeSnackbar]);
+
+  useEffect(() => {
+    dispatch(loginFailureAction(LOGIN_FAILURE));
+    dispatch(orcidRequestFailureAction(ORCID_REQUEST_FAILURE));
+    setTimeout(() => {
+      dispatch(loginSuccessAction());
+    }, 5000);
+  }, []);
 
   useEffect(() => {
     const updateUser = async () => {

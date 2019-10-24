@@ -1,16 +1,20 @@
 import { combineReducers } from 'redux';
 
-import { ErrorMessageType } from '../types/error.types';
+import { FeedbackMessageType } from '../types/feedback.types';
 import { SearchResults } from '../types/search.types';
 import User from '../types/user.types';
-import { errorReducer } from './errorReducer';
+import { feedbackReducer } from './feedbackReducer';
 import { resourceReducer } from './resourceReducer';
 import { userReducer } from './userReducer';
 
 export interface RootStore {
-  errors: ErrorMessageType[];
+  feedback: FeedbackMessageType[];
   results: SearchResults;
   user: User;
 }
 
-export default combineReducers({ user: userReducer, results: resourceReducer, errors: errorReducer });
+export default combineReducers({
+  user: userReducer,
+  results: resourceReducer,
+  feedback: feedbackReducer,
+});
