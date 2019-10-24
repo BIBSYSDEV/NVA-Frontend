@@ -93,9 +93,7 @@ Resources:
                 Version: '1'
               Configuration:
                 ActionMode: CREATE_UPDATE
-                StackName: !Sub 
-                  - 'nva-frontend-cloudfront-stack-${branch}'
-                  - branch: !Ref GitHubBranch
+                StackName: !Sub 'nva-frontend-cloudfront-stack-${GitHubBranch}'
                 Capabilities: CAPABILITY_IAM
                 RoleArn: !GetAtt CloudFrontDeployRole.Arn
                 TemplatePath: BuildArtifact::template.yml
