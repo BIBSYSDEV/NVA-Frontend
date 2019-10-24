@@ -28,11 +28,9 @@ const App: React.FC = () => {
 
   useEffect(() => {
     if (errors) {
-      errors.map(error => {
-        enqueueSnackbar(error.message, { variant: error.variant, persist: true });
-      });
+      errors.map(error => enqueueSnackbar(error.message, { variant: error.variant, persist: true }));
     }
-  }, [errors]);
+  }, [errors, enqueueSnackbar]);
 
   useEffect(() => {
     const updateUser = async () => {

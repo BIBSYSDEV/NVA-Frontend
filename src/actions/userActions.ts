@@ -35,7 +35,7 @@ export const logoutSuccessAction = () => ({
   type: LOGOUT_SUCCESS,
 });
 
-export const setOrcidInfo = (name: string, orcid: string) => ({
+export const setOrcidInfoAction = (name: string, orcid: string) => ({
   type: SET_ORCID_INFO,
   name,
   orcid,

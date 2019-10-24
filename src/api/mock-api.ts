@@ -3,7 +3,7 @@ import { Dispatch } from 'redux';
 
 import { orcidRequestFailureAction } from '../actions/errorActions';
 import { searchForResources } from '../actions/resourceActions';
-import { setOrcidInfo, setUserAction } from '../actions/userActions';
+import { setOrcidInfoAction, setUserAction } from '../actions/userActions';
 import { Resource } from '../types/resource.types';
 import User from '../types/user.types';
 import { SEARCH_RESULTS_PER_PAGE } from '../utils/constants';
@@ -67,7 +67,7 @@ export const mockOrcidLookup = async (dispatch: Dispatch, orcidCode: string) => 
   })
     .then(data => data.json())
     .then((data: OrcidResponse) => {
-      dispatch(setOrcidInfo(data.name, data.orcid));
+      dispatch(setOrcidInfoAction(data.name, data.orcid));
     })
     .catch(() => {
       dispatch(orcidRequestFailureAction('ORCID request failed'));
