@@ -9,6 +9,7 @@ import { LOGIN_SUCCESS, UserActions } from '../actions/userActions';
 import { FeedbackMessageType } from '../types/feedback.types';
 
 export const feedbackReducer = (state: FeedbackMessageType[] = [], action: ErrorActions | UserActions) => {
+  let remainingFeedbackMessages = [];
   switch (action.type) {
     case LOGIN_FAILURE:
     case ORCID_SIGNIN_FAILURE:
@@ -16,10 +17,8 @@ export const feedbackReducer = (state: FeedbackMessageType[] = [], action: Error
     case REFRESH_TOKEN_FAILURE:
       return [...state, action];
     case LOGIN_SUCCESS:
-      const remainingErrorMessages = [...state].filter(error => {
-        return error.message !== LOGIN_FAILURE;
-      });
-      return [...remainingErrorMessages, action];
+      remainingFeedbackMessages = [...state].filter(error => error.message !== LOGIN_FAILURE);
+      return [...remainingFeedbackMessages, action];
     default:
       return state;
   }
