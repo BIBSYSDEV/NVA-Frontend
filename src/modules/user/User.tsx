@@ -17,16 +17,20 @@ const User: React.FC = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const history = useHistory();
-
   const location = useLocation();
+
   useEffect(() => {
     const query = new URLSearchParams(location.search);
     const orcidCode = query.get('code') || '';
-    if (orcidCode) {
+    const error = query.get('error') || '';
+    if (error) {
+      alert('Connection to Orcid failed');
+      history.push('/user');
+    } else if (orcidCode) {
       dispatch(getOrcidInfo(orcidCode));
       history.push('/user');
     }
-  }, [location.search, dispatch]);
+  }, [history, location.search, dispatch]);
 
   const user = useSelector((state: RootStore) => state.user);
 
