@@ -17,10 +17,13 @@ import Resource from './modules/resources/Resource';
 import Search from './modules/search/Search';
 import User from './modules/user/User';
 import { RootStore } from './reducers/rootReducer';
+import { useMockData } from './utils/constants';
 import { hubListener } from './utils/hub-listener';
 
 const App: React.FC = () => {
-  Amplify.configure(awsConfig);
+  if (!useMockData) {
+    Amplify.configure(awsConfig);
+  }
 
   const dispatch = useDispatch();
   const { closeSnackbar, enqueueSnackbar } = useSnackbar();
@@ -49,8 +52,10 @@ const App: React.FC = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    Hub.listen('auth', data => hubListener(data, dispatch));
-    return () => Hub.remove('auth', data => hubListener(data, dispatch));
+    if (!useMockData) {
+      Hub.listen('auth', data => hubListener(data, dispatch));
+      return () => Hub.remove('auth', data => hubListener(data, dispatch));
+    }
   }, [dispatch]);
 
   return (

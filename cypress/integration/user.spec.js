@@ -1,6 +1,10 @@
 describe('A user logs in and views their user details', () => {
   it('Given that the user is logged in', () => {
-    cy.visit('/');
+    cy.visit('/', {
+      onBeforeLoad: _contentWindow => {
+        Object.defineProperty(navigator, 'language', { value: 'en-US,en' });
+      },
+    });
     cy.get('[data-cy=menu]').contains('Test User');
   });
   it('When they click their user details in the navigation bar', () => {
@@ -16,5 +20,40 @@ describe('A user logs in and views their user details', () => {
     cy.get('[data-cy=user-institution]').contains('unit');
     cy.get('[data-cy=user-applications]').contains('NVA, DLR');
     cy.get('[data-cy=user-role]').contains('Publisher');
+  });
+});
+
+describe('A user connects her ORCID to her account', () => {
+  it('Given that the user is logged in and navigated to the user page', () => {
+    cy.visit('/user', {
+      onBeforeLoad: _contentWindow => {
+        Object.defineProperty(navigator, 'language', { value: 'en-US,en' });
+      },
+    });
+  });
+  it('When they click the connect to ORCID button to open the modal', () => {
+    cy.get('[data-cy=open-orcid-modal]').click({ force: true });
+  });
+  it('And they click the connect to ORCID button', () => {
+    cy.get('[data-cy=connect-to-orcid]').click({ force: true });
+  });
+  it('And they are redirected to ORCID', () => {
+    // mocked during testing
+  });
+
+  it('And the ORCID connection is successful', () => {
+    cy.visit('/user?code=123456');
+  });
+  it('Then they see their ORCID in the user page', () => {
+    cy.get('[data-cy=orcid-info]').contains('https://orcid.org/0000-0001-2345-6789');
+  });
+  it('When the ORCID connection is unsuccessful', () => {
+    //mock failure
+    cy.visit('/user?error=some_error');
+  });
+  it('Then they should get an errormessage', () => {
+    cy.get('[data-cy=snackbar]').contains('ORCID login failed');
+
+    // find ORCID
   });
 });
