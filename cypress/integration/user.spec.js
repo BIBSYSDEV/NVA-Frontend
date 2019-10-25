@@ -1,10 +1,6 @@
 describe('A user logs in and views their user details', () => {
   it('Given that the user is logged in', () => {
-    cy.visit('/', {
-      onBeforeLoad: _contentWindow => {
-        Object.defineProperty(navigator, 'language', { value: 'en-US,en' });
-      },
-    });
+    cy.visit('/');
     cy.get('[data-cy=menu]').contains('Test User');
   });
   it('When they click their user details in the navigation bar', () => {
@@ -25,11 +21,7 @@ describe('A user logs in and views their user details', () => {
 
 describe('A user connects her ORCID to her account', () => {
   it('Given that the user is logged in and navigated to the user page', () => {
-    cy.visit('/user', {
-      onBeforeLoad: _contentWindow => {
-        Object.defineProperty(navigator, 'language', { value: 'en-US,en' });
-      },
-    });
+    cy.visit('/user');
   });
   it('When they click the connect to ORCID button to open the modal', () => {
     cy.get('[data-cy=open-orcid-modal]').click({ force: true });
@@ -48,12 +40,13 @@ describe('A user connects her ORCID to her account', () => {
     cy.get('[data-cy=orcid-info]').contains('https://orcid.org/0000-0001-2345-6789');
   });
   it('When the ORCID connection is unsuccessful', () => {
-    //mock failure
+    // need to set language to english in order to check that the error message is correct
+    cy.get('[data-cy=language-selector] .MuiSelect-root').click({ force: true });
+    cy.get('[data-cy=user-language-en]').click({ force: true });
+
     cy.visit('/user?error=some_error');
   });
   it('Then they should get an errormessage', () => {
     cy.get('[data-cy=snackbar]').contains('ORCID login failed');
-
-    // find ORCID
   });
 });
