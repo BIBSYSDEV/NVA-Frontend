@@ -7,7 +7,9 @@ describe('A user searches for resources and browses through the result-pages', (
     cy.get('[data-cy=menu]').should('not.exist');
   });
   it('When the user enters "test" into the search input', () => {
-    cy.get('[data-cy=search-input] .MuiInputBase-input').type('test');
+    cy.get('[data-cy=search-input] .MuiInputBase-input')
+      .click({ force: true })
+      .type('test');
   });
   it('And clicks Search', () => {
     cy.get('[data-cy=search-button]').click({ force: true });

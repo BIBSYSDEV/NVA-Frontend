@@ -62,20 +62,20 @@
 
   &__feide-info {
     display: block;
+  }
 
-    .line {
-      padding-bottom: 0.5rem;
+  .line {
+    padding-bottom: 0.5rem;
 
-      .label {
-        display: inline-block;
-        width: 10rem;
-      }
+    .label {
+      display: inline-block;
+      width: 10rem;
+    }
 
-      .text {
-        display: inline-block;
-        width: 20rem;
-        font-weight: bold;
-      }
+    .text {
+      display: inline-block;
+      width: 30rem;
+      font-weight: bold;
     }
   }
 
