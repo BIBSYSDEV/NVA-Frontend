@@ -7,7 +7,7 @@ import { Resource } from '../types/resource.types';
 import User from '../types/user.types';
 import resources from '../utils/testfiles/resources_45_random_results_generated.json';
 import user from '../utils/testfiles/user.json';
-import { SEARCH_RESULTS_PER_PAGE, useMockData } from '../utils/constants';
+import { SEARCH_RESULTS_PER_PAGE } from '../utils/constants';
 
 export const mockSetUser = async (dispatch: Dispatch) => {
   fetchMock.mock('http://example.com/user', user);
@@ -21,21 +21,15 @@ export const mockSetUser = async (dispatch: Dispatch) => {
     });
 };
 
-export const Search = async (dispatch: Dispatch, searchTerm: string, offset: number) => {
-  if (useMockData) {
-    fetchMock.mock(`/resources/${searchTerm}`, resources);
-  }
-  return await fetch(`/resources/${searchTerm}`)
-    .then(data => {
-      return data.json();
-    })
+export const mockSearch = async (dispatch: Dispatch, searchTerm: string, offset: number) => {
+  fetchMock.mock(`http://example.com/resources/${searchTerm}`, resources);
+  return await fetch(`http://example.com/resources/${searchTerm}`)
+    .then(data => data.json())
     .then((data: Resource[]) => {
       const result = data.slice(offset, offset + SEARCH_RESULTS_PER_PAGE);
       dispatch(searchForResources(result, searchTerm, data.length, offset));
     })
     .then(() => {
-      if (useMockData) {
-        fetchMock.reset();
-      }
+      fetchMock.reset();
     });
 };
