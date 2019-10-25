@@ -1,9 +1,9 @@
 import fetchMock from 'fetch-mock';
 import { Dispatch } from 'redux';
 
-import { orcidRequestFailureAction } from '../actions/errorActions';
+import { orcidRequestFailureAction, setOrcidInfoAction } from '../actions/orcidActions';
 import { searchForResources } from '../actions/resourceActions';
-import { setOrcidInfoAction, setUserAction } from '../actions/userActions';
+import { setUserAction } from '../actions/userActions';
 import { Resource } from '../types/resource.types';
 import User from '../types/user.types';
 import { SEARCH_RESULTS_PER_PAGE } from '../utils/constants';

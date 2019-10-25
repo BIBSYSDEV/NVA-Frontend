@@ -1,14 +1,14 @@
 import { Auth } from 'aws-amplify';
 import { Dispatch } from 'redux';
 
-import { refreshTokenFailureAction } from '../actions/errorActions';
 import {
   initLoginAction,
   initLogoutAction,
   loginSuccessAction,
+  refreshTokenFailureAction,
   refreshTokenSuccessAction,
-  setUserAction,
-} from '../actions/userActions';
+} from '../actions/authActions';
+import { setUserAction } from '../actions/userActions';
 import { emptyUser } from '../types/user.types';
 import { useMockData } from '../utils/constants';
 import { mockOrcidLookup, mockSetUser } from './mock-api';

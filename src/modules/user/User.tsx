@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router';
 
-import { orcidSignInFailureAction } from '../../actions/errorActions';
+import { orcidSignInFailureAction } from '../../actions/orcidActions';
 import { getOrcidInfo } from '../../api/user';
 import { RootStore } from '../../reducers/rootReducer';
 import UserCard from './UserCard';

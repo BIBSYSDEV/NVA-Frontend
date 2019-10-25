@@ -1,7 +1,6 @@
 import { Dispatch } from 'redux';
 
-import { loginFailureAction } from '../actions/errorActions';
-import { loginSuccessAction, logoutSuccessAction } from '../actions/userActions';
+import { loginFailureAction, loginSuccessAction, logoutSuccessAction } from '../actions/authActions';
 
 export const hubListener = (data: any, dispatch: Dispatch<any>) => {
   switch (data.payload.event) {

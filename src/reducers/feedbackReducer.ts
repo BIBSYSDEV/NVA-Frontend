@@ -1,14 +1,12 @@
-import {
-  ErrorActions,
-  LOGIN_FAILURE,
-  ORCID_REQUEST_FAILURE,
-  ORCID_SIGNIN_FAILURE,
-  REFRESH_TOKEN_FAILURE,
-} from '../actions/errorActions';
-import { LOGIN_SUCCESS, UserActions } from '../actions/userActions';
+import { AuthActions, LOGIN_FAILURE, LOGIN_SUCCESS, REFRESH_TOKEN_FAILURE } from '../actions/authActions';
+import { ORCID_REQUEST_FAILURE, ORCID_SIGNIN_FAILURE, OrcidActions } from '../actions/orcidActions';
+import { UserActions } from '../actions/userActions';
 import { FeedbackMessageType } from '../types/feedback.types';
 
-export const feedbackReducer = (state: FeedbackMessageType[] = [], action: ErrorActions | UserActions) => {
+export const feedbackReducer = (
+  state: FeedbackMessageType[] = [],
+  action: AuthActions | OrcidActions | UserActions
+) => {
   let remainingFeedbackMessages = [];
   switch (action.type) {
     case LOGIN_FAILURE:
