@@ -1,4 +1,8 @@
 AWSTemplateFormatVersion: "2010-09-09"
+
+Description: >
+  This template creates a pipeline for building and deploying a web application to a CloudFront distribution
+
 Parameters:
   GitHubOAuthToken:
     Description: OAuth token used by AWS CodePipeline to connect to GitHub

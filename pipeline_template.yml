@@ -2,8 +2,8 @@ AWSTemplateFormatVersion: '2010-09-09'
 Transform: 'AWS::Serverless-2016-10-31'
 
 Description: >
-  This template creates a CodePipeline pipeline for serverless applications that a) pulls source from github,
-  b) builds the a serverless application and c) publishes it in the AWS Serverless Application Repository.
+  This template creates a CodePipeline pipeline for serverless web applications that a) pulls source from github,
+  b) builds the a serverless web application and c) sets up a CloudFront distribution
 
 Parameters:
   GitHubOAuthToken:
