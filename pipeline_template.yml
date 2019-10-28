@@ -69,7 +69,7 @@ Resources:
                 OAuthToken: !Ref GitHubOAuthToken
                 Repo: !Ref GitHubRepo
                 Branch: !Ref GitHubBranch
-                PollForSourceChanges: false
+                PollForSourceChanges: true
               OutputArtifacts:
                 - Name: SourceArtifact
               RunOrder: 1
