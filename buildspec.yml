@@ -10,11 +10,6 @@ phases:
       - npm run build
 artifacts:
   files:
-    - build/*
-    - discard-paths: yes
-  secondary-artifacts:
-    static:
-      files:
-        - build/static/*
-      base-directory: static
-  
+    - './**/*'
+  base-directory: .
+  name: websitename
