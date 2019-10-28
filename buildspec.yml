@@ -10,7 +10,6 @@ phases:
       - npm run build
 artifacts:
   files:
-    - '*'
-    - 'static/**/*'
+    - '**/*'
   base-directory: build
   name: nva-frontend
