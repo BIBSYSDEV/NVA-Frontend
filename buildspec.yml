@@ -11,6 +11,6 @@ phases:
 artifacts:
   files:
     - '*'
-    - '*/static/*'
+    - '*/static/**/*'
   base-directory: build
   name: nva-frontend
