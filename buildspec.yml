@@ -11,4 +11,10 @@ phases:
 artifacts:
   files:
     - build/*
+    - discard-paths: yes
+  secondary-artifacts:
+    static:
+      files:
+        - build/static/*
+      base-directory: static
   
