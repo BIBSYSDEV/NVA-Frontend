@@ -10,6 +10,5 @@ phases:
       - npm run build
 artifacts:
   files:
-    - build/**/*
-    - template.yml
+    - build/*
   discard-paths: yes
