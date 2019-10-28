@@ -152,41 +152,6 @@ Resources:
                   - 'cloudformation:*'
                 Effect: Allow
                 Resource: '*'
-  CloudFrontDeployRole:
-    Type: AWS::IAM::Role
-    Properties:
-      AssumeRolePolicyDocument:
-        Statement:
-          - Action: ['sts:AssumeRole']
-            Effect: Allow
-            Principal:
-              Service: [cloudfront.amazonaws.com, cloudformation.amazonaws.com]
-        Version: '2012-10-17'
-      Path: /
-      Policies:
-        - PolicyName: CloudFormationAccess
-          PolicyDocument:
-            Version: '2012-10-17'
-            Statement:
-              - Action:
-                  - 'iam:PassRole'
-                Effect: Allow
-                Resource: '*'
-              - Action:
-                  - 'cloudformation:*'
-                Effect: Allow
-                Resource: '*'
-              - Action:
-                  - 'cloudfront:*'
-                  - 's3:CreateBucket'
-                Effect: Allow
-                Resource: '*'
-              - Action:
-                  - 's3:ListAllMyBuckets'
-                  - 's3:PutBucketPolicy'
-                  - 's3:PutObject'
-                Effect: Allow
-                Resource: arn:aws:s3:::*
   CodeBuildServiceRole:
     Type: AWS::IAM::Role
     Properties:
@@ -256,7 +221,4 @@ Resources:
     Properties:
       VersioningConfiguration:
         Status: Enabled
-Outputs:
-  PipelineBucketName:
-    Value: !Ref FrontendBucketName
     
