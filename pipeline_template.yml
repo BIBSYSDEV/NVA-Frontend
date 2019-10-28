@@ -40,7 +40,12 @@ Resources:
             Type: PLAINTEXT
             Value: !Ref ArtifactStoreBucket
       Source:
-        Type: CODEPIPELINE #Possibly wrong
+        Type: CODEPIPELINE
+  NvaFrontendBucket:
+    Type: 'AWS::S3::Bucket'
+    Properties:
+      BucketName: !Ref FrontendBucketName
+
 
   Pipeline:
     Type: AWS::CodePipeline::Pipeline
@@ -85,22 +90,6 @@ Resources:
               RunOrder: 1
         - Name: Deploy
           Actions:
-            - Name: DeployToCloudFront
-              ActionTypeId:
-                Category: Deploy
-                Owner: AWS
-                Provider: CloudFormation
-                Version: '1'
-              Configuration:
-                ActionMode: CREATE_UPDATE
-                StackName: !Sub 'nva-frontend-cloudfront-stack-${GitHubBranch}'
-                Capabilities: CAPABILITY_IAM
-                RoleArn: !GetAtt CloudFrontDeployRole.Arn
-                TemplatePath: BuildArtifact::template.yml
-                ParameterOverrides: !Sub '{ "NvaFrontendBucketName": "${FrontendBucketName}" }' 
-              InputArtifacts: 
-                - Name: BuildArtifact
-              RunOrder: 1
             - Name: MoveApplicationtoS3
               ActionTypeId:
                 Category: Deploy
@@ -112,8 +101,7 @@ Resources:
               Configuration:
                 BucketName: !Ref FrontendBucketName
                 Extract: true
-              RunOrder: 2
-                
+              RunOrder: 1
   PipelineRole:
     Type: AWS::IAM::Role
     Properties:
@@ -148,6 +136,13 @@ Resources:
                 Effect: Allow
                 Resource:
                   - !Sub ${ArtifactStoreBucket.Arn}/*
+              - Action:
+                  - 's3:PutObject'
+                  - 's3:GetObject'
+                  - 's3:GetObjectVersion'
+                Effect: Allow
+                Resource:
+                  - !Sub ${NvaFrontendBucket.Arn}/*
               - Action:
                   - 'codebuild:StartBuild'
                   - 'codebuild:BatchGetBuilds'
@@ -261,3 +256,7 @@ Resources:
     Properties:
       VersioningConfiguration:
         Status: Enabled
+Outputs:
+  PipelineBucketName:
+    Value: !Ref FrontendBucketName
+    
