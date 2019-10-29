@@ -7,6 +7,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import { getCurrentAuthenticatedUser } from './api/user';
 import awsConfig from './aws-config';
+import Breadcrumbs from './modules/breadcrumbs/Breadcrumbs';
 import Dashboard from './modules/dashboard/Dashboard';
 import NotFound from './modules/errorpages/NotFound';
 import Header from './modules/header/Header';
@@ -14,6 +15,7 @@ import Resource from './modules/resources/Resource';
 import Search from './modules/search/Search';
 import User from './modules/user/User';
 import { hubListener } from './utils/hub-listener';
+import AdminMenu from './modules/dashboard/AdminMenu';
 
 const App: React.FC = () => {
   Amplify.configure(awsConfig);
@@ -38,17 +40,20 @@ const App: React.FC = () => {
     <BrowserRouter>
       <div className="app">
         <Header />
+        <AdminMenu />
+        <Breadcrumbs />
         <div className="body">
           <Switch>
             <Route exact path="/" component={Dashboard} />
             <Route exact path="/resources/new" component={Resource} />
+            <Route exact path="/search" component={Search} />
             <Route exact path="/search/:searchTerm" component={Search} />
             <Route exact path="/search/:searchTerm/:offset" component={Search} />
             <Route exact path="/user" component={User} />
             <Route path="*" component={NotFound} />
           </Switch>
         </div>
-        <div className="footer">footer</div>
+        <div className="footer">Footer</div>
       </div>
     </BrowserRouter>
   );

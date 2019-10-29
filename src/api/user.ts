@@ -5,7 +5,7 @@ import { refreshTokenFailureAction } from '../actions/errorActions';
 import { initLoginAction, initLogoutAction, refreshTokenSuccessAction, setUserAction } from '../actions/userActions';
 import { emptyUser } from '../types/user.types';
 import { useMockData } from '../utils/constants';
-import { mockSetUser } from './mock-api';
+import { mockOrcidLookup, mockSetUser } from './mock-api';
 
 export const login = () => {
   return async (dispatch: Dispatch) => {
@@ -62,6 +62,14 @@ export const logout = () => {
       dispatch(setUserAction(emptyUser));
     } else {
       Auth.signOut();
+    }
+  };
+};
+
+export const getOrcidInfo = (orcidCode: string) => {
+  return async (dispatch: Dispatch) => {
+    if (useMockData) {
+      mockOrcidLookup(dispatch, orcidCode);
     }
   };
 };

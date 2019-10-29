@@ -5,7 +5,6 @@
   display: grid;
   grid-template-areas: 'filter-container search-container';
   grid-template-columns: 10rem auto;
-  height: 100%;
   width: 100%;
   justify-items: center;
   padding-top: 5rem;
@@ -37,18 +36,16 @@
   }
 
   &__input {
-    display: inline-block;
     grid-area: input;
     margin-left: 1rem;
   }
 
   &__search-button {
-    display: inline-block;
     grid-area: button;
     justify-self: right;
   }
 }
 
 .search-results {
-  grid-area: results;
+  padding-bottom: 1rem;
 }
