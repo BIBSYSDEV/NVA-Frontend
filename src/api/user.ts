@@ -11,7 +11,7 @@ import {
 import { setUserAction } from '../actions/userActions';
 import { emptyUser } from '../types/user.types';
 import { useMockData } from '../utils/constants';
-import { mockOrcidLookup } from './orcid';
+import { orcidLookup } from './orcid';
 import { mockUser } from './mock-api';
 
 export const login = () => {
@@ -76,6 +76,6 @@ export const logout = () => {
 
 export const getOrcidInfo = (orcidCode: string) => {
   return async (dispatch: Dispatch) => {
-    mockOrcidLookup(dispatch, orcidCode);
+    orcidLookup(dispatch, orcidCode);
   };
 };
