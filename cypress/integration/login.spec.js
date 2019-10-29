@@ -1,7 +1,7 @@
 describe('A user logs in with Feide', () => {
   it('Given that the user is on the start page', () => {
     cy.visit('/');
-    // Logging out since allready logged in
+    // Logging out since already logged in
     cy.get('[data-cy=menu]').click({ force: true });
     cy.get('[data-cy=logout-button]').click({ force: true });
   });

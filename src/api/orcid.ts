@@ -23,10 +23,9 @@ export const mockOrcidLookup = async (dispatch: Dispatch, orcidCode: string) => 
     },
   })
     .then(response => {
-      console.log('RESPONSE: ', response);
       dispatch(setOrcidInfoAction(response.data.name, response.data.orcid));
     })
-    .catch(function(error) {
+    .catch(() => {
       dispatch(orcidRequestFailureAction('ORCID request failed'));
     });
 };
