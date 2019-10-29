@@ -46,7 +46,6 @@ Resources:
     Properties:
       BucketName: !Ref FrontendBucketName
 
-
   Pipeline:
     Type: AWS::CodePipeline::Pipeline
     Properties:
@@ -102,6 +101,7 @@ Resources:
                 BucketName: !Ref FrontendBucketName
                 Extract: true
               RunOrder: 1
+
   PipelineRole:
     Type: AWS::IAM::Role
     Properties:
@@ -119,17 +119,8 @@ Resources:
             Version: '2012-10-17'
             Statement:
               - Action:
-                  - 'iam:PassRole'
-                Effect: Allow
-                Resource: '*'
-              - Action:
                   - 's3:ListBucket'
                   - 's3:GetBucketVersioning'
-                  - 's3:PutObject'
-                Effect: Allow
-                Resource:
-                  - !Sub ${ArtifactStoreBucket.Arn}
-              - Action:
                   - 's3:PutObject'
                   - 's3:GetObject'
                   - 's3:GetObjectVersion'
@@ -147,11 +138,7 @@ Resources:
                   - 'codebuild:StartBuild'
                   - 'codebuild:BatchGetBuilds'
                 Effect: Allow
-                Resource: '*'
-              - Action:
-                  - 'cloudformation:*'
-                Effect: Allow
-                Resource: '*'
+                Resource: !GetAtt CodeBuildProject.Arn
   CodeBuildServiceRole:
     Type: AWS::IAM::Role
     Properties:
@@ -191,34 +178,9 @@ Resources:
                   - 's3:PutObject'
                 Resource:
                   - !Sub 'arn:aws:s3:::${ArtifactStoreBucket}/*'
-        - PolicyName: CodeBuildParameterStore
-          PolicyDocument:
-            Version: '2012-10-17'
-            Statement:
-              -
-                Effect: Allow
-                Action: 'ssm:GetParameters'
-                Resource: '*'
-  BucketPolicy:
-    Type: AWS::S3::BucketPolicy
-    Properties:
-      Bucket:
-        Ref: ArtifactStoreBucket
-      PolicyDocument:
-        Statement:
-          - Action:
-              - "s3:GetObject"
-            Effect: "Allow"
-            Resource: 
-              !Join ['', [!GetAtt [ ArtifactStoreBucket, Arn ], "/*"]]
-            Principal: "*"
-            Condition:
-              ArnLike:
-                aws:SourceArn: 'arn:aws:serverlessrepo:*:*:*'
 
   ArtifactStoreBucket:
     Type: AWS::S3::Bucket
     Properties:
       VersioningConfiguration:
         Status: Enabled
-    
