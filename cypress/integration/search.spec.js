@@ -1,5 +1,5 @@
-const mockDataWith2Results = require('../../src/utils/testfiles/resources_2_random_results_generated');
-const mockDataWith45Results = require('../../src/utils/testfiles/resources_45_random_results_generated');
+import mockDataWith2Results from './resources_2_random_results_generated';
+import mockDataWith45Results from './resources_45_random_results_generated';
 
 describe('Searching', () => {
   beforeEach(function() {
