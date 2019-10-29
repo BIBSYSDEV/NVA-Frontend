@@ -7,6 +7,7 @@
     "@material-ui/icons": "^4.4.1",
     "@types/react-router": "^5.1.1",
     "aws-amplify": "^1.1.40",
+    "axios": "^0.19.0",
     "classnames": "^2.2.6",
     "cypress": "^3.4.1",
     "formik": "^1.5.8",
@@ -32,7 +33,7 @@
   "scripts": {
     "start": "react-scripts -r @cypress/instrument-cra start",
     "build": "react-scripts build",
-    "test:cypress": "REACT_APP_USE_MOCK=true start-server-and-test http://localhost:3000",
+    "test:cypress": "REACT_APP_USE_MOCK=false start-server-and-test http://localhost:3000",
     "test": "cypress run",
     "deploy": "aws s3 sync build/ s3://demo-stack-bucket",
     "eject": "react-scripts eject",
