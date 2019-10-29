@@ -1,34 +1,42 @@
-describe('A user searches for resources and browses through the result-pages', () => {
-  it('Given that a user is on the start page and is not logged in', () => {
+import mockDataWith2 from '../../src/utils/testfiles/resources_2_random_results_generated';
+import mockDataWith45 from '../../src/utils/testfiles/resources_45_random_results_generated';
+
+describe('Searching', () => {
+  beforeEach(function() {
+    //gå til hovedsiden og logg ut brukeren
     cy.visit('/');
-    cy.get('[data-cy=menu]').click();
-    cy.get('[data-cy=logout-button]').click();
-    cy.get('[data-cy=login-button]').should('be.visible');
-    cy.get('[data-cy=menu]').should('not.exist');
+
+    //when mocking - no need to go out
+    // cy.get("[data-cy=menu]").click();
+    // cy.get("[data-cy=logout-button]").click();
   });
-  it('When the user enters "test" into the search input', () => {
-    cy.get('[data-cy=search-input] .MuiInputBase-input')
-      .click({ force: true })
-      .type('test');
-  });
-  it('And clicks Search', () => {
-    cy.get('[data-cy=search-button]').click({ force: true });
-  });
-  it('And there is 45 results', () => {
+
+  it('should show a result-list when searching', () => {
+    cy.server();
+    cy.route('/search/resources/test', mockDataWith2);
+    searchForText('test');
     cy.get('[data-cy=search-results]')
       .find('[data-cy=result-list-item] ')
       .should('have.length.greaterThan', 1);
+    cy.get('[data-cy=search-results]').contains('2');
+  });
+
+  it('should show a working pagination', () => {
+    cy.server();
+    cy.route('/search/resources/test', mockDataWith45);
+    searchForText('test');
     cy.get('[data-cy=search-results]').contains('45');
-  });
-  it('Then pagination is shown', () => {
     cy.get('[data-cy=pagination]').contains('2');
-  });
-  it('And user clicks on ">" in pagination', () => {
     cy.get('[data-cy=pagination]')
       .contains('>')
       .click({ force: true });
-  });
-  it('Then the result-title should show "(11 - 20)"', () => {
     cy.get('[data-cy=search-results]').contains('(11 - 20)');
   });
 });
+
+const searchForText = text => {
+  cy.get('[data-cy=search-input] .MuiInputBase-input')
+    .click({ force: true })
+    .type(text);
+  cy.get('[data-cy=search-button]').click({ force: true });
+};

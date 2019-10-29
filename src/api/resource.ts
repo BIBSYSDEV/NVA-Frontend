@@ -1,14 +1,11 @@
-import { Dispatch } from 'redux';
-import mockResources2 from '../utils/testfiles/resources_2_random_results_generated.json';
-import MockAdapter from 'axios-mock-adapter';
-
-import { RESOURCES_API_BASEURL, SEARCH_RESULTS_PER_PAGE, useMockData } from '../utils/constants';
 import Axios from 'axios';
+import { Dispatch } from 'redux';
+
+import { RESOURCES_API_BASEURL, SEARCH_RESULTS_PER_PAGE } from '../utils/constants';
 import { searchForResources } from '../actions/resourceActions';
 
 export const search = (searchTerm: string, offset?: number) => {
   return async (dispatch: Dispatch) => {
-    // make api call to search endpoint
     Axios.get(`${RESOURCES_API_BASEURL}${searchTerm}`)
       .then(response => {
         const notEmptyOffset = offset ? offset : 0;
