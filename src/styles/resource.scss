@@ -3,4 +3,14 @@
 .resource {
   align-self: flex-start;
   flex-grow: 1;
+  padding: 5rem;
+}
+
+.MuiTabs-flexContainer {
+  background-color: lightsalmon;
+}
+
+.MuiTab-textColorPrimary.Mui-selected {
+  color: black !important;
+  font-weight: bold;
 }

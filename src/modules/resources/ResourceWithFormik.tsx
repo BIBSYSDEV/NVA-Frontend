@@ -25,6 +25,7 @@ const ResourceWithFormik: React.FC<ResourceWithFormikProps> = ({ handleErrors })
   const handleValidation = (values: any) => {
     try {
       resourceSchema.validateSync(values, { abortEarly: false });
+      handleErrors([]);
     } catch (e) {
       handleErrors(e.inner);
     }
@@ -62,7 +63,14 @@ const ResourceWithFormik: React.FC<ResourceWithFormikProps> = ({ handleErrors })
             <Field name="password" label={t('Password')} type="password" component={TextField} fullWidth />
 
             <div className="button-group">
-              <Button className="button-group__reset" type="button" color="secondary" onClick={handleReset}>
+              <Button
+                className="button-group__reset"
+                type="button"
+                color="secondary"
+                onClick={() => {
+                  handleReset();
+                  handleErrors([]);
+                }}>
                 {t('Reset')}
               </Button>
               <Button
