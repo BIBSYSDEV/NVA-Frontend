@@ -1,41 +1,6 @@
 @import './colors.scss';
 
 .resource {
-  display: grid;
-  height: 40vh;
-  grid-template-areas: 'heading' 'form';
-  grid-template-rows: 1fr 2fr;
-  color: black;
-  background-color: white;
-  padding: 1em;
-  border-radius: 4px;
-  text-align: center;
-
-  &__heading {
-    grid-area: heading;
-    padding-bottom: 1em;
-  }
-
-  &__form {
-    grid-area: form;
-  }
-}
-
-.button-group {
-  display: grid;
-  grid-template-areas: 'reset submit';
-  grid-template-columns: 1fr 1fr;
-  padding-top: 2em;
-
-  &__submit {
-    grid-area: submit;
-  }
-
-  &__reset {
-    grid-area: reset;
-  }
-}
-
-.resource-list {
-  max-width: 35rem;
+  align-self: flex-start;
+  flex-grow: 1;
 }

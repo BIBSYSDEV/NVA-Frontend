@@ -1,69 +1,63 @@
 import '../../styles/resource.scss';
 
-import { Field, Form, Formik } from 'formik';
-import { TextField } from 'formik-material-ui';
-import React from 'react';
-import { useTranslation } from 'react-i18next';
-import * as Yup from 'yup';
+import React, { useState } from 'react';
 
-import { Button, Typography } from '@material-ui/core';
+import Tabs from '@material-ui/core/Tabs';
+
+import LinkTab from '../../components/TabPanel/LinkTab';
+import TabPanel from '../../components/TabPanel/TabPanel';
+import ResourceWithFormik from './ResourceWithFormik';
+
+const a11yProps = (tabNumber: number) => {
+  return {
+    id: `nav-tab-${tabNumber}`,
+    'aria-controls': `nav-tabpanel-${tabNumber}`,
+  };
+};
 
 const Resource: React.FC = () => {
-  const { t } = useTranslation();
+  const [value, setValue] = React.useState(0);
+  const [errors, setErrors] = useState();
 
-  const ResourceSchema = Yup.object().shape({
-    email: Yup.string()
-      .email(t('Invalid email'))
-      .required(t('Required field')),
-    password: Yup.string().required(t('Required field')),
-  });
+  const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
+    setValue(newValue);
+  };
+
+  const handleErrors = (errors: any[]) => {
+    setErrors(errors);
+  };
 
   return (
     <div className="resource">
-      <Typography className="resource__heading" variant="h4">
-        {t('Register new resource')}
-      </Typography>
-      <Formik
-        initialValues={{ email: '', password: '' }}
-        validationSchema={ResourceSchema}
-        onSubmit={(values, { setSubmitting }) => {
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
-            setSubmitting(false);
-          }, 400);
-        }}>
-        {({
-          values,
-          errors,
-          touched,
-          handleChange,
-          handleBlur,
-          handleSubmit,
-          handleReset,
-          isSubmitting,
-          /* and other goodies */
-        }) => (
-          <Form className="resource__form">
-            <Field name="email" label={t('Email')} type="email" component={TextField} fullWidth />
-            <br />
-            <br />
-            <Field name="password" label={t('Password')} type="password" component={TextField} fullWidth />
-
-            <div className="button-group">
-              <Button className="button-group__reset" type="button" color="secondary" onClick={handleReset}>
-                {t('Reset')}
-              </Button>
-              <Button
-                className="button-group__submit"
-                type="submit"
-                color="primary"
-                disabled={isSubmitting || !!errors.email || !!errors.password}>
-                {t('Create')}
-              </Button>
-            </div>
-          </Form>
-        )}
-      </Formik>
+      <Tabs
+        variant="fullWidth"
+        value={value}
+        onChange={handleChange}
+        aria-label="navigation"
+        indicatorColor="primary"
+        textColor="primary">
+        <LinkTab label="Page One" {...a11yProps(0)} error={errors && errors.length > 0} />
+        <LinkTab label="Page Two" {...a11yProps(1)} />
+        <LinkTab label="Page Three" {...a11yProps(2)} />
+      </Tabs>
+      <TabPanel value={value} tabNumber={0}>
+        <h1>Errors:</h1>
+        {errors &&
+          errors.map((error: any) => {
+            return (
+              <p key={error.path} style={{ color: 'red' }}>
+                {error.path} : {error.name} - {error.message}
+              </p>
+            );
+          })}
+        <ResourceWithFormik handleErrors={handleErrors} />
+      </TabPanel>
+      <TabPanel value={value} tabNumber={1}>
+        Page Two
+      </TabPanel>
+      <TabPanel value={value} tabNumber={2}>
+        Page Three
+      </TabPanel>
     </div>
   );
 };

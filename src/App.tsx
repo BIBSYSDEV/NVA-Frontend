@@ -14,6 +14,7 @@ import Dashboard from './modules/dashboard/Dashboard';
 import NotFound from './modules/errorpages/NotFound';
 import Header from './modules/header/Header';
 import Resource from './modules/resources/Resource';
+import ResourceList from './modules/resources/ResourceList';
 import Search from './modules/search/Search';
 import User from './modules/user/User';
 import { RootStore } from './reducers/rootReducer';
@@ -67,6 +68,7 @@ const App: React.FC = () => {
         <div className="body">
           <Switch>
             <Route exact path="/" component={Dashboard} />
+            <Route exact path="/resources" component={ResourceList} />
             <Route exact path="/resources/new" component={Resource} />
             <Route exact path="/search" component={Search} />
             <Route exact path="/search/:searchTerm" component={Search} />
