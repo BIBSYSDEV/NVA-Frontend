@@ -9,10 +9,10 @@ import LinkTab from '../../components/TabPanel/LinkTab';
 import TabPanel from '../../components/TabPanel/TabPanel';
 import ResourceWithFormik from './ResourceWithFormik';
 
-const a11yProps = (tabNumber: number) => {
+const a11yProps = (tabDescription: string) => {
   return {
-    id: `nav-tab-${tabNumber}`,
-    'aria-controls': `nav-tabpanel-${tabNumber}`,
+    id: `nav-tab-${tabDescription}`,
+    'aria-controls': `nav-tabpanel-${tabDescription}`,
   };
 };
 
@@ -38,14 +38,14 @@ const Resource: React.FC = () => {
         aria-label="navigation"
         TabIndicatorProps={{ style: { backgroundColor: 'blue' } }}
         textColor="primary">
-        <LinkTab label={`1. ${t('Publication')}`} {...a11yProps(0)} error={errors && errors.length > 0} />
-        <LinkTab label={`2. ${t('Description')}`} {...a11yProps(1)} />
-        <LinkTab label={`3. ${t('References')}`} {...a11yProps(2)} />
-        <LinkTab label={`4. ${t('Contributors')}`} {...a11yProps(3)} />
-        <LinkTab label={`5. ${t('Files and Licenses')}`} {...a11yProps(4)} />
-        <LinkTab label={`6. ${t('Submission')}`} {...a11yProps(5)} />
+        <LinkTab label={`1. ${t('Publication')}`} {...a11yProps('publication')} error={errors && errors.length > 0} />
+        <LinkTab label={`2. ${t('Description')}`} {...a11yProps('description')} />
+        <LinkTab label={`3. ${t('References')}`} {...a11yProps('references')} />
+        <LinkTab label={`4. ${t('Contributors')}`} {...a11yProps('contributors')} />
+        <LinkTab label={`5. ${t('Files and Licenses')}`} {...a11yProps('files-and-licenses')} />
+        <LinkTab label={`6. ${t('Submission')}`} {...a11yProps('submission')} />
       </Tabs>
-      <TabPanel value={value} tabNumber={0}>
+      <TabPanel value={value} tabNumber={0} ariaLabel="publication">
         {errors &&
           errors.map((error: any) => {
             return (
@@ -56,19 +56,19 @@ const Resource: React.FC = () => {
           })}
         <ResourceWithFormik handleErrors={handleErrors} />
       </TabPanel>
-      <TabPanel value={value} tabNumber={1}>
+      <TabPanel value={value} tabNumber={1} ariaLabel="description">
         Page Two
       </TabPanel>
-      <TabPanel value={value} tabNumber={2}>
+      <TabPanel value={value} tabNumber={2} ariaLabel="references">
         Page Three
       </TabPanel>
-      <TabPanel value={value} tabNumber={3}>
+      <TabPanel value={value} tabNumber={3} ariaLabel="contributors">
         Page Four
       </TabPanel>
-      <TabPanel value={value} tabNumber={4}>
+      <TabPanel value={value} tabNumber={4} ariaLabel="files-and-licenses">
         Page Five
       </TabPanel>
-      <TabPanel value={value} tabNumber={5}>
+      <TabPanel value={value} tabNumber={5} ariaLabel="submission">
         Page Six
       </TabPanel>
     </div>
