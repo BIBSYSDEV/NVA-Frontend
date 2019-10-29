@@ -7,6 +7,7 @@ export const INIT_LOGOUT = 'initiate logout';
 export const REFRESH_TOKEN_SUCCESS = 'refresh token success';
 export const LOGIN_SUCCESS = 'login success';
 export const LOGOUT_SUCCESS = 'logout success';
+export const SET_ORCID_INFO = 'set orcid info';
 
 // ACTION CREATORS
 export const setUserAction = (user: User) => ({
@@ -34,6 +35,12 @@ export const logoutSuccessAction = () => ({
   type: LOGOUT_SUCCESS,
 });
 
+export const setOrcidInfo = (name: string, orcid: string) => ({
+  type: SET_ORCID_INFO,
+  name,
+  orcid,
+});
+
 export interface SetUserAction {
   type: typeof SET_USER;
   user: User;
@@ -59,10 +66,17 @@ export interface LogoutSuccessAction {
   type: typeof LOGOUT_SUCCESS;
 }
 
+export interface SetOrcidInfoAction {
+  type: typeof SET_ORCID_INFO;
+  name: string;
+  orcid: string;
+}
+
 export type UserActions =
   | SetUserAction
   | InitLoginAction
   | InitLogoutAction
   | LoginSuccessAction
   | LogoutSuccessAction
-  | RefreshTokenSuccessAction;
+  | RefreshTokenSuccessAction
+  | SetOrcidInfoAction;

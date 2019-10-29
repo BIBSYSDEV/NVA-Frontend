@@ -13,12 +13,14 @@
     background-color: darken($primary-button-color, 3%);
   }
 }
-
-.menu-list {
+.MuiMenu-list {
   width: 15rem;
-  background-color: $primary-button-color;
   border-radius: 4px;
-  color: $primary-color;
+  color: $text-color;
+
+  .MuiMenuItem-root {
+    border-bottom: 1px solid $box-color;
+  }
 }
 
 @media only screen and (max-width: 600px) {
@@ -28,7 +30,7 @@
     }
   }
 
-  .menu-list {
+  .MuiMenu-list {
     width: 10rem;
   }
 }
