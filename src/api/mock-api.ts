@@ -2,13 +2,13 @@ import fetchMock from 'fetch-mock';
 import { Dispatch } from 'redux';
 
 import { orcidRequestFailureAction, setOrcidInfoAction } from '../actions/orcidActions';
-import { searchForResources } from '../actions/resourceActions';
 import { setUserAction } from '../actions/userActions';
-import { Resource } from '../types/resource.types';
 import User from '../types/user.types';
-import { SEARCH_RESULTS_PER_PAGE } from '../utils/constants';
-import resources from '../utils/testfiles/resources_45_random_results_generated.json';
+import { RESOURCES_API_BASEURL } from '../utils/constants';
 import user from '../utils/testfiles/user.json';
+import MockAdapter from 'axios-mock-adapter';
+import Axios from 'axios';
+import mockResources from '../utils/testfiles/resources_45_random_results_generated.json';
 
 interface OrcidResponse {
   accessToken: string;
@@ -20,6 +20,11 @@ interface OrcidResponse {
   orcid: string;
 }
 
+// //const mockingEnabled = true;
+const mock = new MockAdapter(Axios);
+
+mock.onGet(new RegExp(`${RESOURCES_API_BASEURL}/*`)).reply(200, mockResources);
+
 export const mockSetUser = async (dispatch: Dispatch) => {
   fetchMock.mock('http://example.com/user', user, { overwriteRoutes: false });
   return await fetch('http://example.com/user')
@@ -29,15 +34,15 @@ export const mockSetUser = async (dispatch: Dispatch) => {
     });
 };
 
-export const mockSearch = async (dispatch: Dispatch, searchTerm: string, offset: number) => {
-  fetchMock.mock(`http://example.com/resources/${searchTerm}`, resources, { overwriteRoutes: false });
-  return await fetch(`http://example.com/resources/${searchTerm}`)
-    .then(data => data.json())
-    .then((data: Resource[]) => {
-      const result = data.slice(offset, offset + SEARCH_RESULTS_PER_PAGE);
-      dispatch(searchForResources(result, searchTerm, data.length, offset));
-    });
-};
+// export const mockSearch = async (dispatch: Dispatch, searchTerm: string, offset: number) => {
+//   fetchMock.mock(`http://example.com/resources/${searchTerm}`, resources, { overwriteRoutes: false });
+//   return await fetch(`http://example.com/resources/${searchTerm}`)
+//     .then(data => data.json())
+//     .then((data: Resource[]) => {
+//       const result = data.slice(offset, offset + SEARCH_RESULTS_PER_PAGE);
+//       dispatch(searchForResources(result, searchTerm, data.length, offset));
+//     });
+// };
 
 export const mockOrcidLookup = async (dispatch: Dispatch, orcidCode: string) => {
   const orcidResponse: OrcidResponse = {
