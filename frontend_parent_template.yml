@@ -1,4 +1,4 @@
-AWSTemplateFormatVersion: "2010-09-09"
+AWSTemplateFormatVersion: '2010-09-09'
 
 Description: >
   This template creates a pipeline for building and deploying a web application to a CloudFront distribution
@@ -23,10 +23,10 @@ Parameters:
     Type: String
 
 Resources:
-  PipelineStack: 
+  PipelineStack:
     Type: AWS::CloudFormation::Stack
-    Properties: 
-      TemplateURL: "https://nva-frontend-deploy.s3-eu-west-1.amazonaws.com/pipeline_template.yml"
+    Properties:
+      TemplateURL: 'https://nva-frontend-deploy.s3-eu-west-1.amazonaws.com/pipeline_template.yml'
       TimeoutInMinutes: 60
       Parameters:
         GitHubOAuthToken: !Ref GitHubOAuthToken
@@ -34,11 +34,11 @@ Resources:
         GitHubRepo: !Ref GitHubRepo
         GitHubBranch: !Ref GitHubBranch
         FrontendBucketName: !Ref FrontendBucketName
-  CloudfrontStack: 
+  CloudfrontStack:
     Type: AWS::CloudFormation::Stack
     DependsOn: PipelineStack
-    Properties: 
-      TemplateURL: "https://nva-frontend-deploy.s3-eu-west-1.amazonaws.com/cloudfront_template.yml"
+    Properties:
+      TemplateURL: 'https://nva-frontend-deploy.s3-eu-west-1.amazonaws.com/cloudfront_template.yml'
       TimeoutInMinutes: 60
       Parameters:
         NvaFrontendBucketName: !Ref FrontendBucketName

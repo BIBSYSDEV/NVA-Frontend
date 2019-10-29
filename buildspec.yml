@@ -13,4 +13,3 @@ artifacts:
     - '**/*'
   base-directory: build
   name: nva-frontend
-  

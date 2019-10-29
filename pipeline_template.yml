@@ -62,7 +62,7 @@ Resources:
                 Category: Source
                 Owner: ThirdParty
                 Provider: GitHub
-                Version: "1"
+                Version: '1'
               Configuration:
                 Owner: !Ref GitHubOwner
                 OAuthToken: !Ref GitHubOAuthToken
@@ -95,7 +95,7 @@ Resources:
                 Owner: AWS
                 Provider: S3
                 Version: '1'
-              InputArtifacts: 
+              InputArtifacts:
                 - Name: BuildArtifact
               Configuration:
                 BucketName: !Ref FrontendBucketName
@@ -157,8 +157,7 @@ Resources:
           PolicyDocument:
             Version: '2012-10-17'
             Statement:
-              -
-                Effect: Allow
+              - Effect: Allow
                 Action:
                   - 'logs:CreateLogGroup'
                   - 'logs:CreateLogStream'
@@ -170,8 +169,7 @@ Resources:
           PolicyDocument:
             Version: '2012-10-17'
             Statement:
-              -
-                Effect: Allow
+              - Effect: Allow
                 Action:
                   - 's3:GetObject'
                   - 's3:GetObjectVersion'
