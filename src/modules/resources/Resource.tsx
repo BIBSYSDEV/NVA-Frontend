@@ -1,12 +1,13 @@
 import '../../styles/resource.scss';
 
-import React, { useState } from 'react';
+import React, { useReducer } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import Tabs from '@material-ui/core/Tabs';
 
 import LinkTab from '../../components/TabPanel/LinkTab';
 import TabPanel from '../../components/TabPanel/TabPanel';
+import { initialValidatorState, validationReducer } from '../../reducers/validationReducer';
 import ResourceWithFormik from './ResourceWithFormik';
 
 const a11yProps = (tabDescription: string) => {
@@ -18,17 +19,13 @@ const a11yProps = (tabDescription: string) => {
 
 const Resource: React.FC = () => {
   const [value, setValue] = React.useState(0);
-  const [errors, setErrors] = useState<any>([]);
   const { t } = useTranslation();
 
-  const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
+  const handleChange = (_: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
   };
 
-  const handleErrors = (errors: any[]) => {
-    setErrors(errors);
-  };
-
+  const [errors, dispatch] = useReducer(validationReducer, initialValidatorState);
   return (
     <div className="resource">
       <Tabs
@@ -38,7 +35,11 @@ const Resource: React.FC = () => {
         aria-label="navigation"
         TabIndicatorProps={{ style: { backgroundColor: 'blue' } }}
         textColor="primary">
-        <LinkTab label={`1. ${t('Publication')}`} {...a11yProps('publication')} error={errors && errors.length > 0} />
+        <LinkTab
+          label={`1. ${t('Publication')}`}
+          {...a11yProps('publication')}
+          error={errors.publicationErrors && errors.publicationErrors.length > 0}
+        />
         <LinkTab label={`2. ${t('Description')}`} {...a11yProps('description')} />
         <LinkTab label={`3. ${t('References')}`} {...a11yProps('references')} />
         <LinkTab label={`4. ${t('Contributors')}`} {...a11yProps('contributors')} />
@@ -46,15 +47,15 @@ const Resource: React.FC = () => {
         <LinkTab label={`6. ${t('Submission')}`} {...a11yProps('submission')} />
       </Tabs>
       <TabPanel value={value} tabNumber={0} ariaLabel="publication">
-        {errors &&
-          errors.map((error: any) => {
+        {errors.publicationErrors &&
+          errors.publicationErrors.map((error: any) => {
             return (
               <p key={error.path} style={{ color: 'red' }}>
                 {error.path} : {error.name} - {error.message}
               </p>
             );
           })}
-        <ResourceWithFormik handleErrors={handleErrors} />
+        <ResourceWithFormik dispatch={dispatch} />
       </TabPanel>
       <TabPanel value={value} tabNumber={1} ariaLabel="description">
         Page Two

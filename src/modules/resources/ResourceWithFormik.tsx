@@ -8,11 +8,13 @@ import * as Yup from 'yup';
 
 import { Button, Typography } from '@material-ui/core';
 
+import { CLEAR_PUBLICATION_ERRORS, PUBLICATION_ERROR } from '../../reducers/validationReducer';
+
 export interface ResourceWithFormikProps {
-  handleErrors: (errors: any[]) => void;
+  dispatch: any;
 }
 
-const ResourceWithFormik: React.FC<ResourceWithFormikProps> = ({ handleErrors }) => {
+const ResourceWithFormik: React.FC<ResourceWithFormikProps> = ({ dispatch }) => {
   const { t } = useTranslation();
 
   const resourceSchema = Yup.object().shape({
@@ -25,9 +27,9 @@ const ResourceWithFormik: React.FC<ResourceWithFormikProps> = ({ handleErrors })
   const handleValidation = (values: any) => {
     try {
       resourceSchema.validateSync(values, { abortEarly: false });
-      handleErrors([]);
+      dispatch({ type: CLEAR_PUBLICATION_ERRORS });
     } catch (e) {
-      handleErrors(e.inner);
+      dispatch({ type: PUBLICATION_ERROR, payload: e.inner });
     }
   };
 
@@ -69,7 +71,7 @@ const ResourceWithFormik: React.FC<ResourceWithFormikProps> = ({ handleErrors })
                 color="secondary"
                 onClick={() => {
                   handleReset();
-                  handleErrors([]);
+                  dispatch({ type: CLEAR_PUBLICATION_ERRORS });
                 }}>
                 {t('Reset')}
               </Button>
