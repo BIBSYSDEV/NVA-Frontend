@@ -14,7 +14,7 @@ describe('A user logs in and views their user details', () => {
     cy.get('[data-cy=user-id]').contains('testuser@unit.no');
     cy.get('[data-cy=user-email]').contains('testuser@unit.no');
     cy.get('[data-cy=user-institution]').contains('unit');
-    cy.get('[data-cy=user-applications]').contains('NVA, DLR');
+    cy.get('[data-cy=user-applications]').contains('NVA, BIRD');
     cy.get('[data-cy=user-role]').contains('Publisher');
   });
 });

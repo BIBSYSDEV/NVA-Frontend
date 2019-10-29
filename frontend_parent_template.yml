@@ -1,0 +1,44 @@
+AWSTemplateFormatVersion: '2010-09-09'
+
+Description: >
+  This template creates a pipeline for building and deploying a web application to a CloudFront distribution
+
+Parameters:
+  GitHubOAuthToken:
+    Description: OAuth token used by AWS CodePipeline to connect to GitHub
+    NoEcho: true
+    Type: String
+  GitHubOwner:
+    Description: GitHub username owning the repo
+    Type: String
+  GitHubRepo:
+    Description: GitHub repo name
+    Type: String
+  GitHubBranch:
+    Description: GitHub repo branch name. It defaults to master if not specified.
+    Type: String
+    Default: master
+  FrontendBucketName:
+    Description: Bucket name for frontend. Must be all lower case, numbers and '-', '_'
+    Type: String
+
+Resources:
+  PipelineStack:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: 'https://nva-frontend-deploy.s3-eu-west-1.amazonaws.com/pipeline_template.yml'
+      TimeoutInMinutes: 60
+      Parameters:
+        GitHubOAuthToken: !Ref GitHubOAuthToken
+        GitHubOwner: !Ref GitHubOwner
+        GitHubRepo: !Ref GitHubRepo
+        GitHubBranch: !Ref GitHubBranch
+        FrontendBucketName: !Ref FrontendBucketName
+  CloudfrontStack:
+    Type: AWS::CloudFormation::Stack
+    DependsOn: PipelineStack
+    Properties:
+      TemplateURL: 'https://nva-frontend-deploy.s3-eu-west-1.amazonaws.com/cloudfront_template.yml'
+      TimeoutInMinutes: 60
+      Parameters:
+        NvaFrontendBucketName: !Ref FrontendBucketName

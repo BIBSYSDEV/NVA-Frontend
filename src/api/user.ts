@@ -11,13 +11,14 @@ import {
 import { setUserAction } from '../actions/userActions';
 import { emptyUser } from '../types/user.types';
 import { useMockData } from '../utils/constants';
-import { mockOrcidLookup, mockSetUser } from './mock-api';
+import { orcidLookup } from './orcid';
+import { mockUser } from './mock-api';
 
 export const login = () => {
   return async (dispatch: Dispatch) => {
     dispatch(initLoginAction());
     if (useMockData) {
-      mockSetUser(dispatch);
+      dispatch(setUserAction(mockUser));
       dispatch(loginSuccessAction());
     } else {
       Auth.federatedSignIn();
@@ -28,7 +29,7 @@ export const login = () => {
 export const getCurrentAuthenticatedUser = () => {
   return async (dispatch: Dispatch<any>) => {
     if (useMockData) {
-      mockSetUser(dispatch);
+      dispatch(setUserAction(mockUser));
     } else {
       try {
         const cognitoUser = await Auth.currentAuthenticatedUser();
@@ -75,8 +76,6 @@ export const logout = () => {
 
 export const getOrcidInfo = (orcidCode: string) => {
   return async (dispatch: Dispatch) => {
-    if (useMockData) {
-      mockOrcidLookup(dispatch, orcidCode);
-    }
+    orcidLookup(dispatch, orcidCode);
   };
 };
