@@ -1,8 +1,9 @@
 import fetchMock from 'fetch-mock';
 import { Dispatch } from 'redux';
 
+import { orcidRequestFailureAction, setOrcidInfoAction } from '../actions/orcidActions';
 import { searchForResources } from '../actions/resourceActions';
-import { setOrcidInfo, setUserAction } from '../actions/userActions';
+import { setUserAction } from '../actions/userActions';
 import { Resource } from '../types/resource.types';
 import User from '../types/user.types';
 import { SEARCH_RESULTS_PER_PAGE } from '../utils/constants';
@@ -25,9 +26,6 @@ export const mockSetUser = async (dispatch: Dispatch) => {
     .then(data => data.json())
     .then((data: User) => {
       dispatch(setUserAction(data));
-    })
-    .then(() => {
-      fetchMock.reset();
     });
 };
 
@@ -38,9 +36,6 @@ export const mockSearch = async (dispatch: Dispatch, searchTerm: string, offset:
     .then((data: Resource[]) => {
       const result = data.slice(offset, offset + SEARCH_RESULTS_PER_PAGE);
       dispatch(searchForResources(result, searchTerm, data.length, offset));
-    })
-    .then(() => {
-      fetchMock.reset();
     });
 };
 
@@ -72,9 +67,9 @@ export const mockOrcidLookup = async (dispatch: Dispatch, orcidCode: string) => 
   })
     .then(data => data.json())
     .then((data: OrcidResponse) => {
-      dispatch(setOrcidInfo(data.name, data.orcid));
+      dispatch(setOrcidInfoAction(data.name, data.orcid));
     })
-    .then(() => {
-      fetchMock.reset();
+    .catch(() => {
+      dispatch(orcidRequestFailureAction('ORCID request failed'));
     });
 };

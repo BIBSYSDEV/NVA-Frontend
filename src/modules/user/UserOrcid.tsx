@@ -35,12 +35,13 @@ const UserOrcid: React.FC = () => {
         <div className="line">
           <div className="label">{t('Your ORCID')}:</div>
           <div className="text">
-            <a href={`https://orcid.org/${user.orcid}`}>{`https://orcid.org/${user.orcid}`}</a>
+            <a data-cy="orcid-info" href={`https://orcid.org/${user.orcid}`}>{`https://orcid.org/${user.orcid}`}</a>
           </div>
         </div>
       ) : (
         <ButtonModal
           buttonText={t('Create or Connect to your ORCID')}
+          dataCy="open-orcid-modal"
           startIcon={<img src="https://orcid.org/sites/default/files/images/orcid_24x24.png" alt="ORCID iD icon" />}>
           {({ setOpen }: any) => (
             <div className="orcid-modal">
@@ -49,6 +50,7 @@ const UserOrcid: React.FC = () => {
               <p>{t('Log in to your ORCID account or create new ORCID account')}</p>
               <div className="orcid-button">
                 <Button
+                  data-cy="connect-to-orcid"
                   onClick={() => {
                     openORCID();
                     setOpen(false);

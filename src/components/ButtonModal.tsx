@@ -23,6 +23,7 @@ export interface ButtonModalProps {
   ariaLabelledBy?: string;
   buttonText: string;
   children: (props: any) => ReactNode;
+  dataCy?: string;
   startIcon?: ReactNode;
 }
 
@@ -31,6 +32,7 @@ const ButtonModal: React.FC<ButtonModalProps> = ({
   ariaLabelledBy,
   buttonText,
   children,
+  dataCy,
   startIcon,
 }) => {
   const [open, setOpen] = React.useState(false);
@@ -46,7 +48,7 @@ const ButtonModal: React.FC<ButtonModalProps> = ({
 
   return (
     <>
-      <Button onClick={handleOpen} variant="outlined" startIcon={startIcon}>
+      <Button onClick={handleOpen} variant="outlined" startIcon={startIcon} data-cy={dataCy}>
         {buttonText}
       </Button>
       <Modal

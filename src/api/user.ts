@@ -1,8 +1,14 @@
 import { Auth } from 'aws-amplify';
 import { Dispatch } from 'redux';
 
-import { refreshTokenFailureAction } from '../actions/errorActions';
-import { initLoginAction, initLogoutAction, refreshTokenSuccessAction, setUserAction } from '../actions/userActions';
+import {
+  initLoginAction,
+  initLogoutAction,
+  loginSuccessAction,
+  refreshTokenFailureAction,
+  refreshTokenSuccessAction,
+} from '../actions/authActions';
+import { setUserAction } from '../actions/userActions';
 import { emptyUser } from '../types/user.types';
 import { useMockData } from '../utils/constants';
 import { mockOrcidLookup, mockSetUser } from './mock-api';
@@ -12,6 +18,7 @@ export const login = () => {
     dispatch(initLoginAction());
     if (useMockData) {
       mockSetUser(dispatch);
+      dispatch(loginSuccessAction());
     } else {
       Auth.federatedSignIn();
     }

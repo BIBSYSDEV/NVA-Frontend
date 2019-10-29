@@ -27,3 +27,7 @@
   align-items: center;
   border-top: 2px solid $tertiary-color;
 }
+
+.MuiSnackbarContent-action .MuiIconButton-root {
+  color: white;
+}
