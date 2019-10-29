@@ -1,6 +1,6 @@
 import '../../styles/resource.scss';
 
-import React, { useReducer } from 'react';
+import React, { useReducer, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import Tabs from '@material-ui/core/Tabs';
@@ -18,14 +18,14 @@ const a11yProps = (tabDescription: string) => {
 };
 
 const Resource: React.FC = () => {
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
+  const [errors, dispatch] = useReducer(validationReducer, initialValidatorState);
   const { t } = useTranslation();
 
   const handleChange = (_: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
   };
 
-  const [errors, dispatch] = useReducer(validationReducer, initialValidatorState);
   return (
     <div className="resource">
       <Tabs
