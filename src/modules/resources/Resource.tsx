@@ -3,6 +3,7 @@ import '../../styles/resource.scss';
 import React, { useReducer, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { Button } from '@material-ui/core';
 import Tabs from '@material-ui/core/Tabs';
 
 import LinkTab from '../../components/TabPanel/LinkTab';
@@ -24,6 +25,10 @@ const Resource: React.FC = () => {
 
   const handleChange = (_: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
+  };
+
+  const goToNextPage = (value: number) => {
+    setValue(value + 1);
   };
 
   return (
@@ -56,21 +61,27 @@ const Resource: React.FC = () => {
             );
           })}
         <ResourceWithFormik dispatch={dispatch} />
+        <Button onClick={() => goToNextPage(value)}>{t('Next')}</Button>
       </TabPanel>
       <TabPanel value={value} tabNumber={1} ariaLabel="description">
-        Page Two
+        <div>Page Two</div>
+        <Button onClick={() => goToNextPage(value)}>{t('Next')}</Button>
       </TabPanel>
       <TabPanel value={value} tabNumber={2} ariaLabel="references">
-        Page Three
+        <div>Page Three</div>
+        <Button onClick={() => goToNextPage(value)}>{t('Next')}</Button>
       </TabPanel>
       <TabPanel value={value} tabNumber={3} ariaLabel="contributors">
-        Page Four
+        <div>Page Four</div>
+        <Button onClick={() => goToNextPage(value)}>{t('Next')}</Button>
       </TabPanel>
       <TabPanel value={value} tabNumber={4} ariaLabel="files-and-licenses">
-        Page Five
+        <div>Page Five</div>
+        <Button onClick={() => goToNextPage(value)}>{t('Next')}</Button>
       </TabPanel>
       <TabPanel value={value} tabNumber={5} ariaLabel="submission">
-        Page Six
+        <div>Page Six</div>
+        <Button onClick={() => goToNextPage(value)}>{t('Next')}</Button>
       </TabPanel>
     </div>
   );
