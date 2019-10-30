@@ -6,6 +6,10 @@ export const mapBreadcrumbName = (pathName: string) => {
       return i18next.t('Search');
     case 'user':
       return i18next.t('My profile');
+    case 'resources':
+      return i18next.t('Workplace');
+    case 'new':
+      return i18next.t('New publication');
     default:
       return pathName;
   }
