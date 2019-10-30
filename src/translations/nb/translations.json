@@ -12,6 +12,13 @@
   "description_what_is_ORCID": "Beskrivelse av ORCID",
   "description_why_ORCID": "Med ORCID blir det enklere å identifisere deg som forfatter. Vi kan også hente informasjon fra ORCID, som kan gjøre det raskere for deg å registrere dine publikasjoner.",
   "Email": "Epost",
+  "ErrorMessage": {
+    "Failed to get user": "Kunne ikke hente bruker",
+    "Login failed": "Kunne ikke logge inn",
+    "ORCID login failed": "Kunne ikke logge inn på ORCID",
+    "ORCID request failed": "Kunne ikke hente data fra ORCID",
+    "Search failed": "Søk feilet"
+  },
   "Files and Licenses": "Filer og lisenser",
   "Home": "Hjem",
   "ID": "ID",
@@ -32,7 +39,6 @@
   "New resource": "Ny ressurs",
   "Next": "Neste",
   "ORCID": "ORCID",
-  "ORCID login failed": "Kunne ikke logge inn på ORCID",
   "Organizations": "Tilhørighet",
   "Password": "Passord",
   "Publication": "Publikasjon",
@@ -51,6 +57,9 @@
   "Roles": "Roller",
   "Search": "Søk",
   "Skip this step (can be configured in 'profile' later)": "Hopp over nå (kan gjøres under 'profil' senere)",
+  "SuccessMessage": {
+    "Login success": "Logget inn"
+  },
   "Submission": "Innsending",
   "User information": "Brukerinformasjon",
   "What is ORCID?": "Hva er ORCID?",

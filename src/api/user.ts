@@ -38,7 +38,7 @@ export const getCurrentAuthenticatedUser = () => {
         dispatch(setUserAction(user));
         dispatch(refreshToken());
       } catch (e) {
-        dispatch(setUserFailureAction('Failed to get user'));
+        dispatch(setUserFailureAction('ErrorMessage.Failed to get user'));
       }
     }
   };

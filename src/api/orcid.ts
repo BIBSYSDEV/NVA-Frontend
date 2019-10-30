@@ -26,6 +26,6 @@ export const orcidLookup = async (dispatch: Dispatch, orcidCode: string) => {
       dispatch(setOrcidInfoAction(response.data.name, response.data.orcid));
     })
     .catch(() => {
-      dispatch(orcidRequestFailureAction('ORCID request failed'));
+      dispatch(orcidRequestFailureAction('ErrorMessage.ORCID request failed'));
     });
 };

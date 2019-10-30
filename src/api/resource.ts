@@ -1,9 +1,8 @@
 import Axios from 'axios';
 import { Dispatch } from 'redux';
 
+import { searchFailureAction, searchForResources } from '../actions/resourceActions';
 import { RESOURCES_API_BASEURL, SEARCH_RESULTS_PER_PAGE } from '../utils/constants';
-import { searchForResources } from '../actions/resourceActions';
-import { orcidRequestFailureAction } from '../actions/orcidActions';
 
 export const search = (searchTerm: string, offset?: number) => {
   return async (dispatch: Dispatch) => {
@@ -14,7 +13,7 @@ export const search = (searchTerm: string, offset?: number) => {
         dispatch(searchForResources(result, searchTerm, response.data.length, offset));
       })
       .catch(() => {
-        dispatch(orcidRequestFailureAction('Search request failed'));
+        dispatch(searchFailureAction('ErrorMessage.Search failed'));
       });
   };
 };

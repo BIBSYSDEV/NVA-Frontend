@@ -1,7 +1,10 @@
+import { VariantType } from 'notistack';
+
 import { Resource } from '../types/resource.types';
 
 export const SEARCH_FOR_RESOURCES = 'search for resources';
 export const CLEAR_SEARCH = 'clear search';
+export const SEARCH_FAILURE = 'search failure';
 
 export const searchForResources = (
   resources: Resource[],
@@ -14,6 +17,12 @@ export const searchForResources = (
   searchTerm,
   totalNumberOfHits,
   offset: offset ? offset : 0,
+});
+
+export const searchFailureAction = (message: string) => ({
+  type: SEARCH_FAILURE,
+  message,
+  variant: 'error',
 });
 
 export const clearSearch = () => ({
@@ -32,4 +41,10 @@ export interface ClearSearchAction {
   type: typeof CLEAR_SEARCH;
 }
 
-export type ResourceActions = SearchForResourcesAction | ClearSearchAction;
+export interface SearchFailureAction {
+  type: typeof SEARCH_FAILURE;
+  message: string;
+  variant: VariantType;
+}
+
+export type ResourceActions = SearchForResourcesAction | ClearSearchAction | SearchFailureAction;

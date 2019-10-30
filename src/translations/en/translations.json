@@ -12,6 +12,13 @@
   "Dashboard": "Dashboard",
   "Description": "Description",
   "Email": "Email",
+  "ErrorMessage": {
+    "Failed to get user": "Failed to get user",
+    "Login failed": "Login failed",
+    "ORCID login failed": "ORCID login failed",
+    "ORCID request failed": "Could not get data from ORCID",
+    "Search failed": "Search failed"
+  },
   "Files and Licenses": "Files and Licenses",
   "Home": "Home",
   "Id": "ID",
@@ -32,7 +39,6 @@
   "New resource": "New resource",
   "Next": "Next",
   "ORCID": "ORCID",
-  "ORCID login failed": "ORCID login failed",
   "Organizations": "Organizations",
   "Password": "Password",
   "Publication": "Publication",
@@ -51,6 +57,9 @@
   "Roles": "Roles",
   "Search": "Search",
   "Skip this step (can be configured in 'profile' later)": "Skip this step (can be configured in 'profile' later)",
+  "SuccessMessage": {
+    "Login success": "Logged in"
+  },
   "Submission": "Submission",
   "User information": "User information",
   "What is ORCID?": "What is ORCID?",
