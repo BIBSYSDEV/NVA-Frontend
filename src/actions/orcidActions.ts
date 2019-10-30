@@ -22,12 +22,12 @@ export const setOrcidInfoAction = (name: string, orcid: string) => ({
   orcid,
 });
 
-export interface OrcidSignInError {
+export interface OrcidSignInFailure {
   type: typeof ORCID_SIGNIN_FAILURE;
   message: string;
   variant: VariantType;
 }
-export interface OrcidRequestError {
+export interface OrcidRequestFailure {
   type: typeof ORCID_REQUEST_FAILURE;
   message: string;
   variant: VariantType;
@@ -39,4 +39,4 @@ export interface SetOrcidInfoAction {
   orcid: string;
 }
 
-export type OrcidActions = OrcidRequestError | OrcidSignInError | SetOrcidInfoAction;
+export type OrcidActions = OrcidRequestFailure | OrcidSignInFailure | SetOrcidInfoAction;
