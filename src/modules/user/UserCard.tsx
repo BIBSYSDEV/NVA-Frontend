@@ -11,7 +11,7 @@ export interface UserCardProps {
 const UserCard: React.FC<UserCardProps> = ({ headerLabel, subHeaderLabel, className, children }) => (
   <div className={classnames('card', className)}>
     <div className="header">{headerLabel}</div>
-    {subHeaderLabel && <div className="card__sub-header">{subHeaderLabel}</div>}
+    {subHeaderLabel && <div className="sub-header">{subHeaderLabel}</div>}
     {children && <div className="card-content">{children}</div>}
   </div>
 );

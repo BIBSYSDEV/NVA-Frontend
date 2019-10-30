@@ -35,9 +35,7 @@ const ResourceWithFormik: React.FC<ResourceWithFormikProps> = ({ dispatch }) => 
 
   return (
     <div className="resource">
-      <Typography className="resource__heading" variant="h4">
-        {t('Register new resource')}
-      </Typography>
+      <Typography variant="h4">{t('Register new resource')}</Typography>
       <Formik
         initialValues={{ email: '', password: '' }}
         validationSchema={resourceSchema}
@@ -58,28 +56,22 @@ const ResourceWithFormik: React.FC<ResourceWithFormikProps> = ({ dispatch }) => 
           isSubmitting,
           /* and other goodies */
         }) => (
-          <Form className="resource__form">
+          <Form>
             <Field name="email" label={t('Email')} type="email" component={TextField} fullWidth />
             <br />
             <br />
             <Field name="password" label={t('Password')} type="password" component={TextField} fullWidth />
 
-            <div className="button-group">
+            <div>
               <Button
-                className="button-group__reset"
                 type="button"
-                color="secondary"
                 onClick={() => {
                   handleReset();
                   dispatch({ type: CLEAR_PUBLICATION_ERRORS });
                 }}>
                 {t('Reset')}
               </Button>
-              <Button
-                className="button-group__submit"
-                type="submit"
-                color="primary"
-                disabled={isSubmitting || !!errors.email || !!errors.password}>
+              <Button type="submit" disabled={isSubmitting || !!errors.email || !!errors.password}>
                 {t('Create')}
               </Button>
               <Button type="submit" onClick={(_: any) => handleValidation(values)}>
