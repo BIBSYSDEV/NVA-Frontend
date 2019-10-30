@@ -1,4 +1,4 @@
-import '../../styles/dashboard.scss';
+import '../../styles/modules/dashboard.scss';
 
 import React from 'react';
 

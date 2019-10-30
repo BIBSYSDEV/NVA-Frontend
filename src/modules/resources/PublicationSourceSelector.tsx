@@ -6,7 +6,7 @@ export interface typeProps {
 
 const PublicationSourceSelector: React.FC<typeProps> = ({ type }) => {
   return (
-    <div className="publicationSelector">
+    <div className="publication-selector">
       <div>Selector v</div>
       <div>{type}</div>
     </div>

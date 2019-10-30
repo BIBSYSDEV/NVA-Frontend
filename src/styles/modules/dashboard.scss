@@ -1,9 +1,9 @@
-@import './colors.scss';
+@import '../abstracts/colors';
 
 .dashboard {
   width: 100%;
   height: 85%;
-  color: $text-color;
+  color: $primary-text-color;
   display: grid;
   grid-template-areas: 'search-bar' 'other-content';
   grid-template-rows: 4rem 15rem auto;

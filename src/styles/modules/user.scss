@@ -1,4 +1,4 @@
-@import './colors.scss';
+@import '../abstracts/colors';
 
 .user {
   display: grid;
@@ -83,14 +83,14 @@
     display: block;
 
     .line:first-of-type {
-      border-top: 1px solid $text-color;
+      border-top: 1px solid $primary-line-color;
     }
 
     .line {
       padding-bottom: 0.8rem;
       padding-top: 0.8rem;
       display: flex;
-      border-bottom: 1px solid $text-color;
+      border-bottom: 1px solid $primary-line-color;
 
       .MuiIcon-root {
         display: inline-block;
@@ -116,6 +116,15 @@
 
   &__orcid-info {
     height: 15rem;
+
+    .MuiButton-root {
+      background-color: $primary-background-color;
+      color: $primary-text-color;
+    }
+
+    .MuiButton-root:hover {
+      background-color: darken($primary-background-color, 3%);
+    }
   }
 }
 
@@ -126,7 +135,16 @@
   }
 
   a {
-    color: $primary-button-color;
+    color: $primary-link-color;
+  }
+
+  .MuiButton-root {
+    background-color: $primary-background-color;
+    color: $primary-text-color;
+  }
+
+  .MuiButton-root:hover {
+    background-color: darken($primary-background-color, 3%);
   }
 
   .orcid-button {

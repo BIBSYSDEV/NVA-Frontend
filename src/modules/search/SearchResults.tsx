@@ -1,4 +1,4 @@
-import '../../styles/search.scss';
+import '../../styles/modules/search.scss';
 
 import Pagination from 'material-ui-flat-pagination';
 import React, { useState } from 'react';

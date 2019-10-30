@@ -1,4 +1,4 @@
-import '../../styles/adminmenu.scss';
+import '../../styles/components/admin-menu.scss';
 
 import React from 'react';
 import { useTranslation } from 'react-i18next';

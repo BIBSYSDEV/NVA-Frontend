@@ -1,4 +1,4 @@
-import '../../styles/breadcrumbs.scss';
+import '../../styles/components/breadcrumbs.scss';
 
 import React from 'react';
 import { useTranslation } from 'react-i18next';

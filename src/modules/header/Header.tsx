@@ -1,4 +1,4 @@
-import '../../styles/header.scss';
+import '../../styles/components/header.scss';
 
 import React from 'react';
 import { Link } from 'react-router-dom';
@@ -8,7 +8,7 @@ import { Typography } from '@material-ui/core';
 import Login from './Login';
 
 const Header: React.FC = () => (
-  <div className="header">
+  <div className="page-header">
     <Link to="/">
       <div className="logo">
         <Typography variant="h6">

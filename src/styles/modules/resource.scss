@@ -1,4 +1,4 @@
-@import './colors.scss';
+@import '../abstracts/colors';
 
 .resource {
   align-self: flex-start;
@@ -9,7 +9,7 @@
     margin-top: 1rem;
     margin-right: 0.5rem;
     background-color: $primary-button-color;
-    color: $primary-color;
+    color: $primary-text-color-inverse;
     text-transform: none;
   }
 

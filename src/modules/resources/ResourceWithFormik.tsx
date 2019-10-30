@@ -1,4 +1,4 @@
-import '../../styles/resource.scss';
+import '../../styles/modules/resource.scss';
 
 import { Field, Form, Formik } from 'formik';
 import { TextField } from 'formik-material-ui';

@@ -17,7 +17,7 @@ const TabPanel: React.FC<TabPanelProps> = ({ ariaLabel, children, tabNumber, val
     hidden={value !== tabNumber}
     id={`nav-tabpanel-${ariaLabel}`}
     aria-labelledby={`nav-tab-${ariaLabel}`}>
-    <Box p={3}>{children}</Box>
+    <Box>{children}</Box>
   </Typography>
 );
 

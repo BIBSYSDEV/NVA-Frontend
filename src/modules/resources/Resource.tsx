@@ -1,4 +1,4 @@
-import '../../styles/resource.scss';
+import '../../styles/modules/resource.scss';
 
 import React, { useReducer, useState } from 'react';
 import { useTranslation } from 'react-i18next';

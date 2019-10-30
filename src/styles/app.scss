@@ -1,4 +1,4 @@
-@import './colors.scss';
+@import 'abstracts/colors';
 
 .app {
   height: 100vh;
@@ -8,7 +8,7 @@
   font-size: 62.5%;
 }
 
-.body {
+.page-body {
   display: flex;
   align-items: center;
   background-color: white;
@@ -19,13 +19,13 @@
 .footer {
   display: flex;
   min-height: 3rem;
-  background-color: $primary-color;
-  color: $primary-button-color;
+  background-color: $primary-background-color;
+  color: $primary-link-color;
   font-size: 1rem;
   font-weight: bold;
   justify-content: center;
   align-items: center;
-  border-top: 2px solid $tertiary-color;
+  border-top: 2px solid $primary-line-color;
 }
 
 .MuiSnackbarContent-action .MuiIconButton-root {
