@@ -45,16 +45,16 @@ const SearchBar: React.FC<SearchBarProps> = ({ resetSearchInput: resetSearch }) 
   return (
     <div className="search-bar">
       <Paper>
-        <form className="search-bar__search-container" onSubmit={handleSubmit}>
+        <form className="container" onSubmit={handleSubmit}>
           <InputBase
             autoFocus
             data-cy="search-input"
-            className="search-bar__input"
+            className="input"
             placeholder={t('Search')}
             onChange={handleChange}
             value={searchTerm}
           />
-          <IconButton data-cy="search-button" className="search-bar__search-button" onClick={handleSearch}>
+          <IconButton data-cy="search-button" className="search-button" onClick={handleSearch}>
             <SearchIcon />
           </IconButton>
         </form>

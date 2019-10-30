@@ -29,18 +29,18 @@
     min-width: 50vw;
   }
 
-  &__search-container {
+  .container {
     display: grid;
     grid-template-areas: 'input button';
     align-items: center;
   }
 
-  &__input {
+  .input {
     grid-area: input;
     margin-left: 1rem;
   }
 
-  &__search-button {
+  .search-button {
     grid-area: button;
     justify-self: right;
   }
