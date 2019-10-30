@@ -26,27 +26,27 @@
     background-color: $box-color;
     padding: 2rem;
 
-    &__header {
+    .header {
       font-size: 1.5rem;
       font-weight: bold;
       padding-bottom: 0.5rem;
     }
 
-    &__sub-header {
+    .sub-header {
       font-size: 1.3rem;
       padding-bottom: 1.5rem;
     }
   }
 
-  &__profile-image {
+  .profile-image {
     height: 14rem;
   }
 
-  &__contact-info {
+  .contact-info {
     height: 10rem;
   }
 
-  &__language {
+  .language {
     padding: 0;
 
     .MuiFormControl-root {
@@ -56,11 +56,11 @@
     }
   }
 
-  &__author-info {
+  .author-info {
     height: 10rem;
   }
 
-  &__feide-info {
+  .feide-info {
     display: block;
   }
 
@@ -79,7 +79,7 @@
     }
   }
 
-  &__roles {
+  .roles {
     display: block;
 
     .line:first-of-type {
@@ -110,11 +110,11 @@
     }
   }
 
-  &__organizations {
+  .organizations {
     height: 5rem;
   }
 
-  &__orcid-info {
+  .orcid-info {
     height: 15rem;
 
     .MuiButton-root {
@@ -132,10 +132,6 @@
   h5 {
     border-bottom: 1px solid black;
     text-align: right;
-  }
-
-  a {
-    color: $primary-link-color;
   }
 
   .MuiButton-root {

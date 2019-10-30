@@ -30,7 +30,7 @@ const UserOrcid: React.FC = () => {
   };
 
   return (
-    <UserCard headerLabel={t('ORCID')} className="user__orcid-info">
+    <UserCard headerLabel={t('ORCID')} className="orcid-info">
       {user.orcid ? (
         <div className="line">
           <div className="label">{t('Your ORCID')}:</div>

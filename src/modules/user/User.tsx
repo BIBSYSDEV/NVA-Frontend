@@ -38,16 +38,16 @@ const User: React.FC = () => {
   return (
     <div className="user">
       <div className="secondary-info">
-        <UserCard headerLabel="Bilde" className="user__profile-image" />
-        <UserCard headerLabel={t('Contact')} className="user__contact-info" />
+        <UserCard headerLabel="Bilde" className="profile-image" />
+        <UserCard headerLabel={t('Contact')} className="contact-info" />
         <UserLanguage />
-        <UserCard headerLabel={t('Author information')} className="user__author-info" />
+        <UserCard headerLabel={t('Author information')} className="author-info" />
       </div>
 
       <div className="primary-info">
         <UserInfo user={user} />
         <UserRoles user={user} />
-        <UserCard headerLabel={t('Organizations')} className="user__organizations" />
+        <UserCard headerLabel={t('Organizations')} className="organizations" />
         <UserOrcid />
       </div>
     </div>

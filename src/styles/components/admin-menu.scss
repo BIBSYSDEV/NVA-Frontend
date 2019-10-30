@@ -1,7 +1,7 @@
-@import './colors.scss';
+@import '../abstracts/colors';
 
 .admin-menu {
-  background-color: $secondary-color;
+  background-color: $box-color;
   width: 100%;
   display: flex;
   align-items: center;
@@ -16,12 +16,6 @@
   .MuiButton-root {
     margin-left: 1rem;
     margin-right: 1rem;
-    background-color: $primary-button-color;
-    color: $primary-color;
     text-transform: none;
-  }
-
-  .MuiButton-root:hover {
-    background-color: darken($primary-button-color, 3%);
   }
 }
