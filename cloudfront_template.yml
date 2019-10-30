@@ -46,7 +46,7 @@ Resources:
             Cookies:
               Forward: none
           ViewerProtocolPolicy: allow-all
-        DefaultRootObject: '/index.html'
+        DefaultRootObject: 'index.html'
         PriceClass: PriceClass_100
         Restrictions:
           GeoRestriction:

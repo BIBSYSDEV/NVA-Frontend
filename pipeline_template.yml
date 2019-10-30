@@ -23,6 +23,10 @@ Parameters:
   FrontendBucketName:
     Description: Bucket name for frontend. Must be all lower case, numbers and '-', '_'
     Type: String
+  UseMockData:
+    Description: Bucket name for frontend. Must be all lower case, numbers and '-', '_'
+    Type: String
+    Default: false
 
 Resources:
   CodeBuildProject:
@@ -39,6 +43,9 @@ Resources:
           - Name: S3_BUCKET
             Type: PLAINTEXT
             Value: !Ref ArtifactStoreBucket
+          - Name: REACT_APP_USE_MOCK
+            Type: PLAINTEXT
+            Value: !Ref UseMockData
       Source:
         Type: CODEPIPELINE
   NvaFrontendBucket:
