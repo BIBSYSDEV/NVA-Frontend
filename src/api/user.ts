@@ -8,12 +8,11 @@ import {
   logoutSuccessAction,
   refreshTokenFailureAction,
   refreshTokenSuccessAction,
-} from '../actions/authActions';
-import { clearFeedbackAction } from '../actions/feedbackActions';
-import { clearUserAction, setUserAction, setUserFailureAction } from '../actions/userActions';
+} from '../redux/actions/authActions';
+import { clearFeedbackAction } from '../redux/actions/feedbackActions';
+import { clearUserAction, setUserAction, setUserFailureAction } from '../redux/actions/userActions';
 import { useMockData } from '../utils/constants';
-import { mockUser } from './mock-api';
-import { orcidLookup } from './orcid';
+import { mockUser } from './mock-interceptor';
 
 export const login = () => {
   return async (dispatch: Dispatch) => {
@@ -75,11 +74,5 @@ export const logout = () => {
       Auth.signOut();
       dispatch(clearFeedbackAction());
     }
-  };
-};
-
-export const getOrcidInfo = (orcidCode: string) => {
-  return async (dispatch: Dispatch) => {
-    orcidLookup(dispatch, orcidCode);
   };
 };
