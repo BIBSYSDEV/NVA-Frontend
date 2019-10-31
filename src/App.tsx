@@ -28,7 +28,7 @@ const App: React.FC = () => {
   }
 
   const dispatch = useDispatch();
-  const { t } = useTranslation();
+  const { t } = useTranslation('feedback');
   const { closeSnackbar, enqueueSnackbar } = useSnackbar();
   const feedback = useSelector((store: RootStore) => store.feedback);
 
