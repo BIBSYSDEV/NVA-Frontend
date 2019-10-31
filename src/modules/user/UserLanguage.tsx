@@ -1,3 +1,5 @@
+import '../../styles/modules/user.scss';
+
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -22,7 +24,7 @@ const UserLanguage: React.FC = () => {
   };
 
   return (
-    <UserCard headerLabel={t('Language')} className="user__language">
+    <UserCard headerLabel={t('Language')} className="language">
       <FormControl variant="outlined">
         <Select value={languageSelected} onChange={handleLanguageChange} data-cy="language-selector">
           {languages.map(language => (

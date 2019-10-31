@@ -1,14 +1,9 @@
-@import './colors.scss';
+@import '../abstracts/colors';
 
-.auth {
-  grid-area: auth;
-  justify-self: right;
-  align-items: center;
-
+body {
   .MuiButton-root {
-    width: 8rem;
     background-color: $primary-button-color;
-    color: $primary-color;
+    color: $text-color-light;
   }
 
   .MuiButton-root:hover {

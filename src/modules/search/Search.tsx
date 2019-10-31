@@ -1,4 +1,4 @@
-import '../../styles/search.scss';
+import '../../styles/modules/search.scss';
 
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';

@@ -1,18 +1,13 @@
-@import './colors.scss';
+@import '../abstracts/colors';
 
 .menu {
   grid-area: menu;
 
   .MuiButton-root {
     width: 15rem;
-    background-color: $primary-button-color;
-    color: $primary-color;
-  }
-
-  .MuiButton-root:hover {
-    background-color: darken($primary-button-color, 3%);
   }
 }
+
 .MuiMenu-list {
   width: 15rem;
   border-radius: 4px;

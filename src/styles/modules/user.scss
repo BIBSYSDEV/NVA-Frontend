@@ -1,4 +1,4 @@
-@import './colors.scss';
+@import '../abstracts/colors';
 
 .user {
   display: grid;
@@ -26,29 +26,27 @@
     background-color: $box-color;
     padding: 2rem;
 
-    &__header {
+    .header {
       font-size: 1.5rem;
       font-weight: bold;
       padding-bottom: 0.5rem;
     }
 
-    &__sub-header {
+    .sub-header {
       font-size: 1.3rem;
       padding-bottom: 1.5rem;
     }
   }
 
-  &__profile-image {
+  .profile-image {
     height: 14rem;
   }
 
-  &__contact-info {
+  .contact-info {
     height: 10rem;
   }
 
-  &__language {
-    padding: 0;
-
+  .language {
     .MuiFormControl-root {
       padding-top: 1rem;
       width: -webkit-fill-available;
@@ -56,11 +54,11 @@
     }
   }
 
-  &__author-info {
+  .author-info {
     height: 10rem;
   }
 
-  &__feide-info {
+  .feide-info {
     display: block;
   }
 
@@ -79,18 +77,18 @@
     }
   }
 
-  &__roles {
+  .roles {
     display: block;
 
     .line:first-of-type {
-      border-top: 1px solid $text-color;
+      border-top: 1px solid $line-color;
     }
 
     .line {
       padding-bottom: 0.8rem;
       padding-top: 0.8rem;
       display: flex;
-      border-bottom: 1px solid $text-color;
+      border-bottom: 1px solid $line-color;
 
       .MuiIcon-root {
         display: inline-block;
@@ -110,12 +108,21 @@
     }
   }
 
-  &__organizations {
+  .organizations {
     height: 5rem;
   }
 
-  &__orcid-info {
+  .orcid-info {
     height: 15rem;
+
+    .MuiButton-root {
+      background-color: $background-color;
+      color: $text-color;
+    }
+
+    .MuiButton-root:hover {
+      background-color: darken($background-color, 3%);
+    }
   }
 }
 
@@ -125,8 +132,13 @@
     text-align: right;
   }
 
-  a {
-    color: $primary-button-color;
+  .MuiButton-root {
+    background-color: $background-color;
+    color: $text-color;
+  }
+
+  .MuiButton-root:hover {
+    background-color: darken($background-color, 3%);
   }
 
   .orcid-button {

@@ -15,7 +15,7 @@ const UserRoles: React.FC<UserRolesProps> = ({ user }) => {
   const { roles } = user;
 
   return (
-    <UserCard headerLabel={t('Roles')} subHeaderLabel={t('Info from NVA')} className="user__roles">
+    <UserCard headerLabel={t('Roles')} subHeaderLabel={t('Info from NVA')} className="roles">
       {roles &&
         user.roles.map((role: RoleName) => {
           if (role === RoleName.PUBLISHER) {

@@ -1,4 +1,4 @@
-import '../../styles/resource.scss';
+import '../../styles/modules/resource.scss';
 
 import React, { useReducer, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -10,6 +10,7 @@ import LinkTab from '../../components/TabPanel/LinkTab';
 import TabPanel from '../../components/TabPanel/TabPanel';
 import { initialValidatorState, validationReducer } from '../../reducers/validationReducer';
 import ResourceWithFormik from './ResourceWithFormik';
+import PublicationPanel from './PublicationPanel';
 
 const a11yProps = (tabDescription: string) => {
   return {
@@ -52,6 +53,7 @@ const Resource: React.FC = () => {
         <LinkTab label={`6. ${t('Submission')}`} {...a11yProps('submission')} />
       </Tabs>
       <TabPanel value={value} tabNumber={0} ariaLabel="publication">
+        <PublicationPanel />
         {errors.publicationErrors &&
           errors.publicationErrors.map((error: any) => {
             return (

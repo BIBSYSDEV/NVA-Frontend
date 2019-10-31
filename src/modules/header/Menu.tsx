@@ -1,4 +1,4 @@
-import '../../styles/menu.scss';
+import '../../styles/components/menu.scss';
 
 import React from 'react';
 import { useTranslation } from 'react-i18next';

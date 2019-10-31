@@ -1,4 +1,4 @@
-import '../../styles/login.scss';
+import '../../styles/components/login.scss';
 
 import React from 'react';
 import { useTranslation } from 'react-i18next';

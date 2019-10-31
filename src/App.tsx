@@ -1,4 +1,5 @@
 import './styles/app.scss';
+import './styles/components/buttons.scss';
 
 import Amplify, { Hub } from 'aws-amplify';
 import { useSnackbar } from 'notistack';
@@ -67,7 +68,7 @@ const App: React.FC = () => {
         <Header />
         <AdminMenu />
         <Breadcrumbs />
-        <div className="body">
+        <div className="page-body">
           <Switch>
             <Route exact path="/" component={Dashboard} />
             <Route exact path="/resources" component={ResourceList} />
