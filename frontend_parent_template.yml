@@ -21,6 +21,10 @@ Parameters:
   FrontendBucketName:
     Description: Bucket name for frontend. Must be all lower case, numbers and '-', '_'
     Type: String
+  UseMockData:
+    Description: Set true to use mock data for testing purposes
+    Type: String
+    Default: false
 
 Resources:
   PipelineStack:
@@ -34,6 +38,7 @@ Resources:
         GitHubRepo: !Ref GitHubRepo
         GitHubBranch: !Ref GitHubBranch
         FrontendBucketName: !Ref FrontendBucketName
+        UseMockData: !Ref UseMockData
   CloudfrontStack:
     Type: AWS::CloudFormation::Stack
     DependsOn: PipelineStack
