@@ -24,7 +24,7 @@ Parameters:
     Description: Bucket name for frontend. Must be all lower case, numbers and '-', '_'
     Type: String
   UseMockData:
-    Description: Bucket name for frontend. Must be all lower case, numbers and '-', '_'
+    Description: Set true to use mock data for testing purposes
     Type: String
     Default: false
 
