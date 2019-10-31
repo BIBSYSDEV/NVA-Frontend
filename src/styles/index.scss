@@ -6,7 +6,7 @@ body {
     'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: $primary-text-color;
+  color: $text-color;
 }
 
 code {
@@ -15,5 +15,5 @@ code {
 
 a {
   text-decoration: none;
-  color: $primary-link-color;
+  color: $link-color;
 }

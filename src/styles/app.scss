@@ -19,13 +19,13 @@
 .footer {
   display: flex;
   min-height: 3rem;
-  background-color: $primary-background-color;
-  color: $primary-link-color;
+  background-color: $background-color;
+  color: $link-color;
   font-size: 1rem;
   font-weight: bold;
   justify-content: center;
   align-items: center;
-  border-top: 2px solid $primary-line-color;
+  border-top: 2px solid $line-color;
 }
 
 .MuiSnackbarContent-action .MuiIconButton-root {

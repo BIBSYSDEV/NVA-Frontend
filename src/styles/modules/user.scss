@@ -81,14 +81,14 @@
     display: block;
 
     .line:first-of-type {
-      border-top: 1px solid $primary-line-color;
+      border-top: 1px solid $line-color;
     }
 
     .line {
       padding-bottom: 0.8rem;
       padding-top: 0.8rem;
       display: flex;
-      border-bottom: 1px solid $primary-line-color;
+      border-bottom: 1px solid $line-color;
 
       .MuiIcon-root {
         display: inline-block;
@@ -116,12 +116,12 @@
     height: 15rem;
 
     .MuiButton-root {
-      background-color: $primary-background-color;
-      color: $primary-text-color;
+      background-color: $background-color;
+      color: $text-color;
     }
 
     .MuiButton-root:hover {
-      background-color: darken($primary-background-color, 3%);
+      background-color: darken($background-color, 3%);
     }
   }
 }
@@ -133,12 +133,12 @@
   }
 
   .MuiButton-root {
-    background-color: $primary-background-color;
-    color: $primary-text-color;
+    background-color: $background-color;
+    color: $text-color;
   }
 
   .MuiButton-root:hover {
-    background-color: darken($primary-background-color, 3%);
+    background-color: darken($background-color, 3%);
   }
 
   .orcid-button {

@@ -2,10 +2,10 @@
 
 .breadcrumbs {
   grid-area: breadcrumbs;
-  background-color: $primary-background-color;
+  background-color: $background-color;
   padding: 0.5rem;
 
   a {
-    color: $primary-text-color;
+    color: $text-color;
   }
 }
