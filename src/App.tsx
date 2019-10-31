@@ -3,6 +3,7 @@ import './styles/app.scss';
 import Amplify, { Hub } from 'aws-amplify';
 import { useSnackbar } from 'notistack';
 import React, { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
@@ -27,6 +28,7 @@ const App: React.FC = () => {
   }
 
   const dispatch = useDispatch();
+  const { t } = useTranslation('feedback');
   const { closeSnackbar, enqueueSnackbar } = useSnackbar();
   const feedback = useSelector((store: RootStore) => store.feedback);
 
@@ -34,14 +36,14 @@ const App: React.FC = () => {
     if (feedback.length > 0) {
       feedback.map(fb =>
         fb.variant === 'error'
-          ? enqueueSnackbar(fb.message, { variant: fb.variant, persist: true })
-          : enqueueSnackbar(fb.message, { variant: fb.variant })
+          ? enqueueSnackbar(t(fb.message), { variant: fb.variant, persist: true })
+          : enqueueSnackbar(t(fb.message), { variant: fb.variant })
       );
     }
     return () => {
       closeSnackbar();
     };
-  }, [feedback, enqueueSnackbar, closeSnackbar]);
+  }, [feedback, enqueueSnackbar, closeSnackbar, t]);
 
   useEffect(() => {
     const updateUser = async () => {

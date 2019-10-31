@@ -1,8 +1,8 @@
-import { Dispatch } from 'redux';
 import Axios from 'axios';
+import { Dispatch } from 'redux';
 
-import { ORCID_API_BASEURL } from '../utils/constants';
 import { orcidRequestFailureAction, setOrcidInfoAction } from '../actions/orcidActions';
+import { ORCID_API_BASEURL } from '../utils/constants';
 
 export const orcidLookup = async (dispatch: Dispatch, orcidCode: string) => {
   const data = {
@@ -14,7 +14,7 @@ export const orcidLookup = async (dispatch: Dispatch, orcidCode: string) => {
   };
 
   Axios({
-    method: 'post',
+    method: 'POST',
     url: ORCID_API_BASEURL,
     data: data,
     headers: {
@@ -26,6 +26,6 @@ export const orcidLookup = async (dispatch: Dispatch, orcidCode: string) => {
       dispatch(setOrcidInfoAction(response.data.name, response.data.orcid));
     })
     .catch(() => {
-      dispatch(orcidRequestFailureAction('ORCID request failed'));
+      dispatch(orcidRequestFailureAction('ErrorMessage.ORCID request failed'));
     });
 };
