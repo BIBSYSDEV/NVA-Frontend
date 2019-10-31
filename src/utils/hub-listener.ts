@@ -11,7 +11,7 @@ export const hubListener = (data: any, dispatch: Dispatch<any>) => {
       dispatch(logoutSuccessAction());
       break;
     case 'signIn_failure':
-      dispatch(loginFailureAction('Login failed. Please try again.'));
+      dispatch(loginFailureAction('ErrorMessage.Login failed'));
       break;
   }
 };

@@ -1,0 +1,12 @@
+{
+  "ErrorMessage": {
+    "Failed to get user": "Kunne ikke hente bruker",
+    "Login failed": "Kunne ikke logge inn",
+    "ORCID login failed": "Kunne ikke logge inn på ORCID",
+    "ORCID request failed": "Kunne ikke hente data fra ORCID",
+    "Search failed": "Søk feilet"
+  },
+  "SuccessMessage": {
+    "Login success": "Logget inn"
+  }
+}

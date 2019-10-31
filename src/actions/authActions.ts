@@ -22,7 +22,7 @@ export const refreshTokenSuccessAction = () => ({
 
 export const loginSuccessAction = () => ({
   type: LOGIN_SUCCESS,
-  message: 'login success',
+  message: 'SuccessMessage.Login success',
   variant: 'success',
 });
 

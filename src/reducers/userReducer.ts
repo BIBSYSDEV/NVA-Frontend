@@ -1,10 +1,15 @@
 import { OrcidActions, SET_ORCID_INFO } from '../actions/orcidActions';
-import { SET_USER, UserActions } from '../actions/userActions';
+import { CLEAR_USER, SET_USER_SUCCESS, UserActions } from '../actions/userActions';
 import User, { emptyUser } from '../types/user.types';
 
 export const userReducer = (state: User = emptyUser, action: UserActions | OrcidActions) => {
   switch (action.type) {
-    case SET_USER:
+    case CLEAR_USER:
+      return {
+        ...state,
+        ...emptyUser,
+      };
+    case SET_USER_SUCCESS:
       return {
         ...state,
         ...action.user,

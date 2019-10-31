@@ -5,14 +5,15 @@ import {
   initLoginAction,
   initLogoutAction,
   loginSuccessAction,
+  logoutSuccessAction,
   refreshTokenFailureAction,
   refreshTokenSuccessAction,
 } from '../actions/authActions';
-import { setUserAction } from '../actions/userActions';
-import { emptyUser } from '../types/user.types';
+import { clearFeedbackAction } from '../actions/feedbackActions';
+import { clearUserAction, setUserAction, setUserFailureAction } from '../actions/userActions';
 import { useMockData } from '../utils/constants';
-import { orcidLookup } from './orcid';
 import { mockUser } from './mock-api';
+import { orcidLookup } from './orcid';
 
 export const login = () => {
   return async (dispatch: Dispatch) => {
@@ -37,7 +38,7 @@ export const getCurrentAuthenticatedUser = () => {
         dispatch(setUserAction(user));
         dispatch(refreshToken());
       } catch (e) {
-        dispatch(setUserAction(emptyUser));
+        dispatch(setUserFailureAction('ErrorMessage.Failed to get user'));
       }
     }
   };
@@ -67,9 +68,12 @@ export const logout = () => {
   return async (dispatch: Dispatch) => {
     dispatch(initLogoutAction());
     if (useMockData) {
-      dispatch(setUserAction(emptyUser));
+      dispatch(clearUserAction());
+      dispatch(clearFeedbackAction());
+      dispatch(logoutSuccessAction());
     } else {
       Auth.signOut();
+      dispatch(clearFeedbackAction());
     }
   };
 };
