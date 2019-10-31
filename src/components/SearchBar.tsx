@@ -1,4 +1,4 @@
-import '../styles/modules/search.scss';
+import '../styles/pages/search.scss';
 
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';

@@ -1,7 +1,7 @@
 import Axios from 'axios';
 import { Dispatch } from 'redux';
 
-import { searchFailureAction, searchForResources } from '../actions/resourceActions';
+import { searchFailureAction, searchForResources } from '../redux/actions/resourceActions';
 import { RESOURCES_API_BASEURL, SEARCH_RESULTS_PER_PAGE } from '../utils/constants';
 
 export const search = (searchTerm: string, offset?: number) => {

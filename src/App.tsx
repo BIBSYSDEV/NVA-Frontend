@@ -9,17 +9,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import { getCurrentAuthenticatedUser } from './api/user';
-import awsConfig from './aws-config';
-import Breadcrumbs from './modules/breadcrumbs/Breadcrumbs';
-import AdminMenu from './modules/dashboard/AdminMenu';
-import Dashboard from './modules/dashboard/Dashboard';
-import NotFound from './modules/errorpages/NotFound';
-import Header from './modules/header/Header';
-import Resource from './modules/resources/Resource';
-import ResourceList from './modules/resources/ResourceList';
-import Search from './modules/search/Search';
-import User from './modules/user/User';
-import { RootStore } from './reducers/rootReducer';
+import Breadcrumbs from './layout/Breadcrumbs';
+import Header from './layout/header/Header';
+import AdminMenu from './pages/dashboard/AdminMenu';
+import Dashboard from './pages/dashboard/Dashboard';
+import NotFound from './pages/errorpages/NotFound';
+import Resource from './pages/resource/Resource';
+import Search from './pages/search/Search';
+import User from './pages/user/User';
+import Workspace from './pages/workspace/Workspace';
+import { RootStore } from './redux/reducers/rootReducer';
+import awsConfig from './utils/aws-config';
 import { useMockData } from './utils/constants';
 import { hubListener } from './utils/hub-listener';
 
@@ -71,7 +71,7 @@ const App: React.FC = () => {
         <div className="page-body">
           <Switch>
             <Route exact path="/" component={Dashboard} />
-            <Route exact path="/resources" component={ResourceList} />
+            <Route exact path="/resources" component={Workspace} />
             <Route exact path="/resources/new" component={Resource} />
             <Route exact path="/search" component={Search} />
             <Route exact path="/search/:searchTerm" component={Search} />
