@@ -53,6 +53,7 @@ const Resource: React.FC = () => {
         <LinkTab label={`6. ${t('Submission')}`} {...a11yProps('submission')} />
       </Tabs>
       <TabPanel value={value} tabNumber={0} ariaLabel="publication">
+        <PublicationPanel />
         {errors.publicationErrors &&
           errors.publicationErrors.map((error: any) => {
             return (
