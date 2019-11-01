@@ -35,7 +35,7 @@
     "start": "react-scripts -r @cypress/instrument-cra start",
     "build": "react-scripts build",
     "test:cypress": "REACT_APP_USE_MOCK=true start-server-and-test http://localhost:3000",
-    "test:react": "react-scripts test",
+    "test:react": "react-scripts test --coverage --watchAll=false",
     "test": "cypress run",
     "deploy": "aws s3 sync build/ s3://demo-stack-bucket",
     "eject": "react-scripts eject",
