@@ -1,5 +1,5 @@
 describe('Login', () => {
-  before('Given that the user is on the start page, and is not logged in', () => {
+  beforeEach('Given that the user is on the start page, and is not logged in', () => {
     cy.visit('/');
     // Logging out since already logged in
     cy.get('[data-cy=menu]').click({ force: true });
