@@ -8,10 +8,12 @@ import { createStore } from 'redux';
 
 import { IconButton } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
-import { getByTestId, render, wait } from '@testing-library/react';
+import { cleanup, getByTestId, render, wait } from '@testing-library/react';
 
 import App from '../App';
 import { loginFailureAction } from '../redux/actions/authActions';
+import { clearFeedbackAction } from '../redux/actions/feedbackActions';
+import { orcidRequestFailureAction } from '../redux/actions/orcidActions';
 import rootReducer from '../redux/reducers/rootReducer';
 import i18n from '../translations/i18n';
 
@@ -50,5 +52,16 @@ describe('Snackbar', () => {
     store.dispatch(loginFailureAction('ErrorMessage.Login failed'));
     await wait(() => getByTestId(app.container, 'snackbar'));
     expect(getByTestId(app.container, 'snackbar').textContent).toBe('Login failed');
+  });
+
+  test('shows orcid request error message when connecting to ORCID failed', async () => {
+    store.dispatch(orcidRequestFailureAction('ErrorMessage.ORCID request failed'));
+    await wait(() => getByTestId(app.container, 'snackbar'));
+    expect(getByTestId(app.container, 'snackbar').textContent).toBe('Could not get data from ORCID');
+  });
+
+  afterEach(() => {
+    store.dispatch(clearFeedbackAction());
+    cleanup();
   });
 });
