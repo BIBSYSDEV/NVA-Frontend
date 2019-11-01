@@ -1,17 +1,25 @@
 import { Auth } from 'aws-amplify';
 import { Dispatch } from 'redux';
 
-import { refreshTokenFailureAction } from '../actions/errorActions';
-import { initLoginAction, initLogoutAction, refreshTokenSuccessAction, setUserAction } from '../actions/userActions';
-import { emptyUser } from '../types/user.types';
+import {
+  initLoginAction,
+  initLogoutAction,
+  loginSuccessAction,
+  logoutSuccessAction,
+  refreshTokenFailureAction,
+  refreshTokenSuccessAction,
+} from '../redux/actions/authActions';
+import { clearFeedbackAction } from '../redux/actions/feedbackActions';
+import { clearUserAction, setUserAction, setUserFailureAction } from '../redux/actions/userActions';
 import { useMockData } from '../utils/constants';
-import { mockSetUser } from './mock-api';
+import { mockUser } from './mock-interceptor';
 
 export const login = () => {
   return async (dispatch: Dispatch) => {
     dispatch(initLoginAction());
     if (useMockData) {
-      mockSetUser(dispatch);
+      dispatch(setUserAction(mockUser));
+      dispatch(loginSuccessAction());
     } else {
       Auth.federatedSignIn();
     }
@@ -21,7 +29,7 @@ export const login = () => {
 export const getCurrentAuthenticatedUser = () => {
   return async (dispatch: Dispatch<any>) => {
     if (useMockData) {
-      mockSetUser(dispatch);
+      dispatch(setUserAction(mockUser));
     } else {
       try {
         const cognitoUser = await Auth.currentAuthenticatedUser();
@@ -29,7 +37,7 @@ export const getCurrentAuthenticatedUser = () => {
         dispatch(setUserAction(user));
         dispatch(refreshToken());
       } catch (e) {
-        dispatch(setUserAction(emptyUser));
+        dispatch(setUserFailureAction('ErrorMessage.Failed to get user'));
       }
     }
   };
@@ -59,9 +67,12 @@ export const logout = () => {
   return async (dispatch: Dispatch) => {
     dispatch(initLogoutAction());
     if (useMockData) {
-      dispatch(setUserAction(emptyUser));
+      dispatch(clearUserAction());
+      dispatch(clearFeedbackAction());
+      dispatch(logoutSuccessAction());
     } else {
       Auth.signOut();
+      dispatch(clearFeedbackAction());
     }
   };
 };

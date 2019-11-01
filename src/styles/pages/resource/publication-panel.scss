@@ -1,0 +1,51 @@
+@import '../../abstracts/colors';
+
+.publication-panel {
+  width: 100%;
+  padding-top: 2rem;
+
+  .header {
+    font-size: 2rem;
+    font-weight: bold;
+    line-height: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .panel-content {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .selector-wrapper {
+    flex-basis: 60%;
+    min-width: 10rem;
+  }
+
+  .information-box {
+    flex-basis: 30%;
+    background-color: $box-color;
+    padding: 1rem;
+
+    .header {
+      font-size: 1.2rem;
+      font-weight: bold;
+      line-height: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .content {
+      margin-bottom: 2rem;
+    }
+
+    a {
+      color: $link-color;
+    }
+  }
+
+  .publication-selector {
+    padding: 1rem;
+    margin-bottom: 2rem;
+    height: 5rem;
+    background-color: $publication-selector-color;
+  }
+}

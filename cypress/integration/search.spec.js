@@ -1,33 +1,36 @@
-describe('A user searches for resources and browses through the result-pages', () => {
-  it('Given that a user is on the start page and is not logged in', () => {
+describe('Searching', () => {
+  beforeEach(() => {
     cy.visit('/');
-    cy.get('[data-cy=menu]').click();
-    cy.get('[data-cy=logout-button]').click();
-    cy.get('[data-cy=login-button]').should('be.visible');
-    cy.get('[data-cy=menu]').should('not.exist');
-    cy.get('[data-cy=logo]').click();
   });
-  it('When the user enters "test" into the search input', () => {
-    cy.get('[data-cy=search-input] .MuiInputBase-input').type('test');
-  });
-  it('And clicks Search', () => {
-    cy.get('[data-cy=search-button]').click();
-  });
-  it('And there is 45 results', () => {
+
+  it('should show a result-list when searching', () => {
+    cy.server();
+    cy.fixture('resources_2_random_results_generated').as('mockDataWith2Results');
+    cy.route('/search/resources/test', '@mockDataWith2Results');
+    searchForText('test');
     cy.get('[data-cy=search-results]')
       .find('[data-cy=result-list-item] ')
       .should('have.length.greaterThan', 1);
+    cy.get('[data-cy=search-results]').contains('2');
+  });
+
+  it('should show a working pagination', () => {
+    cy.server();
+    cy.fixture('resources_45_random_results_generated').as('mockDataWith45Results');
+    cy.route('/search/resources/test', '@mockDataWith45Results');
+    searchForText('test');
     cy.get('[data-cy=search-results]').contains('45');
-  });
-  it('Then pagination is shown', () => {
     cy.get('[data-cy=pagination]').contains('2');
-  });
-  it('And user clicks on ">" in pagination', () => {
     cy.get('[data-cy=pagination]')
       .contains('>')
-      .click();
-  });
-  it('Then the result-title should show "(11 - 20)"', () => {
+      .click({ force: true });
     cy.get('[data-cy=search-results]').contains('(11 - 20)');
   });
 });
+
+const searchForText = text => {
+  cy.get('[data-cy=search-input] .MuiInputBase-input')
+    .click({ force: true })
+    .type(text);
+  cy.get('[data-cy=search-button]').click({ force: true });
+};

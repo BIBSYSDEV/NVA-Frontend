@@ -1,4 +1,4 @@
-@import './colors.scss';
+@import 'abstracts/colors';
 
 body {
   margin: 0;
@@ -6,6 +6,7 @@ body {
     'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: $text-color;
 }
 
 code {
@@ -14,5 +15,5 @@ code {
 
 a {
   text-decoration: none;
-  color: $secondary-color;
+  color: $link-color;
 }

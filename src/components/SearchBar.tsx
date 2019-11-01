@@ -1,4 +1,4 @@
-import '../styles/search.scss';
+import '../styles/pages/search.scss';
 
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -45,17 +45,17 @@ const SearchBar: React.FC<SearchBarProps> = ({ resetSearchInput: resetSearch }) 
   return (
     <div className="search-bar">
       <Paper>
-        <form className="search-bar__search-container" onSubmit={handleSubmit}>
+        <form className="container" onSubmit={handleSubmit}>
           <InputBase
             autoFocus
             data-cy="search-input"
-            className="search-bar__input"
+            className="input"
             placeholder={t('Search')}
             onChange={handleChange}
             value={searchTerm}
             inputProps={{ 'data-testid': 'search-input' }}
           />
-          <IconButton data-cy="search-button" className="search-bar__search-button" onClick={handleSearch}>
+          <IconButton data-cy="search-button" className="search-button" onClick={handleSearch}>
             <SearchIcon />
           </IconButton>
         </form>

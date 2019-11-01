@@ -21,6 +21,8 @@ export default interface User {
   institution: string;
   roles: RoleName[];
   applications: ApplicationName[];
+  orcidName: string;
+  orcid: string;
 }
 
 export const emptyUser: User = {
@@ -30,4 +32,6 @@ export const emptyUser: User = {
   institution: '',
   roles: [],
   applications: [],
+  orcidName: '',
+  orcid: '',
 };

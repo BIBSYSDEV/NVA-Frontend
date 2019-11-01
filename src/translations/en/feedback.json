@@ -1,0 +1,12 @@
+{
+  "ErrorMessage": {
+    "Failed to get user": "Failed to get user",
+    "Login failed": "Login failed",
+    "ORCID login failed": "ORCID login failed",
+    "ORCID request failed": "Could not get data from ORCID",
+    "Search failed": "Search failed"
+  },
+  "SuccessMessage": {
+    "Login success": "Logged in"
+  }
+}

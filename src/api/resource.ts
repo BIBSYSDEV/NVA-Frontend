@@ -1,13 +1,19 @@
+import Axios from 'axios';
 import { Dispatch } from 'redux';
 
-import { useMockData } from '../utils/constants';
-import { mockSearch } from './mock-api';
+import { searchFailureAction, searchForResources } from '../redux/actions/resourceActions';
+import { RESOURCES_API_BASEURL, SEARCH_RESULTS_PER_PAGE } from '../utils/constants';
 
 export const search = (searchTerm: string, offset?: number) => {
   return async (dispatch: Dispatch) => {
-    // make api call to search endpoint
-    if (useMockData) {
-      mockSearch(dispatch, searchTerm, offset ? offset : 0);
-    }
+    Axios.get(`${RESOURCES_API_BASEURL}${searchTerm}`)
+      .then(response => {
+        const currentOffset = offset || 0;
+        const result = response.data.slice(currentOffset, currentOffset + SEARCH_RESULTS_PER_PAGE);
+        dispatch(searchForResources(result, searchTerm, response.data.length, offset));
+      })
+      .catch(() => {
+        dispatch(searchFailureAction('ErrorMessage.Search failed'));
+      });
   };
 };

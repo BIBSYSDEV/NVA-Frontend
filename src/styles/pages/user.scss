@@ -1,0 +1,153 @@
+@import '../abstracts/colors';
+
+.user {
+  display: grid;
+  grid-template-areas: 'secondary-info primary-info';
+  grid-template-columns: 1fr 3fr;
+  grid-gap: 3rem;
+  font-size: 1rem;
+  padding: 2rem;
+
+  .secondary-info {
+    display: grid;
+    grid-area: secondary-info;
+    grid-template-areas: 'profile-image' 'contact-info' 'language' 'author-info';
+    grid-row-gap: 3rem;
+    min-width: 20rem;
+  }
+
+  .primary-info {
+    display: grid;
+    grid-area: primary-info;
+    grid-gap: 3rem;
+  }
+
+  .card {
+    background-color: $box-color;
+    padding: 2rem;
+
+    .header {
+      font-size: 1.5rem;
+      font-weight: bold;
+      padding-bottom: 0.5rem;
+    }
+
+    .sub-header {
+      font-size: 1.3rem;
+      padding-bottom: 1.5rem;
+    }
+  }
+
+  .profile-image {
+    height: 14rem;
+  }
+
+  .contact-info {
+    height: 10rem;
+  }
+
+  .language {
+    .MuiFormControl-root {
+      padding-top: 1rem;
+      width: -webkit-fill-available;
+      max-width: 15rem;
+    }
+  }
+
+  .author-info {
+    height: 10rem;
+  }
+
+  .feide-info {
+    display: block;
+  }
+
+  .line {
+    padding-bottom: 0.5rem;
+
+    .label {
+      display: inline-block;
+      width: 10rem;
+    }
+
+    .text {
+      display: inline-block;
+      width: 30rem;
+      font-weight: bold;
+    }
+  }
+
+  .roles {
+    display: block;
+
+    .line:first-of-type {
+      border-top: 1px solid $line-color;
+    }
+
+    .line {
+      padding-bottom: 0.8rem;
+      padding-top: 0.8rem;
+      display: flex;
+      border-bottom: 1px solid $line-color;
+
+      .MuiIcon-root {
+        display: inline-block;
+        width: 3rem;
+      }
+
+      .label {
+        display: inline-block;
+        font-weight: bold;
+        width: 6rem;
+      }
+
+      .text {
+        display: inline-block;
+        width: 20rem;
+      }
+    }
+  }
+
+  .organizations {
+    height: 5rem;
+  }
+
+  .orcid-info {
+    height: 15rem;
+
+    .MuiButton-root {
+      background-color: $background-color;
+      color: $text-color;
+    }
+
+    .MuiButton-root:hover {
+      background-color: darken($background-color, 3%);
+    }
+  }
+}
+
+.orcid-modal {
+  h5 {
+    border-bottom: 1px solid black;
+    text-align: right;
+  }
+
+  .MuiButton-root {
+    background-color: $background-color;
+    color: $text-color;
+  }
+
+  .MuiButton-root:hover {
+    background-color: darken($background-color, 3%);
+  }
+
+  .orcid-button {
+    padding: 3rem 0;
+    text-align: center;
+  }
+
+  .skip {
+    padding-top: 5rem;
+    text-align: center;
+  }
+}

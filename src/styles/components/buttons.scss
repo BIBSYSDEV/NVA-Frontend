@@ -1,0 +1,12 @@
+@import '../abstracts/colors';
+
+body {
+  .MuiButton-root {
+    background-color: $primary-button-color;
+    color: $text-color-light;
+  }
+
+  .MuiButton-root:hover {
+    background-color: darken($primary-button-color, 3%);
+  }
+}
