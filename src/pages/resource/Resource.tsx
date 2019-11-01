@@ -10,7 +10,6 @@ import LinkTab from '../../components/TabPanel/LinkTab';
 import TabPanel from '../../components/TabPanel/TabPanel';
 import { initialValidatorState, validationReducer } from '../../redux/reducers/validationReducer';
 import PublicationPanel from './PublicationPanel';
-import ResourceWithFormik from './ResourceWithFormik';
 
 const a11yProps = (tabDescription: string) => {
   return {
@@ -62,7 +61,6 @@ const Resource: React.FC = () => {
               </p>
             );
           })}
-        <ResourceWithFormik dispatch={dispatch} />
         <Button onClick={() => goToNextPage(value)}>{t('Next')}</Button>
       </TabPanel>
       <TabPanel value={value} tabNumber={1} ariaLabel="description">
