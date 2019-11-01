@@ -1,4 +1,5 @@
 {
+  "Abstract": "Sammendrag",
   "Admin panel": "Adminpanel",
   "Applications": "Applikasjoner",
   "Author information": "Forfatter-informasjon",
@@ -51,6 +52,7 @@
   "Search": "Søk",
   "Skip this step (can be configured in 'profile' later)": "Hopp over nå (kan gjøres under 'profil' senere)",
   "Submission": "Innsending",
+  "Title": "Tittel",
   "User information": "Brukerinformasjon",
   "What is ORCID?": "Hva er ORCID?",
   "Why should I connect to ORCID?": "Hvorfor ber vi om ORCID?",

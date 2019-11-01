@@ -1,9 +1,8 @@
-import '../../styles/pages/resource/publication-panel.scss';
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 
 import PublicationSourceSelector from './PublicationSourceSelector';
+import '../../styles/pages/resource/publication-panel.scss';
 
 const PublicationPanel: React.FC = () => (
   <div className="publication-panel">

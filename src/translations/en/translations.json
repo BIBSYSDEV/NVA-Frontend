@@ -1,4 +1,5 @@
 {
+  "Abstract": "Abstract",
   "Admin panel": "Admin panel",
   "Applications": "Applications",
   "Author information": "Author information",
@@ -51,6 +52,7 @@
   "Search": "Search",
   "Skip this step (can be configured in 'profile' later)": "Skip this step (can be configured in 'profile' later)",
   "Submission": "Submission",
+  "Title": "title",
   "User information": "User information",
   "What is ORCID?": "What is ORCID?",
   "Why should I connect to ORCID?": "Why should I connect to ORCID?",

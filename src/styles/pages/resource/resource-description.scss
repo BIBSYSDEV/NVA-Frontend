@@ -1,0 +1,31 @@
+@import '../../abstracts/colors';
+
+.resource-description-panel {
+  width: 100%;
+  padding-top: 2rem;
+
+  .header {
+    font-size: 2rem;
+    font-weight: bold;
+    line-height: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .panel-content {
+    background-color: $box-color;
+    padding: 1rem;
+
+    .field-wrapper {
+      padding: 1rem;
+      flex-grow: 1;
+    }
+
+    .multiple-field-wrapper {
+      display: flex;
+    }
+
+    .MuiInputBase-root {
+      background-color: white;
+    }
+  }
+}
