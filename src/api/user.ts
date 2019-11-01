@@ -28,17 +28,13 @@ export const login = () => {
 
 export const getCurrentAuthenticatedUser = () => {
   return async (dispatch: Dispatch<any>) => {
-    if (useMockData) {
-      dispatch(setUserAction(mockUser));
-    } else {
-      try {
-        const cognitoUser = await Auth.currentAuthenticatedUser();
-        const user = await cognitoUser.attributes;
-        dispatch(setUserAction(user));
-        dispatch(refreshToken());
-      } catch (e) {
-        dispatch(setUserFailureAction('ErrorMessage.Failed to get user'));
-      }
+    try {
+      const cognitoUser = await Auth.currentAuthenticatedUser();
+      const user = await cognitoUser.attributes;
+      dispatch(setUserAction(user));
+      dispatch(refreshToken());
+    } catch (e) {
+      dispatch(setUserFailureAction('ErrorMessage.Failed to get user'));
     }
   };
 };

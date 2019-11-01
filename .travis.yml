@@ -17,5 +17,6 @@ install:
   - npm ci
 script:
   - npm run build
+  - npm run test:react
   - npm run test:cypress --coverage
   - npx nyc report

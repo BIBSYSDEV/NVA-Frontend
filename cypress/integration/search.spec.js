@@ -1,10 +1,10 @@
-describe('Searching', () => {
+describe('Search', () => {
   beforeEach(() => {
     cy.visit('/');
+    cy.server();
   });
 
-  it('should show a result-list when searching', () => {
-    cy.server();
+  it('The user should see a result-list when searching', () => {
     cy.fixture('resources_2_random_results_generated').as('mockDataWith2Results');
     cy.route('/search/resources/test', '@mockDataWith2Results');
     searchForText('test');
@@ -14,8 +14,7 @@ describe('Searching', () => {
     cy.get('[data-cy=search-results]').contains('2');
   });
 
-  it('should show a working pagination', () => {
-    cy.server();
+  it('The user should see a working pagination', () => {
     cy.fixture('resources_45_random_results_generated').as('mockDataWith45Results');
     cy.route('/search/resources/test', '@mockDataWith45Results');
     searchForText('test');

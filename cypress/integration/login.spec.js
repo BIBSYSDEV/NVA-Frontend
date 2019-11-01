@@ -1,22 +1,15 @@
-describe('A user logs in with Feide', () => {
-  it('Given that the user is on the start page', () => {
+describe('Login', () => {
+  beforeEach('Given that the user is on the start page, and is not logged in', () => {
     cy.visit('/');
     // Logging out since already logged in
     cy.get('[data-cy=menu]').click({ force: true });
     cy.get('[data-cy=logout-button]').click({ force: true });
   });
-  it('When they click on the log-in button', () => {
-    // Unable to test login via Feide, so mocking login by setting REACY_APP_USE_MOCK=true in .env file
+
+  it('The user should be able to log in', () => {
     cy.get('[data-cy=login-button]').click({ force: true });
-  });
-  it('And they are redirected to Feide', () => {
-    // mocked during testing
-  });
-  it('And they enter their valid credentials', () => {
-    // mocked during testing
-  });
-  it('Then they are redirected back to the NVA application', () => {
-    cy.contains('NVA');
+
     cy.get('[data-cy=menu]').should('be.visible');
+    cy.get('[data-cy=menu]').contains('Test User');
   });
 });

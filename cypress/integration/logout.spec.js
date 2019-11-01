@@ -1,13 +1,13 @@
-describe('A user logs out from NVA application', () => {
-  it('Given that the user is logged in', () => {
+describe('Logout', () => {
+  before('Given that the user is logged in:', () => {
     cy.visit('/');
     cy.get('[data-cy=menu]').contains('Test User');
   });
-  it('When they click on the log-out button', () => {
+
+  it('The user should be able to log out', () => {
     cy.get('[data-cy=menu]').click({ force: true });
     cy.get('[data-cy=logout-button]').click({ force: true });
-  });
-  it('Then they are logged out of the NVA application', () => {
+
     cy.get('[data-cy=login-button]').should('be.visible');
     cy.get('[data-cy=menu]').should('not.exist');
   });
