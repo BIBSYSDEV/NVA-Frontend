@@ -17,7 +17,7 @@
 
     .field-wrapper {
       padding: 1rem;
-      flex-grow: 1;
+      flex: 1 0 40%;
     }
 
     .multiple-field-wrapper {
@@ -26,6 +26,12 @@
 
     .MuiInputBase-root {
       background-color: white;
+    }
+
+    .header {
+      font-size: 1.5rem;
+      margin-left: 1rem;
+      margin-top: 2rem;
     }
   }
 }

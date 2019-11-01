@@ -6,8 +6,8 @@ import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 
 import { CLEAR_PUBLICATION_ERRORS, PUBLICATION_ERROR } from '../../redux/reducers/validationReducer';
-import { TextField } from 'formik-material-ui';
-import { Button } from '@material-ui/core';
+import { Select, TextField } from 'formik-material-ui';
+import { Button, MenuItem } from '@material-ui/core';
 
 export interface ResourceDescriptionFormProps {
   dispatch: any;
@@ -34,99 +34,108 @@ const ResourceDescriptionForm: React.FC<ResourceDescriptionFormProps> = ({ dispa
   return (
     <div className="resource-description-panel">
       <div className="header">{t('Description')}</div>
-      <div className="panel-content">
-        <Formik
-          initialValues={{ title: '', abstract: '', description: '' }}
-          validationSchema={resourceSchema}
-          onSubmit={(values, { setSubmitting }) => {
-            setTimeout(() => {
-              alert(JSON.stringify(values, null, 2));
-              setSubmitting(false);
-            }, 400);
-          }}>
-          {({ values, errors, touched, handleChange, handleBlur, handleSubmit, handleReset, isSubmitting }) => (
-            <Form>
-              <div className="field-wrapper">
-                <Field
-                  name="title"
-                  label={t('Title')}
-                  component={TextField}
-                  fullWidth
-                  className="input-field"
-                  variant="outlined"
-                />
-              </div>
-
-              <div className="field-wrapper">
-                <Field
-                  name="abstract"
-                  label={t('Abstract')}
-                  component={TextField}
-                  multiline
-                  rows="4"
-                  fullWidth
-                  variant="outlined"
-                />
-              </div>
-
-              <div className="field-wrapper">
-                <Field
-                  name="description"
-                  label={t('Description')}
-                  component={TextField}
-                  multiline
-                  rows="4"
-                  fullWidth
-                  variant="outlined"
-                />
-              </div>
-
-              <div className="multiple-field-wrapper ">
-                <span className="field-wrapper ">
-                  <Field name="NPI" label={t('NPI')} component={TextField} variant="outlined" fullWidth />
-                </span>
-                <span className="field-wrapper">
-                  <Field name="keyword" label={t('Keyword')} component={TextField} fullWidth variant="outlined" />
-                </span>
-              </div>
-
-              <div className="multiple-field-wrapper ">
-                <span className="field-wrapper ">
+      <Formik
+        initialValues={{ title: '', abstract: '', description: '', language: 10 }}
+        validationSchema={resourceSchema}
+        onSubmit={(values, { setSubmitting }) => {
+          setTimeout(() => {
+            alert(JSON.stringify(values, null, 2));
+            setSubmitting(false);
+          }, 400);
+        }}>
+        {({ values, errors, touched, handleChange, handleBlur, handleSubmit, handleReset, isSubmitting }) => (
+          <>
+            <div className="panel-content">
+              <Form>
+                <div className="field-wrapper">
                   <Field
-                    name="publication-date"
-                    label={t('Publication date')}
+                    name="title"
+                    label={t('Title')}
                     component={TextField}
-                    variant="outlined"
                     fullWidth
+                    className="input-field"
+                    variant="outlined"
                   />
-                </span>
-                <span className="field-wrapper">
-                  <Field name="language" label={t('Language')} component={TextField} fullWidth variant="outlined" />
-                </span>
-              </div>
+                </div>
 
-              <div>
-                <Button
-                  type="button"
-                  onClick={() => {
-                    handleReset();
-                    dispatch({ type: CLEAR_PUBLICATION_ERRORS });
-                  }}>
-                  {t('Reset')}
-                </Button>
-                <Button
-                  type="submit"
-                  disabled={isSubmitting || !!errors.abstract || !!errors.title || !!errors.description}>
-                  {t('Create')}
-                </Button>
-                <Button type="submit" onClick={(_: any) => handleValidation(values)}>
-                  Validate
-                </Button>
-              </div>
-            </Form>
-          )}
-        </Formik>
-      </div>
+                <div className="field-wrapper">
+                  <Field
+                    name="abstract"
+                    label={t('Abstract')}
+                    component={TextField}
+                    multiline
+                    rows="4"
+                    fullWidth
+                    variant="outlined"
+                  />
+                </div>
+
+                <div className="field-wrapper">
+                  <Field
+                    name="description"
+                    label={t('Description')}
+                    component={TextField}
+                    multiline
+                    rows="4"
+                    fullWidth
+                    variant="outlined"
+                  />
+                </div>
+
+                <div className="multiple-field-wrapper ">
+                  <div className="field-wrapper ">
+                    <Field name="NPI" label={t('NPI')} component={TextField} variant="outlined" fullWidth />
+                  </div>
+                  <div className="field-wrapper">
+                    <Field name="keyword" label={t('Keyword')} component={TextField} fullWidth variant="outlined" />
+                  </div>
+                </div>
+
+                <div className="multiple-field-wrapper ">
+                  <div className="field-wrapper ">
+                    <Field
+                      name="publication-date"
+                      label={t('Publication date')}
+                      component={TextField}
+                      variant="outlined"
+                      fullWidth
+                    />
+                  </div>
+                  <div className="field-wrapper">
+                    <Field name="language" label={t('Language')} variant="outlined" fullWidth component={Select}>
+                      <MenuItem value={10}>Ten</MenuItem>
+                      <MenuItem value={20}>Twenty</MenuItem>
+                      <MenuItem value={30}>Thirty</MenuItem>
+                    </Field>
+                  </div>
+                </div>
+
+                <div className="header">{t('Project assosiation')}</div>
+
+                <div className="field-wrapper">
+                  <Field name="project" label={t('Project')} component={Select} fullWidth variant="outlined" />
+                </div>
+              </Form>
+            </div>
+            <Button
+              type="button"
+              onClick={() => {
+                handleReset();
+                dispatch({ type: CLEAR_PUBLICATION_ERRORS });
+              }}>
+              {t('Reset')}
+            </Button>
+            <Button
+              type="submit"
+              disabled={isSubmitting || !!errors.abstract || !!errors.title || !!errors.description}>
+              {t('Create')}
+            </Button>
+            <Button type="submit" onClick={(_: any) => handleValidation(values)}>
+              Validate
+            </Button>
+          </>
+        )}
+      </Formik>
     </div>
   );
 };
