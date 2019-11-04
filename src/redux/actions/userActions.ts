@@ -8,16 +8,16 @@ export const SET_USER_SUCCESS = 'set user';
 export const SET_USER_FAILURE = 'set user failure';
 
 // ACTION CREATORS
-export const clearUserAction = () => ({
+export const clearUser = (): ClearUserAction => ({
   type: CLEAR_USER,
 });
 
-export const setUserAction = (user: User) => ({
+export const setUser = (user: User): SetUserAction => ({
   type: SET_USER_SUCCESS,
   user,
 });
 
-export const setUserFailureAction = (message: string) => ({
+export const setUserFailure = (message: string): SetUserFailureAction => ({
   type: SET_USER_FAILURE,
   message,
   variant: 'error',

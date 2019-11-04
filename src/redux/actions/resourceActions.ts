@@ -11,7 +11,7 @@ export const searchForResources = (
   searchTerm: string,
   totalNumberOfHits: number,
   offset?: number
-) => ({
+): SearchForResourcesAction => ({
   type: SEARCH_FOR_RESOURCES,
   resources,
   searchTerm,
@@ -19,13 +19,13 @@ export const searchForResources = (
   offset: offset ? offset : 0,
 });
 
-export const searchFailureAction = (message: string) => ({
+export const searchFailure = (message: string): SearchFailureAction => ({
   type: SEARCH_FAILURE,
   message,
   variant: 'error',
 });
 
-export const clearSearch = () => ({
+export const clearSearch = (): ClearSearchAction => ({
   type: CLEAR_SEARCH,
 });
 

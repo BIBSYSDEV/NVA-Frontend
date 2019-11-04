@@ -1,17 +1,17 @@
 import { Dispatch } from 'redux';
 
-import { loginFailureAction, loginSuccessAction, logoutSuccessAction } from '../redux/actions/authActions';
+import { loginFailure, loginSuccess, logoutSuccess } from '../redux/actions/authActions';
 
 export const hubListener = (data: any, dispatch: Dispatch<any>) => {
   switch (data.payload.event) {
     case 'signIn':
-      dispatch(loginSuccessAction());
+      dispatch(loginSuccess());
       break;
     case 'signOut':
-      dispatch(logoutSuccessAction());
+      dispatch(logoutSuccess());
       break;
     case 'signIn_failure':
-      dispatch(loginFailureAction('ErrorMessage.Login failed'));
+      dispatch(loginFailure('ErrorMessage.Login failed'));
       break;
   }
 };

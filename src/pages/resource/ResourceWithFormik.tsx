@@ -8,7 +8,7 @@ import * as Yup from 'yup';
 
 import { Button, Typography } from '@material-ui/core';
 
-import { CLEAR_PUBLICATION_ERRORS, PUBLICATION_ERROR } from '../../redux/reducers/validationReducer';
+import { clearPublicationErrors, publicationError } from '../../redux/actions/validationActions';
 
 export interface ResourceWithFormikProps {
   dispatch: any;
@@ -27,9 +27,9 @@ const ResourceWithFormik: React.FC<ResourceWithFormikProps> = ({ dispatch }) => 
   const handleValidation = (values: any) => {
     try {
       resourceSchema.validateSync(values, { abortEarly: false });
-      dispatch({ type: CLEAR_PUBLICATION_ERRORS });
+      dispatch(clearPublicationErrors());
     } catch (e) {
-      dispatch({ type: PUBLICATION_ERROR, payload: e.inner });
+      dispatch(publicationError(e.inner));
     }
   };
 
@@ -67,7 +67,7 @@ const ResourceWithFormik: React.FC<ResourceWithFormikProps> = ({ dispatch }) => 
                 type="button"
                 onClick={() => {
                   handleReset();
-                  dispatch({ type: CLEAR_PUBLICATION_ERRORS });
+                  dispatch(clearPublicationErrors());
                 }}>
                 {t('Reset')}
               </Button>

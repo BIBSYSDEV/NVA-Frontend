@@ -2,7 +2,7 @@
 export const CLEAR_FEEDBACK = 'clear feedback';
 
 // ACTION CREATORS
-export const clearFeedbackAction = () => ({
+export const clearFeedback = (): ClearFeedbackAction => ({
   type: CLEAR_FEEDBACK,
 });
 

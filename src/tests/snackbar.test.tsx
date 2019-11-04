@@ -11,11 +11,11 @@ import CloseIcon from '@material-ui/icons/Close';
 import { cleanup, getByTestId, render, wait } from '@testing-library/react';
 
 import App from '../App';
-import { loginFailureAction, loginSuccessAction } from '../redux/actions/authActions';
-import { clearFeedbackAction } from '../redux/actions/feedbackActions';
-import { orcidRequestFailureAction, orcidSignInFailureAction } from '../redux/actions/orcidActions';
-import { searchFailureAction } from '../redux/actions/resourceActions';
-import { setUserFailureAction } from '../redux/actions/userActions';
+import { loginFailure, loginSuccess } from '../redux/actions/authActions';
+import { clearFeedback } from '../redux/actions/feedbackActions';
+import { orcidRequestFailure, orcidSignInFailure } from '../redux/actions/orcidActions';
+import { searchFailure } from '../redux/actions/resourceActions';
+import { setUserFailure } from '../redux/actions/userActions';
 import rootReducer from '../redux/reducers/rootReducer';
 import i18n from '../translations/i18n';
 
@@ -51,43 +51,43 @@ describe('Snackbar', () => {
   });
 
   test('shows login success message when logging in successfully', async () => {
-    store.dispatch(loginSuccessAction());
+    store.dispatch(loginSuccess());
     await wait(() => getByTestId(app.container, 'snackbar'));
     expect(getByTestId(app.container, 'snackbar').textContent).toBe('Logged in');
   });
 
   test('shows login error message when login failed', async () => {
-    store.dispatch(loginFailureAction('ErrorMessage.Login failed'));
+    store.dispatch(loginFailure('ErrorMessage.Login failed'));
     await wait(() => getByTestId(app.container, 'snackbar'));
     expect(getByTestId(app.container, 'snackbar').textContent).toBe('Login failed');
   });
 
   test('shows error message when failing to get authenticated user', async () => {
-    store.dispatch(setUserFailureAction('ErrorMessage.Failed to get user'));
+    store.dispatch(setUserFailure('ErrorMessage.Failed to get user'));
     await wait(() => getByTestId(app.container, 'snackbar'));
     expect(getByTestId(app.container, 'snackbar').textContent).toBe('Failed to get user');
   });
 
   test('shows orcid request error message when connecting to ORCID failed', async () => {
-    store.dispatch(orcidRequestFailureAction('ErrorMessage.ORCID request failed'));
+    store.dispatch(orcidRequestFailure('ErrorMessage.ORCID request failed'));
     await wait(() => getByTestId(app.container, 'snackbar'));
     expect(getByTestId(app.container, 'snackbar').textContent).toBe('Could not get data from ORCID');
   });
 
   test('shows orcid request error message when logging in to ORCID failed', async () => {
-    store.dispatch(orcidSignInFailureAction('ErrorMessage.ORCID login failed'));
+    store.dispatch(orcidSignInFailure('ErrorMessage.ORCID login failed'));
     await wait(() => getByTestId(app.container, 'snackbar'));
     expect(getByTestId(app.container, 'snackbar').textContent).toBe('ORCID login failed');
   });
 
   test('shows search error message when search failed', async () => {
-    store.dispatch(searchFailureAction('ErrorMessage.Search failed'));
+    store.dispatch(searchFailure('ErrorMessage.Search failed'));
     await wait(() => getByTestId(app.container, 'snackbar'));
     expect(getByTestId(app.container, 'snackbar').textContent).toBe('Search failed');
   });
 
   afterEach(() => {
-    store.dispatch(clearFeedbackAction());
+    store.dispatch(clearFeedback());
     cleanup();
   });
 });

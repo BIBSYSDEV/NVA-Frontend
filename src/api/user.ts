@@ -2,24 +2,24 @@ import { Auth } from 'aws-amplify';
 import { Dispatch } from 'redux';
 
 import {
-  initLoginAction,
-  initLogoutAction,
-  loginSuccessAction,
-  logoutSuccessAction,
-  refreshTokenFailureAction,
-  refreshTokenSuccessAction,
+  initLogin,
+  initLogout,
+  loginSuccess,
+  logoutSuccess,
+  refreshTokenFailure,
+  refreshTokenSuccess,
 } from '../redux/actions/authActions';
-import { clearFeedbackAction } from '../redux/actions/feedbackActions';
-import { clearUserAction, setUserAction, setUserFailureAction } from '../redux/actions/userActions';
+import { clearFeedback } from '../redux/actions/feedbackActions';
+import { clearUser, setUser, setUserFailure } from '../redux/actions/userActions';
 import { useMockData } from '../utils/constants';
 import { mockUser } from './mock-interceptor';
 
 export const login = () => {
   return async (dispatch: Dispatch) => {
-    dispatch(initLoginAction());
+    dispatch(initLogin());
     if (useMockData) {
-      dispatch(setUserAction(mockUser));
-      dispatch(loginSuccessAction());
+      dispatch(setUser(mockUser));
+      dispatch(loginSuccess());
     } else {
       Auth.federatedSignIn();
     }
@@ -31,10 +31,10 @@ export const getCurrentAuthenticatedUser = () => {
     try {
       const cognitoUser = await Auth.currentAuthenticatedUser();
       const user = await cognitoUser.attributes;
-      dispatch(setUserAction(user));
+      dispatch(setUser(user));
       dispatch(refreshToken());
     } catch (e) {
-      dispatch(setUserFailureAction('ErrorMessage.Failed to get user'));
+      dispatch(setUserFailure('ErrorMessage.Failed to get user'));
     }
   };
 };
@@ -47,28 +47,28 @@ export const refreshToken = () => {
       if (!currentSession.isValid()) {
         cognitoUser.refreshSession(currentSession.getRefreshToken(), (error: any) => {
           if (error) {
-            dispatch(refreshTokenFailureAction(error));
+            dispatch(refreshTokenFailure(error));
           } else {
-            dispatch(refreshTokenSuccessAction());
+            dispatch(refreshTokenSuccess());
           }
         });
       }
     } catch (e) {
-      dispatch(refreshTokenFailureAction(e));
+      dispatch(refreshTokenFailure(e));
     }
   };
 };
 
 export const logout = () => {
   return async (dispatch: Dispatch) => {
-    dispatch(initLogoutAction());
+    dispatch(initLogout());
     if (useMockData) {
-      dispatch(clearUserAction());
-      dispatch(clearFeedbackAction());
-      dispatch(logoutSuccessAction());
+      dispatch(clearUser());
+      dispatch(clearFeedback());
+      dispatch(logoutSuccess());
     } else {
       Auth.signOut();
-      dispatch(clearFeedbackAction());
+      dispatch(clearFeedback());
     }
   };
 };
