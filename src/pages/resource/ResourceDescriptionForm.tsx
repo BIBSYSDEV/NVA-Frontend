@@ -1,21 +1,50 @@
 import '../../styles/pages/resource/resource-description.scss';
-
 import { Field, Form, Formik } from 'formik';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
-
+import DateFnsUtils from '@date-io/date-fns';
 import { CLEAR_PUBLICATION_ERRORS, PUBLICATION_ERROR } from '../../redux/reducers/validationReducer';
 import { Select, TextField } from 'formik-material-ui';
-import { Button, MenuItem } from '@material-ui/core';
+import { MenuItem } from '@material-ui/core';
 import { defaultLanguage, languages } from '../../translations/i18n';
+import publications from '../../utils/testfiles/projects_random_generated.json';
+import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 
 export interface ResourceDescriptionFormProps {
   dispatch: any;
 }
 
+export interface FormikDatePickerProps {
+  name: any;
+  form: any;
+  field: any;
+}
+
+const FormikDatePicker: React.FC<FormikDatePickerProps> = ({ name, form: { setFieldValue }, field: { value } }) => {
+  console.log(setFieldValue);
+  return (
+    <KeyboardDatePicker
+      name={name}
+      label="input"
+      autoOk
+      onChange={value => {
+        console.log('setting value to', value);
+        setFieldValue(name, '2019-11-24T22:00:00.000Z');
+      }}
+      value={value}
+    />
+  );
+};
+
 const ResourceDescriptionForm: React.FC<ResourceDescriptionFormProps> = ({ dispatch }) => {
   const { t } = useTranslation();
+
+  const [selectedDate, setSelectedDate] = React.useState<Date | null>(new Date('2014-08-18T21:11:54'));
+
+  const handleDateChange = (date: Date | null) => {
+    setSelectedDate(date);
+  };
 
   const resourceSchema = Yup.object().shape({
     title: Yup.string().required(t('Required field')),
@@ -36,7 +65,14 @@ const ResourceDescriptionForm: React.FC<ResourceDescriptionFormProps> = ({ dispa
     <div className="resource-description-panel">
       <div className="header">{t('Description')}</div>
       <Formik
-        initialValues={{ title: '', abstract: '', description: '', language: defaultLanguage }}
+        initialValues={{
+          title: '',
+          abstract: '',
+          description: '',
+          language: defaultLanguage,
+          date: '2019-10-24T22:00:00.000Z',
+          project: '762886',
+        }}
         validationSchema={resourceSchema}
         onSubmit={(values, { setSubmitting }) => {
           setTimeout(() => {
@@ -44,7 +80,17 @@ const ResourceDescriptionForm: React.FC<ResourceDescriptionFormProps> = ({ dispa
             setSubmitting(false);
           }, 400);
         }}>
-        {({ values, errors, touched, handleChange, handleBlur, handleSubmit, handleReset, isSubmitting }) => (
+        {({
+          values,
+          errors,
+          touched,
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          handleReset,
+          isSubmitting,
+          setFieldValue,
+        }) => (
           <>
             <div className="panel-content">
               <Form>
@@ -91,17 +137,12 @@ const ResourceDescriptionForm: React.FC<ResourceDescriptionFormProps> = ({ dispa
 
                 <div className="multiple-field-wrapper ">
                   <div className="field-wrapper ">
-                    <Field
-                      name="publication-date"
-                      label={t('Publication date')}
-                      component={TextField}
-                      variant="outlined"
-                      fullWidth
-                    />
+                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                      <Field component={FormikDatePicker} setFieldValue={handleDateChange} name="date" />
+                    </MuiPickersUtilsProvider>
                   </div>
                   <div className="field-wrapper">
-                    <Field name="language" variant="outlined" fullWidth component={Select} label={'PER'}>
-                      Name
+                    <Field name="language" variant="outlined" fullWidth component={Select} label={'DATO!'}>
                       {languages.map(language => (
                         <MenuItem value={language.code} key={language.code} data-cy={`user-language-${language.code}`}>
                           {language.name}
@@ -114,26 +155,16 @@ const ResourceDescriptionForm: React.FC<ResourceDescriptionFormProps> = ({ dispa
                 <div className="header">{t('Project assosiation')}</div>
 
                 <div className="field-wrapper">
-                  <Field name="project" label={t('Project')} component={Select} fullWidth variant="outlined" />
+                  <Field name="project" label={t('Project')} component={Select} fullWidth variant="outlined">
+                    {publications.map(publication => (
+                      <MenuItem value={publication.id} id="pub-item" key={publication.id}>
+                        {`${publication.name} - ${publication.id}`}
+                      </MenuItem>
+                    ))}
+                  </Field>
                 </div>
               </Form>
             </div>
-            <Button
-              type="button"
-              onClick={() => {
-                handleReset();
-                dispatch({ type: CLEAR_PUBLICATION_ERRORS });
-              }}>
-              {t('Reset')}
-            </Button>
-            <Button
-              type="submit"
-              disabled={isSubmitting || !!errors.abstract || !!errors.title || !!errors.description}>
-              {t('Create')}
-            </Button>
-            <Button type="submit" onClick={(_: any) => handleValidation(values)}>
-              Validate
-            </Button>
           </>
         )}
       </Formik>
