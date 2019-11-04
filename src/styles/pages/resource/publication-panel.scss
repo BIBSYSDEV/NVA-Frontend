@@ -45,7 +45,18 @@
   .publication-selector {
     padding: 1rem;
     margin-bottom: 2rem;
-    height: 5rem;
+    min-height: 3.5rem;
     background-color: $publication-selector-color;
+    flex-flow: row wrap;
+
+    .icon {
+      margin-right: 1rem;
+    }
+
+    input {
+      background-color: $background-color;
+      color: $text-color;
+    }
   }
+
 }
