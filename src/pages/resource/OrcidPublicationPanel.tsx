@@ -21,6 +21,7 @@ const OrcidPublicationPanel: React.FC<OrcidPanelProps> = ({ expanded, onChange }
             id="orcid-publication-panel"
             expanded={expanded}
             onChange={onChange}
+            ariaControls="publication-method-orcid"
         >
             {t('suggestions_from_ORCID_description')}
         </PublicationExpansionPanel>

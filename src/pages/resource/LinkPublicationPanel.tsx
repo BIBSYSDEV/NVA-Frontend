@@ -31,6 +31,7 @@ const LinkPublicationPanel: React.FC<LinkPanelProps> = ({expanded, onChange}) =>
             id="link-publication-panel"
             expanded={expanded}
             onChange={onChange}
+            ariaControls="publication-method-link"
         >
         <div className="link-description">
             {t('link_publication_description')}

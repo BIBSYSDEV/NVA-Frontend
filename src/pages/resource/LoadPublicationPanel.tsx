@@ -21,6 +21,7 @@ const LoadPublicationPanel: React.FC<LoadPanelProps> = ({expanded, onChange}) =>
             id="load-publication-panel"
             expanded={expanded}
             onChange={onChange}
+            ariaControls="publication-method-file"
         >
             {t('load_file_description')}
         </PublicationExpansionPanel>

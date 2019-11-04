@@ -10,9 +10,10 @@ export interface PanelProps {
     id: string;
     expanded: boolean;
     onChange: (event: React.ChangeEvent<any>, isExpanded: boolean) => void;
+    ariaControls: string;
     children?: ReactNode;
   }
-const PublicationExpansionPanel: React.FC<PanelProps> = ({headerLabel, icon, className, id, expanded, onChange, children}) => {
+const PublicationExpansionPanel: React.FC<PanelProps> = ({headerLabel, icon, className, id, expanded, onChange, children, ariaControls}) => {
 
     return <ExpansionPanel 
         className={className}            
@@ -21,7 +22,7 @@ const PublicationExpansionPanel: React.FC<PanelProps> = ({headerLabel, icon, cla
     >
         <ExpansionPanelSummary 
             expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1c-content"
+            aria-controls={ariaControls}
             id={id}
         >
             {icon} {headerLabel}
