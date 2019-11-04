@@ -6,7 +6,7 @@ import ExpansionPanelDetails  from '@material-ui/core/ExpansionPanelDetails';
 
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-export interface PanelProps {
+export interface PublicationExpansionPanelProps {
     headerLabel: string;
     icon: ReactNode;
     className: string;
@@ -17,7 +17,7 @@ export interface PanelProps {
     children?: ReactNode;
   }
 
-  const PublicationExpansionPanel: React.FC<PanelProps> = ({headerLabel, icon, className, id, expanded, onChange, children, ariaControls}) => {
+  const PublicationExpansionPanel: React.FC<PublicationExpansionPanelProps> = ({headerLabel, icon, className, id, expanded, onChange, children, ariaControls}) => {
     return <ExpansionPanel 
         className={className}            
         expanded={expanded}
