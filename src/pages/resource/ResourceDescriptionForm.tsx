@@ -24,11 +24,9 @@ export interface FormikDatePickerProps {
 const FormikDatePicker: React.FC<FormikDatePickerProps> = ({ name, form: { setFieldValue }, field: { value } }) => {
   return (
     <KeyboardDatePicker
-      name={name}
       label="DATO!!!"
-      autoOk
       onChange={value => {
-        setFieldValue(name, '2019-01-01T07:00:00.000Z');
+        setFieldValue('date', value);
       }}
       value={value}
     />
