@@ -1,6 +1,6 @@
 import React from 'react';
 
-export interface LabelTextLineProps {
+interface LabelTextLineProps {
   label: string;
   text: string;
   dataTestId?: string;

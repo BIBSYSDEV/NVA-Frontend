@@ -5,7 +5,7 @@ import LabelTextLine from '../../components/LabelTextLine';
 import User from '../../types/user.types';
 import UserCard from './UserCard';
 
-export interface UserInfoProps {
+interface UserInfoProps {
   user: User;
 }
 

@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import React, { ReactNode } from 'react';
 
-export interface UserCardProps {
+interface UserCardProps {
   headerLabel: string;
   subHeaderLabel?: string;
   className: string;
