@@ -8,6 +8,7 @@ import * as Yup from 'yup';
 import { CLEAR_PUBLICATION_ERRORS, PUBLICATION_ERROR } from '../../redux/reducers/validationReducer';
 import { Select, TextField } from 'formik-material-ui';
 import { Button, MenuItem } from '@material-ui/core';
+import { defaultLanguage, languages } from '../../translations/i18n';
 
 export interface ResourceDescriptionFormProps {
   dispatch: any;
@@ -35,7 +36,7 @@ const ResourceDescriptionForm: React.FC<ResourceDescriptionFormProps> = ({ dispa
     <div className="resource-description-panel">
       <div className="header">{t('Description')}</div>
       <Formik
-        initialValues={{ title: '', abstract: '', description: '', language: 10 }}
+        initialValues={{ title: '', abstract: '', description: '', language: defaultLanguage }}
         validationSchema={resourceSchema}
         onSubmit={(values, { setSubmitting }) => {
           setTimeout(() => {
@@ -57,7 +58,6 @@ const ResourceDescriptionForm: React.FC<ResourceDescriptionFormProps> = ({ dispa
                     variant="outlined"
                   />
                 </div>
-
                 <div className="field-wrapper">
                   <Field
                     name="abstract"
@@ -69,7 +69,6 @@ const ResourceDescriptionForm: React.FC<ResourceDescriptionFormProps> = ({ dispa
                     variant="outlined"
                   />
                 </div>
-
                 <div className="field-wrapper">
                   <Field
                     name="description"
@@ -81,7 +80,6 @@ const ResourceDescriptionForm: React.FC<ResourceDescriptionFormProps> = ({ dispa
                     variant="outlined"
                   />
                 </div>
-
                 <div className="multiple-field-wrapper ">
                   <div className="field-wrapper ">
                     <Field name="NPI" label={t('NPI')} component={TextField} variant="outlined" fullWidth />
@@ -102,10 +100,13 @@ const ResourceDescriptionForm: React.FC<ResourceDescriptionFormProps> = ({ dispa
                     />
                   </div>
                   <div className="field-wrapper">
-                    <Field name="language" label={t('Language')} variant="outlined" fullWidth component={Select}>
-                      <MenuItem value={10}>Ten</MenuItem>
-                      <MenuItem value={20}>Twenty</MenuItem>
-                      <MenuItem value={30}>Thirty</MenuItem>
+                    <Field name="language" variant="outlined" fullWidth component={Select} label={'PER'}>
+                      Name
+                      {languages.map(language => (
+                        <MenuItem value={language.code} key={language.code} data-cy={`user-language-${language.code}`}>
+                          {language.name}
+                        </MenuItem>
+                      ))}
                     </Field>
                   </div>
                 </div>
