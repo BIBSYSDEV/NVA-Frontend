@@ -3,13 +3,13 @@ import React from 'react';
 export interface LabelTextLineProps {
   label: string;
   text: string;
-  dataCy?: string;
+  dataTestId?: string;
 }
 
-const LabelTextLine: React.FC<LabelTextLineProps> = ({ label, text, dataCy }) => (
+const LabelTextLine: React.FC<LabelTextLineProps> = ({ label, text, dataTestId }) => (
   <div className="line">
     <div className="label">{label}:</div>
-    <div className="text" data-cy={dataCy}>
+    <div className="text" data-testid={dataTestId}>
       {text}
     </div>
   </div>

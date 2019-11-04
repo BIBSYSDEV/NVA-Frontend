@@ -35,7 +35,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ resources, searchTerm }) 
   };
 
   return (
-    <div className="search-results" data-cy="search-results">
+    <div className="search-results" data-testid="search-results">
       {t('Results', { count: results.totalNumberOfHits, term: searchTerm })} ({offset + 1} - {offset + resources.length}
       )
       <List>
@@ -46,7 +46,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ resources, searchTerm }) 
                 <ImageIcon />
               </ListItemIcon>
               <ListItemText
-                data-cy="result-list-item"
+                data-testid="result-list-item"
                 primary={resource.titles.en}
                 secondary={
                   <React.Fragment>
@@ -61,7 +61,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ resources, searchTerm }) 
           ))}
       </List>
       <Pagination
-        data-cy="pagination"
+        data-testid="pagination"
         limit={SEARCH_RESULTS_PER_PAGE}
         offset={offset}
         total={results.totalNumberOfHits}

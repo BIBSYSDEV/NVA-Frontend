@@ -32,7 +32,7 @@ const Menu: React.FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
 
   return (
     <div className="menu">
-      <Button aria-controls="menu" aria-haspopup="true" onClick={handleClick} data-cy="menu">
+      <Button aria-controls="menu" aria-haspopup="true" onClick={handleClick} data-testid="menu">
         {menuButtonLabel}
         {menuOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
       </Button>
@@ -52,7 +52,7 @@ const Menu: React.FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
           horizontal: 'left',
         }}>
         <MenuItem
-          data-cy="user-profile-button"
+          data-testid="user-profile-button"
           onClick={() => {
             handleClose();
             history.push('/user');
@@ -60,7 +60,7 @@ const Menu: React.FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
           {t('My profile')}
         </MenuItem>
 
-        <MenuItem onClick={handleLogout} data-cy="logout-button">
+        <MenuItem onClick={handleLogout} data-testid="logout-button">
           {t('Logout')}
         </MenuItem>
       </MUIMenu>
