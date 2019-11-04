@@ -1,6 +1,9 @@
 import React, { ReactNode } from 'react';
 
-import { ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails } from '@material-ui/core';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails  from '@material-ui/core/ExpansionPanelDetails';
+
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 export interface PanelProps {
@@ -13,8 +16,8 @@ export interface PanelProps {
     ariaControls: string;
     children?: ReactNode;
   }
-const PublicationExpansionPanel: React.FC<PanelProps> = ({headerLabel, icon, className, id, expanded, onChange, children, ariaControls}) => {
 
+  const PublicationExpansionPanel: React.FC<PanelProps> = ({headerLabel, icon, className, id, expanded, onChange, children, ariaControls}) => {
     return <ExpansionPanel 
         className={className}            
         expanded={expanded}

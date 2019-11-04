@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PublicationExpansionPanel from './PublicationExpansionPanel';
-import { TextField, Button } from '@material-ui/core';
-
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 import LinkIcon from '@material-ui/icons/Link';
 
 import { useTranslation } from 'react-i18next';
