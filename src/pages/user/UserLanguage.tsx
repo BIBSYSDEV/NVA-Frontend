@@ -26,9 +26,9 @@ const UserLanguage: React.FC = () => {
   return (
     <UserCard headerLabel={t('Language')} className="language">
       <FormControl variant="outlined">
-        <Select value={languageSelected} onChange={handleLanguageChange} data-cy="language-selector">
+        <Select value={languageSelected} onChange={handleLanguageChange} data-testid="language-selector">
           {languages.map(language => (
-            <MenuItem value={language.code} key={language.code} data-cy={`user-language-${language.code}`}>
+            <MenuItem value={language.code} key={language.code} data-testid={`user-language-${language.code}`}>
               {language.name}
             </MenuItem>
           ))}

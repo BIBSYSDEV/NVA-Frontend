@@ -23,7 +23,7 @@ ReactDOM.render(
     <Provider store={store}>
       <SnackbarProvider
         maxSnack={3}
-        data-cy="snackbar"
+        data-testid="snackbar"
         action={key => (
           <IconButton onClick={onClickDismiss(key)}>
             <CloseIcon />
