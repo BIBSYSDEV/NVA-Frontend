@@ -6,12 +6,12 @@ import LinkIcon from '@material-ui/icons/Link';
 
 import { useTranslation } from 'react-i18next';
 
-interface LinkPanelProps {
+interface LinkPublicationPanelProps {
     expanded: boolean;
     onChange: (event: React.ChangeEvent<any>, isExpanded: boolean) => void;
 }
 
-const LinkPublicationPanel: React.FC<LinkPanelProps> = ({expanded, onChange}) => {
+const LinkPublicationPanel: React.FC<LinkPublicationPanelProps> = ({expanded, onChange}) => {
     const [searchTerm, setSearchTerm] = useState('');
     const { t } = useTranslation();
 

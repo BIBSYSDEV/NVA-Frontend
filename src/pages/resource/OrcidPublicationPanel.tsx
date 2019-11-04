@@ -5,12 +5,12 @@ import SearchIcon from '@material-ui/icons/Search';
 
 import { useTranslation } from 'react-i18next';
 
-interface OrcidPanelProps {
+interface OrcidPublicationPanelProps {
     expanded: boolean;
     onChange: (event: React.ChangeEvent<any>, isExpanded: boolean) => void;
 }
 
-const OrcidPublicationPanel: React.FC<OrcidPanelProps> = ({ expanded, onChange }) => {
+const OrcidPublicationPanel: React.FC<OrcidPublicationPanelProps> = ({ expanded, onChange }) => {
     const { t } = useTranslation();
     
     return (   
