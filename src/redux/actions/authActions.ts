@@ -2,11 +2,11 @@ import { VariantType } from 'notistack';
 
 export const LOGIN_FAILURE = 'login failure';
 export const REFRESH_TOKEN_FAILURE = 'refresh token failure';
-export const INIT_LOGIN = 'initiate login';
-export const INIT_LOGOUT = 'initiate logout';
-export const REFRESH_TOKEN_SUCCESS = 'refresh token success';
+const INIT_LOGIN = 'initiate login';
+const INIT_LOGOUT = 'initiate logout';
+const REFRESH_TOKEN_SUCCESS = 'refresh token success';
 export const LOGIN_SUCCESS = 'login success';
-export const LOGOUT_SUCCESS = 'logout success';
+const LOGOUT_SUCCESS = 'logout success';
 
 export const initLogin = (): InitLoginAction => ({
   type: INIT_LOGIN,

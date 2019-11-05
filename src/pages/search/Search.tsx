@@ -10,7 +10,7 @@ import { RootStore } from '../../redux/reducers/rootReducer';
 import SearchResults from './SearchResults';
 
 const Search: React.FC = () => {
-  const searchResults = useSelector((state: RootStore) => state.results);
+  const searchResults = useSelector((state: RootStore) => state.search);
   const { resources, searchTerm } = searchResults;
   const dispatch = useDispatch();
   const history = useHistory();
