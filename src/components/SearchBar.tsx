@@ -8,7 +8,7 @@ import { useHistory } from 'react-router';
 import { IconButton, InputBase, Paper } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 
-import { search } from '../api/resource';
+import { search } from '../api/search';
 
 interface SearchBarProps {
   resetSearchInput: boolean;

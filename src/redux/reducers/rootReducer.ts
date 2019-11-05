@@ -4,7 +4,7 @@ import { FeedbackMessageType } from '../../types/feedback.types';
 import { SearchResults } from '../../types/search.types';
 import User from '../../types/user.types';
 import { feedbackReducer } from './feedbackReducer';
-import { resourceReducer } from './resourceReducer';
+import { searchReducer } from './searchReducer';
 import { userReducer } from './userReducer';
 
 export interface RootStore {
@@ -15,6 +15,6 @@ export interface RootStore {
 
 export default combineReducers({
   user: userReducer,
-  results: resourceReducer,
+  results: searchReducer,
   feedback: feedbackReducer,
 });

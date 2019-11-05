@@ -19,7 +19,7 @@ import Resource from './pages/resource/Resource';
 import Search from './pages/search/Search';
 import User from './pages/user/User';
 import Workspace from './pages/workspace/Workspace';
-import { setUserAction } from './redux/actions/userActions';
+import { setUser } from './redux/actions/userActions';
 import { RootStore } from './redux/reducers/rootReducer';
 import awsConfig from './utils/aws-config';
 import { useMockData } from './utils/constants';
@@ -57,7 +57,7 @@ const App: React.FC = () => {
       updateUser();
       return () => Hub.remove('auth', updateUser);
     } else {
-      dispatch(setUserAction(mockUser));
+      dispatch(setUser(mockUser));
     }
   }, [dispatch]);
 
