@@ -11,7 +11,7 @@ import TabPanel from '../../components/TabPanel/TabPanel';
 import { validationReducer } from '../../redux/reducers/validationReducer';
 import { initialValidatorState } from '../../types/validation.types';
 import PublicationPanel from './PublicationPanel';
-import ResourceWithFormik from './ResourceWithFormik';
+import ResourceDescriptionForm from './ResourceDescriptionForm';
 
 const a11yProps = (tabDescription: string) => {
   return {
@@ -63,11 +63,10 @@ const Resource: React.FC = () => {
               </p>
             );
           })}
-        <ResourceWithFormik dispatch={dispatch} />
         <Button onClick={() => goToNextPage(value)}>{t('Next')}</Button>
       </TabPanel>
       <TabPanel value={value} tabNumber={1} ariaLabel="description">
-        <div>Page Two</div>
+        <ResourceDescriptionForm dispatch={dispatch} />
         <Button onClick={() => goToNextPage(value)}>{t('Next')}</Button>
       </TabPanel>
       <TabPanel value={value} tabNumber={2} ariaLabel="references">

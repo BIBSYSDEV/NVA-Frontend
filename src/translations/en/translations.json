@@ -1,4 +1,5 @@
 {
+  "Abstract": "Abstract",
   "Admin panel": "Admin panel",
   "Applications": "Applications",
   "Author information": "Author information",
@@ -35,6 +36,17 @@
   "New publication": "New publication",
   "New registration": "+ New registration",
   "New resource": "New resource",
+  "resource_form": {
+    "title": "Title",
+    "description": "Description",
+    "abstract": "Abstract",
+    "NPI": "NPI",
+    "tags": "tags",
+    "publication_date": "Publication date or year",
+    "language": "language",
+    "project_assosiation": "Project assosiation",
+    "project": "Project"
+  },
   "Next": "Next",
   "ORCID": "ORCID",
   "ORCID-link": "ORCID-link",

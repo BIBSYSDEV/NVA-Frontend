@@ -18,27 +18,28 @@ const PublicationPanel: React.FC = () => {
   };
 
   return (
-  <div className="publication-panel">
-    <div className="header">{t('Choose publication')}</div>
-    <div className="panel-content">
-      <div className="selector-wrapper">
-        <LoadPublicationPanel expanded={expanded === 'load-panel'} onChange={handleChange('load-panel')}/>
-        <LinkPublicationPanel expanded={expanded === 'link-panel'} onChange={handleChange('link-panel')}/>
-        <OrcidPublicationPanel expanded={expanded === 'orcid-panel'} onChange={handleChange('orcid-panel')}/>
-      </div>
-      <div className="information-box">
-        <div className="header">Information</div>
-        <div className="content">
-          Velg publikasjoner Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-          ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore
-          eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-          mollit anim id est laborum.
+    <div className="publication-panel">
+      <div className="header">{t('Choose publication')}</div>
+      <div className="panel-content">
+        <div className="selector-wrapper">
+          <LoadPublicationPanel expanded={expanded === 'load-panel'} onChange={handleChange('load-panel')} />
+          <LinkPublicationPanel expanded={expanded === 'link-panel'} onChange={handleChange('link-panel')} />
+          <OrcidPublicationPanel expanded={expanded === 'orcid-panel'} onChange={handleChange('orcid-panel')} />
         </div>
-        <Link to={'/'}>Hvilken type publikasjoner kan jeg laste opp</Link>
+        <div className="information-box">
+          <div className="header">Information</div>
+          <div className="content">
+            Velg publikasjoner Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+            ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
+            dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+            deserunt mollit anim id est laborum.
+          </div>
+          <Link to={'/'}>Hvilken type publikasjoner kan jeg laste opp</Link>
+        </div>
       </div>
     </div>
-  </div>
-)};
+  );
+};
 
 export default PublicationPanel;
