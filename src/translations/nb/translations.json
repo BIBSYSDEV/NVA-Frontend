@@ -37,15 +37,15 @@
   "New registration": "+ Ny registrering",
   "New resource": "Ny ressurs",
   "resource_form": {
-    "Title": "Tittel",
-    "Description": "Beskrivelse",
-    "Abstract": "Sammendrag",
+    "title": "Tittel",
+    "description": "Beskrivelse",
+    "abstract": "Sammendrag",
     "NPI": "NPI Fagfelt ",
-    "Tags": "Nøkkelord",
-    "Publication date": "Publiseringsdato eller år",
-    "Language": "Språk",
+    "tags": "Nøkkelord",
+    "publication_date": "Publiseringsdato eller år",
+    "language": "Språk",
     "project_assosiation": "Prosjekttilknytning",
-    "Project": "Prosjekt"
+    "project": "Prosjekt"
   },
   "Next": "Neste",
   "ORCID": "ORCID",

@@ -10,9 +10,9 @@ import { defaultLanguage, languages } from '../../translations/i18n';
 import publications from '../../utils/testfiles/projects_random_generated.json';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import FormikDatePicker from './FormikDatePicker';
-import { CLEAR_PUBLICATION_ERRORS, PUBLICATION_ERROR } from '../../redux/actions/validationActions';
+import { clearPublicationErrors, publicationError } from '../../redux/actions/validationActions';
 
-export interface ResourceDescriptionFormProps {
+interface ResourceDescriptionFormProps {
   dispatch: any;
 }
 
@@ -21,16 +21,14 @@ const ResourceDescriptionForm: React.FC<ResourceDescriptionFormProps> = ({ dispa
 
   const resourceSchema = Yup.object().shape({
     title: Yup.string().required(t('Required field')),
-    abstract: Yup.string().required(t('Required field')),
-    description: Yup.string().required(t('Required field')),
   });
 
   const handleValidation = (values: any) => {
     try {
       resourceSchema.validateSync(values, { abortEarly: false });
-      dispatch({ type: CLEAR_PUBLICATION_ERRORS });
+      dispatch(clearPublicationErrors);
     } catch (e) {
-      dispatch({ type: PUBLICATION_ERROR, payload: e.inner });
+      dispatch(publicationError(e.inner));
     }
   };
 
@@ -38,8 +36,9 @@ const ResourceDescriptionForm: React.FC<ResourceDescriptionFormProps> = ({ dispa
     title: '',
     abstract: '',
     description: '',
+    NPI: '',
     language: defaultLanguage,
-    date: '2019-10-24T22:00:00.000Z',
+    date: Date.now(),
     project: '762886',
   };
 
@@ -57,103 +56,103 @@ const ResourceDescriptionForm: React.FC<ResourceDescriptionFormProps> = ({ dispa
             }, 400);
           }}>
           {values => (
-            <>
-              <div className="panel-content">
-                <Form>
-                  <div className="field-wrapper">
+            <div className="panel-content">
+              <Form>
+                <div className="field-wrapper">
+                  <Field
+                    aria-label="title"
+                    name="title"
+                    label={t('resource_form.title')}
+                    component={TextField}
+                    fullWidth
+                    className="input-field"
+                    variant="outlined"
+                  />
+                </div>
+                <div className="field-wrapper">
+                  <Field
+                    aria-label="abstract"
+                    name="abstract"
+                    label={t('resource_form.abstract')}
+                    component={TextField}
+                    multiline
+                    rows="4"
+                    fullWidth
+                    variant="outlined"
+                  />
+                </div>
+                <div className="field-wrapper">
+                  <Field
+                    name="description"
+                    label={t('resource_form.description')}
+                    component={TextField}
+                    multiline
+                    rows="4"
+                    fullWidth
+                    variant="outlined"
+                  />
+                </div>
+                <div className="multiple-field-wrapper ">
+                  <div className="field-wrapper ">
                     <Field
-                      name="title"
-                      label={t('resource_form.Title')}
+                      name="NPI"
+                      label={t('resource_form.NPI')}
                       component={TextField}
-                      fullWidth
-                      className="input-field"
                       variant="outlined"
+                      fullWidth
                     />
                   </div>
                   <div className="field-wrapper">
                     <Field
-                      name="abstract"
-                      label={t('resource_form.Abstract')}
+                      name="keyword"
+                      label={t('resource_form.tags')}
                       component={TextField}
-                      multiline
-                      rows="4"
                       fullWidth
                       variant="outlined"
                     />
                   </div>
-                  <div className="field-wrapper">
-                    <Field
-                      name="description"
-                      label={t('resource_form.Description')}
-                      component={TextField}
-                      multiline
-                      rows="4"
-                      fullWidth
-                      variant="outlined"
-                    />
-                  </div>
-                  <div className="multiple-field-wrapper ">
-                    <div className="field-wrapper ">
-                      <Field
-                        name="NPI"
-                        label={t('resource_form.NPI')}
-                        component={TextField}
-                        variant="outlined"
-                        fullWidth
-                      />
-                    </div>
-                    <div className="field-wrapper">
-                      <Field
-                        name="keyword"
-                        label={t('resource_form.Tags')}
-                        component={TextField}
-                        fullWidth
-                        variant="outlined"
-                      />
-                    </div>
-                  </div>
+                </div>
 
-                  <div className="multiple-field-wrapper ">
-                    <div className="field-wrapper ">
-                      <Field component={FormikDatePicker} name="date" />
-                    </div>
-
-                    <div className="field-wrapper">
-                      <Field name="language" variant="outlined" fullWidth component={Select} label={t('date')}>
-                        {languages.map(language => (
-                          <MenuItem
-                            value={language.code}
-                            key={language.code}
-                            data-cy={`user-language-${language.code}`}>
-                            {language.name}
-                          </MenuItem>
-                        ))}
-                      </Field>
-                    </div>
+                <div className="multiple-field-wrapper ">
+                  <div className="field-wrapper ">
+                    <Field component={FormikDatePicker} name="date" />
                   </div>
-
-                  <div className="header">{t('resource_form.project_assosiation')}</div>
 
                   <div className="field-wrapper">
-                    <Field
-                      name="project"
-                      label={t('resource_form.Project')}
-                      component={Select}
-                      fullWidth
-                      variant="outlined">
-                      {publications.map(publication => (
-                        <MenuItem value={publication.id} id="pub-item" key={publication.id}>
-                          {`${publication.name} - ${publication.id}`}
+                    <Field name="language" variant="outlined" fullWidth component={Select} label={t('date')}>
+                      {languages.map(language => (
+                        <MenuItem
+                          value={language.code}
+                          key={language.code}
+                          data-testid={`user-language-${language.code}`}>
+                          {language.name}
                         </MenuItem>
                       ))}
                     </Field>
                   </div>
-                  <Button type="submit" onClick={(_: any) => handleValidation(values)}>
-                    Validate
-                  </Button>
-                </Form>
-              </div>
-            </>
+                </div>
+
+                <div className="header">{t('resource_form.project_assosiation')}</div>
+
+                <div className="field-wrapper">
+                  <Field
+                    name="project"
+                    label={t('resource_form.project')}
+                    component={Select}
+                    fullWidth
+                    variant="outlined">
+                    {publications.map(publication => (
+                      <MenuItem value={publication.id} className="pub-item" key={publication.id}>
+                        {`${publication.name} - ${publication.id}`}
+                      </MenuItem>
+                    ))}
+                  </Field>
+                </div>
+                <Button type="submit" onClick={(_: any) => handleValidation(values)}>
+                  Validate
+                </Button>
+              </Form>
+            </div>
           )}
         </Formik>
       </MuiPickersUtilsProvider>

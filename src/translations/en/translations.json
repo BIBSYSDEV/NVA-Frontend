@@ -37,15 +37,15 @@
   "New registration": "+ New registration",
   "New resource": "New resource",
   "resource_form": {
-    "Title": "Title",
-    "Description": "Description",
-    "Abstract": "Abstract",
+    "title": "Title",
+    "description": "Description",
+    "abstract": "Abstract",
     "NPI": "NPI",
-    "Tags": "tags",
-    "Publication date": "Publication date or year",
-    "Language": "language",
+    "tags": "tags",
+    "publication_date": "Publication date or year",
+    "language": "language",
     "project_assosiation": "Project assosiation",
-    "Project": "Project"
+    "project": "Project"
   },
   "Next": "Next",
   "ORCID": "ORCID",

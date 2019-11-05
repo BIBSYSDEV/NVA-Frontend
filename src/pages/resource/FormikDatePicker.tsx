@@ -7,7 +7,7 @@ const FormikDatePicker = ({ form: { setFieldValue }, field: { value, name } }: a
   return (
     <KeyboardDatePicker
       inputVariant="outlined"
-      label={t('Publication date')}
+      label={t('resource_form.publication_date')}
       name={name}
       onChange={value => {
         setFieldValue(name, value);
