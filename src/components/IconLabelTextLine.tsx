@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Icon } from '@material-ui/core';
 
-export interface IconLabelTextLineProps {
+interface IconLabelTextLineProps {
   dataTestId?: string;
   icon: string;
   label: string;
