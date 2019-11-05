@@ -42,37 +42,37 @@ export const refreshTokenFailure = (message: string): RefreshTokenFailureAction 
   variant: 'error',
 });
 
-export interface LoginFailureAction {
+interface LoginFailureAction {
   type: typeof LOGIN_FAILURE;
   message: string;
   variant: VariantType;
 }
 
-export interface RefreshTokenFailureAction {
+interface RefreshTokenFailureAction {
   type: typeof REFRESH_TOKEN_FAILURE;
   message: string;
   variant: VariantType;
 }
 
-export interface InitLoginAction {
+interface InitLoginAction {
   type: typeof INIT_LOGIN;
 }
 
-export interface InitLogoutAction {
+interface InitLogoutAction {
   type: typeof INIT_LOGOUT;
 }
 
-export interface RefreshTokenSuccessAction {
+interface RefreshTokenSuccessAction {
   type: typeof REFRESH_TOKEN_SUCCESS;
 }
 
-export interface LoginSuccessAction {
+interface LoginSuccessAction {
   type: typeof LOGIN_SUCCESS;
   message: string;
   variant: VariantType;
 }
 
-export interface LogoutSuccessAction {
+interface LogoutSuccessAction {
   type: typeof LOGOUT_SUCCESS;
 }
 

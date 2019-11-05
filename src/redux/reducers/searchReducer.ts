@@ -1,7 +1,7 @@
 import { emptySearchResults, SearchResults } from '../../types/search.types';
-import { CLEAR_SEARCH, ResourceActions, SEARCH_FOR_RESOURCES } from '../actions/resourceActions';
+import { CLEAR_SEARCH, SEARCH_FOR_RESOURCES, SearchActions } from '../actions/searchActions';
 
-export const resourceReducer = (state: SearchResults = emptySearchResults, action: ResourceActions) => {
+export const searchReducer = (state: SearchResults = emptySearchResults, action: SearchActions) => {
   switch (action.type) {
     case SEARCH_FOR_RESOURCES:
       return {

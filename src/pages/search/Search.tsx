@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 
 import SearchBar from '../../components/SearchBar';
-import { clearSearch } from '../../redux/actions/resourceActions';
+import { clearSearch } from '../../redux/actions/searchActions';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import SearchResults from './SearchResults';
 

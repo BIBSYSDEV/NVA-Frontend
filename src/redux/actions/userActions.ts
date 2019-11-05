@@ -23,15 +23,15 @@ export const setUserFailure = (message: string): SetUserFailureAction => ({
   variant: 'error',
 });
 
-export interface ClearUserAction {
+interface ClearUserAction {
   type: typeof CLEAR_USER;
 }
-export interface SetUserAction {
+interface SetUserAction {
   type: typeof SET_USER_SUCCESS;
   user: User;
 }
 
-export interface SetUserFailureAction {
+interface SetUserFailureAction {
   type: typeof SET_USER_FAILURE;
   message: string;
   variant: VariantType;

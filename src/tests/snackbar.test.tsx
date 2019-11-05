@@ -14,7 +14,7 @@ import App from '../App';
 import { loginFailure, loginSuccess } from '../redux/actions/authActions';
 import { clearFeedback } from '../redux/actions/feedbackActions';
 import { orcidRequestFailure, orcidSignInFailure } from '../redux/actions/orcidActions';
-import { searchFailure } from '../redux/actions/resourceActions';
+import { searchFailure } from '../redux/actions/searchActions';
 import { setUserFailure } from '../redux/actions/userActions';
 import rootReducer from '../redux/reducers/rootReducer';
 import i18n from '../translations/i18n';

@@ -4,10 +4,10 @@ import {
   DESCRIPTION_ERROR,
   PUBLICATION_ERROR,
   REFERENCES_ERROR,
-  ValidatorActions,
+  ValidationActions,
 } from '../actions/validationActions';
 
-export const validationReducer = (state: ValidatorState = initialValidatorState, action: ValidatorActions) => {
+export const validationReducer = (state: ValidatorState = initialValidatorState, action: ValidationActions) => {
   switch (action.type) {
     case CLEAR_PUBLICATION_ERRORS:
       return { ...state, publicationErrors: [] };

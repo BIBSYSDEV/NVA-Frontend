@@ -24,26 +24,26 @@ export const referencesError = (error: YupError[]): ReferencesErrorAction => ({
   error,
 });
 
-export interface ClearPublicationErrorsAction {
+interface ClearPublicationErrorsAction {
   type: typeof CLEAR_PUBLICATION_ERRORS;
 }
 
-export interface PublicationErrorAction {
+interface PublicationErrorAction {
   type: typeof PUBLICATION_ERROR;
   error: YupError[];
 }
 
-export interface DescriptionErrorAction {
+interface DescriptionErrorAction {
   type: typeof DESCRIPTION_ERROR;
   error: YupError[];
 }
 
-export interface ReferencesErrorAction {
+interface ReferencesErrorAction {
   type: typeof REFERENCES_ERROR;
   error: YupError[];
 }
 
-export type ValidatorActions =
+export type ValidationActions =
   | ClearPublicationErrorsAction
   | PublicationErrorAction
   | DescriptionErrorAction

@@ -29,7 +29,7 @@ export const clearSearch = (): ClearSearchAction => ({
   type: CLEAR_SEARCH,
 });
 
-export interface SearchForResourcesAction {
+interface SearchForResourcesAction {
   type: typeof SEARCH_FOR_RESOURCES;
   resources: Resource[];
   searchTerm: string;
@@ -37,14 +37,14 @@ export interface SearchForResourcesAction {
   offset?: number;
 }
 
-export interface ClearSearchAction {
+interface ClearSearchAction {
   type: typeof CLEAR_SEARCH;
 }
 
-export interface SearchFailureAction {
+interface SearchFailureAction {
   type: typeof SEARCH_FAILURE;
   message: string;
   variant: VariantType;
 }
 
-export type ResourceActions = SearchForResourcesAction | ClearSearchAction | SearchFailureAction;
+export type SearchActions = SearchForResourcesAction | ClearSearchAction | SearchFailureAction;
