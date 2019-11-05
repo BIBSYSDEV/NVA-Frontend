@@ -5,7 +5,7 @@ import IconLabelTextLine from '../../components/IconLabelTextLine';
 import User, { RoleName } from '../../types/user.types';
 import UserCard from './UserCard';
 
-export interface UserRolesProps {
+interface UserRolesProps {
   user: User;
 }
 

@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export interface ButtonModalProps {
+interface ButtonModalProps {
   ariaDescribedBy?: string;
   ariaLabelledBy?: string;
   buttonText: string;

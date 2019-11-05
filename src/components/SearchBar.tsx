@@ -10,7 +10,7 @@ import SearchIcon from '@material-ui/icons/Search';
 
 import { search } from '../api/resource';
 
-export interface SearchBarProps {
+interface SearchBarProps {
   resetSearchInput: boolean;
 }
 

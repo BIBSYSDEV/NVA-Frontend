@@ -10,7 +10,7 @@ import { Button, Typography } from '@material-ui/core';
 
 import { clearPublicationErrors, publicationError } from '../../redux/actions/validationActions';
 
-export interface ResourceWithFormikProps {
+interface ResourceWithFormikProps {
   dispatch: any;
 }
 

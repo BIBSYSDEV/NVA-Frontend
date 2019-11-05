@@ -9,7 +9,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 
-export interface MenuProps {
+interface MenuProps {
   handleLogout: () => void;
   menuButtonLabel: string;
 }
