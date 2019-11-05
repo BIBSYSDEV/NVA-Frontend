@@ -16,15 +16,15 @@ export interface ResourceDescriptionFormProps {
 }
 
 export interface FormikDatePickerProps {
-  name: any;
   form: any;
   field: any;
 }
 
-const FormikDatePicker: React.FC<FormikDatePickerProps> = ({ name, form: { setFieldValue }, field: { value } }) => {
+const FormikDatePicker: React.FC<FormikDatePickerProps> = ({ form: { setFieldValue }, field: { value } }) => {
+  const { t } = useTranslation();
   return (
     <KeyboardDatePicker
-      label="DATO!!!"
+      label={t('date')}
       onChange={value => {
         setFieldValue('date', value);
       }}
@@ -51,19 +51,21 @@ const ResourceDescriptionForm: React.FC<ResourceDescriptionFormProps> = ({ dispa
     }
   };
 
+  const initialFormikValues = {
+    title: '',
+    abstract: '',
+    description: '',
+    language: defaultLanguage,
+    date: '2019-10-24T22:00:00.000Z',
+    project: '762886',
+  };
+
   return (
     <div className="resource-description-panel">
       <div className="header">{t('Description')}</div>
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <Formik
-          initialValues={{
-            title: '',
-            abstract: '',
-            description: '',
-            language: defaultLanguage,
-            date: '2019-10-24T22:00:00.000Z',
-            project: '762886',
-          }}
+          initialValues={initialFormikValues}
           validationSchema={resourceSchema}
           onSubmit={(values, { setSubmitting }) => {
             setTimeout(() => {
@@ -130,8 +132,9 @@ const ResourceDescriptionForm: React.FC<ResourceDescriptionFormProps> = ({ dispa
                     <div className="field-wrapper ">
                       <Field component={FormikDatePicker} name="date" />
                     </div>
+
                     <div className="field-wrapper">
-                      <Field name="language" variant="outlined" fullWidth component={Select} label={'DATO!'}>
+                      <Field name="language" variant="outlined" fullWidth component={Select} label={t('date')}>
                         {languages.map(language => (
                           <MenuItem
                             value={language.code}
