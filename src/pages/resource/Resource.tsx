@@ -1,6 +1,6 @@
 import '../../styles/pages/resource/resource.scss';
 
-import React, { useEffect, useReducer, useState } from 'react';
+import React, { useReducer, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { Button } from '@material-ui/core';

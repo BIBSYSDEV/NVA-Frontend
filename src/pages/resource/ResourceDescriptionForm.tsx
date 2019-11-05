@@ -1,37 +1,20 @@
-import '../../styles/pages/resource/resource-description.scss';
-import { Field, Form, Formik } from 'formik';
 import React from 'react';
+import { Field, Form, Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import DateFnsUtils from '@date-io/date-fns';
-import { CLEAR_PUBLICATION_ERRORS, PUBLICATION_ERROR } from '../../redux/reducers/validationReducer';
 import { Select, TextField } from 'formik-material-ui';
-import { MenuItem } from '@material-ui/core';
+import { Button, MenuItem } from '@material-ui/core';
+import '../../styles/pages/resource/resource-description.scss';
 import { defaultLanguage, languages } from '../../translations/i18n';
 import publications from '../../utils/testfiles/projects_random_generated.json';
-import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import { CLEAR_PUBLICATION_ERRORS, PUBLICATION_ERROR } from '../../redux/reducers/validationReducer';
+import FormikDatePicker from './FormikDatePicker';
 
 export interface ResourceDescriptionFormProps {
   dispatch: any;
 }
-
-export interface FormikDatePickerProps {
-  form: any;
-  field: any;
-}
-
-const FormikDatePicker: React.FC<FormikDatePickerProps> = ({ form: { setFieldValue }, field: { value } }) => {
-  const { t } = useTranslation();
-  return (
-    <KeyboardDatePicker
-      label={t('date')}
-      onChange={value => {
-        setFieldValue('date', value);
-      }}
-      value={value}
-    />
-  );
-};
 
 const ResourceDescriptionForm: React.FC<ResourceDescriptionFormProps> = ({ dispatch }) => {
   const { t } = useTranslation();
@@ -73,24 +56,14 @@ const ResourceDescriptionForm: React.FC<ResourceDescriptionFormProps> = ({ dispa
               setSubmitting(false);
             }, 400);
           }}>
-          {({
-            values,
-            errors,
-            touched,
-            handleChange,
-            handleBlur,
-            handleSubmit,
-            handleReset,
-            isSubmitting,
-            setFieldValue,
-          }) => (
+          {values => (
             <>
               <div className="panel-content">
                 <Form>
                   <div className="field-wrapper">
                     <Field
                       name="title"
-                      label={t('Title')}
+                      label={t('resource_form.Title')}
                       component={TextField}
                       fullWidth
                       className="input-field"
@@ -100,7 +73,7 @@ const ResourceDescriptionForm: React.FC<ResourceDescriptionFormProps> = ({ dispa
                   <div className="field-wrapper">
                     <Field
                       name="abstract"
-                      label={t('Abstract')}
+                      label={t('resource_form.Abstract')}
                       component={TextField}
                       multiline
                       rows="4"
@@ -111,7 +84,7 @@ const ResourceDescriptionForm: React.FC<ResourceDescriptionFormProps> = ({ dispa
                   <div className="field-wrapper">
                     <Field
                       name="description"
-                      label={t('Description')}
+                      label={t('resource_form.Description')}
                       component={TextField}
                       multiline
                       rows="4"
@@ -121,10 +94,22 @@ const ResourceDescriptionForm: React.FC<ResourceDescriptionFormProps> = ({ dispa
                   </div>
                   <div className="multiple-field-wrapper ">
                     <div className="field-wrapper ">
-                      <Field name="NPI" label={t('NPI')} component={TextField} variant="outlined" fullWidth />
+                      <Field
+                        name="NPI"
+                        label={t('resource_form.NPI')}
+                        component={TextField}
+                        variant="outlined"
+                        fullWidth
+                      />
                     </div>
                     <div className="field-wrapper">
-                      <Field name="keyword" label={t('Keyword')} component={TextField} fullWidth variant="outlined" />
+                      <Field
+                        name="keyword"
+                        label={t('resource_form.Tags')}
+                        component={TextField}
+                        fullWidth
+                        variant="outlined"
+                      />
                     </div>
                   </div>
 
@@ -147,10 +132,15 @@ const ResourceDescriptionForm: React.FC<ResourceDescriptionFormProps> = ({ dispa
                     </div>
                   </div>
 
-                  <div className="header">{t('Project assosiation')}</div>
+                  <div className="header">{t('resource_form.project_assosiation')}</div>
 
                   <div className="field-wrapper">
-                    <Field name="project" label={t('Project')} component={Select} fullWidth variant="outlined">
+                    <Field
+                      name="project"
+                      label={t('resource_form.Project')}
+                      component={Select}
+                      fullWidth
+                      variant="outlined">
                       {publications.map(publication => (
                         <MenuItem value={publication.id} id="pub-item" key={publication.id}>
                           {`${publication.name} - ${publication.id}`}
@@ -158,6 +148,9 @@ const ResourceDescriptionForm: React.FC<ResourceDescriptionFormProps> = ({ dispa
                       ))}
                     </Field>
                   </div>
+                  <Button type="submit" onClick={(_: any) => handleValidation(values)}>
+                    Validate
+                  </Button>
                 </Form>
               </div>
             </>
