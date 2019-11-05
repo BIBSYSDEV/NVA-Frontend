@@ -9,8 +9,8 @@ import '../../styles/pages/resource/resource-description.scss';
 import { defaultLanguage, languages } from '../../translations/i18n';
 import publications from '../../utils/testfiles/projects_random_generated.json';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
-import { CLEAR_PUBLICATION_ERRORS, PUBLICATION_ERROR } from '../../redux/reducers/validationReducer';
 import FormikDatePicker from './FormikDatePicker';
+import { CLEAR_PUBLICATION_ERRORS, PUBLICATION_ERROR } from '../../redux/actions/validationActions';
 
 export interface ResourceDescriptionFormProps {
   dispatch: any;

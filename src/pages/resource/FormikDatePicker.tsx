@@ -6,7 +6,6 @@ const FormikDatePicker = ({ form: { setFieldValue }, field: { value, name } }: a
   const { t } = useTranslation();
   return (
     <KeyboardDatePicker
-      //TODO: ARIA????
       inputVariant="outlined"
       label={t('Publication date')}
       name={name}
