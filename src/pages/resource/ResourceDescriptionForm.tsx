@@ -83,6 +83,7 @@ const ResourceDescriptionForm: React.FC<ResourceDescriptionFormProps> = ({ dispa
                 </div>
                 <div className="field-wrapper">
                   <Field
+                    aria-label="description"
                     name="description"
                     label={t('resource_form.description')}
                     component={TextField}
@@ -95,6 +96,7 @@ const ResourceDescriptionForm: React.FC<ResourceDescriptionFormProps> = ({ dispa
                 <div className="multiple-field-wrapper ">
                   <div className="field-wrapper ">
                     <Field
+                      aria-label="NPI"
                       name="NPI"
                       label={t('resource_form.NPI')}
                       component={TextField}
@@ -104,6 +106,7 @@ const ResourceDescriptionForm: React.FC<ResourceDescriptionFormProps> = ({ dispa
                   </div>
                   <div className="field-wrapper">
                     <Field
+                      aria-label="keyword"
                       name="keyword"
                       label={t('resource_form.tags')}
                       component={TextField}
@@ -115,11 +118,17 @@ const ResourceDescriptionForm: React.FC<ResourceDescriptionFormProps> = ({ dispa
 
                 <div className="multiple-field-wrapper ">
                   <div className="field-wrapper ">
-                    <Field component={FormikDatePicker} name="date" />
+                    <Field aria-label="date" component={FormikDatePicker} name="date" />
                   </div>
 
                   <div className="field-wrapper">
-                    <Field name="language" variant="outlined" fullWidth component={Select} label={t('date')}>
+                    <Field
+                      name="language"
+                      aria-label="language"
+                      variant="outlined"
+                      fullWidth
+                      component={Select}
+                      label={t('date')}>
                       {languages.map(language => (
                         <MenuItem
                           value={language.code}
@@ -137,6 +146,7 @@ const ResourceDescriptionForm: React.FC<ResourceDescriptionFormProps> = ({ dispa
                 <div className="field-wrapper">
                   <Field
                     name="project"
+                    aria-label="project"
                     label={t('resource_form.project')}
                     component={Select}
                     fullWidth
