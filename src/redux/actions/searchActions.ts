@@ -11,7 +11,7 @@ export const searchForResources = (
   searchTerm: string,
   totalNumberOfHits: number,
   offset?: number
-) => ({
+): SearchForResourcesAction => ({
   type: SEARCH_FOR_RESOURCES,
   resources,
   searchTerm,
@@ -19,17 +19,17 @@ export const searchForResources = (
   offset: offset ? offset : 0,
 });
 
-export const searchFailureAction = (message: string) => ({
+export const searchFailure = (message: string): SearchFailureAction => ({
   type: SEARCH_FAILURE,
   message,
   variant: 'error',
 });
 
-export const clearSearch = () => ({
+export const clearSearch = (): ClearSearchAction => ({
   type: CLEAR_SEARCH,
 });
 
-export interface SearchForResourcesAction {
+interface SearchForResourcesAction {
   type: typeof SEARCH_FOR_RESOURCES;
   resources: Resource[];
   searchTerm: string;
@@ -37,14 +37,14 @@ export interface SearchForResourcesAction {
   offset?: number;
 }
 
-export interface ClearSearchAction {
+interface ClearSearchAction {
   type: typeof CLEAR_SEARCH;
 }
 
-export interface SearchFailureAction {
+interface SearchFailureAction {
   type: typeof SEARCH_FAILURE;
   message: string;
   variant: VariantType;
 }
 
-export type ResourceActions = SearchForResourcesAction | ClearSearchAction | SearchFailureAction;
+export type SearchActions = SearchForResourcesAction | ClearSearchAction | SearchFailureAction;

@@ -8,9 +8,9 @@ import { useHistory } from 'react-router';
 import { IconButton, InputBase, Paper } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 
-import { search } from '../api/resource';
+import { search } from '../api/search';
 
-export interface SearchBarProps {
+interface SearchBarProps {
   resetSearchInput: boolean;
 }
 
@@ -48,13 +48,13 @@ const SearchBar: React.FC<SearchBarProps> = ({ resetSearchInput: resetSearch }) 
         <form className="container" onSubmit={handleSubmit}>
           <InputBase
             autoFocus
-            data-cy="search-input"
+            data-testid="search-input"
             className="input"
             placeholder={t('Search')}
             onChange={handleChange}
             value={searchTerm}
           />
-          <IconButton data-cy="search-button" className="search-button" onClick={handleSearch}>
+          <IconButton data-testid="search-button" className="search-button" onClick={handleSearch}>
             <SearchIcon />
           </IconButton>
         </form>

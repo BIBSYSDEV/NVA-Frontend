@@ -8,7 +8,8 @@ import Tabs from '@material-ui/core/Tabs';
 
 import LinkTab from '../../components/TabPanel/LinkTab';
 import TabPanel from '../../components/TabPanel/TabPanel';
-import { initialValidatorState, validationReducer } from '../../redux/reducers/validationReducer';
+import { validationReducer } from '../../redux/reducers/validationReducer';
+import { initialValidatorState } from '../../types/validation.types';
 import PublicationPanel from './PublicationPanel';
 import ResourceDescriptionForm from './ResourceDescriptionForm';
 

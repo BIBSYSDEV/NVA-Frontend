@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
+import { mockUser } from './api/mock-interceptor';
 import { getCurrentAuthenticatedUser } from './api/user';
 import Breadcrumbs from './layout/Breadcrumbs';
 import Header from './layout/header/Header';
@@ -18,6 +19,7 @@ import Resource from './pages/resource/Resource';
 import Search from './pages/search/Search';
 import User from './pages/user/User';
 import Workspace from './pages/workspace/Workspace';
+import { setUser } from './redux/actions/userActions';
 import { RootStore } from './redux/reducers/rootReducer';
 import awsConfig from './utils/aws-config';
 import { useMockData } from './utils/constants';
@@ -47,12 +49,16 @@ const App: React.FC = () => {
   }, [feedback, enqueueSnackbar, closeSnackbar, t]);
 
   useEffect(() => {
-    const updateUser = async () => {
-      dispatch(getCurrentAuthenticatedUser());
-    };
-    Hub.listen('auth', updateUser);
-    updateUser();
-    return () => Hub.remove('auth', updateUser);
+    if (!useMockData) {
+      const updateUser = async () => {
+        dispatch(getCurrentAuthenticatedUser());
+      };
+      Hub.listen('auth', updateUser);
+      updateUser();
+      return () => Hub.remove('auth', updateUser);
+    } else {
+      dispatch(setUser(mockUser));
+    }
   }, [dispatch]);
 
   useEffect(() => {

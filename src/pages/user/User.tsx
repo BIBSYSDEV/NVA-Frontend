@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router';
 
 import { getOrcidInfo } from '../../api/orcid';
-import { orcidSignInFailureAction } from '../../redux/actions/orcidActions';
+import { orcidSignInFailure } from '../../redux/actions/orcidActions';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import UserCard from './UserCard';
 import UserInfo from './UserInfo';
@@ -25,7 +25,7 @@ const User: React.FC = () => {
     const orcidCode = query.get('code') || '';
     const error = query.get('error') || '';
     if (error) {
-      dispatch(orcidSignInFailureAction('ErrorMessage.ORCID login failed'));
+      dispatch(orcidSignInFailure('ErrorMessage.ORCID login failed'));
       history.push('/user');
     } else if (orcidCode) {
       dispatch(getOrcidInfo(orcidCode));

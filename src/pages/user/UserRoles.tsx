@@ -5,7 +5,7 @@ import IconLabelTextLine from '../../components/IconLabelTextLine';
 import User, { RoleName } from '../../types/user.types';
 import UserCard from './UserCard';
 
-export interface UserRolesProps {
+interface UserRolesProps {
   user: User;
 }
 
@@ -21,7 +21,7 @@ const UserRoles: React.FC<UserRolesProps> = ({ user }) => {
           if (role === RoleName.PUBLISHER) {
             return (
               <IconLabelTextLine
-                dataCy="user-role"
+                dataTestId="user-role"
                 icon={'create'}
                 label={role}
                 text={t('RoleDescription.Publisher')}
@@ -31,7 +31,7 @@ const UserRoles: React.FC<UserRolesProps> = ({ user }) => {
           } else if (role === RoleName.CURATOR) {
             return (
               <IconLabelTextLine
-                dataCy="user-role"
+                dataTestId="user-role"
                 icon="all_inbox"
                 label={role}
                 text={t('RoleDescription.Curator')}

@@ -1,7 +1,7 @@
 import Axios from 'axios';
 import { Dispatch } from 'redux';
 
-import { orcidRequestFailureAction, setOrcidInfoAction } from '../redux/actions/orcidActions';
+import { orcidRequestFailure, setOrcidInfo } from '../redux/actions/orcidActions';
 import { ORCID_API_BASEURL } from '../utils/constants';
 
 export const getOrcidInfo = (orcidCode: string) => {
@@ -24,10 +24,10 @@ export const getOrcidInfo = (orcidCode: string) => {
       },
     })
       .then(response => {
-        dispatch(setOrcidInfoAction(response.data.name, response.data.orcid));
+        dispatch(setOrcidInfo(response.data.name, response.data.orcid));
       })
       .catch(() => {
-        dispatch(orcidRequestFailureAction('ErrorMessage.ORCID request failed'));
+        dispatch(orcidRequestFailure('ErrorMessage.ORCID request failed'));
       });
   };
 };

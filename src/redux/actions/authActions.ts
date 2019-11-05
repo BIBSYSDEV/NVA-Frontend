@@ -8,71 +8,71 @@ export const REFRESH_TOKEN_SUCCESS = 'refresh token success';
 export const LOGIN_SUCCESS = 'login success';
 export const LOGOUT_SUCCESS = 'logout success';
 
-export const initLoginAction = () => ({
+export const initLogin = (): InitLoginAction => ({
   type: INIT_LOGIN,
 });
 
-export const initLogoutAction = () => ({
+export const initLogout = (): InitLogoutAction => ({
   type: INIT_LOGOUT,
 });
 
-export const refreshTokenSuccessAction = () => ({
-  type: REFRESH_TOKEN_SUCCESS,
-});
-
-export const loginSuccessAction = () => ({
+export const loginSuccess = (): LoginSuccessAction => ({
   type: LOGIN_SUCCESS,
   message: 'SuccessMessage.Login success',
   variant: 'success',
 });
 
-export const logoutSuccessAction = () => ({
+export const logoutSuccess = (): LogoutSuccessAction => ({
   type: LOGOUT_SUCCESS,
 });
 
-export const loginFailureAction = (message: string) => ({
+export const refreshTokenSuccess = (): RefreshTokenSuccessAction => ({
+  type: REFRESH_TOKEN_SUCCESS,
+});
+
+export const loginFailure = (message: string): LoginFailureAction => ({
   type: LOGIN_FAILURE,
   message,
   variant: 'error',
 });
 
-export const refreshTokenFailureAction = (message: string) => ({
+export const refreshTokenFailure = (message: string): RefreshTokenFailureAction => ({
   type: REFRESH_TOKEN_FAILURE,
   message,
   variant: 'error',
 });
 
-export interface LoginFailureAction {
+interface LoginFailureAction {
   type: typeof LOGIN_FAILURE;
   message: string;
   variant: VariantType;
 }
 
-export interface RefreshTokenFailureAction {
+interface RefreshTokenFailureAction {
   type: typeof REFRESH_TOKEN_FAILURE;
   message: string;
   variant: VariantType;
 }
 
-export interface InitLoginAction {
+interface InitLoginAction {
   type: typeof INIT_LOGIN;
 }
 
-export interface InitLogoutAction {
+interface InitLogoutAction {
   type: typeof INIT_LOGOUT;
 }
 
-export interface RefreshTokenSuccessAction {
+interface RefreshTokenSuccessAction {
   type: typeof REFRESH_TOKEN_SUCCESS;
 }
 
-export interface LoginSuccessAction {
+interface LoginSuccessAction {
   type: typeof LOGIN_SUCCESS;
   message: string;
   variant: VariantType;
 }
 
-export interface LogoutSuccessAction {
+interface LogoutSuccessAction {
   type: typeof LOGOUT_SUCCESS;
 }
 
