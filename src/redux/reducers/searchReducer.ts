@@ -1,7 +1,7 @@
-import { emptySearchResults, SearchResults } from '../../types/search.types';
+import { emptySearch, Search } from '../../types/search.types';
 import { CLEAR_SEARCH, SEARCH_FOR_RESOURCES, SearchActions } from '../actions/searchActions';
 
-export const searchReducer = (state: SearchResults = emptySearchResults, action: SearchActions) => {
+export const searchReducer = (state: Search = emptySearch, action: SearchActions) => {
   switch (action.type) {
     case SEARCH_FOR_RESOURCES:
       return {
@@ -11,7 +11,7 @@ export const searchReducer = (state: SearchResults = emptySearchResults, action:
         offset: action.offset ? action.offset : 0,
       };
     case CLEAR_SEARCH:
-      return { ...emptySearchResults };
+      return { ...emptySearch };
     default:
       return state;
   }

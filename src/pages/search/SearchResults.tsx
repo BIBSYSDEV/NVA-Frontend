@@ -23,7 +23,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ resources, searchTerm }) 
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const history = useHistory();
-  const results = useSelector((state: RootStore) => state.results);
+  const results = useSelector((state: RootStore) => state.search);
   const [offset, setOffset] = useState(0);
 
   const updateSearch = (offset: number) => {

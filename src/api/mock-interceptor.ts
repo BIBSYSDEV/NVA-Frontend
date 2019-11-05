@@ -17,7 +17,7 @@ export const mockUser: User = {
   orcid: '', //0000-0001-2345-6789
 };
 
-export const mockOrcidResponse: OrcidResponse = {
+const mockOrcidResponse: OrcidResponse = {
   accessToken: 'f5af9f51-07e6-4332-8f1a-c0c11c1e3728',
   tokenType: 'bearer',
   refreshToken: 'f725f747-3a65-49f6-a231-3e8944ce464d',
