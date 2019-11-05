@@ -1,6 +1,6 @@
 import '../styles/pages/search.scss';
 
-import React, { useEffect, useState } from 'react';
+import React, { Dispatch, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
@@ -8,30 +8,25 @@ import { useHistory } from 'react-router';
 import { IconButton, InputBase, Paper } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 
-import { search } from '../api/resource';
+import { search } from '../api/search';
+import { SearchActions } from '../redux/actions/searchActions';
 
 export interface SearchBarProps {
+  dispatchSearch: Dispatch<SearchActions>;
   resetSearchInput: boolean;
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({ resetSearchInput: resetSearch }) => {
+const SearchBar: React.FC<SearchBarProps> = ({ dispatchSearch, resetSearchInput }) => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
   const history = useHistory();
   const [searchTerm, setSearchTerm] = useState('');
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    if (resetSearch) {
+    if (resetSearchInput) {
       setSearchTerm('');
     }
-  }, [resetSearch]);
-
-  const handleSearch = () => {
-    if (searchTerm.length > 0) {
-      dispatch(search(searchTerm));
-      history.push(`/search/${searchTerm}`);
-    }
-  };
+  }, [resetSearchInput]);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -40,6 +35,11 @@ const SearchBar: React.FC<SearchBarProps> = ({ resetSearchInput: resetSearch }) 
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
+  };
+
+  const handleSearch = () => {
+    dispatch(search(searchTerm, dispatchSearch));
+    history.push(`/search/${searchTerm}`);
   };
 
   return (

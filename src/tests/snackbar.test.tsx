@@ -14,7 +14,7 @@ import App from '../App';
 import { loginFailureAction, loginSuccessAction } from '../redux/actions/authActions';
 import { clearFeedbackAction } from '../redux/actions/feedbackActions';
 import { orcidRequestFailureAction, orcidSignInFailureAction } from '../redux/actions/orcidActions';
-import { searchFailureAction } from '../redux/actions/resourceActions';
+import { searchFailure } from '../redux/actions/searchActions';
 import { setUserFailureAction } from '../redux/actions/userActions';
 import rootReducer from '../redux/reducers/rootReducer';
 import i18n from '../translations/i18n';
@@ -81,7 +81,7 @@ describe('Snackbar', () => {
   });
 
   test('shows search error message when search failed', async () => {
-    store.dispatch(searchFailureAction('ErrorMessage.Search failed'));
+    store.dispatch(searchFailure('ErrorMessage.Search failed'));
     await wait(() => getByTestId(app.container, 'snackbar'));
     expect(getByTestId(app.container, 'snackbar').textContent).toBe('Search failed');
   });

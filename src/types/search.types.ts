@@ -1,14 +1,14 @@
 import { Resource } from './resource.types';
-import { SearchResults } from './search.types';
+import { SearchResult } from './search.types';
 
-export interface SearchResults {
+export interface SearchResult {
   resources: Resource[];
   searchTerm: string;
   offset: number;
   totalNumberOfHits: number;
 }
 
-export const emptySearchResults: SearchResults = {
+export const emptySearchResults: SearchResult = {
   resources: [],
   searchTerm: '',
   offset: 0,

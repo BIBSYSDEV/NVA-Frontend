@@ -1,43 +1,43 @@
 import '../../styles/pages/search.scss';
 
 import Pagination from 'material-ui-flat-pagination';
-import React, { useState } from 'react';
+import React, { Dispatch, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 
 import { List, ListItem, ListItemIcon, ListItemText, Typography } from '@material-ui/core';
 import ImageIcon from '@material-ui/icons/Image';
 
-import { search } from '../../api/resource';
-import { RootStore } from '../../redux/reducers/rootReducer';
-import { Resource } from '../../types/resource.types';
+import { search } from '../../api/search';
+import { SearchActions } from '../../redux/actions/searchActions';
+import { SearchResult } from '../../types/search.types';
 import { SEARCH_RESULTS_PER_PAGE } from '../../utils/constants';
 
 export interface SearchResultsProps {
-  resources: Resource[];
-  searchTerm: string;
+  dispatchSearch: Dispatch<SearchActions>;
+  searchResults: SearchResult;
 }
 
-const SearchResults: React.FC<SearchResultsProps> = ({ resources, searchTerm }) => {
+const SearchResults: React.FC<SearchResultsProps> = ({ dispatchSearch, searchResults }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const history = useHistory();
-  const results = useSelector((state: RootStore) => state.results);
-  const [offset, setOffset] = useState(0);
+  const { resources, searchTerm, totalNumberOfHits, offset } = searchResults;
+  const [localOffset, setLocalOffset] = useState(offset);
 
   const updateSearch = (offset: number) => {
-    setOffset(offset);
+    setLocalOffset(offset);
     if (searchTerm.length > 0) {
-      dispatch(search(searchTerm, offset));
+      dispatch(search(searchTerm, dispatchSearch, offset));
       history.push(`/search/${searchTerm}/${offset}`);
     }
   };
 
   return (
     <div className="search-results" data-testid="search-results">
-      {t('Results', { count: results.totalNumberOfHits, term: searchTerm })} ({offset + 1} - {offset + resources.length}
-      )
+      {t('Results', { count: totalNumberOfHits, term: searchTerm })} ({localOffset + 1} -{' '}
+      {localOffset + resources.length})
       <List>
         {resources &&
           resources.map(resource => (
@@ -63,8 +63,8 @@ const SearchResults: React.FC<SearchResultsProps> = ({ resources, searchTerm }) 
       <Pagination
         data-testid="pagination"
         limit={SEARCH_RESULTS_PER_PAGE}
-        offset={offset}
-        total={results.totalNumberOfHits}
+        offset={localOffset}
+        total={totalNumberOfHits}
         onClick={(_, offset) => updateSearch(offset)}
       />
     </div>

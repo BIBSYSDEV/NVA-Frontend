@@ -3,7 +3,7 @@ import './styles/components/buttons.scss';
 
 import Amplify, { Hub } from 'aws-amplify';
 import { useSnackbar } from 'notistack';
-import React, { useEffect } from 'react';
+import React, { useEffect, useReducer } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
@@ -21,6 +21,8 @@ import User from './pages/user/User';
 import Workspace from './pages/workspace/Workspace';
 import { setUserAction } from './redux/actions/userActions';
 import { RootStore } from './redux/reducers/rootReducer';
+import { searchReducer } from './redux/reducers/searchReducer';
+import { emptySearchResults } from './types/search.types';
 import awsConfig from './utils/aws-config';
 import { useMockData } from './utils/constants';
 import { hubListener } from './utils/hub-listener';
@@ -31,6 +33,7 @@ const App: React.FC = () => {
   }
 
   const dispatch = useDispatch();
+  const [searchResults, dispatchSearch] = useReducer(searchReducer, emptySearchResults);
   const { t } = useTranslation('feedback');
   const { closeSnackbar, enqueueSnackbar } = useSnackbar();
   const feedback = useSelector((store: RootStore) => store.feedback);
@@ -76,12 +79,24 @@ const App: React.FC = () => {
         <Breadcrumbs />
         <div className="page-body">
           <Switch>
-            <Route exact path="/" component={Dashboard} />
+            <Route exact path="/" component={() => <Dashboard dispatchSearch={dispatchSearch} />} />
             <Route exact path="/resources" component={Workspace} />
             <Route exact path="/resources/new" component={Resource} />
-            <Route exact path="/search" component={Search} />
-            <Route exact path="/search/:searchTerm" component={Search} />
-            <Route exact path="/search/:searchTerm/:offset" component={Search} />
+            <Route
+              exact
+              path="/search"
+              component={() => <Search dispatchSearch={dispatchSearch} searchResults={searchResults} resetSearch />}
+            />
+            <Route
+              exact
+              path="/search/:searchTerm"
+              component={() => <Search dispatchSearch={dispatchSearch} searchResults={searchResults} />}
+            />
+            <Route
+              exact
+              path="/search/:searchTerm/:offset"
+              component={() => <Search dispatchSearch={dispatchSearch} searchResults={searchResults} />}
+            />
             <Route exact path="/user" component={User} />
             <Route path="*" component={NotFound} />
           </Switch>

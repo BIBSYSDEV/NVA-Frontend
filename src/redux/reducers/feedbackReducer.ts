@@ -2,12 +2,12 @@ import { FeedbackMessageType } from '../../types/feedback.types';
 import { AuthActions, LOGIN_FAILURE, LOGIN_SUCCESS, REFRESH_TOKEN_FAILURE } from '../actions/authActions';
 import { CLEAR_FEEDBACK, FeedbackActions } from '../actions/feedbackActions';
 import { ORCID_REQUEST_FAILURE, ORCID_SIGNIN_FAILURE, OrcidActions } from '../actions/orcidActions';
-import { ResourceActions, SEARCH_FAILURE } from '../actions/resourceActions';
+import { SEARCH_FAILURE, SearchActions } from '../actions/searchActions';
 import { SET_USER_FAILURE, UserActions } from '../actions/userActions';
 
 export const feedbackReducer = (
   state: FeedbackMessageType[] = [],
-  action: AuthActions | OrcidActions | UserActions | FeedbackActions | ResourceActions
+  action: AuthActions | OrcidActions | UserActions | FeedbackActions | SearchActions
 ) => {
   let remainingFeedbackMessages = [];
   switch (action.type) {
