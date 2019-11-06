@@ -1,101 +1,58 @@
 import '../../styles/pages/resource/resource.scss';
 
 import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 
-import { Button } from '@material-ui/core';
-import Tabs from '@material-ui/core/Tabs';
-
-import LinkTab from '../../components/TabPanel/LinkTab';
 import TabPanel from '../../components/TabPanel/TabPanel';
 import { RootStore } from '../../redux/reducers/rootReducer';
+import DescriptionPanel from './DescriptionPanel';
 import PublicationPanel from './PublicationPanel';
-import ResourceDescriptionForm from './ResourceDescriptionForm';
-
-const a11yProps = (tabDescription: string) => {
-  return {
-    id: `nav-tab-${tabDescription}`,
-    'aria-controls': `nav-tabpanel-${tabDescription}`,
-  };
-};
+import { ResourceFormTabs } from './ResourceFormTabs';
 
 const Resource: React.FC = () => {
-  const [value, setValue] = useState(0);
+  const [tabNumber, setTabNumber] = useState(0);
   const errors = useSelector((store: RootStore) => store.errors);
-  const { t } = useTranslation();
+  const { referencesErrors, contributorsErrors, filesAndLicensesErrors } = errors;
 
-  const handleChange = (_: React.ChangeEvent<{}>, newValue: number) => {
-    setValue(newValue);
+  const handleChange = (_: React.ChangeEvent<{}>, newTabNumber: number) => {
+    setTabNumber(newTabNumber);
   };
 
-  const goToNextPage = (value: number) => {
-    setValue(value + 1);
+  const goToNextPage = (_: any) => {
+    setTabNumber(tabNumber + 1);
   };
 
   return (
     <div className="resource">
-      <Tabs
-        variant="fullWidth"
-        value={value}
-        onChange={handleChange}
-        aria-label="navigation"
-        TabIndicatorProps={{ style: { backgroundColor: 'blue' } }}
-        textColor="primary">
-        <LinkTab
-          label={`1. ${t('Publication')}`}
-          {...a11yProps('publication')}
-          error={errors.publicationErrors && errors.publicationErrors.length > 0}
-        />
-        <LinkTab
-          label={`2. ${t('Description')}`}
-          {...a11yProps('description')}
-          error={errors.descriptionErrors && errors.descriptionErrors.length > 0}
-        />
-        <LinkTab label={`3. ${t('References')}`} {...a11yProps('references')} />
-        <LinkTab label={`4. ${t('Contributors')}`} {...a11yProps('contributors')} />
-        <LinkTab label={`5. ${t('Files and Licenses')}`} {...a11yProps('files-and-licenses')} />
-        <LinkTab label={`6. ${t('Submission')}`} {...a11yProps('submission')} />
-      </Tabs>
-      <TabPanel value={value} tabNumber={0} ariaLabel="publication">
-        <PublicationPanel />
-        {errors.publicationErrors &&
-          errors.publicationErrors.map((error: any) => {
-            return (
-              <p key={error.path} style={{ color: 'red' }}>
-                {error.path} : {error.name} - {error.message}
-              </p>
-            );
-          })}
-        <Button onClick={() => goToNextPage(value)}>{t('Next')}</Button>
-      </TabPanel>
-      <TabPanel value={value} tabNumber={1} ariaLabel="description">
-        {errors.descriptionErrors &&
-          errors.descriptionErrors.map((error: any) => {
-            return (
-              <p key={error.path} style={{ color: 'red' }}>
-                {error.path} : {error.name} - {error.message}
-              </p>
-            );
-          })}
-        <ResourceDescriptionForm />
-        <Button onClick={() => goToNextPage(value)}>{t('Next')}</Button>
-      </TabPanel>
-      <TabPanel value={value} tabNumber={2} ariaLabel="references">
+      <ResourceFormTabs tabNumber={tabNumber} onChange={handleChange} />
+      <PublicationPanel tabNumber={tabNumber} onClick={goToNextPage} />
+      <DescriptionPanel tabNumber={tabNumber} onClick={goToNextPage} />
+      <TabPanel
+        value={tabNumber}
+        currentTabNumber={2}
+        ariaLabel="references"
+        onClick={goToNextPage}
+        errors={referencesErrors}>
         <div>Page Three</div>
-        <Button onClick={() => goToNextPage(value)}>{t('Next')}</Button>
       </TabPanel>
-      <TabPanel value={value} tabNumber={3} ariaLabel="contributors">
+      <TabPanel
+        value={tabNumber}
+        currentTabNumber={3}
+        ariaLabel="contributors"
+        onClick={goToNextPage}
+        errors={contributorsErrors}>
         <div>Page Four</div>
-        <Button onClick={() => goToNextPage(value)}>{t('Next')}</Button>
       </TabPanel>
-      <TabPanel value={value} tabNumber={4} ariaLabel="files-and-licenses">
+      <TabPanel
+        value={tabNumber}
+        currentTabNumber={4}
+        ariaLabel="files-and-licenses"
+        onClick={goToNextPage}
+        errors={filesAndLicensesErrors}>
         <div>Page Five</div>
-        <Button onClick={() => goToNextPage(value)}>{t('Next')}</Button>
       </TabPanel>
-      <TabPanel value={value} tabNumber={5} ariaLabel="submission">
+      <TabPanel value={tabNumber} currentTabNumber={5} ariaLabel="submission" onClick={goToNextPage}>
         <div>Page Six</div>
-        <Button onClick={() => goToNextPage(value)}>{t('Next')}</Button>
       </TabPanel>
     </div>
   );
