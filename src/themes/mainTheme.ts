@@ -16,6 +16,9 @@ export default createMuiTheme({
     text: {
       secondary: '#44515d',
     },
+    background: {
+      default: '#fff',
+    },
   },
   overrides: {
     MuiButton: {

@@ -11,6 +11,7 @@ import { ThemeProvider as MUIThemeProvider, StylesProvider } from '@material-ui/
 import CloseIcon from '@material-ui/icons/Close';
 import i18n from './translations/i18n';
 import mainTheme from './themes/mainTheme';
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 import App from './App';
 import store from './redux/store';
@@ -30,6 +31,7 @@ ReactDOM.render(
       <StylesProvider injectFirst>
         <ThemeProvider theme={mainTheme}>
           <MUIThemeProvider theme={mainTheme}>
+            <CssBaseline />
             <SnackbarProvider
               maxSnack={3}
               data-testid="snackbar"
