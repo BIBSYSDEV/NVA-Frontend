@@ -28,12 +28,12 @@ const TabPanel: React.FC<TabPanelProps> = ({ ariaLabel, children, currentTabNumb
       id={`nav-tabpanel-${ariaLabel}`}
       aria-labelledby={`nav-tab-${ariaLabel}`}>
       <Box>
-        {children}
         {errors &&
           errors.length > 0 &&
           errors.map((error: any) => {
             return <LabelTextLine key={error.path} label={error.path} text={`${error.name} - ${error.message}`} />;
           })}
+        {children}
         {onClick && <Button onClick={onClick}>{t('Next')}</Button>}
       </Box>
     </Typography>
