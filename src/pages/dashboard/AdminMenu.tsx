@@ -8,7 +8,7 @@ import styled from 'styled-components';
 import { RootStore } from '../../redux/reducers/rootReducer';
 
 const StyledAdminMenu = styled.div`
-  background-color: ${props => props.theme.palette.groupingBox.main};
+  background-color: ${props => props.theme.palette.box.main};
   width: 100%;
   display: flex;
   align-items: center;
