@@ -28,7 +28,7 @@ const Login: React.FC = () => {
       {user && user.name ? (
         <Menu menuButtonLabel={user.name} handleLogout={handleLogout} />
       ) : (
-        <Button onClick={handleLogin} data-testid="login-button">
+        <Button color="primary" variant="contained" onClick={handleLogin} data-testid="login-button">
           {t('Login')}
         </Button>
       )}
