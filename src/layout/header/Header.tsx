@@ -3,7 +3,7 @@ import Login from './Login';
 import Logo from './Logo';
 import styled from 'styled-components';
 
-const PageHeader = styled.div`
+const StyledPageHeader = styled.div`
   display: grid;
   grid-template-areas: 'logo auth';
   grid-template-columns: 5rem auto;
@@ -16,10 +16,10 @@ const PageHeader = styled.div`
 `;
 
 const Header: React.FC = () => (
-  <PageHeader>
+  <StyledPageHeader>
     <Logo />
     <Login />
-  </PageHeader>
+  </StyledPageHeader>
 );
 
 export default Header;
