@@ -1,23 +1,27 @@
 import '../../styles/layout/header.scss';
-
 import React from 'react';
-import { Link } from 'react-router-dom';
-
-import { Typography } from '@material-ui/core';
-
 import Login from './Login';
+import Logo from './Logo';
+import styled from 'styled-components';
+
+const PageHeader = styled.div`
+  display: grid;
+  grid-template-areas: 'logo auth';
+  grid-template-columns: 5rem auto;
+  font-weight: bold;
+  align-items: center;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  background-color: ${props => props.theme.backgroundColor};
+  border-bottom: 2px solid ${props => props.theme.backgroundColor};
+  min-height: 4rem;
+`;
 
 const Header: React.FC = () => (
-  <div className="page-header">
-    <Link to="/">
-      <div className="logo">
-        <Typography variant="h6">
-          <b>NVA</b>
-        </Typography>
-      </div>
-    </Link>
+  <PageHeader>
+    <Logo />
     <Login />
-  </div>
+  </PageHeader>
 );
 
 export default Header;

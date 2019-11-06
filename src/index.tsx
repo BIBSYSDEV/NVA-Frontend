@@ -5,37 +5,43 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { I18nextProvider } from 'react-i18next';
 import { Provider } from 'react-redux';
-
 import { IconButton } from '@material-ui/core';
+import styled, { ThemeProvider } from 'styled-components';
+import { ThemeProvider as MUIThemeProvider, StylesProvider } from '@material-ui/styles';
 import CloseIcon from '@material-ui/icons/Close';
+import i18n from './translations/i18n';
+import mainTheme from './themes/mainTheme';
 
 import App from './App';
 import store from './redux/store';
-import i18n from './translations/i18n';
-import { ThemeProvider, StylesProvider } from '@material-ui/styles';
-import mainTheme from './themes/mainTheme';
 
 const notistackRef = React.createRef<any>();
 const onClickDismiss = (key: any) => () => {
   notistackRef.current.closeSnackbar(key);
 };
 
+const StyledCloseIcon = styled(CloseIcon)`
+  color: white;
+`;
+
 ReactDOM.render(
   <I18nextProvider i18n={i18n}>
     <Provider store={store}>
       <StylesProvider injectFirst>
         <ThemeProvider theme={mainTheme}>
-          <SnackbarProvider
-            maxSnack={3}
-            data-testid="snackbar"
-            action={key => (
-              <IconButton onClick={onClickDismiss(key)}>
-                <CloseIcon />
-              </IconButton>
-            )}
-            ref={notistackRef}>
-            <App />
-          </SnackbarProvider>
+          <MUIThemeProvider theme={mainTheme}>
+            <SnackbarProvider
+              maxSnack={3}
+              data-testid="snackbar"
+              action={key => (
+                <IconButton onClick={onClickDismiss(key)}>
+                  <StyledCloseIcon />
+                </IconButton>
+              )}
+              ref={notistackRef}>
+              <App />
+            </SnackbarProvider>
+          </MUIThemeProvider>
         </ThemeProvider>
       </StylesProvider>
     </Provider>
