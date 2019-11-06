@@ -10,6 +10,11 @@ export default createMuiTheme({
     },
   },
   overrides: {
+    MuiButton: {
+      root: {
+        textTransform: 'none',
+      },
+    },
     MuiSnackbarContent: {
       action: {
         color: '#ffffff',
