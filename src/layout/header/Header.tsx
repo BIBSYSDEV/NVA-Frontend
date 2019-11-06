@@ -1,4 +1,3 @@
-import '../../styles/layout/header.scss';
 import React from 'react';
 import Login from './Login';
 import Logo from './Logo';
