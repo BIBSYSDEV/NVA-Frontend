@@ -1,4 +1,4 @@
-import { initialValidatorState, ValidatorState } from '../../types/validation.types';
+import { FormValidator, initialFormValidator } from '../../types/validation.types';
 import {
   CLEAR_PUBLICATION_ERRORS,
   DESCRIPTION_ERROR,
@@ -7,7 +7,7 @@ import {
   ValidationActions,
 } from '../actions/validationActions';
 
-export const validationReducer = (state: ValidatorState = initialValidatorState, action: ValidationActions) => {
+export const validationReducer = (state: FormValidator = initialFormValidator, action: ValidationActions) => {
   switch (action.type) {
     case CLEAR_PUBLICATION_ERRORS:
       return { ...state, publicationErrors: [] };

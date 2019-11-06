@@ -1,23 +1,24 @@
-import React from 'react';
-import { Field, Form, Formik } from 'formik';
-import { useTranslation } from 'react-i18next';
-import * as Yup from 'yup';
-import DateFnsUtils from '@date-io/date-fns';
-import { Select, TextField } from 'formik-material-ui';
-import { Button, MenuItem } from '@material-ui/core';
 import '../../styles/pages/resource/resource-description.scss';
+
+import { Field, Form, Formik } from 'formik';
+import { Select, TextField } from 'formik-material-ui';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
+import * as Yup from 'yup';
+
+import DateFnsUtils from '@date-io/date-fns';
+import { MenuItem } from '@material-ui/core';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+
+import { clearDescriptionErrors, descriptionError } from '../../redux/actions/validationActions';
 import { defaultLanguage, languages } from '../../translations/i18n';
 import publications from '../../utils/testfiles/projects_random_generated.json';
-import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import FormikDatePicker from './FormikDatePicker';
-import { clearPublicationErrors, publicationError } from '../../redux/actions/validationActions';
 
-interface ResourceDescriptionFormProps {
-  dispatch: any;
-}
-
-const ResourceDescriptionForm: React.FC<ResourceDescriptionFormProps> = ({ dispatch }) => {
+const ResourceDescriptionForm: React.FC = () => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
 
   const resourceSchema = Yup.object().shape({
     title: Yup.string().required(t('Required field')),
@@ -26,9 +27,9 @@ const ResourceDescriptionForm: React.FC<ResourceDescriptionFormProps> = ({ dispa
   const handleValidation = (values: any) => {
     try {
       resourceSchema.validateSync(values, { abortEarly: false });
-      dispatch(clearPublicationErrors);
+      dispatch(clearDescriptionErrors());
     } catch (e) {
-      dispatch(publicationError(e.inner));
+      dispatch(descriptionError(e.inner));
     }
   };
 
@@ -57,7 +58,7 @@ const ResourceDescriptionForm: React.FC<ResourceDescriptionFormProps> = ({ dispa
           }}>
           {values => (
             <div className="panel-content">
-              <Form>
+              <Form onBlur={() => handleValidation(values)}>
                 <div className="field-wrapper">
                   <Field
                     aria-label="title"
@@ -158,9 +159,6 @@ const ResourceDescriptionForm: React.FC<ResourceDescriptionFormProps> = ({ dispa
                     ))}
                   </Field>
                 </div>
-                <Button type="submit" onClick={(_: any) => handleValidation(values)}>
-                  Validate
-                </Button>
               </Form>
             </div>
           )}

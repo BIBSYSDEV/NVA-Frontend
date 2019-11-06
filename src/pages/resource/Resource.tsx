@@ -1,15 +1,15 @@
 import '../../styles/pages/resource/resource.scss';
 
-import React, { useReducer, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 
 import { Button } from '@material-ui/core';
 import Tabs from '@material-ui/core/Tabs';
 
 import LinkTab from '../../components/TabPanel/LinkTab';
 import TabPanel from '../../components/TabPanel/TabPanel';
-import { validationReducer } from '../../redux/reducers/validationReducer';
-import { initialValidatorState } from '../../types/validation.types';
+import { RootStore } from '../../redux/reducers/rootReducer';
 import PublicationPanel from './PublicationPanel';
 import ResourceDescriptionForm from './ResourceDescriptionForm';
 
@@ -22,7 +22,7 @@ const a11yProps = (tabDescription: string) => {
 
 const Resource: React.FC = () => {
   const [value, setValue] = useState(0);
-  const [errors, dispatch] = useReducer(validationReducer, initialValidatorState);
+  const errors = useSelector((store: RootStore) => store.errors);
   const { t } = useTranslation();
 
   const handleChange = (_: React.ChangeEvent<{}>, newValue: number) => {
@@ -47,7 +47,11 @@ const Resource: React.FC = () => {
           {...a11yProps('publication')}
           error={errors.publicationErrors && errors.publicationErrors.length > 0}
         />
-        <LinkTab label={`2. ${t('Description')}`} {...a11yProps('description')} />
+        <LinkTab
+          label={`2. ${t('Description')}`}
+          {...a11yProps('description')}
+          error={errors.descriptionErrors && errors.descriptionErrors.length > 0}
+        />
         <LinkTab label={`3. ${t('References')}`} {...a11yProps('references')} />
         <LinkTab label={`4. ${t('Contributors')}`} {...a11yProps('contributors')} />
         <LinkTab label={`5. ${t('Files and Licenses')}`} {...a11yProps('files-and-licenses')} />
@@ -66,7 +70,15 @@ const Resource: React.FC = () => {
         <Button onClick={() => goToNextPage(value)}>{t('Next')}</Button>
       </TabPanel>
       <TabPanel value={value} tabNumber={1} ariaLabel="description">
-        <ResourceDescriptionForm dispatch={dispatch} />
+        {errors.descriptionErrors &&
+          errors.descriptionErrors.map((error: any) => {
+            return (
+              <p key={error.path} style={{ color: 'red' }}>
+                {error.path} : {error.name} - {error.message}
+              </p>
+            );
+          })}
+        <ResourceDescriptionForm />
         <Button onClick={() => goToNextPage(value)}>{t('Next')}</Button>
       </TabPanel>
       <TabPanel value={value} tabNumber={2} ariaLabel="references">

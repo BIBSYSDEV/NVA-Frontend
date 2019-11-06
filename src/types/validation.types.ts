@@ -1,10 +1,10 @@
-export const initialValidatorState: ValidatorState = {
+export const initialFormValidator: FormValidator = {
   publicationErrors: [],
   descriptionErrors: [],
   referencesErrors: [],
 };
 
-export interface ValidatorState {
+export interface FormValidator {
   publicationErrors: YupError[];
   descriptionErrors: YupError[];
   referencesErrors: YupError[];
