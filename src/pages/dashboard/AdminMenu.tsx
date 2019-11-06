@@ -1,13 +1,31 @@
-import '../../styles/layout/admin-menu.scss';
-
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-
 import { Button } from '@material-ui/core';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
 import { RootStore } from '../../redux/reducers/rootReducer';
+import { BOX_COLOR } from '../../themes/mainTheme';
+
+const StyledAdminMenu = styled.div`
+  background-color: ${BOX_COLOR};
+  width: 100%;
+  display: flex;
+  align-items: center;
+  min-height: 4rem;
+`;
+
+const StyledHeader = styled.div`
+  font-size: 1rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+`;
+
+const StyledButton = styled(Button)`
+  margin-left: 1rem;
+  margin-right: 1rem;
+`;
 
 const AdminMenu: React.FC = () => {
   const user = useSelector((state: RootStore) => state.user);
@@ -15,14 +33,14 @@ const AdminMenu: React.FC = () => {
   return (
     <>
       {user.id && (
-        <div className="admin-menu">
-          <div className="title">{t('Admin panel')}</div>
+        <StyledAdminMenu>
+          <StyledHeader>{t('Admin panel')}</StyledHeader>
           <Link to="/resources/new">
-            <Button color="primary" variant="contained">
+            <StyledButton color="primary" variant="contained">
               {t('New registration')}
-            </Button>
+            </StyledButton>
           </Link>
-        </div>
+        </StyledAdminMenu>
       )}
     </>
   );
