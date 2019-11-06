@@ -12,6 +12,8 @@ import CloseIcon from '@material-ui/icons/Close';
 import App from './App';
 import store from './redux/store';
 import i18n from './translations/i18n';
+import { ThemeProvider, StylesProvider } from '@material-ui/styles';
+import mainTheme from './themes/mainTheme';
 
 const notistackRef = React.createRef<any>();
 const onClickDismiss = (key: any) => () => {
@@ -21,17 +23,21 @@ const onClickDismiss = (key: any) => () => {
 ReactDOM.render(
   <I18nextProvider i18n={i18n}>
     <Provider store={store}>
-      <SnackbarProvider
-        maxSnack={3}
-        data-testid="snackbar"
-        action={key => (
-          <IconButton onClick={onClickDismiss(key)}>
-            <CloseIcon />
-          </IconButton>
-        )}
-        ref={notistackRef}>
-        <App />
-      </SnackbarProvider>
+      <StylesProvider injectFirst>
+        <ThemeProvider theme={mainTheme}>
+          <SnackbarProvider
+            maxSnack={3}
+            data-testid="snackbar"
+            action={key => (
+              <IconButton onClick={onClickDismiss(key)}>
+                <CloseIcon />
+              </IconButton>
+            )}
+            ref={notistackRef}>
+            <App />
+          </SnackbarProvider>
+        </ThemeProvider>
+      </StylesProvider>
     </Provider>
   </I18nextProvider>,
   document.getElementById('root')

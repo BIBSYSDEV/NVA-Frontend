@@ -1,5 +1,4 @@
 import './styles/app.scss';
-import './styles/components/buttons.scss';
 
 import Amplify, { Hub } from 'aws-amplify';
 import { useSnackbar } from 'notistack';

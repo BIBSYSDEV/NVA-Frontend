@@ -18,7 +18,9 @@ const AdminMenu: React.FC = () => {
         <div className="admin-menu">
           <div className="title">{t('Admin panel')}</div>
           <Link to="/resources/new">
-            <Button>{t('New registration')}</Button>
+            <Button color="primary" variant="contained">
+              {t('New registration')}
+            </Button>
           </Link>
         </div>
       )}
