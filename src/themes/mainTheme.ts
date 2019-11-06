@@ -1,18 +1,30 @@
 import { createMuiTheme } from '@material-ui/core';
+// import { PaletteColor } from '@material-ui/core/styles/createPalette';
+// import { Theme } from '@material-ui/core/styles/createMuiTheme';
+// import { Palette, PaletteColor, PaletteOptions } from '@material-ui/core/styles/createPalette';
 
-export const BACKGROUND_COLOR = '#ffffff';
-export const TEXT_COLOR = '#44515d';
-export const LINE_COLOR = '#3d4349';
-export const LINK_COLOR = '#6558f5';
-export const BOX_COLOR = '#eeeeff';
-export const PRIMARY_BUTTON_COLOR = '#ffffff';
-export const PUBLICATION_SELECTOR_COLOR = '#ffffff';
+// Extend Palette type to allow custom colors
+declare module '@material-ui/core/styles/createPalette' {
+  interface Palette {
+    link: PaletteColor;
+    seperator: PaletteColor;
+    groupingBox: PaletteColor;
+  }
+  interface PaletteOptions {
+    link?: PaletteColorOptions;
+    seperator?: PaletteColorOptions;
+    groupingBox?: PaletteColorOptions;
+  }
+}
 
 export default createMuiTheme({
   palette: {
     primary: {
       main: '#6558f5',
     },
+    link: { main: '#6558f5' },
+    seperator: { main: '#3d4349' },
+    groupingBox: { main: '#eeeeff' },
     text: {
       secondary: '#44515d',
     },

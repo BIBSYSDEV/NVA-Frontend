@@ -6,10 +6,9 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { RootStore } from '../../redux/reducers/rootReducer';
-import { BOX_COLOR } from '../../themes/mainTheme';
 
 const StyledAdminMenu = styled.div`
-  background-color: ${BOX_COLOR};
+  background-color: ${props => props.theme.palette.groupingBox.main};
   width: 100%;
   display: flex;
   align-items: center;
