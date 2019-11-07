@@ -4,12 +4,12 @@ import { createMuiTheme } from '@material-ui/core';
 declare module '@material-ui/core/styles/createPalette' {
   interface Palette {
     link: PaletteColor;
-    seperator: PaletteColor;
+    separator: PaletteColor;
     box: PaletteColor;
   }
   interface PaletteOptions {
     link?: PaletteColorOptions;
-    seperator?: PaletteColorOptions;
+    separator?: PaletteColorOptions;
     box?: PaletteColorOptions;
   }
 }
@@ -20,7 +20,7 @@ export default createMuiTheme({
       main: '#6558f5',
     },
     link: { main: '#6558f5' },
-    seperator: { main: '#3d4349' },
+    separator: { main: '#3d4349' },
     box: { main: '#eeeeff' },
     text: {
       secondary: '#44515d',

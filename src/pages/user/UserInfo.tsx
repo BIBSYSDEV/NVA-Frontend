@@ -18,7 +18,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
   }, [user]);
 
   return (
-    <UserCard headerLabel={t('User information')} subHeaderLabel={t('Info from Feide')} className="feide-info">
+    <UserCard headerLabel={t('User information')} subHeaderLabel={t('Info from Feide')}>
       <LabelTextLine dataTestId="user-name" label={t('Name')} text={user.name} />
       <LabelTextLine dataTestId="user-id" label={t('ID')} text={user.id} />
       <LabelTextLine dataTestId="user-email" label={t('Email')} text={user.email} />

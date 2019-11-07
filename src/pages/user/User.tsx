@@ -1,5 +1,3 @@
-import '../../styles/pages/user.scss';
-
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,6 +11,30 @@ import UserInfo from './UserInfo';
 import UserLanguage from './UserLanguage';
 import UserOrcid from './UserOrcid';
 import UserRoles from './UserRoles';
+import styled from 'styled-components';
+
+const StyledUserPage = styled.div`
+  display: grid;
+  grid-template-areas: 'secondary-info primary-info';
+  grid-template-columns: 1fr 3fr;
+  grid-gap: 3rem;
+  font-size: 1rem;
+  padding: 2rem;
+`;
+
+const SecondaryUserInfo = styled.div`
+  display: grid;
+  grid-area: secondary-info;
+  grid-template-areas: 'profile-image' 'contact-info' 'language' 'author-info';
+  grid-row-gap: 3rem;
+  min-width: 20rem;
+`;
+
+const PrimaryUserInfo = styled.div`
+  display: grid;
+  grid-area: primary-info;
+  grid-gap: 3rem;
+`;
 
 const User: React.FC = () => {
   const { t } = useTranslation();
@@ -36,21 +58,21 @@ const User: React.FC = () => {
   const user = useSelector((state: RootStore) => state.user);
 
   return (
-    <div className="user">
-      <div className="secondary-info">
-        <UserCard headerLabel="Bilde" className="profile-image" />
-        <UserCard headerLabel={t('Contact')} className="contact-info" />
+    <StyledUserPage>
+      <SecondaryUserInfo>
+        <UserCard headerLabel="Bilde" />
+        <UserCard headerLabel={t('Contact')} />
         <UserLanguage />
-        <UserCard headerLabel={t('Author information')} className="author-info" />
-      </div>
+        <UserCard headerLabel={t('Author information')} />
+      </SecondaryUserInfo>
 
-      <div className="primary-info">
+      <PrimaryUserInfo>
         <UserInfo user={user} />
         <UserRoles user={user} />
-        <UserCard headerLabel={t('Organizations')} className="organizations" />
+        <UserCard headerLabel={t('Organizations')} />
         <UserOrcid />
-      </div>
-    </div>
+      </PrimaryUserInfo>
+    </StyledUserPage>
   );
 };
 
