@@ -4,11 +4,12 @@ import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import styled from 'styled-components';
 
 interface PublicationExpansionPanelProps {
   headerLabel: string;
   icon: ReactNode;
-  className: string;
+  className?: string;
   id: string;
   expanded: boolean;
   onChange: (event: React.ChangeEvent<any>, isExpanded: boolean) => void;
@@ -16,10 +17,21 @@ interface PublicationExpansionPanelProps {
   children?: ReactNode;
 }
 
+const StyledPublicationExpansionPanel = styled(ExpansionPanel)`
+  padding: 1rem;
+  margin-bottom: 2rem;
+  min-height: 3.5rem;
+  background-color: ${({ theme }) => theme.palette.secondary.main};
+  flex-flow: row wrap;
+`;
+
+const StyledIcon = styled.span`
+  margin-right: 1rem;
+`;
+
 const PublicationExpansionPanel: React.FC<PublicationExpansionPanelProps> = ({
   headerLabel,
   icon,
-  className,
   id,
   expanded,
   onChange,
@@ -27,12 +39,12 @@ const PublicationExpansionPanel: React.FC<PublicationExpansionPanelProps> = ({
   ariaControls,
 }) => {
   return (
-    <ExpansionPanel className={className} expanded={expanded} onChange={onChange}>
+    <StyledPublicationExpansionPanel expanded={expanded} onChange={onChange}>
       <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} aria-controls={ariaControls} id={id}>
-        {icon} {headerLabel}
+        <StyledIcon>{icon}</StyledIcon> {headerLabel}
       </ExpansionPanelSummary>
       <ExpansionPanelDetails>{children}</ExpansionPanelDetails>
-    </ExpansionPanel>
+    </StyledPublicationExpansionPanel>
   );
 };
 

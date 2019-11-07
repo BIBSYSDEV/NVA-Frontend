@@ -29,6 +29,18 @@ const StyledPublicationPanel = styled.div`
 const StyledSelectorWrapper = styled.div`
   flex-basis: 60%;
   min-width: 10rem;
+
+  /* div * {
+    padding: 1rem;
+    margin-bottom: 2rem;
+    min-height: 3.5rem;
+    background-color: ${({ theme }) => theme.palette.secondary.main};
+    flex-flow: row wrap;
+
+    input {
+      color: ${({ theme }) => theme.palette.text.main};
+    }
+  } */
 `;
 
 const StyledInfoBox = styled.div`
