@@ -16,7 +16,7 @@ const UserOrcid: React.FC = () => {
   return (
     <UserCard headerLabel={t('ORCID')}>
       {user.orcid ? (
-        <LabelTextLine dataTestId="orcid-id" label={t('Your ORCID')} text={OrcidLink} externalLink={OrcidLink} />
+        <LabelTextLine dataTestId={'orcid-info'} label={t('Your ORCID')} text={OrcidLink} externalLink={OrcidLink} />
       ) : (
         <ButtonModal
           buttonText={t('Create or Connect to your ORCID')}
