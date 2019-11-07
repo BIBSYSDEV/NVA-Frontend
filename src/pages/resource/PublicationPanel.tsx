@@ -26,12 +26,7 @@ const PublicationPanel: React.FC<PublicationPanelProps> = ({ onClick, tabNumber 
   };
 
   return (
-    <TabPanel
-      value={tabNumber}
-      currentTabNumber={0}
-      ariaLabel="publication"
-      onClick={onClick}
-      errors={errors.publicationErrors}>
+    <TabPanel isHidden={tabNumber !== 0} ariaLabel="publication" onClick={onClick} errors={errors.publicationErrors}>
       <div className="publication-panel">
         <div className="header">{t('Choose publication')}</div>
         <div className="panel-content">

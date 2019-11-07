@@ -12,10 +12,9 @@ import LabelTextLine from '../LabelTextLine';
 interface TabPanelProps {
   ariaLabel: string;
   children?: React.ReactNode;
-  currentTabNumber: number;
+  isHidden: boolean;
   errors?: YupError[];
   onClick: (event: React.MouseEvent<any>) => void;
-  value: any;
 }
 
 const StyledButton = styled(Button)`
@@ -23,16 +22,11 @@ const StyledButton = styled(Button)`
   margin-right: 0.5rem;
 `;
 
-const TabPanel: React.FC<TabPanelProps> = ({ ariaLabel, children, currentTabNumber, errors, onClick, value }) => {
+const TabPanel: React.FC<TabPanelProps> = ({ ariaLabel, children, errors, isHidden, onClick }) => {
   const { t } = useTranslation();
 
   return (
-    <Typography
-      component="div"
-      role="tabpanel"
-      hidden={value !== currentTabNumber}
-      id={`nav-tabpanel-${ariaLabel}`}
-      aria-labelledby={`nav-tab-${ariaLabel}`}>
+    <Typography component="div" role="tabpanel" hidden={isHidden} aria-labelledby={`nav-tab-${ariaLabel}`}>
       <Box>
         {errors &&
           errors.length > 0 &&

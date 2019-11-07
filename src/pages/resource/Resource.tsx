@@ -18,7 +18,7 @@ const Resource: React.FC = () => {
     setTabNumber(newTabNumber);
   };
 
-  const goToNextPage = (_: any) => {
+  const goToNextPage = (_: React.MouseEvent<any>) => {
     setTabNumber(tabNumber + 1);
   };
 
@@ -27,31 +27,20 @@ const Resource: React.FC = () => {
       <ResourceFormTabs tabNumber={tabNumber} onChange={handleChange} />
       <PublicationPanel tabNumber={tabNumber} onClick={goToNextPage} />
       <DescriptionPanel tabNumber={tabNumber} onClick={goToNextPage} />
-      <TabPanel
-        value={tabNumber}
-        currentTabNumber={2}
-        ariaLabel="references"
-        onClick={goToNextPage}
-        errors={referencesErrors}>
+      <TabPanel isHidden={tabNumber !== 2} ariaLabel="references" onClick={goToNextPage} errors={referencesErrors}>
         <div>Page Three</div>
       </TabPanel>
-      <TabPanel
-        value={tabNumber}
-        currentTabNumber={3}
-        ariaLabel="contributors"
-        onClick={goToNextPage}
-        errors={contributorsErrors}>
+      <TabPanel isHidden={tabNumber !== 3} ariaLabel="contributors" onClick={goToNextPage} errors={contributorsErrors}>
         <div>Page Four</div>
       </TabPanel>
       <TabPanel
-        value={tabNumber}
-        currentTabNumber={4}
+        isHidden={tabNumber !== 4}
         ariaLabel="files-and-licenses"
         onClick={goToNextPage}
         errors={filesAndLicensesErrors}>
         <div>Page Five</div>
       </TabPanel>
-      <TabPanel value={tabNumber} currentTabNumber={5} ariaLabel="submission" onClick={goToNextPage}>
+      <TabPanel isHidden={tabNumber !== 5} ariaLabel="submission" onClick={goToNextPage}>
         <div>Page Six</div>
       </TabPanel>
     </div>
