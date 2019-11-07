@@ -9,7 +9,7 @@ const StyledFooter = styled.div`
   font-weight: bold;
   justify-content: center;
   align-items: center;
-  border-top: 2px solid ${({ theme }) => theme.palette.seperator.main};
+  border-top: 2px solid ${({ theme }) => theme.palette.separator.main};
 `;
 
 const Footer: React.FC = () => <StyledFooter>footer</StyledFooter>;
