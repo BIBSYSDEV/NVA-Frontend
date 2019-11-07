@@ -5,9 +5,11 @@ import { I18nextProvider } from 'react-i18next';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
 import { createStore } from 'redux';
+import { ThemeProvider } from 'styled-components';
 
 import { IconButton } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
+import { StylesProvider, ThemeProvider as MUIThemeProvider } from '@material-ui/styles';
 import { cleanup, getByTestId, render, wait } from '@testing-library/react';
 
 import App from '../App';
@@ -17,6 +19,7 @@ import { orcidRequestFailure, orcidSignInFailure } from '../redux/actions/orcidA
 import { searchFailure } from '../redux/actions/searchActions';
 import { setUserFailure } from '../redux/actions/userActions';
 import rootReducer from '../redux/reducers/rootReducer';
+import mainTheme from '../themes/mainTheme';
 import i18n from '../translations/i18n';
 
 describe('Snackbar', () => {
@@ -32,19 +35,25 @@ describe('Snackbar', () => {
     app = render(
       <Provider store={store}>
         <I18nextProvider i18n={i18n}>
-          <SnackbarProvider
-            maxSnack={3}
-            data-testid="snackbar"
-            action={key => (
-              <IconButton onClick={onClickDismiss(key)}>
-                <CloseIcon />
-              </IconButton>
-            )}
-            ref={notistackRef}>
-            <Router history={history}>
-              <App />
-            </Router>
-          </SnackbarProvider>
+          <StylesProvider injectFirst>
+            <ThemeProvider theme={mainTheme}>
+              <MUIThemeProvider theme={mainTheme}>
+                <SnackbarProvider
+                  maxSnack={3}
+                  data-testid="snackbar"
+                  action={key => (
+                    <IconButton onClick={onClickDismiss(key)}>
+                      <CloseIcon />
+                    </IconButton>
+                  )}
+                  ref={notistackRef}>
+                  <Router history={history}>
+                    <App />
+                  </Router>
+                </SnackbarProvider>
+              </MUIThemeProvider>
+            </ThemeProvider>
+          </StylesProvider>
         </I18nextProvider>
       </Provider>
     );

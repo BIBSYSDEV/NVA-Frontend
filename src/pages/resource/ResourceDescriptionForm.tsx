@@ -11,10 +11,15 @@ import publications from '../../utils/testfiles/projects_random_generated.json';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import FormikDatePicker from './FormikDatePicker';
 import { clearPublicationErrors, publicationError } from '../../redux/actions/validationActions';
+import styled from 'styled-components';
 
 interface ResourceDescriptionFormProps {
   dispatch: any;
 }
+
+const StyledPublicationItem = styled(MenuItem)`
+  width: 50rem;
+`;
 
 const ResourceDescriptionForm: React.FC<ResourceDescriptionFormProps> = ({ dispatch }) => {
   const { t } = useTranslation();
@@ -152,9 +157,9 @@ const ResourceDescriptionForm: React.FC<ResourceDescriptionFormProps> = ({ dispa
                     fullWidth
                     variant="outlined">
                     {publications.map(publication => (
-                      <MenuItem value={publication.id} className="pub-item" key={publication.id}>
+                      <StyledPublicationItem value={publication.id} key={publication.id}>
                         {`${publication.name} - ${publication.id}`}
-                      </MenuItem>
+                      </StyledPublicationItem>
                     ))}
                   </Field>
                 </div>

@@ -2,6 +2,7 @@ import '../../styles/pages/resource/resource.scss';
 
 import React, { useReducer, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import styled from 'styled-components';
 
 import { Button } from '@material-ui/core';
 import Tabs from '@material-ui/core/Tabs';
@@ -19,6 +20,11 @@ const a11yProps = (tabDescription: string) => {
     'aria-controls': `nav-tabpanel-${tabDescription}`,
   };
 };
+
+const StyledButton = styled(Button)`
+  margin-top: 1rem;
+  margin-right: 0.5rem;
+`;
 
 const Resource: React.FC = () => {
   const [value, setValue] = useState(0);
@@ -63,27 +69,39 @@ const Resource: React.FC = () => {
               </p>
             );
           })}
-        <Button onClick={() => goToNextPage(value)}>{t('Next')}</Button>
+        <Button color="primary" variant="contained" aria-label="next" onClick={() => goToNextPage(value)}>
+          {t('Next')}
+        </Button>
       </TabPanel>
       <TabPanel value={value} tabNumber={1} ariaLabel="description">
         <ResourceDescriptionForm dispatch={dispatch} />
-        <Button onClick={() => goToNextPage(value)}>{t('Next')}</Button>
+        <StyledButton color="primary" variant="contained" aria-label="next" onClick={() => goToNextPage(value)}>
+          {t('Next')}
+        </StyledButton>
       </TabPanel>
       <TabPanel value={value} tabNumber={2} ariaLabel="references">
         <div>Page Three</div>
-        <Button onClick={() => goToNextPage(value)}>{t('Next')}</Button>
+        <Button color="primary" variant="contained" aria-label="next" onClick={() => goToNextPage(value)}>
+          {t('Next')}
+        </Button>
       </TabPanel>
       <TabPanel value={value} tabNumber={3} ariaLabel="contributors">
         <div>Page Four</div>
-        <Button onClick={() => goToNextPage(value)}>{t('Next')}</Button>
+        <Button color="primary" variant="contained" aria-label="next" onClick={() => goToNextPage(value)}>
+          {t('Next')}
+        </Button>
       </TabPanel>
       <TabPanel value={value} tabNumber={4} ariaLabel="files-and-licenses">
         <div>Page Five</div>
-        <Button onClick={() => goToNextPage(value)}>{t('Next')}</Button>
+        <Button color="primary" variant="contained" aria-label="next" onClick={() => goToNextPage(value)}>
+          {t('Next')}
+        </Button>
       </TabPanel>
       <TabPanel value={value} tabNumber={5} ariaLabel="submission">
         <div>Page Six</div>
-        <Button onClick={() => goToNextPage(value)}>{t('Next')}</Button>
+        <Button color="primary" variant="contained" aria-label="next" onClick={() => goToNextPage(value)}>
+          {t('Next')}
+        </Button>
       </TabPanel>
     </div>
   );
