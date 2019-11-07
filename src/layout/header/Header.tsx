@@ -11,7 +11,7 @@ const StyledPageHeader = styled.div`
   align-items: center;
   padding-left: 1rem;
   padding-right: 1rem;
-  border-bottom: 2px solid ${props => props.theme.palette.seperator.main};
+  border-bottom: 2px solid ${({ theme }) => theme.palette.seperator.main};
   min-height: 4rem;
 `;
 

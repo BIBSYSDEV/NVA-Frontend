@@ -12,8 +12,6 @@ const StyledFooter = styled.div`
   border-top: 2px solid ${props => props.theme.palette.seperator.main};
 `;
 
-const Footer: React.FC = () => {
-  return <StyledFooter>footer</StyledFooter>;
-};
+const Footer: React.FC = () => <StyledFooter>footer</StyledFooter>;
 
 export default Footer;

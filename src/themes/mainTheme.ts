@@ -1,7 +1,4 @@
 import { createMuiTheme } from '@material-ui/core';
-// import { PaletteColor } from '@material-ui/core/styles/createPalette';
-// import { Theme } from '@material-ui/core/styles/createMuiTheme';
-// import { Palette, PaletteColor, PaletteOptions } from '@material-ui/core/styles/createPalette';
 
 // Extend Palette type to allow custom colors
 declare module '@material-ui/core/styles/createPalette' {

@@ -17,7 +17,7 @@ interface ResourceDescriptionFormProps {
   dispatch: any;
 }
 
-const StyledPublicationType = styled(MenuItem)`
+const StyledPublicationItem = styled(MenuItem)`
   width: 50rem;
 `;
 
@@ -157,9 +157,9 @@ const ResourceDescriptionForm: React.FC<ResourceDescriptionFormProps> = ({ dispa
                     fullWidth
                     variant="outlined">
                     {publications.map(publication => (
-                      <StyledPublicationType value={publication.id} key={publication.id}>
+                      <StyledPublicationItem value={publication.id} key={publication.id}>
                         {`${publication.name} - ${publication.id}`}
-                      </StyledPublicationType>
+                      </StyledPublicationItem>
                     ))}
                   </Field>
                 </div>
