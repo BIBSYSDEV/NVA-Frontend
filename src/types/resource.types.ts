@@ -3,6 +3,14 @@ export enum ResourceType {
   FILE = 'file',
 }
 
+export enum ResourceFormTabs {
+  PUBLICATION,
+  DESCRIPTION,
+  REFERENCES,
+  CONTRIBUTORS,
+  FILES_AND_LICENSES,
+}
+
 export interface TitleType {
   en: string;
   no: string;
