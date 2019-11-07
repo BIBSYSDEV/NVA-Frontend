@@ -4,8 +4,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
 
-import { Button, Menu as MUIMenu } from '@material-ui/core';
-import MenuItem from '@material-ui/core/MenuItem';
+import { Button, Menu as MUIMenu, MenuItem } from '@material-ui/core';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 

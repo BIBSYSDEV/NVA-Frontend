@@ -2,9 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import { Button } from '@material-ui/core';
-import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
+import { Box, Button, Typography } from '@material-ui/core';
 
 import { YupError } from '../../types/validation.types';
 import LabelTextLine from '../LabelTextLine';
