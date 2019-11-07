@@ -19,6 +19,9 @@ export default createMuiTheme({
     primary: {
       main: '#6558f5',
     },
+    secondary: {
+      main: '#96c3ec',
+    },
     link: { main: '#6558f5' },
     seperator: { main: '#3d4349' },
     box: { main: '#eeeeff' },
