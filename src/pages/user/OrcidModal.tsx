@@ -54,7 +54,7 @@ const OrcidModal: React.FC<OrcidModalProps> = ({ setOpen }) => {
   };
 
   return (
-    <div className="orcid-modal">
+    <div>
       <StyledNavigationHelp>{t('Registration')} 2/2</StyledNavigationHelp>
       <StyledHeader>{t('Create or Connect to your ORCID')}</StyledHeader>
       <p>{t('Log in to your ORCID account or create new ORCID account')}</p>

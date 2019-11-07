@@ -1,12 +1,6 @@
 import React, { ReactNode } from 'react';
 import styled from 'styled-components';
 
-interface UserCardProps {
-  headerLabel: string;
-  subHeaderLabel?: string;
-  children?: ReactNode;
-}
-
 const StyledUserCard = styled.div`
   background-color: ${({ theme }) => theme.palette.box.main};
   padding: 2rem;
@@ -24,6 +18,12 @@ const StyledSubHeader = styled.div`
 `;
 
 const StyledCardContent = styled.div``;
+
+interface UserCardProps {
+  headerLabel: string;
+  subHeaderLabel?: string;
+  children?: ReactNode;
+}
 
 const UserCard: React.FC<UserCardProps> = ({ headerLabel, subHeaderLabel, children }) => (
   <StyledUserCard>
