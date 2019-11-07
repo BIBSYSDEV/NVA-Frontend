@@ -4,18 +4,6 @@
   align-self: flex-start;
   flex-grow: 1;
   padding: 5rem;
-
-  .MuiButton-root {
-    margin-top: 1rem;
-    margin-right: 0.5rem;
-    background-color: $primary-button-color;
-    color: $text-color-light;
-    text-transform: none;
-  }
-
-  .MuiButton-root:hover {
-    background-color: darken($primary-button-color, 3%);
-  }
 }
 
 .MuiTabs-flexContainer {

@@ -32,7 +32,13 @@ const Menu: React.FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
 
   return (
     <div className="menu">
-      <Button aria-controls="menu" aria-haspopup="true" onClick={handleClick} data-testid="menu">
+      <Button
+        color="primary"
+        variant="contained"
+        aria-controls="menu"
+        aria-haspopup="true"
+        onClick={handleClick}
+        data-testid="menu">
         {menuButtonLabel}
         {menuOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
       </Button>
