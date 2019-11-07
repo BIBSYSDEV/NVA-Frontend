@@ -9,7 +9,7 @@ export const StyledUserPage = styled.div`
   padding: 2rem;
 `;
 
-export const SecondaryUserInfo = styled.div`
+export const StyledSecondaryUserInfo = styled.div`
   display: grid;
   grid-area: secondary-info;
   grid-template-areas: 'profile-image' 'contact-info' 'language' 'author-info';
@@ -17,7 +17,7 @@ export const SecondaryUserInfo = styled.div`
   min-width: 20rem;
 `;
 
-export const PrimaryUserInfo = styled.div`
+export const StyledPrimaryUserInfo = styled.div`
   display: grid;
   grid-area: primary-info;
   grid-gap: 3rem;

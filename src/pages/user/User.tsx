@@ -11,7 +11,7 @@ import UserInfo from './UserInfo';
 import UserLanguage from './UserLanguage';
 import UserOrcid from './UserOrcid';
 import UserRoles from './UserRoles';
-import { PrimaryUserInfo, SecondaryUserInfo, StyledUserPage } from './User.styles';
+import { StyledPrimaryUserInfo, StyledSecondaryUserInfo, StyledUserPage } from './User.styles';
 
 const User: React.FC = () => {
   const { t } = useTranslation();
@@ -36,19 +36,19 @@ const User: React.FC = () => {
 
   return (
     <StyledUserPage>
-      <SecondaryUserInfo>
+      <StyledSecondaryUserInfo>
         <UserCard headerLabel="Bilde" />
         <UserCard headerLabel={t('Contact')} />
         <UserLanguage />
         <UserCard headerLabel={t('Author information')} />
-      </SecondaryUserInfo>
+      </StyledSecondaryUserInfo>
 
-      <PrimaryUserInfo>
+      <StyledPrimaryUserInfo>
         <UserInfo user={user} />
         <UserRoles user={user} />
         <UserCard headerLabel={t('Organizations')} />
         <UserOrcid />
-      </PrimaryUserInfo>
+      </StyledPrimaryUserInfo>
     </StyledUserPage>
   );
 };
