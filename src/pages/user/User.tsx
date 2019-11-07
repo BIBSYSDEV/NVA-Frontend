@@ -11,30 +11,7 @@ import UserInfo from './UserInfo';
 import UserLanguage from './UserLanguage';
 import UserOrcid from './UserOrcid';
 import UserRoles from './UserRoles';
-import styled from 'styled-components';
-
-const StyledUserPage = styled.div`
-  display: grid;
-  grid-template-areas: 'secondary-info primary-info';
-  grid-template-columns: 1fr 3fr;
-  grid-gap: 3rem;
-  font-size: 1rem;
-  padding: 2rem;
-`;
-
-const SecondaryUserInfo = styled.div`
-  display: grid;
-  grid-area: secondary-info;
-  grid-template-areas: 'profile-image' 'contact-info' 'language' 'author-info';
-  grid-row-gap: 3rem;
-  min-width: 20rem;
-`;
-
-const PrimaryUserInfo = styled.div`
-  display: grid;
-  grid-area: primary-info;
-  grid-gap: 3rem;
-`;
+import { PrimaryUserInfo, SecondaryUserInfo, StyledUserPage } from './User.styles';
 
 const User: React.FC = () => {
   const { t } = useTranslation();

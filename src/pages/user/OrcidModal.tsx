@@ -1,37 +1,15 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
 import { Button } from '@material-ui/core';
 import { useMockData } from '../../utils/constants';
 import { useHistory } from 'react-router';
-
-const StyledOrcidButtonHolder = styled.div`
-  margin: 3rem 0;
-  text-align: center;
-`;
-
-const StyledNavigationHelp = styled.div`
-  border-bottom: 1px solid black;
-  text-align: right;
-  font-size: 0.8rem;
-  font-weight: bold;
-`;
-
-const StyledHeader = styled.div`
-  font-size: 1.2rem;
-  margin: 1em 0;
-  font-weight: bold;
-`;
-
-const StyledSubHeader = styled.div`
-  margin: 1em 0;
-  font-weight: bold;
-`;
-
-const StyledFooter = styled.div`
-  padding-top: 5rem;
-  text-align: center;
-`;
+import {
+  StyledFooter,
+  StyledHeading,
+  StyledNavigationHelp,
+  StyledOrcidButtonHolder,
+  StyledSubHeading,
+} from './OricdModal.styles';
 
 interface OrcidModalProps {
   setOpen: any;
@@ -56,7 +34,7 @@ const OrcidModal: React.FC<OrcidModalProps> = ({ setOpen }) => {
   return (
     <div>
       <StyledNavigationHelp>{t('Registration')} 2/2</StyledNavigationHelp>
-      <StyledHeader>{t('Create or Connect to your ORCID')}</StyledHeader>
+      <StyledHeading>{t('Create or Connect to your ORCID')}</StyledHeading>
       <p>{t('Log in to your ORCID account or create new ORCID account')}</p>
       <StyledOrcidButtonHolder>
         <Button
@@ -71,9 +49,9 @@ const OrcidModal: React.FC<OrcidModalProps> = ({ setOpen }) => {
           {t('Create or Connect to your ORCID')}
         </Button>
       </StyledOrcidButtonHolder>
-      <StyledSubHeader>{t('Why should I connect to ORCID?')}</StyledSubHeader>
+      <StyledSubHeading>{t('Why should I connect to ORCID?')}</StyledSubHeading>
       <p>{t('description_why_ORCID')}</p>
-      <StyledSubHeader>{'What is ORCID?'}</StyledSubHeader>
+      <StyledSubHeading>{'What is ORCID?'}</StyledSubHeading>
       <p>{t('description_what_is_ORCID')}</p>
       <p>
         {t('Learn more at ')} <a href="https://orcid.org">orcid.org</a>
