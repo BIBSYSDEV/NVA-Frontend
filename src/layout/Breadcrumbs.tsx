@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router';
 import { Link } from 'react-router-dom';
 
-import MuiBreadcrumbs from '@material-ui/core/Breadcrumbs';
+import { Breadcrumbs as MuiBreadcrumbs } from '@material-ui/core';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 
 import { mapBreadcrumbName } from '../utils/mapBreadcrumbName';

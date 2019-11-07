@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import PublicationExpansionPanel from './PublicationExpansionPanel';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
+import { useTranslation } from 'react-i18next';
+
+import { Button, TextField } from '@material-ui/core';
 import LinkIcon from '@material-ui/icons/Link';
 
-import { useTranslation } from 'react-i18next';
+import PublicationExpansionPanel from './PublicationExpansionPanel';
 
 interface LinkPublicationPanelProps {
   expanded: boolean;
