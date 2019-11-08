@@ -8,6 +8,7 @@ import { RootStore } from '../../redux/reducers/rootReducer';
 import DescriptionPanel from './DescriptionPanel';
 import PublicationPanel from './PublicationPanel';
 import { ResourceFormTabs } from './ResourceFormTabs';
+import ContributorsPanel from './ContributorsPanel';
 
 const Resource: React.FC = () => {
   const [tabNumber, setTabNumber] = useState(0);
@@ -27,20 +28,24 @@ const Resource: React.FC = () => {
       <ResourceFormTabs tabNumber={tabNumber} onChange={handleChange} />
       <PublicationPanel tabNumber={tabNumber} onClick={goToNextPage} />
       <DescriptionPanel tabNumber={tabNumber} onClick={goToNextPage} />
-      <TabPanel isHidden={tabNumber !== 2} ariaLabel="references" onClick={goToNextPage} errors={referencesErrors}>
+      <TabPanel
+        isHidden={tabNumber !== 2}
+        ariaLabel="references"
+        onClick={goToNextPage}
+        errors={referencesErrors}
+        heading="References">
         <div>Page Three</div>
       </TabPanel>
-      <TabPanel isHidden={tabNumber !== 3} ariaLabel="contributors" onClick={goToNextPage} errors={contributorsErrors}>
-        <div>Page Four</div>
-      </TabPanel>
+      <ContributorsPanel tabNumber={tabNumber} onClick={goToNextPage} />
       <TabPanel
         isHidden={tabNumber !== 4}
         ariaLabel="files-and-licenses"
         onClick={goToNextPage}
-        errors={filesAndLicensesErrors}>
+        errors={filesAndLicensesErrors}
+        heading="files and licenses">
         <div>Page Five</div>
       </TabPanel>
-      <TabPanel isHidden={tabNumber !== 5} ariaLabel="submission" onClick={goToNextPage}>
+      <TabPanel isHidden={tabNumber !== 5} ariaLabel="submission" onClick={goToNextPage} heading="submission">
         <div>Page Six</div>
       </TabPanel>
     </div>
