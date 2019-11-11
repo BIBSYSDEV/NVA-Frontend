@@ -1,4 +1,4 @@
-import { Resource, ResourceType } from '../../types/resource.types';
+import { ResourceMetadata, ResourceType } from '../../types/resource.types';
 
 const faker = require('faker');
 const fs = require('fs');
@@ -11,7 +11,7 @@ const generateRandomResourceType = () =>
 const convertToSentence = (sentence: string) => sentence.charAt(0).toUpperCase() + sentence.slice(1);
 
 const generateResources: any = () => {
-  let resources: Resource[] = [];
+  let resources: ResourceMetadata[] = [];
   for (let i = 0; i < NUMBER_OF_RESOURCES; i++) {
     let resource: any = {};
     resource.creators = [];

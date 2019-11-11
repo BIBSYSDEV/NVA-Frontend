@@ -11,11 +11,11 @@ import ImageIcon from '@material-ui/icons/Image';
 
 import { search } from '../../api/search';
 import { RootStore } from '../../redux/reducers/rootReducer';
-import { Resource } from '../../types/resource.types';
+import { ResourceMetadata } from '../../types/resource.types';
 import { SEARCH_RESULTS_PER_PAGE } from '../../utils/constants';
 
 interface SearchResultsProps {
-  resources: Resource[];
+  resources: ResourceMetadata[];
   searchTerm: string;
 }
 
