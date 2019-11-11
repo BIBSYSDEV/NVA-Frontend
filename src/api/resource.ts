@@ -1,6 +1,14 @@
 import Axios from 'axios';
 import { Dispatch } from 'redux';
 
+import {
+  createResourceFailure,
+  createResourceSuccess,
+  getResourceFailure,
+  getResourceSuccess,
+  updateResourceFailure,
+  updateResourceSuccess,
+} from '../redux/actions/resourceActions';
 import { Resource, ResourceFileMap, ResourceMetadata } from '../types/resource.types';
 import { RESOURCES_API_BASEURL } from '../utils/constants';
 
@@ -26,13 +34,13 @@ export const createNewResource = (files: ResourceFileMap[], metadata: ResourceMe
     })
       .then(response => {
         if (response.status === 200) {
-          // dispatch(createNewResourceSuccess())
+          dispatch(createResourceSuccess());
         } else {
-          // dispatch(createNewResourceFailure())
+          dispatch(createResourceFailure('could not create resource'));
         }
       })
       .catch(() => {
-        // dispatch(createNewResourceFailure())
+        dispatch(createResourceFailure('could not create resource'));
       });
   };
 };
@@ -51,13 +59,13 @@ export const updateResource = (resource: Resource) => {
     })
       .then(response => {
         if (response.status === 200) {
-          // dispatch(updateNewResourceSuccess())
+          dispatch(updateResourceSuccess());
         } else {
-          // dispatch(updateNewResourceFailure())
+          dispatch(updateResourceFailure('could not update resource'));
         }
       })
       .catch(() => {
-        // dispatch(updateNewResourceFailure())
+        dispatch(updateResourceFailure('could not update resource'));
       });
   };
 };
@@ -67,14 +75,14 @@ export const getResource = (id: string) => {
     Axios.get(`/${RESOURCES_API_BASEURL}${id}`)
       .then(response => {
         if (response.status === 200) {
-          // dispatch(getResourceSuccess())
+          dispatch(getResourceSuccess());
           return response;
         } else {
-          // dispatch(getResourceFailure())
+          dispatch(getResourceFailure('could not get resource'));
         }
       })
       .catch(() => {
-        // dispatch(getResourceFailure())
+        dispatch(getResourceFailure('could not get resource'));
       });
   };
 };
