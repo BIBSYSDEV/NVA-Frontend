@@ -12,12 +12,16 @@ import Contributor from './contributors/Contributor';
 import ContributorLabel from './contributors/ContributorLabel';
 import ContributorSelector from './contributors/ContributorSelector';
 
+<<<<<<< Updated upstream
 const StyledBox = styled.div`
   background-color: ${({ theme }) => theme.palette.box.main};
   display: grid;
   grid-template-areas: 'icon name institution switch orcid arrows delete';
   grid-template-columns: 5% 30% 20% 10% 5% 5% 5%;
 `;
+=======
+import { ARROW_UP, ARROW_DOWN } from './../../utils/constants';
+>>>>>>> Stashed changes
 
 interface ContributorsPanelProps {
   onClick: (event: React.MouseEvent<any>) => void;
@@ -53,6 +57,20 @@ const ContributorsPanel: React.FC<ContributorsPanelProps> = ({ onClick, tabNumbe
     newItems.splice(position + direction, 0, item);
 
     setContributors(newItems);
+  };
+
+  const onCorrespondingChange = (id: string): void => {
+    const tempContributors = contributors;
+    const index = tempContributors.findIndex(i => i.id === id);
+    tempContributors[index].corresponding = !tempContributors[index].corresponding;
+    setContributors(tempContributors);
+  };
+
+  const onInstitutionChange = (id: string, institution: string): void => {
+    const tempContributors = contributors;
+    const index = tempContributors.findIndex(i => i.id === id);
+    tempContributors[index].institutionChoice = institution;
+    setContributors(tempContributors);
   };
 
   const addContributor = () => {};
