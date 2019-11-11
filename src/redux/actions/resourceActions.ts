@@ -9,7 +9,7 @@ export const GET_RESOURCE_FAILURE = 'get resource failure';
 
 export const createResourceSuccess = (): CreateResourceSuccessAction => ({
   type: CREATE_RESOURCE_SUCCESS,
-  message: 'new resource created',
+  message: 'SuccessMessage.New resource created',
   variant: 'success',
 });
 
@@ -21,7 +21,7 @@ export const createResourceFailure = (message: string): CreateResourceFailureAct
 
 export const updateResourceSuccess = (): UpdateResourceSuccessAction => ({
   type: UPDATE_RESOURCE_SUCCESS,
-  message: 'updated resource',
+  message: 'SuccessMessage.Updated resource',
   variant: 'success',
 });
 
@@ -33,7 +33,6 @@ export const updateResourceFailure = (message: string): UpdateResourceFailureAct
 
 export const getResourceSuccess = (): GetResourceSuccessAction => ({
   type: GET_RESOURCE_SUCCESS,
-  message: 'got resources',
   variant: 'success',
 });
 
@@ -69,7 +68,6 @@ interface UpdateResourceFailureAction {
 
 interface GetResourceSuccessAction {
   type: typeof GET_RESOURCE_SUCCESS;
-  message: string;
   variant: VariantType;
 }
 

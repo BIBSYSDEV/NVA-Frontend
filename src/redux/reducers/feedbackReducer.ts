@@ -6,7 +6,6 @@ import {
   CREATE_RESOURCE_FAILURE,
   CREATE_RESOURCE_SUCCESS,
   GET_RESOURCE_FAILURE,
-  GET_RESOURCE_SUCCESS,
   ResourceActions,
   UPDATE_RESOURCE_FAILURE,
   UPDATE_RESOURCE_SUCCESS,
@@ -31,7 +30,6 @@ export const feedbackReducer = (
     case UPDATE_RESOURCE_FAILURE:
     case UPDATE_RESOURCE_SUCCESS:
     case GET_RESOURCE_FAILURE:
-    case GET_RESOURCE_SUCCESS:
       return [...state, action];
     case LOGIN_SUCCESS:
       remainingFeedbackMessages = [...state].filter(error => error.message !== LOGIN_FAILURE);

@@ -36,11 +36,11 @@ export const createNewResource = (files: ResourceFileMap[], metadata: ResourceMe
         if (response.status === 200) {
           dispatch(createResourceSuccess());
         } else {
-          dispatch(createResourceFailure('could not create resource'));
+          dispatch(createResourceFailure('ErrorMessage.Could not create resource'));
         }
       })
       .catch(() => {
-        dispatch(createResourceFailure('could not create resource'));
+        dispatch(createResourceFailure('ErrorMessage.Could not create resource'));
       });
   };
 };
@@ -61,11 +61,11 @@ export const updateResource = (resource: Resource) => {
         if (response.status === 200) {
           dispatch(updateResourceSuccess());
         } else {
-          dispatch(updateResourceFailure('could not update resource'));
+          dispatch(updateResourceFailure('ErrorMessage.Could not update resource'));
         }
       })
       .catch(() => {
-        dispatch(updateResourceFailure('could not update resource'));
+        dispatch(updateResourceFailure('ErrorMessage.Could not update resource'));
       });
   };
 };
@@ -78,11 +78,11 @@ export const getResource = (id: string) => {
           dispatch(getResourceSuccess());
           return response;
         } else {
-          dispatch(getResourceFailure('could not get resource'));
+          dispatch(getResourceFailure('ErrorMessage.Could not get resource'));
         }
       })
       .catch(() => {
-        dispatch(getResourceFailure('could not get resource'));
+        dispatch(getResourceFailure('ErrorMessage.Could not get resource'));
       });
   };
 };
