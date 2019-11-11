@@ -4,7 +4,6 @@ import styled from 'styled-components';
 const StyledFooter = styled.div`
   display: flex;
   min-height: 3rem;
-  color: ${({ theme }) => theme.palette.link.main};
   font-size: 1rem;
   font-weight: bold;
   justify-content: center;

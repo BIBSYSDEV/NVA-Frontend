@@ -27,7 +27,6 @@ const LinkPublicationPanel: React.FC<LinkPublicationPanelProps> = ({ expanded, o
     <PublicationExpansionPanel
       headerLabel={t('Link to publication')}
       icon={<LinkIcon className="icon" />}
-      className="publication-selector"
       id="link-publication-panel"
       expanded={expanded}
       onChange={onChange}
