@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { YupError } from '../../types/validation.types';
 import LabelTextLine from '../LabelTextLine';
-import Box from '../Box';
 
 interface TabPanelProps {
   ariaLabel: string;

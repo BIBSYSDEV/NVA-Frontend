@@ -1,0 +1,50 @@
+@import '../../abstracts/colors';
+
+.container {
+  display: grid;
+  grid-template-areas: 'icon name institution switch orcid arrows delete';
+  grid-template-columns: 5% 30% 20% 10% 5% 5% 5%;
+
+  .contributor-icon {
+    grid-area: icon;
+  }
+
+  .contributor-name {
+    grid-area: name;
+  }
+
+  .contributor-institution {
+    grid-area: institution;
+  }
+
+  .contributor-switch {
+    grid-area: switch;
+  }
+
+  .contributor-orcid-icon {
+    grid-area: orcid;
+  }
+
+  .contributor-arrows {
+    grid-area: arrows;
+  }
+
+  .contributor-delete-icon {
+    grid-area: delete;
+  }
+}
+
+.arrows {
+  display: grid;
+  grid-template-areas:
+    'arrows-up'
+    'arrows-down';
+
+  .arrows-up {
+    grid-area: arrows-up;
+  }
+
+  .arrows-down {
+    grid-area: arrows-down;
+  }
+}

@@ -1,0 +1,22 @@
+[
+  {
+    "id": "1",
+    "name": "Eirik Nilsen",
+    "institutions": ["Unit", "BIBSYS"],
+    "orcid": "some orcid"
+  },
+  {
+    "id": "2",
+    "name": "Per Christian Bjelke",
+    "institutions": ["Unit", "BIBSYS"]
+  },
+  {
+    "id": "3",
+    "name": "Sarah Serussi",
+    "institutions": ["Unit"]
+  },
+  {
+    "id": "4",
+    "name": "Kjetil Møkkelgjerd"
+  }
+]
