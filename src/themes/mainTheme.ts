@@ -3,13 +3,11 @@ import { createMuiTheme } from '@material-ui/core';
 // Extend Palette type to allow custom colors
 declare module '@material-ui/core/styles/createPalette' {
   interface Palette {
-    link: PaletteColor;
-    seperator: PaletteColor;
+    separator: PaletteColor;
     box: PaletteColor;
   }
   interface PaletteOptions {
-    link?: PaletteColorOptions;
-    seperator?: PaletteColorOptions;
+    separator?: PaletteColorOptions;
     box?: PaletteColorOptions;
   }
 }
@@ -22,8 +20,7 @@ export default createMuiTheme({
     secondary: {
       main: '#96c3ec',
     },
-    link: { main: '#6558f5' },
-    seperator: { main: '#3d4349' },
+    separator: { main: '#3d4349' },
     box: { main: '#eeeeff' },
     text: {
       secondary: '#44515d',
@@ -41,6 +38,11 @@ export default createMuiTheme({
     MuiSnackbarContent: {
       action: {
         color: '#ffffff',
+      },
+    },
+    MuiLink: {
+      root: {
+        color: '#6558f5',
       },
     },
   },

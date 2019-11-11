@@ -9,7 +9,6 @@ import styled from 'styled-components';
 interface PublicationExpansionPanelProps {
   headerLabel: string;
   icon: ReactNode;
-  className?: string;
   id: string;
   expanded: boolean;
   onChange: (event: React.ChangeEvent<any>, isExpanded: boolean) => void;
@@ -18,11 +17,16 @@ interface PublicationExpansionPanelProps {
 }
 
 const StyledPublicationExpansionPanel = styled(ExpansionPanel)`
-  padding: 1rem;
   margin-bottom: 2rem;
-  min-height: 3.5rem;
   background-color: ${({ theme }) => theme.palette.secondary.main};
   flex-flow: row wrap;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+
+const StyledExpansionPanelSummary = styled(ExpansionPanelSummary)`
+  min-height: 5rem;
 `;
 
 const StyledIcon = styled.span`
@@ -40,9 +44,9 @@ const PublicationExpansionPanel: React.FC<PublicationExpansionPanelProps> = ({
 }) => {
   return (
     <StyledPublicationExpansionPanel expanded={expanded} onChange={onChange}>
-      <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} aria-controls={ariaControls} id={id}>
+      <StyledExpansionPanelSummary expandIcon={<ExpandMoreIcon />} aria-controls={ariaControls} id={id}>
         <StyledIcon>{icon}</StyledIcon> {headerLabel}
-      </ExpansionPanelSummary>
+      </StyledExpansionPanelSummary>
       <ExpansionPanelDetails>{children}</ExpansionPanelDetails>
     </StyledPublicationExpansionPanel>
   );
