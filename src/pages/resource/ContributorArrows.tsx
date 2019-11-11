@@ -1,20 +1,20 @@
 import React from 'react';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
+import { ARROW_UP, ARROW_DOWN } from '../../utils/constants';
 
 interface ContributorArrowsProps {
   id: string;
-  onClickUp: (id: string) => void;
-  onClickDown: (id: string) => void;
+  moveContributor: (id: string, direction: number) => void;
 }
 
-const ContributorArrows: React.FC<ContributorArrowsProps> = ({ id, onClickUp, onClickDown }) => {
+const ContributorArrows: React.FC<ContributorArrowsProps> = ({ id, moveContributor }) => {
   return (
     <div className="arrows">
       <div className="arrows-up">
-        <ArrowDropUpIcon onClick={() => onClickUp(id)} />
+        <ArrowDropUpIcon onClick={() => moveContributor(id, ARROW_UP)} />
       </div>
-      <div className="arrows-down" onClick={() => onClickDown(id)}>
+      <div className="arrows-down" onClick={() => moveContributor(id, ARROW_DOWN)}>
         <ArrowDropDownIcon />
       </div>
     </div>

@@ -36,15 +36,17 @@
 
 .arrows {
   display: grid;
-  grid-template-areas:
-    'arrows-up'
-    'arrows-down';
+  grid-template-areas: 'arrows-up arrows-down';
 
   .arrows-up {
     grid-area: arrows-up;
+    padding: 0;
+    margin: 0;
   }
 
   .arrows-down {
     grid-area: arrows-down;
+    padding: 0;
+    margin: 0;
   }
 }

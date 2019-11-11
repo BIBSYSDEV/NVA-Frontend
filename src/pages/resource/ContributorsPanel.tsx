@@ -10,6 +10,9 @@ import ContributorSelector from './ContributorSelector';
 import contributorsMock from '../../utils/testfiles/contributors.json';
 import ContributorLabel from './ContributorLabel';
 
+import { ARROW_UP, ARROW_DOWN } from './../../utils/constants';
+import { List, ListItem } from '@material-ui/core';
+
 interface ContributorsPanelProps {
   onClick: (event: React.MouseEvent<any>) => void;
   tabNumber: number;
@@ -26,6 +29,24 @@ const ContributorsPanel: React.FC<ContributorsPanelProps> = ({ onClick, tabNumbe
       return contributor.id !== id;
     });
     setContributors(filteredContributors);
+  };
+
+  const moveContributor = (id: string, direction: number): void => {
+    const position = contributors.findIndex(i => i.id === id);
+    if (position < 0) {
+      throw new Error('Given item not found.');
+    } else if (
+      (direction === ARROW_UP && position === 0) ||
+      (direction === ARROW_DOWN && position === contributors.length - 1)
+    ) {
+      return; // canot move outside of array
+    }
+
+    const item = contributors[position]; // save item for later
+    const newItems = contributors.filter(i => i.id !== id); // remove item from array
+    newItems.splice(position + direction, 0, item);
+
+    setContributors(newItems);
   };
 
   const addContributor = () => {};
@@ -64,9 +85,11 @@ const ContributorsPanel: React.FC<ContributorsPanelProps> = ({ onClick, tabNumbe
                 institutions={contributor.institutions}
                 orcid={contributor.orcid}
                 deleteContributor={deleteContributor}
+                moveContributor={moveContributor}
               />
             ))}
           </div>
+
           <div>
             <ContributorSelector addContributor={addContributor} />
           </div>

@@ -8,6 +8,7 @@ import Switch from '@material-ui/core/Switch';
 import MenuItem from '@material-ui/core/MenuItem';
 import DeleteIcon from '@material-ui/icons/Delete';
 import ContributorArrows from './ContributorArrows';
+import { ARROW_UP, ARROW_DOWN } from '../../utils/constants';
 
 const StyledContributor = styled.div`
   background-color: ${({ theme }) => theme.palette.box.main};
@@ -19,13 +20,18 @@ interface ContributorProps {
   institutions?: string[];
   orcid?: string;
   deleteContributor: (event: React.MouseEvent<any>, id: string) => void;
+  moveContributor: (id: string, direction: number) => void;
 }
 
-const Contributor: React.FC<ContributorProps> = ({ id, name, institutions, orcid, deleteContributor }) => {
+const Contributor: React.FC<ContributorProps> = ({
+  id,
+  name,
+  institutions,
+  orcid,
+  deleteContributor,
+  moveContributor,
+}) => {
   const handleChange = (id: string) => (event: React.ChangeEvent<HTMLInputElement>) => {};
-
-  const onClickUp = (event: React.MouseEvent<any>, id: string): void => {};
-  const onClickDown = (event: React.MouseEvent<any>, id: string): void => {};
 
   return (
     <StyledContributor>
@@ -46,7 +52,7 @@ const Contributor: React.FC<ContributorProps> = ({ id, name, institutions, orcid
         <div className="contributor-orcid-icon">
           {orcid && <img src="https://orcid.org/sites/default/files/images/orcid_24x24.png" alt="ORCID iD icon" />}
         </div>
-        <ContributorArrows onClickUp={onClickUp(id)} onClickDown={onClickDown(id)} id={id} />
+        <ContributorArrows moveContributor={moveContributor} id={id} />
         <div className="contributor-delete-icon">
           <DeleteIcon onClick={event => deleteContributor(event, id)} />
         </div>
