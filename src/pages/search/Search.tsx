@@ -1,5 +1,3 @@
-import '../../styles/pages/search.scss';
-
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
@@ -8,6 +6,14 @@ import SearchBar from '../../components/SearchBar';
 import { clearSearch } from '../../redux/actions/searchActions';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import SearchResults from './SearchResults';
+import styled from 'styled-components';
+
+const StyledSearch = styled.div`
+  display: grid;
+  grid-template-columns: 10rem auto;
+  width: 100%;
+  justify-items: center;
+`;
 
 const Search: React.FC = () => {
   const searchResults = useSelector((state: RootStore) => state.search);
@@ -26,13 +32,13 @@ const Search: React.FC = () => {
   }, [dispatch, history.location.pathname]);
 
   return (
-    <div className="search">
-      <div className="search-container">
+    <StyledSearch>
+      <div>filter</div>
+      <div>
         <SearchBar resetSearchInput={resetSearchInput} />
         {resources && resources.length > 0 && <SearchResults resources={resources} searchTerm={searchTerm} />}
       </div>
-      <div className="filter-container">filter</div>
-    </div>
+    </StyledSearch>
   );
 };
 
