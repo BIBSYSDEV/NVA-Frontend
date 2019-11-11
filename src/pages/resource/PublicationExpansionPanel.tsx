@@ -18,7 +18,6 @@ interface PublicationExpansionPanelProps {
 
 const StyledPublicationExpansionPanel = styled(ExpansionPanel)`
   margin-bottom: 2rem;
-  background-color: ${({ theme }) => theme.palette.secondary.main};
   flex-flow: row wrap;
   display: flex;
   flex-direction: column;

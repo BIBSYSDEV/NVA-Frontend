@@ -12,21 +12,32 @@ declare module '@material-ui/core/styles/createPalette' {
   }
 }
 
+enum Colors {
+  Primary = '#6558f5',
+  Secondary = '#96c3ec',
+  Background = '#fff',
+  Box = '#eeeeff',
+  Link = '#6558f5',
+  Separator = '#3d4349',
+  SecondaryText = '#44515d',
+  ExpandedPanel = '#b2acfa',
+}
+
 export default createMuiTheme({
   palette: {
     primary: {
-      main: '#6558f5',
+      main: Colors.Primary,
     },
     secondary: {
-      main: '#96c3ec',
+      main: Colors.Secondary,
     },
-    separator: { main: '#3d4349' },
-    box: { main: '#eeeeff' },
+    separator: { main: Colors.Separator },
+    box: { main: Colors.Box },
     text: {
-      secondary: '#44515d',
+      secondary: Colors.SecondaryText,
     },
     background: {
-      default: '#fff',
+      default: Colors.Background,
     },
   },
   overrides: {
@@ -35,15 +46,29 @@ export default createMuiTheme({
         textTransform: 'none',
       },
     },
-    MuiSnackbarContent: {
-      action: {
+    MuiSnackbar: {
+      root: {
         color: '#ffffff',
       },
     },
     MuiLink: {
       root: {
-        color: '#6558f5',
+        color: Colors.Link,
       },
+    },
+    MuiExpansionPanel: {
+      root: {
+        background: Colors.Secondary,
+        '&$expanded': {
+          background: Colors.ExpandedPanel,
+        },
+      },
+    },
+    MuiExpansionPanelDetails: {
+      root: { background: Colors.ExpandedPanel },
+    },
+    MuiIconButton: {
+      root: { color: Colors.Background },
     },
   },
 });
