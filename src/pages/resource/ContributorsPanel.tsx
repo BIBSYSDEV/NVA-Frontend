@@ -1,17 +1,23 @@
-import TabPanel from '../../components/TabPanel/TabPanel';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootStore } from '../../redux/reducers/rootReducer';
+import styled from 'styled-components';
+
 import Box from '../../components/Box';
-import Contributor from './Contributor';
-import ContributorSelector from './ContributorSelector';
-
+import TabPanel from '../../components/TabPanel/TabPanel';
+import { RootStore } from '../../redux/reducers/rootReducer';
+import { ARROW_DOWN, ARROW_UP } from '../../utils/constants';
 import contributorsMock from '../../utils/testfiles/contributors.json';
-import ContributorLabel from './ContributorLabel';
+import Contributor from './contributors/Contributor';
+import ContributorLabel from './contributors/ContributorLabel';
+import ContributorSelector from './contributors/ContributorSelector';
 
-import { ARROW_UP, ARROW_DOWN } from './../../utils/constants';
-import { List, ListItem } from '@material-ui/core';
+const StyledBox = styled.div`
+  background-color: ${({ theme }) => theme.palette.box.main};
+  display: grid;
+  grid-template-areas: 'icon name institution switch orcid arrows delete';
+  grid-template-columns: 5% 30% 20% 10% 5% 5% 5%;
+`;
 
 interface ContributorsPanelProps {
   onClick: (event: React.MouseEvent<any>) => void;
@@ -61,7 +67,7 @@ const ContributorsPanel: React.FC<ContributorsPanelProps> = ({ onClick, tabNumbe
       <div>
         <Box>
           <div>{t('Forfattere')}</div>
-          <div className="container">
+          <StyledBox>
             <div className="contributor-icon"></div>
             <div className="contributor-name">
               <ContributorLabel>{t('Name')}</ContributorLabel>
@@ -76,19 +82,17 @@ const ContributorsPanel: React.FC<ContributorsPanelProps> = ({ onClick, tabNumbe
               <ContributorLabel>{t('ORCID')}</ContributorLabel>
             </div>
             <div className="contributor-delete-icon"></div>
-          </div>
-          <div>
-            {contributors.map(contributor => (
-              <Contributor
-                id={contributor.id}
-                name={contributor.name}
-                institutions={contributor.institutions}
-                orcid={contributor.orcid}
-                deleteContributor={deleteContributor}
-                moveContributor={moveContributor}
-              />
-            ))}
-          </div>
+          </StyledBox>
+          {contributors.map(contributor => (
+            <Contributor
+              id={contributor.id}
+              name={contributor.name}
+              institutions={contributor.institutions}
+              orcid={contributor.orcid}
+              deleteContributor={deleteContributor}
+              moveContributor={moveContributor}
+            />
+          ))}
 
           <div>
             <ContributorSelector addContributor={addContributor} />

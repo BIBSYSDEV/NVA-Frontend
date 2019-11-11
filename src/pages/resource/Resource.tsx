@@ -5,13 +5,13 @@ import { useSelector } from 'react-redux';
 
 import TabPanel from '../../components/TabPanel/TabPanel';
 import { RootStore } from '../../redux/reducers/rootReducer';
+import ContributorsPanel from './ContributorsPanel';
 import DescriptionPanel from './DescriptionPanel';
 import PublicationPanel from './PublicationPanel';
 import { ResourceFormTabs } from './ResourceFormTabs';
-import ContributorsPanel from './ContributorsPanel';
 
 const Resource: React.FC = () => {
-  const [tabNumber, setTabNumber] = useState(0);
+  const [tabNumber, setTabNumber] = useState(3);
   const errors = useSelector((store: RootStore) => store.errors);
   const { referencesErrors, contributorsErrors, filesAndLicensesErrors } = errors;
 
