@@ -4,17 +4,17 @@ import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 
 interface ContributorArrowsProps {
   id: string;
-  onClickUp: (event: React.MouseEvent<any>, id: string) => void;
-  onClickDown: (event: React.MouseEvent<any>, id: string) => void;
+  onClickUp: (id: string) => void;
+  onClickDown: (id: string) => void;
 }
 
-const ContributorArrows: React.FC<ContributorArrowsProps> = ({ id, onClickUp, onClickDown}) => {
+const ContributorArrows: React.FC<ContributorArrowsProps> = ({ id, onClickUp, onClickDown }) => {
   return (
     <div className="arrows">
       <div className="arrows-up">
-        <ArrowDropUpIcon onClick={event => onClickUp(event, id)}/>
+        <ArrowDropUpIcon onClick={() => onClickUp(id)} />
       </div>
-      <div className="arrows-down" onClick={event => onClickDown(event, id)}>
+      <div className="arrows-down" onClick={() => onClickDown(id)}>
         <ArrowDropDownIcon />
       </div>
     </div>

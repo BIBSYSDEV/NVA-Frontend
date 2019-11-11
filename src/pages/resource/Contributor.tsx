@@ -24,9 +24,8 @@ interface ContributorProps {
 const Contributor: React.FC<ContributorProps> = ({ id, name, institutions, orcid, deleteContributor }) => {
   const handleChange = (id: string) => (event: React.ChangeEvent<HTMLInputElement>) => {};
 
-  const onClickUp = (event: React.MouseEvent<any>, id: string): void => {
-
-  }
+  const onClickUp = (event: React.MouseEvent<any>, id: string): void => {};
+  const onClickDown = (event: React.MouseEvent<any>, id: string): void => {};
 
   return (
     <StyledContributor>
