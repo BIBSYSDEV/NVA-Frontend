@@ -32,7 +32,7 @@ ReactDOM.render(
               maxSnack={3}
               data-testid="snackbar"
               action={key => (
-                <IconButton onClick={onClickDismiss(key)}>
+                <IconButton color="inherit" onClick={onClickDismiss(key)}>
                   <CloseIcon />
                 </IconButton>
               )}

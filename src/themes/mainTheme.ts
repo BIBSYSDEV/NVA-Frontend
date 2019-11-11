@@ -51,6 +51,11 @@ export default createMuiTheme({
         color: '#ffffff',
       },
     },
+    MuiSnackbarContent: {
+      root: {
+        color: Colors.Background,
+      },
+    },
     MuiLink: {
       root: {
         color: Colors.Link,
@@ -66,9 +71,6 @@ export default createMuiTheme({
     },
     MuiExpansionPanelDetails: {
       root: { background: Colors.ExpandedPanel },
-    },
-    MuiIconButton: {
-      root: { color: Colors.Background },
     },
   },
 });
