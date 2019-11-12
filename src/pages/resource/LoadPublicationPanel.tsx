@@ -16,8 +16,7 @@ const LoadPublicationPanel: React.FC<LoadPublicationPanelProps> = ({ expanded, o
   return (
     <PublicationExpansionPanel
       headerLabel={t('Load file')}
-      icon={<CloudDownloadIcon className="icon" />}
-      className="publication-selector"
+      icon={<CloudDownloadIcon />}
       id="load-publication-panel"
       expanded={expanded}
       onChange={onChange}

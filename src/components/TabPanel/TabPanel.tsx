@@ -1,8 +1,9 @@
-import { Button } from '@material-ui/core';
-import Typography from '@material-ui/core/Typography';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
+
+import { Button, Typography } from '@material-ui/core';
+
 import { YupError } from '../../types/validation.types';
 import LabelTextLine from '../LabelTextLine';
 
