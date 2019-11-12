@@ -13,7 +13,7 @@ import { ResourceFormTabs } from './ResourceFormTabs';
 const Resource: React.FC = () => {
   const [tabNumber, setTabNumber] = useState(0);
   const errors = useSelector((store: RootStore) => store.errors);
-  const { referencesErrors, contributorsErrors, filesAndLicensesErrors } = errors;
+  const { referencesErrors, filesAndLicensesErrors } = errors;
 
   const handleChange = (_: React.ChangeEvent<{}>, newTabNumber: number) => {
     setTabNumber(newTabNumber);

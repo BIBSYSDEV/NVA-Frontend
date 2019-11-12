@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
+import mockContributors from '../../utils/testfiles/contributors.json';
+
 import Box from '../../components/Box';
 import TabPanel from '../../components/TabPanel/TabPanel';
 import { contributorReducer } from '../../redux/reducers/contributorReducer';
@@ -26,8 +28,8 @@ interface ContributorsPanelProps {
 const ContributorsPanel: React.FC<ContributorsPanelProps> = ({ onClick, tabNumber }) => {
   const { t } = useTranslation();
   const errors = useSelector((store: RootStore) => store.errors);
-
-  const [contributors, dispatch] = useReducer(contributorReducer, []);
+  const initialState = mockContributors;
+  const [contributors, dispatch] = useReducer(contributorReducer, initialState);
 
   return (
     <TabPanel
