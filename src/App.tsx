@@ -21,8 +21,10 @@ import { setUser } from './redux/actions/userActions';
 import { RootStore } from './redux/reducers/rootReducer';
 import awsConfig from './utils/aws-config';
 import { useMockData } from './utils/constants';
+import mockContributors from './utils/testfiles/contributors.json';
 import { hubListener } from './utils/hub-listener';
 import styled from 'styled-components';
+import { addContributor } from './redux/actions/contributorActions';
 
 const StyledApp = styled.div`
   height: 100vh;
@@ -72,6 +74,7 @@ const App: React.FC = () => {
       return () => Hub.remove('auth', updateUser);
     } else {
       dispatch(setUser(mockUser));
+      mockContributors.forEach(contributor => dispatch(addContributor(contributor)));
     }
   }, [dispatch]);
 
