@@ -14,14 +14,6 @@ interface MenuProps {
 
 const StyledMenu = styled.div`
   grid-area: menu;
-
-  .MuiButton-root {
-    width: 15rem;
-
-    @media only screen and (max-width: 600px) {
-      width: 10rem;
-    }
-  }
 `;
 
 const StyledMuiMenu = styled(MuiMenu)`
@@ -32,11 +24,19 @@ const StyledMuiMenu = styled(MuiMenu)`
     @media only screen and (max-width: 600px) {
       width: 10rem;
     }
-
-    .MuiMenuItem-root {
-      border-bottom: 1px solid ${({ theme }) => theme.palette.box.main};
-    }
   }
+`;
+
+const StyledMenuButton = styled(Button)`
+  width: 15rem;
+
+  @media only screen and (max-width: 600px) {
+    width: 10rem;
+  }
+`;
+
+const StyledMenuItem = styled(MenuItem)`
+  border-bottom: 1px solid ${({ theme }) => theme.palette.box.main};
 `;
 
 const Menu: React.FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
@@ -54,7 +54,7 @@ const Menu: React.FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
 
   return (
     <StyledMenu>
-      <Button
+      <StyledMenuButton
         color="primary"
         variant="contained"
         aria-controls="menu"
@@ -63,7 +63,7 @@ const Menu: React.FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
         data-testid="menu">
         {menuButtonLabel}
         {anchorEl ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-      </Button>
+      </StyledMenuButton>
       <StyledMuiMenu
         anchorEl={anchorEl}
         getContentAnchorEl={null}
@@ -74,18 +74,18 @@ const Menu: React.FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
           vertical: 'bottom',
           horizontal: 'left',
         }}>
-        <MenuItem
+        <StyledMenuItem
           data-testid="user-profile-button"
           onClick={() => {
             handleClose();
             history.push('/user');
           }}>
           {t('My profile')}
-        </MenuItem>
+        </StyledMenuItem>
 
-        <MenuItem onClick={handleLogout} data-testid="logout-button">
+        <StyledMenuItem onClick={handleLogout} data-testid="logout-button">
           {t('Logout')}
-        </MenuItem>
+        </StyledMenuItem>
       </StyledMuiMenu>
     </StyledMenu>
   );
