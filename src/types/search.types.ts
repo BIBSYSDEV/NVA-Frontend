@@ -1,7 +1,7 @@
-import { Resource } from './resource.types';
+import { ResourceMetadata } from './resource.types';
 
 export interface Search {
-  resources: Resource[];
+  resources: ResourceMetadata[];
   searchTerm: string;
   offset: number;
   totalNumberOfHits: number;

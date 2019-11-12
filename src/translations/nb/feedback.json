@@ -1,5 +1,8 @@
 {
   "ErrorMessage": {
+    "Could not create resource": "Kunne ikke opprette ressurs",
+    "Could not update resource": "Kunne ikke oppdatere ressurs",
+    "Could not get resource": "Kunne ikke laste inn ressurs",
     "Failed to get user": "Kunne ikke hente bruker",
     "Login failed": "Kunne ikke logge inn",
     "ORCID login failed": "Kunne ikke logge inn på ORCID",
@@ -7,6 +10,8 @@
     "Search failed": "Søk feilet"
   },
   "SuccessMessage": {
-    "Login success": "Logget inn"
+    "Login success": "Logget inn",
+    "New resource created": "Ressursen er opprettet",
+    "Updated resource": "Ressursen er oppdatert"
   }
 }

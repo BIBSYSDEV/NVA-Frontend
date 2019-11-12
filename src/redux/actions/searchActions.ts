@@ -1,13 +1,13 @@
 import { VariantType } from 'notistack';
 
-import { Resource } from '../../types/resource.types';
+import { ResourceMetadata } from '../../types/resource.types';
 
 export const SEARCH_FOR_RESOURCES = 'search for resources';
 export const CLEAR_SEARCH = 'clear search';
 export const SEARCH_FAILURE = 'search failure';
 
 export const searchForResources = (
-  resources: Resource[],
+  resources: ResourceMetadata[],
   searchTerm: string,
   totalNumberOfHits: number,
   offset?: number
@@ -31,7 +31,7 @@ export const clearSearch = (): ClearSearchAction => ({
 
 interface SearchForResourcesAction {
   type: typeof SEARCH_FOR_RESOURCES;
-  resources: Resource[];
+  resources: ResourceMetadata[];
   searchTerm: string;
   totalNumberOfHits: number;
   offset?: number;

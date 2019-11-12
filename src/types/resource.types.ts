@@ -11,12 +11,16 @@ export enum ResourceFormTabs {
   FILES_AND_LICENSES,
 }
 
-export interface TitleType {
-  en: string;
-  no: string;
+export interface ResourceTitle {
+  title: string;
 }
 
-export interface Resource {
+export interface TitleType {
+  en: ResourceTitle;
+  no: ResourceTitle;
+}
+
+export interface ResourceMetadata {
   creators: string[];
   handle: string;
   license: string;
@@ -24,4 +28,27 @@ export interface Resource {
   publisher: string;
   titles: TitleType;
   type: ResourceType;
+}
+
+export interface ResourceFile {
+  checksum: string;
+  filename: string;
+  mimetype: string;
+  size: string;
+}
+
+export interface ResourceFileMap {
+  indexedDate: string;
+  file: ResourceFile;
+}
+
+export interface Resource {
+  createdDate: string;
+  files: ResourceFileMap[];
+  metadata: ResourceMetadata;
+  modifiedDate: string;
+  owner: string;
+  publishedDate: string;
+  resourceIdentifier: string;
+  status: string;
 }

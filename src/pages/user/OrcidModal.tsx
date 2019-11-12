@@ -1,9 +1,11 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button } from '@material-ui/core';
-import { useMockData } from '../../utils/constants';
 import { useHistory } from 'react-router';
 import styled from 'styled-components';
+
+import { Button } from '@material-ui/core';
+
+import { USE_MOCK_DATA } from '../../utils/constants';
 
 const StyledButtonHolder = styled.div`
   margin: 3rem 0;
@@ -42,7 +44,7 @@ const OrcidModal: React.FC<OrcidModalProps> = ({ setOpen }) => {
   const history = useHistory();
 
   const openORCID = () => {
-    if (useMockData) {
+    if (USE_MOCK_DATA) {
       history.push('/user?code=123456');
     } else {
       window.open(
