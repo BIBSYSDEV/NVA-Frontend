@@ -16,7 +16,9 @@ const StyledContributor = styled.div`
   background-color: ${({ theme }) => theme.palette.box.main};
   display: grid;
   grid-template-areas: 'icon name institution switch orcid arrows delete';
-  grid-template-columns: 5% 30% 20% 10% 5% 5% 5%;
+  grid-template-columns: 5% 30% 18% 10% 5% 5% 5%;
+  margin-bottom: 0.5rem;
+  align-items: center;
 `;
 
 const StyledPersonIcon = styled(Person)`
