@@ -2,7 +2,7 @@ import Axios from 'axios';
 import { Dispatch } from 'redux';
 
 import { orcidRequestFailure, setOrcidInfo } from '../redux/actions/orcidActions';
-import { ORCID_API_BASEURL } from '../utils/constants';
+import { ORCID_URL } from '../utils/constants';
 
 export const getOrcidInfo = (orcidCode: string) => {
   return async (dispatch: Dispatch) => {
@@ -16,7 +16,7 @@ export const getOrcidInfo = (orcidCode: string) => {
 
     Axios({
       method: 'POST',
-      url: ORCID_API_BASEURL,
+      url: ORCID_URL,
       data: data,
       headers: {
         Accept: 'application/json',

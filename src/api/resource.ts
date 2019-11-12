@@ -10,11 +10,9 @@ import {
   updateResourceSuccess,
 } from '../redux/actions/resourceActions';
 import { Resource, ResourceFileMap, ResourceMetadata } from '../types/resource.types';
-import { RESOURCES_API_BASEURL } from '../utils/constants';
+import { API_BASE_URL, StatusCode } from '../utils/constants';
 
-export const createNewResource = (files: ResourceFileMap[], metadata: ResourceMetadata) => {
-  const owner = 'user@unit.no';
-
+export const createNewResource = (files: ResourceFileMap[], metadata: ResourceMetadata, owner: string) => {
   const resource: Partial<Resource> = {
     createdDate: new Date().toISOString(),
     files,
@@ -25,7 +23,7 @@ export const createNewResource = (files: ResourceFileMap[], metadata: ResourceMe
   return async (dispatch: Dispatch) => {
     Axios({
       method: 'POST',
-      url: `/${RESOURCES_API_BASEURL}`,
+      url: `/${API_BASE_URL.RESOURCES}`,
       data: resource,
       headers: {
         Accept: 'application/json',
@@ -33,7 +31,7 @@ export const createNewResource = (files: ResourceFileMap[], metadata: ResourceMe
       },
     })
       .then(response => {
-        if (response.status === 200) {
+        if (response.status === StatusCode.OK) {
           dispatch(createResourceSuccess());
         } else {
           dispatch(createResourceFailure('ErrorMessage.Could not create resource'));
@@ -50,7 +48,7 @@ export const updateResource = (resource: Resource) => {
   return async (dispatch: Dispatch) => {
     Axios({
       method: 'PUT',
-      url: `/${RESOURCES_API_BASEURL}${resourceIdentifier}`,
+      url: `/${API_BASE_URL.RESOURCES}/${resourceIdentifier}`,
       data: { ...resource, modifiedDate: new Date().toISOString() },
       headers: {
         Accept: 'application/json',
@@ -58,7 +56,7 @@ export const updateResource = (resource: Resource) => {
       },
     })
       .then(response => {
-        if (response.status === 200) {
+        if (response.status === StatusCode.OK) {
           dispatch(updateResourceSuccess());
         } else {
           dispatch(updateResourceFailure('ErrorMessage.Could not update resource'));
@@ -72,9 +70,9 @@ export const updateResource = (resource: Resource) => {
 
 export const getResource = (id: string) => {
   return async (dispatch: Dispatch) => {
-    Axios.get(`/${RESOURCES_API_BASEURL}${id}`)
+    Axios.get(`/${API_BASE_URL.RESOURCES}${id}`)
       .then(response => {
-        if (response.status === 200) {
+        if (response.status === StatusCode.OK) {
           dispatch(getResourceSuccess());
           return response;
         } else {
