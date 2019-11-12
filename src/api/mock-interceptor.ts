@@ -3,7 +3,7 @@ import MockAdapter from 'axios-mock-adapter';
 
 import OrcidResponse from '../types/orcid.types';
 import User, { ApplicationName, RoleName } from '../types/user.types';
-import { API_BASE_URL, ORCID_URL, useMockData } from '../utils/constants';
+import { ApiBaseUrl, ORCID_URL, USE_MOCK_DATA } from '../utils/constants';
 import mockResources from '../utils/testfiles/resources_45_random_results_generated.json';
 
 export const mockUser: User = {
@@ -28,14 +28,14 @@ const mockOrcidResponse: OrcidResponse = {
 };
 
 // AXIOS INTERCEPTOR
-if (useMockData) {
+if (USE_MOCK_DATA) {
   const mock = new MockAdapter(Axios);
 
   // SEARCH
-  mock.onGet(new RegExp(`/${API_BASE_URL.RESOURCES}/*`)).reply(200, mockResources);
+  mock.onGet(new RegExp(`/${ApiBaseUrl.RESOURCES}/*`)).reply(200, mockResources);
 
   // USER
-  mock.onGet(new RegExp(`/${API_BASE_URL}/*`)).reply(200, mockUser);
+  mock.onGet(new RegExp(`/${ApiBaseUrl}/*`)).reply(200, mockUser);
 
   // ORCID
   mock.onPost(ORCID_URL).reply(200, mockOrcidResponse);

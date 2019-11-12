@@ -2,11 +2,11 @@ import Axios from 'axios';
 import { Dispatch } from 'redux';
 
 import { searchFailure, searchForResources } from '../redux/actions/searchActions';
-import { API_BASE_URL, SEARCH_RESULTS_PER_PAGE } from '../utils/constants';
+import { ApiBaseUrl, SEARCH_RESULTS_PER_PAGE } from '../utils/constants';
 
 export const search = (searchTerm: string, offset?: number) => {
   return async (dispatch: Dispatch) => {
-    Axios.get(`/${API_BASE_URL.RESOURCES}/${searchTerm}`)
+    Axios.get(`/${ApiBaseUrl.RESOURCES}/${searchTerm}`)
       .then(response => {
         const currentOffset = offset || 0;
         const result = response.data.slice(currentOffset, currentOffset + SEARCH_RESULTS_PER_PAGE);

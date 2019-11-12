@@ -10,7 +10,7 @@ import {
   updateResourceSuccess,
 } from '../redux/actions/resourceActions';
 import { Resource, ResourceFileMap, ResourceMetadata } from '../types/resource.types';
-import { API_BASE_URL, StatusCode } from '../utils/constants';
+import { ApiBaseUrl, StatusCode } from '../utils/constants';
 
 export const createNewResource = (files: ResourceFileMap[], metadata: ResourceMetadata, owner: string) => {
   const resource: Partial<Resource> = {
@@ -23,7 +23,7 @@ export const createNewResource = (files: ResourceFileMap[], metadata: ResourceMe
   return async (dispatch: Dispatch) => {
     Axios({
       method: 'POST',
-      url: `/${API_BASE_URL.RESOURCES}`,
+      url: `/${ApiBaseUrl.RESOURCES}`,
       data: resource,
       headers: {
         Accept: 'application/json',
@@ -48,7 +48,7 @@ export const updateResource = (resource: Resource) => {
   return async (dispatch: Dispatch) => {
     Axios({
       method: 'PUT',
-      url: `/${API_BASE_URL.RESOURCES}/${resourceIdentifier}`,
+      url: `/${ApiBaseUrl.RESOURCES}/${resourceIdentifier}`,
       data: { ...resource, modifiedDate: new Date().toISOString() },
       headers: {
         Accept: 'application/json',
@@ -70,7 +70,7 @@ export const updateResource = (resource: Resource) => {
 
 export const getResource = (id: string) => {
   return async (dispatch: Dispatch) => {
-    Axios.get(`/${API_BASE_URL.RESOURCES}${id}`)
+    Axios.get(`/${ApiBaseUrl.RESOURCES}${id}`)
       .then(response => {
         if (response.status === StatusCode.OK) {
           dispatch(getResourceSuccess());
