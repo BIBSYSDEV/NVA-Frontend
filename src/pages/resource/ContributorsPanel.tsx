@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
@@ -6,22 +6,17 @@ import styled from 'styled-components';
 import Box from '../../components/Box';
 import TabPanel from '../../components/TabPanel/TabPanel';
 import { RootStore } from '../../redux/reducers/rootReducer';
-import { ARROW_DOWN, ARROW_UP } from '../../utils/constants';
-import contributorsMock from '../../utils/testfiles/contributors.json';
 import Contributor from './contributors/Contributor';
 import ContributorLabel from './contributors/ContributorLabel';
 import ContributorSelector from './contributors/ContributorSelector';
 
-<<<<<<< Updated upstream
+
 const StyledBox = styled.div`
   background-color: ${({ theme }) => theme.palette.box.main};
   display: grid;
   grid-template-areas: 'icon name institution switch orcid arrows delete';
   grid-template-columns: 5% 30% 20% 10% 5% 5% 5%;
 `;
-=======
-import { ARROW_UP, ARROW_DOWN } from './../../utils/constants';
->>>>>>> Stashed changes
 
 interface ContributorsPanelProps {
   onClick: (event: React.MouseEvent<any>) => void;
@@ -31,49 +26,8 @@ interface ContributorsPanelProps {
 const ContributorsPanel: React.FC<ContributorsPanelProps> = ({ onClick, tabNumber }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const [contributors, setContributors] = useState(contributorsMock);
   const errors = useSelector((store: RootStore) => store.errors);
-
-  const deleteContributor = (event: React.MouseEvent<any>, id: string): void => {
-    var filteredContributors = contributors.filter((contributor, index, arr) => {
-      return contributor.id !== id;
-    });
-    setContributors(filteredContributors);
-  };
-
-  const moveContributor = (id: string, direction: number): void => {
-    const position = contributors.findIndex(i => i.id === id);
-    if (position < 0) {
-      throw new Error('Given item not found.');
-    } else if (
-      (direction === ARROW_UP && position === 0) ||
-      (direction === ARROW_DOWN && position === contributors.length - 1)
-    ) {
-      return; // canot move outside of array
-    }
-
-    const item = contributors[position]; // save item for later
-    const newItems = contributors.filter(i => i.id !== id); // remove item from array
-    newItems.splice(position + direction, 0, item);
-
-    setContributors(newItems);
-  };
-
-  const onCorrespondingChange = (id: string): void => {
-    const tempContributors = contributors;
-    const index = tempContributors.findIndex(i => i.id === id);
-    tempContributors[index].corresponding = !tempContributors[index].corresponding;
-    setContributors(tempContributors);
-  };
-
-  const onInstitutionChange = (id: string, institution: string): void => {
-    const tempContributors = contributors;
-    const index = tempContributors.findIndex(i => i.id === id);
-    tempContributors[index].institutionChoice = institution;
-    setContributors(tempContributors);
-  };
-
-  const addContributor = () => {};
+  const contributors = useSelector((state: RootStore) => state.contributors);
 
   return (
     <TabPanel
@@ -102,18 +56,11 @@ const ContributorsPanel: React.FC<ContributorsPanelProps> = ({ onClick, tabNumbe
             <div className="contributor-delete-icon"></div>
           </StyledBox>
           {contributors.map(contributor => (
-            <Contributor
-              id={contributor.id}
-              name={contributor.name}
-              institutions={contributor.institutions}
-              orcid={contributor.orcid}
-              deleteContributor={deleteContributor}
-              moveContributor={moveContributor}
-            />
+            <Contributor contributor={contributor} key={contributor.id}/>
           ))}
 
           <div>
-            <ContributorSelector addContributor={addContributor} />
+            <ContributorSelector />
           </div>
         </Box>
         <Box>

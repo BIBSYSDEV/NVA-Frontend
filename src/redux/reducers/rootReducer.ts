@@ -8,12 +8,15 @@ import { feedbackReducer } from './feedbackReducer';
 import { searchReducer } from './searchReducer';
 import { userReducer } from './userReducer';
 import { validationReducer } from './validationReducer';
+import ContributorType from '../../types/contributor.types';
+import { contributorReducer } from './contributorReducer';
 
 export interface RootStore {
   errors: FormValidator;
   feedback: FeedbackMessageType[];
   search: Search;
   user: User;
+  contributors: ContributorType[];
 }
 
 export default combineReducers({
@@ -21,4 +24,5 @@ export default combineReducers({
   user: userReducer,
   search: searchReducer,
   feedback: feedbackReducer,
+  contributors: contributorReducer,
 });

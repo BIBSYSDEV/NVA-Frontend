@@ -1,39 +1,25 @@
 import React from 'react';
-import styled from 'styled-components';
-
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
-
-import { ARROW_DOWN, ARROW_UP } from '../../../utils/constants';
-
-const StyledArrows = styled.div`
-  display: grid;
-  grid-template-areas: 'arrows-up arrows-down';
-`;
-
-const StyledArrowUp = styled(ArrowDropUpIcon)`
-  grid-area: arrows-up;
-  padding: 0;
-  margin: 0;
-`;
-
-const StyledArrowDown = styled(ArrowDropDownIcon)`
-  grid-area: arrows-down;
-  padding: 0;
-  margin: 0;
-`;
+import { ARROW_UP, ARROW_DOWN } from '../../../utils/constants';
+import ContributorType from '../../../types/contributor.types';
 
 interface ContributorArrowsProps {
-  id: string;
-  moveContributor: (id: string, direction: number) => void;
+  contributor: ContributorType;
+  onMoveContributor: (contributor: ContributorType, direction: number) => void;
 }
 
-const ContributorArrows: React.FC<ContributorArrowsProps> = ({ id, moveContributor }) => {
+const ContributorArrows: React.FC<ContributorArrowsProps> = ({ contributor, onMoveContributor }) => {
+
   return (
-    <StyledArrows>
-      <StyledArrowUp onClick={() => moveContributor(id, ARROW_UP)} />
-      <StyledArrowDown onClick={() => moveContributor(id, ARROW_DOWN)} />
-    </StyledArrows>
+    <div className="arrows">
+      <div className="arrows-up">
+        <ArrowDropUpIcon onClick={() => onMoveContributor(contributor, ARROW_UP)} />
+      </div>
+      <div className="arrows-down" onClick={() => onMoveContributor(contributor, ARROW_DOWN)}>
+        <ArrowDropDownIcon />
+      </div>
+    </div>
   );
 };
 

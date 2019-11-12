@@ -1,4 +1,4 @@
-export default interface Contributor {
+export default interface ContributorType {
   id: string;
   name: string;
   institutions?: string[];

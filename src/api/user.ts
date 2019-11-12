@@ -12,7 +12,9 @@ import {
 import { clearFeedback } from '../redux/actions/feedbackActions';
 import { clearUser, setUser, setUserFailure } from '../redux/actions/userActions';
 import { useMockData } from '../utils/constants';
+import contributorsMock from '../utils/testfiles/contributors.json';
 import { mockUser } from './mock-interceptor';
+import { addContributor, resetContributors } from './../redux/actions/contributorActions';
 
 export const login = () => {
   return async (dispatch: Dispatch) => {
@@ -20,6 +22,7 @@ export const login = () => {
     if (useMockData) {
       dispatch(setUser(mockUser));
       dispatch(loginSuccess());
+      contributorsMock.forEach(contributor => dispatch(addContributor(contributor)));
     } else {
       Auth.federatedSignIn();
     }
@@ -66,6 +69,7 @@ export const logout = () => {
       dispatch(clearUser());
       dispatch(clearFeedback());
       dispatch(logoutSuccess());
+      dispatch(resetContributors());
     } else {
       Auth.signOut();
       dispatch(clearFeedback());

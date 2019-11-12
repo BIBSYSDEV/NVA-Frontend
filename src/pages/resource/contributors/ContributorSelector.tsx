@@ -3,11 +3,7 @@ import styled from 'styled-components';
 
 const StyledContributorSelector = styled.div``;
 
-interface ContributorSelectorProps {
-  addContributor: () => void;
-}
-
-const ContributorSelector: React.FC<ContributorSelectorProps> = ({ addContributor }) => {
+const ContributorSelector: React.FC = () => {
   return <StyledContributorSelector>Select contributor here</StyledContributorSelector>;
 };
 

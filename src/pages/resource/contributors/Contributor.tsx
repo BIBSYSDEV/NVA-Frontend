@@ -8,6 +8,9 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import Person from '@material-ui/icons/Person';
 
 import ContributorArrows from './ContributorArrows';
+import ContributorType from '../../../types/contributor.types';
+import { useDispatch } from 'react-redux';
+import { updateContributor, removeContributor, moveContributor } from '../../../redux/actions/contributorActions';
 
 const StyledContributor = styled.div`
   background-color: ${({ theme }) => theme.palette.box.main};
@@ -45,38 +48,57 @@ const StyledDeleteIcon = styled(DeleteIcon)`
 `;
 
 interface ContributorProps {
-  id: string;
-  name: string;
-  institutions?: string[];
-  orcid?: string;
-  deleteContributor: (event: React.MouseEvent<any>, id: string) => void;
-  moveContributor: (id: string, direction: number) => void;
+  contributor: ContributorType;
+  key: string;
 }
 
-const Contributor: React.FC<ContributorProps> = ({
-  id,
-  name,
-  institutions,
-  orcid,
-  deleteContributor,
-  moveContributor,
-}) => {
-  const handleChange = (id: string) => (event: React.ChangeEvent<HTMLInputElement>) => {};
+const Contributor: React.FC<ContributorProps> = ({ contributor }) => {
+  const dispatch = useDispatch();
+
+  const handleCorrespondingAuthorChange = (contributor: ContributorType) => (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    contributor.corresponding = event.target.checked;
+    dispatch(updateContributor(contributor));
+  };
+
+  const handleInstitutionChange = (contributor: ContributorType) => (event: React.ChangeEvent<any>) => {
+    contributor.institutionChoice = event.target.value;
+    dispatch(updateContributor(contributor));
+  };
+
+  const deleteContributor = (contributor: ContributorType): void => {
+    dispatch(removeContributor(contributor));
+  };
+
+  const onMoveContributor = (contributor: ContributorType, direction: number) => {
+    dispatch(moveContributor(contributor, direction));
+  };
 
   return (
     <StyledContributor>
       <StyledPersonIcon />
-      <StyledName>{name}</StyledName>
-      <StyledInstitution>
-        <MenuItem value="" />
-        {institutions && institutions.map(institution => <MenuItem value={institution}>{institution}</MenuItem>)}
+      <StyledName>{contributor.name}</StyledName>
+      <StyledInstitution onChange={handleInstitutionChange(contributor)} value={contributor.institutionChoice}>
+        <MenuItem value="" key="-1" />
+        {contributor.institutions &&
+          contributor.institutions.map(institution => (
+            <MenuItem value={institution} key={institution}>
+              {institution}
+            </MenuItem>
+          ))}
       </StyledInstitution>
-      <StyledCorrespondingAuthor onChange={handleChange(id)} value={id} />
+      <StyledCorrespondingAuthor
+        onChange={handleCorrespondingAuthorChange(contributor)}
+        checked={contributor.corresponding}
+      />
       <StyledOrcidIcon>
-        {orcid && <img src="https://orcid.org/sites/default/files/images/orcid_24x24.png" alt="ORCID iD icon" />}
+        {contributor.orcid && (
+          <img src="https://orcid.org/sites/default/files/images/orcid_24x24.png" alt="ORCID iD icon" />
+        )}
       </StyledOrcidIcon>
-      <StyledContributorsArrows moveContributor={moveContributor} id={id} />
-      <StyledDeleteIcon onClick={event => deleteContributor(event, id)} />
+      <StyledContributorsArrows contributor={contributor} onMoveContributor={onMoveContributor} />
+      <StyledDeleteIcon onClick={() => deleteContributor(contributor)} />
     </StyledContributor>
   );
 };
