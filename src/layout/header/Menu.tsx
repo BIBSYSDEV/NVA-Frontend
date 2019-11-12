@@ -1,36 +1,59 @@
-import '../../styles/layout/menu.scss';
-
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
 
-import { Button, Menu as MUIMenu, MenuItem } from '@material-ui/core';
+import { Button, Menu as MuiMenu, MenuItem } from '@material-ui/core';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+import styled from 'styled-components';
 
 interface MenuProps {
   handleLogout: () => void;
   menuButtonLabel: string;
 }
 
+const StyledMenu = styled.div`
+  grid-area: menu;
+
+  .MuiButton-root {
+    width: 15rem;
+
+    @media only screen and (max-width: 600px) {
+      width: 10rem;
+    }
+  }
+`;
+
+const StyledMuiMenu = styled(MuiMenu)`
+  .MuiMenu-list {
+    width: 15rem;
+    border: 3px solid ${({ theme }) => theme.palette.box.main};
+
+    @media only screen and (max-width: 600px) {
+      width: 10rem;
+    }
+
+    .MuiMenuItem-root {
+      border-bottom: 1px solid ${({ theme }) => theme.palette.box.main};
+    }
+  }
+`;
+
 const Menu: React.FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const [menuOpen, setMenuOpen] = React.useState(false);
   const { t } = useTranslation();
   const history = useHistory();
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
-    setMenuOpen(!menuOpen);
   };
 
   const handleClose = () => {
     setAnchorEl(null);
-    setMenuOpen(false);
   };
 
   return (
-    <div className="menu">
+    <StyledMenu>
       <Button
         color="primary"
         variant="contained"
@@ -39,19 +62,14 @@ const Menu: React.FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
         onClick={handleClick}
         data-testid="menu">
         {menuButtonLabel}
-        {menuOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+        {anchorEl ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
       </Button>
-      <MUIMenu
+      <StyledMuiMenu
         anchorEl={anchorEl}
-        elevation={0}
         getContentAnchorEl={null}
         keepMounted
-        open={!!anchorEl}
+        open={Boolean(anchorEl)}
         onClose={handleClose}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'left',
-        }}
         anchorOrigin={{
           vertical: 'bottom',
           horizontal: 'left',
@@ -68,8 +86,8 @@ const Menu: React.FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
         <MenuItem onClick={handleLogout} data-testid="logout-button">
           {t('Logout')}
         </MenuItem>
-      </MUIMenu>
-    </div>
+      </StyledMuiMenu>
+    </StyledMenu>
   );
 };
 
