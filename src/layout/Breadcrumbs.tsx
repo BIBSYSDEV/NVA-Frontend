@@ -1,5 +1,3 @@
-import '../styles/layout/breadcrumbs.scss';
-
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router';
@@ -9,6 +7,16 @@ import { Breadcrumbs as MuiBreadcrumbs } from '@material-ui/core';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 
 import { mapBreadcrumbName } from '../utils/mapBreadcrumbName';
+import styled from 'styled-components';
+
+const StyledBreadcrumbs = styled.div`
+  grid-area: breadcrumbs;
+  padding: 0.5rem;
+
+  a {
+    color: ${({ theme }) => theme.palette.text.secondary};
+  }
+`;
 
 const Breadcrumbs: React.FC = () => {
   const location = useLocation();
@@ -19,7 +27,7 @@ const Breadcrumbs: React.FC = () => {
   return (
     <>
       {pathNames.length > 0 && (
-        <div className="breadcrumbs">
+        <StyledBreadcrumbs>
           <MuiBreadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
             <Link to="/">{t('Home')}</Link>
             {pathNames.map((value, index) => {
@@ -37,7 +45,7 @@ const Breadcrumbs: React.FC = () => {
               );
             })}
           </MuiBreadcrumbs>
-        </div>
+        </StyledBreadcrumbs>
       )}
     </>
   );
