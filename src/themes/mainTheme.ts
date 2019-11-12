@@ -3,30 +3,41 @@ import { createMuiTheme } from '@material-ui/core';
 // Extend Palette type to allow custom colors
 declare module '@material-ui/core/styles/createPalette' {
   interface Palette {
-    link: PaletteColor;
     separator: PaletteColor;
     box: PaletteColor;
   }
   interface PaletteOptions {
-    link?: PaletteColorOptions;
     separator?: PaletteColorOptions;
     box?: PaletteColorOptions;
   }
 }
 
+enum Colors {
+  Primary = '#6558f5',
+  Secondary = '#96c3ec',
+  Background = '#fff',
+  Box = '#eeeeff',
+  Link = '#6558f5',
+  Separator = '#3d4349',
+  SecondaryText = '#44515d',
+  ExpandedPanel = '#b2acfa',
+}
+
 export default createMuiTheme({
   palette: {
     primary: {
-      main: '#6558f5',
+      main: Colors.Primary,
     },
-    link: { main: '#6558f5' },
-    separator: { main: '#3d4349' },
-    box: { main: '#eeeeff' },
+    secondary: {
+      main: Colors.Secondary,
+    },
+    separator: { main: Colors.Separator },
+    box: { main: Colors.Box },
     text: {
-      secondary: '#44515d',
+      secondary: Colors.SecondaryText,
     },
     background: {
-      default: '#fff',
+      default: Colors.Background,
     },
   },
   overrides: {
@@ -36,9 +47,25 @@ export default createMuiTheme({
       },
     },
     MuiSnackbarContent: {
-      action: {
-        color: '#ffffff',
+      root: {
+        color: Colors.Background,
       },
+    },
+    MuiLink: {
+      root: {
+        color: Colors.Link,
+      },
+    },
+    MuiExpansionPanel: {
+      root: {
+        background: Colors.Secondary,
+        '&$expanded': {
+          background: Colors.ExpandedPanel,
+        },
+      },
+    },
+    MuiExpansionPanelDetails: {
+      root: { background: Colors.ExpandedPanel },
     },
   },
 });
