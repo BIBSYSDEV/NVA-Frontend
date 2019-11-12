@@ -11,7 +11,7 @@ import PublicationPanel from './PublicationPanel';
 import { ResourceFormTabs } from './ResourceFormTabs';
 
 const Resource: React.FC = () => {
-  const [tabNumber, setTabNumber] = useState(3);
+  const [tabNumber, setTabNumber] = useState(0);
   const errors = useSelector((store: RootStore) => store.errors);
   const { referencesErrors, contributorsErrors, filesAndLicensesErrors } = errors;
 

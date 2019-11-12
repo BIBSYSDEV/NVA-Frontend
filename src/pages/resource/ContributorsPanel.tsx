@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useReducer } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
 import Box from '../../components/Box';
 import TabPanel from '../../components/TabPanel/TabPanel';
+import { contributorReducer } from '../../redux/reducers/contributorReducer';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import Contributor from './contributors/Contributor';
 import ContributorLabel from './contributors/ContributorLabel';
@@ -24,9 +25,9 @@ interface ContributorsPanelProps {
 
 const ContributorsPanel: React.FC<ContributorsPanelProps> = ({ onClick, tabNumber }) => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
   const errors = useSelector((store: RootStore) => store.errors);
-  const contributors = useSelector((state: RootStore) => state.contributors);
+
+  const [contributors, dispatch] = useReducer(contributorReducer, []);
 
   return (
     <TabPanel
@@ -35,37 +36,34 @@ const ContributorsPanel: React.FC<ContributorsPanelProps> = ({ onClick, tabNumbe
       onClick={onClick}
       errors={errors.contributorsErrors}
       heading="Contributors">
-      <div>
-        <Box>
-          <div>{t('Forfattere')}</div>
-          <StyledBox>
-            <div className="contributor-icon"></div>
-            <div className="contributor-name">
-              <ContributorLabel>{t('Name')}</ContributorLabel>
-            </div>
-            <div className="contributor-institution">
-              <ContributorLabel>{t('Institution')}</ContributorLabel>
-            </div>
-            <div className="contributor-switch">
-              <ContributorLabel>{t('Corresponding')}</ContributorLabel>
-            </div>
-            <div className="contributor-orcid">
-              <ContributorLabel>{t('ORCID')}</ContributorLabel>
-            </div>
-            <div className="contributor-delete-icon"></div>
-          </StyledBox>
-          {contributors.map(contributor => (
-            <Contributor contributor={contributor} key={contributor.id} />
-          ))}
-
-          <div>
-            <ContributorSelector />
+      <Box>
+        <div>{t('contributors.authors')}</div>
+        <StyledBox>
+          <div className="contributor-icon"></div>
+          <div className="contributor-name">
+            <ContributorLabel>{t('contributors.name')}</ContributorLabel>
           </div>
-        </Box>
-        <Box>
-          <div>Bidragsytere</div>
-        </Box>
-      </div>
+          <div className="contributor-institution">
+            <ContributorLabel>{t('contributors.institution')}</ContributorLabel>
+          </div>
+          <div className="contributor-switch">
+            <ContributorLabel>{t('contributors.corresponding')}</ContributorLabel>
+          </div>
+          <div className="contributor-orcid">
+            <ContributorLabel>{t('contributors.ORCID')}</ContributorLabel>
+          </div>
+          <div className="contributor-delete-icon"></div>
+        </StyledBox>
+        {contributors.map(contributor => (
+          <Contributor contributor={contributor} key={contributor.id} dispatch={dispatch} />
+        ))}
+        <div>
+          <ContributorSelector />
+        </div>
+      </Box>
+      <Box>
+        <div>Bidragsytere</div>
+      </Box>
     </TabPanel>
   );
 };

@@ -1,5 +1,5 @@
 // ACTION TYPES
-import ContributorType from './../../types/contributor.types';
+import ContributorType, { Direction } from './../../types/contributor.types';
 export const ADD_CONTRIBUTOR = 'add contributor';
 export const REMOVE_CONTRIBUTOR = 'remove contributor';
 export const UPDATE_CONTRIBUTOR = 'update contributor';
@@ -50,7 +50,7 @@ interface UpdateContributor {
 interface MoveContributor {
   type: typeof MOVE_CONTRIBUTOR;
   contributor: ContributorType;
-  direction: number;
+  direction: Direction;
 }
 
 interface ResetContributors {

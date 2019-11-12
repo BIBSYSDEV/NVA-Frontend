@@ -1,12 +1,7 @@
-import ContributorType from '../../types/contributor.types';
-import { ARROW_DOWN, ARROW_UP } from '../../utils/constants';
+import ContributorType, { Direction } from '../../types/contributor.types';
 import {
-  ADD_CONTRIBUTOR,
-  ContributorActions,
-  MOVE_CONTRIBUTOR,
-  REMOVE_CONTRIBUTOR,
-  RESET_CONTRIBUTORS,
-  UPDATE_CONTRIBUTOR,
+    ADD_CONTRIBUTOR, ContributorActions, MOVE_CONTRIBUTOR, REMOVE_CONTRIBUTOR, RESET_CONTRIBUTORS,
+    UPDATE_CONTRIBUTOR
 } from '../actions/contributorActions';
 
 export const contributorReducer = (state: ContributorType[] = [], action: ContributorActions) => {
@@ -27,11 +22,10 @@ export const contributorReducer = (state: ContributorType[] = [], action: Contri
       });
     case MOVE_CONTRIBUTOR:
       const position = state.findIndex(i => i.id === action.contributor.id);
-
       if (
         position < 0 ||
-        (action.direction === ARROW_UP && position === 0) ||
-        (action.direction === ARROW_DOWN && position === state.length - 1)
+        (action.direction === Direction.ARROW_UP && position === 0) ||
+        (action.direction === Direction.ARROW_DOWN && position === state.length - 1)
       ) {
         return state; // canot move outside of array
       }

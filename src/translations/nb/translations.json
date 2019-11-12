@@ -47,6 +47,13 @@
     "project_assosiation": "Prosjekttilknytning",
     "project": "Prosjekt"
   },
+  "contributors": {
+    "authors": "Forfattere",
+    "name": "Navn",
+    "institution": "Institusjon",
+    "corresponding": "Korresponderende",
+    "ORCID": "ORCID"
+  },
   "Next": "Neste",
   "ORCID": "ORCID",
   "ORCID-link": "ORCID-lenke",

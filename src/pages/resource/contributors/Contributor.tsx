@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Dispatch } from 'react';
 import styled from 'styled-components';
 
 import MenuItem from '@material-ui/core/MenuItem';
@@ -9,7 +9,6 @@ import Person from '@material-ui/icons/Person';
 
 import ContributorArrows from './ContributorArrows';
 import ContributorType from '../../../types/contributor.types';
-import { useDispatch } from 'react-redux';
 import { updateContributor, removeContributor, moveContributor } from '../../../redux/actions/contributorActions';
 
 const StyledContributor = styled.div`
@@ -51,12 +50,10 @@ const StyledDeleteIcon = styled(DeleteIcon)`
 
 interface ContributorProps {
   contributor: ContributorType;
-  key: string;
+  dispatch: Dispatch<any>;
 }
 
-const Contributor: React.FC<ContributorProps> = ({ contributor }) => {
-  const dispatch = useDispatch();
-
+const Contributor: React.FC<ContributorProps> = ({ contributor, dispatch }) => {
   const handleCorrespondingAuthorChange = (contributor: ContributorType) => (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -65,7 +62,7 @@ const Contributor: React.FC<ContributorProps> = ({ contributor }) => {
   };
 
   const handleInstitutionChange = (contributor: ContributorType) => (event: React.ChangeEvent<any>) => {
-    contributor.institutionChoice = event.target.value;
+    contributor.selectedInstitution = event.target.value;
     dispatch(updateContributor(contributor));
   };
 
@@ -81,7 +78,7 @@ const Contributor: React.FC<ContributorProps> = ({ contributor }) => {
     <StyledContributor>
       <StyledPersonIcon />
       <StyledName>{contributor.name}</StyledName>
-      <StyledInstitution onChange={handleInstitutionChange(contributor)} value={contributor.institutionChoice}>
+      <StyledInstitution onChange={handleInstitutionChange(contributor)} value={contributor.selectedInstitution}>
         <MenuItem value="" key="-1" />
         {contributor.institutions &&
           contributor.institutions.map(institution => (

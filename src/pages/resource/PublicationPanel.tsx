@@ -1,7 +1,6 @@
 import '../../styles/pages/resource/publication-panel.scss';
 
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -17,7 +16,6 @@ interface PublicationPanelProps {
 }
 
 const PublicationPanel: React.FC<PublicationPanelProps> = ({ onClick, tabNumber }) => {
-  const { t } = useTranslation();
   const [expanded, setExpanded] = React.useState<string | false>(false);
   const errors = useSelector((store: RootStore) => store.errors);
 

@@ -1,8 +1,7 @@
 import React from 'react';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
-import { ARROW_UP, ARROW_DOWN } from '../../../utils/constants';
-import ContributorType from '../../../types/contributor.types';
+import ContributorType, { Direction } from '../../../types/contributor.types';
 import styled from 'styled-components';
 
 const StyledContributorArrows = styled.div`
@@ -26,14 +25,12 @@ interface ContributorArrowsProps {
 const ContributorArrows: React.FC<ContributorArrowsProps> = ({ contributor, onMoveContributor }) => {
   return (
     <StyledContributorArrows>
-      <div className="arrows">
-        <StyledUpArrow>
-          <ArrowDropUpIcon onClick={() => onMoveContributor(contributor, ARROW_UP)} />
-        </StyledUpArrow>
-        <StyledDownArrow>
-          <ArrowDropDownIcon onClick={() => onMoveContributor(contributor, ARROW_DOWN)} />
-        </StyledDownArrow>
-      </div>
+      <StyledUpArrow>
+        <ArrowDropUpIcon onClick={() => onMoveContributor(contributor, Direction.ARROW_UP)} />
+      </StyledUpArrow>
+      <StyledDownArrow>
+        <ArrowDropDownIcon onClick={() => onMoveContributor(contributor, Direction.ARROW_DOWN)} />
+      </StyledDownArrow>
     </StyledContributorArrows>
   );
 };
