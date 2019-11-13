@@ -11,6 +11,7 @@ import {
 } from '../redux/actions/authActions';
 import { clearFeedback } from '../redux/actions/feedbackActions';
 import { clearUser, setUser, setUserFailure } from '../redux/actions/userActions';
+import { RootStore } from '../redux/reducers/rootReducer';
 import { USE_MOCK_DATA } from '../utils/constants';
 import { mockUser } from './mock-interceptor';
 
@@ -27,7 +28,8 @@ export const login = () => {
 };
 
 export const getCurrentAuthenticatedUser = () => {
-  return async (dispatch: Dispatch<any>) => {
+  return async (dispatch: Dispatch<any>, getState: () => RootStore) => {
+    const store = getState();
     if (USE_MOCK_DATA) {
       dispatch(setUser(mockUser));
     } else {
@@ -37,7 +39,9 @@ export const getCurrentAuthenticatedUser = () => {
         dispatch(setUser(user));
         dispatch(refreshToken());
       } catch (e) {
-        dispatch(setUserFailure('ErrorMessage.Failed to get user'));
+        if (store.auth.isLoggedIn) {
+          dispatch(setUserFailure('ErrorMessage.Failed to get user'));
+        }
       }
     }
   };
