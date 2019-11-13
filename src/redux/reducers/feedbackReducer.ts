@@ -33,7 +33,7 @@ export const feedbackReducer = (
       return [...state, action];
     case LOGIN_SUCCESS:
       remainingFeedbackMessages = [...state].filter(error => error.message !== LOGIN_FAILURE);
-      return [...remainingFeedbackMessages, action];
+      return [...remainingFeedbackMessages];
     case SET_USER_SUCCESS:
       remainingFeedbackMessages = state.filter(error => error.message !== SET_USER_FAILURE);
       return [...remainingFeedbackMessages];
