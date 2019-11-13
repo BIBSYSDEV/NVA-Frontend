@@ -1,4 +1,4 @@
-AWSTemplateFormatVersion: '2010-09-09'
+AWSTemplateFormatVersion: "2010-09-09"
 
 Description: >
   This template creates a CloudFront distribution for a web application
@@ -15,50 +15,52 @@ Resources:
       PolicyDocument:
         Statement:
           Action:
-            - 's3:GetObject'
-          Effect: 'Allow'
-          Resource: !Sub 'arn:aws:s3:::${NvaFrontendBucketName}/*'
+            - "s3:GetObject"
+          Effect: "Allow"
+          Resource: !Sub "arn:aws:s3:::${NvaFrontendBucketName}/*"
           Principal:
-            AWS: !Sub 'arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity ${CloudFrontOriginAccessIdentity}'
+            AWS: !Sub "arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity ${CloudFrontOriginAccessIdentity}"
   CloudFrontOriginAccessIdentity:
     Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
     Properties:
       CloudFrontOriginAccessIdentityConfig:
-        Comment: !Sub '${NvaFrontendBucketName}-access-identity'
+        Comment: !Sub "${NvaFrontendBucketName}-access-identity"
   NvaCloudFrontDistribution:
     Type: AWS::CloudFront::Distribution
     Properties:
       DistributionConfig:
+        Aliases:
+          - dev.nva.aws.unit.no
         Origins:
-          - DomainName: !Sub '${NvaFrontendBucketName}.s3.amazonaws.com'
-            Id: !Sub 'S3-${NvaFrontendBucketName}'
+          - DomainName: !Sub "${NvaFrontendBucketName}.s3.amazonaws.com"
+            Id: !Sub "S3-${NvaFrontendBucketName}"
             S3OriginConfig:
-              OriginAccessIdentity: !Sub 'origin-access-identity/cloudfront/${CloudFrontOriginAccessIdentity}'
+              OriginAccessIdentity: !Sub "origin-access-identity/cloudfront/${CloudFrontOriginAccessIdentity}"
         Enabled: true
         Comment: NVA frontend distribution
         DefaultCacheBehavior:
           AllowedMethods:
             - GET
             - HEAD
-          TargetOriginId: !Sub 'S3-${NvaFrontendBucketName}'
+          TargetOriginId: !Sub "S3-${NvaFrontendBucketName}"
           ForwardedValues:
             QueryString: false
             Cookies:
               Forward: none
           ViewerProtocolPolicy: allow-all
-        DefaultRootObject: 'index.html'
+        DefaultRootObject: "index.html"
         PriceClass: PriceClass_100
         Restrictions:
           GeoRestriction:
             RestrictionType: none
         ViewerCertificate:
-          CloudFrontDefaultCertificate: true
+          AcmCertificateArn: arn:aws:acm:us-east-1:750639270376:certificate/72355178-f20b-45c9-b036-5a9196f9da9d
         CustomErrorResponses:
           - ErrorCode: 404
             ErrorCachingMinTTL: 10
             ResponseCode: 200
-            ResponsePagePath: '/index.html'
+            ResponsePagePath: "/index.html"
           - ErrorCode: 403
             ErrorCachingMinTTL: 10
             ResponseCode: 200
-            ResponsePagePath: '/index.html'
+            ResponsePagePath: "/index.html"
