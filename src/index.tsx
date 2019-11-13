@@ -1,5 +1,3 @@
-import './styles/index.scss';
-
 import { SnackbarProvider } from 'notistack';
 import React from 'react';
 import ReactDOM from 'react-dom';
