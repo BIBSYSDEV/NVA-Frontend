@@ -6,6 +6,7 @@ import { RootStore } from '../../redux/reducers/rootReducer';
 import ContributorsPanel from './ContributorsPanel';
 import DescriptionPanel from './DescriptionPanel';
 import PublicationPanel from './PublicationPanel';
+import FilesAndLicensesPanel from './FilesAndLicensesPanel';
 import { ResourceFormTabs } from './ResourceFormTabs';
 import styled from 'styled-components';
 
@@ -16,7 +17,7 @@ const StyledResource = styled.div`
 `;
 
 const Resource: React.FC = () => {
-  const [tabNumber, setTabNumber] = useState(3);
+  const [tabNumber, setTabNumber] = useState(4);
   const errors = useSelector((store: RootStore) => store.errors);
   const { referencesErrors, filesAndLicensesErrors } = errors;
 
@@ -42,14 +43,7 @@ const Resource: React.FC = () => {
         <div>Page Three</div>
       </TabPanel>
       <ContributorsPanel tabNumber={tabNumber} onClick={goToNextPage} />
-      <TabPanel
-        isHidden={tabNumber !== 4}
-        ariaLabel="files-and-licenses"
-        onClick={goToNextPage}
-        errors={filesAndLicensesErrors}
-        heading="files and licenses">
-        <div>Page Five</div>
-      </TabPanel>
+      <FilesAndLicensesPanel tabNumber={tabNumber} onClick={goToNextPage} />
       <TabPanel isHidden={tabNumber !== 5} ariaLabel="submission" onClick={goToNextPage} heading="submission">
         <div>Page Six</div>
       </TabPanel>
