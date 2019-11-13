@@ -19,8 +19,10 @@ enum Colors {
   Box = '#eeeeff',
   Link = '#6558f5',
   Separator = '#3d4349',
+  PrimaryText = 'rgba(0, 0, 0, 0.87)',
   SecondaryText = '#44515d',
   ExpandedPanel = '#b2acfa',
+  TabBackground = '#f3c19d',
 }
 
 export default createMuiTheme({
@@ -34,6 +36,7 @@ export default createMuiTheme({
     separator: { main: Colors.Separator },
     box: { main: Colors.Box },
     text: {
+      primary: Colors.PrimaryText,
       secondary: Colors.SecondaryText,
     },
     background: {
@@ -66,6 +69,32 @@ export default createMuiTheme({
     },
     MuiExpansionPanelDetails: {
       root: { background: Colors.ExpandedPanel },
+    },
+    MuiFormControl: {
+      root: {
+        width: '100%',
+      },
+    },
+    MuiFormLabel: {
+      root: {
+        background: Colors.Background,
+      },
+    },
+    MuiInputBase: {
+      root: {
+        background: Colors.Background,
+      },
+    },
+    MuiTab: {
+      root: {
+        background: Colors.TabBackground,
+      },
+      textColorPrimary: {
+        '&$selected': {
+          color: Colors.PrimaryText,
+          fontWeight: 'bold',
+        },
+      },
     },
   },
 });

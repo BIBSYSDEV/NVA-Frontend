@@ -1,7 +1,11 @@
 import ContributorType, { Direction } from '../../types/contributor.types';
 import {
-    ADD_CONTRIBUTOR, ContributorActions, MOVE_CONTRIBUTOR, REMOVE_CONTRIBUTOR, RESET_CONTRIBUTORS,
-    UPDATE_CONTRIBUTOR
+  ADD_CONTRIBUTOR,
+  ContributorActions,
+  MOVE_CONTRIBUTOR,
+  REMOVE_CONTRIBUTOR,
+  RESET_CONTRIBUTORS,
+  UPDATE_CONTRIBUTOR,
 } from '../actions/contributorActions';
 
 export const contributorReducer = (state: ContributorType[] = [], action: ContributorActions) => {
