@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import Select from '@material-ui/core/Select';
+import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
+import AddIcon from '@material-ui/icons/Add';
 import Switch from '@material-ui/core/Switch';
 import ContributorArrows from './ContributorArrows';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -45,6 +47,7 @@ const StyledContributor = {
 
   DeleteIcon: styled(DeleteIcon)`
     grid-area: delete;
+    color: red;
   `,
   VerifyPerson: styled(Button)`
     grid-area: verify-person;
@@ -52,8 +55,28 @@ const StyledContributor = {
     margin-left: 1rem;
   `,
 
-  AddIcon: styled(AddCircleIcon)`
+  AddCircleIcon: styled(AddCircleIcon)`
     grid-area: icon;
+  `,
+
+  MainHeading: styled.div`
+    font-weight: bold;
+  `,
+
+  Box: styled(Box)`
+    background-color: ${({ theme }) => theme.palette.box.main};
+    padding: 1rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  `,
+
+  AddIcon: styled(AddIcon)`
+    height: 1rem;
+  `,
+
+  AuthorsButton: styled(Button)`
+    color: blue;
+    text-decoration: underline;
   `,
 };
 

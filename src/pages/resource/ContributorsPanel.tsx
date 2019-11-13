@@ -1,24 +1,16 @@
 import React, { useReducer } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import styled from 'styled-components';
 
 import mockContributors from '../../utils/testfiles/contributors.json';
 
-import Box from '../../components/Box';
 import TabPanel from '../../components/TabPanel/TabPanel';
 import { contributorReducer } from '../../redux/reducers/contributorReducer';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import Contributor from './contributors/Contributor';
 import ContributorLabel from './contributors/ContributorLabel';
-import ContributorSelector from './contributors/ContributorSelector';
+import ContributorValidator from './contributors/ContributorValidator';
 import StyledContributor from './contributors/StyledComponents';
-
-const StyledBox = styled(Box)`
-  background-color: ${({ theme }) => theme.palette.box.main};
-  padding: 1rem;
-  margin: 1rem;
-`;
 
 interface ContributorsPanelProps {
   onClick: (event: React.MouseEvent<any>) => void;
@@ -38,8 +30,8 @@ const ContributorsPanel: React.FC<ContributorsPanelProps> = ({ onClick, tabNumbe
       onClick={onClick}
       errors={errors.contributorsErrors}
       heading="Contributors">
-      <StyledBox>
-        <div>{t('contributors.authors')}</div>
+      <StyledContributor.Box>
+        <StyledContributor.MainHeading>{t('contributors.authors')}</StyledContributor.MainHeading>
         <StyledContributor.ContributorContainer>
           <div className="contributor-icon"></div>
           <div className="contributor-name">
@@ -59,11 +51,14 @@ const ContributorsPanel: React.FC<ContributorsPanelProps> = ({ onClick, tabNumbe
         {contributors.map(contributor => (
           <Contributor contributor={contributor} key={contributor.id} dispatch={dispatch} />
         ))}
-        <ContributorSelector />
-      </StyledBox>
-      <Box>
-        <div>Bidragsytere</div>
-      </Box>
+        <ContributorValidator />
+        <StyledContributor.AuthorsButton variant="text" startIcon={<StyledContributor.AddIcon />}>
+          {t('contributors.add_author')}
+        </StyledContributor.AuthorsButton>
+      </StyledContributor.Box>
+      <StyledContributor.Box>
+        <StyledContributor.MainHeading>Bidragsytere</StyledContributor.MainHeading>
+      </StyledContributor.Box>
     </TabPanel>
   );
 };

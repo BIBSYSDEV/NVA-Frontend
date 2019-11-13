@@ -4,7 +4,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { useTranslation } from 'react-i18next';
 import StyledContributor from './StyledComponents';
 
-const StyledContributorSelector = styled(StyledContributor.ContributorContainer)`
+const StyledContributorValidator = styled(StyledContributor.ContributorContainer)`
   grid-template-areas: 'icon name institution verify-person verify-person . delete';
 `;
 
@@ -18,24 +18,23 @@ const StyledPersonIcon = styled(StyledContributor.PersonIcon)`
   color: white;
 `;
 
-const ContributorSelector: React.FC = () => {
+const ContributorValidator: React.FC = () => {
   const { t } = useTranslation();
 
   return (
-    <StyledContributorSelector>
-      <StyledContributor.AddIcon />
+    <StyledContributorValidator>
+      <StyledContributor.AddCircleIcon />
       <StyledNameInput />
-      <StyledContributor.Select>
+      <StyledContributor.Select variant="outlined">
         <MenuItem value=""></MenuItem>
-        text
       </StyledContributor.Select>
       <StyledContributor.VerifyPerson color="primary" variant="contained">
         <StyledPersonIcon />
         {t('contributors.verify_person')}
       </StyledContributor.VerifyPerson>
       <StyledContributor.DeleteIcon />
-    </StyledContributorSelector>
+    </StyledContributorValidator>
   );
 };
 
-export default ContributorSelector;
+export default ContributorValidator;
