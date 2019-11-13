@@ -47,6 +47,13 @@
     "project_assosiation": "Project assosiation",
     "project": "Project"
   },
+  "contributors": {
+    "authors": "Authors",
+    "name": "Name",
+    "institution": "Institution",
+    "corresponding": "Corresponding",
+    "ORCID": "ORCID"
+  },
   "Next": "Next",
   "ORCID": "ORCID",
   "ORCID-link": "ORCID-link",

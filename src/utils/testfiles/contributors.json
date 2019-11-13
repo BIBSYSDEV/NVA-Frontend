@@ -1,0 +1,30 @@
+[
+  {
+    "id": "1",
+    "name": "Eirik Nilsen",
+    "institutions": ["Unit", "BIBSYS"],
+    "institutionChoice": "",
+    "orcid": "some orcid",
+    "corresponding": false
+  },
+  {
+    "id": "2",
+    "name": "Per Christian Bjelke",
+    "institutions": ["Unit", "BIBSYS"],
+    "institutionChoice": "",
+    "corresponding": false
+  },
+  {
+    "id": "3",
+    "name": "Sarah Serussi",
+    "institutions": ["Unit"],
+    "institutionChoice": "",
+    "corresponding": false
+  },
+  {
+    "id": "4",
+    "name": "Kjetil Møkkelgjerd",
+    "institutionChoice": "",
+    "corresponding": false
+  }
+]

@@ -53,9 +53,13 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ onClick, tabNumber 
   };
 
   return (
-    <TabPanel isHidden={tabNumber !== 1} ariaLabel="description" onClick={onClick} errors={errors.descriptionErrors}>
+    <TabPanel
+      isHidden={tabNumber !== 1}
+      ariaLabel="description"
+      onClick={onClick}
+      errors={errors.descriptionErrors}
+      heading="Description">
       <div className="resource-description-panel">
-        <div className="header">{t('Description')}</div>
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <Formik
             initialValues={initialFormikValues}
