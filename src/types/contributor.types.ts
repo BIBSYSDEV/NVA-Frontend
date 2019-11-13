@@ -12,7 +12,7 @@ export default interface ContributorType {
   corresponding?: boolean;
 }
 
-export const emptyContributor = {
+export const emptyContributor: ContributorType = {
   id: '',
   name: '',
   institutions: [],
