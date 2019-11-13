@@ -52,7 +52,8 @@
     "name": "Navn",
     "institution": "Institusjon",
     "corresponding": "Korresponderende",
-    "ORCID": "ORCID"
+    "ORCID": "ORCID",
+    "verify_person": "Verifiser"
   },
   "Next": "Neste",
   "ORCID": "ORCID",

@@ -12,12 +12,12 @@ import { RootStore } from '../../redux/reducers/rootReducer';
 import Contributor from './contributors/Contributor';
 import ContributorLabel from './contributors/ContributorLabel';
 import ContributorSelector from './contributors/ContributorSelector';
+import StyledContributor from './contributors/StyledComponents';
 
-const StyledBox = styled.div`
+const StyledBox = styled(Box)`
   background-color: ${({ theme }) => theme.palette.box.main};
-  display: grid;
-  grid-template-areas: 'icon name institution switch orcid arrows delete';
-  grid-template-columns: 5% 30% 18% 10% 5% 5% 5%;
+  padding: 1rem;
+  margin: 1rem;
 `;
 
 interface ContributorsPanelProps {
@@ -38,9 +38,9 @@ const ContributorsPanel: React.FC<ContributorsPanelProps> = ({ onClick, tabNumbe
       onClick={onClick}
       errors={errors.contributorsErrors}
       heading="Contributors">
-      <Box>
+      <StyledBox>
         <div>{t('contributors.authors')}</div>
-        <StyledBox>
+        <StyledContributor.ContributorContainer>
           <div className="contributor-icon"></div>
           <div className="contributor-name">
             <ContributorLabel>{t('contributors.name')}</ContributorLabel>
@@ -55,12 +55,12 @@ const ContributorsPanel: React.FC<ContributorsPanelProps> = ({ onClick, tabNumbe
             <ContributorLabel>{t('contributors.ORCID')}</ContributorLabel>
           </div>
           <div className="contributor-delete-icon"></div>
-        </StyledBox>
+        </StyledContributor.ContributorContainer>
         {contributors.map(contributor => (
           <Contributor contributor={contributor} key={contributor.id} dispatch={dispatch} />
         ))}
         <ContributorSelector />
-      </Box>
+      </StyledBox>
       <Box>
         <div>Bidragsytere</div>
       </Box>

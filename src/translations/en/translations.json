@@ -52,7 +52,8 @@
     "name": "Name",
     "institution": "Institution",
     "corresponding": "Corresponding",
-    "ORCID": "ORCID"
+    "ORCID": "ORCID",
+    "verify_person": "Verify"
   },
   "Next": "Next",
   "ORCID": "ORCID",

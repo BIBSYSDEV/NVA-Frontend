@@ -2,50 +2,14 @@ import React, { Dispatch } from 'react';
 import styled from 'styled-components';
 
 import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
-import Switch from '@material-ui/core/Switch';
-import DeleteIcon from '@material-ui/icons/Delete';
-import Person from '@material-ui/icons/Person';
 
 import { moveContributor, removeContributor, updateContributor } from '../../../redux/actions/contributorActions';
 import ContributorType from '../../../types/contributor.types';
-import ContributorArrows from './ContributorArrows';
+import ContributorStyles from './StyledComponents';
 
-const StyledContributor = styled.div`
-  background-color: ${({ theme }) => theme.palette.box.main};
-  display: grid;
-  grid-template-areas: 'icon name institution switch orcid arrows delete';
-  grid-template-columns: 5% 30% 18% 10% 5% 5% 5%;
+const StyledContainer = styled(ContributorStyles.ContributorContainer)`
   margin-bottom: 0.5rem;
   align-items: center;
-`;
-
-const StyledPersonIcon = styled(Person)`
-  grid-area: icon;
-`;
-
-const StyledName = styled.div`
-  grid-area: name;
-`;
-
-const StyledSelect = styled(Select)`
-  grid-area: institution;
-`;
-
-const StyledCorrespondingAuthor = styled(Switch)`
-  grid-area: switch;
-`;
-
-const StyledOrcidIcon = styled.div`
-  grid-area: orcid;
-`;
-
-const StyledContributorsArrows = styled(ContributorArrows)`
-  grid-area: arrows;
-`;
-
-const StyledDeleteIcon = styled(DeleteIcon)`
-  grid-area: delete;
 `;
 
 interface ContributorProps {
@@ -75,10 +39,13 @@ const Contributor: React.FC<ContributorProps> = ({ contributor, dispatch }) => {
   };
 
   return (
-    <StyledContributor>
-      <StyledPersonIcon />
-      <StyledName>{contributor.name}</StyledName>
-      <StyledSelect onChange={handleInstitutionChange(contributor)} value={contributor.selectedInstitution || ''}>
+    <StyledContainer>
+      <ContributorStyles.PersonIcon />
+      <ContributorStyles.Name>{contributor.name}</ContributorStyles.Name>
+      <ContributorStyles.Select
+        onChange={handleInstitutionChange(contributor)}
+        value={contributor.selectedInstitution || ''}
+        variant="outlined">
         <MenuItem value="" key="-1" />
         {contributor.institutions &&
           contributor.institutions.map(institution => (
@@ -86,19 +53,19 @@ const Contributor: React.FC<ContributorProps> = ({ contributor, dispatch }) => {
               {institution}
             </MenuItem>
           ))}
-      </StyledSelect>
-      <StyledCorrespondingAuthor
+      </ContributorStyles.Select>
+      <ContributorStyles.CorrespondingAuthor
         onChange={handleCorrespondingAuthorChange(contributor)}
         checked={contributor.corresponding}
       />
-      <StyledOrcidIcon>
+      <ContributorStyles.OrcidIcon>
         {contributor.orcid && (
           <img src="https://orcid.org/sites/default/files/images/orcid_24x24.png" alt="ORCID iD icon" />
         )}
-      </StyledOrcidIcon>
-      <StyledContributorsArrows contributor={contributor} onMoveContributor={onMoveContributor} />
-      <StyledDeleteIcon onClick={() => deleteContributor(contributor)} />
-    </StyledContributor>
+      </ContributorStyles.OrcidIcon>
+      <ContributorStyles.ContributorsArrows contributor={contributor} onMoveContributor={onMoveContributor} />
+      <ContributorStyles.DeleteIcon onClick={() => deleteContributor(contributor)} />
+    </StyledContainer>
   );
 };
 
