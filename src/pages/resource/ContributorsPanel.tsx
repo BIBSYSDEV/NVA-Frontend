@@ -59,9 +59,7 @@ const ContributorsPanel: React.FC<ContributorsPanelProps> = ({ onClick, tabNumbe
         {contributors.map(contributor => (
           <Contributor contributor={contributor} key={contributor.id} dispatch={dispatch} />
         ))}
-        <div>
-          <ContributorSelector />
-        </div>
+        <ContributorSelector />
       </Box>
       <Box>
         <div>Bidragsytere</div>
