@@ -6,7 +6,7 @@ const INIT_LOGIN = 'initiate login';
 const INIT_LOGOUT = 'initiate logout';
 const REFRESH_TOKEN_SUCCESS = 'refresh token success';
 export const LOGIN_SUCCESS = 'login success';
-const LOGOUT_SUCCESS = 'logout success';
+export const LOGOUT_SUCCESS = 'logout success';
 
 export const initLogin = (): InitLoginAction => ({
   type: INIT_LOGIN,

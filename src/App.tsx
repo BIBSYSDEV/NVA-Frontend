@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { mockUser } from './api/mock-interceptor';
 import { getCurrentAuthenticatedUser } from './api/user';
 import Breadcrumbs from './layout/Breadcrumbs';
 import Footer from './layout/Footer';
@@ -18,7 +17,6 @@ import Resource from './pages/resource/Resource';
 import Search from './pages/search/Search';
 import User from './pages/user/User';
 import Workspace from './pages/workspace/Workspace';
-import { setUser } from './redux/actions/userActions';
 import { RootStore } from './redux/reducers/rootReducer';
 import awsConfig from './utils/aws-config';
 import { USE_MOCK_DATA } from './utils/constants';
@@ -40,14 +38,15 @@ const StyledPageBody = styled.div`
 `;
 
 const App: React.FC = () => {
-  if (!USE_MOCK_DATA) {
-    Amplify.configure(awsConfig);
-  }
-
   const dispatch = useDispatch();
   const { t } = useTranslation('feedback');
   const { closeSnackbar, enqueueSnackbar } = useSnackbar();
   const feedback = useSelector((store: RootStore) => store.feedback);
+  const auth = useSelector((store: RootStore) => store.auth);
+
+  if (!USE_MOCK_DATA && !auth.isLoggedIn) {
+    Amplify.configure(awsConfig);
+  }
 
   useEffect(() => {
     if (feedback.length > 0) {
@@ -63,24 +62,14 @@ const App: React.FC = () => {
   }, [feedback, enqueueSnackbar, closeSnackbar, t]);
 
   useEffect(() => {
-    if (!USE_MOCK_DATA) {
-      const updateUser = async () => {
-        dispatch(getCurrentAuthenticatedUser());
-      };
-      Hub.listen('auth', updateUser);
-      updateUser();
-      return () => Hub.remove('auth', updateUser);
-    } else {
-      dispatch(setUser(mockUser));
+    if (auth.isLoggedIn) {
+      dispatch(getCurrentAuthenticatedUser());
     }
-  }, [dispatch]);
-
-  useEffect(() => {
     if (!USE_MOCK_DATA) {
       Hub.listen('auth', data => hubListener(data, dispatch));
       return () => Hub.remove('auth', data => hubListener(data, dispatch));
     }
-  }, [dispatch]);
+  }, [dispatch, auth.isLoggedIn]);
 
   return (
     <BrowserRouter>
