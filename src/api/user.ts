@@ -11,13 +11,13 @@ import {
 } from '../redux/actions/authActions';
 import { clearFeedback } from '../redux/actions/feedbackActions';
 import { clearUser, setUser, setUserFailure } from '../redux/actions/userActions';
-import { useMockData } from '../utils/constants';
+import { USE_MOCK_DATA } from '../utils/constants';
 import { mockUser } from './mock-interceptor';
 
 export const login = () => {
   return async (dispatch: Dispatch) => {
     dispatch(initLogin());
-    if (useMockData) {
+    if (USE_MOCK_DATA) {
       dispatch(setUser(mockUser));
       dispatch(loginSuccess());
     } else {
@@ -62,7 +62,7 @@ export const refreshToken = () => {
 export const logout = () => {
   return async (dispatch: Dispatch) => {
     dispatch(initLogout());
-    if (useMockData) {
+    if (USE_MOCK_DATA) {
       dispatch(clearUser());
       dispatch(clearFeedback());
       dispatch(logoutSuccess());

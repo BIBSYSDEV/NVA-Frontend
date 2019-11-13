@@ -7,9 +7,9 @@ import Switch from '@material-ui/core/Switch';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Person from '@material-ui/icons/Person';
 
-import ContributorArrows from './ContributorArrows';
+import { moveContributor, removeContributor, updateContributor } from '../../../redux/actions/contributorActions';
 import ContributorType from '../../../types/contributor.types';
-import { updateContributor, removeContributor, moveContributor } from '../../../redux/actions/contributorActions';
+import ContributorArrows from './ContributorArrows';
 
 const StyledContributor = styled.div`
   background-color: ${({ theme }) => theme.palette.box.main};
@@ -28,7 +28,7 @@ const StyledName = styled.div`
   grid-area: name;
 `;
 
-const StyledInstitution = styled(Select)`
+const StyledSelect = styled(Select)`
   grid-area: institution;
 `;
 
@@ -78,7 +78,7 @@ const Contributor: React.FC<ContributorProps> = ({ contributor, dispatch }) => {
     <StyledContributor>
       <StyledPersonIcon />
       <StyledName>{contributor.name}</StyledName>
-      <StyledInstitution onChange={handleInstitutionChange(contributor)} value={contributor.selectedInstitution}>
+      <StyledSelect onChange={handleInstitutionChange(contributor)} value={contributor.selectedInstitution || ''}>
         <MenuItem value="" key="-1" />
         {contributor.institutions &&
           contributor.institutions.map(institution => (
@@ -86,7 +86,7 @@ const Contributor: React.FC<ContributorProps> = ({ contributor, dispatch }) => {
               {institution}
             </MenuItem>
           ))}
-      </StyledInstitution>
+      </StyledSelect>
       <StyledCorrespondingAuthor
         onChange={handleCorrespondingAuthorChange(contributor)}
         checked={contributor.corresponding}

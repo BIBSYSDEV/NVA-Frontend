@@ -16,7 +16,7 @@ export const emptyContributor = {
   id: '',
   name: '',
   institutions: [],
-  institutionChoice: '',
+  selectedInstitution: '',
   orcid: '',
   corresponding: false,
 };

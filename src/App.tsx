@@ -4,12 +4,13 @@ import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import styled from 'styled-components';
 
 import { mockUser } from './api/mock-interceptor';
 import { getCurrentAuthenticatedUser } from './api/user';
 import Breadcrumbs from './layout/Breadcrumbs';
-import Header from './layout/header/Header';
 import Footer from './layout/Footer';
+import Header from './layout/header/Header';
 import AdminMenu from './pages/dashboard/AdminMenu';
 import Dashboard from './pages/dashboard/Dashboard';
 import NotFound from './pages/errorpages/NotFound';
@@ -20,9 +21,8 @@ import Workspace from './pages/workspace/Workspace';
 import { setUser } from './redux/actions/userActions';
 import { RootStore } from './redux/reducers/rootReducer';
 import awsConfig from './utils/aws-config';
-import { useMockData } from './utils/constants';
+import { USE_MOCK_DATA } from './utils/constants';
 import { hubListener } from './utils/hub-listener';
-import styled from 'styled-components';
 
 const StyledApp = styled.div`
   height: 100vh;
@@ -40,7 +40,7 @@ const StyledPageBody = styled.div`
 `;
 
 const App: React.FC = () => {
-  if (!useMockData) {
+  if (!USE_MOCK_DATA) {
     Amplify.configure(awsConfig);
   }
 
@@ -63,7 +63,7 @@ const App: React.FC = () => {
   }, [feedback, enqueueSnackbar, closeSnackbar, t]);
 
   useEffect(() => {
-    if (!useMockData) {
+    if (!USE_MOCK_DATA) {
       const updateUser = async () => {
         dispatch(getCurrentAuthenticatedUser());
       };
@@ -76,7 +76,7 @@ const App: React.FC = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (!useMockData) {
+    if (!USE_MOCK_DATA) {
       Hub.listen('auth', data => hubListener(data, dispatch));
       return () => Hub.remove('auth', data => hubListener(data, dispatch));
     }

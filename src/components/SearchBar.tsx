@@ -1,5 +1,3 @@
-import '../styles/pages/search.scss';
-
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
@@ -9,10 +7,26 @@ import { IconButton, InputBase, Paper } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 
 import { search } from '../api/search';
+import styled from 'styled-components';
 
 interface SearchBarProps {
   resetSearchInput: boolean;
 }
+
+const StyledPaper = styled(Paper)`
+  margin-bottom: 3rem;
+`;
+
+const StyledForm = styled.form`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const StyledInputBase = styled(InputBase)`
+  margin-left: 1rem;
+  min-width: 50vw;
+  max-width: 65vw;
+`;
 
 const SearchBar: React.FC<SearchBarProps> = ({ resetSearchInput: resetSearch }) => {
   const { t } = useTranslation();
@@ -43,23 +57,20 @@ const SearchBar: React.FC<SearchBarProps> = ({ resetSearchInput: resetSearch }) 
   };
 
   return (
-    <div className="search-bar">
-      <Paper>
-        <form className="container" onSubmit={handleSubmit}>
-          <InputBase
-            autoFocus
-            data-testid="search-input"
-            className="input"
-            placeholder={t('Search')}
-            onChange={handleChange}
-            value={searchTerm}
-          />
-          <IconButton data-testid="search-button" className="search-button" onClick={handleSearch}>
-            <SearchIcon />
-          </IconButton>
-        </form>
-      </Paper>
-    </div>
+    <StyledPaper>
+      <StyledForm onSubmit={handleSubmit}>
+        <StyledInputBase
+          autoFocus
+          data-testid="search-input"
+          placeholder={t('Search')}
+          onChange={handleChange}
+          value={searchTerm}
+        />
+        <IconButton type="submit" data-testid="search-button">
+          <SearchIcon />
+        </IconButton>
+      </StyledForm>
+    </StyledPaper>
   );
 };
 

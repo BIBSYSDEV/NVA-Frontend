@@ -1,5 +1,3 @@
-import '../../styles/pages/search.scss';
-
 import Pagination from 'material-ui-flat-pagination';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -11,13 +9,18 @@ import ImageIcon from '@material-ui/icons/Image';
 
 import { search } from '../../api/search';
 import { RootStore } from '../../redux/reducers/rootReducer';
-import { Resource } from '../../types/resource.types';
+import { ResourceMetadata } from '../../types/resource.types';
 import { SEARCH_RESULTS_PER_PAGE } from '../../utils/constants';
+import styled from 'styled-components';
 
 interface SearchResultsProps {
-  resources: Resource[];
+  resources: ResourceMetadata[];
   searchTerm: string;
 }
+
+const StyledSearchResults = styled.div`
+  padding-bottom: 1rem;
+`;
 
 const SearchResults: React.FC<SearchResultsProps> = ({ resources, searchTerm }) => {
   const { t } = useTranslation();
@@ -35,7 +38,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ resources, searchTerm }) 
   };
 
   return (
-    <div className="search-results" data-testid="search-results">
+    <StyledSearchResults data-testid="search-results">
       {t('Results', { count: results.totalNumberOfHits, term: searchTerm })} ({offset + 1} - {offset + resources.length}
       )
       <List>
@@ -49,11 +52,11 @@ const SearchResults: React.FC<SearchResultsProps> = ({ resources, searchTerm }) 
                 data-testid="result-list-item"
                 primary={resource.titles.en}
                 secondary={
-                  <React.Fragment>
+                  <>
                     <Typography component="span">{resource.creators}</Typography>
                     <br />
                     {resource.publisher}
-                  </React.Fragment>
+                  </>
                 }>
                 {' '}
               </ListItemText>
@@ -67,7 +70,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ resources, searchTerm }) 
         total={results.totalNumberOfHits}
         onClick={(_, offset) => updateSearch(offset)}
       />
-    </div>
+    </StyledSearchResults>
   );
 };
 

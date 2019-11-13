@@ -17,7 +17,6 @@ const OrcidPublicationPanel: React.FC<OrcidPublicationPanelProps> = ({ expanded,
     <PublicationExpansionPanel
       headerLabel={t('Suggestions from ORCID')}
       icon={<SearchIcon className="icon" />}
-      className="publication-selector"
       id="orcid-publication-panel"
       expanded={expanded}
       onChange={onChange}

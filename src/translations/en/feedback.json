@@ -1,5 +1,8 @@
 {
   "ErrorMessage": {
+    "Could not create resource": "Could not create resource",
+    "Could not update resource": "Could not update resource",
+    "Could not get resource": "Could not get resource",
     "Failed to get user": "Failed to get user",
     "Login failed": "Login failed",
     "ORCID login failed": "ORCID login failed",
@@ -7,6 +10,8 @@
     "Search failed": "Search failed"
   },
   "SuccessMessage": {
-    "Login success": "Logged in"
+    "Login success": "Logged in",
+    "New resource created": "New resource created",
+    "Updated resource": "Updated resource"
   }
 }
