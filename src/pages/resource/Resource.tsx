@@ -1,5 +1,3 @@
-import '../../styles/pages/resource/resource.scss';
-
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 
@@ -8,6 +6,13 @@ import { RootStore } from '../../redux/reducers/rootReducer';
 import DescriptionPanel from './DescriptionPanel';
 import PublicationPanel from './PublicationPanel';
 import { ResourceFormTabs } from './ResourceFormTabs';
+import styled from 'styled-components';
+
+const StyledResource = styled.div`
+  align-self: flex-start;
+  flex-grow: 1;
+  padding: 5rem;
+`;
 
 const Resource: React.FC = () => {
   const [tabNumber, setTabNumber] = useState(0);
@@ -23,7 +28,7 @@ const Resource: React.FC = () => {
   };
 
   return (
-    <div className="resource">
+    <StyledResource>
       <ResourceFormTabs tabNumber={tabNumber} onChange={handleChange} />
       <PublicationPanel tabNumber={tabNumber} onClick={goToNextPage} />
       <DescriptionPanel tabNumber={tabNumber} onClick={goToNextPage} />
@@ -43,7 +48,7 @@ const Resource: React.FC = () => {
       <TabPanel isHidden={tabNumber !== 5} ariaLabel="submission" onClick={goToNextPage}>
         <div>Page Six</div>
       </TabPanel>
-    </div>
+    </StyledResource>
   );
 };
 

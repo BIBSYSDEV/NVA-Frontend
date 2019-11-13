@@ -1,5 +1,3 @@
-import '../../styles/pages/resource/resource-description.scss';
-
 import { Field, Form, Formik } from 'formik';
 import { Select, TextField } from 'formik-material-ui';
 import React from 'react';
@@ -18,6 +16,39 @@ import { defaultLanguage, languages } from '../../translations/i18n';
 import { ResourceFormTabs } from '../../types/resource.types';
 import publications from '../../utils/testfiles/projects_random_generated.json';
 import FormikDatePicker from './FormikDatePicker';
+import styled from 'styled-components';
+
+const StyledDescriptionPanel = styled.div`
+  width: 100%;
+  padding-top: 2rem;
+
+  > header {
+    font-size: 2rem;
+    font-weight: bold;
+    line-height: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  > section {
+    background-color: ${({ theme }) => theme.palette.box.main};
+    padding: 1rem;
+  }
+`;
+
+const MultipleFieldWrapper = styled.div`
+  display: flex;
+`;
+
+const StyledFieldWrapper = styled.div`
+  padding: 1rem;
+  flex: 1 0 40%;
+`;
+
+const StyledFieldHeader = styled.header`
+  font-size: 1.5rem;
+  margin-left: 1rem;
+  margin-top: 2rem;
+`;
 
 interface DescriptionPanelProps {
   onClick: (event: React.MouseEvent<any>) => void;
@@ -54,8 +85,8 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ onClick, tabNumber 
 
   return (
     <TabPanel isHidden={tabNumber !== 1} ariaLabel="description" onClick={onClick} errors={errors.descriptionErrors}>
-      <div className="resource-description-panel">
-        <div className="header">{t('Description')}</div>
+      <StyledDescriptionPanel>
+        <header>{t('Description')}</header>
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <Formik
             initialValues={initialFormikValues}
@@ -67,20 +98,19 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ onClick, tabNumber 
               }, 400);
             }}>
             {values => (
-              <div className="panel-content">
+              <section>
                 <Form onBlur={() => handleValidation(values)}>
-                  <div className="field-wrapper">
+                  <StyledFieldWrapper>
                     <Field
                       aria-label="title"
                       name="title"
                       label={t('resource_form.title')}
                       component={TextField}
                       fullWidth
-                      className="input-field"
                       variant="outlined"
                     />
-                  </div>
-                  <div className="field-wrapper">
+                  </StyledFieldWrapper>
+                  <StyledFieldWrapper>
                     <Field
                       aria-label="abstract"
                       name="abstract"
@@ -91,8 +121,8 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ onClick, tabNumber 
                       fullWidth
                       variant="outlined"
                     />
-                  </div>
-                  <div className="field-wrapper">
+                  </StyledFieldWrapper>
+                  <StyledFieldWrapper>
                     <Field
                       aria-label="description"
                       name="description"
@@ -103,9 +133,9 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ onClick, tabNumber 
                       fullWidth
                       variant="outlined"
                     />
-                  </div>
-                  <div className="multiple-field-wrapper ">
-                    <div className="field-wrapper ">
+                  </StyledFieldWrapper>
+                  <MultipleFieldWrapper>
+                    <StyledFieldWrapper>
                       <Field
                         aria-label="NPI"
                         name="NPI"
@@ -114,8 +144,8 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ onClick, tabNumber 
                         variant="outlined"
                         fullWidth
                       />
-                    </div>
-                    <div className="field-wrapper">
+                    </StyledFieldWrapper>
+                    <StyledFieldWrapper>
                       <Field
                         aria-label="keyword"
                         name="keyword"
@@ -124,15 +154,15 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ onClick, tabNumber 
                         fullWidth
                         variant="outlined"
                       />
-                    </div>
-                  </div>
+                    </StyledFieldWrapper>
+                  </MultipleFieldWrapper>
 
-                  <div className="multiple-field-wrapper ">
-                    <div className="field-wrapper ">
+                  <MultipleFieldWrapper>
+                    <StyledFieldWrapper>
                       <Field aria-label="date" component={FormikDatePicker} name="date" />
-                    </div>
+                    </StyledFieldWrapper>
 
-                    <div className="field-wrapper">
+                    <StyledFieldWrapper>
                       <Field
                         name="language"
                         aria-label="language"
@@ -149,12 +179,11 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ onClick, tabNumber 
                           </MenuItem>
                         ))}
                       </Field>
-                    </div>
-                  </div>
+                    </StyledFieldWrapper>
+                  </MultipleFieldWrapper>
 
-                  <div className="header">{t('resource_form.project_assosiation')}</div>
-
-                  <div className="field-wrapper">
+                  <StyledFieldHeader>{t('resource_form.project_assosiation')}</StyledFieldHeader>
+                  <StyledFieldWrapper>
                     <Field
                       name="project"
                       aria-label="project"
@@ -163,18 +192,18 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ onClick, tabNumber 
                       fullWidth
                       variant="outlined">
                       {publications.map(publication => (
-                        <MenuItem value={publication.id} className="pub-item" key={publication.id}>
+                        <MenuItem value={publication.id} key={publication.id}>
                           {`${publication.name} - ${publication.id}`}
                         </MenuItem>
                       ))}
                     </Field>
-                  </div>
+                  </StyledFieldWrapper>
                 </Form>
-              </div>
+              </section>
             )}
           </Formik>
         </MuiPickersUtilsProvider>
-      </div>
+      </StyledDescriptionPanel>
     </TabPanel>
   );
 };
