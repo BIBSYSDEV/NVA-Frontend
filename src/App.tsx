@@ -44,9 +44,11 @@ const App: React.FC = () => {
   const feedback = useSelector((store: RootStore) => store.feedback);
   const auth = useSelector((store: RootStore) => store.auth);
 
-  if (!USE_MOCK_DATA && !auth.isLoggedIn) {
-    Amplify.configure(awsConfig);
-  }
+  useEffect(() => {
+    if (!USE_MOCK_DATA && !auth.isLoggedIn) {
+      Amplify.configure(awsConfig);
+    }
+  }, [auth.isLoggedIn]);
 
   useEffect(() => {
     if (feedback.length > 0) {
@@ -62,9 +64,7 @@ const App: React.FC = () => {
   }, [feedback, enqueueSnackbar, closeSnackbar, t]);
 
   useEffect(() => {
-    if (auth.isLoggedIn) {
-      dispatch(getCurrentAuthenticatedUser());
-    }
+    dispatch(getCurrentAuthenticatedUser());
     if (!USE_MOCK_DATA) {
       Hub.listen('auth', data => hubListener(data, dispatch));
       return () => Hub.remove('auth', data => hubListener(data, dispatch));
