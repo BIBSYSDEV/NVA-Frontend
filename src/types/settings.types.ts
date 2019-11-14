@@ -1,5 +1,5 @@
 export enum Language {
-  NORWEGIAN_BOKMAL = 'nb',
-  NORWEGIAN_NYNORSK = 'nn',
-  ENGLISH = 'en',
+  NORWEGIAN_BOKMAL = 'nb-NO',
+  NORWEGIAN_NYNORSK = 'nn-NO',
+  ENGLISH = 'en-US',
 }
