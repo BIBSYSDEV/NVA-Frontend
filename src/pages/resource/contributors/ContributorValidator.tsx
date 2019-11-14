@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import MenuItem from '@material-ui/core/MenuItem';
+import PersonIcon from '@material-ui/icons/Person';
 import { useTranslation } from 'react-i18next';
 import StyledContributor from './StyledComponents';
 
@@ -10,12 +11,8 @@ const StyledContributorValidator = styled(StyledContributor.ContributorContainer
 
 const StyledNameInput = styled(StyledContributor.Name)`
   height: 2rem;
-  background-color: white;
+  background-color: ${({ theme }) => theme.palette.background.default};
   margin-right: 1rem;
-`;
-
-const StyledPersonIcon = styled(StyledContributor.PersonIcon)`
-  color: white;
 `;
 
 const ContributorValidator: React.FC = () => {
@@ -28,8 +25,7 @@ const ContributorValidator: React.FC = () => {
       <StyledContributor.Select variant="outlined">
         <MenuItem value=""></MenuItem>
       </StyledContributor.Select>
-      <StyledContributor.VerifyPerson color="primary" variant="contained">
-        <StyledPersonIcon />
+      <StyledContributor.VerifyPerson color="primary" variant="contained" startIcon={<PersonIcon />}>
         {t('contributors.verify_person')}
       </StyledContributor.VerifyPerson>
       <StyledContributor.DeleteIcon />
