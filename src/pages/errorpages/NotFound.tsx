@@ -1,9 +1,7 @@
-import '../../styles/pages/not_found.scss';
-
 import React from 'react';
 
 const NotFound: React.FC = () => {
-  return <div className="not_found">404</div>;
+  return <p>404</p>;
 };
 
 export default NotFound;
