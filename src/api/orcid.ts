@@ -28,7 +28,7 @@ export const getOrcidInfo = (orcidCode: string) => {
       } else {
         dispatch(orcidRequestFailure('ErrorMessage.ORCID request failed'));
       }
-    } catch (e) {
+    } catch {
       dispatch(orcidRequestFailure('ErrorMessage.ORCID request failed'));
     }
   };
