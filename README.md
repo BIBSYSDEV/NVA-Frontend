@@ -4,18 +4,22 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 We are using environment variables in this project.<br>
 To be able to run this app, you need to create a .env file with the following fields:<br>
-`REACT_APP_AWS_COGNITO_IDENTITY_POOL_ID=eu-west-1:XXXXXXXXXXXXXXXXXXXXXXX`<br>
+`REACT_APP_AWS_COGNITO_IDENTITY_POOL_ID=eu-west-1:XXXXXXXXXX`<br>
 `REACT_APP_AWS_REGION=eu-west-1`<br>
-`REACT_APP_AWS_USER_POOLS_ID=eu-west-1_XXXXXXXXXXXX`<br>
-`REACT_APP_AWS_USER_POOLS_WEB_CLIENT_ID=XXXXXXXXXXXXXXXXXXXXXXXXX`<br>
+`REACT_APP_AWS_USER_POOLS_ID=eu-west-XXXXXXXXXX`<br>
+`REACT_APP_AWS_USER_POOLS_WEB_CLIENT_ID=XXXXXXXXXX`<br>
 `REACT_APP_DOMAIN=XXXXXXXXX.auth.eu-west-1.amazoncognito.com`<br>
+`REACT_APP_ORCID_CLIENT_ID=XXXXXXXXXX`<br>
+`REACT_APP_ORCID_CLIENT_SECRET=XXXXXXXXXX`<br>
+`REACT_APP_ORCID_REDIRECT_URI=https://nva.unit.no`<br>
+`REACT_APP_ORCID_BASE_URL=https://sandbox.orcid.org`<br>
 
 To use mock data, you need to add this variable to the .env file:<br>
 `REACT_APP_USE_MOCK=true`
 
 # Generate code coverage
 
-`npm run test:cypress --coverage`
+`npx nyc report`
 
 coverage report: `coverage/lcov-report/index.html`
 
@@ -29,9 +33,13 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.<br>
 You will also see any lint errors in the console.
 
-### `npm test`
+### `npm run test:cypress`
 
-Runs cypress
+Runs cypress tests
+
+### `npm run test:react`
+
+Runs React testing library tests
 
 ### `npm run build`
 
