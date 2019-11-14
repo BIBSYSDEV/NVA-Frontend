@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 import { Button } from '@material-ui/core';
 
-import { USE_MOCK_DATA } from '../../utils/constants';
+import { ORCID_SIGN_IN_URL, USE_MOCK_DATA } from '../../utils/constants';
 
 const StyledButtonHolder = styled.div`
   margin: 3rem 0;
@@ -48,7 +48,7 @@ const OrcidModal: React.FC<OrcidModalProps> = ({ setOpen }) => {
       history.push('/user?code=123456');
     } else {
       window.open(
-        'https://sandbox.orcid.org/signin?oauth&client_id=0000-0002-1223-3173&response_type=code&scope=/authenticate&redirect_uri=http://localhost:3000',
+        ORCID_SIGN_IN_URL,
         '_blank',
         'toolbar=no, scrollbars=yes, width=500, height=600, top=500, left=500, rel="noopener noreferrer"'
       );

@@ -40,14 +40,11 @@ const StyledPageBody = styled.div`
 `;
 
 const App: React.FC = () => {
-  if (!USE_MOCK_DATA) {
-    Amplify.configure(awsConfig);
-  }
-
   const dispatch = useDispatch();
   const { t } = useTranslation('feedback');
   const { closeSnackbar, enqueueSnackbar } = useSnackbar();
   const feedback = useSelector((store: RootStore) => store.feedback);
+  const auth = useSelector((store: RootStore) => store.auth);
 
   useEffect(() => {
     if (feedback.length > 0) {
@@ -63,24 +60,17 @@ const App: React.FC = () => {
   }, [feedback, enqueueSnackbar, closeSnackbar, t]);
 
   useEffect(() => {
-    if (!USE_MOCK_DATA) {
-      const updateUser = async () => {
-        dispatch(getCurrentAuthenticatedUser());
-      };
-      Hub.listen('auth', updateUser);
-      updateUser();
-      return () => Hub.remove('auth', updateUser);
-    } else {
+    if (USE_MOCK_DATA) {
       dispatch(setUser(mockUser));
-    }
-  }, [dispatch]);
-
-  useEffect(() => {
-    if (!USE_MOCK_DATA) {
+    } else {
+      if (!auth.isLoggedIn) {
+        Amplify.configure(awsConfig);
+      }
+      dispatch(getCurrentAuthenticatedUser());
       Hub.listen('auth', data => hubListener(data, dispatch));
       return () => Hub.remove('auth', data => hubListener(data, dispatch));
     }
-  }, [dispatch]);
+  }, [dispatch, auth.isLoggedIn]);
 
   return (
     <BrowserRouter>
