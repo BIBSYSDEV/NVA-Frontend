@@ -11,8 +11,8 @@ To be able to run this app, you need to create a .env file with the following fi
 `REACT_APP_DOMAIN=XXXXXXXXX.auth.eu-west-1.amazoncognito.com`<br>
 `REACT_APP_ORCID_CLIENT_ID=XXXXXXXXXX`<br>
 `REACT_APP_ORCID_CLIENT_SECRET=XXXXXXXXXX`<br>
-`REACT_APP_ORCID_REDIRECT_URI=https://nva.unit.no`<br>
-`REACT_APP_ORCID_BASE_URL=https://sandbox.orcid.org`<br>
+`REACT_APP_ORCID_REDIRECT_URI=XXXXXXXXXX`<br>
+`REACT_APP_ORCID_BASE_URL=XXXXXXXXXX`<br>
 
 To use mock data, you need to add this variable to the .env file:<br>
 `REACT_APP_USE_MOCK=true`
