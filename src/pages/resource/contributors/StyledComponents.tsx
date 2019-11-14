@@ -9,6 +9,11 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import Person from '@material-ui/icons/Person';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 
+const BaseSelectStyle = styled(Select)`
+  height: 2rem;
+  background-color: white;
+`;
+
 const StyledContributor = {
   ContributorContainer: styled.div`
     background-color: ${({ theme }) => theme.palette.box.main};
@@ -27,10 +32,14 @@ const StyledContributor = {
     grid-area: name;
   `,
 
-  Select: styled(Select)`
+  Select: BaseSelectStyle,
+
+  TypeSelect: styled(BaseSelectStyle)`
+    grid-area: type;
+  `,
+
+  InstitutionSelect: styled(BaseSelectStyle)`
     grid-area: institution;
-    height: 2rem;
-    background-color: white;
   `,
 
   CorrespondingAuthor: styled(Switch)`
