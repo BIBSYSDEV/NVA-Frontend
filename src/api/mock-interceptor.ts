@@ -3,7 +3,7 @@ import MockAdapter from 'axios-mock-adapter';
 
 import OrcidResponse from '../types/orcid.types';
 import User, { ApplicationName, RoleName } from '../types/user.types';
-import { ApiBaseUrl, ORCID_URL, USE_MOCK_DATA } from '../utils/constants';
+import { ApiBaseUrl, ORCID_OAUTH_URL, USE_MOCK_DATA } from '../utils/constants';
 import mockResources from '../utils/testfiles/resources_45_random_results_generated.json';
 
 export const mockUser: User = {
@@ -38,7 +38,7 @@ if (USE_MOCK_DATA) {
   mock.onGet(new RegExp(`/${ApiBaseUrl}/*`)).reply(200, mockUser);
 
   // ORCID
-  mock.onPost(ORCID_URL).reply(200, mockOrcidResponse);
+  mock.onPost(ORCID_OAUTH_URL).reply(200, mockOrcidResponse);
 
   mock.onAny().reply(function(config) {
     throw new Error('Could not find mock for ' + config.url);

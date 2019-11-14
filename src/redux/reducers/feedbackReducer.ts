@@ -11,7 +11,7 @@ import {
   UPDATE_RESOURCE_SUCCESS,
 } from '../actions/resourceActions';
 import { SEARCH_FAILURE, SearchActions } from '../actions/searchActions';
-import { SET_USER_FAILURE, UserActions } from '../actions/userActions';
+import { SET_USER_FAILURE, SET_USER_SUCCESS, UserActions } from '../actions/userActions';
 
 export const feedbackReducer = (
   state: FeedbackMessageType[] = [],
@@ -33,7 +33,10 @@ export const feedbackReducer = (
       return [...state, action];
     case LOGIN_SUCCESS:
       remainingFeedbackMessages = [...state].filter(error => error.message !== LOGIN_FAILURE);
-      return [...remainingFeedbackMessages, action];
+      return [...remainingFeedbackMessages];
+    case SET_USER_SUCCESS:
+      remainingFeedbackMessages = state.filter(error => error.message !== SET_USER_FAILURE);
+      return [...remainingFeedbackMessages];
     case CLEAR_FEEDBACK:
       return [];
     default:

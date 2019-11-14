@@ -28,7 +28,7 @@ describe('User', () => {
   it('The user should see an error message if they are not successfully logged into ORCID', () => {
     // need to set language to english in order to check that the error message is correct
     cy.get('[data-testid=language-selector] .MuiSelect-root').click({ force: true });
-    cy.get('[data-testid=user-language-en]').click({ force: true });
+    cy.get('[data-testid=user-language-en-US]').click({ force: true });
 
     cy.visit('/user?error=some_error');
     cy.get('[data-testid=snackbar]').contains('ORCID login failed');

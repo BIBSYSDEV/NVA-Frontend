@@ -17,7 +17,7 @@ const StyledResource = styled.div`
 `;
 
 const Resource: React.FC = () => {
-  const [tabNumber, setTabNumber] = useState(4);
+  const [tabNumber, setTabNumber] = useState(0);
   const errors = useSelector((store: RootStore) => store.errors);
   const { referencesErrors, filesAndLicensesErrors } = errors;
 
