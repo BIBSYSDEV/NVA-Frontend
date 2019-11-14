@@ -30,18 +30,14 @@ export const login = () => {
 export const getCurrentAuthenticatedUser = () => {
   return async (dispatch: Dispatch<any>, getState: () => RootStore) => {
     const store = getState();
-    if (USE_MOCK_DATA) {
-      dispatch(setUser(mockUser));
-    } else {
-      try {
-        const cognitoUser = await Auth.currentAuthenticatedUser();
-        const user = await cognitoUser.attributes;
-        dispatch(setUser(user));
-        dispatch(refreshToken());
-      } catch (e) {
-        if (store.auth.isLoggedIn) {
-          dispatch(setUserFailure('ErrorMessage.Failed to get user'));
-        }
+    try {
+      const cognitoUser = await Auth.currentAuthenticatedUser();
+      const user = await cognitoUser.attributes;
+      dispatch(setUser(user));
+      dispatch(refreshToken());
+    } catch (e) {
+      if (store.auth.isLoggedIn) {
+        dispatch(setUserFailure('ErrorMessage.Failed to get user'));
       }
     }
   };

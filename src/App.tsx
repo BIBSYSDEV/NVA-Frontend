@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import styled from 'styled-components';
 
+import { mockUser } from './api/mock-interceptor';
 import { getCurrentAuthenticatedUser } from './api/user';
 import Breadcrumbs from './layout/Breadcrumbs';
 import Footer from './layout/Footer';
@@ -17,6 +18,7 @@ import Resource from './pages/resource/Resource';
 import Search from './pages/search/Search';
 import User from './pages/user/User';
 import Workspace from './pages/workspace/Workspace';
+import { setUser } from './redux/actions/userActions';
 import { RootStore } from './redux/reducers/rootReducer';
 import awsConfig from './utils/aws-config';
 import { USE_MOCK_DATA } from './utils/constants';
@@ -64,8 +66,10 @@ const App: React.FC = () => {
   }, [feedback, enqueueSnackbar, closeSnackbar, t]);
 
   useEffect(() => {
-    dispatch(getCurrentAuthenticatedUser());
-    if (!USE_MOCK_DATA) {
+    if (USE_MOCK_DATA) {
+      dispatch(setUser(mockUser));
+    } else {
+      dispatch(getCurrentAuthenticatedUser());
       Hub.listen('auth', data => hubListener(data, dispatch));
       return () => Hub.remove('auth', data => hubListener(data, dispatch));
     }
