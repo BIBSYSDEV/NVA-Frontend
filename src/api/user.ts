@@ -29,13 +29,13 @@ export const login = () => {
 
 export const getCurrentAuthenticatedUser = () => {
   return async (dispatch: Dispatch<any>, getState: () => RootStore) => {
-    const store = getState();
     try {
       const cognitoUser = await Auth.currentAuthenticatedUser();
       const user = await cognitoUser.attributes;
       dispatch(setUser(user));
       dispatch(refreshToken());
     } catch (e) {
+      const store = getState();
       if (store.auth.isLoggedIn) {
         dispatch(setUserFailure('ErrorMessage.Failed to get user'));
       }

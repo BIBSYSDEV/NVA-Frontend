@@ -47,12 +47,6 @@ const App: React.FC = () => {
   const auth = useSelector((store: RootStore) => store.auth);
 
   useEffect(() => {
-    if (!USE_MOCK_DATA && !auth.isLoggedIn) {
-      Amplify.configure(awsConfig);
-    }
-  }, [auth.isLoggedIn]);
-
-  useEffect(() => {
     if (feedback.length > 0) {
       feedback.map(fb =>
         fb.variant === 'error'
@@ -69,6 +63,9 @@ const App: React.FC = () => {
     if (USE_MOCK_DATA) {
       dispatch(setUser(mockUser));
     } else {
+      if (!auth.isLoggedIn) {
+        Amplify.configure(awsConfig);
+      }
       dispatch(getCurrentAuthenticatedUser());
       Hub.listen('auth', data => hubListener(data, dispatch));
       return () => Hub.remove('auth', data => hubListener(data, dispatch));
