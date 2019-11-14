@@ -52,7 +52,9 @@
     "name": "Navn",
     "institution": "Institusjon",
     "corresponding": "Korresponderende",
-    "ORCID": "ORCID"
+    "ORCID": "ORCID",
+    "verify_person": "Verifiser",
+    "add_author": "Legg til flere forfattere"
   },
   "Next": "Neste",
   "ORCID": "ORCID",

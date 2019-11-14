@@ -1,24 +1,16 @@
 import React, { useReducer } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import styled from 'styled-components';
 
 import mockContributors from '../../utils/testfiles/contributors.json';
 
-import Box from '../../components/Box';
 import TabPanel from '../../components/TabPanel/TabPanel';
 import { contributorReducer } from '../../redux/reducers/contributorReducer';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import Contributor from './contributors/Contributor';
 import ContributorLabel from './contributors/ContributorLabel';
-import ContributorSelector from './contributors/ContributorSelector';
-
-const StyledBox = styled.div`
-  background-color: ${({ theme }) => theme.palette.box.main};
-  display: grid;
-  grid-template-areas: 'icon name institution switch orcid arrows delete';
-  grid-template-columns: 5% 30% 18% 10% 5% 5% 5%;
-`;
+import ContributorValidator from './contributors/ContributorValidator';
+import StyledContributor from './contributors/StyledComponents';
 
 interface ContributorsPanelProps {
   onClick: (event: React.MouseEvent<any>) => void;
@@ -38,9 +30,9 @@ const ContributorsPanel: React.FC<ContributorsPanelProps> = ({ onClick, tabNumbe
       onClick={onClick}
       errors={errors.contributorsErrors}
       heading="Contributors">
-      <Box>
-        <div>{t('contributors.authors')}</div>
-        <StyledBox>
+      <StyledContributor.Box>
+        <StyledContributor.MainHeading>{t('contributors.authors')}</StyledContributor.MainHeading>
+        <StyledContributor.ContributorContainer>
           <div className="contributor-icon"></div>
           <div className="contributor-name">
             <ContributorLabel>{t('contributors.name')}</ContributorLabel>
@@ -55,15 +47,18 @@ const ContributorsPanel: React.FC<ContributorsPanelProps> = ({ onClick, tabNumbe
             <ContributorLabel>{t('contributors.ORCID')}</ContributorLabel>
           </div>
           <div className="contributor-delete-icon"></div>
-        </StyledBox>
+        </StyledContributor.ContributorContainer>
         {contributors.map(contributor => (
           <Contributor contributor={contributor} key={contributor.id} dispatch={dispatch} />
         ))}
-        <ContributorSelector />
-      </Box>
-      <Box>
-        <div>Bidragsytere</div>
-      </Box>
+        <ContributorValidator />
+        <StyledContributor.AuthorsButton variant="text" startIcon={<StyledContributor.AddIcon />}>
+          {t('contributors.add_author')}
+        </StyledContributor.AuthorsButton>
+      </StyledContributor.Box>
+      <StyledContributor.Box>
+        <StyledContributor.MainHeading>Bidragsytere</StyledContributor.MainHeading>
+      </StyledContributor.Box>
     </TabPanel>
   );
 };

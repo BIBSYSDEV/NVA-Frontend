@@ -52,7 +52,9 @@
     "name": "Name",
     "institution": "Institution",
     "corresponding": "Corresponding",
-    "ORCID": "ORCID"
+    "ORCID": "ORCID",
+    "verify_person": "Verify",
+    "add_author": "Add authors"
   },
   "Next": "Next",
   "ORCID": "ORCID",

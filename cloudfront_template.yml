@@ -29,6 +29,8 @@ Resources:
     Type: AWS::CloudFront::Distribution
     Properties:
       DistributionConfig:
+        Aliases:
+          - dev.nva.aws.unit.no
         Origins:
           - DomainName: !Sub '${NvaFrontendBucketName}.s3.amazonaws.com'
             Id: !Sub 'S3-${NvaFrontendBucketName}'
@@ -52,7 +54,7 @@ Resources:
           GeoRestriction:
             RestrictionType: none
         ViewerCertificate:
-          CloudFrontDefaultCertificate: true
+          AcmCertificateArn: arn:aws:acm:us-east-1:750639270376:certificate/72355178-f20b-45c9-b036-5a9196f9da9d
         CustomErrorResponses:
           - ErrorCode: 404
             ErrorCachingMinTTL: 10
