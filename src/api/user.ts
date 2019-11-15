@@ -30,9 +30,25 @@ export const login = () => {
 export const getCurrentAuthenticatedUser = () => {
   return async (dispatch: Dispatch<any>, getState: () => RootStore) => {
     try {
-      const cognitoUser = await Auth.currentAuthenticatedUser();
-      const user = await cognitoUser.attributes;
-      dispatch(setUser(user));
+      const cognitoUser = await Auth.currentAuthenticatedUser({ bypassCache: true });
+      if (cognitoUser != null) {
+        await cognitoUser.getSession(async (err: any) => {
+          if (err) {
+            // dispatch session not valid failure
+            // console.log('session validity: ' + session.isValid());
+          }
+
+          // NOTE: getSession must be called to authenticate user before calling getUserAttributes
+          await cognitoUser.getUserAttributes((err: any) => {
+            if (err) {
+              // dispatch could not get user info failure
+              // Handle error
+            } else {
+              dispatch(setUser(cognitoUser.attributes));
+            }
+          });
+        });
+      }
       dispatch(refreshToken());
     } catch (e) {
       const store = getState();

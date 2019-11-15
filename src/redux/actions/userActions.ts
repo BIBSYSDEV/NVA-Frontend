@@ -1,6 +1,6 @@
 import { VariantType } from 'notistack';
 
-import User from '../../types/user.types';
+import { FeideUser } from '../../types/user.types';
 
 // ACTION TYPES
 export const CLEAR_USER = 'clear user';
@@ -12,7 +12,7 @@ export const clearUser = (): ClearUserAction => ({
   type: CLEAR_USER,
 });
 
-export const setUser = (user: User): SetUserAction => ({
+export const setUser = (user: FeideUser): SetUserAction => ({
   type: SET_USER_SUCCESS,
   user,
 });
@@ -28,7 +28,7 @@ interface ClearUserAction {
 }
 interface SetUserAction {
   type: typeof SET_USER_SUCCESS;
-  user: User;
+  user: FeideUser;
 }
 
 interface SetUserFailureAction {

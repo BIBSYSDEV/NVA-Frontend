@@ -14,15 +14,31 @@ export interface Role {
   description: string;
 }
 
-export default interface User {
+export interface User {
   email: string;
   name: string;
   id: string;
   institution: string;
   roles: RoleName[];
-  applications: ApplicationName[];
+  application: ApplicationName | string;
   orcidName: string;
   orcid: string;
+}
+
+export interface FeideUser {
+  name: string;
+  email: string;
+  'custom:identifiers': string;
+  sub: string;
+  email_verfied: boolean;
+  'custom:orgName': string;
+  'custom:orgNumber': string;
+  'custom:application': string;
+  'custom:applicationRoles': string;
+  identities: string;
+  'custom:commonName': string;
+  'custom:feideId': string;
+  'custom:affiliation': string;
 }
 
 export const emptyUser: User = {
@@ -31,7 +47,7 @@ export const emptyUser: User = {
   id: '',
   institution: '',
   roles: [],
-  applications: [],
+  application: '',
   orcidName: '',
   orcid: '',
 };

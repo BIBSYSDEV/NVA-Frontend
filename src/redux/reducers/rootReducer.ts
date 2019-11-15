@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 
 import { FeedbackMessageType } from '../../types/feedback.types';
 import { Search } from '../../types/search.types';
-import User from '../../types/user.types';
+import { User } from '../../types/user.types';
 import { FormValidator } from '../../types/validation.types';
 import { authReducer } from './authReducer';
 import { feedbackReducer } from './feedbackReducer';
