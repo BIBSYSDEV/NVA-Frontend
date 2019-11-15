@@ -23,7 +23,6 @@
   "Invalid email": "Ugyldig epost",
   "Language": "Språk",
   "Learn more at ": "Les mer på ",
-  "link_publication_description": "Feks. DOI lenke, lenke til artikkel, lenke til video av foredrag etc.",
   "Load file": "Last opp fil",
   "load_file_description": "Load file...",
   "Log in to your ORCID account or create new ORCID account": "Logg inn på din ORCID-konto eller lag ny dersom du ikke har konto",
@@ -36,9 +35,6 @@
   "New registration": "+ Ny registrering",
   "New resource": "Ny ressurs",
   "resource_form": {
-    "publication_panel": {
-      "link_to_publication": "Link til publikasjon"
-    },
     "title": "Tittel",
     "description": "Beskrivelse",
     "abstract": "Sammendrag",
@@ -60,10 +56,15 @@
   },
   "Next": "Neste",
   "ORCID": "ORCID",
-  "ORCID-link": "ORCID-lenke",
   "Organizations": "Tilhørighet",
   "Password": "Passord",
   "Publication": "Publikasjon",
+  "publication_panel": {
+    "link_publication_description": "Feks. DOI lenke, lenke til artikkel, lenke til video av foredrag etc.",
+    "link_to_publication": "Link til publikasjon",
+    "ORCID-link": "ORCID-lenke",
+    "search": "Søk"
+  },
   "Publisher": "Utgiver",
   "References": "Referanser",
   "Register new resource": "Registrer ny ressurs",
