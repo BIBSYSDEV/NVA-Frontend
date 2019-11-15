@@ -5,6 +5,19 @@ import { Button, TextField } from '@material-ui/core';
 import LinkIcon from '@material-ui/icons/Link';
 
 import PublicationExpansionPanel from './PublicationExpansionPanel';
+import styled from 'styled-components';
+
+const StyledInputBox = styled.div`
+  display: flex;
+  align-items: center;
+  margin-top: 0.3rem;
+`;
+
+const StyledTextField = styled(TextField)`
+  margin-right: 1rem;
+`;
+
+const StyledButton = styled(Button)``;
 
 interface LinkPublicationPanelProps {
   expanded: boolean;
@@ -32,11 +45,20 @@ const LinkPublicationPanel: React.FC<LinkPublicationPanelProps> = ({ expanded, o
       onChange={onChange}
       ariaControls="publication-method-link">
       <div className="link-description">
-        {t('link_publication_description')}
-        <div className="input-box">
-          <TextField id="ORCID-link" label={t('ORCID-link')} onChange={handleChange} value={searchTerm} />
-          <Button onClick={handleSearch}>{t('Search')}</Button>
-        </div>
+        {t('publication_panel.link_publication_description')}
+        <StyledInputBox>
+          <StyledTextField
+            margin="dense"
+            id="ORCID-link"
+            variant="outlined"
+            label={t('publication_panel.ORCID-link')}
+            onChange={handleChange}
+            value={searchTerm}
+          />
+          <StyledButton color="primary" variant="contained" onClick={handleSearch}>
+            {t('publication_panel.search')}
+          </StyledButton>
+        </StyledInputBox>
       </div>
     </PublicationExpansionPanel>
   );
