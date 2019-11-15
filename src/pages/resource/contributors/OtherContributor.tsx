@@ -5,20 +5,6 @@ import { updateContributor, removeContributor } from '../../../redux/actions/con
 import contributorTypes from '../../../utils/testfiles/contributor_types.json';
 import StyledContributor from './StyledComponents';
 import styled from 'styled-components';
-import { useTranslation } from 'react-i18next';
-import ContributorLabel from './ContributorLabel';
-
-const StyledContainer = styled.div`
-  background-color: ${({ theme }) => theme.palette.box.main};
-  display: grid;
-  grid-template-areas:
-    'type-heading name-heading institution-heading .'
-    'type name institution delete';
-  grid-template-columns: 18% 30% 18% 5%;
-  grid-column-gap: 0.5rem;
-  margin-bottom: 0.5rem;
-  padding-bottom: 0.5rem;
-`;
 
 const StyledNameInput = styled(TextField)`
   height: 1rem;
@@ -32,8 +18,6 @@ interface OtherContributorProps {
 }
 
 const OtherContributor: React.FC<OtherContributorProps> = ({ contributor, dispatch }) => {
-  const { t } = useTranslation();
-
   const handleTypeChange = (contributor: ContributorType) => (event: React.ChangeEvent<any>) => {
     contributor.type = event.target.value;
     dispatch(updateContributor(contributor));
@@ -44,17 +28,17 @@ const OtherContributor: React.FC<OtherContributorProps> = ({ contributor, dispat
     dispatch(updateContributor(contributor));
   };
 
+  const handleNameChange = (contributor: ContributorType) => (event: React.ChangeEvent<any>) => {
+    contributor.name = event.target.value;
+    dispatch(updateContributor(contributor));
+  };
+
   const deleteContributor = (contributor: ContributorType): void => {
     dispatch(removeContributor(contributor));
   };
 
   return (
-    <StyledContainer>
-      <ContributorLabel>{t('contributors.type')}</ContributorLabel>
-      <ContributorLabel>{t('contributors.name')}</ContributorLabel>
-      <ContributorLabel>{t('contributors.institution')}</ContributorLabel>
-      <div />
-
+    <StyledContributor.OtherContributorContainer>
       <StyledContributor.TypeSelect
         onChange={handleTypeChange(contributor)}
         value={contributor.type || ''}
@@ -68,7 +52,7 @@ const OtherContributor: React.FC<OtherContributorProps> = ({ contributor, dispat
             </MenuItem>
           ))}
       </StyledContributor.TypeSelect>
-      <StyledNameInput value={contributor.name} />
+      <StyledNameInput value={contributor.name} onChange={handleNameChange(contributor)} />
       <StyledContributor.InstitutionSelect
         onChange={handleInstitutionChange(contributor)}
         value={contributor.selectedInstitution || ''}
@@ -82,7 +66,7 @@ const OtherContributor: React.FC<OtherContributorProps> = ({ contributor, dispat
           ))}
       </StyledContributor.InstitutionSelect>
       <StyledContributor.DeleteIcon onClick={() => deleteContributor(contributor)} />
-    </StyledContainer>
+    </StyledContributor.OtherContributorContainer>
   );
 };
 
