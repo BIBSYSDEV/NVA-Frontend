@@ -17,7 +17,9 @@ const StyledTextField = styled(TextField)`
   margin-right: 1rem;
 `;
 
-const StyledButton = styled(Button)``;
+const StyledBody = styled.div`
+  width: 100%;
+`;
 
 interface LinkPublicationPanelProps {
   expanded: boolean;
@@ -44,7 +46,7 @@ const LinkPublicationPanel: React.FC<LinkPublicationPanelProps> = ({ expanded, o
       expanded={expanded}
       onChange={onChange}
       ariaControls="publication-method-link">
-      <div className="link-description">
+      <StyledBody>
         {t('publication_panel.link_publication_description')}
         <StyledInputBox>
           <StyledTextField
@@ -55,11 +57,11 @@ const LinkPublicationPanel: React.FC<LinkPublicationPanelProps> = ({ expanded, o
             onChange={handleChange}
             value={searchTerm}
           />
-          <StyledButton color="primary" variant="contained" onClick={handleSearch}>
+          <Button color="primary" variant="contained" onClick={handleSearch}>
             {t('publication_panel.search')}
-          </StyledButton>
+          </Button>
         </StyledInputBox>
-      </div>
+      </StyledBody>
     </PublicationExpansionPanel>
   );
 };
