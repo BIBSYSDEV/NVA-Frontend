@@ -13,7 +13,7 @@ import { StylesProvider, ThemeProvider as MUIThemeProvider } from '@material-ui/
 import { cleanup, getByTestId, render, wait } from '@testing-library/react';
 
 import App from '../App';
-import { loginFailure, loginSuccess } from '../redux/actions/authActions';
+import { loginFailure } from '../redux/actions/authActions';
 import { clearFeedback } from '../redux/actions/feedbackActions';
 import { orcidRequestFailure, orcidSignInFailure } from '../redux/actions/orcidActions';
 import { searchFailure } from '../redux/actions/searchActions';
@@ -57,12 +57,6 @@ describe('Snackbar', () => {
         </I18nextProvider>
       </Provider>
     );
-  });
-
-  test('shows login success message when logging in successfully', async () => {
-    store.dispatch(loginSuccess());
-    await wait(() => getByTestId(app.container, 'snackbar'));
-    expect(getByTestId(app.container, 'snackbar').textContent).toBe('Logged in');
   });
 
   test('shows login error message when login failed', async () => {
