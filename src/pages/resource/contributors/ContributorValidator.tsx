@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import MenuItem from '@material-ui/core/MenuItem';
 import PersonIcon from '@material-ui/icons/Person';
 import { useTranslation } from 'react-i18next';
-import StyledContributor from './StyledComponents';
+import StyledContributor from './StyledContributor';
 
 const StyledContributorValidator = styled(StyledContributor.ContributorContainer)`
   grid-template-areas: 'icon name institution verify-person verify-person . delete';

@@ -5,7 +5,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 import { moveContributor, removeContributor, updateContributor } from '../../../redux/actions/contributorActions';
 import ContributorType from '../../../types/contributor.types';
-import ContributorStyles from './StyledComponents';
+import ContributorStyles from './StyledContributor';
 
 const StyledContainer = styled(ContributorStyles.ContributorContainer)`
   margin-bottom: 0.5rem;

@@ -10,7 +10,7 @@ import { RootStore } from '../../redux/reducers/rootReducer';
 import Contributor from './contributors/Contributor';
 import ContributorLabel from './contributors/ContributorLabel';
 import ContributorValidator from './contributors/ContributorValidator';
-import StyledContributor from './contributors/StyledComponents';
+import StyledContributor from './contributors/StyledContributor';
 
 interface ContributorsPanelProps {
   onClick: (event: React.MouseEvent<any>) => void;
