@@ -23,7 +23,6 @@
   "Invalid email": "Ugyldig epost",
   "Language": "Språk",
   "Learn more at ": "Les mer på ",
-  "Link to publication": "Link til publication",
   "link_publication_description": "Feks. DOI lenke, lenke til artikkel, lenke til video av foredrag etc.",
   "Load file": "Last opp fil",
   "load_file_description": "Load file...",
@@ -37,6 +36,9 @@
   "New registration": "+ Ny registrering",
   "New resource": "Ny ressurs",
   "resource_form": {
+    "publication_panel": {
+      "link_to_publication": "Link til publikasjon"
+    },
     "title": "Tittel",
     "description": "Beskrivelse",
     "abstract": "Sammendrag",

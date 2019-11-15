@@ -23,7 +23,6 @@
   "Invalid email": "Invalid email",
   "Language": "Language",
   "Learn more at ": "Learn more at ",
-  "Link to publication": "Link to publication",
   "link_publication_description": "E.g. DOI link, link to article, link to video of lecture etc.",
   "Load file": "Load file",
   "load_file_description": "Load file...",
@@ -37,6 +36,9 @@
   "New registration": "+ New registration",
   "New resource": "New resource",
   "resource_form": {
+    "publication_panel": {
+      "link_to_publication": "Link to publication"
+    },
     "title": "Title",
     "description": "Description",
     "abstract": "Abstract",

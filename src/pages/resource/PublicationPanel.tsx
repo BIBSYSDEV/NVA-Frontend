@@ -10,11 +10,7 @@ import { RootStore } from '../../redux/reducers/rootReducer';
 import LinkPublicationPanel from './LinkPublicationPanel';
 import LoadPublicationPanel from './LoadPublicationPanel';
 import OrcidPublicationPanel from './OrcidPublicationPanel';
-
-interface PublicationPanelProps {
-  onClick: (event: React.MouseEvent<any>) => void;
-  tabNumber: number;
-}
+import { useTranslation } from 'react-i18next';
 
 const StyledPublicationPanel = styled.div`
   width: 100%;
@@ -45,9 +41,15 @@ const StyledInfoBox = styled.div`
   }
 `;
 
+interface PublicationPanelProps {
+  onClick: (event: React.MouseEvent<any>) => void;
+  tabNumber: number;
+}
+
 const PublicationPanel: React.FC<PublicationPanelProps> = ({ onClick, tabNumber }) => {
   const [expanded, setExpanded] = React.useState<string | false>(false);
   const errors = useSelector((store: RootStore) => store.errors);
+  const { t } = useTranslation();
 
   const handleChange = (panel: string) => (_: React.ChangeEvent<any>, isExpanded: boolean) => {
     setExpanded(isExpanded ? panel : false);
@@ -67,7 +69,7 @@ const PublicationPanel: React.FC<PublicationPanelProps> = ({ onClick, tabNumber 
           <OrcidPublicationPanel expanded={expanded === 'orcid-panel'} onChange={handleChange('orcid-panel')} />
         </StyledSelectorWrapper>
         <StyledInfoBox>
-          <header>Information</header>
+          <header>{t('Information')}</header>
           <section>
             Velg publikasjoner Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
             ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
