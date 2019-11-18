@@ -4,21 +4,15 @@ import { useSelector } from 'react-redux';
 
 import TabPanel from '../../components/TabPanel/TabPanel';
 import { RootStore } from '../../redux/reducers/rootReducer';
-import styled from 'styled-components';
 
 import Box from '../../components/Box';
-import { Input } from '@material-ui/core';
+
+import UppyFileUpload from './UppyFileUpload';
 
 interface FilesAndLicensesPanel {
   onClick: (event: React.MouseEvent<any>) => void;
   tabNumber: number;
 }
-
-const StyledFilesAndLicenses = styled.div`
-  * {
-    margin-bottom: 2rem;
-  }
-`;
 
 const FilesAndLicensesPanel: React.FC<FilesAndLicensesPanel> = ({ onClick, tabNumber }) => {
   const { t } = useTranslation();
@@ -30,18 +24,13 @@ const FilesAndLicensesPanel: React.FC<FilesAndLicensesPanel> = ({ onClick, tabNu
       ariaLabel="files and licenses"
       onClick={onClick}
       errors={errors.filesAndLicensesErrors}
-      heading={t('filesAndLicenses')}>
-      <StyledFilesAndLicenses>
-        <Box>
-          Upload files
-          {/* TODO: https://www.npmjs.com/package/material-ui-dropzone */}
-          <Input type="file" placeholder="TEAST">
-            UPLOAD FLIe
-          </Input>
-        </Box>
-        <Box>Uploaded files</Box>
-        <Box>License</Box>
-      </StyledFilesAndLicenses>
+      heading={t('resource_form.files_and_licenses.header')}>
+      <h1>{t('resource_form.files_and_licenses.upload_files')}</h1>
+      <Box>
+        <UppyFileUpload />
+      </Box>
+      <h1>{t('resource_form.files_and_licenses.files')}</h1>
+      <Box>TODO</Box>
     </TabPanel>
   );
 };
