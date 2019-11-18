@@ -16,7 +16,7 @@ interface DoiResource {
   url: string;
   owner: string;
 }
-export const createNewResourceFromDOI = (url: string, owner: string) => {
+export const createNewResourceFromDoi = (url: string, owner: string) => {
   const data: DoiResource = {
     url,
     owner,

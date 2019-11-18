@@ -8,7 +8,7 @@ import LinkIcon from '@material-ui/icons/Link';
 import PublicationExpansionPanel from './PublicationExpansionPanel';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { createNewResourceFromDOI } from '../../api/resource';
+import { createNewResourceFromDoi } from '../../api/resource';
 
 const StyledInputBox = styled.div`
   display: flex;
@@ -37,7 +37,7 @@ const LinkPublicationPanel: React.FC<LinkPublicationPanelProps> = ({ expanded, o
   const user = useSelector((state: RootStore) => state.user);
 
   const handleSearch = () => {
-    dispatch(createNewResourceFromDOI(doiUrl, user.id));
+    dispatch(createNewResourceFromDoi(doiUrl, user.id));
     goToNextTab();
   };
 
