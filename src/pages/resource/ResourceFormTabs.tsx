@@ -43,7 +43,7 @@ export const ResourceFormTabs: React.FC<ResourceFormTabsProps> = ({ onChange, ta
       />
       <LinkTab label={`3. ${t('References')}`} {...a11yProps('references')} />
       <LinkTab label={`4. ${t('Contributors')}`} {...a11yProps('contributors')} />
-      <LinkTab label={`5. ${t('Files and Licenses')}`} {...a11yProps('files-and-licenses')} />
+      <LinkTab label={`5. ${t('Files and License')}`} {...a11yProps('files-and-license')} />
       <LinkTab label={`6. ${t('Submission')}`} {...a11yProps('submission')} />
     </Tabs>
   );
