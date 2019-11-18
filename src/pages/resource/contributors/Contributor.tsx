@@ -22,9 +22,7 @@ interface ContributorProps {
 }
 
 const Contributor: React.FC<ContributorProps> = ({ contributor, dispatch }) => {
-  const handleCorrespondingAuthorChange = (contributor: ContributorType) => (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleCorrespondingAuthorChange = (contributor: ContributorType) => (event: React.ChangeEvent<any>) => {
     contributor.corresponding = event.target.checked;
     dispatch(updateContributor(contributor));
   };

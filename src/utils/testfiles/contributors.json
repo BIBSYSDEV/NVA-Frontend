@@ -6,7 +6,8 @@
     "selectedInstitution": "",
     "orcid": "some orcid",
     "corresponding": false,
-    "type": "Author"
+    "type": "Author",
+    "verified": true
   },
   {
     "id": "2",
@@ -14,7 +15,8 @@
     "institutions": ["Unit", "BIBSYS"],
     "selectedInstitution": "",
     "corresponding": false,
-    "type": "Author"
+    "type": "Author",
+    "verified": true
   },
   {
     "id": "3",
@@ -22,27 +24,31 @@
     "institutions": ["Unit"],
     "selectedInstitution": "",
     "corresponding": false,
-    "type": "Author"
+    "type": "Author",
+    "verified": true
   },
   {
     "id": "4",
     "name": "Kjetil Møkkelgjerd",
     "selectedInstitution": "",
     "corresponding": false,
-    "type": "Author"
+    "type": "Author",
+    "verified": true
   },
   {
     "id": "5",
     "name": "Svenn Gjetø",
     "selectedInstitution": "",
     "corresponding": false,
-    "type": "Editor"
+    "type": "Editor",
+    "verified": false
   },
   {
     "id": "6",
     "name": "Nikolai Fikse Raanes",
     "selectedInstitution": "",
     "corresponding": false,
-    "type": "Photographer"
+    "type": "Photographer",
+    "verified": false
   }
 ]

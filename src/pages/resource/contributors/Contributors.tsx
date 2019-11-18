@@ -28,11 +28,15 @@ const Contributors: React.FC<ContributorsProps> = ({ contributors, dispatch, onA
         <div className="contributor-delete-icon" />
       </StyledContributor.ContributorContainer>
       {contributors
-        .filter(contributor => contributor.type === 'Author')
+        .filter(contributor => contributor.type === 'Author' && contributor.verified)
         .map(contributor => (
           <Contributor contributor={contributor} key={contributor.id} dispatch={dispatch} />
         ))}
-      <ContributorValidator />
+      {contributors
+        .filter(contributor => contributor.type === 'Author' && !contributor.verified)
+        .map(contributor => (
+          <ContributorValidator contributor={contributor} key={contributor.id} dispatch={dispatch} />
+        ))}
       <StyledContributor.AuthorsButton variant="text" startIcon={<StyledContributor.AddIcon />} onClick={onAddAuthor}>
         {t('contributors.add_author')}
       </StyledContributor.AuthorsButton>

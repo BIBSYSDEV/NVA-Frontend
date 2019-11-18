@@ -14,22 +14,22 @@ const BaseSelectStyle = styled(Select)`
   background-color: white;
 `;
 
+const BaseContainerStyle = styled.div`
+  background-color: ${({ theme }) => theme.palette.box.main};
+  display: grid;
+  grid-column-gap: 0.5rem;
+  align-items: center;
+`;
+
 const StyledContributor = {
-  ContributorContainer: styled.div`
-    background-color: ${({ theme }) => theme.palette.box.main};
-    display: grid;
+  ContributorContainer: styled(BaseContainerStyle)`
     grid-template-areas: 'icon name institution switch orcid arrows delete';
     grid-template-columns: 5% 40% 25% 10% 5% 5% 5%;
-    grid-column-gap: 0.5rem;
   `,
 
-  OtherContributorContainer: styled.div`
-    background-color: ${({ theme }) => theme.palette.box.main};
-    display: grid;
+  OtherContributorContainer: styled(BaseContainerStyle)`
     grid-template-areas: 'type name institution delete';
     grid-template-columns: 20% 40% 25% 5%;
-    grid-gap: 0.5rem;
-    margin-bottom: 0.5rem;
   `,
 
   PersonIcon: styled(Person)`

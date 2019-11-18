@@ -11,6 +11,7 @@ export default interface ContributorType {
   orcid?: string;
   corresponding?: boolean;
   type: string;
+  verified: boolean;
 }
 
 export const emptyContributor: ContributorType = {
@@ -21,4 +22,5 @@ export const emptyContributor: ContributorType = {
   orcid: '',
   corresponding: false,
   type: '',
+  verified: false,
 };

@@ -7,8 +7,7 @@ import StyledContributor from './StyledComponents';
 import styled from 'styled-components';
 
 const StyledNameInput = styled(TextField)`
-  height: 1rem;
-  background-color: white;
+  background-color: ${({ theme }) => theme.palette.background.default};
   margin-right: 1rem;
 `;
 
@@ -52,7 +51,12 @@ const OtherContributor: React.FC<OtherContributorProps> = ({ contributor, dispat
             </MenuItem>
           ))}
       </StyledContributor.TypeSelect>
-      <StyledNameInput value={contributor.name} onChange={handleNameChange(contributor)} />
+      <StyledNameInput
+        value={contributor.name}
+        onChange={handleNameChange(contributor)}
+        margin="dense"
+        variant="outlined"
+      />
       <StyledContributor.InstitutionSelect
         onChange={handleInstitutionChange(contributor)}
         value={contributor.selectedInstitution || ''}
