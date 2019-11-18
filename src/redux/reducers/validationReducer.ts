@@ -14,8 +14,8 @@ export const validationReducer = (state: FormValidator = initialFormValidator, a
           return { ...state, referencesErrors: [] };
         case ResourceFormTabs.CONTRIBUTORS:
           return { ...state, contributorsErrors: [] };
-        case ResourceFormTabs.FILES_AND_LICENSES:
-          return { ...state, filesAndLicensesErrors: [] };
+        case ResourceFormTabs.FILES_AND_LICENSE:
+          return { ...state, filesAndLicenseErrors: [] };
       }
       break;
     case FORM_ERROR:
@@ -28,8 +28,8 @@ export const validationReducer = (state: FormValidator = initialFormValidator, a
           return { ...state, referencesErrors: action.error };
         case ResourceFormTabs.CONTRIBUTORS:
           return { ...state, contributorsErrors: action.error };
-        case ResourceFormTabs.FILES_AND_LICENSES:
-          return { ...state, filesAndLicensesErrors: action.error };
+        case ResourceFormTabs.FILES_AND_LICENSE:
+          return { ...state, filesAndLicenseErrors: action.error };
       }
       break;
     default:

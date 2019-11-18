@@ -3,7 +3,7 @@ export const initialFormValidator: FormValidator = {
   descriptionErrors: [],
   referencesErrors: [],
   contributorsErrors: [],
-  filesAndLicensesErrors: [],
+  filesAndLicenseErrors: [],
 };
 
 export interface FormValidator {
@@ -11,7 +11,7 @@ export interface FormValidator {
   descriptionErrors: YupError[];
   referencesErrors: YupError[];
   contributorsErrors: YupError[];
-  filesAndLicensesErrors: YupError[];
+  filesAndLicenseErrors: YupError[];
 }
 
 export interface YupError {

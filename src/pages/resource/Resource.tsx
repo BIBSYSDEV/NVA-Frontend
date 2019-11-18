@@ -6,7 +6,7 @@ import { RootStore } from '../../redux/reducers/rootReducer';
 import ContributorsPanel from './ContributorsPanel';
 import DescriptionPanel from './DescriptionPanel';
 import PublicationPanel from './PublicationPanel';
-import FilesAndLicensesPanel from './FilesAndLicensesPanel';
+import FilesAndLicensPanel from './FilesAndLicensePanel';
 import { ResourceFormTabs } from './ResourceFormTabs';
 import styled from 'styled-components';
 
@@ -43,7 +43,7 @@ const Resource: React.FC = () => {
         <div>Page Three</div>
       </TabPanel>
       <ContributorsPanel tabNumber={tabNumber} onClick={goToNextPage} />
-      <FilesAndLicensesPanel tabNumber={tabNumber} onClick={goToNextPage} />
+      <FilesAndLicensPanel tabNumber={tabNumber} onClick={goToNextPage} />
       <TabPanel isHidden={tabNumber !== 5} ariaLabel="submission" onClick={goToNextPage} heading="submission">
         <div>Page Six</div>
       </TabPanel>

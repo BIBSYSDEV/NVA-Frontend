@@ -14,7 +14,7 @@
   "Dashboard": "Dashboard",
   "Description": "Description",
   "Email": "Email",
-  "Files and Licenses": "Files and Licenses",
+  "Files and License": "Files and License",
   "Home": "Home",
   "Id": "ID",
   "Info from Feide": "Info retrieved from Feide",
@@ -46,7 +46,7 @@
     "language": "language",
     "project_assosiation": "Project assosiation",
     "project": "Project",
-    "files_and_licenses": {
+    "files_and_license": {
       "header": "Files and License",
       "upload_files": "Upload Files",
       "files": "Files"
