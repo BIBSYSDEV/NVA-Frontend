@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router';
+import styled from 'styled-components';
 
 import { getOrcidInfo } from '../../api/orcid';
 import { orcidSignInFailure } from '../../redux/actions/orcidActions';
@@ -11,7 +12,6 @@ import UserInfo from './UserInfo';
 import UserLanguage from './UserLanguage';
 import UserOrcid from './UserOrcid';
 import UserRoles from './UserRoles';
-import styled from 'styled-components';
 
 const StyledUserPage = styled.div`
   display: grid;
@@ -47,7 +47,7 @@ const User: React.FC = () => {
     const orcidCode = query.get('code') || '';
     const error = query.get('error') || '';
     if (error) {
-      dispatch(orcidSignInFailure('ErrorMessage.ORCID login failed'));
+      dispatch(orcidSignInFailure('error.orcid_login'));
       history.push('/user');
     } else if (orcidCode) {
       dispatch(getOrcidInfo(orcidCode));
