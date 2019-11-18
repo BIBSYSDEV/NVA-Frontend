@@ -8,7 +8,7 @@ export enum ResourceFormTabs {
   DESCRIPTION,
   REFERENCES,
   CONTRIBUTORS,
-  FILES_AND_LICENSES,
+  FILES_AND_LICENSE,
 }
 
 export interface ResourceTitle {
