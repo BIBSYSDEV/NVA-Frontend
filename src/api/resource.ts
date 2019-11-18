@@ -34,7 +34,6 @@ export const createNewResourceFromDOI = (url: string, owner: string) => {
       });
       if (response.status === StatusCode.OK) {
         dispatch(createResourceSuccess());
-        //TODO: use metadata to fill schema
       } else {
         dispatch(createResourceFailure('ErrorMessage.Could not create resource'));
       }

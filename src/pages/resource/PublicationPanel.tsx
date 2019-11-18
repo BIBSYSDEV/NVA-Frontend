@@ -59,7 +59,7 @@ const PublicationPanel: React.FC<PublicationPanelProps> = ({ goToNextPage, tabNu
     <TabPanel
       isHidden={tabNumber !== 0}
       ariaLabel="publication"
-      goToNextPage={goToNextPage} //TODO: ....
+      goToNextPage={goToNextPage}
       errors={errors.publicationErrors}
       heading="Publication">
       <StyledPublicationPanel>
