@@ -35,11 +35,11 @@ const StyledFieldHeader = styled.header`
 `;
 
 interface DescriptionPanelProps {
-  goToNextPage: (event: React.MouseEvent<any>) => void;
+  goToNextTab: (event: React.MouseEvent<any>) => void;
   tabNumber: number;
 }
 
-const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextPage, tabNumber }) => {
+const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNumber }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const errors = useSelector((store: RootStore) => store.errors);
@@ -71,7 +71,7 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextPage, tabNu
     <TabPanel
       isHidden={tabNumber !== 1}
       ariaLabel="description"
-      goToNextPage={goToNextPage}
+      goToNextTab={goToNextTab}
       errors={errors.descriptionErrors}
       heading="Description">
       <Box>

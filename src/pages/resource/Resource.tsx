@@ -25,26 +25,26 @@ const Resource: React.FC = () => {
     setTabNumber(newTabNumber);
   };
 
-  const goToNextPage = () => {
+  const goToNextTab = () => {
     setTabNumber(tabNumber + 1);
   };
 
   return (
     <StyledResource>
       <ResourceFormTabs tabNumber={tabNumber} handleTabChange={handleTabChange} />
-      <PublicationPanel tabNumber={tabNumber} goToNextPage={goToNextPage} />
-      <DescriptionPanel tabNumber={tabNumber} goToNextPage={goToNextPage} />
+      <PublicationPanel tabNumber={tabNumber} goToNextTab={goToNextTab} />
+      <DescriptionPanel tabNumber={tabNumber} goToNextTab={goToNextTab} />
       <TabPanel
         isHidden={tabNumber !== 2}
         ariaLabel="references"
-        goToNextPage={goToNextPage}
+        goToNextTab={goToNextTab}
         errors={referencesErrors}
         heading="References">
         <div>Page Three</div>
       </TabPanel>
-      <ContributorsPanel tabNumber={tabNumber} goToNextPage={goToNextPage} />
-      <FilesAndLicensPanel tabNumber={tabNumber} goToNextPage={goToNextPage} />
-      <TabPanel isHidden={tabNumber !== 5} ariaLabel="submission" goToNextPage={goToNextPage} heading="submission">
+      <ContributorsPanel tabNumber={tabNumber} goToNextTab={goToNextTab} />
+      <FilesAndLicensPanel tabNumber={tabNumber} goToNextTab={goToNextTab} />
+      <TabPanel isHidden={tabNumber !== 5} ariaLabel="submission" heading="submission">
         <div>Page Six</div>
       </TabPanel>
     </StyledResource>

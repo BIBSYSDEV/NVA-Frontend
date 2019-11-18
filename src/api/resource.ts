@@ -12,12 +12,12 @@ import {
 import { Resource, ResourceFileMap, ResourceMetadata } from '../types/resource.types';
 import { ApiBaseUrl, StatusCode } from '../utils/constants';
 
-interface createNewResourceFromDOIDataType {
+interface DoiResource {
   url: string;
   owner: string;
 }
 export const createNewResourceFromDOI = (url: string, owner: string) => {
-  const data: createNewResourceFromDOIDataType = {
+  const data: DoiResource = {
     url,
     owner,
   };
@@ -37,9 +37,8 @@ export const createNewResourceFromDOI = (url: string, owner: string) => {
       } else {
         dispatch(createResourceFailure('ErrorMessage.Could not create resource'));
       }
-    } catch (err) {
+    } catch {
       dispatch(createResourceFailure('ErrorMessage.Could not create resource'));
-      console.error(err);
     }
   };
 };

@@ -27,22 +27,22 @@ const StyledBody = styled.div`
 interface LinkPublicationPanelProps {
   expanded: boolean;
   onChange: (event: React.ChangeEvent<any>, isExpanded: boolean) => void;
-  goToNextPage: any;
+  goToNextTab: () => void;
 }
 
-const LinkPublicationPanel: React.FC<LinkPublicationPanelProps> = ({ expanded, onChange, goToNextPage }) => {
-  const [DOIUrl, setDOIUrl] = useState('');
+const LinkPublicationPanel: React.FC<LinkPublicationPanelProps> = ({ expanded, onChange, goToNextTab }) => {
+  const [doiUrl, setDoiUrl] = useState('');
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const user = useSelector((state: RootStore) => state.user);
 
   const handleSearch = () => {
-    dispatch(createNewResourceFromDOI(DOIUrl, user.id));
-    goToNextPage();
+    dispatch(createNewResourceFromDOI(doiUrl, user.id));
+    goToNextTab();
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setDOIUrl(event.target.value);
+    setDoiUrl(event.target.value);
   };
 
   return (
@@ -56,14 +56,17 @@ const LinkPublicationPanel: React.FC<LinkPublicationPanelProps> = ({ expanded, o
       <StyledBody>
         {t('publication_panel.link_publication_description')}
         <StyledInputBox>
-          <StyledTextField
-            margin="dense"
-            id="ORCID-link"
-            variant="outlined"
-            label={t('publication_panel.ORCID-link')}
-            onChange={handleChange}
-            value={DOIUrl}
-          />
+          <form>
+            <StyledTextField
+              margin="dense"
+              id="ORCID-link"
+              variant="outlined"
+              type="url"
+              label={t('publication_panel.ORCID-link')}
+              onChange={handleChange}
+              value={doiUrl}
+            />
+          </form>
           <Button color="primary" variant="contained" onClick={handleSearch}>
             {t('publication_panel.search')}
           </Button>
