@@ -1,3 +1,4 @@
+import { CognitoUserSession } from 'amazon-cognito-identity-js';
 import { Auth } from 'aws-amplify';
 import { Dispatch } from 'redux';
 
@@ -8,6 +9,7 @@ import {
   logoutSuccess,
   refreshTokenFailure,
   refreshTokenSuccess,
+  sessionInvalidFailure,
 } from '../redux/actions/authActions';
 import { clearFeedback } from '../redux/actions/feedbackActions';
 import { clearUser, setUser, setUserFailure } from '../redux/actions/userActions';
@@ -31,13 +33,27 @@ export const getCurrentAuthenticatedUser = () => {
   return async (dispatch: Dispatch<any>, getState: () => RootStore) => {
     try {
       const cognitoUser = await Auth.currentAuthenticatedUser();
-      const user = await cognitoUser.attributes;
-      dispatch(setUser(user));
+      if (cognitoUser != null) {
+        cognitoUser.getSession((error: any, session: CognitoUserSession) => {
+          if (error || !session.isValid()) {
+            dispatch(sessionInvalidFailure('error.get_session'));
+          }
+
+          // NOTE: getSession must be called to authenticate user before calling getUserAttributes
+          cognitoUser.getUserAttributes((error: any) => {
+            if (error) {
+              dispatch(setUserFailure('error.get_user'));
+            } else {
+              dispatch(setUser(cognitoUser.attributes));
+            }
+          });
+        });
+      }
       dispatch(refreshToken());
     } catch (e) {
       const store = getState();
       if (store.auth.isLoggedIn) {
-        dispatch(setUserFailure('ErrorMessage.Failed to get user'));
+        dispatch(setUserFailure('error.get_user'));
       }
     }
   };

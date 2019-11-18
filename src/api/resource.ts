@@ -64,10 +64,10 @@ export const createNewResource = (files: ResourceFileMap[], metadata: ResourceMe
       if (response.status === StatusCode.OK) {
         dispatch(createResourceSuccess());
       } else {
-        dispatch(createResourceFailure('ErrorMessage.Could not create resource'));
+        dispatch(createResourceFailure('error.create_resource'));
       }
     } catch {
-      dispatch(createResourceFailure('ErrorMessage.Could not create resource'));
+      dispatch(createResourceFailure('error.create_resource'));
     }
   };
 };
@@ -88,10 +88,10 @@ export const updateResource = (resource: Resource) => {
       if (response.status === StatusCode.OK) {
         dispatch(updateResourceSuccess());
       } else {
-        dispatch(updateResourceFailure('ErrorMessage.Could not update resource'));
+        dispatch(updateResourceFailure('error.update_resource'));
       }
     } catch {
-      dispatch(updateResourceFailure('ErrorMessage.Could not update resource'));
+      dispatch(updateResourceFailure('error.update_resource'));
     }
   };
 };
@@ -104,10 +104,10 @@ export const getResource = (id: string) => {
         dispatch(getResourceSuccess());
         return response;
       } else {
-        dispatch(getResourceFailure('ErrorMessage.Could not get resource'));
+        dispatch(getResourceFailure('error.get_resource'));
       }
     } catch {
-      dispatch(getResourceFailure('ErrorMessage.Could not get resource'));
+      dispatch(getResourceFailure('error.get_resource'));
     }
   };
 };

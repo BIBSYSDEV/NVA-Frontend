@@ -13,7 +13,7 @@ export const search = (searchTerm: string, offset?: number) => {
         dispatch(searchForResources(result, searchTerm, response.data.length, offset));
       })
       .catch(() => {
-        dispatch(searchFailure('ErrorMessage.Search failed'));
+        dispatch(searchFailure('error.search'));
       });
   };
 };

@@ -1,17 +1,18 @@
 {
-  "ErrorMessage": {
-    "Could not create resource": "Could not create resource",
-    "Could not update resource": "Could not update resource",
-    "Could not get resource": "Could not get resource",
-    "Failed to get user": "Failed to get user",
-    "Login failed": "Login failed",
-    "ORCID login failed": "ORCID login failed",
-    "ORCID request failed": "Could not get data from ORCID",
-    "Search failed": "Search failed"
+  "error": {
+    "create_resource": "Could not create resource",
+    "update_resource": "Could not update resource",
+    "get_resource": "Could not get resource",
+    "get_user": "Failed to get user",
+    "login": "Login failed",
+    "orcid_login": "ORCID login failed",
+    "get_orcid": "Could not get data from ORCID",
+    "get_session": "Invalid session. Please log in again.",
+    "search": "Search failed"
   },
-  "SuccessMessage": {
-    "Login success": "Logged in",
-    "New resource created": "New resource created",
-    "Updated resource": "Updated resource"
+  "success": {
+    "login": "Logged in",
+    "create_resource": "New resource created",
+    "update_resource": "Updated resource"
   }
 }

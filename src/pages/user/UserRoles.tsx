@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 import IconLabelTextLine from '../../components/IconLabelTextLine';
-import User, { RoleName } from '../../types/user.types';
+import { RoleName, User } from '../../types/user.types';
 import UserCard from './UserCard';
 
 interface UserRolesProps {
