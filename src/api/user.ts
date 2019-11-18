@@ -32,7 +32,7 @@ export const login = () => {
 export const getCurrentAuthenticatedUser = () => {
   return async (dispatch: Dispatch<any>, getState: () => RootStore) => {
     try {
-      const cognitoUser = await Auth.currentAuthenticatedUser({ bypassCache: true });
+      const cognitoUser = await Auth.currentAuthenticatedUser();
       if (cognitoUser != null) {
         await cognitoUser.getSession(async (error: any, session: CognitoUserSession) => {
           if (error || !session.isValid()) {
