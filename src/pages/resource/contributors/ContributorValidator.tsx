@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import MenuItem from '@material-ui/core/MenuItem';
 import PersonIcon from '@material-ui/icons/Person';
 import { useTranslation } from 'react-i18next';
-import StyledContributor from './StyledComponents';
+import StyledContributor from './StyledContributor';
 
 const StyledContributorValidator = styled(StyledContributor.ContributorContainer)`
   grid-template-areas: 'icon name institution verify-person verify-person . delete';
@@ -22,8 +22,8 @@ const ContributorValidator: React.FC = () => {
     <StyledContributorValidator>
       <StyledContributor.AddCircleIcon />
       <StyledNameInput />
-      <StyledContributor.Select variant="outlined">
-        <MenuItem value=""></MenuItem>
+      <StyledContributor.Select value="" variant="outlined">
+        <MenuItem value="TEST">TEST</MenuItem>
       </StyledContributor.Select>
       <StyledContributor.VerifyPerson color="primary" variant="contained" startIcon={<PersonIcon />}>
         {t('contributors.verify_person')}

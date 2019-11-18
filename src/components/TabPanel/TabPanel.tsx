@@ -12,7 +12,7 @@ interface TabPanelProps {
   children?: React.ReactNode;
   isHidden: boolean;
   errors?: YupError[];
-  onClick: (event: React.MouseEvent<any>) => void;
+  goToNextTab?: (event: React.MouseEvent<any>) => void;
   heading: string;
 }
 
@@ -29,7 +29,7 @@ const StyledButton = styled(Button)`
   margin-right: 0.5rem;
 `;
 
-const TabPanel: React.FC<TabPanelProps> = ({ ariaLabel, children, errors, isHidden, onClick, heading }) => {
+const TabPanel: React.FC<TabPanelProps> = ({ ariaLabel, children, errors, isHidden, goToNextTab, heading }) => {
   const { t } = useTranslation();
 
   return (
@@ -41,8 +41,8 @@ const TabPanel: React.FC<TabPanelProps> = ({ ariaLabel, children, errors, isHidd
         ))}
       <StyledHeading>{t(heading)}</StyledHeading>
       {children}
-      {onClick && (
-        <StyledButton color="primary" variant="contained" onClick={onClick}>
+      {goToNextTab && (
+        <StyledButton color="primary" variant="contained" onClick={goToNextTab}>
           {t('Next')}
         </StyledButton>
       )}

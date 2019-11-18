@@ -21,30 +21,30 @@ const Resource: React.FC = () => {
   const errors = useSelector((store: RootStore) => store.errors);
   const { referencesErrors } = errors;
 
-  const handleChange = (_: React.ChangeEvent<{}>, newTabNumber: number) => {
+  const handleTabChange = (_: React.ChangeEvent<{}>, newTabNumber: number) => {
     setTabNumber(newTabNumber);
   };
 
-  const goToNextPage = (_: React.MouseEvent<any>) => {
+  const goToNextTab = () => {
     setTabNumber(tabNumber + 1);
   };
 
   return (
     <StyledResource>
-      <ResourceFormTabs tabNumber={tabNumber} onChange={handleChange} />
-      <PublicationPanel tabNumber={tabNumber} onClick={goToNextPage} />
-      <DescriptionPanel tabNumber={tabNumber} onClick={goToNextPage} />
+      <ResourceFormTabs tabNumber={tabNumber} handleTabChange={handleTabChange} />
+      <PublicationPanel tabNumber={tabNumber} goToNextTab={goToNextTab} />
+      <DescriptionPanel tabNumber={tabNumber} goToNextTab={goToNextTab} />
       <TabPanel
         isHidden={tabNumber !== 2}
         ariaLabel="references"
-        onClick={goToNextPage}
+        goToNextTab={goToNextTab}
         errors={referencesErrors}
         heading="References">
         <div>Page Three</div>
       </TabPanel>
-      <ContributorsPanel tabNumber={tabNumber} onClick={goToNextPage} />
-      <FilesAndLicensPanel tabNumber={tabNumber} onClick={goToNextPage} />
-      <TabPanel isHidden={tabNumber !== 5} ariaLabel="submission" onClick={goToNextPage} heading="submission">
+      <ContributorsPanel tabNumber={tabNumber} goToNextTab={goToNextTab} />
+      <FilesAndLicensPanel tabNumber={tabNumber} goToNextTab={goToNextTab} />
+      <TabPanel isHidden={tabNumber !== 5} ariaLabel="submission" heading="submission">
         <div>Page Six</div>
       </TabPanel>
     </StyledResource>

@@ -5,6 +5,7 @@ import OrcidResponse from '../types/orcid.types';
 import { ApplicationName, FeideUser, RoleName } from '../types/user.types';
 import { ApiBaseUrl, ORCID_OAUTH_URL, USE_MOCK_DATA } from '../utils/constants';
 import mockResources from '../utils/testfiles/resources_45_random_results_generated.json';
+import mockDoiResource from '../utils/testfiles/resource_generated_from_doi.json';
 
 export const mockUser: FeideUser = {
   name: 'Test User',
@@ -38,6 +39,9 @@ if (USE_MOCK_DATA) {
 
   // SEARCH
   mock.onGet(new RegExp(`/${ApiBaseUrl.RESOURCES}/*`)).reply(200, mockResources);
+
+  // Create resource from doi
+  mock.onPost(new RegExp(`/${ApiBaseUrl.RESOURCES}/doi/*`)).reply(200, mockDoiResource);
 
   // USER
   mock.onGet(new RegExp(`/${ApiBaseUrl}/*`)).reply(200, mockUser);
