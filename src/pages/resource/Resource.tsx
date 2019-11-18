@@ -42,9 +42,9 @@ const Resource: React.FC = () => {
         heading="References">
         <div>Page Three</div>
       </TabPanel>
-      <ContributorsPanel tabNumber={tabNumber} onClick={goToNextPage} />
-      <FilesAndLicensPanel tabNumber={tabNumber} onClick={goToNextPage} />
-      <TabPanel isHidden={tabNumber !== 5} ariaLabel="submission" onClick={goToNextPage} heading="submission">
+      <ContributorsPanel tabNumber={tabNumber} goToNextPage={goToNextPage} />
+      <FilesAndLicensPanel tabNumber={tabNumber} goToNextPage={goToNextPage} />
+      <TabPanel isHidden={tabNumber !== 5} ariaLabel="submission" goToNextPage={goToNextPage} heading="submission">
         <div>Page Six</div>
       </TabPanel>
     </StyledResource>
