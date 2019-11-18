@@ -7,6 +7,7 @@ export enum ApplicationName {
   NVA = 'NVA',
   DLR = 'DLR',
   BIRD = 'BIRD',
+  NONE = '',
 }
 
 export interface Role {
@@ -20,7 +21,7 @@ export interface User {
   id: string;
   institution: string;
   roles: RoleName[];
-  application: ApplicationName | string;
+  application: ApplicationName;
   orcidName: string;
   orcid: string;
 }
@@ -47,7 +48,7 @@ export const emptyUser: User = {
   id: '',
   institution: '',
   roles: [],
-  application: '',
+  application: ApplicationName.NONE,
   orcidName: '',
   orcid: '',
 };

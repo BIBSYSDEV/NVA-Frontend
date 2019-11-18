@@ -1,4 +1,4 @@
-import { emptyUser, RoleName, User } from '../../types/user.types';
+import { ApplicationName, emptyUser, RoleName, User } from '../../types/user.types';
 import { OrcidActions, SET_ORCID_INFO } from '../actions/orcidActions';
 import { CLEAR_USER, SET_USER_SUCCESS, UserActions } from '../actions/userActions';
 
@@ -17,7 +17,7 @@ export const userReducer = (state: User = emptyUser, action: UserActions | Orcid
         id: action.user['custom:feideId'],
         institution: action.user['custom:orgName'],
         roles,
-        application: action.user['custom:application'],
+        application: action.user['custom:application'] as ApplicationName,
       };
       return {
         ...state,
