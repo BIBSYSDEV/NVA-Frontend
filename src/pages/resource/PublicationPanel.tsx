@@ -42,11 +42,11 @@ const StyledInfoBox = styled.div`
 `;
 
 interface PublicationPanelProps {
-  onClick: (event: React.MouseEvent<any>) => void;
+  goToNextPage: () => void;
   tabNumber: number;
 }
 
-const PublicationPanel: React.FC<PublicationPanelProps> = ({ onClick, tabNumber }) => {
+const PublicationPanel: React.FC<PublicationPanelProps> = ({ goToNextPage, tabNumber }) => {
   const [expanded, setExpanded] = React.useState<string | false>(false);
   const errors = useSelector((store: RootStore) => store.errors);
   const { t } = useTranslation();
@@ -59,13 +59,17 @@ const PublicationPanel: React.FC<PublicationPanelProps> = ({ onClick, tabNumber 
     <TabPanel
       isHidden={tabNumber !== 0}
       ariaLabel="publication"
-      onClick={onClick}
+      goToNextPage={goToNextPage} //TODO: ....
       errors={errors.publicationErrors}
       heading="Publication">
       <StyledPublicationPanel>
         <StyledSelectorWrapper>
           <LoadPublicationPanel expanded={expanded === 'load-panel'} onChange={handleChange('load-panel')} />
-          <LinkPublicationPanel expanded={expanded === 'link-panel'} onChange={handleChange('link-panel')} />
+          <LinkPublicationPanel
+            expanded={expanded === 'link-panel'}
+            goToNextPage={goToNextPage}
+            onChange={handleChange('link-panel')}
+          />
           <OrcidPublicationPanel expanded={expanded === 'orcid-panel'} onChange={handleChange('orcid-panel')} />
         </StyledSelectorWrapper>
         <StyledInfoBox>

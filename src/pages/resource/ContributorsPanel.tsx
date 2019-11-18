@@ -13,11 +13,11 @@ import ContributorValidator from './contributors/ContributorValidator';
 import StyledContributor from './contributors/StyledContributor';
 
 interface ContributorsPanelProps {
-  onClick: (event: React.MouseEvent<any>) => void;
+  goToNextPage: (event: React.MouseEvent<any>) => void;
   tabNumber: number;
 }
 
-const ContributorsPanel: React.FC<ContributorsPanelProps> = ({ onClick, tabNumber }) => {
+const ContributorsPanel: React.FC<ContributorsPanelProps> = ({ goToNextPage, tabNumber }) => {
   const { t } = useTranslation();
   const errors = useSelector((store: RootStore) => store.errors);
   const initialState = mockContributors;
@@ -27,7 +27,7 @@ const ContributorsPanel: React.FC<ContributorsPanelProps> = ({ onClick, tabNumbe
     <TabPanel
       isHidden={tabNumber !== 3}
       ariaLabel="references"
-      onClick={onClick}
+      goToNextPage={goToNextPage}
       errors={errors.contributorsErrors}
       heading="Contributors">
       <StyledContributor.Box>

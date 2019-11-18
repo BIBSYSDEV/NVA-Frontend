@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { RootStore } from '../../redux/reducers/rootReducer';
 
 import { Button, TextField } from '@material-ui/core';
 import LinkIcon from '@material-ui/icons/Link';
 
 import PublicationExpansionPanel from './PublicationExpansionPanel';
 import styled from 'styled-components';
+import { useDispatch, useSelector } from 'react-redux';
+import { createNewResourceFromDOI } from '../../api/resource';
 
 const StyledInputBox = styled.div`
   display: flex;
@@ -24,18 +27,22 @@ const StyledBody = styled.div`
 interface LinkPublicationPanelProps {
   expanded: boolean;
   onChange: (event: React.ChangeEvent<any>, isExpanded: boolean) => void;
+  goToNextPage: any;
 }
 
-const LinkPublicationPanel: React.FC<LinkPublicationPanelProps> = ({ expanded, onChange }) => {
-  const [searchTerm, setSearchTerm] = useState('');
+const LinkPublicationPanel: React.FC<LinkPublicationPanelProps> = ({ expanded, onChange, goToNextPage }) => {
+  const [DOIUrl, setDOIUrl] = useState('');
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const user = useSelector((state: RootStore) => state.user);
 
   const handleSearch = () => {
-    // do search
+    dispatch(createNewResourceFromDOI(DOIUrl, user.id));
+    goToNextPage();
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(event.target.value);
+    setDOIUrl(event.target.value);
   };
 
   return (
@@ -55,7 +62,7 @@ const LinkPublicationPanel: React.FC<LinkPublicationPanelProps> = ({ expanded, o
             variant="outlined"
             label={t('publication_panel.ORCID-link')}
             onChange={handleChange}
-            value={searchTerm}
+            value={DOIUrl}
           />
           <Button color="primary" variant="contained" onClick={handleSearch}>
             {t('publication_panel.search')}

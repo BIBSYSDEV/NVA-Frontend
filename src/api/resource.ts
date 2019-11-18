@@ -12,9 +12,41 @@ import {
 import { Resource, ResourceFileMap, ResourceMetadata } from '../types/resource.types';
 import { ApiBaseUrl, StatusCode } from '../utils/constants';
 
+interface createNewResourceFromDOIDataType {
+  url: string;
+  owner: string;
+}
+export const createNewResourceFromDOI = (url: string, owner: string) => {
+  const data: createNewResourceFromDOIDataType = {
+    url,
+    owner,
+  };
+  return async (dispatch: Dispatch) => {
+    try {
+      const response = await Axios({
+        method: 'POST',
+        url: `/${ApiBaseUrl.RESOURCES}/doi`,
+        data: data,
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'aplication/json',
+        },
+      });
+      if (response.status === StatusCode.OK) {
+        dispatch(createResourceSuccess());
+        //TODO: use metadata to fill schema
+      } else {
+        dispatch(createResourceFailure('ErrorMessage.Could not create resource'));
+      }
+    } catch (err) {
+      dispatch(createResourceFailure('ErrorMessage.Could not create resource'));
+      console.error(err);
+    }
+  };
+};
+
 export const createNewResource = (files: ResourceFileMap[], metadata: ResourceMetadata, owner: string) => {
   const resource: Partial<Resource> = {
-    createdDate: new Date().toISOString(),
     files,
     metadata,
     owner,
