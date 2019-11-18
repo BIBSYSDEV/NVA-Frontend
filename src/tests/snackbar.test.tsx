@@ -60,31 +60,31 @@ describe('Snackbar', () => {
   });
 
   test('shows login error message when login failed', async () => {
-    store.dispatch(loginFailure('ErrorMessage.Login failed'));
+    store.dispatch(loginFailure('error.login'));
     await wait(() => getByTestId(app.container, 'snackbar'));
     expect(getByTestId(app.container, 'snackbar').textContent).toBe('Login failed');
   });
 
   test('shows error message when failing to get authenticated user', async () => {
-    store.dispatch(setUserFailure('ErrorMessage.Failed to get user'));
+    store.dispatch(setUserFailure('error.get_user'));
     await wait(() => getByTestId(app.container, 'snackbar'));
     expect(getByTestId(app.container, 'snackbar').textContent).toBe('Failed to get user');
   });
 
   test('shows orcid request error message when connecting to ORCID failed', async () => {
-    store.dispatch(orcidRequestFailure('ErrorMessage.ORCID request failed'));
+    store.dispatch(orcidRequestFailure('error.get_orcid'));
     await wait(() => getByTestId(app.container, 'snackbar'));
     expect(getByTestId(app.container, 'snackbar').textContent).toBe('Could not get data from ORCID');
   });
 
   test('shows orcid request error message when logging in to ORCID failed', async () => {
-    store.dispatch(orcidSignInFailure('ErrorMessage.ORCID login failed'));
+    store.dispatch(orcidSignInFailure('error.orcid_login'));
     await wait(() => getByTestId(app.container, 'snackbar'));
     expect(getByTestId(app.container, 'snackbar').textContent).toBe('ORCID login failed');
   });
 
   test('shows search error message when search failed', async () => {
-    store.dispatch(searchFailure('ErrorMessage.Search failed'));
+    store.dispatch(searchFailure('error.search'));
     await wait(() => getByTestId(app.container, 'snackbar'));
     expect(getByTestId(app.container, 'snackbar').textContent).toBe('Search failed');
   });

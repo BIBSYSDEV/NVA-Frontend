@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 import LabelTextLine from '../../components/LabelTextLine';
-import User from '../../types/user.types';
+import { User } from '../../types/user.types';
 import UserCard from './UserCard';
 
 interface UserInfoProps {
@@ -10,12 +10,7 @@ interface UserInfoProps {
 }
 
 const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
-  const [applications, setApplications] = useState('');
   const { t } = useTranslation();
-
-  useEffect(() => {
-    user.applications.length > 0 && setApplications(user.applications.join(', '));
-  }, [user]);
 
   return (
     <UserCard headerLabel={t('User information')} subHeaderLabel={t('Info from Feide')}>
@@ -23,7 +18,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
       <LabelTextLine dataTestId="user-id" label={t('ID')} text={user.id} />
       <LabelTextLine dataTestId="user-email" label={t('Email')} text={user.email} />
       <LabelTextLine dataTestId="user-institution" label={t('Institution')} text={user.institution} />
-      <LabelTextLine dataTestId="user-applications" label={t('Applications')} text={applications} />
+      <LabelTextLine dataTestId="user-applications" label={t('Applications')} text={user.application} />
     </UserCard>
   );
 };

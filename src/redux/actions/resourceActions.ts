@@ -9,7 +9,7 @@ export const GET_RESOURCE_FAILURE = 'get resource failure';
 
 export const createResourceSuccess = (): CreateResourceSuccessAction => ({
   type: CREATE_RESOURCE_SUCCESS,
-  message: 'SuccessMessage.New resource created',
+  message: 'success.create_resource',
   variant: 'success',
 });
 
@@ -21,7 +21,7 @@ export const createResourceFailure = (message: string): CreateResourceFailureAct
 
 export const updateResourceSuccess = (): UpdateResourceSuccessAction => ({
   type: UPDATE_RESOURCE_SUCCESS,
-  message: 'SuccessMessage.Updated resource',
+  message: 'success.update_resource',
   variant: 'success',
 });
 
