@@ -22,8 +22,8 @@ const ContributorValidator: React.FC = () => {
     <StyledContributorValidator>
       <StyledContributor.AddCircleIcon />
       <StyledNameInput />
-      <StyledContributor.Select variant="outlined">
-        <MenuItem value=""></MenuItem>
+      <StyledContributor.Select value="" variant="outlined">
+        <MenuItem value="TEST">TEST</MenuItem>
       </StyledContributor.Select>
       <StyledContributor.VerifyPerson color="primary" variant="contained" startIcon={<PersonIcon />}>
         {t('contributors.verify_person')}
