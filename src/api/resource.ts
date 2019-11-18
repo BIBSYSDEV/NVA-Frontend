@@ -35,10 +35,10 @@ export const createNewResourceFromDOI = (url: string, owner: string) => {
       if (response.status === StatusCode.OK) {
         dispatch(createResourceSuccess());
       } else {
-        dispatch(createResourceFailure('ErrorMessage.Could not create resource'));
+        dispatch(createResourceFailure('error.create_resource'));
       }
     } catch {
-      dispatch(createResourceFailure('ErrorMessage.Could not create resource'));
+      dispatch(createResourceFailure('error.create_resource'));
     }
   };
 };
