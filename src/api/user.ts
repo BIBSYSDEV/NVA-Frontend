@@ -34,13 +34,13 @@ export const getCurrentAuthenticatedUser = () => {
     try {
       const cognitoUser = await Auth.currentAuthenticatedUser();
       if (cognitoUser != null) {
-        await cognitoUser.getSession(async (error: any, session: CognitoUserSession) => {
+        cognitoUser.getSession((error: any, session: CognitoUserSession) => {
           if (error || !session.isValid()) {
             dispatch(sessionInvalidFailure('error.get_session'));
           }
 
           // NOTE: getSession must be called to authenticate user before calling getUserAttributes
-          await cognitoUser.getUserAttributes((error: any) => {
+          cognitoUser.getUserAttributes((error: any) => {
             if (error) {
               dispatch(setUserFailure('error.get_user'));
             } else {
