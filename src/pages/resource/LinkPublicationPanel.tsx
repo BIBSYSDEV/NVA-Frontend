@@ -15,7 +15,7 @@ const StyledBody = styled.div`
 
 const StyledHeading = styled.div`
   font-size: 1.2rem;
-  padding: 10px 0;
+  margin: 1rem 0;
 `;
 
 const StyledTitle = styled.div`
