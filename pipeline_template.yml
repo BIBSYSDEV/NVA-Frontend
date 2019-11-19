@@ -48,19 +48,19 @@ Resources:
             Value: !Ref UseMockData
           - Name: REACT_APP_AWS_COGNITO_IDENTITY_POOL_ID
             Type: PLAINTEXT
-            Value: eu-west-1:e5bf7cd7-4b7b-484c-b101-eef567dae073
+            Value: '{{resolve:ssm:REACT_APP_AWS_COGNITO_IDENTITY_POOL_ID:1}}' # eu-west-1:e5bf7cd7-4b7b-484c-b101-eef567dae073
           - Name: REACT_APP_AWS_REGION
             Type: PLAINTEXT
-            Value: eu-west-1
+            Value: !Ref "AWS::Region" # eu-west-1
           - Name: REACT_APP_AWS_USER_POOLS_ID
             Type: PLAINTEXT
-            Value: eu-west-1_1IA7t6BK0
+            Value: '{{resolve:ssm:REACT_APP_AWS_USER_POOLS_ID:1}}' # eu-west-1_1IA7t6BK0
           - Name: REACT_APP_AWS_USER_POOLS_WEB_CLIENT_ID
             Type: PLAINTEXT
-            Value: 2sqh11f89dnsstmthg5vlh756r
+            Value: '{{resolve:ssm:REACT_APP_AWS_USER_POOLS_WEB_CLIENT_ID:1}}' # 2sqh11f89dnsstmthg5vlh756r
           - Name: REACT_APP_DOMAIN
             Type: PLAINTEXT
-            Value: nva-develop.auth.eu-west-1.amazoncognito.com
+            Value: '{{resolve:ssm:REACT_APP_AWS_USER_POOLS_WEB_CLIENT_ID:1}}' # nva-develop.auth.eu-west-1.amazoncognito.com
       Source:
         Type: CODEPIPELINE
   NvaFrontendBucket:
