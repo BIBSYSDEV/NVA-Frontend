@@ -42,8 +42,7 @@ const LinkPublicationPanel: React.FC<LinkPublicationPanelProps> = ({ expanded, o
   };
 
   const handleSearch = async (values: any) => {
-    const title = await lookupDoiTitle(values.doiUrl);
-    setDoiTitle(title);
+    setDoiTitle(await lookupDoiTitle(values.doiUrl));
     setDoiUrl(values.doiUrl);
   };
 
