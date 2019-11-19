@@ -61,7 +61,9 @@
     "corresponding": "Korresponderende",
     "ORCID": "ORCID",
     "verify_person": "Verifiser",
-    "add_author": "Legg til flere forfattere"
+    "add_author": "Legg til flere forfattere",
+    "add_other_contributor": "Legg til flere",
+    "type": "Bidragstype"
   },
   "Next": "Neste",
   "ORCID": "ORCID",

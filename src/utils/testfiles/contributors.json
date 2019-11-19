@@ -3,28 +3,52 @@
     "id": "1",
     "name": "Eirik Nilsen",
     "institutions": ["Unit", "BIBSYS"],
-    "institutionChoice": "",
+    "selectedInstitution": "",
     "orcid": "some orcid",
-    "corresponding": false
+    "corresponding": false,
+    "type": "Author",
+    "verified": true
   },
   {
     "id": "2",
     "name": "Per Christian Bjelke",
     "institutions": ["Unit", "BIBSYS"],
-    "institutionChoice": "",
-    "corresponding": false
+    "selectedInstitution": "",
+    "corresponding": false,
+    "type": "Author",
+    "verified": true
   },
   {
     "id": "3",
     "name": "Sarah Serussi",
     "institutions": ["Unit"],
-    "institutionChoice": "",
-    "corresponding": false
+    "selectedInstitution": "",
+    "corresponding": false,
+    "type": "Author",
+    "verified": true
   },
   {
     "id": "4",
     "name": "Kjetil Møkkelgjerd",
-    "institutionChoice": "",
-    "corresponding": false
+    "selectedInstitution": "",
+    "corresponding": false,
+    "type": "Author",
+    "verified": true
+  },
+  {
+    "id": "5",
+    "name": "Svenn Gjetø",
+    "selectedInstitution": "",
+    "corresponding": false,
+    "type": "Editor",
+    "verified": false
+  },
+  {
+    "id": "6",
+    "name": "Nikolai Fikse Raanes",
+    "selectedInstitution": "",
+    "corresponding": false,
+    "type": "Photographer",
+    "verified": false
   }
 ]
