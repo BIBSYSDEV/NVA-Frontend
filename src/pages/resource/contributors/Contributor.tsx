@@ -12,15 +12,17 @@ const StyledContainer = styled(ContributorStyles.ContributorContainer)`
   align-items: center;
 `;
 
+const StyledInstitutionSelect = styled(ContributorStyles.Select)`
+  grid-area: institution;
+`;
+
 interface ContributorProps {
   contributor: ContributorType;
   dispatch: Dispatch<any>;
 }
 
 const Contributor: React.FC<ContributorProps> = ({ contributor, dispatch }) => {
-  const handleCorrespondingAuthorChange = (contributor: ContributorType) => (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleCorrespondingAuthorChange = (contributor: ContributorType) => (event: React.ChangeEvent<any>) => {
     contributor.corresponding = event.target.checked;
     dispatch(updateContributor(contributor));
   };
@@ -42,7 +44,7 @@ const Contributor: React.FC<ContributorProps> = ({ contributor, dispatch }) => {
     <StyledContainer>
       <ContributorStyles.PersonIcon />
       <ContributorStyles.Name>{contributor.name}</ContributorStyles.Name>
-      <ContributorStyles.Select
+      <StyledInstitutionSelect
         onChange={handleInstitutionChange(contributor)}
         value={contributor.selectedInstitution || ''}
         variant="outlined">
@@ -53,7 +55,7 @@ const Contributor: React.FC<ContributorProps> = ({ contributor, dispatch }) => {
               {institution}
             </MenuItem>
           ))}
-      </ContributorStyles.Select>
+      </StyledInstitutionSelect>
       <ContributorStyles.CorrespondingAuthor
         onChange={handleCorrespondingAuthorChange(contributor)}
         checked={contributor.corresponding}

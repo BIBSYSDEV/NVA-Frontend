@@ -57,7 +57,9 @@
     "corresponding": "Corresponding",
     "ORCID": "ORCID",
     "verify_person": "Verify",
-    "add_author": "Add authors"
+    "add_author": "Add authors",
+    "add_other_contributor": "Add more contributors",
+    "type": "Contributor type"
   },
   "Next": "Next",
   "ORCID": "ORCID",
