@@ -1,55 +1,25 @@
-// Persist form data to LocalStorage with a custom hook
-import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { updateResourceDescriptionFormData } from '../../redux/actions/formActions';
+import useLocalStorage from './useLocalStorage';
+import { useEffect } from 'react';
 
-export default function useFormPersister(key: string, initialValue: object = {}) {
-  // NB! key can have at most one "."
-  // First element will be key for localStorage, second element will be key of value object
-  // Ex: "form-data.description" will result in "form-data" as LS key, and "description" as key on root of value object
-  const [lsKey, objKey] = key.split('.');
+export default function useFormPersister(formKey: string, initialValue: object = {}) {
+  // Initiate localStorage, with a similar structure for keys as used in Redux
+  const lsKey = `forms.${formKey}`;
+  const [lsValue, setLsValues] = useLocalStorage(lsKey, initialValue);
 
-  const [storedValue, setStoredValue] = useState(() => {
-    try {
-      // Get value from local storage by key
-      let lsItem = window.localStorage.getItem(lsKey);
-
-      // Add value to LS if not yet existing
-      if (!lsItem) {
-        const lsValue = JSON.stringify(objKey ? { [objKey]: initialValue } : initialValue);
-        window.localStorage.setItem(lsKey, lsValue);
-        lsItem = lsValue;
-      }
-
-      // Parse string value to JSON
-      const jsonData = JSON.parse(lsItem);
-
-      // Return relevant part of value
-      if (objKey) {
-        return jsonData[objKey];
-      } else {
-        return jsonData;
-      }
-    } catch (error) {
-      // If error return initialValue
-      return initialValue;
+  const dispatch = useDispatch();
+  // Put potential localStorage data into Redux store
+  useEffect(() => {
+    if (lsValue && Object.getOwnPropertyNames(lsValue).length > 0) {
+      dispatch(updateResourceDescriptionFormData(lsValue));
     }
-  });
+  }, [dispatch, lsValue]);
 
-  // Update value function
-  const setValue = (value: any) => {
-    try {
-      // Update state
-      setStoredValue(value);
-
-      // Update local storage
-      const lsValue = window.localStorage.getItem(lsKey);
-      const jsonValue = JSON.parse(lsValue ? lsValue : '');
-      jsonValue[objKey] = value;
-
-      window.localStorage.setItem(lsKey, JSON.stringify(jsonValue));
-    } catch (err) {
-      // Keep using existing values if error occurs
-    }
+  // Update LS. This will trigger useEffect to update Redux store
+  const setFormData = (value: any) => {
+    setLsValues(value);
   };
 
-  return [storedValue, setValue];
+  return [lsValue, setFormData];
 }

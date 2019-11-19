@@ -44,7 +44,7 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const errors = useSelector((store: RootStore) => store.errors);
-  const [persistedValues, setPersistedValues] = useFormPersister('resource-form-data.description', {});
+  const [persistedValues, setPersistedValues] = useFormPersister('resourceDescription', {});
 
   const resourceSchema = Yup.object().shape({
     title: Yup.string().required(t('Required field')),
