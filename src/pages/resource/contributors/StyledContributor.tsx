@@ -9,13 +9,27 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import Person from '@material-ui/icons/Person';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 
+const BaseSelectStyle = styled(Select)`
+  height: 2rem;
+  background-color: white;
+`;
+
+const BaseContainerStyle = styled.div`
+  background-color: ${({ theme }) => theme.palette.box.main};
+  display: grid;
+  grid-column-gap: 0.5rem;
+  align-items: center;
+`;
+
 const StyledContributor = {
-  ContributorContainer: styled.div`
-    background-color: ${({ theme }) => theme.palette.box.main};
-    display: grid;
+  ContributorContainer: styled(BaseContainerStyle)`
     grid-template-areas: 'icon name institution switch orcid arrows delete';
-    grid-template-columns: 5% 30% 18% 10% 5% 5% 5%;
-    grid-column-gap: 0.5rem;
+    grid-template-columns: 5% 40% 25% 10% 5% 5% 5%;
+  `,
+
+  OtherContributorContainer: styled(BaseContainerStyle)`
+    grid-template-areas: 'type name institution delete';
+    grid-template-columns: 20% 40% 25% 5%;
   `,
 
   PersonIcon: styled(Person)`
@@ -27,10 +41,14 @@ const StyledContributor = {
     grid-area: name;
   `,
 
-  Select: styled(Select)`
+  Select: BaseSelectStyle,
+
+  TypeSelect: styled(BaseSelectStyle)`
+    grid-area: type;
+  `,
+
+  InstitutionSelect: styled(BaseSelectStyle)`
     grid-area: institution;
-    height: 2rem;
-    background-color: white;
   `,
 
   CorrespondingAuthor: styled(Switch)`
