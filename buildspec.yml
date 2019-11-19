@@ -8,8 +8,7 @@ phases:
       - npm install
   build:
     commands:
-      - npm run build:production
-artifacts:
+      - npm run build
   files:
     - '**/*'
   base-directory: build
