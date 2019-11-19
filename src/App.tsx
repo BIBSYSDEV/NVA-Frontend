@@ -1,7 +1,5 @@
 import Amplify, { Hub } from 'aws-amplify';
-import { useSnackbar } from 'notistack';
 import React, { useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import styled from 'styled-components';
@@ -11,6 +9,7 @@ import { getCurrentAuthenticatedUser } from './api/user';
 import Breadcrumbs from './layout/Breadcrumbs';
 import Footer from './layout/Footer';
 import Header from './layout/header/Header';
+import Notifier from './layout/Notifier';
 import AdminMenu from './pages/dashboard/AdminMenu';
 import Dashboard from './pages/dashboard/Dashboard';
 import NotFound from './pages/errorpages/NotFound';
@@ -18,7 +17,6 @@ import Resource from './pages/resource/Resource';
 import Search from './pages/search/Search';
 import User from './pages/user/User';
 import Workspace from './pages/workspace/Workspace';
-import { clearFeedback } from './redux/actions/feedbackActions';
 import { setUser } from './redux/actions/userActions';
 import { RootStore } from './redux/reducers/rootReducer';
 import awsConfig from './utils/aws-config';
@@ -42,28 +40,7 @@ const StyledPageBody = styled.div`
 
 const App: React.FC = () => {
   const dispatch = useDispatch();
-  const { t } = useTranslation('feedback');
-  const { closeSnackbar, enqueueSnackbar } = useSnackbar();
-  const feedback = useSelector((store: RootStore) => store.feedback);
   const auth = useSelector((store: RootStore) => store.auth);
-
-  useEffect(() => {
-    if (feedback.length > 0) {
-      feedback.map(fb => {
-        if (fb.variant === 'error') {
-          enqueueSnackbar(t(fb.message), { variant: fb.variant, persist: true });
-        } else {
-          enqueueSnackbar(t(fb.message), { variant: fb.variant });
-          setTimeout(() => {
-            dispatch(clearFeedback());
-          }, 3000);
-        }
-      });
-    }
-    return () => {
-      closeSnackbar();
-    };
-  }, [feedback, enqueueSnackbar, closeSnackbar, t, dispatch]);
 
   useEffect(() => {
     if (USE_MOCK_DATA) {
@@ -81,6 +58,7 @@ const App: React.FC = () => {
   return (
     <BrowserRouter>
       <StyledApp>
+        <Notifier />
         <Header />
         <AdminMenu />
         <Breadcrumbs />

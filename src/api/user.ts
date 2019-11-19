@@ -11,9 +11,9 @@ import {
   refreshTokenSuccess,
   sessionInvalidFailure,
 } from '../redux/actions/authActions';
-import { clearFeedback } from '../redux/actions/feedbackActions';
 import { clearUser, setUser, setUserFailure } from '../redux/actions/userActions';
 import { RootStore } from '../redux/reducers/rootReducer';
+import i18n from '../translations/i18n';
 import { USE_MOCK_DATA } from '../utils/constants';
 import { mockUser } from './mock-interceptor';
 
@@ -31,18 +31,21 @@ export const login = () => {
 
 export const getCurrentAuthenticatedUser = () => {
   return async (dispatch: Dispatch<any>, getState: () => RootStore) => {
+    setTimeout(() => {
+      dispatch(setUserFailure(i18n.t('feedback:error.get_user')));
+    }, 500);
     try {
       const cognitoUser = await Auth.currentAuthenticatedUser();
       if (cognitoUser != null) {
         cognitoUser.getSession((error: any, session: CognitoUserSession) => {
           if (error || !session.isValid()) {
-            dispatch(sessionInvalidFailure('error.get_session'));
+            dispatch(sessionInvalidFailure(i18n.t('feedback:error.get_session')));
           }
 
           // NOTE: getSession must be called to authenticate user before calling getUserAttributes
           cognitoUser.getUserAttributes((error: any) => {
             if (error) {
-              dispatch(setUserFailure('error.get_user'));
+              dispatch(setUserFailure(i18n.t('feedback:error.get_user')));
             } else {
               dispatch(setUser(cognitoUser.attributes));
             }
@@ -53,7 +56,7 @@ export const getCurrentAuthenticatedUser = () => {
     } catch (e) {
       const store = getState();
       if (store.auth.isLoggedIn) {
-        dispatch(setUserFailure('error.get_user'));
+        dispatch(setUserFailure(i18n.t('feedback:error.get_user')));
       }
     }
   };
@@ -84,11 +87,9 @@ export const logout = () => {
     dispatch(initLogout());
     if (USE_MOCK_DATA) {
       dispatch(clearUser());
-      dispatch(clearFeedback());
       dispatch(logoutSuccess());
     } else {
       Auth.signOut();
-      dispatch(clearFeedback());
     }
   };
 };

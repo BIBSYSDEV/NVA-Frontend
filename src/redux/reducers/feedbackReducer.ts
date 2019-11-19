@@ -1,6 +1,8 @@
-import { FeedbackMessageType } from '../../types/feedback.types';
+import uuid from 'uuid';
+
+import { FeedbackType, initialFeedbackState, NotificationType } from '../../types/feedback.types';
 import { AuthActions, LOGIN_FAILURE, LOGIN_SUCCESS, REFRESH_TOKEN_FAILURE } from '../actions/authActions';
-import { CLEAR_FEEDBACK, FeedbackActions } from '../actions/feedbackActions';
+import { ADD_NOTIFICATION, FeedbackActions, REMOVE_NOTIFICATION } from '../actions/feedbackActions';
 import { ORCID_REQUEST_FAILURE, ORCID_SIGNIN_FAILURE, OrcidActions } from '../actions/orcidActions';
 import {
   CREATE_RESOURCE_FAILURE,
@@ -14,12 +16,10 @@ import { SEARCH_FAILURE, SearchActions } from '../actions/searchActions';
 import { SET_USER_FAILURE, SET_USER_SUCCESS, UserActions } from '../actions/userActions';
 
 export const feedbackReducer = (
-  state: FeedbackMessageType[] = [],
-  action: AuthActions | OrcidActions | UserActions | FeedbackActions | SearchActions | ResourceActions
+  state: FeedbackType = initialFeedbackState,
+  action: FeedbackActions | AuthActions | OrcidActions | UserActions | FeedbackActions | SearchActions | ResourceActions
 ) => {
-  let remainingFeedbackMessages = [];
   switch (action.type) {
-    case LOGIN_FAILURE:
     case ORCID_SIGNIN_FAILURE:
     case ORCID_REQUEST_FAILURE:
     case REFRESH_TOKEN_FAILURE:
@@ -30,15 +30,36 @@ export const feedbackReducer = (
     case UPDATE_RESOURCE_FAILURE:
     case UPDATE_RESOURCE_SUCCESS:
     case GET_RESOURCE_FAILURE:
-      return [...state, action];
+      return {
+        ...state,
+        nextNotification: state.nextNotification + 1,
+        notifications: [...state.notifications, { key: uuid.v4(), ...action }],
+      };
     case LOGIN_SUCCESS:
-      remainingFeedbackMessages = [...state].filter(error => error.message !== LOGIN_FAILURE);
-      return [...remainingFeedbackMessages];
+      return {
+        ...state,
+        notifications: state.notifications.filter(
+          (notification: NotificationType) => notification.message !== LOGIN_FAILURE
+        ),
+      };
     case SET_USER_SUCCESS:
-      remainingFeedbackMessages = state.filter(error => error.message !== SET_USER_FAILURE);
-      return [...remainingFeedbackMessages];
-    case CLEAR_FEEDBACK:
-      return [];
+      return {
+        ...state,
+        notifications: state.notifications.filter(
+          (notification: NotificationType) => notification.message !== SET_USER_FAILURE
+        ),
+      };
+    case ADD_NOTIFICATION:
+      return {
+        ...state,
+        nextNotification: state.nextNotification + 1,
+        notifications: [...state.notifications, { key: uuid.v4(), ...action.notification }],
+      };
+    case REMOVE_NOTIFICATION:
+      return {
+        ...state,
+        notifications: state.notifications.filter((notification: any) => notification.key !== action.key),
+      };
     default:
       return state;
   }

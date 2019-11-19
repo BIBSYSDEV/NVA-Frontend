@@ -1,13 +1,26 @@
-// ACTION TYPES
-export const CLEAR_FEEDBACK = 'clear feedback';
+import { NotificationType } from '../../types/feedback.types';
 
-// ACTION CREATORS
-export const clearFeedback = (): ClearFeedbackAction => ({
-  type: CLEAR_FEEDBACK,
+export const ADD_NOTIFICATION = 'add notification';
+export const REMOVE_NOTIFICATION = 'remove notification';
+
+export const addNotification = (notification: NotificationType): AddNotificationAction => ({
+  type: ADD_NOTIFICATION,
+  notification: notification,
 });
 
-interface ClearFeedbackAction {
-  type: typeof CLEAR_FEEDBACK;
+export const removeNotification = (key: string): RemoveNotificationAction => ({
+  type: REMOVE_NOTIFICATION,
+  key: key,
+});
+
+interface AddNotificationAction {
+  type: typeof ADD_NOTIFICATION;
+  notification: NotificationType;
 }
 
-export type FeedbackActions = ClearFeedbackAction;
+interface RemoveNotificationAction {
+  type: typeof REMOVE_NOTIFICATION;
+  key: string;
+}
+
+export type FeedbackActions = AddNotificationAction | RemoveNotificationAction;
