@@ -10,11 +10,7 @@ import { RootStore } from '../../redux/reducers/rootReducer';
 import LinkPublicationPanel from './LinkPublicationPanel';
 import LoadPublicationPanel from './LoadPublicationPanel';
 import OrcidPublicationPanel from './OrcidPublicationPanel';
-
-interface PublicationPanelProps {
-  onClick: (event: React.MouseEvent<any>) => void;
-  tabNumber: number;
-}
+import { useTranslation } from 'react-i18next';
 
 const StyledPublicationPanel = styled.div`
   width: 100%;
@@ -45,9 +41,15 @@ const StyledInfoBox = styled.div`
   }
 `;
 
-const PublicationPanel: React.FC<PublicationPanelProps> = ({ onClick, tabNumber }) => {
+interface PublicationPanelProps {
+  goToNextTab: () => void;
+  tabNumber: number;
+}
+
+const PublicationPanel: React.FC<PublicationPanelProps> = ({ goToNextTab, tabNumber }) => {
   const [expanded, setExpanded] = React.useState<string | false>(false);
   const errors = useSelector((store: RootStore) => store.errors);
+  const { t } = useTranslation();
 
   const handleChange = (panel: string) => (_: React.ChangeEvent<any>, isExpanded: boolean) => {
     setExpanded(isExpanded ? panel : false);
@@ -57,17 +59,21 @@ const PublicationPanel: React.FC<PublicationPanelProps> = ({ onClick, tabNumber 
     <TabPanel
       isHidden={tabNumber !== 0}
       ariaLabel="publication"
-      onClick={onClick}
+      goToNextTab={goToNextTab}
       errors={errors.publicationErrors}
       heading="Publication">
       <StyledPublicationPanel>
         <StyledSelectorWrapper>
           <LoadPublicationPanel expanded={expanded === 'load-panel'} onChange={handleChange('load-panel')} />
-          <LinkPublicationPanel expanded={expanded === 'link-panel'} onChange={handleChange('link-panel')} />
+          <LinkPublicationPanel
+            expanded={expanded === 'link-panel'}
+            goToNextTab={goToNextTab}
+            onChange={handleChange('link-panel')}
+          />
           <OrcidPublicationPanel expanded={expanded === 'orcid-panel'} onChange={handleChange('orcid-panel')} />
         </StyledSelectorWrapper>
         <StyledInfoBox>
-          <header>Information</header>
+          <header>{t('Information')}</header>
           <section>
             Velg publikasjoner Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
             ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut

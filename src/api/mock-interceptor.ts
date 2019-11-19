@@ -2,19 +2,25 @@ import Axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 
 import OrcidResponse from '../types/orcid.types';
-import User, { ApplicationName, RoleName } from '../types/user.types';
+import { ApplicationName, FeideUser, RoleName } from '../types/user.types';
 import { ApiBaseUrl, ORCID_OAUTH_URL, USE_MOCK_DATA } from '../utils/constants';
 import mockResources from '../utils/testfiles/resources_45_random_results_generated.json';
+import mockDoiResource from '../utils/testfiles/resource_generated_from_doi.json';
 
-export const mockUser: User = {
+export const mockUser: FeideUser = {
   name: 'Test User',
   email: 'testuser@unit.no',
-  id: 'testuser@unit.no',
-  institution: 'unit',
-  roles: [RoleName.PUBLISHER, RoleName.CURATOR],
-  applications: [ApplicationName.NVA, ApplicationName.BIRD],
-  orcidName: '',
-  orcid: '', //0000-0001-2345-6789
+  'custom:identifiers': 'testuser@unit.no',
+  'custom:orgName': 'unit',
+  'custom:applicationRoles': `${RoleName.PUBLISHER},${RoleName.CURATOR}`,
+  'custom:application': ApplicationName.NVA,
+  'custom:orgNumber': 'NO293739283',
+  'custom:commonName': 'Unit',
+  'custom:feideId': 'tu@unit.no',
+  sub: 'jasdfahkf-341-sdfdsf-12321',
+  email_verfied: true,
+  'custom:affiliation': '[member, employee, staff]',
+  identities: "[{'userId':'91829182'}]",
 };
 
 const mockOrcidResponse: OrcidResponse = {
@@ -33,6 +39,9 @@ if (USE_MOCK_DATA) {
 
   // SEARCH
   mock.onGet(new RegExp(`/${ApiBaseUrl.RESOURCES}/*`)).reply(200, mockResources);
+
+  // Create resource from doi
+  mock.onPost(new RegExp(`/${ApiBaseUrl.RESOURCES}/doi/*`)).reply(200, mockDoiResource);
 
   // USER
   mock.onGet(new RegExp(`/${ApiBaseUrl}/*`)).reply(200, mockUser);

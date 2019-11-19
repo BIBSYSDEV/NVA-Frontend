@@ -15,11 +15,11 @@ const a11yProps = (tabDescription: string) => {
 };
 
 interface ResourceFormTabsProps {
-  onChange: (_: React.ChangeEvent<{}>, newValue: number) => void;
+  handleTabChange: (_: React.ChangeEvent<{}>, newValue: number) => void;
   tabNumber: number;
 }
 
-export const ResourceFormTabs: React.FC<ResourceFormTabsProps> = ({ onChange, tabNumber }) => {
+export const ResourceFormTabs: React.FC<ResourceFormTabsProps> = ({ handleTabChange, tabNumber }) => {
   const errors = useSelector((store: RootStore) => store.errors);
   const { t } = useTranslation();
 
@@ -27,7 +27,7 @@ export const ResourceFormTabs: React.FC<ResourceFormTabsProps> = ({ onChange, ta
     <Tabs
       variant="fullWidth"
       value={tabNumber}
-      onChange={onChange}
+      onChange={handleTabChange}
       aria-label="navigation"
       TabIndicatorProps={{ style: { backgroundColor: 'blue' } }}
       textColor="primary">
@@ -43,7 +43,7 @@ export const ResourceFormTabs: React.FC<ResourceFormTabsProps> = ({ onChange, ta
       />
       <LinkTab label={`3. ${t('References')}`} {...a11yProps('references')} />
       <LinkTab label={`4. ${t('Contributors')}`} {...a11yProps('contributors')} />
-      <LinkTab label={`5. ${t('Files and Licenses')}`} {...a11yProps('files-and-licenses')} />
+      <LinkTab label={`5. ${t('Files and License')}`} {...a11yProps('files-and-license')} />
       <LinkTab label={`6. ${t('Submission')}`} {...a11yProps('submission')} />
     </Tabs>
   );

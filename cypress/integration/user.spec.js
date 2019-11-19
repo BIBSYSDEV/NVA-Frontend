@@ -9,10 +9,10 @@ describe('User', () => {
     cy.get('[data-testid=user-profile-button]').click({ force: true });
 
     cy.get('[data-testid=user-name]').contains('Test User');
-    cy.get('[data-testid=user-id]').contains('testuser@unit.no');
+    cy.get('[data-testid=user-id]').contains('tu@unit.no');
     cy.get('[data-testid=user-email]').contains('testuser@unit.no');
     cy.get('[data-testid=user-institution]').contains('unit');
-    cy.get('[data-testid=user-applications]').contains('NVA, BIRD');
+    cy.get('[data-testid=user-applications]').contains('NVA');
     cy.get('[data-testid=user-role]').contains('Publisher');
   });
 

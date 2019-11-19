@@ -1,11 +1,11 @@
 import React, { Dispatch } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import ContributorType from '../../../types/contributor.types';
+import StyledContributor from '../contributors/StyledContributor';
 import Contributor from './Contributor';
 import ContributorLabel from './ContributorLabel';
 import ContributorValidator from './ContributorValidator';
-import StyledContributor from '../contributors/StyledComponents';
-import ContributorType from '../../../types/contributor.types';
 
 interface ContributorsProps {
   contributors: ContributorType[];
@@ -20,12 +20,10 @@ const Contributors: React.FC<ContributorsProps> = ({ contributors, dispatch, onA
     <StyledContributor.Box>
       <StyledContributor.MainHeading>{t('contributors.authors')}</StyledContributor.MainHeading>
       <StyledContributor.ContributorContainer>
-        <div className="contributor-icon" />
         <ContributorLabel>{t('contributors.name')}</ContributorLabel>
         <ContributorLabel>{t('contributors.institution')}</ContributorLabel>
         <ContributorLabel>{t('contributors.corresponding')}</ContributorLabel>
         <ContributorLabel>{t('contributors.ORCID')}</ContributorLabel>
-        <div className="contributor-delete-icon" />
       </StyledContributor.ContributorContainer>
       {contributors
         .filter(contributor => contributor.type === 'Author' && contributor.verified)

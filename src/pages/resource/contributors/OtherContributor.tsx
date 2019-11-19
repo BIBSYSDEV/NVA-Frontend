@@ -1,10 +1,12 @@
 import React, { Dispatch } from 'react';
-import { MenuItem, TextField } from '@material-ui/core';
-import ContributorType from '../../../types/contributor.types';
-import { updateContributor, removeContributor } from '../../../redux/actions/contributorActions';
-import contributorTypes from '../../../utils/testfiles/contributor_types.json';
-import StyledContributor from './StyledComponents';
 import styled from 'styled-components';
+
+import { MenuItem, TextField } from '@material-ui/core';
+
+import { removeContributor, updateContributor } from '../../../redux/actions/contributorActions';
+import ContributorType from '../../../types/contributor.types';
+import contributorTypes from '../../../utils/testfiles/contributor_types.json';
+import StyledContributor from './StyledContributor';
 
 const StyledNameInput = styled(TextField)`
   background-color: ${({ theme }) => theme.palette.background.default};

@@ -1,11 +1,13 @@
 import React, { Dispatch } from 'react';
-import styled from 'styled-components';
-import PersonIcon from '@material-ui/icons/Person';
 import { useTranslation } from 'react-i18next';
-import StyledContributor from './StyledComponents';
-import { TextField, MenuItem } from '@material-ui/core';
-import ContributorType from '../../../types/contributor.types';
+import styled from 'styled-components';
+
+import { MenuItem, TextField } from '@material-ui/core';
+import PersonIcon from '@material-ui/icons/Person';
+
 import { removeContributor, updateContributor } from '../../../redux/actions/contributorActions';
+import ContributorType from '../../../types/contributor.types';
+import StyledContributor from './StyledContributor';
 
 const StyledContributorValidator = styled(StyledContributor.ContributorContainer)`
   grid-template-areas: 'icon name institution verify-person verify-person . delete';

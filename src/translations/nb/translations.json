@@ -14,7 +14,7 @@
   "description_what_is_ORCID": "Beskrivelse av ORCID",
   "description_why_ORCID": "Med ORCID blir det enklere å identifisere deg som forfatter. Vi kan også hente informasjon fra ORCID, som kan gjøre det raskere for deg å registrere dine publikasjoner.",
   "Email": "Epost",
-  "Files and Licenses": "Filer og lisenser",
+  "Files and License": "Filer og lisens",
   "Home": "Hjem",
   "ID": "ID",
   "Info from Feide": "Info hentet fra Feide",
@@ -23,8 +23,6 @@
   "Invalid email": "Ugyldig epost",
   "Language": "Språk",
   "Learn more at ": "Les mer på ",
-  "Link to publication": "Link til publication",
-  "link_publication_description": "Feks. DOI lenke, lenke til artikkel, lenke til video av foredrag etc.",
   "Load file": "Last opp fil",
   "load_file_description": "Load file...",
   "Log in to your ORCID account or create new ORCID account": "Logg inn på din ORCID-konto eller lag ny dersom du ikke har konto",
@@ -45,7 +43,12 @@
     "publication_date": "Publiseringsdato eller år",
     "language": "Språk",
     "project_assosiation": "Prosjekttilknytning",
-    "project": "Prosjekt"
+    "project": "Prosjekt",
+    "files_and_license": {
+      "header": "Filer og Lisens",
+      "upload_files": "Last opp filer",
+      "files": "Filer"
+    }
   },
   "contributors": {
     "authors": "Forfattere",
@@ -60,10 +63,15 @@
   },
   "Next": "Neste",
   "ORCID": "ORCID",
-  "ORCID-link": "ORCID-lenke",
   "Organizations": "Tilhørighet",
   "Password": "Passord",
   "Publication": "Publikasjon",
+  "publication_panel": {
+    "link_publication_description": "Feks. DOI lenke, lenke til artikkel, lenke til video av foredrag etc.",
+    "link_to_publication": "Link til publikasjon",
+    "ORCID-link": "ORCID-lenke",
+    "search": "Søk"
+  },
   "Publisher": "Utgiver",
   "References": "Referanser",
   "Register new resource": "Registrer ny ressurs",

@@ -1,9 +1,10 @@
 import React, { Dispatch } from 'react';
 import { useTranslation } from 'react-i18next';
-import ContributorLabel from './ContributorLabel';
-import StyledContributor from './StyledComponents';
-import OtherContributor from './OtherContributor';
+
 import ContributorType from '../../../types/contributor.types';
+import ContributorLabel from './ContributorLabel';
+import OtherContributor from './OtherContributor';
+import StyledContributor from './StyledContributor';
 
 interface OtherContributorsProps {
   contributors: ContributorType[];
