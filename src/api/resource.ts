@@ -111,3 +111,17 @@ export const getResource = (id: string) => {
     }
   };
 };
+
+export const lookupDoiTitle = async (url: string) => {
+  try {
+    const response = await Axios.get(`/${ApiBaseUrl.DOI_LOOKUP}${url}`);
+    if (response.status === StatusCode.OK) {
+      console.log('RESPONSE', response.data);
+      return response.data.title;
+    } else {
+      console.error('error.get_doi');
+    }
+  } catch {
+    console.error('error.get_doi');
+  }
+};

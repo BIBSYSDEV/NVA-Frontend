@@ -6,6 +6,7 @@ import { ApplicationName, FeideUser, RoleName } from '../types/user.types';
 import { ApiBaseUrl, ORCID_OAUTH_URL, USE_MOCK_DATA } from '../utils/constants';
 import mockResources from '../utils/testfiles/resources_45_random_results_generated.json';
 import mockDoiResource from '../utils/testfiles/resource_generated_from_doi.json';
+import mockDoiLookupResponse from '../utils/testfiles/doi_lookup_response.json';
 
 export const mockUser: FeideUser = {
   name: 'Test User',
@@ -42,6 +43,9 @@ if (USE_MOCK_DATA) {
 
   // Create resource from doi
   mock.onPost(new RegExp(`/${ApiBaseUrl.RESOURCES}/doi/*`)).reply(200, mockDoiResource);
+
+  // lookup DOI
+  mock.onGet(new RegExp(`/${ApiBaseUrl.DOI_LOOKUP}/*`)).reply(200, mockDoiLookupResponse);
 
   // USER
   mock.onGet(new RegExp(`/${ApiBaseUrl}/*`)).reply(200, mockUser);
