@@ -18,6 +18,7 @@ import Resource from './pages/resource/Resource';
 import Search from './pages/search/Search';
 import User from './pages/user/User';
 import Workspace from './pages/workspace/Workspace';
+import { clearFeedback } from './redux/actions/feedbackActions';
 import { setUser } from './redux/actions/userActions';
 import { RootStore } from './redux/reducers/rootReducer';
 import awsConfig from './utils/aws-config';
@@ -48,16 +49,21 @@ const App: React.FC = () => {
 
   useEffect(() => {
     if (feedback.length > 0) {
-      feedback.map(fb =>
-        fb.variant === 'error'
-          ? enqueueSnackbar(t(fb.message), { variant: fb.variant, persist: true })
-          : enqueueSnackbar(t(fb.message), { variant: fb.variant })
-      );
+      feedback.map(fb => {
+        if (fb.variant === 'error') {
+          enqueueSnackbar(t(fb.message), { variant: fb.variant, persist: true });
+        } else {
+          enqueueSnackbar(t(fb.message), { variant: fb.variant });
+          setTimeout(() => {
+            dispatch(clearFeedback());
+          }, 3000);
+        }
+      });
     }
     return () => {
       closeSnackbar();
     };
-  }, [feedback, enqueueSnackbar, closeSnackbar, t]);
+  }, [feedback, enqueueSnackbar, closeSnackbar, t, dispatch]);
 
   useEffect(() => {
     if (USE_MOCK_DATA) {

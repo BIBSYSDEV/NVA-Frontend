@@ -26,7 +26,7 @@ export const getOrcidInfo = (orcidCode: string) => {
       if (response.status === StatusCode.OK) {
         dispatch(setOrcidInfo(response.data.name, response.data.orcid));
       } else {
-        dispatch(orcidRequestFailure('error.get_orcid'));
+        // dispatch(orcidRequestFailure('error.get_orcid'));
       }
     } catch {
       dispatch(orcidRequestFailure('error.get_orcid'));
