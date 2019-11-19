@@ -8,7 +8,8 @@ phases:
       - npm install
   build:
     commands:
-      - npm run build:prod
+      - env
+      - npm run build
 artifacts:
   files:
     - '**/*'
