@@ -18,6 +18,7 @@ import publications from '../../utils/testfiles/projects_random_generated.json';
 import FormikDatePicker from './FormikDatePicker';
 import styled from 'styled-components';
 import Box from '../../components/Box';
+import useFormPersister from '../../utils/hooks/useFormPersister';
 
 const MultipleFieldWrapper = styled.div`
   display: flex;
@@ -43,6 +44,7 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const errors = useSelector((store: RootStore) => store.errors);
+  const [persistedValues, setPersistedValues] = useFormPersister('resource-form-data.description', {});
 
   const resourceSchema = Yup.object().shape({
     title: Yup.string().required(t('Required field')),
@@ -58,13 +60,13 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
   };
 
   const initialFormikValues = {
-    title: '',
-    abstract: '',
-    description: '',
-    NPI: '',
-    language: defaultLanguage,
-    date: Date.now(),
-    project: '762886',
+    title: persistedValues.title || '',
+    abstract: persistedValues.abstract || '',
+    description: persistedValues.description || '',
+    NPI: persistedValues.NPI || '',
+    language: persistedValues.language || defaultLanguage,
+    date: persistedValues.date || Date.now(),
+    project: persistedValues.project || '762886',
   };
 
   return (
@@ -86,7 +88,11 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
               }, 400);
             }}>
             {values => (
-              <Form onBlur={() => handleValidation(values)}>
+              <Form
+                onBlur={() => {
+                  handleValidation(values);
+                  setPersistedValues(values.values);
+                }}>
                 <StyledFieldWrapper>
                   <Field
                     aria-label="title"
