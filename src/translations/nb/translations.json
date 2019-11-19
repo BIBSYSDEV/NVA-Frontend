@@ -51,7 +51,7 @@
     },
     "feedback": {
       "required_field": "Påkrevd felt",
-      "invalid_url": "Invalid URL"
+      "invalid_url": "Ugyldig lenke"
     }
   },
   "contributors": {

@@ -1,29 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-
 import { Button } from '@material-ui/core';
-import { TextField } from 'formik-material-ui';
 import LinkIcon from '@material-ui/icons/Link';
-
 import PublicationExpansionPanel from './PublicationExpansionPanel';
+import LinkPublicationPanelForm from './LinkPublicationPanelForm';
 import styled from 'styled-components';
-import { Field, Form, Formik } from 'formik';
-import * as Yup from 'yup';
 import { createNewResourceFromDoi, lookupDoiTitle } from '../../api/resource';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootStore } from '../../redux/reducers/rootReducer';
-import Axios from 'axios';
-import { ApiBaseUrl, StatusCode } from '../../utils/constants';
-
-const StyledInputBox = styled.div`
-  display: flex;
-  align-items: center;
-  margin-top: 0.3rem;
-`;
-
-const StyledTextField = styled(Field)`
-  margin-right: 1rem;
-`;
 
 const StyledBody = styled.div`
   width: 100%;
@@ -52,20 +36,12 @@ const LinkPublicationPanel: React.FC<LinkPublicationPanelProps> = ({ expanded, o
   const dispatch = useDispatch();
   const user = useSelector((state: RootStore) => state.user);
 
-  const resourceSchema = Yup.object().shape({
-    doiUrl: Yup.string()
-      .url(t('resource_form.feedback.invalid_url'))
-      .required(t('resource_form.feedback.required_field')),
-  });
-
   const handleConfirmDOIMetadata = () => {
     dispatch(createNewResourceFromDoi(doiUrl, user.id));
     goToNextTab();
   };
 
   const handleSearch = async (values: any) => {
-    // const title = dispatch(lookupDoiTitle(values.doiUrl));
-    // setDoiTitle(title);
     const title = await lookupDoiTitle(values.doiUrl);
     setDoiTitle(title);
     setDoiUrl(values.doiUrl);
@@ -81,33 +57,7 @@ const LinkPublicationPanel: React.FC<LinkPublicationPanelProps> = ({ expanded, o
       ariaControls="publication-method-link">
       <StyledBody>
         {t('publication_panel.link_publication_description')}
-        <Formik
-          onSubmit={values => {
-            handleSearch(values);
-          }}
-          initialValues={{
-            doiUrl: '',
-          }}
-          validationSchema={resourceSchema}>
-          {() => (
-            <Form>
-              <StyledInputBox>
-                <StyledTextField
-                  aria-label="DOI-link"
-                  margin="dense"
-                  name="doiUrl"
-                  variant="outlined"
-                  fullWidth
-                  label={t('publication_panel.ORCID-link')}
-                  component={TextField}
-                />
-                <Button color="primary" variant="contained" type="submit">
-                  {t('publication_panel.search')}
-                </Button>
-              </StyledInputBox>
-            </Form>
-          )}
-        </Formik>
+        <LinkPublicationPanelForm handleSearch={handleSearch} />
         {doiTitle && (
           <>
             <StyledHeading> {t('publication_panel.resource')}:</StyledHeading>

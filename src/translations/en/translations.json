@@ -50,8 +50,8 @@
       "files": "Files"
     },
     "feedback": {
-      "required_field": "Påkrevd felt",
-      "invalid_url": "Ugyldig lenke"
+      "required_field": "Required field",
+      "invalid_url": "Invalid URL"
     }
   },
   "contributors": {
