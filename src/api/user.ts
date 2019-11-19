@@ -31,9 +31,6 @@ export const login = () => {
 
 export const getCurrentAuthenticatedUser = () => {
   return async (dispatch: Dispatch<any>, getState: () => RootStore) => {
-    setTimeout(() => {
-      dispatch(setUserFailure(i18n.t('feedback:error.get_user')));
-    }, 500);
     try {
       const cognitoUser = await Auth.currentAuthenticatedUser();
       if (cognitoUser != null) {
