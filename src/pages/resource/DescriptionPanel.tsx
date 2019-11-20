@@ -12,13 +12,16 @@ import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import TabPanel from '../../components/TabPanel/TabPanel';
 import { clearFormErrors, formError } from '../../redux/actions/validationActions';
 import { RootStore } from '../../redux/reducers/rootReducer';
-import { defaultLanguage, languages } from '../../translations/i18n';
+import { languages } from '../../translations/i18n';
 import { ResourceFormTabs } from '../../types/resource.types';
+import { emptyForms } from '../../types/form.types';
 import publications from '../../utils/testfiles/projects_random_generated.json';
 import FormikDatePicker from './FormikDatePicker';
 import styled from 'styled-components';
 import Box from '../../components/Box';
 import useFormPersistor from '../../utils/hooks/useFormPersistor';
+
+const emptyResourceDescriptionForm = emptyForms.resourceDescription;
 
 const MultipleFieldWrapper = styled.div`
   display: flex;
@@ -60,13 +63,13 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
   };
 
   const initialFormikValues = {
-    title: persistedFormData.title || '',
-    abstract: persistedFormData.abstract || '',
-    description: persistedFormData.description || '',
-    NPI: persistedFormData.npi || '',
-    language: persistedFormData.language || defaultLanguage,
-    date: persistedFormData.date || Date.now(),
-    project: persistedFormData.project || '762886',
+    title: persistedFormData.title || emptyResourceDescriptionForm.title,
+    abstract: persistedFormData.abstract || emptyResourceDescriptionForm.abstract,
+    description: persistedFormData.description || emptyResourceDescriptionForm.description,
+    NPI: persistedFormData.npi || emptyResourceDescriptionForm.npi,
+    language: persistedFormData.language || emptyResourceDescriptionForm.language,
+    date: persistedFormData.date || emptyResourceDescriptionForm.date,
+    project: persistedFormData.project || emptyResourceDescriptionForm.project,
   };
 
   return (

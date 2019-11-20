@@ -11,7 +11,8 @@ export interface ResourceDescriptionFormData {
   description: string;
   npi: string;
   language: Language;
-  date: number;
+  date?: Date;
+  year?: number;
   project: string;
 }
 
@@ -22,7 +23,8 @@ export const emptyForms: FormsData = {
     description: '',
     npi: '',
     language: defaultLanguage,
-    date: Date.now(),
+    date: undefined,
+    year: undefined,
     project: '',
   },
 };
