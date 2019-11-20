@@ -6,6 +6,7 @@ export const ORCID_SIGN_IN_URL = `${process.env.REACT_APP_ORCID_BASE_URL}/signin
 export enum ApiBaseUrl {
   RESOURCES = 'resources',
   USER = 'user',
+  CRISTIN_EXTERNAL = 'https://api.cristin.no/v2',
 }
 
 export enum StatusCode {

@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 
 import DateFnsUtils from '@date-io/date-fns';
-import { MenuItem } from '@material-ui/core';
+import { Button, MenuItem, TextField as MuiTextField } from '@material-ui/core';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 
 import TabPanel from '../../components/TabPanel/TabPanel';
@@ -14,7 +14,6 @@ import { clearFormErrors, formError } from '../../redux/actions/validationAction
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { defaultLanguage, languages } from '../../translations/i18n';
 import { ResourceFormTabs } from '../../types/resource.types';
-import publications from '../../utils/testfiles/projects_random_generated.json';
 import FormikDatePicker from './FormikDatePicker';
 import styled from 'styled-components';
 import Box from '../../components/Box';
@@ -57,6 +56,8 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
     }
   };
 
+  const handleProjectSearch = () => {};
+
   const initialFormikValues = {
     title: '',
     abstract: '',
@@ -64,7 +65,7 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
     NPI: '',
     language: defaultLanguage,
     date: Date.now(),
-    project: '762886',
+    project: '',
   };
 
   return (
@@ -170,21 +171,27 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
                 </MultipleFieldWrapper>
 
                 <StyledFieldHeader>{t('resource_form.project_assosiation')}</StyledFieldHeader>
-                <StyledFieldWrapper>
-                  <Field
-                    name="project"
-                    aria-label="project"
-                    label={t('resource_form.project')}
-                    component={Select}
-                    fullWidth
-                    variant="outlined">
-                    {publications.map(publication => (
-                      <MenuItem value={publication.id} key={publication.id}>
-                        {`${publication.name} - ${publication.id}`}
-                      </MenuItem>
-                    ))}
-                  </Field>
-                </StyledFieldWrapper>
+
+                <MuiTextField margin="dense" variant="outlined" label={t('resource_form.project')} />
+                <Button color="primary" variant="contained" onClick={handleProjectSearch}>
+                  {t('publication_panel.search')}
+                </Button>
+
+                {/*<StyledFieldWrapper>*/}
+                {/*  <Field*/}
+                {/*    name="project"*/}
+                {/*    aria-label="project"*/}
+                {/*    label={t('resource_form.project')}*/}
+                {/*    component={Select}*/}
+                {/*    fullWidth*/}
+                {/*    variant="outlined">*/}
+                {/*    {publications.map(publication => (*/}
+                {/*      <MenuItem value={publication.id} key={publication.id}>*/}
+                {/*        {`${publication.name} - ${publication.id}`}*/}
+                {/*      </MenuItem>*/}
+                {/*    ))}*/}
+                {/*  </Field>*/}
+                {/*</StyledFieldWrapper>*/}
               </Form>
             )}
           </Formik>

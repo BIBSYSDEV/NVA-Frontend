@@ -1,0 +1,103 @@
+[
+  {
+    "cristin_project_id": "414927",
+    "title": {
+      "no": "Livskvalitet og helse i normalbefolkningen.",
+      "en": "Quality of Life and Health in the Norwegian Population"
+    },
+    "main_language": "no",
+    "url": "https://api.cristin.no/v2/projects/414927"
+  },
+  {
+    "cristin_project_id": "414934",
+    "title": {
+      "en": "Evaluation of a knowledge-based teaching model for students and nurses in\r\nneonatal unit related to children with congenital heart disease",
+      "no": "Utprøving av en kunnskapsbasert undervisningsmodell relatert til barn med\r\nmedfødt hjertefeil"
+    },
+    "main_language": "no",
+    "url": "https://api.cristin.no/v2/projects/414934"
+  },
+  {
+    "cristin_project_id": "414935",
+    "title": {
+      "en": "Malodorous smells and suffering. How do patients and nurses describe, interpret\r\nand act in a patient context where malororous smells are involved? An\r\nempirical inquiry.",
+      "no": "Lukt og lidelse. En kvalitativ undersøkelse av sykepleieres og pasienters\r\nerfaringer i møte med lidelser som impliserer vond lukt."
+    },
+    "main_language": "no",
+    "url": "https://api.cristin.no/v2/projects/414935"
+  },
+  {
+    "cristin_project_id": "414936",
+    "title": {
+      "no": "Kontaktsykepleiers veilederrolle med fokus på læring av praktiske ferdigheter",
+      "en": "Clinical nurses` role as preceptors with a focus on the learning of practical\r\nskills"
+    },
+    "main_language": "no",
+    "url": "https://api.cristin.no/v2/projects/414936"
+  },
+  {
+    "cristin_project_id": "435010",
+    "title": {
+      "no": "A multicenter,randomized,double-blind,placebo-controlled phase IIIb study to evaluate the efficacy, safety and tolerability of Serelaxin when added to standard therapy in acute heart failure patients(RELAX-2 trial)"
+    },
+    "main_language": "no",
+    "url": "https://api.cristin.no/v2/projects/435010"
+  },
+  {
+    "cristin_project_id": "436922",
+    "title": {
+      "en": "A randomized controlled trial of the effect of diathermy in endoscopic sinus surgery of nasal polyposis on recurrence and patient reported symptoms"
+    },
+    "main_language": "en",
+    "url": "https://api.cristin.no/v2/projects/436922"
+  },
+  {
+    "cristin_project_id": "480346",
+    "title": {
+      "en": "Exercise for SpondyloArthritis (SpA), the ESpA study. The effect of a supervised exercise intervention on disease activity and cardiovascular risk in patients with SpA - A multicenter randomized controlled trial"
+    },
+    "main_language": "en",
+    "url": "https://api.cristin.no/v2/projects/480346"
+  },
+  {
+    "cristin_project_id": "480347",
+    "title": {
+      "en": "Exercise for SpondyloArthritis (SpA) the ESpA study. The effect of a supervised exercise intervention on disease activity and cardiovascular risk in patients with SpA - A multicenter randomized  controlled trial"
+    },
+    "main_language": "en",
+    "url": "https://api.cristin.no/v2/projects/480347"
+  },
+  {
+    "cristin_project_id": "525854",
+    "title": {
+      "en": "A comparison of the effectiveness of normale saline mouthwash and mouthwash based on tea solution from Salvia Officinalis in palliativ care"
+    },
+    "main_language": "en",
+    "url": "https://api.cristin.no/v2/projects/525854"
+  },
+  {
+    "cristin_project_id": "535720",
+    "title": {
+      "en": "A Norwegian multicentre trial assessing the effectiveness of tailoring infliximab treatment by therapeutic drug monitoring - the NOR-DRUM study"
+    },
+    "main_language": "en",
+    "url": "https://api.cristin.no/v2/projects/535720"
+  },
+  {
+    "cristin_project_id": "544947",
+    "title": {
+      "nb": "Munnstell med salviete som munnskyllemiddel",
+      "en": "A comparison of the effectiveness of normal saline mouthwash and mouthwash based on tea solution from Salvia Officinalis(SO) in palliative care. A randomized controlled trial."
+    },
+    "main_language": "nb",
+    "url": "https://api.cristin.no/v2/projects/544947"
+  },
+  {
+    "cristin_project_id": "547363",
+    "title": {
+      "en": "Safe, Correct, and Effective Drug Therapy for the Prevention of AKI and Dialysis after Surgery in Children with CHD; MiLed 1 and TAKICARDd 1 projects"
+    },
+    "main_language": "en",
+    "url": "https://api.cristin.no/v2/projects/547363"
+  }
+]

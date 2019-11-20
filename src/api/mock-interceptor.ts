@@ -6,6 +6,7 @@ import { ApplicationName, FeideUser, RoleName } from '../types/user.types';
 import { ApiBaseUrl, ORCID_OAUTH_URL, USE_MOCK_DATA } from '../utils/constants';
 import mockResources from '../utils/testfiles/resources_45_random_results_generated.json';
 import mockDoiResource from '../utils/testfiles/resource_generated_from_doi.json';
+import mockCristinProjects from '../utils/testfiles/cristin_projects_real.json';
 
 export const mockUser: FeideUser = {
   name: 'Test User',
@@ -43,8 +44,11 @@ if (USE_MOCK_DATA) {
   // Create resource from doi
   mock.onPost(new RegExp(`/${ApiBaseUrl.RESOURCES}/doi/*`)).reply(200, mockDoiResource);
 
+  // cristin-projects
+  mock.onGet(new RegExp(`/${ApiBaseUrl.CRISTIN_EXTERNAL}/*`)).reply(200, mockCristinProjects);
+
   // USER
-  mock.onGet(new RegExp(`/${ApiBaseUrl}/*`)).reply(200, mockUser);
+  mock.onGet(new RegExp(`/${ApiBaseUrl.USER}/*`)).reply(200, mockUser);
 
   // ORCID
   mock.onPost(ORCID_OAUTH_URL).reply(200, mockOrcidResponse);
