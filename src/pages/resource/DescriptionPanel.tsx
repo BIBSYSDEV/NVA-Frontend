@@ -18,7 +18,7 @@ import publications from '../../utils/testfiles/projects_random_generated.json';
 import FormikDatePicker from './FormikDatePicker';
 import styled from 'styled-components';
 import Box from '../../components/Box';
-import useFormPersister from '../../utils/hooks/useFormPersister';
+import useFormPersistor from '../../utils/hooks/useFormPersistor';
 
 const MultipleFieldWrapper = styled.div`
   display: flex;
@@ -44,7 +44,7 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const errors = useSelector((store: RootStore) => store.errors);
-  const [persistedValues, setPersistedValues] = useFormPersister('resourceDescription', {});
+  const [persistedFormData, setPersistedFormData] = useFormPersistor('resourceDescription', {});
 
   const resourceSchema = Yup.object().shape({
     title: Yup.string().required(t('Required field')),
@@ -60,13 +60,13 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
   };
 
   const initialFormikValues = {
-    title: persistedValues.title || '',
-    abstract: persistedValues.abstract || '',
-    description: persistedValues.description || '',
-    NPI: persistedValues.NPI || '',
-    language: persistedValues.language || defaultLanguage,
-    date: persistedValues.date || Date.now(),
-    project: persistedValues.project || '762886',
+    title: persistedFormData.title || '',
+    abstract: persistedFormData.abstract || '',
+    description: persistedFormData.description || '',
+    NPI: persistedFormData.npi || '',
+    language: persistedFormData.language || defaultLanguage,
+    date: persistedFormData.date || Date.now(),
+    project: persistedFormData.project || '762886',
   };
 
   return (
@@ -91,7 +91,7 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
               <Form
                 onBlur={() => {
                   handleValidation(values);
-                  setPersistedValues(values.values);
+                  setPersistedFormData(values.values);
                 }}>
                 <StyledFieldWrapper>
                   <Field

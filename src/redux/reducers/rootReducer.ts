@@ -4,13 +4,13 @@ import { FeedbackMessageType } from '../../types/feedback.types';
 import { Search } from '../../types/search.types';
 import { User } from '../../types/user.types';
 import { FormValidator } from '../../types/validation.types';
-import { Forms } from '../../types/form.types';
+import { FormsData } from '../../types/form.types';
 import { authReducer } from './authReducer';
 import { feedbackReducer } from './feedbackReducer';
 import { searchReducer } from './searchReducer';
 import { userReducer } from './userReducer';
 import { validationReducer } from './validationReducer';
-import { formReducer } from './formReducer';
+import { formsDataReducer } from './formsDataReducer';
 
 export interface RootStore {
   auth: { isLoggedIn: boolean };
@@ -18,7 +18,7 @@ export interface RootStore {
   feedback: FeedbackMessageType[];
   search: Search;
   user: User;
-  forms: Forms;
+  forms: FormsData;
 }
 
 export default combineReducers({
@@ -27,5 +27,5 @@ export default combineReducers({
   search: searchReducer,
   feedback: feedbackReducer,
   auth: authReducer,
-  forms: formReducer,
+  formsData: formsDataReducer,
 });

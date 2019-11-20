@@ -2,34 +2,30 @@
 import { useState } from 'react';
 
 export default function useLocalStorage(key: string, initialValue: object = {}) {
-  // NB! key can have at most one "."
-  // First element will be key for localStorage, second element will be key of value object
-  // Ex: "form-data.description" will result in "form-data" as LS key, and "description" as key on root of value object
-  const [lsKey, objKey] = key.split('.');
+  // NB! key can have at most one ".": First element will be key for localStorage, second element will be key of value object
+  // Ex: "formsData.resourceDescription" will result in "formsData" as localStorage key, and "resourceDescription" as key on root of value object
+  const [localStorageKey, objectKey] = key.split('.');
 
   const [storedValue, setStoredValue] = useState(() => {
     try {
-      // Get value from local storage by key
-      let lsItem = window.localStorage.getItem(lsKey);
+      let localStorageItem = window.localStorage.getItem(localStorageKey);
 
-      // Add value to LS if not yet existing
-      if (!lsItem) {
-        const lsValue = JSON.stringify(objKey ? { [objKey]: initialValue } : initialValue);
-        window.localStorage.setItem(lsKey, lsValue);
-        lsItem = lsValue;
+      // Add value to localStorage if not yet existing
+      if (!localStorageItem) {
+        const localStorageValue = JSON.stringify(objectKey ? { [objectKey]: initialValue } : initialValue);
+        window.localStorage.setItem(localStorageKey, localStorageValue);
+        localStorageItem = localStorageValue;
       }
 
-      // Parse string value to JSON
-      const jsonData = JSON.parse(lsItem);
+      const jsonData = JSON.parse(localStorageItem);
 
       // Return relevant part of value
-      if (objKey) {
-        return jsonData[objKey];
+      if (objectKey) {
+        return jsonData[objectKey];
       } else {
         return jsonData;
       }
     } catch (error) {
-      // If error return initialValue
       return initialValue;
     }
   });
@@ -37,23 +33,23 @@ export default function useLocalStorage(key: string, initialValue: object = {}) 
   // Update value function
   const setValue = (value: any) => {
     try {
-      // Update state
       setStoredValue(value);
 
-      // Update localStorage
-      const lsValue = window.localStorage.getItem(lsKey);
-      if (!lsValue) {
+      const localStorageValue = window.localStorage.getItem(localStorageKey);
+      if (!localStorageValue) {
         return;
       }
 
-      let jsonValue = JSON.parse(lsValue);
-      if (objKey) {
-        jsonValue[objKey] = value;
+      let jsonValue = JSON.parse(localStorageValue);
+
+      // Update correct part of value
+      if (objectKey) {
+        jsonValue[objectKey] = value;
       } else {
         jsonValue = value;
       }
 
-      window.localStorage.setItem(lsKey, JSON.stringify(jsonValue));
+      window.localStorage.setItem(localStorageKey, JSON.stringify(jsonValue));
     } catch {
       // Keep using existing values if error occurs
     }

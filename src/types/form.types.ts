@@ -1,7 +1,7 @@
 import { Language } from './settings.types';
 import { defaultLanguage } from '../translations/i18n';
 
-export interface Forms {
+export interface FormsData {
   resourceDescription: ResourceDescriptionFormData;
 }
 
@@ -15,7 +15,7 @@ export interface ResourceDescriptionFormData {
   project: string;
 }
 
-export const emptyForms: Forms = {
+export const emptyForms: FormsData = {
   resourceDescription: {
     title: '',
     abstract: '',
