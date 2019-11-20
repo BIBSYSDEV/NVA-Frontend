@@ -48,6 +48,10 @@
       "header": "Files and License",
       "upload_files": "Upload Files",
       "files": "Files"
+    },
+    "feedback": {
+      "required_field": "Required field",
+      "invalid_url": "Invalid URL"
     }
   },
   "contributors": {
@@ -57,7 +61,9 @@
     "corresponding": "Corresponding",
     "ORCID": "ORCID",
     "verify_person": "Verify",
-    "add_author": "Add authors"
+    "add_author": "Add authors",
+    "add_other_contributor": "Add more contributors",
+    "type": "Contributor type"
   },
   "Next": "Next",
   "ORCID": "ORCID",
@@ -67,7 +73,9 @@
   "publication_panel": {
     "link_publication_description": "E.g. DOI link, link to article, link to video of lecture etc.",
     "link_to_publication": "Link to publication",
+    "next": "Next",
     "ORCID-link": "ORCID-link",
+    "resource": "Ressurs",
     "search": "Search"
   },
   "Publisher": "Publisher",

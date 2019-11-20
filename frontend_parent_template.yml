@@ -30,7 +30,7 @@ Resources:
   PipelineStack:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: 'https://nva-frontend-deploy.s3-eu-west-1.amazonaws.com/pipeline_template.yml'
+      TemplateURL: 'https://nva-frontend-deploy-develop.s3-eu-west-1.amazonaws.com/pipeline_template.yml'
       TimeoutInMinutes: 60
       Parameters:
         GitHubOAuthToken: !Ref GitHubOAuthToken
@@ -43,7 +43,7 @@ Resources:
     Type: AWS::CloudFormation::Stack
     DependsOn: PipelineStack
     Properties:
-      TemplateURL: 'https://nva-frontend-deploy.s3-eu-west-1.amazonaws.com/cloudfront_template.yml'
+      TemplateURL: 'https://nva-frontend-deploy-develop.s3-eu-west-1.amazonaws.com/cloudfront_template.yml'
       TimeoutInMinutes: 60
       Parameters:
         NvaFrontendBucketName: !Ref FrontendBucketName

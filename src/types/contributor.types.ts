@@ -10,6 +10,8 @@ export default interface ContributorType {
   selectedInstitution?: string;
   orcid?: string;
   corresponding?: boolean;
+  type?: string;
+  verified?: boolean;
 }
 
 export const emptyContributor: ContributorType = {
@@ -19,4 +21,6 @@ export const emptyContributor: ContributorType = {
   selectedInstitution: '',
   orcid: '',
   corresponding: false,
+  type: '',
+  verified: false,
 };
