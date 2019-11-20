@@ -39,24 +39,22 @@ const LinkPublicationPanelForm: React.FC<LinkPublicationPanelFormProps> = ({ han
         doiUrl: '',
       }}
       validationSchema={resourceSchema}>
-      {() => (
-        <Form>
-          <StyledInputBox>
-            <StyledTextField
-              aria-label="DOI-link"
-              margin="dense"
-              name="doiUrl"
-              variant="outlined"
-              fullWidth
-              label={t('publication_panel.ORCID-link')}
-              component={TextField}
-            />
-            <Button color="primary" variant="contained" type="submit">
-              {t('publication_panel.search')}
-            </Button>
-          </StyledInputBox>
-        </Form>
-      )}
+      <Form>
+        <StyledInputBox>
+          <StyledTextField
+            aria-label="DOI-link"
+            margin="dense"
+            name="doiUrl"
+            variant="outlined"
+            fullWidth
+            label={t('publication_panel.ORCID-link')}
+            component={TextField}
+          />
+          <Button color="primary" variant="contained" type="submit">
+            {t('publication_panel.search')}
+          </Button>
+        </StyledInputBox>
+      </Form>
     </Formik>
   );
 };
