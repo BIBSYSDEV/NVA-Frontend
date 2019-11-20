@@ -36,7 +36,7 @@ const LinkPublicationPanel: React.FC<LinkPublicationPanelProps> = ({ expanded, o
   const dispatch = useDispatch();
   const user = useSelector((state: RootStore) => state.user);
 
-  const handleConfirmDOIMetadata = () => {
+  const handleConfirm = () => {
     dispatch(createNewResourceFromDoi(doiUrl, user.id));
     goToNextTab();
   };
@@ -61,7 +61,7 @@ const LinkPublicationPanel: React.FC<LinkPublicationPanelProps> = ({ expanded, o
           <>
             <StyledHeading> {t('publication_panel.resource')}:</StyledHeading>
             <StyledTitle>{doiTitle}</StyledTitle>
-            <Button fullWidth color="primary" variant="contained" onClick={handleConfirmDOIMetadata}>
+            <Button fullWidth color="primary" variant="contained" onClick={handleConfirm}>
               {t('publication_panel.next')}
             </Button>
           </>
