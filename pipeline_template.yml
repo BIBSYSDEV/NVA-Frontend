@@ -67,11 +67,6 @@ Resources:
           - Name: REACT_APP_REDIRECT_SIGN_OUT
             Type: PLAINTEXT
             Value: '{{resolve:ssm:REACT_APP_REDIRECT_SIGN_OUT:1}}'
-
-
-
-
-
       Source:
         Type: CODEPIPELINE
   NvaFrontendBucket:
