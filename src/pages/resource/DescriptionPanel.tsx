@@ -44,7 +44,7 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
   const errors = useSelector((store: RootStore) => store.errors);
 
   const resourceSchema = Yup.object().shape({
-    title: Yup.string().required(t('Required field')),
+    title: Yup.string().required(t('resource_form.feedback.required_field')),
   });
 
   const handleValidation = (values: any) => {

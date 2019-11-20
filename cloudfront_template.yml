@@ -54,7 +54,7 @@ Resources:
           GeoRestriction:
             RestrictionType: none
         ViewerCertificate:
-          AcmCertificateArn: arn:aws:acm:us-east-1:884807050265:certificate/c389080c-8c6d-4b96-9c40-b7f7597c59e1
+          AcmCertificateArn: '{{resolve:ssm:domainCertificateArn:1}}'
           SslSupportMethod: sni-only
         CustomErrorResponses:
           - ErrorCode: 404

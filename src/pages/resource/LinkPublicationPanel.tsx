@@ -1,27 +1,26 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { RootStore } from '../../redux/reducers/rootReducer';
-
-import { Button, TextField } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import LinkIcon from '@material-ui/icons/Link';
-
 import PublicationExpansionPanel from './PublicationExpansionPanel';
+import LinkPublicationPanelForm from './LinkPublicationPanelForm';
 import styled from 'styled-components';
+import { createNewResourceFromDoi, lookupDoiTitle } from '../../api/resource';
 import { useDispatch, useSelector } from 'react-redux';
-import { createNewResourceFromDoi } from '../../api/resource';
-
-const StyledInputBox = styled.div`
-  display: flex;
-  align-items: center;
-  margin-top: 0.3rem;
-`;
-
-const StyledTextField = styled(TextField)`
-  margin-right: 1rem;
-`;
+import { RootStore } from '../../redux/reducers/rootReducer';
 
 const StyledBody = styled.div`
   width: 100%;
+`;
+
+const StyledHeading = styled.div`
+  font-size: 1.2rem;
+  margin: 1rem 0;
+`;
+
+const StyledTitle = styled.div`
+  font-weight: bold;
+  margin-bottom: 1rem;
 `;
 
 interface LinkPublicationPanelProps {
@@ -31,18 +30,20 @@ interface LinkPublicationPanelProps {
 }
 
 const LinkPublicationPanel: React.FC<LinkPublicationPanelProps> = ({ expanded, onChange, goToNextTab }) => {
-  const [doiUrl, setDoiUrl] = useState('');
   const { t } = useTranslation();
+  const [doiUrl, setDoiUrl] = useState('');
+  const [doiTitle, setDoiTitle] = useState('');
   const dispatch = useDispatch();
   const user = useSelector((state: RootStore) => state.user);
 
-  const handleSearch = () => {
+  const handleConfirm = () => {
     dispatch(createNewResourceFromDoi(doiUrl, user.id));
     goToNextTab();
   };
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setDoiUrl(event.target.value);
+  const handleSearch = async (values: any) => {
+    setDoiTitle(await lookupDoiTitle(values.doiUrl));
+    setDoiUrl(values.doiUrl);
   };
 
   return (
@@ -55,22 +56,16 @@ const LinkPublicationPanel: React.FC<LinkPublicationPanelProps> = ({ expanded, o
       ariaControls="publication-method-link">
       <StyledBody>
         {t('publication_panel.link_publication_description')}
-        <StyledInputBox>
-          <form>
-            <StyledTextField
-              margin="dense"
-              id="ORCID-link"
-              variant="outlined"
-              type="url"
-              label={t('publication_panel.ORCID-link')}
-              onChange={handleChange}
-              value={doiUrl}
-            />
-          </form>
-          <Button color="primary" variant="contained" onClick={handleSearch}>
-            {t('publication_panel.search')}
-          </Button>
-        </StyledInputBox>
+        <LinkPublicationPanelForm handleSearch={handleSearch} />
+        {doiTitle && (
+          <>
+            <StyledHeading> {t('publication_panel.resource')}:</StyledHeading>
+            <StyledTitle>{doiTitle}</StyledTitle>
+            <Button fullWidth color="primary" variant="contained" onClick={handleConfirm}>
+              {t('publication_panel.next')}
+            </Button>
+          </>
+        )}
       </StyledBody>
     </PublicationExpansionPanel>
   );
