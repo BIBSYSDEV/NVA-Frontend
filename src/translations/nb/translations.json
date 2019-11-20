@@ -48,6 +48,10 @@
       "header": "Filer og Lisens",
       "upload_files": "Last opp filer",
       "files": "Filer"
+    },
+    "feedback": {
+      "required_field": "Påkrevd felt",
+      "invalid_url": "Ugyldig lenke"
     }
   },
   "contributors": {
@@ -69,7 +73,9 @@
   "publication_panel": {
     "link_publication_description": "Feks. DOI lenke, lenke til artikkel, lenke til video av foredrag etc.",
     "link_to_publication": "Link til publikasjon",
+    "next": "Neste",
     "ORCID-link": "ORCID-lenke",
+    "resource": "Ressurs",
     "search": "Søk"
   },
   "Publisher": "Utgiver",

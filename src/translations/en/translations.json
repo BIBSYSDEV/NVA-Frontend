@@ -48,6 +48,10 @@
       "header": "Files and License",
       "upload_files": "Upload Files",
       "files": "Files"
+    },
+    "feedback": {
+      "required_field": "Required field",
+      "invalid_url": "Invalid URL"
     }
   },
   "contributors": {
@@ -69,7 +73,9 @@
   "publication_panel": {
     "link_publication_description": "E.g. DOI link, link to article, link to video of lecture etc.",
     "link_to_publication": "Link to publication",
+    "next": "Next",
     "ORCID-link": "ORCID-link",
+    "resource": "Ressurs",
     "search": "Search"
   },
   "Publisher": "Publisher",
