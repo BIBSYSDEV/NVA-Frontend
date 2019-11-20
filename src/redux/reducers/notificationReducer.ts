@@ -1,15 +1,22 @@
 import uuid from 'uuid';
 
 import i18n from '../../translations/i18n';
-import { Notification } from '../../types/feedback.types';
+import { Notification } from '../../types/notification.types';
 import { AuthActions, LOGIN_FAILURE, REFRESH_TOKEN_FAILURE } from '../actions/authActions';
 import {
-    ADD_NOTIFICATION, CLEAR_NOTIFICATIONS, NotificationActions, REMOVE_NOTIFICATION
+  ADD_NOTIFICATION,
+  CLEAR_NOTIFICATIONS,
+  NotificationActions,
+  REMOVE_NOTIFICATION,
 } from '../actions/notificationActions';
 import { ORCID_REQUEST_FAILURE, ORCID_SIGNIN_FAILURE, OrcidActions } from '../actions/orcidActions';
 import {
-    CREATE_RESOURCE_FAILURE, CREATE_RESOURCE_SUCCESS, GET_RESOURCE_FAILURE, ResourceActions,
-    UPDATE_RESOURCE_FAILURE, UPDATE_RESOURCE_SUCCESS
+  CREATE_RESOURCE_FAILURE,
+  CREATE_RESOURCE_SUCCESS,
+  GET_RESOURCE_FAILURE,
+  ResourceActions,
+  UPDATE_RESOURCE_FAILURE,
+  UPDATE_RESOURCE_SUCCESS,
 } from '../actions/resourceActions';
 import { SEARCH_FAILURE, SearchActions } from '../actions/searchActions';
 import { SET_USER_FAILURE, SET_USER_SUCCESS, UserActions } from '../actions/userActions';

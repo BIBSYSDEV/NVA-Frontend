@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import { Notification } from '../../types/feedback.types';
+import { Notification } from '../../types/notification.types';
 import { Search } from '../../types/search.types';
 import { User } from '../../types/user.types';
 import { FormValidator } from '../../types/validation.types';
