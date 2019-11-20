@@ -40,13 +40,21 @@ export default function useLocalStorage(key: string, initialValue: object = {}) 
       // Update state
       setStoredValue(value);
 
-      // Update local storage
+      // Update localStorage
       const lsValue = window.localStorage.getItem(lsKey);
-      const jsonValue = JSON.parse(lsValue ? lsValue : '');
-      jsonValue[objKey] = value;
+      if (!lsValue) {
+        return;
+      }
+
+      let jsonValue = JSON.parse(lsValue);
+      if (objKey) {
+        jsonValue[objKey] = value;
+      } else {
+        jsonValue = value;
+      }
 
       window.localStorage.setItem(lsKey, JSON.stringify(jsonValue));
-    } catch (err) {
+    } catch {
       // Keep using existing values if error occurs
     }
   };
