@@ -12,12 +12,14 @@ import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import TabPanel from '../../components/TabPanel/TabPanel';
 import { clearFormErrors, formError } from '../../redux/actions/validationActions';
 import { RootStore } from '../../redux/reducers/rootReducer';
-import { defaultLanguage, languages } from '../../translations/i18n';
+import { languages } from '../../translations/i18n';
 import { ResourceFormTabs } from '../../types/resource.types';
+import { emptyResourceDescription, ResourceDescriptionFormData } from '../../types/form.types';
 import publications from '../../utils/testfiles/projects_random_generated.json';
 import FormikDatePicker from './FormikDatePicker';
 import styled from 'styled-components';
 import Box from '../../components/Box';
+import useFormPersistor from '../../utils/hooks/useFormPersistor';
 
 const MultipleFieldWrapper = styled.div`
   display: flex;
@@ -43,12 +45,14 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const errors = useSelector((store: RootStore) => store.errors);
+  const [persistedFormData, setPersistedFormData] = useFormPersistor('resourceDescription');
 
   const resourceSchema = Yup.object().shape({
     title: Yup.string().required(t('resource_form.feedback.required_field')),
   });
 
-  const handleValidation = (values: any) => {
+  const validateAndPersistValues = (values: ResourceDescriptionFormData) => {
+    setPersistedFormData(values);
     try {
       resourceSchema.validateSync(values, { abortEarly: false });
       dispatch(clearFormErrors(ResourceFormTabs.DESCRIPTION));
@@ -58,13 +62,13 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
   };
 
   const initialFormikValues = {
-    title: '',
-    abstract: '',
-    description: '',
-    NPI: '',
-    language: defaultLanguage,
-    date: Date.now(),
-    project: '762886',
+    title: persistedFormData.title || emptyResourceDescription.title,
+    abstract: persistedFormData.abstract || emptyResourceDescription.abstract,
+    description: persistedFormData.description || emptyResourceDescription.description,
+    npi: persistedFormData.npi || emptyResourceDescription.npi,
+    language: persistedFormData.language || emptyResourceDescription.language,
+    date: persistedFormData.date || emptyResourceDescription.date,
+    project: persistedFormData.project || emptyResourceDescription.project,
   };
 
   return (
@@ -78,115 +82,115 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <Formik
             initialValues={initialFormikValues}
+            validateOnChange={false}
             validationSchema={resourceSchema}
+            validate={values => validateAndPersistValues(values)}
             onSubmit={(values, { setSubmitting }) => {
               setTimeout(() => {
                 alert(JSON.stringify(values, null, 2));
                 setSubmitting(false);
               }, 400);
             }}>
-            {values => (
-              <Form onBlur={() => handleValidation(values)}>
+            <Form>
+              <StyledFieldWrapper>
+                <Field
+                  aria-label="title"
+                  name="title"
+                  label={t('resource_form.title')}
+                  component={TextField}
+                  fullWidth
+                  variant="outlined"
+                />
+              </StyledFieldWrapper>
+              <StyledFieldWrapper>
+                <Field
+                  aria-label="abstract"
+                  name="abstract"
+                  label={t('resource_form.abstract')}
+                  component={TextField}
+                  multiline
+                  rows="4"
+                  fullWidth
+                  variant="outlined"
+                />
+              </StyledFieldWrapper>
+              <StyledFieldWrapper>
+                <Field
+                  aria-label="description"
+                  name="description"
+                  label={t('resource_form.description')}
+                  component={TextField}
+                  multiline
+                  rows="4"
+                  fullWidth
+                  variant="outlined"
+                />
+              </StyledFieldWrapper>
+              <MultipleFieldWrapper>
                 <StyledFieldWrapper>
                   <Field
-                    aria-label="title"
-                    name="title"
-                    label={t('resource_form.title')}
+                    aria-label="NPI"
+                    name="NPI"
+                    label={t('resource_form.NPI')}
+                    component={TextField}
+                    variant="outlined"
+                    fullWidth
+                  />
+                </StyledFieldWrapper>
+                <StyledFieldWrapper>
+                  <Field
+                    aria-label="keyword"
+                    name="keyword"
+                    label={t('resource_form.tags')}
                     component={TextField}
                     fullWidth
                     variant="outlined"
                   />
                 </StyledFieldWrapper>
+              </MultipleFieldWrapper>
+
+              <MultipleFieldWrapper>
                 <StyledFieldWrapper>
-                  <Field
-                    aria-label="abstract"
-                    name="abstract"
-                    label={t('resource_form.abstract')}
-                    component={TextField}
-                    multiline
-                    rows="4"
-                    fullWidth
-                    variant="outlined"
-                  />
+                  <Field aria-label="date" component={FormikDatePicker} name="date" />
                 </StyledFieldWrapper>
+
                 <StyledFieldWrapper>
                   <Field
-                    aria-label="description"
-                    name="description"
-                    label={t('resource_form.description')}
-                    component={TextField}
-                    multiline
-                    rows="4"
-                    fullWidth
+                    name="language"
+                    aria-label="language"
                     variant="outlined"
-                  />
-                </StyledFieldWrapper>
-                <MultipleFieldWrapper>
-                  <StyledFieldWrapper>
-                    <Field
-                      aria-label="NPI"
-                      name="NPI"
-                      label={t('resource_form.NPI')}
-                      component={TextField}
-                      variant="outlined"
-                      fullWidth
-                    />
-                  </StyledFieldWrapper>
-                  <StyledFieldWrapper>
-                    <Field
-                      aria-label="keyword"
-                      name="keyword"
-                      label={t('resource_form.tags')}
-                      component={TextField}
-                      fullWidth
-                      variant="outlined"
-                    />
-                  </StyledFieldWrapper>
-                </MultipleFieldWrapper>
-
-                <MultipleFieldWrapper>
-                  <StyledFieldWrapper>
-                    <Field aria-label="date" component={FormikDatePicker} name="date" />
-                  </StyledFieldWrapper>
-
-                  <StyledFieldWrapper>
-                    <Field
-                      name="language"
-                      aria-label="language"
-                      variant="outlined"
-                      fullWidth
-                      component={Select}
-                      label={t('date')}>
-                      {languages.map(language => (
-                        <MenuItem
-                          value={language.code}
-                          key={language.code}
-                          data-testid={`user-language-${language.code}`}>
-                          {language.name}
-                        </MenuItem>
-                      ))}
-                    </Field>
-                  </StyledFieldWrapper>
-                </MultipleFieldWrapper>
-
-                <StyledFieldHeader>{t('resource_form.project_assosiation')}</StyledFieldHeader>
-                <StyledFieldWrapper>
-                  <Field
-                    name="project"
-                    aria-label="project"
-                    label={t('resource_form.project')}
+                    fullWidth
                     component={Select}
-                    fullWidth
-                    variant="outlined">
-                    {publications.map(publication => (
-                      <MenuItem value={publication.id} key={publication.id}>
-                        {`${publication.name} - ${publication.id}`}
+                    label={t('date')}>
+                    {languages.map(language => (
+                      <MenuItem
+                        value={language.code}
+                        key={language.code}
+                        data-testid={`user-language-${language.code}`}>
+                        {language.name}
                       </MenuItem>
                     ))}
                   </Field>
                 </StyledFieldWrapper>
-              </Form>
-            )}
+              </MultipleFieldWrapper>
+
+              <StyledFieldHeader>{t('resource_form.project_assosiation')}</StyledFieldHeader>
+              <StyledFieldWrapper>
+                <Field
+                  name="project"
+                  aria-label="project"
+                  label={t('resource_form.project')}
+                  component={Select}
+                  fullWidth
+                  variant="outlined">
+                  {publications.map(publication => (
+                    <MenuItem value={publication.id} key={publication.id}>
+                      {`${publication.name} - ${publication.id}`}
+                    </MenuItem>
+                  ))}
+                </Field>
+              </StyledFieldWrapper>
+            </Form>
           </Formik>
         </MuiPickersUtilsProvider>
       </Box>
