@@ -145,8 +145,8 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
                     name="keyword"
                     label={t('resource_form.tags')}
                     component={TextField}
-                    variant="outlined"
                     fullWidth
+                    variant="outlined"
                   />
                 </StyledFieldWrapper>
               </MultipleFieldWrapper>
