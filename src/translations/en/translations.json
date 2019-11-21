@@ -34,10 +34,6 @@
   "New publication": "New publication",
   "New registration": "+ New registration",
   "New resource": "New resource",
-  "common": {
-    "next": "Next",
-    "save": "Save"
-  },
   "resource_form": {
     "title": "Title",
     "description": "Description",

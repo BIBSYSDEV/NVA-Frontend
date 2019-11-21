@@ -52,15 +52,7 @@ export default function useLocalStorage(key: string, initialValue: object = {}) 
   };
 
   const clearValue = () => {
-    if (objectKey) {
-      const newObject = {
-        [objectKey]: initialValue,
-      };
-      window.localStorage.setItem(localStorageKey, JSON.stringify(newObject));
-    } else {
-      window.localStorage.removeItem(localStorageKey);
-    }
-    setStoredValue(initialValue);
+    setValue(initialValue);
   };
 
   return [storedValue, setValue, clearValue];

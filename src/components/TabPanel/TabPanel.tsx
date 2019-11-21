@@ -13,7 +13,7 @@ interface TabPanelProps {
   isHidden: boolean;
   errors?: YupError[];
   goToNextTab?: (event: React.MouseEvent<any>) => void;
-  saveClick?: (event: React.MouseEvent<any>) => void;
+  onClickSave?: (event: React.MouseEvent<any>) => void;
   heading: string;
 }
 
@@ -36,7 +36,7 @@ const TabPanel: React.FC<TabPanelProps> = ({
   errors,
   isHidden,
   goToNextTab,
-  saveClick,
+  onClickSave,
   heading,
 }) => {
   const { t } = useTranslation();
@@ -52,12 +52,12 @@ const TabPanel: React.FC<TabPanelProps> = ({
       {children}
       {goToNextTab && (
         <StyledButton color="primary" variant="contained" onClick={goToNextTab}>
-          {t('common.next')}
+          {t('common:next')}
         </StyledButton>
       )}
-      {saveClick && (
-        <StyledButton variant="contained" onClick={saveClick}>
-          {t('common.save')}
+      {onClickSave && (
+        <StyledButton variant="contained" onClick={onClickSave}>
+          {t('common:save')}
         </StyledButton>
       )}
     </Typography>

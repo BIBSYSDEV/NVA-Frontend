@@ -63,8 +63,8 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
   };
 
   const saveAndClearLocalStorage = () => {
-    clearPersistedData();
     saveResource();
+    clearPersistedData();
   };
 
   const initialFormikValues = {
@@ -82,7 +82,7 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
       isHidden={tabNumber !== 1}
       ariaLabel="description"
       goToNextTab={goToNextTab}
-      saveClick={saveAndClearLocalStorage}
+      onClickSave={saveAndClearLocalStorage}
       errors={errors.descriptionErrors}
       heading="Description">
       <Box>

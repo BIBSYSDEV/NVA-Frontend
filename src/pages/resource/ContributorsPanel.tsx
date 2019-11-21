@@ -46,7 +46,7 @@ const ContributorsPanel: React.FC<ContributorsPanelProps> = ({ goToNextTab, tabN
       isHidden={tabNumber !== 3}
       ariaLabel="references"
       goToNextTab={goToNextTab}
-      saveClick={saveResource}
+      onClickSave={saveResource}
       errors={errors.contributorsErrors}
       heading="Contributors">
       <Contributors contributors={contributors} dispatch={dispatch} onAddAuthor={onAddAuthor} />
