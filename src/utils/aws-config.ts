@@ -7,8 +7,8 @@ const awsConfig = {
   oauth: {
     domain: process.env.REACT_APP_DOMAIN,
     scope: ['openid'],
-    redirectSignIn: 'http://localhost:3000',
-    redirectSignOut: 'http://localhost:3000',
+    redirectSignIn: process.env.REACT_APP_REDIRECT_SIGN_IN,
+    redirectSignOut: process.env.REACT_APP_REDIRECT_SIGN_OUT,
     responseType: 'code',
   },
 };
