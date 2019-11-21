@@ -16,9 +16,10 @@ const StyledResource = styled.div`
   padding: 5rem;
 `;
 
-const Resource: React.FC = () => {
+const ResourceForm: React.FC = () => {
   const [tabNumber, setTabNumber] = useState(0);
   const errors = useSelector((store: RootStore) => store.errors);
+  const formData = useSelector((store: RootStore) => store.formsData);
   const { referencesErrors } = errors;
 
   const handleTabChange = (_: React.ChangeEvent<{}>, newTabNumber: number) => {
@@ -29,11 +30,15 @@ const Resource: React.FC = () => {
     setTabNumber(tabNumber + 1);
   };
 
+  const saveResource = async () => {
+    console.log('Save resource:', formData);
+  };
+
   return (
     <StyledResource>
       <ResourceFormTabs tabNumber={tabNumber} handleTabChange={handleTabChange} />
       <PublicationPanel tabNumber={tabNumber} goToNextTab={goToNextTab} />
-      <DescriptionPanel tabNumber={tabNumber} goToNextTab={goToNextTab} />
+      <DescriptionPanel tabNumber={tabNumber} goToNextTab={goToNextTab} saveResource={saveResource} />
       <TabPanel
         isHidden={tabNumber !== 2}
         ariaLabel="references"
@@ -42,7 +47,7 @@ const Resource: React.FC = () => {
         heading="References">
         <div>Page Three</div>
       </TabPanel>
-      <ContributorsPanel tabNumber={tabNumber} goToNextTab={goToNextTab} />
+      <ContributorsPanel tabNumber={tabNumber} goToNextTab={goToNextTab} saveResource={saveResource} />
       <FilesAndLicensPanel tabNumber={tabNumber} goToNextTab={goToNextTab} />
       <TabPanel isHidden={tabNumber !== 5} ariaLabel="submission" heading="submission">
         <div>Page Six</div>
@@ -51,4 +56,4 @@ const Resource: React.FC = () => {
   );
 };
 
-export default Resource;
+export default ResourceForm;

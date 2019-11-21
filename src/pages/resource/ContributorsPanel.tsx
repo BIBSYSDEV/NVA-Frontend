@@ -13,10 +13,11 @@ import OtherContributors from './contributors/OtherContributors';
 
 interface ContributorsPanelProps {
   goToNextTab: (event: React.MouseEvent<any>) => void;
+  saveResource: (event: React.MouseEvent<any>) => void;
   tabNumber: number;
 }
 
-const ContributorsPanel: React.FC<ContributorsPanelProps> = ({ goToNextTab, tabNumber }) => {
+const ContributorsPanel: React.FC<ContributorsPanelProps> = ({ goToNextTab, tabNumber, saveResource }) => {
   const errors = useSelector((store: RootStore) => store.errors);
   const initialState = USE_MOCK_DATA ? mockContributors : [];
   const [contributors, dispatch] = useReducer(contributorReducer, initialState);
@@ -45,6 +46,7 @@ const ContributorsPanel: React.FC<ContributorsPanelProps> = ({ goToNextTab, tabN
       isHidden={tabNumber !== 3}
       ariaLabel="references"
       goToNextTab={goToNextTab}
+      saveClick={saveResource}
       errors={errors.contributorsErrors}
       heading="Contributors">
       <Contributors contributors={contributors} dispatch={dispatch} onAddAuthor={onAddAuthor} />

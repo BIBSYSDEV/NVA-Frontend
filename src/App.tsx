@@ -14,7 +14,7 @@ import Header from './layout/header/Header';
 import AdminMenu from './pages/dashboard/AdminMenu';
 import Dashboard from './pages/dashboard/Dashboard';
 import NotFound from './pages/errorpages/NotFound';
-import Resource from './pages/resource/Resource';
+import ResourceForm from './pages/resource/ResourceForm';
 import Search from './pages/search/Search';
 import User from './pages/user/User';
 import Workspace from './pages/workspace/Workspace';
@@ -82,7 +82,7 @@ const App: React.FC = () => {
           <Switch>
             <Route exact path="/" component={Dashboard} />
             <Route exact path="/resources" component={Workspace} />
-            <Route exact path="/resources/new" component={Resource} />
+            <Route exact path="/resources/new" component={ResourceForm} />
             <Route exact path="/search" component={Search} />
             <Route exact path="/search/:searchTerm" component={Search} />
             <Route exact path="/search/:searchTerm/:offset" component={Search} />
