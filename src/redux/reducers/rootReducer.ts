@@ -18,7 +18,7 @@ export interface RootStore {
   notifications: Notification[];
   search: Search;
   user: User;
-  forms: FormsData;
+  formsData: FormsData;
 }
 
 export default combineReducers({

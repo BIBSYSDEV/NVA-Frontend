@@ -6,7 +6,10 @@ import { useEffect } from 'react';
 export default function useFormPersistor(formKey: string, initialValue: object = {}) {
   // Initiate locaStorage with a similar structure for keys as used in Redux
   const localStorageKey = `formsData.${formKey}`;
-  const [localStorageValue, setLocalStorageValues] = useLocalStorage(localStorageKey, initialValue);
+  const [localStorageValue, setLocalStorageValue, clearLocalStorageValue] = useLocalStorage(
+    localStorageKey,
+    initialValue
+  );
 
   const dispatch = useDispatch();
 
@@ -19,8 +22,8 @@ export default function useFormPersistor(formKey: string, initialValue: object =
 
   // Update LS. This will trigger useEffect to update Redux store
   const setFormData = (value: any) => {
-    setLocalStorageValues(value);
+    setLocalStorageValue(value);
   };
 
-  return [localStorageValue, setFormData];
+  return [localStorageValue, setFormData, clearLocalStorageValue];
 }
