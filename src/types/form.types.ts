@@ -16,15 +16,17 @@ export interface ResourceDescriptionFormData {
   project: string;
 }
 
+export const emptyResourceDescription: ResourceDescriptionFormData = {
+  title: '',
+  abstract: '',
+  description: '',
+  npi: '',
+  language: defaultLanguage,
+  date: undefined,
+  year: undefined,
+  project: '',
+};
+
 export const emptyForms: FormsData = {
-  resourceDescription: {
-    title: '',
-    abstract: '',
-    description: '',
-    npi: '',
-    language: defaultLanguage,
-    date: undefined,
-    year: undefined,
-    project: '',
-  },
+  resourceDescription: emptyResourceDescription,
 };

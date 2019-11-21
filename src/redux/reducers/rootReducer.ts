@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux';
 
-import { FeedbackMessageType } from '../../types/feedback.types';
+import { Notification } from '../../types/notification.types';
 import { Search } from '../../types/search.types';
 import { User } from '../../types/user.types';
 import { FormValidator } from '../../types/validation.types';
 import { FormsData } from '../../types/form.types';
 import { authReducer } from './authReducer';
-import { feedbackReducer } from './feedbackReducer';
+import { notificationReducer } from './notificationReducer';
 import { searchReducer } from './searchReducer';
 import { userReducer } from './userReducer';
 import { validationReducer } from './validationReducer';
@@ -15,17 +15,17 @@ import { formsDataReducer } from './formsDataReducer';
 export interface RootStore {
   auth: { isLoggedIn: boolean };
   errors: FormValidator;
-  feedback: FeedbackMessageType[];
+  notifications: Notification[];
   search: Search;
   user: User;
   formsData: FormsData;
 }
 
 export default combineReducers({
-  errors: validationReducer,
-  user: userReducer,
-  search: searchReducer,
-  feedback: feedbackReducer,
   auth: authReducer,
+  errors: validationReducer,
+  notifications: notificationReducer,
+  search: searchReducer,
+  user: userReducer,
   formsData: formsDataReducer,
 });

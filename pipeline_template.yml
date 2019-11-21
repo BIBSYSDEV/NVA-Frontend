@@ -51,7 +51,7 @@ Resources:
             Value: '{{resolve:ssm:REACT_APP_AWS_COGNITO_IDENTITY_POOL_ID:1}}'
           - Name: REACT_APP_AWS_REGION
             Type: PLAINTEXT
-            Value: !Ref "AWS::Region" # eu-west-1
+            Value: !Ref 'AWS::Region' # eu-west-1
           - Name: REACT_APP_AWS_USER_POOLS_ID
             Type: PLAINTEXT
             Value: '{{resolve:ssm:REACT_APP_AWS_USER_POOLS_ID:1}}'

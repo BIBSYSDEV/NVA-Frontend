@@ -2,6 +2,7 @@ import Axios from 'axios';
 import { Dispatch } from 'redux';
 
 import { orcidRequestFailure, setOrcidInfo } from '../redux/actions/orcidActions';
+import i18n from '../translations/i18n';
 import { ORCID_OAUTH_URL, StatusCode } from '../utils/constants';
 
 export const getOrcidInfo = (orcidCode: string) => {
@@ -26,10 +27,10 @@ export const getOrcidInfo = (orcidCode: string) => {
       if (response.status === StatusCode.OK) {
         dispatch(setOrcidInfo(response.data.name, response.data.orcid));
       } else {
-        dispatch(orcidRequestFailure('error.get_orcid'));
+        dispatch(orcidRequestFailure(i18n.t('feedback:error.get_orcid')));
       }
     } catch {
-      dispatch(orcidRequestFailure('error.get_orcid'));
+      dispatch(orcidRequestFailure(i18n.t('feedback:error.get_orcid')));
     }
   };
 };
