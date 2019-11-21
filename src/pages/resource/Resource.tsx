@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import TabPanel from '../../components/TabPanel/TabPanel';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import ContributorsPanel from './ContributorsPanel';
-import DescriptionPanel from './DescriptionPanel';
+import DescriptionPanel from './description/DescriptionPanel';
 import PublicationPanel from './PublicationPanel';
 import FilesAndLicensPanel from './FilesAndLicensePanel';
 import { ResourceFormTabs } from './ResourceFormTabs';
@@ -17,7 +17,7 @@ const StyledResource = styled.div`
 `;
 
 const Resource: React.FC = () => {
-  const [tabNumber, setTabNumber] = useState(0);
+  const [tabNumber, setTabNumber] = useState(1);
   const errors = useSelector((store: RootStore) => store.errors);
   const { referencesErrors } = errors;
 

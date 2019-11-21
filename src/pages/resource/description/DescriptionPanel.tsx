@@ -6,17 +6,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 
 import DateFnsUtils from '@date-io/date-fns';
-import { Button, MenuItem, TextField as MuiTextField } from '@material-ui/core';
+import { MenuItem } from '@material-ui/core';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 
-import TabPanel from '../../components/TabPanel/TabPanel';
-import { clearFormErrors, formError } from '../../redux/actions/validationActions';
-import { RootStore } from '../../redux/reducers/rootReducer';
-import { defaultLanguage, languages } from '../../translations/i18n';
-import { ResourceFormTabs } from '../../types/resource.types';
-import FormikDatePicker from './FormikDatePicker';
+import TabPanel from '../../../components/TabPanel/TabPanel';
+import { clearFormErrors, formError } from '../../../redux/actions/validationActions';
+import { RootStore } from '../../../redux/reducers/rootReducer';
+import { defaultLanguage, languages } from '../../../translations/i18n';
+import { ResourceFormTabs } from '../../../types/resource.types';
+import FormikDatePicker from '../FormikDatePicker';
 import styled from 'styled-components';
-import Box from '../../components/Box';
+import Box from '../../../components/Box';
+import CristinProject from './CristinProject';
 
 const MultipleFieldWrapper = styled.div`
   display: flex;
@@ -25,12 +26,6 @@ const MultipleFieldWrapper = styled.div`
 const StyledFieldWrapper = styled.div`
   padding: 1rem;
   flex: 1 0 40%;
-`;
-
-const StyledFieldHeader = styled.header`
-  font-size: 1.5rem;
-  margin-left: 1rem;
-  margin-top: 2rem;
 `;
 
 interface DescriptionPanelProps {
@@ -55,8 +50,6 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
       dispatch(formError(ResourceFormTabs.DESCRIPTION, e.inner));
     }
   };
-
-  const handleProjectSearch = () => {};
 
   const initialFormikValues = {
     title: '',
@@ -92,6 +85,7 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
                   <Field
                     aria-label="title"
                     name="title"
+                    margin="dense"
                     label={t('resource_form.title')}
                     component={TextField}
                     fullWidth
@@ -104,6 +98,7 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
                     name="abstract"
                     label={t('resource_form.abstract')}
                     component={TextField}
+                    margin="dense"
                     multiline
                     rows="4"
                     fullWidth
@@ -117,6 +112,7 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
                     label={t('resource_form.description')}
                     component={TextField}
                     multiline
+                    margin="dense"
                     rows="4"
                     fullWidth
                     variant="outlined"
@@ -130,6 +126,7 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
                       label={t('resource_form.NPI')}
                       component={TextField}
                       variant="outlined"
+                      margin="dense"
                       fullWidth
                     />
                   </StyledFieldWrapper>
@@ -141,6 +138,7 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
                       component={TextField}
                       fullWidth
                       variant="outlined"
+                      margin="dense"
                     />
                   </StyledFieldWrapper>
                 </MultipleFieldWrapper>
@@ -156,6 +154,7 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
                       aria-label="language"
                       variant="outlined"
                       fullWidth
+                      margin="dense"
                       component={Select}
                       label={t('date')}>
                       {languages.map(language => (
@@ -170,28 +169,7 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
                   </StyledFieldWrapper>
                 </MultipleFieldWrapper>
 
-                <StyledFieldHeader>{t('resource_form.project_assosiation')}</StyledFieldHeader>
-
-                <MuiTextField margin="dense" variant="outlined" label={t('resource_form.project')} />
-                <Button color="primary" variant="contained" onClick={handleProjectSearch}>
-                  {t('publication_panel.search')}
-                </Button>
-
-                {/*<StyledFieldWrapper>*/}
-                {/*  <Field*/}
-                {/*    name="project"*/}
-                {/*    aria-label="project"*/}
-                {/*    label={t('resource_form.project')}*/}
-                {/*    component={Select}*/}
-                {/*    fullWidth*/}
-                {/*    variant="outlined">*/}
-                {/*    {publications.map(publication => (*/}
-                {/*      <MenuItem value={publication.id} key={publication.id}>*/}
-                {/*        {`${publication.name} - ${publication.id}`}*/}
-                {/*      </MenuItem>*/}
-                {/*    ))}*/}
-                {/*  </Field>*/}
-                {/*</StyledFieldWrapper>*/}
+                <CristinProject />
               </Form>
             )}
           </Formik>
