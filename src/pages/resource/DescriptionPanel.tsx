@@ -14,14 +14,12 @@ import { clearFormErrors, formError } from '../../redux/actions/validationAction
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { languages } from '../../translations/i18n';
 import { ResourceFormTabs } from '../../types/resource.types';
-import { emptyForms } from '../../types/form.types';
+import { emptyResourceDescription, ResourceDescriptionFormData } from '../../types/form.types';
 import publications from '../../utils/testfiles/projects_random_generated.json';
 import FormikDatePicker from './FormikDatePicker';
 import styled from 'styled-components';
 import Box from '../../components/Box';
 import useFormPersistor from '../../utils/hooks/useFormPersistor';
-
-const emptyResourceDescriptionForm = emptyForms.resourceDescription;
 
 const MultipleFieldWrapper = styled.div`
   display: flex;
@@ -53,7 +51,7 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
     title: Yup.string().required(t('Required field')),
   });
 
-  const handleValidation = (values: any) => {
+  const validateAndPersistValues = (values: ResourceDescriptionFormData) => {
     setPersistedFormData(values);
     try {
       resourceSchema.validateSync(values, { abortEarly: false });
@@ -64,13 +62,13 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
   };
 
   const initialFormikValues = {
-    title: persistedFormData.title || emptyResourceDescriptionForm.title,
-    abstract: persistedFormData.abstract || emptyResourceDescriptionForm.abstract,
-    description: persistedFormData.description || emptyResourceDescriptionForm.description,
-    NPI: persistedFormData.npi || emptyResourceDescriptionForm.npi,
-    language: persistedFormData.language || emptyResourceDescriptionForm.language,
-    date: persistedFormData.date || emptyResourceDescriptionForm.date,
-    project: persistedFormData.project || emptyResourceDescriptionForm.project,
+    title: persistedFormData.title || emptyResourceDescription.title,
+    abstract: persistedFormData.abstract || emptyResourceDescription.abstract,
+    description: persistedFormData.description || emptyResourceDescription.description,
+    npi: persistedFormData.npi || emptyResourceDescription.npi,
+    language: persistedFormData.language || emptyResourceDescription.language,
+    date: persistedFormData.date || emptyResourceDescription.date,
+    project: persistedFormData.project || emptyResourceDescription.project,
   };
 
   return (
@@ -86,7 +84,7 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
             initialValues={initialFormikValues}
             validateOnChange={false}
             validationSchema={resourceSchema}
-            validate={values => handleValidation(values)}
+            validate={values => validateAndPersistValues(values)}
             onSubmit={(values, { setSubmitting }) => {
               setTimeout(() => {
                 alert(JSON.stringify(values, null, 2));
