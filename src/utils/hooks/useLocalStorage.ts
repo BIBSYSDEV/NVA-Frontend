@@ -25,34 +25,30 @@ export default function useLocalStorage(key: string, initialValue: object = {}) 
       } else {
         return jsonData;
       }
-    } catch (error) {
+    } catch {
       return initialValue;
     }
   });
 
   // Update value function
   const setValue = (value: any) => {
-    try {
-      setStoredValue(value);
+    setStoredValue(value);
 
-      const localStorageValue = window.localStorage.getItem(localStorageKey);
-      if (!localStorageValue) {
-        return;
-      }
-
-      let jsonValue = JSON.parse(localStorageValue);
-
-      // Update correct part of value
-      if (objectKey) {
-        jsonValue[objectKey] = value;
-      } else {
-        jsonValue = value;
-      }
-
-      window.localStorage.setItem(localStorageKey, JSON.stringify(jsonValue));
-    } catch {
-      // Keep using existing values if error occurs
+    const localStorageValue = window.localStorage.getItem(localStorageKey);
+    if (!localStorageValue) {
+      return;
     }
+
+    let jsonValue = JSON.parse(localStorageValue);
+
+    // Update correct part of value
+    if (objectKey) {
+      jsonValue[objectKey] = value;
+    } else {
+      jsonValue = value;
+    }
+
+    window.localStorage.setItem(localStorageKey, JSON.stringify(jsonValue));
   };
 
   return [storedValue, setValue];
