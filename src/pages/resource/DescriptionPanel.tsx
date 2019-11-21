@@ -38,7 +38,7 @@ const StyledFieldHeader = styled.header`
 
 interface DescriptionPanelProps {
   goToNextTab: (event: React.MouseEvent<any>) => void;
-  saveResource: (event: React.MouseEvent<any>) => void;
+  saveResource: () => void;
   tabNumber: number;
 }
 
@@ -46,7 +46,7 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const errors = useSelector((store: RootStore) => store.errors);
-  const [persistedFormData, setPersistedFormData] = useFormPersistor('resourceDescription');
+  const [persistedFormData, setPersistedFormData, clearPersistedData] = useFormPersistor('resourceDescription');
 
   const resourceSchema = Yup.object().shape({
     title: Yup.string().required(t('resource_form.feedback.required_field')),
@@ -60,6 +60,11 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
     } catch (e) {
       dispatch(formError(ResourceFormTabs.DESCRIPTION, e.inner));
     }
+  };
+
+  const saveAndClearLocalStorage = () => {
+    clearPersistedData();
+    saveResource();
   };
 
   const initialFormikValues = {
@@ -77,7 +82,7 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
       isHidden={tabNumber !== 1}
       ariaLabel="description"
       goToNextTab={goToNextTab}
-      saveClick={saveResource}
+      saveClick={saveAndClearLocalStorage}
       errors={errors.descriptionErrors}
       heading="Description">
       <Box>
