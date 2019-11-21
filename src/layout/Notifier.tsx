@@ -11,38 +11,28 @@ export const Notifier: React.FC = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    notifications.map(notification => {
+    notifications.forEach(notification => {
+      const options = {
+        key: notification.key,
+        variant: notification.variant,
+        onClick: () => {
+          closeSnackbar(notification.key);
+        },
+      };
       if (notification.dismissed) {
         closeSnackbar(notification.key);
         dispatch(removeNotification(notification.key));
+      } else {
+        if (notification.variant === 'error') {
+          enqueueSnackbar(notification.message, {
+            ...options,
+            persist: true,
+          });
+        } else {
+          enqueueSnackbar(notification.message, { ...options });
+          dispatch(removeNotification(notification.key));
+        }
       }
-      return null;
-    });
-  }, [notifications, closeSnackbar, dispatch]);
-
-  useEffect(() => {
-    notifications.map(notification => {
-      if (!notification.dismissed) {
-        const options = {
-          key: notification.key,
-          variant: notification.variant,
-          onClick: () => {
-            closeSnackbar(notification.key);
-          },
-        };
-        setTimeout(() => {
-          if (notification.variant === 'error') {
-            enqueueSnackbar(notification.message, {
-              ...options,
-              persist: true,
-            });
-          } else {
-            enqueueSnackbar(notification.message, { ...options });
-            dispatch(removeNotification(notification.key));
-          }
-        }, 300);
-      }
-      return null;
     });
   }, [notifications, closeSnackbar, dispatch, enqueueSnackbar]);
 

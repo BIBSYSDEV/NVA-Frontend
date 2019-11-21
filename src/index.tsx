@@ -14,6 +14,7 @@ import App from './App';
 import store from './redux/store';
 import mainTheme from './themes/mainTheme';
 import i18n from './translations/i18n';
+import { MAX_NOTIFICATIONS } from './utils/constants';
 
 ReactDOM.render(
   <I18nextProvider i18n={i18n}>
@@ -23,13 +24,13 @@ ReactDOM.render(
           <MUIThemeProvider theme={mainTheme}>
             <CssBaseline />
             <SnackbarProvider
-              maxSnack={3}
+              maxSnack={MAX_NOTIFICATIONS}
               data-testid="snackbar"
-              action={() => (
+              action={
                 <IconButton color="inherit">
                   <CloseIcon />
                 </IconButton>
-              )}>
+              }>
               <App />
             </SnackbarProvider>
           </MUIThemeProvider>

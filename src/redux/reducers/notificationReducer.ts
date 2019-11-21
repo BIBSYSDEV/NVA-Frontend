@@ -50,16 +50,20 @@ export const notificationReducer = (
     case REMOVE_NOTIFICATION:
       return state.filter(notification => notification.key !== action.key);
     case SET_USER_SUCCESS:
-      const itemToKeep = state.find(notification => notification.message === i18n.t('feedback:error.get_user'));
-      if (itemToKeep) {
-        const filtered = state.filter(notification => notification.message !== i18n.t('feedback:error.get_user'));
-        return [...filtered, { ...itemToKeep, dismissed: true }];
-      } else {
-        return state;
-      }
+      return dismissNotification(state, 'feedback:error.get_user');
     case CLEAR_NOTIFICATIONS:
       return [];
     default:
       return state;
+  }
+};
+
+const dismissNotification = (state: Notification[], translationKey: string): Notification[] => {
+  const itemToKeep = state.find(notification => notification.message === i18n.t(translationKey));
+  if (itemToKeep) {
+    const filteredNotifications = state.filter(notification => notification.message !== itemToKeep.message);
+    return [...filteredNotifications, { ...itemToKeep, dismissed: true }];
+  } else {
+    return state;
   }
 };
