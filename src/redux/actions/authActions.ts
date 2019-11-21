@@ -19,8 +19,6 @@ export const initLogout = (): InitLogoutAction => ({
 
 export const loginSuccess = (): LoginSuccessAction => ({
   type: LOGIN_SUCCESS,
-  message: 'success.login',
-  variant: 'success',
 });
 
 export const logoutSuccess = (): LogoutSuccessAction => ({
@@ -81,8 +79,6 @@ interface RefreshTokenSuccessAction {
 
 interface LoginSuccessAction {
   type: typeof LOGIN_SUCCESS;
-  message: string;
-  variant: VariantType;
 }
 
 interface LogoutSuccessAction {

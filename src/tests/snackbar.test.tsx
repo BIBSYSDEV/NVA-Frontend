@@ -14,7 +14,7 @@ import { cleanup, getByTestId, render, wait } from '@testing-library/react';
 
 import App from '../App';
 import { loginFailure } from '../redux/actions/authActions';
-import { clearFeedback } from '../redux/actions/feedbackActions';
+import { clearNotifications } from '../redux/actions/notificationActions';
 import { orcidRequestFailure, orcidSignInFailure } from '../redux/actions/orcidActions';
 import { searchFailure } from '../redux/actions/searchActions';
 import { setUserFailure } from '../redux/actions/userActions';
@@ -60,37 +60,37 @@ describe('Snackbar', () => {
   });
 
   test('shows login error message when login failed', async () => {
-    store.dispatch(loginFailure('error.login'));
+    store.dispatch(loginFailure('Login failed'));
     await wait(() => getByTestId(app.container, 'snackbar'));
     expect(getByTestId(app.container, 'snackbar').textContent).toBe('Login failed');
   });
 
   test('shows error message when failing to get authenticated user', async () => {
-    store.dispatch(setUserFailure('error.get_user'));
+    store.dispatch(setUserFailure('Failed to get user'));
     await wait(() => getByTestId(app.container, 'snackbar'));
     expect(getByTestId(app.container, 'snackbar').textContent).toBe('Failed to get user');
   });
 
   test('shows orcid request error message when connecting to ORCID failed', async () => {
-    store.dispatch(orcidRequestFailure('error.get_orcid'));
+    store.dispatch(orcidRequestFailure('Could not get data from ORCID'));
     await wait(() => getByTestId(app.container, 'snackbar'));
     expect(getByTestId(app.container, 'snackbar').textContent).toBe('Could not get data from ORCID');
   });
 
   test('shows orcid request error message when logging in to ORCID failed', async () => {
-    store.dispatch(orcidSignInFailure('error.orcid_login'));
+    store.dispatch(orcidSignInFailure('ORCID login failed'));
     await wait(() => getByTestId(app.container, 'snackbar'));
     expect(getByTestId(app.container, 'snackbar').textContent).toBe('ORCID login failed');
   });
 
   test('shows search error message when search failed', async () => {
-    store.dispatch(searchFailure('error.search'));
+    store.dispatch(searchFailure('Search failed'));
     await wait(() => getByTestId(app.container, 'snackbar'));
     expect(getByTestId(app.container, 'snackbar').textContent).toBe('Search failed');
   });
 
   afterEach(() => {
-    store.dispatch(clearFeedback());
+    store.dispatch(clearNotifications());
     cleanup();
   });
 });

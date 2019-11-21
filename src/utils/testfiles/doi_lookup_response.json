@@ -1,0 +1,69 @@
+{
+  "type": "article-journal",
+  "id": "https://doi.org/10.1098/rspb.2018.0085",
+  "author": [
+    {
+      "family": "Wroe",
+      "given": "Stephen"
+    },
+    {
+      "family": "Parr",
+      "given": "William C. H."
+    },
+    {
+      "family": "Ledogar",
+      "given": "Justin A."
+    },
+    {
+      "family": "Bourke",
+      "given": "Jason"
+    },
+    {
+      "family": "Evans",
+      "given": "Samuel P."
+    },
+    {
+      "family": "Fiorenza",
+      "given": "Luca"
+    },
+    {
+      "family": "Benazzi",
+      "given": "Stefano"
+    },
+    {
+      "family": "Hublin",
+      "given": "Jean-Jacques"
+    },
+    {
+      "family": "Stringer",
+      "given": "Chris"
+    },
+    {
+      "family": "Kullmer",
+      "given": "Ottmar"
+    },
+    {
+      "family": "Curry",
+      "given": "Michael"
+    },
+    {
+      "family": "Rae",
+      "given": "Todd C."
+    },
+    {
+      "family": "Yokley",
+      "given": "Todd R."
+    }
+  ],
+  "issued": {
+    "date-parts": [[2018, 4, 4]]
+  },
+  "container-title": "Proceedings of the Royal Society B: Biological Sciences",
+  "DOI": "10.1098/rspb.2018.0085",
+  "volume": "285",
+  "issue": "1876",
+  "page": "20180085-",
+  "publisher": "(:unav)",
+  "title": "Computer simulations show that Neanderthal facial morphology represents adaptation to cold and high energy demands, but not heavy biting",
+  "URL": "https://royalsocietypublishing.org/doi/10.1098/rspb.2018.0085"
+}

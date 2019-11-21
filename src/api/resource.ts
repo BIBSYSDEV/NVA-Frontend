@@ -9,6 +9,7 @@ import {
   updateResourceFailure,
   updateResourceSuccess,
 } from '../redux/actions/resourceActions';
+import i18n from '../translations/i18n';
 import { Resource, ResourceFileMap, ResourceMetadata } from '../types/resource.types';
 import { ApiBaseUrl, StatusCode } from '../utils/constants';
 
@@ -35,10 +36,10 @@ export const createNewResourceFromDoi = (url: string, owner: string) => {
       if (response.status === StatusCode.OK) {
         dispatch(createResourceSuccess());
       } else {
-        dispatch(createResourceFailure('error.create_resource'));
+        dispatch(createResourceFailure(i18n.t('feedback:error.create_resource')));
       }
     } catch {
-      dispatch(createResourceFailure('error.create_resource'));
+      dispatch(createResourceFailure(i18n.t('feedback:error.create_resource')));
     }
   };
 };
@@ -64,10 +65,10 @@ export const createNewResource = (files: ResourceFileMap[], metadata: ResourceMe
       if (response.status === StatusCode.OK) {
         dispatch(createResourceSuccess());
       } else {
-        dispatch(createResourceFailure('error.create_resource'));
+        dispatch(createResourceFailure(i18n.t('feedback:error.create_resource')));
       }
     } catch {
-      dispatch(createResourceFailure('error.create_resource'));
+      dispatch(createResourceFailure(i18n.t('feedback:error.create_resource')));
     }
   };
 };
@@ -88,10 +89,10 @@ export const updateResource = (resource: Resource) => {
       if (response.status === StatusCode.OK) {
         dispatch(updateResourceSuccess());
       } else {
-        dispatch(updateResourceFailure('error.update_resource'));
+        dispatch(updateResourceFailure(i18n.t('feedback:error.update_resource')));
       }
     } catch {
-      dispatch(updateResourceFailure('error.update_resource'));
+      dispatch(updateResourceFailure(i18n.t('feedback:error.update_resource')));
     }
   };
 };
@@ -104,10 +105,23 @@ export const getResource = (id: string) => {
         dispatch(getResourceSuccess());
         return response;
       } else {
-        dispatch(getResourceFailure('error.get_resource'));
+        dispatch(getResourceFailure(i18n.t('feedback:error.get_resource')));
       }
     } catch {
-      dispatch(getResourceFailure('error.get_resource'));
+      dispatch(getResourceFailure(i18n.t('feedback:error.get_resource')));
     }
   };
+};
+
+export const lookupDoiTitle = async (url: string) => {
+  try {
+    const response = await Axios.get(`/${ApiBaseUrl.DOI_LOOKUP}${url}`);
+    if (response.status === StatusCode.OK) {
+      return response.data.title;
+    } else {
+      console.error('error.get_doi'); //TO BE REPLACED
+    }
+  } catch {
+    console.error('error.get_doi'); //TO BE REPLACED
+  }
 };

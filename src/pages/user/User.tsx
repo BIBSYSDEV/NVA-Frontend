@@ -47,7 +47,7 @@ const User: React.FC = () => {
     const orcidCode = query.get('code') || '';
     const error = query.get('error') || '';
     if (error) {
-      dispatch(orcidSignInFailure('error.orcid_login'));
+      dispatch(orcidSignInFailure(t('feedback:error.orcid_login')));
       history.push('/user');
     } else if (orcidCode) {
       dispatch(getOrcidInfo(orcidCode));

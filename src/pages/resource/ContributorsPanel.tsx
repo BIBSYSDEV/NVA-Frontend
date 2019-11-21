@@ -1,16 +1,15 @@
-import React, { useReducer } from 'react';
-import { useTranslation } from 'react-i18next';
+import React, { useReducer, useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import mockContributors from '../../utils/testfiles/contributors.json';
-
 import TabPanel from '../../components/TabPanel/TabPanel';
+import { addContributor } from '../../redux/actions/contributorActions';
 import { contributorReducer } from '../../redux/reducers/contributorReducer';
 import { RootStore } from '../../redux/reducers/rootReducer';
-import Contributor from './contributors/Contributor';
-import ContributorLabel from './contributors/ContributorLabel';
-import ContributorValidator from './contributors/ContributorValidator';
-import StyledContributor from './contributors/StyledContributor';
+import { emptyContributor } from '../../types/contributor.types';
+import { USE_MOCK_DATA } from '../../utils/constants';
+import mockContributors from '../../utils/testfiles/contributors.json';
+import Contributors from './contributors/Contributors';
+import OtherContributors from './contributors/OtherContributors';
 
 interface ContributorsPanelProps {
   goToNextTab: (event: React.MouseEvent<any>) => void;
@@ -18,10 +17,28 @@ interface ContributorsPanelProps {
 }
 
 const ContributorsPanel: React.FC<ContributorsPanelProps> = ({ goToNextTab, tabNumber }) => {
-  const { t } = useTranslation();
   const errors = useSelector((store: RootStore) => store.errors);
-  const initialState = mockContributors;
+  const initialState = USE_MOCK_DATA ? mockContributors : [];
   const [contributors, dispatch] = useReducer(contributorReducer, initialState);
+  const [idCounter, setIdCounter] = useState(contributors.length);
+
+  const onAddOtherContributor = () => {
+    setIdCounter(idCounter + 1);
+    const newContributor = {
+      ...emptyContributor,
+      ...{ id: 'c' + idCounter, type: '' },
+    };
+    dispatch(addContributor(newContributor));
+  };
+
+  const onAddAuthor = () => {
+    setIdCounter(idCounter + 1);
+    const newContributor = {
+      ...emptyContributor,
+      ...{ type: 'Author', id: 'c' + idCounter },
+    };
+    dispatch(addContributor(newContributor));
+  };
 
   return (
     <TabPanel
@@ -30,35 +47,12 @@ const ContributorsPanel: React.FC<ContributorsPanelProps> = ({ goToNextTab, tabN
       goToNextTab={goToNextTab}
       errors={errors.contributorsErrors}
       heading="Contributors">
-      <StyledContributor.Box>
-        <StyledContributor.MainHeading>{t('contributors.authors')}</StyledContributor.MainHeading>
-        <StyledContributor.ContributorContainer>
-          <div className="contributor-icon"></div>
-          <div className="contributor-name">
-            <ContributorLabel>{t('contributors.name')}</ContributorLabel>
-          </div>
-          <div className="contributor-institution">
-            <ContributorLabel>{t('contributors.institution')}</ContributorLabel>
-          </div>
-          <div className="contributor-switch">
-            <ContributorLabel>{t('contributors.corresponding')}</ContributorLabel>
-          </div>
-          <div className="contributor-orcid">
-            <ContributorLabel>{t('contributors.ORCID')}</ContributorLabel>
-          </div>
-          <div className="contributor-delete-icon"></div>
-        </StyledContributor.ContributorContainer>
-        {contributors.map(contributor => (
-          <Contributor contributor={contributor} key={contributor.id} dispatch={dispatch} />
-        ))}
-        <ContributorValidator />
-        <StyledContributor.AuthorsButton variant="text" startIcon={<StyledContributor.AddIcon />}>
-          {t('contributors.add_author')}
-        </StyledContributor.AuthorsButton>
-      </StyledContributor.Box>
-      <StyledContributor.Box>
-        <StyledContributor.MainHeading>Bidragsytere</StyledContributor.MainHeading>
-      </StyledContributor.Box>
+      <Contributors contributors={contributors} dispatch={dispatch} onAddAuthor={onAddAuthor} />
+      <OtherContributors
+        contributors={contributors}
+        dispatch={dispatch}
+        onAddOtherContributor={onAddOtherContributor}
+      />
     </TabPanel>
   );
 };
