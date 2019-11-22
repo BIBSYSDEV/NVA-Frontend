@@ -17,14 +17,14 @@ import { ResourceFormTabs } from '../../../types/resource.types';
 import FormikDatePicker from '../FormikDatePicker';
 import styled from 'styled-components';
 import Box from '../../../components/Box';
-import CristinProject from './CristinProject';
+import Project from './Project';
 
 const MultipleFieldWrapper = styled.div`
   display: flex;
 `;
 
 const StyledFieldWrapper = styled.div`
-  padding: 1rem;
+  padding: 0.5rem;
   flex: 1 0 40%;
 `;
 
@@ -169,7 +169,7 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
                   </StyledFieldWrapper>
                 </MultipleFieldWrapper>
 
-                <CristinProject />
+                <Project />
               </Form>
             )}
           </Formik>

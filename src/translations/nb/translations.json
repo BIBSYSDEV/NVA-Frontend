@@ -43,7 +43,8 @@
     "publication_date": "Publiseringsdato eller år",
     "language": "Språk",
     "project_assosiation": "Prosjekttilknytning",
-    "project": "Prosjekt",
+    "project": "Prosjekttittel",
+    "id": "Prosjektid",
     "files_and_license": {
       "header": "Filer og Lisens",
       "upload_files": "Last opp filer",
