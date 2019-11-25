@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
+import styled from 'styled-components';
 
 import TabPanel from '../../components/TabPanel/TabPanel';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import ContributorsPanel from './ContributorsPanel';
 import DescriptionPanel from './DescriptionPanel';
-import PublicationPanel from './PublicationPanel';
 import FilesAndLicensPanel from './FilesAndLicensePanel';
+import PublicationPanel from './PublicationPanel';
+import { ReferencesPanel } from './ReferencesPanel';
 import { ResourceFormTabs } from './ResourceFormTabs';
-import styled from 'styled-components';
 
 const StyledResource = styled.div`
   align-self: flex-start;
@@ -39,14 +40,7 @@ const ResourceForm: React.FC = () => {
       <ResourceFormTabs tabNumber={tabNumber} handleTabChange={handleTabChange} />
       <PublicationPanel tabNumber={tabNumber} goToNextTab={goToNextTab} />
       <DescriptionPanel tabNumber={tabNumber} goToNextTab={goToNextTab} saveResource={saveResource} />
-      <TabPanel
-        isHidden={tabNumber !== 2}
-        ariaLabel="references"
-        goToNextTab={goToNextTab}
-        errors={referencesErrors}
-        heading="References">
-        <div>Page Three</div>
-      </TabPanel>
+      <ReferencesPanel tabNumber={tabNumber} goToNextTab={goToNextTab} />
       <ContributorsPanel tabNumber={tabNumber} goToNextTab={goToNextTab} saveResource={saveResource} />
       <FilesAndLicensPanel tabNumber={tabNumber} goToNextTab={goToNextTab} />
       <TabPanel isHidden={tabNumber !== 5} ariaLabel="submission" heading="submission">
