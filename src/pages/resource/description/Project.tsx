@@ -76,7 +76,7 @@ const Project: React.FC = () => {
 
   const handleListItemClick = (event: any, project: CristinProjectType) => {
     setSelectedProjectList([...selectedProjectList, project]);
-    setProjectList([]);
+    setProjectList(undefined);
   };
 
   const removeProject = (projectToDelete: CristinProjectType) => {
