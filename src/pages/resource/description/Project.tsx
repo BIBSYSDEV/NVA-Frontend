@@ -49,7 +49,7 @@ const Project: React.FC = () => {
   const [idValue, setIdValue] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
 
-  const [projectList, setProjectList] = useState<CristinProjectType[]>([]);
+  const [projectList, setProjectList] = useState<CristinProjectType[]>();
   const [selectedProjectList, setSelectedProjectList] = useState<CristinProjectType[]>([]);
 
   const handleProjectSearch = async () => {
@@ -61,7 +61,7 @@ const Project: React.FC = () => {
       projects = await searchCristinProjects(`title=${titleValue}`);
       setSearchTerm(titleValue);
     }
-    projects && setProjectList(projects);
+    projects ? setProjectList(projects) : setProjectList([]);
     setTitleValue('');
     setIdValue('');
   };
@@ -123,7 +123,7 @@ const Project: React.FC = () => {
           {t('publication_panel.search')}
         </Button>
       </StyledInputBox>
-      {projectList.length > 0 && (
+      {projectList && (
         <StyledResultBox>
           {t('resource_form.project_search_result_header', {
             searchTerm: searchTerm,
