@@ -6,26 +6,24 @@ import { PublicationChannel } from '../../../types/references.types';
 import { PUBLISHERS_URL } from '../../../utils/constants';
 
 interface PublisherSearchProps {
-  setFieldValue: (value: any) => void;
+  setFieldValue: (name: string, value: any) => void;
 }
 
 export const PublisherSearch: React.FC<PublisherSearchProps> = ({ setFieldValue }) => {
   const requestUrl = PUBLISHERS_URL;
   const [searchResults, setSearchResults] = React.useState<PublicationChannel[]>([]);
 
-  const getQueryWithSearchTerm = (searchTerm: string) => {
-    return {
-      tabell_id: 851,
-      api_versjon: 1,
-      statuslinje: 'N',
-      begrensning: '10',
-      kodetekst: 'J',
-      desimal_separator: '.',
-      variabler: ['*'],
-      sortBy: [],
-      filter: [{ variabel: 'Original tittel', selection: { filter: 'like', values: [`%${searchTerm}%`] } }],
-    };
-  };
+  const getQueryWithSearchTerm = (searchTerm: string) => ({
+    tabell_id: 851,
+    api_versjon: 1,
+    statuslinje: 'N',
+    begrensning: '10',
+    kodetekst: 'J',
+    desimal_separator: '.',
+    variabler: ['*'],
+    sortBy: [],
+    filter: [{ variabel: 'Original tittel', selection: { filter: 'like', values: [`%${searchTerm}%`] } }],
+  });
 
   const search = async (searchTerm: string) => {
     try {

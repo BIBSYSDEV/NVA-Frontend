@@ -17,7 +17,7 @@ const StyledFieldWrapper = styled.div`
   flex: 1 0 40%;
 `;
 
-export interface ReferencesPanelProps {
+interface ReferencesPanelProps {
   goToNextTab: () => void;
   tabNumber: number;
 }
