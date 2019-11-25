@@ -108,7 +108,7 @@ const Project: React.FC = () => {
           margin="dense"
           variant="outlined"
           name="title"
-          label={t('resource_form.project')}
+          label={t('resource_form.project_title')}
           value={titleValue}
         />
         <StyledMuiTextField
@@ -116,7 +116,7 @@ const Project: React.FC = () => {
           margin="dense"
           name="id"
           variant="outlined"
-          label={t('resource_form.id')}
+          label={t('resource_form.project_id')}
           value={idValue}
         />
         <Button disabled={!titleValue && !idValue} color="primary" variant="contained" onClick={handleProjectSearch}>
