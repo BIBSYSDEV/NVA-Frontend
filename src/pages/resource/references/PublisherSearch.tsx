@@ -62,8 +62,6 @@ export const PublisherSearch: React.FC<PublisherSearchProps> = ({
 
   return (
     <AutoSearch
-      requestUrl={requestUrl}
-      searchTerm={searchTerm}
       onInputChange={handleInputChange}
       searchResults={options}
       setFieldValue={setFieldValue}

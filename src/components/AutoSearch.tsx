@@ -5,9 +5,7 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
 interface AutoSearchProps {
-  requestUrl: string;
-  searchTerm: string;
-  onInputChange: (event: object, value: string) => void;
+  onInputChange?: (event: object, value: string) => void;
   searchResults: any;
   setFieldValue: (name: any, value: any) => void;
   formikFieldName: string;
@@ -15,17 +13,14 @@ interface AutoSearchProps {
 }
 
 export const AutoSearch: React.FC<AutoSearchProps> = ({
-  requestUrl,
   onInputChange,
-  searchTerm,
   formikFieldName,
   searchResults,
   setFieldValue,
   label,
-  ...props
 }) => {
   const [open, setOpen] = React.useState(false);
-  const loading = open && searchResults.length === 0 && searchTerm.length > 3;
+  const loading = open && searchResults.length === 0;
 
   return (
     <Autocomplete
