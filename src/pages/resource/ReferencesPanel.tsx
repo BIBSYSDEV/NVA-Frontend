@@ -1,8 +1,10 @@
 import { Field, Form, Formik } from 'formik';
-import { Select } from 'material-ui-formik-components/Select';
+import { Select } from 'formik-material-ui';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
+
+import { MenuItem } from '@material-ui/core';
 
 import Box from '../../components/Box';
 import TabPanel from '../../components/TabPanel/TabPanel';
@@ -50,9 +52,13 @@ export const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, t
                 label="type"
                 variant="outlined"
                 fullWidth
-                component={Select}
-                options={referenceTypeList.map(reference => ({ value: reference, label: reference }))}
-              />
+                component={Select}>
+                {referenceTypeList.map(reference => (
+                  <MenuItem value={reference} key={reference} data-testid={`reference-type-${reference}`}>
+                    {reference}
+                  </MenuItem>
+                ))}
+              </Field>
             </StyledFieldWrapper>
 
             <StyledFieldWrapper>
