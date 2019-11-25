@@ -10,6 +10,7 @@ interface AutoSearchProps {
   setFieldValue: (name: string, value: any) => void;
   formikFieldName: string;
   label?: string;
+  groupBy?: (options: any) => string;
 }
 
 export const AutoSearch: React.FC<AutoSearchProps> = ({
@@ -18,6 +19,7 @@ export const AutoSearch: React.FC<AutoSearchProps> = ({
   searchResults,
   setFieldValue,
   label,
+  groupBy,
 }) => {
   const [open, setOpen] = React.useState(false);
   const loading = open && searchResults.length === 0;
@@ -36,6 +38,7 @@ export const AutoSearch: React.FC<AutoSearchProps> = ({
       onChange={(event: object, value: string) => {
         setFieldValue(formikFieldName, value);
       }}
+      groupBy={groupBy}
       onInputChange={onInputChange}
       getOptionLabel={option => option.title}
       options={searchResults || []}
