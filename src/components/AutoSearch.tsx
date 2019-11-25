@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import CircularProgress from '@material-ui/core/CircularProgress';
 import TextField from '@material-ui/core/TextField';
@@ -19,8 +19,15 @@ export const AutoSearch: React.FC<AutoSearchProps> = ({
   setFieldValue,
   label,
 }) => {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [options, setOptions] = useState([]);
   const loading = open && searchResults.length === 0;
+
+  useEffect(() => {
+    if (searchResults) {
+      setOptions(searchResults);
+    }
+  }, [searchResults]);
 
   return (
     <Autocomplete
@@ -32,13 +39,14 @@ export const AutoSearch: React.FC<AutoSearchProps> = ({
       }}
       onClose={() => {
         setOpen(false);
+        setOptions([]);
       }}
-      onChange={(event: object, value: string) => {
+      onChange={(_: object, value: string) => {
         setFieldValue(formikFieldName, value);
       }}
       onInputChange={onInputChange}
       getOptionLabel={option => option.title}
-      options={searchResults || []}
+      options={options}
       loading={loading}
       autoComplete={false}
       renderInput={params => (
@@ -51,10 +59,10 @@ export const AutoSearch: React.FC<AutoSearchProps> = ({
           InputProps={{
             ...params.InputProps,
             endAdornment: (
-              <React.Fragment>
+              <>
                 {loading ? <CircularProgress color="inherit" size={20} /> : null}
                 {params.InputProps.endAdornment}
-              </React.Fragment>
+              </>
             ),
           }}
         />
