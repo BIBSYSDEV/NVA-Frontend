@@ -26,7 +26,7 @@ const StyledMuiTextField = styled(MuiTextField)`
 `;
 
 const StyledResultBox = styled.div`
-  background-color: white;
+  background-color: ${({ theme }) => theme.palette.background.default};
   border: 1px solid grey;
   padding: 1rem;
 `;
@@ -47,6 +47,8 @@ const Project: React.FC = () => {
   const { t } = useTranslation();
   const [titleValue, setTitleValue] = useState('');
   const [idValue, setIdValue] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
+
   const [projectList, setProjectList] = useState<CristinProjectType[]>([]);
   const [selectedProjectList, setSelectedProjectList] = useState<CristinProjectType[]>([]);
 
@@ -54,15 +56,20 @@ const Project: React.FC = () => {
     let projects = [];
     if (idValue) {
       projects = await searchCristinProjects(`id=${idValue}`);
+      setSearchTerm(idValue);
     } else if (titleValue) {
       projects = await searchCristinProjects(`title=${titleValue}`);
+      setSearchTerm(titleValue);
     }
-    setProjectList(projects);
+    projects && setProjectList(projects);
+    setTitleValue('');
+    setIdValue('');
   };
 
   const handleTitleValueChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitleValue(event.target.value);
   };
+
   const handleIdValueChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIdValue(event.target.value);
   };
@@ -70,11 +77,9 @@ const Project: React.FC = () => {
   const handleListItemClick = (event: any, project: CristinProjectType) => {
     setSelectedProjectList([...selectedProjectList, project]);
     setProjectList([]);
-    setTitleValue('');
-    setIdValue('');
   };
 
-  const deleteProject = (projectToDelete: CristinProjectType) => {
+  const removeProject = (projectToDelete: CristinProjectType) => {
     setSelectedProjectList(selectedProjectList.filter(project => projectToDelete !== project));
   };
 
@@ -86,18 +91,17 @@ const Project: React.FC = () => {
           <List>
             {selectedProjectList.map((project: CristinProjectType, index: number) => (
               <ListItem key={index}>
-                <a href={'/'}>{project.main_language === 'no' && `${project.title.no} (NO)`}</a>
-                <a href={'/'}>{project.main_language === 'en' && `${project.title.en} (EN)`}</a>
-                <StyledDeleteIcon onClick={() => deleteProject(project)} />
+                <a href={'/'}>{`${project.title[project.main_language]}(${project.main_language})`}</a>
+                <StyledDeleteIcon onClick={() => removeProject(project)} />
               </ListItem>
             ))}
           </List>
         </StyledSelectedProjectList>
       ) : (
-        <div>Ingen prosjekter tilknyttet</div>
+        <div>{t('resource_form.no_projects')}</div>
       )}
 
-      <div>Søk etter prosjekt:</div>
+      <div>{t('resource_form.search_project')}</div>
       <StyledInputBox>
         <StyledMuiTextField
           onChange={handleTitleValueChange}
@@ -121,14 +125,15 @@ const Project: React.FC = () => {
       </StyledInputBox>
       {projectList.length > 0 && (
         <StyledResultBox>
-          Searching for "{titleValue}
-          {idValue}" gives {projectList.length} hits:
+          {t('resource_form.project_search_result_header', {
+            searchTerm: searchTerm,
+            count: projectList.length,
+          })}
           <StyledResultListBox>
             <List>
               {projectList.map((project: CristinProjectType, index: number) => (
                 <ListItem button onClick={event => handleListItemClick(event, project)} key={index}>
-                  {project.main_language === 'no' && `${project.title.no} (NO)`}
-                  {project.main_language === 'en' && `${project.title.en} (EN)`}
+                  {`${project.title[project.main_language]}(${project.main_language})`}
                 </ListItem>
               ))}
             </List>

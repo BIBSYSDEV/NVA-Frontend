@@ -3,10 +3,9 @@ import { ApiBaseUrl, StatusCode } from '../utils/constants';
 
 export const searchCristinProjects = async (query: string) => {
   try {
-    const response = await Axios.get(`${ApiBaseUrl.CRISTIN_EXTERNAL}/?${query}`);
+    const response = await Axios.get(`${ApiBaseUrl.CRISTIN_EXTERNAL}/projects?${query}`);
     if (response.status === StatusCode.OK) {
-      //totalt antall i X-Total-Count i header
-      console.log(response.data);
+      if (response.headers) response.data.totalCont = response.headers['X-Total-Count'];
       return response.data;
     } else {
       console.error('error.get_cristin_project'); //TO BE REPLACED

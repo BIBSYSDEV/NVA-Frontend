@@ -1,11 +1,6 @@
-export interface CristinProjectTitleType {
-  en: string;
-  no: string;
-}
-
 export default interface CristinProjectType {
   cristin_project_id: string;
-  title: CristinProjectTitleType;
+  title: any; //TODO: HVORDAN TYPE {"en": "example-title", "no": "eksempel-tittel"}
   main_language: string;
   url: string;
 }

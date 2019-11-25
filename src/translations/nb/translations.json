@@ -45,6 +45,9 @@
     "project_assosiation": "Prosjekttilknytning",
     "project": "Prosjekttittel",
     "id": "Prosjektid",
+    "search_project": "Søk etter prosjekt på tittel eller id:",
+    "project_search_result_header": "{{count}} treff på '{{searchTerm}}'",
+    "no_projects": "Ingen prosjekter tilknyttet",
     "files_and_license": {
       "header": "Filer og Lisens",
       "upload_files": "Last opp filer",
