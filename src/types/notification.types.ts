@@ -1,6 +1,8 @@
 import { VariantType } from 'notistack';
 
-export interface FeedbackMessageType {
+export interface Notification {
   message: string;
   variant: VariantType;
+  key: string;
+  dismissed?: boolean;
 }

@@ -6,6 +6,8 @@ import feedbackEn from './en/feedback.json';
 import translationsEn from './en/translations.json';
 import feedbackNb from './nb/feedback.json';
 import translationsNb from './nb/translations.json';
+import commonEn from './en/common.json';
+import commonNb from './nb/common.json';
 
 export const defaultLanguage = Language.NORWEGIAN_BOKMAL;
 
@@ -14,15 +16,17 @@ i18n.use(LanguageDetector).init({
     en: {
       feedback: feedbackEn,
       translations: translationsEn,
+      common: commonEn,
     },
     nb: {
       feedback: feedbackNb,
       translations: translationsNb,
+      common: commonNb,
     },
   },
   fallbackLng: defaultLanguage,
   debug: false,
-  ns: ['feedback', 'translations'],
+  ns: ['common', 'feedback', 'translations'],
   defaultNS: 'translations',
   interpolation: {
     formatSeparator: ',',
