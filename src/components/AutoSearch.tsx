@@ -44,7 +44,9 @@ export const AutoSearch: React.FC<AutoSearchProps> = ({
       onChange={(_: object, value: string) => {
         setFieldValue(formikFieldName, value);
       }}
-      onInputChange={onInputChange}
+      onInputChange={(event: object, value: string) => {
+        open && onInputChange && onInputChange(event, value);
+      }}
       getOptionLabel={option => option.title}
       options={options}
       loading={loading}
