@@ -10,7 +10,6 @@ import Box from '../../components/Box';
 import TabPanel from '../../components/TabPanel/TabPanel';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { ReferenceType, referenceTypeList } from '../../types/references.types';
-import { PUBLISHERS_URL } from '../../utils/constants';
 import { PublisherSearch } from './references/PublisherSearch';
 
 const StyledFieldWrapper = styled.div`
@@ -65,11 +64,7 @@ export const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, t
               <Field name="publisher">
                 {({ form: { values, setFieldValue } }: any) => (
                   <>
-                    <PublisherSearch
-                      requestUrl={PUBLISHERS_URL}
-                      searchTerm={values.publisher}
-                      setFieldValue={setFieldValue}
-                    />
+                    <PublisherSearch setFieldValue={setFieldValue} />
                     {values && values.publisher && values.publisher.title && (
                       <div>
                         <p>Tittel: {values.publisher.title}</p>

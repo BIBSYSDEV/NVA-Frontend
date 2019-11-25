@@ -3,19 +3,14 @@ import React from 'react';
 
 import { AutoSearch } from '../../../components/AutoSearch';
 import { PublicationChannel } from '../../../types/references.types';
+import { PUBLISHERS_URL } from '../../../utils/constants';
 
 interface PublisherSearchProps {
-  requestUrl: string;
-  searchTerm: string;
   setFieldValue: (value: any) => void;
 }
 
-export const PublisherSearch: React.FC<PublisherSearchProps> = ({
-  requestUrl,
-  searchTerm,
-  setFieldValue,
-  ...props
-}) => {
+export const PublisherSearch: React.FC<PublisherSearchProps> = ({ setFieldValue }) => {
+  const requestUrl = PUBLISHERS_URL;
   const [searchResults, setSearchResults] = React.useState<PublicationChannel[]>([]);
 
   const getQueryWithSearchTerm = (searchTerm: string) => {
@@ -39,7 +34,6 @@ export const PublisherSearch: React.FC<PublisherSearchProps> = ({
         url: requestUrl,
         data: getQueryWithSearchTerm(searchTerm),
       });
-      console.log('response', response.data);
       setSearchResults(
         response.data.map((item: any) => ({
           title: item['Original tittel'],
@@ -49,6 +43,7 @@ export const PublisherSearch: React.FC<PublisherSearchProps> = ({
         }))
       );
     } catch (e) {
+      // dispatch errors here
       console.log(e);
     }
   };
