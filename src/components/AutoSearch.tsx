@@ -31,7 +31,6 @@ export const AutoSearch: React.FC<AutoSearchProps> = ({
 
   return (
     <Autocomplete
-      id="auto-search"
       style={{ width: 1000 }}
       open={open}
       onOpen={() => {
@@ -50,7 +49,6 @@ export const AutoSearch: React.FC<AutoSearchProps> = ({
       getOptionLabel={option => option.title}
       options={options}
       loading={loading}
-      autoComplete={false}
       renderInput={params => (
         <TextField
           {...params}
