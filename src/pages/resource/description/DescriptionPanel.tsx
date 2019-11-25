@@ -9,19 +9,17 @@ import DateFnsUtils from '@date-io/date-fns';
 import { MenuItem } from '@material-ui/core';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 
-import TabPanel from '../../components/TabPanel/TabPanel';
-import { clearFormErrors, formError } from '../../redux/actions/validationActions';
-import { RootStore } from '../../redux/reducers/rootReducer';
-import { languages } from '../../translations/i18n';
-import { ResourceFormTabs } from '../../types/resource.types';
-import { emptyResourceDescription, ResourceDescriptionFormData } from '../../types/form.types';
-import publications from '../../utils/testfiles/projects_random_generated.json';
-import FormikDatePicker from './FormikDatePicker';
+import { clearFormErrors, formError } from '../../../redux/actions/validationActions';
+import { RootStore } from '../../../redux/reducers/rootReducer';
+import { languages } from '../../../translations/i18n';
+import { ResourceFormTabs } from '../../../types/resource.types';
+import { emptyResourceDescription, ResourceDescriptionFormData } from '../../../types/form.types';
+import FormikDatePicker from './../FormikDatePicker';
 import styled from 'styled-components';
 import Box from '../../../components/Box';
 import Project from './Project';
-import Box from '../../components/Box';
-import useFormPersistor from '../../utils/hooks/useFormPersistor';
+import TabPanel from '../../../components/TabPanel/TabPanel';
+import useFormPersistor from '../../../utils/hooks/useFormPersistor';
 
 const MultipleFieldWrapper = styled.div`
   display: flex;
@@ -30,12 +28,6 @@ const MultipleFieldWrapper = styled.div`
 const StyledFieldWrapper = styled.div`
   padding: 0.5rem;
   flex: 1 0 40%;
-`;
-
-const StyledFieldHeader = styled.header`
-  font-size: 1.5rem;
-  margin-left: 1rem;
-  margin-top: 2rem;
 `;
 
 interface DescriptionPanelProps {
