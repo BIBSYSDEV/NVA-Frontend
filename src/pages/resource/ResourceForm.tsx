@@ -19,9 +19,7 @@ const StyledResource = styled.div`
 
 const ResourceForm: React.FC = () => {
   const [tabNumber, setTabNumber] = useState(0);
-  const errors = useSelector((store: RootStore) => store.errors);
   const formData = useSelector((store: RootStore) => store.formsData);
-  const { referencesErrors } = errors;
 
   const handleTabChange = (_: React.ChangeEvent<{}>, newTabNumber: number) => {
     setTabNumber(newTabNumber);

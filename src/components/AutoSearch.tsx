@@ -7,7 +7,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 interface AutoSearchProps {
   onInputChange?: (event: object, value: string) => void;
   searchResults: any;
-  setFieldValue: (name: any, value: any) => void;
+  setFieldValue: (name: string, value: any) => void;
   formikFieldName: string;
   label?: string;
 }

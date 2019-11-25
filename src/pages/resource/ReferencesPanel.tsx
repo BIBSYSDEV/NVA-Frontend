@@ -57,19 +57,25 @@ export const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, t
 
             <StyledFieldWrapper>
               <Field name="publisher">
-                {({ form: { values, setFieldValue } }: any) => {
-                  console.log('formik values', values);
-                  return (
+                {({ form: { values, setFieldValue } }: any) => (
+                  <>
                     <PublisherSearch
                       requestUrl={PUBLISHERS_URL}
                       searchTerm={values.publisher}
                       setFieldValue={setFieldValue}
                     />
-                  );
-                }}
+                    {values && values.publisher && values.publisher.title && (
+                      <div>
+                        <p>Tittel: {values.publisher.title}</p>
+                        <p>ISSN: {values.publisher.issn}</p>
+                        <p>Nivå: {values.publisher.level}</p>
+                        <p>Utgiver: {values.publisher.publisher}</p>
+                      </div>
+                    )}
+                  </>
+                )}
               </Field>
             </StyledFieldWrapper>
-            <button type="submit">Save</button>
           </Form>
         </Formik>
       </Box>

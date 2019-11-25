@@ -16,7 +16,7 @@ export const PublisherSearch: React.FC<PublisherSearchProps> = ({
   setFieldValue,
   ...props
 }) => {
-  const [options, setOptions] = React.useState<PublicationChannel[]>([]);
+  const [searchResults, setSearchResults] = React.useState<PublicationChannel[]>([]);
 
   const getQueryWithSearchTerm = (searchTerm: string) => {
     return {
@@ -40,12 +40,12 @@ export const PublisherSearch: React.FC<PublisherSearchProps> = ({
         data: getQueryWithSearchTerm(searchTerm),
       });
       console.log('response', response.data);
-      setOptions(
+      setSearchResults(
         response.data.map((item: any) => ({
           title: item['Original tittel'],
           issn: item['Online ISSN'],
           level: item['Nivå 2019'],
-          publisher: item['Utgvier'],
+          publisher: item['Utgiver'],
         }))
       );
     } catch (e) {
@@ -54,7 +54,7 @@ export const PublisherSearch: React.FC<PublisherSearchProps> = ({
   };
 
   const handleInputChange = (event: object, value: string) => {
-    if (value.length > 3) {
+    if (event !== null && value.length > 3) {
       // need debounce function here
       search(value);
     }
@@ -63,7 +63,7 @@ export const PublisherSearch: React.FC<PublisherSearchProps> = ({
   return (
     <AutoSearch
       onInputChange={handleInputChange}
-      searchResults={options}
+      searchResults={searchResults}
       setFieldValue={setFieldValue}
       formikFieldName="publisher"
       label="Publisher"
