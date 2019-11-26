@@ -28,7 +28,7 @@ export const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, t
 
   const initialFormikValues = {
     publisher: { title: '', issn: '', level: '', publisher: '' },
-    reference_type: ReferenceType.PUBLICATION_IN_JOURNAL,
+    referenceType: ReferenceType.PUBLICATION_IN_JOURNAL,
   };
 
   return (
@@ -48,14 +48,14 @@ export const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, t
           <Form>
             <StyledFieldWrapper>
               <Field
-                name="reference_type"
-                aria-label="reference_type"
+                name="referenceType"
+                aria-label="referenceType"
                 label="type"
                 variant="outlined"
                 fullWidth
                 component={Select}>
                 {referenceTypeList.map(reference => (
-                  <MenuItem value={reference} key={reference} data-testid={`reference-type-${reference}`}>
+                  <MenuItem value={reference} key={reference} data-testid={`referenceType-${reference}`}>
                     {reference}
                   </MenuItem>
                 ))}

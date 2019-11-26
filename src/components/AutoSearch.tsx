@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import CircularProgress from '@material-ui/core/CircularProgress';
-import TextField from '@material-ui/core/TextField';
+import { CircularProgress, TextField } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
 import { MINIMUM_SEARCH_CHARACTERS } from '../utils/constants';
@@ -10,13 +9,13 @@ interface AutoSearchProps {
   onInputChange?: (event: object, value: string) => void;
   searchResults: any;
   setFieldValue: (name: string, value: any) => void;
-  formikFieldName: string;
+  fieldName: string;
   label?: string;
 }
 
 export const AutoSearch: React.FC<AutoSearchProps> = ({
   onInputChange,
-  formikFieldName,
+  fieldName: formikFieldName,
   searchResults,
   setFieldValue,
   label,
@@ -46,9 +45,7 @@ export const AutoSearch: React.FC<AutoSearchProps> = ({
         setFieldValue(formikFieldName, value);
       }}
       onInputChange={(event: object, value: string) => {
-        if (value.length >= MINIMUM_SEARCH_CHARACTERS && options.length === 0) {
-          setLoading(true);
-        }
+        value.length >= MINIMUM_SEARCH_CHARACTERS && options.length === 0 && setLoading(true);
         open && onInputChange && onInputChange(event, value);
       }}
       getOptionLabel={option => option.title}
@@ -65,7 +62,7 @@ export const AutoSearch: React.FC<AutoSearchProps> = ({
             ...params.InputProps,
             endAdornment: (
               <>
-                {loading ? <CircularProgress color="inherit" size={20} /> : null}
+                {loading && <CircularProgress color="inherit" size={20} />}
                 {params.InputProps.endAdornment}
               </>
             ),

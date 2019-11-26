@@ -1,12 +1,12 @@
-import Axios from 'axios';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 
+import { getPublicationChannels } from '../../../api/external/publicationChannelApi';
 import { AutoSearch } from '../../../components/AutoSearch';
 import { searchFailure } from '../../../redux/actions/searchActions';
 import { PublicationChannel } from '../../../types/references.types';
-import { DEBOUNCE_INTERVAL, MINIMUM_SEARCH_CHARACTERS, PUBLISHERS_URL } from '../../../utils/constants';
+import { MINIMUM_SEARCH_CHARACTERS } from '../../../utils/constants';
 import useDebounce from '../../../utils/hooks/useDebounce';
 
 interface PublisherSearchProps {
@@ -18,40 +18,17 @@ export const PublisherSearch: React.FC<PublisherSearchProps> = ({ setFieldValue 
   const [searchTerm, setSearchTerm] = useState('');
   const [searching, setSearching] = useState(false);
 
-  const debouncedSearchTerm = useDebounce(searchTerm, DEBOUNCE_INTERVAL);
+  const debouncedSearchTerm = useDebounce(searchTerm);
   const dispatch = useDispatch();
   const { t } = useTranslation('feedback');
-
-  const getQueryWithSearchTerm = (searchTerm: string) => ({
-    tabell_id: 851,
-    api_versjon: 1,
-    statuslinje: 'N',
-    begrensning: '10',
-    kodetekst: 'J',
-    desimal_separator: '.',
-    variabler: ['*'],
-    sortBy: [],
-    filter: [{ variabel: 'Original tittel', selection: { filter: 'like', values: [`%${searchTerm}%`] } }],
-  });
 
   const search = useCallback(
     async (searchTerm: string) => {
       setSearching(true);
-      try {
-        const response = await Axios({
-          method: 'POST',
-          url: PUBLISHERS_URL,
-          data: getQueryWithSearchTerm(searchTerm),
-        });
-        setSearchResults(
-          response.data.map((item: any) => ({
-            title: item['Original tittel'],
-            issn: item['Online ISSN'],
-            level: item['Nivå 2019'],
-            publisher: item['Utgiver'],
-          }))
-        );
-      } catch (e) {
+      const response = await getPublicationChannels(searchTerm);
+      if (response) {
+        setSearchResults(response);
+      } else {
         dispatch(searchFailure(t('error.search')));
       }
     },
@@ -76,7 +53,7 @@ export const PublisherSearch: React.FC<PublisherSearchProps> = ({ setFieldValue 
       onInputChange={handleInputChange}
       searchResults={searchResults}
       setFieldValue={setFieldValue}
-      formikFieldName="publisher"
+      fieldName="publisher"
       label={t('Publisher')}
     />
   );
