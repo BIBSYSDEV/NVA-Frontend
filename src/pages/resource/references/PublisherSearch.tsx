@@ -1,17 +1,21 @@
 import Axios from 'axios';
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import { AutoSearch } from '../../../components/AutoSearch';
 import { PublicationChannel } from '../../../types/references.types';
-import { MINIMUM_SEARCH_CHARACTERS, PUBLISHERS_URL } from '../../../utils/constants';
+import { DEBOUNCE_INTERVAL, MINIMUM_SEARCH_CHARACTERS, PUBLISHERS_URL } from '../../../utils/constants';
+import useDebounce from '../../../utils/hooks/useDebounce';
 
 interface PublisherSearchProps {
   setFieldValue: (name: string, value: any) => void;
 }
 
 export const PublisherSearch: React.FC<PublisherSearchProps> = ({ setFieldValue }) => {
-  const requestUrl = PUBLISHERS_URL;
-  const [searchResults, setSearchResults] = React.useState<PublicationChannel[]>([]);
+  const [searchResults, setSearchResults] = useState<PublicationChannel[]>([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [searching, setSearching] = useState(false);
+
+  const debouncedSearchTerm = useDebounce(searchTerm, DEBOUNCE_INTERVAL);
 
   const getQueryWithSearchTerm = (searchTerm: string) => ({
     tabell_id: 851,
@@ -25,11 +29,12 @@ export const PublisherSearch: React.FC<PublisherSearchProps> = ({ setFieldValue 
     filter: [{ variabel: 'Original tittel', selection: { filter: 'like', values: [`%${searchTerm}%`] } }],
   });
 
-  const search = async (searchTerm: string) => {
+  const search = useCallback(async (searchTerm: string) => {
+    setSearching(true);
     try {
       const response = await Axios({
         method: 'POST',
-        url: requestUrl,
+        url: PUBLISHERS_URL,
         data: getQueryWithSearchTerm(searchTerm),
       });
       setSearchResults(
@@ -44,12 +49,18 @@ export const PublisherSearch: React.FC<PublisherSearchProps> = ({ setFieldValue 
       // dispatch errors here
       console.log(e);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    if (debouncedSearchTerm && !searching) {
+      search(debouncedSearchTerm);
+      setSearching(false);
+    }
+  }, [debouncedSearchTerm, search, searching]);
 
   const handleInputChange = (event: object, value: string) => {
     if (event !== null && value.length >= MINIMUM_SEARCH_CHARACTERS) {
-      // need debounce function here
-      search(value);
+      setSearchTerm(value);
     }
   };
 

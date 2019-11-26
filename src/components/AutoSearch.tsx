@@ -4,8 +4,6 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
-import { MINIMUM_SEARCH_CHARACTERS } from '../utils/constants';
-
 interface AutoSearchProps {
   onInputChange?: (event: object, value: string) => void;
   searchResults: any;
@@ -38,11 +36,13 @@ export const AutoSearch: React.FC<AutoSearchProps> = ({
         setOpen(false);
         setOptions([]);
       }}
+      onOpen={() => {
+        setOpen(true);
+      }}
       onChange={(_: object, value: string) => {
         setFieldValue(formikFieldName, value);
       }}
       onInputChange={(event: object, value: string) => {
-        value.length >= MINIMUM_SEARCH_CHARACTERS && setOpen(true);
         open && onInputChange && onInputChange(event, value);
       }}
       getOptionLabel={option => option.title}
