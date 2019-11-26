@@ -4,7 +4,7 @@ import disciplines from './../../../utils/testfiles/disciplines_en.json';
 import { useTranslation } from 'react-i18next';
 
 interface DisciplineSeachProps {
-  setFieldValue: (value: any) => void;
+  setFieldValue: (name: string, value: any) => void;
 }
 
 interface DisciplineType {
