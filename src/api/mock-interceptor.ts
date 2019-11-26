@@ -48,10 +48,14 @@ if (USE_MOCK_DATA) {
   mock.onGet(new RegExp(`/${ApiBaseUrl.DOI_LOOKUP}/*`)).reply(200, mockDoiLookupResponse);
 
   // USER
-  mock.onGet(new RegExp(`/${ApiBaseUrl}/*`)).reply(200, mockUser);
+  mock.onGet(new RegExp(`/${ApiBaseUrl.USER}/*`)).reply(200, mockUser);
 
   // ORCID
   mock.onPost(ORCID_OAUTH_URL).reply(200, mockOrcidResponse);
+
+  // Authority Registry
+  mock.onGet(new RegExp('bibsys.no/authority/rest')).passThrough();
+  mock.onGet(new RegExp('http://www.viaf.org/viaf/')).passThrough();
 
   mock.onAny().reply(function(config) {
     throw new Error('Could not find mock for ' + config.url);

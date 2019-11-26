@@ -12,6 +12,7 @@ import UserInfo from './UserInfo';
 import UserLanguage from './UserLanguage';
 import UserOrcid from './UserOrcid';
 import UserRoles from './UserRoles';
+import { Link } from 'react-router-dom';
 
 const StyledUserPage = styled.div`
   display: grid;
@@ -63,7 +64,9 @@ const User: React.FC = () => {
         <UserCard headerLabel="Bilde" />
         <UserCard headerLabel={t('Contact')} />
         <UserLanguage />
-        <UserCard headerLabel={t('Author information')} />
+        <UserCard headerLabel={t('Author information')}>
+          <Link to="/user/connectAuthor">Connect Author</Link>
+        </UserCard>
       </StyledSecondaryUserInfo>
 
       <StyledPrimaryUserInfo>

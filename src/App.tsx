@@ -22,6 +22,7 @@ import { RootStore } from './redux/reducers/rootReducer';
 import awsConfig from './utils/aws-config';
 import { USE_MOCK_DATA } from './utils/constants';
 import { hubListener } from './utils/hub-listener';
+import { ConnectAuthority } from './pages/user/ConnectAuthority';
 
 const StyledApp = styled.div`
   height: 100vh;
@@ -33,9 +34,11 @@ const StyledApp = styled.div`
 
 const StyledPageBody = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
   font-size: 1.6rem;
   flex-grow: 1;
+  margin: 2rem;
 `;
 
 const App: React.FC = () => {
@@ -71,6 +74,7 @@ const App: React.FC = () => {
             <Route exact path="/search/:searchTerm" component={Search} />
             <Route exact path="/search/:searchTerm/:offset" component={Search} />
             <Route exact path="/user" component={User} />
+            <Route exact path="/user/connectAuthor" component={ConnectAuthority} />
             <Route path="*" component={NotFound} />
           </Switch>
         </StyledPageBody>
