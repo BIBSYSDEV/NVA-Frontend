@@ -8,18 +8,11 @@ import { MINIMUM_SEARCH_CHARACTERS } from '../utils/constants';
 interface AutoSearchProps {
   onInputChange?: (event: object, value: string) => void;
   searchResults: any;
-  setFieldValue: (name: string, value: any) => void;
-  fieldName: string;
-  label?: string;
+  setFieldValue: (value: any) => void;
+  label: string;
 }
 
-export const AutoSearch: React.FC<AutoSearchProps> = ({
-  onInputChange,
-  fieldName: formikFieldName,
-  searchResults,
-  setFieldValue,
-  label,
-}) => {
+export const AutoSearch: React.FC<AutoSearchProps> = ({ onInputChange, searchResults, setFieldValue, label }) => {
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -42,7 +35,7 @@ export const AutoSearch: React.FC<AutoSearchProps> = ({
         setOpen(true);
       }}
       onChange={(_: object, value: string) => {
-        setFieldValue(formikFieldName, value);
+        setFieldValue(value);
       }}
       onInputChange={(event: object, value: string) => {
         value.length >= MINIMUM_SEARCH_CHARACTERS && options.length === 0 && setLoading(true);
@@ -54,7 +47,7 @@ export const AutoSearch: React.FC<AutoSearchProps> = ({
       renderInput={params => (
         <TextField
           {...params}
-          label={label || formikFieldName}
+          label={label}
           fullWidth
           variant="outlined"
           autoComplete="false"
