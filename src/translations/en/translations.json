@@ -79,6 +79,12 @@
     "search": "Search"
   },
   "Publisher": "Publisher",
+  "reference_tab": {
+    "title": "Title",
+    "ISSN": "ISSN",
+    "level": "Level",
+    "publisher": "Publisher"
+  },
   "References": "References",
   "Register new resource": "Register new resource",
   "Registration": "Registration",
