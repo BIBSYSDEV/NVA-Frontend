@@ -1,6 +1,6 @@
 import Axios from 'axios';
 
-import { PUBLISHERS_URL } from '../../utils/constants';
+import { ExternalApi } from '../../utils/constants';
 
 const getQueryWithSearchTerm = (searchTerm: string) => ({
   tabell_id: 851,
@@ -18,7 +18,7 @@ export const getPublicationChannels = async (searchTerm: string) => {
   try {
     const response = await Axios({
       method: 'POST',
-      url: PUBLISHERS_URL,
+      url: ExternalApi.PUBLICATION_CHANNEL,
       data: getQueryWithSearchTerm(searchTerm),
     });
     return response.data.map((item: any) => ({
