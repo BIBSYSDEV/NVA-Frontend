@@ -3,7 +3,7 @@ import React from 'react';
 
 import { AutoSearch } from '../../../components/AutoSearch';
 import { PublicationChannel } from '../../../types/references.types';
-import { PUBLISHERS_URL } from '../../../utils/constants';
+import { MINIMUM_SEARCH_CHARACTERS, PUBLISHERS_URL } from '../../../utils/constants';
 
 interface PublisherSearchProps {
   setFieldValue: (name: string, value: any) => void;
@@ -47,7 +47,7 @@ export const PublisherSearch: React.FC<PublisherSearchProps> = ({ setFieldValue 
   };
 
   const handleInputChange = (event: object, value: string) => {
-    if (event !== null && value.length > 3) {
+    if (event !== null && value.length >= MINIMUM_SEARCH_CHARACTERS) {
       // need debounce function here
       search(value);
     }
