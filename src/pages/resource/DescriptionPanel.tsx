@@ -137,11 +137,7 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
               <MultipleFieldWrapper>
                 <StyledFieldWrapper>
                   <Field name="npi">
-                    {({ form: { values, setFieldValue } }: any) => (
-                      <>
-                        <DisciplineSearch setFieldValue={setFieldValue} />
-                      </>
-                    )}
+                    {({ form: { values, setFieldValue } }: any) => <DisciplineSearch setFieldValue={setFieldValue} />}
                   </Field>
                 </StyledFieldWrapper>
                 <StyledFieldWrapper>
