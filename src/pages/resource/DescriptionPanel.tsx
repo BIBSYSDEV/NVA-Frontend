@@ -140,7 +140,6 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
                     {({ form: { values, setFieldValue } }: any) => (
                       <>
                         <DisciplineSearch setFieldValue={setFieldValue} />
-                        {values && values.npi && values.npi.title && <div>{values.npi.title}</div>}
                       </>
                     )}
                   </Field>

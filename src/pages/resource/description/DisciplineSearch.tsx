@@ -1,6 +1,7 @@
 import React from 'react';
 import { AutoSearch } from './../../../components/AutoSearch';
-import disciplines from './../../../utils/testfiles/disciplines_no.json';
+import disciplines from './../../../utils/testfiles/disciplines_en.json';
+import { useTranslation } from 'react-i18next';
 
 interface DisciplineSeachProps {
   setFieldValue: (value: any) => void;
@@ -12,10 +13,12 @@ interface DisciplineType {
 }
 
 const DisciplineSearch: React.FC<DisciplineSeachProps> = ({ setFieldValue }) => {
+  const { t } = useTranslation();
+
   const searchResults = Object.values(disciplines)
     .map((mainDisciplines, index) =>
       mainDisciplines.map(discipline => ({
-        title: discipline,
+        title: t(`disciplines:${discipline}`),
         mainDiscipline: Object.keys(disciplines)[index],
       }))
     )
@@ -26,7 +29,7 @@ const DisciplineSearch: React.FC<DisciplineSeachProps> = ({ setFieldValue }) => 
       searchResults={searchResults}
       setFieldValue={setFieldValue}
       formikFieldName="npi"
-      label="NPI fagfelt"
+      label={t('resource_form.NPI_disciplines')}
       groupBy={(discipline: DisciplineType) => discipline.mainDiscipline}
     />
   );
