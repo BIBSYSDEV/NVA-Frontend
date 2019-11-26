@@ -1,6 +1,7 @@
 import { Field, Form, Formik } from 'formik';
 import { Select } from 'formik-material-ui';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
@@ -23,6 +24,8 @@ interface ReferencesPanelProps {
 }
 export const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, tabNumber }) => {
   const errors = useSelector((store: RootStore) => store.errors);
+  const { t } = useTranslation();
+
   const initialFormikValues = {
     publisher: { title: '', issn: '', level: '', publisher: '' },
     reference_type: ReferenceType.PUBLICATION_IN_JOURNAL,
@@ -40,7 +43,6 @@ export const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, t
           enableReinitialize
           initialValues={initialFormikValues}
           onSubmit={(values, { setSubmitting }) => {
-            console.log(values);
             setSubmitting(false);
           }}>
           <Form>
@@ -67,10 +69,18 @@ export const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, t
                     <PublisherSearch setFieldValue={setFieldValue} />
                     {values && values.publisher && values.publisher.title && (
                       <div>
-                        <p>Tittel: {values.publisher.title}</p>
-                        <p>ISSN: {values.publisher.issn}</p>
-                        <p>Nivå: {values.publisher.level}</p>
-                        <p>Utgiver: {values.publisher.publisher}</p>
+                        <p>
+                          {t('reference_tab.title')}: {values.publisher.title}
+                        </p>
+                        <p>
+                          {t('reference_tab.ISSN')}: {values.publisher.issn}
+                        </p>
+                        <p>
+                          {t('reference_tab.level')}: {values.publisher.level}
+                        </p>
+                        <p>
+                          {t('reference_tab.publisher')}: {values.publisher.publisher}
+                        </p>
                       </div>
                     )}
                   </>
