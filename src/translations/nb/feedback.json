@@ -8,7 +8,8 @@
     "orcid_login": "Kunne ikke logge inn på ORCID",
     "get_orcid": "Kunne ikke hente data fra ORCID",
     "get_session": "Økten er utløpt. Vennligst logg inn på nytt.",
-    "search": "Søk feilet"
+    "search": "Søk feilet",
+    "get_cristin_project": "Søk på prosjekt feilet"
   },
   "success": {
     "login": "Logget inn",

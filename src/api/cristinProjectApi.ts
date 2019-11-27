@@ -11,12 +11,12 @@ export const searchCristinProjects = async (query: string, dispatch: Dispatch) =
       return response.data;
     } else {
       dispatch(
-        addNotification({ key: 'error.get_cristin_project', message: 'error.get_cristin_project', variant: 'error' })
+        addNotification({ key: 'error.get_cristin_project', message: 'error.get_cristin_project', variant: 'error' }) //TODO: vent på Kjetils PR
       );
     }
   } catch (err) {
     dispatch(
-      addNotification({ key: 'error.get_cristin_project', message: 'error.get_cristin_project', variant: 'error' })
+      addNotification({ key: 'error.get_cristin_project', message: 'error.get_cristin_project', variant: 'error' }) //TODO: vent på Kjetils PR
     );
   }
 };

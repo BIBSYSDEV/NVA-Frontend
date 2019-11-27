@@ -8,7 +8,8 @@
     "orcid_login": "ORCID login failed",
     "get_orcid": "Could not get data from ORCID",
     "get_session": "Invalid session. Please log in again.",
-    "search": "Search failed"
+    "search": "Search failed",
+    "get_cristin_project": "Search for projects failed"
   },
   "success": {
     "login": "Logged in",
