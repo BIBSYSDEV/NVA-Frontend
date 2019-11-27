@@ -1,8 +1,8 @@
 {
+  "authority": "Autoritet",
   "home": "Hjem",
-  "search": "Søk",
-  "user": "Min profil",
-  "resources": "Arbeidsområde",
   "new": "Ny publikasjon",
-  "authority": "Autoritet"
+  "resources": "Arbeidsområde",
+  "search": "Søk",
+  "user": "Min profil"
 }

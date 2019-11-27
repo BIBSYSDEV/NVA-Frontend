@@ -1,8 +1,8 @@
 {
+  "authority": "Authority",
   "home": "Home",
-  "search": "Search",
-  "user": "My profile",
-  "resources": "Workspace",
   "new": "New publication",
-  "authority": "Authority"
+  "resources": "Workspace",
+  "search": "Search",
+  "user": "My profile"
 }
