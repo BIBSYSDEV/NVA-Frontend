@@ -43,6 +43,7 @@
     "description": "Beskrivelse",
     "abstract": "Sammendrag",
     "NPI": "NPI Fagfelt ",
+    "NPI_disciplines": "NPI Fagfelt",
     "tags": "Nøkkelord",
     "publication_date": "Publiseringsdato eller år",
     "language": "Språk",
@@ -83,6 +84,12 @@
     "search": "Søk"
   },
   "Publisher": "Utgiver",
+  "reference_tab": {
+    "title": "Tittel",
+    "ISSN": "ISSN",
+    "level": "Nivå",
+    "publisher": "Utgiver"
+  },
   "References": "Referanser",
   "Register new resource": "Registrer ny ressurs",
   "Registration": "Registrering",

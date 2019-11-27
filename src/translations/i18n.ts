@@ -8,6 +8,8 @@ import translationsEn from './en/translations.json';
 import translationsNb from './nb/translations.json';
 import profileEn from './en/profile.json';
 import profileNb from './nb/profile.json';
+import disciplinesNb from './nb/disciplines.json';
+import disciplinesEn from './en/disciplines.json';
 import commonEn from './en/common.json';
 import commonNb from './nb/common.json';
 
@@ -20,12 +22,14 @@ i18n.use(LanguageDetector).init({
       translations: translationsEn,
       common: commonEn,
       profile: profileEn,
+      disciplines: disciplinesEn,
     },
     nb: {
       feedback: feedbackNb,
       translations: translationsNb,
       common: commonNb,
       profile: profileNb,
+      disciplines: disciplinesNb,
     },
   },
   fallbackLng: defaultLanguage,
