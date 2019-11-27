@@ -6,6 +6,8 @@ import feedbackEn from './en/feedback.json';
 import translationsEn from './en/translations.json';
 import feedbackNb from './nb/feedback.json';
 import translationsNb from './nb/translations.json';
+import disciplinesNb from './nb/disciplines.json';
+import disciplinesEn from './en/disciplines.json';
 import commonEn from './en/common.json';
 import commonNb from './nb/common.json';
 
@@ -17,11 +19,13 @@ i18n.use(LanguageDetector).init({
       feedback: feedbackEn,
       translations: translationsEn,
       common: commonEn,
+      disciplines: disciplinesEn,
     },
     nb: {
       feedback: feedbackNb,
       translations: translationsNb,
       common: commonNb,
+      disciplines: disciplinesNb,
     },
   },
   fallbackLng: defaultLanguage,

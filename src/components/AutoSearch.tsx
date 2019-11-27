@@ -10,9 +10,16 @@ interface AutoSearchProps {
   searchResults: any;
   setFieldValue: (value: any) => void;
   label: string;
+  groupBy?: (options: any) => string;
 }
 
-export const AutoSearch: React.FC<AutoSearchProps> = ({ onInputChange, searchResults, setFieldValue, label }) => {
+export const AutoSearch: React.FC<AutoSearchProps> = ({
+  onInputChange,
+  searchResults,
+  setFieldValue,
+  label,
+  groupBy,
+}) => {
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -44,6 +51,7 @@ export const AutoSearch: React.FC<AutoSearchProps> = ({ onInputChange, searchRes
       getOptionLabel={option => option.title}
       options={options}
       loading={loading}
+      groupBy={groupBy}
       renderInput={params => (
         <TextField
           {...params}

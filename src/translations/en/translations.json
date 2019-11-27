@@ -39,6 +39,7 @@
     "description": "Description",
     "abstract": "Abstract",
     "NPI": "NPI",
+    "NPI_disciplines": "NPI disciplines",
     "tags": "tags",
     "publication_date": "Publication date or year",
     "language": "language",
