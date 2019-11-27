@@ -1,19 +1,19 @@
 {
   "error": {
     "create_resource": "Could not create resource",
-    "update_resource": "Could not update resource",
+    "get_cristin_project": "Search for projects failed",
+    "get_orcid": "Could not get data from ORCID",
     "get_resource": "Could not get resource",
+    "get_session": "Invalid session. Please log in again.",
     "get_user": "Failed to get user",
     "login": "Login failed",
     "orcid_login": "ORCID login failed",
-    "get_orcid": "Could not get data from ORCID",
-    "get_session": "Invalid session. Please log in again.",
     "search": "Search failed",
-    "get_cristin_project": "Search for projects failed"
+    "update_resource": "Could not update resource"
   },
   "success": {
-    "login": "Logged in",
     "create_resource": "New resource created",
+    "login": "Logged in",
     "update_resource": "Updated resource"
   }
 }

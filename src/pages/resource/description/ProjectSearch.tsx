@@ -4,15 +4,26 @@ import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import AutoSearch from '../../../components/AutoSearch';
 import { MINIMUM_SEARCH_CHARACTERS } from '../../../utils/constants';
-import CristinProjectType from '../../../types/cristin_project.types';
 import { searchCristinProjects } from '../../../api/cristinProjectApi';
 
 interface ProjectSearchProps {
   setFieldValue: (name: string, value: any) => void;
 }
 
+interface CristinProjectType {
+  cristin_project_id: string;
+  title: { [key: string]: string };
+  main_language: string;
+  url: string;
+}
+
+interface NormalizedProjectType {
+  id: string;
+  title: { [key: string]: string };
+}
+
 export const ProjectSearch: React.FC<ProjectSearchProps> = ({ setFieldValue }) => {
-  const [searchResults, setSearchResults] = useState<CristinProjectType[]>([]);
+  const [searchResults, setSearchResults] = useState<NormalizedProjectType[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [searching, setSearching] = useState(false);
 
@@ -25,12 +36,10 @@ export const ProjectSearch: React.FC<ProjectSearchProps> = ({ setFieldValue }) =
       setSearching(true);
       const response = await searchCristinProjects(`title=${searchTerm}`, dispatch);
       if (response) {
-        const normalizedResponse = response.map((project: CristinProjectType) => {
-          return {
-            id: project.cristin_project_id,
-            title: `${project.title[project.main_language]} (${project.main_language})`,
-          };
-        });
+        const normalizedResponse = response.map((project: CristinProjectType) => ({
+          id: project.cristin_project_id,
+          title: `${project.title[project.main_language]} (${project.main_language})`,
+        }));
         setSearchResults(normalizedResponse);
       }
     },
