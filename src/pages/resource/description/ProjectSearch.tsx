@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import AutoSearch from '../../../components/AutoSearch';
 import { MINIMUM_SEARCH_CHARACTERS } from '../../../utils/constants';
-import { searchCristinProjects } from '../../../api/cristinProjectApi';
+import { searchCristinProjects } from '../../../api/external/cristinProjectApi';
 
 interface ProjectSearchProps {
   setFieldValue: (name: string, value: any) => void;
