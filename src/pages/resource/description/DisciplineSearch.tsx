@@ -27,8 +27,7 @@ const DisciplineSearch: React.FC<DisciplineSeachProps> = ({ setFieldValue }) => 
   return (
     <AutoSearch
       searchResults={searchResults}
-      setFieldValue={setFieldValue}
-      formikFieldName="npi"
+      setFieldValue={(value: any) => setFieldValue('npi', value)}
       label={t('resource_form.NPI_disciplines')}
       groupBy={(discipline: DisciplineType) => discipline.mainDiscipline}
     />
