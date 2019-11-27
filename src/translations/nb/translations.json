@@ -87,6 +87,12 @@
     "search": "Søk"
   },
   "Publisher": "Utgiver",
+  "reference_tab": {
+    "title": "Tittel",
+    "ISSN": "ISSN",
+    "level": "Nivå",
+    "publisher": "Utgiver"
+  },
   "References": "Referanser",
   "Register new resource": "Registrer ny ressurs",
   "Registration": "Registrering",
