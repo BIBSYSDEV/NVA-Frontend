@@ -8,6 +8,7 @@ import mockResources from '../utils/testfiles/resources_45_random_results_genera
 import mockDoiResource from '../utils/testfiles/resource_generated_from_doi.json';
 import mockDoiLookupResponse from '../utils/testfiles/doi_lookup_response.json';
 import mockCristinProjects from '../utils/testfiles/cristin_projects_real.json';
+import mockNsdPublisers from '../utils/testfiles/publishersFromNsd.json';
 
 export const mockUser: FeideUser = {
   name: 'Test User',
@@ -49,10 +50,10 @@ if (USE_MOCK_DATA) {
   mock.onGet(new RegExp(`/${ApiBaseUrl.DOI_LOOKUP}/*`)).reply(200, mockDoiLookupResponse);
 
   // cristin-projects
-  mock.onGet(new RegExp(`${ExternalApi.CRISTIN}/projects*`)).reply(200, mockCristinProjects, { 'X-Total-Count': '12' });
+  mock.onGet(new RegExp(`${ExternalApi.CRISTIN}/projects*`)).reply(400, mockCristinProjects, { 'X-Total-Count': '12' });
 
   // PUBLICATION CHANNEL
-  mock.onPost(ExternalApi.PUBLICATION_CHANNEL).passThrough();
+  mock.onPost(ExternalApi.PUBLICATION_CHANNEL).reply(200, mockNsdPublisers);
 
   // USER
   mock.onGet(new RegExp(`/${ApiBaseUrl.USER}/*`)).reply(200, mockUser);

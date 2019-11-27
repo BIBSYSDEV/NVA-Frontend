@@ -33,8 +33,6 @@ export const ProjectSearch: React.FC<ProjectSearchProps> = ({ setFieldValue }) =
           };
         });
         setSearchResults(normalizedResponse);
-      } else {
-        dispatch(searchFailure(t('error.get_cristin_project'))); //TODO : trengs denne ?
       }
     },
     [dispatch, t]
