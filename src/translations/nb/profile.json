@@ -1,6 +1,6 @@
 {
-  "connectAuthority": "Koble til din forfatter ID",
+  "connect_authority": "Koble til din forfatter ID",
   "authority": {
-    "searchSummary": "{{results}} treff for \"{{searchTerm}}\""
+    "search_summary": "{{results}} treff for \"{{searchTerm}}\""
   }
 }

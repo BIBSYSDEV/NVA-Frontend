@@ -3,6 +3,10 @@ export enum Marc21Codes {
   HEADING_PERSONAL_NAME = '100',
   PERSONAL_NAME = '400',
 }
+export enum Marc21Subcodes {
+  NAME = 'a',
+}
+
 export interface Subfield {
   subcode: string;
   value: string;

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { getAuthorities } from '../../../api/authorityRegisterApi';
 import { RootStore } from '../../../redux/reducers/rootReducer';
 import styled from 'styled-components';
@@ -16,23 +16,24 @@ const StyledAuthorityContainer = styled.div`
 export const ConnectAuthority: React.FC = () => {
   const [matchingAuthorities, setMatchingAuthorities] = useState<Authority[]>([]);
   const user = useSelector((store: RootStore) => store.user);
+  const dispatch = useDispatch();
   const { t } = useTranslation('profile');
   const searchTerm = user.name;
 
   useEffect(() => {
     const fetchAuthorities = async () => {
-      const retrievedAuthorities = await getAuthorities(searchTerm);
+      const retrievedAuthorities = await getAuthorities(searchTerm, dispatch);
       setMatchingAuthorities(retrievedAuthorities);
     };
 
     if (searchTerm) {
       fetchAuthorities();
     }
-  }, [searchTerm]);
+  }, [dispatch, searchTerm]);
 
   return (
     <StyledAuthorityContainer>
-      {t('authority.searchSummary', { results: matchingAuthorities.length, searchTerm: searchTerm })}
+      {t('authority.search_summary', { results: matchingAuthorities.length, searchTerm: searchTerm })}
       {matchingAuthorities.map(authority => (
         <AuthorityCard key={authority.systemControlNumber} authority={authority} />
       ))}
