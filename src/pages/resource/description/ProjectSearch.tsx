@@ -5,21 +5,10 @@ import { useTranslation } from 'react-i18next';
 import AutoSearch from '../../../components/AutoSearch';
 import { MINIMUM_SEARCH_CHARACTERS } from '../../../utils/constants';
 import { searchCristinProjects } from '../../../api/external/cristinProjectApi';
+import { CristinProjectType, NormalizedProjectType } from '../../../types/project.types';
 
 interface ProjectSearchProps {
   setFieldValue: (name: string, value: any) => void;
-}
-
-interface CristinProjectType {
-  cristin_project_id: string;
-  title: { [key: string]: string };
-  main_language: string;
-  url: string;
-}
-
-interface NormalizedProjectType {
-  id: string;
-  title: { [key: string]: string };
 }
 
 export const ProjectSearch: React.FC<ProjectSearchProps> = ({ setFieldValue }) => {
