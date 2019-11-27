@@ -43,7 +43,7 @@ export const ProjectSearch: React.FC<ProjectSearchProps> = ({ setFieldValue }) =
         setSearchResults(normalizedResponse);
       }
     },
-    [dispatch, t]
+    [dispatch]
   );
 
   useEffect(() => {
