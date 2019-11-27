@@ -65,7 +65,7 @@ const User: React.FC = () => {
         <UserCard headerLabel={t('Contact')} />
         <UserLanguage />
         <UserCard headerLabel={t('Author information')}>
-          <Link to="/user/connectAuthor">Connect Author</Link>
+          <Link to="/user/authority">{t('profile:connectAuthority')}</Link>
         </UserCard>
       </StyledSecondaryUserInfo>
 

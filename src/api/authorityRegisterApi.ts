@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { StatusCode, ApiBaseUrl } from '../../utils/constants';
+import { StatusCode, ApiBaseUrl } from '../utils/constants';
 
 enum AuthorityTypes {
   PERSON = 'PERSON',

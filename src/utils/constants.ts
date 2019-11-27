@@ -11,7 +11,6 @@ export enum ApiBaseUrl {
   DOI_LOOKUP = 'doilookup',
   USER = 'user',
   AUTHORITY_REGISTER_EXTERNAL = 'https://utvikle-a.bibsys.no/authority/rest',
-  VIAF_EXTERNAL = 'http://www.viaf.org/viaf',
 }
 
 export enum StatusCode {
