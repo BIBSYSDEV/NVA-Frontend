@@ -1,63 +1,63 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
-import CircularProgress from '@material-ui/core/CircularProgress';
-import TextField from '@material-ui/core/TextField';
+import { CircularProgress, TextField } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+
+import { MINIMUM_SEARCH_CHARACTERS } from '../utils/constants';
 
 interface AutoSearchProps {
   onInputChange?: (event: object, value: string) => void;
   searchResults: any;
-  setFieldValue: (name: string, value: any) => void;
-  formikFieldName: string;
-  label?: string;
-  groupBy?: (options: any) => string;
+  setFieldValue: (value: any) => void;
+  label: string;
 }
 
-export const AutoSearch: React.FC<AutoSearchProps> = ({
-  onInputChange,
-  formikFieldName,
-  searchResults,
-  setFieldValue,
-  label,
-  groupBy,
-}) => {
-  const [open, setOpen] = React.useState(false);
-  const loading = open && searchResults.length === 0;
+export const AutoSearch: React.FC<AutoSearchProps> = ({ onInputChange, searchResults, setFieldValue, label }) => {
+  const [open, setOpen] = useState(false);
+  const [options, setOptions] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (searchResults) {
+      setOptions(searchResults);
+      setLoading(false);
+    }
+  }, [searchResults]);
 
   return (
     <Autocomplete
-      id="auto-search"
-      style={{ width: 1000 }}
       open={open}
+      onClose={() => {
+        setOpen(false);
+        setOptions([]);
+      }}
       onOpen={() => {
         setOpen(true);
       }}
-      onClose={() => {
-        setOpen(false);
+      onChange={(_: object, value: string) => {
+        setFieldValue(value);
       }}
-      onChange={(event: object, value: string) => {
-        setFieldValue(formikFieldName, value);
+      onInputChange={(event: object, value: string) => {
+        value.length >= MINIMUM_SEARCH_CHARACTERS && options.length === 0 && setLoading(true);
+        open && onInputChange && onInputChange(event, value);
       }}
-      groupBy={groupBy}
-      onInputChange={onInputChange}
       getOptionLabel={option => option.title}
-      options={searchResults || []}
+      options={options}
       loading={loading}
-      autoComplete={false}
       renderInput={params => (
         <TextField
           {...params}
-          label={label || formikFieldName}
+          label={label}
           fullWidth
           variant="outlined"
           autoComplete="false"
           InputProps={{
             ...params.InputProps,
             endAdornment: (
-              <React.Fragment>
-                {loading ? <CircularProgress color="inherit" size={20} /> : null}
+              <>
+                {loading && <CircularProgress color="inherit" size={20} />}
                 {params.InputProps.endAdornment}
-              </React.Fragment>
+              </>
             ),
           }}
         />
