@@ -50,7 +50,7 @@ if (USE_MOCK_DATA) {
   mock.onGet(new RegExp(`/${ApiBaseUrl.DOI_LOOKUP}/*`)).reply(200, mockDoiLookupResponse);
 
   // cristin-projects
-  mock.onGet(new RegExp(`${ExternalApi.CRISTIN}/projects*`)).reply(400, mockCristinProjects, { 'X-Total-Count': '12' });
+  mock.onGet(new RegExp(`${ExternalApi.CRISTIN}/projects*`)).reply(200, mockCristinProjects, { 'X-Total-Count': '12' });
 
   // PUBLICATION CHANNEL
   mock.onPost(ExternalApi.PUBLICATION_CHANNEL).reply(200, mockNsdPublisers);
