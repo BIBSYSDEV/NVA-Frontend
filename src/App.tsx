@@ -1,4 +1,4 @@
-import Amplify, { Hub } from 'aws-amplify';
+import Amplify, { Auth, Hub } from 'aws-amplify';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
@@ -48,6 +48,7 @@ const App: React.FC = () => {
     } else {
       if (!auth.isLoggedIn) {
         Amplify.configure(awsConfig);
+        Auth.configure(awsConfig.oauth);
       }
       dispatch(getCurrentAuthenticatedUser());
       Hub.listen('auth', data => hubListener(data, dispatch));
