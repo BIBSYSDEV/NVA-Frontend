@@ -3,7 +3,7 @@ import MockAdapter from 'axios-mock-adapter';
 
 import OrcidResponse from '../types/orcid.types';
 import { ApplicationName, FeideUser, RoleName } from '../types/user.types';
-import { ApiBaseUrl, ORCID_OAUTH_URL, USE_MOCK_DATA } from '../utils/constants';
+import { ApiBaseUrl, ExternalApi, ORCID_OAUTH_URL, USE_MOCK_DATA } from '../utils/constants';
 import mockResources from '../utils/testfiles/resources_45_random_results_generated.json';
 import mockDoiResource from '../utils/testfiles/resource_generated_from_doi.json';
 import mockDoiLookupResponse from '../utils/testfiles/doi_lookup_response.json';
@@ -49,9 +49,10 @@ if (USE_MOCK_DATA) {
   mock.onGet(new RegExp(`/${ApiBaseUrl.DOI_LOOKUP}/*`)).reply(200, mockDoiLookupResponse);
 
   // cristin-projects
-  mock
-    .onGet(new RegExp(`${ApiBaseUrl.CRISTIN_EXTERNAL}/projects*`))
-    .reply(200, mockCristinProjects, { 'X-Total-Count': '12' });
+  mock.onGet(new RegExp(`${ExternalApi.CRISTIN}/projects*`)).reply(200, mockCristinProjects, { 'X-Total-Count': '12' });
+
+  // PUBLICATION CHANNEL
+  mock.onPost(ExternalApi.PUBLICATION_CHANNEL).passThrough();
 
   // USER
   mock.onGet(new RegExp(`/${ApiBaseUrl.USER}/*`)).reply(200, mockUser);

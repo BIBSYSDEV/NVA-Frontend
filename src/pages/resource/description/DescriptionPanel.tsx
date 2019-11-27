@@ -18,11 +18,9 @@ import FormikDatePicker from './../FormikDatePicker';
 import styled from 'styled-components';
 import Box from '../../../components/Box';
 import TabPanel from '../../../components/TabPanel/TabPanel';
-import useFormPersistor from '../../../utils/hooks/useFormPersistor';
 import { ProjectSearch } from './ProjectSearch';
-import Box from '../../components/Box';
-import useFormPersistor from '../../utils/hooks/useFormPersistor';
-import DisciplineSearch from './description/DisciplineSearch';
+import useFormPersistor from '../../../utils/hooks/useFormPersistor';
+import DisciplineSearch from '../description/DisciplineSearch';
 
 const MultipleFieldWrapper = styled.div`
   display: flex;
@@ -34,6 +32,7 @@ const StyledFieldWrapper = styled.div`
 `;
 
 const StyledFieldHeader = styled.header`
+  margin: 1rem;
   font-size: 1.5rem;
 `;
 
@@ -185,17 +184,11 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
               <StyledFieldHeader>{t('resource_form.project_assosiation')}</StyledFieldHeader>
 
               <StyledFieldWrapper>
-                <Field name="project">
+                <Field margin="dense" name="project">
                   {({ form: { values, setFieldValue } }: any) => (
                     <>
                       <ProjectSearch setFieldValue={setFieldValue} />
-                      {/*{values && values.project && values.project.id && (*/}
-                      {/*    <div>*/}
-                      {/*      <p>*/}
-                      {/*         {values.project.id}*/}
-                      {/*      </p>*/}
-                      {/*    </div>*/}
-                      {/*)}*/}
+                      {values && values.project && values.project.title && <p>{values.project.title}</p>}
                     </>
                   )}
                 </Field>

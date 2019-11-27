@@ -1,9 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { PublicationChannel } from '../../../types/references.types';
 import useDebounce from '../../../utils/hooks/useDebounce';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { getPublicationChannels } from '../../../api/external/publicationChannelApi';
 import { searchFailure } from '../../../redux/actions/searchActions';
 import AutoSearch from '../../../components/AutoSearch';
 import { MINIMUM_SEARCH_CHARACTERS } from '../../../utils/constants';
@@ -17,8 +15,6 @@ interface ProjectSearchProps {
 interface normalizedResult {
   cristin_project_id: string;
   title: string;
-  main_language: string;
-  url: string;
 }
 
 export const ProjectSearch: React.FC<ProjectSearchProps> = ({ setFieldValue }) => {
@@ -38,13 +34,10 @@ export const ProjectSearch: React.FC<ProjectSearchProps> = ({ setFieldValue }) =
         const normalizedResponse = response.map((project: CristinProjectType) => {
           const normalizedProject: normalizedResult = {
             cristin_project_id: project.cristin_project_id,
-            title: `${project.title[project.main_language]}(${project.main_language})`,
-            main_language: project.main_language,
-            url: project.url,
+            title: `${project.title[project.main_language]} (${project.main_language})`,
           };
           return normalizedProject;
         });
-        console.log(normalizedResponse);
         setSearchResults(normalizedResponse);
       } else {
         dispatch(searchFailure(t('error.search')));

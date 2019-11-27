@@ -10,13 +10,13 @@ export const ORCID_SIGN_IN_URL = `${process.env.REACT_APP_ORCID_BASE_URL}/signin
 
 export enum ExternalApi {
   PUBLICATION_CHANNEL = 'https://api.nsd.no/dbhapitjener/Tabeller/hentJSONTabellData',
+  CRISTIN = 'https://api.cristin.no/v2',
 }
 
 export enum ApiBaseUrl {
   RESOURCES = 'resources',
   DOI_LOOKUP = 'doilookup',
   USER = 'user',
-  CRISTIN_EXTERNAL = 'https://api.cristin.no/v2',
 }
 
 export enum StatusCode {
