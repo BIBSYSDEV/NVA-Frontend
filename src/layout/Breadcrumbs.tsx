@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom';
 import { Breadcrumbs as MuiBreadcrumbs, Link as MuiLink } from '@material-ui/core';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 
-import { mapBreadcrumbName } from '../utils/mapBreadcrumbName';
 import styled from 'styled-components';
 
 const StyledBreadcrumbs = styled.div`
@@ -20,7 +19,7 @@ const StyledBreadcrumbs = styled.div`
 
 const Breadcrumbs: React.FC = () => {
   const location = useLocation();
-  const { t } = useTranslation();
+  const { t } = useTranslation('breadcrumbs');
 
   const pathNames = location.pathname.split('/').filter(x => x);
 
@@ -30,10 +29,10 @@ const Breadcrumbs: React.FC = () => {
         <StyledBreadcrumbs>
           <MuiBreadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
             <MuiLink component={Link} to="/">
-              {t('Home')}
+              {t('home')}
             </MuiLink>
-            {pathNames.map((value, index) => {
-              const translatedValue = mapBreadcrumbName(value);
+            {pathNames.map((pathName, index) => {
+              const translatedValue = t(pathName);
               const lastBreadcrumb = index === pathNames.length - 1;
               const to = `/${pathNames.slice(0, index + 1).join('/')}`;
               return lastBreadcrumb ? (
