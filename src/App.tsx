@@ -19,7 +19,7 @@ import User from './pages/user/User';
 import Workspace from './pages/workspace/Workspace';
 import { setUser } from './redux/actions/userActions';
 import { RootStore } from './redux/reducers/rootReducer';
-import awsConfig from './utils/aws-config';
+import { awsConfig } from './utils/aws-config';
 import { USE_MOCK_DATA } from './utils/constants';
 import { hubListener } from './utils/hub-listener';
 

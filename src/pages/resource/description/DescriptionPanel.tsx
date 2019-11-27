@@ -20,6 +20,9 @@ import Box from '../../../components/Box';
 import TabPanel from '../../../components/TabPanel/TabPanel';
 import useFormPersistor from '../../../utils/hooks/useFormPersistor';
 import { ProjectSearch } from './ProjectSearch';
+import Box from '../../components/Box';
+import useFormPersistor from '../../utils/hooks/useFormPersistor';
+import DisciplineSearch from './description/DisciplineSearch';
 
 const MultipleFieldWrapper = styled.div`
   display: flex;
@@ -136,15 +139,9 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
               </StyledFieldWrapper>
               <MultipleFieldWrapper>
                 <StyledFieldWrapper>
-                  <Field
-                    aria-label="NPI"
-                    name="NPI"
-                    label={t('resource_form.NPI')}
-                    component={TextField}
-                    variant="outlined"
-                    margin="dense"
-                    fullWidth
-                  />
+                  <Field name="npi">
+                    {({ form: { values, setFieldValue } }: any) => <DisciplineSearch setFieldValue={setFieldValue} />}
+                  </Field>
                 </StyledFieldWrapper>
                 <StyledFieldWrapper>
                   <Field

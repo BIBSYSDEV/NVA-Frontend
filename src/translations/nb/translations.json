@@ -43,6 +43,7 @@
     "description": "Beskrivelse",
     "abstract": "Sammendrag",
     "NPI": "NPI Fagfelt ",
+    "NPI_disciplines": "NPI Fagfelt",
     "tags": "Nøkkelord",
     "publication_date": "Publiseringsdato eller år",
     "language": "Språk",
