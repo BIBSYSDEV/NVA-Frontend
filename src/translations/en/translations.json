@@ -44,11 +44,6 @@
     "publication_date": "Publication date or year",
     "language": "language",
     "project_assosiation": "Project assosiation",
-    "project_title": "Project title",
-    "project_id": "Project id",
-    "search_project": "Search for project with title or id:",
-    "project_search_result_header": "{{count}} result for '{{term}}'",
-    "no_projects": "No connected projects",
     "files_and_license": {
       "header": "Files and License",
       "upload_files": "Upload Files",

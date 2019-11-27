@@ -12,11 +12,6 @@ interface ProjectSearchProps {
   setFieldValue: (name: string, value: any) => void;
 }
 
-interface normalizedResult {
-  cristin_project_id: string;
-  title: string;
-}
-
 export const ProjectSearch: React.FC<ProjectSearchProps> = ({ setFieldValue }) => {
   const [searchResults, setSearchResults] = useState<CristinProjectType[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -32,15 +27,14 @@ export const ProjectSearch: React.FC<ProjectSearchProps> = ({ setFieldValue }) =
       const response = await searchCristinProjects(`title=${searchTerm}`, dispatch);
       if (response) {
         const normalizedResponse = response.map((project: CristinProjectType) => {
-          const normalizedProject: normalizedResult = {
-            cristin_project_id: project.cristin_project_id,
+          return {
+            id: project.cristin_project_id,
             title: `${project.title[project.main_language]} (${project.main_language})`,
           };
-          return normalizedProject;
         });
         setSearchResults(normalizedResponse);
       } else {
-        dispatch(searchFailure(t('error.search')));
+        dispatch(searchFailure(t('error.get_cristin_project'))); //TODO : trengs denne ?
       }
     },
     [dispatch, t]
