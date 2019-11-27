@@ -20,7 +20,6 @@ const StyledUserPage = styled.div`
   grid-template-columns: 1fr 3fr;
   grid-gap: 3rem;
   font-size: 1rem;
-  padding: 2rem;
 `;
 
 const StyledSecondaryUserInfo = styled.div`

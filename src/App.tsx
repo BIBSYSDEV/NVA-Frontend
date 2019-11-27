@@ -38,7 +38,7 @@ const StyledPageBody = styled.div`
   align-items: center;
   font-size: 1.6rem;
   flex-grow: 1;
-  margin: 2rem;
+  margin: 3rem;
 `;
 
 const App: React.FC = () => {

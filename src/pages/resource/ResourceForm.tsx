@@ -11,9 +11,8 @@ import { ResourceFormTabs } from './ResourceFormTabs';
 import styled from 'styled-components';
 
 const StyledResource = styled.div`
-  align-self: flex-start;
   flex-grow: 1;
-  padding: 5rem;
+  width: 100%;
 `;
 
 const ResourceForm: React.FC = () => {
