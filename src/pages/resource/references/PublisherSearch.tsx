@@ -57,5 +57,3 @@ export const PublisherSearch: React.FC<PublisherSearchProps> = ({ setFieldValue 
     />
   );
 };
-
-export default PublisherSearch;

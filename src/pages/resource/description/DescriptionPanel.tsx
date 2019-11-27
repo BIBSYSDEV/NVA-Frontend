@@ -17,9 +17,9 @@ import { emptyResourceDescription, ResourceDescriptionFormData } from '../../../
 import FormikDatePicker from './../FormikDatePicker';
 import styled from 'styled-components';
 import Box from '../../../components/Box';
-import Project from './Project';
 import TabPanel from '../../../components/TabPanel/TabPanel';
 import useFormPersistor from '../../../utils/hooks/useFormPersistor';
+import { ProjectSearch } from './ProjectSearch';
 
 const MultipleFieldWrapper = styled.div`
   display: flex;
@@ -28,6 +28,10 @@ const MultipleFieldWrapper = styled.div`
 const StyledFieldWrapper = styled.div`
   padding: 0.5rem;
   flex: 1 0 40%;
+`;
+
+const StyledFieldHeader = styled.header`
+  font-size: 1.5rem;
 `;
 
 interface DescriptionPanelProps {
@@ -181,7 +185,24 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
                 </StyledFieldWrapper>
               </MultipleFieldWrapper>
 
-              <Project />
+              <StyledFieldHeader>{t('resource_form.project_assosiation')}</StyledFieldHeader>
+
+              <StyledFieldWrapper>
+                <Field name="project">
+                  {({ form: { values, setFieldValue } }: any) => (
+                    <>
+                      <ProjectSearch setFieldValue={setFieldValue} />
+                      {/*{values && values.project && values.project.id && (*/}
+                      {/*    <div>*/}
+                      {/*      <p>*/}
+                      {/*         {values.project.id}*/}
+                      {/*      </p>*/}
+                      {/*    </div>*/}
+                      {/*)}*/}
+                    </>
+                  )}
+                </Field>
+              </StyledFieldWrapper>
             </Form>
           </Formik>
         </MuiPickersUtilsProvider>

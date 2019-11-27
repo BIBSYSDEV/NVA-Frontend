@@ -49,7 +49,9 @@ if (USE_MOCK_DATA) {
   mock.onGet(new RegExp(`/${ApiBaseUrl.DOI_LOOKUP}/*`)).reply(200, mockDoiLookupResponse);
 
   // cristin-projects
-  mock.onGet(new RegExp(`${ApiBaseUrl.CRISTIN_EXTERNAL}/*`)).reply(200, mockCristinProjects, { 'X-Total-Count': '12' });
+  mock
+    .onGet(new RegExp(`${ApiBaseUrl.CRISTIN_EXTERNAL}/projects*`))
+    .reply(200, mockCristinProjects, { 'X-Total-Count': '12' });
 
   // USER
   mock.onGet(new RegExp(`/${ApiBaseUrl.USER}/*`)).reply(200, mockUser);
