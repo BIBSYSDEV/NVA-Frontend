@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useState } from 'react';
 import useDebounce from '../../../utils/hooks/useDebounce';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { searchFailure } from '../../../redux/actions/searchActions';
 import AutoSearch from '../../../components/AutoSearch';
 import { MINIMUM_SEARCH_CHARACTERS } from '../../../utils/constants';
 import CristinProjectType from '../../../types/cristin_project.types';
@@ -19,7 +18,7 @@ export const ProjectSearch: React.FC<ProjectSearchProps> = ({ setFieldValue }) =
 
   const debouncedSearchTerm = useDebounce(searchTerm);
   const dispatch = useDispatch();
-  const { t } = useTranslation('feedback');
+  const { t } = useTranslation();
 
   const search = useCallback(
     async (searchTerm: string) => {
@@ -56,7 +55,7 @@ export const ProjectSearch: React.FC<ProjectSearchProps> = ({ setFieldValue }) =
       onInputChange={handleInputChange}
       searchResults={searchResults}
       setFieldValue={(value: any) => setFieldValue('project', value)}
-      label={t('Project')}
+      label={t('resource_form.project')}
     />
   );
 };

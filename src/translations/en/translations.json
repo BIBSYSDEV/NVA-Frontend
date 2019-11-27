@@ -44,6 +44,7 @@
     "publication_date": "Publication date or year",
     "language": "language",
     "project_assosiation": "Project assosiation",
+    "project": "Project",
     "files_and_license": {
       "header": "Files and License",
       "upload_files": "Upload Files",
