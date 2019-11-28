@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getAuthorities } from '../../../api/authorityRegisterApi';
+import { getAuthorities } from '../../../api/external/authorityRegisterApi';
 import { RootStore } from '../../../redux/reducers/rootReducer';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
