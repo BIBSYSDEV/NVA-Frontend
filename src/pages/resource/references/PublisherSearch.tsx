@@ -6,7 +6,6 @@ import { getPublicationChannels } from '../../../api/external/publicationChannel
 import { AutoSearch } from '../../../components/AutoSearch';
 import { searchFailure } from '../../../redux/actions/searchActions';
 import { PublicationChannel } from '../../../types/references.types';
-import { MINIMUM_SEARCH_CHARACTERS } from '../../../utils/constants';
 import useDebounce from '../../../utils/hooks/useDebounce';
 
 interface PublisherSearchProps {
@@ -42,15 +41,9 @@ export const PublisherSearch: React.FC<PublisherSearchProps> = ({ setFieldValue 
     }
   }, [debouncedSearchTerm, search, searching]);
 
-  const handleInputChange = (event: object, value: string) => {
-    if (event !== null && value.length >= MINIMUM_SEARCH_CHARACTERS) {
-      setSearchTerm(value);
-    }
-  };
-
   return (
     <AutoSearch
-      onInputChange={handleInputChange}
+      onInputChange={(_, value) => setSearchTerm(value)}
       searchResults={searchResults}
       setFieldValue={(value: any) => setFieldValue('publisher', value)}
       label={t('Publisher')}
