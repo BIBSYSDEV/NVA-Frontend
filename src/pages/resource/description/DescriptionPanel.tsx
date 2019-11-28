@@ -27,7 +27,7 @@ const MultipleFieldWrapper = styled.div`
 `;
 
 const StyledFieldWrapper = styled.div`
-  padding: 1rem 1rem 0 1rem;
+  margin: 1rem;
   flex: 1 0 40%;
 `;
 
