@@ -9,7 +9,9 @@ phases:
   build:
     commands:
       - npm run build
+      - echo --------------------------------------
       - echo $REACT_APP_REDIRECT_SIGN_IN
+      - echo --------------------------------------
 artifacts:
   files:
     - '**/*'
