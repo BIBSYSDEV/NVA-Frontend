@@ -3,7 +3,6 @@ import useDebounce from '../../../utils/hooks/useDebounce';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import AutoSearch from '../../../components/AutoSearch';
-import { MINIMUM_SEARCH_CHARACTERS } from '../../../utils/constants';
 import { searchCristinProjects } from '../../../api/external/cristinProjectApi';
 import { CristinProjectType, NormalizedProjectType } from '../../../types/project.types';
 
@@ -41,12 +40,6 @@ const ProjectSearch: React.FC<ProjectSearchProps> = ({ setFieldValue }) => {
       setSearching(false);
     }
   }, [debouncedSearchTerm, search, searching]);
-
-  const handleInputChange = (event: object, value: string) => {
-    if (event !== null && value.length >= MINIMUM_SEARCH_CHARACTERS) {
-      setSearchTerm(value);
-    }
-  };
 
   return (
     <AutoSearch
