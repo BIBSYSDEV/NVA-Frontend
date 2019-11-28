@@ -18,7 +18,7 @@ import FormikDatePicker from './../FormikDatePicker';
 import styled from 'styled-components';
 import Box from '../../../components/Box';
 import TabPanel from '../../../components/TabPanel/TabPanel';
-import { ProjectSearch } from './ProjectSearch';
+import ProjectSearch from './ProjectSearch';
 import useFormPersistor from '../../../utils/hooks/useFormPersistor';
 import DisciplineSearch from '../description/DisciplineSearch';
 

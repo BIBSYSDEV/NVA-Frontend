@@ -11,7 +11,7 @@ interface ProjectSearchProps {
   setFieldValue: (name: string, value: any) => void;
 }
 
-export const ProjectSearch: React.FC<ProjectSearchProps> = ({ setFieldValue }) => {
+const ProjectSearch: React.FC<ProjectSearchProps> = ({ setFieldValue }) => {
   const [searchResults, setSearchResults] = useState<NormalizedProjectType[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [searching, setSearching] = useState(false);
@@ -57,3 +57,5 @@ export const ProjectSearch: React.FC<ProjectSearchProps> = ({ setFieldValue }) =
     />
   );
 };
+
+export default ProjectSearch;
