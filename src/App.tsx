@@ -6,15 +6,18 @@ import styled from 'styled-components';
 
 import { mockUser } from './api/mock-interceptor';
 import { getCurrentAuthenticatedUser } from './api/user';
+import PrivateRoute from './components/PrivateRoute';
 import Breadcrumbs from './layout/Breadcrumbs';
 import Footer from './layout/Footer';
 import Header from './layout/header/Header';
 import Notifier from './layout/Notifier';
 import AdminMenu from './pages/dashboard/AdminMenu';
 import Dashboard from './pages/dashboard/Dashboard';
+import NotAuthorized from './pages/errorpages/NotAuthorized';
 import NotFound from './pages/errorpages/NotFound';
 import ResourceForm from './pages/resource/ResourceForm';
 import Search from './pages/search/Search';
+import { ConnectAuthority } from './pages/user/authority/ConnectAuthority';
 import User from './pages/user/User';
 import Workspace from './pages/workspace/Workspace';
 import { setUser } from './redux/actions/userActions';
@@ -22,7 +25,6 @@ import { RootStore } from './redux/reducers/rootReducer';
 import { awsConfig } from './utils/aws-config';
 import { USE_MOCK_DATA } from './utils/constants';
 import { hubListener } from './utils/hub-listener';
-import { ConnectAuthority } from './pages/user/authority/ConnectAuthority';
 
 const StyledApp = styled.div`
   height: 100vh;
@@ -46,7 +48,7 @@ const App: React.FC = () => {
   const auth = useSelector((store: RootStore) => store.auth);
 
   useEffect(() => {
-    if (USE_MOCK_DATA) {
+    if (USE_MOCK_DATA && auth.isLoggedIn) {
       dispatch(setUser(mockUser));
     } else {
       if (!auth.isLoggedIn) {
@@ -63,18 +65,19 @@ const App: React.FC = () => {
       <StyledApp>
         <Notifier />
         <Header />
-        <AdminMenu />
+        {auth.isLoggedIn && <AdminMenu />}
         <Breadcrumbs />
         <StyledPageBody>
           <Switch>
             <Route exact path="/" component={Dashboard} />
-            <Route exact path="/resources" component={Workspace} />
-            <Route exact path="/resources/new" component={ResourceForm} />
+            <PrivateRoute exact path="/resources" component={Workspace} />
+            <PrivateRoute exact path="/resources/new" component={ResourceForm} />
             <Route exact path="/search" component={Search} />
             <Route exact path="/search/:searchTerm" component={Search} />
             <Route exact path="/search/:searchTerm/:offset" component={Search} />
             <Route exact path="/user" component={User} />
             <Route exact path="/user/authority" component={ConnectAuthority} />
+            <Route exact path="/401" component={NotAuthorized} />
             <Route path="*" component={NotFound} />
           </Switch>
         </StyledPageBody>
