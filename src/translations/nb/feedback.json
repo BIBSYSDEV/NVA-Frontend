@@ -3,6 +3,7 @@
     "create_resource": "Kunne ikke opprette ressurs",
     "get_authorities": "Kunne ikke hente autoriteter",
     "get_orcid": "Kunne ikke hente data fra ORCID",
+    "get_publications": "Kunne ikke laste inn publikasjoner",
     "get_resource": "Kunne ikke laste inn ressurs",
     "get_session": "Økten er utløpt. Vennligst logg inn på nytt.",
     "get_user": "Kunne ikke hente bruker",
