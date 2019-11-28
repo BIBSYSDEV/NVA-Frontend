@@ -50,9 +50,9 @@ const ProjectSearch: React.FC<ProjectSearchProps> = ({ setFieldValue }) => {
 
   return (
     <AutoSearch
-      onInputChange={handleInputChange}
+      onInputChange={(_, value) => setSearchTerm(value)}
       searchResults={searchResults}
-      setFieldValue={(value: any) => setFieldValue('project', value)}
+      setFieldValue={value => setFieldValue('project', value)}
       label={t('resource_form.project')}
     />
   );
