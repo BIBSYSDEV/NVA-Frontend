@@ -27,7 +27,7 @@ const MultipleFieldWrapper = styled.div`
 `;
 
 const StyledFieldWrapper = styled.div`
-  padding: 0.5rem;
+  padding: 1rem 1rem 0 1rem;
   flex: 1 0 40%;
 `;
 
@@ -103,7 +103,6 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
                 <Field
                   aria-label="title"
                   name="title"
-                  margin="dense"
                   label={t('resource_form.title')}
                   component={TextField}
                   fullWidth
@@ -116,7 +115,6 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
                   name="abstract"
                   label={t('resource_form.abstract')}
                   component={TextField}
-                  margin="dense"
                   multiline
                   rows="4"
                   fullWidth
@@ -130,7 +128,6 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
                   label={t('resource_form.description')}
                   component={TextField}
                   multiline
-                  margin="dense"
                   rows="4"
                   fullWidth
                   variant="outlined"
@@ -150,7 +147,6 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
                     component={TextField}
                     fullWidth
                     variant="outlined"
-                    margin="dense"
                   />
                 </StyledFieldWrapper>
               </MultipleFieldWrapper>
@@ -166,7 +162,6 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
                     aria-label="language"
                     variant="outlined"
                     fullWidth
-                    margin="dense"
                     component={Select}
                     label={t('date')}>
                     {languages.map(language => (
@@ -184,7 +179,7 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
               <StyledFieldHeader>{t('resource_form.project_assosiation')}</StyledFieldHeader>
 
               <StyledFieldWrapper>
-                <Field margin="dense" name="project">
+                <Field name="project">
                   {({ form: { values, setFieldValue } }: any) => (
                     <>
                       <ProjectSearch setFieldValue={setFieldValue} />
