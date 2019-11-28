@@ -15,7 +15,6 @@
   "description_why_ORCID": "Med ORCID blir det enklere å identifisere deg som forfatter. Vi kan også hente informasjon fra ORCID, som kan gjøre det raskere for deg å registrere dine publikasjoner.",
   "Email": "Epost",
   "Files and License": "Filer og lisens",
-  "Home": "Hjem",
   "ID": "ID",
   "Info from Feide": "Info hentet fra Feide",
   "Info from NVA": "Info hentet fra NVA",
@@ -31,7 +30,6 @@
   "Menu": "Meny",
   "My profile": "Min profil",
   "Name": "Navn",
-  "New publication": "Ny publisering",
   "New registration": "+ Ny registrering",
   "New resource": "Ny ressurs",
   "common": {
@@ -110,6 +108,5 @@
   "User information": "Brukerinformasjon",
   "What is ORCID?": "Hva er ORCID?",
   "Why should I connect to ORCID?": "Hvorfor ber vi om ORCID?",
-  "Workspace": "Arbeidsområde",
   "Your ORCID": "Din ORCID"
 }

@@ -15,7 +15,6 @@
   "Description": "Description",
   "Email": "Email",
   "Files and License": "Files and License",
-  "Home": "Home",
   "Id": "ID",
   "Info from Feide": "Info retrieved from Feide",
   "Info from NVA": "Info retrieved from NVA",
@@ -31,7 +30,6 @@
   "Menu": "Menu",
   "My profile": "My profile",
   "Name": "Name",
-  "New publication": "New publication",
   "New registration": "+ New registration",
   "New resource": "New resource",
   "resource_form": {
@@ -106,6 +104,5 @@
   "User information": "User information",
   "What is ORCID?": "What is ORCID?",
   "Why should I connect to ORCID?": "Why should I connect to ORCID?",
-  "Workspace": "Workspace",
   "Your ORCID": "Your ORCID"
 }
