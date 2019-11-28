@@ -14,6 +14,7 @@ phases:
       - echo $REACT_APP_REDIRECT_SIGN_OUT
       - echo $REACT_APP_REDIRECT_SIGN_IN
       - echo --------------------------------------
+      - env
       - npm run build
       - echo --------------------------------------
       - echo $REACT_APP_AWS_COGNITO_IDENTITY_POOL_ID
