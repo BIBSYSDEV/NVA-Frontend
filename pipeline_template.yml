@@ -46,27 +46,9 @@ Resources:
           - Name: REACT_APP_USE_MOCK
             Type: PLAINTEXT
             Value: !Ref UseMockData
-          - Name: REACT_APP_AWS_COGNITO_IDENTITY_POOL_ID
-            Type: PLAINTEXT
-            Value: '{{resolve:ssm:REACT_APP_AWS_COGNITO_IDENTITY_POOL_ID:1}}'
           - Name: REACT_APP_AWS_REGION
             Type: PLAINTEXT
-            Value: !Ref 'AWS::Region' # eu-west-1
-          - Name: REACT_APP_AWS_USER_POOLS_ID
-            Type: PLAINTEXT
-            Value: '{{resolve:ssm:REACT_APP_AWS_USER_POOLS_ID:1}}'
-          - Name: REACT_APP_AWS_USER_POOLS_WEB_CLIENT_ID
-            Type: PLAINTEXT
-            Value: '{{resolve:ssm:REACT_APP_AWS_USER_POOLS_WEB_CLIENT_ID:1}}'
-          - Name: REACT_APP_DOMAIN
-            Type: PLAINTEXT
-            Value: '{{resolve:ssm:REACT_APP_DOMAIN:1}}'
-          - Name: REACT_APP_REDIRECT_SIGN_IN
-            Type: PLAINTEXT
-            Value: '{{resolve:ssm:REACT_APP_REDIRECT_SIGN_IN:1}}'
-          - Name: REACT_APP_REDIRECT_SIGN_OUT
-            Type: PLAINTEXT
-            Value: '{{resolve:ssm:REACT_APP_REDIRECT_SIGN_OUT:1}}'
+            Value: !Ref 'AWS::Region'
       Source:
         Type: CODEPIPELINE
   NvaFrontendBucket:
@@ -167,6 +149,11 @@ Resources:
                   - 'codebuild:BatchGetBuilds'
                 Effect: Allow
                 Resource: !GetAtt CodeBuildProject.Arn
+              - Action:
+                  - 'ssm:getParameters'
+                Effect: Allow
+                Resource: '*'
+
   CodeBuildServiceRole:
     Type: AWS::IAM::Role
     Properties:
@@ -204,6 +191,16 @@ Resources:
                   - 's3:PutObject'
                 Resource:
                   - !Sub 'arn:aws:s3:::${ArtifactStoreBucket}/*'
+        - PolicyName: secretsPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - 'ssm:GetParameters'
+                  - 'secretsmanager:GetSecretValue'
+                Resource: '*'
+
 
   ArtifactStoreBucket:
     Type: AWS::S3::Bucket
