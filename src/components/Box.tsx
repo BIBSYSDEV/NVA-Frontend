@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const StyledBox = styled.div`
   background-color: ${({ theme }) => theme.palette.box.main};
-  padding-bottom: 1rem;
+  padding: 1rem;
 `;
 
 interface BoxProps {
