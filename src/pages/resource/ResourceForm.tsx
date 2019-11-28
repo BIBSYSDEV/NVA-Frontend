@@ -12,9 +12,8 @@ import { ReferencesPanel } from './ReferencesPanel';
 import { ResourceFormTabs } from './ResourceFormTabs';
 
 const StyledResource = styled.div`
-  align-self: flex-start;
   flex-grow: 1;
-  padding: 5rem;
+  width: 100%;
 `;
 
 const ResourceForm: React.FC = () => {

@@ -12,6 +12,7 @@ import UserInfo from './UserInfo';
 import UserLanguage from './UserLanguage';
 import UserOrcid from './UserOrcid';
 import UserRoles from './UserRoles';
+import { Link } from 'react-router-dom';
 
 const StyledUserPage = styled.div`
   display: grid;
@@ -19,7 +20,6 @@ const StyledUserPage = styled.div`
   grid-template-columns: 1fr 3fr;
   grid-gap: 3rem;
   font-size: 1rem;
-  padding: 2rem;
 `;
 
 const StyledSecondaryUserInfo = styled.div`
@@ -63,7 +63,9 @@ const User: React.FC = () => {
         <UserCard headerLabel="Bilde" />
         <UserCard headerLabel={t('Contact')} />
         <UserLanguage />
-        <UserCard headerLabel={t('Author information')} />
+        <UserCard headerLabel={t('Author information')}>
+          <Link to="/user/authority">{t('profile:connect_authority')}</Link>
+        </UserCard>
       </StyledSecondaryUserInfo>
 
       <StyledPrimaryUserInfo>

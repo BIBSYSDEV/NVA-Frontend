@@ -3,9 +3,11 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 
 import { Language } from '../types/settings.types';
 import feedbackEn from './en/feedback.json';
-import translationsEn from './en/translations.json';
 import feedbackNb from './nb/feedback.json';
+import translationsEn from './en/translations.json';
 import translationsNb from './nb/translations.json';
+import profileEn from './en/profile.json';
+import profileNb from './nb/profile.json';
 import disciplinesNb from './nb/disciplines.json';
 import disciplinesEn from './en/disciplines.json';
 import commonEn from './en/common.json';
@@ -21,6 +23,7 @@ i18n.use(LanguageDetector).init({
       feedback: feedbackEn,
       translations: translationsEn,
       common: commonEn,
+      profile: profileEn,
       disciplines: disciplinesEn,
       breadcrumbs: breadcrumbsEn,
     },
@@ -28,13 +31,14 @@ i18n.use(LanguageDetector).init({
       feedback: feedbackNb,
       translations: translationsNb,
       common: commonNb,
+      profile: profileNb,
       disciplines: disciplinesNb,
       breadcrumbs: breadcrumbsNb,
     },
   },
   fallbackLng: defaultLanguage,
   debug: false,
-  ns: ['common', 'feedback', 'translations', 'breadcrumbs'],
+  ns: ['common', 'feedback', 'translations', 'profile', 'breadcrumbs'],
   defaultNS: 'translations',
   interpolation: {
     formatSeparator: ',',

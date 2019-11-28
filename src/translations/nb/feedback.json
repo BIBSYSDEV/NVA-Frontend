@@ -1,18 +1,19 @@
 {
   "error": {
     "create_resource": "Kunne ikke opprette ressurs",
-    "update_resource": "Kunne ikke oppdatere ressurs",
+    "get_authorities": "Kunne ikke hente autoriteter",
+    "get_orcid": "Kunne ikke hente data fra ORCID",
     "get_resource": "Kunne ikke laste inn ressurs",
+    "get_session": "Økten er utløpt. Vennligst logg inn på nytt.",
     "get_user": "Kunne ikke hente bruker",
     "login": "Kunne ikke logge inn",
     "orcid_login": "Kunne ikke logge inn på ORCID",
-    "get_orcid": "Kunne ikke hente data fra ORCID",
-    "get_session": "Økten er utløpt. Vennligst logg inn på nytt.",
-    "search": "Søk feilet"
+    "search": "Søk feilet",
+    "update_resource": "Kunne ikke oppdatere ressurs"
   },
   "success": {
-    "login": "Logget inn",
     "create_resource": "Ressursen er opprettet",
+    "login": "Logget inn",
     "update_resource": "Ressursen er oppdatert"
   }
 }

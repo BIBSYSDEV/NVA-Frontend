@@ -1,0 +1,6 @@
+{
+  "connect_authority": "Connect your author ID",
+  "authority": {
+    "search_summary": "{{results}} results for \"{{searchTerm}}\""
+  }
+}
