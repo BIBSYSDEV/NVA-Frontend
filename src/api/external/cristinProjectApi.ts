@@ -21,7 +21,7 @@ export const searchCristinProjects = async (query: string, dispatch: Dispatch) =
     } else {
       dispatch(addNotification(errorNotification));
     }
-  } catch (err) {
+  } catch {
     dispatch(addNotification(errorNotification));
   }
 };
