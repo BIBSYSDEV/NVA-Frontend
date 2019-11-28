@@ -30,7 +30,7 @@ Resources:
     Properties:
       DistributionConfig:
         Aliases:
-          - frontend.dev.nva.aws.unit.no
+          - test.sandbox.nva.aws.unit.no
         Origins:
           - DomainName: !Sub '${NvaFrontendBucketName}.s3.amazonaws.com'
             Id: !Sub 'S3-${NvaFrontendBucketName}'
