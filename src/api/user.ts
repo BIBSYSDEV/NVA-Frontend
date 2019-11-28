@@ -49,7 +49,6 @@ export const getCurrentAuthenticatedUser = () => {
           });
         });
       }
-      dispatch(refreshToken());
     } catch (e) {
       const store = getState();
       if (store.auth.isLoggedIn) {

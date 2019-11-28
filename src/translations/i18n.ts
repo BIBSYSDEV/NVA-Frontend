@@ -12,6 +12,8 @@ import disciplinesNb from './nb/disciplines.json';
 import disciplinesEn from './en/disciplines.json';
 import commonEn from './en/common.json';
 import commonNb from './nb/common.json';
+import breadcrumbsEn from './en/breadcrumbs.json';
+import breadcrumbsNb from './nb/breadcrumbs.json';
 
 export const defaultLanguage = Language.NORWEGIAN_BOKMAL;
 
@@ -23,6 +25,7 @@ i18n.use(LanguageDetector).init({
       common: commonEn,
       profile: profileEn,
       disciplines: disciplinesEn,
+      breadcrumbs: breadcrumbsEn,
     },
     nb: {
       feedback: feedbackNb,
@@ -30,11 +33,12 @@ i18n.use(LanguageDetector).init({
       common: commonNb,
       profile: profileNb,
       disciplines: disciplinesNb,
+      breadcrumbs: breadcrumbsNb,
     },
   },
   fallbackLng: defaultLanguage,
   debug: false,
-  ns: ['common', 'feedback', 'translations', 'profile'],
+  ns: ['common', 'feedback', 'translations', 'profile', 'breadcrumbs'],
   defaultNS: 'translations',
   interpolation: {
     formatSeparator: ',',
