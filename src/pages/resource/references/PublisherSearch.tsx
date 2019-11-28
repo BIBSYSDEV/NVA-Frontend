@@ -45,7 +45,7 @@ export const PublisherSearch: React.FC<PublisherSearchProps> = ({ setFieldValue 
     <AutoSearch
       onInputChange={(_, value) => setSearchTerm(value)}
       searchResults={searchResults}
-      setFieldValue={(value: any) => setFieldValue('publisher', value)}
+      setFieldValue={value => setFieldValue('publisher', value)}
       label={t('Publisher')}
     />
   );
