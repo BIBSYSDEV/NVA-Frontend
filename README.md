@@ -17,6 +17,7 @@ To be able to run this app, you need to create a .env file with the following fi
 `REACT_APP_ORCID_BASE_URL=XXXXXXXXXX`<br>
 `REACT_APP_AUTHORITY_REGISTER_API_URL=https://authority.bibsys.no/authority/rest`<br>
 `REACT_APP_PUBLICATION_CHANNEL_API_URL=https://api.nsd.no/dbhapitjener/Tabeller/hentJSONTabellData`<br>
+`REACT_APP_ALMA_API_URL=https://api-eu.hosted.exlibrisgroup.com`<br>
 
 To use mock data, you need to add this variable to the .env file:<br>
 `REACT_APP_USE_MOCK=true`

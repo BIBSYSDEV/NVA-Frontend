@@ -6,14 +6,11 @@ import { addNotification } from '../../redux/actions/notificationActions';
 import { StatusCode, ALMA_API_URL } from '../../utils/constants';
 import uuid from 'uuid';
 
-enum AuthorityTypes {
-  PERSON = 'PERSON',
-}
-
-// Authority register API docs: https://authority.bibsys.no/authority/
+// ALMA API docs: https://developers.exlibrisgroup.com/alma/apis/
 
 export const getPublications = async (systemControlNumber: string, dispatch: Dispatch) => {
-  const url = `${ALMA_API_URL}/${systemControlNumber}`;
+  const url = `${ALMA_API_URL}/almaws/v1/bibs`;
+  console.log('url:', url, 'scn:', systemControlNumber);
 
   try {
     const response = await Axios.get(url, { headers: { Authorization: `apikey <MY_KEY>` } });
