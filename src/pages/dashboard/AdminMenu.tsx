@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+
 import { Button, Link as MuiLink } from '@material-ui/core';
 
 import { RootStore } from '../../redux/reducers/rootReducer';
@@ -36,7 +37,7 @@ const AdminMenu: React.FC = () => {
         <StyledAdminMenu>
           <StyledHeader>{t('Admin panel')}</StyledHeader>
           <MuiLink component={Link} to="/resources/new">
-            <StyledButton color="primary" variant="contained">
+            <StyledButton color="primary" variant="contained" data-testid="new-registration-button">
               {t('New registration')}
             </StyledButton>
           </MuiLink>
