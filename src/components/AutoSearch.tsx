@@ -46,7 +46,7 @@ export const AutoSearch: React.FC<AutoSearchProps> = ({
       }}
       onInputChange={(event: object, value: string) => {
         value.length >= MINIMUM_SEARCH_CHARACTERS && options.length === 0 && setLoading(true);
-        open && onInputChange && onInputChange(event, value);
+        open && value.length >= MINIMUM_SEARCH_CHARACTERS && onInputChange && onInputChange(event, value);
       }}
       getOptionLabel={option => option.title}
       options={options}
