@@ -60,7 +60,7 @@ Resources:
             Value: '{{resolve:ssm:REACT_APP_AWS_USER_POOLS_WEB_CLIENT_ID:1}}'
           - Name: REACT_APP_DOMAIN
             Type: PLAINTEXT
-            Value: '{{resolve:ssm:REACT_APP_AWS_USER_POOLS_WEB_CLIENT_ID:1}}'
+            Value: '{{resolve:ssm:REACT_APP_DOMAIN:1}}'
           - Name: REACT_APP_REDIRECT_SIGN_IN
             Type: PLAINTEXT
             Value: '{{resolve:ssm:REACT_APP_REDIRECT_SIGN_IN:1}}'
