@@ -2,6 +2,7 @@
   "error": {
     "create_resource": "Kunne ikke opprette ressurs",
     "get_authorities": "Kunne ikke hente autoriteter",
+    "get_cristin_project": "Søk på prosjekt feilet",
     "get_orcid": "Kunne ikke hente data fra ORCID",
     "get_resource": "Kunne ikke laste inn ressurs",
     "get_session": "Økten er utløpt. Vennligst logg inn på nytt.",

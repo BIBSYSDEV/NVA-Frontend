@@ -12,7 +12,7 @@ interface PublisherSearchProps {
   setFieldValue: (name: string, value: any) => void;
 }
 
-export const PublisherSearch: React.FC<PublisherSearchProps> = ({ setFieldValue }) => {
+const PublisherSearch: React.FC<PublisherSearchProps> = ({ setFieldValue }) => {
   const [searchResults, setSearchResults] = useState<PublicationChannel[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [searching, setSearching] = useState(false);

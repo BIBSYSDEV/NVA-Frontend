@@ -11,7 +11,7 @@ import Box from '../../components/Box';
 import TabPanel from '../../components/TabPanel/TabPanel';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { ReferenceType, referenceTypeList } from '../../types/references.types';
-import { PublisherSearch } from './references/PublisherSearch';
+import PublisherSearch from './references/PublisherSearch';
 
 const StyledFieldWrapper = styled.div`
   padding: 1rem;

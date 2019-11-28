@@ -10,6 +10,7 @@ export const ORCID_SIGN_IN_URL = `${process.env.REACT_APP_ORCID_BASE_URL}/signin
 
 export const PUBLICATION_CHANNEL_API_URL = process.env.REACT_APP_PUBLICATION_CHANNEL_API_URL;
 export const AUTHORITY_REGISTER_API_URL = process.env.REACT_APP_AUTHORITY_REGISTER_API_URL;
+export const CRISTIN_API_URL = process.env.REACT_APP_CRISTIN_API_URL;
 
 export enum ApiBaseUrl {
   RESOURCES = 'resources',

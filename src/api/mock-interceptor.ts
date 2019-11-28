@@ -3,11 +3,20 @@ import MockAdapter from 'axios-mock-adapter';
 
 import OrcidResponse from '../types/orcid.types';
 import { ApplicationName, FeideUser, RoleName } from '../types/user.types';
-import { ApiBaseUrl, ORCID_OAUTH_URL, USE_MOCK_DATA, AUTHORITY_REGISTER_API_URL } from '../utils/constants';
 import mockResources from '../utils/testfiles/resources_45_random_results_generated.json';
 import mockDoiResource from '../utils/testfiles/resource_generated_from_doi.json';
 import mockDoiLookupResponse from '../utils/testfiles/doi_lookup_response.json';
+import mockCristinProjects from '../utils/testfiles/cristin_projects_real.json';
+import mockNsdPublisers from '../utils/testfiles/publishersFromNsd.json';
 import mockAuthoritiesResponse from '../utils/testfiles/mock_authorities_response.json';
+import {
+  ApiBaseUrl,
+  AUTHORITY_REGISTER_API_URL,
+  CRISTIN_API_URL,
+  ORCID_OAUTH_URL,
+  PUBLICATION_CHANNEL_API_URL,
+  USE_MOCK_DATA,
+} from '../utils/constants';
 
 export const mockUser: FeideUser = {
   name: 'Test User',
@@ -47,6 +56,12 @@ if (USE_MOCK_DATA) {
 
   // lookup DOI
   mock.onGet(new RegExp(`/${ApiBaseUrl.DOI_LOOKUP}/*`)).reply(200, mockDoiLookupResponse);
+
+  // CRISTIN
+  mock.onGet(new RegExp(`${CRISTIN_API_URL}/projects*`)).reply(200, mockCristinProjects, { 'X-Total-Count': '12' });
+
+  // PUBLICATION CHANNEL
+  mock.onPost(PUBLICATION_CHANNEL_API_URL).reply(200, mockNsdPublisers);
 
   // USER
   mock.onGet(new RegExp(`/${ApiBaseUrl.USER}/*`)).reply(200, mockUser);

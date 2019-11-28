@@ -43,7 +43,6 @@ const LinkPublicationPanelForm: React.FC<LinkPublicationPanelFormProps> = ({ han
         <StyledInputBox>
           <StyledTextField
             aria-label="DOI-link"
-            margin="dense"
             name="doiUrl"
             variant="outlined"
             fullWidth

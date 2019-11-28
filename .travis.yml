@@ -8,6 +8,10 @@ cache:
 env:
   global:
     - REACT_APP_USE_MOCK=true
+    - REACT_APP_ORCID_BASE_URL=https://sandbox.orcid.org
+    - REACT_APP_PUBLICATION_CHANNEL_API_URL=https://api.nsd.no/dbhapitjener/Tabeller/hentJSONTabellData
+    - REACT_APP_AUTHORITY_REGISTER_API_URL=https://utvikle-a.bibsys.no/authority/rest
+    - REACT_APP_CRISTIN_API_URL=https://api.cristin.no/v2
 addons:
   apt:
     packages:
