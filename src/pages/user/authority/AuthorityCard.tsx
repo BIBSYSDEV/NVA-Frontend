@@ -17,7 +17,7 @@ interface AuthorityCardProps {
 }
 
 const AuthorityCard: React.FC<AuthorityCardProps> = ({ authority }) => {
-  const [publications, setPublications] = useState([]);
+  const [publications, setPublications] = useState<string[]>([]);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -40,7 +40,7 @@ const AuthorityCard: React.FC<AuthorityCardProps> = ({ authority }) => {
     <Box>
       <StyledBoxContent>
         <div>{authorityName && authorityName.value}</div>
-        <div>{JSON.stringify(publications[0])}</div>
+        <div>{publications[0]}</div>
       </StyledBoxContent>
     </Box>
   );
