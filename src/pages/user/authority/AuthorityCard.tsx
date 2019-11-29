@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import Box from '../../../components/Box';
 import { Marc21Codes, Marc21Subcodes, Authority } from '../../../types/authority.types';
+import { AlmaPublication } from '../../../types/resource.types';
 import { useDispatch } from 'react-redux';
 import { getPublications } from '../../../api/external/almaApi';
 
@@ -15,13 +16,9 @@ const StyledBoxContent = styled.div`
 interface AuthorityCardProps {
   authority: Authority;
 }
-interface Publication {
-  title: string;
-  date: string;
-}
 
 const AuthorityCard: React.FC<AuthorityCardProps> = ({ authority }) => {
-  const [publications, setPublications] = useState<Publication[]>([]);
+  const [publications, setPublications] = useState<AlmaPublication[]>([]);
   const dispatch = useDispatch();
 
   useEffect(() => {

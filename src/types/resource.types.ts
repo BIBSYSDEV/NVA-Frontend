@@ -52,3 +52,8 @@ export interface Resource {
   resourceIdentifier: string;
   status: string;
 }
+
+export interface AlmaPublication {
+  title: string;
+  date: string;
+}

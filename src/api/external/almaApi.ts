@@ -1,7 +1,7 @@
 import Axios from 'axios';
 import { Dispatch } from 'redux';
 import i18n from '../../translations/i18n';
-
+import { AlmaPublication } from '../../types/resource.types';
 import { addNotification } from '../../redux/actions/notificationActions';
 import { StatusCode } from '../../utils/constants';
 import uuid from 'uuid';
@@ -28,7 +28,7 @@ export const getPublications = async (systemControlNumber: string, dispatch: Dis
       const xmlPublications = Array.from(xmlData.getElementsByTagName(AlmaCodes.PUBLICATION_DATA_TAG));
 
       // Extract title and date from publications
-      const publications = xmlPublications.map(publication => {
+      const publications: AlmaPublication[] = xmlPublications.map(publication => {
         const titleTags = publication.getElementsByTagName(AlmaCodes.TITLE_TAG);
         const dateTags = publication.getElementsByTagName(AlmaCodes.DATE_TAG);
 
