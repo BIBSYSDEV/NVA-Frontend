@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
@@ -10,7 +11,6 @@ import { RootStore } from '../../redux/reducers/rootReducer';
 import LinkPublicationPanel from './LinkPublicationPanel';
 import LoadPublicationPanel from './LoadPublicationPanel';
 import OrcidPublicationPanel from './OrcidPublicationPanel';
-import { useTranslation } from 'react-i18next';
 
 const StyledPublicationPanel = styled.div`
   width: 100%;
@@ -61,7 +61,7 @@ const PublicationPanel: React.FC<PublicationPanelProps> = ({ goToNextTab, tabNum
       ariaLabel="publication"
       goToNextTab={goToNextTab}
       errors={errors.publicationErrors}
-      heading="Publication">
+      heading="publication:publication_heading">
       <StyledPublicationPanel>
         <StyledSelectorWrapper>
           <LoadPublicationPanel expanded={expanded === 'load-panel'} onChange={handleChange('load-panel')} />
@@ -73,7 +73,7 @@ const PublicationPanel: React.FC<PublicationPanelProps> = ({ goToNextTab, tabNum
           <OrcidPublicationPanel expanded={expanded === 'orcid-panel'} onChange={handleChange('orcid-panel')} />
         </StyledSelectorWrapper>
         <StyledInfoBox>
-          <header>{t('Information')}</header>
+          <header>{t('publication:publication.information')}</header>
           <section>
             Velg publikasjoner Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
             ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut

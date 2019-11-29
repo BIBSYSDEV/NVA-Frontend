@@ -1,0 +1,54 @@
+{
+  "contributors_heading": "Bidragsytere",
+  "contributors": {
+    "add_author": "Legg til flere forfattere",
+    "add_other_contributor": "Legg til flere",
+    "authors": "Forfattere",
+    "corresponding": "Korresponderende",
+    "institution": "Institusjon",
+    "name": "Navn",
+    "ORCID": "ORCID",
+    "type": "Bidragstype",
+    "verify_person": "Verifiser"
+  },
+  "description_heading": "Beskrivelse",
+  "description": {
+    "abstract": "Sammendrag",
+    "date": "Dato",
+    "description": "Beskrivelse",
+    "NPI_disciplines": "NPI Fagfelt",
+    "project": "Prosjekt",
+    "project_assosiation": "Prosjekttilknytning",
+    "tags": "Nøkkelord",
+    "title": "Tittel"
+  },
+  "files_and_license_heading": "Filer og lisens",
+  "files_and_license": {
+    "files": "Filer",
+    "upload_files": "Last opp filer"
+  },
+  "feedback": {
+    "invalid_url": "Ugyldig lenke",
+    "required_field": "Påkrevd felt"
+  },
+  "publication_heading": "Publikasjon",
+  "publication": {
+    "date": "Publiseringsdato eller år",
+    "information": "Informasjon",
+    "link_publication_description": "Feks. DOI lenke, lenke til artikkel, lenke til video av foredrag etc.",
+    "link_to_publication": "Link til publikasjon",
+    "load_file": "Last opp fil",
+    "load_file_description": "Last opp fil...",
+    "ORCID_link": "ORCID-link",
+    "resource": "Ressurs",
+    "search": "Søk"
+  },
+  "references_heading": "Referanser",
+  "references": {
+    "title": "Tittel",
+    "ISSN": "ISSN",
+    "level": "Nivå",
+    "publisher": "Utgiver"
+  },
+  "submission": "Innsending"
+}

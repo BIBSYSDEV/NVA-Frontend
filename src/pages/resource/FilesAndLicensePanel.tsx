@@ -2,11 +2,9 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 
+import Box from '../../components/Box';
 import TabPanel from '../../components/TabPanel/TabPanel';
 import { RootStore } from '../../redux/reducers/rootReducer';
-
-import Box from '../../components/Box';
-
 import UppyFileUpload from './UppyFileUpload';
 
 interface FilesAndLicensePanelProps {
@@ -24,12 +22,12 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab
       ariaLabel="files and license"
       goToNextTab={goToNextTab}
       errors={errors.filesAndLicenseErrors}
-      heading={t('resource_form.files_and_license.header')}>
-      <h1>{t('resource_form.files_and_license.upload_files')}</h1>
+      heading={t('publication:files_and_license_heading')}>
+      <h1>{t('publication:files_and_license.upload_files')}</h1>
       <Box>
         <UppyFileUpload />
       </Box>
-      <h1>{t('resource_form.files_and_license.files')}</h1>
+      <h1>{t('publication:files_and_license.files')}</h1>
       <Box>TODO</Box>
     </TabPanel>
   );

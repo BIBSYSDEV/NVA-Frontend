@@ -32,19 +32,19 @@ export const ResourceFormTabs: React.FC<ResourceFormTabsProps> = ({ handleTabCha
       TabIndicatorProps={{ style: { backgroundColor: 'blue' } }}
       textColor="primary">
       <LinkTab
-        label={`1. ${t('Publication')}`}
+        label={`1. ${t('publication:publication_heading')}`}
         {...a11yProps('publication')}
         error={errors.publicationErrors && errors.publicationErrors.length > 0}
       />
       <LinkTab
-        label={`2. ${t('Description')}`}
+        label={`2. ${t('publication:description_heading')}`}
         {...a11yProps('description')}
         error={errors.descriptionErrors && errors.descriptionErrors.length > 0}
       />
-      <LinkTab label={`3. ${t('References')}`} {...a11yProps('references')} />
-      <LinkTab label={`4. ${t('Contributors')}`} {...a11yProps('contributors')} />
-      <LinkTab label={`5. ${t('Files and License')}`} {...a11yProps('files-and-license')} />
-      <LinkTab label={`6. ${t('Submission')}`} {...a11yProps('submission')} />
+      <LinkTab label={`3. ${t('publication:references_heading')}`} {...a11yProps('references')} />
+      <LinkTab label={`4. ${t('publication:contributors_heading')}`} {...a11yProps('contributors')} />
+      <LinkTab label={`5. ${t('publication:files_and_license_heading')}`} {...a11yProps('files-and-license')} />
+      <LinkTab label={`6. ${t('publication:submission')}`} {...a11yProps('submission')} />
     </Tabs>
   );
 };

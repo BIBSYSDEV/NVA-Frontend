@@ -1,11 +1,11 @@
+import { Field, Form, Formik } from 'formik';
+import { TextField } from 'formik-material-ui';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import styled from 'styled-components';
+import * as Yup from 'yup';
 
 import { Button } from '@material-ui/core';
-import { TextField } from 'formik-material-ui';
-import styled from 'styled-components';
-import { Field, Form, Formik } from 'formik';
-import * as Yup from 'yup';
 
 const StyledInputBox = styled.div`
   display: flex;
@@ -26,8 +26,8 @@ const LinkPublicationPanelForm: React.FC<LinkPublicationPanelFormProps> = ({ han
 
   const resourceSchema = Yup.object().shape({
     doiUrl: Yup.string()
-      .url(t('resource_form.feedback.invalid_url'))
-      .required(t('resource_form.feedback.required_field')),
+      .url(t('publication:feedback.invalid_url'))
+      .required(t('publication:feedback.required_field')),
   });
 
   return (
@@ -46,11 +46,11 @@ const LinkPublicationPanelForm: React.FC<LinkPublicationPanelFormProps> = ({ han
             name="doiUrl"
             variant="outlined"
             fullWidth
-            label={t('publication_panel.ORCID-link')}
+            label={t('publication:publication.ORCID_link')}
             component={TextField}
           />
           <Button color="primary" variant="contained" type="submit">
-            {t('publication_panel.search')}
+            {t('publication:publication.search')}
           </Button>
         </StyledInputBox>
       </Form>
