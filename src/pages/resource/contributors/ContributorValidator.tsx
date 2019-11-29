@@ -43,12 +43,7 @@ const ContributorValidator: React.FC<ContributorValidatorProps> = ({ contributor
   return (
     <StyledContributorValidator>
       <StyledContributor.AddCircleIcon />
-      <StyledNameInput
-        variant="outlined"
-        margin="dense"
-        onChange={handleNameChange(contributor)}
-        value={contributor.name}
-      />
+      <StyledNameInput variant="outlined" onChange={handleNameChange(contributor)} value={contributor.name} />
       <StyledContributor.Select variant="outlined">
         <MenuItem value=""></MenuItem>
       </StyledContributor.Select>

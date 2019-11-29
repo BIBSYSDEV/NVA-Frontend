@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import TabPanel from '../../components/TabPanel/TabPanel';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import ContributorsPanel from './ContributorsPanel';
-import DescriptionPanel from './DescriptionPanel';
+import DescriptionPanel from './description/DescriptionPanel';
 import FilesAndLicensPanel from './FilesAndLicensePanel';
 import PublicationPanel from './PublicationPanel';
 import { ReferencesPanel } from './ReferencesPanel';

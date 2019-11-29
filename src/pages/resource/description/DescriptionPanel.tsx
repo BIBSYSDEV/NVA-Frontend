@@ -9,32 +9,31 @@ import DateFnsUtils from '@date-io/date-fns';
 import { MenuItem } from '@material-ui/core';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 
-import TabPanel from '../../components/TabPanel/TabPanel';
-import { clearFormErrors, formError } from '../../redux/actions/validationActions';
-import { RootStore } from '../../redux/reducers/rootReducer';
-import { languages } from '../../translations/i18n';
-import { ResourceFormTabs } from '../../types/resource.types';
-import { emptyResourceDescription, ResourceDescriptionFormData } from '../../types/form.types';
-import publications from '../../utils/testfiles/projects_random_generated.json';
-import FormikDatePicker from './FormikDatePicker';
+import { clearFormErrors, formError } from '../../../redux/actions/validationActions';
+import { RootStore } from '../../../redux/reducers/rootReducer';
+import { languages } from '../../../translations/i18n';
+import { ResourceFormTabs } from '../../../types/resource.types';
+import { emptyResourceDescription, ResourceDescriptionFormData } from '../../../types/form.types';
+import FormikDatePicker from './../FormikDatePicker';
 import styled from 'styled-components';
-import Box from '../../components/Box';
-import useFormPersistor from '../../utils/hooks/useFormPersistor';
-import DisciplineSearch from './description/DisciplineSearch';
+import Box from '../../../components/Box';
+import TabPanel from '../../../components/TabPanel/TabPanel';
+import ProjectSearch from './ProjectSearch';
+import useFormPersistor from '../../../utils/hooks/useFormPersistor';
+import DisciplineSearch from '../description/DisciplineSearch';
 
 const MultipleFieldWrapper = styled.div`
   display: flex;
 `;
 
 const StyledFieldWrapper = styled.div`
-  padding: 1rem;
+  margin: 1rem;
   flex: 1 0 40%;
 `;
 
 const StyledFieldHeader = styled.header`
+  margin: 1rem;
   font-size: 1.5rem;
-  margin-left: 1rem;
-  margin-top: 2rem;
 `;
 
 interface DescriptionPanelProps {
@@ -178,19 +177,15 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
               </MultipleFieldWrapper>
 
               <StyledFieldHeader>{t('resource_form.project_assosiation')}</StyledFieldHeader>
+
               <StyledFieldWrapper>
-                <Field
-                  name="project"
-                  aria-label="project"
-                  label={t('resource_form.project')}
-                  component={Select}
-                  fullWidth
-                  variant="outlined">
-                  {publications.map(publication => (
-                    <MenuItem value={publication.id} key={publication.id}>
-                      {`${publication.name} - ${publication.id}`}
-                    </MenuItem>
-                  ))}
+                <Field name="project">
+                  {({ form: { values, setFieldValue } }: any) => (
+                    <>
+                      <ProjectSearch setFieldValue={setFieldValue} />
+                      {values && values.project && values.project.title && <p>{values.project.title}</p>}
+                    </>
+                  )}
                 </Field>
               </StyledFieldWrapper>
             </Form>

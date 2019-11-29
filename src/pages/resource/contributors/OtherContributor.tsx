@@ -53,12 +53,7 @@ const OtherContributor: React.FC<OtherContributorProps> = ({ contributor, dispat
             </MenuItem>
           ))}
       </StyledContributor.TypeSelect>
-      <StyledNameInput
-        value={contributor.name}
-        onChange={handleNameChange(contributor)}
-        margin="dense"
-        variant="outlined"
-      />
+      <StyledNameInput value={contributor.name} onChange={handleNameChange(contributor)} variant="outlined" />
       <StyledContributor.InstitutionSelect
         onChange={handleInstitutionChange(contributor)}
         value={contributor.selectedInstitution || ''}

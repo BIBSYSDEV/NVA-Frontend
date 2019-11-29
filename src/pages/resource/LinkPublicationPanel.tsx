@@ -5,7 +5,7 @@ import LinkIcon from '@material-ui/icons/Link';
 import PublicationExpansionPanel from './PublicationExpansionPanel';
 import LinkPublicationPanelForm from './LinkPublicationPanelForm';
 import styled from 'styled-components';
-import { createNewResourceFromDoi, lookupDoiTitle } from '../../api/resource';
+import { createNewResourceFromDoi, lookupDoiTitle } from '../../api/resourceApi';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootStore } from '../../redux/reducers/rootReducer';
 
