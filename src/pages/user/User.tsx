@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router';
 import styled from 'styled-components';
 
-import { getOrcidInfo } from '../../api/orcid';
+import { getOrcidInfo } from '../../api/orcidApi';
 import { orcidSignInFailure } from '../../redux/actions/orcidActions';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import UserCard from './UserCard';
