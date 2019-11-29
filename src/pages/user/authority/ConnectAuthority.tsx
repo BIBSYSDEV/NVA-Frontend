@@ -18,8 +18,8 @@ export const ConnectAuthority: React.FC = () => {
   const user = useSelector((store: RootStore) => store.user);
   const dispatch = useDispatch();
   const { t } = useTranslation('profile');
-  const searchTerm = user.name;
-
+  // const searchTerm = user.name;
+  const searchTerm = 'møkkelgjerd';
   useEffect(() => {
     const fetchAuthorities = async () => {
       const retrievedAuthorities = await getAuthorities(searchTerm, dispatch);

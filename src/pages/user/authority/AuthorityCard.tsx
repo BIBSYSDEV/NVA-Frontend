@@ -15,9 +15,13 @@ const StyledBoxContent = styled.div`
 interface AuthorityCardProps {
   authority: Authority;
 }
+interface Publication {
+  title: string;
+  date: string;
+}
 
 const AuthorityCard: React.FC<AuthorityCardProps> = ({ authority }) => {
-  const [publications, setPublications] = useState<string[]>([]);
+  const [publications, setPublications] = useState<Publication[]>([]);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -40,7 +44,7 @@ const AuthorityCard: React.FC<AuthorityCardProps> = ({ authority }) => {
     <Box>
       <StyledBoxContent>
         <div>{authorityName && authorityName.value}</div>
-        <div>{publications[0]}</div>
+        <div>{publications.length ? publications[0].title : null}</div>
       </StyledBoxContent>
     </Box>
   );
