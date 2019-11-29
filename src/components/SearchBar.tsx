@@ -6,7 +6,7 @@ import { useHistory } from 'react-router';
 import { IconButton, InputBase, Paper } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 
-import { search } from '../api/search';
+import { search } from '../api/searchApi';
 import styled from 'styled-components';
 
 interface SearchBarProps {

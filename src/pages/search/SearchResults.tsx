@@ -7,7 +7,7 @@ import { useHistory } from 'react-router';
 import { List, ListItem, ListItemIcon, ListItemText, Typography } from '@material-ui/core';
 import ImageIcon from '@material-ui/icons/Image';
 
-import { search } from '../../api/search';
+import { search } from '../../api/searchApi';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { ResourceMetadata } from '../../types/resource.types';
 import { SEARCH_RESULTS_PER_PAGE } from '../../utils/constants';

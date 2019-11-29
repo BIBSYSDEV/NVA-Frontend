@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button } from '@material-ui/core';
 import styled from 'styled-components';
 
-import { login, logout } from '../../api/user';
+import { login, logout } from '../../api/userApi';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import Menu from './Menu';
 
