@@ -48,8 +48,8 @@ const App: React.FC = () => {
   const auth = useSelector((store: RootStore) => store.auth);
 
   useEffect(() => {
-    if (USE_MOCK_DATA && auth.isLoggedIn) {
-      dispatch(setUser(mockUser));
+    if (USE_MOCK_DATA) {
+      auth.isLoggedIn && dispatch(setUser(mockUser));
     } else {
       if (!auth.isLoggedIn) {
         Amplify.configure(awsConfig);
