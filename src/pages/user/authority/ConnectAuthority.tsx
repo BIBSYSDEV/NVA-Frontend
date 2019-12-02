@@ -64,7 +64,7 @@ export const ConnectAuthority: React.FC = () => {
         </StyledClickableDiv>
       ))}
 
-      {matchingAuthorities.length ? (
+      {matchingAuthorities.length > 0 && (
         <Button
           color="primary"
           variant="contained"
@@ -73,7 +73,7 @@ export const ConnectAuthority: React.FC = () => {
           disabled={!selectedAuthorityScn.length}>
           {t('authority.connect_authority')}
         </Button>
-      ) : null}
+      )}
     </StyledAuthorityContainer>
   );
 };
