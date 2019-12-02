@@ -176,7 +176,7 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
                 </StyledFieldWrapper>
               </MultipleFieldWrapper>
 
-              <StyledFieldHeader>{t('publication:description.project_assosiation')}</StyledFieldHeader>
+              <StyledFieldHeader>{t('publication:description.project_association')}</StyledFieldHeader>
 
               <StyledFieldWrapper>
                 <Field name="project">

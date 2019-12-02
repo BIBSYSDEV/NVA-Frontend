@@ -23,7 +23,7 @@ const Contributors: React.FC<ContributorsProps> = ({ contributors, dispatch, onA
         <ContributorLabel>{t('common:name')}</ContributorLabel>
         <ContributorLabel>{t('publication:contributors.institution')}</ContributorLabel>
         <ContributorLabel>{t('publication:contributors.corresponding')}</ContributorLabel>
-        <ContributorLabel>{t('publication:contributors.orcid')}</ContributorLabel>
+        <ContributorLabel>{t('common:orcid')}</ContributorLabel>
       </StyledContributor.ContributorContainer>
       {contributors
         .filter(contributor => contributor.type === 'Author' && contributor.verified)

@@ -6,7 +6,6 @@
     "authors": "Forfattere",
     "corresponding": "Korresponderende",
     "institution": "Institusjon",
-    "orcid": "ORCID",
     "type": "Bidragstype",
     "verify_person": "Verifiser"
   },
@@ -16,7 +15,7 @@
     "description": "Beskrivelse",
     "npi_disciplines": "NPI Fagfelt",
     "project": "Prosjekt",
-    "project_assosiation": "Prosjekttilknytning",
+    "project_association": "Prosjekttilknytning",
     "tags": "Nøkkelord"
   },
   "files_and_license_heading": "Filer og lisens",

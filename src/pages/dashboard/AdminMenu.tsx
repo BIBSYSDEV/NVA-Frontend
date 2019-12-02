@@ -35,10 +35,10 @@ const AdminMenu: React.FC = () => {
     <>
       {user.id && (
         <StyledAdminMenu>
-          <StyledHeader>{t('Admin panel')}</StyledHeader>
+          <StyledHeader>{t('admin_panel')}</StyledHeader>
           <MuiLink component={Link} to="/resources/new">
             <StyledButton color="primary" variant="contained" data-testid="new-registration-button">
-              {t('New registration')}
+              + {t('new_registration')}
             </StyledButton>
           </MuiLink>
         </StyledAdminMenu>

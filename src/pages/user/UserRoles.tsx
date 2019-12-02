@@ -15,7 +15,7 @@ const UserRoles: React.FC<UserRolesProps> = ({ user }) => {
   const { roles } = user;
 
   return (
-    <UserCard headerLabel={t('Roles')} subHeaderLabel={t('Info from NVA')}>
+    <UserCard headerLabel={t('profile:heading.roles')} subHeaderLabel={t('profile:info_nva')}>
       {roles &&
         user.roles.map((role: RoleName) => {
           if (role === RoleName.PUBLISHER) {
@@ -23,8 +23,8 @@ const UserRoles: React.FC<UserRolesProps> = ({ user }) => {
               <IconLabelTextLine
                 dataTestId="user-role"
                 icon={'create'}
-                label={role}
-                text={t('RoleDescription.Publisher')}
+                label={t('profile:roles.publisher')}
+                text={t('profile:roles.publisher_description')}
                 key={role}
               />
             );
@@ -33,8 +33,8 @@ const UserRoles: React.FC<UserRolesProps> = ({ user }) => {
               <IconLabelTextLine
                 dataTestId="user-role"
                 icon="all_inbox"
-                label={role}
-                text={t('RoleDescription.Curator')}
+                label={t('profile:roles.curator')}
+                text={t('profile:roles.curator_description')}
                 key={role}
               />
             );

@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
+import styled from 'styled-components';
 
 import { List, ListItem, ListItemIcon, ListItemText, Typography } from '@material-ui/core';
 import ImageIcon from '@material-ui/icons/Image';
@@ -11,7 +12,6 @@ import { search } from '../../api/searchApi';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { ResourceMetadata } from '../../types/resource.types';
 import { SEARCH_RESULTS_PER_PAGE } from '../../utils/constants';
-import styled from 'styled-components';
 
 interface SearchResultsProps {
   resources: ResourceMetadata[];
@@ -39,7 +39,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ resources, searchTerm }) 
 
   return (
     <StyledSearchResults data-testid="search-results">
-      {t('Results', { count: results.totalNumberOfHits, term: searchTerm })} ({offset + 1} - {offset + resources.length}
+      {t('results', { count: results.totalNumberOfHits, term: searchTerm })} ({offset + 1} - {offset + resources.length}
       )
       <List>
         {resources &&
