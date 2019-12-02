@@ -1,5 +1,9 @@
 {
+  "date": "Date",
   "information": "Information",
+  "name": "Name",
   "next": "Next",
-  "save": "Save"
+  "save": "Save",
+  "search": "Search",
+  "title": "Title"
 }

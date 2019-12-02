@@ -1,5 +1,9 @@
 {
+  "date": "Dato",
   "information": "Information",
+  "name": "Navn",
   "next": "Neste",
-  "save": "Lagre"
+  "save": "Lagre",
+  "search": "Søk",
+  "title": "Tittel"
 }

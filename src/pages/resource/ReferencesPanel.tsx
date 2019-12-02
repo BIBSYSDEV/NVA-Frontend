@@ -70,10 +70,10 @@ export const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, t
                     {values && values.publisher && values.publisher.title && (
                       <div>
                         <p>
-                          {t('publication:references.title')}: {values.publisher.title}
+                          {t('common:title')}: {values.publisher.title}
                         </p>
                         <p>
-                          {t('publication:references.ISSN')}: {values.publisher.issn}
+                          {t('publication:references.issn')}: {values.publisher.issn}
                         </p>
                         <p>
                           {t('publication:references.level')}: {values.publisher.level}

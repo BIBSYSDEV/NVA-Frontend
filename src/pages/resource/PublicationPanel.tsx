@@ -73,7 +73,7 @@ const PublicationPanel: React.FC<PublicationPanelProps> = ({ goToNextTab, tabNum
           <OrcidPublicationPanel expanded={expanded === 'orcid-panel'} onChange={handleChange('orcid-panel')} />
         </StyledSelectorWrapper>
         <StyledInfoBox>
-          <header>{t('publication:publication.information')}</header>
+          <header>{t('common:information')}</header>
           <section>
             Velg publikasjoner Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
             ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut

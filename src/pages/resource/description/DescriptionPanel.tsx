@@ -103,7 +103,7 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
                 <Field
                   aria-label="title"
                   name="title"
-                  label={t('publication:description.title')}
+                  label={t('common:title')}
                   component={TextField}
                   fullWidth
                   variant="outlined"
@@ -163,7 +163,7 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
                     variant="outlined"
                     fullWidth
                     component={Select}
-                    label={t('publication:description.date')}>
+                    label={t('common:date')}>
                     {languages.map(language => (
                       <MenuItem
                         value={language.code}

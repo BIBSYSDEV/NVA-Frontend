@@ -6,8 +6,7 @@
     "authors": "Authors",
     "corresponding": "Corresponding",
     "institution": "Institution",
-    "name": "Name",
-    "ORCID": "ORCID",
+    "orcid": "ORCID",
     "type": "Contributor type",
     "verify_person": "Verify"
   },
@@ -15,12 +14,10 @@
   "description": {
     "abstract": "Abstract",
     "description": "Description",
-    "date": "Date",
-    "NPI_disciplines": "NPI disciplines",
+    "npi_disciplines": "NPI disciplines",
     "project": "Project",
     "project_association": "Project assosiation",
-    "tags": "Tags",
-    "title": "Title"
+    "tags": "Tags"
   },
   "feedback": {
     "invalid_url": "Invalid URL",
@@ -34,19 +31,16 @@
   "publication_heading": "Publication",
   "publication": {
     "date": "Publication date or year",
-    "information": "Information",
     "link_publication_description": "E.g. DOI link, link to article, link to video of lecture etc.",
     "link_to_publication": "Link to publication",
     "load_file": "Load file",
     "load_file_description": "Load file...",
-    "ORCID_link": "ORCID link",
-    "resource": "Resource",
-    "search": "Search"
+    "orcid_link": "ORCID link",
+    "resource": "Resource"
   },
   "references_heading": "References",
   "references": {
-    "title": "Title",
-    "ISSN": "ISSN",
+    "issn": "ISSN",
     "level": "Level",
     "publisher": "Publisher"
   },

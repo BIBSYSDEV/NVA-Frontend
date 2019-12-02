@@ -6,21 +6,18 @@
     "authors": "Forfattere",
     "corresponding": "Korresponderende",
     "institution": "Institusjon",
-    "name": "Navn",
-    "ORCID": "ORCID",
+    "orcid": "ORCID",
     "type": "Bidragstype",
     "verify_person": "Verifiser"
   },
   "description_heading": "Beskrivelse",
   "description": {
     "abstract": "Sammendrag",
-    "date": "Dato",
     "description": "Beskrivelse",
-    "NPI_disciplines": "NPI Fagfelt",
+    "npi_disciplines": "NPI Fagfelt",
     "project": "Prosjekt",
     "project_assosiation": "Prosjekttilknytning",
-    "tags": "Nøkkelord",
-    "title": "Tittel"
+    "tags": "Nøkkelord"
   },
   "files_and_license_heading": "Filer og lisens",
   "files_and_license": {
@@ -34,19 +31,16 @@
   "publication_heading": "Publikasjon",
   "publication": {
     "date": "Publiseringsdato eller år",
-    "information": "Informasjon",
     "link_publication_description": "Feks. DOI lenke, lenke til artikkel, lenke til video av foredrag etc.",
     "link_to_publication": "Link til publikasjon",
     "load_file": "Last opp fil",
     "load_file_description": "Last opp fil...",
-    "ORCID_link": "ORCID-link",
-    "resource": "Ressurs",
-    "search": "Søk"
+    "orcid_link": "ORCID-link",
+    "resource": "Ressurs"
   },
   "references_heading": "Referanser",
   "references": {
-    "title": "Tittel",
-    "ISSN": "ISSN",
+    "issn": "ISSN",
     "level": "Nivå",
     "publisher": "Utgiver"
   },
