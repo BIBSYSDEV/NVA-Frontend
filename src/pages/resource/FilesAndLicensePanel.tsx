@@ -13,7 +13,7 @@ interface FilesAndLicensePanelProps {
 }
 
 const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab, tabNumber }) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('publication');
   const errors = useSelector((store: RootStore) => store.errors);
 
   return (
@@ -22,12 +22,12 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab
       ariaLabel="files and license"
       goToNextTab={goToNextTab}
       errors={errors.filesAndLicenseErrors}
-      heading={t('publication:heading.files_and_license')}>
-      <h1>{t('publication:files_and_license.upload_files')}</h1>
+      heading={t('heading.files_and_license')}>
+      <h1>{t('files_and_license.upload_files')}</h1>
       <Box>
         <UppyFileUpload />
       </Box>
-      <h1>{t('publication:files_and_license.files')}</h1>
+      <h1>{t('files_and_license.files')}</h1>
       <Box>TODO</Box>
     </TabPanel>
   );

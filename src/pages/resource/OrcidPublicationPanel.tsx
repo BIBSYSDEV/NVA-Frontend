@@ -11,17 +11,17 @@ interface OrcidPublicationPanelProps {
 }
 
 const OrcidPublicationPanel: React.FC<OrcidPublicationPanelProps> = ({ expanded, onChange }) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('profile');
 
   return (
     <PublicationExpansionPanel
-      headerLabel={t('profile:orcid.suggestions')}
+      headerLabel={t('orcid.suggestions')}
       icon={<SearchIcon className="icon" />}
       id="orcid-publication-panel"
       expanded={expanded}
       onChange={onChange}
       ariaControls="publication-method-orcid">
-      {t('profile:orcid.suggestions_description')}
+      {t('orcid.suggestions_description')}
     </PublicationExpansionPanel>
   );
 };

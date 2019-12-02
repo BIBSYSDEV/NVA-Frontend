@@ -21,7 +21,7 @@ interface ResourceFormTabsProps {
 
 export const ResourceFormTabs: React.FC<ResourceFormTabsProps> = ({ handleTabChange, tabNumber }) => {
   const errors = useSelector((store: RootStore) => store.errors);
-  const { t } = useTranslation();
+  const { t } = useTranslation('publication');
 
   return (
     <Tabs
@@ -32,19 +32,19 @@ export const ResourceFormTabs: React.FC<ResourceFormTabsProps> = ({ handleTabCha
       TabIndicatorProps={{ style: { backgroundColor: 'blue' } }}
       textColor="primary">
       <LinkTab
-        label={`1. ${t('publication:heading.publication')}`}
+        label={`1. ${t('heading.publication')}`}
         {...a11yProps('publication')}
         error={errors.publicationErrors && errors.publicationErrors.length > 0}
       />
       <LinkTab
-        label={`2. ${t('publication:heading.description')}`}
+        label={`2. ${t('heading.description')}`}
         {...a11yProps('description')}
         error={errors.descriptionErrors && errors.descriptionErrors.length > 0}
       />
-      <LinkTab label={`3. ${t('publication:heading.references')}`} {...a11yProps('references')} />
-      <LinkTab label={`4. ${t('publication:heading.contributors')}`} {...a11yProps('contributors')} />
-      <LinkTab label={`5. ${t('publication:heading.files_and_license')}`} {...a11yProps('files-and-license')} />
-      <LinkTab label={`6. ${t('publication:heading.submission')}`} {...a11yProps('submission')} />
+      <LinkTab label={`3. ${t('heading.references')}`} {...a11yProps('references')} />
+      <LinkTab label={`4. ${t('heading.contributors')}`} {...a11yProps('contributors')} />
+      <LinkTab label={`5. ${t('heading.files_and_license')}`} {...a11yProps('files-and-license')} />
+      <LinkTab label={`6. ${t('heading.submission')}`} {...a11yProps('submission')} />
     </Tabs>
   );
 };

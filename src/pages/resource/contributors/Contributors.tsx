@@ -21,7 +21,7 @@ const Contributors: React.FC<ContributorsProps> = ({ contributors, dispatch, onA
       <StyledContributor.MainHeading>{t('publication:contributors.authors')}</StyledContributor.MainHeading>
       <StyledContributor.ContributorContainer>
         <ContributorLabel>{t('common:name')}</ContributorLabel>
-        <ContributorLabel>{t('publication:contributors.institution')}</ContributorLabel>
+        <ContributorLabel>{t('common:institution')}</ContributorLabel>
         <ContributorLabel>{t('publication:contributors.corresponding')}</ContributorLabel>
         <ContributorLabel>{t('common:orcid')}</ContributorLabel>
       </StyledContributor.ContributorContainer>

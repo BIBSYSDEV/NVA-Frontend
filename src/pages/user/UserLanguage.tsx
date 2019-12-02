@@ -16,7 +16,7 @@ const StyledFormControl = styled(FormControl)`
 
 const UserLanguage: React.FC = () => {
   const [languageSelected, setLanguageSelected] = useState<Language | string>(defaultLanguage);
-  const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation('profile');
 
   useEffect(() => {
     const previouslySelectedLanguage = i18n.language;
@@ -29,7 +29,7 @@ const UserLanguage: React.FC = () => {
   };
 
   return (
-    <UserCard headerLabel={t('profile:heading.language')}>
+    <UserCard headerLabel={t('heading.language')}>
       <StyledFormControl variant="outlined">
         <Select value={languageSelected} onChange={handleLanguageChange} data-testid="language-selector">
           {languages.map(language => (

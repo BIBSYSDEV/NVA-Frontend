@@ -17,7 +17,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
       <LabelTextLine dataTestId="user-name" label={t('common:name')} text={user.name} />
       <LabelTextLine dataTestId="user-id" label={t('profile:id')} text={user.id} />
       <LabelTextLine dataTestId="user-email" label={t('profile:email')} text={user.email} />
-      <LabelTextLine dataTestId="user-institution" label={t('Institution')} text={user.institution} />
+      <LabelTextLine dataTestId="user-institution" label={t('common:institution')} text={user.institution} />
       <LabelTextLine dataTestId="user-applications" label={t('profile:applications')} text={user.application} />
     </UserCard>
   );

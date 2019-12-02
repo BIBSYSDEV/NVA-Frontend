@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
@@ -17,6 +18,7 @@ const StyledResource = styled.div`
 `;
 
 const ResourceForm: React.FC = () => {
+  const { t } = useTranslation('publication');
   const [tabNumber, setTabNumber] = useState(0);
   const formData = useSelector((store: RootStore) => store.formsData);
 
@@ -40,7 +42,7 @@ const ResourceForm: React.FC = () => {
       <ReferencesPanel tabNumber={tabNumber} goToNextTab={goToNextTab} />
       <ContributorsPanel tabNumber={tabNumber} goToNextTab={goToNextTab} saveResource={saveResource} />
       <FilesAndLicensPanel tabNumber={tabNumber} goToNextTab={goToNextTab} />
-      <TabPanel isHidden={tabNumber !== 5} ariaLabel="submission" heading="publication:heading.submission">
+      <TabPanel isHidden={tabNumber !== 5} ariaLabel="submission" heading={t('heading.submission')}>
         <div>Page Six</div>
       </TabPanel>
     </StyledResource>
