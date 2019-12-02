@@ -4,6 +4,7 @@
     "get_authorities": "Could not retrieve authorities",
     "get_cristin_project": "Search for projects failed",
     "get_orcid": "Could not get data from ORCID",
+    "get_publications": "Could not retrieve publications",
     "get_resource": "Could not get resource",
     "get_session": "Invalid session. Please log in again.",
     "get_user": "Failed to get user",
