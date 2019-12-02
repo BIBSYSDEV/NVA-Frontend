@@ -1,0 +1,54 @@
+{
+  "contributors_heading": "Contributors",
+  "contributors": {
+    "add_author": "Add authors",
+    "add_other_contributor": "Add more contributors",
+    "authors": "Authors",
+    "corresponding": "Corresponding",
+    "institution": "Institution",
+    "name": "Name",
+    "ORCID": "ORCID",
+    "type": "Contributor type",
+    "verify_person": "Verify"
+  },
+  "description_heading": "Description",
+  "description": {
+    "abstract": "Abstract",
+    "description": "Description",
+    "date": "Date",
+    "NPI_disciplines": "NPI disciplines",
+    "project": "Project",
+    "project_association": "Project assosiation",
+    "tags": "Tags",
+    "title": "Title"
+  },
+  "feedback": {
+    "invalid_url": "Invalid URL",
+    "required_field": "Required field"
+  },
+  "files_and_license_heading": "Files and License",
+  "files_and_license": {
+    "files": "Files",
+    "upload_files": "Upload Files"
+  },
+  "publication_heading": "Publication",
+  "publication": {
+    "date": "Publication date or year",
+    "information": "Information",
+    "link_publication_description": "E.g. DOI link, link to article, link to video of lecture etc.",
+    "link_to_publication": "Link to publication",
+    "load_file": "Load file",
+    "load_file_description": "Load file...",
+    "ORCID_link": "ORCID link",
+    "resource": "Resource",
+    "search": "Search"
+  },
+  "references_heading": "References",
+  "references": {
+    "title": "Title",
+    "ISSN": "ISSN",
+    "level": "Level",
+    "publisher": "Publisher"
+  },
+  "submission_heading": "Submission"
+}

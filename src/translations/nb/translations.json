@@ -6,15 +6,12 @@
   "Choose publication": "Velg publikasjon",
   "Create or Connect to your ORCID": "Opprett eller Koble til din ORCID",
   "Contact": "Kontaktinformasjon",
-  "Contributors": "Bidragsytere",
   "Create": "Opprett",
   "Curator": "Kurator",
   "Dashboard": "Dashboard",
-  "Description": "Beskrivelse",
   "description_what_is_ORCID": "Beskrivelse av ORCID",
   "description_why_ORCID": "Med ORCID blir det enklere å identifisere deg som forfatter. Vi kan også hente informasjon fra ORCID, som kan gjøre det raskere for deg å registrere dine publikasjoner.",
   "Email": "Epost",
-  "Files and License": "Filer og lisens",
   "ID": "ID",
   "Info from Feide": "Info hentet fra Feide",
   "Info from NVA": "Info hentet fra NVA",
@@ -22,8 +19,7 @@
   "Invalid email": "Ugyldig epost",
   "Language": "Språk",
   "Learn more at ": "Les mer på ",
-  "Load file": "Last opp fil",
-  "load_file_description": "Load file...",
+
   "Log in to your ORCID account or create new ORCID account": "Logg inn på din ORCID-konto eller lag ny dersom du ikke har konto",
   "Login": "Logg inn",
   "Logout": "Logg ut",
@@ -32,63 +28,9 @@
   "Name": "Navn",
   "New registration": "+ Ny registrering",
   "New resource": "Ny ressurs",
-  "common": {
-    "next": "Neste",
-    "save": "Lagre"
-  },
-  "resource_form": {
-    "title": "Tittel",
-    "description": "Beskrivelse",
-    "abstract": "Sammendrag",
-    "NPI": "NPI Fagfelt ",
-    "NPI_disciplines": "NPI Fagfelt",
-    "tags": "Nøkkelord",
-    "publication_date": "Publiseringsdato eller år",
-    "language": "Språk",
-    "project_assosiation": "Prosjekttilknytning",
-    "project": "Prosjekt",
-    "files_and_license": {
-      "header": "Filer og Lisens",
-      "upload_files": "Last opp filer",
-      "files": "Filer"
-    },
-    "feedback": {
-      "required_field": "Påkrevd felt",
-      "invalid_url": "Ugyldig lenke"
-    }
-  },
-  "contributors": {
-    "authors": "Forfattere",
-    "name": "Navn",
-    "institution": "Institusjon",
-    "corresponding": "Korresponderende",
-    "ORCID": "ORCID",
-    "verify_person": "Verifiser",
-    "add_author": "Legg til flere forfattere",
-    "add_other_contributor": "Legg til flere",
-    "type": "Bidragstype"
-  },
-  "Next": "Neste",
   "ORCID": "ORCID",
   "Organizations": "Tilhørighet",
   "Password": "Passord",
-  "Publication": "Publikasjon",
-  "publication_panel": {
-    "link_publication_description": "Feks. DOI lenke, lenke til artikkel, lenke til video av foredrag etc.",
-    "link_to_publication": "Link til publikasjon",
-    "next": "Neste",
-    "ORCID-link": "ORCID-lenke",
-    "resource": "Ressurs",
-    "search": "Søk"
-  },
-  "Publisher": "Utgiver",
-  "reference_tab": {
-    "title": "Tittel",
-    "ISSN": "ISSN",
-    "level": "Nivå",
-    "publisher": "Utgiver"
-  },
-  "References": "Referanser",
   "Register new resource": "Registrer ny ressurs",
   "Registration": "Registrering",
   "Required field": "Påkrevd felt",
@@ -102,7 +44,6 @@
   "Roles": "Roller",
   "Search": "Søk",
   "Skip this step (can be configured in 'profile' later)": "Hopp over nå (kan gjøres under 'profil' senere)",
-  "Submission": "Innsending",
   "Suggestions from ORCID": "Forslag fra ORCID",
   "suggestions_from_ORCID_description": "Forslag fra ORCID...",
   "User information": "Brukerinformasjon",

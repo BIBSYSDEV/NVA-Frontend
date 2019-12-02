@@ -20,9 +20,9 @@ const OtherContributors: React.FC<OtherContributorsProps> = ({ contributors, dis
       <StyledContributor.MainHeading>Bidragsytere</StyledContributor.MainHeading>
 
       <StyledContributor.OtherContributorContainer>
-        <ContributorLabel>{t('contributors.type')}</ContributorLabel>
-        <ContributorLabel>{t('contributors.name')}</ContributorLabel>
-        <ContributorLabel>{t('contributors.institution')}</ContributorLabel>
+        <ContributorLabel>{t('publication:contributors.type')}</ContributorLabel>
+        <ContributorLabel>{t('publication:contributors.name')}</ContributorLabel>
+        <ContributorLabel>{t('publication:contributors.institution')}</ContributorLabel>
         <div className="contributor-delete-icon" />
       </StyledContributor.OtherContributorContainer>
 
@@ -35,7 +35,7 @@ const OtherContributors: React.FC<OtherContributorsProps> = ({ contributors, dis
         variant="text"
         startIcon={<StyledContributor.AddIcon />}
         onClick={onAddOtherContributor}>
-        {t('contributors.add_other_contributor')}
+        {t('publication:contributors.add_other_contributor')}
       </StyledContributor.AuthorsButton>
     </StyledContributor.Box>
   );

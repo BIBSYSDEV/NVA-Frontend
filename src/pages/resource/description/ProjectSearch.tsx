@@ -1,10 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import useDebounce from '../../../utils/hooks/useDebounce';
-import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import AutoSearch from '../../../components/AutoSearch';
+import { useDispatch } from 'react-redux';
+
 import { searchCristinProjects } from '../../../api/external/cristinProjectApi';
+import AutoSearch from '../../../components/AutoSearch';
 import { CristinProjectType, NormalizedProjectType } from '../../../types/project.types';
+import useDebounce from '../../../utils/hooks/useDebounce';
 
 interface ProjectSearchProps {
   setFieldValue: (name: string, value: any) => void;
@@ -46,7 +47,7 @@ const ProjectSearch: React.FC<ProjectSearchProps> = ({ setFieldValue }) => {
       onInputChange={(_, value) => setSearchTerm(value)}
       searchResults={searchResults}
       setFieldValue={value => setFieldValue('project', value)}
-      label={t('resource_form.project')}
+      label={t('publication:description.project')}
     />
   );
 };

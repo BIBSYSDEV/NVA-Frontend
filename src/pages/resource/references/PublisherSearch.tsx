@@ -46,7 +46,7 @@ const PublisherSearch: React.FC<PublisherSearchProps> = ({ setFieldValue }) => {
       onInputChange={(_, value) => setSearchTerm(value)}
       searchResults={searchResults}
       setFieldValue={value => setFieldValue('publisher', value)}
-      label={t('Publisher')}
+      label={t('publication:references.publisher')}
     />
   );
 };

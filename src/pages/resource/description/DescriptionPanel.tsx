@@ -3,24 +3,24 @@ import { Select, TextField } from 'formik-material-ui';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
+import styled from 'styled-components';
 import * as Yup from 'yup';
 
 import DateFnsUtils from '@date-io/date-fns';
 import { MenuItem } from '@material-ui/core';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 
+import Box from '../../../components/Box';
+import TabPanel from '../../../components/TabPanel/TabPanel';
 import { clearFormErrors, formError } from '../../../redux/actions/validationActions';
 import { RootStore } from '../../../redux/reducers/rootReducer';
 import { languages } from '../../../translations/i18n';
-import { ResourceFormTabs } from '../../../types/resource.types';
 import { emptyResourceDescription, ResourceDescriptionFormData } from '../../../types/form.types';
-import FormikDatePicker from './../FormikDatePicker';
-import styled from 'styled-components';
-import Box from '../../../components/Box';
-import TabPanel from '../../../components/TabPanel/TabPanel';
-import ProjectSearch from './ProjectSearch';
+import { ResourceFormTabs } from '../../../types/resource.types';
 import useFormPersistor from '../../../utils/hooks/useFormPersistor';
 import DisciplineSearch from '../description/DisciplineSearch';
+import FormikDatePicker from '../FormikDatePicker';
+import ProjectSearch from './ProjectSearch';
 
 const MultipleFieldWrapper = styled.div`
   display: flex;
@@ -49,7 +49,7 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
   const [persistedFormData, setPersistedFormData, clearPersistedData] = useFormPersistor('resourceDescription');
 
   const resourceSchema = Yup.object().shape({
-    title: Yup.string().required(t('resource_form.feedback.required_field')),
+    title: Yup.string().required(t('publication:feedback.required_field')),
   });
 
   const validateAndPersistValues = (values: ResourceDescriptionFormData) => {
@@ -84,7 +84,7 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
       goToNextTab={goToNextTab}
       onClickSave={saveAndClearLocalStorage}
       errors={errors.descriptionErrors}
-      heading="Description">
+      heading="publication:description_heading">
       <Box>
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <Formik
@@ -103,7 +103,7 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
                 <Field
                   aria-label="title"
                   name="title"
-                  label={t('resource_form.title')}
+                  label={t('publication:description.title')}
                   component={TextField}
                   fullWidth
                   variant="outlined"
@@ -113,7 +113,7 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
                 <Field
                   aria-label="abstract"
                   name="abstract"
-                  label={t('resource_form.abstract')}
+                  label={t('publication:description.abstract')}
                   component={TextField}
                   multiline
                   rows="4"
@@ -125,7 +125,7 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
                 <Field
                   aria-label="description"
                   name="description"
-                  label={t('resource_form.description')}
+                  label={t('publication:description.description')}
                   component={TextField}
                   multiline
                   rows="4"
@@ -143,7 +143,7 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
                   <Field
                     aria-label="keyword"
                     name="keyword"
-                    label={t('resource_form.tags')}
+                    label={t('publication:description.tags')}
                     component={TextField}
                     fullWidth
                     variant="outlined"
@@ -163,7 +163,7 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
                     variant="outlined"
                     fullWidth
                     component={Select}
-                    label={t('date')}>
+                    label={t('publication:description.date')}>
                     {languages.map(language => (
                       <MenuItem
                         value={language.code}
@@ -176,7 +176,7 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
                 </StyledFieldWrapper>
               </MultipleFieldWrapper>
 
-              <StyledFieldHeader>{t('resource_form.project_assosiation')}</StyledFieldHeader>
+              <StyledFieldHeader>{t('publication:description.project_assosiation')}</StyledFieldHeader>
 
               <StyledFieldWrapper>
                 <Field name="project">

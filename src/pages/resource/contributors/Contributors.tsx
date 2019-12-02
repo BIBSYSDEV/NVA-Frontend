@@ -18,12 +18,12 @@ const Contributors: React.FC<ContributorsProps> = ({ contributors, dispatch, onA
 
   return (
     <StyledContributor.Box>
-      <StyledContributor.MainHeading>{t('contributors.authors')}</StyledContributor.MainHeading>
+      <StyledContributor.MainHeading>{t('publication:contributors.authors')}</StyledContributor.MainHeading>
       <StyledContributor.ContributorContainer>
-        <ContributorLabel>{t('contributors.name')}</ContributorLabel>
-        <ContributorLabel>{t('contributors.institution')}</ContributorLabel>
-        <ContributorLabel>{t('contributors.corresponding')}</ContributorLabel>
-        <ContributorLabel>{t('contributors.ORCID')}</ContributorLabel>
+        <ContributorLabel>{t('publication:contributors.name')}</ContributorLabel>
+        <ContributorLabel>{t('publication:contributors.institution')}</ContributorLabel>
+        <ContributorLabel>{t('publication:contributors.corresponding')}</ContributorLabel>
+        <ContributorLabel>{t('publication:contributors.ORCID')}</ContributorLabel>
       </StyledContributor.ContributorContainer>
       {contributors
         .filter(contributor => contributor.type === 'Author' && contributor.verified)
@@ -36,7 +36,7 @@ const Contributors: React.FC<ContributorsProps> = ({ contributors, dispatch, onA
           <ContributorValidator contributor={contributor} key={contributor.id} dispatch={dispatch} />
         ))}
       <StyledContributor.AuthorsButton variant="text" startIcon={<StyledContributor.AddIcon />} onClick={onAddAuthor}>
-        {t('contributors.add_author')}
+        {t('publication:contributors.add_author')}
       </StyledContributor.AuthorsButton>
     </StyledContributor.Box>
   );

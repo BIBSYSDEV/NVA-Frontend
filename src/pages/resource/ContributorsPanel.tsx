@@ -48,7 +48,7 @@ const ContributorsPanel: React.FC<ContributorsPanelProps> = ({ goToNextTab, tabN
       goToNextTab={goToNextTab}
       onClickSave={saveResource}
       errors={errors.contributorsErrors}
-      heading="Contributors">
+      heading="publication:contributors_heading">
       <Contributors contributors={contributors} dispatch={dispatch} onAddAuthor={onAddAuthor} />
       <OtherContributors
         contributors={contributors}
