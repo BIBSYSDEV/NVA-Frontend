@@ -84,7 +84,7 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
       goToNextTab={goToNextTab}
       onClickSave={saveAndClearLocalStorage}
       errors={errors.descriptionErrors}
-      heading="publication:heading.description">
+      heading={t('publication:heading.description')}>
       <Box>
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <Formik

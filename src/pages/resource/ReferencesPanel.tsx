@@ -37,7 +37,7 @@ export const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, t
       ariaLabel="references"
       goToNextTab={goToNextTab}
       errors={errors.referencesErrors}
-      heading="publication:heading.references">
+      heading={t('publication:heading.references')}>
       <Box>
         <Formik
           enableReinitialize
