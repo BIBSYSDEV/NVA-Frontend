@@ -6,6 +6,7 @@ import { Marc21Codes, Marc21Subcodes, Authority } from '../../../types/authority
 import { AlmaPublication } from '../../../types/resource.types';
 import { useDispatch } from 'react-redux';
 import { getPublications } from '../../../api/external/almaApi';
+import { Radio } from '@material-ui/core';
 
 const StyledBoxContent = styled.div`
   display: grid;
@@ -15,9 +16,10 @@ const StyledBoxContent = styled.div`
 
 interface AuthorityCardProps {
   authority: Authority;
+  isSelected: boolean;
 }
 
-const AuthorityCard: React.FC<AuthorityCardProps> = ({ authority }) => {
+const AuthorityCard: React.FC<AuthorityCardProps> = ({ authority, isSelected }) => {
   const [publications, setPublications] = useState<AlmaPublication[]>([]);
   const dispatch = useDispatch();
 
@@ -40,7 +42,10 @@ const AuthorityCard: React.FC<AuthorityCardProps> = ({ authority }) => {
   return (
     <Box>
       <StyledBoxContent>
-        <div>{authorityName && authorityName.value}</div>
+        <div>
+          <Radio color="primary" checked={isSelected} />
+          {authorityName && authorityName.value}
+        </div>
         <div>{publications.length ? publications[0].title : null}</div>
       </StyledBoxContent>
     </Box>
