@@ -1,5 +1,4 @@
 {
-  "contributors_heading": "Bidragsytere",
   "contributors": {
     "add_author": "Legg til flere forfattere",
     "add_other_contributor": "Legg til flere",
@@ -9,7 +8,6 @@
     "type": "Bidragstype",
     "verify_person": "Verifiser"
   },
-  "description_heading": "Beskrivelse",
   "description": {
     "abstract": "Sammendrag",
     "description": "Beskrivelse",
@@ -18,7 +16,6 @@
     "project_association": "Prosjekttilknytning",
     "tags": "Nøkkelord"
   },
-  "files_and_license_heading": "Filer og lisens",
   "files_and_license": {
     "files": "Filer",
     "upload_files": "Last opp filer"
@@ -27,21 +24,25 @@
     "invalid_url": "Ugyldig lenke",
     "required_field": "Påkrevd felt"
   },
-  "publication_heading": "Publikasjon",
+  "heading": {
+    "contributors": "Bidragsytere",
+    "description": "Beskrivelse",
+    "files_and_license": "Filer og lisens",
+    "publication": "Publikasjon",
+    "references": "Referanser",
+    "submission": "Innsending"
+  },
   "publication": {
     "date": "Publiseringsdato eller år",
     "link_publication_description": "Feks. DOI lenke, lenke til artikkel, lenke til video av foredrag etc.",
     "link_to_publication": "Link til publikasjon",
     "load_file": "Last opp fil",
     "load_file_description": "Last opp fil...",
-    "orcid_link": "ORCID-link",
-    "resource": "Ressurs"
+    "orcid_link": "ORCID-link"
   },
-  "references_heading": "Referanser",
   "references": {
     "issn": "ISSN",
     "level": "Nivå",
     "publisher": "Utgiver"
-  },
-  "submission_heading": "Innsending"
+  }
 }

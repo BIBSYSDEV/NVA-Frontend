@@ -61,7 +61,7 @@ const PublicationPanel: React.FC<PublicationPanelProps> = ({ goToNextTab, tabNum
       ariaLabel="publication"
       goToNextTab={goToNextTab}
       errors={errors.publicationErrors}
-      heading="publication:publication_heading">
+      heading="publication:heading.publication">
       <StyledPublicationPanel>
         <StyledSelectorWrapper>
           <LoadPublicationPanel expanded={expanded === 'load-panel'} onChange={handleChange('load-panel')} />

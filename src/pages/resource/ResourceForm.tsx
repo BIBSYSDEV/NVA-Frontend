@@ -40,7 +40,7 @@ const ResourceForm: React.FC = () => {
       <ReferencesPanel tabNumber={tabNumber} goToNextTab={goToNextTab} />
       <ContributorsPanel tabNumber={tabNumber} goToNextTab={goToNextTab} saveResource={saveResource} />
       <FilesAndLicensPanel tabNumber={tabNumber} goToNextTab={goToNextTab} />
-      <TabPanel isHidden={tabNumber !== 5} ariaLabel="submission" heading="publication:submission_heading">
+      <TabPanel isHidden={tabNumber !== 5} ariaLabel="submission" heading="publication:heading.submission">
         <div>Page Six</div>
       </TabPanel>
     </StyledResource>

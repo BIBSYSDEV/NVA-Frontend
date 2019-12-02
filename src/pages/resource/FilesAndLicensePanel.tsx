@@ -22,7 +22,7 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab
       ariaLabel="files and license"
       goToNextTab={goToNextTab}
       errors={errors.filesAndLicenseErrors}
-      heading={t('publication:files_and_license_heading')}>
+      heading={t('publication:heading.files_and_license')}>
       <h1>{t('publication:files_and_license.upload_files')}</h1>
       <Box>
         <UppyFileUpload />

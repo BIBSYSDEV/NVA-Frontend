@@ -1,5 +1,4 @@
 {
-  "contributors_heading": "Contributors",
   "contributors": {
     "add_author": "Add authors",
     "add_other_contributor": "Add more contributors",
@@ -9,7 +8,6 @@
     "type": "Contributor type",
     "verify_person": "Verify"
   },
-  "description_heading": "Description",
   "description": {
     "abstract": "Abstract",
     "description": "Description",
@@ -22,26 +20,29 @@
     "invalid_url": "Invalid URL",
     "required_field": "Required field"
   },
-  "files_and_license_heading": "Files and License",
   "files_and_license": {
     "files": "Files",
     "upload_files": "Upload Files"
   },
-  "publication_heading": "Publication",
+  "heading": {
+    "contributors": "Contributors",
+    "description": "Description",
+    "files_and_license": "Files and License",
+    "publication": "Publication",
+    "references": "References",
+    "submission": "Submission"
+  },
   "publication": {
     "date": "Publication date or year",
     "link_publication_description": "E.g. DOI link, link to article, link to video of lecture etc.",
     "link_to_publication": "Link to publication",
     "load_file": "Load file",
     "load_file_description": "Load file...",
-    "orcid_link": "ORCID link",
-    "resource": "Resource"
+    "orcid_link": "ORCID link"
   },
-  "references_heading": "References",
   "references": {
     "issn": "ISSN",
     "level": "Level",
     "publisher": "Publisher"
-  },
-  "submission_heading": "Submission"
+  }
 }
