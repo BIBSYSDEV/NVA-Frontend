@@ -61,7 +61,7 @@ const LinkPublicationPanel: React.FC<LinkPublicationPanelProps> = ({ expanded, o
         <LinkPublicationPanelForm handleSearch={handleSearch} />
         {doiTitle && (
           <>
-            <StyledHeading> {t('publication:publication.resource')}:</StyledHeading>
+            <StyledHeading> {t('publication:heading.publication')}:</StyledHeading>
             <StyledTitle>{doiTitle}</StyledTitle>
             <Button fullWidth color="primary" variant="contained" onClick={handleConfirm}>
               {t('common:next')}

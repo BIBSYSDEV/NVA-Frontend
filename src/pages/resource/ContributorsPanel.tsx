@@ -1,4 +1,5 @@
 import React, { useReducer, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 
 import TabPanel from '../../components/TabPanel/TabPanel';
@@ -18,6 +19,7 @@ interface ContributorsPanelProps {
 }
 
 const ContributorsPanel: React.FC<ContributorsPanelProps> = ({ goToNextTab, tabNumber, saveResource }) => {
+  const { t } = useTranslation('publication');
   const errors = useSelector((store: RootStore) => store.errors);
   const initialState = USE_MOCK_DATA ? mockContributors : [];
   const [contributors, dispatch] = useReducer(contributorReducer, initialState);
@@ -48,7 +50,7 @@ const ContributorsPanel: React.FC<ContributorsPanelProps> = ({ goToNextTab, tabN
       goToNextTab={goToNextTab}
       onClickSave={saveResource}
       errors={errors.contributorsErrors}
-      heading="publication:contributors_heading">
+      heading={t('heading.contributors')}>
       <Contributors contributors={contributors} dispatch={dispatch} onAddAuthor={onAddAuthor} />
       <OtherContributors
         contributors={contributors}

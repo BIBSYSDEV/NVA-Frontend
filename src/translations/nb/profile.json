@@ -1,6 +1,40 @@
 {
-  "connect_authority": "Koble til din forfatter ID",
   "authority": {
     "search_summary": "{{results}} treff for \"{{searchTerm}}\""
+  },
+  "applications": "Applikasjoner",
+  "email": "Epost",
+  "heading": {
+    "author_info": "Forfatter-informasjon",
+    "connect_authority": "Koble til din forfatter ID",
+    "contact_info": "Kontaktinformasjon",
+    "language": "Språk",
+    "organizations": "Tilhørighet",
+    "roles": "Roller",
+    "user_info": "Brukerinformasjon"
+  },
+  "id": "ID",
+  "info_feide": "Info hentet fra Feide",
+  "info_nva": "Info hentet fra NVA",
+  "my_profile": "Min profil",
+  "orcid": {
+    "create_or_connect": "Opprett eller koble til din ORCID",
+    "description_what_is_orcid": "Beskrivelse av ORCID",
+    "description_why_use_orcid": "Med ORCID blir det enklere å identifisere deg som forfatter. Vi kan også hente informasjon fra ORCID, som kan gjøre det raskere for deg å registrere dine publikasjoner.",
+    "learn_more": "Les mer på ",
+    "login": "Logg inn på din ORCID-konto eller lag ny dersom du ikke har konto",
+    "registration": "Registrering",
+    "skip_this_step": "Hopp over nå (kan gjøres under 'profil' senere)",
+    "suggestions": "Forslag fra ORCID",
+    "suggestions_description": "Forslag fra ORCID...",
+    "what": "Hva er ORCID?",
+    "why": "Hvorfor ber vi om ORCID?",
+    "your_orcid": "Din ORCID"
+  },
+  "roles": {
+    "curator": "Kurator",
+    "curator_description": "Kurator er tilgangen alle som kan godkjenne og publisere for andre har",
+    "publisher": "Utgiver",
+    "publisher_description": "Utgiver er den tilgangen ansatte på institusjonen har. Gir tilgang til å registrere egne publikasjoner"
   }
 }

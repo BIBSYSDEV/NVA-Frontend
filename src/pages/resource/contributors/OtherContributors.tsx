@@ -21,8 +21,8 @@ const OtherContributors: React.FC<OtherContributorsProps> = ({ contributors, dis
 
       <StyledContributor.OtherContributorContainer>
         <ContributorLabel>{t('publication:contributors.type')}</ContributorLabel>
-        <ContributorLabel>{t('publication:contributors.name')}</ContributorLabel>
-        <ContributorLabel>{t('publication:contributors.institution')}</ContributorLabel>
+        <ContributorLabel>{t('common:name')}</ContributorLabel>
+        <ContributorLabel>{t('common:institution')}</ContributorLabel>
         <div className="contributor-delete-icon" />
       </StyledContributor.OtherContributorContainer>
 

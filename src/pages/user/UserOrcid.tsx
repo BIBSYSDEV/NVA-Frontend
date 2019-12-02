@@ -3,10 +3,10 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 
 import ButtonModal from '../../components/ButtonModal';
-import { RootStore } from '../../redux/reducers/rootReducer';
-import UserCard from './UserCard';
 import LabelTextLine from '../../components/LabelTextLine';
+import { RootStore } from '../../redux/reducers/rootReducer';
 import OrcidModal from './OrcidModal';
+import UserCard from './UserCard';
 
 const UserOrcid: React.FC = () => {
   const { t } = useTranslation();
@@ -14,12 +14,17 @@ const UserOrcid: React.FC = () => {
   const OrcidLink = `https://orcid.org/${user.orcid}`;
 
   return (
-    <UserCard headerLabel={t('ORCID')}>
+    <UserCard headerLabel={t('common:orcid')}>
       {user.orcid ? (
-        <LabelTextLine dataTestId={'orcid-info'} label={t('Your ORCID')} text={OrcidLink} externalLink={OrcidLink} />
+        <LabelTextLine
+          dataTestId={'orcid-info'}
+          label={t('profile:orcid.your_orcid')}
+          text={OrcidLink}
+          externalLink={OrcidLink}
+        />
       ) : (
         <ButtonModal
-          buttonText={t('Create or Connect to your ORCID')}
+          buttonText={t('profile:orcid.create_or_connect')}
           dataTestId="open-orcid-modal"
           startIcon={<img src="https://orcid.org/sites/default/files/images/orcid_24x24.png" alt="ORCID iD icon" />}>
           {({ setOpen }: any) => <OrcidModal setOpen={setOpen} />}

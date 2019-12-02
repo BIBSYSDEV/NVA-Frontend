@@ -1,9 +1,9 @@
 import React from 'react';
-import PublicationExpansionPanel from './PublicationExpansionPanel';
+import { useTranslation } from 'react-i18next';
 
 import SearchIcon from '@material-ui/icons/Search';
 
-import { useTranslation } from 'react-i18next';
+import PublicationExpansionPanel from './PublicationExpansionPanel';
 
 interface OrcidPublicationPanelProps {
   expanded: boolean;
@@ -11,17 +11,17 @@ interface OrcidPublicationPanelProps {
 }
 
 const OrcidPublicationPanel: React.FC<OrcidPublicationPanelProps> = ({ expanded, onChange }) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('profile');
 
   return (
     <PublicationExpansionPanel
-      headerLabel={t('Suggestions from ORCID')}
+      headerLabel={t('orcid.suggestions')}
       icon={<SearchIcon className="icon" />}
       id="orcid-publication-panel"
       expanded={expanded}
       onChange={onChange}
       ariaControls="publication-method-orcid">
-      {t('suggestions_from_ORCID_description')}
+      {t('orcid.suggestions_description')}
     </PublicationExpansionPanel>
   );
 };

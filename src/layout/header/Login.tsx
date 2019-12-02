@@ -1,8 +1,9 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button } from '@material-ui/core';
 import styled from 'styled-components';
+
+import { Button } from '@material-ui/core';
 
 import { login, logout } from '../../api/userApi';
 import { RootStore } from '../../redux/reducers/rootReducer';
@@ -33,7 +34,7 @@ const Login: React.FC = () => {
         <Menu menuButtonLabel={user.name} handleLogout={handleLogout} />
       ) : (
         <Button color="primary" variant="contained" onClick={handleLogin} data-testid="login-button">
-          {t('Login')}
+          {t('login')}
         </Button>
       )}
     </StyledLoginComponent>
