@@ -11,11 +11,13 @@
     "login": "Kunne ikke logge inn",
     "orcid_login": "Kunne ikke logge inn på ORCID",
     "search": "Søk feilet",
-    "update_resource": "Kunne ikke oppdatere ressurs"
+    "update_resource": "Kunne ikke oppdatere ressurs",
+    "update_authority": "Kunne ikke oppdatere autoritet"
   },
   "success": {
     "create_resource": "Ressursen er opprettet",
     "login": "Logget inn",
-    "update_resource": "Ressursen er oppdatert"
+    "update_resource": "Ressursen er oppdatert",
+    "update_authority": "Forfatter er oppdatert"
   }
 }

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getAuthorities } from '../../../api/external/authorityRegisterApi';
+import { getAuthorities, updateAuthority } from '../../../api/external/authorityRegisterApi';
 import { RootStore } from '../../../redux/reducers/rootReducer';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
@@ -37,6 +37,22 @@ export const ConnectAuthority: React.FC = () => {
     }
   }, [dispatch, searchTerm]);
 
+  const setFeideIdForSelectedAuthority = async () => {
+    const authority = matchingAuthorities.find(auth => auth.systemControlNumber === selectedAuthorityScn);
+
+    if (authority) {
+      // Ensure we keep all existing data when adding Feide ID
+      const oldFeideIds = authority.identifiersMap.feide;
+      const newFeideIds = oldFeideIds ? [...oldFeideIds, user.id] : [user.id];
+      authority.identifiersMap = {
+        ...authority.identifiersMap,
+        feide: newFeideIds,
+      };
+
+      await updateAuthority(authority, dispatch);
+    }
+  };
+
   return (
     <StyledAuthorityContainer>
       {t('authority.search_summary', { results: matchingAuthorities.length, searchTerm: searchTerm })}
@@ -53,7 +69,7 @@ export const ConnectAuthority: React.FC = () => {
           color="primary"
           variant="contained"
           size="large"
-          onClick={() => console.log('scn:', selectedAuthorityScn)}
+          onClick={setFeideIdForSelectedAuthority}
           disabled={!selectedAuthorityScn.length}>
           {t('authority.connect_authority')}
         </Button>
