@@ -70,7 +70,7 @@ export const ConnectAuthority: React.FC = () => {
           variant="contained"
           size="large"
           onClick={setFeideIdForSelectedAuthority}
-          disabled={!selectedAuthorityScn.length}>
+          disabled={!selectedAuthorityScn}>
           {t('authority.connect_authority')}
         </Button>
       )}
