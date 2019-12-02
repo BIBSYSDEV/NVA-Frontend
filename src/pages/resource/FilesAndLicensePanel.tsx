@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import Box from '../../components/Box';
 import TabPanel from '../../components/TabPanel/TabPanel';
 import { RootStore } from '../../redux/reducers/rootReducer';
-import UppyFileUpload from './UppyFileUpload';
+import UppyFileUpload from './files_and_license_tab/UppyFileUpload';
 
 interface FilesAndLicensePanelProps {
   goToNextTab: (event: React.MouseEvent<any>) => void;

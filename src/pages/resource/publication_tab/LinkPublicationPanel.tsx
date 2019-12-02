@@ -6,8 +6,8 @@ import styled from 'styled-components';
 import { Button } from '@material-ui/core';
 import LinkIcon from '@material-ui/icons/Link';
 
-import { createNewResourceFromDoi, lookupDoiTitle } from '../../api/resourceApi';
-import { RootStore } from '../../redux/reducers/rootReducer';
+import { createNewResourceFromDoi, lookupDoiTitle } from '../../../api/resourceApi';
+import { RootStore } from '../../../redux/reducers/rootReducer';
 import LinkPublicationPanelForm from './LinkPublicationPanelForm';
 import PublicationExpansionPanel from './PublicationExpansionPanel';
 

@@ -9,8 +9,8 @@ import { RootStore } from '../../redux/reducers/rootReducer';
 import { emptyContributor } from '../../types/contributor.types';
 import { USE_MOCK_DATA } from '../../utils/constants';
 import mockContributors from '../../utils/testfiles/contributors.json';
-import Contributors from './contributors/Contributors';
-import OtherContributors from './contributors/OtherContributors';
+import Contributors from './contributors_tab/Contributors';
+import OtherContributors from './contributors_tab/OtherContributors';
 
 interface ContributorsPanelProps {
   goToNextTab: (event: React.MouseEvent<any>) => void;
