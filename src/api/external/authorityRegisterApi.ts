@@ -50,12 +50,10 @@ export const getAuthorityById = async (id: string, dispatch: Dispatch, idType: s
       // Return authority object or undefined if none
       return response.data[0];
     } else {
-      dispatch(
-        addNotification({ message: i18n.t('feedback:error.get_authorities'), variant: 'error', key: uuid.v4() })
-      );
+      dispatch(addNotification({ message: i18n.t('feedback:error.get_authority'), variant: 'error', key: uuid.v4() }));
     }
   } catch {
-    dispatch(addNotification({ message: i18n.t('feedback:error.get_authorities'), variant: 'error', key: uuid.v4() }));
+    dispatch(addNotification({ message: i18n.t('feedback:error.get_authority'), variant: 'error', key: uuid.v4() }));
   }
 };
 

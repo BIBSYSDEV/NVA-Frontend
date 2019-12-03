@@ -1,6 +1,7 @@
 {
   "error": {
     "create_resource": "Could not create resource",
+    "get_authority": "Could not retrieve authority",
     "get_authorities": "Could not retrieve authorities",
     "get_cristin_project": "Search for projects failed",
     "get_orcid": "Could not get data from ORCID",
