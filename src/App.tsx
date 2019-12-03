@@ -20,11 +20,12 @@ import Search from './pages/search/Search';
 import { ConnectAuthority } from './pages/user/authority/ConnectAuthority';
 import User from './pages/user/User';
 import Workspace from './pages/workspace/Workspace';
-import { setUser } from './redux/actions/userActions';
+import { setUser, setAuthorityData } from './redux/actions/userActions';
 import { RootStore } from './redux/reducers/rootReducer';
 import { awsConfig } from './utils/aws-config';
 import { USE_MOCK_DATA } from './utils/constants';
 import { hubListener } from './utils/hub-listener';
+import { getAuthorityById } from './api/external/authorityRegisterApi';
 
 const StyledApp = styled.div`
   height: 100vh;
@@ -46,6 +47,7 @@ const StyledPageBody = styled.div`
 const App: React.FC = () => {
   const dispatch = useDispatch();
   const auth = useSelector((store: RootStore) => store.auth);
+  const user = useSelector((store: RootStore) => store.user);
 
   useEffect(() => {
     if (USE_MOCK_DATA) {
@@ -59,6 +61,18 @@ const App: React.FC = () => {
       return () => Hub.remove('auth', data => hubListener(data, dispatch));
     }
   }, [dispatch, auth.isLoggedIn]);
+
+  useEffect(() => {
+    const getAuthority = async () => {
+      const authority = await getAuthorityById(user.id, dispatch);
+      if (authority) {
+        dispatch(setAuthorityData(authority));
+      }
+    };
+    if (user.id) {
+      getAuthority();
+    }
+  }, [dispatch, user.id]);
 
   return (
     <BrowserRouter>

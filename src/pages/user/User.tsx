@@ -13,6 +13,7 @@ import UserLanguage from './UserLanguage';
 import UserOrcid from './UserOrcid';
 import UserRoles from './UserRoles';
 import { Link } from 'react-router-dom';
+import { Button } from '@material-ui/core';
 
 const StyledUserPage = styled.div`
   display: grid;
@@ -64,7 +65,15 @@ const User: React.FC = () => {
         <UserCard headerLabel={t('Contact')} />
         <UserLanguage />
         <UserCard headerLabel={t('Author information')}>
-          <Link to="/user/authority">{t('profile:connect_authority')}</Link>
+          {user.authority ? (
+            <p>CONNECTED</p>
+          ) : (
+            <Link to="/user/authority">
+              <Button color="primary" variant="contained">
+                {t('profile:connect_authority')}
+              </Button>
+            </Link>
+          )}
         </UserCard>
       </StyledSecondaryUserInfo>
 

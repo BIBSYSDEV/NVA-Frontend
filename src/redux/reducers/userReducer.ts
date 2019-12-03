@@ -1,6 +1,6 @@
 import { ApplicationName, emptyUser, RoleName, User } from '../../types/user.types';
 import { OrcidActions, SET_ORCID_INFO } from '../actions/orcidActions';
-import { CLEAR_USER, SET_USER_SUCCESS, UserActions } from '../actions/userActions';
+import { CLEAR_USER, SET_USER_SUCCESS, SET_AUTHORITY_DATA, UserActions } from '../actions/userActions';
 
 export const userReducer = (state: User = emptyUser, action: UserActions | OrcidActions) => {
   switch (action.type) {
@@ -28,6 +28,11 @@ export const userReducer = (state: User = emptyUser, action: UserActions | Orcid
         ...state,
         orcidName: action.name,
         orcid: action.orcid,
+      };
+    case SET_AUTHORITY_DATA:
+      return {
+        ...state,
+        authority: action.authority,
       };
     default:
       return state;

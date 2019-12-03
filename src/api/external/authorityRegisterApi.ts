@@ -38,3 +38,22 @@ export const getAuthorities = async (
     dispatch(addNotification({ message: i18n.t('feedback:error.get_authorities'), variant: 'error', key: uuid.v4() }));
   }
 };
+
+export const getAuthorityById = async (id: string, dispatch: Dispatch, idType: string = 'feide') => {
+  const url = `${AUTHORITY_REGISTER_API_URL}/functions/v2/identifier/${idType}?id=${id}&format=json`;
+
+  try {
+    const response = await Axios.get(url);
+
+    if (response.status === StatusCode.OK) {
+      // Return authority object or undefined if none
+      return response.data[0];
+    } else {
+      dispatch(
+        addNotification({ message: i18n.t('feedback:error.get_authorities'), variant: 'error', key: uuid.v4() })
+      );
+    }
+  } catch {
+    dispatch(addNotification({ message: i18n.t('feedback:error.get_authorities'), variant: 'error', key: uuid.v4() }));
+  }
+};
