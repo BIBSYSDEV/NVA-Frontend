@@ -26,7 +26,9 @@ Parameters:
   UseMockData:
     Description: Set true to use mock data for testing purposes
     Type: String
-    Default: false
+  CloudfrontDistribution:
+    Description: Id for Cloudfront Distribution, used to invalidate files to reset cache
+    Type: String
 
 Resources:
   CodeBuildProject:
@@ -51,10 +53,6 @@ Resources:
             Value: !Ref 'AWS::Region'
       Source:
         Type: CODEPIPELINE
-  NvaFrontendBucket:
-    Type: 'AWS::S3::Bucket'
-    Properties:
-      BucketName: !Ref FrontendBucketName
 
   Pipeline:
     Type: AWS::CodePipeline::Pipeline
@@ -111,6 +109,44 @@ Resources:
                 BucketName: !Ref FrontendBucketName
                 Extract: true
               RunOrder: 1
+            - Name: InvalidateDistribution
+              ActionTypeId:
+                Category: Invoke
+                Owner: AWS
+                Provider: Lambda
+                Version: '1'
+              Configuration:
+                FunctionName: !Ref InvalidateCloudfrontDistribution
+                UserParameters: !Sub '{"distribution_id", "${CloudfrontDistribution}"}'
+
+  InvalidateCloudfrontDistribution:
+    Type: AWS::Lambda::Function
+    Properties:
+      Code:
+        ZipFile: |
+          import boto3
+
+          def handler(event, context):
+              client = boto3.client('cloudfront')
+              response = client.create_invalidation(
+                  DistributionId=event['distribution_id'],
+                  InvalidationBatch={
+                      'Paths': {
+                          'Quantity': 1,
+                          'Items': [
+                              '/*',
+                          ]
+                      },
+                      'CallerReference': '0'
+                  }
+              )
+      Role: !GetAtt InvalidateCloudfrontDistributionFunctionRole.Arn
+      Handler: index.handler
+      Description: Lambda to invalidate Cloudfront distribution
+      Runtime: python3.7
+      Timeout: 30
+      TracingConfig:
+        Mode: Active
 
   PipelineRole:
     Type: AWS::IAM::Role
@@ -143,7 +179,7 @@ Resources:
                   - 's3:GetObjectVersion'
                 Effect: Allow
                 Resource:
-                  - !Sub ${NvaFrontendBucket.Arn}/*
+                  - !Sub arn:aws:s3:::${FrontendBucketName}/*
               - Action:
                   - 'codebuild:StartBuild'
                   - 'codebuild:BatchGetBuilds'
@@ -152,6 +188,30 @@ Resources:
               - Action:
                   - 'ssm:getParameters'
                 Effect: Allow
+                Resource: '*'
+
+  InvalidateCloudfrontDistributionFunctionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      Path: '/'
+      Policies:
+        - PolicyName: InvalidateCloudformationDistributionPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - 'cloudfront:CreateInvalidation'
+                  - 'xray:PutTraceSegments'
                 Resource: '*'
 
   CodeBuildServiceRole:
@@ -200,7 +260,6 @@ Resources:
                   - 'ssm:GetParameters'
                   - 'secretsmanager:GetSecretValue'
                 Resource: '*'
-
 
   ArtifactStoreBucket:
     Type: AWS::S3::Bucket

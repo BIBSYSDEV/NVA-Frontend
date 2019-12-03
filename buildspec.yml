@@ -31,10 +31,6 @@ phases:
   build:
     commands:
       - npm run build
-  post-build:
-    commands:
-      - copy to s3...
-      - invalidate cloudfront distribution...
 artifacts:
   files:
     - '**/*'
