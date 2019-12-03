@@ -201,7 +201,6 @@ Resources:
                   - 'secretsmanager:GetSecretValue'
                 Resource: '*'
 
-
   ArtifactStoreBucket:
     Type: AWS::S3::Bucket
     Properties:

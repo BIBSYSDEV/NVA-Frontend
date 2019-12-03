@@ -1,8 +1,9 @@
 {
+  "applications": "Applikasjoner",
   "authority": {
+    "connect_authority": "Koble til forfatteridentitet",
     "search_summary": "{{results}} treff for \"{{searchTerm}}\""
   },
-  "applications": "Applikasjoner",
   "email": "Epost",
   "heading": {
     "author_info": "Forfatter-informasjon",

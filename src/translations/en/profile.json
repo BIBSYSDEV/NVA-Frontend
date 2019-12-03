@@ -1,6 +1,7 @@
 {
-  "applications": "applications",
+  "applications": "Applications",
   "authority": {
+    "connect_authority": "Connect your author ID",
     "search_summary": "{{results}} results for \"{{searchTerm}}\""
   },
   "email": "Email",
