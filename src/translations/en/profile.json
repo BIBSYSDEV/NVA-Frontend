@@ -2,11 +2,14 @@
   "applications": "Applications",
   "authority": {
     "connect_authority": "Connect your author ID",
-    "search_summary": "{{results}} results for \"{{searchTerm}}\""
+    "connected_info": "You have a connected author ID",
+    "not_connected_info": "To be identified as an author we need a to the library system",
+    "search_summary": "{{results}} results for \"{{searchTerm}}\"",
+    "see_profile": "See author profile"
   },
   "email": "Email",
   "heading": {
-    "author_info": "Author information",
+    "author_info": "Author ID",
     "connect_authority": "Connect your author ID",
     "contact_info": "Contact",
     "language": "Language",

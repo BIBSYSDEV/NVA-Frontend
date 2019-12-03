@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { Button } from '@material-ui/core';
+import { Button, Link as MuiLink } from '@material-ui/core';
 
 import { getOrcidInfo } from '../../api/orcidApi';
 import { orcidSignInFailure } from '../../redux/actions/orcidActions';
@@ -38,7 +38,7 @@ const StyledPrimaryUserInfo = styled.div`
 `;
 
 const User: React.FC = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('profile');
   const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
@@ -62,17 +62,23 @@ const User: React.FC = () => {
     <StyledUserPage>
       <StyledSecondaryUserInfo>
         <UserCard headerLabel="Bilde" />
-        <UserCard headerLabel={t('profile:heading.contact_info')} />
+        <UserCard headerLabel={t('heading.contact_info')} />
         <UserLanguage />
-        <UserCard headerLabel={t('Author information')}>
+        <UserCard headerLabel={t('heading.author_info')}>
           {user.authority ? (
-            <p>CONNECTED</p>
+            <>
+              <p>{t('authority.connected_info')}</p>
+              <MuiLink href={user.authority.identifiersMap.handle[0]}>{t('authority.see_profile')}</MuiLink>
+            </>
           ) : (
-            <Link to="/user/authority">
-              <Button color="primary" variant="contained">
-                {t('profile:connect_authority')}
-              </Button>
-            </Link>
+            <>
+              <p>{t('authority.not_connected_info')}</p>
+              <Link to="/user/authority">
+                <Button color="primary" variant="contained">
+                  {t('authority.connect_authority')}
+                </Button>
+              </Link>
+            </>
           )}
         </UserCard>
       </StyledSecondaryUserInfo>
@@ -80,7 +86,7 @@ const User: React.FC = () => {
       <StyledPrimaryUserInfo>
         <UserInfo user={user} />
         <UserRoles user={user} />
-        <UserCard headerLabel={t('profile:heading.organizations')} />
+        <UserCard headerLabel={t('heading.organizations')} />
         <UserOrcid />
       </StyledPrimaryUserInfo>
     </StyledUserPage>

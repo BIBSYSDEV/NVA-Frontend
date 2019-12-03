@@ -1,12 +1,15 @@
 {
   "applications": "Applikasjoner",
   "authority": {
-    "connect_authority": "Koble til forfatteridentitet",
-    "search_summary": "{{results}} treff for \"{{searchTerm}}\""
+    "connect_authority": "Koble til din forfatteridentitet",
+    "connected_info": "Du har en tilkoblet forfatter ID",
+    "not_connected_info": "For å identifisere deg som forfatter trenger vi en kobling til biblioteksystemet.",
+    "search_summary": "{{results}} treff for \"{{searchTerm}}\"",
+    "see_profile": "Se forfatterprofil"
   },
   "email": "Epost",
   "heading": {
-    "author_info": "Forfatter-informasjon",
+    "author_info": "Forfatter ID",
     "connect_authority": "Koble til din forfatter ID",
     "contact_info": "Kontaktinformasjon",
     "language": "Språk",
