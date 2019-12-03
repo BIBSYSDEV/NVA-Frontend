@@ -15,6 +15,6 @@ describe('Publication', () => {
 
   it('The user should not be able to go to the registration page for publication if not logged in', () => {
     cy.visit('/resources/new');
-    cy.get('[data-testid=401]').should('be.visible');
+    cy.get('[data-testid=404]').should('be.visible');
   });
 });
