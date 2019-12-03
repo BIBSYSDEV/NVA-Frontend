@@ -2,7 +2,6 @@ describe('Env-variables', () => {
   test('tests that mandatory environment variables are set', async () => {
     const requiredEnv = [
       'REACT_APP_AWS_COGNITO_IDENTITY_POOL_ID',
-      'REACT_APP_AWS_REGION',
       'REACT_APP_AWS_USER_POOLS_ID',
       'REACT_APP_AWS_USER_POOLS_WEB_CLIENT_ID',
       'REACT_APP_DOMAIN',
