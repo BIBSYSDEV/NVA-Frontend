@@ -10,17 +10,17 @@ import DateFnsUtils from '@date-io/date-fns';
 import { MenuItem } from '@material-ui/core';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 
-import Box from '../../../components/Box';
-import TabPanel from '../../../components/TabPanel/TabPanel';
-import { clearFormErrors, formError } from '../../../redux/actions/validationActions';
-import { RootStore } from '../../../redux/reducers/rootReducer';
-import { languages } from '../../../translations/i18n';
-import { emptyResourceDescription, ResourceDescriptionFormData } from '../../../types/form.types';
-import { ResourceFormTabs } from '../../../types/resource.types';
-import useFormPersistor from '../../../utils/hooks/useFormPersistor';
-import DisciplineSearch from '../description/DisciplineSearch';
-import FormikDatePicker from '../FormikDatePicker';
-import ProjectSearch from './ProjectSearch';
+import Box from '../../components/Box';
+import TabPanel from '../../components/TabPanel/TabPanel';
+import { clearFormErrors, formError } from '../../redux/actions/validationActions';
+import { RootStore } from '../../redux/reducers/rootReducer';
+import { languages } from '../../translations/i18n';
+import { emptyResourceDescription, ResourceDescriptionFormData } from '../../types/form.types';
+import { ResourceFormTabs } from '../../types/resource.types';
+import useFormPersistor from '../../utils/hooks/useFormPersistor';
+import DisciplineSearch from './description_tab/DisciplineSearch';
+import FormikDatePicker from './description_tab/FormikDatePicker';
+import ProjectSearch from './description_tab/ProjectSearch';
 
 const MultipleFieldWrapper = styled.div`
   display: flex;

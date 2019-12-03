@@ -8,9 +8,9 @@ import { Link as MuiLink } from '@material-ui/core';
 
 import TabPanel from '../../components/TabPanel/TabPanel';
 import { RootStore } from '../../redux/reducers/rootReducer';
-import LinkPublicationPanel from './LinkPublicationPanel';
-import LoadPublicationPanel from './LoadPublicationPanel';
-import OrcidPublicationPanel from './OrcidPublicationPanel';
+import LinkPublicationPanel from './publication_tab/LinkPublicationPanel';
+import LoadPublicationPanel from './publication_tab/LoadPublicationPanel';
+import OrcidPublicationPanel from './publication_tab/OrcidPublicationPanel';
 
 const StyledPublicationPanel = styled.div`
   width: 100%;
