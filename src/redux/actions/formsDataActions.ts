@@ -1,17 +1,26 @@
-import { ResourceDescriptionFormData } from '../../types/form.types';
+import { DescriptionFormData, ReferencesFormData } from '../../types/form.types';
 
-export const UPDATE_RESOURCE_DESCRIPTION_FORM_DATA = 'update resource description form data';
+export const UPDATE_DESCRIPTION_FORM_DATA = 'update description form data';
+export const UPDATE_REFERENCES_FORM_DATA = 'update references form data';
 
-export const updateResourceDescriptionFormData = (
-  resourceDescriptionData: ResourceDescriptionFormData
-): UpdateResourceDescriptionFormData => ({
-  type: UPDATE_RESOURCE_DESCRIPTION_FORM_DATA,
-  resourceDescriptionData,
+export const updateDescriptionFormData = (descriptionData: DescriptionFormData): UpdateDescriptionFormData => ({
+  type: UPDATE_DESCRIPTION_FORM_DATA,
+  descriptionData,
 });
 
-interface UpdateResourceDescriptionFormData {
-  type: typeof UPDATE_RESOURCE_DESCRIPTION_FORM_DATA;
-  resourceDescriptionData: ResourceDescriptionFormData;
+interface UpdateDescriptionFormData {
+  type: typeof UPDATE_DESCRIPTION_FORM_DATA;
+  descriptionData: DescriptionFormData;
 }
 
-export type FormActions = UpdateResourceDescriptionFormData;
+export const updateReferencesFormData = (referencesData: ReferencesFormData): UpdateReferencesFormData => ({
+  type: UPDATE_REFERENCES_FORM_DATA,
+  referencesData,
+});
+
+interface UpdateReferencesFormData {
+  type: typeof UPDATE_REFERENCES_FORM_DATA;
+  referencesData: ReferencesFormData;
+}
+
+export type FormActions = UpdateDescriptionFormData | UpdateReferencesFormData;

@@ -15,7 +15,7 @@ import TabPanel from '../../components/TabPanel/TabPanel';
 import { clearFormErrors, formError } from '../../redux/actions/validationActions';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { languages } from '../../translations/i18n';
-import { emptyResourceDescription, ResourceDescriptionFormData } from '../../types/form.types';
+import { DescriptionFormData, emptyDescriptionForm } from '../../types/form.types';
 import { ResourceFormTabs } from '../../types/resource.types';
 import useFormPersistor from '../../utils/hooks/useFormPersistor';
 import DisciplineSearch from './description_tab/DisciplineSearch';
@@ -52,7 +52,7 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
     title: Yup.string().required(t('publication:feedback.required_field')),
   });
 
-  const validateAndPersistValues = (values: ResourceDescriptionFormData) => {
+  const validateAndPersistValues = (values: DescriptionFormData) => {
     setPersistedFormData(values);
     try {
       resourceSchema.validateSync(values, { abortEarly: false });
@@ -68,13 +68,13 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
   };
 
   const initialFormikValues = {
-    title: persistedFormData.title || emptyResourceDescription.title,
-    abstract: persistedFormData.abstract || emptyResourceDescription.abstract,
-    description: persistedFormData.description || emptyResourceDescription.description,
-    npi: persistedFormData.npi || emptyResourceDescription.npi,
-    language: persistedFormData.language || emptyResourceDescription.language,
-    date: persistedFormData.date || emptyResourceDescription.date,
-    project: persistedFormData.project || emptyResourceDescription.project,
+    title: persistedFormData.title || emptyDescriptionForm.title,
+    abstract: persistedFormData.abstract || emptyDescriptionForm.abstract,
+    description: persistedFormData.description || emptyDescriptionForm.description,
+    npi: persistedFormData.npi || emptyDescriptionForm.npi,
+    language: persistedFormData.language || emptyDescriptionForm.language,
+    date: persistedFormData.date || emptyDescriptionForm.date,
+    project: persistedFormData.project || emptyDescriptionForm.project,
   };
 
   return (

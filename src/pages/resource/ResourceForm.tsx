@@ -39,7 +39,7 @@ const ResourceForm: React.FC = () => {
       <ResourceFormTabs tabNumber={tabNumber} handleTabChange={handleTabChange} />
       <PublicationPanel tabNumber={tabNumber} goToNextTab={goToNextTab} />
       <DescriptionPanel tabNumber={tabNumber} goToNextTab={goToNextTab} saveResource={saveResource} />
-      <ReferencesPanel tabNumber={tabNumber} goToNextTab={goToNextTab} />
+      <ReferencesPanel tabNumber={tabNumber} goToNextTab={goToNextTab} saveResource={saveResource} />
       <ContributorsPanel tabNumber={tabNumber} goToNextTab={goToNextTab} saveResource={saveResource} />
       <FilesAndLicensePanel tabNumber={tabNumber} goToNextTab={goToNextTab} />
       <TabPanel isHidden={tabNumber !== 5} ariaLabel="submission" heading={t('heading.submission')}>
