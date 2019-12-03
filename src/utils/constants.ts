@@ -37,6 +37,7 @@ const requiredEnv = [
   'REACT_APP_ORCID_BASE_URL',
   'REACT_APP_PUBLICATION_CHANNEL_API_URL',
   'REACT_APP_AUTHORITY_REGISTER_API_URL',
+  'REACT_APP_CRISTIN_API_URL',
 ];
 const unsetEnv = requiredEnv.filter(env => !(typeof process.env[env] !== 'undefined'));
 if (unsetEnv.length > 0) {
