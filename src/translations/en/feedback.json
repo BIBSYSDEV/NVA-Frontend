@@ -11,11 +11,13 @@
     "login": "Login failed",
     "orcid_login": "ORCID login failed",
     "search": "Search failed",
+    "update_authority": "Could not update authority",
     "update_resource": "Could not update resource"
   },
   "success": {
     "create_resource": "New resource created",
     "login": "Logged in",
+    "update_authority": "Updated authority",
     "update_resource": "Updated resource"
   }
 }

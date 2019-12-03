@@ -2,7 +2,9 @@ import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { Button } from '@material-ui/core';
 
 import { getOrcidInfo } from '../../api/orcidApi';
 import { orcidSignInFailure } from '../../redux/actions/orcidActions';
@@ -12,8 +14,6 @@ import UserInfo from './UserInfo';
 import UserLanguage from './UserLanguage';
 import UserOrcid from './UserOrcid';
 import UserRoles from './UserRoles';
-import { Link } from 'react-router-dom';
-import { Button } from '@material-ui/core';
 
 const StyledUserPage = styled.div`
   display: grid;
@@ -62,7 +62,7 @@ const User: React.FC = () => {
     <StyledUserPage>
       <StyledSecondaryUserInfo>
         <UserCard headerLabel="Bilde" />
-        <UserCard headerLabel={t('Contact')} />
+        <UserCard headerLabel={t('profile:heading.contact_info')} />
         <UserLanguage />
         <UserCard headerLabel={t('Author information')}>
           {user.authority ? (
@@ -80,7 +80,7 @@ const User: React.FC = () => {
       <StyledPrimaryUserInfo>
         <UserInfo user={user} />
         <UserRoles user={user} />
-        <UserCard headerLabel={t('Organizations')} />
+        <UserCard headerLabel={t('profile:heading.organizations')} />
         <UserOrcid />
       </StyledPrimaryUserInfo>
     </StyledUserPage>

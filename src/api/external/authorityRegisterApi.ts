@@ -5,6 +5,7 @@ import i18n from '../../translations/i18n';
 import { addNotification } from '../../redux/actions/notificationActions';
 import { StatusCode, AUTHORITY_REGISTER_API_URL } from '../../utils/constants';
 import uuid from 'uuid';
+import { Authority } from '../../types/authority.types';
 
 enum AuthorityTypes {
   PERSON = 'PERSON',
@@ -34,7 +35,7 @@ export const getAuthorities = async (
         addNotification({ message: i18n.t('feedback:error.get_authorities'), variant: 'error', key: uuid.v4() })
       );
     }
-  } catch (error) {
+  } catch {
     dispatch(addNotification({ message: i18n.t('feedback:error.get_authorities'), variant: 'error', key: uuid.v4() }));
   }
 };
@@ -55,5 +56,26 @@ export const getAuthorityById = async (id: string, dispatch: Dispatch, idType: s
     }
   } catch {
     dispatch(addNotification({ message: i18n.t('feedback:error.get_authorities'), variant: 'error', key: uuid.v4() }));
+  }
+};
+
+export const updateAuthority = async (authority: Authority, dispatch: Dispatch) => {
+  const url = `${AUTHORITY_REGISTER_API_URL}/authorities/v2/${authority.systemControlNumber}`;
+
+  try {
+    const response = await Axios.put(url, authority);
+
+    if (response.status === StatusCode.OK) {
+      dispatch(
+        addNotification({ message: i18n.t('feedback:success.update_authority'), variant: 'success', key: uuid.v4() })
+      );
+      return response.data;
+    } else {
+      dispatch(
+        addNotification({ message: i18n.t('feedback:error.update_authority'), variant: 'error', key: uuid.v4() })
+      );
+    }
+  } catch {
+    dispatch(addNotification({ message: i18n.t('feedback:error.update_authority'), variant: 'error', key: uuid.v4() }));
   }
 };

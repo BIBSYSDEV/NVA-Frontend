@@ -1,6 +1,41 @@
 {
-  "connect_authority": "Connect your author ID",
+  "applications": "Applications",
   "authority": {
+    "connect_authority": "Connect your author ID",
     "search_summary": "{{results}} results for \"{{searchTerm}}\""
+  },
+  "email": "Email",
+  "heading": {
+    "author_info": "Author information",
+    "connect_authority": "Connect your author ID",
+    "contact_info": "Contact",
+    "language": "Language",
+    "organizations": "Organizations",
+    "roles": "Roles",
+    "user_info": "User information"
+  },
+  "id": "ID",
+  "info_feide": "Info retrieved from Feide",
+  "info_nva": "Info retrieved from NVA",
+  "my_profile": "My profile",
+  "orcid": {
+    "create_or_connect": "Create or connect to your ORCID",
+    "description_what_is_orcid": "ORCID is an independent non-profit effort to provide an open registry of unique researcher identifiers and open services to link research activities and organizations to these identifiers.",
+    "description_why_use_orcid": "Why use ORCID",
+    "learn_more": "Learn more at ",
+    "login": "Log in to your ORCID account or create new ORCID account",
+    "registration": "Registration",
+    "skip_this_step": "Skip this step (can be configured in 'profile' later)",
+    "suggestions": "Suggestions from ORCID",
+    "suggestions_description": "Suggestions from ORCID...",
+    "what": "What is ORCID?",
+    "why": "Why should I connect to ORCID?",
+    "your_orcid": "Your ORCID"
+  },
+  "roles": {
+    "curator": "Curator",
+    "curator_description": "A Curator is a person whom has access to approve and publish other researcher's work",
+    "publisher": "Publisher",
+    "publisher_description": "A Publisher is a person whom is employed at the organization. A publisher has also access to register their own publications"
   }
 }

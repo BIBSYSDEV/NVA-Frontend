@@ -48,7 +48,7 @@ const TabPanel: React.FC<TabPanelProps> = ({
         errors.map((error: any) => (
           <LabelTextLine key={error.path} label={error.path} text={`${error.name} - ${error.message}`} />
         ))}
-      <StyledHeading>{t(heading)}</StyledHeading>
+      <StyledHeading>{heading}</StyledHeading>
       {children}
       {goToNextTab && (
         <StyledButton color="primary" variant="contained" onClick={goToNextTab}>

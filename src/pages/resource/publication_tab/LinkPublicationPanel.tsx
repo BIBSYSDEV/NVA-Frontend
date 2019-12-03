@@ -6,8 +6,8 @@ import styled from 'styled-components';
 import { Button } from '@material-ui/core';
 import LinkIcon from '@material-ui/icons/Link';
 
-import { createNewResourceFromDoi, lookupDoiTitle } from '../../api/resourceApi';
-import { RootStore } from '../../redux/reducers/rootReducer';
+import { createNewResourceFromDoi, lookupDoiTitle } from '../../../api/resourceApi';
+import { RootStore } from '../../../redux/reducers/rootReducer';
 import LinkPublicationPanelForm from './LinkPublicationPanelForm';
 import PublicationExpansionPanel from './PublicationExpansionPanel';
 
@@ -61,7 +61,7 @@ const LinkPublicationPanel: React.FC<LinkPublicationPanelProps> = ({ expanded, o
         <LinkPublicationPanelForm handleSearch={handleSearch} />
         {doiTitle && (
           <>
-            <StyledHeading> {t('publication:publication.resource')}:</StyledHeading>
+            <StyledHeading> {t('publication:heading.publication')}:</StyledHeading>
             <StyledTitle>{doiTitle}</StyledTitle>
             <Button fullWidth color="primary" variant="contained" onClick={handleConfirm}>
               {t('common:next')}

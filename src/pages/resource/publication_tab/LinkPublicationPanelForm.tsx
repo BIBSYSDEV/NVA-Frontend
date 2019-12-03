@@ -46,11 +46,11 @@ const LinkPublicationPanelForm: React.FC<LinkPublicationPanelFormProps> = ({ han
             name="doiUrl"
             variant="outlined"
             fullWidth
-            label={t('publication:publication.ORCID_link')}
+            label={t('publication:publication.orcid_link')}
             component={TextField}
           />
           <Button color="primary" variant="contained" type="submit">
-            {t('publication:publication.search')}
+            {t('common:search')}
           </Button>
         </StyledInputBox>
       </Form>

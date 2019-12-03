@@ -10,17 +10,17 @@ import DateFnsUtils from '@date-io/date-fns';
 import { MenuItem } from '@material-ui/core';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 
-import Box from '../../../components/Box';
-import TabPanel from '../../../components/TabPanel/TabPanel';
-import { clearFormErrors, formError } from '../../../redux/actions/validationActions';
-import { RootStore } from '../../../redux/reducers/rootReducer';
-import { languages } from '../../../translations/i18n';
-import { emptyResourceDescription, ResourceDescriptionFormData } from '../../../types/form.types';
-import { ResourceFormTabs } from '../../../types/resource.types';
-import useFormPersistor from '../../../utils/hooks/useFormPersistor';
-import DisciplineSearch from '../description/DisciplineSearch';
-import FormikDatePicker from '../FormikDatePicker';
-import ProjectSearch from './ProjectSearch';
+import Box from '../../components/Box';
+import TabPanel from '../../components/TabPanel/TabPanel';
+import { clearFormErrors, formError } from '../../redux/actions/validationActions';
+import { RootStore } from '../../redux/reducers/rootReducer';
+import { languages } from '../../translations/i18n';
+import { emptyResourceDescription, ResourceDescriptionFormData } from '../../types/form.types';
+import { ResourceFormTabs } from '../../types/resource.types';
+import useFormPersistor from '../../utils/hooks/useFormPersistor';
+import DisciplineSearch from './description_tab/DisciplineSearch';
+import FormikDatePicker from './description_tab/FormikDatePicker';
+import ProjectSearch from './description_tab/ProjectSearch';
 
 const MultipleFieldWrapper = styled.div`
   display: flex;
@@ -84,7 +84,7 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
       goToNextTab={goToNextTab}
       onClickSave={saveAndClearLocalStorage}
       errors={errors.descriptionErrors}
-      heading="publication:description_heading">
+      heading={t('publication:heading.description')}>
       <Box>
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <Formik
@@ -103,7 +103,7 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
                 <Field
                   aria-label="title"
                   name="title"
-                  label={t('publication:description.title')}
+                  label={t('common:title')}
                   component={TextField}
                   fullWidth
                   variant="outlined"
@@ -163,7 +163,7 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
                     variant="outlined"
                     fullWidth
                     component={Select}
-                    label={t('publication:description.date')}>
+                    label={t('common:date')}>
                     {languages.map(language => (
                       <MenuItem
                         value={language.code}
@@ -176,7 +176,7 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
                 </StyledFieldWrapper>
               </MultipleFieldWrapper>
 
-              <StyledFieldHeader>{t('publication:description.project_assosiation')}</StyledFieldHeader>
+              <StyledFieldHeader>{t('publication:description.project_association')}</StyledFieldHeader>
 
               <StyledFieldWrapper>
                 <Field name="project">
