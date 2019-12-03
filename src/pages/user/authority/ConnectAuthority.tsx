@@ -20,7 +20,7 @@ const StyledClickableDiv = styled.div`
 
 export const ConnectAuthority: React.FC = () => {
   const [matchingAuthorities, setMatchingAuthorities] = useState<Authority[]>([]);
-  const [systemControlNumber, setSelectedSystemControlNumber] = useState<string>('');
+  const [selectedSystemControlNumber, setSelectedSystemControlNumber] = useState('');
   const user = useSelector((store: RootStore) => store.user);
   const dispatch = useDispatch();
   const { t } = useTranslation('profile');
@@ -38,7 +38,7 @@ export const ConnectAuthority: React.FC = () => {
   }, [dispatch, searchTerm]);
 
   const setFeideIdForSelectedAuthority = async () => {
-    const authority = matchingAuthorities.find(auth => auth.systemControlNumber === systemControlNumber);
+    const authority = matchingAuthorities.find(auth => auth.systemControlNumber === selectedSystemControlNumber);
 
     if (authority) {
       // Ensure we keep all existing data when adding Feide ID
@@ -60,7 +60,10 @@ export const ConnectAuthority: React.FC = () => {
         <StyledClickableDiv
           key={authority.systemControlNumber}
           onClick={() => setSelectedSystemControlNumber(authority.systemControlNumber)}>
-          <AuthorityCard authority={authority} isSelected={systemControlNumber === authority.systemControlNumber} />
+          <AuthorityCard
+            authority={authority}
+            isSelected={selectedSystemControlNumber === authority.systemControlNumber}
+          />
         </StyledClickableDiv>
       ))}
 
@@ -70,7 +73,7 @@ export const ConnectAuthority: React.FC = () => {
           variant="contained"
           size="large"
           onClick={setFeideIdForSelectedAuthority}
-          disabled={!systemControlNumber}>
+          disabled={!selectedSystemControlNumber}>
           {t('authority.connect_authority')}
         </Button>
       )}
