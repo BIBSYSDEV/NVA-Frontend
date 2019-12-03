@@ -6,7 +6,6 @@ import styled from 'styled-components';
 
 import { mockUser } from './api/mock-interceptor';
 import { getCurrentAuthenticatedUser } from './api/userApi';
-import PrivateRoute from './components/PrivateRoute';
 import Breadcrumbs from './layout/Breadcrumbs';
 import Footer from './layout/Footer';
 import Header from './layout/header/Header';
@@ -70,8 +69,8 @@ const App: React.FC = () => {
         <StyledPageBody>
           <Switch>
             <Route exact path="/" component={Dashboard} />
-            <PrivateRoute exact path="/resources" component={Workspace} />
-            <PrivateRoute exact path="/resources/new" component={ResourceForm} />
+            {auth.isLoggedIn && <Route exact path="/resources" component={Workspace} />}
+            {auth.isLoggedIn && <Route exact path="/resources/new" component={ResourceForm} />}
             <Route exact path="/search" component={Search} />
             <Route exact path="/search/:searchTerm" component={Search} />
             <Route exact path="/search/:searchTerm/:offset" component={Search} />
