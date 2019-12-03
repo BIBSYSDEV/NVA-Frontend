@@ -1,5 +1,10 @@
 import { emptyForms, FormsData } from '../../types/form.types';
-import { FormActions, UPDATE_DESCRIPTION_FORM_DATA, UPDATE_REFERENCES_FORM_DATA } from '../actions/formsDataActions';
+import {
+  FormActions,
+  UPDATE_CONTRIBUTORS_FORM_DATA,
+  UPDATE_DESCRIPTION_FORM_DATA,
+  UPDATE_REFERENCES_FORM_DATA,
+} from '../actions/formsDataActions';
 
 export const formsDataReducer = (state: FormsData = emptyForms, action: FormActions) => {
   switch (action.type) {
@@ -12,6 +17,11 @@ export const formsDataReducer = (state: FormsData = emptyForms, action: FormActi
       return {
         ...state,
         resourceReferences: action.referencesData,
+      };
+    case UPDATE_CONTRIBUTORS_FORM_DATA:
+      return {
+        ...state,
+        resourceContributors: action.contributorsData,
       };
     default:
       return state;
