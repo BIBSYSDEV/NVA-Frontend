@@ -29,7 +29,7 @@ const DisciplineSearch: React.FC<DisciplineSearchProps> = ({ setFieldValue }) =>
     <AutoSearch
       searchResults={searchResults}
       setFieldValue={(value: any) => setFieldValue('npi', value)}
-      label={t('publication:description.NPI_disciplines')}
+      label={t('publication:description.npi_disciplines')}
       groupBy={(discipline: DisciplineType) => discipline.mainDiscipline}
     />
   );

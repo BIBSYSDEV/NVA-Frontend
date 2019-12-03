@@ -1,5 +1,11 @@
 {
+  "date": "Date",
   "information": "Information",
+  "institution": "Institution",
+  "name": "Name",
   "next": "Next",
-  "save": "Save"
+  "orcid": "ORCID",
+  "save": "Save",
+  "search": "Search",
+  "title": "Title"
 }

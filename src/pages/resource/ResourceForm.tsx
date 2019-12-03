@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
@@ -6,7 +7,7 @@ import TabPanel from '../../components/TabPanel/TabPanel';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import ContributorsPanel from './ContributorsPanel';
 import DescriptionPanel from './description/DescriptionPanel';
-import FilesAndLicensPanel from './FilesAndLicensePanel';
+import FilesAndLicensePanel from './FilesAndLicensePanel';
 import PublicationPanel from './PublicationPanel';
 import { ReferencesPanel } from './ReferencesPanel';
 import { ResourceFormTabs } from './ResourceFormTabs';
@@ -17,6 +18,7 @@ const StyledResource = styled.div`
 `;
 
 const ResourceForm: React.FC = () => {
+  const { t } = useTranslation('publication');
   const [tabNumber, setTabNumber] = useState(0);
   const formData = useSelector((store: RootStore) => store.formsData);
 
@@ -39,8 +41,8 @@ const ResourceForm: React.FC = () => {
       <DescriptionPanel tabNumber={tabNumber} goToNextTab={goToNextTab} saveResource={saveResource} />
       <ReferencesPanel tabNumber={tabNumber} goToNextTab={goToNextTab} />
       <ContributorsPanel tabNumber={tabNumber} goToNextTab={goToNextTab} saveResource={saveResource} />
-      <FilesAndLicensPanel tabNumber={tabNumber} goToNextTab={goToNextTab} />
-      <TabPanel isHidden={tabNumber !== 5} ariaLabel="submission" heading="publication:submission_heading">
+      <FilesAndLicensePanel tabNumber={tabNumber} goToNextTab={goToNextTab} />
+      <TabPanel isHidden={tabNumber !== 5} ariaLabel="submission" heading={t('heading.submission')}>
         <div>Page Six</div>
       </TabPanel>
     </StyledResource>

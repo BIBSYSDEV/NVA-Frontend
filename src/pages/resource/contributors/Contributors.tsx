@@ -20,10 +20,10 @@ const Contributors: React.FC<ContributorsProps> = ({ contributors, dispatch, onA
     <StyledContributor.Box>
       <StyledContributor.MainHeading>{t('publication:contributors.authors')}</StyledContributor.MainHeading>
       <StyledContributor.ContributorContainer>
-        <ContributorLabel>{t('publication:contributors.name')}</ContributorLabel>
-        <ContributorLabel>{t('publication:contributors.institution')}</ContributorLabel>
+        <ContributorLabel>{t('common:name')}</ContributorLabel>
+        <ContributorLabel>{t('common:institution')}</ContributorLabel>
         <ContributorLabel>{t('publication:contributors.corresponding')}</ContributorLabel>
-        <ContributorLabel>{t('publication:contributors.ORCID')}</ContributorLabel>
+        <ContributorLabel>{t('common:orcid')}</ContributorLabel>
       </StyledContributor.ContributorContainer>
       {contributors
         .filter(contributor => contributor.type === 'Author' && contributor.verified)

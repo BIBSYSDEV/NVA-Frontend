@@ -61,7 +61,7 @@ const PublicationPanel: React.FC<PublicationPanelProps> = ({ goToNextTab, tabNum
       ariaLabel="publication"
       goToNextTab={goToNextTab}
       errors={errors.publicationErrors}
-      heading="publication:publication_heading">
+      heading={t('publication:heading.publication')}>
       <StyledPublicationPanel>
         <StyledSelectorWrapper>
           <LoadPublicationPanel expanded={expanded === 'load-panel'} onChange={handleChange('load-panel')} />
@@ -73,7 +73,7 @@ const PublicationPanel: React.FC<PublicationPanelProps> = ({ goToNextTab, tabNum
           <OrcidPublicationPanel expanded={expanded === 'orcid-panel'} onChange={handleChange('orcid-panel')} />
         </StyledSelectorWrapper>
         <StyledInfoBox>
-          <header>{t('publication:publication.information')}</header>
+          <header>{t('common:information')}</header>
           <section>
             Velg publikasjoner Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
             ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut

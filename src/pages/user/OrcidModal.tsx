@@ -40,7 +40,7 @@ interface OrcidModalProps {
 }
 
 const OrcidModal: React.FC<OrcidModalProps> = ({ setOpen }) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('profile');
   const history = useHistory();
 
   const openORCID = () => {
@@ -57,9 +57,9 @@ const OrcidModal: React.FC<OrcidModalProps> = ({ setOpen }) => {
 
   return (
     <div>
-      <StyledNavigationHelp>{t('Registration')} 2/2</StyledNavigationHelp>
-      <StyledHeading>{t('Create or Connect to your ORCID')}</StyledHeading>
-      <p>{t('Log in to your ORCID account or create new ORCID account')}</p>
+      <StyledNavigationHelp>{t('orcid.registration')} 2/2</StyledNavigationHelp>
+      <StyledHeading>{t('orcid.create_or_connect')}</StyledHeading>
+      <p>{t('orcid.login')}</p>
       <StyledButtonHolder>
         <Button
           data-testid="connect-to-orcid"
@@ -70,22 +70,22 @@ const OrcidModal: React.FC<OrcidModalProps> = ({ setOpen }) => {
           variant="outlined"
           size="large"
           startIcon={<img src="https://orcid.org/sites/default/files/images/orcid_24x24.png" alt="ORCID iD icon" />}>
-          {t('Create or Connect to your ORCID')}
+          {t('orcid.create_or_connect')}
         </Button>
       </StyledButtonHolder>
-      <StyledSubHeading>{t('Why should I connect to ORCID?')}</StyledSubHeading>
-      <p>{t('description_why_ORCID')}</p>
-      <StyledSubHeading>{'What is ORCID?'}</StyledSubHeading>
-      <p>{t('description_what_is_ORCID')}</p>
+      <StyledSubHeading>{t('orcid.why')}</StyledSubHeading>
+      <p>{t('orcid.description_why_use_orcid')}</p>
+      <StyledSubHeading>{'orcid.what'}</StyledSubHeading>
+      <p>{t('orcid.description_what_is_orcid')}</p>
       <p>
-        {t('Learn more at ')} <a href="https://orcid.org">orcid.org</a>
+        {t('orcid.learn_more')} <a href="https://orcid.org">orcid.org</a>
       </p>
       <StyledFooter>
         <Button
           onClick={() => {
             setOpen(false);
           }}>
-          {t("Skip this step (can be configured in 'profile' later)")}
+          {t('orcid.skip_this_step')}
         </Button>
       </StyledFooter>
     </div>
