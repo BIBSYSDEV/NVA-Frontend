@@ -12,7 +12,6 @@ import Header from './layout/header/Header';
 import Notifier from './layout/Notifier';
 import AdminMenu from './pages/dashboard/AdminMenu';
 import Dashboard from './pages/dashboard/Dashboard';
-import NotAuthorized from './pages/errorpages/NotAuthorized';
 import NotFound from './pages/errorpages/NotFound';
 import ResourceForm from './pages/resource/ResourceForm';
 import Search from './pages/search/Search';
@@ -76,7 +75,6 @@ const App: React.FC = () => {
             <Route exact path="/search/:searchTerm/:offset" component={Search} />
             <Route exact path="/user" component={User} />
             <Route exact path="/user/authority" component={ConnectAuthority} />
-            <Route exact path="/401" component={NotAuthorized} />
             <Route path="*" component={NotFound} />
           </Switch>
         </StyledPageBody>
