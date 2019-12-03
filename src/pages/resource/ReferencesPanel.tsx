@@ -11,7 +11,7 @@ import Box from '../../components/Box';
 import TabPanel from '../../components/TabPanel/TabPanel';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { ReferenceType, referenceTypeList } from '../../types/references.types';
-import PublisherSearch from './references/PublisherSearch';
+import PublisherSearch from './references_tab/PublisherSearch';
 
 const StyledFieldWrapper = styled.div`
   padding: 1rem;
@@ -37,7 +37,7 @@ export const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, t
       ariaLabel="references"
       goToNextTab={goToNextTab}
       errors={errors.referencesErrors}
-      heading="References">
+      heading={t('publication:heading.references')}>
       <Box>
         <Formik
           enableReinitialize
@@ -70,16 +70,16 @@ export const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, t
                     {values && values.publisher && values.publisher.title && (
                       <div>
                         <p>
-                          {t('reference_tab.title')}: {values.publisher.title}
+                          {t('common:title')}: {values.publisher.title}
                         </p>
                         <p>
-                          {t('reference_tab.ISSN')}: {values.publisher.issn}
+                          {t('publication:references.issn')}: {values.publisher.issn}
                         </p>
                         <p>
-                          {t('reference_tab.level')}: {values.publisher.level}
+                          {t('publication:references.level')}: {values.publisher.level}
                         </p>
                         <p>
-                          {t('reference_tab.publisher')}: {values.publisher.publisher}
+                          {t('publication:references.publisher')}: {values.publisher.publisher}
                         </p>
                       </div>
                     )}

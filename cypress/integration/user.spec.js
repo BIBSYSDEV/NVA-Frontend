@@ -1,12 +1,17 @@
 describe('User', () => {
   before('Given that the user is logged in:', () => {
     cy.visit('/');
+    cy.get('[data-testid=login-button]').click({ force: true });
     cy.get('[data-testid=menu]').contains('Test User');
   });
 
   it('The user should be able to see their user details', () => {
     cy.get('[data-testid=menu]').click({ force: true });
     cy.get('[data-testid=user-profile-button]').click({ force: true });
+
+    // need to set language to english in order to check that the translated values are correct
+    cy.get('[data-testid=language-selector] .MuiSelect-root').click({ force: true });
+    cy.get('[data-testid=user-language-en-US]').click({ force: true });
 
     cy.get('[data-testid=user-name]').contains('Test User');
     cy.get('[data-testid=user-id]').contains('tu@unit.no');

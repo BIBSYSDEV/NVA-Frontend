@@ -1,7 +1,8 @@
 import React from 'react';
-import { AutoSearch } from './../../../components/AutoSearch';
-import disciplines from './../../../utils/testfiles/disciplines_en.json';
 import { useTranslation } from 'react-i18next';
+
+import { AutoSearch } from '../../../components/AutoSearch';
+import disciplines from '../../../utils/testfiles/disciplines_en.json';
 
 interface DisciplineSearchProps {
   setFieldValue: (name: string, value: any) => void;
@@ -28,7 +29,7 @@ const DisciplineSearch: React.FC<DisciplineSearchProps> = ({ setFieldValue }) =>
     <AutoSearch
       searchResults={searchResults}
       setFieldValue={(value: any) => setFieldValue('npi', value)}
-      label={t('resource_form.NPI_disciplines')}
+      label={t('publication:description.npi_disciplines')}
       groupBy={(discipline: DisciplineType) => discipline.mainDiscipline}
     />
   );

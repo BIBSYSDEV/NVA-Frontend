@@ -52,7 +52,7 @@ const ContributorValidator: React.FC<ContributorValidatorProps> = ({ contributor
         variant="contained"
         startIcon={<PersonIcon />}
         onClick={() => validateContributor(contributor)}>
-        {t('contributors.verify_person')}
+        {t('publication:contributors.verify_person')}
       </StyledContributor.VerifyPerson>
       <StyledContributor.DeleteIcon onClick={() => deleteContributor(contributor)} />
     </StyledContributorValidator>

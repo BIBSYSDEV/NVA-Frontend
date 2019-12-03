@@ -4,17 +4,20 @@
     "get_authorities": "Could not retrieve authorities",
     "get_cristin_project": "Search for projects failed",
     "get_orcid": "Could not get data from ORCID",
+    "get_publications": "Could not retrieve publications",
     "get_resource": "Could not get resource",
     "get_session": "Invalid session. Please log in again.",
     "get_user": "Failed to get user",
     "login": "Login failed",
     "orcid_login": "ORCID login failed",
     "search": "Search failed",
+    "update_authority": "Could not update authority",
     "update_resource": "Could not update resource"
   },
   "success": {
     "create_resource": "New resource created",
     "login": "Logged in",
+    "update_authority": "Updated authority",
     "update_resource": "Updated resource"
   }
 }

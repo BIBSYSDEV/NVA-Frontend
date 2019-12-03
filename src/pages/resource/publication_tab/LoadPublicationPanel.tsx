@@ -1,9 +1,9 @@
 import React from 'react';
-import PublicationExpansionPanel from './PublicationExpansionPanel';
+import { useTranslation } from 'react-i18next';
 
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 
-import { useTranslation } from 'react-i18next';
+import PublicationExpansionPanel from './PublicationExpansionPanel';
 
 interface LoadPublicationPanelProps {
   expanded: boolean;
@@ -15,13 +15,13 @@ const LoadPublicationPanel: React.FC<LoadPublicationPanelProps> = ({ expanded, o
 
   return (
     <PublicationExpansionPanel
-      headerLabel={t('Load file')}
+      headerLabel={t('publication:publication.load_file')}
       icon={<CloudDownloadIcon />}
       id="load-publication-panel"
       expanded={expanded}
       onChange={onChange}
       ariaControls="publication-method-file">
-      {t('load_file_description')}
+      {t('publication:publication.load_file_description')}
     </PublicationExpansionPanel>
   );
 };

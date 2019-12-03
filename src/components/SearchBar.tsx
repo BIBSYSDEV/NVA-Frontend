@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
+import styled from 'styled-components';
 
 import { IconButton, InputBase, Paper } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 
-import { search } from '../api/search';
-import styled from 'styled-components';
+import { search } from '../api/searchApi';
 
 interface SearchBarProps {
   resetSearchInput: boolean;
@@ -62,7 +62,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ resetSearchInput: resetSearch }) 
         <StyledInputBase
           autoFocus
           data-testid="search-input"
-          placeholder={t('Search')}
+          placeholder={t('common:search')}
           onChange={handleChange}
           value={searchTerm}
         />

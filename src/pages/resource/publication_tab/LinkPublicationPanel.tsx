@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+import styled from 'styled-components';
+
 import { Button } from '@material-ui/core';
 import LinkIcon from '@material-ui/icons/Link';
-import PublicationExpansionPanel from './PublicationExpansionPanel';
+
+import { createNewResourceFromDoi, lookupDoiTitle } from '../../../api/resourceApi';
+import { RootStore } from '../../../redux/reducers/rootReducer';
 import LinkPublicationPanelForm from './LinkPublicationPanelForm';
-import styled from 'styled-components';
-import { createNewResourceFromDoi, lookupDoiTitle } from '../../api/resource';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootStore } from '../../redux/reducers/rootReducer';
+import PublicationExpansionPanel from './PublicationExpansionPanel';
 
 const StyledBody = styled.div`
   width: 100%;
@@ -48,21 +50,21 @@ const LinkPublicationPanel: React.FC<LinkPublicationPanelProps> = ({ expanded, o
 
   return (
     <PublicationExpansionPanel
-      headerLabel={t('publication_panel.link_to_publication')}
+      headerLabel={t('publication:publication.link_to_publication')}
       icon={<LinkIcon className="icon" />}
       id="link-publication-panel"
       expanded={expanded}
       onChange={onChange}
       ariaControls="publication-method-link">
       <StyledBody>
-        {t('publication_panel.link_publication_description')}
+        {t('publication:publication.link_publication_description')}
         <LinkPublicationPanelForm handleSearch={handleSearch} />
         {doiTitle && (
           <>
-            <StyledHeading> {t('publication_panel.resource')}:</StyledHeading>
+            <StyledHeading> {t('publication:heading.publication')}:</StyledHeading>
             <StyledTitle>{doiTitle}</StyledTitle>
             <Button fullWidth color="primary" variant="contained" onClick={handleConfirm}>
-              {t('publication_panel.next')}
+              {t('common:next')}
             </Button>
           </>
         )}
