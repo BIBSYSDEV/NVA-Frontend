@@ -1,6 +1,5 @@
 import { VariantType } from 'notistack';
 
-export const ORCID_SIGNIN_FAILURE = 'orcid sign in failure';
 export const ORCID_REQUEST_FAILURE = 'orcid request failure';
 export const SET_ORCID = 'set orcid';
 
