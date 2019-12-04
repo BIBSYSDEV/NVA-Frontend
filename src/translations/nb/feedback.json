@@ -1,6 +1,7 @@
 {
   "error": {
     "create_resource": "Kunne ikke opprette ressurs",
+    "get_authority": "Kunne ikke hente autoritet",
     "get_authorities": "Kunne ikke hente autoriteter",
     "get_cristin_project": "Søk på prosjekt feilet",
     "get_orcid": "Kunne ikke hente data fra ORCID",

@@ -20,5 +20,5 @@ export interface Marcdata {
 export interface Authority {
   systemControlNumber: string;
   marcdata: Marcdata[];
-  identifiersMap: { scn: string[]; feide: string[] };
+  identifiersMap: { scn: string[]; feide: string[]; handle: string[] };
 }
