@@ -17,7 +17,7 @@ const StyledSearch = styled.div`
 
 const Search: React.FC = () => {
   const searchResults = useSelector((state: RootStore) => state.search);
-  const { resources, searchTerm } = searchResults;
+  const { publications, searchTerm } = searchResults;
   const dispatch = useDispatch();
   const history = useHistory();
   const [resetSearchInput, setResetSearchInput] = useState(false);
@@ -36,7 +36,9 @@ const Search: React.FC = () => {
       <div>filter</div>
       <div>
         <SearchBar resetSearchInput={resetSearchInput} />
-        {resources && resources.length > 0 && <SearchResults resources={resources} searchTerm={searchTerm} />}
+        {publications && publications.length > 0 && (
+          <SearchResults publications={publications} searchTerm={searchTerm} />
+        )}
       </div>
     </StyledSearch>
   );

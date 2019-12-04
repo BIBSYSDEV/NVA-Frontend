@@ -18,10 +18,10 @@ export default function useFormPersistor(formKey: string, initialValue: object =
   useEffect(() => {
     if (localStorageValue && Object.getOwnPropertyNames(localStorageValue).length > 0) {
       switch (formKey) {
-        case 'resourceDescription':
+        case 'publicationDescription':
           dispatch(updateDescriptionFormData(localStorageValue));
           break;
-        case 'resourceReferences':
+        case 'publicationReferences':
           dispatch(updateReferencesFormData(localStorageValue));
           break;
         default:

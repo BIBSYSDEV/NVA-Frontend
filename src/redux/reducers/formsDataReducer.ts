@@ -11,17 +11,17 @@ export const formsDataReducer = (state: FormsData = emptyForms, action: FormActi
     case UPDATE_DESCRIPTION_FORM_DATA:
       return {
         ...state,
-        resourceDescription: action.descriptionData,
+        publicationDescription: action.descriptionData,
       };
     case UPDATE_REFERENCES_FORM_DATA:
       return {
         ...state,
-        resourceReferences: action.referencesData,
+        publicationReferences: action.referencesData,
       };
     case UPDATE_CONTRIBUTORS_FORM_DATA:
       return {
         ...state,
-        resourceContributors: action.contributorsData,
+        publicationContributors: action.contributorsData,
       };
     default:
       return state;

@@ -5,8 +5,8 @@ describe('Search', () => {
   });
 
   it('The user should see a result-list when searching', () => {
-    cy.fixture('resources_2_random_results_generated').as('mockDataWith2Results');
-    cy.route('/search/resources/test', '@mockDataWith2Results');
+    cy.fixture('publications_2_random_results_generated').as('mockDataWith2Results');
+    cy.route('/search/publications/test', '@mockDataWith2Results');
     searchForText('test');
     cy.get('[data-testid=search-results]')
       .find('[data-testid=result-list-item] ')
@@ -15,8 +15,8 @@ describe('Search', () => {
   });
 
   it('The user should see a working pagination', () => {
-    cy.fixture('resources_45_random_results_generated').as('mockDataWith45Results');
-    cy.route('/search/resources/test', '@mockDataWith45Results');
+    cy.fixture('publications_45_random_results_generated').as('mockDataWith45Results');
+    cy.route('/search/publications/test', '@mockDataWith45Results');
     searchForText('test');
     cy.get('[data-testid=search-results]').contains('45');
     cy.get('[data-testid=pagination]').contains('2');
