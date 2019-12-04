@@ -16,7 +16,7 @@ import { clearFormErrors, formError } from '../../redux/actions/validationAction
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { languages } from '../../translations/i18n';
 import { DescriptionFormData, emptyDescriptionForm } from '../../types/form.types';
-import { ResourceFormTabs } from '../../types/resource.types';
+import { PublicationFormTabs } from '../../types/publication.types';
 import useFormPersistor from '../../utils/hooks/useFormPersistor';
 import DisciplineSearch from './description_tab/DisciplineSearch';
 import FormikDatePicker from './description_tab/FormikDatePicker';
@@ -38,32 +38,32 @@ const StyledFieldHeader = styled.header`
 
 interface DescriptionPanelProps {
   goToNextTab: (event: React.MouseEvent<any>) => void;
-  saveResource: () => void;
+  savePublication: () => void;
   tabNumber: number;
 }
 
-const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNumber, saveResource }) => {
+const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNumber, savePublication }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const errors = useSelector((store: RootStore) => store.errors);
-  const [persistedFormData, setPersistedFormData, clearPersistedData] = useFormPersistor('resourceDescription');
+  const [persistedFormData, setPersistedFormData, clearPersistedData] = useFormPersistor('publicationDescription');
 
-  const resourceSchema = Yup.object().shape({
+  const publicationSchema = Yup.object().shape({
     title: Yup.string().required(t('publication:feedback.required_field')),
   });
 
   const validateAndPersistValues = (values: DescriptionFormData) => {
     setPersistedFormData(values);
     try {
-      resourceSchema.validateSync(values, { abortEarly: false });
-      dispatch(clearFormErrors(ResourceFormTabs.DESCRIPTION));
+      publicationSchema.validateSync(values, { abortEarly: false });
+      dispatch(clearFormErrors(PublicationFormTabs.DESCRIPTION));
     } catch (e) {
-      dispatch(formError(ResourceFormTabs.DESCRIPTION, e.inner));
+      dispatch(formError(PublicationFormTabs.DESCRIPTION, e.inner));
     }
   };
 
   const saveAndClearLocalStorage = () => {
-    saveResource();
+    savePublication();
     clearPersistedData();
   };
 
@@ -90,7 +90,7 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
           <Formik
             initialValues={initialFormikValues}
             validateOnChange={false}
-            validationSchema={resourceSchema}
+            validationSchema={publicationSchema}
             validate={values => validateAndPersistValues(values)}
             onSubmit={(values, { setSubmitting }) => {
               setTimeout(() => {

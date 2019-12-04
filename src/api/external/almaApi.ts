@@ -1,7 +1,7 @@
 import Axios from 'axios';
 import { Dispatch } from 'redux';
 import i18n from '../../translations/i18n';
-import { AlmaPublication } from '../../types/resource.types';
+import { AlmaPublication } from '../../types/publication.types';
 import { addNotification } from '../../redux/actions/notificationActions';
 import { StatusCode } from '../../utils/constants';
 import uuid from 'uuid';

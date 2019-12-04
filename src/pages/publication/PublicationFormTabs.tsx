@@ -14,12 +14,12 @@ const a11yProps = (tabDescription: string) => {
   };
 };
 
-interface ResourceFormTabsProps {
+interface PublicationFormTabsProps {
   handleTabChange: (_: React.ChangeEvent<{}>, newValue: number) => void;
   tabNumber: number;
 }
 
-export const ResourceFormTabs: React.FC<ResourceFormTabsProps> = ({ handleTabChange, tabNumber }) => {
+export const PublicationFormTabs: React.FC<PublicationFormTabsProps> = ({ handleTabChange, tabNumber }) => {
   const errors = useSelector((store: RootStore) => store.errors);
   const { t } = useTranslation('publication');
 

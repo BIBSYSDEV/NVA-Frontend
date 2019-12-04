@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { Button } from '@material-ui/core';
 import LinkIcon from '@material-ui/icons/Link';
 
-import { createNewResourceFromDoi, lookupDoiTitle } from '../../../api/resourceApi';
+import { createNewPublicationFromDoi, lookupDoiTitle } from '../../../api/publicationApi';
 import { RootStore } from '../../../redux/reducers/rootReducer';
 import LinkPublicationPanelForm from './LinkPublicationPanelForm';
 import PublicationExpansionPanel from './PublicationExpansionPanel';
@@ -39,7 +39,7 @@ const LinkPublicationPanel: React.FC<LinkPublicationPanelProps> = ({ expanded, o
   const user = useSelector((state: RootStore) => state.user);
 
   const handleConfirm = () => {
-    dispatch(createNewResourceFromDoi(doiUrl, user.id));
+    dispatch(createNewPublicationFromDoi(doiUrl, user.id));
     goToNextTab();
   };
 

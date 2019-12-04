@@ -10,14 +10,14 @@ import DescriptionPanel from './DescriptionPanel';
 import FilesAndLicensePanel from './FilesAndLicensePanel';
 import PublicationPanel from './PublicationPanel';
 import { ReferencesPanel } from './ReferencesPanel';
-import { ResourceFormTabs } from './ResourceFormTabs';
+import { PublicationFormTabs } from './PublicationFormTabs';
 
-const StyledResource = styled.div`
+const StyledPublication = styled.div`
   flex-grow: 1;
   width: 100%;
 `;
 
-const ResourceForm: React.FC = () => {
+const PublicationForm: React.FC = () => {
   const { t } = useTranslation('publication');
   const [tabNumber, setTabNumber] = useState(0);
   const formData = useSelector((store: RootStore) => store.formsData);
@@ -30,23 +30,23 @@ const ResourceForm: React.FC = () => {
     setTabNumber(tabNumber + 1);
   };
 
-  const saveResource = async () => {
-    console.log('Save resource:', formData);
+  const savePublication = async () => {
+    console.log('Save publication:', formData);
   };
 
   return (
-    <StyledResource>
-      <ResourceFormTabs tabNumber={tabNumber} handleTabChange={handleTabChange} />
+    <StyledPublication>
+      <PublicationFormTabs tabNumber={tabNumber} handleTabChange={handleTabChange} />
       <PublicationPanel tabNumber={tabNumber} goToNextTab={goToNextTab} />
-      <DescriptionPanel tabNumber={tabNumber} goToNextTab={goToNextTab} saveResource={saveResource} />
-      <ReferencesPanel tabNumber={tabNumber} goToNextTab={goToNextTab} saveResource={saveResource} />
-      <ContributorsPanel tabNumber={tabNumber} goToNextTab={goToNextTab} saveResource={saveResource} />
+      <DescriptionPanel tabNumber={tabNumber} goToNextTab={goToNextTab} savePublication={savePublication} />
+      <ReferencesPanel tabNumber={tabNumber} goToNextTab={goToNextTab} savePublication={savePublication} />
+      <ContributorsPanel tabNumber={tabNumber} goToNextTab={goToNextTab} savePublication={savePublication} />
       <FilesAndLicensePanel tabNumber={tabNumber} goToNextTab={goToNextTab} />
       <TabPanel isHidden={tabNumber !== 5} ariaLabel="submission" heading={t('heading.submission')}>
         <div>Page Six</div>
       </TabPanel>
-    </StyledResource>
+    </StyledPublication>
   );
 };
 
-export default ResourceForm;
+export default PublicationForm;

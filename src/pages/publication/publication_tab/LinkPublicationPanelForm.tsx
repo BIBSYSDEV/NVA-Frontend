@@ -24,7 +24,7 @@ interface LinkPublicationPanelFormProps {
 const LinkPublicationPanelForm: React.FC<LinkPublicationPanelFormProps> = ({ handleSearch }) => {
   const { t } = useTranslation();
 
-  const resourceSchema = Yup.object().shape({
+  const publicationSchema = Yup.object().shape({
     doiUrl: Yup.string()
       .url(t('publication:feedback.invalid_url'))
       .required(t('publication:feedback.required_field')),
@@ -38,7 +38,7 @@ const LinkPublicationPanelForm: React.FC<LinkPublicationPanelFormProps> = ({ han
       initialValues={{
         doiUrl: '',
       }}
-      validationSchema={resourceSchema}>
+      validationSchema={publicationSchema}>
       <Form>
         <StyledInputBox>
           <StyledTextField

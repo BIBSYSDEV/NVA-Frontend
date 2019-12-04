@@ -1,9 +1,9 @@
-export enum ResourceType {
+export enum PublicationType {
   TEXT = 'text',
   FILE = 'file',
 }
 
-export enum ResourceFormTabs {
+export enum PublicationFormTabs {
   PUBLICATION,
   DESCRIPTION,
   REFERENCES,
@@ -11,45 +11,45 @@ export enum ResourceFormTabs {
   FILES_AND_LICENSE,
 }
 
-export interface ResourceTitle {
+export interface PublicationTitle {
   title: string;
 }
 
 export interface TitleType {
-  en: ResourceTitle;
-  no: ResourceTitle;
+  en: PublicationTitle;
+  no: PublicationTitle;
 }
 
-export interface ResourceMetadata {
+export interface PublicationMetadata {
   creators: string[];
   handle: string;
   license: string;
   publicationYear: number;
   publisher: string;
   titles: TitleType;
-  type: ResourceType;
+  type: PublicationType;
 }
 
-export interface ResourceFile {
+export interface PublicationFile {
   checksum: string;
   filename: string;
   mimetype: string;
   size: string;
 }
 
-export interface ResourceFileMap {
+export interface PublicationFileMap {
   indexedDate: string;
-  file: ResourceFile;
+  file: PublicationFile;
 }
 
-export interface Resource {
+export interface Publication {
   createdDate: string;
-  files: ResourceFileMap[];
-  metadata: ResourceMetadata;
+  files: PublicationFileMap[];
+  metadata: PublicationMetadata;
   modifiedDate: string;
   owner: string;
   publishedDate: string;
-  resourceIdentifier: string;
+  publicationIdentifier: string;
   status: string;
 }
 

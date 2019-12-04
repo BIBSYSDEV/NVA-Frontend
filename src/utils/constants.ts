@@ -14,7 +14,7 @@ export const ALMA_API_URL = process.env.REACT_APP_ALMA_API_URL;
 export const CRISTIN_API_URL = process.env.REACT_APP_CRISTIN_API_URL;
 
 export enum ApiBaseUrl {
-  RESOURCES = 'resources',
+  PUBLICATIONS = 'publications',
   DOI_LOOKUP = 'doilookup',
   USER = 'user',
 }

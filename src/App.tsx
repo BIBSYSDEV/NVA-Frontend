@@ -13,7 +13,7 @@ import Notifier from './layout/Notifier';
 import AdminMenu from './pages/dashboard/AdminMenu';
 import Dashboard from './pages/dashboard/Dashboard';
 import NotFound from './pages/errorpages/NotFound';
-import ResourceForm from './pages/resource/ResourceForm';
+import PublicationForm from './pages/publication/PublicationForm';
 import Search from './pages/search/Search';
 import { ConnectAuthority } from './pages/user/authority/ConnectAuthority';
 import User from './pages/user/User';
@@ -82,8 +82,8 @@ const App: React.FC = () => {
         <StyledPageBody>
           <Switch>
             <Route exact path="/" component={Dashboard} />
-            {auth.isLoggedIn && <Route exact path="/resources" component={Workspace} />}
-            {auth.isLoggedIn && <Route exact path="/resources/new" component={ResourceForm} />}
+            {auth.isLoggedIn && <Route exact path="/publications" component={Workspace} />}
+            {auth.isLoggedIn && <Route exact path="/publications/new" component={PublicationForm} />}
             <Route exact path="/search" component={Search} />
             <Route exact path="/search/:searchTerm" component={Search} />
             <Route exact path="/search/:searchTerm/:offset" component={Search} />

@@ -3,8 +3,8 @@ import MockAdapter from 'axios-mock-adapter';
 
 import OrcidResponse from '../types/orcid.types';
 import { ApplicationName, FeideUser, RoleName } from '../types/user.types';
-import mockResources from '../utils/testfiles/resources_45_random_results_generated.json';
-import mockDoiResource from '../utils/testfiles/resource_generated_from_doi.json';
+import mockPublications from '../utils/testfiles/publications_45_random_results_generated.json';
+import mockDoiPublication from '../utils/testfiles/publication_generated_from_doi.json';
 import mockDoiLookupResponse from '../utils/testfiles/doi_lookup_response.json';
 import mockCristinProjects from '../utils/testfiles/cristin_projects_real.json';
 import mockNsdPublisers from '../utils/testfiles/publishersFromNsd.json';
@@ -49,10 +49,10 @@ if (USE_MOCK_DATA) {
   const mock = new MockAdapter(Axios);
 
   // SEARCH
-  mock.onGet(new RegExp(`/${ApiBaseUrl.RESOURCES}/*`)).reply(200, mockResources);
+  mock.onGet(new RegExp(`/${ApiBaseUrl.PUBLICATIONS}/*`)).reply(200, mockPublications);
 
-  // Create resource from doi
-  mock.onPost(new RegExp(`/${ApiBaseUrl.RESOURCES}/doi/*`)).reply(200, mockDoiResource);
+  // Create publication from doi
+  mock.onPost(new RegExp(`/${ApiBaseUrl.PUBLICATIONS}/doi/*`)).reply(200, mockDoiPublication);
 
   // lookup DOI
   mock.onGet(new RegExp(`/${ApiBaseUrl.DOI_LOOKUP}/*`)).reply(200, mockDoiLookupResponse);

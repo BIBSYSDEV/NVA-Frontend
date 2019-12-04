@@ -22,14 +22,14 @@ const StyledFieldWrapper = styled.div`
 
 interface ReferencesPanelProps {
   goToNextTab: () => void;
-  saveResource: () => void;
+  savePublication: () => void;
   tabNumber: number;
 }
-export const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, saveResource, tabNumber }) => {
+export const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, savePublication, tabNumber }) => {
   const errors = useSelector((store: RootStore) => store.errors);
   const { t } = useTranslation();
   const [persistedFormData, setPersistedFormData, clearPersistedData] = useFormPersistor(
-    'resourceReferences',
+    'publicationReferences',
     emptyReferencesForm
   );
 
@@ -51,7 +51,7 @@ export const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, s
       heading={t('publication:heading.references')}
       isHidden={tabNumber !== 2}
       onClickSave={() => {
-        saveResource();
+        savePublication();
         clearPersistedData();
       }}>
       <Box>

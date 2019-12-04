@@ -14,11 +14,11 @@ import OtherContributors from './contributors_tab/OtherContributors';
 
 interface ContributorsPanelProps {
   goToNextTab: (event: React.MouseEvent<any>) => void;
-  saveResource: (event: React.MouseEvent<any>) => void;
+  savePublication: (event: React.MouseEvent<any>) => void;
   tabNumber: number;
 }
 
-const ContributorsPanel: React.FC<ContributorsPanelProps> = ({ goToNextTab, tabNumber, saveResource }) => {
+const ContributorsPanel: React.FC<ContributorsPanelProps> = ({ goToNextTab, tabNumber, savePublication }) => {
   const { t } = useTranslation('publication');
   const errors = useSelector((store: RootStore) => store.errors);
   const initialState = USE_MOCK_DATA ? mockContributors : [];
@@ -48,7 +48,7 @@ const ContributorsPanel: React.FC<ContributorsPanelProps> = ({ goToNextTab, tabN
       isHidden={tabNumber !== 3}
       ariaLabel="references"
       goToNextTab={goToNextTab}
-      onClickSave={saveResource}
+      onClickSave={savePublication}
       errors={errors.contributorsErrors}
       heading={t('heading.contributors')}>
       <Contributors contributors={contributors} dispatch={dispatch} onAddAuthor={onAddAuthor} />

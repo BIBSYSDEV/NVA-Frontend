@@ -11,13 +11,13 @@ import {
 } from '../actions/notificationActions';
 import { ORCID_REQUEST_FAILURE, ORCID_SIGNIN_FAILURE, OrcidActions } from '../actions/orcidActions';
 import {
-  CREATE_RESOURCE_FAILURE,
-  CREATE_RESOURCE_SUCCESS,
-  GET_RESOURCE_FAILURE,
-  ResourceActions,
-  UPDATE_RESOURCE_FAILURE,
-  UPDATE_RESOURCE_SUCCESS,
-} from '../actions/resourceActions';
+  CREATE_PUBLICATION_FAILURE,
+  CREATE_PUBLICATION_SUCCESS,
+  GET_PUBLICATION_FAILURE,
+  UPDATE_PUBLICATION_FAILURE,
+  UPDATE_PUBLICATION_SUCCESS,
+  PublicationActions,
+} from '../actions/publicationActions';
 import { SEARCH_FAILURE, SearchActions } from '../actions/searchActions';
 import { SET_USER_FAILURE, SET_USER_SUCCESS, UserActions } from '../actions/userActions';
 
@@ -30,7 +30,7 @@ export const notificationReducer = (
     | UserActions
     | NotificationActions
     | SearchActions
-    | ResourceActions
+    | PublicationActions
 ) => {
   switch (action.type) {
     case ORCID_SIGNIN_FAILURE:
@@ -38,11 +38,11 @@ export const notificationReducer = (
     case REFRESH_TOKEN_FAILURE:
     case SET_USER_FAILURE:
     case SEARCH_FAILURE:
-    case CREATE_RESOURCE_FAILURE:
-    case CREATE_RESOURCE_SUCCESS:
-    case UPDATE_RESOURCE_FAILURE:
-    case UPDATE_RESOURCE_SUCCESS:
-    case GET_RESOURCE_FAILURE:
+    case CREATE_PUBLICATION_FAILURE:
+    case CREATE_PUBLICATION_SUCCESS:
+    case UPDATE_PUBLICATION_FAILURE:
+    case UPDATE_PUBLICATION_SUCCESS:
+    case GET_PUBLICATION_FAILURE:
     case LOGIN_FAILURE:
       return [...state, { key: uuid.v4(), ...action }];
     case ADD_NOTIFICATION:

@@ -1,24 +1,24 @@
 {
   "error": {
-    "create_resource": "Kunne ikke opprette ressurs",
+    "create_publication": "Kunne ikke opprette publikasjon",
     "get_authority": "Kunne ikke hente autoritet",
     "get_authorities": "Kunne ikke hente autoriteter",
     "get_cristin_project": "Søk på prosjekt feilet",
     "get_orcid": "Kunne ikke hente data fra ORCID",
     "get_publications": "Kunne ikke laste inn publikasjoner",
-    "get_resource": "Kunne ikke laste inn ressurs",
+    "get_publication": "Kunne ikke laste inn publikasjon",
     "get_session": "Økten er utløpt. Vennligst logg inn på nytt.",
     "get_user": "Kunne ikke hente bruker",
     "login": "Kunne ikke logge inn",
     "orcid_login": "Kunne ikke logge inn på ORCID",
     "search": "Søk feilet",
     "update_authority": "Kunne ikke oppdatere autoritet",
-    "update_resource": "Kunne ikke oppdatere ressurs"
+    "update_publication": "Kunne ikke oppdatere publikasjon"
   },
   "success": {
-    "create_resource": "Ressursen er opprettet",
+    "create_publication": "Publikasjonen er opprettet",
     "login": "Logget inn",
     "update_authority": "Forfatter er oppdatert",
-    "update_resource": "Ressursen er oppdatert"
+    "update_publication": "Publikasjonen er oppdatert"
   }
 }

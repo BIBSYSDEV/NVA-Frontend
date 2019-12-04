@@ -10,7 +10,7 @@ const Workspace: React.FC = () => {
   return (
     <>
       <h1>{t('list_of_publications')}</h1>
-      <Link to="/resources/new">
+      <Link to="/publications/new">
         <Button>+ {t('new_registration')}</Button>
       </Link>
     </>
