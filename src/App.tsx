@@ -44,21 +44,20 @@ const StyledPageBody = styled.div`
 
 const App: React.FC = () => {
   const dispatch = useDispatch();
-  const auth = useSelector((store: RootStore) => store.auth);
   const user = useSelector((store: RootStore) => store.user);
 
   useEffect(() => {
     if (USE_MOCK_DATA) {
-      auth.isLoggedIn && dispatch(setUser(mockUser));
+      user.isLoggedIn && dispatch(setUser(mockUser));
     } else {
-      if (!auth.isLoggedIn) {
+      if (!user.isLoggedIn) {
         Amplify.configure(awsConfig);
       }
       dispatch(getCurrentAuthenticatedUser());
       Hub.listen('auth', data => hubListener(data, dispatch));
       return () => Hub.remove('auth', data => hubListener(data, dispatch));
     }
-  }, [dispatch, auth.isLoggedIn]);
+  }, [dispatch, user.isLoggedIn]);
 
   useEffect(() => {
     const getAuthority = async () => {
@@ -77,13 +76,13 @@ const App: React.FC = () => {
       <StyledApp>
         <Notifier />
         <Header />
-        {auth.isLoggedIn && <AdminMenu />}
+        {user.isLoggedIn && <AdminMenu />}
         <Breadcrumbs />
         <StyledPageBody>
           <Switch>
             <Route exact path="/" component={Dashboard} />
-            {auth.isLoggedIn && <Route exact path="/publications" component={Workspace} />}
-            {auth.isLoggedIn && <Route exact path="/publications/new" component={PublicationForm} />}
+            {user.isLoggedIn && <Route exact path="/publications" component={Workspace} />}
+            {user.isLoggedIn && <Route exact path="/publications/new" component={PublicationForm} />}
             <Route exact path="/search" component={Search} />
             <Route exact path="/search/:searchTerm" component={Search} />
             <Route exact path="/search/:searchTerm/:offset" component={Search} />
