@@ -10,7 +10,9 @@ import { MenuItem } from '@material-ui/core';
 import Box from '../../components/Box';
 import TabPanel from '../../components/TabPanel/TabPanel';
 import { RootStore } from '../../redux/reducers/rootReducer';
+import { emptyReferencesForm, ReferencesFormData } from '../../types/form.types';
 import { ReferenceType, referenceTypeList } from '../../types/references.types';
+import useFormPersistor from '../../utils/hooks/useFormPersistor';
 import PublisherSearch from './references_tab/PublisherSearch';
 
 const StyledFieldWrapper = styled.div`
@@ -20,31 +22,46 @@ const StyledFieldWrapper = styled.div`
 
 interface ReferencesPanelProps {
   goToNextTab: () => void;
+  saveResource: () => void;
   tabNumber: number;
 }
-export const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, tabNumber }) => {
+export const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, saveResource, tabNumber }) => {
   const errors = useSelector((store: RootStore) => store.errors);
   const { t } = useTranslation();
+  const [persistedFormData, setPersistedFormData, clearPersistedData] = useFormPersistor(
+    'resourceReferences',
+    emptyReferencesForm
+  );
 
   const initialFormikValues = {
-    publisher: { title: '', issn: '', level: '', publisher: '' },
-    referenceType: ReferenceType.PUBLICATION_IN_JOURNAL,
+    publisher: {
+      issn: (persistedFormData.publisher && persistedFormData.publisher.issn) || '',
+      level: (persistedFormData.publisher && persistedFormData.publisher.level) || '',
+      publisher: (persistedFormData.publisher && persistedFormData.publisher.publisher) || '',
+      title: (persistedFormData.publisher && persistedFormData.publisher.title) || '',
+    },
+    referenceType: persistedFormData.referenceType || ReferenceType.PUBLICATION_IN_JOURNAL,
   };
 
   return (
     <TabPanel
-      isHidden={tabNumber !== 2}
       ariaLabel="references"
-      goToNextTab={goToNextTab}
       errors={errors.referencesErrors}
-      heading={t('publication:heading.references')}>
+      goToNextTab={goToNextTab}
+      heading={t('publication:heading.references')}
+      isHidden={tabNumber !== 2}
+      onClickSave={() => {
+        saveResource();
+        clearPersistedData();
+      }}>
       <Box>
         <Formik
           enableReinitialize
           initialValues={initialFormikValues}
           onSubmit={(values, { setSubmitting }) => {
             setSubmitting(false);
-          }}>
+          }}
+          validate={(values: ReferencesFormData) => setPersistedFormData(values)}>
           <Form>
             <StyledFieldWrapper>
               <Field

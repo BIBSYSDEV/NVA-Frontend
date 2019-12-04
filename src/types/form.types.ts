@@ -1,11 +1,15 @@
-import { Language } from './settings.types';
 import { defaultLanguage } from '../translations/i18n';
+import ContributorType from './contributor.types';
+import { ReferenceType } from './references.types';
+import { Language } from './settings.types';
 
 export interface FormsData {
-  resourceDescription: ResourceDescriptionFormData;
+  description: DescriptionFormData;
+  references: ReferencesFormData;
+  contributors: ContributorsFormData;
 }
 
-export interface ResourceDescriptionFormData {
+export interface DescriptionFormData {
   title: string;
   abstract: string;
   description: string;
@@ -16,7 +20,22 @@ export interface ResourceDescriptionFormData {
   project: string;
 }
 
-export const emptyResourceDescription: ResourceDescriptionFormData = {
+export interface ReferencesFormData {
+  publisher: {
+    issn: string;
+    level: string;
+    publisher: string;
+    title: string;
+  };
+  referenceType: ReferenceType;
+}
+
+export interface ContributorsFormData {
+  authors: ContributorType[];
+  contributors: ContributorType[];
+}
+
+export const emptyDescriptionForm: DescriptionFormData = {
   title: '',
   abstract: '',
   description: '',
@@ -27,6 +46,23 @@ export const emptyResourceDescription: ResourceDescriptionFormData = {
   project: '',
 };
 
+export const emptyReferencesForm: ReferencesFormData = {
+  publisher: {
+    issn: '',
+    level: '',
+    publisher: '',
+    title: '',
+  },
+  referenceType: ReferenceType.PUBLICATION_IN_JOURNAL,
+};
+
+export const emptyContributorsForm: ContributorsFormData = {
+  authors: [],
+  contributors: [],
+};
+
 export const emptyForms: FormsData = {
-  resourceDescription: emptyResourceDescription,
+  description: emptyDescriptionForm,
+  references: emptyReferencesForm,
+  contributors: emptyContributorsForm,
 };
