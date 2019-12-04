@@ -7,7 +7,7 @@ import {
   ApiBaseUrl,
   AUTHORITY_REGISTER_API_URL,
   CRISTIN_API_URL,
-  ORCID_OAUTH_USER_INFO_URL,
+  ORCID_USER_INFO_URL,
   PUBLICATION_CHANNEL_API_URL,
   USE_MOCK_DATA,
 } from '../utils/constants';
@@ -65,7 +65,7 @@ if (USE_MOCK_DATA) {
   mock.onGet(new RegExp(`/${ApiBaseUrl.USER}/*`)).reply(200, mockUser);
 
   // ORCID
-  mock.onPost(ORCID_OAUTH_USER_INFO_URL).reply(200, mockOrcidResponse);
+  mock.onPost(ORCID_USER_INFO_URL).reply(200, mockOrcidResponse);
 
   // Authority Registry
   mock.onGet(new RegExp(`${AUTHORITY_REGISTER_API_URL}`)).reply(200, mockAuthoritiesResponse);

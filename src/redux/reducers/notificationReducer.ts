@@ -9,14 +9,14 @@ import {
   NotificationActions,
   REMOVE_NOTIFICATION,
 } from '../actions/notificationActions';
-import { ORCID_REQUEST_FAILURE, ORCID_SIGNIN_FAILURE, OrcidActions } from '../actions/orcidActions';
+import { ORCID_REQUEST_FAILURE, OrcidActions } from '../actions/orcidActions';
 import {
   CREATE_PUBLICATION_FAILURE,
   CREATE_PUBLICATION_SUCCESS,
   GET_PUBLICATION_FAILURE,
+  PublicationActions,
   UPDATE_PUBLICATION_FAILURE,
   UPDATE_PUBLICATION_SUCCESS,
-  PublicationActions,
 } from '../actions/publicationActions';
 import { SEARCH_FAILURE, SearchActions } from '../actions/searchActions';
 import { SET_USER_FAILURE, SET_USER_SUCCESS, UserActions } from '../actions/userActions';
@@ -33,7 +33,6 @@ export const notificationReducer = (
     | PublicationActions
 ) => {
   switch (action.type) {
-    case ORCID_SIGNIN_FAILURE:
     case ORCID_REQUEST_FAILURE:
     case REFRESH_TOKEN_FAILURE:
     case SET_USER_FAILURE:
