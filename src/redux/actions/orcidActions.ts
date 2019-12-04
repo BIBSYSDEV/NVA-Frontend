@@ -2,7 +2,7 @@ import { VariantType } from 'notistack';
 
 export const ORCID_SIGNIN_FAILURE = 'orcid sign in failure';
 export const ORCID_REQUEST_FAILURE = 'orcid request failure';
-export const SET_ORCID_INFO = 'set orcid info';
+export const SET_ORCID = 'set orcid';
 
 export const orcidSignInFailure = (message: string): OrcidSignInFailureAction => ({
   type: ORCID_SIGNIN_FAILURE,
@@ -16,9 +16,8 @@ export const orcidRequestFailure = (message: string): OrcidRequestFailureAction 
   variant: 'error',
 });
 
-export const setOrcidInfo = (name: string, orcid: string): SetOrcidInfoAction => ({
-  type: SET_ORCID_INFO,
-  name,
+export const setOrcid = (orcid: string): SetOrcidAction => ({
+  type: SET_ORCID,
   orcid,
 });
 
@@ -33,10 +32,9 @@ interface OrcidRequestFailureAction {
   variant: VariantType;
 }
 
-interface SetOrcidInfoAction {
-  type: typeof SET_ORCID_INFO;
-  name: string;
+interface SetOrcidAction {
+  type: typeof SET_ORCID;
   orcid: string;
 }
 
-export type OrcidActions = OrcidRequestFailureAction | OrcidSignInFailureAction | SetOrcidInfoAction;
+export type OrcidActions = OrcidRequestFailureAction | OrcidSignInFailureAction | SetOrcidAction;
