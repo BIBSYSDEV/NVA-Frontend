@@ -2,15 +2,7 @@ import { CognitoUserSession } from 'amazon-cognito-identity-js';
 import { Auth } from 'aws-amplify';
 import { Dispatch } from 'redux';
 
-import {
-  initLogin,
-  initLogout,
-  loginSuccess,
-  logoutSuccess,
-  refreshTokenFailure,
-  refreshTokenSuccess,
-  sessionInvalidFailure,
-} from '../redux/actions/authActions';
+import { loginSuccess, logoutSuccess, refreshTokenFailure } from '../redux/actions/authActions';
 import { clearUser, setUser, setUserFailure } from '../redux/actions/userActions';
 import { RootStore } from '../redux/reducers/rootReducer';
 import i18n from '../translations/i18n';
@@ -19,7 +11,6 @@ import { mockUser } from './mock-interceptor';
 
 export const login = () => {
   return async (dispatch: Dispatch) => {
-    dispatch(initLogin());
     if (USE_MOCK_DATA) {
       dispatch(setUser(mockUser));
       dispatch(loginSuccess());
@@ -34,24 +25,25 @@ export const getCurrentAuthenticatedUser = () => {
     try {
       const cognitoUser = await Auth.currentAuthenticatedUser();
       if (cognitoUser != null) {
-        cognitoUser.getSession((error: any, session: CognitoUserSession) => {
+        cognitoUser.getSession(async (error: any, session: CognitoUserSession) => {
           if (error || !session.isValid()) {
-            dispatch(sessionInvalidFailure(i18n.t('feedback:error.get_session')));
+            const currentSession = await Auth.currentSession();
+            cognitoUser.refreshSession(currentSession.getRefreshToken());
+          } else {
+            // NOTE: getSession must be called to authenticate user before calling getUserAttributes
+            cognitoUser.getUserAttributes((error: any) => {
+              if (error) {
+                dispatch(setUserFailure(i18n.t('feedback:error.get_user')));
+              } else {
+                dispatch(setUser(cognitoUser.attributes));
+              }
+            });
           }
-
-          // NOTE: getSession must be called to authenticate user before calling getUserAttributes
-          cognitoUser.getUserAttributes((error: any) => {
-            if (error) {
-              dispatch(setUserFailure(i18n.t('feedback:error.get_user')));
-            } else {
-              dispatch(setUser(cognitoUser.attributes));
-            }
-          });
         });
       }
-    } catch (e) {
+    } catch {
       const store = getState();
-      if (store.auth.isLoggedIn) {
+      if (store.user.isLoggedIn) {
         dispatch(setUserFailure(i18n.t('feedback:error.get_user')));
       }
     }
@@ -67,8 +59,6 @@ export const refreshToken = () => {
         cognitoUser.refreshSession(currentSession.getRefreshToken(), (error: any) => {
           if (error) {
             dispatch(refreshTokenFailure(error));
-          } else {
-            dispatch(refreshTokenSuccess());
           }
         });
       }
@@ -80,7 +70,6 @@ export const refreshToken = () => {
 
 export const logout = () => {
   return async (dispatch: Dispatch) => {
-    dispatch(initLogout());
     if (USE_MOCK_DATA) {
       dispatch(clearUser());
       dispatch(logoutSuccess());

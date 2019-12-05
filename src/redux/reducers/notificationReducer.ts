@@ -45,7 +45,7 @@ export const notificationReducer = (
     case LOGIN_FAILURE:
       return [...state, { key: uuid.v4(), ...action }];
     case ADD_NOTIFICATION:
-      return [...state, { key: uuid.v4(), ...action.notification }];
+      return [...state, { ...action.notification }];
     case REMOVE_NOTIFICATION:
       return state.filter(notification => notification.key !== action.key);
     case SET_USER_SUCCESS:

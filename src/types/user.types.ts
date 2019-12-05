@@ -27,6 +27,7 @@ export interface User {
   orcidName: string;
   orcid: string;
   authority?: Authority;
+  isLoggedIn: boolean;
 }
 
 export interface FeideUser {
@@ -55,4 +56,5 @@ export const emptyUser: User = {
   orcidName: '',
   orcid: '',
   authority: undefined,
+  isLoggedIn: false,
 };
