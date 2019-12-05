@@ -45,7 +45,7 @@ const OrcidModal: React.FC<OrcidModalProps> = ({ setOpen }) => {
 
   const openORCID = () => {
     if (USE_MOCK_DATA) {
-      history.push('/user?code=123456');
+      history.push('/user/#access_token=12343123');
     } else {
       window.open(
         ORCID_SIGN_IN_URL,

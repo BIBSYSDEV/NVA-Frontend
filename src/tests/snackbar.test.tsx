@@ -15,7 +15,7 @@ import { cleanup, getByTestId, render, wait } from '@testing-library/react';
 import App from '../App';
 import { loginFailure } from '../redux/actions/authActions';
 import { clearNotifications } from '../redux/actions/notificationActions';
-import { orcidRequestFailure, orcidSignInFailure } from '../redux/actions/orcidActions';
+import { orcidRequestFailure } from '../redux/actions/orcidActions';
 import { searchFailure } from '../redux/actions/searchActions';
 import { setUserFailure } from '../redux/actions/userActions';
 import rootReducer from '../redux/reducers/rootReducer';
@@ -75,12 +75,6 @@ describe('Snackbar', () => {
     store.dispatch(orcidRequestFailure('Could not get data from ORCID'));
     await wait(() => getByTestId(app.container, 'snackbar'));
     expect(getByTestId(app.container, 'snackbar').textContent).toBe('Could not get data from ORCID');
-  });
-
-  test('shows orcid request error message when logging in to ORCID failed', async () => {
-    store.dispatch(orcidSignInFailure('ORCID login failed'));
-    await wait(() => getByTestId(app.container, 'snackbar'));
-    expect(getByTestId(app.container, 'snackbar').textContent).toBe('ORCID login failed');
   });
 
   test('shows search error message when search failed', async () => {
