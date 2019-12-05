@@ -14,6 +14,11 @@ import { emptyReferencesForm, ReferencesFormData } from '../../types/form.types'
 import { ReferenceType, referenceTypeList } from '../../types/references.types';
 import useFormPersistor from '../../utils/hooks/useFormPersistor';
 import PublisherSearch from './references_tab/PublisherSearch';
+import ReportReferenceForm from './references_tab/ReportReferenceForm';
+import BookReferenceForm from './references_tab/BookReferenceForm';
+import ChapterReferenceForm from './references_tab/ChapterReferenceForm';
+import JournalPublicationReferenceForm from './references_tab/JournalPublicationReferenceForm';
+import DegreeReferenceForm from './references_tab/DegreeReferenceForm';
 
 const StyledFieldWrapper = styled.div`
   padding: 1rem;
@@ -62,49 +67,57 @@ export const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, s
             setSubmitting(false);
           }}
           validate={(values: ReferencesFormData) => setPersistedFormData(values)}>
-          <Form>
-            <StyledFieldWrapper>
-              <Field
-                name="referenceType"
-                aria-label="referenceType"
-                label="type"
-                variant="outlined"
-                fullWidth
-                component={Select}>
-                {referenceTypeList.map(reference => (
-                  <MenuItem value={reference} key={reference} data-testid={`referenceType-${reference}`}>
-                    {reference}
-                  </MenuItem>
-                ))}
-              </Field>
-            </StyledFieldWrapper>
+          {({ values }) => (
+            <Form>
+              <StyledFieldWrapper>
+                <Field
+                  name="referenceType"
+                  aria-label="referenceType"
+                  label="type"
+                  variant="outlined"
+                  fullWidth
+                  component={Select}>
+                  {referenceTypeList.map(reference => (
+                    <MenuItem value={reference} key={reference} data-testid={`referenceType-${reference}`}>
+                      {reference}
+                    </MenuItem>
+                  ))}
+                </Field>
+              </StyledFieldWrapper>
 
-            <StyledFieldWrapper>
-              <Field name="publisher">
-                {({ form: { values, setFieldValue } }: any) => (
-                  <>
-                    <PublisherSearch setFieldValue={setFieldValue} />
-                    {values && values.publisher && values.publisher.title && (
-                      <div>
-                        <p>
-                          {t('common:title')}: {values.publisher.title}
-                        </p>
-                        <p>
-                          {t('publication:references.issn')}: {values.publisher.issn}
-                        </p>
-                        <p>
-                          {t('publication:references.level')}: {values.publisher.level}
-                        </p>
-                        <p>
-                          {t('publication:references.publisher')}: {values.publisher.publisher}
-                        </p>
-                      </div>
-                    )}
-                  </>
-                )}
-              </Field>
-            </StyledFieldWrapper>
-          </Form>
+              {values.referenceType === ReferenceType.BOOK && <BookReferenceForm />}
+              {values.referenceType === ReferenceType.CHAPTER && <ChapterReferenceForm />}
+              {values.referenceType === ReferenceType.REPORT && <ReportReferenceForm />}
+              {values.referenceType === ReferenceType.DEGREE && <DegreeReferenceForm />}
+              {values.referenceType === ReferenceType.PUBLICATION_IN_JOURNAL && <JournalPublicationReferenceForm />}
+
+              {/* <StyledFieldWrapper>
+                <Field name="publisher">
+                  {({ form: { values, setFieldValue } }: any) => (
+                    <>
+                      <PublisherSearch setFieldValue={setFieldValue} />
+                      {values && values.publisher && values.publisher.title && (
+                        <div>
+                          <p>
+                            {t('common:title')}: {values.publisher.title}
+                          </p>
+                          <p>
+                            {t('publication:references.issn')}: {values.publisher.issn}
+                          </p>
+                          <p>
+                            {t('publication:references.level')}: {values.publisher.level}
+                          </p>
+                          <p>
+                            {t('publication:references.publisher')}: {values.publisher.publisher}
+                          </p>
+                        </div>
+                      )}
+                    </>
+                  )}
+                </Field>
+              </StyledFieldWrapper> */}
+            </Form>
+          )}
         </Formik>
       </Box>
     </TabPanel>
