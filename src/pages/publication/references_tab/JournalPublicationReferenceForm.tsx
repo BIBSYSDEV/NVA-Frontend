@@ -2,30 +2,35 @@ import React from 'react';
 import { Formik, Form, Field } from 'formik';
 import { TextField, Select } from 'formik-material-ui';
 import { MenuItem } from '@material-ui/core';
+import useFormPersistor from '../../../utils/hooks/useFormPersistor';
+import { emptyJournalPublicationReferenceFormData } from '../../../types/form.types';
+import { useTranslation } from 'react-i18next';
+
+// enum with translation keys
+enum JournalPublicationTypes {
+  ARTICLE = 'references.article_type',
+  REVIEW = 'references.review_type',
+}
 
 const JournalPublicationReferenceForm: React.FC = () => {
-  const initialValues = {
-    type: '',
-    doi: '',
-  };
-
-  const publicationTypes = ['Article', 'Short communication', 'Leader', 'Letter', 'Review'];
+  const { t } = useTranslation('publication');
+  const [persistedFormData, setPersistedFormData] = useFormPersistor(
+    'publicationJournalPublicationReference',
+    emptyJournalPublicationReferenceFormData
+  );
 
   return (
-    <Formik initialValues={initialValues} onSubmit={values => console.log('BookRef', values)}>
+    <Formik initialValues={persistedFormData} onSubmit={() => {}}>
       {({ values }) => (
-        <Form
-          onBlur={() => {
-            console.log(values);
-          }}>
+        <Form onBlur={() => setPersistedFormData(values)}>
           <Field name="type" component={Select} variant="outlined" fullWidth>
-            {publicationTypes.map(type => (
+            {Object.values(JournalPublicationTypes).map(type => (
               <MenuItem value={type} key={type}>
-                {type}
+                {t(type)}
               </MenuItem>
             ))}
           </Field>
-          <Field name="doi" component={TextField} variant="outlined" label="DOI"></Field>
+          <Field name="doi" component={TextField} variant="outlined" label={t('references.doi')} />
         </Form>
       )}
     </Formik>

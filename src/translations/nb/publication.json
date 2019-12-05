@@ -40,8 +40,12 @@
     "orcid_link": "ORCID-link"
   },
   "references": {
+    "article_type": "Artikkel",
+    "doi": "DOI",
+    "isbn": "ISBN",
     "issn": "ISSN",
     "level": "Nivå",
-    "publisher": "Utgiver"
+    "publisher": "Utgiver",
+    "review_type": "Anmeldelse"
   }
 }

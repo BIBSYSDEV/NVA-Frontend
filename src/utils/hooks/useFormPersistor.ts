@@ -1,7 +1,11 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { updateDescriptionFormData, updateReferencesFormData } from '../../redux/actions/formsDataActions';
+import {
+  updateDescriptionFormData,
+  updateJournalPublicationReferenceFormData,
+  updateBookReferenceFormData,
+} from '../../redux/actions/formsDataActions';
 import useLocalStorage from './useLocalStorage';
 
 export default function useFormPersistor(formKey: string, initialValue: object = {}) {
@@ -21,8 +25,15 @@ export default function useFormPersistor(formKey: string, initialValue: object =
         case 'publicationDescription':
           dispatch(updateDescriptionFormData(localStorageValue));
           break;
-        case 'publicationReferences':
-          dispatch(updateReferencesFormData(localStorageValue));
+        case 'publicationJournalPublicationReference':
+          dispatch(updateJournalPublicationReferenceFormData(localStorageValue));
+          break;
+        case 'publicationBookReference':
+          dispatch(updateBookReferenceFormData(localStorageValue));
+          break;
+        case 'publicationChapterReference':
+        case 'publicationReportReference':
+        case 'publicationDegreeReference':
           break;
         default:
           break;
