@@ -14,9 +14,9 @@ import {
   CREATE_PUBLICATION_FAILURE,
   CREATE_PUBLICATION_SUCCESS,
   GET_PUBLICATION_FAILURE,
+  PublicationActions,
   UPDATE_PUBLICATION_FAILURE,
   UPDATE_PUBLICATION_SUCCESS,
-  PublicationActions,
 } from '../actions/publicationActions';
 import { SEARCH_FAILURE, SearchActions } from '../actions/searchActions';
 import { SET_USER_FAILURE, SET_USER_SUCCESS, UserActions } from '../actions/userActions';
@@ -46,7 +46,7 @@ export const notificationReducer = (
     case LOGIN_FAILURE:
       return [...state, { key: uuid.v4(), ...action }];
     case ADD_NOTIFICATION:
-      return [...state, { key: uuid.v4(), ...action.notification }];
+      return [...state, { ...action.notification }];
     case REMOVE_NOTIFICATION:
       return state.filter(notification => notification.key !== action.key);
     case SET_USER_SUCCESS:
