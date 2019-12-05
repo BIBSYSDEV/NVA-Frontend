@@ -6,19 +6,21 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import { MINIMUM_SEARCH_CHARACTERS } from '../utils/constants';
 
 interface AutoSearchProps {
+  dataTestId?: string;
+  groupBy?: (options: any) => string;
+  label: string;
   onInputChange?: (event: object, value: string) => void;
   searchResults: any;
   setFieldValue: (value: any) => void;
-  label: string;
-  groupBy?: (options: any) => string;
 }
 
 export const AutoSearch: React.FC<AutoSearchProps> = ({
+  dataTestId,
+  groupBy,
+  label,
   onInputChange,
   searchResults,
   setFieldValue,
-  label,
-  groupBy,
 }) => {
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState([]);
@@ -34,6 +36,7 @@ export const AutoSearch: React.FC<AutoSearchProps> = ({
   return (
     <Autocomplete
       open={open}
+      data-testid="autocomplete"
       onClose={() => {
         setOpen(false);
         setOptions([]);
@@ -55,6 +58,7 @@ export const AutoSearch: React.FC<AutoSearchProps> = ({
       renderInput={params => (
         <TextField
           {...params}
+          data-testid={dataTestId}
           label={label}
           fullWidth
           variant="outlined"

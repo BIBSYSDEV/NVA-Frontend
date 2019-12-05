@@ -43,10 +43,11 @@ const PublisherSearch: React.FC<PublisherSearchProps> = ({ setFieldValue }) => {
 
   return (
     <AutoSearch
+      dataTestId="autosearch-publisher"
+      label={t('publication:references.publisher')}
       onInputChange={(_, value) => setSearchTerm(value)}
       searchResults={searchResults}
       setFieldValue={value => setFieldValue('publisher', value)}
-      label={t('publication:references.publisher')}
     />
   );
 };
