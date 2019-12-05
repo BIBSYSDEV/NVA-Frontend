@@ -4,10 +4,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+
 import { Button, Link as MuiLink } from '@material-ui/core';
 
-import { getOrcidInfo } from '../../api/orcidApi';
-import { orcidSignInFailure } from '../../redux/actions/orcidActions';
+import { getOrcidInfo } from '../../api/external/orcidApi';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import UserCard from './UserCard';
 import UserInfo from './UserInfo';
@@ -39,24 +39,18 @@ const StyledPrimaryUserInfo = styled.div`
 
 const User: React.FC = () => {
   const { t } = useTranslation('profile');
+  const user = useSelector((state: RootStore) => state.user);
+  const location = useLocation();
   const dispatch = useDispatch();
   const history = useHistory();
-  const location = useLocation();
 
   useEffect(() => {
-    const query = new URLSearchParams(location.search);
-    const orcidCode = query.get('code') || '';
-    const error = query.get('error') || '';
-    if (error) {
-      dispatch(orcidSignInFailure(t('feedback:error.orcid_login')));
-      history.push('/user');
-    } else if (orcidCode) {
-      dispatch(getOrcidInfo(orcidCode));
+    const orcidAccessToken = new URLSearchParams(location.hash.replace('#', '?')).get('access_token') || '';
+    if (orcidAccessToken) {
+      dispatch(getOrcidInfo(orcidAccessToken));
       history.push('/user');
     }
-  }, [t, history, location.search, dispatch]);
-
-  const user = useSelector((state: RootStore) => state.user);
+  }, [dispatch, location.hash, history]);
 
   return (
     <StyledUserPage>

@@ -5,13 +5,14 @@ import { useSelector } from 'react-redux';
 import ButtonModal from '../../components/ButtonModal';
 import LabelTextLine from '../../components/LabelTextLine';
 import { RootStore } from '../../redux/reducers/rootReducer';
+import { ORCID_BASE_URL } from '../../utils/constants';
 import OrcidModal from './OrcidModal';
 import UserCard from './UserCard';
 
 const UserOrcid: React.FC = () => {
   const { t } = useTranslation();
   const user = useSelector((state: RootStore) => state.user);
-  const OrcidLink = `https://orcid.org/${user.orcid}`;
+  const OrcidLink = `${ORCID_BASE_URL}/${user.orcid}`;
 
   return (
     <UserCard headerLabel={t('common:orcid')}>

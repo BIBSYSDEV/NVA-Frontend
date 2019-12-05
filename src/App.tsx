@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import styled from 'styled-components';
 
+import { getAuthorityById } from './api/external/authorityRegisterApi';
 import { mockUser } from './api/mock-interceptor';
 import { getCurrentAuthenticatedUser } from './api/userApi';
 import Breadcrumbs from './layout/Breadcrumbs';
@@ -18,12 +19,11 @@ import Search from './pages/search/Search';
 import { ConnectAuthority } from './pages/user/authority/ConnectAuthority';
 import User from './pages/user/User';
 import Workspace from './pages/workspace/Workspace';
-import { setUser, setAuthorityData } from './redux/actions/userActions';
+import { setAuthorityData, setUser } from './redux/actions/userActions';
 import { RootStore } from './redux/reducers/rootReducer';
 import { awsConfig } from './utils/aws-config';
 import { USE_MOCK_DATA } from './utils/constants';
 import { hubListener } from './utils/hub-listener';
-import { getAuthorityById } from './api/external/authorityRegisterApi';
 
 const StyledApp = styled.div`
   height: 100vh;
@@ -86,8 +86,8 @@ const App: React.FC = () => {
             <Route exact path="/search" component={Search} />
             <Route exact path="/search/:searchTerm" component={Search} />
             <Route exact path="/search/:searchTerm/:offset" component={Search} />
-            <Route exact path="/user" component={User} />
-            <Route exact path="/user/authority" component={ConnectAuthority} />
+            {user.isLoggedIn && <Route exact path="/user" component={User} />}
+            {user.isLoggedIn && <Route exact path="/user/authority" component={ConnectAuthority} />}
             <Route path="*" component={NotFound} />
           </Switch>
         </StyledPageBody>
