@@ -10,6 +10,4 @@ export interface Notification {
 export interface AddNotification {
   message: string;
   variant: VariantType;
-  key?: string;
-  dismissed?: boolean;
 }
