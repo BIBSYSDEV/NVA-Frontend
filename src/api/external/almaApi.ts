@@ -1,10 +1,10 @@
 import Axios from 'axios';
 import { Dispatch } from 'redux';
+
+import { addNotification } from '../../redux/actions/notificationActions';
 import i18n from '../../translations/i18n';
 import { AlmaPublication } from '../../types/publication.types';
-import { addNotification } from '../../redux/actions/notificationActions';
 import { StatusCode } from '../../utils/constants';
-import uuid from 'uuid';
 
 // ALMA API docs: https://developers.exlibrisgroup.com/alma/apis/
 
@@ -40,12 +40,10 @@ export const getPublications = async (systemControlNumber: string, dispatch: Dis
       // Filter out publications where titles are missing, and do a (naive) sort by date
       return publications.filter(publication => publication.title).sort((a, b) => b.date.localeCompare(a.date));
     } else {
-      dispatch(
-        addNotification({ message: i18n.t('feedback:error.get_publications'), variant: 'error', key: uuid.v4() })
-      );
+      dispatch(addNotification({ message: i18n.t('feedback:error.get_publications'), variant: 'error' }));
     }
   } catch (error) {
-    dispatch(addNotification({ message: i18n.t('feedback:error.get_publications'), variant: 'error', key: uuid.v4() }));
+    dispatch(addNotification({ message: i18n.t('feedback:error.get_publications'), variant: 'error' }));
   }
   return [];
 };
