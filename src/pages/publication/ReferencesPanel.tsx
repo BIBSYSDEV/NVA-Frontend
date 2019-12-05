@@ -1,4 +1,4 @@
-import { Field, Form, Formik } from 'formik';
+import { Field, Formik } from 'formik';
 import { Select } from 'formik-material-ui';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -13,7 +13,6 @@ import { RootStore } from '../../redux/reducers/rootReducer';
 import { emptyReferencesForm, ReferencesFormData } from '../../types/form.types';
 import { ReferenceType, referenceTypeList } from '../../types/references.types';
 import useFormPersistor from '../../utils/hooks/useFormPersistor';
-import PublisherSearch from './references_tab/PublisherSearch';
 import ReportReferenceForm from './references_tab/ReportReferenceForm';
 import BookReferenceForm from './references_tab/BookReferenceForm';
 import ChapterReferenceForm from './references_tab/ChapterReferenceForm';
@@ -68,7 +67,7 @@ export const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, s
           }}
           validate={(values: ReferencesFormData) => setPersistedFormData(values)}>
           {({ values }) => (
-            <Form>
+            <>
               <StyledFieldWrapper>
                 <Field
                   name="referenceType"
@@ -90,33 +89,7 @@ export const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, s
               {values.referenceType === ReferenceType.REPORT && <ReportReferenceForm />}
               {values.referenceType === ReferenceType.DEGREE && <DegreeReferenceForm />}
               {values.referenceType === ReferenceType.PUBLICATION_IN_JOURNAL && <JournalPublicationReferenceForm />}
-
-              {/* <StyledFieldWrapper>
-                <Field name="publisher">
-                  {({ form: { values, setFieldValue } }: any) => (
-                    <>
-                      <PublisherSearch setFieldValue={setFieldValue} />
-                      {values && values.publisher && values.publisher.title && (
-                        <div>
-                          <p>
-                            {t('common:title')}: {values.publisher.title}
-                          </p>
-                          <p>
-                            {t('publication:references.issn')}: {values.publisher.issn}
-                          </p>
-                          <p>
-                            {t('publication:references.level')}: {values.publisher.level}
-                          </p>
-                          <p>
-                            {t('publication:references.publisher')}: {values.publisher.publisher}
-                          </p>
-                        </div>
-                      )}
-                    </>
-                  )}
-                </Field>
-              </StyledFieldWrapper> */}
-            </Form>
+            </>
           )}
         </Formik>
       </Box>
