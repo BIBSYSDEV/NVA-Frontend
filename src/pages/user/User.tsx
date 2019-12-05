@@ -1,4 +1,3 @@
-import queryString from 'query-string';
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -46,13 +45,12 @@ const User: React.FC = () => {
   const history = useHistory();
 
   useEffect(() => {
-    const hash = queryString.parse(location.hash);
-    const orcidAccessToken = (hash.access_token as string) || '';
+    const orcidAccessToken = new URLSearchParams(location.hash.replace('#', '?')).get('access_token') || '';
     if (orcidAccessToken) {
       dispatch(getOrcidInfo(orcidAccessToken));
       history.push('/user');
     }
-  }, [t, dispatch, location.hash, history]);
+  }, [dispatch, location.hash, history]);
 
   return (
     <StyledUserPage>
