@@ -15,6 +15,6 @@ describe('Publication: References', () => {
     cy.get('.MuiAutocomplete-option')
       .contains('Novum Testamentum')
       .click({ force: true });
-    cy.get('[data-testid=publisher-results]').contains('ISSN: 1568-5365');
+    cy.get('[data-testid=selected-publisher]').contains('ISSN: 1568-5365');
   });
 });

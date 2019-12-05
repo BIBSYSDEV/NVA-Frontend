@@ -183,7 +183,9 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
                   {({ form: { values, setFieldValue } }: any) => (
                     <>
                       <ProjectSearch setFieldValue={setFieldValue} />
-                      {values && values.project && values.project.title && <p>{values.project.title}</p>}
+                      {values && values.project && values.project.title && (
+                        <p data-testid="selected-project">{values.project.title}</p>
+                      )}
                     </>
                   )}
                 </Field>

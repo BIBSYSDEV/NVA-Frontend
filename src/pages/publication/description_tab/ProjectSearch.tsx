@@ -44,10 +44,11 @@ const ProjectSearch: React.FC<ProjectSearchProps> = ({ setFieldValue }) => {
 
   return (
     <AutoSearch
+      dataTestId="autosearch-project"
+      label={t('publication:description.project')}
       onInputChange={(_, value) => setSearchTerm(value)}
       searchResults={searchResults}
       setFieldValue={value => setFieldValue('project', value)}
-      label={t('publication:description.project')}
     />
   );
 };

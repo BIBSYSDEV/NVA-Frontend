@@ -85,7 +85,7 @@ export const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, s
                   <>
                     <PublisherSearch setFieldValue={setFieldValue} />
                     {values && values.publisher && values.publisher.title && (
-                      <div data-testid="publisher-results">
+                      <div data-testid="selected-publisher">
                         <p>
                           {t('common:title')}: {values.publisher.title}
                         </p>
