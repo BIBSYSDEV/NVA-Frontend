@@ -3,8 +3,7 @@ import {
   FormActions,
   UPDATE_CONTRIBUTORS_FORM_DATA,
   UPDATE_DESCRIPTION_FORM_DATA,
-  UPDATE_BOOK_FORM_DATA,
-  UPDATE_JOURNAL_PUBLICATIONS_FORM_DATA,
+  UPDATE_REFERENCE_FORM_DATA,
 } from '../actions/formsDataActions';
 
 export const formsDataReducer = (state: FormsData = emptyForms, action: FormActions) => {
@@ -19,16 +18,12 @@ export const formsDataReducer = (state: FormsData = emptyForms, action: FormActi
         ...state,
         publicationContributors: action.contributorsData,
       };
-    case UPDATE_BOOK_FORM_DATA:
+    case UPDATE_REFERENCE_FORM_DATA:
       return {
         ...state,
-        publicationBookReference: action.bookReferenceData,
+        publicationBookReference: action.referenceData,
       };
-    case UPDATE_JOURNAL_PUBLICATIONS_FORM_DATA:
-      return {
-        ...state,
-        publicationJournalPublicationReference: action.journalPublicationReferenceData,
-      };
+
     default:
       return state;
   }

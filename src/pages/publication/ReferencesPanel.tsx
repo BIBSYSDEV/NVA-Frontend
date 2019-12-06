@@ -1,4 +1,4 @@
-import { Field, Formik } from 'formik';
+import { Field, Formik, Form } from 'formik';
 import { Select } from 'formik-material-ui';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -16,6 +16,8 @@ import BookReferenceForm from './references_tab/BookReferenceForm';
 import ChapterReferenceForm from './references_tab/ChapterReferenceForm';
 import JournalPublicationReferenceForm from './references_tab/JournalPublicationReferenceForm';
 import DegreeReferenceForm from './references_tab/DegreeReferenceForm';
+import useFormPersistor from '../../utils/hooks/useFormPersistor';
+import { emptyBookReferenceFormData, emptyJournalPublicationReferenceFormData } from '../../types/form.types';
 
 const StyledBox = styled.div`
   margin-top: 1rem;
@@ -23,6 +25,8 @@ const StyledBox = styled.div`
 
 const initialValues = {
   referenceType: '',
+  book: emptyBookReferenceFormData,
+  journalPublication: emptyJournalPublicationReferenceFormData,
 };
 
 interface ReferencesPanelProps {
@@ -33,6 +37,7 @@ interface ReferencesPanelProps {
 
 export const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, savePublication, tabNumber }) => {
   const errors = useSelector((store: RootStore) => store.errors);
+  const [persistedFormData, setPersistedFormData] = useFormPersistor('publicationReference', initialValues);
   const { t } = useTranslation('publication');
 
   return (
@@ -44,21 +49,16 @@ export const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, s
       isHidden={tabNumber !== 2}
       onClickSave={() => savePublication()}>
       <Formik
-        enableReinitialize
-        initialValues={initialValues}
+        initialValues={persistedFormData}
         onSubmit={(values, { setSubmitting }) => {
           setSubmitting(false);
         }}>
         {({ values }) => (
-          <>
-            <Field
-              name="referenceType"
-              aria-label="referenceType"
-              variant="outlined"
-              fullWidth
-              component={Select}
-              labelId="type-id"
-              inputProps={{ id: 'type-id', labelId: 'type-id' }}>
+          <Form
+            onBlur={() => {
+              setPersistedFormData(values);
+            }}>
+            <Field name="referenceType" aria-label="referenceType" variant="outlined" fullWidth component={Select}>
               {referenceTypeList.map(type => (
                 <MenuItem value={type.value} key={type.value} data-testid={`referenceType-${type}`}>
                   {t(type.label)}
@@ -77,7 +77,7 @@ export const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, s
                 </Box>
               </StyledBox>
             )}
-          </>
+          </Form>
         )}
       </Formik>
     </TabPanel>

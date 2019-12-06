@@ -5,10 +5,8 @@ import { Language } from './settings.types';
 
 export interface FormsData {
   publicationDescription: DescriptionFormData;
-  publicationReferences: ReferencesFormData;
+  publicationReference: ReferenceFormData;
   publicationContributors: ContributorsFormData;
-  publicationJournalPublicationReference: JournalPublicationReferenceFormData;
-  publicationBookReference: BookReferenceFormData;
 }
 
 export interface DescriptionFormData {
@@ -47,6 +45,12 @@ export interface JournalPublicationReferenceFormData {
   doi: string;
 }
 
+export interface ReferenceFormData {
+  referenceType: string;
+  book: BookReferenceFormData;
+  journalPublication: JournalPublicationReferenceFormData;
+}
+
 export const emptyDescriptionForm: DescriptionFormData = {
   title: '',
   abstract: '',
@@ -83,10 +87,14 @@ export const emptyJournalPublicationReferenceFormData: JournalPublicationReferen
   doi: '',
 };
 
+export const emptyReferenceFormData: ReferenceFormData = {
+  referenceType: '',
+  book: emptyBookReferenceFormData,
+  journalPublication: emptyJournalPublicationReferenceFormData,
+};
+
 export const emptyForms: FormsData = {
   publicationDescription: emptyDescriptionForm,
-  publicationReferences: emptyReferencesForm,
   publicationContributors: emptyContributorsForm,
-  publicationJournalPublicationReference: emptyJournalPublicationReferenceFormData,
-  publicationBookReference: emptyBookReferenceFormData,
+  publicationReference: emptyReferenceFormData,
 };
