@@ -118,6 +118,7 @@ Resources:
               Configuration:
                 FunctionName: !Ref InvalidateCloudfrontDistribution
                 UserParameters: !Sub '{"distribution_id": "${CloudfrontDistribution}"}'
+              RunOrder: 2
 
   InvalidateCloudfrontDistribution:
     Type: AWS::Lambda::Function
