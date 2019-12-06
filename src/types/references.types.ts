@@ -1,17 +1,17 @@
 export enum ReferenceType {
-  PUBLICATION_IN_JOURNAL = 'Publication in journal',
-  BOOK = 'Book',
-  REPORT = 'Report',
-  DEGREE = 'Degree',
-  CHAPTER = 'Chapter',
+  PUBLICATION_IN_JOURNAL = 'journalPublication',
+  BOOK = 'book',
+  REPORT = 'report',
+  DEGREE = 'degree',
+  CHAPTER = 'chapter',
 }
 
 export const referenceTypeList = [
-  ReferenceType.PUBLICATION_IN_JOURNAL,
-  ReferenceType.BOOK,
-  ReferenceType.REPORT,
-  ReferenceType.DEGREE,
-  ReferenceType.CHAPTER,
+  { label: 'references.journal_publication', value: ReferenceType.PUBLICATION_IN_JOURNAL },
+  { label: 'references.book', value: ReferenceType.BOOK },
+  { label: 'references.report', value: ReferenceType.REPORT },
+  { label: 'references.degree', value: ReferenceType.DEGREE },
+  { label: 'references.chapter', value: ReferenceType.CHAPTER },
 ];
 
 export interface PublicationChannel {
@@ -20,3 +20,13 @@ export interface PublicationChannel {
   level: string | null;
   publisher: string;
 }
+
+enum JournalPublicationTypeValue {
+  ARTICLE = 'article',
+  REVIEW = 'review',
+}
+
+export const journalPublicationTypes = [
+  { label: 'references.article', value: JournalPublicationTypeValue.ARTICLE },
+  { label: 'references.review', value: JournalPublicationTypeValue.REVIEW },
+];

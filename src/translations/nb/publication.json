@@ -40,12 +40,17 @@
     "orcid_link": "ORCID-link"
   },
   "references": {
-    "article_type": "Artikkel",
+    "article": "Artikkel",
+    "book": "Bok",
+    "chapter": "Kapittel",
+    "degree": "Grad",
     "doi": "DOI",
     "isbn": "ISBN",
     "issn": "ISSN",
+    "journal_publication": "Publikasjon i Journal",
     "level": "Nivå",
     "publisher": "Utgiver",
-    "review_type": "Anmeldelse"
+    "report": "Rapport",
+    "review": "Anmeldelse"
   }
 }
