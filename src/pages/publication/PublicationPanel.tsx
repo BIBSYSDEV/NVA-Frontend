@@ -10,7 +10,6 @@ import TabPanel from '../../components/TabPanel/TabPanel';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import LinkPublicationPanel from './publication_tab/LinkPublicationPanel';
 import LoadPublicationPanel from './publication_tab/LoadPublicationPanel';
-import OrcidPublicationPanel from './publication_tab/OrcidPublicationPanel';
 
 const StyledPublicationPanel = styled.div`
   width: 100%;
@@ -70,7 +69,6 @@ const PublicationPanel: React.FC<PublicationPanelProps> = ({ goToNextTab, tabNum
             goToNextTab={goToNextTab}
             onChange={handleChange('link-panel')}
           />
-          <OrcidPublicationPanel expanded={expanded === 'orcid-panel'} onChange={handleChange('orcid-panel')} />
         </StyledSelectorWrapper>
         <StyledInfoBox>
           <header>{t('common:information')}</header>

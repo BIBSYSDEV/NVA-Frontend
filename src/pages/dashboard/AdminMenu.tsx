@@ -16,12 +16,6 @@ const StyledAdminMenu = styled.div`
   min-height: 4rem;
 `;
 
-const StyledHeader = styled.div`
-  font-size: 1rem;
-  margin-left: 1rem;
-  margin-right: 1rem;
-`;
-
 const StyledButton = styled(Button)`
   margin-left: 1rem;
   margin-right: 1rem;
@@ -35,7 +29,6 @@ const AdminMenu: React.FC = () => {
     <>
       {user.id && (
         <StyledAdminMenu>
-          <StyledHeader>{t('admin_panel')}</StyledHeader>
           <MuiLink component={Link} to="/publications/new">
             <StyledButton color="primary" variant="contained" data-testid="new-registration-button">
               + {t('new_registration')}
