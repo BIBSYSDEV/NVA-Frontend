@@ -9,12 +9,11 @@ const BookReferenceForm: React.FC = () => {
 
   return (
     <>
-      <Field
-        name="book.publisher"
-        render={({ form: { setFieldValue } }: any) => (
+      <Field name="book.publisher">
+        {({ form: { setFieldValue } }: any) => (
           <PublisherSearch setFieldValue={value => setFieldValue('book.publisher', value)} />
         )}
-      />
+      </Field>
 
       <Field name="book.isbn" component={TextField} variant="outlined" label={t('references.isbn')} />
     </>
