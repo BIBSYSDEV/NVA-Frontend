@@ -117,7 +117,7 @@ Resources:
                 Version: '1'
               Configuration:
                 FunctionName: !Ref InvalidateCloudfrontDistribution
-                UserParameters: !Sub '{"distribution_id", "${CloudfrontDistribution}"}'
+                UserParameters: !Sub '{"distribution_id": "${CloudfrontDistribution}"}'
 
   InvalidateCloudfrontDistribution:
     Type: AWS::Lambda::Function
@@ -125,11 +125,15 @@ Resources:
       Code:
         ZipFile: |
           import boto3
+          import json
 
           def handler(event, context):
               client = boto3.client('cloudfront')
+              data = event['CodePipeline.job']['data']
+              param = json.loads(data['actionConfiguration']['configuration'].get('UserParameters','{}'))
+              distributionId = param['distribution_id']
               response = client.create_invalidation(
-                  DistributionId=event['distribution_id'],
+                  DistributionId=distributionId,
                   InvalidationBatch={
                       'Paths': {
                           'Quantity': 1,
@@ -140,13 +144,13 @@ Resources:
                       'CallerReference': '0'
                   }
               )
+
+              return "Invalidation complete"
       Role: !GetAtt InvalidateCloudfrontDistributionFunctionRole.Arn
       Handler: index.handler
       Description: Lambda to invalidate Cloudfront distribution
       Runtime: python3.7
       Timeout: 30
-      TracingConfig:
-        Mode: Active
 
   PipelineRole:
     Type: AWS::IAM::Role
@@ -181,6 +185,10 @@ Resources:
                 Resource:
                   - !Sub arn:aws:s3:::${FrontendBucketName}/*
               - Action:
+                  - 'lambda:InvokeFunction'
+                Effect: Allow
+                Resource: !GetAtt InvalidateCloudfrontDistribution.Arn
+              - Action:
                   - 'codebuild:StartBuild'
                   - 'codebuild:BatchGetBuilds'
                 Effect: Allow
@@ -203,6 +211,8 @@ Resources:
             Action:
               - sts:AssumeRole
       Path: '/'
+      ManagedPolicyArns:
+        - 'arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'
       Policies:
         - PolicyName: InvalidateCloudformationDistributionPolicy
           PolicyDocument:
@@ -211,7 +221,6 @@ Resources:
               - Effect: Allow
                 Action:
                   - 'cloudfront:CreateInvalidation'
-                  - 'xray:PutTraceSegments'
                 Resource: '*'
 
   CodeBuildServiceRole:
