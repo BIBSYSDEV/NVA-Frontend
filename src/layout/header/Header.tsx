@@ -1,5 +1,6 @@
 import React from 'react';
 import Login from './Login';
+import Logo from './Logo';
 import styled from 'styled-components';
 
 const StyledPageHeader = styled.div`
@@ -17,6 +18,7 @@ const StyledPageHeader = styled.div`
 const Header: React.FC = () => (
   <StyledPageHeader>
     <Login />
+    <Logo />
   </StyledPageHeader>
 );
 
