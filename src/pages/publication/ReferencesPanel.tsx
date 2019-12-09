@@ -10,38 +10,35 @@ import { MenuItem } from '@material-ui/core';
 import Box from '../../components/Box';
 import TabPanel from '../../components/TabPanel/TabPanel';
 import { RootStore } from '../../redux/reducers/rootReducer';
-import { emptyReferencesForm, ReferencesFormData } from '../../types/form.types';
+import { emptyBookReferenceFormData, emptyJournalPublicationReferenceFormData } from '../../types/form.types';
 import { ReferenceType, referenceTypeList } from '../../types/references.types';
 import useFormPersistor from '../../utils/hooks/useFormPersistor';
-import PublisherSearch from './references_tab/PublisherSearch';
+import BookReferenceForm from './references_tab/BookReferenceForm';
+import ChapterReferenceForm from './references_tab/ChapterReferenceForm';
+import DegreeReferenceForm from './references_tab/DegreeReferenceForm';
+import JournalPublicationReferenceForm from './references_tab/JournalPublicationReferenceForm';
+import ReportReferenceForm from './references_tab/ReportReferenceForm';
 
-const StyledFieldWrapper = styled.div`
-  padding: 1rem;
-  flex: 1 0 40%;
+const StyledBox = styled.div`
+  margin-top: 1rem;
 `;
+
+const initialValues = {
+  referenceType: '',
+  book: emptyBookReferenceFormData,
+  journalPublication: emptyJournalPublicationReferenceFormData,
+};
 
 interface ReferencesPanelProps {
   goToNextTab: () => void;
   savePublication: () => void;
   tabNumber: number;
 }
+
 export const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, savePublication, tabNumber }) => {
   const errors = useSelector((store: RootStore) => store.errors);
-  const { t } = useTranslation();
-  const [persistedFormData, setPersistedFormData, clearPersistedData] = useFormPersistor(
-    'publicationReferences',
-    emptyReferencesForm
-  );
-
-  const initialFormikValues = {
-    publisher: {
-      issn: persistedFormData.publisher?.issn || '',
-      level: persistedFormData.publisher?.level || '',
-      publisher: persistedFormData.publisher?.publisher || '',
-      title: persistedFormData.publisher?.title || '',
-    },
-    referenceType: persistedFormData.referenceType || ReferenceType.PUBLICATION_IN_JOURNAL,
-  };
+  const [persistedFormData, setPersistedFormData] = useFormPersistor('publicationReference', initialValues);
+  const { t } = useTranslation('publication');
 
   return (
     <TabPanel
@@ -50,63 +47,39 @@ export const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, s
       goToNextTab={goToNextTab}
       heading={t('publication:heading.references')}
       isHidden={tabNumber !== 2}
-      onClickSave={() => {
-        savePublication();
-        clearPersistedData();
-      }}>
-      <Box>
-        <Formik
-          enableReinitialize
-          initialValues={initialFormikValues}
-          onSubmit={(values, { setSubmitting }) => {
-            setSubmitting(false);
-          }}
-          validate={(values: ReferencesFormData) => setPersistedFormData(values)}>
-          <Form>
-            <StyledFieldWrapper>
-              <Field
-                name="referenceType"
-                aria-label="referenceType"
-                label="type"
-                variant="outlined"
-                fullWidth
-                component={Select}>
-                {referenceTypeList.map(reference => (
-                  <MenuItem value={reference} key={reference} data-testid={`referenceType-${reference}`}>
-                    {reference}
-                  </MenuItem>
-                ))}
-              </Field>
-            </StyledFieldWrapper>
+      onClickSave={() => savePublication()}>
+      <Formik
+        initialValues={persistedFormData}
+        onSubmit={(values, { setSubmitting }) => {
+          setSubmitting(false);
+        }}>
+        {({ values }) => (
+          <Form
+            onBlur={() => {
+              setPersistedFormData(values);
+            }}>
+            <Field name="referenceType" aria-label="referenceType" variant="outlined" fullWidth component={Select}>
+              {referenceTypeList.map(type => (
+                <MenuItem value={type.value} key={type.value} data-testid={`referenceType-${type}`}>
+                  {t(type.label)}
+                </MenuItem>
+              ))}
+            </Field>
 
-            <StyledFieldWrapper>
-              <Field name="publisher">
-                {({ form: { values, setFieldValue } }: any) => (
-                  <>
-                    <PublisherSearch setFieldValue={setFieldValue} />
-                    {values?.publisher?.title && (
-                      <div>
-                        <p>
-                          {t('common:title')}: {values.publisher.title}
-                        </p>
-                        <p>
-                          {t('publication:references.issn')}: {values.publisher.issn}
-                        </p>
-                        <p>
-                          {t('publication:references.level')}: {values.publisher.level}
-                        </p>
-                        <p>
-                          {t('publication:references.publisher')}: {values.publisher.publisher}
-                        </p>
-                      </div>
-                    )}
-                  </>
-                )}
-              </Field>
-            </StyledFieldWrapper>
+            {values.referenceType && (
+              <StyledBox>
+                <Box>
+                  {values.referenceType === ReferenceType.BOOK && <BookReferenceForm />}
+                  {values.referenceType === ReferenceType.CHAPTER && <ChapterReferenceForm />}
+                  {values.referenceType === ReferenceType.REPORT && <ReportReferenceForm />}
+                  {values.referenceType === ReferenceType.DEGREE && <DegreeReferenceForm />}
+                  {values.referenceType === ReferenceType.PUBLICATION_IN_JOURNAL && <JournalPublicationReferenceForm />}
+                </Box>
+              </StyledBox>
+            )}
           </Form>
-        </Formik>
-      </Box>
+        )}
+      </Formik>
     </TabPanel>
   );
 };

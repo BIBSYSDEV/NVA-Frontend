@@ -40,8 +40,17 @@
     "orcid_link": "ORCID link"
   },
   "references": {
+    "article": "Article",
+    "book": "Book",
+    "chapter": "Chapter",
+    "degree": "Degree",
+    "doi": "DOI",
+    "isbn": "ISBN",
     "issn": "ISSN",
+    "journal_publication": "Publication in Journal",
     "level": "Level",
-    "publisher": "Publisher"
+    "publisher": "Publisher",
+    "report": "Report",
+    "review": "Review"
   }
 }
