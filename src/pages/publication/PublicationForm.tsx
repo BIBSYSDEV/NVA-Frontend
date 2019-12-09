@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
+import { Formik, Form } from 'formik';
+import * as Yup from 'yup';
 
 import TabPanel from '../../components/TabPanel/TabPanel';
 import { RootStore } from '../../redux/reducers/rootReducer';
@@ -11,6 +13,7 @@ import FilesAndLicensePanel from './FilesAndLicensePanel';
 import PublicationPanel from './PublicationPanel';
 import { ReferencesPanel } from './ReferencesPanel';
 import { PublicationFormTabs } from './PublicationFormTabs';
+import { emptyPublicationFormData } from '../../types/form.types';
 
 const StyledPublication = styled.div`
   flex-grow: 1;
@@ -21,6 +24,12 @@ const PublicationForm: React.FC = () => {
   const { t } = useTranslation('publication');
   const [tabNumber, setTabNumber] = useState(0);
   const formData = useSelector((store: RootStore) => store.formsData);
+
+  const validationSchema = Yup.object().shape({
+    description: Yup.object().shape({
+      title: Yup.string().required(t('publication:feedback.required_field')),
+    }),
+  });
 
   const handleTabChange = (_: React.ChangeEvent<{}>, newTabNumber: number) => {
     setTabNumber(newTabNumber);
@@ -38,13 +47,40 @@ const PublicationForm: React.FC = () => {
     <StyledPublication>
       <PublicationFormTabs tabNumber={tabNumber} handleTabChange={handleTabChange} />
       <PublicationPanel tabNumber={tabNumber} goToNextTab={goToNextTab} />
-      <DescriptionPanel tabNumber={tabNumber} goToNextTab={goToNextTab} savePublication={savePublication} />
-      <ReferencesPanel tabNumber={tabNumber} goToNextTab={goToNextTab} savePublication={savePublication} />
-      <ContributorsPanel tabNumber={tabNumber} goToNextTab={goToNextTab} savePublication={savePublication} />
-      <FilesAndLicensePanel tabNumber={tabNumber} goToNextTab={goToNextTab} />
-      <TabPanel isHidden={tabNumber !== 5} ariaLabel="submission" heading={t('heading.submission')}>
-        <div>Page Six</div>
-      </TabPanel>
+      <Formik
+        initialValues={emptyPublicationFormData}
+        validationSchema={validationSchema}
+        onSubmit={values => console.log('Submit:', values)}>
+        {({ values, errors }) => (
+          <Form>
+            {JSON.stringify(errors)}
+            <DescriptionPanel
+              tabNumber={tabNumber}
+              goToNextTab={goToNextTab}
+              savePublication={savePublication}
+              errors={errors}
+            />
+            <ReferencesPanel
+              tabNumber={tabNumber}
+              goToNextTab={goToNextTab}
+              savePublication={savePublication}
+              selectedReferenceType={values.reference.referenceType}
+              errors={errors}
+            />
+            <ContributorsPanel
+              tabNumber={tabNumber}
+              goToNextTab={goToNextTab}
+              savePublication={savePublication}
+              errors={errors}
+            />
+            <FilesAndLicensePanel tabNumber={tabNumber} goToNextTab={goToNextTab} />
+            <TabPanel isHidden={tabNumber !== 5} ariaLabel="submission" heading={t('heading.submission')}>
+              <div>Page Six</div>
+            </TabPanel>
+            <button type="submit">Submit</button>
+          </Form>
+        )}
+      </Formik>
     </StyledPublication>
   );
 };

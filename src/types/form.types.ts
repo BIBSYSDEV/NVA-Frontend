@@ -51,7 +51,7 @@ export interface ReferenceFormData {
   journalPublication: JournalPublicationReferenceFormData;
 }
 
-export const emptyDescriptionForm: DescriptionFormData = {
+export const emptyDescriptionFormData: DescriptionFormData = {
   title: '',
   abstract: '',
   description: '',
@@ -72,7 +72,7 @@ export const emptyReferencesForm: ReferencesFormData = {
   referenceType: ReferenceType.PUBLICATION_IN_JOURNAL,
 };
 
-export const emptyContributorsForm: ContributorsFormData = {
+export const emptyContributorsFormData: ContributorsFormData = {
   authors: [],
   contributors: [],
 };
@@ -93,8 +93,15 @@ export const emptyReferenceFormData: ReferenceFormData = {
   journalPublication: emptyJournalPublicationReferenceFormData,
 };
 
+// todo: remove
 export const emptyForms: FormsData = {
-  publicationDescription: emptyDescriptionForm,
-  publicationContributors: emptyContributorsForm,
+  publicationDescription: emptyDescriptionFormData,
+  publicationContributors: emptyContributorsFormData,
   publicationReference: emptyReferenceFormData,
+};
+
+export const emptyPublicationFormData = {
+  description: emptyDescriptionFormData,
+  reference: emptyReferenceFormData,
+  contributors: emptyContributorsFormData,
 };

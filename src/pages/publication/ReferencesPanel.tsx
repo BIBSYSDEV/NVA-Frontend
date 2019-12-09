@@ -1,4 +1,4 @@
-import { Field, Formik, Form } from 'formik';
+import { Field } from 'formik';
 import { Select } from 'formik-material-ui';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -16,30 +16,27 @@ import BookReferenceForm from './references_tab/BookReferenceForm';
 import ChapterReferenceForm from './references_tab/ChapterReferenceForm';
 import JournalPublicationReferenceForm from './references_tab/JournalPublicationReferenceForm';
 import DegreeReferenceForm from './references_tab/DegreeReferenceForm';
-import useFormPersistor from '../../utils/hooks/useFormPersistor';
-import { emptyBookReferenceFormData, emptyJournalPublicationReferenceFormData } from '../../types/form.types';
 
 const StyledBox = styled.div`
   margin-top: 1rem;
 `;
 
-const initialValues = {
-  referenceType: '',
-  book: emptyBookReferenceFormData,
-  journalPublication: emptyJournalPublicationReferenceFormData,
-};
-
 interface ReferencesPanelProps {
   goToNextTab: () => void;
   savePublication: () => void;
   tabNumber: number;
+  selectedReferenceType: string;
+  errors: any;
 }
 
-export const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, savePublication, tabNumber }) => {
-  const errors = useSelector((store: RootStore) => store.errors);
-  const [persistedFormData, setPersistedFormData] = useFormPersistor('publicationReference', initialValues);
+export const ReferencesPanel: React.FC<ReferencesPanelProps> = ({
+  goToNextTab,
+  savePublication,
+  tabNumber,
+  selectedReferenceType,
+  errors,
+}) => {
   const { t } = useTranslation('publication');
-
   return (
     <TabPanel
       ariaLabel="references"
@@ -48,38 +45,25 @@ export const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, s
       heading={t('publication:heading.references')}
       isHidden={tabNumber !== 2}
       onClickSave={() => savePublication()}>
-      <Formik
-        initialValues={persistedFormData}
-        onSubmit={(values, { setSubmitting }) => {
-          setSubmitting(false);
-        }}>
-        {({ values }) => (
-          <Form
-            onBlur={() => {
-              setPersistedFormData(values);
-            }}>
-            <Field name="referenceType" aria-label="referenceType" variant="outlined" fullWidth component={Select}>
-              {referenceTypeList.map(type => (
-                <MenuItem value={type.value} key={type.value} data-testid={`referenceType-${type}`}>
-                  {t(type.label)}
-                </MenuItem>
-              ))}
-            </Field>
+      <Field name="reference.referenceType" aria-label="referenceType" variant="outlined" fullWidth component={Select}>
+        {referenceTypeList.map(type => (
+          <MenuItem value={type.value} key={type.value} data-testid={`referenceType-${type}`}>
+            {t(type.label)}
+          </MenuItem>
+        ))}
+      </Field>
 
-            {values.referenceType && (
-              <StyledBox>
-                <Box>
-                  {values.referenceType === ReferenceType.BOOK && <BookReferenceForm />}
-                  {values.referenceType === ReferenceType.CHAPTER && <ChapterReferenceForm />}
-                  {values.referenceType === ReferenceType.REPORT && <ReportReferenceForm />}
-                  {values.referenceType === ReferenceType.DEGREE && <DegreeReferenceForm />}
-                  {values.referenceType === ReferenceType.PUBLICATION_IN_JOURNAL && <JournalPublicationReferenceForm />}
-                </Box>
-              </StyledBox>
-            )}
-          </Form>
-        )}
-      </Formik>
+      {selectedReferenceType && (
+        <StyledBox>
+          <Box>
+            {selectedReferenceType === ReferenceType.BOOK && <BookReferenceForm />}
+            {selectedReferenceType === ReferenceType.CHAPTER && <ChapterReferenceForm />}
+            {selectedReferenceType === ReferenceType.REPORT && <ReportReferenceForm />}
+            {selectedReferenceType === ReferenceType.DEGREE && <DegreeReferenceForm />}
+            {selectedReferenceType === ReferenceType.PUBLICATION_IN_JOURNAL && <JournalPublicationReferenceForm />}
+          </Box>
+        </StyledBox>
+      )}
     </TabPanel>
   );
 };
