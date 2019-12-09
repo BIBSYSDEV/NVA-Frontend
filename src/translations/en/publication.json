@@ -1,0 +1,47 @@
+{
+  "contributors": {
+    "add_author": "Add authors",
+    "add_other_contributor": "Add more contributors",
+    "authors": "Authors",
+    "corresponding": "Corresponding",
+    "type": "Contributor type",
+    "verify_person": "Verify"
+  },
+  "description": {
+    "abstract": "Abstract",
+    "description": "Description",
+    "npi_disciplines": "NPI disciplines",
+    "project": "Project",
+    "project_association": "Project assosiation",
+    "tags": "Tags"
+  },
+  "feedback": {
+    "invalid_url": "Invalid URL",
+    "required_field": "Required field"
+  },
+  "files_and_license": {
+    "files": "Files",
+    "upload_files": "Upload Files"
+  },
+  "heading": {
+    "contributors": "Contributors",
+    "description": "Description",
+    "files_and_license": "Files and License",
+    "publication": "Publication",
+    "references": "References",
+    "submission": "Submission"
+  },
+  "publication": {
+    "date": "Publication date or year",
+    "link_publication_description": "E.g. DOI link, link to article, link to video of lecture etc.",
+    "link_to_publication": "Link to publication",
+    "load_file": "Load file",
+    "load_file_description": "Load file...",
+    "orcid_link": "ORCID link"
+  },
+  "references": {
+    "issn": "ISSN",
+    "level": "Level",
+    "publisher": "Publisher"
+  }
+}

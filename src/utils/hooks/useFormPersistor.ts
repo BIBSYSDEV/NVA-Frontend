@@ -1,11 +1,12 @@
-import { useDispatch } from 'react-redux';
-import { updateResourceDescriptionFormData } from '../../redux/actions/formsDataActions';
-import useLocalStorage from './useLocalStorage';
 import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+
+import { updateDescriptionFormData, updateReferencesFormData } from '../../redux/actions/formsDataActions';
+import useLocalStorage from './useLocalStorage';
 
 export default function useFormPersistor(formKey: string, initialValue: object = {}) {
   // Initiate locaStorage with a similar structure for keys as used in Redux
-  const localStorageKey = `formsData.${formKey}`;
+  const localStorageKey = formKey;
   const [localStorageValue, setLocalStorageValue, clearLocalStorageValue] = useLocalStorage(
     localStorageKey,
     initialValue
@@ -16,9 +17,18 @@ export default function useFormPersistor(formKey: string, initialValue: object =
   // Put potential localStorage data into Redux store
   useEffect(() => {
     if (localStorageValue && Object.getOwnPropertyNames(localStorageValue).length > 0) {
-      dispatch(updateResourceDescriptionFormData(localStorageValue));
+      switch (formKey) {
+        case 'publicationDescription':
+          dispatch(updateDescriptionFormData(localStorageValue));
+          break;
+        case 'publicationReferences':
+          dispatch(updateReferencesFormData(localStorageValue));
+          break;
+        default:
+          break;
+      }
     }
-  }, [dispatch, localStorageValue]);
+  }, [dispatch, localStorageValue, formKey]);
 
   // Update LS. This will trigger useEffect to update Redux store
   const setFormData = (value: any) => {

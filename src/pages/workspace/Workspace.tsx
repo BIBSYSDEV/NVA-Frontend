@@ -9,9 +9,9 @@ const Workspace: React.FC = () => {
 
   return (
     <>
-      <h1>List of resources</h1>
-      <Link to="/resources/new">
-        <Button>{t('New registration')}</Button>
+      <h1>{t('list_of_publications')}</h1>
+      <Link to="/publications/new">
+        <Button>+ {t('new_registration')}</Button>
       </Link>
     </>
   );

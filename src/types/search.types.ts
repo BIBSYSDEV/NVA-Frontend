@@ -1,14 +1,14 @@
-import { ResourceMetadata } from './resource.types';
+import { PublicationMetadata } from './publication.types';
 
 export interface Search {
-  resources: ResourceMetadata[];
+  publications: PublicationMetadata[];
   searchTerm: string;
   offset: number;
   totalNumberOfHits: number;
 }
 
 export const emptySearch: Search = {
-  resources: [],
+  publications: [],
   searchTerm: '',
   offset: 0,
   totalNumberOfHits: 0,

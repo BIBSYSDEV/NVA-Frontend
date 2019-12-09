@@ -4,8 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import styled from 'styled-components';
 
+import { getAuthorityById } from './api/external/authorityRegisterApi';
 import { mockUser } from './api/mock-interceptor';
-import { getCurrentAuthenticatedUser } from './api/user';
+import { getCurrentAuthenticatedUser } from './api/userApi';
 import Breadcrumbs from './layout/Breadcrumbs';
 import Footer from './layout/Footer';
 import Header from './layout/header/Header';
@@ -13,11 +14,12 @@ import Notifier from './layout/Notifier';
 import AdminMenu from './pages/dashboard/AdminMenu';
 import Dashboard from './pages/dashboard/Dashboard';
 import NotFound from './pages/errorpages/NotFound';
-import ResourceForm from './pages/resource/ResourceForm';
+import PublicationForm from './pages/publication/PublicationForm';
 import Search from './pages/search/Search';
+import { ConnectAuthority } from './pages/user/authority/ConnectAuthority';
 import User from './pages/user/User';
 import Workspace from './pages/workspace/Workspace';
-import { setUser } from './redux/actions/userActions';
+import { setAuthorityData, setUser } from './redux/actions/userActions';
 import { RootStore } from './redux/reducers/rootReducer';
 import { awsConfig } from './utils/aws-config';
 import { USE_MOCK_DATA } from './utils/constants';
@@ -33,44 +35,59 @@ const StyledApp = styled.div`
 
 const StyledPageBody = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
   font-size: 1.6rem;
   flex-grow: 1;
+  margin: 3rem;
 `;
 
 const App: React.FC = () => {
   const dispatch = useDispatch();
-  const auth = useSelector((store: RootStore) => store.auth);
+  const user = useSelector((store: RootStore) => store.user);
 
   useEffect(() => {
     if (USE_MOCK_DATA) {
-      dispatch(setUser(mockUser));
+      user.isLoggedIn && dispatch(setUser(mockUser));
     } else {
-      if (!auth.isLoggedIn) {
+      if (!user.isLoggedIn) {
         Amplify.configure(awsConfig);
       }
       dispatch(getCurrentAuthenticatedUser());
       Hub.listen('auth', data => hubListener(data, dispatch));
       return () => Hub.remove('auth', data => hubListener(data, dispatch));
     }
-  }, [dispatch, auth.isLoggedIn]);
+  }, [dispatch, user.isLoggedIn]);
+
+  useEffect(() => {
+    const getAuthority = async () => {
+      const authority = await getAuthorityById(user.id, dispatch);
+      if (authority) {
+        dispatch(setAuthorityData(authority));
+      }
+    };
+    if (user.id) {
+      getAuthority();
+    }
+  }, [dispatch, user.id]);
 
   return (
     <BrowserRouter>
       <StyledApp>
         <Notifier />
         <Header />
-        <AdminMenu />
+        {user.isLoggedIn && <AdminMenu />}
         <Breadcrumbs />
         <StyledPageBody>
           <Switch>
             <Route exact path="/" component={Dashboard} />
-            <Route exact path="/resources" component={Workspace} />
-            <Route exact path="/resources/new" component={ResourceForm} />
+            {user.isLoggedIn && <Route exact path="/publications" component={Workspace} />}
+            {user.isLoggedIn && <Route exact path="/publications/new" component={PublicationForm} />}
             <Route exact path="/search" component={Search} />
             <Route exact path="/search/:searchTerm" component={Search} />
             <Route exact path="/search/:searchTerm/:offset" component={Search} />
-            <Route exact path="/user" component={User} />
+            {user.isLoggedIn && <Route exact path="/user" component={User} />}
+            {user.isLoggedIn && <Route exact path="/user/authority" component={ConnectAuthority} />}
             <Route path="*" component={NotFound} />
           </Switch>
         </StyledPageBody>

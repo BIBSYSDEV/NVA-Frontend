@@ -1,4 +1,11 @@
 {
+  "date": "Dato",
+  "information": "Information",
+  "institution": "Institusjon",
+  "name": "Navn",
   "next": "Neste",
-  "save": "Lagre"
+  "orcid": "ORCID",
+  "save": "Lagre",
+  "search": "Søk",
+  "title": "Tittel"
 }

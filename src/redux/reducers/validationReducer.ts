@@ -1,4 +1,4 @@
-import { ResourceFormTabs } from '../../types/resource.types';
+import { PublicationFormTabs } from '../../types/publication.types';
 import { FormValidator, initialFormValidator } from '../../types/validation.types';
 import { CLEAR_FORM_ERRORS, FORM_ERROR, ValidationActions } from '../actions/validationActions';
 
@@ -6,29 +6,29 @@ export const validationReducer = (state: FormValidator = initialFormValidator, a
   switch (action.type) {
     case CLEAR_FORM_ERRORS:
       switch (action.formArea) {
-        case ResourceFormTabs.PUBLICATION:
+        case PublicationFormTabs.PUBLICATION:
           return { ...state, publicationErrors: [] };
-        case ResourceFormTabs.DESCRIPTION:
+        case PublicationFormTabs.DESCRIPTION:
           return { ...state, descriptionErrors: [] };
-        case ResourceFormTabs.REFERENCES:
+        case PublicationFormTabs.REFERENCES:
           return { ...state, referencesErrors: [] };
-        case ResourceFormTabs.CONTRIBUTORS:
+        case PublicationFormTabs.CONTRIBUTORS:
           return { ...state, contributorsErrors: [] };
-        case ResourceFormTabs.FILES_AND_LICENSE:
+        case PublicationFormTabs.FILES_AND_LICENSE:
           return { ...state, filesAndLicenseErrors: [] };
       }
       break;
     case FORM_ERROR:
       switch (action.formArea) {
-        case ResourceFormTabs.PUBLICATION:
+        case PublicationFormTabs.PUBLICATION:
           return { ...state, publicationErrors: action.error };
-        case ResourceFormTabs.DESCRIPTION:
+        case PublicationFormTabs.DESCRIPTION:
           return { ...state, descriptionErrors: action.error };
-        case ResourceFormTabs.REFERENCES:
+        case PublicationFormTabs.REFERENCES:
           return { ...state, referencesErrors: action.error };
-        case ResourceFormTabs.CONTRIBUTORS:
+        case PublicationFormTabs.CONTRIBUTORS:
           return { ...state, contributorsErrors: action.error };
-        case ResourceFormTabs.FILES_AND_LICENSE:
+        case PublicationFormTabs.FILES_AND_LICENSE:
           return { ...state, filesAndLicenseErrors: action.error };
       }
       break;

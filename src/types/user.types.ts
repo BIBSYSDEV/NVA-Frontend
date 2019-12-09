@@ -1,3 +1,5 @@
+import { Authority } from './authority.types';
+
 export enum RoleName {
   PUBLISHER = 'Publisher',
   CURATOR = 'Curator',
@@ -24,6 +26,8 @@ export interface User {
   application: ApplicationName;
   orcidName: string;
   orcid: string;
+  authority?: Authority;
+  isLoggedIn: boolean;
 }
 
 export interface FeideUser {
@@ -51,4 +55,6 @@ export const emptyUser: User = {
   application: ApplicationName.NONE,
   orcidName: '',
   orcid: '',
+  authority: undefined,
+  isLoggedIn: false,
 };

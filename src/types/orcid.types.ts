@@ -1,9 +1,7 @@
 export default interface OrcidResponse {
-  accessToken: string;
-  tokenType: string;
-  refreshToken: string;
-  expiresIn: number;
-  scope: string;
-  name: string;
-  orcid: string;
+  id: string;
+  sub: string;
+  name: string | null;
+  family_name: string | null;
+  given_name: string | null;
 }

@@ -2,10 +2,12 @@ import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { getOrcidInfo } from '../../api/orcid';
-import { orcidSignInFailure } from '../../redux/actions/orcidActions';
+import { Button, Link as MuiLink } from '@material-ui/core';
+
+import { getOrcidInfo } from '../../api/external/orcidApi';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import UserCard from './UserCard';
 import UserInfo from './UserInfo';
@@ -19,7 +21,6 @@ const StyledUserPage = styled.div`
   grid-template-columns: 1fr 3fr;
   grid-gap: 3rem;
   font-size: 1rem;
-  padding: 2rem;
 `;
 
 const StyledSecondaryUserInfo = styled.div`
@@ -37,39 +38,49 @@ const StyledPrimaryUserInfo = styled.div`
 `;
 
 const User: React.FC = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('profile');
+  const user = useSelector((state: RootStore) => state.user);
+  const location = useLocation();
   const dispatch = useDispatch();
   const history = useHistory();
-  const location = useLocation();
 
   useEffect(() => {
-    const query = new URLSearchParams(location.search);
-    const orcidCode = query.get('code') || '';
-    const error = query.get('error') || '';
-    if (error) {
-      dispatch(orcidSignInFailure(t('feedback:error.orcid_login')));
-      history.push('/user');
-    } else if (orcidCode) {
-      dispatch(getOrcidInfo(orcidCode));
+    const orcidAccessToken = new URLSearchParams(location.hash.replace('#', '?')).get('access_token') || '';
+    if (orcidAccessToken) {
+      dispatch(getOrcidInfo(orcidAccessToken));
       history.push('/user');
     }
-  }, [t, history, location.search, dispatch]);
-
-  const user = useSelector((state: RootStore) => state.user);
+  }, [dispatch, location.hash, history]);
 
   return (
     <StyledUserPage>
       <StyledSecondaryUserInfo>
         <UserCard headerLabel="Bilde" />
-        <UserCard headerLabel={t('Contact')} />
+        <UserCard headerLabel={t('heading.contact_info')} />
         <UserLanguage />
-        <UserCard headerLabel={t('Author information')} />
+        <UserCard headerLabel={t('heading.author_info')}>
+          {user.authority ? (
+            <>
+              <p>{t('authority.connected_info')}</p>
+              <MuiLink href={user.authority.identifiersMap.handle[0]}>{t('authority.see_profile')}</MuiLink>
+            </>
+          ) : (
+            <>
+              <p>{t('authority.not_connected_info')}</p>
+              <Link to="/user/authority">
+                <Button color="primary" variant="contained">
+                  {t('authority.connect_authority')}
+                </Button>
+              </Link>
+            </>
+          )}
+        </UserCard>
       </StyledSecondaryUserInfo>
 
       <StyledPrimaryUserInfo>
         <UserInfo user={user} />
         <UserRoles user={user} />
-        <UserCard headerLabel={t('Organizations')} />
+        <UserCard headerLabel={t('heading.organizations')} />
         <UserOrcid />
       </StyledPrimaryUserInfo>
     </StyledUserPage>
