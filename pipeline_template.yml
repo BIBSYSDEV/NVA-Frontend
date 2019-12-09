@@ -130,22 +130,32 @@ Resources:
 
           def handler(event, context):
               client = boto3.client('cloudfront')
+
               data = event['CodePipeline.job']['data']
               param = json.loads(data['actionConfiguration']['configuration'].get('UserParameters','{}'))
               distributionId = param['distribution_id']
-              response = client.create_invalidation(
-                  DistributionId=distributionId,
-                  InvalidationBatch={
-                      'Paths': {
-                          'Quantity': 1,
-                          'Items': [
-                              '/*',
-                          ]
-                      },
-                      'CallerReference': '0'
-                  }
-              )
 
+              codepipeline = boto3.client('codepipeline')
+              job = event['CodePipeline.job']['id'];
+              try:
+                client.create_invalidation(
+                    DistributionId=distributionId,
+                    InvalidationBatch={
+                        'Paths': {
+                            'Quantity': 1,
+                            'Items': [
+                                '/*',
+                            ]
+                        },
+                        'CallerReference': '0'
+                    }
+                )
+              except:
+                print("Exception:",sys.exc_info()[0])
+                codepipeline.put_job_failure_result(jobId=job);
+                return "Invalidation failed"
+
+              codepipeline.put_job_success_result(jobId=job);
               return "Invalidation complete"
       Role: !GetAtt InvalidateCloudfrontDistributionFunctionRole.Arn
       Handler: index.handler
@@ -222,6 +232,8 @@ Resources:
               - Effect: Allow
                 Action:
                   - 'cloudfront:CreateInvalidation'
+                  - 'codepipeline:PutJobSuccessResult'
+                  - 'codepipeline:PutJobFailureResult'
                 Resource: '*'
 
   CodeBuildServiceRole:
