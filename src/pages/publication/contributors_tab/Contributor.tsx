@@ -49,12 +49,11 @@ const Contributor: React.FC<ContributorProps> = ({ contributor, dispatch }) => {
         value={contributor.selectedInstitution || ''}
         variant="outlined">
         <MenuItem value="" key="-1" />
-        {contributor.institutions &&
-          contributor.institutions.map(institution => (
-            <MenuItem value={institution} key={institution}>
-              {institution}
-            </MenuItem>
-          ))}
+        {contributor?.institutions?.map(institution => (
+          <MenuItem value={institution} key={institution}>
+            {institution}
+          </MenuItem>
+        ))}
       </StyledInstitutionSelect>
       <ContributorStyles.CorrespondingAuthor
         onChange={handleCorrespondingAuthorChange(contributor)}

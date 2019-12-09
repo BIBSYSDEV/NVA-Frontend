@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
+import styled from 'styled-components';
 
 import SearchBar from '../../components/SearchBar';
 import { clearSearch } from '../../redux/actions/searchActions';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import SearchResults from './SearchResults';
-import styled from 'styled-components';
 
 const StyledSearch = styled.div`
   display: grid;
@@ -36,9 +36,7 @@ const Search: React.FC = () => {
       <div>filter</div>
       <div>
         <SearchBar resetSearchInput={resetSearchInput} />
-        {publications && publications.length > 0 && (
-          <SearchResults publications={publications} searchTerm={searchTerm} />
-        )}
+        {publications?.length && <SearchResults publications={publications} searchTerm={searchTerm} />}
       </div>
     </StyledSearch>
   );

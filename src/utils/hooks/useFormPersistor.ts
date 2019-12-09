@@ -16,7 +16,7 @@ export default function useFormPersistor(formKey: string, initialValue: object =
 
   // Put potential localStorage data into Redux store
   useEffect(() => {
-    if (localStorageValue && Object.getOwnPropertyNames(localStorageValue).length > 0) {
+    if (localStorageValue && Object.getOwnPropertyNames(localStorageValue).length) {
       switch (formKey) {
         case 'publicationDescription':
           dispatch(updateDescriptionFormData(localStorageValue));

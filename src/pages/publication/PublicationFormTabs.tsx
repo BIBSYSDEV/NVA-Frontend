@@ -34,12 +34,12 @@ export const PublicationFormTabs: React.FC<PublicationFormTabsProps> = ({ handle
       <LinkTab
         label={`1. ${t('heading.publication')}`}
         {...a11yProps('publication')}
-        error={errors.publicationErrors && errors.publicationErrors.length > 0}
+        error={errors.publicationErrors?.length > 0}
       />
       <LinkTab
         label={`2. ${t('heading.description')}`}
         {...a11yProps('description')}
-        error={errors.descriptionErrors && errors.descriptionErrors.length > 0}
+        error={errors.descriptionErrors?.length > 0}
       />
       <LinkTab label={`3. ${t('heading.references')}`} {...a11yProps('references')} />
       <LinkTab label={`4. ${t('heading.contributors')}`} {...a11yProps('contributors')} />

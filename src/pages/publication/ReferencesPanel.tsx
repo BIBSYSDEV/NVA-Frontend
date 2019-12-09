@@ -35,10 +35,10 @@ export const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, s
 
   const initialFormikValues = {
     publisher: {
-      issn: (persistedFormData.publisher && persistedFormData.publisher.issn) || '',
-      level: (persistedFormData.publisher && persistedFormData.publisher.level) || '',
-      publisher: (persistedFormData.publisher && persistedFormData.publisher.publisher) || '',
-      title: (persistedFormData.publisher && persistedFormData.publisher.title) || '',
+      issn: persistedFormData.publisher?.issn || '',
+      level: persistedFormData.publisher?.level || '',
+      publisher: persistedFormData.publisher?.publisher || '',
+      title: persistedFormData.publisher?.title || '',
     },
     referenceType: persistedFormData.referenceType || ReferenceType.PUBLICATION_IN_JOURNAL,
   };
@@ -84,7 +84,7 @@ export const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, s
                 {({ form: { values, setFieldValue } }: any) => (
                   <>
                     <PublisherSearch setFieldValue={setFieldValue} />
-                    {values && values.publisher && values.publisher.title && (
+                    {values?.publisher?.title && (
                       <div>
                         <p>
                           {t('common:title')}: {values.publisher.title}
