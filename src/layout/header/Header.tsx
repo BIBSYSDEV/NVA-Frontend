@@ -17,8 +17,8 @@ const StyledPageHeader = styled.div`
 
 const Header: React.FC = () => (
   <StyledPageHeader>
-    <Logo />
     <Login />
+    <Logo />
   </StyledPageHeader>
 );
 
