@@ -43,16 +43,12 @@ const PublicationForm: React.FC = () => {
     console.log('Save publication:', values);
   };
 
-  const submitPublication = async (values: any) => {
-    console.log('Submit publication', values);
-  };
-
   return (
     <StyledPublication>
       <Formik
         initialValues={emptyPublicationFormData}
         validationSchema={validationSchema}
-        onSubmit={values => submitPublication(values)}>
+        onSubmit={values => savePublication(values)}>
         {({ values, errors, touched }) => (
           <Form>
             <PublicationFormTabs
@@ -82,7 +78,6 @@ const PublicationForm: React.FC = () => {
             <TabPanel isHidden={tabNumber !== 5} ariaLabel="submission" heading={t('heading.submission')}>
               <div>Page Six</div>
             </TabPanel>
-            <button type="submit">Submit</button>
           </Form>
         )}
       </Formik>
