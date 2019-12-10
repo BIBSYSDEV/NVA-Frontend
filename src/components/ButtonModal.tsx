@@ -1,22 +1,19 @@
 import React, { ReactNode } from 'react';
+import styled from 'styled-components';
 
-import { Backdrop, Button, Fade, Modal } from '@material-ui/core';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { Backdrop, Button, Dialog, Fade } from '@material-ui/core';
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    modal: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    paper: {
-      backgroundColor: theme.palette.background.paper,
-      padding: theme.spacing(2, 4, 3),
-      maxWidth: '30rem',
-    },
-  })
-);
+const StyledDialog = styled(Dialog)`
+  display: 'flex';
+  align-items: 'center';
+  justify-content: 'center';
+`;
+
+const StyledPaper = styled.div`
+  background-color: ${({ theme }) => theme.palette.box.main};
+  padding: ${({ theme }) => theme.spacing(2, 4, 3)};
+  width: '50rem';
+`;
 
 interface ButtonModalProps {
   ariaDescribedBy?: string;
@@ -36,7 +33,6 @@ const ButtonModal: React.FC<ButtonModalProps> = ({
   startIcon,
 }) => {
   const [open, setOpen] = React.useState(false);
-  const classes = useStyles(() => {});
 
   const handleOpen = () => {
     setOpen(true);
@@ -51,21 +47,20 @@ const ButtonModal: React.FC<ButtonModalProps> = ({
       <Button onClick={handleOpen} variant="outlined" startIcon={startIcon} data-testid={dataTestId}>
         {buttonText}
       </Button>
-      <Modal
+      <StyledDialog
         aria-labelledby={ariaDescribedBy}
         aria-describedby={ariaLabelledBy}
         open={open}
         onClose={handleClose}
-        className={classes.modal}
         closeAfterTransition
         BackdropComponent={Backdrop}
         BackdropProps={{
           timeout: 500,
         }}>
         <Fade in={open}>
-          <div className={classes.paper}>{children({ setOpen })}</div>
+          <StyledPaper>{children({ setOpen })}</StyledPaper>
         </Fade>
-      </Modal>
+      </StyledDialog>
     </>
   );
 };
