@@ -24,7 +24,7 @@ const Breadcrumbs: React.FC = () => {
 
   return (
     <>
-      {pathNames.length && (
+      {pathNames.length > 0 && (
         <StyledBreadcrumbs>
           <MuiBreadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
             <MuiLink component={Link} to="/">

@@ -36,7 +36,7 @@ const Search: React.FC = () => {
       <div>filter</div>
       <div>
         <SearchBar resetSearchInput={resetSearchInput} />
-        {publications?.length && <SearchResults publications={publications} searchTerm={searchTerm} />}
+        {publications?.length > 0 && <SearchResults publications={publications} searchTerm={searchTerm} />}
       </div>
     </StyledSearch>
   );

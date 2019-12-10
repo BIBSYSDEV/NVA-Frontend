@@ -33,8 +33,8 @@ export const getPublications = async (systemControlNumber: string, dispatch: Dis
         const dateTags = publication.getElementsByTagName(AlmaCodes.DATE_TAG);
 
         return {
-          title: titleTags?.[0].innerHTML ?? '',
-          date: dateTags?.[0].innerHTML ?? '',
+          title: titleTags?.[0]?.innerHTML ?? '',
+          date: dateTags?.[0]?.innerHTML ?? '',
         };
       });
       // Filter out publications where titles are missing, and do a (naive) sort by date

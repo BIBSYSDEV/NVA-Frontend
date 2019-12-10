@@ -46,7 +46,7 @@ const AuthorityCard: React.FC<AuthorityCardProps> = ({ authority, isSelected }) 
           <Radio color="primary" checked={isSelected} />
           {authorityName?.value}
         </div>
-        <div>{publications?.[0].title}</div>
+        <div>{publications?.[0]?.title}</div>
       </StyledBoxContent>
     </Box>
   );
