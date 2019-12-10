@@ -3,10 +3,10 @@ import ContributorType from './contributor.types';
 import { ReferenceType } from './references.types';
 import { Language } from './settings.types';
 
-export interface FormsData {
-  publicationDescription: DescriptionFormData;
-  publicationReference: ReferenceFormData;
-  publicationContributors: ContributorsFormData;
+export interface PublicationFormsData {
+  description: DescriptionFormData;
+  reference: ReferenceFormData;
+  contributors: ContributorsFormData;
 }
 
 export interface DescriptionFormData {
@@ -93,14 +93,7 @@ export const emptyReferenceFormData: ReferenceFormData = {
   journalPublication: emptyJournalPublicationReferenceFormData,
 };
 
-// todo: remove
-export const emptyForms: FormsData = {
-  publicationDescription: emptyDescriptionFormData,
-  publicationContributors: emptyContributorsFormData,
-  publicationReference: emptyReferenceFormData,
-};
-
-export const emptyPublicationFormData = {
+export const emptyPublicationFormData: PublicationFormsData = {
   description: emptyDescriptionFormData,
   reference: emptyReferenceFormData,
   contributors: emptyContributorsFormData,

@@ -4,13 +4,11 @@ import styled from 'styled-components';
 
 import { Button, Typography } from '@material-ui/core';
 
-import { YupError } from '../../types/validation.types';
-
 interface TabPanelProps {
   ariaLabel: string;
   children?: React.ReactNode;
   isHidden: boolean;
-  errors?: YupError[];
+  errors?: any;
   goToNextTab?: (event: React.MouseEvent<any>) => void;
   onClickSave?: (event: React.MouseEvent<any>) => void;
   heading: string;
