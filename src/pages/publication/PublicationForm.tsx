@@ -12,6 +12,7 @@ import PublicationPanel from './PublicationPanel';
 import { ReferencesPanel } from './ReferencesPanel';
 import { PublicationFormTabs } from './PublicationFormTabs';
 import { emptyPublicationFormData, PublicationFormsData } from '../../types/form.types';
+import useLocalStorage from '../../utils/hooks/useLocalStorage';
 
 const StyledPublication = styled.div`
   flex-grow: 1;
@@ -21,6 +22,10 @@ const StyledPublication = styled.div`
 const PublicationForm: React.FC = () => {
   const { t } = useTranslation('publication');
   const [tabNumber, setTabNumber] = useState(0);
+  const [localStorageFormData, setLocalStorageFormData] = useLocalStorage(
+    'publicationFormData',
+    emptyPublicationFormData
+  );
 
   const validationSchema = Yup.object().shape({
     description: Yup.object().shape({
@@ -46,11 +51,11 @@ const PublicationForm: React.FC = () => {
   return (
     <StyledPublication>
       <Formik
-        initialValues={emptyPublicationFormData}
+        initialValues={localStorageFormData}
         validationSchema={validationSchema}
         onSubmit={values => savePublication(values)}>
         {({ values, errors, touched }) => (
-          <Form>
+          <Form onBlur={setLocalStorageFormData(values)}>
             <PublicationFormTabs
               tabNumber={tabNumber}
               handleTabChange={handleTabChange}
