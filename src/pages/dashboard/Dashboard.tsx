@@ -1,7 +1,10 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
+import ButtonModal from '../../components/ButtonModal';
 import SearchBar from '../../components/SearchBar';
+import { ConnectAuthority } from '../user/authority/ConnectAuthority';
 
 const StyledDashboard = styled.div`
   width: 100%;
@@ -21,11 +24,20 @@ const StyledOtherContent = styled.div`
   grid-area: search-bar;
 `;
 
-const Dashboard: React.FC = () => (
-  <StyledDashboard>
-    <StyledSearchBar resetSearchInput />
-    <StyledOtherContent>Annet innhold</StyledOtherContent>
-  </StyledDashboard>
-);
+const Dashboard: React.FC = () => {
+  const { t } = useTranslation('profile');
+  return (
+    <StyledDashboard>
+      <StyledSearchBar resetSearchInput />
+      <ButtonModal
+        buttonText={t('authority.connect_authority')}
+        dataTestId="connect-author-modal"
+        ariaLabelledBy="connect-author-modal">
+        {() => <ConnectAuthority />}
+      </ButtonModal>
+      <StyledOtherContent>Annet innhold</StyledOtherContent>
+    </StyledDashboard>
+  );
+};
 
 export default Dashboard;

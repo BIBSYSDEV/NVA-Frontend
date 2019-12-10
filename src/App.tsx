@@ -16,7 +16,6 @@ import Dashboard from './pages/dashboard/Dashboard';
 import NotFound from './pages/errorpages/NotFound';
 import PublicationForm from './pages/publication/PublicationForm';
 import Search from './pages/search/Search';
-import { ConnectAuthority } from './pages/user/authority/ConnectAuthority';
 import User from './pages/user/User';
 import Workspace from './pages/workspace/Workspace';
 import { setAuthorityData, setUser } from './redux/actions/userActions';
@@ -86,7 +85,6 @@ const App: React.FC = () => {
             <Route exact path="/search/:searchTerm" component={Search} />
             <Route exact path="/search/:searchTerm/:offset" component={Search} />
             {user.isLoggedIn && <Route exact path="/user" component={User} />}
-            {user.isLoggedIn && <Route exact path="/user/authority" component={ConnectAuthority} />}
             <Route path="*" component={NotFound} />
           </Switch>
         </StyledPageBody>

@@ -2,13 +2,14 @@ import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { Button, Link as MuiLink } from '@material-ui/core';
+import { Link as MuiLink } from '@material-ui/core';
 
 import { getOrcidInfo } from '../../api/external/orcidApi';
+import ButtonModal from '../../components/ButtonModal';
 import { RootStore } from '../../redux/reducers/rootReducer';
+import { ConnectAuthority } from './authority/ConnectAuthority';
 import UserCard from './UserCard';
 import UserInfo from './UserInfo';
 import UserLanguage from './UserLanguage';
@@ -67,11 +68,12 @@ const User: React.FC = () => {
           ) : (
             <>
               <p>{t('authority.not_connected_info')}</p>
-              <Link to="/user/authority">
-                <Button color="primary" variant="contained">
-                  {t('authority.connect_authority')}
-                </Button>
-              </Link>
+              <ButtonModal
+                buttonText={t('authority.connect_authority')}
+                dataTestId="connect-author-modal"
+                ariaLabelledBy="connect-author-modal">
+                {() => <ConnectAuthority />}
+              </ButtonModal>
             </>
           )}
         </UserCard>
