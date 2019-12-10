@@ -37,7 +37,7 @@
     "link_to_publication": "Link to publication",
     "load_file": "Load file",
     "load_file_description": "Load file...",
-    "orcid_link": "ORCID link"
+    "link": "Link"
   },
   "references": {
     "article": "Article",

@@ -46,7 +46,7 @@ const LinkPublicationPanelForm: React.FC<LinkPublicationPanelFormProps> = ({ han
             name="doiUrl"
             variant="outlined"
             fullWidth
-            label={t('publication:publication.orcid_link')}
+            label={t('publication:publication.link')}
             component={TextField}
           />
           <Button color="primary" variant="contained" type="submit">

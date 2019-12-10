@@ -6,3 +6,8 @@ export interface Notification {
   key: string;
   dismissed?: boolean;
 }
+
+export interface AddNotification {
+  message: string;
+  variant: VariantType;
+}

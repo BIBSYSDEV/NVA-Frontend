@@ -18,6 +18,7 @@ export const Notifier: React.FC = () => {
         onClick: () => {
           closeSnackbar(notification.key);
         },
+        preventDuplicate: true,
       };
       if (notification.dismissed) {
         closeSnackbar(notification.key);

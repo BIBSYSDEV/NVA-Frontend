@@ -9,7 +9,6 @@ import { MenuItem } from '@material-ui/core';
 
 import Box from '../../components/Box';
 import TabPanel from '../../components/TabPanel/TabPanel';
-import { RootStore } from '../../redux/reducers/rootReducer';
 import { ReferenceType, referenceTypeList } from '../../types/references.types';
 import ReportReferenceForm from './references_tab/ReportReferenceForm';
 import BookReferenceForm from './references_tab/BookReferenceForm';

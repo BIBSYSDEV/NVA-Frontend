@@ -1,6 +1,6 @@
 import React from 'react';
-import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
 const StyledLine = styled.div`
   padding-bottom: 0.5rem;
@@ -29,7 +29,7 @@ const LabelTextLine: React.FC<LabelTextLineProps> = ({ label, text, dataTestId, 
   <StyledLine>
     <StyledLabel>{label}:</StyledLabel>
     {externalLink && (
-      <a href={externalLink}>
+      <a href={externalLink} target="_blank" rel="noopener noreferrer">
         <StyledText data-testid={dataTestId}>{text}</StyledText>
       </a>
     )}
