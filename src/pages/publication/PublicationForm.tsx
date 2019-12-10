@@ -22,7 +22,7 @@ const StyledPublication = styled.div`
 const PublicationForm: React.FC = () => {
   const { t } = useTranslation('publication');
   const [tabNumber, setTabNumber] = useState(0);
-  const [localStorageFormData, setLocalStorageFormData] = useLocalStorage(
+  const [localStorageFormData, setLocalStorageFormData, clearLocalStorageFormData] = useLocalStorage(
     'publicationFormData',
     emptyPublicationFormData
   );
@@ -46,6 +46,7 @@ const PublicationForm: React.FC = () => {
 
   const savePublication = async (values: PublicationFormsData) => {
     console.log('Save publication:', values);
+    clearLocalStorageFormData();
   };
 
   return (
