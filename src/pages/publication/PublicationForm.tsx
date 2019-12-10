@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 
 import TabPanel from '../../components/TabPanel/TabPanel';
-import { RootStore } from '../../redux/reducers/rootReducer';
 import ContributorsPanel from './ContributorsPanel';
 import DescriptionPanel from './DescriptionPanel';
 import FilesAndLicensePanel from './FilesAndLicensePanel';
@@ -23,11 +21,13 @@ const StyledPublication = styled.div`
 const PublicationForm: React.FC = () => {
   const { t } = useTranslation('publication');
   const [tabNumber, setTabNumber] = useState(0);
-  const formData = useSelector((store: RootStore) => store.formsData);
 
   const validationSchema = Yup.object().shape({
     description: Yup.object().shape({
       title: Yup.string().required(t('publication:feedback.required_field')),
+    }),
+    reference: Yup.object().shape({
+      referenceType: Yup.string().required(t('publication:feedback.required_field')),
     }),
   });
 
@@ -39,39 +39,44 @@ const PublicationForm: React.FC = () => {
     setTabNumber(tabNumber + 1);
   };
 
-  const savePublication = async () => {
-    console.log('Save publication:', formData);
+  const savePublication = async (values: any) => {
+    console.log('Save publication:', values);
+  };
+
+  const submitPublication = async (values: any) => {
+    console.log('Submit publication', values);
   };
 
   return (
     <StyledPublication>
-      <PublicationFormTabs tabNumber={tabNumber} handleTabChange={handleTabChange} />
-      <PublicationPanel tabNumber={tabNumber} goToNextTab={goToNextTab} />
       <Formik
         initialValues={emptyPublicationFormData}
         validationSchema={validationSchema}
-        onSubmit={values => console.log('Submit:', values)}>
-        {({ values, errors }) => (
+        onSubmit={values => submitPublication(values)}>
+        {({ values, errors, touched }) => (
           <Form>
-            {JSON.stringify(errors)}
+            <PublicationFormTabs
+              tabNumber={tabNumber}
+              handleTabChange={handleTabChange}
+              errors={errors}
+              touched={touched}
+            />
+            <PublicationPanel tabNumber={tabNumber} goToNextTab={goToNextTab} />
             <DescriptionPanel
               tabNumber={tabNumber}
               goToNextTab={goToNextTab}
-              savePublication={savePublication}
-              errors={errors}
+              savePublication={() => savePublication(values)}
             />
             <ReferencesPanel
               tabNumber={tabNumber}
               goToNextTab={goToNextTab}
-              savePublication={savePublication}
+              savePublication={() => savePublication(values)}
               selectedReferenceType={values.reference.referenceType}
-              errors={errors}
             />
             <ContributorsPanel
               tabNumber={tabNumber}
               goToNextTab={goToNextTab}
-              savePublication={savePublication}
-              errors={errors}
+              savePublication={() => savePublication(values)}
             />
             <FilesAndLicensePanel tabNumber={tabNumber} goToNextTab={goToNextTab} />
             <TabPanel isHidden={tabNumber !== 5} ariaLabel="submission" heading={t('heading.submission')}>

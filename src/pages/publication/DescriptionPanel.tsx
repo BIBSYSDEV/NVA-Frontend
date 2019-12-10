@@ -2,7 +2,6 @@ import { Field } from 'formik';
 import { Select, TextField } from 'formik-material-ui';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
 import DateFnsUtils from '@date-io/date-fns';
@@ -11,7 +10,6 @@ import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 
 import Box from '../../components/Box';
 import TabPanel from '../../components/TabPanel/TabPanel';
-import { RootStore } from '../../redux/reducers/rootReducer';
 import { languages } from '../../translations/i18n';
 import DisciplineSearch from './description_tab/DisciplineSearch';
 import FormikDatePicker from './description_tab/FormikDatePicker';
@@ -35,12 +33,10 @@ interface DescriptionPanelProps {
   goToNextTab: (event: React.MouseEvent<any>) => void;
   savePublication: () => void;
   tabNumber: number;
-  errors: any;
 }
 
 const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNumber, savePublication }) => {
   const { t } = useTranslation();
-  const errors = useSelector((store: RootStore) => store.errors);
 
   const saveAndClearLocalStorage = () => {
     savePublication();
@@ -52,7 +48,6 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
       ariaLabel="description"
       goToNextTab={goToNextTab}
       onClickSave={saveAndClearLocalStorage}
-      errors={errors.descriptionErrors}
       heading={t('publication:heading.description')}>
       <Box>
         <MuiPickersUtilsProvider utils={DateFnsUtils}>

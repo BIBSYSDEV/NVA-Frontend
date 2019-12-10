@@ -2,7 +2,6 @@ import { Field } from 'formik';
 import { Select } from 'formik-material-ui';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
 import { MenuItem } from '@material-ui/core';
@@ -10,7 +9,6 @@ import { MenuItem } from '@material-ui/core';
 import Box from '../../components/Box';
 import TabPanel from '../../components/TabPanel/TabPanel';
 import { ReferenceType, referenceTypeList } from '../../types/references.types';
-import useFormPersistor from '../../utils/hooks/useFormPersistor';
 import BookReferenceForm from './references_tab/BookReferenceForm';
 import JournalPublicationReferenceForm from './references_tab/JournalPublicationReferenceForm';
 import ReportReferenceForm from './references_tab/ReportReferenceForm';
@@ -26,7 +24,6 @@ interface ReferencesPanelProps {
   savePublication: () => void;
   tabNumber: number;
   selectedReferenceType: string;
-  errors: any;
 }
 
 export const ReferencesPanel: React.FC<ReferencesPanelProps> = ({
@@ -34,13 +31,11 @@ export const ReferencesPanel: React.FC<ReferencesPanelProps> = ({
   savePublication,
   tabNumber,
   selectedReferenceType,
-  errors,
 }) => {
   const { t } = useTranslation('publication');
   return (
     <TabPanel
       ariaLabel="references"
-      errors={errors.referencesErrors}
       goToNextTab={goToNextTab}
       heading={t('publication:heading.references')}
       isHidden={tabNumber !== 2}
