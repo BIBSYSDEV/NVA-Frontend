@@ -30,7 +30,7 @@ const Login: React.FC = () => {
 
   return (
     <StyledLoginComponent>
-      {user && user.name ? (
+      {user?.name ? (
         <Menu menuButtonLabel={user.name} handleLogout={handleLogout} />
       ) : (
         <Button color="primary" variant="contained" onClick={handleLogin} data-testid="login-button">

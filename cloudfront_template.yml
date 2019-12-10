@@ -30,7 +30,7 @@ Resources:
     Properties:
       DistributionConfig:
         Aliases:
-          - test.sandbox.nva.aws.unit.no
+          - frontend.dev.nva.aws.unit.no
         Origins:
           - DomainName: !Sub '${NvaFrontendBucketName}.s3.amazonaws.com'
             Id: !Sub 'S3-${NvaFrontendBucketName}'
@@ -65,3 +65,6 @@ Resources:
             ErrorCachingMinTTL: 10
             ResponseCode: 200
             ResponsePagePath: '/index.html'
+Outputs:
+  CloudFrontDistribution:
+    Value: !Ref NvaCloudFrontDistribution
