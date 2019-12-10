@@ -65,3 +65,6 @@ Resources:
             ErrorCachingMinTTL: 10
             ResponseCode: 200
             ResponsePagePath: '/index.html'
+Outputs:
+  CloudFrontDistribution:
+    Value: !Ref NvaCloudFrontDistribution
