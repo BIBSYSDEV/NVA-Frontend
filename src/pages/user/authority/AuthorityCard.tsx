@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
-import Box from '../../../components/Box';
-import { Marc21Codes, Marc21Subcodes, Authority } from '../../../types/authority.types';
-import { AlmaPublication } from '../../../types/publication.types';
-import { useDispatch } from 'react-redux';
-import { getPublications } from '../../../api/external/almaApi';
 import { Radio } from '@material-ui/core';
+
+import { getPublications } from '../../../api/external/almaApi';
+import Box from '../../../components/Box';
+import { Authority, Marc21Codes, Marc21Subcodes } from '../../../types/authority.types';
+import { AlmaPublication } from '../../../types/publication.types';
 
 const StyledBoxContent = styled.div`
   display: grid;
@@ -36,17 +37,16 @@ const AuthorityCard: React.FC<AuthorityCardProps> = ({ authority, isSelected }) 
   const authorityNameField =
     authorityMarcdata.find(field => Marc21Codes.PERSONAL_NAME === field.tag) ||
     authorityMarcdata.find(field => Marc21Codes.HEADING_PERSONAL_NAME === field.tag);
-  const authorityName =
-    authorityNameField && authorityNameField.subfields.find(subfield => subfield.subcode === Marc21Subcodes.NAME);
+  const authorityName = authorityNameField?.subfields.find(subfield => subfield.subcode === Marc21Subcodes.NAME);
 
   return (
     <Box>
       <StyledBoxContent>
         <div>
           <Radio color="primary" checked={isSelected} />
-          {authorityName && authorityName.value}
+          {authorityName?.value}
         </div>
-        <div>{publications.length > 0 && publications[0].title}</div>
+        <div>{publications?.[0]?.title}</div>
       </StyledBoxContent>
     </Box>
   );

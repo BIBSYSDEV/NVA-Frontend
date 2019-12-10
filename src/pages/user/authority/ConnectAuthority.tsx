@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+import styled from 'styled-components';
+
+import { Button } from '@material-ui/core';
+
 import { getAuthorities, updateAuthority } from '../../../api/external/authorityRegisterApi';
 import { RootStore } from '../../../redux/reducers/rootReducer';
-import styled from 'styled-components';
-import { useTranslation } from 'react-i18next';
 import { Authority } from '../../../types/authority.types';
 import AuthorityCard from './AuthorityCard';
-import { Button } from '@material-ui/core';
 
 const StyledAuthorityContainer = styled.div`
   > * {

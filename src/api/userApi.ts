@@ -24,23 +24,21 @@ export const getCurrentAuthenticatedUser = () => {
   return async (dispatch: Dispatch<any>, getState: () => RootStore) => {
     try {
       const cognitoUser = await Auth.currentAuthenticatedUser();
-      if (cognitoUser != null) {
-        cognitoUser.getSession(async (error: any, session: CognitoUserSession) => {
-          if (error || !session.isValid()) {
-            const currentSession = await Auth.currentSession();
-            cognitoUser.refreshSession(currentSession.getRefreshToken());
-          } else {
-            // NOTE: getSession must be called to authenticate user before calling getUserAttributes
-            cognitoUser.getUserAttributes((error: any) => {
-              if (error) {
-                dispatch(setUserFailure(i18n.t('feedback:error.get_user')));
-              } else {
-                dispatch(setUser(cognitoUser.attributes));
-              }
-            });
-          }
-        });
-      }
+      cognitoUser?.getSession(async (error: any, session: CognitoUserSession) => {
+        if (error || !session.isValid()) {
+          const currentSession = await Auth.currentSession();
+          cognitoUser.refreshSession(currentSession.getRefreshToken());
+        } else {
+          // NOTE: getSession must be called to authenticate user before calling getUserAttributes
+          cognitoUser.getUserAttributes((error: any) => {
+            if (error) {
+              dispatch(setUserFailure(i18n.t('feedback:error.get_user')));
+            } else {
+              dispatch(setUser(cognitoUser.attributes));
+            }
+          });
+        }
+      });
     } catch {
       const store = getState();
       if (store.user.isLoggedIn) {

@@ -2,11 +2,10 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
 import { Breadcrumbs as MuiBreadcrumbs, Link as MuiLink } from '@material-ui/core';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-
-import styled from 'styled-components';
 
 const StyledBreadcrumbs = styled.div`
   grid-area: breadcrumbs;

@@ -1,4 +1,4 @@
-import { Field, Formik, Form } from 'formik';
+import { Field, Form, Formik } from 'formik';
 import { Select } from 'formik-material-ui';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -10,14 +10,14 @@ import { MenuItem } from '@material-ui/core';
 import Box from '../../components/Box';
 import TabPanel from '../../components/TabPanel/TabPanel';
 import { RootStore } from '../../redux/reducers/rootReducer';
+import { emptyBookReferenceFormData, emptyJournalPublicationReferenceFormData } from '../../types/form.types';
 import { ReferenceType, referenceTypeList } from '../../types/references.types';
-import ReportReferenceForm from './references_tab/ReportReferenceForm';
+import useFormPersistor from '../../utils/hooks/useFormPersistor';
 import BookReferenceForm from './references_tab/BookReferenceForm';
 import ChapterReferenceForm from './references_tab/ChapterReferenceForm';
-import JournalPublicationReferenceForm from './references_tab/JournalPublicationReferenceForm';
 import DegreeReferenceForm from './references_tab/DegreeReferenceForm';
-import useFormPersistor from '../../utils/hooks/useFormPersistor';
-import { emptyBookReferenceFormData, emptyJournalPublicationReferenceFormData } from '../../types/form.types';
+import JournalPublicationReferenceForm from './references_tab/JournalPublicationReferenceForm';
+import ReportReferenceForm from './references_tab/ReportReferenceForm';
 
 const StyledBox = styled.div`
   margin-top: 1rem;
