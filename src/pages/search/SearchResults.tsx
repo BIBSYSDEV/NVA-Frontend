@@ -31,7 +31,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ publications, searchTerm 
 
   const updateSearch = (offset: number) => {
     setOffset(offset);
-    if (searchTerm.length > 0) {
+    if (searchTerm.length) {
       dispatch(search(searchTerm, offset));
       history.push(`/search/${searchTerm}/${offset}`);
     }

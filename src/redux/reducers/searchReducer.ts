@@ -8,7 +8,7 @@ export const searchReducer = (state: Search = emptySearch, action: SearchActions
         publications: [...action.publications],
         searchTerm: action.searchTerm,
         totalNumberOfHits: action.totalNumberOfHits,
-        offset: action.offset ? action.offset : 0,
+        offset: action.offset ?? 0,
       };
     case CLEAR_SEARCH:
       return { ...emptySearch };

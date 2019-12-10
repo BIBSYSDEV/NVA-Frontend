@@ -59,12 +59,11 @@ const OtherContributor: React.FC<OtherContributorProps> = ({ contributor, dispat
         value={contributor.selectedInstitution || ''}
         variant="outlined">
         <MenuItem value="" key="-1" />
-        {contributor.institutions &&
-          contributor.institutions.map(institution => (
-            <MenuItem value={institution} key={institution}>
-              {institution}
-            </MenuItem>
-          ))}
+        {contributor?.institutions?.map(institution => (
+          <MenuItem value={institution} key={institution}>
+            {institution}
+          </MenuItem>
+        ))}
       </StyledContributor.InstitutionSelect>
       <StyledContributor.DeleteIcon onClick={() => deleteContributor(contributor)} />
     </StyledContributor.OtherContributorContainer>

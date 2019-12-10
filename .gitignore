@@ -36,3 +36,4 @@ cypress/screenshots
 cypress/videos
 .nyc_output
 
+a_frontend_parent_template.yml
