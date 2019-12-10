@@ -1,0 +1,47 @@
+{
+  "contributors": {
+    "add_author": "Legg til flere forfattere",
+    "add_other_contributor": "Legg til flere",
+    "authors": "Forfattere",
+    "corresponding": "Korresponderende",
+    "type": "Bidragstype",
+    "verify_person": "Verifiser"
+  },
+  "description": {
+    "abstract": "Sammendrag",
+    "description": "Beskrivelse",
+    "npi_disciplines": "NPI Fagfelt",
+    "project": "Prosjekt",
+    "project_association": "Prosjekttilknytning",
+    "tags": "Nøkkelord"
+  },
+  "files_and_license": {
+    "files": "Filer",
+    "upload_files": "Last opp filer"
+  },
+  "feedback": {
+    "invalid_url": "Ugyldig lenke",
+    "required_field": "Påkrevd felt"
+  },
+  "heading": {
+    "contributors": "Bidragsytere",
+    "description": "Beskrivelse",
+    "files_and_license": "Filer og lisens",
+    "publication": "Publikasjon",
+    "references": "Referanser",
+    "submission": "Innsending"
+  },
+  "publication": {
+    "date": "Publiseringsdato eller år",
+    "link_publication_description": "Feks. DOI lenke, lenke til artikkel, lenke til video av foredrag etc.",
+    "link_to_publication": "Link til publikasjon",
+    "load_file": "Last opp fil",
+    "load_file_description": "Last opp fil...",
+    "orcid_link": "ORCID-link"
+  },
+  "references": {
+    "issn": "ISSN",
+    "level": "Nivå",
+    "publisher": "Utgiver"
+  }
+}

@@ -17,7 +17,6 @@ env:
 
   secrets-manager:
     REACT_APP_ORCID_CLIENT_SECRET: REACT_APP_ORCID_CLIENT_SECRET
-
     #  Values to be assigned outside of pipeline
     # REACT_APP_AWS_REGION
     # REACT_APP_USE_MOCK
@@ -32,6 +31,10 @@ phases:
   build:
     commands:
       - npm run build
+  post-build:
+    commands:
+      - copy to s3...
+      - invalidate cloudfront distribution...
 artifacts:
   files:
     - '**/*'

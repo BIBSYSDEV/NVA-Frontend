@@ -1,40 +1,40 @@
-import { ResourceMetadata, ResourceType } from '../../types/resource.types';
+import { PublicationMetadata, PublicationType } from '../../types/publication.types';
 
 const faker = require('faker');
 const fs = require('fs');
 
-const NUMBER_OF_RESOURCES = 45;
+const NUMBER_OF_PUBLICATIONS = 45;
 
-const generateRandomResourceType = () =>
-  faker.helpers.replaceSymbolWithNumber(faker.random.arrayElement(Object.getOwnPropertyNames(ResourceType)));
+const generateRandomPublicationType = () =>
+  faker.helpers.replaceSymbolWithNumber(faker.random.arrayElement(Object.getOwnPropertyNames(PublicationType)));
 
 const convertToSentence = (sentence: string) => sentence.charAt(0).toUpperCase() + sentence.slice(1);
 
-const generateResources: any = () => {
-  let resources: ResourceMetadata[] = [];
-  for (let i = 0; i < NUMBER_OF_RESOURCES; i++) {
-    let resource: any = {};
-    resource.creators = [];
+const generatePublications: any = () => {
+  let publications: PublicationMetadata[] = [];
+  for (let i = 0; i < NUMBER_OF_PUBLICATIONS; i++) {
+    let publication: any = {};
+    publication.creators = [];
     let numberOfAuthors = Math.floor(Math.random() * 9) + 1;
     for (let j = 1; j < numberOfAuthors; j++) {
       let creator = faker.name.lastName() + ', ' + faker.name.firstName();
-      resource.creators.push(creator);
+      publication.creators.push(creator);
     }
-    resource.handle = 'http:/hndl.net/' + faker.random.number({ min: 10000 });
-    resource.license = 'UNIT_CCBY';
+    publication.handle = 'http:/hndl.net/' + faker.random.number({ min: 10000 });
+    publication.license = 'UNIT_CCBY';
     let fakeDate = faker.date.past(500, '2100-01-01');
-    resource.publicationYear = fakeDate.getFullYear();
-    resource.publisher = faker.company.companyName();
-    resource.titles = {
+    publication.publicationYear = fakeDate.getFullYear();
+    publication.publisher = faker.company.companyName();
+    publication.titles = {
       no: convertToSentence(faker.company.bs()),
       en: convertToSentence(faker.company.bs()),
     };
 
-    resource.type = generateRandomResourceType();
-    resources.push(resource);
+    publication.type = generateRandomPublicationType();
+    publications.push(publication);
   }
-  return resources;
+  return publications;
 };
 
-const resultAsString = JSON.stringify(generateResources(), null, '  ');
-fs.writeFileSync('./resources_45_random_results_generated.json', resultAsString);
+const resultAsString = JSON.stringify(generatePublications(), null, '  ');
+fs.writeFileSync('./publications_45_random_results_generated.json', resultAsString);

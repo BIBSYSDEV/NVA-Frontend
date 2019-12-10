@@ -3,10 +3,20 @@ import MockAdapter from 'axios-mock-adapter';
 
 import OrcidResponse from '../types/orcid.types';
 import { ApplicationName, FeideUser, RoleName } from '../types/user.types';
-import { ApiBaseUrl, ORCID_OAUTH_URL, USE_MOCK_DATA } from '../utils/constants';
-import mockResources from '../utils/testfiles/resources_45_random_results_generated.json';
-import mockDoiResource from '../utils/testfiles/resource_generated_from_doi.json';
+import {
+  ApiBaseUrl,
+  AUTHORITY_REGISTER_API_URL,
+  CRISTIN_API_URL,
+  ORCID_USER_INFO_URL,
+  PUBLICATION_CHANNEL_API_URL,
+  USE_MOCK_DATA,
+} from '../utils/constants';
+import mockCristinProjects from '../utils/testfiles/cristin_projects_real.json';
 import mockDoiLookupResponse from '../utils/testfiles/doi_lookup_response.json';
+import mockAuthoritiesResponse from '../utils/testfiles/mock_authorities_response.json';
+import mockDoiPublication from '../utils/testfiles/publication_generated_from_doi.json';
+import mockPublications from '../utils/testfiles/publications_45_random_results_generated.json';
+import mockNsdPublisers from '../utils/testfiles/publishersFromNsd.json';
 
 export const mockUser: FeideUser = {
   name: 'Test User',
@@ -25,13 +35,11 @@ export const mockUser: FeideUser = {
 };
 
 const mockOrcidResponse: OrcidResponse = {
-  accessToken: 'f5af9f51-07e6-4332-8f1a-c0c11c1e3728',
-  tokenType: 'bearer',
-  refreshToken: 'f725f747-3a65-49f6-a231-3e8944ce464d',
-  expiresIn: 631138518,
-  scope: '/authorize',
+  id: 'https://sandbox.orcid.org/0000-0001-2345-6789',
+  sub: '0000-0001-2345-6789',
   name: 'Sofia Garcia',
-  orcid: '0000-0001-2345-6789',
+  family_name: 'Garcia',
+  given_name: 'Sofia',
 };
 
 // AXIOS INTERCEPTOR
@@ -39,19 +47,28 @@ if (USE_MOCK_DATA) {
   const mock = new MockAdapter(Axios);
 
   // SEARCH
-  mock.onGet(new RegExp(`/${ApiBaseUrl.RESOURCES}/*`)).reply(200, mockResources);
+  mock.onGet(new RegExp(`/${ApiBaseUrl.PUBLICATIONS}/*`)).reply(200, mockPublications);
 
-  // Create resource from doi
-  mock.onPost(new RegExp(`/${ApiBaseUrl.RESOURCES}/doi/*`)).reply(200, mockDoiResource);
+  // Create publication from doi
+  mock.onPost(new RegExp(`/${ApiBaseUrl.PUBLICATIONS}/doi/*`)).reply(200, mockDoiPublication);
 
   // lookup DOI
   mock.onGet(new RegExp(`/${ApiBaseUrl.DOI_LOOKUP}/*`)).reply(200, mockDoiLookupResponse);
 
+  // CRISTIN
+  mock.onGet(new RegExp(`${CRISTIN_API_URL}/projects*`)).reply(200, mockCristinProjects, { 'X-Total-Count': '12' });
+
+  // PUBLICATION CHANNEL
+  mock.onPost(PUBLICATION_CHANNEL_API_URL).reply(200, mockNsdPublisers);
+
   // USER
-  mock.onGet(new RegExp(`/${ApiBaseUrl}/*`)).reply(200, mockUser);
+  mock.onGet(new RegExp(`/${ApiBaseUrl.USER}/*`)).reply(200, mockUser);
 
   // ORCID
-  mock.onPost(ORCID_OAUTH_URL).reply(200, mockOrcidResponse);
+  mock.onPost(ORCID_USER_INFO_URL).reply(200, mockOrcidResponse);
+
+  // Authority Registry
+  mock.onGet(new RegExp(`${AUTHORITY_REGISTER_API_URL}`)).reply(200, mockAuthoritiesResponse);
 
   mock.onAny().reply(function(config) {
     throw new Error('Could not find mock for ' + config.url);

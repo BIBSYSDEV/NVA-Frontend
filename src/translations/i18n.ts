@@ -2,16 +2,20 @@ import i18n from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 
 import { Language } from '../types/settings.types';
-import feedbackEn from './en/feedback.json';
-import translationsEn from './en/translations.json';
-import feedbackNb from './nb/feedback.json';
-import translationsNb from './nb/translations.json';
-import disciplinesNb from './nb/disciplines.json';
-import disciplinesEn from './en/disciplines.json';
-import commonEn from './en/common.json';
-import commonNb from './nb/common.json';
 import breadcrumbsEn from './en/breadcrumbs.json';
+import commonEn from './en/common.json';
+import disciplinesEn from './en/disciplines.json';
+import feedbackEn from './en/feedback.json';
+import profileEn from './en/profile.json';
+import publicationEn from './en/publication.json';
+import translationsEn from './en/translations.json';
 import breadcrumbsNb from './nb/breadcrumbs.json';
+import commonNb from './nb/common.json';
+import disciplinesNb from './nb/disciplines.json';
+import feedbackNb from './nb/feedback.json';
+import profileNb from './nb/profile.json';
+import publicationNb from './nb/publication.json';
+import translationsNb from './nb/translations.json';
 
 export const defaultLanguage = Language.NORWEGIAN_BOKMAL;
 
@@ -21,20 +25,24 @@ i18n.use(LanguageDetector).init({
       feedback: feedbackEn,
       translations: translationsEn,
       common: commonEn,
+      profile: profileEn,
       disciplines: disciplinesEn,
       breadcrumbs: breadcrumbsEn,
+      publication: publicationEn,
     },
     nb: {
       feedback: feedbackNb,
       translations: translationsNb,
       common: commonNb,
+      profile: profileNb,
       disciplines: disciplinesNb,
       breadcrumbs: breadcrumbsNb,
+      publication: publicationNb,
     },
   },
   fallbackLng: defaultLanguage,
   debug: false,
-  ns: ['common', 'feedback', 'translations', 'breadcrumbs'],
+  ns: ['common', 'feedback', 'translations', 'profile', 'breadcrumbs'],
   defaultNS: 'translations',
   interpolation: {
     formatSeparator: ',',
