@@ -8,7 +8,6 @@ interface TabPanelProps {
   ariaLabel: string;
   children?: React.ReactNode;
   isHidden: boolean;
-  errors?: any;
   goToNextTab?: (event: React.MouseEvent<any>) => void;
   onClickSave?: (event: React.MouseEvent<any>) => void;
   heading: string;

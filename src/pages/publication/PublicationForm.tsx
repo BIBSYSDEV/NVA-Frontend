@@ -11,7 +11,7 @@ import FilesAndLicensePanel from './FilesAndLicensePanel';
 import PublicationPanel from './PublicationPanel';
 import { ReferencesPanel } from './ReferencesPanel';
 import { PublicationFormTabs } from './PublicationFormTabs';
-import { emptyPublicationFormData } from '../../types/form.types';
+import { emptyPublicationFormData, PublicationFormsData } from '../../types/form.types';
 
 const StyledPublication = styled.div`
   flex-grow: 1;
@@ -39,7 +39,7 @@ const PublicationForm: React.FC = () => {
     setTabNumber(tabNumber + 1);
   };
 
-  const savePublication = async (values: any) => {
+  const savePublication = async (values: PublicationFormsData) => {
     console.log('Save publication:', values);
   };
 
