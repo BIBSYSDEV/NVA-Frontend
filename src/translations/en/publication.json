@@ -37,11 +37,20 @@
     "link_to_publication": "Link to publication",
     "load_file": "Load file",
     "load_file_description": "Load file...",
-    "orcid_link": "ORCID link"
+    "link": "Link"
   },
   "references": {
+    "article": "Article",
+    "book": "Book",
+    "chapter": "Chapter",
+    "degree": "Degree",
+    "doi": "DOI",
+    "isbn": "ISBN",
     "issn": "ISSN",
+    "journal_publication": "Publication in Journal",
     "level": "Level",
-    "publisher": "Publisher"
+    "publisher": "Publisher",
+    "report": "Report",
+    "review": "Review"
   }
 }

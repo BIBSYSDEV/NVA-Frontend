@@ -4,9 +4,9 @@ import { ReferenceType } from './references.types';
 import { Language } from './settings.types';
 
 export interface FormsData {
-  description: DescriptionFormData;
-  references: ReferencesFormData;
-  contributors: ContributorsFormData;
+  publicationDescription: DescriptionFormData;
+  publicationReference: ReferenceFormData;
+  publicationContributors: ContributorsFormData;
 }
 
 export interface DescriptionFormData {
@@ -35,6 +35,22 @@ export interface ContributorsFormData {
   contributors: ContributorType[];
 }
 
+export interface BookReferenceFormData {
+  publisher: string;
+  isbn: string;
+}
+
+export interface JournalPublicationReferenceFormData {
+  type: string;
+  doi: string;
+}
+
+export interface ReferenceFormData {
+  referenceType: string;
+  book: BookReferenceFormData;
+  journalPublication: JournalPublicationReferenceFormData;
+}
+
 export const emptyDescriptionForm: DescriptionFormData = {
   title: '',
   abstract: '',
@@ -61,8 +77,24 @@ export const emptyContributorsForm: ContributorsFormData = {
   contributors: [],
 };
 
+export const emptyBookReferenceFormData: BookReferenceFormData = {
+  publisher: '',
+  isbn: '',
+};
+
+export const emptyJournalPublicationReferenceFormData: JournalPublicationReferenceFormData = {
+  type: '',
+  doi: '',
+};
+
+export const emptyReferenceFormData: ReferenceFormData = {
+  referenceType: '',
+  book: emptyBookReferenceFormData,
+  journalPublication: emptyJournalPublicationReferenceFormData,
+};
+
 export const emptyForms: FormsData = {
-  description: emptyDescriptionForm,
-  references: emptyReferencesForm,
-  contributors: emptyContributorsForm,
+  publicationDescription: emptyDescriptionForm,
+  publicationContributors: emptyContributorsForm,
+  publicationReference: emptyReferenceFormData,
 };
