@@ -1,13 +1,11 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { Link as MuiLink } from '@material-ui/core';
 
 import TabPanel from '../../components/TabPanel/TabPanel';
-import { RootStore } from '../../redux/reducers/rootReducer';
 import LinkPublicationPanel from './publication_tab/LinkPublicationPanel';
 import LoadPublicationPanel from './publication_tab/LoadPublicationPanel';
 
@@ -47,7 +45,6 @@ interface PublicationPanelProps {
 
 const PublicationPanel: React.FC<PublicationPanelProps> = ({ goToNextTab, tabNumber }) => {
   const [expanded, setExpanded] = React.useState<string | false>(false);
-  const errors = useSelector((store: RootStore) => store.errors);
   const { t } = useTranslation();
 
   const handleChange = (panel: string) => (_: React.ChangeEvent<any>, isExpanded: boolean) => {
@@ -59,7 +56,6 @@ const PublicationPanel: React.FC<PublicationPanelProps> = ({ goToNextTab, tabNum
       isHidden={tabNumber !== 0}
       ariaLabel="publication"
       goToNextTab={goToNextTab}
-      errors={errors.publicationErrors}
       heading={t('publication:heading.publication')}>
       <StyledPublicationPanel>
         <StyledSelectorWrapper>
