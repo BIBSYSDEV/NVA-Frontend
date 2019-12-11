@@ -1,4 +1,4 @@
-import { Field, Form, Formik } from 'formik';
+import { Field, Formik } from 'formik';
 import { TextField } from 'formik-material-ui';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -39,21 +39,19 @@ const LinkPublicationPanelForm: React.FC<LinkPublicationPanelFormProps> = ({ han
         doiUrl: '',
       }}
       validationSchema={publicationSchema}>
-      <Form>
-        <StyledInputBox>
-          <StyledTextField
-            aria-label="DOI-link"
-            name="doiUrl"
-            variant="outlined"
-            fullWidth
-            label={t('publication:publication.link')}
-            component={TextField}
-          />
-          <Button color="primary" variant="contained" type="submit">
-            {t('common:search')}
-          </Button>
-        </StyledInputBox>
-      </Form>
+      <StyledInputBox>
+        <StyledTextField
+          aria-label="DOI-link"
+          name="doiUrl"
+          variant="outlined"
+          fullWidth
+          label={t('publication:publication.link')}
+          component={TextField}
+        />
+        <Button color="primary" variant="contained" type="submit">
+          {t('common:search')}
+        </Button>
+      </StyledInputBox>
     </Formik>
   );
 };
