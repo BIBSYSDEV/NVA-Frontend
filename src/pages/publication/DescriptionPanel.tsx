@@ -60,18 +60,20 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({
 
   // Validation messages won't show on fields that are not touched
   const setAllFieldsTouched = useCallback(() => {
-    Object.values(FieldNames).forEach(fieldName => setFieldTouched(fieldName));
-  }, [setFieldTouched]);
+    if (!allFieldsAreTouched) {
+      Object.values(FieldNames).forEach(fieldName => setFieldTouched(fieldName));
+      setAllFieldsAreTouched(true);
+    }
+  }, [setFieldTouched, allFieldsAreTouched, setAllFieldsAreTouched]);
 
   // Set all fields as touched if user navigates away from this panel.
   useEffect(() => {
     if (tabNumber === descriptionPanelNumber) {
       setIsVisited(true);
-    } else if (isVisited && !allFieldsAreTouched) {
+    } else if (isVisited) {
       setAllFieldsTouched();
-      setAllFieldsAreTouched(true);
     }
-  }, [setAllFieldsTouched, isVisited, allFieldsAreTouched, tabNumber]);
+  }, [setAllFieldsTouched, isVisited, tabNumber]);
 
   const validateAndSave = () => {
     setAllFieldsTouched();

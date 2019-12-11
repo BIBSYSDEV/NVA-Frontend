@@ -30,3 +30,28 @@ export const journalPublicationTypes = [
   { label: 'references.article', value: JournalPublicationTypeValue.ARTICLE },
   { label: 'references.review', value: JournalPublicationTypeValue.REVIEW },
 ];
+
+enum BookTypeValue {
+  MONOGRAPHY = 'monography',
+  ANTHOLOGY = 'anthology',
+}
+
+export const bookTypes = [
+  { label: 'references.monography', value: BookTypeValue.MONOGRAPHY },
+  { label: 'references.anthology', value: BookTypeValue.ANTHOLOGY },
+];
+
+// Values represent name for fields used by Formik
+export enum ReferenceFieldNames {
+  REFERENCE_TYPE = 'reference.referenceType',
+}
+
+export enum journalPublicationFieldNames {
+  TYPE = 'reference.journalPublication.type',
+  DOI = 'reference.journalPublication.doi',
+}
+
+export enum BookFieldNames {
+  TYPE = 'reference.book.type',
+  PUBLISHER = 'reference.book.publisher',
+}

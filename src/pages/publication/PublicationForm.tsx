@@ -12,6 +12,7 @@ import PublicationPanel from './PublicationPanel';
 import { ReferencesPanel } from './ReferencesPanel';
 import { PublicationFormTabs } from './PublicationFormTabs';
 import { emptyPublicationFormData, PublicationFormsData } from '../../types/form.types';
+import { ReferenceType } from '../../types/references.types';
 import useLocalStorage from '../../utils/hooks/useLocalStorage';
 
 const StyledPublication = styled.div`
@@ -32,6 +33,22 @@ const PublicationForm: React.FC = () => {
     }),
     reference: Yup.object().shape({
       referenceType: Yup.string().required(t('publication:feedback.required_field')),
+
+      journalPublication: Yup.object().when('referenceType', {
+        is: ReferenceType.PUBLICATION_IN_JOURNAL,
+        then: Yup.object().shape({
+          type: Yup.string().required(t('publication:feedback.required_field')),
+          doi: Yup.string().url(),
+        }),
+      }),
+
+      book: Yup.object().when('referenceType', {
+        is: ReferenceType.BOOK,
+        then: Yup.object().shape({
+          type: Yup.string().required(t('publication:feedback.required_field')),
+          publisher: Yup.object().required(t('publication:feedback.required_field')),
+        }),
+      }),
     }),
   });
 
@@ -73,6 +90,7 @@ const PublicationForm: React.FC = () => {
               tabNumber={tabNumber}
               goToNextTab={goToNextTab}
               savePublication={() => savePublication(values)}
+              setFieldTouched={setFieldTouched}
               selectedReferenceType={values.reference.referenceType}
             />
             <ContributorsPanel
