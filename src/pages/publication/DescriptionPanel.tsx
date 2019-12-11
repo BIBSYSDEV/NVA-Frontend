@@ -1,6 +1,6 @@
 import { Field } from 'formik';
 import { Select, TextField } from 'formik-material-ui';
-import React from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
@@ -39,9 +39,10 @@ enum FieldNames {
   LANGUAGE = 'description.language',
   PROJECT = 'description.project',
 }
+const descriptionPanelNumber = 1;
 
 interface DescriptionPanelProps {
-  goToNextTab: () => void;
+  goToNextTab: (event: React.MouseEvent<any>) => void;
   savePublication: () => void;
   tabNumber: number;
   setFieldTouched: (fieldName: string) => void;
@@ -54,15 +55,23 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({
   setFieldTouched,
 }) => {
   const { t } = useTranslation();
+  const [isVisited, setIsVisited] = useState(false);
+  const [allFieldsAreTouched, setAllFieldsAreTouched] = useState(false);
 
-  const setAllFieldsTouched = () => {
+  // Validation messages won't show on fields that are not touched
+  const setAllFieldsTouched = useCallback(() => {
     Object.values(FieldNames).forEach(fieldName => setFieldTouched(fieldName));
-  };
+  }, [setFieldTouched]);
 
-  const validateAndGoToNext = () => {
-    setAllFieldsTouched();
-    goToNextTab();
-  };
+  // Set all fields as touched if user navigates away from this panel.
+  useEffect(() => {
+    if (tabNumber === descriptionPanelNumber) {
+      setIsVisited(true);
+    } else if (isVisited && !allFieldsAreTouched) {
+      setAllFieldsTouched();
+      setAllFieldsAreTouched(true);
+    }
+  }, [setAllFieldsTouched, isVisited, allFieldsAreTouched, tabNumber]);
 
   const validateAndSave = () => {
     setAllFieldsTouched();
@@ -71,9 +80,9 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({
 
   return (
     <TabPanel
-      isHidden={tabNumber !== 1}
+      isHidden={tabNumber !== descriptionPanelNumber}
       ariaLabel="description"
-      goToNextTab={validateAndGoToNext}
+      goToNextTab={goToNextTab}
       onClickSave={validateAndSave}
       heading={t('publication:heading.description')}>
       <Box>
