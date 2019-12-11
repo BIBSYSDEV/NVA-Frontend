@@ -15,7 +15,6 @@ import { emptyPublicationFormData, PublicationFormsData } from '../../types/form
 import useLocalStorage from '../../utils/hooks/useLocalStorage';
 
 const StyledPublication = styled.div`
-  flex-grow: 1;
   width: 100%;
 `;
 
@@ -55,7 +54,7 @@ const PublicationForm: React.FC = () => {
         initialValues={localStorageFormData}
         validationSchema={validationSchema}
         onSubmit={values => savePublication(values)}>
-        {({ values, errors, touched }) => (
+        {({ values, errors, touched, setFieldTouched }) => (
           <Form onBlur={setLocalStorageFormData(values)}>
             <PublicationFormTabs
               tabNumber={tabNumber}
@@ -68,6 +67,7 @@ const PublicationForm: React.FC = () => {
               tabNumber={tabNumber}
               goToNextTab={goToNextTab}
               savePublication={() => savePublication(values)}
+              setFieldTouched={setFieldTouched}
             />
             <ReferencesPanel
               tabNumber={tabNumber}
