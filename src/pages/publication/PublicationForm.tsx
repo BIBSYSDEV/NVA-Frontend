@@ -48,6 +48,7 @@ const PublicationForm: React.FC = () => {
       <Formik
         initialValues={emptyPublicationFormData}
         validationSchema={validationSchema}
+        validateOnChange={false}
         onSubmit={values => savePublication(values)}>
         {({ values, errors, touched }) => (
           <Form>

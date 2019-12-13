@@ -1,43 +1,63 @@
-import React, { Dispatch } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-import ContributorType from '../../../types/contributor.types';
+import ContributorType, { emptyContributor } from '../../../types/contributor.types';
 import Contributor from './Contributor';
 import ContributorLabel from './ContributorLabel';
 import ContributorValidator from './ContributorValidator';
 import StyledContributor from './StyledContributor';
+import { FieldArray } from 'formik';
 
-interface ContributorsProps {
-  contributors: ContributorType[];
-  dispatch: Dispatch<any>;
-  onAddAuthor: () => void;
-}
+interface ContributorsProps {}
 
-const Contributors: React.FC<ContributorsProps> = ({ contributors, dispatch, onAddAuthor }) => {
+const Contributors: React.FC<ContributorsProps> = () => {
   const { t } = useTranslation();
 
   return (
     <StyledContributor.Box>
       <StyledContributor.MainHeading>{t('publication:contributors.authors')}</StyledContributor.MainHeading>
       <StyledContributor.ContributorContainer>
+        <p />
         <ContributorLabel>{t('common:name')}</ContributorLabel>
         <ContributorLabel>{t('common:institution')}</ContributorLabel>
         <ContributorLabel>{t('publication:contributors.corresponding')}</ContributorLabel>
         <ContributorLabel>{t('common:orcid')}</ContributorLabel>
       </StyledContributor.ContributorContainer>
-      {contributors
-        .filter(contributor => contributor.type === 'Author' && contributor.verified)
-        .map(contributor => (
-          <Contributor contributor={contributor} key={contributor.id} dispatch={dispatch} />
-        ))}
-      {contributors
-        .filter(contributor => contributor.type === 'Author' && !contributor.verified)
-        .map(contributor => (
-          <ContributorValidator contributor={contributor} key={contributor.id} dispatch={dispatch} />
-        ))}
-      <StyledContributor.AuthorsButton variant="text" startIcon={<StyledContributor.AddIcon />} onClick={onAddAuthor}>
-        {t('publication:contributors.add_author')}
-      </StyledContributor.AuthorsButton>
+      <FieldArray name="contributors.authors">
+        {({ swap, push, remove, form: { values, setFieldValue } }) => {
+          return (
+            <div>
+              {values.contributors?.authors?.map((author: ContributorType, index: number) =>
+                author.verified ? (
+                  <Contributor
+                    contributor={author}
+                    key={author.id}
+                    index={index}
+                    setFieldValue={setFieldValue}
+                    swap={swap}
+                    remove={remove}
+                  />
+                ) : (
+                  <ContributorValidator
+                    contributor={author}
+                    key={author.id}
+                    index={index}
+                    setFieldValue={setFieldValue}
+                    swap={swap}
+                    remove={remove}
+                  />
+                )
+              )}
+              <StyledContributor.AuthorsButton
+                variant="text"
+                startIcon={<StyledContributor.AddIcon />}
+                onClick={() => push({ ...emptyContributor })}>
+                {t('publication:contributors.add_author')}
+              </StyledContributor.AuthorsButton>
+            </div>
+          );
+        }}
+      </FieldArray>
     </StyledContributor.Box>
   );
 };

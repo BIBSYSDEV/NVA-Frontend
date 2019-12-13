@@ -1,61 +1,68 @@
-import React, { Dispatch } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import { MenuItem, TextField } from '@material-ui/core';
+import { MenuItem } from '@material-ui/core';
 import PersonIcon from '@material-ui/icons/Person';
 
-import { removeContributor, updateContributor } from '../../../redux/actions/contributorActions';
 import ContributorType from '../../../types/contributor.types';
 import StyledContributor from './StyledContributor';
+import ContributorStyles from './StyledContributor';
+import { Field } from 'formik';
 
 const StyledContributorValidator = styled(StyledContributor.ContributorContainer)`
-  grid-template-areas: 'icon name institution verify-person verify-person . delete';
+  grid-template-areas: 'icon name institution verify-person verify-person arrows delete';
 `;
 
-const StyledNameInput = styled(TextField)`
+const StyledNameInput = styled(Field)`
   background-color: ${({ theme }) => theme.palette.background.default};
   margin-right: 1rem;
 `;
 
 interface ContributorValidatorProps {
   contributor: ContributorType;
-  dispatch: Dispatch<any>;
+  index: number;
+  remove: (index: number) => void;
+  setFieldValue: (name: string, value: any) => void;
+  swap: (indexA: number, indexB: number) => void;
 }
 
-const ContributorValidator: React.FC<ContributorValidatorProps> = ({ contributor, dispatch }) => {
+const ContributorValidator: React.FC<ContributorValidatorProps> = ({ index, setFieldValue, remove, swap }) => {
   const { t } = useTranslation();
 
-  const deleteContributor = (contributor: ContributorType): void => {
-    dispatch(removeContributor(contributor));
-  };
-
-  const validateContributor = (contributor: ContributorType): void => {
-    contributor.verified = true;
-    dispatch(updateContributor(contributor));
-  };
-
-  const handleNameChange = (contributor: ContributorType) => (event: React.ChangeEvent<any>) => {
-    contributor.name = event.target.value;
-    dispatch(updateContributor(contributor));
+  const validateContributor = (name: string) => {
+    console.log(name);
+    name && setFieldValue(`contributors.authors[${index}].verified`, 'true');
   };
 
   return (
-    <StyledContributorValidator>
-      <StyledContributor.AddCircleIcon />
-      <StyledNameInput variant="outlined" onChange={handleNameChange(contributor)} value={contributor.name} />
-      <StyledContributor.Select variant="outlined">
-        <MenuItem value=""></MenuItem>
-      </StyledContributor.Select>
-      <StyledContributor.VerifyPerson
-        color="primary"
-        variant="contained"
-        startIcon={<PersonIcon />}
-        onClick={() => validateContributor(contributor)}>
-        {t('publication:contributors.verify_person')}
-      </StyledContributor.VerifyPerson>
-      <StyledContributor.DeleteIcon onClick={() => deleteContributor(contributor)} />
-    </StyledContributorValidator>
+    <Field name={`contributors.authors[${index}]`}>
+      {({ form: { values } }: any) => {
+        return (
+          <StyledContributorValidator>
+            <StyledContributor.AddCircleIcon />
+            <StyledNameInput variant="outlined" name={`contributors.authors[${index}].name`} validateOnChange="false" />
+            <StyledContributor.Select variant="outlined">
+              <MenuItem value=""></MenuItem>
+            </StyledContributor.Select>
+            <StyledContributor.VerifyPerson
+              color="primary"
+              variant="contained"
+              startIcon={<PersonIcon />}
+              onClick={() => validateContributor(values.contributors.authors[index].name)}>
+              {t('publication:contributors.verify_person')}
+            </StyledContributor.VerifyPerson>
+            <ContributorStyles.ContributorsArrows
+              swap={swap}
+              first={index === 0}
+              last={index === values.contributors.authors.length - 1}
+              index={index}
+            />
+            <StyledContributor.DeleteIcon onClick={() => remove(index)} />
+          </StyledContributorValidator>
+        );
+      }}
+    </Field>
   );
 };
 
