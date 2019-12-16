@@ -1,7 +1,7 @@
 import React from 'react';
 import { Field } from 'formik';
 import { TextField, Select } from 'formik-material-ui';
-import { MenuItem } from '@material-ui/core';
+import { MenuItem, Checkbox, FormControl, FormLabel, FormGroup, FormControlLabel } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { journalPublicationTypes } from '../../../types/references.types';
 
@@ -23,6 +23,43 @@ const JournalPublicationReferenceForm: React.FC = () => {
         variant="outlined"
         label={t('references.doi')}
       />
+      <Field
+        name="reference.journalPublication.journal"
+        component={TextField}
+        variant="outlined"
+        label={t('references.journal')}
+      />
+      <Field
+        name="reference.journalPublication.volume"
+        component={TextField}
+        variant="outlined"
+        label={t('references.volume')}
+      />
+      <Field
+        name="reference.journalPublication.issue"
+        component={TextField}
+        variant="outlined"
+        label={t('references.issue')}
+      />
+      <Field name="reference.journalPublication.peer_review">
+        {({ field }: any) => {
+          return (
+            <FormControl>
+              <FormLabel>{t('references.peer_review')}</FormLabel>
+              <FormGroup>
+                <FormControlLabel
+                  control={<Checkbox checked={field.value} value="true" />}
+                  label={t('references.is_peer_reviewed')}
+                />
+                <FormControlLabel
+                  control={<Checkbox checked={field.value} value="false" />}
+                  label={t('references.is_not_peer_reviewed')}
+                />
+              </FormGroup>
+            </FormControl>
+          );
+        }}
+      </Field>
     </>
   );
 };

@@ -51,6 +51,12 @@
     "level": "Nivå",
     "publisher": "Utgiver",
     "report": "Rapport",
-    "review": "Anmeldelse"
+    "review": "Anmeldelse",
+    "journal": "Tidsskrift",
+    "volume": "Volum",
+    "issue": "Hefte",
+    "peer_review": "Er publiaksjonen fagfellevurdert?",
+    "is_peer_reviewed": "Ja, den er fagfellevurdert",
+    "is_not_peer_reviewed": "Nei, den er ikke fagfellevurdert"
   }
 }

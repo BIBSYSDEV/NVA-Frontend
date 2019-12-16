@@ -23,10 +23,16 @@ export interface PublicationChannel {
 
 enum JournalPublicationTypeValue {
   ARTICLE = 'article',
+  SHORT_COMMUNICATION = 'shortCommunication',
+  EDITORIAL = 'editorial',
+  LETTER = 'letter',
   REVIEW = 'review',
 }
 
 export const journalPublicationTypes = [
   { label: 'references.article', value: JournalPublicationTypeValue.ARTICLE },
+  { label: 'references.shortCommunication', value: JournalPublicationTypeValue.SHORT_COMMUNICATION },
+  { label: 'references.editorial', value: JournalPublicationTypeValue.EDITORIAL },
+  { label: 'references.letter', value: JournalPublicationTypeValue.LETTER },
   { label: 'references.review', value: JournalPublicationTypeValue.REVIEW },
 ];

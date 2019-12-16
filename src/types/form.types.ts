@@ -43,6 +43,10 @@ export interface BookReferenceFormData {
 export interface JournalPublicationReferenceFormData {
   type: string;
   doi: string;
+  journal: string;
+  volume: string;
+  issue: string;
+  peerReview: string;
 }
 
 export interface ReferenceFormData {
@@ -85,6 +89,10 @@ export const emptyBookReferenceFormData: BookReferenceFormData = {
 export const emptyJournalPublicationReferenceFormData: JournalPublicationReferenceFormData = {
   type: '',
   doi: '',
+  journal: '',
+  volume: '',
+  issue: '',
+  peerReview: 'false',
 };
 
 export const emptyReferenceFormData: ReferenceFormData = {

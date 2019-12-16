@@ -51,6 +51,12 @@
     "level": "Level",
     "publisher": "Publisher",
     "report": "Report",
-    "review": "Review"
+    "review": "Review",
+    "journal": "Journal",
+    "volume": "Volume",
+    "issue": "Issue",
+    "peer_review": "Is the publication peer reviewed?",
+    "is_peer_reviewed": "The publication is peer reviewed",
+    "is_not_peer_reviewed": "The publication is not peer reviewed"
   }
 }
