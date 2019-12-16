@@ -1,4 +1,4 @@
-import { Field, useFormikContext } from 'formik';
+import { Field, useFormikContext, FormikProps } from 'formik';
 import { Select } from 'formik-material-ui';
 import React, { useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -33,7 +33,7 @@ interface ReferencesPanelProps {
 
 export const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, savePublication }) => {
   const { t } = useTranslation('publication');
-  const { values, setFieldTouched }: any = useFormikContext();
+  const { values, setFieldTouched }: FormikProps<any> = useFormikContext();
   const { referenceType } = values.reference;
 
   // Validation messages won't show on fields that are not touched

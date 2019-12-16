@@ -1,4 +1,4 @@
-import { Field, useFormikContext, FormikHelpers } from 'formik';
+import { Field, useFormikContext, FormikProps } from 'formik';
 import { Select, TextField } from 'formik-material-ui';
 import React, { useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -47,7 +47,7 @@ interface DescriptionPanelProps {
 
 const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, savePublication }) => {
   const { t } = useTranslation();
-  const { setFieldTouched }: FormikHelpers<any> = useFormikContext();
+  const { setFieldTouched }: FormikProps<any> = useFormikContext();
 
   // Validation messages won't show on fields that are not touched
   const setAllFieldsTouched = useCallback(() => {
