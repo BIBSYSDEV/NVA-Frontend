@@ -5,7 +5,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 import ContributorType from '../../../types/contributor.types';
 import ContributorStyles from './StyledContributor';
-import { Field, useFormikContext } from 'formik';
+import { Field, useFormikContext, FormikProps } from 'formik';
 
 const StyledContainer = styled(ContributorStyles.ContributorContainer)`
   margin-bottom: 0.5rem;
@@ -24,7 +24,7 @@ interface ContributorProps {
 }
 
 const Contributor: React.FC<ContributorProps> = ({ contributor, index, swap, remove }) => {
-  const { setFieldValue } = useFormikContext();
+  const { setFieldValue }: FormikProps<any> = useFormikContext();
 
   return (
     <Field name={`contributors.authors[${index}]`}>
@@ -37,7 +37,7 @@ const Contributor: React.FC<ContributorProps> = ({ contributor, index, swap, rem
               {({ field }: any) => {
                 return (
                   <StyledInstitutionSelect
-                    onChange={event => setFieldValue(field.name as never, event.target.value)}
+                    onChange={event => setFieldValue(field.name, event.target.value)}
                     value={contributor.selectedInstitution || ''}
                     variant="outlined">
                     <MenuItem value="" key="-1" />

@@ -7,7 +7,7 @@ import ContributorType from '../../../types/contributor.types';
 import contributorTypes from '../../../utils/testfiles/contributor_types.json';
 import ContributorStyles from './StyledContributor';
 import StyledContributor from './StyledContributor';
-import { Field, useFormikContext } from 'formik';
+import { Field, useFormikContext, FormikProps } from 'formik';
 
 const StyledNameInput = styled(Field)`
   background-color: ${({ theme }) => theme.palette.background.default};
@@ -22,7 +22,7 @@ interface OtherContributorProps {
 }
 
 const OtherContributor: React.FC<OtherContributorProps> = ({ contributor, index, swap, remove }) => {
-  const { setFieldValue } = useFormikContext();
+  const { setFieldValue }: FormikProps<any> = useFormikContext();
 
   return (
     <Field name={`contributors.authors[${index}]`}>
@@ -35,7 +35,7 @@ const OtherContributor: React.FC<OtherContributorProps> = ({ contributor, index,
                   <StyledContributor.TypeSelect
                     value={field.value || ''}
                     variant="outlined"
-                    onChange={event => setFieldValue(field.name as never, event.target.value)}>
+                    onChange={event => setFieldValue(field.name, event.target.value)}>
                     >
                     <MenuItem value="" key="-1" />
                     {contributorTypes
@@ -56,7 +56,7 @@ const OtherContributor: React.FC<OtherContributorProps> = ({ contributor, index,
                   <StyledContributor.InstitutionSelect
                     value={field.value || ''}
                     variant="outlined"
-                    onChange={event => setFieldValue(field.name as never, event?.target.value)}>
+                    onChange={event => setFieldValue(field.name, event?.target.value)}>
                     <MenuItem value="" key="-1" />
                     {contributor?.institutions?.map(institution => (
                       <MenuItem value={institution} key={institution}>

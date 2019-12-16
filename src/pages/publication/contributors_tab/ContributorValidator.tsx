@@ -8,7 +8,7 @@ import PersonIcon from '@material-ui/icons/Person';
 import ContributorType from '../../../types/contributor.types';
 import StyledContributor from './StyledContributor';
 import ContributorStyles from './StyledContributor';
-import { Field, useFormikContext } from 'formik';
+import { Field, useFormikContext, FormikProps } from 'formik';
 
 const StyledContributorValidator = styled(StyledContributor.ContributorContainer)`
   grid-template-areas: 'icon name institution verify-person verify-person arrows delete';
@@ -28,10 +28,10 @@ interface ContributorValidatorProps {
 
 const ContributorValidator: React.FC<ContributorValidatorProps> = ({ index, remove, swap }) => {
   const { t } = useTranslation();
-  const { setFieldValue } = useFormikContext();
+  const { setFieldValue }: FormikProps<any> = useFormikContext();
 
   const validateContributor = (name: string) => {
-    name && setFieldValue(`contributors.authors[${index}].verified` as never, 'true');
+    name && setFieldValue(`contributors.authors[${index}].verified`, 'true');
   };
 
   return (
