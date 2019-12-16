@@ -37,7 +37,7 @@ const PublicationForm: React.FC = () => {
       journalPublication: Yup.object().when('referenceType', {
         is: ReferenceType.PUBLICATION_IN_JOURNAL,
         then: Yup.object().shape({
-          type: Yup.string().required(t('publication:feedback.required_field')),
+          type: Yup.string(),
           doi: Yup.string().url(),
         }),
       }),
@@ -45,8 +45,8 @@ const PublicationForm: React.FC = () => {
       book: Yup.object().when('referenceType', {
         is: ReferenceType.BOOK,
         then: Yup.object().shape({
-          type: Yup.string().required(t('publication:feedback.required_field')),
-          publisher: Yup.object().required(t('publication:feedback.required_field')),
+          type: Yup.string(),
+          publisher: Yup.object(),
         }),
       }),
     }),
@@ -70,38 +70,33 @@ const PublicationForm: React.FC = () => {
       <Formik
         initialValues={localStorageFormData}
         validationSchema={validationSchema}
-        onSubmit={values => savePublication(values)}>
-        {({ values, errors, touched, setFieldTouched }) => (
-          <Form onBlur={setLocalStorageFormData(values)}>
+        onSubmit={(values: any) => savePublication(values)}
+        validateOnChange={false}>
+        {({ values, errors, touched }: any) => (
+          <Form onBlur={() => setLocalStorageFormData(values)}>
             <PublicationFormTabs
               tabNumber={tabNumber}
               handleTabChange={handleTabChange}
               errors={errors}
               touched={touched}
             />
-            <PublicationPanel tabNumber={tabNumber} goToNextTab={goToNextTab} />
-            <DescriptionPanel
-              tabNumber={tabNumber}
-              goToNextTab={goToNextTab}
-              savePublication={() => savePublication(values)}
-              setFieldTouched={setFieldTouched}
-            />
-            <ReferencesPanel
-              tabNumber={tabNumber}
-              goToNextTab={goToNextTab}
-              savePublication={() => savePublication(values)}
-              setFieldTouched={setFieldTouched}
-              selectedReferenceType={values.reference.referenceType}
-            />
-            <ContributorsPanel
-              tabNumber={tabNumber}
-              goToNextTab={goToNextTab}
-              savePublication={() => savePublication(values)}
-            />
-            <FilesAndLicensePanel tabNumber={tabNumber} goToNextTab={goToNextTab} />
-            <TabPanel isHidden={tabNumber !== 5} ariaLabel="submission" heading={t('heading.submission')}>
-              <div>Page Six</div>
-            </TabPanel>
+            {tabNumber === 0 && <PublicationPanel goToNextTab={goToNextTab} />}
+            {tabNumber === 1 && (
+              <DescriptionPanel goToNextTab={goToNextTab} savePublication={() => savePublication(values)} />
+            )}
+            {tabNumber === 2 && (
+              <ReferencesPanel goToNextTab={goToNextTab} savePublication={() => savePublication(values)} />
+            )}
+            {tabNumber === 3 && (
+              <ContributorsPanel goToNextTab={goToNextTab} savePublication={() => savePublication(values)} />
+            )}
+            {tabNumber === 4 && <FilesAndLicensePanel goToNextTab={goToNextTab} />}
+
+            {tabNumber === 5 && (
+              <TabPanel ariaLabel="submission" heading={t('heading.submission')}>
+                <div>Page Six</div>
+              </TabPanel>
+            )}
           </Form>
         )}
       </Formik>

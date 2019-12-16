@@ -7,7 +7,7 @@ import { Button, Typography } from '@material-ui/core';
 interface TabPanelProps {
   ariaLabel: string;
   children?: React.ReactNode;
-  isHidden: boolean;
+  isHidden?: boolean;
   goToNextTab?: (event: React.MouseEvent<any>) => void;
   onClickSave?: (event: React.MouseEvent<any>) => void;
   heading: string;

@@ -1,6 +1,6 @@
-import { Field } from 'formik';
+import { Field, useFormikContext } from 'formik';
 import { Select } from 'formik-material-ui';
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
@@ -26,32 +26,21 @@ const StyledBox = styled.div`
   margin-top: 1rem;
 `;
 
-const referencePanelNumber = 2;
-
 interface ReferencesPanelProps {
   goToNextTab: () => void;
   savePublication: () => void;
-  tabNumber: number;
-  selectedReferenceType: string;
-  setFieldTouched: (fieldName: string) => void;
 }
 
-export const ReferencesPanel: React.FC<ReferencesPanelProps> = ({
-  goToNextTab,
-  savePublication,
-  tabNumber,
-  selectedReferenceType,
-  setFieldTouched,
-}) => {
+export const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, savePublication }) => {
   const { t } = useTranslation('publication');
-  const [isVisited, setIsVisited] = useState(false);
-  const [allFieldsAreTouched, setAllFieldsAreTouched] = useState(false);
+  const { values, setFieldTouched }: any = useFormikContext();
+  const { referenceType } = values.reference;
 
   // Validation messages won't show on fields that are not touched
   const setAllFieldsTouched = useCallback(() => {
     Object.values(ReferenceFieldNames).forEach(fieldName => setFieldTouched(fieldName));
 
-    switch (selectedReferenceType) {
+    switch (referenceType) {
       case ReferenceType.BOOK:
         Object.values(BookFieldNames).forEach(fieldName => setFieldTouched(fieldName));
         break;
@@ -61,30 +50,18 @@ export const ReferencesPanel: React.FC<ReferencesPanelProps> = ({
       default:
         break;
     }
+  }, [setFieldTouched, referenceType]);
 
-    setAllFieldsAreTouched(true);
-  }, [setFieldTouched, selectedReferenceType]);
-
-  // Set all fields as touched if user navigates away from this panel.
   useEffect(() => {
-    if (tabNumber === referencePanelNumber) {
-      setIsVisited(true);
-    } else if (isVisited && !allFieldsAreTouched) {
-      setAllFieldsTouched();
-    }
-  }, [setAllFieldsTouched, isVisited, allFieldsAreTouched, tabNumber]);
-
-  // Ensure validation are triggered again after user changes reference type
-  useEffect(() => {
-    setAllFieldsAreTouched(false);
-  }, [selectedReferenceType]);
+    // Set all fields as touched if user navigates away from this panel ( on unmount)
+    return () => setAllFieldsTouched();
+  }, [setAllFieldsTouched]);
 
   return (
     <TabPanel
       ariaLabel="references"
       goToNextTab={goToNextTab}
       heading={t('publication:heading.references')}
-      isHidden={tabNumber !== referencePanelNumber}
       onClickSave={() => savePublication()}>
       <Field
         name={ReferenceFieldNames.REFERENCE_TYPE}
@@ -99,14 +76,14 @@ export const ReferencesPanel: React.FC<ReferencesPanelProps> = ({
         ))}
       </Field>
 
-      {selectedReferenceType && (
+      {referenceType && (
         <StyledBox>
           <Box>
-            {selectedReferenceType === ReferenceType.BOOK && <BookReferenceForm />}
-            {selectedReferenceType === ReferenceType.CHAPTER && <ChapterReferenceForm />}
-            {selectedReferenceType === ReferenceType.REPORT && <ReportReferenceForm />}
-            {selectedReferenceType === ReferenceType.DEGREE && <DegreeReferenceForm />}
-            {selectedReferenceType === ReferenceType.PUBLICATION_IN_JOURNAL && <JournalPublicationReferenceForm />}
+            {referenceType === ReferenceType.BOOK && <BookReferenceForm />}
+            {referenceType === ReferenceType.CHAPTER && <ChapterReferenceForm />}
+            {referenceType === ReferenceType.REPORT && <ReportReferenceForm />}
+            {referenceType === ReferenceType.DEGREE && <DegreeReferenceForm />}
+            {referenceType === ReferenceType.PUBLICATION_IN_JOURNAL && <JournalPublicationReferenceForm />}
           </Box>
         </StyledBox>
       )}

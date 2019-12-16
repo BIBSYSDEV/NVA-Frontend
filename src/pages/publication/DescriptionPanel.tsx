@@ -1,6 +1,6 @@
-import { Field } from 'formik';
+import { Field, useFormikContext } from 'formik';
 import { Select, TextField } from 'formik-material-ui';
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
@@ -39,41 +39,25 @@ enum FieldNames {
   LANGUAGE = 'description.language',
   PROJECT = 'description.project',
 }
-const descriptionPanelNumber = 1;
 
 interface DescriptionPanelProps {
   goToNextTab: (event: React.MouseEvent<any>) => void;
   savePublication: () => void;
-  tabNumber: number;
-  setFieldTouched: (fieldName: string) => void;
 }
 
-const DescriptionPanel: React.FC<DescriptionPanelProps> = ({
-  goToNextTab,
-  tabNumber,
-  savePublication,
-  setFieldTouched,
-}) => {
+const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, savePublication }) => {
   const { t } = useTranslation();
-  const [isVisited, setIsVisited] = useState(false);
-  const [allFieldsAreTouched, setAllFieldsAreTouched] = useState(false);
+  const { setFieldTouched } = useFormikContext();
 
   // Validation messages won't show on fields that are not touched
   const setAllFieldsTouched = useCallback(() => {
-    if (!allFieldsAreTouched) {
-      Object.values(FieldNames).forEach(fieldName => setFieldTouched(fieldName));
-      setAllFieldsAreTouched(true);
-    }
-  }, [setFieldTouched, allFieldsAreTouched, setAllFieldsAreTouched]);
+    Object.values(FieldNames).forEach(fieldName => setFieldTouched(fieldName));
+  }, [setFieldTouched]);
 
-  // Set all fields as touched if user navigates away from this panel.
   useEffect(() => {
-    if (tabNumber === descriptionPanelNumber) {
-      setIsVisited(true);
-    } else if (isVisited) {
-      setAllFieldsTouched();
-    }
-  }, [setAllFieldsTouched, isVisited, tabNumber]);
+    // Set all fields as touched if user navigates away from this panel (on unmount)
+    return () => setAllFieldsTouched();
+  }, [setAllFieldsTouched]);
 
   const validateAndSave = () => {
     setAllFieldsTouched();
@@ -82,7 +66,6 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({
 
   return (
     <TabPanel
-      isHidden={tabNumber !== descriptionPanelNumber}
       ariaLabel="description"
       goToNextTab={goToNextTab}
       onClickSave={validateAndSave}
@@ -126,7 +109,9 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({
           <MultipleFieldWrapper>
             <StyledFieldWrapper>
               <Field name={FieldNames.NPI}>
-                {({ form: { setFieldValue } }: any) => <DisciplineSearch setFieldValue={setFieldValue} />}
+                {({ form: { setFieldValue } }: any) => (
+                  <DisciplineSearch setFieldValue={newValue => setFieldValue(FieldNames.NPI, newValue)} />
+                )}
               </Field>
             </StyledFieldWrapper>
             <StyledFieldWrapper>
@@ -167,10 +152,10 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({
 
           <StyledFieldWrapper>
             <Field name={FieldNames.PROJECT}>
-              {({ form: { values, setFieldValue } }: any) => (
+              {({ form: { setFieldValue }, field: { value } }: any) => (
                 <>
-                  <ProjectSearch setFieldValue={setFieldValue} />
-                  {values?.project?.title && <p>{values.project.title}</p>}
+                  <ProjectSearch setFieldValue={newValue => setFieldValue(FieldNames.PROJECT, newValue)} />
+                  {value.title && <p>{value.title}</p>}
                 </>
               )}
             </Field>
