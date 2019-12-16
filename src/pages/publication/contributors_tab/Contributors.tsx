@@ -29,20 +29,12 @@ const Contributors: React.FC<ContributorsProps> = () => {
             <div>
               {values.contributors?.authors?.map((author: ContributorType, index: number) =>
                 author.verified ? (
-                  <Contributor
-                    contributor={author}
-                    key={author.id}
-                    index={index}
-                    setFieldValue={setFieldValue}
-                    swap={swap}
-                    remove={remove}
-                  />
+                  <Contributor contributor={author} key={author.id} index={index} swap={swap} remove={remove} />
                 ) : (
                   <ContributorValidator
                     contributor={author}
                     key={author.id}
                     index={index}
-                    setFieldValue={setFieldValue}
                     swap={swap}
                     remove={remove}
                   />

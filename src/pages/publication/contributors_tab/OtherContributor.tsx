@@ -7,7 +7,7 @@ import ContributorType from '../../../types/contributor.types';
 import contributorTypes from '../../../utils/testfiles/contributor_types.json';
 import ContributorStyles from './StyledContributor';
 import StyledContributor from './StyledContributor';
-import { Field } from 'formik';
+import { Field, useFormikContext } from 'formik';
 
 const StyledNameInput = styled(Field)`
   background-color: ${({ theme }) => theme.palette.background.default};
@@ -17,12 +17,13 @@ const StyledNameInput = styled(Field)`
 interface OtherContributorProps {
   contributor: ContributorType;
   index: number;
-  setFieldValue: (name: string, value: any) => void;
   swap: (indexA: number, indexB: number) => void;
   remove: (index: number) => void;
 }
 
-const OtherContributor: React.FC<OtherContributorProps> = ({ contributor, index, setFieldValue, swap, remove }) => {
+const OtherContributor: React.FC<OtherContributorProps> = ({ contributor, index, swap, remove }) => {
+  const { setFieldValue } = useFormikContext();
+
   return (
     <Field name={`contributors.authors[${index}]`}>
       {({ form: { values } }: any) => {
@@ -34,7 +35,7 @@ const OtherContributor: React.FC<OtherContributorProps> = ({ contributor, index,
                   <StyledContributor.TypeSelect
                     value={field.value || ''}
                     variant="outlined"
-                    onChange={event => setFieldValue(field.name, event.target.value)}>
+                    onChange={event => setFieldValue(field.name as never, event.target.value)}>
                     >
                     <MenuItem value="" key="-1" />
                     {contributorTypes
@@ -55,7 +56,7 @@ const OtherContributor: React.FC<OtherContributorProps> = ({ contributor, index,
                   <StyledContributor.InstitutionSelect
                     value={field.value || ''}
                     variant="outlined"
-                    onChange={event => setFieldValue(field.name, event?.target.value)}>
+                    onChange={event => setFieldValue(field.name as never, event?.target.value)}>
                     <MenuItem value="" key="-1" />
                     {contributor?.institutions?.map(institution => (
                       <MenuItem value={institution} key={institution}>

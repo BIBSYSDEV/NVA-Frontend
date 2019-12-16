@@ -25,7 +25,7 @@ const OtherContributors: React.FC<OtherContributorsProps> = () => {
       </StyledContributor.OtherContributorContainer>
 
       <FieldArray name="contributors.contributors">
-        {({ swap, push, remove, form: { values, setFieldValue } }) => {
+        {({ swap, push, remove, form: { values } }) => {
           return (
             <div>
               {values.contributors?.contributors.map((contributor: ContributorType, index: number) => (
@@ -35,7 +35,6 @@ const OtherContributors: React.FC<OtherContributorsProps> = () => {
                   index={index}
                   remove={remove}
                   swap={swap}
-                  setFieldValue={setFieldValue}
                 />
               ))}
               <StyledContributor.AuthorsButton
