@@ -24,50 +24,48 @@ interface ContributorProps {
 }
 
 const Contributor: React.FC<ContributorProps> = ({ contributor, index, swap, remove }) => {
-  const { setFieldValue }: FormikProps<any> = useFormikContext();
+  const { setFieldValue, values }: FormikProps<any> = useFormikContext();
 
   return (
     <Field name={`contributors.authors[${index}]`}>
-      {({ form: { values } }: any) => {
-        return (
-          <StyledContainer>
-            <ContributorStyles.PersonIcon />
-            <ContributorStyles.Name>{contributor.name}</ContributorStyles.Name>
-            <Field name={`contributors.authors[${index}].selectedInstitution`}>
-              {({ field }: any) => {
-                return (
-                  <StyledInstitutionSelect
-                    onChange={event => setFieldValue(field.name, event.target.value)}
-                    value={contributor.selectedInstitution || ''}
-                    variant="outlined">
-                    <MenuItem value="" key="-1" />
-                    {contributor?.institutions?.map(institution => (
-                      <MenuItem value={institution} key={institution}>
-                        {institution}
-                      </MenuItem>
-                    ))}
-                  </StyledInstitutionSelect>
-                );
-              }}
-            </Field>
-            <Field name={`contributors.authors[${index}].corresponding`}>
-              {() => <ContributorStyles.CorrespondingAuthor />}
-            </Field>
-            <ContributorStyles.OrcidIcon>
-              {contributor.orcid && (
-                <img src="https://orcid.org/sites/default/files/images/orcid_24x24.png" alt="ORCID iD icon" />
-              )}
-            </ContributorStyles.OrcidIcon>
-            <ContributorStyles.ContributorsArrows
-              first={index === 0}
-              last={index === values.contributors.authors.length - 1}
-              swap={swap}
-              index={index}
-            />
-            <ContributorStyles.DeleteIcon onClick={() => remove(index)} />
-          </StyledContainer>
-        );
-      }}
+      {() => (
+        <StyledContainer>
+          <ContributorStyles.PersonIcon />
+          <ContributorStyles.Name>{contributor.name}</ContributorStyles.Name>
+          <Field name={`contributors.authors[${index}].selectedInstitution`}>
+            {({ field }: any) => {
+              return (
+                <StyledInstitutionSelect
+                  onChange={event => setFieldValue(field.name, event.target.value)}
+                  value={contributor.selectedInstitution || ''}
+                  variant="outlined">
+                  <MenuItem value="" key="-1" />
+                  {contributor?.institutions?.map(institution => (
+                    <MenuItem value={institution} key={institution}>
+                      {institution}
+                    </MenuItem>
+                  ))}
+                </StyledInstitutionSelect>
+              );
+            }}
+          </Field>
+          <Field name={`contributors.authors[${index}].corresponding`}>
+            {() => <ContributorStyles.CorrespondingAuthor />}
+          </Field>
+          <ContributorStyles.OrcidIcon>
+            {contributor.orcid && (
+              <img src="https://orcid.org/sites/default/files/images/orcid_24x24.png" alt="ORCID iD icon" />
+            )}
+          </ContributorStyles.OrcidIcon>
+          <ContributorStyles.ContributorsArrows
+            first={index === 0}
+            last={index === values.contributors.authors.length - 1}
+            swap={swap}
+            index={index}
+          />
+          <ContributorStyles.DeleteIcon onClick={() => remove(index)} />
+        </StyledContainer>
+      )}
     </Field>
   );
 };

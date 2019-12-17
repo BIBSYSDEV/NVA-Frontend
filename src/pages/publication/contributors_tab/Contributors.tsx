@@ -17,14 +17,13 @@ const Contributors: React.FC<ContributorsProps> = () => {
     <StyledContributor.Box>
       <StyledContributor.MainHeading>{t('publication:contributors.authors')}</StyledContributor.MainHeading>
       <StyledContributor.ContributorContainer>
-        <p />
         <ContributorLabel>{t('common:name')}</ContributorLabel>
         <ContributorLabel>{t('common:institution')}</ContributorLabel>
         <ContributorLabel>{t('publication:contributors.corresponding')}</ContributorLabel>
         <ContributorLabel>{t('common:orcid')}</ContributorLabel>
       </StyledContributor.ContributorContainer>
       <FieldArray name="contributors.authors">
-        {({ swap, push, remove, form: { values, setFieldValue } }) => {
+        {({ swap, push, remove, form: { values } }) => {
           return (
             <div>
               {values.contributors?.authors?.map((author: ContributorType, index: number) =>
