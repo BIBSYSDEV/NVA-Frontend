@@ -7,7 +7,6 @@ import styled from 'styled-components';
 import { getAuthorityById } from './api/external/authorityRegisterApi';
 import { mockUser } from './api/mock-interceptor';
 import { getCurrentAuthenticatedUser } from './api/userApi';
-import ButtonModal from './components/ButtonModal';
 import Breadcrumbs from './layout/Breadcrumbs';
 import Footer from './layout/Footer';
 import Header from './layout/header/Header';
@@ -17,7 +16,7 @@ import Dashboard from './pages/dashboard/Dashboard';
 import NotFound from './pages/errorpages/NotFound';
 import PublicationForm from './pages/publication/PublicationForm';
 import Search from './pages/search/Search';
-import { ConnectAuthority } from './pages/user/authority/ConnectAuthority';
+import AuthorityModal from './pages/user/authority/AuthorityModal';
 import User from './pages/user/User';
 import Workspace from './pages/workspace/Workspace';
 import { setAuthorityData, setUser } from './redux/actions/userActions';
@@ -74,7 +73,6 @@ const App: React.FC = () => {
 
   useEffect(() => {
     !!user.id && !user.authority && setShowModal(true);
-    // TODO: check if user has crossed out "do not show this again"
   }, [user.id, user.authority]);
 
   return (
@@ -84,11 +82,7 @@ const App: React.FC = () => {
         <Header />
         {user.isLoggedIn && <AdminMenu />}
         <Breadcrumbs />
-        {showModal && (
-          <ButtonModal dataTestId="connect-author-modal" openModal={showModal} ariaLabelledBy="connect-author-modal">
-            {() => <ConnectAuthority />}
-          </ButtonModal>
-        )}
+        <AuthorityModal showModal={showModal} />
         <StyledPageBody>
           <Switch>
             <Route exact path="/" component={Dashboard} />
