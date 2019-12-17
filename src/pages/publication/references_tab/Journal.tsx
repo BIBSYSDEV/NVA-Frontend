@@ -3,6 +3,7 @@ import { Field } from 'formik';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { PublicationChannel } from './../../../types/references.types';
+import { TextField } from '@material-ui/core';
 
 interface JournalProps {
   journal: PublicationChannel;
@@ -16,6 +17,11 @@ const StyledJournal = styled.div`
     'journal journal journal'
     'issnLabel levelLabel publisherLabel'
     'issn level publisher';
+  grid-template-columns: '33% 33% 33%';
+`;
+
+const StyledJournalTitle = styled.div`
+  grid-area: 'journal';
 `;
 
 const StyledJournalLabel = styled.div`
@@ -28,7 +34,15 @@ const Journal: React.FC<JournalProps> = ({ journal }) => {
 
   return (
     <StyledJournal>
-      <Field name="reference.journalPublication.journal" component="TextField" value={journal.title} />
+      <Field name="reference.journalPublication.journal">
+        {({ field }: any) => {
+          return (
+            <StyledJournalTitle>
+              <TextField>{field.value}</TextField>
+            </StyledJournalTitle>
+          );
+        }}
+      </Field>
       <StyledJournalLabel>{t('reference.issn')}</StyledJournalLabel>
       <StyledJournalLabel>{t('reference.level')}</StyledJournalLabel>
       <StyledJournalLabel>{t('reference.publisher')}</StyledJournalLabel>

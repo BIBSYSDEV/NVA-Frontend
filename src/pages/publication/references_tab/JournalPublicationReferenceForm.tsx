@@ -4,6 +4,7 @@ import { TextField, Select } from 'formik-material-ui';
 import { MenuItem, Checkbox, FormControl, FormLabel, FormGroup, FormControlLabel } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { journalPublicationTypes } from '../../../types/references.types';
+import Journal from './Journal';
 
 const JournalPublicationReferenceForm: React.FC = () => {
   const { t } = useTranslation('publication');
@@ -23,12 +24,11 @@ const JournalPublicationReferenceForm: React.FC = () => {
         variant="outlined"
         label={t('references.doi')}
       />
-      <Field
-        name="reference.journalPublication.journal"
-        component={TextField}
-        variant="outlined"
-        label={t('references.journal')}
-      />
+      <Field name="reference.journalPublication.journal">
+        {({ field }: any) => {
+          return <Journal journal={field.value} />;
+        }}
+      </Field>
       <Field
         name="reference.journalPublication.volume"
         component={TextField}
