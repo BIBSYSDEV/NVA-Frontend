@@ -18,9 +18,10 @@ const StyledPaper = styled.div`
 interface ButtonModalProps {
   ariaDescribedBy?: string;
   ariaLabelledBy?: string;
-  buttonText: string;
+  buttonText?: string;
   children: (props: any) => ReactNode;
   dataTestId?: string;
+  openModal?: boolean;
   startIcon?: ReactNode;
 }
 
@@ -30,9 +31,10 @@ const ButtonModal: React.FC<ButtonModalProps> = ({
   buttonText,
   children,
   dataTestId,
+  openModal,
   startIcon,
 }) => {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(openModal ?? false);
 
   const handleOpen = () => {
     setOpen(true);
@@ -44,9 +46,11 @@ const ButtonModal: React.FC<ButtonModalProps> = ({
 
   return (
     <>
-      <Button onClick={handleOpen} variant="outlined" startIcon={startIcon} data-testid={dataTestId}>
-        {buttonText}
-      </Button>
+      {buttonText && (
+        <Button onClick={handleOpen} variant="outlined" startIcon={startIcon} data-testid={dataTestId}>
+          {buttonText}
+        </Button>
+      )}
       <StyledDialog
         aria-labelledby={ariaDescribedBy}
         aria-describedby={ariaLabelledBy}

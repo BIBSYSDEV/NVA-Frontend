@@ -1,5 +1,5 @@
 import Amplify, { Hub } from 'aws-amplify';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import styled from 'styled-components';
@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import { getAuthorityById } from './api/external/authorityRegisterApi';
 import { mockUser } from './api/mock-interceptor';
 import { getCurrentAuthenticatedUser } from './api/userApi';
+import ButtonModal from './components/ButtonModal';
 import Breadcrumbs from './layout/Breadcrumbs';
 import Footer from './layout/Footer';
 import Header from './layout/header/Header';
@@ -16,6 +17,7 @@ import Dashboard from './pages/dashboard/Dashboard';
 import NotFound from './pages/errorpages/NotFound';
 import PublicationForm from './pages/publication/PublicationForm';
 import Search from './pages/search/Search';
+import { ConnectAuthority } from './pages/user/authority/ConnectAuthority';
 import User from './pages/user/User';
 import Workspace from './pages/workspace/Workspace';
 import { setAuthorityData, setUser } from './redux/actions/userActions';
@@ -43,6 +45,7 @@ const StyledPageBody = styled.div`
 const App: React.FC = () => {
   const dispatch = useDispatch();
   const user = useSelector((store: RootStore) => store.user);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     if (USE_MOCK_DATA) {
@@ -69,6 +72,11 @@ const App: React.FC = () => {
     }
   }, [dispatch, user.id]);
 
+  useEffect(() => {
+    !!user.id && !user.authority && setShowModal(true);
+    // TODO: check if user has crossed out "do not show this again"
+  }, [user.id, user.authority]);
+
   return (
     <BrowserRouter>
       <StyledApp>
@@ -76,6 +84,11 @@ const App: React.FC = () => {
         <Header />
         {user.isLoggedIn && <AdminMenu />}
         <Breadcrumbs />
+        {showModal && (
+          <ButtonModal dataTestId="connect-author-modal" openModal={showModal} ariaLabelledBy="connect-author-modal">
+            {() => <ConnectAuthority />}
+          </ButtonModal>
+        )}
         <StyledPageBody>
           <Switch>
             <Route exact path="/" component={Dashboard} />
