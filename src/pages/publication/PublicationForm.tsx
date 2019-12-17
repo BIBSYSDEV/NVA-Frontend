@@ -70,7 +70,7 @@ const PublicationForm: React.FC = () => {
       <Formik
         initialValues={localStorageFormData}
         validationSchema={validationSchema}
-        onSubmit={(values: any) => savePublication(values)}
+        onSubmit={(values: PublicationFormsData) => savePublication(values)}
         validateOnChange={false}>
         {({ values, errors, touched }: any) => (
           <Form onBlur={() => setLocalStorageFormData(values)}>

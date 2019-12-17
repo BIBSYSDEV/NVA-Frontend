@@ -28,8 +28,8 @@ const StyledContributor = {
   `,
 
   OtherContributorContainer: styled(BaseContainerStyle)`
-    grid-template-areas: 'type name institution delete';
-    grid-template-columns: 20% 40% 25% 5%;
+    grid-template-areas: 'type name institution arrows delete';
+    grid-template-columns: 20% 40% 20% 5% 5%;
   `,
 
   PersonIcon: styled(Person)`
