@@ -1,6 +1,6 @@
-import { Field } from 'formik';
+import { Field, useFormikContext, FormikProps } from 'formik';
 import { Select, TextField } from 'formik-material-ui';
-import React from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
@@ -29,32 +29,53 @@ const StyledFieldHeader = styled.header`
   font-size: 1.5rem;
 `;
 
+enum FieldNames {
+  TITLE = 'description.title',
+  ABSTRACT = 'description.abstract',
+  DESCRIPTION = 'description.description',
+  NPI = 'description.npi',
+  KEYWORDS = 'description.keywords',
+  DATE = 'description.date',
+  LANGUAGE = 'description.language',
+  PROJECT = 'description.project',
+}
+
 interface DescriptionPanelProps {
   goToNextTab: (event: React.MouseEvent<any>) => void;
   savePublication: () => void;
-  tabNumber: number;
 }
 
-const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNumber, savePublication }) => {
+const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, savePublication }) => {
   const { t } = useTranslation();
+  const { setFieldTouched, setFieldValue }: FormikProps<any> = useFormikContext();
 
-  const saveAndClearLocalStorage = () => {
+  // Validation messages won't show on fields that are not touched
+  const setAllFieldsTouched = useCallback(() => {
+    Object.values(FieldNames).forEach(fieldName => setFieldTouched(fieldName));
+  }, [setFieldTouched]);
+
+  useEffect(() => {
+    // Set all fields as touched if user navigates away from this panel (on unmount)
+    return () => setAllFieldsTouched();
+  }, [setAllFieldsTouched]);
+
+  const validateAndSave = () => {
+    setAllFieldsTouched();
     savePublication();
   };
 
   return (
     <TabPanel
-      isHidden={tabNumber !== 1}
       ariaLabel="description"
       goToNextTab={goToNextTab}
-      onClickSave={saveAndClearLocalStorage}
+      onClickSave={validateAndSave}
       heading={t('publication:heading.description')}>
       <Box>
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <StyledFieldWrapper>
             <Field
               aria-label="title"
-              name="description.title"
+              name={FieldNames.TITLE}
               label={t('common:title')}
               component={TextField}
               fullWidth
@@ -64,7 +85,7 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
           <StyledFieldWrapper>
             <Field
               aria-label="abstract"
-              name="description.abstract"
+              name={FieldNames.ABSTRACT}
               label={t('publication:description.abstract')}
               component={TextField}
               multiline
@@ -76,7 +97,7 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
           <StyledFieldWrapper>
             <Field
               aria-label="description"
-              name="description.description"
+              name={FieldNames.DESCRIPTION}
               label={t('publication:description.description')}
               component={TextField}
               multiline
@@ -87,14 +108,14 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
           </StyledFieldWrapper>
           <MultipleFieldWrapper>
             <StyledFieldWrapper>
-              <Field name="description.npi">
-                {({ form: { setFieldValue } }: any) => <DisciplineSearch setFieldValue={setFieldValue} />}
+              <Field name={FieldNames.NPI}>
+                {() => <DisciplineSearch setValueFunction={newValue => setFieldValue(FieldNames.NPI, newValue)} />}
               </Field>
             </StyledFieldWrapper>
             <StyledFieldWrapper>
               <Field
                 aria-label="keyword"
-                name="description.keyword"
+                name={FieldNames.KEYWORDS}
                 label={t('publication:description.tags')}
                 component={TextField}
                 fullWidth
@@ -105,12 +126,12 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
 
           <MultipleFieldWrapper>
             <StyledFieldWrapper>
-              <Field aria-label="date" component={FormikDatePicker} name="date" />
+              <Field aria-label="date" component={FormikDatePicker} name={FieldNames.DATE} />
             </StyledFieldWrapper>
 
             <StyledFieldWrapper>
               <Field
-                name="description.language"
+                name={FieldNames.LANGUAGE}
                 aria-label="language"
                 variant="outlined"
                 fullWidth
@@ -128,11 +149,11 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNum
           <StyledFieldHeader>{t('publication:description.project_association')}</StyledFieldHeader>
 
           <StyledFieldWrapper>
-            <Field name="description.project">
-              {({ form: { values, setFieldValue } }: any) => (
+            <Field name={FieldNames.PROJECT}>
+              {({ field: { value } }: any) => (
                 <>
-                  <ProjectSearch setFieldValue={setFieldValue} />
-                  {values?.project?.title && <p>{values.project.title}</p>}
+                  <ProjectSearch setValueFunction={newValue => setFieldValue(FieldNames.PROJECT, newValue)} />
+                  {value.title && <p>{value.title}</p>}
                 </>
               )}
             </Field>

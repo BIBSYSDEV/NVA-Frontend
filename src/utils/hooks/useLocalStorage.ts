@@ -35,7 +35,7 @@ export default function useLocalStorage(key: string, initialValue: object = {}) 
   };
 
   const clearValue = () => {
-    setValue(initialValue);
+    window.localStorage.removeItem(key);
   };
 
   return [storedValue, setValue, clearValue];
