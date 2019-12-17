@@ -1,8 +1,8 @@
 import React from 'react';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
-import ContributorType, { Direction } from '../../../types/contributor.types';
 import styled from 'styled-components';
+import StopIcon from '@material-ui/icons/Stop';
 
 const StyledContributorArrows = styled.div`
   display: grid;
@@ -18,18 +18,20 @@ const StyledDownArrow = styled.span`
 `;
 
 interface ContributorArrowsProps {
-  contributor: ContributorType;
-  onMoveContributor: (contributor: ContributorType, direction: number) => void;
+  index: number;
+  first: boolean;
+  last: boolean;
+  swap: (indexA: number, indexB: number) => void;
 }
 
-const ContributorArrows: React.FC<ContributorArrowsProps> = ({ contributor, onMoveContributor }) => {
+const ContributorArrows: React.FC<ContributorArrowsProps> = ({ first, last, swap, index }) => {
   return (
     <StyledContributorArrows>
       <StyledUpArrow>
-        <ArrowDropUpIcon onClick={() => onMoveContributor(contributor, Direction.ARROW_UP)} />
+        {(!first && <ArrowDropUpIcon onClick={() => swap(index, index - 1)} />) || <StopIcon />}
       </StyledUpArrow>
       <StyledDownArrow>
-        <ArrowDropDownIcon onClick={() => onMoveContributor(contributor, Direction.ARROW_DOWN)} />
+        {(!last && <ArrowDropDownIcon onClick={() => swap(index, index + 1)} />) || <StopIcon />}
       </StyledDownArrow>
     </StyledContributorArrows>
   );

@@ -4,14 +4,9 @@ import styled from 'styled-components';
 
 import { Button, Typography } from '@material-ui/core';
 
-import { YupError } from '../../types/validation.types';
-import LabelTextLine from '../LabelTextLine';
-
 interface TabPanelProps {
   ariaLabel: string;
   children?: React.ReactNode;
-  isHidden: boolean;
-  errors?: YupError[];
   goToNextTab?: (event: React.MouseEvent<any>) => void;
   onClickSave?: (event: React.MouseEvent<any>) => void;
   heading: string;
@@ -30,22 +25,11 @@ const StyledButton = styled(Button)`
   margin-right: 0.5rem;
 `;
 
-const TabPanel: React.FC<TabPanelProps> = ({
-  ariaLabel,
-  children,
-  errors,
-  isHidden,
-  goToNextTab,
-  onClickSave,
-  heading,
-}) => {
+const TabPanel: React.FC<TabPanelProps> = ({ ariaLabel, children, goToNextTab, onClickSave, heading }) => {
   const { t } = useTranslation();
 
   return (
-    <Typography component="div" role="tabpanel" hidden={isHidden} aria-labelledby={`nav-tab-${ariaLabel}`}>
-      {errors?.map((error: any) => (
-        <LabelTextLine key={error.path} label={error.path} text={`${error.name} - ${error.message}`} />
-      ))}
+    <Typography component="div" role="tabpanel" aria-labelledby={`nav-tab-${ariaLabel}`}>
       <StyledHeading>{heading}</StyledHeading>
       {children}
       {goToNextTab && (

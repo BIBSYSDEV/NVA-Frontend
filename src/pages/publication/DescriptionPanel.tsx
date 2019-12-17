@@ -1,10 +1,8 @@
-import { Field, Form, Formik } from 'formik';
+import { Field, useFormikContext, FormikProps } from 'formik';
 import { Select, TextField } from 'formik-material-ui';
-import React from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import * as Yup from 'yup';
 
 import DateFnsUtils from '@date-io/date-fns';
 import { MenuItem } from '@material-ui/core';
@@ -12,12 +10,7 @@ import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 
 import Box from '../../components/Box';
 import TabPanel from '../../components/TabPanel/TabPanel';
-import { clearFormErrors, formError } from '../../redux/actions/validationActions';
-import { RootStore } from '../../redux/reducers/rootReducer';
 import { languages } from '../../translations/i18n';
-import { DescriptionFormData, emptyDescriptionForm } from '../../types/form.types';
-import { PublicationFormTabs } from '../../types/publication.types';
-import useFormPersistor from '../../utils/hooks/useFormPersistor';
 import DisciplineSearch from './description_tab/DisciplineSearch';
 import FormikDatePicker from './description_tab/FormikDatePicker';
 import ProjectSearch from './description_tab/ProjectSearch';
@@ -36,160 +29,135 @@ const StyledFieldHeader = styled.header`
   font-size: 1.5rem;
 `;
 
+enum FieldNames {
+  TITLE = 'description.title',
+  ABSTRACT = 'description.abstract',
+  DESCRIPTION = 'description.description',
+  NPI = 'description.npi',
+  KEYWORDS = 'description.keywords',
+  DATE = 'description.date',
+  LANGUAGE = 'description.language',
+  PROJECT = 'description.project',
+}
+
 interface DescriptionPanelProps {
   goToNextTab: (event: React.MouseEvent<any>) => void;
   savePublication: () => void;
-  tabNumber: number;
 }
 
-const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, tabNumber, savePublication }) => {
+const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, savePublication }) => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
-  const errors = useSelector((store: RootStore) => store.errors);
-  const [persistedFormData, setPersistedFormData, clearPersistedData] = useFormPersistor('publicationDescription');
+  const { setFieldTouched, setFieldValue }: FormikProps<any> = useFormikContext();
 
-  const publicationSchema = Yup.object().shape({
-    title: Yup.string().required(t('publication:feedback.required_field')),
-  });
+  // Validation messages won't show on fields that are not touched
+  const setAllFieldsTouched = useCallback(() => {
+    Object.values(FieldNames).forEach(fieldName => setFieldTouched(fieldName));
+  }, [setFieldTouched]);
 
-  const validateAndPersistValues = (values: DescriptionFormData) => {
-    setPersistedFormData(values);
-    try {
-      publicationSchema.validateSync(values, { abortEarly: false });
-      dispatch(clearFormErrors(PublicationFormTabs.DESCRIPTION));
-    } catch (e) {
-      dispatch(formError(PublicationFormTabs.DESCRIPTION, e.inner));
-    }
-  };
+  useEffect(() => {
+    // Set all fields as touched if user navigates away from this panel (on unmount)
+    return () => setAllFieldsTouched();
+  }, [setAllFieldsTouched]);
 
-  const saveAndClearLocalStorage = () => {
+  const validateAndSave = () => {
+    setAllFieldsTouched();
     savePublication();
-    clearPersistedData();
-  };
-
-  const initialFormikValues = {
-    title: persistedFormData.title || emptyDescriptionForm.title,
-    abstract: persistedFormData.abstract || emptyDescriptionForm.abstract,
-    description: persistedFormData.description || emptyDescriptionForm.description,
-    npi: persistedFormData.npi || emptyDescriptionForm.npi,
-    language: persistedFormData.language || emptyDescriptionForm.language,
-    date: persistedFormData.date || emptyDescriptionForm.date,
-    project: persistedFormData.project || emptyDescriptionForm.project,
   };
 
   return (
     <TabPanel
-      isHidden={tabNumber !== 1}
       ariaLabel="description"
       goToNextTab={goToNextTab}
-      onClickSave={saveAndClearLocalStorage}
-      errors={errors.descriptionErrors}
+      onClickSave={validateAndSave}
       heading={t('publication:heading.description')}>
       <Box>
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
-          <Formik
-            initialValues={initialFormikValues}
-            validateOnChange={false}
-            validationSchema={publicationSchema}
-            validate={values => validateAndPersistValues(values)}
-            onSubmit={(values, { setSubmitting }) => {
-              setTimeout(() => {
-                alert(JSON.stringify(values, null, 2));
-                setSubmitting(false);
-              }, 400);
-            }}>
-            <Form>
-              <StyledFieldWrapper>
-                <Field
-                  aria-label="title"
-                  name="title"
-                  label={t('common:title')}
-                  component={TextField}
-                  fullWidth
-                  variant="outlined"
-                />
-              </StyledFieldWrapper>
-              <StyledFieldWrapper>
-                <Field
-                  aria-label="abstract"
-                  name="abstract"
-                  label={t('publication:description.abstract')}
-                  component={TextField}
-                  multiline
-                  rows="4"
-                  fullWidth
-                  variant="outlined"
-                />
-              </StyledFieldWrapper>
-              <StyledFieldWrapper>
-                <Field
-                  aria-label="description"
-                  name="description"
-                  label={t('publication:description.description')}
-                  component={TextField}
-                  multiline
-                  rows="4"
-                  fullWidth
-                  variant="outlined"
-                />
-              </StyledFieldWrapper>
-              <MultipleFieldWrapper>
-                <StyledFieldWrapper>
-                  <Field name="npi">
-                    {({ form: { values, setFieldValue } }: any) => <DisciplineSearch setFieldValue={setFieldValue} />}
-                  </Field>
-                </StyledFieldWrapper>
-                <StyledFieldWrapper>
-                  <Field
-                    aria-label="keyword"
-                    name="keyword"
-                    label={t('publication:description.tags')}
-                    component={TextField}
-                    fullWidth
-                    variant="outlined"
-                  />
-                </StyledFieldWrapper>
-              </MultipleFieldWrapper>
+          <StyledFieldWrapper>
+            <Field
+              aria-label="title"
+              name={FieldNames.TITLE}
+              label={t('common:title')}
+              component={TextField}
+              fullWidth
+              variant="outlined"
+            />
+          </StyledFieldWrapper>
+          <StyledFieldWrapper>
+            <Field
+              aria-label="abstract"
+              name={FieldNames.ABSTRACT}
+              label={t('publication:description.abstract')}
+              component={TextField}
+              multiline
+              rows="4"
+              fullWidth
+              variant="outlined"
+            />
+          </StyledFieldWrapper>
+          <StyledFieldWrapper>
+            <Field
+              aria-label="description"
+              name={FieldNames.DESCRIPTION}
+              label={t('publication:description.description')}
+              component={TextField}
+              multiline
+              rows="4"
+              fullWidth
+              variant="outlined"
+            />
+          </StyledFieldWrapper>
+          <MultipleFieldWrapper>
+            <StyledFieldWrapper>
+              <Field name={FieldNames.NPI}>
+                {() => <DisciplineSearch setValueFunction={newValue => setFieldValue(FieldNames.NPI, newValue)} />}
+              </Field>
+            </StyledFieldWrapper>
+            <StyledFieldWrapper>
+              <Field
+                aria-label="keyword"
+                name={FieldNames.KEYWORDS}
+                label={t('publication:description.tags')}
+                component={TextField}
+                fullWidth
+                variant="outlined"
+              />
+            </StyledFieldWrapper>
+          </MultipleFieldWrapper>
 
-              <MultipleFieldWrapper>
-                <StyledFieldWrapper>
-                  <Field aria-label="date" component={FormikDatePicker} name="date" />
-                </StyledFieldWrapper>
+          <MultipleFieldWrapper>
+            <StyledFieldWrapper>
+              <Field aria-label="date" component={FormikDatePicker} name={FieldNames.DATE} />
+            </StyledFieldWrapper>
 
-                <StyledFieldWrapper>
-                  <Field
-                    name="language"
-                    aria-label="language"
-                    variant="outlined"
-                    fullWidth
-                    component={Select}
-                    label={t('common:date')}>
-                    {languages.map(language => (
-                      <MenuItem
-                        value={language.code}
-                        key={language.code}
-                        data-testid={`user-language-${language.code}`}>
-                        {language.name}
-                      </MenuItem>
-                    ))}
-                  </Field>
-                </StyledFieldWrapper>
-              </MultipleFieldWrapper>
+            <StyledFieldWrapper>
+              <Field
+                name={FieldNames.LANGUAGE}
+                aria-label="language"
+                variant="outlined"
+                fullWidth
+                component={Select}
+                label={t('common:date')}>
+                {languages.map(language => (
+                  <MenuItem value={language.code} key={language.code} data-testid={`user-language-${language.code}`}>
+                    {language.name}
+                  </MenuItem>
+                ))}
+              </Field>
+            </StyledFieldWrapper>
+          </MultipleFieldWrapper>
 
-              <StyledFieldHeader>{t('publication:description.project_association')}</StyledFieldHeader>
+          <StyledFieldHeader>{t('publication:description.project_association')}</StyledFieldHeader>
 
-              <StyledFieldWrapper>
-                <Field name="project">
-                  {({ form: { values, setFieldValue } }: any) => (
-                    <>
-                      <ProjectSearch setFieldValue={setFieldValue} />
-                      {values?.project?.title && <p>{values.project.title}</p>}
-                    </>
-                  )}
-                </Field>
-              </StyledFieldWrapper>
-            </Form>
-          </Formik>
+          <StyledFieldWrapper>
+            <Field name={FieldNames.PROJECT}>
+              {({ field: { value } }: any) => (
+                <>
+                  <ProjectSearch setValueFunction={newValue => setFieldValue(FieldNames.PROJECT, newValue)} />
+                  {value.title && <p>{value.title}</p>}
+                </>
+              )}
+            </Field>
+          </StyledFieldWrapper>
         </MuiPickersUtilsProvider>
       </Box>
     </TabPanel>

@@ -3,10 +3,10 @@ import ContributorType from './contributor.types';
 import { ReferenceType } from './references.types';
 import { Language } from './settings.types';
 
-export interface FormsData {
-  publicationDescription: DescriptionFormData;
-  publicationReference: ReferenceFormData;
-  publicationContributors: ContributorsFormData;
+export interface PublicationFormsData {
+  description: DescriptionFormData;
+  reference: ReferenceFormData;
+  contributors: ContributorsFormData;
 }
 
 export interface DescriptionFormData {
@@ -36,8 +36,8 @@ export interface ContributorsFormData {
 }
 
 export interface BookReferenceFormData {
+  type: string;
   publisher: string;
-  isbn: string;
 }
 
 export interface JournalPublicationReferenceFormData {
@@ -51,7 +51,7 @@ export interface ReferenceFormData {
   journalPublication: JournalPublicationReferenceFormData;
 }
 
-export const emptyDescriptionForm: DescriptionFormData = {
+export const emptyDescriptionFormData: DescriptionFormData = {
   title: '',
   abstract: '',
   description: '',
@@ -72,14 +72,14 @@ export const emptyReferencesForm: ReferencesFormData = {
   referenceType: ReferenceType.PUBLICATION_IN_JOURNAL,
 };
 
-export const emptyContributorsForm: ContributorsFormData = {
+export const emptyContributorsFormData: ContributorsFormData = {
   authors: [],
   contributors: [],
 };
 
 export const emptyBookReferenceFormData: BookReferenceFormData = {
+  type: '',
   publisher: '',
-  isbn: '',
 };
 
 export const emptyJournalPublicationReferenceFormData: JournalPublicationReferenceFormData = {
@@ -93,8 +93,8 @@ export const emptyReferenceFormData: ReferenceFormData = {
   journalPublication: emptyJournalPublicationReferenceFormData,
 };
 
-export const emptyForms: FormsData = {
-  publicationDescription: emptyDescriptionForm,
-  publicationContributors: emptyContributorsForm,
-  publicationReference: emptyReferenceFormData,
+export const emptyPublicationFormData: PublicationFormsData = {
+  description: emptyDescriptionFormData,
+  reference: emptyReferenceFormData,
+  contributors: emptyContributorsFormData,
 };
