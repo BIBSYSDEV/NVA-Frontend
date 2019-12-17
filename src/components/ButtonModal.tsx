@@ -10,7 +10,7 @@ const StyledDialog = styled(Dialog)`
 `;
 
 const StyledPaper = styled.div`
-  background-color: ${({ theme }) => theme.palette.box.main};
+  background-color: ${({ theme }) => theme.palette.background};
   padding: ${({ theme }) => theme.spacing(2, 4, 3)};
   width: '50rem';
 `;

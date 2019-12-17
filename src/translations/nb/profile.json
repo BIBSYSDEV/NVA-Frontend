@@ -3,6 +3,8 @@
   "authority": {
     "connect_authority": "Koble til din forfatteridentitet",
     "connected_info": "Du har en tilkoblet forfatter ID",
+    "last_publication": "Siste publikasjon",
+    "no_publications_found": "Ingen utgivelser funnet",
     "not_connected_info": "For å identifisere deg som forfatter trenger vi en kobling til biblioteksystemet.",
     "search_summary": "{{results}} treff for \"{{searchTerm}}\"",
     "see_profile": "Se forfatterprofil"

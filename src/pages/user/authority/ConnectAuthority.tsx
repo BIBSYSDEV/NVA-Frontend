@@ -20,6 +20,17 @@ const StyledClickableDiv = styled.div`
   cursor: pointer;
 `;
 
+const StyledHeading = styled.div`
+  font-size: 1.2rem;
+  margin: 1em 0;
+  font-weight: bold;
+`;
+
+const StyledSubHeading = styled.div`
+  text-align: right;
+  font-weight: bold;
+`;
+
 export const ConnectAuthority: React.FC = () => {
   const [matchingAuthorities, setMatchingAuthorities] = useState<Authority[]>([]);
   const [selectedSystemControlNumber, setSelectedSystemControlNumber] = useState('');
@@ -57,7 +68,11 @@ export const ConnectAuthority: React.FC = () => {
 
   return (
     <StyledAuthorityContainer>
-      {t('authority.search_summary', { results: matchingAuthorities.length, searchTerm: searchTerm })}
+      <StyledHeading>{t('authority.connect_authority')}</StyledHeading>
+      <StyledSubHeading>
+        {t('authority.search_summary', { results: matchingAuthorities.length, searchTerm: searchTerm })}
+      </StyledSubHeading>
+
       {matchingAuthorities.map(authority => (
         <StyledClickableDiv
           key={authority.systemControlNumber}
