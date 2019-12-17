@@ -7,7 +7,6 @@ import { Button, Typography } from '@material-ui/core';
 interface TabPanelProps {
   ariaLabel: string;
   children?: React.ReactNode;
-  isHidden: boolean;
   goToNextTab?: (event: React.MouseEvent<any>) => void;
   onClickSave?: (event: React.MouseEvent<any>) => void;
   heading: string;
@@ -26,11 +25,11 @@ const StyledButton = styled(Button)`
   margin-right: 0.5rem;
 `;
 
-const TabPanel: React.FC<TabPanelProps> = ({ ariaLabel, children, isHidden, goToNextTab, onClickSave, heading }) => {
+const TabPanel: React.FC<TabPanelProps> = ({ ariaLabel, children, goToNextTab, onClickSave, heading }) => {
   const { t } = useTranslation();
 
   return (
-    <Typography component="div" role="tabpanel" hidden={isHidden} aria-labelledby={`nav-tab-${ariaLabel}`}>
+    <Typography component="div" role="tabpanel" aria-labelledby={`nav-tab-${ariaLabel}`}>
       <StyledHeading>{heading}</StyledHeading>
       {children}
       {goToNextTab && (

@@ -40,6 +40,7 @@
     "link": "Link"
   },
   "references": {
+    "anthology": "Anthology",
     "article": "Article",
     "book": "Book",
     "chapter": "Chapter",
@@ -49,6 +50,7 @@
     "issn": "ISSN",
     "journal_publication": "Publication in Journal",
     "level": "Level",
+    "monography": "Monography",
     "publisher": "Publisher",
     "report": "Report",
     "review": "Review"

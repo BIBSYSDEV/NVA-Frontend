@@ -1,18 +1,16 @@
-import React, { Dispatch } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 import ContributorType from '../../../types/contributor.types';
 import ContributorLabel from './ContributorLabel';
 import OtherContributor from './OtherContributor';
 import StyledContributor from './StyledContributor';
+import { emptyContributor } from './../../../types/contributor.types';
+import { FieldArray } from 'formik';
 
-interface OtherContributorsProps {
-  contributors: ContributorType[];
-  dispatch: Dispatch<any>;
-  onAddOtherContributor: () => void;
-}
+interface OtherContributorsProps {}
 
-const OtherContributors: React.FC<OtherContributorsProps> = ({ contributors, dispatch, onAddOtherContributor }) => {
+const OtherContributors: React.FC<OtherContributorsProps> = () => {
   const { t } = useTranslation();
 
   return (
@@ -26,17 +24,29 @@ const OtherContributors: React.FC<OtherContributorsProps> = ({ contributors, dis
         <div className="contributor-delete-icon" />
       </StyledContributor.OtherContributorContainer>
 
-      {contributors
-        .filter(contributor => contributor.type !== 'Author')
-        .map(contributor => (
-          <OtherContributor contributor={contributor} key={contributor.id} dispatch={dispatch} />
-        ))}
-      <StyledContributor.AuthorsButton
-        variant="text"
-        startIcon={<StyledContributor.AddIcon />}
-        onClick={onAddOtherContributor}>
-        {t('publication:contributors.add_other_contributor')}
-      </StyledContributor.AuthorsButton>
+      <FieldArray name="contributors.contributors">
+        {({ swap, push, remove, form: { values } }) => {
+          return (
+            <div>
+              {values.contributors?.contributors.map((contributor: ContributorType, index: number) => (
+                <OtherContributor
+                  contributor={contributor}
+                  key={contributor.id}
+                  index={index}
+                  remove={remove}
+                  swap={swap}
+                />
+              ))}
+              <StyledContributor.AuthorsButton
+                variant="text"
+                startIcon={<StyledContributor.AddIcon />}
+                onClick={() => push({ ...emptyContributor })}>
+                {t('publication:contributors.add_other_contributor')}
+              </StyledContributor.AuthorsButton>
+            </div>
+          );
+        }}
+      </FieldArray>
     </StyledContributor.Box>
   );
 };

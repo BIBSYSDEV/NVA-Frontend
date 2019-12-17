@@ -36,8 +36,8 @@ export interface ContributorsFormData {
 }
 
 export interface BookReferenceFormData {
+  type: string;
   publisher: string;
-  isbn: string;
 }
 
 export interface JournalPublicationReferenceFormData {
@@ -78,8 +78,8 @@ export const emptyContributorsFormData: ContributorsFormData = {
 };
 
 export const emptyBookReferenceFormData: BookReferenceFormData = {
+  type: '',
   publisher: '',
-  isbn: '',
 };
 
 export const emptyJournalPublicationReferenceFormData: JournalPublicationReferenceFormData = {
