@@ -22,7 +22,7 @@ const BookReferenceForm: React.FC = () => {
       </Field>
 
       <Field name={BookFieldNames.PUBLISHER}>
-        {() => <PublisherSearch setFieldValue={value => setFieldValue(BookFieldNames.PUBLISHER, value)} />}
+        {() => <PublisherSearch setValueFunction={value => setFieldValue(BookFieldNames.PUBLISHER, value)} />}
       </Field>
     </>
   );

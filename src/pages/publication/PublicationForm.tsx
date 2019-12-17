@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { Formik, Form } from 'formik';
+import { Formik, Form, FormikProps } from 'formik';
 import * as Yup from 'yup';
 
 import TabPanel from '../../components/TabPanel/TabPanel';
@@ -72,7 +72,7 @@ const PublicationForm: React.FC = () => {
         validationSchema={validationSchema}
         onSubmit={(values: PublicationFormsData) => savePublication(values)}
         validateOnChange={false}>
-        {({ values, errors, touched }: any) => (
+        {({ values, errors, touched }: FormikProps<any>) => (
           <Form onBlur={() => setLocalStorageFormData(values)}>
             <PublicationFormTabs
               tabNumber={tabNumber}

@@ -8,7 +8,7 @@ import { MINIMUM_SEARCH_CHARACTERS } from '../utils/constants';
 interface AutoSearchProps {
   onInputChange?: (event: object, value: string) => void;
   searchResults: any;
-  setFieldValue: (value: any) => void;
+  setValueFunction: (value: any) => void;
   label: string;
   groupBy?: (options: any) => string;
 }
@@ -16,7 +16,7 @@ interface AutoSearchProps {
 export const AutoSearch: React.FC<AutoSearchProps> = ({
   onInputChange,
   searchResults,
-  setFieldValue,
+  setValueFunction,
   label,
   groupBy,
 }) => {
@@ -42,7 +42,7 @@ export const AutoSearch: React.FC<AutoSearchProps> = ({
         setOpen(true);
       }}
       onChange={(_: object, value: string) => {
-        setFieldValue(value);
+        setValueFunction(value);
       }}
       onInputChange={(event: object, value: string) => {
         value.length >= MINIMUM_SEARCH_CHARACTERS && options.length === 0 && setLoading(true);

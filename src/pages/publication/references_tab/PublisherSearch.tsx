@@ -9,10 +9,10 @@ import { PublicationChannel } from '../../../types/references.types';
 import useDebounce from '../../../utils/hooks/useDebounce';
 
 interface PublisherSearchProps {
-  setFieldValue: (value: any) => void;
+  setValueFunction: (value: any) => void;
 }
 
-const PublisherSearch: React.FC<PublisherSearchProps> = ({ setFieldValue }) => {
+const PublisherSearch: React.FC<PublisherSearchProps> = ({ setValueFunction }) => {
   const [searchResults, setSearchResults] = useState<PublicationChannel[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [searching, setSearching] = useState(false);
@@ -45,7 +45,7 @@ const PublisherSearch: React.FC<PublisherSearchProps> = ({ setFieldValue }) => {
     <AutoSearch
       onInputChange={(_, value) => setSearchTerm(value)}
       searchResults={searchResults}
-      setFieldValue={value => setFieldValue(value)}
+      setValueFunction={setValueFunction}
       label={t('publication:references.publisher')}
     />
   );
