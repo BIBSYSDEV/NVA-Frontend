@@ -1,5 +1,5 @@
 import React from 'react';
-import { Field } from 'formik';
+import { Field, useFormikContext, FormikProps } from 'formik';
 import { Select } from 'formik-material-ui';
 import PublisherSearch from './PublisherSearch';
 import { useTranslation } from 'react-i18next';
@@ -8,6 +8,8 @@ import { MenuItem } from '@material-ui/core';
 
 const BookReferenceForm: React.FC = () => {
   const { t } = useTranslation('publication');
+
+  const { setFieldValue }: FormikProps<any> = useFormikContext();
 
   return (
     <>
@@ -20,9 +22,7 @@ const BookReferenceForm: React.FC = () => {
       </Field>
 
       <Field name={BookFieldNames.PUBLISHER}>
-        {({ form: { setFieldValue } }: any) => (
-          <PublisherSearch setFieldValue={value => setFieldValue(BookFieldNames.PUBLISHER, value)} />
-        )}
+        {() => <PublisherSearch setFieldValue={value => setFieldValue(BookFieldNames.PUBLISHER, value)} />}
       </Field>
     </>
   );

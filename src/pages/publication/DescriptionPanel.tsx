@@ -47,7 +47,7 @@ interface DescriptionPanelProps {
 
 const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, savePublication }) => {
   const { t } = useTranslation();
-  const { setFieldTouched }: FormikProps<any> = useFormikContext();
+  const { setFieldTouched, setFieldValue }: FormikProps<any> = useFormikContext();
 
   // Validation messages won't show on fields that are not touched
   const setAllFieldsTouched = useCallback(() => {
@@ -109,9 +109,7 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, savePu
           <MultipleFieldWrapper>
             <StyledFieldWrapper>
               <Field name={FieldNames.NPI}>
-                {({ form: { setFieldValue } }: any) => (
-                  <DisciplineSearch setFieldValue={newValue => setFieldValue(FieldNames.NPI, newValue)} />
-                )}
+                {() => <DisciplineSearch setFieldValue={newValue => setFieldValue(FieldNames.NPI, newValue)} />}
               </Field>
             </StyledFieldWrapper>
             <StyledFieldWrapper>
@@ -152,7 +150,7 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, savePu
 
           <StyledFieldWrapper>
             <Field name={FieldNames.PROJECT}>
-              {({ form: { setFieldValue }, field: { value } }: any) => (
+              {({ field: { value } }: any) => (
                 <>
                   <ProjectSearch setFieldValue={newValue => setFieldValue(FieldNames.PROJECT, newValue)} />
                   {value.title && <p>{value.title}</p>}
