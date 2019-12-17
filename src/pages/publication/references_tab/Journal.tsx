@@ -14,14 +14,14 @@ const StyledJournal = styled.div`
   grid-column-gap: 0.5rem;
   align-items: center;
   grid-template-areas:
-    'journal journal journal'
+    'journalTitle journalTitle journalTitle'
     'issnLabel levelLabel publisherLabel'
     'issn level publisher';
-  grid-template-columns: '33% 33% 33%';
+  grid-template-columns: 33% 33% 33%;
 `;
 
 const StyledJournalTitle = styled.div`
-  grid-area: 'journal';
+  grid-area: 'journalTitle';
 `;
 
 const StyledJournalLabel = styled.div`
@@ -29,26 +29,52 @@ const StyledJournalLabel = styled.div`
   font-weight: bold;
 `;
 
+const StyledIssnLabel = styled(StyledJournalLabel)`
+  grid-area: 'issnLabel';
+`;
+
+const StyledLevelLabel = styled(StyledJournalLabel)`
+  grid-area: 'levelLabel';
+`;
+
+const StyledPublisherLabel = styled(StyledJournalLabel)`
+  grid-area: 'publisherLabel';
+`;
+
+const StyledIssnText = styled.div`
+  grid-area: 'issn';
+`;
+
+const StyledLevelText = styled.div`
+  grid-area: 'level';
+`;
+
+const StyledPublisherText = styled.div`
+  grid-area: 'publisher';
+`;
+
 const Journal: React.FC<JournalProps> = ({ journal }) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('publication');
 
   return (
     <StyledJournal>
-      <Field name="reference.journalPublication.journal">
-        {({ field }: any) => {
-          return (
-            <StyledJournalTitle>
-              <TextField>{field.value}</TextField>
-            </StyledJournalTitle>
-          );
-        }}
-      </Field>
-      <StyledJournalLabel>{t('reference.issn')}</StyledJournalLabel>
-      <StyledJournalLabel>{t('reference.level')}</StyledJournalLabel>
-      <StyledJournalLabel>{t('reference.publisher')}</StyledJournalLabel>
-      <div>{journal.issn}</div>
-      <div>{journal.level}</div>
-      <div>{journal.publisher}</div>
+      <StyledJournalTitle>
+        <Field name="reference.journalPublication.journal">
+          {({ field }: any) => {
+            return (
+              <TextField variant="outlined" label={t('references.journal')}>
+                {field.value}
+              </TextField>
+            );
+          }}
+        </Field>
+      </StyledJournalTitle>
+      <StyledIssnLabel>{t('references.issn')}</StyledIssnLabel>
+      <StyledLevelLabel>{t('references.level')}</StyledLevelLabel>
+      <StyledPublisherLabel>{t('references.publisher')}</StyledPublisherLabel>
+      <StyledIssnText>{`issn: ${journal.issn}`}</StyledIssnText>
+      <StyledLevelText>{`level: ${journal.level}`}</StyledLevelText>
+      <StyledPublisherText>{`publisher: ${journal.publisher}`}</StyledPublisherText>
     </StyledJournal>
   );
 };
