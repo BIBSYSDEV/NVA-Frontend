@@ -60,9 +60,16 @@
     "issue": "Hefte",
     "pages_from": "Sidetall fra",
     "pages_to": "til",
-    "peer_review": "Er publiaksjonen fagfellevurdert?",
+    "or": "Eller",
+    "article_number": "Artikkelnummer",
+    "peer_review": "Er publikasjonen fagfellevurdert?",
     "is_peer_reviewed": "Ja, den er fagfellevurdert",
     "is_not_peer_reviewed": "Nei, den er ikke fagfellevurdert",
-    "remove": "Fjern"
+    "remove": "Fjern",
+    "nvi_header": "Norsk vitenskapsindeks - NVI",
+    "nvi_success": "Denne publikasjonen kan inngå i NVI",
+    "nvi_fail_level_1": "Denne publikajsonen kan ikke inngå i NVI, da valg tidsskrift er ikke på nivå 1 eller 2.",
+    "nvi_fail_level_2": "(Tidsskriftets nivå i Kanaregisteret kan bli endret, slik at publikasjonen likevel kan inngå i NVI)",
+    "nvi_fail_no_peer_review": "Denne publikasjonen kan ikke inngå i NVI, da den ikke er fagfellevurdert."
   }
 }
