@@ -18,7 +18,7 @@ interface AuthorityModalProps {
 }
 
 const AuthorityModal: React.FC<AuthorityModalProps> = ({ showModal }) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('common');
   const [doNotShowAgain, setDoNotShowAgain] = useState(false);
   const [showAuthorityModal, setShowAuthorityModal] = useLocalStorage('showAuthorityModal', true);
   const showAuthorityModalRef = useRef(showAuthorityModal);
