@@ -2,6 +2,7 @@ import React, { ReactNode } from 'react';
 import styled from 'styled-components';
 
 import { Backdrop, Button, Dialog, Fade } from '@material-ui/core';
+import CloseIcon from '@material-ui/icons/Close';
 
 const StyledDialog = styled(Dialog)`
   display: 'flex';
@@ -11,8 +12,23 @@ const StyledDialog = styled(Dialog)`
 
 const StyledPaper = styled.div`
   background-color: ${({ theme }) => theme.palette.background};
-  padding: ${({ theme }) => theme.spacing(2, 4, 3)};
+  margin: 1rem;
   width: '50rem';
+`;
+
+const StyledHeaderContainer = styled.div`
+  display: flex;
+  margin: 1rem 1rem 0 1rem;
+  justify-content: space-between;
+`;
+
+const StyledHeading = styled.div`
+  font-size: 1.2rem;
+  font-weight: bold;
+`;
+
+const StyledCloseIcon = styled(CloseIcon)`
+  cursor: pointer;
 `;
 
 interface ButtonModalProps {
@@ -21,6 +37,7 @@ interface ButtonModalProps {
   buttonText?: string;
   children: (props: any) => ReactNode;
   dataTestId?: string;
+  headingText?: string;
   openModal?: boolean;
   startIcon?: ReactNode;
 }
@@ -31,6 +48,7 @@ const ButtonModal: React.FC<ButtonModalProps> = ({
   buttonText,
   children,
   dataTestId,
+  headingText,
   openModal,
   startIcon,
 }) => {
@@ -61,6 +79,11 @@ const ButtonModal: React.FC<ButtonModalProps> = ({
         BackdropProps={{
           timeout: 500,
         }}>
+        <StyledHeaderContainer>
+          <StyledHeading>{headingText}</StyledHeading>
+          <StyledCloseIcon onClick={handleClose} />
+        </StyledHeaderContainer>
+
         <Fade in={open}>
           <StyledPaper>{children({ setOpen })}</StyledPaper>
         </Fade>

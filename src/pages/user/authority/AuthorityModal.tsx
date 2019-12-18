@@ -31,7 +31,11 @@ const AuthorityModal: React.FC<AuthorityModalProps> = ({ showModal }) => {
   return (
     <>
       {showModal && localStorageRef.current && (
-        <ButtonModal dataTestId="connect-author-modal" openModal={showModal} ariaLabelledBy="connect-author-modal">
+        <ButtonModal
+          dataTestId="connect-author-modal"
+          openModal={showModal}
+          ariaLabelledBy="connect-author-modal"
+          headingText={t('profile:authority.connect_authority')}>
           {() => (
             <>
               <ConnectAuthority />

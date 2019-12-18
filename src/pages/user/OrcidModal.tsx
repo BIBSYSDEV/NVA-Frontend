@@ -12,19 +12,6 @@ const StyledButtonHolder = styled.div`
   text-align: center;
 `;
 
-const StyledNavigationHelp = styled.div`
-  border-bottom: 1px solid black;
-  text-align: right;
-  font-size: 0.8rem;
-  font-weight: bold;
-`;
-
-const StyledHeading = styled.div`
-  font-size: 1.2rem;
-  margin: 1em 0;
-  font-weight: bold;
-`;
-
 const StyledSubHeading = styled.div`
   margin: 1em 0;
   font-weight: bold;
@@ -56,9 +43,7 @@ const OrcidModal: React.FC<OrcidModalProps> = ({ setOpen }) => {
   };
 
   return (
-    <div>
-      <StyledNavigationHelp>{t('orcid.registration')} 2/2</StyledNavigationHelp>
-      <StyledHeading>{t('orcid.create_or_connect')}</StyledHeading>
+    <>
       <p>{t('orcid.login')}</p>
       <StyledButtonHolder>
         <Button
@@ -88,7 +73,7 @@ const OrcidModal: React.FC<OrcidModalProps> = ({ setOpen }) => {
           {t('orcid.skip_this_step')}
         </Button>
       </StyledFooter>
-    </div>
+    </>
   );
 };
 

@@ -71,7 +71,8 @@ const User: React.FC = () => {
               <ButtonModal
                 buttonText={t('authority.connect_authority')}
                 dataTestId="connect-author-modal"
-                ariaLabelledBy="connect-author-modal">
+                ariaLabelledBy="connect-author-modal"
+                headingText={t('authority.connect_authority')}>
                 {() => <ConnectAuthority />}
               </ButtonModal>
             </>

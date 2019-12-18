@@ -27,6 +27,7 @@ const UserOrcid: React.FC = () => {
         <ButtonModal
           buttonText={t('profile:orcid.create_or_connect')}
           dataTestId="open-orcid-modal"
+          headingText={t('profile:orcid.create_or_connect')}
           startIcon={<img src="https://orcid.org/sites/default/files/images/orcid_24x24.png" alt="ORCID iD icon" />}>
           {({ setOpen }: any) => <OrcidModal setOpen={setOpen} />}
         </ButtonModal>

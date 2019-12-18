@@ -20,12 +20,6 @@ const StyledClickableDiv = styled.div`
   cursor: pointer;
 `;
 
-const StyledHeading = styled.div`
-  font-size: 1.2rem;
-  margin: 1em 0;
-  font-weight: bold;
-`;
-
 const StyledSubHeading = styled.div`
   text-align: right;
   font-weight: bold;
@@ -67,33 +61,34 @@ export const ConnectAuthority: React.FC = () => {
   };
 
   return (
-    <StyledAuthorityContainer>
-      <StyledHeading>{t('authority.connect_authority')}</StyledHeading>
+    <>
       <StyledSubHeading>
         {t('authority.search_summary', { results: matchingAuthorities.length, searchTerm: searchTerm })}
       </StyledSubHeading>
 
-      {matchingAuthorities.map(authority => (
-        <StyledClickableDiv
-          key={authority.systemControlNumber}
-          onClick={() => setSelectedSystemControlNumber(authority.systemControlNumber)}>
-          <AuthorityCard
-            authority={authority}
-            isSelected={selectedSystemControlNumber === authority.systemControlNumber}
-          />
-        </StyledClickableDiv>
-      ))}
+      <StyledAuthorityContainer>
+        {matchingAuthorities.map(authority => (
+          <StyledClickableDiv
+            key={authority.systemControlNumber}
+            onClick={() => setSelectedSystemControlNumber(authority.systemControlNumber)}>
+            <AuthorityCard
+              authority={authority}
+              isSelected={selectedSystemControlNumber === authority.systemControlNumber}
+            />
+          </StyledClickableDiv>
+        ))}
 
-      {matchingAuthorities.length > 0 && (
-        <Button
-          color="primary"
-          variant="contained"
-          size="large"
-          onClick={setFeideIdForSelectedAuthority}
-          disabled={!selectedSystemControlNumber}>
-          {t('authority.connect_authority')}
-        </Button>
-      )}
-    </StyledAuthorityContainer>
+        {matchingAuthorities.length > 0 && (
+          <Button
+            color="primary"
+            variant="contained"
+            size="large"
+            onClick={setFeideIdForSelectedAuthority}
+            disabled={!selectedSystemControlNumber}>
+            {t('authority.connect_authority')}
+          </Button>
+        )}
+      </StyledAuthorityContainer>
+    </>
   );
 };
