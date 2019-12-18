@@ -19,18 +19,18 @@ interface AuthorityModalProps {
 
 const AuthorityModal: React.FC<AuthorityModalProps> = ({ showModal }) => {
   const { t } = useTranslation();
-  const [checked, setChecked] = useState(false);
-  const [doNotShowAgain, setDoNotShowAgain] = useLocalStorage('doNotShowAgain', { connectAuthorityModal: false });
-  const localStorageRef = useRef(!doNotShowAgain.connectAuthorityModal);
+  const [doNotShowAgain, setDoNotShowAgain] = useState(false);
+  const [showAuthorityModal, setShowAuthorityModal] = useLocalStorage('showAuthorityModal', true);
+  const showAuthorityModalRef = useRef(showAuthorityModal);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setChecked(event.target.checked);
-    setDoNotShowAgain({ connectAuthorityModal: event.target.checked });
+    setDoNotShowAgain(event.target.checked);
+    setShowAuthorityModal(!event.target.checked);
   };
 
   return (
     <>
-      {showModal && localStorageRef.current && (
+      {showModal && showAuthorityModalRef.current && (
         <Modal
           dataTestId="connect-author-modal"
           openModal={showModal}
@@ -39,7 +39,7 @@ const AuthorityModal: React.FC<AuthorityModalProps> = ({ showModal }) => {
           <>
             <ConnectAuthority />
             <StyledCheckbox
-              control={<Checkbox onChange={handleChange} checked={checked} />}
+              control={<Checkbox onChange={handleChange} checked={doNotShowAgain} />}
               label={t('do_not_show_again')}
             />
           </>
