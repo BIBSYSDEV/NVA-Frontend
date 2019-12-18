@@ -72,7 +72,7 @@ const App: React.FC = () => {
   }, [dispatch, user.id]);
 
   useEffect(() => {
-    !!user.id && !user.authority && setShowModal(true);
+    user.id && !user.authority && setShowModal(true);
   }, [user.id, user.authority]);
 
   return (
