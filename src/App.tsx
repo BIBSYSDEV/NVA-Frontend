@@ -1,5 +1,5 @@
 import Amplify, { Hub } from 'aws-amplify';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import styled from 'styled-components';
@@ -16,7 +16,7 @@ import Dashboard from './pages/dashboard/Dashboard';
 import NotFound from './pages/errorpages/NotFound';
 import PublicationForm from './pages/publication/PublicationForm';
 import Search from './pages/search/Search';
-import { ConnectAuthority } from './pages/user/authority/ConnectAuthority';
+import AuthorityModal from './pages/user/authority/AuthorityModal';
 import User from './pages/user/User';
 import Workspace from './pages/workspace/Workspace';
 import { setAuthorityData, setUser } from './redux/actions/userActions';
@@ -44,6 +44,7 @@ const StyledPageBody = styled.div`
 const App: React.FC = () => {
   const dispatch = useDispatch();
   const user = useSelector((store: RootStore) => store.user);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     if (USE_MOCK_DATA) {
@@ -70,6 +71,10 @@ const App: React.FC = () => {
     }
   }, [dispatch, user.id]);
 
+  useEffect(() => {
+    user.id && !user.authority && setShowModal(true);
+  }, [user.id, user.authority]);
+
   return (
     <BrowserRouter>
       <StyledApp>
@@ -77,6 +82,7 @@ const App: React.FC = () => {
         <Header />
         {user.isLoggedIn && <AdminMenu />}
         <Breadcrumbs />
+        <AuthorityModal showModal={showModal} />
         <StyledPageBody>
           <Switch>
             <Route exact path="/" component={Dashboard} />
@@ -86,7 +92,6 @@ const App: React.FC = () => {
             <Route exact path="/search/:searchTerm" component={Search} />
             <Route exact path="/search/:searchTerm/:offset" component={Search} />
             {user.isLoggedIn && <Route exact path="/user" component={User} />}
-            {user.isLoggedIn && <Route exact path="/user/authority" component={ConnectAuthority} />}
             <Route path="*" component={NotFound} />
           </Switch>
         </StyledPageBody>

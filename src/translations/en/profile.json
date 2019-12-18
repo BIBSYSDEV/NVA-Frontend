@@ -3,6 +3,8 @@
   "authority": {
     "connect_authority": "Connect your author ID",
     "connected_info": "You have a connected author ID",
+    "last_publication": "Last publication",
+    "no_publications_found": "No publications found",
     "not_connected_info": "To be identified as an author we need a to the library system",
     "search_summary": "{{results}} results for \"{{searchTerm}}\"",
     "see_profile": "See author profile"

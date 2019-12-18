@@ -1,29 +1,17 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 
-import { Backdrop, Button, Fade, Modal } from '@material-ui/core';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { Button } from '@material-ui/core';
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    modal: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    paper: {
-      backgroundColor: theme.palette.background.paper,
-      padding: theme.spacing(2, 4, 3),
-      maxWidth: '30rem',
-    },
-  })
-);
+import Modal from './Modal';
 
 interface ButtonModalProps {
   ariaDescribedBy?: string;
   ariaLabelledBy?: string;
   buttonText: string;
-  children: (props: any) => ReactNode;
+  children: any;
   dataTestId?: string;
+  headingText?: string;
+  openModal?: boolean;
   startIcon?: ReactNode;
 }
 
@@ -33,10 +21,11 @@ const ButtonModal: React.FC<ButtonModalProps> = ({
   buttonText,
   children,
   dataTestId,
+  headingText,
+  openModal,
   startIcon,
 }) => {
-  const [open, setOpen] = React.useState(false);
-  const classes = useStyles(() => {});
+  const [open, setOpen] = useState(false);
 
   const handleOpen = () => {
     setOpen(true);
@@ -46,25 +35,23 @@ const ButtonModal: React.FC<ButtonModalProps> = ({
     setOpen(false);
   };
 
+  // allows children to close Modal
+  useEffect(() => {
+    !openModal && setOpen(false);
+  }, [openModal]);
+
   return (
     <>
       <Button onClick={handleOpen} variant="outlined" startIcon={startIcon} data-testid={dataTestId}>
         {buttonText}
       </Button>
       <Modal
-        aria-labelledby={ariaDescribedBy}
-        aria-describedby={ariaLabelledBy}
-        open={open}
+        ariaDescribedBy={ariaDescribedBy}
+        ariaLabelledBy={ariaLabelledBy}
+        headingText={headingText}
         onClose={handleClose}
-        className={classes.modal}
-        closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500,
-        }}>
-        <Fade in={open}>
-          <div className={classes.paper}>{children({ setOpen })}</div>
-        </Fade>
+        openModal={open}>
+        {children}
       </Modal>
     </>
   );
