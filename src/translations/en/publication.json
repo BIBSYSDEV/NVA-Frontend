@@ -12,7 +12,7 @@
     "description": "Description",
     "npi_disciplines": "NPI disciplines",
     "project": "Project",
-    "project_association": "Project assosiation",
+    "project_association": "Project association",
     "tags": "Tags"
   },
   "feedback": {
@@ -51,12 +51,18 @@
     "level": "Level",
     "publisher": "Publisher",
     "report": "Report",
+    "short_communication": "Short communication",
+    "editorial": "Editorial",
+    "letter": "Letter",
     "review": "Review",
     "journal": "Journal",
     "volume": "Volume",
     "issue": "Issue",
+    "pages_from": "Pages from",
+    "pages_to": "to",
     "peer_review": "Is the publication peer reviewed?",
     "is_peer_reviewed": "The publication is peer reviewed",
-    "is_not_peer_reviewed": "The publication is not peer reviewed"
+    "is_not_peer_reviewed": "The publication is not peer reviewed",
+    "remove": "Remove"
   }
 }

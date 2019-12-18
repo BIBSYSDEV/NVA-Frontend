@@ -1,27 +1,24 @@
 import React from 'react';
-import { Field } from 'formik';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { PublicationChannel } from './../../../types/references.types';
-import { TextField } from '@material-ui/core';
-
-interface JournalProps {
-  journal: PublicationChannel;
-}
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import CancelIcon from '@material-ui/icons/Cancel';
+import DeleteIcon from '@material-ui/icons/Delete';
+import { Button } from '@material-ui/core';
 
 const StyledJournal = styled.div`
+  margin-top: 0.5rem;
+  border-color: black;
+  border-width: 1pt;
+  background-color: ${({ theme }) => theme.palette.background.default};
   display: grid;
   grid-column-gap: 0.5rem;
   align-items: center;
   grid-template-areas:
-    'journalTitle journalTitle journalTitle'
-    'issnLabel levelLabel publisherLabel'
-    'issn level publisher';
-  grid-template-columns: 33% 33% 33%;
-`;
-
-const StyledJournalTitle = styled.div`
-  grid-area: 'journalTitle';
+    'icon issnLabel levelLabel publisherLabel button'
+    'icon issn level publisher button';
+  grid-template-columns: 5% 40% 10% 30% 10%;
 `;
 
 const StyledJournalLabel = styled.div`
@@ -30,52 +27,73 @@ const StyledJournalLabel = styled.div`
 `;
 
 const StyledIssnLabel = styled(StyledJournalLabel)`
-  grid-area: 'issnLabel';
+  grid-area: issnLabel;
 `;
 
 const StyledLevelLabel = styled(StyledJournalLabel)`
-  grid-area: 'levelLabel';
+  grid-area: levelLabel;
 `;
 
 const StyledPublisherLabel = styled(StyledJournalLabel)`
-  grid-area: 'publisherLabel';
+  grid-area: publisherLabel;
 `;
 
 const StyledIssnText = styled.div`
-  grid-area: 'issn';
+  grid-area: issn;
 `;
 
 const StyledLevelText = styled.div`
-  grid-area: 'level';
+  grid-area: level;
 `;
 
 const StyledPublisherText = styled.div`
-  grid-area: 'publisher';
+  grid-area: publisher;
 `;
 
-const Journal: React.FC<JournalProps> = ({ journal }) => {
+const StyledCheckCircleIcon = styled(CheckCircleIcon)`
+  grid-area: icon;
+  color: green;
+  margin: 0.5rem;
+  font-size: 2rem;
+`;
+
+const StyledCancelIcon = styled(CancelIcon)`
+  grid-area: icon;
+  color: red;
+  margin: 0.5rem;
+  font-size: 2rem;
+`;
+
+const StyledButton = styled(Button)`
+  grid-area: button;
+  background-color: red;
+  color: white;
+`;
+
+interface JournalProps {
+  journal: PublicationChannel;
+  setFieldValue: (name: string, value: any) => void;
+}
+
+const Journal: React.FC<JournalProps> = ({ journal, setFieldValue }) => {
   const { t } = useTranslation('publication');
 
   return (
-    <StyledJournal>
-      <StyledJournalTitle>
-        <Field name="reference.journalPublication.journal">
-          {({ field }: any) => {
-            return (
-              <TextField variant="outlined" label={t('references.journal')}>
-                {field.value}
-              </TextField>
-            );
-          }}
-        </Field>
-      </StyledJournalTitle>
-      <StyledIssnLabel>{t('references.issn')}</StyledIssnLabel>
-      <StyledLevelLabel>{t('references.level')}</StyledLevelLabel>
-      <StyledPublisherLabel>{t('references.publisher')}</StyledPublisherLabel>
-      <StyledIssnText>{`issn: ${journal.issn}`}</StyledIssnText>
-      <StyledLevelText>{`level: ${journal.level}`}</StyledLevelText>
-      <StyledPublisherText>{`publisher: ${journal.publisher}`}</StyledPublisherText>
-    </StyledJournal>
+    (journal && (
+      <StyledJournal>
+        <StyledIssnLabel>{t('references.journal')}</StyledIssnLabel>
+        <StyledLevelLabel>{t('references.level')}</StyledLevelLabel>
+        <StyledPublisherLabel>{t('references.publisher')}</StyledPublisherLabel>
+        {journal?.level ? <StyledCheckCircleIcon /> : <StyledCancelIcon />}
+        <StyledIssnText>{journal?.title}</StyledIssnText>
+        <StyledLevelText>{journal?.level}</StyledLevelText>
+        <StyledPublisherText>{journal?.publisher}</StyledPublisherText>
+        <StyledButton onClick={() => setFieldValue('reference.journalPublication.selectedJournal', null)}>
+          <DeleteIcon />
+          {t('references.remove')}
+        </StyledButton>
+      </StyledJournal>
+    )) || <div />
   );
 };
 

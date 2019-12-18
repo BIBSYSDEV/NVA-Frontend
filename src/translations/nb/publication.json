@@ -51,12 +51,18 @@
     "level": "Nivå",
     "publisher": "Utgiver",
     "report": "Rapport",
+    "short_communication": "Short communication",
+    "editorial": "Leder",
+    "letter": "Brev til redaktør",
     "review": "Anmeldelse",
     "journal": "Tidsskrift",
     "volume": "Volum",
     "issue": "Hefte",
+    "pages_from": "Sidetall fra",
+    "pages_to": "til",
     "peer_review": "Er publiaksjonen fagfellevurdert?",
     "is_peer_reviewed": "Ja, den er fagfellevurdert",
-    "is_not_peer_reviewed": "Nei, den er ikke fagfellevurdert"
+    "is_not_peer_reviewed": "Nei, den er ikke fagfellevurdert",
+    "remove": "Fjern"
   }
 }
