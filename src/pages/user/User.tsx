@@ -73,7 +73,7 @@ const User: React.FC = () => {
                 dataTestId="connect-author-modal"
                 ariaLabelledBy="connect-author-modal"
                 headingText={t('authority.connect_authority')}>
-                {() => <ConnectAuthority />}
+                <ConnectAuthority />
               </ButtonModal>
             </>
           )}

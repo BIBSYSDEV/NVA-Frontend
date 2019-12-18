@@ -1,41 +1,14 @@
-import React, { ReactNode } from 'react';
-import styled from 'styled-components';
+import React, { ReactNode, useEffect, useState } from 'react';
 
-import { Backdrop, Button, Dialog, Fade } from '@material-ui/core';
-import CloseIcon from '@material-ui/icons/Close';
+import { Button } from '@material-ui/core';
 
-const StyledDialog = styled(Dialog)`
-  display: 'flex';
-  align-items: 'center';
-  justify-content: 'center';
-`;
-
-const StyledPaper = styled.div`
-  background-color: ${({ theme }) => theme.palette.background};
-  margin: 1rem;
-  width: '50rem';
-`;
-
-const StyledHeaderContainer = styled.div`
-  display: flex;
-  margin: 1rem 1rem 0 1rem;
-  justify-content: space-between;
-`;
-
-const StyledHeading = styled.div`
-  font-size: 1.2rem;
-  font-weight: bold;
-`;
-
-const StyledCloseIcon = styled(CloseIcon)`
-  cursor: pointer;
-`;
+import Modal from './Modal';
 
 interface ButtonModalProps {
   ariaDescribedBy?: string;
   ariaLabelledBy?: string;
-  buttonText?: string;
-  children: (props: any) => ReactNode;
+  buttonText: string;
+  children: any;
   dataTestId?: string;
   headingText?: string;
   openModal?: boolean;
@@ -52,7 +25,7 @@ const ButtonModal: React.FC<ButtonModalProps> = ({
   openModal,
   startIcon,
 }) => {
-  const [open, setOpen] = React.useState(openModal ?? false);
+  const [open, setOpen] = useState(false);
 
   const handleOpen = () => {
     setOpen(true);
@@ -62,32 +35,24 @@ const ButtonModal: React.FC<ButtonModalProps> = ({
     setOpen(false);
   };
 
+  // allows children to close Modal
+  useEffect(() => {
+    !openModal && setOpen(false);
+  }, [openModal]);
+
   return (
     <>
-      {buttonText && (
-        <Button onClick={handleOpen} variant="outlined" startIcon={startIcon} data-testid={dataTestId}>
-          {buttonText}
-        </Button>
-      )}
-      <StyledDialog
-        aria-labelledby={ariaDescribedBy}
-        aria-describedby={ariaLabelledBy}
-        open={open}
+      <Button onClick={handleOpen} variant="outlined" startIcon={startIcon} data-testid={dataTestId}>
+        {buttonText}
+      </Button>
+      <Modal
+        ariaDescribedBy={ariaDescribedBy}
+        ariaLabelledBy={ariaLabelledBy}
+        headingText={headingText}
         onClose={handleClose}
-        closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500,
-        }}>
-        <StyledHeaderContainer>
-          <StyledHeading>{headingText}</StyledHeading>
-          <StyledCloseIcon onClick={handleClose} />
-        </StyledHeaderContainer>
-
-        <Fade in={open}>
-          <StyledPaper>{children({ setOpen })}</StyledPaper>
-        </Fade>
-      </StyledDialog>
+        openModal={open}>
+        {children}
+      </Modal>
     </>
   );
 };
