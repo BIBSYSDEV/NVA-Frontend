@@ -13,7 +13,7 @@ const UserOrcid: React.FC = () => {
   const { t } = useTranslation();
   const user = useSelector((state: RootStore) => state.user);
   const OrcidLink = `${ORCID_BASE_URL}/${user.orcid}`;
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
 
   return (
     <UserCard headerLabel={t('common:orcid')}>

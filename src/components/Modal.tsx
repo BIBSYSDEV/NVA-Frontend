@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import { Backdrop, Dialog, Fade } from '@material-ui/core';
@@ -50,7 +50,7 @@ const Modal: React.FC<ModalProps> = ({
   onClose,
   openModal,
 }) => {
-  const [open, setOpen] = React.useState(openModal ?? false);
+  const [open, setOpen] = useState(openModal ?? false);
 
   // allows ButtonModal to close Modal
   const handleClose = () => {
@@ -60,8 +60,7 @@ const Modal: React.FC<ModalProps> = ({
 
   // allows children of Modal and ButtonModal to open and close Modal
   useEffect(() => {
-    openModal && setOpen(true);
-    !openModal && setOpen(false);
+    setOpen(openModal);
   }, [openModal]);
 
   return (

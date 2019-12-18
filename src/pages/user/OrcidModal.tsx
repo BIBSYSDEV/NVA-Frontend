@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
 import styled from 'styled-components';
@@ -29,10 +29,6 @@ interface OrcidModalProps {
 const OrcidModal: React.FC<OrcidModalProps> = ({ setOpen }) => {
   const { t } = useTranslation('profile');
   const history = useHistory();
-
-  useEffect(() => {
-    setOpen(true);
-  }, [setOpen]);
 
   const openORCID = () => {
     if (USE_MOCK_DATA) {
