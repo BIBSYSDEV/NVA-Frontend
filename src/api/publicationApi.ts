@@ -29,12 +29,12 @@ export const createNewPublicationFromDoi = (url: string, owner: string) => {
         },
       });
       if (response.status === StatusCode.OK) {
-        dispatch(addNotification({ message: i18n.t('feedback:success.create_publication'), variant: 'success' }));
+        dispatch(addNotification(i18n.t('feedback:success.create_publication')));
       } else {
-        dispatch(addNotification({ message: i18n.t('feedback:error.create_publication'), variant: 'error' }));
+        dispatch(addNotification(i18n.t('feedback:error.create_publication'), 'error'));
       }
     } catch {
-      dispatch(addNotification({ message: i18n.t('feedback:error.create_publication'), variant: 'error' }));
+      dispatch(addNotification(i18n.t('feedback:error.create_publication'), 'error'));
     }
   };
 };
@@ -61,12 +61,12 @@ export const createNewPublication = async (
       },
     });
     if (response.status === StatusCode.OK) {
-      dispatch(addNotification({ message: i18n.t('feedback:success.create_publication'), variant: 'success' }));
+      dispatch(addNotification(i18n.t('feedback:success.create_publication')));
     } else {
-      dispatch(addNotification({ message: i18n.t('feedback:error.create_publication'), variant: 'error' }));
+      dispatch(addNotification(i18n.t('feedback:error.create_publication'), 'error'));
     }
   } catch {
-    dispatch(addNotification({ message: i18n.t('feedback:error.create_publication'), variant: 'error' }));
+    dispatch(addNotification(i18n.t('feedback:error.create_publication'), 'error'));
   }
 };
 
@@ -83,12 +83,12 @@ export const updatePublication = async (publication: Publication, dispatch: Disp
       },
     });
     if (response.status === StatusCode.OK) {
-      dispatch(addNotification({ message: i18n.t('feedback:success.update_publication'), variant: 'success' }));
+      dispatch(addNotification(i18n.t('feedback:success.update_publication')));
     } else {
-      dispatch(addNotification({ message: i18n.t('feedback:error.update_publication'), variant: 'error' }));
+      dispatch(addNotification(i18n.t('feedback:error.update_publication'), 'error'));
     }
   } catch {
-    dispatch(addNotification({ message: i18n.t('feedback:error.update_publication'), variant: 'error' }));
+    dispatch(addNotification(i18n.t('feedback:error.update_publication'), 'error'));
   }
 };
 
@@ -104,20 +104,10 @@ export const getPublication = async (id: string, dispatch: Dispatch) => {
     if (response.status === StatusCode.OK) {
       return response;
     } else {
-      dispatch(
-        addNotification({
-          message: i18n.t('feedback:error.get_publication'),
-          variant: 'error',
-        })
-      );
+      dispatch(addNotification(i18n.t('feedback:error.get_publication'), 'error'));
     }
   } catch {
-    dispatch(
-      addNotification({
-        message: i18n.t('feedback:error.get_publication'),
-        variant: 'error',
-      })
-    );
+    dispatch(addNotification(i18n.t('feedback:error.get_publication'), 'error'));
   }
 };
 
