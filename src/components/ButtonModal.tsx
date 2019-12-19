@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useState } from 'react';
+import React, { ReactNode, useState } from 'react';
 
 import { Button } from '@material-ui/core';
 
@@ -11,7 +11,6 @@ interface ButtonModalProps {
   children: any;
   dataTestId?: string;
   headingText?: string;
-  openModal?: boolean;
   startIcon?: ReactNode;
 }
 
@@ -22,7 +21,6 @@ const ButtonModal: React.FC<ButtonModalProps> = ({
   children,
   dataTestId,
   headingText,
-  openModal,
   startIcon,
 }) => {
   const [open, setOpen] = useState(false);
@@ -34,11 +32,6 @@ const ButtonModal: React.FC<ButtonModalProps> = ({
   const handleClose = () => {
     setOpen(false);
   };
-
-  // allows children to close Modal
-  useEffect(() => {
-    !openModal && setOpen(false);
-  }, [openModal]);
 
   return (
     <>

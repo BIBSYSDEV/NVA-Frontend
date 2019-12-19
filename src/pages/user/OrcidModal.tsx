@@ -17,16 +17,7 @@ const StyledSubHeading = styled.div`
   font-weight: bold;
 `;
 
-const StyledFooter = styled.div`
-  padding-top: 5rem;
-  text-align: center;
-`;
-
-interface OrcidModalProps {
-  setOpen: (value: boolean) => void;
-}
-
-const OrcidModal: React.FC<OrcidModalProps> = ({ setOpen }) => {
+const OrcidModal: React.FC = () => {
   const { t } = useTranslation('profile');
   const history = useHistory();
 
@@ -50,7 +41,6 @@ const OrcidModal: React.FC<OrcidModalProps> = ({ setOpen }) => {
           data-testid="connect-to-orcid"
           onClick={() => {
             openORCID();
-            setOpen(false);
           }}
           variant="outlined"
           size="large"
@@ -65,14 +55,6 @@ const OrcidModal: React.FC<OrcidModalProps> = ({ setOpen }) => {
       <p>
         {t('orcid.learn_more')} <a href="https://orcid.org">orcid.org</a>
       </p>
-      <StyledFooter>
-        <Button
-          onClick={() => {
-            setOpen(false);
-          }}>
-          {t('orcid.skip_this_step')}
-        </Button>
-      </StyledFooter>
     </>
   );
 };

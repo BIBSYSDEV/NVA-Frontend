@@ -11,9 +11,10 @@ import useLocalStorage from '../../../utils/hooks/useLocalStorage';
 import OrcidModal from '../OrcidModal';
 import { ConnectAuthority } from './ConnectAuthority';
 
-const StyledCheckbox = styled(FormControlLabel)`
+const StyledFooter = styled.div`
+  display: flex;
+  justify-content: space-between;
   margin-top: 2rem;
-  align-self: center;
 `;
 
 interface AuthorityModalProps {
@@ -22,28 +23,37 @@ interface AuthorityModalProps {
 
 const AuthorityModal: React.FC<AuthorityModalProps> = ({ showModal }) => {
   const { t } = useTranslation('common');
-  const [doNotShowAgain, setDoNotShowAgain] = useState(false);
-  const [openOrcid, setOpenOrcid] = useState(false);
   const user = useSelector((store: RootStore) => store.user);
 
+  const [doNotShowAuthorityModalAgain, setDoNotShowAuthorityModalAgain] = useState(false);
   const [showAuthorityModal, setShowAuthorityModal] = useLocalStorage('showAuthorityModal', true);
   const showAuthorityModalRef = useRef(showAuthorityModal);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setDoNotShowAgain(event.target.checked);
+  const [doNotShowOrcidModalAgain, setDoNotShowOrcidModalAgain] = useState(false);
+  const [openOrcidModal, setOpenOrcidModal] = useState(false);
+  const [showOrcidModal, setShowOrcidModal] = useLocalStorage('showOrcidModal', true);
+  const showOrcidModalRef = useRef(showOrcidModal);
+
+  const handleShowAuthorityModal = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setDoNotShowAuthorityModalAgain(event.target.checked);
     setShowAuthorityModal(!event.target.checked);
+  };
+
+  const handleShowOrcidModal = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setDoNotShowOrcidModalAgain(event.target.checked);
+    setShowOrcidModal(!event.target.checked);
   };
 
   const handleNextClick = (_: any) => {
     if (!user.orcid) {
-      showAuthorityModalRef.current = false;
-      setOpenOrcid(true);
+      setOpenOrcidModal(true);
     }
+    showAuthorityModalRef.current = false;
   };
 
   return (
     <>
-      {showModal && showAuthorityModalRef.current && (
+      {showAuthorityModalRef.current && (
         <Modal
           dataTestId="connect-author-modal"
           openModal={showModal}
@@ -51,21 +61,31 @@ const AuthorityModal: React.FC<AuthorityModalProps> = ({ showModal }) => {
           headingText={t('profile:authority.connect_authority')}>
           <>
             <ConnectAuthority />
-            <Button onClick={handleNextClick}>Neste</Button>
-            <StyledCheckbox
-              control={<Checkbox onChange={handleChange} checked={doNotShowAgain} />}
-              label={t('do_not_show_again')}
-            />
+            <StyledFooter>
+              <FormControlLabel
+                control={<Checkbox onChange={handleShowAuthorityModal} checked={doNotShowAuthorityModalAgain} />}
+                label={t('do_not_show_again')}
+              />
+              <Button color="primary" variant="contained" onClick={handleNextClick}>
+                {t('next')}
+              </Button>
+            </StyledFooter>
           </>
         </Modal>
       )}
-      {!showAuthorityModalRef.current && openOrcid && (
+      {showOrcidModalRef.current && (
         <Modal
           dataTestId="open-orcid-modal"
-          openModal={showModal}
+          openModal={openOrcidModal}
           ariaLabelledBy="orcid-modal"
           headingText={t('profile:orcid.create_or_connect')}>
-          <OrcidModal setOpen={setOpenOrcid} />
+          <OrcidModal />
+          <StyledFooter>
+            <FormControlLabel
+              control={<Checkbox onChange={handleShowOrcidModal} checked={doNotShowOrcidModalAgain} />}
+              label={t('common:do_not_show_again')}
+            />
+          </StyledFooter>
         </Modal>
       )}
     </>
