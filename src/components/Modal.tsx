@@ -38,7 +38,7 @@ interface ModalProps {
   dataTestId?: string;
   headingText?: string;
   onClose?: () => void;
-  openModal: boolean;
+  openModal?: boolean;
 }
 
 const Modal: React.FC<ModalProps> = ({
@@ -50,7 +50,7 @@ const Modal: React.FC<ModalProps> = ({
   onClose,
   openModal,
 }) => {
-  const [open, setOpen] = useState(openModal ?? false);
+  const [open, setOpen] = useState(openModal ?? true);
 
   // allows ButtonModal to close Modal
   const handleClose = () => {
@@ -60,7 +60,7 @@ const Modal: React.FC<ModalProps> = ({
 
   // allows children of Modal and ButtonModal to open and close Modal
   useEffect(() => {
-    setOpen(openModal);
+    openModal && setOpen(openModal);
   }, [openModal]);
 
   return (
