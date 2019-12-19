@@ -2,9 +2,7 @@ import { Publication } from '../../types/publication.types';
 
 export const GET_PUBLICATIONS_SUCCESS = 'get publications success';
 
-// TODO: Add publicationReducer when enpoint is ready
-
-const getPublicationsSuccess = (publications: Publication[]): GetPublicationsSuccessAction => ({
+export const getPublicationsSuccess = (publications: Publication[]): GetPublicationsSuccessAction => ({
   type: GET_PUBLICATIONS_SUCCESS,
   publications,
 });
@@ -14,4 +12,4 @@ interface GetPublicationsSuccessAction {
   publications: Publication[];
 }
 
-type PublicationActions = GetPublicationsSuccessAction;
+export type PublicationActions = GetPublicationsSuccessAction;
