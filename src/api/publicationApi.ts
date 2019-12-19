@@ -2,41 +2,29 @@ import Axios from 'axios';
 import { Dispatch } from 'redux';
 
 import i18n from '../translations/i18n';
-import { Publication, PublicationFileMap, PublicationMetadata } from '../types/publication.types';
+import { Publication, PublicationFileMap, PublicationMetadata, DoiPublication } from '../types/publication.types';
 import { ApiBaseUrl, StatusCode, API_URL, API_TOKEN } from '../utils/constants';
 import { addNotification } from '../redux/actions/notificationActions';
 
-interface DoiPublication {
-  url: string;
-  owner: string;
-}
-
-export const createNewPublicationFromDoi = (url: string, owner: string) => {
+export const createNewPublicationFromDoi = async (url: string, owner: string, dispatch: Dispatch) => {
   const data: DoiPublication = {
     url,
     owner,
   };
-  return async (dispatch: Dispatch) => {
-    try {
-      const response = await Axios({
-        method: 'POST',
-        url: `/${ApiBaseUrl.PUBLICATIONS}/doi`,
-        data: data,
-        headers: {
-          Authorization: `Bearer ${API_TOKEN}`,
-          Accept: 'application/json',
-          'Content-Type': 'aplication/json',
-        },
-      });
-      if (response.status === StatusCode.OK) {
-        dispatch(addNotification(i18n.t('feedback:success.create_publication')));
-      } else {
-        dispatch(addNotification(i18n.t('feedback:error.create_publication'), 'error'));
-      }
-    } catch {
+  try {
+    const response = await Axios.post(`/${ApiBaseUrl.PUBLICATIONS}/doi`, data, {
+      headers: {
+        Authorization: `Bearer ${API_TOKEN}`,
+      },
+    });
+    if (response.status === StatusCode.OK) {
+      dispatch(addNotification(i18n.t('feedback:success.create_publication')));
+    } else {
       dispatch(addNotification(i18n.t('feedback:error.create_publication'), 'error'));
     }
-  };
+  } catch {
+    dispatch(addNotification(i18n.t('feedback:error.create_publication'), 'error'));
+  }
 };
 
 export const createNewPublication = async (
@@ -56,8 +44,6 @@ export const createNewPublication = async (
     const response = await Axios.post(url, publication, {
       headers: {
         Authorization: `Bearer ${API_TOKEN}`,
-        Accept: 'application/json',
-        'Content-Type': 'aplication/json',
       },
     });
     if (response.status === StatusCode.OK) {
@@ -78,8 +64,6 @@ export const updatePublication = async (publication: Publication, dispatch: Disp
     const response = await Axios.put(url, publication, {
       headers: {
         Authorization: `Bearer ${API_TOKEN}`,
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
       },
     });
     if (response.status === StatusCode.OK) {
@@ -98,7 +82,6 @@ export const getPublication = async (id: string, dispatch: Dispatch) => {
     const response = await Axios.get(url, {
       headers: {
         Authorization: `Bearer ${API_TOKEN}`,
-        Accept: 'application/json',
       },
     });
     if (response.status === StatusCode.OK) {
