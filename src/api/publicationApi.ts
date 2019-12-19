@@ -1,22 +1,16 @@
 import Axios from 'axios';
 import { Dispatch } from 'redux';
 
-import {
-  createPublicationFailure,
-  createPublicationSuccess,
-  getPublicationFailure,
-  getPublicationSuccess,
-  updatePublicationFailure,
-  updatePublicationSuccess,
-} from '../redux/actions/publicationActions';
 import i18n from '../translations/i18n';
 import { Publication, PublicationFileMap, PublicationMetadata } from '../types/publication.types';
-import { ApiBaseUrl, StatusCode } from '../utils/constants';
+import { ApiBaseUrl, StatusCode, API_URL, API_TOKEN } from '../utils/constants';
+import { addNotification } from '../redux/actions/notificationActions';
 
 interface DoiPublication {
   url: string;
   owner: string;
 }
+
 export const createNewPublicationFromDoi = (url: string, owner: string) => {
   const data: DoiPublication = {
     url,
@@ -29,88 +23,102 @@ export const createNewPublicationFromDoi = (url: string, owner: string) => {
         url: `/${ApiBaseUrl.PUBLICATIONS}/doi`,
         data: data,
         headers: {
+          Authorization: `Bearer ${API_TOKEN}`,
           Accept: 'application/json',
           'Content-Type': 'aplication/json',
         },
       });
       if (response.status === StatusCode.OK) {
-        dispatch(createPublicationSuccess());
+        dispatch(addNotification({ message: i18n.t('feedback:success.create_publication'), variant: 'success' }));
       } else {
-        dispatch(createPublicationFailure(i18n.t('feedback:error.create_publication')));
+        dispatch(addNotification({ message: i18n.t('feedback:error.create_publication'), variant: 'error' }));
       }
     } catch {
-      dispatch(createPublicationFailure(i18n.t('feedback:error.create_publication')));
+      dispatch(addNotification({ message: i18n.t('feedback:error.create_publication'), variant: 'error' }));
     }
   };
 };
 
-export const createNewPublication = (files: PublicationFileMap[], metadata: PublicationMetadata, owner: string) => {
+export const createNewPublication = async (
+  files: PublicationFileMap[],
+  metadata: PublicationMetadata,
+  owner: string,
+  dispatch: Dispatch
+) => {
   const publication: Partial<Publication> = {
     files,
     metadata,
     owner,
   };
+  const url = `${API_URL}/insert-resource`;
 
-  return async (dispatch: Dispatch) => {
-    try {
-      const response = await Axios({
-        method: 'POST',
-        url: `/${ApiBaseUrl.PUBLICATIONS}`,
-        data: publication,
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'aplication/json',
-        },
-      });
-      if (response.status === StatusCode.OK) {
-        dispatch(createPublicationSuccess());
-      } else {
-        dispatch(createPublicationFailure(i18n.t('feedback:error.create_publication')));
-      }
-    } catch {
-      dispatch(createPublicationFailure(i18n.t('feedback:error.create_publication')));
+  try {
+    const response = await Axios.post(url, publication, {
+      headers: {
+        Authorization: `Bearer ${API_TOKEN}`,
+        Accept: 'application/json',
+        'Content-Type': 'aplication/json',
+      },
+    });
+    if (response.status === StatusCode.OK) {
+      dispatch(addNotification({ message: i18n.t('feedback:success.create_publication'), variant: 'success' }));
+    } else {
+      dispatch(addNotification({ message: i18n.t('feedback:error.create_publication'), variant: 'error' }));
     }
-  };
+  } catch {
+    dispatch(addNotification({ message: i18n.t('feedback:error.create_publication'), variant: 'error' }));
+  }
 };
 
-export const updatePublication = (publication: Publication) => {
+export const updatePublication = async (publication: Publication, dispatch: Dispatch) => {
   const { publicationIdentifier } = publication;
-  return async (dispatch: Dispatch) => {
-    try {
-      const response = await Axios({
-        method: 'PUT',
-        url: `/${ApiBaseUrl.PUBLICATIONS}/${publicationIdentifier}`,
-        data: { ...publication, modifiedDate: new Date().toISOString() },
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-      });
-      if (response.status === StatusCode.OK) {
-        dispatch(updatePublicationSuccess());
-      } else {
-        dispatch(updatePublicationFailure(i18n.t('feedback:error.update_publication')));
-      }
-    } catch {
-      dispatch(updatePublicationFailure(i18n.t('feedback:error.update_publication')));
+  const url = `${API_URL}/update-resource/${publicationIdentifier}`;
+
+  try {
+    const response = await Axios.put(url, publication, {
+      headers: {
+        Authorization: `Bearer ${API_TOKEN}`,
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    });
+    if (response.status === StatusCode.OK) {
+      dispatch(addNotification({ message: i18n.t('feedback:success.update_publication'), variant: 'success' }));
+    } else {
+      dispatch(addNotification({ message: i18n.t('feedback:error.update_publication'), variant: 'error' }));
     }
-  };
+  } catch {
+    dispatch(addNotification({ message: i18n.t('feedback:error.update_publication'), variant: 'error' }));
+  }
 };
 
-export const getPublication = (id: string) => {
-  return async (dispatch: Dispatch) => {
-    try {
-      const response = await Axios.get(`/${ApiBaseUrl.PUBLICATIONS}${id}`);
-      if (response.status === StatusCode.OK) {
-        dispatch(getPublicationSuccess());
-        return response;
-      } else {
-        dispatch(getPublicationFailure(i18n.t('feedback:error.get_publication')));
-      }
-    } catch {
-      dispatch(getPublicationFailure(i18n.t('feedback:error.get_publication')));
+export const getPublication = async (id: string, dispatch: Dispatch) => {
+  const url = `${API_URL}/fetch-resource/${id}`;
+  try {
+    const response = await Axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${API_TOKEN}`,
+        Accept: 'application/json',
+      },
+    });
+    if (response.status === StatusCode.OK) {
+      return response;
+    } else {
+      dispatch(
+        addNotification({
+          message: i18n.t('feedback:error.get_publication'),
+          variant: 'error',
+        })
+      );
     }
-  };
+  } catch {
+    dispatch(
+      addNotification({
+        message: i18n.t('feedback:error.get_publication'),
+        variant: 'error',
+      })
+    );
+  }
 };
 
 export const lookupDoiTitle = async (url: string) => {

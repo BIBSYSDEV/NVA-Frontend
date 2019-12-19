@@ -10,38 +10,18 @@ import {
   REMOVE_NOTIFICATION,
 } from '../actions/notificationActions';
 import { ORCID_REQUEST_FAILURE, OrcidActions } from '../actions/orcidActions';
-import {
-  CREATE_PUBLICATION_FAILURE,
-  CREATE_PUBLICATION_SUCCESS,
-  GET_PUBLICATION_FAILURE,
-  PublicationActions,
-  UPDATE_PUBLICATION_FAILURE,
-  UPDATE_PUBLICATION_SUCCESS,
-} from '../actions/publicationActions';
 import { SEARCH_FAILURE, SearchActions } from '../actions/searchActions';
 import { SET_USER_FAILURE, SET_USER_SUCCESS, UserActions } from '../actions/userActions';
 
 export const notificationReducer = (
   state: Notification[] = [],
-  action:
-    | NotificationActions
-    | AuthActions
-    | OrcidActions
-    | UserActions
-    | NotificationActions
-    | SearchActions
-    | PublicationActions
+  action: NotificationActions | AuthActions | OrcidActions | UserActions | NotificationActions | SearchActions
 ) => {
   switch (action.type) {
     case ORCID_REQUEST_FAILURE:
     case REFRESH_TOKEN_FAILURE:
     case SET_USER_FAILURE:
     case SEARCH_FAILURE:
-    case CREATE_PUBLICATION_FAILURE:
-    case CREATE_PUBLICATION_SUCCESS:
-    case UPDATE_PUBLICATION_FAILURE:
-    case UPDATE_PUBLICATION_SUCCESS:
-    case GET_PUBLICATION_FAILURE:
     case LOGIN_FAILURE:
       return [...state, { key: uuid.v4(), ...action }];
     case ADD_NOTIFICATION:

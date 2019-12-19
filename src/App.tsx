@@ -24,6 +24,7 @@ import { RootStore } from './redux/reducers/rootReducer';
 import { awsConfig } from './utils/aws-config';
 import { USE_MOCK_DATA } from './utils/constants';
 import { hubListener } from './utils/hub-listener';
+import { getPublication } from './api/publicationApi';
 
 const StyledApp = styled.div`
   height: 100vh;
@@ -69,6 +70,13 @@ const App: React.FC = () => {
       getAuthority();
     }
   }, [dispatch, user.id]);
+
+  useEffect(() => {
+    const async = async () => {
+      await getPublication('5', dispatch);
+    };
+    async();
+  }, [dispatch]);
 
   return (
     <BrowserRouter>
