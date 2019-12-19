@@ -4,7 +4,7 @@ import { Dispatch } from 'redux';
 import { addNotification } from '../../redux/actions/notificationActions';
 import i18n from '../../translations/i18n';
 import { AlmaPublication } from '../../types/publication.types';
-import { StatusCode } from '../../utils/constants';
+import { ALMA_API_URL, StatusCode } from '../../utils/constants';
 
 // ALMA API docs: https://developers.exlibrisgroup.com/alma/apis/
 
@@ -15,7 +15,7 @@ enum AlmaCodes {
 }
 
 const almaAuthorityDataUrl = (systemControlNumber: string) =>
-  `/view/sru/47BIBSYS_NETWORK?version=1.2&operation=searchRetrieve&recordSchema=dc&maximumRecords=10&startRecord=1&query=authority_id=${systemControlNumber}`;
+  `${ALMA_API_URL}?version=1.2&operation=searchRetrieve&recordSchema=dc&maximumRecords=10&startRecord=1&query=authority_id=${systemControlNumber}`;
 
 export const getPublications = async (systemControlNumber: string, dispatch: Dispatch) => {
   const url = almaAuthorityDataUrl(systemControlNumber);

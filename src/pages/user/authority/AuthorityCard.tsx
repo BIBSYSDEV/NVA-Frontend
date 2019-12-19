@@ -1,18 +1,28 @@
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
 import { Radio } from '@material-ui/core';
 
 import { getPublications } from '../../../api/external/almaApi';
-import Box from '../../../components/Box';
 import { Authority, Marc21Codes, Marc21Subcodes } from '../../../types/authority.types';
 import { AlmaPublication } from '../../../types/publication.types';
 
 const StyledBoxContent = styled.div`
   display: grid;
-  grid-template-columns: 1fr 3fr;
-  column-gap: 2rem;
+  grid-template-columns: 2fr 2fr;
+  background-color: ${({ theme }) => theme.palette.box.main};
+  padding: 1rem;
+`;
+
+const StyledPublicationContent = styled.div`
+  align-self: center;
+`;
+
+const StyledPublicationInfo = styled.div`
+  display: block;
+  font-weight: bold;
 `;
 
 interface AuthorityCardProps {
@@ -23,6 +33,7 @@ interface AuthorityCardProps {
 const AuthorityCard: React.FC<AuthorityCardProps> = ({ authority, isSelected }) => {
   const [publications, setPublications] = useState<AlmaPublication[]>([]);
   const dispatch = useDispatch();
+  const { t } = useTranslation('profile');
 
   useEffect(() => {
     const fetchAuthorities = async () => {
@@ -40,15 +51,22 @@ const AuthorityCard: React.FC<AuthorityCardProps> = ({ authority, isSelected }) 
   const authorityName = authorityNameField?.subfields.find(subfield => subfield.subcode === Marc21Subcodes.NAME);
 
   return (
-    <Box>
-      <StyledBoxContent>
-        <div>
-          <Radio color="primary" checked={isSelected} />
-          {authorityName?.value}
-        </div>
-        <div>{publications?.[0]?.title}</div>
-      </StyledBoxContent>
-    </Box>
+    <StyledBoxContent>
+      <div>
+        <Radio color="primary" checked={isSelected} />
+        {authorityName?.value}
+      </div>
+      <StyledPublicationContent>
+        {publications?.[0] ? (
+          <div>
+            <StyledPublicationInfo>{t('authority.last_publication')}</StyledPublicationInfo>
+            {publications?.[0]?.title}
+          </div>
+        ) : (
+          <i>{t('authority.no_publications_found')}</i>
+        )}
+      </StyledPublicationContent>
+    </StyledBoxContent>
   );
 };
 

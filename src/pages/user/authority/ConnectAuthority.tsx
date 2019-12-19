@@ -20,6 +20,11 @@ const StyledClickableDiv = styled.div`
   cursor: pointer;
 `;
 
+const StyledSubHeading = styled.div`
+  text-align: right;
+  font-weight: bold;
+`;
+
 export const ConnectAuthority: React.FC = () => {
   const [matchingAuthorities, setMatchingAuthorities] = useState<Authority[]>([]);
   const [selectedSystemControlNumber, setSelectedSystemControlNumber] = useState('');
@@ -56,29 +61,34 @@ export const ConnectAuthority: React.FC = () => {
   };
 
   return (
-    <StyledAuthorityContainer>
-      {t('authority.search_summary', { results: matchingAuthorities.length, searchTerm: searchTerm })}
-      {matchingAuthorities.map(authority => (
-        <StyledClickableDiv
-          key={authority.systemControlNumber}
-          onClick={() => setSelectedSystemControlNumber(authority.systemControlNumber)}>
-          <AuthorityCard
-            authority={authority}
-            isSelected={selectedSystemControlNumber === authority.systemControlNumber}
-          />
-        </StyledClickableDiv>
-      ))}
+    <>
+      <StyledSubHeading>
+        {t('authority.search_summary', { results: matchingAuthorities.length, searchTerm: searchTerm })}
+      </StyledSubHeading>
 
-      {matchingAuthorities.length > 0 && (
-        <Button
-          color="primary"
-          variant="contained"
-          size="large"
-          onClick={setFeideIdForSelectedAuthority}
-          disabled={!selectedSystemControlNumber}>
-          {t('authority.connect_authority')}
-        </Button>
-      )}
-    </StyledAuthorityContainer>
+      <StyledAuthorityContainer>
+        {matchingAuthorities.map(authority => (
+          <StyledClickableDiv
+            key={authority.systemControlNumber}
+            onClick={() => setSelectedSystemControlNumber(authority.systemControlNumber)}>
+            <AuthorityCard
+              authority={authority}
+              isSelected={selectedSystemControlNumber === authority.systemControlNumber}
+            />
+          </StyledClickableDiv>
+        ))}
+
+        {matchingAuthorities.length > 0 && (
+          <Button
+            color="primary"
+            variant="contained"
+            size="large"
+            onClick={setFeideIdForSelectedAuthority}
+            disabled={!selectedSystemControlNumber}>
+            {t('authority.connect_authority')}
+          </Button>
+        )}
+      </StyledAuthorityContainer>
+    </>
   );
 };
