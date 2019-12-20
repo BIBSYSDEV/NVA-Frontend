@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import { Backdrop, Dialog, Fade } from '@material-ui/core';
@@ -41,7 +41,7 @@ interface ModalProps {
   openModal?: boolean;
 }
 
-const Modal: React.FC<ModalProps> = ({
+const Modal: FC<ModalProps> = ({
   ariaDescribedBy,
   ariaLabelledBy,
   children,

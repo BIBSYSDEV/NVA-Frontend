@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { FC, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
@@ -17,7 +17,7 @@ const StyledFooter = styled.div`
   margin-top: 2rem;
 `;
 
-const AuthorityOrcidModal: React.FC = () => {
+const AuthorityOrcidModal: FC = () => {
   const { t } = useTranslation('common');
   const user = useSelector((store: RootStore) => store.user);
 
@@ -42,7 +42,7 @@ const AuthorityOrcidModal: React.FC = () => {
     setShowOrcidModal(!event.target.checked);
   };
 
-  const handleNextClick = (_: any) => {
+  const handleNextClick = () => {
     if (!user.orcid) {
       setOpenOrcidModal(true);
     }
@@ -81,7 +81,7 @@ const AuthorityOrcidModal: React.FC = () => {
           <StyledFooter>
             <FormControlLabel
               control={<Checkbox onChange={handleShowOrcidModal} checked={doNotShowOrcidModalAgain} />}
-              label={t('common:do_not_show_again')}
+              label={t('do_not_show_again')}
             />
           </StyledFooter>
         </Modal>

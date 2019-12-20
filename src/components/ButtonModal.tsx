@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from 'react';
+import React, { FC, ReactNode, useState } from 'react';
 
 import { Button } from '@material-ui/core';
 
@@ -14,7 +14,7 @@ interface ButtonModalProps {
   startIcon?: ReactNode;
 }
 
-const ButtonModal: React.FC<ButtonModalProps> = ({
+const ButtonModal: FC<ButtonModalProps> = ({
   ariaDescribedBy,
   ariaLabelledBy,
   buttonText,

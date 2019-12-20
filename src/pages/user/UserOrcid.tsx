@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 
@@ -9,7 +9,7 @@ import { ORCID_BASE_URL } from '../../utils/constants';
 import OrcidModal from './OrcidModal';
 import UserCard from './UserCard';
 
-const UserOrcid: React.FC = () => {
+const UserOrcid: FC = () => {
   const { t } = useTranslation();
   const user = useSelector((state: RootStore) => state.user);
   const OrcidLink = `${ORCID_BASE_URL}/${user.orcid}`;
