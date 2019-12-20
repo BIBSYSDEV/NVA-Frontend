@@ -16,7 +16,7 @@ import Dashboard from './pages/dashboard/Dashboard';
 import NotFound from './pages/errorpages/NotFound';
 import PublicationForm from './pages/publication/PublicationForm';
 import Search from './pages/search/Search';
-import AuthorityModal from './pages/user/authority/AuthorityModal';
+import AuthorityOrcidModal from './pages/user/authority/AuthorityModal';
 import User from './pages/user/User';
 import Workspace from './pages/workspace/Workspace';
 import { setAuthorityData, setUser } from './redux/actions/userActions';
@@ -73,7 +73,8 @@ const App: React.FC = () => {
 
   useEffect(() => {
     user.id && !user.authority && setShowModal(true);
-  }, [user.id, user.authority]);
+    user.id && !user.orcid && setShowModal(true);
+  }, [user.id, user.authority, user.orcid]);
 
   return (
     <BrowserRouter>
@@ -82,7 +83,7 @@ const App: React.FC = () => {
         <Header />
         {user.isLoggedIn && <AdminMenu />}
         <Breadcrumbs />
-        <AuthorityModal showModal={showModal} />
+        {showModal && <AuthorityOrcidModal />}
         <StyledPageBody>
           <Switch>
             <Route exact path="/" component={Dashboard} />
