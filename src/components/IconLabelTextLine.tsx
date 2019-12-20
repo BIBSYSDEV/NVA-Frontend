@@ -1,11 +1,18 @@
 import React from 'react';
-import { Icon } from '@material-ui/core';
 import styled from 'styled-components';
+
+import { Icon } from '@material-ui/core';
 
 const StyledLine = styled.div`
   padding-bottom: 0.8rem;
   padding-top: 0.8rem;
-  display: flex;
+  display: grid;
+  @media (min-width: 1000px) {
+    grid-template-areas: 'icon label text';
+    grid-template-columns: auto 1fr 6fr;
+  }
+  grid-template-areas: 'icon label .' 'text text text';
+  grid-template-columns: auto 3fr;
   border-bottom: 1px solid ${({ theme }) => theme.palette.separator.main};
   &:first-of-type {
     border-top: 1px solid ${({ theme }) => theme.palette.separator.main};
@@ -13,16 +20,17 @@ const StyledLine = styled.div`
 `;
 
 const StyledLabel = styled.div`
+  grid-area: label;
   font-weight: bold;
-  width: 6rem;
 `;
 
 const StyledText = styled.div`
-  width: 20rem;
+  grid-area: text;
 `;
 
 const StyledIcon = styled(Icon)`
-  width: 3rem;
+  grid-area: icon;
+  padding-right: 2rem;
 `;
 
 interface IconLabelTextLineProps {

@@ -35,10 +35,12 @@ const StyledApp = styled.div`
 const StyledPageBody = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  @media (min-width: 600px) {
+    align-items: center;
+    margin: 3rem;
+  }
   font-size: 1.6rem;
   flex-grow: 1;
-  margin: 3rem;
 `;
 
 const App: React.FC = () => {
