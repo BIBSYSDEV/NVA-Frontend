@@ -26,7 +26,7 @@ export interface User {
   application: ApplicationName;
   orcidName: string;
   orcid: string;
-  authority?: Authority;
+  authority: Authority | null;
   isLoggedIn: boolean;
 }
 
@@ -55,6 +55,6 @@ export const emptyUser: User = {
   application: ApplicationName.NONE,
   orcidName: '',
   orcid: '',
-  authority: undefined,
+  authority: null,
   isLoggedIn: false,
 };

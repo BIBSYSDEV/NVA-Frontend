@@ -2,13 +2,14 @@ import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { Button, Link as MuiLink } from '@material-ui/core';
+import { Link as MuiLink } from '@material-ui/core';
 
 import { getOrcidInfo } from '../../api/external/orcidApi';
+import ButtonModal from '../../components/ButtonModal';
 import { RootStore } from '../../redux/reducers/rootReducer';
+import { ConnectAuthority } from './authority/ConnectAuthority';
 import UserCard from './UserCard';
 import UserInfo from './UserInfo';
 import UserLanguage from './UserLanguage';
@@ -17,10 +18,13 @@ import UserRoles from './UserRoles';
 
 const StyledUserPage = styled.div`
   display: grid;
-  grid-template-areas: 'secondary-info primary-info';
-  grid-template-columns: 1fr 3fr;
+  @media (min-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
+    grid-template-areas: 'secondary-info primary-info';
+    grid-template-columns: 1fr 3fr;
+  }
   grid-gap: 3rem;
   font-size: 1rem;
+  grid-template-areas: 'primary-info' 'secondary-info';
 `;
 
 const StyledSecondaryUserInfo = styled.div`
@@ -28,13 +32,12 @@ const StyledSecondaryUserInfo = styled.div`
   grid-area: secondary-info;
   grid-template-areas: 'profile-image' 'contact-info' 'language' 'author-info';
   grid-row-gap: 3rem;
-  min-width: 20rem;
 `;
 
 const StyledPrimaryUserInfo = styled.div`
   display: grid;
   grid-area: primary-info;
-  grid-gap: 3rem;
+  grid-row-gap: 3rem;
 `;
 
 const User: React.FC = () => {
@@ -67,11 +70,13 @@ const User: React.FC = () => {
           ) : (
             <>
               <p>{t('authority.not_connected_info')}</p>
-              <Link to="/user/authority">
-                <Button color="primary" variant="contained">
-                  {t('authority.connect_authority')}
-                </Button>
-              </Link>
+              <ButtonModal
+                buttonText={t('authority.connect_authority')}
+                dataTestId="connect-author-modal"
+                ariaLabelledBy="connect-author-modal"
+                headingText={t('authority.connect_authority')}>
+                <ConnectAuthority />
+              </ButtonModal>
             </>
           )}
         </UserCard>

@@ -3,7 +3,10 @@ import styled from 'styled-components';
 
 const StyledUserCard = styled.div`
   background-color: ${({ theme }) => theme.palette.box.main};
-  padding: 2rem;
+  @media (min-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+    padding: 2rem;
+  }
+  padding: 0.5rem;
 `;
 
 const StyledHeading = styled.div`
@@ -14,7 +17,9 @@ const StyledHeading = styled.div`
 
 const StyledSubHeading = styled.div`
   font-size: 1.3rem;
-  padding-bottom: 1.5rem;
+  @media (min-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+    padding-bottom: 1.5rem;
+  }
 `;
 
 interface UserCardProps {
@@ -27,7 +32,7 @@ const UserCard: React.FC<UserCardProps> = ({ headerLabel, subHeaderLabel, childr
   <StyledUserCard>
     <StyledHeading>{headerLabel}</StyledHeading>
     {subHeaderLabel && <StyledSubHeading>{subHeaderLabel}</StyledSubHeading>}
-    {children && <div>{children}</div>}
+    {children}
   </StyledUserCard>
 );
 
