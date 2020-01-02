@@ -18,7 +18,7 @@ import UserRoles from './UserRoles';
 
 const StyledUserPage = styled.div`
   display: grid;
-  @media (min-width: 1000px) {
+  @media (min-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
     grid-template-areas: 'secondary-info primary-info';
     grid-template-columns: 1fr 3fr;
   }

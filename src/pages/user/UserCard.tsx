@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const StyledUserCard = styled.div`
   background-color: ${({ theme }) => theme.palette.box.main};
-  @media (min-width: 600px) {
+  @media (min-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
     padding: 2rem;
   }
   padding: 0.5rem;
@@ -17,7 +17,7 @@ const StyledHeading = styled.div`
 
 const StyledSubHeading = styled.div`
   font-size: 1.3rem;
-  @media (min-width: 600px) {
+  @media (min-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
     padding-bottom: 1.5rem;
   }
 `;

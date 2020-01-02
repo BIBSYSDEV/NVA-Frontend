@@ -35,7 +35,7 @@ const StyledApp = styled.div`
 const StyledPageBody = styled.div`
   display: flex;
   flex-direction: column;
-  @media (min-width: 600px) {
+  @media (min-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
     align-items: center;
     margin: 3rem;
   }
