@@ -45,7 +45,7 @@ const PublicationChannelSearch: React.FC<PublicationChannelSearchProps> = ({ set
     <AutoSearch
       onInputChange={(_, value) => setSearchTerm(value)}
       searchResults={searchResults}
-      setFieldValue={value => setFieldValue('reference.journalPublication.selectedJournal', value)}
+      setValueFunction={value => setFieldValue('reference.journalPublication.selectedJournal', value)}
       label={t('publication:references.journal')}
     />
   );

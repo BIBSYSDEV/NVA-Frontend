@@ -3,7 +3,7 @@ import { Field, useFormikContext } from 'formik';
 import { TextField, Select } from 'formik-material-ui';
 import { MenuItem, Radio, FormControl, FormLabel, FormControlLabel, RadioGroup } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import { journalPublicationTypes } from '../../../types/references.types';
+import { journalPublicationTypes, journalPublicationFieldNames } from '../../../types/references.types';
 import Journal from './Journal';
 import styled from 'styled-components';
 import PublicationChannelSearch from './PublicationChannelSearch';
