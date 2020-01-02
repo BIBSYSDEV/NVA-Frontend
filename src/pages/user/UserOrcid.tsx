@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 
@@ -9,11 +9,10 @@ import { ORCID_BASE_URL } from '../../utils/constants';
 import OrcidModal from './OrcidModal';
 import UserCard from './UserCard';
 
-const UserOrcid: React.FC = () => {
+const UserOrcid: FC = () => {
   const { t } = useTranslation();
   const user = useSelector((state: RootStore) => state.user);
   const OrcidLink = `${ORCID_BASE_URL}/${user.orcid}`;
-  const [open, setOpen] = useState(true);
 
   return (
     <UserCard headerLabel={t('common:orcid')}>
@@ -29,9 +28,8 @@ const UserOrcid: React.FC = () => {
           buttonText={t('profile:orcid.create_or_connect')}
           dataTestId="open-orcid-modal"
           headingText={t('profile:orcid.create_or_connect')}
-          openModal={open}
           startIcon={<img src="https://orcid.org/sites/default/files/images/orcid_24x24.png" alt="ORCID iD icon" />}>
-          <OrcidModal setOpen={setOpen} />
+          <OrcidModal />
         </ButtonModal>
       )}
     </UserCard>

@@ -16,7 +16,7 @@ import Dashboard from './pages/dashboard/Dashboard';
 import NotFound from './pages/errorpages/NotFound';
 import PublicationForm from './pages/publication/PublicationForm';
 import Search from './pages/search/Search';
-import AuthorityModal from './pages/user/authority/AuthorityModal';
+import AuthorityOrcidModal from './pages/user/authority/AuthorityOrcidModal';
 import User from './pages/user/User';
 import Workspace from './pages/workspace/Workspace';
 import { setAuthorityData, setUser } from './redux/actions/userActions';
@@ -35,16 +35,18 @@ const StyledApp = styled.div`
 const StyledPageBody = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  @media (min-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+    align-items: center;
+    margin: 3rem;
+  }
   font-size: 1.6rem;
   flex-grow: 1;
-  margin: 3rem;
 `;
 
 const App: React.FC = () => {
   const dispatch = useDispatch();
   const user = useSelector((store: RootStore) => store.user);
-  const [showModal, setShowModal] = useState(false);
+  const [showAuthorityOrcidModal, setShowAuthorityOrcidModal] = useState(false);
 
   useEffect(() => {
     if (USE_MOCK_DATA) {
@@ -72,8 +74,8 @@ const App: React.FC = () => {
   }, [dispatch, user.id]);
 
   useEffect(() => {
-    user.id && !user.authority && setShowModal(true);
-  }, [user.id, user.authority]);
+    user.id && (!user.authority || !user.orcid) && setShowAuthorityOrcidModal(true);
+  }, [user.id, user.authority, user.orcid]);
 
   return (
     <BrowserRouter>
@@ -82,7 +84,7 @@ const App: React.FC = () => {
         <Header />
         {user.isLoggedIn && <AdminMenu />}
         <Breadcrumbs />
-        <AuthorityModal showModal={showModal} />
+        {showAuthorityOrcidModal && <AuthorityOrcidModal />}
         <StyledPageBody>
           <Switch>
             <Route exact path="/" component={Dashboard} />
