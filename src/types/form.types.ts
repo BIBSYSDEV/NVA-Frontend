@@ -47,6 +47,9 @@ export interface JournalPublicationReferenceFormData {
   volume: string;
   issue: string;
   peerReview: string;
+  pagesFrom: string;
+  pagesTo: string;
+  articleNumber: string;
 }
 
 export interface ReferenceFormData {
@@ -93,6 +96,9 @@ export const emptyJournalPublicationReferenceFormData: JournalPublicationReferen
   volume: '',
   issue: '',
   peerReview: 'false',
+  pagesFrom: '',
+  pagesTo: '',
+  articleNumber: '',
 };
 
 export const emptyReferenceFormData: ReferenceFormData = {

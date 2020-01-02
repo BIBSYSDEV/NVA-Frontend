@@ -56,6 +56,7 @@
     "letter": "Brev til redaktør",
     "review": "Anmeldelse",
     "journal": "Tidsskrift",
+    "journal_not_found": "Finner du ikke tidsskriftet?",
     "volume": "Volum",
     "issue": "Hefte",
     "pages_from": "Sidetall fra",
@@ -68,8 +69,8 @@
     "remove": "Fjern",
     "nvi_header": "Norsk vitenskapsindeks - NVI",
     "nvi_success": "Denne publikasjonen kan inngå i NVI",
-    "nvi_fail_level_1": "Denne publikajsonen kan ikke inngå i NVI, da valg tidsskrift er ikke på nivå 1 eller 2.",
-    "nvi_fail_level_2": "(Tidsskriftets nivå i Kanaregisteret kan bli endret, slik at publikasjonen likevel kan inngå i NVI)",
+    "nvi_fail_level_line1": "Denne publikajsonen kan ikke inngå i NVI, da valg tidsskrift er ikke på nivå 1 eller 2.",
+    "nvi_fail_level_line2": "(Tidsskriftets nivå i Kanaregisteret kan bli endret, slik at publikasjonen likevel kan inngå i NVI)",
     "nvi_fail_no_peer_review": "Denne publikasjonen kan ikke inngå i NVI, da den ikke er fagfellevurdert."
   }
 }
