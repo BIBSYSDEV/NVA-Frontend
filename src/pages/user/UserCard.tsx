@@ -32,7 +32,7 @@ const UserCard: React.FC<UserCardProps> = ({ headerLabel, subHeaderLabel, childr
   <StyledUserCard>
     <StyledHeading>{headerLabel}</StyledHeading>
     {subHeaderLabel && <StyledSubHeading>{subHeaderLabel}</StyledSubHeading>}
-    {children && <>{children}</>}
+    {children}
   </StyledUserCard>
 );
 
