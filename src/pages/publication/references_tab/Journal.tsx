@@ -72,10 +72,10 @@ const StyledButton = styled(Button)`
 
 interface JournalProps {
   journal: PublicationChannel;
-  setFieldValue: (name: string, value: any) => void;
+  setValue: (value: string) => void;
 }
 
-const Journal: React.FC<JournalProps> = ({ journal, setFieldValue }) => {
+const Journal: React.FC<JournalProps> = ({ journal, setValue }) => {
   const { t } = useTranslation('publication');
 
   return (
@@ -88,7 +88,7 @@ const Journal: React.FC<JournalProps> = ({ journal, setFieldValue }) => {
         <StyledIssnText>{journal?.title}</StyledIssnText>
         <StyledLevelText>{journal?.level}</StyledLevelText>
         <StyledPublisherText>{journal?.publisher}</StyledPublisherText>
-        <StyledButton onClick={() => setFieldValue('reference.journalPublication.selectedJournal', null)}>
+        <StyledButton onClick={() => setValue('')}>
           <DeleteIcon />
           {t('references.remove')}
         </StyledButton>

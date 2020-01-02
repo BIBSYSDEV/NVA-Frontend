@@ -46,7 +46,7 @@ export interface JournalPublicationReferenceFormData {
   journal: string;
   volume: string;
   issue: string;
-  peerReview: string;
+  peerReview: boolean;
   pagesFrom: string;
   pagesTo: string;
   articleNumber: string;
@@ -95,7 +95,7 @@ export const emptyJournalPublicationReferenceFormData: JournalPublicationReferen
   journal: '',
   volume: '',
   issue: '',
-  peerReview: 'false',
+  peerReview: false,
   pagesFrom: '',
   pagesTo: '',
   articleNumber: '',

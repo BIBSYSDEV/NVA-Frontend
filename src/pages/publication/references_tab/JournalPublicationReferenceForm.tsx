@@ -18,7 +18,7 @@ const StyledArticleDetail = styled.div`
   align-content: center;
 `;
 
-const StyledNVIValidation = styled.div`
+const StyledNviValidation = styled.div`
   margin-top: 0.7rem;
   display: grid;
   grid-template-columns: 4rem auto;
@@ -28,13 +28,13 @@ const StyledNVIValidation = styled.div`
   background-color: ${({ theme }) => theme.palette.background.default};
 `;
 
-const StyledNVIHeader = styled.div`
+const StyledNviHeader = styled.div`
   font-size: 1.5rem;
   font-weight: bold;
   grid-area: header;
 `;
 
-const StyledNVIInformation = styled.div`
+const StyledNviInformation = styled.div`
   grid-area: information;
 `;
 
@@ -68,7 +68,7 @@ const StyledNewJournal = styled.div`
   width: 100%;
 `;
 
-const StyledOrLabel = styled.div`
+const StyledLabel = styled.div`
   align-self: center;
   justify-self: center;
 `;
@@ -83,6 +83,12 @@ const StyledPeerReview = styled.div`
 const JournalPublicationReferenceForm: React.FC = () => {
   const { t } = useTranslation('publication');
   const { values } = useFormikContext();
+
+  const isRatedJournal =
+    values.reference?.journalPublication?.selectedJournal?.level &&
+    values.reference.journalPublication.selectedJournal.level !== '0';
+
+  const isPeerReviewed = values.reference.journalPublication.peerReview;
 
   return (
     <>
@@ -105,13 +111,11 @@ const JournalPublicationReferenceForm: React.FC = () => {
         {t('references.journal_not_found')}
       </StyledNewJournal>
       <Field name="reference.journalPublication.journal">
-        {({ form: { setFieldValue } }: any) => {
-          return <PublicationChannelSearch setFieldValue={setFieldValue} />;
-        }}
+        {({ form: { setFieldValue } }: any) => <PublicationChannelSearch setFieldValue={setFieldValue} />}
       </Field>
       <Field name="reference.journalPublication.selectedJournal">
         {({ field, form: { setFieldValue } }: any) => {
-          return <Journal journal={field.value} setFieldValue={setFieldValue} />;
+          return <Journal journal={field.value} setValue={value => setFieldValue(field.name, value)} />;
         }}
       </Field>
       <StyledArticleDetail>
@@ -141,7 +145,7 @@ const JournalPublicationReferenceForm: React.FC = () => {
           label={t('references.pages_to')}
           disabled={!!values.reference.journalPublication.articleNumber}
         />
-        <StyledOrLabel>{t('references.or')}</StyledOrLabel>
+        <StyledLabel>{t('references.or')}</StyledLabel>
         <Field
           name="reference.journalPublication.articleNumber"
           component={TextField}
@@ -152,49 +156,47 @@ const JournalPublicationReferenceForm: React.FC = () => {
       </StyledArticleDetail>
       <StyledPeerReview>
         <Field name="reference.journalPublication.peerReview">
-          {({ field, form: { setFieldValue } }: any) => {
-            return (
-              <FormControl>
-                <FormLabel>
-                  {t('references.peer_review')}
-                  <StyledInfoIcon />
-                </FormLabel>
-                <RadioGroup value={field.value} onChange={event => setFieldValue(field.name, event.target.value)}>
-                  <FormControlLabel control={<Radio value="true" />} label={t('references.is_peer_reviewed')} />
-                  <FormControlLabel control={<Radio value="false" />} label={t('references.is_not_peer_reviewed')} />
-                </RadioGroup>
-              </FormControl>
-            );
-          }}
+          {({ field, form: { setFieldValue } }: any) => (
+            <FormControl>
+              <FormLabel>
+                {t('references.peer_review')}
+                <StyledInfoIcon />
+              </FormLabel>
+              <RadioGroup
+                value={field.value ? 'true' : 'false'}
+                onChange={event => setFieldValue(field.name, event.target.value === 'true')}>
+                <FormControlLabel control={<Radio value="true" />} label={t('references.is_peer_reviewed')} />
+                <FormControlLabel control={<Radio value="false" />} label={t('references.is_not_peer_reviewed')} />
+              </RadioGroup>
+            </FormControl>
+          )}
         </Field>
       </StyledPeerReview>
       {values.reference?.journalPublication?.selectedJournal && (
-        <StyledNVIValidation>
-          <StyledNVIHeader>{t('references.nvi_header')}</StyledNVIHeader>
-          {(values.reference.journalPublication.selectedJournal.level &&
-            values.reference.journalPublication.selectedJournal.level !== '0' &&
-            values.reference.journalPublication.peerReview === 'true' && (
-              <>
-                <StyledCheckCircleIcon />
-                <StyledNVIInformation>{t('references.nvi_success')}</StyledNVIInformation>
-              </>
-            )) ||
-            ((!values.reference.journalPublication.selectedJournal.level ||
-              values.reference.journalPublication.selectedJournal.level === '0') && (
-              <>
-                <StyledCancelIcon />
-                <StyledNVIInformation>
-                  <div>{t('references.nvi_fail_level_line1')}</div>
-                  <div>{t('references.nvi_fail_level_line2')}</div>
-                </StyledNVIInformation>
-              </>
-            )) || (
-              <>
-                <StyledCancelIcon />
-                <StyledNVIInformation>{t('references.nvi_fail_no_peer_review')}</StyledNVIInformation>
-              </>
-            )}
-        </StyledNVIValidation>
+        <StyledNviValidation>
+          <StyledNviHeader>{t('references.nvi_header')}</StyledNviHeader>
+          {isRatedJournal && isPeerReviewed && (
+            <>
+              <StyledCheckCircleIcon />
+              <StyledNviInformation>{t('references.nvi_success')}</StyledNviInformation>
+            </>
+          )}
+          {isRatedJournal && !isPeerReviewed && (
+            <>
+              <StyledCancelIcon />
+              <StyledNviInformation>{t('references.nvi_fail_no_peer_review')}</StyledNviInformation>
+            </>
+          )}
+          {!isRatedJournal && (
+            <>
+              <StyledCancelIcon />
+              <StyledNviInformation>
+                <div>{t('references.nvi_fail_rated_line1')}</div>
+                <div>{t('references.nvi_fail_rated_line2')}</div>
+              </StyledNviInformation>
+            </>
+          )}
+        </StyledNviValidation>
       )}
     </>
   );
