@@ -136,14 +136,12 @@ const JournalPublicationReferenceForm: React.FC = () => {
           component={TextField}
           variant="outlined"
           label={t('references.pages_from')}
-          disabled={!!values.reference.journalPublication.articleNumber}
         />
         <Field
           name="reference.journalPublication.pagesTo"
           component={TextField}
           variant="outlined"
           label={t('references.pages_to')}
-          disabled={!!values.reference.journalPublication.articleNumber}
         />
         <StyledLabel>{t('references.or')}</StyledLabel>
         <Field
@@ -151,7 +149,6 @@ const JournalPublicationReferenceForm: React.FC = () => {
           component={TextField}
           variant="outlined"
           label={t('references.article_number')}
-          disabled={!!values.reference.journalPublication.pagesFrom || !!values.reference.journalPublication.pagesTo}
         />
       </StyledArticleDetail>
       <StyledPeerReview>
