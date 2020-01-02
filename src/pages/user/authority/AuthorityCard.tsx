@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { Radio } from '@material-ui/core';
 
 import { getPublications } from '../../../api/external/almaApi';
-import { Authority, Marc21Codes, Marc21Subcodes } from '../../../types/authority.types';
+import { Authority } from '../../../types/authority.types';
 import { AlmaPublication } from '../../../types/publication.types';
 
 const StyledBoxContent = styled.div`
@@ -37,24 +37,18 @@ const AuthorityCard: React.FC<AuthorityCardProps> = ({ authority, isSelected }) 
 
   useEffect(() => {
     const fetchAuthorities = async () => {
-      const retrievedPublications = await getPublications(authority.systemControlNumber, dispatch);
+      const retrievedPublications = await getPublications(authority.scn, dispatch);
       setPublications(retrievedPublications);
     };
 
     fetchAuthorities();
-  }, [dispatch, authority.systemControlNumber]);
-
-  const authorityMarcdata = authority.marcdata || [];
-  const authorityNameField =
-    authorityMarcdata.find(field => Marc21Codes.PERSONAL_NAME === field.tag) ||
-    authorityMarcdata.find(field => Marc21Codes.HEADING_PERSONAL_NAME === field.tag);
-  const authorityName = authorityNameField?.subfields.find(subfield => subfield.subcode === Marc21Subcodes.NAME);
+  }, [dispatch, authority.scn]);
 
   return (
     <StyledBoxContent>
       <div>
         <Radio color="primary" checked={isSelected} />
-        {authorityName?.value}
+        {authority?.name}
       </div>
       <StyledPublicationContent>
         {publications?.[0] ? (

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { getAuthorityById } from './api/external/authorityRegisterApi';
+import { getAuthorityByFeideId } from './api/external/authorityRegisterApi';
 import { mockUser } from './api/mock-interceptor';
 import { getCurrentAuthenticatedUser } from './api/userApi';
 import Breadcrumbs from './layout/Breadcrumbs';
@@ -63,7 +63,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     const getAuthority = async () => {
-      const authority = await getAuthorityById(user.id, dispatch);
+      const authority = await getAuthorityByFeideId(user.id, dispatch);
       if (authority) {
         dispatch(setAuthorityData(authority));
       }

@@ -45,17 +45,9 @@ export const ConnectAuthority: React.FC = () => {
   }, [dispatch, searchTerm]);
 
   const setFeideIdForSelectedAuthority = async () => {
-    const authority = matchingAuthorities.find(auth => auth.systemControlNumber === selectedSystemControlNumber);
+    const authority = matchingAuthorities.find(auth => auth.scn === selectedSystemControlNumber);
 
     if (authority) {
-      // Ensure we keep all existing data when adding Feide ID
-      const oldFeideIds = authority.identifiersMap.feide;
-      const newFeideIds = oldFeideIds ? [...oldFeideIds, user.id] : [user.id];
-      authority.identifiersMap = {
-        ...authority.identifiersMap,
-        feide: newFeideIds,
-      };
-
       await updateAuthority(authority, dispatch);
     }
   };
@@ -63,22 +55,17 @@ export const ConnectAuthority: React.FC = () => {
   return (
     <>
       <StyledSubHeading>
-        {t('authority.search_summary', { results: matchingAuthorities.length, searchTerm: searchTerm })}
+        {t('authority.search_summary', { results: matchingAuthorities?.length ?? 0, searchTerm: searchTerm })}
       </StyledSubHeading>
 
       <StyledAuthorityContainer>
-        {matchingAuthorities.map(authority => (
-          <StyledClickableDiv
-            key={authority.systemControlNumber}
-            onClick={() => setSelectedSystemControlNumber(authority.systemControlNumber)}>
-            <AuthorityCard
-              authority={authority}
-              isSelected={selectedSystemControlNumber === authority.systemControlNumber}
-            />
+        {matchingAuthorities?.map(authority => (
+          <StyledClickableDiv key={authority.scn} onClick={() => setSelectedSystemControlNumber(authority.scn)}>
+            <AuthorityCard authority={authority} isSelected={selectedSystemControlNumber === authority.scn} />
           </StyledClickableDiv>
         ))}
 
-        {matchingAuthorities.length > 0 && (
+        {matchingAuthorities?.length > 0 && (
           <Button
             color="primary"
             variant="contained"

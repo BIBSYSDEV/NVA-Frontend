@@ -1,6 +1,7 @@
 import Axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 
+import { Authority } from '../types/authority.types';
 import OrcidResponse from '../types/orcid.types';
 import { ApplicationName, FeideUser, RoleName } from '../types/user.types';
 import {
@@ -42,6 +43,15 @@ const mockOrcidResponse: OrcidResponse = {
   given_name: 'Sofia',
 };
 
+const mockSingleAuthorityResponse: Authority = {
+  name: 'Gundersen, Osteloff',
+  scn: '90179802',
+  feideId: 'osteloff@ntnu.no',
+  orcId: '',
+  handle: 'https://vg.no',
+  birthDate: '1941-04-25 00:00:00.000',
+};
+
 // AXIOS INTERCEPTOR
 if (USE_MOCK_DATA) {
   const mock = new MockAdapter(Axios);
@@ -68,7 +78,8 @@ if (USE_MOCK_DATA) {
   mock.onPost(ORCID_USER_INFO_URL).reply(200, mockOrcidResponse);
 
   // Authority Registry
-  mock.onGet(new RegExp(`${AUTHORITY_REGISTER_API_URL}`)).reply(200, mockAuthoritiesResponse);
+  mock.onPost(new RegExp(`${AUTHORITY_REGISTER_API_URL}/authority`)).reply(200, mockAuthoritiesResponse);
+  mock.onPut(new RegExp(`${AUTHORITY_REGISTER_API_URL}/authority/*`)).reply(200, mockSingleAuthorityResponse);
 
   mock.onAny().reply(function(config) {
     throw new Error('Could not find mock for ' + config.url);

@@ -24,9 +24,8 @@ export interface User {
   institution: string;
   roles: RoleName[];
   application: ApplicationName;
-  orcidName: string;
   orcid: string;
-  authority: Authority | null;
+  authority: Partial<Authority> | null;
   isLoggedIn: boolean;
 }
 
@@ -53,7 +52,6 @@ export const emptyUser: User = {
   institution: '',
   roles: [],
   application: ApplicationName.NONE,
-  orcidName: '',
   orcid: '',
   authority: null,
   isLoggedIn: false,

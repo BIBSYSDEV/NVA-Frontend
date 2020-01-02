@@ -6,6 +6,7 @@ import styled from 'styled-components';
 
 import { Link as MuiLink } from '@material-ui/core';
 
+import { updateAuthority } from '../../api/external/authorityRegisterApi';
 import { getOrcidInfo } from '../../api/external/orcidApi';
 import ButtonModal from '../../components/ButtonModal';
 import { RootStore } from '../../redux/reducers/rootReducer';
@@ -55,6 +56,13 @@ const User: React.FC = () => {
     }
   }, [dispatch, location.hash, history]);
 
+  useEffect(() => {
+    const orcid = user.orcid;
+    if (orcid) {
+      updateAuthority(user.authority, dispatch);
+    }
+  }, [user.authority, user.orcid, dispatch]);
+
   return (
     <StyledUserPage>
       <StyledSecondaryUserInfo>
@@ -65,7 +73,7 @@ const User: React.FC = () => {
           {user.authority ? (
             <>
               <p>{t('authority.connected_info')}</p>
-              <MuiLink href={user.authority.identifiersMap.handle[0]}>{t('authority.see_profile')}</MuiLink>
+              <MuiLink href={user.authority.handle}>{t('authority.see_profile')}</MuiLink>
             </>
           ) : (
             <>
