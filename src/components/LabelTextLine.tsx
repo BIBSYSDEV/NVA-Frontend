@@ -13,7 +13,7 @@ const StyledLabel = styled.div`
 
 const StyledText = styled.div`
   display: inline-block;
-  width: 30rem;
+  width: 10rem;
   font-weight: bold;
 `;
 
