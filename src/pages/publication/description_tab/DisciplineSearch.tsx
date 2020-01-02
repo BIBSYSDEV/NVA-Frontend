@@ -5,7 +5,7 @@ import { AutoSearch } from '../../../components/AutoSearch';
 import disciplines from '../../../utils/testfiles/disciplines_en.json';
 
 interface DisciplineSearchProps {
-  setFieldValue: (name: string, value: any) => void;
+  setValueFunction: (value: any) => void;
 }
 
 interface DisciplineType {
@@ -13,7 +13,7 @@ interface DisciplineType {
   mainDiscipline: string;
 }
 
-const DisciplineSearch: React.FC<DisciplineSearchProps> = ({ setFieldValue }) => {
+const DisciplineSearch: React.FC<DisciplineSearchProps> = ({ setValueFunction }) => {
   const { t } = useTranslation();
 
   const searchResults = Object.values(disciplines)
@@ -28,7 +28,7 @@ const DisciplineSearch: React.FC<DisciplineSearchProps> = ({ setFieldValue }) =>
   return (
     <AutoSearch
       searchResults={searchResults}
-      setFieldValue={(value: any) => setFieldValue('npi', value)}
+      setValueFunction={setValueFunction}
       label={t('publication:description.npi_disciplines')}
       groupBy={(discipline: DisciplineType) => discipline.mainDiscipline}
     />

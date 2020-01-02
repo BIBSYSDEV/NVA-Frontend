@@ -40,6 +40,7 @@
     "link": "Link"
   },
   "references": {
+    "anthology": "Antologi",
     "article": "Artikkel",
     "book": "Bok",
     "chapter": "Kapittel",
@@ -49,6 +50,7 @@
     "issn": "ISSN",
     "journal_publication": "Publikasjon i Journal",
     "level": "Nivå",
+    "monography": "Monografi",
     "publisher": "Utgiver",
     "report": "Rapport",
     "short_communication": "Short communication",

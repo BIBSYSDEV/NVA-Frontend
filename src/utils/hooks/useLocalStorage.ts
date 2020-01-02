@@ -1,7 +1,7 @@
 // Persist form data to LocalStorage with a custom hook
 import { useState } from 'react';
 
-export default function useLocalStorage(key: string, initialValue: object = {}) {
+export default function useLocalStorage(key: string, initialValue: any = undefined) {
   const [storedValue, setStoredValue] = useState(() => {
     try {
       let localStorageItem = window.localStorage.getItem(key);
@@ -35,7 +35,7 @@ export default function useLocalStorage(key: string, initialValue: object = {}) 
   };
 
   const clearValue = () => {
-    setValue(initialValue);
+    window.localStorage.removeItem(key);
   };
 
   return [storedValue, setValue, clearValue];

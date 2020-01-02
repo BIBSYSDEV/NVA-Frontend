@@ -8,10 +8,10 @@ import { CristinProjectType, NormalizedProjectType } from '../../../types/projec
 import useDebounce from '../../../utils/hooks/useDebounce';
 
 interface ProjectSearchProps {
-  setFieldValue: (name: string, value: any) => void;
+  setValueFunction: (value: any) => void;
 }
 
-const ProjectSearch: React.FC<ProjectSearchProps> = ({ setFieldValue }) => {
+const ProjectSearch: React.FC<ProjectSearchProps> = ({ setValueFunction }) => {
   const [searchResults, setSearchResults] = useState<NormalizedProjectType[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [searching, setSearching] = useState(false);
@@ -46,7 +46,7 @@ const ProjectSearch: React.FC<ProjectSearchProps> = ({ setFieldValue }) => {
     <AutoSearch
       onInputChange={(_, value) => setSearchTerm(value)}
       searchResults={searchResults}
-      setFieldValue={value => setFieldValue('project', value)}
+      setValueFunction={setValueFunction}
       label={t('publication:description.project')}
     />
   );

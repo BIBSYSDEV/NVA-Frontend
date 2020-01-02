@@ -40,10 +40,9 @@ const StyledInfoBox = styled.div`
 
 interface PublicationPanelProps {
   goToNextTab: () => void;
-  tabNumber: number;
 }
 
-const PublicationPanel: React.FC<PublicationPanelProps> = ({ goToNextTab, tabNumber }) => {
+const PublicationPanel: React.FC<PublicationPanelProps> = ({ goToNextTab }) => {
   const [expanded, setExpanded] = React.useState<string | false>(false);
   const { t } = useTranslation();
 
@@ -52,11 +51,7 @@ const PublicationPanel: React.FC<PublicationPanelProps> = ({ goToNextTab, tabNum
   };
 
   return (
-    <TabPanel
-      isHidden={tabNumber !== 0}
-      ariaLabel="publication"
-      goToNextTab={goToNextTab}
-      heading={t('publication:heading.publication')}>
+    <TabPanel ariaLabel="publication" goToNextTab={goToNextTab} heading={t('publication:heading.publication')}>
       <StyledPublicationPanel>
         <StyledSelectorWrapper>
           <LoadPublicationPanel expanded={expanded === 'load-panel'} onChange={handleChange('load-panel')} />

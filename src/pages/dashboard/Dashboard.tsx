@@ -24,6 +24,7 @@ const StyledOtherContent = styled.div`
 const Dashboard: React.FC = () => (
   <StyledDashboard>
     <StyledSearchBar resetSearchInput />
+
     <StyledOtherContent>Annet innhold</StyledOtherContent>
   </StyledDashboard>
 );

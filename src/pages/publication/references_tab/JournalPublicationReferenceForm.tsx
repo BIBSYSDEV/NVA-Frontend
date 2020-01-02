@@ -86,15 +86,16 @@ const JournalPublicationReferenceForm: React.FC = () => {
 
   return (
     <>
-      <Field name="reference.journalPublication.type" component={Select} variant="outlined" fullWidth>
+      <Field name={journalPublicationFieldNames.TYPE} component={Select} variant="outlined" fullWidth>
         {journalPublicationTypes.map(type => (
           <MenuItem value={type.value} key={type.value}>
             {t(type.label)}
           </MenuItem>
         ))}
       </Field>
+
       <Field
-        name="reference.journalPublication.doi"
+        name={journalPublicationFieldNames.DOI}
         component={TextField}
         variant="outlined"
         label={t('references.doi')}

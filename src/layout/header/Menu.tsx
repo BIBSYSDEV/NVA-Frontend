@@ -21,7 +21,7 @@ const StyledMuiMenu = styled(MuiMenu)`
     width: 15rem;
     border: 3px solid ${({ theme }) => theme.palette.box.main};
 
-    @media only screen and (max-width: 600px) {
+    @media only screen and (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
       width: 10rem;
     }
   }
@@ -30,7 +30,7 @@ const StyledMuiMenu = styled(MuiMenu)`
 const StyledMenuButton = styled(Button)`
   width: 15rem;
 
-  @media only screen and (max-width: 600px) {
+  @media only screen and (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
     width: 10rem;
   }
 `;
