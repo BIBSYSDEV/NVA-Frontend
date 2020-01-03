@@ -111,12 +111,14 @@ const JournalPublicationReferenceForm: React.FC = () => {
         {t('references.journal_not_found')}
       </StyledNewJournal>
       <Field name="reference.journalPublication.journal">
-        {({ form: { setFieldValue } }: any) => <PublicationChannelSearch setFieldValue={setFieldValue} />}
+        {({ field, form: { setFieldValue } }: any) => (
+          <PublicationChannelSearch setValue={value => setFieldValue(field.name, value)} />
+        )}
       </Field>
       <Field name="reference.journalPublication.selectedJournal">
-        {({ field, form: { setFieldValue } }: any) => {
-          return <Journal journal={field.value} setValue={value => setFieldValue(field.name, value)} />;
-        }}
+        {({ field, form: { setFieldValue } }: any) => (
+          <Journal journal={field.value} setValue={value => setFieldValue(field.name, value)} />
+        )}
       </Field>
       <StyledArticleDetail>
         <Field
@@ -172,19 +174,19 @@ const JournalPublicationReferenceForm: React.FC = () => {
       {values.reference?.journalPublication?.selectedJournal && (
         <StyledNviValidation>
           <StyledNviHeader>{t('references.nvi_header')}</StyledNviHeader>
-          {isRatedJournal && isPeerReviewed && (
-            <>
-              <StyledCheckCircleIcon />
-              <StyledNviInformation>{t('references.nvi_success')}</StyledNviInformation>
-            </>
-          )}
-          {isRatedJournal && !isPeerReviewed && (
-            <>
-              <StyledCancelIcon />
-              <StyledNviInformation>{t('references.nvi_fail_no_peer_review')}</StyledNviInformation>
-            </>
-          )}
-          {!isRatedJournal && (
+          {isRatedJournal ? (
+            isPeerReviewed ? (
+              <>
+                <StyledCheckCircleIcon />
+                <StyledNviInformation>{t('references.nvi_success')}</StyledNviInformation>
+              </>
+            ) : (
+              <>
+                <StyledCancelIcon />
+                <StyledNviInformation>{t('references.nvi_fail_no_peer_review')}</StyledNviInformation>
+              </>
+            )
+          ) : (
             <>
               <StyledCancelIcon />
               <StyledNviInformation>
