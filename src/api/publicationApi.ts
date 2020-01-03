@@ -85,7 +85,7 @@ export const getPublication = async (id: string, dispatch: Dispatch) => {
       },
     });
     if (response.status === StatusCode.OK) {
-      return response;
+      return response.data.Items[0];
     } else {
       dispatch(addNotification(i18n.t('feedback:error.get_publication'), 'error'));
     }
