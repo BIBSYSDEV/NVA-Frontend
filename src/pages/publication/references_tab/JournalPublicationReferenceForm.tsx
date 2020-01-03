@@ -112,7 +112,9 @@ const JournalPublicationReferenceForm: React.FC = () => {
       </StyledNewJournal>
       <Field name="reference.journalPublication.journal">
         {({ field, form: { setFieldValue } }: any) => (
-          <PublicationChannelSearch setValue={value => setFieldValue(field.name, value)} />
+          <PublicationChannelSearch
+            setValue={value => setFieldValue('reference.journalPublication.selectedJournal', value)}
+          />
         )}
       </Field>
       <Field name="reference.journalPublication.selectedJournal">

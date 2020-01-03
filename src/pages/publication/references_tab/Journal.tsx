@@ -16,8 +16,8 @@ const StyledJournal = styled.div`
   grid-column-gap: 0.5rem;
   align-items: center;
   grid-template-areas:
-    'icon issnLabel levelLabel publisherLabel button'
-    'icon issn level publisher button';
+    'icon titleLabel levelLabel publisherLabel button'
+    'icon title level publisher button';
   grid-template-columns: 5% 40% 10% 30% 10%;
 `;
 
@@ -27,7 +27,7 @@ const StyledJournalLabel = styled.div`
 `;
 
 const StyledIssnLabel = styled(StyledJournalLabel)`
-  grid-area: issnLabel;
+  grid-area: titleLabel;
 `;
 
 const StyledLevelLabel = styled(StyledJournalLabel)`
@@ -38,8 +38,8 @@ const StyledPublisherLabel = styled(StyledJournalLabel)`
   grid-area: publisherLabel;
 `;
 
-const StyledIssnText = styled.div`
-  grid-area: issn;
+const StyledTitleText = styled.div`
+  grid-area: title;
 `;
 
 const StyledLevelText = styled.div`
@@ -78,23 +78,21 @@ interface JournalProps {
 const Journal: React.FC<JournalProps> = ({ journal, setValue }) => {
   const { t } = useTranslation('publication');
 
-  return (
-    (journal && (
-      <StyledJournal>
-        <StyledIssnLabel>{t('references.journal')}</StyledIssnLabel>
-        <StyledLevelLabel>{t('references.level')}</StyledLevelLabel>
-        <StyledPublisherLabel>{t('references.publisher')}</StyledPublisherLabel>
-        {journal?.level ? <StyledCheckCircleIcon /> : <StyledCancelIcon />}
-        <StyledIssnText>{journal?.title}</StyledIssnText>
-        <StyledLevelText>{journal?.level}</StyledLevelText>
-        <StyledPublisherText>{journal?.publisher}</StyledPublisherText>
-        <StyledButton onClick={() => setValue('')}>
-          <DeleteIcon />
-          {t('references.remove')}
-        </StyledButton>
-      </StyledJournal>
-    )) || <div />
-  );
+  return journal ? (
+    <StyledJournal>
+      <StyledIssnLabel>{t('references.journal')}</StyledIssnLabel>
+      <StyledLevelLabel>{t('references.level')}</StyledLevelLabel>
+      <StyledPublisherLabel>{t('references.publisher')}</StyledPublisherLabel>
+      {journal?.level ? <StyledCheckCircleIcon /> : <StyledCancelIcon />}
+      <StyledTitleText>{journal?.title}</StyledTitleText>
+      <StyledLevelText>{journal?.level}</StyledLevelText>
+      <StyledPublisherText>{journal?.publisher}</StyledPublisherText>
+      <StyledButton onClick={() => setValue('')}>
+        <DeleteIcon />
+        {t('references.remove')}
+      </StyledButton>
+    </StyledJournal>
+  ) : null;
 };
 
 export default Journal;
