@@ -31,9 +31,8 @@ export const getPublicationChannels = async (searchTerm: string) => {
     });
     return response.data.map((item: any) => ({
       title: item['Original tittel'],
-      issn: item['Online ISSN'],
       level: item['Nivå 2019'],
-      publisher: item['Utgiver'],
+      publisher: item['Forlag'],
     }));
   } catch {
     return [];
@@ -49,9 +48,7 @@ export const getPublishers = async (searchTerm: string) => {
     });
     return response.data.map((item: any) => ({
       title: item['Original tittel'],
-      issn: item['Online ISSN'],
       level: item['Nivå 2019'],
-      publisher: item['Utgiver'],
     }));
   } catch {
     return [];

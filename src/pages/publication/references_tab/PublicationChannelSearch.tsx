@@ -38,7 +38,7 @@ const PublicationChannelSearch: React.FC<PublicationChannelSearchProps> = ({
         dispatch(searchFailure(t('error.search')));
       }
     },
-    [dispatch, t]
+    [dispatch, t, publicationTable]
   );
 
   useEffect(() => {

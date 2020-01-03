@@ -16,7 +16,6 @@ export const referenceTypeList = [
 
 export interface PublicationChannel {
   title: string;
-  issn: string;
   level: string | null;
   publisher: string;
 }

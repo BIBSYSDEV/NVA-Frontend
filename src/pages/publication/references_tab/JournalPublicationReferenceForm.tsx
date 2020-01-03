@@ -1,17 +1,26 @@
 import { Field, useFormikContext } from 'formik';
-import { Select, TextField } from 'formik-material-ui';
+import { TextField } from 'formik-material-ui';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import { FormControl, FormControlLabel, FormLabel, MenuItem, Radio, RadioGroup } from '@material-ui/core';
+import {
+  FormControl,
+  FormControlLabel,
+  FormLabel,
+  InputLabel,
+  MenuItem,
+  Radio,
+  RadioGroup,
+  Select,
+} from '@material-ui/core';
 import CancelIcon from '@material-ui/icons/Cancel';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import InfoIcon from '@material-ui/icons/Info';
 
 import { journalPublicationFieldNames, journalPublicationTypes } from '../../../types/references.types';
 import { PublicationTableNumber } from '../../../utils/constants';
-import Journal from './Journal';
+import JournalPublisherRow from './components/JournalPublisherRow';
 import PublicationChannelSearch from './PublicationChannelSearch';
 
 const StyledArticleDetail = styled.div`
@@ -95,12 +104,19 @@ const JournalPublicationReferenceForm: React.FC = () => {
 
   return (
     <>
-      <Field name={journalPublicationFieldNames.TYPE} component={Select} variant="outlined" fullWidth>
-        {journalPublicationTypes.map(type => (
-          <MenuItem value={type.value} key={type.value}>
-            {t(type.label)}
-          </MenuItem>
-        ))}
+      <Field name={journalPublicationFieldNames.TYPE} variant="outlined" fullWidth>
+        {({ field: { onChange, value } }: any) => (
+          <FormControl variant="outlined">
+            <InputLabel>{t('common:type')}</InputLabel>
+            <Select value={value} onChange={onChange}>
+              {journalPublicationTypes.map(type => (
+                <MenuItem value={type.value} key={type.value}>
+                  {t(type.label)}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        )}
       </Field>
 
       <Field
@@ -123,9 +139,16 @@ const JournalPublicationReferenceForm: React.FC = () => {
         )}
       </Field>
       <Field name="reference.journalPublication.selectedJournal">
-        {({ field, form: { setFieldValue } }: any) => (
-          <Journal journal={field.value} setValue={value => setFieldValue(field.name, value)} />
-        )}
+        {({ field, form: { setFieldValue } }: any) => {
+          if (field.value)
+            return (
+              <JournalPublisherRow
+                publisher={field.value}
+                label={t('references.journal')}
+                setValue={value => setFieldValue(field.name, value)}
+              />
+            );
+        }}
       </Field>
       <StyledArticleDetail>
         <Field

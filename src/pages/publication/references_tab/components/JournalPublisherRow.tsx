@@ -1,24 +1,24 @@
 import React from 'react';
-import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
-import { PublicationChannel } from './../../../types/references.types';
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import CancelIcon from '@material-ui/icons/Cancel';
-import DeleteIcon from '@material-ui/icons/Delete';
-import { Button } from '@material-ui/core';
+import styled from 'styled-components';
 
-const StyledJournal = styled.div`
-  margin-top: 0.5rem;
-  border-color: black;
-  border-width: 1pt;
+import { Button } from '@material-ui/core';
+import CancelIcon from '@material-ui/icons/Cancel';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import DeleteIcon from '@material-ui/icons/Delete';
+
+import { PublicationChannel } from '../../../../types/references.types';
+
+const StyledJournalPublisherRow = styled.div`
+  margin: 1rem 0;
+  padding: 1rem;
   background-color: ${({ theme }) => theme.palette.background.default};
   display: grid;
   grid-column-gap: 0.5rem;
-  align-items: center;
   grid-template-areas:
     'icon titleLabel levelLabel publisherLabel button'
     'icon title level publisher button';
-  grid-template-columns: 5% 40% 10% 30% 10%;
+  grid-template-columns: 1fr 6fr 3fr 3fr 1fr;
 `;
 
 const StyledJournalLabel = styled.div`
@@ -26,7 +26,7 @@ const StyledJournalLabel = styled.div`
   font-weight: bold;
 `;
 
-const StyledIssnLabel = styled(StyledJournalLabel)`
+const StyledTitle = styled(StyledJournalLabel)`
   grid-area: titleLabel;
 `;
 
@@ -68,31 +68,39 @@ const StyledButton = styled(Button)`
   grid-area: button;
   background-color: red;
   color: white;
+  margin: 0.5rem;
 `;
 
-interface JournalProps {
-  journal: PublicationChannel;
+interface JournalPublisherRowProps {
+  hidePublisher?: boolean;
+  publisher: Partial<PublicationChannel>;
+  label: string;
   setValue: (value: string) => void;
 }
 
-const Journal: React.FC<JournalProps> = ({ journal, setValue }) => {
+const JournalPublisherRow: React.FC<JournalPublisherRowProps> = ({
+  hidePublisher = false,
+  publisher: journal,
+  label,
+  setValue,
+}) => {
   const { t } = useTranslation('publication');
 
-  return journal ? (
-    <StyledJournal>
-      <StyledIssnLabel>{t('references.journal')}</StyledIssnLabel>
+  return (
+    <StyledJournalPublisherRow>
+      <StyledTitle>{label}</StyledTitle>
       <StyledLevelLabel>{t('references.level')}</StyledLevelLabel>
-      <StyledPublisherLabel>{t('references.publisher')}</StyledPublisherLabel>
-      {journal?.level ? <StyledCheckCircleIcon /> : <StyledCancelIcon />}
-      <StyledTitleText>{journal?.title}</StyledTitleText>
-      <StyledLevelText>{journal?.level}</StyledLevelText>
-      <StyledPublisherText>{journal?.publisher}</StyledPublisherText>
+      {!hidePublisher && <StyledPublisherLabel>{t('references.publisher')}</StyledPublisherLabel>}
+      {journal.level ? <StyledCheckCircleIcon /> : <StyledCancelIcon />}
+      <StyledTitleText>{journal.title}</StyledTitleText>
+      <StyledLevelText>{journal.level}</StyledLevelText>
+      {!hidePublisher && <StyledPublisherText>{journal.publisher}</StyledPublisherText>}
       <StyledButton onClick={() => setValue('')}>
         <DeleteIcon />
         {t('references.remove')}
       </StyledButton>
-    </StyledJournal>
-  ) : null;
+    </StyledJournalPublisherRow>
+  );
 };
 
-export default Journal;
+export default JournalPublisherRow;
