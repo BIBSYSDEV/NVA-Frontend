@@ -2,17 +2,24 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 
-import { getPublicationChannels } from '../../../api/external/publicationChannelApi';
+import { getDataFromNsd } from '../../../api/external/publicationChannelApi';
 import { AutoSearch } from '../../../components/AutoSearch';
 import { searchFailure } from '../../../redux/actions/searchActions';
 import { PublicationChannel } from '../../../types/references.types';
+import { PublicationTableNumber } from '../../../utils/constants';
 import useDebounce from '../../../utils/hooks/useDebounce';
 
 interface PublicationChannelSearchProps {
-  setValue: (value: any) => void;
+  label: string;
+  publicationTable: PublicationTableNumber;
+  setValueFunction: (value: any) => void;
 }
 
-const PublicationChannelSearch: React.FC<PublicationChannelSearchProps> = ({ setValue }) => {
+const PublicationChannelSearch: React.FC<PublicationChannelSearchProps> = ({
+  label,
+  publicationTable,
+  setValueFunction,
+}) => {
   const [searchResults, setSearchResults] = useState<PublicationChannel[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [searching, setSearching] = useState(false);
@@ -24,7 +31,7 @@ const PublicationChannelSearch: React.FC<PublicationChannelSearchProps> = ({ set
   const search = useCallback(
     async (searchTerm: string) => {
       setSearching(true);
-      const response = await getPublicationChannels(searchTerm);
+      const response = await getDataFromNsd(searchTerm, publicationTable);
       if (response) {
         setSearchResults(response);
       } else {
@@ -45,8 +52,8 @@ const PublicationChannelSearch: React.FC<PublicationChannelSearchProps> = ({ set
     <AutoSearch
       onInputChange={(_, value) => setSearchTerm(value)}
       searchResults={searchResults}
-      setValueFunction={value => setValue(value)}
-      label={t('publication:references.journal')}
+      setValueFunction={setValueFunction}
+      label={label}
     />
   );
 };

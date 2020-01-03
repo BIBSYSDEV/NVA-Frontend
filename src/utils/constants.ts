@@ -23,3 +23,8 @@ export enum ApiBaseUrl {
 export enum StatusCode {
   OK = 200,
 }
+
+export enum PublicationTableNumber {
+  PUBLISHERS = 850,
+  PUBLICATION_CHANNELS = 851,
+}

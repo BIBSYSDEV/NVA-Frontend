@@ -1,15 +1,18 @@
-import React from 'react';
 import { Field, useFormikContext } from 'formik';
-import { TextField, Select } from 'formik-material-ui';
-import { MenuItem, Radio, FormControl, FormLabel, FormControlLabel, RadioGroup } from '@material-ui/core';
+import { Select, TextField } from 'formik-material-ui';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { journalPublicationTypes, journalPublicationFieldNames } from '../../../types/references.types';
-import Journal from './Journal';
 import styled from 'styled-components';
-import PublicationChannelSearch from './PublicationChannelSearch';
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+
+import { FormControl, FormControlLabel, FormLabel, MenuItem, Radio, RadioGroup } from '@material-ui/core';
 import CancelIcon from '@material-ui/icons/Cancel';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import InfoIcon from '@material-ui/icons/Info';
+
+import { journalPublicationFieldNames, journalPublicationTypes } from '../../../types/references.types';
+import { PublicationTableNumber } from '../../../utils/constants';
+import Journal from './Journal';
+import PublicationChannelSearch from './PublicationChannelSearch';
 
 const StyledArticleDetail = styled.div`
   display: grid;
@@ -113,7 +116,9 @@ const JournalPublicationReferenceForm: React.FC = () => {
       <Field name="reference.journalPublication.journal">
         {({ field, form: { setFieldValue } }: any) => (
           <PublicationChannelSearch
-            setValue={value => setFieldValue('reference.journalPublication.selectedJournal', value)}
+            label={t('publication:references.journal')}
+            publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
+            setValueFunction={value => setFieldValue('reference.journalPublication.selectedJournal', value)}
           />
         )}
       </Field>
