@@ -57,3 +57,8 @@ export interface AlmaPublication {
   title: string;
   date: string;
 }
+
+export interface DoiPublication {
+  url: string;
+  owner: string;
+}
