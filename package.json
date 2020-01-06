@@ -104,10 +104,10 @@
     "fs": "0.0.1-security",
     "history": "^4.10.1",
     "husky": "^3.1.0",
-    "istanbul-lib-coverage": "^2.0.5",
-    "nyc": "^14.1.1",
+    "istanbul-lib-coverage": "^3.0.0",
+    "nyc": "^15.0.0",
     "prettier": "^1.19.1",
-    "pretty-quick": "^1.11.1",
+    "pretty-quick": "^2.0.1",
     "start-server-and-test": "^1.10.6",
     "ts-node": "^8.5.3",
     "typescript": "^3.7.2"
