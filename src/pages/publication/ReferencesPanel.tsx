@@ -1,6 +1,6 @@
-import { Field, useFormikContext, FormikProps } from 'formik';
+import { Field, FormikProps, useFormikContext } from 'formik';
 import { Select } from 'formik-material-ui';
-import React, { useEffect, useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
@@ -8,19 +8,19 @@ import { MenuItem } from '@material-ui/core';
 
 import Box from '../../components/Box';
 import TabPanel from '../../components/TabPanel/TabPanel';
+import { PublicationFormsData } from '../../types/form.types';
 import {
+  BookFieldNames,
+  journalPublicationFieldNames,
+  ReferenceFieldNames,
   ReferenceType,
   referenceTypeList,
-  ReferenceFieldNames,
-  journalPublicationFieldNames,
-  BookFieldNames,
 } from '../../types/references.types';
-
 import BookReferenceForm from './references_tab/BookReferenceForm';
-import JournalPublicationReferenceForm from './references_tab/JournalPublicationReferenceForm';
-import ReportReferenceForm from './references_tab/ReportReferenceForm';
 import ChapterReferenceForm from './references_tab/ChapterReferenceForm';
 import DegreeReferenceForm from './references_tab/DegreeReferenceForm';
+import JournalPublicationReferenceForm from './references_tab/JournalPublicationReferenceForm';
+import ReportReferenceForm from './references_tab/ReportReferenceForm';
 
 const StyledBox = styled.div`
   margin-top: 1rem;
@@ -33,7 +33,7 @@ interface ReferencesPanelProps {
 
 export const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, savePublication }) => {
   const { t } = useTranslation('publication');
-  const { values, setFieldTouched }: FormikProps<any> = useFormikContext();
+  const { values, setFieldTouched }: FormikProps<PublicationFormsData> = useFormikContext();
   const { referenceType } = values.reference;
 
   // Validation messages won't show on fields that are not touched

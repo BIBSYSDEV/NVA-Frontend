@@ -20,13 +20,15 @@ export interface DescriptionFormData {
   project: string;
 }
 
+interface Publisher {
+  issn: string;
+  level: string;
+  publisher: string;
+  title: string;
+}
+
 export interface ReferencesFormData {
-  publisher: {
-    issn: string;
-    level: string;
-    publisher: string;
-    title: string;
-  };
+  publisher: Publisher;
   referenceType: ReferenceType;
 }
 
@@ -37,13 +39,18 @@ export interface ContributorsFormData {
 
 export interface BookReferenceFormData {
   type: string;
-  publisher: string;
+  publisher: Publisher;
+  isbn: string;
+  peerReview: boolean;
+  textBook: boolean;
+  numberOfPages: number | undefined;
+  series: string;
 }
 
 export interface JournalPublicationReferenceFormData {
   type: string;
   doi: string;
-  journal: string;
+  journal: Publisher;
   volume: string;
   issue: string;
   peerReview: boolean;
@@ -86,13 +93,28 @@ export const emptyContributorsFormData: ContributorsFormData = {
 
 export const emptyBookReferenceFormData: BookReferenceFormData = {
   type: '',
-  publisher: '',
+  publisher: {
+    issn: '',
+    level: '',
+    publisher: '',
+    title: '',
+  },
+  isbn: '',
+  peerReview: false,
+  textBook: false,
+  numberOfPages: 0,
+  series: '',
 };
 
 export const emptyJournalPublicationReferenceFormData: JournalPublicationReferenceFormData = {
   type: '',
   doi: '',
-  journal: '',
+  journal: {
+    issn: '',
+    level: '',
+    publisher: '',
+    title: '',
+  },
   volume: '',
   issue: '',
   peerReview: false,

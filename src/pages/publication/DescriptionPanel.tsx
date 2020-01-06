@@ -1,6 +1,6 @@
-import { Field, useFormikContext, FormikProps } from 'formik';
+import { Field, FormikProps, useFormikContext } from 'formik';
 import { Select, TextField } from 'formik-material-ui';
-import React, { useEffect, useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
@@ -11,6 +11,7 @@ import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import Box from '../../components/Box';
 import TabPanel from '../../components/TabPanel/TabPanel';
 import { languages } from '../../translations/i18n';
+import { PublicationFormsData } from '../../types/form.types';
 import DisciplineSearch from './description_tab/DisciplineSearch';
 import FormikDatePicker from './description_tab/FormikDatePicker';
 import ProjectSearch from './description_tab/ProjectSearch';
@@ -47,7 +48,7 @@ interface DescriptionPanelProps {
 
 const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, savePublication }) => {
   const { t } = useTranslation();
-  const { setFieldTouched, setFieldValue }: FormikProps<any> = useFormikContext();
+  const { setFieldTouched, setFieldValue }: FormikProps<PublicationFormsData> = useFormikContext();
 
   // Validation messages won't show on fields that are not touched
   const setAllFieldsTouched = useCallback(() => {

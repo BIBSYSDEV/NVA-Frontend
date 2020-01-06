@@ -1,3 +1,4 @@
+import { Field, FormikProps, useFormikContext } from 'formik';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
@@ -6,9 +7,8 @@ import { MenuItem } from '@material-ui/core';
 import PersonIcon from '@material-ui/icons/Person';
 
 import ContributorType from '../../../types/contributor.types';
+import { PublicationFormsData } from '../../../types/form.types';
 import StyledContributor from './StyledContributor';
-import ContributorStyles from './StyledContributor';
-import { Field, useFormikContext, FormikProps } from 'formik';
 
 const StyledContributorValidator = styled(StyledContributor.ContributorContainer)`
   grid-template-areas: 'icon name institution verify-person verify-person arrows delete';
@@ -28,7 +28,7 @@ interface ContributorValidatorProps {
 
 const ContributorValidator: React.FC<ContributorValidatorProps> = ({ index, remove, swap }) => {
   const { t } = useTranslation();
-  const { setFieldValue }: FormikProps<any> = useFormikContext();
+  const { setFieldValue }: FormikProps<PublicationFormsData> = useFormikContext();
 
   const validateContributor = (name: string) => {
     name && setFieldValue(`contributors.authors[${index}].verified`, 'true');
@@ -51,7 +51,7 @@ const ContributorValidator: React.FC<ContributorValidatorProps> = ({ index, remo
               onClick={() => validateContributor(values.contributors.authors[index].name)}>
               {t('publication:contributors.verify_person')}
             </StyledContributor.VerifyPerson>
-            <ContributorStyles.ContributorsArrows
+            <StyledContributor.ContributorsArrows
               swap={swap}
               first={index === 0}
               last={index === values.contributors.authors.length - 1}

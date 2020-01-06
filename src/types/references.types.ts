@@ -36,7 +36,7 @@ export const journalPublicationTypes = [
   { label: 'references.review', value: JournalPublicationTypeValue.REVIEW },
 ];
 
-enum BookTypeValue {
+export enum BookTypeValue {
   MONOGRAPHY = 'monography',
   ANTHOLOGY = 'anthology',
 }
@@ -59,4 +59,9 @@ export enum journalPublicationFieldNames {
 export enum BookFieldNames {
   TYPE = 'reference.book.type',
   PUBLISHER = 'reference.book.publisher',
+  ISBN = 'reference.book.isbn',
+  PEER_REVIEW = 'reference.book.peerReview',
+  TEXT_BOOK = 'reference.book.textBook',
+  NUMBER_OF_PAGES = 'reference.book.numberOfPages',
+  SERIES = 'reference.book.series',
 }

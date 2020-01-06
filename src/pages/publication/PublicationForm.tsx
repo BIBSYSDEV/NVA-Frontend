@@ -1,19 +1,19 @@
+import { Form, Formik, FormikProps } from 'formik';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { Formik, Form, FormikProps } from 'formik';
 import * as Yup from 'yup';
 
 import TabPanel from '../../components/TabPanel/TabPanel';
-import ContributorsPanel from './ContributorsPanel';
-import DescriptionPanel from './DescriptionPanel';
-import FilesAndLicensePanel from './FilesAndLicensePanel';
-import PublicationPanel from './PublicationPanel';
-import { ReferencesPanel } from './ReferencesPanel';
-import { PublicationFormTabs } from './PublicationFormTabs';
 import { emptyPublicationFormData, PublicationFormsData } from '../../types/form.types';
 import { ReferenceType } from '../../types/references.types';
 import useLocalStorage from '../../utils/hooks/useLocalStorage';
+import ContributorsPanel from './ContributorsPanel';
+import DescriptionPanel from './DescriptionPanel';
+import FilesAndLicensePanel from './FilesAndLicensePanel';
+import { PublicationFormTabs } from './PublicationFormTabs';
+import PublicationPanel from './PublicationPanel';
+import { ReferencesPanel } from './ReferencesPanel';
 
 const StyledPublication = styled.div`
   width: 100%;
@@ -47,6 +47,11 @@ const PublicationForm: React.FC = () => {
         then: Yup.object().shape({
           type: Yup.string(),
           publisher: Yup.object(),
+          isbn: Yup.string(),
+          peerReview: Yup.bool(),
+          textBook: Yup.bool(),
+          numberOfPages: Yup.number(),
+          series: Yup.string(),
         }),
       }),
     }),
@@ -72,7 +77,7 @@ const PublicationForm: React.FC = () => {
         validationSchema={validationSchema}
         onSubmit={(values: PublicationFormsData) => savePublication(values)}
         validateOnChange={false}>
-        {({ values, errors, touched }: FormikProps<any>) => (
+        {({ values, errors, touched }: FormikProps<PublicationFormsData>) => (
           <Form onBlur={() => setLocalStorageFormData(values)}>
             <PublicationFormTabs
               tabNumber={tabNumber}
