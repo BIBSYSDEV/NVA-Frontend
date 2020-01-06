@@ -1,26 +1,19 @@
-import { Field, useFormikContext } from 'formik';
+import { Field, FormikProps, useFormikContext } from 'formik';
 import { TextField } from 'formik-material-ui';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import {
-  FormControl,
-  FormControlLabel,
-  FormLabel,
-  InputLabel,
-  MenuItem,
-  Radio,
-  RadioGroup,
-  Select,
-} from '@material-ui/core';
+import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
 import CancelIcon from '@material-ui/icons/Cancel';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import InfoIcon from '@material-ui/icons/Info';
 
+import { PublicationFormsData } from '../../../types/form.types';
 import { journalPublicationFieldNames, journalPublicationTypes } from '../../../types/references.types';
 import { PublicationTableNumber } from '../../../utils/constants';
 import JournalPublisherRow from './components/JournalPublisherRow';
+import PeerReview from './components/PeerReview';
 import PublicationChannelSearch from './PublicationChannelSearch';
 
 const StyledArticleDetail = styled.div`
@@ -94,11 +87,10 @@ const StyledPeerReview = styled.div`
 
 const JournalPublicationReferenceForm: React.FC = () => {
   const { t } = useTranslation('publication');
-  const { values } = useFormikContext();
+  const { setFieldValue, values }: FormikProps<PublicationFormsData> = useFormikContext();
 
   const isRatedJournal =
-    values.reference?.journalPublication?.selectedJournal?.level &&
-    values.reference.journalPublication.selectedJournal.level !== '0';
+    values.reference?.journalPublication?.journal?.level && values.reference.journalPublication.journal.level !== '0';
 
   const isPeerReviewed = values.reference.journalPublication.peerReview;
 
@@ -106,9 +98,9 @@ const JournalPublicationReferenceForm: React.FC = () => {
     <>
       <Field name={journalPublicationFieldNames.TYPE} variant="outlined" fullWidth>
         {({ field: { onChange, value } }: any) => (
-          <FormControl variant="outlined">
+          <FormControl variant="outlined" fullWidth>
             <InputLabel>{t('common:type')}</InputLabel>
-            <Select value={value} onChange={onChange}>
+            <Select value={value} onChange={onChange(journalPublicationFieldNames.TYPE, value)}>
               {journalPublicationTypes.map(type => (
                 <MenuItem value={type.value} key={type.value}>
                   {t(type.label)}
@@ -121,7 +113,7 @@ const JournalPublicationReferenceForm: React.FC = () => {
 
       <Field
         name={journalPublicationFieldNames.DOI}
-        component={TextField}
+        component={(props: any) => <TextField fullWidth {...props} />}
         variant="outlined"
         label={t('references.doi')}
       />
@@ -130,25 +122,22 @@ const JournalPublicationReferenceForm: React.FC = () => {
         {t('references.journal_not_found')}
       </StyledNewJournal>
       <Field name="reference.journalPublication.journal">
-        {({ field, form: { setFieldValue } }: any) => (
-          <PublicationChannelSearch
-            label={t('publication:references.journal')}
-            publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
-            setValueFunction={value => setFieldValue('reference.journalPublication.selectedJournal', value)}
-          />
-        )}
-      </Field>
-      <Field name="reference.journalPublication.selectedJournal">
-        {({ field, form: { setFieldValue } }: any) => {
-          if (field.value)
-            return (
+        {({ field }: any) => (
+          <>
+            <PublicationChannelSearch
+              label={t('publication:references.journal')}
+              publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
+              setValueFunction={value => setFieldValue('reference.journalPublication.journal', value)}
+            />
+            {field.value && (
               <JournalPublisherRow
                 publisher={field.value}
                 label={t('references.journal')}
                 setValue={value => setFieldValue(field.name, value)}
               />
-            );
-        }}
+            )}
+          </>
+        )}
       </Field>
       <StyledArticleDetail>
         <Field
@@ -185,23 +174,12 @@ const JournalPublicationReferenceForm: React.FC = () => {
       </StyledArticleDetail>
       <StyledPeerReview>
         <Field name="reference.journalPublication.peerReview">
-          {({ field, form: { setFieldValue } }: any) => (
-            <FormControl>
-              <FormLabel>
-                {t('references.peer_review')}
-                <StyledInfoIcon />
-              </FormLabel>
-              <RadioGroup
-                value={field.value ? 'true' : 'false'}
-                onChange={event => setFieldValue(field.name, event.target.value === 'true')}>
-                <FormControlLabel control={<Radio value="true" />} label={t('references.is_peer_reviewed')} />
-                <FormControlLabel control={<Radio value="false" />} label={t('references.is_not_peer_reviewed')} />
-              </RadioGroup>
-            </FormControl>
+          {({ field }: any) => (
+            <PeerReview field={field} label={t('references.peer_review')} setFieldValue={setFieldValue} />
           )}
         </Field>
       </StyledPeerReview>
-      {values.reference?.journalPublication?.selectedJournal && (
+      {values.reference?.journalPublication?.journal && (
         <StyledNviValidation>
           <StyledNviHeader>{t('references.nvi_header')}</StyledNviHeader>
           {isRatedJournal ? (
