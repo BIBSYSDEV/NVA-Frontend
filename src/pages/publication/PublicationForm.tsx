@@ -14,6 +14,8 @@ import { PublicationFormTabs } from './PublicationFormTabs';
 import { emptyPublicationFormData, PublicationFormsData } from '../../types/form.types';
 import { ReferenceType } from '../../types/references.types';
 import useLocalStorage from '../../utils/hooks/useLocalStorage';
+import { useDispatch } from 'react-redux';
+import { updatePublication } from '../../api/publicationApi';
 
 const StyledPublication = styled.div`
   width: 100%;
@@ -26,6 +28,7 @@ const PublicationForm: React.FC = () => {
     'publicationFormData',
     emptyPublicationFormData
   );
+  const dispatch = useDispatch();
 
   const validationSchema = Yup.object().shape({
     description: Yup.object().shape({
@@ -62,6 +65,8 @@ const PublicationForm: React.FC = () => {
 
   const savePublication = async (values: PublicationFormsData) => {
     console.log('Save publication:', values);
+
+    // const updatedPublication = await updatePublication(values, dispatch);
     clearLocalStorageFormData();
   };
 

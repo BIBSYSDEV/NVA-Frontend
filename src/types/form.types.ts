@@ -4,6 +4,7 @@ import { ReferenceType } from './references.types';
 import { Language } from './settings.types';
 
 export interface PublicationFormsData {
+  resource_identifier: string;
   description: DescriptionFormData;
   reference: ReferenceFormData;
   contributors: ContributorsFormData;
@@ -108,6 +109,7 @@ export const emptyReferenceFormData: ReferenceFormData = {
 };
 
 export const emptyPublicationFormData: PublicationFormsData = {
+  resource_identifier: '',
   description: emptyDescriptionFormData,
   reference: emptyReferenceFormData,
   contributors: emptyContributorsFormData,

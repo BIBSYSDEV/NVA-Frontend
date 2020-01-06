@@ -2,9 +2,10 @@ import Axios from 'axios';
 import { Dispatch } from 'redux';
 
 import i18n from '../translations/i18n';
-import { Publication, PublicationFileMap, PublicationMetadata, DoiPublication } from '../types/publication.types';
+import { DoiPublication } from '../types/publication.types';
 import { ApiBaseUrl, StatusCode, API_URL, API_TOKEN } from '../utils/constants';
 import { addNotification } from '../redux/actions/notificationActions';
+import { PublicationFormsData } from '../types/form.types';
 
 export const createNewPublicationFromDoi = async (url: string, owner: string, dispatch: Dispatch) => {
   const data: DoiPublication = {
@@ -27,17 +28,7 @@ export const createNewPublicationFromDoi = async (url: string, owner: string, di
   }
 };
 
-export const createNewPublication = async (
-  files: PublicationFileMap[],
-  metadata: PublicationMetadata,
-  owner: string,
-  dispatch: Dispatch
-) => {
-  const publication: Partial<Publication> = {
-    files,
-    metadata,
-    owner,
-  };
+export const createNewPublication = async (publication: PublicationFormsData, dispatch: Dispatch) => {
   const url = `${API_URL}/insert-resource`;
 
   try {
@@ -56,9 +47,15 @@ export const createNewPublication = async (
   }
 };
 
-export const updatePublication = async (publication: Publication, dispatch: Dispatch) => {
-  const { publicationIdentifier } = publication;
-  const url = `${API_URL}/update-resource/${publicationIdentifier}`;
+export const updatePublication = async (publication: PublicationFormsData, dispatch: Dispatch) => {
+  const { resource_identifier: resourceIdentifier } = publication;
+  if (!resourceIdentifier) {
+    // create new if not existing?
+    dispatch(addNotification(i18n.t('feedback:error.update_publication'), 'error'));
+    return;
+  }
+
+  const url = `${API_URL}/update-resource/${resourceIdentifier}`;
 
   try {
     const response = await Axios.put(url, publication, {
