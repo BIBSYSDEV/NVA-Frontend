@@ -4,6 +4,8 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
 import { Checkbox, FormControl, FormControlLabel, InputLabel, MenuItem, Select, TextField } from '@material-ui/core';
+import CancelIcon from '@material-ui/icons/Cancel';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 
 import { PublicationFormsData } from '../../../types/form.types';
 import { BookFieldNames, bookTypes } from '../../../types/references.types';
@@ -38,18 +40,56 @@ const StyledHeading = styled.div`
   padding-top: 1.5rem;
 `;
 
+const StyledNviValidation = styled.div`
+  margin-top: 0.7rem;
+  display: grid;
+  grid-template-columns: 4rem auto;
+  grid-template-areas:
+    'icon header'
+    'icon information';
+  background-color: ${({ theme }) => theme.palette.background.default};
+`;
+
+const StyledNviHeader = styled.div`
+  font-size: 1.5rem;
+  font-weight: bold;
+  grid-area: header;
+`;
+
+const StyledNviInformation = styled.div`
+  grid-area: information;
+`;
+
+const StyledCheckCircleIcon = styled(CheckCircleIcon)`
+  grid-area: icon;
+  color: green;
+  margin: 0.5rem;
+  font-size: 2rem;
+`;
+
+const StyledCancelIcon = styled(CancelIcon)`
+  grid-area: icon;
+  color: red;
+  margin: 0.5rem;
+  font-size: 2rem;
+`;
+
 const BookReferenceForm: FC = () => {
   const { t } = useTranslation('publication');
 
-  const { setFieldValue }: FormikProps<PublicationFormsData> = useFormikContext();
+  const { setFieldValue, values }: FormikProps<PublicationFormsData> = useFormikContext();
+
+  const isRatedBook = values.reference?.book?.publisher?.level && values.reference.book.publisher.level !== '0';
+
+  const isPeerReviewed = values.reference.book.peerReview;
 
   return (
     <>
       <Field name={BookFieldNames.TYPE}>
-        {({ field: { value, onChange } }: any) => (
+        {({ field: { onChange, name, value } }: any) => (
           <FormControl variant="outlined" fullWidth>
             <InputLabel>{t('common:type')}</InputLabel>
-            <Select value={value} onChange={onChange(BookFieldNames.TYPE, value)}>
+            <Select value={value} onChange={onChange(name, value)}>
               {bookTypes.map(type => (
                 <MenuItem value={type.value} key={type.value}>
                   {t(type.label)}
@@ -61,25 +101,27 @@ const BookReferenceForm: FC = () => {
       </Field>
 
       <Field name={BookFieldNames.PUBLISHER}>
-        {({ field }: any) => (
+        {({ field: { name, value } }: any) => (
           <>
             <PublicationChannelSearch
               label={t('references.publisher')}
               publicationTable={PublicationTableNumber.PUBLISHERS}
-              setValueFunction={value => setFieldValue(BookFieldNames.PUBLISHER, value)}
+              setValueFunction={value => setFieldValue(name, value)}
             />
-            {field.value && (
+            {value.title && (
               <JournalPublisherRow
                 hidePublisher
                 label={t('references.publisher')}
-                publisher={field.value}
-                setValue={value => setFieldValue(field.name, value)}
+                publisher={value}
+                setValue={value => setFieldValue(name, value)}
               />
             )}
           </>
         )}
       </Field>
-      <Field name={BookFieldNames.ISBN} component={TextField} variant="outlined" label={t('references.isbn')} />
+      <Field name={BookFieldNames.ISBN}>
+        {({ field }: any) => <TextField variant="outlined" label={t('references.isbn')} {...field} />}
+      </Field>
       <StyledSection>
         <StyledPeerReview>
           <Field name={BookFieldNames.PEER_REVIEW}>
@@ -90,15 +132,13 @@ const BookReferenceForm: FC = () => {
         </StyledPeerReview>
         <StyledTextBook>
           <Field name={BookFieldNames.TEXT_BOOK}>
-            {({ field: { value } }: any) => (
+            {({ field: { name, value } }: any) => (
               <>
                 <StyledLabel>{t('references.text_book')}</StyledLabel>
                 <FormControlLabel
                   control={
                     <Checkbox
-                      onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                        setFieldValue(BookFieldNames.TEXT_BOOK, event.target.checked)
-                      }
+                      onChange={(event: ChangeEvent<HTMLInputElement>) => setFieldValue(name, event.target.checked)}
                       checked={value || false}
                     />
                   }
@@ -109,33 +149,56 @@ const BookReferenceForm: FC = () => {
           </Field>
         </StyledTextBook>
       </StyledSection>
-      <Field
-        name={BookFieldNames.NUMBER_OF_PAGES}
-        component={TextField}
-        variant="outlined"
-        label={t('references.number_of_pages')}
-      />
+      <Field name={BookFieldNames.NUMBER_OF_PAGES}>
+        {({ field }: any) => <TextField variant="outlined" label={t('references.number_of_pages')} {...field} />}
+      </Field>
       <StyledHeading>{t('references.series')}</StyledHeading>
       <StyledLabel>{t('references.series_info')}</StyledLabel>
       <Field name={BookFieldNames.SERIES}>
-        {({ field }: any) => (
+        {({ field: { name, value } }: any) => (
           <>
             <PublicationChannelSearch
               label={t('common:title')}
               publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
-              setValueFunction={value => setFieldValue(BookFieldNames.SERIES, value)}
+              setValueFunction={value => setFieldValue(name, value)}
             />
-            {field.value && (
+            {value.title && (
               <JournalPublisherRow
                 hidePublisher
                 label={t('common:title')}
-                publisher={field.value}
-                setValue={value => setFieldValue(field.name, value)}
+                publisher={value}
+                setValue={value => setFieldValue(name, value)}
               />
             )}
           </>
         )}
       </Field>
+      {values.reference?.book?.publisher.title && (
+        <StyledNviValidation>
+          <StyledNviHeader>{t('references.nvi_header')}</StyledNviHeader>
+          {isRatedBook ? (
+            isPeerReviewed ? (
+              <>
+                <StyledCheckCircleIcon />
+                <StyledNviInformation>{t('references.nvi_success')}</StyledNviInformation>
+              </>
+            ) : (
+              <>
+                <StyledCancelIcon />
+                <StyledNviInformation>{t('references.nvi_fail_no_peer_review')}</StyledNviInformation>
+              </>
+            )
+          ) : (
+            <>
+              <StyledCancelIcon />
+              <StyledNviInformation>
+                <div>{t('references.nvi_fail_rated_line1')}</div>
+                <div>{t('references.nvi_fail_rated_line2')}</div>
+              </StyledNviInformation>
+            </>
+          )}
+        </StyledNviValidation>
+      )}
     </>
   );
 };

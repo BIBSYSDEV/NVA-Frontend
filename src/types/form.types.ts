@@ -44,7 +44,7 @@ export interface BookReferenceFormData {
   peerReview: boolean;
   textBook: boolean;
   numberOfPages: number | undefined;
-  series: string;
+  series: Publisher;
 }
 
 export interface JournalPublicationReferenceFormData {
@@ -103,7 +103,12 @@ export const emptyBookReferenceFormData: BookReferenceFormData = {
   peerReview: false,
   textBook: false,
   numberOfPages: 0,
-  series: '',
+  series: {
+    issn: '',
+    level: '',
+    publisher: '',
+    title: '',
+  },
 };
 
 export const emptyJournalPublicationReferenceFormData: JournalPublicationReferenceFormData = {

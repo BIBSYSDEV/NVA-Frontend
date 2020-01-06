@@ -129,7 +129,7 @@ const JournalPublicationReferenceForm: React.FC = () => {
               publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
               setValueFunction={value => setFieldValue('reference.journalPublication.journal', value)}
             />
-            {field.value && (
+            {field.value.title && (
               <JournalPublisherRow
                 publisher={field.value}
                 label={t('references.journal')}
@@ -179,7 +179,7 @@ const JournalPublicationReferenceForm: React.FC = () => {
           )}
         </Field>
       </StyledPeerReview>
-      {values.reference?.journalPublication?.journal && (
+      {values.reference?.journalPublication?.journal.title && (
         <StyledNviValidation>
           <StyledNviHeader>{t('references.nvi_header')}</StyledNviHeader>
           {isRatedJournal ? (
