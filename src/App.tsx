@@ -24,7 +24,6 @@ import { RootStore } from './redux/reducers/rootReducer';
 import { awsConfig } from './utils/aws-config';
 import { USE_MOCK_DATA } from './utils/constants';
 import { hubListener } from './utils/hub-listener';
-import { getPublication } from './api/publicationApi';
 
 const StyledApp = styled.div`
   height: 100vh;
@@ -78,13 +77,6 @@ const App: React.FC = () => {
     user.id && (!user.authority || !user.orcid) && setShowAuthorityOrcidModal(true);
   }, [user.id, user.authority, user.orcid]);
 
-  useEffect(() => {
-    const get = async () => {
-      const a = await getPublication('29a5e50c-52ee-41b9-9841-f85dd645eb7c', dispatch);
-      console.log(a);
-    };
-    get();
-  }, [dispatch]);
   return (
     <BrowserRouter>
       <StyledApp>

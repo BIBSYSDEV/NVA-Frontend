@@ -29,15 +29,15 @@ const StyledFieldHeader = styled.header`
   font-size: 1.5rem;
 `;
 
-enum FieldNames {
-  TITLE = 'description.title',
-  ABSTRACT = 'description.abstract',
-  DESCRIPTION = 'description.description',
-  NPI = 'description.npi',
-  KEYWORDS = 'description.keywords',
-  DATE = 'description.date',
-  LANGUAGE = 'description.language',
-  PROJECT = 'description.project',
+enum DescriptionFieldNames {
+  TITLE = 'title',
+  ABSTRACT = 'abstract',
+  DESCRIPTION = 'description',
+  NPI_DISCIPLINES = 'npiDisciplines',
+  TAGS = 'tags',
+  PUBLICATION_DATE = 'publicationDate',
+  LANGUAGE = 'language',
+  PROJECTS = 'projects',
 }
 
 interface DescriptionPanelProps {
@@ -51,7 +51,7 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, savePu
 
   // Validation messages won't show on fields that are not touched
   const setAllFieldsTouched = useCallback(() => {
-    Object.values(FieldNames).forEach(fieldName => setFieldTouched(fieldName));
+    Object.values(DescriptionFieldNames).forEach(fieldName => setFieldTouched(fieldName));
   }, [setFieldTouched]);
 
   useEffect(() => {
@@ -75,7 +75,7 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, savePu
           <StyledFieldWrapper>
             <Field
               aria-label="title"
-              name={FieldNames.TITLE}
+              name={DescriptionFieldNames.TITLE}
               label={t('common:title')}
               component={TextField}
               fullWidth
@@ -85,7 +85,7 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, savePu
           <StyledFieldWrapper>
             <Field
               aria-label="abstract"
-              name={FieldNames.ABSTRACT}
+              name={DescriptionFieldNames.ABSTRACT}
               label={t('publication:description.abstract')}
               component={TextField}
               multiline
@@ -97,7 +97,7 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, savePu
           <StyledFieldWrapper>
             <Field
               aria-label="description"
-              name={FieldNames.DESCRIPTION}
+              name={DescriptionFieldNames.DESCRIPTION}
               label={t('publication:description.description')}
               component={TextField}
               multiline
@@ -108,14 +108,16 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, savePu
           </StyledFieldWrapper>
           <MultipleFieldWrapper>
             <StyledFieldWrapper>
-              <Field name={FieldNames.NPI}>
-                {() => <DisciplineSearch setValueFunction={newValue => setFieldValue(FieldNames.NPI, newValue)} />}
+              <Field name={DescriptionFieldNames.NPI_DISCIPLINES}>
+                {({ field }: any) => (
+                  <DisciplineSearch setValueFunction={newValue => setFieldValue(field.name, newValue)} />
+                )}
               </Field>
             </StyledFieldWrapper>
             <StyledFieldWrapper>
               <Field
-                aria-label="keyword"
-                name={FieldNames.KEYWORDS}
+                aria-label="tags"
+                name={DescriptionFieldNames.TAGS}
                 label={t('publication:description.tags')}
                 component={TextField}
                 fullWidth
@@ -126,12 +128,13 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, savePu
 
           <MultipleFieldWrapper>
             <StyledFieldWrapper>
-              <Field aria-label="date" component={FormikDatePicker} name={FieldNames.DATE} />
+              {/* TODO: https://material-ui-pickers.dev/demo/datepicker#different-views */}
+              <Field aria-label="date" component={FormikDatePicker} name={DescriptionFieldNames.PUBLICATION_DATE} />
             </StyledFieldWrapper>
 
             <StyledFieldWrapper>
               <Field
-                name={FieldNames.LANGUAGE}
+                name={DescriptionFieldNames.LANGUAGE}
                 aria-label="language"
                 variant="outlined"
                 fullWidth
@@ -149,10 +152,11 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, savePu
           <StyledFieldHeader>{t('publication:description.project_association')}</StyledFieldHeader>
 
           <StyledFieldWrapper>
-            <Field name={FieldNames.PROJECT}>
-              {({ field: { value } }: any) => (
+            <Field name={DescriptionFieldNames.PROJECTS}>
+              {/* TODO: Use <FieldArray /> */}
+              {({ field: { value, name } }: any) => (
                 <>
-                  <ProjectSearch setValueFunction={newValue => setFieldValue(FieldNames.PROJECT, newValue)} />
+                  <ProjectSearch setValueFunction={newValue => setFieldValue(name, newValue)} />
                   {value.title && <p>{value.title}</p>}
                 </>
               )}

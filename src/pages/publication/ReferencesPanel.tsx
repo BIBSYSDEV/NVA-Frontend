@@ -34,13 +34,13 @@ interface ReferencesPanelProps {
 export const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, savePublication }) => {
   const { t } = useTranslation('publication');
   const { values, setFieldTouched }: FormikProps<any> = useFormikContext();
-  const { referenceType } = values.reference;
+  const { type } = values.reference;
 
   // Validation messages won't show on fields that are not touched
   const setAllFieldsTouched = useCallback(() => {
     Object.values(ReferenceFieldNames).forEach(fieldName => setFieldTouched(fieldName));
 
-    switch (referenceType) {
+    switch (type) {
       case ReferenceType.BOOK:
         Object.values(BookFieldNames).forEach(fieldName => setFieldTouched(fieldName));
         break;
@@ -50,7 +50,7 @@ export const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, s
       default:
         break;
     }
-  }, [setFieldTouched, referenceType]);
+  }, [setFieldTouched, type]);
 
   useEffect(() => {
     // Set all fields as touched if user navigates away from this panel ( on unmount)
@@ -76,14 +76,14 @@ export const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, s
         ))}
       </Field>
 
-      {referenceType && (
+      {type && (
         <StyledBox>
           <Box>
-            {referenceType === ReferenceType.BOOK && <BookReferenceForm />}
-            {referenceType === ReferenceType.CHAPTER && <ChapterReferenceForm />}
-            {referenceType === ReferenceType.REPORT && <ReportReferenceForm />}
-            {referenceType === ReferenceType.DEGREE && <DegreeReferenceForm />}
-            {referenceType === ReferenceType.PUBLICATION_IN_JOURNAL && <JournalPublicationReferenceForm />}
+            {type === ReferenceType.BOOK && <BookReferenceForm />}
+            {type === ReferenceType.CHAPTER && <ChapterReferenceForm />}
+            {type === ReferenceType.REPORT && <ReportReferenceForm />}
+            {type === ReferenceType.DEGREE && <DegreeReferenceForm />}
+            {type === ReferenceType.PUBLICATION_IN_JOURNAL && <JournalPublicationReferenceForm />}
           </Box>
         </StyledBox>
       )}

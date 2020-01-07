@@ -110,16 +110,12 @@ const JournalPublicationReferenceForm: React.FC = () => {
         <StyledInfoIcon />
         {t('references.journal_not_found')}
       </StyledNewJournal>
-      <Field name="reference.journalPublication.journal">
-        {({ field, form: { setFieldValue } }: any) => (
-          <PublicationChannelSearch
-            setValue={value => setFieldValue('reference.journalPublication.selectedJournal', value)}
-          />
-        )}
-      </Field>
       <Field name="reference.journalPublication.selectedJournal">
         {({ field, form: { setFieldValue } }: any) => (
-          <Journal journal={field.value} setValue={value => setFieldValue(field.name, value)} />
+          <>
+            <PublicationChannelSearch setValue={value => setFieldValue(field.name, value)} />
+            <Journal journal={field.value} setValue={value => setFieldValue(field.name, value)} />
+          </>
         )}
       </Field>
       <StyledArticleDetail>
@@ -136,13 +132,13 @@ const JournalPublicationReferenceForm: React.FC = () => {
           label={t('references.issue')}
         />
         <Field
-          name="reference.journalPublication.pagesFrom"
+          name="reference.journalPublication.pageStart"
           component={TextField}
           variant="outlined"
           label={t('references.pages_from')}
         />
         <Field
-          name="reference.journalPublication.pagesTo"
+          name="reference.journalPublication.pageEnd"
           component={TextField}
           variant="outlined"
           label={t('references.pages_to')}
@@ -156,7 +152,7 @@ const JournalPublicationReferenceForm: React.FC = () => {
         />
       </StyledArticleDetail>
       <StyledPeerReview>
-        <Field name="reference.journalPublication.peerReview">
+        <Field name="reference.journalPublication.peerReviewed">
           {({ field, form: { setFieldValue } }: any) => (
             <FormControl>
               <FormLabel>

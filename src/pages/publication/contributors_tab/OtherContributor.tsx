@@ -25,11 +25,11 @@ const OtherContributor: React.FC<OtherContributorProps> = ({ contributor, index,
   const { setFieldValue }: FormikProps<any> = useFormikContext();
 
   return (
-    <Field name={`contributors.authors[${index}]`}>
+    <Field name={`contributors[${index}]`}>
       {({ form: { values } }: any) => {
         return (
           <StyledContributor.OtherContributorContainer>
-            <Field name={`contributors.contributors[${index}].type`}>
+            <Field name={`contributors[${index}].type`}>
               {({ field }: any) => {
                 return (
                   <StyledContributor.TypeSelect
@@ -49,8 +49,8 @@ const OtherContributor: React.FC<OtherContributorProps> = ({ contributor, index,
                 );
               }}
             </Field>
-            <StyledNameInput variant="outlined" name={`contributors.contributors[${index}].name`} />
-            <Field name={`contributors.contributors[${index}].selectedInstitution`}>
+            <StyledNameInput variant="outlined" name={`contributors[${index}].name`} />
+            <Field name={`contributors[${index}].selectedInstitution`}>
               {({ field }: any) => {
                 return (
                   <StyledContributor.InstitutionSelect
@@ -69,7 +69,7 @@ const OtherContributor: React.FC<OtherContributorProps> = ({ contributor, index,
             </Field>
             <ContributorStyles.ContributorsArrows
               first={index === 0}
-              last={index === values.contributors.contributors.length - 1}
+              last={index === values.contributors.length - 1}
               swap={swap}
               index={index}
             />

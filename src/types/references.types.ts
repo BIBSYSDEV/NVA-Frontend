@@ -1,24 +1,41 @@
+export interface Reference {
+  type: ReferenceType | '';
+  journalPublication?: journalPublication;
+  book?: Book;
+  report?: Report;
+}
+
+interface journalPublication {
+  type: JournalPublicationTypeValue | '';
+  journal: PublicationChannel;
+  issue: string;
+  pageStart: string;
+  pageEnd: string;
+  peerReviewed: boolean;
+  link: string;
+  articleNumber: string;
+}
+
+interface Book {
+  type: string;
+  publisher: string;
+}
+
+interface Report {}
+
+export interface PublicationChannel {
+  title: string;
+  issn: string;
+  level: string;
+  publisher: string;
+}
+
 export enum ReferenceType {
   PUBLICATION_IN_JOURNAL = 'journalPublication',
   BOOK = 'book',
   REPORT = 'report',
   DEGREE = 'degree',
   CHAPTER = 'chapter',
-}
-
-export const referenceTypeList = [
-  { label: 'references.journal_publication', value: ReferenceType.PUBLICATION_IN_JOURNAL },
-  { label: 'references.book', value: ReferenceType.BOOK },
-  { label: 'references.report', value: ReferenceType.REPORT },
-  { label: 'references.degree', value: ReferenceType.DEGREE },
-  { label: 'references.chapter', value: ReferenceType.CHAPTER },
-];
-
-export interface PublicationChannel {
-  title: string;
-  issn: string;
-  level: string | null;
-  publisher: string;
 }
 
 enum JournalPublicationTypeValue {
@@ -29,6 +46,20 @@ enum JournalPublicationTypeValue {
   REVIEW = 'review',
 }
 
+enum BookTypeValue {
+  MONOGRAPHY = 'monography',
+  ANTHOLOGY = 'anthology',
+}
+
+// Arrays of types, with i18n-key for label and values
+export const referenceTypeList = [
+  { label: 'references.journal_publication', value: ReferenceType.PUBLICATION_IN_JOURNAL },
+  { label: 'references.book', value: ReferenceType.BOOK },
+  { label: 'references.report', value: ReferenceType.REPORT },
+  { label: 'references.degree', value: ReferenceType.DEGREE },
+  { label: 'references.chapter', value: ReferenceType.CHAPTER },
+];
+
 export const journalPublicationTypes = [
   { label: 'references.article', value: JournalPublicationTypeValue.ARTICLE },
   { label: 'references.short_communication', value: JournalPublicationTypeValue.SHORT_COMMUNICATION },
@@ -37,19 +68,14 @@ export const journalPublicationTypes = [
   { label: 'references.review', value: JournalPublicationTypeValue.REVIEW },
 ];
 
-enum BookTypeValue {
-  MONOGRAPHY = 'monography',
-  ANTHOLOGY = 'anthology',
-}
-
 export const bookTypes = [
   { label: 'references.monography', value: BookTypeValue.MONOGRAPHY },
   { label: 'references.anthology', value: BookTypeValue.ANTHOLOGY },
 ];
 
-// Values represent name for fields used by Formik
+// Enums representing name of fields used by Formik
 export enum ReferenceFieldNames {
-  REFERENCE_TYPE = 'reference.referenceType',
+  REFERENCE_TYPE = 'reference.type',
 }
 
 export enum journalPublicationFieldNames {
