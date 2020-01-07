@@ -12,7 +12,7 @@ import { JournalPublicationFieldNames, journalPublicationTypes } from '../../../
 import { PublicationTableNumber } from '../../../utils/constants';
 import JournalPublisherRow from './components/JournalPublisherRow';
 import PeerReview from './components/PeerReview';
-import PublicationChannelSearch from './PublicationChannelSearch';
+import PublicationChannelSearch from './components/PublicationChannelSearch';
 
 const StyledArticleDetail = styled.div`
   display: grid;
@@ -103,6 +103,7 @@ const JournalPublicationReferenceForm: React.FC = () => {
         {({ field: { name, value } }: any) => (
           <>
             <PublicationChannelSearch
+              clearSearchField={value === emptyPublisher}
               label={t('publication:references.journal')}
               publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
               setValueFunction={value => setFieldValue(name, value ?? emptyPublisher)}

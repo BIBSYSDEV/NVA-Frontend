@@ -12,7 +12,7 @@ import { BookFieldNames, bookTypes } from '../../../types/references.types';
 import { PublicationTableNumber } from '../../../utils/constants';
 import JournalPublisherRow from './components/JournalPublisherRow';
 import PeerReview from './components/PeerReview';
-import PublicationChannelSearch from './PublicationChannelSearch';
+import PublicationChannelSearch from './components/PublicationChannelSearch';
 
 const StyledSection = styled.div`
   display: grid;
@@ -105,6 +105,7 @@ const BookReferenceForm: FC = () => {
         {({ field: { name, value } }: any) => (
           <>
             <PublicationChannelSearch
+              clearSearchField={value === emptyPublisher}
               label={t('references.publisher')}
               publicationTable={PublicationTableNumber.PUBLISHERS}
               setValueFunction={value => setFieldValue(name, value ?? emptyPublisher)}
@@ -159,6 +160,7 @@ const BookReferenceForm: FC = () => {
         {({ field: { name, value } }: any) => (
           <>
             <PublicationChannelSearch
+              clearSearchField={value === emptyPublisher}
               label={t('common:title')}
               publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
               setValueFunction={value => setFieldValue(name, value ?? emptyPublisher)}

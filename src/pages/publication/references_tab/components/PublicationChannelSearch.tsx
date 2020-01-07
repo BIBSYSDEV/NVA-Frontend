@@ -2,20 +2,22 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 
-import { getDataFromNsd } from '../../../api/external/publicationChannelApi';
-import { AutoSearch } from '../../../components/AutoSearch';
-import { searchFailure } from '../../../redux/actions/searchActions';
-import { PublicationChannel } from '../../../types/references.types';
-import { PublicationTableNumber } from '../../../utils/constants';
-import useDebounce from '../../../utils/hooks/useDebounce';
+import { getDataFromNsd } from '../../../../api/external/publicationChannelApi';
+import { AutoSearch } from '../../../../components/AutoSearch';
+import { searchFailure } from '../../../../redux/actions/searchActions';
+import { PublicationChannel } from '../../../../types/references.types';
+import { PublicationTableNumber } from '../../../../utils/constants';
+import useDebounce from '../../../../utils/hooks/useDebounce';
 
 interface PublicationChannelSearchProps {
+  clearSearchField: boolean;
   label: string;
   publicationTable: PublicationTableNumber;
   setValueFunction: (value: any) => void;
 }
 
 const PublicationChannelSearch: React.FC<PublicationChannelSearchProps> = ({
+  clearSearchField,
   label,
   publicationTable,
   setValueFunction,
@@ -50,6 +52,7 @@ const PublicationChannelSearch: React.FC<PublicationChannelSearchProps> = ({
 
   return (
     <AutoSearch
+      clearSearchField={clearSearchField}
       onInputChange={(_, value) => setSearchTerm(value)}
       searchResults={searchResults}
       setValueFunction={setValueFunction}
