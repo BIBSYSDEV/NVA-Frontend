@@ -7,7 +7,7 @@ import { Checkbox, FormControl, FormControlLabel, InputLabel, MenuItem, Select, 
 import CancelIcon from '@material-ui/icons/Cancel';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 
-import { PublicationFormsData } from '../../../types/form.types';
+import { emptyPublisher, PublicationFormsData } from '../../../types/form.types';
 import { BookFieldNames, bookTypes } from '../../../types/references.types';
 import { PublicationTableNumber } from '../../../utils/constants';
 import JournalPublisherRow from './components/JournalPublisherRow';
@@ -41,13 +41,14 @@ const StyledHeading = styled.div`
 `;
 
 const StyledNviValidation = styled.div`
-  margin-top: 0.7rem;
+  margin-top: 1rem;
   display: grid;
   grid-template-columns: 4rem auto;
   grid-template-areas:
     'icon header'
     'icon information';
   background-color: ${({ theme }) => theme.palette.background.default};
+  padding: 1rem 0;
 `;
 
 const StyledNviHeader = styled.div`
@@ -63,14 +64,14 @@ const StyledNviInformation = styled.div`
 const StyledCheckCircleIcon = styled(CheckCircleIcon)`
   grid-area: icon;
   color: green;
-  margin: 0.5rem;
+  margin: 1rem;
   font-size: 2rem;
 `;
 
 const StyledCancelIcon = styled(CancelIcon)`
   grid-area: icon;
   color: red;
-  margin: 0.5rem;
+  margin: 1rem;
   font-size: 2rem;
 `;
 
@@ -106,14 +107,14 @@ const BookReferenceForm: FC = () => {
             <PublicationChannelSearch
               label={t('references.publisher')}
               publicationTable={PublicationTableNumber.PUBLISHERS}
-              setValueFunction={value => setFieldValue(name, value)}
+              setValueFunction={value => setFieldValue(name, value ?? emptyPublisher)}
             />
             {value.title && (
               <JournalPublisherRow
                 hidePublisher
                 label={t('references.publisher')}
                 publisher={value}
-                setValue={value => setFieldValue(name, value)}
+                onClickDelete={() => setFieldValue(name, emptyPublisher)}
               />
             )}
           </>
@@ -160,34 +161,27 @@ const BookReferenceForm: FC = () => {
             <PublicationChannelSearch
               label={t('common:title')}
               publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
-              setValueFunction={value => setFieldValue(name, value)}
+              setValueFunction={value => setFieldValue(name, value ?? emptyPublisher)}
             />
             {value.title && (
               <JournalPublisherRow
                 hidePublisher
                 label={t('common:title')}
                 publisher={value}
-                setValue={value => setFieldValue(name, value)}
+                onClickDelete={() => setFieldValue(name, emptyPublisher)}
               />
             )}
           </>
         )}
       </Field>
-      {values.reference?.book?.publisher.title && (
-        <StyledNviValidation>
-          <StyledNviHeader>{t('references.nvi_header')}</StyledNviHeader>
-          {isRatedBook ? (
-            isPeerReviewed ? (
-              <>
-                <StyledCheckCircleIcon />
-                <StyledNviInformation>{t('references.nvi_success')}</StyledNviInformation>
-              </>
-            ) : (
-              <>
-                <StyledCancelIcon />
-                <StyledNviInformation>{t('references.nvi_fail_no_peer_review')}</StyledNviInformation>
-              </>
-            )
+      <StyledNviValidation>
+        <StyledNviHeader>{t('references.nvi_header')}</StyledNviHeader>
+        {isPeerReviewed ? (
+          isRatedBook ? (
+            <>
+              <StyledCheckCircleIcon />
+              <StyledNviInformation>{t('references.nvi_success')}</StyledNviInformation>
+            </>
           ) : (
             <>
               <StyledCancelIcon />
@@ -196,9 +190,16 @@ const BookReferenceForm: FC = () => {
                 <div>{t('references.nvi_fail_rated_line2')}</div>
               </StyledNviInformation>
             </>
-          )}
-        </StyledNviValidation>
-      )}
+          )
+        ) : (
+          <>
+            <StyledCancelIcon />
+            <StyledNviInformation>
+              <div>{t('references.nvi_fail_no_peer_review')}</div>
+            </StyledNviInformation>
+          </>
+        )}
+      </StyledNviValidation>
     </>
   );
 };

@@ -65,6 +65,13 @@ export interface ReferenceFormData {
   journalPublication: JournalPublicationReferenceFormData;
 }
 
+export const emptyPublisher: Publisher = {
+  issn: '',
+  level: '',
+  publisher: '',
+  title: '',
+};
+
 export const emptyDescriptionFormData: DescriptionFormData = {
   title: '',
   abstract: '',
@@ -77,12 +84,7 @@ export const emptyDescriptionFormData: DescriptionFormData = {
 };
 
 export const emptyReferencesForm: ReferencesFormData = {
-  publisher: {
-    issn: '',
-    level: '',
-    publisher: '',
-    title: '',
-  },
+  publisher: emptyPublisher,
   referenceType: ReferenceType.PUBLICATION_IN_JOURNAL,
 };
 
@@ -93,33 +95,18 @@ export const emptyContributorsFormData: ContributorsFormData = {
 
 export const emptyBookReferenceFormData: BookReferenceFormData = {
   type: '',
-  publisher: {
-    issn: '',
-    level: '',
-    publisher: '',
-    title: '',
-  },
+  publisher: emptyPublisher,
   isbn: '',
   peerReview: false,
   textBook: false,
   numberOfPages: 0,
-  series: {
-    issn: '',
-    level: '',
-    publisher: '',
-    title: '',
-  },
+  series: emptyPublisher,
 };
 
 export const emptyJournalPublicationReferenceFormData: JournalPublicationReferenceFormData = {
   type: '',
   doi: '',
-  journal: {
-    issn: '',
-    level: '',
-    publisher: '',
-    title: '',
-  },
+  journal: emptyPublisher,
   volume: '',
   issue: '',
   peerReview: false,

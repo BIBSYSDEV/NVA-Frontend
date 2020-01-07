@@ -1,3 +1,7 @@
+type EnumDictionary<T extends string, U> = {
+  [K in T]: U;
+};
+
 export enum ReferenceType {
   PUBLICATION_IN_JOURNAL = 'journalPublication',
   BOOK = 'book',
@@ -6,13 +10,13 @@ export enum ReferenceType {
   CHAPTER = 'chapter',
 }
 
-export const referenceTypeList = [
-  { label: 'references.journal_publication', value: ReferenceType.PUBLICATION_IN_JOURNAL },
-  { label: 'references.book', value: ReferenceType.BOOK },
-  { label: 'references.report', value: ReferenceType.REPORT },
-  { label: 'references.degree', value: ReferenceType.DEGREE },
-  { label: 'references.chapter', value: ReferenceType.CHAPTER },
-];
+export const referenceTypeLanguageKeyMap: EnumDictionary<string, string> = {
+  [ReferenceType.PUBLICATION_IN_JOURNAL]: 'references.journal_publication',
+  [ReferenceType.BOOK]: 'references.book',
+  [ReferenceType.REPORT]: 'references.report',
+  [ReferenceType.DEGREE]: 'references.degree',
+  [ReferenceType.CHAPTER]: 'references.chapter',
+};
 
 export interface PublicationChannel {
   title: string;

@@ -7,9 +7,8 @@ import styled from 'styled-components';
 import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
 import CancelIcon from '@material-ui/icons/Cancel';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import InfoIcon from '@material-ui/icons/Info';
 
-import { PublicationFormsData } from '../../../types/form.types';
+import { emptyPublisher, PublicationFormsData } from '../../../types/form.types';
 import { journalPublicationFieldNames, journalPublicationTypes } from '../../../types/references.types';
 import { PublicationTableNumber } from '../../../utils/constants';
 import JournalPublisherRow from './components/JournalPublisherRow';
@@ -24,13 +23,14 @@ const StyledArticleDetail = styled.div`
 `;
 
 const StyledNviValidation = styled.div`
-  margin-top: 0.7rem;
+  margin-top: 1rem;
   display: grid;
   grid-template-columns: 4rem auto;
   grid-template-areas:
     'icon header'
     'icon information';
   background-color: ${({ theme }) => theme.palette.background.default};
+  padding: 1rem 0;
 `;
 
 const StyledNviHeader = styled.div`
@@ -46,34 +46,19 @@ const StyledNviInformation = styled.div`
 const StyledCheckCircleIcon = styled(CheckCircleIcon)`
   grid-area: icon;
   color: green;
-  margin: 0.5rem;
+  margin: 1rem;
   font-size: 2rem;
 `;
 
 const StyledCancelIcon = styled(CancelIcon)`
   grid-area: icon;
   color: red;
-  margin: 0.5rem;
+  margin: 1rem;
   font-size: 2rem;
 `;
 
-const StyledInfoIcon = styled(InfoIcon)`
-  font-size: small;
-  margin-right: 0.3rem;
-  margin-left: 0.3rem;
-  color: ${({ theme }) => theme.palette.primary.main};
-`;
-
-const StyledNewJournal = styled.div`
-  font-size: 0.7rem;
-  margin-top: 0.7rem;
-  text-align: right;
-  align-items: center;
-  color: ${({ theme }) => theme.palette.primary.main};
-  width: 100%;
-`;
-
 const StyledLabel = styled.div`
+  margin-top: 1rem;
   align-self: center;
   justify-self: center;
 `;
@@ -117,23 +102,19 @@ const JournalPublicationReferenceForm: React.FC = () => {
         variant="outlined"
         label={t('references.doi')}
       />
-      <StyledNewJournal>
-        <StyledInfoIcon />
-        {t('references.journal_not_found')}
-      </StyledNewJournal>
       <Field name="reference.journalPublication.journal">
-        {({ field }: any) => (
+        {({ field: { name, value } }: any) => (
           <>
             <PublicationChannelSearch
               label={t('publication:references.journal')}
               publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
-              setValueFunction={value => setFieldValue('reference.journalPublication.journal', value)}
+              setValueFunction={value => setFieldValue(name, value ?? emptyPublisher)}
             />
-            {field.value.title && (
+            {value.title && (
               <JournalPublisherRow
-                publisher={field.value}
+                publisher={value}
                 label={t('references.journal')}
-                setValue={value => setFieldValue(field.name, value)}
+                onClickDelete={() => setFieldValue(name, emptyPublisher)}
               />
             )}
           </>
@@ -179,21 +160,14 @@ const JournalPublicationReferenceForm: React.FC = () => {
           )}
         </Field>
       </StyledPeerReview>
-      {values.reference?.journalPublication?.journal.title && (
-        <StyledNviValidation>
-          <StyledNviHeader>{t('references.nvi_header')}</StyledNviHeader>
-          {isRatedJournal ? (
-            isPeerReviewed ? (
-              <>
-                <StyledCheckCircleIcon />
-                <StyledNviInformation>{t('references.nvi_success')}</StyledNviInformation>
-              </>
-            ) : (
-              <>
-                <StyledCancelIcon />
-                <StyledNviInformation>{t('references.nvi_fail_no_peer_review')}</StyledNviInformation>
-              </>
-            )
+      <StyledNviValidation>
+        <StyledNviHeader>{t('references.nvi_header')}</StyledNviHeader>
+        {isPeerReviewed ? (
+          isRatedJournal ? (
+            <>
+              <StyledCheckCircleIcon />
+              <StyledNviInformation>{t('references.nvi_success')}</StyledNviInformation>
+            </>
           ) : (
             <>
               <StyledCancelIcon />
@@ -202,9 +176,16 @@ const JournalPublicationReferenceForm: React.FC = () => {
                 <div>{t('references.nvi_fail_rated_line2')}</div>
               </StyledNviInformation>
             </>
-          )}
-        </StyledNviValidation>
-      )}
+          )
+        ) : (
+          <>
+            <StyledCancelIcon />
+            <StyledNviInformation>
+              <div>{t('references.nvi_fail_no_peer_review')}</div>
+            </StyledNviInformation>
+          </>
+        )}
+      </StyledNviValidation>
     </>
   );
 };
