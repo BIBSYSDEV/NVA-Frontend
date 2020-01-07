@@ -82,7 +82,7 @@ const BookReferenceForm: FC = () => {
 
   const isRatedBook = values.reference?.book?.publisher?.level && values.reference.book.publisher.level !== '0';
 
-  const isPeerReviewed = values.reference.book.peerReview;
+  const isPeerReviewed = values.reference?.book?.peerReview;
 
   return (
     <>

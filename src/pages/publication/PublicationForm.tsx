@@ -39,6 +39,13 @@ const PublicationForm: React.FC = () => {
         then: Yup.object().shape({
           type: Yup.string(),
           doi: Yup.string().url(),
+          journal: Yup.object(),
+          volume: Yup.number(),
+          issue: Yup.number(),
+          pagesFrom: Yup.number(),
+          pagesTo: Yup.number(),
+          articleNumber: Yup.string(),
+          peerReview: Yup.bool(),
         }),
       }),
 

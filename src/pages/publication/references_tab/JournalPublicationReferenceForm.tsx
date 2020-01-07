@@ -1,15 +1,14 @@
 import { Field, FormikProps, useFormikContext } from 'formik';
-import { TextField } from 'formik-material-ui';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
+import { FormControl, InputLabel, MenuItem, Select, TextField } from '@material-ui/core';
 import CancelIcon from '@material-ui/icons/Cancel';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 
 import { emptyPublisher, PublicationFormsData } from '../../../types/form.types';
-import { journalPublicationFieldNames, journalPublicationTypes } from '../../../types/references.types';
+import { JournalPublicationFieldNames, journalPublicationTypes } from '../../../types/references.types';
 import { PublicationTableNumber } from '../../../utils/constants';
 import JournalPublisherRow from './components/JournalPublisherRow';
 import PeerReview from './components/PeerReview';
@@ -77,15 +76,15 @@ const JournalPublicationReferenceForm: React.FC = () => {
   const isRatedJournal =
     values.reference?.journalPublication?.journal?.level && values.reference.journalPublication.journal.level !== '0';
 
-  const isPeerReviewed = values.reference.journalPublication.peerReview;
+  const isPeerReviewed = values.reference?.journalPublication?.peerReview;
 
   return (
     <>
-      <Field name={journalPublicationFieldNames.TYPE} variant="outlined" fullWidth>
+      <Field name={JournalPublicationFieldNames.TYPE} variant="outlined" fullWidth>
         {({ field: { onChange, value } }: any) => (
           <FormControl variant="outlined" fullWidth>
             <InputLabel>{t('common:type')}</InputLabel>
-            <Select value={value} onChange={onChange(journalPublicationFieldNames.TYPE, value)}>
+            <Select value={value} onChange={onChange(JournalPublicationFieldNames.TYPE, value)}>
               {journalPublicationTypes.map(type => (
                 <MenuItem value={type.value} key={type.value}>
                   {t(type.label)}
@@ -96,13 +95,11 @@ const JournalPublicationReferenceForm: React.FC = () => {
         )}
       </Field>
 
-      <Field
-        name={journalPublicationFieldNames.DOI}
-        component={(props: any) => <TextField fullWidth {...props} />}
-        variant="outlined"
-        label={t('references.doi')}
-      />
-      <Field name="reference.journalPublication.journal">
+      <Field name={JournalPublicationFieldNames.DOI}>
+        {({ field }: any) => <TextField variant="outlined" label={t('references.doi')} {...field} />}
+      </Field>
+
+      <Field name={JournalPublicationFieldNames.JOURNAL}>
         {({ field: { name, value } }: any) => (
           <>
             <PublicationChannelSearch
@@ -121,40 +118,30 @@ const JournalPublicationReferenceForm: React.FC = () => {
         )}
       </Field>
       <StyledArticleDetail>
-        <Field
-          name="reference.journalPublication.volume"
-          component={TextField}
-          variant="outlined"
-          label={t('references.volume')}
-        />
-        <Field
-          name="reference.journalPublication.issue"
-          component={TextField}
-          variant="outlined"
-          label={t('references.issue')}
-        />
-        <Field
-          name="reference.journalPublication.pagesFrom"
-          component={TextField}
-          variant="outlined"
-          label={t('references.pages_from')}
-        />
-        <Field
-          name="reference.journalPublication.pagesTo"
-          component={TextField}
-          variant="outlined"
-          label={t('references.pages_to')}
-        />
+        <Field name={JournalPublicationFieldNames.VOLUME}>
+          {({ field }: any) => <TextField variant="outlined" label={t('references.volume')} {...field} />}
+        </Field>
+
+        <Field name={JournalPublicationFieldNames.ISSUE}>
+          {({ field }: any) => <TextField variant="outlined" label={t('references.issue')} {...field} />}
+        </Field>
+
+        <Field name={JournalPublicationFieldNames.PAGES_FROM}>
+          {({ field }: any) => <TextField variant="outlined" label={t('references.pages_from')} {...field} />}
+        </Field>
+
+        <Field name={JournalPublicationFieldNames.PAGES_TO}>
+          {({ field }: any) => <TextField variant="outlined" label={t('references.pages_to')} {...field} />}
+        </Field>
+
         <StyledLabel>{t('references.or')}</StyledLabel>
-        <Field
-          name="reference.journalPublication.articleNumber"
-          component={TextField}
-          variant="outlined"
-          label={t('references.article_number')}
-        />
+
+        <Field name={JournalPublicationFieldNames.ARTICLE_NUMBER}>
+          {({ field }: any) => <TextField variant="outlined" label={t('references.article_number')} {...field} />}
+        </Field>
       </StyledArticleDetail>
       <StyledPeerReview>
-        <Field name="reference.journalPublication.peerReview">
+        <Field name={JournalPublicationFieldNames.PEER_REVIEW}>
           {({ field }: any) => (
             <PeerReview field={field} label={t('references.peer_review')} setFieldValue={setFieldValue} />
           )}

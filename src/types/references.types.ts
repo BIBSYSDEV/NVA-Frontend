@@ -55,9 +55,16 @@ export enum ReferenceFieldNames {
   REFERENCE_TYPE = 'reference.referenceType',
 }
 
-export enum journalPublicationFieldNames {
+export enum JournalPublicationFieldNames {
   TYPE = 'reference.journalPublication.type',
   DOI = 'reference.journalPublication.doi',
+  JOURNAL = 'reference.journalPublication.journal',
+  VOLUME = 'reference.journalPublication.volume',
+  ISSUE = 'reference.journalPublication.issue',
+  PAGES_FROM = 'reference.journalPublication.pagesFrom',
+  PAGES_TO = 'reference.journalPublication.pagesTo',
+  ARTICLE_NUMBER = 'reference.journalPublication.articleNumber',
+  PEER_REVIEW = 'reference.journalPublication.peerReview',
 }
 
 export enum BookFieldNames {

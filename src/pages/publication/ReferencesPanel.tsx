@@ -10,7 +10,7 @@ import TabPanel from '../../components/TabPanel/TabPanel';
 import { PublicationFormsData } from '../../types/form.types';
 import {
   BookFieldNames,
-  journalPublicationFieldNames,
+  JournalPublicationFieldNames,
   ReferenceFieldNames,
   ReferenceType,
   referenceTypeLanguageKeyMap,
@@ -54,7 +54,7 @@ export const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, s
         Object.values(BookFieldNames).forEach(fieldName => setFieldTouched(fieldName));
         break;
       case ReferenceType.PUBLICATION_IN_JOURNAL:
-        Object.values(journalPublicationFieldNames).forEach(fieldName => setFieldTouched(fieldName));
+        Object.values(JournalPublicationFieldNames).forEach(fieldName => setFieldTouched(fieldName));
         break;
       default:
         break;
