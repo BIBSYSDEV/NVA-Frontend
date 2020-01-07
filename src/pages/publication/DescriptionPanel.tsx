@@ -66,11 +66,7 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, savePu
   };
 
   return (
-    <TabPanel
-      ariaLabel="description"
-      goToNextTab={goToNextTab}
-      onClickSave={validateAndSave}
-      heading={t('publication:heading.description')}>
+    <TabPanel ariaLabel="description" goToNextTab={goToNextTab} onClickSave={validateAndSave}>
       <Box>
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <StyledFieldWrapper>

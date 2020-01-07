@@ -6,7 +6,6 @@ import { FormControl, FormControlLabel, Radio, RadioGroup } from '@material-ui/c
 
 const StyledLabel = styled.div`
   color: ${({ theme }) => theme.palette.text.primary};
-  font-size: 1rem;
   font-weight: bold;
 `;
 

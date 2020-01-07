@@ -98,7 +98,7 @@ const PublicationForm: React.FC = () => {
             {tabNumber === 4 && <FilesAndLicensePanel goToNextTab={goToNextTab} />}
 
             {tabNumber === 5 && (
-              <TabPanel ariaLabel="submission" heading={t('heading.submission')}>
+              <TabPanel ariaLabel="submission">
                 <div>Page Six</div>
               </TabPanel>
             )}
