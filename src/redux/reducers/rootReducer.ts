@@ -6,6 +6,7 @@ import { User } from '../../types/user.types';
 import { notificationReducer } from './notificationReducer';
 import { searchReducer } from './searchReducer';
 import { userReducer } from './userReducer';
+import { publicationReducer } from './publicationReducer';
 
 export interface RootStore {
   notifications: Notification[];
@@ -17,4 +18,5 @@ export default combineReducers({
   notifications: notificationReducer,
   search: searchReducer,
   user: userReducer,
+  publications: publicationReducer,
 });

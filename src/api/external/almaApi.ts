@@ -40,10 +40,10 @@ export const getPublications = async (systemControlNumber: string, dispatch: Dis
       // Filter out publications where titles are missing, and do a (naive) sort by date
       return publications.filter(publication => publication.title).sort((a, b) => b.date.localeCompare(a.date));
     } else {
-      dispatch(addNotification({ message: i18n.t('feedback:error.get_publications'), variant: 'error' }));
+      dispatch(addNotification(i18n.t('feedback:error.get_publications'), 'error'));
     }
   } catch (error) {
-    dispatch(addNotification({ message: i18n.t('feedback:error.get_publications'), variant: 'error' }));
+    dispatch(addNotification(i18n.t('feedback:error.get_publications'), 'error'));
   }
   return [];
 };
