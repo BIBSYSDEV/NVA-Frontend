@@ -11,6 +11,7 @@ const a11yProps = (tabDescription: string) => {
   return {
     id: `nav-tab-${tabDescription}`,
     'aria-controls': `nav-tabpanel-${tabDescription}`,
+    'data-testid': `nav-tabpanel-${tabDescription}`,
   };
 };
 

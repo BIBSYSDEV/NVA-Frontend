@@ -38,6 +38,13 @@ const PublicationForm: React.FC = () => {
         then: Yup.object().shape({
           type: Yup.string(),
           doi: Yup.string().url(),
+          journal: Yup.object(),
+          volume: Yup.number(),
+          issue: Yup.number(),
+          pagesFrom: Yup.number(),
+          pagesTo: Yup.number(),
+          articleNumber: Yup.string(),
+          peerReview: Yup.bool(),
         }),
       }),
 
@@ -46,6 +53,11 @@ const PublicationForm: React.FC = () => {
         then: Yup.object().shape({
           type: Yup.string(),
           publisher: Yup.object(),
+          isbn: Yup.string(),
+          peerReview: Yup.bool(),
+          textBook: Yup.bool(),
+          numberOfPages: Yup.string(),
+          series: Yup.string(),
         }),
       }),
     }),
@@ -71,7 +83,7 @@ const PublicationForm: React.FC = () => {
         validationSchema={validationSchema}
         onSubmit={(values: PublicationFormsData) => savePublication(values)}
         validateOnChange={false}>
-        {({ values, errors, touched }: FormikProps<any>) => (
+        {({ values, errors, touched }: FormikProps<PublicationFormsData>) => (
           <Form onBlur={() => setLocalStorageFormData(values)}>
             <PublicationFormTabs
               tabNumber={tabNumber}
@@ -91,7 +103,7 @@ const PublicationForm: React.FC = () => {
             {tabNumber === 3 && <FilesAndLicensePanel goToNextTab={goToNextTab} />}
 
             {tabNumber === 4 && (
-              <TabPanel ariaLabel="submission" heading={t('heading.submission')}>
+              <TabPanel ariaLabel="submission">
                 <div>Page Six</div>
               </TabPanel>
             )}

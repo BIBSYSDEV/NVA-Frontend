@@ -57,8 +57,9 @@
     "journal_not_found": "Journal not found?",
     "journal_publication": "Publication in Journal",
     "letter": "Letter",
-    "level": "Level",
+    "level": "Level in NPI",
     "monography": "Monography",
+    "number_of_pages": "Total number of pages",
     "nvi_header": "Norwegian Scientific Index - NVI",
     "nvi_success": "This publication can be included in NVI",
     "nvi_fail_rated_line1": "This publication can not be included in NVI, since selected journal is not at level 1 or 2.",
@@ -72,7 +73,11 @@
     "remove": "Remove",
     "report": "Report",
     "review": "Review",
+    "series": "Series",
+    "series_info": "If the book is part of a series",
     "short_communication": "Short communication",
+    "text_book": "Is this a textbook?",
+    "text_book_yes": "Yes, this is a textbook",
     "volume": "Volume"
   }
 }

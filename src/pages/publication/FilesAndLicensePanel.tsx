@@ -13,7 +13,7 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab
   const { t } = useTranslation('publication');
 
   return (
-    <TabPanel ariaLabel="files and license" goToNextTab={goToNextTab} heading={t('heading.files_and_license')}>
+    <TabPanel ariaLabel="files and license" goToNextTab={goToNextTab}>
       <h1>{t('files_and_license.upload_files')}</h1>
       <Box>
         <UppyFileUpload />
