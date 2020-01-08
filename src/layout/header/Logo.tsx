@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Link as MuiLink } from '@material-ui/core';
 import styled from 'styled-components';
+
+import { Link as MuiLink } from '@material-ui/core';
 
 const StyledLogo = styled.div`
   color: ${({ theme }) => theme.palette.text.secondary};
@@ -11,7 +12,7 @@ const StyledLogo = styled.div`
 
 const Logo: React.FC = () => (
   <MuiLink component={Link} to="/">
-    <StyledLogo>NVA</StyledLogo>
+    <StyledLogo>Hjem</StyledLogo>
   </MuiLink>
 );
 
