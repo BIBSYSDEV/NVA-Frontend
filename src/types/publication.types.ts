@@ -133,9 +133,9 @@ export const emptyPublication: Publication = {
         title: '',
       },
       issue: '',
-      peerReviewed: false,
-      pageStart: '',
-      pageEnd: '',
+      peerReview: false,
+      pagesFrom: '',
+      pagesTo: '',
       articleNumber: '',
     },
     book: {

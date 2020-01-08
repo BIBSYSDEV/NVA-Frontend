@@ -132,13 +132,13 @@ const JournalPublicationReferenceForm: React.FC = () => {
           label={t('references.issue')}
         />
         <Field
-          name="reference.journalPublication.pageStart"
+          name="reference.journalPublication.pagesFrom"
           component={TextField}
           variant="outlined"
           label={t('references.pages_from')}
         />
         <Field
-          name="reference.journalPublication.pageEnd"
+          name="reference.journalPublication.pagesTo"
           component={TextField}
           variant="outlined"
           label={t('references.pages_to')}
@@ -152,7 +152,7 @@ const JournalPublicationReferenceForm: React.FC = () => {
         />
       </StyledArticleDetail>
       <StyledPeerReview>
-        <Field name="reference.journalPublication.peerReviewed">
+        <Field name="reference.journalPublication.peerReview">
           {({ field, form: { setFieldValue } }: any) => (
             <FormControl>
               <FormLabel>

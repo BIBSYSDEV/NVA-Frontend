@@ -9,9 +9,9 @@ interface journalPublication {
   type: JournalPublicationTypeValue | '';
   journal: PublicationChannel;
   issue: string;
-  pageStart: string;
-  pageEnd: string;
-  peerReviewed: boolean;
+  pagesFrom: string;
+  pagesTo: string;
+  peerReview: boolean;
   link: string;
   articleNumber: string;
 }
