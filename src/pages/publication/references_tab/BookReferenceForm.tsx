@@ -4,13 +4,12 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
 import { Checkbox, FormControl, FormControlLabel, InputLabel, MenuItem, Select, TextField } from '@material-ui/core';
-import CancelIcon from '@material-ui/icons/Cancel';
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 
 import { emptyPublisher, PublicationFormsData } from '../../../types/form.types';
 import { BookFieldNames, bookTypes } from '../../../types/references.types';
 import { PublicationTableNumber } from '../../../utils/constants';
 import JournalPublisherRow from './components/JournalPublisherRow';
+import NviValidation from './components/NviValidation';
 import PeerReview from './components/PeerReview';
 import PublicationChannelSearch from './components/PublicationChannelSearch';
 
@@ -38,41 +37,6 @@ const StyledLabel = styled.div`
 const StyledHeading = styled.div`
   font-size: 1.5rem;
   padding-top: 1.5rem;
-`;
-
-const StyledNviValidation = styled.div`
-  margin-top: 1rem;
-  display: grid;
-  grid-template-columns: 4rem auto;
-  grid-template-areas:
-    'icon header'
-    'icon information';
-  background-color: ${({ theme }) => theme.palette.background.default};
-  padding: 1rem 0;
-`;
-
-const StyledNviHeader = styled.div`
-  font-size: 1.5rem;
-  font-weight: bold;
-  grid-area: header;
-`;
-
-const StyledNviInformation = styled.div`
-  grid-area: information;
-`;
-
-const StyledCheckCircleIcon = styled(CheckCircleIcon)`
-  grid-area: icon;
-  color: green;
-  margin: 1rem;
-  font-size: 2rem;
-`;
-
-const StyledCancelIcon = styled(CancelIcon)`
-  grid-area: icon;
-  color: red;
-  margin: 1rem;
-  font-size: 2rem;
 `;
 
 const BookReferenceForm: FC = () => {
@@ -108,7 +72,7 @@ const BookReferenceForm: FC = () => {
               clearSearchField={value === emptyPublisher}
               label={t('references.publisher')}
               publicationTable={PublicationTableNumber.PUBLISHERS}
-              setValueFunction={value => setFieldValue(name, value ?? emptyPublisher)}
+              setValueFunction={inputValue => setFieldValue(name, inputValue ?? emptyPublisher)}
             />
             {value.title && (
               <JournalPublisherRow
@@ -126,11 +90,7 @@ const BookReferenceForm: FC = () => {
       </Field>
       <StyledSection>
         <StyledPeerReview>
-          <Field name={BookFieldNames.PEER_REVIEW}>
-            {({ field }: any) => (
-              <PeerReview field={field} label={t('references.peer_review')} setFieldValue={setFieldValue} />
-            )}
-          </Field>
+          <PeerReview fieldName={BookFieldNames.PEER_REVIEW} label={t('references.peer_review')} />
         </StyledPeerReview>
         <StyledTextBook>
           <Field name={BookFieldNames.TEXT_BOOK}>
@@ -141,7 +101,7 @@ const BookReferenceForm: FC = () => {
                   control={
                     <Checkbox
                       onChange={(event: ChangeEvent<HTMLInputElement>) => setFieldValue(name, event.target.checked)}
-                      checked={value || false}
+                      checked={!!value}
                     />
                   }
                   label={t('references.text_book_yes')}
@@ -163,7 +123,7 @@ const BookReferenceForm: FC = () => {
               clearSearchField={value === emptyPublisher}
               label={t('common:title')}
               publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
-              setValueFunction={value => setFieldValue(name, value ?? emptyPublisher)}
+              setValueFunction={inputValue => setFieldValue(name, inputValue ?? emptyPublisher)}
             />
             {value.title && (
               <JournalPublisherRow
@@ -176,32 +136,7 @@ const BookReferenceForm: FC = () => {
           </>
         )}
       </Field>
-      <StyledNviValidation>
-        <StyledNviHeader>{t('references.nvi_header')}</StyledNviHeader>
-        {isPeerReviewed ? (
-          isRatedBook ? (
-            <>
-              <StyledCheckCircleIcon />
-              <StyledNviInformation>{t('references.nvi_success')}</StyledNviInformation>
-            </>
-          ) : (
-            <>
-              <StyledCancelIcon />
-              <StyledNviInformation>
-                <div>{t('references.nvi_fail_rated_line1')}</div>
-                <div>{t('references.nvi_fail_rated_line2')}</div>
-              </StyledNviInformation>
-            </>
-          )
-        ) : (
-          <>
-            <StyledCancelIcon />
-            <StyledNviInformation>
-              <div>{t('references.nvi_fail_no_peer_review')}</div>
-            </StyledNviInformation>
-          </>
-        )}
-      </StyledNviValidation>
+      <NviValidation isPeerReviewed={isPeerReviewed} isRated={!!isRatedBook} />
     </>
   );
 };
