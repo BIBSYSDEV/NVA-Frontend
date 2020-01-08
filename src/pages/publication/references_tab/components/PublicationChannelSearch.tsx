@@ -11,6 +11,7 @@ import useDebounce from '../../../../utils/hooks/useDebounce';
 
 interface PublicationChannelSearchProps {
   clearSearchField: boolean;
+  dataTestId: string;
   label: string;
   publicationTable: PublicationTableNumber;
   setValueFunction: (value: any) => void;
@@ -18,6 +19,7 @@ interface PublicationChannelSearchProps {
 
 const PublicationChannelSearch: React.FC<PublicationChannelSearchProps> = ({
   clearSearchField,
+  dataTestId,
   label,
   publicationTable,
   setValueFunction,
@@ -53,6 +55,7 @@ const PublicationChannelSearch: React.FC<PublicationChannelSearchProps> = ({
   return (
     <AutoSearch
       clearSearchField={clearSearchField}
+      dataTestId={dataTestId}
       onInputChange={(_, value) => setSearchTerm(value)}
       searchResults={searchResults}
       setValueFunction={setValueFunction}

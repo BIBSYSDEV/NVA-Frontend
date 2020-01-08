@@ -68,12 +68,14 @@ const JournalPublicationReferenceForm: React.FC = () => {
           <>
             <PublicationChannelSearch
               clearSearchField={value === emptyPublisher}
+              dataTestId="autosearch-journal"
               label={t('publication:references.journal')}
               publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
               setValueFunction={inputValue => setFieldValue(name, inputValue ?? emptyPublisher)}
             />
             {value.title && (
               <JournalPublisherRow
+                dataTestId="autosearch-results-journal"
                 publisher={value}
                 label={t('references.journal')}
                 onClickDelete={() => setFieldValue(name, emptyPublisher)}
@@ -108,7 +110,7 @@ const JournalPublicationReferenceForm: React.FC = () => {
       <StyledPeerReview>
         <PeerReview fieldName={JournalPublicationFieldNames.PEER_REVIEW} label={t('references.peer_review')} />
       </StyledPeerReview>
-      <NviValidation isPeerReviewed={isPeerReviewed} isRated={!!isRatedJournal} />
+      <NviValidation isPeerReviewed={isPeerReviewed} isRated={!!isRatedJournal} dataTestId="nvi_journal" />
     </>
   );
 };

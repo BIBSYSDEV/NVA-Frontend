@@ -56,6 +56,7 @@ const StyledButton = styled(Button)`
 `;
 
 interface JournalPublisherRowProps {
+  dataTestId: string;
   hidePublisher?: boolean;
   publisher: Partial<PublicationChannel>;
   label: string;
@@ -63,6 +64,7 @@ interface JournalPublisherRowProps {
 }
 
 const JournalPublisherRow: React.FC<JournalPublisherRowProps> = ({
+  dataTestId,
   hidePublisher = false,
   publisher,
   label,
@@ -71,7 +73,7 @@ const JournalPublisherRow: React.FC<JournalPublisherRowProps> = ({
   const { t } = useTranslation('publication');
 
   return (
-    <StyledJournalPublisherRow>
+    <StyledJournalPublisherRow data-testid={dataTestId}>
       <StyledTitle>{label}</StyledTitle>
       <StyledLevelLabel>{t('references.level')}</StyledLevelLabel>
       {!hidePublisher && <StyledPublisherLabel>{t('references.publisher')}</StyledPublisherLabel>}

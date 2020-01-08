@@ -8,10 +8,11 @@ import { CristinProjectType, NormalizedProjectType } from '../../../types/projec
 import useDebounce from '../../../utils/hooks/useDebounce';
 
 interface ProjectSearchProps {
+  dataTestId: string;
   setValueFunction: (value: any) => void;
 }
 
-const ProjectSearch: React.FC<ProjectSearchProps> = ({ setValueFunction }) => {
+const ProjectSearch: React.FC<ProjectSearchProps> = ({ dataTestId, setValueFunction }) => {
   const [searchResults, setSearchResults] = useState<NormalizedProjectType[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [searching, setSearching] = useState(false);
@@ -44,6 +45,7 @@ const ProjectSearch: React.FC<ProjectSearchProps> = ({ setValueFunction }) => {
 
   return (
     <AutoSearch
+      dataTestId={dataTestId}
       onInputChange={(_, value) => setSearchTerm(value)}
       searchResults={searchResults}
       setValueFunction={setValueFunction}
