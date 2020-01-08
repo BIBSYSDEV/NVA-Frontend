@@ -1,4 +1,4 @@
-import { Reference, emptyPublisher } from './references.types';
+import { Reference, emptyReference } from './references.types';
 import { Project } from './project.types';
 import Contributor from './contributor.types';
 
@@ -108,33 +108,7 @@ export const emptyPublication: Publication = {
   },
   language: 'nb-NO', // enum?
   projects: [],
-  reference: {
-    type: '',
-    journalPublication: {
-      type: '',
-      link: '',
-      journal: {
-        issn: '',
-        level: '',
-        publisher: '',
-        title: '',
-      },
-      issue: '',
-      peerReview: false,
-      pagesFrom: '',
-      pagesTo: '',
-      articleNumber: '',
-    },
-    book: {
-      type: '',
-      publisher: emptyPublisher,
-      isbn: '',
-      peerReview: false,
-      textBook: false,
-      numberOfPages: '',
-      series: emptyPublisher,
-    },
-  },
+  reference: emptyReference,
   authors: [],
   contributors: [], // TODO: Merge with authors
   files: [],

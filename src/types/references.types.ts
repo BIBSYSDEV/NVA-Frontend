@@ -8,6 +8,7 @@ export interface Reference {
 interface journalPublication {
   type: JournalPublicationTypeValue | '';
   journal: Publisher;
+  volume: string;
   issue: string;
   pagesFrom: string;
   pagesTo: string;
@@ -34,6 +35,41 @@ export interface Publisher {
   level: string;
   publisher: string;
 }
+
+export const emptyPublisher: Publisher = {
+  issn: '',
+  level: '',
+  publisher: '',
+  title: '',
+};
+
+const emptyBookReference: Book = {
+  type: '',
+  publisher: emptyPublisher,
+  isbn: '',
+  peerReview: false,
+  textBook: false,
+  numberOfPages: '',
+  series: emptyPublisher,
+};
+
+const emptyJournalPublicationReference: journalPublication = {
+  type: '',
+  link: '',
+  journal: emptyPublisher,
+  volume: '',
+  issue: '',
+  peerReview: false,
+  pagesFrom: '',
+  pagesTo: '',
+  articleNumber: '',
+};
+
+export const emptyReference: Reference = {
+  type: '',
+  journalPublication: emptyJournalPublicationReference,
+  book: emptyBookReference,
+};
 
 type EnumDictionary<T extends string, U> = {
   [K in T]: U;
@@ -107,10 +143,3 @@ export enum BookFieldNames {
   NUMBER_OF_PAGES = 'reference.book.numberOfPages',
   SERIES = 'reference.book.series',
 }
-
-export const emptyPublisher: Publisher = {
-  issn: '',
-  level: '',
-  publisher: '',
-  title: '',
-};

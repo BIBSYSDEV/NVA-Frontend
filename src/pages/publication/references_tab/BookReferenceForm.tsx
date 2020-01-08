@@ -5,8 +5,7 @@ import styled from 'styled-components';
 
 import { Checkbox, FormControl, FormControlLabel, InputLabel, MenuItem, Select, TextField } from '@material-ui/core';
 
-import { emptyPublisher } from '../../../types/form.types';
-import { BookFieldNames, bookTypes } from '../../../types/references.types';
+import { BookFieldNames, bookTypes, emptyPublisher } from '../../../types/references.types';
 import { PublicationTableNumber } from '../../../utils/constants';
 import JournalPublisherRow from './components/JournalPublisherRow';
 import NviValidation from './components/NviValidation';
