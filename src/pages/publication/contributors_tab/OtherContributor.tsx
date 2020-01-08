@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { MenuItem } from '@material-ui/core';
 
 import ContributorType from '../../../types/contributor.types';
-import { PublicationFormsData } from '../../../types/form.types';
+import { Publication } from '../../../types/publication.types';
 import contributorTypes from '../../../utils/testfiles/contributor_types.json';
 import StyledContributor from './StyledContributor';
 
@@ -22,7 +22,7 @@ interface OtherContributorProps {
 }
 
 const OtherContributor: React.FC<OtherContributorProps> = ({ contributor, index, swap, remove }) => {
-  const { setFieldValue }: FormikProps<PublicationFormsData> = useFormikContext();
+  const { setFieldValue }: FormikProps<Publication> = useFormikContext();
 
   return (
     <Field name={`contributors[${index}]`}>

@@ -5,13 +5,14 @@ import styled from 'styled-components';
 
 import { FormControl, InputLabel, MenuItem, Select, TextField } from '@material-ui/core';
 
-import { emptyPublisher, PublicationFormsData } from '../../../types/form.types';
+import { emptyPublisher } from '../../../types/form.types';
 import { JournalPublicationFieldNames, journalPublicationTypes } from '../../../types/references.types';
 import { PublicationTableNumber } from '../../../utils/constants';
 import JournalPublisherRow from './components/JournalPublisherRow';
 import NviValidation from './components/NviValidation';
 import PeerReview from './components/PeerReview';
 import PublicationChannelSearch from './components/PublicationChannelSearch';
+import { Publication } from '../../../types/publication.types';
 
 const StyledArticleDetail = styled.div`
   display: grid;
@@ -35,11 +36,10 @@ const StyledPeerReview = styled.div`
 
 const JournalPublicationReferenceForm: React.FC = () => {
   const { t } = useTranslation('publication');
-  const { setFieldValue, values }: FormikProps<PublicationFormsData> = useFormikContext();
+  const { setFieldValue, values }: FormikProps<Publication> = useFormikContext();
 
   const isRatedJournal =
     values.reference?.journalPublication?.journal?.level && values.reference.journalPublication.journal.level !== '0';
-
   const isPeerReviewed = values.reference?.journalPublication?.peerReview;
 
   return (
@@ -108,7 +108,7 @@ const JournalPublicationReferenceForm: React.FC = () => {
       <StyledPeerReview>
         <PeerReview fieldName={JournalPublicationFieldNames.PEER_REVIEW} label={t('references.peer_review')} />
       </StyledPeerReview>
-      <NviValidation isPeerReviewed={isPeerReviewed} isRated={!!isRatedJournal} />
+      <NviValidation isPeerReviewed={!!isPeerReviewed} isRated={!!isRatedJournal} />
     </>
   );
 };

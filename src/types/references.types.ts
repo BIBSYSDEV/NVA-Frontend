@@ -7,7 +7,7 @@ export interface Reference {
 
 interface journalPublication {
   type: JournalPublicationTypeValue | '';
-  journal: PublicationChannel;
+  journal: Publisher;
   issue: string;
   pagesFrom: string;
   pagesTo: string;
@@ -18,12 +18,17 @@ interface journalPublication {
 
 interface Book {
   type: string;
-  publisher: string;
+  publisher: Publisher;
+  isbn: string;
+  peerReview: boolean;
+  textBook: boolean;
+  numberOfPages: string;
+  series: Publisher;
 }
 
 interface Report {}
 
-export interface PublicationChannel {
+export interface Publisher {
   title: string;
   issn: string;
   level: string;
@@ -102,3 +107,10 @@ export enum BookFieldNames {
   NUMBER_OF_PAGES = 'reference.book.numberOfPages',
   SERIES = 'reference.book.series',
 }
+
+export const emptyPublisher: Publisher = {
+  issn: '',
+  level: '',
+  publisher: '',
+  title: '',
+};

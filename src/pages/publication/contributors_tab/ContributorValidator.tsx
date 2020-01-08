@@ -7,7 +7,7 @@ import { MenuItem } from '@material-ui/core';
 import PersonIcon from '@material-ui/icons/Person';
 
 import ContributorType from '../../../types/contributor.types';
-import { PublicationFormsData } from '../../../types/form.types';
+import { Publication } from '../../../types/publication.types';
 import StyledContributor from './StyledContributor';
 
 const StyledContributorValidator = styled(StyledContributor.ContributorContainer)`
@@ -28,7 +28,7 @@ interface ContributorValidatorProps {
 
 const ContributorValidator: React.FC<ContributorValidatorProps> = ({ index, remove, swap }) => {
   const { t } = useTranslation();
-  const { setFieldValue }: FormikProps<PublicationFormsData> = useFormikContext();
+  const { setFieldValue }: FormikProps<Publication> = useFormikContext();
 
   const validateContributor = (name: string) => {
     name && setFieldValue(`authors[${index}].verified`, 'true');

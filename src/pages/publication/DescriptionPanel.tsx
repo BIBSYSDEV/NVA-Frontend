@@ -11,10 +11,10 @@ import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import Box from '../../components/Box';
 import TabPanel from '../../components/TabPanel/TabPanel';
 import { languages } from '../../translations/i18n';
-import { PublicationFormsData } from '../../types/form.types';
 import DisciplineSearch from './description_tab/DisciplineSearch';
 import FormikDatePicker from './description_tab/FormikDatePicker';
 import ProjectSearch from './description_tab/ProjectSearch';
+import { Publication } from '../../types/publication.types';
 
 const MultipleFieldWrapper = styled.div`
   display: flex;
@@ -48,7 +48,7 @@ interface DescriptionPanelProps {
 
 const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, savePublication }) => {
   const { t } = useTranslation();
-  const { setFieldTouched, setFieldValue }: FormikProps<PublicationFormsData> = useFormikContext();
+  const { setFieldTouched, setFieldValue }: FormikProps<Publication> = useFormikContext();
 
   // Validation messages won't show on fields that are not touched
   const setAllFieldsTouched = useCallback(() => {

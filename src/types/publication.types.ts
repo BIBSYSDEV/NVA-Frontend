@@ -1,4 +1,4 @@
-import { Reference } from './references.types';
+import { Reference, emptyPublisher } from './references.types';
 import { Project } from './project.types';
 import Contributor from './contributor.types';
 
@@ -127,7 +127,12 @@ export const emptyPublication: Publication = {
     },
     book: {
       type: '',
-      publisher: '',
+      publisher: emptyPublisher,
+      isbn: '',
+      peerReview: false,
+      textBook: false,
+      numberOfPages: '',
+      series: emptyPublisher,
     },
   },
   authors: [],

@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 import { FormControl, FormControlLabel, Radio, RadioGroup } from '@material-ui/core';
 
-import { PublicationFormsData } from '../../../../types/form.types';
+import { Publication } from '../../../../types/publication.types';
 
 const StyledLabel = styled.div`
   font-weight: bold;
@@ -19,7 +19,7 @@ interface PeerReviewProps {
 const PeerReview: FC<PeerReviewProps> = ({ fieldName, label }) => {
   const { t } = useTranslation('publication');
 
-  const { setFieldValue }: FormikProps<PublicationFormsData> = useFormikContext();
+  const { setFieldValue }: FormikProps<Publication> = useFormikContext();
 
   return (
     <Field name={fieldName}>

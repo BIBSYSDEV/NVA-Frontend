@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import * as Yup from 'yup';
 
 import TabPanel from '../../components/TabPanel/TabPanel';
-import { emptyPublicationFormData, PublicationFormsData } from '../../types/form.types';
 import ContributorsPanel from './ContributorsPanel';
 import DescriptionPanel from './DescriptionPanel';
 import FilesAndLicensePanel from './FilesAndLicensePanel';
@@ -72,7 +71,7 @@ const PublicationForm: React.FC = () => {
     setTabNumber(tabNumber + 1);
   };
 
-  const savePublication = async (values: PublicationFormsData) => {
+  const savePublication = async (values: Publication) => {
     console.log('Save publication:', values);
 
     clearLocalStorageFormData();
@@ -85,7 +84,7 @@ const PublicationForm: React.FC = () => {
         validationSchema={validationSchema}
         onSubmit={(values: any) => savePublication(values)}
         validateOnChange={false}>
-        {({ values, errors, touched }: FormikProps<PublicationFormsData>) => (
+        {({ values, errors, touched }: FormikProps<Publication>) => (
           <Form onBlur={() => setLocalStorageFormData(values)}>
             <PublicationFormTabs
               tabNumber={tabNumber}
