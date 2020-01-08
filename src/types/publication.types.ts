@@ -108,7 +108,9 @@ export const emptyPublication: Publication = {
   modified: '', // date?
   createdDate: '', // date?
   createdBy: '',
-  title: {},
+  title: {
+    no: '',
+  },
   abstract: '',
   description: '',
   npiDisciplines: [],
@@ -119,7 +121,7 @@ export const emptyPublication: Publication = {
     month: '',
     day: '',
   },
-  language: 'no', // enum?
+  language: 'nb-NO', // enum?
   projects: [],
   reference: {
     type: '',

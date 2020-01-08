@@ -30,12 +30,12 @@ const StyledFieldHeader = styled.header`
 `;
 
 enum DescriptionFieldNames {
-  TITLE = 'title',
+  TITLE = 'title.no',
   ABSTRACT = 'abstract',
   DESCRIPTION = 'description',
   NPI_DISCIPLINES = 'npiDisciplines',
   TAGS = 'tags',
-  PUBLICATION_DATE = 'publicationDate',
+  PUBLICATION_YEAR = 'publicationDate.year',
   LANGUAGE = 'language',
   PROJECTS = 'projects',
 }
@@ -115,6 +115,7 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, savePu
               </Field>
             </StyledFieldWrapper>
             <StyledFieldWrapper>
+              {/* TODO: Use <Chip /> or similar to visualize tags  */}
               <Field
                 aria-label="tags"
                 name={DescriptionFieldNames.TAGS}
@@ -128,8 +129,10 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, savePu
 
           <MultipleFieldWrapper>
             <StyledFieldWrapper>
-              {/* TODO: https://material-ui-pickers.dev/demo/datepicker#different-views */}
-              <Field aria-label="date" component={FormikDatePicker} name={DescriptionFieldNames.PUBLICATION_DATE} />
+              {/* TODO: Render three different Fields: year, month, date
+               *  https://material-ui-pickers.dev/demo/datepicker#different-views
+               */}
+              <Field aria-label="date" component={FormikDatePicker} name={DescriptionFieldNames.PUBLICATION_YEAR} />
             </StyledFieldWrapper>
 
             <StyledFieldWrapper>
