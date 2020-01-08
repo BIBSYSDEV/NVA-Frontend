@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
 import styled from 'styled-components';
 
 import { Button } from '@material-ui/core';
@@ -28,19 +29,19 @@ const StyledTitle = styled.div`
 interface LinkPublicationPanelProps {
   expanded: boolean;
   onChange: (event: React.ChangeEvent<any>, isExpanded: boolean) => void;
-  goToNextTab: () => void;
 }
 
-const LinkPublicationPanel: React.FC<LinkPublicationPanelProps> = ({ expanded, onChange, goToNextTab }) => {
+const LinkPublicationPanel: React.FC<LinkPublicationPanelProps> = ({ expanded, onChange }) => {
   const { t } = useTranslation();
   const [doiUrl, setDoiUrl] = useState('');
   const [doiTitle, setDoiTitle] = useState('');
   const dispatch = useDispatch();
+  const history = useHistory();
   const user = useSelector((state: RootStore) => state.user);
 
   const handleConfirm = () => {
     dispatch(createNewPublicationFromDoi(doiUrl, user.id, dispatch));
-    goToNextTab();
+    history.push('publications/new');
   };
 
   const handleSearch = async (values: any) => {

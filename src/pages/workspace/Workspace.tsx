@@ -4,14 +4,17 @@ import { Link } from 'react-router-dom';
 
 import { Button } from '@material-ui/core';
 
+import PublicationPanel from '../publication/PublicationPanel';
+
 const Workspace: React.FC = () => {
   const { t } = useTranslation();
-
   return (
     <>
-      <h1>{t('list_of_publications')}</h1>
+      <PublicationPanel />
       <Link to="/publications/new">
-        <Button>+ {t('new_registration')}</Button>
+        <Button color="primary" variant="contained">
+          {t('new_publication')}
+        </Button>
       </Link>
     </>
   );
