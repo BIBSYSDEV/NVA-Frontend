@@ -37,8 +37,7 @@ const JournalPublicationReferenceForm: React.FC = () => {
   const { t } = useTranslation('publication');
   const { setFieldValue, values }: FormikProps<PublicationFormsData> = useFormikContext();
 
-  const isRatedJournal =
-    values.reference?.journalPublication?.journal?.level && values.reference.journalPublication.journal.level !== '0';
+  const isRatedJournal = values.reference?.journalPublication?.journal?.level;
 
   const isPeerReviewed = values.reference?.journalPublication?.peerReview;
 

@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 
-import { getDataFromNsd } from '../../../../api/external/publicationChannelApi';
+import { getPublishers } from '../../../../api/publicationChannelApi';
 import { AutoSearch } from '../../../../components/AutoSearch';
 import { searchFailure } from '../../../../redux/actions/searchActions';
 import { PublicationChannel } from '../../../../types/references.types';
@@ -35,7 +35,7 @@ const PublicationChannelSearch: React.FC<PublicationChannelSearchProps> = ({
   const search = useCallback(
     async (searchTerm: string) => {
       setSearching(true);
-      const response = await getDataFromNsd(searchTerm, publicationTable);
+      const response = await getPublishers(searchTerm, publicationTable);
       if (response) {
         setSearchResults(response);
       } else {

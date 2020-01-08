@@ -20,10 +20,11 @@ export interface DescriptionFormData {
   project: string;
 }
 
-interface Publisher {
-  issn: string;
-  level: string;
+export interface Publisher {
+  level: number | null;
+  onlineIssn: string;
   publisher: string;
+  printIssn: string;
   title: string;
 }
 
@@ -66,8 +67,9 @@ export interface ReferenceFormData {
 }
 
 export const emptyPublisher: Publisher = {
-  issn: '',
-  level: '',
+  onlineIssn: '',
+  printIssn: '',
+  level: null,
   publisher: '',
   title: '',
 };
