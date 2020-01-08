@@ -57,7 +57,7 @@ const PublicationForm: React.FC = () => {
           isbn: Yup.string(),
           peerReview: Yup.bool(),
           textBook: Yup.bool(),
-          numberOfPages: Yup.number(),
+          numberOfPages: Yup.string(),
           series: Yup.string(),
         }),
       }),

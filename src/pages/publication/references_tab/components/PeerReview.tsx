@@ -8,7 +8,6 @@ import { FormControl, FormControlLabel, Radio, RadioGroup } from '@material-ui/c
 import { PublicationFormsData } from '../../../../types/form.types';
 
 const StyledLabel = styled.div`
-  color: ${({ theme }) => theme.palette.text.primary};
   font-weight: bold;
 `;
 
@@ -31,8 +30,14 @@ const PeerReview: FC<PeerReviewProps> = ({ fieldName, label }) => {
             <RadioGroup
               value={value ? 'true' : 'false'}
               onChange={event => setFieldValue(name, event.target.value === 'true')}>
-              <FormControlLabel control={<Radio value="true" />} label={t('references.is_peer_reviewed')} />
-              <FormControlLabel control={<Radio value="false" />} label={t('references.is_not_peer_reviewed')} />
+              <FormControlLabel
+                control={<Radio data-testid="peer_review-true" value="true" />}
+                label={t('references.is_peer_reviewed')}
+              />
+              <FormControlLabel
+                control={<Radio data-testid="peer_review-false" value="false" />}
+                label={t('references.is_not_peer_reviewed')}
+              />
             </RadioGroup>
           </FormControl>
         </>

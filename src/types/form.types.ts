@@ -43,7 +43,7 @@ export interface BookReferenceFormData {
   isbn: string;
   peerReview: boolean;
   textBook: boolean;
-  numberOfPages: number | undefined;
+  numberOfPages: string;
   series: Publisher;
 }
 
@@ -99,7 +99,7 @@ export const emptyBookReferenceFormData: BookReferenceFormData = {
   isbn: '',
   peerReview: false,
   textBook: false,
-  numberOfPages: 0,
+  numberOfPages: '',
   series: emptyPublisher,
 };
 

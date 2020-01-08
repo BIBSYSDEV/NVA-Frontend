@@ -68,25 +68,31 @@ const BookReferenceForm: FC = () => {
       <Field name={BookFieldNames.PUBLISHER}>
         {({ field: { name, value } }: any) => (
           <>
-            <PublicationChannelSearch
-              clearSearchField={value === emptyPublisher}
-              label={t('references.publisher')}
-              publicationTable={PublicationTableNumber.PUBLISHERS}
-              setValueFunction={inputValue => setFieldValue(name, inputValue ?? emptyPublisher)}
-            />
-            {value.title && (
-              <JournalPublisherRow
-                hidePublisher
+            <div data-testid="autosearch-publisher">
+              <PublicationChannelSearch
+                clearSearchField={value === emptyPublisher}
                 label={t('references.publisher')}
-                publisher={value}
-                onClickDelete={() => setFieldValue(name, emptyPublisher)}
+                publicationTable={PublicationTableNumber.PUBLISHERS}
+                setValueFunction={inputValue => setFieldValue(name, inputValue ?? emptyPublisher)}
               />
+            </div>
+            {value.title && (
+              <div data-testid="autosearch-results-publisher">
+                <JournalPublisherRow
+                  hidePublisher
+                  label={t('references.publisher')}
+                  publisher={value}
+                  onClickDelete={() => setFieldValue(name, emptyPublisher)}
+                />
+              </div>
             )}
           </>
         )}
       </Field>
       <Field name={BookFieldNames.ISBN}>
-        {({ field }: any) => <TextField variant="outlined" label={t('references.isbn')} {...field} />}
+        {({ field }: any) => (
+          <TextField data-testid="isbn" variant="outlined" label={t('references.isbn')} {...field} />
+        )}
       </Field>
       <StyledSection>
         <StyledPeerReview>
@@ -100,6 +106,7 @@ const BookReferenceForm: FC = () => {
                 <FormControlLabel
                   control={
                     <Checkbox
+                      data-testid="text_book"
                       onChange={(event: ChangeEvent<HTMLInputElement>) => setFieldValue(name, event.target.checked)}
                       checked={!!value}
                     />
@@ -112,31 +119,44 @@ const BookReferenceForm: FC = () => {
         </StyledTextBook>
       </StyledSection>
       <Field name={BookFieldNames.NUMBER_OF_PAGES}>
-        {({ field }: any) => <TextField variant="outlined" label={t('references.number_of_pages')} {...field} />}
+        {({ field }: any) => (
+          <TextField
+            data-testid="number_of_pages"
+            variant="outlined"
+            label={t('references.number_of_pages')}
+            {...field}
+          />
+        )}
       </Field>
       <StyledHeading>{t('references.series')}</StyledHeading>
       <StyledLabel>{t('references.series_info')}</StyledLabel>
       <Field name={BookFieldNames.SERIES}>
         {({ field: { name, value } }: any) => (
           <>
-            <PublicationChannelSearch
-              clearSearchField={value === emptyPublisher}
-              label={t('common:title')}
-              publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
-              setValueFunction={inputValue => setFieldValue(name, inputValue ?? emptyPublisher)}
-            />
-            {value.title && (
-              <JournalPublisherRow
-                hidePublisher
+            <div data-testid="autosearch-series">
+              <PublicationChannelSearch
+                clearSearchField={value === emptyPublisher}
                 label={t('common:title')}
-                publisher={value}
-                onClickDelete={() => setFieldValue(name, emptyPublisher)}
+                publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
+                setValueFunction={inputValue => setFieldValue(name, inputValue ?? emptyPublisher)}
               />
+            </div>
+            {value.title && (
+              <div data-testid="autosearch-results-series">
+                <JournalPublisherRow
+                  hidePublisher
+                  label={t('common:title')}
+                  publisher={value}
+                  onClickDelete={() => setFieldValue(name, emptyPublisher)}
+                />
+              </div>
             )}
           </>
         )}
       </Field>
-      <NviValidation isPeerReviewed={isPeerReviewed} isRated={!!isRatedBook} />
+      <div data-testid="nvi_book">
+        <NviValidation isPeerReviewed={isPeerReviewed} isRated={!!isRatedBook} />
+      </div>
     </>
   );
 };
