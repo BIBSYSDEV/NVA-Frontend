@@ -70,13 +70,13 @@ export const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, s
     <TabPanel ariaLabel="references" goToNextTab={goToNextTab} onClickSave={() => savePublication()}>
       <StyledSelectContainer>
         <Field name={ReferenceFieldNames.REFERENCE_TYPE}>
-          {({ field: { onChange, name, value } }: any) => (
+          {({ field }: any) => (
             <FormControl variant="outlined" fullWidth>
               <InputLabel>{t('common:type')}</InputLabel>
-              <Select value={value} onChange={onChange(name, value)} data-testid="reference_type">
-                {Object.keys(referenceTypeLanguageKeyMap).map(type => (
-                  <MenuItem value={type} key={type} data-testid={`reference_type-${type}`}>
-                    {t(referenceTypeLanguageKeyMap[type])}
+              <Select {...field} data-testid="reference_type">
+                {Object.entries(referenceTypeLanguageKeyMap).map(([key, value]) => (
+                  <MenuItem value={key} key={key} data-testid={`reference_type-${key}`}>
+                    {t(value)}
                   </MenuItem>
                 ))}
               </Select>

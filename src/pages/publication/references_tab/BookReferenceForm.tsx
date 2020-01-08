@@ -51,10 +51,10 @@ const BookReferenceForm: FC = () => {
   return (
     <>
       <Field name={BookFieldNames.TYPE}>
-        {({ field: { onChange, name, value } }: any) => (
+        {({ field }: any) => (
           <FormControl variant="outlined" fullWidth>
             <InputLabel>{t('common:type')}</InputLabel>
-            <Select value={value} onChange={onChange(name, value)}>
+            <Select {...field}>
               {bookTypes.map(type => (
                 <MenuItem value={type.value} key={type.value}>
                   {t(type.label)}
@@ -108,7 +108,7 @@ const BookReferenceForm: FC = () => {
                     <Checkbox
                       data-testid="text_book"
                       onChange={(event: ChangeEvent<HTMLInputElement>) => setFieldValue(name, event.target.checked)}
-                      checked={!!value}
+                      checked={value}
                     />
                   }
                   label={t('references.text_book_yes')}

@@ -45,10 +45,10 @@ const JournalPublicationReferenceForm: React.FC = () => {
   return (
     <>
       <Field name={JournalPublicationFieldNames.TYPE} variant="outlined" fullWidth>
-        {({ field: { onChange, value } }: any) => (
+        {({ field }: any) => (
           <FormControl variant="outlined" fullWidth>
             <InputLabel>{t('common:type')}</InputLabel>
-            <Select value={value} onChange={onChange(JournalPublicationFieldNames.TYPE, value)}>
+            <Select {...field}>
               {journalPublicationTypes.map(type => (
                 <MenuItem value={type.value} key={type.value}>
                   {t(type.label)}
