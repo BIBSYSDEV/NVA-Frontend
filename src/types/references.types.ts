@@ -30,6 +30,10 @@ export interface PublicationChannel {
   publisher: string;
 }
 
+type EnumDictionary<T extends string, U> = {
+  [K in T]: U;
+};
+
 export enum ReferenceType {
   PUBLICATION_IN_JOURNAL = 'journalPublication',
   BOOK = 'book',
@@ -37,6 +41,14 @@ export enum ReferenceType {
   DEGREE = 'degree',
   CHAPTER = 'chapter',
 }
+
+export const referenceTypeLanguageKeyMap: EnumDictionary<string, string> = {
+  [ReferenceType.PUBLICATION_IN_JOURNAL]: 'references.journal_publication',
+  [ReferenceType.BOOK]: 'references.book',
+  [ReferenceType.REPORT]: 'references.report',
+  [ReferenceType.DEGREE]: 'references.degree',
+  [ReferenceType.CHAPTER]: 'references.chapter',
+};
 
 enum JournalPublicationTypeValue {
   ARTICLE = 'article',
@@ -46,20 +58,6 @@ enum JournalPublicationTypeValue {
   REVIEW = 'review',
 }
 
-enum BookTypeValue {
-  MONOGRAPHY = 'monography',
-  ANTHOLOGY = 'anthology',
-}
-
-// Arrays of types, with i18n-key for label and values
-export const referenceTypeList = [
-  { label: 'references.journal_publication', value: ReferenceType.PUBLICATION_IN_JOURNAL },
-  { label: 'references.book', value: ReferenceType.BOOK },
-  { label: 'references.report', value: ReferenceType.REPORT },
-  { label: 'references.degree', value: ReferenceType.DEGREE },
-  { label: 'references.chapter', value: ReferenceType.CHAPTER },
-];
-
 export const journalPublicationTypes = [
   { label: 'references.article', value: JournalPublicationTypeValue.ARTICLE },
   { label: 'references.short_communication', value: JournalPublicationTypeValue.SHORT_COMMUNICATION },
@@ -67,6 +65,11 @@ export const journalPublicationTypes = [
   { label: 'references.letter', value: JournalPublicationTypeValue.LETTER },
   { label: 'references.review', value: JournalPublicationTypeValue.REVIEW },
 ];
+
+export enum BookTypeValue {
+  MONOGRAPHY = 'monography',
+  ANTHOLOGY = 'anthology',
+}
 
 export const bookTypes = [
   { label: 'references.monography', value: BookTypeValue.MONOGRAPHY },
@@ -78,12 +81,24 @@ export enum ReferenceFieldNames {
   REFERENCE_TYPE = 'reference.type',
 }
 
-export enum journalPublicationFieldNames {
+export enum JournalPublicationFieldNames {
   TYPE = 'reference.journalPublication.type',
   DOI = 'reference.journalPublication.doi',
+  JOURNAL = 'reference.journalPublication.journal',
+  VOLUME = 'reference.journalPublication.volume',
+  ISSUE = 'reference.journalPublication.issue',
+  PAGES_FROM = 'reference.journalPublication.pagesFrom',
+  PAGES_TO = 'reference.journalPublication.pagesTo',
+  ARTICLE_NUMBER = 'reference.journalPublication.articleNumber',
+  PEER_REVIEW = 'reference.journalPublication.peerReview',
 }
 
 export enum BookFieldNames {
   TYPE = 'reference.book.type',
   PUBLISHER = 'reference.book.publisher',
+  ISBN = 'reference.book.isbn',
+  PEER_REVIEW = 'reference.book.peerReview',
+  TEXT_BOOK = 'reference.book.textBook',
+  NUMBER_OF_PAGES = 'reference.book.numberOfPages',
+  SERIES = 'reference.book.series',
 }

@@ -1,5 +1,4 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 
 import TabPanel from '../../components/TabPanel/TabPanel';
 import Contributors from './contributors_tab/Contributors';
@@ -10,19 +9,11 @@ interface ContributorsPanelProps {
   savePublication: (event: React.MouseEvent<any>) => void;
 }
 
-const ContributorsPanel: React.FC<ContributorsPanelProps> = ({ goToNextTab, savePublication }) => {
-  const { t } = useTranslation('publication');
-
-  return (
-    <TabPanel
-      ariaLabel="references"
-      goToNextTab={goToNextTab}
-      onClickSave={savePublication}
-      heading={t('heading.contributors')}>
-      <Contributors />
-      <OtherContributors />
-    </TabPanel>
-  );
-};
+const ContributorsPanel: React.FC<ContributorsPanelProps> = ({ goToNextTab, savePublication }) => (
+  <TabPanel ariaLabel="references" goToNextTab={goToNextTab} onClickSave={savePublication}>
+    <Contributors />
+    <OtherContributors />
+  </TabPanel>
+);
 
 export default ContributorsPanel;

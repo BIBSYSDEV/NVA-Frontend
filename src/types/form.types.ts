@@ -21,13 +21,15 @@ export interface DescriptionFormData {
   project: string;
 }
 
+interface Publisher {
+  issn: string;
+  level: string;
+  publisher: string;
+  title: string;
+}
+
 export interface ReferencesFormData {
-  publisher: {
-    issn: string;
-    level: string;
-    publisher: string;
-    title: string;
-  };
+  publisher: Publisher;
   referenceType: ReferenceType;
 }
 
@@ -38,13 +40,18 @@ export interface ContributorsFormData {
 
 export interface BookReferenceFormData {
   type: string;
-  publisher: string;
+  publisher: Publisher;
+  isbn: string;
+  peerReview: boolean;
+  textBook: boolean;
+  numberOfPages: string;
+  series: Publisher;
 }
 
 export interface JournalPublicationReferenceFormData {
   type: string;
   doi: string;
-  journal: string;
+  journal: Publisher;
   volume: string;
   issue: string;
   peerReview: boolean;
@@ -59,6 +66,13 @@ export interface ReferenceFormData {
   journalPublication: JournalPublicationReferenceFormData;
 }
 
+export const emptyPublisher: Publisher = {
+  issn: '',
+  level: '',
+  publisher: '',
+  title: '',
+};
+
 export const emptyDescriptionFormData: DescriptionFormData = {
   title: '',
   abstract: '',
@@ -71,12 +85,7 @@ export const emptyDescriptionFormData: DescriptionFormData = {
 };
 
 export const emptyReferencesForm: ReferencesFormData = {
-  publisher: {
-    issn: '',
-    level: '',
-    publisher: '',
-    title: '',
-  },
+  publisher: emptyPublisher,
   referenceType: ReferenceType.PUBLICATION_IN_JOURNAL,
 };
 
@@ -87,13 +96,18 @@ export const emptyContributorsFormData: ContributorsFormData = {
 
 export const emptyBookReferenceFormData: BookReferenceFormData = {
   type: '',
-  publisher: '',
+  publisher: emptyPublisher,
+  isbn: '',
+  peerReview: false,
+  textBook: false,
+  numberOfPages: '',
+  series: emptyPublisher,
 };
 
 export const emptyJournalPublicationReferenceFormData: JournalPublicationReferenceFormData = {
   type: '',
   doi: '',
-  journal: '',
+  journal: emptyPublisher,
   volume: '',
   issue: '',
   peerReview: false,

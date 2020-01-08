@@ -9,7 +9,7 @@ describe('Publication', () => {
     cy.get('[data-testid=menu]').should('be.visible');
     cy.get('[data-testid=menu]').contains('Test User');
 
-    cy.get('[data-testid=new-registration-button]').click({ force: true });
+    cy.get('[data-testid=new-publication-button]').click({ force: true });
     cy.url().should('include', '/publications/new');
   });
 

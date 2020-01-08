@@ -1,3 +1,4 @@
+import { Field, FormikProps, useFormikContext } from 'formik';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -5,7 +6,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 import ContributorType from '../../../types/contributor.types';
 import ContributorStyles from './StyledContributor';
-import { Field, useFormikContext, FormikProps } from 'formik';
+import { Publication } from '../../../types/publication.types';
 
 const StyledContainer = styled(ContributorStyles.ContributorContainer)`
   margin-bottom: 0.5rem;
@@ -24,7 +25,7 @@ interface ContributorProps {
 }
 
 const Contributor: React.FC<ContributorProps> = ({ contributor, index, swap, remove }) => {
-  const { setFieldValue, values }: FormikProps<any> = useFormikContext();
+  const { setFieldValue, values }: FormikProps<Publication> = useFormikContext();
 
   return (
     <Field name={`authors[${index}]`}>
