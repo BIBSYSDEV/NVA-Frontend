@@ -1,7 +1,9 @@
+import { FormikErrors, FormikTouched } from 'formik';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+
 import { Tabs } from '@material-ui/core';
-import { FormikErrors, FormikTouched } from 'formik';
+
 import LinkTab from '../../components/TabPanel/LinkTab';
 import { PublicationFormsData } from '../../types/form.types';
 
@@ -9,6 +11,7 @@ const a11yProps = (tabDescription: string) => {
   return {
     id: `nav-tab-${tabDescription}`,
     'aria-controls': `nav-tabpanel-${tabDescription}`,
+    'data-testid': `nav-tabpanel-${tabDescription}`,
   };
 };
 

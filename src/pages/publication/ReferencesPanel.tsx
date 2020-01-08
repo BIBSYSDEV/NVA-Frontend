@@ -73,9 +73,9 @@ export const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, s
           {({ field: { onChange, name, value } }: any) => (
             <FormControl variant="outlined" fullWidth>
               <InputLabel>{t('common:type')}</InputLabel>
-              <Select value={value} onChange={onChange(name, value)}>
+              <Select value={value} onChange={onChange(name, value)} data-testid="reference_type">
                 {Object.keys(referenceTypeLanguageKeyMap).map(type => (
-                  <MenuItem value={type} key={type} data-testid={`referenceType-${type}`}>
+                  <MenuItem value={type} key={type} data-testid={`reference_type-${type}`}>
                     {t(referenceTypeLanguageKeyMap[type])}
                   </MenuItem>
                 ))}
@@ -88,7 +88,9 @@ export const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, s
       {referenceType && (
         <StyledBox>
           <Box>
-            <StyledTypeHeading>{t(referenceTypeLanguageKeyMap[referenceType])}</StyledTypeHeading>
+            <StyledTypeHeading data-testid="reference_type-heading">
+              {t(referenceTypeLanguageKeyMap[referenceType])}
+            </StyledTypeHeading>
             {referenceType === ReferenceType.BOOK && <BookReferenceForm />}
             {referenceType === ReferenceType.CHAPTER && <ChapterReferenceForm />}
             {referenceType === ReferenceType.REPORT && <ReportReferenceForm />}
