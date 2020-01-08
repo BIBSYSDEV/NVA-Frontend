@@ -1,5 +1,6 @@
 import { Reference } from './references.types';
 import { Project } from './project.types';
+import Contributor from './contributor.types';
 
 export enum PublicationType {
   TEXT = 'text',
@@ -53,22 +54,6 @@ export interface DoiPublication {
 interface NpiDiscipline {
   id: string;
   title: string;
-}
-
-interface Institution {
-  id: string;
-  name: string;
-  institution?: Institution;
-}
-
-// TODO: lokk at contributor.types
-interface Contributor {
-  type: string; // enum?
-  name: string;
-  institution?: Institution;
-  corresponding?: boolean;
-  email?: string;
-  orcid?: string;
 }
 
 interface File {
@@ -148,13 +133,4 @@ export const emptyPublication: Publication = {
   authors: [],
   contributors: [], // TODO: Merge with authors
   files: [],
-};
-
-export const emptyContributor: Contributor = {
-  type: '', // enum?
-  name: '',
-  institution: undefined,
-  corresponding: false,
-  email: '',
-  orcid: '',
 };

@@ -37,14 +37,14 @@ const Contributor: React.FC<ContributorProps> = ({ contributor, index, swap, rem
               return (
                 <StyledInstitutionSelect
                   onChange={event => setFieldValue(field.name, event.target.value)}
-                  value={contributor.selectedInstitution || ''}
+                  value={contributor.institution || ''}
                   variant="outlined">
                   <MenuItem value="" key="-1" />
-                  {contributor?.institutions?.map(institution => (
+                  {/* {contributor?.institutions?.map(institution => (
                     <MenuItem value={institution} key={institution}>
                       {institution}
                     </MenuItem>
-                  ))}
+                  ))} */}
                 </StyledInstitutionSelect>
               );
             }}

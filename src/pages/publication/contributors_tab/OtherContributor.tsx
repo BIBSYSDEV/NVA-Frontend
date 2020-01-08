@@ -58,11 +58,11 @@ const OtherContributor: React.FC<OtherContributorProps> = ({ contributor, index,
                     variant="outlined"
                     onChange={event => setFieldValue(field.name, event?.target.value)}>
                     <MenuItem value="" key="-1" />
-                    {contributor?.institutions?.map(institution => (
+                    {/* {contributor?.institutions?.map(institution => (
                       <MenuItem value={institution} key={institution}>
                         {institution}
                       </MenuItem>
-                    ))}
+                    ))} */}
                   </StyledContributor.InstitutionSelect>
                 );
               }}
