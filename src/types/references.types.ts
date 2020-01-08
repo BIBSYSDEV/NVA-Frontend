@@ -50,6 +50,16 @@ export const bookTypes = [
   { label: 'references.anthology', value: BookTypeValue.ANTHOLOGY },
 ];
 
+export enum ReportTypeValue {
+  MONOGRAPHY = 'monography',
+  ANTHOLOGY = 'anthology',
+}
+
+export const reportTypes = [
+  { label: 'references.monography', value: BookTypeValue.MONOGRAPHY },
+  { label: 'references.anthology', value: BookTypeValue.ANTHOLOGY },
+];
+
 // Values represent name for fields used by Formik
 export enum ReferenceFieldNames {
   REFERENCE_TYPE = 'reference.referenceType',
@@ -73,6 +83,14 @@ export enum BookFieldNames {
   ISBN = 'reference.book.isbn',
   PEER_REVIEW = 'reference.book.peerReview',
   TEXT_BOOK = 'reference.book.textBook',
+  NUMBER_OF_PAGES = 'reference.book.numberOfPages',
+  SERIES = 'reference.book.series',
+}
+
+export enum ReportFieldNames {
+  TYPE = 'reference.book.type',
+  PUBLISHER = 'reference.book.publisher',
+  ISBN = 'reference.book.isbn',
   NUMBER_OF_PAGES = 'reference.book.numberOfPages',
   SERIES = 'reference.book.series',
 }
