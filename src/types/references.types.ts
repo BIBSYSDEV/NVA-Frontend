@@ -51,13 +51,17 @@ export const bookTypes = [
 ];
 
 export enum ReportTypeValue {
-  MONOGRAPHY = 'monography',
-  ANTHOLOGY = 'anthology',
+  REPORT = 'report',
+  RESEARCH_REPORT = 'research_report',
+  POLICY_REPORT = 'policy_report',
+  WORK_NOTE = 'work_note',
 }
 
 export const reportTypes = [
-  { label: 'references.monography', value: BookTypeValue.MONOGRAPHY },
-  { label: 'references.anthology', value: BookTypeValue.ANTHOLOGY },
+  { label: 'references.report', value: ReportTypeValue.REPORT },
+  { label: 'references.research_report', value: ReportTypeValue.RESEARCH_REPORT },
+  { label: 'references.policy_report', value: ReportTypeValue.POLICY_REPORT },
+  { label: 'references.work_note', value: ReportTypeValue.WORK_NOTE },
 ];
 
 // Values represent name for fields used by Formik
@@ -88,9 +92,9 @@ export enum BookFieldNames {
 }
 
 export enum ReportFieldNames {
-  TYPE = 'reference.book.type',
-  PUBLISHER = 'reference.book.publisher',
-  ISBN = 'reference.book.isbn',
-  NUMBER_OF_PAGES = 'reference.book.numberOfPages',
-  SERIES = 'reference.book.series',
+  TYPE = 'reference.report.type',
+  PUBLISHER = 'reference.report.publisher',
+  ISBN = 'reference.report.isbn',
+  NUMBER_OF_PAGES = 'reference.report.numberOfPages',
+  SERIES = 'reference.report.series',
 }
