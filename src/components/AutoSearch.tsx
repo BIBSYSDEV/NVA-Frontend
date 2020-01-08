@@ -6,6 +6,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import { MINIMUM_SEARCH_CHARACTERS } from '../utils/constants';
 
 interface AutoSearchProps {
+  clearSearchField?: boolean;
   onInputChange?: (event: object, value: string) => void;
   searchResults: any;
   setValueFunction: (value: any) => void;
@@ -14,12 +15,14 @@ interface AutoSearchProps {
 }
 
 export const AutoSearch: React.FC<AutoSearchProps> = ({
+  clearSearchField,
   onInputChange,
   searchResults,
   setValueFunction,
   label,
   groupBy,
 }) => {
+  const [value, setValue] = useState({ title: '' });
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -30,6 +33,13 @@ export const AutoSearch: React.FC<AutoSearchProps> = ({
       setLoading(false);
     }
   }, [searchResults]);
+
+  useEffect(() => {
+    if (clearSearchField) {
+      setOptions([]);
+      setValue({ title: '' });
+    }
+  }, [clearSearchField]);
 
   return (
     <Autocomplete
@@ -45,12 +55,14 @@ export const AutoSearch: React.FC<AutoSearchProps> = ({
         setValueFunction(value);
       }}
       onInputChange={(event: object, value: string) => {
+        setValue({ title: value });
         value.length >= MINIMUM_SEARCH_CHARACTERS && options.length === 0 && setLoading(true);
         open && value.length >= MINIMUM_SEARCH_CHARACTERS && onInputChange && onInputChange(event, value);
       }}
       getOptionLabel={option => option.title}
       options={options}
       loading={loading}
+      value={value}
       groupBy={groupBy}
       renderInput={params => (
         <TextField

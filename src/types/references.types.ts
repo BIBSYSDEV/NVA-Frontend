@@ -1,3 +1,7 @@
+type EnumDictionary<T extends string, U> = {
+  [K in T]: U;
+};
+
 export enum ReferenceType {
   PUBLICATION_IN_JOURNAL = 'journalPublication',
   BOOK = 'book',
@@ -6,17 +10,16 @@ export enum ReferenceType {
   CHAPTER = 'chapter',
 }
 
-export const referenceTypeList = [
-  { label: 'references.journal_publication', value: ReferenceType.PUBLICATION_IN_JOURNAL },
-  { label: 'references.book', value: ReferenceType.BOOK },
-  { label: 'references.report', value: ReferenceType.REPORT },
-  { label: 'references.degree', value: ReferenceType.DEGREE },
-  { label: 'references.chapter', value: ReferenceType.CHAPTER },
-];
+export const referenceTypeLanguageKeyMap: EnumDictionary<string, string> = {
+  [ReferenceType.PUBLICATION_IN_JOURNAL]: 'references.journal_publication',
+  [ReferenceType.BOOK]: 'references.book',
+  [ReferenceType.REPORT]: 'references.report',
+  [ReferenceType.DEGREE]: 'references.degree',
+  [ReferenceType.CHAPTER]: 'references.chapter',
+};
 
 export interface PublicationChannel {
   title: string;
-  issn: string;
   level: string | null;
   publisher: string;
 }
@@ -37,7 +40,7 @@ export const journalPublicationTypes = [
   { label: 'references.review', value: JournalPublicationTypeValue.REVIEW },
 ];
 
-enum BookTypeValue {
+export enum BookTypeValue {
   MONOGRAPHY = 'monography',
   ANTHOLOGY = 'anthology',
 }
@@ -52,12 +55,24 @@ export enum ReferenceFieldNames {
   REFERENCE_TYPE = 'reference.referenceType',
 }
 
-export enum journalPublicationFieldNames {
+export enum JournalPublicationFieldNames {
   TYPE = 'reference.journalPublication.type',
   DOI = 'reference.journalPublication.doi',
+  JOURNAL = 'reference.journalPublication.journal',
+  VOLUME = 'reference.journalPublication.volume',
+  ISSUE = 'reference.journalPublication.issue',
+  PAGES_FROM = 'reference.journalPublication.pagesFrom',
+  PAGES_TO = 'reference.journalPublication.pagesTo',
+  ARTICLE_NUMBER = 'reference.journalPublication.articleNumber',
+  PEER_REVIEW = 'reference.journalPublication.peerReview',
 }
 
 export enum BookFieldNames {
   TYPE = 'reference.book.type',
   PUBLISHER = 'reference.book.publisher',
+  ISBN = 'reference.book.isbn',
+  PEER_REVIEW = 'reference.book.peerReview',
+  TEXT_BOOK = 'reference.book.textBook',
+  NUMBER_OF_PAGES = 'reference.book.numberOfPages',
+  SERIES = 'reference.book.series',
 }

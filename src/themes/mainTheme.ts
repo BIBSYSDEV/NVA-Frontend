@@ -83,11 +83,6 @@ export default createMuiTheme({
     MuiExpansionPanelDetails: {
       root: { background: Colors.ExpandedPanel },
     },
-    MuiFormControl: {
-      root: {
-        width: '100%',
-      },
-    },
     MuiFormLabel: {
       root: {
         background: Colors.Background,

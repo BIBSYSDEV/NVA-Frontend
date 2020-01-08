@@ -1,13 +1,13 @@
+import { Field, FormikProps, useFormikContext } from 'formik';
 import React from 'react';
 import styled from 'styled-components';
 
 import { MenuItem } from '@material-ui/core';
 
 import ContributorType from '../../../types/contributor.types';
+import { PublicationFormsData } from '../../../types/form.types';
 import contributorTypes from '../../../utils/testfiles/contributor_types.json';
-import ContributorStyles from './StyledContributor';
 import StyledContributor from './StyledContributor';
-import { Field, useFormikContext, FormikProps } from 'formik';
 
 const StyledNameInput = styled(Field)`
   background-color: ${({ theme }) => theme.palette.background.default};
@@ -22,7 +22,7 @@ interface OtherContributorProps {
 }
 
 const OtherContributor: React.FC<OtherContributorProps> = ({ contributor, index, swap, remove }) => {
-  const { setFieldValue }: FormikProps<any> = useFormikContext();
+  const { setFieldValue }: FormikProps<PublicationFormsData> = useFormikContext();
 
   return (
     <Field name={`contributors.authors[${index}]`}>
@@ -67,7 +67,7 @@ const OtherContributor: React.FC<OtherContributorProps> = ({ contributor, index,
                 );
               }}
             </Field>
-            <ContributorStyles.ContributorsArrows
+            <StyledContributor.ContributorsArrows
               first={index === 0}
               last={index === values.contributors.contributors.length - 1}
               swap={swap}
