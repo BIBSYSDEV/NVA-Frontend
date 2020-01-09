@@ -8,6 +8,7 @@ import LinkTab from '../../components/TabPanel/LinkTab';
 import { Publication } from '../../types/publication.types';
 import { DescriptionFieldNames } from './DescriptionPanel';
 import { ReferenceFieldNames, JournalArticleFieldNames, BookFieldNames } from '../../types/references.types';
+import { getObjectValueByFieldName } from '../../utils/helpers';
 
 const a11yProps = (tabDescription: string) => {
   return {
@@ -69,9 +70,4 @@ const hasTouchedError = (errors: FormikErrors<any>, touched: FormikTouched<any>,
     const fieldIsTouched = getObjectValueByFieldName(touched, fieldName);
     return fieldHasError && fieldIsTouched;
   });
-};
-
-// Inspired by https://stackoverflow.com/a/6394168
-const getObjectValueByFieldName = (object: any, keyString: string) => {
-  return keyString.split('.').reduce((obj, key): any => obj && obj[key], object);
 };
