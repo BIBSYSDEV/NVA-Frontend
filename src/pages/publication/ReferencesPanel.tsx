@@ -3,7 +3,7 @@ import React, { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
+import { FormControl, InputLabel, MenuItem, Select, FormHelperText } from '@material-ui/core';
 
 import Box from '../../components/Box';
 import TabPanel from '../../components/TabPanel/TabPanel';
@@ -70,8 +70,8 @@ export const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, s
     <TabPanel ariaLabel="references" goToNextTab={goToNextTab} onClickSave={() => savePublication()}>
       <StyledSelectContainer>
         <Field name={ReferenceFieldNames.REFERENCE_TYPE}>
-          {({ field }: any) => (
-            <FormControl variant="outlined" fullWidth>
+          {({ field, meta: { error } }: any) => (
+            <FormControl variant="outlined" fullWidth error={!!error}>
               <InputLabel>{t('common:type')}</InputLabel>
               <Select {...field} data-testid="reference_type">
                 {Object.entries(referenceTypeLanguageKeyMap).map(([key, value]) => (
@@ -80,6 +80,7 @@ export const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, s
                   </MenuItem>
                 ))}
               </Select>
+              <FormHelperText>{error}</FormHelperText>
             </FormControl>
           )}
         </Field>
