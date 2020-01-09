@@ -65,6 +65,17 @@ const PublicationForm: React.FC = () => {
           series: Yup.string(),
         }),
       }),
+
+      report: Yup.object().when('referenceType', {
+        is: ReferenceType.REPORT,
+        then: Yup.object().shape({
+          type: Yup.string(),
+          publisher: Yup.object(),
+          isbn: Yup.string(),
+          numberOfPages: Yup.string(),
+          series: Yup.string(),
+        }),
+      }),
     }),
   });
 

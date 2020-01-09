@@ -1,25 +1,16 @@
-// ***********************************************
-// This example commands.js shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add("login", (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add("drag", { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add("dismiss", { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This is will overwrite an existing command --
-// Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+Cypress.Commands.add('mocklogin', () => {
+  // ignore the modal
+  window.localStorage.setItem('showAuthorityModal', 'false');
+  window.localStorage.setItem('showOrcidModal', 'false');
+
+  // log in
+  cy.get('[data-testid=login-button]').click({ force: true });
+
+  // set language
+  cy.get('[data-testid=menu]').click({ force: true });
+  cy.get('[data-testid=user-profile-button]').click({ force: true });
+
+  // need to set language to english in order to check that the translated values are correct
+  cy.get('[data-testid=language-selector] .MuiSelect-root').click({ force: true });
+  cy.get('[data-testid=user-language-en-US]').click({ force: true });
+});
