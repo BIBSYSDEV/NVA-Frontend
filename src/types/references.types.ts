@@ -65,7 +65,7 @@ const emptyJournalArticleReference: JournalArticle = {
   articleNumber: '',
 };
 
-const emptyReportReferenceFormData: ReportReferenceFormData = {
+const emptyReportReference: ReportReference = {
   type: '',
   publisher: emptyPublisher,
   isbn: '',
@@ -77,7 +77,7 @@ export const emptyReference: Reference = {
   type: '',
   journalArticle: emptyJournalArticleReference,
   book: emptyBookReference,
-  report: emptyReportReferenceFormData,
+  report: emptyReportReference,
 };
 
 type EnumDictionary<T extends string, U> = {
@@ -175,7 +175,7 @@ export enum ReportFieldNames {
   SERIES = 'reference.report.series',
 }
 
-export interface ReportReferenceFormData {
+export interface ReportReference {
   type: string;
   publisher: Publisher;
   isbn: string;

@@ -69,14 +69,14 @@ const ReportReferenceForm: FC = () => {
         )}
       </Field>
       <div>
-        <Field name={ReportFieldNames.ISBN}>
+        <Field name={ReportFieldNames.ISBN} fullWidth>
           {({ field }: any) => (
             <TextField data-testid="isbn" variant="outlined" label={t('references.isbn')} {...field} />
           )}
         </Field>
       </div>
       <div>
-        <Field name={ReportFieldNames.NUMBER_OF_PAGES}>
+        <Field name={ReportFieldNames.NUMBER_OF_PAGES} fullWidth>
           {({ field }: any) => (
             <TextField
               data-testid="number_of_pages"
