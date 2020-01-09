@@ -5,11 +5,11 @@ import styled from 'styled-components';
 
 import { FormControl, InputLabel, MenuItem, Select, TextField } from '@material-ui/core';
 
-import { emptyPublisher, PublicationFormsData } from '../../../types/form.types';
-import { ReportFieldNames, reportTypes } from '../../../types/references.types';
 import { PublicationTableNumber } from '../../../utils/constants';
 import JournalPublisherRow from './components/JournalPublisherRow';
 import PublicationChannelSearch from './components/PublicationChannelSearch';
+import { emptyPublisher, ReportFieldNames, reportTypes } from '../../../types/references.types';
+import { Publication } from '../../../types/publication.types';
 
 const StyledLabel = styled.div`
   color: ${({ theme }) => theme.palette.text.primary};
@@ -25,7 +25,7 @@ const StyledHeading = styled.div`
 const ReportReferenceForm: FC = () => {
   const { t } = useTranslation('publication');
 
-  const { setFieldValue }: FormikProps<PublicationFormsData> = useFormikContext();
+  const { setFieldValue }: FormikProps<Publication> = useFormikContext();
 
   return (
     <>
