@@ -1,4 +1,4 @@
-import { Field, FormikProps, useFormikContext } from 'formik';
+import { Field, FormikProps, useFormikContext, ErrorMessage } from 'formik';
 import React, { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
@@ -70,8 +70,8 @@ export const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, s
     <TabPanel ariaLabel="references" goToNextTab={goToNextTab} onClickSave={() => savePublication()}>
       <StyledSelectContainer>
         <Field name={ReferenceFieldNames.REFERENCE_TYPE}>
-          {({ field, meta: { error } }: any) => (
-            <FormControl variant="outlined" fullWidth error={!!error}>
+          {({ field, meta: { error, touched } }: any) => (
+            <FormControl variant="outlined" fullWidth error={!!error && touched}>
               <InputLabel>{t('common:type')}</InputLabel>
               <Select {...field} data-testid="reference_type">
                 {Object.entries(referenceTypeLanguageKeyMap).map(([key, value]) => (
@@ -80,7 +80,9 @@ export const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, s
                   </MenuItem>
                 ))}
               </Select>
-              <FormHelperText>{error}</FormHelperText>
+              <FormHelperText>
+                <ErrorMessage name={ReferenceFieldNames.REFERENCE_TYPE} />
+              </FormHelperText>
             </FormControl>
           )}
         </Field>
