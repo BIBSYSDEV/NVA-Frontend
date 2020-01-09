@@ -61,7 +61,7 @@ interface File {
   license: string; //enum?
   acceptedVersion: boolean;
   administrativeContract: boolean;
-  archivePublishDate: string; // date?
+  embargoDate: string; // date?
 }
 
 export interface Publication {
@@ -94,7 +94,7 @@ export const emptyPublication: Publication = {
   createdDate: '', // date?
   createdBy: '',
   title: {
-    no: '',
+    nb: '',
   },
   abstract: '',
   description: '',

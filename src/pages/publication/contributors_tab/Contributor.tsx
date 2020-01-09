@@ -33,7 +33,7 @@ const Contributor: React.FC<ContributorProps> = ({ contributor, index, swap, rem
         <StyledContainer>
           <ContributorStyles.PersonIcon />
           <ContributorStyles.Name>{contributor.name}</ContributorStyles.Name>
-          <Field name={`authors[${index}].selectedInstitution`}>
+          <Field name={`authors[${index}].institution`}>
             {({ field }: any) => {
               return (
                 <StyledInstitutionSelect

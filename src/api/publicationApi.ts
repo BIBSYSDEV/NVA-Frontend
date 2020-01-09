@@ -49,7 +49,6 @@ export const createNewPublication = async (publication: Publication, dispatch: D
 export const updatePublication = async (publication: Publication, dispatch: Dispatch) => {
   const { id } = publication;
   if (!id) {
-    // create new if not existing?
     dispatch(addNotification(i18n.t('feedback:error.update_publication'), 'error'));
     return;
   }

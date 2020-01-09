@@ -3,33 +3,10 @@ export enum Direction {
   ARROW_DOWN = 1,
 }
 
-// export default interface ContributorType {
-//   id: string;
-//   name: string;
-//   institutions?: string[];
-//   selectedInstitution?: string;
-//   orcid?: string;
-//   corresponding?: boolean;
-//   type?: string;
-//   verified?: boolean;
-// }
-
-// export const emptyContributor: ContributorType = {
-//   id: '',
-//   name: '',
-//   institutions: [],
-//   selectedInstitution: '',
-//   orcid: '',
-//   corresponding: false,
-//   type: '',
-//   verified: false,
-// };
-
-// TODO: The following will currently mess up contributors-form :/
 export default interface Contributor {
   id: string;
   name: string;
-  institution?: Institution;
+  institution: Institution | null;
   orcid?: string;
   corresponding?: boolean;
   email?: string;
@@ -46,7 +23,7 @@ export interface Institution {
 export const emptyContributor: Contributor = {
   id: '',
   name: '',
-  institution: undefined,
+  institution: null,
   orcid: '',
   corresponding: false,
   type: '',

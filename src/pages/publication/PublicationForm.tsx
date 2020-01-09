@@ -33,7 +33,7 @@ const PublicationForm: React.FC = () => {
     reference: Yup.object().shape({
       referenceType: Yup.string().required(t('publication:feedback.required_field')),
 
-      journalPublication: Yup.object().when('referenceType', {
+      journalArticle: Yup.object().when('referenceType', {
         is: ReferenceType.PUBLICATION_IN_JOURNAL,
         then: Yup.object().shape({
           type: Yup.string(),
@@ -72,8 +72,6 @@ const PublicationForm: React.FC = () => {
   };
 
   const savePublication = async (values: Publication) => {
-    console.log('Save publication:', values);
-
     clearLocalStorageFormData();
   };
 

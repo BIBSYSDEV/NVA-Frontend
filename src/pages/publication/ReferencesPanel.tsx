@@ -9,7 +9,7 @@ import Box from '../../components/Box';
 import TabPanel from '../../components/TabPanel/TabPanel';
 import {
   BookFieldNames,
-  JournalPublicationFieldNames,
+  JournalArticleFieldNames,
   ReferenceFieldNames,
   ReferenceType,
   referenceTypeLanguageKeyMap,
@@ -17,7 +17,7 @@ import {
 import BookReferenceForm from './references_tab/BookReferenceForm';
 import ChapterReferenceForm from './references_tab/ChapterReferenceForm';
 import DegreeReferenceForm from './references_tab/DegreeReferenceForm';
-import JournalPublicationReferenceForm from './references_tab/JournalPublicationReferenceForm';
+import JournalArticleReferenceForm from './references_tab/JournalArticleReferenceForm';
 import ReportReferenceForm from './references_tab/ReportReferenceForm';
 import { Publication } from '../../types/publication.types';
 
@@ -54,7 +54,7 @@ export const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, s
         Object.values(BookFieldNames).forEach(fieldName => setFieldTouched(fieldName));
         break;
       case ReferenceType.PUBLICATION_IN_JOURNAL:
-        Object.values(JournalPublicationFieldNames).forEach(fieldName => setFieldTouched(fieldName));
+        Object.values(JournalArticleFieldNames).forEach(fieldName => setFieldTouched(fieldName));
         break;
       default:
         break;
@@ -95,7 +95,7 @@ export const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, s
             {type === ReferenceType.CHAPTER && <ChapterReferenceForm />}
             {type === ReferenceType.REPORT && <ReportReferenceForm />}
             {type === ReferenceType.DEGREE && <DegreeReferenceForm />}
-            {type === ReferenceType.PUBLICATION_IN_JOURNAL && <JournalPublicationReferenceForm />}
+            {type === ReferenceType.PUBLICATION_IN_JOURNAL && <JournalArticleReferenceForm />}
           </Box>
         </StyledBox>
       )}
