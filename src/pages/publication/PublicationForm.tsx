@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import * as Yup from 'yup';
 
 import TabPanel from '../../components/TabPanel/TabPanel';
+import { checkLocalStorageVersion } from '../../utils/local-storage-versioning';
 import ContributorsPanel from './ContributorsPanel';
 import DescriptionPanel from './DescriptionPanel';
 import FilesAndLicensePanel from './FilesAndLicensePanel';
@@ -22,6 +23,8 @@ const StyledPublication = styled.div`
 const PublicationForm: React.FC = () => {
   const { t } = useTranslation('publication');
   const [tabNumber, setTabNumber] = useState(0);
+
+  checkLocalStorageVersion();
   const [localStorageFormData, setLocalStorageFormData, clearLocalStorageFormData] = useLocalStorage(
     'publicationFormData',
     emptyPublication
