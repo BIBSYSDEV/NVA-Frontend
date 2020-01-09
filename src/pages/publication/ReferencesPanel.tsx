@@ -7,19 +7,20 @@ import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
 
 import Box from '../../components/Box';
 import TabPanel from '../../components/TabPanel/TabPanel';
+import { Publication } from '../../types/publication.types';
 import {
   BookFieldNames,
   JournalArticleFieldNames,
   ReferenceFieldNames,
   ReferenceType,
   referenceTypeLanguageKeyMap,
+  ReportFieldNames,
 } from '../../types/references.types';
 import BookReferenceForm from './references_tab/BookReferenceForm';
 import ChapterReferenceForm from './references_tab/ChapterReferenceForm';
 import DegreeReferenceForm from './references_tab/DegreeReferenceForm';
 import JournalArticleReferenceForm from './references_tab/JournalArticleReferenceForm';
 import ReportReferenceForm from './references_tab/ReportReferenceForm';
-import { Publication } from '../../types/publication.types';
 
 const StyledBox = styled.div`
   margin-top: 1rem;
@@ -55,6 +56,9 @@ export const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, s
         break;
       case ReferenceType.PUBLICATION_IN_JOURNAL:
         Object.values(JournalArticleFieldNames).forEach(fieldName => setFieldTouched(fieldName));
+        break;
+      case ReferenceType.REPORT:
+        Object.values(ReportFieldNames).forEach(fieldName => setFieldTouched(fieldName));
         break;
       default:
         break;
