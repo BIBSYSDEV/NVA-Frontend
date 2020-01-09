@@ -17,7 +17,7 @@ export const getPublishers = async (searchTerm: string, publicationTable: Public
       url: PUBLICATION_CHANNEL_API_URL,
       data: { searchTerm: `%${searchTerm}%`, tableId: publicationTable },
     });
-    return response.data.results.map((item: PublicationChannelItem) => ({
+    return response.data.results.map((item: Partial<PublicationChannelItem>) => ({
       title: item.originalTitle,
       level: item.level,
       publisher: item.publishing,
