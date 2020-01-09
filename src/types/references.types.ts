@@ -27,7 +27,13 @@ interface Book {
   series: Publisher;
 }
 
-interface Report {}
+interface Report {
+  type: string;
+  publisher: Publisher;
+  isbn: string;
+  numberOfPages: string;
+  series: Publisher;
+}
 
 export interface Publisher {
   title: string;
@@ -65,7 +71,7 @@ const emptyJournalArticleReference: JournalArticle = {
   articleNumber: '',
 };
 
-const emptyReportReference: ReportReference = {
+const emptyReportReference: Report = {
   type: '',
   publisher: emptyPublisher,
   isbn: '',
@@ -173,12 +179,4 @@ export enum ReportFieldNames {
   ISBN = 'reference.report.isbn',
   NUMBER_OF_PAGES = 'reference.report.numberOfPages',
   SERIES = 'reference.report.series',
-}
-
-export interface ReportReference {
-  type: string;
-  publisher: Publisher;
-  isbn: string;
-  numberOfPages: string;
-  series: Publisher;
 }

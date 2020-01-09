@@ -66,7 +66,7 @@ const PublicationForm: React.FC = () => {
         }),
       }),
 
-      report: Yup.object().when('referenceType', {
+      report: Yup.object().when('type', {
         is: ReferenceType.REPORT,
         then: Yup.object().shape({
           type: Yup.string(),
