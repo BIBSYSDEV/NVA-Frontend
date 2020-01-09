@@ -21,11 +21,11 @@ const StyledSection = styled.div`
 `;
 
 const StyledPeerReview = styled.div`
-  grid-area: 'peer-review';
+  grid-area: peer-review;
 `;
 
 const StyledTextBook = styled.div`
-  grid-area: 'text-book';
+  grid-area: text-book;
 `;
 
 const StyledLabel = styled.div`
