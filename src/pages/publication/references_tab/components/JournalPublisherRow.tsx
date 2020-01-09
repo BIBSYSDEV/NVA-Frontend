@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { Button } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 
-import { PublicationChannel } from '../../../../types/references.types';
+import { Publisher } from '../../../../types/references.types';
 
 const StyledJournalPublisherRow = styled.div`
   margin: 1rem 0;
@@ -58,7 +58,7 @@ const StyledButton = styled(Button)`
 interface JournalPublisherRowProps {
   dataTestId: string;
   hidePublisher?: boolean;
-  publisher: Partial<PublicationChannel>;
+  publisher: Partial<Publisher>;
   label: string;
   onClickDelete: (event: React.MouseEvent<any>) => void;
 }

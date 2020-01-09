@@ -5,8 +5,8 @@ import styled from 'styled-components';
 
 import { Checkbox, FormControl, FormControlLabel, InputLabel, MenuItem, Select, TextField } from '@material-ui/core';
 
-import { emptyPublisher, PublicationFormsData } from '../../../types/form.types';
-import { BookFieldNames, bookTypes } from '../../../types/references.types';
+import { Publication } from '../../../types/publication.types';
+import { BookFieldNames, bookTypes, emptyPublisher } from '../../../types/references.types';
 import { PublicationTableNumber } from '../../../utils/constants';
 import JournalPublisherRow from './components/JournalPublisherRow';
 import NviValidation from './components/NviValidation';
@@ -41,11 +41,9 @@ const StyledHeading = styled.div`
 
 const BookReferenceForm: FC = () => {
   const { t } = useTranslation('publication');
-
-  const { setFieldValue, values }: FormikProps<PublicationFormsData> = useFormikContext();
+  const { setFieldValue, values }: FormikProps<Publication> = useFormikContext();
 
   const isRatedBook = values.reference?.book?.publisher?.level;
-
   const isPeerReviewed = values.reference?.book?.peerReview;
 
   return (
@@ -150,7 +148,7 @@ const BookReferenceForm: FC = () => {
           </>
         )}
       </Field>
-      <NviValidation isPeerReviewed={isPeerReviewed} isRated={!!isRatedBook} dataTestId="nvi_book" />
+      <NviValidation isPeerReviewed={!!isPeerReviewed} isRated={!!isRatedBook} dataTestId="nvi_book" />
     </>
   );
 };

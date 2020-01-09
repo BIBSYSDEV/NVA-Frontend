@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { getPublishers } from '../../../../api/publicationChannelApi';
 import { AutoSearch } from '../../../../components/AutoSearch';
 import { searchFailure } from '../../../../redux/actions/searchActions';
-import { PublicationChannel } from '../../../../types/references.types';
+import { Publisher } from '../../../../types/references.types';
 import { PublicationTableNumber } from '../../../../utils/constants';
 import useDebounce from '../../../../utils/hooks/useDebounce';
 
@@ -24,7 +24,7 @@ const PublicationChannelSearch: React.FC<PublicationChannelSearchProps> = ({
   publicationTable,
   setValueFunction,
 }) => {
-  const [searchResults, setSearchResults] = useState<PublicationChannel[]>([]);
+  const [searchResults, setSearchResults] = useState<Publisher[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [searching, setSearching] = useState(false);
 
