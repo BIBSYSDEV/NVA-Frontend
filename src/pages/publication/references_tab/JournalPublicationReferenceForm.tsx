@@ -71,6 +71,7 @@ const JournalPublicationReferenceForm: React.FC = () => {
               label={t('publication:references.journal')}
               publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
               setValueFunction={inputValue => setFieldValue(name, inputValue ?? emptyPublisher)}
+              value={value.title}
             />
             {value.title && (
               <JournalPublisherRow

@@ -1,17 +1,25 @@
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import styled from 'styled-components';
 
 import { CircularProgress, TextField } from '@material-ui/core';
+import SearchIcon from '@material-ui/icons/Search';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
 import { MINIMUM_SEARCH_CHARACTERS } from '../utils/constants';
 
+const StyledSearchIcon = styled(SearchIcon)`
+  margin-left: 0.5rem;
+  color: ${({ theme }) => theme.palette.text.disabled};
+`;
+
 interface AutoSearchProps {
-  clearSearchField?: boolean;
-  onInputChange?: (event: object, value: string) => void;
+  label: string;
   searchResults: any;
   setValueFunction: (value: any) => void;
-  label: string;
-  groupBy?: (options: any) => string;
+  clearSearchField?: boolean;
+  onInputChange?: (event: object, value: string) => void;
+  value: string;
 }
 
 export const AutoSearch: React.FC<AutoSearchProps> = ({
@@ -20,12 +28,14 @@ export const AutoSearch: React.FC<AutoSearchProps> = ({
   searchResults,
   setValueFunction,
   label,
-  groupBy,
+  value,
 }) => {
-  const [value, setValue] = useState({ title: '' });
+  const [displayValue, setDisplayValue] = useState({ title: '' });
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  const { t } = useTranslation('common');
 
   useEffect(() => {
     if (searchResults) {
@@ -35,9 +45,15 @@ export const AutoSearch: React.FC<AutoSearchProps> = ({
   }, [searchResults]);
 
   useEffect(() => {
+    if (!value) {
+      setDisplayValue({ title: '' });
+    }
+    setDisplayValue({ title: value });
+  }, [value]);
+
+  useEffect(() => {
     if (clearSearchField) {
       setOptions([]);
-      setValue({ title: '' });
     }
   }, [clearSearchField]);
 
@@ -55,15 +71,14 @@ export const AutoSearch: React.FC<AutoSearchProps> = ({
         setValueFunction(value);
       }}
       onInputChange={(event: object, value: string) => {
-        setValue({ title: value });
         value.length >= MINIMUM_SEARCH_CHARACTERS && options.length === 0 && setLoading(true);
         open && value.length >= MINIMUM_SEARCH_CHARACTERS && onInputChange && onInputChange(event, value);
       }}
-      getOptionLabel={option => option.title}
+      getOptionLabel={option => option.title || ''}
       options={options}
       loading={loading}
-      value={value}
-      groupBy={groupBy}
+      value={displayValue}
+      noOptionsText={t('no_hits')}
       renderInput={params => (
         <TextField
           {...params}
@@ -73,6 +88,7 @@ export const AutoSearch: React.FC<AutoSearchProps> = ({
           autoComplete="false"
           InputProps={{
             ...params.InputProps,
+            startAdornment: <StyledSearchIcon />,
             endAdornment: (
               <>
                 {loading && <CircularProgress color="inherit" size={20} />}

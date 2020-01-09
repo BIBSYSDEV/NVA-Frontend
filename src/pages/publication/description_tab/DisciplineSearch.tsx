@@ -1,11 +1,12 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { AutoSearch } from '../../../components/AutoSearch';
+import AutoLookup from '../../../components/AutoLookup';
 import disciplines from '../../../utils/testfiles/disciplines_en.json';
 
 interface DisciplineSearchProps {
   setValueFunction: (value: any) => void;
+  value: string;
 }
 
 interface DisciplineType {
@@ -13,7 +14,7 @@ interface DisciplineType {
   mainDiscipline: string;
 }
 
-const DisciplineSearch: React.FC<DisciplineSearchProps> = ({ setValueFunction }) => {
+const DisciplineSearch: React.FC<DisciplineSearchProps> = ({ setValueFunction, value }) => {
   const { t } = useTranslation();
 
   const searchResults = Object.values(disciplines)
@@ -26,11 +27,12 @@ const DisciplineSearch: React.FC<DisciplineSearchProps> = ({ setValueFunction })
     .flat();
 
   return (
-    <AutoSearch
-      searchResults={searchResults}
-      setValueFunction={setValueFunction}
+    <AutoLookup
       label={t('publication:description.npi_disciplines')}
+      options={searchResults}
+      setValueFunction={setValueFunction}
       groupBy={(discipline: DisciplineType) => discipline.mainDiscipline}
+      value={value}
     />
   );
 };

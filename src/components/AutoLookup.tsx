@@ -1,0 +1,58 @@
+import React, { FC, useEffect, useState } from 'react';
+import styled from 'styled-components';
+
+import { TextField } from '@material-ui/core';
+import SearchIcon from '@material-ui/icons/Search';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+
+const StyledSearchIcon = styled(SearchIcon)`
+  margin-left: 0.5rem;
+  color: ${({ theme }) => theme.palette.text.disabled};
+`;
+
+interface AutoLookupProps {
+  label: string;
+  options: any[];
+  setValueFunction: (value: any) => void;
+  groupBy?: (options: any) => string;
+  value?: string;
+}
+
+const AutoLookup: FC<AutoLookupProps> = ({ label, options, setValueFunction, groupBy, value }) => {
+  const [displayValue, setDisplayValue] = useState({ title: value });
+
+  useEffect(() => {
+    if (!value) {
+      setDisplayValue({ title: '' });
+    }
+    setDisplayValue({ title: value });
+  }, [value]);
+
+  return (
+    <Autocomplete
+      options={options}
+      groupBy={groupBy}
+      getOptionLabel={option => option.title || ''}
+      onChange={(_: object, value: string) => {
+        setValueFunction(value);
+      }}
+      value={displayValue}
+      renderInput={params => (
+        <TextField
+          {...params}
+          label={label}
+          fullWidth
+          variant="outlined"
+          autoComplete="false"
+          InputProps={{
+            ...params.InputProps,
+            startAdornment: <StyledSearchIcon />,
+            endAdornment: <>{params.InputProps.endAdornment}</>,
+          }}
+        />
+      )}
+    />
+  );
+};
+
+export default AutoLookup;

@@ -9,9 +9,10 @@ import useDebounce from '../../../utils/hooks/useDebounce';
 
 interface ProjectSearchProps {
   setValueFunction: (value: any) => void;
+  value: string;
 }
 
-const ProjectSearch: React.FC<ProjectSearchProps> = ({ setValueFunction }) => {
+const ProjectSearch: React.FC<ProjectSearchProps> = ({ setValueFunction, value }) => {
   const [searchResults, setSearchResults] = useState<NormalizedProjectType[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [searching, setSearching] = useState(false);
@@ -30,6 +31,8 @@ const ProjectSearch: React.FC<ProjectSearchProps> = ({ setValueFunction }) => {
           title: `${project.title[project.main_language]} (${project.main_language})`,
         }));
         setSearchResults(normalizedResponse);
+      } else {
+        setSearchResults([]);
       }
     },
     [dispatch]
@@ -48,6 +51,7 @@ const ProjectSearch: React.FC<ProjectSearchProps> = ({ setValueFunction }) => {
       searchResults={searchResults}
       setValueFunction={setValueFunction}
       label={t('publication:description.project')}
+      value={value}
     />
   );
 };

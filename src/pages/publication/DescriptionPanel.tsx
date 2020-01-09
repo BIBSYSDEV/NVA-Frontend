@@ -106,7 +106,12 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, savePu
           <MultipleFieldWrapper>
             <StyledFieldWrapper>
               <Field name={FieldNames.NPI}>
-                {() => <DisciplineSearch setValueFunction={newValue => setFieldValue(FieldNames.NPI, newValue)} />}
+                {({ field: { name, value } }: any) => (
+                  <DisciplineSearch
+                    setValueFunction={newValue => setFieldValue(name, newValue ?? { title: '', mainDiscipline: '' })}
+                    value={value.title}
+                  />
+                )}
               </Field>
             </StyledFieldWrapper>
             <StyledFieldWrapper>
@@ -149,7 +154,10 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, savePu
             <Field name={FieldNames.PROJECT}>
               {({ field: { value } }: any) => (
                 <>
-                  <ProjectSearch setValueFunction={newValue => setFieldValue(FieldNames.PROJECT, newValue)} />
+                  <ProjectSearch
+                    setValueFunction={newValue => setFieldValue(FieldNames.PROJECT, newValue ?? { id: '', title: '' })}
+                    value={value.title}
+                  />
                   {value.title && <p>{value.title}</p>}
                 </>
               )}

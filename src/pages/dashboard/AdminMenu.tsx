@@ -31,7 +31,7 @@ const AdminMenu: React.FC = () => {
         <StyledAdminMenu>
           <MuiLink component={Link} to="/publications/new">
             <StyledButton color="primary" variant="contained" data-testid="new-publication-button">
-              + {t('new_registration')}
+              + {t('new_publication')}
             </StyledButton>
           </MuiLink>
         </StyledAdminMenu>

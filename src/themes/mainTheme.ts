@@ -23,6 +23,7 @@ enum Colors {
   SecondaryText = '#44515d',
   ExpandedPanel = '#b2acfa',
   TabBackground = '#f3c19d',
+  Grey = '#bbb',
 }
 
 export default createMuiTheme({
@@ -47,6 +48,7 @@ export default createMuiTheme({
     text: {
       primary: Colors.PrimaryText,
       secondary: Colors.SecondaryText,
+      disabled: Colors.Grey,
     },
     background: {
       default: Colors.Background,
