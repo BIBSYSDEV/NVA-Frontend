@@ -1,6 +1,6 @@
 import Axios from 'axios';
 
-import { PUBLICATION_CHANNEL_API_URL, PublicationTableNumber } from '../utils/constants';
+import { API_URL, PublicationTableNumber } from '../utils/constants';
 
 interface PublicationChannelItem {
   originalTitle: string;
@@ -14,7 +14,7 @@ export const getPublishers = async (searchTerm: string, publicationTable: Public
   try {
     const response = await Axios({
       method: 'POST',
-      url: PUBLICATION_CHANNEL_API_URL,
+      url: `${API_URL}/channel/search`,
       data: { searchTerm: `%${searchTerm}%`, tableId: publicationTable },
     });
     return response.data.results.map((item: Partial<PublicationChannelItem>) => ({

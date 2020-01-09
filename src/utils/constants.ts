@@ -4,7 +4,7 @@ export const SEARCH_RESULTS_PER_PAGE = 10;
 export const MINIMUM_SEARCH_CHARACTERS = 3;
 export const DEBOUNCE_INTERVAL = 500;
 export const MAX_NOTIFICATIONS = 3;
-export const APP_VERSION = '1';
+export const APP_VERSION = '3';
 
 export const ORCID_BASE_URL = process.env.REACT_APP_ORCID_BASE_URL;
 export const ORCID_USER_INFO_URL = '/oauth/userinfo';
@@ -17,8 +17,6 @@ export const CRISTIN_API_URL = process.env.REACT_APP_CRISTIN_API_URL;
 export const API_URL = process.env.REACT_APP_API_URL;
 const API_TOKEN_KEY = process.env.REACT_APP_API_TOKEN_KEY;
 export const API_TOKEN = API_TOKEN_KEY ? localStorage.getItem(API_TOKEN_KEY) : '';
-
-export const PUBLICATION_CHANNEL_API_URL = `${API_URL}/channel/search`;
 
 export enum ApiBaseUrl {
   PUBLICATIONS = 'publications',
