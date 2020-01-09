@@ -54,14 +54,14 @@ export enum ReportTypeValue {
   REPORT = 'report',
   RESEARCH_REPORT = 'research_report',
   POLICY_REPORT = 'policy_report',
-  WORK_NOTE = 'work_note',
+  WORKING_PAPER = 'working_paper',
 }
 
 export const reportTypes = [
   { label: 'references.report', value: ReportTypeValue.REPORT },
   { label: 'references.research_report', value: ReportTypeValue.RESEARCH_REPORT },
   { label: 'references.policy_report', value: ReportTypeValue.POLICY_REPORT },
-  { label: 'references.work_note', value: ReportTypeValue.WORK_NOTE },
+  { label: 'references.working_paper', value: ReportTypeValue.WORKING_PAPER },
 ];
 
 // Values represent name for fields used by Formik
