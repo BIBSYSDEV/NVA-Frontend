@@ -8,6 +8,7 @@ import TabPanel from '../../components/TabPanel/TabPanel';
 import { emptyPublicationFormData, PublicationFormsData } from '../../types/form.types';
 import { ReferenceType } from '../../types/references.types';
 import useLocalStorage from '../../utils/hooks/useLocalStorage';
+import { checkLocalStorageVersion } from '../../utils/local-storage-versioning';
 import ContributorsPanel from './ContributorsPanel';
 import DescriptionPanel from './DescriptionPanel';
 import FilesAndLicensePanel from './FilesAndLicensePanel';
@@ -21,6 +22,8 @@ const StyledPublication = styled.div`
 const PublicationForm: React.FC = () => {
   const { t } = useTranslation('publication');
   const [tabNumber, setTabNumber] = useState(0);
+
+  checkLocalStorageVersion();
   const [localStorageFormData, setLocalStorageFormData, clearLocalStorageFormData] = useLocalStorage(
     'publicationFormData',
     emptyPublicationFormData
