@@ -7,10 +7,9 @@ import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
 
 import Box from '../../components/Box';
 import TabPanel from '../../components/TabPanel/TabPanel';
-import { PublicationFormsData } from '../../types/form.types';
 import {
   BookFieldNames,
-  JournalPublicationFieldNames,
+  JournalArticleFieldNames,
   ReferenceFieldNames,
   ReferenceType,
   referenceTypeLanguageKeyMap,
@@ -18,8 +17,9 @@ import {
 import BookReferenceForm from './references_tab/BookReferenceForm';
 import ChapterReferenceForm from './references_tab/ChapterReferenceForm';
 import DegreeReferenceForm from './references_tab/DegreeReferenceForm';
-import JournalPublicationReferenceForm from './references_tab/JournalPublicationReferenceForm';
+import JournalArticleReferenceForm from './references_tab/JournalArticleReferenceForm';
 import ReportReferenceForm from './references_tab/ReportReferenceForm';
+import { Publication } from '../../types/publication.types';
 
 const StyledBox = styled.div`
   margin-top: 1rem;
@@ -42,24 +42,24 @@ interface ReferencesPanelProps {
 
 export const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, savePublication }) => {
   const { t } = useTranslation('publication');
-  const { values, setFieldTouched }: FormikProps<PublicationFormsData> = useFormikContext();
-  const { referenceType } = values.reference;
+  const { values, setFieldTouched }: FormikProps<Publication> = useFormikContext();
+  const { type } = values.reference;
 
   // Validation messages won't show on fields that are not touched
   const setAllFieldsTouched = useCallback(() => {
     Object.values(ReferenceFieldNames).forEach(fieldName => setFieldTouched(fieldName));
 
-    switch (referenceType) {
+    switch (type) {
       case ReferenceType.BOOK:
         Object.values(BookFieldNames).forEach(fieldName => setFieldTouched(fieldName));
         break;
       case ReferenceType.PUBLICATION_IN_JOURNAL:
-        Object.values(JournalPublicationFieldNames).forEach(fieldName => setFieldTouched(fieldName));
+        Object.values(JournalArticleFieldNames).forEach(fieldName => setFieldTouched(fieldName));
         break;
       default:
         break;
     }
-  }, [setFieldTouched, referenceType]);
+  }, [setFieldTouched, type]);
 
   useEffect(() => {
     // Set all fields as touched if user navigates away from this panel ( on unmount)
@@ -85,17 +85,17 @@ export const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, s
         </Field>
       </StyledSelectContainer>
 
-      {referenceType && (
+      {type && (
         <StyledBox>
           <Box>
             <StyledTypeHeading data-testid="reference_type-heading">
-              {t(referenceTypeLanguageKeyMap[referenceType])}
+              {t(referenceTypeLanguageKeyMap[type])}
             </StyledTypeHeading>
-            {referenceType === ReferenceType.BOOK && <BookReferenceForm />}
-            {referenceType === ReferenceType.CHAPTER && <ChapterReferenceForm />}
-            {referenceType === ReferenceType.REPORT && <ReportReferenceForm />}
-            {referenceType === ReferenceType.DEGREE && <DegreeReferenceForm />}
-            {referenceType === ReferenceType.PUBLICATION_IN_JOURNAL && <JournalPublicationReferenceForm />}
+            {type === ReferenceType.BOOK && <BookReferenceForm />}
+            {type === ReferenceType.CHAPTER && <ChapterReferenceForm />}
+            {type === ReferenceType.REPORT && <ReportReferenceForm />}
+            {type === ReferenceType.DEGREE && <DegreeReferenceForm />}
+            {type === ReferenceType.PUBLICATION_IN_JOURNAL && <JournalArticleReferenceForm />}
           </Box>
         </StyledBox>
       )}
