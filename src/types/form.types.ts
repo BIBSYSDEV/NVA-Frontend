@@ -37,6 +37,14 @@ export interface ContributorsFormData {
   contributors: ContributorType[];
 }
 
+export interface ReportReferenceFormData {
+  type: string;
+  publisher: Publisher;
+  isbn: string;
+  numberOfPages: string;
+  series: Publisher;
+}
+
 export interface BookReferenceFormData {
   type: string;
   publisher: Publisher;
@@ -62,6 +70,7 @@ export interface JournalPublicationReferenceFormData {
 export interface ReferenceFormData {
   referenceType: string;
   book: BookReferenceFormData;
+  report: ReportReferenceFormData;
   journalPublication: JournalPublicationReferenceFormData;
 }
 
@@ -103,6 +112,14 @@ export const emptyBookReferenceFormData: BookReferenceFormData = {
   series: emptyPublisher,
 };
 
+export const emptyReportReferenceFormData: ReportReferenceFormData = {
+  type: '',
+  publisher: emptyPublisher,
+  isbn: '',
+  numberOfPages: '',
+  series: emptyPublisher,
+};
+
 export const emptyJournalPublicationReferenceFormData: JournalPublicationReferenceFormData = {
   type: '',
   doi: '',
@@ -118,6 +135,7 @@ export const emptyJournalPublicationReferenceFormData: JournalPublicationReferen
 export const emptyReferenceFormData: ReferenceFormData = {
   referenceType: '',
   book: emptyBookReferenceFormData,
+  report: emptyReportReferenceFormData,
   journalPublication: emptyJournalPublicationReferenceFormData,
 };
 
