@@ -7,7 +7,7 @@ import { MenuItem } from '@material-ui/core';
 import PersonIcon from '@material-ui/icons/Person';
 
 import ContributorType from '../../../types/contributor.types';
-import { PublicationFormsData } from '../../../types/form.types';
+import { Publication } from '../../../types/publication.types';
 import StyledContributor from './StyledContributor';
 
 const StyledContributorValidator = styled(StyledContributor.ContributorContainer)`
@@ -28,19 +28,19 @@ interface ContributorValidatorProps {
 
 const ContributorValidator: React.FC<ContributorValidatorProps> = ({ index, remove, swap }) => {
   const { t } = useTranslation();
-  const { setFieldValue }: FormikProps<PublicationFormsData> = useFormikContext();
+  const { setFieldValue }: FormikProps<Publication> = useFormikContext();
 
   const validateContributor = (name: string) => {
-    name && setFieldValue(`contributors.authors[${index}].verified`, 'true');
+    name && setFieldValue(`authors[${index}].verified`, 'true');
   };
 
   return (
-    <Field name={`contributors.authors[${index}]`}>
+    <Field name={`authors[${index}]`}>
       {({ form: { values } }: any) => {
         return (
           <StyledContributorValidator>
             <StyledContributor.AddCircleIcon />
-            <StyledNameInput variant="outlined" name={`contributors.authors[${index}].name`} validateOnChange="false" />
+            <StyledNameInput variant="outlined" name={`authors[${index}].name`} validateOnChange="false" />
             <StyledContributor.Select variant="outlined">
               <MenuItem value=""></MenuItem>
             </StyledContributor.Select>
@@ -48,13 +48,13 @@ const ContributorValidator: React.FC<ContributorValidatorProps> = ({ index, remo
               color="primary"
               variant="contained"
               startIcon={<PersonIcon />}
-              onClick={() => validateContributor(values.contributors.authors[index].name)}>
+              onClick={() => validateContributor(values.authors[index].name)}>
               {t('publication:contributors.verify_person')}
             </StyledContributor.VerifyPerson>
             <StyledContributor.ContributorsArrows
               swap={swap}
               first={index === 0}
-              last={index === values.contributors.authors.length - 1}
+              last={index === values.authors.length - 1}
               index={index}
             />
             <StyledContributor.DeleteIcon onClick={() => remove(index)} />

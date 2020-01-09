@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { Tabs } from '@material-ui/core';
 
 import LinkTab from '../../components/TabPanel/LinkTab';
-import { PublicationFormsData } from '../../types/form.types';
+import { Publication } from '../../types/publication.types';
 
 const a11yProps = (tabDescription: string) => {
   return {
@@ -18,8 +18,8 @@ const a11yProps = (tabDescription: string) => {
 interface PublicationFormTabsProps {
   handleTabChange: (_: React.ChangeEvent<{}>, newValue: number) => void;
   tabNumber: number;
-  errors: FormikErrors<PublicationFormsData>;
-  touched: FormikTouched<PublicationFormsData>;
+  errors: FormikErrors<Publication>;
+  touched: FormikTouched<Publication>;
 }
 
 export const PublicationFormTabs: React.FC<PublicationFormTabsProps> = ({
@@ -42,7 +42,7 @@ export const PublicationFormTabs: React.FC<PublicationFormTabsProps> = ({
       <LinkTab
         label={`2. ${t('heading.description')}`}
         {...a11yProps('description')}
-        error={hasTouchedError(errors.description, touched.description)}
+        // error={hasTouchedError(errors.description, touched.description)}
       />
       <LinkTab
         label={`3. ${t('heading.references')}`}
@@ -52,7 +52,7 @@ export const PublicationFormTabs: React.FC<PublicationFormTabsProps> = ({
       <LinkTab
         label={`4. ${t('heading.contributors')}`}
         {...a11yProps('contributors')}
-        error={hasTouchedError(errors.contributors, touched.contributors)}
+        // error={hasTouchedError(errors.contributors, touched.contributors)}
       />
       <LinkTab label={`5. ${t('heading.files_and_license')}`} {...a11yProps('files-and-license')} />
       <LinkTab label={`6. ${t('heading.submission')}`} {...a11yProps('submission')} />

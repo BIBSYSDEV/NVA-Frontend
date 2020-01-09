@@ -1,9 +1,82 @@
+export interface Reference {
+  type: ReferenceType | '';
+  journalArticle?: JournalArticle;
+  book?: Book;
+  report?: Report;
+}
+
+interface JournalArticle {
+  type: JournalArticleTypeValue | '';
+  journal: Publisher;
+  volume: string;
+  issue: string;
+  pagesFrom: string;
+  pagesTo: string;
+  peerReview: boolean;
+  link: string;
+  articleNumber: string;
+}
+
+interface Book {
+  type: string;
+  publisher: Publisher;
+  isbn: string;
+  peerReview: boolean;
+  textBook: boolean;
+  numberOfPages: string;
+  series: Publisher;
+}
+
+interface Report {}
+
+export interface Publisher {
+  title: string;
+  issn: string;
+  level: string;
+  publisher: string;
+}
+
+export const emptyPublisher: Publisher = {
+  issn: '',
+  level: '',
+  publisher: '',
+  title: '',
+};
+
+const emptyBookReference: Book = {
+  type: '',
+  publisher: emptyPublisher,
+  isbn: '',
+  peerReview: false,
+  textBook: false,
+  numberOfPages: '',
+  series: emptyPublisher,
+};
+
+const emptyJournalArticleReference: JournalArticle = {
+  type: '',
+  link: '',
+  journal: emptyPublisher,
+  volume: '',
+  issue: '',
+  peerReview: false,
+  pagesFrom: '',
+  pagesTo: '',
+  articleNumber: '',
+};
+
+export const emptyReference: Reference = {
+  type: '',
+  journalArticle: emptyJournalArticleReference,
+  book: emptyBookReference,
+};
+
 type EnumDictionary<T extends string, U> = {
   [K in T]: U;
 };
 
 export enum ReferenceType {
-  PUBLICATION_IN_JOURNAL = 'journalPublication',
+  PUBLICATION_IN_JOURNAL = 'journalArticle',
   BOOK = 'book',
   REPORT = 'report',
   DEGREE = 'degree',
@@ -18,13 +91,7 @@ export const referenceTypeLanguageKeyMap: EnumDictionary<string, string> = {
   [ReferenceType.CHAPTER]: 'references.chapter',
 };
 
-export interface PublicationChannel {
-  title: string;
-  level: string | null;
-  publisher: string;
-}
-
-enum JournalPublicationTypeValue {
+enum JournalArticleTypeValue {
   ARTICLE = 'article',
   SHORT_COMMUNICATION = 'shortCommunication',
   EDITORIAL = 'editorial',
@@ -32,12 +99,12 @@ enum JournalPublicationTypeValue {
   REVIEW = 'review',
 }
 
-export const journalPublicationTypes = [
-  { label: 'references.article', value: JournalPublicationTypeValue.ARTICLE },
-  { label: 'references.short_communication', value: JournalPublicationTypeValue.SHORT_COMMUNICATION },
-  { label: 'references.editorial', value: JournalPublicationTypeValue.EDITORIAL },
-  { label: 'references.letter', value: JournalPublicationTypeValue.LETTER },
-  { label: 'references.review', value: JournalPublicationTypeValue.REVIEW },
+export const journalArticleTypes = [
+  { label: 'references.article', value: JournalArticleTypeValue.ARTICLE },
+  { label: 'references.short_communication', value: JournalArticleTypeValue.SHORT_COMMUNICATION },
+  { label: 'references.editorial', value: JournalArticleTypeValue.EDITORIAL },
+  { label: 'references.letter', value: JournalArticleTypeValue.LETTER },
+  { label: 'references.review', value: JournalArticleTypeValue.REVIEW },
 ];
 
 export enum BookTypeValue {
@@ -50,21 +117,21 @@ export const bookTypes = [
   { label: 'references.anthology', value: BookTypeValue.ANTHOLOGY },
 ];
 
-// Values represent name for fields used by Formik
+// Enums representing name of fields used by Formik
 export enum ReferenceFieldNames {
-  REFERENCE_TYPE = 'reference.referenceType',
+  REFERENCE_TYPE = 'reference.type',
 }
 
-export enum JournalPublicationFieldNames {
-  TYPE = 'reference.journalPublication.type',
-  DOI = 'reference.journalPublication.doi',
-  JOURNAL = 'reference.journalPublication.journal',
-  VOLUME = 'reference.journalPublication.volume',
-  ISSUE = 'reference.journalPublication.issue',
-  PAGES_FROM = 'reference.journalPublication.pagesFrom',
-  PAGES_TO = 'reference.journalPublication.pagesTo',
-  ARTICLE_NUMBER = 'reference.journalPublication.articleNumber',
-  PEER_REVIEW = 'reference.journalPublication.peerReview',
+export enum JournalArticleFieldNames {
+  TYPE = 'reference.journalArticle.type',
+  DOI = 'reference.journalArticle.doi',
+  JOURNAL = 'reference.journalArticle.journal',
+  VOLUME = 'reference.journalArticle.volume',
+  ISSUE = 'reference.journalArticle.issue',
+  PAGES_FROM = 'reference.journalArticle.pagesFrom',
+  PAGES_TO = 'reference.journalArticle.pagesTo',
+  ARTICLE_NUMBER = 'reference.journalArticle.articleNumber',
+  PEER_REVIEW = 'reference.journalArticle.peerReview',
 }
 
 export enum BookFieldNames {
