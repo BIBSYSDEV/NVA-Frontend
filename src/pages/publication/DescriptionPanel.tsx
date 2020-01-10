@@ -6,7 +6,7 @@ import styled from 'styled-components';
 
 import DateFnsUtils from '@date-io/date-fns';
 import { MenuItem } from '@material-ui/core';
-import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 
 import Box from '../../components/Box';
 import TabPanel from '../../components/TabPanel/TabPanel';
