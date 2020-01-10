@@ -76,7 +76,6 @@ const BookReferenceForm: FC = () => {
             {value.title && (
               <JournalPublisherRow
                 dataTestId="autosearch-results-publisher"
-                hidePublisher
                 label={t('references.publisher')}
                 publisher={value}
                 onClickDelete={() => setFieldValue(name, emptyPublisher)}
@@ -139,7 +138,6 @@ const BookReferenceForm: FC = () => {
             {value.title && (
               <JournalPublisherRow
                 dataTestId="autosearch-results-series"
-                hidePublisher
                 label={t('common:title')}
                 publisher={value}
                 onClickDelete={() => setFieldValue(name, emptyPublisher)}

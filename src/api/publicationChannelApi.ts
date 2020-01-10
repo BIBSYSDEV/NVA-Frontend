@@ -1,14 +1,7 @@
 import Axios from 'axios';
 
+import { Publisher } from '../types/references.types';
 import { API_URL, PublicationTableNumber } from '../utils/constants';
-
-interface PublicationChannelItem {
-  originalTitle: string;
-  printIssn: string;
-  onlineIssn: string;
-  level: number | null;
-  publishing: string;
-}
 
 export const getPublishers = async (searchTerm: string, publicationTable: PublicationTableNumber) => {
   try {
@@ -17,10 +10,9 @@ export const getPublishers = async (searchTerm: string, publicationTable: Public
       url: `${API_URL}/channel/search`,
       data: { searchTerm: `%${searchTerm}%`, tableId: publicationTable },
     });
-    return response.data.results.map((item: Partial<PublicationChannelItem>) => ({
-      title: item.originalTitle,
+    return response.data.results.map((item: Partial<Publisher>) => ({
+      title: item.title,
       level: item.level,
-      publisher: item.publishing,
     }));
   } catch {
     return [];

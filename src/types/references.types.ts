@@ -40,14 +40,12 @@ export interface Publisher {
   printIssn: string;
   onlineIssn: string;
   level: number | null;
-  publisher: string;
 }
 
 export const emptyPublisher: Publisher = {
   printIssn: '',
   onlineIssn: '',
   level: null,
-  publisher: '',
   title: '',
 };
 

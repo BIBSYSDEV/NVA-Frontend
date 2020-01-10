@@ -14,9 +14,9 @@ const StyledJournalPublisherRow = styled.div`
   display: grid;
   grid-column-gap: 0.5rem;
   grid-template-areas:
-    'titleLabel levelLabel publisherLabel button'
-    'title level publisher button';
-  grid-template-columns: 7fr 3fr 3fr 1fr;
+    'titleLabel levelLabel button'
+    'title level button';
+  grid-template-columns: 7fr 6fr 1fr;
 `;
 
 const StyledJournalLabel = styled.div`
@@ -32,20 +32,12 @@ const StyledLevelLabel = styled(StyledJournalLabel)`
   grid-area: levelLabel;
 `;
 
-const StyledPublisherLabel = styled(StyledJournalLabel)`
-  grid-area: publisherLabel;
-`;
-
 const StyledTitleText = styled.div`
   grid-area: title;
 `;
 
 const StyledLevelText = styled.div`
   grid-area: level;
-`;
-
-const StyledPublisherText = styled.div`
-  grid-area: publisher;
 `;
 
 const StyledButton = styled(Button)`
@@ -57,29 +49,20 @@ const StyledButton = styled(Button)`
 
 interface JournalPublisherRowProps {
   dataTestId: string;
-  hidePublisher?: boolean;
   publisher: Partial<Publisher>;
   label: string;
   onClickDelete: (event: React.MouseEvent<any>) => void;
 }
 
-const JournalPublisherRow: React.FC<JournalPublisherRowProps> = ({
-  dataTestId,
-  hidePublisher = false,
-  publisher,
-  label,
-  onClickDelete,
-}) => {
+const JournalPublisherRow: React.FC<JournalPublisherRowProps> = ({ dataTestId, publisher, label, onClickDelete }) => {
   const { t } = useTranslation('publication');
 
   return (
     <StyledJournalPublisherRow data-testid={dataTestId}>
       <StyledTitle>{label}</StyledTitle>
       <StyledLevelLabel>{t('references.level')}</StyledLevelLabel>
-      {!hidePublisher && <StyledPublisherLabel>{t('references.publisher')}</StyledPublisherLabel>}
       <StyledTitleText>{publisher.title}</StyledTitleText>
       <StyledLevelText>{publisher.level}</StyledLevelText>
-      {!hidePublisher && <StyledPublisherText>{publisher.publisher}</StyledPublisherText>}
       <StyledButton onClick={onClickDelete}>
         <DeleteIcon />
         {t('references.remove')}
