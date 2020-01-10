@@ -9,6 +9,7 @@ import styled from 'styled-components';
 
 const StyledFormControlLabel = styled(FormControlLabel)`
   margin-left: 0.5rem;
+  height: 100%; /* Ensure this element is as high as the DatePicker for centering */
 `;
 
 interface DatePickerFieldProps {
