@@ -81,7 +81,7 @@ const PublicationForm: React.FC = () => {
   return (
     <StyledPublication>
       <Formik
-        initialValues={localStorageFormData}
+        initialValues={emptyPublication}
         validationSchema={validationSchema}
         onSubmit={(values: Publication) => savePublication(values)}
         validateOnChange={false}>

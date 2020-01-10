@@ -6,13 +6,12 @@ import styled from 'styled-components';
 
 import DateFnsUtils from '@date-io/date-fns';
 import { MenuItem } from '@material-ui/core';
-import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
 
 import Box from '../../components/Box';
 import TabPanel from '../../components/TabPanel/TabPanel';
 import { languages } from '../../translations/i18n';
 import DisciplineSearch from './description_tab/DisciplineSearch';
-import FormikDatePicker from './description_tab/FormikDatePicker';
 import ProjectSearch from './description_tab/ProjectSearch';
 import { Publication } from '../../types/publication.types';
 
@@ -37,6 +36,8 @@ enum DescriptionFieldNames {
   NPI_DISCIPLINES = 'npiDisciplines',
   TAGS = 'tags',
   PUBLICATION_YEAR = 'publicationDate.year',
+  PUBLICATION_MONTH = 'publicationDate.month',
+  PUBLICATION_DAY = 'publicationDate.day',
   LANGUAGE = 'language',
   PROJECTS = 'projects',
 }
@@ -126,10 +127,20 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, savePu
 
           <MultipleFieldWrapper>
             <StyledFieldWrapper>
-              {/* TODO: Render three different Fields: year, month, date
-               *  https://material-ui-pickers.dev/demo/datepicker#different-views
-               */}
-              <Field aria-label="date" component={FormikDatePicker} name={DescriptionFieldNames.PUBLICATION_YEAR} />
+              <Field name={DescriptionFieldNames.PUBLICATION_YEAR}>
+                {({ field: { name, value } }: any) => (
+                  <KeyboardDatePicker
+                    inputVariant="outlined"
+                    label={t('år')}
+                    onChange={value => {
+                      console.log('år', value);
+                      setFieldValue(name, value?.getFullYear());
+                    }}
+                    views={['year']}
+                    value={value ? new Date(value, 1) : null}
+                  />
+                )}
+              </Field>
             </StyledFieldWrapper>
 
             <StyledFieldWrapper>
