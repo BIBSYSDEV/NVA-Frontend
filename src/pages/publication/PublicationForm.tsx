@@ -31,12 +31,14 @@ const PublicationForm: React.FC = () => {
   );
 
   const validationSchema = Yup.object().shape({
-    title: Yup.string().required(t('publication:feedback.required_field')),
+    title: Yup.object().shape({
+      nb: Yup.string().required(t('publication:feedback.required_field')),
+    }),
 
     reference: Yup.object().shape({
-      referenceType: Yup.string().required(t('publication:feedback.required_field')),
+      type: Yup.string().required(t('publication:feedback.required_field')),
 
-      journalArticle: Yup.object().when('referenceType', {
+      journalArticle: Yup.object().when('type', {
         is: ReferenceType.PUBLICATION_IN_JOURNAL,
         then: Yup.object().shape({
           type: Yup.string(),
@@ -51,7 +53,7 @@ const PublicationForm: React.FC = () => {
         }),
       }),
 
-      book: Yup.object().when('referenceType', {
+      book: Yup.object().when('type', {
         is: ReferenceType.BOOK,
         then: Yup.object().shape({
           type: Yup.string(),
@@ -64,7 +66,7 @@ const PublicationForm: React.FC = () => {
         }),
       }),
 
-      report: Yup.object().when('referenceType', {
+      report: Yup.object().when('type', {
         is: ReferenceType.REPORT,
         then: Yup.object().shape({
           type: Yup.string(),
@@ -96,14 +98,9 @@ const PublicationForm: React.FC = () => {
         validationSchema={validationSchema}
         onSubmit={(values: Publication) => savePublication(values)}
         validateOnChange={false}>
-        {({ values, errors, touched }: FormikProps<Publication>) => (
+        {({ values }: FormikProps<Publication>) => (
           <Form onBlur={() => setLocalStorageFormData(values)}>
-            <PublicationFormTabs
-              tabNumber={tabNumber}
-              handleTabChange={handleTabChange}
-              errors={errors}
-              touched={touched}
-            />
+            <PublicationFormTabs tabNumber={tabNumber} handleTabChange={handleTabChange} />
             {tabNumber === 0 && <PublicationPanel goToNextTab={goToNextTab} />}
             {tabNumber === 1 && (
               <DescriptionPanel goToNextTab={goToNextTab} savePublication={() => savePublication(values)} />
