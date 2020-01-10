@@ -22,7 +22,7 @@ const StyledPublication = styled.div`
 
 const PublicationForm: React.FC = () => {
   const { t } = useTranslation('publication');
-  const [tabNumber, setTabNumber] = useState(0);
+  const [tabNumber, setTabNumber] = useState(1);
 
   checkLocalStorageVersion();
   const [localStorageFormData, setLocalStorageFormData, clearLocalStorageFormData] = useLocalStorage(
@@ -81,7 +81,7 @@ const PublicationForm: React.FC = () => {
   return (
     <StyledPublication>
       <Formik
-        initialValues={emptyPublication}
+        initialValues={localStorageFormData}
         validationSchema={validationSchema}
         onSubmit={(values: Publication) => savePublication(values)}
         validateOnChange={false}>

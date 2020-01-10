@@ -104,10 +104,10 @@ export default createMuiTheme({
         },
       },
     },
-    MuiTextField: {
-      root: {
-        marginTop: '1rem',
-      },
-    },
+    // MuiTextField: {
+    //   root: {
+    //     marginTop: '1rem',
+    //   },
+    // },
   },
 });

@@ -5,8 +5,19 @@ import { KeyboardDatePicker, DatePickerView } from '@material-ui/pickers';
 import { useFormikContext, FormikProps } from 'formik';
 import { Publication } from '../../../types/publication.types';
 import { FormControlLabel, Checkbox } from '@material-ui/core';
+import styled from 'styled-components';
 
-const DatePickerField = ({ yearFieldName, monthFieldName, dayFieldName }: any) => {
+const StyledFormControlLabel = styled(FormControlLabel)`
+  margin-left: 0.5rem;
+`;
+
+interface DatePickerFieldProps {
+  yearFieldName: string;
+  monthFieldName: string;
+  dayFieldName: string;
+}
+
+const DatePickerField = ({ yearFieldName, monthFieldName, dayFieldName }: DatePickerFieldProps) => {
   const { t } = useTranslation('publication');
   const { setFieldValue }: FormikProps<Publication> = useFormikContext();
 
@@ -38,8 +49,17 @@ const DatePickerField = ({ yearFieldName, monthFieldName, dayFieldName }: any) =
         onChange={setDate}
         views={views}
         value={date}
+        labelFunc={date => {
+          if (!date) {
+            return '';
+          } else if (yearOnly) {
+            return `${date.getFullYear()}`;
+          } else {
+            return date.toLocaleDateString();
+          }
+        }}
       />
-      <FormControlLabel
+      <StyledFormControlLabel
         control={<Checkbox checked={yearOnly} onChange={toggleYearOnly} color="primary" />}
         label={t('description.year_only')}
       />
