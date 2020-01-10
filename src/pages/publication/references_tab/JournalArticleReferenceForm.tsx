@@ -8,10 +8,10 @@ import { FormControl, InputLabel, MenuItem, Select, TextField } from '@material-
 import { Publication } from '../../../types/publication.types';
 import { emptyPublisher, JournalArticleFieldNames, journalArticleTypes } from '../../../types/references.types';
 import { PublicationTableNumber } from '../../../utils/constants';
-import JournalPublisherRow from './components/JournalPublisherRow';
 import NviValidation from './components/NviValidation';
 import PeerReview from './components/PeerReview';
 import PublicationChannelSearch from './components/PublicationChannelSearch';
+import PublisherRow from './components/PublisherRow';
 
 const StyledArticleDetail = styled.div`
   display: grid;
@@ -72,7 +72,7 @@ const JournalArticleReferenceForm: React.FC = () => {
               setValueFunction={inputValue => setFieldValue(name, inputValue ?? emptyPublisher)}
             />
             {value.title && (
-              <JournalPublisherRow
+              <PublisherRow
                 dataTestId="autosearch-results-journal"
                 publisher={value}
                 label={t('references.journal')}

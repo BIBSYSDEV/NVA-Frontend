@@ -8,8 +8,8 @@ import { FormControl, InputLabel, MenuItem, Select, TextField } from '@material-
 import { Publication } from '../../../types/publication.types';
 import { emptyPublisher, ReportFieldNames, reportTypes } from '../../../types/references.types';
 import { PublicationTableNumber } from '../../../utils/constants';
-import JournalPublisherRow from './components/JournalPublisherRow';
 import PublicationChannelSearch from './components/PublicationChannelSearch';
+import PublisherRow from './components/PublisherRow';
 
 const StyledLabel = styled.div`
   color: ${({ theme }) => theme.palette.text.primary};
@@ -55,7 +55,7 @@ const ReportReferenceForm: FC = () => {
               setValueFunction={inputValue => setFieldValue(name, inputValue ?? emptyPublisher)}
             />
             {value.title && (
-              <JournalPublisherRow
+              <PublisherRow
                 dataTestId="autosearch-results-publisher"
                 label={t('references.publisher')}
                 publisher={value}
@@ -95,7 +95,7 @@ const ReportReferenceForm: FC = () => {
               setValueFunction={inputValue => setFieldValue(name, inputValue ?? emptyPublisher)}
             />
             {value.title && (
-              <JournalPublisherRow
+              <PublisherRow
                 dataTestId="autosearch-results-series"
                 label={t('common:title')}
                 publisher={value}

@@ -7,7 +7,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 
 import { Publisher } from '../../../../types/references.types';
 
-const StyledJournalPublisherRow = styled.div`
+const StyledPublisherRow = styled.div`
   margin: 1rem 0;
   padding: 1rem;
   background-color: ${({ theme }) => theme.palette.background.default};
@@ -47,18 +47,18 @@ const StyledButton = styled(Button)`
   margin: 0.5rem;
 `;
 
-interface JournalPublisherRowProps {
+interface PublisherRowProps {
   dataTestId: string;
   publisher: Partial<Publisher>;
   label: string;
   onClickDelete: (event: React.MouseEvent<any>) => void;
 }
 
-const JournalPublisherRow: React.FC<JournalPublisherRowProps> = ({ dataTestId, publisher, label, onClickDelete }) => {
+const PublisherRow: React.FC<PublisherRowProps> = ({ dataTestId, publisher, label, onClickDelete }) => {
   const { t } = useTranslation('publication');
 
   return (
-    <StyledJournalPublisherRow data-testid={dataTestId}>
+    <StyledPublisherRow data-testid={dataTestId}>
       <StyledTitle>{label}</StyledTitle>
       <StyledLevelLabel>{t('references.level')}</StyledLevelLabel>
       <StyledTitleText>{publisher.title}</StyledTitleText>
@@ -67,8 +67,8 @@ const JournalPublisherRow: React.FC<JournalPublisherRowProps> = ({ dataTestId, p
         <DeleteIcon />
         {t('references.remove')}
       </StyledButton>
-    </StyledJournalPublisherRow>
+    </StyledPublisherRow>
   );
 };
 
-export default JournalPublisherRow;
+export default PublisherRow;
