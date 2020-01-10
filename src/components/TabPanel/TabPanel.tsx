@@ -2,22 +2,19 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import { Button, Typography } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 
 interface TabPanelProps {
   ariaLabel: string;
   children?: React.ReactNode;
   goToNextTab?: (event: React.MouseEvent<any>) => void;
   onClickSave?: (event: React.MouseEvent<any>) => void;
-  heading: string;
 }
 
-const StyledHeading = styled.div`
-  font-size: 2rem;
-  font-weight: bold;
-  line-height: 1.5rem;
+const StyledDiv = styled.div`
   margin-top: 2rem;
   margin-bottom: 1rem;
+  font-size: 1rem;
 `;
 
 const StyledButton = styled(Button)`
@@ -25,12 +22,11 @@ const StyledButton = styled(Button)`
   margin-right: 0.5rem;
 `;
 
-const TabPanel: React.FC<TabPanelProps> = ({ ariaLabel, children, goToNextTab, onClickSave, heading }) => {
+const TabPanel: React.FC<TabPanelProps> = ({ children, goToNextTab, onClickSave }) => {
   const { t } = useTranslation();
 
   return (
-    <Typography component="div" role="tabpanel" aria-labelledby={`nav-tab-${ariaLabel}`}>
-      <StyledHeading>{heading}</StyledHeading>
+    <StyledDiv>
       {children}
       {goToNextTab && (
         <StyledButton color="primary" variant="contained" onClick={goToNextTab}>
@@ -42,7 +38,7 @@ const TabPanel: React.FC<TabPanelProps> = ({ ariaLabel, children, goToNextTab, o
           {t('common:save')}
         </StyledButton>
       )}
-    </Typography>
+    </StyledDiv>
   );
 };
 

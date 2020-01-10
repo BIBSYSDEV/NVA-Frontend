@@ -1,17 +1,17 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-import ContributorType from '../../../types/contributor.types';
+import ContributorType, { emptyContributor } from '../../../types/contributor.types';
 import ContributorLabel from './ContributorLabel';
 import OtherContributor from './OtherContributor';
 import StyledContributor from './StyledContributor';
-import { emptyContributor } from './../../../types/contributor.types';
-import { FieldArray } from 'formik';
+import { FieldArray, useFormikContext } from 'formik';
 
 interface OtherContributorsProps {}
 
 const OtherContributors: React.FC<OtherContributorsProps> = () => {
   const { t } = useTranslation();
+  const { values } = useFormikContext();
 
   return (
     <StyledContributor.Box>
@@ -24,11 +24,11 @@ const OtherContributors: React.FC<OtherContributorsProps> = () => {
         <div className="contributor-delete-icon" />
       </StyledContributor.OtherContributorContainer>
 
-      <FieldArray name="contributors.contributors">
-        {({ swap, push, remove, form: { values } }) => {
+      <FieldArray name="contributors">
+        {({ swap, push, remove }) => {
           return (
             <div>
-              {values.contributors?.contributors.map((contributor: ContributorType, index: number) => (
+              {values.contributors.map((contributor: ContributorType, index: number) => (
                 <OtherContributor
                   contributor={contributor}
                   key={contributor.id}
@@ -40,7 +40,7 @@ const OtherContributors: React.FC<OtherContributorsProps> = () => {
               <StyledContributor.AuthorsButton
                 variant="text"
                 startIcon={<StyledContributor.AddIcon />}
-                onClick={() => push({ ...emptyContributor })}>
+                onClick={() => push(emptyContributor)}>
                 {t('publication:contributors.add_other_contributor')}
               </StyledContributor.AuthorsButton>
             </div>

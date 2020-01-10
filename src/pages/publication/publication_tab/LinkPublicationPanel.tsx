@@ -39,7 +39,7 @@ const LinkPublicationPanel: React.FC<LinkPublicationPanelProps> = ({ expanded, o
   const user = useSelector((state: RootStore) => state.user);
 
   const handleConfirm = () => {
-    dispatch(createNewPublicationFromDoi(doiUrl, user.id));
+    dispatch(createNewPublicationFromDoi(doiUrl, user.id, dispatch));
     goToNextTab();
   };
 

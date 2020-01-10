@@ -2,18 +2,29 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 
-import { getPublicationChannels } from '../../../api/external/publicationChannelApi';
-import { AutoSearch } from '../../../components/AutoSearch';
-import { searchFailure } from '../../../redux/actions/searchActions';
-import { PublicationChannel } from '../../../types/references.types';
-import useDebounce from '../../../utils/hooks/useDebounce';
+import { getPublishers } from '../../../../api/publicationChannelApi';
+import { AutoSearch } from '../../../../components/AutoSearch';
+import { searchFailure } from '../../../../redux/actions/searchActions';
+import { Publisher } from '../../../../types/references.types';
+import { PublicationTableNumber } from '../../../../utils/constants';
+import useDebounce from '../../../../utils/hooks/useDebounce';
 
-interface PublisherSearchProps {
+interface PublicationChannelSearchProps {
+  clearSearchField: boolean;
+  dataTestId: string;
+  label: string;
+  publicationTable: PublicationTableNumber;
   setValueFunction: (value: any) => void;
 }
 
-const PublisherSearch: React.FC<PublisherSearchProps> = ({ setValueFunction }) => {
-  const [searchResults, setSearchResults] = useState<PublicationChannel[]>([]);
+const PublicationChannelSearch: React.FC<PublicationChannelSearchProps> = ({
+  clearSearchField,
+  dataTestId,
+  label,
+  publicationTable,
+  setValueFunction,
+}) => {
+  const [searchResults, setSearchResults] = useState<Publisher[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [searching, setSearching] = useState(false);
 
@@ -24,14 +35,14 @@ const PublisherSearch: React.FC<PublisherSearchProps> = ({ setValueFunction }) =
   const search = useCallback(
     async (searchTerm: string) => {
       setSearching(true);
-      const response = await getPublicationChannels(searchTerm);
+      const response = await getPublishers(searchTerm, publicationTable);
       if (response) {
         setSearchResults(response);
       } else {
         dispatch(searchFailure(t('error.search')));
       }
     },
-    [dispatch, t]
+    [dispatch, t, publicationTable]
   );
 
   useEffect(() => {
@@ -43,12 +54,14 @@ const PublisherSearch: React.FC<PublisherSearchProps> = ({ setValueFunction }) =
 
   return (
     <AutoSearch
+      clearSearchField={clearSearchField}
+      dataTestId={dataTestId}
       onInputChange={(_, value) => setSearchTerm(value)}
       searchResults={searchResults}
       setValueFunction={setValueFunction}
-      label={t('publication:references.publisher')}
+      label={label}
     />
   );
 };
 
-export default PublisherSearch;
+export default PublicationChannelSearch;

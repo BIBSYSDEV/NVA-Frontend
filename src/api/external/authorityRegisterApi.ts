@@ -17,10 +17,10 @@ export const getAuthorities = async (name: string, dispatch: Dispatch) => {
     if (response.status === StatusCode.OK) {
       return response.data;
     } else {
-      dispatch(addNotification({ message: i18n.t('feedback:error.get_authorities'), variant: 'error' }));
+      dispatch(addNotification(i18n.t('feedback:error.get_authorities'), 'error'));
     }
   } catch {
-    dispatch(addNotification({ message: i18n.t('feedback:error.get_authorities'), variant: 'error' }));
+    dispatch(addNotification(i18n.t('feedback:error.get_authorities'), 'error'));
   }
 };
 
@@ -54,10 +54,10 @@ export const getAuthorityByOrcId = async (orcId: string, dispatch: Dispatch) => 
     if (response.status === StatusCode.OK) {
       return response.data;
     } else {
-      dispatch(addNotification({ message: i18n.t('feedback:error.get_authority'), variant: 'error' }));
+      dispatch(addNotification(i18n.t('feedback:error.get_authority'), 'error'));
     }
   } catch {
-    dispatch(addNotification({ message: i18n.t('feedback:error.get_authority'), variant: 'error' }));
+    dispatch(addNotification(i18n.t('feedback:error.get_authority'), 'error'));
   }
 };
 
@@ -72,12 +72,12 @@ export const updateAuthority = async (authority: Partial<Authority> | null, disp
     const response = await Axios.put(url, authority);
 
     if (response.status === StatusCode.OK) {
-      dispatch(addNotification({ message: i18n.t('feedback:success.update_authority'), variant: 'success' }));
+      dispatch(addNotification(i18n.t('feedback:success.update_authority'), 'success'));
       return response.data;
     } else {
-      dispatch(addNotification({ message: i18n.t('feedback:error.update_authority'), variant: 'error' }));
+      dispatch(addNotification(i18n.t('feedback:error.update_authority'), 'error'));
     }
   } catch {
-    dispatch(addNotification({ message: i18n.t('feedback:error.update_authority'), variant: 'error' }));
+    dispatch(addNotification(i18n.t('feedback:error.update_authority'), 'error'));
   }
 };

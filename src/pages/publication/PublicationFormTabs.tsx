@@ -1,31 +1,38 @@
+import { FormikErrors, FormikTouched, useFormikContext, FormikProps } from 'formik';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+
 import { Tabs } from '@material-ui/core';
-import { FormikErrors, FormikTouched } from 'formik';
+
 import LinkTab from '../../components/TabPanel/LinkTab';
-import { PublicationFormsData } from '../../types/form.types';
+import { Publication } from '../../types/publication.types';
+import { DescriptionFieldNames } from './DescriptionPanel';
+import { ReferenceFieldNames, JournalArticleFieldNames, BookFieldNames } from '../../types/references.types';
+import { getObjectValueByFieldName } from '../../utils/helpers';
 
 const a11yProps = (tabDescription: string) => {
   return {
     id: `nav-tab-${tabDescription}`,
     'aria-controls': `nav-tabpanel-${tabDescription}`,
+    'data-testid': `nav-tabpanel-${tabDescription}`,
   };
 };
+
+const descriptionFieldNames = Object.values(DescriptionFieldNames);
+const referenceFieldNames = [
+  ...Object.values(ReferenceFieldNames),
+  ...Object.values(JournalArticleFieldNames),
+  ...Object.values(BookFieldNames),
+];
 
 interface PublicationFormTabsProps {
   handleTabChange: (_: React.ChangeEvent<{}>, newValue: number) => void;
   tabNumber: number;
-  errors: FormikErrors<PublicationFormsData>;
-  touched: FormikTouched<PublicationFormsData>;
 }
 
-export const PublicationFormTabs: React.FC<PublicationFormTabsProps> = ({
-  handleTabChange,
-  tabNumber,
-  errors,
-  touched,
-}) => {
+export const PublicationFormTabs: React.FC<PublicationFormTabsProps> = ({ handleTabChange, tabNumber }) => {
   const { t } = useTranslation('publication');
+  const { errors, touched }: FormikProps<Publication> = useFormikContext();
 
   return (
     <Tabs
@@ -39,29 +46,28 @@ export const PublicationFormTabs: React.FC<PublicationFormTabsProps> = ({
       <LinkTab
         label={`2. ${t('heading.description')}`}
         {...a11yProps('description')}
-        error={hasTouchedError(errors.description, touched.description)}
+        error={hasTouchedError(errors, touched, descriptionFieldNames)}
       />
       <LinkTab
         label={`3. ${t('heading.references')}`}
         {...a11yProps('references')}
-        error={hasTouchedError(errors.reference, touched.reference)}
+        error={hasTouchedError(errors, touched, referenceFieldNames)}
       />
-      <LinkTab
-        label={`4. ${t('heading.contributors')}`}
-        {...a11yProps('contributors')}
-        error={hasTouchedError(errors.contributors, touched.contributors)}
-      />
+      <LinkTab label={`4. ${t('heading.contributors')}`} {...a11yProps('contributors')} error={false} />
       <LinkTab label={`5. ${t('heading.files_and_license')}`} {...a11yProps('files-and-license')} />
       <LinkTab label={`6. ${t('heading.submission')}`} {...a11yProps('submission')} />
     </Tabs>
   );
 };
 
-const hasTouchedError = (errors: FormikErrors<any> | undefined, touched: FormikTouched<any> | undefined): boolean => {
-  if (!errors || !touched) {
+const hasTouchedError = (errors: FormikErrors<any>, touched: FormikTouched<any>, fieldNames: string[]): boolean => {
+  if (!Object.keys(errors).length || !Object.keys(touched).length || !fieldNames.length) {
     return false;
   }
 
-  const errorFieldNames = Object.keys(errors);
-  return errorFieldNames.some(field => touched[field]);
+  return fieldNames.some(fieldName => {
+    const fieldHasError = !!getObjectValueByFieldName(errors, fieldName);
+    const fieldIsTouched = getObjectValueByFieldName(touched, fieldName);
+    return fieldHasError && fieldIsTouched;
+  });
 };

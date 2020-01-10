@@ -4,15 +4,16 @@ import { useDispatch } from 'react-redux';
 
 import { searchCristinProjects } from '../../../api/external/cristinProjectApi';
 import AutoSearch from '../../../components/AutoSearch';
-import { CristinProjectType, NormalizedProjectType } from '../../../types/project.types';
+import { CristinProjectType, Project } from '../../../types/project.types';
 import useDebounce from '../../../utils/hooks/useDebounce';
 
 interface ProjectSearchProps {
+  dataTestId: string;
   setValueFunction: (value: any) => void;
 }
 
-const ProjectSearch: React.FC<ProjectSearchProps> = ({ setValueFunction }) => {
-  const [searchResults, setSearchResults] = useState<NormalizedProjectType[]>([]);
+const ProjectSearch: React.FC<ProjectSearchProps> = ({ dataTestId, setValueFunction }) => {
+  const [searchResults, setSearchResults] = useState<Project[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [searching, setSearching] = useState(false);
 
@@ -44,6 +45,7 @@ const ProjectSearch: React.FC<ProjectSearchProps> = ({ setValueFunction }) => {
 
   return (
     <AutoSearch
+      dataTestId={dataTestId}
       onInputChange={(_, value) => setSearchTerm(value)}
       searchResults={searchResults}
       setValueFunction={setValueFunction}

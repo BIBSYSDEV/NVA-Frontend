@@ -1,3 +1,4 @@
+import { Field, FormikProps, useFormikContext } from 'formik';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -5,7 +6,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 import ContributorType from '../../../types/contributor.types';
 import ContributorStyles from './StyledContributor';
-import { Field, useFormikContext, FormikProps } from 'formik';
+import { Publication } from '../../../types/publication.types';
 
 const StyledContainer = styled(ContributorStyles.ContributorContainer)`
   margin-bottom: 0.5rem;
@@ -24,34 +25,32 @@ interface ContributorProps {
 }
 
 const Contributor: React.FC<ContributorProps> = ({ contributor, index, swap, remove }) => {
-  const { setFieldValue, values }: FormikProps<any> = useFormikContext();
+  const { setFieldValue, values }: FormikProps<Publication> = useFormikContext();
 
   return (
-    <Field name={`contributors.authors[${index}]`}>
+    <Field name={`authors[${index}]`}>
       {() => (
         <StyledContainer>
           <ContributorStyles.PersonIcon />
           <ContributorStyles.Name>{contributor.name}</ContributorStyles.Name>
-          <Field name={`contributors.authors[${index}].selectedInstitution`}>
+          <Field name={`authors[${index}].institution`}>
             {({ field }: any) => {
               return (
                 <StyledInstitutionSelect
                   onChange={event => setFieldValue(field.name, event.target.value)}
-                  value={contributor.selectedInstitution || ''}
+                  value={contributor.institution || ''}
                   variant="outlined">
                   <MenuItem value="" key="-1" />
-                  {contributor?.institutions?.map(institution => (
+                  {/* {contributor?.institutions?.map(institution => (
                     <MenuItem value={institution} key={institution}>
                       {institution}
                     </MenuItem>
-                  ))}
+                  ))} */}
                 </StyledInstitutionSelect>
               );
             }}
           </Field>
-          <Field name={`contributors.authors[${index}].corresponding`}>
-            {() => <ContributorStyles.CorrespondingAuthor />}
-          </Field>
+          <Field name={`authors[${index}].corresponding`}>{() => <ContributorStyles.CorrespondingAuthor />}</Field>
           <ContributorStyles.OrcidIcon>
             {contributor.orcid && (
               <img src="https://orcid.org/sites/default/files/images/orcid_24x24.png" alt="ORCID iD icon" />
@@ -59,7 +58,7 @@ const Contributor: React.FC<ContributorProps> = ({ contributor, index, swap, rem
           </ContributorStyles.OrcidIcon>
           <ContributorStyles.ContributorsArrows
             first={index === 0}
-            last={index === values.contributors.authors.length - 1}
+            last={index === values.authors.length - 1}
             swap={swap}
             index={index}
           />
