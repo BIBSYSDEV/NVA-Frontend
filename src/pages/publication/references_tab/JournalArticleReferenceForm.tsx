@@ -71,6 +71,7 @@ const JournalArticleReferenceForm: FC = () => {
               publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
               setValueFunction={inputValue => setFieldValue(name, inputValue ?? emptyPublisher)}
               value={value.title}
+              placeholder={t('references.search_for_journal')}
             />
             {value.title && (
               <PublisherRow

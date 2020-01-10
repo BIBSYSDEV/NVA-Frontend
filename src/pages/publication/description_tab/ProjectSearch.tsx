@@ -11,9 +11,10 @@ interface ProjectSearchProps {
   dataTestId: string;
   setValueFunction: (value: any) => void;
   value: string;
+  placeholder?: string;
 }
 
-const ProjectSearch: FC<ProjectSearchProps> = ({ dataTestId, setValueFunction, value }) => {
+const ProjectSearch: FC<ProjectSearchProps> = ({ dataTestId, setValueFunction, value, placeholder }) => {
   const [searchResults, setSearchResults] = useState<Project[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [searching, setSearching] = useState(false);
@@ -54,6 +55,7 @@ const ProjectSearch: FC<ProjectSearchProps> = ({ dataTestId, setValueFunction, v
       setValueFunction={setValueFunction}
       label={t('publication:description.project')}
       value={value}
+      placeholder={placeholder}
     />
   );
 };

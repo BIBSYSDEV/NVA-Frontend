@@ -73,6 +73,7 @@ const BookReferenceForm: FC = () => {
               publicationTable={PublicationTableNumber.PUBLISHERS}
               setValueFunction={inputValue => setFieldValue(name, inputValue ?? emptyPublisher)}
               value={value.title}
+              placeholder={t('references.search_for_publisher')}
             />
             {value.title && (
               <PublisherRow
@@ -136,6 +137,7 @@ const BookReferenceForm: FC = () => {
               publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
               setValueFunction={inputValue => setFieldValue(name, inputValue ?? emptyPublisher)}
               value={value.title}
+              placeholder={t('references.search_for_series')}
             />
             {value.title && (
               <PublisherRow

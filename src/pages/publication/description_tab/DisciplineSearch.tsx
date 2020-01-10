@@ -8,6 +8,7 @@ interface DisciplineSearchProps {
   dataTestId: string;
   setValueFunction: (value: any) => void;
   value: string;
+  placeholder?: string;
 }
 
 interface DisciplineType {
@@ -15,7 +16,7 @@ interface DisciplineType {
   mainDiscipline: string;
 }
 
-const DisciplineSearch: FC<DisciplineSearchProps> = ({ dataTestId, setValueFunction, value }) => {
+const DisciplineSearch: FC<DisciplineSearchProps> = ({ dataTestId, setValueFunction, value, placeholder }) => {
   const { t } = useTranslation();
 
   const searchResults = Object.values(disciplines)
@@ -35,6 +36,7 @@ const DisciplineSearch: FC<DisciplineSearchProps> = ({ dataTestId, setValueFunct
       setValueFunction={setValueFunction}
       groupBy={(discipline: DisciplineType) => discipline.mainDiscipline}
       value={value}
+      placeholder={placeholder}
     />
   );
 };

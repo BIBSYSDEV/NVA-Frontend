@@ -16,10 +16,19 @@ interface AutoLookupProps {
   setValueFunction: (value: any) => void;
   dataTestId?: string;
   groupBy?: (options: any) => string;
+  placeholder?: string;
   value?: string;
 }
 
-const AutoLookup: FC<AutoLookupProps> = ({ label, options, setValueFunction, dataTestId, groupBy, value }) => {
+const AutoLookup: FC<AutoLookupProps> = ({
+  label,
+  options,
+  setValueFunction,
+  dataTestId,
+  groupBy,
+  placeholder,
+  value,
+}) => {
   const [displayValue, setDisplayValue] = useState({ title: value });
 
   useEffect(() => {
@@ -46,6 +55,7 @@ const AutoLookup: FC<AutoLookupProps> = ({ label, options, setValueFunction, dat
           fullWidth
           variant="outlined"
           autoComplete="false"
+          placeholder={placeholder}
           InputProps={{
             ...params.InputProps,
             startAdornment: <StyledSearchIcon />,

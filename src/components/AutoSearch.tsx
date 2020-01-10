@@ -21,16 +21,18 @@ interface AutoSearchProps {
   clearSearchField?: boolean;
   dataTestId?: string;
   onInputChange?: (event: object, value: string) => void;
+  placeholder?: string;
 }
 
 export const AutoSearch: FC<AutoSearchProps> = ({
+  label,
+  searchResults,
+  setValueFunction,
+  value,
   clearSearchField,
   dataTestId,
   onInputChange,
-  searchResults,
-  setValueFunction,
-  label,
-  value,
+  placeholder,
 }) => {
   const [displayValue, setDisplayValue] = useState({ title: '' });
   const [open, setOpen] = useState(false);
@@ -90,6 +92,7 @@ export const AutoSearch: FC<AutoSearchProps> = ({
           fullWidth
           variant="outlined"
           autoComplete="false"
+          placeholder={placeholder}
           InputProps={{
             ...params.InputProps,
             startAdornment: <StyledSearchIcon />,
