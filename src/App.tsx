@@ -23,7 +23,7 @@ import Workspace from './pages/workspace/Workspace';
 import { setAuthorityData, setUser } from './redux/actions/userActions';
 import { RootStore } from './redux/reducers/rootReducer';
 import { awsConfig } from './utils/aws-config';
-import { USE_MOCK_DATA } from './utils/constants';
+import { API_URL, USE_MOCK_DATA } from './utils/constants';
 import { hubListener } from './utils/hub-listener';
 
 const StyledApp = styled.div`
@@ -47,11 +47,10 @@ const StyledPageBody = styled.div`
 const App: React.FC = () => {
   useEffect(() => {
     const setAxiosHeaders = async () => {
-      // TODO: Set global config of baseURL and auth when backend is ready
-      // Set global config of axios requests
-      // axios.defaults.baseURL = API_URL;
       const idToken = await getIdToken();
 
+      // Set global config of axios requests
+      Axios.defaults.baseURL = API_URL;
       Axios.defaults.headers.common = {
         Authorization: `Bearer ${idToken}`,
         Accept: 'application/json',

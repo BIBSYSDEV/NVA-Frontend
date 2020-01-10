@@ -4,14 +4,7 @@ import MockAdapter from 'axios-mock-adapter';
 import { Authority } from '../types/authority.types';
 import OrcidResponse from '../types/orcid.types';
 import { ApplicationName, FeideUser, RoleName } from '../types/user.types';
-import {
-  API_URL,
-  ApiBaseUrl,
-  AUTHORITY_REGISTER_API_URL,
-  CRISTIN_API_URL,
-  ORCID_USER_INFO_URL,
-  USE_MOCK_DATA,
-} from '../utils/constants';
+import { API_URL, ApiBaseUrl, CRISTIN_API_URL, ORCID_USER_INFO_URL, USE_MOCK_DATA } from '../utils/constants';
 import mockCristinProjects from '../utils/testfiles/cristin_projects_real.json';
 import mockDoiLookupResponse from '../utils/testfiles/doi_lookup_response.json';
 import mockAuthoritiesResponse from '../utils/testfiles/mock_authorities_response.json';
@@ -78,8 +71,8 @@ if (USE_MOCK_DATA) {
   mock.onPost(ORCID_USER_INFO_URL).reply(200, mockOrcidResponse);
 
   // Authority Registry
-  mock.onPost(new RegExp(`${AUTHORITY_REGISTER_API_URL}/authority`)).reply(200, mockAuthoritiesResponse);
-  mock.onPut(new RegExp(`${AUTHORITY_REGISTER_API_URL}/authority/*`)).reply(200, mockSingleAuthorityResponse);
+  mock.onPost(new RegExp(`${API_URL}/authority`)).reply(200, mockAuthoritiesResponse);
+  mock.onPut(new RegExp(`${API_URL}/authority/*`)).reply(200, mockSingleAuthorityResponse);
 
   mock.onAny().reply(function(config) {
     throw new Error('Could not find mock for ' + config.url);

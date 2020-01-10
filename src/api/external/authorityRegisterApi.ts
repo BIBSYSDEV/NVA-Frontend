@@ -4,10 +4,10 @@ import { Dispatch } from 'redux';
 import { addNotification } from '../../redux/actions/notificationActions';
 import i18n from '../../translations/i18n';
 import { Authority } from '../../types/authority.types';
-import { API_URL, StatusCode } from '../../utils/constants';
+import { StatusCode } from '../../utils/constants';
 
 export const getAuthorities = async (name: string, dispatch: Dispatch) => {
-  const url = `${API_URL}/authority`;
+  const url = '/authority';
 
   try {
     const response = await Axios.post(url, {
@@ -25,7 +25,7 @@ export const getAuthorities = async (name: string, dispatch: Dispatch) => {
 };
 
 export const getAuthorityByFeideId = async (feideId: string, dispatch: Dispatch) => {
-  const url = `${API_URL}/authority`;
+  const url = '/authority';
 
   try {
     const response = await Axios.post(url, {
@@ -44,7 +44,7 @@ export const getAuthorityByFeideId = async (feideId: string, dispatch: Dispatch)
 };
 
 export const getAuthorityByOrcId = async (orcId: string, dispatch: Dispatch) => {
-  const url = `${API_URL}/authority`;
+  const url = '/authority';
 
   try {
     const response = await Axios.post(url, {
@@ -66,7 +66,7 @@ export const updateAuthority = async (authority: Partial<Authority> | null, disp
     return;
   }
 
-  const url = `${API_URL}/authority/${authority.scn}`;
+  const url = `/authority/${authority.scn}`;
 
   try {
     const response = await Axios.put(url, authority);
