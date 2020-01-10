@@ -4,7 +4,7 @@ export const SEARCH_RESULTS_PER_PAGE = 10;
 export const MINIMUM_SEARCH_CHARACTERS = 3;
 export const DEBOUNCE_INTERVAL = 500;
 export const MAX_NOTIFICATIONS = 3;
-export const APP_VERSION = '4';
+export const APP_VERSION = '3';
 
 export const ORCID_BASE_URL = process.env.REACT_APP_ORCID_BASE_URL;
 export const ORCID_USER_INFO_URL = '/oauth/userinfo';
