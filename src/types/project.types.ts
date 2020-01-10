@@ -11,3 +11,8 @@ export interface Project {
   grantId?: string;
   financedBy?: string;
 }
+
+export const emptyProject = {
+  id: '',
+  title: { nb: '' },
+};
