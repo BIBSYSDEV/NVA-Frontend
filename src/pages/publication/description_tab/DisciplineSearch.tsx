@@ -22,7 +22,7 @@ const DisciplineSearch: FC<DisciplineSearchProps> = ({ dataTestId, setValueFunct
     .map((mainDisciplines, index) =>
       mainDisciplines.map(discipline => ({
         title: t(`disciplines:${discipline}`),
-        mainDiscipline: Object.keys(disciplines)[index],
+        mainDiscipline: t(`disciplines:${Object.keys(disciplines)[index]}`),
       }))
     )
     .flat();
