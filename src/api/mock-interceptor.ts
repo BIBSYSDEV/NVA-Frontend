@@ -10,13 +10,13 @@ import {
   ORCID_USER_INFO_URL,
   USE_MOCK_DATA,
 } from '../utils/constants';
-import mockCristinProjects from '../utils/testfiles/cristin_projects_real.json';
+import mockProjects from '../utils/testfiles/cristin_projects_real.json';
 import mockDoiLookupResponse from '../utils/testfiles/doi_lookup_response.json';
 import mockAuthoritiesResponse from '../utils/testfiles/mock_authorities_response.json';
 import mockDoiPublication from '../utils/testfiles/publication_generated_from_doi.json';
 import mockPublications from '../utils/testfiles/publications_45_random_results_generated.json';
 import mockNsdPublisers from '../utils/testfiles/publishersFromNsd.json';
-import { PROJECT_SEARCH_URL } from './external/cristinProjectApi';
+import { PROJECT_SEARCH_URL } from './external/projectApi';
 
 export const mockUser: FeideUser = {
   name: 'Test User',
@@ -58,7 +58,7 @@ if (USE_MOCK_DATA) {
   mock.onGet(new RegExp(`${API_URL}/${ApiServiceUrl.DOI_LOOKUP}/*`)).reply(200, mockDoiLookupResponse);
 
   // PROJECT
-  mock.onGet(new RegExp(`${PROJECT_SEARCH_URL}/*`)).reply(200, mockCristinProjects, { 'X-Total-Count': '12' });
+  mock.onGet(new RegExp(`${PROJECT_SEARCH_URL}/*`)).reply(200, mockProjects, { 'X-Total-Count': '12' });
 
   // PUBLICATION CHANNEL
   mock.onPost(new RegExp(`${API_URL}/channel/search`)).reply(200, mockNsdPublisers);

@@ -12,7 +12,6 @@ export const ORCID_SIGN_IN_URL = `${ORCID_BASE_URL}/signin?oauth&client_id=${pro
 
 export const AUTHORITY_REGISTER_API_URL = process.env.REACT_APP_AUTHORITY_REGISTER_API_URL;
 export const ALMA_API_URL = process.env.REACT_APP_ALMA_API_URL;
-export const CRISTIN_API_URL = process.env.REACT_APP_CRISTIN_API_URL;
 
 export const API_URL = process.env.REACT_APP_API_URL;
 const API_TOKEN_KEY = process.env.REACT_APP_API_TOKEN_KEY;

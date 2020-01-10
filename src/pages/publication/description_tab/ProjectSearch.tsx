@@ -2,9 +2,9 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 
-import { searchCristinProjects } from '../../../api/external/cristinProjectApi';
+import { searchProjects } from '../../../api/external/projectApi';
 import AutoSearch from '../../../components/AutoSearch';
-import { CristinProjectType, Project } from '../../../types/project.types';
+import { ProjectType, Project } from '../../../types/project.types';
 import useDebounce from '../../../utils/hooks/useDebounce';
 
 interface ProjectSearchProps {
@@ -24,10 +24,10 @@ const ProjectSearch: React.FC<ProjectSearchProps> = ({ dataTestId, setValueFunct
   const search = useCallback(
     async (searchTerm: string) => {
       setSearching(true);
-      const response = await searchCristinProjects(`title=${searchTerm}`, dispatch);
+      const response = await searchProjects(`title=${searchTerm}`, dispatch);
       if (response) {
-        const normalizedResponse = response.map((project: CristinProjectType) => ({
-          id: project.cristin_project_id,
+        const normalizedResponse = response.map((project: ProjectType) => ({
+          id: project.project_id,
           title: `${project.title[project.main_language]} (${project.main_language})`,
         }));
         setSearchResults(normalizedResponse);
