@@ -5,9 +5,8 @@ import OrcidResponse from '../types/orcid.types';
 import { ApplicationName, FeideUser, RoleName } from '../types/user.types';
 import {
   API_URL,
-  ApiBaseUrl,
+  ApiServiceUrl,
   AUTHORITY_REGISTER_API_URL,
-  CRISTIN_API_URL,
   ORCID_USER_INFO_URL,
   USE_MOCK_DATA,
 } from '../utils/constants';
@@ -17,6 +16,7 @@ import mockAuthoritiesResponse from '../utils/testfiles/mock_authorities_respons
 import mockDoiPublication from '../utils/testfiles/publication_generated_from_doi.json';
 import mockPublications from '../utils/testfiles/publications_45_random_results_generated.json';
 import mockNsdPublisers from '../utils/testfiles/publishersFromNsd.json';
+import { PROJECT_SEARCH_URL } from './external/cristinProjectApi';
 
 export const mockUser: FeideUser = {
   name: 'Test User',
@@ -46,23 +46,25 @@ const mockOrcidResponse: OrcidResponse = {
 if (USE_MOCK_DATA) {
   const mock = new MockAdapter(Axios);
 
+  console.log(`${PROJECT_SEARCH_URL}`);
+
   // SEARCH
-  mock.onGet(new RegExp(`/${ApiBaseUrl.PUBLICATIONS}/*`)).reply(200, mockPublications);
+  mock.onGet(new RegExp(`${API_URL}/${ApiServiceUrl.PUBLICATIONS}/*`)).reply(200, mockPublications);
 
   // Create publication from doi
-  mock.onPost(new RegExp(`/${ApiBaseUrl.PUBLICATIONS}/doi/*`)).reply(200, mockDoiPublication);
+  mock.onPost(new RegExp(`${API_URL}/${ApiServiceUrl.PUBLICATIONS}/doi/*`)).reply(200, mockDoiPublication);
 
   // lookup DOI
-  mock.onGet(new RegExp(`/${ApiBaseUrl.DOI_LOOKUP}/*`)).reply(200, mockDoiLookupResponse);
+  mock.onGet(new RegExp(`${API_URL}/${ApiServiceUrl.DOI_LOOKUP}/*`)).reply(200, mockDoiLookupResponse);
 
-  // CRISTIN
-  mock.onGet(new RegExp(`${CRISTIN_API_URL}/projects*`)).reply(200, mockCristinProjects, { 'X-Total-Count': '12' });
+  // PROJECT
+  mock.onGet(new RegExp(`${PROJECT_SEARCH_URL}/*`)).reply(200, mockCristinProjects, { 'X-Total-Count': '12' });
 
   // PUBLICATION CHANNEL
   mock.onPost(new RegExp(`${API_URL}/channel/search`)).reply(200, mockNsdPublisers);
 
   // USER
-  mock.onGet(new RegExp(`/${ApiBaseUrl.USER}/*`)).reply(200, mockUser);
+  mock.onGet(new RegExp(`${API_URL}/${ApiServiceUrl.USER}/*`)).reply(200, mockUser);
 
   // ORCID
   mock.onPost(ORCID_USER_INFO_URL).reply(200, mockOrcidResponse);
@@ -71,6 +73,7 @@ if (USE_MOCK_DATA) {
   mock.onGet(new RegExp(`${AUTHORITY_REGISTER_API_URL}`)).reply(200, mockAuthoritiesResponse);
 
   mock.onAny().reply(function(config) {
+    console.log('ERROR!');
     throw new Error('Could not find mock for ' + config.url);
   });
 }

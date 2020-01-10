@@ -3,8 +3,14 @@ import { Dispatch } from 'redux';
 
 import i18n from '../translations/i18n';
 import { DoiPublication, Publication } from '../types/publication.types';
-import { ApiBaseUrl, StatusCode, API_URL, API_TOKEN } from '../utils/constants';
+import { ApiServiceUrl, StatusCode, API_URL, API_TOKEN } from '../utils/constants';
 import { addNotification } from '../redux/actions/notificationActions';
+
+const PUBLICATION_SERVICE_BASE_URL = `${API_URL}${ApiServiceUrl.PUBLICATIONS}`;
+export const PUBLICATION_INSERT_RESOURCE_URL = `${PUBLICATION_SERVICE_BASE_URL}/insert-resource`;
+export const PUBLICATION_UPDATE_RESOURCE_URL = `${PUBLICATION_SERVICE_BASE_URL}/update-resource`;
+export const PUBLICATION_FETCH_RESOURCE_URL = `${PUBLICATION_SERVICE_BASE_URL}/fetch-resource`;
+export const PUBLICATION_DOI_URL = `${PUBLICATION_SERVICE_BASE_URL}/doi`;
 
 export const createNewPublicationFromDoi = async (url: string, owner: string, dispatch: Dispatch) => {
   const data: DoiPublication = {
@@ -12,7 +18,7 @@ export const createNewPublicationFromDoi = async (url: string, owner: string, di
     owner,
   };
   try {
-    const response = await Axios.post(`/${ApiBaseUrl.PUBLICATIONS}/doi`, data, {
+    const response = await Axios.post(PUBLICATION_DOI_URL, data, {
       headers: {
         Authorization: `Bearer ${API_TOKEN}`,
       },
@@ -28,10 +34,8 @@ export const createNewPublicationFromDoi = async (url: string, owner: string, di
 };
 
 export const createNewPublication = async (publication: Publication, dispatch: Dispatch) => {
-  const url = `${API_URL}/insert-resource`;
-
   try {
-    const response = await Axios.post(url, publication, {
+    const response = await Axios.post(PUBLICATION_INSERT_RESOURCE_URL, publication, {
       headers: {
         Authorization: `Bearer ${API_TOKEN}`,
       },
@@ -52,11 +56,8 @@ export const updatePublication = async (publication: Publication, dispatch: Disp
     dispatch(addNotification(i18n.t('feedback:error.update_publication'), 'error'));
     return;
   }
-
-  const url = `${API_URL}/update-resource/${id}`;
-
   try {
-    const response = await Axios.put(url, publication, {
+    const response = await Axios.put(`${PUBLICATION_UPDATE_RESOURCE_URL}/${id}`, publication, {
       headers: {
         Authorization: `Bearer ${API_TOKEN}`,
       },
@@ -72,7 +73,7 @@ export const updatePublication = async (publication: Publication, dispatch: Disp
 };
 
 export const getPublication = async (id: string, dispatch: Dispatch) => {
-  const url = `${API_URL}/fetch-resource/${id}`;
+  const url = `${PUBLICATION_FETCH_RESOURCE_URL}/${id}`;
   try {
     const response = await Axios.get(url, {
       headers: {
@@ -91,7 +92,7 @@ export const getPublication = async (id: string, dispatch: Dispatch) => {
 
 export const lookupDoiTitle = async (url: string) => {
   try {
-    const response = await Axios.get(`/${ApiBaseUrl.DOI_LOOKUP}${url}`);
+    const response = await Axios.get(`${API_URL}/${ApiServiceUrl.DOI_LOOKUP}${url}`);
     if (response.status === StatusCode.OK) {
       return response.data.title;
     } else {

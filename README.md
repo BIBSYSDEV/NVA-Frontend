@@ -4,23 +4,23 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 We are using environment variables in this project.<br>
 To be able to run this app, you need to create a .env file with the following fields:<br>
-`REACT_APP_AWS_COGNITO_IDENTITY_POOL_ID=eu-west-1:XXXXXXXXXX`<br>
-`REACT_APP_AWS_REGION=eu-west-1`<br>
-`REACT_APP_AWS_USER_POOLS_ID=eu-west-XXXXXXXXXX`<br>
-`REACT_APP_AWS_USER_POOLS_WEB_CLIENT_ID=XXXXXXXXXX`<br>
-`REACT_APP_DOMAIN=XXXXXXXXX.auth.eu-west-1.amazoncognito.com`<br>
-`REACT_APP_REDIRECT_SIGN_IN=XXXXXXXXXX`<br>
-`REACT_APP_REDIRECT_SIGN_OUT=XXXXXXXXXX`<br>
-`REACT_APP_ORCID_CLIENT_ID=XXXXXXXXXX`<br>
-`REACT_APP_ORCID_CLIENT_SECRET=XXXXXXXXXX`<br>
-`REACT_APP_ORCID_REDIRECT_URI=XXXXXXXXXX`<br>
-`REACT_APP_ORCID_BASE_URL=XXXXXXXXXX`<br>
-`REACT_APP_AUTHORITY_REGISTER_API_URL=https://authority.bibsys.no/authority/rest`<br>
-`REACT_APP_PUBLICATION_CHANNEL_API_URL=https://api.nsd.no/dbhapitjener/Tabeller/hentJSONTabellData`<br>
-`REACT_APP_ALMA_API_URL=https://api-eu.hosted.exlibrisgroup.com`<br>
-`REACT_APP_CRISTIN_API_URL=https://api.cristin.no/v2`<br>
-`REACT_APP_API_URL=https://api.dev.nva.aws.unit.no`<br>
-`REACT_APP_API_TOKEN_KEY=XXXXXXXXXX`<br>
+
+    REACT_APP_AWS_COGNITO_IDENTITY_POOL_ID=eu-west-1:XXXXXXXXXX
+    REACT_APP_AWS_REGION=eu-west-1
+    REACT_APP_AWS_USER_POOLS_ID=eu-west-XXXXXXXXXX
+    REACT_APP_AWS_USER_POOLS_WEB_CLIENT_ID=XXXXXXXXXX
+    REACT_APP_DOMAIN=XXXXXXXXX.auth.eu-west-1.amazoncognito.com
+    REACT_APP_REDIRECT_SIGN_IN=XXXXXXXXXX
+    REACT_APP_REDIRECT_SIGN_OUT=XXXXXXXXXX
+    REACT_APP_ORCID_CLIENT_ID=XXXXXXXXXX
+    REACT_APP_ORCID_CLIENT_SECRET=XXXXXXXXXX
+    REACT_APP_ORCID_REDIRECT_URI=XXXXXXXXXX
+    REACT_APP_ORCID_BASE_URL=XXXXXXXXXX
+    REACT_APP_AUTHORITY_REGISTER_API_URL=https://authority.bibsys.no/authority/rest
+    REACT_APP_PUBLICATION_CHANNEL_API_URL=https://api.nsd.no/dbhapitjener/Tabeller/hentJSONTabellData
+    REACT_APP_ALMA_API_URL=https://api-eu.hosted.exlibrisgroup.com
+    REACT_APP_API_URL=https://api.dev.nva.aws.unit.no
+    REACT_APP_API_TOKEN_KEY=XXXXXXXXXX
 
 To use mock data, you need to add this variable to the .env file:<br>
 `REACT_APP_USE_MOCK=true`
