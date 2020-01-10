@@ -5,11 +5,11 @@ import styled from 'styled-components';
 
 import { FormControl, InputLabel, MenuItem, Select, TextField } from '@material-ui/core';
 
-import { PublicationTableNumber } from '../../../utils/constants';
-import JournalPublisherRow from './components/JournalPublisherRow';
-import PublicationChannelSearch from './components/PublicationChannelSearch';
-import { emptyPublisher, ReportFieldNames, reportTypes } from '../../../types/references.types';
 import { Publication } from '../../../types/publication.types';
+import { emptyPublisher, ReportFieldNames, reportTypes } from '../../../types/references.types';
+import { PublicationTableNumber } from '../../../utils/constants';
+import PublicationChannelSearch from './components/PublicationChannelSearch';
+import PublisherRow from './components/PublisherRow';
 
 const StyledLabel = styled.div`
   color: ${({ theme }) => theme.palette.text.primary};
@@ -47,36 +47,31 @@ const ReportReferenceForm: FC = () => {
       <Field name={ReportFieldNames.PUBLISHER}>
         {({ field: { name, value } }: any) => (
           <>
-            <div data-testid="autosearch-publisher">
-              <PublicationChannelSearch
-                clearSearchField={value === emptyPublisher}
-                label={t('references.publisher')}
-                publicationTable={PublicationTableNumber.PUBLISHERS}
-                setValueFunction={inputValue => setFieldValue(name, inputValue ?? emptyPublisher)}
-              />
-            </div>
+            <PublicationChannelSearch
+              clearSearchField={value === emptyPublisher}
+              dataTestId="autosearch-publisher"
+              label={t('references.publisher')}
+              publicationTable={PublicationTableNumber.PUBLISHERS}
+              setValueFunction={inputValue => setFieldValue(name, inputValue ?? emptyPublisher)}
+            />
             {value.title && (
-              <div data-testid="autosearch-results-publisher">
-                <JournalPublisherRow
-                  hidePublisher
-                  label={t('references.publisher')}
-                  publisher={value}
-                  onClickDelete={() => setFieldValue(name, emptyPublisher)}
-                />
-              </div>
+              <PublisherRow
+                dataTestId="autosearch-results-publisher"
+                label={t('references.publisher')}
+                publisher={value}
+                onClickDelete={() => setFieldValue(name, emptyPublisher)}
+              />
             )}
           </>
         )}
       </Field>
+      <Field name={ReportFieldNames.ISBN}>
+        {({ field }: any) => (
+          <TextField data-testid="isbn" variant="outlined" label={t('references.isbn')} {...field} />
+        )}
+      </Field>
       <div>
-        <Field name={ReportFieldNames.ISBN} fullWidth>
-          {({ field }: any) => (
-            <TextField data-testid="isbn" variant="outlined" label={t('references.isbn')} {...field} />
-          )}
-        </Field>
-      </div>
-      <div>
-        <Field name={ReportFieldNames.NUMBER_OF_PAGES} fullWidth>
+        <Field name={ReportFieldNames.NUMBER_OF_PAGES}>
           {({ field }: any) => (
             <TextField
               data-testid="number_of_pages"
@@ -92,23 +87,20 @@ const ReportReferenceForm: FC = () => {
       <Field name={ReportFieldNames.SERIES}>
         {({ field: { name, value } }: any) => (
           <>
-            <div data-testid="autosearch-series">
-              <PublicationChannelSearch
-                clearSearchField={value === emptyPublisher}
-                label={t('common:title')}
-                publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
-                setValueFunction={inputValue => setFieldValue(name, inputValue ?? emptyPublisher)}
-              />
-            </div>
+            <PublicationChannelSearch
+              clearSearchField={value === emptyPublisher}
+              dataTestId="autosearch-series"
+              label={t('common:title')}
+              publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
+              setValueFunction={inputValue => setFieldValue(name, inputValue ?? emptyPublisher)}
+            />
             {value.title && (
-              <div data-testid="autosearch-results-series">
-                <JournalPublisherRow
-                  hidePublisher
-                  label={t('common:title')}
-                  publisher={value}
-                  onClickDelete={() => setFieldValue(name, emptyPublisher)}
-                />
-              </div>
+              <PublisherRow
+                dataTestId="autosearch-results-series"
+                label={t('common:title')}
+                publisher={value}
+                onClickDelete={() => setFieldValue(name, emptyPublisher)}
+              />
             )}
           </>
         )}

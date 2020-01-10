@@ -37,15 +37,15 @@ interface Report {
 
 export interface Publisher {
   title: string;
-  issn: string;
-  level: string;
-  publisher: string;
+  printIssn: string;
+  onlineIssn: string;
+  level: number | null;
 }
 
 export const emptyPublisher: Publisher = {
-  issn: '',
-  level: '',
-  publisher: '',
+  printIssn: '',
+  onlineIssn: '',
+  level: null,
   title: '',
 };
 

@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 
-import { getDataFromNsd } from '../../../../api/external/publicationChannelApi';
+import { getPublishers } from '../../../../api/publicationChannelApi';
 import { AutoSearch } from '../../../../components/AutoSearch';
 import { searchFailure } from '../../../../redux/actions/searchActions';
 import { Publisher } from '../../../../types/references.types';
@@ -11,6 +11,7 @@ import useDebounce from '../../../../utils/hooks/useDebounce';
 
 interface PublicationChannelSearchProps {
   clearSearchField: boolean;
+  dataTestId: string;
   label: string;
   publicationTable: PublicationTableNumber;
   setValueFunction: (value: any) => void;
@@ -18,6 +19,7 @@ interface PublicationChannelSearchProps {
 
 const PublicationChannelSearch: React.FC<PublicationChannelSearchProps> = ({
   clearSearchField,
+  dataTestId,
   label,
   publicationTable,
   setValueFunction,
@@ -33,7 +35,7 @@ const PublicationChannelSearch: React.FC<PublicationChannelSearchProps> = ({
   const search = useCallback(
     async (searchTerm: string) => {
       setSearching(true);
-      const response = await getDataFromNsd(searchTerm, publicationTable);
+      const response = await getPublishers(searchTerm, publicationTable);
       if (response) {
         setSearchResults(response);
       } else {
@@ -53,6 +55,7 @@ const PublicationChannelSearch: React.FC<PublicationChannelSearchProps> = ({
   return (
     <AutoSearch
       clearSearchField={clearSearchField}
+      dataTestId={dataTestId}
       onInputChange={(_, value) => setSearchTerm(value)}
       searchResults={searchResults}
       setValueFunction={setValueFunction}
