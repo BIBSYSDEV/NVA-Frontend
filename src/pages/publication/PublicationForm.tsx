@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import * as Yup from 'yup';
 
 import TabPanel from '../../components/TabPanel/TabPanel';
-import { emptyPublicationFormData, PublicationFormsData } from '../../types/form.types';
+import { emptyPublication, Publication } from '../../types/publication.types';
 import { ReferenceType } from '../../types/references.types';
 import useLocalStorage from '../../utils/hooks/useLocalStorage';
 import { checkLocalStorageVersion } from '../../utils/local-storage-versioning';
@@ -26,17 +26,18 @@ const PublicationForm: React.FC = () => {
   checkLocalStorageVersion();
   const [localStorageFormData, setLocalStorageFormData, clearLocalStorageFormData] = useLocalStorage(
     'publicationFormData',
-    emptyPublicationFormData
+    emptyPublication
   );
 
   const validationSchema = Yup.object().shape({
-    description: Yup.object().shape({
-      title: Yup.string().required(t('publication:feedback.required_field')),
+    title: Yup.object().shape({
+      nb: Yup.string().required(t('publication:feedback.required_field')),
     }),
-    reference: Yup.object().shape({
-      referenceType: Yup.string().required(t('publication:feedback.required_field')),
 
-      journalPublication: Yup.object().when('referenceType', {
+    reference: Yup.object().shape({
+      type: Yup.string().required(t('publication:feedback.required_field')),
+
+      journalArticle: Yup.object().when('type', {
         is: ReferenceType.PUBLICATION_IN_JOURNAL,
         then: Yup.object().shape({
           type: Yup.string(),
@@ -51,7 +52,7 @@ const PublicationForm: React.FC = () => {
         }),
       }),
 
-      book: Yup.object().when('referenceType', {
+      book: Yup.object().when('type', {
         is: ReferenceType.BOOK,
         then: Yup.object().shape({
           type: Yup.string(),
@@ -59,6 +60,17 @@ const PublicationForm: React.FC = () => {
           isbn: Yup.string(),
           peerReview: Yup.bool(),
           textBook: Yup.bool(),
+          numberOfPages: Yup.string(),
+          series: Yup.string(),
+        }),
+      }),
+
+      report: Yup.object().when('type', {
+        is: ReferenceType.REPORT,
+        then: Yup.object().shape({
+          type: Yup.string(),
+          publisher: Yup.object(),
+          isbn: Yup.string(),
           numberOfPages: Yup.string(),
           series: Yup.string(),
         }),
@@ -74,8 +86,7 @@ const PublicationForm: React.FC = () => {
     setTabNumber(tabNumber + 1);
   };
 
-  const savePublication = async (values: PublicationFormsData) => {
-    console.log('Save publication:', values);
+  const savePublication = async (values: Publication) => {
     clearLocalStorageFormData();
   };
 
@@ -84,16 +95,11 @@ const PublicationForm: React.FC = () => {
       <Formik
         initialValues={localStorageFormData}
         validationSchema={validationSchema}
-        onSubmit={(values: PublicationFormsData) => savePublication(values)}
+        onSubmit={(values: Publication) => savePublication(values)}
         validateOnChange={false}>
-        {({ values, errors, touched }: FormikProps<PublicationFormsData>) => (
+        {({ values }: FormikProps<Publication>) => (
           <Form onBlur={() => setLocalStorageFormData(values)}>
-            <PublicationFormTabs
-              tabNumber={tabNumber}
-              handleTabChange={handleTabChange}
-              errors={errors}
-              touched={touched}
-            />
+            <PublicationFormTabs tabNumber={tabNumber} handleTabChange={handleTabChange} />
             {tabNumber === 0 && (
               <DescriptionPanel goToNextTab={goToNextTab} savePublication={() => savePublication(values)} />
             )}

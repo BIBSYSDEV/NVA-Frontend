@@ -5,13 +5,13 @@ import styled from 'styled-components';
 
 import { Checkbox, FormControl, FormControlLabel, InputLabel, MenuItem, Select, TextField } from '@material-ui/core';
 
-import { emptyPublisher, PublicationFormsData } from '../../../types/form.types';
-import { BookFieldNames, bookTypes } from '../../../types/references.types';
+import { Publication } from '../../../types/publication.types';
+import { BookFieldNames, bookTypes, emptyPublisher } from '../../../types/references.types';
 import { PublicationTableNumber } from '../../../utils/constants';
-import JournalPublisherRow from './components/JournalPublisherRow';
 import NviValidation from './components/NviValidation';
 import PeerReview from './components/PeerReview';
 import PublicationChannelSearch from './components/PublicationChannelSearch';
+import PublisherRow from './components/PublisherRow';
 
 const StyledSection = styled.div`
   display: grid;
@@ -21,11 +21,11 @@ const StyledSection = styled.div`
 `;
 
 const StyledPeerReview = styled.div`
-  grid-area: 'peer-review';
+  grid-area: peer-review;
 `;
 
 const StyledTextBook = styled.div`
-  grid-area: 'text-book';
+  grid-area: text-book;
 `;
 
 const StyledLabel = styled.div`
@@ -41,11 +41,9 @@ const StyledHeading = styled.div`
 
 const BookReferenceForm: FC = () => {
   const { t } = useTranslation('publication');
+  const { setFieldValue, values }: FormikProps<Publication> = useFormikContext();
 
-  const { setFieldValue, values }: FormikProps<PublicationFormsData> = useFormikContext();
-
-  const isRatedBook = values.reference?.book?.publisher?.level && values.reference.book.publisher.level !== '0';
-
+  const isRatedBook = values.reference?.book?.publisher?.level;
   const isPeerReviewed = values.reference?.book?.peerReview;
 
   return (
@@ -68,24 +66,21 @@ const BookReferenceForm: FC = () => {
       <Field name={BookFieldNames.PUBLISHER}>
         {({ field: { name, value } }: any) => (
           <>
-            <div data-testid="autosearch-publisher">
-              <PublicationChannelSearch
-                clearSearchField={value === emptyPublisher}
-                label={t('references.publisher')}
-                publicationTable={PublicationTableNumber.PUBLISHERS}
-                setValueFunction={inputValue => setFieldValue(name, inputValue ?? emptyPublisher)}
-                value={value.title}
-              />
-            </div>
+            <PublicationChannelSearch
+              clearSearchField={value === emptyPublisher}
+              dataTestId="autosearch-publisher"
+              label={t('references.publisher')}
+              publicationTable={PublicationTableNumber.PUBLISHERS}
+              setValueFunction={inputValue => setFieldValue(name, inputValue ?? emptyPublisher)}
+              value={value.title}
+            />
             {value.title && (
-              <div data-testid="autosearch-results-publisher">
-                <JournalPublisherRow
-                  hidePublisher
-                  label={t('references.publisher')}
-                  publisher={value}
-                  onClickDelete={() => setFieldValue(name, emptyPublisher)}
-                />
-              </div>
+              <PublisherRow
+                dataTestId="autosearch-results-publisher"
+                label={t('references.publisher')}
+                publisher={value}
+                onClickDelete={() => setFieldValue(name, emptyPublisher)}
+              />
             )}
           </>
         )}
@@ -134,31 +129,26 @@ const BookReferenceForm: FC = () => {
       <Field name={BookFieldNames.SERIES}>
         {({ field: { name, value } }: any) => (
           <>
-            <div data-testid="autosearch-series">
-              <PublicationChannelSearch
-                clearSearchField={value === emptyPublisher}
-                label={t('common:title')}
-                publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
-                setValueFunction={inputValue => setFieldValue(name, inputValue ?? emptyPublisher)}
-                value={value.title}
-              />
-            </div>
+            <PublicationChannelSearch
+              dataTestId="autosearch-series"
+              clearSearchField={value === emptyPublisher}
+              label={t('common:title')}
+              publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
+              setValueFunction={inputValue => setFieldValue(name, inputValue ?? emptyPublisher)}
+              value={value.title}
+            />
             {value.title && (
-              <div data-testid="autosearch-results-series">
-                <JournalPublisherRow
-                  hidePublisher
-                  label={t('common:title')}
-                  publisher={value}
-                  onClickDelete={() => setFieldValue(name, emptyPublisher)}
-                />
-              </div>
+              <PublisherRow
+                dataTestId="autosearch-results-series"
+                label={t('common:title')}
+                publisher={value}
+                onClickDelete={() => setFieldValue(name, emptyPublisher)}
+              />
             )}
           </>
         )}
       </Field>
-      <div data-testid="nvi_book">
-        <NviValidation isPeerReviewed={isPeerReviewed} isRated={!!isRatedBook} />
-      </div>
+      <NviValidation isPeerReviewed={!!isPeerReviewed} isRated={!!isRatedBook} dataTestId="nvi_book" />
     </>
   );
 };

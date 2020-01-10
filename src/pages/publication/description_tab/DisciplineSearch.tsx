@@ -5,6 +5,7 @@ import AutoLookup from '../../../components/AutoLookup';
 import disciplines from '../../../utils/testfiles/disciplines_en.json';
 
 interface DisciplineSearchProps {
+  dataTestId: string;
   setValueFunction: (value: any) => void;
   value: string;
 }
@@ -14,7 +15,7 @@ interface DisciplineType {
   mainDiscipline: string;
 }
 
-const DisciplineSearch: React.FC<DisciplineSearchProps> = ({ setValueFunction, value }) => {
+const DisciplineSearch: React.FC<DisciplineSearchProps> = ({ dataTestId, setValueFunction, value }) => {
   const { t } = useTranslation();
 
   const searchResults = Object.values(disciplines)
@@ -28,6 +29,7 @@ const DisciplineSearch: React.FC<DisciplineSearchProps> = ({ setValueFunction, v
 
   return (
     <AutoLookup
+      dataTestId={dataTestId}
       label={t('publication:description.npi_disciplines')}
       options={searchResults}
       setValueFunction={setValueFunction}

@@ -69,15 +69,18 @@
     "pages_from": "Pages from",
     "pages_to": "to",
     "peer_review": "Is the publication peer reviewed?",
+    "policy_report": "Policy report",
     "publisher": "Publisher",
     "remove": "Remove",
     "report": "Report",
+    "research_report": "Research report",
     "review": "Review",
     "series": "Series",
     "series_info": "If the book is part of a series",
     "short_communication": "Short communication",
     "text_book": "Is this a textbook?",
     "text_book_yes": "Yes, this is a textbook",
-    "volume": "Volume"
+    "volume": "Volume",
+    "working_paper": "Working paper"
   }
 }

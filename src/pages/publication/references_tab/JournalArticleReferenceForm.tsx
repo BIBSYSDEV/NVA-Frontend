@@ -5,13 +5,13 @@ import styled from 'styled-components';
 
 import { FormControl, InputLabel, MenuItem, Select, TextField } from '@material-ui/core';
 
-import { emptyPublisher, PublicationFormsData } from '../../../types/form.types';
-import { JournalPublicationFieldNames, journalPublicationTypes } from '../../../types/references.types';
+import { Publication } from '../../../types/publication.types';
+import { emptyPublisher, JournalArticleFieldNames, journalArticleTypes } from '../../../types/references.types';
 import { PublicationTableNumber } from '../../../utils/constants';
-import JournalPublisherRow from './components/JournalPublisherRow';
 import NviValidation from './components/NviValidation';
 import PeerReview from './components/PeerReview';
 import PublicationChannelSearch from './components/PublicationChannelSearch';
+import PublisherRow from './components/PublisherRow';
 
 const StyledArticleDetail = styled.div`
   display: grid;
@@ -33,23 +33,21 @@ const StyledPeerReview = styled.div`
   background-color: ${({ theme }) => theme.palette.background.default};
 `;
 
-const JournalPublicationReferenceForm: React.FC = () => {
+const JournalArticleReferenceForm: React.FC = () => {
   const { t } = useTranslation('publication');
-  const { setFieldValue, values }: FormikProps<PublicationFormsData> = useFormikContext();
+  const { setFieldValue, values }: FormikProps<Publication> = useFormikContext();
 
-  const isRatedJournal =
-    values.reference?.journalPublication?.journal?.level && values.reference.journalPublication.journal.level !== '0';
-
-  const isPeerReviewed = values.reference?.journalPublication?.peerReview;
+  const isRatedJournal = values.reference?.journalArticle?.journal?.level;
+  const isPeerReviewed = values.reference?.journalArticle?.peerReview;
 
   return (
     <>
-      <Field name={JournalPublicationFieldNames.TYPE} variant="outlined" fullWidth>
+      <Field name={JournalArticleFieldNames.TYPE} variant="outlined" fullWidth>
         {({ field }: any) => (
           <FormControl variant="outlined" fullWidth>
             <InputLabel>{t('common:type')}</InputLabel>
             <Select {...field}>
-              {journalPublicationTypes.map(type => (
+              {journalArticleTypes.map(type => (
                 <MenuItem value={type.value} key={type.value}>
                   {t(type.label)}
                 </MenuItem>
@@ -59,22 +57,24 @@ const JournalPublicationReferenceForm: React.FC = () => {
         )}
       </Field>
 
-      <Field name={JournalPublicationFieldNames.DOI}>
+      <Field name={JournalArticleFieldNames.DOI}>
         {({ field }: any) => <TextField variant="outlined" label={t('references.doi')} {...field} />}
       </Field>
 
-      <Field name={JournalPublicationFieldNames.JOURNAL}>
+      <Field name={JournalArticleFieldNames.JOURNAL}>
         {({ field: { name, value } }: any) => (
           <>
             <PublicationChannelSearch
               clearSearchField={value === emptyPublisher}
+              dataTestId="autosearch-journal"
               label={t('publication:references.journal')}
               publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
               setValueFunction={inputValue => setFieldValue(name, inputValue ?? emptyPublisher)}
               value={value.title}
             />
             {value.title && (
-              <JournalPublisherRow
+              <PublisherRow
+                dataTestId="autosearch-results-journal"
                 publisher={value}
                 label={t('references.journal')}
                 onClickDelete={() => setFieldValue(name, emptyPublisher)}
@@ -84,34 +84,34 @@ const JournalPublicationReferenceForm: React.FC = () => {
         )}
       </Field>
       <StyledArticleDetail>
-        <Field name={JournalPublicationFieldNames.VOLUME}>
+        <Field name={JournalArticleFieldNames.VOLUME}>
           {({ field }: any) => <TextField variant="outlined" label={t('references.volume')} {...field} />}
         </Field>
 
-        <Field name={JournalPublicationFieldNames.ISSUE}>
+        <Field name={JournalArticleFieldNames.ISSUE}>
           {({ field }: any) => <TextField variant="outlined" label={t('references.issue')} {...field} />}
         </Field>
 
-        <Field name={JournalPublicationFieldNames.PAGES_FROM}>
+        <Field name={JournalArticleFieldNames.PAGES_FROM}>
           {({ field }: any) => <TextField variant="outlined" label={t('references.pages_from')} {...field} />}
         </Field>
 
-        <Field name={JournalPublicationFieldNames.PAGES_TO}>
+        <Field name={JournalArticleFieldNames.PAGES_TO}>
           {({ field }: any) => <TextField variant="outlined" label={t('references.pages_to')} {...field} />}
         </Field>
 
         <StyledLabel>{t('references.or')}</StyledLabel>
 
-        <Field name={JournalPublicationFieldNames.ARTICLE_NUMBER}>
+        <Field name={JournalArticleFieldNames.ARTICLE_NUMBER}>
           {({ field }: any) => <TextField variant="outlined" label={t('references.article_number')} {...field} />}
         </Field>
       </StyledArticleDetail>
       <StyledPeerReview>
-        <PeerReview fieldName={JournalPublicationFieldNames.PEER_REVIEW} label={t('references.peer_review')} />
+        <PeerReview fieldName={JournalArticleFieldNames.PEER_REVIEW} label={t('references.peer_review')} />
       </StyledPeerReview>
-      <NviValidation isPeerReviewed={isPeerReviewed} isRated={!!isRatedJournal} />
+      <NviValidation isPeerReviewed={!!isPeerReviewed} isRated={!!isRatedJournal} dataTestId="nvi_journal" />
     </>
   );
 };
 
-export default JournalPublicationReferenceForm;
+export default JournalArticleReferenceForm;

@@ -14,16 +14,18 @@ const StyledSearchIcon = styled(SearchIcon)`
 `;
 
 interface AutoSearchProps {
+  dataTestId: string;
   label: string;
   searchResults: any;
   setValueFunction: (value: any) => void;
+  value: string;
   clearSearchField?: boolean;
   onInputChange?: (event: object, value: string) => void;
-  value: string;
 }
 
 export const AutoSearch: React.FC<AutoSearchProps> = ({
   clearSearchField,
+  dataTestId,
   onInputChange,
   searchResults,
   setValueFunction,
@@ -82,6 +84,7 @@ export const AutoSearch: React.FC<AutoSearchProps> = ({
       renderInput={params => (
         <TextField
           {...params}
+          data-testid={dataTestId}
           label={label}
           fullWidth
           variant="outlined"

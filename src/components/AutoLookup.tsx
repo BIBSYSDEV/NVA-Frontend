@@ -14,11 +14,12 @@ interface AutoLookupProps {
   label: string;
   options: any[];
   setValueFunction: (value: any) => void;
+  dataTestId?: string;
   groupBy?: (options: any) => string;
   value?: string;
 }
 
-const AutoLookup: FC<AutoLookupProps> = ({ label, options, setValueFunction, groupBy, value }) => {
+const AutoLookup: FC<AutoLookupProps> = ({ label, options, setValueFunction, dataTestId, groupBy, value }) => {
   const [displayValue, setDisplayValue] = useState({ title: value });
 
   useEffect(() => {
@@ -40,6 +41,7 @@ const AutoLookup: FC<AutoLookupProps> = ({ label, options, setValueFunction, gro
       renderInput={params => (
         <TextField
           {...params}
+          data-testid={dataTestId}
           label={label}
           fullWidth
           variant="outlined"
