@@ -30,7 +30,7 @@ const StyledFieldHeader = styled.header`
   font-size: 1.5rem;
 `;
 
-enum DescriptionFieldNames {
+export enum DescriptionFieldNames {
   TITLE = 'title.nb',
   ABSTRACT = 'abstract',
   DESCRIPTION = 'description',
