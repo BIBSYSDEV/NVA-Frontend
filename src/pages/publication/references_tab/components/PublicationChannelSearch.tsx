@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { FC, useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 
@@ -18,7 +18,7 @@ interface PublicationChannelSearchProps {
   value: string;
 }
 
-const PublicationChannelSearch: React.FC<PublicationChannelSearchProps> = ({
+const PublicationChannelSearch: FC<PublicationChannelSearchProps> = ({
   clearSearchField,
   dataTestId,
   label,

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
@@ -37,8 +37,8 @@ const StyledInfoBox = styled.div`
   }
 `;
 
-const PublicationPanel: React.FC = () => {
-  const [expanded, setExpanded] = React.useState<string | false>(false);
+const PublicationPanel: FC = () => {
+  const [expanded, setExpanded] = useState<string | false>(false);
   const { t } = useTranslation();
 
   const handleChange = (panel: string) => (_: React.ChangeEvent<any>, isExpanded: boolean) => {

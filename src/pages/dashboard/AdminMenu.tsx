@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -21,7 +21,7 @@ const StyledButton = styled(Button)`
   margin-right: 1rem;
 `;
 
-const AdminMenu: React.FC = () => {
+const AdminMenu: FC = () => {
   const user = useSelector((state: RootStore) => state.user);
   const { t } = useTranslation();
 

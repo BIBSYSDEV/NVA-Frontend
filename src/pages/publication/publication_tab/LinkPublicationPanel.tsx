@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
@@ -31,7 +31,7 @@ interface LinkPublicationPanelProps {
   onChange: (event: React.ChangeEvent<any>, isExpanded: boolean) => void;
 }
 
-const LinkPublicationPanel: React.FC<LinkPublicationPanelProps> = ({ expanded, onChange }) => {
+const LinkPublicationPanel: FC<LinkPublicationPanelProps> = ({ expanded, onChange }) => {
   const { t } = useTranslation();
   const [doiUrl, setDoiUrl] = useState('');
   const [doiTitle, setDoiTitle] = useState('');

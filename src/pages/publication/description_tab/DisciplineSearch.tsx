@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import AutoLookup from '../../../components/AutoLookup';
@@ -15,7 +15,7 @@ interface DisciplineType {
   mainDiscipline: string;
 }
 
-const DisciplineSearch: React.FC<DisciplineSearchProps> = ({ dataTestId, setValueFunction, value }) => {
+const DisciplineSearch: FC<DisciplineSearchProps> = ({ dataTestId, setValueFunction, value }) => {
   const { t } = useTranslation();
 
   const searchResults = Object.values(disciplines)

@@ -1,5 +1,5 @@
 import { Form, Formik, FormikProps } from 'formik';
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import * as Yup from 'yup';
@@ -19,7 +19,7 @@ const StyledPublication = styled.div`
   width: 100%;
 `;
 
-const PublicationForm: React.FC = () => {
+const PublicationForm: FC = () => {
   const { t } = useTranslation('publication');
   const [tabNumber, setTabNumber] = useState(0);
 

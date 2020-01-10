@@ -1,5 +1,5 @@
 import { FormikErrors, FormikProps, FormikTouched, useFormikContext } from 'formik';
-import React from 'react';
+import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { Tabs } from '@material-ui/core';
@@ -30,7 +30,7 @@ interface PublicationFormTabsProps {
   tabNumber: number;
 }
 
-export const PublicationFormTabs: React.FC<PublicationFormTabsProps> = ({ handleTabChange, tabNumber }) => {
+export const PublicationFormTabs: FC<PublicationFormTabsProps> = ({ handleTabChange, tabNumber }) => {
   const { t } = useTranslation('publication');
   const { errors, touched }: FormikProps<Publication> = useFormikContext();
 

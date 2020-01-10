@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
@@ -23,7 +23,7 @@ interface AutoSearchProps {
   onInputChange?: (event: object, value: string) => void;
 }
 
-export const AutoSearch: React.FC<AutoSearchProps> = ({
+export const AutoSearch: FC<AutoSearchProps> = ({
   clearSearchField,
   dataTestId,
   onInputChange,

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { FC, useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 
@@ -13,7 +13,7 @@ interface ProjectSearchProps {
   value: string;
 }
 
-const ProjectSearch: React.FC<ProjectSearchProps> = ({ dataTestId, setValueFunction, value }) => {
+const ProjectSearch: FC<ProjectSearchProps> = ({ dataTestId, setValueFunction, value }) => {
   const [searchResults, setSearchResults] = useState<Project[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [searching, setSearching] = useState(false);
