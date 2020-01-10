@@ -17,11 +17,11 @@ const StyledTextField = styled(Field)`
   margin-right: 1rem;
 `;
 
-interface LinkPublicationPanelFormProps {
+interface LinkPublicationFormProps {
   handleSearch: (values: any) => void;
 }
 
-const LinkPublicationPanelForm: React.FC<LinkPublicationPanelFormProps> = ({ handleSearch }) => {
+const LinkPublicationForm: React.FC<LinkPublicationFormProps> = ({ handleSearch }) => {
   const { t } = useTranslation();
 
   const publicationSchema = Yup.object().shape({
@@ -56,4 +56,4 @@ const LinkPublicationPanelForm: React.FC<LinkPublicationPanelFormProps> = ({ han
   );
 };
 
-export default LinkPublicationPanelForm;
+export default LinkPublicationForm;

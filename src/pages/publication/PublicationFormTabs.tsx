@@ -1,14 +1,14 @@
-import { FormikErrors, FormikTouched, useFormikContext, FormikProps } from 'formik';
-import React from 'react';
+import { FormikErrors, FormikProps, FormikTouched, useFormikContext } from 'formik';
+import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { Tabs } from '@material-ui/core';
 
 import LinkTab from '../../components/TabPanel/LinkTab';
 import { Publication } from '../../types/publication.types';
-import { DescriptionFieldNames } from './DescriptionPanel';
-import { ReferenceFieldNames, JournalArticleFieldNames, BookFieldNames } from '../../types/references.types';
+import { BookFieldNames, JournalArticleFieldNames, ReferenceFieldNames } from '../../types/references.types';
 import { getObjectValueByFieldName } from '../../utils/helpers';
+import { DescriptionFieldNames } from './DescriptionPanel';
 
 const a11yProps = (tabDescription: string) => {
   return {
@@ -30,7 +30,7 @@ interface PublicationFormTabsProps {
   tabNumber: number;
 }
 
-export const PublicationFormTabs: React.FC<PublicationFormTabsProps> = ({ handleTabChange, tabNumber }) => {
+export const PublicationFormTabs: FC<PublicationFormTabsProps> = ({ handleTabChange, tabNumber }) => {
   const { t } = useTranslation('publication');
   const { errors, touched }: FormikProps<Publication> = useFormikContext();
 
@@ -42,20 +42,19 @@ export const PublicationFormTabs: React.FC<PublicationFormTabsProps> = ({ handle
       aria-label="navigation"
       TabIndicatorProps={{ style: { backgroundColor: 'blue' } }}
       textColor="primary">
-      <LinkTab label={`1. ${t('heading.publication')}`} {...a11yProps('publication')} />
       <LinkTab
-        label={`2. ${t('heading.description')}`}
+        label={`1. ${t('heading.description')}`}
         {...a11yProps('description')}
         error={hasTouchedError(errors, touched, descriptionFieldNames)}
       />
       <LinkTab
-        label={`3. ${t('heading.references')}`}
+        label={`2. ${t('heading.references')}`}
         {...a11yProps('references')}
         error={hasTouchedError(errors, touched, referenceFieldNames)}
       />
-      <LinkTab label={`4. ${t('heading.contributors')}`} {...a11yProps('contributors')} error={false} />
-      <LinkTab label={`5. ${t('heading.files_and_license')}`} {...a11yProps('files-and-license')} />
-      <LinkTab label={`6. ${t('heading.submission')}`} {...a11yProps('submission')} />
+      <LinkTab label={`3. ${t('heading.contributors')}`} {...a11yProps('contributors')} error={false} />
+      <LinkTab label={`4. ${t('heading.files_and_license')}`} {...a11yProps('files-and-license')} />
+      <LinkTab label={`5. ${t('heading.submission')}`} {...a11yProps('submission')} />
     </Tabs>
   );
 };

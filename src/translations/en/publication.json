@@ -13,6 +13,8 @@
     "npi_disciplines": "NPI disciplines",
     "project": "Project",
     "project_association": "Project association",
+    "search_for_npi_discipline": "Search for NPI discipline",
+    "search_for_project": "Search for project",
     "tags": "Tags"
   },
   "feedback": {
@@ -75,6 +77,9 @@
     "report": "Report",
     "research_report": "Research report",
     "review": "Review",
+    "search_for_journal": "Search for journals",
+    "search_for_publisher": "Search for publisher",
+    "search_for_series": "Search for series",
     "series": "Series",
     "series_info": "If the book is part of a series",
     "short_communication": "Short communication",
