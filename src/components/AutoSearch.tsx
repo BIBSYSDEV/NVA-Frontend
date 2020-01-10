@@ -14,12 +14,12 @@ const StyledSearchIcon = styled(SearchIcon)`
 `;
 
 interface AutoSearchProps {
-  dataTestId: string;
   label: string;
   searchResults: any;
   setValueFunction: (value: any) => void;
   value: string;
   clearSearchField?: boolean;
+  dataTestId?: string;
   onInputChange?: (event: object, value: string) => void;
 }
 
@@ -61,6 +61,7 @@ export const AutoSearch: React.FC<AutoSearchProps> = ({
 
   return (
     <Autocomplete
+      disableOpenOnFocus
       open={open}
       onClose={() => {
         setOpen(false);
@@ -73,7 +74,7 @@ export const AutoSearch: React.FC<AutoSearchProps> = ({
         setValueFunction(value);
       }}
       onInputChange={(event: object, value: string) => {
-        value.length >= MINIMUM_SEARCH_CHARACTERS && options.length === 0 && setLoading(true);
+        value.length >= MINIMUM_SEARCH_CHARACTERS && options.length === 0 && open && setLoading(true);
         open && value.length >= MINIMUM_SEARCH_CHARACTERS && onInputChange && onInputChange(event, value);
       }}
       getOptionLabel={option => option.title || ''}
