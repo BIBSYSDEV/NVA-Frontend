@@ -1,4 +1,5 @@
 import Amplify, { Hub } from 'aws-amplify';
+import Axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
@@ -6,7 +7,7 @@ import styled from 'styled-components';
 
 import { getAuthorityByFeideId } from './api/external/authorityRegisterApi';
 import { mockUser } from './api/mock-interceptor';
-import { getCurrentAuthenticatedUser } from './api/userApi';
+import { getCurrentAuthenticatedUser, getIdToken } from './api/userApi';
 import Breadcrumbs from './layout/Breadcrumbs';
 import Footer from './layout/Footer';
 import Header from './layout/header/Header';
@@ -44,6 +45,23 @@ const StyledPageBody = styled.div`
 `;
 
 const App: React.FC = () => {
+  useEffect(() => {
+    const setAxiosHeaders = async () => {
+      // TODO: Set global config of baseURL and auth when backend is ready
+      // Set global config of axios requests
+      // axios.defaults.baseURL = API_URL;
+      const idToken = await getIdToken();
+
+      Axios.defaults.headers.common = {
+        Authorization: `Bearer ${idToken}`,
+        Accept: 'application/json',
+      };
+      Axios.defaults.headers.post['Content-Type'] = 'application/json';
+      Axios.defaults.headers.put['Content-Type'] = 'application/json';
+    };
+    setAxiosHeaders();
+  }, []);
+
   const dispatch = useDispatch();
   const user = useSelector((store: RootStore) => store.user);
   const [showAuthorityOrcidModal, setShowAuthorityOrcidModal] = useState(false);

@@ -4,10 +4,10 @@ import { Dispatch } from 'redux';
 import { addNotification } from '../../redux/actions/notificationActions';
 import i18n from '../../translations/i18n';
 import { Authority } from '../../types/authority.types';
-import { AUTHORITY_REGISTER_API_URL, StatusCode } from '../../utils/constants';
+import { API_URL, StatusCode } from '../../utils/constants';
 
 export const getAuthorities = async (name: string, dispatch: Dispatch) => {
-  const url = `${AUTHORITY_REGISTER_API_URL}/authority`;
+  const url = `${API_URL}/authority`;
 
   try {
     const response = await Axios.post(url, {
@@ -25,7 +25,7 @@ export const getAuthorities = async (name: string, dispatch: Dispatch) => {
 };
 
 export const getAuthorityByFeideId = async (feideId: string, dispatch: Dispatch) => {
-  const url = `${AUTHORITY_REGISTER_API_URL}/authority`;
+  const url = `${API_URL}/authority`;
 
   try {
     const response = await Axios.post(url, {
@@ -36,15 +36,15 @@ export const getAuthorityByFeideId = async (feideId: string, dispatch: Dispatch)
       const filteredAuthorities = response.data.filter((auth: Authority) => auth.feideId === feideId);
       return filteredAuthorities?.[0] ?? null;
     } else {
-      dispatch(addNotification({ message: i18n.t('feedback:error.get_authority'), variant: 'error' }));
+      dispatch(addNotification(i18n.t('feedback:error.get_authority'), 'error'));
     }
   } catch {
-    dispatch(addNotification({ message: i18n.t('feedback:error.get_authority'), variant: 'error' }));
+    dispatch(addNotification(i18n.t('feedback:error.get_authority'), 'error'));
   }
 };
 
 export const getAuthorityByOrcId = async (orcId: string, dispatch: Dispatch) => {
-  const url = `${AUTHORITY_REGISTER_API_URL}/authority`;
+  const url = `${API_URL}/authority`;
 
   try {
     const response = await Axios.post(url, {
@@ -66,7 +66,7 @@ export const updateAuthority = async (authority: Partial<Authority> | null, disp
     return;
   }
 
-  const url = `${AUTHORITY_REGISTER_API_URL}/authority/${authority.scn}`;
+  const url = `${API_URL}/authority/${authority.scn}`;
 
   try {
     const response = await Axios.put(url, authority);
