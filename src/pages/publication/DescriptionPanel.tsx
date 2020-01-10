@@ -11,9 +11,9 @@ import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import Box from '../../components/Box';
 import TabPanel from '../../components/TabPanel/TabPanel';
 import { languages } from '../../translations/i18n';
+import { Publication } from '../../types/publication.types';
 import DisciplineSearch from './description_tab/DisciplineSearch';
 import ProjectSearch from './description_tab/ProjectSearch';
-import { Publication } from '../../types/publication.types';
 import DatePickerField from './description_tab/DatePickerField';
 
 const MultipleFieldWrapper = styled.div`
@@ -30,7 +30,7 @@ const StyledFieldHeader = styled.header`
   font-size: 1.5rem;
 `;
 
-enum DescriptionFieldNames {
+export enum DescriptionFieldNames {
   TITLE = 'title.nb',
   ABSTRACT = 'abstract',
   DESCRIPTION = 'description',
@@ -109,7 +109,10 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, savePu
             <StyledFieldWrapper>
               <Field name={DescriptionFieldNames.NPI_DISCIPLINES}>
                 {({ field }: any) => (
-                  <DisciplineSearch setValueFunction={newValue => setFieldValue(field.name, newValue)} />
+                  <DisciplineSearch
+                    setValueFunction={newValue => setFieldValue(field.name, newValue)}
+                    dataTestId="search_npi"
+                  />
                 )}
               </Field>
             </StyledFieldWrapper>
@@ -159,7 +162,10 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, savePu
               {/* TODO: Use <FieldArray /> */}
               {({ field: { value, name } }: any) => (
                 <>
-                  <ProjectSearch setValueFunction={newValue => setFieldValue(name, newValue)} />
+                  <ProjectSearch
+                    setValueFunction={newValue => setFieldValue(name, newValue)}
+                    dataTestId="search_project"
+                  />
                   {value.title && <p>{value.title}</p>}
                 </>
               )}

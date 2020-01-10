@@ -27,19 +27,25 @@ interface Book {
   series: Publisher;
 }
 
-interface Report {}
+interface Report {
+  type: string;
+  publisher: Publisher;
+  isbn: string;
+  numberOfPages: string;
+  series: Publisher;
+}
 
 export interface Publisher {
   title: string;
-  issn: string;
-  level: string;
-  publisher: string;
+  printIssn: string;
+  onlineIssn: string;
+  level: number | null;
 }
 
 export const emptyPublisher: Publisher = {
-  issn: '',
-  level: '',
-  publisher: '',
+  printIssn: '',
+  onlineIssn: '',
+  level: null,
   title: '',
 };
 
@@ -65,10 +71,19 @@ const emptyJournalArticleReference: JournalArticle = {
   articleNumber: '',
 };
 
+const emptyReportReference: Report = {
+  type: '',
+  publisher: emptyPublisher,
+  isbn: '',
+  numberOfPages: '',
+  series: emptyPublisher,
+};
+
 export const emptyReference: Reference = {
   type: '',
   journalArticle: emptyJournalArticleReference,
   book: emptyBookReference,
+  report: emptyReportReference,
 };
 
 type EnumDictionary<T extends string, U> = {
@@ -117,6 +132,20 @@ export const bookTypes = [
   { label: 'references.anthology', value: BookTypeValue.ANTHOLOGY },
 ];
 
+export enum ReportTypeValue {
+  REPORT = 'report',
+  RESEARCH_REPORT = 'research_report',
+  POLICY_REPORT = 'policy_report',
+  WORKING_PAPER = 'working_paper',
+}
+
+export const reportTypes = [
+  { label: 'references.report', value: ReportTypeValue.REPORT },
+  { label: 'references.research_report', value: ReportTypeValue.RESEARCH_REPORT },
+  { label: 'references.policy_report', value: ReportTypeValue.POLICY_REPORT },
+  { label: 'references.working_paper', value: ReportTypeValue.WORKING_PAPER },
+];
+
 // Enums representing name of fields used by Formik
 export enum ReferenceFieldNames {
   REFERENCE_TYPE = 'reference.type',
@@ -142,4 +171,12 @@ export enum BookFieldNames {
   TEXT_BOOK = 'reference.book.textBook',
   NUMBER_OF_PAGES = 'reference.book.numberOfPages',
   SERIES = 'reference.book.series',
+}
+
+export enum ReportFieldNames {
+  TYPE = 'reference.report.type',
+  PUBLISHER = 'reference.report.publisher',
+  ISBN = 'reference.report.isbn',
+  NUMBER_OF_PAGES = 'reference.report.numberOfPages',
+  SERIES = 'reference.report.series',
 }

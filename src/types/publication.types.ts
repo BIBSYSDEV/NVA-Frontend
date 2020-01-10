@@ -1,6 +1,6 @@
-import { Reference, emptyReference } from './references.types';
-import { Project } from './project.types';
 import Contributor from './contributor.types';
+import { Project } from './project.types';
+import { emptyReference, Reference } from './references.types';
 
 export enum PublicationType {
   TEXT = 'text',

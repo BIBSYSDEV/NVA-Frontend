@@ -26,11 +26,6 @@ const StyledNviInformation = styled.div`
   grid-area: information;
 `;
 
-interface NviValidationProps {
-  isPeerReviewed: boolean;
-  isRated: boolean;
-}
-
 const StyledCheckCircleIcon = styled(CheckCircleIcon)`
   grid-area: icon;
   color: green;
@@ -45,11 +40,17 @@ const StyledCancelIcon = styled(CancelIcon)`
   font-size: 2rem;
 `;
 
-const NviValidation: FC<NviValidationProps> = ({ isPeerReviewed, isRated }) => {
+interface NviValidationProps {
+  dataTestId: string;
+  isPeerReviewed: boolean;
+  isRated: boolean;
+}
+
+const NviValidation: FC<NviValidationProps> = ({ dataTestId, isPeerReviewed, isRated }) => {
   const { t } = useTranslation('publication');
 
   return (
-    <StyledNviValidation>
+    <StyledNviValidation data-testid={dataTestId}>
       <StyledNviHeader>{t('references.nvi_header')}</StyledNviHeader>
       {isPeerReviewed ? (
         isRated ? (

@@ -7,6 +7,7 @@ import { MINIMUM_SEARCH_CHARACTERS } from '../utils/constants';
 
 interface AutoSearchProps {
   clearSearchField?: boolean;
+  dataTestId: string;
   onInputChange?: (event: object, value: string) => void;
   searchResults: any;
   setValueFunction: (value: any) => void;
@@ -16,6 +17,7 @@ interface AutoSearchProps {
 
 export const AutoSearch: React.FC<AutoSearchProps> = ({
   clearSearchField,
+  dataTestId,
   onInputChange,
   searchResults,
   setValueFunction,
@@ -67,6 +69,7 @@ export const AutoSearch: React.FC<AutoSearchProps> = ({
       renderInput={params => (
         <TextField
           {...params}
+          data-testid={dataTestId}
           label={label}
           fullWidth
           variant="outlined"
