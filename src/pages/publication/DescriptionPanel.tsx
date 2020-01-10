@@ -14,6 +14,7 @@ import { languages } from '../../translations/i18n';
 import DisciplineSearch from './description_tab/DisciplineSearch';
 import ProjectSearch from './description_tab/ProjectSearch';
 import { Publication } from '../../types/publication.types';
+import DatePickerField from './description_tab/DatePickerField';
 
 const MultipleFieldWrapper = styled.div`
   display: flex;
@@ -127,20 +128,11 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, savePu
 
           <MultipleFieldWrapper>
             <StyledFieldWrapper>
-              <Field name={DescriptionFieldNames.PUBLICATION_YEAR}>
-                {({ field: { name, value } }: any) => (
-                  <KeyboardDatePicker
-                    inputVariant="outlined"
-                    label={t('år')}
-                    onChange={value => {
-                      console.log('år', value);
-                      setFieldValue(name, value?.getFullYear());
-                    }}
-                    views={['year']}
-                    value={value ? new Date(value, 1) : null}
-                  />
-                )}
-              </Field>
+              <DatePickerField
+                yearFieldName={DescriptionFieldNames.PUBLICATION_YEAR}
+                monthFieldName={DescriptionFieldNames.PUBLICATION_MONTH}
+                dayFieldName={DescriptionFieldNames.PUBLICATION_DAY}
+              />
             </StyledFieldWrapper>
 
             <StyledFieldWrapper>

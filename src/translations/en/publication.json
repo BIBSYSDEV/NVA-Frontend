@@ -13,7 +13,9 @@
     "npi_disciplines": "NPI disciplines",
     "project": "Project",
     "project_association": "Project association",
-    "tags": "Tags"
+    "publish_date": "Publish date",
+    "tags": "Tags",
+    "year_only": "Kun årstall"
   },
   "feedback": {
     "invalid_url": "Invalid URL",
@@ -32,7 +34,6 @@
     "submission": "Submission"
   },
   "publication": {
-    "date": "Publication date or year",
     "link_publication_description": "E.g. DOI link, link to article, link to video of lecture etc.",
     "link_to_publication": "Link to publication",
     "load_file": "Load file",

@@ -13,7 +13,9 @@
     "npi_disciplines": "NPI Fagfelt",
     "project": "Prosjekt",
     "project_association": "Prosjekttilknytning",
-    "tags": "Nøkkelord"
+    "publish_date": "Publiseringsdato",
+    "tags": "Nøkkelord",
+    "year_only": "Year only"
   },
   "files_and_license": {
     "files": "Filer",
@@ -32,7 +34,6 @@
     "submission": "Innsending"
   },
   "publication": {
-    "date": "Publiseringsdato eller år",
     "link_publication_description": "Feks. DOI lenke, lenke til artikkel, lenke til video av foredrag etc.",
     "link_to_publication": "Link til publikasjon",
     "load_file": "Last opp fil",

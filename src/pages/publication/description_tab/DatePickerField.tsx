@@ -1,81 +1,62 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { KeyboardDatePicker } from '@material-ui/pickers';
-import { useFormikContext, Field } from 'formik';
+import { KeyboardDatePicker, DatePickerView } from '@material-ui/pickers';
+import { useFormikContext, Field, FormikProps } from 'formik';
+import { Publication } from '../../../types/publication.types';
+import { FormControlLabel, Checkbox } from '@material-ui/core';
 
 const DatePickerField = ({ yearFieldName, monthFieldName, dayFieldName }: any) => {
-  const { t } = useTranslation();
-  const { values, setFieldValue }: any = useFormikContext();
-  const [date, setDate] = useState<Date | null>(null);
+  const { t } = useTranslation('publication');
+  const {
+    values: {
+      publicationDate: { year, month, day },
+    },
+    setFieldValue,
+  }: FormikProps<Publication> = useFormikContext();
 
-  // useEffect(() => {
-  //   if (date) {
-  //     setFieldValue(yearFieldName, date.getFullYear());
-  //     setFieldValue(monthFieldName, date.getMonth());
-  //     setFieldValue(dayFieldName, date.get)
-  //   }
-  // }, [date]);
-  console.log('values', values);
-  const { year, month, day } = values.publicationDate;
+  const [date, setDate] = useState<Date | null>(null);
+  const [yearOnly, setYearOnly] = useState(false);
 
   useEffect(() => {
     if (year) {
-      const newDate = new Date(year, month || 1, day || 1);
-      setDate(newDate);
+      setDate(new Date(parseInt(year), parseInt(month) || 0, parseInt(day) || 1));
     }
   }, [year, month, day]);
 
+  useEffect(() => {
+    updateDateValues(date);
+  }, [yearOnly]);
+
+  const updateDateValues = (newDate: Date | null) => {
+    const updatedYear = newDate ? newDate.getFullYear() : '';
+    const updatedMonth = !yearOnly && newDate ? newDate.getMonth() : '';
+    const updatedDay = !yearOnly && newDate ? newDate.getDate() : '';
+
+    setFieldValue(yearFieldName, updatedYear);
+    setFieldValue(monthFieldName, updatedMonth);
+    setFieldValue(dayFieldName, updatedDay);
+  };
+
+  const toggleYearOnly = () => {
+    setYearOnly(!yearOnly);
+  };
+
+  const views: DatePickerView[] = yearOnly ? ['year'] : ['year', 'month', 'date'];
+  console.log(year, month, day);
   return (
     <>
-      <Field name={yearFieldName}>
-        {({ field: { name } }: any) => (
-          <KeyboardDatePicker
-            inputVariant="outlined"
-            label={t('år')}
-            onChange={value => {
-              console.log('år', value);
-              setFieldValue(name, value?.getFullYear());
-            }}
-            views={['year']}
-            value={year ? date : null}
-          />
-        )}
-      </Field>
-
-      <Field name={monthFieldName}>
-        {({ field: { name } }: any) => (
-          <KeyboardDatePicker
-            inputVariant="outlined"
-            label={t('mnd')}
-            onChange={value => {
-              console.log('mnd', value);
-              setFieldValue(name, value ? value.getMonth() : null);
-            }}
-            views={['month']}
-            value={month ? date : null}
-            initialFocusedDate={date}
-          />
-        )}
-      </Field>
-
-      <Field name={dayFieldName}>
-        {({ field: { name } }: any) => (
-          <KeyboardDatePicker
-            inputVariant="outlined"
-            label={t('dag')}
-            onChange={value => {
-              console.log('dag', value);
-              setFieldValue(monthFieldName, value?.getMonth());
-              setFieldValue(name, value?.getDate());
-            }}
-            views={['year', 'month', 'date']}
-            initialFocusedDate={date}
-            value={day ? date : null}
-            // disabled={!!month}
-          />
-        )}
-      </Field>
+      <KeyboardDatePicker
+        inputVariant="outlined"
+        label={t('description.publish_date')}
+        onChange={updateDateValues}
+        views={views}
+        value={date}
+      />
+      <FormControlLabel
+        control={<Checkbox checked={yearOnly} onChange={toggleYearOnly} color="primary" />}
+        label={t('description.year_only')}
+      />
     </>
   );
 };
