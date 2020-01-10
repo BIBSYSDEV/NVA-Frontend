@@ -1,7 +1,6 @@
 import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router';
 import styled from 'styled-components';
 
 import { Button } from '@material-ui/core';
@@ -36,12 +35,10 @@ const LinkPublicationPanel: FC<LinkPublicationPanelProps> = ({ expanded, onChang
   const [doiUrl, setDoiUrl] = useState('');
   const [doiTitle, setDoiTitle] = useState('');
   const dispatch = useDispatch();
-  const history = useHistory();
   const user = useSelector((state: RootStore) => state.user);
 
   const handleConfirm = () => {
     dispatch(createNewPublicationFromDoi(doiUrl, user.id, dispatch));
-    history.push('publications/new');
   };
 
   const handleSearch = async (values: any) => {

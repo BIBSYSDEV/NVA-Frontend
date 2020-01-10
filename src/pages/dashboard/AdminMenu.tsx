@@ -29,7 +29,7 @@ const AdminMenu: FC = () => {
   const { t } = useTranslation();
 
   useEffect(() => {
-    setShowNewRegistrationButton(history.location.pathname === '/publications');
+    setShowNewRegistrationButton(history.location.pathname !== '/publications/new');
   }, [history.location.pathname]);
 
   return (
