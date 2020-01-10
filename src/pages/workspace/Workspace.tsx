@@ -4,15 +4,13 @@ import { Link } from 'react-router-dom';
 
 import { Button } from '@material-ui/core';
 
-import PublicationPanel from '../publication/PublicationPanel';
-
 const Workspace: React.FC = () => {
   const { t } = useTranslation();
   return (
     <>
-      <PublicationPanel />
+      <h1>{t('list_of_publications')}</h1>
+      {/* temporary button so that we can navigate to schema */}
       <Link to="/publications/new">
-        {/* temporary button so that we can navigate to schema */}
         <Button color="primary" variant="contained" data-testid="new-schema-button">
           {t('new_publication')}
         </Button>

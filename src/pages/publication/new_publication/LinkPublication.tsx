@@ -9,7 +9,7 @@ import LinkIcon from '@material-ui/icons/Link';
 
 import { createNewPublicationFromDoi, lookupDoiTitle } from '../../../api/publicationApi';
 import { RootStore } from '../../../redux/reducers/rootReducer';
-import LinkPublicationPanelForm from './LinkPublicationPanelForm';
+import LinkPublicationForm from './LinkPublicationForm';
 import PublicationExpansionPanel from './PublicationExpansionPanel';
 
 const StyledBody = styled.div`
@@ -59,7 +59,7 @@ const LinkPublicationPanel: FC<LinkPublicationPanelProps> = ({ expanded, onChang
       ariaControls="publication-method-link">
       <StyledBody>
         {t('publication:publication.link_publication_description')}
-        <LinkPublicationPanelForm handleSearch={handleSearch} />
+        <LinkPublicationForm handleSearch={handleSearch} />
         {doiTitle && (
           <>
             <StyledHeading> {t('publication:heading.publication')}:</StyledHeading>
