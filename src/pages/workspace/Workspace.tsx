@@ -13,7 +13,7 @@ const Workspace: React.FC = () => {
       <PublicationPanel />
       <Link to="/publications/new">
         {/* temporary button so that we can navigate to schema */}
-        <Button color="primary" variant="contained">
+        <Button color="primary" variant="contained" data-testid="new-schema-button">
           {t('new_publication')}
         </Button>
       </Link>
