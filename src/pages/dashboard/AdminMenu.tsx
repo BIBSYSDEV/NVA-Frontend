@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
@@ -24,17 +24,12 @@ const StyledButton = styled(Button)`
 
 const AdminMenu: FC = () => {
   const user = useSelector((state: RootStore) => state.user);
-  const [showNewRegistrationButton, setShowNewRegistrationButton] = useState(false);
   const history = useHistory();
   const { t } = useTranslation();
 
-  useEffect(() => {
-    setShowNewRegistrationButton(history.location.pathname !== '/publications/new');
-  }, [history.location.pathname]);
-
   return (
     <>
-      {user.id && showNewRegistrationButton && (
+      {user.id && history.location.pathname !== '/publications/new' && (
         <StyledAdminMenu>
           <MuiLink component={Link} to="/publications/new">
             <StyledButton color="primary" variant="contained" data-testid="new-publication-button">
