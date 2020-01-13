@@ -15,6 +15,7 @@ import { emptyNpiDiscipline, Publication } from '../../types/publication.types';
 import DisciplineSearch from './description_tab/DisciplineSearch';
 import FormikDatePicker from './description_tab/FormikDatePicker';
 import ProjectSearch from './description_tab/ProjectSearch';
+import ProjectRow from './description_tab/ProjectRow';
 
 const MultipleFieldWrapper = styled.div`
   display: flex;
@@ -158,17 +159,18 @@ const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublicat
 
           <StyledFieldWrapper>
             <FieldArray name={DescriptionFieldNames.PROJECTS}>
-              {({ push }) => (
+              {({ insert, remove }) => (
                 <>
+                  {console.log(values.projects)}
                   <ProjectSearch
-                    setValueFunction={newValue => push(newValue)}
+                    setValueFunction={newValue => insert(0, newValue)}
                     dataTestId="search_project"
                     value={''}
                     placeholder={t('description.search_for_project')}
                   />
-                  {values[DescriptionFieldNames.PROJECTS].map(
-                    (project: any) => project && <p key={project.id}>{project.title && project.title}</p>
-                  )}
+                  {values[DescriptionFieldNames.PROJECTS].map((project, i) => (
+                    <ProjectRow key={project.id} project={project} onClickRemove={() => remove(i)} />
+                  ))}
                 </>
               )}
             </FieldArray>
