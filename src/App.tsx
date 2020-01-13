@@ -50,10 +50,10 @@ const App: React.FC = () => {
       Axios.defaults.baseURL = API_URL;
       // Uncomment this when we use our backend only
       // const idToken = await getIdToken();
-      // Axios.defaults.headers.common = {
-      //   Authorization: `Bearer ${idToken}`,
-      //   Accept: 'application/json',
-      // };
+      Axios.defaults.headers.common = {
+        //   Authorization: `Bearer ${idToken}`,
+        Accept: 'application/json',
+      };
       Axios.defaults.headers.post['Content-Type'] = 'application/json';
       Axios.defaults.headers.put['Content-Type'] = 'application/json';
     };

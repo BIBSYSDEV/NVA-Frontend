@@ -4,14 +4,14 @@ import { Dispatch } from 'redux';
 import { addNotification } from '../redux/actions/notificationActions';
 import i18n from '../translations/i18n';
 import { Authority } from '../types/authority.types';
-import { StatusCode, USE_MOCK_DATA } from '../utils/constants';
+import { StatusCode } from '../utils/constants';
 import { getIdToken } from './userApi';
 
 export const getAuthorities = async (name: string, dispatch: Dispatch) => {
   const url = '/authority';
 
   // remove when Authorization headers are set for all requests
-  const idToken = USE_MOCK_DATA ? '' : await getIdToken();
+  const idToken = await getIdToken();
   const headers = {
     Authorization: `Bearer ${idToken}`,
   };
@@ -33,7 +33,7 @@ export const getAuthorityByFeideId = async (feideId: string, dispatch: Dispatch)
   const url = '/authority';
 
   // remove when Authorization headers are set for all requests
-  const idToken = USE_MOCK_DATA ? '' : await getIdToken();
+  const idToken = await getIdToken();
   const headers = {
     Authorization: `Bearer ${idToken}`,
   };
@@ -60,7 +60,7 @@ export const updateAuthority = async (authority: Partial<Authority> | null, disp
   const url = `/authority/${authority.scn}`;
 
   // remove when Authorization headers are set for all requests
-  const idToken = USE_MOCK_DATA ? '' : await getIdToken();
+  const idToken = await getIdToken();
   const headers = {
     Authorization: `Bearer ${idToken}`,
   };
