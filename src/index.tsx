@@ -4,7 +4,6 @@ import ReactDOM from 'react-dom';
 import { I18nextProvider } from 'react-i18next';
 import { Provider } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
-import axios from 'axios';
 
 import { IconButton } from '@material-ui/core';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -15,18 +14,7 @@ import App from './App';
 import store from './redux/store';
 import mainTheme from './themes/mainTheme';
 import i18n from './translations/i18n';
-import { API_URL, MAX_NOTIFICATIONS /*API_URL, API_TOKEN*/ } from './utils/constants';
-
-// Set global config of axios requests
-axios.defaults.baseURL = API_URL;
-
-// TODO: Set global config auth only when backend is ready
-axios.defaults.headers.common = {
-  // Authorization: `Bearer ${API_TOKEN}`,
-  Accept: 'application/json',
-};
-axios.defaults.headers.post['Content-Type'] = 'application/json';
-axios.defaults.headers.put['Content-Type'] = 'application/json';
+import { MAX_NOTIFICATIONS } from './utils/constants';
 
 ReactDOM.render(
   <I18nextProvider i18n={i18n}>

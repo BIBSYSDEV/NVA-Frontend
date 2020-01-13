@@ -1,16 +1,11 @@
 import Axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 
+import { Authority } from '../types/authority.types';
 import OrcidResponse from '../types/orcid.types';
 import { ApplicationName, FeideUser, RoleName } from '../types/user.types';
-import {
-  API_URL,
-  ApiServiceUrl,
-  AUTHORITY_REGISTER_API_URL,
-  ORCID_USER_INFO_URL,
-  USE_MOCK_DATA,
-} from '../utils/constants';
-import mockProjects from '../utils/testfiles/cristin_projects_real.json';
+import { API_URL, ApiBaseUrl, CRISTIN_API_URL, ORCID_USER_INFO_URL, USE_MOCK_DATA } from '../utils/constants';
+import mockCristinProjects from '../utils/testfiles/cristin_projects_real.json';
 import mockDoiLookupResponse from '../utils/testfiles/doi_lookup_response.json';
 import mockAuthoritiesResponse from '../utils/testfiles/mock_authorities_response.json';
 import mockDoiPublication from '../utils/testfiles/publication_generated_from_doi.json';
@@ -42,18 +37,27 @@ const mockOrcidResponse: OrcidResponse = {
   given_name: 'Sofia',
 };
 
+const mockSingleAuthorityResponse: Authority = {
+  name: 'Gundersen, Osteloff',
+  scn: '90179802',
+  feideId: 'osteloff@ntnu.no',
+  orcId: '0000-0001-2345-6789',
+  handle: 'https://vg.no',
+  birthDate: '1941-04-25 00:00:00.000',
+};
+
 // AXIOS INTERCEPTOR
 if (USE_MOCK_DATA) {
   const mock = new MockAdapter(Axios);
 
   // SEARCH
-  mock.onGet(new RegExp(`${API_URL}/${ApiServiceUrl.PUBLICATIONS}/*`)).reply(200, mockPublications);
+  mock.onGet(new RegExp(`/${ApiBaseUrl.PUBLICATIONS}/*`)).reply(200, mockPublications);
 
   // Create publication from doi
-  mock.onPost(new RegExp(`${API_URL}/${ApiServiceUrl.PUBLICATIONS}/doi/*`)).reply(200, mockDoiPublication);
+  mock.onPost(new RegExp(`/${ApiBaseUrl.PUBLICATIONS}/doi/*`)).reply(200, mockDoiPublication);
 
   // lookup DOI
-  mock.onGet(new RegExp(`${API_URL}/${ApiServiceUrl.DOI_LOOKUP}/*`)).reply(200, mockDoiLookupResponse);
+  mock.onGet(new RegExp(`/${ApiBaseUrl.DOI_LOOKUP}/*`)).reply(200, mockDoiLookupResponse);
 
   // PROJECT
   mock.onGet(new RegExp(`${PROJECT_SERVICE_BASE_URL}/*`)).reply(200, mockProjects, { 'X-Total-Count': '12' });
@@ -62,13 +66,14 @@ if (USE_MOCK_DATA) {
   mock.onPost(new RegExp(`${API_URL}/channel/search`)).reply(200, mockNsdPublisers);
 
   // USER
-  mock.onGet(new RegExp(`${API_URL}/${ApiServiceUrl.USER}/*`)).reply(200, mockUser);
+  mock.onGet(new RegExp(`/${ApiBaseUrl.USER}/*`)).reply(200, mockUser);
 
   // ORCID
   mock.onPost(ORCID_USER_INFO_URL).reply(200, mockOrcidResponse);
 
   // Authority Registry
-  mock.onGet(new RegExp(`${AUTHORITY_REGISTER_API_URL}`)).reply(200, mockAuthoritiesResponse);
+  mock.onPost(new RegExp(`${API_URL}/authority`)).reply(200, mockAuthoritiesResponse);
+  mock.onPut(new RegExp(`${API_URL}/authority/*`)).reply(200, mockSingleAuthorityResponse);
 
   mock.onAny().reply(function(config) {
     throw new Error('Could not find mock for ' + config.url);

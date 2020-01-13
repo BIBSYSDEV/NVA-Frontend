@@ -48,6 +48,11 @@ export const getCurrentAuthenticatedUser = () => {
   };
 };
 
+export const getIdToken = async () => {
+  const cognitoUser = await Auth.currentAuthenticatedUser();
+  return cognitoUser?.signInUserSession?.idToken?.jwtToken || null;
+};
+
 export const refreshToken = () => {
   return async (dispatch: Dispatch) => {
     try {

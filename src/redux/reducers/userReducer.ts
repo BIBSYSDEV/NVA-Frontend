@@ -28,6 +28,7 @@ export const userReducer = (state: User = emptyUser, action: UserActions | Orcid
     case SET_ORCID:
       return {
         ...state,
+        authority: { ...state.authority, orcId: action.orcid },
         orcid: action.orcid,
       };
     case SET_AUTHORITY_DATA:

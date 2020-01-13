@@ -11,8 +11,7 @@ describe('Env-variables', () => {
       'REACT_APP_ORCID_CLIENT_SECRET',
       'REACT_APP_ORCID_REDIRECT_URI',
       'REACT_APP_ORCID_BASE_URL',
-      'REACT_APP_PUBLICATION_CHANNEL_API_URL',
-      'REACT_APP_AUTHORITY_REGISTER_API_URL',
+      'REACT_APP_API_URL',
     ];
     const unsetEnv = requiredEnv.filter(env => !(typeof process.env[env] !== 'undefined'));
     if (unsetEnv.length > 0) {

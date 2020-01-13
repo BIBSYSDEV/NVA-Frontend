@@ -16,8 +16,6 @@ To be able to run this app, you need to create a .env file with the following fi
     REACT_APP_ORCID_CLIENT_SECRET=XXXXXXXXXX
     REACT_APP_ORCID_REDIRECT_URI=XXXXXXXXXX
     REACT_APP_ORCID_BASE_URL=XXXXXXXXXX
-    REACT_APP_AUTHORITY_REGISTER_API_URL=https://authority.bibsys.no/authority/rest
-    REACT_APP_PUBLICATION_CHANNEL_API_URL=https://api.nsd.no/dbhapitjener/Tabeller/hentJSONTabellData
     REACT_APP_ALMA_API_URL=https://api-eu.hosted.exlibrisgroup.com
     REACT_APP_API_URL=https://api.dev.nva.aws.unit.no
     REACT_APP_API_TOKEN_KEY=XXXXXXXXXX
