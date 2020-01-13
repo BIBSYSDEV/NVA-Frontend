@@ -15,11 +15,12 @@ import App from './App';
 import store from './redux/store';
 import mainTheme from './themes/mainTheme';
 import i18n from './translations/i18n';
-import { MAX_NOTIFICATIONS /*API_URL, API_TOKEN*/ } from './utils/constants';
+import { API_URL, MAX_NOTIFICATIONS /*API_URL, API_TOKEN*/ } from './utils/constants';
 
-// TODO: Set global config of baseURL and auth when backend is ready
 // Set global config of axios requests
-// axios.defaults.baseURL = API_URL;
+axios.defaults.baseURL = API_URL;
+
+// TODO: Set global config auth only when backend is ready
 axios.defaults.headers.common = {
   // Authorization: `Bearer ${API_TOKEN}`,
   Accept: 'application/json',

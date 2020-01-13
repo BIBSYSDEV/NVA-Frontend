@@ -16,7 +16,7 @@ import mockAuthoritiesResponse from '../utils/testfiles/mock_authorities_respons
 import mockDoiPublication from '../utils/testfiles/publication_generated_from_doi.json';
 import mockPublications from '../utils/testfiles/publications_45_random_results_generated.json';
 import mockNsdPublisers from '../utils/testfiles/publishersFromNsd.json';
-import { PROJECT_SEARCH_URL } from './external/projectApi';
+import { PROJECT_SERVICE_BASE_URL } from './projectApi';
 
 export const mockUser: FeideUser = {
   name: 'Test User',
@@ -46,8 +46,6 @@ const mockOrcidResponse: OrcidResponse = {
 if (USE_MOCK_DATA) {
   const mock = new MockAdapter(Axios);
 
-  console.log(`${PROJECT_SEARCH_URL}`);
-
   // SEARCH
   mock.onGet(new RegExp(`${API_URL}/${ApiServiceUrl.PUBLICATIONS}/*`)).reply(200, mockPublications);
 
@@ -58,7 +56,7 @@ if (USE_MOCK_DATA) {
   mock.onGet(new RegExp(`${API_URL}/${ApiServiceUrl.DOI_LOOKUP}/*`)).reply(200, mockDoiLookupResponse);
 
   // PROJECT
-  mock.onGet(new RegExp(`${PROJECT_SEARCH_URL}/*`)).reply(200, mockProjects, { 'X-Total-Count': '12' });
+  mock.onGet(new RegExp(`${PROJECT_SERVICE_BASE_URL}/*`)).reply(200, mockProjects, { 'X-Total-Count': '12' });
 
   // PUBLICATION CHANNEL
   mock.onPost(new RegExp(`${API_URL}/channel/search`)).reply(200, mockNsdPublisers);
@@ -73,7 +71,6 @@ if (USE_MOCK_DATA) {
   mock.onGet(new RegExp(`${AUTHORITY_REGISTER_API_URL}`)).reply(200, mockAuthoritiesResponse);
 
   mock.onAny().reply(function(config) {
-    console.log('ERROR!');
     throw new Error('Could not find mock for ' + config.url);
   });
 }

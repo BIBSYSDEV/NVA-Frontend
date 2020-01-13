@@ -18,10 +18,10 @@ const API_TOKEN_KEY = process.env.REACT_APP_API_TOKEN_KEY;
 export const API_TOKEN = API_TOKEN_KEY ? localStorage.getItem(API_TOKEN_KEY) : '';
 
 export enum ApiServiceUrl {
-  PUBLICATIONS = 'publications',
-  DOI_LOOKUP = 'doilookup',
-  USER = 'user',
-  PROJECT = 'cristin-project',
+  PUBLICATIONS = '/publications',
+  DOI_LOOKUP = '/doilookup',
+  USER = '/user',
+  PROJECT = '/cristin-project',
 }
 
 export enum StatusCode {

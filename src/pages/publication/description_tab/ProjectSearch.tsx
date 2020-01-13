@@ -2,7 +2,7 @@ import React, { FC, useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 
-import { searchProjects } from '../../../api/external/projectApi';
+import { searchProjects } from '../../../api/projectApi';
 import AutoSearch from '../../../components/AutoSearch';
 import { ProjectType, Project } from '../../../types/project.types';
 import useDebounce from '../../../utils/hooks/useDebounce';
