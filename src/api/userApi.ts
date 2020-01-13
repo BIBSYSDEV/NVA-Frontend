@@ -49,6 +49,9 @@ export const getCurrentAuthenticatedUser = () => {
 };
 
 export const getIdToken = async () => {
+  if (USE_MOCK_DATA) {
+    return '';
+  }
   const cognitoUser = await Auth.currentAuthenticatedUser();
   return cognitoUser?.signInUserSession?.idToken?.jwtToken || null;
 };
