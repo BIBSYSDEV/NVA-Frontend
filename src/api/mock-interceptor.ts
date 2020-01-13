@@ -36,7 +36,7 @@ const mockOrcidResponse: OrcidResponse = {
   given_name: 'Sofia',
 };
 
-export const mockSingleAuthorityResponse: Authority = {
+const mockSingleAuthorityResponse: Authority = {
   name: 'Gundersen, Osteloff',
   scn: '90179802',
   feideId: 'osteloff@ntnu.no',
