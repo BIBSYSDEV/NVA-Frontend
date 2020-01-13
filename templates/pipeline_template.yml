@@ -136,6 +136,7 @@ Resources:
       Code:
         ZipFile: |
           import boto3
+          import sys
           import json
 
           def handler(event, context):
@@ -180,10 +181,11 @@ Resources:
         ZipFile: |
           import json
           import boto3
+          import sys
           from botocore.vendored import requests
 
 
-          def lambda_handler(event, context):
+          def handler(event, context):
               codepipeline = boto3.client('codepipeline')
               job = event['CodePipeline.job']['id'];
 
@@ -196,21 +198,10 @@ Resources:
                   bucket = s3.Bucket(bucket)
                   for obj in bucket.objects.filter():
                       s3.Object(bucket.name, obj.key).delete()
-                  sendResponseCfn(event, context, "SUCCESS")
                   codepipeline.put_job_success_result(jobId=job);
-              except Exception as e:
+              except:
                   print("Exception:",sys.exc_info()[0])
-                  sendResponseCfn(event, context, "FAILED")
                   codepipeline.put_job_failure_result(jobId=job);
-
-          def sendResponseCfn(event, context, responseStatus):
-              response_body = {'Status': responseStatus,
-                              'Reason': 'Log stream name: ' + context.log_stream_name,
-                              'PhysicalResourceId': context.log_stream_name,
-                              'StackId': event['StackId'],
-                              'RequestId': event['RequestId'],
-                              'LogicalResourceId': event['LogicalResourceId'],
-                              'Data': json.loads("{}")}
 
               requests.put(event['ResponseURL'], data=json.dumps(response_body))
       Role: !GetAtt CleanUpBucketBeforeDeployFunctionRole.Arn
@@ -254,7 +245,9 @@ Resources:
               - Action:
                   - 'lambda:InvokeFunction'
                 Effect: Allow
-                Resource: !GetAtt InvalidateCloudfrontDistribution.Arn
+                Resource:
+                  - !GetAtt InvalidateCloudfrontDistribution.Arn
+                  - !GetAtt CleanUpBucketBeforeDeploy.Arn
               - Action:
                   - 'codebuild:StartBuild'
                   - 'codebuild:BatchGetBuilds'
@@ -292,7 +285,7 @@ Resources:
                   - 'codepipeline:PutJobFailureResult'
                 Resource: '*'
 
-  CleanupBucketBeforeDeployFunctionRole:
+  CleanUpBucketBeforeDeployFunctionRole:
     Type: AWS::IAM::Role
     Properties:
       AssumeRolePolicyDocument:
