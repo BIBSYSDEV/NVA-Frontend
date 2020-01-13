@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 import { Button } from '@material-ui/core';
 
-import { getAuthorities, updateAuthority } from '../../../api/external/authorityRegisterApi';
+import { getAuthorities, updateAuthority } from '../../../api/authorityApi';
 import { RootStore } from '../../../redux/reducers/rootReducer';
 import { Authority } from '../../../types/authority.types';
 import AuthorityCard from './AuthorityCard';

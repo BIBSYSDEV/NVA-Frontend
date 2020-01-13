@@ -6,7 +6,7 @@ import styled from 'styled-components';
 
 import { Link as MuiLink } from '@material-ui/core';
 
-import { updateAuthority } from '../../api/external/authorityRegisterApi';
+import { updateAuthority } from '../../api/authorityApi';
 import { getOrcidInfo } from '../../api/external/orcidApi';
 import ButtonModal from '../../components/ButtonModal';
 import { RootStore } from '../../redux/reducers/rootReducer';

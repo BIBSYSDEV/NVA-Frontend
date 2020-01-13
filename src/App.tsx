@@ -5,9 +5,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { getAuthorityByFeideId } from './api/external/authorityRegisterApi';
+import { getAuthorityByFeideId } from './api/authorityApi';
 import { mockUser } from './api/mock-interceptor';
-import { getCurrentAuthenticatedUser, getIdToken } from './api/userApi';
+import { getCurrentAuthenticatedUser } from './api/userApi';
 import Breadcrumbs from './layout/Breadcrumbs';
 import Footer from './layout/Footer';
 import Header from './layout/header/Header';
@@ -46,14 +46,14 @@ const StyledPageBody = styled.div`
 const App: React.FC = () => {
   useEffect(() => {
     const setAxiosHeaders = async () => {
-      const idToken = await getIdToken();
-
       // Set global config of axios requests
       Axios.defaults.baseURL = API_URL;
-      Axios.defaults.headers.common = {
-        Authorization: `Bearer ${idToken}`,
-        Accept: 'application/json',
-      };
+      // Uncomment this when we use our backend only
+      // const idToken = await getIdToken();
+      // Axios.defaults.headers.common = {
+      //   Authorization: `Bearer ${idToken}`,
+      //   Accept: 'application/json',
+      // };
       Axios.defaults.headers.post['Content-Type'] = 'application/json';
       Axios.defaults.headers.put['Content-Type'] = 'application/json';
     };
