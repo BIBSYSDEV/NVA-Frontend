@@ -40,7 +40,7 @@ const mockSingleAuthorityResponse: Authority = {
   name: 'Gundersen, Osteloff',
   scn: '90179802',
   feideId: 'osteloff@ntnu.no',
-  orcId: '',
+  orcId: '0000-0001-2345-6789',
   handle: 'https://vg.no',
   birthDate: '1941-04-25 00:00:00.000',
 };

@@ -84,7 +84,7 @@ const App: React.FC = () => {
         dispatch(setAuthorityData(authority));
       }
     };
-    if (user.id) {
+    if (user.id && !USE_MOCK_DATA) {
       getAuthority();
     }
   }, [dispatch, user.id]);
