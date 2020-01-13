@@ -1,6 +1,6 @@
 import { Field, FormikProps, useFormikContext } from 'formik';
 import { Select, TextField } from 'formik-material-ui';
-import React, { useCallback, useEffect } from 'react';
+import React, { FC, useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
@@ -11,7 +11,8 @@ import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import Box from '../../components/Box';
 import TabPanel from '../../components/TabPanel/TabPanel';
 import { languages } from '../../translations/i18n';
-import { Publication } from '../../types/publication.types';
+import { emptyProject } from '../../types/project.types';
+import { emptyNpiDiscipline, Publication } from '../../types/publication.types';
 import DisciplineSearch from './description_tab/DisciplineSearch';
 import ProjectSearch from './description_tab/ProjectSearch';
 import DatePickerField from './description_tab/DatePickerField';
@@ -34,7 +35,7 @@ export enum DescriptionFieldNames {
   TITLE = 'title.nb',
   ABSTRACT = 'abstract',
   DESCRIPTION = 'description',
-  NPI_DISCIPLINES = 'npiDisciplines',
+  NPI_DISCIPLINE = 'npiDiscipline',
   TAGS = 'tags',
   PUBLICATION_YEAR = 'publicationDate.year',
   PUBLICATION_MONTH = 'publicationDate.month',
@@ -48,8 +49,8 @@ interface DescriptionPanelProps {
   savePublication: () => void;
 }
 
-const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, savePublication }) => {
-  const { t } = useTranslation();
+const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublication }) => {
+  const { t } = useTranslation('publication');
   const { setFieldTouched, setFieldValue }: FormikProps<Publication> = useFormikContext();
 
   // Validation messages won't show on fields that are not touched
@@ -85,7 +86,7 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, savePu
             <Field
               aria-label="abstract"
               name={DescriptionFieldNames.ABSTRACT}
-              label={t('publication:description.abstract')}
+              label={t('description.abstract')}
               component={TextField}
               multiline
               rows="4"
@@ -97,7 +98,7 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, savePu
             <Field
               aria-label="description"
               name={DescriptionFieldNames.DESCRIPTION}
-              label={t('publication:description.description')}
+              label={t('description.description')}
               component={TextField}
               multiline
               rows="4"
@@ -107,11 +108,13 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, savePu
           </StyledFieldWrapper>
           <MultipleFieldWrapper>
             <StyledFieldWrapper>
-              <Field name={DescriptionFieldNames.NPI_DISCIPLINES}>
-                {({ field }: any) => (
+              <Field name={DescriptionFieldNames.NPI_DISCIPLINE}>
+                {({ field: { name, value } }: any) => (
                   <DisciplineSearch
-                    setValueFunction={newValue => setFieldValue(field.name, newValue)}
+                    setValueFunction={newValue => setFieldValue(name, newValue ?? emptyNpiDiscipline)}
                     dataTestId="search_npi"
+                    value={value.title}
+                    placeholder={t('description.search_for_npi_discipline')}
                   />
                 )}
               </Field>
@@ -121,7 +124,7 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, savePu
               <Field
                 aria-label="tags"
                 name={DescriptionFieldNames.TAGS}
-                label={t('publication:description.tags')}
+                label={t('description.tags')}
                 component={TextField}
                 fullWidth
                 variant="outlined"
@@ -155,7 +158,7 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, savePu
             </StyledFieldWrapper>
           </MultipleFieldWrapper>
 
-          <StyledFieldHeader>{t('publication:description.project_association')}</StyledFieldHeader>
+          <StyledFieldHeader>{t('description.project_association')}</StyledFieldHeader>
 
           <StyledFieldWrapper>
             <Field name={DescriptionFieldNames.PROJECTS}>
@@ -163,8 +166,10 @@ const DescriptionPanel: React.FC<DescriptionPanelProps> = ({ goToNextTab, savePu
               {({ field: { value, name } }: any) => (
                 <>
                   <ProjectSearch
-                    setValueFunction={newValue => setFieldValue(name, newValue)}
+                    setValueFunction={newValue => setFieldValue(name, newValue ?? emptyProject)}
+                    value={value.title}
                     dataTestId="search_project"
+                    placeholder={t('description.search_for_project')}
                   />
                   {value.title && <p>{value.title}</p>}
                 </>

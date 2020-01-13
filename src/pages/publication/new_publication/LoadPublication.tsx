@@ -5,12 +5,12 @@ import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 
 import PublicationExpansionPanel from './PublicationExpansionPanel';
 
-interface LoadPublicationPanelProps {
+interface LoadPublicationProps {
   expanded: boolean;
   onChange: (event: React.ChangeEvent<any>, isExpanded: boolean) => void;
 }
 
-const LoadPublicationPanel: React.FC<LoadPublicationPanelProps> = ({ expanded, onChange }) => {
+const LoadPublication: React.FC<LoadPublicationProps> = ({ expanded, onChange }) => {
   const { t } = useTranslation();
 
   return (
@@ -26,4 +26,4 @@ const LoadPublicationPanel: React.FC<LoadPublicationPanelProps> = ({ expanded, o
   );
 };
 
-export default LoadPublicationPanel;
+export default LoadPublication;

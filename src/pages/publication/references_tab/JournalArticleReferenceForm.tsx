@@ -1,5 +1,5 @@
 import { Field, FormikProps, useFormikContext } from 'formik';
-import React from 'react';
+import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
@@ -33,7 +33,7 @@ const StyledPeerReview = styled.div`
   background-color: ${({ theme }) => theme.palette.background.default};
 `;
 
-const JournalArticleReferenceForm: React.FC = () => {
+const JournalArticleReferenceForm: FC = () => {
   const { t } = useTranslation('publication');
   const { setFieldValue, values }: FormikProps<Publication> = useFormikContext();
 
@@ -70,6 +70,8 @@ const JournalArticleReferenceForm: React.FC = () => {
               label={t('publication:references.journal')}
               publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
               setValueFunction={inputValue => setFieldValue(name, inputValue ?? emptyPublisher)}
+              value={value.title}
+              placeholder={t('references.search_for_journal')}
             />
             {value.title && (
               <PublisherRow

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { FC, useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 
@@ -15,14 +15,18 @@ interface PublicationChannelSearchProps {
   label: string;
   publicationTable: PublicationTableNumber;
   setValueFunction: (value: any) => void;
+  value: string;
+  placeholder?: string;
 }
 
-const PublicationChannelSearch: React.FC<PublicationChannelSearchProps> = ({
+const PublicationChannelSearch: FC<PublicationChannelSearchProps> = ({
   clearSearchField,
   dataTestId,
   label,
   publicationTable,
   setValueFunction,
+  value,
+  placeholder,
 }) => {
   const [searchResults, setSearchResults] = useState<Publisher[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -60,6 +64,8 @@ const PublicationChannelSearch: React.FC<PublicationChannelSearchProps> = ({
       searchResults={searchResults}
       setValueFunction={setValueFunction}
       label={label}
+      value={value}
+      placeholder={placeholder}
     />
   );
 };

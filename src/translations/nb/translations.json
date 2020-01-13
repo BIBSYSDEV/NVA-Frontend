@@ -2,6 +2,6 @@
   "list_of_publications": "Liste over publikasjoner",
   "login": "Logg inn",
   "logout": "Logg ut",
-  "new_registration": "Ny registrering",
+  "new_publication": "Ny publisering",
   "results": "{{count}} resultat for '{{term}}'"
 }
