@@ -52,8 +52,8 @@ export interface DoiPublication {
 }
 
 interface NpiDiscipline {
-  id: string;
   title: string;
+  mainDiscipline: string;
 }
 
 interface File {
@@ -72,7 +72,7 @@ export interface Publication {
   title: { [key: string]: string };
   abstract: string;
   description: string;
-  npiDisciplines: NpiDiscipline[];
+  npiDiscipline: NpiDiscipline;
   tags: string[];
   doiLink: string;
   publicationDate: {
@@ -88,6 +88,11 @@ export interface Publication {
   files: File[];
 }
 
+export const emptyNpiDiscipline = {
+  title: '',
+  mainDiscipline: '',
+};
+
 export const emptyPublication: Publication = {
   id: '',
   modified: '', // date?
@@ -98,7 +103,7 @@ export const emptyPublication: Publication = {
   },
   abstract: '',
   description: '',
-  npiDisciplines: [],
+  npiDiscipline: emptyNpiDiscipline,
   tags: [],
   doiLink: '',
   publicationDate: {

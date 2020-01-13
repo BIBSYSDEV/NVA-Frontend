@@ -1,26 +1,25 @@
 import { Form, Formik, FormikProps } from 'formik';
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import * as Yup from 'yup';
 
 import TabPanel from '../../components/TabPanel/TabPanel';
+import { emptyPublication, Publication } from '../../types/publication.types';
+import { ReferenceType } from '../../types/references.types';
+import useLocalStorage from '../../utils/hooks/useLocalStorage';
 import { checkLocalStorageVersion } from '../../utils/local-storage-versioning';
 import ContributorsPanel from './ContributorsPanel';
 import DescriptionPanel from './DescriptionPanel';
 import FilesAndLicensePanel from './FilesAndLicensePanel';
 import { PublicationFormTabs } from './PublicationFormTabs';
-import PublicationPanel from './PublicationPanel';
 import { ReferencesPanel } from './ReferencesPanel';
-import { ReferenceType } from '../../types/references.types';
-import useLocalStorage from '../../utils/hooks/useLocalStorage';
-import { Publication, emptyPublication } from '../../types/publication.types';
 
 const StyledPublication = styled.div`
   width: 100%;
 `;
 
-const PublicationForm: React.FC = () => {
+const PublicationForm: FC = () => {
   const { t } = useTranslation('publication');
   const [tabNumber, setTabNumber] = useState(0);
 
@@ -101,19 +100,18 @@ const PublicationForm: React.FC = () => {
         {({ values }: FormikProps<Publication>) => (
           <Form onBlur={() => setLocalStorageFormData(values)}>
             <PublicationFormTabs tabNumber={tabNumber} handleTabChange={handleTabChange} />
-            {tabNumber === 0 && <PublicationPanel goToNextTab={goToNextTab} />}
-            {tabNumber === 1 && (
+            {tabNumber === 0 && (
               <DescriptionPanel goToNextTab={goToNextTab} savePublication={() => savePublication(values)} />
             )}
-            {tabNumber === 2 && (
+            {tabNumber === 1 && (
               <ReferencesPanel goToNextTab={goToNextTab} savePublication={() => savePublication(values)} />
             )}
-            {tabNumber === 3 && (
+            {tabNumber === 2 && (
               <ContributorsPanel goToNextTab={goToNextTab} savePublication={() => savePublication(values)} />
             )}
-            {tabNumber === 4 && <FilesAndLicensePanel goToNextTab={goToNextTab} />}
+            {tabNumber === 3 && <FilesAndLicensePanel goToNextTab={goToNextTab} />}
 
-            {tabNumber === 5 && (
+            {tabNumber === 4 && (
               <TabPanel ariaLabel="submission">
                 <div>Page Six</div>
               </TabPanel>
