@@ -5,7 +5,14 @@ export interface CristinProjectType {
   url: string;
 }
 
-export interface NormalizedProjectType {
+export interface Project {
   id: string;
   title: { [key: string]: string };
+  grantId?: string;
+  financedBy?: string;
 }
+
+export const emptyProject = {
+  id: '',
+  title: { nb: '' },
+};

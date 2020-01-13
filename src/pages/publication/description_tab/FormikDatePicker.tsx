@@ -11,9 +11,10 @@ const FormikDatePicker = ({ form: { setFieldValue }, field: { value, name } }: a
       label={t('publication:publication.date')}
       name={name}
       onChange={value => {
-        setFieldValue(name, value);
+        setFieldValue(name, value?.getFullYear());
       }}
-      value={value}
+      views={['year']}
+      value={value ? new Date(value, 1) : ''}
     />
   );
 };

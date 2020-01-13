@@ -1,15 +1,17 @@
 import uuid from 'uuid';
 
-import { AddNotification, Notification } from '../../types/notification.types';
+import { VariantType } from 'notistack';
+import { Notification } from '../../types/notification.types';
 
 export const ADD_NOTIFICATION = 'add notification';
 export const REMOVE_NOTIFICATION = 'remove notification';
 export const CLEAR_NOTIFICATIONS = 'clear notifications';
 
-export const addNotification = (notification: AddNotification): AddNotificationAction => ({
+export const addNotification = (message: string, variant: VariantType = 'success'): AddNotificationAction => ({
   type: ADD_NOTIFICATION,
   notification: {
-    ...notification,
+    message,
+    variant,
     key: uuid.v4(),
   },
 });

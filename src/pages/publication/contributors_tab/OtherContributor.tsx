@@ -1,13 +1,13 @@
+import { Field, FormikProps, useFormikContext } from 'formik';
 import React from 'react';
 import styled from 'styled-components';
 
 import { MenuItem } from '@material-ui/core';
 
 import ContributorType from '../../../types/contributor.types';
+import { Publication } from '../../../types/publication.types';
 import contributorTypes from '../../../utils/testfiles/contributor_types.json';
-import ContributorStyles from './StyledContributor';
 import StyledContributor from './StyledContributor';
-import { Field, useFormikContext, FormikProps } from 'formik';
 
 const StyledNameInput = styled(Field)`
   background-color: ${({ theme }) => theme.palette.background.default};
@@ -22,14 +22,14 @@ interface OtherContributorProps {
 }
 
 const OtherContributor: React.FC<OtherContributorProps> = ({ contributor, index, swap, remove }) => {
-  const { setFieldValue }: FormikProps<any> = useFormikContext();
+  const { setFieldValue }: FormikProps<Publication> = useFormikContext();
 
   return (
-    <Field name={`contributors.authors[${index}]`}>
+    <Field name={`contributors[${index}]`}>
       {({ form: { values } }: any) => {
         return (
           <StyledContributor.OtherContributorContainer>
-            <Field name={`contributors.contributors[${index}].type`}>
+            <Field name={`contributors[${index}].type`}>
               {({ field }: any) => {
                 return (
                   <StyledContributor.TypeSelect
@@ -49,8 +49,8 @@ const OtherContributor: React.FC<OtherContributorProps> = ({ contributor, index,
                 );
               }}
             </Field>
-            <StyledNameInput variant="outlined" name={`contributors.contributors[${index}].name`} />
-            <Field name={`contributors.contributors[${index}].selectedInstitution`}>
+            <StyledNameInput variant="outlined" name={`contributors[${index}].name`} />
+            <Field name={`contributors[${index}].selectedInstitution`}>
               {({ field }: any) => {
                 return (
                   <StyledContributor.InstitutionSelect
@@ -58,18 +58,18 @@ const OtherContributor: React.FC<OtherContributorProps> = ({ contributor, index,
                     variant="outlined"
                     onChange={event => setFieldValue(field.name, event?.target.value)}>
                     <MenuItem value="" key="-1" />
-                    {contributor?.institutions?.map(institution => (
+                    {/* {contributor?.institutions?.map(institution => (
                       <MenuItem value={institution} key={institution}>
                         {institution}
                       </MenuItem>
-                    ))}
+                    ))} */}
                   </StyledContributor.InstitutionSelect>
                 );
               }}
             </Field>
-            <ContributorStyles.ContributorsArrows
+            <StyledContributor.ContributorsArrows
               first={index === 0}
-              last={index === values.contributors.contributors.length - 1}
+              last={index === values.contributors.length - 1}
               swap={swap}
               index={index}
             />

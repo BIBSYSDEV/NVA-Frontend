@@ -65,7 +65,7 @@ const User: React.FC = () => {
           {user.authority ? (
             <>
               <p>{t('authority.connected_info')}</p>
-              <MuiLink href={user.authority.identifiersMap.handle[0]}>{t('authority.see_profile')}</MuiLink>
+              <MuiLink href={user.authority.identifiersMap?.handle[0]}>{t('authority.see_profile')}</MuiLink>
             </>
           ) : (
             <>

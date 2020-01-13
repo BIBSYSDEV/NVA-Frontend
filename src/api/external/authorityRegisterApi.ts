@@ -30,10 +30,10 @@ export const getAuthorities = async (
       );
       return filteredAuthorities;
     } else {
-      dispatch(addNotification({ message: i18n.t('feedback:error.get_authorities'), variant: 'error' }));
+      dispatch(addNotification(i18n.t('feedback:error.get_authorities'), 'error'));
     }
   } catch {
-    dispatch(addNotification({ message: i18n.t('feedback:error.get_authorities'), variant: 'error' }));
+    dispatch(addNotification(i18n.t('feedback:error.get_authorities'), 'error'));
   }
 };
 
@@ -47,10 +47,10 @@ export const getAuthorityById = async (id: string, dispatch: Dispatch, idType: s
       // Return authority object or undefined if none
       return response.data[0];
     } else {
-      dispatch(addNotification({ message: i18n.t('feedback:error.get_authority'), variant: 'error' }));
+      dispatch(addNotification(i18n.t('feedback:error.get_authority'), 'error'));
     }
   } catch {
-    dispatch(addNotification({ message: i18n.t('feedback:error.get_authority'), variant: 'error' }));
+    dispatch(addNotification(i18n.t('feedback:error.get_authority'), 'error'));
   }
 };
 
@@ -61,12 +61,12 @@ export const updateAuthority = async (authority: Authority, dispatch: Dispatch) 
     const response = await Axios.put(url, authority);
 
     if (response.status === StatusCode.OK) {
-      dispatch(addNotification({ message: i18n.t('feedback:success.update_authority'), variant: 'success' }));
+      dispatch(addNotification(i18n.t('feedback:success.update_authority'), 'success'));
       return response.data;
     } else {
-      dispatch(addNotification({ message: i18n.t('feedback:error.update_authority'), variant: 'error' }));
+      dispatch(addNotification(i18n.t('feedback:error.update_authority'), 'error'));
     }
   } catch {
-    dispatch(addNotification({ message: i18n.t('feedback:error.update_authority'), variant: 'error' }));
+    dispatch(addNotification(i18n.t('feedback:error.update_authority'), 'error'));
   }
 };

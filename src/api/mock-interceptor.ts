@@ -4,11 +4,11 @@ import MockAdapter from 'axios-mock-adapter';
 import OrcidResponse from '../types/orcid.types';
 import { ApplicationName, FeideUser, RoleName } from '../types/user.types';
 import {
+  API_URL,
   ApiBaseUrl,
   AUTHORITY_REGISTER_API_URL,
   CRISTIN_API_URL,
   ORCID_USER_INFO_URL,
-  PUBLICATION_CHANNEL_API_URL,
   USE_MOCK_DATA,
 } from '../utils/constants';
 import mockCristinProjects from '../utils/testfiles/cristin_projects_real.json';
@@ -59,7 +59,7 @@ if (USE_MOCK_DATA) {
   mock.onGet(new RegExp(`${CRISTIN_API_URL}/projects*`)).reply(200, mockCristinProjects, { 'X-Total-Count': '12' });
 
   // PUBLICATION CHANNEL
-  mock.onPost(PUBLICATION_CHANNEL_API_URL).reply(200, mockNsdPublisers);
+  mock.onPost(new RegExp(`${API_URL}/channel/search`)).reply(200, mockNsdPublisers);
 
   // USER
   mock.onGet(new RegExp(`/${ApiBaseUrl.USER}/*`)).reply(200, mockUser);

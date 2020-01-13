@@ -13,6 +13,8 @@
     "npi_disciplines": "NPI disciplines",
     "project": "Project",
     "project_association": "Project association",
+    "search_for_npi_discipline": "Search for NPI discipline",
+    "search_for_project": "Search for project",
     "tags": "Tags"
   },
   "feedback": {
@@ -57,8 +59,9 @@
     "journal_not_found": "Journal not found?",
     "journal_publication": "Publication in Journal",
     "letter": "Letter",
-    "level": "Level",
+    "level": "Level in NPI",
     "monography": "Monography",
+    "number_of_pages": "Total number of pages",
     "nvi_header": "Norwegian Scientific Index - NVI",
     "nvi_success": "This publication can be included in NVI",
     "nvi_fail_rated_line1": "This publication can not be included in NVI, since selected journal is not at level 1 or 2.",
@@ -68,11 +71,21 @@
     "pages_from": "Pages from",
     "pages_to": "to",
     "peer_review": "Is the publication peer reviewed?",
+    "policy_report": "Policy report",
     "publisher": "Publisher",
     "remove": "Remove",
     "report": "Report",
+    "research_report": "Research report",
     "review": "Review",
+    "search_for_journal": "Search for journals",
+    "search_for_publisher": "Search for publisher",
+    "search_for_series": "Search for series",
+    "series": "Series",
+    "series_info": "If the book is part of a series",
     "short_communication": "Short communication",
-    "volume": "Volume"
+    "text_book": "Is this a textbook?",
+    "text_book_yes": "Yes, this is a textbook",
+    "volume": "Volume",
+    "working_paper": "Working paper"
   }
 }

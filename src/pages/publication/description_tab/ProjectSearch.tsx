@@ -1,18 +1,21 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { FC, useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 
 import { searchCristinProjects } from '../../../api/external/cristinProjectApi';
 import AutoSearch from '../../../components/AutoSearch';
-import { CristinProjectType, NormalizedProjectType } from '../../../types/project.types';
+import { CristinProjectType, Project } from '../../../types/project.types';
 import useDebounce from '../../../utils/hooks/useDebounce';
 
 interface ProjectSearchProps {
+  dataTestId: string;
   setValueFunction: (value: any) => void;
+  value: string;
+  placeholder?: string;
 }
 
-const ProjectSearch: React.FC<ProjectSearchProps> = ({ setValueFunction }) => {
-  const [searchResults, setSearchResults] = useState<NormalizedProjectType[]>([]);
+const ProjectSearch: FC<ProjectSearchProps> = ({ dataTestId, setValueFunction, value, placeholder }) => {
+  const [searchResults, setSearchResults] = useState<Project[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [searching, setSearching] = useState(false);
 
@@ -30,6 +33,8 @@ const ProjectSearch: React.FC<ProjectSearchProps> = ({ setValueFunction }) => {
           title: `${project.title[project.main_language]} (${project.main_language})`,
         }));
         setSearchResults(normalizedResponse);
+      } else {
+        setSearchResults([]);
       }
     },
     [dispatch]
@@ -44,10 +49,13 @@ const ProjectSearch: React.FC<ProjectSearchProps> = ({ setValueFunction }) => {
 
   return (
     <AutoSearch
+      dataTestId={dataTestId}
       onInputChange={(_, value) => setSearchTerm(value)}
       searchResults={searchResults}
       setValueFunction={setValueFunction}
       label={t('publication:description.project')}
+      value={value}
+      placeholder={placeholder}
     />
   );
 };

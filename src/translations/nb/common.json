@@ -5,8 +5,10 @@
   "institution": "Institusjon",
   "name": "Navn",
   "next": "Neste",
+  "no_hits": "Ingen treff",
   "orcid": "ORCID",
   "save": "Lagre",
   "search": "Søk",
-  "title": "Tittel"
+  "title": "Tittel",
+  "type": "Type"
 }

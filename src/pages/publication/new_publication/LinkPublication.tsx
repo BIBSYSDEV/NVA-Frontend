@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
@@ -8,7 +8,7 @@ import LinkIcon from '@material-ui/icons/Link';
 
 import { createNewPublicationFromDoi, lookupDoiTitle } from '../../../api/publicationApi';
 import { RootStore } from '../../../redux/reducers/rootReducer';
-import LinkPublicationPanelForm from './LinkPublicationPanelForm';
+import LinkPublicationForm from './LinkPublicationForm';
 import PublicationExpansionPanel from './PublicationExpansionPanel';
 
 const StyledBody = styled.div`
@@ -28,10 +28,9 @@ const StyledTitle = styled.div`
 interface LinkPublicationPanelProps {
   expanded: boolean;
   onChange: (event: React.ChangeEvent<any>, isExpanded: boolean) => void;
-  goToNextTab: () => void;
 }
 
-const LinkPublicationPanel: React.FC<LinkPublicationPanelProps> = ({ expanded, onChange, goToNextTab }) => {
+const LinkPublicationPanel: FC<LinkPublicationPanelProps> = ({ expanded, onChange }) => {
   const { t } = useTranslation();
   const [doiUrl, setDoiUrl] = useState('');
   const [doiTitle, setDoiTitle] = useState('');
@@ -39,8 +38,7 @@ const LinkPublicationPanel: React.FC<LinkPublicationPanelProps> = ({ expanded, o
   const user = useSelector((state: RootStore) => state.user);
 
   const handleConfirm = () => {
-    dispatch(createNewPublicationFromDoi(doiUrl, user.id));
-    goToNextTab();
+    dispatch(createNewPublicationFromDoi(doiUrl, user.id, dispatch));
   };
 
   const handleSearch = async (values: any) => {
@@ -58,7 +56,7 @@ const LinkPublicationPanel: React.FC<LinkPublicationPanelProps> = ({ expanded, o
       ariaControls="publication-method-link">
       <StyledBody>
         {t('publication:publication.link_publication_description')}
-        <LinkPublicationPanelForm handleSearch={handleSearch} />
+        <LinkPublicationForm handleSearch={handleSearch} />
         {doiTitle && (
           <>
             <StyledHeading> {t('publication:heading.publication')}:</StyledHeading>

@@ -14,7 +14,7 @@ import Notifier from './layout/Notifier';
 import AdminMenu from './pages/dashboard/AdminMenu';
 import Dashboard from './pages/dashboard/Dashboard';
 import NotFound from './pages/errorpages/NotFound';
-import PublicationForm from './pages/publication/PublicationForm';
+import NewPublication from './pages/publication/NewPublication';
 import Search from './pages/search/Search';
 import AuthorityOrcidModal from './pages/user/authority/AuthorityOrcidModal';
 import User from './pages/user/User';
@@ -29,7 +29,6 @@ const StyledApp = styled.div`
   height: 100vh;
   display: flex;
   flex-direction: column;
-  font-size: 62.5%;
 `;
 
 const StyledPageBody = styled.div`
@@ -39,7 +38,7 @@ const StyledPageBody = styled.div`
     align-items: center;
     margin: 3rem;
   }
-  font-size: 1.6rem;
+  font-size: 1rem;
   flex-grow: 1;
 `;
 
@@ -89,7 +88,7 @@ const App: React.FC = () => {
           <Switch>
             <Route exact path="/" component={Dashboard} />
             {user.isLoggedIn && <Route exact path="/publications" component={Workspace} />}
-            {user.isLoggedIn && <Route exact path="/publications/new" component={PublicationForm} />}
+            {user.isLoggedIn && <Route exact path="/publications/new" component={NewPublication} />}
             <Route exact path="/search" component={Search} />
             <Route exact path="/search/:searchTerm" component={Search} />
             <Route exact path="/search/:searchTerm/:offset" component={Search} />
