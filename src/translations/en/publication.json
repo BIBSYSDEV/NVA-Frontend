@@ -9,13 +9,13 @@
   },
   "description": {
     "abstract": "Abstract",
+    "date_published": "Date published",
     "description": "Description",
     "npi_disciplines": "NPI disciplines",
     "project": "Project",
     "project_association": "Project association",
-    "publish_date": "Publish date",
     "tags": "Tags",
-    "year_only": "Kun årstall"
+    "year_only": "Year only"
   },
   "feedback": {
     "invalid_url": "Invalid URL",

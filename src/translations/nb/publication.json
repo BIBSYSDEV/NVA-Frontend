@@ -9,11 +9,11 @@
   },
   "description": {
     "abstract": "Sammendrag",
+    "date_published": "Publiseringsdato",
     "description": "Beskrivelse",
     "npi_disciplines": "NPI Fagfelt",
     "project": "Prosjekt",
     "project_association": "Prosjekttilknytning",
-    "publish_date": "Publiseringsdato",
     "tags": "Nøkkelord",
     "year_only": "Kun årstall"
   },

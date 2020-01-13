@@ -22,7 +22,7 @@ const StyledPublication = styled.div`
 
 const PublicationForm: React.FC = () => {
   const { t } = useTranslation('publication');
-  const [tabNumber, setTabNumber] = useState(1);
+  const [tabNumber, setTabNumber] = useState(0);
 
   checkLocalStorageVersion();
   const [localStorageFormData, setLocalStorageFormData, clearLocalStorageFormData] = useLocalStorage(

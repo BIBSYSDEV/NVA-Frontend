@@ -28,7 +28,7 @@ const DatePickerField = ({ yearFieldName, monthFieldName, dayFieldName }: DatePi
   useEffect(() => {
     // Extract data from date object
     const updatedYear = date ? date.getFullYear() : '';
-    const updatedMonth = !yearOnly && date ? date.getMonth() : '';
+    const updatedMonth = !yearOnly && date ? date.getMonth() + 1 : '';
     const updatedDay = !yearOnly && date ? date.getDate() : '';
 
     setFieldValue(yearFieldName, updatedYear);
@@ -50,6 +50,7 @@ const DatePickerField = ({ yearFieldName, monthFieldName, dayFieldName }: DatePi
         onChange={setDate}
         views={views}
         value={date}
+        autoOk
         labelFunc={date => {
           if (!date) {
             return '';
