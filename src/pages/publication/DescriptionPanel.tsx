@@ -1,4 +1,4 @@
-import { Field, FormikProps, useFormikContext } from 'formik';
+import { Field, FormikProps, useFormikContext, FieldArray } from 'formik';
 import { Select, TextField } from 'formik-material-ui';
 import React, { FC, useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -11,7 +11,6 @@ import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import Box from '../../components/Box';
 import TabPanel from '../../components/TabPanel/TabPanel';
 import { languages } from '../../translations/i18n';
-import { emptyProject } from '../../types/project.types';
 import { emptyNpiDiscipline, Publication } from '../../types/publication.types';
 import DisciplineSearch from './description_tab/DisciplineSearch';
 import FormikDatePicker from './description_tab/FormikDatePicker';
@@ -49,7 +48,7 @@ interface DescriptionPanelProps {
 
 const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublication }) => {
   const { t } = useTranslation('publication');
-  const { setFieldTouched, setFieldValue }: FormikProps<Publication> = useFormikContext();
+  const { setFieldTouched, setFieldValue, values }: FormikProps<Publication> = useFormikContext();
 
   // Validation messages won't show on fields that are not touched
   const setAllFieldsTouched = useCallback(() => {
@@ -158,20 +157,21 @@ const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublicat
           <StyledFieldHeader>{t('description.project_association')}</StyledFieldHeader>
 
           <StyledFieldWrapper>
-            <Field name={DescriptionFieldNames.PROJECTS}>
-              {/* TODO: Use <FieldArray /> */}
-              {({ field: { value, name } }: any) => (
+            <FieldArray name={DescriptionFieldNames.PROJECTS}>
+              {({ push }) => (
                 <>
                   <ProjectSearch
-                    setValueFunction={newValue => setFieldValue(name, newValue ?? emptyProject)}
-                    value={value.title}
+                    setValueFunction={newValue => push(newValue)}
                     dataTestId="search_project"
+                    value={''}
                     placeholder={t('description.search_for_project')}
                   />
-                  {value.title && <p>{value.title}</p>}
+                  {values[DescriptionFieldNames.PROJECTS].map(
+                    (project: any) => project && <p key={project.id}>{project.title && project.title}</p>
+                  )}
                 </>
               )}
-            </Field>
+            </FieldArray>
           </StyledFieldWrapper>
         </MuiPickersUtilsProvider>
       </Box>
