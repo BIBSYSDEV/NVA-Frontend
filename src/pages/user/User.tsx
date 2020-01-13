@@ -57,8 +57,7 @@ const User: React.FC = () => {
   }, [dispatch, location.hash, history]);
 
   useEffect(() => {
-    const orcid = user.orcid;
-    if (orcid) {
+    if (user.orcid && !user.authority?.orcId) {
       updateAuthority(user.authority, dispatch);
     }
   }, [user.authority, user.orcid, dispatch]);

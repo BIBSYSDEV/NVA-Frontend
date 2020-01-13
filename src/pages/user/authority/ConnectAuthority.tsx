@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { Button } from '@material-ui/core';
 
 import { getAuthorities, updateAuthority } from '../../../api/authorityApi';
+import { setAuthorityData } from '../../../redux/actions/userActions';
 import { RootStore } from '../../../redux/reducers/rootReducer';
 import { Authority } from '../../../types/authority.types';
 import AuthorityCard from './AuthorityCard';
@@ -49,6 +50,7 @@ export const ConnectAuthority: React.FC = () => {
 
     if (authority) {
       await updateAuthority(authority, dispatch);
+      dispatch(setAuthorityData(authority));
     }
   };
 
