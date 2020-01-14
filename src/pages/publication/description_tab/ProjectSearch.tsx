@@ -47,8 +47,8 @@ const ProjectSearch: FC<ProjectSearchProps> = ({ dataTestId, setValueFunction, p
       onInputChange={(_, value) => setSearchTerm(value)}
       searchResults={searchResults}
       setValueFunction={setValueFunction}
-      clearOnSelect={true}
       placeholder={placeholder}
+      clearOnSelect
     />
   );
 };

@@ -171,9 +171,10 @@ const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublicat
                     dataTestId="search_project"
                     placeholder={t('description.search_for_project')}
                   />
-                  {getObjectValueByFieldName(values, name).map((project: Project, i: number) => (
-                    <ProjectRow key={project.id} project={project} onClickRemove={() => remove(i)} />
-                  ))}
+                  {getObjectValueByFieldName(values, name).map(
+                    (project: Project, i: number) =>
+                      project && <ProjectRow key={project.id} project={project} onClickRemove={() => remove(i)} />
+                  )}
                 </>
               )}
             </FieldArray>
