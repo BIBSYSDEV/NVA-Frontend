@@ -11,6 +11,8 @@ import mockAuthoritiesResponse from '../utils/testfiles/mock_authorities_respons
 import mockDoiPublication from '../utils/testfiles/publication_generated_from_doi.json';
 import mockPublications from '../utils/testfiles/publications_45_random_results_generated.json';
 import mockNsdPublisers from '../utils/testfiles/publishersFromNsd.json';
+import { AuthorityApiUrls } from './authorityApi';
+import { PublicationChannelApiUrls } from './publicationChannelApi';
 
 export const mockUser: FeideUser = {
   name: 'Test User',
@@ -38,7 +40,7 @@ const mockOrcidResponse: OrcidResponse = {
 
 const mockSingleAuthorityResponse: Authority = {
   name: 'Gundersen, Osteloff',
-  scn: '90179802',
+  scn: '901790000000',
   feideId: 'osteloff@ntnu.no',
   orcId: '0000-0001-2345-6789',
   handle: 'https://vg.no',
@@ -62,7 +64,7 @@ if (USE_MOCK_DATA) {
   mock.onGet(new RegExp(`${CRISTIN_API_URL}/projects*`)).reply(200, mockCristinProjects, { 'X-Total-Count': '12' });
 
   // PUBLICATION CHANNEL
-  mock.onPost(new RegExp(`${API_URL}/channel/search`)).reply(200, mockNsdPublisers);
+  mock.onPost(new RegExp(`${API_URL}${PublicationChannelApiUrls.SEARCH}`)).reply(200, mockNsdPublisers);
 
   // USER
   mock.onGet(new RegExp(`/${ApiBaseUrl.USER}/*`)).reply(200, mockUser);
@@ -71,8 +73,8 @@ if (USE_MOCK_DATA) {
   mock.onPost(ORCID_USER_INFO_URL).reply(200, mockOrcidResponse);
 
   // Authority Registry
-  mock.onPost(new RegExp(`${API_URL}/authority`)).reply(200, mockAuthoritiesResponse);
-  mock.onPut(new RegExp(`${API_URL}/authority/*`)).reply(200, mockSingleAuthorityResponse);
+  mock.onPost(new RegExp(`${API_URL}${AuthorityApiUrls.AUTHORITY}`)).reply(200, mockAuthoritiesResponse);
+  mock.onPut(new RegExp(`${API_URL}${AuthorityApiUrls.AUTHORITY}/*`)).reply(200, mockSingleAuthorityResponse);
 
   mock.onAny().reply(function(config) {
     throw new Error('Could not find mock for ' + config.url);
