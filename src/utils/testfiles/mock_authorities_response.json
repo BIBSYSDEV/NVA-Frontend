@@ -1,54 +1,18 @@
-{
-  "q": "osteloff",
-  "startRow": "1",
-  "maxRows": "10",
-  "numFound": 1,
-  "results": [
-    {
-      "authorityType": "PERSON",
-      "status": "kat2",
-      "origin": "adabas",
-      "deleted": false,
-      "systemControlNumber": "90179801",
-      "lastUpdateDate": "2018-11-01 11:21:59.515",
-      "createdDate": "1991-04-25 00:00:00.000",
-      "replacedBy": "0",
-      "marcdata": [
-        {
-          "tag": "100",
-          "ind1": "1",
-          "ind2": " ",
-          "subfields": [
-            {
-              "subcode": "a",
-              "value": "Osteloff, Oddny"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "authorityType": "PERSON",
-      "status": "kat2",
-      "origin": "adabas",
-      "deleted": false,
-      "systemControlNumber": "90179801",
-      "lastUpdateDate": "2018-11-01 11:21:59.515",
-      "createdDate": "1991-04-25 00:00:00.000",
-      "replacedBy": "0",
-      "marcdata": [
-        {
-          "tag": "100",
-          "ind1": "1",
-          "ind2": " ",
-          "subfields": [
-            {
-              "subcode": "a",
-              "value": "Gundersen, Osteloff"
-            }
-          ]
-        }
-      ]
-    }
-  ]
-}
+[
+  {
+    "name": "Osteloff, Oddny",
+    "scn": "90179801",
+    "feideId": "",
+    "orcId": "",
+    "handle": "",
+    "birthDate": "1991-04-25 00:00:00.000"
+  },
+  {
+    "name": "Gundersen, Osteloff",
+    "scn": "90179802",
+    "feideId": "tu@unit.no",
+    "orcId": "",
+    "handle": "https://vg.no",
+    "birthDate": "1941-04-25 00:00:00.000"
+  }
+]
