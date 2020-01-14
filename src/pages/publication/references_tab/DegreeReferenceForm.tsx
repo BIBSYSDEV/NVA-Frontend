@@ -74,7 +74,7 @@ const DegreeReferenceForm: React.FC = () => {
             <TextField
               data-testid="specialisation"
               variant="outlined"
-              label={t('references.specialisation')}
+              label={t('references.specialization')}
               {...field}
             />
           )}

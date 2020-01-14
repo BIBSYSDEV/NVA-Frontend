@@ -39,7 +39,7 @@ interface Report {
 interface Degree {
   type: string;
   publisher: Publisher;
-  specialisation: string;
+  specialization: string;
   series: Publisher;
 }
 
@@ -90,7 +90,7 @@ const emptyReportReference: Report = {
 const emptyDegreeReference: Degree = {
   type: '',
   publisher: emptyPublisher,
-  specialisation: '',
+  specialization: '',
   series: emptyPublisher,
 };
 
