@@ -1,4 +1,4 @@
-import { Field, FormikProps, useFormikContext } from 'formik';
+import { Field, FormikProps, useFormikContext, FieldArray } from 'formik';
 import { Select, TextField } from 'formik-material-ui';
 import React, { FC, useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -16,6 +16,8 @@ import { emptyNpiDiscipline, Publication } from '../../types/publication.types';
 import DisciplineSearch from './description_tab/DisciplineSearch';
 import ProjectSearch from './description_tab/ProjectSearch';
 import DatePickerField from './description_tab/DatePickerField';
+import ChipInput from 'material-ui-chip-input';
+import { getObjectValueByFieldName } from '../../utils/helpers';
 
 const MultipleFieldWrapper = styled.div`
   display: flex;
@@ -24,6 +26,10 @@ const MultipleFieldWrapper = styled.div`
 const StyledFieldWrapper = styled.div`
   margin: 1rem;
   flex: 1 0 40%;
+`;
+
+const StyledTagsField = styled(StyledFieldWrapper)`
+  margin-top: 2rem;
 `;
 
 const StyledFieldHeader = styled.header`
@@ -51,7 +57,7 @@ interface DescriptionPanelProps {
 
 const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublication }) => {
   const { t } = useTranslation('publication');
-  const { setFieldTouched, setFieldValue }: FormikProps<Publication> = useFormikContext();
+  const { values, setFieldTouched, setFieldValue }: FormikProps<Publication> = useFormikContext();
 
   // Validation messages won't show on fields that are not touched
   const setAllFieldsTouched = useCallback(() => {
@@ -119,17 +125,22 @@ const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublicat
                 )}
               </Field>
             </StyledFieldWrapper>
-            <StyledFieldWrapper>
-              {/* TODO: Use <Chip /> or similar to visualize tags  */}
-              <Field
-                aria-label="tags"
-                name={DescriptionFieldNames.TAGS}
-                label={t('description.tags')}
-                component={TextField}
-                fullWidth
-                variant="outlined"
-              />
-            </StyledFieldWrapper>
+            <StyledTagsField>
+              <FieldArray name={DescriptionFieldNames.TAGS}>
+                {({ name, push, remove }) => (
+                  <ChipInput
+                    value={getObjectValueByFieldName(values, name)}
+                    onAdd={tag => push(tag)}
+                    onDelete={(_, index) => remove(index)}
+                    aria-label="tags"
+                    label={t('description.tags')}
+                    helperText={t('description.tags_helper')}
+                    variant="outlined"
+                    fullWidth
+                  />
+                )}
+              </FieldArray>
+            </StyledTagsField>
           </MultipleFieldWrapper>
 
           <MultipleFieldWrapper>
