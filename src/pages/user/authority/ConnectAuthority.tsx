@@ -50,7 +50,6 @@ export const ConnectAuthority: React.FC = () => {
     const selectedAuthority = matchingAuthorities.find(auth => auth.scn === selectedSystemControlNumber);
 
     if (selectedAuthority) {
-      // set orcId for user if orcId is present
       selectedAuthority.orcId && dispatch(setOrcid(selectedAuthority.orcId));
 
       const authority: Authority = { ...selectedAuthority, feideId: user.id };
