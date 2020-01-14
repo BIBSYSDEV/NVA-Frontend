@@ -31,11 +31,11 @@ export const AutoSearch: FC<AutoSearchProps> = ({
   label,
   searchResults,
   setValueFunction,
-  value,
   clearSearchField,
   dataTestId,
   onInputChange,
   placeholder,
+  value = '',
   clearOnSelect = false,
 }) => {
   const [displayValue, setDisplayValue] = useState(emptyValue);
@@ -53,10 +53,7 @@ export const AutoSearch: FC<AutoSearchProps> = ({
   }, [searchResults]);
 
   useEffect(() => {
-    if (!value) {
-      setDisplayValue(emptyValue);
-    }
-    setDisplayValue({ title: value || '' });
+    setDisplayValue({ title: value });
   }, [value]);
 
   useEffect(() => {
@@ -77,9 +74,11 @@ export const AutoSearch: FC<AutoSearchProps> = ({
         setOpen(true);
       }}
       onChange={(_: object, value: string) => {
-        setValueFunction(value);
-        if (clearOnSelect) {
-          setDisplayValue(emptyValue);
+        if (value) {
+          setValueFunction(value);
+          if (clearOnSelect) {
+            setDisplayValue(emptyValue);
+          }
         }
       }}
       onInputChange={(event: object, value: string) => {
