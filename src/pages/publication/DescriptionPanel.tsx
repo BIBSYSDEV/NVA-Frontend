@@ -16,6 +16,8 @@ import DisciplineSearch from './description_tab/DisciplineSearch';
 import ProjectSearch from './description_tab/ProjectSearch';
 import ProjectRow from './description_tab/ProjectRow';
 import DatePickerField from './description_tab/DatePickerField';
+import { getObjectValueByFieldName } from '../../utils/helpers';
+import { Project } from '../../types/project.types';
 
 const MultipleFieldWrapper = styled.div`
   display: flex;
@@ -162,14 +164,14 @@ const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublicat
 
           <StyledFieldWrapper>
             <FieldArray name={DescriptionFieldNames.PROJECTS}>
-              {({ insert, remove }) => (
+              {({ name, insert, remove }) => (
                 <>
                   <ProjectSearch
                     setValueFunction={newValue => insert(0, newValue)}
                     dataTestId="search_project"
                     placeholder={t('description.search_for_project')}
                   />
-                  {values[DescriptionFieldNames.PROJECTS].map((project, i) => (
+                  {getObjectValueByFieldName(values, name).map((project: Project, i: number) => (
                     <ProjectRow key={project.id} project={project} onClickRemove={() => remove(i)} />
                   ))}
                 </>
