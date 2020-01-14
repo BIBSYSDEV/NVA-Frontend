@@ -6,7 +6,6 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { getAuthorityByFeideId } from './api/authorityApi';
-import { mockUser } from './api/mock-interceptor';
 import { getCurrentAuthenticatedUser } from './api/userApi';
 import Breadcrumbs from './layout/Breadcrumbs';
 import Footer from './layout/Footer';
@@ -25,6 +24,7 @@ import { RootStore } from './redux/reducers/rootReducer';
 import { awsConfig } from './utils/aws-config';
 import { API_URL, USE_MOCK_DATA } from './utils/constants';
 import { hubListener } from './utils/hub-listener';
+import { mockUser } from './utils/testfiles/mock_feide_user';
 
 const StyledApp = styled.div`
   height: 100vh;

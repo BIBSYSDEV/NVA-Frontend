@@ -3,7 +3,7 @@ import Axios from 'axios';
 import { Publisher } from '../types/references.types';
 import { PublicationTableNumber } from '../utils/constants';
 
-export enum PublicationChannelApiUrls {
+export enum PublicationChannelApiPaths {
   SEARCH = '/channel/search',
 }
 
@@ -11,7 +11,7 @@ export const getPublishers = async (searchTerm: string, publicationTable: Public
   try {
     const response = await Axios({
       method: 'POST',
-      url: `${PublicationChannelApiUrls.SEARCH}`,
+      url: PublicationChannelApiPaths.SEARCH,
       data: { searchTerm: `%${searchTerm}%`, tableId: publicationTable },
     });
     return response.data.results.map((item: Partial<Publisher>) => ({

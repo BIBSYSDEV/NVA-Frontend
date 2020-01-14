@@ -56,6 +56,7 @@ export const ConnectAuthority: React.FC = () => {
       const authority: Authority = { ...selectedAuthority, feideId: user.id };
       dispatch(setAuthorityData(authority));
       await updateAuthority(authority, dispatch);
+      dispatch(setAuthorityData(authority));
     }
   };
 
