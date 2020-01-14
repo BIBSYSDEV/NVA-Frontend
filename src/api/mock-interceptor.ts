@@ -3,31 +3,16 @@ import MockAdapter from 'axios-mock-adapter';
 
 import { Authority } from '../types/authority.types';
 import OrcidResponse from '../types/orcid.types';
-import { ApplicationName, FeideUser, RoleName } from '../types/user.types';
-import { API_URL, ApiServiceUrl, ORCID_USER_INFO_URL, USE_MOCK_DATA } from '../utils/constants';
-import mockProjects from '../utils/testfiles/projects_real.json';
+import { API_URL, ApiBaseUrl, CRISTIN_API_URL, ORCID_USER_INFO_URL } from '../utils/constants';
+import mockCristinProjects from '../utils/testfiles/cristin_projects_real.json';
 import mockDoiLookupResponse from '../utils/testfiles/doi_lookup_response.json';
 import mockAuthoritiesResponse from '../utils/testfiles/mock_authorities_response.json';
+import { mockUser } from '../utils/testfiles/mock_feide_user';
 import mockDoiPublication from '../utils/testfiles/publication_generated_from_doi.json';
 import mockPublications from '../utils/testfiles/publications_45_random_results_generated.json';
 import mockNsdPublisers from '../utils/testfiles/publishersFromNsd.json';
-import { PROJECT_SERVICE_BASE_URL } from './projectApi';
-
-export const mockUser: FeideUser = {
-  name: 'Test User',
-  email: 'testuser@unit.no',
-  'custom:identifiers': 'testuser@unit.no',
-  'custom:orgName': 'unit',
-  'custom:applicationRoles': `${RoleName.PUBLISHER},${RoleName.CURATOR}`,
-  'custom:application': ApplicationName.NVA,
-  'custom:orgNumber': 'NO293739283',
-  'custom:commonName': 'Unit',
-  'custom:feideId': 'tu@unit.no',
-  sub: 'jasdfahkf-341-sdfdsf-12321',
-  email_verfied: true,
-  'custom:affiliation': '[member, employee, staff]',
-  identities: "[{'userId':'91829182'}]",
-};
+import { AuthorityApiPaths } from './authorityApi';
+import { PublicationChannelApiPaths } from './publicationChannelApi';
 
 const mockOrcidResponse: OrcidResponse = {
   id: 'https://sandbox.orcid.org/0000-0001-2345-6789',
@@ -47,7 +32,7 @@ const mockSingleAuthorityResponse: Authority = {
 };
 
 // AXIOS INTERCEPTOR
-if (USE_MOCK_DATA) {
+export const interceptRequestsOnMock = () => {
   const mock = new MockAdapter(Axios);
 
   // SEARCH
@@ -63,7 +48,7 @@ if (USE_MOCK_DATA) {
   mock.onGet(new RegExp(`${PROJECT_SERVICE_BASE_URL}/*`)).reply(200, mockProjects, { 'X-Total-Count': '12' });
 
   // PUBLICATION CHANNEL
-  mock.onPost(new RegExp(`${API_URL}/channel/search`)).reply(200, mockNsdPublisers);
+  mock.onPost(new RegExp(`${API_URL}${PublicationChannelApiPaths.SEARCH}`)).reply(200, mockNsdPublisers);
 
   // USER
   mock.onGet(new RegExp(`/${ApiServiceUrl.USER}/*`)).reply(200, mockUser);
@@ -72,10 +57,10 @@ if (USE_MOCK_DATA) {
   mock.onPost(ORCID_USER_INFO_URL).reply(200, mockOrcidResponse);
 
   // Authority Registry
-  mock.onPost(new RegExp(`${API_URL}/authority`)).reply(200, mockAuthoritiesResponse);
-  mock.onPut(new RegExp(`${API_URL}/authority/*`)).reply(200, mockSingleAuthorityResponse);
+  mock.onPost(new RegExp(`${API_URL}${AuthorityApiPaths.AUTHORITY}`)).reply(200, mockAuthoritiesResponse);
+  mock.onPut(new RegExp(`${API_URL}${AuthorityApiPaths.AUTHORITY}/*`)).reply(200, mockSingleAuthorityResponse);
 
   mock.onAny().reply(function(config) {
     throw new Error('Could not find mock for ' + config.url);
   });
-}
+};
