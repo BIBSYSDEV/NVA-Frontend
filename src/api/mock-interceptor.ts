@@ -7,7 +7,6 @@ import { API_URL, ORCID_USER_INFO_URL } from '../utils/constants';
 import mockProjects from '../utils/testfiles/projects_real.json';
 import mockDoiLookupResponse from '../utils/testfiles/doi_lookup_response.json';
 import mockAuthoritiesResponse from '../utils/testfiles/mock_authorities_response.json';
-//import { mockUser } from '../utils/testfiles/mock_feide_user';
 import mockDoiPublication from '../utils/testfiles/publication_generated_from_doi.json';
 import mockPublications from '../utils/testfiles/publications_45_random_results_generated.json';
 import mockNsdPublisers from '../utils/testfiles/publishersFromNsd.json';
@@ -51,9 +50,6 @@ export const interceptRequestsOnMock = () => {
 
   // PUBLICATION CHANNEL
   mock.onPost(new RegExp(`${API_URL}${PublicationChannelApiPaths.SEARCH}`)).reply(200, mockNsdPublisers);
-
-  // USER
-  // mock.onGet(new RegExp(`/${ApiServiceUrl.USER}/*`)).reply(200, mockUser);
 
   // ORCID
   mock.onPost(ORCID_USER_INFO_URL).reply(200, mockOrcidResponse);
