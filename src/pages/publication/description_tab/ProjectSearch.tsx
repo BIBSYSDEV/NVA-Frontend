@@ -26,7 +26,7 @@ const ProjectSearch: FC<ProjectSearchProps> = ({ dataTestId, setValueFunction, p
       const response = await searchProjects(`title=${searchTerm}`, dispatch);
       if (response) {
         setSearchResults(
-          response.map((project: any) => {
+          response.map((project: Project) => {
             return { ...project, title: project.titles[0].title };
           })
         );

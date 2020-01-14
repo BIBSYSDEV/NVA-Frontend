@@ -67,10 +67,10 @@ const ProjectRow: FC<ProjectRowProps> = ({ project, onClickRemove }) => {
       <StyledTitle>{project.titles[0]?.title}</StyledTitle>
       <>
         <StyledGrantLabel>{t('publication:description.project_id')}</StyledGrantLabel>
-        <StyledGrant>{project.fundings[0]?.projectCode}</StyledGrant>
+        <StyledGrant>{project.fundings?.[0]?.projectCode}</StyledGrant>
 
         <StyledFinancedByLabel>{t('publication:description.financed_by')}</StyledFinancedByLabel>
-        <StyledFinancedBy>{project.fundings[0]?.fundingSourceCode}</StyledFinancedBy>
+        <StyledFinancedBy>{project.fundings?.[0]?.fundingSourceCode}</StyledFinancedBy>
       </>
       <StyledAction>
         <StyledRemoveButton onClick={onClickRemove}>
