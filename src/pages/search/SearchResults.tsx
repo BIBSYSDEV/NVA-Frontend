@@ -8,7 +8,7 @@ import styled from 'styled-components';
 import { List, ListItem, ListItemIcon, ListItemText, Typography } from '@material-ui/core';
 import ImageIcon from '@material-ui/icons/Image';
 
-import { search } from '../../api/searchApi';
+import { search } from '../../api/publicationApi';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { PublicationMetadata } from '../../types/publication.types';
 import { SEARCH_RESULTS_PER_PAGE } from '../../utils/constants';

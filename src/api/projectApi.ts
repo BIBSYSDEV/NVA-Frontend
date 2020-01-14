@@ -3,15 +3,19 @@ import { Dispatch } from 'redux';
 
 import { addNotification } from '../redux/actions/notificationActions';
 import i18n from '../translations/i18n';
-import { API_TOKEN, API_URL, ApiServiceUrl, StatusCode } from '../utils/constants';
+import { StatusCode } from '../utils/constants';
+import { getIdToken } from './userApi';
 
-export const PROJECT_SERVICE_BASE_URL = `${API_URL}${ApiServiceUrl.PROJECT}`;
+export enum ProjectsApiPaths {
+  PROJECTS = '/cristin-projects',
+}
 
 export const searchProjects = async (query: string, dispatch: Dispatch) => {
   try {
-    const response = await Axios.get(`${PROJECT_SERVICE_BASE_URL}?${query}`, {
+    const idToken = await getIdToken();
+    const response = await Axios.get(`${ProjectsApiPaths.PROJECTS}?${query}`, {
       headers: {
-        Authorization: `Bearer ${API_TOKEN}`,
+        Authorization: `Bearer ${idToken}`,
       },
     });
     if (response.status === StatusCode.OK && response.headers) {

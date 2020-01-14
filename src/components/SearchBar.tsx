@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import { IconButton, InputBase, Paper } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 
-import { search } from '../api/searchApi';
+import { search } from '../api/publicationApi';
 
 interface SearchBarProps {
   resetSearchInput: boolean;
