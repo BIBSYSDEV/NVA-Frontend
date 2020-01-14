@@ -64,7 +64,7 @@ const ProjectRow: FC<ProjectRowProps> = ({ project, onClickRemove }) => {
   return (
     <StyledRow>
       <StyledTitleLabel>{t('common:title')}</StyledTitleLabel>
-      <StyledTitle>{project.titles[0]?.title}</StyledTitle>
+      <StyledTitle>{project.titles?.[0]?.title}</StyledTitle>
       <>
         <StyledGrantLabel>{t('publication:description.project_id')}</StyledGrantLabel>
         <StyledGrant>{project.fundings?.[0]?.projectCode}</StyledGrant>

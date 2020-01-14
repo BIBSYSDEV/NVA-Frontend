@@ -27,7 +27,7 @@ const ProjectSearch: FC<ProjectSearchProps> = ({ dataTestId, setValueFunction, p
       if (response) {
         setSearchResults(
           response.map((project: Project) => {
-            return { ...project, title: project.titles[0].title };
+            return { ...project, title: project.titles?.[0]?.title };
           })
         );
       } else {
