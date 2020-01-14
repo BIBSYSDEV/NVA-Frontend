@@ -14,14 +14,14 @@ export const AUTHORITY_REGISTER_API_URL = process.env.REACT_APP_AUTHORITY_REGIST
 export const ALMA_API_URL = process.env.REACT_APP_ALMA_API_URL;
 
 export const API_URL = process.env.REACT_APP_API_URL;
-const API_TOKEN_KEY = process.env.REACT_APP_API_TOKEN_KEY;
-export const API_TOKEN = API_TOKEN_KEY ? localStorage.getItem(API_TOKEN_KEY) : '';
+export const API_TOKEN = process.env.REACT_APP_API_TOKEN_KEY;
+// export const API_TOKEN = API_TOKEN_KEY ? localStorage.getItem(API_TOKEN_KEY) : '';
 
 export enum ApiServiceUrl {
   PUBLICATIONS = '/publications',
   DOI_LOOKUP = '/doilookup',
   USER = '/user',
-  PROJECT = '/cristin-project',
+  PROJECT = '/cristin-projects',
 }
 
 export enum StatusCode {

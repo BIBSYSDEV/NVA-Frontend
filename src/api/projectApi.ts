@@ -15,7 +15,6 @@ export const searchProjects = async (query: string, dispatch: Dispatch) => {
       },
     });
     if (response.status === StatusCode.OK && response.headers) {
-      response.data.totalCount = response.headers['X-Total-Count'];
       return response.data;
     } else {
       dispatch(addNotification(i18n.t('feedback:error.get_project'), 'error'));

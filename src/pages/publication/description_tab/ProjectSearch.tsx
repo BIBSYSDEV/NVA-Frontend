@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 
 import { searchProjects } from '../../../api/projectApi';
 import AutoSearch from '../../../components/AutoSearch';
-import { ProjectType, Project } from '../../../types/project.types';
+import { Project } from '../../../types/project.types';
 import useDebounce from '../../../utils/hooks/useDebounce';
 
 interface ProjectSearchProps {
@@ -27,12 +27,9 @@ const ProjectSearch: FC<ProjectSearchProps> = ({ dataTestId, setValueFunction, v
     async (searchTerm: string) => {
       setSearching(true);
       const response = await searchProjects(`title=${searchTerm}`, dispatch);
+      console.log(response);
       if (response) {
-        const normalizedResponse = response.map((project: ProjectType) => ({
-          id: project.project_id,
-          title: `${project.title[project.main_language]} (${project.main_language})`,
-        }));
-        setSearchResults(normalizedResponse);
+        setSearchResults(response);
       } else {
         setSearchResults([]);
       }
