@@ -9,12 +9,14 @@
   },
   "description": {
     "abstract": "Sammendrag",
+    "date_published": "Publiseringsdato",
     "description": "Beskrivelse",
     "npi_disciplines": "NPI Fagfelt",
     "project_association": "Prosjekttilknytning",
     "search_for_npi_discipline": "Søk etter NPI-fagfelt",
     "search_for_project": "Søk etter prosjekt",
-    "tags": "Nøkkelord"
+    "tags": "Nøkkelord",
+    "year_only": "Kun årstall"
   },
   "files_and_license": {
     "files": "Filer",
@@ -33,7 +35,6 @@
     "submission": "Innsending"
   },
   "publication": {
-    "date": "Publiseringsdato eller år",
     "link_publication_description": "Feks. DOI lenke, lenke til artikkel, lenke til video av foredrag etc.",
     "link_to_publication": "Link til publikasjon",
     "load_file": "Last opp fil",

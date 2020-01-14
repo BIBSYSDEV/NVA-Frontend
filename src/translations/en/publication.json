@@ -9,12 +9,14 @@
   },
   "description": {
     "abstract": "Abstract",
+    "date_published": "Date published",
     "description": "Description",
     "npi_disciplines": "NPI disciplines",
     "project_association": "Project association",
     "search_for_npi_discipline": "Search for NPI discipline",
     "search_for_project": "Search for project",
-    "tags": "Tags"
+    "tags": "Tags",
+    "year_only": "Year only"
   },
   "feedback": {
     "invalid_url": "Invalid URL",
@@ -33,7 +35,6 @@
     "submission": "Submission"
   },
   "publication": {
-    "date": "Publication date or year",
     "link_publication_description": "E.g. DOI link, link to article, link to video of lecture etc.",
     "link_to_publication": "Link to publication",
     "load_file": "Load file",

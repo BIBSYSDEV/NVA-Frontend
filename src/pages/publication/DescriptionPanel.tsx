@@ -13,9 +13,9 @@ import TabPanel from '../../components/TabPanel/TabPanel';
 import { languages } from '../../translations/i18n';
 import { emptyNpiDiscipline, Publication } from '../../types/publication.types';
 import DisciplineSearch from './description_tab/DisciplineSearch';
-import FormikDatePicker from './description_tab/FormikDatePicker';
 import ProjectSearch from './description_tab/ProjectSearch';
 import ProjectRow from './description_tab/ProjectRow';
+import DatePickerField from './description_tab/DatePickerField';
 
 const MultipleFieldWrapper = styled.div`
   display: flex;
@@ -38,6 +38,8 @@ export enum DescriptionFieldNames {
   NPI_DISCIPLINE = 'npiDiscipline',
   TAGS = 'tags',
   PUBLICATION_YEAR = 'publicationDate.year',
+  PUBLICATION_MONTH = 'publicationDate.month',
+  PUBLICATION_DAY = 'publicationDate.day',
   LANGUAGE = 'language',
   PROJECTS = 'projects',
 }
@@ -132,10 +134,11 @@ const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublicat
 
           <MultipleFieldWrapper>
             <StyledFieldWrapper>
-              {/* TODO: Render three different Fields: year, month, date
-               *  https://material-ui-pickers.dev/demo/datepicker#different-views
-               */}
-              <Field aria-label="date" component={FormikDatePicker} name={DescriptionFieldNames.PUBLICATION_YEAR} />
+              <DatePickerField
+                yearFieldName={DescriptionFieldNames.PUBLICATION_YEAR}
+                monthFieldName={DescriptionFieldNames.PUBLICATION_MONTH}
+                dayFieldName={DescriptionFieldNames.PUBLICATION_DAY}
+              />
             </StyledFieldWrapper>
 
             <StyledFieldWrapper>
