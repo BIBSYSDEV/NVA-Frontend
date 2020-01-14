@@ -1,10 +1,10 @@
 import Axios from 'axios';
 import { Dispatch } from 'redux';
 
+import { addNotification } from '../redux/actions/notificationActions';
 import i18n from '../translations/i18n';
 import { DoiPublication, Publication } from '../types/publication.types';
-import { ApiBaseUrl, StatusCode, API_URL, API_TOKEN } from '../utils/constants';
-import { addNotification } from '../redux/actions/notificationActions';
+import { API_TOKEN, ApiBaseUrl, StatusCode } from '../utils/constants';
 
 export const createNewPublicationFromDoi = async (url: string, owner: string, dispatch: Dispatch) => {
   const data: DoiPublication = {
@@ -28,7 +28,7 @@ export const createNewPublicationFromDoi = async (url: string, owner: string, di
 };
 
 export const createNewPublication = async (publication: Publication, dispatch: Dispatch) => {
-  const url = `${API_URL}/insert-resource`;
+  const url = '/insert-resource';
 
   try {
     const response = await Axios.post(url, publication, {
@@ -53,7 +53,7 @@ export const updatePublication = async (publication: Publication, dispatch: Disp
     return;
   }
 
-  const url = `${API_URL}/update-resource/${id}`;
+  const url = `/update-resource/${id}`;
 
   try {
     const response = await Axios.put(url, publication, {
@@ -72,7 +72,7 @@ export const updatePublication = async (publication: Publication, dispatch: Disp
 };
 
 export const getPublication = async (id: string, dispatch: Dispatch) => {
-  const url = `${API_URL}/fetch-resource/${id}`;
+  const url = `/fetch-resource/${id}`;
   try {
     const response = await Axios.get(url, {
       headers: {
