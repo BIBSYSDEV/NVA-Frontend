@@ -2,6 +2,8 @@ import React, { FC } from 'react';
 import styled from 'styled-components';
 import { Project } from '../../../types/project.types';
 import { Button } from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/Delete';
+import { useTranslation } from 'react-i18next';
 
 const StyledRow = styled.div`
   margin-top: 1rem;
@@ -57,19 +59,24 @@ interface ProjectRowProps {
 }
 
 const ProjectRow: FC<ProjectRowProps> = ({ project, onClickRemove }) => {
+  const { t } = useTranslation();
+
   return (
     <StyledRow>
-      <StyledTitleLabel>Tittel:</StyledTitleLabel>
+      <StyledTitleLabel>{t('common:title')}:</StyledTitleLabel>
       <StyledTitle>{project.title}</StyledTitle>
 
-      <StyledGrantLabel>Grant ID:</StyledGrantLabel>
+      <StyledGrantLabel>{t('publication:description.project_id')}:</StyledGrantLabel>
       <StyledGrant>{project.grantId}</StyledGrant>
 
-      <StyledFinancedByLabel>Finansiert av</StyledFinancedByLabel>
+      <StyledFinancedByLabel>{t('publication:description.financed_by')}</StyledFinancedByLabel>
       <StyledFinancedBy>{project.financedBy}</StyledFinancedBy>
 
       <StyledAction>
-        <StyledRemoveButton onClick={onClickRemove}>Fjern</StyledRemoveButton>
+        <StyledRemoveButton onClick={onClickRemove}>
+          <DeleteIcon />
+          {t('common:remove')}
+        </StyledRemoveButton>
       </StyledAction>
     </StyledRow>
   );
