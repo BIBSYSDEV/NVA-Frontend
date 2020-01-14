@@ -1,11 +1,11 @@
 import Amplify, { Hub } from 'aws-amplify';
+import Axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { getAuthorityById } from './api/external/authorityRegisterApi';
-import { mockUser } from './api/mock-interceptor';
+import { getAuthorityByFeideId } from './api/authorityApi';
 import { getCurrentAuthenticatedUser } from './api/userApi';
 import Breadcrumbs from './layout/Breadcrumbs';
 import Footer from './layout/Footer';
@@ -22,8 +22,9 @@ import Workspace from './pages/workspace/Workspace';
 import { setAuthorityData, setUser } from './redux/actions/userActions';
 import { RootStore } from './redux/reducers/rootReducer';
 import { awsConfig } from './utils/aws-config';
-import { USE_MOCK_DATA } from './utils/constants';
+import { API_URL, USE_MOCK_DATA } from './utils/constants';
 import { hubListener } from './utils/hub-listener';
+import { mockUser } from './utils/testfiles/mock_feide_user';
 
 const StyledApp = styled.div`
   height: 100vh;
@@ -43,6 +44,22 @@ const StyledPageBody = styled.div`
 `;
 
 const App: React.FC = () => {
+  useEffect(() => {
+    const setAxiosHeaders = async () => {
+      // Set global config of axios requests
+      Axios.defaults.baseURL = API_URL;
+      // Uncomment this when we use our backend only
+      // const idToken = await getIdToken();
+      Axios.defaults.headers.common = {
+        //   Authorization: `Bearer ${idToken}`,
+        Accept: 'application/json',
+      };
+      Axios.defaults.headers.post['Content-Type'] = 'application/json';
+      Axios.defaults.headers.put['Content-Type'] = 'application/json';
+    };
+    setAxiosHeaders();
+  }, []);
+
   const dispatch = useDispatch();
   const user = useSelector((store: RootStore) => store.user);
   const [showAuthorityOrcidModal, setShowAuthorityOrcidModal] = useState(false);
@@ -62,12 +79,12 @@ const App: React.FC = () => {
 
   useEffect(() => {
     const getAuthority = async () => {
-      const authority = await getAuthorityById(user.id, dispatch);
+      const authority = await getAuthorityByFeideId(user.id, dispatch);
       if (authority) {
         dispatch(setAuthorityData(authority));
       }
     };
-    if (user.id) {
+    if (user.id && !USE_MOCK_DATA) {
       getAuthority();
     }
   }, [dispatch, user.id]);

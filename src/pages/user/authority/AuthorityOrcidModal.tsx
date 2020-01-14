@@ -1,4 +1,4 @@
-import React, { FC, useRef, useState } from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
@@ -31,6 +31,10 @@ const AuthorityOrcidModal: FC = () => {
   const showOrcidModalRef = useRef(showOrcidModal);
 
   const [openOrcidModal, setOpenOrcidModal] = useState(!!user.authority);
+
+  useEffect(() => {
+    setOpenOrcidModal(!!user.authority && !user.orcid);
+  }, [user.authority, user.orcid]);
 
   const handleShowAuthorityModal = (event: React.ChangeEvent<HTMLInputElement>) => {
     setDoNotShowAuthorityModalAgain(event.target.checked);
