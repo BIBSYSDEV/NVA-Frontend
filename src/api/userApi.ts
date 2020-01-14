@@ -7,7 +7,7 @@ import { clearUser, setUser, setUserFailure } from '../redux/actions/userActions
 import { RootStore } from '../redux/reducers/rootReducer';
 import i18n from '../translations/i18n';
 import { USE_MOCK_DATA } from '../utils/constants';
-import { mockUser } from './mock-interceptor';
+import { mockUser } from '../utils/testfiles/mock_feide_user';
 
 export const login = () => {
   return async (dispatch: Dispatch) => {

@@ -7,9 +7,11 @@ import { Authority } from '../types/authority.types';
 import { StatusCode } from '../utils/constants';
 import { getIdToken } from './userApi';
 
-export const getAuthorities = async (name: string, dispatch: Dispatch) => {
-  const url = '/authority';
+export enum AuthorityApiPaths {
+  AUTHORITY = '/authority',
+}
 
+export const getAuthorities = async (name: string, dispatch: Dispatch) => {
   // remove when Authorization headers are set for all requests
   const idToken = await getIdToken();
   const headers = {
@@ -17,7 +19,7 @@ export const getAuthorities = async (name: string, dispatch: Dispatch) => {
   };
 
   try {
-    const response = await Axios.post(url, { name }, { headers });
+    const response = await Axios.post(AuthorityApiPaths.AUTHORITY, { name }, { headers });
 
     if (response.status === StatusCode.OK) {
       return response.data;
@@ -30,8 +32,6 @@ export const getAuthorities = async (name: string, dispatch: Dispatch) => {
 };
 
 export const getAuthorityByFeideId = async (feideId: string, dispatch: Dispatch) => {
-  const url = '/authority';
-
   // remove when Authorization headers are set for all requests
   const idToken = await getIdToken();
   const headers = {
@@ -39,7 +39,7 @@ export const getAuthorityByFeideId = async (feideId: string, dispatch: Dispatch)
   };
 
   try {
-    const response = await Axios.post(url, { feideId }, { headers });
+    const response = await Axios.post(AuthorityApiPaths.AUTHORITY, { feideId }, { headers });
 
     if (response.status === StatusCode.OK) {
       const filteredAuthorities = response.data.filter((auth: Authority) => auth.feideId === feideId);
@@ -57,7 +57,7 @@ export const updateAuthority = async (authority: Partial<Authority> | null, disp
     return;
   }
 
-  const url = `/authority/${authority.scn}`;
+  const url = `${AuthorityApiPaths.AUTHORITY}/${authority.scn}`;
 
   // remove when Authorization headers are set for all requests
   const idToken = await getIdToken();
