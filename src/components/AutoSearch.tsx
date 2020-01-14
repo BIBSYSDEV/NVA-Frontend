@@ -19,7 +19,7 @@ interface AutoSearchProps {
   label?: string;
   searchResults: any;
   setValueFunction: (value: any) => void;
-  value: string;
+  value?: string;
   clearSearchField?: boolean;
   dataTestId?: string;
   onInputChange?: (event: object, value: string) => void;
@@ -56,7 +56,7 @@ export const AutoSearch: FC<AutoSearchProps> = ({
     if (!value) {
       setDisplayValue(emptyValue);
     }
-    setDisplayValue({ title: value });
+    setDisplayValue({ title: value || '' });
   }, [value]);
 
   useEffect(() => {
