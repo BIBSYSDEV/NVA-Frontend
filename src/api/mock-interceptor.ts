@@ -63,7 +63,6 @@ export const interceptRequestsOnMock = () => {
   mock.onPut(new RegExp(`${API_URL}${AuthorityApiPaths.AUTHORITY}/*`)).reply(200, mockSingleAuthorityResponse);
 
   mock.onAny().reply(function(config) {
-    alert(PublicationsApiPaths.FETCH_RESOURCE);
     throw new Error('Could not find mock for ' + config.url);
   });
 };
