@@ -38,7 +38,7 @@ export const interceptRequestsOnMock = () => {
   const mock = new MockAdapter(Axios);
 
   // SEARCH
-  mock.onGet(new RegExp(`${PublicationsApiPaths.FETCH_RESOURCE}/*`)).reply(200, mockPublications);
+  mock.onGet(new RegExp(`${PublicationsApiPaths.SEARCH}/*`)).reply(200, mockPublications);
 
   // Create publication from doi
   mock.onPost(new RegExp(`${PublicationsApiPaths.DOI}/*`)).reply(200, mockDoiPublication);
@@ -63,6 +63,7 @@ export const interceptRequestsOnMock = () => {
   mock.onPut(new RegExp(`${API_URL}${AuthorityApiPaths.AUTHORITY}/*`)).reply(200, mockSingleAuthorityResponse);
 
   mock.onAny().reply(function(config) {
+    alert(PublicationsApiPaths.FETCH_RESOURCE);
     throw new Error('Could not find mock for ' + config.url);
   });
 };

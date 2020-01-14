@@ -102,7 +102,7 @@ export const getPublication = async (id: string, dispatch: Dispatch) => {
 export const lookupDoiTitle = async (url: string) => {
   try {
     const idToken = await getIdToken();
-    const response = await Axios.get(`/${PublicationsApiPaths.DOI_LOOKUP}${url}`, {
+    const response = await Axios.get(`${PublicationsApiPaths.DOI_LOOKUP}${url}`, {
       headers: {
         Authorization: `Bearer ${idToken}`,
       },
