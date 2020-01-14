@@ -46,7 +46,7 @@ export const ConnectAuthority: React.FC = () => {
     }
   }, [dispatch, searchTerm]);
 
-  const setFeideIdForSelectedAuthority = async () => {
+  const setOrcIdAndFeideId = async () => {
     const selectedAuthority = matchingAuthorities.find(auth => auth.scn === selectedSystemControlNumber);
 
     if (selectedAuthority) {
@@ -77,7 +77,7 @@ export const ConnectAuthority: React.FC = () => {
             color="primary"
             variant="contained"
             size="large"
-            onClick={setFeideIdForSelectedAuthority}
+            onClick={setOrcIdAndFeideId}
             disabled={!selectedSystemControlNumber}>
             {t('authority.connect_authority')}
           </Button>
