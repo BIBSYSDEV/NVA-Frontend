@@ -64,14 +64,14 @@ const ProjectRow: FC<ProjectRowProps> = ({ project, onClickRemove }) => {
   return (
     <StyledRow>
       <StyledTitleLabel>{t('common:title')}</StyledTitleLabel>
-      <StyledTitle>{project.title}</StyledTitle>
+      <StyledTitle>{project.titles[0]?.title}</StyledTitle>
+      <>
+        <StyledGrantLabel>{t('publication:description.project_id')}</StyledGrantLabel>
+        <StyledGrant>{project.fundings[0]?.projectCode}</StyledGrant>
 
-      <StyledGrantLabel>{t('publication:description.project_id')}</StyledGrantLabel>
-      <StyledGrant>{project.grantId}</StyledGrant>
-
-      <StyledFinancedByLabel>{t('publication:description.financed_by')}</StyledFinancedByLabel>
-      <StyledFinancedBy>{project.financedBy}</StyledFinancedBy>
-
+        <StyledFinancedByLabel>{t('publication:description.financed_by')}</StyledFinancedByLabel>
+        <StyledFinancedBy>{project.fundings[0]?.fundingSourceCode}</StyledFinancedBy>
+      </>
       <StyledAction>
         <StyledRemoveButton onClick={onClickRemove}>
           <DeleteIcon />
