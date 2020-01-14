@@ -161,11 +161,9 @@ const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublicat
             <FieldArray name={DescriptionFieldNames.PROJECTS}>
               {({ insert, remove }) => (
                 <>
-                  {console.log(values.projects)}
                   <ProjectSearch
                     setValueFunction={newValue => insert(0, newValue)}
                     dataTestId="search_project"
-                    value={''}
                     placeholder={t('description.search_for_project')}
                   />
                   {values[DescriptionFieldNames.PROJECTS].map((project, i) => (

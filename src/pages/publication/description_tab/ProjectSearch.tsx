@@ -1,5 +1,4 @@
 import React, { FC, useCallback, useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 
 import { searchCristinProjects } from '../../../api/external/cristinProjectApi';
@@ -10,18 +9,16 @@ import useDebounce from '../../../utils/hooks/useDebounce';
 interface ProjectSearchProps {
   dataTestId: string;
   setValueFunction: (value: any) => void;
-  value: string;
   placeholder?: string;
 }
 
-const ProjectSearch: FC<ProjectSearchProps> = ({ dataTestId, setValueFunction, value, placeholder }) => {
+const ProjectSearch: FC<ProjectSearchProps> = ({ dataTestId, setValueFunction, placeholder }) => {
   const [searchResults, setSearchResults] = useState<Project[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [searching, setSearching] = useState(false);
 
   const debouncedSearchTerm = useDebounce(searchTerm);
   const dispatch = useDispatch();
-  const { t } = useTranslation();
 
   const search = useCallback(
     async (searchTerm: string) => {
@@ -53,8 +50,8 @@ const ProjectSearch: FC<ProjectSearchProps> = ({ dataTestId, setValueFunction, v
       onInputChange={(_, value) => setSearchTerm(value)}
       searchResults={searchResults}
       setValueFunction={setValueFunction}
-      label={t('publication:description.project')}
-      value={value}
+      clearOnSelect={true}
+      value={''}
       placeholder={placeholder}
     />
   );

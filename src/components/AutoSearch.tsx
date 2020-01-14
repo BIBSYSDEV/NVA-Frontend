@@ -13,8 +13,10 @@ const StyledSearchIcon = styled(SearchIcon)`
   color: ${({ theme }) => theme.palette.text.disabled};
 `;
 
+const emptyValue = { title: '' };
+
 interface AutoSearchProps {
-  label: string;
+  label?: string;
   searchResults: any;
   setValueFunction: (value: any) => void;
   value: string;
@@ -22,6 +24,7 @@ interface AutoSearchProps {
   dataTestId?: string;
   onInputChange?: (event: object, value: string) => void;
   placeholder?: string;
+  clearOnSelect?: boolean;
 }
 
 export const AutoSearch: FC<AutoSearchProps> = ({
@@ -33,8 +36,9 @@ export const AutoSearch: FC<AutoSearchProps> = ({
   dataTestId,
   onInputChange,
   placeholder,
+  clearOnSelect = false,
 }) => {
-  const [displayValue, setDisplayValue] = useState({ title: '' });
+  const [displayValue, setDisplayValue] = useState(emptyValue);
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -50,7 +54,7 @@ export const AutoSearch: FC<AutoSearchProps> = ({
 
   useEffect(() => {
     if (!value) {
-      setDisplayValue({ title: '' });
+      setDisplayValue(emptyValue);
     }
     setDisplayValue({ title: value });
   }, [value]);
@@ -74,6 +78,9 @@ export const AutoSearch: FC<AutoSearchProps> = ({
       }}
       onChange={(_: object, value: string) => {
         setValueFunction(value);
+        if (clearOnSelect) {
+          setDisplayValue(emptyValue);
+        }
       }}
       onInputChange={(event: object, value: string) => {
         value.length >= MINIMUM_SEARCH_CHARACTERS && options.length === 0 && open && setLoading(true);
