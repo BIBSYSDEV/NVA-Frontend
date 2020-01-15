@@ -12,6 +12,8 @@ export enum AuthorityApiPaths {
 }
 
 export const getAuthorities = async (name: string, dispatch: Dispatch) => {
+  const url = encodeURI(`/authority?name=${name}`);
+
   // remove when Authorization headers are set for all requests
   const idToken = await getIdToken();
   const headers = {
@@ -19,7 +21,7 @@ export const getAuthorities = async (name: string, dispatch: Dispatch) => {
   };
 
   try {
-    const response = await Axios.post(AuthorityApiPaths.AUTHORITY, { name }, { headers });
+    const response = await Axios.get(url, { headers });
 
     if (response.status === StatusCode.OK) {
       return response.data;
@@ -32,6 +34,8 @@ export const getAuthorities = async (name: string, dispatch: Dispatch) => {
 };
 
 export const getAuthorityByFeideId = async (feideId: string, dispatch: Dispatch) => {
+  const url = encodeURI(`/authority?name=${feideId}`);
+
   // remove when Authorization headers are set for all requests
   const idToken = await getIdToken();
   const headers = {
@@ -39,10 +43,10 @@ export const getAuthorityByFeideId = async (feideId: string, dispatch: Dispatch)
   };
 
   try {
-    const response = await Axios.post(AuthorityApiPaths.AUTHORITY, { feideId }, { headers });
+    const response = await Axios.get(url, { headers });
 
     if (response.status === StatusCode.OK) {
-      const filteredAuthorities = response.data.filter((auth: Authority) => auth.feideId === feideId);
+      const filteredAuthorities = response.data.filter((auth: Authority) => auth.feideId.some(id => id === feideId));
       return filteredAuthorities?.[0] ?? null;
     } else {
       dispatch(addNotification(i18n.t('feedback:error.get_authority'), 'error'));
@@ -52,13 +56,12 @@ export const getAuthorityByFeideId = async (feideId: string, dispatch: Dispatch)
   }
 };
 
-export const updateAuthority = async (authority: Partial<Authority> | null, dispatch: Dispatch) => {
-  if (!authority) {
+export const updateFeideIdForAuthority = async (feideId: string, systemControlNumber: string, dispatch: Dispatch) => {
+  if (!feideId) {
     return;
   }
 
-  const url = `${AuthorityApiPaths.AUTHORITY}/${authority.scn}`;
-
+  const url = `${AuthorityApiPaths.AUTHORITY}/${systemControlNumber}`;
   // remove when Authorization headers are set for all requests
   const idToken = await getIdToken();
   const headers = {
@@ -66,7 +69,33 @@ export const updateAuthority = async (authority: Partial<Authority> | null, disp
   };
 
   try {
-    const response = await Axios.put(url, authority, { headers });
+    const response = await Axios.put(url, { feideId }, { headers });
+
+    if (response.status === StatusCode.OK) {
+      dispatch(addNotification(i18n.t('feedback:success.update_authority'), 'success'));
+      return response.data;
+    } else {
+      dispatch(addNotification(i18n.t('feedback:error.update_authority'), 'error'));
+    }
+  } catch {
+    dispatch(addNotification(i18n.t('feedback:error.update_authority'), 'error'));
+  }
+};
+
+export const updateOrcIdForAuthority = async (orcId: string, systemControlNumber: string, dispatch: Dispatch) => {
+  if (!orcId) {
+    return;
+  }
+
+  const url = `${AuthorityApiPaths.AUTHORITY}/${systemControlNumber}`;
+  // remove when Authorization headers are set for all requests
+  const idToken = await getIdToken();
+  const headers = {
+    Authorization: `Bearer ${idToken}`,
+  };
+
+  try {
+    const response = await Axios.put(url, { orcId }, { headers });
 
     if (response.status === StatusCode.OK) {
       dispatch(addNotification(i18n.t('feedback:success.update_authority'), 'success'));
