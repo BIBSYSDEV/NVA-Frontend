@@ -60,7 +60,6 @@ export const AutoSearch: FC<AutoSearchProps> = ({
       open={open}
       onClose={() => {
         setOpen(false);
-        setDisplayValue(emptyValue);
         setOptions([]);
       }}
       onOpen={() => {
@@ -69,6 +68,7 @@ export const AutoSearch: FC<AutoSearchProps> = ({
       onChange={(_: object, value: string) => {
         if (value) {
           setValueFunction(value);
+          setDisplayValue(emptyValue);
         }
       }}
       onInputChange={(event: any, value: string) => {
@@ -78,9 +78,11 @@ export const AutoSearch: FC<AutoSearchProps> = ({
         if (options.length === 0) {
           setLoading(true);
         }
+
         // Update input if event comes from typing, not option selection
-        if (event.target.localName === 'input') {
+        if (event?.target.localName === 'input') {
           onInputChange(event, value);
+          setDisplayValue({ title: value });
         }
       }}
       getOptionLabel={option => option.title || ''}
