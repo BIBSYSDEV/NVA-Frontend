@@ -72,7 +72,6 @@ const BookReferenceForm: FC = () => {
               label={t('references.publisher')}
               publicationTable={PublicationTableNumber.PUBLISHERS}
               setValueFunction={inputValue => setFieldValue(name, inputValue ?? emptyPublisher)}
-              value={value.title}
               placeholder={t('references.search_for_publisher')}
             />
             {value.title && (
@@ -136,7 +135,6 @@ const BookReferenceForm: FC = () => {
               label={t('common:title')}
               publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
               setValueFunction={inputValue => setFieldValue(name, inputValue ?? emptyPublisher)}
-              value={value.title}
               placeholder={t('references.search_for_series')}
             />
             {value.title && (

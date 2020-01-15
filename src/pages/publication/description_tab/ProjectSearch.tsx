@@ -51,7 +51,6 @@ const ProjectSearch: FC<ProjectSearchProps> = ({ dataTestId, setValueFunction, p
       searchResults={searchResults}
       setValueFunction={setValueFunction}
       placeholder={placeholder}
-      clearOnSelect
     />
   );
 };

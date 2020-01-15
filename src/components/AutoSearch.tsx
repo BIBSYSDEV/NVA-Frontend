@@ -19,12 +19,10 @@ interface AutoSearchProps {
   label?: string;
   searchResults: any;
   setValueFunction: (value: any) => void;
-  value?: string;
   clearSearchField?: boolean;
   dataTestId?: string;
   onInputChange?: (event: object, value: string) => void;
   placeholder?: string;
-  clearOnSelect?: boolean;
 }
 
 export const AutoSearch: FC<AutoSearchProps> = ({
@@ -35,8 +33,6 @@ export const AutoSearch: FC<AutoSearchProps> = ({
   dataTestId,
   onInputChange,
   placeholder,
-  value = '',
-  clearOnSelect = false,
 }) => {
   const [displayValue, setDisplayValue] = useState(emptyValue);
   const [open, setOpen] = useState(false);
@@ -53,10 +49,6 @@ export const AutoSearch: FC<AutoSearchProps> = ({
   }, [searchResults]);
 
   useEffect(() => {
-    setDisplayValue({ title: value });
-  }, [value]);
-
-  useEffect(() => {
     if (clearSearchField) {
       setOptions([]);
     }
@@ -68,6 +60,7 @@ export const AutoSearch: FC<AutoSearchProps> = ({
       open={open}
       onClose={() => {
         setOpen(false);
+        setDisplayValue(emptyValue);
         setOptions([]);
       }}
       onOpen={() => {
@@ -76,9 +69,6 @@ export const AutoSearch: FC<AutoSearchProps> = ({
       onChange={(_: object, value: string) => {
         if (value) {
           setValueFunction(value);
-          if (clearOnSelect) {
-            setDisplayValue(emptyValue);
-          }
         }
       }}
       onInputChange={(event: object, value: string) => {
@@ -88,6 +78,7 @@ export const AutoSearch: FC<AutoSearchProps> = ({
       getOptionLabel={option => option.title || ''}
       options={options}
       loading={loading}
+      blurOnSelect
       value={displayValue}
       noOptionsText={t('no_hits')}
       renderInput={params => (
