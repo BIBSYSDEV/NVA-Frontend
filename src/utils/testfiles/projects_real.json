@@ -1,0 +1,190 @@
+[
+  {
+    "cristinProjectId": "2039372",
+    "titles": [
+      {
+        "title": "PhD prosjekt: Selvbestemmelse uten ord - utfordrende relasjoner mellom person med alvorlig utviklingshemming og profesjonelle",
+        "language": "nb"
+      }
+    ],
+    "participants": [
+      {
+        "cristinPersonId": "853939",
+        "fullName": "Skarsaune, Synne Kristin Nese"
+      }
+    ],
+    "institutions": [
+      {
+        "cristinInstitutionId": "251",
+        "name": "VID vitenskapelige høgskole",
+        "language": "nb"
+      }
+    ],
+    "fundings": []
+  },
+  {
+    "cristinProjectId": "261005",
+    "titles": [
+      {
+        "title": "The distribution and meaning of nominal forms in Norwegian; a cross-linguistic perspective",
+        "language": "en"
+      }
+    ],
+    "participants": [
+      {
+        "cristinPersonId": "10399",
+        "fullName": "Borthen, Kaja"
+      },
+      {
+        "cristinPersonId": "40621",
+        "fullName": "Brøseth, Heidi"
+      },
+      {
+        "cristinPersonId": "43575",
+        "fullName": "Fretheim, Thorstein"
+      }
+    ],
+    "institutions": [
+      {
+        "cristinInstitutionId": "68400852",
+        "name": "University of Minnesota, Twin Cities Campus",
+        "language": "nb"
+      }
+    ],
+    "fundings": []
+  },
+  {
+    "cristinProjectId": "261023",
+    "titles": [
+      {
+        "title": "The \"Forging\" of Christian Identity in the Northern Periphery (c.820-1200)",
+        "language": "en"
+      }
+    ],
+    "participants": [
+      {
+        "cristinPersonId": "45219",
+        "fullName": "Zilmer, Kristel"
+      },
+      {
+        "cristinPersonId": "53083",
+        "fullName": "Garipzanov, Ildar"
+      },
+      {
+        "cristinPersonId": "219054",
+        "fullName": "Hraundal Jonsson, Thorir"
+      }
+    ],
+    "institutions": [
+      {
+        "cristinInstitutionId": "184",
+        "name": "Universitetet i Bergen",
+        "language": "nb"
+      }
+    ],
+    "fundings": []
+  },
+  {
+    "cristinProjectId": "261393",
+    "titles": [
+      {
+        "title": "Quantitative MR imaging used to gain new knowledge of perinatal brain injury- from newborns to young adults with very low birth weight",
+        "language": "no"
+      }
+    ],
+    "participants": [
+      {
+        "cristinPersonId": "28701",
+        "fullName": "Indredavik, Marit Sæbø"
+      },
+      {
+        "cristinPersonId": "29723",
+        "fullName": "Antonsen, Ida Kristin"
+      },
+      {
+        "cristinPersonId": "29918",
+        "fullName": "Løhaugen, Gro"
+      },
+      {
+        "cristinPersonId": "35566",
+        "fullName": "Lund, Line Knutsen"
+      },
+      {
+        "cristinPersonId": "38022",
+        "fullName": "Skranes, Jon Sverre"
+      },
+      {
+        "cristinPersonId": "40140",
+        "fullName": "Lindqvist, Susanne"
+      },
+      {
+        "cristinPersonId": "40846",
+        "fullName": "Haraldseth, Olav"
+      },
+      {
+        "cristinPersonId": "40905",
+        "fullName": "Brubakk, Ann-Mari"
+      },
+      {
+        "cristinPersonId": "42889",
+        "fullName": "Evensen, Kari Anne Indredavik"
+      },
+      {
+        "cristinPersonId": "43968",
+        "fullName": "Håberg, Asta Kristine"
+      }
+    ],
+    "institutions": [
+      {
+        "cristinInstitutionId": "194",
+        "name": "Norges teknisk-naturvitenskapelige universitet",
+        "language": "nb"
+      }
+    ],
+    "fundings": [
+      {
+        "fundingSourceCode": "NFR",
+        "projectCode": "182663"
+      }
+    ]
+  },
+  {
+    "cristinProjectId": "279350",
+    "titles": [
+      {
+        "title": "Hvordan komme seg etter psykose? En longitudinell studie av nevrokognitive funksjoner og resiliens hoa personer med førstegangspsykose",
+        "language": "no"
+      }
+    ],
+    "participants": [
+      {
+        "cristinPersonId": "6416",
+        "fullName": "Torgalsbøen, Anne-Kari"
+      },
+      {
+        "cristinPersonId": "12828",
+        "fullName": "Czajkowski, Nikolai Olavi"
+      },
+      {
+        "cristinPersonId": "110035",
+        "fullName": "Harding, Courtenay"
+      },
+      {
+        "cristinPersonId": "420288",
+        "fullName": "Fu, Susie"
+      },
+      {
+        "cristinPersonId": "607351",
+        "fullName": "Nuechterlein, KH"
+      }
+    ],
+    "institutions": [
+      {
+        "cristinInstitutionId": "185",
+        "name": "Universitetet i Oslo",
+        "language": "nb"
+      }
+    ],
+    "fundings": []
+  }
+]

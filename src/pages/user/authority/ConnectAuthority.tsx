@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { Button } from '@material-ui/core';
 
 import { getAuthorities, updateAuthority } from '../../../api/authorityApi';
+import { setOrcid } from '../../../redux/actions/orcidActions';
 import { setAuthorityData } from '../../../redux/actions/userActions';
 import { RootStore } from '../../../redux/reducers/rootReducer';
 import { Authority } from '../../../types/authority.types';
@@ -45,10 +46,14 @@ export const ConnectAuthority: React.FC = () => {
     }
   }, [dispatch, searchTerm]);
 
-  const setFeideIdForSelectedAuthority = async () => {
-    const authority = matchingAuthorities.find(auth => auth.scn === selectedSystemControlNumber);
+  const setOrcIdAndFeideId = async () => {
+    const selectedAuthority = matchingAuthorities.find(auth => auth.scn === selectedSystemControlNumber);
 
-    if (authority) {
+    if (selectedAuthority) {
+      selectedAuthority.orcId && dispatch(setOrcid(selectedAuthority.orcId));
+
+      const authority: Authority = { ...selectedAuthority, feideId: user.id };
+      dispatch(setAuthorityData(authority));
       await updateAuthority(authority, dispatch);
       dispatch(setAuthorityData(authority));
     }
@@ -72,7 +77,7 @@ export const ConnectAuthority: React.FC = () => {
             color="primary"
             variant="contained"
             size="large"
-            onClick={setFeideIdForSelectedAuthority}
+            onClick={setOrcIdAndFeideId}
             disabled={!selectedSystemControlNumber}>
             {t('authority.connect_authority')}
           </Button>

@@ -7,8 +7,9 @@ import { useTranslation } from 'react-i18next';
 
 const StyledRow = styled.div`
   margin-top: 1rem;
-  background: white;
-  padding: 1rem;
+  <<<<<<<headbackground: white;
+  =======background: ${({ theme }) => theme.palette.background.default};
+  >>>>>>>8ed6d0e9b5724d00c9f70fc5567521e029bc08d6padding: 1rem;
   display: grid;
   grid-column-gap: 0.5rem;
   grid-template-areas:
@@ -49,14 +50,14 @@ const StyledAction = styled.div`
 `;
 
 const StyledRemoveButton = styled(Button)`
-  background-color: red;
-  color: white;
+  background-color: ${({ theme }) => theme.palette.danger.main};
+  color: ${({ theme }) => theme.palette.background.default};
 `;
 
 interface ProjectRowProps {
   project: Project;
   onClickRemove: () => void;
-  dataTestId?: string;
+  dataTestId: string;
 }
 
 const ProjectRow: FC<ProjectRowProps> = ({ project, onClickRemove, dataTestId }) => {
@@ -65,14 +66,14 @@ const ProjectRow: FC<ProjectRowProps> = ({ project, onClickRemove, dataTestId })
   return (
     <StyledRow data-testid={dataTestId}>
       <StyledTitleLabel>{t('common:title')}</StyledTitleLabel>
-      <StyledTitle>{project.title}</StyledTitle>
+      <StyledTitle>{project.titles?.[0]?.title}</StyledTitle>
+      <>
+        <StyledGrantLabel>{t('publication:description.project_id')}</StyledGrantLabel>
+        <StyledGrant>{project.fundings?.[0]?.projectCode}</StyledGrant>
 
-      <StyledGrantLabel>{t('publication:description.project_id')}</StyledGrantLabel>
-      <StyledGrant>{project.grantId}</StyledGrant>
-
-      <StyledFinancedByLabel>{t('publication:description.financed_by')}</StyledFinancedByLabel>
-      <StyledFinancedBy>{project.financedBy}</StyledFinancedBy>
-
+        <StyledFinancedByLabel>{t('publication:description.financed_by')}</StyledFinancedByLabel>
+        <StyledFinancedBy>{project.fundings?.[0]?.fundingSourceCode}</StyledFinancedBy>
+      </>
       <StyledAction>
         <StyledRemoveButton onClick={onClickRemove}>
           <DeleteIcon />
