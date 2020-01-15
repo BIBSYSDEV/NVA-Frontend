@@ -10,8 +10,8 @@
   {
     "name": "Gundersen, Osteloff",
     "scn": "901790000000",
-    "feideId": ["tu@unit.no"],
-    "orcId": [""],
+    "feideIds": ["tu@unit.no"],
+    "orcIds": [""],
     "handle": "https://vg.no",
     "birthDate": "1941-04-25 00:00:00.000"
   }

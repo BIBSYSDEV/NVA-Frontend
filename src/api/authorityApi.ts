@@ -72,7 +72,6 @@ export const getAuthorityByFeideId = async (feideId: string, dispatch: Dispatch)
           handle: auth.handle,
         }))
         .filter((auth: AuthorityResponse) => auth.feideIds.some(id => id === feideId));
-      console.log('filteredAuthorities', filteredAuthorities);
       return filteredAuthorities?.[0] ?? null;
     } else {
       dispatch(addNotification(i18n.t('feedback:error.get_authority'), 'error'));
@@ -109,8 +108,8 @@ export const updateFeideIdForAuthority = async (feideId: string, systemControlNu
 };
 
 // TODO: handle 204 from backend
-export const updateOrcIdForAuthority = async (orcId: string, systemControlNumber: string, dispatch: Dispatch) => {
-  if (!orcId) {
+export const updateOrcIdForAuthority = async (orcid: string, systemControlNumber: string, dispatch: Dispatch) => {
+  if (!orcid) {
     return;
   }
 
@@ -122,7 +121,7 @@ export const updateOrcIdForAuthority = async (orcId: string, systemControlNumber
   };
 
   try {
-    const response = await Axios.put(url, { orcId }, { headers });
+    const response = await Axios.put(url, { orcId: orcid }, { headers });
 
     if (response.status === StatusCode.OK) {
       return response.data;
