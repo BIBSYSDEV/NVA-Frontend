@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 
 const StyledRow = styled.div`
   margin-top: 1rem;
-  background: white;
+  background: ${({ theme }) => theme.palette.background.default};
   padding: 1rem;
   display: grid;
   grid-column-gap: 0.5rem;
@@ -49,8 +49,8 @@ const StyledAction = styled.div`
 `;
 
 const StyledRemoveButton = styled(Button)`
-  background-color: red;
-  color: white;
+  background-color: ${({ theme }) => theme.palette.danger.main};
+  color: ${({ theme }) => theme.palette.background.default};
 `;
 
 interface ProjectRowProps {
@@ -64,6 +64,14 @@ const ProjectRow: FC<ProjectRowProps> = ({ project, onClickRemove }) => {
   return (
     <StyledRow>
       <StyledTitleLabel>{t('common:title')}</StyledTitleLabel>
+      <StyledTitle>{project.title}</StyledTitle>
+
+      <StyledGrantLabel>{t('publication:description.project_id')}</StyledGrantLabel>
+      <StyledGrant>{project.grantId}</StyledGrant>
+
+      <StyledFinancedByLabel>{t('publication:description.financed_by')}</StyledFinancedByLabel>
+      <StyledFinancedBy>{project.financedBy}</StyledFinancedBy>
+
       <StyledTitle>{project.titles?.[0]?.title}</StyledTitle>
       <>
         <StyledGrantLabel>{t('publication:description.project_id')}</StyledGrantLabel>

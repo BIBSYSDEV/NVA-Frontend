@@ -11,13 +11,14 @@
     "abstract": "Abstract",
     "date_published": "Date published",
     "description": "Description",
-    "financed_by": "Finansiert av",
+    "financed_by": "Financed by",
     "npi_disciplines": "NPI disciplines",
     "project_association": "Project association",
     "project_id": "Project ID",
     "search_for_npi_discipline": "Search for NPI discipline",
     "search_for_project": "Search for project",
     "tags": "Tags",
+    "tags_helper": "Press Enter to add keyword",
     "year_only": "Year only"
   },
   "feedback": {

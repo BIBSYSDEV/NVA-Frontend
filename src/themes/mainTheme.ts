@@ -5,10 +5,12 @@ declare module '@material-ui/core/styles/createPalette' {
   interface Palette {
     separator: PaletteColor;
     box: PaletteColor;
+    danger: PaletteColor;
   }
   interface PaletteOptions {
     separator?: PaletteColorOptions;
     box?: PaletteColorOptions;
+    danger?: PaletteColorOptions;
   }
 }
 
@@ -24,6 +26,7 @@ enum Colors {
   ExpandedPanel = '#b2acfa',
   TabBackground = '#f3c19d',
   Disabled = '#bbb',
+  Danger = '#ff0000',
 }
 
 export default createMuiTheme({
@@ -45,6 +48,7 @@ export default createMuiTheme({
     },
     separator: { main: Colors.Separator },
     box: { main: Colors.Box },
+    danger: { main: Colors.Danger },
     text: {
       primary: Colors.PrimaryText,
       secondary: Colors.SecondaryText,
