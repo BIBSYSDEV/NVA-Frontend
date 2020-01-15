@@ -24,7 +24,7 @@ const mockOrcidResponse: OrcidResponse = {
 
 const mockSingleAuthorityResponse: Authority = {
   name: 'Gundersen, Osteloff',
-  scn: '90179802',
+  scn: '901790000000',
   feideId: 'osteloff@ntnu.no',
   orcId: '0000-0001-2345-6789',
   handle: 'https://vg.no',
