@@ -75,7 +75,7 @@ const ProjectRow: FC<ProjectRowProps> = ({ project, onClickRemove, dataTestId })
         <StyledFinancedBy>{project.fundings?.[0]?.fundingSourceCode}</StyledFinancedBy>
       </>
       <StyledAction>
-        <StyledRemoveButton onClick={onClickRemove}>
+        <StyledRemoveButton data-testid={`${dataTestId}_remove_button`} onClick={onClickRemove}>
           <DeleteIcon />
           {t('common:remove')}
         </StyledRemoveButton>
