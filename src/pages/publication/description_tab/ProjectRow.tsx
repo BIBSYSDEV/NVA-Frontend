@@ -7,9 +7,7 @@ import { useTranslation } from 'react-i18next';
 
 const StyledRow = styled.div`
   margin-top: 1rem;
-  <<<<<<<headbackground: white;
-  =======background: ${({ theme }) => theme.palette.background.default};
-  >>>>>>>8ed6d0e9b5724d00c9f70fc5567521e029bc08d6padding: 1rem;
+  background: ${({ theme }) => theme.palette.background.default};
   display: grid;
   grid-column-gap: 0.5rem;
   grid-template-areas:
