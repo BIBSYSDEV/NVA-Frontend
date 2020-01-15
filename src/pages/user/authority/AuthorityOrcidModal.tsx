@@ -21,8 +21,8 @@ const AuthorityOrcidModal: FC = () => {
   const { t } = useTranslation('common');
   const user = useSelector((store: RootStore) => store.user);
 
-  const noOrcid = user.authority?.orcid.length === 0;
-  const noFeideId = user.authority?.feideId.length === 0;
+  const noOrcid = user.authority?.orcids.length === 0;
+  const noFeideId = user.authority?.feideIds.length === 0;
 
   const [doNotShowAuthorityModalAgain, setDoNotShowAuthorityModalAgain] = useState(false);
   const [doNotShowOrcidModalAgain, setDoNotShowOrcidModalAgain] = useState(false);

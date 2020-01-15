@@ -29,7 +29,7 @@ export const userReducer = (state: User = emptyUser, action: UserActions | Orcid
     case SET_ORCID:
       return {
         ...state,
-        authority: { ...state.authority, orcid: getUniqueList([...state.authority.orcid, action.orcid], 'orcId') },
+        authority: { ...state.authority, orcid: getUniqueList([...state.authority.orcids, action.orcid], 'orcId') },
       };
     case SET_AUTHORITY_DATA:
       return {

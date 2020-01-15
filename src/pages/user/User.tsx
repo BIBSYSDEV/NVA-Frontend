@@ -57,8 +57,8 @@ const User: React.FC = () => {
   }, [dispatch, location.hash, history]);
 
   useEffect(() => {
-    if (user.authority?.orcid) {
-      updateOrcIdForAuthority(user.authority?.orcid[0], user.authority.scn, dispatch);
+    if (user.authority?.orcids) {
+      updateOrcIdForAuthority(user.authority?.orcids[0], user.authority.systemControlNumber, dispatch);
     }
   }, [user.authority, dispatch]);
 
@@ -69,7 +69,7 @@ const User: React.FC = () => {
         <UserCard headerLabel={t('heading.contact_info')} />
         <UserLanguage />
         <UserCard headerLabel={t('heading.author_info')}>
-          {user.authority?.feideId.length > 0 ? (
+          {user.authority?.feideIds.length > 0 ? (
             <>
               <p>{t('authority.connected_info')}</p>
               <MuiLink href={user.authority.handle}>{t('authority.see_profile')}</MuiLink>

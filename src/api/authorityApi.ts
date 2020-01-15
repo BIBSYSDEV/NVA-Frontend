@@ -11,6 +11,15 @@ export enum AuthorityApiPaths {
   AUTHORITY = '/authority',
 }
 
+interface AuthorityResponse {
+  name: string;
+  scn: string;
+  feideIds: string[];
+  orcIds: string[];
+  birthDate?: string;
+  handle: string;
+}
+
 export const getAuthorities = async (name: string, dispatch: Dispatch) => {
   const url = encodeURI(`/authority?name=${name}`);
 
@@ -24,7 +33,14 @@ export const getAuthorities = async (name: string, dispatch: Dispatch) => {
     const response = await Axios.get(url, { headers });
 
     if (response.status === StatusCode.OK) {
-      return response.data;
+      return response.data.map((auth: AuthorityResponse) => ({
+        name: auth.name,
+        systemControlNumber: auth.scn,
+        feideIds: auth.feideIds,
+        orcids: auth.orcIds,
+        birthDate: auth.birthDate,
+        handle: auth.handle,
+      }));
     } else {
       dispatch(addNotification(i18n.t('feedback:error.get_authorities'), 'error'));
     }
@@ -46,7 +62,17 @@ export const getAuthorityByFeideId = async (feideId: string, dispatch: Dispatch)
     const response = await Axios.get(url, { headers });
 
     if (response.status === StatusCode.OK) {
-      const filteredAuthorities = response.data.filter((auth: Authority) => auth.feideId.some(id => id === feideId));
+      const filteredAuthorities: Authority[] = response.data
+        .map((auth: AuthorityResponse) => ({
+          name: auth.name,
+          systemControlNumber: auth.scn,
+          feideIds: auth.feideIds,
+          orcids: auth.orcIds,
+          birthDate: auth.birthDate,
+          handle: auth.handle,
+        }))
+        .filter((auth: AuthorityResponse) => auth.feideIds.some(id => id === feideId));
+      console.log('filteredAuthorities', filteredAuthorities);
       return filteredAuthorities?.[0] ?? null;
     } else {
       dispatch(addNotification(i18n.t('feedback:error.get_authority'), 'error'));

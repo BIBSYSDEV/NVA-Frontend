@@ -47,12 +47,14 @@ export const ConnectAuthority: React.FC = () => {
   }, [dispatch, searchTerm]);
 
   const setOrcIdAndFeideId = async () => {
-    const selectedAuthority = matchingAuthorities.find(auth => auth.scn === selectedSystemControlNumber);
+    const selectedAuthority = matchingAuthorities.find(
+      auth => auth.systemControlNumber === selectedSystemControlNumber
+    );
 
     if (selectedAuthority && user.authority) {
-      selectedAuthority.orcid && dispatch(setOrcid(selectedAuthority.orcid));
+      selectedAuthority.orcids && dispatch(setOrcid(selectedAuthority.orcids));
 
-      const updatedAuthority = await updateFeideIdForAuthority(user.id, user.authority.scn, dispatch);
+      const updatedAuthority = await updateFeideIdForAuthority(user.id, user.authority.systemControlNumber, dispatch);
       dispatch(setAuthorityData(updatedAuthority));
     }
   };
@@ -65,8 +67,13 @@ export const ConnectAuthority: React.FC = () => {
 
       <StyledAuthorityContainer>
         {matchingAuthorities?.map(authority => (
-          <StyledClickableDiv key={authority.scn} onClick={() => setSelectedSystemControlNumber(authority.scn)}>
-            <AuthorityCard authority={authority} isSelected={selectedSystemControlNumber === authority.scn} />
+          <StyledClickableDiv
+            key={authority.systemControlNumber}
+            onClick={() => setSelectedSystemControlNumber(authority.systemControlNumber)}>
+            <AuthorityCard
+              authority={authority}
+              isSelected={selectedSystemControlNumber === authority.systemControlNumber}
+            />
           </StyledClickableDiv>
         ))}
 

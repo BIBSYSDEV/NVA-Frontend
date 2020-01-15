@@ -12,7 +12,7 @@ import UserCard from './UserCard';
 const UserOrcid: FC = () => {
   const { t } = useTranslation();
   const user = useSelector((state: RootStore) => state.user);
-  const listOfOrcids = user.authority?.orcid;
+  const listOfOrcids = user.authority?.orcids;
 
   return (
     <UserCard headerLabel={t('common:orcid')}>
