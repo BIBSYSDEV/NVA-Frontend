@@ -22,7 +22,7 @@ import Workspace from './pages/workspace/Workspace';
 import { setAuthorityData, setUser } from './redux/actions/userActions';
 import { RootStore } from './redux/reducers/rootReducer';
 import { awsConfig } from './utils/aws-config';
-import { API_URL, USE_MOCK_DATA } from './utils/constants';
+import { API_URL, DEBOUNCE_INTERVAL_MODAL, USE_MOCK_DATA } from './utils/constants';
 import { hubListener } from './utils/hub-listener';
 import { mockUser } from './utils/testfiles/mock_feide_user';
 
@@ -90,9 +90,11 @@ const App: React.FC = () => {
   }, [dispatch, user.id]);
 
   useEffect(() => {
-    user.id &&
-      (user.authority?.orcid.length === 0 || user.authority?.feideId.length === 0) &&
-      setShowAuthorityOrcidModal(true);
+    setTimeout(() => {
+      user.id &&
+        (user.authority?.orcids.length === 0 || user.authority?.feideIds.length === 0) &&
+        setShowAuthorityOrcidModal(true);
+    }, DEBOUNCE_INTERVAL_MODAL);
   }, [user.id, user.authority]);
 
   return (
