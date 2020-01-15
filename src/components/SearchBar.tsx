@@ -40,9 +40,9 @@ const SearchBar: React.FC<SearchBarProps> = ({ resetSearchInput: resetSearch }) 
     }
   }, [resetSearch]);
 
-  const handleSearch = () => {
+  const handleSearch = async () => {
     if (searchTerm.length) {
-      dispatch(search(searchTerm));
+      await search(searchTerm, dispatch);
       history.push(`/search/${searchTerm}`);
     }
   };

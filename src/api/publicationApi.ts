@@ -117,16 +117,22 @@ export const lookupDoiTitle = async (url: string) => {
   }
 };
 
-export const search = (searchTerm: string, offset?: number) => {
-  return async (dispatch: Dispatch) => {
-    Axios.get(`${PublicationsApiPaths.SEARCH}/${searchTerm}`)
-      .then(response => {
-        const currentOffset = offset || 0;
-        const result = response.data.slice(currentOffset, currentOffset + SEARCH_RESULTS_PER_PAGE);
-        dispatch(searchForPublications(result, searchTerm, response.data.length, offset));
-      })
-      .catch(() => {
-        dispatch(searchFailure(i18n.t('feedback:error.search')));
-      });
-  };
+export const search = async (searchTerm: string, dispatch: Dispatch, offset?: number) => {
+  try {
+    const idToken = await getIdToken();
+    const response = await Axios.get(`${PublicationsApiPaths.SEARCH}/${searchTerm}`, {
+      headers: {
+        Authorization: `Bearer ${idToken}`,
+      },
+    });
+    if (response.status === StatusCode.OK) {
+      const currentOffset = offset || 0;
+      const result = response.data.slice(currentOffset, currentOffset + SEARCH_RESULTS_PER_PAGE);
+      dispatch(searchForPublications(result, searchTerm, response.data.length, offset));
+    } else {
+      dispatch(searchFailure(i18n.t('feedback:error.search')));
+    }
+  } catch {
+    dispatch(searchFailure(i18n.t('feedback:error.search')));
+  }
 };

@@ -29,10 +29,10 @@ const SearchResults: React.FC<SearchResultsProps> = ({ publications, searchTerm 
   const results = useSelector((state: RootStore) => state.search);
   const [offset, setOffset] = useState(0);
 
-  const updateSearch = (offset: number) => {
+  const updateSearch = async (offset: number) => {
     setOffset(offset);
     if (searchTerm.length) {
-      dispatch(search(searchTerm, offset));
+      await search(searchTerm, dispatch, offset);
       history.push(`/search/${searchTerm}/${offset}`);
     }
   };

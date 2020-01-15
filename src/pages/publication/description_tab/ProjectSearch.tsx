@@ -1,7 +1,7 @@
 import React, { FC, useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { searchProjects } from '../../../api/projectApi';
+import { searchProjectsByTitle } from '../../../api/projectApi';
 import AutoSearch from '../../../components/AutoSearch';
 import { Project } from '../../../types/project.types';
 import useDebounce from '../../../utils/hooks/useDebounce';
@@ -23,7 +23,7 @@ const ProjectSearch: FC<ProjectSearchProps> = ({ dataTestId, setValueFunction, p
   const search = useCallback(
     async (searchTerm: string) => {
       setSearching(true);
-      const response = await searchProjects(`title=${searchTerm}`, dispatch);
+      const response = await searchProjectsByTitle(`title=${searchTerm}`, dispatch);
       if (response) {
         setSearchResults(
           response.map((project: Project) => {

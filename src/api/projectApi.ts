@@ -10,15 +10,16 @@ export enum ProjectsApiPaths {
   PROJECTS = '/cristin-projects',
 }
 
-export const searchProjects = async (query: string, dispatch: Dispatch) => {
+export const searchProjectsByTitle = async (query: string, dispatch: Dispatch) => {
+  const titleQuery = `title=${query}`;
   try {
     const idToken = await getIdToken();
-    const response = await Axios.get(`${ProjectsApiPaths.PROJECTS}?${query}`, {
+    const response = await Axios.get(`${ProjectsApiPaths.PROJECTS}?${titleQuery}`, {
       headers: {
         Authorization: `Bearer ${idToken}`,
       },
     });
-    if (response.status === StatusCode.OK && response.headers) {
+    if (response.status === StatusCode.OK) {
       return response.data;
     } else {
       dispatch(addNotification(i18n.t('feedback:error.get_project'), 'error'));
