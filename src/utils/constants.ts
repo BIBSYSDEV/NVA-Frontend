@@ -10,19 +10,9 @@ export const ORCID_BASE_URL = process.env.REACT_APP_ORCID_BASE_URL;
 export const ORCID_USER_INFO_URL = '/oauth/userinfo';
 export const ORCID_SIGN_IN_URL = `${ORCID_BASE_URL}/signin?oauth&client_id=${process.env.REACT_APP_ORCID_CLIENT_ID}&response_type=token&scope=openid&redirect_uri=${process.env.REACT_APP_ORCID_REDIRECT_URI}`;
 
-export const AUTHORITY_REGISTER_API_URL = process.env.REACT_APP_AUTHORITY_REGISTER_API_URL;
 export const ALMA_API_URL = process.env.REACT_APP_ALMA_API_URL;
-export const CRISTIN_API_URL = process.env.REACT_APP_CRISTIN_API_URL;
 
 export const API_URL = process.env.REACT_APP_API_URL;
-const API_TOKEN_KEY = process.env.REACT_APP_API_TOKEN_KEY;
-export const API_TOKEN = API_TOKEN_KEY ? localStorage.getItem(API_TOKEN_KEY) : '';
-
-export enum ApiBaseUrl {
-  PUBLICATIONS = 'publications',
-  DOI_LOOKUP = 'doilookup',
-  USER = 'user',
-}
 
 export enum StatusCode {
   OK = 200,

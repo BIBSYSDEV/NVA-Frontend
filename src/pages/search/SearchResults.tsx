@@ -8,7 +8,7 @@ import styled from 'styled-components';
 import { List, ListItem, ListItemIcon, ListItemText, Typography } from '@material-ui/core';
 import ImageIcon from '@material-ui/icons/Image';
 
-import { search } from '../../api/searchApi';
+import { search } from '../../api/publicationApi';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { PublicationMetadata } from '../../types/publication.types';
 import { SEARCH_RESULTS_PER_PAGE } from '../../utils/constants';
@@ -29,10 +29,10 @@ const SearchResults: React.FC<SearchResultsProps> = ({ publications, searchTerm 
   const results = useSelector((state: RootStore) => state.search);
   const [offset, setOffset] = useState(0);
 
-  const updateSearch = (offset: number) => {
+  const updateSearch = async (offset: number) => {
     setOffset(offset);
     if (searchTerm.length) {
-      dispatch(search(searchTerm, offset));
+      await search(searchTerm, dispatch, offset);
       history.push(`/search/${searchTerm}/${offset}`);
     }
   };
