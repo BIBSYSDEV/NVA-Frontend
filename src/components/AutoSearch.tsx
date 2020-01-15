@@ -21,7 +21,7 @@ interface AutoSearchProps {
   setValueFunction: (value: any) => void;
   clearSearchField?: boolean;
   dataTestId?: string;
-  onInputChange?: (event: object, value: string) => void;
+  onInputChange: (event: object, value: string) => void;
   placeholder?: string;
 }
 
@@ -71,9 +71,17 @@ export const AutoSearch: FC<AutoSearchProps> = ({
           setValueFunction(value);
         }
       }}
-      onInputChange={(event: object, value: string) => {
-        value.length >= MINIMUM_SEARCH_CHARACTERS && options.length === 0 && open && setLoading(true);
-        open && value.length >= MINIMUM_SEARCH_CHARACTERS && onInputChange && onInputChange(event, value);
+      onInputChange={(event: any, value: string) => {
+        if (value.length < MINIMUM_SEARCH_CHARACTERS) {
+          return;
+        }
+        if (options.length === 0) {
+          setLoading(true);
+        }
+        // Update input if event comes from typing, not option selection
+        if (event.target.localName === 'input') {
+          onInputChange(event, value);
+        }
       }}
       getOptionLabel={option => option.title || ''}
       options={options}
@@ -81,6 +89,7 @@ export const AutoSearch: FC<AutoSearchProps> = ({
       blurOnSelect
       value={displayValue}
       noOptionsText={t('no_hits')}
+      filterOptions={options => options}
       renderInput={params => (
         <TextField
           {...params}

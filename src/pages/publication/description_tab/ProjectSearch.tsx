@@ -23,7 +23,7 @@ const ProjectSearch: FC<ProjectSearchProps> = ({ dataTestId, setValueFunction, p
   const search = useCallback(
     async (searchTerm: string) => {
       setSearching(true);
-      const response = await searchProjectsByTitle(`title=${searchTerm}`, dispatch);
+      const response = await searchProjectsByTitle(searchTerm, dispatch);
       if (response) {
         setSearchResults(
           response.map((project: Project) => {
