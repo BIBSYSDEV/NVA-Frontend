@@ -6,7 +6,7 @@ import { getPublishers } from '../../../../api/publicationChannelApi';
 import { AutoSearch } from '../../../../components/AutoSearch';
 import { searchFailure } from '../../../../redux/actions/searchActions';
 import { Publisher } from '../../../../types/references.types';
-import { PublicationTableNumber } from '../../../../utils/constants';
+import { PublicationTableNumber, MINIMUM_SEARCH_CHARACTERS } from '../../../../utils/constants';
 import useDebounce from '../../../../utils/hooks/useDebounce';
 
 interface PublicationChannelSearchProps {
@@ -48,7 +48,7 @@ const PublicationChannelSearch: FC<PublicationChannelSearchProps> = ({
   );
 
   useEffect(() => {
-    if (debouncedSearchTerm && !searching) {
+    if (debouncedSearchTerm && !searching && debouncedSearchTerm.length >= MINIMUM_SEARCH_CHARACTERS) {
       search(debouncedSearchTerm);
       setSearching(false);
     }

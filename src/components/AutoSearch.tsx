@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import { CircularProgress, TextField } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-
 import { MINIMUM_SEARCH_CHARACTERS } from '../utils/constants';
 
 const StyledSearchIcon = styled(SearchIcon)`
@@ -60,7 +59,6 @@ export const AutoSearch: FC<AutoSearchProps> = ({
       open={open}
       onClose={() => {
         setOpen(false);
-        setOptions([]);
       }}
       onOpen={() => {
         setOpen(true);
@@ -69,20 +67,18 @@ export const AutoSearch: FC<AutoSearchProps> = ({
         if (value) {
           setValueFunction(value);
           setDisplayValue(emptyValue);
+          setOptions([]);
         }
       }}
       onInputChange={(event: any, value: string) => {
-        if (value.length < MINIMUM_SEARCH_CHARACTERS) {
-          return;
-        }
-        if (options.length === 0) {
-          setLoading(true);
-        }
+        setDisplayValue({ title: value });
 
         // Update input if event comes from typing, not option selection
         if (event?.target.localName === 'input') {
           onInputChange(event, value);
-          setDisplayValue({ title: value });
+          if (value.length >= MINIMUM_SEARCH_CHARACTERS) {
+            setLoading(true);
+          }
         }
       }}
       getOptionLabel={option => option.title || ''}
@@ -98,6 +94,7 @@ export const AutoSearch: FC<AutoSearchProps> = ({
           data-testid={dataTestId}
           label={label}
           fullWidth
+          onClick={() => setOpen(true)}
           variant="outlined"
           autoComplete="false"
           placeholder={placeholder}

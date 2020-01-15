@@ -5,6 +5,7 @@ import { searchProjectsByTitle } from '../../../api/projectApi';
 import AutoSearch from '../../../components/AutoSearch';
 import { Project } from '../../../types/project.types';
 import useDebounce from '../../../utils/hooks/useDebounce';
+import { MINIMUM_SEARCH_CHARACTERS } from '../../../utils/constants';
 
 interface ProjectSearchProps {
   dataTestId: string;
@@ -38,7 +39,7 @@ const ProjectSearch: FC<ProjectSearchProps> = ({ dataTestId, setValueFunction, p
   );
 
   useEffect(() => {
-    if (debouncedSearchTerm && !searching) {
+    if (debouncedSearchTerm && !searching && debouncedSearchTerm.length >= MINIMUM_SEARCH_CHARACTERS) {
       search(debouncedSearchTerm);
       setSearching(false);
     }
