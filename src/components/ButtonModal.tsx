@@ -35,7 +35,7 @@ const ButtonModal: FC<ButtonModalProps> = ({
 
   return (
     <>
-      <Button onClick={handleOpen} variant="outlined" startIcon={startIcon} data-testid={dataTestId}>
+      <Button onClick={handleOpen} variant="contained" color="primary" startIcon={startIcon} data-testid={dataTestId}>
         {buttonText}
       </Button>
       <Modal

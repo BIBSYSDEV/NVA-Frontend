@@ -31,7 +31,7 @@ const StyledUserPage = styled.div`
 const StyledSecondaryUserInfo = styled.div`
   display: grid;
   grid-area: secondary-info;
-  grid-template-areas: 'profile-image' 'contact-info' 'language' 'author-info';
+  grid-template-areas: 'profile-image' 'contact-info' 'language' 'roles';
   grid-row-gap: 3rem;
 `;
 
@@ -68,6 +68,11 @@ const User: React.FC = () => {
         <UserCard headerLabel="Bilde" />
         <UserCard headerLabel={t('heading.contact_info')} />
         <UserLanguage />
+        <UserRoles user={user} />
+      </StyledSecondaryUserInfo>
+
+      <StyledPrimaryUserInfo>
+        <UserInfo user={user} />
         <UserCard headerLabel={t('heading.author_info')}>
           {user.authority ? (
             <>
@@ -87,13 +92,8 @@ const User: React.FC = () => {
             </>
           )}
         </UserCard>
-      </StyledSecondaryUserInfo>
-
-      <StyledPrimaryUserInfo>
-        <UserInfo user={user} />
-        <UserRoles user={user} />
-        <UserCard headerLabel={t('heading.organizations')} />
         <UserOrcid />
+        <UserCard headerLabel={t('heading.organizations')} />
       </StyledPrimaryUserInfo>
     </StyledUserPage>
   );

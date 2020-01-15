@@ -13,6 +13,7 @@ const StyledHeading = styled.div`
   font-size: 1.5rem;
   font-weight: bold;
   padding-bottom: 0.5rem;
+  display: flex;
 `;
 
 const StyledSubHeading = styled.div`
@@ -22,15 +23,31 @@ const StyledSubHeading = styled.div`
   }
 `;
 
+const StyledIcon = styled.div`
+  padding-right: 0.5rem;
+  padding-top: 0.2rem;
+`;
+
 interface UserCardProps {
   headerLabel: string;
+  headerIcon?: string;
+  alt?: string;
   subHeaderLabel?: string;
   children?: ReactNode;
 }
 
-const UserCard: React.FC<UserCardProps> = ({ headerLabel, subHeaderLabel, children }) => (
+const UserCard: React.FC<UserCardProps> = ({ headerLabel, headerIcon, alt, subHeaderLabel, children }) => (
   <StyledUserCard>
-    <StyledHeading>{headerLabel}</StyledHeading>
+    <StyledHeading>
+      <>
+        {headerIcon && (
+          <StyledIcon>
+            <img src={headerIcon} alt={alt} />
+          </StyledIcon>
+        )}
+        {headerLabel}
+      </>
+    </StyledHeading>
     {subHeaderLabel && <StyledSubHeading>{subHeaderLabel}</StyledSubHeading>}
     {children}
   </StyledUserCard>
