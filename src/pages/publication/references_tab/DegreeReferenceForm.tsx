@@ -68,18 +68,6 @@ const DegreeReferenceForm: React.FC = () => {
           </>
         )}
       </Field>
-      <div>
-        <Field name={DegreeFieldNames.SPECIALISATION}>
-          {({ field }: any) => (
-            <TextField
-              data-testid="specialization"
-              variant="outlined"
-              label={t('references.specialization')}
-              {...field}
-            />
-          )}
-        </Field>
-      </div>
       <StyledHeading>{t('references.series')}</StyledHeading>
       <StyledLabel>{t('references.series_info')}</StyledLabel>
       <Field name={DegreeFieldNames.SERIES}>
