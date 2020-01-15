@@ -9,7 +9,7 @@ export const orcidRequestFailure = (message: string): OrcidRequestFailureAction 
   variant: 'error',
 });
 
-export const setOrcid = (orcid: string): SetOrcidAction => ({
+export const setOrcid = (orcid: string[]): SetOrcidAction => ({
   type: SET_ORCID,
   orcid,
 });
@@ -22,7 +22,7 @@ interface OrcidRequestFailureAction {
 
 interface SetOrcidAction {
   type: typeof SET_ORCID;
-  orcid: string;
+  orcid: string[];
 }
 
 export type OrcidActions = OrcidRequestFailureAction | SetOrcidAction;

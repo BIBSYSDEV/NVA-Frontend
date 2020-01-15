@@ -12,17 +12,23 @@ import UserCard from './UserCard';
 const UserOrcid: FC = () => {
   const { t } = useTranslation();
   const user = useSelector((state: RootStore) => state.user);
-  const OrcidLink = `${ORCID_BASE_URL}/${user.orcid}`;
+  const listOfOrcids = user.authority?.orcid;
 
   return (
     <UserCard headerLabel={t('common:orcid')}>
-      {user.orcid ? (
-        <LabelTextLine
-          dataTestId={'orcid-info'}
-          label={t('profile:orcid.your_orcid')}
-          text={OrcidLink}
-          externalLink={OrcidLink}
-        />
+      {listOfOrcids?.length > 0 ? (
+        listOfOrcids.map((orcid: string) => {
+          const orcidLink = `${ORCID_BASE_URL}/${orcid}`;
+          return (
+            <LabelTextLine
+              key={orcid}
+              dataTestId={'orcid-info'}
+              label={t('profile:orcid.your_orcid')}
+              text={orcidLink}
+              externalLink={orcidLink}
+            />
+          );
+        })
       ) : (
         <ButtonModal
           buttonText={t('profile:orcid.create_or_connect')}

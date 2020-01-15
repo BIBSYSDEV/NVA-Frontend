@@ -21,6 +21,9 @@ const AuthorityOrcidModal: FC = () => {
   const { t } = useTranslation('common');
   const user = useSelector((store: RootStore) => store.user);
 
+  const noOrcid = user.authority?.orcid.length === 0;
+  const noFeideId = user.authority?.feideId.length === 0;
+
   const [doNotShowAuthorityModalAgain, setDoNotShowAuthorityModalAgain] = useState(false);
   const [doNotShowOrcidModalAgain, setDoNotShowOrcidModalAgain] = useState(false);
 
@@ -30,11 +33,11 @@ const AuthorityOrcidModal: FC = () => {
   const showAuthorityModalRef = useRef(showAuthorityModal);
   const showOrcidModalRef = useRef(showOrcidModal);
 
-  const [openOrcidModal, setOpenOrcidModal] = useState(!!user.authority);
+  const [openOrcidModal, setOpenOrcidModal] = useState(!noFeideId);
 
   useEffect(() => {
-    setOpenOrcidModal(!!user.authority && !user.orcid);
-  }, [user.authority, user.orcid]);
+    setOpenOrcidModal(!noFeideId && noOrcid);
+  }, [noFeideId, noOrcid]);
 
   const handleShowAuthorityModal = (event: React.ChangeEvent<HTMLInputElement>) => {
     setDoNotShowAuthorityModalAgain(event.target.checked);
@@ -47,7 +50,7 @@ const AuthorityOrcidModal: FC = () => {
   };
 
   const handleNextClick = () => {
-    if (!user.orcid) {
+    if (noOrcid) {
       setOpenOrcidModal(true);
     }
     showAuthorityModalRef.current = false;
@@ -55,7 +58,7 @@ const AuthorityOrcidModal: FC = () => {
 
   return (
     <>
-      {showAuthorityModalRef.current && !user.authority && (
+      {showAuthorityModalRef.current && noFeideId && (
         <Modal
           dataTestId="connect-author-modal"
           ariaLabelledBy="connect-author-modal"
@@ -67,7 +70,7 @@ const AuthorityOrcidModal: FC = () => {
                 control={<Checkbox onChange={handleShowAuthorityModal} checked={doNotShowAuthorityModalAgain} />}
                 label={t('do_not_show_again')}
               />
-              {!user.orcid && (
+              {noOrcid && (
                 <Button color="primary" variant="contained" onClick={handleNextClick}>
                   {t('next')}
                 </Button>

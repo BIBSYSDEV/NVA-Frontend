@@ -25,8 +25,8 @@ const mockOrcidResponse: OrcidResponse = {
 const mockSingleAuthorityResponse: Authority = {
   name: 'Gundersen, Osteloff',
   scn: '901790000000',
-  feideId: 'osteloff@ntnu.no',
-  orcId: '0000-0001-2345-6789',
+  feideId: ['tu@unit.no'],
+  orcid: ['0000-0001-2345-6789'],
   handle: 'https://vg.no',
   birthDate: '1941-04-25 00:00:00.000',
 };
@@ -57,7 +57,7 @@ export const interceptRequestsOnMock = () => {
   mock.onPost(ORCID_USER_INFO_URL).reply(200, mockOrcidResponse);
 
   // Authority Registry
-  mock.onPost(new RegExp(`${API_URL}${AuthorityApiPaths.AUTHORITY}`)).reply(200, mockAuthoritiesResponse);
+  mock.onGet(new RegExp(`${API_URL}${AuthorityApiPaths.AUTHORITY}`)).reply(200, mockAuthoritiesResponse);
   mock.onPut(new RegExp(`${API_URL}${AuthorityApiPaths.AUTHORITY}/*`)).reply(200, mockSingleAuthorityResponse);
 
   mock.onAny().reply(function(config) {

@@ -1,4 +1,5 @@
 import { ApplicationName, emptyUser, RoleName, User } from '../../types/user.types';
+import { getUniqueList } from '../../utils/helpers';
 import { AuthActions, LOGIN_SUCCESS, LOGOUT_SUCCESS } from '../actions/authActions';
 import { OrcidActions, SET_ORCID } from '../actions/orcidActions';
 import { CLEAR_USER, SET_AUTHORITY_DATA, SET_USER_SUCCESS, UserActions } from '../actions/userActions';
@@ -28,8 +29,7 @@ export const userReducer = (state: User = emptyUser, action: UserActions | Orcid
     case SET_ORCID:
       return {
         ...state,
-        authority: { ...state.authority, orcId: action.orcid },
-        orcid: action.orcid,
+        authority: { ...state.authority, orcid: getUniqueList([...state.authority.orcid, action.orcid], 'orcId') },
       };
     case SET_AUTHORITY_DATA:
       return {

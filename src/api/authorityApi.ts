@@ -56,6 +56,7 @@ export const getAuthorityByFeideId = async (feideId: string, dispatch: Dispatch)
   }
 };
 
+// TODO: handle 204 from backend
 export const updateFeideIdForAuthority = async (feideId: string, systemControlNumber: string, dispatch: Dispatch) => {
   if (!feideId) {
     return;
@@ -72,7 +73,6 @@ export const updateFeideIdForAuthority = async (feideId: string, systemControlNu
     const response = await Axios.put(url, { feideId }, { headers });
 
     if (response.status === StatusCode.OK) {
-      dispatch(addNotification(i18n.t('feedback:success.update_authority'), 'success'));
       return response.data;
     } else {
       dispatch(addNotification(i18n.t('feedback:error.update_authority'), 'error'));
@@ -82,6 +82,7 @@ export const updateFeideIdForAuthority = async (feideId: string, systemControlNu
   }
 };
 
+// TODO: handle 204 from backend
 export const updateOrcIdForAuthority = async (orcId: string, systemControlNumber: string, dispatch: Dispatch) => {
   if (!orcId) {
     return;
@@ -98,7 +99,6 @@ export const updateOrcIdForAuthority = async (orcId: string, systemControlNumber
     const response = await Axios.put(url, { orcId }, { headers });
 
     if (response.status === StatusCode.OK) {
-      dispatch(addNotification(i18n.t('feedback:success.update_authority'), 'success'));
       return response.data;
     } else {
       dispatch(addNotification(i18n.t('feedback:error.update_authority'), 'error'));

@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 import { Button } from '@material-ui/core';
 
-import { getAuthorities, updateAuthority } from '../../../api/authorityApi';
+import { getAuthorities, updateFeideIdForAuthority } from '../../../api/authorityApi';
 import { setOrcid } from '../../../redux/actions/orcidActions';
 import { setAuthorityData } from '../../../redux/actions/userActions';
 import { RootStore } from '../../../redux/reducers/rootReducer';
@@ -49,13 +49,11 @@ export const ConnectAuthority: React.FC = () => {
   const setOrcIdAndFeideId = async () => {
     const selectedAuthority = matchingAuthorities.find(auth => auth.scn === selectedSystemControlNumber);
 
-    if (selectedAuthority) {
-      selectedAuthority.orcId && dispatch(setOrcid(selectedAuthority.orcId));
+    if (selectedAuthority && user.authority) {
+      selectedAuthority.orcid && dispatch(setOrcid(selectedAuthority.orcid));
 
-      const authority: Authority = { ...selectedAuthority, feideId: user.id };
-      dispatch(setAuthorityData(authority));
-      await updateAuthority(authority, dispatch);
-      dispatch(setAuthorityData(authority));
+      const updatedAuthority = await updateFeideIdForAuthority(user.id, user.authority.scn, dispatch);
+      dispatch(setAuthorityData(updatedAuthority));
     }
   };
 

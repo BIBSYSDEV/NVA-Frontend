@@ -90,8 +90,10 @@ const App: React.FC = () => {
   }, [dispatch, user.id]);
 
   useEffect(() => {
-    user.id && (!user.authority || !user.orcid) && setShowAuthorityOrcidModal(true);
-  }, [user.id, user.authority, user.orcid]);
+    user.id &&
+      (user.authority?.orcid.length === 0 || user.authority?.feideId.length === 0) &&
+      setShowAuthorityOrcidModal(true);
+  }, [user.id, user.authority]);
 
   return (
     <BrowserRouter>

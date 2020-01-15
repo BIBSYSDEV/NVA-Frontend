@@ -2,16 +2,16 @@
   {
     "name": "Osteloff, Oddny",
     "scn": "901790000001",
-    "feideId": "",
-    "orcId": "",
+    "feideId": [],
+    "orcId": [],
     "handle": "",
     "birthDate": "1991-04-25 00:00:00.000"
   },
   {
     "name": "Gundersen, Osteloff",
     "scn": "901790000000",
-    "feideId": "tu@unit.no",
-    "orcId": "",
+    "feideId": ["tu@unit.no"],
+    "orcId": [""],
     "handle": "https://vg.no",
     "birthDate": "1941-04-25 00:00:00.000"
   }
