@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 const StyledRow = styled.div`
   margin-top: 1rem;
   background: ${({ theme }) => theme.palette.background.default};
+  padding: 1rem;
   display: grid;
   grid-column-gap: 0.5rem;
   grid-template-areas:
