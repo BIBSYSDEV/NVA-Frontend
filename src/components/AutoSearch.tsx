@@ -20,7 +20,7 @@ interface AutoSearchProps {
   setValueFunction: (value: any) => void;
   clearSearchField?: boolean;
   dataTestId?: string;
-  onInputChange: (event: object, value: string) => void;
+  onInputChange: (value: string) => void;
   placeholder?: string;
 }
 
@@ -56,7 +56,7 @@ export const AutoSearch: FC<AutoSearchProps> = ({
   return (
     <Autocomplete
       disableOpenOnFocus
-      open={open}
+      open={displayValue.title.length >= MINIMUM_SEARCH_CHARACTERS && open}
       onClose={() => {
         setOpen(false);
       }}
@@ -70,15 +70,19 @@ export const AutoSearch: FC<AutoSearchProps> = ({
           setOptions([]);
         }
       }}
-      onInputChange={(event: any, value: string) => {
+      onInputChange={(_: any, value: string, reason: string) => {
         setDisplayValue({ title: value });
 
-        // Update input if event comes from typing, not option selection
-        if (event?.target.localName === 'input') {
-          onInputChange(event, value);
+        if (reason === 'input') {
           if (value.length >= MINIMUM_SEARCH_CHARACTERS) {
             setLoading(true);
+            onInputChange(value);
+          } else {
+            setOpen(false);
+            setOptions([]);
           }
+        } else {
+          setOptions([]);
         }
       }}
       getOptionLabel={option => option.title || ''}
@@ -94,7 +98,7 @@ export const AutoSearch: FC<AutoSearchProps> = ({
           data-testid={dataTestId}
           label={label}
           fullWidth
-          onClick={() => setOpen(true)}
+          onClick={() => displayValue.title && setOpen(true)}
           variant="outlined"
           autoComplete="false"
           placeholder={placeholder}

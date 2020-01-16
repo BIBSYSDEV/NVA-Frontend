@@ -1,11 +1,10 @@
-import React, { FC, useCallback, useEffect, useState } from 'react';
+import React, { FC, useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { searchProjectsByTitle } from '../../../api/projectApi';
 import AutoSearch from '../../../components/AutoSearch';
 import { Project } from '../../../types/project.types';
-import useDebounce from '../../../utils/hooks/useDebounce';
-import { MINIMUM_SEARCH_CHARACTERS } from '../../../utils/constants';
+import { debounce } from '../../../utils/debounce';
 import { useFormikContext } from 'formik';
 
 interface ProjectSearchProps {
@@ -16,16 +15,11 @@ interface ProjectSearchProps {
 
 const ProjectSearch: FC<ProjectSearchProps> = ({ dataTestId, setValueFunction, placeholder }) => {
   const [searchResults, setSearchResults] = useState<Project[]>([]);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [searching, setSearching] = useState(false);
+  const dispatch = useDispatch();
   const { values } = useFormikContext();
 
-  const debouncedSearchTerm = useDebounce(searchTerm);
-  const dispatch = useDispatch();
-
-  const search = useCallback(
-    async (searchTerm: string) => {
-      setSearching(true);
+  const debouncedSearch = useCallback(
+    debounce(async (searchTerm: string) => {
       const response = await searchProjectsByTitle(searchTerm, dispatch);
       if (response) {
         const unselectedProjects = response.filter(
@@ -43,21 +37,14 @@ const ProjectSearch: FC<ProjectSearchProps> = ({ dataTestId, setValueFunction, p
       } else {
         setSearchResults([]);
       }
-    },
-    [dispatch, values.projects]
+    }),
+    [dispatch]
   );
-
-  useEffect(() => {
-    if (debouncedSearchTerm && !searching && debouncedSearchTerm.length >= MINIMUM_SEARCH_CHARACTERS) {
-      search(debouncedSearchTerm);
-      setSearching(false);
-    }
-  }, [debouncedSearchTerm, search, searching]);
 
   return (
     <AutoSearch
       dataTestId={dataTestId}
-      onInputChange={(_, value) => setSearchTerm(value)}
+      onInputChange={debouncedSearch}
       searchResults={searchResults}
       setValueFunction={setValueFunction}
       placeholder={placeholder}
