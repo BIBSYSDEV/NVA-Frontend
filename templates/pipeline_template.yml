@@ -97,6 +97,16 @@ Resources:
               RunOrder: 1
         - Name: Deploy
           Actions:
+            - Name: CleanUpS3Bucket
+              ActionTypeId:
+                Category: Invoke
+                Owner: AWS
+                Provider: Lambda
+                Version: '1'
+              Configuration:
+                FunctionName: !Ref CleanUpBucketBeforeDeploy
+                UserParameters: !Sub '{"bucket_name": "${FrontendBucketName}"}'
+              RunOrder: 1
             - Name: MoveApplicationtoS3
               ActionTypeId:
                 Category: Deploy
@@ -108,7 +118,7 @@ Resources:
               Configuration:
                 BucketName: !Ref FrontendBucketName
                 Extract: true
-              RunOrder: 1
+              RunOrder: 2
             - Name: InvalidateDistribution
               ActionTypeId:
                 Category: Invoke
@@ -118,7 +128,7 @@ Resources:
               Configuration:
                 FunctionName: !Ref InvalidateCloudfrontDistribution
                 UserParameters: !Sub '{"distribution_id": "${CloudfrontDistribution}"}'
-              RunOrder: 2
+              RunOrder: 3
 
   InvalidateCloudfrontDistribution:
     Type: AWS::Lambda::Function
@@ -126,6 +136,7 @@ Resources:
       Code:
         ZipFile: |
           import boto3
+          import sys
           import json
 
           def handler(event, context):
@@ -160,6 +171,42 @@ Resources:
       Role: !GetAtt InvalidateCloudfrontDistributionFunctionRole.Arn
       Handler: index.handler
       Description: Lambda to invalidate Cloudfront distribution
+      Runtime: python3.7
+      Timeout: 30
+
+  CleanUpBucketBeforeDeploy:
+    Type: AWS::Lambda::Function
+    Properties:
+      Code:
+        ZipFile: |
+          import json
+          import boto3
+          import sys
+          from botocore.vendored import requests
+
+
+          def handler(event, context):
+              codepipeline = boto3.client('codepipeline')
+              job = event['CodePipeline.job']['id'];
+
+              try:
+                  data = event['CodePipeline.job']['data']
+                  param = json.loads(data['actionConfiguration']['configuration'].get('UserParameters','{}'))
+                  bucket = param['bucket_name']
+
+                  s3 = boto3.resource('s3')
+                  bucket = s3.Bucket(bucket)
+                  for obj in bucket.objects.filter():
+                      s3.Object(bucket.name, obj.key).delete()
+                  codepipeline.put_job_success_result(jobId=job);
+              except:
+                  print("Exception:",sys.exc_info()[0])
+                  codepipeline.put_job_failure_result(jobId=job);
+
+              requests.put(event['ResponseURL'], data=json.dumps(response_body))
+      Role: !GetAtt CleanUpBucketBeforeDeployFunctionRole.Arn
+      Handler: index.handler
+      Description: Lambda to clean S3 bucket before deploy
       Runtime: python3.7
       Timeout: 30
 
@@ -198,7 +245,9 @@ Resources:
               - Action:
                   - 'lambda:InvokeFunction'
                 Effect: Allow
-                Resource: !GetAtt InvalidateCloudfrontDistribution.Arn
+                Resource:
+                  - !GetAtt InvalidateCloudfrontDistribution.Arn
+                  - !GetAtt CleanUpBucketBeforeDeploy.Arn
               - Action:
                   - 'codebuild:StartBuild'
                   - 'codebuild:BatchGetBuilds'
@@ -232,6 +281,35 @@ Resources:
               - Effect: Allow
                 Action:
                   - 'cloudfront:CreateInvalidation'
+                  - 'codepipeline:PutJobSuccessResult'
+                  - 'codepipeline:PutJobFailureResult'
+                Resource: '*'
+
+  CleanUpBucketBeforeDeployFunctionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      Path: '/'
+      ManagedPolicyArns:
+        - 'arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'
+      Policies:
+        - PolicyName: InvalidateCloudformationDistributionPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - 's3:ListBucket'
+                  - 's3:GetObject'
+                  - 's3:DeleteObject'
                   - 'codepipeline:PutJobSuccessResult'
                   - 'codepipeline:PutJobFailureResult'
                 Resource: '*'
