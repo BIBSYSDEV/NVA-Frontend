@@ -56,13 +56,14 @@ const StyledRemoveButton = styled(Button)`
 interface ProjectRowProps {
   project: Project;
   onClickRemove: () => void;
+  dataTestId: string;
 }
 
-const ProjectRow: FC<ProjectRowProps> = ({ project, onClickRemove }) => {
+const ProjectRow: FC<ProjectRowProps> = ({ project, onClickRemove, dataTestId }) => {
   const { t } = useTranslation();
 
   return (
-    <StyledRow>
+    <StyledRow data-testid={dataTestId}>
       <StyledTitleLabel>{t('common:title')}</StyledTitleLabel>
       <StyledTitle>{project.titles?.[0]?.title}</StyledTitle>
       <>
@@ -73,7 +74,7 @@ const ProjectRow: FC<ProjectRowProps> = ({ project, onClickRemove }) => {
         <StyledFinancedBy>{project.fundings?.[0]?.fundingSourceCode}</StyledFinancedBy>
       </>
       <StyledAction>
-        <StyledRemoveButton onClick={onClickRemove}>
+        <StyledRemoveButton data-testid={`${dataTestId}_remove_button`} onClick={onClickRemove}>
           <DeleteIcon />
           {t('common:remove')}
         </StyledRemoveButton>
