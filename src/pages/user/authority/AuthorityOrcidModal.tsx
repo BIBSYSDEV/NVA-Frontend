@@ -36,7 +36,7 @@ const AuthorityOrcidModal: FC = () => {
   const showOrcidModalRef = useRef(showOrcidModal);
 
   const [openOrcidModal, setOpenOrcidModal] = useState(!noFeide);
-  const [openAuthorityModal, setOpenAuthorityModal] = useState(false);
+  const [openAuthorityModal, setOpenAuthorityModal] = useState(noFeide);
 
   useEffect(() => {
     if (location.pathname !== '/') {
