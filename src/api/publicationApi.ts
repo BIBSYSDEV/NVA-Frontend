@@ -14,7 +14,7 @@ export enum PublicationsApiPaths {
   INSERT_RESOURCE = '/publications/insert-resource',
   UPDATE_RESOURCE = '/publications/update-resource',
   FETCH_RESOURCE = '/publications/fetch-resource',
-  DOI_LOOKUP = '/doilookup',
+  DOI_LOOKUP = '/doi',
 }
 
 export const createNewPublicationFromDoi = async (url: string, owner: string, dispatch: Dispatch) => {
@@ -99,16 +99,16 @@ export const getPublication = async (id: string, dispatch: Dispatch) => {
   }
 };
 
-export const lookupDoiTitle = async (url: string) => {
+export const getPublicationByDoi = async (doiUrl: string) => {
   try {
     const idToken = await getIdToken();
-    const response = await Axios.get(`${PublicationsApiPaths.DOI_LOOKUP}${url}`, {
+    const response = await Axios.get(`${PublicationsApiPaths.DOI_LOOKUP}/?url=${doiUrl}`, {
       headers: {
         Authorization: `Bearer ${idToken}`,
       },
     });
     if (response.status === StatusCode.OK) {
-      return response.data.title;
+      return response.data;
     } else {
       console.error('error.get_doi'); //TO BE REPLACED
     }

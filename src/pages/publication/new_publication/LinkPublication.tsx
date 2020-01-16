@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { Button } from '@material-ui/core';
 import LinkIcon from '@material-ui/icons/Link';
 
-import { createNewPublicationFromDoi, lookupDoiTitle } from '../../../api/publicationApi';
+import { createNewPublicationFromDoi, getPublicationByDoi } from '../../../api/publicationApi';
 import { RootStore } from '../../../redux/reducers/rootReducer';
 import LinkPublicationForm from './LinkPublicationForm';
 import PublicationExpansionPanel from './PublicationExpansionPanel';
@@ -37,13 +37,16 @@ const LinkPublicationPanel: FC<LinkPublicationPanelProps> = ({ expanded, onChang
   const dispatch = useDispatch();
   const user = useSelector((state: RootStore) => state.user);
 
-  const handleConfirm = () => {
+  const searchDoi = (evt: any) => {
+    console.log(evt);
     dispatch(createNewPublicationFromDoi(doiUrl, user.id, dispatch));
   };
 
   const handleSearch = async (values: any) => {
-    setDoiTitle(await lookupDoiTitle(values.doiUrl));
-    setDoiUrl(values.doiUrl);
+    const publication = await getPublicationByDoi(values.doiUrl);
+    console.log('res:', publication);
+    setDoiTitle(publication.title);
+    // setDoiUrl(values.doiUrl);
   };
 
   return (
@@ -61,7 +64,7 @@ const LinkPublicationPanel: FC<LinkPublicationPanelProps> = ({ expanded, onChang
           <>
             <StyledHeading> {t('publication:heading.publication')}:</StyledHeading>
             <StyledTitle>{doiTitle}</StyledTitle>
-            <Button fullWidth color="primary" variant="contained" onClick={handleConfirm}>
+            <Button fullWidth color="primary" variant="contained" onClick={evt => searchDoi(evt)}>
               {t('common:next')}
             </Button>
           </>
