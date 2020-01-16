@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect, useState } from 'react';
+import React, { FC, useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 
@@ -6,8 +6,8 @@ import { getPublishers } from '../../../../api/publicationChannelApi';
 import { AutoSearch } from '../../../../components/AutoSearch';
 import { searchFailure } from '../../../../redux/actions/searchActions';
 import { Publisher } from '../../../../types/references.types';
-import { PublicationTableNumber, MINIMUM_SEARCH_CHARACTERS } from '../../../../utils/constants';
-import useDebounce from '../../../../utils/hooks/useDebounce';
+import { PublicationTableNumber } from '../../../../utils/constants';
+import { debounce } from '../../../../utils/debounce';
 
 interface PublicationChannelSearchProps {
   clearSearchField: boolean;
@@ -27,38 +27,26 @@ const PublicationChannelSearch: FC<PublicationChannelSearchProps> = ({
   placeholder,
 }) => {
   const [searchResults, setSearchResults] = useState<Publisher[]>([]);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [searching, setSearching] = useState(false);
-
-  const debouncedSearchTerm = useDebounce(searchTerm);
   const dispatch = useDispatch();
   const { t } = useTranslation('feedback');
 
   const search = useCallback(
-    async (searchTerm: string) => {
-      setSearching(true);
+    debounce(async (searchTerm: string) => {
       const response = await getPublishers(searchTerm, publicationTable);
       if (response) {
         setSearchResults(response);
       } else {
         dispatch(searchFailure(t('error.search')));
       }
-    },
+    }),
     [dispatch, t, publicationTable]
   );
-
-  useEffect(() => {
-    if (debouncedSearchTerm && !searching && debouncedSearchTerm.length >= MINIMUM_SEARCH_CHARACTERS) {
-      search(debouncedSearchTerm);
-      setSearching(false);
-    }
-  }, [debouncedSearchTerm, search, searching]);
 
   return (
     <AutoSearch
       clearSearchField={clearSearchField}
       dataTestId={dataTestId}
-      onInputChange={(_, value) => setSearchTerm(value)}
+      onInputChange={value => search(value)}
       searchResults={searchResults}
       setValueFunction={setValueFunction}
       label={label}
