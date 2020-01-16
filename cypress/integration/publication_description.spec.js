@@ -8,6 +8,8 @@ describe('Publication: Description', () => {
     cy.mocklogin();
 
     cy.get('[data-testid=new-publication-button]').click({ force: true });
+
+    // TODO: Change this when DOI-link is used
     cy.get('[data-testid=new-schema-button]').click({ force: true });
 
     cy.get('[data-testid=search_project]')
