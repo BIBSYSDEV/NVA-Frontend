@@ -22,7 +22,6 @@ describe('User', () => {
   });
 
   it('The user should be able to connect to their ORCID account if they are successfully logged into ORCID', () => {
-    window.localStorage.setItem('showAuthorityModal', 'false');
     cy.get('[data-testid=open-orcid-modal]').click({ force: true });
     cy.get('[data-testid=connect-to-orcid]').click({ force: true });
 

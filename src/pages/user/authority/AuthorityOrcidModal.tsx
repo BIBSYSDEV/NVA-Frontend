@@ -1,6 +1,7 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
 import styled from 'styled-components';
 
 import { Button, Checkbox, FormControlLabel } from '@material-ui/core';
@@ -20,6 +21,7 @@ const StyledFooter = styled.div`
 const AuthorityOrcidModal: FC = () => {
   const { t } = useTranslation('common');
   const user = useSelector((store: RootStore) => store.user);
+  const { location } = useHistory();
 
   const noOrcid = user.authority?.orcids.length === 0;
   const noFeide = user.authority?.feideids.length === 0;
@@ -34,6 +36,14 @@ const AuthorityOrcidModal: FC = () => {
   const showOrcidModalRef = useRef(showOrcidModal);
 
   const [openOrcidModal, setOpenOrcidModal] = useState(!noFeide);
+  const [openAuthorityModal, setOpenAuthorityModal] = useState(false);
+
+  useEffect(() => {
+    if (location.pathname !== '/') {
+      setOpenOrcidModal(false);
+      setOpenAuthorityModal(false);
+    }
+  }, [location]);
 
   useEffect(() => {
     setOpenOrcidModal(!noFeide && noOrcid);
@@ -58,7 +68,7 @@ const AuthorityOrcidModal: FC = () => {
 
   return (
     <>
-      {showAuthorityModalRef.current && noFeide && (
+      {showAuthorityModalRef.current && openAuthorityModal && noFeide && (
         <Modal
           dataTestId="connect-author-modal"
           ariaLabelledBy="connect-author-modal"
