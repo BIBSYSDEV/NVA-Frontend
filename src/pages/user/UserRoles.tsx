@@ -13,7 +13,7 @@ const UserRoles: React.FC<UserRolesProps> = ({ user }) => {
   const { t } = useTranslation('profile');
 
   return (
-    <UserCard headerLabel={t('heading.roles')}>
+    <UserCard headingLabel={t('heading.roles')}>
       {user.roles?.map((role: RoleName) => {
         if (role === RoleName.PUBLISHER) {
           return (

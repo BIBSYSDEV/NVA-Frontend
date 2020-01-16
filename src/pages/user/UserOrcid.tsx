@@ -10,7 +10,7 @@ import OrcidModal from './OrcidModal';
 import UserCard from './UserCard';
 import styled from 'styled-components';
 
-const StyledInformationDiv = styled.div`
+const StyledInformation = styled.div`
   margin-bottom: 1rem;
 `;
 
@@ -21,9 +21,8 @@ const UserOrcid: FC = () => {
 
   return (
     <UserCard
-      headerLabel={t('common:orcid')}
-      headerIcon="https://orcid.org/sites/default/files/images/orcid_24x24.png"
-      alternativeText="ORCID iD icon">
+      headingLabel={t('common:orcid')}
+      headingIcon={<img src="https://orcid.org/sites/default/files/images/orcid_24x24.png" alt="ORCID icon" />}>
       {user.orcid ? (
         <LabelTextLine
           dataTestId={'orcid-info'}
@@ -33,7 +32,7 @@ const UserOrcid: FC = () => {
         />
       ) : (
         <>
-          <StyledInformationDiv>{t('profile:orcid.description_why_use_orcid')}</StyledInformationDiv>
+          <StyledInformation>{t('profile:orcid.description_why_use_orcid')}</StyledInformation>
           <ButtonModal
             buttonText={t('profile:orcid.create_or_connect')}
             dataTestId="open-orcid-modal"

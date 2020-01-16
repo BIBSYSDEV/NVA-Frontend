@@ -29,26 +29,22 @@ const StyledIcon = styled.div`
 `;
 
 interface UserCardProps {
-  headerLabel: string;
-  headerIcon?: string;
+  headingLabel: string;
+  headingIcon?: ReactNode;
   alternativeText?: string;
-  subHeaderLabel?: string;
+  subHeadingLabel?: string;
   children?: ReactNode;
 }
 
-const UserCard: React.FC<UserCardProps> = ({ headerLabel, headerIcon, alternativeText, subHeaderLabel, children }) => (
+const UserCard: React.FC<UserCardProps> = ({ headingLabel, headingIcon, subHeadingLabel, children }) => (
   <StyledUserCard>
     <StyledHeading>
       <>
-        {headerIcon && (
-          <StyledIcon>
-            <img src={headerIcon} alt={alternativeText} />
-          </StyledIcon>
-        )}
-        {headerLabel}
+        {headingIcon && <StyledIcon>{headingIcon}</StyledIcon>}
+        {headingLabel}
       </>
     </StyledHeading>
-    {subHeaderLabel && <StyledSubHeading>{subHeaderLabel}</StyledSubHeading>}
+    {subHeadingLabel && <StyledSubHeading>{subHeadingLabel}</StyledSubHeading>}
     {children}
   </StyledUserCard>
 );

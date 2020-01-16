@@ -65,15 +65,15 @@ const User: React.FC = () => {
   return (
     <StyledUserPage>
       <StyledSecondaryUserInfo>
-        <UserCard headerLabel="Bilde" />
-        <UserCard headerLabel={t('heading.contact_info')} />
+        <UserCard headingLabel="Bilde" />
+        <UserCard headingLabel={t('heading.contact_info')} />
         <UserLanguage />
         <UserRoles user={user} />
       </StyledSecondaryUserInfo>
 
       <StyledPrimaryUserInfo>
         <UserInfo user={user} />
-        <UserCard headerLabel={t('heading.author_info')}>
+        <UserCard headingLabel={t('heading.author_info')}>
           {user.authority ? (
             <>
               <p>{t('authority.connected_info')}</p>
@@ -93,7 +93,7 @@ const User: React.FC = () => {
           )}
         </UserCard>
         <UserOrcid />
-        <UserCard headerLabel={t('heading.organizations')} />
+        <UserCard headingLabel={t('heading.organizations')} />
       </StyledPrimaryUserInfo>
     </StyledUserPage>
   );

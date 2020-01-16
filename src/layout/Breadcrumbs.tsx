@@ -4,7 +4,8 @@ import { useLocation } from 'react-router';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { Breadcrumbs as MuiBreadcrumbs, Link as MuiLink } from '@material-ui/core';
+import MuiLink from '@material-ui/core/Link';
+import { Breadcrumbs as MuiBreadcrumbs } from '@material-ui/core';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 
 const StyledBreadcrumbs = styled.div`
