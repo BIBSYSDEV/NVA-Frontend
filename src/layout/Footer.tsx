@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
+import logo from '../resources/images/unit_logo.png';
 
 const StyledFooter = styled.div`
   display: flex;
@@ -21,7 +22,7 @@ const Footer: React.FC = () => {
   return (
     <StyledFooter>
       {t('delivered_by')}
-      <StyledLogo src="unit_logo.png" alt="UNIT logo" />
+      <StyledLogo src={logo} alt="UNIT logo" />
     </StyledFooter>
   );
 };
