@@ -69,7 +69,7 @@ const User: React.FC = () => {
         <UserCard headerLabel={t('heading.contact_info')} />
         <UserLanguage />
         <UserCard headerLabel={t('heading.author_info')}>
-          {user.authority?.feideIds.length > 0 ? (
+          {user.authority?.feideids.length > 0 ? (
             <>
               <p>{t('authority.connected_info')}</p>
               <MuiLink href={user.authority.handle}>{t('authority.see_profile')}</MuiLink>

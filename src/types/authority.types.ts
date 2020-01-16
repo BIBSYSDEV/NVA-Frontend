@@ -1,7 +1,7 @@
 export interface Authority {
   name: string;
   systemControlNumber: string;
-  feideIds: string[];
+  feideids: string[];
   orcids: string[];
   birthDate?: string;
   handle?: string;
@@ -10,7 +10,7 @@ export interface Authority {
 export const emptyAuthority = {
   name: '',
   systemControlNumber: '',
-  feideIds: [],
+  feideids: [],
   orcids: [],
   birthDate: '',
   handle: '',
