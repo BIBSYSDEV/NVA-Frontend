@@ -1,7 +1,7 @@
 import i18n from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 
-import { Language } from '../types/settings.types';
+import { LanguageCodes } from '../types/settings.types';
 import breadcrumbsEn from './en/breadcrumbs.json';
 import commonEn from './en/common.json';
 import disciplinesEn from './en/disciplines.json';
@@ -17,7 +17,7 @@ import profileNb from './nb/profile.json';
 import publicationNb from './nb/publication.json';
 import translationsNb from './nb/translations.json';
 
-export const defaultLanguage = Language.NORWEGIAN_BOKMAL;
+export const defaultLanguage = LanguageCodes.NORWEGIAN_BOKMAL;
 
 i18n.use(LanguageDetector).init({
   resources: {
@@ -52,14 +52,15 @@ i18n.use(LanguageDetector).init({
   },
 });
 
+//TODO: RENAME TO f.ex. USER_LANGUAGES
 export const languages = [
   {
     name: 'English',
-    code: Language.ENGLISH,
+    code: LanguageCodes.ENGLISH,
   },
   {
     name: 'Norsk (bokmål)',
-    code: Language.NORWEGIAN_BOKMAL,
+    code: LanguageCodes.NORWEGIAN_BOKMAL,
   },
 ];
 
