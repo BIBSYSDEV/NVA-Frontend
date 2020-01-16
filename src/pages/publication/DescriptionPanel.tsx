@@ -184,7 +184,12 @@ const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublicat
                   {getObjectValueByFieldName(values, name).map(
                     (project: Project, i: number) =>
                       project && (
-                        <ProjectRow key={project.cristinProjectId} project={project} onClickRemove={() => remove(i)} />
+                        <ProjectRow
+                          key={project.cristinProjectId}
+                          project={project}
+                          onClickRemove={() => remove(i)}
+                          dataTestId={`selected_project${i}`}
+                        />
                       )
                   )}
                 </>
