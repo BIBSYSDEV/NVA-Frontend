@@ -6,6 +6,7 @@ import AutoSearch from '../../../components/AutoSearch';
 import { Project } from '../../../types/project.types';
 import useDebounce from '../../../utils/hooks/useDebounce';
 import { MINIMUM_SEARCH_CHARACTERS } from '../../../utils/constants';
+import { useFormikContext } from 'formik';
 
 interface ProjectSearchProps {
   dataTestId: string;
@@ -17,6 +18,7 @@ const ProjectSearch: FC<ProjectSearchProps> = ({ dataTestId, setValueFunction, p
   const [searchResults, setSearchResults] = useState<Project[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [searching, setSearching] = useState(false);
+  const { values } = useFormikContext();
 
   const debouncedSearchTerm = useDebounce(searchTerm);
   const dispatch = useDispatch();
@@ -26,8 +28,15 @@ const ProjectSearch: FC<ProjectSearchProps> = ({ dataTestId, setValueFunction, p
       setSearching(true);
       const response = await searchProjectsByTitle(searchTerm, dispatch);
       if (response) {
+        const unselectedProjects = response.filter(
+          (project: any) =>
+            !values.projects.some(
+              (selectedProject: any) => selectedProject.cristinProjectId === project.cristinProjectId
+            )
+        );
+
         setSearchResults(
-          response.map((project: Project) => {
+          unselectedProjects.map((project: Project) => {
             return { ...project, title: project.titles?.[0]?.title };
           })
         );
@@ -35,7 +44,7 @@ const ProjectSearch: FC<ProjectSearchProps> = ({ dataTestId, setValueFunction, p
         setSearchResults([]);
       }
     },
-    [dispatch]
+    [dispatch, values.projects]
   );
 
   useEffect(() => {
