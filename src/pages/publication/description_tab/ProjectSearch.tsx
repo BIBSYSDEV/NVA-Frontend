@@ -29,7 +29,7 @@ const ProjectSearch: FC<ProjectSearchProps> = ({ dataTestId, setValueFunction, p
       const response = await searchProjectsByTitle(searchTerm, dispatch);
       if (response) {
         const unselectedProjects = response.filter(
-          (project: any) =>
+          (project: Project) =>
             !values.projects.some(
               (selectedProject: any) => selectedProject.cristinProjectId === project.cristinProjectId
             )
