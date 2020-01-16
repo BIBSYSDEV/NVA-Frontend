@@ -23,7 +23,7 @@ const UserOrcid: FC = () => {
     <UserCard
       headerLabel={t('common:orcid')}
       headerIcon="https://orcid.org/sites/default/files/images/orcid_24x24.png"
-      alt="ORCID iD icon">
+      alternativeText="ORCID iD icon">
       {user.orcid ? (
         <LabelTextLine
           dataTestId={'orcid-info'}

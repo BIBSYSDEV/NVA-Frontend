@@ -31,18 +31,18 @@ const StyledIcon = styled.div`
 interface UserCardProps {
   headerLabel: string;
   headerIcon?: string;
-  alt?: string;
+  alternativeText?: string;
   subHeaderLabel?: string;
   children?: ReactNode;
 }
 
-const UserCard: React.FC<UserCardProps> = ({ headerLabel, headerIcon, alt, subHeaderLabel, children }) => (
+const UserCard: React.FC<UserCardProps> = ({ headerLabel, headerIcon, alternativeText, subHeaderLabel, children }) => (
   <StyledUserCard>
     <StyledHeading>
       <>
         {headerIcon && (
           <StyledIcon>
-            <img src={headerIcon} alt={alt} />
+            <img src={headerIcon} alt={alternativeText} />
           </StyledIcon>
         )}
         {headerLabel}
