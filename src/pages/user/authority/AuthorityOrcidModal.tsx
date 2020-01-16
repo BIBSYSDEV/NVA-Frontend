@@ -22,7 +22,7 @@ const AuthorityOrcidModal: FC = () => {
   const user = useSelector((store: RootStore) => store.user);
 
   const noOrcid = user.authority?.orcids.length === 0;
-  const noFeideId = user.authority?.feideids.length === 0;
+  const noFeide = user.authority?.feideids.length === 0;
 
   const [doNotShowAuthorityModalAgain, setDoNotShowAuthorityModalAgain] = useState(false);
   const [doNotShowOrcidModalAgain, setDoNotShowOrcidModalAgain] = useState(false);
@@ -33,11 +33,11 @@ const AuthorityOrcidModal: FC = () => {
   const showAuthorityModalRef = useRef(showAuthorityModal);
   const showOrcidModalRef = useRef(showOrcidModal);
 
-  const [openOrcidModal, setOpenOrcidModal] = useState(!noFeideId);
+  const [openOrcidModal, setOpenOrcidModal] = useState(!noFeide);
 
   useEffect(() => {
-    setOpenOrcidModal(!noFeideId && noOrcid);
-  }, [noFeideId, noOrcid]);
+    setOpenOrcidModal(!noFeide && noOrcid);
+  }, [noFeide, noOrcid]);
 
   const handleShowAuthorityModal = (event: React.ChangeEvent<HTMLInputElement>) => {
     setDoNotShowAuthorityModalAgain(event.target.checked);
@@ -58,7 +58,7 @@ const AuthorityOrcidModal: FC = () => {
 
   return (
     <>
-      {showAuthorityModalRef.current && noFeideId && (
+      {showAuthorityModalRef.current && noFeide && (
         <Modal
           dataTestId="connect-author-modal"
           ariaLabelledBy="connect-author-modal"

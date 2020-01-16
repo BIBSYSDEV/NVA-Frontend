@@ -33,7 +33,7 @@ export const getAuthorities = async (name: string, dispatch: Dispatch) => {
   }
 };
 
-export const getAuthorityByFeideId = async (feideid: string, dispatch: Dispatch) => {
+export const getAuthorityByFeide = async (feideid: string, dispatch: Dispatch) => {
   const url = encodeURI(`/authority?name=${feideid}`);
 
   // remove when Authorization headers are set for all requests
@@ -59,7 +59,7 @@ export const getAuthorityByFeideId = async (feideid: string, dispatch: Dispatch)
 };
 
 // TODO: handle 204 from backend
-export const updateFeideIdForAuthority = async (feideid: string, systemControlNumber: string, dispatch: Dispatch) => {
+export const updateFeideForAuthority = async (feideid: string, systemControlNumber: string, dispatch: Dispatch) => {
   if (!feideid) {
     return;
   }

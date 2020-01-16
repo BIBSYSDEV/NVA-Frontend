@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { getAuthorityByFeideId } from './api/authorityApi';
+import { getAuthorityByFeide } from './api/authorityApi';
 import { getCurrentAuthenticatedUser } from './api/userApi';
 import Breadcrumbs from './layout/Breadcrumbs';
 import Footer from './layout/Footer';
@@ -79,7 +79,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     const getAuthority = async () => {
-      const authority = await getAuthorityByFeideId(user.id, dispatch);
+      const authority = await getAuthorityByFeide(user.id, dispatch);
       if (authority) {
         dispatch(setAuthorityData(authority));
       }
