@@ -4,7 +4,7 @@ describe('Publication: Description', () => {
     cy.server();
   });
 
-  it('The user should be able to fill out the form for book type', () => {
+  it('The user should be able to add and remove projects', () => {
     cy.mocklogin();
 
     cy.get('[data-testid=new-publication-button]').click({ force: true });
