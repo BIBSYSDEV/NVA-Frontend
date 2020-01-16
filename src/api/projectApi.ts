@@ -11,7 +11,7 @@ export enum ProjectsApiPaths {
 }
 
 export const searchProjectsByTitle = async (query: string, dispatch: Dispatch) => {
-  const titleQuery = `title=${query}`;
+  const titleQuery = `title=${encodeURIComponent(query)}`;
   try {
     const idToken = await getIdToken();
     const response = await Axios.get(`${ProjectsApiPaths.PROJECTS}?${titleQuery}`, {
