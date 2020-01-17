@@ -3,6 +3,7 @@ export interface Reference {
   journalArticle?: JournalArticle;
   book?: Book;
   report?: Report;
+  degree?: Degree;
 }
 
 interface JournalArticle {
@@ -32,6 +33,13 @@ interface Report {
   publisher: Publisher;
   isbn: string;
   numberOfPages: string;
+  series: Publisher;
+}
+
+interface Degree {
+  type: string;
+  publisher: Publisher;
+  specialization: string;
   series: Publisher;
 }
 
@@ -79,11 +87,19 @@ const emptyReportReference: Report = {
   series: emptyPublisher,
 };
 
+const emptyDegreeReference: Degree = {
+  type: '',
+  publisher: emptyPublisher,
+  specialization: '',
+  series: emptyPublisher,
+};
+
 export const emptyReference: Reference = {
   type: '',
   journalArticle: emptyJournalArticleReference,
   book: emptyBookReference,
   report: emptyReportReference,
+  degree: emptyDegreeReference,
 };
 
 type EnumDictionary<T extends string, U> = {
@@ -146,6 +162,18 @@ export const reportTypes = [
   { label: 'references.working_paper', value: ReportTypeValue.WORKING_PAPER },
 ];
 
+export enum DegreeTypeValue {
+  BACHELOR = 'bachelor',
+  MASTER = 'master',
+  DOCTORATE = 'doctorate',
+}
+
+export const degreeTypes = [
+  { label: 'references.bachelor', value: DegreeTypeValue.BACHELOR },
+  { label: 'references.master', value: DegreeTypeValue.MASTER },
+  { label: 'references.doctorate', value: DegreeTypeValue.DOCTORATE },
+];
+
 // Enums representing name of fields used by Formik
 export enum ReferenceFieldNames {
   REFERENCE_TYPE = 'reference.type',
@@ -179,4 +207,11 @@ export enum ReportFieldNames {
   ISBN = 'reference.report.isbn',
   NUMBER_OF_PAGES = 'reference.report.numberOfPages',
   SERIES = 'reference.report.series',
+}
+
+export enum DegreeFieldNames {
+  TYPE = 'reference.degree.type',
+  PUBLISHER = 'reference.degree.publisher',
+  SPECIALISATION = 'reference.degree.numberOfPages',
+  SERIES = 'reference.degree.series',
 }

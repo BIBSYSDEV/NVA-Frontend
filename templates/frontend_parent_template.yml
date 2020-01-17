@@ -29,13 +29,13 @@ Resources:
   FrontendBucketStack:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: 'https://{{resolve:ssm:nva-frontend-template-bucket}}.s3-eu-west-1.amazonaws.com/s3_template.yml'
+      TemplateURL: 'https://{{resolve:ssm:nva-frontend-template-bucket:1}}.s3-eu-west-1.amazonaws.com/s3_template.yml'
       TimeoutInMinutes: 60
   CloudfrontStack:
     DependsOn: FrontendBucketStack
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: 'https://{{resolve:ssm:nva-frontend-template-bucket}}.s3-eu-west-1.amazonaws.com/cloudfront_template.yml'
+      TemplateURL: 'https://{{resolve:ssm:nva-frontend-template-bucket:1}}.s3-eu-west-1.amazonaws.com/cloudfront_template.yml'
       TimeoutInMinutes: 60
       Parameters:
         NvaFrontendBucketName: !GetAtt FrontendBucketStack.Outputs.BucketName
@@ -43,7 +43,7 @@ Resources:
     DependsOn: CloudfrontStack
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: 'https://{{resolve:ssm:nva-frontend-template-bucket}}.s3-eu-west-1.amazonaws.com/pipeline_template.yml'
+      TemplateURL: 'https://{{resolve:ssm:nva-frontend-template-bucket:1}}.s3-eu-west-1.amazonaws.com/pipeline_template.yml'
       TimeoutInMinutes: 60
       Parameters:
         GitHubOAuthToken: '{{resolve:ssm:nva-githubtoken:1}}'
