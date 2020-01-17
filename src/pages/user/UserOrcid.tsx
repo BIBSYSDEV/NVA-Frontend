@@ -1,15 +1,15 @@
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
+import styled from 'styled-components';
 
 import ButtonModal from '../../components/ButtonModal';
 import LabelTextLine from '../../components/LabelTextLine';
 import { RootStore } from '../../redux/reducers/rootReducer';
+import orcidIcon from '../../resources/images/orcid_24x24.png';
 import { ORCID_BASE_URL } from '../../utils/constants';
 import OrcidModal from './OrcidModal';
 import UserCard from './UserCard';
-import styled from 'styled-components';
-import orcidIcon from '../../resources/images/orcid_24x24.png';
 
 const StyledInformation = styled.div`
   margin-bottom: 1rem;
@@ -18,17 +18,23 @@ const StyledInformation = styled.div`
 const UserOrcid: FC = () => {
   const { t } = useTranslation();
   const user = useSelector((state: RootStore) => state.user);
-  const OrcidLink = `${ORCID_BASE_URL}/${user.orcid}`;
+  const listOfOrcids = user.authority?.orcids;
 
   return (
     <UserCard headingLabel={t('common:orcid')} headingIcon={<img src={orcidIcon} alt="ORCID icon" />}>
-      {user.orcid ? (
-        <LabelTextLine
-          dataTestId={'orcid-info'}
-          label={t('profile:orcid.your_orcid')}
-          text={OrcidLink}
-          externalLink={OrcidLink}
-        />
+      {listOfOrcids?.length > 0 ? (
+        listOfOrcids.map((orcid: string) => {
+          const orcidLink = `${ORCID_BASE_URL}/${orcid}`;
+          return (
+            <LabelTextLine
+              key={orcid}
+              dataTestId={'orcid-info'}
+              label={t('profile:orcid.your_orcid')}
+              text={orcidLink}
+              externalLink={orcidLink}
+            />
+          );
+        })
       ) : (
         <>
           <StyledInformation>{t('profile:orcid.description_why_use_orcid')}</StyledInformation>

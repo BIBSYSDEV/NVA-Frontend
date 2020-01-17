@@ -1,8 +1,17 @@
 export interface Authority {
   name: string;
-  scn: string;
-  feideId: string;
-  orcId: string;
-  birthDate: string;
-  handle: string;
+  systemControlNumber: string;
+  feideids: string[];
+  orcids: string[];
+  birthDate?: string;
+  handle?: string;
 }
+
+export const emptyAuthority = {
+  name: '',
+  systemControlNumber: '',
+  feideids: [],
+  orcids: [],
+  birthDate: '',
+  handle: '',
+};
