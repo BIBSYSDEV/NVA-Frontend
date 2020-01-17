@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
 import styled from 'styled-components';
 
-import { Button } from '@material-ui/core';
+import { Button, Link } from '@material-ui/core';
 
 import { ORCID_SIGN_IN_URL, USE_MOCK_DATA } from '../../utils/constants';
 
@@ -53,7 +53,7 @@ const OrcidModal: FC = () => {
       <StyledSubHeading>{'orcid.what'}</StyledSubHeading>
       <p>{t('orcid.description_what_is_orcid')}</p>
       <p>
-        {t('orcid.learn_more')} <a href="https://orcid.org">orcid.org</a>
+        {t('orcid.learn_more')} <Link href="https://orcid.org">orcid.org</Link>
       </p>
     </>
   );

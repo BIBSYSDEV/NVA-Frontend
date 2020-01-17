@@ -31,7 +31,7 @@ const StyledUserPage = styled.div`
 const StyledSecondaryUserInfo = styled.div`
   display: grid;
   grid-area: secondary-info;
-  grid-template-areas: 'profile-image' 'contact-info' 'language' 'author-info';
+  grid-template-areas: 'profile-image' 'contact-info' 'language' 'roles';
   grid-row-gap: 3rem;
 `;
 
@@ -65,10 +65,15 @@ const User: React.FC = () => {
   return (
     <StyledUserPage>
       <StyledSecondaryUserInfo>
-        <UserCard headerLabel="Bilde" />
-        <UserCard headerLabel={t('heading.contact_info')} />
+        <UserCard headingLabel={t('picture')} />
+        <UserCard headingLabel={t('heading.contact_info')} />
         <UserLanguage />
-        <UserCard headerLabel={t('heading.author_info')}>
+        <UserRoles user={user} />
+      </StyledSecondaryUserInfo>
+
+      <StyledPrimaryUserInfo>
+        <UserInfo user={user} />
+        <UserCard headingLabel={t('heading.author_info')}>
           {user.authority ? (
             <>
               <p>{t('authority.connected_info')}</p>
@@ -87,13 +92,8 @@ const User: React.FC = () => {
             </>
           )}
         </UserCard>
-      </StyledSecondaryUserInfo>
-
-      <StyledPrimaryUserInfo>
-        <UserInfo user={user} />
-        <UserRoles user={user} />
-        <UserCard headerLabel={t('heading.organizations')} />
         <UserOrcid />
+        <UserCard headingLabel={t('heading.organizations')} />
       </StyledPrimaryUserInfo>
     </StyledUserPage>
   );

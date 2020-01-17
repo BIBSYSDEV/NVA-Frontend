@@ -8,8 +8,8 @@ const StyledLine = styled.div`
   padding-top: 0.8rem;
   display: grid;
   @media only screen and (min-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
-    grid-template-areas: 'icon label text';
-    grid-template-columns: auto 1fr 6fr;
+    grid-template-areas: 'icon label' 'text text';
+    grid-template-columns: auto 1fr;
   }
   grid-template-areas: 'icon label .' 'text text text';
   grid-template-columns: auto 3fr;
