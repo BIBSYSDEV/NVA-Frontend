@@ -7,7 +7,6 @@ import { API_URL, ORCID_USER_INFO_URL } from '../utils/constants';
 import mockProjects from '../utils/testfiles/projects_real.json';
 import mockDoiLookupResponse from '../utils/testfiles/doi_lookup_response.json';
 import mockAuthoritiesResponse from '../utils/testfiles/mock_authorities_response.json';
-import mockDoiPublication from '../utils/testfiles/publication_generated_from_doi.json';
 import mockPublications from '../utils/testfiles/publications_45_random_results_generated.json';
 import mockNsdPublisers from '../utils/testfiles/publishersFromNsd.json';
 import { AuthorityApiPaths } from './authorityApi';
@@ -40,7 +39,7 @@ export const interceptRequestsOnMock = () => {
   mock.onGet(new RegExp(`${PublicationsApiPaths.SEARCH}/*`)).reply(200, mockPublications);
 
   // Create publication from doi
-  mock.onPost(new RegExp(`${PublicationsApiPaths.DOI}/*`)).reply(200, mockDoiPublication);
+  mock.onPost(new RegExp(`${PublicationsApiPaths.CREATE_WITH_DOI}`)).reply(200, mockPublications[0]);
 
   // lookup DOI
   mock.onGet(new RegExp(`${PublicationsApiPaths.DOI_LOOKUP}/*`)).reply(200, mockDoiLookupResponse);
