@@ -58,7 +58,6 @@ const LinkPublicationPanel: FC<LinkPublicationPanelProps> = ({ expanded, onChang
     }
     setLoading(false);
   };
-  console.log('render');
 
   return (
     <PublicationExpansionPanel
