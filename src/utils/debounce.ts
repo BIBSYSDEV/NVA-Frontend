@@ -1,7 +1,7 @@
-import { DEBOUNCE_INTERVAL } from './constants';
+import { DEBOUNCE_INTERVAL_INPUT } from './constants';
 
 // Use any function to be debounced as first argument
-export const debounce = (func: (args: any) => void, delay: number = DEBOUNCE_INTERVAL) => {
+export const debounce = (func: (args: any) => void, delay: number = DEBOUNCE_INTERVAL_INPUT) => {
   let timeoutId: number;
   return (...args: any) => {
     clearInterval(timeoutId);
