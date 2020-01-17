@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 import { Button } from '@material-ui/core';
 
-import { getAuthorities, updateFeideForAuthority } from '../../../api/authorityApi';
+import { updateFeideForAuthority } from '../../../api/authorityApi';
 import { setOrcid } from '../../../redux/actions/orcidActions';
 import { setAuthorityData } from '../../../redux/actions/userActions';
 import { RootStore } from '../../../redux/reducers/rootReducer';
@@ -36,15 +36,10 @@ export const ConnectAuthority: React.FC = () => {
   const userName = user.name;
 
   useEffect(() => {
-    const fetchAuthorities = async () => {
-      const retrievedAuthorities = await getAuthorities(userName, user.id, dispatch);
-      setMatchingAuthorities(retrievedAuthorities);
-    };
-
-    if (userName) {
-      fetchAuthorities();
+    if (user.possibleAuthorities.length > 0) {
+      setMatchingAuthorities(user.possibleAuthorities);
     }
-  }, [dispatch, userName, user.id]);
+  }, [user.possibleAuthorities]);
 
   const setOrcidAndFeide = async () => {
     const selectedAuthority = matchingAuthorities.find(

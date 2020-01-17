@@ -2,7 +2,7 @@ import Axios from 'axios';
 import { Dispatch } from 'redux';
 
 import { addNotification } from '../redux/actions/notificationActions';
-import { setAuthorityData } from '../redux/actions/userActions';
+import { setAuthorityData, setPossibleAuthories } from '../redux/actions/userActions';
 import i18n from '../translations/i18n';
 import { Authority } from '../types/authority.types';
 import { StatusCode } from '../utils/constants';
@@ -31,6 +31,7 @@ export const getAuthorities = async (name: string, feideId: string, dispatch: Di
       if (filteredAuthorities.length === 1) {
         dispatch(setAuthorityData(filteredAuthorities[0]));
       } else {
+        dispatch(setPossibleAuthories(response.data));
         return response.data;
       }
     } else {
