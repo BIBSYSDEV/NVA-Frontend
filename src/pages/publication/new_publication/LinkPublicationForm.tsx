@@ -36,7 +36,7 @@ const LinkPublicationForm: React.FC<LinkPublicationFormProps> = ({ handleSearch 
         setSubmitting(false);
       }}
       initialValues={{
-        doiUrl: 'https://doi.org/10.1126/science.169.3946.635',
+        doiUrl: '',
       }}
       validationSchema={publicationSchema}>
       <Form>

@@ -34,6 +34,7 @@ const LinkPublicationPanel: FC<LinkPublicationPanelProps> = ({ expanded, onChang
   const [doiUrl, setDoiUrl] = useState('');
   const [doiTitle, setDoiTitle] = useState('');
   const [loading, setLoading] = useState(false);
+  const [noHit, setNoHit] = useState(false);
   const dispatch = useDispatch();
 
   const createPublication = async () => {
@@ -44,14 +45,20 @@ const LinkPublicationPanel: FC<LinkPublicationPanelProps> = ({ expanded, onChang
 
   const handleSearch = async (values: any) => {
     setLoading(true);
+    setNoHit(false);
     setDoiTitle('');
     setDoiUrl('');
 
     const publication = await getPublicationByDoi(values.doiUrl);
-    setDoiTitle(publication.title);
-    setDoiUrl(publication.id);
+    if (publication) {
+      setDoiTitle(publication.title);
+      setDoiUrl(publication.id);
+    } else {
+      setNoHit(true);
+    }
     setLoading(false);
   };
+  console.log('render');
 
   return (
     <PublicationExpansionPanel
@@ -65,6 +72,7 @@ const LinkPublicationPanel: FC<LinkPublicationPanelProps> = ({ expanded, onChang
         {t('publication:publication.link_publication_description')}
         <LinkPublicationForm handleSearch={handleSearch} />
         {loading && <p>{t('common:loading')}...</p>}
+        {noHit && <p>{t('common:no_hits')}</p>}
         {doiTitle && (
           <>
             <StyledHeading> {t('publication:heading.publication')}:</StyledHeading>
