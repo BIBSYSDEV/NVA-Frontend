@@ -40,7 +40,6 @@ const LinkPublicationPanel: FC<LinkPublicationPanelProps> = ({ expanded, onChang
   const createPublication = async () => {
     // eslint-disable-next-line
     const createdPublication = await createNewPublicationFromDoi(doiUrl, dispatch);
-    // TODO: If valid link: Open form prefilled with values from createdPublicaiton (NP-229)
   };
 
   const handleSearch = async (values: any) => {

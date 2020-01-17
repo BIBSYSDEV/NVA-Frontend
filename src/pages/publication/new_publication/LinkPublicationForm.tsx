@@ -21,12 +21,12 @@ interface LinkPublicationFormProps {
 }
 
 const LinkPublicationForm: React.FC<LinkPublicationFormProps> = ({ handleSearch }) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('publication');
 
   const publicationSchema = Yup.object().shape({
     doiUrl: Yup.string()
-      .url(t('publication:feedback.invalid_url'))
-      .required(t('publication:feedback.required_field')),
+      .url(t('feedback.invalid_url'))
+      .required(t('feedback.required_field')),
   });
 
   return (
@@ -46,7 +46,7 @@ const LinkPublicationForm: React.FC<LinkPublicationFormProps> = ({ handleSearch 
             name="doiUrl"
             variant="outlined"
             fullWidth
-            label={t('publication:publication.link')}
+            label={t('publication.link')}
             component={TextField}
           />
           <Button color="primary" variant="contained" type="submit">
