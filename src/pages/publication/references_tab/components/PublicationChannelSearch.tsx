@@ -34,7 +34,7 @@ const PublicationChannelSearch: FC<PublicationChannelSearchProps> = ({
     debounce(async (searchTerm: string) => {
       const response = await getPublishers(searchTerm, publicationTable);
       if (response) {
-        setSearchResults(response);
+        setSearchResults(response.filter((element: Publisher) => element.title));
       } else {
         dispatch(searchFailure(t('error.search')));
       }

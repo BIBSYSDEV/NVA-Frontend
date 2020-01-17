@@ -30,9 +30,11 @@ const ProjectSearch: FC<ProjectSearchProps> = ({ dataTestId, setValueFunction, p
         );
 
         setSearchResults(
-          unselectedProjects.map((project: Project) => {
-            return { ...project, title: project.titles?.[0]?.title };
-          })
+          unselectedProjects
+            .filter((project: Project) => project.titles?.length)
+            .map((project: Project) => {
+              return { ...project, title: project.titles?.[0]?.title };
+            })
         );
       } else {
         setSearchResults([]);
