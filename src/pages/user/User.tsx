@@ -94,7 +94,9 @@ const User: React.FC = () => {
           )}
         </UserCard>
         <UserOrcid />
-        <UserCard headingLabel={t('heading.organizations')} />
+        <UserCard headingLabel={t('heading.organizations')}>
+          <UserOrganizations user={user} />
+        </UserCard>
       </StyledPrimaryUserInfo>
     </StyledUserPage>
   );
