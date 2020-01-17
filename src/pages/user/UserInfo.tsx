@@ -13,7 +13,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
   const { t } = useTranslation();
 
   return (
-    <UserCard headerLabel={t('profile:heading.user_info')} subHeaderLabel={t('profile:info_feide')}>
+    <UserCard headingLabel={t('profile:heading.user_info')} subHeadingLabel={t('profile:info_feide')}>
       <LabelTextLine dataTestId="user-name" label={t('common:name')} text={user.name} />
       <LabelTextLine dataTestId="user-id" label={t('profile:id')} text={user.id} />
       <LabelTextLine dataTestId="user-email" label={t('profile:email')} text={user.email} />

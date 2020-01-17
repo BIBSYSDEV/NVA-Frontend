@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Link as MuiLink } from '@material-ui/core';
 import styled from 'styled-components';
 
 const StyledLine = styled.div`
@@ -29,14 +30,14 @@ const LabelTextLine: React.FC<LabelTextLineProps> = ({ label, text, dataTestId, 
   <StyledLine>
     <StyledLabel>{label}:</StyledLabel>
     {externalLink && (
-      <a href={externalLink} target="_blank" rel="noopener noreferrer">
+      <MuiLink href={externalLink} target="_blank" rel="noopener noreferrer">
         <StyledText data-testid={dataTestId}>{text}</StyledText>
-      </a>
+      </MuiLink>
     )}
     {internalLink && (
-      <Link to={internalLink}>
+      <MuiLink component={Link} to={internalLink}>
         <StyledText data-testid={dataTestId}>{text}</StyledText>
-      </Link>
+      </MuiLink>
     )}
     {!(internalLink || externalLink) && <StyledText data-testid={dataTestId}>{text}</StyledText>}
   </StyledLine>
