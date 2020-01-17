@@ -35,7 +35,7 @@ const AuthorityOrcidModal: FC = () => {
   const showAuthorityModalRef = useRef(showAuthorityModal);
   const showOrcidModalRef = useRef(showOrcidModal);
 
-  const [openOrcidModal, setOpenOrcidModal] = useState(!noFeide);
+  const [openOrcidModal, setOpenOrcidModal] = useState(!noFeide && noOrcid);
   const [openAuthorityModal, setOpenAuthorityModal] = useState(noFeide);
 
   useEffect(() => {

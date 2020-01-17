@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 import { Button } from '@material-ui/core';
 
-import { getAuthorities, updateFeideForAuthority as updateFeideidForAuthority } from '../../../api/authorityApi';
+import { getAuthorities, updateFeideForAuthority } from '../../../api/authorityApi';
 import { setOrcid } from '../../../redux/actions/orcidActions';
 import { setAuthorityData } from '../../../redux/actions/userActions';
 import { RootStore } from '../../../redux/reducers/rootReducer';
@@ -52,9 +52,9 @@ export const ConnectAuthority: React.FC = () => {
     );
 
     if (selectedAuthority && user.authority) {
-      selectedAuthority.orcids && dispatch(setOrcid(selectedAuthority.orcids));
+      selectedAuthority.orcids.length > 0 && dispatch(setOrcid(selectedAuthority.orcids));
 
-      const updatedAuthority = await updateFeideidForAuthority(user.id, user.authority.systemControlNumber, dispatch);
+      const updatedAuthority = await updateFeideForAuthority(user.id, user.authority.systemControlNumber, dispatch);
       dispatch(setAuthorityData(updatedAuthority));
     }
   };
