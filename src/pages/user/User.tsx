@@ -48,6 +48,9 @@ const User: React.FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
+  const hasHandles = user.authority?.handles?.length > 0;
+  const hasFeide = user.authority?.feideids?.length > 0;
+
   useEffect(() => {
     const orcidAccessToken = new URLSearchParams(location.hash.replace('#', '?')).get('access_token') || '';
     if (orcidAccessToken) {
@@ -74,10 +77,10 @@ const User: React.FC = () => {
       <StyledPrimaryUserInfo>
         <UserInfo user={user} />
         <UserCard headingLabel={t('heading.author_info')}>
-          {user.authority?.feideids.length > 0 ? (
+          {hasFeide ? (
             <>
               <p>{t('authority.connected_info')}</p>
-              <MuiLink href={user.authority.handle}>{t('authority.see_profile')}</MuiLink>
+              {hasHandles && <MuiLink href={user.authority.handles?.[0]}>{t('authority.see_profile')}</MuiLink>}
             </>
           ) : (
             <>

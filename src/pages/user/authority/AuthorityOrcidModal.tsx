@@ -25,6 +25,7 @@ const AuthorityOrcidModal: FC = () => {
 
   const noOrcid = user.authority?.orcids.length === 0;
   const noFeide = user.authority?.feideids.length === 0;
+  const onHomePage = location.pathname === '/';
 
   const [doNotShowAuthorityModalAgain, setDoNotShowAuthorityModalAgain] = useState(false);
   const [doNotShowOrcidModalAgain, setDoNotShowOrcidModalAgain] = useState(false);
@@ -35,19 +36,13 @@ const AuthorityOrcidModal: FC = () => {
   const showAuthorityModalRef = useRef(showAuthorityModal);
   const showOrcidModalRef = useRef(showOrcidModal);
 
-  const [openOrcidModal, setOpenOrcidModal] = useState(!noFeide && noOrcid);
-  const [openAuthorityModal, setOpenAuthorityModal] = useState(noFeide);
+  const [openOrcidModal, setOpenOrcidModal] = useState(!noFeide && noOrcid && onHomePage);
+  const [openAuthorityModal, setOpenAuthorityModal] = useState(noFeide && onHomePage);
 
   useEffect(() => {
-    if (location.pathname !== '/') {
-      setOpenOrcidModal(false);
-      setOpenAuthorityModal(false);
-    }
-  }, [location]);
-
-  useEffect(() => {
-    setOpenOrcidModal(!noFeide && noOrcid);
-  }, [noFeide, noOrcid]);
+    setOpenOrcidModal(!noFeide && noOrcid && onHomePage);
+    setOpenAuthorityModal(noFeide && onHomePage);
+  }, [noFeide, noOrcid, onHomePage]);
 
   const handleShowAuthorityModal = (event: React.ChangeEvent<HTMLInputElement>) => {
     setDoNotShowAuthorityModalAgain(event.target.checked);
@@ -68,7 +63,7 @@ const AuthorityOrcidModal: FC = () => {
 
   return (
     <>
-      {showAuthorityModalRef.current && openAuthorityModal && noFeide && (
+      {showAuthorityModalRef.current && openAuthorityModal && (
         <Modal
           dataTestId="connect-author-modal"
           ariaLabelledBy="connect-author-modal"
