@@ -6,7 +6,7 @@ import styled from 'styled-components';
 
 import { Link as MuiLink } from '@material-ui/core';
 
-import { updateOrcIdForAuthority } from '../../api/authorityApi';
+import { updateOrcidForAuthority } from '../../api/authorityApi';
 import { getOrcidInfo } from '../../api/external/orcidApi';
 import ButtonModal from '../../components/ButtonModal';
 import { RootStore } from '../../redux/reducers/rootReducer';
@@ -58,7 +58,7 @@ const User: React.FC = () => {
 
   useEffect(() => {
     if (user.authority?.orcids.length > 0) {
-      updateOrcIdForAuthority(user.authority?.orcids[0], user.authority.systemControlNumber, dispatch);
+      updateOrcidForAuthority(user.authority?.orcids[0], user.authority.systemControlNumber, dispatch);
     }
   }, [user.authority, dispatch]);
 

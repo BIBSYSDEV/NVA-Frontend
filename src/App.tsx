@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { getAuthorityByFeide } from './api/authorityApi';
+import { getAuthorities } from './api/authorityApi';
 import { getCurrentAuthenticatedUser } from './api/userApi';
 import Breadcrumbs from './layout/Breadcrumbs';
 import Footer from './layout/Footer';
@@ -19,7 +19,7 @@ import Search from './pages/search/Search';
 import AuthorityOrcidModal from './pages/user/authority/AuthorityOrcidModal';
 import User from './pages/user/User';
 import Workspace from './pages/workspace/Workspace';
-import { setAuthorityData, setUser } from './redux/actions/userActions';
+import { setUser } from './redux/actions/userActions';
 import { RootStore } from './redux/reducers/rootReducer';
 import { awsConfig } from './utils/aws-config';
 import { API_URL, DEBOUNCE_INTERVAL_MODAL, USE_MOCK_DATA } from './utils/constants';
@@ -79,15 +79,12 @@ const App: React.FC = () => {
 
   useEffect(() => {
     const getAuthority = async () => {
-      const authority = await getAuthorityByFeide(user.id, dispatch);
-      if (authority) {
-        dispatch(setAuthorityData(authority));
-      }
+      await getAuthorities(user.name, user.id, dispatch);
     };
-    if (user.id && !USE_MOCK_DATA) {
+    if (user.name && !user.authority?.name && !USE_MOCK_DATA) {
       getAuthority();
     }
-  }, [dispatch, user.id]);
+  }, [dispatch, user.name, user.id, user.authority]);
 
   useEffect(() => {
     setTimeout(() => {

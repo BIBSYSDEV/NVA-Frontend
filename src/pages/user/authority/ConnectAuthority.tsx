@@ -33,18 +33,18 @@ export const ConnectAuthority: React.FC = () => {
   const user = useSelector((store: RootStore) => store.user);
   const dispatch = useDispatch();
   const { t } = useTranslation('profile');
-  const searchTerm = user.name;
+  const userName = user.name;
 
   useEffect(() => {
     const fetchAuthorities = async () => {
-      const retrievedAuthorities = await getAuthorities(searchTerm, dispatch);
+      const retrievedAuthorities = await getAuthorities(userName, user.id, dispatch);
       setMatchingAuthorities(retrievedAuthorities);
     };
 
-    if (searchTerm) {
+    if (userName) {
       fetchAuthorities();
     }
-  }, [dispatch, searchTerm]);
+  }, [dispatch, userName, user.id]);
 
   const setOrcidAndFeide = async () => {
     const selectedAuthority = matchingAuthorities.find(
@@ -62,7 +62,7 @@ export const ConnectAuthority: React.FC = () => {
   return (
     <>
       <StyledSubHeading>
-        {t('authority.search_summary', { results: matchingAuthorities?.length ?? 0, searchTerm: searchTerm })}
+        {t('authority.search_summary', { results: matchingAuthorities?.length ?? 0, searchTerm: userName })}
       </StyledSubHeading>
 
       <StyledAuthorityContainer>
