@@ -1,13 +1,12 @@
 import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
 import { Button } from '@material-ui/core';
 import LinkIcon from '@material-ui/icons/Link';
 
 import { createNewPublicationFromDoi, getPublicationByDoi } from '../../../api/publicationApi';
-import { RootStore } from '../../../redux/reducers/rootReducer';
 import LinkPublicationForm from './LinkPublicationForm';
 import PublicationExpansionPanel from './PublicationExpansionPanel';
 
@@ -15,7 +14,7 @@ const StyledBody = styled.div`
   width: 100%;
 `;
 
-const StyledHeading = styled.div`
+const StyledHeading = styled.span`
   font-size: 1.2rem;
   margin: 1rem 0;
 `;
@@ -34,19 +33,24 @@ const LinkPublicationPanel: FC<LinkPublicationPanelProps> = ({ expanded, onChang
   const { t } = useTranslation();
   const [doiUrl, setDoiUrl] = useState('');
   const [doiTitle, setDoiTitle] = useState('');
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
-  const user = useSelector((state: RootStore) => state.user);
 
-  const searchDoi = (evt: any) => {
-    console.log(evt);
-    dispatch(createNewPublicationFromDoi(doiUrl, user.id, dispatch));
+  const createPublication = async () => {
+    // eslint-disable-next-line
+    const createdPublication = await createNewPublicationFromDoi(doiUrl, dispatch);
+    // TODO: If valid link: Open form prefilled with values from createdPublicaiton (NP-229)
   };
 
   const handleSearch = async (values: any) => {
+    setLoading(true);
+    setDoiTitle('');
+    setDoiUrl('');
+
     const publication = await getPublicationByDoi(values.doiUrl);
-    console.log('res:', publication);
     setDoiTitle(publication.title);
-    // setDoiUrl(values.doiUrl);
+    setDoiUrl(publication.id);
+    setLoading(false);
   };
 
   return (
@@ -60,11 +64,12 @@ const LinkPublicationPanel: FC<LinkPublicationPanelProps> = ({ expanded, onChang
       <StyledBody>
         {t('publication:publication.link_publication_description')}
         <LinkPublicationForm handleSearch={handleSearch} />
+        {loading && <p>{t('common:loading')}...</p>}
         {doiTitle && (
           <>
             <StyledHeading> {t('publication:heading.publication')}:</StyledHeading>
             <StyledTitle>{doiTitle}</StyledTitle>
-            <Button fullWidth color="primary" variant="contained" onClick={evt => searchDoi(evt)}>
+            <Button fullWidth color="primary" variant="contained" onClick={createPublication}>
               {t('common:next')}
             </Button>
           </>

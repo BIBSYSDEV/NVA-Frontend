@@ -31,8 +31,9 @@ const LinkPublicationForm: React.FC<LinkPublicationFormProps> = ({ handleSearch 
 
   return (
     <Formik
-      onSubmit={values => {
+      onSubmit={(values, { setSubmitting }) => {
         handleSearch(values);
+        setSubmitting(false);
       }}
       initialValues={{
         doiUrl: 'https://doi.org/10.1126/science.169.3946.635',
