@@ -3,16 +3,17 @@ import MockAdapter from 'axios-mock-adapter';
 
 import { Authority } from '../types/authority.types';
 import OrcidResponse from '../types/orcid.types';
-import { API_URL, ApiBaseUrl, CRISTIN_API_URL, ORCID_USER_INFO_URL } from '../utils/constants';
-import mockCristinProjects from '../utils/testfiles/cristin_projects_real.json';
+import { API_URL, ORCID_USER_INFO_URL } from '../utils/constants';
+import mockProjects from '../utils/testfiles/projects_real.json';
 import mockDoiLookupResponse from '../utils/testfiles/doi_lookup_response.json';
 import mockAuthoritiesResponse from '../utils/testfiles/mock_authorities_response.json';
-import { mockUser } from '../utils/testfiles/mock_feide_user';
 import mockDoiPublication from '../utils/testfiles/publication_generated_from_doi.json';
 import mockPublications from '../utils/testfiles/publications_45_random_results_generated.json';
 import mockNsdPublisers from '../utils/testfiles/publishersFromNsd.json';
 import { AuthorityApiPaths } from './authorityApi';
 import { PublicationChannelApiPaths } from './publicationChannelApi';
+import { PublicationsApiPaths } from './publicationApi';
+import { ProjectsApiPaths } from './projectApi';
 
 const mockOrcidResponse: OrcidResponse = {
   id: 'https://sandbox.orcid.org/0000-0001-2345-6789',
@@ -36,22 +37,19 @@ export const interceptRequestsOnMock = () => {
   const mock = new MockAdapter(Axios);
 
   // SEARCH
-  mock.onGet(new RegExp(`/${ApiBaseUrl.PUBLICATIONS}/*`)).reply(200, mockPublications);
+  mock.onGet(new RegExp(`${PublicationsApiPaths.SEARCH}/*`)).reply(200, mockPublications);
 
   // Create publication from doi
-  mock.onPost(new RegExp(`/${ApiBaseUrl.PUBLICATIONS}/doi/*`)).reply(200, mockDoiPublication);
+  mock.onPost(new RegExp(`${PublicationsApiPaths.DOI}/*`)).reply(200, mockDoiPublication);
 
   // lookup DOI
-  mock.onGet(new RegExp(`/${ApiBaseUrl.DOI_LOOKUP}/*`)).reply(200, mockDoiLookupResponse);
+  mock.onGet(new RegExp(`${PublicationsApiPaths.DOI_LOOKUP}/*`)).reply(200, mockDoiLookupResponse);
 
-  // CRISTIN
-  mock.onGet(new RegExp(`${CRISTIN_API_URL}/projects*`)).reply(200, mockCristinProjects, { 'X-Total-Count': '12' });
+  // PROJECT
+  mock.onGet(new RegExp(`${ProjectsApiPaths.PROJECTS}/*`)).reply(200, mockProjects);
 
   // PUBLICATION CHANNEL
   mock.onPost(new RegExp(`${API_URL}${PublicationChannelApiPaths.SEARCH}`)).reply(200, mockNsdPublisers);
-
-  // USER
-  mock.onGet(new RegExp(`/${ApiBaseUrl.USER}/*`)).reply(200, mockUser);
 
   // ORCID
   mock.onPost(ORCID_USER_INFO_URL).reply(200, mockOrcidResponse);

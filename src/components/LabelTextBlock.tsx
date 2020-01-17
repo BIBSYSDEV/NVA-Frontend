@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom';
 import { Link as MuiLink } from '@material-ui/core';
 import styled from 'styled-components';
 
-const StyledLine = styled.div`
+const StyledBlock = styled.div`
   padding-bottom: 0.5rem;
+  display: grid;
 `;
 
 const StyledLabel = styled.div`
@@ -13,11 +14,11 @@ const StyledLabel = styled.div`
 `;
 
 const StyledText = styled.div`
-  display: inline-block;
+  width: 10rem;
   font-weight: bold;
 `;
 
-interface LabelTextLineProps {
+interface LabelTextBlockProps {
   label: string;
   text: string;
   dataTestId?: string;
@@ -25,8 +26,8 @@ interface LabelTextLineProps {
   externalLink?: string;
 }
 
-const LabelTextLine: React.FC<LabelTextLineProps> = ({ label, text, dataTestId, internalLink, externalLink }) => (
-  <StyledLine>
+const LabelTextBlock: React.FC<LabelTextBlockProps> = ({ label, text, dataTestId, internalLink, externalLink }) => (
+  <StyledBlock>
     <StyledLabel>{label}:</StyledLabel>
     {externalLink && (
       <MuiLink href={externalLink} target="_blank" rel="noopener noreferrer">
@@ -39,7 +40,7 @@ const LabelTextLine: React.FC<LabelTextLineProps> = ({ label, text, dataTestId, 
       </MuiLink>
     )}
     {!(internalLink || externalLink) && <StyledText data-testid={dataTestId}>{text}</StyledText>}
-  </StyledLine>
+  </StyledBlock>
 );
 
-export default LabelTextLine;
+export default LabelTextBlock;

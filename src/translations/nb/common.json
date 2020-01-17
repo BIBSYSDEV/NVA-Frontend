@@ -7,8 +7,10 @@
   "next": "Neste",
   "no_hits": "Ingen treff",
   "orcid": "ORCID",
+  "remove": "Fjern",
   "save": "Lagre",
   "search": "Søk",
   "title": "Tittel",
-  "type": "Type"
+  "type": "Type",
+  "picture": "Bilde"
 }

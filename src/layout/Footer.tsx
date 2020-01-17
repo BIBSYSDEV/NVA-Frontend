@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useTranslation } from 'react-i18next';
+import logo from '../resources/images/unit_logo.png';
 
 const StyledFooter = styled.div`
   display: flex;
@@ -11,6 +13,18 @@ const StyledFooter = styled.div`
   border-top: 2px solid ${({ theme }) => theme.palette.separator.main};
 `;
 
-const Footer: React.FC = () => <StyledFooter>footer</StyledFooter>;
+const StyledLogo = styled.img`
+  margin-left: 0.3rem;
+`;
+
+const Footer: React.FC = () => {
+  const { t } = useTranslation('');
+  return (
+    <StyledFooter>
+      {t('delivered_by')}
+      <StyledLogo src={logo} alt="UNIT logo" />
+    </StyledFooter>
+  );
+};
 
 export default Footer;

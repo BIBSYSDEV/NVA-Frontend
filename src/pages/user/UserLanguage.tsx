@@ -29,7 +29,7 @@ const UserLanguage: React.FC = () => {
   };
 
   return (
-    <UserCard headerLabel={t('heading.language')}>
+    <UserCard headingLabel={t('heading.language')}>
       <StyledFormControl variant="outlined">
         <Select value={languageSelected} onChange={handleLanguageChange} data-testid="language-selector">
           {languages.map(language => (
