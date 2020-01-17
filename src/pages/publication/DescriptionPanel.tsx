@@ -7,7 +7,6 @@ import styled from 'styled-components';
 import DateFnsUtils from '@date-io/date-fns';
 import { MenuItem } from '@material-ui/core';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
-
 import Box from '../../components/Box';
 import TabPanel from '../../components/TabPanel/TabPanel';
 import { emptyNpiDiscipline, Publication } from '../../types/publication.types';
@@ -160,7 +159,7 @@ const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublicat
                 variant="outlined"
                 fullWidth
                 component={Select}
-                label={t('common:date')}>
+                label={t('common:language')}>
                 {orderedLanguages.map(code => (
                   <MenuItem value={code} key={code} data-testid={`publication-language-${code}`}>
                     {t(`languages:${code}`)}
