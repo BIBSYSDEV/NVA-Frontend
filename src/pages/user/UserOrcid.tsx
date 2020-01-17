@@ -9,6 +9,7 @@ import { ORCID_BASE_URL } from '../../utils/constants';
 import OrcidModal from './OrcidModal';
 import UserCard from './UserCard';
 import styled from 'styled-components';
+import orcidIcon from '../../resources/images/orcid_24x24.png';
 
 const StyledInformation = styled.div`
   margin-bottom: 1rem;
@@ -20,9 +21,7 @@ const UserOrcid: FC = () => {
   const OrcidLink = `${ORCID_BASE_URL}/${user.orcid}`;
 
   return (
-    <UserCard
-      headingLabel={t('common:orcid')}
-      headingIcon={<img src="https://orcid.org/sites/default/files/images/orcid_24x24.png" alt="ORCID icon" />}>
+    <UserCard headingLabel={t('common:orcid')} headingIcon={<img src={orcidIcon} alt="ORCID icon" />}>
       {user.orcid ? (
         <LabelTextLine
           dataTestId={'orcid-info'}
