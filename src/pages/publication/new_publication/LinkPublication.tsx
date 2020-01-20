@@ -9,7 +9,7 @@ import LinkIcon from '@material-ui/icons/Link';
 import { getPublicationByDoi } from '../../../api/publicationApi';
 import LinkPublicationForm from './LinkPublicationForm';
 import PublicationExpansionPanel from './PublicationExpansionPanel';
-import { DOI } from '../../../types/publication.types';
+import { Doi } from '../../../types/publication.types';
 
 const StyledBody = styled.div`
   width: 100%;
@@ -33,7 +33,7 @@ interface LinkPublicationPanelProps {
 
 const LinkPublicationPanel: FC<LinkPublicationPanelProps> = ({ expanded, onChange, openForm }) => {
   const { t } = useTranslation();
-  const [doi, setDoi] = useState<DOI | null>(null);
+  const [doi, setDoi] = useState<Doi | null>(null);
   const [loading, setLoading] = useState(false);
   const [noHit, setNoHit] = useState(false);
   const history = useHistory();

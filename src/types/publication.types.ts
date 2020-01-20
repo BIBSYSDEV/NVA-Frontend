@@ -83,7 +83,7 @@ export interface Publication {
   files: File[];
 }
 
-export interface DOI {
+export interface Doi {
   title: string;
 }
 
