@@ -1,15 +1,13 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Field, FormikProps, useFormikContext } from 'formik';
-import { emptyPublisher, JournalArticleFieldNames } from '../../../types/references.types';
 import { TextField } from '@material-ui/core';
-// import PublicationChannelSearch from './components/PublicationChannelSearch';
-// import { PublicationTableNumber } from '../../../utils/constants';
-// import PublisherRow from './components/PublisherRow';
 import InfoIcon from '@material-ui/icons/Info';
 import { Publication } from '../../../types/publication.types';
 import styled from 'styled-components';
 import RemoveIcon from '@material-ui/icons/Remove';
+import { ChapterFieldNames } from '../../../types/references.types';
+import { AutoSearch } from '../../../components/AutoSearch';
 
 const ChapterReferenceForm: React.FC = () => {
   const { t } = useTranslation('publication');
@@ -18,6 +16,8 @@ const ChapterReferenceForm: React.FC = () => {
     margin-top: 1rem;
     background-color: ${({ theme }) => theme.palette.background.default};
     padding: 1rem 0;
+    display: flex;
+    align-items: center;
   `;
 
   const StyledIcon = styled(InfoIcon)`
@@ -49,34 +49,32 @@ const ChapterReferenceForm: React.FC = () => {
     <>
       <StyledInfoBox>
         <StyledIcon />
-        <span>{t('chapter.info')}</span>
+        {t('chapter.info')}
       </StyledInfoBox>
 
-      {/*<Field name={ReportFieldNames.PUBLISHER}>*/}
-      {/*  {({ field: { name, value } }: any) => (*/}
-      {/*    <>*/}
-      {/*      <PublicationChannelSearch*/}
-      {/*        clearSearchField={value === emptyPublisher}*/}
-      {/*        dataTestId="autosearch-publisher"*/}
-      {/*        label={t('references.publisher')}*/}
-      {/*        publicationTable={PublicationTableNumber.PUBLISHERS}*/}
-      {/*        setValueFunction={inputValue => setFieldValue(name, inputValue ?? emptyPublisher)}*/}
-      {/*        value={value.title}*/}
-      {/*        placeholder={t('references.search_for_publisher')}*/}
-      {/*      />*/}
-      {/*      {value.title && (*/}
-      {/*        <PublisherRow*/}
-      {/*          dataTestId="autosearch-results-publisher"*/}
-      {/*          label={t('references.publisher')}*/}
-      {/*          publisher={value}*/}
-      {/*          onClickDelete={() => setFieldValue(name, emptyPublisher)}*/}
-      {/*        />*/}
-      {/*      )}*/}
-      {/*    </>*/}
-      {/*  )}*/}
-      {/*</Field>*/}
+      <Field name={ChapterFieldNames.LINK}>
+        {({ field }: any) => (
+          <>
+            <TextField
+              aria-label="DOI-link"
+              name="doiUrl"
+              variant="outlined"
+              fullWidth
+              label={t('publication:chapter.link')}
+            />
+          </>
+        )}
+      </Field>
+
+      <Field name={ChapterFieldNames.ANTHOLOGY}>
+        {({ field: { name, value } }: any) => (
+          <>
+            <AutoSearch label={'Publisert i'} value={value} searchResults={() => {}} setValueFunction={() => {}} />
+          </>
+        )}
+      </Field>
       <StyledPageNumberWrapper>
-        <Field name={JournalArticleFieldNames.PAGES_FROM}>
+        <Field name={ChapterFieldNames.PAGES_FROM}>
           {({ field }: any) => (
             <StyledPageNumberField variant="outlined" label={t('references.pages_from')} {...field} />
           )}
@@ -84,7 +82,7 @@ const ChapterReferenceForm: React.FC = () => {
         <StyledDashIconWrapper>
           <RemoveIcon />
         </StyledDashIconWrapper>
-        <Field name={JournalArticleFieldNames.PAGES_TO}>
+        <Field name={ChapterFieldNames.PAGES_TO}>
           {({ field }: any) => <StyledPageNumberField variant="outlined" label={t('references.pages_to')} {...field} />}
         </Field>
       </StyledPageNumberWrapper>
