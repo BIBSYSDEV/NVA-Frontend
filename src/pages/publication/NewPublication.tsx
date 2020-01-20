@@ -13,30 +13,37 @@ const StyledNewPublication = styled.div`
   width: 100%;
   padding-top: 2rem;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  @media only screen and (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
+    margin-right: 0;
+    flex-wrap: wrap;
+  }
+} 
 `;
 
 const StyledSelectorWrapper = styled.div`
-  min-width: 20rem;
   flex: 1;
+  min-width: 25rem;
   margin-right: 2rem;
-  max-width: 50rem;
+  @media only screen and (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
+    margin-right: 0;
+  }
+}
 `;
 
 const StyledInfoBox = styled.div`
   background-color: ${({ theme }) => theme.palette.box.main};
   padding: 1rem;
-  min-width: 20rem;
-  width: 30rem;
-
+  min-width: 25rem;
+  flex: 1;
+  @media only screen and (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
+    margin-right: 0;
+  }
   > header {
     font-size: 1.2rem;
     font-weight: bold;
     line-height: 1.5rem;
     margin-bottom: 2rem;
   }
-
   > section {
     margin-bottom: 2rem;
   }
