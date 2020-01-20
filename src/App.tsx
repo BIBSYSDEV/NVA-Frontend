@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { getAuthorityByFeideId } from './api/authorityApi';
+import { getAuthorityByFeide } from './api/authorityApi';
 import { getCurrentAuthenticatedUser } from './api/userApi';
 import Breadcrumbs from './layout/Breadcrumbs';
 import Footer from './layout/Footer';
@@ -22,7 +22,7 @@ import Workspace from './pages/workspace/Workspace';
 import { setAuthorityData, setUser } from './redux/actions/userActions';
 import { RootStore } from './redux/reducers/rootReducer';
 import { awsConfig } from './utils/aws-config';
-import { API_URL, USE_MOCK_DATA } from './utils/constants';
+import { API_URL, DEBOUNCE_INTERVAL_MODAL, USE_MOCK_DATA } from './utils/constants';
 import { hubListener } from './utils/hub-listener';
 import { mockUser } from './utils/testfiles/mock_feide_user';
 
@@ -79,7 +79,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     const getAuthority = async () => {
-      const authority = await getAuthorityByFeideId(user.id, dispatch);
+      const authority = await getAuthorityByFeide(user.id, dispatch);
       if (authority) {
         dispatch(setAuthorityData(authority));
       }
@@ -90,8 +90,12 @@ const App: React.FC = () => {
   }, [dispatch, user.id]);
 
   useEffect(() => {
-    user.id && (!user.authority || !user.orcid) && setShowAuthorityOrcidModal(true);
-  }, [user.id, user.authority, user.orcid]);
+    setTimeout(() => {
+      user.id &&
+        (user.authority?.orcids.length === 0 || user.authority?.feideids.length === 0) &&
+        setShowAuthorityOrcidModal(true);
+    }, DEBOUNCE_INTERVAL_MODAL);
+  }, [user.id, user.authority]);
 
   return (
     <BrowserRouter>

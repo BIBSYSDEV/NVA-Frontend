@@ -6,7 +6,7 @@ import styled from 'styled-components';
 
 import { Link as MuiLink } from '@material-ui/core';
 
-import { updateAuthority } from '../../api/authorityApi';
+import { updateOrcIdForAuthority } from '../../api/authorityApi';
 import { getOrcidInfo } from '../../api/external/orcidApi';
 import ButtonModal from '../../components/ButtonModal';
 import { RootStore } from '../../redux/reducers/rootReducer';
@@ -58,10 +58,10 @@ const User: React.FC = () => {
   }, [dispatch, location.hash, history]);
 
   useEffect(() => {
-    if (user.orcid && !user.authority?.orcId) {
-      updateAuthority(user.authority, dispatch);
+    if (user.authority?.orcids.length > 0) {
+      updateOrcIdForAuthority(user.authority?.orcids[0], user.authority.systemControlNumber, dispatch);
     }
-  }, [user.authority, user.orcid, dispatch]);
+  }, [user.authority, dispatch]);
 
   return (
     <StyledUserPage>
@@ -75,7 +75,7 @@ const User: React.FC = () => {
       <StyledPrimaryUserInfo>
         <UserInfo user={user} />
         <UserCard headingLabel={t('heading.author_info')}>
-          {user.authority ? (
+          {user.authority?.feideids.length > 0 ? (
             <>
               <p>{t('authority.connected_info')}</p>
               <MuiLink href={user.authority.handle}>{t('authority.see_profile')}</MuiLink>

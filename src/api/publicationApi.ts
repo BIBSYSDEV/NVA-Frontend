@@ -3,28 +3,25 @@ import { Dispatch } from 'redux';
 
 import { addNotification } from '../redux/actions/notificationActions';
 import i18n from '../translations/i18n';
-import { DoiPublication, Publication } from '../types/publication.types';
+import { Publication } from '../types/publication.types';
 import { SEARCH_RESULTS_PER_PAGE, StatusCode } from '../utils/constants';
 import { searchFailure, searchForPublications } from '../redux/actions/searchActions';
 import { getIdToken } from './userApi';
 
 export enum PublicationsApiPaths {
   SEARCH = '/publications',
-  DOI = '/publications/doi',
+  CREATE_WITH_DOI = '/publications/doi',
   INSERT_RESOURCE = '/publications/insert-resource',
   UPDATE_RESOURCE = '/publications/update-resource',
   FETCH_RESOURCE = '/publications/fetch-resource',
-  DOI_LOOKUP = '/doilookup',
+  DOI_LOOKUP = '/doi',
 }
 
-export const createNewPublicationFromDoi = async (url: string, owner: string, dispatch: Dispatch) => {
-  const data: DoiPublication = {
-    url,
-    owner,
-  };
+export const createNewPublicationFromDoi = async (doiUrl: string, dispatch: Dispatch) => {
+  const payload = { doiUrl };
   try {
     const idToken = await getIdToken();
-    const response = await Axios.post(PublicationsApiPaths.DOI, data, {
+    const response = await Axios.post(PublicationsApiPaths.CREATE_WITH_DOI, payload, {
       headers: {
         Authorization: `Bearer ${idToken}`,
       },
@@ -99,16 +96,16 @@ export const getPublication = async (id: string, dispatch: Dispatch) => {
   }
 };
 
-export const lookupDoiTitle = async (url: string) => {
+export const getPublicationByDoi = async (doiUrl: string) => {
   try {
     const idToken = await getIdToken();
-    const response = await Axios.get(`${PublicationsApiPaths.DOI_LOOKUP}${url}`, {
+    const response = await Axios.get(`${PublicationsApiPaths.DOI_LOOKUP}/?url=${doiUrl}`, {
       headers: {
         Authorization: `Bearer ${idToken}`,
       },
     });
     if (response.status === StatusCode.OK) {
-      return response.data.title;
+      return response.data;
     } else {
       console.error('error.get_doi'); //TO BE REPLACED
     }

@@ -203,7 +203,6 @@ Resources:
                   print("Exception:",sys.exc_info()[0])
                   codepipeline.put_job_failure_result(jobId=job);
 
-              requests.put(event['ResponseURL'], data=json.dumps(response_body))
       Role: !GetAtt CleanUpBucketBeforeDeployFunctionRole.Arn
       Handler: index.handler
       Description: Lambda to clean S3 bucket before deploy

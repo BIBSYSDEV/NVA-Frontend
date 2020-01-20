@@ -14,7 +14,6 @@ const StyledLabel = styled.div`
 
 const StyledText = styled.div`
   display: inline-block;
-  width: 10rem;
   font-weight: bold;
 `;
 
