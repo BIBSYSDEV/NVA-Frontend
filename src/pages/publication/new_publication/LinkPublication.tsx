@@ -54,9 +54,9 @@ const LinkPublicationPanel: FC<LinkPublicationPanelProps> = ({ expanded, onChang
     setNoHit(false);
     setDoi(null);
 
-    const publication = await getPublicationByDoi(values.doiUrl);
-    if (publication) {
-      setDoi(publication);
+    const doiPublication = await getPublicationByDoi(values.doiUrl);
+    if (doiPublication) {
+      setDoi(doiPublication);
     } else {
       setNoHit(true);
     }
