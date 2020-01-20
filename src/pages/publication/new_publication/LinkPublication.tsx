@@ -55,6 +55,7 @@ const LinkPublicationPanel: FC<LinkPublicationPanelProps> = ({ expanded, onChang
     setDoi(null);
 
     const doiPublication = await getPublicationByDoi(values.doiUrl);
+    console.log(doiPublication);
     if (doiPublication) {
       setDoi(doiPublication);
     } else {
