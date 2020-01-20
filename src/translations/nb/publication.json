@@ -1,4 +1,7 @@
 {
+  "chapter": {
+    "info": "Den antologien kapittelet er publisert i, må være registrert først"
+  },
   "contributors": {
     "add_author": "Legg til flere forfattere",
     "add_other_contributor": "Legg til flere",

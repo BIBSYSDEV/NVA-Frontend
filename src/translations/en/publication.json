@@ -1,4 +1,7 @@
 {
+  "chapter": {
+    "info": "The anthology this chapter is published in, must be registered in advance"
+  },
   "contributors": {
     "add_author": "Add authors",
     "add_other_contributor": "Add more contributors",
