@@ -83,6 +83,10 @@ export interface Publication {
   files: File[];
 }
 
+export interface DOI {
+  title: string;
+}
+
 export const emptyNpiDiscipline = {
   title: '',
   mainDiscipline: '',

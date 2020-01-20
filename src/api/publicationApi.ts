@@ -97,21 +97,16 @@ export const getPublication = async (id: string, dispatch: Dispatch) => {
 };
 
 export const getPublicationByDoi = async (doiUrl: string) => {
-  try {
-    const idToken = await getIdToken();
-    const response = await Axios.get(`${PublicationsApiPaths.DOI_LOOKUP}/?url=${doiUrl}`, {
-      headers: {
-        Authorization: `Bearer ${idToken}`,
-      },
-    });
-    if (response.status === StatusCode.OK) {
-      return response.data;
-    } else {
-      console.error('error.get_doi'); //TO BE REPLACED
-    }
-  } catch {
-    console.error('error.get_doi'); //TO BE REPLACED
+  const idToken = await getIdToken();
+  const response = await Axios.get(`${PublicationsApiPaths.DOI_LOOKUP}/?url=${doiUrl}`, {
+    headers: {
+      Authorization: `Bearer ${idToken}`,
+    },
+  });
+  if (response.status === StatusCode.OK) {
+    return response.data;
   }
+  return null;
 };
 
 export const search = async (searchTerm: string, dispatch: Dispatch, offset?: number) => {

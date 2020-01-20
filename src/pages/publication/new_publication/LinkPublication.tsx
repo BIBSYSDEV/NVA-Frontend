@@ -1,14 +1,15 @@
 import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
+import { useHistory } from 'react-router';
 
 import { Button } from '@material-ui/core';
 import LinkIcon from '@material-ui/icons/Link';
 
-import { createNewPublicationFromDoi, getPublicationByDoi } from '../../../api/publicationApi';
+import { getPublicationByDoi } from '../../../api/publicationApi';
 import LinkPublicationForm from './LinkPublicationForm';
 import PublicationExpansionPanel from './PublicationExpansionPanel';
+import { DOI } from '../../../types/publication.types';
 
 const StyledBody = styled.div`
   width: 100%;
@@ -27,31 +28,35 @@ const StyledTitle = styled.div`
 interface LinkPublicationPanelProps {
   expanded: boolean;
   onChange: (event: React.ChangeEvent<any>, isExpanded: boolean) => void;
+  openForm: () => void;
 }
 
-const LinkPublicationPanel: FC<LinkPublicationPanelProps> = ({ expanded, onChange }) => {
+const LinkPublicationPanel: FC<LinkPublicationPanelProps> = ({ expanded, onChange, openForm }) => {
   const { t } = useTranslation();
-  const [doiUrl, setDoiUrl] = useState('');
-  const [doiTitle, setDoiTitle] = useState('');
+  const [doi, setDoi] = useState<DOI | null>(null);
   const [loading, setLoading] = useState(false);
   const [noHit, setNoHit] = useState(false);
-  const dispatch = useDispatch();
+  const history = useHistory();
 
   const createPublication = async () => {
-    // eslint-disable-next-line
-    const createdPublication = await createNewPublicationFromDoi(doiUrl, dispatch);
+    if (!doi) {
+      return;
+    }
+    // TODO: Create new publication with DOI
+
+    // TODO: Set created publication id as URL param
+    history.push({ search: `?title=${doi.title}` });
+    openForm();
   };
 
   const handleSearch = async (values: any) => {
     setLoading(true);
     setNoHit(false);
-    setDoiTitle('');
-    setDoiUrl('');
+    setDoi(null);
 
     const publication = await getPublicationByDoi(values.doiUrl);
     if (publication) {
-      setDoiTitle(publication.title);
-      setDoiUrl(publication.id);
+      setDoi(publication);
     } else {
       setNoHit(true);
     }
@@ -71,10 +76,10 @@ const LinkPublicationPanel: FC<LinkPublicationPanelProps> = ({ expanded, onChang
         <LinkPublicationForm handleSearch={handleSearch} />
         {loading && <p>{t('common:loading')}...</p>}
         {noHit && <p>{t('common:no_hits')}</p>}
-        {doiTitle && (
+        {doi && (
           <>
             <StyledHeading> {t('publication:heading.publication')}:</StyledHeading>
-            <StyledTitle>{doiTitle}</StyledTitle>
+            <StyledTitle>{doi.title}</StyledTitle>
             <Button fullWidth color="primary" variant="contained" onClick={createPublication}>
               {t('common:next')}
             </Button>
