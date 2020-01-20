@@ -57,6 +57,42 @@ export const emptyPublisher: Publisher = {
   title: '',
 };
 
+export interface InstitutionName {
+  name: string;
+  language: string;
+}
+
+export const emptyInstitutionName: InstitutionName = {
+  name: '',
+  language: '',
+};
+
+export interface Institution {
+  institutionNames: InstitutionName[];
+  acronym: string;
+  cristinInstitutionId: string;
+  country: string;
+  cristinUnitId: string;
+}
+
+export const emptyInstitution: Institution = {
+  institutionNames: [emptyInstitutionName],
+  acronym: '',
+  cristinInstitutionId: '',
+  country: '',
+  cristinUnitId: '',
+};
+
+export interface InstitutionSubUnit {
+  unitNames: InstitutionName[];
+  cristinUnitId: string;
+}
+
+export const emptyInstitutionSubUnit: InstitutionSubUnit = {
+  unitNames: [emptyInstitutionName],
+  cristinUnitId: '',
+};
+
 const emptyBookReference: Book = {
   type: '',
   publisher: emptyPublisher,

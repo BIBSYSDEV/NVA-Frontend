@@ -16,7 +16,7 @@ import UserInfo from './UserInfo';
 import UserLanguage from './UserLanguage';
 import UserOrcid from './UserOrcid';
 import UserRoles from './UserRoles';
-import UserOrganizations from './UserOrganizations';
+import UserInstitutions from './UserInstitutions';
 
 const StyledUserPage = styled.div`
   display: grid;
@@ -95,7 +95,7 @@ const User: React.FC = () => {
         </UserCard>
         <UserOrcid />
         <UserCard headingLabel={t('heading.organizations')}>
-          <UserOrganizations user={user} />
+          <UserInstitutions user={user} />
         </UserCard>
       </StyledPrimaryUserInfo>
     </StyledUserPage>
