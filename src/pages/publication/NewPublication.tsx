@@ -13,18 +13,22 @@ const StyledNewPublication = styled.div`
   width: 100%;
   padding-top: 2rem;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
 `;
 
 const StyledSelectorWrapper = styled.div`
-  flex-basis: 60%;
-  min-width: 10rem;
+  min-width: 20rem;
+  flex: 1;
+  margin-right: 2rem;
+  max-width: 50rem;
 `;
 
 const StyledInfoBox = styled.div`
-  flex-basis: 30%;
   background-color: ${({ theme }) => theme.palette.box.main};
   padding: 1rem;
+  min-width: 20rem;
+  width: 30rem;
 
   > header {
     font-size: 1.2rem;
