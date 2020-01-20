@@ -19,8 +19,9 @@ import Search from './pages/search/Search';
 import AuthorityOrcidModal from './pages/user/authority/AuthorityOrcidModal';
 import User from './pages/user/User';
 import Workspace from './pages/workspace/Workspace';
-import { setUser } from './redux/actions/userActions';
+import { setAuthorityData, setPossibleAuthories, setUser } from './redux/actions/userActions';
 import { RootStore } from './redux/reducers/rootReducer';
+import { Authority } from './types/authority.types';
 import { awsConfig } from './utils/aws-config';
 import { API_URL, DEBOUNCE_INTERVAL_MODAL, USE_MOCK_DATA } from './utils/constants';
 import { hubListener } from './utils/hub-listener';
@@ -79,7 +80,15 @@ const App: React.FC = () => {
 
   useEffect(() => {
     const getAuthority = async () => {
-      await getAuthorities(user.name, user.id, dispatch);
+      const authorities = await getAuthorities(user.name, dispatch);
+      const filteredAuthorities: Authority[] = authorities.filter((auth: Authority) =>
+        auth.feideids.some(id => id === user.id)
+      );
+      if (filteredAuthorities.length === 1) {
+        dispatch(setAuthorityData(filteredAuthorities[0]));
+      } else {
+        dispatch(setPossibleAuthories(authorities));
+      }
     };
     if (user.name && !user.authority?.name && !USE_MOCK_DATA) {
       getAuthority();
