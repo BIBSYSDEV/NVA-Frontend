@@ -33,7 +33,6 @@ export const ConnectAuthority: React.FC = () => {
   const user = useSelector((store: RootStore) => store.user);
   const dispatch = useDispatch();
   const { t } = useTranslation('profile');
-  const userName = user.name;
 
   useEffect(() => {
     if (user.possibleAuthorities.length > 0) {
@@ -57,7 +56,7 @@ export const ConnectAuthority: React.FC = () => {
   return (
     <>
       <StyledSubHeading>
-        {t('authority.search_summary', { results: matchingAuthorities?.length ?? 0, searchTerm: userName })}
+        {t('authority.search_summary', { results: matchingAuthorities?.length ?? 0, searchTerm: user.name })}
       </StyledSubHeading>
 
       <StyledAuthorityContainer>
