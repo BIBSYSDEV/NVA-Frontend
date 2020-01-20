@@ -62,6 +62,7 @@ export const ConnectAuthority: React.FC = () => {
       <StyledAuthorityContainer>
         {matchingAuthorities?.map(authority => (
           <StyledClickableDiv
+            data-testid="author-radio-button"
             key={authority.systemControlNumber}
             onClick={() => setSelectedSystemControlNumber(authority.systemControlNumber)}>
             <AuthorityCard
@@ -73,6 +74,7 @@ export const ConnectAuthority: React.FC = () => {
 
         {matchingAuthorities?.length > 0 && (
           <Button
+            data-testid="connect-author-button"
             color="primary"
             variant="contained"
             size="large"

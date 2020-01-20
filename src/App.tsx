@@ -90,7 +90,7 @@ const App: React.FC = () => {
         dispatch(setPossibleAuthories(authorities));
       }
     };
-    if (user.name && !user.authority?.name && !USE_MOCK_DATA) {
+    if (user.name && !user.authority?.name) {
       getAuthority();
     }
   }, [dispatch, user.name, user.id, user.authority]);

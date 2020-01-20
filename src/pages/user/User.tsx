@@ -79,7 +79,7 @@ const User: React.FC = () => {
         <UserCard headingLabel={t('heading.author_info')}>
           {hasFeide ? (
             <>
-              <p>{t('authority.connected_info')}</p>
+              <p data-testid="author-connected-info">{t('authority.connected_info')}</p>
               {hasHandles && <MuiLink href={user.authority.handles?.[0]}>{t('authority.see_profile')}</MuiLink>}
             </>
           ) : (

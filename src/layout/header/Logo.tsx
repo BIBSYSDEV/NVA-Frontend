@@ -12,7 +12,7 @@ const StyledLogo = styled.div`
 
 const Logo: React.FC = () => (
   <MuiLink component={Link} to="/">
-    <StyledLogo>NVA</StyledLogo>
+    <StyledLogo data-testid="logo">NVA</StyledLogo>
   </MuiLink>
 );
 
