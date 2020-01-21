@@ -75,9 +75,9 @@ const ChapterReferenceForm: React.FC = () => {
           <>
             <AutoSearch
               label={t('publication:chapter.anthology')}
-              value={value}
               searchResults={() => {}}
               setValueFunction={() => {}}
+              onInputChange={() => {}}
             />
           </>
         )}
