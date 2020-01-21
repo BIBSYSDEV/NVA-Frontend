@@ -47,11 +47,6 @@ export interface AlmaPublication {
   date: string;
 }
 
-export interface DoiPublication {
-  url: string;
-  owner: string;
-}
-
 interface NpiDiscipline {
   title: string;
   mainDiscipline: string;

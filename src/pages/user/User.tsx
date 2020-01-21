@@ -6,7 +6,7 @@ import styled from 'styled-components';
 
 import { Link as MuiLink } from '@material-ui/core';
 
-import { updateAuthority } from '../../api/authorityApi';
+import { updateOrcidForAuthority } from '../../api/authorityApi';
 import { getOrcidInfo } from '../../api/external/orcidApi';
 import ButtonModal from '../../components/ButtonModal';
 import { RootStore } from '../../redux/reducers/rootReducer';
@@ -31,7 +31,7 @@ const StyledUserPage = styled.div`
 const StyledSecondaryUserInfo = styled.div`
   display: grid;
   grid-area: secondary-info;
-  grid-template-areas: 'profile-image' 'contact-info' 'language' 'author-info';
+  grid-template-areas: 'profile-image' 'contact-info' 'language' 'roles';
   grid-row-gap: 3rem;
 `;
 
@@ -48,6 +48,9 @@ const User: React.FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
+  const hasHandles = user.authority?.handles?.length > 0;
+  const hasFeide = user.authority?.feideids?.length > 0;
+
   useEffect(() => {
     const orcidAccessToken = new URLSearchParams(location.hash.replace('#', '?')).get('access_token') || '';
     if (orcidAccessToken) {
@@ -57,22 +60,27 @@ const User: React.FC = () => {
   }, [dispatch, location.hash, history]);
 
   useEffect(() => {
-    if (user.orcid && !user.authority?.orcId) {
-      updateAuthority(user.authority, dispatch);
+    if (user.authority?.orcids.length > 0) {
+      updateOrcidForAuthority(user.authority?.orcids[0], user.authority.systemControlNumber, dispatch);
     }
-  }, [user.authority, user.orcid, dispatch]);
+  }, [user.authority, dispatch]);
 
   return (
     <StyledUserPage>
       <StyledSecondaryUserInfo>
-        <UserCard headerLabel="Bilde" />
-        <UserCard headerLabel={t('heading.contact_info')} />
+        <UserCard headingLabel={t('picture')} />
+        <UserCard headingLabel={t('heading.contact_info')} />
         <UserLanguage />
-        <UserCard headerLabel={t('heading.author_info')}>
-          {user.authority ? (
+        <UserRoles user={user} />
+      </StyledSecondaryUserInfo>
+
+      <StyledPrimaryUserInfo>
+        <UserInfo user={user} />
+        <UserCard headingLabel={t('heading.author_info')}>
+          {hasFeide ? (
             <>
-              <p>{t('authority.connected_info')}</p>
-              <MuiLink href={user.authority.handle}>{t('authority.see_profile')}</MuiLink>
+              <p data-testid="author-connected-info">{t('authority.connected_info')}</p>
+              {hasHandles && <MuiLink href={user.authority.handles?.[0]}>{t('authority.see_profile')}</MuiLink>}
             </>
           ) : (
             <>
@@ -87,13 +95,8 @@ const User: React.FC = () => {
             </>
           )}
         </UserCard>
-      </StyledSecondaryUserInfo>
-
-      <StyledPrimaryUserInfo>
-        <UserInfo user={user} />
-        <UserRoles user={user} />
-        <UserCard headerLabel={t('heading.organizations')} />
         <UserOrcid />
+        <UserCard headingLabel={t('heading.organizations')} />
       </StyledPrimaryUserInfo>
     </StyledUserPage>
   );

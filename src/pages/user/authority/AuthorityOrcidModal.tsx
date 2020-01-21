@@ -1,6 +1,7 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
 import styled from 'styled-components';
 
 import { Button, Checkbox, FormControlLabel } from '@material-ui/core';
@@ -20,6 +21,11 @@ const StyledFooter = styled.div`
 const AuthorityOrcidModal: FC = () => {
   const { t } = useTranslation('common');
   const user = useSelector((store: RootStore) => store.user);
+  const { location } = useHistory();
+
+  const noOrcid = user.authority?.orcids.length === 0;
+  const noFeide = user.authority?.feideids.length === 0;
+  const onHomePage = location.pathname === '/';
 
   const [doNotShowAuthorityModalAgain, setDoNotShowAuthorityModalAgain] = useState(false);
   const [doNotShowOrcidModalAgain, setDoNotShowOrcidModalAgain] = useState(false);
@@ -30,11 +36,13 @@ const AuthorityOrcidModal: FC = () => {
   const showAuthorityModalRef = useRef(showAuthorityModal);
   const showOrcidModalRef = useRef(showOrcidModal);
 
-  const [openOrcidModal, setOpenOrcidModal] = useState(!!user.authority);
+  const [openOrcidModal, setOpenOrcidModal] = useState(!noFeide && noOrcid && onHomePage);
+  const [openAuthorityModal, setOpenAuthorityModal] = useState(noFeide && onHomePage);
 
   useEffect(() => {
-    setOpenOrcidModal(!!user.authority && !user.orcid);
-  }, [user.authority, user.orcid]);
+    setOpenOrcidModal(!noFeide && noOrcid && onHomePage);
+    setOpenAuthorityModal(noFeide && onHomePage);
+  }, [noFeide, noOrcid, onHomePage]);
 
   const handleShowAuthorityModal = (event: React.ChangeEvent<HTMLInputElement>) => {
     setDoNotShowAuthorityModalAgain(event.target.checked);
@@ -47,7 +55,7 @@ const AuthorityOrcidModal: FC = () => {
   };
 
   const handleNextClick = () => {
-    if (!user.orcid) {
+    if (noOrcid) {
       setOpenOrcidModal(true);
     }
     showAuthorityModalRef.current = false;
@@ -55,7 +63,7 @@ const AuthorityOrcidModal: FC = () => {
 
   return (
     <>
-      {showAuthorityModalRef.current && !user.authority && (
+      {showAuthorityModalRef.current && openAuthorityModal && (
         <Modal
           dataTestId="connect-author-modal"
           ariaLabelledBy="connect-author-modal"
@@ -67,7 +75,7 @@ const AuthorityOrcidModal: FC = () => {
                 control={<Checkbox onChange={handleShowAuthorityModal} checked={doNotShowAuthorityModalAgain} />}
                 label={t('do_not_show_again')}
               />
-              {!user.orcid && (
+              {noOrcid && (
                 <Button color="primary" variant="contained" onClick={handleNextClick}>
                   {t('next')}
                 </Button>
