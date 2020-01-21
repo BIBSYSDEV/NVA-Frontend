@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Field, FormikProps, useFormikContext } from 'formik';
+import { Field } from 'formik';
 import { TextField } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
-import { Publication } from '../../../types/publication.types';
 import styled from 'styled-components';
 import RemoveIcon from '@material-ui/icons/Remove';
 import { ChapterFieldNames } from '../../../types/references.types';
@@ -44,11 +43,6 @@ const ChapterReferenceForm: React.FC = () => {
     width: 10rem;
   `;
 
-  const { setFieldValue }: FormikProps<Publication> = useFormikContext();
-
-  const [isPeerReviewed, setIsPeerReviewed] = useState(true);
-  const [isRatedBook, setIsRatedBook] = useState(true);
-
   return (
     <>
       <StyledInfoBox>
@@ -60,6 +54,7 @@ const ChapterReferenceForm: React.FC = () => {
         {({ field }: any) => (
           <>
             <TextField
+              data-testid="XXX"
               aria-label="DOI-link"
               name="doiUrl"
               variant="outlined"
@@ -74,6 +69,7 @@ const ChapterReferenceForm: React.FC = () => {
         {({ field: { name, value } }: any) => (
           <>
             <AutoSearch
+              data-testid="chapter-autosearch-anthology"
               label={t('publication:chapter.anthology')}
               searchResults={() => {}}
               setValueFunction={() => {}}
@@ -86,18 +82,30 @@ const ChapterReferenceForm: React.FC = () => {
       <StyledPageNumberWrapper>
         <Field name={ChapterFieldNames.PAGES_FROM}>
           {({ field }: any) => (
-            <StyledPageNumberField variant="outlined" label={t('references.pages_from')} {...field} />
+            <StyledPageNumberField
+              variant="outlined"
+              data-testid="chapter-pages-from"
+              label={t('references.pages_from')}
+              {...field}
+            />
           )}
         </Field>
         <StyledDashIconWrapper>
           <RemoveIcon />
         </StyledDashIconWrapper>
         <Field name={ChapterFieldNames.PAGES_TO}>
-          {({ field }: any) => <StyledPageNumberField variant="outlined" label={t('references.pages_to')} {...field} />}
+          {({ field }: any) => (
+            <StyledPageNumberField
+              data-testid="chapter-pages-to"
+              variant="outlined"
+              label={t('references.pages_to')}
+              {...field}
+            />
+          )}
         </Field>
       </StyledPageNumberWrapper>
 
-      <NviValidation isPeerReviewed={!!isPeerReviewed} isRated={!!isRatedBook} dataTestId="nvi_chapter" />
+      <NviValidation isPeerReviewed={true} isRated={true} dataTestId="nvi-chapter" />
     </>
   );
 };
