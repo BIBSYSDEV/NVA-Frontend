@@ -73,10 +73,10 @@ const LinkPublicationPanel: FC<LinkPublicationPanelProps> = ({ expanded, onChang
     <PublicationExpansionPanel
       headerLabel={t('publication:publication.link_to_publication')}
       icon={<LinkIcon className="icon" />}
-      id="link-publication-panel"
       expanded={expanded}
       onChange={onChange}
-      ariaControls="publication-method-link">
+      ariaControls="publication-method-link"
+      dataTestId="new-publication-link">
       <StyledBody>
         {t('publication:publication.link_publication_description')}
         <LinkPublicationForm handleSearch={handleSearch} />
@@ -86,7 +86,12 @@ const LinkPublicationPanel: FC<LinkPublicationPanelProps> = ({ expanded, onChang
           <>
             <StyledHeading> {t('publication:heading.publication')}:</StyledHeading>
             <StyledTitle>{doi.title}</StyledTitle>
-            <Button fullWidth color="primary" variant="contained" onClick={createPublication}>
+            <Button
+              fullWidth
+              color="primary"
+              variant="contained"
+              onClick={createPublication}
+              data-testid="publication-link-next-button">
               {t('common:next')}
             </Button>
           </>

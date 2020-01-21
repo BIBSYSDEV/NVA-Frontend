@@ -87,6 +87,7 @@ const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublicat
               component={TextField}
               fullWidth
               variant="outlined"
+              inputProps={{ 'data-testid': 'publication-title-input' }}
             />
           </StyledFieldWrapper>
           <StyledFieldWrapper>

@@ -1,10 +1,9 @@
 import { Field, Formik, Form } from 'formik';
-import { TextField } from 'formik-material-ui';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import * as Yup from 'yup';
-import { Button } from '@material-ui/core';
+import { Button, TextField } from '@material-ui/core';
 
 const StyledInputBox = styled.div`
   display: flex;
@@ -12,7 +11,7 @@ const StyledInputBox = styled.div`
   margin-top: 0.3rem;
 `;
 
-const StyledTextField = styled(Field)`
+const StyledTextField = styled(TextField)`
   margin-right: 1rem;
 `;
 
@@ -41,15 +40,19 @@ const LinkPublicationForm: React.FC<LinkPublicationFormProps> = ({ handleSearch 
       validationSchema={publicationSchema}>
       <Form>
         <StyledInputBox>
-          <StyledTextField
-            aria-label="DOI-link"
-            name="doiUrl"
-            variant="outlined"
-            fullWidth
-            label={t('publication.link')}
-            component={TextField}
-          />
-          <Button color="primary" variant="contained" type="submit">
+          <Field name="doiUrl">
+            {({ field }: any) => (
+              <StyledTextField
+                variant="outlined"
+                label={t('publication.link')}
+                fullWidth
+                aria-label="DOI-link"
+                inputProps={{ 'data-testid': 'new-publication-link-input' }}
+                {...field}
+              />
+            )}
+          </Field>
+          <Button color="primary" variant="contained" type="submit" data-testid="doi-search-button">
             {t('common:search')}
           </Button>
         </StyledInputBox>

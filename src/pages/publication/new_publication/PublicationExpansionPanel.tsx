@@ -9,11 +9,11 @@ import styled from 'styled-components';
 interface PublicationExpansionPanelProps {
   headerLabel: string;
   icon: ReactNode;
-  id: string;
   expanded: boolean;
   onChange: (event: React.ChangeEvent<any>, isExpanded: boolean) => void;
   ariaControls: string;
   children?: ReactNode;
+  dataTestId?: string;
 }
 
 const StyledPublicationExpansionPanel = styled(ExpansionPanel)`
@@ -35,15 +35,18 @@ const StyledIcon = styled.span`
 const PublicationExpansionPanel: React.FC<PublicationExpansionPanelProps> = ({
   headerLabel,
   icon,
-  id,
   expanded,
   onChange,
   children,
   ariaControls,
+  dataTestId,
 }) => {
   return (
     <StyledPublicationExpansionPanel expanded={expanded} onChange={onChange}>
-      <StyledExpansionPanelSummary expandIcon={<ExpandMoreIcon />} aria-controls={ariaControls} id={id}>
+      <StyledExpansionPanelSummary
+        expandIcon={<ExpandMoreIcon />}
+        aria-controls={ariaControls}
+        data-testid={dataTestId}>
         <StyledIcon>{icon}</StyledIcon> {headerLabel}
       </StyledExpansionPanelSummary>
       <ExpansionPanelDetails>{children}</ExpansionPanelDetails>
