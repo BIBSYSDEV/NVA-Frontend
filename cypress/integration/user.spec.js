@@ -28,9 +28,6 @@ describe('User connects to their Authority', () => {
   it('The user should be able to connect to an authority on the start page when no authority is connected', () => {
     cy.get('[data-testid=logo]').click({ force: true });
 
-    // wait for modal to open
-    cy.wait(3000);
-
     // connect author
     cy.get('[data-testid=connect-author-modal]').click({ force: true });
     cy.get('[data-testid=author-radio-button]')
