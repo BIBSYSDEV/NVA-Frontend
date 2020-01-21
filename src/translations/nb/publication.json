@@ -1,6 +1,8 @@
 {
   "chapter": {
-    "info": "Den antologien kapittelet er publisert i, må være registrert først"
+    "anthology": "Publisert i",
+    "info": "Den antologien kapittelet er publisert i, må være registrert først",
+    "link": "Link til publikasjon"
   },
   "contributors": {
     "add_author": "Legg til flere forfattere",
