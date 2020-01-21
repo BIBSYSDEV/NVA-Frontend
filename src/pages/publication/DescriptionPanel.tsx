@@ -160,7 +160,6 @@ const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublicat
                 fullWidth
                 component={Select}
                 label={t('common:language')}>
-                {/*TODO: label doesnt show*/}
                 {orderedLanguages.map(code => (
                   <MenuItem value={code} key={code} data-testid={`publication-language-${code}`}>
                     {t(`languages:${code}`)}
