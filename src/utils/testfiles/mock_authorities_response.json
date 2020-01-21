@@ -1,17 +1,17 @@
 [
   {
     "name": "Osteloff, Oddny",
-    "scn": "901790000001",
-    "feideId": "",
-    "orcId": "",
+    "systemControlNumber": "901790000001",
+    "feideids": [],
+    "orcids": [],
     "handle": "",
     "birthDate": "1991-04-25 00:00:00.000"
   },
   {
-    "name": "Gundersen, Osteloff",
-    "scn": "901790000000",
-    "feideId": "tu@unit.no",
-    "orcId": "",
+    "name": "Test User",
+    "systemControlNumber": "901790000000",
+    "feideids": ["osteloff@unit.no"],
+    "orcids": ["0000-0001-2345-6789"],
     "handle": "https://vg.no",
     "birthDate": "1941-04-25 00:00:00.000"
   }

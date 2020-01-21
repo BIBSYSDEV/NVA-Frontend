@@ -43,7 +43,7 @@ export const getPublications = async (systemControlNumber: string, dispatch: Dis
       dispatch(addNotification(i18n.t('feedback:error.get_publications'), 'error'));
     }
   } catch (error) {
-    dispatch(addNotification(i18n.t('feedback:error.get_publications'), 'error'));
+    // dispatch(addNotification(i18n.t('feedback:error.get_publications'), 'error'));
   }
   return [];
 };

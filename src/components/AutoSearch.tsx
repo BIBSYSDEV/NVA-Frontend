@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import { CircularProgress, TextField } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-
 import { MINIMUM_SEARCH_CHARACTERS } from '../utils/constants';
 
 const StyledSearchIcon = styled(SearchIcon)`
@@ -19,12 +18,10 @@ interface AutoSearchProps {
   label?: string;
   searchResults: any;
   setValueFunction: (value: any) => void;
-  value?: string;
   clearSearchField?: boolean;
   dataTestId?: string;
-  onInputChange?: (event: object, value: string) => void;
+  onInputChange: (value: string) => void;
   placeholder?: string;
-  clearOnSelect?: boolean;
 }
 
 export const AutoSearch: FC<AutoSearchProps> = ({
@@ -35,8 +32,6 @@ export const AutoSearch: FC<AutoSearchProps> = ({
   dataTestId,
   onInputChange,
   placeholder,
-  value = '',
-  clearOnSelect = false,
 }) => {
   const [displayValue, setDisplayValue] = useState(emptyValue);
   const [open, setOpen] = useState(false);
@@ -53,10 +48,6 @@ export const AutoSearch: FC<AutoSearchProps> = ({
   }, [searchResults]);
 
   useEffect(() => {
-    setDisplayValue({ title: value });
-  }, [value]);
-
-  useEffect(() => {
     if (clearSearchField) {
       setOptions([]);
     }
@@ -65,10 +56,9 @@ export const AutoSearch: FC<AutoSearchProps> = ({
   return (
     <Autocomplete
       disableOpenOnFocus
-      open={open}
+      open={displayValue.title.length >= MINIMUM_SEARCH_CHARACTERS && open}
       onClose={() => {
         setOpen(false);
-        setOptions([]);
       }}
       onOpen={() => {
         setOpen(true);
@@ -76,26 +66,39 @@ export const AutoSearch: FC<AutoSearchProps> = ({
       onChange={(_: object, value: string) => {
         if (value) {
           setValueFunction(value);
-          if (clearOnSelect) {
-            setDisplayValue(emptyValue);
-          }
+          setDisplayValue(emptyValue);
+          setOptions([]);
         }
       }}
-      onInputChange={(event: object, value: string) => {
-        value.length >= MINIMUM_SEARCH_CHARACTERS && options.length === 0 && open && setLoading(true);
-        open && value.length >= MINIMUM_SEARCH_CHARACTERS && onInputChange && onInputChange(event, value);
+      onInputChange={(_: any, value: string, reason: string) => {
+        setDisplayValue({ title: value });
+
+        if (reason === 'input') {
+          if (value.length >= MINIMUM_SEARCH_CHARACTERS) {
+            setLoading(true);
+            onInputChange(value);
+          } else {
+            setOpen(false);
+            setOptions([]);
+          }
+        } else {
+          setOptions([]);
+        }
       }}
       getOptionLabel={option => option.title || ''}
       options={options}
       loading={loading}
+      blurOnSelect
       value={displayValue}
       noOptionsText={t('no_hits')}
+      filterOptions={options => options}
       renderInput={params => (
         <TextField
           {...params}
           data-testid={dataTestId}
           label={label}
           fullWidth
+          onClick={() => displayValue.title && setOpen(true)}
           variant="outlined"
           autoComplete="false"
           placeholder={placeholder}

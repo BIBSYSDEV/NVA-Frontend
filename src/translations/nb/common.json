@@ -4,6 +4,7 @@
   "information": "Information",
   "institution": "Institusjon",
   "language": "Språk",
+  "loading": "Laster",
   "name": "Navn",
   "next": "Neste",
   "no_hits": "Ingen treff",
@@ -12,5 +13,6 @@
   "save": "Lagre",
   "search": "Søk",
   "title": "Tittel",
-  "type": "Type"
+  "type": "Type",
+  "picture": "Bilde"
 }

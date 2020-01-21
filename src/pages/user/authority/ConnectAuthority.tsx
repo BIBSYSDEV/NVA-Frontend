@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 import { Button } from '@material-ui/core';
 
-import { getAuthorities, updateAuthority } from '../../../api/authorityApi';
+import { updateFeideForAuthority } from '../../../api/authorityApi';
 import { setOrcid } from '../../../redux/actions/orcidActions';
 import { setAuthorityData } from '../../../redux/actions/userActions';
 import { RootStore } from '../../../redux/reducers/rootReducer';
@@ -33,51 +33,52 @@ export const ConnectAuthority: React.FC = () => {
   const user = useSelector((store: RootStore) => store.user);
   const dispatch = useDispatch();
   const { t } = useTranslation('profile');
-  const searchTerm = user.name;
 
   useEffect(() => {
-    const fetchAuthorities = async () => {
-      const retrievedAuthorities = await getAuthorities(searchTerm, dispatch);
-      setMatchingAuthorities(retrievedAuthorities);
-    };
-
-    if (searchTerm) {
-      fetchAuthorities();
+    if (user.possibleAuthorities.length > 0) {
+      setMatchingAuthorities(user.possibleAuthorities);
     }
-  }, [dispatch, searchTerm]);
+  }, [user.possibleAuthorities]);
 
-  const setOrcIdAndFeideId = async () => {
-    const selectedAuthority = matchingAuthorities.find(auth => auth.scn === selectedSystemControlNumber);
+  const setOrcidAndFeide = async () => {
+    const selectedAuthority = matchingAuthorities.find(
+      auth => auth.systemControlNumber === selectedSystemControlNumber
+    );
 
-    if (selectedAuthority) {
-      selectedAuthority.orcId && dispatch(setOrcid(selectedAuthority.orcId));
+    if (selectedAuthority && user.authority) {
+      selectedAuthority.orcids.length > 0 && dispatch(setOrcid(selectedAuthority.orcids));
 
-      const authority: Authority = { ...selectedAuthority, feideId: user.id };
-      dispatch(setAuthorityData(authority));
-      await updateAuthority(authority, dispatch);
-      dispatch(setAuthorityData(authority));
+      const updatedAuthority = await updateFeideForAuthority(user.id, user.authority.systemControlNumber, dispatch);
+      dispatch(setAuthorityData(updatedAuthority));
     }
   };
 
   return (
     <>
       <StyledSubHeading>
-        {t('authority.search_summary', { results: matchingAuthorities?.length ?? 0, searchTerm: searchTerm })}
+        {t('authority.search_summary', { results: matchingAuthorities?.length ?? 0, searchTerm: user.name })}
       </StyledSubHeading>
 
       <StyledAuthorityContainer>
         {matchingAuthorities?.map(authority => (
-          <StyledClickableDiv key={authority.scn} onClick={() => setSelectedSystemControlNumber(authority.scn)}>
-            <AuthorityCard authority={authority} isSelected={selectedSystemControlNumber === authority.scn} />
+          <StyledClickableDiv
+            data-testid="author-radio-button"
+            key={authority.systemControlNumber}
+            onClick={() => setSelectedSystemControlNumber(authority.systemControlNumber)}>
+            <AuthorityCard
+              authority={authority}
+              isSelected={selectedSystemControlNumber === authority.systemControlNumber}
+            />
           </StyledClickableDiv>
         ))}
 
         {matchingAuthorities?.length > 0 && (
           <Button
+            data-testid="connect-author-button"
             color="primary"
             variant="contained"
             size="large"
-            onClick={setOrcIdAndFeideId}
+            onClick={setOrcidAndFeide}
             disabled={!selectedSystemControlNumber}>
             {t('authority.connect_authority')}
           </Button>
