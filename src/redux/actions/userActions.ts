@@ -1,13 +1,14 @@
 import { VariantType } from 'notistack';
 
-import { FeideUser } from '../../types/user.types';
 import { Authority } from '../../types/authority.types';
+import { FeideUser } from '../../types/user.types';
 
 // ACTION TYPES
 export const CLEAR_USER = 'clear user';
 export const SET_USER_SUCCESS = 'set user';
 export const SET_USER_FAILURE = 'set user failure';
 export const SET_AUTHORITY_DATA = 'set authority data';
+export const SET_POSSIBLE_AUTHORITIES = 'set possible authorities';
 
 // ACTION CREATORS
 export const clearUser = (): ClearUserAction => ({
@@ -30,6 +31,11 @@ export const setAuthorityData = (authority: Authority): SetAuthorityAction => ({
   authority,
 });
 
+export const setPossibleAuthories = (possibleAuthorities: Authority[]): SetPossibleAuthoritiesAction => ({
+  type: SET_POSSIBLE_AUTHORITIES,
+  possibleAuthorities,
+});
+
 interface ClearUserAction {
   type: typeof CLEAR_USER;
 }
@@ -49,4 +55,14 @@ interface SetUserFailureAction {
   variant: VariantType;
 }
 
-export type UserActions = ClearUserAction | SetUserAction | SetUserFailureAction | SetAuthorityAction;
+interface SetPossibleAuthoritiesAction {
+  type: typeof SET_POSSIBLE_AUTHORITIES;
+  possibleAuthorities: Authority[];
+}
+
+export type UserActions =
+  | ClearUserAction
+  | SetUserAction
+  | SetUserFailureAction
+  | SetAuthorityAction
+  | SetPossibleAuthoritiesAction;

@@ -1,12 +1,8 @@
 Cypress.Commands.add('mocklogin', () => {
-  // ignore the modal
-  window.localStorage.setItem('showAuthorityModal', 'false');
-  window.localStorage.setItem('showOrcidModal', 'false');
-
   // log in
   cy.get('[data-testid=login-button]').click({ force: true });
 
-  // set language
+  // navigate to profile
   cy.get('[data-testid=menu]').click({ force: true });
   cy.get('[data-testid=user-profile-button]').click({ force: true });
 

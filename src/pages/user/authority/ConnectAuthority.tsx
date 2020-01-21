@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 import { Button } from '@material-ui/core';
 
-import { getAuthorities, updateFeideForAuthority } from '../../../api/authorityApi';
+import { updateFeideForAuthority } from '../../../api/authorityApi';
 import { setOrcid } from '../../../redux/actions/orcidActions';
 import { setAuthorityData } from '../../../redux/actions/userActions';
 import { RootStore } from '../../../redux/reducers/rootReducer';
@@ -33,18 +33,12 @@ export const ConnectAuthority: React.FC = () => {
   const user = useSelector((store: RootStore) => store.user);
   const dispatch = useDispatch();
   const { t } = useTranslation('profile');
-  const searchTerm = user.name;
 
   useEffect(() => {
-    const fetchAuthorities = async () => {
-      const retrievedAuthorities = await getAuthorities(searchTerm, dispatch);
-      setMatchingAuthorities(retrievedAuthorities);
-    };
-
-    if (searchTerm) {
-      fetchAuthorities();
+    if (user.possibleAuthorities.length > 0) {
+      setMatchingAuthorities(user.possibleAuthorities);
     }
-  }, [dispatch, searchTerm]);
+  }, [user.possibleAuthorities]);
 
   const setOrcidAndFeide = async () => {
     const selectedAuthority = matchingAuthorities.find(
@@ -62,12 +56,13 @@ export const ConnectAuthority: React.FC = () => {
   return (
     <>
       <StyledSubHeading>
-        {t('authority.search_summary', { results: matchingAuthorities?.length ?? 0, searchTerm: searchTerm })}
+        {t('authority.search_summary', { results: matchingAuthorities?.length ?? 0, searchTerm: user.name })}
       </StyledSubHeading>
 
       <StyledAuthorityContainer>
         {matchingAuthorities?.map(authority => (
           <StyledClickableDiv
+            data-testid="author-radio-button"
             key={authority.systemControlNumber}
             onClick={() => setSelectedSystemControlNumber(authority.systemControlNumber)}>
             <AuthorityCard
@@ -79,6 +74,7 @@ export const ConnectAuthority: React.FC = () => {
 
         {matchingAuthorities?.length > 0 && (
           <Button
+            data-testid="connect-author-button"
             color="primary"
             variant="contained"
             size="large"

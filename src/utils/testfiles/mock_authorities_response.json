@@ -8,10 +8,10 @@
     "birthDate": "1991-04-25 00:00:00.000"
   },
   {
-    "name": "Gundersen, Osteloff",
+    "name": "Test User",
     "systemControlNumber": "901790000000",
-    "feideids": ["tu@unit.no"],
-    "orcids": [""],
+    "feideids": ["osteloff@unit.no"],
+    "orcids": ["0000-0001-2345-6789"],
     "handle": "https://vg.no",
     "birthDate": "1941-04-25 00:00:00.000"
   }

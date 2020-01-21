@@ -17,6 +17,7 @@ export const API_URL = process.env.REACT_APP_API_URL;
 
 export enum StatusCode {
   OK = 200,
+  NO_CONTENT = 204,
 }
 
 export enum PublicationTableNumber {

@@ -4,7 +4,7 @@ export interface Authority {
   feideids: string[];
   orcids: string[];
   birthDate?: string;
-  handle?: string;
+  handles: string[];
 }
 
 export const emptyAuthority = {
@@ -13,5 +13,5 @@ export const emptyAuthority = {
   feideids: [],
   orcids: [],
   birthDate: '',
-  handle: '',
+  handles: [],
 };
