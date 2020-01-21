@@ -4,15 +4,15 @@ import MockAdapter from 'axios-mock-adapter';
 import { Authority } from '../types/authority.types';
 import OrcidResponse from '../types/orcid.types';
 import { API_URL, ORCID_USER_INFO_URL } from '../utils/constants';
-import mockProjects from '../utils/testfiles/projects_real.json';
 import mockDoiLookupResponse from '../utils/testfiles/doi_lookup_response.json';
 import mockAuthoritiesResponse from '../utils/testfiles/mock_authorities_response.json';
+import mockProjects from '../utils/testfiles/projects_real.json';
 import mockPublications from '../utils/testfiles/publications_45_random_results_generated.json';
 import mockNsdPublisers from '../utils/testfiles/publishersFromNsd.json';
 import { AuthorityApiPaths } from './authorityApi';
-import { PublicationChannelApiPaths } from './publicationChannelApi';
-import { PublicationsApiPaths } from './publicationApi';
 import { ProjectsApiPaths } from './projectApi';
+import { PublicationsApiPaths } from './publicationApi';
+import { PublicationChannelApiPaths } from './publicationChannelApi';
 
 const mockOrcidResponse: OrcidResponse = {
   id: 'https://sandbox.orcid.org/0000-0001-2345-6789',
@@ -23,11 +23,11 @@ const mockOrcidResponse: OrcidResponse = {
 };
 
 const mockSingleAuthorityResponse: Authority = {
-  name: 'Gundersen, Osteloff',
+  name: 'Test User',
   systemControlNumber: '901790000000',
-  feideids: ['tu@unit.no'],
+  feideids: ['osteloff@unit.no'],
   orcids: ['0000-0001-2345-6789'],
-  handle: 'https://vg.no',
+  handles: [],
   birthDate: '1941-04-25 00:00:00.000',
 };
 
