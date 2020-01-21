@@ -104,11 +104,15 @@ export const getPublicationByDoi = async (doiUrl: string) => {
         Authorization: `Bearer ${idToken}`,
       },
     });
+
     if (response.status === StatusCode.OK) {
       return response.data;
+    } else {
+      return null;
     }
-  } catch {}
-  return null;
+  } catch (error) {
+    return { error };
+  }
 };
 
 export const search = async (searchTerm: string, dispatch: Dispatch, offset?: number) => {

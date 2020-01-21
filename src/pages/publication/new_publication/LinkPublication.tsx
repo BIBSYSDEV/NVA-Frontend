@@ -10,6 +10,8 @@ import { getPublicationByDoi } from '../../../api/publicationApi';
 import LinkPublicationForm from './LinkPublicationForm';
 import PublicationExpansionPanel from './PublicationExpansionPanel';
 import { Doi } from '../../../types/publication.types';
+import { useDispatch } from 'react-redux';
+import { addNotification } from '../../../redux/actions/notificationActions';
 
 const StyledBody = styled.div`
   width: 100%;
@@ -37,6 +39,7 @@ const LinkPublicationPanel: FC<LinkPublicationPanelProps> = ({ expanded, onChang
   const [loading, setLoading] = useState(false);
   const [noHit, setNoHit] = useState(false);
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const createPublication = async () => {
     if (!doi) {
@@ -55,10 +58,13 @@ const LinkPublicationPanel: FC<LinkPublicationPanelProps> = ({ expanded, onChang
     setDoi(null);
 
     const doiPublication = await getPublicationByDoi(values.doiUrl);
-    if (doiPublication) {
-      setDoi(doiPublication);
-    } else {
+    if (doiPublication?.error) {
       setNoHit(true);
+      dispatch(addNotification(t('feedback:error.get_doi'), 'error'));
+    } else if (!doiPublication) {
+      setNoHit(true);
+    } else {
+      setDoi(doiPublication);
     }
     setLoading(false);
   };
