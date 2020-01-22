@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Field, FormikProps, useFormikContext } from 'formik';
+import { Field } from 'formik';
 import { TextField } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
 import styled from 'styled-components';
@@ -8,7 +8,6 @@ import RemoveIcon from '@material-ui/icons/Remove';
 import { ChapterFieldNames } from '../../../types/references.types';
 import { AutoSearch } from '../../../components/AutoSearch';
 import NviValidation from './components/NviValidation';
-import { Publication } from '../../../types/publication.types';
 
 const StyledInfoBox = styled.div`
   margin-top: 1rem;

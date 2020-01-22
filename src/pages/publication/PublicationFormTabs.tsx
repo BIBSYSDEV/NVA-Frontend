@@ -12,7 +12,6 @@ import {
   JournalArticleFieldNames,
   ReferenceFieldNames,
   ReportFieldNames,
-  reportTypes,
 } from '../../types/references.types';
 import { getObjectValueByFieldName } from '../../utils/helpers';
 import { DescriptionFieldNames } from './DescriptionPanel';
