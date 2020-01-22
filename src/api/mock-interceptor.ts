@@ -9,10 +9,14 @@ import mockDoiLookupResponse from '../utils/testfiles/doi_lookup_response.json';
 import mockAuthoritiesResponse from '../utils/testfiles/mock_authorities_response.json';
 import mockPublications from '../utils/testfiles/publications_45_random_results_generated.json';
 import mockNsdPublisers from '../utils/testfiles/publishersFromNsd.json';
+import mockInstitutionQuery from '../utils/testfiles/institution_query.json';
+import mockFacultyQuery from '../utils/testfiles/institution_faculty_query.json';
+import mockInstituteQuery from '../utils/testfiles/institution_institute_query.json';
 import { AuthorityApiPaths } from './authorityApi';
 import { PublicationChannelApiPaths } from './publicationChannelApi';
 import { PublicationsApiPaths } from './publicationApi';
 import { ProjectsApiPaths } from './projectApi';
+import { InstituionApiPaths } from './InstitutionApi';
 
 const mockOrcidResponse: OrcidResponse = {
   id: 'https://sandbox.orcid.org/0000-0001-2345-6789',
@@ -27,6 +31,7 @@ const mockSingleAuthorityResponse: Authority = {
   systemControlNumber: '901790000000',
   feideids: ['tu@unit.no'],
   orcids: ['0000-0001-2345-6789'],
+  orgunitids: ['194.0.0.0'],
   handle: 'https://vg.no',
   birthDate: '1941-04-25 00:00:00.000',
 };
@@ -56,6 +61,11 @@ export const interceptRequestsOnMock = () => {
   // Authority Registry
   mock.onGet(new RegExp(`${API_URL}${AuthorityApiPaths.AUTHORITY}`)).reply(200, mockAuthoritiesResponse);
   mock.onPut(new RegExp(`${API_URL}${AuthorityApiPaths.AUTHORITY}/*`)).reply(200, mockSingleAuthorityResponse);
+
+  // Institution Registry
+  mock.onGet(new RegExp(`${API_URL}${InstituionApiPaths.QUERY}\\?name=*`)).reply(200, mockInstitutionQuery);
+  mock.onGet(new RegExp(`${API_URL}${InstituionApiPaths.GET}[0-9]+.0.0.0`)).reply(200, mockFacultyQuery);
+  mock.onGet(new RegExp(`${API_URL}${InstituionApiPaths.GET}*.[^0]+.0.0`)).reply(200, mockInstituteQuery);
 
   mock.onAny().reply(function(config) {
     throw new Error('Could not find mock for ' + config.url);

@@ -68,6 +68,7 @@ export const emptyInstitutionName: InstitutionName = {
 };
 
 export interface Institution {
+  title?: string;
   institutionNames: InstitutionName[];
   acronym: string;
   cristinInstitutionId: string;
@@ -76,6 +77,7 @@ export interface Institution {
 }
 
 export const emptyInstitution: Institution = {
+  title: '',
   institutionNames: [emptyInstitutionName],
   acronym: '',
   cristinInstitutionId: '',

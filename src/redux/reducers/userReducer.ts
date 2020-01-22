@@ -2,8 +2,12 @@ import { ApplicationName, emptyUser, RoleName, User } from '../../types/user.typ
 import { AuthActions, LOGIN_SUCCESS, LOGOUT_SUCCESS } from '../actions/authActions';
 import { OrcidActions, SET_ORCID } from '../actions/orcidActions';
 import { CLEAR_USER, SET_AUTHORITY_DATA, SET_USER_SUCCESS, UserActions } from '../actions/userActions';
+import { SET_INSTITUTION, InstitutionActions } from '../actions/institutionActions';
 
-export const userReducer = (state: User = emptyUser, action: UserActions | OrcidActions | AuthActions) => {
+export const userReducer = (
+  state: User = emptyUser,
+  action: UserActions | OrcidActions | AuthActions | InstitutionActions
+) => {
   switch (action.type) {
     case CLEAR_USER:
       return {
@@ -29,6 +33,11 @@ export const userReducer = (state: User = emptyUser, action: UserActions | Orcid
       return {
         ...state,
         authority: { ...state.authority, orcids: [...state.authority.orcids, action.orcids] },
+      };
+    case SET_INSTITUTION:
+      return {
+        ...state,
+        authority: { ...state.authority, orgunitids: [...state.authority.orgunitids, action.orgunitids] },
       };
     case SET_AUTHORITY_DATA:
       return {

@@ -1,0 +1,50 @@
+[
+  {
+    "cristinInstitutionId": "194",
+    "institutionNames": [
+      {
+        "name": "Norges teknisk-naturvitenskapelige universitet",
+        "language": "nb"
+      }
+    ],
+    "acronym": "NTNU",
+    "country": "NO",
+    "cristinUnitId": "194.0.0.0"
+  },
+  {
+    "cristinInstitutionId": "43200063",
+    "institutionNames": [
+      {
+        "name": "National Taiwan Normal University",
+        "language": "nb"
+      }
+    ],
+    "acronym": "NTNU",
+    "country": "TW",
+    "cristinUnitId": "43200063.0.0.0"
+  },
+  {
+    "cristinInstitutionId": "7403",
+    "institutionNames": [
+      {
+        "name": "NTNU Samfunnsforskning AS",
+        "language": "nb"
+      }
+    ],
+    "acronym": "SAMFORSK",
+    "country": "NO",
+    "cristinUnitId": "7403.0.0.0"
+  },
+  {
+    "cristinInstitutionId": "7538",
+    "institutionNames": [
+      {
+        "name": "Senter for økonomisk forskning AS",
+        "language": "nb"
+      }
+    ],
+    "acronym": "SØF",
+    "country": "NO",
+    "cristinUnitId": "7538.0.0.0"
+  }
+]

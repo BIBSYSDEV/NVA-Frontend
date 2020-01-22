@@ -1,31 +1,32 @@
 import Axios from 'axios';
-
-import { Institution, InstitutionName, InstitutionSubUnit } from '../types/references.types';
+import { API_URL } from './../utils/constants';
 
 export enum InstituionApiPaths {
-  SEARCH = '/institution',
-  GET = '/institution/',
+  QUERY = '/institution',
+  GET = '/institution/unit/',
 }
 
 export const queryInstitution = async (searchTerm: string) => {
   try {
     const response = await Axios({
       method: 'GET',
-      url: `${InstituionApiPaths.SEARCH}?name=${searchTerm}`,
+      url: `${API_URL}${InstituionApiPaths.QUERY}?name=${searchTerm}`,
     });
-    return response.data.results;
-  } catch {
+    return response.data;
+  } catch (e) {
+    console.log(e);
     return [];
   }
 };
 
 export const getInstitutionSubUnit = async (cristinUnitId: string) => {
+  console.log(cristinUnitId);
   try {
     const response = await Axios({
       method: 'GET',
-      url: `${InstituionApiPaths.GET}${cristinUnitId}`,
+      url: `${API_URL}${InstituionApiPaths.GET}${cristinUnitId}`,
     });
-    return response.data.results;
+    return response.data;
   } catch {
     return [];
   }
