@@ -19,3 +19,7 @@ export const customerKeyMap: EnumDictionary<string, string> = {
   NO994960822: CustomerOrganizationId.ANNOM,
   NO969840383: CustomerOrganizationId.NORSOK,
 };
+
+export const getOrganizationIdByOrganizationNumber = (organizationNumber: string): string => {
+  return customerKeyMap[organizationNumber];
+};
