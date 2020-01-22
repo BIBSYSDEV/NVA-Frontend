@@ -19,7 +19,7 @@ import Search from './pages/search/Search';
 import AuthorityOrcidModal from './pages/user/authority/AuthorityOrcidModal';
 import User from './pages/user/User';
 import Workspace from './pages/workspace/Workspace';
-import { setAuthorityData, setPossibleAuthories, setUser } from './redux/actions/userActions';
+import { setAuthorityData, setPossibleAuthorities, setUser } from './redux/actions/userActions';
 import { RootStore } from './redux/reducers/rootReducer';
 import { Authority } from './types/authority.types';
 import { awsConfig } from './utils/aws-config';
@@ -96,7 +96,7 @@ const App: React.FC = () => {
             dispatch(setAuthorityData(updatedAuthority));
           }
         } else {
-          dispatch(setPossibleAuthories(authorities));
+          dispatch(setPossibleAuthorities(authorities));
         }
       }
     };

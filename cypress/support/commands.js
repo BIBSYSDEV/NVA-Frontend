@@ -8,5 +8,5 @@ Cypress.Commands.add('mocklogin', () => {
 
   // need to set language to english in order to check that the translated values are correct
   cy.get('[data-testid=language-selector] .MuiSelect-root').click({ force: true });
-  cy.get('[data-testid=user-language-en]').click({ force: true });
+  cy.get('[data-testid=user-language-en-US]').click({ force: true });
 });
