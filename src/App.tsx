@@ -81,21 +81,23 @@ const App: React.FC = () => {
   useEffect(() => {
     const getAuthority = async () => {
       const authorities = await getAuthorities(user.name, dispatch);
-      const filteredAuthorities: Authority[] = authorities.filter((auth: Authority) =>
-        auth.feideids.some(id => id === user.id)
-      );
-      if (filteredAuthorities.length === 1) {
-        const updatedAuthority = await updateInstitutionForAuthority(
-          user.organizationId,
-          filteredAuthorities[0].systemControlNumber
+      if (authorities) {
+        const filteredAuthorities: Authority[] = authorities.filter((auth: Authority) =>
+          auth.feideids.some(id => id === user.id)
         );
-        if (!updatedAuthority || updatedAuthority?.error) {
-          dispatch(setAuthorityData(filteredAuthorities[0]));
+        if (filteredAuthorities.length === 1) {
+          const updatedAuthority = await updateInstitutionForAuthority(
+            user.organizationId,
+            filteredAuthorities[0].systemControlNumber
+          );
+          if (!updatedAuthority || updatedAuthority?.error) {
+            dispatch(setAuthorityData(filteredAuthorities[0]));
+          } else {
+            dispatch(setAuthorityData(updatedAuthority));
+          }
         } else {
-          dispatch(setAuthorityData(updatedAuthority));
+          dispatch(setPossibleAuthories(authorities));
         }
-      } else {
-        dispatch(setPossibleAuthories(authorities));
       }
     };
     if (user.name) {
