@@ -58,7 +58,11 @@ const NewPublication: FC = () => {
           <StyledNewPublication>
             <StyledSelectorWrapper>
               <LoadPublication expanded={expanded === 'load-panel'} onChange={handleChange('load-panel')} />
-              <LinkPublication expanded={expanded === 'link-panel'} onChange={handleChange('link-panel')} />
+              <LinkPublication
+                expanded={expanded === 'link-panel'}
+                onChange={handleChange('link-panel')}
+                openForm={handleClick}
+              />
             </StyledSelectorWrapper>
             <StyledInfoBox>
               <header>{t('common:information')}</header>

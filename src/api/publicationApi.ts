@@ -104,13 +104,14 @@ export const getPublicationByDoi = async (doiUrl: string) => {
         Authorization: `Bearer ${idToken}`,
       },
     });
+
     if (response.status === StatusCode.OK) {
       return response.data;
     } else {
-      console.error('error.get_doi'); //TO BE REPLACED
+      return null;
     }
-  } catch {
-    console.error('error.get_doi'); //TO BE REPLACED
+  } catch (error) {
+    return { error };
   }
 };
 
