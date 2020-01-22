@@ -1,7 +1,13 @@
 import { ApplicationName, emptyUser, RoleName, User } from '../../types/user.types';
 import { AuthActions, LOGIN_SUCCESS, LOGOUT_SUCCESS } from '../actions/authActions';
 import { OrcidActions, SET_ORCID } from '../actions/orcidActions';
-import { CLEAR_USER, SET_AUTHORITY_DATA, SET_USER_SUCCESS, UserActions } from '../actions/userActions';
+import {
+  CLEAR_USER,
+  SET_AUTHORITY_DATA,
+  SET_POSSIBLE_AUTHORITIES,
+  SET_USER_SUCCESS,
+  UserActions,
+} from '../actions/userActions';
 import { SET_INSTITUTION, InstitutionActions } from '../actions/institutionActions';
 
 export const userReducer = (
@@ -43,6 +49,11 @@ export const userReducer = (
       return {
         ...state,
         authority: action.authority,
+      };
+    case SET_POSSIBLE_AUTHORITIES:
+      return {
+        ...state,
+        possibleAuthorities: action.possibleAuthorities,
       };
     case LOGIN_SUCCESS:
       return {

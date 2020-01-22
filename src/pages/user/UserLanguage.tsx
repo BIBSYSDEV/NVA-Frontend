@@ -4,8 +4,8 @@ import styled from 'styled-components';
 
 import { FormControl, MenuItem, Select } from '@material-ui/core';
 
-import { defaultLanguage, languages } from '../../translations/i18n';
-import { Language } from '../../types/settings.types';
+import { defaultLanguage } from '../../translations/i18n';
+import { LanguageCodes, pageLanguages } from '../../types/language.types';
 import UserCard from './UserCard';
 
 const StyledFormControl = styled(FormControl)`
@@ -15,7 +15,7 @@ const StyledFormControl = styled(FormControl)`
 `;
 
 const UserLanguage: React.FC = () => {
-  const [languageSelected, setLanguageSelected] = useState<Language | string>(defaultLanguage);
+  const [languageSelected, setLanguageSelected] = useState<LanguageCodes | string>(defaultLanguage);
   const { t, i18n } = useTranslation('profile');
 
   useEffect(() => {
@@ -32,7 +32,7 @@ const UserLanguage: React.FC = () => {
     <UserCard headingLabel={t('heading.language')}>
       <StyledFormControl variant="outlined">
         <Select value={languageSelected} onChange={handleLanguageChange} data-testid="language-selector">
-          {languages.map(language => (
+          {pageLanguages.map(language => (
             <MenuItem value={language.code} key={language.code} data-testid={`user-language-${language.code}`}>
               {language.name}
             </MenuItem>

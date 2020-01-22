@@ -6,7 +6,7 @@ import styled from 'styled-components';
 
 import { Link as MuiLink } from '@material-ui/core';
 
-import { updateOrcIdForAuthority } from '../../api/authorityApi';
+import { updateOrcidForAuthority } from '../../api/authorityApi';
 import { getOrcidInfo } from '../../api/external/orcidApi';
 import ButtonModal from '../../components/ButtonModal';
 import { RootStore } from '../../redux/reducers/rootReducer';
@@ -49,6 +49,9 @@ const User: React.FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
+  const hasHandles = user.authority?.handles?.length > 0;
+  const hasFeide = user.authority?.feideids?.length > 0;
+
   useEffect(() => {
     const orcidAccessToken = new URLSearchParams(location.hash.replace('#', '?')).get('access_token') || '';
     if (orcidAccessToken) {
@@ -59,7 +62,7 @@ const User: React.FC = () => {
 
   useEffect(() => {
     if (user.authority?.orcids.length > 0) {
-      updateOrcIdForAuthority(user.authority?.orcids[0], user.authority.systemControlNumber, dispatch);
+      updateOrcidForAuthority(user.authority?.orcids[0], user.authority.systemControlNumber, dispatch);
     }
   }, [user.authority, dispatch]);
 
@@ -75,10 +78,10 @@ const User: React.FC = () => {
       <StyledPrimaryUserInfo>
         <UserInfo user={user} />
         <UserCard headingLabel={t('heading.author_info')}>
-          {user.authority?.feideids.length > 0 ? (
+          {hasFeide ? (
             <>
-              <p>{t('authority.connected_info')}</p>
-              <MuiLink href={user.authority.handle}>{t('authority.see_profile')}</MuiLink>
+              <p data-testid="author-connected-info">{t('authority.connected_info')}</p>
+              {hasHandles && <MuiLink href={user.authority.handles?.[0]}>{t('authority.see_profile')}</MuiLink>}
             </>
           ) : (
             <>

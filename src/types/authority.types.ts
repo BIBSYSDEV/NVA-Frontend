@@ -5,7 +5,7 @@ export interface Authority {
   orcids: string[];
   orgunitids: string[];
   birthDate?: string;
-  handle?: string;
+  handles: string[];
 }
 
 export const emptyAuthority = {
@@ -15,5 +15,5 @@ export const emptyAuthority = {
   orcids: [],
   orgunitids: [],
   birthDate: '',
-  handle: '',
+  handles: [],
 };

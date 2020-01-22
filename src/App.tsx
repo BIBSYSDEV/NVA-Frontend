@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { getAuthorityByFeide } from './api/authorityApi';
+import { getAuthorities } from './api/authorityApi';
 import { getCurrentAuthenticatedUser } from './api/userApi';
 import Breadcrumbs from './layout/Breadcrumbs';
 import Footer from './layout/Footer';
@@ -19,8 +19,9 @@ import Search from './pages/search/Search';
 import AuthorityOrcidModal from './pages/user/authority/AuthorityOrcidModal';
 import User from './pages/user/User';
 import Workspace from './pages/workspace/Workspace';
-import { setAuthorityData, setUser } from './redux/actions/userActions';
+import { setAuthorityData, setPossibleAuthories, setUser } from './redux/actions/userActions';
 import { RootStore } from './redux/reducers/rootReducer';
+import { Authority } from './types/authority.types';
 import { awsConfig } from './utils/aws-config';
 import { API_URL, DEBOUNCE_INTERVAL_MODAL, USE_MOCK_DATA } from './utils/constants';
 import { hubListener } from './utils/hub-listener';
@@ -79,15 +80,20 @@ const App: React.FC = () => {
 
   useEffect(() => {
     const getAuthority = async () => {
-      const authority = await getAuthorityByFeide(user.id, dispatch);
-      if (authority) {
-        dispatch(setAuthorityData(authority));
+      const authorities = await getAuthorities(user.name, dispatch);
+      const filteredAuthorities: Authority[] = authorities.filter((auth: Authority) =>
+        auth.feideids.some(id => id === user.id)
+      );
+      if (filteredAuthorities.length === 1) {
+        dispatch(setAuthorityData(filteredAuthorities[0]));
+      } else {
+        dispatch(setPossibleAuthories(authorities));
       }
     };
-    if (user.id && !USE_MOCK_DATA) {
+    if (user.name && !user.authority?.name) {
       getAuthority();
     }
-  }, [dispatch, user.id]);
+  }, [dispatch, user.name, user.id, user.authority]);
 
   useEffect(() => {
     setTimeout(() => {

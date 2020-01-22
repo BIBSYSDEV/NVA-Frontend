@@ -26,6 +26,7 @@ export interface User {
   application: ApplicationName;
   authority: Authority;
   isLoggedIn: boolean;
+  possibleAuthorities: Authority[];
 }
 
 export interface FeideUser {
@@ -53,4 +54,5 @@ export const emptyUser: User = {
   application: ApplicationName.NONE,
   authority: emptyAuthority,
   isLoggedIn: false,
+  possibleAuthorities: [],
 };
