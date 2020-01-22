@@ -24,10 +24,7 @@ describe('Publication: References: Chapter', () => {
     cy.get('[data-testid=chapter-link]').type('http://www.banan.no');
 
     // fill out anthologoy-search
-    cy.get('[data-testid=chapter-autosearch-anthology]')
-      .click({ force: true })
-      .type('Test');
-    cy.contains('No hits').click({ force: true });
+    cy.get('[data-testid=chapter-autosearch-anthology]').should('be.visible');
 
     // fill out number of page-number fields
     cy.get('[data-testid=chapter-pages-from]').type('1');
