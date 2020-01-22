@@ -89,9 +89,7 @@ const App: React.FC = () => {
           user.organizationId,
           filteredAuthorities[0].systemControlNumber
         );
-        if (!updatedAuthority) {
-          dispatch(setAuthorityData(filteredAuthorities[0]));
-        } else if (updatedAuthority.error) {
+        if (!updatedAuthority || updatedAuthority?.error) {
           dispatch(setAuthorityData(filteredAuthorities[0]));
         } else {
           dispatch(setAuthorityData(updatedAuthority));
