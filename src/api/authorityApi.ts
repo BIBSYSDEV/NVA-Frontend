@@ -85,3 +85,29 @@ export const updateOrcidForAuthority = async (orcid: string, systemControlNumber
     dispatch(addNotification(i18n.t('feedback:error.update_authority'), 'error'));
   }
 };
+
+export const updateInstitutionForAuthority = async (orgunitid: string, systemControlNumber: string) => {
+  if (!orgunitid) {
+    return;
+  }
+
+  const url = `${AuthorityApiPaths.AUTHORITY}/${systemControlNumber}`;
+  // remove when Authorization headers are set for all requests
+  const idToken = await getIdToken();
+  const headers = {
+    Authorization: `Bearer ${idToken}`,
+  };
+
+  try {
+    const response = await Axios.put(url, { orgunitid }, { headers });
+    if (response.status === StatusCode.OK) {
+      return response.data;
+    } else if (response.status === StatusCode.NO_CONTENT) {
+      return;
+    } else {
+      return null;
+    }
+  } catch (error) {
+    return { error };
+  }
+};

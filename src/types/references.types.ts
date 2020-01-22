@@ -102,7 +102,7 @@ export const emptyReference: Reference = {
   degree: emptyDegreeReference,
 };
 
-type EnumDictionary<T extends string, U> = {
+export type EnumDictionary<T extends string, U> = {
   [K in T]: U;
 };
 
