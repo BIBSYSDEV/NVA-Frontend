@@ -1,7 +1,6 @@
 import Amplify, { Hub } from 'aws-amplify';
 import Axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import styled from 'styled-components';
@@ -20,7 +19,6 @@ import Search from './pages/search/Search';
 import AuthorityOrcidModal from './pages/user/authority/AuthorityOrcidModal';
 import User from './pages/user/User';
 import Workspace from './pages/workspace/Workspace';
-import { addNotification } from './redux/actions/notificationActions';
 import { setAuthorityData, setPossibleAuthories, setUser } from './redux/actions/userActions';
 import { RootStore } from './redux/reducers/rootReducer';
 import { Authority } from './types/authority.types';
@@ -47,7 +45,6 @@ const StyledPageBody = styled.div`
 `;
 
 const App: React.FC = () => {
-  const { t } = useTranslation('feedback');
   useEffect(() => {
     const setAxiosHeaders = async () => {
       // Set global config of axios requests
@@ -94,9 +91,8 @@ const App: React.FC = () => {
         );
         if (!updatedAuthority) {
           dispatch(setAuthorityData(filteredAuthorities[0]));
-        } else if (updatedAuthority?.error) {
+        } else if (updatedAuthority.error) {
           dispatch(setAuthorityData(filteredAuthorities[0]));
-          dispatch(addNotification(t('error.update_authority'), 'error'));
         } else {
           dispatch(setAuthorityData(updatedAuthority));
         }
@@ -107,7 +103,7 @@ const App: React.FC = () => {
     if (user.name) {
       getAuthority();
     }
-  }, [dispatch, user.name, user.id, user.organizationId, t]);
+  }, [dispatch, user.name, user.id, user.organizationId]);
 
   useEffect(() => {
     setTimeout(() => {

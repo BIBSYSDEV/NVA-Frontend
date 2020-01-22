@@ -105,9 +105,9 @@ export const updateInstitutionForAuthority = async (orgunitid: string, systemCon
     } else if (response.status === StatusCode.NO_CONTENT) {
       return;
     } else {
-      return null;
+      return { error: i18n.t('feedback:error.update_authority') };
     }
   } catch (error) {
-    return { error };
+    return { error: i18n.t('feedback:error.update_authority') };
   }
 };
