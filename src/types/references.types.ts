@@ -1,3 +1,5 @@
+import { EnumDictionary } from './common.types';
+
 export interface Reference {
   type: ReferenceType | '';
   journalArticle?: JournalArticle;
@@ -115,10 +117,6 @@ export const emptyReference: Reference = {
   report: emptyReportReference,
   degree: emptyDegreeReference,
   chapter: emptyChapterReference,
-};
-
-type EnumDictionary<T extends string, U> = {
-  [K in T]: U;
 };
 
 export enum ReferenceType {

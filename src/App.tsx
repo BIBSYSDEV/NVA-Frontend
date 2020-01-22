@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { getAuthorities } from './api/authorityApi';
+import { getAuthorities, updateInstitutionForAuthority } from './api/authorityApi';
 import { getCurrentAuthenticatedUser } from './api/userApi';
 import Breadcrumbs from './layout/Breadcrumbs';
 import Footer from './layout/Footer';
@@ -19,7 +19,7 @@ import Search from './pages/search/Search';
 import AuthorityOrcidModal from './pages/user/authority/AuthorityOrcidModal';
 import User from './pages/user/User';
 import Workspace from './pages/workspace/Workspace';
-import { setAuthorityData, setPossibleAuthories, setUser } from './redux/actions/userActions';
+import { setAuthorityData, setPossibleAuthorities, setUser } from './redux/actions/userActions';
 import { RootStore } from './redux/reducers/rootReducer';
 import { Authority } from './types/authority.types';
 import { awsConfig } from './utils/aws-config';
@@ -81,19 +81,29 @@ const App: React.FC = () => {
   useEffect(() => {
     const getAuthority = async () => {
       const authorities = await getAuthorities(user.name, dispatch);
-      const filteredAuthorities: Authority[] = authorities.filter((auth: Authority) =>
-        auth.feideids.some(id => id === user.id)
-      );
-      if (filteredAuthorities.length === 1) {
-        dispatch(setAuthorityData(filteredAuthorities[0]));
-      } else {
-        dispatch(setPossibleAuthories(authorities));
+      if (authorities) {
+        const filteredAuthorities: Authority[] = authorities.filter((auth: Authority) =>
+          auth.feideids.some(id => id === user.id)
+        );
+        if (filteredAuthorities.length === 1) {
+          const updatedAuthority = await updateInstitutionForAuthority(
+            user.organizationId,
+            filteredAuthorities[0].systemControlNumber
+          );
+          if (!updatedAuthority || updatedAuthority?.error) {
+            dispatch(setAuthorityData(filteredAuthorities[0]));
+          } else {
+            dispatch(setAuthorityData(updatedAuthority));
+          }
+        } else {
+          dispatch(setPossibleAuthorities(authorities));
+        }
       }
     };
-    if (user.name && !user.authority?.name) {
+    if (user.name) {
       getAuthority();
     }
-  }, [dispatch, user.name, user.id, user.authority]);
+  }, [dispatch, user.name, user.id, user.organizationId]);
 
   useEffect(() => {
     setTimeout(() => {
