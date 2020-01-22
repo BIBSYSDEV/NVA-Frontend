@@ -52,30 +52,27 @@ const ChapterReferenceForm: React.FC = () => {
 
       <Field name={ChapterFieldNames.LINK}>
         {({ field }: any) => (
-          <>
-            <TextField
-              data-testid="chapter-link"
-              aria-label="DOI-link"
-              name="doiUrl"
-              variant="outlined"
-              fullWidth
-              label={t('publication:chapter.link')}
-            />
-          </>
+          <TextField
+            data-testid="chapter-link"
+            aria-label="DOI-link"
+            name="doiUrl"
+            variant="outlined"
+            fullWidth
+            label={t('publication:chapter.link')}
+            {...field}
+          />
         )}
       </Field>
 
       <Field name={ChapterFieldNames.ANTHOLOGY}>
-        {({ field: { name, value } }: any) => (
-          <>
-            <AutoSearch
-              dataTestId="chapter-autosearch-anthology"
-              label={t('publication:chapter.anthology')}
-              searchResults={() => {}}
-              setValueFunction={() => {}}
-              onInputChange={() => {}}
-            />
-          </>
+        {() => (
+          <AutoSearch
+            dataTestId="chapter-autosearch-anthology"
+            label={t('publication:chapter.anthology')}
+            searchResults={() => {}}
+            setValueFunction={() => {}}
+            onInputChange={() => {}}
+          />
         )}
       </Field>
 
