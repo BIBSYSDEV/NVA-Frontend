@@ -13,29 +13,47 @@ const StyledNewPublication = styled.div`
   width: 100%;
   padding-top: 2rem;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  @media only screen and (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
+    display:block;
+    margin-right: 0;
+    flex-wrap: wrap;
+  }
+} 
 `;
 
 const StyledSelectorWrapper = styled.div`
-  flex-basis: 60%;
-  min-width: 10rem;
+  flex: 1;
+  max-width: 50rem;
+  margin-right: 2rem;
+  @media only screen and (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
+    margin-right: 0;
+  }
+}
 `;
 
 const StyledInfoBox = styled.div`
-  flex-basis: 30%;
   background-color: ${({ theme }) => theme.palette.box.main};
   padding: 1rem;
-
+  max-width: 25rem;
+  flex: 1;
+  @media only screen and (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
+    max-width: inherit;
+    margin-right: 0;
+  }
   > header {
     font-size: 1.2rem;
     font-weight: bold;
     line-height: 1.5rem;
     margin-bottom: 2rem;
   }
-
   > section {
     margin-bottom: 2rem;
   }
+`;
+
+const StyledButton = styled(Button)`
+  margin: 1rem;
 `;
 
 const NewPublication: FC = () => {
@@ -79,9 +97,9 @@ const NewPublication: FC = () => {
             </StyledInfoBox>
           </StyledNewPublication>
           {/* temporary button so that we can navigate to schema */}
-          <Button color="primary" variant="contained" data-testid="new-schema-button" onClick={handleClick}>
+          <StyledButton color="primary" variant="contained" data-testid="new-schema-button" onClick={handleClick}>
             {t('new_publication')}
-          </Button>
+          </StyledButton>
         </>
       ) : (
         <PublicationForm />
