@@ -1,4 +1,4 @@
-import { EnumDictionary } from '../types/references.types';
+import { EnumDictionary } from '../types/common.types';
 
 export enum CustomerOrganizationId {
   UNIT = '20202.0.0.0',
