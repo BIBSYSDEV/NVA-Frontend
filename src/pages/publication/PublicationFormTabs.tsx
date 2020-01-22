@@ -6,7 +6,14 @@ import { Tabs } from '@material-ui/core';
 
 import LinkTab from '../../components/TabPanel/LinkTab';
 import { Publication } from '../../types/publication.types';
-import { BookFieldNames, JournalArticleFieldNames, ReferenceFieldNames } from '../../types/references.types';
+import {
+  BookFieldNames,
+  ChapterFieldNames,
+  JournalArticleFieldNames,
+  ReferenceFieldNames,
+  ReportFieldNames,
+  reportTypes,
+} from '../../types/references.types';
 import { getObjectValueByFieldName } from '../../utils/helpers';
 import { DescriptionFieldNames } from './DescriptionPanel';
 
@@ -23,6 +30,8 @@ const referenceFieldNames = [
   ...Object.values(ReferenceFieldNames),
   ...Object.values(JournalArticleFieldNames),
   ...Object.values(BookFieldNames),
+  ...Object.values(ChapterFieldNames),
+  ...Object.values(ReportFieldNames),
 ];
 
 interface PublicationFormTabsProps {

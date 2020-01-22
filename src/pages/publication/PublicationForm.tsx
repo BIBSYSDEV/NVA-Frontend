@@ -66,6 +66,15 @@ const PublicationForm: FC = () => {
         }),
       }),
 
+      chapter: Yup.object().when('type', {
+        is: ReferenceType.CHAPTER,
+        then: Yup.object().shape({
+          link: Yup.string().url(),
+          pagesFrom: Yup.number(),
+          pagesTo: Yup.number(),
+        }),
+      }),
+
       report: Yup.object().when('type', {
         is: ReferenceType.REPORT,
         then: Yup.object().shape({

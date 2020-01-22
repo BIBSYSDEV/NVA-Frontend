@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Field } from 'formik';
+import { Field, FormikProps, useFormikContext } from 'formik';
 import { TextField } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
 import styled from 'styled-components';
@@ -8,40 +8,41 @@ import RemoveIcon from '@material-ui/icons/Remove';
 import { ChapterFieldNames } from '../../../types/references.types';
 import { AutoSearch } from '../../../components/AutoSearch';
 import NviValidation from './components/NviValidation';
+import { Publication } from '../../../types/publication.types';
+
+const StyledInfoBox = styled.div`
+  margin-top: 1rem;
+  background-color: ${({ theme }) => theme.palette.background.default};
+  padding: 1rem 0;
+  display: flex;
+  align-items: center;
+`;
+
+const StyledIcon = styled(InfoIcon)`
+  color: ${({ theme }) => theme.palette.text.secondary};
+  margin: 1rem;
+  font-size: 2rem;
+`;
+
+const StyledPageNumberWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+`;
+
+const StyledDashIconWrapper = styled.div`
+  margin-right: 1rem;
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+`;
+
+const StyledPageNumberField = styled(TextField)`
+  margin-right: 1rem;
+  width: 10rem;
+`;
 
 const ChapterReferenceForm: React.FC = () => {
   const { t } = useTranslation('publication');
-
-  const StyledInfoBox = styled.div`
-    margin-top: 1rem;
-    background-color: ${({ theme }) => theme.palette.background.default};
-    padding: 1rem 0;
-    display: flex;
-    align-items: center;
-  `;
-
-  const StyledIcon = styled(InfoIcon)`
-    color: ${({ theme }) => theme.palette.text.secondary};
-    margin: 1rem;
-    font-size: 2rem;
-  `;
-
-  const StyledPageNumberWrapper = styled.div`
-    display: flex;
-    flex-wrap: wrap;
-  `;
-
-  const StyledDashIconWrapper = styled.div`
-    margin-right: 1rem;
-    margin-top: 1rem;
-    display: flex;
-    align-items: center;
-  `;
-
-  const StyledPageNumberField = styled(TextField)`
-    margin-right: 1rem;
-    width: 10rem;
-  `;
 
   return (
     <>
@@ -54,7 +55,7 @@ const ChapterReferenceForm: React.FC = () => {
         {({ field }: any) => (
           <>
             <TextField
-              data-testid="XXX"
+              data-testid="chapter-link"
               aria-label="DOI-link"
               name="doiUrl"
               variant="outlined"
@@ -69,7 +70,7 @@ const ChapterReferenceForm: React.FC = () => {
         {({ field: { name, value } }: any) => (
           <>
             <AutoSearch
-              data-testid="chapter-autosearch-anthology"
+              dataTestId="chapter-autosearch-anthology"
               label={t('publication:chapter.anthology')}
               searchResults={() => {}}
               setValueFunction={() => {}}
