@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 import { Button } from '@material-ui/core';
 
-import { updateFeideForAuthority } from '../../../api/authorityApi';
+import { updateFeideForAuthority, updateInstitutionForAuthority } from '../../../api/authorityApi';
 import { setOrcid } from '../../../redux/actions/orcidActions';
 import { setAuthorityData } from '../../../redux/actions/userActions';
 import { RootStore } from '../../../redux/reducers/rootReducer';
@@ -40,7 +40,7 @@ export const ConnectAuthority: React.FC = () => {
     }
   }, [user.possibleAuthorities]);
 
-  const setOrcidAndFeide = async () => {
+  const updateAuthorityForUser = async () => {
     const selectedAuthority = matchingAuthorities.find(
       auth => auth.systemControlNumber === selectedSystemControlNumber
     );
@@ -48,8 +48,18 @@ export const ConnectAuthority: React.FC = () => {
     if (selectedAuthority && user.authority) {
       selectedAuthority.orcids.length > 0 && dispatch(setOrcid(selectedAuthority.orcids));
 
-      const updatedAuthority = await updateFeideForAuthority(user.id, user.authority.systemControlNumber, dispatch);
-      dispatch(setAuthorityData(updatedAuthority));
+      const updatedAuthorityWithFeide = await updateFeideForAuthority(
+        user.id,
+        user.authority.systemControlNumber,
+        dispatch
+      );
+      if (updatedAuthorityWithFeide) {
+        const updatedAuthorityWithOrganizationId = await updateInstitutionForAuthority(
+          user.organizationId,
+          user.authority.systemControlNumber
+        );
+        dispatch(setAuthorityData(updatedAuthorityWithOrganizationId));
+      }
     }
   };
 
@@ -78,7 +88,7 @@ export const ConnectAuthority: React.FC = () => {
             color="primary"
             variant="contained"
             size="large"
-            onClick={setOrcidAndFeide}
+            onClick={updateAuthorityForUser}
             disabled={!selectedSystemControlNumber}>
             {t('authority.connect_authority')}
           </Button>
