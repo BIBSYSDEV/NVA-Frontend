@@ -7,6 +7,12 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { useTranslation } from 'react-i18next';
 import InstitutionSelector from './InstitutionSelector';
 import styled from 'styled-components';
+import { useDispatch } from 'react-redux';
+import { setInstitution } from '../../redux/actions/institutionActions';
+import { User } from '../../types/user.types';
+import { updateInstitutionForAuthority } from './../../api/authorityApi';
+import { InstitutionPresentationModel } from './../../types/institution.types';
+import { institutionLookup } from '../../api/institutionApi';
 
 const StyledInstitutionDialog = styled.div`
   width: 20rem;
@@ -14,14 +20,16 @@ const StyledInstitutionDialog = styled.div`
 
 const StyledDialog = styled(Dialog)``;
 
-const InstitutionDialog: React.FC = () => {
+interface InstitutionDialogProps {
+  user: User;
+  addInstitutionPresentation: (institutionPresentation: InstitutionPresentationModel) => void;
+}
+
+const InstitutionDialog: React.FC<InstitutionDialogProps> = ({ user, addInstitutionPresentation }) => {
   const [open, setOpen] = useState(false);
   const [selectedCristinUnitId, setSelectedCristinUnitId] = useState('');
+  const dispatch = useDispatch();
   const { t } = useTranslation('profile');
-
-  const setValue = (cristinUnitId: string) => {
-    console.log(`setvalue = ${cristinUnitId}`);
-  };
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -32,7 +40,11 @@ const InstitutionDialog: React.FC = () => {
   };
 
   const handleConfirm = () => {
-    setValue(selectedCristinUnitId);
+    if (!user.authority.orgunitids.find(orgunitid => orgunitid === selectedCristinUnitId)) {
+      dispatch(setInstitution(selectedCristinUnitId));
+      updateInstitutionForAuthority(user.authority.systemControlNumber, selectedCristinUnitId);
+      institutionLookup(selectedCristinUnitId).then(presentation => addInstitutionPresentation(presentation));
+    }
     setOpen(false);
   };
 

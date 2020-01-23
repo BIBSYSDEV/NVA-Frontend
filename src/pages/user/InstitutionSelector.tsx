@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { emptyInstitution, Institution, InstitutionSubUnit } from '../../types/references.types';
+import {
+  emptyInstitution,
+  Institution,
+  InstitutionSubUnit,
+  emptyInstitutionSubUnit,
+} from '../../types/institution.types';
 import InstitutionSearch from '../publication/references_tab/components/InstitutionSearch';
 import SubUnitSelect from './SubUnitSelect';
-import { getInstitutionSubUnit } from '../../api/InstitutionApi';
-import { emptyInstitutionSubUnit } from '../../types/references.types';
+import { getInstitutionSubUnit } from '../../api/institutionApi';
 import styled from 'styled-components';
+import InstitutionPresentation from './InstitutionPresentation';
 
 const StyledInstitutionSelector = styled.div`
   width: 30rem;
@@ -62,9 +67,11 @@ const InstitutionSelector: React.FC<InstitutionSelectorProps> = ({ valueFunction
 
   return (
     <StyledInstitutionSelector>
-      <p>{selectedInstitution?.title}</p>
-      <p>{selectedFaculty?.unitNames[0].name}</p>
-      <p>{selectedInstitute?.unitNames[0].name}</p>
+      <InstitutionPresentation
+        institution={selectedInstitution.institutionNames}
+        level1={selectedFaculty.unitNames}
+        level2={selectedInstitute.unitNames}
+      />
       <InstitutionSearch
         clearSearchField={selectedInstitution === emptyInstitution}
         dataTestId="autosearch-institution"

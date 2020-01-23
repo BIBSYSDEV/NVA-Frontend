@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router';
@@ -17,6 +17,8 @@ import UserLanguage from './UserLanguage';
 import UserOrcid from './UserOrcid';
 import UserRoles from './UserRoles';
 import InstitutionDialog from './InstitutionDialog';
+import { InstitutionPresentationModel } from './../../types/institution.types';
+import InstitutionPresentation from './InstitutionPresentation';
 
 const StyledUserPage = styled.div`
   display: grid;
@@ -49,6 +51,8 @@ const User: React.FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
+  const [institutionPresentations, setInstitutionPresentations] = useState<InstitutionPresentationModel[]>([]);
+
   const hasHandles = user.authority?.handles?.length > 0;
   const hasFeide = user.authority?.feideids?.length > 0;
 
@@ -65,6 +69,10 @@ const User: React.FC = () => {
       updateOrcidForAuthority(user.authority?.orcids[0], user.authority.systemControlNumber, dispatch);
     }
   }, [user.authority, dispatch]);
+
+  const addInstitutionPresentation = (institutionPresentation: InstitutionPresentationModel) => {
+    setInstitutionPresentations([...institutionPresentations, institutionPresentation]);
+  };
 
   return (
     <StyledUserPage>
@@ -98,7 +106,17 @@ const User: React.FC = () => {
         </UserCard>
         <UserOrcid />
         <UserCard headingLabel={t('heading.organizations')}>
-          <InstitutionDialog />
+          <InstitutionDialog user={user} addInstitutionPresentation={addInstitutionPresentation} />
+          <>
+            {institutionPresentations.map((presentation: InstitutionPresentationModel) => (
+              <InstitutionPresentation
+                key={presentation.cristinUnitId}
+                institution={presentation.institutionName}
+                level1={presentation.level1Name}
+                level2={presentation.level2Name}
+              />
+            ))}
+          </>
         </UserCard>
       </StyledPrimaryUserInfo>
     </StyledUserPage>

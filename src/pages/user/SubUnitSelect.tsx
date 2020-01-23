@@ -1,5 +1,5 @@
 import React from 'react';
-import { InstitutionSubUnit, InstitutionName } from '../../types/references.types';
+import { InstitutionSubUnit, InstitutionName } from '../../types/institution.types';
 import { Select, MenuItem, FormControl, InputLabel } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
@@ -36,7 +36,7 @@ const SubUnitSelect: React.FC<SubUnitSelectProps> = ({ searchResults, selectedVa
 
   return (
     <StyledSubUnitSelect>
-      <StyledFormControl>
+      <StyledFormControl variant="outlined">
         <InputLabel>{label}</InputLabel>
         <StyledSelect
           value={selectedValue.cristinUnitId}
