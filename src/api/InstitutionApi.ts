@@ -20,7 +20,6 @@ export const queryInstitution = async (searchTerm: string) => {
 };
 
 export const getInstitutionSubUnit = async (cristinUnitId: string) => {
-  console.log(cristinUnitId);
   try {
     const response = await Axios({
       method: 'GET',

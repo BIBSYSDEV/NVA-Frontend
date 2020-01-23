@@ -2,23 +2,26 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { emptyInstitution, Institution, InstitutionSubUnit } from '../../types/references.types';
 import InstitutionSearch from '../publication/references_tab/components/InstitutionSearch';
-import { useDispatch } from 'react-redux';
-import { setInstitution } from '../../redux/actions/institutionActions';
-import { Button } from '@material-ui/core';
 import SubUnitSelect from './SubUnitSelect';
-import { getInstitutionSubUnit } from './../../api/InstitutionApi';
-import { emptyInstitutionSubUnit } from './../../types/references.types';
+import { getInstitutionSubUnit } from '../../api/InstitutionApi';
+import { emptyInstitutionSubUnit } from '../../types/references.types';
+import styled from 'styled-components';
 
-const InstitutionModal: React.FC = () => {
-  const { t } = useTranslation();
-  const dispatch = useDispatch();
+const StyledInstitutionSelector = styled.div`
+  width: 30rem;
+`;
+
+interface InstitutionSelectorProps {
+  valueFunction: (value: string) => void;
+}
+
+const InstitutionSelector: React.FC<InstitutionSelectorProps> = ({ valueFunction }) => {
+  const { t } = useTranslation('profile');
   const [faculties, setFaculties] = useState<InstitutionSubUnit[]>([]);
   const [institutes, setInstitutes] = useState<InstitutionSubUnit[]>([]);
   const [selectedInstitution, setSelectedInstituion] = useState(emptyInstitution);
   const [selectedFaculty, setSelectedFaculty] = useState(emptyInstitutionSubUnit);
   const [selectedInstitute, setSelectedInstitute] = useState(emptyInstitutionSubUnit);
-
-  const addInstitution = (institution: Institution) => dispatch(setInstitution(institution));
 
   const getSubUnits = async (searchValue: string, setValueFunction: (value: any) => void) => {
     const response = await getInstitutionSubUnit(searchValue);
@@ -27,50 +30,62 @@ const InstitutionModal: React.FC = () => {
     }
   };
 
-  const searchFaculties = (institution: Institution) => {
-    setSelectedInstituion(institution ?? selectedInstitution);
-    setFaculties([]);
-    setSelectedFaculty(emptyInstitutionSubUnit);
+  const resetInstitute = () => {
     setInstitutes([]);
     setSelectedInstitute(emptyInstitutionSubUnit);
-    setSelectedInstitute(emptyInstitutionSubUnit);
+  };
+
+  const resetFaculty = () => {
+    setFaculties([]);
+    setSelectedFaculty(emptyInstitutionSubUnit);
+    resetInstitute();
+  };
+
+  const searchFaculties = (institution: Institution) => {
+    valueFunction(institution.cristinUnitId);
+    setSelectedInstituion(institution ?? selectedInstitution);
+    resetFaculty();
     getSubUnits(institution.cristinUnitId, setFaculties);
   };
 
   const searchInstitutes = (faculty: InstitutionSubUnit) => {
-    setInstitutes([]);
-    setSelectedInstitute(emptyInstitutionSubUnit);
+    valueFunction(faculty.cristinUnitId);
     setSelectedFaculty(faculty);
+    resetInstitute();
     getSubUnits(faculty.cristinUnitId, setInstitutes);
   };
 
+  const setInstitute = (subUnit: InstitutionSubUnit) => {
+    setSelectedInstitute(subUnit);
+    valueFunction(subUnit.cristinUnitId);
+  };
+
   return (
-    <div>
-      <p>{t('change_institution')}</p>
+    <StyledInstitutionSelector>
       <p>{selectedInstitution?.title}</p>
       <p>{selectedFaculty?.unitNames[0].name}</p>
       <p>{selectedInstitute?.unitNames[0].name}</p>
       <InstitutionSearch
         clearSearchField={selectedInstitution === emptyInstitution}
         dataTestId="autosearch-institution"
-        label={t('references.institution')}
+        label={t('organization.institution')}
         setValueFunction={inputValue => searchFaculties(inputValue)}
-        placeholder={t('references.search_for_institution')}
+        placeholder={t('organization.search_for_institution')}
       />
-      <SubUnitSelect searchResults={faculties} selectedValue={selectedFaculty} valueFunction={searchInstitutes} />
+      <SubUnitSelect
+        searchResults={faculties}
+        selectedValue={selectedFaculty}
+        valueFunction={searchInstitutes}
+        label={t('organization.faculty')}
+      />
       <SubUnitSelect
         searchResults={institutes}
         selectedValue={selectedInstitute}
-        valueFunction={setSelectedInstitute}
+        valueFunction={setInstitute}
+        label={t('organization.institute')}
       />
-      <Button
-        onClick={() => {
-          addInstitution(selectedInstitution);
-        }}>
-        Add
-      </Button>
-    </div>
+    </StyledInstitutionSelector>
   );
 };
 
-export default InstitutionModal;
+export default InstitutionSelector;

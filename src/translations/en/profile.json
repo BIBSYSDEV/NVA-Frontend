@@ -42,5 +42,16 @@
     "curator_description": "A Curator is a person whom has access to approve and publish other researcher's work",
     "publisher": "Publisher",
     "publisher_description": "A Publisher is a person whom is employed at the organization. A publisher has also access to register their own publications"
+  },
+  "organization": {
+    "add": "Add",
+    "edit": "Edit",
+    "edit_institution": "Edit institution",
+    "institution": "Institution",
+    "faculty": "Faculty",
+    "institute": "Institute",
+    "save": "Save",
+    "close": "Close",
+    "search_for_institution": "Search for institution"
   }
 }

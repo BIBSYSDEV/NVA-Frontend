@@ -7,6 +7,7 @@ import { searchFailure } from '../../../../redux/actions/searchActions';
 import useDebounce from '../../../../utils/hooks/useDebounce';
 import { Institution } from '../../../../types/references.types';
 import { queryInstitution } from '../../../../api/InstitutionApi';
+import i18n from './../../../../translations/i18n';
 
 interface InstitutionSearchProps {
   clearSearchField: boolean;
@@ -39,7 +40,9 @@ const InstitutionSearch: FC<InstitutionSearchProps> = ({
         setSearchResults(
           response.map((institution: Institution) => ({
             ...institution,
-            title: institution.institutionNames[0].name,
+            title:
+              institution.institutionNames.filter(unitName => unitName.language === i18n.language)[0]?.name ??
+              institution.institutionNames[0].name,
           }))
         );
       } else {
