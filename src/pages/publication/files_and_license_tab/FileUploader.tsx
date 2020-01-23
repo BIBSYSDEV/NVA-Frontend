@@ -26,6 +26,7 @@ const FileUploader: React.FC<FileUploaderProps> = ({ addFile }) => {
 
   useEffect(() => {
     // Ups: This will add a new complete listener for every new mount
+    // Uppy should be configured on mount, and be closed on form unmount...
     if (!listenerAdded) {
       uppy.on('upload-success', (file: File) => {
         addFile(file);
@@ -40,6 +41,7 @@ const FileUploader: React.FC<FileUploaderProps> = ({ addFile }) => {
       proudlyDisplayPoweredByUppy={false}
       showSelectedFiles={false}
       showProgressDetails
+      hideProgressAfterFinish
       width={uploaderMaxWidthPx}
       height={uploaderMaxHeightPx}
       locale={{

@@ -20,6 +20,7 @@ const StyledUploadedFiles = styled.section`
 
 const dummyData = [
   {
+    administrativeContract: true,
     source: 'react:Dashboard',
     id: 'uppy-70/762/questions/pdf-1d-1d-1e-application/pdf-986995-1570106738413',
     name: '70-762-questions.pdf',
@@ -157,7 +158,7 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab
   return (
     <TabPanel ariaLabel="files and license" goToNextTab={goToNextTab}>
       <FieldArray name={FilesFieldNames.FILES}>
-        {({ push, remove }) => (
+        {({ push, remove, replace }) => (
           <>
             <h1>{t('files_and_license.upload_files')}</h1>
             <Box>
@@ -172,7 +173,12 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab
                 <h1>{t('files_and_license.files')}</h1>
                 <StyledUploadedFiles>
                   {uploadedFiles.map((file, i) => (
-                    <FileCard key={file.id} file={file} removeFile={() => remove(i)} />
+                    <FileCard
+                      key={file.id}
+                      file={file}
+                      removeFile={() => remove(i)}
+                      updateFile={newFile => replace(i, newFile)}
+                    />
                   ))}
                 </StyledUploadedFiles>
               </>
