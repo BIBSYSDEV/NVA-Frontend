@@ -5,18 +5,21 @@ import styled from 'styled-components';
 
 const StyledLine = styled.div`
   padding-bottom: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
 `;
 
 const StyledLabel = styled.div`
   display: inline-block;
+  width: 10rem;
   min-width: 10rem;
 `;
 
 const StyledText = styled.div`
   display: inline-block;
   font-weight: bold;
-  min-width: 10rem;
-  width: 80%;
+  flex: 1;
+  min-width: 80%;
 `;
 
 interface LabelTextLineProps {
