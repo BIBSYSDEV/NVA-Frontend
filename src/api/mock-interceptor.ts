@@ -75,7 +75,6 @@ export const interceptRequestsOnMock = () => {
   mock.onPost(ORCID_USER_INFO_URL).reply(200, mockOrcidResponse);
 
   // Authority Registry
-  // mock.onGet(new RegExp(`${API_URL}${AuthorityApiPaths.AUTHORITY}`)).reply(200, mockAuthoritiesResponse);
   mock.onGet(new RegExp(`${API_URL}${AuthorityApiPaths.AUTHORITY}\\?name=*`)).reply(200, mockAuthoritiesResponse);
   mock
     .onGet(new RegExp(`${API_URL}${AuthorityApiPaths.AUTHORITY}\\?name=tu@unit.no`))
