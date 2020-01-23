@@ -3,8 +3,7 @@ import Box from '../../../components/Box';
 import styled from 'styled-components';
 import { Button, Link, FormControlLabel, Checkbox } from '@material-ui/core';
 import { File } from '../../../types/license.types';
-import { Field, FormikProps, useFormikContext } from 'formik';
-import { Publication } from '../../../types/publication.types';
+import { Field } from 'formik';
 
 const StyledTitle = styled.div`
   font-weight: bold;
@@ -20,8 +19,6 @@ interface FileCardProps {
 }
 
 const FileCard: React.FC<FileCardProps> = ({ file, removeFile }) => {
-  const { setFieldValue }: FormikProps<Publication> = useFormikContext();
-
   return (
     <Box>
       <StyledTitle>{file.name}</StyledTitle>
