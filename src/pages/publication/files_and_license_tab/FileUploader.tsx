@@ -17,14 +17,16 @@ const uppy = Uppy({
 });
 
 interface FileUploaderProps {
-  addFile: (file: any) => void;
+  addFiles: (files: any[]) => void;
 }
 
-const FileUploader: React.FC<FileUploaderProps> = ({ addFile }) => {
+const FileUploader: React.FC<FileUploaderProps> = ({ addFiles }) => {
   const { t } = useTranslation('publication');
 
-  uppy.on('upload-success', uploadedFile => {
-    addFile(uploadedFile);
+  uppy.on('complete', result => {
+    if (result.successful.length) {
+      addFiles(result.successful);
+    }
   });
 
   return (
