@@ -8,15 +8,27 @@ import { Publication } from '../../types/publication.types';
 import { Button } from '@material-ui/core';
 import LabelContentLine from '../../components/LabelContentLine';
 import styled from 'styled-components';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { ReferenceType } from '../../types/references.types';
 
 const StyledContentText = styled.div`
   margin-bottom: 0.3rem;
   font-weight: bold;
 `;
 
+const StyledExpansionPanel = styled(ExpansionPanel)``;
+
+const StyledExpansionPanelDetails = styled(ExpansionPanelDetails)``;
+
 const SubmissionPanel: React.FC = () => {
   const { t } = useTranslation('publication');
   const { values }: FormikProps<Publication> = useFormikContext();
+
+  values.title.nb =
+    'PhD prosjekt: Selvbestemmelse uten ord - utfordrende relasjoner mellom person med alvorlig utviklingshemming og profesjonelle';
 
   return (
     <TabPanel ariaLabel="submission">
@@ -47,6 +59,31 @@ const SubmissionPanel: React.FC = () => {
         </LabelContentLine>
 
         <h2>{t('heading.references')}</h2>
+
+        {values.reference.type === ReferenceType.BOOK && (
+          <>
+            <p>Book</p>
+            <LabelContentLine label={t('xxx')}>{values.reference.book?.isbn}</LabelContentLine>
+            <LabelContentLine label={t('xxx')}>{values.reference.book?.numberOfPages}</LabelContentLine>
+          </>
+        )}
+        {values.reference.type === ReferenceType.DEGREE && (
+          <>
+            <p>Degree</p>
+            <LabelContentLine label={t('xxx')}>{values.reference.degree?.type}</LabelContentLine>
+            <LabelContentLine label={t('xxx')}>{values.reference.degree?.specialization}</LabelContentLine>
+          </>
+        )}
+
+        <StyledExpansionPanel variant="outlined">
+          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1a-content" id="panel1a-header">
+            {t('heading.contributors')}
+          </ExpansionPanelSummary>
+          <StyledExpansionPanelDetails>
+            <LabelContentLine label={t('description.tags')}>{`${values.tags.join(', ')}`}</LabelContentLine>
+            <LabelContentLine label={t('common:language')}>{t(`languages:${values.language}`)}</LabelContentLine>
+          </StyledExpansionPanelDetails>
+        </StyledExpansionPanel>
 
         <h2>{t('heading.contributors')}</h2>
 
