@@ -7,7 +7,7 @@ import {
   emptyInstitutionSubUnit,
   InstitutionPresentationModel,
   emptyInstitutionName,
-} from './../types/institution.types';
+} from '../types/institution.types';
 
 export enum InstituionApiPaths {
   QUERY = '/institution',
