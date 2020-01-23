@@ -22,6 +22,8 @@
     "year_only": "Kun årstall"
   },
   "files_and_license": {
+    "browse": "velg filer",
+    "drag_files": "Dra filer hit eller",
     "files": "Filer",
     "upload_files": "Last opp filer"
   },

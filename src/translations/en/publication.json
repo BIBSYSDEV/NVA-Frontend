@@ -26,6 +26,8 @@
     "required_field": "Required field"
   },
   "files_and_license": {
+    "browse": "browse",
+    "drag_files": "Drag files here or",
     "files": "Files",
     "upload_files": "Upload Files"
   },
