@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import '@uppy/core/dist/style.css';
 import '@uppy/dashboard/dist/style.css';
 
@@ -18,20 +18,22 @@ const uppy = Uppy({
 });
 
 interface FileUploaderProps {
-  addFiles: (files: File[]) => void;
+  addFile: (file: File) => void;
 }
 
-const FileUploader: React.FC<FileUploaderProps> = ({ addFiles }) => {
+const FileUploader: React.FC<FileUploaderProps> = ({ addFile }) => {
   const { t } = useTranslation('publication');
+  const [listenerAdded, setListenerAdded] = useState(false);
 
   useEffect(() => {
     // Ups: This will add a new complete listener for every new mount
-    uppy.on('complete', result => {
-      if (result.successful.length) {
-        addFiles(result.successful);
-      }
-    });
-  }, [addFiles]);
+    if (!listenerAdded) {
+      uppy.on('upload-success', (file: File) => {
+        addFile(file);
+      });
+      setListenerAdded(true);
+    }
+  }, [addFile, listenerAdded]);
 
   return (
     <Dashboard

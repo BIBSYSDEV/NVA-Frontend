@@ -7,7 +7,7 @@ import FileUploader from './files_and_license_tab/FileUploader';
 import FileCard from './files_and_license_tab/FileCard';
 import styled from 'styled-components';
 import { File } from '../../types/license.types';
-import { useFormikContext, FormikProps } from 'formik';
+import { useFormikContext, FormikProps, FieldArray } from 'formik';
 import { Publication } from '../../types/publication.types';
 
 const StyledUploadedFiles = styled.section`
@@ -152,31 +152,37 @@ interface FilesAndLicensePanelProps {
 
 const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab }) => {
   const { t } = useTranslation('publication');
-  const { setFieldValue, values }: FormikProps<Publication> = useFormikContext();
+  const { values }: FormikProps<Publication> = useFormikContext();
 
   const currentFiles = values[FilesFieldNames.FILES];
 
-  const addFiles = (newFiles: File[]) => {
-    setFieldValue(FilesFieldNames.FILES, [...currentFiles, ...newFiles]);
-  };
   console.log('values', values);
   return (
     <TabPanel ariaLabel="files and license" goToNextTab={goToNextTab}>
-      <h1>{t('files_and_license.upload_files')}</h1>
-      <Box>
-        <FileUploader addFiles={addFiles} />
-      </Box>
-
-      {currentFiles.length > 0 && (
-        <>
-          <h1>{t('files_and_license.files')}</h1>
-          <StyledUploadedFiles>
-            {currentFiles.map(file => (
-              <FileCard key={file.id} file={file} />
-            ))}
-          </StyledUploadedFiles>
-        </>
-      )}
+      <FieldArray name={FilesFieldNames.FILES}>
+        {({ push, remove }) => (
+          <>
+            <h1>{t('files_and_license.upload_files')}</h1>
+            <Box>
+              <FileUploader
+                addFile={file => {
+                  push(file);
+                }}
+              />
+            </Box>
+            {currentFiles.length > 0 && (
+              <>
+                <h1>{t('files_and_license.files')}</h1>
+                <StyledUploadedFiles>
+                  {currentFiles.map((file, i) => (
+                    <FileCard key={file.id} file={file} removeFile={() => remove(i)} />
+                  ))}
+                </StyledUploadedFiles>
+              </>
+            )}
+          </>
+        )}
+      </FieldArray>
     </TabPanel>
   );
 };

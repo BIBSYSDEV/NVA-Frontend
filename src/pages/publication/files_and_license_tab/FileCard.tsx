@@ -3,7 +3,8 @@ import Box from '../../../components/Box';
 import styled from 'styled-components';
 import { Button, Link, FormControlLabel, Checkbox } from '@material-ui/core';
 import { File } from '../../../types/license.types';
-import { Field } from 'formik';
+import { Field, FormikProps, useFormikContext } from 'formik';
+import { Publication } from '../../../types/publication.types';
 
 const StyledTitle = styled.div`
   font-weight: bold;
@@ -15,9 +16,12 @@ const StyledActions = styled.div``;
 
 interface FileCardProps {
   file: File;
+  removeFile: () => void;
 }
 
-const FileCard: React.FC<FileCardProps> = ({ file }) => {
+const FileCard: React.FC<FileCardProps> = ({ file, removeFile }) => {
+  const { setFieldValue }: FormikProps<Publication> = useFormikContext();
+
   return (
     <Box>
       <StyledTitle>{file.name}</StyledTitle>
@@ -25,7 +29,7 @@ const FileCard: React.FC<FileCardProps> = ({ file }) => {
       <Field>
         {() => (
           <FormControlLabel
-            control={<Checkbox checked={false} onChange={() => console.log('click')} value="checkedA" />}
+            control={<Checkbox checked={file.administrativeContract} onChange={() => {}} value="checkedA" />}
             label="Administrativ avtale"
           />
         )}
@@ -36,7 +40,7 @@ const FileCard: React.FC<FileCardProps> = ({ file }) => {
             Forhåndsvis
           </Button>
         </Link>
-        <Button>Fjern</Button>
+        <Button onClick={removeFile}>Fjern</Button>
       </StyledActions>
     </Box>
   );
