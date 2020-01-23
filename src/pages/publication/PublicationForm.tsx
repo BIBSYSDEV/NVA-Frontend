@@ -1,5 +1,5 @@
 import { Form, Formik, FormikProps } from 'formik';
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import * as Yup from 'yup';
@@ -7,8 +7,6 @@ import * as Yup from 'yup';
 import TabPanel from '../../components/TabPanel/TabPanel';
 import { emptyPublication, Publication } from '../../types/publication.types';
 import { ReferenceType } from '../../types/references.types';
-import useLocalStorage from '../../utils/hooks/useLocalStorage';
-import { checkLocalStorageVersion } from '../../utils/local-storage-versioning';
 import ContributorsPanel from './ContributorsPanel';
 import DescriptionPanel from './DescriptionPanel';
 import FilesAndLicensePanel from './FilesAndLicensePanel';
@@ -17,17 +15,13 @@ import { ReferencesPanel } from './ReferencesPanel';
 
 const StyledPublication = styled.div`
   width: 100%;
+  max-width: ${({ theme }) => theme.breakpoints.values.lg + 'px'};
 `;
 
 const PublicationForm: FC = () => {
   const { t } = useTranslation('publication');
   const [tabNumber, setTabNumber] = useState(0);
-
-  checkLocalStorageVersion();
-  const [localStorageFormData, setLocalStorageFormData, clearLocalStorageFormData] = useLocalStorage(
-    'publicationFormData',
-    emptyPublication
-  );
+  const [initialValues, setInitialValues] = useState(emptyPublication);
 
   const validationSchema = Yup.object().shape({
     title: Yup.object().shape({
@@ -65,6 +59,15 @@ const PublicationForm: FC = () => {
         }),
       }),
 
+      chapter: Yup.object().when('type', {
+        is: ReferenceType.CHAPTER,
+        then: Yup.object().shape({
+          link: Yup.string().url(),
+          pagesFrom: Yup.number(),
+          pagesTo: Yup.number(),
+        }),
+      }),
+
       report: Yup.object().when('type', {
         is: ReferenceType.REPORT,
         then: Yup.object().shape({
@@ -78,6 +81,19 @@ const PublicationForm: FC = () => {
     }),
   });
 
+  useEffect(() => {
+    // TODO: Fetch publication by ID in URL
+    const searchParams = new URLSearchParams(window.location.search);
+    const title = searchParams.get('title') || '';
+
+    setInitialValues({
+      ...emptyPublication,
+      title: {
+        nb: title,
+      },
+    });
+  }, []);
+
   const handleTabChange = (_: React.ChangeEvent<{}>, newTabNumber: number) => {
     setTabNumber(newTabNumber);
   };
@@ -86,19 +102,18 @@ const PublicationForm: FC = () => {
     setTabNumber(tabNumber + 1);
   };
 
-  const savePublication = async (values: Publication) => {
-    clearLocalStorageFormData();
-  };
+  const savePublication = async (values: Publication) => {};
 
   return (
     <StyledPublication>
       <Formik
-        initialValues={localStorageFormData}
+        enableReinitialize
+        initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={(values: Publication) => savePublication(values)}
         validateOnChange={false}>
         {({ values }: FormikProps<Publication>) => (
-          <Form onBlur={() => setLocalStorageFormData(values)}>
+          <Form>
             <PublicationFormTabs tabNumber={tabNumber} handleTabChange={handleTabChange} />
             {tabNumber === 0 && (
               <DescriptionPanel goToNextTab={goToNextTab} savePublication={() => savePublication(values)} />

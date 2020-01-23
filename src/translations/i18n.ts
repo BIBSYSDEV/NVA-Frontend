@@ -1,11 +1,12 @@
 import i18n from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 
-import { Language } from '../types/settings.types';
+import { PageLanguageCodes } from '../types/language.types';
 import breadcrumbsEn from './en/breadcrumbs.json';
 import commonEn from './en/common.json';
 import disciplinesEn from './en/disciplines.json';
 import feedbackEn from './en/feedback.json';
+import languagesEn from './en/languages.json';
 import profileEn from './en/profile.json';
 import publicationEn from './en/publication.json';
 import translationsEn from './en/translations.json';
@@ -13,36 +14,39 @@ import breadcrumbsNb from './nb/breadcrumbs.json';
 import commonNb from './nb/common.json';
 import disciplinesNb from './nb/disciplines.json';
 import feedbackNb from './nb/feedback.json';
+import languagesNb from './nb/languages.json';
 import profileNb from './nb/profile.json';
 import publicationNb from './nb/publication.json';
 import translationsNb from './nb/translations.json';
 
-export const defaultLanguage = Language.NORWEGIAN_BOKMAL;
+export const defaultLanguage = PageLanguageCodes.NORWEGIAN_BOKMAL;
 
 i18n.use(LanguageDetector).init({
   resources: {
     en: {
-      feedback: feedbackEn,
-      translations: translationsEn,
-      common: commonEn,
-      profile: profileEn,
-      disciplines: disciplinesEn,
       breadcrumbs: breadcrumbsEn,
+      common: commonEn,
+      disciplines: disciplinesEn,
+      languages: languagesEn,
+      feedback: feedbackEn,
+      profile: profileEn,
       publication: publicationEn,
+      translations: translationsEn,
     },
     nb: {
-      feedback: feedbackNb,
-      translations: translationsNb,
-      common: commonNb,
-      profile: profileNb,
-      disciplines: disciplinesNb,
       breadcrumbs: breadcrumbsNb,
+      common: commonNb,
+      disciplines: disciplinesNb,
+      languages: languagesNb,
+      feedback: feedbackNb,
+      profile: profileNb,
       publication: publicationNb,
+      translations: translationsNb,
     },
   },
   fallbackLng: defaultLanguage,
   debug: false,
-  ns: ['common', 'feedback', 'translations', 'profile', 'breadcrumbs'],
+  ns: ['breadcrumbs', 'common', 'languages', 'feedback', 'profile', 'translations'],
   defaultNS: 'translations',
   interpolation: {
     formatSeparator: ',',
@@ -51,16 +55,5 @@ i18n.use(LanguageDetector).init({
     wait: true,
   },
 });
-
-export const languages = [
-  {
-    name: 'English',
-    code: Language.ENGLISH,
-  },
-  {
-    name: 'Norsk (bokmål)',
-    code: Language.NORWEGIAN_BOKMAL,
-  },
-];
 
 export default i18n;

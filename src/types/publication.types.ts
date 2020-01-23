@@ -2,6 +2,7 @@ import Contributor from './contributor.types';
 import { Project } from './project.types';
 import { emptyReference, Reference } from './references.types';
 import { File } from './license.types';
+import { LanguageCodes } from './language.types';
 
 export enum PublicationType {
   TEXT = 'text',
@@ -76,6 +77,10 @@ export interface Publication {
   files: File[];
 }
 
+export interface Doi {
+  title: string;
+}
+
 export const emptyNpiDiscipline = {
   title: '',
   mainDiscipline: '',
@@ -99,7 +104,7 @@ export const emptyPublication: Publication = {
     month: '',
     day: '',
   },
-  language: 'nb-NO', // enum?
+  language: LanguageCodes.NORWEGIAN_BOKMAL,
   projects: [],
   reference: emptyReference,
   authors: [],
