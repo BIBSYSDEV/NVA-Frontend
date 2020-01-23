@@ -6,9 +6,10 @@ import styled from 'styled-components';
 
 import { Link as MuiLink } from '@material-ui/core';
 
-import { updateOrcidForAuthority } from '../../api/authorityApi';
+import { getAuthorities, updateOrcidForAuthority } from '../../api/authorityApi';
 import { getOrcidInfo } from '../../api/external/orcidApi';
 import ButtonModal from '../../components/ButtonModal';
+import { setAuthorityData } from '../../redux/actions/userActions';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { ConnectAuthority } from './authority/ConnectAuthority';
 import UserCard from './UserCard';
@@ -60,10 +61,22 @@ const User: React.FC = () => {
   }, [dispatch, location.hash, history]);
 
   useEffect(() => {
-    if (user.authority?.orcids.length > 0) {
-      updateOrcidForAuthority(user.authority?.orcids[0], user.authority.systemControlNumber, dispatch);
+    const updateOrcid = async () => {
+      if (user.authority?.systemControlNumber && !user.authority?.orcids.includes(user.externalOrcid)) {
+        const updatedAuthority = await updateOrcidForAuthority(
+          user.externalOrcid,
+          user.authority.systemControlNumber,
+          dispatch
+        );
+        dispatch(setAuthorityData(updatedAuthority));
+      } else {
+        await getAuthorities(user.id, dispatch);
+      }
+    };
+    if (user.externalOrcid) {
+      updateOrcid();
     }
-  }, [user.authority, dispatch]);
+  }, [user.authority, dispatch, user.id, user.externalOrcid]);
 
   return (
     <StyledUserPage>

@@ -6,7 +6,6 @@ import styled from 'styled-components';
 import { Button } from '@material-ui/core';
 
 import { updateFeideForAuthority, updateInstitutionForAuthority } from '../../../api/authorityApi';
-import { setOrcid } from '../../../redux/actions/orcidActions';
 import { setAuthorityData } from '../../../redux/actions/userActions';
 import { RootStore } from '../../../redux/reducers/rootReducer';
 import { Authority } from '../../../types/authority.types';
@@ -46,8 +45,6 @@ export const ConnectAuthority: React.FC = () => {
     );
 
     if (selectedAuthority) {
-      selectedAuthority.orcids.length > 0 && dispatch(setOrcid(selectedAuthority.orcids));
-
       const updatedAuthorityWithFeide = await updateFeideForAuthority(user.id, selectedSystemControlNumber, dispatch);
       if (updatedAuthorityWithFeide) {
         const updatedAuthorityWithOrganizationId = await updateInstitutionForAuthority(
