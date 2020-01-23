@@ -6,23 +6,16 @@ import TabPanel from '../../components/TabPanel/TabPanel';
 import { FormikProps, useFormikContext } from 'formik';
 import { Publication } from '../../types/publication.types';
 import { Button } from '@material-ui/core';
-import LabelTextLine from '../../components/LabelTextLine';
+import LabelContentLine from '../../components/LabelContentLine';
+import styled from 'styled-components';
+
+const StyledContentText = styled.div`
+  margin-bottom: 0.3rem;
+`;
 
 const SubmissionPanel: React.FC = () => {
   const { t } = useTranslation('publication');
   const { values }: FormikProps<Publication> = useFormikContext();
-
-  console.log(values);
-
-  values.title.nb = 'jfdkls fksdjf sdklj fsdkfj sdkfj sdlkfj sdklf jsdl';
-  values.abstract =
-    'jgfkldjgldfkjgkldfj gkldf gdfkljg dfkljg dfklgj dfklg lkdfj' +
-    ' gkldj fgkljd fgklj dfgkl gfd gkldf gdfkljg dfkljg dfklgj dfklg' +
-    ' lkdfj gkldj fgkljd fgklj dfgkl gfd gkldf gdfkljg dfkljg dfklgj ' +
-    'dfklg lkdfj gkldj fgkljd fgklj dfgkl gfd gkldf gdfkljg dfkljg dfklgj' +
-    ' dfklg lkdfj gkldj fgkljd fgklj dfgkl gfd gkldf gdfkljg dfkljg dfklgj dfklg ' +
-    'lkdfj gkldj fgkljd fgklj dfgkl gfd gkldf gdfkljg dfkljg' +
-    ' dfklgj dfklg lkdfj gkldj fgkljd fgklj dfgkl gfd';
 
   return (
     <TabPanel ariaLabel="submission">
@@ -31,8 +24,25 @@ const SubmissionPanel: React.FC = () => {
 
         <h2>{t('heading.description')}</h2>
 
-        <LabelTextLine label={t('common:title')} text={values.title.nb}></LabelTextLine>
-        <LabelTextLine label={t('description.abstract')} text={values.abstract}></LabelTextLine>
+        <LabelContentLine label={t('common:title')}>{values.title.nb}</LabelContentLine>
+        <LabelContentLine label={t('description.abstract')}>{values.abstract}</LabelContentLine>
+        <LabelContentLine label={t('description:description')}>{values.description}</LabelContentLine>
+        <LabelContentLine label={t('description.npi_disciplines')}>
+          {values.npiDiscipline.mainDiscipline}
+          {values.npiDiscipline.title && `- ${values.npiDiscipline.title}`}
+        </LabelContentLine>
+        <LabelContentLine label={t('description.tags')}>{`${values.tags.join(', ')}`}</LabelContentLine>
+        <LabelContentLine label={t('common:language')}>{t(`languages:${values.language}`)}</LabelContentLine>
+        <LabelContentLine label={t('description.date_published')}>
+          {values.publicationDate.year}
+          {values.publicationDate.month && `-${values.publicationDate.month}`}
+          {values.publicationDate.day && `-${values.publicationDate.day}`}
+        </LabelContentLine>
+        <LabelContentLine label={t('description.project_association')}>
+          {values.projects.map(project => {
+            return <StyledContentText>{project.titles?.[0]?.title}</StyledContentText>;
+          })}
+        </LabelContentLine>
 
         <h2>{t('heading.references')}</h2>
 
