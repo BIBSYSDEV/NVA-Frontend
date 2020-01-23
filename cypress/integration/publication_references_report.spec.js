@@ -1,4 +1,4 @@
-describe('Publication: References', () => {
+describe('Publication: References: Report', () => {
   beforeEach(() => {
     cy.visit('/');
     cy.server();

@@ -27,6 +27,7 @@ export interface User {
   authority: Authority;
   isLoggedIn: boolean;
   possibleAuthorities: Authority[];
+  organizationId: string;
 }
 
 export interface FeideUser {
@@ -55,4 +56,5 @@ export const emptyUser: User = {
   authority: emptyAuthority,
   isLoggedIn: false,
   possibleAuthorities: [],
+  organizationId: '',
 };

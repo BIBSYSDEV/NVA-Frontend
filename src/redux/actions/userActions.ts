@@ -31,7 +31,7 @@ export const setAuthorityData = (authority: Authority): SetAuthorityAction => ({
   authority,
 });
 
-export const setPossibleAuthories = (possibleAuthorities: Authority[]): SetPossibleAuthoritiesAction => ({
+export const setPossibleAuthorities = (possibleAuthorities: Authority[]): SetPossibleAuthoritiesAction => ({
   type: SET_POSSIBLE_AUTHORITIES,
   possibleAuthorities,
 });

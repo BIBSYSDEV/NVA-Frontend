@@ -1,3 +1,5 @@
+import { EnumDictionary } from './common.types';
+
 export enum LanguageCodes {
   NORWEGIAN_BOKMAL = 'nb',
   NORWEGIAN_NYNORSK = 'nn',
@@ -36,13 +38,12 @@ export const orderedLanguages = [
   LanguageCodes.OTHER,
 ];
 
-export const pageLanguages = [
-  {
-    name: 'English',
-    code: LanguageCodes.ENGLISH,
-  },
-  {
-    name: 'Norsk (bokmål)',
-    code: LanguageCodes.NORWEGIAN_BOKMAL,
-  },
-];
+export enum PageLanguageCodes {
+  NORWEGIAN_BOKMAL = 'nb-NO',
+  ENGLISH = 'en-US',
+}
+
+export const pageLanguages: EnumDictionary<string, string> = {
+  [PageLanguageCodes.NORWEGIAN_BOKMAL]: 'Norsk (bokmål)',
+  [PageLanguageCodes.ENGLISH]: 'English',
+};
