@@ -25,7 +25,7 @@ const FileUploader: React.FC<FileUploaderProps> = ({ addFiles }) => {
   const { t } = useTranslation('publication');
 
   useEffect(() => {
-    // This will add a new complete listener for every new mount
+    // Ups: This will add a new complete listener for every new mount
     uppy.on('complete', result => {
       if (result.successful.length) {
         addFiles(result.successful);

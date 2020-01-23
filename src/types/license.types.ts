@@ -22,4 +22,8 @@ export interface File {
   data: {
     size: number;
   };
+  administrativeContract?: boolean;
+  acceptedVersion?: boolean;
+  embargoDate?: Date;
+  license?: License;
 }

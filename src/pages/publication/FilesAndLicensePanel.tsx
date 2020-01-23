@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 import Box from '../../components/Box';
@@ -7,6 +7,8 @@ import FileUploader from './files_and_license_tab/FileUploader';
 import FileCard from './files_and_license_tab/FileCard';
 import styled from 'styled-components';
 import { File } from '../../types/license.types';
+import { useFormikContext, FormikProps } from 'formik';
+import { Publication } from '../../types/publication.types';
 
 const StyledUploadedFiles = styled.section`
   display: flex;
@@ -140,18 +142,24 @@ const dummyData = [
   },
 ];
 
+enum FilesFieldNames {
+  FILES = 'files',
+}
+
 interface FilesAndLicensePanelProps {
   goToNextTab: (event: React.MouseEvent<any>) => void;
 }
 
 const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab }) => {
-  const [files, setFiles] = useState<File[]>(dummyData);
   const { t } = useTranslation('publication');
+  const { setFieldValue, values }: FormikProps<Publication> = useFormikContext();
+
+  const currentFiles = values[FilesFieldNames.FILES];
 
   const addFiles = (newFiles: File[]) => {
-    setFiles([...files, ...newFiles]);
+    setFieldValue(FilesFieldNames.FILES, [...currentFiles, ...newFiles]);
   };
-
+  console.log('values', values);
   return (
     <TabPanel ariaLabel="files and license" goToNextTab={goToNextTab}>
       <h1>{t('files_and_license.upload_files')}</h1>
@@ -159,11 +167,11 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab
         <FileUploader addFiles={addFiles} />
       </Box>
 
-      {files.length > 0 && (
+      {currentFiles.length > 0 && (
         <>
           <h1>{t('files_and_license.files')}</h1>
           <StyledUploadedFiles>
-            {files.map(file => (
+            {currentFiles.map(file => (
               <FileCard key={file.id} file={file} />
             ))}
           </StyledUploadedFiles>

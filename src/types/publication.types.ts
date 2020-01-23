@@ -1,6 +1,7 @@
 import Contributor from './contributor.types';
 import { Project } from './project.types';
 import { emptyReference, Reference } from './references.types';
+import { File } from './license.types';
 
 export enum PublicationType {
   TEXT = 'text',
@@ -49,14 +50,6 @@ export interface AlmaPublication {
 interface NpiDiscipline {
   title: string;
   mainDiscipline: string;
-}
-
-interface File {
-  title: string;
-  license: string; //enum?
-  acceptedVersion: boolean;
-  administrativeContract: boolean;
-  embargoDate: string; // date?
 }
 
 export interface Publication {
