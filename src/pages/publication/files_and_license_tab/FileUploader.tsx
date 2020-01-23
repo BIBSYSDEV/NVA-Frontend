@@ -9,9 +9,6 @@ import { useTranslation } from 'react-i18next';
 
 const uppy = Uppy({
   autoProceed: true,
-  restrictions: {
-    allowedFileTypes: ['image/*', 'text/*', 'application/*'],
-  },
 }).use(Tus, {
   endpoint: 'https://master.tus.io/files/',
 });
@@ -19,6 +16,9 @@ const uppy = Uppy({
 interface FileUploaderProps {
   addFile: (file: any) => void;
 }
+
+const uploaderMaxWidthPx = 10000;
+const uploaderMaxHeightPx = 200;
 
 const FileUploader: React.FC<FileUploaderProps> = ({ addFile }) => {
   const { t } = useTranslation('publication');
@@ -33,8 +33,8 @@ const FileUploader: React.FC<FileUploaderProps> = ({ addFile }) => {
       proudlyDisplayPoweredByUppy={false}
       showSelectedFiles={false}
       showProgressDetails
-      width={10000}
-      height={200}
+      width={uploaderMaxWidthPx}
+      height={uploaderMaxHeightPx}
       locale={{
         strings: {
           dropPaste: `${t('files_and_license.drag_files')} %{browse}`,
