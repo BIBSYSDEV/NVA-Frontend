@@ -40,7 +40,8 @@
     "files_and_license": "Filer og lisens",
     "publication": "Publikasjon",
     "references": "Referanser",
-    "submission": "Innsending"
+    "submission": "Innsending",
+    "summary": "Oppsummering"
   },
   "publication": {
     "link_publication_description": "Feks. DOI lenke, lenke til artikkel, lenke til video av foredrag etc.",

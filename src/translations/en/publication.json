@@ -40,7 +40,8 @@
     "files_and_license": "Files and License",
     "publication": "Publication",
     "references": "References",
-    "submission": "Submission"
+    "submission": "Submission",
+    "summary": "Summary"
   },
   "publication": {
     "link_publication_description": "E.g. DOI link, link to article, link to video of lecture etc.",

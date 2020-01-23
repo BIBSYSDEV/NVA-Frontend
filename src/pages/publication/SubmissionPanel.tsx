@@ -11,6 +11,7 @@ import styled from 'styled-components';
 
 const StyledContentText = styled.div`
   margin-bottom: 0.3rem;
+  font-weight: bold;
 `;
 
 const SubmissionPanel: React.FC = () => {
@@ -22,9 +23,10 @@ const SubmissionPanel: React.FC = () => {
       <Box>
         <h1>{t('heading.summary')}</h1>
 
+        <StyledContentText>{values.title.nb}</StyledContentText>
+
         <h2>{t('heading.description')}</h2>
 
-        <LabelContentLine label={t('common:title')}>{values.title.nb}</LabelContentLine>
         <LabelContentLine label={t('description.abstract')}>{values.abstract}</LabelContentLine>
         <LabelContentLine label={t('description:description')}>{values.description}</LabelContentLine>
         <LabelContentLine label={t('description.npi_disciplines')}>
