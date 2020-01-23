@@ -45,18 +45,14 @@ export const ConnectAuthority: React.FC = () => {
       auth => auth.systemControlNumber === selectedSystemControlNumber
     );
 
-    if (selectedAuthority && user.authority) {
+    if (selectedAuthority) {
       selectedAuthority.orcids.length > 0 && dispatch(setOrcid(selectedAuthority.orcids));
 
-      const updatedAuthorityWithFeide = await updateFeideForAuthority(
-        user.id,
-        user.authority.systemControlNumber,
-        dispatch
-      );
+      const updatedAuthorityWithFeide = await updateFeideForAuthority(user.id, selectedSystemControlNumber, dispatch);
       if (updatedAuthorityWithFeide) {
         const updatedAuthorityWithOrganizationId = await updateInstitutionForAuthority(
           user.organizationId,
-          user.authority.systemControlNumber
+          selectedSystemControlNumber
         );
         dispatch(setAuthorityData(updatedAuthorityWithOrganizationId));
       }
