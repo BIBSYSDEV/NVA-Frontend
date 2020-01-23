@@ -9,12 +9,14 @@ const StyledLine = styled.div`
 
 const StyledLabel = styled.div`
   display: inline-block;
-  width: 10rem;
+  min-width: 10rem;
 `;
 
 const StyledText = styled.div`
   display: inline-block;
   font-weight: bold;
+  min-width: 10rem;
+  width: 80%;
 `;
 
 interface LabelTextLineProps {
