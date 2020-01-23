@@ -14,3 +14,12 @@ export default interface License {
   url_image: string;
   time_created: Date;
 }
+
+export interface File {
+  id: string;
+  name: string;
+  uploadURL: string;
+  data: {
+    size: number;
+  };
+}

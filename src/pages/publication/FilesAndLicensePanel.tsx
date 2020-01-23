@@ -6,6 +6,7 @@ import TabPanel from '../../components/TabPanel/TabPanel';
 import FileUploader from './files_and_license_tab/FileUploader';
 import FileCard from './files_and_license_tab/FileCard';
 import styled from 'styled-components';
+import { File } from '../../types/license.types';
 
 const StyledUploadedFiles = styled.section`
   display: flex;
@@ -144,10 +145,10 @@ interface FilesAndLicensePanelProps {
 }
 
 const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab }) => {
-  const [files, setFiles] = useState<any[]>(dummyData);
+  const [files, setFiles] = useState<File[]>(dummyData);
   const { t } = useTranslation('publication');
 
-  const addFiles = (newFiles: any[]) => {
+  const addFiles = (newFiles: File[]) => {
     setFiles([...files, ...newFiles]);
   };
 

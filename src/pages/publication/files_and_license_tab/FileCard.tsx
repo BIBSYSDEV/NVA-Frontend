@@ -2,6 +2,7 @@ import React from 'react';
 import Box from '../../../components/Box';
 import styled from 'styled-components';
 import { Button, Link } from '@material-ui/core';
+import { File } from '../../../types/license.types';
 
 const StyledTitle = styled.div`
   font-weight: bold;
@@ -11,7 +12,7 @@ const StyledDescription = styled.div`
 `;
 
 interface FileCardProps {
-  file: any;
+  file: File;
 }
 
 const FileCard: React.FC<FileCardProps> = ({ file }) => {

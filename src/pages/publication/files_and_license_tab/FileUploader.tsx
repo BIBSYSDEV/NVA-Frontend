@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import '@uppy/core/dist/style.css';
 import '@uppy/dashboard/dist/style.css';
 
@@ -6,6 +6,7 @@ import Tus from '@uppy/tus';
 import Uppy from '@uppy/core';
 import { Dashboard } from '@uppy/react';
 import { useTranslation } from 'react-i18next';
+import { File } from '../../../types/license.types';
 
 const uppy = Uppy({
   autoProceed: true,
@@ -17,17 +18,20 @@ const uppy = Uppy({
 });
 
 interface FileUploaderProps {
-  addFiles: (files: any[]) => void;
+  addFiles: (files: File[]) => void;
 }
 
 const FileUploader: React.FC<FileUploaderProps> = ({ addFiles }) => {
   const { t } = useTranslation('publication');
 
-  uppy.on('complete', result => {
-    if (result.successful.length) {
-      addFiles(result.successful);
-    }
-  });
+  useEffect(() => {
+    // This will add a new complete listener for every new mount
+    uppy.on('complete', result => {
+      if (result.successful.length) {
+        addFiles(result.successful);
+      }
+    });
+  }, [addFiles]);
 
   return (
     <Dashboard
