@@ -17,7 +17,6 @@ const LoadPublication: React.FC<LoadPublicationProps> = ({ expanded, onChange })
     <PublicationExpansionPanel
       headerLabel={t('publication:publication.load_file')}
       icon={<CloudDownloadIcon />}
-      id="load-publication-panel"
       expanded={expanded}
       onChange={onChange}
       ariaControls="publication-method-file">

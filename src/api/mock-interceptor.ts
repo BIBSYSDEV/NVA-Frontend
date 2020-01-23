@@ -27,6 +27,7 @@ const mockSingleAuthorityResponse: Authority = {
   systemControlNumber: '901790000000',
   feideids: ['osteloff@unit.no'],
   orcids: ['0000-0001-2345-6789'],
+  orgunitids: [],
   handles: [],
   birthDate: '1941-04-25 00:00:00.000',
 };
