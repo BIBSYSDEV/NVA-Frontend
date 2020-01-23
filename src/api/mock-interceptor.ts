@@ -14,7 +14,7 @@ import mockFacultyQuery from '../utils/testfiles/institution_faculty_query.json'
 import mockInstituteQuery from '../utils/testfiles/institution_institute_query.json';
 import { AuthorityApiPaths } from './authorityApi';
 import { ProjectsApiPaths } from './projectApi';
-import { InstituionApiPaths } from './InstitutionApi';
+import { InstituionApiPaths } from './institutionApi';
 import { PublicationsApiPaths } from './publicationApi';
 import { PublicationChannelApiPaths } from './publicationChannelApi';
 

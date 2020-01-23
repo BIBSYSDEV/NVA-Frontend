@@ -6,7 +6,7 @@ import { AutoSearch } from '../../../../components/AutoSearch';
 import { searchFailure } from '../../../../redux/actions/searchActions';
 import useDebounce from '../../../../utils/hooks/useDebounce';
 import { Institution } from '../../../../types/institution.types';
-import { queryInstitution } from '../../../../api/InstitutionApi';
+import { queryInstitution } from '../../../../api/institutionApi';
 import i18n from './../../../../translations/i18n';
 
 interface InstitutionSearchProps {

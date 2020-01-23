@@ -12,7 +12,7 @@ import { setInstitution } from '../../redux/actions/institutionActions';
 import { User } from '../../types/user.types';
 import { updateInstitutionForAuthority } from './../../api/authorityApi';
 import { InstitutionPresentationModel } from './../../types/institution.types';
-import { institutionLookup } from '../../api/InstitutionApi';
+import { institutionLookup } from '../../api/institutionApi';
 
 const StyledInstitutionDialog = styled.div`
   width: 20rem;

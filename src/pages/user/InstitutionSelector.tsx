@@ -8,7 +8,7 @@ import {
 } from '../../types/institution.types';
 import InstitutionSearch from '../publication/references_tab/components/InstitutionSearch';
 import SubUnitSelect from './SubUnitSelect';
-import { getInstitutionSubUnit } from '../../api/InstitutionApi';
+import { getInstitutionSubUnit } from '../../api/institutionApi';
 import styled from 'styled-components';
 import InstitutionPresentation from './InstitutionPresentation';
 
