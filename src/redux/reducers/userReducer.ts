@@ -1,4 +1,5 @@
 import { ApplicationName, emptyUser, RoleName, User } from '../../types/user.types';
+import { getOrganizationIdByOrganizationNumber } from '../../utils/customers';
 import { AuthActions, LOGIN_SUCCESS, LOGOUT_SUCCESS } from '../actions/authActions';
 import { OrcidActions, SET_ORCID } from '../actions/orcidActions';
 import {
@@ -30,6 +31,7 @@ export const userReducer = (
         roles,
         application: action.user['custom:application'] as ApplicationName,
         isLoggedIn: true,
+        organizationId: getOrganizationIdByOrganizationNumber(action.user['custom:orgNumber']),
       };
       return {
         ...state,

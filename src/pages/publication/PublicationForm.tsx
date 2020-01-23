@@ -15,6 +15,7 @@ import { ReferencesPanel } from './ReferencesPanel';
 
 const StyledPublication = styled.div`
   width: 100%;
+  max-width: ${({ theme }) => theme.breakpoints.values.lg + 'px'};
 `;
 
 const PublicationForm: FC = () => {
@@ -55,6 +56,15 @@ const PublicationForm: FC = () => {
           textBook: Yup.bool(),
           numberOfPages: Yup.string(),
           series: Yup.string(),
+        }),
+      }),
+
+      chapter: Yup.object().when('type', {
+        is: ReferenceType.CHAPTER,
+        then: Yup.object().shape({
+          link: Yup.string().url(),
+          pagesFrom: Yup.number(),
+          pagesTo: Yup.number(),
         }),
       }),
 

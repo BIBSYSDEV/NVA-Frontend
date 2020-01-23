@@ -1,9 +1,12 @@
+import { EnumDictionary } from './common.types';
+
 export interface Reference {
   type: ReferenceType | '';
   journalArticle?: JournalArticle;
   book?: Book;
   report?: Report;
   degree?: Degree;
+  chapter?: Chapter;
 }
 
 interface JournalArticle {
@@ -50,6 +53,12 @@ export interface Publisher {
   level: number | null;
 }
 
+export interface Chapter {
+  link: string;
+  pagesFrom: string;
+  pagesTo: string;
+  anthology: Book;
+}
 export const emptyPublisher: Publisher = {
   printIssn: '',
   onlineIssn: '',
@@ -132,16 +141,20 @@ const emptyDegreeReference: Degree = {
   series: emptyPublisher,
 };
 
+const emptyChapterReference: Chapter = {
+  link: '',
+  pagesFrom: '',
+  pagesTo: '',
+  anthology: emptyBookReference,
+};
+
 export const emptyReference: Reference = {
   type: '',
   journalArticle: emptyJournalArticleReference,
   book: emptyBookReference,
   report: emptyReportReference,
   degree: emptyDegreeReference,
-};
-
-type EnumDictionary<T extends string, U> = {
-  [K in T]: U;
+  chapter: emptyChapterReference,
 };
 
 export enum ReferenceType {
@@ -252,4 +265,11 @@ export enum DegreeFieldNames {
   PUBLISHER = 'reference.degree.publisher',
   SPECIALISATION = 'reference.degree.numberOfPages',
   SERIES = 'reference.degree.series',
+}
+
+export enum ChapterFieldNames {
+  LINK = 'reference.chapter.link',
+  ANTHOLOGY = 'reference.chapter.anthology',
+  PAGES_FROM = 'reference.chapter.pagesFrom',
+  PAGES_TO = 'reference.chapter.pagesTo',
 }
