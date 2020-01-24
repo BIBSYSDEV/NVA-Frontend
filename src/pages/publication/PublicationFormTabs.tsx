@@ -48,7 +48,7 @@ export const PublicationFormTabs: FC<PublicationFormTabsProps> = ({ handleTabCha
       value={tabNumber}
       onChange={handleTabChange}
       aria-label="navigation"
-      TabIndicatorProps={{ style: { backgroundColor: 'blue' } }}
+      TabIndicatorProps={{ style: {} }}
       textColor="primary">
       <LinkTab
         label={`1. ${t('heading.description')}`}

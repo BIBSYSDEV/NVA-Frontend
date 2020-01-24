@@ -9,7 +9,7 @@ interface LinkTabProps {
 }
 
 const LinkTab: React.FC<LinkTabProps> = ({ error, ...rest }) => {
-  const styledTab = error ? { color: 'red', border: '1px solid red' } : undefined;
+  const styledTab = error ? { color: '#ff5555' } : undefined;
   return (
     <Tab
       component="a"
