@@ -9,9 +9,9 @@ import mockAuthoritiesResponse from '../utils/testfiles/mock_authorities_respons
 import mockProjects from '../utils/testfiles/projects_real.json';
 import mockPublications from '../utils/testfiles/publications_45_random_results_generated.json';
 import mockNsdPublisers from '../utils/testfiles/publishersFromNsd.json';
-import mockInstitutionQuery from '../utils/testfiles/institution_query.json';
-import mockFacultyQuery from '../utils/testfiles/institution_faculty_query.json';
-import mockInstituteQuery from '../utils/testfiles/institution_institute_query.json';
+import mockInstitutionResponse from '../utils/testfiles/institution_query.json';
+import mockFacultyResponse from '../utils/testfiles/institution_faculty_query.json';
+import mockInstituteResponse from '../utils/testfiles/institution_institute_query.json';
 import { AuthorityApiPaths } from './authorityApi';
 import { ProjectsApiPaths } from './projectApi';
 import { InstituionApiPaths } from './institutionApi';
@@ -26,7 +26,7 @@ const mockOrcidResponse: OrcidResponse = {
   given_name: 'Sofia',
 };
 
-const mockSingleAuthorityResponse: Authority = {
+const mockSingleAuthorityResponseWithOrcid: Authority = {
   name: 'Test User',
   systemControlNumber: '901790000000',
   feideids: ['osteloff@unit.no'],
@@ -36,6 +36,25 @@ const mockSingleAuthorityResponse: Authority = {
   birthDate: '1941-04-25 00:00:00.000',
 };
 
+const mockSingleAuthorityResponse: Authority = {
+  name: 'Test User',
+  systemControlNumber: '901790000000',
+  feideids: ['tu@unit.no'],
+  orcids: [],
+  orgunitids: ['220.0.0.0'],
+  handles: [],
+  birthDate: '1941-04-25 00:00:00.000',
+};
+
+const mockSingleAuthorityResponseWithFeide: Authority = {
+  name: 'Test User',
+  systemControlNumber: '901790000000',
+  feideids: ['tu@unit.no'],
+  orcids: [],
+  orgunitids: [],
+  handles: [],
+  birthDate: '1941-04-25 00:00:00.000',
+};
 // AXIOS INTERCEPTOR
 export const interceptRequestsOnMock = () => {
   const mock = new MockAdapter(Axios);
@@ -59,13 +78,22 @@ export const interceptRequestsOnMock = () => {
   mock.onPost(ORCID_USER_INFO_URL).reply(200, mockOrcidResponse);
 
   // Authority Registry
-  mock.onGet(new RegExp(`${API_URL}${AuthorityApiPaths.AUTHORITY}`)).reply(200, mockAuthoritiesResponse);
-  mock.onPut(new RegExp(`${API_URL}${AuthorityApiPaths.AUTHORITY}/*`)).reply(200, mockSingleAuthorityResponse);
+  mock.onGet(new RegExp(`${API_URL}${AuthorityApiPaths.AUTHORITY}\\?name=*`)).reply(200, mockAuthoritiesResponse);
+  mock
+    .onGet(new RegExp(`${API_URL}${AuthorityApiPaths.AUTHORITY}\\?name=tu@unit.no`))
+    .reply(200, mockSingleAuthorityResponse);
+  mock
+    .onPut(new RegExp(`${API_URL}${AuthorityApiPaths.AUTHORITY}/*`))
+    .replyOnce(200, mockSingleAuthorityResponseWithFeide);
+  mock.onPut(new RegExp(`${API_URL}${AuthorityApiPaths.AUTHORITY}/*`)).replyOnce(200, mockSingleAuthorityResponse);
+  mock
+    .onPut(new RegExp(`${API_URL}${AuthorityApiPaths.AUTHORITY}/*`))
+    .replyOnce(200, mockSingleAuthorityResponseWithOrcid);
 
   // Institution Registry
-  mock.onGet(new RegExp(`${API_URL}${InstituionApiPaths.QUERY}\\?name=*`)).reply(200, mockInstitutionQuery);
-  mock.onGet(new RegExp(`${API_URL}${InstituionApiPaths.GET}[0-9]+.0.0.0`)).reply(200, mockFacultyQuery);
-  mock.onGet(new RegExp(`${API_URL}${InstituionApiPaths.GET}*.[^0]+.0.0`)).reply(200, mockInstituteQuery);
+  mock.onGet(new RegExp(`${API_URL}${InstituionApiPaths.INSTITUTION}\\?name=*`)).reply(200, mockInstitutionResponse);
+  mock.onGet(new RegExp(`${API_URL}${InstituionApiPaths.UNIT}[0-9]+.0.0.0`)).reply(200, mockFacultyResponse);
+  mock.onGet(new RegExp(`${API_URL}${InstituionApiPaths.UNIT}*.[^0]+.0.0`)).reply(200, mockInstituteResponse);
 
   mock.onAny().reply(function(config) {
     throw new Error('Could not find mock for ' + config.url);

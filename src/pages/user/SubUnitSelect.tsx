@@ -1,7 +1,7 @@
 import React from 'react';
-import { InstitutionSubUnit, InstitutionName } from '../../types/institution.types';
+import { InstitutionSubUnit } from '../../types/institution.types';
+import { selectNameByLanguage } from './../../utils/helpers';
 import { Select, MenuItem, FormControl, InputLabel } from '@material-ui/core';
-import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
 const StyledSubUnitSelect = styled.div`
@@ -24,14 +24,8 @@ interface SubUnitSelectProps {
 }
 
 const SubUnitSelect: React.FC<SubUnitSelectProps> = ({ searchResults, selectedValue, valueFunction, label }) => {
-  const { i18n } = useTranslation('profile');
-
   const selectSubUnit = (cristinUnitId: string) => {
     valueFunction(searchResults.filter(subUnit => subUnit.cristinUnitId === cristinUnitId)[0]);
-  };
-
-  const findUnitName = (unitNames: InstitutionName[]) => {
-    return unitNames.filter(unitName => unitName.language === i18n.language)[0]?.name ?? unitNames[0].name;
   };
 
   return (
@@ -44,7 +38,7 @@ const SubUnitSelect: React.FC<SubUnitSelectProps> = ({ searchResults, selectedVa
           disabled={searchResults.length === 0}>
           {searchResults.map(subUnit => (
             <MenuItem key={subUnit.cristinUnitId} value={subUnit.cristinUnitId}>
-              {findUnitName(subUnit.unitNames)}
+              {selectNameByLanguage(subUnit.unitNames)}
             </MenuItem>
           ))}
         </StyledSelect>

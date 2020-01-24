@@ -3,10 +3,12 @@ export interface InstitutionName {
   language: string;
 }
 
-export const emptyInstitutionName: InstitutionName = {
-  name: '',
-  language: '',
-};
+export const emptyInstitutionNames: InstitutionName[] = [
+  {
+    name: '',
+    language: '',
+  },
+];
 
 export interface Institution {
   title?: string;
@@ -19,7 +21,7 @@ export interface Institution {
 
 export const emptyInstitution: Institution = {
   title: '',
-  institutionNames: [emptyInstitutionName],
+  institutionNames: emptyInstitutionNames,
   acronym: '',
   cristinInstitutionId: '',
   country: '',
@@ -32,7 +34,7 @@ export interface InstitutionSubUnit {
 }
 
 export const emptyInstitutionSubUnit: InstitutionSubUnit = {
-  unitNames: [emptyInstitutionName],
+  unitNames: emptyInstitutionNames,
   cristinUnitId: '',
 };
 
@@ -45,7 +47,7 @@ export interface InstitutionPresentationModel {
 
 export const emptyInstitutionPresentation: InstitutionPresentationModel = {
   cristinUnitId: '',
-  institutionName: [emptyInstitutionName],
-  level1Name: [emptyInstitutionName],
-  level2Name: [emptyInstitutionName],
+  institutionName: emptyInstitutionNames,
+  level1Name: emptyInstitutionNames,
+  level2Name: emptyInstitutionNames,
 };

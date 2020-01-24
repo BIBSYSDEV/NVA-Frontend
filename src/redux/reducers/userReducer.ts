@@ -1,7 +1,7 @@
 import { ApplicationName, emptyUser, RoleName, User } from '../../types/user.types';
 import { getOrganizationIdByOrganizationNumber } from '../../utils/customers';
 import { AuthActions, LOGIN_SUCCESS, LOGOUT_SUCCESS } from '../actions/authActions';
-import { OrcidActions, SET_ORCID } from '../actions/orcidActions';
+import { OrcidActions, SET_EXTERNAL_ORCID } from '../actions/orcidActions';
 import {
   CLEAR_USER,
   SET_AUTHORITY_DATA,
@@ -37,10 +37,10 @@ export const userReducer = (
         ...state,
         ...user,
       };
-    case SET_ORCID:
+    case SET_EXTERNAL_ORCID:
       return {
         ...state,
-        authority: { ...state.authority, orcids: [...state.authority.orcids, action.orcids] },
+        externalOrcid: action.orcid,
       };
     case SET_INSTITUTION:
       return {

@@ -40,7 +40,7 @@ const InstitutionDialog: React.FC<InstitutionDialogProps> = ({ user, addInstitut
   };
 
   const handleConfirm = () => {
-    if (!user.authority.orgunitids.find(orgunitid => orgunitid === selectedCristinUnitId)) {
+    if (!user.authority.orgunitids?.find(orgunitid => orgunitid === selectedCristinUnitId)) {
       dispatch(setInstitution(selectedCristinUnitId));
       updateInstitutionForAuthority(user.authority.systemControlNumber, selectedCristinUnitId);
       institutionLookup(selectedCristinUnitId).then(presentation => addInstitutionPresentation(presentation));
@@ -62,7 +62,7 @@ const InstitutionDialog: React.FC<InstitutionDialogProps> = ({ user, addInstitut
           <Button onClick={handleCancel} variant="contained" color="primary">
             {t('organization.close')}
           </Button>
-          <Button onClick={handleConfirm} variant="contained" color="primary">
+          <Button onClick={handleConfirm} variant="contained" color="primary" disabled={!selectedCristinUnitId}>
             {t('organization.save')}
           </Button>
         </DialogActions>
