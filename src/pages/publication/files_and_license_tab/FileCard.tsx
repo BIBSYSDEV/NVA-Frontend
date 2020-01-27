@@ -15,6 +15,7 @@ import {
 import { File } from '../../../types/license.types';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
+import { useTranslation } from 'react-i18next';
 
 const StyledTitle = styled.div`
   font-weight: bold;
@@ -31,6 +32,8 @@ interface FileCardProps {
 }
 
 const FileCard: React.FC<FileCardProps> = ({ file, removeFile, updateFile }) => {
+  const { t } = useTranslation('publication');
+
   return (
     <Box>
       <StyledTitle>{file.name}</StyledTitle>
@@ -49,13 +52,13 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, updateFile }) => 
             }
           />
         }
-        label="Administrativ avtale"
+        label={t('files_and_license.administrative_contract')}
       />
 
       {!file.administrativeContract && (
         <MuiBox display="flex" justifyContent="space-between">
           <FormControl component="fieldset">
-            <FormLabel component="legend">Velg versjon</FormLabel>
+            <FormLabel component="legend">{t('files_and_license.select_version')}</FormLabel>
             <RadioGroup
               aria-label="version"
               value={file.acceptedVersion}
@@ -68,19 +71,19 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, updateFile }) => 
               <FormControlLabel
                 value="accepted"
                 control={<Radio color="primary" checked={file.acceptedVersion} />}
-                label="Akseptert versjon"
+                label={t('files_and_license.accepted_version')}
               />
               <FormControlLabel
                 value="published"
                 control={<Radio color="primary" checked={!file.acceptedVersion} />}
-                label="Publisert versjon"
+                label={t('files_and_license.published_version')}
               />
             </RadioGroup>
           </FormControl>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <KeyboardDatePicker
               inputVariant="outlined"
-              label={'Utsattdato'}
+              label={t('files_and_license.embargo_date')}
               onChange={value =>
                 updateFile({
                   ...file,
@@ -99,10 +102,10 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, updateFile }) => 
       <StyledActions>
         <Link href={file.uploadURL}>
           <Button color="primary" variant="contained">
-            Forhåndsvis
+            {t('common:preview')}
           </Button>
         </Link>
-        <Button onClick={removeFile}>Fjern</Button>
+        <Button onClick={removeFile}>{t('common:remove')}</Button>
       </StyledActions>
     </Box>
   );
