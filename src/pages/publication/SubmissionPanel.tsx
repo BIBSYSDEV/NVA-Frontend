@@ -5,14 +5,19 @@ import Box from '../../components/Box';
 import TabPanel from '../../components/TabPanel/TabPanel';
 import { FormikProps, useFormikContext } from 'formik';
 import { Publication } from '../../types/publication.types';
-import { Button } from '@material-ui/core';
+import { Button, Typography } from '@material-ui/core';
 import LabelContentLine from '../../components/LabelContentLine';
 import styled from 'styled-components';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { ReferenceType } from '../../types/references.types';
+import SubmissionBookPresentation from './submission_tab/submission_book_presentation';
+import SubmissionDegreePresentation from './submission_tab/submission_degree_presentation';
+import SubmissionChapterPresentation from './submission_tab/submission_chapter_presentation';
+import SubmissionReportPresentation from './submission_tab/submission_report_presentation';
+import SubmissionJournalPublicationPresentation from './submission_tab/submission_journal_publication_presentation';
+import SubmissionDescriptionPresentation from './submission_tab/submission_description_presentation';
 
 const StyledContentText = styled.div`
   margin-bottom: 0.3rem;
@@ -33,48 +38,31 @@ const SubmissionPanel: React.FC = () => {
   return (
     <TabPanel ariaLabel="submission">
       <Box>
-        <h1>{t('heading.summary')}</h1>
-
+        <Typography variant="h1">{t('heading.summary')}</Typography>
         <StyledContentText>{values.title.nb}</StyledContentText>
 
-        <h2>{t('heading.description')}</h2>
+        <Typography variant="h2">{t('heading.description')}</Typography>
+        <SubmissionDescriptionPresentation />
 
-        <LabelContentLine label={t('description.abstract')}>{values.abstract}</LabelContentLine>
-        <LabelContentLine label={t('description:description')}>{values.description}</LabelContentLine>
-        <LabelContentLine label={t('description.npi_disciplines')}>
-          {values.npiDiscipline.mainDiscipline}
-          {values.npiDiscipline.title && `- ${values.npiDiscipline.title}`}
-        </LabelContentLine>
-        <LabelContentLine label={t('description.tags')}>{`${values.tags.join(', ')}`}</LabelContentLine>
-        <LabelContentLine label={t('common:language')}>{t(`languages:${values.language}`)}</LabelContentLine>
-        <LabelContentLine label={t('description.date_published')}>
-          {values.publicationDate.year}
-          {values.publicationDate.month && `-${values.publicationDate.month}`}
-          {values.publicationDate.day && `-${values.publicationDate.day}`}
-        </LabelContentLine>
-        <LabelContentLine label={t('description.project_association')}>
-          {values.projects.map(project => {
-            return <StyledContentText>{project.titles?.[0]?.title}</StyledContentText>;
-          })}
-        </LabelContentLine>
+        <Typography variant="h2">{t('heading.references')}</Typography>
+        <SubmissionBookPresentation />
+        <SubmissionDegreePresentation />
+        <SubmissionChapterPresentation />
+        <SubmissionReportPresentation />
+        <SubmissionJournalPublicationPresentation />
+        {/*{values.reference.type === ReferenceType.BOOK && <SubmissionBookPresentation />}*/}
+        {/*{values.reference.type === ReferenceType.DEGREE && <SubmissionDegreePresentation />}*/}
+        {/*{values.reference.type === ReferenceType.CHAPTER && <SubmissionChapterPresentation />}*/}
+        {/*{values.reference.type === ReferenceType.REPORT && <SubmissionReportPresentation />}*/}
+        {/*{values.reference.type === ReferenceType.PUBLICATION_IN_JOURNAL && <SubmissionJournalPublicationPresentation />}*/}
 
-        <h2>{t('heading.references')}</h2>
+        <Typography variant="h2">{t('heading.references')}</Typography>
+        <h2>{t('heading.contributors')}</h2>
 
-        {values.reference.type === ReferenceType.BOOK && (
-          <>
-            <p>Book</p>
-            <LabelContentLine label={t('xxx')}>{values.reference.book?.isbn}</LabelContentLine>
-            <LabelContentLine label={t('xxx')}>{values.reference.book?.numberOfPages}</LabelContentLine>
-          </>
-        )}
-        {values.reference.type === ReferenceType.DEGREE && (
-          <>
-            <p>Degree</p>
-            <LabelContentLine label={t('xxx')}>{values.reference.degree?.type}</LabelContentLine>
-            <LabelContentLine label={t('xxx')}>{values.reference.degree?.specialization}</LabelContentLine>
-          </>
-        )}
+        <Typography variant="h2">{t('heading.references')}</Typography>
+        <h2>{t('heading.files_and_license')}</h2>
 
+        <hr />
         <StyledExpansionPanel variant="outlined">
           <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1a-content" id="panel1a-header">
             {t('heading.contributors')}
@@ -84,10 +72,6 @@ const SubmissionPanel: React.FC = () => {
             <LabelContentLine label={t('common:language')}>{t(`languages:${values.language}`)}</LabelContentLine>
           </StyledExpansionPanelDetails>
         </StyledExpansionPanel>
-
-        <h2>{t('heading.contributors')}</h2>
-
-        <h2>{t('heading.files_and_license')}</h2>
       </Box>
 
       <Button color="primary" variant="contained">

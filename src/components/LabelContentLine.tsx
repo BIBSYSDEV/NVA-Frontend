@@ -28,7 +28,7 @@ interface LabelTextLineProps {
 const LabelContentLine: React.FC<LabelTextLineProps> = ({ label, children, dataTestId }) => {
   return (
     <StyledLine data-testid={dataTestId}>
-      <StyledLabel>{label}:</StyledLabel>
+      <StyledLabel>{label}</StyledLabel>
       <StyledText>{children}</StyledText>
     </StyledLine>
   );
