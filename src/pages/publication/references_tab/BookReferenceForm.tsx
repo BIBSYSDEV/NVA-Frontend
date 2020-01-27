@@ -17,7 +17,10 @@ const StyledSection = styled.div`
   display: grid;
   grid-template-areas: 'peer-review text-book';
   grid-template-columns: 1fr 2fr;
-  margin-top: 1rem;
+  margin-top: 0.7rem;
+  padding-top: 0.7rem;
+  padding-left: 0.7rem;
+  background-color: ${({ theme }) => theme.palette.background.default};
 `;
 
 const StyledPeerReview = styled.div`
