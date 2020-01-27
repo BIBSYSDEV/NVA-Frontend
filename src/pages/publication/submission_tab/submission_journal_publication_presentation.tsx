@@ -14,7 +14,7 @@ const SubmissionJournalPublicationPresentation: React.FC = () => {
       <Typography variant="h3">{t('references.journal_publication')}</Typography>
 
       <LabelContentLine label={t('common:type')}>{values.reference.journalArticle?.type}</LabelContentLine>
-      <LabelContentLine label={t('reference.publisher')}>
+      <LabelContentLine label={t('references.publisher')}>
         {values.reference.journalArticle?.journal?.title}
       </LabelContentLine>
 
@@ -24,11 +24,11 @@ const SubmissionJournalPublicationPresentation: React.FC = () => {
         {values.reference.journalArticle?.pagesFrom}
       </LabelContentLine>
       <LabelContentLine label={t('references.pages_to')}>{values.reference.journalArticle?.pagesTo}</LabelContentLine>
-      <LabelContentLine label={t('references.peer_review')}>
+      <LabelContentLine label={t('references.peer_reviewed')}>
         {values.reference.journalArticle?.peerReview}
       </LabelContentLine>
       <LabelContentLine label={t('references.doi')}>{values.reference.journalArticle?.link}</LabelContentLine>
-      <LabelContentLine label={t('references:article_number')}>
+      <LabelContentLine label={t('references.article_number')}>
         {values.reference.journalArticle?.articleNumber}
       </LabelContentLine>
     </>
