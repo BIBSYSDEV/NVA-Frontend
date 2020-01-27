@@ -29,9 +29,8 @@ describe('User connects to their Authority', () => {
       .contains('Test User');
     cy.get('[data-testid=connect-author-button]').click({ force: true });
 
-    // navigate to profile
-    cy.get('[data-testid=menu]').click({ force: true });
-    cy.get('[data-testid=user-profile-button]').click({ force: true });
+    // connect orcid
+    cy.get('[data-testid=connect-to-orcid]').click({ force: true });
 
     // check that author is connected
     cy.get('[data-testid=author-connected-info]').should('be.visible');
