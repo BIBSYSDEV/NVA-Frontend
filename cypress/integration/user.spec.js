@@ -10,13 +10,6 @@ describe('User', () => {
     cy.get('[data-testid=user-email]').contains('testuser@unit.no');
     cy.get('[data-testid=user-role]').contains('Publisher');
   });
-
-  it('The user should be able to connect to their ORCID account if they are successfully logged into ORCID', () => {
-    cy.get('[data-testid=open-orcid-modal]').click({ force: true });
-    cy.get('[data-testid=connect-to-orcid]').click({ force: true });
-
-    cy.get('[data-testid=orcid-info]').contains('https://sandbox.orcid.org/0000-0001-2345-6789');
-  });
 });
 
 describe('User connects to their Authority', () => {
@@ -25,7 +18,7 @@ describe('User connects to their Authority', () => {
     cy.mocklogin();
   });
 
-  it('The user should be able to connect to an authority on the start page when no authority is connected', () => {
+  it('The user should be able to connect to an authority and an orcid on the start page when no authority is connected', () => {
     cy.get('[data-testid=logo]').click({ force: true });
 
     // connect author
