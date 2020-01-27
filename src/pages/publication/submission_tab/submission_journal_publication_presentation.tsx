@@ -14,19 +14,23 @@ const SubmissionJournalPublicationPresentation: React.FC = () => {
       <Typography variant="h3">{t('references.journal_publication')}</Typography>
 
       <LabelContentLine label={t('common:type')}>{values.reference.journalArticle?.type}</LabelContentLine>
-      <LabelContentLine label={t('reference:publisher')}>
+      <LabelContentLine label={t('reference.publisher')}>
         {values.reference.journalArticle?.journal?.title}
       </LabelContentLine>
 
-      <LabelContentLine label={t('reference:volume')}>{values.reference.journalArticle?.volume}</LabelContentLine>
-      <LabelContentLine label={t('reference:issue')}>{values.reference.journalArticle?.issue}</LabelContentLine>
-      <LabelContentLine label={t('reference:pagesFrom')}>{values.reference.journalArticle?.pagesFrom}</LabelContentLine>
-      <LabelContentLine label={t('reference:pagesTo')}>{values.reference.journalArticle?.pagesTo}</LabelContentLine>
-      <LabelContentLine label={t('reference:peer_review')}>
+      <LabelContentLine label={t('references.volume')}>{values.reference.journalArticle?.volume}</LabelContentLine>
+      <LabelContentLine label={t('references.issue')}>{values.reference.journalArticle?.issue}</LabelContentLine>
+      <LabelContentLine label={t('references.pages_from')}>
+        {values.reference.journalArticle?.pagesFrom}
+      </LabelContentLine>
+      <LabelContentLine label={t('references.pages_to')}>{values.reference.journalArticle?.pagesTo}</LabelContentLine>
+      <LabelContentLine label={t('references.peer_review')}>
         {values.reference.journalArticle?.peerReview}
       </LabelContentLine>
-      <LabelContentLine label={t('reference:doi')}>{values.reference.journalArticle?.link}</LabelContentLine>
-      <LabelContentLine label={t('reference:type')}>{values.reference.journalArticle?.articleNumber}</LabelContentLine>
+      <LabelContentLine label={t('references.doi')}>{values.reference.journalArticle?.link}</LabelContentLine>
+      <LabelContentLine label={t('references:article_number')}>
+        {values.reference.journalArticle?.articleNumber}
+      </LabelContentLine>
     </>
   );
 };

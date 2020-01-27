@@ -7,12 +7,14 @@
   "loading": "Laster",
   "name": "Navn",
   "next": "Neste",
+  "no": "Nei",
   "no_hits": "Ingen treff",
   "orcid": "ORCID",
+  "picture": "Bilde",
   "remove": "Fjern",
   "save": "Lagre",
   "search": "Søk",
   "title": "Tittel",
   "type": "Type",
-  "picture": "Bilde"
+  "yes": "Ja"
 }

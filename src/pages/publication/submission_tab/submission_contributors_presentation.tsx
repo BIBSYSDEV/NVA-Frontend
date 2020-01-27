@@ -11,7 +11,7 @@ const SubmissionContributorsPresentation: React.FC = () => {
 
   return (
     <>
-      <LabelContentLine label={t('heading:contributrors')}>
+      <LabelContentLine label={t('heading.contributors')}>
         {values.contributors.map(contributor => {
           return (
             <SubmissionContentText>

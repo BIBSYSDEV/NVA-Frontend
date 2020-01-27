@@ -101,7 +101,7 @@ const BookReferenceForm: FC = () => {
           <Field name={BookFieldNames.TEXT_BOOK}>
             {({ field: { name, value } }: any) => (
               <>
-                <StyledLabel>{t('references.text_book')}</StyledLabel>
+                <StyledLabel>{t('references.is_text_book')}</StyledLabel>
                 <FormControlLabel
                   control={
                     <Checkbox

@@ -7,12 +7,14 @@
   "loading": "Loading",
   "name": "Name",
   "next": "Next",
+  "no": "No",
   "no_hits": "No hits",
   "orcid": "ORCID",
+  "picture": "Picture",
   "remove": "Remove",
   "save": "Save",
   "search": "Search",
   "title": "Title",
   "type": "Type",
-  "picture": "Picture"
+  "yes": "Yes"
 }

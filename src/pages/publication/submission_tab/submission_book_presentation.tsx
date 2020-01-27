@@ -15,10 +15,10 @@ const SubmissionBookPresentation: React.FC = () => {
       <LabelContentLine label={t('common:type')}>{values.reference.book?.type}</LabelContentLine>
       <LabelContentLine label={t('references.publisher')}>{values.reference.book?.publisher?.title}</LabelContentLine>
       <LabelContentLine label={t('references.peer_reviewed')}>
-        {values.reference.book?.peerReview ? t('references.is_peer_reviewed') : t('references.is_not_peer_reviewed')}
+        {values.reference.book?.peerReview ? t('common:yes') : t('common:no')}
       </LabelContentLine>
       <LabelContentLine label={t('references.text_book')}>
-        {values.reference.book?.textBook ? t('references.text_book_yes') : t('references.no')}
+        {values.reference.book?.textBook ? t('common:yes') : t('common:no')}
       </LabelContentLine>
       <LabelContentLine label={t('references.series')}>{values.reference.book?.series?.title}</LabelContentLine>
       <LabelContentLine label={t('references.issn')}>{values.reference.book?.isbn}</LabelContentLine>
