@@ -24,6 +24,19 @@ export interface File {
   };
   administrativeContract?: boolean;
   acceptedVersion?: boolean;
-  embargoDate?: Date;
-  license?: License;
+  embargoDate?: Date | null;
+  license?: License | null;
 }
+
+export const emptyFile: File = {
+  id: '',
+  name: '',
+  uploadURL: '',
+  data: {
+    size: 0,
+  },
+  administrativeContract: false,
+  acceptedVersion: true,
+  embargoDate: null,
+  license: null,
+};

@@ -6,6 +6,7 @@ import Tus from '@uppy/tus';
 import Uppy from '@uppy/core';
 import { Dashboard } from '@uppy/react';
 import { useTranslation } from 'react-i18next';
+import { emptyFile } from '../../../types/license.types';
 
 const uppy = Uppy({
   autoProceed: true,
@@ -29,7 +30,10 @@ const FileUploader: React.FC<FileUploaderProps> = ({ addFile }) => {
     // Uppy should be configured on mount, and be closed on form unmount...
     if (!listenerAdded) {
       uppy.on('upload-success', (file: File) => {
-        addFile(file);
+        addFile({
+          ...emptyFile,
+          ...file,
+        });
       });
       setListenerAdded(true);
     }
