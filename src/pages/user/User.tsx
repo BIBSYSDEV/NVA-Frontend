@@ -6,7 +6,7 @@ import styled from 'styled-components';
 
 import { Link as MuiLink } from '@material-ui/core';
 
-import { getAuthorities, updateOrcidForAuthority } from '../../api/authorityApi';
+import { updateOrcidForAuthority } from '../../api/authorityApi';
 import { getOrcidInfo } from '../../api/external/orcidApi';
 import ButtonModal from '../../components/ButtonModal';
 import { setAuthorityData } from '../../redux/actions/userActions';
@@ -69,14 +69,12 @@ const User: React.FC = () => {
           dispatch
         );
         dispatch(setAuthorityData(updatedAuthority));
-      } else {
-        await getAuthorities(user.id, dispatch);
       }
     };
     if (user.externalOrcid) {
       updateOrcid();
     }
-  }, [user.authority, dispatch, user.id, user.externalOrcid]);
+  }, [user.authority, dispatch, user.externalOrcid]);
 
   return (
     <StyledUserPage>
