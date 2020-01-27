@@ -18,10 +18,17 @@ import SubmissionChapterPresentation from './submission_tab/submission_chapter_p
 import SubmissionReportPresentation from './submission_tab/submission_report_presentation';
 import SubmissionJournalPublicationPresentation from './submission_tab/submission_journal_publication_presentation';
 import SubmissionDescriptionPresentation from './submission_tab/submission_description_presentation';
+import SubmissionFilesAndLicensesPresentation from './submission_tab/submission_files_licenses_presentation';
+import SubmissionContributorsPresentation from './submission_tab/submission_contributors_presentation';
+import { ReferenceType } from '../../types/references.types';
 
 const StyledContentText = styled.div`
   margin-bottom: 0.3rem;
   font-weight: bold;
+`;
+
+const StyledPublishButton = styled(Button)`
+  margin-top: 0.5rem;
 `;
 
 const StyledExpansionPanel = styled(ExpansionPanel)``;
@@ -45,22 +52,22 @@ const SubmissionPanel: React.FC = () => {
         <SubmissionDescriptionPresentation />
 
         <Typography variant="h2">{t('heading.references')}</Typography>
-        <SubmissionBookPresentation />
-        <SubmissionDegreePresentation />
-        <SubmissionChapterPresentation />
-        <SubmissionReportPresentation />
-        <SubmissionJournalPublicationPresentation />
-        {/*{values.reference.type === ReferenceType.BOOK && <SubmissionBookPresentation />}*/}
-        {/*{values.reference.type === ReferenceType.DEGREE && <SubmissionDegreePresentation />}*/}
-        {/*{values.reference.type === ReferenceType.CHAPTER && <SubmissionChapterPresentation />}*/}
-        {/*{values.reference.type === ReferenceType.REPORT && <SubmissionReportPresentation />}*/}
-        {/*{values.reference.type === ReferenceType.PUBLICATION_IN_JOURNAL && <SubmissionJournalPublicationPresentation />}*/}
+        {/*<SubmissionBookPresentation />*/}
+        {/*<SubmissionDegreePresentation />*/}
+        {/*<SubmissionChapterPresentation />*/}
+        {/*<SubmissionReportPresentation />*/}
+        {/*<SubmissionJournalPublicationPresentation />*/}
+        {values.reference.type === ReferenceType.BOOK && <SubmissionBookPresentation />}
+        {values.reference.type === ReferenceType.DEGREE && <SubmissionDegreePresentation />}
+        {values.reference.type === ReferenceType.CHAPTER && <SubmissionChapterPresentation />}
+        {values.reference.type === ReferenceType.REPORT && <SubmissionReportPresentation />}
+        {values.reference.type === ReferenceType.PUBLICATION_IN_JOURNAL && <SubmissionJournalPublicationPresentation />}
 
-        <Typography variant="h2">{t('heading.references')}</Typography>
-        <h2>{t('heading.contributors')}</h2>
+        <Typography variant="h2">{t('heading.contributors')}</Typography>
+        <SubmissionContributorsPresentation />
 
-        <Typography variant="h2">{t('heading.references')}</Typography>
-        <h2>{t('heading.files_and_license')}</h2>
+        <Typography variant="h2">{t('heading.files_and_license')}</Typography>
+        <SubmissionFilesAndLicensesPresentation />
 
         <hr />
         <StyledExpansionPanel variant="outlined">
@@ -73,10 +80,9 @@ const SubmissionPanel: React.FC = () => {
           </StyledExpansionPanelDetails>
         </StyledExpansionPanel>
       </Box>
-
-      <Button color="primary" variant="contained">
+      <StyledPublishButton color="primary" variant="contained">
         {t('Publish')}
-      </Button>
+      </StyledPublishButton>
       {/*<Button variant="contained">{t('Save')}</Button>*/}
 
       {/*<div>{t('delete_registration')}</div>*/}

@@ -3,6 +3,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormikProps, useFormikContext } from 'formik';
 import { Publication } from '../../../types/publication.types';
+import { Typography } from '@material-ui/core';
 
 const SubmissionJournalPublicationPresentation: React.FC = () => {
   const { t } = useTranslation('publication');
@@ -10,7 +11,8 @@ const SubmissionJournalPublicationPresentation: React.FC = () => {
 
   return (
     <>
-      <p>{t('references.journal_publication')}</p>
+      <Typography variant="h3">{t('references.journal_publication')}</Typography>
+
       <LabelContentLine label={t('common:type')}>{values.reference.journalArticle?.type}</LabelContentLine>
       <LabelContentLine label={t('reference:publisher')}>
         {values.reference.journalArticle?.journal?.title}

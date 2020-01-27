@@ -3,6 +3,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormikProps, useFormikContext } from 'formik';
 import { Publication } from '../../../types/publication.types';
+import { Typography } from '@material-ui/core';
 
 const SubmissionDegreePresentation: React.FC = () => {
   const { t } = useTranslation('publication');
@@ -10,7 +11,8 @@ const SubmissionDegreePresentation: React.FC = () => {
 
   return (
     <>
-      <p>{t('references.degree')}</p>
+      <Typography variant="h3">{t('references.degree')}</Typography>
+
       <LabelContentLine label={t('common:type')}>{values.reference.degree?.type}</LabelContentLine>
       <LabelContentLine label={t('references.publisher')}>{values.reference.degree?.publisher?.title}</LabelContentLine>
       <LabelContentLine label={t('references.specialization')}>
