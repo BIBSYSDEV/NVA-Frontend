@@ -3,12 +3,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormikProps, useFormikContext } from 'formik';
 import { Publication } from '../../../types/publication.types';
-import styled from 'styled-components';
-
-const StyledContentText = styled.div`
-  margin-bottom: 0.3rem;
-  font-weight: bold;
-`;
+import SubmissionContentText from './submission_content_text';
 
 const SubmissionContributorsPresentation: React.FC = () => {
   const { t } = useTranslation('publication');
@@ -19,10 +14,10 @@ const SubmissionContributorsPresentation: React.FC = () => {
       <LabelContentLine label={t('heading:contributrors')}>
         {values.contributors.map(contributor => {
           return (
-            <StyledContentText>
+            <SubmissionContentText>
               {contributor.name}
               {contributor.institution?.name && `(${contributor.institution.name})`})
-            </StyledContentText>
+            </SubmissionContentText>
           );
         })}
       </LabelContentLine>

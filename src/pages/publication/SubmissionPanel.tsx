@@ -6,12 +6,7 @@ import TabPanel from '../../components/TabPanel/TabPanel';
 import { FormikProps, useFormikContext } from 'formik';
 import { Publication } from '../../types/publication.types';
 import { Button, Typography } from '@material-ui/core';
-import LabelContentLine from '../../components/LabelContentLine';
 import styled from 'styled-components';
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import SubmissionBookPresentation from './submission_tab/submission_book_presentation';
 import SubmissionDegreePresentation from './submission_tab/submission_degree_presentation';
 import SubmissionChapterPresentation from './submission_tab/submission_chapter_presentation';
@@ -21,42 +16,27 @@ import SubmissionDescriptionPresentation from './submission_tab/submission_descr
 import SubmissionFilesAndLicensesPresentation from './submission_tab/submission_files_licenses_presentation';
 import SubmissionContributorsPresentation from './submission_tab/submission_contributors_presentation';
 import { ReferenceType } from '../../types/references.types';
-
-const StyledContentText = styled.div`
-  margin-bottom: 0.3rem;
-  font-weight: bold;
-`;
+import SubmissionContentText from './submission_tab/submission_content_text';
 
 const StyledPublishButton = styled(Button)`
   margin-top: 0.5rem;
 `;
 
-const StyledExpansionPanel = styled(ExpansionPanel)``;
-
-const StyledExpansionPanelDetails = styled(ExpansionPanelDetails)``;
-
 const SubmissionPanel: React.FC = () => {
   const { t } = useTranslation('publication');
   const { values }: FormikProps<Publication> = useFormikContext();
-
-  values.title.nb =
-    'PhD prosjekt: Selvbestemmelse uten ord - utfordrende relasjoner mellom person med alvorlig utviklingshemming og profesjonelle';
 
   return (
     <TabPanel ariaLabel="submission">
       <Box>
         <Typography variant="h1">{t('heading.summary')}</Typography>
-        <StyledContentText>{values.title.nb}</StyledContentText>
+        <hr />
+        <SubmissionContentText>{values.title.nb}</SubmissionContentText>
 
         <Typography variant="h2">{t('heading.description')}</Typography>
         <SubmissionDescriptionPresentation />
 
         <Typography variant="h2">{t('heading.references')}</Typography>
-        {/*<SubmissionBookPresentation />*/}
-        {/*<SubmissionDegreePresentation />*/}
-        {/*<SubmissionChapterPresentation />*/}
-        {/*<SubmissionReportPresentation />*/}
-        {/*<SubmissionJournalPublicationPresentation />*/}
         {values.reference.type === ReferenceType.BOOK && <SubmissionBookPresentation />}
         {values.reference.type === ReferenceType.DEGREE && <SubmissionDegreePresentation />}
         {values.reference.type === ReferenceType.CHAPTER && <SubmissionChapterPresentation />}
@@ -68,24 +48,10 @@ const SubmissionPanel: React.FC = () => {
 
         <Typography variant="h2">{t('heading.files_and_license')}</Typography>
         <SubmissionFilesAndLicensesPresentation />
-
-        <hr />
-        <StyledExpansionPanel variant="outlined">
-          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1a-content" id="panel1a-header">
-            {t('heading.contributors')}
-          </ExpansionPanelSummary>
-          <StyledExpansionPanelDetails>
-            <LabelContentLine label={t('description.tags')}>{`${values.tags.join(', ')}`}</LabelContentLine>
-            <LabelContentLine label={t('common:language')}>{t(`languages:${values.language}`)}</LabelContentLine>
-          </StyledExpansionPanelDetails>
-        </StyledExpansionPanel>
       </Box>
       <StyledPublishButton color="primary" variant="contained">
         {t('Publish')}
       </StyledPublishButton>
-      {/*<Button variant="contained">{t('Save')}</Button>*/}
-
-      {/*<div>{t('delete_registration')}</div>*/}
     </TabPanel>
   );
 };

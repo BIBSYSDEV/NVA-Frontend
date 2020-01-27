@@ -3,12 +3,8 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormikProps, useFormikContext } from 'formik';
 import { Publication } from '../../../types/publication.types';
-import styled from 'styled-components';
+import SubmissionContentText from './submission_content_text';
 
-const StyledContentText = styled.div`
-  margin-bottom: 0.3rem;
-  font-weight: bold;
-`;
 const SubmissionDescriptionPresentation: React.FC = () => {
   const { t } = useTranslation('publication');
   const { values }: FormikProps<Publication> = useFormikContext();
@@ -30,7 +26,7 @@ const SubmissionDescriptionPresentation: React.FC = () => {
       </LabelContentLine>
       <LabelContentLine label={t('description.project_association')}>
         {values.projects.map(project => {
-          return <StyledContentText>{project.titles?.[0]?.title}</StyledContentText>;
+          return <SubmissionContentText>{project.titles?.[0]?.title}</SubmissionContentText>;
         })}
       </LabelContentLine>
     </>
