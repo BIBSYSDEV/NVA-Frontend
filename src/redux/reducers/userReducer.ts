@@ -9,7 +9,7 @@ import {
   SET_USER_SUCCESS,
   UserActions,
 } from '../actions/userActions';
-import { SET_INSTITUTION, InstitutionActions } from '../actions/institutionActions';
+import { ADD_INSTITUTION, InstitutionActions } from '../actions/institutionActions';
 
 export const userReducer = (
   state: User = emptyUser,
@@ -42,10 +42,10 @@ export const userReducer = (
         ...state,
         externalOrcid: action.orcid,
       };
-    case SET_INSTITUTION:
+    case ADD_INSTITUTION:
       return {
         ...state,
-        authority: { ...state.authority, orgunitids: [...state.authority.orgunitids, action.orgunitids] },
+        authority: { ...state.authority, orgunitids: [...state.authority.orgunitids, action.orgunitid] },
       };
     case SET_AUTHORITY_DATA:
       return {

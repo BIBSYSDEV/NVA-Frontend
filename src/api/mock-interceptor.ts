@@ -18,6 +18,9 @@ import { InstituionApiPaths } from './institutionApi';
 import { PublicationsApiPaths } from './publicationApi';
 import { PublicationChannelApiPaths } from './publicationChannelApi';
 
+const TOP_INSTITUTION_REGEXP = '[0-9]+.0.0.0';
+const SUBUNIT_INSTITUTION_REGEXP = '*.[^0]+.0.0';
+
 const mockOrcidResponse: OrcidResponse = {
   id: 'https://sandbox.orcid.org/0000-0001-2345-6789',
   sub: '0000-0001-2345-6789',
@@ -92,8 +95,12 @@ export const interceptRequestsOnMock = () => {
 
   // Institution Registry
   mock.onGet(new RegExp(`${API_URL}${InstituionApiPaths.INSTITUTION}\\?name=*`)).reply(200, mockInstitutionResponse);
-  mock.onGet(new RegExp(`${API_URL}${InstituionApiPaths.UNIT}[0-9]+.0.0.0`)).reply(200, mockFacultyResponse);
-  mock.onGet(new RegExp(`${API_URL}${InstituionApiPaths.UNIT}*.[^0]+.0.0`)).reply(200, mockInstituteResponse);
+  mock
+    .onGet(new RegExp(`${API_URL}${InstituionApiPaths.UNIT}${TOP_INSTITUTION_REGEXP}`))
+    .reply(200, mockFacultyResponse);
+  mock
+    .onGet(new RegExp(`${API_URL}${InstituionApiPaths.UNIT}${SUBUNIT_INSTITUTION_REGEXP}`))
+    .reply(200, mockInstituteResponse);
 
   mock.onAny().reply(function(config) {
     throw new Error('Could not find mock for ' + config.url);

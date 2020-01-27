@@ -82,3 +82,5 @@ export const institutionLookup = async (cristinUnitId: string) => {
 
   return presentation;
 };
+
+export const addInstitution = async (cristinUnitId: string) => {};

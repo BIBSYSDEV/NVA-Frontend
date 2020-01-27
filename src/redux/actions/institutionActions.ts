@@ -1,13 +1,13 @@
-export const SET_INSTITUTION = 'set institution';
+export const ADD_INSTITUTION = 'set institution';
 
 export const setInstitution = (institution: string): SetInstitutionAction => ({
-  type: SET_INSTITUTION,
-  orgunitids: institution,
+  type: ADD_INSTITUTION,
+  orgunitid: institution,
 });
 
 interface SetInstitutionAction {
-  type: typeof SET_INSTITUTION;
-  orgunitids: string;
+  type: typeof ADD_INSTITUTION;
+  orgunitid: string;
 }
 
 export type InstitutionActions = SetInstitutionAction;
