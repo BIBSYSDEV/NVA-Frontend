@@ -74,14 +74,12 @@ const User: React.FC = () => {
           dispatch
         );
         dispatch(setAuthorityData(updatedAuthority));
-      } else {
-        await getAuthorities(user.id, dispatch);
       }
     };
     if (user.externalOrcid) {
       updateOrcid();
     }
-  }, [user.authority, dispatch, user.id, user.externalOrcid]);
+  }, [user.authority, dispatch, user.externalOrcid]);
 
   const addInstitutionPresentation = (institutionPresentation: InstitutionPresentationModel) => {
     setInstitutionPresentations([...institutionPresentations, institutionPresentation]);
