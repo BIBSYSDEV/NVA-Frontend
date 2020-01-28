@@ -11,7 +11,7 @@ export enum AuthorityApiPaths {
 }
 
 export const getAuthorities = async (name: string, dispatch: Dispatch) => {
-  const url = encodeURI(`/authority?name=${name}`);
+  const url = encodeURI(`${AuthorityApiPaths.AUTHORITY}?name=${name}`);
 
   // remove when Authorization headers are set for all requests
   const idToken = await getIdToken();

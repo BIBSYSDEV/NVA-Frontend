@@ -22,11 +22,31 @@ const mockOrcidResponse: OrcidResponse = {
   given_name: 'Sofia',
 };
 
-const mockSingleAuthorityResponse: Authority = {
+const mockSingleAuthorityResponseWithOrcid: Authority = {
   name: 'Test User',
   systemControlNumber: '901790000000',
   feideids: ['osteloff@unit.no'],
   orcids: ['0000-0001-2345-6789'],
+  orgunitids: [],
+  handles: [],
+  birthDate: '1941-04-25 00:00:00.000',
+};
+
+const mockSingleAuthorityResponse: Authority = {
+  name: 'Test User',
+  systemControlNumber: '901790000000',
+  feideids: ['tu@unit.no'],
+  orcids: [],
+  orgunitids: ['220.0.0.0'],
+  handles: [],
+  birthDate: '1941-04-25 00:00:00.000',
+};
+
+const mockSingleAuthorityResponseWithFeide: Authority = {
+  name: 'Test User',
+  systemControlNumber: '901790000000',
+  feideids: ['tu@unit.no'],
+  orcids: [],
   orgunitids: [],
   handles: [],
   birthDate: '1941-04-25 00:00:00.000',
@@ -55,8 +75,17 @@ export const interceptRequestsOnMock = () => {
   mock.onPost(ORCID_USER_INFO_URL).reply(200, mockOrcidResponse);
 
   // Authority Registry
-  mock.onGet(new RegExp(`${API_URL}${AuthorityApiPaths.AUTHORITY}`)).reply(200, mockAuthoritiesResponse);
-  mock.onPut(new RegExp(`${API_URL}${AuthorityApiPaths.AUTHORITY}/*`)).reply(200, mockSingleAuthorityResponse);
+  mock.onGet(new RegExp(`${API_URL}${AuthorityApiPaths.AUTHORITY}\\?name=*`)).reply(200, mockAuthoritiesResponse);
+  mock
+    .onGet(new RegExp(`${API_URL}${AuthorityApiPaths.AUTHORITY}\\?name=tu@unit.no`))
+    .reply(200, mockSingleAuthorityResponse);
+  mock
+    .onPut(new RegExp(`${API_URL}${AuthorityApiPaths.AUTHORITY}/*`))
+    .replyOnce(200, mockSingleAuthorityResponseWithFeide);
+  mock.onPut(new RegExp(`${API_URL}${AuthorityApiPaths.AUTHORITY}/*`)).replyOnce(200, mockSingleAuthorityResponse);
+  mock
+    .onPut(new RegExp(`${API_URL}${AuthorityApiPaths.AUTHORITY}/*`))
+    .replyOnce(200, mockSingleAuthorityResponseWithOrcid);
 
   mock.onAny().reply(function(config) {
     throw new Error('Could not find mock for ' + config.url);
