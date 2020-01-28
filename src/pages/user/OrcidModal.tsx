@@ -3,11 +3,11 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
 import styled from 'styled-components';
 
-import { Button, Link } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 
 import { ORCID_SIGN_IN_URL, USE_MOCK_DATA } from '../../utils/constants';
 
-const StyledButtonHolder = styled.div`
+const StyledButtonContainer = styled.div`
   margin: 3rem 0;
   text-align: center;
 `;
@@ -15,6 +15,10 @@ const StyledButtonHolder = styled.div`
 const StyledSubHeading = styled.div`
   margin: 1em 0;
   font-weight: bold;
+`;
+
+const StyledOrcidDescription = styled.div`
+  padding: 0.5rem;
 `;
 
 const OrcidModal: FC = () => {
@@ -35,26 +39,24 @@ const OrcidModal: FC = () => {
 
   return (
     <>
-      <p>{t('orcid.login')}</p>
-      <StyledButtonHolder>
+      <StyledOrcidDescription>
+        <p>{t('orcid.login')}</p>
+        <StyledSubHeading>{t('orcid.why')}</StyledSubHeading>
+        <p>{t('orcid.description_why_use_orcid')}</p>
+        <StyledSubHeading>{'orcid.what'}</StyledSubHeading>
+        <p>{t('orcid.description_what_is_orcid')}</p>
+      </StyledOrcidDescription>
+      <StyledButtonContainer>
         <Button
           data-testid="connect-to-orcid"
           onClick={() => {
             openORCID();
           }}
-          variant="outlined"
-          size="large"
-          startIcon={<img src="https://orcid.org/sites/default/files/images/orcid_24x24.png" alt="ORCID iD icon" />}>
+          color="primary"
+          variant="contained">
           {t('orcid.create_or_connect')}
         </Button>
-      </StyledButtonHolder>
-      <StyledSubHeading>{t('orcid.why')}</StyledSubHeading>
-      <p>{t('orcid.description_why_use_orcid')}</p>
-      <StyledSubHeading>{'orcid.what'}</StyledSubHeading>
-      <p>{t('orcid.description_what_is_orcid')}</p>
-      <p>
-        {t('orcid.learn_more')} <Link href="https://orcid.org">orcid.org</Link>
-      </p>
+      </StyledButtonContainer>
     </>
   );
 };
