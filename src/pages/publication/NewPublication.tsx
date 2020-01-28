@@ -15,11 +15,10 @@ const StyledNewPublication = styled.div`
   display: flex;
   justify-content: center;
   @media only screen and (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
-    display:block;
+    display: block;
     margin-right: 0;
     flex-wrap: wrap;
   }
-} 
 `;
 
 const StyledSelectorWrapper = styled.div`
@@ -29,7 +28,6 @@ const StyledSelectorWrapper = styled.div`
   @media only screen and (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
     margin-right: 0;
   }
-}
 `;
 
 const StyledInfoBox = styled.div`
