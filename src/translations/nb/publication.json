@@ -37,9 +37,11 @@
     "drag_files": "Dra filer hit eller",
     "embargo_date": "Dato for utsatt publisering i arkivet",
     "files": "Filer",
+    "license": "Lisens",
     "published_version": "Publisert versjon",
     "select_version": "Velg versjon",
-    "upload_files": "Last opp filer"
+    "upload_files": "Last opp filer",
+    "uploaded_size": "Lastet opp {{size}} kB"
   },
   "heading": {
     "contributors": "Bidragsytere",

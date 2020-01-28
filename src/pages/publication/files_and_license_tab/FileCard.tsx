@@ -11,6 +11,8 @@ import {
   RadioGroup,
   Radio,
   Box as MuiBox,
+  Select,
+  InputLabel,
 } from '@material-ui/core';
 import { File } from '../../../types/license.types';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
@@ -25,6 +27,15 @@ const StyledDescription = styled.div`
 `;
 const StyledActions = styled.div``;
 
+const StyledFormControl = styled(FormControl)`
+  width: 30%;
+  margin-top: 1rem;
+`;
+
+const StyledLicenseFormControl = styled(StyledFormControl)`
+  margin-top: 2rem;
+`;
+
 interface FileCardProps {
   file: File;
   removeFile: () => void;
@@ -37,7 +48,9 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, updateFile }) => 
   return (
     <Box>
       <StyledTitle>{file.name}</StyledTitle>
-      <StyledDescription>Ferdig opplastet {Math.round(file.data.size / 1000)} kB</StyledDescription>
+      <StyledDescription>
+        {t('files_and_license.uploaded_size', { size: Math.round(file.data.size / 1000) })}
+      </StyledDescription>
 
       <FormControlLabel
         control={
@@ -57,7 +70,7 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, updateFile }) => 
 
       {!file.administrativeContract && (
         <MuiBox display="flex" justifyContent="space-between">
-          <FormControl component="fieldset">
+          <StyledFormControl>
             <FormLabel component="legend">{t('files_and_license.select_version')}</FormLabel>
             <RadioGroup
               aria-label="version"
@@ -79,28 +92,34 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, updateFile }) => 
                 label={t('files_and_license.published_version')}
               />
             </RadioGroup>
-          </FormControl>
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <KeyboardDatePicker
-              inputVariant="outlined"
-              label={t('files_and_license.embargo_date')}
-              onChange={value =>
-                updateFile({
-                  ...file,
-                  embargoDate: value,
-                })
-              }
-              value={file.embargoDate}
-              autoOk
-            />
-          </MuiPickersUtilsProvider>
+          </StyledFormControl>
 
-          {/* TODO: License */}
+          <StyledFormControl>
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+              <KeyboardDatePicker
+                inputVariant="outlined"
+                label={t('files_and_license.embargo_date')}
+                onChange={value =>
+                  updateFile({
+                    ...file,
+                    embargoDate: value,
+                  })
+                }
+                value={file.embargoDate}
+                autoOk
+              />
+            </MuiPickersUtilsProvider>
+          </StyledFormControl>
+
+          <StyledLicenseFormControl variant="outlined">
+            <InputLabel>{t('files_and_license.license')}</InputLabel>
+            <Select value={''} onChange={() => {}} labelWidth={50}></Select>
+          </StyledLicenseFormControl>
         </MuiBox>
       )}
 
       <StyledActions>
-        <Link href={file.uploadURL}>
+        <Link href={file.uploadUrl} target="_blank">
           <Button color="primary" variant="contained">
             {t('common:preview')}
           </Button>

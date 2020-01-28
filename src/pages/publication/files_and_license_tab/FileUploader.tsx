@@ -6,7 +6,7 @@ import Tus from '@uppy/tus';
 import Uppy from '@uppy/core';
 import { Dashboard } from '@uppy/react';
 import { useTranslation } from 'react-i18next';
-import { emptyFile } from '../../../types/license.types';
+import { File, emptyFile } from '../../../types/license.types';
 
 const uppy = Uppy({
   autoProceed: true,
@@ -29,10 +29,11 @@ const FileUploader: React.FC<FileUploaderProps> = ({ addFile }) => {
     // Ups: This will add a new complete listener for every new mount
     // Uppy should be configured on mount, and be closed on form unmount...
     if (!listenerAdded) {
-      uppy.on('upload-success', (file: File) => {
+      uppy.on('upload-success', (file: File, response: any) => {
         addFile({
           ...emptyFile,
           ...file,
+          uploadUrl: response?.uploadURL,
         });
       });
       setListenerAdded(true);

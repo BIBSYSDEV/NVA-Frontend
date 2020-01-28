@@ -37,9 +37,11 @@
     "drag_files": "Drag files here or",
     "embargo_date": "Date for delayed publishing in archive",
     "files": "Files",
+    "license": "License",
     "published_version": "Published version",
     "select_version": "Select version",
-    "upload_files": "Upload Files"
+    "upload_files": "Upload Files",
+    "uploaded_size": "Uploaded {{size}} kB"
   },
   "heading": {
     "contributors": "Contributors",

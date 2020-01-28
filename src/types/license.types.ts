@@ -18,7 +18,7 @@ export default interface License {
 export interface File {
   id: string;
   name: string;
-  uploadURL: string;
+  uploadUrl: string;
   data: {
     size: number;
   };
@@ -31,7 +31,7 @@ export interface File {
 export const emptyFile: File = {
   id: '',
   name: '',
-  uploadURL: '',
+  uploadUrl: '',
   data: {
     size: 0,
   },

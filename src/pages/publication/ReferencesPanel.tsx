@@ -85,7 +85,7 @@ export const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, s
           {({ field, meta: { error, touched } }: any) => (
             <FormControl variant="outlined" fullWidth error={!!error && touched}>
               <InputLabel>{t('common:type')}</InputLabel>
-              <Select {...field} data-testid="reference_type">
+              <Select {...field} labelWidth={40} data-testid="reference_type">
                 {Object.entries(referenceTypeLanguageKeyMap).map(([key, value]) => (
                   <MenuItem value={key} key={key} data-testid={`reference_type-${key}`}>
                     {t(value)}
