@@ -7,7 +7,7 @@ import { searchFailure } from '../../../../redux/actions/searchActions';
 import { debounce } from '../../../../utils/debounce';
 import { Institution } from '../../../../types/institution.types';
 import { queryInstitution } from '../../../../api/institutionApi';
-import i18n from './../../../../translations/i18n';
+import { selectNameByLanguage } from '../../../../utils/helpers';
 
 interface InstitutionSearchProps {
   clearSearchField: boolean;
@@ -36,9 +36,7 @@ const InstitutionSearch: FC<InstitutionSearchProps> = ({
         setSearchResults(
           response.map((institution: Institution) => ({
             ...institution,
-            title:
-              institution.institutionNames.filter(unitName => unitName.language === i18n.language)[0]?.name ??
-              institution.institutionNames[0].name,
+            title: selectNameByLanguage(institution.institutionNames),
           }))
         );
       } else {

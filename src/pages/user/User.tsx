@@ -6,7 +6,7 @@ import styled from 'styled-components';
 
 import { Link as MuiLink } from '@material-ui/core';
 
-import { getAuthorities, updateOrcidForAuthority } from '../../api/authorityApi';
+import { updateOrcidForAuthority } from '../../api/authorityApi';
 import { getOrcidInfo } from '../../api/external/orcidApi';
 import ButtonModal from '../../components/ButtonModal';
 import { setAuthorityData } from '../../redux/actions/userActions';
@@ -18,8 +18,8 @@ import UserLanguage from './UserLanguage';
 import UserOrcid from './UserOrcid';
 import UserRoles from './UserRoles';
 import InstitutionDialog from './InstitutionDialog';
-import { InstitutionPresentationModel } from './../../types/institution.types';
-import InstitutionPresentation from './InstitutionPresentation';
+import { InstitutionPresentation } from './../../types/institution.types';
+import InstitutionPresentationCard from './InstitutionPresentation';
 
 const StyledUserPage = styled.div`
   display: grid;
@@ -52,7 +52,7 @@ const User: React.FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const [institutionPresentations, setInstitutionPresentations] = useState<InstitutionPresentationModel[]>([]);
+  const [institutionPresentations, setInstitutionPresentations] = useState<InstitutionPresentation[]>([]);
 
   const hasHandles = user.authority?.handles?.length > 0;
   const hasFeide = user.authority?.feideids?.length > 0;
@@ -81,7 +81,7 @@ const User: React.FC = () => {
     }
   }, [user.authority, dispatch, user.externalOrcid]);
 
-  const addInstitutionPresentation = (institutionPresentation: InstitutionPresentationModel) => {
+  const addInstitutionPresentation = (institutionPresentation: InstitutionPresentation) => {
     setInstitutionPresentations([...institutionPresentations, institutionPresentation]);
   };
 
@@ -119,8 +119,8 @@ const User: React.FC = () => {
         <UserCard headingLabel={t('heading.organizations')}>
           <InstitutionDialog user={user} addInstitutionPresentation={addInstitutionPresentation} />
           <>
-            {institutionPresentations.map((presentation: InstitutionPresentationModel) => (
-              <InstitutionPresentation
+            {institutionPresentations.map((presentation: InstitutionPresentation) => (
+              <InstitutionPresentationCard
                 key={presentation.cristinUnitId}
                 institution={presentation.institutionName}
                 level1={presentation.level1Name}

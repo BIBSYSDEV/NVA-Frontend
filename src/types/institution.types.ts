@@ -38,14 +38,14 @@ export const emptyInstitutionSubUnit: InstitutionSubUnit = {
   cristinUnitId: '',
 };
 
-export interface InstitutionPresentationModel {
+export interface InstitutionPresentation {
   cristinUnitId: string;
   institutionName: InstitutionName[];
   level1Name?: InstitutionName[];
   level2Name?: InstitutionName[];
 }
 
-export const emptyInstitutionPresentation: InstitutionPresentationModel = {
+export const emptyInstitutionPresentation: InstitutionPresentation = {
   cristinUnitId: '',
   institutionName: emptyInstitutionNames,
   level1Name: emptyInstitutionNames,

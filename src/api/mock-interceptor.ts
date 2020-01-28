@@ -96,10 +96,10 @@ export const interceptRequestsOnMock = () => {
   // Institution Registry
   mock.onGet(new RegExp(`${API_URL}${InstituionApiPaths.INSTITUTION}\\?name=*`)).reply(200, mockInstitutionResponse);
   mock
-    .onGet(new RegExp(`${API_URL}${InstituionApiPaths.UNIT}${TOP_INSTITUTION_REGEXP}`))
+    .onGet(new RegExp(`${API_URL}${InstituionApiPaths.UNIT}/${TOP_INSTITUTION_REGEXP}`))
     .reply(200, mockFacultyResponse);
   mock
-    .onGet(new RegExp(`${API_URL}${InstituionApiPaths.UNIT}${SUBUNIT_INSTITUTION_REGEXP}`))
+    .onGet(new RegExp(`${API_URL}${InstituionApiPaths.UNIT}/${SUBUNIT_INSTITUTION_REGEXP}`))
     .reply(200, mockInstituteResponse);
 
   mock.onAny().reply(function(config) {

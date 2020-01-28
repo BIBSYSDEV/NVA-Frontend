@@ -11,18 +11,18 @@ import { useDispatch } from 'react-redux';
 import { setInstitution } from '../../redux/actions/institutionActions';
 import { User } from '../../types/user.types';
 import { updateInstitutionForAuthority } from './../../api/authorityApi';
-import { InstitutionPresentationModel } from './../../types/institution.types';
+import { InstitutionPresentation } from './../../types/institution.types';
 import { institutionLookup } from '../../api/institutionApi';
+import { setAuthorityData } from './../../redux/actions/userActions';
+import { addNotification } from '../../redux/actions/notificationActions';
 
 const StyledInstitutionDialog = styled.div`
   width: 20rem;
 `;
 
-const StyledDialog = styled(Dialog)``;
-
 interface InstitutionDialogProps {
   user: User;
-  addInstitutionPresentation: (institutionPresentation: InstitutionPresentationModel) => void;
+  addInstitutionPresentation: (institutionPresentation: InstitutionPresentation) => void;
 }
 
 const InstitutionDialog: React.FC<InstitutionDialogProps> = ({ user, addInstitutionPresentation }) => {
@@ -39,11 +39,19 @@ const InstitutionDialog: React.FC<InstitutionDialogProps> = ({ user, addInstitut
     setOpen(false);
   };
 
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
     if (!user.authority.orgunitids?.find(orgunitid => orgunitid === selectedCristinUnitId)) {
       dispatch(setInstitution(selectedCristinUnitId));
-      updateInstitutionForAuthority(user.authority.systemControlNumber, selectedCristinUnitId);
-      institutionLookup(selectedCristinUnitId).then(presentation => addInstitutionPresentation(presentation));
+      const updatedAuthority = await updateInstitutionForAuthority(
+        user.authority.systemControlNumber,
+        selectedCristinUnitId
+      );
+      if (updatedAuthority?.error) {
+        dispatch(addNotification(updatedAuthority.error));
+      } else {
+        dispatch(setAuthorityData(updatedAuthority));
+        institutionLookup(selectedCristinUnitId).then(presentation => addInstitutionPresentation(presentation));
+      }
     }
     setOpen(false);
   };
@@ -53,7 +61,7 @@ const InstitutionDialog: React.FC<InstitutionDialogProps> = ({ user, addInstitut
       <Button variant="contained" color="primary" onClick={handleClickOpen}>
         {t('organization.add')}
       </Button>
-      <StyledDialog open={open} onClose={handleConfirm} aria-labelledby="form-dialog-title">
+      <Dialog open={open} onClose={handleConfirm} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">{t('organization.edit_institution')}</DialogTitle>
         <DialogContent>
           <InstitutionSelector valueFunction={setSelectedCristinUnitId} />
@@ -66,7 +74,7 @@ const InstitutionDialog: React.FC<InstitutionDialogProps> = ({ user, addInstitut
             {t('organization.save')}
           </Button>
         </DialogActions>
-      </StyledDialog>
+      </Dialog>
     </StyledInstitutionDialog>
   );
 };
