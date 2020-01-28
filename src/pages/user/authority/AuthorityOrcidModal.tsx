@@ -8,7 +8,6 @@ import { Button } from '@material-ui/core';
 
 import Modal from '../../../components/Modal';
 import { RootStore } from '../../../redux/reducers/rootReducer';
-import useLocalStorage from '../../../utils/hooks/useLocalStorage';
 import OrcidModal from '../OrcidModal';
 import { ConnectAuthority } from './ConnectAuthority';
 
