@@ -99,11 +99,16 @@ export const getPublication = async (id: string, dispatch: Dispatch) => {
 export const getPublicationByDoi = async (doiUrl: string) => {
   try {
     const idToken = await getIdToken();
-    const response = await Axios.get(`${PublicationsApiPaths.DOI_LOOKUP}/?url=${doiUrl}`, {
-      headers: {
-        Authorization: `Bearer ${idToken}`,
-      },
-    });
+    const response = await Axios.post(
+      `${PublicationsApiPaths.DOI_LOOKUP}/`,
+      { doiUrl },
+      {
+        headers: {
+          Authorization: `Bearer ${idToken}`,
+          Accept: 'application/vnd.citationstyles.csl+json',
+        },
+      }
+    );
 
     if (response.status === StatusCode.OK) {
       return response.data;
