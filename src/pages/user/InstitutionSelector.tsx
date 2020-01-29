@@ -17,10 +17,10 @@ const StyledInstitutionSelector = styled.div`
 `;
 
 interface InstitutionSelectorProps {
-  valueFunction: (value: string) => void;
+  setSelectedCrustinUnitId: (value: string) => void;
 }
 
-const InstitutionSelector: React.FC<InstitutionSelectorProps> = ({ valueFunction }) => {
+const InstitutionSelector: React.FC<InstitutionSelectorProps> = ({ setSelectedCrustinUnitId }) => {
   const { t } = useTranslation('profile');
   const [faculties, setFaculties] = useState<InstitutionSubUnit[]>([]);
   const [institutes, setInstitutes] = useState<InstitutionSubUnit[]>([]);
@@ -47,14 +47,14 @@ const InstitutionSelector: React.FC<InstitutionSelectorProps> = ({ valueFunction
   };
 
   const searchFaculties = (institution: Institution) => {
-    valueFunction(institution.cristinUnitId);
+    setSelectedCrustinUnitId(institution.cristinUnitId);
     setSelectedInstituion(institution ?? selectedInstitution);
     resetFaculty();
     getSubUnits(institution.cristinUnitId, setFaculties);
   };
 
   const searchInstitutes = (faculty: InstitutionSubUnit) => {
-    valueFunction(faculty.cristinUnitId);
+    setSelectedCrustinUnitId(faculty.cristinUnitId);
     setSelectedFaculty(faculty);
     resetInstitute();
     getSubUnits(faculty.cristinUnitId, setInstitutes);
@@ -62,7 +62,7 @@ const InstitutionSelector: React.FC<InstitutionSelectorProps> = ({ valueFunction
 
   const setInstitute = (subUnit: InstitutionSubUnit) => {
     setSelectedInstitute(subUnit);
-    valueFunction(subUnit.cristinUnitId);
+    setSelectedCrustinUnitId(subUnit.cristinUnitId);
   };
 
   return (

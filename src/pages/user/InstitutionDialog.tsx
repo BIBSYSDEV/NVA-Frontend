@@ -45,7 +45,7 @@ const InstitutionDialog: React.FC<InstitutionDialogProps> = ({ user, title }) =>
         user.authority.systemControlNumber
       );
       if (updatedAuthority?.error) {
-        dispatch(addNotification(updatedAuthority.error));
+        dispatch(addNotification(updatedAuthority.error, 'error'));
       } else if (updatedAuthority) {
         dispatch(setAuthorityData(updatedAuthority));
         try {
@@ -69,7 +69,7 @@ const InstitutionDialog: React.FC<InstitutionDialogProps> = ({ user, title }) =>
       <Dialog open={open} onClose={handleConfirm} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">{title}</DialogTitle>
         <DialogContent>
-          <InstitutionSelector valueFunction={setSelectedCristinUnitId} />
+          <InstitutionSelector setSelectedCrustinUnitId={setSelectedCristinUnitId} />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCancel} variant="contained" color="primary">

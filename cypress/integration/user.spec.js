@@ -52,11 +52,3 @@ describe('User connects to their Authority', () => {
     cy.get('[data-testid=author-connected-info]').should('be.visible');
   });
 });
-
-// Given User opened Add Institution from My Profile
-// When searched for an Institution
-// And selects an Institutuion
-// And clicks the Add button
-// Then the Add Institution window is closed
-// And the Institution is saved to the Authority Registry
-// And the user sees the new Institution in My Profile
