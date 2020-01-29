@@ -12,6 +12,7 @@ import DescriptionPanel from './DescriptionPanel';
 import FilesAndLicensePanel from './FilesAndLicensePanel';
 import { PublicationFormTabs } from './PublicationFormTabs';
 import { ReferencesPanel } from './ReferencesPanel';
+import { uppyConfig } from '../../utils/uppy-config';
 
 const StyledPublication = styled.div`
   width: 100%;
@@ -22,6 +23,7 @@ const PublicationForm: FC = () => {
   const { t } = useTranslation('publication');
   const [tabNumber, setTabNumber] = useState(0);
   const [initialValues, setInitialValues] = useState(emptyPublication);
+  const [uppy, setUppy] = useState();
 
   const validationSchema = Yup.object().shape({
     title: Yup.object().shape({
@@ -94,6 +96,14 @@ const PublicationForm: FC = () => {
     });
   }, []);
 
+  useEffect(() => {
+    // Set up Uppy for file uploading on form mount
+    if (!uppy) {
+      setUppy(uppyConfig);
+    }
+    return () => uppy && uppy.close();
+  }, [uppy]);
+
   const handleTabChange = (_: React.ChangeEvent<{}>, newTabNumber: number) => {
     setTabNumber(newTabNumber);
   };
@@ -124,7 +134,7 @@ const PublicationForm: FC = () => {
             {tabNumber === 2 && (
               <ContributorsPanel goToNextTab={goToNextTab} savePublication={() => savePublication(values)} />
             )}
-            {tabNumber === 3 && <FilesAndLicensePanel goToNextTab={goToNextTab} />}
+            {tabNumber === 3 && <FilesAndLicensePanel goToNextTab={goToNextTab} uppy={uppy} />}
 
             {tabNumber === 4 && (
               <TabPanel ariaLabel="submission">

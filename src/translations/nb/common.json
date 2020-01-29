@@ -1,6 +1,9 @@
 {
+  "add": "Legg til",
+  "cancel": "Avbryt",
   "date": "Dato",
   "do_not_show_again": "Ikke vis dette igjen",
+  "edit": "Endre",
   "information": "Information",
   "institution": "Institusjon",
   "language": "Språk",
@@ -9,10 +12,11 @@
   "next": "Neste",
   "no_hits": "Ingen treff",
   "orcid": "ORCID",
+  "picture": "Bilde",
+  "preview": "Forhåndsvis",
   "remove": "Fjern",
   "save": "Lagre",
   "search": "Søk",
   "title": "Tittel",
-  "type": "Type",
-  "picture": "Bilde"
+  "type": "Type"
 }

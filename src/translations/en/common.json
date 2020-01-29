@@ -1,5 +1,8 @@
 {
+  "add": "Add",
+  "cancel": "Cancel",
   "date": "Date",
+  "edit": "Edit",
   "do_not_show_again": "Do not show this again",
   "information": "Information",
   "institution": "Institution",
@@ -9,10 +12,11 @@
   "next": "Next",
   "no_hits": "No hits",
   "orcid": "ORCID",
+  "picture": "Picture",
+  "preview": "Preview",
   "remove": "Remove",
   "save": "Save",
   "search": "Search",
   "title": "Title",
-  "type": "Type",
-  "picture": "Picture"
+  "type": "Type"
 }
