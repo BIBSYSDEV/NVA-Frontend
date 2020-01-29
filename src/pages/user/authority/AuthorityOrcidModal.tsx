@@ -27,23 +27,19 @@ const AuthorityOrcidModal: FC = () => {
   const { location } = useHistory();
 
   const noOrcid = user.authority?.orcids.length === 0;
-  const noFeide = user.authority?.feideids.length === 0;
   const noAuthority = user.authority?.systemControlNumber === '';
   const onHomePage = location.pathname === '/';
 
-  const [openOrcidModal, setOpenOrcidModal] = useState(!noFeide && noOrcid && onHomePage);
-  const [openAuthorityModal, setOpenAuthorityModal] = useState(noFeide && onHomePage);
+  const [openOrcidModal, setOpenOrcidModal] = useState(!noAuthority && noOrcid && onHomePage);
+  const [openAuthorityModal, setOpenAuthorityModal] = useState(noAuthority && onHomePage);
 
   useEffect(() => {
-    setOpenOrcidModal(!noFeide && noOrcid && onHomePage);
-    setOpenAuthorityModal(noFeide && onHomePage);
-  }, [noFeide, noOrcid, onHomePage]);
+    setOpenOrcidModal(!noAuthority && noOrcid && onHomePage);
+    setOpenAuthorityModal(noAuthority && onHomePage);
+  }, [noAuthority, noOrcid, onHomePage]);
 
   const handleNextClick = () => {
-    if (noOrcid) {
-      setOpenOrcidModal(true);
-    }
-    setOpenAuthorityModal(false);
+    setOpenOrcidModal(true);
   };
 
   return (
