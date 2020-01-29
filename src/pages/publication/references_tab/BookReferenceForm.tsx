@@ -3,7 +3,7 @@ import React, { ChangeEvent, FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import { Checkbox, FormControl, FormControlLabel, MenuItem, TextField } from '@material-ui/core';
+import { Checkbox, FormControlLabel, MenuItem, TextField } from '@material-ui/core';
 
 import { Publication } from '../../../types/publication.types';
 import { BookFieldNames, bookTypes, emptyPublisher } from '../../../types/references.types';
@@ -50,15 +50,13 @@ const BookReferenceForm: FC = () => {
     <>
       <Field name={BookFieldNames.TYPE}>
         {({ field }: any) => (
-          <FormControl variant="outlined" fullWidth>
-            <TextField select variant="outlined" label={t('common:type')} {...field}>
-              {bookTypes.map(type => (
-                <MenuItem value={type.value} key={type.value}>
-                  {t(type.label)}
-                </MenuItem>
-              ))}
-            </TextField>
-          </FormControl>
+          <TextField select variant="outlined" label={t('common:type')} {...field} fullWidth>
+            {bookTypes.map(type => (
+              <MenuItem value={type.value} key={type.value}>
+                {t(type.label)}
+              </MenuItem>
+            ))}
+          </TextField>
         )}
       </Field>
 
