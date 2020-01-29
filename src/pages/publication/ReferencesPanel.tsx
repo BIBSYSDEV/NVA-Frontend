@@ -3,7 +3,7 @@ import React, { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import { FormControl, InputLabel, MenuItem, Select, FormHelperText } from '@material-ui/core';
+import { FormControl, MenuItem, FormHelperText, TextField } from '@material-ui/core';
 
 import Box from '../../components/Box';
 import TabPanel from '../../components/TabPanel/TabPanel';
@@ -84,14 +84,13 @@ export const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, s
         <Field name={ReferenceFieldNames.REFERENCE_TYPE}>
           {({ field, meta: { error, touched } }: any) => (
             <FormControl variant="outlined" fullWidth error={!!error && touched}>
-              <InputLabel>{t('common:type')}</InputLabel>
-              <Select {...field} labelWidth={40} data-testid="reference_type">
+              <TextField select variant="outlined" {...field} label={t('common:type')} data-testid="reference_type">
                 {Object.entries(referenceTypeLanguageKeyMap).map(([key, value]) => (
                   <MenuItem value={key} key={key} data-testid={`reference_type-${key}`}>
                     {t(value)}
                   </MenuItem>
                 ))}
-              </Select>
+              </TextField>
               <FormHelperText>
                 <ErrorMessage name={ReferenceFieldNames.REFERENCE_TYPE} />
               </FormHelperText>

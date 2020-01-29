@@ -10,8 +10,7 @@ import {
   FormLabel,
   RadioGroup,
   Radio,
-  Select,
-  InputLabel,
+  TextField,
 } from '@material-ui/core';
 import { File } from '../../../types/license.types';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
@@ -29,10 +28,6 @@ const StyledActions = styled.div``;
 const StyledFormControl = styled(FormControl)`
   width: 30%;
   margin-top: 1rem;
-`;
-
-const StyledLicenseFormControl = styled(StyledFormControl)`
-  margin-top: 2rem;
 `;
 
 const StyledFileInfo = styled.div`
@@ -115,10 +110,9 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, updateFile }) => 
             </MuiPickersUtilsProvider>
           </StyledFormControl>
 
-          <StyledLicenseFormControl variant="outlined">
-            <InputLabel>{t('files_and_license.license')}</InputLabel>
-            <Select value={''} onChange={() => {}} labelWidth={50}></Select>
-          </StyledLicenseFormControl>
+          <StyledFormControl>
+            <TextField select variant="outlined" label={t('files_and_license.license')}></TextField>
+          </StyledFormControl>
         </StyledFileInfo>
       )}
 
