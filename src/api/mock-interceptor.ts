@@ -42,7 +42,7 @@ const mockSingleAuthorityResponse: Authority = {
   birthDate: '1941-04-25 00:00:00.000',
 };
 
-const mockSingleAuthorityResponseWithFeide: Authority = {
+export const mockSingleAuthorityResponseWithFeide: Authority = {
   name: 'Test User',
   systemControlNumber: '901790000000',
   feideids: ['tu@unit.no'],

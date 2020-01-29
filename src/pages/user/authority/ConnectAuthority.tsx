@@ -66,27 +66,25 @@ export const ConnectAuthority: FC = () => {
               {t('authority.search_summary', { results: matchingAuthorities?.length ?? 0, searchTerm: user.name })}
             </StyledSubHeading>
             {matchingAuthorities.map(authority => (
-              <>
-                <StyledClickableDiv
-                  data-testid="author-radio-button"
-                  key={authority.systemControlNumber}
-                  onClick={() => setSelectedSystemControlNumber(authority.systemControlNumber)}>
-                  <AuthorityCard
-                    authority={authority}
-                    isSelected={selectedSystemControlNumber === authority.systemControlNumber}
-                  />
-                </StyledClickableDiv>
-                <Button
-                  data-testid="connect-author-button"
-                  color="primary"
-                  variant="contained"
-                  size="large"
-                  onClick={updateAuthorityForUser}
-                  disabled={!selectedSystemControlNumber}>
-                  {t('authority.connect_authority')}
-                </Button>
-              </>
+              <StyledClickableDiv
+                data-testid="author-radio-button"
+                key={authority.systemControlNumber}
+                onClick={() => setSelectedSystemControlNumber(authority.systemControlNumber)}>
+                <AuthorityCard
+                  authority={authority}
+                  isSelected={selectedSystemControlNumber === authority.systemControlNumber}
+                />
+              </StyledClickableDiv>
             ))}
+            <Button
+              data-testid="connect-author-button"
+              color="primary"
+              variant="contained"
+              size="large"
+              onClick={updateAuthorityForUser}
+              disabled={!selectedSystemControlNumber}>
+              {t('authority.connect_authority')}
+            </Button>
           </>
         ) : (
           <NewAuthorityCard />

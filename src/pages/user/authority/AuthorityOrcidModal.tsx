@@ -44,6 +44,7 @@ const AuthorityOrcidModal: FC = () => {
 
   const handleNextClick = () => {
     setOpenOrcidModal(true);
+    setOpenAuthorityModal(false);
   };
 
   return (

@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { Button, Radio } from '@material-ui/core';
 
 import { mockSingleAuthorityResponseWithFeide } from '../../../api/mock-interceptor';
+import Progress from '../../../components/Progress';
 import { setAuthorityData } from '../../../redux/actions/userActions';
 import { RootStore } from '../../../redux/reducers/rootReducer';
 
@@ -19,6 +20,7 @@ const StyledBoxContent = styled.div`
   background-color: ${({ theme }) => theme.palette.box.main};
   padding: 1rem;
   align-items: center;
+  height: 16rem;
 `;
 
 const StyledAuthority = styled.div`
@@ -33,6 +35,15 @@ const StyledDescription = styled.div`
 const StyledButton = styled(Button)`
   grid-area: create-button;
   margin-top: 2rem;
+`;
+
+const StyledProgressContainer = styled.div`
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 36rem;
+  height: 16rem;
+  padding: 2rem;
 `;
 
 const NewAuthorityCard: React.FC = () => {
@@ -58,11 +69,13 @@ const NewAuthorityCard: React.FC = () => {
   };
 
   return (
-    <StyledBoxContent>
+    <>
       {loading ? (
-        <div>loading</div>
+        <StyledProgressContainer>
+          <Progress size={100} />
+        </StyledProgressContainer>
       ) : (
-        <>
+        <StyledBoxContent>
           <StyledAuthority>
             <Radio color="primary" checked />
             {user.name}
@@ -76,9 +89,9 @@ const NewAuthorityCard: React.FC = () => {
             onClick={handleCreateAuthority}>
             {t('authority.create_authority')}
           </StyledButton>
-        </>
+        </StyledBoxContent>
       )}
-    </StyledBoxContent>
+    </>
   );
 };
 
