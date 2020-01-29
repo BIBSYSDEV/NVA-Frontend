@@ -47,7 +47,9 @@ export default createMuiTheme({
       main: Colors.Secondary,
     },
     separator: { main: Colors.Separator },
-    box: { main: Colors.Box },
+    box: {
+      main: Colors.Box,
+    },
     danger: { main: Colors.Danger },
     text: {
       primary: Colors.PrimaryText,

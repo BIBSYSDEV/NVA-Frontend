@@ -9,10 +9,17 @@ import mockAuthoritiesResponse from '../utils/testfiles/mock_authorities_respons
 import mockProjects from '../utils/testfiles/projects_real.json';
 import mockPublications from '../utils/testfiles/publications_45_random_results_generated.json';
 import mockNsdPublisers from '../utils/testfiles/publishersFromNsd.json';
+import mockInstitutionResponse from '../utils/testfiles/institution_query.json';
+import mockFacultyResponse from '../utils/testfiles/institution_faculty_query.json';
+import mockInstituteResponse from '../utils/testfiles/institution_institute_query.json';
 import { AuthorityApiPaths } from './authorityApi';
 import { ProjectsApiPaths } from './projectApi';
+import { InstituionApiPaths } from './institutionApi';
 import { PublicationsApiPaths } from './publicationApi';
 import { PublicationChannelApiPaths } from './publicationChannelApi';
+
+const TOP_INSTITUTION_REGEXP = '[0-9]+.0.0.0';
+const SUBUNIT_INSTITUTION_REGEXP = '*.[^0]+.0.0';
 
 const mockOrcidResponse: OrcidResponse = {
   id: 'https://sandbox.orcid.org/0000-0001-2345-6789',
@@ -20,6 +27,26 @@ const mockOrcidResponse: OrcidResponse = {
   name: 'Sofia Garcia',
   family_name: 'Garcia',
   given_name: 'Sofia',
+};
+
+const mockSingleAuthorityResponseWithFeide: Authority = {
+  name: 'Test User',
+  systemControlNumber: '901790000000',
+  feideids: ['tu@unit.no'],
+  orcids: [],
+  orgunitids: [],
+  handles: [],
+  birthDate: '1941-04-25 00:00:00.000',
+};
+
+const mockSingleAuthorityResponse: Authority = {
+  name: 'Test User',
+  systemControlNumber: '901790000000',
+  feideids: ['tu@unit.no'],
+  orcids: [],
+  orgunitids: [],
+  handles: [],
+  birthDate: '1941-04-25 00:00:00.000',
 };
 
 const mockSingleAuthorityResponseWithOrcid: Authority = {
@@ -32,22 +59,22 @@ const mockSingleAuthorityResponseWithOrcid: Authority = {
   birthDate: '1941-04-25 00:00:00.000',
 };
 
-const mockSingleAuthorityResponse: Authority = {
+const mockSingleAuthorityResponseWithFirstOrgunitid: Authority = {
   name: 'Test User',
   systemControlNumber: '901790000000',
-  feideids: ['tu@unit.no'],
-  orcids: [],
-  orgunitids: ['220.0.0.0'],
+  feideids: ['osteloff@unit.no'],
+  orcids: ['0000-0001-2345-6789'],
+  orgunitids: ['194.0.0.0'],
   handles: [],
   birthDate: '1941-04-25 00:00:00.000',
 };
 
-const mockSingleAuthorityResponseWithFeide: Authority = {
+const mockSingleAuthorityResponseWithSecondOrgunitid: Authority = {
   name: 'Test User',
   systemControlNumber: '901790000000',
-  feideids: ['tu@unit.no'],
-  orcids: [],
-  orgunitids: [],
+  feideids: ['osteloff@unit.no'],
+  orcids: ['0000-0001-2345-6789'],
+  orgunitids: ['194.0.0.0', '194.16.0.0'],
   handles: [],
   birthDate: '1941-04-25 00:00:00.000',
 };
@@ -86,6 +113,23 @@ export const interceptRequestsOnMock = () => {
   mock
     .onPut(new RegExp(`${API_URL}${AuthorityApiPaths.AUTHORITY}/*`))
     .replyOnce(200, mockSingleAuthorityResponseWithOrcid);
+
+  mock
+    .onPut(new RegExp(`${API_URL}${AuthorityApiPaths.AUTHORITY}/*`))
+    .replyOnce(200, mockSingleAuthorityResponseWithFirstOrgunitid);
+
+  mock
+    .onPut(new RegExp(`${API_URL}${AuthorityApiPaths.AUTHORITY}/*`))
+    .replyOnce(200, mockSingleAuthorityResponseWithSecondOrgunitid);
+
+  // Institution Registry
+  mock.onGet(new RegExp(`${API_URL}${InstituionApiPaths.INSTITUTION}\\?name=*`)).reply(200, mockInstitutionResponse);
+  mock
+    .onGet(new RegExp(`${API_URL}${InstituionApiPaths.UNIT}/${TOP_INSTITUTION_REGEXP}`))
+    .reply(200, mockFacultyResponse);
+  mock
+    .onGet(new RegExp(`${API_URL}${InstituionApiPaths.UNIT}/${SUBUNIT_INSTITUTION_REGEXP}`))
+    .reply(200, mockInstituteResponse);
 
   mock.onAny().reply(function(config) {
     throw new Error('Could not find mock for ' + config.url);
