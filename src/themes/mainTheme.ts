@@ -19,6 +19,7 @@ enum Colors {
   Secondary = '#96c3ec',
   Background = '#fff',
   Box = '#eeeeff',
+  SecondaryBox = '#ccc',
   Link = '#6558f5',
   Separator = '#3d4349',
   PrimaryText = 'rgba(0, 0, 0, 0.87)',
@@ -47,7 +48,9 @@ export default createMuiTheme({
       main: Colors.Secondary,
     },
     separator: { main: Colors.Separator },
-    box: { main: Colors.Box },
+    box: {
+      main: Colors.Box,
+    },
     danger: { main: Colors.Danger },
     text: {
       primary: Colors.PrimaryText,

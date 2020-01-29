@@ -7,7 +7,7 @@ const StyledSelectedInstitution = styled.div`
   margin-top: 0.5rem;
   padding-top: 0.5rem;
   padding-left: 0.5rem;
-  background-color: ${({ theme }) => theme.palette.text.disabled};
+  background-color: ${({ theme }) => theme.palette.background.default};
   height: 5rem;
 `;
 
