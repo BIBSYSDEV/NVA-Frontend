@@ -8,11 +8,10 @@ const StyledSubmissionContentText = styled.div`
 
 interface SubmissionContentTextProps {
   children: any;
-  dataTestId?: string;
 }
 
-const SubmissionContentText: React.FC<SubmissionContentTextProps> = ({ children, dataTestId }) => {
-  return <StyledSubmissionContentText data-testid={dataTestId}>{children}</StyledSubmissionContentText>;
+const SubmissionContentText: React.FC<SubmissionContentTextProps> = ({ children }) => {
+  return <StyledSubmissionContentText>{children}</StyledSubmissionContentText>;
 };
 
 export default SubmissionContentText;
