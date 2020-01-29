@@ -4,7 +4,7 @@ import '@uppy/dashboard/dist/style.css';
 
 import { Dashboard } from '@uppy/react';
 import { useTranslation } from 'react-i18next';
-import { File, emptyFile } from '../../../types/license.types';
+import { File, UppyFileResponse, emptyFile } from '../../../types/license.types';
 
 interface FileUploaderProps {
   addFile: (file: File) => void;
@@ -20,7 +20,7 @@ const FileUploader: React.FC<FileUploaderProps> = ({ addFile, uppy }) => {
 
   useEffect(() => {
     if (uppy && !listenerAdded) {
-      uppy.on('upload-success', (file: File, response: any) => {
+      uppy.on('upload-success', (file: File, response: UppyFileResponse) => {
         addFile({
           ...emptyFile,
           ...file,

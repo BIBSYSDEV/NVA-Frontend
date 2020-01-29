@@ -15,6 +15,10 @@ export default interface License {
   time_created: Date;
 }
 
+export interface UppyFileResponse {
+  uploadURL: string;
+}
+
 export interface File {
   id: string;
   name: string;
@@ -23,7 +27,7 @@ export interface File {
     size: number;
   };
   administrativeContract?: boolean;
-  acceptedVersion?: boolean;
+  isPublished?: boolean | null;
   embargoDate?: Date | null;
   license?: License | null;
 }
@@ -36,7 +40,7 @@ export const emptyFile: File = {
     size: 0,
   },
   administrativeContract: false,
-  acceptedVersion: true,
+  isPublished: null,
   embargoDate: null,
   license: null,
 };

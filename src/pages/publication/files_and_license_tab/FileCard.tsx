@@ -10,7 +10,6 @@ import {
   FormLabel,
   RadioGroup,
   Radio,
-  Box as MuiBox,
   Select,
   InputLabel,
 } from '@material-ui/core';
@@ -34,6 +33,11 @@ const StyledFormControl = styled(FormControl)`
 
 const StyledLicenseFormControl = styled(StyledFormControl)`
   margin-top: 2rem;
+`;
+
+const StyledFileInfo = styled.div`
+  display: flex;
+  justify-content: space-between;
 `;
 
 interface FileCardProps {
@@ -69,26 +73,26 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, updateFile }) => 
       />
 
       {!file.administrativeContract && (
-        <MuiBox display="flex" justifyContent="space-between">
+        <StyledFileInfo>
           <StyledFormControl>
             <FormLabel component="legend">{t('files_and_license.select_version')}</FormLabel>
             <RadioGroup
               aria-label="version"
-              value={file.acceptedVersion}
+              value={file.isPublished}
               onChange={event =>
                 updateFile({
                   ...file,
-                  acceptedVersion: event.target.value === 'accepted',
+                  isPublished: event.target.value === 'published',
                 })
               }>
               <FormControlLabel
                 value="accepted"
-                control={<Radio color="primary" checked={file.acceptedVersion} />}
+                control={<Radio color="primary" checked={file.isPublished !== null && !file.isPublished} />}
                 label={t('files_and_license.accepted_version')}
               />
               <FormControlLabel
                 value="published"
-                control={<Radio color="primary" checked={!file.acceptedVersion} />}
+                control={<Radio color="primary" checked={!!file.isPublished} />}
                 label={t('files_and_license.published_version')}
               />
             </RadioGroup>
@@ -115,7 +119,7 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, updateFile }) => 
             <InputLabel>{t('files_and_license.license')}</InputLabel>
             <Select value={''} onChange={() => {}} labelWidth={50}></Select>
           </StyledLicenseFormControl>
-        </MuiBox>
+        </StyledFileInfo>
       )}
 
       <StyledActions>
