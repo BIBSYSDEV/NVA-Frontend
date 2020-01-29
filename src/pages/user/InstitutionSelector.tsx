@@ -17,10 +17,10 @@ const StyledInstitutionSelector = styled.div`
 `;
 
 interface InstitutionSelectorProps {
-  setSelectedCrustinUnitId: (value: string) => void;
+  setSelectedCristinUnitId: (value: string) => void;
 }
 
-const InstitutionSelector: React.FC<InstitutionSelectorProps> = ({ setSelectedCrustinUnitId }) => {
+const InstitutionSelector: React.FC<InstitutionSelectorProps> = ({ setSelectedCristinUnitId }) => {
   const { t } = useTranslation('profile');
   const [faculties, setFaculties] = useState<InstitutionSubUnit[]>([]);
   const [institutes, setInstitutes] = useState<InstitutionSubUnit[]>([]);
@@ -28,11 +28,13 @@ const InstitutionSelector: React.FC<InstitutionSelectorProps> = ({ setSelectedCr
   const [selectedFaculty, setSelectedFaculty] = useState(emptyInstitutionSubUnit);
   const [selectedInstitute, setSelectedInstitute] = useState(emptyInstitutionSubUnit);
 
-  const getSubUnits = async (searchValue: string, setValueFunction: (value: any) => void) => {
-    const response = await getInstitutionSubUnit(searchValue);
-    if (response) {
-      setValueFunction(response);
-    }
+  const getSubUnits = async (searchValue: string, setStateFunction: (value: InstitutionSubUnit[]) => void) => {
+    try {
+      const response = await getInstitutionSubUnit(searchValue);
+      if (response) {
+        setStateFunction(response);
+      }
+    } catch {}
   };
 
   const resetInstitute = () => {
@@ -47,14 +49,14 @@ const InstitutionSelector: React.FC<InstitutionSelectorProps> = ({ setSelectedCr
   };
 
   const searchFaculties = (institution: Institution) => {
-    setSelectedCrustinUnitId(institution.cristinUnitId);
+    setSelectedCristinUnitId(institution.cristinUnitId);
     setSelectedInstituion(institution ?? selectedInstitution);
     resetFaculty();
     getSubUnits(institution.cristinUnitId, setFaculties);
   };
 
   const searchInstitutes = (faculty: InstitutionSubUnit) => {
-    setSelectedCrustinUnitId(faculty.cristinUnitId);
+    setSelectedCristinUnitId(faculty.cristinUnitId);
     setSelectedFaculty(faculty);
     resetInstitute();
     getSubUnits(faculty.cristinUnitId, setInstitutes);
@@ -62,7 +64,7 @@ const InstitutionSelector: React.FC<InstitutionSelectorProps> = ({ setSelectedCr
 
   const setInstitute = (subUnit: InstitutionSubUnit) => {
     setSelectedInstitute(subUnit);
-    setSelectedCrustinUnitId(subUnit.cristinUnitId);
+    setSelectedCristinUnitId(subUnit.cristinUnitId);
   };
 
   return (
@@ -82,13 +84,13 @@ const InstitutionSelector: React.FC<InstitutionSelectorProps> = ({ setSelectedCr
       <SubUnitSelect
         searchResults={faculties}
         selectedValue={selectedFaculty}
-        valueFunction={searchInstitutes}
+        findSubUnitFunction={searchInstitutes}
         label={t('organization.faculty')}
       />
       <SubUnitSelect
         searchResults={institutes}
         selectedValue={selectedInstitute}
-        valueFunction={setInstitute}
+        findSubUnitFunction={setInstitute}
         label={t('organization.institute')}
       />
     </StyledInstitutionSelector>
