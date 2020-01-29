@@ -1,6 +1,6 @@
-import React from 'react';
-
+import React, { useContext } from 'react';
 import { Tab } from '@material-ui/core';
+import { ThemeContext } from 'styled-components';
 
 interface LinkTabProps {
   error?: boolean;
@@ -9,7 +9,9 @@ interface LinkTabProps {
 }
 
 const LinkTab: React.FC<LinkTabProps> = ({ error, ...rest }) => {
-  const styledTab = error ? { color: '#ff5555' } : undefined;
+  const themeContext = useContext(ThemeContext);
+  const styledTab = error ? { color: themeContext.palette.error.main } : undefined;
+
   return (
     <Tab
       component="a"

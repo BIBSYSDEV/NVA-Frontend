@@ -26,7 +26,7 @@ enum Colors {
   ExpandedPanel = '#b2acfa',
   TabBackground = '#f3c19d',
   Disabled = '#bbb',
-  Danger = '#ff0000',
+  Danger = '#ff5555',
 }
 
 export default createMuiTheme({
