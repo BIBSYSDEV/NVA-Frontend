@@ -26,15 +26,22 @@
     "tags_helper": "Trykk Enter for å legge til nøkkelord",
     "year_only": "Kun årstall"
   },
-  "files_and_license": {
-    "browse": "velg filer",
-    "drag_files": "Dra filer hit eller",
-    "files": "Filer",
-    "upload_files": "Last opp filer"
-  },
   "feedback": {
     "invalid_url": "Ugyldig lenke",
     "required_field": "Påkrevd felt"
+  },
+  "files_and_license": {
+    "accepted_version": "Akseptert versjon",
+    "administrative_contract": "Administrativ avtale",
+    "browse": "velg filer",
+    "drag_files": "Dra filer hit eller",
+    "embargo_date": "Dato for utsatt publisering i arkivet",
+    "files": "Filer",
+    "license": "Lisens",
+    "published_version": "Publisert versjon",
+    "select_version": "Velg versjon",
+    "upload_files": "Last opp filer",
+    "uploaded_size": "Lastet opp {{size}} kB"
   },
   "heading": {
     "contributors": "Bidragsytere",

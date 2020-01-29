@@ -71,7 +71,7 @@ const InstitutionDialog: React.FC<InstitutionDialogProps> = ({ user, title, data
       <Dialog open={open} onClose={handleConfirm} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">{title}</DialogTitle>
         <DialogContent>
-          <InstitutionSelector setSelectedCrustinUnitId={setSelectedCristinUnitId} />
+          <InstitutionSelector setSelectedCristinUnitId={setSelectedCristinUnitId} />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCancel} variant="contained" color="primary">

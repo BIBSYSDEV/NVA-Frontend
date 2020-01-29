@@ -19,13 +19,13 @@ const StyledFormControl = styled(FormControl)`
 interface SubUnitSelectProps {
   searchResults: InstitutionSubUnit[];
   selectedValue: InstitutionSubUnit;
-  valueFunction: (value: InstitutionSubUnit) => void;
+  findSubUnitFunction: (value: InstitutionSubUnit) => void;
   label: string;
 }
 
-const SubUnitSelect: React.FC<SubUnitSelectProps> = ({ searchResults, selectedValue, valueFunction, label }) => {
+const SubUnitSelect: React.FC<SubUnitSelectProps> = ({ searchResults, selectedValue, findSubUnitFunction, label }) => {
   const selectSubUnit = (cristinUnitId: string) => {
-    valueFunction(searchResults.filter(subUnit => subUnit.cristinUnitId === cristinUnitId)[0]);
+    findSubUnitFunction(searchResults.filter(subUnit => subUnit.cristinUnitId === cristinUnitId)[0]);
   };
 
   return (

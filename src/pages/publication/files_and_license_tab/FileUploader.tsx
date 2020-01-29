@@ -1,38 +1,43 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import '@uppy/core/dist/style.css';
 import '@uppy/dashboard/dist/style.css';
 
-import Tus from '@uppy/tus';
-import Uppy from '@uppy/core';
 import { Dashboard } from '@uppy/react';
 import { useTranslation } from 'react-i18next';
-
-const uppy = Uppy({
-  autoProceed: true,
-}).use(Tus, {
-  endpoint: 'https://master.tus.io/files/',
-});
+import { File, UppyFileResponse, emptyFile } from '../../../types/license.types';
 
 interface FileUploaderProps {
-  addFile: (file: any) => void;
+  addFile: (file: File) => void;
+  uppy: any;
 }
 
 const uploaderMaxWidthPx = 10000;
 const uploaderMaxHeightPx = 200;
+let listenerAdded = false; // Avoid adding upload-success listener multiple times
 
-const FileUploader: React.FC<FileUploaderProps> = ({ addFile }) => {
+const FileUploader: React.FC<FileUploaderProps> = ({ addFile, uppy }) => {
   const { t } = useTranslation('publication');
 
-  uppy.on('upload-success', uploadedFile => {
-    addFile(uploadedFile);
-  });
+  useEffect(() => {
+    if (uppy && !listenerAdded) {
+      uppy.on('upload-success', (file: File, response: UppyFileResponse) => {
+        addFile({
+          ...emptyFile,
+          ...file,
+          uploadUrl: response?.uploadURL,
+        });
+      });
+      listenerAdded = true;
+    }
+  }, [addFile, uppy]);
 
-  return (
+  return uppy ? (
     <Dashboard
       uppy={uppy}
       proudlyDisplayPoweredByUppy={false}
       showSelectedFiles={false}
       showProgressDetails
+      hideProgressAfterFinish
       width={uploaderMaxWidthPx}
       height={uploaderMaxHeightPx}
       locale={{
@@ -42,7 +47,7 @@ const FileUploader: React.FC<FileUploaderProps> = ({ addFile }) => {
         },
       }}
     />
-  );
+  ) : null;
 };
 
 export default FileUploader;

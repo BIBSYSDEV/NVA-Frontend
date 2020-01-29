@@ -14,3 +14,33 @@ export default interface License {
   url_image: string;
   time_created: Date;
 }
+
+export interface UppyFileResponse {
+  uploadURL: string;
+}
+
+export interface File {
+  id: string;
+  name: string;
+  uploadUrl: string;
+  data: {
+    size: number;
+  };
+  administrativeContract?: boolean;
+  isPublished?: boolean | null;
+  embargoDate?: Date | null;
+  license?: License | null;
+}
+
+export const emptyFile: File = {
+  id: '',
+  name: '',
+  uploadUrl: '',
+  data: {
+    size: 0,
+  },
+  administrativeContract: false,
+  isPublished: null,
+  embargoDate: null,
+  license: null,
+};

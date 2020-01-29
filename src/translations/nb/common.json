@@ -12,10 +12,11 @@
   "next": "Neste",
   "no_hits": "Ingen treff",
   "orcid": "ORCID",
+  "picture": "Bilde",
+  "preview": "Forhåndsvis",
   "remove": "Fjern",
   "save": "Lagre",
   "search": "Søk",
   "title": "Tittel",
-  "type": "Type",
-  "picture": "Bilde"
+  "type": "Type"
 }
