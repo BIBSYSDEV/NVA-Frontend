@@ -7,14 +7,14 @@ import { FormikProps, useFormikContext } from 'formik';
 import { Publication } from '../../types/publication.types';
 import { Button, Typography } from '@material-ui/core';
 import styled from 'styled-components';
-import SubmissionBookPresentation from './submission_tab/submission_book_presentation';
-import SubmissionDegreePresentation from './submission_tab/submission_degree_presentation';
-import SubmissionChapterPresentation from './submission_tab/submission_chapter_presentation';
-import SubmissionReportPresentation from './submission_tab/submission_report_presentation';
-import SubmissionJournalPublicationPresentation from './submission_tab/submission_journal_publication_presentation';
-import SubmissionDescriptionPresentation from './submission_tab/submission_description_presentation';
-import SubmissionFilesAndLicensesPresentation from './submission_tab/submission_files_licenses_presentation';
-import SubmissionContributorsPresentation from './submission_tab/submission_contributors_presentation';
+import SubmissionBook from './submission_tab/submission_book';
+import SubmissionDegree from './submission_tab/submission_degree';
+import SubmissionChapter from './submission_tab/submission_chapter';
+import SubmissionReport from './submission_tab/submission_report';
+import SubmissionJournalPublication from './submission_tab/submission_journal';
+import SubmissionDescription from './submission_tab/submission_description';
+import SubmissionFilesAndLicenses from './submission_tab/submission_files_licenses';
+import SubmissionContributors from './submission_tab/submission_contributors';
 import { ReferenceType } from '../../types/references.types';
 import SubmissionContentText from './submission_tab/submission_content_text';
 
@@ -34,20 +34,20 @@ const SubmissionPanel: React.FC = () => {
         <SubmissionContentText>{values.title.nb}</SubmissionContentText>
 
         <Typography variant="h2">{t('heading.description')}</Typography>
-        <SubmissionDescriptionPresentation />
+        <SubmissionDescription />
 
         <Typography variant="h2">{t('heading.references')}</Typography>
-        {values.reference.type === ReferenceType.BOOK && <SubmissionBookPresentation />}
-        {values.reference.type === ReferenceType.DEGREE && <SubmissionDegreePresentation />}
-        {values.reference.type === ReferenceType.CHAPTER && <SubmissionChapterPresentation />}
-        {values.reference.type === ReferenceType.REPORT && <SubmissionReportPresentation />}
-        {values.reference.type === ReferenceType.PUBLICATION_IN_JOURNAL && <SubmissionJournalPublicationPresentation />}
+        {values.reference.type === ReferenceType.BOOK && <SubmissionBook />}
+        {values.reference.type === ReferenceType.DEGREE && <SubmissionDegree />}
+        {values.reference.type === ReferenceType.CHAPTER && <SubmissionChapter />}
+        {values.reference.type === ReferenceType.REPORT && <SubmissionReport />}
+        {values.reference.type === ReferenceType.PUBLICATION_IN_JOURNAL && <SubmissionJournalPublication />}
 
         <Typography variant="h2">{t('heading.contributors')}</Typography>
-        <SubmissionContributorsPresentation />
+        <SubmissionContributors />
 
         <Typography variant="h2">{t('heading.files_and_license')}</Typography>
-        <SubmissionFilesAndLicensesPresentation />
+        <SubmissionFilesAndLicenses />
       </Box>
       <StyledPublishButton color="primary" variant="contained">
         {t('Publish')}

@@ -5,17 +5,18 @@ import { FormikProps, useFormikContext } from 'formik';
 import { Publication } from '../../../types/publication.types';
 import SubmissionContentText from './submission_content_text';
 
-const SubmissionFilesAndLicensesPresentation: React.FC = () => {
+const SubmissionContributors: React.FC = () => {
   const { t } = useTranslation('publication');
   const { values }: FormikProps<Publication> = useFormikContext();
 
   return (
     <>
-      <LabelContentLine label={t('files_and_license.files')}>
-        {values.files.map(file => {
+      <LabelContentLine label={t('heading.contributors')}>
+        {values.contributors.map(contributor => {
           return (
             <SubmissionContentText>
-              {file.title}({file.license})
+              {contributor.name}
+              {contributor.institution?.name && `(${contributor.institution.name})`})
             </SubmissionContentText>
           );
         })}
@@ -24,4 +25,4 @@ const SubmissionFilesAndLicensesPresentation: React.FC = () => {
   );
 };
 
-export default SubmissionFilesAndLicensesPresentation;
+export default SubmissionContributors;

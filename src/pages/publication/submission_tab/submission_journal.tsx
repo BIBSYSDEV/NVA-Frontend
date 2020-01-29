@@ -5,7 +5,7 @@ import { FormikProps, useFormikContext } from 'formik';
 import { Publication } from '../../../types/publication.types';
 import { Typography } from '@material-ui/core';
 
-const SubmissionJournalPublicationPresentation: React.FC = () => {
+const SubmissionJournalPublication: React.FC = () => {
   const { t } = useTranslation('publication');
   const { values }: FormikProps<Publication> = useFormikContext();
 
@@ -35,4 +35,4 @@ const SubmissionJournalPublicationPresentation: React.FC = () => {
   );
 };
 
-export default SubmissionJournalPublicationPresentation;
+export default SubmissionJournalPublication;
