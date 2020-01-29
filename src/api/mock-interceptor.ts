@@ -29,7 +29,7 @@ const mockOrcidResponse: OrcidResponse = {
   given_name: 'Sofia',
 };
 
-const mockSingleAuthorityResponseWithFeide: Authority = {
+export const mockSingleAuthorityResponseWithFeide: Authority = {
   name: 'Test User',
   systemControlNumber: '901790000000',
   feideids: ['tu@unit.no'],
