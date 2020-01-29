@@ -7,8 +7,8 @@ describe('Publication: Description', () => {
   it('The user should be able to add and remove projects', () => {
     cy.mocklogin();
 
-    const title = 'fjksdjf sjf skfj sdkfj';
-    const description = 'fjsdjfksdljk skdjf';
+    const title = 'Sample title';
+    const description = 'Sample description.';
 
     const isbn = '978-3-16-148410-0';
 
