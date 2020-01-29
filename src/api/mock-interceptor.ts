@@ -63,7 +63,7 @@ export const interceptRequestsOnMock = () => {
   mock.onPost(new RegExp(`${PublicationsApiPaths.CREATE_WITH_DOI}`)).reply(200, mockPublications[0]);
 
   // lookup DOI
-  mock.onGet(new RegExp(`${PublicationsApiPaths.DOI_LOOKUP}/*`)).reply(200, mockDoiLookupResponse);
+  mock.onPost(new RegExp(`${PublicationsApiPaths.DOI_LOOKUP}/*`)).reply(200, mockDoiLookupResponse);
 
   // PROJECT
   mock.onGet(new RegExp(`${ProjectsApiPaths.PROJECTS}/*`)).reply(200, mockProjects);
