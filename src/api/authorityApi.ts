@@ -38,25 +38,7 @@ export const updateFeideForAuthority = async (feideid: string, systemControlNumb
   }
 
   const url = `${AuthorityApiPaths.AUTHORITY}/${systemControlNumber}`;
-  // remove when Authorization headers are set for all requests
-  const idToken = await getIdToken();
-  const headers = {
-    Authorization: `Bearer ${idToken}`,
-  };
-
-  try {
-    const response = await Axios.put(url, { feideid }, { headers });
-
-    if (response.status === StatusCode.OK) {
-      return response.data;
-    } else if (response.status === StatusCode.NO_CONTENT) {
-      return;
-    } else {
-      dispatch(addNotification(i18n.t('feedback:error.update_authority'), 'error'));
-    }
-  } catch {
-    dispatch(addNotification(i18n.t('feedback:error.update_authority'), 'error'));
-  }
+  return await updateAuthorityAndHandleErrors(url, { feideid });
 };
 
 export const updateOrcidForAuthority = async (orcid: string, systemControlNumber: string, dispatch: Dispatch) => {
@@ -65,25 +47,7 @@ export const updateOrcidForAuthority = async (orcid: string, systemControlNumber
   }
 
   const url = `${AuthorityApiPaths.AUTHORITY}/${systemControlNumber}`;
-  // remove when Authorization headers are set for all requests
-  const idToken = await getIdToken();
-  const headers = {
-    Authorization: `Bearer ${idToken}`,
-  };
-
-  try {
-    const response = await Axios.put(url, { orcid }, { headers });
-
-    if (response.status === StatusCode.OK) {
-      return response.data;
-    } else if (response.status === StatusCode.NO_CONTENT) {
-      return;
-    } else {
-      dispatch(addNotification(i18n.t('feedback:error.update_authority'), 'error'));
-    }
-  } catch {
-    dispatch(addNotification(i18n.t('feedback:error.update_authority'), 'error'));
-  }
+  return await updateAuthorityAndHandleErrors(url, { orcid });
 };
 
 export const updateInstitutionForAuthority = async (orgunitid: string, systemControlNumber: string) => {
@@ -92,22 +56,55 @@ export const updateInstitutionForAuthority = async (orgunitid: string, systemCon
   }
 
   const url = `${AuthorityApiPaths.AUTHORITY}/${systemControlNumber}`;
+  return await updateAuthorityAndHandleErrors(url, { orgunitid });
+};
+
+export const createAuthority = async (name: string) => {
+  const url = `${AuthorityApiPaths.AUTHORITY}`;
+
   // remove when Authorization headers are set for all requests
   const idToken = await getIdToken();
   const headers = {
     Authorization: `Bearer ${idToken}`,
   };
-
   try {
-    const response = await Axios.put(url, { orgunitid }, { headers });
+    const response = await Axios.post(url, { name }, { headers });
     if (response.status === StatusCode.OK) {
       return response.data;
     } else if (response.status === StatusCode.NO_CONTENT) {
       return;
     } else {
-      return { error: i18n.t('feedback:error.update_authority') };
+      return {
+        error: i18n.t('feedback:error.create_authority'),
+      };
     }
   } catch (error) {
-    return { error: i18n.t('feedback:error.update_authority') };
+    return {
+      error: i18n.t('feedback:error.create_authority'),
+    };
+  }
+};
+
+const updateAuthorityAndHandleErrors = async (url: string, body: any) => {
+  // remove when Authorization headers are set for all requests
+  const idToken = await getIdToken();
+  const headers = {
+    Authorization: `Bearer ${idToken}`,
+  };
+  try {
+    const response = await Axios.put(url, body, { headers });
+    if (response.status === StatusCode.OK) {
+      return response.data;
+    } else if (response.status === StatusCode.NO_CONTENT) {
+      return;
+    } else {
+      return {
+        error: i18n.t('feedback:error.update_authority'),
+      };
+    }
+  } catch (error) {
+    return {
+      error: i18n.t('feedback:error.update_authority'),
+    };
   }
 };

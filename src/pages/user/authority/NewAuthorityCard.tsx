@@ -41,12 +41,20 @@ const NewAuthorityCard: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const { t } = useTranslation('profile');
 
-  const handleCreateAuthor = () => {
-    // make ARP request here
+  const handleCreateAuthority = async () => {
+    // NOT YET IMPLEMENTED IN BACKEND
+    // setLoading(true);
+    // const authority = await createAuthority(user.name);
+    // if (authority) {
+    //   dispatch(setAuthorityData(authority));
+    //   setLoading(false);
+    // }
+    // if (USE_MOCK_DATA) {
     setTimeout(() => {
       dispatch(setAuthorityData(mockSingleAuthorityResponseWithFeide));
     }, [2000]);
     setLoading(true);
+    // }
   };
 
   return (
@@ -65,7 +73,7 @@ const NewAuthorityCard: React.FC = () => {
             color="primary"
             variant="contained"
             size="large"
-            onClick={handleCreateAuthor}>
+            onClick={handleCreateAuthority}>
             {t('authority.create_authority')}
           </StyledButton>
         </>
