@@ -22,9 +22,10 @@ const StyledInstitutionDialog = styled.div`
 interface InstitutionDialogProps {
   user: User;
   title: string;
+  dataTestId: string;
 }
 
-const InstitutionDialog: React.FC<InstitutionDialogProps> = ({ user, title }) => {
+const InstitutionDialog: React.FC<InstitutionDialogProps> = ({ user, title, dataTestId }) => {
   const [open, setOpen] = useState(false);
   const [selectedCristinUnitId, setSelectedCristinUnitId] = useState('');
   const dispatch = useDispatch();
@@ -63,13 +64,14 @@ const InstitutionDialog: React.FC<InstitutionDialogProps> = ({ user, title }) =>
         variant="contained"
         color="primary"
         onClick={handleClickOpen}
-        disabled={!user.authority?.systemControlNumber}>
+        disabled={!user.authority?.systemControlNumber}
+        data-testid={dataTestId}>
         {t('common:add')}
       </Button>
       <Dialog open={open} onClose={handleConfirm} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">{title}</DialogTitle>
         <DialogContent>
-          <InstitutionSelector valueFunction={setSelectedCristinUnitId} />
+          <InstitutionSelector valueFunction={setSelectedCristinUnitId} data-testid="autosearch-institution" />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCancel} variant="contained" color="primary">
