@@ -93,7 +93,7 @@ const StyledContributor = {
   `,
 
   AuthorsButton: styled(Button)`
-    color: ${({ theme }) => theme.palette.Link};
+    color: blue;
     text-decoration: underline;
   `,
 };
