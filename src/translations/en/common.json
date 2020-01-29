@@ -9,10 +9,11 @@
   "next": "Next",
   "no_hits": "No hits",
   "orcid": "ORCID",
+  "picture": "Picture",
+  "preview": "Preview",
   "remove": "Remove",
   "save": "Save",
   "search": "Search",
   "title": "Title",
-  "type": "Type",
-  "picture": "Picture"
+  "type": "Type"
 }
