@@ -8,8 +8,13 @@ import { Button } from '@material-ui/core';
 import { ORCID_SIGN_IN_URL, USE_MOCK_DATA } from '../../utils/constants';
 
 const StyledButtonContainer = styled.div`
-  margin: 3rem 0;
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  margin: 1rem 0;
+`;
+
+const StyledButton = styled(Button)`
+  width: 22rem;
 `;
 
 const StyledSubHeading = styled.div`
@@ -47,7 +52,7 @@ const OrcidModal: FC = () => {
         <p>{t('orcid.description_what_is_orcid')}</p>
       </StyledOrcidDescription>
       <StyledButtonContainer>
-        <Button
+        <StyledButton
           data-testid="connect-to-orcid"
           onClick={() => {
             openORCID();
@@ -55,7 +60,7 @@ const OrcidModal: FC = () => {
           color="primary"
           variant="contained">
           {t('orcid.create_or_connect')}
-        </Button>
+        </StyledButton>
       </StyledButtonContainer>
     </>
   );

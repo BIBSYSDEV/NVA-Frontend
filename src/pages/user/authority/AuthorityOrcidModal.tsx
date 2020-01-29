@@ -21,6 +21,10 @@ const StyledSkipButtonContainer = styled.div`
   text-align: center;
 `;
 
+const StyledButton = styled(Button)`
+  width: 22rem;
+`;
+
 const AuthorityOrcidModal: FC = () => {
   const { t } = useTranslation('common');
   const user = useSelector((store: RootStore) => store.user);
@@ -70,9 +74,9 @@ const AuthorityOrcidModal: FC = () => {
           headingText={t('profile:orcid.create_or_connect')}>
           <OrcidModal />
           <StyledSkipButtonContainer>
-            <Button color="secondary" variant="outlined" onClick={() => setOpenOrcidModal(false)}>
+            <StyledButton color="secondary" variant="outlined" onClick={() => setOpenOrcidModal(false)}>
               {t('profile:orcid.skip_this_step')}
-            </Button>
+            </StyledButton>
           </StyledSkipButtonContainer>
         </Modal>
       )}
