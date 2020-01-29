@@ -24,9 +24,10 @@ enum FilesFieldNames {
 
 interface FilesAndLicensePanelProps {
   goToNextTab: (event: React.MouseEvent<any>) => void;
+  uppy: any;
 }
 
-const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab }) => {
+const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab, uppy }) => {
   const { t } = useTranslation('publication');
   const { values }: FormikProps<Publication> = useFormikContext();
   const uploadedFiles = values[FilesFieldNames.FILES];
@@ -39,6 +40,7 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab
             <h1>{t('files_and_license.upload_files')}</h1>
             <Box>
               <FileUploader
+                uppy={uppy}
                 addFile={file => {
                   push(file);
                 }}
