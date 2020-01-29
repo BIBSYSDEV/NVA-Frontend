@@ -25,9 +25,9 @@ const SubmissionDescription: React.FC = () => {
         {values.publicationDate.day && `-${values.publicationDate.day}`}
       </LabelContentLine>
       <LabelContentLine label={t('description.project_association')}>
-        {values.projects.map(project => {
-          return <SubmissionContentText>{project.titles?.[0]?.title}</SubmissionContentText>;
-        })}
+        {values.projects.map(project => (
+          <SubmissionContentText key={project.cristinProjectId}>{project.titles?.[0]?.title}</SubmissionContentText>
+        ))}
       </LabelContentLine>
     </>
   );
