@@ -18,7 +18,7 @@ import UserLanguage from './UserLanguage';
 import UserOrcid from './UserOrcid';
 import UserRoles from './UserRoles';
 import InstitutionDialog from './InstitutionDialog';
-import { InstitutionPresentation } from './../../types/institution.types';
+import { InstitutionUnit } from './../../types/institution.types';
 import InstitutionPresentationCard from './InstitutionPresentation';
 
 const StyledUserPage = styled.div`
@@ -52,10 +52,10 @@ const User: React.FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const [institutionPresentations, setInstitutionPresentations] = useState<InstitutionPresentation[]>([]);
-
   const hasHandles = user.authority?.handles?.length > 0;
   const hasFeide = user.authority?.feideids?.length > 0;
+
+  const [institutionPresentations, setInstitutionPresentations] = useState<InstitutionUnit[]>([]);
 
   useEffect(() => {
     const orcidAccessToken = new URLSearchParams(location.hash.replace('#', '?')).get('access_token') || '';
@@ -81,9 +81,9 @@ const User: React.FC = () => {
     }
   }, [user.authority, dispatch, user.externalOrcid]);
 
-  const addInstitutionPresentation = (institutionPresentation: InstitutionPresentation) => {
-    setInstitutionPresentations([...institutionPresentations, institutionPresentation]);
-  };
+  useEffect(() => {
+    setInstitutionPresentations(user.institutionPresentations);
+  }, [user.institutionPresentations, dispatch]);
 
   return (
     <StyledUserPage>
@@ -117,9 +117,9 @@ const User: React.FC = () => {
         </UserCard>
         <UserOrcid />
         <UserCard headingLabel={t('heading.organizations')}>
-          <InstitutionDialog user={user} addInstitutionPresentation={addInstitutionPresentation} />
+          <InstitutionDialog user={user} title={t('organization.add_institution')} />
           <>
-            {institutionPresentations.map((presentation: InstitutionPresentation) => (
+            {institutionPresentations.map((presentation: InstitutionUnit) => (
               <InstitutionPresentationCard
                 key={presentation.cristinUnitId}
                 institution={presentation.institutionName}

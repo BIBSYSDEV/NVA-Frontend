@@ -45,13 +45,14 @@
   },
   "organization": {
     "add": "Add",
+    "add_institution": "Add institution",
+    "close": "Close",
     "edit": "Edit",
     "edit_institution": "Edit institution",
-    "institution": "Institution",
     "faculty": "",
     "institute": "",
+    "institution": "Institution",
     "save": "Save",
-    "close": "Close",
     "search_for_institution": "Search for institution"
   }
 }

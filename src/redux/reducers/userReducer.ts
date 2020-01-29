@@ -9,12 +9,13 @@ import {
   SET_USER_SUCCESS,
   UserActions,
 } from '../actions/userActions';
-import { ADD_INSTITUTION, InstitutionActions } from '../actions/institutionActions';
+import { ADD_INSTITUTION_PRESENTATION, InstitutionActions } from '../actions/institutionActions';
 
 export const userReducer = (
   state: User = emptyUser,
   action: UserActions | OrcidActions | AuthActions | InstitutionActions
 ) => {
+  console.log(action);
   switch (action.type) {
     case CLEAR_USER:
       return {
@@ -42,10 +43,11 @@ export const userReducer = (
         ...state,
         externalOrcid: action.orcid,
       };
-    case ADD_INSTITUTION:
+    case ADD_INSTITUTION_PRESENTATION:
+      console.log('add inst presentation');
       return {
         ...state,
-        authority: { ...state.authority, orgunitids: [...state.authority.orgunitids, action.orgunitid] },
+        institutionPresentations: [...state.institutionPresentations, action.institutionPresentation],
       };
     case SET_AUTHORITY_DATA:
       return {

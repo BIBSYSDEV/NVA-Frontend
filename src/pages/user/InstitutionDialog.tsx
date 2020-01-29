@@ -8,13 +8,12 @@ import { useTranslation } from 'react-i18next';
 import InstitutionSelector from './InstitutionSelector';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
-import { setInstitution } from '../../redux/actions/institutionActions';
 import { User } from '../../types/user.types';
 import { updateInstitutionForAuthority } from './../../api/authorityApi';
-import { InstitutionPresentation } from './../../types/institution.types';
 import { institutionLookup } from '../../api/institutionApi';
 import { setAuthorityData } from './../../redux/actions/userActions';
 import { addNotification } from '../../redux/actions/notificationActions';
+import { addInstitutionPresentation } from '../../redux/actions/institutionActions';
 
 const StyledInstitutionDialog = styled.div`
   width: 20rem;
@@ -22,10 +21,10 @@ const StyledInstitutionDialog = styled.div`
 
 interface InstitutionDialogProps {
   user: User;
-  addInstitutionPresentation: (institutionPresentation: InstitutionPresentation) => void;
+  title: string;
 }
 
-const InstitutionDialog: React.FC<InstitutionDialogProps> = ({ user, addInstitutionPresentation }) => {
+const InstitutionDialog: React.FC<InstitutionDialogProps> = ({ user, title }) => {
   const [open, setOpen] = useState(false);
   const [selectedCristinUnitId, setSelectedCristinUnitId] = useState('');
   const dispatch = useDispatch();
@@ -41,16 +40,18 @@ const InstitutionDialog: React.FC<InstitutionDialogProps> = ({ user, addInstitut
 
   const handleConfirm = async () => {
     if (!user.authority.orgunitids?.find(orgunitid => orgunitid === selectedCristinUnitId)) {
-      dispatch(setInstitution(selectedCristinUnitId));
       const updatedAuthority = await updateInstitutionForAuthority(
-        user.authority.systemControlNumber,
-        selectedCristinUnitId
+        selectedCristinUnitId,
+        user.authority.systemControlNumber
       );
       if (updatedAuthority?.error) {
         dispatch(addNotification(updatedAuthority.error));
-      } else {
+      } else if (updatedAuthority) {
         dispatch(setAuthorityData(updatedAuthority));
-        institutionLookup(selectedCristinUnitId).then(presentation => addInstitutionPresentation(presentation));
+        try {
+          const presentation = await institutionLookup(selectedCristinUnitId);
+          dispatch(addInstitutionPresentation(presentation));
+        } catch {}
       }
     }
     setOpen(false);
@@ -58,20 +59,24 @@ const InstitutionDialog: React.FC<InstitutionDialogProps> = ({ user, addInstitut
 
   return (
     <StyledInstitutionDialog>
-      <Button variant="contained" color="primary" onClick={handleClickOpen}>
-        {t('organization.add')}
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={handleClickOpen}
+        disabled={!user.authority?.systemControlNumber}>
+        {t('common:add')}
       </Button>
       <Dialog open={open} onClose={handleConfirm} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">{t('organization.edit_institution')}</DialogTitle>
+        <DialogTitle id="form-dialog-title">{title}</DialogTitle>
         <DialogContent>
           <InstitutionSelector valueFunction={setSelectedCristinUnitId} />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCancel} variant="contained" color="primary">
-            {t('organization.close')}
+            {t('common:cancel')}
           </Button>
           <Button onClick={handleConfirm} variant="contained" color="primary" disabled={!selectedCristinUnitId}>
-            {t('organization.save')}
+            {t('common:save')}
           </Button>
         </DialogActions>
       </Dialog>

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { InstitutionName } from './../../types/institution.types';
-import { selectNameByLanguage } from './../../utils/helpers';
+import { selectInstitutionNameByLanguage } from './../../utils/helpers';
 
 const StyledSelectedInstitution = styled.div`
   margin-top: 0.5rem;
@@ -28,9 +28,13 @@ interface InstitutionPresentationProps {
 const InstitutionPresentation: React.FC<InstitutionPresentationProps> = ({ institution, level1, level2 }) => {
   return (
     <StyledSelectedInstitution>
-      <StyledInstitutionTextMain>{selectNameByLanguage(institution)}</StyledInstitutionTextMain>
-      {level1 && level1.length > 0 && <StyledInstitutionText>{selectNameByLanguage(level1)}</StyledInstitutionText>}
-      {level2 && level2.length > 0 && <StyledInstitutionText>{selectNameByLanguage(level2)}</StyledInstitutionText>}
+      <StyledInstitutionTextMain>{selectInstitutionNameByLanguage(institution)}</StyledInstitutionTextMain>
+      {level1 && level1.length > 0 && (
+        <StyledInstitutionText>{selectInstitutionNameByLanguage(level1)}</StyledInstitutionText>
+      )}
+      {level2 && level2.length > 0 && (
+        <StyledInstitutionText>{selectInstitutionNameByLanguage(level2)}</StyledInstitutionText>
+      )}
     </StyledSelectedInstitution>
   );
 };

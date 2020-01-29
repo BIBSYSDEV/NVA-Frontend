@@ -7,6 +7,6 @@ export const getObjectValueByFieldName = (object: any, keyString: string) => {
 };
 
 // Method that retrieves the name of an institution/organization based on selected language
-export const selectNameByLanguage = (institutionName: InstitutionName[]) => {
+export const selectInstitutionNameByLanguage = (institutionName: InstitutionName[]) => {
   return institutionName.filter(unitName => unitName.language === i18n.language)[0]?.name ?? institutionName[0].name;
 };

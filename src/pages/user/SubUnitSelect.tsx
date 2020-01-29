@@ -1,6 +1,6 @@
 import React from 'react';
 import { InstitutionSubUnit } from '../../types/institution.types';
-import { selectNameByLanguage } from './../../utils/helpers';
+import { selectInstitutionNameByLanguage } from './../../utils/helpers';
 import { Select, MenuItem, FormControl, InputLabel } from '@material-ui/core';
 import styled from 'styled-components';
 
@@ -38,7 +38,7 @@ const SubUnitSelect: React.FC<SubUnitSelectProps> = ({ searchResults, selectedVa
           disabled={searchResults.length === 0}>
           {searchResults.map(subUnit => (
             <MenuItem key={subUnit.cristinUnitId} value={subUnit.cristinUnitId}>
-              {selectNameByLanguage(subUnit.unitNames)}
+              {selectInstitutionNameByLanguage(subUnit.unitNames)}
             </MenuItem>
           ))}
         </StyledSelect>

@@ -29,11 +29,11 @@ const mockOrcidResponse: OrcidResponse = {
   given_name: 'Sofia',
 };
 
-const mockSingleAuthorityResponseWithOrcid: Authority = {
+const mockSingleAuthorityResponseWithFeide: Authority = {
   name: 'Test User',
   systemControlNumber: '901790000000',
-  feideids: ['osteloff@unit.no'],
-  orcids: ['0000-0001-2345-6789'],
+  feideids: ['tu@unit.no'],
+  orcids: [],
   orgunitids: [],
   handles: [],
   birthDate: '1941-04-25 00:00:00.000',
@@ -44,20 +44,41 @@ const mockSingleAuthorityResponse: Authority = {
   systemControlNumber: '901790000000',
   feideids: ['tu@unit.no'],
   orcids: [],
-  orgunitids: ['220.0.0.0'],
-  handles: [],
-  birthDate: '1941-04-25 00:00:00.000',
-};
-
-const mockSingleAuthorityResponseWithFeide: Authority = {
-  name: 'Test User',
-  systemControlNumber: '901790000000',
-  feideids: ['tu@unit.no'],
-  orcids: [],
   orgunitids: [],
   handles: [],
   birthDate: '1941-04-25 00:00:00.000',
 };
+
+const mockSingleAuthorityResponseWithOrcid: Authority = {
+  name: 'Test User',
+  systemControlNumber: '901790000000',
+  feideids: ['osteloff@unit.no'],
+  orcids: ['0000-0001-2345-6789'],
+  orgunitids: [],
+  handles: [],
+  birthDate: '1941-04-25 00:00:00.000',
+};
+
+const mockSingleAuthorityResponseWithFirstOrgunitid: Authority = {
+  name: 'Test User',
+  systemControlNumber: '901790000000',
+  feideids: ['osteloff@unit.no'],
+  orcids: ['0000-0001-2345-6789'],
+  orgunitids: ['194.0.0.0'],
+  handles: [],
+  birthDate: '1941-04-25 00:00:00.000',
+};
+
+const mockSingleAuthorityResponseWithSecondOrgunitid: Authority = {
+  name: 'Test User',
+  systemControlNumber: '901790000000',
+  feideids: ['osteloff@unit.no'],
+  orcids: ['0000-0001-2345-6789'],
+  orgunitids: ['194.0.0.0', '194.16.0.0'],
+  handles: [],
+  birthDate: '1941-04-25 00:00:00.000',
+};
+
 // AXIOS INTERCEPTOR
 export const interceptRequestsOnMock = () => {
   const mock = new MockAdapter(Axios);
@@ -92,6 +113,14 @@ export const interceptRequestsOnMock = () => {
   mock
     .onPut(new RegExp(`${API_URL}${AuthorityApiPaths.AUTHORITY}/*`))
     .replyOnce(200, mockSingleAuthorityResponseWithOrcid);
+
+  mock
+    .onPut(new RegExp(`${API_URL}${AuthorityApiPaths.AUTHORITY}/*`))
+    .replyOnce(200, mockSingleAuthorityResponseWithFirstOrgunitid);
+
+  mock
+    .onPut(new RegExp(`${API_URL}${AuthorityApiPaths.AUTHORITY}/*`))
+    .replyOnce(200, mockSingleAuthorityResponseWithSecondOrgunitid);
 
   // Institution Registry
   mock.onGet(new RegExp(`${API_URL}${InstituionApiPaths.INSTITUTION}\\?name=*`)).reply(200, mockInstitutionResponse);
