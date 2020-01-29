@@ -29,12 +29,10 @@ const InstitutionSelector: React.FC<InstitutionSelectorProps> = ({ setSelectedCr
   const [selectedInstitute, setSelectedInstitute] = useState(emptyInstitutionSubUnit);
 
   const getSubUnits = async (searchValue: string, setStateFunction: (value: InstitutionSubUnit[]) => void) => {
-    try {
-      const response = await getInstitutionSubUnit(searchValue);
-      if (response) {
-        setStateFunction(response);
-      }
-    } catch {}
+    const response = await getInstitutionSubUnit(searchValue);
+    if (response) {
+      setStateFunction(response);
+    }
   };
 
   const resetInstitute = () => {
