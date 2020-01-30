@@ -27,13 +27,19 @@ interface InstitutionPresentationProps {
 
 const InstitutionPresentation: React.FC<InstitutionPresentationProps> = ({ institution, level1, level2 }) => {
   return (
-    <StyledSelectedInstitution>
-      <StyledInstitutionTextMain>{selectInstitutionNameByLanguage(institution)}</StyledInstitutionTextMain>
+    <StyledSelectedInstitution data-testid="institution-presentation">
+      <StyledInstitutionTextMain data-testid="institution-presentation-top">
+        {selectInstitutionNameByLanguage(institution)}
+      </StyledInstitutionTextMain>
       {level1 && level1.length > 0 && (
-        <StyledInstitutionText>{selectInstitutionNameByLanguage(level1)}</StyledInstitutionText>
+        <StyledInstitutionText data-testid="institution-presentation-subunit-1">
+          {selectInstitutionNameByLanguage(level1)}
+        </StyledInstitutionText>
       )}
       {level2 && level2.length > 0 && (
-        <StyledInstitutionText>{selectInstitutionNameByLanguage(level2)}</StyledInstitutionText>
+        <StyledInstitutionText data-testid="institution-presentation-subunit-2">
+          {selectInstitutionNameByLanguage(level2)}
+        </StyledInstitutionText>
       )}
     </StyledSelectedInstitution>
   );

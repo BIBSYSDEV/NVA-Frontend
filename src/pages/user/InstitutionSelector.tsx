@@ -84,12 +84,14 @@ const InstitutionSelector: React.FC<InstitutionSelectorProps> = ({ setSelectedCr
         selectedValue={selectedFaculty}
         findSubUnitFunction={searchInstitutes}
         label={t('organization.faculty')}
+        dataTestId="institution-set-subunit-1"
       />
       <SubUnitSelect
         searchResults={institutes}
         selectedValue={selectedInstitute}
         findSubUnitFunction={setInstitute}
         label={t('organization.institute')}
+        dataTestId="institution-set-subunit-2"
       />
     </StyledInstitutionSelector>
   );
