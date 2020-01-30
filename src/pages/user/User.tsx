@@ -113,7 +113,11 @@ const User: React.FC = () => {
         </UserCard>
         <UserOrcid />
         <UserCard headingLabel={t('heading.organizations')}>
-          <InstitutionDialog user={user} title={t('organization.add_institution')} />
+          <InstitutionDialog
+            user={user}
+            title={t('organization.add_institution')}
+            dataTestId="add-institution-dialog"
+          />
           <>
             {institutionPresentations.map((presentation: InstitutionUnit) => (
               <InstitutionPresentationCard
