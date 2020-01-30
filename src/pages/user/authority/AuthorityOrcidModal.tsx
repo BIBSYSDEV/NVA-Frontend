@@ -52,7 +52,7 @@ const AuthorityOrcidModal: FC = () => {
       {openAuthorityModal && (
         <Modal
           dataTestId="connect-author-modal"
-          disabledEscape
+          disableEscape
           ariaLabelledBy="connect-author-modal"
           headingText={t('profile:authority.connect_authority')}>
           <>

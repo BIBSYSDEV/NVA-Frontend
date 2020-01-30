@@ -57,13 +57,13 @@ const NewAuthorityCard: React.FC = () => {
     // setLoading(true);
     // const authority = await createAuthority(user.name);
     // if (authority) {
-    //   dispatch(setAuthorityData(authority));
     //   setLoading(false);
+    //   dispatch(setAuthorityData(authority));
     // }
     // if (USE_MOCK_DATA) {
     setTimeout(() => {
-      dispatch(setAuthorityData(mockSingleAuthorityResponseWithFeide));
       setLoading(false);
+      dispatch(setAuthorityData(mockSingleAuthorityResponseWithFeide));
     }, [2000]);
     setLoading(true);
     // }

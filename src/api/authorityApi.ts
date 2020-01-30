@@ -32,7 +32,7 @@ export const getAuthorities = async (name: string, dispatch: Dispatch) => {
   }
 };
 
-export const updateFeideForAuthority = async (feideid: string, systemControlNumber: string, dispatch: Dispatch) => {
+export const updateFeideForAuthority = async (feideid: string, systemControlNumber: string) => {
   if (!feideid) {
     return;
   }
@@ -41,7 +41,7 @@ export const updateFeideForAuthority = async (feideid: string, systemControlNumb
   return await updateAuthorityAndHandleErrors(url, { feideid });
 };
 
-export const updateOrcidForAuthority = async (orcid: string, systemControlNumber: string, dispatch: Dispatch) => {
+export const updateOrcidForAuthority = async (orcid: string, systemControlNumber: string) => {
   if (!orcid) {
     return;
   }
@@ -60,7 +60,7 @@ export const updateInstitutionForAuthority = async (orgunitid: string, systemCon
 };
 
 export const createAuthority = async (name: string) => {
-  const url = `${AuthorityApiPaths.AUTHORITY}`;
+  const url = AuthorityApiPaths.AUTHORITY;
 
   // remove when Authorization headers are set for all requests
   const idToken = await getIdToken();

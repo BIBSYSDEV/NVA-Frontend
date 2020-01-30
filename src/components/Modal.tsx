@@ -51,7 +51,7 @@ interface ModalProps {
   ariaLabelledBy?: string;
   children: any;
   dataTestId?: string;
-  disabledEscape?: boolean;
+  disableEscape?: boolean;
   headingIcon?: any;
   headingText?: string;
   onClose?: () => void;
@@ -63,7 +63,7 @@ const Modal: FC<ModalProps> = ({
   ariaLabelledBy,
   children,
   dataTestId,
-  disabledEscape,
+  disableEscape,
   headingIcon,
   headingText,
   onClose,
@@ -88,8 +88,8 @@ const Modal: FC<ModalProps> = ({
         aria-labelledby={ariaDescribedBy}
         aria-describedby={ariaLabelledBy}
         data-testid={dataTestId}
-        disableBackdropClick={disabledEscape}
-        disableEscapeKeyDown={disabledEscape}
+        disableBackdropClick={disableEscape}
+        disableEscapeKeyDown={disableEscape}
         open={open}
         onClose={handleClose}
         closeAfterTransition
@@ -106,7 +106,7 @@ const Modal: FC<ModalProps> = ({
           ) : (
             <StyledHeading>{headingText}</StyledHeading>
           )}
-          {!disabledEscape && <StyledCloseIcon onClick={handleClose} />}
+          {!disableEscape && <StyledCloseIcon onClick={handleClose} />}
         </StyledHeaderContainer>
 
         <Fade in={open}>
