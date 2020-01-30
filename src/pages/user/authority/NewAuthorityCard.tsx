@@ -63,6 +63,7 @@ const NewAuthorityCard: React.FC = () => {
     // if (USE_MOCK_DATA) {
     setTimeout(() => {
       dispatch(setAuthorityData(mockSingleAuthorityResponseWithFeide));
+      setLoading(false);
     }, [2000]);
     setLoading(true);
     // }
