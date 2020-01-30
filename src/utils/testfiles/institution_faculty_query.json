@@ -1,0 +1,146 @@
+[
+  {
+    "cristinUnitId": "194.12.0.0",
+    "unitNames": [
+      {
+        "name": "Rektor",
+        "language": "nb"
+      }
+    ]
+  },
+  {
+    "cristinUnitId": "194.13.0.0",
+    "unitNames": [
+      {
+        "name": "Prorektor for forskning",
+        "language": "nb"
+      }
+    ]
+  },
+  {
+    "cristinUnitId": "194.14.0.0",
+    "unitNames": [
+      {
+        "name": "Prorektor for utdanning",
+        "language": "nb"
+      }
+    ]
+  },
+  {
+    "cristinUnitId": "194.15.0.0",
+    "unitNames": [
+      {
+        "name": "Økonomi- og eiendomsdirektør",
+        "language": "nb"
+      }
+    ]
+  },
+  {
+    "cristinUnitId": "194.16.0.0",
+    "unitNames": [
+      {
+        "name": "Organisasjonsdirektør",
+        "language": "nb"
+      }
+    ]
+  },
+  {
+    "cristinUnitId": "194.17.0.0",
+    "unitNames": [
+      {
+        "name": "Prorektor for nyskaping",
+        "language": "nb"
+      }
+    ]
+  },
+  {
+    "cristinUnitId": "194.31.0.0",
+    "unitNames": [
+      {
+        "name": "NTNU Vitenskapsmuseet",
+        "language": "nb"
+      }
+    ]
+  },
+  {
+    "cristinUnitId": "194.35.0.0",
+    "unitNames": [
+      {
+        "name": "Enheter under Kunnskapdepartementet og Utdanningdirektoratet",
+        "language": "nb"
+      }
+    ]
+  },
+  {
+    "cristinUnitId": "194.60.0.0",
+    "unitNames": [
+      {
+        "name": "Fakultet for økonomi",
+        "language": "nb"
+      }
+    ]
+  },
+  {
+    "cristinUnitId": "194.61.0.0",
+    "unitNames": [
+      {
+        "name": "Fakultet for arkitektur og design",
+        "language": "nb"
+      }
+    ]
+  },
+  {
+    "cristinUnitId": "194.62.0.0",
+    "unitNames": [
+      {
+        "name": "Det humanistiske fakultet",
+        "language": "nb"
+      }
+    ]
+  },
+  {
+    "cristinUnitId": "194.63.0.0",
+    "unitNames": [
+      {
+        "name": "Fakultet for informasjonsteknologi og elektroteknikk",
+        "language": "nb"
+      }
+    ]
+  },
+  {
+    "cristinUnitId": "194.64.0.0",
+    "unitNames": [
+      {
+        "name": "Fakultet for ingeniørvitenskap",
+        "language": "nb"
+      }
+    ]
+  },
+  {
+    "cristinUnitId": "194.65.0.0",
+    "unitNames": [
+      {
+        "name": "Fakultet for medisin og helsevitenskap",
+        "language": "nb"
+      }
+    ]
+  },
+  {
+    "cristinUnitId": "194.66.0.0",
+    "unitNames": [
+      {
+        "name": "Fakultet for naturvitenskap",
+        "language": "nb"
+      }
+    ]
+  },
+  {
+    "cristinUnitId": "194.67.0.0",
+    "unitNames": [
+      {
+        "name": "Fakultet for samfunns- og utdanningsvitenskap",
+        "language": "nb"
+      }
+    ]
+  }
+]

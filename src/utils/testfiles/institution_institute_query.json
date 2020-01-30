@@ -1,0 +1,92 @@
+[
+  {
+    "cristinUnitId": "194.66.1.0",
+    "unitNames": [
+      {
+        "name": "NV fakultetsadministrasjon",
+        "language": "nb"
+      }
+    ]
+  },
+  {
+    "cristinUnitId": "194.66.10.0",
+    "unitNames": [
+      {
+        "name": "Institutt for biologi",
+        "language": "nb"
+      }
+    ]
+  },
+  {
+    "cristinUnitId": "194.66.15.0",
+    "unitNames": [
+      {
+        "name": "Institutt for bioteknologi og matvitenskap",
+        "language": "nb"
+      }
+    ]
+  },
+  {
+    "cristinUnitId": "194.66.20.0",
+    "unitNames": [
+      {
+        "name": "Institutt for fysikk",
+        "language": "nb"
+      }
+    ]
+  },
+  {
+    "cristinUnitId": "194.66.25.0",
+    "unitNames": [
+      {
+        "name": "Institutt for kjemi",
+        "language": "nb"
+      }
+    ]
+  },
+  {
+    "cristinUnitId": "194.66.30.0",
+    "unitNames": [
+      {
+        "name": "Institutt for kjemisk prosessteknologi",
+        "language": "nb"
+      }
+    ]
+  },
+  {
+    "cristinUnitId": "194.66.35.0",
+    "unitNames": [
+      {
+        "name": "Institutt for materialteknologi",
+        "language": "nb"
+      }
+    ]
+  },
+  {
+    "cristinUnitId": "194.66.40.0",
+    "unitNames": [
+      {
+        "name": "Institutt for bioingeniørfag",
+        "language": "nb"
+      }
+    ]
+  },
+  {
+    "cristinUnitId": "194.66.45.0",
+    "unitNames": [
+      {
+        "name": "Institutt for biologiske fag Ålesund",
+        "language": "nb"
+      }
+    ]
+  },
+  {
+    "cristinUnitId": "194.66.50.0",
+    "unitNames": [
+      {
+        "name": "Felles forskningsinfrastruktur",
+        "language": "nb"
+      }
+    ]
+  }
+]

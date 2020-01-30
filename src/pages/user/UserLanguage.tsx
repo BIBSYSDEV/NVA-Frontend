@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import { FormControl, MenuItem, Select } from '@material-ui/core';
+import { MenuItem, Select } from '@material-ui/core';
 
 import { defaultLanguage } from '../../translations/i18n';
 import { pageLanguages } from '../../types/language.types';
 import UserCard from './UserCard';
 
-const StyledFormControl = styled(FormControl)`
-  padding-top: 1rem;
+const StyledSelect = styled(Select)`
+  margin-top: 1rem;
   width: 100%;
   max-width: 15rem;
 `;
@@ -30,15 +30,17 @@ const UserLanguage: React.FC = () => {
 
   return (
     <UserCard headingLabel={t('heading.language')}>
-      <StyledFormControl variant="outlined">
-        <Select value={languageSelected} onChange={handleLanguageChange} data-testid="language-selector">
-          {Object.entries(pageLanguages).map(([languageCode, languageName]) => (
-            <MenuItem value={languageCode} key={languageCode} data-testid={`user-language-${languageCode}`}>
-              {languageName}
-            </MenuItem>
-          ))}
-        </Select>
-      </StyledFormControl>
+      <StyledSelect
+        variant="outlined"
+        value={languageSelected}
+        onChange={handleLanguageChange}
+        data-testid="language-selector">
+        {Object.entries(pageLanguages).map(([languageCode, languageName]) => (
+          <MenuItem value={languageCode} key={languageCode} data-testid={`user-language-${languageCode}`}>
+            {languageName}
+          </MenuItem>
+        ))}
+      </StyledSelect>
     </UserCard>
   );
 };
