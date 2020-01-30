@@ -17,7 +17,7 @@ const SubmissionDescription: React.FC = () => {
         {values.npiDiscipline.mainDiscipline}
         {values.npiDiscipline.title && `- ${values.npiDiscipline.title}`}
       </LabelContentRow>
-      <LabelContentRow label={t('description.tags')}>${values.tags.join(', ')}</LabelContentRow>
+      <LabelContentRow label={t('description.tags')}>{values.tags.join(', ')}</LabelContentRow>
       <LabelContentRow label={t('common:language')}>{t(`languages:${values.language}`)}</LabelContentRow>
       <LabelContentRow label={t('description.date_published')}>
         {values.publicationDate.year}
