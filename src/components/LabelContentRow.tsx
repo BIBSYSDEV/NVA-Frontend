@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const StyledLine = styled.div`
+const StyledRow = styled.div`
   padding-bottom: 0.5rem;
   display: flex;
   flex-wrap: wrap;
@@ -25,13 +25,13 @@ interface LabelTextLineProps {
   dataTestId?: string;
 }
 
-const LabelContentLine: React.FC<LabelTextLineProps> = ({ label, children, dataTestId }) => {
+const LabelContentRow: React.FC<LabelTextLineProps> = ({ label, children, dataTestId }) => {
   return (
-    <StyledLine data-testid={dataTestId}>
+    <StyledRow data-testid={dataTestId}>
       <StyledLabel>{label}</StyledLabel>
       <StyledText>{children}</StyledText>
-    </StyledLine>
+    </StyledRow>
   );
 };
 
-export default LabelContentLine;
+export default LabelContentRow;
