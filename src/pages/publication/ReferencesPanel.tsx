@@ -83,7 +83,7 @@ export const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, s
       <StyledSelectContainer>
         <Field name={ReferenceFieldNames.REFERENCE_TYPE}>
           {({ field, meta: { error, touched } }: any) => (
-            <FormControl variant="outlined" fullWidth error={!!error && touched}>
+            <FormControl fullWidth error={!!error && touched}>
               <TextField select variant="outlined" {...field} label={t('common:type')} data-testid="reference_type">
                 {Object.entries(referenceTypeLanguageKeyMap).map(([key, value]) => (
                   <MenuItem value={key} key={key} data-testid={`reference_type-${key}`}>
