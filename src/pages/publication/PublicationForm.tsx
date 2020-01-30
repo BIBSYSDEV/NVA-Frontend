@@ -13,6 +13,7 @@ import FilesAndLicensePanel from './FilesAndLicensePanel';
 import { PublicationFormTabs } from './PublicationFormTabs';
 import { ReferencesPanel } from './ReferencesPanel';
 import { createUppy } from '../../utils/uppy-config';
+import SubmissionPanel from './SubmissionPanel';
 
 const StyledPublication = styled.div`
   width: 100%;
@@ -138,7 +139,7 @@ const PublicationForm: FC = () => {
 
             {tabNumber === 4 && (
               <TabPanel ariaLabel="submission">
-                <div>Page Six</div>
+                <SubmissionPanel />
               </TabPanel>
             )}
           </Form>

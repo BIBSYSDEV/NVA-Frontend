@@ -111,6 +111,7 @@ const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublicat
               rows="4"
               fullWidth
               variant="outlined"
+              inputProps={{ 'data-testid': 'publication-description-input' }}
             />
           </StyledFieldWrapper>
           <MultipleFieldWrapper>

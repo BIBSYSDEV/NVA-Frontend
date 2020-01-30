@@ -49,7 +49,8 @@
     "files_and_license": "Files and License",
     "publication": "Publication",
     "references": "References",
-    "submission": "Submission"
+    "submission": "Submission",
+    "summary": "Summary"
   },
   "publication": {
     "link_publication_description": "E.g. DOI link, link to article, link to video of lecture etc.",
@@ -71,6 +72,7 @@
     "editorial": "Editorial",
     "is_peer_reviewed": "The publication is peer reviewed",
     "is_not_peer_reviewed": "The publication is not peer reviewed",
+    "is_text_book": "Is this a textbook?",
     "isbn": "ISBN",
     "issn": "ISSN",
     "issue": "Issue",
@@ -91,6 +93,7 @@
     "pages_from": "Pages from",
     "pages_to": "to",
     "peer_review": "Is the publication peer reviewed?",
+    "peer_reviewed": "Peer reviewed",
     "policy_report": "Policy report",
     "publisher": "Publisher",
     "remove": "Remove",
@@ -104,7 +107,7 @@
     "series_info": "If the book is part of a series",
     "short_communication": "Short communication",
     "specialization": "Specialization",
-    "text_book": "Is this a textbook?",
+    "text_book": "Textbook",
     "text_book_yes": "Yes, this is a textbook",
     "volume": "Volume",
     "working_paper": "Working paper"

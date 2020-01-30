@@ -33,7 +33,7 @@ export const AutoSearch: FC<AutoSearchProps> = ({
   onInputChange,
   placeholder,
 }) => {
-  const [displayValue, setDisplayValue] = useState(emptyValue);
+  const [displayValue, setDisplayValue] = useState<any>(emptyValue);
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -63,7 +63,7 @@ export const AutoSearch: FC<AutoSearchProps> = ({
       onOpen={() => {
         setOpen(true);
       }}
-      onChange={(_: object, value: string) => {
+      onChange={(_: object, value: string | null) => {
         if (value) {
           setValueFunction(value);
           setDisplayValue(emptyValue);
@@ -85,7 +85,7 @@ export const AutoSearch: FC<AutoSearchProps> = ({
           setOptions([]);
         }
       }}
-      getOptionLabel={option => option.title || ''}
+      getOptionLabel={(option: any) => option.title || ''}
       options={options}
       loading={loading}
       blurOnSelect

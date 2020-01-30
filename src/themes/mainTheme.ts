@@ -26,7 +26,7 @@ enum Colors {
   ExpandedPanel = '#b2acfa',
   TabBackground = '#f3c19d',
   Disabled = '#bbb',
-  Danger = '#ff0000',
+  Danger = '#ff5555',
 }
 
 export default createMuiTheme({
@@ -61,6 +61,18 @@ export default createMuiTheme({
     },
   },
   typography: {
+    h1: {
+      fontSize: '2.5rem',
+      lineHeight: '4rem',
+    },
+    h2: {
+      fontSize: '2rem',
+      lineHeight: '3rem',
+    },
+    h3: {
+      fontSize: '1.5rem',
+      lineHeight: '3rem',
+    },
     fontFamily:
       "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif",
   },

@@ -21,9 +21,16 @@ interface SubUnitSelectProps {
   selectedValue: InstitutionSubUnit;
   findSubUnitFunction: (value: InstitutionSubUnit) => void;
   label: string;
+  dataTestId: string;
 }
 
-const SubUnitSelect: React.FC<SubUnitSelectProps> = ({ searchResults, selectedValue, findSubUnitFunction, label }) => {
+const SubUnitSelect: React.FC<SubUnitSelectProps> = ({
+  searchResults,
+  selectedValue,
+  findSubUnitFunction,
+  label,
+  dataTestId,
+}) => {
   const selectSubUnit = (cristinUnitId: string) => {
     findSubUnitFunction(searchResults.filter(subUnit => subUnit.cristinUnitId === cristinUnitId)[0]);
   };
@@ -35,7 +42,8 @@ const SubUnitSelect: React.FC<SubUnitSelectProps> = ({ searchResults, selectedVa
         <StyledSelect
           value={selectedValue.cristinUnitId}
           onChange={(event: React.ChangeEvent<{ value: unknown }>) => selectSubUnit(event.target.value as string)}
-          disabled={searchResults.length === 0}>
+          disabled={searchResults.length === 0}
+          data-testid={dataTestId}>
           {searchResults.map(subUnit => (
             <MenuItem key={subUnit.cristinUnitId} value={subUnit.cristinUnitId}>
               {selectInstitutionNameByLanguage(subUnit.unitNames)}
