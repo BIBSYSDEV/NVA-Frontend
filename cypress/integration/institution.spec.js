@@ -22,11 +22,11 @@ describe('User adds an institution to their profile', () => {
       .click({ force: true })
       .type('ntnu');
     cy.contains('Norges teknisk-naturvitenskapelige universitet').click({ force: true });
-    cy.get('[data-testid=institution-set-subunit_1]')
+    cy.get('[data-testid=institution-set-subunit-1]')
       .click({ force: true })
       .type(' ');
     cy.contains('Fakultet for naturvitenskap').click({ force: true });
-    cy.get('[data-testid=institution-set-subunit_2]')
+    cy.get('[data-testid=institution-set-subunit-2]')
       .click({ force: true })
       .type(' ');
     cy.contains('Institutt for fysikk').click({ force: true });
