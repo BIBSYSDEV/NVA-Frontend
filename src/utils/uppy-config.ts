@@ -14,8 +14,9 @@ export const createUppy = () =>
     autoProceed: true,
   }).use(AwsS3Multipart, {
     createMultipartUpload: async (file: File) => await createMultipartUpload(file),
-    listParts: async (file: File, { uploadedId, key }: any) => await listParts(file),
-    prepareUploadPart: async (file: File, partData: any) => await prepareUploadPart(file),
-    abortMultipartUpload: async (file: File, { uploadedId, key }: any) => await abortMultipartUpload(file),
-    completeMultipartUpload: async (file: File, { uploadedId, key, parts }: any) => await completeMultipartUpload(file),
+    listParts: async (_: File, { uploadedId, key }: any) => await listParts(uploadedId, key),
+    prepareUploadPart: async (_: File, partData: any) => await prepareUploadPart(partData),
+    abortMultipartUpload: async (_: File, { uploadedId, key }: any) => await abortMultipartUpload(uploadedId, key),
+    completeMultipartUpload: async (_: File, { uploadedId, key, parts }: any) =>
+      await completeMultipartUpload(uploadedId, key, parts),
   });

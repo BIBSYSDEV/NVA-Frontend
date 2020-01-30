@@ -2,12 +2,17 @@ import Axios from 'axios';
 import { getIdToken } from './userApi';
 import { File } from '../types/license.types';
 
+interface Part {
+  ETag: string;
+  PartNumber: number;
+}
+
 export enum FileUploadApiPaths {
-  CREATE_MULTIPART_UPLOAD = '/upload/create',
-  LIST_PARTS = '',
-  PREPARE_UPLOAD_PART = '',
-  ABORT_MULTIPART_UPLOAD = '',
-  COMPLETE_MULTIPART_UPLOAD = '',
+  CREATE = '/upload/create',
+  LIST_PARTS = '/upload/listparts',
+  PREPARE = '/upload/prepare',
+  ABORT = '/upload/abort',
+  COMPLETE = '/upload/complete',
 }
 
 export const createMultipartUpload = async (file: File) => {
@@ -17,22 +22,70 @@ export const createMultipartUpload = async (file: File) => {
     lastmodified: file.data.lastModified,
     mimetype: file.data.type,
   };
-  console.log('File', file);
-  console.log('Payload', payload);
+
   const idToken = await getIdToken();
-  const response = await Axios.post(FileUploadApiPaths.CREATE_MULTIPART_UPLOAD, payload, {
+  const response = await Axios.post(FileUploadApiPaths.CREATE, payload, {
     headers: {
       Authorization: `Bearer ${idToken}`,
     },
   });
-  console.log('Res:', response);
   return response;
 };
 
-export const listParts = async (file: any) => {};
+export const listParts = async (uploadId: string, key: string) => {
+  const payload = {
+    uploadId,
+    key,
+  };
 
-export const prepareUploadPart = async (file: any) => {};
+  const idToken = await getIdToken();
+  const response = await Axios.post(FileUploadApiPaths.LIST_PARTS, payload, {
+    headers: {
+      Authorization: `Bearer ${idToken}`,
+    },
+  });
+  return response;
+};
 
-export const abortMultipartUpload = async (file: any) => {};
+export const prepareUploadPart = async (partData: any) => {
+  const payload = partData;
 
-export const completeMultipartUpload = async (file: any) => {};
+  const idToken = await getIdToken();
+  const response = await Axios.post(FileUploadApiPaths.PREPARE, payload, {
+    headers: {
+      Authorization: `Bearer ${idToken}`,
+    },
+  });
+  return response;
+};
+
+export const abortMultipartUpload = async (uploadId: string, key: string) => {
+  const payload = {
+    uploadId,
+    key,
+  };
+
+  const idToken = await getIdToken();
+  const response = await Axios.post(FileUploadApiPaths.ABORT, payload, {
+    headers: {
+      Authorization: `Bearer ${idToken}`,
+    },
+  });
+  return response;
+};
+
+export const completeMultipartUpload = async (uploadId: string, key: string, parts: Part[]) => {
+  const payload = {
+    uploadId,
+    key,
+    parts,
+  };
+
+  const idToken = await getIdToken();
+  const response = await Axios.post(FileUploadApiPaths.COMPLETE, payload, {
+    headers: {
+      Authorization: `Bearer ${idToken}`,
+    },
+  });
+  return response;
+};
