@@ -29,7 +29,7 @@ const AutoLookup: FC<AutoLookupProps> = ({
   placeholder,
   value,
 }) => {
-  const [displayValue, setDisplayValue] = useState({ title: value });
+  const [displayValue, setDisplayValue] = useState<any>({ title: value });
 
   useEffect(() => {
     if (!value) {
@@ -42,8 +42,8 @@ const AutoLookup: FC<AutoLookupProps> = ({
     <Autocomplete
       options={options}
       groupBy={groupBy}
-      getOptionLabel={option => option.title || ''}
-      onChange={(_: object, value: string) => {
+      getOptionLabel={(option: any) => option.title || ''}
+      onChange={(_: object, value: string | null) => {
         setValueFunction(value);
       }}
       value={displayValue}
