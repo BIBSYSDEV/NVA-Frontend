@@ -1,4 +1,4 @@
-import LabelContentLine from '../../../components/LabelContentLine';
+import LabelContentRow from '../../../components/LabelContentRow';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormikProps, useFormikContext } from 'formik';
@@ -13,13 +13,13 @@ const SubmissionReport: React.FC = () => {
     <>
       <Typography variant="h3">{t('references.report')}</Typography>
 
-      <LabelContentLine label={t('common:type')}>{values.reference.report?.type}</LabelContentLine>
-      <LabelContentLine label={t('references.publisher')}>{values.reference.report?.publisher?.title}</LabelContentLine>
-      <LabelContentLine label={t('references.isbn')}>{values.reference.report?.isbn}</LabelContentLine>
-      <LabelContentLine label={t('references.series')}>{values.reference.report?.series?.title}</LabelContentLine>
-      <LabelContentLine label={t('references.number_of_pages')}>
+      <LabelContentRow label={t('common:type')}>{values.reference.report?.type}</LabelContentRow>
+      <LabelContentRow label={t('references.publisher')}>{values.reference.report?.publisher?.title}</LabelContentRow>
+      <LabelContentRow label={t('references.isbn')}>{values.reference.report?.isbn}</LabelContentRow>
+      <LabelContentRow label={t('references.series')}>{values.reference.report?.series?.title}</LabelContentRow>
+      <LabelContentRow label={t('references.number_of_pages')}>
         {values.reference.report?.numberOfPages}
-      </LabelContentLine>
+      </LabelContentRow>
     </>
   );
 };

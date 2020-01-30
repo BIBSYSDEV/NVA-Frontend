@@ -1,4 +1,4 @@
-import LabelContentLine from '../../../components/LabelContentLine';
+import LabelContentRow from '../../../components/LabelContentRow';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormikProps, useFormikContext } from 'formik';
@@ -11,13 +11,13 @@ const SubmissionFilesAndLicenses: React.FC = () => {
 
   return (
     <>
-      <LabelContentLine label={t('files_and_license.files')}>
+      <LabelContentRow label={t('files_and_license.files')}>
         {values.files.map(file => (
           <SubmissionContentText>
             {file.title}({file.license})
           </SubmissionContentText>
         ))}
-      </LabelContentLine>
+      </LabelContentRow>
     </>
   );
 };

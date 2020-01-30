@@ -1,4 +1,4 @@
-import LabelContentLine from '../../../components/LabelContentLine';
+import LabelContentRow from '../../../components/LabelContentRow';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormikProps, useFormikContext } from 'formik';
@@ -11,7 +11,7 @@ const SubmissionContributors: React.FC = () => {
 
   return (
     <>
-      <LabelContentLine label={t('heading.contributors')}>
+      <LabelContentRow label={t('heading.contributors')}>
         {values.contributors.map(contributor => {
           return (
             <SubmissionContentText>
@@ -20,7 +20,7 @@ const SubmissionContributors: React.FC = () => {
             </SubmissionContentText>
           );
         })}
-      </LabelContentLine>
+      </LabelContentRow>
     </>
   );
 };

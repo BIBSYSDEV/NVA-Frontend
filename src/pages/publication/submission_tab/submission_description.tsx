@@ -1,4 +1,4 @@
-import LabelContentLine from '../../../components/LabelContentLine';
+import LabelContentRow from '../../../components/LabelContentRow';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormikProps, useFormikContext } from 'formik';
@@ -11,24 +11,24 @@ const SubmissionDescription: React.FC = () => {
 
   return (
     <>
-      <LabelContentLine label={t('description.abstract')}>{values.abstract}</LabelContentLine>
-      <LabelContentLine label={t('description.description')}>{values.description}</LabelContentLine>
-      <LabelContentLine label={t('description.npi_disciplines')}>
+      <LabelContentRow label={t('description.abstract')}>{values.abstract}</LabelContentRow>
+      <LabelContentRow label={t('description.description')}>{values.description}</LabelContentRow>
+      <LabelContentRow label={t('description.npi_disciplines')}>
         {values.npiDiscipline.mainDiscipline}
         {values.npiDiscipline.title && `- ${values.npiDiscipline.title}`}
-      </LabelContentLine>
-      <LabelContentLine label={t('description.tags')}>{`${values.tags.join(', ')}`}</LabelContentLine>
-      <LabelContentLine label={t('common:language')}>{t(`languages:${values.language}`)}</LabelContentLine>
-      <LabelContentLine label={t('description.date_published')}>
+      </LabelContentRow>
+      <LabelContentRow label={t('description.tags')}>{`${values.tags.join(', ')}`}</LabelContentRow>
+      <LabelContentRow label={t('common:language')}>{t(`languages:${values.language}`)}</LabelContentRow>
+      <LabelContentRow label={t('description.date_published')}>
         {values.publicationDate.year}
         {values.publicationDate.month && `-${values.publicationDate.month}`}
         {values.publicationDate.day && `-${values.publicationDate.day}`}
-      </LabelContentLine>
-      <LabelContentLine label={t('description.project_association')}>
+      </LabelContentRow>
+      <LabelContentRow label={t('description.project_association')}>
         {values.projects.map(project => (
           <SubmissionContentText key={project.cristinProjectId}>{project.titles?.[0]?.title}</SubmissionContentText>
         ))}
-      </LabelContentLine>
+      </LabelContentRow>
     </>
   );
 };

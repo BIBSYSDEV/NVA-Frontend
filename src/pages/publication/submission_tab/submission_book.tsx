@@ -1,4 +1,4 @@
-import LabelContentLine from '../../../components/LabelContentLine';
+import LabelContentRow from '../../../components/LabelContentRow';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormikProps, useFormikContext } from 'formik';
@@ -12,19 +12,17 @@ const SubmissionBook: React.FC = () => {
   return (
     <>
       <Typography variant="h3">{t('references.book')}</Typography>
-      <LabelContentLine label={t('common:type')}>{values.reference.book?.type}</LabelContentLine>
-      <LabelContentLine label={t('references.publisher')}>{values.reference.book?.publisher?.title}</LabelContentLine>
-      <LabelContentLine label={t('references.peer_reviewed')}>
+      <LabelContentRow label={t('common:type')}>{values.reference.book?.type}</LabelContentRow>
+      <LabelContentRow label={t('references.publisher')}>{values.reference.book?.publisher?.title}</LabelContentRow>
+      <LabelContentRow label={t('references.peer_reviewed')}>
         {values.reference.book?.peerReview ? t('common:yes') : t('common:no')}
-      </LabelContentLine>
-      <LabelContentLine label={t('references.text_book')}>
+      </LabelContentRow>
+      <LabelContentRow label={t('references.text_book')}>
         {values.reference.book?.textBook ? t('common:yes') : t('common:no')}
-      </LabelContentLine>
-      <LabelContentLine label={t('references.series')}>{values.reference.book?.series?.title}</LabelContentLine>
-      <LabelContentLine label={t('references.issn')}>{values.reference.book?.isbn}</LabelContentLine>
-      <LabelContentLine label={t('references.number_of_pages')}>
-        {values.reference.book?.numberOfPages}
-      </LabelContentLine>
+      </LabelContentRow>
+      <LabelContentRow label={t('references.series')}>{values.reference.book?.series?.title}</LabelContentRow>
+      <LabelContentRow label={t('references.issn')}>{values.reference.book?.isbn}</LabelContentRow>
+      <LabelContentRow label={t('references.number_of_pages')}>{values.reference.book?.numberOfPages}</LabelContentRow>
     </>
   );
 };

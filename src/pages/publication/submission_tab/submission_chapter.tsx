@@ -1,4 +1,4 @@
-import LabelContentLine from '../../../components/LabelContentLine';
+import LabelContentRow from '../../../components/LabelContentRow';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormikProps, useFormikContext } from 'formik';
@@ -13,10 +13,10 @@ const SubmissionChapter: React.FC = () => {
     <>
       <Typography variant="h3">{t('references.chapter')}</Typography>
 
-      <LabelContentLine label={t('chapter.anthology')}>{values.reference.chapter?.anthology?.isbn}</LabelContentLine>
-      <LabelContentLine label={t('chapter.link')}>{values.reference.chapter?.link}</LabelContentLine>
-      <LabelContentLine label={t('references.pages_from')}>{values.reference.chapter?.pagesFrom}</LabelContentLine>
-      <LabelContentLine label={t('references.pages_to')}>{values.reference.chapter?.pagesTo}</LabelContentLine>
+      <LabelContentRow label={t('chapter.anthology')}>{values.reference.chapter?.anthology?.isbn}</LabelContentRow>
+      <LabelContentRow label={t('chapter.link')}>{values.reference.chapter?.link}</LabelContentRow>
+      <LabelContentRow label={t('references.pages_from')}>{values.reference.chapter?.pagesFrom}</LabelContentRow>
+      <LabelContentRow label={t('references.pages_to')}>{values.reference.chapter?.pagesTo}</LabelContentRow>
     </>
   );
 };

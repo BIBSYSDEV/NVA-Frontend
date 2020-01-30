@@ -1,4 +1,4 @@
-import LabelContentLine from '../../../components/LabelContentLine';
+import LabelContentRow from '../../../components/LabelContentRow';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormikProps, useFormikContext } from 'formik';
@@ -13,12 +13,12 @@ const SubmissionDegree: React.FC = () => {
     <>
       <Typography variant="h3">{t('references.degree')}</Typography>
 
-      <LabelContentLine label={t('common:type')}>{values.reference.degree?.type}</LabelContentLine>
-      <LabelContentLine label={t('references.publisher')}>{values.reference.degree?.publisher?.title}</LabelContentLine>
-      <LabelContentLine label={t('references.specialization')}>
+      <LabelContentRow label={t('common:type')}>{values.reference.degree?.type}</LabelContentRow>
+      <LabelContentRow label={t('references.publisher')}>{values.reference.degree?.publisher?.title}</LabelContentRow>
+      <LabelContentRow label={t('references.specialization')}>
         {values.reference.degree?.specialization}
-      </LabelContentLine>
-      <LabelContentLine label={t('references.series')}>{values.reference.degree?.series?.title}</LabelContentLine>
+      </LabelContentRow>
+      <LabelContentRow label={t('references.series')}>{values.reference.degree?.series?.title}</LabelContentRow>
     </>
   );
 };
