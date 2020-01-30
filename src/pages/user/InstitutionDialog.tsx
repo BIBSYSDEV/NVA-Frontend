@@ -74,10 +74,15 @@ const InstitutionDialog: React.FC<InstitutionDialogProps> = ({ user, title, data
           <InstitutionSelector setSelectedCristinUnitId={setSelectedCristinUnitId} />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCancel} variant="contained" color="primary">
+          <Button onClick={handleCancel} variant="contained" color="primary" data-testid="institution-cancel-button">
             {t('common:cancel')}
           </Button>
-          <Button onClick={handleConfirm} variant="contained" color="primary" disabled={!selectedCristinUnitId}>
+          <Button
+            onClick={handleConfirm}
+            variant="contained"
+            color="primary"
+            disabled={!selectedCristinUnitId}
+            data-testid="institution-add-button">
             {t('common:save')}
           </Button>
         </DialogActions>

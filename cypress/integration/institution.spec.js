@@ -1,5 +1,5 @@
 describe('User adds an institution to their profile', () => {
-  beforeEach('Given that the user is logged in:', () => {
+  before('Given that the user is logged in:', () => {
     cy.visit('/');
     cy.mocklogin();
   });
@@ -14,22 +14,29 @@ describe('User adds an institution to their profile', () => {
     cy.get('[data-testid=connect-author-button]').click({ force: true });
 
     // connect orcid
-    cy.get('[data-testid=connect-to-orcid]').click({ force: true });
+    cy.get('[data-testid=open-orcid-modal]').click({ force: true });
 
     // add institution
-    cy.get('[data-testid=add-institution-dialog').click({ force: true });
-    cy.get('[data-testid=autosearch-institution')
+    cy.get('[data-testid=add-institution-dialog]').click({ force: true });
+    cy.get('[data-testid=autosearch-institution]')
       .click({ force: true })
       .type('ntnu');
     cy.contains('Norges teknisk-naturvitenskapelige universitet').click({ force: true });
-    cy.get('[data-testid=institution-set-subunit_1').click({ force: true });
+    cy.get('[data-testid=institution-set-subunit_1]')
+      .click({ force: true })
+      .type(' ');
     cy.contains('Fakultet for naturvitenskap').click({ force: true });
-    cy.get('[data-testid=institution-set-subunit_2').click({ force: true });
+    cy.get('[data-testid=institution-set-subunit_2]')
+      .click({ force: true })
+      .type(' ');
     cy.contains('Institutt for fysikk').click({ force: true });
 
+    cy.get('[data-testid=institution-add-button]').click({ force: true });
+
     // check that institution is add to user profile
-    cy.get('Norges teknisk-naturvitenskapelige universitet').should('be.visible');
-    cy.get('Fakultet for naturvitenskap').should('be.visible');
-    cy.get('Institutt for fysikk').should('be.visible');
+    cy.get('[data-testid=institution-presentation]').should('be.visible');
+    cy.get('[data-testid=institution-presentation-top]').should('be.visible');
+    cy.get('[data-testid=institution-presentation-subunit-1]').should('be.visible');
+    cy.get('[data-testid=institution-presentation-subunit-2]').should('be.visible');
   });
 });
