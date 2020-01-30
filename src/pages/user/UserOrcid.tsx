@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import ButtonModal from '../../components/ButtonModal';
 import LabelTextLine from '../../components/LabelTextLine';
 import { RootStore } from '../../redux/reducers/rootReducer';
-import orcidIcon from '../../resources/images/orcid_24x24.png';
+import orcidIcon from '../../resources/images/orcid_logo.svg';
 import { ORCID_BASE_URL } from '../../utils/constants';
 import OrcidModal from './OrcidModal';
 import UserCard from './UserCard';
