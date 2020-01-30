@@ -5,7 +5,8 @@
     "link": "Link to publication"
   },
   "contributors": {
-    "add_author": "Add authors",
+    "add_author": "Add author",
+    "add_authors": "Add authors",
     "add_other_contributor": "Add more contributors",
     "authors": "Authors",
     "corresponding": "Corresponding",

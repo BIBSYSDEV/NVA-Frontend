@@ -1,19 +1,27 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
+import { Button } from '@material-ui/core';
+
+import Box from '../../components/Box';
 import TabPanel from '../../components/TabPanel/TabPanel';
-import Contributors from './contributors_tab/Contributors';
-import OtherContributors from './contributors_tab/OtherContributors';
 
 interface ContributorsPanelProps {
   goToNextTab: (event: React.MouseEvent<any>) => void;
   savePublication: (event: React.MouseEvent<any>) => void;
 }
 
-const ContributorsPanel: React.FC<ContributorsPanelProps> = ({ goToNextTab, savePublication }) => (
-  <TabPanel ariaLabel="references" goToNextTab={goToNextTab} onClickSave={savePublication}>
-    <Contributors />
-    <OtherContributors />
-  </TabPanel>
-);
+const ContributorsPanel: React.FC<ContributorsPanelProps> = ({ goToNextTab, savePublication }) => {
+  const { t } = useTranslation('publication');
+  return (
+    <TabPanel ariaLabel="references" goToNextTab={goToNextTab} onClickSave={savePublication}>
+      <Box>
+        <Button color="primary" variant="contained">
+          {t('contributors.add_author')}
+        </Button>
+      </Box>
+    </TabPanel>
+  );
+};
 
 export default ContributorsPanel;
