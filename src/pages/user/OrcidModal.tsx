@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
 import styled from 'styled-components';
 
-import { Button } from '@material-ui/core';
+import { Button, Typography } from '@material-ui/core';
 
 import { ORCID_SIGN_IN_URL, USE_MOCK_DATA } from '../../utils/constants';
 
@@ -17,7 +17,7 @@ const StyledButton = styled(Button)`
   width: 22rem;
 `;
 
-const StyledSubHeading = styled.div`
+const StyledSubHeading = styled(Typography)`
   margin: 1em 0;
   font-weight: bold;
 `;
@@ -45,11 +45,11 @@ const OrcidModal: FC = () => {
   return (
     <>
       <StyledOrcidDescription>
-        <p>{t('orcid.login')}</p>
-        <StyledSubHeading>{t('orcid.why')}</StyledSubHeading>
-        <p>{t('orcid.description_why_use_orcid')}</p>
-        <StyledSubHeading>{'orcid.what'}</StyledSubHeading>
-        <p>{t('orcid.description_what_is_orcid')}</p>
+        <Typography variant="body1">{t('orcid.login')}</Typography>
+        <StyledSubHeading variant="h6">{t('orcid.why')}</StyledSubHeading>
+        <Typography variant="body1">{t('orcid.description_why_use_orcid')}</Typography>
+        <StyledSubHeading variant="h6">{t('orcid.what')}</StyledSubHeading>
+        <Typography variant="body1">{t('orcid.description_what_is_orcid')}</Typography>
       </StyledOrcidDescription>
       <StyledButtonContainer>
         <StyledButton
