@@ -10,7 +10,7 @@ describe('Publication: Description', () => {
     const title = 'Sample title';
     const description = 'Sample description.';
 
-    const isbn = '978-8-20-248523-8';
+    const isbn = '9788202485238';
 
     cy.get('[data-testid=new-publication-button]').click({ force: true });
 

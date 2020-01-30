@@ -14,7 +14,7 @@ const SubmissionFilesAndLicenses: React.FC = () => {
       <LabelContentRow label={t('files_and_license.files')}>
         {values.files.map(file => (
           <SubmissionContentText>
-            {file.title}({file.license})
+            {file.name}({file.license})
           </SubmissionContentText>
         ))}
       </LabelContentRow>
