@@ -3,7 +3,7 @@ import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import { FormControl, InputLabel, MenuItem, Select, TextField } from '@material-ui/core';
+import { MenuItem, TextField } from '@material-ui/core';
 
 import { Publication } from '../../../types/publication.types';
 import { emptyPublisher, JournalArticleFieldNames, journalArticleTypes } from '../../../types/references.types';
@@ -42,18 +42,15 @@ const JournalArticleReferenceForm: FC = () => {
 
   return (
     <>
-      <Field name={JournalArticleFieldNames.TYPE} variant="outlined" fullWidth>
+      <Field name={JournalArticleFieldNames.TYPE} variant="outlined">
         {({ field }: any) => (
-          <FormControl variant="outlined" fullWidth>
-            <InputLabel>{t('common:type')}</InputLabel>
-            <Select {...field}>
-              {journalArticleTypes.map(type => (
-                <MenuItem value={type.value} key={type.value}>
-                  {t(type.label)}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+          <TextField select variant="outlined" fullWidth label={t('common:type')} {...field}>
+            {journalArticleTypes.map(type => (
+              <MenuItem value={type.value} key={type.value}>
+                {t(type.label)}
+              </MenuItem>
+            ))}
+          </TextField>
         )}
       </Field>
 
