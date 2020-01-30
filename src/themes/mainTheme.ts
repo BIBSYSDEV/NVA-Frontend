@@ -19,7 +19,6 @@ enum Colors {
   Secondary = '#96c3ec',
   Background = '#fff',
   Box = '#eeeeff',
-  SecondaryBox = '#ccc',
   Link = '#6558f5',
   Separator = '#3d4349',
   PrimaryText = 'rgba(0, 0, 0, 0.87)',
