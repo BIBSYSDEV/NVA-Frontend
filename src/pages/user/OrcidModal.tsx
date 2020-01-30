@@ -3,18 +3,27 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
 import styled from 'styled-components';
 
-import { Button, Link } from '@material-ui/core';
+import { Button, Typography } from '@material-ui/core';
 
 import { ORCID_SIGN_IN_URL, USE_MOCK_DATA } from '../../utils/constants';
 
-const StyledButtonHolder = styled.div`
-  margin: 3rem 0;
-  text-align: center;
+const StyledButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin: 1rem 0;
 `;
 
-const StyledSubHeading = styled.div`
+const StyledButton = styled(Button)`
+  width: 22rem;
+`;
+
+const StyledSubHeading = styled(Typography)`
   margin: 1em 0;
   font-weight: bold;
+`;
+
+const StyledOrcidDescription = styled.div`
+  padding: 0.5rem;
 `;
 
 const OrcidModal: FC = () => {
@@ -35,26 +44,24 @@ const OrcidModal: FC = () => {
 
   return (
     <>
-      <p>{t('orcid.login')}</p>
-      <StyledButtonHolder>
-        <Button
+      <StyledOrcidDescription>
+        <Typography variant="body1">{t('orcid.login')}</Typography>
+        <StyledSubHeading variant="h6">{t('orcid.why')}</StyledSubHeading>
+        <Typography variant="body1">{t('orcid.description_why_use_orcid')}</Typography>
+        <StyledSubHeading variant="h6">{t('orcid.what')}</StyledSubHeading>
+        <Typography variant="body1">{t('orcid.description_what_is_orcid')}</Typography>
+      </StyledOrcidDescription>
+      <StyledButtonContainer>
+        <StyledButton
           data-testid="connect-to-orcid"
           onClick={() => {
             openORCID();
           }}
-          variant="outlined"
-          size="large"
-          startIcon={<img src="https://orcid.org/sites/default/files/images/orcid_24x24.png" alt="ORCID iD icon" />}>
+          color="primary"
+          variant="contained">
           {t('orcid.create_or_connect')}
-        </Button>
-      </StyledButtonHolder>
-      <StyledSubHeading>{t('orcid.why')}</StyledSubHeading>
-      <p>{t('orcid.description_why_use_orcid')}</p>
-      <StyledSubHeading>{'orcid.what'}</StyledSubHeading>
-      <p>{t('orcid.description_what_is_orcid')}</p>
-      <p>
-        {t('orcid.learn_more')} <Link href="https://orcid.org">orcid.org</Link>
-      </p>
+        </StyledButton>
+      </StyledButtonContainer>
     </>
   );
 };

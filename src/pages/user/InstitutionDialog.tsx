@@ -22,9 +22,10 @@ const StyledInstitutionDialog = styled.div`
 interface InstitutionDialogProps {
   user: User;
   title: string;
+  dataTestId: string;
 }
 
-const InstitutionDialog: React.FC<InstitutionDialogProps> = ({ user, title }) => {
+const InstitutionDialog: React.FC<InstitutionDialogProps> = ({ user, title, dataTestId }) => {
   const [open, setOpen] = useState(false);
   const [selectedCristinUnitId, setSelectedCristinUnitId] = useState('');
   const dispatch = useDispatch();
@@ -63,7 +64,8 @@ const InstitutionDialog: React.FC<InstitutionDialogProps> = ({ user, title }) =>
         variant="contained"
         color="primary"
         onClick={handleClickOpen}
-        disabled={!user.authority?.systemControlNumber}>
+        disabled={!user.authority?.systemControlNumber}
+        data-testid={dataTestId}>
         {t('common:add')}
       </Button>
       <Dialog open={open} onClose={handleConfirm} aria-labelledby="form-dialog-title">
@@ -72,10 +74,15 @@ const InstitutionDialog: React.FC<InstitutionDialogProps> = ({ user, title }) =>
           <InstitutionSelector setSelectedCristinUnitId={setSelectedCristinUnitId} />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCancel} variant="contained" color="primary">
+          <Button onClick={handleCancel} variant="contained" color="primary" data-testid="institution-cancel-button">
             {t('common:cancel')}
           </Button>
-          <Button onClick={handleConfirm} variant="contained" color="primary" disabled={!selectedCristinUnitId}>
+          <Button
+            onClick={handleConfirm}
+            variant="contained"
+            color="primary"
+            disabled={!selectedCristinUnitId}
+            data-testid="institution-add-button">
             {t('common:save')}
           </Button>
         </DialogActions>

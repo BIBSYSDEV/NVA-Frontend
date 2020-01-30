@@ -14,6 +14,7 @@ const StyledHeading = styled.div`
   font-weight: bold;
   padding-bottom: 0.5rem;
   display: flex;
+  align-items: center;
 `;
 
 const StyledSubHeading = styled.div`
@@ -24,8 +25,10 @@ const StyledSubHeading = styled.div`
 `;
 
 const StyledIcon = styled.div`
-  padding-right: 0.5rem;
-  padding-top: 0.2rem;
+  display: inline-flex;
+  height: 2.5rem;
+  width: 4.5rem;
+  margin-left: -1rem;
 `;
 
 interface UserCardProps {

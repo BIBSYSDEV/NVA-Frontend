@@ -11,15 +11,15 @@ import { getOrcidInfo } from '../../api/external/orcidApi';
 import ButtonModal from '../../components/ButtonModal';
 import { setAuthorityData } from '../../redux/actions/userActions';
 import { RootStore } from '../../redux/reducers/rootReducer';
+import { InstitutionUnit } from '../../types/institution.types';
 import { ConnectAuthority } from './authority/ConnectAuthority';
+import InstitutionDialog from './InstitutionDialog';
+import InstitutionPresentationCard from './InstitutionPresentation';
 import UserCard from './UserCard';
 import UserInfo from './UserInfo';
 import UserLanguage from './UserLanguage';
 import UserOrcid from './UserOrcid';
 import UserRoles from './UserRoles';
-import InstitutionDialog from './InstitutionDialog';
-import { InstitutionUnit } from './../../types/institution.types';
-import InstitutionPresentationCard from './InstitutionPresentation';
 
 const StyledUserPage = styled.div`
   display: grid;
@@ -68,11 +68,7 @@ const User: React.FC = () => {
   useEffect(() => {
     const updateOrcid = async () => {
       if (user.authority?.systemControlNumber && !user.authority?.orcids.includes(user.externalOrcid)) {
-        const updatedAuthority = await updateOrcidForAuthority(
-          user.externalOrcid,
-          user.authority.systemControlNumber,
-          dispatch
-        );
+        const updatedAuthority = await updateOrcidForAuthority(user.externalOrcid, user.authority.systemControlNumber);
         dispatch(setAuthorityData(updatedAuthority));
       }
     };
@@ -117,7 +113,11 @@ const User: React.FC = () => {
         </UserCard>
         <UserOrcid />
         <UserCard headingLabel={t('heading.organizations')}>
-          <InstitutionDialog user={user} title={t('organization.add_institution')} />
+          <InstitutionDialog
+            user={user}
+            title={t('organization.add_institution')}
+            dataTestId="add-institution-dialog"
+          />
           <>
             {institutionPresentations.map((presentation: InstitutionUnit) => (
               <InstitutionPresentationCard

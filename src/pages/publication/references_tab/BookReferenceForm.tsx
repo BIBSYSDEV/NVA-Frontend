@@ -17,7 +17,10 @@ const StyledSection = styled.div`
   display: grid;
   grid-template-areas: 'peer-review text-book';
   grid-template-columns: 1fr 2fr;
-  margin-top: 1rem;
+  margin-top: 0.7rem;
+  padding-top: 0.7rem;
+  padding-left: 0.7rem;
+  background-color: ${({ theme }) => theme.palette.background.default};
 `;
 
 const StyledPeerReview = styled.div`
@@ -95,7 +98,7 @@ const BookReferenceForm: FC = () => {
           <Field name={BookFieldNames.TEXT_BOOK}>
             {({ field: { name, value } }: any) => (
               <>
-                <StyledLabel>{t('references.text_book')}</StyledLabel>
+                <StyledLabel>{t('references.is_text_book')}</StyledLabel>
                 <FormControlLabel
                   control={
                     <Checkbox

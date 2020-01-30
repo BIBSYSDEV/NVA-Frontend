@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import { Backdrop, Dialog, Fade } from '@material-ui/core';
+import { Avatar, Backdrop, Dialog, Fade } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 
 const StyledDialog = styled(Dialog)`
@@ -18,17 +18,32 @@ const StyledPaper = styled.div`
 
 const StyledHeaderContainer = styled.div`
   display: flex;
-  margin: 1rem 1rem 0 1rem;
+  padding: 1rem 0;
   justify-content: space-between;
 `;
 
 const StyledHeading = styled.div`
   font-size: 1.2rem;
   font-weight: bold;
+  grid-area: text;
+  margin-left: 1rem;
 `;
 
 const StyledCloseIcon = styled(CloseIcon)`
   cursor: pointer;
+  margin-right: 1rem;
+`;
+
+const StyledAvatar = styled(Avatar)`
+  grid-area: avatar;
+  margin-left: 1rem;
+`;
+
+const StyledInfoContainer = styled.div`
+  display: grid;
+  grid-template-areas: 'avatar text';
+  grid-template-columns: 1fr 7fr;
+  align-items: center;
 `;
 
 interface ModalProps {
@@ -36,6 +51,8 @@ interface ModalProps {
   ariaLabelledBy?: string;
   children: any;
   dataTestId?: string;
+  disableEscape?: boolean;
+  headingIcon?: any;
   headingText?: string;
   onClose?: () => void;
   openModal?: boolean;
@@ -46,6 +63,8 @@ const Modal: FC<ModalProps> = ({
   ariaLabelledBy,
   children,
   dataTestId,
+  disableEscape,
+  headingIcon,
   headingText,
   onClose,
   openModal,
@@ -69,6 +88,8 @@ const Modal: FC<ModalProps> = ({
         aria-labelledby={ariaDescribedBy}
         aria-describedby={ariaLabelledBy}
         data-testid={dataTestId}
+        disableBackdropClick={disableEscape}
+        disableEscapeKeyDown={disableEscape}
         open={open}
         onClose={handleClose}
         closeAfterTransition
@@ -77,8 +98,15 @@ const Modal: FC<ModalProps> = ({
           timeout: 500,
         }}>
         <StyledHeaderContainer>
-          <StyledHeading>{headingText}</StyledHeading>
-          <StyledCloseIcon onClick={handleClose} />
+          {headingIcon ? (
+            <StyledInfoContainer>
+              {headingIcon && <StyledAvatar src={headingIcon.src} alt={headingIcon.alt} />}
+              <StyledHeading>{headingText}</StyledHeading>
+            </StyledInfoContainer>
+          ) : (
+            <StyledHeading>{headingText}</StyledHeading>
+          )}
+          {!disableEscape && <StyledCloseIcon onClick={handleClose} />}
         </StyledHeaderContainer>
 
         <Fade in={open}>
