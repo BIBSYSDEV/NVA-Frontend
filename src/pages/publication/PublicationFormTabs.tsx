@@ -43,13 +43,7 @@ export const PublicationFormTabs: FC<PublicationFormTabsProps> = ({ handleTabCha
   const { errors, touched }: FormikProps<Publication> = useFormikContext();
 
   return (
-    <Tabs
-      variant="fullWidth"
-      value={tabNumber}
-      onChange={handleTabChange}
-      aria-label="navigation"
-      TabIndicatorProps={{ style: { backgroundColor: 'blue' } }}
-      textColor="primary">
+    <Tabs variant="fullWidth" value={tabNumber} onChange={handleTabChange} aria-label="navigation" textColor="primary">
       <LinkTab
         label={`1. ${t('heading.description')}`}
         {...a11yProps('description')}
