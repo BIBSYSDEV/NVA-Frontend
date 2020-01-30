@@ -50,7 +50,7 @@ const SubmissionPanel: React.FC = () => {
         <SubmissionFilesAndLicenses />
       </Box>
       <StyledPublishButton color="primary" variant="contained">
-        {t('Publish')}
+        {t('publish')}
       </StyledPublishButton>
     </TabPanel>
   );
