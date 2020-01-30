@@ -35,8 +35,8 @@ describe('User adds an institution to their profile', () => {
 
     // check that institution is add to user profile
     cy.get('[data-testid=institution-presentation]').should('be.visible');
-    cy.get('[data-testid=institution-presentation-top]').should('be.visible');
-    cy.get('[data-testid=institution-presentation-subunit-1]').should('be.visible');
-    cy.get('[data-testid=institution-presentation-subunit-2]').should('be.visible');
+    cy.contains('Norges teknisk-naturvitenskapelige universitet').should('be.visible');
+    cy.contains('Fakultet for naturvitenskap').should('be.visible');
+    cy.contains('Institutt for fysikk').should('be.visible');
   });
 });
