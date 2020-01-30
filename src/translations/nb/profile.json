@@ -4,6 +4,7 @@
     "connect_authority": "Koble til din forfatteridentitet",
     "connected_info": "Du har en tilkoblet forfatter ID",
     "create_authority": "Opprett forfatteridentitet",
+    "created_authority": "Forfatteridentitet er opprettet",
     "last_publication": "Siste publikasjon",
     "description_no_authority_found": "Vi finner ikke en forfatteridentitet som passer med ditt navn (hentet fra din pålogging til denne tjenesten). Det vil derfor opprettes en ny forfatteridentitet, slik at du kan ta i bruk denne tjenesten. Om navnet over ikke stemmer med deg, så må du ta kontakt med kurator ved din institusjon for å få korrigert din forfatteridentitet.",
     "no_publications_found": "Ingen utgivelser funnet",

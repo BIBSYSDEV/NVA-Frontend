@@ -7,6 +7,7 @@ import { Button, Radio } from '@material-ui/core';
 
 import { mockSingleAuthorityResponseWithFeide } from '../../../api/mock-interceptor';
 import Progress from '../../../components/Progress';
+import { addNotification } from '../../../redux/actions/notificationActions';
 import { setAuthorityData } from '../../../redux/actions/userActions';
 import { RootStore } from '../../../redux/reducers/rootReducer';
 
@@ -59,11 +60,13 @@ const NewAuthorityCard: React.FC = () => {
     // if (authority) {
     //   setLoading(false);
     //   dispatch(setAuthorityData(authority));
+    //   dispatch(addNotification('authority.created_authority'));
     // }
     // if (USE_MOCK_DATA) {
     setTimeout(() => {
       setLoading(false);
       dispatch(setAuthorityData(mockSingleAuthorityResponseWithFeide));
+      dispatch(addNotification('authority.created_authority'));
     }, [2000]);
     setLoading(true);
     // }
