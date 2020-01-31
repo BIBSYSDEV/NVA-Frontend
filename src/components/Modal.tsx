@@ -13,7 +13,7 @@ const StyledDialog = styled(Dialog)`
 const StyledPaper = styled.div`
   background-color: ${({ theme }) => theme.palette.background};
   margin: 1rem;
-  width: '50rem';
+  width: 35rem;
 `;
 
 const StyledHeaderContainer = styled.div`

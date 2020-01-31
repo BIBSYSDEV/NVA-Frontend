@@ -1,17 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router';
 import styled from 'styled-components';
 
 import { IconButton, InputBase, Paper } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
-
-import { search } from '../api/publicationApi';
-
-interface SearchBarProps {
-  resetSearchInput: boolean;
-}
 
 const StyledPaper = styled(Paper)`
   margin-bottom: 3rem;
@@ -24,36 +16,32 @@ const StyledForm = styled.form`
 
 const StyledInputBase = styled(InputBase)`
   margin-left: 1rem;
-  min-width: 50vw;
-  max-width: 65vw;
 `;
 
-const SearchBar: React.FC<SearchBarProps> = ({ resetSearchInput: resetSearch }) => {
+interface SearchBarProps {
+  handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  handleSearch: () => void;
+  resetSearchInput: boolean;
+  searchTerm: string;
+}
+
+const SearchBar: React.FC<SearchBarProps> = ({ resetSearchInput, handleSearch, handleChange, searchTerm }) => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
-  const history = useHistory();
-  const [searchTerm, setSearchTerm] = useState('');
+  const [displayValue, setDisplayValue] = useState(searchTerm);
 
   useEffect(() => {
-    if (resetSearch) {
-      setSearchTerm('');
+    if (resetSearchInput) {
+      setDisplayValue('');
     }
-  }, [resetSearch]);
+  }, [resetSearchInput]);
 
-  const handleSearch = async () => {
-    if (searchTerm.length) {
-      await search(searchTerm, dispatch);
-      history.push(`/search/${searchTerm}`);
-    }
-  };
+  useEffect(() => {
+    setDisplayValue(searchTerm);
+  }, [searchTerm]);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     handleSearch();
-  };
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(event.target.value);
   };
 
   return (
@@ -64,7 +52,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ resetSearchInput: resetSearch }) 
           data-testid="search-input"
           placeholder={t('common:search')}
           onChange={handleChange}
-          value={searchTerm}
+          value={displayValue}
         />
         <IconButton type="submit" data-testid="search-button">
           <SearchIcon />
