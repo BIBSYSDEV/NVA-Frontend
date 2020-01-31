@@ -17,6 +17,7 @@ import SubmissionFilesAndLicenses from './submission_tab/submission_files_licens
 import SubmissionContributors from './submission_tab/submission_contributors';
 import { ReferenceType } from '../../types/references.types';
 import SubmissionContentText from './submission_tab/submission_content_text';
+import FormHeading from './FormHeading';
 
 const StyledPublishButton = styled(Button)`
   margin-top: 0.5rem;
@@ -29,24 +30,24 @@ const SubmissionPanel: React.FC = () => {
   return (
     <TabPanel ariaLabel="submission">
       <Box>
-        <Typography variant="h1">{t('heading.summary')}</Typography>
+        <FormHeading variant="h1">{t('heading.summary')}</FormHeading>
         <hr />
         <SubmissionContentText>{values.title.nb}</SubmissionContentText>
 
-        <Typography variant="h2">{t('heading.description')}</Typography>
+        <FormHeading variant="h2">{t('heading.description')}</FormHeading>
         <SubmissionDescription />
 
-        <Typography variant="h2">{t('heading.references')}</Typography>
+        <FormHeading variant="h2">{t('heading.references')}</FormHeading>
         {values.reference.type === ReferenceType.BOOK && <SubmissionBook />}
         {values.reference.type === ReferenceType.DEGREE && <SubmissionDegree />}
         {values.reference.type === ReferenceType.CHAPTER && <SubmissionChapter />}
         {values.reference.type === ReferenceType.REPORT && <SubmissionReport />}
         {values.reference.type === ReferenceType.PUBLICATION_IN_JOURNAL && <SubmissionJournalPublication />}
 
-        <Typography variant="h2">{t('heading.contributors')}</Typography>
+        <FormHeading variant="h2">{t('heading.contributors')}</FormHeading>
         <SubmissionContributors />
 
-        <Typography variant="h2">{t('heading.files_and_license')}</Typography>
+        <FormHeading variant="h2">{t('heading.files_and_license')}</FormHeading>
         <SubmissionFilesAndLicenses />
       </Box>
       <StyledPublishButton color="primary" variant="contained">
