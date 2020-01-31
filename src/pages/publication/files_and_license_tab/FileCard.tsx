@@ -13,7 +13,7 @@ import {
   TextField,
   MenuItem,
 } from '@material-ui/core';
-import { File, licenses, License } from '../../../types/license.types';
+import { File, licenses, License } from '../../../types/file.types';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import { useTranslation } from 'react-i18next';
