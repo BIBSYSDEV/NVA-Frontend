@@ -18,6 +18,7 @@ interface props {
   variant: any;
 }
 
+//EXAMPLE 1 : with props.
 const FormHeading: FC<props> = ({ children, variant }) => {
   return <StyledTypography variant={variant}>{children}</StyledTypography>;
 };

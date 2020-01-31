@@ -5,7 +5,7 @@ import Box from '../../components/Box';
 import TabPanel from '../../components/TabPanel/TabPanel';
 import { FormikProps, useFormikContext } from 'formik';
 import { Publication } from '../../types/publication.types';
-import { Button, Typography } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import styled from 'styled-components';
 import SubmissionBook from './submission_tab/submission_book';
 import SubmissionDegree from './submission_tab/submission_degree';
@@ -18,6 +18,7 @@ import SubmissionContributors from './submission_tab/submission_contributors';
 import { ReferenceType } from '../../types/references.types';
 import SubmissionContentText from './submission_tab/submission_content_text';
 import FormHeading from './FormHeading';
+import FormHeadingForBox from './FormHeadingForBox';
 
 const StyledPublishButton = styled(Button)`
   margin-top: 0.5rem;
@@ -30,6 +31,7 @@ const SubmissionPanel: React.FC = () => {
   return (
     <TabPanel ariaLabel="submission">
       <Box>
+        <FormHeadingForBox>{t('heading.summary')}</FormHeadingForBox>
         <FormHeading variant="h1">{t('heading.summary')}</FormHeading>
         <hr />
         <SubmissionContentText>{values.title.nb}</SubmissionContentText>
