@@ -82,7 +82,7 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, updateFile }) => 
             <FormLabel component="legend">{t('files_and_license.select_version')}</FormLabel>
             <RadioGroup
               aria-label="version"
-              value={file.isPublished}
+              value={file.isPublished ? 'published' : 'accepted'}
               onChange={event =>
                 updateFile({
                   ...file,
@@ -123,7 +123,7 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, updateFile }) => 
             <StyledSelect
               select
               variant="outlined"
-              defaultValue={file.license}
+              value={file.license}
               label={t('files_and_license.license')}
               onChange={({ target: { value } }) => {
                 updateFile({
