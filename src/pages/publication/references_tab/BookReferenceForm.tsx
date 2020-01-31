@@ -12,6 +12,8 @@ import NviValidation from './components/NviValidation';
 import PeerReview from './components/PeerReview';
 import PublicationChannelSearch from './components/PublicationChannelSearch';
 import PublisherRow from './components/PublisherRow';
+import FormCardSubHeading from '../../../components/FormCardSubHeading';
+import FormCardLabel from '../../../components/FormCardLabel';
 
 const StyledSection = styled.div`
   display: grid;
@@ -35,11 +37,6 @@ const StyledLabel = styled.div`
   color: ${({ theme }) => theme.palette.text.primary};
   font-size: 1rem;
   font-weight: bold;
-`;
-
-const StyledHeading = styled.div`
-  font-size: 1.5rem;
-  padding-top: 1.5rem;
 `;
 
 const BookReferenceForm: FC = () => {
@@ -124,8 +121,8 @@ const BookReferenceForm: FC = () => {
           />
         )}
       </Field>
-      <StyledHeading>{t('references.series')}</StyledHeading>
-      <StyledLabel>{t('references.series_info')}</StyledLabel>
+      <FormCardSubHeading>{t('references.series')}</FormCardSubHeading>
+      <FormCardLabel>{t('references.series_info')}</FormCardLabel>
       <Field name={BookFieldNames.SERIES}>
         {({ field: { name, value } }: any) => (
           <>
