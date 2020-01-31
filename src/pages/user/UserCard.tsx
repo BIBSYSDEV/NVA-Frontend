@@ -1,8 +1,8 @@
 import React, { ReactNode } from 'react';
 import styled from 'styled-components';
+import { Card } from '@material-ui/core';
 
-const StyledUserCard = styled.div`
-  background-color: ${({ theme }) => theme.palette.box.main};
+const StyledUserCard = styled(Card)`
   @media (min-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
     padding: 2rem;
   }
@@ -37,7 +37,7 @@ interface UserCardProps {
 }
 
 const UserCard: React.FC<UserCardProps> = ({ headingLabel, headingIcon, subHeadingLabel, children }) => (
-  <StyledUserCard>
+  <StyledUserCard variant="outlined">
     <StyledHeading>
       <>
         {headingIcon && <StyledIcon>{headingIcon}</StyledIcon>}

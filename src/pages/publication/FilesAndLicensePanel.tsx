@@ -1,13 +1,13 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-
-import Box from '../../components/Box';
 import TabPanel from '../../components/TabPanel/TabPanel';
 import FileUploader from './files_and_license_tab/FileUploader';
 import FileCard from './files_and_license_tab/FileCard';
 import styled from 'styled-components';
-import { useFormikContext, FormikProps, FieldArray } from 'formik';
+import { FieldArray, FormikProps, useFormikContext } from 'formik';
 import { Publication } from '../../types/publication.types';
+import FormCard from './FormCard';
+import FormCardHeading from '../../components/FormCardHeading';
 
 const StyledUploadedFiles = styled.section`
   display: flex;
@@ -17,7 +17,6 @@ const StyledUploadedFiles = styled.section`
     margin-bottom: 1rem;
   }
 `;
-
 enum FilesFieldNames {
   FILES = 'files',
 }
@@ -37,15 +36,15 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab
       <FieldArray name={FilesFieldNames.FILES}>
         {({ push, remove, replace }) => (
           <>
-            <h1>{t('files_and_license.upload_files')}</h1>
-            <Box>
+            <FormCard>
+              <FormCardHeading>{t('files_and_license.upload_files')}</FormCardHeading>
               <FileUploader
                 uppy={uppy}
                 addFile={file => {
                   push(file);
                 }}
               />
-            </Box>
+            </FormCard>
             {uploadedFiles.length > 0 && (
               <>
                 <h1>{t('files_and_license.files')}</h1>

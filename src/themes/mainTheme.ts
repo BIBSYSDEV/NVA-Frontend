@@ -119,6 +119,11 @@ export default createMuiTheme({
         },
       },
     },
+    MuiCard: {
+      root: {
+        backgroundColor: Colors.Box,
+      },
+    },
     MuiTextField: {
       root: {
         marginTop: '1rem',

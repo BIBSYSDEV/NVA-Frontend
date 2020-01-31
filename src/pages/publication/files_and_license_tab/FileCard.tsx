@@ -1,25 +1,23 @@
 import React from 'react';
-import Box from '../../../components/Box';
 import styled from 'styled-components';
 import {
   Button,
-  Link,
-  FormControlLabel,
   Checkbox,
   FormControl,
+  FormControlLabel,
   FormLabel,
-  RadioGroup,
+  Link,
   Radio,
+  RadioGroup,
   TextField,
 } from '@material-ui/core';
 import { File } from '../../../types/license.types';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import { useTranslation } from 'react-i18next';
+import FormCard from '../FormCard';
+import FormCardHeading from '../../../components/FormCardHeading';
 
-const StyledTitle = styled.div`
-  font-weight: bold;
-`;
 const StyledDescription = styled.div`
   font-style: italic;
 `;
@@ -45,8 +43,8 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, updateFile }) => 
   const { t } = useTranslation('publication');
 
   return (
-    <Box>
-      <StyledTitle>{file.name}</StyledTitle>
+    <FormCard>
+      <FormCardHeading>{file.name}</FormCardHeading>
       <StyledDescription>
         {t('files_and_license.uploaded_size', { size: Math.round(file.data.size / 1000) })}
       </StyledDescription>
@@ -124,7 +122,7 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, updateFile }) => 
         </Link>
         <Button onClick={removeFile}>{t('common:remove')}</Button>
       </StyledActions>
-    </Box>
+    </FormCard>
   );
 };
 

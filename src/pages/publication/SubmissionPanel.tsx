@@ -1,7 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-import Box from '../../components/Box';
 import TabPanel from '../../components/TabPanel/TabPanel';
 import { FormikProps, useFormikContext } from 'formik';
 import { Publication } from '../../types/publication.types';
@@ -16,9 +15,9 @@ import SubmissionDescription from './submission_tab/submission_description';
 import SubmissionFilesAndLicenses from './submission_tab/submission_files_licenses';
 import SubmissionContributors from './submission_tab/submission_contributors';
 import { ReferenceType } from '../../types/references.types';
-import SubmissionContentText from './submission_tab/submission_content_text';
-import FormHeading from './FormHeading';
-import FormHeadingForBox from './FormHeadingForBox';
+import FormCardHeading from '../../components/FormCardHeading';
+import FormCardSubHeading from '../../components/FormCardSubHeading';
+import FormCard from './FormCard';
 
 const StyledPublishButton = styled(Button)`
   margin-top: 0.5rem;
@@ -30,28 +29,29 @@ const SubmissionPanel: React.FC = () => {
 
   return (
     <TabPanel ariaLabel="submission">
-      <Box>
-        <FormHeadingForBox>{t('heading.summary')}</FormHeadingForBox>
-        <FormHeading variant="h1">{t('heading.summary')}</FormHeading>
-        <hr />
-        <SubmissionContentText>{values.title.nb}</SubmissionContentText>
+      <FormCard>
+        <FormCardHeading>{t('heading.summary')}</FormCardHeading>
 
-        <FormHeading variant="h2">{t('heading.description')}</FormHeading>
+        <FormCardSubHeading>{t('heading.description')}</FormCardSubHeading>
+        <hr />
         <SubmissionDescription />
 
-        <FormHeading variant="h2">{t('heading.references')}</FormHeading>
+        <FormCardSubHeading>{t('heading.references')}</FormCardSubHeading>
+        <hr />
         {values.reference.type === ReferenceType.BOOK && <SubmissionBook />}
         {values.reference.type === ReferenceType.DEGREE && <SubmissionDegree />}
         {values.reference.type === ReferenceType.CHAPTER && <SubmissionChapter />}
         {values.reference.type === ReferenceType.REPORT && <SubmissionReport />}
         {values.reference.type === ReferenceType.PUBLICATION_IN_JOURNAL && <SubmissionJournalPublication />}
 
-        <FormHeading variant="h2">{t('heading.contributors')}</FormHeading>
+        <FormCardSubHeading>{t('heading.contributors')}</FormCardSubHeading>
+        <hr />
         <SubmissionContributors />
 
-        <FormHeading variant="h2">{t('heading.files_and_license')}</FormHeading>
+        <FormCardSubHeading>{t('heading.files_and_license')}</FormCardSubHeading>
+        <hr />
         <SubmissionFilesAndLicenses />
-      </Box>
+      </FormCard>
       <StyledPublishButton color="primary" variant="contained">
         {t('publish')}
       </StyledPublishButton>

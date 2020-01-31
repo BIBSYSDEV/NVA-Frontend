@@ -1,11 +1,10 @@
-import { Field, FormikProps, useFormikContext, ErrorMessage } from 'formik';
+import { ErrorMessage, Field, FormikProps, useFormikContext } from 'formik';
 import React, { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import { FormControl, MenuItem, FormHelperText, TextField } from '@material-ui/core';
+import { FormControl, FormHelperText, MenuItem, TextField } from '@material-ui/core';
 
-import Box from '../../components/Box';
 import TabPanel from '../../components/TabPanel/TabPanel';
 import { Publication } from '../../types/publication.types';
 import {
@@ -23,6 +22,7 @@ import ChapterReferenceForm from './references_tab/ChapterReferenceForm';
 import DegreeReferenceForm from './references_tab/DegreeReferenceForm';
 import JournalArticleReferenceForm from './references_tab/JournalArticleReferenceForm';
 import ReportReferenceForm from './references_tab/ReportReferenceForm';
+import FormCard from './FormCard';
 
 const StyledBox = styled.div`
   margin-top: 1rem;
@@ -101,7 +101,7 @@ export const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, s
 
       {type && (
         <StyledBox>
-          <Box>
+          <FormCard>
             <StyledTypeHeading data-testid="reference_type-heading">
               {t(referenceTypeLanguageKeyMap[type])}
             </StyledTypeHeading>
@@ -110,7 +110,7 @@ export const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, s
             {type === ReferenceType.REPORT && <ReportReferenceForm />}
             {type === ReferenceType.DEGREE && <DegreeReferenceForm />}
             {type === ReferenceType.PUBLICATION_IN_JOURNAL && <JournalArticleReferenceForm />}
-          </Box>
+          </FormCard>
         </StyledBox>
       )}
     </TabPanel>
