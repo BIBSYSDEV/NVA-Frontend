@@ -123,7 +123,7 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, updateFile }) => 
             <StyledSelect
               select
               variant="outlined"
-              defaultValue=""
+              defaultValue={file.license}
               label={t('files_and_license.license')}
               onChange={({ target: { value } }) => {
                 updateFile({
