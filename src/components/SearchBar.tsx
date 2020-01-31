@@ -16,6 +16,7 @@ const StyledForm = styled.form`
 
 const StyledInputBase = styled(InputBase)`
   margin-left: 1rem;
+  width: 90%;
 `;
 
 interface SearchBarProps {

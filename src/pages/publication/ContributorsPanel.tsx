@@ -17,6 +17,9 @@ import AuthorityCard from '../user/authority/AuthorityCard';
 
 const StyledClickableDiv = styled.div`
   cursor: pointer;
+  align-items: center;
+  background-color: ${({ theme }) => theme.palette.box.main};
+  padding-right: 1rem;
 `;
 
 const StyledSearchBarContainer = styled.div`
@@ -29,7 +32,7 @@ interface ContributorsPanelProps {
 }
 
 const ContributorsPanel: React.FC<ContributorsPanelProps> = ({ goToNextTab, savePublication }) => {
-  const { t } = useTranslation('profile');
+  const { t } = useTranslation('publication');
   const dispatch = useDispatch();
   const [selectedAuthor, setSelectedAuthor] = useState<Authority>(emptyAuthority);
   const [matchingAuthorities, setMatchingAuthorities] = useState<Authority[]>();
@@ -93,7 +96,7 @@ const ContributorsPanel: React.FC<ContributorsPanelProps> = ({ goToNextTab, save
                     console.log('add author', selectedAuthor);
                   }}
                   disabled={!selectedAuthor}>
-                  {t('authority.connect_authority')}
+                  {t('common:add')}
                 </Button>
               </>
             ) : (

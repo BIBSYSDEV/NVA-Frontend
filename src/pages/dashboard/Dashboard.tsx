@@ -24,6 +24,10 @@ const StyledOtherContent = styled.div`
   grid-area: search-bar;
 `;
 
+const StyledSearchBarContainer = styled.div`
+  width: 35rem;
+`;
+
 const Dashboard: FC = () => {
   const history = useHistory();
   const dispatch = useDispatch();
@@ -42,13 +46,14 @@ const Dashboard: FC = () => {
 
   return (
     <StyledDashboard>
-      <StyledSearchBar
-        resetSearchInput
-        handleSearch={handleSearch}
-        handleChange={handleChange}
-        searchTerm={searchTerm}
-      />
-
+      <StyledSearchBarContainer>
+        <StyledSearchBar
+          resetSearchInput
+          handleSearch={handleSearch}
+          handleChange={handleChange}
+          searchTerm={searchTerm}
+        />
+      </StyledSearchBarContainer>
       <StyledOtherContent>Annet innhold</StyledOtherContent>
     </StyledDashboard>
   );
