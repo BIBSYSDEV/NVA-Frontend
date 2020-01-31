@@ -11,11 +11,13 @@ import {
   RadioGroup,
   Radio,
   TextField,
+  MenuItem,
 } from '@material-ui/core';
-import { File } from '../../../types/license.types';
+import { File, licenses, License } from '../../../types/license.types';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import { useTranslation } from 'react-i18next';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
 
 const StyledTitle = styled.div`
   font-weight: bold;
@@ -33,6 +35,13 @@ const StyledFormControl = styled(FormControl)`
 const StyledFileInfo = styled.div`
   display: flex;
   justify-content: space-between;
+`;
+
+const StyledSelect = styled(TextField)`
+  .MuiSelect-root {
+    /* Ensure input height isn't expanded due to image content */
+    height: 1.1875rem;
+  }
 `;
 
 interface FileCardProps {
@@ -111,7 +120,25 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, updateFile }) => 
           </StyledFormControl>
 
           <StyledFormControl>
-            <TextField select variant="outlined" label={t('files_and_license.license')}></TextField>
+            <StyledSelect
+              select
+              variant="outlined"
+              defaultValue=""
+              label={t('files_and_license.license')}
+              onChange={({ target: { value } }) => {
+                updateFile({
+                  ...file,
+                  license: value,
+                });
+              }}>
+              {licenses.map((license: License) => (
+                <MenuItem key={license.name} value={license.name} divider dense>
+                  <ListItemIcon>
+                    <img src={license.image} alt={license.name} />
+                  </ListItemIcon>
+                </MenuItem>
+              ))}
+            </StyledSelect>
           </StyledFormControl>
         </StyledFileInfo>
       )}
