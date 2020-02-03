@@ -49,6 +49,7 @@ const StyledSelect = styled(TextField)`
 const StyledLicenseSelector = styled.div`
   display: flex;
   flex-direction: row;
+  align-items: center;
 `;
 
 interface FileCardProps {
