@@ -41,7 +41,13 @@ export const licenses: License[] = [
     name: 'CC BY-NC-ND',
     image: LicenseImages.ccByNcNdImage,
     description:
-      'Denne lisensen er den mest restriktive av våre seks kjernelisenser. Den tillater andre å laste ned ditt verk og dele dem med andre så lenge du er navngitt som opphavspersonen, men de kan ikke endre dem på noen måte, eller bruke dem kommersielt.',
+      'This license is the most restrictive of our six main licenses, only allowing others to download your works and share them with others as long as they credit you, but they can’t change them in any way or use them commercially.',
+  },
+  {
+    name: 'CC0',
+    image: LicenseImages.cc0Image,
+    description:
+      'CC0 enables scientists, educators, artists and other creators and owners of copyright- or database-protected content to waive those interests in their works and thereby place them as completely as possible in the public domain, so that others may freely build upon, enhance and reuse the works for any purposes without restriction under copyright or database law.',
   },
 ];
 
