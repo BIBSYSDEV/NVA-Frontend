@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { Button, Typography } from '@material-ui/core';
 
 import { getAuthorities } from '../../../api/authorityApi';
-import ButtonModal from '../../../components/ButtonModal';
+import Modal from '../../../components/Modal';
 import SearchBar from '../../../components/SearchBar';
 import { searchFailure } from '../../../redux/actions/searchActions';
 import { Authority, emptyAuthority } from '../../../types/authority.types';
@@ -41,11 +41,19 @@ const AddContributor: FC = () => {
   const [selectedAuthor, setSelectedAuthor] = useState<Authority>(emptyAuthority);
   const [matchingAuthorities, setMatchingAuthorities] = useState<Authority[]>();
   const [searchTerm, setSearchTerm] = useState('');
-  const [authorAdded, setAuthorAdded] = useState(false);
   const [displayValue, setDisplayValue] = useState<DisplayValue>({
     searchTerm: '',
     results: 0,
   });
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const search = useCallback(
     debounce(async (searchTerm: string) => {
@@ -71,54 +79,64 @@ const AddContributor: FC = () => {
   };
 
   return (
-    <ButtonModal buttonText={t('contributors.add_author')} headingText={t('contributors.add_author')}>
-      <>
-        <StyledSearchBarContainer>
-          <SearchBar
-            handleSearch={handleSearch}
-            handleChange={handleChange}
-            searchTerm={searchTerm}
-            resetSearchInput={false}
-          />
-        </StyledSearchBarContainer>
-        {matchingAuthorities && matchingAuthorities.length > 0 ? (
+    <>
+      <Button onClick={handleOpen} variant="contained" color="primary" data-testid="">
+        {t('contributors.add_author')}
+      </Button>
+      {open && (
+        <Modal
+          ariaDescribedBy=""
+          ariaLabelledBy=""
+          headingText={t('contributors.add_author')}
+          onClose={handleClose}
+          openModal={open}>
           <>
-            <Typography variant="h3">
-              {t('profile:authority.search_summary', {
-                searchTerm: displayValue.searchTerm,
-                results: displayValue.results,
-              })}
-            </Typography>
-            {matchingAuthorities.map(authority => (
-              <StyledClickableDiv
-                data-testid="author-radio-button"
-                key={authority.systemControlNumber}
-                onClick={() => setSelectedAuthor(authority)}>
-                <AuthorityCard
-                  authority={authority}
-                  isSelected={selectedAuthor.systemControlNumber === authority.systemControlNumber}
-                />
-              </StyledClickableDiv>
-            ))}
-            <StyledButtonContainer>
-              <Button
-                color="primary"
-                data-testid="connect-author-button"
-                disabled={!selectedAuthor.systemControlNumber}
-                onClick={() => {
-                  console.log('add author', selectedAuthor);
-                }}
-                size="large"
-                variant="contained">
-                {t('common:add')}
-              </Button>
-            </StyledButtonContainer>
+            <StyledSearchBarContainer>
+              <SearchBar
+                handleSearch={handleSearch}
+                handleChange={handleChange}
+                searchTerm={searchTerm}
+                resetSearchInput={false}
+              />
+            </StyledSearchBarContainer>
+            {matchingAuthorities && matchingAuthorities.length > 0 ? (
+              <>
+                <Typography variant="h3">
+                  {t('profile:authority.search_summary', {
+                    searchTerm: displayValue.searchTerm,
+                    results: displayValue.results,
+                  })}
+                </Typography>
+                {matchingAuthorities.map(authority => (
+                  <StyledClickableDiv
+                    data-testid="author-radio-button"
+                    key={authority.systemControlNumber}
+                    onClick={() => setSelectedAuthor(authority)}>
+                    <AuthorityCard
+                      authority={authority}
+                      isSelected={selectedAuthor.systemControlNumber === authority.systemControlNumber}
+                    />
+                  </StyledClickableDiv>
+                ))}
+                <StyledButtonContainer>
+                  <Button
+                    color="primary"
+                    data-testid="connect-author-button"
+                    disabled={!selectedAuthor.systemControlNumber}
+                    onClick={handleClose}
+                    size="large"
+                    variant="contained">
+                    {t('common:add')}
+                  </Button>
+                </StyledButtonContainer>
+              </>
+            ) : (
+              <div>Ingen treff</div>
+            )}
           </>
-        ) : (
-          <div>Ingen treff</div>
-        )}
-      </>
-    </ButtonModal>
+        </Modal>
+      )}
+    </>
   );
 };
 
