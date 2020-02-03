@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, ReactNode } from 'react';
 import { Typography } from '@material-ui/core';
 import styled from 'styled-components';
 
@@ -7,11 +7,11 @@ const StyledTypography = styled(Typography)`
   font-weight: bold;
 `;
 
-interface props {
-  children: any;
+interface FormCardLabelProps {
+  children: ReactNode;
 }
 
-const FormCardLabel: FC<props> = ({ children }) => {
+const FormCardLabel: FC<FormCardLabelProps> = ({ children }) => {
   return <StyledTypography variant="h4">{children}</StyledTypography>;
 };
 
