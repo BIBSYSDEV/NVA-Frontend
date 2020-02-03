@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { Button, Link as MuiLink } from '@material-ui/core';
+import { Button, Card, Link as MuiLink } from '@material-ui/core';
 
 import LinkPublication from './new_publication/LinkPublication';
 import LoadPublication from './new_publication/LoadPublication';
@@ -31,8 +31,7 @@ const StyledSelectorWrapper = styled.div`
   }
 `;
 
-const StyledInfoBox = styled.div`
-  background-color: ${({ theme }) => theme.palette.box.main};
+const StyledCard = styled(Card)`
   padding: 1rem;
   max-width: 25rem;
   flex: 1;
@@ -75,7 +74,7 @@ const NewPublication: FC = () => {
                 openForm={handleClick}
               />
             </StyledSelectorWrapper>
-            <StyledInfoBox>
+            <StyledCard variant="outlined">
               <FormCardHeading>{t('common:information')}</FormCardHeading>
               <section>
                 Velg publikasjoner Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
@@ -87,7 +86,7 @@ const NewPublication: FC = () => {
               <MuiLink component={Link} to={'/'} underline={'none'}>
                 Hvilke type publikasjoner kan jeg laste opp
               </MuiLink>
-            </StyledInfoBox>
+            </StyledCard>
           </StyledNewPublication>
           {/* temporary button so that we can navigate to schema */}
           <StyledButton color="primary" variant="contained" data-testid="new-schema-button" onClick={handleClick}>

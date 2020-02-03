@@ -7,6 +7,7 @@ const StyledCard = styled(Card)`
     padding: 2rem;
   }
   padding: 0.5rem;
+  margin-bottom: 1rem;
 `;
 
 interface UserCardProps {
