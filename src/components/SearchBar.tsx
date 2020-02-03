@@ -6,7 +6,7 @@ import { IconButton, InputBase, Paper } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 
 const StyledPaper = styled(Paper)`
-  margin-bottom: 3rem;
+  margin-bottom: 1rem;
 `;
 
 const StyledForm = styled.form`

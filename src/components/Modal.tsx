@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import { Avatar, Backdrop, Dialog, Fade } from '@material-ui/core';
+import { Avatar, Backdrop, Dialog, Fade, Typography } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 
 const StyledDialog = styled(Dialog)`
@@ -22,8 +22,7 @@ const StyledHeaderContainer = styled.div`
   justify-content: space-between;
 `;
 
-const StyledHeading = styled.div`
-  font-size: 1.2rem;
+const StyledTypography = styled(Typography)`
   font-weight: bold;
   grid-area: text;
   margin-left: 1rem;
@@ -101,10 +100,10 @@ const Modal: FC<ModalProps> = ({
           {headingIcon ? (
             <StyledInfoContainer>
               {headingIcon && <StyledAvatar src={headingIcon.src} alt={headingIcon.alt} />}
-              <StyledHeading>{headingText}</StyledHeading>
+              <StyledTypography variant="h3">{headingText}</StyledTypography>
             </StyledInfoContainer>
           ) : (
-            <StyledHeading>{headingText}</StyledHeading>
+            <StyledTypography variant="h3">{headingText}</StyledTypography>
           )}
           {!disableEscape && <StyledCloseIcon onClick={handleClose} />}
         </StyledHeaderContainer>
