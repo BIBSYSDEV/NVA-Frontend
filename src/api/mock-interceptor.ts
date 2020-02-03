@@ -5,16 +5,16 @@ import { Authority } from '../types/authority.types';
 import OrcidResponse from '../types/orcid.types';
 import { API_URL, ORCID_USER_INFO_URL } from '../utils/constants';
 import mockDoiLookupResponse from '../utils/testfiles/doi_lookup_response.json';
+import mockFacultyResponse from '../utils/testfiles/institution_faculty_query.json';
+import mockInstituteResponse from '../utils/testfiles/institution_institute_query.json';
+import mockInstitutionResponse from '../utils/testfiles/institution_query.json';
 import mockAuthoritiesResponse from '../utils/testfiles/mock_authorities_response.json';
 import mockProjects from '../utils/testfiles/projects_real.json';
 import mockPublications from '../utils/testfiles/publications_45_random_results_generated.json';
 import mockNsdPublisers from '../utils/testfiles/publishersFromNsd.json';
-import mockInstitutionResponse from '../utils/testfiles/institution_query.json';
-import mockFacultyResponse from '../utils/testfiles/institution_faculty_query.json';
-import mockInstituteResponse from '../utils/testfiles/institution_institute_query.json';
 import { AuthorityApiPaths } from './authorityApi';
-import { ProjectsApiPaths } from './projectApi';
 import { InstituionApiPaths } from './institutionApi';
+import { ProjectsApiPaths } from './projectApi';
 import { PublicationsApiPaths } from './publicationApi';
 import { PublicationChannelApiPaths } from './publicationChannelApi';
 
@@ -29,7 +29,7 @@ const mockOrcidResponse: OrcidResponse = {
   given_name: 'Sofia',
 };
 
-const mockSingleAuthorityResponseWithFeide: Authority = {
+export const mockSingleAuthorityResponseWithFeide: Authority = {
   name: 'Test User',
   systemControlNumber: '901790000000',
   feideids: ['tu@unit.no'],
