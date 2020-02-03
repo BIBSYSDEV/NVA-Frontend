@@ -6,12 +6,12 @@ const StyledTypography = styled(Typography)`
   font-size: 1.2rem;
 `;
 
-interface FormCardLabelPropsProps {
+interface FormCardSubHeadingProps {
   children: ReactNode;
 }
 
-const FormCardLabelProps: FC<FormCardLabelPropsProps> = ({ children }) => {
-  return <StyledTypography variant="h3">{children}</StyledTypography>;
-};
+const FormCardSubHeading: FC<FormCardSubHeadingProps> = ({ children }) => (
+  <StyledTypography variant="h3">{children}</StyledTypography>
+);
 
 export default FormCardSubHeading;

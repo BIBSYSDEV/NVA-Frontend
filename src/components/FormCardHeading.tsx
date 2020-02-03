@@ -11,8 +11,8 @@ interface FormCardHeadingProps {
   children: ReactNode;
 }
 
-const FormCardHeading: FC<FormCardHeadingProps> = ({ children }) => {
-  return <StyledTypography variant="h2">{children}</StyledTypography>;
-};
+const FormCardHeading: FC<FormCardHeadingProps> = ({ children }) => (
+  <StyledTypography variant="h2">{children}</StyledTypography>
+);
 
 export default FormCardHeading;
