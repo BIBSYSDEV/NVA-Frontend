@@ -115,7 +115,7 @@ const AddContributorModal: FC<AddContributorModalProps> = ({ addAuthor }) => {
           </StyledButtonContainer>
         </>
       ) : (
-        <div>Ingen treff</div>
+        <Typography variant="body1">{t('common:no_hits')}</Typography>
       )}
     </>
   );

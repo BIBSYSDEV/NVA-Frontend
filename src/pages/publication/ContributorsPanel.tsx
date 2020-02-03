@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 
 import Box from '../../components/Box';
 import TabPanel from '../../components/TabPanel/TabPanel';
@@ -9,14 +9,12 @@ interface ContributorsPanelProps {
   savePublication: (event: React.MouseEvent<any>) => void;
 }
 
-const ContributorsPanel: React.FC<ContributorsPanelProps> = ({ goToNextTab, savePublication }) => {
-  return (
-    <TabPanel ariaLabel="references" goToNextTab={goToNextTab} onClickSave={savePublication}>
-      <Box>
-        <AddContributor />
-      </Box>
-    </TabPanel>
-  );
-};
+const ContributorsPanel: FC<ContributorsPanelProps> = ({ goToNextTab, savePublication }) => (
+  <TabPanel ariaLabel="references" goToNextTab={goToNextTab} onClickSave={savePublication}>
+    <Box>
+      <AddContributor />
+    </Box>
+  </TabPanel>
+);
 
 export default ContributorsPanel;
