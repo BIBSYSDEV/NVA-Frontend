@@ -49,13 +49,13 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab
       <FieldArray name={FilesFieldNames.FILES}>
         {({ push, remove, replace }) => (
           <>
-            <h1>{t('files_and_license.upload_files')}</h1>
+            <Typography variant="h2">{t('files_and_license.upload_files')}</Typography>
             <Box>
               <FileUploader uppy={uppy} addFile={file => push(file)} />
             </Box>
             {uploadedFiles.length > 0 && (
               <>
-                <h1>{t('files_and_license.files')}</h1>
+                <Typography variant="h2">{t('files_and_license.files')}</Typography>
                 <StyledUploadedFiles>
                   {uploadedFiles.map((file, i) => (
                     <FileCard
