@@ -12,12 +12,14 @@ import {
   Radio,
   TextField,
   MenuItem,
+  IconButton,
 } from '@material-ui/core';
 import { File, licenses, License } from '../../../types/file.types';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import { useTranslation } from 'react-i18next';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
+import HelpIcon from '@material-ui/icons/Help';
 
 const StyledTitle = styled.div`
   font-weight: bold;
@@ -44,13 +46,19 @@ const StyledSelect = styled(TextField)`
   }
 `;
 
+const StyledLicenseSelector = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
 interface FileCardProps {
   file: File;
   removeFile: () => void;
   updateFile: (newFile: File) => void;
+  toggleLicenseModal: () => void;
 }
 
-const FileCard: React.FC<FileCardProps> = ({ file, removeFile, updateFile }) => {
+const FileCard: React.FC<FileCardProps> = ({ file, removeFile, updateFile, toggleLicenseModal }) => {
   const { t } = useTranslation('publication');
 
   return (
@@ -120,25 +128,31 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, updateFile }) => 
           </StyledFormControl>
 
           <StyledFormControl>
-            <StyledSelect
-              select
-              variant="outlined"
-              value={file.license}
-              label={t('files_and_license.license')}
-              onChange={({ target: { value } }) => {
-                updateFile({
-                  ...file,
-                  license: value,
-                });
-              }}>
-              {licenses.map((license: License) => (
-                <MenuItem key={license.name} value={license.name} divider dense>
-                  <ListItemIcon>
-                    <img src={license.image} alt={license.name} />
-                  </ListItemIcon>
-                </MenuItem>
-              ))}
-            </StyledSelect>
+            <StyledLicenseSelector>
+              <StyledSelect
+                select
+                fullWidth
+                variant="outlined"
+                value={file.license}
+                label={t('files_and_license.license')}
+                onChange={({ target: { value } }) => {
+                  updateFile({
+                    ...file,
+                    license: value,
+                  });
+                }}>
+                {licenses.map((license: License) => (
+                  <MenuItem key={license.name} value={license.name} divider dense>
+                    <ListItemIcon>
+                      <img src={license.image} alt={license.name} />
+                    </ListItemIcon>
+                  </MenuItem>
+                ))}
+              </StyledSelect>
+              <IconButton size="small" onClick={toggleLicenseModal}>
+                <HelpIcon />
+              </IconButton>
+            </StyledLicenseSelector>
           </StyledFormControl>
         </StyledFileInfo>
       )}

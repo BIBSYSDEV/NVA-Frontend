@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import Box from '../../components/Box';
@@ -8,6 +8,9 @@ import FileCard from './files_and_license_tab/FileCard';
 import styled from 'styled-components';
 import { useFormikContext, FormikProps, FieldArray } from 'formik';
 import { Publication } from '../../types/publication.types';
+import Modal from '../../components/Modal';
+import { licenses } from '../../types/file.types';
+import { Typography } from '@material-ui/core';
 
 const StyledUploadedFiles = styled.section`
   display: flex;
@@ -16,6 +19,10 @@ const StyledUploadedFiles = styled.section`
   > * {
     margin-bottom: 1rem;
   }
+`;
+
+const StyledLicenseDescription = styled.article`
+  margin-bottom: 1rem;
 `;
 
 enum FilesFieldNames {
@@ -30,7 +37,12 @@ interface FilesAndLicensePanelProps {
 const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab, uppy }) => {
   const { t } = useTranslation('publication');
   const { values }: FormikProps<Publication> = useFormikContext();
+  const [openLicenseModal, setOpenLicenseModal] = useState(false);
   const uploadedFiles = values[FilesFieldNames.FILES];
+
+  const toggleLicenseModal = () => {
+    setOpenLicenseModal(!openLicenseModal);
+  };
 
   return (
     <TabPanel ariaLabel="files and license" goToNextTab={goToNextTab}>
@@ -51,6 +63,7 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab
                       file={file}
                       removeFile={() => remove(i)}
                       updateFile={newFile => replace(i, newFile)}
+                      toggleLicenseModal={toggleLicenseModal}
                     />
                   ))}
                 </StyledUploadedFiles>
@@ -59,6 +72,15 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab
           </>
         )}
       </FieldArray>
+      <Modal headingText={t('files_and_license.licenses')} openModal={openLicenseModal} onClose={toggleLicenseModal}>
+        {licenses.map(license => (
+          <StyledLicenseDescription key={license.name}>
+            <Typography variant="h6">{license.name}</Typography>
+            <img src={license.image} alt={license.name} />
+            <Typography variant="body2">{license.description}</Typography>
+          </StyledLicenseDescription>
+        ))}
+      </Modal>
     </TabPanel>
   );
 };
