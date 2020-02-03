@@ -3,7 +3,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormikProps, useFormikContext } from 'formik';
 import { Publication } from '../../../types/publication.types';
-import { Typography } from '@material-ui/core';
+import FormCardSubHeading from '../../../components/FormCardSubHeading';
 
 const SubmissionReport: React.FC = () => {
   const { t } = useTranslation('publication');
@@ -11,7 +11,7 @@ const SubmissionReport: React.FC = () => {
 
   return (
     <>
-      <Typography variant="h3">{t('references.report')}</Typography>
+      <FormCardSubHeading>{t('references.report')}</FormCardSubHeading>
 
       <LabelContentRow label={t('common:type')}>{values.reference.report?.type}</LabelContentRow>
       <LabelContentRow label={t('references.publisher')}>{values.reference.report?.publisher?.title}</LabelContentRow>

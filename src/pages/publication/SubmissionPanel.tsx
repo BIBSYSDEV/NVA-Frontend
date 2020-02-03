@@ -32,24 +32,24 @@ const SubmissionPanel: React.FC = () => {
       <FormCard>
         <FormCardHeading>{t('heading.summary')}</FormCardHeading>
 
-        <FormCardSubHeading>{t('heading.description')}</FormCardSubHeading>
         <hr />
+        <FormCardSubHeading>{t('heading.description')}</FormCardSubHeading>
         <SubmissionDescription />
 
-        <FormCardSubHeading>{t('heading.references')}</FormCardSubHeading>
         <hr />
+        <FormCardSubHeading>{t('heading.references')}</FormCardSubHeading>
         {values.reference.type === ReferenceType.BOOK && <SubmissionBook />}
         {values.reference.type === ReferenceType.DEGREE && <SubmissionDegree />}
         {values.reference.type === ReferenceType.CHAPTER && <SubmissionChapter />}
         {values.reference.type === ReferenceType.REPORT && <SubmissionReport />}
         {values.reference.type === ReferenceType.PUBLICATION_IN_JOURNAL && <SubmissionJournalPublication />}
 
-        <FormCardSubHeading>{t('heading.contributors')}</FormCardSubHeading>
         <hr />
+        <FormCardSubHeading>{t('heading.contributors')}</FormCardSubHeading>
         <SubmissionContributors />
 
-        <FormCardSubHeading>{t('heading.files_and_license')}</FormCardSubHeading>
         <hr />
+        <FormCardSubHeading>{t('heading.files_and_license')}</FormCardSubHeading>
         <SubmissionFilesAndLicenses />
       </FormCard>
       <StyledPublishButton color="primary" variant="contained">
