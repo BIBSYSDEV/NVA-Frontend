@@ -21,6 +21,13 @@ const StyledHeaderContainer = styled.div`
   justify-content: space-between;
 `;
 
+const StyledWidth = styled.div`
+  min-width: 30rem;
+  @media (min-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+    max-width: 10rem;
+  }
+`;
+
 const StyledTypography = styled(Typography)`
   font-weight: bold;
   grid-area: text;
@@ -95,6 +102,7 @@ const Modal: FC<ModalProps> = ({
         BackdropProps={{
           timeout: 500,
         }}>
+        <StyledWidth />
         <StyledHeaderContainer>
           {headingIcon ? (
             <StyledInfoContainer>
