@@ -8,6 +8,7 @@ import { Button, Link as MuiLink } from '@material-ui/core';
 import LinkPublication from './new_publication/LinkPublication';
 import LoadPublication from './new_publication/LoadPublication';
 import PublicationForm from './PublicationForm';
+import FormCardHeading from '../../components/FormCardHeading';
 
 const StyledNewPublication = styled.div`
   width: 100%;
@@ -38,12 +39,6 @@ const StyledInfoBox = styled.div`
   @media only screen and (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
     max-width: inherit;
     margin-right: 0;
-  }
-  > header {
-    font-size: 1.2rem;
-    font-weight: bold;
-    line-height: 1.5rem;
-    margin-bottom: 2rem;
   }
   > section {
     margin-bottom: 2rem;
@@ -81,7 +76,7 @@ const NewPublication: FC = () => {
               />
             </StyledSelectorWrapper>
             <StyledInfoBox>
-              <header>{t('common:information')}</header>
+              <FormCardHeading>{t('common:information')}</FormCardHeading>
               <section>
                 Velg publikasjoner Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
                 incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco

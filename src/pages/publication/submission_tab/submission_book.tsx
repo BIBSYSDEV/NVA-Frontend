@@ -3,7 +3,6 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormikProps, useFormikContext } from 'formik';
 import { Publication } from '../../../types/publication.types';
-import { Typography } from '@material-ui/core';
 import FormCardSubHeading from '../../../components/FormCardSubHeading';
 
 const SubmissionBook: React.FC = () => {

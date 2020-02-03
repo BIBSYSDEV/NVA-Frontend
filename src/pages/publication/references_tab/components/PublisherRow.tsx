@@ -6,6 +6,7 @@ import { Button } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 import { Publisher } from '../../../../types/references.types';
+import FormCardLabel from '../../../../components/FormCardLabel';
 
 const StyledPublisherRow = styled.div`
   margin: 1rem 0;
@@ -16,19 +17,14 @@ const StyledPublisherRow = styled.div`
   grid-template-areas:
     'titleLabel levelLabel button'
     'title level button';
-  grid-template-columns: 7fr 6fr 1fr;
+  grid-template-columns: 7fr 6fr 2fr;
 `;
 
-const StyledJournalLabel = styled.div`
-  font-size: 0.7rem;
-  font-weight: bold;
-`;
-
-const StyledTitle = styled(StyledJournalLabel)`
+const StyledTitle = styled(FormCardLabel)`
   grid-area: titleLabel;
 `;
 
-const StyledLevelLabel = styled(StyledJournalLabel)`
+const StyledLevelLabel = styled(FormCardLabel)`
   grid-area: levelLabel;
 `;
 
@@ -40,10 +36,9 @@ const StyledLevelText = styled.div`
   grid-area: level;
 `;
 
-const StyledButton = styled(Button)`
+const DeleteButton = styled(Button)`
   grid-area: button;
-  background-color: red;
-  color: white;
+  background-color: ${({ theme }) => theme.palette.danger.main};
   margin: 0.5rem;
 `;
 
@@ -63,10 +58,10 @@ const PublisherRow: React.FC<PublisherRowProps> = ({ dataTestId, publisher, labe
       <StyledLevelLabel>{t('references.level')}</StyledLevelLabel>
       <StyledTitleText>{publisher.title}</StyledTitleText>
       <StyledLevelText>{publisher.level}</StyledLevelText>
-      <StyledButton onClick={onClickDelete}>
+      <DeleteButton variant="contained" color="primary" onClick={onClickDelete}>
         <DeleteIcon />
         {t('references.remove')}
-      </StyledButton>
+      </DeleteButton>
     </StyledPublisherRow>
   );
 };

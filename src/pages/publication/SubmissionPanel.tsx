@@ -17,7 +17,7 @@ import SubmissionContributors from './submission_tab/submission_contributors';
 import { ReferenceType } from '../../types/references.types';
 import FormCardHeading from '../../components/FormCardHeading';
 import FormCardSubHeading from '../../components/FormCardSubHeading';
-import FormCard from './FormCard';
+import FormCard from '../../components/FormCard';
 
 const StyledPublishButton = styled(Button)`
   margin-top: 0.5rem;
@@ -32,11 +32,9 @@ const SubmissionPanel: React.FC = () => {
       <FormCard>
         <FormCardHeading>{t('heading.summary')}</FormCardHeading>
 
-        <hr />
         <FormCardSubHeading>{t('heading.description')}</FormCardSubHeading>
         <SubmissionDescription />
 
-        <hr />
         <FormCardSubHeading>{t('heading.references')}</FormCardSubHeading>
         {values.reference.type === ReferenceType.BOOK && <SubmissionBook />}
         {values.reference.type === ReferenceType.DEGREE && <SubmissionDegree />}
@@ -44,11 +42,9 @@ const SubmissionPanel: React.FC = () => {
         {values.reference.type === ReferenceType.REPORT && <SubmissionReport />}
         {values.reference.type === ReferenceType.PUBLICATION_IN_JOURNAL && <SubmissionJournalPublication />}
 
-        <hr />
         <FormCardSubHeading>{t('heading.contributors')}</FormCardSubHeading>
         <SubmissionContributors />
 
-        <hr />
         <FormCardSubHeading>{t('heading.files_and_license')}</FormCardSubHeading>
         <SubmissionFilesAndLicenses />
       </FormCard>

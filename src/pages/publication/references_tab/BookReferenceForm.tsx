@@ -33,12 +33,6 @@ const StyledTextBook = styled.div`
   grid-area: text-book;
 `;
 
-const StyledLabel = styled.div`
-  color: ${({ theme }) => theme.palette.text.primary};
-  font-size: 1rem;
-  font-weight: bold;
-`;
-
 const BookReferenceForm: FC = () => {
   const { t } = useTranslation('publication');
   const { setFieldValue, values }: FormikProps<Publication> = useFormikContext();
@@ -95,7 +89,7 @@ const BookReferenceForm: FC = () => {
           <Field name={BookFieldNames.TEXT_BOOK}>
             {({ field: { name, value } }: any) => (
               <>
-                <StyledLabel>{t('references.is_text_book')}</StyledLabel>
+                <FormCardLabel>{t('references.is_text_book')}</FormCardLabel>
                 <FormControlLabel
                   control={
                     <Checkbox
