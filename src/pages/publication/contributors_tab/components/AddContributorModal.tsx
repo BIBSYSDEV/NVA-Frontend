@@ -19,10 +19,6 @@ const StyledClickableDiv = styled.div`
   padding-right: 0.5rem;
 `;
 
-const StyledSearchBarContainer = styled.div`
-  width: 35rem;
-`;
-
 const StyledButtonContainer = styled.div`
   display: flex;
   justify-content: flex-end;
@@ -75,14 +71,12 @@ const AddContributorModal: FC<AddContributorModalProps> = ({ addAuthor }) => {
 
   return (
     <>
-      <StyledSearchBarContainer>
-        <SearchBar
-          handleSearch={handleSearch}
-          handleChange={handleChange}
-          searchTerm={searchTerm}
-          resetSearchInput={false}
-        />
-      </StyledSearchBarContainer>
+      <SearchBar
+        handleSearch={handleSearch}
+        handleChange={handleChange}
+        searchTerm={searchTerm}
+        resetSearchInput={false}
+      />
       {matchingAuthorities && matchingAuthorities.length > 0 ? (
         <>
           <Typography variant="h3">
