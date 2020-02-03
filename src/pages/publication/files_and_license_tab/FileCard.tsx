@@ -12,6 +12,7 @@ import {
   Radio,
   TextField,
   MenuItem,
+  ListItemText,
 } from '@material-ui/core';
 import { File, licenses, License } from '../../../types/file.types';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
@@ -42,6 +43,10 @@ const StyledSelect = styled(TextField)`
     /* Ensure input height isn't expanded due to image content */
     height: 1.1875rem;
   }
+`;
+
+const StyledListItemText = styled(ListItemText)`
+  margin-left: 0.5rem;
 `;
 
 interface FileCardProps {
@@ -136,6 +141,7 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, updateFile }) => 
                   <ListItemIcon>
                     <img src={license.image} alt={license.name} />
                   </ListItemIcon>
+                  <StyledListItemText>{license.name}</StyledListItemText>
                 </MenuItem>
               ))}
             </StyledSelect>
