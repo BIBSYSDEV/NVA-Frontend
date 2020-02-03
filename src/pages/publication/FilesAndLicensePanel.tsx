@@ -39,7 +39,6 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab
             <FormCard>
               <FormCardHeading>{t('files_and_license.upload_files')}</FormCardHeading>{' '}
               <FileUploader uppy={uppy} addFile={file => push(file)} />
-              <FileUploader uppy={uppy} addFile={file => push(file)} />
             </FormCard>
             {uploadedFiles.length > 0 && (
               <>
