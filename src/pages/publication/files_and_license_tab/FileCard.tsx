@@ -48,16 +48,11 @@ const StyledSelect = styled(TextField)`
   }
 `;
 
-const StyledLicenseSelector = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
 const StyledLicenseName = styled(Typography)`
   margin-left: 0.5rem;
 `;
 
-const StyledSelectedValue = styled.span`
+const StyledVerticalAlign = styled.div`
   display: flex;
   align-items: center;
 `;
@@ -139,7 +134,7 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, updateFile, toggl
           </StyledFormControl>
 
           <StyledFormControl>
-            <StyledLicenseSelector>
+            <StyledVerticalAlign>
               <StyledSelect
                 select
                 fullWidth
@@ -147,12 +142,12 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, updateFile, toggl
                   renderValue: (option: any) => {
                     const selectedLicense = licenses.find((license: any) => license.name === option);
                     return selectedLicense ? (
-                      <StyledSelectedValue>
+                      <StyledVerticalAlign>
                         <img src={selectedLicense.image} alt={selectedLicense.name} />
                         <StyledLicenseName display="inline" variant="body1">
                           {option}
                         </StyledLicenseName>
-                      </StyledSelectedValue>
+                      </StyledVerticalAlign>
                     ) : null;
                   },
                 }}
@@ -179,7 +174,7 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, updateFile, toggl
               <IconButton size="small" onClick={toggleLicenseModal}>
                 <HelpIcon />
               </IconButton>
-            </StyledLicenseSelector>
+            </StyledVerticalAlign>
           </StyledFormControl>
         </StyledFileInfo>
       )}
