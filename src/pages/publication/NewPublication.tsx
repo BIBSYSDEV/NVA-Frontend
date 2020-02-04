@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { Button, Card, Link as MuiLink } from '@material-ui/core';
+import { Button, Link as MuiLink } from '@material-ui/core';
 
 import LinkPublication from './new_publication/LinkPublication';
 import LoadPublication from './new_publication/LoadPublication';
