@@ -9,6 +9,7 @@ import LinkPublication from './new_publication/LinkPublication';
 import LoadPublication from './new_publication/LoadPublication';
 import PublicationForm from './PublicationForm';
 import FormCardHeading from '../../components/FormCardHeading';
+import FormCard from '../../components/FormCard';
 
 const StyledNewPublication = styled.div`
   width: 100%;
@@ -31,7 +32,7 @@ const StyledSelectorWrapper = styled.div`
   }
 `;
 
-const StyledCard = styled(Card)`
+const StyledCard = styled(FormCard)`
   padding: 1rem;
   max-width: 25rem;
   flex: 1;
@@ -74,7 +75,7 @@ const NewPublication: FC = () => {
                 openForm={handleClick}
               />
             </StyledSelectorWrapper>
-            <StyledCard variant="outlined">
+            <StyledCard>
               <FormCardHeading>{t('common:information')}</FormCardHeading>
               <section>
                 Velg publikasjoner Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor

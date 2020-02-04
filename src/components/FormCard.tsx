@@ -14,6 +14,10 @@ interface UserCardProps {
   children: ReactNode;
 }
 
-const FormCard: React.FC<UserCardProps> = ({ children }) => <StyledCard variant="outlined">{children}</StyledCard>;
+const FormCard: React.FC<UserCardProps> = ({ children, ...props }) => (
+  <StyledCard variant="outlined" {...props}>
+    {children}
+  </StyledCard>
+);
 
 export default FormCard;

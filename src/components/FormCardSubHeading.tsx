@@ -10,8 +10,10 @@ interface FormCardSubHeadingProps {
   children: ReactNode;
 }
 
-const FormCardSubHeading: FC<FormCardSubHeadingProps> = ({ children }) => (
-  <StyledTypography variant="h3">{children}</StyledTypography>
+const FormCardSubHeading: FC<FormCardSubHeadingProps> = ({ children, ...props }) => (
+  <StyledTypography variant="h3" {...props}>
+    {children}
+  </StyledTypography>
 );
 
 export default FormCardSubHeading;
