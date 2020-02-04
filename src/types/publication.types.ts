@@ -1,7 +1,7 @@
 import Contributor from './contributor.types';
 import { Project } from './project.types';
 import { emptyReference, Reference } from './references.types';
-import { File } from './license.types';
+import { File } from './file.types';
 import { LanguageCodes } from './language.types';
 
 export enum PublicationType {
