@@ -36,9 +36,8 @@ const StyledLevelText = styled.div`
   grid-area: level;
 `;
 
-const DeleteButton = styled(Button)`
+const StyledButton = styled(Button)`
   grid-area: button;
-  background-color: ${({ theme }) => theme.palette.danger.main};
   margin: 0.5rem;
 `;
 
@@ -58,10 +57,10 @@ const PublisherRow: React.FC<PublisherRowProps> = ({ dataTestId, publisher, labe
       <StyledLevelLabel>{t('references.level')}</StyledLevelLabel>
       <StyledTitleText>{publisher.title}</StyledTitleText>
       <StyledLevelText>{publisher.level}</StyledLevelText>
-      <DeleteButton variant="contained" color="primary" onClick={onClickDelete}>
+      <StyledButton variant="contained" color="secondary" onClick={onClickDelete}>
         <DeleteIcon />
         {t('references.remove')}
-      </DeleteButton>
+      </StyledButton>
     </StyledPublisherRow>
   );
 };
