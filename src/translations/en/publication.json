@@ -38,6 +38,7 @@
     "embargo_date": "Date for delayed publishing in archive",
     "files": "Files",
     "license": "License",
+    "licenses": "Licenses",
     "published_version": "Published version",
     "select_version": "Select version",
     "upload_files": "Upload Files",

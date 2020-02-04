@@ -38,6 +38,7 @@
     "embargo_date": "Dato for utsatt publisering i arkivet",
     "files": "Filer",
     "license": "Lisens",
+    "licenses": "Lisenser",
     "published_version": "Publisert versjon",
     "select_version": "Velg versjon",
     "upload_files": "Last opp filer",
