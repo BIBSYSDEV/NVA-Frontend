@@ -1,15 +1,11 @@
 import { Field, FormikProps, useFormikContext } from 'formik';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
 
 import { FormControl, FormControlLabel, Radio, RadioGroup } from '@material-ui/core';
 
 import { Publication } from '../../../../types/publication.types';
-
-const StyledLabel = styled.div`
-  font-weight: bold;
-`;
+import FormCardLabel from '../../../../components/FormCard/FormCardLabel';
 
 interface PeerReviewProps {
   fieldName: string;
@@ -25,7 +21,7 @@ const PeerReview: FC<PeerReviewProps> = ({ fieldName, label }) => {
     <Field name={fieldName}>
       {({ field: { name, value } }: any) => (
         <>
-          <StyledLabel>{label}</StyledLabel>
+          <FormCardLabel>{label}</FormCardLabel>
           <FormControl>
             <RadioGroup
               value={value ? 'true' : 'false'}

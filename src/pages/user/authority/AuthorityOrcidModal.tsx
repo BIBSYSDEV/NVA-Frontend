@@ -76,7 +76,7 @@ const AuthorityOrcidModal: FC = () => {
           headingText={t('profile:orcid.create_or_connect')}>
           <OrcidModal />
           <StyledSkipButtonContainer>
-            <StyledButton color="secondary" variant="outlined" onClick={() => setOpenOrcidModal(false)}>
+            <StyledButton variant="outlined" onClick={() => setOpenOrcidModal(false)}>
               {t('profile:orcid.skip_this_step')}
             </StyledButton>
           </StyledSkipButtonContainer>

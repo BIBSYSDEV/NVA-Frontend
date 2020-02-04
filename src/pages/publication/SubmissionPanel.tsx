@@ -1,11 +1,10 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-import Box from '../../components/Box';
 import TabPanel from '../../components/TabPanel/TabPanel';
 import { FormikProps, useFormikContext } from 'formik';
 import { Publication } from '../../types/publication.types';
-import { Button, Typography } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import styled from 'styled-components';
 import SubmissionBook from './submission_tab/submission_book';
 import SubmissionDegree from './submission_tab/submission_degree';
@@ -16,7 +15,9 @@ import SubmissionDescription from './submission_tab/submission_description';
 import SubmissionFilesAndLicenses from './submission_tab/submission_files_licenses';
 import SubmissionContributors from './submission_tab/submission_contributors';
 import { ReferenceType } from '../../types/references.types';
-import SubmissionContentText from './submission_tab/submission_content_text';
+import FormCardHeading from '../../components/FormCard/FormCardHeading';
+import FormCardSubHeading from '../../components/FormCard/FormCardSubHeading';
+import FormCard from '../../components/FormCard/FormCard';
 
 const StyledPublishButton = styled(Button)`
   margin-top: 0.5rem;
@@ -28,27 +29,25 @@ const SubmissionPanel: React.FC = () => {
 
   return (
     <TabPanel ariaLabel="submission">
-      <Box>
-        <Typography variant="h1">{t('heading.summary')}</Typography>
-        <hr />
-        <SubmissionContentText>{values.title.nb}</SubmissionContentText>
+      <FormCard>
+        <FormCardHeading>{t('heading.summary')}</FormCardHeading>
 
-        <Typography variant="h2">{t('heading.description')}</Typography>
+        <FormCardSubHeading>{t('heading.description')}</FormCardSubHeading>
         <SubmissionDescription />
 
-        <Typography variant="h2">{t('heading.references')}</Typography>
+        <FormCardSubHeading>{t('heading.references')}</FormCardSubHeading>
         {values.reference.type === ReferenceType.BOOK && <SubmissionBook />}
         {values.reference.type === ReferenceType.DEGREE && <SubmissionDegree />}
         {values.reference.type === ReferenceType.CHAPTER && <SubmissionChapter />}
         {values.reference.type === ReferenceType.REPORT && <SubmissionReport />}
         {values.reference.type === ReferenceType.PUBLICATION_IN_JOURNAL && <SubmissionJournalPublication />}
 
-        <Typography variant="h2">{t('heading.contributors')}</Typography>
+        <FormCardSubHeading>{t('heading.contributors')}</FormCardSubHeading>
         <SubmissionContributors />
 
-        <Typography variant="h2">{t('heading.files_and_license')}</Typography>
+        <FormCardSubHeading>{t('heading.files_and_license')}</FormCardSubHeading>
         <SubmissionFilesAndLicenses />
-      </Box>
+      </FormCard>
       <StyledPublishButton color="primary" variant="contained">
         {t('publish')}
       </StyledPublishButton>

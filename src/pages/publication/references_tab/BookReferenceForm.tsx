@@ -12,6 +12,8 @@ import NviValidation from './components/NviValidation';
 import PeerReview from './components/PeerReview';
 import PublicationChannelSearch from './components/PublicationChannelSearch';
 import PublisherRow from './components/PublisherRow';
+import FormCardSubHeading from '../../../components/FormCard/FormCardSubHeading';
+import FormCardLabel from '../../../components/FormCard/FormCardLabel';
 
 const StyledSection = styled.div`
   display: grid;
@@ -29,17 +31,6 @@ const StyledPeerReview = styled.div`
 
 const StyledTextBook = styled.div`
   grid-area: text-book;
-`;
-
-const StyledLabel = styled.div`
-  color: ${({ theme }) => theme.palette.text.primary};
-  font-size: 1rem;
-  font-weight: bold;
-`;
-
-const StyledHeading = styled.div`
-  font-size: 1.5rem;
-  padding-top: 1.5rem;
 `;
 
 const BookReferenceForm: FC = () => {
@@ -98,7 +89,7 @@ const BookReferenceForm: FC = () => {
           <Field name={BookFieldNames.TEXT_BOOK}>
             {({ field: { name, value } }: any) => (
               <>
-                <StyledLabel>{t('references.is_text_book')}</StyledLabel>
+                <FormCardLabel>{t('references.is_text_book')}</FormCardLabel>
                 <FormControlLabel
                   control={
                     <Checkbox
@@ -124,8 +115,8 @@ const BookReferenceForm: FC = () => {
           />
         )}
       </Field>
-      <StyledHeading>{t('references.series')}</StyledHeading>
-      <StyledLabel>{t('references.series_info')}</StyledLabel>
+      <FormCardSubHeading>{t('references.series')}</FormCardSubHeading>
+      <FormCardLabel>{t('references.series_info')}</FormCardLabel>
       <Field name={BookFieldNames.SERIES}>
         {({ field: { name, value } }: any) => (
           <>
