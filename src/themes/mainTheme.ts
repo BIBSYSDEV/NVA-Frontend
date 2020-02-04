@@ -23,7 +23,7 @@ enum Colors {
   Separator = '#3d4349',
   PrimaryText = 'rgba(0, 0, 0, 0.87)',
   SecondaryText = '#44515d',
-  UnexpandedPanel = '#96c3ec',
+  CollapsedPanel = '#96c3ec',
   ExpandedPanel = '#b2acfa',
   TabBackground = '#f3c19d',
   Disabled = '#bbb',
@@ -95,7 +95,7 @@ export default createMuiTheme({
     },
     MuiExpansionPanel: {
       root: {
-        background: Colors.UnexpandedPanel,
+        background: Colors.CollapsedPanel,
         '&$expanded': {
           background: Colors.ExpandedPanel,
         },
