@@ -12,7 +12,7 @@ import { Typography } from '@material-ui/core';
 import FormCard from '../../components/FormCard/FormCard';
 import FormCardHeading from '../../components/FormCard/FormCardHeading';
 
-const StyledUploadedFiles = styled.section`
+const StyledUploadedFiles = styled(FormCard)`
   display: flex;
   flex-direction: column;
 
@@ -55,8 +55,8 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab
             </FormCard>
             {uploadedFiles.length > 0 && (
               <>
-                <FormCardHeading>{t('files_and_license.files')}</FormCardHeading>
                 <StyledUploadedFiles>
+                  <FormCardHeading>{t('files_and_license.files')}</FormCardHeading>
                   {uploadedFiles.map((file, i) => (
                     <FileCard
                       key={file.id}

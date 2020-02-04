@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
 import { Button } from '@material-ui/core';
-import DeleteIcon from '@material-ui/icons/Delete';
 
 import { Publisher } from '../../../../types/references.types';
 import FormCardLabel from '../../../../components/FormCard/FormCardLabel';
@@ -58,8 +57,7 @@ const PublisherRow: React.FC<PublisherRowProps> = ({ dataTestId, publisher, labe
       <StyledTitleText>{publisher.title}</StyledTitleText>
       <StyledLevelText>{publisher.level}</StyledLevelText>
       <StyledButton variant="contained" color="secondary" onClick={onClickDelete}>
-        <DeleteIcon />
-        {t('references.remove')}
+        {t('common:remove')}
       </StyledButton>
     </StyledPublisherRow>
   );
