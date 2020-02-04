@@ -8,8 +8,8 @@ import { Button, Card, Link as MuiLink } from '@material-ui/core';
 import LinkPublication from './new_publication/LinkPublication';
 import LoadPublication from './new_publication/LoadPublication';
 import PublicationForm from './PublicationForm';
-import FormCardHeading from '../../components/FormCardHeading';
-import FormCard from '../../components/FormCard';
+import FormCardHeading from '../../components/FormCard/FormCardHeading';
+import FormCard from '../../components/FormCard/FormCard';
 
 const StyledNewPublication = styled.div`
   width: 100%;

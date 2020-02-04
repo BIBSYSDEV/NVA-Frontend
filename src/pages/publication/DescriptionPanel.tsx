@@ -17,8 +17,8 @@ import { Project } from '../../types/project.types';
 import ChipInput from 'material-ui-chip-input';
 import { getObjectValueByFieldName } from '../../utils/helpers';
 import { orderedLanguages } from '../../types/language.types';
-import FormCardHeading from '../../components/FormCardHeading';
-import FormCard from '../../components/FormCard';
+import FormCardHeading from '../../components/FormCard/FormCardHeading';
+import FormCard from '../../components/FormCard/FormCard';
 
 const MultipleFieldWrapper = styled.div`
   display: flex;

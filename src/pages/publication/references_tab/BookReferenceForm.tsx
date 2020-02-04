@@ -12,8 +12,8 @@ import NviValidation from './components/NviValidation';
 import PeerReview from './components/PeerReview';
 import PublicationChannelSearch from './components/PublicationChannelSearch';
 import PublisherRow from './components/PublisherRow';
-import FormCardSubHeading from '../../../components/FormCardSubHeading';
-import FormCardLabel from '../../../components/FormCardLabel';
+import FormCardSubHeading from '../../../components/FormCard/FormCardSubHeading';
+import FormCardLabel from '../../../components/FormCard/FormCardLabel';
 
 const StyledSection = styled.div`
   display: grid;

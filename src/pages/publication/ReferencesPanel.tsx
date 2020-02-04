@@ -22,7 +22,7 @@ import ChapterReferenceForm from './references_tab/ChapterReferenceForm';
 import DegreeReferenceForm from './references_tab/DegreeReferenceForm';
 import JournalArticleReferenceForm from './references_tab/JournalArticleReferenceForm';
 import ReportReferenceForm from './references_tab/ReportReferenceForm';
-import FormCard from '../../components/FormCard';
+import FormCard from '../../components/FormCard/FormCard';
 
 const StyledBox = styled.div`
   margin-top: 1rem;

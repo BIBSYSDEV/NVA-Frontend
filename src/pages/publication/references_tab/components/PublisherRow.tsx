@@ -6,7 +6,7 @@ import { Button } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 import { Publisher } from '../../../../types/references.types';
-import FormCardLabel from '../../../../components/FormCardLabel';
+import FormCardLabel from '../../../../components/FormCard/FormCardLabel';
 
 const StyledPublisherRow = styled.div`
   margin: 1rem 0;

@@ -3,7 +3,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormikProps, useFormikContext } from 'formik';
 import { Publication } from '../../../types/publication.types';
-import FormCardSubHeading from '../../../components/FormCardSubHeading';
+import FormCardSubHeading from '../../../components/FormCard/FormCardSubHeading';
 
 const SubmissionJournalPublication: React.FC = () => {
   const { t } = useTranslation('publication');

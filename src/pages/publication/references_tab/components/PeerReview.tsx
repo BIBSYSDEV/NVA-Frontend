@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { FormControl, FormControlLabel, Radio, RadioGroup } from '@material-ui/core';
 
 import { Publication } from '../../../../types/publication.types';
-import FormCardLabel from '../../../../components/FormCardLabel';
+import FormCardLabel from '../../../../components/FormCard/FormCardLabel';
 
 interface PeerReviewProps {
   fieldName: string;

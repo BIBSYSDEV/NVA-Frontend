@@ -15,8 +15,8 @@ import { File } from '../../../types/license.types';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import { useTranslation } from 'react-i18next';
-import FormCard from '../../../components/FormCard';
-import FormCardHeading from '../../../components/FormCardHeading';
+import FormCard from '../../../components/FormCard/FormCard';
+import FormCardHeading from '../../../components/FormCard/FormCardHeading';
 
 const StyledDescription = styled.div`
   font-style: italic;

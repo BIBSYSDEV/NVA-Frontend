@@ -15,9 +15,9 @@ import SubmissionDescription from './submission_tab/submission_description';
 import SubmissionFilesAndLicenses from './submission_tab/submission_files_licenses';
 import SubmissionContributors from './submission_tab/submission_contributors';
 import { ReferenceType } from '../../types/references.types';
-import FormCardHeading from '../../components/FormCardHeading';
-import FormCardSubHeading from '../../components/FormCardSubHeading';
-import FormCard from '../../components/FormCard';
+import FormCardHeading from '../../components/FormCard/FormCardHeading';
+import FormCardSubHeading from '../../components/FormCard/FormCardSubHeading';
+import FormCard from '../../components/FormCard/FormCard';
 
 const StyledPublishButton = styled(Button)`
   margin-top: 0.5rem;

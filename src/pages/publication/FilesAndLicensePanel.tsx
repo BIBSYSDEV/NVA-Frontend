@@ -6,8 +6,8 @@ import FileCard from './files_and_license_tab/FileCard';
 import styled from 'styled-components';
 import { FieldArray, FormikProps, useFormikContext } from 'formik';
 import { Publication } from '../../types/publication.types';
-import FormCard from '../../components/FormCard';
-import FormCardHeading from '../../components/FormCardHeading';
+import FormCard from '../../components/FormCard/FormCard';
+import FormCardHeading from '../../components/FormCard/FormCardHeading';
 
 const StyledUploadedFiles = styled.section`
   display: flex;
