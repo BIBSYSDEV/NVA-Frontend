@@ -13,6 +13,7 @@ import {
   TextField,
   MenuItem,
   ListItemText,
+  Typography,
 } from '@material-ui/core';
 import { File, licenses, License } from '../../../types/file.types';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
@@ -45,8 +46,13 @@ const StyledSelect = styled(TextField)`
   }
 `;
 
-const StyledListItemText = styled(ListItemText)`
+const StyledLicenseName = styled(Typography)`
   margin-left: 0.5rem;
+`;
+
+const StyledSelectedValue = styled.span`
+  display: flex;
+  align-items: center;
 `;
 
 interface FileCardProps {
@@ -127,6 +133,19 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, updateFile }) => 
           <StyledFormControl>
             <StyledSelect
               select
+              SelectProps={{
+                renderValue: (option: any) => {
+                  const selectedLicense = licenses.find((license: any) => license.name === option);
+                  return selectedLicense ? (
+                    <StyledSelectedValue>
+                      <img src={selectedLicense.image} alt={selectedLicense.name} />
+                      <StyledLicenseName display="inline" variant="body1">
+                        {option}
+                      </StyledLicenseName>
+                    </StyledSelectedValue>
+                  ) : null;
+                },
+              }}
               variant="outlined"
               value={file.license}
               label={t('files_and_license.license')}
@@ -141,7 +160,9 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, updateFile }) => 
                   <ListItemIcon>
                     <img src={license.image} alt={license.name} />
                   </ListItemIcon>
-                  <StyledListItemText>{license.name}</StyledListItemText>
+                  <ListItemText>
+                    <StyledLicenseName variant="body1">{license.name}</StyledLicenseName>
+                  </ListItemText>
                 </MenuItem>
               ))}
             </StyledSelect>
