@@ -37,11 +37,11 @@ interface FilesAndLicensePanelProps {
 const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab, uppy }) => {
   const { t } = useTranslation('publication');
   const { values }: FormikProps<Publication> = useFormikContext();
-  const [licenseModalIsOpen, setLicenseModalIsOpen] = useState(false);
+  const [isLicenseModalOpen, setIsLicenseModalOpen] = useState(false);
   const uploadedFiles = values[FilesFieldNames.FILES];
 
   const toggleLicenseModal = () => {
-    setLicenseModalIsOpen(!licenseModalIsOpen);
+    setIsLicenseModalOpen(!isLicenseModalOpen);
   };
 
   return (
@@ -72,7 +72,7 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab
           </>
         )}
       </FieldArray>
-      <Modal headingText={t('files_and_license.licenses')} openModal={licenseModalIsOpen} onClose={toggleLicenseModal}>
+      <Modal headingText={t('files_and_license.licenses')} openModal={isLicenseModalOpen} onClose={toggleLicenseModal}>
         {licenses.map(license => (
           <StyledLicenseDescription key={license.name}>
             <Typography variant="h6">{license.name}</Typography>

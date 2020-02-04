@@ -140,7 +140,7 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, updateFile, toggl
                 fullWidth
                 SelectProps={{
                   renderValue: (option: any) => {
-                    const selectedLicense = licenses.find((license: any) => license.name === option);
+                    const selectedLicense = licenses.find((license: License) => license.name === option);
                     return selectedLicense ? (
                       <StyledVerticalAlign>
                         <img src={selectedLicense.image} alt={selectedLicense.name} />
