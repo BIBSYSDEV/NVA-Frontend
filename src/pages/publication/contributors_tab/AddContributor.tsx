@@ -13,23 +13,19 @@ const AddContributor: FC = () => {
   const [addedAuthors, setAddedAuthors] = useState<Authority[]>([]);
   const [open, setOpen] = useState(false);
 
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
+  const toggleModal = () => {
+    setOpen(!open);
   };
 
   const addAuthor = (author: Authority) => {
     setAddedAuthors([...addedAuthors, author]);
-    handleClose();
+    setOpen(false);
   };
 
   return (
     <>
       {addedAuthors && addedAuthors.map(author => <h4 key={author.systemControlNumber}>{author.name}</h4>)}
-      <Button onClick={handleOpen} variant="contained" color="primary" data-testid="add-contributor">
+      <Button onClick={toggleModal} variant="contained" color="primary" data-testid="add-contributor">
         {t('contributors.add_author')}
       </Button>
       {open && (
@@ -37,7 +33,7 @@ const AddContributor: FC = () => {
           ariaDescribedBy=""
           ariaLabelledBy=""
           headingText={t('contributors.add_author')}
-          onClose={handleClose}
+          onClose={toggleModal}
           openModal={open}>
           <AddContributorModal addAuthor={addAuthor} />
         </Modal>

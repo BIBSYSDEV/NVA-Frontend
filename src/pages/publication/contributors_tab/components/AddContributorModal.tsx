@@ -7,7 +7,7 @@ import { Button, Typography } from '@material-ui/core';
 
 import { getAuthorities } from '../../../../api/authorityApi';
 import SearchBar from '../../../../components/SearchBar';
-import { searchFailure } from '../../../../redux/actions/searchActions';
+import { addNotification } from '../../../../redux/actions/notificationActions';
 import { Authority, emptyAuthority } from '../../../../types/authority.types';
 import { debounce } from '../../../../utils/debounce';
 import AuthorityCard from '../../../user/authority/AuthorityCard';
@@ -40,7 +40,6 @@ const AddContributorModal: FC<AddContributorModalProps> = ({ addAuthor }) => {
 
   const [matchingAuthorities, setMatchingAuthorities] = useState<Authority[]>();
   const [selectedAuthor, setSelectedAuthor] = useState<Authority>(emptyAuthority);
-  const [searchTerm, setSearchTerm] = useState('');
   const [displayValue, setDisplayValue] = useState<DisplayValue>({
     searchTerm: '',
     results: 0,
@@ -53,30 +52,21 @@ const AddContributorModal: FC<AddContributorModalProps> = ({ addAuthor }) => {
         setMatchingAuthorities(response);
         setDisplayValue({ searchTerm, results: response.length });
       } else {
-        dispatch(searchFailure(t('error.search')));
+        dispatch(addNotification(t('feedback:error.get_authorities'), 'error'));
       }
     }),
     [dispatch, t]
   );
 
-  const handleSearch = async () => {
+  const handleSearch = async (searchTerm: string) => {
     if (searchTerm.length) {
       await search(searchTerm);
     }
   };
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(event.target.value);
-  };
-
   return (
     <>
-      <SearchBar
-        handleSearch={handleSearch}
-        handleChange={handleChange}
-        searchTerm={searchTerm}
-        resetSearchInput={false}
-      />
+      <SearchBar handleSearch={handleSearch} resetSearchInput={false} />
       {matchingAuthorities && matchingAuthorities.length > 0 ? (
         <>
           <Typography variant="h3">

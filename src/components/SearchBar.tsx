@@ -20,29 +20,31 @@ const StyledInputBase = styled(InputBase)`
 `;
 
 interface SearchBarProps {
-  handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  handleSearch: () => void;
+  handleSearch: (searchTerm: string) => void;
   resetSearchInput: boolean;
-  searchTerm: string;
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({ resetSearchInput, handleSearch, handleChange, searchTerm }) => {
+const SearchBar: React.FC<SearchBarProps> = ({ resetSearchInput, handleSearch }) => {
   const { t } = useTranslation();
-  const [displayValue, setDisplayValue] = useState(searchTerm);
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     if (resetSearchInput) {
-      setDisplayValue('');
+      setSearchTerm('');
     }
   }, [resetSearchInput]);
 
   useEffect(() => {
-    setDisplayValue(searchTerm);
+    setSearchTerm(searchTerm);
   }, [searchTerm]);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    handleSearch();
+    handleSearch(searchTerm);
+  };
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);
   };
 
   return (
@@ -53,7 +55,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ resetSearchInput, handleSearch, h
           data-testid="search-input"
           placeholder={t('common:search')}
           onChange={handleChange}
-          value={displayValue}
+          value={searchTerm}
         />
         <IconButton type="submit" data-testid="search-button">
           <SearchIcon />

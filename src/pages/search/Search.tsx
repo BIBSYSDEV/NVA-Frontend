@@ -48,12 +48,7 @@ const Search: FC = () => {
     <StyledSearch>
       <div>filter</div>
       <div>
-        <SearchBar
-          resetSearchInput={resetSearchInput}
-          searchTerm={searchTerm}
-          handleSearch={handleSearch}
-          handleChange={handleChange}
-        />
+        <SearchBar resetSearchInput={resetSearchInput} handleSearch={handleSearch} />
         {publications?.length > 0 && <SearchResults publications={publications} searchTerm={searchTerm} />}
       </div>
     </StyledSearch>

@@ -47,12 +47,7 @@ const Dashboard: FC = () => {
   return (
     <StyledDashboard>
       <StyledSearchBarContainer>
-        <StyledSearchBar
-          resetSearchInput
-          handleSearch={handleSearch}
-          handleChange={handleChange}
-          searchTerm={searchTerm}
-        />
+        <StyledSearchBar resetSearchInput handleSearch={handleSearch} />
       </StyledSearchBarContainer>
       <StyledOtherContent>Annet innhold</StyledOtherContent>
     </StyledDashboard>
