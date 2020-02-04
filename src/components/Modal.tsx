@@ -5,15 +5,15 @@ import { Avatar, Backdrop, Dialog, Fade } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 
 const StyledDialog = styled(Dialog)`
-  display: 'flex';
-  align-items: 'center';
-  justify-content: 'center';
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const StyledPaper = styled.div`
   background-color: ${({ theme }) => theme.palette.background};
   margin: 1rem;
-  width: '50rem';
+  width: 50rem;
 `;
 
 const StyledHeaderContainer = styled.div`
