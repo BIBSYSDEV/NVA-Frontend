@@ -11,11 +11,17 @@ import {
   RadioGroup,
   Radio,
   TextField,
+  MenuItem,
+  IconButton,
+  ListItemText,
+  Typography,
 } from '@material-ui/core';
-import { File } from '../../../types/license.types';
+import { File, licenses, License } from '../../../types/file.types';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import { useTranslation } from 'react-i18next';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import HelpIcon from '@material-ui/icons/Help';
 
 const StyledTitle = styled.div`
   font-weight: bold;
@@ -35,13 +41,30 @@ const StyledFileInfo = styled.div`
   justify-content: space-between;
 `;
 
+const StyledSelect = styled(TextField)`
+  .MuiSelect-root {
+    /* Ensure input height isn't expanded due to image content */
+    height: 1.1875rem;
+  }
+`;
+
+const StyledLicenseName = styled(Typography)`
+  margin-left: 0.5rem;
+`;
+
+const StyledVerticalAlign = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
 interface FileCardProps {
   file: File;
   removeFile: () => void;
   updateFile: (newFile: File) => void;
+  toggleLicenseModal: () => void;
 }
 
-const FileCard: React.FC<FileCardProps> = ({ file, removeFile, updateFile }) => {
+const FileCard: React.FC<FileCardProps> = ({ file, removeFile, updateFile, toggleLicenseModal }) => {
   const { t } = useTranslation('publication');
 
   return (
@@ -73,7 +96,7 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, updateFile }) => 
             <FormLabel component="legend">{t('files_and_license.select_version')}</FormLabel>
             <RadioGroup
               aria-label="version"
-              value={file.isPublished}
+              value={file.isPublished ? 'published' : 'accepted'}
               onChange={event =>
                 updateFile({
                   ...file,
@@ -111,7 +134,47 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, updateFile }) => 
           </StyledFormControl>
 
           <StyledFormControl>
-            <TextField select variant="outlined" label={t('files_and_license.license')}></TextField>
+            <StyledVerticalAlign>
+              <StyledSelect
+                select
+                fullWidth
+                SelectProps={{
+                  renderValue: (option: any) => {
+                    const selectedLicense = licenses.find((license: License) => license.name === option);
+                    return selectedLicense ? (
+                      <StyledVerticalAlign>
+                        <img src={selectedLicense.image} alt={selectedLicense.name} />
+                        <StyledLicenseName display="inline" variant="body1">
+                          {option}
+                        </StyledLicenseName>
+                      </StyledVerticalAlign>
+                    ) : null;
+                  },
+                }}
+                variant="outlined"
+                value={file.license}
+                label={t('files_and_license.license')}
+                onChange={({ target: { value } }) => {
+                  updateFile({
+                    ...file,
+                    license: value,
+                  });
+                }}>
+                {licenses.map((license: License) => (
+                  <MenuItem key={license.name} value={license.name} divider dense>
+                    <ListItemIcon>
+                      <img src={license.image} alt={license.name} />
+                    </ListItemIcon>
+                    <ListItemText>
+                      <StyledLicenseName variant="body1">{license.name}</StyledLicenseName>
+                    </ListItemText>
+                  </MenuItem>
+                ))}
+              </StyledSelect>
+              <IconButton size="small" onClick={toggleLicenseModal}>
+                <HelpIcon />
+              </IconButton>
+            </StyledVerticalAlign>
           </StyledFormControl>
         </StyledFileInfo>
       )}
