@@ -38,7 +38,37 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab
   const { t } = useTranslation('publication');
   const { values }: FormikProps<Publication> = useFormikContext();
   const [licenseModalIsOpen, setLicenseModalIsOpen] = useState(false);
-  const uploadedFiles = values[FilesFieldNames.FILES];
+  const uploadedFiles = [
+    {
+      id: 'uppy-img/jpg-1e-image/jpeg-10441-1573761889133',
+      name: 'img.jpg',
+      uploadUrl:
+        'https://master.tus.io/files/eea3b19c18cced20e24f81780210469a+x0MvmT59gUbdTBetll_EVRccMwmdfa5EFsqXg_6qFBqw8kRJDZdZJrjKyzO_XXuWD71E103ZHkjcd0B.8RU3GDujxz9_yztyO91wpqxvdWCa4FrhyeQXUuOVlcEt7m.J',
+      data: { size: 1000 },
+      administrativeContract: false,
+      isPublished: null,
+      embargoDate: null,
+      license: '',
+      source: 'react:Dashboard',
+      extension: 'jpg',
+      meta: {
+        relativePath: null,
+        name: 'img.jpg',
+        type: 'image/jpeg',
+      },
+      type: 'image/jpeg',
+      progress: {
+        percentage: 0,
+        bytesUploaded: 0,
+        bytesTotal: 10441,
+        uploadComplete: false,
+        uploadStarted: null,
+      },
+      size: 10441,
+      isRemote: false,
+      remote: '',
+    },
+  ]; // values[FilesFieldNames.FILES]
 
   const toggleLicenseModal = () => {
     setLicenseModalIsOpen(!licenseModalIsOpen);

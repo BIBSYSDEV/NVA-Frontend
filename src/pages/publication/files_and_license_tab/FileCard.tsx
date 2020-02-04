@@ -13,6 +13,8 @@ import {
   TextField,
   MenuItem,
   IconButton,
+  ListItemText,
+  Typography,
 } from '@material-ui/core';
 import { File, licenses, License } from '../../../types/file.types';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
@@ -48,7 +50,15 @@ const StyledSelect = styled(TextField)`
 
 const StyledLicenseSelector = styled.div`
   display: flex;
-  flex-direction: row;
+  align-items: center;
+`;
+
+const StyledLicenseName = styled(Typography)`
+  margin-left: 0.5rem;
+`;
+
+const StyledSelectedValue = styled.span`
+  display: flex;
   align-items: center;
 `;
 
@@ -133,6 +143,19 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, updateFile, toggl
               <StyledSelect
                 select
                 fullWidth
+                SelectProps={{
+                  renderValue: (option: any) => {
+                    const selectedLicense = licenses.find((license: any) => license.name === option);
+                    return selectedLicense ? (
+                      <StyledSelectedValue>
+                        <img src={selectedLicense.image} alt={selectedLicense.name} />
+                        <StyledLicenseName display="inline" variant="body1">
+                          {option}
+                        </StyledLicenseName>
+                      </StyledSelectedValue>
+                    ) : null;
+                  },
+                }}
                 variant="outlined"
                 value={file.license}
                 label={t('files_and_license.license')}
@@ -147,6 +170,9 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, updateFile, toggl
                     <ListItemIcon>
                       <img src={license.image} alt={license.name} />
                     </ListItemIcon>
+                    <ListItemText>
+                      <StyledLicenseName variant="body1">{license.name}</StyledLicenseName>
+                    </ListItemText>
                   </MenuItem>
                 ))}
               </StyledSelect>

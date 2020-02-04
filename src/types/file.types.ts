@@ -43,6 +43,12 @@ export const licenses: License[] = [
     description:
       'This license is the most restrictive of our six main licenses, only allowing others to download your works and share them with others as long as they credit you, but they can’t change them in any way or use them commercially.',
   },
+  {
+    name: 'CC0',
+    image: LicenseImages.cc0Image,
+    description:
+      'CC0 enables scientists, educators, artists and other creators and owners of copyright- or database-protected content to waive those interests in their works and thereby place them as completely as possible in the public domain, so that others may freely build upon, enhance and reuse the works for any purposes without restriction under copyright or database law.',
+  },
 ];
 
 export interface UppyFileResponse {
