@@ -41,6 +41,7 @@
     "licenses": "Licenses",
     "published_version": "Published version",
     "select_version": "Select version",
+    "title": "File name",
     "upload_files": "Upload Files",
     "uploaded_size": "Uploaded {{size}} kB"
   },
