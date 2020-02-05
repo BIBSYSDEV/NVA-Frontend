@@ -6,11 +6,10 @@ import styled from 'styled-components';
 import { MenuItem, TextField } from '@material-ui/core';
 
 import { Publication } from '../../../types/publication.types';
-import { emptyPublisher, DegreeFieldNames } from '../../../types/references.types';
+import { emptyPublisher, DegreeFieldNames, DegreeType, BookType } from '../../../types/references.types';
 import { PublicationTableNumber } from '../../../utils/constants';
 import PublicationChannelSearch from './components/PublicationChannelSearch';
 import PublisherRow from './components/PublisherRow';
-import { degreeTypes } from './../../../types/references.types';
 
 const StyledLabel = styled.div`
   color: ${({ theme }) => theme.palette.text.primary};
@@ -33,9 +32,9 @@ const DegreeReferenceForm: React.FC = () => {
       <Field name={DegreeFieldNames.TYPE}>
         {({ field }: any) => (
           <TextField select variant="outlined" fullWidth label={t('common:type')} {...field}>
-            {degreeTypes.map(type => (
-              <MenuItem value={type.value} key={type.value}>
-                {t(type.label)}
+            {Object.values(DegreeType).map(typeValue => (
+              <MenuItem value={typeValue} key={typeValue}>
+                {t(`referenceTypes:subtypes_degree.${typeValue}`)}
               </MenuItem>
             ))}
           </TextField>
