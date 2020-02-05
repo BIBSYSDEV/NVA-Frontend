@@ -39,7 +39,7 @@ const StyledFormCardLabel = styled(FormCardLabel)`
 `;
 
 interface SearchSummary {
-  loading: boolean;
+  isLoading: boolean;
   searchTerm: string;
   results: number;
 }
@@ -55,18 +55,18 @@ const AddContributorModalContent: FC<AddContributorModalContentProps> = ({ addAu
   const [matchingAuthorities, setMatchingAuthorities] = useState<Authority[]>([]);
   const [selectedAuthor, setSelectedAuthor] = useState<Authority>(emptyAuthority);
   const [searchSummary, setSearchSummary] = useState<SearchSummary>({
-    loading: false,
+    isLoading: false,
     searchTerm: '',
     results: 0,
   });
 
   const search = useCallback(
     debounce(async (searchTerm: string) => {
-      setSearchSummary({ loading: true, searchTerm, results: 0 });
+      setSearchSummary({ isLoading: true, searchTerm, results: 0 });
       const response = await getAuthorities(searchTerm, dispatch);
       if (response) {
         setMatchingAuthorities(response);
-        setSearchSummary({ loading: false, searchTerm, results: response.length });
+        setSearchSummary({ isLoading: false, searchTerm, results: response.length });
       } else {
         dispatch(addNotification(t('feedback:error.get_authorities'), 'error'));
       }
@@ -83,7 +83,7 @@ const AddContributorModalContent: FC<AddContributorModalContentProps> = ({ addAu
   return (
     <>
       <SearchBar handleSearch={handleSearch} resetSearchInput={false} />
-      {searchSummary.loading ? (
+      {searchSummary.isLoading ? (
         <StyledProgressContainer>
           <Progress size={100} />
         </StyledProgressContainer>

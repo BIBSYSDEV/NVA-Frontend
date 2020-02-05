@@ -75,38 +75,36 @@ const Modal: FC<ModalProps> = ({
   };
 
   return (
-    <>
-      <Dialog
-        aria-labelledby={ariaDescribedBy}
-        aria-describedby={ariaLabelledBy}
-        data-testid={dataTestId}
-        disableBackdropClick={disableEscape}
-        disableEscapeKeyDown={disableEscape}
-        open={openModal}
-        onClose={handleClose}
-        closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500,
-        }}>
-        <StyledWidth />
-        <StyledHeaderContainer>
-          {headingIcon ? (
-            <StyledInfoContainer>
-              {headingIcon && <StyledAvatar src={headingIcon.src} alt={headingIcon.alt} />}
-              <FormCardHeading>{headingText}</FormCardHeading>
-            </StyledInfoContainer>
-          ) : (
-            <StyledFormCardHeading>{headingText}</StyledFormCardHeading>
-          )}
-          {!disableEscape && <StyledCloseIcon onClick={handleClose} />}
-        </StyledHeaderContainer>
+    <Dialog
+      aria-labelledby={ariaDescribedBy}
+      aria-describedby={ariaLabelledBy}
+      data-testid={dataTestId}
+      disableBackdropClick={disableEscape}
+      disableEscapeKeyDown={disableEscape}
+      open={openModal}
+      onClose={handleClose}
+      closeAfterTransition
+      BackdropComponent={Backdrop}
+      BackdropProps={{
+        timeout: 500,
+      }}>
+      <StyledWidth />
+      <StyledHeaderContainer>
+        {headingIcon ? (
+          <StyledInfoContainer>
+            {headingIcon && <StyledAvatar src={headingIcon.src} alt={headingIcon.alt} />}
+            <FormCardHeading>{headingText}</FormCardHeading>
+          </StyledInfoContainer>
+        ) : (
+          <StyledFormCardHeading>{headingText}</StyledFormCardHeading>
+        )}
+        {!disableEscape && <StyledCloseIcon onClick={handleClose} />}
+      </StyledHeaderContainer>
 
-        <Fade in={openModal}>
-          <StyledPaper>{children}</StyledPaper>
-        </Fade>
-      </Dialog>
-    </>
+      <Fade in={openModal}>
+        <StyledPaper>{children}</StyledPaper>
+      </Fade>
+    </Dialog>
   );
 };
 
