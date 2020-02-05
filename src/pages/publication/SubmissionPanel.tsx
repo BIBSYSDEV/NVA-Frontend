@@ -49,7 +49,7 @@ const SubmissionPanel: React.FC = () => {
         <SubmissionFilesAndLicenses />
       </FormCard>
       <StyledPublishButton color="primary" variant="contained">
-        {t('publish')}
+        {t('common:publish')}
       </StyledPublishButton>
     </TabPanel>
   );
