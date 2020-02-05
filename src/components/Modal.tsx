@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC } from 'react';
 import styled from 'styled-components';
 
 import { Avatar, Backdrop, Dialog, Fade, Typography } from '@material-ui/core';
@@ -60,7 +60,7 @@ interface ModalProps {
   headingIcon?: any;
   headingText?: string;
   onClose?: () => void;
-  openModal?: boolean;
+  openModal: boolean;
 }
 
 const Modal: FC<ModalProps> = ({
@@ -74,18 +74,9 @@ const Modal: FC<ModalProps> = ({
   onClose,
   openModal,
 }) => {
-  const [open, setOpen] = useState(openModal ?? true);
-
-  // allows ButtonModal to close Modal
   const handleClose = () => {
     onClose && onClose();
-    setOpen(false);
   };
-
-  // allows children of Modal and ButtonModal to open and close Modal
-  useEffect(() => {
-    openModal && setOpen(openModal);
-  }, [openModal]);
 
   return (
     <>
@@ -95,7 +86,7 @@ const Modal: FC<ModalProps> = ({
         data-testid={dataTestId}
         disableBackdropClick={disableEscape}
         disableEscapeKeyDown={disableEscape}
-        open={open}
+        open={openModal}
         onClose={handleClose}
         closeAfterTransition
         BackdropComponent={Backdrop}
@@ -115,7 +106,7 @@ const Modal: FC<ModalProps> = ({
           {!disableEscape && <StyledCloseIcon onClick={handleClose} />}
         </StyledHeaderContainer>
 
-        <Fade in={open}>
+        <Fade in={openModal}>
           <StyledPaper>{children}</StyledPaper>
         </Fade>
       </StyledDialog>

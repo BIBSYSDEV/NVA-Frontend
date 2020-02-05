@@ -28,16 +28,14 @@ const AddContributor: FC = () => {
       <Button onClick={toggleModal} variant="contained" color="primary" data-testid="add-contributor">
         {t('contributors.add_author')}
       </Button>
-      {open && (
-        <Modal
-          ariaDescribedBy=""
-          ariaLabelledBy=""
-          headingText={t('contributors.add_author')}
-          onClose={toggleModal}
-          openModal={open}>
-          <AddContributorModal addAuthor={addAuthor} />
-        </Modal>
-      )}
+      <Modal
+        ariaDescribedBy="add-contributor-modal"
+        ariaLabelledBy="add-contributor-modal"
+        headingText={t('contributors.add_author')}
+        onClose={toggleModal}
+        openModal={open}>
+        <AddContributorModal addAuthor={addAuthor} />
+      </Modal>
     </>
   );
 };

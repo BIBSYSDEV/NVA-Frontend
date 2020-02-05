@@ -50,38 +50,38 @@ const AuthorityOrcidModal: FC = () => {
 
   return (
     <>
-      {openAuthorityModal && (
-        <Modal
-          dataTestId="connect-author-modal"
-          disableEscape
-          ariaLabelledBy="connect-author-modal"
-          headingText={t('profile:authority.connect_authority')}>
-          <>
-            <ConnectAuthority />
-            {noOrcid && (
-              <StyledButtonContainer>
-                <Button color="primary" variant="contained" onClick={handleNextClick} disabled={noAuthority}>
-                  {t('next')}
-                </Button>
-              </StyledButtonContainer>
-            )}
-          </>
-        </Modal>
-      )}
-      {openOrcidModal && (
-        <Modal
-          dataTestId="open-orcid-modal"
-          ariaLabelledBy="orcid-modal"
-          headingIcon={{ src: orcidLogo, alt: 'ORCID iD icon' }}
-          headingText={t('profile:orcid.create_or_connect')}>
-          <OrcidModal />
-          <StyledSkipButtonContainer>
-            <StyledButton color="secondary" variant="outlined" onClick={() => setOpenOrcidModal(false)}>
-              {t('profile:orcid.skip_this_step')}
-            </StyledButton>
-          </StyledSkipButtonContainer>
-        </Modal>
-      )}
+      <Modal
+        dataTestId="connect-author-modal"
+        disableEscape
+        openModal={openAuthorityModal}
+        onClose={() => setOpenAuthorityModal(false)}
+        ariaLabelledBy="connect-author-modal"
+        headingText={t('profile:authority.connect_authority')}>
+        <>
+          <ConnectAuthority />
+          {noOrcid && (
+            <StyledButtonContainer>
+              <Button color="primary" variant="contained" onClick={handleNextClick} disabled={noAuthority}>
+                {t('next')}
+              </Button>
+            </StyledButtonContainer>
+          )}
+        </>
+      </Modal>
+      <Modal
+        dataTestId="open-orcid-modal"
+        ariaLabelledBy="orcid-modal"
+        openModal={openOrcidModal}
+        onClose={() => setOpenOrcidModal(false)}
+        headingIcon={{ src: orcidLogo, alt: 'ORCID iD icon' }}
+        headingText={t('profile:orcid.create_or_connect')}>
+        <OrcidModal />
+        <StyledSkipButtonContainer>
+          <StyledButton color="secondary" variant="outlined" onClick={() => setOpenOrcidModal(false)}>
+            {t('profile:orcid.skip_this_step')}
+          </StyledButton>
+        </StyledSkipButtonContainer>
+      </Modal>
     </>
   );
 };
