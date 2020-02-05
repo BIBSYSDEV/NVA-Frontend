@@ -30,11 +30,11 @@ interface DisplayValue {
   results: number;
 }
 
-interface AddContributorModalProps {
+interface AddContributorModalContentProps {
   addAuthor: (selectedAuthor: Authority) => void;
 }
 
-const AddContributorModal: FC<AddContributorModalProps> = ({ addAuthor }) => {
+const AddContributorModalContent: FC<AddContributorModalContentProps> = ({ addAuthor }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation('publication');
 
@@ -105,4 +105,4 @@ const AddContributorModal: FC<AddContributorModalProps> = ({ addAuthor }) => {
   );
 };
 
-export default AddContributorModal;
+export default AddContributorModalContent;

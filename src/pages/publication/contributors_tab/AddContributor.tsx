@@ -5,7 +5,7 @@ import { Button } from '@material-ui/core';
 
 import Modal from '../../../components/Modal';
 import { Authority } from '../../../types/authority.types';
-import AddContributorModal from './components/AddContributorModal';
+import AddContributorModalContent from './components/AddContributorModalContent';
 
 const AddContributor: FC = () => {
   const { t } = useTranslation('publication');
@@ -34,7 +34,7 @@ const AddContributor: FC = () => {
         headingText={t('contributors.add_author')}
         onClose={toggleModal}
         openModal={open}>
-        <AddContributorModal addAuthor={addAuthor} />
+        <AddContributorModalContent addAuthor={addAuthor} />
       </Modal>
     </>
   );
