@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 import styled from 'styled-components';
@@ -31,17 +31,12 @@ const StyledSearchBarContainer = styled.div`
 const Dashboard: FC = () => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const [searchTerm, setSearchTerm] = useState('');
 
-  const handleSearch = async () => {
+  const handleSearch = async (searchTerm: string) => {
     if (searchTerm.length) {
       await search(searchTerm, dispatch);
       history.push(`/search/${searchTerm}`);
     }
-  };
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(event.target.value);
   };
 
   return (

@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { Button, Typography } from '@material-ui/core';
 
 import { getAuthorities } from '../../../../api/authorityApi';
+import FormCardLabel from '../../../../components/FormCard/FormCardLabel';
 import Progress from '../../../../components/Progress';
 import SearchBar from '../../../../components/SearchBar';
 import { addNotification } from '../../../../redux/actions/notificationActions';
@@ -31,6 +32,10 @@ const StyledProgressContainer = styled.div`
   justify-content: space-around;
   align-items: center;
   padding: 2rem;
+`;
+
+const StyledFormCardLabel = styled(FormCardLabel)`
+  padding: 0.5rem;
 `;
 
 interface SearchSummary {
@@ -84,12 +89,12 @@ const AddContributorModalContent: FC<AddContributorModalContentProps> = ({ addAu
         </StyledProgressContainer>
       ) : matchingAuthorities?.length > 0 ? (
         <>
-          <Typography variant="h3">
+          <StyledFormCardLabel>
             {t('profile:authority.search_summary', {
               searchTerm: searchSummary.searchTerm,
               results: searchSummary.results,
             })}
-          </Typography>
+          </StyledFormCardLabel>
           {matchingAuthorities?.map(authority => (
             <StyledClickableDiv
               data-testid="author-radio-button"

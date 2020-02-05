@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 
-import Box from '../../components/Box';
+import FormCard from '../../components/FormCard/FormCard';
 import TabPanel from '../../components/TabPanel/TabPanel';
 import AddContributor from './contributors_tab/AddContributor';
 
@@ -11,9 +11,9 @@ interface ContributorsPanelProps {
 
 const ContributorsPanel: FC<ContributorsPanelProps> = ({ goToNextTab, savePublication }) => (
   <TabPanel ariaLabel="references" goToNextTab={goToNextTab} onClickSave={savePublication}>
-    <Box>
+    <FormCard>
       <AddContributor />
-    </Box>
+    </FormCard>
   </TabPanel>
 );
 

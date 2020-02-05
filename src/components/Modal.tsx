@@ -1,8 +1,10 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 
-import { Avatar, Backdrop, Dialog, Fade, Typography } from '@material-ui/core';
+import { Avatar, Backdrop, Dialog, Fade } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
+
+import FormCardHeading from './FormCard/FormCardHeading';
 
 const StyledPaper = styled.div`
   background-color: ${({ theme }) => theme.palette.background};
@@ -22,8 +24,7 @@ const StyledWidth = styled.div`
   }
 `;
 
-const StyledTypography = styled(Typography)`
-  font-weight: bold;
+const StyledFormCardHeading = styled(FormCardHeading)`
   grid-area: text;
   margin-left: 1rem;
 `;
@@ -42,6 +43,7 @@ const StyledInfoContainer = styled.div`
   display: grid;
   grid-template-areas: 'avatar text';
   grid-template-columns: 1fr 7fr;
+  grid-gap: 1rem;
   align-items: center;
 `;
 
@@ -92,10 +94,10 @@ const Modal: FC<ModalProps> = ({
           {headingIcon ? (
             <StyledInfoContainer>
               {headingIcon && <StyledAvatar src={headingIcon.src} alt={headingIcon.alt} />}
-              <StyledTypography variant="h3">{headingText}</StyledTypography>
+              <FormCardHeading>{headingText}</FormCardHeading>
             </StyledInfoContainer>
           ) : (
-            <StyledTypography variant="h3">{headingText}</StyledTypography>
+            <StyledFormCardHeading>{headingText}</StyledFormCardHeading>
           )}
           {!disableEscape && <StyledCloseIcon onClick={handleClose} />}
         </StyledHeaderContainer>

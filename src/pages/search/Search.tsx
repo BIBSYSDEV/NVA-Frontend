@@ -22,17 +22,13 @@ const Search: FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [resetSearchInput, setResetSearchInput] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
+  const searchTerm = history.location.pathname.replace('/search/', '');
 
-  const handleSearch = async () => {
+  const handleSearch = async (searchTerm: string) => {
     if (searchTerm.length) {
       await search(searchTerm, dispatch);
       history.push(`/search/${searchTerm}`);
     }
-  };
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(event.target.value);
   };
 
   useEffect(() => {
