@@ -5,24 +5,18 @@ import styled from 'styled-components';
 
 import { FormControl, FormHelperText, MenuItem, TextField } from '@material-ui/core';
 
+import FormCard from '../../components/FormCard/FormCard';
 import TabPanel from '../../components/TabPanel/TabPanel';
 import { Publication } from '../../types/publication.types';
 import {
-  BookFieldNames,
-  ChapterFieldNames,
-  DegreeFieldNames,
-  JournalArticleFieldNames,
-  ReferenceFieldNames,
-  ReferenceType,
-  referenceTypeLanguageKeyMap,
-  ReportFieldNames,
+    BookFieldNames, ChapterFieldNames, DegreeFieldNames, JournalArticleFieldNames,
+    ReferenceFieldNames, ReferenceType, referenceTypeLanguageKeyMap, ReportFieldNames
 } from '../../types/references.types';
 import BookReferenceForm from './references_tab/BookReferenceForm';
 import ChapterReferenceForm from './references_tab/ChapterReferenceForm';
 import DegreeReferenceForm from './references_tab/DegreeReferenceForm';
 import JournalArticleReferenceForm from './references_tab/JournalArticleReferenceForm';
 import ReportReferenceForm from './references_tab/ReportReferenceForm';
-import FormCard from '../../components/FormCard/FormCard';
 
 const StyledBox = styled.div`
   margin-top: 1rem;
@@ -43,7 +37,7 @@ interface ReferencesPanelProps {
   savePublication: () => void;
 }
 
-export const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, savePublication }) => {
+const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, savePublication }) => {
   const { t } = useTranslation('publication');
   const { values, setFieldTouched }: FormikProps<Publication> = useFormikContext();
   const { type } = values.reference;

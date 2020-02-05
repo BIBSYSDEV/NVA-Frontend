@@ -53,7 +53,7 @@ export interface Publisher {
   level: number | null;
 }
 
-export interface Chapter {
+interface Chapter {
   link: string;
   pagesFrom: string;
   pagesTo: string;
@@ -151,7 +151,7 @@ export const journalArticleTypes = [
   { label: 'references.review', value: JournalArticleTypeValue.REVIEW },
 ];
 
-export enum BookTypeValue {
+enum BookTypeValue {
   MONOGRAPHY = 'monography',
   ANTHOLOGY = 'anthology',
 }
@@ -161,7 +161,7 @@ export const bookTypes = [
   { label: 'references.anthology', value: BookTypeValue.ANTHOLOGY },
 ];
 
-export enum ReportTypeValue {
+enum ReportTypeValue {
   REPORT = 'report',
   RESEARCH_REPORT = 'research_report',
   POLICY_REPORT = 'policy_report',
@@ -175,7 +175,7 @@ export const reportTypes = [
   { label: 'references.working_paper', value: ReportTypeValue.WORKING_PAPER },
 ];
 
-export enum DegreeTypeValue {
+enum DegreeTypeValue {
   BACHELOR = 'bachelor',
   MASTER = 'master',
   DOCTORATE = 'doctorate',
