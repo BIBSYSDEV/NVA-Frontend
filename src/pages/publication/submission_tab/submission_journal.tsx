@@ -22,7 +22,7 @@ const SubmissionJournalPublication: React.FC = () => {
       <LabelContentRow label={t('references.pages_from')}>{values.reference.journalArticle?.pagesFrom}</LabelContentRow>
       <LabelContentRow label={t('references.pages_to')}>{values.reference.journalArticle?.pagesTo}</LabelContentRow>
       <LabelContentRow label={t('references.peer_reviewed')}>
-        {values.reference.journalArticle?.peerReview}
+        {values.reference.journalArticle?.peerReview ? t('common:yes') : t('common:no')}
       </LabelContentRow>
       <LabelContentRow label={t('references.doi')}>{values.reference.journalArticle?.link}</LabelContentRow>
       <LabelContentRow label={t('references.article_number')}>
