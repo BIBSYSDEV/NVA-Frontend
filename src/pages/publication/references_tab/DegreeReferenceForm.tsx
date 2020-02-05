@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { MenuItem, TextField } from '@material-ui/core';
 
 import { Publication } from '../../../types/publication.types';
-import { emptyPublisher, DegreeFieldNames, DegreeType, BookType } from '../../../types/references.types';
+import { emptyPublisher, DegreeFieldNames, DegreeType } from '../../../types/references.types';
 import { PublicationTableNumber } from '../../../utils/constants';
 import PublicationChannelSearch from './components/PublicationChannelSearch';
 import PublisherRow from './components/PublisherRow';
