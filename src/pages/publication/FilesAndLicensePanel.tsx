@@ -11,6 +11,7 @@ import { licenses } from '../../types/file.types';
 import { Typography } from '@material-ui/core';
 import FormCard from '../../components/FormCard/FormCard';
 import FormCardHeading from '../../components/FormCard/FormCardHeading';
+import { openAccessLogo } from '../../resources/images/licenses';
 
 const StyledUploadedFiles = styled(FormCard)`
   display: flex;
@@ -40,12 +41,22 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab
   const [isLicenseModalOpen, setIsLicenseModalOpen] = useState(false);
   const uploadedFiles = values[FilesFieldNames.FILES];
 
+  const referenceType = values.reference.type;
+  const publisherTitle = referenceType ? values.reference[referenceType]?.publisher?.title : null;
+
   const toggleLicenseModal = () => {
     setIsLicenseModalOpen(!isLicenseModalOpen);
   };
 
   return (
     <TabPanel ariaLabel="files and license" goToNextTab={goToNextTab}>
+      <FormCard>
+        <FormCardHeading>
+          {publisherTitle}
+          <img src={openAccessLogo} alt="hajksd"></img>
+        </FormCardHeading>
+      </FormCard>
+
       <FieldArray name={FilesFieldNames.FILES}>
         {({ push, remove, replace }) => (
           <>
