@@ -94,6 +94,7 @@ const BookReferenceForm: FC = () => {
                   control={
                     <Checkbox
                       data-testid="text_book"
+                      color="primary"
                       onChange={(event: ChangeEvent<HTMLInputElement>) => setFieldValue(name, event.target.checked)}
                       checked={value}
                     />
