@@ -1,15 +1,14 @@
 import React from 'react';
-import Box from '../../../components/Box';
 import styled from 'styled-components';
 import {
   Button,
-  Link,
-  FormControlLabel,
   Checkbox,
   FormControl,
+  FormControlLabel,
   FormLabel,
-  RadioGroup,
+  Link,
   Radio,
+  RadioGroup,
   TextField,
   MenuItem,
   IconButton,
@@ -20,12 +19,12 @@ import { File, licenses, License } from '../../../types/file.types';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import { useTranslation } from 'react-i18next';
+import FormCard from '../../../components/FormCard/FormCard';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import HelpIcon from '@material-ui/icons/Help';
+import FormCardSubHeading from '../../../components/FormCard/FormCardSubHeading';
+import DeleteIcon from '@material-ui/icons/Delete';
 
-const StyledTitle = styled.div`
-  font-weight: bold;
-`;
 const StyledDescription = styled.div`
   font-style: italic;
 `;
@@ -68,8 +67,8 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, updateFile, toggl
   const { t } = useTranslation('publication');
 
   return (
-    <Box>
-      <StyledTitle>{file.name}</StyledTitle>
+    <FormCard>
+      <FormCardSubHeading>{file.name}</FormCardSubHeading>
       <StyledDescription>
         {t('files_and_license.uploaded_size', { size: Math.round(file.data.size / 1000) })}
       </StyledDescription>
@@ -185,9 +184,12 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, updateFile, toggl
             {t('common:preview')}
           </Button>
         </Link>
-        <Button onClick={removeFile}>{t('common:remove')}</Button>
+        <Button variant="contained" color="secondary" onClick={removeFile}>
+          <DeleteIcon />
+          {t('common:remove')}
+        </Button>
       </StyledActions>
-    </Box>
+    </FormCard>
   );
 };
 

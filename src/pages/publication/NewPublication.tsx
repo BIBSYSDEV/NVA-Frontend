@@ -8,6 +8,8 @@ import { Button, Link as MuiLink } from '@material-ui/core';
 import LinkPublication from './new_publication/LinkPublication';
 import LoadPublication from './new_publication/LoadPublication';
 import PublicationForm from './PublicationForm';
+import FormCardHeading from '../../components/FormCard/FormCardHeading';
+import FormCard from '../../components/FormCard/FormCard';
 
 const StyledNewPublication = styled.div`
   width: 100%;
@@ -30,20 +32,13 @@ const StyledSelectorWrapper = styled.div`
   }
 `;
 
-const StyledInfoBox = styled.div`
-  background-color: ${({ theme }) => theme.palette.box.main};
+const StyledCard = styled(FormCard)`
   padding: 1rem;
   max-width: 25rem;
   flex: 1;
   @media only screen and (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
     max-width: inherit;
     margin-right: 0;
-  }
-  > header {
-    font-size: 1.2rem;
-    font-weight: bold;
-    line-height: 1.5rem;
-    margin-bottom: 2rem;
   }
   > section {
     margin-bottom: 2rem;
@@ -80,8 +75,8 @@ const NewPublication: FC = () => {
                 openForm={handleClick}
               />
             </StyledSelectorWrapper>
-            <StyledInfoBox>
-              <header>{t('common:information')}</header>
+            <StyledCard>
+              <FormCardHeading>{t('common:information')}</FormCardHeading>
               <section>
                 Velg publikasjoner Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
                 incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
@@ -92,7 +87,7 @@ const NewPublication: FC = () => {
               <MuiLink component={Link} to={'/'} underline={'none'}>
                 Hvilke type publikasjoner kan jeg laste opp
               </MuiLink>
-            </StyledInfoBox>
+            </StyledCard>
           </StyledNewPublication>
           {/* temporary button so that we can navigate to schema */}
           <StyledButton color="primary" variant="contained" data-testid="new-schema-button" onClick={handleClick}>
