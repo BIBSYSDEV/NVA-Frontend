@@ -11,8 +11,10 @@ const SubmissionBook: React.FC = () => {
 
   return (
     <>
-      <FormCardSubHeading>{t('references.book')}</FormCardSubHeading>
-      <LabelContentRow label={t('common:type')}>{values.reference.book?.type}</LabelContentRow>
+      <LabelContentRow label={t('common:type')}>{t('references.book')}</LabelContentRow>
+      <LabelContentRow label={t('references.subtype')}>
+        {t(`references.${values.reference.book?.type}`)}
+      </LabelContentRow>
       <LabelContentRow label={t('references.publisher')}>{values.reference.book?.publisher?.title}</LabelContentRow>
       <LabelContentRow label={t('references.peer_reviewed')}>
         {values.reference.book?.peerReview ? t('common:yes') : t('common:no')}
