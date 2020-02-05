@@ -11,7 +11,7 @@ export interface Reference {
 
 interface JournalArticle {
   type: JournalArticleTypeValue | '';
-  journal: Publisher;
+  publisher: Publisher;
   volume: string;
   issue: string;
   pagesFrom: string;
@@ -58,7 +58,9 @@ export interface Chapter {
   pagesFrom: string;
   pagesTo: string;
   anthology: Book;
+  publisher: Publisher;
 }
+
 export const emptyPublisher: Publisher = {
   printIssn: '',
   onlineIssn: '',
@@ -79,7 +81,7 @@ const emptyBookReference: Book = {
 const emptyJournalArticleReference: JournalArticle = {
   type: '',
   link: '',
-  journal: emptyPublisher,
+  publisher: emptyPublisher,
   volume: '',
   issue: '',
   peerReview: false,
@@ -108,6 +110,7 @@ const emptyChapterReference: Chapter = {
   pagesFrom: '',
   pagesTo: '',
   anthology: emptyBookReference,
+  publisher: emptyPublisher,
 };
 
 export const emptyReference: Reference = {
@@ -195,7 +198,7 @@ export enum ReferenceFieldNames {
 export enum JournalArticleFieldNames {
   TYPE = 'reference.journalArticle.type',
   DOI = 'reference.journalArticle.doi',
-  JOURNAL = 'reference.journalArticle.journal',
+  PUBLISHER = 'reference.journalArticle.publisher',
   VOLUME = 'reference.journalArticle.volume',
   ISSUE = 'reference.journalArticle.issue',
   PAGES_FROM = 'reference.journalArticle.pagesFrom',
@@ -234,4 +237,5 @@ export enum ChapterFieldNames {
   ANTHOLOGY = 'reference.chapter.anthology',
   PAGES_FROM = 'reference.chapter.pagesFrom',
   PAGES_TO = 'reference.chapter.pagesTo',
+  PUBLISHER = 'reference.chapter.publisher',
 }
