@@ -14,7 +14,7 @@ export enum PublicationsApiPaths {
   INSERT_RESOURCE = '/publications/insert-resource',
   UPDATE_RESOURCE = '/publications/update-resource',
   FETCH_RESOURCE = '/publications/fetch-resource',
-  DOI_LOOKUP = '/doi',
+  DOI_LOOKUP = '/doi-fetch',
 }
 
 export const createNewPublicationFromDoi = async (doiUrl: string, dispatch: Dispatch) => {

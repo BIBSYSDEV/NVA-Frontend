@@ -4,7 +4,7 @@ import '@uppy/dashboard/dist/style.css';
 
 import { Dashboard } from '@uppy/react';
 import { useTranslation } from 'react-i18next';
-import { File, UppyFileResponse, emptyFile } from '../../../types/license.types';
+import { File, UppyFileResponse, emptyFile } from '../../../types/file.types';
 
 interface FileUploaderProps {
   addFile: (file: File) => void;

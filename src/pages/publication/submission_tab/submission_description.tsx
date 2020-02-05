@@ -11,6 +11,7 @@ const SubmissionDescription: React.FC = () => {
 
   return (
     <>
+      <LabelContentRow label={t('common:title')}>{values.title.nb}</LabelContentRow>
       <LabelContentRow label={t('description.abstract')}>{values.abstract}</LabelContentRow>
       <LabelContentRow label={t('description.description')}>{values.description}</LabelContentRow>
       <LabelContentRow label={t('description.npi_disciplines')}>
