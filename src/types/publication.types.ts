@@ -1,4 +1,4 @@
-import Contributor from './contributor.types';
+import { Contributor } from './contributor.types';
 import { File } from './file.types';
 import { LanguageCodes } from './language.types';
 import { Project } from './project.types';
