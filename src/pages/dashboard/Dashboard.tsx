@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { FC } from 'react';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router';
 import styled from 'styled-components';
 
+import { search } from '../../api/publicationApi';
 import SearchBar from '../../components/SearchBar';
 
 const StyledDashboard = styled.div`
@@ -21,12 +24,29 @@ const StyledOtherContent = styled.div`
   grid-area: search-bar;
 `;
 
-const Dashboard: React.FC = () => (
-  <StyledDashboard>
-    <StyledSearchBar resetSearchInput />
+const StyledSearchBarContainer = styled.div`
+  width: 35rem;
+`;
 
-    <StyledOtherContent>Annet innhold</StyledOtherContent>
-  </StyledDashboard>
-);
+const Dashboard: FC = () => {
+  const history = useHistory();
+  const dispatch = useDispatch();
+
+  const handleSearch = async (searchTerm: string) => {
+    if (searchTerm.length) {
+      await search(searchTerm, dispatch);
+      history.push(`/search/${searchTerm}`);
+    }
+  };
+
+  return (
+    <StyledDashboard>
+      <StyledSearchBarContainer>
+        <StyledSearchBar resetSearchInput handleSearch={handleSearch} />
+      </StyledSearchBarContainer>
+      <StyledOtherContent>Annet innhold</StyledOtherContent>
+    </StyledDashboard>
+  );
+};
 
 export default Dashboard;

@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
+import Truncate from 'react-truncate';
 import styled from 'styled-components';
 
-import { Radio } from '@material-ui/core';
+import { Radio, Typography } from '@material-ui/core';
 
 import { getPublications } from '../../../api/external/almaApi';
 import { Authority } from '../../../types/authority.types';
@@ -14,6 +15,7 @@ const StyledBoxContent = styled.div`
   grid-template-columns: 2fr 2fr;
   background-color: ${({ theme }) => theme.palette.box.main};
   padding: 1rem;
+  height: 5.5rem;
 `;
 
 const StyledPublicationContent = styled.div`
@@ -23,6 +25,10 @@ const StyledPublicationContent = styled.div`
 const StyledPublicationInfo = styled.div`
   display: block;
   font-weight: bold;
+`;
+
+const StyledAuthority = styled.div`
+  align-self: center;
 `;
 
 interface AuthorityCardProps {
@@ -46,16 +52,18 @@ const AuthorityCard: React.FC<AuthorityCardProps> = ({ authority, isSelected }) 
 
   return (
     <StyledBoxContent>
-      <div>
+      <StyledAuthority>
         <Radio color="primary" checked={isSelected} />
         {authority?.name}
-      </div>
+      </StyledAuthority>
       <StyledPublicationContent>
         {publications?.[0] ? (
-          <div>
+          <>
             <StyledPublicationInfo>{t('authority.last_publication')}</StyledPublicationInfo>
-            {publications?.[0]?.title}
-          </div>
+            <Truncate lines={2} ellipsis={<span>...</span>}>
+              <Typography variant="body2">{publications?.[0]?.title}</Typography>
+            </Truncate>
+          </>
         ) : (
           <i>{t('authority.no_publications_found')}</i>
         )}

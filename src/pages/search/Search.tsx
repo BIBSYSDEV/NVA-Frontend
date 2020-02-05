@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import styled from 'styled-components';
 
+import { search } from '../../api/publicationApi';
 import SearchBar from '../../components/SearchBar';
 import { clearSearch } from '../../redux/actions/searchActions';
 import { RootStore } from '../../redux/reducers/rootReducer';
@@ -15,12 +16,20 @@ const StyledSearch = styled.div`
   justify-items: center;
 `;
 
-const Search: React.FC = () => {
+const Search: FC = () => {
   const searchResults = useSelector((state: RootStore) => state.search);
-  const { publications, searchTerm } = searchResults;
+  const { publications } = searchResults;
   const dispatch = useDispatch();
   const history = useHistory();
   const [resetSearchInput, setResetSearchInput] = useState(false);
+  const searchTerm = history.location.pathname.replace('/search/', '');
+
+  const handleSearch = async (searchTerm: string) => {
+    if (searchTerm.length) {
+      await search(searchTerm, dispatch);
+      history.push(`/search/${searchTerm}`);
+    }
+  };
 
   useEffect(() => {
     if (history.location.pathname === '/search') {
@@ -35,7 +44,7 @@ const Search: React.FC = () => {
     <StyledSearch>
       <div>filter</div>
       <div>
-        <SearchBar resetSearchInput={resetSearchInput} />
+        <SearchBar resetSearchInput={resetSearchInput} handleSearch={handleSearch} />
         {publications?.length > 0 && <SearchResults publications={publications} searchTerm={searchTerm} />}
       </div>
     </StyledSearch>

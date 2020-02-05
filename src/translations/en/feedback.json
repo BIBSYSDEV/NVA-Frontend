@@ -1,5 +1,6 @@
 {
   "error": {
+    "create_authority": "Could not create authority",
     "create_publication": "Could not create publication",
     "get_authority": "Could not retrieve authority",
     "get_authorities": "Could not retrieve authorities",
