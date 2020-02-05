@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { Button, Typography } from '@material-ui/core';
 
 import { getAuthorities } from '../../../../api/authorityApi';
+import Progress from '../../../../components/Progress';
 import SearchBar from '../../../../components/SearchBar';
 import { addNotification } from '../../../../redux/actions/notificationActions';
 import { Authority, emptyAuthority } from '../../../../types/authority.types';
@@ -25,7 +26,15 @@ const StyledButtonContainer = styled.div`
   margin-top: 1rem;
 `;
 
-interface DisplayValue {
+const StyledProgressContainer = styled.div`
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 2rem;
+`;
+
+interface SearchSummary {
+  loading: boolean;
   searchTerm: string;
   results: number;
 }
@@ -38,19 +47,21 @@ const AddContributorModalContent: FC<AddContributorModalContentProps> = ({ addAu
   const dispatch = useDispatch();
   const { t } = useTranslation('publication');
 
-  const [matchingAuthorities, setMatchingAuthorities] = useState<Authority[]>();
+  const [matchingAuthorities, setMatchingAuthorities] = useState<Authority[]>([]);
   const [selectedAuthor, setSelectedAuthor] = useState<Authority>(emptyAuthority);
-  const [displayValue, setDisplayValue] = useState<DisplayValue>({
+  const [searchSummary, setSearchSummary] = useState<SearchSummary>({
+    loading: false,
     searchTerm: '',
     results: 0,
   });
 
   const search = useCallback(
     debounce(async (searchTerm: string) => {
+      setSearchSummary({ loading: true, searchTerm, results: 0 });
       const response = await getAuthorities(searchTerm, dispatch);
       if (response) {
         setMatchingAuthorities(response);
-        setDisplayValue({ searchTerm, results: response.length });
+        setSearchSummary({ loading: false, searchTerm, results: response.length });
       } else {
         dispatch(addNotification(t('feedback:error.get_authorities'), 'error'));
       }
@@ -67,15 +78,19 @@ const AddContributorModalContent: FC<AddContributorModalContentProps> = ({ addAu
   return (
     <>
       <SearchBar handleSearch={handleSearch} resetSearchInput={false} />
-      {matchingAuthorities && matchingAuthorities.length > 0 ? (
+      {searchSummary.loading ? (
+        <StyledProgressContainer>
+          <Progress size={100} />
+        </StyledProgressContainer>
+      ) : matchingAuthorities?.length > 0 ? (
         <>
           <Typography variant="h3">
             {t('profile:authority.search_summary', {
-              searchTerm: displayValue.searchTerm,
-              results: displayValue.results,
+              searchTerm: searchSummary.searchTerm,
+              results: searchSummary.results,
             })}
           </Typography>
-          {matchingAuthorities.map(authority => (
+          {matchingAuthorities?.map(authority => (
             <StyledClickableDiv
               data-testid="author-radio-button"
               key={authority.systemControlNumber}

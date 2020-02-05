@@ -4,12 +4,6 @@ import styled from 'styled-components';
 import { Avatar, Backdrop, Dialog, Fade, Typography } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 
-const StyledDialog = styled(Dialog)`
-  display: 'flex';
-  align-items: 'center';
-  justify-content: 'center';
-`;
-
 const StyledPaper = styled.div`
   background-color: ${({ theme }) => theme.palette.background};
   margin: 1rem;
@@ -22,7 +16,7 @@ const StyledHeaderContainer = styled.div`
 `;
 
 const StyledWidth = styled.div`
-  min-width: 30rem;
+  min-width: 40rem;
   @media (min-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
     max-width: 10rem;
   }
@@ -80,7 +74,7 @@ const Modal: FC<ModalProps> = ({
 
   return (
     <>
-      <StyledDialog
+      <Dialog
         aria-labelledby={ariaDescribedBy}
         aria-describedby={ariaLabelledBy}
         data-testid={dataTestId}
@@ -109,7 +103,7 @@ const Modal: FC<ModalProps> = ({
         <Fade in={openModal}>
           <StyledPaper>{children}</StyledPaper>
         </Fade>
-      </StyledDialog>
+      </Dialog>
     </>
   );
 };
