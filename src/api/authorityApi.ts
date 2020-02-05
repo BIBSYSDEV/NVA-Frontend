@@ -99,12 +99,12 @@ const updateAuthorityAndHandleErrors = async (url: string, body: any) => {
       return;
     } else {
       return {
-        error: i18n.t('feedback:error.update_authority'),
+        error: i18n.t('feedback:error.update_authority', 'error'),
       };
     }
   } catch (error) {
     return {
-      error: i18n.t('feedback:error.update_authority'),
+      error: i18n.t('feedback:error.update_authority', 'error'),
     };
   }
 };
