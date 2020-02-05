@@ -9,14 +9,34 @@ import {
 } from '../api/fileUploadApi';
 import { File } from '../types/license.types';
 
+interface UppyArgs {
+  uploadId: string;
+  key: string;
+}
+
+interface UppyPrepareArgs extends UppyArgs {
+  body: Blob;
+  number: number;
+}
+
+interface UppyCompleteArgs extends UppyArgs {
+  parts: UppyCompletePart[];
+}
+
+export interface UppyCompletePart {
+  PartNumber: string;
+  ETag: string;
+}
+
 export const createUppy = () =>
   new Uppy({
     autoProceed: true,
   }).use(AwsS3Multipart, {
+    abortMultipartUpload: async (_: File, { uploadId, key }: UppyArgs) => await abortMultipartUpload(uploadId, key),
+    completeMultipartUpload: async (_: File, { uploadId, key, parts }: UppyCompleteArgs) =>
+      await completeMultipartUpload(uploadId, key, parts),
     createMultipartUpload: async (file: File) => await createMultipartUpload(file),
-    listParts: async (_: File, { uploadedId, key }: any) => await listParts(uploadedId, key),
-    prepareUploadPart: async (_: File, partData: any) => await prepareUploadPart(partData),
-    abortMultipartUpload: async (_: File, { uploadedId, key }: any) => await abortMultipartUpload(uploadedId, key),
-    completeMultipartUpload: async (_: File, { uploadedId, key, parts }: any) =>
-      await completeMultipartUpload(uploadedId, key, parts),
+    listParts: async (_: File, { uploadId, key }: UppyArgs) => await listParts(uploadId, key),
+    prepareUploadPart: async (_: File, { uploadId, key, body, number }: UppyPrepareArgs) =>
+      await prepareUploadPart(uploadId, key, body, number),
   });
