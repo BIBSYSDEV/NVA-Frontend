@@ -16,13 +16,14 @@ declare module '@material-ui/core/styles/createPalette' {
 
 enum Colors {
   Primary = '#6558f5',
-  Secondary = '#96c3ec',
+  Secondary = '#ff5555',
   Background = '#fff',
   Box = '#eeeeff',
   Link = '#6558f5',
   Separator = '#3d4349',
   PrimaryText = 'rgba(0, 0, 0, 0.87)',
   SecondaryText = '#44515d',
+  CollapsedPanel = '#96c3ec',
   ExpandedPanel = '#b2acfa',
   TabBackground = '#f3c19d',
   Disabled = '#bbb',
@@ -94,7 +95,7 @@ export default createMuiTheme({
     },
     MuiExpansionPanel: {
       root: {
-        background: Colors.Secondary,
+        background: Colors.CollapsedPanel,
         '&$expanded': {
           background: Colors.ExpandedPanel,
         },
@@ -117,6 +118,11 @@ export default createMuiTheme({
           color: Colors.PrimaryText,
           fontWeight: 'bold',
         },
+      },
+    },
+    MuiCard: {
+      root: {
+        backgroundColor: Colors.Box,
       },
     },
     MuiTextField: {

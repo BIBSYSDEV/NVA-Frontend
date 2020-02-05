@@ -1,6 +1,6 @@
 import Axios from 'axios';
 import { getIdToken } from './userApi';
-import { File } from '../types/license.types';
+import { File } from '../types/file.types';
 import { UppyCompletePart } from '../utils/uppy-config';
 
 export enum FileUploadApiPaths {

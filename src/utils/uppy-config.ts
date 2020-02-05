@@ -7,7 +7,7 @@ import {
   abortMultipartUpload,
   completeMultipartUpload,
 } from '../api/fileUploadApi';
-import { File } from '../types/license.types';
+import { File } from '../types/file.types';
 
 interface UppyArgs {
   uploadId: string;

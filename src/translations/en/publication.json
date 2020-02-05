@@ -5,7 +5,8 @@
     "link": "Link to publication"
   },
   "contributors": {
-    "add_author": "Add authors",
+    "add_author": "Add author",
+    "add_authors": "Add authors",
     "add_other_contributor": "Add more contributors",
     "authors": "Authors",
     "corresponding": "Corresponding",
@@ -38,6 +39,7 @@
     "embargo_date": "Date for delayed publishing in archive",
     "files": "Files",
     "license": "License",
+    "licenses": "Licenses",
     "published_version": "Published version",
     "select_version": "Select version",
     "upload_files": "Upload Files",

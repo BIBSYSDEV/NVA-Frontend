@@ -84,7 +84,7 @@ const User: React.FC = () => {
   return (
     <StyledUserPage>
       <StyledSecondaryUserInfo>
-        <UserCard headingLabel={t('picture')} />
+        <UserCard headingLabel={t('common:picture')} />
         <UserCard headingLabel={t('heading.contact_info')} />
         <UserLanguage />
         <UserRoles user={user} />
