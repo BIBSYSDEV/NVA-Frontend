@@ -1,10 +1,10 @@
-describe.skip('Search', () => {
+describe('Search', () => {
   beforeEach(() => {
     cy.visit('/');
     cy.server();
   });
 
-  it.skip('The user should see a result-list when searching', () => {
+  it('The user should see a result-list when searching', () => {
     cy.fixture('publications_2_random_results_generated').as('mockDataWith2Results');
     cy.route('/search/publications/test', '@mockDataWith2Results');
     searchForText('test');
@@ -14,7 +14,7 @@ describe.skip('Search', () => {
     cy.get('[data-testid=search-results]').contains('2');
   });
 
-  it.skip('The user should see a working pagination', () => {
+  it('The user should see a working pagination', () => {
     cy.fixture('publications_45_random_results_generated').as('mockDataWith45Results');
     cy.route('/search/publications/test', '@mockDataWith45Results');
     searchForText('test');
