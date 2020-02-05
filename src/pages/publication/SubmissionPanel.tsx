@@ -31,22 +31,26 @@ const SubmissionPanel: React.FC = () => {
     <TabPanel ariaLabel="submission">
       <FormCard>
         <FormCardHeading>{t('heading.summary')}</FormCardHeading>
-
-        <FormCardSubHeading>{t('heading.description')}</FormCardSubHeading>
-        <SubmissionDescription />
-
-        <FormCardSubHeading>{t('heading.references')}</FormCardSubHeading>
-        {values.reference.type === ReferenceType.BOOK && <SubmissionBook />}
-        {values.reference.type === ReferenceType.DEGREE && <SubmissionDegree />}
-        {values.reference.type === ReferenceType.CHAPTER && <SubmissionChapter />}
-        {values.reference.type === ReferenceType.REPORT && <SubmissionReport />}
-        {values.reference.type === ReferenceType.PUBLICATION_IN_JOURNAL && <SubmissionJournalPublication />}
-
-        <FormCardSubHeading>{t('heading.contributors')}</FormCardSubHeading>
-        <SubmissionContributors />
-
-        <FormCardSubHeading>{t('heading.files_and_license')}</FormCardSubHeading>
-        <SubmissionFilesAndLicenses />
+        <FormCard>
+          <FormCardSubHeading>{t('heading.description')}</FormCardSubHeading>
+          <SubmissionDescription />
+        </FormCard>
+        <FormCard>
+          <FormCardSubHeading>{t('heading.references')}</FormCardSubHeading>
+          {values.reference.type === ReferenceType.BOOK && <SubmissionBook />}
+          {values.reference.type === ReferenceType.DEGREE && <SubmissionDegree />}
+          {values.reference.type === ReferenceType.CHAPTER && <SubmissionChapter />}
+          {values.reference.type === ReferenceType.REPORT && <SubmissionReport />}
+          {values.reference.type === ReferenceType.PUBLICATION_IN_JOURNAL && <SubmissionJournalPublication />}
+        </FormCard>
+        <FormCard>
+          <FormCardSubHeading>{t('heading.contributors')}</FormCardSubHeading>
+          <SubmissionContributors />
+        </FormCard>
+        <FormCard>
+          <FormCardSubHeading>{t('heading.files_and_license')}</FormCardSubHeading>
+          <SubmissionFilesAndLicenses />
+        </FormCard>
       </FormCard>
       <StyledPublishButton color="primary" variant="contained">
         {t('common:publish')}
