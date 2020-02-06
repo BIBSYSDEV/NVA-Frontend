@@ -1,9 +1,4 @@
-export enum Direction {
-  ARROW_UP = -1,
-  ARROW_DOWN = 1,
-}
-
-export default interface Contributor {
+export interface Contributor {
   id: string;
   name: string;
   institution: Institution | null;
@@ -14,13 +9,13 @@ export default interface Contributor {
   verified?: boolean;
 }
 
-export interface Institution {
+interface Institution {
   id: string;
   name: string;
   institution?: Institution;
 }
 
-export const emptyContributor: Contributor = {
+const emptyContributor: Contributor = {
   id: '',
   name: '',
   institution: null,

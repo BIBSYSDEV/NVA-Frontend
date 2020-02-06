@@ -27,11 +27,11 @@ const PeerReview: FC<PeerReviewProps> = ({ fieldName, label }) => {
               value={value ? 'true' : 'false'}
               onChange={event => setFieldValue(name, event.target.value === 'true')}>
               <FormControlLabel
-                control={<Radio data-testid="peer_review-true" value="true" />}
+                control={<Radio color="primary" data-testid="peer_review-true" value="true" />}
                 label={t('references.is_peer_reviewed')}
               />
               <FormControlLabel
-                control={<Radio data-testid="peer_review-false" value="false" />}
+                control={<Radio color="primary" data-testid="peer_review-false" value="false" />}
                 label={t('references.is_not_peer_reviewed')}
               />
             </RadioGroup>

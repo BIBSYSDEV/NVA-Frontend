@@ -1,6 +1,6 @@
 import { EnumDictionary } from '../types/common.types';
 
-export enum CustomerOrganizationId {
+enum CustomerOrganizationId {
   UNIT = '20202.0.0.0',
   STATPED = '5831.0.0.0', // Statped
   NORDEMENS = '7581.0.0.0', // Nasjonalt kompetansesenter for aldring og helse
@@ -11,7 +11,7 @@ export enum CustomerOrganizationId {
 
 // These values are composed by NO + organization number
 // might change or be replaced by backend
-export const customerKeyMap: EnumDictionary<string, string> = {
+const customerKeyMap: EnumDictionary<string, string> = {
   NO919477822: CustomerOrganizationId.UNIT,
   NO998554640: CustomerOrganizationId.STATPED,
   NO983975259: CustomerOrganizationId.NORDEMENS,

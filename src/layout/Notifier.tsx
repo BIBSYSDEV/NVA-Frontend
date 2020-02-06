@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { removeNotification } from '../redux/actions/notificationActions';
 import { RootStore } from '../redux/reducers/rootReducer';
 
-export const Notifier: React.FC = () => {
+const Notifier: React.FC = () => {
   const notifications = useSelector((store: RootStore) => store.notifications);
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const dispatch = useDispatch();
