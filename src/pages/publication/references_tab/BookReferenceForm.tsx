@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { Checkbox, FormControlLabel, MenuItem, TextField } from '@material-ui/core';
 
 import { Publication } from '../../../types/publication.types';
-import { BookFieldNames, bookTypes, emptyPublisher } from '../../../types/references.types';
+import { BookFieldNames, BookType, emptyPublisher } from '../../../types/references.types';
 import { PublicationTableNumber } from '../../../utils/constants';
 import NviValidation from './components/NviValidation';
 import PeerReview from './components/PeerReview';
@@ -45,9 +45,9 @@ const BookReferenceForm: FC = () => {
       <Field name={BookFieldNames.TYPE}>
         {({ field }: any) => (
           <TextField select variant="outlined" label={t('common:type')} {...field} fullWidth>
-            {bookTypes.map(type => (
-              <MenuItem value={type.value} key={type.value}>
-                {t(type.label)}
+            {Object.values(BookType).map(typeValue => (
+              <MenuItem value={typeValue} key={typeValue}>
+                {t(`referenceTypes:subtypes_book.${typeValue}`)}
               </MenuItem>
             ))}
           </TextField>
@@ -94,6 +94,7 @@ const BookReferenceForm: FC = () => {
                   control={
                     <Checkbox
                       data-testid="text_book"
+                      color="primary"
                       onChange={(event: ChangeEvent<HTMLInputElement>) => setFieldValue(name, event.target.checked)}
                       checked={value}
                     />

@@ -4,6 +4,7 @@ import { Typography } from '@material-ui/core';
 
 const StyledTypography = styled(Typography)`
   font-size: 1.2rem;
+  font-weight: 600;
 `;
 
 interface FormCardSubHeadingProps {
