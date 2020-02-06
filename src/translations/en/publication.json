@@ -37,6 +37,12 @@
     "drag_files": "Drag files here or",
     "embargo_date": "Date for delayed publishing in archive",
     "files": "Files",
+    "info_from_channel_register": {
+      "no_open_publishment": "Unit don't have any agreement for open publishing with publisher of selected journal",
+      "open_access": "Open Access",
+      "open_publishment": "Unit have an agreement for open publishing with publisher of selected journal",
+      "title": "Information from channel register"
+    },
     "license": "License",
     "licenses": "Licenses",
     "published_version": "Published version",
