@@ -26,6 +26,7 @@ import { awsConfig } from './utils/aws-config';
 import { API_URL, DEBOUNCE_INTERVAL_MODAL, USE_MOCK_DATA } from './utils/constants';
 import { hubListener } from './utils/hub-listener';
 import { mockUser } from './utils/testfiles/mock_feide_user';
+import MyPublications from './pages/publication/MyPublications';
 
 const StyledApp = styled.div`
   min-height: 100vh;
@@ -126,6 +127,7 @@ const App: React.FC = () => {
             <Route exact path="/" component={Dashboard} />
             {user.isLoggedIn && <Route exact path="/publications" component={Workspace} />}
             {user.isLoggedIn && <Route exact path="/publications/new" component={NewPublication} />}
+            {user.isLoggedIn && <Route exact path="/my-publications" component={MyPublications} />}
             <Route exact path="/search" component={Search} />
             <Route exact path="/search/:searchTerm" component={Search} />
             <Route exact path="/search/:searchTerm/:offset" component={Search} />
