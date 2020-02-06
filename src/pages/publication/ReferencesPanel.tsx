@@ -5,7 +5,6 @@ import styled from 'styled-components';
 
 import { FormControl, FormHelperText, MenuItem, TextField } from '@material-ui/core';
 
-import FormCard from '../../components/FormCard/FormCard';
 import TabPanel from '../../components/TabPanel/TabPanel';
 import { Publication } from '../../types/publication.types';
 import {
