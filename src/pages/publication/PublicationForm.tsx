@@ -17,7 +17,6 @@ import SubmissionPanel from './SubmissionPanel';
 
 const StyledPublication = styled.div`
   width: 100%;
-  max-width: ${({ theme }) => theme.breakpoints.values.lg + 'px'};
 `;
 
 const PublicationForm: FC = () => {
