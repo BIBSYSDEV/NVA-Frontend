@@ -5,7 +5,7 @@
     "institutions": ["Unit", "BIBSYS"],
     "selectedInstitution": "",
     "orcid": "some orcid",
-    "corresponding": false,
+    "corresponding": true,
     "type": "Author",
     "verified": true
   },

@@ -1,9 +1,11 @@
 import arrayMove from 'array-move';
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 
 import { Checkbox, FormControlLabel, Table, TableBody, TableCell, TableRow } from '@material-ui/core';
 import { Contributor } from '../../../../types/contributor.types';
+import { FormikProps, useFormikContext } from 'formik';
+import { Publication } from '../../../../types/publication.types';
 
 interface SortableItemProps {
   contributor: Contributor;
@@ -11,19 +13,27 @@ interface SortableItemProps {
 }
 
 const SortableItem = SortableElement(({ contributor, placement }: SortableItemProps) => {
-  const [checked, setChecked] = useState(contributor.corresponding);
+  const { setFieldValue }: FormikProps<Publication> = useFormikContext();
 
   const handleChange = (event: any) => {
-    setChecked(event.target.checked);
+    setFieldValue(`contributors[${placement - 1}].corresponding`, event.target.checked);
   };
+
   return (
     <TableRow tabIndex={0} key={contributor.name}>
       <TableCell component="th" scope="row">
         <div>{contributor.name}</div>
         <FormControlLabel
-          control={<Checkbox checked={checked} onChange={handleChange} value="checkedA" />}
+          control={<Checkbox checked={contributor.corresponding} onChange={handleChange} value="checkedA" />}
           label="Korresponderende"
         />
+        <div>
+          {contributor.corresponding && (
+            <span>
+              Email: <input />
+            </span>
+          )}
+        </div>
       </TableCell>
       <TableCell align="right" />
       <TableCell align="left">
@@ -56,12 +66,13 @@ interface SortableTableProps {
 }
 
 const SortableTable: FC<SortableTableProps> = ({ listOfContributors }) => {
-  const [contributors, setContributors] = useState<Contributor[]>(listOfContributors);
+  const { setFieldValue }: FormikProps<Publication> = useFormikContext();
 
   const onSortEnd = ({ oldIndex, newIndex }: any) => {
-    setContributors(contributors => arrayMove(contributors, oldIndex, newIndex));
+    const reorderedList = arrayMove(listOfContributors, oldIndex, newIndex);
+    setFieldValue('contributors', reorderedList);
   };
-  return <SortableList contributors={contributors} onSortEnd={onSortEnd} />;
+  return <SortableList contributors={listOfContributors} onSortEnd={onSortEnd} />;
 };
 
 export default SortableTable;
