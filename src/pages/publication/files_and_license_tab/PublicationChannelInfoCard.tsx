@@ -27,21 +27,21 @@ const PublicationChannelInfoCard: React.FC<PublicationChannelInfoCardProps> = ({
 
   return (
     <FormCard>
-      <FormCardHeading>{t('files_and_license.info_from_channel_register.title')}</FormCardHeading>
+      <FormCardHeading>{t('files_and_license.info_from_publication_channel_register.title')}</FormCardHeading>
       <StyledInfoEntries>
         <div>
           <FormCardLabel>{publisher.title}</FormCardLabel>
           <Typography variant="body1">
             {publisher.isOpenAccess
-              ? t('files_and_license.info_from_channel_register.open_publishment')
-              : t('files_and_license.info_from_channel_register.no_open_publishment')}
+              ? t('files_and_license.info_from_publication_channel_register.open_publishment')
+              : t('files_and_license.info_from_publication_channel_register.no_open_publishment')}
           </Typography>
         </div>
         {publisher.isOpenAccess && (
           <StyledAvatar
             variant="square"
             src={openAccessLogo}
-            alt={t('files_and_license.info_from_channel_register.open_access')}
+            alt={t('files_and_license.info_from_publication_channel_register.open_access')}
           />
         )}
       </StyledInfoEntries>
