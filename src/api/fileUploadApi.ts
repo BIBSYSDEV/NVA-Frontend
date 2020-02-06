@@ -29,10 +29,8 @@ export const abortMultipartUpload = async (uploadId: string, key: string) => {
 export const completeMultipartUpload = async (uploadId: string, key: string, parts: UppyCompletePart[]) => {
   const payload = {
     uploadId,
-    key: `${key}`,
-    parts: parts.map(part => {
-      return { ...part, ETag: JSON.parse(part.ETag) };
-    }),
+    key,
+    parts,
   };
 
   const idToken = await getIdToken();
@@ -89,5 +87,5 @@ export const prepareUploadPart = async (uploadId: string, key: string, body: Blo
       Authorization: `Bearer ${idToken}`,
     },
   });
-  return { url: response.data };
+  return response.data;
 };
