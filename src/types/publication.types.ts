@@ -1,23 +1,15 @@
-import Contributor from './contributor.types';
-import { Project } from './project.types';
-import { emptyReference, Reference } from './references.types';
+import { Contributor } from './contributor.types';
 import { File } from './file.types';
 import { LanguageCodes } from './language.types';
+import { Project } from './project.types';
+import { emptyReference, Reference } from './references.types';
 
 export enum PublicationType {
   TEXT = 'text',
   FILE = 'file',
 }
 
-export enum PublicationFormTabs {
-  PUBLICATION,
-  DESCRIPTION,
-  REFERENCES,
-  CONTRIBUTORS,
-  FILES_AND_LICENSE,
-}
-
-export interface TitleType {
+interface TitleType {
   [key: string]: string;
 }
 
@@ -29,18 +21,6 @@ export interface PublicationMetadata {
   publisher: string;
   titles: TitleType;
   type: PublicationType;
-}
-
-export interface PublicationFile {
-  checksum: string;
-  filename: string;
-  mimetype: string;
-  size: string;
-}
-
-export interface PublicationFileMap {
-  indexedDate: string;
-  file: PublicationFile;
 }
 
 export interface AlmaPublication {

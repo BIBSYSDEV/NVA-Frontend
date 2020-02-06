@@ -1,5 +1,3 @@
-import { EnumDictionary } from './common.types';
-
 export interface Reference {
   type: ReferenceType | '';
   journalArticle?: JournalArticle;
@@ -10,7 +8,7 @@ export interface Reference {
 }
 
 interface JournalArticle {
-  type: JournalArticleTypeValue | '';
+  type: JournalArticleType | '';
   journal: Publisher;
   volume: string;
   issue: string;
@@ -22,7 +20,7 @@ interface JournalArticle {
 }
 
 interface Book {
-  type: string;
+  type: BookType | '';
   publisher: Publisher;
   isbn: string;
   peerReview: boolean;
@@ -32,7 +30,7 @@ interface Book {
 }
 
 interface Report {
-  type: string;
+  type: ReportType | '';
   publisher: Publisher;
   isbn: string;
   numberOfPages: string;
@@ -40,7 +38,7 @@ interface Report {
 }
 
 interface Degree {
-  type: string;
+  type: DegreeType | '';
   publisher: Publisher;
   specialization: string;
   series: Publisher;
@@ -53,7 +51,7 @@ export interface Publisher {
   level: number | null;
 }
 
-export interface Chapter {
+interface Chapter {
   link: string;
   pagesFrom: string;
   pagesTo: string;
@@ -127,15 +125,7 @@ export enum ReferenceType {
   CHAPTER = 'chapter',
 }
 
-export const referenceTypeLanguageKeyMap: EnumDictionary<string, string> = {
-  [ReferenceType.PUBLICATION_IN_JOURNAL]: 'references.journal_publication',
-  [ReferenceType.BOOK]: 'references.book',
-  [ReferenceType.REPORT]: 'references.report',
-  [ReferenceType.DEGREE]: 'references.degree',
-  [ReferenceType.CHAPTER]: 'references.chapter',
-};
-
-enum JournalArticleTypeValue {
+export enum JournalArticleType {
   ARTICLE = 'article',
   SHORT_COMMUNICATION = 'shortCommunication',
   EDITORIAL = 'editorial',
@@ -143,49 +133,23 @@ enum JournalArticleTypeValue {
   REVIEW = 'review',
 }
 
-export const journalArticleTypes = [
-  { label: 'references.article', value: JournalArticleTypeValue.ARTICLE },
-  { label: 'references.short_communication', value: JournalArticleTypeValue.SHORT_COMMUNICATION },
-  { label: 'references.editorial', value: JournalArticleTypeValue.EDITORIAL },
-  { label: 'references.letter', value: JournalArticleTypeValue.LETTER },
-  { label: 'references.review', value: JournalArticleTypeValue.REVIEW },
-];
-
-export enum BookTypeValue {
+export enum BookType {
   MONOGRAPHY = 'monography',
   ANTHOLOGY = 'anthology',
 }
 
-export const bookTypes = [
-  { label: 'references.monography', value: BookTypeValue.MONOGRAPHY },
-  { label: 'references.anthology', value: BookTypeValue.ANTHOLOGY },
-];
-
-export enum ReportTypeValue {
+export enum ReportType {
   REPORT = 'report',
-  RESEARCH_REPORT = 'research_report',
-  POLICY_REPORT = 'policy_report',
-  WORKING_PAPER = 'working_paper',
+  RESEARCH_REPORT = 'researchReport',
+  POLICY_REPORT = 'policyReport',
+  WORKING_PAPER = 'workingPaper',
 }
 
-export const reportTypes = [
-  { label: 'references.report', value: ReportTypeValue.REPORT },
-  { label: 'references.research_report', value: ReportTypeValue.RESEARCH_REPORT },
-  { label: 'references.policy_report', value: ReportTypeValue.POLICY_REPORT },
-  { label: 'references.working_paper', value: ReportTypeValue.WORKING_PAPER },
-];
-
-export enum DegreeTypeValue {
+export enum DegreeType {
   BACHELOR = 'bachelor',
   MASTER = 'master',
   DOCTORATE = 'doctorate',
 }
-
-export const degreeTypes = [
-  { label: 'references.bachelor', value: DegreeTypeValue.BACHELOR },
-  { label: 'references.master', value: DegreeTypeValue.MASTER },
-  { label: 'references.doctorate', value: DegreeTypeValue.DOCTORATE },
-];
 
 // Enums representing name of fields used by Formik
 export enum ReferenceFieldNames {

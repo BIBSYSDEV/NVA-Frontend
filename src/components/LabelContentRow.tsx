@@ -5,6 +5,7 @@ const StyledRow = styled.div`
   padding-bottom: 0.5rem;
   display: flex;
   flex-wrap: wrap;
+  font-size: 0.8rem;
 `;
 
 const StyledLabel = styled.div`
