@@ -22,15 +22,10 @@ import DegreeReferenceForm from './references_tab/DegreeReferenceForm';
 import JournalArticleReferenceForm from './references_tab/JournalArticleReferenceForm';
 import ReportReferenceForm from './references_tab/ReportReferenceForm';
 import FormCard from '../../components/FormCard/FormCard';
+import FormCardHeading from '../../components/FormCard/FormCardHeading';
 
 const StyledBox = styled.div`
   margin-top: 1rem;
-`;
-
-const StyledTypeHeading = styled.div`
-  font-size: 1.5rem;
-  padding-bottom: 1rem;
-  font-weight: bold;
 `;
 
 const StyledSelectContainer = styled.div`
@@ -101,7 +96,7 @@ export const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, s
       {type && (
         <StyledBox>
           <FormCard>
-            <StyledTypeHeading data-testid="reference_type-heading">{t(`referenceTypes:${type}`)}</StyledTypeHeading>
+            <FormCardHeading data-testid="reference_type-heading">{t(`referenceTypes:${type}`)}</FormCardHeading>
             {type === ReferenceType.BOOK && <BookReferenceForm />}
             {type === ReferenceType.CHAPTER && <ChapterReferenceForm />}
             {type === ReferenceType.REPORT && <ReportReferenceForm />}
