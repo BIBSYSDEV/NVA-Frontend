@@ -18,7 +18,6 @@ import NewPublication from './pages/publication/NewPublication';
 import Search from './pages/search/Search';
 import AuthorityOrcidModal from './pages/user/authority/AuthorityOrcidModal';
 import User from './pages/user/User';
-import Workspace from './pages/workspace/Workspace';
 import { setAuthorityData, setPossibleAuthorities, setUser } from './redux/actions/userActions';
 import { RootStore } from './redux/reducers/rootReducer';
 import { Authority } from './types/authority.types';
@@ -125,8 +124,7 @@ const App: React.FC = () => {
         <StyledPageBody>
           <Switch>
             <Route exact path="/" component={Dashboard} />
-            {user.isLoggedIn && <Route exact path="/publications" component={Workspace} />}
-            {user.isLoggedIn && <Route exact path="/publications/new" component={NewPublication} />}
+            {user.isLoggedIn && <Route exact path="/new-publication" component={NewPublication} />}
             {user.isLoggedIn && <Route exact path="/my-publications" component={MyPublications} />}
             <Route exact path="/search" component={Search} />
             <Route exact path="/search/:searchTerm" component={Search} />
