@@ -1,5 +1,5 @@
 import { Form, Formik, FormikProps } from 'formik';
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import * as Yup from 'yup';
@@ -7,12 +7,12 @@ import * as Yup from 'yup';
 import TabPanel from '../../components/TabPanel/TabPanel';
 import { emptyPublication, Publication } from '../../types/publication.types';
 import { ReferenceType } from '../../types/references.types';
+import { createUppy } from '../../utils/uppy-config';
 import ContributorsPanel from './ContributorsPanel';
 import DescriptionPanel from './DescriptionPanel';
 import FilesAndLicensePanel from './FilesAndLicensePanel';
 import { PublicationFormTabs } from './PublicationFormTabs';
-import { ReferencesPanel } from './ReferencesPanel';
-import { createUppy } from '../../utils/uppy-config';
+import ReferencesPanel from './ReferencesPanel';
 import SubmissionPanel from './SubmissionPanel';
 
 const StyledPublication = styled.div`
