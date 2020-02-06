@@ -61,7 +61,10 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab
                     <FileCard
                       key={file.id}
                       file={file}
-                      removeFile={() => remove(i)}
+                      removeFile={() => {
+                        uppy.removeFile(file.id);
+                        remove(i);
+                      }}
                       updateFile={newFile => replace(i, newFile)}
                       toggleLicenseModal={toggleLicenseModal}
                     />
