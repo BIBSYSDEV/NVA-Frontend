@@ -30,6 +30,7 @@
   {
     "id": "4",
     "name": "Kjetil Møkkelgjerd",
+    "institutions": [],
     "selectedInstitution": "",
     "corresponding": false,
     "type": "Author",
@@ -38,6 +39,7 @@
   {
     "id": "5",
     "name": "Svenn Gjetø",
+    "institutions": ["Unit"],
     "selectedInstitution": "",
     "corresponding": false,
     "type": "Editor",
@@ -46,6 +48,7 @@
   {
     "id": "6",
     "name": "Nikolai Fikse Raanes",
+    "institutions": [],
     "selectedInstitution": "",
     "corresponding": false,
     "type": "Photographer",

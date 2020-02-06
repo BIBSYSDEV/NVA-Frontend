@@ -1,7 +1,7 @@
 export interface Contributor {
   id: string;
   name: string;
-  institution: Institution | null;
+  institutions: Institution[];
   orcid?: string;
   corresponding?: boolean;
   email?: string;
@@ -18,7 +18,7 @@ interface Institution {
 const emptyContributor: Contributor = {
   id: '',
   name: '',
-  institution: null,
+  institutions: [],
   orcid: '',
   corresponding: false,
   type: '',
