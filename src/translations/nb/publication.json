@@ -19,6 +19,7 @@
     "description": "Beskrivelse",
     "financed_by": "Finansiert av",
     "npi_disciplines": "NPI Fagfelt",
+    "primary_language": "Hovedspråk for innhold",
     "project_association": "Prosjekttilknytning",
     "project_id": "Prosjekt-ID",
     "search_for_npi_discipline": "Søk etter NPI-fagfelt",

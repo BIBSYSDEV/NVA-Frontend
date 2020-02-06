@@ -19,6 +19,7 @@
     "description": "Description",
     "financed_by": "Financed by",
     "npi_disciplines": "NPI disciplines",
+    "primary_language": "Primary language for content",
     "project_association": "Project association",
     "project_id": "Project ID",
     "search_for_npi_discipline": "Search for NPI discipline",
