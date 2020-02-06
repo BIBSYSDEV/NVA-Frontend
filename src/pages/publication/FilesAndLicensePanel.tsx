@@ -8,11 +8,10 @@ import { FieldArray, FormikProps, useFormikContext } from 'formik';
 import { Publication } from '../../types/publication.types';
 import Modal from '../../components/Modal';
 import { licenses } from '../../types/file.types';
-import { Typography, Avatar } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 import FormCard from '../../components/FormCard/FormCard';
 import FormCardHeading from '../../components/FormCard/FormCardHeading';
-import { openAccessLogo } from '../../resources/images/licenses';
-import FormCardLabel from '../../components/FormCard/FormCardLabel';
+import PublicationChannelInfoCard from './files_and_license_tab/PublicationChannelInfoCard';
 
 const StyledUploadedFiles = styled(FormCard)`
   display: flex;
@@ -25,16 +24,6 @@ const StyledUploadedFiles = styled(FormCard)`
 
 const StyledLicenseDescription = styled.article`
   margin-bottom: 1rem;
-`;
-
-const StyledInfoEntries = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;
-
-const StyledAvatar = styled(Avatar)`
-  object-fit: contain;
-  height: 100%;
 `;
 
 enum FilesFieldNames {
@@ -53,7 +42,7 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab
 
   const uploadedFiles = values[FilesFieldNames.FILES];
   const referenceType = values.reference.type;
-  const publisher = referenceType && values.reference[referenceType]?.publisher;
+  const publisher = referenceType ? values.reference[referenceType]?.publisher : null;
 
   const toggleLicenseModal = () => {
     setIsLicenseModalOpen(!isLicenseModalOpen);
@@ -61,28 +50,7 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab
 
   return (
     <TabPanel ariaLabel="files and license" goToNextTab={goToNextTab}>
-      {publisher && (
-        <FormCard>
-          <FormCardHeading>{t('files_and_license.info_from_channel_register.title')}</FormCardHeading>
-          <StyledInfoEntries>
-            <div>
-              <FormCardLabel>{publisher.title}</FormCardLabel>
-              <Typography variant="body1">
-                {publisher.isOpenAccess
-                  ? t('files_and_license.info_from_channel_register.open_publishment')
-                  : t('files_and_license.info_from_channel_register.no_open_publishment')}
-              </Typography>
-            </div>
-            {publisher.isOpenAccess && (
-              <StyledAvatar
-                variant="square"
-                src={openAccessLogo}
-                alt={t('files_and_license.info_from_channel_register.open_access')}
-              />
-            )}
-          </StyledInfoEntries>
-        </FormCard>
-      )}
+      {publisher?.title && <PublicationChannelInfoCard publisher={publisher} />}
 
       <FieldArray name={FilesFieldNames.FILES}>
         {({ push, remove, replace }) => (
