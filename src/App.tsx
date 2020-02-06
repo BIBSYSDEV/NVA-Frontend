@@ -53,7 +53,6 @@ const App: React.FC = () => {
 
   const dispatch = useDispatch();
   const user = useSelector((store: RootStore) => store.user);
-  user.isLoggedIn = true;
   const [showAuthorityOrcidModal, setShowAuthorityOrcidModal] = useState(false);
 
   useEffect(() => {
