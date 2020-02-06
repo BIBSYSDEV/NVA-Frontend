@@ -5,6 +5,7 @@ import styled from 'styled-components';
 
 import { FormControl, FormHelperText, MenuItem, TextField } from '@material-ui/core';
 
+import FormCard from '../../components/FormCard/FormCard';
 import TabPanel from '../../components/TabPanel/TabPanel';
 import { Publication } from '../../types/publication.types';
 import {
@@ -37,7 +38,7 @@ interface ReferencesPanelProps {
   savePublication: () => void;
 }
 
-export const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, savePublication }) => {
+const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, savePublication }) => {
   const { t } = useTranslation('publication');
   const { values, setFieldTouched }: FormikProps<Publication> = useFormikContext();
   const { type } = values.reference;

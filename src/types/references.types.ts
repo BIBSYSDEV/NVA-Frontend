@@ -51,7 +51,7 @@ export interface Publisher {
   level: number | null;
 }
 
-export interface Chapter {
+interface Chapter {
   link: string;
   pagesFrom: string;
   pagesTo: string;
