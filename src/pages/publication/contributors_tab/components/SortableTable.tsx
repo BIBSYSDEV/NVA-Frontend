@@ -35,10 +35,9 @@ const SortableItem = SortableElement(({ contributor, placement }: SortableItemPr
           )}
         </div>
       </TableCell>
-      <TableCell align="right" />
       <TableCell align="left">
         {contributor.institutions.map(institution => (
-          <div key={`${institution}`}>{institution}</div>
+          <div key={`${institution.name}`}>{institution.name}</div>
         ))}
       </TableCell>
       <TableCell align="right">{placement}</TableCell>

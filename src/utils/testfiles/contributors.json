@@ -1,57 +1,64 @@
 [
   {
-    "id": "1",
     "name": "Eirik Nilsen",
-    "institutions": ["Unit", "BIBSYS"],
+    "institutions": [
+      {
+        "id": "1",
+        "name": "Unit",
+        "institution": {
+          "id": "1.2",
+          "name": "Fakultet for osteloff"
+        }
+      },
+      { "id": "2", "name": "BIBSYS" }
+    ],
     "selectedInstitution": "",
     "orcid": "some orcid",
     "corresponding": true,
     "type": "Author",
-    "verified": true
+    "systemControlNumber": "1234321"
   },
   {
-    "id": "2",
     "name": "Per Christian Bjelke",
-    "institutions": ["Unit", "BIBSYS"],
+    "institutions": [
+      { "id": "1", "name": "Unit" },
+      { "id": "2", "name": "BIBSYS" }
+    ],
     "selectedInstitution": "",
     "corresponding": false,
     "type": "Author",
-    "verified": true
+    "systemControlNumber": "2432432"
   },
   {
-    "id": "3",
     "name": "Sarah Serussi",
-    "institutions": ["Unit"],
+    "institutions": [{ "id": "1", "name": "Unit" }],
     "selectedInstitution": "",
     "corresponding": false,
     "type": "Author",
-    "verified": true
+    "systemControlNumber": ""
   },
   {
-    "id": "4",
     "name": "Kjetil Møkkelgjerd",
     "institutions": [],
     "selectedInstitution": "",
     "corresponding": false,
     "type": "Author",
-    "verified": true
+    "systemControlNumber": "9845784"
   },
   {
-    "id": "5",
     "name": "Svenn Gjetø",
-    "institutions": ["Unit"],
+    "institutions": [{ "id": "1", "name": "Unit" }],
     "selectedInstitution": "",
     "corresponding": false,
     "type": "Editor",
-    "verified": false
+    "systemControlNumber": "83743746"
   },
   {
-    "id": "6",
     "name": "Nikolai Fikse Raanes",
     "institutions": [],
     "selectedInstitution": "",
     "corresponding": false,
     "type": "Photographer",
-    "verified": false
+    "systemControlNumber": ""
   }
 ]
