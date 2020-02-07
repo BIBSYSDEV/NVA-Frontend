@@ -5,13 +5,13 @@ import { DummyPublicationListElement } from './MyPublications';
 import { Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 
-interface StyledTableRowProps {
-  index: number;
-}
-const StyledTableRow = styled(TableRow)<StyledTableRowProps>`
-  background-color: ${props =>
-    Boolean(props.index % 2) ? props.theme.palette.box.main : props.theme.palette.background.default};
+const StyledTableRow = styled(TableRow)`
+  background-color: ${props => props.theme.palette.box.main};
+  :nth-child(odd) {
+    background-color: ${props => props.theme.palette.background.default};
+  }
 `;
+
 const StyledTable = styled(Table)`
   width: 100%;
 `;
@@ -33,7 +33,7 @@ const PublicationList: FC<PublicationListProps> = ({ elements }) => {
       </TableHead>
       <TableBody>
         {elements.map((element, index) => (
-          <StyledTableRow key={index} index={index}>
+          <StyledTableRow key={index}>
             <TableCell component="th" scope="row">
               {element.title}
             </TableCell>
