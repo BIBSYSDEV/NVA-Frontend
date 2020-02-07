@@ -1,32 +1,52 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import FormCard from '../../components/FormCard/FormCard';
 import FormCardHeading from '../../components/FormCard/FormCardHeading';
 import PublicationList from './PublicationList';
+import { getMyPublications } from '../../api/publicationApi';
+import { addNotification } from '../../redux/actions/notificationActions';
+import i18n from '../../translations/i18n';
+import { useDispatch } from 'react-redux';
+import { CircularProgress } from '@material-ui/core';
+import styled from 'styled-components';
 
 export interface DummyPublicationListElement {
   id: string;
   title: string;
-  date: string;
+  createdDate: string;
   status: string;
 }
 
+const StyledSection = styled.section`
+  text-align: center;
+`;
+
 const MyPublications: FC = () => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(true);
+  const [elements, setElements] = useState<DummyPublicationListElement[]>([]);
 
-  //TODO: to be replaced by data from api in NP-471
-  let dummyElement: DummyPublicationListElement = {
-    id: '5843058934095834905.',
-    title: 'Qualitative research practice: A guide for social science students and researchers.',
-    status: 'Kladd',
-    date: '02.09.2010',
-  };
-  let dummyElementList = [dummyElement, dummyElement, dummyElement, dummyElement, dummyElement];
+  useEffect(() => {
+    const loadData = async () => {
+      setIsLoading(true);
+      const publications = await getMyPublications();
+      if (publications?.error) {
+        dispatch(addNotification(i18n.t('feedback:error.get_publications'), 'error'));
+      } else {
+        setElements(publications);
+      }
+      setIsLoading(false);
+    };
+    loadData();
+  }, [dispatch]);
 
   return (
     <FormCard>
       <FormCardHeading>{t('workLists:my_publications')}</FormCardHeading>
-      <PublicationList elements={dummyElementList} />
+      <StyledSection>
+        {isLoading ? <CircularProgress color="inherit" size={20} /> : <PublicationList elements={elements} />}
+      </StyledSection>
     </FormCard>
   );
 };

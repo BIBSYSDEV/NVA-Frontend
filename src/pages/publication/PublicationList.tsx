@@ -37,8 +37,8 @@ const PublicationList: FC<PublicationListProps> = ({ elements }) => {
             <TableCell component="th" scope="row">
               {element.title}
             </TableCell>
-            <TableCell>{element.status}</TableCell>
-            <TableCell>{element.date}</TableCell>
+            <TableCell style={{ width: '15%' }}>{element.status}</TableCell>
+            <TableCell style={{ width: '15%' }}>{element.createdDate}</TableCell>
           </StyledTableRow>
         ))}
       </TableBody>

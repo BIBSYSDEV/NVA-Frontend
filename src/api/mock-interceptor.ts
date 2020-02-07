@@ -84,9 +84,6 @@ const mockSingleAuthorityResponseWithSecondOrgunitid: Authority = {
 export const interceptRequestsOnMock = () => {
   const mock = new MockAdapter(Axios);
 
-  // SEARCH
-  mock.onGet(new RegExp(`${PublicationsApiPaths.SEARCH}/*`)).reply(200, mockPublications);
-
   //MY PUBLICATIONS
   mock.onGet(new RegExp(`${PublicationsApiPaths.FETCH_MY_RESOURCES}/*`)).reply(200, mockMyPublications);
 
@@ -134,6 +131,9 @@ export const interceptRequestsOnMock = () => {
   mock
     .onGet(new RegExp(`${API_URL}${InstituionApiPaths.UNIT}/${SUBUNIT_INSTITUTION_REGEXP}`))
     .reply(200, mockInstituteResponse);
+
+  // SEARCH
+  mock.onGet(new RegExp(`${PublicationsApiPaths.SEARCH}/*`)).reply(200, mockPublications);
 
   mock.onAny().reply(function(config) {
     throw new Error('Could not find mock for ' + config.url);

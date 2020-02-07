@@ -97,22 +97,25 @@ export const getPublication = async (id: string, dispatch: Dispatch) => {
   }
 };
 
-export const getMyPublications = async (dispatch: Dispatch) => {
+export const getMyPublications = async () => {
+  const sleep = (m: number) => new Promise(r => setTimeout(r, m));
   const url = `${PublicationsApiPaths.FETCH_MY_RESOURCES}`;
   try {
     const idToken = await getIdToken();
+    await sleep(1000);
     const response = await Axios.get(url, {
       headers: {
         Authorization: `Bearer ${idToken}`,
       },
     });
     if (response.status === StatusCode.OK) {
-      return response.data.Items;
+      console.log(response.data);
+      return response.data;
     } else {
-      dispatch(addNotification(i18n.t('feedback:error.get_publications'), 'error'));
+      return null;
     }
-  } catch {
-    dispatch(addNotification(i18n.t('feedback:error.get_publications'), 'error'));
+  } catch (error) {
+    return { error };
   }
 };
 
