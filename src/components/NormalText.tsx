@@ -1,11 +1,11 @@
 import React, { FC, ReactNode } from 'react';
 import { Typography } from '@material-ui/core';
 
-interface FormCardLabelProps {
+interface NormalTextProps {
   children: ReactNode;
 }
 
-const NormalText: FC<FormCardLabelProps> = ({ children, ...props }) => (
+const NormalText: FC<NormalTextProps> = ({ children, ...props }) => (
   <Typography variant="body1" {...props}>
     {children}
   </Typography>

@@ -23,28 +23,26 @@ interface PublicationListProps {
 const PublicationList: FC<PublicationListProps> = ({ elements }) => {
   const { t } = useTranslation();
   return (
-    <>
-      <StyledTable>
-        <TableHead>
-          <TableRow>
-            <TableCell>{t('workLists:publication_name')}</TableCell>
-            <TableCell>{t('common:status')}</TableCell>
-            <TableCell>{t('common:date')}</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {elements.map((element, index) => (
-            <StyledTableRow key={index} index={index}>
-              <TableCell component="th" scope="row">
-                {element.title}
-              </TableCell>
-              <TableCell>{element.status}</TableCell>
-              <TableCell>{element.date}</TableCell>
-            </StyledTableRow>
-          ))}
-        </TableBody>
-      </StyledTable>
-    </>
+    <StyledTable>
+      <TableHead>
+        <TableRow>
+          <TableCell>{t('workLists:publication_name')}</TableCell>
+          <TableCell>{t('common:status')}</TableCell>
+          <TableCell>{t('common:date')}</TableCell>
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        {elements.map((element, index) => (
+          <StyledTableRow key={index} index={index}>
+            <TableCell component="th" scope="row">
+              {element.title}
+            </TableCell>
+            <TableCell>{element.status}</TableCell>
+            <TableCell>{element.date}</TableCell>
+          </StyledTableRow>
+        ))}
+      </TableBody>
+    </StyledTable>
   );
 };
 
