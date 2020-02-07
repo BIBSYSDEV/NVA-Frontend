@@ -92,7 +92,7 @@ const Menu: React.FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
           {t('workLists:my_publications')}
         </StyledMenuItem>
 
-        <StyledMenuItem onClick={handleLogout} data-testid="logout-button">
+        <StyledMenuItem onClick={handleLogout} data-testid="menu-logout-button">
           {t('logout')}
         </StyledMenuItem>
       </StyledMuiMenu>
