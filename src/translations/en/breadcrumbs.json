@@ -1,7 +1,7 @@
 {
   "authority": "Authority",
   "home": "Home",
-  "new": "New publication",
-  "publications": "Workspace",
+  "new-publication": "New publication",
+  "my-publications": "My publications",
   "user": "My profile"
 }

@@ -29,9 +29,9 @@ const AdminMenu: FC = () => {
 
   return (
     <>
-      {user.id && history.location.pathname !== '/publications/new' && (
+      {user.id && history.location.pathname !== '/new-publication' && (
         <StyledAdminMenu>
-          <MuiLink component={Link} to="/publications/new">
+          <MuiLink component={Link} to="/new-publication">
             <StyledButton color="primary" variant="contained" data-testid="new-publication-button">
               + {t('new_publication')}
             </StyledButton>
