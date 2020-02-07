@@ -57,15 +57,15 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab
               <>
                 <StyledUploadedFiles>
                   <FormCardHeading>{t('files_and_license.files')}</FormCardHeading>
-                  {uploadedFiles.map((file, i) => (
+                  {uploadedFiles.map((file, index) => (
                     <FileCard
                       key={file.id}
                       file={file}
                       removeFile={() => {
                         uppy.removeFile(file.id);
-                        remove(i);
+                        remove(index);
                       }}
-                      updateFile={newFile => replace(i, newFile)}
+                      updateFile={newFile => replace(index, newFile)}
                       toggleLicenseModal={toggleLicenseModal}
                     />
                   ))}
