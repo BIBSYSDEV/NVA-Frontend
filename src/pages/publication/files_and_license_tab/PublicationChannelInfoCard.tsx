@@ -24,7 +24,7 @@ interface PublicationChannelInfoCardProps {
 
 const PublicationChannelInfoCard: React.FC<PublicationChannelInfoCardProps> = ({ publisher }) => {
   const { t } = useTranslation('publication');
-  console.log(publisher);
+
   return (
     <FormCard>
       <FormCardHeading>{t('files_and_license.info_from_publication_channel_register.title')}</FormCardHeading>
