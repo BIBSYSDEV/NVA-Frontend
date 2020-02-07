@@ -11,6 +11,7 @@ import mockInstitutionResponse from '../utils/testfiles/institution_query.json';
 import mockAuthoritiesResponse from '../utils/testfiles/mock_authorities_response.json';
 import mockProjects from '../utils/testfiles/projects_real.json';
 import mockPublications from '../utils/testfiles/publications_45_random_results_generated.json';
+import mockMyPublications from '../utils/testfiles/my_publications.json';
 import mockNsdPublisers from '../utils/testfiles/publishersFromNsd.json';
 import { AuthorityApiPaths } from './authorityApi';
 import { InstituionApiPaths } from './institutionApi';
@@ -85,6 +86,9 @@ export const interceptRequestsOnMock = () => {
 
   // SEARCH
   mock.onGet(new RegExp(`${PublicationsApiPaths.SEARCH}/*`)).reply(200, mockPublications);
+
+  //MY PUBLICATIONS
+  mock.onGet(new RegExp(`${PublicationsApiPaths.FETCH_MY_RESOURCES}/*`)).reply(200, mockMyPublications);
 
   // Create publication from doi
   mock.onPost(new RegExp(`${PublicationsApiPaths.CREATE_WITH_DOI}`)).reply(200, mockPublications[0]);
