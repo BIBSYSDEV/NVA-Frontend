@@ -27,9 +27,9 @@ const PublicationList: FC<PublicationListProps> = ({ elements }) => {
       <StyledTable>
         <TableHead>
           <TableRow>
-            <TableCell align="left">{t('workLists:publication_name')}</TableCell>
-            <TableCell align="left">{t('common:status')}</TableCell>
-            <TableCell align="left">{t('common:date')}</TableCell>
+            <TableCell>{t('workLists:publication_name')}</TableCell>
+            <TableCell>{t('common:status')}</TableCell>
+            <TableCell>{t('common:date')}</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -38,8 +38,8 @@ const PublicationList: FC<PublicationListProps> = ({ elements }) => {
               <TableCell component="th" scope="row">
                 {element.title}
               </TableCell>
-              <TableCell align="left">{element.status}</TableCell>
-              <TableCell align="left">{element.date}</TableCell>
+              <TableCell>{element.status}</TableCell>
+              <TableCell>{element.date}</TableCell>
             </StyledTableRow>
           ))}
         </TableBody>
