@@ -39,6 +39,12 @@
     "drag_files": "Dra filer hit eller",
     "embargo_date": "Dato for utsatt publisering i arkivet",
     "files": "Filer",
+    "info_from_publication_channel_register": {
+      "no_open_publishment": "Unit har ingen avtale om åpen publisering med utgiver av valgt tidsskrift",
+      "open_access": "Open Access",
+      "open_publishment": "Unit har inngått avtale om åpen publisering av valgt tidsskrift",
+      "title": "Informasjon fra Kanalregister"
+    },
     "license": "Lisens",
     "licenses": "Lisenser",
     "published_version": "Publisert versjon",
