@@ -37,7 +37,7 @@ const JournalArticleReferenceForm: FC = () => {
   const { t } = useTranslation('publication');
   const { setFieldValue, values }: FormikProps<Publication> = useFormikContext();
 
-  const isRatedJournal = values.reference?.journalArticle?.journal?.level;
+  const isRatedJournal = values.reference?.journalArticle?.publisher?.level;
   const isPeerReviewed = values.reference?.journalArticle?.peerReview;
 
   return (
@@ -58,7 +58,7 @@ const JournalArticleReferenceForm: FC = () => {
         {({ field }: any) => <TextField variant="outlined" label={t('references.doi')} {...field} />}
       </Field>
 
-      <Field name={JournalArticleFieldNames.JOURNAL}>
+      <Field name={JournalArticleFieldNames.PUBLISHER}>
         {({ field: { name, value } }: any) => (
           <>
             <PublicationChannelSearch

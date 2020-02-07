@@ -11,6 +11,7 @@ import { licenses } from '../../types/file.types';
 import { Typography } from '@material-ui/core';
 import FormCard from '../../components/FormCard/FormCard';
 import FormCardHeading from '../../components/FormCard/FormCardHeading';
+import PublicationChannelInfoCard from './files_and_license_tab/PublicationChannelInfoCard';
 
 const StyledUploadedFiles = styled(FormCard)`
   display: flex;
@@ -38,7 +39,10 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab
   const { t } = useTranslation('publication');
   const { values }: FormikProps<Publication> = useFormikContext();
   const [isLicenseModalOpen, setIsLicenseModalOpen] = useState(false);
+
   const uploadedFiles = values[FilesFieldNames.FILES];
+  const referenceType = values.reference.type;
+  const publisher = referenceType ? values.reference[referenceType]?.publisher : null;
 
   const toggleLicenseModal = () => {
     setIsLicenseModalOpen(!isLicenseModalOpen);
@@ -46,6 +50,8 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab
 
   return (
     <TabPanel ariaLabel="files and license" goToNextTab={goToNextTab}>
+      {publisher?.title && <PublicationChannelInfoCard publisher={publisher} />}
+
       <FieldArray name={FilesFieldNames.FILES}>
         {({ push, remove, replace }) => (
           <>

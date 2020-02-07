@@ -19,6 +19,7 @@
     "description": "Description",
     "financed_by": "Financed by",
     "npi_disciplines": "NPI disciplines",
+    "primary_language": "Primary language for content",
     "project_association": "Project association",
     "project_id": "Project ID",
     "search_for_npi_discipline": "Search for NPI discipline",
@@ -38,6 +39,12 @@
     "drag_files": "Drag files here or",
     "embargo_date": "Date for delayed publishing in archive",
     "files": "Files",
+    "info_from_publication_channel_register": {
+      "no_open_publishment": "Unit doesn't have any agreement for open publishing with publisher of selected journal",
+      "open_access": "Open Access",
+      "open_publishment": "Unit has an agreement for open publishing with publisher of selected journal",
+      "title": "Information from publication channel register"
+    },
     "license": "License",
     "licenses": "Licenses",
     "published_version": "Published version",

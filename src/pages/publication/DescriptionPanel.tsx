@@ -1,5 +1,5 @@
 import { Field, FieldArray, FormikProps, useFormikContext } from 'formik';
-import { Select, TextField } from 'formik-material-ui';
+import { TextField } from 'formik-material-ui';
 import React, { FC, useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
@@ -162,8 +162,9 @@ const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublicat
                 aria-label="language"
                 variant="outlined"
                 fullWidth
-                component={Select}
-                label={t('common:language')}>
+                component={TextField}
+                select
+                label={t('description.primary_language')}>
                 {orderedLanguages.map(code => (
                   <MenuItem value={code} key={code} data-testid={`publication-language-${code}`}>
                     {t(`languages:${code}`)}
