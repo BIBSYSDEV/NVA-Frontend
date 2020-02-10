@@ -28,7 +28,10 @@ import DeleteIcon from '@material-ui/icons/Delete';
 const StyledDescription = styled.div`
   font-style: italic;
 `;
-const StyledActions = styled.div``;
+
+const StyledPreview = styled(Link)`
+  margin-right: 1rem;
+`;
 
 const StyledFormControl = styled(FormControl)`
   width: 30%;
@@ -178,17 +181,17 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, updateFile, toggl
         </StyledFileInfo>
       )}
 
-      <StyledActions>
-        <Link href={file.uploadUrl} target="_blank">
+      {file.uploadUrl && (
+        <StyledPreview href={file.uploadUrl} target="_blank">
           <Button color="primary" variant="contained">
             {t('common:preview')}
           </Button>
-        </Link>
-        <Button variant="contained" color="secondary" onClick={removeFile}>
-          <DeleteIcon />
-          {t('common:remove')}
-        </Button>
-      </StyledActions>
+        </StyledPreview>
+      )}
+      <Button variant="contained" color="secondary" onClick={removeFile}>
+        <DeleteIcon />
+        {t('common:remove')}
+      </Button>
     </FormCard>
   );
 };
