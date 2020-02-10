@@ -9,6 +9,7 @@ import i18n from '../../translations/i18n';
 import { useDispatch } from 'react-redux';
 import { CircularProgress } from '@material-ui/core';
 import styled from 'styled-components';
+import { PublicationPreview } from '../../types/publication.types';
 
 export interface DummyPublicationListElement {
   id: string;
@@ -25,7 +26,7 @@ const MyPublications: FC = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
-  const [publications, setPublications] = useState<DummyPublicationListElement[]>([]);
+  const [publications, setPublications] = useState<PublicationPreview[]>([]);
 
   useEffect(() => {
     const loadData = async () => {

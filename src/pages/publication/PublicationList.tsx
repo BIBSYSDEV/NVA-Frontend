@@ -1,9 +1,9 @@
 import React, { FC } from 'react';
 
 import styled from 'styled-components';
-import { DummyPublicationListElement } from './MyPublications';
 import { Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
+import { PublicationPreview } from '../../types/publication.types';
 
 const StyledTableRow = styled(TableRow)`
   background-color: ${props => props.theme.palette.box.main};
@@ -24,7 +24,7 @@ const StyledTableCellForDate = styled(TableCell)`
 `;
 
 interface PublicationListProps {
-  publications: DummyPublicationListElement[];
+  publications: PublicationPreview[];
 }
 
 const PublicationList: FC<PublicationListProps> = ({ publications }) => {
