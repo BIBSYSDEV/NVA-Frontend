@@ -38,7 +38,10 @@ const SortableItem = SortableElement(({ contributor, placement, onDelete }: Sort
         <FormCardSubHeading>{contributor.name}</FormCardSubHeading>
         <Field name={`contributors[${index}].corresponding`}>
           {({ field }: any) => (
-            <FormControlLabel control={<Checkbox checked={field.value} {...field} />} label="Korresponderende" />
+            <FormControlLabel
+              control={<Checkbox checked={field.value} {...field} />}
+              label={t('publication:contributors.corresponding')}
+            />
           )}
         </Field>
         <div>
