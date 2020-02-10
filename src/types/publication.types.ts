@@ -9,6 +9,11 @@ export enum PublicationType {
   FILE = 'file',
 }
 
+export enum PublicationStatus {
+  DRAFT = 'draft',
+  REJECTED = 'rejected',
+}
+
 interface TitleType {
   [key: string]: string;
 }
@@ -55,7 +60,10 @@ export interface Publication {
   authors: Contributor[];
   contributors: Contributor[];
   files: File[];
+  status: PublicationStatus;
 }
+
+export type PublicationPreview = Pick<Publication, 'id' | 'title' | 'createdDate' | 'status'>;
 
 export interface Doi {
   title: string;
@@ -90,4 +98,5 @@ export const emptyPublication: Publication = {
   authors: [],
   contributors: [], // TODO: Merge with authors
   files: [],
+  status: PublicationStatus.DRAFT,
 };

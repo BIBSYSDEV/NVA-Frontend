@@ -104,5 +104,9 @@
     "text_book": "Textbook",
     "text_book_yes": "Yes, this is a textbook",
     "volume": "Volume"
+  },
+  "status": {
+    "draft": "Draft",
+    "rejected": "Rejected"
   }
 }
