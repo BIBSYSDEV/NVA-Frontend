@@ -12,9 +12,9 @@
       },
       { "id": "2", "name": "BIBSYS" }
     ],
-    "selectedInstitution": "",
     "orcid": "some orcid",
     "corresponding": true,
+    "email": "en@unit.no",
     "type": "Author",
     "systemControlNumber": "1234321"
   },
@@ -24,41 +24,41 @@
       { "id": "1", "name": "Unit" },
       { "id": "2", "name": "BIBSYS" }
     ],
-    "selectedInstitution": "",
     "corresponding": false,
     "type": "Author",
+    "email": "pcb@unit.no",
     "systemControlNumber": "2432432"
   },
   {
     "name": "Sarah Serussi",
     "institutions": [{ "id": "1", "name": "Unit" }],
-    "selectedInstitution": "",
     "corresponding": false,
     "type": "Author",
+    "email": "sase@unit.no",
     "systemControlNumber": ""
   },
   {
     "name": "Kjetil Møkkelgjerd",
     "institutions": [],
-    "selectedInstitution": "",
     "corresponding": false,
     "type": "Author",
+    "email": "",
     "systemControlNumber": "9845784"
   },
   {
     "name": "Svenn Gjetø",
     "institutions": [{ "id": "1", "name": "Unit" }],
-    "selectedInstitution": "",
     "corresponding": false,
     "type": "Editor",
+    "email": "",
     "systemControlNumber": "83743746"
   },
   {
     "name": "Nikolai Fikse Raanes",
     "institutions": [],
-    "selectedInstitution": "",
     "corresponding": false,
     "type": "Photographer",
+    "email": "",
     "systemControlNumber": ""
   }
 ]
