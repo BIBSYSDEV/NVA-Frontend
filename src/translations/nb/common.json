@@ -15,9 +15,11 @@
   "orcid": "ORCID",
   "picture": "Bilde",
   "preview": "Forhåndsvis",
+  "publish": "Publiser",
   "remove": "Fjern",
   "save": "Lagre",
   "search": "Søk",
+  "status": "Status",
   "title": "Tittel",
   "type": "Type",
   "yes": "Ja"

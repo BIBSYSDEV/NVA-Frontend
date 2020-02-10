@@ -4,7 +4,7 @@ describe('Login', () => {
   });
 
   it('The user should be able to log in', () => {
-    cy.get('[data-testid=login-button]').click({ force: true });
+    cy.get('[data-testid=menu-login-button]').click({ force: true });
 
     cy.get('[data-testid=menu]').should('be.visible');
     cy.get('[data-testid=menu]').contains('Test User');

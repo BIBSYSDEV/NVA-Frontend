@@ -3,8 +3,9 @@ import styled from 'styled-components';
 import { Card } from '@material-ui/core';
 
 const StyledCard = styled(Card)`
+  width: 100%;
   @media (min-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-    padding: 2rem;
+    padding: 1rem 2rem;
   }
   padding: 0.5rem;
   margin-bottom: 1rem;

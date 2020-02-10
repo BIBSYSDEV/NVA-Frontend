@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { MenuItem, TextField } from '@material-ui/core';
 
 import { Publication } from '../../../types/publication.types';
-import { emptyPublisher, JournalArticleFieldNames, journalArticleTypes } from '../../../types/references.types';
+import { emptyPublisher, JournalArticleFieldNames, JournalArticleType } from '../../../types/references.types';
 import { PublicationTableNumber } from '../../../utils/constants';
 import NviValidation from './components/NviValidation';
 import PeerReview from './components/PeerReview';
@@ -37,7 +37,7 @@ const JournalArticleReferenceForm: FC = () => {
   const { t } = useTranslation('publication');
   const { setFieldValue, values }: FormikProps<Publication> = useFormikContext();
 
-  const isRatedJournal = values.reference?.journalArticle?.journal?.level;
+  const isRatedJournal = values.reference?.journalArticle?.publisher?.level;
   const isPeerReviewed = values.reference?.journalArticle?.peerReview;
 
   return (
@@ -45,9 +45,9 @@ const JournalArticleReferenceForm: FC = () => {
       <Field name={JournalArticleFieldNames.TYPE} variant="outlined">
         {({ field }: any) => (
           <TextField select variant="outlined" fullWidth label={t('common:type')} {...field}>
-            {journalArticleTypes.map(type => (
-              <MenuItem value={type.value} key={type.value}>
-                {t(type.label)}
+            {Object.values(JournalArticleType).map(typeValue => (
+              <MenuItem value={typeValue} key={typeValue}>
+                {t(`referenceTypes:subtypes_journal_article.${typeValue}`)}
               </MenuItem>
             ))}
           </TextField>
@@ -58,7 +58,7 @@ const JournalArticleReferenceForm: FC = () => {
         {({ field }: any) => <TextField variant="outlined" label={t('references.doi')} {...field} />}
       </Field>
 
-      <Field name={JournalArticleFieldNames.JOURNAL}>
+      <Field name={JournalArticleFieldNames.PUBLISHER}>
         {({ field: { name, value } }: any) => (
           <>
             <PublicationChannelSearch

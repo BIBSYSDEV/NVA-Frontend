@@ -3,7 +3,6 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormikProps, useFormikContext } from 'formik';
 import { Publication } from '../../../types/publication.types';
-import FormCardSubHeading from '../../../components/FormCard/FormCardSubHeading';
 
 const SubmissionReport: React.FC = () => {
   const { t } = useTranslation('publication');
@@ -11,9 +10,10 @@ const SubmissionReport: React.FC = () => {
 
   return (
     <>
-      <FormCardSubHeading>{t('references.report')}</FormCardSubHeading>
-
-      <LabelContentRow label={t('common:type')}>{values.reference.report?.type}</LabelContentRow>
+      <LabelContentRow label={t('common:type')}>{t('referenceTypes:report')}</LabelContentRow>
+      <LabelContentRow label={t('references.subtype')}>
+        {t(`referenceTypes:subtypes_report.${values.reference.report?.type}`)}
+      </LabelContentRow>
       <LabelContentRow label={t('references.publisher')}>{values.reference.report?.publisher?.title}</LabelContentRow>
       <LabelContentRow label={t('references.isbn')}>{values.reference.report?.isbn}</LabelContentRow>
       <LabelContentRow label={t('references.series')}>{values.reference.report?.series?.title}</LabelContentRow>

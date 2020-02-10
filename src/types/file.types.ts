@@ -61,6 +61,8 @@ export interface File {
   uploadUrl: string;
   data: {
     size: number;
+    lastModified: number;
+    type: string;
   };
   administrativeContract?: boolean;
   isPublished?: boolean | null;
@@ -74,6 +76,8 @@ export const emptyFile: File = {
   uploadUrl: '',
   data: {
     size: 0,
+    lastModified: 0,
+    type: '',
   },
   administrativeContract: false,
   isPublished: null,

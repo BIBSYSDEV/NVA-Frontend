@@ -1,7 +1,7 @@
 {
   "authority": "Autoritet",
   "home": "Hjem",
-  "new": "Ny publikasjon",
-  "publications": "Arbeidsområde",
+  "new-publication": "Ny publikasjon",
+  "my-publications": "My publications",
   "user": "Min profil"
 }

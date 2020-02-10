@@ -75,7 +75,7 @@ const Menu: React.FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
           horizontal: 'left',
         }}>
         <StyledMenuItem
-          data-testid="user-profile-button"
+          data-testid="menu-user-profile-button"
           onClick={() => {
             handleClose();
             history.push('/user');
@@ -83,7 +83,16 @@ const Menu: React.FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
           {t('profile:my_profile')}
         </StyledMenuItem>
 
-        <StyledMenuItem onClick={handleLogout} data-testid="logout-button">
+        <StyledMenuItem
+          data-testid="menu-my-publications-button"
+          onClick={() => {
+            handleClose();
+            history.push('/my-publications');
+          }}>
+          {t('workLists:my_publications')}
+        </StyledMenuItem>
+
+        <StyledMenuItem onClick={handleLogout} data-testid="menu-logout-button">
           {t('logout')}
         </StyledMenuItem>
       </StyledMuiMenu>

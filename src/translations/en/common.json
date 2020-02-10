@@ -15,9 +15,11 @@
   "orcid": "ORCID",
   "picture": "Picture",
   "preview": "Preview",
+  "publish": "Publish",
   "remove": "Remove",
   "save": "Save",
   "search": "Search",
+  "status": "Status",
   "title": "Title",
   "type": "Type",
   "yes": "Yes"

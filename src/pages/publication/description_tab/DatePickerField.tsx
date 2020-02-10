@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { KeyboardDatePicker, DatePickerView } from '@material-ui/pickers';
-import { useFormikContext, FormikProps } from 'formik';
+import { useFormikContext, FormikProps, getIn } from 'formik';
 import { Publication } from '../../../types/publication.types';
 import { FormControlLabel, Checkbox } from '@material-ui/core';
 import styled from 'styled-components';
@@ -20,10 +20,19 @@ interface DatePickerFieldProps {
 
 const DatePickerField = ({ yearFieldName, monthFieldName, dayFieldName }: DatePickerFieldProps) => {
   const { t } = useTranslation('publication');
-  const { setFieldValue }: FormikProps<Publication> = useFormikContext();
+  const { setFieldValue, values }: FormikProps<Publication> = useFormikContext();
 
-  const [date, setDate] = useState<Date | null>(null);
-  const [yearOnly, setYearOnly] = useState(false);
+  const initialYear = getIn(values, yearFieldName);
+  const initialMonth = getIn(values, monthFieldName);
+  const initialDay = getIn(values, dayFieldName);
+  const [date, setDate] = useState<Date | null>(
+    initialYear
+      ? initialMonth
+        ? new Date(initialYear, initialMonth - 1, initialDay || 1, 12, 0, 0)
+        : new Date(initialYear, 0, 1, 12, 0, 0)
+      : null
+  );
+  const [yearOnly, setYearOnly] = useState(!!initialYear && !initialMonth);
 
   useEffect(() => {
     // Extract data from date object

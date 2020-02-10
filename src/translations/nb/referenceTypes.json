@@ -1,0 +1,29 @@
+{
+  "book": "Bok",
+  "chapter": "Kapittel",
+  "degree": "Grad",
+  "journalArticle": "Publikasjon i tidsskrift",
+  "report": "Rapport",
+  "subtypes_report": {
+    "report": "Rapport",
+    "researchReport": "Forskningsrapport",
+    "policyReport": "Policyrapport",
+    "workingPaper": "Arbeidsnotat"
+  },
+  "subtypes_journal_article": {
+    "article": "Artikkel",
+    "editorial": "Leder",
+    "letter": "Brev til redaktør",
+    "review": "Anmeldelse",
+    "shortCommunication": "Short communication"
+  },
+  "subtypes_book": {
+    "monography": "Monografi",
+    "anthology": "Antologi"
+  },
+  "subtypes_degree": {
+    "bachelor": "Bachelorgrad",
+    "doctorate": "Doktorgrad",
+    "master": "Mastergrad"
+  }
+}
