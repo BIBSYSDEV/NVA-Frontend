@@ -98,11 +98,9 @@ export const getPublication = async (id: string, dispatch: Dispatch) => {
 };
 
 export const getMyPublications = async () => {
-  const sleep = (m: number) => new Promise(r => setTimeout(r, m));
   const url = `${PublicationsApiPaths.FETCH_MY_RESOURCES}`;
   try {
     const idToken = await getIdToken();
-    await sleep(1000);
     const response = await Axios.get(url, {
       headers: {
         Authorization: `Bearer ${idToken}`,
