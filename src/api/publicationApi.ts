@@ -98,7 +98,7 @@ export const getPublication = async (id: string, dispatch: Dispatch) => {
 };
 
 export const getMyPublications = async () => {
-  const url = `${PublicationsApiPaths.FETCH_MY_RESOURCES}`;
+  const url = PublicationsApiPaths.FETCH_MY_RESOURCES;
   try {
     const idToken = await getIdToken();
     const response = await Axios.get(url, {
@@ -107,7 +107,6 @@ export const getMyPublications = async () => {
       },
     });
     if (response.status === StatusCode.OK) {
-      console.log(response.data);
       return response.data;
     } else {
       return null;
