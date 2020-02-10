@@ -5,10 +5,8 @@ import FormCard from '../../components/FormCard/FormCard';
 import FormCardHeading from '../../components/FormCard/FormCardHeading';
 import TabPanel from '../../components/TabPanel/TabPanel';
 import SortableTable from './contributors_tab/components/SortableTable';
-import contributors from '../../utils/testfiles/contributors.json';
 import { FormikProps, useFormikContext, FieldArray } from 'formik';
 import { Publication } from '../../types/publication.types';
-import { Button } from '@material-ui/core';
 
 enum ContributorFieldNames {
   CONTRIBUTORS = 'contributors',
@@ -30,7 +28,7 @@ interface ContributorsPanelProps {
 
 const ContributorsPanel: FC<ContributorsPanelProps> = ({ goToNextTab, savePublication }) => {
   const { t } = useTranslation('publication');
-  const { setFieldTouched, setFieldValue, values }: FormikProps<Publication> = useFormikContext();
+  const { setFieldTouched, values }: FormikProps<Publication> = useFormikContext();
 
   // Validation messages won't show on fields that are not touched
   const setAllFieldsTouched = useCallback(() => {
@@ -51,9 +49,6 @@ const ContributorsPanel: FC<ContributorsPanelProps> = ({ goToNextTab, savePublic
     <TabPanel ariaLabel="references" goToNextTab={goToNextTab} onClickSave={savePublication}>
       <FormCard>
         <FormCardHeading>{t('contributors.authors')}</FormCardHeading>
-        <Button variant="contained" color="secondary" onClick={() => setFieldValue('contributors', contributors)}>
-          Test
-        </Button>
         <FieldArray name={ContributorFieldNames.CONTRIBUTORS}>
           {({ push, remove }) => <SortableTable listOfContributors={values.contributors} push={push} remove={remove} />}
         </FieldArray>

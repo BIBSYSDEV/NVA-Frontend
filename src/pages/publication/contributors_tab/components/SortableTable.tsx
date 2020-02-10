@@ -1,4 +1,3 @@
-import arrayMove from 'array-move';
 import React, { FC } from 'react';
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 
@@ -20,6 +19,7 @@ import { useTranslation } from 'react-i18next';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 import FormCardSubHeading from '../../../../components/FormCard/FormCardSubHeading';
+import { removeDuplicatesByScn, arrayMove } from '../../../../utils/helpers';
 
 interface SortableItemProps {
   contributor: Contributor;
@@ -33,7 +33,7 @@ const SortableItem = SortableElement(({ contributor, placement, onDelete }: Sort
   const index = placement - 1;
 
   return (
-    <TableRow tabIndex={0} key={contributor.name}>
+    <TableRow tabIndex={0} key={contributor.systemControlNumber}>
       <TableCell align="left">
         <FormCardSubHeading>{contributor.name}</FormCardSubHeading>
         <Field name={`contributors[${index}].corresponding`}>
@@ -51,16 +51,18 @@ const SortableItem = SortableElement(({ contributor, placement, onDelete }: Sort
       </TableCell>
       <TableCell align="left">
         {contributor.institutions?.map(institution => (
-          <div key={`${institution.name}`}>{institution.name}</div>
+          <div key={`${institution.id}`}>{institution.name}</div>
         ))}
       </TableCell>
       <TableCell align="right">
-        <div>{placement}</div>
         <div>
-          <Button color="secondary" onClick={() => onDelete(index)}>
-            <DeleteIcon />
-            {t('common:remove')}
-          </Button>
+          <div>{placement}</div>
+          <div>
+            <Button color="secondary" onClick={() => onDelete(index)}>
+              <DeleteIcon />
+              {t('common:remove')}
+            </Button>
+          </div>
         </div>
       </TableCell>
     </TableRow>
@@ -73,21 +75,24 @@ interface SortableListProps {
   onSortEnd: ({ oldIndex, newIndex }: any) => void;
 }
 
-const SortableList = SortableContainer(({ contributors, onDelete }: SortableListProps) => (
-  <Table>
-    <TableBody>
-      {contributors.map((contributor: Contributor, index: number) => (
-        <SortableItem
-          index={index}
-          contributor={contributor}
-          key={`item-${contributor.name}`}
-          placement={index + 1}
-          onDelete={onDelete}
-        />
-      ))}
-    </TableBody>
-  </Table>
-));
+const SortableList = SortableContainer(({ contributors, onDelete }: SortableListProps) => {
+  const uniqueContributors = removeDuplicatesByScn(contributors);
+  return (
+    <Table>
+      <TableBody>
+        {uniqueContributors.map((contributor: Contributor, index: number) => (
+          <SortableItem
+            index={index}
+            contributor={contributor}
+            key={contributor.systemControlNumber}
+            placement={index + 1}
+            onDelete={onDelete}
+          />
+        ))}
+      </TableBody>
+    </Table>
+  );
+});
 
 interface SortableTableProps {
   listOfContributors: Contributor[];
@@ -116,7 +121,10 @@ const SortableTable: FC<SortableTableProps> = ({ listOfContributors, push, remov
           const contributor: Contributor = {
             name: authority.name,
             systemControlNumber: authority.systemControlNumber,
-            institutions: [],
+            institutions: authority.orgunitids.map(orgunit => ({
+              id: orgunit,
+              name: orgunit,
+            })),
             email: '',
             type: '',
             corresponding: false,
