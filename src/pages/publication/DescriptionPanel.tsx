@@ -17,6 +17,7 @@ import { Project } from '../../types/project.types';
 import ChipInput from 'material-ui-chip-input';
 import { getObjectValueByFieldName } from '../../utils/helpers';
 import { orderedLanguages } from '../../types/language.types';
+import FormCardHeading from '../../components/FormCard/FormCardHeading';
 import FormCard from '../../components/FormCard/FormCard';
 
 const MultipleFieldWrapper = styled.div`
@@ -78,6 +79,7 @@ const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublicat
     <TabPanel ariaLabel="description" goToNextTab={goToNextTab} onClickSave={validateAndSave}>
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <FormCard>
+          <FormCardHeading>{t('heading.description')}</FormCardHeading>
           <StyledFieldWrapper>
             <Field
               aria-label="title"
