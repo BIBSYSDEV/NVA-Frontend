@@ -36,11 +36,19 @@ const StyledPreview = styled(Link)`
 const StyledFormControl = styled(FormControl)`
   width: 30%;
   margin-top: 1rem;
+
+  @media (max-width: ${({ theme }) => `${theme.breakpoints.values.sm}px`}) {
+    width: 100%;
+  }
 `;
 
 const StyledFileInfo = styled.div`
   display: flex;
   justify-content: space-between;
+
+  @media (max-width: ${({ theme }) => `${theme.breakpoints.values.sm}px`}) {
+    flex-direction: column;
+  }
 `;
 
 const StyledSelect = styled(TextField)`
@@ -57,6 +65,10 @@ const StyledLicenseName = styled(Typography)`
 const StyledVerticalAlign = styled.div`
   display: flex;
   align-items: center;
+`;
+
+const StyledActions = styled.div`
+  margin-top: 1rem;
 `;
 
 interface FileCardProps {
@@ -182,7 +194,7 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, updateFile, toggl
         </StyledFileInfo>
       )}
 
-      <div>
+      <StyledActions>
         {file.uploadUrl && (
           <StyledPreview href={file.uploadUrl} target="_blank">
             <Button color="primary" variant="contained">
@@ -194,7 +206,7 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, updateFile, toggl
           <DeleteIcon />
           {t('common:remove')}
         </Button>
-      </div>
+      </StyledActions>
     </FormCard>
   );
 };
