@@ -18,7 +18,7 @@ export interface DummyPublicationListElement {
   status: string;
 }
 
-const StyledSection = styled.section`
+const StyledWrapper = styled.div`
   text-align: center;
 `;
 
@@ -45,9 +45,9 @@ const MyPublications: FC = () => {
   return (
     <FormCard>
       <FormCardHeading>{t('workLists:my_publications')}</FormCardHeading>
-      <StyledSection>
+      <StyledWrapper>
         {isLoading ? <CircularProgress color="inherit" size={20} /> : <PublicationList publications={publications} />}
-      </StyledSection>
+      </StyledWrapper>
     </FormCard>
   );
 };
