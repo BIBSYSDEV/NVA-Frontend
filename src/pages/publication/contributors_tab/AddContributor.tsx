@@ -7,7 +7,11 @@ import Modal from '../../../components/Modal';
 import { Authority } from '../../../types/authority.types';
 import AddContributorModalContent from './components/AddContributorModalContent';
 
-const AddContributor: FC = () => {
+interface AddContributorProps {
+  onAdd: (author: Authority) => void;
+}
+
+const AddContributor: FC<AddContributorProps> = ({ onAdd }) => {
   const { t } = useTranslation('publication');
 
   const [addedAuthors, setAddedAuthors] = useState<Authority[]>([]);
@@ -20,11 +24,11 @@ const AddContributor: FC = () => {
   const addAuthor = (author: Authority) => {
     setAddedAuthors([...addedAuthors, author]);
     setOpen(false);
+    onAdd(author);
   };
 
   return (
     <>
-      {addedAuthors && addedAuthors.map(author => <h4 key={author.systemControlNumber}>{author.name}</h4>)}
       <Button onClick={toggleModal} variant="contained" color="primary" data-testid="add-contributor">
         {t('contributors.add_author')}
       </Button>

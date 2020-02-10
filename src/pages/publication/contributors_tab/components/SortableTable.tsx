@@ -6,6 +6,7 @@ import { Checkbox, FormControlLabel, Table, TableBody, TableCell, TableRow } fro
 import { Contributor } from '../../../../types/contributor.types';
 import { FormikProps, useFormikContext } from 'formik';
 import { Publication } from '../../../../types/publication.types';
+import AddContributor from '../AddContributor';
 
 interface SortableItemProps {
   contributor: Contributor;
@@ -24,7 +25,9 @@ const SortableItem = SortableElement(({ contributor, placement }: SortableItemPr
       <TableCell component="th" scope="row">
         <div>{contributor.name}</div>
         <FormControlLabel
-          control={<Checkbox checked={contributor.corresponding} onChange={handleChange} value="checkedA" />}
+          control={
+            <Checkbox checked={contributor.corresponding} onChange={handleChange} value={contributor.corresponding} />
+          }
           label="Korresponderende"
         />
         <div>
@@ -36,7 +39,7 @@ const SortableItem = SortableElement(({ contributor, placement }: SortableItemPr
         </div>
       </TableCell>
       <TableCell align="left">
-        {contributor.institutions.map(institution => (
+        {contributor.institutions?.map(institution => (
           <div key={`${institution.name}`}>{institution.name}</div>
         ))}
       </TableCell>
@@ -62,16 +65,22 @@ const SortableList = SortableContainer(({ contributors }: SortableListProps) => 
 
 interface SortableTableProps {
   listOfContributors: Contributor[];
+  push: (obj: any) => void;
 }
 
-const SortableTable: FC<SortableTableProps> = ({ listOfContributors }) => {
+const SortableTable: FC<SortableTableProps> = ({ listOfContributors, push }) => {
   const { setFieldValue }: FormikProps<Publication> = useFormikContext();
 
   const onSortEnd = ({ oldIndex, newIndex }: any) => {
     const reorderedList = arrayMove(listOfContributors, oldIndex, newIndex);
     setFieldValue('contributors', reorderedList);
   };
-  return <SortableList contributors={listOfContributors} onSortEnd={onSortEnd} />;
+  return (
+    <>
+      <SortableList contributors={listOfContributors} onSortEnd={onSortEnd} />
+      <AddContributor onAdd={author => push(author)} />
+    </>
+  );
 };
 
 export default SortableTable;

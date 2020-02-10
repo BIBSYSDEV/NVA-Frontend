@@ -4,10 +4,9 @@ import { useTranslation } from 'react-i18next';
 import FormCard from '../../components/FormCard/FormCard';
 import FormCardHeading from '../../components/FormCard/FormCardHeading';
 import TabPanel from '../../components/TabPanel/TabPanel';
-import AddContributor from './contributors_tab/AddContributor';
 import SortableTable from './contributors_tab/components/SortableTable';
 import contributors from '../../utils/testfiles/contributors.json';
-import { FormikProps, useFormikContext, Field } from 'formik';
+import { FormikProps, useFormikContext, FieldArray } from 'formik';
 import { Publication } from '../../types/publication.types';
 import { Button } from '@material-ui/core';
 
@@ -55,10 +54,13 @@ const ContributorsPanel: FC<ContributorsPanelProps> = ({ goToNextTab, savePublic
         <Button variant="contained" color="secondary" onClick={() => setFieldValue('contributors', contributors)}>
           Test
         </Button>
-        <Field name={ContributorFieldNames.CONTRIBUTORS}>
-          {({ field: { value } }: any) => <SortableTable listOfContributors={value} />}
-        </Field>
-        <AddContributor />
+        <FieldArray name={ContributorFieldNames.CONTRIBUTORS}>
+          {({ name, push, remove }) => (
+            <>
+              <SortableTable listOfContributors={values.contributors} push={push} />
+            </>
+          )}
+        </FieldArray>
       </FormCard>
     </TabPanel>
   );
