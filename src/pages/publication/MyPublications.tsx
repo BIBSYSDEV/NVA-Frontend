@@ -25,7 +25,7 @@ const MyPublications: FC = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
-  const [elements, setElements] = useState<DummyPublicationListElement[]>([]);
+  const [publications, setPublications] = useState<DummyPublicationListElement[]>([]);
 
   useEffect(() => {
     const loadData = async () => {
@@ -34,7 +34,7 @@ const MyPublications: FC = () => {
       if (publications?.error) {
         dispatch(addNotification(i18n.t('feedback:error.get_publications'), 'error'));
       } else {
-        setElements(publications);
+        setPublications(publications);
       }
       setIsLoading(false);
     };
@@ -44,9 +44,8 @@ const MyPublications: FC = () => {
   return (
     <FormCard>
       <FormCardHeading>{t('workLists:my_publications')}</FormCardHeading>
-      <PublicationList publications={dummyElementList} />
       <StyledSection>
-        {isLoading ? <CircularProgress color="inherit" size={20} /> : <PublicationList elements={elements} />}
+        {isLoading ? <CircularProgress color="inherit" size={20} /> : <PublicationList publications={publications} />}
       </StyledSection>
     </FormCard>
   );
