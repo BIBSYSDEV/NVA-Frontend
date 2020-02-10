@@ -131,6 +131,7 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, updateFile, toggl
                 }
                 value={file.embargoDate}
                 autoOk
+                format={'dd.MM.yyyy'}
               />
             </MuiPickersUtilsProvider>
           </StyledFormControl>
