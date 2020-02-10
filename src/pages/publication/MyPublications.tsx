@@ -44,6 +44,7 @@ const MyPublications: FC = () => {
   return (
     <FormCard>
       <FormCardHeading>{t('workLists:my_publications')}</FormCardHeading>
+      <PublicationList publications={dummyElementList} />
       <StyledSection>
         {isLoading ? <CircularProgress color="inherit" size={20} /> : <PublicationList elements={elements} />}
       </StyledSection>

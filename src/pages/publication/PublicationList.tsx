@@ -24,10 +24,10 @@ const StyledTableCellForDate = styled(TableCell)`
 `;
 
 interface PublicationListProps {
-  elements: DummyPublicationListElement[];
+  publications: DummyPublicationListElement[];
 }
 
-const PublicationList: FC<PublicationListProps> = ({ elements }) => {
+const PublicationList: FC<PublicationListProps> = ({ publications }) => {
   const { t } = useTranslation();
   return (
     <StyledTable>
@@ -39,13 +39,13 @@ const PublicationList: FC<PublicationListProps> = ({ elements }) => {
         </TableRow>
       </TableHead>
       <TableBody>
-        {elements.map((element, index) => (
-          <StyledTableRow key={index}>
+        {publications.map(publication => (
+          <StyledTableRow key={publication.id}>
             <TableCell component="th" scope="row">
-              {element.title}
+              {publication.title}
             </TableCell>
-            <StyledTableCellForStatus>{element.status}</StyledTableCellForStatus>
-            <StyledTableCellForDate>{element.createdDate}</StyledTableCellForDate>
+            <StyledTableCellForStatus>{publication.status}</StyledTableCellForStatus>
+            <StyledTableCellForDate>{publication.createdDate}</StyledTableCellForDate>
           </StyledTableRow>
         ))}
       </TableBody>

@@ -1,6 +1,4 @@
 import Axios from 'axios';
-
-import { Publisher } from '../types/references.types';
 import { PublicationTableNumber } from '../utils/constants';
 
 export enum PublicationChannelApiPaths {
@@ -14,10 +12,7 @@ export const getPublishers = async (searchTerm: string, publicationTable: Public
       url: PublicationChannelApiPaths.SEARCH,
       data: { searchTerm: `%${searchTerm}%`, tableId: publicationTable },
     });
-    return response.data.results.map((item: Partial<Publisher>) => ({
-      title: item.title,
-      level: item.level,
-    }));
+    return response.data.results;
   } catch {
     return [];
   }

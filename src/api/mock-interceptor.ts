@@ -18,6 +18,7 @@ import { InstituionApiPaths } from './institutionApi';
 import { ProjectsApiPaths } from './projectApi';
 import { PublicationsApiPaths } from './publicationApi';
 import { PublicationChannelApiPaths } from './publicationChannelApi';
+import { FileUploadApiPaths } from './fileUploadApi';
 
 const TOP_INSTITUTION_REGEXP = '[0-9]+.0.0.0';
 const SUBUNIT_INSTITUTION_REGEXP = '*.[^0]+.0.0';
@@ -80,9 +81,18 @@ const mockSingleAuthorityResponseWithSecondOrgunitid: Authority = {
   birthDate: '1941-04-25 00:00:00.000',
 };
 
+const mockCreateUpload = { uploadId: 'asd', key: 'sfd' };
+const mockPrepareUpload = { url: 'https://file-upload.com/files/' };
+const mockCompleteUpload = {};
+
 // AXIOS INTERCEPTOR
 export const interceptRequestsOnMock = () => {
   const mock = new MockAdapter(Axios);
+
+  // File Upload
+  mock.onPost(new RegExp(FileUploadApiPaths.CREATE)).reply(200, mockCreateUpload);
+  mock.onPost(new RegExp(FileUploadApiPaths.PREPARE)).reply(200, mockPrepareUpload);
+  mock.onPost(new RegExp(FileUploadApiPaths.COMPLETE)).reply(200, mockCompleteUpload);
 
   //MY PUBLICATIONS
   mock.onGet(new RegExp(`${PublicationsApiPaths.FETCH_MY_RESOURCES}/*`)).reply(200, mockMyPublications);

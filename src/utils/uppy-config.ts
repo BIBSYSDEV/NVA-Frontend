@@ -1,9 +1,42 @@
 import { Uppy } from '@uppy/core';
-import Tus from '@uppy/tus';
+import AwsS3Multipart from '@uppy/aws-s3-multipart';
+import {
+  createMultipartUpload,
+  listParts,
+  prepareUploadPart,
+  abortMultipartUpload,
+  completeMultipartUpload,
+} from '../api/fileUploadApi';
+import { File } from '../types/file.types';
+
+interface UppyArgs {
+  uploadId: string;
+  key: string;
+}
+
+interface UppyPrepareArgs extends UppyArgs {
+  body: Blob;
+  number: number;
+}
+
+interface UppyCompleteArgs extends UppyArgs {
+  parts: UppyCompletePart[];
+}
+
+export interface UppyCompletePart {
+  PartNumber: string;
+  ETag: string;
+}
 
 export const createUppy = () =>
   new Uppy({
     autoProceed: true,
-  }).use(Tus, {
-    endpoint: 'https://master.tus.io/files/',
+  }).use(AwsS3Multipart, {
+    abortMultipartUpload: async (_: File, { uploadId, key }: UppyArgs) => await abortMultipartUpload(uploadId, key),
+    completeMultipartUpload: async (_: File, { uploadId, key, parts }: UppyCompleteArgs) =>
+      await completeMultipartUpload(uploadId, key, parts),
+    createMultipartUpload: async (file: File) => await createMultipartUpload(file),
+    listParts: async (_: File, { uploadId, key }: UppyArgs) => await listParts(uploadId, key),
+    prepareUploadPart: async (_: File, { uploadId, key, body, number }: UppyPrepareArgs) =>
+      await prepareUploadPart(uploadId, key, body, number),
   });

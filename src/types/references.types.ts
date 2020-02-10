@@ -49,7 +49,7 @@ export interface Publisher {
   printIssn: string;
   onlineIssn: string;
   level: number | null;
-  isOpenAccess: boolean;
+  openAccess: boolean;
 }
 
 interface Chapter {
@@ -65,7 +65,7 @@ export const emptyPublisher: Publisher = {
   onlineIssn: '',
   level: null,
   title: '',
-  isOpenAccess: false,
+  openAccess: false,
 };
 
 const emptyBookReference: Book = {

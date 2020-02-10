@@ -32,12 +32,12 @@ const PublicationChannelInfoCard: React.FC<PublicationChannelInfoCardProps> = ({
         <div>
           <FormCardLabel>{publisher.title}</FormCardLabel>
           <Typography variant="body1">
-            {publisher.isOpenAccess
+            {publisher.openAccess
               ? t('files_and_license.info_from_publication_channel_register.open_publishment')
               : t('files_and_license.info_from_publication_channel_register.no_open_publishment')}
           </Typography>
         </div>
-        {publisher.isOpenAccess && (
+        {publisher.openAccess && (
           <StyledAvatar
             variant="square"
             src={openAccessLogo}
