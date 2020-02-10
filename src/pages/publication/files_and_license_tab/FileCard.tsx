@@ -67,7 +67,7 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, updateFile, toggl
   const { t } = useTranslation('publication');
 
   return (
-    <FormCard>
+    <FormCard data-testid="uploaded-file-card">
       <FormCardSubHeading>{file.name}</FormCardSubHeading>
       <StyledDescription>
         {t('files_and_license.uploaded_size', { size: Math.round(file.data.size / 1000) })}
