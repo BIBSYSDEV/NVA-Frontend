@@ -40,10 +40,10 @@ const ContributorsPanel: FC<ContributorsPanelProps> = ({ goToNextTab, savePublic
     return () => setAllFieldsTouched();
   }, [setAllFieldsTouched]);
 
-  const validateAndSave = () => {
-    setAllFieldsTouched();
-    savePublication();
-  };
+  // const validateAndSave = () => {
+  //   setAllFieldsTouched();
+  //   savePublication();
+  // };
 
   return (
     <TabPanel ariaLabel="references" goToNextTab={goToNextTab} onClickSave={savePublication}>
