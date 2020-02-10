@@ -181,17 +181,19 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, updateFile, toggl
         </StyledFileInfo>
       )}
 
-      {file.uploadUrl && (
-        <StyledPreview href={file.uploadUrl} target="_blank">
-          <Button color="primary" variant="contained">
-            {t('common:preview')}
-          </Button>
-        </StyledPreview>
-      )}
-      <Button variant="contained" color="secondary" onClick={removeFile}>
-        <DeleteIcon />
-        {t('common:remove')}
-      </Button>
+      <div>
+        {file.uploadUrl && (
+          <StyledPreview href={file.uploadUrl} target="_blank">
+            <Button color="primary" variant="contained">
+              {t('common:preview')}
+            </Button>
+          </StyledPreview>
+        )}
+        <Button variant="contained" color="secondary" onClick={removeFile}>
+          <DeleteIcon />
+          {t('common:remove')}
+        </Button>
+      </div>
     </FormCard>
   );
 };
