@@ -16,6 +16,13 @@ const StyledTable = styled(Table)`
   width: 100%;
 `;
 
+const StyledTableCellForStatus = styled(TableCell)`
+  width: 15%;
+`;
+const StyledTableCellForDate = styled(TableCell)`
+  width: 15%;
+`;
+
 interface PublicationListProps {
   elements: DummyPublicationListElement[];
 }
@@ -37,8 +44,8 @@ const PublicationList: FC<PublicationListProps> = ({ elements }) => {
             <TableCell component="th" scope="row">
               {element.title}
             </TableCell>
-            <TableCell style={{ width: '15%' }}>{element.status}</TableCell>
-            <TableCell style={{ width: '15%' }}>{element.createdDate}</TableCell>
+            <StyledTableCellForStatus>{element.status}</StyledTableCellForStatus>
+            <StyledTableCellForDate>{element.createdDate}</StyledTableCellForDate>
           </StyledTableRow>
         ))}
       </TableBody>
