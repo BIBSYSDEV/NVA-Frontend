@@ -24,7 +24,7 @@ const SubmissionFilesAndLicenses: React.FC = () => {
             {file.administrativeContract ? t('common:yes') : t('common:no')}
           </LabelContentRow>
           <LabelContentRow label={t('files_and_license.published_version')}>
-            {file.isPublished ? t('common:yes') : t('common:no')}v
+            {file.isPublished ? t('common:yes') : t('common:no')}
           </LabelContentRow>
         </React.Fragment>
       ))}

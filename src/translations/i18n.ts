@@ -11,6 +11,7 @@ import profileEn from './en/profile.json';
 import publicationEn from './en/publication.json';
 import referenceTypesEn from './en/referenceTypes.json';
 import translationsEn from './en/translations.json';
+import workListsEn from './en/workLists.json';
 import breadcrumbsNb from './nb/breadcrumbs.json';
 import commonNb from './nb/common.json';
 import disciplinesNb from './nb/disciplines.json';
@@ -20,6 +21,7 @@ import profileNb from './nb/profile.json';
 import publicationNb from './nb/publication.json';
 import referenceTypesNb from './nb/referenceTypes.json';
 import translationsNb from './nb/translations.json';
+import workListsNb from './nb/workLists.json';
 
 export const defaultLanguage = PageLanguageCodes.NORWEGIAN_BOKMAL;
 
@@ -35,6 +37,7 @@ i18n.use(LanguageDetector).init({
       publication: publicationEn,
       referenceTypes: referenceTypesEn,
       translations: translationsEn,
+      workLists: workListsEn,
     },
     nb: {
       breadcrumbs: breadcrumbsNb,
@@ -46,6 +49,7 @@ i18n.use(LanguageDetector).init({
       publication: publicationNb,
       referenceTypes: referenceTypesNb,
       translations: translationsNb,
+      workLists: workListsNb,
     },
   },
   fallbackLng: defaultLanguage,

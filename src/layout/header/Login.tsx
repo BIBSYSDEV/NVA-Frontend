@@ -33,7 +33,7 @@ const Login: React.FC = () => {
       {user?.name ? (
         <Menu menuButtonLabel={user.name} handleLogout={handleLogout} />
       ) : (
-        <Button color="primary" variant="contained" onClick={handleLogin} data-testid="login-button">
+        <Button color="primary" variant="contained" onClick={handleLogin} data-testid="menu-login-button">
           {t('login')}
         </Button>
       )}
