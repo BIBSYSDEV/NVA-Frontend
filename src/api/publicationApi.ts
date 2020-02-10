@@ -109,7 +109,7 @@ export const getMyPublications = async () => {
     if (response.status === StatusCode.OK) {
       return response.data;
     } else {
-      return null;
+      return [];
     }
   } catch (error) {
     return { error };
