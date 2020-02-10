@@ -44,7 +44,7 @@ const PublicationList: FC<PublicationListProps> = ({ publications }) => {
             <TableCell component="th" scope="row">
               {publication.title}
             </TableCell>
-            <StyledTableCellForStatus>{publication.status}</StyledTableCellForStatus>
+            <StyledTableCellForStatus>{t(`publication:status.${publication.status}`)}</StyledTableCellForStatus>
             <StyledTableCellForDate>{publication.createdDate}</StyledTableCellForDate>
           </StyledTableRow>
         ))}

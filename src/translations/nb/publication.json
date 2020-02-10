@@ -104,5 +104,9 @@
     "text_book": "Lærebok",
     "text_book_yes": "Ja, boken er en lærebok",
     "volume": "Volum"
+  },
+  "status": {
+    "draft": "Kladd",
+    "rejected": "Avvist"
   }
 }

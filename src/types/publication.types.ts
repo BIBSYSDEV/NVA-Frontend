@@ -10,8 +10,8 @@ export enum PublicationType {
 }
 
 export enum PublicationStatus {
-  DRAFT = 'kladd',
-  REJECTED = 'avvist',
+  DRAFT = 'draft',
+  REJECTED = 'rejected',
 }
 
 interface TitleType {
