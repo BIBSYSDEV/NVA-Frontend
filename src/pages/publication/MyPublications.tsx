@@ -7,7 +7,7 @@ import PublicationList from './PublicationList';
 export interface DummyPublicationListElement {
   id: string;
   title: string;
-  date: string;
+  createdDate: string;
   status: string;
 }
 
@@ -19,14 +19,14 @@ const MyPublications: FC = () => {
     id: '5843058934095834905.',
     title: 'Qualitative research practice: A guide for social science students and researchers.',
     status: 'Kladd',
-    date: '02.09.2010',
+    createdDate: '02.09.2010',
   };
   let dummyElementList = [dummyElement, dummyElement, dummyElement, dummyElement, dummyElement];
 
   return (
     <FormCard>
       <FormCardHeading>{t('workLists:my_publications')}</FormCardHeading>
-      <PublicationList elements={dummyElementList} />
+      <PublicationList publications={dummyElementList} />
     </FormCard>
   );
 };
