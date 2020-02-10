@@ -55,11 +55,7 @@ const ContributorsPanel: FC<ContributorsPanelProps> = ({ goToNextTab, savePublic
           Test
         </Button>
         <FieldArray name={ContributorFieldNames.CONTRIBUTORS}>
-          {({ name, push, remove }) => (
-            <>
-              <SortableTable listOfContributors={values.contributors} push={push} />
-            </>
-          )}
+          {({ push, remove }) => <SortableTable listOfContributors={values.contributors} push={push} remove={remove} />}
         </FieldArray>
       </FormCard>
     </TabPanel>
