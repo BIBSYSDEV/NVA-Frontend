@@ -30,8 +30,8 @@
   },
   "feedback": {
     "invalid_url": "Ugyldig lenke",
-    "required_field": "Påkrevd felt",
-    "minimum_one_contributor": "Du må ha minst en forfatter på denne publikasjonen"
+    "minimum_one_contributor": "Du må ha minst en forfatter på denne publikasjonen",
+    "required_field": "Påkrevd felt"
   },
   "files_and_license": {
     "accepted_version": "Akseptert versjon",
