@@ -20,10 +20,10 @@ const DisciplineSearch: FC<DisciplineSearchProps> = ({ dataTestId, setValueFunct
   const { t } = useTranslation();
 
   const searchResults = Object.values(disciplines)
-    .map((mainDisciplines, index) =>
-      mainDisciplines.map(discipline => ({
-        title: t(`disciplines:${discipline}`),
-        mainDiscipline: t(`disciplines:${Object.keys(disciplines)[index]}`),
+    .map(([mainDiscipline, ...disciplineTitles]) =>
+      disciplineTitles.map(disciplineTitle => ({
+        title: t(`disciplines:${disciplineTitle}`),
+        mainDiscipline: t(`disciplines:${mainDiscipline}`),
       }))
     )
     .flat();
