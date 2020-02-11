@@ -161,7 +161,7 @@ const User: React.FC = () => {
               color="primary"
               onClick={handleClickAdd}
               disabled={!user.authority?.systemControlNumber}
-              data-testid="add-institution">
+              data-testid="add-new-institution-button">
               {t('common:add')}
             </Button>
           }>

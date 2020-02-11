@@ -78,7 +78,8 @@ const InstitutionPresentation: React.FC<InstitutionPresentationProps> = ({
             onClick={() => handleConfirm()}
             variant="contained"
             color="secondary"
-            disabled={!!!selectedCristinUnitId}>
+            disabled={!!!selectedCristinUnitId}
+            data-testid="institution-add-button">
             Add
           </StyledButton>
           <StyledButton

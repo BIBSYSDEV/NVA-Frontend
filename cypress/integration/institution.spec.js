@@ -15,18 +15,19 @@ describe('User adds an institution to their profile', () => {
 
     // connect orcid
     cy.get('[data-testid=open-orcid-modal]').click({ force: true });
+    cy.get('[data-testid=connect-to-orcid]').click({ force: true });
 
     // add institution
-    cy.get('[data-testid=add-institution-dialog]').click({ force: true });
+    cy.get('[data-testid=add-new-institution-button]').click({ force: true });
     cy.get('[data-testid=autosearch-institution]')
       .click({ force: true })
       .type('ntnu');
     cy.contains('Norges teknisk-naturvitenskapelige universitet').click({ force: true });
-    cy.get('[data-testid=institution-set-subunit-1]')
+    cy.get('[data-testid=institution-set-subunit-selector]')
       .click({ force: true })
       .type(' ');
     cy.contains('Fakultet for naturvitenskap').click({ force: true });
-    cy.get('[data-testid=institution-set-subunit-2]')
+    cy.get('[data-testid=institution-set-subunit-selector]')
       .click({ force: true })
       .type(' ');
     cy.contains('Institutt for fysikk').click({ force: true });
