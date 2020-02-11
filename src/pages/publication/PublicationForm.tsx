@@ -19,11 +19,14 @@ const StyledPublication = styled.div`
   width: 100%;
 `;
 
-const PublicationForm: FC = () => {
+interface PublicationFormProps {
+  uppy: any;
+}
+
+const PublicationForm: FC<PublicationFormProps> = ({ uppy = createUppy() }) => {
   const { t } = useTranslation('publication');
   const [tabNumber, setTabNumber] = useState(0);
   const [initialValues, setInitialValues] = useState(emptyPublication);
-  const [uppy, setUppy] = useState();
 
   const validationSchema = Yup.object().shape({
     title: Yup.object().shape({
@@ -97,10 +100,6 @@ const PublicationForm: FC = () => {
   }, []);
 
   useEffect(() => {
-    // Set up Uppy for file uploading on form mount
-    if (!uppy) {
-      setUppy(createUppy());
-    }
     return () => uppy && uppy.close();
   }, [uppy]);
 

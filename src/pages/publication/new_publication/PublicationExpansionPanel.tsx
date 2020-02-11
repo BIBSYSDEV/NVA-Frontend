@@ -49,7 +49,7 @@ const PublicationExpansionPanel: React.FC<PublicationExpansionPanelProps> = ({
         data-testid={dataTestId}>
         <StyledIcon>{icon}</StyledIcon> {headerLabel}
       </StyledExpansionPanelSummary>
-      <ExpansionPanelDetails>{children}</ExpansionPanelDetails>
+      {children && <ExpansionPanelDetails>{children}</ExpansionPanelDetails>}
     </StyledPublicationExpansionPanel>
   );
 };
