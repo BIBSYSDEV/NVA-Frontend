@@ -46,8 +46,10 @@ export const ConnectAuthority: FC = () => {
     );
 
     if (selectedAuthority) {
-      const updatedAuthorityWithFeide = await updateFeideForAuthority(user.id, selectedSystemControlNumber);
-      if (updatedAuthorityWithFeide) {
+      const updatedAuthorityWithFeide: Authority = await updateFeideForAuthority(user.id, selectedSystemControlNumber);
+      if (updatedAuthorityWithFeide?.orgunitids.includes(user.organizationId)) {
+        dispatch(setAuthorityData(updatedAuthorityWithFeide));
+      } else {
         const updatedAuthorityWithOrganizationId = await updateInstitutionForAuthority(
           user.organizationId,
           selectedSystemControlNumber
