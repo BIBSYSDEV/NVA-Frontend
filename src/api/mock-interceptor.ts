@@ -19,7 +19,7 @@ import { PublicationsApiPaths } from './publicationApi';
 import { PublicationChannelApiPaths } from './publicationChannelApi';
 
 const TOP_INSTITUTION_REGEXP = '[0-9]+.0.0.0';
-const SUBUNIT_INSTITUTION_REGEXP = '*.[^0]+.0.0';
+const SUBUNIT_INSTITUTION_REGEXP = '*.*.0.0';
 
 const mockOrcidResponse: OrcidResponse = {
   id: 'https://sandbox.orcid.org/0000-0001-2345-6789',

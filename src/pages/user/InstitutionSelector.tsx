@@ -47,17 +47,17 @@ const InstitutionSelector: React.FC<InstitutionSelectorProps> = ({ setSelectedCr
 
   const searchSubUnits = async (newSubUnit: InstitutionSubUnit, index: number) => {
     setSelectedCristinUnitId(newSubUnit.cristinUnitId);
-    const oldSearchValues = subUnitSelector?.subUnits || [];
+    let oldSearchValues = subUnitSelector?.subUnits || [];
+    if (index < subUnits.length) {
+      oldSearchValues = subUnits[index].subUnits || [];
+    }
     const searchValue = await getSubUnit(newSubUnit.cristinUnitId);
     newSubUnit.subUnits = [...oldSearchValues];
     setSubUnitSelector(searchValue);
 
-    if (index === 0) {
-      setSubUnits([newSubUnit]);
-    } else {
-      const newSubUnits = subUnits.slice(0, index);
-      setSubUnits([...newSubUnits, newSubUnit]);
-    }
+    const newSubUnits = [...subUnits].splice(0, index);
+
+    setSubUnits([...newSubUnits, newSubUnit]);
   };
 
   return (

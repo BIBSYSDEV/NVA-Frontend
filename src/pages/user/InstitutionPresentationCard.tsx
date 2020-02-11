@@ -81,7 +81,12 @@ const InstitutionPresentation: React.FC<InstitutionPresentationProps> = ({
             disabled={!!!selectedCristinUnitId}>
             Add
           </StyledButton>
-          <StyledButton onClick={() => setOpenEdit(false)} variant="contained" color="secondary">
+          <StyledButton
+            onClick={() => {
+              setOpenEdit(false);
+            }}
+            variant="contained"
+            color="secondary">
             Cancel
           </StyledButton>
         </>
