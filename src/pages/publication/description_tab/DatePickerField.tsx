@@ -60,15 +60,7 @@ const DatePickerField = ({ yearFieldName, monthFieldName, dayFieldName }: DatePi
         views={views}
         value={date}
         autoOk
-        labelFunc={date => {
-          if (!date) {
-            return '';
-          } else if (yearOnly) {
-            return `${date.getFullYear()}`;
-          } else {
-            return date.toLocaleDateString();
-          }
-        }}
+        format={yearOnly ? 'yyyy' : 'dd.MM.yyyy'}
       />
       <StyledFormControlLabel
         control={<Checkbox checked={yearOnly} onChange={toggleYearOnly} color="primary" />}
