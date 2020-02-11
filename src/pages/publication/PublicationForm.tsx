@@ -98,7 +98,7 @@ const PublicationForm: FC = () => {
           ),
         })
       )
-      .min(1, 'you need to have at least one contributor'),
+      .min(1, t('publication:feedback.minimum_one_contributor')),
   });
 
   useEffect(() => {

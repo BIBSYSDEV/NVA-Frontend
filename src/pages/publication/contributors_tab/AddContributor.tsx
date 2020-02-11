@@ -8,10 +8,10 @@ import { Authority } from '../../../types/authority.types';
 import AddContributorModalContent from './components/AddContributorModalContent';
 
 interface AddContributorProps {
-  onAdd: (author: Authority) => void;
+  onAuthorSelected: (author: Authority) => void;
 }
 
-const AddContributor: FC<AddContributorProps> = ({ onAdd }) => {
+const AddContributor: FC<AddContributorProps> = ({ onAuthorSelected }) => {
   const { t } = useTranslation('publication');
 
   const [addedAuthors, setAddedAuthors] = useState<Authority[]>([]);
@@ -24,7 +24,7 @@ const AddContributor: FC<AddContributorProps> = ({ onAdd }) => {
   const addAuthor = (author: Authority) => {
     setAddedAuthors([...addedAuthors, author]);
     setOpen(false);
-    onAdd(author);
+    onAuthorSelected(author);
   };
 
   return (

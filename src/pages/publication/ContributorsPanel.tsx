@@ -5,10 +5,10 @@ import FormCard from '../../components/FormCard/FormCard';
 import FormCardHeading from '../../components/FormCard/FormCardHeading';
 import TabPanel from '../../components/TabPanel/TabPanel';
 import SortableTable from './contributors_tab/components/SortableTable';
-import { FormikProps, useFormikContext, FieldArray } from 'formik';
+import { FormikProps, useFormikContext, FieldArray, getIn } from 'formik';
 import { Publication } from '../../types/publication.types';
 
-enum ContributorFieldNames {
+export enum ContributorFieldNames {
   CONTRIBUTORS = 'contributors',
   TYPE = 'type',
   NAME = 'name',
@@ -50,7 +50,13 @@ const ContributorsPanel: FC<ContributorsPanelProps> = ({ goToNextTab, savePublic
       <FormCard>
         <FormCardHeading>{t('contributors.authors')}</FormCardHeading>
         <FieldArray name={ContributorFieldNames.CONTRIBUTORS}>
-          {({ push, remove }) => <SortableTable listOfContributors={values.contributors} push={push} remove={remove} />}
+          {({ push, remove }) => (
+            <SortableTable
+              listOfContributors={getIn(values, ContributorFieldNames.CONTRIBUTORS)}
+              push={push}
+              remove={remove}
+            />
+          )}
         </FieldArray>
       </FormCard>
     </TabPanel>

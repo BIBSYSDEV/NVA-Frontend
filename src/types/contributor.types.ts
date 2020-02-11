@@ -1,10 +1,10 @@
 export interface Contributor {
   name: string;
   institutions: Institution[];
+  type: ContributorType | '';
   orcid?: string;
   corresponding?: boolean;
   email?: string;
-  type: ContributorType | '';
   systemControlNumber?: string;
 }
 
@@ -14,12 +14,13 @@ interface Institution {
   institution?: Institution;
 }
 
-const emptyContributor: Contributor = {
+export const emptyContributor: Contributor = {
   name: '',
   institutions: [],
+  type: '',
   orcid: '',
   corresponding: false,
-  type: '',
+  email: '',
   systemControlNumber: '',
 };
 

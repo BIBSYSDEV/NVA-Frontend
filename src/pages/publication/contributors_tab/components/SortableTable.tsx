@@ -11,7 +11,7 @@ import {
   TextField,
   Button,
 } from '@material-ui/core';
-import { Contributor } from '../../../../types/contributor.types';
+import { Contributor, emptyContributor } from '../../../../types/contributor.types';
 import { FormikProps, useFormikContext, Field } from 'formik';
 import { Publication } from '../../../../types/publication.types';
 import AddContributor from '../AddContributor';
@@ -20,6 +20,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 
 import FormCardSubHeading from '../../../../components/FormCard/FormCardSubHeading';
 import { removeDuplicatesByScn, arrayMove } from '../../../../utils/helpers';
+import { ContributorFieldNames } from '../../ContributorsPanel';
 
 interface SortableItemProps {
   contributor: Contributor;
@@ -108,7 +109,7 @@ const SortableTable: FC<SortableTableProps> = ({ listOfContributors, push, remov
 
   const onSortEnd = ({ oldIndex, newIndex }: any) => {
     const reorderedList = arrayMove(listOfContributors, oldIndex, newIndex);
-    setFieldValue('contributors', reorderedList);
+    setFieldValue(ContributorFieldNames.CONTRIBUTORS, reorderedList);
   };
 
   return (
@@ -120,17 +121,15 @@ const SortableTable: FC<SortableTableProps> = ({ listOfContributors, push, remov
         distance={10}
       />
       <AddContributor
-        onAdd={authority => {
+        onAuthorSelected={authority => {
           const contributor: Contributor = {
+            ...emptyContributor,
             name: authority.name,
             systemControlNumber: authority.systemControlNumber,
             institutions: authority.orgunitids.map(orgunit => ({
               id: orgunit,
               name: orgunit,
             })),
-            email: '',
-            type: '',
-            corresponding: false,
           };
           push(contributor);
         }}
