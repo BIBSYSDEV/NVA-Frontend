@@ -1,9 +1,11 @@
 import React, { FC } from 'react';
 
 import styled from 'styled-components';
-import { Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
+import { Button, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { PublicationPreview } from '../../types/publication.types';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
 
 const StyledTableRow = styled(TableRow)`
   background-color: ${props => props.theme.palette.box.main};
@@ -17,10 +19,18 @@ const StyledTable = styled(Table)`
 `;
 
 const StyledTableCellForStatus = styled(TableCell)`
-  width: 15%;
+  width: 10%;
 `;
 const StyledTableCellForDate = styled(TableCell)`
   width: 15%;
+`;
+
+const StyledEditIcon = styled(EditIcon)`
+  margin-right: 0.5rem;
+`;
+
+const StyledDeleteIcon = styled(DeleteIcon)`
+  margin-right: 0.5rem;
 `;
 
 interface PublicationListProps {
@@ -46,6 +56,18 @@ const PublicationList: FC<PublicationListProps> = ({ publications }) => {
             </TableCell>
             <StyledTableCellForStatus>{t(`publication:status.${publication.status}`)}</StyledTableCellForStatus>
             <StyledTableCellForDate>{publication.createdDate}</StyledTableCellForDate>
+            <TableCell>
+              <Button color="primary" variant="outlined" data-testid="edit-button">
+                <StyledEditIcon />
+                {t('common:edit')}
+              </Button>
+            </TableCell>
+            <TableCell>
+              <Button color="secondary" variant="outlined" data-testid="menu-login-button">
+                <StyledDeleteIcon />
+                {t('common:remove')}
+              </Button>
+            </TableCell>
           </StyledTableRow>
         ))}
       </TableBody>
