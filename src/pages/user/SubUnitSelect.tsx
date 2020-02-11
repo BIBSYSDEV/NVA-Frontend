@@ -1,5 +1,5 @@
 import React from 'react';
-import { InstitutionSubUnit } from '../../types/institution.types';
+import { InstitutionSubUnit, emptyInstitutionSubUnit } from '../../types/institution.types';
 import { selectInstitutionNameByLanguage } from './../../utils/helpers';
 import { Select, MenuItem, FormControl, InputLabel } from '@material-ui/core';
 import styled from 'styled-components';
@@ -32,7 +32,9 @@ const SubUnitSelect: React.FC<SubUnitSelectProps> = ({
   dataTestId,
 }) => {
   const selectSubUnit = (cristinUnitId: string) => {
-    findSubUnitFunction(searchResults.filter(subUnit => subUnit.cristinUnitId === cristinUnitId)[0]);
+    findSubUnitFunction(
+      searchResults.find(subUnit => subUnit.cristinUnitId === cristinUnitId) ?? emptyInstitutionSubUnit
+    );
   };
 
   return (
@@ -40,7 +42,7 @@ const SubUnitSelect: React.FC<SubUnitSelectProps> = ({
       <StyledFormControl variant="outlined">
         <InputLabel>{label}</InputLabel>
         <StyledSelect
-          value={selectedValue.cristinUnitId}
+          value={selectedValue?.cristinUnitId}
           onChange={(event: React.ChangeEvent<{ value: unknown }>) => selectSubUnit(event.target.value as string)}
           disabled={searchResults.length === 0}
           data-testid={dataTestId}>

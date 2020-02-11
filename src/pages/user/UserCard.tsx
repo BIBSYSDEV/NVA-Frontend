@@ -9,6 +9,16 @@ const StyledUserCard = styled.div`
   padding: 0.5rem;
 `;
 
+const StyledButtonBox = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+`;
+
+const StyledButton = styled(StyledButtonBox)`
+  color: green;
+`;
+
 const StyledHeading = styled.div`
   font-size: 1.5rem;
   font-weight: bold;
@@ -31,17 +41,19 @@ const StyledIcon = styled.div`
 interface UserCardProps {
   headingLabel: string;
   headingIcon?: ReactNode;
+  headingButton?: ReactNode;
   alternativeText?: string;
   subHeadingLabel?: string;
   children?: ReactNode;
 }
 
-const UserCard: React.FC<UserCardProps> = ({ headingLabel, headingIcon, subHeadingLabel, children }) => (
+const UserCard: React.FC<UserCardProps> = ({ headingLabel, headingIcon, headingButton, subHeadingLabel, children }) => (
   <StyledUserCard>
     <StyledHeading>
       <>
         {headingIcon && <StyledIcon>{headingIcon}</StyledIcon>}
         {headingLabel}
+        {headingButton && <StyledButton>{headingButton}</StyledButton>}
       </>
     </StyledHeading>
     {subHeadingLabel && <StyledSubHeading>{subHeadingLabel}</StyledSubHeading>}

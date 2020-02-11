@@ -4,9 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router';
 import styled from 'styled-components';
 
-import { Link as MuiLink } from '@material-ui/core';
+import { Link as MuiLink, Button } from '@material-ui/core';
 
-import { updateOrcidForAuthority } from '../../api/authorityApi';
+import { updateOrcidForAuthority, updateInstitutionForAuthority } from '../../api/authorityApi';
 import { getOrcidInfo } from '../../api/external/orcidApi';
 import ButtonModal from '../../components/ButtonModal';
 import { setAuthorityData } from '../../redux/actions/userActions';
@@ -17,9 +17,11 @@ import UserInfo from './UserInfo';
 import UserLanguage from './UserLanguage';
 import UserOrcid from './UserOrcid';
 import UserRoles from './UserRoles';
-import InstitutionDialog from './InstitutionDialog';
-import { InstitutionUnit } from './../../types/institution.types';
-import InstitutionPresentationCard from './InstitutionPresentation';
+import { InstitutionUnit, emptyInstitutionUnit } from './../../types/institution.types';
+import InstitutionPresentationCard from './InstitutionPresentationCard';
+import { addInstitutionUnit } from '../../redux/actions/institutionActions';
+import { institutionLookup } from '../../api/institutionApi';
+import { addNotification } from '../../redux/actions/notificationActions';
 
 const StyledUserPage = styled.div`
   display: grid;
@@ -48,14 +50,13 @@ const StyledPrimaryUserInfo = styled.div`
 const User: React.FC = () => {
   const { t } = useTranslation('profile');
   const user = useSelector((state: RootStore) => state.user);
+  const [institutionUnits, setInstitutionUnits] = useState<InstitutionUnit[]>([]);
   const location = useLocation();
   const dispatch = useDispatch();
   const history = useHistory();
 
   const hasHandles = user.authority?.handles?.length > 0;
   const hasFeide = user.authority?.feideids?.length > 0;
-
-  const [institutionPresentations, setInstitutionPresentations] = useState<InstitutionUnit[]>([]);
 
   useEffect(() => {
     const orcidAccessToken = new URLSearchParams(location.hash.replace('#', '?')).get('access_token') || '';
@@ -82,8 +83,44 @@ const User: React.FC = () => {
   }, [user.authority, dispatch, user.externalOrcid]);
 
   useEffect(() => {
-    setInstitutionPresentations(user.institutionPresentations);
-  }, [user.institutionPresentations, dispatch]);
+    const newInstitutionUnits: InstitutionUnit[] = [];
+    institutionUnits.forEach(institutionUnit => {
+      !user.institutionUnits.find(
+        storedInstitutionUnit => storedInstitutionUnit.cristinUnitId === institutionUnit.cristinUnitId
+      ) ?? newInstitutionUnits.push(institutionUnit);
+    });
+    newInstitutionUnits.forEach(institutionUnit => dispatch(addInstitutionUnit(institutionUnit)));
+  }, [institutionUnits, user.institutionUnits, dispatch]);
+
+  const handleClickAdd = () => setInstitutionUnits([...institutionUnits, emptyInstitutionUnit]);
+
+  const addNewInstitutionUnit = async (cristinUnitId: string) => {
+    const updateRedux = async (cristinUnitId: string) => {
+      if (!user.authority.orgunitids?.find(orgunitid => orgunitid === cristinUnitId)) {
+        const updatedAuthority = await updateInstitutionForAuthority(cristinUnitId, user.authority.systemControlNumber);
+        if (updatedAuthority?.error) {
+          dispatch(addNotification(updatedAuthority.error, 'error'));
+        } else if (updatedAuthority) {
+          dispatch(setAuthorityData(updatedAuthority));
+          try {
+            dispatch(addInstitutionUnit(await institutionLookup(cristinUnitId)));
+          } catch {}
+        }
+      }
+    };
+
+    if (!institutionUnits.find(institutionUnit => institutionUnit.cristinUnitId === cristinUnitId)) {
+      const newInstitutionUnit: InstitutionUnit = await institutionLookup(cristinUnitId);
+      setInstitutionUnits([
+        ...institutionUnits.filter(institutionUnit => institutionUnit.cristinUnitId !== ''),
+        newInstitutionUnit,
+      ]);
+
+      updateRedux(cristinUnitId);
+    } else {
+      setInstitutionUnits(institutionUnits.filter(institutionUnit => institutionUnit.cristinUnitId !== ''));
+    }
+  };
 
   return (
     <StyledUserPage>
@@ -116,19 +153,24 @@ const User: React.FC = () => {
           )}
         </UserCard>
         <UserOrcid />
-        <UserCard headingLabel={t('heading.organizations')}>
-          <InstitutionDialog
-            user={user}
-            title={t('organization.add_institution')}
-            dataTestId="add-institution-dialog"
-          />
+        <UserCard
+          headingLabel={t('heading.organizations')}
+          headingButton={
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleClickAdd}
+              disabled={!user.authority?.systemControlNumber}
+              data-testid="add-institution">
+              {t('common:add')}
+            </Button>
+          }>
           <>
-            {institutionPresentations.map((presentation: InstitutionUnit) => (
+            {institutionUnits.map((institutionUnit: InstitutionUnit) => (
               <InstitutionPresentationCard
-                key={presentation.cristinUnitId}
-                institution={presentation.institutionName}
-                level1={presentation.level1Name}
-                level2={presentation.level2Name}
+                key={institutionUnit.cristinUnitId}
+                institutionUnit={institutionUnit}
+                addNewInstitutionUnit={addNewInstitutionUnit}
               />
             ))}
           </>

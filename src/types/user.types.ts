@@ -30,7 +30,7 @@ export interface User {
   possibleAuthorities: Authority[];
   organizationId: string;
   externalOrcid: string;
-  institutionPresentations: InstitutionUnit[];
+  institutionUnits: InstitutionUnit[];
 }
 
 export interface FeideUser {
@@ -61,5 +61,5 @@ export const emptyUser: User = {
   possibleAuthorities: [],
   organizationId: '',
   externalOrcid: '',
-  institutionPresentations: [],
+  institutionUnits: [],
 };

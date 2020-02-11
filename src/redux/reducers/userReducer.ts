@@ -9,7 +9,7 @@ import {
   SET_USER_SUCCESS,
   UserActions,
 } from '../actions/userActions';
-import { ADD_INSTITUTION_PRESENTATION, InstitutionActions } from '../actions/institutionActions';
+import { ADD_INSTITUTION_UNIT, InstitutionActions } from '../actions/institutionActions';
 
 export const userReducer = (
   state: User = emptyUser,
@@ -42,11 +42,15 @@ export const userReducer = (
         ...state,
         externalOrcid: action.orcid,
       };
-    case ADD_INSTITUTION_PRESENTATION:
-      return {
-        ...state,
-        institutionPresentations: [...state.institutionPresentations, action.institutionPresentation],
-      };
+    case ADD_INSTITUTION_UNIT:
+      if (action.institutionUnit.cristinUnitId !== '') {
+        return {
+          ...state,
+          institutionUnits: [...state.institutionUnits, action.institutionUnit],
+        };
+      } else {
+        return state;
+      }
     case SET_AUTHORITY_DATA:
       return {
         ...state,

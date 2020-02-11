@@ -13,7 +13,8 @@ import { updateInstitutionForAuthority } from './../../api/authorityApi';
 import { institutionLookup } from '../../api/institutionApi';
 import { setAuthorityData } from './../../redux/actions/userActions';
 import { addNotification } from '../../redux/actions/notificationActions';
-import { addInstitutionPresentation } from '../../redux/actions/institutionActions';
+import { addInstitutionUnit } from '../../redux/actions/institutionActions';
+import { InstitutionUnit } from './../../types/institution.types';
 
 const StyledInstitutionDialog = styled.div`
   width: 20rem;
@@ -23,11 +24,13 @@ interface InstitutionDialogProps {
   user: User;
   title: string;
   dataTestId: string;
+  institutionUnit?: InstitutionUnit;
+  isOpen?: boolean;
 }
 
-const InstitutionDialog: React.FC<InstitutionDialogProps> = ({ user, title, dataTestId }) => {
-  const [open, setOpen] = useState(false);
-  const [selectedCristinUnitId, setSelectedCristinUnitId] = useState('');
+const InstitutionDialog: React.FC<InstitutionDialogProps> = ({ user, title, dataTestId, institutionUnit, isOpen }) => {
+  const [open, setOpen] = useState(isOpen || false);
+  const [selectedCristinUnitId, setSelectedCristinUnitId] = useState(institutionUnit?.cristinUnitId || '');
   const dispatch = useDispatch();
   const { t } = useTranslation('profile');
 
@@ -50,8 +53,7 @@ const InstitutionDialog: React.FC<InstitutionDialogProps> = ({ user, title, data
       } else if (updatedAuthority) {
         dispatch(setAuthorityData(updatedAuthority));
         try {
-          const presentation = await institutionLookup(selectedCristinUnitId);
-          dispatch(addInstitutionPresentation(presentation));
+          dispatch(addInstitutionUnit(await institutionLookup(selectedCristinUnitId)));
         } catch {}
       }
     }
@@ -71,7 +73,7 @@ const InstitutionDialog: React.FC<InstitutionDialogProps> = ({ user, title, data
       <Dialog open={open} onClose={handleConfirm} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">{title}</DialogTitle>
         <DialogContent>
-          <InstitutionSelector setSelectedCristinUnitId={setSelectedCristinUnitId} />
+          <InstitutionSelector setSelectedCristinUnitId={setSelectedCristinUnitId} disabled={!!institutionUnit} />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCancel} variant="contained" color="primary" data-testid="institution-cancel-button">

@@ -120,7 +120,7 @@ export const interceptRequestsOnMock = () => {
 
   mock
     .onPut(new RegExp(`${API_URL}${AuthorityApiPaths.AUTHORITY}/*`))
-    .replyOnce(200, mockSingleAuthorityResponseWithSecondOrgunitid);
+    .reply(200, mockSingleAuthorityResponseWithSecondOrgunitid);
 
   // Institution Registry
   mock.onGet(new RegExp(`${API_URL}${InstituionApiPaths.INSTITUTION}\\?name=*`)).reply(200, mockInstitutionResponse);

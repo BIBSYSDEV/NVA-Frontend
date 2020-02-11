@@ -1,17 +1,15 @@
 import { InstitutionUnit } from './../../types/institution.types';
 
-export const ADD_INSTITUTION_PRESENTATION = 'add institution presentation';
+export const ADD_INSTITUTION_UNIT = 'add institution unit';
 
-export const addInstitutionPresentation = (
-  institutionPresentation: InstitutionUnit
-): AddInstitutionPresentationAction => ({
-  type: ADD_INSTITUTION_PRESENTATION,
-  institutionPresentation,
+export const addInstitutionUnit = (institutionUnit: InstitutionUnit): AddInstitutionUnitAction => ({
+  type: ADD_INSTITUTION_UNIT,
+  institutionUnit: institutionUnit,
 });
 
-interface AddInstitutionPresentationAction {
-  type: typeof ADD_INSTITUTION_PRESENTATION;
-  institutionPresentation: InstitutionUnit;
+interface AddInstitutionUnitAction {
+  type: typeof ADD_INSTITUTION_UNIT;
+  institutionUnit: InstitutionUnit;
 }
 
-export type InstitutionActions = AddInstitutionPresentationAction;
+export type InstitutionActions = AddInstitutionUnitAction;

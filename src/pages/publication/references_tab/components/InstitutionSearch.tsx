@@ -15,6 +15,8 @@ interface InstitutionSearchProps {
   label: string;
   setValueFunction: (value: any) => void;
   placeholder?: string;
+  selectedInstitution?: Institution;
+  disabled?: boolean;
 }
 
 const InstitutionSearch: FC<InstitutionSearchProps> = ({
@@ -23,6 +25,8 @@ const InstitutionSearch: FC<InstitutionSearchProps> = ({
   label,
   setValueFunction,
   placeholder,
+  selectedInstitution,
+  disabled,
 }) => {
   const [searchResults, setSearchResults] = useState<Institution[]>([]);
 
@@ -55,6 +59,9 @@ const InstitutionSearch: FC<InstitutionSearchProps> = ({
       setValueFunction={setValueFunction}
       label={label}
       placeholder={placeholder}
+      displaySelection={true}
+      disabled={disabled || false}
+      defaultValue={selectedInstitution}
     />
   );
 };

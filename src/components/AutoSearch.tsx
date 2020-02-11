@@ -22,6 +22,9 @@ interface AutoSearchProps {
   dataTestId?: string;
   onInputChange: (value: string) => void;
   placeholder?: string;
+  displaySelection?: boolean;
+  disabled?: boolean;
+  defaultValue?: any;
 }
 
 export const AutoSearch: FC<AutoSearchProps> = ({
@@ -32,6 +35,9 @@ export const AutoSearch: FC<AutoSearchProps> = ({
   dataTestId,
   onInputChange,
   placeholder,
+  displaySelection,
+  disabled,
+  defaultValue,
 }) => {
   const [displayValue, setDisplayValue] = useState(emptyValue);
   const [open, setOpen] = useState(false);
@@ -57,6 +63,7 @@ export const AutoSearch: FC<AutoSearchProps> = ({
     <Autocomplete
       disableOpenOnFocus
       open={displayValue.title.length >= MINIMUM_SEARCH_CHARACTERS && open}
+      defaultValue={defaultValue}
       onClose={() => {
         setOpen(false);
       }}
@@ -66,7 +73,9 @@ export const AutoSearch: FC<AutoSearchProps> = ({
       onChange={(_: object, value: string) => {
         if (value) {
           setValueFunction(value);
-          setDisplayValue(emptyValue);
+          if (!displaySelection) {
+            setDisplayValue(emptyValue);
+          }
           setOptions([]);
         }
       }}
@@ -92,13 +101,14 @@ export const AutoSearch: FC<AutoSearchProps> = ({
       value={displayValue}
       noOptionsText={t('no_hits')}
       filterOptions={options => options}
+      disabled={disabled}
       renderInput={params => (
         <TextField
           {...params}
           data-testid={dataTestId}
           label={label}
           fullWidth
-          onClick={() => displayValue.title && setOpen(true)}
+          onClick={() => !disabled && displayValue.title && setOpen(true)}
           variant="outlined"
           autoComplete="false"
           placeholder={placeholder}

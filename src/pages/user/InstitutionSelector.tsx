@@ -10,7 +10,6 @@ import InstitutionSearch from '../publication/references_tab/components/Institut
 import SubUnitSelect from './SubUnitSelect';
 import { getInstitutionSubUnit } from '../../api/institutionApi';
 import styled from 'styled-components';
-import InstitutionPresentation from './InstitutionPresentation';
 
 const StyledInstitutionSelector = styled.div`
   width: 30rem;
@@ -18,81 +17,81 @@ const StyledInstitutionSelector = styled.div`
 
 interface InstitutionSelectorProps {
   setSelectedCristinUnitId: (value: string) => void;
+  disabled: boolean;
 }
 
-const InstitutionSelector: React.FC<InstitutionSelectorProps> = ({ setSelectedCristinUnitId }) => {
+const InstitutionSelector: React.FC<InstitutionSelectorProps> = ({ setSelectedCristinUnitId, disabled }) => {
   const { t } = useTranslation('profile');
-  const [faculties, setFaculties] = useState<InstitutionSubUnit[]>([]);
-  const [institutes, setInstitutes] = useState<InstitutionSubUnit[]>([]);
+  const [subUnits, setSubUnits] = useState<InstitutionSubUnit[]>([]);
   const [selectedInstitution, setSelectedInstituion] = useState(emptyInstitution);
-  const [selectedFaculty, setSelectedFaculty] = useState(emptyInstitutionSubUnit);
-  const [selectedInstitute, setSelectedInstitute] = useState(emptyInstitutionSubUnit);
+  const [subUnitSelector, setSubUnitSelector] = useState<InstitutionSubUnit>();
 
-  const getSubUnits = async (searchValue: string, setStateFunction: (value: InstitutionSubUnit[]) => void) => {
-    const response = await getInstitutionSubUnit(searchValue);
+  const getSubUnit = async (cristinUnitId: string) => {
+    const newSubUnit: InstitutionSubUnit = emptyInstitutionSubUnit;
+
+    const response: InstitutionSubUnit[] = await getInstitutionSubUnit(cristinUnitId);
     if (response) {
-      setStateFunction(response);
+      newSubUnit.subUnits = response;
     }
+
+    return newSubUnit;
   };
 
-  const resetInstitute = () => {
-    setInstitutes([]);
-    setSelectedInstitute(emptyInstitutionSubUnit);
-  };
-
-  const resetFaculty = () => {
-    setFaculties([]);
-    setSelectedFaculty(emptyInstitutionSubUnit);
-    resetInstitute();
-  };
-
-  const searchFaculties = (institution: Institution) => {
+  const selectInstitution = async (institution: Institution) => {
     setSelectedCristinUnitId(institution.cristinUnitId);
     setSelectedInstituion(institution ?? selectedInstitution);
-    resetFaculty();
-    getSubUnits(institution.cristinUnitId, setFaculties);
+    setSubUnits([]);
+    const searchValue = await getSubUnit(institution.cristinUnitId);
+    setSubUnitSelector(searchValue);
   };
 
-  const searchInstitutes = (faculty: InstitutionSubUnit) => {
-    setSelectedCristinUnitId(faculty.cristinUnitId);
-    setSelectedFaculty(faculty);
-    resetInstitute();
-    getSubUnits(faculty.cristinUnitId, setInstitutes);
-  };
+  const searchSubUnits = async (newSubUnit: InstitutionSubUnit, index: number) => {
+    setSelectedCristinUnitId(newSubUnit.cristinUnitId);
+    const oldSearchValues = subUnitSelector?.subUnits || [];
+    const searchValue = await getSubUnit(newSubUnit.cristinUnitId);
+    newSubUnit.subUnits = [...oldSearchValues];
+    setSubUnitSelector(searchValue);
 
-  const setInstitute = (subUnit: InstitutionSubUnit) => {
-    setSelectedInstitute(subUnit);
-    setSelectedCristinUnitId(subUnit.cristinUnitId);
+    if (index === 0) {
+      setSubUnits([newSubUnit]);
+    } else {
+      const newSubUnits = subUnits.slice(0, index);
+      setSubUnits([...newSubUnits, newSubUnit]);
+    }
   };
 
   return (
     <StyledInstitutionSelector>
-      <InstitutionPresentation
-        institution={selectedInstitution.institutionNames}
-        level1={selectedFaculty.unitNames}
-        level2={selectedInstitute.unitNames}
-      />
       <InstitutionSearch
         clearSearchField={selectedInstitution === emptyInstitution}
         dataTestId="autosearch-institution"
         label={t('organization.institution')}
-        setValueFunction={inputValue => searchFaculties(inputValue)}
+        setValueFunction={inputValue => selectInstitution(inputValue)}
         placeholder={t('organization.search_for_institution')}
+        selectedInstitution={selectedInstitution}
+        disabled={disabled}
       />
-      <SubUnitSelect
-        searchResults={faculties}
-        selectedValue={selectedFaculty}
-        findSubUnitFunction={searchInstitutes}
-        label={t('organization.faculty')}
-        dataTestId="institution-set-subunit-1"
-      />
-      <SubUnitSelect
-        searchResults={institutes}
-        selectedValue={selectedInstitute}
-        findSubUnitFunction={setInstitute}
-        label={t('organization.institute')}
-        dataTestId="institution-set-subunit-2"
-      />
+      {subUnits.map((subUnit, index) => {
+        return (
+          <SubUnitSelect
+            searchResults={subUnit.subUnits || []}
+            selectedValue={subUnit}
+            findSubUnitFunction={subUnit => searchSubUnits(subUnit, index)}
+            label={t('organization.faculty')}
+            dataTestId={`institution-set-subunit-${index}`}
+            key={`instiution-subunit-${index}`}
+          />
+        );
+      })}
+      {subUnitSelector?.subUnits && subUnitSelector.subUnits.length > 0 && (
+        <SubUnitSelect
+          searchResults={subUnitSelector?.subUnits || []}
+          selectedValue={subUnitSelector}
+          findSubUnitFunction={subUnitSelector => searchSubUnits(subUnitSelector, subUnits.length)}
+          label={t('organization.faculty')}
+          dataTestId={`institution-set-subunit-selector`}
+        />
+      )}
     </StyledInstitutionSelector>
   );
 };
