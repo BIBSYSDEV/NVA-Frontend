@@ -12,15 +12,13 @@ import {
   Button,
 } from '@material-ui/core';
 import { Contributor, emptyContributor } from '../../../../types/contributor.types';
-import { FormikProps, useFormikContext, Field } from 'formik';
-import { Publication } from '../../../../types/publication.types';
+import { Field } from 'formik';
 import AddContributor from '../AddContributor';
 import { useTranslation } from 'react-i18next';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 import FormCardSubHeading from '../../../../components/FormCard/FormCardSubHeading';
-import { removeDuplicatesByScn, arrayMove } from '../../../../utils/helpers';
-import { ContributorFieldNames } from '../../ContributorsPanel';
+import { removeDuplicatesByScn } from '../../../../utils/helpers';
 
 interface SortableItemProps {
   contributor: Contributor;
@@ -102,40 +100,32 @@ interface SortableTableProps {
   listOfContributors: Contributor[];
   push: (obj: any) => void;
   remove: (index: number) => void;
+  swap: (oldIndex: number, newIndex: number) => void;
 }
 
-const SortableTable: FC<SortableTableProps> = ({ listOfContributors, push, remove }) => {
-  const { setFieldValue }: FormikProps<Publication> = useFormikContext();
-
-  const onSortEnd = ({ oldIndex, newIndex }: any) => {
-    const reorderedList = arrayMove(listOfContributors, oldIndex, newIndex);
-    setFieldValue(ContributorFieldNames.CONTRIBUTORS, reorderedList);
-  };
-
-  return (
-    <>
-      <SortableList
-        contributors={listOfContributors}
-        onSortEnd={onSortEnd}
-        onDelete={index => remove(index)}
-        distance={10}
-      />
-      <AddContributor
-        onAuthorSelected={authority => {
-          const contributor: Contributor = {
-            ...emptyContributor,
-            name: authority.name,
-            systemControlNumber: authority.systemControlNumber,
-            institutions: authority.orgunitids.map(orgunit => ({
-              id: orgunit,
-              name: orgunit,
-            })),
-          };
-          push(contributor);
-        }}
-      />
-    </>
-  );
-};
+const SortableTable: FC<SortableTableProps> = ({ listOfContributors, push, remove, swap }) => (
+  <>
+    <SortableList
+      contributors={listOfContributors}
+      onSortEnd={({ oldIndex, newIndex }: any) => swap(oldIndex, newIndex)}
+      onDelete={index => remove(index)}
+      distance={10}
+    />
+    <AddContributor
+      onAuthorSelected={authority => {
+        const contributor: Contributor = {
+          ...emptyContributor,
+          name: authority.name,
+          systemControlNumber: authority.systemControlNumber,
+          institutions: authority.orgunitids.map(orgunit => ({
+            id: orgunit,
+            name: orgunit,
+          })),
+        };
+        push(contributor);
+      }}
+    />
+  </>
+);
 
 export default SortableTable;

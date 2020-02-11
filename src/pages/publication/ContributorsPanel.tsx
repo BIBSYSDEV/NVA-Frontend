@@ -50,11 +50,12 @@ const ContributorsPanel: FC<ContributorsPanelProps> = ({ goToNextTab, savePublic
       <FormCard>
         <FormCardHeading>{t('contributors.authors')}</FormCardHeading>
         <FieldArray name={ContributorFieldNames.CONTRIBUTORS}>
-          {({ push, remove }) => (
+          {({ push, remove, swap }) => (
             <SortableTable
               listOfContributors={getIn(values, ContributorFieldNames.CONTRIBUTORS)}
               push={push}
               remove={remove}
+              swap={swap}
             />
           )}
         </FieldArray>
