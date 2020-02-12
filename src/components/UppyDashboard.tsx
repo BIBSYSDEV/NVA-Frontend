@@ -35,7 +35,7 @@ const UppyDashboard: React.FC<FileUploaderProps> = ({ uppy }) => {
           strings: {
             dropPaste: `${t('files_and_license.drag_files')} %{browse}`,
             browse: t('files_and_license.browse'),
-            dropHint: 'jaja',
+            dropHint: t('files_and_license.drop_here'),
           },
         }}
       />
