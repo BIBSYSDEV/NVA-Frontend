@@ -34,7 +34,7 @@ const LoadPublication: React.FC<LoadPublicationProps> = ({ expanded, onChange, u
       expanded={expanded}
       onChange={onChange}
       ariaControls="publication-method-file">
-      {uppy ? <UppyDashboard uppy={uppy} maxWidthPx={750} /> : null}
+      {uppy ? <UppyDashboard uppy={uppy} /> : null}
     </PublicationExpansionPanel>
   );
 };

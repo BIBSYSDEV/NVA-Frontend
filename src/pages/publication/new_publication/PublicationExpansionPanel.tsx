@@ -18,10 +18,6 @@ interface PublicationExpansionPanelProps {
 
 const StyledPublicationExpansionPanel = styled(ExpansionPanel)`
   margin-bottom: 2rem;
-  flex-flow: row wrap;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
 `;
 
 const StyledExpansionPanelSummary = styled(ExpansionPanelSummary)`
@@ -49,7 +45,7 @@ const PublicationExpansionPanel: React.FC<PublicationExpansionPanelProps> = ({
         data-testid={dataTestId}>
         <StyledIcon>{icon}</StyledIcon> {headerLabel}
       </StyledExpansionPanelSummary>
-      {children && <ExpansionPanelDetails>{children}</ExpansionPanelDetails>}
+      <ExpansionPanelDetails>{children}</ExpansionPanelDetails>
     </StyledPublicationExpansionPanel>
   );
 };

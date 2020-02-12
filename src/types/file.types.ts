@@ -51,10 +51,6 @@ export const licenses: License[] = [
   },
 ];
 
-export interface UppyFileResponse {
-  uploadURL: string;
-}
-
 export interface File {
   id: string;
   name: string;

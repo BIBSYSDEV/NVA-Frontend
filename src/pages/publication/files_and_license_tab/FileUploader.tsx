@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { File, UppyFileResponse, emptyFile } from '../../../types/file.types';
+import { File, emptyFile } from '../../../types/file.types';
 import UppyDashboard from '../../../components/UppyDashboard';
 
 interface FileUploaderProps {
@@ -10,7 +10,7 @@ interface FileUploaderProps {
 const FileUploader: React.FC<FileUploaderProps> = ({ addFile, uppy }) => {
   useEffect(() => {
     if (uppy && !uppy.hasUploadSuccessEventListener) {
-      uppy.on('upload-success', (file: File, response: UppyFileResponse) => {
+      uppy.on('upload-success', (file: File) => {
         addFile({
           ...emptyFile,
           ...file,
