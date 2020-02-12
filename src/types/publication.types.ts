@@ -1,23 +1,20 @@
-import Contributor from './contributor.types';
+import { Contributor } from './contributor.types';
+import { File } from './file.types';
+import { LanguageCodes } from './language.types';
 import { Project } from './project.types';
 import { emptyReference, Reference } from './references.types';
-import { File } from './license.types';
-import { LanguageCodes } from './language.types';
 
 export enum PublicationType {
   TEXT = 'text',
   FILE = 'file',
 }
 
-export enum PublicationFormTabs {
-  PUBLICATION,
-  DESCRIPTION,
-  REFERENCES,
-  CONTRIBUTORS,
-  FILES_AND_LICENSE,
+export enum PublicationStatus {
+  DRAFT = 'draft',
+  REJECTED = 'rejected',
 }
 
-export interface TitleType {
+interface TitleType {
   [key: string]: string;
 }
 
@@ -29,18 +26,6 @@ export interface PublicationMetadata {
   publisher: string;
   titles: TitleType;
   type: PublicationType;
-}
-
-export interface PublicationFile {
-  checksum: string;
-  filename: string;
-  mimetype: string;
-  size: string;
-}
-
-export interface PublicationFileMap {
-  indexedDate: string;
-  file: PublicationFile;
 }
 
 export interface AlmaPublication {
@@ -75,7 +60,10 @@ export interface Publication {
   authors: Contributor[];
   contributors: Contributor[];
   files: File[];
+  status: PublicationStatus;
 }
+
+export type PublicationPreview = Pick<Publication, 'id' | 'title' | 'createdDate' | 'status'>;
 
 export interface Doi {
   title: string;
@@ -110,4 +98,5 @@ export const emptyPublication: Publication = {
   authors: [],
   contributors: [], // TODO: Merge with authors
   files: [],
+  status: PublicationStatus.DRAFT,
 };

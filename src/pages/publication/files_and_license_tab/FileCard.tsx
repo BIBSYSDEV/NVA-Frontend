@@ -1,52 +1,89 @@
 import React from 'react';
-import Box from '../../../components/Box';
 import styled from 'styled-components';
 import {
   Button,
-  Link,
-  FormControlLabel,
   Checkbox,
   FormControl,
+  FormControlLabel,
   FormLabel,
-  RadioGroup,
+  Link,
   Radio,
+  RadioGroup,
   TextField,
+  MenuItem,
+  IconButton,
+  ListItemText,
+  Typography,
 } from '@material-ui/core';
-import { File } from '../../../types/license.types';
+import { File, licenses, License } from '../../../types/file.types';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import { useTranslation } from 'react-i18next';
+import FormCard from '../../../components/FormCard/FormCard';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import HelpIcon from '@material-ui/icons/Help';
+import FormCardSubHeading from '../../../components/FormCard/FormCardSubHeading';
+import DeleteIcon from '@material-ui/icons/Delete';
 
-const StyledTitle = styled.div`
-  font-weight: bold;
-`;
 const StyledDescription = styled.div`
   font-style: italic;
 `;
-const StyledActions = styled.div``;
+
+const StyledPreview = styled(Link)`
+  margin-right: 1rem;
+`;
 
 const StyledFormControl = styled(FormControl)`
   width: 30%;
   margin-top: 1rem;
+
+  @media (max-width: ${({ theme }) => `${theme.breakpoints.values.sm}px`}) {
+    width: 100%;
+  }
 `;
 
 const StyledFileInfo = styled.div`
   display: flex;
   justify-content: space-between;
+
+  @media (max-width: ${({ theme }) => `${theme.breakpoints.values.sm}px`}) {
+    flex-direction: column;
+  }
+`;
+
+const StyledSelect = styled(TextField)`
+  .MuiSelect-root {
+    /* Ensure input height isn't expanded due to image content */
+    height: 1.1875rem;
+  }
+`;
+
+const StyledLicenseName = styled(Typography)`
+  margin-left: 0.5rem;
+`;
+
+const StyledVerticalAlign = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const StyledActions = styled.div`
+  margin-top: 1rem;
 `;
 
 interface FileCardProps {
   file: File;
   removeFile: () => void;
   updateFile: (newFile: File) => void;
+  toggleLicenseModal: () => void;
 }
 
-const FileCard: React.FC<FileCardProps> = ({ file, removeFile, updateFile }) => {
+const FileCard: React.FC<FileCardProps> = ({ file, removeFile, updateFile, toggleLicenseModal }) => {
   const { t } = useTranslation('publication');
 
   return (
-    <Box>
-      <StyledTitle>{file.name}</StyledTitle>
+    <FormCard data-testid="uploaded-file-card">
+      <FormCardSubHeading>{file.name}</FormCardSubHeading>
       <StyledDescription>
         {t('files_and_license.uploaded_size', { size: Math.round(file.data.size / 1000) })}
       </StyledDescription>
@@ -73,7 +110,7 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, updateFile }) => 
             <FormLabel component="legend">{t('files_and_license.select_version')}</FormLabel>
             <RadioGroup
               aria-label="version"
-              value={file.isPublished}
+              value={file.isPublished ? 'published' : 'accepted'}
               onChange={event =>
                 updateFile({
                   ...file,
@@ -106,25 +143,71 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, updateFile }) => 
                 }
                 value={file.embargoDate}
                 autoOk
+                format={'dd.MM.yyyy'}
               />
             </MuiPickersUtilsProvider>
           </StyledFormControl>
 
           <StyledFormControl>
-            <TextField select variant="outlined" label={t('files_and_license.license')}></TextField>
+            <StyledVerticalAlign>
+              <StyledSelect
+                select
+                fullWidth
+                SelectProps={{
+                  renderValue: (option: any) => {
+                    const selectedLicense = licenses.find((license: License) => license.name === option);
+                    return selectedLicense ? (
+                      <StyledVerticalAlign>
+                        <img src={selectedLicense.image} alt={selectedLicense.name} />
+                        <StyledLicenseName display="inline" variant="body1">
+                          {option}
+                        </StyledLicenseName>
+                      </StyledVerticalAlign>
+                    ) : null;
+                  },
+                }}
+                variant="outlined"
+                value={file.license}
+                label={t('files_and_license.license')}
+                onChange={({ target: { value } }) => {
+                  updateFile({
+                    ...file,
+                    license: value,
+                  });
+                }}>
+                {licenses.map((license: License) => (
+                  <MenuItem key={license.name} value={license.name} divider dense>
+                    <ListItemIcon>
+                      <img src={license.image} alt={license.name} />
+                    </ListItemIcon>
+                    <ListItemText>
+                      <StyledLicenseName variant="body1">{license.name}</StyledLicenseName>
+                    </ListItemText>
+                  </MenuItem>
+                ))}
+              </StyledSelect>
+              <IconButton size="small" onClick={toggleLicenseModal}>
+                <HelpIcon />
+              </IconButton>
+            </StyledVerticalAlign>
           </StyledFormControl>
         </StyledFileInfo>
       )}
 
       <StyledActions>
-        <Link href={file.uploadUrl} target="_blank">
-          <Button color="primary" variant="contained">
-            {t('common:preview')}
-          </Button>
-        </Link>
-        <Button onClick={removeFile}>{t('common:remove')}</Button>
+        {file.uploadUrl && (
+          <StyledPreview href={file.uploadUrl} target="_blank">
+            <Button color="primary" variant="contained">
+              {t('common:preview')}
+            </Button>
+          </StyledPreview>
+        )}
+        <Button variant="contained" color="secondary" onClick={removeFile}>
+          <DeleteIcon />
+          {t('common:remove')}
+        </Button>
       </StyledActions>
-    </Box>
+    </FormCard>
   );
 };
 

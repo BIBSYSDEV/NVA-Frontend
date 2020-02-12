@@ -1,20 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router';
 import styled from 'styled-components';
 
 import { IconButton, InputBase, Paper } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 
-import { search } from '../api/publicationApi';
-
-interface SearchBarProps {
-  resetSearchInput: boolean;
-}
-
 const StyledPaper = styled(Paper)`
-  margin-bottom: 3rem;
+  margin-bottom: 1rem;
 `;
 
 const StyledForm = styled.form`
@@ -24,32 +16,31 @@ const StyledForm = styled.form`
 
 const StyledInputBase = styled(InputBase)`
   margin-left: 1rem;
-  min-width: 50vw;
-  max-width: 65vw;
+  width: 90%;
 `;
 
-const SearchBar: React.FC<SearchBarProps> = ({ resetSearchInput: resetSearch }) => {
+interface SearchBarProps {
+  handleSearch: (searchTerm: string) => void;
+  resetSearchInput: boolean;
+}
+
+const SearchBar: React.FC<SearchBarProps> = ({ resetSearchInput, handleSearch }) => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
-  const history = useHistory();
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
-    if (resetSearch) {
+    if (resetSearchInput) {
       setSearchTerm('');
     }
-  }, [resetSearch]);
+  }, [resetSearchInput]);
 
-  const handleSearch = async () => {
-    if (searchTerm.length) {
-      await search(searchTerm, dispatch);
-      history.push(`/search/${searchTerm}`);
-    }
-  };
+  useEffect(() => {
+    setSearchTerm(searchTerm);
+  }, [searchTerm]);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    handleSearch();
+    handleSearch(searchTerm);
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {

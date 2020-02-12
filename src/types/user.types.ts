@@ -13,11 +13,6 @@ export enum ApplicationName {
   NONE = '',
 }
 
-export interface Role {
-  name: RoleName;
-  description: string;
-}
-
 export interface User {
   email: string;
   name: string;

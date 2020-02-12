@@ -1,8 +1,8 @@
 import React, { ReactNode } from 'react';
 import styled from 'styled-components';
+import { Card } from '@material-ui/core';
 
-const StyledUserCard = styled.div`
-  background-color: ${({ theme }) => theme.palette.box.main};
+const StyledUserCard = styled(Card)`
   @media (min-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
     padding: 2rem;
   }
@@ -24,6 +24,7 @@ const StyledHeading = styled.div`
   font-weight: bold;
   padding-bottom: 0.5rem;
   display: flex;
+  align-items: center;
 `;
 
 const StyledSubHeading = styled.div`
@@ -34,8 +35,10 @@ const StyledSubHeading = styled.div`
 `;
 
 const StyledIcon = styled.div`
-  padding-right: 0.5rem;
-  padding-top: 0.2rem;
+  display: inline-flex;
+  height: 2.5rem;
+  width: 4.5rem;
+  margin-left: -1rem;
 `;
 
 interface UserCardProps {
@@ -48,7 +51,7 @@ interface UserCardProps {
 }
 
 const UserCard: React.FC<UserCardProps> = ({ headingLabel, headingIcon, headingButton, subHeadingLabel, children }) => (
-  <StyledUserCard>
+  <StyledUserCard variant="outlined">
     <StyledHeading>
       <>
         {headingIcon && <StyledIcon>{headingIcon}</StyledIcon>}

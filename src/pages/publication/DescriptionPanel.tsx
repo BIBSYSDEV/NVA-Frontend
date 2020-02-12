@@ -1,5 +1,5 @@
-import { Field, FormikProps, useFormikContext, FieldArray } from 'formik';
-import { Select, TextField } from 'formik-material-ui';
+import { Field, FieldArray, FormikProps, useFormikContext } from 'formik';
+import { TextField } from 'formik-material-ui';
 import React, { FC, useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
@@ -7,7 +7,6 @@ import styled from 'styled-components';
 import DateFnsUtils from '@date-io/date-fns';
 import { MenuItem } from '@material-ui/core';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
-import Box from '../../components/Box';
 import TabPanel from '../../components/TabPanel/TabPanel';
 import { emptyNpiDiscipline, Publication } from '../../types/publication.types';
 import DisciplineSearch from './description_tab/DisciplineSearch';
@@ -18,6 +17,8 @@ import { Project } from '../../types/project.types';
 import ChipInput from 'material-ui-chip-input';
 import { getObjectValueByFieldName } from '../../utils/helpers';
 import { orderedLanguages } from '../../types/language.types';
+import FormCardHeading from '../../components/FormCard/FormCardHeading';
+import FormCard from '../../components/FormCard/FormCard';
 
 const MultipleFieldWrapper = styled.div`
   display: flex;
@@ -76,8 +77,9 @@ const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublicat
 
   return (
     <TabPanel ariaLabel="description" goToNextTab={goToNextTab} onClickSave={validateAndSave}>
-      <Box>
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <FormCard>
+          <FormCardHeading>{t('heading.description')}</FormCardHeading>
           <StyledFieldWrapper>
             <Field
               aria-label="title"
@@ -111,6 +113,7 @@ const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublicat
               rows="4"
               fullWidth
               variant="outlined"
+              inputProps={{ 'data-testid': 'publication-description-input' }}
             />
           </StyledFieldWrapper>
           <MultipleFieldWrapper>
@@ -159,8 +162,9 @@ const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublicat
                 aria-label="language"
                 variant="outlined"
                 fullWidth
-                component={Select}
-                label={t('common:language')}>
+                component={TextField}
+                select
+                label={t('description.primary_language')}>
                 {orderedLanguages.map(code => (
                   <MenuItem value={code} key={code} data-testid={`publication-language-${code}`}>
                     {t(`languages:${code}`)}
@@ -169,7 +173,8 @@ const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublicat
               </Field>
             </StyledFieldWrapper>
           </MultipleFieldWrapper>
-
+        </FormCard>
+        <FormCard>
           <StyledFieldHeader>{t('description.project_association')}</StyledFieldHeader>
 
           <StyledFieldWrapper>
@@ -196,8 +201,8 @@ const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublicat
               )}
             </FieldArray>
           </StyledFieldWrapper>
-        </MuiPickersUtilsProvider>
-      </Box>
+        </FormCard>
+      </MuiPickersUtilsProvider>
     </TabPanel>
   );
 };

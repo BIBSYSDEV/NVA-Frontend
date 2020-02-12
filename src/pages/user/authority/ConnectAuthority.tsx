@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
@@ -10,6 +10,7 @@ import { setAuthorityData } from '../../../redux/actions/userActions';
 import { RootStore } from '../../../redux/reducers/rootReducer';
 import { Authority } from '../../../types/authority.types';
 import AuthorityCard from './AuthorityCard';
+import NewAuthorityCard from './NewAuthorityCard';
 
 const StyledAuthorityContainer = styled.div`
   > * {
@@ -26,7 +27,7 @@ const StyledSubHeading = styled.div`
   font-weight: bold;
 `;
 
-export const ConnectAuthority: React.FC = () => {
+export const ConnectAuthority: FC = () => {
   const [matchingAuthorities, setMatchingAuthorities] = useState<Authority[]>([]);
   const [selectedSystemControlNumber, setSelectedSystemControlNumber] = useState('');
   const user = useSelector((store: RootStore) => store.user);
@@ -45,8 +46,10 @@ export const ConnectAuthority: React.FC = () => {
     );
 
     if (selectedAuthority) {
-      const updatedAuthorityWithFeide = await updateFeideForAuthority(user.id, selectedSystemControlNumber, dispatch);
-      if (updatedAuthorityWithFeide) {
+      const updatedAuthorityWithFeide: Authority = await updateFeideForAuthority(user.id, selectedSystemControlNumber);
+      if (updatedAuthorityWithFeide?.orgunitids.includes(user.organizationId)) {
+        dispatch(setAuthorityData(updatedAuthorityWithFeide));
+      } else {
         const updatedAuthorityWithOrganizationId = await updateInstitutionForAuthority(
           user.organizationId,
           selectedSystemControlNumber
@@ -58,33 +61,35 @@ export const ConnectAuthority: React.FC = () => {
 
   return (
     <>
-      <StyledSubHeading>
-        {t('authority.search_summary', { results: matchingAuthorities?.length ?? 0, searchTerm: user.name })}
-      </StyledSubHeading>
-
       <StyledAuthorityContainer>
-        {matchingAuthorities?.map(authority => (
-          <StyledClickableDiv
-            data-testid="author-radio-button"
-            key={authority.systemControlNumber}
-            onClick={() => setSelectedSystemControlNumber(authority.systemControlNumber)}>
-            <AuthorityCard
-              authority={authority}
-              isSelected={selectedSystemControlNumber === authority.systemControlNumber}
-            />
-          </StyledClickableDiv>
-        ))}
-
-        {matchingAuthorities?.length > 0 && (
-          <Button
-            data-testid="connect-author-button"
-            color="primary"
-            variant="contained"
-            size="large"
-            onClick={updateAuthorityForUser}
-            disabled={!selectedSystemControlNumber}>
-            {t('authority.connect_authority')}
-          </Button>
+        {matchingAuthorities.length > 0 ? (
+          <>
+            <StyledSubHeading>
+              {t('authority.search_summary', { results: matchingAuthorities?.length ?? 0, searchTerm: user.name })}
+            </StyledSubHeading>
+            {matchingAuthorities.map(authority => (
+              <StyledClickableDiv
+                data-testid="author-radio-button"
+                key={authority.systemControlNumber}
+                onClick={() => setSelectedSystemControlNumber(authority.systemControlNumber)}>
+                <AuthorityCard
+                  authority={authority}
+                  isSelected={selectedSystemControlNumber === authority.systemControlNumber}
+                />
+              </StyledClickableDiv>
+            ))}
+            <Button
+              data-testid="connect-author-button"
+              color="primary"
+              variant="contained"
+              size="large"
+              onClick={updateAuthorityForUser}
+              disabled={!selectedSystemControlNumber}>
+              {t('authority.connect_authority')}
+            </Button>
+          </>
+        ) : (
+          <NewAuthorityCard />
         )}
       </StyledAuthorityContainer>
     </>

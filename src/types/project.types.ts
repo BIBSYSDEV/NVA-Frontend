@@ -1,38 +1,29 @@
 export interface Project {
   cristinProjectId: string;
   mainLanguage: string;
-  titles: [ProjectTitle];
-  participants: [ProjectParticipant];
-  institutions: [ProjectInstitution];
-  fundings: [ProjectFundings];
+  titles: ProjectTitle[];
+  participants: ProjectParticipant[];
+  institutions: ProjectInstitution[];
+  fundings: ProjectFundings[];
 }
 
-export interface ProjectTitle {
+interface ProjectTitle {
   title: string;
   language: string;
 }
 
-export interface ProjectParticipant {
+interface ProjectParticipant {
   cristinPersonId: string;
   fullName: string;
 }
 
-export interface ProjectInstitution {
+interface ProjectInstitution {
   cristinInstitutionId: string;
   name: string;
   language: string;
 }
 
-export interface ProjectFundings {
+interface ProjectFundings {
   fundingSourceCode: string;
   projectCode: string;
 }
-
-export const emptyProject = {
-  cristinProjectId: '',
-  mainLanguage: '',
-  titles: [],
-  participants: [],
-  institutions: [],
-  fundings: [],
-};

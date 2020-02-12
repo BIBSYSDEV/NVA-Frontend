@@ -1,5 +1,5 @@
 import { Form, Formik, FormikProps } from 'formik';
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import * as Yup from 'yup';
@@ -7,16 +7,16 @@ import * as Yup from 'yup';
 import TabPanel from '../../components/TabPanel/TabPanel';
 import { emptyPublication, Publication } from '../../types/publication.types';
 import { ReferenceType } from '../../types/references.types';
+import { createUppy } from '../../utils/uppy-config';
 import ContributorsPanel from './ContributorsPanel';
 import DescriptionPanel from './DescriptionPanel';
 import FilesAndLicensePanel from './FilesAndLicensePanel';
 import { PublicationFormTabs } from './PublicationFormTabs';
-import { ReferencesPanel } from './ReferencesPanel';
-import { uppyConfig } from '../../utils/uppy-config';
+import ReferencesPanel from './ReferencesPanel';
+import SubmissionPanel from './SubmissionPanel';
 
 const StyledPublication = styled.div`
   width: 100%;
-  max-width: ${({ theme }) => theme.breakpoints.values.lg + 'px'};
 `;
 
 const PublicationForm: FC = () => {
@@ -99,7 +99,7 @@ const PublicationForm: FC = () => {
   useEffect(() => {
     // Set up Uppy for file uploading on form mount
     if (!uppy) {
-      setUppy(uppyConfig);
+      setUppy(createUppy());
     }
     return () => uppy && uppy.close();
   }, [uppy]);
@@ -138,7 +138,7 @@ const PublicationForm: FC = () => {
 
             {tabNumber === 4 && (
               <TabPanel ariaLabel="submission">
-                <div>Page Six</div>
+                <SubmissionPanel />
               </TabPanel>
             )}
           </Form>

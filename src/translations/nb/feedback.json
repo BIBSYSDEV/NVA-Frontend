@@ -1,5 +1,6 @@
 {
   "error": {
+    "create_authority": "Kunne ikke opprette autoritet",
     "create_publication": "Kunne ikke opprette publikasjon",
     "get_authority": "Kunne ikke hente autoritet",
     "get_authorities": "Kunne ikke hente autoriteter",

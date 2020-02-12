@@ -4,7 +4,7 @@ import '@uppy/dashboard/dist/style.css';
 
 import { Dashboard } from '@uppy/react';
 import { useTranslation } from 'react-i18next';
-import { File, UppyFileResponse, emptyFile } from '../../../types/license.types';
+import { File, UppyFileResponse, emptyFile } from '../../../types/file.types';
 
 interface FileUploaderProps {
   addFile: (file: File) => void;
@@ -13,13 +13,12 @@ interface FileUploaderProps {
 
 const uploaderMaxWidthPx = 10000;
 const uploaderMaxHeightPx = 200;
-let listenerAdded = false; // Avoid adding upload-success listener multiple times
 
 const FileUploader: React.FC<FileUploaderProps> = ({ addFile, uppy }) => {
   const { t } = useTranslation('publication');
 
   useEffect(() => {
-    if (uppy && !listenerAdded) {
+    if (uppy && !uppy.hasUploadSuccessEventListener) {
       uppy.on('upload-success', (file: File, response: UppyFileResponse) => {
         addFile({
           ...emptyFile,
@@ -27,7 +26,8 @@ const FileUploader: React.FC<FileUploaderProps> = ({ addFile, uppy }) => {
           uploadUrl: response?.uploadURL,
         });
       });
-      listenerAdded = true;
+      // Avoid duplicating event listener
+      uppy.hasUploadSuccessEventListener = true;
     }
   }, [addFile, uppy]);
 

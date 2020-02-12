@@ -6,18 +6,23 @@ import styled from 'styled-components';
 import { Checkbox, FormControlLabel, MenuItem, TextField } from '@material-ui/core';
 
 import { Publication } from '../../../types/publication.types';
-import { BookFieldNames, bookTypes, emptyPublisher } from '../../../types/references.types';
+import { BookFieldNames, BookType, emptyPublisher } from '../../../types/references.types';
 import { PublicationTableNumber } from '../../../utils/constants';
 import NviValidation from './components/NviValidation';
 import PeerReview from './components/PeerReview';
 import PublicationChannelSearch from './components/PublicationChannelSearch';
 import PublisherRow from './components/PublisherRow';
+import FormCardSubHeading from '../../../components/FormCard/FormCardSubHeading';
+import FormCardLabel from '../../../components/FormCard/FormCardLabel';
 
 const StyledSection = styled.div`
   display: grid;
   grid-template-areas: 'peer-review text-book';
   grid-template-columns: 1fr 2fr;
-  margin-top: 1rem;
+  margin-top: 0.7rem;
+  padding-top: 0.7rem;
+  padding-left: 0.7rem;
+  background-color: ${({ theme }) => theme.palette.background.default};
 `;
 
 const StyledPeerReview = styled.div`
@@ -26,17 +31,6 @@ const StyledPeerReview = styled.div`
 
 const StyledTextBook = styled.div`
   grid-area: text-book;
-`;
-
-const StyledLabel = styled.div`
-  color: ${({ theme }) => theme.palette.text.primary};
-  font-size: 1rem;
-  font-weight: bold;
-`;
-
-const StyledHeading = styled.div`
-  font-size: 1.5rem;
-  padding-top: 1.5rem;
 `;
 
 const BookReferenceForm: FC = () => {
@@ -51,9 +45,9 @@ const BookReferenceForm: FC = () => {
       <Field name={BookFieldNames.TYPE}>
         {({ field }: any) => (
           <TextField select variant="outlined" label={t('common:type')} {...field} fullWidth>
-            {bookTypes.map(type => (
-              <MenuItem value={type.value} key={type.value}>
-                {t(type.label)}
+            {Object.values(BookType).map(typeValue => (
+              <MenuItem value={typeValue} key={typeValue}>
+                {t(`referenceTypes:subtypes_book.${typeValue}`)}
               </MenuItem>
             ))}
           </TextField>
@@ -95,11 +89,12 @@ const BookReferenceForm: FC = () => {
           <Field name={BookFieldNames.TEXT_BOOK}>
             {({ field: { name, value } }: any) => (
               <>
-                <StyledLabel>{t('references.text_book')}</StyledLabel>
+                <FormCardLabel>{t('references.is_text_book')}</FormCardLabel>
                 <FormControlLabel
                   control={
                     <Checkbox
                       data-testid="text_book"
+                      color="primary"
                       onChange={(event: ChangeEvent<HTMLInputElement>) => setFieldValue(name, event.target.checked)}
                       checked={value}
                     />
@@ -121,8 +116,8 @@ const BookReferenceForm: FC = () => {
           />
         )}
       </Field>
-      <StyledHeading>{t('references.series')}</StyledHeading>
-      <StyledLabel>{t('references.series_info')}</StyledLabel>
+      <FormCardSubHeading>{t('references.series')}</FormCardSubHeading>
+      <FormCardLabel>{t('references.series_info')}</FormCardLabel>
       <Field name={BookFieldNames.SERIES}>
         {({ field: { name, value } }: any) => (
           <>

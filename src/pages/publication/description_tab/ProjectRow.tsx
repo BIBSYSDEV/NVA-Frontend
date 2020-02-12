@@ -48,11 +48,6 @@ const StyledAction = styled.div`
   grid-area: removeButton;
 `;
 
-const StyledRemoveButton = styled(Button)`
-  background-color: ${({ theme }) => theme.palette.danger.main};
-  color: ${({ theme }) => theme.palette.background.default};
-`;
-
 interface ProjectRowProps {
   project: Project;
   onClickRemove: () => void;
@@ -74,10 +69,10 @@ const ProjectRow: FC<ProjectRowProps> = ({ project, onClickRemove, dataTestId })
         <StyledFinancedBy>{project.fundings?.[0]?.fundingSourceCode}</StyledFinancedBy>
       </>
       <StyledAction>
-        <StyledRemoveButton data-testid={`${dataTestId}_remove_button`} onClick={onClickRemove}>
+        <Button data-testid={`${dataTestId}_remove_button`} color="secondary" onClick={onClickRemove}>
           <DeleteIcon />
           {t('common:remove')}
-        </StyledRemoveButton>
+        </Button>
       </StyledAction>
     </StyledRow>
   );

@@ -18,7 +18,6 @@ import NewPublication from './pages/publication/NewPublication';
 import Search from './pages/search/Search';
 import AuthorityOrcidModal from './pages/user/authority/AuthorityOrcidModal';
 import User from './pages/user/User';
-import Workspace from './pages/workspace/Workspace';
 import { setAuthorityData, setPossibleAuthorities, setUser } from './redux/actions/userActions';
 import { RootStore } from './redux/reducers/rootReducer';
 import { Authority } from './types/authority.types';
@@ -26,22 +25,13 @@ import { awsConfig } from './utils/aws-config';
 import { API_URL, DEBOUNCE_INTERVAL_MODAL, USE_MOCK_DATA } from './utils/constants';
 import { hubListener } from './utils/hub-listener';
 import { mockUser } from './utils/testfiles/mock_feide_user';
+import MyPublications from './pages/publication/MyPublications';
+import ContentPage from './components/FormCard/ContentPage';
 
 const StyledApp = styled.div`
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-`;
-
-const StyledPageBody = styled.div`
-  display: flex;
-  flex-direction: column;
-  @media (min-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-    align-items: center;
-    margin: 3rem;
-  }
-  font-size: 1rem;
-  flex-grow: 1;
 `;
 
 const App: React.FC = () => {
@@ -121,18 +111,18 @@ const App: React.FC = () => {
         {user.isLoggedIn && <AdminMenu />}
         <Breadcrumbs />
         {showAuthorityOrcidModal && <AuthorityOrcidModal />}
-        <StyledPageBody>
+        <ContentPage>
           <Switch>
             <Route exact path="/" component={Dashboard} />
-            {user.isLoggedIn && <Route exact path="/publications" component={Workspace} />}
-            {user.isLoggedIn && <Route exact path="/publications/new" component={NewPublication} />}
+            {user.isLoggedIn && <Route exact path="/new-publication" component={NewPublication} />}
+            {user.isLoggedIn && <Route exact path="/my-publications" component={MyPublications} />}
             <Route exact path="/search" component={Search} />
             <Route exact path="/search/:searchTerm" component={Search} />
             <Route exact path="/search/:searchTerm/:offset" component={Search} />
             {user.isLoggedIn && <Route exact path="/user" component={User} />}
             <Route path="*" component={NotFound} />
           </Switch>
-        </StyledPageBody>
+        </ContentPage>
         <Footer />
       </StyledApp>
     </BrowserRouter>

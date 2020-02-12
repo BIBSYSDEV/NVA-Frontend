@@ -1,21 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-
-import Box from '../../components/Box';
 import TabPanel from '../../components/TabPanel/TabPanel';
 import FileUploader from './files_and_license_tab/FileUploader';
 import FileCard from './files_and_license_tab/FileCard';
 import styled from 'styled-components';
-import { useFormikContext, FormikProps, FieldArray } from 'formik';
+import { FieldArray, FormikProps, useFormikContext } from 'formik';
 import { Publication } from '../../types/publication.types';
+import Modal from '../../components/Modal';
+import { licenses } from '../../types/file.types';
+import { Typography } from '@material-ui/core';
+import FormCard from '../../components/FormCard/FormCard';
+import FormCardHeading from '../../components/FormCard/FormCardHeading';
+import PublicationChannelInfoCard from './files_and_license_tab/PublicationChannelInfoCard';
 
-const StyledUploadedFiles = styled.section`
+const StyledUploadedFiles = styled(FormCard)`
   display: flex;
   flex-direction: column;
 
   > * {
     margin-bottom: 1rem;
   }
+`;
+
+const StyledLicenseDescription = styled.article`
+  margin-bottom: 1rem;
 `;
 
 enum FilesFieldNames {
@@ -30,32 +38,41 @@ interface FilesAndLicensePanelProps {
 const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab, uppy }) => {
   const { t } = useTranslation('publication');
   const { values }: FormikProps<Publication> = useFormikContext();
+  const [isLicenseModalOpen, setIsLicenseModalOpen] = useState(false);
+
   const uploadedFiles = values[FilesFieldNames.FILES];
+  const referenceType = values.reference.type;
+  const publisher = referenceType ? values.reference[referenceType]?.publisher : null;
+
+  const toggleLicenseModal = () => {
+    setIsLicenseModalOpen(!isLicenseModalOpen);
+  };
 
   return (
     <TabPanel ariaLabel="files and license" goToNextTab={goToNextTab}>
+      {publisher?.title && <PublicationChannelInfoCard publisher={publisher} />}
+
       <FieldArray name={FilesFieldNames.FILES}>
         {({ push, remove, replace }) => (
           <>
-            <h1>{t('files_and_license.upload_files')}</h1>
-            <Box>
-              <FileUploader
-                uppy={uppy}
-                addFile={file => {
-                  push(file);
-                }}
-              />
-            </Box>
+            <FormCard>
+              <FormCardHeading>{t('files_and_license.upload_files')}</FormCardHeading>
+              <FileUploader uppy={uppy} addFile={file => push(file)} />
+            </FormCard>
             {uploadedFiles.length > 0 && (
               <>
-                <h1>{t('files_and_license.files')}</h1>
                 <StyledUploadedFiles>
-                  {uploadedFiles.map((file, i) => (
+                  <FormCardHeading>{t('files_and_license.files')}</FormCardHeading>
+                  {uploadedFiles.map((file, index) => (
                     <FileCard
                       key={file.id}
                       file={file}
-                      removeFile={() => remove(i)}
-                      updateFile={newFile => replace(i, newFile)}
+                      removeFile={() => {
+                        uppy.removeFile(file.id);
+                        remove(index);
+                      }}
+                      updateFile={newFile => replace(index, newFile)}
+                      toggleLicenseModal={toggleLicenseModal}
                     />
                   ))}
                 </StyledUploadedFiles>
@@ -64,6 +81,15 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab
           </>
         )}
       </FieldArray>
+      <Modal headingText={t('files_and_license.licenses')} openModal={isLicenseModalOpen} onClose={toggleLicenseModal}>
+        {licenses.map(license => (
+          <StyledLicenseDescription key={license.name}>
+            <Typography variant="h6">{license.name}</Typography>
+            <img src={license.image} alt={license.name} />
+            <Typography variant="body2">{license.description}</Typography>
+          </StyledLicenseDescription>
+        ))}
+      </Modal>
     </TabPanel>
   );
 };

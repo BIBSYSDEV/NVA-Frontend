@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { MenuItem, TextField } from '@material-ui/core';
 
 import { Publication } from '../../../types/publication.types';
-import { emptyPublisher, ReportFieldNames, reportTypes } from '../../../types/references.types';
+import { emptyPublisher, ReportFieldNames, ReportType } from '../../../types/references.types';
 import { PublicationTableNumber } from '../../../utils/constants';
 import PublicationChannelSearch from './components/PublicationChannelSearch';
 import PublisherRow from './components/PublisherRow';
@@ -32,9 +32,9 @@ const ReportReferenceForm: FC = () => {
       <Field name={ReportFieldNames.TYPE}>
         {({ field }: any) => (
           <TextField select variant="outlined" fullWidth label={t('common:type')} {...field}>
-            {reportTypes.map(type => (
-              <MenuItem value={type.value} key={type.value}>
-                {t(type.label)}
+            {Object.values(ReportType).map(typeValue => (
+              <MenuItem value={typeValue} key={typeValue}>
+                {t(`referenceTypes:subtypes_report.${typeValue}`)}
               </MenuItem>
             ))}
           </TextField>

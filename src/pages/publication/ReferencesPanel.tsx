@@ -1,11 +1,10 @@
-import { Field, FormikProps, useFormikContext, ErrorMessage } from 'formik';
+import { ErrorMessage, Field, FormikProps, useFormikContext } from 'formik';
 import React, { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import { FormControl, MenuItem, FormHelperText, TextField } from '@material-ui/core';
+import { FormControl, FormHelperText, MenuItem, TextField } from '@material-ui/core';
 
-import Box from '../../components/Box';
 import TabPanel from '../../components/TabPanel/TabPanel';
 import { Publication } from '../../types/publication.types';
 import {
@@ -15,7 +14,6 @@ import {
   JournalArticleFieldNames,
   ReferenceFieldNames,
   ReferenceType,
-  referenceTypeLanguageKeyMap,
   ReportFieldNames,
 } from '../../types/references.types';
 import BookReferenceForm from './references_tab/BookReferenceForm';
@@ -23,15 +21,11 @@ import ChapterReferenceForm from './references_tab/ChapterReferenceForm';
 import DegreeReferenceForm from './references_tab/DegreeReferenceForm';
 import JournalArticleReferenceForm from './references_tab/JournalArticleReferenceForm';
 import ReportReferenceForm from './references_tab/ReportReferenceForm';
+import FormCard from '../../components/FormCard/FormCard';
+import FormCardHeading from '../../components/FormCard/FormCardHeading';
 
 const StyledBox = styled.div`
   margin-top: 1rem;
-`;
-
-const StyledTypeHeading = styled.div`
-  font-size: 1.5rem;
-  padding-bottom: 1rem;
-  font-weight: bold;
 `;
 
 const StyledSelectContainer = styled.div`
@@ -43,7 +37,7 @@ interface ReferencesPanelProps {
   savePublication: () => void;
 }
 
-export const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, savePublication }) => {
+const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, savePublication }) => {
   const { t } = useTranslation('publication');
   const { values, setFieldTouched }: FormikProps<Publication> = useFormikContext();
   const { type } = values.reference;
@@ -85,9 +79,9 @@ export const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, s
           {({ field, meta: { error, touched } }: any) => (
             <FormControl fullWidth error={!!error && touched}>
               <TextField select variant="outlined" {...field} label={t('common:type')} data-testid="reference_type">
-                {Object.entries(referenceTypeLanguageKeyMap).map(([key, value]) => (
-                  <MenuItem value={key} key={key} data-testid={`reference_type-${key}`}>
-                    {t(value)}
+                {Object.values(ReferenceType).map(typeValue => (
+                  <MenuItem value={typeValue} key={typeValue} data-testid={`reference_type-${typeValue}`}>
+                    {t(`referenceTypes:${typeValue}`)}
                   </MenuItem>
                 ))}
               </TextField>
@@ -101,16 +95,14 @@ export const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, s
 
       {type && (
         <StyledBox>
-          <Box>
-            <StyledTypeHeading data-testid="reference_type-heading">
-              {t(referenceTypeLanguageKeyMap[type])}
-            </StyledTypeHeading>
+          <FormCard>
+            <FormCardHeading data-testid="reference_type-heading">{t(`referenceTypes:${type}`)}</FormCardHeading>
             {type === ReferenceType.BOOK && <BookReferenceForm />}
             {type === ReferenceType.CHAPTER && <ChapterReferenceForm />}
             {type === ReferenceType.REPORT && <ReportReferenceForm />}
             {type === ReferenceType.DEGREE && <DegreeReferenceForm />}
             {type === ReferenceType.PUBLICATION_IN_JOURNAL && <JournalArticleReferenceForm />}
-          </Box>
+          </FormCard>
         </StyledBox>
       )}
     </TabPanel>

@@ -14,7 +14,8 @@ export enum PublicationsApiPaths {
   INSERT_RESOURCE = '/publications/insert-resource',
   UPDATE_RESOURCE = '/publications/update-resource',
   FETCH_RESOURCE = '/publications/fetch-resource',
-  DOI_LOOKUP = '/doi',
+  FETCH_MY_RESOURCES = '/publications/fetch-my-resources',
+  DOI_LOOKUP = '/doi-fetch',
 }
 
 export const createNewPublicationFromDoi = async (doiUrl: string, dispatch: Dispatch) => {
@@ -93,6 +94,25 @@ export const getPublication = async (id: string, dispatch: Dispatch) => {
     }
   } catch {
     dispatch(addNotification(i18n.t('feedback:error.get_publication'), 'error'));
+  }
+};
+
+export const getMyPublications = async () => {
+  const url = PublicationsApiPaths.FETCH_MY_RESOURCES;
+  try {
+    const idToken = await getIdToken();
+    const response = await Axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${idToken}`,
+      },
+    });
+    if (response.status === StatusCode.OK) {
+      return response.data;
+    } else {
+      return [];
+    }
+  } catch (error) {
+    return { error };
   }
 };
 
