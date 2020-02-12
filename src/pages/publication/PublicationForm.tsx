@@ -138,7 +138,7 @@ const PublicationForm: FC = () => {
 
             {tabNumber === 4 && (
               <TabPanel ariaLabel="submission">
-                <SubmissionPanel />
+                <SubmissionPanel savePublication={() => savePublication(values)} />
               </TabPanel>
             )}
           </Form>
