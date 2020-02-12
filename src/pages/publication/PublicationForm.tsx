@@ -14,13 +14,14 @@ import FilesAndLicensePanel from './FilesAndLicensePanel';
 import { PublicationFormTabs } from './PublicationFormTabs';
 import ReferencesPanel from './ReferencesPanel';
 import SubmissionPanel from './SubmissionPanel';
+import { Uppy } from '../../types/file.types';
 
 const StyledPublication = styled.div`
   width: 100%;
 `;
 
 interface PublicationFormProps {
-  uppy: any;
+  uppy: Uppy;
 }
 
 const PublicationForm: FC<PublicationFormProps> = ({ uppy = createUppy() }) => {

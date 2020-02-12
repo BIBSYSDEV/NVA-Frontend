@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
-import { File, emptyFile } from '../../../types/file.types';
+import { File, emptyFile, Uppy } from '../../../types/file.types';
 import UppyDashboard from '../../../components/UppyDashboard';
 
 interface FileUploaderProps {
   addFile: (file: File) => void;
-  uppy: any;
+  uppy: Uppy;
 }
 
 const FileUploader: React.FC<FileUploaderProps> = ({ addFile, uppy }) => {

@@ -5,11 +5,12 @@ import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 
 import PublicationExpansionPanel from './PublicationExpansionPanel';
 import UppyDashboard from '../../../components/UppyDashboard';
+import { Uppy } from '../../../types/file.types';
 
 interface LoadPublicationProps {
   expanded: boolean;
   onChange: (event: React.ChangeEvent<any>, isExpanded: boolean) => void;
-  uppy: any;
+  uppy: Uppy;
   openForm: () => void;
 }
 
@@ -23,7 +24,9 @@ const LoadPublication: React.FC<LoadPublicationProps> = ({ expanded, onChange, u
   useEffect(() => {
     if (uppy) {
       uppy.on('file-added', navigateToForm);
-      return () => uppy.off('file-added', navigateToForm);
+      return () => {
+        uppy.off('file-added', navigateToForm);
+      };
     }
   }, [uppy, navigateToForm]);
 

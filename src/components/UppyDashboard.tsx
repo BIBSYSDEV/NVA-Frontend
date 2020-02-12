@@ -5,13 +5,14 @@ import '@uppy/dashboard/dist/style.css';
 import { Dashboard } from '@uppy/react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
+import { Uppy } from '../types/file.types';
 
 const StyledDashboard = styled.div`
   overflow: auto;
 `;
 
 interface FileUploaderProps {
-  uppy: any;
+  uppy: Uppy;
 }
 
 const uploaderMaxWidthPx = 10000;
