@@ -20,7 +20,7 @@ const PublicationPage: FC<PublicationPageProps> = ({ publicationId }) => {
       setIsLoadingPublication(true);
       const publication = await getPublication(publicationId);
       if (publication?.error) {
-        dispatch(addNotification(i18n.t('feedback:error.get_publications'), 'error'));
+        dispatch(addNotification(i18n.t('feedback:error.get_publication'), 'error'));
       } else {
         setPublication(publication);
       }
