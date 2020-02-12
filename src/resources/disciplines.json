@@ -1,6 +1,5 @@
 {
   "Humanities": [
-    "Humanities",
     "Archaeology and Conservation",
     "Architecture and Design",
     "Asian and African Studies",
@@ -24,7 +23,6 @@
     "Germanic Studies"
   ],
   "Natural Sciences and Engineering": [
-    "Natural Sciences and Engineering",
     "Applied geology, petroleum science and engineering",
     "Biology",
     "Biotechnology",
@@ -50,7 +48,6 @@
     "Multidisciplinar technology"
   ],
   "Social Science": [
-    "Social Science",
     "Library and Information Science",
     "Geography",
     "Gender Studies",
@@ -66,7 +63,6 @@
     "Business and Finance"
   ],
   "Health Sciences": [
-    "Health Sciences",
     "Anaesthesia, Emergency and Intensive Care",
     "Biomedicine",
     "Dermatology and Venerology",
