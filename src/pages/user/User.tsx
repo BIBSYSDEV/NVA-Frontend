@@ -11,10 +11,7 @@ import { getOrcidInfo } from '../../api/external/orcidApi';
 import ButtonModal from '../../components/ButtonModal';
 import { setAuthorityData } from '../../redux/actions/userActions';
 import { RootStore } from '../../redux/reducers/rootReducer';
-import { InstitutionUnit } from '../../types/institution.types';
 import { ConnectAuthority } from './authority/ConnectAuthority';
-import InstitutionDialog from './InstitutionDialog';
-import InstitutionPresentationCard from './InstitutionPresentation';
 import UserCard from './UserCard';
 import UserInfo from './UserInfo';
 import UserLanguage from './UserLanguage';
@@ -152,9 +149,8 @@ const User: React.FC = () => {
           )}
         </UserCard>
         <UserOrcid />
-        <UserCard
-          headingLabel={t('heading.organizations')}
-          headingButton={
+        <UserCard headingLabel={t('heading.organizations')}>
+          <>
             <Button
               variant="contained"
               color="primary"
@@ -163,8 +159,6 @@ const User: React.FC = () => {
               data-testid="add-new-institution-button">
               {t('common:add')}
             </Button>
-          }>
-          <>
             {institutionUnits.map((institutionUnit: InstitutionUnit) => (
               <InstitutionPresentationCard
                 key={institutionUnit.cristinUnitId}
