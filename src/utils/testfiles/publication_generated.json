@@ -25,10 +25,38 @@
     "month": "12",
     "day": "12"
   },
+  "projects": [
+    {
+      "id": "123",
+      "titles": [
+        {
+          "title": "Optimalisert osteloffproduksjon i 2019",
+          "language": "no"
+        }
+      ],
+      "grantId": "12312",
+      "financedBy": "NTNU"
+    }
+  ],
+  "reference": {
+    "type": "book",
+    "book": {
+      "type": "anthology",
+      "publisher": {
+        "title": "Osteloff book publisher",
+        "onlineIssn": "123"
+      },
+      "isbn": "1234",
+      "series": {
+        "title": "The Osteloff series"
+      }
+    }
+  },
   "files": [
     {
       "id": "3214324",
-      "name": "filename.pdf"
+      "title": "filename.pdf",
+      "license": "CC BY"
     }
   ],
   "publisher": "Littel - Tromp",
@@ -36,6 +64,5 @@
     "no": "Simulering som didaktisk tilnærming: Å tilrettelegge for likeverdige helsetjenester for innvandrerpasienter med kommunikasjonsutfordringer",
     "en": "Out-of-the-box optimize applications"
   },
-  "type": "TEXT",
   "language": "no"
 }

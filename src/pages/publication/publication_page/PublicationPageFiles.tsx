@@ -21,13 +21,11 @@ interface PublicationPageFilesProps {
 const PublicationPageFiles: FC<PublicationPageFilesProps> = ({ files }) => {
   return (
     <>
-      {files.map(() => {
-        return (
-          <FileIconWrapper>
-            <StyledFileIcon />
-          </FileIconWrapper>
-        );
-      })}
+      {files.map((file, index) => (
+        <FileIconWrapper key={file.id}>
+          <StyledFileIcon />
+        </FileIconWrapper>
+      ))}
     </>
   );
 };

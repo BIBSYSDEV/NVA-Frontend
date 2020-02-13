@@ -14,6 +14,7 @@ import LabelContentRowForPublicationPage from '../../components/LabelContentRowF
 import NormalText from '../../components/NormalText';
 import PublicationPageAuthors from './publication_page/PublicationPageAuthors';
 import PublicationPageFiles from './publication_page/PublicationPageFiles';
+import PublicationPageIdenfifiers from './publication_page/PublicationPageIdentifiers';
 
 const ContentWrapper = styled.div`
   display: flex;
@@ -88,6 +89,7 @@ const PublicationPage: FC<PublicationPageProps> = ({ publicationId }) => {
                   {publication.publicationDate.month && `-${publication.publicationDate.month}`}
                   {publication.publicationDate.day && `-${publication.publicationDate.day}`}
                 </LabelContentRowForPublicationPage>
+                <PublicationPageIdenfifiers publication={publication} />
               </StyledSidebarCard>
             </Sidebar>
             <MainContent>
@@ -109,6 +111,11 @@ const PublicationPage: FC<PublicationPageProps> = ({ publicationId }) => {
               {publication.tags && (
                 <LabelContentRowForPublicationPage label={t('description.tags')}>
                   {publication.tags}
+                </LabelContentRowForPublicationPage>
+              )}
+              {publication.projects.length > 0 && (
+                <LabelContentRowForPublicationPage label={t('description.project_association')}>
+                  {publication.projects?.[0].titles?.[0].title}
                 </LabelContentRowForPublicationPage>
               )}
             </MainContent>
