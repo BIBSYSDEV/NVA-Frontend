@@ -5,12 +5,11 @@ const StyledContentPage = styled.section`
   display: flex;
   flex-direction: column;
   width: 100%;
-  margin: auto;
   align-self: center;
   max-width: ${({ theme }) => theme.breakpoints.values.lg + 'px'};
   @media (min-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
     align-items: center;
-    margin: 1rem 2rem;
+    padding: 1rem 2rem;
   }
   flex-grow: 1;
 `;

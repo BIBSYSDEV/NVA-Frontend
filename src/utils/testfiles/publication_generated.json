@@ -1,3 +1,28 @@
 {
-  "id": "57854"
+  "authors": [
+    {
+      "name": "Spinka, Stephany",
+      "id": "98348043"
+    }
+  ],
+  "id": "1234",
+  "handle": "http:/hndl.net/57854",
+  "createdDate": "2020",
+  "abstract": "fdsfds dfsjlkjf sdlkfj sdklf jsdlfk jsdlkf ",
+  "description": "kfsdølkfdskfl øsdkf dsølkf sdløkf sdøf ksdø",
+  "license": "UNIT_CCBY",
+  "tags": "per, er, kul",
+  "doiLink": "doilink",
+  "publicationDate": {
+    "year": "1480",
+    "month": "12",
+    "day": "12"
+  },
+  "publisher": "Littel - Tromp",
+  "title": {
+    "no": "Cross-media brand niches",
+    "en": "Out-of-the-box optimize applications"
+  },
+  "type": "TEXT",
+  "language": "no"
 }
