@@ -3,16 +3,23 @@
     {
       "name": "Spinka, Stephany",
       "id": "98348043"
+    },
+    {
+      "name": "Skiles, Lane",
+      "id": "983433"
+    },
+    {
+      "name": "Bednar, Leonard",
+      "id": "1233"
     }
   ],
   "id": "1234",
-  "handle": "http:/hndl.net/57854",
   "createdDate": "2020",
-  "abstract": "fdsfds dfsjlkjf sdlkfj sdklf jsdlfk jsdlkf ",
-  "description": "kfsdølkfdskfl øsdkf dsølkf sdløkf sdøf ksdø",
+  "abstract": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras tincidunt, ante vitae convallis interdum, ipsum enim tempor dolor, sit amet condimentum lorem neque non sem. Nulla volutpat turpis elit. Nam fringilla sed nisi quis blandit. Nulla porttitor egestas massa, a fringilla nunc. Fusce at ornare urna. Sed luctus odio et velit dignissim, vel suscipit eros maximus. Nullam volutpat velit vel ante vestibulum, vitae accumsan lacus faucibus.\n\nNulla ultrices porta elit non scelerisque. In hac habitasse platea dictumst. Maecenas cursus lacinia magna non ultrices. Proin id porttitor mauris. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vitae tempus nunc. Maecenas eu leo gravida, dictum velit sit amet, faucibus tortor. Nam ut lacus pretium, aliquam risus sed, faucibus enim ",
+  "description": "Morbi sed neque egestas, egestas lacus ac, tincidunt metus. Donec quis ipsum vulputate, tempus nisi vulputate, commodo orci. Suspendisse blandit condimentum ex quis egestas. Ut rhoncus eros non condimentum mattis. Ut lectus nisi, molestie sit amet hendrerit ut, mollis vel odio. In a risus tellus. Morbi rutrum augue metus, ut malesuada ex posuere vitae. Nam nec rhoncus turpis.",
   "license": "UNIT_CCBY",
-  "tags": "per, er, kul",
-  "doiLink": "doilink",
+  "tags": "Ost, Loff, Majones",
+  "doiLink": "https://doi.org/10.1098/rspb.2018.0085",
   "publicationDate": {
     "year": "1480",
     "month": "12",
@@ -20,7 +27,7 @@
   },
   "publisher": "Littel - Tromp",
   "title": {
-    "no": "Cross-media brand niches",
+    "no": "Simulering som didaktisk tilnærming: Å tilrettelegge for likeverdige helsetjenester for innvandrerpasienter med kommunikasjonsutfordringer",
     "en": "Out-of-the-box optimize applications"
   },
   "type": "TEXT",
