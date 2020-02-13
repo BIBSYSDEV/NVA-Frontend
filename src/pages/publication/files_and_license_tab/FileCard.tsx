@@ -171,12 +171,12 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, updateFile, toggl
                     variant="outlined"
                     value={file.license}
                     label={t('files_and_license.license')}
-                    onChange={({ target: { value } }) => {
+                    onChange={({ target: { value } }) =>
                       updateFile({
                         ...file,
                         license: value,
-                      });
-                    }}>
+                      })
+                    }>
                     {licenses.map((license: License) => (
                       <MenuItem key={license.name} value={license.name} divider dense>
                         <ListItemIcon>

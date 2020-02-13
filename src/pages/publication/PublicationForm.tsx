@@ -93,9 +93,7 @@ const PublicationForm: FC<PublicationFormProps> = ({ uppy = createUppy() }) => {
     const title = searchParams.get('title') || '';
 
     // Get files uploaded from new publication view
-    const files = Object.values(uppy.getState().files).map(file => {
-      return { ...emptyFile, ...file };
-    });
+    const files = Object.values(uppy.getState().files).map(file => ({ ...emptyFile, ...file }));
 
     setInitialValues({
       ...emptyPublication,
