@@ -55,10 +55,10 @@ export const licenses: License[] = [
 export interface File {
   id: string;
   name: string;
-  uploadUrl: string;
+  preview?: string;
   data: {
     size: number;
-    lastModified: number;
+    lastModified?: number;
     type: string;
   };
   administrativeContract?: boolean;
@@ -70,7 +70,7 @@ export interface File {
 export const emptyFile: File = {
   id: '',
   name: '',
-  uploadUrl: '',
+  preview: '',
   data: {
     size: 0,
     lastModified: 0,

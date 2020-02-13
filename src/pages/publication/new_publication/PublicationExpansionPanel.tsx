@@ -28,6 +28,10 @@ const StyledIcon = styled.span`
   margin-right: 1rem;
 `;
 
+const StyledExpansionPanelDetails = styled(ExpansionPanelDetails)`
+  flex-direction: column;
+`;
+
 const PublicationExpansionPanel: React.FC<PublicationExpansionPanelProps> = ({
   headerLabel,
   icon,
@@ -45,7 +49,7 @@ const PublicationExpansionPanel: React.FC<PublicationExpansionPanelProps> = ({
         data-testid={dataTestId}>
         <StyledIcon>{icon}</StyledIcon> {headerLabel}
       </StyledExpansionPanelSummary>
-      <ExpansionPanelDetails>{children}</ExpansionPanelDetails>
+      <StyledExpansionPanelDetails>{children}</StyledExpansionPanelDetails>
     </StyledPublicationExpansionPanel>
   );
 };
