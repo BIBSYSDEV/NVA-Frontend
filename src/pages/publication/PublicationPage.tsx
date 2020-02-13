@@ -15,6 +15,7 @@ import NormalText from '../../components/NormalText';
 import PublicationPageAuthors from './publication_page/PublicationPageAuthors';
 import PublicationPageFiles from './publication_page/PublicationPageFiles';
 import PublicationPageIdenfifiers from './publication_page/PublicationPageIdentifiers';
+import PublicationPageSeries from './publication_page/PublicationPageSeries';
 
 const ContentWrapper = styled.div`
   display: flex;
@@ -118,6 +119,7 @@ const PublicationPage: FC<PublicationPageProps> = ({ publicationId }) => {
                   {publication.projects?.[0].titles?.[0].title}
                 </LabelContentRowForPublicationPage>
               )}
+              <PublicationPageSeries publication={publication}></PublicationPageSeries>
             </MainContent>
           </ContentWrapper>
         </ContentPage>
