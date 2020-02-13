@@ -14,7 +14,7 @@ import FilesAndLicensePanel from './FilesAndLicensePanel';
 import { PublicationFormTabs } from './PublicationFormTabs';
 import ReferencesPanel from './ReferencesPanel';
 import SubmissionPanel from './SubmissionPanel';
-import { Uppy } from '../../types/file.types';
+import { Uppy, emptyFile } from '../../types/file.types';
 
 const StyledPublication = styled.div`
   width: 100%;
@@ -92,13 +92,19 @@ const PublicationForm: FC<PublicationFormProps> = ({ uppy = createUppy() }) => {
     const searchParams = new URLSearchParams(window.location.search);
     const title = searchParams.get('title') || '';
 
+    // Get files uploaded from new publication view
+    const files = Object.values(uppy.getState().files).map(file => {
+      return { ...emptyFile, ...file };
+    });
+
     setInitialValues({
       ...emptyPublication,
       title: {
         nb: title,
       },
+      files,
     });
-  }, []);
+  }, [uppy]);
 
   useEffect(() => {
     return () => uppy && uppy.close();
