@@ -25,6 +25,12 @@
     "month": "12",
     "day": "12"
   },
+  "files": [
+    {
+      "id": "3214324",
+      "name": "filename.pdf"
+    }
+  ],
   "publisher": "Littel - Tromp",
   "title": {
     "no": "Simulering som didaktisk tilnærming: Å tilrettelegge for likeverdige helsetjenester for innvandrerpasienter med kommunikasjonsutfordringer",

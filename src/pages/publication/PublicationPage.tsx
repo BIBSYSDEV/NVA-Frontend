@@ -9,11 +9,11 @@ import styled from 'styled-components';
 import ContentPage from '../../components/FormCard/ContentPage';
 import FormCardHeading from '../../components/FormCard/FormCardHeading';
 import FormCard from '../../components/FormCard/FormCard';
-import DescriptionIcon from '@material-ui/icons/DescriptionOutlined';
 import { useTranslation } from 'react-i18next';
 import LabelContentRowForPublicationPage from '../../components/LabelContentRowForPublicationPage';
 import NormalText from '../../components/NormalText';
-import PublicationPageAuthors from './PublicationPageAuthors';
+import PublicationPageAuthors from './publication_page/PublicationPageAuthors';
+import PublicationPageFiles from './publication_page/PublicationPageFiles';
 
 const ContentWrapper = styled.div`
   display: flex;
@@ -32,17 +32,6 @@ const MainContent = styled.div`
   flex: 1;
   padding-left: 1rem;
   min-width: 30rem;
-`;
-
-const StyledFileIcon = styled(DescriptionIcon)`
-  width: 100px;
-  height: 150px;
-  border: 1px solid black;
-  padding: 0.5rem;
-`;
-
-const FileIconWrapper = styled.div`
-  text-align: center;
 `;
 
 const StyledSidebarCard = styled(FormCard)`
@@ -81,37 +70,47 @@ const PublicationPage: FC<PublicationPageProps> = ({ publicationId }) => {
       ) : (
         <ContentPage>
           <FormCardHeading>{publication.title?.no}</FormCardHeading>
-          <PublicationPageAuthors authors={publication.authors} />
+          {publication.authors && <PublicationPageAuthors authors={publication.authors} />}
           <ContentWrapper>
             <Sidebar>
               <StyledSidebarCard>
                 <NormalText>NTNU institutt for osteloff</NormalText>
                 <NormalText>SINTEF Teknologi og samfunn</NormalText>
               </StyledSidebarCard>
-              <StyledSidebarCard>
-                <FileIconWrapper>
-                  <StyledFileIcon />
-                </FileIconWrapper>
-              </StyledSidebarCard>
+              {publication.files && (
+                <StyledSidebarCard>
+                  <PublicationPageFiles files={publication.files} />
+                </StyledSidebarCard>
+              )}
               <StyledSidebarCard>
                 <LabelContentRowForPublicationPage label={t('description.date_published')}>
                   {publication.publicationDate.year}
+                  {publication.publicationDate.month && `-${publication.publicationDate.month}`}
+                  {publication.publicationDate.day && `-${publication.publicationDate.day}`}
                 </LabelContentRowForPublicationPage>
               </StyledSidebarCard>
             </Sidebar>
             <MainContent>
-              <LabelContentRowForPublicationPage label={t('references.doi')}>
-                <Link href={publication.doiLink}>{publication.doiLink}</Link>
-              </LabelContentRowForPublicationPage>
-              <LabelContentRowForPublicationPage label={t('description.abstract')}>
-                {publication.abstract}
-              </LabelContentRowForPublicationPage>
-              <LabelContentRowForPublicationPage label={t('description.description')}>
-                {publication.description}
-              </LabelContentRowForPublicationPage>
-              <LabelContentRowForPublicationPage label={t('description.tags')}>
-                {publication.tags}
-              </LabelContentRowForPublicationPage>
+              {publication.doiLink && (
+                <LabelContentRowForPublicationPage label={t('references.doi')}>
+                  <Link href={publication.doiLink}>{publication.doiLink}</Link>
+                </LabelContentRowForPublicationPage>
+              )}
+              {publication.abstract && (
+                <LabelContentRowForPublicationPage label={t('description.abstract')}>
+                  {publication.abstract}
+                </LabelContentRowForPublicationPage>
+              )}
+              {publication.description && (
+                <LabelContentRowForPublicationPage label={t('description.description')}>
+                  {publication.description}
+                </LabelContentRowForPublicationPage>
+              )}
+              {publication.tags && (
+                <LabelContentRowForPublicationPage label={t('description.tags')}>
+                  {publication.tags}
+                </LabelContentRowForPublicationPage>
+              )}
             </MainContent>
           </ContentWrapper>
         </ContentPage>

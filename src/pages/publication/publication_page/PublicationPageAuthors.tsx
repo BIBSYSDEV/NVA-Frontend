@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
-import { Contributor } from '../../types/contributor.types';
-import NormalText from '../../components/NormalText';
+import { Contributor } from '../../../types/contributor.types';
+import NormalText from '../../../components/NormalText';
 import styled from 'styled-components';
 
 const StyledAuthors = styled(NormalText)``;
