@@ -16,6 +16,7 @@ import PublicationPageAuthors from './publication_page/PublicationPageAuthors';
 import PublicationPageFiles from './publication_page/PublicationPageFiles';
 import PublicationPageIdenfifiers from './publication_page/PublicationPageIdentifiers';
 import PublicationPageSeries from './publication_page/PublicationPageSeries';
+import PublicationPageJournal from './publication_page/PublicationPageJournal';
 
 const ContentWrapper = styled.div`
   display: flex;
@@ -114,12 +115,13 @@ const PublicationPage: FC<PublicationPageProps> = ({ publicationId }) => {
                   {publication.tags}
                 </LabelContentRowForPublicationPage>
               )}
+              <PublicationPageJournal publication={publication} />
               {publication.projects.length > 0 && (
                 <LabelContentRowForPublicationPage label={t('description.project_association')}>
                   {publication.projects?.[0].titles?.[0].title}
                 </LabelContentRowForPublicationPage>
               )}
-              <PublicationPageSeries publication={publication}></PublicationPageSeries>
+              <PublicationPageSeries publication={publication} />
             </MainContent>
           </ContentWrapper>
         </ContentPage>
