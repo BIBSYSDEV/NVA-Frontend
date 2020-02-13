@@ -81,6 +81,24 @@ const PublicationForm: FC = () => {
         }),
       }),
     }),
+    contributors: Yup.array()
+      .of(
+        Yup.object().shape({
+          type: Yup.string(),
+          name: Yup.string(),
+          corresponding: Yup.bool(),
+          email: Yup.string(),
+          orcid: Yup.string(),
+          systemControlNumber: Yup.string(),
+          institutions: Yup.array().of(
+            Yup.object().shape({
+              id: Yup.string(),
+              name: Yup.string(),
+            })
+          ),
+        })
+      )
+      .min(1, t('publication:feedback.minimum_one_contributor')),
   });
 
   useEffect(() => {

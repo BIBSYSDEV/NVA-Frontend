@@ -1,12 +1,11 @@
 export interface Contributor {
-  id: string;
   name: string;
-  institution: Institution | null;
+  institutions: Institution[];
+  type: ContributorType | '';
   orcid?: string;
   corresponding?: boolean;
   email?: string;
-  type: ContributorType | '';
-  verified?: boolean;
+  systemControlNumber?: string;
 }
 
 interface Institution {
@@ -15,14 +14,14 @@ interface Institution {
   institution?: Institution;
 }
 
-const emptyContributor: Contributor = {
-  id: '',
+export const emptyContributor: Contributor = {
   name: '',
-  institution: null,
+  institutions: [],
+  type: '',
   orcid: '',
   corresponding: false,
-  type: '',
-  verified: false,
+  email: '',
+  systemControlNumber: '',
 };
 
 enum ContributorType {

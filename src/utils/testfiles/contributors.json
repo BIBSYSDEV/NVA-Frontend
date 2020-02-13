@@ -1,54 +1,64 @@
 [
   {
-    "id": "1",
     "name": "Eirik Nilsen",
-    "institutions": ["Unit", "BIBSYS"],
-    "selectedInstitution": "",
+    "institutions": [
+      {
+        "id": "1",
+        "name": "Unit",
+        "institution": {
+          "id": "1.2",
+          "name": "Fakultet for osteloff"
+        }
+      },
+      { "id": "2", "name": "BIBSYS" }
+    ],
     "orcid": "some orcid",
-    "corresponding": false,
+    "corresponding": true,
+    "email": "en@unit.no",
     "type": "Author",
-    "verified": true
+    "systemControlNumber": "1234321"
   },
   {
-    "id": "2",
     "name": "Per Christian Bjelke",
-    "institutions": ["Unit", "BIBSYS"],
-    "selectedInstitution": "",
+    "institutions": [
+      { "id": "1", "name": "Unit" },
+      { "id": "2", "name": "BIBSYS" }
+    ],
     "corresponding": false,
     "type": "Author",
-    "verified": true
+    "email": "pcb@unit.no",
+    "systemControlNumber": "2432432"
   },
   {
-    "id": "3",
     "name": "Sarah Serussi",
-    "institutions": ["Unit"],
-    "selectedInstitution": "",
+    "institutions": [{ "id": "1", "name": "Unit" }],
     "corresponding": false,
     "type": "Author",
-    "verified": true
+    "email": "sase@unit.no",
+    "systemControlNumber": ""
   },
   {
-    "id": "4",
     "name": "Kjetil Møkkelgjerd",
-    "selectedInstitution": "",
+    "institutions": [],
     "corresponding": false,
     "type": "Author",
-    "verified": true
+    "email": "",
+    "systemControlNumber": "9845784"
   },
   {
-    "id": "5",
     "name": "Svenn Gjetø",
-    "selectedInstitution": "",
+    "institutions": [{ "id": "1", "name": "Unit" }],
     "corresponding": false,
     "type": "Editor",
-    "verified": false
+    "email": "",
+    "systemControlNumber": "83743746"
   },
   {
-    "id": "6",
     "name": "Nikolai Fikse Raanes",
-    "selectedInstitution": "",
+    "institutions": [],
     "corresponding": false,
     "type": "Photographer",
-    "verified": false
+    "email": "",
+    "systemControlNumber": ""
   }
 ]
