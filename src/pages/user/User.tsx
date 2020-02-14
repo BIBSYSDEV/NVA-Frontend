@@ -6,7 +6,7 @@ import styled from 'styled-components';
 
 import { Link as MuiLink, Button } from '@material-ui/core';
 
-import { updateOrcidForAuthority, updateInstitutionForAuthority } from '../../api/authorityApi';
+import { updateOrcidForAuthority, addInstitutionForAuthority } from '../../api/authorityApi';
 import { getOrcidInfo } from '../../api/external/orcidApi';
 import ButtonModal from '../../components/ButtonModal';
 import { setAuthorityData } from '../../redux/actions/userActions';
@@ -18,7 +18,7 @@ import UserLanguage from './UserLanguage';
 import UserOrcid from './UserOrcid';
 import UserRoles from './UserRoles';
 import { InstitutionUnit, emptyInstitutionUnit } from './../../types/institution.types';
-import InstitutionPresentationCard from './InstitutionPresentationCard';
+import InstitutionCard from './InstitutionPresentationCard';
 import { addInstitutionUnit } from '../../redux/actions/institutionActions';
 import { getInstitutionUnitNames } from '../../api/institutionApi';
 import { addNotification } from '../../redux/actions/notificationActions';
@@ -70,7 +70,11 @@ const User: React.FC = () => {
     const updateOrcid = async () => {
       if (user.authority?.systemControlNumber && !user.authority?.orcids.includes(user.externalOrcid)) {
         const updatedAuthority = await updateOrcidForAuthority(user.externalOrcid, user.authority.systemControlNumber);
-        dispatch(setAuthorityData(updatedAuthority));
+        if (updatedAuthority?.error) {
+          dispatch(addNotification(updatedAuthority.error, 'error'));
+        } else if (updatedAuthority) {
+          dispatch(setAuthorityData(updatedAuthority));
+        }
       }
     };
     if (user.externalOrcid) {
@@ -93,21 +97,6 @@ const User: React.FC = () => {
   const handleClickAdd = () => setInstitutionUnits([...institutionUnits, emptyInstitutionUnit]);
 
   const addInstitution = async (cristinUnitId: string) => {
-    const updateAuthority = async (cristinUnitId: string) => {
-      if (!user.authority.orgunitids?.find(orgunitid => orgunitid === cristinUnitId)) {
-        const updatedAuthority = await updateInstitutionForAuthority(cristinUnitId, user.authority.systemControlNumber);
-        if (updatedAuthority?.error) {
-          dispatch(addNotification(updatedAuthority.error, 'error'));
-        } else if (updatedAuthority) {
-          dispatch(setAuthorityData(updatedAuthority));
-          try {
-            const institutionUnit = await getInstitutionUnitNames(cristinUnitId);
-            if (institutionUnit.cristinUnitId !== '') dispatch(addInstitutionUnit(institutionUnit));
-          } catch {}
-        }
-      }
-    };
-
     if (!institutionUnits.find(institutionUnit => institutionUnit.cristinUnitId === cristinUnitId)) {
       const newInstitutionUnit: InstitutionUnit = await getInstitutionUnitNames(cristinUnitId);
       setInstitutionUnits([
@@ -115,7 +104,22 @@ const User: React.FC = () => {
         newInstitutionUnit,
       ]);
 
-      // updateAuthority(cristinUnitId);
+      const updatedAuthority = await addInstitutionForAuthority(
+        cristinUnitId,
+        user.authority.orgunitids,
+        user.authority.systemControlNumber
+      );
+      if (updatedAuthority?.error) {
+        dispatch(addNotification(updatedAuthority.error, 'error'));
+      } else if (updatedAuthority) {
+        dispatch(setAuthorityData(updatedAuthority));
+        try {
+          const institutionUnit = await getInstitutionUnitNames(cristinUnitId);
+          if (institutionUnit.cristinUnitId !== '') dispatch(addInstitutionUnit(institutionUnit));
+        } catch {
+          dispatch(addNotification(t('search_institution'), 'error'));
+        }
+      }
     } else {
       setInstitutionUnits(institutionUnits.filter(institutionUnit => institutionUnit.cristinUnitId !== ''));
     }
@@ -154,6 +158,13 @@ const User: React.FC = () => {
         <UserOrcid />
         <UserCard headingLabel={t('heading.organizations')}>
           <>
+            {institutionUnits.map((institutionUnit: InstitutionUnit) => (
+              <InstitutionCard
+                key={institutionUnit.cristinUnitId}
+                institutionUnit={institutionUnit}
+                addNewInstitutionUnit={addInstitution}
+              />
+            ))}
             <Button
               variant="contained"
               color="primary"
@@ -162,13 +173,6 @@ const User: React.FC = () => {
               data-testid="add-new-institution-button">
               {t('common:add')}
             </Button>
-            {institutionUnits.map((institutionUnit: InstitutionUnit) => (
-              <InstitutionPresentationCard
-                key={institutionUnit.cristinUnitId}
-                institutionUnit={institutionUnit}
-                addNewInstitutionUnit={addInstitution}
-              />
-            ))}
           </>
         </UserCard>
       </StyledPrimaryUserInfo>

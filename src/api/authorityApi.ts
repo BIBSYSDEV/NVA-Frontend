@@ -59,6 +59,23 @@ export const updateInstitutionForAuthority = async (orgunitid: string, systemCon
   return await updateAuthorityAndHandleErrors(url, { orgunitid });
 };
 
+export const addInstitutionForAuthority = async (
+  cristinUnitId: string,
+  orgunitids: string[],
+  systemControlNumber: string
+) => {
+  if (!(orgunitids.length > 0)) {
+    if (!orgunitids.find(orgunitid => orgunitid === cristinUnitId)) {
+      const updatedAuthority = await updateInstitutionForAuthority(cristinUnitId, systemControlNumber);
+      if (updatedAuthority?.error) {
+        return { error: updatedAuthority.error };
+      } else if (updatedAuthority) {
+        return updatedAuthority;
+      }
+    }
+  }
+};
+
 export const createAuthority = async (name: string) => {
   const url = AuthorityApiPaths.AUTHORITY;
 

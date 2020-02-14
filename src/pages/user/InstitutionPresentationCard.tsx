@@ -33,10 +33,7 @@ interface InstitutionPresentationProps {
   addNewInstitutionUnit: (cristinUnitId: string) => void;
 }
 
-const InstitutionPresentation: React.FC<InstitutionPresentationProps> = ({
-  institutionUnit,
-  addNewInstitutionUnit,
-}) => {
+const InstitutionCard: React.FC<InstitutionPresentationProps> = ({ institutionUnit, addNewInstitutionUnit }) => {
   const [selectedCristinUnitId, setSelectedCristinUnitId] = useState(institutionUnit?.cristinUnitId || '');
   const [openEdit, setOpenEdit] = useState(false);
   const { t } = useTranslation('profile');
@@ -53,18 +50,13 @@ const InstitutionPresentation: React.FC<InstitutionPresentationProps> = ({
       {institutionId && (
         <StyledSelectedInstitution data-testid="institution-presentation">
           {institutionUnit.subUnits.map((subUnit, index) => {
-            console.log(subUnit.cristinUnitId);
             return index === 0 ? (
-              <>
-                <StyledInstitutionTextMain
-                  data-testid="institution-presentation-top"
-                  key={`institution-${institutionId}-${index}`}>
-                  {selectInstitutionNameByLanguage(subUnit.unitNames)}
-                  {institutionUnit.cristinUnitId && (
-                    <Button onClick={() => setOpenEdit(true)}>{t('common:edit')}</Button>
-                  )}
-                </StyledInstitutionTextMain>
-              </>
+              <StyledInstitutionTextMain
+                data-testid="institution-presentation-top"
+                key={`institution-${institutionId}-${index}`}>
+                {selectInstitutionNameByLanguage(subUnit.unitNames)}
+                {/* {institutionUnit.cristinUnitId && <Button onClick={() => setOpenEdit(true)}>{t('common:edit')}</Button>} */}
+              </StyledInstitutionTextMain>
             ) : (
               <StyledInstitutionText
                 data-testid="institution-presentation-subunit-1"
@@ -103,4 +95,4 @@ const InstitutionPresentation: React.FC<InstitutionPresentationProps> = ({
   );
 };
 
-export default InstitutionPresentation;
+export default InstitutionCard;

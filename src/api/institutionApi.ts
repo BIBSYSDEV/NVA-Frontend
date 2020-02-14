@@ -44,16 +44,19 @@ export const getInstitutionUnitNames = async (cristinUnitId: string) => {
     subUnits: [],
   };
 
-  // find subUnits
   const subUnit: InstitutionSubUnit = await getInstitutionSubUnit(cristinUnitId);
-  institutionUnit.subUnits = [subUnit];
 
-  if (subUnit.parentUnit) {
-    let parentSubUnit = await getInstitutionSubUnit(subUnit.parentUnit?.cristinUnitId);
-    institutionUnit.subUnits = [parentSubUnit, ...institutionUnit.subUnits];
-    while (parentSubUnit.parentUnit) {
+  // find subUnits
+  if (!cristinUnitId.endsWith('0.0.0')) {
+    institutionUnit.subUnits = [subUnit];
+
+    if (subUnit.parentUnit) {
+      let parentSubUnit = await getInstitutionSubUnit(subUnit.parentUnit?.cristinUnitId);
       institutionUnit.subUnits = [parentSubUnit, ...institutionUnit.subUnits];
-      parentSubUnit = await getInstitutionSubUnit(parentSubUnit.parentUnit.cristinUnitId);
+      while (parentSubUnit.parentUnit) {
+        institutionUnit.subUnits = [parentSubUnit, ...institutionUnit.subUnits];
+        parentSubUnit = await getInstitutionSubUnit(parentSubUnit.parentUnit.cristinUnitId);
+      }
     }
   }
 
