@@ -63,8 +63,6 @@ const InstitutionSelector: React.FC<InstitutionSelectorProps> = ({ setSelectedCr
     }
   };
 
-  console.log(subUnitSelector);
-
   return (
     <StyledInstitutionSelector>
       <InstitutionSearch

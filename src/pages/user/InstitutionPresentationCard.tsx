@@ -53,6 +53,7 @@ const InstitutionPresentation: React.FC<InstitutionPresentationProps> = ({
       {institutionId && (
         <StyledSelectedInstitution data-testid="institution-presentation">
           {institutionUnit.subUnits.map((subUnit, index) => {
+            console.log(subUnit.cristinUnitId);
             return index === 0 ? (
               <>
                 <StyledInstitutionTextMain
@@ -63,11 +64,6 @@ const InstitutionPresentation: React.FC<InstitutionPresentationProps> = ({
                     <Button onClick={() => setOpenEdit(true)}>{t('common:edit')}</Button>
                   )}
                 </StyledInstitutionTextMain>
-                <StyledInstitutionText
-                  data-testid="institution-presentation-subunit-1"
-                  key={`institution-${institutionId}-${index}`}>
-                  {selectInstitutionNameByLanguage(subUnit.unitNames)}
-                </StyledInstitutionText>
               </>
             ) : (
               <StyledInstitutionText

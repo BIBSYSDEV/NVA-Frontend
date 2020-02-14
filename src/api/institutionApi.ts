@@ -50,6 +50,7 @@ export const getInstitutionUnitNames = async (cristinUnitId: string) => {
 
   if (subUnit.parentUnit) {
     let parentSubUnit = await getInstitutionSubUnit(subUnit.parentUnit?.cristinUnitId);
+    institutionUnit.subUnits = [parentSubUnit, ...institutionUnit.subUnits];
     while (parentSubUnit.parentUnit) {
       institutionUnit.subUnits = [parentSubUnit, ...institutionUnit.subUnits];
       parentSubUnit = await getInstitutionSubUnit(parentSubUnit.parentUnit.cristinUnitId);
