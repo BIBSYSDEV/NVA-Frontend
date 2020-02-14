@@ -63,7 +63,7 @@ export default createMuiTheme({
   },
   typography: {
     body1: {
-      fontSize: '0.8rem',
+      fontSize: '0.85rem',
       color: Colors.SecondaryText,
     },
     h1: {

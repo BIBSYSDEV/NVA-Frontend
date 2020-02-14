@@ -6,7 +6,7 @@ import { File } from '../../../types/file.types';
 const StyledFileIcon = styled(DescriptionIcon)`
   width: 100px;
   height: 150px;
-  border: 1px solid black;
+  border: 1px solid ${({ theme }) => theme.palette.text.primary};
   padding: 0.5rem;
 `;
 

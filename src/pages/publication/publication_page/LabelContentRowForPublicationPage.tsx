@@ -14,13 +14,17 @@ const StyledText = styled(NormalText)`
   display: inline;
 `;
 
-interface LabelTextLineProps {
+interface LabelContentRowForPublicationPageProps {
   label: string;
   children: any;
   dataTestId?: string;
 }
 
-const LabelContentRowForPublicationPage: React.FC<LabelTextLineProps> = ({ label, children, dataTestId }) => {
+const LabelContentRowForPublicationPage: React.FC<LabelContentRowForPublicationPageProps> = ({
+  label,
+  children,
+  dataTestId,
+}) => {
   return (
     <StyledRow data-testid={dataTestId}>
       <StyledLabel>{label}: </StyledLabel>
