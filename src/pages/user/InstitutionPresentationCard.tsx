@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { InstitutionUnit } from '../../types/institution.types';
 import { selectInstitutionNameByLanguage } from '../../utils/helpers';
-import { Button } from '@material-ui/core';
-import { useTranslation } from 'react-i18next';
 import InstitutionSelector from './InstitutionSelector';
 
 const StyledSelectedInstitution = styled.div`
@@ -24,24 +22,13 @@ const StyledInstitutionTextMain = styled(StyledInstitutionText)`
   justify-content: space-between;
 `;
 
-const StyledButton = styled(Button)`
-  margin: 0.5rem;
-`;
-
 interface InstitutionPresentationProps {
   institutionUnit: InstitutionUnit;
   addNewInstitutionUnit: (cristinUnitId: string) => void;
 }
 
 const InstitutionCard: React.FC<InstitutionPresentationProps> = ({ institutionUnit, addNewInstitutionUnit }) => {
-  const [selectedCristinUnitId, setSelectedCristinUnitId] = useState(institutionUnit?.cristinUnitId || '');
-  const [openEdit, setOpenEdit] = useState(false);
-  const { t } = useTranslation('profile');
-
-  const handleConfirm = () => {
-    setOpenEdit(false);
-    addNewInstitutionUnit(selectedCristinUnitId);
-  };
+  const [open, setOpen] = useState(false);
 
   const institutionId = institutionUnit.cristinUnitId;
 
@@ -67,29 +54,13 @@ const InstitutionCard: React.FC<InstitutionPresentationProps> = ({ institutionUn
           })}
         </StyledSelectedInstitution>
       )}
-      {(!institutionUnit.cristinUnitId || openEdit) && (
-        <>
-          <InstitutionSelector
-            setSelectedCristinUnitId={setSelectedCristinUnitId}
-            disabled={!!institutionUnit.cristinUnitId}
-          />
-          <StyledButton
-            onClick={() => handleConfirm()}
-            variant="contained"
-            color="primary"
-            disabled={!selectedCristinUnitId}
-            data-testid="institution-add-button">
-            {t('common:add')}
-          </StyledButton>
-          <StyledButton
-            onClick={() => {
-              setOpenEdit(false);
-            }}
-            variant="contained"
-            color="primary">
-            {t('common:cancel')}
-          </StyledButton>
-        </>
+      {open && (
+        <InstitutionSelector
+          institutionUnit={institutionUnit}
+          disabled={!!institutionUnit.cristinUnitId}
+          addNewInstitutionUnit={addNewInstitutionUnit}
+          setOpen={setOpen}
+        />
       )}
     </>
   );

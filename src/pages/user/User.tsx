@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router';
 import styled from 'styled-components';
 
-import { Link as MuiLink, Button } from '@material-ui/core';
+import { Link as MuiLink } from '@material-ui/core';
 
-import { updateOrcidForAuthority, addInstitutionForAuthority } from '../../api/authorityApi';
+import { updateOrcidForAuthority } from '../../api/authorityApi';
 import { getOrcidInfo } from '../../api/external/orcidApi';
 import ButtonModal from '../../components/ButtonModal';
 import { setAuthorityData } from '../../redux/actions/userActions';
@@ -17,11 +17,8 @@ import UserInfo from './UserInfo';
 import UserLanguage from './UserLanguage';
 import UserOrcid from './UserOrcid';
 import UserRoles from './UserRoles';
-import { InstitutionUnit, emptyInstitutionUnit } from './../../types/institution.types';
-import InstitutionCard from './InstitutionPresentationCard';
-import { addInstitutionUnit } from '../../redux/actions/institutionActions';
-import { getInstitutionUnitNames } from '../../api/institutionApi';
 import { addNotification } from '../../redux/actions/notificationActions';
+import UserInstitution from './UserInstitution';
 
 const StyledUserPage = styled.div`
   display: grid;
@@ -50,7 +47,6 @@ const StyledPrimaryUserInfo = styled.div`
 const User: React.FC = () => {
   const { t } = useTranslation('profile');
   const user = useSelector((state: RootStore) => state.user);
-  const [institutionUnits, setInstitutionUnits] = useState<InstitutionUnit[]>([]);
   const location = useLocation();
   const dispatch = useDispatch();
   const history = useHistory();
@@ -81,50 +77,6 @@ const User: React.FC = () => {
       updateOrcid();
     }
   }, [user.authority, dispatch, user.externalOrcid]);
-
-  useEffect(() => {
-    const newInstitutionUnits = institutionUnits.filter(
-      institutionUnit =>
-        !user.institutionUnits.some(
-          storedInstitutionUnit => storedInstitutionUnit.cristinUnitId === institutionUnit.cristinUnitId
-        )
-    );
-    newInstitutionUnits.forEach(institutionUnit => {
-      if (institutionUnit.cristinUnitId !== '') dispatch(addInstitutionUnit(institutionUnit));
-    });
-  }, [institutionUnits, user.institutionUnits, dispatch]);
-
-  const handleClickAdd = () => setInstitutionUnits([...institutionUnits, emptyInstitutionUnit]);
-
-  const addInstitution = async (cristinUnitId: string) => {
-    if (!institutionUnits.find(institutionUnit => institutionUnit.cristinUnitId === cristinUnitId)) {
-      const newInstitutionUnit: InstitutionUnit = await getInstitutionUnitNames(cristinUnitId);
-      setInstitutionUnits([
-        ...institutionUnits.filter(institutionUnit => institutionUnit.cristinUnitId !== ''),
-        newInstitutionUnit,
-      ]);
-
-      const updatedAuthority = await addInstitutionForAuthority(
-        cristinUnitId,
-        user.authority.orgunitids,
-        user.authority.systemControlNumber
-      );
-      if (updatedAuthority?.error) {
-        dispatch(addNotification(updatedAuthority.error, 'error'));
-      } else if (updatedAuthority) {
-        dispatch(setAuthorityData(updatedAuthority));
-        try {
-          const institutionUnit = await getInstitutionUnitNames(cristinUnitId);
-          if (institutionUnit.cristinUnitId !== '') dispatch(addInstitutionUnit(institutionUnit));
-        } catch {
-          dispatch(addNotification(t('search_institution'), 'error'));
-        }
-      }
-    } else {
-      setInstitutionUnits(institutionUnits.filter(institutionUnit => institutionUnit.cristinUnitId !== ''));
-    }
-  };
-
   return (
     <StyledUserPage>
       <StyledSecondaryUserInfo>
@@ -156,25 +108,7 @@ const User: React.FC = () => {
           )}
         </UserCard>
         <UserOrcid />
-        <UserCard headingLabel={t('heading.organizations')}>
-          <>
-            {institutionUnits.map((institutionUnit: InstitutionUnit) => (
-              <InstitutionCard
-                key={institutionUnit.cristinUnitId}
-                institutionUnit={institutionUnit}
-                addNewInstitutionUnit={addInstitution}
-              />
-            ))}
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleClickAdd}
-              disabled={!user.authority?.systemControlNumber}
-              data-testid="add-new-institution-button">
-              {t('common:add')}
-            </Button>
-          </>
-        </UserCard>
+        <UserInstitution />
       </StyledPrimaryUserInfo>
     </StyledUserPage>
   );
