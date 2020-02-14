@@ -40,9 +40,7 @@ const StyledContent = styled.div`
   width: 100%;
   align-self: center;
   max-width: ${({ theme }) => theme.breakpoints.values.lg + 'px'};
-  @media (min-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-    align-items: center;
-  }
+  align-items: center;
   flex-grow: 1;
 `;
 
