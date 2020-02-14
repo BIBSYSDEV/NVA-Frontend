@@ -23,16 +23,16 @@ const ContentWrapper = styled.div`
   display: flex;
   padding-top: 1rem;
 
-  @media only screen and (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
     flex-direction: column;
   }
 `;
 
-const Sidebar = styled.div`
+const StyledSidebar = styled.div`
   min-width: 15rem;
 `;
 
-const MainContent = styled.div`
+const StyledMainContent = styled.div`
   flex: 1;
   padding-left: 1rem;
   min-width: 30rem;
@@ -77,7 +77,7 @@ const PublicationPage: FC<PublicationPageProps> = ({ publicationId }) => {
               <FormCardHeading>{publication.title?.no}</FormCardHeading>
               {publication.authors && <PublicationPageAuthors authors={publication.authors} />}
               <ContentWrapper>
-                <Sidebar>
+                <StyledSidebar>
                   <StyledSidebarCard>
                     <NormalText>NTNU institutt for osteloff</NormalText>
                     <NormalText>SINTEF Teknologi og samfunn</NormalText>
@@ -95,8 +95,8 @@ const PublicationPage: FC<PublicationPageProps> = ({ publicationId }) => {
                     </LabelContentRowForPublicationPage>
                     <PublicationPageIdentifiers publication={publication} />
                   </StyledSidebarCard>
-                </Sidebar>
-                <MainContent>
+                </StyledSidebar>
+                <StyledMainContent>
                   {publication.doiLink && (
                     <LabelContentRowForPublicationPage label={t('references.doi')}>
                       <Link href={publication.doiLink}>{publication.doiLink}</Link>
@@ -124,7 +124,7 @@ const PublicationPage: FC<PublicationPageProps> = ({ publicationId }) => {
                     </LabelContentRowForPublicationPage>
                   )}
                   <PublicationPageSeries publication={publication} />
-                </MainContent>
+                </StyledMainContent>
               </ContentWrapper>
             </>
           ) : (
