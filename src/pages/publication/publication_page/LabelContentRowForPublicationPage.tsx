@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import NormalText from './NormalText';
+import NormalText from '../../../components/NormalText';
 
 const StyledRow = styled.div`
   padding-bottom: 0.5rem;

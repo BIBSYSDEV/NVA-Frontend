@@ -10,7 +10,7 @@ import ContentPage from '../../components/ContentPage';
 import FormCardHeading from '../../components/FormCard/FormCardHeading';
 import FormCard from '../../components/FormCard/FormCard';
 import { useTranslation } from 'react-i18next';
-import LabelContentRowForPublicationPage from '../../components/LabelContentRowForPublicationPage';
+import LabelContentRowForPublicationPage from './publication_page/LabelContentRowForPublicationPage';
 import PublicationPageAuthors from './publication_page/PublicationPageAuthors';
 import PublicationPageFiles from './publication_page/PublicationPageFiles';
 import PublicationPageJournal from './publication_page/PublicationPageJournal';
