@@ -46,29 +46,40 @@ const InstitutionPresentation: React.FC<InstitutionPresentationProps> = ({
     addNewInstitutionUnit(selectedCristinUnitId);
   };
 
+  const institutionId = institutionUnit.cristinUnitId;
+
   return (
     <>
-      {institutionUnit.cristinUnitId && (
+      {institutionId && (
         <StyledSelectedInstitution data-testid="institution-presentation">
-          {institutionUnit.institutionName && institutionUnit.institutionName.length > 0 && (
-            <StyledInstitutionTextMain data-testid="institution-presentation-top">
-              {selectInstitutionNameByLanguage(institutionUnit.institutionName)}
-              {institutionUnit.cristinUnitId && <Button onClick={() => setOpenEdit(true)}>{t('common:edit')}</Button>}
-            </StyledInstitutionTextMain>
-          )}
-          {institutionUnit.level1Name && institutionUnit.level1Name.length > 0 && (
-            <StyledInstitutionText data-testid="institution-presentation-subunit-1">
-              {selectInstitutionNameByLanguage(institutionUnit.level1Name)}
-            </StyledInstitutionText>
-          )}
-          {institutionUnit.level2Name && institutionUnit.level2Name.length > 0 && (
-            <StyledInstitutionText data-testid="institution-presentation-subunit-2">
-              {selectInstitutionNameByLanguage(institutionUnit.level2Name)}
-            </StyledInstitutionText>
-          )}
+          {institutionUnit.subUnits.map((subUnit, index) => {
+            return index === 0 ? (
+              <>
+                <StyledInstitutionTextMain
+                  data-testid="institution-presentation-top"
+                  key={`institution-${institutionId}-${index}`}>
+                  {selectInstitutionNameByLanguage(subUnit.unitNames)}
+                  {institutionUnit.cristinUnitId && (
+                    <Button onClick={() => setOpenEdit(true)}>{t('common:edit')}</Button>
+                  )}
+                </StyledInstitutionTextMain>
+                <StyledInstitutionText
+                  data-testid="institution-presentation-subunit-1"
+                  key={`institution-${institutionId}-${index}`}>
+                  {selectInstitutionNameByLanguage(subUnit.unitNames)}
+                </StyledInstitutionText>
+              </>
+            ) : (
+              <StyledInstitutionText
+                data-testid="institution-presentation-subunit-1"
+                key={`institution-${institutionId}-${index}`}>
+                {selectInstitutionNameByLanguage(subUnit.unitNames)}
+              </StyledInstitutionText>
+            );
+          })}
         </StyledSelectedInstitution>
       )}
-      {(!!!institutionUnit.cristinUnitId || openEdit) && (
+      {(!institutionUnit.cristinUnitId || openEdit) && (
         <>
           <InstitutionSelector
             setSelectedCristinUnitId={setSelectedCristinUnitId}
@@ -78,9 +89,9 @@ const InstitutionPresentation: React.FC<InstitutionPresentationProps> = ({
             onClick={() => handleConfirm()}
             variant="contained"
             color="secondary"
-            disabled={!!!selectedCristinUnitId}
+            disabled={!selectedCristinUnitId}
             data-testid="institution-add-button">
-            Add
+            {t('common:add')}
           </StyledButton>
           <StyledButton
             onClick={() => {
@@ -88,7 +99,7 @@ const InstitutionPresentation: React.FC<InstitutionPresentationProps> = ({
             }}
             variant="contained"
             color="secondary">
-            Cancel
+            {t('common:cancel')}
           </StyledButton>
         </>
       )}

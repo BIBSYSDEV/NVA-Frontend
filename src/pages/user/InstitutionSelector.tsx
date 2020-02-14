@@ -27,45 +27,50 @@ const InstitutionSelector: React.FC<InstitutionSelectorProps> = ({ setSelectedCr
   const [subUnitSelector, setSubUnitSelector] = useState<InstitutionSubUnit>();
 
   const getSubUnit = async (cristinUnitId: string) => {
-    const newSubUnit: InstitutionSubUnit = emptyInstitutionSubUnit;
-
-    const response: InstitutionSubUnit[] = await getInstitutionSubUnit(cristinUnitId);
+    const response: InstitutionSubUnit = await getInstitutionSubUnit(cristinUnitId);
     if (response) {
-      newSubUnit.subUnits = response;
+      return response;
     }
-
-    return newSubUnit;
   };
 
   const selectInstitution = async (institution: Institution) => {
-    setSelectedCristinUnitId(institution.cristinUnitId);
+    const institutionId = institution.cristinInstitutionId;
+    const cristinUnitId = institution?.cristinUnitId ?? `${institutionId}.0.0.0`;
+    setSelectedCristinUnitId(cristinUnitId);
     setSelectedInstituion(institution ?? selectedInstitution);
     setSubUnits([]);
-    const searchValue = await getSubUnit(institution.cristinUnitId);
-    setSubUnitSelector(searchValue);
-  };
-
-  const searchSubUnits = async (newSubUnit: InstitutionSubUnit, index: number) => {
-    setSelectedCristinUnitId(newSubUnit.cristinUnitId);
-    let oldSearchValues = subUnitSelector?.subUnits || [];
-    if (index < subUnits.length) {
-      oldSearchValues = subUnits[index].subUnits || [];
+    const searchValue = await getSubUnit(cristinUnitId);
+    if (searchValue) {
+      searchValue.subunitSiblings = [...(searchValue.subunits || [])];
     }
-    const searchValue = await getSubUnit(newSubUnit.cristinUnitId);
-    newSubUnit.subUnits = [...oldSearchValues];
     setSubUnitSelector(searchValue);
-
-    const newSubUnits = [...subUnits].splice(0, index);
-
-    setSubUnits([...newSubUnits, newSubUnit]);
   };
+
+  const searchSubUnits = async (subUnit: string, index: number) => {
+    setSelectedCristinUnitId(subUnit);
+    let oldSearchValues = subUnitSelector?.subunitSiblings || [];
+    if (index < subUnits.length) {
+      oldSearchValues = subUnits[index].subunitSiblings || [];
+    }
+    const searchValue = await getSubUnit(subUnit);
+    if (searchValue) {
+      searchValue.subunitSiblings = [...oldSearchValues];
+      setSubUnitSelector({ ...searchValue, subunitSiblings: searchValue.subunits });
+
+      const newSubUnits = [...subUnits].splice(0, index);
+
+      setSubUnits([...newSubUnits, searchValue]);
+    }
+  };
+
+  console.log(subUnitSelector);
 
   return (
     <StyledInstitutionSelector>
       <InstitutionSearch
-        clearSearchField={selectedInstitution === emptyInstitution}
         dataTestId="autosearch-institution"
         label={t('organization.institution')}
+        clearSearchField={selectedInstitution === emptyInstitution}
         setValueFunction={inputValue => selectInstitution(inputValue)}
         placeholder={t('organization.search_for_institution')}
         selectedInstitution={selectedInstitution}
@@ -74,19 +79,19 @@ const InstitutionSelector: React.FC<InstitutionSelectorProps> = ({ setSelectedCr
       {subUnits.map((subUnit, index) => {
         return (
           <SubUnitSelect
-            searchResults={subUnit.subUnits || []}
+            searchResults={subUnit.subunitSiblings || []}
             selectedValue={subUnit}
-            findSubUnitFunction={subUnit => searchSubUnits(subUnit, index)}
+            findSubUnitFunction={cristinUnitId => searchSubUnits(cristinUnitId, index)}
             label={t('organization.faculty')}
             dataTestId={`institution-set-subunit-${index}`}
             key={`instiution-subunit-${index}`}
           />
         );
       })}
-      {subUnitSelector?.subUnits && subUnitSelector.subUnits.length > 0 && (
+      {subUnitSelector?.subunits && subUnitSelector.subunits.length > 0 && (
         <SubUnitSelect
-          searchResults={subUnitSelector?.subUnits || []}
-          selectedValue={subUnitSelector}
+          searchResults={subUnitSelector.subunitSiblings || []}
+          selectedValue={emptyInstitutionSubUnit}
           findSubUnitFunction={subUnitSelector => searchSubUnits(subUnitSelector, subUnits.length)}
           label={t('organization.faculty')}
           dataTestId={`institution-set-subunit-selector`}

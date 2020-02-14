@@ -31,25 +31,42 @@ export const emptyInstitution: Institution = {
 export interface InstitutionSubUnit {
   unitNames: InstitutionName[];
   cristinUnitId: string;
-  subUnits?: InstitutionSubUnit[];
+  institution: {
+    cristinInstitutionId: string;
+  };
+  subunits?: InstitutionSubUnitChild[];
+  subunitSiblings?: InstitutionSubUnitChild[];
+  parentUnit?: {
+    cristinUnitId: string;
+    parentUnitNames: InstitutionName[];
+  };
 }
 
 export const emptyInstitutionSubUnit: InstitutionSubUnit = {
   unitNames: emptyInstitutionNames,
   cristinUnitId: '',
-  subUnits: [],
+  institution: {
+    cristinInstitutionId: '',
+  },
+  subunits: [],
+};
+
+export interface InstitutionSubUnitChild {
+  cristinUnitId: string;
+  subunitNames: InstitutionName[];
+}
+
+export const emptyInstitutionSubUnitChild = {
+  cristinUnitId: '',
+  subunitNames: emptyInstitutionNames,
 };
 
 export interface InstitutionUnit {
   cristinUnitId: string;
-  institutionName: InstitutionName[];
-  level1Name?: InstitutionName[];
-  level2Name?: InstitutionName[];
+  subUnits: InstitutionSubUnit[];
 }
 
 export const emptyInstitutionUnit: InstitutionUnit = {
   cristinUnitId: '',
-  institutionName: emptyInstitutionNames,
-  level1Name: emptyInstitutionNames,
-  level2Name: emptyInstitutionNames,
+  subUnits: [],
 };

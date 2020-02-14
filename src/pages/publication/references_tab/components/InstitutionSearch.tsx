@@ -59,9 +59,8 @@ const InstitutionSearch: FC<InstitutionSearchProps> = ({
       setValueFunction={setValueFunction}
       label={label}
       placeholder={placeholder}
-      displaySelection={true}
-      disabled={disabled || false}
-      defaultValue={selectedInstitution}
+      displaySelection
+      disabled={!!disabled}
     />
   );
 };

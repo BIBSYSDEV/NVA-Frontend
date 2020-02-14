@@ -43,14 +43,10 @@ export const userReducer = (
         externalOrcid: action.orcid,
       };
     case ADD_INSTITUTION_UNIT:
-      if (action.institutionUnit.cristinUnitId !== '') {
-        return {
-          ...state,
-          institutionUnits: [...state.institutionUnits, action.institutionUnit],
-        };
-      } else {
-        return state;
-      }
+      return {
+        ...state,
+        institutionUnits: [...state.institutionUnits, action.institutionUnit],
+      };
     case SET_AUTHORITY_DATA:
       return {
         ...state,

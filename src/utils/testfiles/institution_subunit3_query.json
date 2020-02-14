@@ -1,0 +1,22 @@
+{
+  "cristinUnitId": "194.66.45.0",
+  "institution": {
+    "cristinInstitutionId": "194"
+  },
+  "unitNames": [
+    {
+      "name": "Institutt for biologiske fag Ålesund",
+      "language": "nb"
+    }
+  ],
+  "subunits": [],
+  "parentUnit": {
+    "cristinUnitId": "194.66.0.0",
+    "parentUnitNames": [
+      {
+        "name": "Fakultet for naturvitenskap",
+        "language": "nb"
+      }
+    ]
+  }
+}

@@ -10,7 +10,7 @@ import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { User } from '../../types/user.types';
 import { updateInstitutionForAuthority } from './../../api/authorityApi';
-import { institutionLookup } from '../../api/institutionApi';
+import { getInstitutionUnitNames } from '../../api/institutionApi';
 import { setAuthorityData } from './../../redux/actions/userActions';
 import { addNotification } from '../../redux/actions/notificationActions';
 import { addInstitutionUnit } from '../../redux/actions/institutionActions';
@@ -53,7 +53,7 @@ const InstitutionDialog: React.FC<InstitutionDialogProps> = ({ user, title, data
       } else if (updatedAuthority) {
         dispatch(setAuthorityData(updatedAuthority));
         try {
-          dispatch(addInstitutionUnit(await institutionLookup(selectedCristinUnitId)));
+          dispatch(addInstitutionUnit(await getInstitutionUnitNames(selectedCristinUnitId)));
         } catch {}
       }
     }

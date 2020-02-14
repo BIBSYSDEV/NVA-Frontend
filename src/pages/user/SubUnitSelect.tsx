@@ -1,8 +1,9 @@
 import React from 'react';
-import { InstitutionSubUnit, emptyInstitutionSubUnit } from '../../types/institution.types';
+import { InstitutionSubUnit } from '../../types/institution.types';
 import { selectInstitutionNameByLanguage } from './../../utils/helpers';
 import { Select, MenuItem, FormControl, InputLabel } from '@material-ui/core';
 import styled from 'styled-components';
+import { InstitutionSubUnitChild } from './../../types/institution.types';
 
 const StyledSubUnitSelect = styled.div`
   width: 100%;
@@ -17,9 +18,9 @@ const StyledFormControl = styled(FormControl)`
 `;
 
 interface SubUnitSelectProps {
-  searchResults: InstitutionSubUnit[];
+  searchResults: InstitutionSubUnitChild[];
   selectedValue: InstitutionSubUnit;
-  findSubUnitFunction: (value: InstitutionSubUnit) => void;
+  findSubUnitFunction: (value: string) => void;
   label: string;
   dataTestId: string;
 }
@@ -32,9 +33,7 @@ const SubUnitSelect: React.FC<SubUnitSelectProps> = ({
   dataTestId,
 }) => {
   const selectSubUnit = (cristinUnitId: string) => {
-    findSubUnitFunction(
-      searchResults.find(subUnit => subUnit.cristinUnitId === cristinUnitId) ?? emptyInstitutionSubUnit
-    );
+    findSubUnitFunction(searchResults.find(subUnit => subUnit.cristinUnitId === cristinUnitId)?.cristinUnitId ?? '');
   };
 
   return (
@@ -48,7 +47,7 @@ const SubUnitSelect: React.FC<SubUnitSelectProps> = ({
           data-testid={dataTestId}>
           {searchResults.map(subUnit => (
             <MenuItem key={subUnit.cristinUnitId} value={subUnit.cristinUnitId}>
-              {selectInstitutionNameByLanguage(subUnit.unitNames)}
+              {selectInstitutionNameByLanguage(subUnit.subunitNames)}
             </MenuItem>
           ))}
         </StyledSelect>

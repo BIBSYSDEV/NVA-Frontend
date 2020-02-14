@@ -1,6 +1,7 @@
 import Axios from 'axios';
-import { Institution, InstitutionSubUnit, InstitutionUnit, emptyInstitutionNames } from '../types/institution.types';
+import { InstitutionUnit } from '../types/institution.types';
 import { getIdToken } from './userApi';
+import { InstitutionSubUnit } from './../types/institution.types';
 
 export enum InstituionApiPaths {
   INSTITUTION = '/cristin-institutions',
@@ -37,46 +38,30 @@ export const getInstitutionSubUnit = async (cristinUnitId: string) => {
   }
 };
 
-const findTopInstitutionNames = async (institutionId: string) => {
-  try {
-    const institutions = await queryInstitution(institutionId);
-    const topInstitution = institutions
-      .filter((institution: Institution) => institution.cristinUnitId === institutionId)
-      .pop();
-    return topInstitution.institutionNames;
-  } catch {
-    return [];
-  }
-};
-
-const findSubUnitNames = async (institutionId: string, subUnitId: string) => {
-  try {
-    const faculties = await getInstitutionSubUnit(institutionId);
-    const faculty = faculties.filter((faculty: InstitutionSubUnit) => faculty.cristinUnitId === subUnitId).pop();
-    return faculty?.unitNames || [];
-  } catch {
-    return [];
-  }
-};
-
-export const institutionLookup = async (cristinUnitId: string) => {
-  const institutionNumber = cristinUnitId.split('.');
-
-  const presentation: InstitutionUnit = {
+export const getInstitutionUnitNames = async (cristinUnitId: string) => {
+  const institutionUnit: InstitutionUnit = {
     cristinUnitId: cristinUnitId,
-    institutionName: emptyInstitutionNames,
-    level1Name: emptyInstitutionNames,
-    level2Name: emptyInstitutionNames,
+    subUnits: [],
   };
 
-  const institutionId = `${institutionNumber[0]}.0.0.0`;
-  presentation.institutionName = await findTopInstitutionNames(institutionId);
+  // find subUnits
+  const subUnit: InstitutionSubUnit = await getInstitutionSubUnit(cristinUnitId);
+  institutionUnit.subUnits = [subUnit];
 
-  const facultyId = `${institutionNumber[0]}.${institutionNumber[1]}.0.0`;
-  presentation.level1Name = await findSubUnitNames(institutionId, facultyId);
+  if (subUnit.parentUnit) {
+    let parentSubUnit = await getInstitutionSubUnit(subUnit.parentUnit?.cristinUnitId);
+    while (parentSubUnit.parentUnit) {
+      institutionUnit.subUnits = [parentSubUnit, ...institutionUnit.subUnits];
+      parentSubUnit = await getInstitutionSubUnit(parentSubUnit.parentUnit.cristinUnitId);
+    }
+  }
 
-  const instituteId = `${institutionNumber[0]}.${institutionNumber[1]}.${institutionNumber[2]}.0`;
-  presentation.level2Name = await findSubUnitNames(facultyId, instituteId);
+  // find Institution
+  const topInstitutionId = subUnit.institution.cristinInstitutionId;
+  const institutionId = `${topInstitutionId}.0.0.0`;
 
-  return presentation;
+  const topInstitution = await getInstitutionSubUnit(institutionId);
+  institutionUnit.subUnits = [topInstitution, ...institutionUnit.subUnits];
+
+  return institutionUnit;
 };

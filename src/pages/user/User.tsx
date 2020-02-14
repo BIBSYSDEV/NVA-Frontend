@@ -20,7 +20,7 @@ import UserRoles from './UserRoles';
 import { InstitutionUnit, emptyInstitutionUnit } from './../../types/institution.types';
 import InstitutionPresentationCard from './InstitutionPresentationCard';
 import { addInstitutionUnit } from '../../redux/actions/institutionActions';
-import { institutionLookup } from '../../api/institutionApi';
+import { getInstitutionUnitNames } from '../../api/institutionApi';
 import { addNotification } from '../../redux/actions/notificationActions';
 
 const StyledUserPage = styled.div`
@@ -85,13 +85,15 @@ const User: React.FC = () => {
         storedInstitutionUnit => storedInstitutionUnit.cristinUnitId === institutionUnit.cristinUnitId
       ) ?? newInstitutionUnits.push(institutionUnit);
     });
-    newInstitutionUnits.forEach(institutionUnit => dispatch(addInstitutionUnit(institutionUnit)));
+    newInstitutionUnits.forEach(institutionUnit => {
+      if (institutionUnit.cristinUnitId !== '') dispatch(addInstitutionUnit(institutionUnit));
+    });
   }, [institutionUnits, user.institutionUnits, dispatch]);
 
   const handleClickAdd = () => setInstitutionUnits([...institutionUnits, emptyInstitutionUnit]);
 
-  const addNewInstitutionUnit = async (cristinUnitId: string) => {
-    const updateRedux = async (cristinUnitId: string) => {
+  const addInstitution = async (cristinUnitId: string) => {
+    const updateAuthority = async (cristinUnitId: string) => {
       if (!user.authority.orgunitids?.find(orgunitid => orgunitid === cristinUnitId)) {
         const updatedAuthority = await updateInstitutionForAuthority(cristinUnitId, user.authority.systemControlNumber);
         if (updatedAuthority?.error) {
@@ -99,20 +101,21 @@ const User: React.FC = () => {
         } else if (updatedAuthority) {
           dispatch(setAuthorityData(updatedAuthority));
           try {
-            dispatch(addInstitutionUnit(await institutionLookup(cristinUnitId)));
+            const institutionUnit = await getInstitutionUnitNames(cristinUnitId);
+            if (institutionUnit.cristinUnitId !== '') dispatch(addInstitutionUnit(institutionUnit));
           } catch {}
         }
       }
     };
 
     if (!institutionUnits.find(institutionUnit => institutionUnit.cristinUnitId === cristinUnitId)) {
-      const newInstitutionUnit: InstitutionUnit = await institutionLookup(cristinUnitId);
+      const newInstitutionUnit: InstitutionUnit = await getInstitutionUnitNames(cristinUnitId);
       setInstitutionUnits([
         ...institutionUnits.filter(institutionUnit => institutionUnit.cristinUnitId !== ''),
         newInstitutionUnit,
       ]);
 
-      updateRedux(cristinUnitId);
+      // updateAuthority(cristinUnitId);
     } else {
       setInstitutionUnits(institutionUnits.filter(institutionUnit => institutionUnit.cristinUnitId !== ''));
     }
@@ -163,7 +166,7 @@ const User: React.FC = () => {
               <InstitutionPresentationCard
                 key={institutionUnit.cristinUnitId}
                 institutionUnit={institutionUnit}
-                addNewInstitutionUnit={addNewInstitutionUnit}
+                addNewInstitutionUnit={addInstitution}
               />
             ))}
           </>

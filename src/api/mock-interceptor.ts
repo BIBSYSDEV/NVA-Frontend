@@ -5,8 +5,9 @@ import { Authority } from '../types/authority.types';
 import OrcidResponse from '../types/orcid.types';
 import { API_URL, ORCID_USER_INFO_URL } from '../utils/constants';
 import mockDoiLookupResponse from '../utils/testfiles/doi_lookup_response.json';
-import mockFacultyResponse from '../utils/testfiles/institution_faculty_query.json';
-import mockInstituteResponse from '../utils/testfiles/institution_institute_query.json';
+import mockSubUnit1Response from '../utils/testfiles/institution_subunit1_query.json';
+import mockSubUnit2Response from '../utils/testfiles/institution_subunit2_query.json';
+import mockSubUnit3Response from '../utils/testfiles/institution_subunit3_query.json';
 import mockInstitutionResponse from '../utils/testfiles/institution_query.json';
 import mockAuthoritiesResponse from '../utils/testfiles/mock_authorities_response.json';
 import mockProjects from '../utils/testfiles/projects_real.json';
@@ -21,7 +22,8 @@ import { PublicationChannelApiPaths } from './publicationChannelApi';
 import { FileUploadApiPaths } from './fileUploadApi';
 
 const TOP_INSTITUTION_REGEXP = '[0-9]+.0.0.0';
-const SUBUNIT_INSTITUTION_REGEXP = '*.*.0.0';
+const SUBUNIT1_INSTITUTION_REGEXP = '*.[0-9]+.0.0';
+const SUBUNIT2_INSTITUTION_REGEXP = '*.*.[0-9]+.0';
 
 const mockOrcidResponse: OrcidResponse = {
   id: 'https://sandbox.orcid.org/0000-0001-2345-6789',
@@ -137,10 +139,13 @@ export const interceptRequestsOnMock = () => {
   mock.onGet(new RegExp(`${API_URL}${InstituionApiPaths.INSTITUTION}\\?name=*`)).reply(200, mockInstitutionResponse);
   mock
     .onGet(new RegExp(`${API_URL}${InstituionApiPaths.UNIT}/${TOP_INSTITUTION_REGEXP}`))
-    .reply(200, mockFacultyResponse);
+    .reply(200, mockSubUnit1Response);
   mock
-    .onGet(new RegExp(`${API_URL}${InstituionApiPaths.UNIT}/${SUBUNIT_INSTITUTION_REGEXP}`))
-    .reply(200, mockInstituteResponse);
+    .onGet(new RegExp(`${API_URL}${InstituionApiPaths.UNIT}/${SUBUNIT1_INSTITUTION_REGEXP}`))
+    .reply(200, mockSubUnit2Response);
+  mock
+    .onGet(new RegExp(`${API_URL}${InstituionApiPaths.UNIT}/${SUBUNIT2_INSTITUTION_REGEXP}`))
+    .reply(200, mockSubUnit3Response);
 
   // SEARCH
   mock.onGet(new RegExp(`${PublicationsApiPaths.SEARCH}/*`)).reply(200, mockPublications);

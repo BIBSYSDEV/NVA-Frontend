@@ -1,0 +1,104 @@
+{
+  "cristinUnitId": "194.66.0.0",
+  "institution": {
+    "cristinInstitutionId": "194"
+  },
+  "unitNames": [
+    {
+      "name": "Fakultet for naturvitenskap",
+      "language": "nb"
+    }
+  ],
+  "subunits": [
+    {
+      "cristinUnitId": "194.66.1.0",
+      "subunitNames": [
+        {
+          "name": "NV fakultetsadministrasjon",
+          "language": "nb"
+        }
+      ]
+    },
+    {
+      "cristinUnitId": "194.66.11.0",
+      "subunitNames": [
+        {
+          "name": "Institutt for biologi",
+          "language": "nb"
+        }
+      ]
+    },
+    {
+      "cristinUnitId": "194.66.15.0",
+      "subunitNames": [
+        {
+          "name": "Institutt for bioteknologi og matvitenskap",
+          "language": "nb"
+        }
+      ]
+    },
+    {
+      "cristinUnitId": "194.66.21.0",
+      "subunitNames": [
+        {
+          "name": "Institutt for fysikk",
+          "language": "nb"
+        }
+      ]
+    },
+    {
+      "cristinUnitId": "194.66.25.0",
+      "subunitNames": [
+        {
+          "name": "Institutt for kjemi",
+          "language": "nb"
+        }
+      ]
+    },
+    {
+      "cristinUnitId": "194.66.31.0",
+      "subunitNames": [
+        {
+          "name": "Institutt for kjemisk prosessteknologi",
+          "language": "nb"
+        }
+      ]
+    },
+    {
+      "cristinUnitId": "194.66.35.0",
+      "subunitNames": [
+        {
+          "name": "Institutt for materialteknologi",
+          "language": "nb"
+        }
+      ]
+    },
+    {
+      "cristinUnitId": "194.66.41.0",
+      "subunitNames": [
+        {
+          "name": "Institutt for bioingeniørfag",
+          "language": "nb"
+        }
+      ]
+    },
+    {
+      "cristinUnitId": "194.66.45.0",
+      "subunitNames": [
+        {
+          "name": "Institutt for biologiske fag Ålesund",
+          "language": "nb"
+        }
+      ]
+    },
+    {
+      "cristinUnitId": "194.66.51.0",
+      "subunitNames": [
+        {
+          "name": "Felles forskningsinfrastruktur",
+          "language": "nb"
+        }
+      ]
+    }
+  ]
+}
