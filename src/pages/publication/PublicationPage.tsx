@@ -4,7 +4,7 @@ import { addNotification } from '../../redux/actions/notificationActions';
 import i18n from '../../translations/i18n';
 import { useDispatch } from 'react-redux';
 import { CircularProgress, Link } from '@material-ui/core';
-import { emptyPublication, Publication } from '../../types/publication.types';
+import { Publication } from '../../types/publication.types';
 import styled from 'styled-components';
 import ContentPage from '../../components/ContentPage';
 import FormCardHeading from '../../components/FormCard/FormCardHeading';
@@ -14,7 +14,6 @@ import LabelContentRowForPublicationPage from './publication_page/LabelContentRo
 import PublicationPageAuthors from './publication_page/PublicationPageAuthors';
 import PublicationPageFiles from './publication_page/PublicationPageFiles';
 import PublicationPageJournal from './publication_page/PublicationPageJournal';
-import PublicationPageIdentifiers from './publication_page/PublicationPageIdentifiers';
 import NormalText from '../../components/NormalText';
 import PublicationPageSeries from './publication_page/PublicationPageSeries';
 import NotFound from '../errorpages/NotFound';
@@ -93,7 +92,9 @@ const PublicationPage: FC<PublicationPageProps> = ({ publicationId }) => {
                       {publication.publicationDate.month && `-${publication.publicationDate.month}`}
                       {publication.publicationDate.day && `-${publication.publicationDate.day}`}
                     </LabelContentRowForPublicationPage>
-                    <PublicationPageIdentifiers publication={publication} />
+                    <LabelContentRowForPublicationPage label={t('references.isbn')}>
+                      {publication?.reference?.book?.isbn || publication?.reference?.report?.isbn}
+                    </LabelContentRowForPublicationPage>
                   </StyledSidebarCard>
                 </StyledSidebar>
                 <StyledMainContent>

@@ -13,9 +13,8 @@ const PublicationPageSeries: FC<PublicationPageSeriesProps> = ({ publication }) 
   const { t } = useTranslation('publication');
 
   useEffect(() => {
-    publication.reference.type === ReferenceType.BOOK && setSeries(publication.reference?.book?.series);
-    publication.reference.type === ReferenceType.REPORT && setSeries(publication.reference?.report?.series);
-  }, [publication]);
+    setSeries(publication.reference?.book?.series || publication.reference?.report?.series);
+  }, [publication.reference]);
 
   return (
     <>
