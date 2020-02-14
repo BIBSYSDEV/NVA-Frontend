@@ -10,7 +10,7 @@ const StyledFileIcon = styled(DescriptionIcon)`
   padding: 0.5rem;
 `;
 
-const FileIconWrapper = styled.div`
+const StyledFileIconWrapper = styled.div`
   text-align: center;
 `;
 
@@ -22,9 +22,9 @@ const PublicationPageFiles: FC<PublicationPageFilesProps> = ({ files }) => {
   return (
     <>
       {files.map((file, index) => (
-        <FileIconWrapper key={file.id}>
+        <StyledFileIconWrapper key={file.id}>
           <StyledFileIcon />
-        </FileIconWrapper>
+        </StyledFileIconWrapper>
       ))}
     </>
   );

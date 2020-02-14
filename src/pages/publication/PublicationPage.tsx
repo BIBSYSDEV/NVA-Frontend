@@ -19,7 +19,7 @@ import NormalText from '../../components/NormalText';
 import PublicationPageSeries from './publication_page/PublicationPageSeries';
 import NotFound from '../errorpages/NotFound';
 
-const ContentWrapper = styled.div`
+const StyledContentWrapper = styled.div`
   display: flex;
   padding-top: 1rem;
 
@@ -76,7 +76,7 @@ const PublicationPage: FC<PublicationPageProps> = ({ publicationId }) => {
             <>
               <FormCardHeading>{publication.title?.no}</FormCardHeading>
               {publication.authors && <PublicationPageAuthors authors={publication.authors} />}
-              <ContentWrapper>
+              <StyledContentWrapper>
                 <StyledSidebar>
                   <StyledSidebarCard>
                     <NormalText>NTNU institutt for osteloff</NormalText>
@@ -125,7 +125,7 @@ const PublicationPage: FC<PublicationPageProps> = ({ publicationId }) => {
                   )}
                   <PublicationPageSeries publication={publication} />
                 </StyledMainContent>
-              </ContentWrapper>
+              </StyledContentWrapper>
             </>
           ) : (
             <NotFound />
