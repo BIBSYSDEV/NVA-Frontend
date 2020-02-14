@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import { FieldArray, FormikProps, useFormikContext } from 'formik';
 import { Publication } from '../../types/publication.types';
 import Modal from '../../components/Modal';
-import { licenses } from '../../types/file.types';
+import { licenses, Uppy } from '../../types/file.types';
 import { Typography } from '@material-ui/core';
 import FormCard from '../../components/FormCard/FormCard';
 import FormCardHeading from '../../components/FormCard/FormCardHeading';
@@ -32,7 +32,7 @@ enum FilesFieldNames {
 
 interface FilesAndLicensePanelProps {
   goToNextTab: (event: React.MouseEvent<any>) => void;
-  uppy: any;
+  uppy: Uppy;
 }
 
 const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab, uppy }) => {
@@ -53,11 +53,11 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab
       {publisher?.title && <PublicationChannelInfoCard publisher={publisher} />}
 
       <FieldArray name={FilesFieldNames.FILES}>
-        {({ push, remove, replace }) => (
+        {({ insert, remove, replace }) => (
           <>
             <FormCard>
               <FormCardHeading>{t('files_and_license.upload_files')}</FormCardHeading>
-              <FileUploader uppy={uppy} addFile={file => push(file)} />
+              <FileUploader uppy={uppy} addFile={file => insert(0, file)} />
             </FormCard>
             {uploadedFiles.length > 0 && (
               <>

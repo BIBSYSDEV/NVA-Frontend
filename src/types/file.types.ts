@@ -1,4 +1,5 @@
 import * as LicenseImages from '../resources/images/licenses';
+import { Uppy as UppyType } from '@uppy/react/src/CommonTypes';
 
 export interface License {
   name: string;
@@ -51,17 +52,13 @@ export const licenses: License[] = [
   },
 ];
 
-export interface UppyFileResponse {
-  uploadURL: string;
-}
-
 export interface File {
   id: string;
   name: string;
-  uploadUrl: string;
+  preview?: string;
   data: {
     size: number;
-    lastModified: number;
+    lastModified?: number;
     type: string;
   };
   administrativeContract?: boolean;
@@ -73,7 +70,7 @@ export interface File {
 export const emptyFile: File = {
   id: '',
   name: '',
-  uploadUrl: '',
+  preview: '',
   data: {
     size: 0,
     lastModified: 0,
@@ -84,3 +81,7 @@ export const emptyFile: File = {
   embargoDate: null,
   license: '',
 };
+
+export interface Uppy extends UppyType {
+  hasUploadSuccessEventListener?: boolean;
+}

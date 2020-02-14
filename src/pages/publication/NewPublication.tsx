@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
@@ -10,6 +10,7 @@ import LoadPublication from './new_publication/LoadPublication';
 import PublicationForm from './PublicationForm';
 import FormCardHeading from '../../components/FormCard/FormCardHeading';
 import FormCard from '../../components/FormCard/FormCard';
+import { createUppy } from '../../utils/uppy-config';
 
 const StyledNewPublication = styled.div`
   width: 100%;
@@ -53,6 +54,11 @@ const NewPublication: FC = () => {
   const [expanded, setExpanded] = useState<string | false>(false);
   const [showForm, setShowForm] = useState(false);
   const { t } = useTranslation();
+  const [uppy] = useState(createUppy());
+
+  useEffect(() => {
+    return () => uppy && uppy.close();
+  }, [uppy]);
 
   const handleChange = (panel: string) => (_: React.ChangeEvent<any>, isExpanded: boolean) => {
     setExpanded(isExpanded ? panel : false);
@@ -68,7 +74,12 @@ const NewPublication: FC = () => {
         <>
           <StyledNewPublication>
             <StyledSelectorWrapper>
-              <LoadPublication expanded={expanded === 'load-panel'} onChange={handleChange('load-panel')} />
+              <LoadPublication
+                expanded={expanded === 'load-panel'}
+                onChange={handleChange('load-panel')}
+                uppy={uppy}
+                openForm={() => setShowForm(true)}
+              />
               <LinkPublication
                 expanded={expanded === 'link-panel'}
                 onChange={handleChange('link-panel')}
@@ -95,7 +106,7 @@ const NewPublication: FC = () => {
           </StyledButton>
         </>
       ) : (
-        <PublicationForm />
+        <PublicationForm uppy={uppy} />
       )}
     </>
   );

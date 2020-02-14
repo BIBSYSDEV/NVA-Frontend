@@ -1,29 +1,19 @@
 import React, { useEffect } from 'react';
-import '@uppy/core/dist/style.css';
-import '@uppy/dashboard/dist/style.css';
-
-import { Dashboard } from '@uppy/react';
-import { useTranslation } from 'react-i18next';
-import { File, UppyFileResponse, emptyFile } from '../../../types/file.types';
+import { File, emptyFile, Uppy } from '../../../types/file.types';
+import UppyDashboard from '../../../components/UppyDashboard';
 
 interface FileUploaderProps {
   addFile: (file: File) => void;
-  uppy: any;
+  uppy: Uppy;
 }
 
-const uploaderMaxWidthPx = 10000;
-const uploaderMaxHeightPx = 200;
-
 const FileUploader: React.FC<FileUploaderProps> = ({ addFile, uppy }) => {
-  const { t } = useTranslation('publication');
-
   useEffect(() => {
     if (uppy && !uppy.hasUploadSuccessEventListener) {
-      uppy.on('upload-success', (file: File, response: UppyFileResponse) => {
+      uppy.on('upload-success', (file: File) => {
         addFile({
           ...emptyFile,
           ...file,
-          uploadUrl: response?.uploadURL,
         });
       });
       // Avoid duplicating event listener
@@ -31,23 +21,7 @@ const FileUploader: React.FC<FileUploaderProps> = ({ addFile, uppy }) => {
     }
   }, [addFile, uppy]);
 
-  return uppy ? (
-    <Dashboard
-      uppy={uppy}
-      proudlyDisplayPoweredByUppy={false}
-      showSelectedFiles={false}
-      showProgressDetails
-      hideProgressAfterFinish
-      width={uploaderMaxWidthPx}
-      height={uploaderMaxHeightPx}
-      locale={{
-        strings: {
-          dropPaste: `${t('files_and_license.drag_files')} %{browse}`,
-          browse: t('files_and_license.browse'),
-        },
-      }}
-    />
-  ) : null;
+  return uppy ? <UppyDashboard uppy={uppy} /> : null;
 };
 
 export default FileUploader;
