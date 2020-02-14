@@ -4,11 +4,11 @@ import LabelContentRowForPublicationPage from '../../../components/LabelContentR
 import { ReferenceType } from '../../../types/references.types';
 import { useTranslation } from 'react-i18next';
 
-interface PublicationPageIdenfifiersProps {
+interface PublicationPageIdentifiersProps {
   publication: Publication;
 }
 
-const PublicationPageIdenfifiers: FC<PublicationPageIdenfifiersProps> = ({ publication }) => {
+const PublicationPageIdentifiers: FC<PublicationPageIdentifiersProps> = ({ publication }) => {
   const [isbn, setIsbn] = useState();
   const { t } = useTranslation('publication');
 
@@ -24,4 +24,4 @@ const PublicationPageIdenfifiers: FC<PublicationPageIdenfifiersProps> = ({ publi
   );
 };
 
-export default PublicationPageIdenfifiers;
+export default PublicationPageIdentifiers;

@@ -14,7 +14,7 @@ import LabelContentRowForPublicationPage from '../../components/LabelContentRowF
 import PublicationPageAuthors from './publication_page/PublicationPageAuthors';
 import PublicationPageFiles from './publication_page/PublicationPageFiles';
 import PublicationPageJournal from './publication_page/PublicationPageJournal';
-import PublicationPageIdenfifiers from './publication_page/PublicationPageIdentifiers';
+import PublicationPageIdentifiers from './publication_page/PublicationPageIdentifiers';
 import NormalText from '../../components/NormalText';
 import PublicationPageSeries from './publication_page/PublicationPageSeries';
 import NotFound from '../errorpages/NotFound';
@@ -94,7 +94,7 @@ const PublicationPage: FC<PublicationPageProps> = ({ publicationId }) => {
                       {publication.publicationDate.month && `-${publication.publicationDate.month}`}
                       {publication.publicationDate.day && `-${publication.publicationDate.day}`}
                     </LabelContentRowForPublicationPage>
-                    <PublicationPageIdenfifiers publication={publication} />
+                    <PublicationPageIdentifiers publication={publication} />
                   </StyledSidebarCard>
                 </Sidebar>
                 <MainContent>
