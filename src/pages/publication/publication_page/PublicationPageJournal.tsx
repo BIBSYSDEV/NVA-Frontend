@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { Publication } from '../../../types/publication.types';
 import LabelContentRowForPublicationPage from '../../../components/LabelContentRowForPublicationPage';
 import { ReferenceType } from '../../../types/references.types';
@@ -12,8 +12,10 @@ const PublicationPageJournal: FC<PublicationPageJournalProps> = ({ publication }
   const [publisher, setPublisher] = useState();
   const { t } = useTranslation('publication');
 
-  publication.reference.type === ReferenceType.PUBLICATION_IN_JOURNAL &&
-    setPublisher(publication.reference?.journalArticle?.publisher);
+  useEffect(() => {
+    publication.reference.type === ReferenceType.PUBLICATION_IN_JOURNAL &&
+      setPublisher(publication.reference?.journalArticle?.publisher);
+  }, [publication]);
 
   return (
     <>
