@@ -49,7 +49,7 @@ interface PublicationPageProps {
 const PublicationPage: FC<PublicationPageProps> = ({ publicationId }) => {
   const dispatch = useDispatch();
   const [isLoadingPublication, setIsLoadingPublication] = useState(false);
-  const [publication, setPublication] = useState<Publication>(emptyPublication);
+  const [publication, setPublication] = useState<Publication>();
   const { t } = useTranslation('publication');
 
   useEffect(() => {
@@ -72,7 +72,7 @@ const PublicationPage: FC<PublicationPageProps> = ({ publicationId }) => {
         <CircularProgress color="inherit" size={20} />
       ) : (
         <ContentPage>
-          {publication?.id ? (
+          {publication ? (
             <>
               <FormCardHeading>{publication.title?.no}</FormCardHeading>
               {publication.authors && <PublicationPageAuthors authors={publication.authors} />}
