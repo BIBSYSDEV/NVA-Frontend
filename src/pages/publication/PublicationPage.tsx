@@ -59,7 +59,6 @@ const PublicationPage: FC<PublicationPageProps> = ({ publicationId }) => {
       if (publication?.error) {
         dispatch(addNotification(i18n.t('feedback:error.get_publication'), 'error'));
       } else {
-        console.log(publication);
         setPublication(publication);
       }
       setIsLoadingPublication(false);
