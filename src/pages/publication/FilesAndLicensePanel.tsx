@@ -53,11 +53,11 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab
       {publisher?.title && <PublicationChannelInfoCard publisher={publisher} />}
 
       <FieldArray name={FilesFieldNames.FILES}>
-        {({ push, remove, replace }) => (
+        {({ insert, remove, replace }) => (
           <>
             <FormCard>
               <FormCardHeading>{t('files_and_license.upload_files')}</FormCardHeading>
-              <FileUploader uppy={uppy} addFile={file => push(file)} />
+              <FileUploader uppy={uppy} addFile={file => insert(0, file)} />
             </FormCard>
             {uploadedFiles.length > 0 && (
               <>

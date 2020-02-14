@@ -28,7 +28,7 @@ const LoadPublication: React.FC<LoadPublicationProps> = ({ expanded, onChange, u
   useEffect(() => {
     if (uppy && !uppy.hasUploadSuccessEventListener) {
       const addFile = (newFile: File) => {
-        setUploadedFiles([...uploadedFiles, newFile]);
+        setUploadedFiles([newFile, ...uploadedFiles]);
       };
 
       uppy.on('upload-success', addFile);
