@@ -23,8 +23,8 @@ import { PublicationChannelApiPaths } from './publicationChannelApi';
 import { FileUploadApiPaths } from './fileUploadApi';
 
 const TOP_INSTITUTION_REGEXP = '[0-9]+.0.0.0';
-const SUBUNIT1_INSTITUTION_REGEXP = '*.[0-9]+.0.0';
-const SUBUNIT2_INSTITUTION_REGEXP = '*.*.[0-9]+.0';
+const SUBUNIT1_INSTITUTION_REGEXP = '[1-9][0-9]*\\.[1-9][0-9]*\\.0\\.0';
+const SUBUNIT2_INSTITUTION_REGEXP = '[1-9][0-9]*\\.[1-9][0-9]*\\.[1-9][0-9]\\.0';
 
 const mockOrcidResponse: OrcidResponse = {
   id: 'https://sandbox.orcid.org/0000-0001-2345-6789',

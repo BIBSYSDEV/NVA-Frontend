@@ -30,6 +30,8 @@ export const getInstitutionSubUnit = async (cristinUnitId: string) => {
   };
   const url = `${InstituionApiPaths.UNIT}/${cristinUnitId}`;
 
+  console.log(cristinUnitId);
+
   try {
     const response = await Axios.get(url, { headers });
     return response.data;
