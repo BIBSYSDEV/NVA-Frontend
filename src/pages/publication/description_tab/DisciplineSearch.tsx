@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import AutoLookup from '../../../components/AutoLookup';
-import disciplines from '../../../utils/testfiles/disciplines_en.json';
+import disciplines from '../../../resources/disciplines.json';
 
 interface DisciplineSearchProps {
   dataTestId: string;
@@ -19,11 +19,11 @@ interface DisciplineType {
 const DisciplineSearch: FC<DisciplineSearchProps> = ({ dataTestId, setValueFunction, value, placeholder }) => {
   const { t } = useTranslation();
 
-  const searchResults = Object.values(disciplines)
-    .map((mainDisciplines, index) =>
-      mainDisciplines.map(discipline => ({
-        title: t(`disciplines:${discipline}`),
-        mainDiscipline: t(`disciplines:${Object.keys(disciplines)[index]}`),
+  const searchResults = Object.entries(disciplines)
+    .map(([mainDiscipline, subDisciplines]) =>
+      subDisciplines.map(subDiscipline => ({
+        title: t(`disciplines:${subDiscipline}`),
+        mainDiscipline: t(`disciplines:${mainDiscipline}`),
       }))
     )
     .flat();

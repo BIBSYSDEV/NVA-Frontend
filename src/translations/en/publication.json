@@ -30,6 +30,7 @@
   },
   "feedback": {
     "invalid_url": "Invalid URL",
+    "minimum_one_contributor": "You need to have at least one author registered for this publication",
     "required_field": "Required field"
   },
   "files_and_license": {
@@ -37,6 +38,7 @@
     "administrative_contract": "Administrative contract",
     "browse": "browse",
     "drag_files": "Drag files here or",
+    "drop_here": "Drop your files here",
     "embargo_date": "Date for delayed publishing in archive",
     "files": "Files",
     "info_from_publication_channel_register": {
@@ -66,7 +68,6 @@
     "link_publication_description": "E.g. DOI link, link to article, link to video of lecture etc.",
     "link_to_publication": "Link to publication",
     "load_file": "Load file",
-    "load_file_description": "Load file...",
     "link": "Link"
   },
   "references": {

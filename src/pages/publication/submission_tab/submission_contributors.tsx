@@ -16,7 +16,7 @@ const SubmissionContributors: React.FC = () => {
           return (
             <SubmissionContentText>
               {contributor.name}
-              {contributor.institution?.name && `(${contributor.institution.name})`})
+              {contributor.institutions.map(institution => institution?.name && `(${institution.name})`)}
             </SubmissionContentText>
           );
         })}

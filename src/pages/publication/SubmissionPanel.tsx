@@ -18,14 +18,25 @@ import { ReferenceType } from '../../types/references.types';
 import FormCardHeading from '../../components/FormCard/FormCardHeading';
 import FormCardSubHeading from '../../components/FormCard/FormCardSubHeading';
 import FormCard from '../../components/FormCard/FormCard';
+import { useHistory } from 'react-router';
 
 const StyledPublishButton = styled(Button)`
   margin-top: 0.5rem;
 `;
 
-const SubmissionPanel: React.FC = () => {
+interface SubmissionPanelProps {
+  savePublication: () => void;
+}
+
+const SubmissionPanel: React.FC<SubmissionPanelProps> = ({ savePublication }) => {
   const { t } = useTranslation('publication');
   const { values }: FormikProps<Publication> = useFormikContext();
+  const history = useHistory();
+
+  const publishPublication = () => {
+    savePublication();
+    history.push(`/publication/${values.id}`);
+  };
 
   return (
     <TabPanel ariaLabel="submission">
@@ -52,7 +63,7 @@ const SubmissionPanel: React.FC = () => {
           <SubmissionFilesAndLicenses />
         </FormCard>
       </FormCard>
-      <StyledPublishButton color="primary" variant="contained">
+      <StyledPublishButton color="primary" variant="contained" onClick={publishPublication}>
         {t('common:publish')}
       </StyledPublishButton>
     </TabPanel>

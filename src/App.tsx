@@ -27,6 +27,7 @@ import { hubListener } from './utils/hub-listener';
 import { mockUser } from './utils/testfiles/mock_feide_user';
 import MyPublications from './pages/publication/MyPublications';
 import ContentPage from './components/FormCard/ContentPage';
+import PublicationPage from './pages/publication/PublicationPage';
 
 const StyledApp = styled.div`
   min-height: 100vh;
@@ -117,6 +118,7 @@ const App: React.FC = () => {
             {user.isLoggedIn && <Route exact path="/new-publication" component={NewPublication} />}
             {user.isLoggedIn && <Route exact path="/my-publications" component={MyPublications} />}
             <Route exact path="/search" component={Search} />
+            <Route exact path="/publication/:publicationId" component={PublicationPage} />
             <Route exact path="/search/:searchTerm" component={Search} />
             <Route exact path="/search/:searchTerm/:offset" component={Search} />
             {user.isLoggedIn && <Route exact path="/user" component={User} />}

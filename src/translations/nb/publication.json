@@ -30,6 +30,7 @@
   },
   "feedback": {
     "invalid_url": "Ugyldig lenke",
+    "minimum_one_contributor": "Du må ha minst en forfatter på denne publikasjonen",
     "required_field": "Påkrevd felt"
   },
   "files_and_license": {
@@ -37,6 +38,7 @@
     "administrative_contract": "Administrativ avtale",
     "browse": "velg filer",
     "drag_files": "Dra filer hit eller",
+    "drop_here": "Slipp filene dine her",
     "embargo_date": "Dato for utsatt publisering i arkivet",
     "files": "Filer",
     "info_from_publication_channel_register": {
@@ -66,7 +68,6 @@
     "link_publication_description": "Feks. DOI lenke, lenke til artikkel, lenke til video av foredrag etc.",
     "link_to_publication": "Link til publikasjon",
     "load_file": "Last opp fil",
-    "load_file_description": "Last opp fil...",
     "link": "Link"
   },
   "references": {

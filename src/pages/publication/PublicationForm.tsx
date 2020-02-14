@@ -14,16 +14,20 @@ import FilesAndLicensePanel from './FilesAndLicensePanel';
 import { PublicationFormTabs } from './PublicationFormTabs';
 import ReferencesPanel from './ReferencesPanel';
 import SubmissionPanel from './SubmissionPanel';
+import { Uppy, emptyFile } from '../../types/file.types';
 
 const StyledPublication = styled.div`
   width: 100%;
 `;
 
-const PublicationForm: FC = () => {
+interface PublicationFormProps {
+  uppy: Uppy;
+}
+
+const PublicationForm: FC<PublicationFormProps> = ({ uppy = createUppy() }) => {
   const { t } = useTranslation('publication');
   const [tabNumber, setTabNumber] = useState(0);
   const [initialValues, setInitialValues] = useState(emptyPublication);
-  const [uppy, setUppy] = useState();
 
   const validationSchema = Yup.object().shape({
     title: Yup.object().shape({
@@ -81,6 +85,24 @@ const PublicationForm: FC = () => {
         }),
       }),
     }),
+    contributors: Yup.array()
+      .of(
+        Yup.object().shape({
+          type: Yup.string(),
+          name: Yup.string(),
+          corresponding: Yup.bool(),
+          email: Yup.string(),
+          orcid: Yup.string(),
+          systemControlNumber: Yup.string(),
+          institutions: Yup.array().of(
+            Yup.object().shape({
+              id: Yup.string(),
+              name: Yup.string(),
+            })
+          ),
+        })
+      )
+      .min(1, t('publication:feedback.minimum_one_contributor')),
   });
 
   useEffect(() => {
@@ -88,19 +110,19 @@ const PublicationForm: FC = () => {
     const searchParams = new URLSearchParams(window.location.search);
     const title = searchParams.get('title') || '';
 
+    // Get files uploaded from new publication view
+    const files = Object.values(uppy.getState().files).map(file => ({ ...emptyFile, ...file }));
+
     setInitialValues({
       ...emptyPublication,
       title: {
         nb: title,
       },
+      files,
     });
-  }, []);
+  }, [uppy]);
 
   useEffect(() => {
-    // Set up Uppy for file uploading on form mount
-    if (!uppy) {
-      setUppy(createUppy());
-    }
     return () => uppy && uppy.close();
   }, [uppy]);
 
@@ -138,7 +160,7 @@ const PublicationForm: FC = () => {
 
             {tabNumber === 4 && (
               <TabPanel ariaLabel="submission">
-                <SubmissionPanel />
+                <SubmissionPanel savePublication={() => savePublication(values)} />
               </TabPanel>
             )}
           </Form>

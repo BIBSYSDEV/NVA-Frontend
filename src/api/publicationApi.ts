@@ -78,7 +78,7 @@ export const updatePublication = async (publication: Publication, dispatch: Disp
   }
 };
 
-export const getPublication = async (id: string, dispatch: Dispatch) => {
+export const getPublication = async (id: string) => {
   const url = `${PublicationsApiPaths.FETCH_RESOURCE}/${id}`;
   try {
     const idToken = await getIdToken();
@@ -88,12 +88,12 @@ export const getPublication = async (id: string, dispatch: Dispatch) => {
       },
     });
     if (response.status === StatusCode.OK) {
-      return response.data.Items[0];
+      return response.data;
     } else {
-      dispatch(addNotification(i18n.t('feedback:error.get_publication'), 'error'));
+      return null;
     }
-  } catch {
-    dispatch(addNotification(i18n.t('feedback:error.get_publication'), 'error'));
+  } catch (error) {
+    return { error };
   }
 };
 
