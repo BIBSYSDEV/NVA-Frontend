@@ -43,12 +43,14 @@ const AuthorityCard: React.FC<AuthorityCardProps> = ({ authority, isSelected }) 
 
   useEffect(() => {
     const fetchAuthorities = async () => {
-      const retrievedPublications = await getPublications(authority.systemControlNumber, dispatch);
-      setPublications(retrievedPublications);
+      const retrievedPublications = await getPublications(authority.systemControlNumber, authority.name);
+      if (!retrievedPublications.error) {
+        setPublications(retrievedPublications);
+      }
     };
 
     fetchAuthorities();
-  }, [dispatch, authority.systemControlNumber]);
+  }, [dispatch, authority.systemControlNumber, authority.name]);
 
   return (
     <StyledBoxContent>
