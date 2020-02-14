@@ -7,7 +7,7 @@ import {
   abortMultipartUpload,
   completeMultipartUpload,
 } from '../api/fileUploadApi';
-import { File } from '../types/file.types';
+import { File, Uppy as UppyType } from '../types/file.types';
 
 interface UppyArgs {
   uploadId: string;
@@ -28,7 +28,7 @@ export interface UppyCompletePart {
   ETag: string;
 }
 
-export const createUppy = () =>
+export const createUppy = (): UppyType =>
   new Uppy({
     autoProceed: true,
   }).use(AwsS3Multipart, {
