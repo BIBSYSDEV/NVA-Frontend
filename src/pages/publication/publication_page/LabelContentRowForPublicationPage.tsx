@@ -24,13 +24,11 @@ const LabelContentRowForPublicationPage: React.FC<LabelContentRowForPublicationP
   label,
   children,
   dataTestId,
-}) => {
-  return (
-    <StyledRow data-testid={dataTestId}>
-      <StyledLabel>{label}: </StyledLabel>
-      <StyledText>{children}</StyledText>
-    </StyledRow>
-  );
-};
+}) => (
+  <StyledRow data-testid={dataTestId}>
+    <StyledLabel>{label}: </StyledLabel>
+    <StyledText>{children}</StyledText>
+  </StyledRow>
+);
 
 export default LabelContentRowForPublicationPage;

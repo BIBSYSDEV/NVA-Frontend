@@ -18,16 +18,14 @@ interface PublicationPageFilesProps {
   files: File[];
 }
 
-const PublicationPageFiles: FC<PublicationPageFilesProps> = ({ files }) => {
-  return (
-    <>
-      {files.map(file => (
-        <StyledFileIconWrapper key={file.id}>
-          <StyledFileIcon />
-        </StyledFileIconWrapper>
-      ))}
-    </>
-  );
-};
+const PublicationPageFiles: FC<PublicationPageFilesProps> = ({ files }) => (
+  <>
+    {files.map(file => (
+      <StyledFileIconWrapper key={file.id}>
+        <StyledFileIcon />
+      </StyledFileIconWrapper>
+    ))}
+  </>
+);
 
 export default PublicationPageFiles;

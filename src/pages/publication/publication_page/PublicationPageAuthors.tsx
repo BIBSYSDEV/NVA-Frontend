@@ -11,14 +11,12 @@ interface PublicationPageProps {
   authors: Contributor[];
 }
 
-const PublicationPageAuthors: FC<PublicationPageProps> = ({ authors }) => {
-  return (
-    <NormalText>
-      {authors.map((author, index) => {
-        return <StyledAuthor key={index}>{author.name}</StyledAuthor>;
-      })}
-    </NormalText>
-  );
-};
+const PublicationPageAuthors: FC<PublicationPageProps> = ({ authors }) => (
+  <NormalText>
+    {authors.map((author, index) => {
+      return <StyledAuthor key={index}>{author.name}</StyledAuthor>;
+    })}
+  </NormalText>
+);
 
 export default PublicationPageAuthors;
