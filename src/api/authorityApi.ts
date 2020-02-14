@@ -64,14 +64,16 @@ export const addInstitutionForAuthority = async (
   orgunitids: string[],
   systemControlNumber: string
 ) => {
-  if (!(orgunitids.length > 0)) {
-    if (!orgunitids.find(orgunitid => orgunitid === cristinUnitId)) {
-      const updatedAuthority = await updateInstitutionForAuthority(cristinUnitId, systemControlNumber);
-      if (updatedAuthority?.error) {
-        return { error: updatedAuthority.error };
-      } else if (updatedAuthority) {
-        return updatedAuthority;
-      }
+  if (orgunitids.length === 0) {
+    return;
+  }
+
+  if (!orgunitids.find(orgunitid => orgunitid === cristinUnitId)) {
+    const updatedAuthority = await updateInstitutionForAuthority(cristinUnitId, systemControlNumber);
+    if (updatedAuthority?.error) {
+      return { error: updatedAuthority.error };
+    } else if (updatedAuthority) {
+      return updatedAuthority;
     }
   }
 };

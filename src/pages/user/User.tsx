@@ -83,12 +83,12 @@ const User: React.FC = () => {
   }, [user.authority, dispatch, user.externalOrcid]);
 
   useEffect(() => {
-    const newInstitutionUnits: InstitutionUnit[] = [];
-    institutionUnits.forEach(institutionUnit => {
-      !user.institutionUnits.find(
-        storedInstitutionUnit => storedInstitutionUnit.cristinUnitId === institutionUnit.cristinUnitId
-      ) ?? newInstitutionUnits.push(institutionUnit);
-    });
+    const newInstitutionUnits = institutionUnits.filter(
+      institutionUnit =>
+        !user.institutionUnits.some(
+          storedInstitutionUnit => storedInstitutionUnit.cristinUnitId === institutionUnit.cristinUnitId
+        )
+    );
     newInstitutionUnits.forEach(institutionUnit => {
       if (institutionUnit.cristinUnitId !== '') dispatch(addInstitutionUnit(institutionUnit));
     });

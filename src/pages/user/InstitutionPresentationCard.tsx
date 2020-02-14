@@ -76,7 +76,7 @@ const InstitutionCard: React.FC<InstitutionPresentationProps> = ({ institutionUn
           <StyledButton
             onClick={() => handleConfirm()}
             variant="contained"
-            color="secondary"
+            color="primary"
             disabled={!selectedCristinUnitId}
             data-testid="institution-add-button">
             {t('common:add')}
@@ -86,7 +86,7 @@ const InstitutionCard: React.FC<InstitutionPresentationProps> = ({ institutionUn
               setOpenEdit(false);
             }}
             variant="contained"
-            color="secondary">
+            color="primary">
             {t('common:cancel')}
           </StyledButton>
         </>
