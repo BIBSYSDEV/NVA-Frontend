@@ -6,17 +6,18 @@ import { useDispatch } from 'react-redux';
 import { CircularProgress, Link } from '@material-ui/core';
 import { emptyPublication, Publication } from '../../types/publication.types';
 import styled from 'styled-components';
-import ContentPage from '../../components/FormCard/ContentPage';
+import ContentPage from '../../components/ContentPage';
 import FormCardHeading from '../../components/FormCard/FormCardHeading';
 import FormCard from '../../components/FormCard/FormCard';
 import { useTranslation } from 'react-i18next';
 import LabelContentRowForPublicationPage from '../../components/LabelContentRowForPublicationPage';
-import NormalText from '../../components/NormalText';
 import PublicationPageAuthors from './publication_page/PublicationPageAuthors';
 import PublicationPageFiles from './publication_page/PublicationPageFiles';
-import PublicationPageIdenfifiers from './publication_page/PublicationPageIdentifiers';
-import PublicationPageSeries from './publication_page/PublicationPageSeries';
 import PublicationPageJournal from './publication_page/PublicationPageJournal';
+import PublicationPageIdenfifiers from './publication_page/PublicationPageIdentifiers';
+import NormalText from '../../components/NormalText';
+import PublicationPageSeries from './publication_page/PublicationPageSeries';
+import NotFound from '../errorpages/NotFound';
 
 const ContentWrapper = styled.div`
   display: flex;
@@ -72,58 +73,64 @@ const PublicationPage: FC<PublicationPageProps> = ({ publicationId }) => {
         <CircularProgress color="inherit" size={20} />
       ) : (
         <ContentPage>
-          <FormCardHeading>{publication.title?.no}</FormCardHeading>
-          {publication.authors && <PublicationPageAuthors authors={publication.authors} />}
-          <ContentWrapper>
-            <Sidebar>
-              <StyledSidebarCard>
-                <NormalText>NTNU institutt for osteloff</NormalText>
-                <NormalText>SINTEF Teknologi og samfunn</NormalText>
-              </StyledSidebarCard>
-              {publication.files && (
-                <StyledSidebarCard>
-                  <PublicationPageFiles files={publication.files} />
-                </StyledSidebarCard>
-              )}
-              <StyledSidebarCard>
-                <LabelContentRowForPublicationPage label={t('description.date_published')}>
-                  {publication.publicationDate.year}
-                  {publication.publicationDate.month && `-${publication.publicationDate.month}`}
-                  {publication.publicationDate.day && `-${publication.publicationDate.day}`}
-                </LabelContentRowForPublicationPage>
-                <PublicationPageIdenfifiers publication={publication} />
-              </StyledSidebarCard>
-            </Sidebar>
-            <MainContent>
-              {publication.doiLink && (
-                <LabelContentRowForPublicationPage label={t('references.doi')}>
-                  <Link href={publication.doiLink}>{publication.doiLink}</Link>
-                </LabelContentRowForPublicationPage>
-              )}
-              {publication.abstract && (
-                <LabelContentRowForPublicationPage label={t('description.abstract')}>
-                  {publication.abstract}
-                </LabelContentRowForPublicationPage>
-              )}
-              {publication.description && (
-                <LabelContentRowForPublicationPage label={t('description.description')}>
-                  {publication.description}
-                </LabelContentRowForPublicationPage>
-              )}
-              {publication.tags && (
-                <LabelContentRowForPublicationPage label={t('description.tags')}>
-                  {publication.tags}
-                </LabelContentRowForPublicationPage>
-              )}
-              <PublicationPageJournal publication={publication} />
-              {publication.projects.length > 0 && (
-                <LabelContentRowForPublicationPage label={t('description.project_association')}>
-                  {publication.projects?.[0].titles?.[0].title}
-                </LabelContentRowForPublicationPage>
-              )}
-              <PublicationPageSeries publication={publication} />
-            </MainContent>
-          </ContentWrapper>
+          {publication?.id ? (
+            <>
+              <FormCardHeading>{publication.title?.no}</FormCardHeading>
+              {publication.authors && <PublicationPageAuthors authors={publication.authors} />}
+              <ContentWrapper>
+                <Sidebar>
+                  <StyledSidebarCard>
+                    <NormalText>NTNU institutt for osteloff</NormalText>
+                    <NormalText>SINTEF Teknologi og samfunn</NormalText>
+                  </StyledSidebarCard>
+                  {publication.files && (
+                    <StyledSidebarCard>
+                      <PublicationPageFiles files={publication.files} />
+                    </StyledSidebarCard>
+                  )}
+                  <StyledSidebarCard>
+                    <LabelContentRowForPublicationPage label={t('description.date_published')}>
+                      {publication.publicationDate.year}
+                      {publication.publicationDate.month && `-${publication.publicationDate.month}`}
+                      {publication.publicationDate.day && `-${publication.publicationDate.day}`}
+                    </LabelContentRowForPublicationPage>
+                    <PublicationPageIdenfifiers publication={publication} />
+                  </StyledSidebarCard>
+                </Sidebar>
+                <MainContent>
+                  {publication.doiLink && (
+                    <LabelContentRowForPublicationPage label={t('references.doi')}>
+                      <Link href={publication.doiLink}>{publication.doiLink}</Link>
+                    </LabelContentRowForPublicationPage>
+                  )}
+                  {publication.abstract && (
+                    <LabelContentRowForPublicationPage label={t('description.abstract')}>
+                      {publication.abstract}
+                    </LabelContentRowForPublicationPage>
+                  )}
+                  {publication.description && (
+                    <LabelContentRowForPublicationPage label={t('description.description')}>
+                      {publication.description}
+                    </LabelContentRowForPublicationPage>
+                  )}
+                  {publication.tags && (
+                    <LabelContentRowForPublicationPage label={t('description.tags')}>
+                      {publication.tags}
+                    </LabelContentRowForPublicationPage>
+                  )}
+                  <PublicationPageJournal publication={publication} />
+                  {publication.projects.length > 0 && (
+                    <LabelContentRowForPublicationPage label={t('description.project_association')}>
+                      {publication.projects?.[0].titles?.[0].title}
+                    </LabelContentRowForPublicationPage>
+                  )}
+                  <PublicationPageSeries publication={publication} />
+                </MainContent>
+              </ContentWrapper>
+            </>
+          ) : (
+            <NotFound />
+          )}
         </ContentPage>
       )}
     </>
