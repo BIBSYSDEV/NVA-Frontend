@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   emptyInstitution,
@@ -22,58 +22,41 @@ const StyledButton = styled(Button)`
 `;
 
 interface InstitutionSelectorProps {
-  institutionUnit: InstitutionUnit;
-  disabled: boolean;
   addNewInstitutionUnit: (cristinUnitId: string) => void;
   setOpen: (value: boolean) => void;
 }
 
-const InstitutionSelector: React.FC<InstitutionSelectorProps> = ({
-  disabled,
-  addNewInstitutionUnit,
-  institutionUnit,
-  setOpen,
-}) => {
+const InstitutionSelector: React.FC<InstitutionSelectorProps> = ({ addNewInstitutionUnit, setOpen }) => {
   const { t } = useTranslation('profile');
-  const [subUnits, setSubUnits] = useState<InstitutionSubUnit[]>([]);
+  const [currentUnit, setCurrentUnit] = useState<InstitutionSubUnit>();
+  const [previouslySelectedSubunits, setPreviouslySelectedSubunits] = useState<InstitutionSubUnit[]>([]);
   const [selectedInstitution, setSelectedInstituion] = useState(emptyInstitution);
-  const [subUnitSelector, setSubUnitSelector] = useState<InstitutionSubUnit>();
-  const [selectedCristinUnitId, setSelectedCristinUnitId] = useState(institutionUnit?.cristinUnitId || '');
-
-  const getSubUnit = async (cristinUnitId: string) => {
-    const response: InstitutionSubUnit = await getInstitutionSubUnit(cristinUnitId);
-    if (response) {
-      return response;
-    }
-  };
+  const [selectedCristinUnitId, setSelectedCristinUnitId] = useState('');
 
   const selectInstitution = async (institution: Institution) => {
-    const institutionId = institution.cristinInstitutionId;
-    const cristinUnitId = institution?.cristinUnitId ?? `${institutionId}.0.0.0`;
+    const cristinUnitId = institution?.cristinUnitId ?? `${institution.cristinInstitutionId}.0.0.0`;
     setSelectedCristinUnitId(cristinUnitId);
     setSelectedInstituion(institution ?? selectedInstitution);
-    setSubUnits([]);
-    const searchValue = await getSubUnit(cristinUnitId);
+
+    setPreviouslySelectedSubunits([]);
+    const searchValue = await getInstitutionSubUnit(cristinUnitId);
     if (searchValue) {
       searchValue.subunitSiblings = [...(searchValue.subunits || [])];
     }
-    setSubUnitSelector(searchValue);
+    setCurrentUnit(searchValue);
   };
 
-  const searchSubUnits = async (subUnit: string, index: number) => {
-    setSelectedCristinUnitId(subUnit);
-    let oldSearchValues = subUnitSelector?.subunitSiblings || [];
-    if (index < subUnits.length) {
-      oldSearchValues = subUnits[index].subunitSiblings || [];
+  const searchSubUnits = async (subunitId: string, subunitIndex: number) => {
+    setSelectedCristinUnitId(subunitId);
+    let listOfSubunits = currentUnit?.subunitSiblings || [];
+    if (subunitIndex < previouslySelectedSubunits.length) {
+      listOfSubunits = previouslySelectedSubunits[subunitIndex].subunitSiblings || [];
     }
-    const searchValue = await getSubUnit(subUnit);
+    const searchValue = await getInstitutionSubUnit(subunitId);
     if (searchValue) {
-      searchValue.subunitSiblings = [...oldSearchValues];
-      setSubUnitSelector({ ...searchValue, subunitSiblings: searchValue.subunits });
-
-      const newSubUnits = [...subUnits].splice(0, index);
-
-      setSubUnits([...newSubUnits, searchValue]);
+      searchValue.subunitSiblings = [...listOfSubunits];
+      setCurrentUnit({ ...searchValue, subunitSiblings: searchValue.subunits });
+      setPreviouslySelectedSubunits([...previouslySelectedSubunits, searchValue]);
     }
   };
 
@@ -96,9 +79,9 @@ const InstitutionSelector: React.FC<InstitutionSelectorProps> = ({
           setValueFunction={inputValue => selectInstitution(inputValue)}
           placeholder={t('organization.search_for_institution')}
           selectedInstitution={selectedInstitution}
-          disabled={disabled}
+          disabled={false}
         />
-        {subUnits.map((subUnit, index) => {
+        {previouslySelectedSubunits.map((subUnit, index) => {
           return (
             <SubUnitSelect
               searchResults={subUnit.subunitSiblings || []}
@@ -110,11 +93,11 @@ const InstitutionSelector: React.FC<InstitutionSelectorProps> = ({
             />
           );
         })}
-        {subUnitSelector?.subunits && subUnitSelector.subunits.length > 0 && (
+        {currentUnit?.subunits && currentUnit.subunits.length > 0 && (
           <SubUnitSelect
-            searchResults={subUnitSelector.subunitSiblings || []}
+            searchResults={currentUnit.subunitSiblings || []}
             selectedValue={emptyInstitutionSubUnit}
-            findSubUnitFunction={subUnitSelector => searchSubUnits(subUnitSelector, subUnits.length)}
+            findSubUnitFunction={subunitId => searchSubUnits(subunitId, previouslySelectedSubunits.length)}
             label={t('organization.faculty')}
             dataTestId={`institution-set-subunit-selector`}
           />

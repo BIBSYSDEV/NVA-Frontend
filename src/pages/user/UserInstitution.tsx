@@ -12,6 +12,7 @@ import { addNotification } from '../../redux/actions/notificationActions';
 import { addInstitutionUnit } from '../../redux/actions/institutionActions';
 import { setAuthorityData } from './../../redux/actions/userActions';
 import { useTranslation } from 'react-i18next';
+import InstitutionSelector from './InstitutionSelector';
 
 const StyledButtonContainer = styled.div`
   display: flex;
@@ -23,6 +24,7 @@ const UserInstitution = () => {
   const [institutionUnits, setInstitutionUnits] = useState<InstitutionUnit[]>([]);
   const dispatch = useDispatch();
   const { t } = useTranslation('profile');
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const newInstitutionUnits = institutionUnits.filter(
@@ -36,7 +38,10 @@ const UserInstitution = () => {
     });
   }, [institutionUnits, user.institutionUnits, dispatch]);
 
-  const handleClickAdd = () => setInstitutionUnits([...institutionUnits, emptyInstitutionUnit]);
+  const handleClickAdd = () => {
+    setInstitutionUnits([...institutionUnits, emptyInstitutionUnit]);
+    setOpen(true);
+  };
 
   const addInstitution = async (cristinUnitId: string) => {
     if (!institutionUnits.find(institutionUnit => institutionUnit.cristinUnitId === cristinUnitId)) {
@@ -71,12 +76,9 @@ const UserInstitution = () => {
     <UserCard headingLabel={t('heading.organizations')}>
       <>
         {institutionUnits.map((institutionUnit: InstitutionUnit) => (
-          <InstitutionCard
-            key={institutionUnit.cristinUnitId}
-            institutionUnit={institutionUnit}
-            addNewInstitutionUnit={addInstitution}
-          />
+          <InstitutionCard key={institutionUnit.cristinUnitId} institutionUnit={institutionUnit} />
         ))}
+        {open && <InstitutionSelector addNewInstitutionUnit={addInstitution} setOpen={setOpen} />}
         <StyledButtonContainer>
           <Button
             variant="contained"
