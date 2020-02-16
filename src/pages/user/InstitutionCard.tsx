@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React, { FC } from 'react';
 import styled from 'styled-components';
 import { InstitutionUnit } from '../../types/institution.types';
 import { selectInstitutionNameByLanguage } from '../../utils/helpers';
-import InstitutionSelector from './InstitutionSelector';
 
 const StyledSelectedInstitution = styled.div`
   margin-top: 0.5rem;
@@ -22,11 +21,11 @@ const StyledInstitutionTextMain = styled(StyledInstitutionText)`
   justify-content: space-between;
 `;
 
-interface InstitutionPresentationProps {
+interface InstitutionCardProps {
   institutionUnit: InstitutionUnit;
 }
 
-const InstitutionCard: React.FC<InstitutionPresentationProps> = ({ institutionUnit }) => {
+const InstitutionCard: FC<InstitutionCardProps> = ({ institutionUnit }) => {
   const institutionId = institutionUnit.cristinUnitId;
 
   return (

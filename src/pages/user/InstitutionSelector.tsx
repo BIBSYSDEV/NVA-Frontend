@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   emptyInstitution,
@@ -11,7 +11,6 @@ import SubUnitSelect from './SubUnitSelect';
 import { getInstitutionSubUnit } from '../../api/institutionApi';
 import styled from 'styled-components';
 import { Button } from '@material-ui/core';
-import { InstitutionUnit } from './../../types/institution.types';
 
 const StyledInstitutionSelector = styled.div`
   width: 30rem;
@@ -26,7 +25,7 @@ interface InstitutionSelectorProps {
   setOpen: (value: boolean) => void;
 }
 
-const InstitutionSelector: React.FC<InstitutionSelectorProps> = ({ addNewInstitutionUnit, setOpen }) => {
+const InstitutionSelector: FC<InstitutionSelectorProps> = ({ addNewInstitutionUnit, setOpen }) => {
   const { t } = useTranslation('profile');
   const [currentUnit, setCurrentUnit] = useState<InstitutionSubUnit>();
   const [previouslySelectedSubunits, setPreviouslySelectedSubunits] = useState<InstitutionSubUnit[]>([]);

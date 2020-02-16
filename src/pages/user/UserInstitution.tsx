@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import UserCard from './UserCard';
 import { InstitutionUnit, emptyInstitutionUnit } from './../../types/institution.types';
-import InstitutionCard from './InstitutionPresentationCard';
+import InstitutionCard from './InstitutionCard';
 import { Button } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootStore } from './../../redux/reducers/rootReducer';
