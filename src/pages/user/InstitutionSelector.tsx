@@ -103,19 +103,14 @@ const InstitutionSelector: FC<InstitutionSelectorProps> = ({ addNewInstitutionUn
         )}
       </StyledInstitutionSelector>
       <StyledButton
-        onClick={() => handleAddInstitution()}
+        onClick={handleAddInstitution}
         variant="contained"
         color="primary"
         disabled={!selectedCristinUnitId}
         data-testid="institution-add-button">
         {t('common:add')}
       </StyledButton>
-      <StyledButton
-        onClick={() => {
-          handleCancel();
-        }}
-        variant="contained"
-        color="secondary">
+      <StyledButton onClick={handleCancel} variant="contained" color="secondary">
         {t('common:cancel')}
       </StyledButton>
     </>
