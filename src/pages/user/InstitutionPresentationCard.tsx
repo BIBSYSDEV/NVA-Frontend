@@ -24,12 +24,9 @@ const StyledInstitutionTextMain = styled(StyledInstitutionText)`
 
 interface InstitutionPresentationProps {
   institutionUnit: InstitutionUnit;
-  addNewInstitutionUnit: (cristinUnitId: string) => void;
 }
 
-const InstitutionCard: React.FC<InstitutionPresentationProps> = ({ institutionUnit, addNewInstitutionUnit }) => {
-  const [open, setOpen] = useState(false);
-
+const InstitutionCard: React.FC<InstitutionPresentationProps> = ({ institutionUnit }) => {
   const institutionId = institutionUnit.cristinUnitId;
 
   return (
@@ -53,14 +50,6 @@ const InstitutionCard: React.FC<InstitutionPresentationProps> = ({ institutionUn
             );
           })}
         </StyledSelectedInstitution>
-      )}
-      {open && (
-        <InstitutionSelector
-          institutionUnit={institutionUnit}
-          disabled={!!institutionUnit.cristinUnitId}
-          addNewInstitutionUnit={addNewInstitutionUnit}
-          setOpen={setOpen}
-        />
       )}
     </>
   );
