@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import { Typography } from '@material-ui/core';
 
 const StyledTypography = styled(Typography)`
-  font-size: 1.2rem;
-  font-weight: 600;
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
 `;
 
 interface SubHeadingProps {

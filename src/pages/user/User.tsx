@@ -15,11 +15,12 @@ import { InstitutionUnit } from '../../types/institution.types';
 import { ConnectAuthority } from './authority/ConnectAuthority';
 import InstitutionDialog from './InstitutionDialog';
 import InstitutionPresentationCard from './InstitutionPresentation';
-import UserCard from './UserCard';
 import UserInfo from './UserInfo';
 import UserLanguage from './UserLanguage';
 import UserOrcid from './UserOrcid';
 import UserRoles from './UserRoles';
+import Card from '../../components/Card';
+import Heading from '../../components/Heading';
 
 const StyledUserPage = styled.div`
   display: grid;
@@ -84,15 +85,20 @@ const User: React.FC = () => {
   return (
     <StyledUserPage>
       <StyledSecondaryUserInfo>
-        <UserCard headingLabel={t('common:picture')} />
-        <UserCard headingLabel={t('heading.contact_info')} />
+        <Card>
+          <Heading>{t('common:picture')} </Heading>
+        </Card>
+        <Card>
+          <Heading>{t('heading.contact_info')} </Heading>
+        </Card>
         <UserLanguage />
         <UserRoles user={user} />
       </StyledSecondaryUserInfo>
 
       <StyledPrimaryUserInfo>
         <UserInfo user={user} />
-        <UserCard headingLabel={t('heading.author_info')}>
+        <Card>
+          <Heading>{t('heading.author_info')}</Heading>
           {hasFeide ? (
             <>
               <p data-testid="author-connected-info">{t('authority.connected_info')}</p>
@@ -110,9 +116,10 @@ const User: React.FC = () => {
               </ButtonModal>
             </>
           )}
-        </UserCard>
+        </Card>
         <UserOrcid />
-        <UserCard headingLabel={t('heading.organizations')}>
+        <Card>
+          <Heading> {t('heading.organizations')} </Heading>
           <InstitutionDialog
             user={user}
             title={t('organization.add_institution')}
@@ -128,7 +135,7 @@ const User: React.FC = () => {
               />
             ))}
           </>
-        </UserCard>
+        </Card>
       </StyledPrimaryUserInfo>
     </StyledUserPage>
   );

@@ -5,6 +5,7 @@ import { Typography } from '@material-ui/core';
 const StyledTypography = styled(Typography)`
   font-size: 1.5rem;
   font-weight: bold;
+  margin-bottom: 0.5rem;
 `;
 
 interface HeadingProps {
