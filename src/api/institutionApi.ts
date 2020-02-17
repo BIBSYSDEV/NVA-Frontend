@@ -19,7 +19,7 @@ export const queryInstitution = async (searchTerm: string) => {
     const response = await Axios.get(url, { headers });
     return response.data;
   } catch {
-    return [];
+    return null;
   }
 };
 
@@ -30,19 +30,17 @@ export const getInstitutionSubUnit = async (cristinUnitId: string) => {
   };
   const url = `${InstituionApiPaths.UNIT}/${cristinUnitId}`;
 
-  console.log(cristinUnitId);
-
   try {
     const response = await Axios.get(url, { headers });
     return response.data;
   } catch {
-    return [];
+    return null;
   }
 };
 
 export const getInstitutionUnitNames = async (cristinUnitId: string) => {
   const institutionUnit: InstitutionUnit = {
-    cristinUnitId: cristinUnitId,
+    cristinUnitId,
     subUnits: [],
   };
 

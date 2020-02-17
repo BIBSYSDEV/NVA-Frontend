@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, FC } from 'react';
 import UserCard from './UserCard';
 import { InstitutionUnit, emptyInstitutionUnit } from './../../types/institution.types';
 import InstitutionCard from './InstitutionCard';
@@ -17,9 +17,10 @@ import InstitutionSelector from './InstitutionSelector';
 const StyledButtonContainer = styled.div`
   display: flex;
   justify-content: flex-end;
+  margin-top: 1rem;
 `;
 
-const UserInstitution = () => {
+const UserInstitution: FC = () => {
   const user = useSelector((state: RootStore) => state.user);
   const [institutionUnits, setInstitutionUnits] = useState<InstitutionUnit[]>([]);
   const dispatch = useDispatch();

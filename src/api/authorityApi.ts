@@ -71,7 +71,7 @@ export const addInstitutionForAuthority = async (
   if (!orgunitids.find(orgunitid => orgunitid === cristinUnitId)) {
     const updatedAuthority = await updateInstitutionForAuthority(cristinUnitId, systemControlNumber);
     if (updatedAuthority?.error) {
-      return { error: updatedAuthority.error };
+      return { error: i18n.t('feedback:error.update_authority') };
     } else if (updatedAuthority) {
       return updatedAuthority;
     }

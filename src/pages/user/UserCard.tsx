@@ -34,7 +34,6 @@ const StyledIcon = styled.div`
 interface UserCardProps {
   headingLabel: string;
   headingIcon?: ReactNode;
-  headingButton?: ReactNode;
   alternativeText?: string;
   subHeadingLabel?: string;
   children?: ReactNode;

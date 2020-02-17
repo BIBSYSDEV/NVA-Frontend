@@ -15,29 +15,27 @@ const StyledSearchIcon = styled(SearchIcon)`
 const emptyValue = { title: '' };
 
 interface AutoSearchProps {
-  label?: string;
+  onInputChange: (value: string) => void;
   searchResults: any;
   setValueFunction: (value: any) => void;
   clearSearchField?: boolean;
   dataTestId?: string;
-  onInputChange: (value: string) => void;
-  placeholder?: string;
-  displaySelection?: boolean;
   disabled?: boolean;
-  defaultValue?: any;
+  displaySelection?: boolean;
+  label?: string;
+  placeholder?: string;
 }
 
 export const AutoSearch: FC<AutoSearchProps> = ({
-  label,
+  onInputChange,
   searchResults,
   setValueFunction,
   clearSearchField,
   dataTestId,
-  onInputChange,
-  placeholder,
-  displaySelection,
   disabled,
-  defaultValue,
+  displaySelection,
+  label,
+  placeholder,
 }) => {
   const [displayValue, setDisplayValue] = useState<any>(emptyValue);
   const [open, setOpen] = useState(false);
@@ -63,7 +61,6 @@ export const AutoSearch: FC<AutoSearchProps> = ({
     <Autocomplete
       disableOpenOnFocus
       open={displayValue.title.length >= MINIMUM_SEARCH_CHARACTERS && open}
-      defaultValue={defaultValue}
       onClose={() => {
         setOpen(false);
       }}
