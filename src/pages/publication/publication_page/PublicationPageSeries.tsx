@@ -1,7 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import { Publication } from '../../../types/publication.types';
 import LabelContentRowForPublicationPage from './LabelContentRowForPublicationPage';
-import { ReferenceType } from '../../../types/references.types';
 import { useTranslation } from 'react-i18next';
 
 interface PublicationPageSeriesProps {
