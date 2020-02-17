@@ -20,13 +20,13 @@ const StyledText = styled.div`
   min-width: 60%;
 `;
 
-interface LabelTextLineProps {
+interface LabelContentRowProps {
   label: string;
   children: any;
   dataTestId?: string;
 }
 
-const LabelContentRow: React.FC<LabelTextLineProps> = ({ label, children, dataTestId }) => {
+const LabelContentRow: React.FC<LabelContentRowProps> = ({ label, children, dataTestId }) => {
   return (
     <StyledRow data-testid={dataTestId}>
       <StyledLabel>{label}</StyledLabel>

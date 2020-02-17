@@ -20,13 +20,22 @@ import { awsConfig } from './utils/aws-config';
 import { API_URL, DEBOUNCE_INTERVAL_MODAL, USE_MOCK_DATA } from './utils/constants';
 import { hubListener } from './utils/hub-listener';
 import { mockUser } from './utils/testfiles/mock_feide_user';
-import ContentPage from './components/FormCard/ContentPage';
 import AppRoutes from './AppRoutes';
 
 const StyledApp = styled.div`
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+`;
+
+const StyledContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-self: center;
+  max-width: ${({ theme }) => theme.breakpoints.values.lg + 'px'};
+  align-items: center;
+  flex-grow: 1;
 `;
 
 const App: React.FC = () => {
@@ -106,9 +115,9 @@ const App: React.FC = () => {
         {user.isLoggedIn && <AdminMenu />}
         <Breadcrumbs />
         {showAuthorityOrcidModal && <AuthorityOrcidModal />}
-        <ContentPage>
+        <StyledContent>
           <AppRoutes />
-        </ContentPage>
+        </StyledContent>
         <Footer />
       </StyledApp>
     </BrowserRouter>

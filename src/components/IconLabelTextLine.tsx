@@ -7,7 +7,7 @@ const StyledLine = styled.div`
   padding-bottom: 0.8rem;
   padding-top: 0.8rem;
   display: grid;
-  @media only screen and (min-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
+  @media (min-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
     grid-template-areas: 'icon label' 'text text';
     grid-template-columns: auto 1fr;
   }
