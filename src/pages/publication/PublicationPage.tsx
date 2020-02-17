@@ -34,7 +34,6 @@ const StyledSidebar = styled.div`
 const StyledMainContent = styled.div`
   flex: 1;
   padding-left: 1rem;
-  min-width: 30rem;
 `;
 
 const StyledSidebarCard = styled(FormCard)`
