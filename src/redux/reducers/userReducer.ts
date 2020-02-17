@@ -25,7 +25,7 @@ export const userReducer = (
       const affiliations = action.user['custom:affiliation']
         .replace(/[[\]]/g, '')
         .split(',')
-        .map(s => s.trim()) as Affiliation[];
+        .map(affiliationString => affiliationString.trim()) as Affiliation[];
       const roles = action.user['custom:applicationRoles'].split(',') as RoleName[];
       const user: Partial<User> = {
         name: action.user.name,
