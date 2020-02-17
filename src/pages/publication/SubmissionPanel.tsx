@@ -17,7 +17,7 @@ import SubmissionContributors from './submission_tab/submission_contributors';
 import { ReferenceType } from '../../types/references.types';
 import Heading from '../../components/Heading';
 import SubHeading from '../../components/SubHeading';
-import StyledCard from '../../components/Card';
+import Card from '../../components/Card';
 import { useHistory } from 'react-router';
 
 const StyledPublishButton = styled(Button)`
@@ -40,29 +40,29 @@ const SubmissionPanel: React.FC<SubmissionPanelProps> = ({ savePublication }) =>
 
   return (
     <TabPanel ariaLabel="submission">
-      <StyledCard>
+      <Card>
         <Heading>{t('heading.summary')}</Heading>
-        <StyledCard>
+        <Card>
           <SubHeading>{t('heading.description')}</SubHeading>
           <SubmissionDescription />
-        </StyledCard>
-        <StyledCard>
+        </Card>
+        <Card>
           <SubHeading>{t('heading.references')}</SubHeading>
           {values.reference.type === ReferenceType.BOOK && <SubmissionBook />}
           {values.reference.type === ReferenceType.DEGREE && <SubmissionDegree />}
           {values.reference.type === ReferenceType.CHAPTER && <SubmissionChapter />}
           {values.reference.type === ReferenceType.REPORT && <SubmissionReport />}
           {values.reference.type === ReferenceType.PUBLICATION_IN_JOURNAL && <SubmissionJournalPublication />}
-        </StyledCard>
-        <StyledCard>
+        </Card>
+        <Card>
           <SubHeading>{t('heading.contributors')}</SubHeading>
           <SubmissionContributors />
-        </StyledCard>
-        <StyledCard>
+        </Card>
+        <Card>
           <SubHeading>{t('heading.files_and_license')}</SubHeading>
           <SubmissionFilesAndLicenses />
-        </StyledCard>
-      </StyledCard>
+        </Card>
+      </Card>
       <StyledPublishButton color="primary" variant="contained" onClick={publishPublication}>
         {t('common:publish')}
       </StyledPublishButton>
