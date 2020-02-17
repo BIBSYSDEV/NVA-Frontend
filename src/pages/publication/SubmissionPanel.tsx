@@ -15,9 +15,9 @@ import SubmissionDescription from './submission_tab/submission_description';
 import SubmissionFilesAndLicenses from './submission_tab/submission_files_licenses';
 import SubmissionContributors from './submission_tab/submission_contributors';
 import { ReferenceType } from '../../types/references.types';
-import FormCardHeading from '../../components/FormCard/FormCardHeading';
-import FormCardSubHeading from '../../components/FormCard/FormCardSubHeading';
-import FormCard from '../../components/FormCard/FormCard';
+import Heading from '../../components/Heading';
+import SubHeading from '../../components/SubHeading';
+import StyledCard from '../../components/Card';
 import { useHistory } from 'react-router';
 
 const StyledPublishButton = styled(Button)`
@@ -40,29 +40,29 @@ const SubmissionPanel: React.FC<SubmissionPanelProps> = ({ savePublication }) =>
 
   return (
     <TabPanel ariaLabel="submission">
-      <FormCard>
-        <FormCardHeading>{t('heading.summary')}</FormCardHeading>
-        <FormCard>
-          <FormCardSubHeading>{t('heading.description')}</FormCardSubHeading>
+      <StyledCard>
+        <Heading>{t('heading.summary')}</Heading>
+        <StyledCard>
+          <SubHeading>{t('heading.description')}</SubHeading>
           <SubmissionDescription />
-        </FormCard>
-        <FormCard>
-          <FormCardSubHeading>{t('heading.references')}</FormCardSubHeading>
+        </StyledCard>
+        <StyledCard>
+          <SubHeading>{t('heading.references')}</SubHeading>
           {values.reference.type === ReferenceType.BOOK && <SubmissionBook />}
           {values.reference.type === ReferenceType.DEGREE && <SubmissionDegree />}
           {values.reference.type === ReferenceType.CHAPTER && <SubmissionChapter />}
           {values.reference.type === ReferenceType.REPORT && <SubmissionReport />}
           {values.reference.type === ReferenceType.PUBLICATION_IN_JOURNAL && <SubmissionJournalPublication />}
-        </FormCard>
-        <FormCard>
-          <FormCardSubHeading>{t('heading.contributors')}</FormCardSubHeading>
+        </StyledCard>
+        <StyledCard>
+          <SubHeading>{t('heading.contributors')}</SubHeading>
           <SubmissionContributors />
-        </FormCard>
-        <FormCard>
-          <FormCardSubHeading>{t('heading.files_and_license')}</FormCardSubHeading>
+        </StyledCard>
+        <StyledCard>
+          <SubHeading>{t('heading.files_and_license')}</SubHeading>
           <SubmissionFilesAndLicenses />
-        </FormCard>
-      </FormCard>
+        </StyledCard>
+      </StyledCard>
       <StyledPublishButton color="primary" variant="contained" onClick={publishPublication}>
         {t('common:publish')}
       </StyledPublishButton>

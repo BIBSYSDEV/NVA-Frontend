@@ -26,7 +26,7 @@ import { API_URL, DEBOUNCE_INTERVAL_MODAL, USE_MOCK_DATA } from './utils/constan
 import { hubListener } from './utils/hub-listener';
 import { mockUser } from './utils/testfiles/mock_feide_user';
 import MyPublications from './pages/publication/MyPublications';
-import ContentPage from './components/FormCard/ContentPage';
+import ContentPage from './components/ContentPage';
 import PublicationPage from './pages/publication/PublicationPage';
 
 const StyledApp = styled.div`

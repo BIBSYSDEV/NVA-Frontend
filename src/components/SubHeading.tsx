@@ -3,18 +3,18 @@ import styled from 'styled-components';
 import { Typography } from '@material-ui/core';
 
 const StyledTypography = styled(Typography)`
-  font-size: 1.5rem;
-  font-weight: bold;
+  font-size: 1.2rem;
+  font-weight: 600;
 `;
 
-interface FormCardHeadingProps {
+interface SubHeadingProps {
   children: ReactNode;
 }
 
-const FormCardHeading: FC<FormCardHeadingProps> = ({ children, ...props }) => (
-  <StyledTypography variant="h2" {...props}>
+const SubHeading: FC<SubHeadingProps> = ({ children, ...props }) => (
+  <StyledTypography variant="h3" {...props}>
     {children}
   </StyledTypography>
 );
 
-export default FormCardHeading;
+export default SubHeading;

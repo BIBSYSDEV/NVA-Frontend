@@ -8,8 +8,8 @@ import { Button, Link as MuiLink } from '@material-ui/core';
 import LinkPublication from './new_publication/LinkPublication';
 import LoadPublication from './new_publication/LoadPublication';
 import PublicationForm from './PublicationForm';
-import FormCardHeading from '../../components/FormCard/FormCardHeading';
-import FormCard from '../../components/FormCard/FormCard';
+import Heading from '../../components/Heading';
+import NVACard from '../../components/Card';
 import { createUppy } from '../../utils/uppy-config';
 
 const StyledNewPublication = styled.div`
@@ -33,7 +33,7 @@ const StyledSelectorWrapper = styled.div`
   }
 `;
 
-const StyledCard = styled(FormCard)`
+const StyledCard = styled(NVACard)`
   padding: 1rem;
   max-width: 25rem;
   flex: 1;
@@ -87,7 +87,7 @@ const NewPublication: FC = () => {
               />
             </StyledSelectorWrapper>
             <StyledCard>
-              <FormCardHeading>{t('common:information')}</FormCardHeading>
+              <Heading>{t('common:information')}</Heading>
               <section>
                 Velg publikasjoner Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
                 incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco

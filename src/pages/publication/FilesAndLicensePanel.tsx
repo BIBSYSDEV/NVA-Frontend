@@ -9,11 +9,11 @@ import { Publication } from '../../types/publication.types';
 import Modal from '../../components/Modal';
 import { licenses, Uppy } from '../../types/file.types';
 import { Typography } from '@material-ui/core';
-import FormCard from '../../components/FormCard/FormCard';
-import FormCardHeading from '../../components/FormCard/FormCardHeading';
+import StyledCard from '../../components/Card';
+import Heading from '../../components/Heading';
 import PublicationChannelInfoCard from './files_and_license_tab/PublicationChannelInfoCard';
 
-const StyledUploadedFiles = styled(FormCard)`
+const StyledUploadedFiles = styled(StyledCard)`
   display: flex;
   flex-direction: column;
 
@@ -55,14 +55,14 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab
       <FieldArray name={FilesFieldNames.FILES}>
         {({ insert, remove, replace }) => (
           <>
-            <FormCard>
-              <FormCardHeading>{t('files_and_license.upload_files')}</FormCardHeading>
+            <StyledCard>
+              <Heading>{t('files_and_license.upload_files')}</Heading>
               <FileUploader uppy={uppy} addFile={file => insert(0, file)} />
-            </FormCard>
+            </StyledCard>
             {uploadedFiles.length > 0 && (
               <>
                 <StyledUploadedFiles>
-                  <FormCardHeading>{t('files_and_license.files')}</FormCardHeading>
+                  <Heading>{t('files_and_license.files')}</Heading>
                   {uploadedFiles.map((file, index) => (
                     <FileCard
                       key={file.id}

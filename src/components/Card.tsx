@@ -1,8 +1,8 @@
 import React, { ReactNode } from 'react';
 import styled from 'styled-components';
-import { Card } from '@material-ui/core';
+import { Card as materialCard } from '@material-ui/core';
 
-const StyledCard = styled(Card)`
+const Card = styled(materialCard)`
   width: 100%;
   @media (min-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
     padding: 1rem 2rem;
@@ -11,14 +11,14 @@ const StyledCard = styled(Card)`
   margin-bottom: 1rem;
 `;
 
-interface UserCardProps {
+interface CardProps {
   children: ReactNode;
 }
 
-const FormCard: React.FC<UserCardProps> = ({ children, ...props }) => (
-  <StyledCard variant="outlined" {...props}>
+const StyledCard: React.FC<CardProps> = ({ children, ...props }) => (
+  <Card variant="outlined" {...props}>
     {children}
-  </StyledCard>
+  </Card>
 );
 
-export default FormCard;
+export default StyledCard;
