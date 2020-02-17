@@ -26,13 +26,22 @@ import { API_URL, DEBOUNCE_INTERVAL_MODAL, USE_MOCK_DATA } from './utils/constan
 import { hubListener } from './utils/hub-listener';
 import { mockUser } from './utils/testfiles/mock_feide_user';
 import MyPublications from './pages/publication/MyPublications';
-import ContentPage from './components/FormCard/ContentPage';
 import PublicationPage from './pages/publication/PublicationPage';
 
 const StyledApp = styled.div`
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+`;
+
+const StyledContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-self: center;
+  max-width: ${({ theme }) => theme.breakpoints.values.lg + 'px'};
+  align-items: center;
+  flex-grow: 1;
 `;
 
 const App: React.FC = () => {
@@ -112,7 +121,7 @@ const App: React.FC = () => {
         {user.isLoggedIn && <AdminMenu />}
         <Breadcrumbs />
         {showAuthorityOrcidModal && <AuthorityOrcidModal />}
-        <ContentPage>
+        <StyledContent>
           <Switch>
             <Route exact path="/" component={Dashboard} />
             {user.isLoggedIn && <Route exact path="/new-publication" component={NewPublication} />}
@@ -124,7 +133,7 @@ const App: React.FC = () => {
             {user.isLoggedIn && <Route exact path="/user" component={User} />}
             <Route path="*" component={NotFound} />
           </Switch>
-        </ContentPage>
+        </StyledContent>
         <Footer />
       </StyledApp>
     </BrowserRouter>
