@@ -109,7 +109,7 @@ const App: React.FC = () => {
       <StyledApp>
         <Notifier />
         <Header />
-        {user.isLoggedIn && <AdminMenu />}
+        <AdminMenu />
         <Breadcrumbs />
         {showAuthorityOrcidModal && <AuthorityOrcidModal />}
         <ContentPage>
