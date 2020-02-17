@@ -10,18 +10,18 @@ const StyledDashboard = styled.div`
   width: 100%;
   height: 85%;
   display: grid;
-  grid-template-areas: 'search-bar' 'other-content';
+  grid-template-areas: 'other-content' 'search-bar';
   grid-template-rows: 4rem 15rem auto;
   justify-items: center;
   align-items: center;
 `;
 
 const StyledSearchBar = styled(SearchBar)`
-  grid-area: other-content;
+  grid-area: search-bar;
 `;
 
 const StyledOtherContent = styled.div`
-  grid-area: search-bar;
+  grid-area: other-content;
 `;
 
 const StyledSearchBarContainer = styled.div`
