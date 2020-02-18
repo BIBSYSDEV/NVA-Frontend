@@ -9,11 +9,11 @@ import { Publication } from '../../types/publication.types';
 import Modal from '../../components/Modal';
 import { licenses, Uppy } from '../../types/file.types';
 import { Typography } from '@material-ui/core';
-import StyledCard from '../../components/Card';
+import Card from '../../components/Card';
 import Heading from '../../components/Heading';
 import PublicationChannelInfoCard from './files_and_license_tab/PublicationChannelInfoCard';
 
-const StyledUploadedFiles = styled(StyledCard)`
+const StyledUploadedFiles = styled(Card)`
   display: flex;
   flex-direction: column;
 
@@ -55,10 +55,10 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab
       <FieldArray name={FilesFieldNames.FILES}>
         {({ insert, remove, replace }) => (
           <>
-            <StyledCard>
+            <Card>
               <Heading>{t('files_and_license.upload_files')}</Heading>
               <FileUploader uppy={uppy} addFile={file => insert(0, file)} />
-            </StyledCard>
+            </Card>
             {uploadedFiles.length > 0 && (
               <>
                 <StyledUploadedFiles>

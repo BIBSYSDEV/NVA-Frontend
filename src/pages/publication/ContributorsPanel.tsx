@@ -1,7 +1,7 @@
 import React, { FC, useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import StyledCard from '../../components/Card';
+import Card from '../../components/Card';
 import Heading from '../../components/Heading';
 import TabPanel from '../../components/TabPanel/TabPanel';
 import SortableTable from './contributors_tab/components/SortableTable';
@@ -47,7 +47,7 @@ const ContributorsPanel: FC<ContributorsPanelProps> = ({ goToNextTab, savePublic
 
   return (
     <TabPanel ariaLabel="references" goToNextTab={goToNextTab} onClickSave={savePublication}>
-      <StyledCard>
+      <Card>
         <Heading>{t('contributors.authors')}</Heading>
         <FieldArray name={ContributorFieldNames.CONTRIBUTORS}>
           {({ push, remove, swap }) => (
@@ -59,7 +59,7 @@ const ContributorsPanel: FC<ContributorsPanelProps> = ({ goToNextTab, savePublic
             />
           )}
         </FieldArray>
-      </StyledCard>
+      </Card>
     </TabPanel>
   );
 };

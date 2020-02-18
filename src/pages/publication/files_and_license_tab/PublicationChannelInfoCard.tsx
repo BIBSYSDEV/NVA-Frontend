@@ -1,6 +1,6 @@
 import React from 'react';
 import { Publisher } from '../../../types/references.types';
-import StyledCard from '../../../components/Card';
+import Card from '../../../components/Card';
 import Heading from '../../../components/Heading';
 import Label from '../../../components/Label';
 import { Typography, Avatar } from '@material-ui/core';
@@ -26,7 +26,7 @@ const PublicationChannelInfoCard: React.FC<PublicationChannelInfoCardProps> = ({
   const { t } = useTranslation('publication');
 
   return (
-    <StyledCard>
+    <Card>
       <Heading>{t('files_and_license.info_from_publication_channel_register.title')}</Heading>
       <StyledInfoEntries>
         <div>
@@ -45,7 +45,7 @@ const PublicationChannelInfoCard: React.FC<PublicationChannelInfoCardProps> = ({
           />
         )}
       </StyledInfoEntries>
-    </StyledCard>
+    </Card>
   );
 };
 

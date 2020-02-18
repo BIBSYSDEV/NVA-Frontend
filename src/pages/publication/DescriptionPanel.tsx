@@ -18,7 +18,7 @@ import ChipInput from 'material-ui-chip-input';
 import { getObjectValueByFieldName } from '../../utils/helpers';
 import { orderedLanguages } from '../../types/language.types';
 import Heading from '../../components/Heading';
-import StyledCard from '../../components/Card';
+import Card from '../../components/Card';
 
 const MultipleFieldWrapper = styled.div`
   display: flex;
@@ -78,7 +78,7 @@ const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublicat
   return (
     <TabPanel ariaLabel="description" goToNextTab={goToNextTab} onClickSave={validateAndSave}>
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
-        <StyledCard>
+        <Card>
           <Heading>{t('heading.description')}</Heading>
           <StyledFieldWrapper>
             <Field
@@ -173,8 +173,8 @@ const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublicat
               </Field>
             </StyledFieldWrapper>
           </MultipleFieldWrapper>
-        </StyledCard>
-        <StyledCard>
+        </Card>
+        <Card>
           <StyledFieldHeader>{t('description.project_association')}</StyledFieldHeader>
 
           <StyledFieldWrapper>
@@ -201,7 +201,7 @@ const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublicat
               )}
             </FieldArray>
           </StyledFieldWrapper>
-        </StyledCard>
+        </Card>
       </MuiPickersUtilsProvider>
     </TabPanel>
   );

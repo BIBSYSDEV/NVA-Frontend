@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import StyledCard from '../../components/Card';
+import Card from '../../components/Card';
 import Heading from '../../components/Heading';
 import PublicationList from './PublicationList';
 import { getMyPublications } from '../../api/publicationApi';
@@ -43,12 +43,12 @@ const MyPublications: FC = () => {
   }, [dispatch]);
 
   return (
-    <StyledCard>
+    <Card>
       <Heading>{t('workLists:my_publications')}</Heading>
       <StyledWrapper>
         {isLoading ? <CircularProgress color="inherit" size={20} /> : <PublicationList publications={publications} />}
       </StyledWrapper>
-    </StyledCard>
+    </Card>
   );
 };
 

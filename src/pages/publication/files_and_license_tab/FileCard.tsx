@@ -19,7 +19,7 @@ import { File, licenses, License } from '../../../types/file.types';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import { useTranslation } from 'react-i18next';
-import StyledCard from '../../../components/Card';
+import Card from '../../../components/Card';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import HelpIcon from '@material-ui/icons/Help';
 import SubHeading from '../../../components/SubHeading';
@@ -82,7 +82,7 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, updateFile, toggl
   const { t } = useTranslation('publication');
 
   return (
-    <StyledCard data-testid="uploaded-file-card">
+    <Card data-testid="uploaded-file-card">
       <SubHeading>{file.name}</SubHeading>
       <StyledDescription>
         {t('files_and_license.uploaded_size', { size: Math.round(file.data.size / 1000) })}
@@ -211,7 +211,7 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, updateFile, toggl
           {t('common:remove')}
         </Button>
       </StyledActions>
-    </StyledCard>
+    </Card>
   );
 };
 
