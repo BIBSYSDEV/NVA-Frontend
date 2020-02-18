@@ -6,24 +6,24 @@ import {
   FormControl,
   FormControlLabel,
   FormLabel,
+  IconButton,
   Link,
+  ListItemText,
+  MenuItem,
   Radio,
   RadioGroup,
   TextField,
-  MenuItem,
-  IconButton,
-  ListItemText,
-  Typography,
 } from '@material-ui/core';
-import { File, licenses, License } from '../../../types/file.types';
+import { File, License, licenses } from '../../../types/file.types';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import { useTranslation } from 'react-i18next';
-import FormCard from '../../../components/FormCard/FormCard';
+import Card from '../../../components/Card';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import HelpIcon from '@material-ui/icons/Help';
-import FormCardSubHeading from '../../../components/FormCard/FormCardSubHeading';
+import SubHeading from '../../../components/SubHeading';
 import DeleteIcon from '@material-ui/icons/Delete';
+import Label from '../../../components/Label';
 
 const StyledDescription = styled.div`
   font-style: italic;
@@ -58,7 +58,7 @@ const StyledSelect = styled(TextField)`
   }
 `;
 
-const StyledLicenseName = styled(Typography)`
+const StyledLicenseName = styled(Label)`
   margin-left: 0.5rem;
 `;
 
@@ -82,8 +82,8 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, updateFile, toggl
   const { t } = useTranslation('publication');
 
   return (
-    <FormCard data-testid="uploaded-file-card">
-      <FormCardSubHeading>{file.name}</FormCardSubHeading>
+    <Card data-testid="uploaded-file-card">
+      <SubHeading>{file.name}</SubHeading>
       <StyledDescription>
         {t('files_and_license.uploaded_size', { size: Math.round(file.data.size / 1000) })}
       </StyledDescription>
@@ -161,9 +161,7 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, updateFile, toggl
                         return selectedLicense ? (
                           <StyledVerticalAlign>
                             <img src={selectedLicense.image} alt={selectedLicense.name} />
-                            <StyledLicenseName display="inline" variant="body1">
-                              {option}
-                            </StyledLicenseName>
+                            <StyledLicenseName>{option}</StyledLicenseName>
                           </StyledVerticalAlign>
                         ) : null;
                       },
@@ -183,7 +181,7 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, updateFile, toggl
                           <img src={license.image} alt={license.name} />
                         </ListItemIcon>
                         <ListItemText>
-                          <StyledLicenseName variant="body1">{license.name}</StyledLicenseName>
+                          <StyledLicenseName>{license.name}</StyledLicenseName>
                         </ListItemText>
                       </MenuItem>
                     ))}
@@ -211,7 +209,7 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, updateFile, toggl
           {t('common:remove')}
         </Button>
       </StyledActions>
-    </FormCard>
+    </Card>
   );
 };
 

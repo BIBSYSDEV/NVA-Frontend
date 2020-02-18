@@ -3,16 +3,17 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
-import { Button, Typography } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 
 import { getAuthorities } from '../../../../api/authorityApi';
-import FormCardLabel from '../../../../components/FormCard/FormCardLabel';
+import Label from '../../../../components/Label';
 import Progress from '../../../../components/Progress';
 import SearchBar from '../../../../components/SearchBar';
 import { addNotification } from '../../../../redux/actions/notificationActions';
 import { Authority, emptyAuthority } from '../../../../types/authority.types';
 import { debounce } from '../../../../utils/debounce';
 import AuthorityCard from '../../../user/authority/AuthorityCard';
+import NormalText from '../../../../components/NormalText';
 
 const StyledClickableDiv = styled.div`
   cursor: pointer;
@@ -34,7 +35,7 @@ const StyledProgressContainer = styled.div`
   padding: 2rem;
 `;
 
-const StyledFormCardLabel = styled(FormCardLabel)`
+const StyledLabel = styled(Label)`
   padding: 0.5rem;
 `;
 
@@ -89,12 +90,12 @@ const AddContributorModalContent: FC<AddContributorModalContentProps> = ({ addAu
         </StyledProgressContainer>
       ) : matchingAuthorities?.length > 0 ? (
         <>
-          <StyledFormCardLabel>
+          <StyledLabel>
             {t('profile:authority.search_summary', {
               searchTerm: searchSummary.searchTerm,
               results: searchSummary.results,
             })}
-          </StyledFormCardLabel>
+          </StyledLabel>
           {matchingAuthorities?.map(authority => (
             <StyledClickableDiv
               data-testid="author-radio-button"
@@ -119,7 +120,7 @@ const AddContributorModalContent: FC<AddContributorModalContentProps> = ({ addAu
           </StyledButtonContainer>
         </>
       ) : (
-        <Typography variant="body1">{t('common:no_hits')}</Typography>
+        <NormalText>{t('common:no_hits')}</NormalText>
       )}
     </>
   );

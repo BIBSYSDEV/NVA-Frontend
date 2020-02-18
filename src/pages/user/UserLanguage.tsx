@@ -6,7 +6,8 @@ import { MenuItem, Select } from '@material-ui/core';
 
 import { defaultLanguage } from '../../translations/i18n';
 import { pageLanguages } from '../../types/language.types';
-import UserCard from './UserCard';
+import Card from '../../components/Card';
+import Heading from '../../components/Heading';
 
 const StyledSelect = styled(Select)`
   margin-top: 1rem;
@@ -29,7 +30,8 @@ const UserLanguage: React.FC = () => {
   };
 
   return (
-    <UserCard headingLabel={t('heading.language')}>
+    <Card>
+      <Heading>{t('heading.language')}</Heading>
       <StyledSelect
         variant="outlined"
         value={languageSelected}
@@ -41,7 +43,7 @@ const UserLanguage: React.FC = () => {
           </MenuItem>
         ))}
       </StyledSelect>
-    </UserCard>
+    </Card>
   );
 };
 

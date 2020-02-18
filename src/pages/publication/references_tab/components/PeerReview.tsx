@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { FormControl, FormControlLabel, Radio, RadioGroup } from '@material-ui/core';
 
 import { Publication } from '../../../../types/publication.types';
-import FormCardLabel from '../../../../components/FormCard/FormCardLabel';
+import Label from '../../../../components/Label';
 
 interface PeerReviewProps {
   fieldName: string;
@@ -21,7 +21,7 @@ const PeerReview: FC<PeerReviewProps> = ({ fieldName, label }) => {
     <Field name={fieldName}>
       {({ field: { name, value } }: any) => (
         <>
-          <FormCardLabel>{label}</FormCardLabel>
+          <Label>{label}</Label>
           <FormControl>
             <RadioGroup
               value={value ? 'true' : 'false'}

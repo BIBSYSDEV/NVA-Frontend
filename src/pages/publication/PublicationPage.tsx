@@ -7,8 +7,6 @@ import { CircularProgress, Link } from '@material-ui/core';
 import { Publication } from '../../types/publication.types';
 import styled from 'styled-components';
 import ContentPage from '../../components/ContentPage';
-import FormCardHeading from '../../components/FormCard/FormCardHeading';
-import FormCard from '../../components/FormCard/FormCard';
 import { useTranslation } from 'react-i18next';
 import LabelContentRowForPublicationPage from './publication_page/LabelContentRowForPublicationPage';
 import PublicationPageAuthors from './publication_page/PublicationPageAuthors';
@@ -17,6 +15,8 @@ import PublicationPageJournal from './publication_page/PublicationPageJournal';
 import NormalText from '../../components/NormalText';
 import PublicationPageSeries from './publication_page/PublicationPageSeries';
 import NotFound from '../errorpages/NotFound';
+import Card from '../../components/Card';
+import Heading from '../../components/Heading';
 
 const StyledContentWrapper = styled.div`
   display: flex;
@@ -36,7 +36,7 @@ const StyledMainContent = styled.div`
   padding-left: 1rem;
 `;
 
-const StyledSidebarCard = styled(FormCard)`
+const StyledSidebarCard = styled(Card)`
   padding: 0.5rem;
 `;
 
@@ -72,7 +72,7 @@ const PublicationPage: FC<PublicationPageProps> = ({ publicationId }) => {
         <ContentPage>
           {publication ? (
             <>
-              <FormCardHeading>{publication.title?.no}</FormCardHeading>
+              <Heading>{publication.title?.no}</Heading>
               {publication.authors && <PublicationPageAuthors authors={publication.authors} />}
               <StyledContentWrapper>
                 <StyledSidebar>
