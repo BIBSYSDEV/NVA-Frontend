@@ -26,6 +26,7 @@
   "info_feide": "Info retrieved from Feide",
   "info_nva": "Info retrieved from NVA",
   "my_profile": "My profile",
+  "my_public_profile": "My public profile",
   "orcid": {
     "create_or_connect": "Create or connect to your ORCID",
     "description_what_is_orcid": "ORCID is an independent non-profit effort to provide an open registry of unique researcher identifiers and open services to link research activities and organizations to these identifiers.",

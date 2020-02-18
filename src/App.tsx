@@ -128,6 +128,7 @@ const App: React.FC = () => {
             {user.isLoggedIn && <Route exact path="/new-publication" component={NewPublication} />}
             {user.isLoggedIn && <Route exact path="/my-publications" component={MyPublications} />}
             {user.isLoggedIn && <Route exact path="/public-profile/:userName" component={PublicProfile} />}
+            {user.isLoggedIn && <Route exact path="/public-profile" component={PublicProfile} />}
             <Route exact path="/search" component={Search} />
             <Route exact path="/publication/:publicationId" component={PublicationPage} />
             <Route exact path="/search/:searchTerm" component={Search} />

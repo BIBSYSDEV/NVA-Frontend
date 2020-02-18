@@ -15,7 +15,9 @@
   "orcid": "ORCID",
   "picture": "Bilde",
   "preview": "Forhåndsvis",
+  "publications": "Publikasjoner",
   "publish": "Publiser",
+  "publisher": "Utgiver",
   "remove": "Fjern",
   "save": "Lagre",
   "search": "Søk",
@@ -23,5 +25,6 @@
   "status": "Status",
   "title": "Tittel",
   "type": "Type",
+  "year": "År",
   "yes": "Ja"
 }

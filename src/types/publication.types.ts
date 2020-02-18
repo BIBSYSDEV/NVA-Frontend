@@ -12,6 +12,7 @@ export enum PublicationType {
 export enum PublicationStatus {
   DRAFT = 'draft',
   REJECTED = 'rejected',
+  PUBLISHED = 'published',
 }
 
 interface TitleType {
@@ -64,6 +65,10 @@ export interface Publication {
 }
 
 export type PublicationPreview = Pick<Publication, 'id' | 'title' | 'createdDate' | 'status'>;
+export type PublishedPublicationPreview = Pick<
+  Publication,
+  'id' | 'title' | 'publicationDate' | 'reference' | 'authors' | 'status'
+>;
 
 export interface Doi {
   title: string;

@@ -50,13 +50,11 @@ const MyPublications: FC = () => {
     loadData();
   }, [dispatch]);
 
-  const userName = user.name;
-
   return (
     <FormCard>
       <FormCardHeading>{t('workLists:my_publications')}</FormCardHeading>
       <StyledButtonWrapper>
-        <MuiLink component={Link} to={`/public-profile/${userName}`}>
+        <MuiLink component={Link} to={`/public-profile/${user.name}`}>
           <Button color="primary" variant="contained" data-testid="public-profile-button">
             {t('workLists:go_to_public_profile')}
           </Button>

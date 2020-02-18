@@ -15,7 +15,9 @@
   "orcid": "ORCID",
   "picture": "Picture",
   "preview": "Preview",
+  "publications": "Publications",
   "publish": "Publish",
+  "publisher": "Publisher",
   "remove": "Remove",
   "save": "Save",
   "search": "Search",
@@ -23,5 +25,6 @@
   "status": "Status",
   "title": "Title",
   "type": "Type",
+  "year": "Year",
   "yes": "Yes"
 }
