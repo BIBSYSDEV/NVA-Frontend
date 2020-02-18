@@ -6,10 +6,12 @@ import PublicationList from './PublicationList';
 import { getMyPublications } from '../../api/publicationApi';
 import { addNotification } from '../../redux/actions/notificationActions';
 import i18n from '../../translations/i18n';
-import { useDispatch } from 'react-redux';
-import { CircularProgress } from '@material-ui/core';
+import { useDispatch, useSelector } from 'react-redux';
+import { CircularProgress, Button, Link as MuiLink } from '@material-ui/core';
 import styled from 'styled-components';
 import { PublicationPreview } from '../../types/publication.types';
+import { Link } from 'react-router-dom';
+import { RootStore } from './../../redux/reducers/rootReducer';
 
 export interface DummyPublicationListElement {
   id: string;
@@ -22,9 +24,15 @@ const StyledWrapper = styled.div`
   text-align: center;
 `;
 
+const StyledButtonWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
+
 const MyPublications: FC = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const user = useSelector((store: RootStore) => store.user);
   const [isLoading, setIsLoading] = useState(true);
   const [publications, setPublications] = useState<PublicationPreview[]>([]);
 
@@ -42,9 +50,18 @@ const MyPublications: FC = () => {
     loadData();
   }, [dispatch]);
 
+  const userName = user.name;
+
   return (
     <Card>
       <Heading>{t('workLists:my_publications')}</Heading>
+      <StyledButtonWrapper>
+        <MuiLink component={Link} to={`/public-profile/${userName}`}>
+          <Button color="primary" variant="contained" data-testid="public-profile-button">
+            {t('workLists:go_to_public_profile')}
+          </Button>
+        </MuiLink>
+      </StyledButtonWrapper>
       <StyledWrapper>
         {isLoading ? <CircularProgress color="inherit" size={20} /> : <PublicationList publications={publications} />}
       </StyledWrapper>
