@@ -161,9 +161,7 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, updateFile, toggl
                         return selectedLicense ? (
                           <StyledVerticalAlign>
                             <img src={selectedLicense.image} alt={selectedLicense.name} />
-                            <StyledLicenseName display="inline" variant="body1">
-                              {option}
-                            </StyledLicenseName>
+                            <StyledLicenseName display="inline">{option}</StyledLicenseName>
                           </StyledVerticalAlign>
                         ) : null;
                       },
