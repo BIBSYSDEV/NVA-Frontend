@@ -6,6 +6,9 @@ import styled from 'styled-components';
 import { Button, Menu as MuiMenu, MenuItem } from '@material-ui/core';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+import { useSelector } from 'react-redux';
+import { RootStore } from '../../redux/reducers/rootReducer';
+import { checkIfPublisher } from '../../utils/authorization';
 
 interface MenuProps {
   handleLogout: () => void;
@@ -40,6 +43,7 @@ const StyledMenuItem = styled(MenuItem)`
 `;
 
 const Menu: React.FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
+  const user = useSelector((store: RootStore) => store.user);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const { t } = useTranslation();
   const history = useHistory();
@@ -51,6 +55,8 @@ const Menu: React.FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const isPublisher = checkIfPublisher(user);
 
   return (
     <StyledMenu>
@@ -83,14 +89,16 @@ const Menu: React.FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
           {t('profile:my_profile')}
         </StyledMenuItem>
 
-        <StyledMenuItem
-          data-testid="menu-my-publications-button"
-          onClick={() => {
-            handleClose();
-            history.push('/my-publications');
-          }}>
-          {t('workLists:my_publications')}
-        </StyledMenuItem>
+        {isPublisher && (
+          <StyledMenuItem
+            data-testid="menu-my-publications-button"
+            onClick={() => {
+              handleClose();
+              history.push('/my-publications');
+            }}>
+            {t('workLists:my_publications')}
+          </StyledMenuItem>
+        )}
 
         <StyledMenuItem onClick={handleLogout} data-testid="menu-logout-button">
           {t('logout')}
