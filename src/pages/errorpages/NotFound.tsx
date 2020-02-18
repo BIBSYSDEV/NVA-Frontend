@@ -6,6 +6,7 @@ import Heading from '../../components/Heading';
 const StyledNotFoundWrapper = styled.div`
   width: 100%;
   text-align: center;
+  padding-top: 4rem;
 `;
 
 const NotFound: React.FC = () => {
