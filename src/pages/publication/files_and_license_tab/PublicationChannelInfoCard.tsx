@@ -3,10 +3,11 @@ import { Publisher } from '../../../types/references.types';
 import Card from '../../../components/Card';
 import Heading from '../../../components/Heading';
 import Label from '../../../components/Label';
-import { Typography, Avatar } from '@material-ui/core';
+import { Avatar } from '@material-ui/core';
 import { openAccessLogo } from '../../../resources/images/licenses';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
+import NormalText from '../../../components/NormalText';
 
 const StyledInfoEntries = styled.div`
   display: flex;
@@ -31,11 +32,11 @@ const PublicationChannelInfoCard: React.FC<PublicationChannelInfoCardProps> = ({
       <StyledInfoEntries>
         <div>
           <Label>{publisher.title}</Label>
-          <Typography variant="body1">
+          <NormalText>
             {publisher.openAccess
               ? t('files_and_license.info_from_publication_channel_register.open_publishment')
               : t('files_and_license.info_from_publication_channel_register.no_open_publishment')}
-          </Typography>
+          </NormalText>
         </div>
         {publisher.openAccess && (
           <StyledAvatar

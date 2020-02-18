@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
-import { Button, Typography } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 
 import { getAuthorities } from '../../../../api/authorityApi';
 import Label from '../../../../components/Label';
@@ -13,6 +13,7 @@ import { addNotification } from '../../../../redux/actions/notificationActions';
 import { Authority, emptyAuthority } from '../../../../types/authority.types';
 import { debounce } from '../../../../utils/debounce';
 import AuthorityCard from '../../../user/authority/AuthorityCard';
+import NormalText from '../../../../components/NormalText';
 
 const StyledClickableDiv = styled.div`
   cursor: pointer;
@@ -119,7 +120,7 @@ const AddContributorModalContent: FC<AddContributorModalContentProps> = ({ addAu
           </StyledButtonContainer>
         </>
       ) : (
-        <Typography variant="body1">{t('common:no_hits')}</Typography>
+        <NormalText>{t('common:no_hits')}</NormalText>
       )}
     </>
   );

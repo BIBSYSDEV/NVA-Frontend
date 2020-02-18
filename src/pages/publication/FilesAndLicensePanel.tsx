@@ -8,10 +8,11 @@ import { FieldArray, FormikProps, useFormikContext } from 'formik';
 import { Publication } from '../../types/publication.types';
 import Modal from '../../components/Modal';
 import { licenses, Uppy } from '../../types/file.types';
-import { Typography } from '@material-ui/core';
 import Card from '../../components/Card';
 import Heading from '../../components/Heading';
 import PublicationChannelInfoCard from './files_and_license_tab/PublicationChannelInfoCard';
+import NormalText from '../../components/NormalText';
+import Label from '../../components/Label';
 
 const StyledUploadedFiles = styled(Card)`
   display: flex;
@@ -84,9 +85,9 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab
       <Modal headingText={t('files_and_license.licenses')} openModal={isLicenseModalOpen} onClose={toggleLicenseModal}>
         {licenses.map(license => (
           <StyledLicenseDescription key={license.name}>
-            <Typography variant="h6">{license.name}</Typography>
+            <Label>{license.name}</Label>
             <img src={license.image} alt={license.name} />
-            <Typography variant="body2">{license.description}</Typography>
+            <NormalText>{license.description}</NormalText>
           </StyledLicenseDescription>
         ))}
       </Modal>
