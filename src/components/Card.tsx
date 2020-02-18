@@ -1,8 +1,8 @@
 import React, { ReactNode } from 'react';
 import styled from 'styled-components';
-import { Card as materialCard } from '@material-ui/core';
+import { Card as MaterialCard } from '@material-ui/core';
 
-const StyledCard = styled(materialCard)`
+const StyledCard = styled(MaterialCard)`
   width: 100%;
   @media (min-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
     padding: 1rem 2rem;
