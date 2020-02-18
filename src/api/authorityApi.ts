@@ -68,7 +68,13 @@ export const createAuthority = async (name: string) => {
     Authorization: `Bearer ${idToken}`,
   };
   try {
-    const response = await Axios.post(url, { name }, { headers });
+    const response = await Axios.post(
+      url,
+      {
+        invertedname: name,
+      },
+      { headers }
+    );
     if (response.status === StatusCode.OK) {
       return response.data;
     } else if (response.status === StatusCode.NO_CONTENT) {
