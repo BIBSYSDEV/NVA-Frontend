@@ -5,7 +5,7 @@ export enum AlmaApiPaths {
   ALMA = '/alma',
 }
 
-export const getPublications = async (systemControlNumber: string, invertedCreatorName: string) => {
+export const getAlmaPublication = async (systemControlNumber: string, invertedCreatorName: string) => {
   const url = encodeURI(`${AlmaApiPaths.ALMA}/?scn=${systemControlNumber}&creatorname=${invertedCreatorName}`);
   try {
     const response = await Axios.get(url);
