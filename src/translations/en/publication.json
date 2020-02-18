@@ -110,5 +110,8 @@
   "status": {
     "draft": "Draft",
     "rejected": "Rejected"
+  },
+  "submission": {
+    "ask_for_doi": "Ask for DOI for this registration"
   }
 }
