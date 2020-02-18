@@ -86,10 +86,10 @@ const User: React.FC = () => {
     <StyledUserPage>
       <StyledSecondaryUserInfo>
         <Card>
-          <Heading>{t('common:picture')} </Heading>
+          <Heading>{t('common:picture')}</Heading>
         </Card>
         <Card>
-          <Heading>{t('heading.contact_info')} </Heading>
+          <Heading>{t('heading.contact_info')}</Heading>
         </Card>
         <UserLanguage />
         <UserRoles user={user} />
@@ -119,7 +119,7 @@ const User: React.FC = () => {
         </Card>
         <UserOrcid />
         <Card>
-          <Heading> {t('heading.organizations')} </Heading>
+          <Heading>{t('heading.organizations')}</Heading>
           <InstitutionDialog
             user={user}
             title={t('organization.add_institution')}

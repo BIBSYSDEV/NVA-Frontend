@@ -6,16 +6,15 @@ import {
   FormControl,
   FormControlLabel,
   FormLabel,
+  IconButton,
   Link,
+  ListItemText,
+  MenuItem,
   Radio,
   RadioGroup,
   TextField,
-  MenuItem,
-  IconButton,
-  ListItemText,
-  Typography,
 } from '@material-ui/core';
-import { File, licenses, License } from '../../../types/file.types';
+import { File, License, licenses } from '../../../types/file.types';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import { useTranslation } from 'react-i18next';
@@ -24,6 +23,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import HelpIcon from '@material-ui/icons/Help';
 import SubHeading from '../../../components/SubHeading';
 import DeleteIcon from '@material-ui/icons/Delete';
+import Label from '../../../components/Label';
 
 const StyledDescription = styled.div`
   font-style: italic;
@@ -58,7 +58,7 @@ const StyledSelect = styled(TextField)`
   }
 `;
 
-const StyledLicenseName = styled(Typography)`
+const StyledLicenseName = styled(Label)`
   margin-left: 0.5rem;
 `;
 
@@ -161,7 +161,7 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, updateFile, toggl
                         return selectedLicense ? (
                           <StyledVerticalAlign>
                             <img src={selectedLicense.image} alt={selectedLicense.name} />
-                            <StyledLicenseName display="inline">{option}</StyledLicenseName>
+                            <StyledLicenseName>{option}</StyledLicenseName>
                           </StyledVerticalAlign>
                         ) : null;
                       },
@@ -181,7 +181,7 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, updateFile, toggl
                           <img src={license.image} alt={license.name} />
                         </ListItemIcon>
                         <ListItemText>
-                          <StyledLicenseName variant="body1">{license.name}</StyledLicenseName>
+                          <StyledLicenseName>{license.name}</StyledLicenseName>
                         </ListItemText>
                       </MenuItem>
                     ))}
