@@ -61,6 +61,7 @@ export interface Publication {
   contributors: Contributor[];
   files: File[];
   status: PublicationStatus;
+  shouldCreateDoi: boolean;
 }
 
 export type PublicationPreview = Pick<Publication, 'id' | 'title' | 'createdDate' | 'status'>;
@@ -99,4 +100,5 @@ export const emptyPublication: Publication = {
   contributors: [], // TODO: Merge with authors
   files: [],
   status: PublicationStatus.DRAFT,
+  shouldCreateDoi: false,
 };

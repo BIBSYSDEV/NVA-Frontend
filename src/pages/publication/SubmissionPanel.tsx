@@ -2,9 +2,9 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 import TabPanel from '../../components/TabPanel/TabPanel';
-import { FormikProps, useFormikContext } from 'formik';
+import { FormikProps, useFormikContext, Field, FieldProps } from 'formik';
 import { Publication } from '../../types/publication.types';
-import { Button } from '@material-ui/core';
+import { Button, FormControlLabel, Checkbox } from '@material-ui/core';
 import styled from 'styled-components';
 import SubmissionBook from './submission_tab/submission_book';
 import SubmissionDegree from './submission_tab/submission_degree';
@@ -24,13 +24,17 @@ const StyledPublishButton = styled(Button)`
   margin-top: 0.5rem;
 `;
 
+enum PublishSettingFieldName {
+  SHOULD_CREATE_DOI = 'shouldCreateDoi',
+}
+
 interface SubmissionPanelProps {
   savePublication: () => void;
 }
 
 const SubmissionPanel: React.FC<SubmissionPanelProps> = ({ savePublication }) => {
   const { t } = useTranslation('publication');
-  const { values }: FormikProps<Publication> = useFormikContext();
+  const { values, setFieldValue }: FormikProps<Publication> = useFormikContext();
   const history = useHistory();
 
   const publishPublication = () => {
@@ -61,6 +65,17 @@ const SubmissionPanel: React.FC<SubmissionPanelProps> = ({ savePublication }) =>
         <FormCard>
           <FormCardSubHeading>{t('heading.files_and_license')}</FormCardSubHeading>
           <SubmissionFilesAndLicenses />
+        </FormCard>
+        <FormCard>
+          <FormCardSubHeading>{t('heading.publish_settings')}</FormCardSubHeading>
+          <Field name={PublishSettingFieldName.SHOULD_CREATE_DOI}>
+            {({ field: { name, value } }: FieldProps) => (
+              <FormControlLabel
+                control={<Checkbox color="primary" checked={value} onChange={() => setFieldValue(name, !value)} />}
+                label={t('submission.ask_for_doi')}
+              />
+            )}
+          </Field>
         </FormCard>
       </FormCard>
       <StyledPublishButton color="primary" variant="contained" onClick={publishPublication}>

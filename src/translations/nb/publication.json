@@ -59,6 +59,7 @@
     "contributors": "Bidragsytere",
     "description": "Beskrivelse",
     "files_and_license": "Filer og lisens",
+    "publish_settings": "Publiseringsvalg",
     "publication": "Publikasjon",
     "references": "Referanser",
     "submission": "Innsending",
@@ -109,5 +110,8 @@
   "status": {
     "draft": "Kladd",
     "rejected": "Avvist"
+  },
+  "submission": {
+    "ask_for_doi": "Be om DOI for denne registreringen (anbefales ikke dersom ressursen allerede har en DOI)"
   }
 }
