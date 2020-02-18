@@ -18,7 +18,7 @@ const StyledNewPublication = styled.div`
   padding-top: 2rem;
   display: flex;
   justify-content: center;
-  @media only screen and (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
     display: block;
     margin-right: 0;
     flex-wrap: wrap;
@@ -29,7 +29,7 @@ const StyledSelectorWrapper = styled.div`
   flex: 1;
   max-width: 50rem;
   margin-right: 2rem;
-  @media only screen and (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
     margin-right: 0;
   }
 `;
@@ -38,7 +38,7 @@ const StyledCard = styled(Card)`
   padding: 1rem;
   max-width: 25rem;
   flex: 1;
-  @media only screen and (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
     max-width: inherit;
     margin-right: 0;
   }
