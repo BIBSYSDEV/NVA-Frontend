@@ -48,7 +48,9 @@ const PublishedPublicationList: FC<PublicationListProps> = ({ publications }) =>
   const { t } = useTranslation();
   return (
     <FormCard>
-      <StyledHeading>{`${t('common:publications')} (${publications.length})`}</StyledHeading>
+      <StyledHeading>{`${t('common:publications')} (${
+        publications.filter(publication => publication.status === PublicationStatus.PUBLISHED).length
+      })`}</StyledHeading>
       <StyledTable>
         <TableHead>
           <TableRow>

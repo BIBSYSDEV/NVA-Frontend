@@ -12,31 +12,19 @@ import { useTranslation } from 'react-i18next';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import NormalText from '../../components/NormalText';
 import { ORCID_BASE_URL } from '../../utils/constants';
-import orcidIcon from '../../resources/images/orcid_logo.svg';
+import LabelTextLine from './../../components/LabelTextLine';
 
 const StyledWrapper = styled.div`
   text-align: center;
+  padding: 0.5rem;
 `;
 
-const StyledSecondaryUserInfo = styled.div`
+const StyledUserInfo = styled.div`
   display: flex;
   background-color: ${props => props.theme.palette.background.default};
   align-content: flex-start;
   width: 100%;
   padding: 0.5rem;
-`;
-
-const StyledIcon = styled.img`
-  width: 1.5rem;
-  height: 1.5rem;
-  margin-top: 0.5rem;
-  margin-right: 0.5rem;
-  padding-bottom: 0.5rem;
-`;
-
-const StyledOrcid = styled(NormalText)`
-  display: flex;
-  align-items: center;
 `;
 
 const PublicProfile: FC = () => {
@@ -62,25 +50,28 @@ const PublicProfile: FC = () => {
 
   return (
     <>
-      <StyledSecondaryUserInfo>
+      <StyledUserInfo>
         <UserCard headingLabel={t('common:picture')} />
-        <UserCard headingLabel="">
-          <NormalText>{user.name}</NormalText>
-          <NormalText>{user.email}</NormalText>
+        <UserCard headingLabel={user.name}>
+          {/* <LabelTextLine dataTestId="profile-name" label={t('common:name')} text={user.name} /> */}
+          <LabelTextLine dataTestId="profile-email" label={t('common:email')} text={user.email} />
           {user.authority?.orcids.map((orcid: string) => {
             const orcidLink = `${ORCID_BASE_URL}/${orcid}`;
             return (
-              <StyledOrcid>
-                <StyledIcon src={orcidIcon} alt="ORCID icon" />
-                {orcidLink}
-              </StyledOrcid>
+              <LabelTextLine
+                key={orcid}
+                dataTestId={'orcid-info'}
+                label={t('profile:orcid.orcid')}
+                text={orcidLink}
+                externalLink={orcidLink}
+              />
             );
           })}
           {user.authority?.orgunitids.map(orgunitid => (
             <NormalText>{orgunitid}</NormalText>
           ))}
         </UserCard>
-      </StyledSecondaryUserInfo>
+      </StyledUserInfo>
       <StyledWrapper>
         {isLoading ? (
           <CircularProgress color="inherit" size={20} />
