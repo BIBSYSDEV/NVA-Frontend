@@ -4,10 +4,10 @@ import styled from 'styled-components';
 import { Button, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { PublishedPublicationPreview, PublicationStatus } from '../../types/publication.types';
-import FormCardSubHeading from '../../components/FormCard/FormCardSubHeading';
-import FormCard from '../../components/FormCard/FormCard';
+import Card from '../../components/Card';
+import Heading from '../../components/Heading';
 
-const StyledHeading = styled(FormCardSubHeading)`
+const StyledHeading = styled(Heading)`
   text-align: left;
 `;
 
@@ -47,7 +47,7 @@ interface PublicationListProps {
 const PublishedPublicationList: FC<PublicationListProps> = ({ publications }) => {
   const { t } = useTranslation();
   return (
-    <FormCard>
+    <Card>
       <StyledHeading>{`${t('common:publications')} (${
         publications.filter(publication => publication.status === PublicationStatus.PUBLISHED).length
       })`}</StyledHeading>
@@ -85,7 +85,7 @@ const PublishedPublicationList: FC<PublicationListProps> = ({ publications }) =>
             ))}
         </TableBody>
       </StyledTable>
-    </FormCard>
+    </Card>
   );
 };
 

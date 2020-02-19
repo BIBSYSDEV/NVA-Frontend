@@ -7,12 +7,13 @@ import styled from 'styled-components';
 import { getMyPublications } from '../../api/publicationApi';
 import PublishedPublicationList from './PublishedPublicationList';
 import i18n from '../../translations/i18n';
-import UserCard from './../user/UserCard';
+import Card from '../../components/Card';
 import { useTranslation } from 'react-i18next';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import NormalText from '../../components/NormalText';
 import { ORCID_BASE_URL } from '../../utils/constants';
 import LabelTextLine from './../../components/LabelTextLine';
+import Heading from '../../components/Heading';
 
 const StyledWrapper = styled.div`
   text-align: center;
@@ -51,9 +52,11 @@ const PublicProfile: FC = () => {
   return (
     <>
       <StyledUserInfo>
-        <UserCard headingLabel={t('common:picture')} />
-        <UserCard headingLabel={user.name}>
-          {/* <LabelTextLine dataTestId="profile-name" label={t('common:name')} text={user.name} /> */}
+        <Card>
+          <Heading>{t('common:picture')}</Heading>
+        </Card>
+        <Card>
+          <Heading>{user.name}</Heading>
           <LabelTextLine dataTestId="profile-email" label={t('common:email')} text={user.email} />
           {user.authority?.orcids.map((orcid: string) => {
             const orcidLink = `${ORCID_BASE_URL}/${orcid}`;
@@ -70,7 +73,7 @@ const PublicProfile: FC = () => {
           {user.authority?.orgunitids.map(orgunitid => (
             <NormalText>{orgunitid}</NormalText>
           ))}
-        </UserCard>
+        </Card>
       </StyledUserInfo>
       <StyledWrapper>
         {isLoading ? (
