@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 import styled from 'styled-components';
 import Label from '../../../components/Label';
 import { Unit } from '../../../types/institution.types';
+import { FormikProps, useFormikContext } from 'formik';
 
 const StyledSelectedInstitution = styled.div`
   margin-top: 0.5rem;
@@ -16,28 +17,25 @@ const StyledInstitutionText = styled.div`
 `;
 
 const InstitutionCard: FC = () => {
-  // get Formik values here Presentation.tsx
+  const { values }: FormikProps<any> = useFormikContext();
+
   return (
     <>
-      {unit.id && (
-        <StyledSelectedInstitution data-testid="institution-presentation">
-          {unit.subunits.length > 0 &&
-            unit.subunits.map((subunit: Unit, index: number) => {
-              return index === 0 ? (
-                <Label data-testid="institution-presentation-top" key={`institution-${unit.id}`}>
-                  {subunit.name}
-                  {/* {institutionUnit.cristinUnitId && <Button onClick={() => setOpenEdit(true)}>{t('common:edit')}</Button>} */}
-                </Label>
-              ) : (
+      <StyledSelectedInstitution data-testid="institution-presentation">
+        <Label>{values.institution?.name}</Label>
+        {values.subunits.length > 0 &&
+          values.subunits.map((subunit: Unit) => (
+            <>
+              {subunit.name !== '' && (
                 <StyledInstitutionText
                   data-testid="institution-presentation-subunit-1"
-                  key={`institution-${unit.id}-${index}`}>
+                  key={`institution-${subunit.id}`}>
                   {subunit.name}
                 </StyledInstitutionText>
-              );
-            })}
-        </StyledSelectedInstitution>
-      )}
+              )}
+            </>
+          ))}
+      </StyledSelectedInstitution>
     </>
   );
 };

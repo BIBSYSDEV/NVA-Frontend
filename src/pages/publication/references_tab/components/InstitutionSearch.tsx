@@ -7,6 +7,7 @@ import { searchFailure } from '../../../../redux/actions/searchActions';
 import { debounce } from '../../../../utils/debounce';
 import { Unit } from '../../../../types/institution.types';
 import { getInstitutionAndSubunits } from '../../../../api/institutionApi';
+import { FormikProps, useFormikContext } from 'formik';
 
 interface InstitutionSearchProps {
   clearSearchField: boolean;
@@ -25,6 +26,8 @@ const InstitutionSearch: FC<InstitutionSearchProps> = ({
   placeholder,
   disabled,
 }) => {
+  const { values, setFieldValue }: FormikProps<any> = useFormikContext();
+
   const [searchResults, setSearchResults] = useState<Unit[]>([]);
 
   const dispatch = useDispatch();
@@ -34,6 +37,7 @@ const InstitutionSearch: FC<InstitutionSearchProps> = ({
     debounce(async (searchTerm: string) => {
       const response = await getInstitutionAndSubunits(searchTerm);
       if (response) {
+        console.log('response', response);
         setSearchResults(
           response.map((unit: Unit) => ({
             ...unit,
