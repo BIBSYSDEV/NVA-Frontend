@@ -8,7 +8,7 @@ import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import { useSelector } from 'react-redux';
 import { RootStore } from '../../redux/reducers/rootReducer';
-import { checkIfPublisher } from '../../utils/authorization';
+import { checkIfPublisher, checkIfCurator } from '../../utils/authorization';
 
 interface MenuProps {
   handleLogout: () => void;
@@ -57,6 +57,7 @@ const Menu: React.FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
   };
 
   const isPublisher = checkIfPublisher(user);
+  const isCurator = checkIfCurator(user);
 
   return (
     <StyledMenu>
@@ -88,7 +89,6 @@ const Menu: React.FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
           }}>
           {t('profile:my_profile')}
         </StyledMenuItem>
-
         {isPublisher && (
           <StyledMenuItem
             data-testid="menu-my-publications-button"
@@ -99,7 +99,16 @@ const Menu: React.FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
             {t('workLists:my_publications')}
           </StyledMenuItem>
         )}
-
+        {isCurator && (
+          <StyledMenuItem
+            data-testid="menu-my-worklist-button"
+            onClick={() => {
+              handleClose();
+              history.push('/worklist');
+            }}>
+            {t('workLists:my_worklist')}
+          </StyledMenuItem>
+        )}
         <StyledMenuItem onClick={handleLogout} data-testid="menu-logout-button">
           {t('logout')}
         </StyledMenuItem>
