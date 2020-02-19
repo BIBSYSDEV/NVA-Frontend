@@ -62,22 +62,6 @@ export default createMuiTheme({
     },
   },
   typography: {
-    body1: {
-      fontSize: '0.85rem',
-      color: Colors.SecondaryText,
-    },
-    h1: {
-      fontSize: '2.5rem',
-      lineHeight: '3rem',
-    },
-    h2: {
-      fontSize: '2rem',
-      lineHeight: '2.5rem',
-    },
-    h3: {
-      fontSize: '1.5rem',
-      lineHeight: '2rem',
-    },
     fontFamily:
       "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif",
   },

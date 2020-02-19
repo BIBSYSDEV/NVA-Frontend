@@ -7,14 +7,14 @@ const StyledTypography = styled(Typography)`
   font-weight: bold;
 `;
 
-interface FormCardLabelProps {
+interface LabelProps {
   children: ReactNode;
 }
 
-const FormCardLabel: FC<FormCardLabelProps> = ({ children, ...props }) => (
+const Label: FC<LabelProps> = ({ children, ...props }) => (
   <StyledTypography variant="h4" {...props}>
     {children}
   </StyledTypography>
 );
 
-export default FormCardLabel;
+export default Label;

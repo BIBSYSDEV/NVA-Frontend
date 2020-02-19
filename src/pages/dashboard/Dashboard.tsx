@@ -5,6 +5,7 @@ import styled from 'styled-components';
 
 import { search } from '../../api/publicationApi';
 import SearchBar from '../../components/SearchBar';
+import NormalText from '../../components/NormalText';
 
 const StyledDashboard = styled.div`
   width: 100%;
@@ -20,7 +21,7 @@ const StyledSearchBar = styled(SearchBar)`
   grid-area: search-bar;
 `;
 
-const StyledOtherContent = styled.div`
+const StyledOtherContent = styled(NormalText)`
   grid-area: other-content;
 `;
 

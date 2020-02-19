@@ -5,16 +5,17 @@ import { Typography } from '@material-ui/core';
 const StyledTypography = styled(Typography)`
   font-size: 1.5rem;
   font-weight: bold;
+  margin-bottom: 0.5rem;
 `;
 
-interface FormCardHeadingProps {
+interface HeadingProps {
   children: ReactNode;
 }
 
-const FormCardHeading: FC<FormCardHeadingProps> = ({ children, ...props }) => (
+const Heading: FC<HeadingProps> = ({ children, ...props }) => (
   <StyledTypography variant="h2" {...props}>
     {children}
   </StyledTypography>
 );
 
-export default FormCardHeading;
+export default Heading;

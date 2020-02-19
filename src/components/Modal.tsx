@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Avatar, Backdrop, Dialog, Fade } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 
-import FormCardHeading from './FormCard/FormCardHeading';
+import Heading from './Heading';
 
 const StyledPaper = styled.div`
   background-color: ${({ theme }) => theme.palette.background};
@@ -24,7 +24,7 @@ const StyledWidth = styled.div`
   }
 `;
 
-const StyledFormCardHeading = styled(FormCardHeading)`
+const StyledHeading = styled(Heading)`
   grid-area: text;
   margin-left: 1rem;
 `;
@@ -93,10 +93,10 @@ const Modal: FC<ModalProps> = ({
         {headingIcon ? (
           <StyledInfoContainer>
             {headingIcon && <StyledAvatar src={headingIcon.src} alt={headingIcon.alt} />}
-            <FormCardHeading>{headingText}</FormCardHeading>
+            <Heading>{headingText}</Heading>
           </StyledInfoContainer>
         ) : (
-          <StyledFormCardHeading>{headingText}</StyledFormCardHeading>
+          <StyledHeading>{headingText}</StyledHeading>
         )}
         {!disableEscape && <StyledCloseIcon onClick={handleClose} />}
       </StyledHeaderContainer>
