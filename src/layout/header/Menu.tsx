@@ -8,7 +8,7 @@ import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import { useSelector } from 'react-redux';
 import { RootStore } from '../../redux/reducers/rootReducer';
-import { checkIfPublisher } from '../../utils/authorization';
+import { checkIfAppAdmin, checkIfPublisher } from '../../utils/authorization';
 
 interface MenuProps {
   handleLogout: () => void;
@@ -57,6 +57,7 @@ const Menu: React.FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
   };
 
   const isPublisher = checkIfPublisher(user);
+  const isAppAdmin = checkIfAppAdmin(user);
 
   return (
     <StyledMenu>
@@ -100,6 +101,16 @@ const Menu: React.FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
           </StyledMenuItem>
         )}
 
+        {isAppAdmin && (
+          <StyledMenuItem
+            data-testid="menu-admin-institution-button"
+            onClick={() => {
+              handleClose();
+              history.push('/admin-institutions');
+            }}>
+            {t('common:institutions')}
+          </StyledMenuItem>
+        )}
         <StyledMenuItem onClick={handleLogout} data-testid="menu-logout-button">
           {t('logout')}
         </StyledMenuItem>
