@@ -1,7 +1,54 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import AttachmentIcon from '@material-ui/icons/Attachment';
+import PlaylistAddCheckIcon from '@material-ui/icons/PlaylistAddCheck';
+import styled from 'styled-components';
+
+const StyledTabsContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+`;
+
+const StyledTabButton = styled.button`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+`;
+
+const StyledContent = styled.div`
+  margin-top: 2rem;
+`;
+
+enum Tab {
+  Doi,
+  Approval,
+}
 
 const Worklist: FC = () => {
-  return <h1>TODO</h1>;
+  const { t } = useTranslation('workLists');
+  const [selectedTab, setSelectedTab] = useState(Tab.Doi);
+
+  return (
+    <>
+      <StyledTabsContainer>
+        <StyledTabButton onClick={() => setSelectedTab(Tab.Approval)}>
+          <PlaylistAddCheckIcon fontSize="large" />
+          {t('for_approval')}
+        </StyledTabButton>
+        <StyledTabButton onClick={() => setSelectedTab(Tab.Doi)}>
+          <AttachmentIcon fontSize="large" />
+          {t('doi_requests')}
+        </StyledTabButton>
+      </StyledTabsContainer>
+
+      <StyledContent>
+        {selectedTab === Tab.Approval && <div>Approval</div>}
+        {selectedTab === Tab.Doi && <div>DOI</div>}
+      </StyledContent>
+    </>
+  );
 };
 
 export default Worklist;
