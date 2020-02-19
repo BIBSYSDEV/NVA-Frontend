@@ -1,7 +1,7 @@
-import React, { FC } from 'react';
+import React, { FC, Fragment } from 'react';
 import styled from 'styled-components';
 import Label from '../../../components/Label';
-import { Unit } from '../../../types/institution.types';
+import { Unit, UserUnit, Subunit } from '../../../types/institution.types';
 import { FormikProps, useFormikContext } from 'formik';
 
 const StyledSelectedInstitution = styled.div`
@@ -10,30 +10,31 @@ const StyledSelectedInstitution = styled.div`
   padding-left: 0.5rem;
   background-color: ${({ theme }) => theme.palette.background.default};
   min-height: 5rem;
+  border-radius: 4px;
 `;
 
 const StyledInstitutionText = styled.div`
   height: 1.5rem;
 `;
 
-const InstitutionCard: FC = () => {
-  const { values }: FormikProps<any> = useFormikContext();
+interface InstitutionCardProps {
+  unit: UserUnit;
+}
 
+const InstitutionCard: FC<InstitutionCardProps> = ({ unit }) => {
   return (
     <>
       <StyledSelectedInstitution data-testid="institution-presentation">
-        <Label>{values.institution?.name}</Label>
-        {values.subunits.length > 0 &&
-          values.subunits.map((subunit: Unit) => (
-            <>
+        <Label>{unit.name}</Label>
+        {unit.subunits.length > 0 &&
+          unit.subunits.map((subunit: Subunit) => (
+            <Fragment key={subunit.id}>
               {subunit.name !== '' && (
-                <StyledInstitutionText
-                  data-testid="institution-presentation-subunit-1"
-                  key={`institution-${subunit.id}`}>
+                <StyledInstitutionText data-testid="institution-presentation-subunit">
                   {subunit.name}
                 </StyledInstitutionText>
               )}
-            </>
+            </Fragment>
           ))}
       </StyledSelectedInstitution>
     </>

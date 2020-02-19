@@ -10,7 +10,7 @@ import InstitutionSelector from './institution/InstitutionSelector';
 import Heading from '../../components/Heading';
 import { Formik, FormikProps, Form, Field } from 'formik';
 import InstitutionSearch from '../publication/references_tab/components/InstitutionSearch';
-import { emptyUnit, Unit } from '../../types/institution.types';
+import { emptyUnit, Unit, Subunit, UserUnit } from '../../types/institution.types';
 
 const StyledButtonContainer = styled.div`
   display: flex;
@@ -22,65 +22,81 @@ const StyledButton = styled(Button)`
   margin: 0.5rem;
 `;
 
+const StyledInstitutionSearchContainer = styled.div`
+  width: 30rem;
+`;
+
 const UserInstitution: FC = () => {
-  // Create Formik Form here App.tsx
   const user = useSelector((state: RootStore) => state.user);
   const [open, setOpen] = useState(false);
+  const [units, setUnits] = useState<UserUnit[]>([]);
   const { t } = useTranslation('profile');
 
   const handleClickAdd = () => {
     setOpen(true);
   };
 
-  const saveChanges = (values: any) => {
-    console.log('save', values);
+  const handleAddInstitution = (unit: Subunit, subunits: Subunit[]) => {
+    const filteredSubunits = subunits.filter((u: Subunit) => u.name !== '');
+    console.log('filtered', filteredSubunits);
+    console.log('unit', unit);
+    setUnits([{ id: unit.id, name: unit.name, subunits: filteredSubunits }]);
+    // TODO: find which is the lower subunit to be saved in ARP
+    setOpen(false);
   };
 
-  const handleAddInstitution = () => {};
-
-  const handleCancel = () => {};
-
-  const initialValues: Unit = emptyUnit;
+  const handleCancel = () => {
+    setOpen(false);
+  };
 
   return (
     <Card>
       <Heading>{t('heading.organizations')}</Heading>
       <Formik
         enableReinitialize
-        initialValues={initialValues}
-        onSubmit={(values: any) => saveChanges(values)}
+        initialValues={emptyUnit}
+        onSubmit={(values: any) => handleAddInstitution({ name: values.name, id: values.id }, values.subunits)}
         validateOnChange={false}>
-        {({ values, setFieldValue }: FormikProps<any>) => (
+        {({ values, setFieldValue, handleReset, handleSubmit }: FormikProps<any>) => (
           <>
             <Field name="institution">
               {({ field: { name, value } }: any) => (
                 <>
-                  <InstitutionCard />
-                  <FormControl>
-                    <InstitutionSearch
-                      dataTestId="autosearch-institution"
-                      label={t('organization.institution')}
-                      clearSearchField={values.name === ''}
-                      setValueFunction={inputValue => setFieldValue(name, inputValue ?? emptyUnit)}
-                      placeholder={t('organization.search_for_institution')}
-                      disabled={false}
-                    />
-                  </FormControl>
-                  {values.institution && (
-                    <>
-                      <InstitutionSelector counter={0} unit={value} />
-                      <StyledButton
-                        onClick={handleAddInstitution}
-                        variant="contained"
-                        color="primary"
-                        disabled={!values.selectedInstitution}
-                        data-testid="institution-add-button">
-                        {t('common:add')}
-                      </StyledButton>
-                      <StyledButton onClick={handleCancel} variant="contained" color="secondary">
-                        {t('common:cancel')}
-                      </StyledButton>
-                    </>
+                  {units && units.map((unit: UserUnit) => <InstitutionCard key={unit.id} unit={unit} />)}
+                  {open && (
+                    <StyledInstitutionSearchContainer>
+                      <InstitutionSearch
+                        dataTestId="autosearch-institution"
+                        label={t('organization.institution')}
+                        clearSearchField={values.name === ''}
+                        setValueFunction={inputValue => {
+                          setFieldValue('name', inputValue.name);
+                          setFieldValue('id', inputValue.id);
+                          setFieldValue(name, inputValue ?? emptyUnit);
+                        }}
+                        placeholder={t('organization.search_for_institution')}
+                        disabled={false}
+                      />
+                      {values.institution && (
+                        <>
+                          <InstitutionSelector counter={0} unit={value} />
+                          <StyledButton
+                            onClick={() => {
+                              handleSubmit();
+                            }}
+                            variant="contained"
+                            type="submit"
+                            color="primary"
+                            disabled={!values.institution}
+                            data-testid="institution-add-button">
+                            {t('common:add')}
+                          </StyledButton>
+                          <StyledButton onClick={handleCancel} variant="contained" color="secondary">
+                            {t('common:cancel')}
+                          </StyledButton>
+                        </>
+                      )}
+                    </StyledInstitutionSearchContainer>
                   )}
                 </>
               )}
@@ -88,16 +104,18 @@ const UserInstitution: FC = () => {
           </>
         )}
       </Formik>
-      <StyledButtonContainer>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={handleClickAdd}
-          disabled={!user.authority?.systemControlNumber}
-          data-testid="add-new-institution-button">
-          {t('organization.add_institution')}
-        </Button>
-      </StyledButtonContainer>
+      {!open && (
+        <StyledButtonContainer>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleClickAdd}
+            disabled={!user.authority?.systemControlNumber}
+            data-testid="add-new-institution-button">
+            {t('organization.add_institution')}
+          </Button>
+        </StyledButtonContainer>
+      )}
     </Card>
   );
 };
