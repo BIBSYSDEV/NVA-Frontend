@@ -1,4 +1,4 @@
-import { ApplicationName, emptyUser, RoleName, User } from '../../types/user.types';
+import { ApplicationName, emptyUser, RoleName, User, Affiliation } from '../../types/user.types';
 import { getOrganizationIdByOrganizationNumber } from '../../utils/customers';
 import { AuthActions, LOGIN_SUCCESS, LOGOUT_SUCCESS } from '../actions/authActions';
 import { OrcidActions, SET_EXTERNAL_ORCID } from '../actions/orcidActions';
@@ -22,6 +22,10 @@ export const userReducer = (
         ...emptyUser,
       };
     case SET_USER_SUCCESS:
+      const affiliations = action.user['custom:affiliation']
+        .replace(/[[\]]/g, '')
+        .split(',')
+        .map(affiliationString => affiliationString.trim()) as Affiliation[];
       const roles = action.user['custom:applicationRoles'].split(',') as RoleName[];
       const user: Partial<User> = {
         name: action.user.name,
@@ -32,6 +36,7 @@ export const userReducer = (
         application: action.user['custom:application'] as ApplicationName,
         isLoggedIn: true,
         organizationId: getOrganizationIdByOrganizationNumber(action.user['custom:orgNumber']),
+        affiliations,
       };
       return {
         ...state,

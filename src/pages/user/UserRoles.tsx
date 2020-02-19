@@ -3,7 +3,8 @@ import { useTranslation } from 'react-i18next';
 
 import IconLabelTextLine from '../../components/IconLabelTextLine';
 import { RoleName, User } from '../../types/user.types';
-import UserCard from './UserCard';
+import Card from '../../components/Card';
+import Heading from '../../components/Heading';
 
 interface UserRolesProps {
   user: User;
@@ -13,7 +14,8 @@ const UserRoles: React.FC<UserRolesProps> = ({ user }) => {
   const { t } = useTranslation('profile');
 
   return (
-    <UserCard headingLabel={t('heading.roles')}>
+    <Card>
+      <Heading>{t('heading.roles')}</Heading>
       {user.roles?.map((role: RoleName) => {
         if (role === RoleName.PUBLISHER) {
           return (
@@ -38,7 +40,7 @@ const UserRoles: React.FC<UserRolesProps> = ({ user }) => {
         }
         return null;
       })}
-    </UserCard>
+    </Card>
   );
 };
 

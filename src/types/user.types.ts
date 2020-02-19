@@ -6,6 +6,16 @@ export enum RoleName {
   CURATOR = 'Curator',
 }
 
+export enum Affiliation {
+  EMPLOYEE = 'employee',
+  STAFF = 'staff',
+  MEMBER = 'member',
+  ALUM = 'alum',
+  AFFILIATE = 'affiliate',
+  FACULTY = 'faculty',
+  STUDENT = 'student',
+}
+
 export enum ApplicationName {
   NVA = 'NVA',
   DLR = 'DLR',
@@ -25,7 +35,8 @@ export interface User {
   possibleAuthorities: Authority[];
   organizationId: string;
   externalOrcid: string;
-  institutionUnits: InstitutionUnit[];
+  institutionPresentations: InstitutionUnit[];
+  affiliations: Affiliation[];
 }
 
 export interface FeideUser {
@@ -56,5 +67,6 @@ export const emptyUser: User = {
   possibleAuthorities: [],
   organizationId: '',
   externalOrcid: '',
-  institutionUnits: [],
+  institutionPresentations: [],
+  affiliations: [],
 };
