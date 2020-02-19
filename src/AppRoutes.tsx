@@ -10,6 +10,7 @@ import NotFound from './pages/errorpages/NotFound';
 import { useSelector } from 'react-redux';
 import { RootStore } from './redux/reducers/rootReducer';
 import { checkIfPublisher } from './utils/authorization';
+import PublicProfile from './pages/publication/PublicProfile';
 
 const AppRoutes: FC = () => {
   const user = useSelector((store: RootStore) => store.user);
@@ -20,6 +21,7 @@ const AppRoutes: FC = () => {
       <Route exact path="/" component={Dashboard} />
       {isPublisher && <Route exact path="/new-publication" component={NewPublication} />}
       {isPublisher && <Route exact path="/my-publications" component={MyPublications} />}
+      {user.isLoggedIn && <Route exact path="/public-profile/:userName" component={PublicProfile} />}
       <Route exact path="/search" component={Search} />
       <Route exact path="/publication/:publicationId" component={PublicationPage} />
       <Route exact path="/search/:searchTerm" component={Search} />

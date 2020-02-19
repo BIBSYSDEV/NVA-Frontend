@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { Button } from '@material-ui/core';
 
 import { Publisher } from '../../../../types/references.types';
-import FormCardLabel from '../../../../components/FormCard/FormCardLabel';
+import Label from '../../../../components/Label';
 
 const StyledPublisherRow = styled.div`
   margin: 1rem 0;
@@ -19,11 +19,11 @@ const StyledPublisherRow = styled.div`
   grid-template-columns: 7fr 6fr 2fr;
 `;
 
-const StyledTitle = styled(FormCardLabel)`
+const StyledTitle = styled(Label)`
   grid-area: titleLabel;
 `;
 
-const StyledLevelLabel = styled(FormCardLabel)`
+const StyledLevelLabel = styled(Label)`
   grid-area: levelLabel;
 `;
 
