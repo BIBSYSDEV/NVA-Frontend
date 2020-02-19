@@ -10,11 +10,21 @@ const StyledTabsContainer = styled.div`
   justify-content: space-around;
 `;
 
-const StyledTabButton = styled.button`
+const StyledTabButton = styled.button<{ isSelected: boolean }>`
+  all: unset;
   display: flex;
   flex-direction: column;
   align-items: center;
   cursor: pointer;
+  width: 10rem;
+  font-weight: bold;
+
+  ${({ isSelected, theme }) =>
+    isSelected &&
+    `
+      color: ${theme.palette.primary.main};
+      border-bottom: 0.3rem solid;
+    `};
 `;
 
 const StyledContent = styled.div`
@@ -33,11 +43,11 @@ const Worklist: FC = () => {
   return (
     <>
       <StyledTabsContainer>
-        <StyledTabButton onClick={() => setSelectedTab(Tab.Approval)}>
+        <StyledTabButton onClick={() => setSelectedTab(Tab.Approval)} isSelected={selectedTab === Tab.Approval}>
           <PlaylistAddCheckIcon fontSize="large" />
           {t('for_approval')}
         </StyledTabButton>
-        <StyledTabButton onClick={() => setSelectedTab(Tab.Doi)}>
+        <StyledTabButton onClick={() => setSelectedTab(Tab.Doi)} isSelected={selectedTab === Tab.Doi}>
           <AttachmentIcon fontSize="large" />
           {t('doi_requests')}
         </StyledTabButton>
