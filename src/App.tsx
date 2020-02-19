@@ -2,7 +2,7 @@ import Amplify, { Hub } from 'aws-amplify';
 import Axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { getAuthorities, updateInstitutionForAuthority } from './api/authorityApi';
@@ -12,12 +12,7 @@ import Footer from './layout/Footer';
 import Header from './layout/header/Header';
 import Notifier from './layout/Notifier';
 import AdminMenu from './pages/dashboard/AdminMenu';
-import Dashboard from './pages/dashboard/Dashboard';
-import NotFound from './pages/errorpages/NotFound';
-import NewPublication from './pages/publication/NewPublication';
-import Search from './pages/search/Search';
 import AuthorityOrcidModal from './pages/user/authority/AuthorityOrcidModal';
-import User from './pages/user/User';
 import { setAuthorityData, setPossibleAuthorities, setUser } from './redux/actions/userActions';
 import { RootStore } from './redux/reducers/rootReducer';
 import { Authority } from './types/authority.types';
@@ -25,9 +20,7 @@ import { awsConfig } from './utils/aws-config';
 import { API_URL, DEBOUNCE_INTERVAL_MODAL, USE_MOCK_DATA } from './utils/constants';
 import { hubListener } from './utils/hub-listener';
 import { mockUser } from './utils/testfiles/mock_feide_user';
-import MyPublications from './pages/publication/MyPublications';
-import PublicationPage from './pages/publication/PublicationPage';
-import PublicProfile from './pages/publication/PublicProfile';
+import AppRoutes from './AppRoutes';
 
 const StyledApp = styled.div`
   min-height: 100vh;
@@ -123,18 +116,7 @@ const App: React.FC = () => {
         <Breadcrumbs />
         {showAuthorityOrcidModal && <AuthorityOrcidModal />}
         <StyledContent>
-          <Switch>
-            <Route exact path="/" component={Dashboard} />
-            {user.isLoggedIn && <Route exact path="/new-publication" component={NewPublication} />}
-            {user.isLoggedIn && <Route exact path="/my-publications" component={MyPublications} />}
-            {user.isLoggedIn && <Route exact path="/public-profile/:userName" component={PublicProfile} />}
-            <Route exact path="/search" component={Search} />
-            <Route exact path="/publication/:publicationId" component={PublicationPage} />
-            <Route exact path="/search/:searchTerm" component={Search} />
-            <Route exact path="/search/:searchTerm/:offset" component={Search} />
-            {user.isLoggedIn && <Route exact path="/user" component={User} />}
-            <Route path="*" component={NotFound} />
-          </Switch>
+          <AppRoutes />
         </StyledContent>
         <Footer />
       </StyledApp>
