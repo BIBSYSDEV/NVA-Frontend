@@ -10,7 +10,14 @@ import InstitutionSelector from './institution/InstitutionSelector';
 import Heading from '../../components/Heading';
 import { Formik, FormikProps, Form, Field } from 'formik';
 import InstitutionSearch from '../publication/references_tab/components/InstitutionSearch';
-import { emptyUnit, Unit, Subunit, UserUnit, emptyFormikUnitState } from '../../types/institution.types';
+import {
+  emptyUnit,
+  Unit,
+  Subunit,
+  UserUnit,
+  emptyFormikUnitState,
+  FormikUnitFieldNames,
+} from '../../types/institution.types';
 
 const StyledButtonContainer = styled.div`
   display: flex;
@@ -36,33 +43,35 @@ const UserInstitution: FC = () => {
     setOpen(true);
   };
 
-  const handleAddInstitution = (unit: Subunit, subunits: Subunit[]) => {
-    const filteredSubunits = subunits.filter((u: Subunit) => u.name !== '');
-    console.log('filtered', filteredSubunits);
-    console.log('unit', unit);
-    setUnits([...units, { id: unit.id, name: unit.name, subunits: filteredSubunits }]);
-    // TODO: find which is the lower subunit to be saved in ARP
+  const handleCancel = () => {
     setOpen(false);
   };
 
-  const handleCancel = () => {
+  const handleAddInstitution = ({ name, id, subunits }: UserUnit) => {
+    const filteredSubunits = subunits.filter((u: Subunit) => u.name !== '');
+    setUnits([...units, { id, name, subunits: filteredSubunits }]);
+    // TODO: find which is the lower subunit to be saved in ARP
+    // try {
+    //   // update ARP
+    // } catch (error) {
+    //   // handle error
+    // }
     setOpen(false);
+  };
+
+  const onSubmit = async (values: any, { resetForm }: any) => {
+    handleAddInstitution({ name: values.name, id: values.id, subunits: values.subunits });
+    resetForm({});
   };
 
   return (
     <Card>
       <Heading>{t('heading.organizations')}</Heading>
-      {units && units.map((unit: UserUnit) => <InstitutionCard key={unit.id} unit={unit} />)}
-      <Formik
-        enableReinitialize
-        initialValues={emptyFormikUnitState}
-        onSubmit={(values: any) => {
-          console.log(values);
-        }}
-        validateOnChange={false}>
-        {({ values, setFieldValue, handleReset, handleSubmit }: FormikProps<any>) => (
+      {units && units.map((unit: UserUnit, index: number) => <InstitutionCard key={index} unit={unit} />)}
+      <Formik enableReinitialize initialValues={emptyFormikUnitState} onSubmit={onSubmit} validateOnChange={false}>
+        {({ values, setFieldValue, handleSubmit }: FormikProps<any>) => (
           <>
-            <Field name="unit">
+            <Field name={FormikUnitFieldNames.UNIT}>
               {({ field: { name, value } }: any) => (
                 <>
                   {open && (
@@ -72,8 +81,8 @@ const UserInstitution: FC = () => {
                         label={t('organization.institution')}
                         clearSearchField={values.name === ''}
                         setValueFunction={inputValue => {
-                          setFieldValue('name', inputValue.name);
-                          setFieldValue('id', inputValue.id);
+                          setFieldValue(FormikUnitFieldNames.NAME, inputValue.name);
+                          setFieldValue(FormikUnitFieldNames.ID, inputValue.id);
                           setFieldValue(name, inputValue ?? emptyUnit);
                         }}
                         placeholder={t('organization.search_for_institution')}
@@ -83,10 +92,7 @@ const UserInstitution: FC = () => {
                         <>
                           <InstitutionSelector counter={0} unit={value} />
                           <StyledButton
-                            onClick={() => {
-                              handleAddInstitution({ name: values.name, id: values.id }, values.subunits);
-                              handleReset();
-                            }}
+                            onClick={() => handleSubmit()}
                             variant="contained"
                             type="submit"
                             color="primary"

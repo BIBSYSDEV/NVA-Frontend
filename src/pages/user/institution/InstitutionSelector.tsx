@@ -1,9 +1,8 @@
-import React, { useState, FC, useEffect } from 'react';
+import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
-import InstitutionSearch from '../../publication/references_tab/components/InstitutionSearch';
 import styled from 'styled-components';
-import { Button, FormControl, Select, MenuItem } from '@material-ui/core';
-import { Unit, emptyUnit } from '../../../types/institution.types';
+import { FormControl, Select, MenuItem } from '@material-ui/core';
+import { Unit, emptyUnit, Subunit } from '../../../types/institution.types';
 import { Field, FormikProps, useFormikContext } from 'formik';
 
 const StyledInstitutionSelector = styled.div`
@@ -20,27 +19,23 @@ interface InstitutionSelectorProps {
 }
 
 const InstitutionSelector: FC<InstitutionSelectorProps> = ({ unit, counter }) => {
-  const { t } = useTranslation('profile');
-
   const { values, setFieldValue }: FormikProps<any> = useFormikContext();
 
-  const handleChange = (event: any, value: any) => {
-    const name = event.target.value;
-    const subunit = unit.subunits.find((unit: any) => unit.name === name);
-    let currentCounter = 0;
+  const handleChange = (newValue: string, previousValue: string) => {
+    const subunit = unit.subunits.find((subunit: Subunit) => subunit.name === newValue);
 
-    if (!value) {
-      setFieldValue(`subunits[${counter}].name`, event.target.value);
+    if (!previousValue) {
+      setFieldValue(`subunits[${counter}].name`, newValue);
       setFieldValue(`subunits[${counter}].id`, subunit!.id);
-      ++currentCounter;
     } else {
-      for (let i = 0; i < currentCounter + 1; i++) {
-        setFieldValue(`subunits[${counter - 1}].name`, event.target.value);
-        setFieldValue(`subunits[${counter - 1}].id`, subunit!.id);
-        setFieldValue(`subunits[${counter}].name`, '');
-        setFieldValue(`subunits[${counter}].id`, '');
-        setFieldValue(`subunits[${counter + 1}].name`, '');
-        setFieldValue(`subunits[${counter + 1}].id`, '');
+      setFieldValue(`subunits[${counter - 1}].name`, newValue);
+      setFieldValue(`subunits[${counter - 1}].id`, subunit!.id);
+
+      for (let i = 1; i < values.subunits.length; i++) {
+        // TODO: kanskje bytt om til
+        // setFieldValue(`subunits[${i}]`, null)
+        setFieldValue(`subunits[${i}].name`, '');
+        setFieldValue(`subunits[${i}].id`, '');
       }
     }
   };
@@ -54,12 +49,14 @@ const InstitutionSelector: FC<InstitutionSelectorProps> = ({ unit, counter }) =>
               {({ field: { value } }: any) => (
                 <>
                   <StyledFormControl fullWidth variant="outlined">
-                    <Select value={value || ''} onChange={(event: any) => handleChange(event, value)}>
+                    <Select
+                      value={value || ''}
+                      onChange={(event: React.ChangeEvent<any>) => handleChange(event.target.value, value)}>
                       {unit.subunits.length > 0 &&
-                        unit.subunits.map((unit: any) => {
+                        unit.subunits.map((subunit: Subunit) => {
                           return (
-                            <MenuItem key={unit.id} value={unit.name}>
-                              {unit.name}
+                            <MenuItem key={subunit.id} value={subunit.name}>
+                              {subunit.name}
                             </MenuItem>
                           );
                         })}
@@ -68,7 +65,7 @@ const InstitutionSelector: FC<InstitutionSelectorProps> = ({ unit, counter }) =>
                   {value && unit.subunits.length > 0 ? (
                     <InstitutionSelector
                       key={unit.id}
-                      unit={unit.subunits.find((unit: any) => unit.name === value) || emptyUnit}
+                      unit={unit.subunits.find((unit: Unit) => unit.name === value) || emptyUnit}
                       counter={++counter}
                     />
                   ) : null}

@@ -21,24 +21,16 @@ interface InstitutionCardProps {
   unit: UserUnit;
 }
 
-const InstitutionCard: FC<InstitutionCardProps> = ({ unit }) => {
-  return (
-    <>
-      <StyledSelectedInstitution data-testid="institution-presentation">
-        <Label>{unit.name}</Label>
-        {unit.subunits.length > 0 &&
-          unit.subunits.map((subunit: Subunit) => (
-            <Fragment key={subunit.id}>
-              {subunit.name !== '' && (
-                <StyledInstitutionText data-testid="institution-presentation-subunit">
-                  {subunit.name}
-                </StyledInstitutionText>
-              )}
-            </Fragment>
-          ))}
-      </StyledSelectedInstitution>
-    </>
-  );
-};
+const InstitutionCard: FC<InstitutionCardProps> = ({ unit }) => (
+  <StyledSelectedInstitution data-testid="institution-presentation">
+    <Label>{unit.name}</Label>
+    {unit.subunits.length > 0 &&
+      unit.subunits.map((subunit: Subunit) => (
+        <StyledInstitutionText key={subunit.id} data-testid="institution-presentation-subunit">
+          {subunit.name}
+        </StyledInstitutionText>
+      ))}
+  </StyledSelectedInstitution>
+);
 
 export default InstitutionCard;

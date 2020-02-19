@@ -34,3 +34,10 @@ export const emptyFormikUnitState = {
   subunits: [],
   unit: emptyUnit,
 };
+
+export enum FormikUnitFieldNames {
+  NAME = 'name',
+  ID = 'id',
+  SUBUNITS = 'subunits',
+  UNIT = 'unit',
+}
