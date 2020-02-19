@@ -22,7 +22,7 @@ const UserRoles: React.FC<UserRolesProps> = ({ user }) => {
       {isPublisher && (
         <IconLabelTextLine
           dataTestId="user-role"
-          icon={'create'}
+          icon="create"
           label={t('roles.publisher')}
           text={t('roles.publisher_description')}
         />

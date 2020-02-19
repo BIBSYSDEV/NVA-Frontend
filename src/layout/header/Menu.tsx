@@ -52,8 +52,9 @@ const Menu: React.FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = () => {
+  const handleClose = (newPath: string) => {
     setAnchorEl(null);
+    history.push(newPath);
   };
 
   const isPublisher = checkIfPublisher(user);
@@ -81,31 +82,16 @@ const Menu: React.FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
           vertical: 'bottom',
           horizontal: 'left',
         }}>
-        <StyledMenuItem
-          data-testid="menu-user-profile-button"
-          onClick={() => {
-            handleClose();
-            history.push('/user');
-          }}>
+        <StyledMenuItem data-testid="menu-user-profile-button" onClick={() => handleClose('/user')}>
           {t('profile:my_profile')}
         </StyledMenuItem>
         {isPublisher && (
-          <StyledMenuItem
-            data-testid="menu-my-publications-button"
-            onClick={() => {
-              handleClose();
-              history.push('/my-publications');
-            }}>
+          <StyledMenuItem data-testid="menu-my-publications-button" onClick={() => handleClose('/my-publications')}>
             {t('workLists:my_publications')}
           </StyledMenuItem>
         )}
         {isCurator && (
-          <StyledMenuItem
-            data-testid="menu-my-worklist-button"
-            onClick={() => {
-              handleClose();
-              history.push('/worklist');
-            }}>
+          <StyledMenuItem data-testid="menu-my-worklist-button" onClick={() => handleClose('/worklist')}>
             {t('workLists:my_worklist')}
           </StyledMenuItem>
         )}
