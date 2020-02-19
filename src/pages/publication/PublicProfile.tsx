@@ -28,6 +28,14 @@ const StyledUserInfo = styled.div`
   padding: 0.5rem;
 `;
 
+const StyledPicture = styled(Card)`
+  width: 10rem;
+`;
+
+const StyledUser = styled(Card)`
+  flex-grow: 4;
+`;
+
 const PublicProfile: FC = () => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
@@ -52,10 +60,10 @@ const PublicProfile: FC = () => {
   return (
     <>
       <StyledUserInfo>
-        <Card>
+        <StyledPicture>
           <Heading>{t('common:picture')}</Heading>
-        </Card>
-        <Card>
+        </StyledPicture>
+        <StyledUser>
           <Heading>{user.name}</Heading>
           <LabelTextLine dataTestId="profile-email" label={t('common:email')} text={user.email} />
           {user.authority?.orcids.map((orcid: string) => {
@@ -73,7 +81,7 @@ const PublicProfile: FC = () => {
           {user.authority?.orgunitids.map(orgunitid => (
             <NormalText>{orgunitid}</NormalText>
           ))}
-        </Card>
+        </StyledUser>
       </StyledUserInfo>
       <StyledWrapper>
         {isLoading ? (
