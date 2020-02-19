@@ -9,18 +9,21 @@ import User from './pages/user/User';
 import NotFound from './pages/errorpages/NotFound';
 import { useSelector } from 'react-redux';
 import { RootStore } from './redux/reducers/rootReducer';
-import { checkIfPublisher } from './utils/authorization';
+import { checkIfPublisher, checkIfCurator } from './utils/authorization';
 import PublicProfile from './pages/publication/PublicProfile';
+import Worklist from './pages/Worklist';
 
 const AppRoutes: FC = () => {
   const user = useSelector((store: RootStore) => store.user);
   const isPublisher = checkIfPublisher(user);
+  const isCurator = checkIfCurator(user);
 
   return (
     <Switch>
       <Route exact path="/" component={Dashboard} />
       {isPublisher && <Route exact path="/new-publication" component={NewPublication} />}
       {isPublisher && <Route exact path="/my-publications" component={MyPublications} />}
+      {isCurator && <Route exact path="/worklist" component={Worklist} />}
       {user.isLoggedIn && <Route exact path="/public-profile/:userName" component={PublicProfile} />}
       <Route exact path="/search" component={Search} />
       <Route exact path="/publication/:publicationId" component={PublicationPage} />

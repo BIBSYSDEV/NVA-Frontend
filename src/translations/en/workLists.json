@@ -1,6 +1,7 @@
 {
   "go_to_public_profile": "Go to your public profile",
   "my_publications": "My publications",
-  "unpublished_publications": "Unpublished publications",
-  "publication_name": "Publication name"
+  "my_worklist": "My worklist",
+  "publication_name": "Publication name",
+  "unpublished_publications": "Unpublished publications"
 }
