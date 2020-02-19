@@ -10,7 +10,7 @@ import InstitutionSelector from './institution/InstitutionSelector';
 import Heading from '../../components/Heading';
 import { Formik, FormikProps, Form, Field } from 'formik';
 import InstitutionSearch from '../publication/references_tab/components/InstitutionSearch';
-import { emptyUnit, Unit, Subunit, UserUnit } from '../../types/institution.types';
+import { emptyUnit, Unit, Subunit, UserUnit, emptyFormikUnitState } from '../../types/institution.types';
 
 const StyledButtonContainer = styled.div`
   display: flex;
@@ -40,7 +40,7 @@ const UserInstitution: FC = () => {
     const filteredSubunits = subunits.filter((u: Subunit) => u.name !== '');
     console.log('filtered', filteredSubunits);
     console.log('unit', unit);
-    setUnits([{ id: unit.id, name: unit.name, subunits: filteredSubunits }]);
+    setUnits([...units, { id: unit.id, name: unit.name, subunits: filteredSubunits }]);
     // TODO: find which is the lower subunit to be saved in ARP
     setOpen(false);
   };
@@ -52,17 +52,19 @@ const UserInstitution: FC = () => {
   return (
     <Card>
       <Heading>{t('heading.organizations')}</Heading>
+      {units && units.map((unit: UserUnit) => <InstitutionCard key={unit.id} unit={unit} />)}
       <Formik
         enableReinitialize
-        initialValues={emptyUnit}
-        onSubmit={(values: any) => handleAddInstitution({ name: values.name, id: values.id }, values.subunits)}
+        initialValues={emptyFormikUnitState}
+        onSubmit={(values: any) => {
+          console.log(values);
+        }}
         validateOnChange={false}>
         {({ values, setFieldValue, handleReset, handleSubmit }: FormikProps<any>) => (
           <>
-            <Field name="institution">
+            <Field name="unit">
               {({ field: { name, value } }: any) => (
                 <>
-                  {units && units.map((unit: UserUnit) => <InstitutionCard key={unit.id} unit={unit} />)}
                   {open && (
                     <StyledInstitutionSearchContainer>
                       <InstitutionSearch
@@ -77,17 +79,18 @@ const UserInstitution: FC = () => {
                         placeholder={t('organization.search_for_institution')}
                         disabled={false}
                       />
-                      {values.institution && (
+                      {values.unit && (
                         <>
                           <InstitutionSelector counter={0} unit={value} />
                           <StyledButton
                             onClick={() => {
-                              handleSubmit();
+                              handleAddInstitution({ name: values.name, id: values.id }, values.subunits);
+                              handleReset();
                             }}
                             variant="contained"
                             type="submit"
                             color="primary"
-                            disabled={!values.institution}
+                            disabled={!values.unit}
                             data-testid="institution-add-button">
                             {t('common:add')}
                           </StyledButton>

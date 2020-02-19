@@ -15,8 +15,22 @@ export interface UserUnit {
   subunits: Subunit[];
 }
 
+export interface FormikUnitState {
+  name: string;
+  id: string;
+  subunits: Subunit[];
+  unit: Unit;
+}
+
 export const emptyUnit = {
   name: '',
   id: '',
   subunits: [],
+};
+
+export const emptyFormikUnitState = {
+  name: '',
+  id: '',
+  subunits: [],
+  unit: emptyUnit,
 };
