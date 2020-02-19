@@ -9,12 +9,8 @@ import {
   SET_USER_SUCCESS,
   UserActions,
 } from '../actions/userActions';
-import { ADD_INSTITUTION_UNIT, InstitutionActions } from '../actions/institutionActions';
 
-export const userReducer = (
-  state: User = emptyUser,
-  action: UserActions | OrcidActions | AuthActions | InstitutionActions
-) => {
+export const userReducer = (state: User = emptyUser, action: UserActions | OrcidActions | AuthActions) => {
   switch (action.type) {
     case CLEAR_USER:
       return {
@@ -46,11 +42,6 @@ export const userReducer = (
       return {
         ...state,
         externalOrcid: action.orcid,
-      };
-    case ADD_INSTITUTION_UNIT:
-      return {
-        ...state,
-        institutionUnits: [...state.institutionUnits, action.institutionUnit],
       };
     case SET_AUTHORITY_DATA:
       return {
