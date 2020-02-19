@@ -6,7 +6,7 @@ import styled from 'styled-components';
 
 import { Radio } from '@material-ui/core';
 
-import { getPublications } from '../../../api/external/almaApi';
+import { getAlmaPublication } from '../../../api/external/almaApi';
 import { Authority } from '../../../types/authority.types';
 import { AlmaPublication } from '../../../types/publication.types';
 import NormalText from '../../../components/NormalText';
@@ -38,18 +38,20 @@ interface AuthorityCardProps {
 }
 
 const AuthorityCard: React.FC<AuthorityCardProps> = ({ authority, isSelected }) => {
-  const [publications, setPublications] = useState<AlmaPublication[]>([]);
+  const [publication, setPublication] = useState<AlmaPublication>();
   const dispatch = useDispatch();
   const { t } = useTranslation('profile');
 
   useEffect(() => {
     const fetchAuthorities = async () => {
-      const retrievedPublications = await getPublications(authority.systemControlNumber, dispatch);
-      setPublications(retrievedPublications);
+      const retrievedPublication = await getAlmaPublication(authority.systemControlNumber, authority.name);
+      if (!retrievedPublication.error) {
+        setPublication(retrievedPublication);
+      }
     };
 
     fetchAuthorities();
-  }, [dispatch, authority.systemControlNumber]);
+  }, [dispatch, authority.systemControlNumber, authority.name]);
 
   return (
     <StyledBoxContent>
@@ -58,11 +60,11 @@ const AuthorityCard: React.FC<AuthorityCardProps> = ({ authority, isSelected }) 
         {authority?.name}
       </StyledAuthority>
       <StyledPublicationContent>
-        {publications?.[0] ? (
+        {publication?.title ? (
           <>
             <StyledPublicationInfo>{t('authority.last_publication')}</StyledPublicationInfo>
             <Truncate lines={2} ellipsis={<span>...</span>}>
-              <NormalText>{publications?.[0]?.title}</NormalText>
+              <NormalText>{publication.title}</NormalText>
             </Truncate>
           </>
         ) : (

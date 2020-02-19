@@ -30,7 +30,6 @@ export interface PublicationMetadata {
 
 export interface AlmaPublication {
   title: string;
-  date: string;
 }
 
 interface NpiDiscipline {
