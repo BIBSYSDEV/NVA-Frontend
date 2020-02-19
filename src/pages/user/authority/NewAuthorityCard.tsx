@@ -4,13 +4,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 
 import { Button, Radio } from '@material-ui/core';
-
-import { mockSingleAuthorityResponseWithFeide } from '../../../api/mock-interceptor';
 import Progress from '../../../components/Progress';
 import { addNotification } from '../../../redux/actions/notificationActions';
 import { setAuthorityData } from '../../../redux/actions/userActions';
 import { RootStore } from '../../../redux/reducers/rootReducer';
-import { USE_MOCK_DATA } from '../../../utils/constants';
 import { createAuthority } from '../../../api/authorityApi';
 
 const StyledBoxContent = styled.div`
@@ -62,13 +59,6 @@ const NewAuthorityCard: React.FC = () => {
       setLoading(false);
       dispatch(setAuthorityData(authority));
       dispatch(addNotification('authority.created_authority'));
-    }
-    if (USE_MOCK_DATA) {
-      setTimeout(() => {
-        setLoading(false);
-        dispatch(setAuthorityData(mockSingleAuthorityResponseWithFeide));
-        dispatch(addNotification('authority.created_authority', 'error'));
-      }, [2000]);
     }
   };
 
