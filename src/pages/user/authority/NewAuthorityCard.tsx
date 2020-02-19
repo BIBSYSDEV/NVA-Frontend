@@ -55,11 +55,13 @@ const NewAuthorityCard: React.FC = () => {
   const handleCreateAuthority = async () => {
     setLoading(true);
     const authority = await createAuthority(user);
-    if (authority) {
-      setLoading(false);
+    if (authority?.error) {
+      dispatch(addNotification(authority.error, 'error'));
+    } else {
       dispatch(setAuthorityData(authority));
       dispatch(addNotification('authority.created_authority'));
     }
+    setLoading(false);
   };
 
   return (
