@@ -18,6 +18,7 @@ import Heading from '../../components/Heading';
 const StyledWrapper = styled.div`
   text-align: center;
   padding: 0.5rem;
+  width: 100%;
 `;
 
 const StyledUserInfo = styled.div`
