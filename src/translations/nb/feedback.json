@@ -1,5 +1,6 @@
 {
   "error": {
+    "404_page": "Beklager, men vi kan ikke finne siden du ser etter. (Http feilkode 404)",
     "create_authority": "Kunne ikke opprette autoritet",
     "create_publication": "Kunne ikke opprette publikasjon",
     "get_authority": "Kunne ikke hente autoritet",

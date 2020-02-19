@@ -1,8 +1,8 @@
 import React, { FC, useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import FormCard from '../../components/FormCard/FormCard';
-import FormCardHeading from '../../components/FormCard/FormCardHeading';
+import Card from '../../components/Card';
+import Heading from '../../components/Heading';
 import TabPanel from '../../components/TabPanel/TabPanel';
 import SortableTable from './contributors_tab/components/SortableTable';
 import { FormikProps, useFormikContext, FieldArray, getIn } from 'formik';
@@ -47,8 +47,8 @@ const ContributorsPanel: FC<ContributorsPanelProps> = ({ goToNextTab, savePublic
 
   return (
     <TabPanel ariaLabel="references" goToNextTab={goToNextTab} onClickSave={savePublication}>
-      <FormCard>
-        <FormCardHeading>{t('contributors.authors')}</FormCardHeading>
+      <Card>
+        <Heading>{t('contributors.authors')}</Heading>
         <FieldArray name={ContributorFieldNames.CONTRIBUTORS}>
           {({ push, remove, swap }) => (
             <SortableTable
@@ -59,7 +59,7 @@ const ContributorsPanel: FC<ContributorsPanelProps> = ({ goToNextTab, savePublic
             />
           )}
         </FieldArray>
-      </FormCard>
+      </Card>
     </TabPanel>
   );
 };

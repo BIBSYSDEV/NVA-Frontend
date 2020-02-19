@@ -4,11 +4,12 @@ import { useDispatch } from 'react-redux';
 import Truncate from 'react-truncate';
 import styled from 'styled-components';
 
-import { Radio, Typography } from '@material-ui/core';
+import { Radio } from '@material-ui/core';
 
 import { getAlmaPublication } from '../../../api/external/almaApi';
 import { Authority } from '../../../types/authority.types';
 import { AlmaPublication } from '../../../types/publication.types';
+import NormalText from '../../../components/NormalText';
 
 const StyledBoxContent = styled.div`
   display: grid;
@@ -63,7 +64,7 @@ const AuthorityCard: React.FC<AuthorityCardProps> = ({ authority, isSelected }) 
           <>
             <StyledPublicationInfo>{t('authority.last_publication')}</StyledPublicationInfo>
             <Truncate lines={2} ellipsis={<span>...</span>}>
-              <Typography variant="body2">{publication.title}</Typography>
+              <NormalText>{publication.title}</NormalText>
             </Truncate>
           </>
         ) : (

@@ -8,12 +8,13 @@ import { FieldArray, FormikProps, useFormikContext } from 'formik';
 import { Publication } from '../../types/publication.types';
 import Modal from '../../components/Modal';
 import { licenses, Uppy } from '../../types/file.types';
-import { Typography } from '@material-ui/core';
-import FormCard from '../../components/FormCard/FormCard';
-import FormCardHeading from '../../components/FormCard/FormCardHeading';
+import Card from '../../components/Card';
+import Heading from '../../components/Heading';
 import PublicationChannelInfoCard from './files_and_license_tab/PublicationChannelInfoCard';
+import NormalText from '../../components/NormalText';
+import Label from '../../components/Label';
 
-const StyledUploadedFiles = styled(FormCard)`
+const StyledUploadedFiles = styled(Card)`
   display: flex;
   flex-direction: column;
 
@@ -55,14 +56,14 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab
       <FieldArray name={FilesFieldNames.FILES}>
         {({ insert, remove, replace }) => (
           <>
-            <FormCard>
-              <FormCardHeading>{t('files_and_license.upload_files')}</FormCardHeading>
+            <Card>
+              <Heading>{t('files_and_license.upload_files')}</Heading>
               <FileUploader uppy={uppy} addFile={file => insert(0, file)} />
-            </FormCard>
+            </Card>
             {uploadedFiles.length > 0 && (
               <>
                 <StyledUploadedFiles>
-                  <FormCardHeading>{t('files_and_license.files')}</FormCardHeading>
+                  <Heading>{t('files_and_license.files')}</Heading>
                   {uploadedFiles.map((file, index) => (
                     <FileCard
                       key={file.id}
@@ -84,9 +85,9 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab
       <Modal headingText={t('files_and_license.licenses')} openModal={isLicenseModalOpen} onClose={toggleLicenseModal}>
         {licenses.map(license => (
           <StyledLicenseDescription key={license.name}>
-            <Typography variant="h6">{license.name}</Typography>
+            <Label>{license.name}</Label>
             <img src={license.image} alt={license.name} />
-            <Typography variant="body2">{license.description}</Typography>
+            <NormalText>{license.description}</NormalText>
           </StyledLicenseDescription>
         ))}
       </Modal>

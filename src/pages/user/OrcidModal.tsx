@@ -3,9 +3,11 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
 import styled from 'styled-components';
 
-import { Button, Typography } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 
 import { ORCID_SIGN_IN_URL, USE_MOCK_DATA } from '../../utils/constants';
+import NormalText from '../../components/NormalText';
+import Label from '../../components/Label';
 
 const StyledButtonContainer = styled.div`
   display: flex;
@@ -17,7 +19,7 @@ const StyledButton = styled(Button)`
   width: 22rem;
 `;
 
-const StyledSubHeading = styled(Typography)`
+const StyledSubHeading = styled(Label)`
   margin: 1em 0;
   font-weight: bold;
 `;
@@ -45,11 +47,11 @@ const OrcidModal: FC = () => {
   return (
     <>
       <StyledOrcidDescription>
-        <Typography variant="body1">{t('orcid.login')}</Typography>
-        <StyledSubHeading variant="h6">{t('orcid.why')}</StyledSubHeading>
-        <Typography variant="body1">{t('orcid.description_why_use_orcid')}</Typography>
-        <StyledSubHeading variant="h6">{t('orcid.what')}</StyledSubHeading>
-        <Typography variant="body1">{t('orcid.description_what_is_orcid')}</Typography>
+        <NormalText>{t('orcid.login')}</NormalText>
+        <StyledSubHeading>{t('orcid.why')}</StyledSubHeading>
+        <NormalText>{t('orcid.description_why_use_orcid')}</NormalText>
+        <StyledSubHeading>{t('orcid.what')}</StyledSubHeading>
+        <NormalText>{t('orcid.description_what_is_orcid')}</NormalText>
       </StyledOrcidDescription>
       <StyledButtonContainer>
         <StyledButton
