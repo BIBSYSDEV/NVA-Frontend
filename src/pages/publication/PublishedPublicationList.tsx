@@ -6,6 +6,11 @@ import { useTranslation } from 'react-i18next';
 import { PublishedPublicationPreview, PublicationStatus } from '../../types/publication.types';
 import Card from '../../components/Card';
 import Heading from '../../components/Heading';
+import NormalText from '../../components/NormalText';
+
+const StyledCard = styled(Card)`
+  width: 100%;
+`;
 
 const StyledHeading = styled(Heading)`
   text-align: left;
@@ -47,7 +52,7 @@ interface PublicationListProps {
 const PublishedPublicationList: FC<PublicationListProps> = ({ publications }) => {
   const { t } = useTranslation();
   return (
-    <Card>
+    <StyledCard>
       <StyledHeading>{`${t('common:publications')} (${
         publications.filter(publication => publication.status === PublicationStatus.PUBLISHED).length
       })`}</StyledHeading>
@@ -66,26 +71,34 @@ const PublishedPublicationList: FC<PublicationListProps> = ({ publications }) =>
             .map(publication => (
               <StyledTableRow key={publication.id}>
                 <TableCell component="th" scope="row">
-                  <div>{publication.title}</div>
+                  <NormalText>{publication.title}</NormalText>
                   <StyledAuthor>
-                    {publication.authors[0].name}, {publication.authors[0].institutions[0].name}
+                    <NormalText>
+                      {publication.authors[0].name}, {publication.authors[0].institutions[0].name}
+                    </NormalText>
                   </StyledAuthor>
                 </TableCell>
                 <StyledTableCellForPublisher>
-                  {Object.values(publication.reference).find(value => value.publisher).publisher}
+                  <NormalText>
+                    {Object.values(publication.reference).find(value => value.publisher).publisher}
+                  </NormalText>
                 </StyledTableCellForPublisher>
-                <StyledTableCellForType>{t('referenceTypes:' + publication.reference.type)}</StyledTableCellForType>
-                <StyledTableCellForDate>{publication.publicationDate?.year}</StyledTableCellForDate>
+                <StyledTableCellForType>
+                  <NormalText>{t('referenceTypes:' + publication.reference.type)}</NormalText>
+                </StyledTableCellForType>
+                <StyledTableCellForDate>
+                  <NormalText>{publication.publicationDate?.year}</NormalText>
+                </StyledTableCellForDate>
                 <TableCell>
-                  <Button color="primary" variant="outlined" data-testid="edit-button">
-                    {t('common:read')}
+                  <Button color="primary" variant="outlined" data-testid="read-button">
+                    <NormalText>{t('common:read')}</NormalText>
                   </Button>
                 </TableCell>
               </StyledTableRow>
             ))}
         </TableBody>
       </StyledTable>
-    </Card>
+    </StyledCard>
   );
 };
 

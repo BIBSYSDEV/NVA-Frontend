@@ -19,7 +19,7 @@ describe('User opens their Public Profile from My Publications Page', () => {
 
     // Open My Publications
     cy.get('[data-testid=menu]').click({ force: true });
-    cy.get('[data-testid=menu-my-publications-button').click({ force: true });
+    cy.get('[data-testid=menu-my-publications-button]').click({ force: true });
 
     // Open Public Profile
     cy.get('[data-testid=public-profile-button]').click({ force: true });

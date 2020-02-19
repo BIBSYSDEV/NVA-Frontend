@@ -7,6 +7,7 @@ import { PublicationPreview, PublicationStatus } from '../../types/publication.t
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import Label from '../../components/Label';
+import NormalText from '../../components/NormalText';
 
 const StyledTableRow = styled(TableRow)`
   background-color: ${props => props.theme.palette.box.main};
@@ -61,14 +62,18 @@ const PublicationList: FC<PublicationListProps> = ({ publications }) => {
           .map(publication => (
             <StyledTableRow key={publication.id}>
               <TableCell component="th" scope="row">
-                {publication.title}
+                <NormalText>{publication.title}</NormalText>
               </TableCell>
-              <StyledTableCellForStatus>{t(`publication:status.${publication.status}`)}</StyledTableCellForStatus>
-              <StyledTableCellForDate>{publication.createdDate}</StyledTableCellForDate>
+              <StyledTableCellForStatus>
+                <NormalText>{t(`publication:status.${publication.status}`)}</NormalText>
+              </StyledTableCellForStatus>
+              <StyledTableCellForDate>
+                <NormalText>{publication.createdDate}</NormalText>
+              </StyledTableCellForDate>
               <TableCell>
                 <Button color="primary" variant="outlined" data-testid="edit-button">
                   <StyledEditIcon />
-                  {t('common:edit')}
+                  <NormalText>{t('common:edit')}</NormalText>
                 </Button>
               </TableCell>
               <TableCell>
