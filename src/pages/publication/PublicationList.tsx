@@ -7,7 +7,6 @@ import { PublicationPreview, PublicationStatus } from '../../types/publication.t
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import Label from '../../components/Label';
-import NormalText from '../../components/NormalText';
 
 const StyledTableRow = styled(TableRow)`
   background-color: ${props => props.theme.palette.box.main};
