@@ -1,12 +1,13 @@
 import React from 'react';
 import { Publisher } from '../../../types/references.types';
-import FormCard from '../../../components/FormCard/FormCard';
-import FormCardHeading from '../../../components/FormCard/FormCardHeading';
-import FormCardLabel from '../../../components/FormCard/FormCardLabel';
-import { Typography, Avatar } from '@material-ui/core';
+import Card from '../../../components/Card';
+import Heading from '../../../components/Heading';
+import Label from '../../../components/Label';
+import { Avatar } from '@material-ui/core';
 import { openAccessLogo } from '../../../resources/images/licenses';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
+import NormalText from '../../../components/NormalText';
 
 const StyledInfoEntries = styled.div`
   display: flex;
@@ -26,16 +27,16 @@ const PublicationChannelInfoCard: React.FC<PublicationChannelInfoCardProps> = ({
   const { t } = useTranslation('publication');
 
   return (
-    <FormCard>
-      <FormCardHeading>{t('files_and_license.info_from_publication_channel_register.title')}</FormCardHeading>
+    <Card>
+      <Heading>{t('files_and_license.info_from_publication_channel_register.title')}</Heading>
       <StyledInfoEntries>
         <div>
-          <FormCardLabel>{publisher.title}</FormCardLabel>
-          <Typography variant="body1">
+          <Label>{publisher.title}</Label>
+          <NormalText>
             {publisher.openAccess
               ? t('files_and_license.info_from_publication_channel_register.open_publishment')
               : t('files_and_license.info_from_publication_channel_register.no_open_publishment')}
-          </Typography>
+          </NormalText>
         </div>
         {publisher.openAccess && (
           <StyledAvatar
@@ -45,7 +46,7 @@ const PublicationChannelInfoCard: React.FC<PublicationChannelInfoCardProps> = ({
           />
         )}
       </StyledInfoEntries>
-    </FormCard>
+    </Card>
   );
 };
 

@@ -3,7 +3,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormikProps, useFormikContext } from 'formik';
 import { Publication } from '../../../types/publication.types';
-import FormCardLabel from '../../../components/FormCard/FormCardLabel';
+import Label from '../../../components/Label';
 
 const SubmissionFilesAndLicenses: React.FC = () => {
   const { t } = useTranslation('publication');
@@ -11,7 +11,7 @@ const SubmissionFilesAndLicenses: React.FC = () => {
 
   return (
     <>
-      <FormCardLabel>{t('files_and_license.files')}</FormCardLabel>
+      <Label>{t('files_and_license.files')}</Label>
       {values.files.map(file => (
         <React.Fragment key={file.id}>
           <hr />

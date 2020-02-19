@@ -9,10 +9,18 @@ import { RootStore } from '../../redux/reducers/rootReducer';
 import orcidIcon from '../../resources/images/orcid_logo.svg';
 import { ORCID_BASE_URL } from '../../utils/constants';
 import OrcidModal from './OrcidModal';
-import UserCard from './UserCard';
+import Heading from '../../components/Heading';
+import Card from '../../components/Card';
+import { Avatar } from '@material-ui/core';
 
 const StyledInformation = styled.div`
   margin-bottom: 1rem;
+`;
+
+const StyledAvatar = styled(Avatar)`
+  display: inline-flex;
+  margin-right: 0.5rem;
+  top: 0.5rem;
 `;
 
 const UserOrcid: FC = () => {
@@ -21,7 +29,11 @@ const UserOrcid: FC = () => {
   const listOfOrcids = user.authority?.orcids;
 
   return (
-    <UserCard headingLabel={t('common:orcid')} headingIcon={<img src={orcidIcon} alt="ORCID icon" />}>
+    <Card>
+      <Heading>
+        <StyledAvatar src={orcidIcon} alt="ORCID icon" />
+        {t('common:orcid')}
+      </Heading>
       {listOfOrcids?.length > 0 ? (
         listOfOrcids.map((orcid: string) => {
           const orcidLink = `${ORCID_BASE_URL}/${orcid}`;
@@ -46,7 +58,7 @@ const UserOrcid: FC = () => {
           </ButtonModal>
         </>
       )}
-    </UserCard>
+    </Card>
   );
 };
 

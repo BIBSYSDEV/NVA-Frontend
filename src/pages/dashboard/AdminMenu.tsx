@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import { Button, Link as MuiLink } from '@material-ui/core';
 
 import { RootStore } from '../../redux/reducers/rootReducer';
+import { checkIfPublisher } from '../../utils/authorization';
 
 const StyledAdminMenu = styled.div`
   background-color: ${({ theme }) => theme.palette.box.main};
@@ -27,9 +28,11 @@ const AdminMenu: FC = () => {
   const history = useHistory();
   const { t } = useTranslation();
 
-  return (
+  const isPublisher = checkIfPublisher(user);
+
+  return isPublisher ? (
     <>
-      {user.id && history.location.pathname !== '/new-publication' && (
+      {history.location.pathname !== '/new-publication' && (
         <StyledAdminMenu>
           <MuiLink component={Link} to="/new-publication">
             <StyledButton color="primary" variant="contained" data-testid="new-publication-button">
@@ -39,7 +42,7 @@ const AdminMenu: FC = () => {
         </StyledAdminMenu>
       )}
     </>
-  );
+  ) : null;
 };
 
 export default AdminMenu;

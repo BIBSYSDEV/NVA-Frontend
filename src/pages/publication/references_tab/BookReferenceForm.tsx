@@ -12,8 +12,8 @@ import NviValidation from './components/NviValidation';
 import PeerReview from './components/PeerReview';
 import PublicationChannelSearch from './components/PublicationChannelSearch';
 import PublisherRow from './components/PublisherRow';
-import FormCardSubHeading from '../../../components/FormCard/FormCardSubHeading';
-import FormCardLabel from '../../../components/FormCard/FormCardLabel';
+import SubHeading from '../../../components/SubHeading';
+import Label from '../../../components/Label';
 
 const StyledSection = styled.div`
   display: grid;
@@ -89,7 +89,7 @@ const BookReferenceForm: FC = () => {
           <Field name={BookFieldNames.TEXT_BOOK}>
             {({ field: { name, value } }: any) => (
               <>
-                <FormCardLabel>{t('references.is_text_book')}</FormCardLabel>
+                <Label>{t('references.is_text_book')}</Label>
                 <FormControlLabel
                   control={
                     <Checkbox
@@ -116,8 +116,8 @@ const BookReferenceForm: FC = () => {
           />
         )}
       </Field>
-      <FormCardSubHeading>{t('references.series')}</FormCardSubHeading>
-      <FormCardLabel>{t('references.series_info')}</FormCardLabel>
+      <SubHeading>{t('references.series')}</SubHeading>
+      <Label>{t('references.series_info')}</Label>
       <Field name={BookFieldNames.SERIES}>
         {({ field: { name, value } }: any) => (
           <>

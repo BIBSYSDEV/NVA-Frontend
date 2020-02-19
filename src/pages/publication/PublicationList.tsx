@@ -6,6 +6,8 @@ import { useTranslation } from 'react-i18next';
 import { PublicationPreview, PublicationStatus } from '../../types/publication.types';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
+import Label from '../../components/Label';
+import NormalText from '../../components/NormalText';
 
 const StyledTableRow = styled(TableRow)`
   background-color: ${props => props.theme.palette.box.main};
@@ -43,9 +45,15 @@ const PublicationList: FC<PublicationListProps> = ({ publications }) => {
     <StyledTable>
       <TableHead>
         <TableRow>
-          <TableCell>{t('workLists:publication_name')}</TableCell>
-          <TableCell>{t('common:status')}</TableCell>
-          <TableCell>{t('common:date')}</TableCell>
+          <TableCell>
+            <Label>{t('workLists:publication_name')}</Label>
+          </TableCell>
+          <TableCell>
+            <Label>{t('common:status')}</Label>
+          </TableCell>
+          <TableCell>
+            <Label>{t('common:date')}</Label>
+          </TableCell>
         </TableRow>
       </TableHead>
       <TableBody>

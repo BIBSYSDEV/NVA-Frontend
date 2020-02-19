@@ -17,7 +17,7 @@ import AddContributor from '../AddContributor';
 import { useTranslation } from 'react-i18next';
 import DeleteIcon from '@material-ui/icons/Delete';
 
-import FormCardSubHeading from '../../../../components/FormCard/FormCardSubHeading';
+import SubHeading from '../../../../components/SubHeading';
 import { removeDuplicatesByScn } from '../../../../utils/helpers';
 
 interface SortableItemProps {
@@ -34,7 +34,7 @@ const SortableItem = SortableElement(({ contributor, placement, onDelete }: Sort
   return (
     <TableRow tabIndex={0} key={contributor.systemControlNumber}>
       <TableCell align="left">
-        <FormCardSubHeading>{contributor.name}</FormCardSubHeading>
+        <SubHeading>{contributor.name}</SubHeading>
         <Field name={`contributors[${index}].corresponding`}>
           {({ field }: any) => (
             <FormControlLabel

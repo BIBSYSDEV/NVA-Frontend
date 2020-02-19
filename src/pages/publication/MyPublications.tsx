@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import FormCard from '../../components/FormCard/FormCard';
-import FormCardHeading from '../../components/FormCard/FormCardHeading';
+import Card from '../../components/Card';
+import Heading from '../../components/Heading';
 import PublicationList from './PublicationList';
 import { getMyPublications } from '../../api/publicationApi';
 import { addNotification } from '../../redux/actions/notificationActions';
@@ -51,8 +51,8 @@ const MyPublications: FC = () => {
   }, [dispatch]);
 
   return (
-    <FormCard>
-      <FormCardHeading>{t('workLists:my_publications')}</FormCardHeading>
+    <Card>
+      <Heading>{t('workLists:my_publications')}</Heading>
       <StyledButtonWrapper>
         <MuiLink component={Link} to={`/public-profile/${user.name}`}>
           <Button color="primary" variant="contained" data-testid="public-profile-button">
@@ -63,7 +63,7 @@ const MyPublications: FC = () => {
       <StyledWrapper>
         {isLoading ? <CircularProgress color="inherit" size={20} /> : <PublicationList publications={publications} />}
       </StyledWrapper>
-    </FormCard>
+    </Card>
   );
 };
 
