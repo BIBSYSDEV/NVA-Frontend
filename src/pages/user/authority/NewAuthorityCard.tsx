@@ -54,7 +54,7 @@ const NewAuthorityCard: React.FC = () => {
 
   const handleCreateAuthority = async () => {
     setLoading(true);
-    const authority = await createAuthority(`${user.familyName},${user.givenName}`);
+    const authority = await createAuthority(user);
     if (authority) {
       setLoading(false);
       dispatch(setAuthorityData(authority));
