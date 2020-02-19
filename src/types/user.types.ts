@@ -26,6 +26,8 @@ export enum ApplicationName {
 export interface User {
   email: string;
   name: string;
+  familyName: string;
+  givenName: string;
   id: string;
   institution: string;
   roles: RoleName[];
@@ -53,6 +55,8 @@ export interface FeideUser {
   'custom:commonName': string;
   'custom:feideId': string;
   'custom:affiliation': string;
+  given_name: string;
+  family_name: string;
 }
 
 export const emptyUser: User = {
@@ -69,4 +73,6 @@ export const emptyUser: User = {
   externalOrcid: '',
   institutionPresentations: [],
   affiliations: [],
+  familyName: '',
+  givenName: '',
 };
