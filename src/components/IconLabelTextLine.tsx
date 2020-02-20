@@ -35,7 +35,7 @@ const StyledIcon = styled(Icon)`
 
 interface IconLabelTextLineProps {
   dataTestId?: string;
-  icon: any;
+  icon: string;
   label: string;
   text: string;
 }
