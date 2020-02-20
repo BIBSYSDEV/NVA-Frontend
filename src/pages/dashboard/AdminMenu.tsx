@@ -2,11 +2,9 @@ import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
-import { Link } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 import styled from 'styled-components';
-
-import { Button, Link as MuiLink } from '@material-ui/core';
-
+import { Button } from '@material-ui/core';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { checkIfPublisher } from '../../utils/authorization';
 
@@ -18,7 +16,7 @@ const StyledAdminMenu = styled.div`
   min-height: 4rem;
 `;
 
-const StyledButton = styled(Button)`
+const StyledButtonWrapper = styled(Button)`
   margin-left: 1rem;
   margin-right: 1rem;
 `;
@@ -34,11 +32,11 @@ const AdminMenu: FC = () => {
     <>
       {history.location.pathname !== '/new-publication' && (
         <StyledAdminMenu>
-          <MuiLink component={Link} to="/new-publication">
-            <StyledButton color="primary" variant="contained" data-testid="new-publication-button">
+          <StyledButtonWrapper>
+            <Button component={RouterLink} to="/new-publication" color="primary" data-testid="new-publication-button">
               + {t('new_publication')}
-            </StyledButton>
-          </MuiLink>
+            </Button>
+          </StyledButtonWrapper>
         </StyledAdminMenu>
       )}
     </>
