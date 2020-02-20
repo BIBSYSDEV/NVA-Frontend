@@ -16,6 +16,7 @@ import {
   Unit,
   emptyFormikUnitState,
   FormikUnitFieldNames,
+  FormikUnit,
 } from '../../types/institution.types';
 
 const StyledButtonContainer = styled.div`
@@ -58,7 +59,7 @@ const UserInstitution: FC = () => {
     setOpen(false);
   };
 
-  const onSubmit = async (values: any, { resetForm }: any) => {
+  const onSubmit = async (values: FormikUnit, { resetForm }: any) => {
     handleAddInstitution({ name: values.name, id: values.id, subunits: values.subunits });
     resetForm({});
   };
@@ -68,7 +69,7 @@ const UserInstitution: FC = () => {
       <Heading>{t('heading.organizations')}</Heading>
       {units && units.map((unit: Unit, index: number) => <InstitutionCard key={index} unit={unit} />)}
       <Formik enableReinitialize initialValues={emptyFormikUnitState} onSubmit={onSubmit} validateOnChange={false}>
-        {({ values, setFieldValue, handleSubmit }: FormikProps<any>) => (
+        {({ values, setFieldValue, handleSubmit }: FormikProps<FormikUnit>) => (
           <>
             <Field name={FormikUnitFieldNames.UNIT}>
               {({ field: { name, value } }: any) => (
