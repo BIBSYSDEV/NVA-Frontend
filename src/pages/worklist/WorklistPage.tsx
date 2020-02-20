@@ -17,7 +17,7 @@ const StyledTabButton = styled.button<{ isSelected: boolean }>`
   flex-direction: column;
   align-items: center;
   cursor: pointer;
-  width: 15rem;
+  width: 45%;
   font-weight: bold;
   font-size: 1.2rem;
 
@@ -25,7 +25,8 @@ const StyledTabButton = styled.button<{ isSelected: boolean }>`
     isSelected &&
     `
       color: ${theme.palette.primary.main};
-      border-bottom: 0.3rem solid;
+      padding-bottom: 0.4rem;
+      border-bottom: 0.2rem solid;
     `};
 `;
 
