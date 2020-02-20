@@ -8,7 +8,7 @@ import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import InstitutionSelector from './institution/InstitutionSelector';
 import Heading from '../../components/Heading';
-import { Formik, FormikProps, Field } from 'formik';
+import { Formik, FormikProps, Field, FieldProps } from 'formik';
 import InstitutionSearch from '../publication/references_tab/components/InstitutionSearch';
 import {
   emptyRecursiveUnit,
@@ -39,12 +39,8 @@ const UserInstitution: FC = () => {
   const [units, setUnits] = useState<Unit[]>([]);
   const { t } = useTranslation('profile');
 
-  const handleClickAdd = () => {
-    setOpen(true);
-  };
-
-  const handleCancel = () => {
-    setOpen(false);
+  const toggleOpen = () => {
+    setOpen(!open);
   };
 
   const handleAddInstitution = ({ name, id, subunits }: Unit) => {
@@ -54,62 +50,60 @@ const UserInstitution: FC = () => {
     // } catch (error) {
     //   // handle error
     // }
-    const filteredSubunits = subunits.filter((u: Subunit) => u.name !== '');
+    const filteredSubunits = subunits.filter((subunit: Subunit) => subunit.name !== '');
     setUnits([...units, { id, name, subunits: filteredSubunits }]);
     setOpen(false);
   };
 
   const onSubmit = async (values: FormikUnit, { resetForm }: any) => {
     handleAddInstitution({ name: values.name, id: values.id, subunits: values.subunits });
-    resetForm({});
+    resetForm(emptyFormikUnitState);
   };
 
   return (
     <Card>
       <Heading>{t('heading.organizations')}</Heading>
-      {units && units.map((unit: Unit, index: number) => <InstitutionCard key={index} unit={unit} />)}
+      {units?.map((unit: Unit, index: number) => (
+        <InstitutionCard key={index} unit={unit} />
+      ))}
       <Formik enableReinitialize initialValues={emptyFormikUnitState} onSubmit={onSubmit} validateOnChange={false}>
         {({ values, setFieldValue, handleSubmit }: FormikProps<FormikUnit>) => (
-          <>
-            <Field name={FormikUnitFieldNames.UNIT}>
-              {({ field: { name, value } }: any) => (
-                <>
-                  {open && (
-                    <StyledInstitutionSearchContainer>
-                      <InstitutionSearch
-                        dataTestId="autosearch-institution"
-                        label={t('organization.institution')}
-                        clearSearchField={values.name === ''}
-                        setValueFunction={inputValue => {
-                          setFieldValue(FormikUnitFieldNames.NAME, inputValue.name);
-                          setFieldValue(FormikUnitFieldNames.ID, inputValue.id);
-                          setFieldValue(name, inputValue ?? emptyRecursiveUnit);
-                        }}
-                        placeholder={t('organization.search_for_institution')}
-                      />
-                      {values.unit && (
-                        <>
-                          <InstitutionSelector counter={0} unit={value} />
-                          <StyledButton
-                            onClick={() => handleSubmit()}
-                            variant="contained"
-                            type="submit"
-                            color="primary"
-                            disabled={!values.unit}
-                            data-testid="institution-add-button">
-                            {t('common:add')}
-                          </StyledButton>
-                          <StyledButton onClick={handleCancel} variant="contained" color="secondary">
-                            {t('common:cancel')}
-                          </StyledButton>
-                        </>
-                      )}
-                    </StyledInstitutionSearchContainer>
+          <Field name={FormikUnitFieldNames.UNIT}>
+            {({ field: { name, value } }: FieldProps) =>
+              open && (
+                <StyledInstitutionSearchContainer>
+                  <InstitutionSearch
+                    dataTestId="autosearch-institution"
+                    label={t('organization.institution')}
+                    clearSearchField={values.name === ''}
+                    setValueFunction={inputValue => {
+                      setFieldValue(FormikUnitFieldNames.NAME, inputValue.name);
+                      setFieldValue(FormikUnitFieldNames.ID, inputValue.id);
+                      setFieldValue(name, inputValue ?? emptyRecursiveUnit);
+                    }}
+                    placeholder={t('organization.search_for_institution')}
+                  />
+                  {values.unit && (
+                    <>
+                      <InstitutionSelector counter={0} unit={value} />
+                      <StyledButton
+                        onClick={() => handleSubmit()}
+                        variant="contained"
+                        type="submit"
+                        color="primary"
+                        disabled={!values.unit}
+                        data-testid="institution-add-button">
+                        {t('common:add')}
+                      </StyledButton>
+                      <StyledButton onClick={toggleOpen} variant="contained" color="secondary">
+                        {t('common:cancel')}
+                      </StyledButton>
+                    </>
                   )}
-                </>
-              )}
-            </Field>
-          </>
+                </StyledInstitutionSearchContainer>
+              )
+            }
+          </Field>
         )}
       </Formik>
       {!open && (
@@ -117,7 +111,7 @@ const UserInstitution: FC = () => {
           <Button
             variant="contained"
             color="primary"
-            onClick={handleClickAdd}
+            onClick={toggleOpen}
             disabled={!user.authority?.systemControlNumber}
             data-testid="add-new-institution-button">
             {t('organization.add_institution')}

@@ -23,12 +23,11 @@ interface InstitutionCardProps {
 const InstitutionCard: FC<InstitutionCardProps> = ({ unit }) => (
   <StyledSelectedInstitution data-testid="institution-presentation">
     <Label>{unit.name}</Label>
-    {unit.subunits.length > 0 &&
-      unit.subunits.map((subunit: Subunit) => (
-        <StyledInstitutionText key={subunit.id} data-testid="institution-presentation-subunit">
-          {subunit.name}
-        </StyledInstitutionText>
-      ))}
+    {unit.subunits?.map((subunit: Subunit) => (
+      <StyledInstitutionText key={subunit.id} data-testid="institution-presentation-subunit">
+        {subunit.name}
+      </StyledInstitutionText>
+    ))}
   </StyledSelectedInstitution>
 );
 
