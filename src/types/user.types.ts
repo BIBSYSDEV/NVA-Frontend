@@ -1,5 +1,4 @@
 import { Authority, emptyAuthority } from './authority.types';
-import { InstitutionUnit } from './institution.types';
 
 export enum RoleName {
   PUBLISHER = 'Publisher',
@@ -37,7 +36,6 @@ export interface User {
   possibleAuthorities: Authority[];
   organizationId: string;
   externalOrcid: string;
-  institutionPresentations: InstitutionUnit[];
   affiliations: Affiliation[];
 }
 
@@ -71,7 +69,6 @@ export const emptyUser: User = {
   possibleAuthorities: [],
   organizationId: '',
   externalOrcid: '',
-  institutionPresentations: [],
   affiliations: [],
   familyName: '',
   givenName: '',

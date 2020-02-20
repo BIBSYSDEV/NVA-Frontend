@@ -55,7 +55,7 @@ const DegreeReferenceForm: React.FC = () => {
             {value.title && (
               <PublisherRow
                 dataTestId="autosearch-results-publisher"
-                label={t('references.publisher')}
+                label={t('common:publisher')}
                 publisher={value}
                 onClickDelete={() => setFieldValue(name, emptyPublisher)}
               />

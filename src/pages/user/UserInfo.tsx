@@ -20,7 +20,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
       <SubHeading>{t('profile:info_feide')}</SubHeading>
       <LabelTextLine dataTestId="user-name" label={t('common:name')} text={user.name} />
       <LabelTextLine dataTestId="user-id" label={t('profile:id')} text={user.id} />
-      <LabelTextLine dataTestId="user-email" label={t('profile:email')} text={user.email} />
+      <LabelTextLine dataTestId="user-email" label={t('common:email')} text={user.email} />
     </Card>
   );
 };

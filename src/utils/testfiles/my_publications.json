@@ -24,7 +24,64 @@
     "id": "3333439",
     "title": "Attføring av attføringen : særlig om stoffmisbrukere : hedersskrift til Per Alveberg",
     "createdDate": "2021-01-01",
-    "status": "rejected",
-    "createdBy": "Olga Olgsbu"
+    "status": "rejected"
+  },
+  {
+    "id": "3333439",
+    "title": "Attføring av attføringen : særlig om stoffmisbrukere : hedersskrift til Per Alveberg",
+    "createdDate": "2021-01-01",
+    "status": "published",
+    "publicationDate": {
+      "year": "2021",
+      "month": "01",
+      "day": "01"
+    },
+    "authors": [
+      {
+        "name": "Oddny Osteloff",
+        "institutions": [
+          {
+            "id": "194.61.55.0",
+            "name": "NTNU, Fakultet for arkitektur og design, Institutt for arkitektur og teknologi"
+          }
+        ],
+        "type": "author"
+      }
+    ],
+    "reference": {
+      "type": "book",
+      "book": {
+        "publisher": "Bokforlaget AS"
+      }
+    }
+  },
+  {
+    "id": "12345678",
+    "title": "A longitudinal analysis of estimation, counting skills, and mathematical ability across the first school year.",
+    "createdDate": "1941-04-25",
+    "status": "published",
+    "publicationDate": {
+      "year": "1941",
+      "month": "04",
+      "day": "25"
+    },
+    "authors": [
+      {
+        "name": "Oddny Osteloff",
+        "institutions": [
+          {
+            "id": "194.61.55.0",
+            "name": "NTNU, Fakultet for arkitektur og design, Institutt for arkitektur og teknologi"
+          }
+        ],
+        "type": "author"
+      }
+    ],
+    "reference": {
+      "type": "journalArticle",
+      "journalArticle": {
+        "publisher": "The Very Scientific Journal"
+      }
+    }
   }
 ]

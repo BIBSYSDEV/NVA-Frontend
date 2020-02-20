@@ -46,7 +46,7 @@ const SortableItem = SortableElement(({ contributor, placement, onDelete }: Sort
         <div>
           {contributor.corresponding && (
             <Field name={`contributors[${index}].email`}>
-              {({ field }: any) => <TextField variant="outlined" label={t('profile:email')} {...field} />}
+              {({ field }: any) => <TextField variant="outlined" label={t('common:email')} {...field} />}
             </Field>
           )}
         </div>

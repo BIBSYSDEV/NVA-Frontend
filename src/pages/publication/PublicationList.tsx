@@ -3,7 +3,7 @@ import React, { FC } from 'react';
 import styled from 'styled-components';
 import { Button, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import { PublicationPreview } from '../../types/publication.types';
+import { PublicationPreview, PublicationStatus } from '../../types/publication.types';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import Label from '../../components/Label';
@@ -57,31 +57,33 @@ const PublicationList: FC<PublicationListProps> = ({ publications }) => {
         </TableRow>
       </TableHead>
       <TableBody>
-        {publications.map(publication => (
-          <StyledTableRow key={publication.id}>
-            <TableCell component="th" scope="row">
-              <NormalText>{publication.title}</NormalText>
-            </TableCell>
-            <StyledTableCellForStatus>
-              <NormalText>{t(`publication:status.${publication.status}`)}</NormalText>
-            </StyledTableCellForStatus>
-            <StyledTableCellForDate>
-              <NormalText>{publication.createdDate}</NormalText>
-            </StyledTableCellForDate>
-            <TableCell>
-              <Button color="primary" variant="outlined" data-testid="edit-button">
-                <StyledEditIcon />
-                <NormalText>{t('common:edit')}</NormalText>
-              </Button>
-            </TableCell>
-            <TableCell>
-              <Button color="secondary" variant="outlined" data-testid="menu-login-button">
-                <StyledDeleteIcon />
-                {t('common:remove')}
-              </Button>
-            </TableCell>
-          </StyledTableRow>
-        ))}
+        {publications
+          .filter(publication => publication.status !== PublicationStatus.PUBLISHED)
+          .map(publication => (
+            <StyledTableRow key={publication.id}>
+              <TableCell component="th" scope="row">
+                <NormalText>{publication.title}</NormalText>
+              </TableCell>
+              <StyledTableCellForStatus>
+                <NormalText>{t(`publication:status.${publication.status}`)}</NormalText>
+              </StyledTableCellForStatus>
+              <StyledTableCellForDate>
+                <NormalText>{publication.createdDate}</NormalText>
+              </StyledTableCellForDate>
+              <TableCell>
+                <Button color="primary" variant="outlined" data-testid="edit-button">
+                  <StyledEditIcon />
+                  <NormalText>{t('common:edit')}</NormalText>
+                </Button>
+              </TableCell>
+              <TableCell>
+                <Button color="secondary" variant="outlined" data-testid="menu-login-button">
+                  <StyledDeleteIcon />
+                  {t('common:remove')}
+                </Button>
+              </TableCell>
+            </StyledTableRow>
+          ))}
       </TableBody>
     </StyledTable>
   );

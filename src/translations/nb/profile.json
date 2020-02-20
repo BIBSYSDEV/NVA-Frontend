@@ -12,7 +12,6 @@
     "search_summary": "{{results}} treff for \"{{searchTerm}}\"",
     "see_profile": "Se forfatterprofil"
   },
-  "email": "Epost",
   "heading": {
     "author_info": "Forfatter ID",
     "connect_authority": "Koble til din forfatter ID",
@@ -26,11 +25,13 @@
   "info_feide": "Info hentet fra Feide",
   "info_nva": "Info hentet fra NVA",
   "my_profile": "Min profil",
+  "my_public_profile": "Min offentlige profil",
   "orcid": {
     "create_or_connect": "Opprett eller koble til din ORCID",
     "description_what_is_orcid": "Beskrivelse av ORCID",
     "description_why_use_orcid": "Med ORCID blir det enklere å identifisere deg som forfatter. Vi kan også hente informasjon fra ORCID, som kan gjøre det raskere for deg å registrere dine publikasjoner.",
     "login": "Logg inn på din ORCID-konto eller lag ny dersom du ikke har konto",
+    "orcid": "ORCID",
     "registration": "Registrering",
     "skip_this_step": "Hopp over nå (kan gjøres under 'profil' senere)",
     "suggestions": "Forslag fra ORCID",
@@ -46,7 +47,7 @@
     "publisher_description": "Utgiver er den tilgangen ansatte på institusjonen har. Gir tilgang til å registrere egne publikasjoner"
   },
   "organization": {
-    "add_institution": "Legg til institution",
+    "add_institution": "Legg til institusjon",
     "edit_institution": "Endre institusjon",
     "faculty": "",
     "institute": "",
