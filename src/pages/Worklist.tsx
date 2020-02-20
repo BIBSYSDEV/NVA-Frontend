@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import AttachmentIcon from '@material-ui/icons/Attachment';
+import LinkIcon from '@material-ui/icons/Link';
 import PlaylistAddCheckIcon from '@material-ui/icons/PlaylistAddCheck';
 import styled from 'styled-components';
 
@@ -37,7 +37,7 @@ const StyledPlaylistAddCheckIcon = styled(PlaylistAddCheckIcon)`
   height: 3rem;
 `;
 
-const StyledAttachmentIcon = styled(AttachmentIcon)`
+const StyledLinkIcon = styled(LinkIcon)`
   width: 3rem;
   height: 3rem;
 `;
@@ -59,7 +59,7 @@ const Worklist: FC = () => {
           {t('for_approval')}
         </StyledTabButton>
         <StyledTabButton onClick={() => setSelectedTab(Tab.Doi)} isSelected={selectedTab === Tab.Doi}>
-          <StyledAttachmentIcon fontSize="large" />
+          <StyledLinkIcon fontSize="large" />
           {t('doi_requests')}
         </StyledTabButton>
       </StyledTabsContainer>
