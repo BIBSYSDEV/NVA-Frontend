@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 import { FormControl, Select, MenuItem } from '@material-ui/core';
-import { Unit, emptyUnit, Subunit } from '../../../types/institution.types';
+import { RecursiveUnit, emptyRecursiveUnit, Subunit } from '../../../types/institution.types';
 import { Field, FormikProps, useFormikContext } from 'formik';
 
 const StyledInstitutionSelector = styled.div`
@@ -13,7 +13,7 @@ const StyledFormControl = styled(FormControl)`
 `;
 
 interface InstitutionSelectorProps {
-  unit: Unit;
+  unit: RecursiveUnit;
   counter: number;
 }
 
@@ -62,7 +62,7 @@ const InstitutionSelector: FC<InstitutionSelectorProps> = ({ unit, counter }) =>
               {value && unit.subunits && unit.subunits.length > 0 ? (
                 <InstitutionSelector
                   key={unit.id}
-                  unit={unit.subunits.find((unit: Unit) => unit.name === value) || emptyUnit}
+                  unit={unit.subunits.find((unit: RecursiveUnit) => unit.name === value) || emptyRecursiveUnit}
                   counter={++counter}
                 />
               ) : null}

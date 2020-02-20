@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 import Label from '../../../components/Label';
-import { UserUnit, Subunit } from '../../../types/institution.types';
+import { Unit, Subunit } from '../../../types/institution.types';
 
 const StyledSelectedInstitution = styled.div`
   margin-top: 0.5rem;
@@ -17,7 +17,7 @@ const StyledInstitutionText = styled.div`
 `;
 
 interface InstitutionCardProps {
-  unit: UserUnit;
+  unit: Unit;
 }
 
 const InstitutionCard: FC<InstitutionCardProps> = ({ unit }) => (

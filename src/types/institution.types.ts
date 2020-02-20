@@ -1,7 +1,7 @@
-export interface Unit {
+export interface RecursiveUnit {
   name: string;
   id: string;
-  subunits?: Unit[]; // | []
+  subunits?: RecursiveUnit[];
 }
 
 export interface Subunit {
@@ -9,30 +9,26 @@ export interface Subunit {
   id: string;
 }
 
-export interface UserUnit {
+export interface FormikUnit {
   name: string;
   id: string;
   subunits: Subunit[];
+  unit: RecursiveUnit;
 }
 
-export interface FormikUnitState {
-  name: string;
-  id: string;
-  subunits: Subunit[];
-  unit: Unit;
-}
+export type Unit = Pick<FormikUnit, 'name' | 'id' | 'subunits'>;
 
-export const emptyUnit = {
+export const emptyRecursiveUnit: RecursiveUnit = {
   name: '',
   id: '',
   subunits: [],
 };
 
-export const emptyFormikUnitState = {
+export const emptyFormikUnitState: FormikUnit = {
   name: '',
   id: '',
   subunits: [],
-  unit: emptyUnit,
+  unit: emptyRecursiveUnit,
 };
 
 export enum FormikUnitFieldNames {

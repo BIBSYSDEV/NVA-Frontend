@@ -11,9 +11,9 @@ import Heading from '../../components/Heading';
 import { Formik, FormikProps, Field } from 'formik';
 import InstitutionSearch from '../publication/references_tab/components/InstitutionSearch';
 import {
-  emptyUnit,
+  emptyRecursiveUnit,
   Subunit,
-  UserUnit,
+  Unit,
   emptyFormikUnitState,
   FormikUnitFieldNames,
 } from '../../types/institution.types';
@@ -35,7 +35,7 @@ const StyledInstitutionSearchContainer = styled.div`
 const UserInstitution: FC = () => {
   const user = useSelector((state: RootStore) => state.user);
   const [open, setOpen] = useState(false);
-  const [units, setUnits] = useState<UserUnit[]>([]);
+  const [units, setUnits] = useState<Unit[]>([]);
   const { t } = useTranslation('profile');
 
   const handleClickAdd = () => {
@@ -46,7 +46,7 @@ const UserInstitution: FC = () => {
     setOpen(false);
   };
 
-  const handleAddInstitution = ({ name, id, subunits }: UserUnit) => {
+  const handleAddInstitution = ({ name, id, subunits }: Unit) => {
     // TODO: find which is the lower subunit to be saved in ARP
     // try {
     //   // update ARP
@@ -66,7 +66,7 @@ const UserInstitution: FC = () => {
   return (
     <Card>
       <Heading>{t('heading.organizations')}</Heading>
-      {units && units.map((unit: UserUnit, index: number) => <InstitutionCard key={index} unit={unit} />)}
+      {units && units.map((unit: Unit, index: number) => <InstitutionCard key={index} unit={unit} />)}
       <Formik enableReinitialize initialValues={emptyFormikUnitState} onSubmit={onSubmit} validateOnChange={false}>
         {({ values, setFieldValue, handleSubmit }: FormikProps<any>) => (
           <>
@@ -82,7 +82,7 @@ const UserInstitution: FC = () => {
                         setValueFunction={inputValue => {
                           setFieldValue(FormikUnitFieldNames.NAME, inputValue.name);
                           setFieldValue(FormikUnitFieldNames.ID, inputValue.id);
-                          setFieldValue(name, inputValue ?? emptyUnit);
+                          setFieldValue(name, inputValue ?? emptyRecursiveUnit);
                         }}
                         placeholder={t('organization.search_for_institution')}
                       />
