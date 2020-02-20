@@ -31,7 +31,7 @@ const AuthorityOrcidModal: FC = () => {
   const user = useSelector((store: RootStore) => store.user);
   const { location } = useHistory();
 
-  const noOrcid = user.authority?.orcids.length === 0;
+  const noOrcid = user.authority?.orcids === undefined || user.authority?.orcids.length === 0;
   const noAuthority = user.authority?.systemControlNumber === '';
   const onHomePage = location.pathname === '/';
 
