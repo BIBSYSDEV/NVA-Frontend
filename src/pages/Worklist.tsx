@@ -16,8 +16,9 @@ const StyledTabButton = styled.button<{ isSelected: boolean }>`
   flex-direction: column;
   align-items: center;
   cursor: pointer;
-  width: 10rem;
+  width: 15rem;
   font-weight: bold;
+  font-size: 1.2rem;
 
   ${({ isSelected, theme }) =>
     isSelected &&
@@ -29,6 +30,16 @@ const StyledTabButton = styled.button<{ isSelected: boolean }>`
 
 const StyledContent = styled.div`
   margin-top: 2rem;
+`;
+
+const StyledPlaylistAddCheckIcon = styled(PlaylistAddCheckIcon)`
+  width: 3rem;
+  height: 3rem;
+`;
+
+const StyledAttachmentIcon = styled(AttachmentIcon)`
+  width: 3rem;
+  height: 3rem;
 `;
 
 enum Tab {
@@ -44,17 +55,17 @@ const Worklist: FC = () => {
     <>
       <StyledTabsContainer>
         <StyledTabButton onClick={() => setSelectedTab(Tab.Approval)} isSelected={selectedTab === Tab.Approval}>
-          <PlaylistAddCheckIcon fontSize="large" />
+          <StyledPlaylistAddCheckIcon fontSize="large" />
           {t('for_approval')}
         </StyledTabButton>
         <StyledTabButton onClick={() => setSelectedTab(Tab.Doi)} isSelected={selectedTab === Tab.Doi}>
-          <AttachmentIcon fontSize="large" />
+          <StyledAttachmentIcon fontSize="large" />
           {t('doi_requests')}
         </StyledTabButton>
       </StyledTabsContainer>
 
       <StyledContent>
-        {selectedTab === Tab.Approval && <div>Approval</div>}
+        {selectedTab === Tab.Approval && <div>For Approval</div>}
         {selectedTab === Tab.Doi && <div>DOI</div>}
       </StyledContent>
     </>
