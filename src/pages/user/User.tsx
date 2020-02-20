@@ -19,7 +19,6 @@ import UserRoles from './UserRoles';
 import Card from '../../components/Card';
 import Heading from '../../components/Heading';
 import UserInstitution from './UserInstitution';
-import { addNotification } from '../../redux/actions/notificationActions';
 
 const StyledUserPage = styled.div`
   display: grid;
@@ -67,11 +66,7 @@ const User: React.FC = () => {
     const updateOrcid = async () => {
       if (user.authority?.systemControlNumber && !user.authority?.orcids.includes(user.externalOrcid)) {
         const updatedAuthority = await updateOrcidForAuthority(user.externalOrcid, user.authority.systemControlNumber);
-        if (updatedAuthority?.error) {
-          dispatch(addNotification(updatedAuthority.error, 'error'));
-        } else if (updatedAuthority) {
-          dispatch(setAuthorityData(updatedAuthority));
-        }
+        dispatch(setAuthorityData(updatedAuthority));
       }
     };
     if (user.externalOrcid) {

@@ -47,14 +47,14 @@ const UserInstitution: FC = () => {
   };
 
   const handleAddInstitution = ({ name, id, subunits }: UserUnit) => {
-    const filteredSubunits = subunits.filter((u: Subunit) => u.name !== '');
-    setUnits([...units, { id, name, subunits: filteredSubunits }]);
     // TODO: find which is the lower subunit to be saved in ARP
     // try {
     //   // update ARP
     // } catch (error) {
     //   // handle error
     // }
+    const filteredSubunits = subunits.filter((u: Subunit) => u.name !== '');
+    setUnits([...units, { id, name, subunits: filteredSubunits }]);
     setOpen(false);
   };
 
@@ -85,7 +85,6 @@ const UserInstitution: FC = () => {
                           setFieldValue(name, inputValue ?? emptyUnit);
                         }}
                         placeholder={t('organization.search_for_institution')}
-                        disabled={false}
                       />
                       {values.unit && (
                         <>

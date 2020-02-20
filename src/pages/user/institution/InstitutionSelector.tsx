@@ -38,43 +38,39 @@ const InstitutionSelector: FC<InstitutionSelectorProps> = ({ unit, counter }) =>
   };
 
   return (
-    <>
-      <StyledInstitutionSelector>
-        {unit && unit.subunits && unit.subunits.length > 0 ? (
-          <>
-            <Field name={`subunits[${counter}].name`}>
-              {({ field: { value } }: any) => (
-                <>
-                  <StyledFormControl fullWidth variant="outlined">
-                    <Select
-                      data-testid={`unit-selector-${counter}`}
-                      value={value || ''}
-                      onChange={(event: React.ChangeEvent<any>) => handleChange(event.target.value, value)}>
-                      {unit.subunits &&
-                        unit.subunits.length > 0 &&
-                        unit.subunits.map((subunit: Subunit) => {
-                          return (
-                            <MenuItem key={subunit.id} value={subunit.name}>
-                              {subunit.name}
-                            </MenuItem>
-                          );
-                        })}
-                    </Select>
-                  </StyledFormControl>
-                  {value && unit.subunits && unit.subunits.length > 0 ? (
-                    <InstitutionSelector
-                      key={unit.id}
-                      unit={unit.subunits.find((unit: Unit) => unit.name === value) || emptyUnit}
-                      counter={++counter}
-                    />
-                  ) : null}
-                </>
-              )}
-            </Field>
-          </>
-        ) : null}
-      </StyledInstitutionSelector>
-    </>
+    <StyledInstitutionSelector>
+      {unit && unit.subunits && unit.subunits.length > 0 ? (
+        <Field name={`subunits[${counter}].name`}>
+          {({ field: { value } }: any) => (
+            <>
+              <StyledFormControl fullWidth variant="outlined">
+                <Select
+                  data-testid={`unit-selector-${counter}`}
+                  value={value || ''}
+                  onChange={(event: React.ChangeEvent<any>) => handleChange(event.target.value, value)}>
+                  {unit.subunits &&
+                    unit.subunits.length > 0 &&
+                    unit.subunits.map((subunit: Subunit) => {
+                      return (
+                        <MenuItem key={subunit.id} value={subunit.name}>
+                          {subunit.name}
+                        </MenuItem>
+                      );
+                    })}
+                </Select>
+              </StyledFormControl>
+              {value && unit.subunits && unit.subunits.length > 0 ? (
+                <InstitutionSelector
+                  key={unit.id}
+                  unit={unit.subunits.find((unit: Unit) => unit.name === value) || emptyUnit}
+                  counter={++counter}
+                />
+              ) : null}
+            </>
+          )}
+        </Field>
+      ) : null}
+    </StyledInstitutionSelector>
   );
 };
 
