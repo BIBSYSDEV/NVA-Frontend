@@ -102,7 +102,10 @@ const App: React.FC = () => {
   useEffect(() => {
     setTimeout(() => {
       user.id &&
-        (user.authority?.orcids.length === 0 || user.authority?.feideids.length === 0) &&
+        (user.authority?.orcids === undefined ||
+          user.authority?.orcids.length === 0 ||
+          user.authority?.feideids === undefined ||
+          user.authority?.feideids.length === 0) &&
         setShowAuthorityOrcidModal(true);
     }, DEBOUNCE_INTERVAL_MODAL);
   }, [user.id, user.authority]);
