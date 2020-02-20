@@ -12,7 +12,7 @@
     "@testing-library/react": "^9.4.0",
     "@types/react-router": "^5.1.4",
     "@types/react-truncate": "^2.3.3",
-    "@uppy/aws-s3-multipart": "^1.5.1",
+    "@uppy/aws-s3-multipart": "^1.5.2",
     "@uppy/core": "^1.8.2",
     "@uppy/dashboard": "^1.6.2",
     "@uppy/react": "^1.4.5",
