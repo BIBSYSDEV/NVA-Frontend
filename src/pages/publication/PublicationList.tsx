@@ -54,6 +54,7 @@ const PublicationList: FC<PublicationListProps> = ({ publications }) => {
           <TableCell>
             <Label>{t('common:date')}</Label>
           </TableCell>
+          <TableCell />
         </TableRow>
       </TableHead>
       <TableBody>
