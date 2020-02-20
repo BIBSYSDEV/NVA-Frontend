@@ -32,7 +32,7 @@ const mockOrcidResponse: OrcidResponse = {
   given_name: 'Sofia',
 };
 
-export const mockSingleAuthorityResponseWithFeide: Authority = {
+const mockSingleAuthorityResponseWithFeide: Authority = {
   name: 'Test User',
   systemControlNumber: '901790000000',
   feideids: ['tu@unit.no'],
@@ -121,6 +121,8 @@ export const interceptRequestsOnMock = () => {
   mock
     .onGet(new RegExp(`${API_URL}${AuthorityApiPaths.AUTHORITY}\\?name=tu@unit.no`))
     .reply(200, mockSingleAuthorityResponse);
+
+  // update authority
   mock
     .onPut(new RegExp(`${API_URL}${AuthorityApiPaths.AUTHORITY}/*`))
     .replyOnce(200, mockSingleAuthorityResponseWithFeide);
@@ -128,14 +130,15 @@ export const interceptRequestsOnMock = () => {
   mock
     .onPut(new RegExp(`${API_URL}${AuthorityApiPaths.AUTHORITY}/*`))
     .replyOnce(200, mockSingleAuthorityResponseWithOrcid);
-
   mock
     .onPut(new RegExp(`${API_URL}${AuthorityApiPaths.AUTHORITY}/*`))
     .replyOnce(200, mockSingleAuthorityResponseWithFirstOrgunitid);
-
   mock
     .onPut(new RegExp(`${API_URL}${AuthorityApiPaths.AUTHORITY}/*`))
     .replyOnce(200, mockSingleAuthorityResponseWithSecondOrgunitid);
+
+  // create authority
+  mock.onPost(new RegExp(`${API_URL}${AuthorityApiPaths.AUTHORITY}/*`)).reply(200, mockSingleAuthorityResponse);
 
   // Institution Registry
   mock.onGet(new RegExp(`${API_URL}${InstituionApiPaths.INSTITUTION}\\?name=*`)).reply(200, mockInstitutionResponse);

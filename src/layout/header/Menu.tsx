@@ -9,6 +9,7 @@ import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import { useSelector } from 'react-redux';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { checkIfAppAdmin, checkIfPublisher } from '../../utils/authorization';
+import { checkIfPublisher, checkIfCurator } from '../../utils/authorization';
 
 interface MenuProps {
   handleLogout: () => void;
@@ -52,11 +53,13 @@ const Menu: React.FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = () => {
+  const handleClose = (newPath: string) => {
     setAnchorEl(null);
+    history.push(newPath);
   };
 
   const isPublisher = checkIfPublisher(user);
+  const isCurator = checkIfCurator(user);
   const isAppAdmin = checkIfAppAdmin(user);
 
   return (
@@ -81,22 +84,11 @@ const Menu: React.FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
           vertical: 'bottom',
           horizontal: 'left',
         }}>
-        <StyledMenuItem
-          data-testid="menu-user-profile-button"
-          onClick={() => {
-            handleClose();
-            history.push('/user');
-          }}>
+        <StyledMenuItem data-testid="menu-user-profile-button" onClick={() => handleClose('/user')}>
           {t('profile:my_profile')}
         </StyledMenuItem>
-
         {isPublisher && (
-          <StyledMenuItem
-            data-testid="menu-my-publications-button"
-            onClick={() => {
-              handleClose();
-              history.push('/my-publications');
-            }}>
+          <StyledMenuItem data-testid="menu-my-publications-button" onClick={() => handleClose('/my-publications')}>
             {t('workLists:my_publications')}
           </StyledMenuItem>
         )}
@@ -109,6 +101,11 @@ const Menu: React.FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
               history.push('/admin-institutions');
             }}>
             {t('common:institutions')}
+          </StyledMenuItem>
+        )}
+        {isCurator && (
+          <StyledMenuItem data-testid="menu-my-worklist-button" onClick={() => handleClose('/worklist')}>
+            {t('workLists:my_worklist')}
           </StyledMenuItem>
         )}
         <StyledMenuItem onClick={handleLogout} data-testid="menu-logout-button">
