@@ -6,7 +6,6 @@ import { CircularProgress } from '@material-ui/core';
 import styled from 'styled-components';
 import { getMyPublications } from '../../api/publicationApi';
 import PublishedPublicationList from './PublishedPublicationList';
-import i18n from '../../translations/i18n';
 import Card from '../../components/Card';
 import { useTranslation } from 'react-i18next';
 import { RootStore } from '../../redux/reducers/rootReducer';
@@ -29,14 +28,6 @@ const StyledUserInfo = styled.div`
   padding: 0.5rem;
 `;
 
-const StyledPicture = styled(Card)`
-  width: 10rem;
-`;
-
-const StyledUser = styled(Card)`
-  flex-grow: 4;
-`;
-
 const PublicProfile: FC = () => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
@@ -49,22 +40,19 @@ const PublicProfile: FC = () => {
       setIsLoading(true);
       const publications = await getMyPublications();
       if (publications?.error) {
-        dispatch(addNotification(i18n.t('feedback:error.get_publications'), 'error'));
+        dispatch(addNotification(t('feedback:error.get_publications'), 'error'));
       } else {
         setPublications(publications);
       }
       setIsLoading(false);
     };
     loadData();
-  }, [dispatch]);
+  }, [dispatch, t]);
 
   return (
     <>
       <StyledUserInfo>
-        <StyledPicture>
-          <Heading>{t('common:picture')}</Heading>
-        </StyledPicture>
-        <StyledUser>
+        <Card>
           <Heading>{user.name}</Heading>
           <LabelTextLine dataTestId="profile-email" label={t('common:email')} text={user.email} />
           {user.authority?.orcids.map((orcid: string) => {
@@ -80,9 +68,9 @@ const PublicProfile: FC = () => {
             );
           })}
           {user.authority?.orgunitids.map(orgunitid => (
-            <NormalText>{orgunitid}</NormalText>
+            <NormalText key={orgunitid}>{orgunitid}</NormalText>
           ))}
-        </StyledUser>
+        </Card>
       </StyledUserInfo>
       <StyledWrapper>
         {isLoading ? (
