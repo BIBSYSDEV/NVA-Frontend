@@ -1,46 +1,35 @@
-export interface InstitutionName {
+export interface UnitBase {
   name: string;
-  language: string;
+  id: string;
 }
 
-export const emptyInstitutionNames: InstitutionName[] = [
-  {
-    name: '',
-    language: '',
-  },
-];
-
-export interface Institution {
-  title?: string;
-  institutionNames: InstitutionName[];
-  acronym: string;
-  cristinInstitutionId: string;
-  country: string;
-  cristinUnitId: string;
+export interface RecursiveUnit extends UnitBase {
+  subunits?: RecursiveUnit[];
 }
 
-export const emptyInstitution: Institution = {
-  title: '',
-  institutionNames: emptyInstitutionNames,
-  acronym: '',
-  cristinInstitutionId: '',
-  country: '',
-  cristinUnitId: '',
+export interface FormikUnit extends UnitBase {
+  subunits: UnitBase[];
+  unit: RecursiveUnit;
+}
+
+export type Unit = Pick<FormikUnit, 'name' | 'id' | 'subunits'>;
+
+export const emptyRecursiveUnit: RecursiveUnit = {
+  name: '',
+  id: '',
+  subunits: [],
 };
 
-export interface InstitutionSubUnit {
-  unitNames: InstitutionName[];
-  cristinUnitId: string;
-}
-
-export const emptyInstitutionSubUnit: InstitutionSubUnit = {
-  unitNames: emptyInstitutionNames,
-  cristinUnitId: '',
+export const emptyFormikUnit: FormikUnit = {
+  name: '',
+  id: '',
+  subunits: [],
+  unit: emptyRecursiveUnit,
 };
 
-export interface InstitutionUnit {
-  cristinUnitId: string;
-  institutionName: InstitutionName[];
-  level1Name?: InstitutionName[];
-  level2Name?: InstitutionName[];
+export enum FormikUnitFieldNames {
+  NAME = 'name',
+  ID = 'id',
+  SUBUNITS = 'subunits',
+  UNIT = 'unit',
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router';
@@ -11,16 +11,14 @@ import { getOrcidInfo } from '../../api/external/orcidApi';
 import ButtonModal from '../../components/ButtonModal';
 import { setAuthorityData } from '../../redux/actions/userActions';
 import { RootStore } from '../../redux/reducers/rootReducer';
-import { InstitutionUnit } from '../../types/institution.types';
 import { ConnectAuthority } from './authority/ConnectAuthority';
-import InstitutionDialog from './InstitutionDialog';
-import InstitutionPresentationCard from './InstitutionPresentation';
 import UserInfo from './UserInfo';
 import UserLanguage from './UserLanguage';
 import UserOrcid from './UserOrcid';
 import UserRoles from './UserRoles';
 import Card from '../../components/Card';
 import Heading from '../../components/Heading';
+import UserInstitution from './UserInstitution';
 
 const StyledUserPage = styled.div`
   display: grid;
@@ -56,8 +54,6 @@ const User: React.FC = () => {
   const hasHandles = user.authority?.handles?.length > 0;
   const hasFeide = user.authority?.feideids?.length > 0;
 
-  const [institutionPresentations, setInstitutionPresentations] = useState<InstitutionUnit[]>([]);
-
   useEffect(() => {
     const orcidAccessToken = new URLSearchParams(location.hash.replace('#', '?')).get('access_token') || '';
     if (orcidAccessToken) {
@@ -77,11 +73,6 @@ const User: React.FC = () => {
       updateOrcid();
     }
   }, [user.authority, dispatch, user.externalOrcid]);
-
-  useEffect(() => {
-    setInstitutionPresentations(user.institutionPresentations);
-  }, [user.institutionPresentations, dispatch]);
-
   return (
     <StyledUserPage>
       <StyledSecondaryUserInfo>
@@ -118,24 +109,7 @@ const User: React.FC = () => {
           )}
         </Card>
         <UserOrcid />
-        <Card>
-          <Heading>{t('heading.organizations')}</Heading>
-          <InstitutionDialog
-            user={user}
-            title={t('organization.add_institution')}
-            dataTestId="add-institution-dialog"
-          />
-          <>
-            {institutionPresentations.map((presentation: InstitutionUnit) => (
-              <InstitutionPresentationCard
-                key={presentation.cristinUnitId}
-                institution={presentation.institutionName}
-                level1={presentation.level1Name}
-                level2={presentation.level2Name}
-              />
-            ))}
-          </>
-        </Card>
+        <UserInstitution />
       </StyledPrimaryUserInfo>
     </StyledUserPage>
   );
