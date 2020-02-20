@@ -60,24 +60,26 @@ export const updateInstitutionForAuthority = async (orgunitid: string, systemCon
   return await updateAuthorityAndHandleErrors(url, { orgunitid });
 };
 
-export const addInstitutionForAuthority = async (
-  cristinUnitId: string,
-  orgunitids: string[],
-  systemControlNumber: string
-) => {
-  if (orgunitids.length === 0) {
-    return;
-  }
+// TODO: add institution to user's ARP
+// BACKEND NOT FINISHED YET
+// export const addInstitutionForAuthority = async (
+//   cristinUnitId: string,
+//   orgunitids: string[],
+//   systemControlNumber: string
+// ) => {
+//   if (orgunitids.length === 0) {
+//     return;
+//   }
 
-  if (!orgunitids.find(orgunitid => orgunitid === cristinUnitId)) {
-    const updatedAuthority = await updateInstitutionForAuthority(cristinUnitId, systemControlNumber);
-    if (updatedAuthority?.error) {
-      return { error: i18n.t('feedback:error.update_authority') };
-    } else if (updatedAuthority) {
-      return updatedAuthority;
-    }
-  }
-};
+//   if (!orgunitids.find(orgunitid => orgunitid === cristinUnitId)) {
+//     const updatedAuthority = await updateInstitutionForAuthority(cristinUnitId, systemControlNumber);
+//     if (updatedAuthority?.error) {
+//       return { error: i18n.t('feedback:error.update_authority') };
+//     } else if (updatedAuthority) {
+//       return updatedAuthority;
+//     }
+//   }
+// };
 
 export const createAuthority = async (user: User) => {
   const url = AuthorityApiPaths.AUTHORITY;

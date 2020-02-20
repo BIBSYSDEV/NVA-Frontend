@@ -1,5 +1,6 @@
-import Axios from 'axios';
-import { getIdToken } from './userApi';
+// import Axios from 'axios';
+// import { getIdToken } from './userApi';
+import mockInstitutionResponse from '../utils/testfiles/institution_query.json';
 
 export enum InstituionApiPaths {
   INSTITUTION = '/cristin-institutions',
@@ -7,16 +8,19 @@ export enum InstituionApiPaths {
 }
 
 export const getInstitutionAndSubunits = async (searchTerm: string) => {
-  const idToken = await getIdToken();
-  const headers = {
-    Authorization: `Bearer ${idToken}`,
-  };
-  const url = `${InstituionApiPaths.INSTITUTION}?name=${searchTerm}`;
+  // TODO: get institutions from endpoint
+  // BACKEND NOT FINISHED YET
+  // const idToken = await getIdToken();
+  // const headers = {
+  //   Authorization: `Bearer ${idToken}`,
+  // };
+  // const url = `${InstituionApiPaths.INSTITUTION}?name=${searchTerm}`;
 
-  try {
-    const response = await Axios.get(url, { headers });
-    return response.data;
-  } catch {
-    return null;
-  }
+  // try {
+  //   const response = await Axios.get(url, { headers });
+  //   return response.data;
+  // } catch {
+  //   return null;
+  // }
+  return mockInstitutionResponse;
 };

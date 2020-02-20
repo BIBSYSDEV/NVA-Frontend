@@ -21,7 +21,7 @@ const InstitutionSelector: FC<InstitutionSelectorProps> = ({ unit, counter }) =>
   const { values, setFieldValue }: FormikProps<any> = useFormikContext();
 
   const handleChange = (newValue: string, previousValue: string) => {
-    const subunit = unit.subunits.find((subunit: Subunit) => subunit.name === newValue);
+    const subunit = unit.subunits?.find((subunit: Subunit) => subunit.name === newValue);
 
     if (!previousValue) {
       setFieldValue(`subunits[${counter}].name`, newValue);
@@ -31,8 +31,6 @@ const InstitutionSelector: FC<InstitutionSelectorProps> = ({ unit, counter }) =>
       setFieldValue(`subunits[${counter - 1}].id`, subunit!.id);
 
       for (let i = counter; i < values.subunits.length; i++) {
-        // TODO: kanskje bytt om til
-        // setFieldValue(`subunits[${i}]`, null)
         setFieldValue(`subunits[${i}].name`, '');
         setFieldValue(`subunits[${i}].id`, '');
       }
@@ -51,7 +49,8 @@ const InstitutionSelector: FC<InstitutionSelectorProps> = ({ unit, counter }) =>
                     <Select
                       value={value || ''}
                       onChange={(event: React.ChangeEvent<any>) => handleChange(event.target.value, value)}>
-                      {unit.subunits.length > 0 &&
+                      {unit.subunits &&
+                        unit.subunits.length > 0 &&
                         unit.subunits.map((subunit: Subunit) => {
                           return (
                             <MenuItem key={subunit.id} value={subunit.name}>
@@ -61,7 +60,7 @@ const InstitutionSelector: FC<InstitutionSelectorProps> = ({ unit, counter }) =>
                         })}
                     </Select>
                   </StyledFormControl>
-                  {value && unit.subunits.length > 0 ? (
+                  {value && unit.subunits && unit.subunits.length > 0 ? (
                     <InstitutionSelector
                       key={unit.id}
                       unit={unit.subunits.find((unit: Unit) => unit.name === value) || emptyUnit}
