@@ -1,18 +1,14 @@
-export interface RecursiveUnit {
+export interface UnitBase {
   name: string;
   id: string;
+}
+
+export interface RecursiveUnit extends UnitBase {
   subunits?: RecursiveUnit[];
 }
 
-export interface Subunit {
-  name: string;
-  id: string;
-}
-
-export interface FormikUnit {
-  name: string;
-  id: string;
-  subunits: Subunit[];
+export interface FormikUnit extends UnitBase {
+  subunits: UnitBase[];
   unit: RecursiveUnit;
 }
 
@@ -24,7 +20,7 @@ export const emptyRecursiveUnit: RecursiveUnit = {
   subunits: [],
 };
 
-export const emptyFormikUnitState: FormikUnit = {
+export const emptyFormikUnit: FormikUnit = {
   name: '',
   id: '',
   subunits: [],

@@ -12,9 +12,9 @@ import { Formik, FormikProps, Field, FieldProps } from 'formik';
 import InstitutionSearch from '../publication/references_tab/components/InstitutionSearch';
 import {
   emptyRecursiveUnit,
-  Subunit,
+  UnitBase,
   Unit,
-  emptyFormikUnitState,
+  emptyFormikUnit,
   FormikUnitFieldNames,
   FormikUnit,
 } from '../../types/institution.types';
@@ -50,14 +50,14 @@ const UserInstitution: FC = () => {
     // } catch (error) {
     //   // handle error
     // }
-    const filteredSubunits = subunits.filter((subunit: Subunit) => subunit.name !== '');
+    const filteredSubunits = subunits.filter((subunit: UnitBase) => subunit.name !== '');
     setUnits([...units, { id, name, subunits: filteredSubunits }]);
     setOpen(false);
   };
 
   const onSubmit = async (values: FormikUnit, { resetForm }: any) => {
     handleAddInstitution({ name: values.name, id: values.id, subunits: values.subunits });
-    resetForm(emptyFormikUnitState);
+    resetForm(emptyFormikUnit);
   };
 
   return (
@@ -66,8 +66,8 @@ const UserInstitution: FC = () => {
       {units?.map((unit: Unit, index: number) => (
         <InstitutionCard key={index} unit={unit} />
       ))}
-      <Formik enableReinitialize initialValues={emptyFormikUnitState} onSubmit={onSubmit} validateOnChange={false}>
-        {({ values, setFieldValue, handleSubmit }: FormikProps<FormikUnit>) => (
+      <Formik enableReinitialize initialValues={emptyFormikUnit} onSubmit={onSubmit} validateOnChange={false}>
+        {({ values, setFieldValue, handleSubmit, resetForm }: FormikProps<FormikUnit>) => (
           <Field name={FormikUnitFieldNames.UNIT}>
             {({ field: { name, value } }: FieldProps) =>
               open && (
@@ -95,7 +95,13 @@ const UserInstitution: FC = () => {
                         data-testid="institution-add-button">
                         {t('common:add')}
                       </StyledButton>
-                      <StyledButton onClick={toggleOpen} variant="contained" color="secondary">
+                      <StyledButton
+                        onClick={() => {
+                          toggleOpen();
+                          resetForm({});
+                        }}
+                        variant="contained"
+                        color="secondary">
                         {t('common:cancel')}
                       </StyledButton>
                     </>
