@@ -3,13 +3,12 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
 import styled from 'styled-components';
 
-import { Button, Menu as MuiMenu, MenuItem } from '@material-ui/core';
+import { Button, Menu as MuiMenu, MenuItem, Typography } from '@material-ui/core';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import { useSelector } from 'react-redux';
 import { RootStore } from '../../redux/reducers/rootReducer';
-import { checkIfAppAdmin, checkIfPublisher } from '../../utils/authorization';
-import { checkIfPublisher, checkIfCurator } from '../../utils/authorization';
+import { checkIfAppAdmin, checkIfPublisher, checkIfCurator } from '../../utils/authorization';
 
 interface MenuProps {
   handleLogout: () => void;
@@ -33,7 +32,6 @@ const StyledMuiMenu = styled(MuiMenu)`
 
 const StyledMenuButton = styled(Button)`
   width: 15rem;
-
   @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
     width: 10rem;
   }
@@ -49,11 +47,11 @@ const Menu: React.FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
   const { t } = useTranslation();
   const history = useHistory();
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClickMenuAnchor = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = (newPath: string) => {
+  const handleClickMenuItem = (newPath: string) => {
     setAnchorEl(null);
     history.push(newPath);
   };
@@ -69,9 +67,9 @@ const Menu: React.FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
         variant="contained"
         aria-controls="menu"
         aria-haspopup="true"
-        onClick={handleClick}
+        onClick={handleClickMenuAnchor}
         data-testid="menu">
-        {menuButtonLabel}
+        <Typography noWrap>{menuButtonLabel}</Typography>
         {anchorEl ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
       </StyledMenuButton>
       <StyledMuiMenu
@@ -79,16 +77,19 @@ const Menu: React.FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
         getContentAnchorEl={null}
         keepMounted
         open={!!anchorEl}
-        onClose={handleClose}
+        onClose={handleClickMenuItem}
         anchorOrigin={{
           vertical: 'bottom',
           horizontal: 'left',
         }}>
-        <StyledMenuItem data-testid="menu-user-profile-button" onClick={() => handleClose('/user')}>
+        <StyledMenuItem data-testid="menu-user-profile-button" onClick={() => handleClickMenuItem('/user')}>
           {t('profile:my_profile')}
         </StyledMenuItem>
+
         {isPublisher && (
-          <StyledMenuItem data-testid="menu-my-publications-button" onClick={() => handleClose('/my-publications')}>
+          <StyledMenuItem
+            data-testid="menu-my-publications-button"
+            onClick={() => handleClickMenuItem('/my-publications')}>
             {t('workLists:my_publications')}
           </StyledMenuItem>
         )}
@@ -96,18 +97,17 @@ const Menu: React.FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
         {isAppAdmin && (
           <StyledMenuItem
             data-testid="menu-admin-institution-button"
-            onClick={() => {
-              handleClose();
-              history.push('/admin-institutions');
-            }}>
+            onClick={() => handleClickMenuItem('/admin-institutions')}>
             {t('common:institutions')}
           </StyledMenuItem>
         )}
+
         {isCurator && (
-          <StyledMenuItem data-testid="menu-my-worklist-button" onClick={() => handleClose('/worklist')}>
+          <StyledMenuItem data-testid="menu-my-worklist-button" onClick={() => handleClickMenuItem('/worklist')}>
             {t('workLists:my_worklist')}
           </StyledMenuItem>
         )}
+
         <StyledMenuItem onClick={handleLogout} data-testid="menu-logout-button">
           {t('logout')}
         </StyledMenuItem>
