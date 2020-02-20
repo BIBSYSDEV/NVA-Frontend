@@ -7,10 +7,10 @@ import { getMyPublications } from '../../api/publicationApi';
 import { addNotification } from '../../redux/actions/notificationActions';
 import i18n from '../../translations/i18n';
 import { useDispatch, useSelector } from 'react-redux';
-import { CircularProgress, Button, Link as MuiLink, TableCell } from '@material-ui/core';
+import { Button, CircularProgress } from '@material-ui/core';
 import styled from 'styled-components';
 import { PublicationPreview } from '../../types/publication.types';
-import { Link as RouterLink, Link } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 import { RootStore } from './../../redux/reducers/rootReducer';
 
 const StyledWrapper = styled.div`

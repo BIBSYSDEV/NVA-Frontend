@@ -27,7 +27,7 @@ const AdministrateMemberInstututionPage: FC = () => {
       setIsLoading(true);
       const institutions = await getAllMemberInstitutions();
       if (institutions?.error) {
-        dispatch(addNotification(i18n.t('feedback:error.get_publications'), 'error'));
+        dispatch(addNotification(i18n.t('feedback:error.get_institutions'), 'error'));
       } else {
         setInstitutions(institutions);
       }

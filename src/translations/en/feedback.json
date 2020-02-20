@@ -6,6 +6,7 @@
     "get_authority": "Could not retrieve authority",
     "get_authorities": "Could not retrieve authorities",
     "get_doi": "Could not retrieve link data",
+    "get_institutions": "Could not retrieve institutions",
     "get_project": "Search for projects failed",
     "get_orcid": "Could not get data from ORCID",
     "get_publications": "Could not retrieve publications",
