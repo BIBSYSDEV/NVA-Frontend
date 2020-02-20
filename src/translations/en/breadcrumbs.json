@@ -1,9 +1,11 @@
 {
+  "admin-institutions": "Administrate institutions",
   "authority": "Authority",
   "home": "Home",
   "new-publication": "New publication",
   "my-publications": "My publications",
   "public-profile": "Public profile",
   "publication": "Publication",
-  "user": "My profile"
+  "user": "My profile",
+  "worklist": "My worklist"
 }

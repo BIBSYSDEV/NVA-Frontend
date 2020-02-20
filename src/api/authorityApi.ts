@@ -5,6 +5,7 @@ import { addNotification } from '../redux/actions/notificationActions';
 import i18n from '../translations/i18n';
 import { StatusCode } from '../utils/constants';
 import { getIdToken } from './userApi';
+import { User } from '../types/user.types';
 
 export enum AuthorityApiPaths {
   AUTHORITY = '/authority',
@@ -78,7 +79,7 @@ export const addInstitutionForAuthority = async (
   }
 };
 
-export const createAuthority = async (name: string) => {
+export const createAuthority = async (user: User) => {
   const url = AuthorityApiPaths.AUTHORITY;
 
   // remove when Authorization headers are set for all requests
@@ -87,7 +88,7 @@ export const createAuthority = async (name: string) => {
     Authorization: `Bearer ${idToken}`,
   };
   try {
-    const response = await Axios.post(url, { name }, { headers });
+    const response = await Axios.post(url, { invertedname: `${user.familyName},${user.givenName}` }, { headers });
     if (response.status === StatusCode.OK) {
       return response.data;
     } else if (response.status === StatusCode.NO_CONTENT) {

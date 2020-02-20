@@ -33,6 +33,8 @@ export const userReducer = (state: User = emptyUser, action: UserActions | Orcid
         isLoggedIn: true,
         organizationId: getOrganizationIdByOrganizationNumber(action.user['custom:orgNumber']),
         affiliations,
+        givenName: action.user.given_name,
+        familyName: action.user.family_name,
       };
       return {
         ...state,

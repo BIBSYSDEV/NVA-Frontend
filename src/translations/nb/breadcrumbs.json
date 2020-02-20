@@ -1,9 +1,11 @@
 {
+  "admin-institutions": "Administrer institutions",
   "authority": "Autoritet",
   "home": "Hjem",
   "new-publication": "Ny publikasjon",
   "my-publications": "Mine publikasjoner",
   "public-profile": "Offentlig profil",
   "publication": "Publikasjon",
-  "user": "Min profil"
+  "user": "Min profil",
+  "worklist": "Min arbeidsliste"
 }

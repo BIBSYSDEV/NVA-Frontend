@@ -4,12 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 
 import { Button, Radio } from '@material-ui/core';
-
-import { mockSingleAuthorityResponseWithFeide } from '../../../api/mock-interceptor';
 import Progress from '../../../components/Progress';
 import { addNotification } from '../../../redux/actions/notificationActions';
 import { setAuthorityData } from '../../../redux/actions/userActions';
 import { RootStore } from '../../../redux/reducers/rootReducer';
+import { createAuthority } from '../../../api/authorityApi';
 
 const StyledBoxContent = styled.div`
   display: grid;
@@ -54,22 +53,15 @@ const NewAuthorityCard: React.FC = () => {
   const { t } = useTranslation('profile');
 
   const handleCreateAuthority = async () => {
-    // NOT YET IMPLEMENTED IN BACKEND
-    // setLoading(true);
-    // const authority = await createAuthority(user.name);
-    // if (authority) {
-    //   setLoading(false);
-    //   dispatch(setAuthorityData(authority));
-    //   dispatch(addNotification('authority.created_authority'));
-    // }
-    // if (USE_MOCK_DATA) {
-    setTimeout(() => {
-      setLoading(false);
-      dispatch(setAuthorityData(mockSingleAuthorityResponseWithFeide));
-      dispatch(addNotification('authority.created_authority', 'error'));
-    }, [2000]);
     setLoading(true);
-    // }
+    const authority = await createAuthority(user);
+    if (authority?.error) {
+      dispatch(addNotification(authority.error, 'error'));
+    } else {
+      dispatch(setAuthorityData(authority));
+      dispatch(addNotification('authority.created_authority'));
+    }
+    setLoading(false);
   };
 
   return (

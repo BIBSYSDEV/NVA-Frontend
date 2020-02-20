@@ -14,4 +14,6 @@ export const mockUser: FeideUser = {
   email_verfied: true,
   'custom:affiliation': '[member, employee, staff]',
   identities: "[{'userId':'91829182'}]",
+  family_name: 'User',
+  given_name: 'Test',
 };
