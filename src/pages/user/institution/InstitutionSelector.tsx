@@ -47,6 +47,7 @@ const InstitutionSelector: FC<InstitutionSelectorProps> = ({ unit, counter }) =>
                 <>
                   <StyledFormControl fullWidth variant="outlined">
                     <Select
+                      data-testid={`unit-selector-${counter}`}
                       value={value || ''}
                       onChange={(event: React.ChangeEvent<any>) => handleChange(event.target.value, value)}>
                       {unit.subunits &&
