@@ -98,6 +98,9 @@ export const interceptRequestsOnMock = () => {
   //MY PUBLICATIONS
   mock.onGet(new RegExp(`${PublicationsApiPaths.FETCH_MY_RESOURCES}/*`)).reply(200, mockMyPublications);
 
+  // WORKLIST
+  mock.onGet(new RegExp(`${PublicationsApiPaths.DOI_REQUESTS}/*`)).reply(200, mockMyPublications);
+
   //PUBLICATION
   mock.onGet(new RegExp(`${PublicationsApiPaths.FETCH_RESOURCE}/*`)).reply(200, mockPublication);
 

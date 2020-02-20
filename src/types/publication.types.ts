@@ -63,7 +63,7 @@ export interface Publication {
   shouldCreateDoi: boolean;
 }
 
-export type PublicationPreview = Pick<Publication, 'id' | 'title' | 'createdDate' | 'status'>;
+export type PublicationPreview = Pick<Publication, 'id' | 'title' | 'createdDate' | 'status' | 'createdBy'>;
 
 export interface Doi {
   title: string;
