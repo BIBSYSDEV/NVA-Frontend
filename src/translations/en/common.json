@@ -4,6 +4,7 @@
   "date": "Date",
   "do_not_show_again": "Do not show this again",
   "edit": "Edit",
+  "email": "Email",
   "information": "Information",
   "institution": "Institution",
   "institutions": "Institutions",
@@ -16,7 +17,10 @@
   "orcid": "ORCID",
   "picture": "Picture",
   "preview": "Preview",
+  "publications": "Publications",
   "publish": "Publish",
+  "publisher": "Publisher",
+  "read": "Read",
   "remove": "Remove",
   "save": "Save",
   "search": "Search",
@@ -24,5 +28,6 @@
   "status": "Status",
   "title": "Title",
   "type": "Type",
+  "year": "Year",
   "yes": "Yes"
 }

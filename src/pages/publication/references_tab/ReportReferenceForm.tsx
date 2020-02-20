@@ -47,7 +47,7 @@ const ReportReferenceForm: FC = () => {
             <PublicationChannelSearch
               clearSearchField={value === emptyPublisher}
               dataTestId="autosearch-publisher"
-              label={t('references.publisher')}
+              label={t('common:publisher')}
               publicationTable={PublicationTableNumber.PUBLISHERS}
               setValueFunction={inputValue => setFieldValue(name, inputValue ?? emptyPublisher)}
               placeholder={t('references.search_for_publisher')}
@@ -55,7 +55,7 @@ const ReportReferenceForm: FC = () => {
             {value.title && (
               <PublisherRow
                 dataTestId="autosearch-results-publisher"
-                label={t('references.publisher')}
+                label={t('common:publisher')}
                 publisher={value}
                 onClickDelete={() => setFieldValue(name, emptyPublisher)}
               />
