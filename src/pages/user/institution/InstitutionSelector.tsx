@@ -31,7 +31,7 @@ const InstitutionSelector: FC<InstitutionSelectorProps> = ({ unit, counter }) =>
       setFieldValue(`subunits[${counter - 1}].name`, newValue);
       setFieldValue(`subunits[${counter - 1}].id`, subunit!.id);
 
-      for (let i = 1; i < values.subunits.length; i++) {
+      for (let i = counter; i < values.subunits.length; i++) {
         // TODO: kanskje bytt om til
         // setFieldValue(`subunits[${i}]`, null)
         setFieldValue(`subunits[${i}].name`, '');
