@@ -1,8 +1,7 @@
-import React, { FC, Fragment } from 'react';
+import React, { FC } from 'react';
 import styled from 'styled-components';
 import Label from '../../../components/Label';
-import { Unit, UserUnit, Subunit } from '../../../types/institution.types';
-import { FormikProps, useFormikContext } from 'formik';
+import { UserUnit, Subunit } from '../../../types/institution.types';
 
 const StyledSelectedInstitution = styled.div`
   margin-top: 0.5rem;

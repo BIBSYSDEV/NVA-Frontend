@@ -1,18 +1,17 @@
-import React, { useState, useEffect, FC } from 'react';
+import React, { useState, FC } from 'react';
 import Card from '../../components/Card';
 import InstitutionCard from './institution/InstitutionCard';
-import { Button, FormControl, Select, MenuItem } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import { RootStore } from './../../redux/reducers/rootReducer';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import InstitutionSelector from './institution/InstitutionSelector';
 import Heading from '../../components/Heading';
-import { Formik, FormikProps, Form, Field } from 'formik';
+import { Formik, FormikProps, Field } from 'formik';
 import InstitutionSearch from '../publication/references_tab/components/InstitutionSearch';
 import {
   emptyUnit,
-  Unit,
   Subunit,
   UserUnit,
   emptyFormikUnitState,

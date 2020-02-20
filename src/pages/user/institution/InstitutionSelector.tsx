@@ -1,5 +1,4 @@
 import React, { FC } from 'react';
-import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { FormControl, Select, MenuItem } from '@material-ui/core';
 import { Unit, emptyUnit, Subunit } from '../../../types/institution.types';
