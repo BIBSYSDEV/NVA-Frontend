@@ -15,6 +15,7 @@ import { PublicationFormTabs } from './PublicationFormTabs';
 import ReferencesPanel from './ReferencesPanel';
 import SubmissionPanel from './SubmissionPanel';
 import { Uppy, emptyFile } from '../../types/file.types';
+import { getPublication } from './../../api/publicationApi';
 
 const StyledPublication = styled.div`
   width: 100%;
@@ -22,9 +23,10 @@ const StyledPublication = styled.div`
 
 interface PublicationFormProps {
   uppy: Uppy;
+  id: string;
 }
 
-const PublicationForm: FC<PublicationFormProps> = ({ uppy = createUppy() }) => {
+const PublicationForm: FC<PublicationFormProps> = ({ uppy = createUppy(), id }) => {
   const { t } = useTranslation('publication');
   const [tabNumber, setTabNumber] = useState(0);
   const [initialValues, setInitialValues] = useState(emptyPublication);
@@ -125,6 +127,18 @@ const PublicationForm: FC<PublicationFormProps> = ({ uppy = createUppy() }) => {
   useEffect(() => {
     return () => uppy && uppy.close();
   }, [uppy]);
+
+  useEffect(() => {
+    const getPublicationById = async () => {
+      const publication = await getPublication(id);
+      setInitialValues(publication);
+    };
+
+    if (id) {
+      console.log(`fetching ${id}...`);
+      getPublicationById();
+    }
+  }, [id]);
 
   const handleTabChange = (_: React.ChangeEvent<{}>, newTabNumber: number) => {
     setTabNumber(newTabNumber);

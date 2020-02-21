@@ -13,7 +13,7 @@ import Card from '../../components/Card';
 import { createUppy } from '../../utils/uppy-config';
 import NormalText from '../../components/NormalText';
 
-const StyledNewPublication = styled.div`
+const StyledEditPublication = styled.div`
   width: 100%;
   padding-top: 2rem;
   display: flex;
@@ -51,7 +51,7 @@ const StyledButton = styled(Button)`
   margin: 1rem;
 `;
 
-const NewPublication: FC = () => {
+const EditPublication: FC = () => {
   const [expanded, setExpanded] = useState<string | false>(false);
   const [showForm, setShowForm] = useState(false);
   const { t } = useTranslation();
@@ -74,7 +74,7 @@ const NewPublication: FC = () => {
     <>
       {!showForm && !id ? (
         <>
-          <StyledNewPublication>
+          <StyledEditPublication>
             <StyledSelectorWrapper>
               <LoadPublication
                 expanded={expanded === 'load-panel'}
@@ -101,17 +101,17 @@ const NewPublication: FC = () => {
                 Hvilke type publikasjoner kan jeg laste opp
               </MuiLink>
             </StyledCard>
-          </StyledNewPublication>
+          </StyledEditPublication>
           {/* temporary button so that we can navigate to schema */}
           <StyledButton color="primary" variant="contained" data-testid="new-schema-button" onClick={handleClick}>
             {t('new_publication')}
           </StyledButton>
         </>
       ) : (
-        <PublicationForm uppy={uppy} />
+        <PublicationForm uppy={uppy} id={id || ''} />
       )}
     </>
   );
 };
 
-export default NewPublication;
+export default EditPublication;
