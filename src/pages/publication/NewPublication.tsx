@@ -1,6 +1,6 @@
 import React, { FC, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { Button, Link as MuiLink } from '@material-ui/core';
@@ -56,6 +56,7 @@ const NewPublication: FC = () => {
   const [showForm, setShowForm] = useState(false);
   const { t } = useTranslation();
   const [uppy] = useState(createUppy());
+  const { id } = useParams();
 
   useEffect(() => {
     return () => uppy && uppy.close();
@@ -71,7 +72,7 @@ const NewPublication: FC = () => {
 
   return (
     <>
-      {!showForm ? (
+      {!showForm && !id ? (
         <>
           <StyledNewPublication>
             <StyledSelectorWrapper>

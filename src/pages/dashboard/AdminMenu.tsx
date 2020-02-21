@@ -30,10 +30,10 @@ const AdminMenu: FC = () => {
 
   return isPublisher ? (
     <>
-      {history.location.pathname !== '/new-publication' && (
+      {history.location.pathname !== '/publication' && (
         <StyledAdminMenu>
           <StyledButtonWrapper>
-            <Button component={RouterLink} to="/new-publication" color="primary" data-testid="new-publication-button">
+            <Button component={RouterLink} to="/publication" color="primary" data-testid="new-publication-button">
               + {t('new_publication')}
             </Button>
           </StyledButtonWrapper>

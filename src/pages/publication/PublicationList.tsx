@@ -73,7 +73,7 @@ const PublicationList: FC<PublicationListProps> = ({ publications }) => {
                 <NormalText>{publication.createdDate}</NormalText>
               </StyledTableCellForDate>
               <TableCell>
-                <Button color="primary" component={RouterLink} to="/">
+                <Button color="primary" component={RouterLink} to={`/publication/${publication.id}`}>
                   <StyledEditIcon />
                   <NormalText>{t('common:edit')}</NormalText>
                 </Button>
