@@ -20,8 +20,6 @@ interface WorklistTableProps {
 const WorklistTable: FC<WorklistTableProps> = ({ publications }) => {
   const { t } = useTranslation();
 
-  console.log(publications);
-
   return (
     <Table>
       <TableHead>
