@@ -5,6 +5,7 @@ import PlaylistAddCheckIcon from '@material-ui/icons/PlaylistAddCheck';
 import styled from 'styled-components';
 import DoiRequests from './DoiRequests';
 import PublicationsForApproval from './PublicationsForApproval';
+import Card from '../../components/Card';
 
 const StyledTabsContainer = styled.div`
   width: 100%;
@@ -31,9 +32,10 @@ const StyledTabButton = styled.button<{ isSelected: boolean }>`
     `};
 `;
 
-const StyledContent = styled.div`
+const StyledCard = styled(Card)`
   margin-top: 2rem;
-  width: 100%;
+  text-align: center;
+  min-height: 5rem;
 `;
 
 const StyledPlaylistAddCheckIcon = styled(PlaylistAddCheckIcon)`
@@ -68,10 +70,10 @@ const WorklistPage: FC = () => {
         </StyledTabButton>
       </StyledTabsContainer>
 
-      <StyledContent>
+      <StyledCard>
         {selectedTab === Tab.Approval && <PublicationsForApproval />}
         {selectedTab === Tab.Doi && <DoiRequests />}
-      </StyledContent>
+      </StyledCard>
     </>
   );
 };
