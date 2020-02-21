@@ -52,11 +52,11 @@ const StyledButton = styled(Button)`
 `;
 
 const EditPublication: FC = () => {
+  const { id } = useParams();
   const [expanded, setExpanded] = useState<string | false>(false);
-  const [showForm, setShowForm] = useState(false);
+  const [showForm, setShowForm] = useState(!!id);
   const { t } = useTranslation();
   const [uppy] = useState(createUppy());
-  const { id } = useParams();
 
   useEffect(() => {
     return () => uppy && uppy.close();
@@ -72,7 +72,7 @@ const EditPublication: FC = () => {
 
   return (
     <>
-      {!showForm && !id ? (
+      {!showForm ? (
         <>
           <StyledEditPublication>
             <StyledSelectorWrapper>
