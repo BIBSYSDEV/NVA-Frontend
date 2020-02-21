@@ -1,16 +1,9 @@
 import React, { FC, useState, useEffect } from 'react';
 import { getDoiRequests } from '../../api/publicationApi';
-import Card from '../../components/Card';
 import WorklistTable from './WorkListTable';
 import { useTranslation } from 'react-i18next';
 import Progress from '../../components/Progress';
 import SubHeading from '../../components/SubHeading';
-import styled from 'styled-components';
-
-const StyledCard = styled(Card)`
-  text-align: center;
-  min-height: 5rem;
-`;
 
 const DoiRequests: FC = () => {
   const { t } = useTranslation('workLists');
@@ -28,16 +21,12 @@ const DoiRequests: FC = () => {
     fetchDoiRequests();
   }, []);
 
-  return (
-    <StyledCard>
-      {isLoading ? (
-        <Progress />
-      ) : doiRequests.length > 0 ? (
-        <WorklistTable publications={doiRequests} />
-      ) : (
-        <SubHeading>{t('no_pending_doi_requests')}</SubHeading>
-      )}
-    </StyledCard>
+  return isLoading ? (
+    <Progress />
+  ) : doiRequests.length > 0 ? (
+    <WorklistTable publications={doiRequests} />
+  ) : (
+    <SubHeading>{t('no_pending_doi_requests')}</SubHeading>
   );
 };
 
