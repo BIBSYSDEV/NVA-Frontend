@@ -17,6 +17,7 @@ export enum PublicationsApiPaths {
   FETCH_MY_RESOURCES = '/publications/fetch-my-resources',
   DOI_LOOKUP = '/doi-fetch',
   DOI_REQUESTS = '/publications/doi-requests',
+  FOR_APPROVAL = '/publications/approval',
 }
 
 export const createNewPublicationFromDoi = async (doiUrl: string, dispatch: Dispatch) => {
@@ -166,6 +167,26 @@ export const getDoiRequests = async () => {
   try {
     const idToken = await getIdToken();
     const response = await Axios.get(PublicationsApiPaths.DOI_REQUESTS, {
+      headers: {
+        Authorization: `Bearer ${idToken}`,
+      },
+    });
+
+    if (response.status === StatusCode.OK) {
+      return response.data;
+    } else {
+      return [];
+    }
+  } catch (error) {
+    return { error };
+  }
+};
+
+// Fetch publications ready for approval
+export const getPublicationsForApproval = async () => {
+  try {
+    const idToken = await getIdToken();
+    const response = await Axios.get(PublicationsApiPaths.FOR_APPROVAL, {
       headers: {
         Authorization: `Bearer ${idToken}`,
       },

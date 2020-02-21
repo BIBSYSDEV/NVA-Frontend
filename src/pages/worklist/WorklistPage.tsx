@@ -4,6 +4,7 @@ import LinkIcon from '@material-ui/icons/Link';
 import PlaylistAddCheckIcon from '@material-ui/icons/PlaylistAddCheck';
 import styled from 'styled-components';
 import DoiRequests from './DoiRequests';
+import PublicationsForApproval from './PublicationsForApproval';
 
 const StyledTabsContainer = styled.div`
   width: 100%;
@@ -68,7 +69,7 @@ const WorklistPage: FC = () => {
       </StyledTabsContainer>
 
       <StyledContent>
-        {selectedTab === Tab.Approval && <div>TODO: For Approval</div>}
+        {selectedTab === Tab.Approval && <PublicationsForApproval />}
         {selectedTab === Tab.Doi && <DoiRequests />}
       </StyledContent>
     </>
