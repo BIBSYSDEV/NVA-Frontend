@@ -19,13 +19,11 @@ const StyledTable = styled(Table)`
   width: 100%;
 `;
 
-const StyledTableCellForContact = styled(TableCell)`
-  width: 15%;
+const StyledSmallCell = styled(TableCell)`
+  @media (min-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+    min-width: 9rem;
+  }
 `;
-const StyledTableCellForDate = styled(TableCell)`
-  width: 15%;
-`;
-
 interface InstitutionListProps {
   institutions: DummyCustomerInstitution[];
 }
@@ -55,12 +53,12 @@ const InstitutionList: FC<InstitutionListProps> = ({ institutions }) => {
             <TableCell component="th" scope="row">
               <NormalText>{institution.name}</NormalText>
             </TableCell>
-            <StyledTableCellForDate>
+            <StyledSmallCell>
               <NormalText>{institution.createdDate}</NormalText>
-            </StyledTableCellForDate>
-            <StyledTableCellForContact>
+            </StyledSmallCell>
+            <StyledSmallCell>
               <NormalText>{institution.contact}</NormalText>
-            </StyledTableCellForContact>
+            </StyledSmallCell>
             <TableCell>
               <Button color="primary" component={RouterLink} to="/">
                 <NormalText>{t('edit')}</NormalText>
