@@ -4,6 +4,8 @@
   "go_to_public_profile": "Gå til din offentlige profil",
   "my_publications": "Mine publikasjoner",
   "my_worklist": "Min arbeidsliste",
+  "no_pending_doi_requests": "Du har ingen ventende DOI-forespørsler",
   "publication_name": "Navn på publisering",
+  "submitter": "Innsender",
   "unpublished_publications": "Upubliserte ressurser"
 }
