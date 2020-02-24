@@ -8,6 +8,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import Label from '../../components/Label';
 import NormalText from '../../components/NormalText';
+import { Link as RouterLink } from 'react-router-dom';
 
 const StyledTableRow = styled(TableRow)`
   background-color: ${props => props.theme.palette.box.main};
@@ -71,7 +72,7 @@ const PublicationList: FC<PublicationListProps> = ({ publications }) => {
                 <NormalText>{publication.createdDate}</NormalText>
               </StyledTableCellForDate>
               <TableCell>
-                <Button color="primary" variant="outlined" data-testid="edit-button">
+                <Button color="primary" component={RouterLink} to={`/publication/${publication.id}`}>
                   <StyledEditIcon />
                   <NormalText>{t('common:edit')}</NormalText>
                 </Button>
