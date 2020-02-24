@@ -15,22 +15,26 @@ const StyledSearchIcon = styled(SearchIcon)`
 const emptyValue = { title: '' };
 
 interface AutoSearchProps {
-  label?: string;
+  onInputChange: (value: string) => void;
   searchResults: any;
   setValueFunction: (value: any) => void;
   clearSearchField?: boolean;
   dataTestId?: string;
-  onInputChange: (value: string) => void;
+  disabled?: boolean;
+  displaySelection?: boolean;
+  label?: string;
   placeholder?: string;
 }
 
 export const AutoSearch: FC<AutoSearchProps> = ({
-  label,
+  onInputChange,
   searchResults,
   setValueFunction,
   clearSearchField,
   dataTestId,
-  onInputChange,
+  disabled,
+  displaySelection,
+  label,
   placeholder,
 }) => {
   const [displayValue, setDisplayValue] = useState<any>(emptyValue);
@@ -66,7 +70,9 @@ export const AutoSearch: FC<AutoSearchProps> = ({
       onChange={(_: object, value: string | null) => {
         if (value) {
           setValueFunction(value);
-          setDisplayValue(emptyValue);
+          if (!displaySelection) {
+            setDisplayValue(emptyValue);
+          }
           setOptions([]);
         }
       }}
@@ -92,13 +98,14 @@ export const AutoSearch: FC<AutoSearchProps> = ({
       value={displayValue}
       noOptionsText={t('no_hits')}
       filterOptions={options => options}
+      disabled={disabled}
       renderInput={params => (
         <TextField
           {...params}
           data-testid={dataTestId}
           label={label}
           fullWidth
-          onClick={() => displayValue.title && setOpen(true)}
+          onClick={() => !disabled && displayValue.title && setOpen(true)}
           variant="outlined"
           autoComplete="false"
           placeholder={placeholder}

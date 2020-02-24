@@ -16,6 +16,7 @@
     "login": "Login failed",
     "orcid_login": "ORCID login failed",
     "search": "Search failed",
+    "search_institutions": "Could not find institution",
     "update_authority": "Could not update authority",
     "update_publication": "Could not update publication"
   },

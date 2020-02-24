@@ -5,9 +5,8 @@ import { useDispatch } from 'react-redux';
 import { AutoSearch } from '../../../../components/AutoSearch';
 import { searchFailure } from '../../../../redux/actions/searchActions';
 import { debounce } from '../../../../utils/debounce';
-import { Institution } from '../../../../types/institution.types';
-import { queryInstitution } from '../../../../api/institutionApi';
-import { selectInstitutionNameByLanguage } from '../../../../utils/helpers';
+import { RecursiveUnit } from '../../../../types/institution.types';
+import { getInstitutionAndSubunits } from '../../../../api/institutionApi';
 
 interface InstitutionSearchProps {
   clearSearchField: boolean;
@@ -15,6 +14,7 @@ interface InstitutionSearchProps {
   label: string;
   setValueFunction: (value: any) => void;
   placeholder?: string;
+  disabled?: boolean;
 }
 
 const InstitutionSearch: FC<InstitutionSearchProps> = ({
@@ -23,20 +23,21 @@ const InstitutionSearch: FC<InstitutionSearchProps> = ({
   label,
   setValueFunction,
   placeholder,
+  disabled,
 }) => {
-  const [searchResults, setSearchResults] = useState<Institution[]>([]);
+  const [searchResults, setSearchResults] = useState<RecursiveUnit[]>([]);
 
   const dispatch = useDispatch();
   const { t } = useTranslation('feedback');
 
   const search = useCallback(
     debounce(async (searchTerm: string) => {
-      const response = await queryInstitution(searchTerm);
+      const response = await getInstitutionAndSubunits(searchTerm);
       if (response) {
         setSearchResults(
-          response.map((institution: Institution) => ({
-            ...institution,
-            title: selectInstitutionNameByLanguage(institution.institutionNames),
+          response.map((unit: RecursiveUnit) => ({
+            ...unit,
+            title: unit.name,
           }))
         );
       } else {
@@ -55,6 +56,8 @@ const InstitutionSearch: FC<InstitutionSearchProps> = ({
       setValueFunction={setValueFunction}
       label={label}
       placeholder={placeholder}
+      displaySelection
+      disabled={!!disabled}
     />
   );
 };

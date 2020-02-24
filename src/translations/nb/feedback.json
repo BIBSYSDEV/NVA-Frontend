@@ -16,6 +16,7 @@
     "login": "Kunne ikke logge inn",
     "orcid_login": "Kunne ikke logge inn på ORCID",
     "search": "Søk feilet",
+    "search_institutions": "Kunne ikke finne institusjon",
     "update_authority": "Kunne ikke oppdatere autoritet",
     "update_publication": "Kunne ikke oppdatere publikasjon"
   },

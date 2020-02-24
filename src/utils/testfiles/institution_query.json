@@ -1,50 +1,438 @@
 [
   {
-    "cristinInstitutionId": "194",
-    "institutionNames": [
+    "id": "194.0.0.0",
+    "name": "Norges teknisk-naturvitenskapelige universitet",
+    "subunits": [
       {
-        "name": "Norges teknisk-naturvitenskapelige universitet",
-        "language": "nb"
-      }
-    ],
-    "acronym": "NTNU",
-    "country": "NO",
-    "cristinUnitId": "194.0.0.0"
-  },
-  {
-    "cristinInstitutionId": "43200063",
-    "institutionNames": [
+        "id": "194.67.0.0",
+        "name": "Fakultet for samfunns- og utdanningsvitenskap",
+        "subunits": [
+          {
+            "id": "194.67.90.0",
+            "name": "Institutt for sosialt arbeid"
+          },
+          {
+            "id": "194.67.80.0",
+            "name": "Institutt for lærerutdanning",
+            "subunits": [
+              {
+                "id": "194.67.80.40",
+                "name": "Nasjonalt senter for skriveopplæring og skriveforsking"
+              },
+              {
+                "id": "194.67.80.30",
+                "name": "Nasjonalt senter for matematikk i opplæringen"
+              }
+            ]
+          },
+          {
+            "id": "194.67.70.0",
+            "name": "Institutt for pedagogikk og livslang læring"
+          },
+          {
+            "id": "194.67.45.0",
+            "name": "Institutt for sosialantropologi"
+          },
+          {
+            "id": "194.67.40.0",
+            "name": "Institutt for psykologi"
+          },
+          {
+            "id": "194.67.25.0",
+            "name": "Institutt for sosiologi og statsvitenskap"
+          },
+          {
+            "id": "194.67.10.0",
+            "name": "Institutt for geografi"
+          },
+          {
+            "id": "194.67.1.0",
+            "name": "SU fakultetsadministrasjon"
+          }
+        ]
+      },
       {
-        "name": "National Taiwan Normal University",
-        "language": "nb"
-      }
-    ],
-    "acronym": "NTNU",
-    "country": "TW",
-    "cristinUnitId": "43200063.0.0.0"
-  },
-  {
-    "cristinInstitutionId": "7403",
-    "institutionNames": [
+        "id": "194.66.0.0",
+        "name": "Fakultet for naturvitenskap",
+        "subunits": [
+          {
+            "id": "194.66.50.0",
+            "name": "Felles forskningsinfrastruktur"
+          },
+          {
+            "id": "194.66.45.0",
+            "name": "Institutt for biologiske fag Ålesund"
+          },
+          {
+            "id": "194.66.40.0",
+            "name": "Institutt for bioingeniørfag"
+          },
+          {
+            "id": "194.66.35.0",
+            "name": "Institutt for materialteknologi"
+          },
+          {
+            "id": "194.66.30.0",
+            "name": "Institutt for kjemisk prosessteknologi"
+          },
+          {
+            "id": "194.66.25.0",
+            "name": "Institutt for kjemi"
+          },
+          {
+            "id": "194.66.20.0",
+            "name": "Institutt for fysikk"
+          },
+          {
+            "id": "194.66.15.0",
+            "name": "Institutt for bioteknologi og matvitenskap"
+          },
+          {
+            "id": "194.66.10.0",
+            "name": "Institutt for biologi"
+          },
+          {
+            "id": "194.66.1.0",
+            "name": "NV fakultetsadministrasjon"
+          }
+        ]
+      },
       {
-        "name": "NTNU Samfunnsforskning AS",
-        "language": "nb"
-      }
-    ],
-    "acronym": "SAMFORSK",
-    "country": "NO",
-    "cristinUnitId": "7403.0.0.0"
-  },
-  {
-    "cristinInstitutionId": "7538",
-    "institutionNames": [
+        "id": "194.65.0.0",
+        "name": "Fakultet for medisin og helsevitenskap",
+        "subunits": [
+          {
+            "id": "194.65.80.0",
+            "name": "Institutt for helsevitenskap Ålesund"
+          },
+          {
+            "id": "194.65.70.0",
+            "name": "Institutt for helsevitenskap Gjøvik",
+            "subunits": [
+              {
+                "id": "194.65.70.20",
+                "name": "Senter for omsorgsforskning"
+              }
+            ]
+          },
+          {
+            "id": "194.65.60.0",
+            "name": "Kavliinstitutt for nevrovitenskap"
+          },
+          {
+            "id": "194.65.35.0",
+            "name": "Institutt for psykisk helse",
+            "subunits": [
+              {
+                "id": "194.65.35.5",
+                "name": "RKBU Midt-Norge - Regionalt kunnskapssenter for barn og unge - psykisk helse og barnevern"
+              },
+              {
+                "id": "194.65.35.20",
+                "name": "Nasjonalt kompetansemiljø om utviklingshemming (NAKU)"
+              }
+            ]
+          },
+          {
+            "id": "194.65.30.0",
+            "name": "Institutt for nevromedisin og bevegelsesvitenskap"
+          },
+          {
+            "id": "194.65.25.0",
+            "name": "Institutt for sirkulasjon og bildediagnostikk"
+          },
+          {
+            "id": "194.65.20.0",
+            "name": "Institutt for samfunnsmedisin og sykepleie",
+            "subunits": [
+              {
+                "id": "194.65.20.15",
+                "name": "Helseundersøkelsen i Nord-Trøndelag"
+              },
+              {
+                "id": "194.65.20.10",
+                "name": "Allmennmedisinsk forskningsenhet i Trondheim"
+              }
+            ]
+          },
+          {
+            "id": "194.65.15.0",
+            "name": "Institutt for klinisk og molekylær medisin"
+          },
+          {
+            "id": "194.65.1.0",
+            "name": "MH fakultetsadministrasjon"
+          }
+        ]
+      },
       {
-        "name": "Senter for økonomisk forskning AS",
-        "language": "nb"
+        "id": "194.64.0.0",
+        "name": "Fakultet for ingeniørvitenskap",
+        "subunits": [
+          {
+            "id": "194.64.94.0",
+            "name": "Institutt for vareproduksjon og byggteknikk"
+          },
+          {
+            "id": "194.64.93.0",
+            "name": "Institutt for havromsoperasjoner og byggteknikk"
+          },
+          {
+            "id": "194.64.92.0",
+            "name": "Institutt for maskinteknikk og produksjon"
+          },
+          {
+            "id": "194.64.91.0",
+            "name": "Institutt for bygg- og miljøteknikk"
+          },
+          {
+            "id": "194.64.90.0",
+            "name": "Institutt for geovitenskap og petroleum"
+          },
+          {
+            "id": "194.64.80.0",
+            "name": "Senter for autonome marine operasjoner og systemer"
+          },
+          {
+            "id": "194.64.45.0",
+            "name": "Institutt for konstruksjonsteknikk"
+          },
+          {
+            "id": "194.64.25.0",
+            "name": "Institutt for energi- og prosessteknikk"
+          },
+          {
+            "id": "194.64.20.0",
+            "name": "Institutt for marin teknikk"
+          },
+          {
+            "id": "194.64.1.0",
+            "name": "IV fakultetsadministrasjon"
+          }
+        ]
+      },
+      {
+        "id": "194.63.0.0",
+        "name": "Fakultet for informasjonsteknologi og elektroteknikk",
+        "subunits": [
+          {
+            "id": "194.63.55.0",
+            "name": "Institutt for IKT og realfag"
+          },
+          {
+            "id": "194.63.35.0",
+            "name": "Institutt for elektroniske systemer"
+          },
+          {
+            "id": "194.63.30.0",
+            "name": "Institutt for informasjonssikkerhet og kommunikasjonsteknologi"
+          },
+          {
+            "id": "194.63.25.0",
+            "name": "Institutt for teknisk kybernetikk"
+          },
+          {
+            "id": "194.63.20.0",
+            "name": "Institutt for elkraftteknikk"
+          },
+          {
+            "id": "194.63.15.0",
+            "name": "Institutt for matematiske fag"
+          },
+          {
+            "id": "194.63.10.0",
+            "name": "Institutt for datateknologi og informatikk"
+          },
+          {
+            "id": "194.63.1.0",
+            "name": "IE fakultetsadministrasjon",
+            "subunits": [
+              {
+                "id": "194.63.1.20",
+                "name": "Nasjonalt senter for realfagsrekruttering"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "194.62.0.0",
+        "name": "Det humanistiske fakultet",
+        "subunits": [
+          {
+            "id": "194.62.70.0",
+            "name": "Institutt for filosofi og religionsvitenskap"
+          },
+          {
+            "id": "194.62.65.0",
+            "name": "Institutt for historiske studier"
+          },
+          {
+            "id": "194.62.60.0",
+            "name": "Institutt for språk og litteratur"
+          },
+          {
+            "id": "194.62.45.0",
+            "name": "Institutt for musikk"
+          },
+          {
+            "id": "194.62.40.0",
+            "name": "Institutt for tverrfaglige kulturstudier"
+          },
+          {
+            "id": "194.62.35.0",
+            "name": "Institutt for kunst- og medievitenskap"
+          },
+          {
+            "id": "194.62.1.0",
+            "name": "HF fakultetsadministrasjon"
+          }
+        ]
+      },
+      {
+        "id": "194.61.0.0",
+        "name": "Fakultet for arkitektur og design",
+        "subunits": [
+          {
+            "id": "194.61.55.0",
+            "name": "Institutt for arkitektur og teknologi"
+          },
+          {
+            "id": "194.61.50.0",
+            "name": "Institutt for arkitektur og planlegging"
+          },
+          {
+            "id": "194.61.45.0",
+            "name": "Institutt for design"
+          },
+          {
+            "id": "194.61.30.0",
+            "name": "Kunstakademiet i Trondheim"
+          },
+          {
+            "id": "194.61.1.0",
+            "name": "AD fakultetsadministrasjon"
+          }
+        ]
+      },
+      {
+        "id": "194.60.0.0",
+        "name": "Fakultet for økonomi",
+        "subunits": [
+          {
+            "id": "194.60.25.0",
+            "name": "Institutt for industriell økonomi og teknologiledelse"
+          },
+          {
+            "id": "194.60.20.0",
+            "name": "Institutt for samfunnsøkonomi"
+          },
+          {
+            "id": "194.60.15.0",
+            "name": "Institutt for internasjonal forretningsdrift"
+          },
+          {
+            "id": "194.60.10.0",
+            "name": "NTNU Handelshøyskolen"
+          },
+          {
+            "id": "194.60.1.0",
+            "name": "ØK fakultetsadministrasjon"
+          }
+        ]
+      },
+      {
+        "id": "194.35.0.0",
+        "name": "Enheter under Kunnskapdepartementet og Utdanningdirektoratet"
+      },
+      {
+        "id": "194.31.0.0",
+        "name": "NTNU Vitenskapsmuseet",
+        "subunits": [
+          {
+            "id": "194.31.5.0",
+            "name": "Institutt for arkeologi og kulturhistorie"
+          },
+          {
+            "id": "194.31.15.0",
+            "name": "Seksjon for formidling",
+            "subunits": [
+              {
+                "id": "194.31.15.15",
+                "name": "Nasjonallaboratoriene for datering"
+              }
+            ]
+          },
+          {
+            "id": "194.31.10.0",
+            "name": "Institutt for naturhistorie"
+          },
+          {
+            "id": "194.31.1.0",
+            "name": "Vitenskapsmuseet administrasjon"
+          }
+        ]
+      },
+      {
+        "id": "194.17.0.0",
+        "name": "Prorektor for nyskaping",
+        "subunits": [
+          {
+            "id": "194.20.22.0",
+            "name": "Seksjon for eiendom og drift i Ålesund"
+          },
+          {
+            "id": "194.20.21.0",
+            "name": "Viserektor Ålesund"
+          },
+          {
+            "id": "194.20.12.0",
+            "name": "Seksjon for eiendom og drift i Gjøvik"
+          },
+          {
+            "id": "194.20.11.0",
+            "name": "Viserektor Gjøvik"
+          }
+        ]
+      },
+      {
+        "id": "194.16.0.0",
+        "name": "Organisasjonsdirektør",
+        "subunits": [
+          {
+            "id": "194.16.90.0",
+            "name": "Kommunikasjonsavdelingen"
+          }
+        ]
+      },
+      {
+        "id": "194.15.0.0",
+        "name": "Økonomi- og eiendomsdirektør"
+      },
+      {
+        "id": "194.14.0.0",
+        "name": "Prorektor for utdanning",
+        "subunits": [
+          {
+            "id": "194.14.30.0",
+            "name": "NTNU Universitetsbiblioteket"
+          }
+        ]
+      },
+      {
+        "id": "194.13.0.0",
+        "name": "Prorektor for forskning"
+      },
+      {
+        "id": "194.12.0.0",
+        "name": "Rektor",
+        "subunits": [
+          {
+            "id": "194.12.1.0",
+            "name": "Rektor og styre"
+          }
+        ]
       }
-    ],
-    "acronym": "SØF",
-    "country": "NO",
-    "cristinUnitId": "7538.0.0.0"
+    ]
   }
 ]
