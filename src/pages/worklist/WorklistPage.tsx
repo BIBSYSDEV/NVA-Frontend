@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next';
 import LinkIcon from '@material-ui/icons/Link';
 import PlaylistAddCheckIcon from '@material-ui/icons/PlaylistAddCheck';
 import styled from 'styled-components';
+import DoiRequests from './DoiRequests';
+import Card from '../../components/Card';
 
 const StyledTabsContainer = styled.div`
   width: 100%;
@@ -16,7 +18,7 @@ const StyledTabButton = styled.button<{ isSelected: boolean }>`
   flex-direction: column;
   align-items: center;
   cursor: pointer;
-  width: 15rem;
+  width: 45%;
   font-weight: bold;
   font-size: 1.2rem;
 
@@ -24,12 +26,15 @@ const StyledTabButton = styled.button<{ isSelected: boolean }>`
     isSelected &&
     `
       color: ${theme.palette.primary.main};
-      border-bottom: 0.3rem solid;
+      padding-bottom: 0.4rem;
+      border-bottom: 0.2rem solid;
     `};
 `;
 
-const StyledContent = styled.div`
+const StyledCard = styled(Card)`
   margin-top: 2rem;
+  text-align: center;
+  min-height: 5rem;
 `;
 
 const StyledPlaylistAddCheckIcon = styled(PlaylistAddCheckIcon)`
@@ -47,7 +52,7 @@ enum Tab {
   Approval,
 }
 
-const Worklist: FC = () => {
+const WorklistPage: FC = () => {
   const { t } = useTranslation('workLists');
   const [selectedTab, setSelectedTab] = useState(Tab.Doi);
 
@@ -64,12 +69,12 @@ const Worklist: FC = () => {
         </StyledTabButton>
       </StyledTabsContainer>
 
-      <StyledContent>
-        {selectedTab === Tab.Approval && <div>For Approval</div>}
-        {selectedTab === Tab.Doi && <div>DOI</div>}
-      </StyledContent>
+      <StyledCard>
+        {selectedTab === Tab.Approval && <div>TODO: For Approval</div>}
+        {selectedTab === Tab.Doi && <DoiRequests />}
+      </StyledCard>
     </>
   );
 };
 
-export default Worklist;
+export default WorklistPage;

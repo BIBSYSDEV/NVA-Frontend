@@ -6,6 +6,7 @@
     "get_authority": "Kunne ikke hente autoritet",
     "get_authorities": "Kunne ikke hente autoriteter",
     "get_doi": "Kunne ikke hente lenkedata",
+    "get_doi_requests": "Kunne ikke hente DOI-forespørsler",
     "get_institutions": "Kunne ikke laste inn institusjoner",
     "get_project": "Søk på prosjekt feilet",
     "get_orcid": "Kunne ikke hente data fra ORCID",
