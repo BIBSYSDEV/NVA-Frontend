@@ -32,9 +32,9 @@ const AdminMenu: FC = () => {
 
   return isPublisher ? (
     <>
-      {history.location.pathname !== '/new-publication' && (
+      {history.location.pathname !== '/publication' && (
         <StyledAdminMenu>
-          <MuiLink component={Link} to="/new-publication">
+          <MuiLink component={Link} to="/publication">
             <StyledButton color="primary" variant="contained" data-testid="new-publication-button">
               + {t('new_publication')}
             </StyledButton>

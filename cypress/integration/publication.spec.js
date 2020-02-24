@@ -8,7 +8,7 @@ describe('Publication', () => {
     cy.get('[data-testid=menu-login-button]').click({ force: true });
 
     cy.get('[data-testid=new-publication-button]').click({ force: true });
-    cy.url().should('include', '/new-publication');
+    cy.url().should('include', '/publication');
 
     cy.get('[data-testid=new-publication-link]').click({ force: true });
     cy.get('[data-testid=new-publication-link-input]').type('https://doi.org/10.1098/rspb.2018.0085');

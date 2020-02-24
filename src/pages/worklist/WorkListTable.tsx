@@ -13,6 +13,12 @@ const StyledTableRow = styled(TableRow)`
   }
 `;
 
+const StyledCell = styled(TableCell)`
+  @media (min-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+    min-width: 9rem;
+  }
+`;
+
 interface WorklistTableProps {
   publications: PublicationPreview[];
 }
@@ -24,30 +30,30 @@ const WorklistTable: FC<WorklistTableProps> = ({ publications }) => {
     <Table>
       <TableHead>
         <TableRow>
-          <TableCell>
+          <StyledCell>
             <Label>{t('workLists:publication_name')}</Label>
-          </TableCell>
-          <TableCell>
+          </StyledCell>
+          <StyledCell>
             <Label>{t('workLists:submitter')}</Label>
-          </TableCell>
-          <TableCell>
+          </StyledCell>
+          <StyledCell>
             <Label>{t('common:date')}</Label>
-          </TableCell>
+          </StyledCell>
           <TableCell />
         </TableRow>
       </TableHead>
       <TableBody>
         {publications.map(publication => (
           <StyledTableRow key={publication.id}>
-            <TableCell component="th" scope="row">
+            <StyledCell component="th" scope="row">
               <NormalText>{publication.title}</NormalText>
-            </TableCell>
-            <TableCell>
+            </StyledCell>
+            <StyledCell>
               <NormalText>{publication.createdBy}</NormalText>
-            </TableCell>
-            <TableCell>
+            </StyledCell>
+            <StyledCell>
               <NormalText>{publication.createdDate}</NormalText>
-            </TableCell>
+            </StyledCell>
             <TableCell>
               <Button color="primary" variant="contained">
                 <NormalText>{t('common:open')}</NormalText>
