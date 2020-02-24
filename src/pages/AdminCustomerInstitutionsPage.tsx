@@ -2,8 +2,6 @@ import React, { FC, useEffect, useState } from 'react';
 import Heading from '../components/Heading';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { addNotification } from '../redux/actions/notificationActions';
-import i18n from '../translations/i18n';
 import { getAllCustomerInstitutions } from '../api/customerInstitutionsApi';
 import Card from '../components/Card';
 import { CircularProgress } from '@material-ui/core';
