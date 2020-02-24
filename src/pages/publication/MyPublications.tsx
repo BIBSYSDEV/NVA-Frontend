@@ -7,11 +7,11 @@ import { getMyPublications } from '../../api/publicationApi';
 import { addNotification } from '../../redux/actions/notificationActions';
 import i18n from '../../translations/i18n';
 import { useDispatch, useSelector } from 'react-redux';
-import { CircularProgress, Button, Link as MuiLink } from '@material-ui/core';
+import { Button, CircularProgress } from '@material-ui/core';
 import styled from 'styled-components';
 import { PublicationPreview } from '../../types/publication.types';
-import { Link } from 'react-router-dom';
-import { RootStore } from '../../redux/reducers/rootReducer';
+import { RootStore } from './../../redux/reducers/rootReducer';
+import { Link as RouterLink } from 'react-router-dom';
 
 const StyledWrapper = styled.div`
   text-align: center;
@@ -47,11 +47,13 @@ const MyPublications: FC = () => {
     <Card>
       <Heading>{t('workLists:my_publications')}</Heading>
       <StyledButtonWrapper>
-        <MuiLink component={Link} to={`/public-profile/${user.name}`}>
-          <Button color="primary" variant="contained" data-testid="public-profile-button">
-            {t('workLists:go_to_public_profile')}
-          </Button>
-        </MuiLink>
+        <Button
+          color="primary"
+          component={RouterLink}
+          to={`/public-profile/${user.name}`}
+          data-testid="public-profile-button">
+          {t('workLists:go_to_public_profile')}
+        </Button>
       </StyledButtonWrapper>
       <StyledWrapper>
         {isLoading ? <CircularProgress color="inherit" size={20} /> : <PublicationList publications={publications} />}
