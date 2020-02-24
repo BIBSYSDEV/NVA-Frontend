@@ -56,7 +56,7 @@ const UserInstitution: FC = () => {
       }
       setUnits(units);
     };
-    if (user.authority.orgunitids.length > 0) {
+    if (user.authority.orgunitids?.length > 0) {
       getUnitsForUser();
     }
   }, [user.authority.orgunitids]);

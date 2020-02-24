@@ -1,7 +1,7 @@
 import Axios from 'axios';
 import { getIdToken } from './userApi';
 import mockInstitutionResponse from '../utils/testfiles/institution_query.json';
-import { Unit, emptyRecursiveUnit, RecursiveUnit, UnitResponse } from '../types/institution.types';
+import { emptyRecursiveUnit, RecursiveUnit, UnitResponse } from '../types/institution.types';
 
 export enum InstituionApiPaths {
   INSTITUTION = '/cristin-institutions',
