@@ -10,8 +10,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button, CircularProgress } from '@material-ui/core';
 import styled from 'styled-components';
 import { PublicationPreview } from '../../types/publication.types';
+import { RootStore } from '../../redux/reducers/rootReducer';
 import { Link as RouterLink } from 'react-router-dom';
-import { RootStore } from './../../redux/reducers/rootReducer';
 
 const StyledWrapper = styled.div`
   text-align: center;
