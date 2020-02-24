@@ -1,8 +1,8 @@
-import React, { useState, FC } from 'react';
+import React, { useState, FC, useEffect } from 'react';
 import Card from '../../components/Card';
 import InstitutionCard from './institution/InstitutionCard';
 import { Button } from '@material-ui/core';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { RootStore } from './../../redux/reducers/rootReducer';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
@@ -18,6 +18,9 @@ import {
   FormikUnitFieldNames,
   FormikUnit,
 } from '../../types/institution.types';
+import { updateInstitutionForAuthority } from '../../api/authorityApi';
+import { setAuthorityData } from '../../redux/actions/userActions';
+import { addNotification } from '../../redux/actions/notificationActions';
 
 const StyledButtonContainer = styled.div`
   display: flex;
@@ -38,20 +41,41 @@ const UserInstitution: FC = () => {
   const [open, setOpen] = useState(false);
   const [units, setUnits] = useState<Unit[]>([]);
   const { t } = useTranslation('profile');
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    // TODO get units from authority based on orgunitids
+    // setUnits(response)
+  }, []);
 
   const toggleOpen = () => {
     setOpen(!open);
   };
 
-  const handleAddInstitution = ({ name, id, subunits }: Unit) => {
-    // TODO: find which is the lower subunit to be saved in ARP
-    // try {
-    //   // update ARP
-    // } catch (error) {
-    //   // handle error
-    // }
+  const updateAuthorityAndDispatch = async (id: string, scn: string) => {
+    const updatedAuthority = await updateInstitutionForAuthority(id, scn);
+    if (updatedAuthority.error) {
+      dispatch(addNotification(updatedAuthority.error, 'error'));
+    } else if (updatedAuthority) {
+      dispatch(setAuthorityData(updatedAuthority));
+    }
+  };
+
+  const handleAddInstitution = async ({ name, id, subunits }: Unit) => {
+    try {
+      if (subunits.length === 0) {
+        await updateAuthorityAndDispatch(id, user.authority.systemControlNumber);
+      } else {
+        const lastSubunitId = subunits.slice(-1)[0];
+        await updateAuthorityAndDispatch(lastSubunitId.id, user.authority.systemControlNumber);
+      }
+    } catch (error) {
+      dispatch(addNotification(t('feedback:error.update_authority'), 'error'));
+    }
+    // TODO: remove this when we get data from backend
     const filteredSubunits = subunits.filter((subunit: UnitBase) => subunit.name !== '');
     setUnits([...units, { id, name, subunits: filteredSubunits }]);
+
     setOpen(false);
   };
 
