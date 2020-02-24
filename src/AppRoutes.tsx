@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { Switch, Route } from 'react-router';
 import Dashboard from './pages/dashboard/Dashboard';
-import NewPublication from './pages/publication/NewPublication';
+import EditPublication from './pages/publication/EditPublication';
 import MyPublications from './pages/publication/MyPublications';
 import Search from './pages/search/Search';
 import PublicationPage from './pages/publication/PublicationPage';
@@ -23,7 +23,8 @@ const AppRoutes: FC = () => {
   return (
     <Switch>
       <Route exact path="/" component={Dashboard} />
-      {isPublisher && <Route exact path="/new-publication" component={NewPublication} />}
+      {isPublisher && <Route exact path="/publication" component={EditPublication} />}
+      {isPublisher && <Route exact path="/publication/:id" component={EditPublication} />}
       {isPublisher && <Route exact path="/my-publications" component={MyPublications} />}
       {isAppAdmin && <Route exact path="/admin-institutions" component={InstututionPage} />}
       {isCurator && <Route exact path="/worklist" component={Worklist} />}
