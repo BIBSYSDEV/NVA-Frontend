@@ -5,7 +5,7 @@ import { Button, Table, TableBody, TableCell, TableHead, TableRow } from '@mater
 import { useTranslation } from 'react-i18next';
 import Label from '../components/Label';
 import NormalText from '../components/NormalText';
-import { MemberInstitutions } from './AdministrateMemberInstitutionsPage';
+import { DummyCustomerInstitution } from './AdminCustomerInstitutionsPage';
 import { Link as RouterLink } from 'react-router-dom';
 
 const StyledTableRow = styled(TableRow)`
@@ -27,23 +27,24 @@ const StyledTableCellForDate = styled(TableCell)`
 `;
 
 interface InstitutionListProps {
-  institutions: MemberInstitutions[];
+  institutions: DummyCustomerInstitution[];
 }
 
 const InstitutionList: FC<InstitutionListProps> = ({ institutions }) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('common');
+
   return (
     <StyledTable>
       <TableHead>
         <TableRow>
           <TableCell>
-            <Label>{t('common:name')}</Label>
+            <Label>{t('name')}</Label>
           </TableCell>
           <TableCell>
-            <Label>{t('common:date')}</Label>
+            <Label>{t('date')}</Label>
           </TableCell>
           <TableCell>
-            <Label>{t('common:contact_person')}</Label>
+            <Label>{t('contact_person')}</Label>
           </TableCell>
           <TableCell />
         </TableRow>
@@ -62,7 +63,7 @@ const InstitutionList: FC<InstitutionListProps> = ({ institutions }) => {
             </StyledTableCellForContact>
             <TableCell>
               <Button color="primary" component={RouterLink} to="/">
-                <NormalText>{t('common:edit')}</NormalText>
+                <NormalText>{t('edit')}</NormalText>
               </Button>
             </TableCell>
           </StyledTableRow>

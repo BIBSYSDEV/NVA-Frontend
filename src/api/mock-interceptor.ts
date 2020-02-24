@@ -14,14 +14,14 @@ import mockPublication from '../utils/testfiles/publication_generated.json';
 import mockPublications from '../utils/testfiles/publications_45_random_results_generated.json';
 import mockMyPublications from '../utils/testfiles/my_publications.json';
 import mockNsdPublisers from '../utils/testfiles/publishersFromNsd.json';
-import mockMemberInstitutions from '../utils/testfiles/mock_member_institutions.json';
+import mockCustomerInstitutions from '../utils/testfiles/mock_customer_institutions.json';
 import { AuthorityApiPaths } from './authorityApi';
 import { InstituionApiPaths } from './institutionApi';
 import { ProjectsApiPaths } from './projectApi';
 import { PublicationsApiPaths } from './publicationApi';
 import { PublicationChannelApiPaths } from './publicationChannelApi';
 import { FileUploadApiPaths } from './fileUploadApi';
-import { MemberInstituionApiPaths } from './memberInstitutionsApi';
+import { CustomerInstituionApiPaths } from './customerInstitutionsApi';
 
 const TOP_INSTITUTION_REGEXP = '[0-9]+.0.0.0';
 const SUBUNIT_INSTITUTION_REGEXP = '*.[^0]+.0.0';
@@ -144,8 +144,8 @@ export const interceptRequestsOnMock = () => {
 
   //memberinstitutions
   mock
-    .onGet(new RegExp(`${API_URL}${MemberInstituionApiPaths.MEMBER_INSTITUTION}/*`))
-    .reply(200, mockMemberInstitutions);
+    .onGet(new RegExp(`${API_URL}${CustomerInstituionApiPaths.CUSTOMER_INSTITUTION}/*`))
+    .reply(200, mockCustomerInstitutions);
 
   // Institution Registry
   mock.onGet(new RegExp(`${API_URL}${InstituionApiPaths.INSTITUTION}\\?name=*`)).reply(200, mockInstitutionResponse);

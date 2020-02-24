@@ -4,33 +4,33 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { addNotification } from '../redux/actions/notificationActions';
 import i18n from '../translations/i18n';
-import { getAllMemberInstitutions } from '../api/memberInstitutionsApi';
+import { getAllCustomerInstitutions } from '../api/customerInstitutionsApi';
 import Card from '../components/Card';
 import { CircularProgress } from '@material-ui/core';
 import InstitutionList from './InstitutionList';
 
-export interface MemberInstitutions {
+export interface DummyCustomerInstitution {
   name: string;
   id: string;
   createdDate: string;
   contact: string;
 }
 
-const AdministrateMemberInstututionPage: FC = () => {
+const AdminCustomerInstututionPage: FC = () => {
   const { t } = useTranslation('admin');
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
-  const [institutions, setInstitutions] = useState<MemberInstitutions[]>([]);
+  const [institutions, setInstitutions] = useState<DummyCustomerInstitution[]>([]);
 
   useEffect(() => {
     const loadData = async () => {
       setIsLoading(true);
-      const institutions = await getAllMemberInstitutions();
-      if (institutions?.error) {
-        dispatch(addNotification(i18n.t('feedback:error.get_institutions'), 'error'));
-      } else {
-        setInstitutions(institutions);
-      }
+      const institutions = await getAllCustomerInstitutions();
+      // if (institutions?.error) {
+      //   dispatch(addNotification(t('feedback:error.get_institutions'), 'error'));
+      // } else {
+      setInstitutions(institutions);
+      // }
       setIsLoading(false);
     };
     loadData();
@@ -44,4 +44,4 @@ const AdministrateMemberInstututionPage: FC = () => {
   );
 };
 
-export default AdministrateMemberInstututionPage;
+export default AdminCustomerInstututionPage;
