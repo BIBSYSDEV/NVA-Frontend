@@ -16,7 +16,7 @@ const StyledAdminMenu = styled.div`
   min-height: 4rem;
 `;
 
-const StyledButtonWrapper = styled(Button)`
+const StyledButtonWrapper = styled.div`
   margin-left: 1rem;
   margin-right: 1rem;
 `;
