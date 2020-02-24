@@ -21,7 +21,7 @@ import {
 import { updateInstitutionForAuthority } from '../../api/authorityApi';
 import { setAuthorityData } from '../../redux/actions/userActions';
 import { addNotification } from '../../redux/actions/notificationActions';
-import { getParentInstitutions } from '../../api/institutionApi';
+import { getParentUnits } from '../../api/institutionApi';
 
 const StyledButtonContainer = styled.div`
   display: flex;
@@ -45,23 +45,19 @@ const UserInstitution: FC = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const getParents = async () => {
-      let unitsFromArp: Unit[] = [];
+    const getUnitsForUser = async () => {
+      let units: Unit[] = [];
       for (let orgunitid in user.authority.orgunitids) {
         const currentSubunitid = user.authority.orgunitids[orgunitid];
-        const userUnit: Unit = await getParentInstitutions(currentSubunitid);
-        if (userUnit) {
-          unitsFromArp.push(userUnit);
-        } else {
-          return;
+        const unit: Unit = await getParentUnits(currentSubunitid);
+        if (unit) {
+          units.push(unit);
         }
       }
-      if (unitsFromArp) {
-        setUnits(unitsFromArp);
-      }
+      setUnits(units);
     };
     if (user.authority.orgunitids.length > 0) {
-      getParents();
+      getUnitsForUser();
     }
   }, [user.authority.orgunitids]);
 
@@ -83,8 +79,8 @@ const UserInstitution: FC = () => {
       if (subunits.length === 0) {
         await updateAuthorityAndDispatch(id, user.authority.systemControlNumber);
       } else {
-        const lastSubunitId = subunits.slice(-1)[0];
-        await updateAuthorityAndDispatch(lastSubunitId.id, user.authority.systemControlNumber);
+        const lastSubunit = subunits.slice(-1)[0];
+        await updateAuthorityAndDispatch(lastSubunit.id, user.authority.systemControlNumber);
       }
     } catch (error) {
       dispatch(addNotification(t('feedback:error.update_authority'), 'error'));

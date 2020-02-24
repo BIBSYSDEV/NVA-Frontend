@@ -1,7 +1,7 @@
 import Axios from 'axios';
 import { getIdToken } from './userApi';
 import mockInstitutionResponse from '../utils/testfiles/institution_query.json';
-import { Unit } from '../types/institution.types';
+import { Unit, emptyRecursiveUnit, RecursiveUnit, UnitResponse } from '../types/institution.types';
 
 export enum InstituionApiPaths {
   INSTITUTION = '/cristin-institutions',
@@ -26,7 +26,7 @@ export const getInstitutionAndSubunits = async (searchTerm: string) => {
   return mockInstitutionResponse;
 };
 
-export const getParentInstitutions = async (subunitid: string) => {
+export const getParentUnits = async (subunitid: string) => {
   // TODO: get institutions from endpoint
   // BACKEND NOT FINISHED YET
   const idToken = await getIdToken();
@@ -36,13 +36,13 @@ export const getParentInstitutions = async (subunitid: string) => {
   const url = `${InstituionApiPaths.INSTITUTION}?id=${subunitid}`;
   try {
     const response = await Axios.get(url, { headers });
-    let unit: any = { name: '', id: '', subunits: [] };
+    let unit: RecursiveUnit = emptyRecursiveUnit;
     const { id, name, subunits } = response.data;
     unit.id = id;
     unit.name = name;
 
     if (subunits.length > 0) {
-      unit.subunits = getAllSubunitObjects(subunits);
+      unit.subunits = flatSubunits(subunits);
       return unit;
     } else {
       return response.data;
@@ -52,7 +52,7 @@ export const getParentInstitutions = async (subunitid: string) => {
   }
 };
 
-const getAllSubunitObjects = (subunitsList: any) => {
+const flatSubunits = (subunitsList: UnitResponse[]) => {
   let subunits = [];
   if (subunitsList.length > 0) {
     subunits.push(getSubunitObjectFromList(subunitsList));
@@ -66,7 +66,7 @@ const getAllSubunitObjects = (subunitsList: any) => {
   return subunits;
 };
 
-const getSubunitObjectFromList = (list: any) => {
+const getSubunitObjectFromList = (list: UnitResponse[]) => {
   return {
     id: list[0].id,
     name: list[0].name,

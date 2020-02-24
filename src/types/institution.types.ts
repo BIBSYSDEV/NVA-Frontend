@@ -33,3 +33,14 @@ export enum FormikUnitFieldNames {
   SUBUNITS = 'subunits',
   UNIT = 'unit',
 }
+
+export interface UnitResponse {
+  id: string;
+  name: string;
+  unitName: object;
+  cristinUser: boolean;
+  institution: object;
+  uri?: string;
+  acronym?: string;
+  subunits: UnitResponse[];
+}
