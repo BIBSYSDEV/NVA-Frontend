@@ -21,6 +21,7 @@ import {
 import { updateInstitutionForAuthority } from '../../api/authorityApi';
 import { setAuthorityData } from '../../redux/actions/userActions';
 import { addNotification } from '../../redux/actions/notificationActions';
+import { getParentInstitutions } from '../../api/institutionApi';
 
 const StyledButtonContainer = styled.div`
   display: flex;
@@ -44,9 +45,25 @@ const UserInstitution: FC = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // TODO get units from authority based on orgunitids
-    // setUnits(response)
-  }, []);
+    const getParents = async () => {
+      let unitsFromArp: Unit[] = [];
+      for (let orgunitid in user.authority.orgunitids) {
+        const currentSubunitid = user.authority.orgunitids[orgunitid];
+        const userUnit: Unit = await getParentInstitutions(currentSubunitid);
+        if (userUnit) {
+          unitsFromArp.push(userUnit);
+        } else {
+          return;
+        }
+      }
+      if (unitsFromArp) {
+        setUnits(unitsFromArp);
+      }
+    };
+    if (user.authority.orgunitids.length > 0) {
+      getParents();
+    }
+  }, [user.authority.orgunitids]);
 
   const toggleOpen = () => {
     setOpen(!open);

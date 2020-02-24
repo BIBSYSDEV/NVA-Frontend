@@ -32,7 +32,7 @@ const mockSingleAuthorityResponseWithFeide: Authority = {
   systemControlNumber: '901790000000',
   feideids: ['tu@unit.no'],
   orcids: [],
-  orgunitids: [],
+  orgunitids: ['194.0.0.0', '194.67.0.0', '194.31.15.15'],
   handles: [],
   birthDate: '1941-04-25 00:00:00.000',
 };
@@ -42,7 +42,7 @@ const mockSingleAuthorityResponse: Authority = {
   systemControlNumber: '901790000000',
   feideids: ['tu@unit.no'],
   orcids: [],
-  orgunitids: [],
+  orgunitids: ['194.0.0.0', '194.67.0.0', '194.31.15.15'],
   handles: [],
   birthDate: '1941-04-25 00:00:00.000',
 };
@@ -75,6 +75,36 @@ const mockSingleAuthorityResponseWithSecondOrgunitid: Authority = {
   orgunitids: ['194.0.0.0', '194.16.0.0'],
   handles: [],
   birthDate: '1941-04-25 00:00:00.000',
+};
+
+const mockFirstUnitResponse = { id: '194.0.0.0', name: 'Norges teknisk-naturvitenskapelige universitet', subunits: [] };
+const mockSecondUnitResponse = {
+  id: '194.0.0.0',
+  name: 'Norges teknisk-naturvitenskapelige universitet',
+  subunits: [
+    {
+      id: '194.67.0.0',
+      name: 'Fakultet for samfunns- og utdanningsvitenskap',
+    },
+  ],
+};
+const mockThirdUnitResponse = {
+  id: '194.0.0.0',
+  name: 'Norges teknisk-naturvitenskapelige universitet',
+  subunits: [
+    {
+      id: '194.31.0.0',
+      name: 'NTNU Vitenskapsmuseet',
+    },
+    {
+      id: '194.31.15.0',
+      name: 'Seksjon for formidling',
+    },
+    {
+      id: '194.31.15.15',
+      name: 'Nasjonallaboratoriene for datering',
+    },
+  ],
 };
 
 const mockCreateUpload = { uploadId: 'asd', key: 'sfd' };
@@ -137,6 +167,9 @@ export const interceptRequestsOnMock = () => {
 
   // Institution Registry
   mock.onGet(new RegExp(`${API_URL}${InstituionApiPaths.INSTITUTION}\\?name=*`)).reply(200, mockInstitutionResponse);
+  mock.onGet(new RegExp(`${API_URL}${InstituionApiPaths.INSTITUTION}\\?id=*`)).replyOnce(200, mockFirstUnitResponse);
+  mock.onGet(new RegExp(`${API_URL}${InstituionApiPaths.INSTITUTION}\\?id=*`)).replyOnce(200, mockSecondUnitResponse);
+  mock.onGet(new RegExp(`${API_URL}${InstituionApiPaths.INSTITUTION}\\?id=*`)).replyOnce(200, mockThirdUnitResponse);
 
   // SEARCH
   mock.onGet(new RegExp(`${PublicationsApiPaths.SEARCH}/*`)).reply(200, mockPublications);
