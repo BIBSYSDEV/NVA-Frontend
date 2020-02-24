@@ -16,6 +16,7 @@ export enum PublicationsApiPaths {
   FETCH_RESOURCE = '/publications/fetch-resource',
   FETCH_MY_RESOURCES = '/publications/fetch-my-resources',
   DOI_LOOKUP = '/doi-fetch',
+  DOI_REQUESTS = '/publications/doi-requests',
 }
 
 export const createNewPublicationFromDoi = async (doiUrl: string, dispatch: Dispatch) => {
@@ -157,5 +158,25 @@ export const search = async (searchTerm: string, dispatch: Dispatch, offset?: nu
     }
   } catch {
     dispatch(searchFailure(i18n.t('feedback:error.search')));
+  }
+};
+
+// Fetch publications where creator also wanted a DOI to be created
+export const getDoiRequests = async () => {
+  try {
+    const idToken = await getIdToken();
+    const response = await Axios.get(PublicationsApiPaths.DOI_REQUESTS, {
+      headers: {
+        Authorization: `Bearer ${idToken}`,
+      },
+    });
+
+    if (response.status === StatusCode.OK) {
+      return response.data;
+    } else {
+      return [];
+    }
+  } catch (error) {
+    return { error };
   }
 };
