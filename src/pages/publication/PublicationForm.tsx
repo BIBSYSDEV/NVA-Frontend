@@ -135,7 +135,6 @@ const PublicationForm: FC<PublicationFormProps> = ({ uppy = createUppy(), id }) 
     };
 
     if (id) {
-      console.log(`fetching ${id}...`);
       getPublicationById();
     }
   }, [id]);
