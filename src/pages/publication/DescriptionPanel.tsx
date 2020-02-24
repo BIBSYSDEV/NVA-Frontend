@@ -117,20 +117,18 @@ const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublicat
             />
           </StyledFieldWrapper>
           <MultipleFieldWrapper>
-            {values.npiDiscipline && (
-              <StyledFieldWrapper>
-                <Field name={DescriptionFieldNames.NPI_DISCIPLINE}>
-                  {({ field: { name, value } }: any) => (
-                    <DisciplineSearch
-                      setValueFunction={newValue => setFieldValue(name, newValue ?? emptyNpiDiscipline)}
-                      dataTestId="search_npi"
-                      value={value.title}
-                      placeholder={t('description.search_for_npi_discipline')}
-                    />
-                  )}
-                </Field>
-              </StyledFieldWrapper>
-            )}
+            <StyledFieldWrapper>
+              <Field name={DescriptionFieldNames.NPI_DISCIPLINE}>
+                {({ field: { name, value } }: any) => (
+                  <DisciplineSearch
+                    setValueFunction={newValue => setFieldValue(name, newValue ?? emptyNpiDiscipline)}
+                    dataTestId="search_npi"
+                    value={value.title}
+                    placeholder={t('description.search_for_npi_discipline')}
+                  />
+                )}
+              </Field>
+            </StyledFieldWrapper>
             <StyledTagsField>
               <FieldArray name={DescriptionFieldNames.TAGS}>
                 {({ name, push, remove }) => (
