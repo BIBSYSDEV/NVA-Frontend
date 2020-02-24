@@ -17,7 +17,7 @@ const PublicationsForApproval: FC = () => {
     const fetchPublicationsForApproval = async () => {
       const publicationsForApprovalResponse = await getPublicationsForApproval();
       if (publicationsForApprovalResponse.error) {
-        dispatch(addNotification(t('feedback:error.get_approvable_publications'), 'error'));
+        dispatch(addNotification(publicationsForApprovalResponse.error, 'error'));
       } else {
         setPublicationsForApproval(publicationsForApprovalResponse);
       }

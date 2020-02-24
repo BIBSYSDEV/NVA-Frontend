@@ -17,7 +17,7 @@ const DoiRequests: FC = () => {
     const fetchDoiRequests = async () => {
       const doiRequestsResponse = await getDoiRequests();
       if (doiRequestsResponse.error) {
-        dispatch(addNotification(t('feedback:error.get_doi_requests'), 'error'));
+        dispatch(addNotification(doiRequestsResponse.error, 'error'));
       } else {
         setDoiRequests(doiRequestsResponse);
       }
