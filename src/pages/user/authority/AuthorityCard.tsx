@@ -6,7 +6,7 @@ import styled from 'styled-components';
 
 import { Radio } from '@material-ui/core';
 
-import { getAlmaPublication } from '../../../api/external/almaApi';
+import { getAlmaPublication } from '../../../api/almaApi';
 import { Authority } from '../../../types/authority.types';
 import { AlmaPublication } from '../../../types/publication.types';
 import NormalText from '../../../components/NormalText';
