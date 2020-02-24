@@ -83,26 +83,75 @@ const mockSecondUnitResponse = {
   name: 'Norges teknisk-naturvitenskapelige universitet',
   subunits: [
     {
-      id: '194.67.0.0',
-      name: 'Fakultet for samfunns- og utdanningsvitenskap',
+      id: '194.65.0.0',
+      name: 'Fakultet for medisin og helsevitenskap',
+      unitName: {
+        nb: 'Fakultet for medisin og helsevitenskap',
+      },
+      cristinUser: false,
+      institution: {
+        acronym: 'NTNU',
+      },
+      uri: 'https://api.cristin.no/v2/units/194.65.0.0',
+      acronym: 'MH',
+      subunits: [],
     },
   ],
 };
 const mockThirdUnitResponse = {
   id: '194.0.0.0',
   name: 'Norges teknisk-naturvitenskapelige universitet',
+  unitName: {
+    nb: 'Norges teknisk-naturvitenskapelige universitet',
+  },
+  cristinUser: false,
+  institution: {
+    cristin_institution_id: '194',
+    url: 'https://api.cristin.no/v2/institutions/194',
+  },
   subunits: [
     {
-      id: '194.31.0.0',
-      name: 'NTNU Vitenskapsmuseet',
-    },
-    {
-      id: '194.31.15.0',
-      name: 'Seksjon for formidling',
-    },
-    {
-      id: '194.31.15.15',
-      name: 'Nasjonallaboratoriene for datering',
+      id: '194.65.0.0',
+      name: 'Fakultet for medisin og helsevitenskap',
+      unitName: {
+        nb: 'Fakultet for medisin og helsevitenskap',
+      },
+      cristinUser: false,
+      institution: {
+        acronym: 'NTNU',
+      },
+      uri: 'https://api.cristin.no/v2/units/194.65.0.0',
+      acronym: 'MH',
+      subunits: [
+        {
+          id: '194.65.20.0',
+          name: 'Institutt for samfunnsmedisin og sykepleie',
+          unitName: {
+            nb: 'Institutt for samfunnsmedisin og sykepleie',
+          },
+          cristinUser: false,
+          institution: {
+            acronym: 'NTNU',
+          },
+          uri: 'https://api.cristin.no/v2/units/194.65.20.0',
+          acronym: 'MH-ISM',
+          subunits: [
+            {
+              id: '194.65.20.10',
+              name: 'Allmennmedisinsk forskningsenhet i Trondheim',
+              unitName: {
+                nb: 'Allmennmedisinsk forskningsenhet i Trondheim',
+              },
+              cristinUser: false,
+              institution: {
+                acronym: 'NTNU',
+              },
+              uri: 'https://api.cristin.no/v2/units/194.65.20.10',
+              acronym: 'AFE',
+            },
+          ],
+        },
+      ],
     },
   ],
 };
