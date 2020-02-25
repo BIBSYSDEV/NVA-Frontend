@@ -22,6 +22,7 @@ import { updateInstitutionForAuthority } from '../../api/authorityApi';
 import { setAuthorityData } from '../../redux/actions/userActions';
 import { addNotification } from '../../redux/actions/notificationActions';
 import { getParentUnits } from '../../api/institutionApi';
+import { USE_MOCK_DATA } from '../../utils/constants';
 
 const StyledButtonContainer = styled.div`
   display: flex;
@@ -69,11 +70,13 @@ const UserInstitution: FC = () => {
   };
 
   const updateAuthorityAndDispatch = async (id: string, scn: string) => {
-    const updatedAuthority = await updateInstitutionForAuthority(id, scn);
-    if (updatedAuthority.error) {
-      dispatch(addNotification(updatedAuthority.error, 'error'));
-    } else if (updatedAuthority) {
-      dispatch(setAuthorityData(updatedAuthority));
+    if (!USE_MOCK_DATA) {
+      const updatedAuthority = await updateInstitutionForAuthority(id, scn);
+      if (updatedAuthority.error) {
+        dispatch(addNotification(updatedAuthority.error, 'error'));
+      } else if (updatedAuthority) {
+        dispatch(setAuthorityData(updatedAuthority));
+      }
     }
   };
 

@@ -155,6 +155,48 @@ const mockThirdUnitResponse = {
     },
   ],
 };
+const mockForthUnitResponse = {
+  id: '194.0.0.0',
+  name: 'Norges teknisk-naturvitenskapelige universitet',
+  unitName: {
+    nb: 'Norges teknisk-naturvitenskapelige universitet',
+  },
+  cristinUser: false,
+  institution: {
+    cristin_institution_id: '194',
+    url: 'https://api.cristin.no/v2/institutions/194',
+  },
+  subunits: [
+    {
+      id: '194.65.0.0',
+      name: 'Fakultet for naturvitenskap',
+      unitName: {
+        nb: 'Fakultet for naturvitenskap',
+      },
+      cristinUser: false,
+      institution: {
+        acronym: 'NTNU',
+      },
+      uri: 'https://api.cristin.no/v2/units/194.65.0.0',
+      acronym: 'MH',
+      subunits: [
+        {
+          id: '194.65.20.0',
+          name: 'Institutt for fysikk',
+          unitName: {
+            nb: 'Institutt for fysikk',
+          },
+          cristinUser: false,
+          institution: {
+            acronym: 'NTNU',
+          },
+          uri: 'https://api.cristin.no/v2/units/194.65.20.0',
+          acronym: 'MH-ISM',
+        },
+      ],
+    },
+  ],
+};
 
 const mockCreateUpload = { uploadId: 'asd', key: 'sfd' };
 const mockPrepareUpload = { url: 'https://file-upload.com/files/' };
@@ -222,6 +264,7 @@ export const interceptRequestsOnMock = () => {
   mock.onGet(new RegExp(`${API_URL}${InstituionApiPaths.INSTITUTION}\\?id=*`)).replyOnce(200, mockFirstUnitResponse);
   mock.onGet(new RegExp(`${API_URL}${InstituionApiPaths.INSTITUTION}\\?id=*`)).replyOnce(200, mockSecondUnitResponse);
   mock.onGet(new RegExp(`${API_URL}${InstituionApiPaths.INSTITUTION}\\?id=*`)).replyOnce(200, mockThirdUnitResponse);
+  mock.onGet(new RegExp(`${API_URL}${InstituionApiPaths.INSTITUTION}\\?id=*`)).replyOnce(200, mockForthUnitResponse);
 
   // SEARCH
   mock.onGet(new RegExp(`${PublicationsApiPaths.SEARCH}/*`)).reply(200, mockPublications);
