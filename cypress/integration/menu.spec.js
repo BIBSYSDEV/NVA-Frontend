@@ -13,7 +13,7 @@ describe('Menu', () => {
     cy.get('[data-testid=menu]').click({ force: true });
   });
 
-  it('User with access should see menu options', () => {
+  it('User with affiliations should see menu options', () => {
     cy.window()
       .its('store')
       .then(store => {
@@ -25,9 +25,10 @@ describe('Menu', () => {
     cy.get('[data-testid=menu-admin-institution-button]').should('be.visible');
     cy.get('[data-testid=menu-my-worklist-button]').should('be.visible');
     cy.get('[data-testid=menu-logout-button]').should('be.visible');
+    cy.get('[data-testid=new-publication-button]').should('be.visible');
   });
 
-  it('User without access should not see menu options', () => {
+  it('User without affiliations should not see menu options', () => {
     cy.window()
       .its('store')
       .then(store => {
@@ -39,5 +40,6 @@ describe('Menu', () => {
     cy.get('[data-testid=menu-logout-button]').should('be.visible');
     cy.get('[data-testid=menu-my-publications-button]').should('not.be.visible');
     cy.get('[data-testid=menu-my-worklist-button]').should('not.be.visible');
+    cy.get('[data-testid=new-publication-button]').should('not.be.visible');
   });
 });
