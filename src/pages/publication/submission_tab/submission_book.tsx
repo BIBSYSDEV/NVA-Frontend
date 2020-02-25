@@ -12,7 +12,7 @@ const SubmissionBook: React.FC = () => {
     <>
       <LabelContentRow label={t('common:type')}>{t('referenceTypes:book')}</LabelContentRow>
       <LabelContentRow label={t('references.subtype')}>
-        {values.reference.book?.type && t(`referenceTypes:subtypes_book.${values.reference.book?.type}`)}
+        {values.reference.book?.type && t(`referenceTypes:subtypes_book.${values.reference.book.type}`)}
       </LabelContentRow>
       <LabelContentRow label={t('common:publisher')}>{values.reference.book?.publisher?.title}</LabelContentRow>
       <LabelContentRow label={t('references.peer_reviewed')}>
