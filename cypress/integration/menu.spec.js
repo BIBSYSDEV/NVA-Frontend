@@ -42,4 +42,24 @@ describe('Menu', () => {
     cy.get('[data-testid=menu-my-worklist-button]').should('not.be.visible');
     cy.get('[data-testid=new-publication-button]').should('not.be.visible');
   });
+
+  it('User without affiliations should get 404-message when visiting protected URLs', () => {
+    cy.window()
+      .its('store')
+      .then(store => {
+        store.dispatch(setUser(userWithoutAffiliations));
+      });
+
+    cy.visit('/publication');
+    cy.contains('404');
+
+    cy.visit('/my-publications');
+    cy.contains('404');
+
+    cy.visit('/admin-institutions');
+    cy.contains('404');
+
+    cy.visit('/worklist');
+    cy.contains('404');
+  });
 });
