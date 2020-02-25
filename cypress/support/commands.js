@@ -15,6 +15,6 @@ Cypress.Commands.add('mocklogin', () => {
 
 Cypress.Commands.add('setUserInRedux', user => {
   cy.window()
-    .its('store')
+    .its('store') // Redux store must be exposed via window.store
     .then(store => store.dispatch(setUser(user)));
 });
