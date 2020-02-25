@@ -108,7 +108,7 @@ const EditPublication: FC = () => {
           </StyledButton>
         </>
       ) : (
-        <PublicationForm uppy={uppy} />
+        <PublicationForm uppy={uppy} id={id} />
       )}
     </>
   );

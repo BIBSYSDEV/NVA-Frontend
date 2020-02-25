@@ -1,5 +1,5 @@
 import Axios from 'axios';
-import { StatusCode } from '../../utils/constants';
+import { StatusCode } from '../utils/constants';
 
 export enum AlmaApiPaths {
   ALMA = '/alma',

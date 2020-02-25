@@ -177,8 +177,8 @@ export const getDoiRequests = async () => {
     } else {
       return [];
     }
-  } catch (error) {
-    return { error };
+  } catch {
+    return { error: i18n.t('feedback:error.get_doi_requests') };
   }
 };
 
@@ -197,7 +197,7 @@ export const getPublicationsForApproval = async () => {
     } else {
       return [];
     }
-  } catch (error) {
-    return { error };
+  } catch {
+    return { error: i18n.t('feedback:error.get_approvable_publications') };
   }
 };
