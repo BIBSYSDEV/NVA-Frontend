@@ -24,7 +24,7 @@ const DoiRequests: FC = () => {
       setIsLoading(false);
     };
     fetchDoiRequests();
-  }, [dispatch, t]);
+  }, [dispatch]);
 
   return isLoading ? (
     <Progress />

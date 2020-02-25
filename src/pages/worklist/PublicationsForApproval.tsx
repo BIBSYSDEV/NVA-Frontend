@@ -24,7 +24,7 @@ const PublicationsForApproval: FC = () => {
       setIsLoading(false);
     };
     fetchPublicationsForApproval();
-  }, [dispatch, t]);
+  }, [dispatch]);
 
   return isLoading ? (
     <Progress />
