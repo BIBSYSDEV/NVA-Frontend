@@ -23,7 +23,7 @@ const StyledPublication = styled.div`
 
 interface PublicationFormProps {
   uppy: Uppy;
-  id: string;
+  id?: string;
 }
 
 const PublicationForm: FC<PublicationFormProps> = ({ uppy = createUppy(), id }) => {
@@ -129,13 +129,13 @@ const PublicationForm: FC<PublicationFormProps> = ({ uppy = createUppy(), id }) 
   }, [uppy]);
 
   useEffect(() => {
-    const getPublicationById = async () => {
+    const getPublicationById = async (id: string) => {
       const publication = await getPublication(id);
       setInitialValues(publication);
     };
 
     if (id) {
-      getPublicationById();
+      getPublicationById(id);
     }
   }, [id]);
 
