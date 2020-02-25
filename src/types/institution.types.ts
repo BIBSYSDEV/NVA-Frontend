@@ -34,13 +34,13 @@ export enum FormikUnitFieldNames {
   UNIT = 'unit',
 }
 
-export interface UnitResponse {
+export interface UnitResponseType {
   id: string;
   name: string;
   unitName: object;
   cristinUser: boolean;
   institution: object;
-  uri?: string;
-  acronym?: string;
-  subunits: UnitResponse[];
+  uri: string;
+  acronym: string;
+  subunits: UnitResponseType[];
 }

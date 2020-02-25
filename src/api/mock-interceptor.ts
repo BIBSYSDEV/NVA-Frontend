@@ -84,9 +84,9 @@ const mockSecondUnitResponse = {
   subunits: [
     {
       id: '194.65.0.0',
-      name: 'Fakultet for medisin og helsevitenskap',
+      name: 'Fakultet for osteloff',
       unitName: {
-        nb: 'Fakultet for medisin og helsevitenskap',
+        nb: 'Fakultet for osteloff',
       },
       cristinUser: false,
       institution: {

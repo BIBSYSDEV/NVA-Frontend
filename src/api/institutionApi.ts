@@ -1,7 +1,7 @@
 import Axios from 'axios';
 import { getIdToken } from './userApi';
 import mockInstitutionResponse from '../utils/testfiles/institution_query.json';
-import { emptyRecursiveUnit, RecursiveUnit, UnitResponse } from '../types/institution.types';
+import { UnitResponseType, UnitBase, RecursiveUnit } from '../types/institution.types';
 
 export enum InstituionApiPaths {
   INSTITUTION = '/cristin-institutions',
@@ -36,13 +36,13 @@ export const getParentUnits = async (subunitid: string) => {
   const url = `${InstituionApiPaths.INSTITUTION}?id=${subunitid}`;
   try {
     const response = await Axios.get(url, { headers });
-    let unit: RecursiveUnit = emptyRecursiveUnit;
     const { id, name, subunits } = response.data;
-    unit.id = id;
-    unit.name = name;
 
     if (subunits.length > 0) {
-      unit.subunits = flatSubunits(subunits);
+      let unit: RecursiveUnit = { name: '', id: '', subunits: [] };
+      unit.id = id;
+      unit.name = name;
+      unit.subunits = getSubunits(subunits);
       return unit;
     } else {
       return response.data;
@@ -52,23 +52,16 @@ export const getParentUnits = async (subunitid: string) => {
   }
 };
 
-const flatSubunits = (subunitsList: UnitResponse[]) => {
-  let subunits = [];
-  if (subunitsList.length > 0) {
-    subunits.push(getSubunitObjectFromList(subunitsList));
-    if (subunitsList[0].subunits?.length > 0) {
-      subunits.push(getSubunitObjectFromList(subunitsList[0].subunits));
-      if (subunitsList[0].subunits[0].subunits?.length > 0) {
-        subunits.push(getSubunitObjectFromList(subunitsList[0].subunits[0].subunits));
+// inspired by https://stackoverflow.com/questions/48171842/how-to-write-a-recursive-flat-map-in-javascript
+const getSubunits = (subunits: UnitResponseType[]) => {
+  let list: UnitBase[] = [{ id: subunits[0].id, name: subunits[0].name }];
+  return subunits.flatMap(function loop(node: UnitResponseType): any {
+    if (node.subunits?.length > 0) {
+      list.push({ id: node.subunits[0].id, name: node.subunits[0].name });
+      if (node.subunits?.length > 0) {
+        return node.subunits.flatMap(loop);
       }
     }
-  }
-  return subunits;
-};
-
-const getSubunitObjectFromList = (list: UnitResponse[]) => {
-  return {
-    id: list[0].id,
-    name: list[0].name,
-  };
+    return list;
+  });
 };
