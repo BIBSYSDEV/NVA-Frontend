@@ -21,7 +21,7 @@ const StyledButtonWrapper = styled.div`
   justify-content: flex-end;
 `;
 
-const AdminCustomerInstututionsPage: FC = () => {
+const AdminCustomerInstitutionsPage: FC = () => {
   const { t } = useTranslation('admin');
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
@@ -54,4 +54,4 @@ const AdminCustomerInstututionsPage: FC = () => {
   );
 };
 
-export default AdminCustomerInstututionsPage;
+export default AdminCustomerInstitutionsPage;
