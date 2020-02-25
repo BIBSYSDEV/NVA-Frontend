@@ -3,8 +3,8 @@ import React, { FC } from 'react';
 import styled from 'styled-components';
 import { Button, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import Label from '../components/Label';
-import NormalText from '../components/NormalText';
+import Label from '../../components/Label';
+import NormalText from '../../components/NormalText';
 import { DummyCustomerInstitution } from './AdminCustomerInstitutionsPage';
 import { Link as RouterLink } from 'react-router-dom';
 
