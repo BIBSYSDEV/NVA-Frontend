@@ -57,26 +57,6 @@ const mockSingleAuthorityResponseWithOrcid: Authority = {
   birthDate: '1941-04-25 00:00:00.000',
 };
 
-const mockSingleAuthorityResponseWithFirstOrgunitid: Authority = {
-  name: 'Test User',
-  systemControlNumber: '901790000000',
-  feideids: ['osteloff@unit.no'],
-  orcids: ['0000-0001-2345-6789'],
-  orgunitids: ['194.0.0.0'],
-  handles: [],
-  birthDate: '1941-04-25 00:00:00.000',
-};
-
-const mockSingleAuthorityResponseWithSecondOrgunitid: Authority = {
-  name: 'Test User',
-  systemControlNumber: '901790000000',
-  feideids: ['osteloff@unit.no'],
-  orcids: ['0000-0001-2345-6789'],
-  orgunitids: ['194.0.0.0', '194.16.0.0'],
-  handles: [],
-  birthDate: '1941-04-25 00:00:00.000',
-};
-
 const mockFirstUnitResponse = { id: '194.0.0.0', name: 'Norges teknisk-naturvitenskapelige universitet', subunits: [] };
 const mockSecondUnitResponse = {
   id: '194.0.0.0',
@@ -155,48 +135,6 @@ const mockThirdUnitResponse = {
     },
   ],
 };
-const mockForthUnitResponse = {
-  id: '194.0.0.0',
-  name: 'Norges teknisk-naturvitenskapelige universitet',
-  unitName: {
-    nb: 'Norges teknisk-naturvitenskapelige universitet',
-  },
-  cristinUser: false,
-  institution: {
-    cristin_institution_id: '194',
-    url: 'https://api.cristin.no/v2/institutions/194',
-  },
-  subunits: [
-    {
-      id: '194.65.0.0',
-      name: 'Fakultet for naturvitenskap',
-      unitName: {
-        nb: 'Fakultet for naturvitenskap',
-      },
-      cristinUser: false,
-      institution: {
-        acronym: 'NTNU',
-      },
-      uri: 'https://api.cristin.no/v2/units/194.65.0.0',
-      acronym: 'MH',
-      subunits: [
-        {
-          id: '194.65.20.0',
-          name: 'Institutt for fysikk',
-          unitName: {
-            nb: 'Institutt for fysikk',
-          },
-          cristinUser: false,
-          institution: {
-            acronym: 'NTNU',
-          },
-          uri: 'https://api.cristin.no/v2/units/194.65.20.0',
-          acronym: 'MH-ISM',
-        },
-      ],
-    },
-  ],
-};
 
 const mockCreateUpload = { uploadId: 'asd', key: 'sfd' };
 const mockPrepareUpload = { url: 'https://file-upload.com/files/' };
@@ -246,15 +184,7 @@ export const interceptRequestsOnMock = () => {
     .onPut(new RegExp(`${API_URL}${AuthorityApiPaths.AUTHORITY}/*`))
     .replyOnce(200, mockSingleAuthorityResponseWithFeide);
   mock.onPut(new RegExp(`${API_URL}${AuthorityApiPaths.AUTHORITY}/*`)).replyOnce(200, mockSingleAuthorityResponse);
-  mock
-    .onPut(new RegExp(`${API_URL}${AuthorityApiPaths.AUTHORITY}/*`))
-    .replyOnce(200, mockSingleAuthorityResponseWithOrcid);
-  mock
-    .onPut(new RegExp(`${API_URL}${AuthorityApiPaths.AUTHORITY}/*`))
-    .replyOnce(200, mockSingleAuthorityResponseWithFirstOrgunitid);
-  mock
-    .onPut(new RegExp(`${API_URL}${AuthorityApiPaths.AUTHORITY}/*`))
-    .reply(200, mockSingleAuthorityResponseWithSecondOrgunitid);
+  mock.onPut(new RegExp(`${API_URL}${AuthorityApiPaths.AUTHORITY}/*`)).reply(200, mockSingleAuthorityResponseWithOrcid);
 
   // create authority
   mock.onPost(new RegExp(`${API_URL}${AuthorityApiPaths.AUTHORITY}/*`)).reply(200, mockSingleAuthorityResponse);
@@ -264,7 +194,6 @@ export const interceptRequestsOnMock = () => {
   mock.onGet(new RegExp(`${API_URL}${InstituionApiPaths.INSTITUTION}\\?id=*`)).replyOnce(200, mockFirstUnitResponse);
   mock.onGet(new RegExp(`${API_URL}${InstituionApiPaths.INSTITUTION}\\?id=*`)).replyOnce(200, mockSecondUnitResponse);
   mock.onGet(new RegExp(`${API_URL}${InstituionApiPaths.INSTITUTION}\\?id=*`)).replyOnce(200, mockThirdUnitResponse);
-  mock.onGet(new RegExp(`${API_URL}${InstituionApiPaths.INSTITUTION}\\?id=*`)).replyOnce(200, mockForthUnitResponse);
 
   // SEARCH
   mock.onGet(new RegExp(`${PublicationsApiPaths.SEARCH}/*`)).reply(200, mockPublications);

@@ -1,7 +1,7 @@
 import Axios from 'axios';
 import { getIdToken } from './userApi';
 import mockInstitutionResponse from '../utils/testfiles/institution_query.json';
-import { UnitResponseType, UnitBase, RecursiveUnit } from '../types/institution.types';
+import { UnitResponseType, UnitBase } from '../types/institution.types';
 import { StatusCode } from '../utils/constants';
 import i18n from '../translations/i18n';
 
@@ -42,11 +42,7 @@ export const getParentUnits = async (subunitid: string) => {
       const { id, name, subunits } = response.data;
 
       if (subunits.length > 0) {
-        let unit: RecursiveUnit = { name: '', id: '', subunits: [] };
-        unit.id = id;
-        unit.name = name;
-        unit.subunits = getSubunits(subunits);
-        return unit;
+        return { name, id, subunits: getSubunits(subunits) };
       } else {
         return response.data;
       }
