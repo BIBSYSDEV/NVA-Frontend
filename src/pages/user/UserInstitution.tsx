@@ -49,17 +49,20 @@ const UserInstitution: FC = () => {
       let units: Unit[] = [];
       for (let orgunitid in user.authority.orgunitids) {
         const currentSubunitid = user.authority.orgunitids[orgunitid];
-        const unit: Unit = await getParentUnits(currentSubunitid);
-        if (unit) {
+        const unit = await getParentUnits(currentSubunitid);
+        if (!unit.error) {
           units.push(unit);
         }
+      }
+      if (user.authority.orgunitids.length > 0 && units.length === 0) {
+        dispatch(addNotification(t('feedback:error.get_parent_units'), 'error'));
       }
       setUnits(units);
     };
     if (user.authority.orgunitids?.length > 0) {
       getUnitsForUser();
     }
-  }, [user.authority.orgunitids]);
+  }, [user.authority.orgunitids, dispatch, t]);
 
   const toggleOpen = () => {
     setOpen(!open);
@@ -100,9 +103,11 @@ const UserInstitution: FC = () => {
   return (
     <Card>
       <Heading>{t('heading.organizations')}</Heading>
-      {units?.map((unit: Unit, index: number) => (
-        <InstitutionCard key={index} unit={unit} />
-      ))}
+      {units.length > 0 ? (
+        units.map((unit: Unit, index: number) => <InstitutionCard key={index} unit={unit} />)
+      ) : (
+        <i>{t('organization.no_institutions_found')}</i>
+      )}
       <Formik enableReinitialize initialValues={emptyFormikUnit} onSubmit={onSubmit} validateOnChange={false}>
         {({ values, setFieldValue, handleSubmit, resetForm }: FormikProps<FormikUnit>) => (
           <Field name={FormikUnitFieldNames.UNIT}>

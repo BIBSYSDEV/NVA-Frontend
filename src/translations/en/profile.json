@@ -55,6 +55,7 @@
     "faculty": "",
     "institute": "",
     "institution": "Institution",
+    "no_institutions_found": "No institutions found",
     "save": "Save",
     "search_for_institution": "Search for institution"
   }
