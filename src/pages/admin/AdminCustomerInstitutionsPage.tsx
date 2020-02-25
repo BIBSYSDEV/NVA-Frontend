@@ -45,7 +45,7 @@ const AdminCustomerInstututionsPage: FC = () => {
     <Card>
       <Heading>{t('common:institutions')}</Heading>
       <StyledButtonWrapper>
-        <Button color="primary" component={RouterLink} to={`/admin-institution`} data-testid="public-profile-button">
+        <Button color="primary" component={RouterLink} to={`/admin-institution`} data-testid="add-institution-button">
           {t('add_institution')}
         </Button>
       </StyledButtonWrapper>
