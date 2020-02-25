@@ -10,7 +10,7 @@ describe('Menu', () => {
     cy.visit('/user');
   });
 
-  it('Authorized user with should see protected menu options', () => {
+  it('Authorized user should see protected menu options', () => {
     cy.get('[data-testid=menu-login-button]').click({ force: true });
     cy.setUserInRedux(authorizedUser);
 
@@ -23,7 +23,7 @@ describe('Menu', () => {
     cy.get('[data-testid=new-publication-button]').should('be.visible');
   });
 
-  it('Unauthorized user without should not see protected menu options', () => {
+  it('Unauthorized user should not see protected menu options', () => {
     cy.get('[data-testid=menu-login-button]').click({ force: true });
     cy.setUserInRedux(unauthorizedUser);
 
