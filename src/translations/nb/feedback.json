@@ -3,6 +3,7 @@
     "404_page": "Beklager, men vi kan ikke finne siden du ser etter. (Http feilkode 404)",
     "create_authority": "Kunne ikke opprette autoritet",
     "create_publication": "Kunne ikke opprette publikasjon",
+    "get_approvable_publications": "Kunne ikke hente publikasjoner som venter godkjenning",
     "get_authority": "Kunne ikke hente autoritet",
     "get_authorities": "Kunne ikke hente autoriteter",
     "get_doi": "Kunne ikke hente lenkedata",
