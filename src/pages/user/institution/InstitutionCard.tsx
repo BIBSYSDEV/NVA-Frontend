@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 import Label from '../../../components/Label';
-import { Unit, UnitBase } from '../../../types/institution.types';
 import { Button } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { useTranslation } from 'react-i18next';
@@ -11,6 +10,7 @@ import { AuthorityQualifiers, removeIdFromAuthority } from '../../../api/authori
 import { addNotification } from '../../../redux/actions/notificationActions';
 import { setAuthorityData } from '../../../redux/actions/userActions';
 import NormalText from '../../../components/NormalText';
+import { InstitutionUnit, InstitutionUnitBase } from '../../../types/institution.types';
 
 const StyledSelectedInstitution = styled.div`
   display: grid;
@@ -35,7 +35,7 @@ const StyledButtonContainer = styled.div`
 `;
 
 interface InstitutionCardProps {
-  unit: Unit;
+  unit: InstitutionUnit;
 }
 
 const InstitutionCard: FC<InstitutionCardProps> = ({ unit }) => {
@@ -62,7 +62,7 @@ const InstitutionCard: FC<InstitutionCardProps> = ({ unit }) => {
     <StyledSelectedInstitution data-testid="institution-presentation">
       <StyledTextContainer>
         <Label>{unit.name}</Label>
-        {unit.subunits?.map((subunit: UnitBase) => (
+        {unit.subunits?.map((subunit: InstitutionUnitBase) => (
           <NormalText key={subunit.id} data-testid="institution-presentation-subunit">
             {subunit.name}
           </NormalText>

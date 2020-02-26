@@ -12,11 +12,11 @@ import { Formik, FormikProps, Field, FieldProps } from 'formik';
 import InstitutionSearch from '../publication/references_tab/components/InstitutionSearch';
 import {
   emptyRecursiveUnit,
-  UnitBase,
-  Unit,
+  InstitutionUnitBase,
+  InstitutionUnit,
   emptyFormikUnit,
-  FormikUnitFieldNames,
-  FormikUnit,
+  FormikInstitutionUnitFieldNames,
+  FormikInstitutionUnit,
 } from '../../types/institution.types';
 import { updateInstitutionForAuthority } from '../../api/authorityApi';
 import { setAuthorityData } from '../../redux/actions/userActions';
@@ -41,13 +41,13 @@ const StyledInstitutionSearchContainer = styled.div`
 const UserInstitution: FC = () => {
   const user = useSelector((state: RootStore) => state.user);
   const [open, setOpen] = useState(false);
-  const [units, setUnits] = useState<Unit[]>([]);
+  const [units, setUnits] = useState<InstitutionUnit[]>([]);
   const { t } = useTranslation('profile');
   const dispatch = useDispatch();
 
   useEffect(() => {
     const getUnitsForUser = async () => {
-      let units: Unit[] = [];
+      let units: InstitutionUnit[] = [];
       for (let orgunitid in user.authority.orgunitids) {
         const currentSubunitid = user.authority.orgunitids[orgunitid];
         const unit = await getParentUnits(currentSubunitid);
@@ -78,7 +78,7 @@ const UserInstitution: FC = () => {
     }
   };
 
-  const handleAddInstitution = async ({ name, id, subunits }: Unit) => {
+  const handleAddInstitution = async ({ name, id, subunits }: InstitutionUnit) => {
     try {
       if (subunits.length === 0) {
         await updateAuthorityAndDispatch(id, user.authority.systemControlNumber);
@@ -90,13 +90,13 @@ const UserInstitution: FC = () => {
       dispatch(addNotification(t('feedback:error.update_authority'), 'error'));
     }
     // TODO: remove this when we get data from backend
-    const filteredSubunits = subunits.filter((subunit: UnitBase) => subunit.name !== '');
+    const filteredSubunits = subunits.filter((subunit: InstitutionUnitBase) => subunit.name !== '');
     setUnits([...units, { id, name, subunits: filteredSubunits }]);
 
     setOpen(false);
   };
 
-  const onSubmit = async (values: FormikUnit, { resetForm }: any) => {
+  const onSubmit = async (values: FormikInstitutionUnit, { resetForm }: any) => {
     handleAddInstitution({ name: values.name, id: values.id, subunits: values.subunits });
     resetForm(emptyFormikUnit);
   };
@@ -105,13 +105,13 @@ const UserInstitution: FC = () => {
     <Card>
       <Heading>{t('heading.organizations')}</Heading>
       {units.length > 0 ? (
-        units.map((unit: Unit, index: number) => <InstitutionCard key={index} unit={unit} />)
+        units.map((unit: InstitutionUnit, index: number) => <InstitutionCard key={index} unit={unit} />)
       ) : (
         <>{!open && <NormalText>{t('organization.no_institutions_found')}</NormalText>}</>
       )}
       <Formik enableReinitialize initialValues={emptyFormikUnit} onSubmit={onSubmit} validateOnChange={false}>
-        {({ values, setFieldValue, handleSubmit, resetForm }: FormikProps<FormikUnit>) => (
-          <Field name={FormikUnitFieldNames.UNIT}>
+        {({ values, setFieldValue, handleSubmit, resetForm }: FormikProps<FormikInstitutionUnit>) => (
+          <Field name={FormikInstitutionUnitFieldNames.UNIT}>
             {({ field: { name, value } }: FieldProps) =>
               open && (
                 <StyledInstitutionSearchContainer>
@@ -120,8 +120,8 @@ const UserInstitution: FC = () => {
                     label={t('organization.institution')}
                     clearSearchField={values.name === ''}
                     setValueFunction={inputValue => {
-                      setFieldValue(FormikUnitFieldNames.NAME, inputValue.name);
-                      setFieldValue(FormikUnitFieldNames.ID, inputValue.id);
+                      setFieldValue(FormikInstitutionUnitFieldNames.NAME, inputValue.name);
+                      setFieldValue(FormikInstitutionUnitFieldNames.ID, inputValue.id);
                       setFieldValue(name, inputValue ?? emptyRecursiveUnit);
                     }}
                     placeholder={t('organization.search_for_institution')}

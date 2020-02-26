@@ -1,7 +1,7 @@
 import Axios from 'axios';
 import { getIdToken } from './userApi';
 import mockInstitutionResponse from '../utils/testfiles/institution_query.json';
-import { UnitResponseType, UnitBase } from '../types/institution.types';
+import { InstitutionUnitResponseType, InstitutionUnitBase } from '../types/institution.types';
 import { StatusCode } from '../utils/constants';
 import i18n from '../translations/i18n';
 
@@ -55,9 +55,9 @@ export const getParentUnits = async (subunitid: string) => {
 };
 
 // inspired by https://stackoverflow.com/questions/48171842/how-to-write-a-recursive-flat-map-in-javascript
-const getSubunits = (subunits: UnitResponseType[]) => {
-  let list: UnitBase[] = [{ id: subunits[0].id, name: subunits[0].name }];
-  return subunits.flatMap(function loop(node: UnitResponseType): any {
+const getSubunits = (subunits: InstitutionUnitResponseType[]) => {
+  let list: InstitutionUnitBase[] = [{ id: subunits[0].id, name: subunits[0].name }];
+  return subunits.flatMap(function loop(node: InstitutionUnitResponseType): any {
     if (node.subunits?.length > 0) {
       list.push({ id: node.subunits[0].id, name: node.subunits[0].name });
       if (node.subunits?.length > 0) {

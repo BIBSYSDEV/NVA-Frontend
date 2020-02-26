@@ -1,40 +1,40 @@
-export interface UnitBase {
+export interface InstitutionUnitBase {
   name: string;
   id: string;
 }
 
-export interface RecursiveUnit extends UnitBase {
-  subunits?: RecursiveUnit[];
+export interface RecursiveInstitutionUnit extends InstitutionUnitBase {
+  subunits?: RecursiveInstitutionUnit[];
 }
 
-export interface FormikUnit extends UnitBase {
-  subunits: UnitBase[];
-  unit: RecursiveUnit;
+export interface FormikInstitutionUnit extends InstitutionUnitBase {
+  subunits: InstitutionUnitBase[];
+  unit: RecursiveInstitutionUnit;
 }
 
-export type Unit = Pick<FormikUnit, 'name' | 'id' | 'subunits'>;
+export type InstitutionUnit = Pick<FormikInstitutionUnit, 'name' | 'id' | 'subunits'>;
 
-export const emptyRecursiveUnit: RecursiveUnit = {
+export const emptyRecursiveUnit: RecursiveInstitutionUnit = {
   name: '',
   id: '',
   subunits: [],
 };
 
-export const emptyFormikUnit: FormikUnit = {
+export const emptyFormikUnit: FormikInstitutionUnit = {
   name: '',
   id: '',
   subunits: [],
   unit: emptyRecursiveUnit,
 };
 
-export enum FormikUnitFieldNames {
+export enum FormikInstitutionUnitFieldNames {
   NAME = 'name',
   ID = 'id',
   SUBUNITS = 'subunits',
   UNIT = 'unit',
 }
 
-export interface UnitResponseType {
+export interface InstitutionUnitResponseType {
   id: string;
   name: string;
   unitName: object;
@@ -42,5 +42,5 @@ export interface UnitResponseType {
   institution: object;
   uri: string;
   acronym: string;
-  subunits: UnitResponseType[];
+  subunits: InstitutionUnitResponseType[];
 }
