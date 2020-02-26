@@ -2,14 +2,14 @@ import { mockUser } from '../../src/utils/testfiles/mock_feide_user';
 
 const authorizedUser = { ...mockUser, 'custom:affiliation': '[member, employee, staff]', email: 'ost@unit.no' }; //@unit.no-address resolves to app admin
 
-describe('User administer institutions ', () => {
+describe('User administers institutions ', () => {
   before('Given that the user is logged in as Application administrator:', () => {
     cy.visit('/');
     cy.get('[data-testid=menu-login-button]').click({ force: true });
     cy.setUserInRedux(authorizedUser);
   });
 
-  it('The User should be able to open institutions-admin-page from menu', () => {
+  it('The User should be able to open admin page for institutions from the menu', () => {
     // Open admin-inst-page
     cy.get('[data-testid=menu]').click({ force: true });
     cy.get('[data-testid=menu-admin-institution-button]').click({ force: true });
