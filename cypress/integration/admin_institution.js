@@ -10,7 +10,7 @@ describe('User administers institutions ', () => {
   });
 
   it('The User should be able to open admin page for institutions from the menu', () => {
-    // Open admin-inst-page
+    // Open administer institutions page
     cy.get('[data-testid=menu]').click({ force: true });
     cy.get('[data-testid=menu-admin-institution-button]').click({ force: true });
 
@@ -20,11 +20,11 @@ describe('User administers institutions ', () => {
   });
 
   it('The User should be able to add an institution', () => {
-    // Open admin-inst-page
+    // Open administer institutions page
     cy.get('[data-testid=menu]').click({ force: true });
     cy.get('[data-testid=menu-admin-institution-button]').click({ force: true });
 
-    // Open new-inst-page
+    // Open new institution page
     cy.get('[data-testid=add-institution-button]').click({ force: true });
   });
 });
