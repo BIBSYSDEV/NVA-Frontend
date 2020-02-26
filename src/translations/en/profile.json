@@ -47,16 +47,10 @@
     "publisher_description": "A Publisher is a person whom is employed at the organization. A publisher has also access to register their own publications"
   },
   "organization": {
-    "add": "Add",
     "add_institution": "Add institution",
-    "close": "Close",
-    "edit": "Edit",
     "edit_institution": "Edit institution",
-    "faculty": "",
-    "institute": "",
     "institution": "Institution",
     "no_institutions_found": "No institutions found",
-    "save": "Save",
     "search_for_institution": "Search for institution"
   }
 }
