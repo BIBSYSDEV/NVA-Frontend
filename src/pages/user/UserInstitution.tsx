@@ -22,6 +22,7 @@ import { updateInstitutionForAuthority } from '../../api/authorityApi';
 import { setAuthorityData } from '../../redux/actions/userActions';
 import { addNotification } from '../../redux/actions/notificationActions';
 import { getParentUnits } from '../../api/institutionApi';
+import NormalText from '../../components/NormalText';
 
 const StyledButtonContainer = styled.div`
   display: flex;
@@ -106,7 +107,7 @@ const UserInstitution: FC = () => {
       {units.length > 0 ? (
         units.map((unit: Unit, index: number) => <InstitutionCard key={index} unit={unit} />)
       ) : (
-        <i>{t('organization.no_institutions_found')}</i>
+        <>{!open && <NormalText>{t('organization.no_institutions_found')}</NormalText>}</>
       )}
       <Formik enableReinitialize initialValues={emptyFormikUnit} onSubmit={onSubmit} validateOnChange={false}>
         {({ values, setFieldValue, handleSubmit, resetForm }: FormikProps<FormikUnit>) => (

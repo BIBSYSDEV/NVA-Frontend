@@ -5,6 +5,12 @@ import { Unit, UnitBase } from '../../../types/institution.types';
 import { Button } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { useTranslation } from 'react-i18next';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootStore } from '../../../redux/reducers/rootReducer';
+import { AuthorityQualifiers, removeIdFromAuthority } from '../../../api/authorityApi';
+import { addNotification } from '../../../redux/actions/notificationActions';
+import { setAuthorityData } from '../../../redux/actions/userActions';
+import NormalText from '../../../components/NormalText';
 
 const StyledSelectedInstitution = styled.div`
   display: grid;
@@ -21,11 +27,6 @@ const StyledTextContainer = styled.div`
   grid-area: text;
 `;
 
-const StyledInstitutionText = styled.div`
-  height: 1.5rem;
-`;
-// check if should use Typography here
-
 const StyledButtonContainer = styled.div`
   grid-area: button;
   display: flex;
@@ -39,11 +40,22 @@ interface InstitutionCardProps {
 
 const InstitutionCard: FC<InstitutionCardProps> = ({ unit }) => {
   const { t } = useTranslation('common');
+  const user = useSelector((state: RootStore) => state.user);
+  const dispatch = useDispatch();
 
-  const handleRemoveInstitution = () => {
-    // get last subunit id and remove it from ARP
-    console.log('remove', unit.id);
-    console.log('subunits', unit.subunits);
+  const handleRemoveInstitution = async () => {
+    const idToRemove = unit.subunits.length > 0 ? unit.subunits.slice(-1)[0].id : unit.id;
+    const updatedAuthority = await removeIdFromAuthority(
+      user.authority.systemControlNumber,
+      AuthorityQualifiers.ORGUNIT_ID,
+      idToRemove
+    );
+    if (updatedAuthority.error) {
+      dispatch(addNotification(updatedAuthority.error, 'error'));
+    } else if (updatedAuthority) {
+      dispatch(setAuthorityData(updatedAuthority));
+      dispatch(addNotification(t('feedback:success.delete_identifier')));
+    }
   };
 
   return (
@@ -51,17 +63,13 @@ const InstitutionCard: FC<InstitutionCardProps> = ({ unit }) => {
       <StyledTextContainer>
         <Label>{unit.name}</Label>
         {unit.subunits?.map((subunit: UnitBase) => (
-          <StyledInstitutionText key={subunit.id} data-testid="institution-presentation-subunit">
+          <NormalText key={subunit.id} data-testid="institution-presentation-subunit">
             {subunit.name}
-          </StyledInstitutionText>
+          </NormalText>
         ))}
       </StyledTextContainer>
       <StyledButtonContainer>
-        <Button
-          color="secondary"
-          variant="outlined"
-          data-testid={`delete-publication-${unit.id}`}
-          onClick={handleRemoveInstitution}>
+        <Button color="secondary" data-testid={`delete-publication-${unit.id}`} onClick={handleRemoveInstitution}>
           <DeleteIcon />
           {t('remove')}
         </Button>
