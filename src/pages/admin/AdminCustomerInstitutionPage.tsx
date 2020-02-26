@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import Card from '../../components/Card';
 
-const AdminCustomerInstututionPage: FC = () => {
+const AdminCustomerInstitutionPage: FC = () => {
   return (
     <Card>
       <form>instituition-form</form>
@@ -9,4 +9,4 @@ const AdminCustomerInstututionPage: FC = () => {
   );
 };
 
-export default AdminCustomerInstututionPage;
+export default AdminCustomerInstitutionPage;

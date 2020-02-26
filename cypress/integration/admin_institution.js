@@ -1,10 +1,15 @@
-describe('User opens Admin Institutions Page', () => {
+import { mockUser } from '../../src/utils/testfiles/mock_feide_user';
+
+const authorizedUser = { ...mockUser, 'custom:affiliation': '[member, employee, staff]', email: 'ost@unit.no' }; //@unit.no-address resolves to app admin
+
+describe('User administer institutions ', () => {
   before('Given that the user is logged in as Application administrator:', () => {
     cy.visit('/');
-    cy.mocklogin(); //TODO: set role app administrator
+    cy.get('[data-testid=menu-login-button]').click({ force: true });
+    cy.setUserInRedux(authorizedUser);
   });
 
-  it('The User should be able to open institution-admin-page from menu', () => {
+  it('The User should be able to open institutions-admin-page from menu', () => {
     // Open admin-inst-page
     cy.get('[data-testid=menu]').click({ force: true });
     cy.get('[data-testid=menu-admin-institution-button]').click({ force: true });
@@ -12,6 +17,12 @@ describe('User opens Admin Institutions Page', () => {
     cy.contains('Institutt for osteloff');
     cy.contains('Kjetil');
     cy.contains('27.01.1780');
+  });
+
+  it('The User should be able to add an institution', () => {
+    // Open admin-inst-page
+    cy.get('[data-testid=menu]').click({ force: true });
+    cy.get('[data-testid=menu-admin-institution-button]').click({ force: true });
 
     // Open new-inst-page
     cy.get('[data-testid=add-institution-button]').click({ force: true });
