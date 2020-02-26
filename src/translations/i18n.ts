@@ -2,6 +2,7 @@ import i18n from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 
 import { PageLanguageCodes } from '../types/language.types';
+import adminEn from './en/admin.json';
 import breadcrumbsEn from './en/breadcrumbs.json';
 import commonEn from './en/common.json';
 import disciplinesEn from './en/disciplines.json';
@@ -12,6 +13,8 @@ import publicationEn from './en/publication.json';
 import referenceTypesEn from './en/referenceTypes.json';
 import translationsEn from './en/translations.json';
 import workListsEn from './en/workLists.json';
+
+import adminNb from './nb/admin.json';
 import breadcrumbsNb from './nb/breadcrumbs.json';
 import commonNb from './nb/common.json';
 import disciplinesNb from './nb/disciplines.json';
@@ -28,6 +31,7 @@ export const defaultLanguage = PageLanguageCodes.NORWEGIAN_BOKMAL;
 i18n.use(LanguageDetector).init({
   resources: {
     en: {
+      admin: adminEn,
       breadcrumbs: breadcrumbsEn,
       common: commonEn,
       disciplines: disciplinesEn,
@@ -40,6 +44,7 @@ i18n.use(LanguageDetector).init({
       workLists: workListsEn,
     },
     nb: {
+      admin: adminNb,
       breadcrumbs: breadcrumbsNb,
       common: commonNb,
       disciplines: disciplinesNb,
