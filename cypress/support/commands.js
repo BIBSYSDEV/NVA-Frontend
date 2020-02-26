@@ -1,3 +1,5 @@
+import { setUser } from '../../src/redux/actions/userActions';
+
 Cypress.Commands.add('mocklogin', () => {
   // log in
   cy.get('[data-testid=menu-login-button]').click({ force: true });
@@ -9,4 +11,10 @@ Cypress.Commands.add('mocklogin', () => {
   // need to set language to english in order to check that the translated values are correct
   cy.get('[data-testid=language-selector] .MuiSelect-root').click({ force: true });
   cy.get('[data-testid=user-language-en-US]').click({ force: true });
+});
+
+Cypress.Commands.add('setUserInRedux', user => {
+  cy.window()
+    .its('store') // Redux store must be exposed via window.store
+    .then(store => store.dispatch(setUser(user)));
 });

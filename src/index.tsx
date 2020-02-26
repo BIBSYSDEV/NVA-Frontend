@@ -21,6 +21,11 @@ if (USE_MOCK_DATA) {
   interceptRequestsOnMock();
 }
 
+// Expose redux store to cypress tests
+if ((window as any).Cypress) {
+  (window as any).store = store;
+}
+
 ReactDOM.render(
   <I18nextProvider i18n={i18n}>
     <Provider store={store}>
