@@ -1,7 +1,12 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 import { FormControl, Select, MenuItem } from '@material-ui/core';
-import { RecursiveUnit, emptyRecursiveUnit, UnitBase, FormikUnit } from '../../../types/institution.types';
+import {
+  RecursiveInstitutionUnit,
+  emptyRecursiveUnit,
+  InstitutionUnitBase,
+  FormikInstitutionUnit,
+} from '../../../types/institution.types';
 import { Field, FormikProps, useFormikContext, FieldProps } from 'formik';
 
 const StyledInstitutionSelector = styled.div`
@@ -13,15 +18,15 @@ const StyledFormControl = styled(FormControl)`
 `;
 
 interface InstitutionSelectorProps {
-  unit: RecursiveUnit;
+  unit: RecursiveInstitutionUnit;
   counter: number;
 }
 
 const InstitutionSelector: FC<InstitutionSelectorProps> = ({ unit, counter }) => {
-  const { values, setFieldValue }: FormikProps<FormikUnit> = useFormikContext();
+  const { values, setFieldValue }: FormikProps<FormikInstitutionUnit> = useFormikContext();
 
   const handleChange = (newValue: string, previousValue: string) => {
-    const subunit = unit.subunits?.find((subunit: UnitBase) => subunit.name === newValue);
+    const subunit = unit.subunits?.find((subunit: InstitutionUnitBase) => subunit.name === newValue);
 
     if (!subunit) {
       return;
@@ -52,7 +57,7 @@ const InstitutionSelector: FC<InstitutionSelectorProps> = ({ unit, counter }) =>
                   data-testid={`unit-selector-${counter}`}
                   value={value || ''}
                   onChange={(event: React.ChangeEvent<any>) => handleChange(event.target.value, value)}>
-                  {unit.subunits?.map((subunit: UnitBase) => (
+                  {unit.subunits?.map((subunit: InstitutionUnitBase) => (
                     <MenuItem key={subunit.id} value={subunit.name}>
                       {subunit.name}
                     </MenuItem>
@@ -62,7 +67,9 @@ const InstitutionSelector: FC<InstitutionSelectorProps> = ({ unit, counter }) =>
               {value && unit.subunits && unit.subunits.length > 0 ? (
                 <InstitutionSelector
                   key={unit.id}
-                  unit={unit.subunits.find((unit: RecursiveUnit) => unit.name === value) || emptyRecursiveUnit}
+                  unit={
+                    unit.subunits.find((unit: RecursiveInstitutionUnit) => unit.name === value) || emptyRecursiveUnit
+                  }
                   counter={++counter}
                 />
               ) : null}
