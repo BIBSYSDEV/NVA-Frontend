@@ -60,11 +60,17 @@ const WorklistPage: FC = () => {
   return (
     <>
       <StyledTabsContainer>
-        <StyledTabButton onClick={() => setSelectedTab(Tab.Approval)} isSelected={selectedTab === Tab.Approval}>
+        <StyledTabButton
+          data-testid="for-approval-button"
+          onClick={() => setSelectedTab(Tab.Approval)}
+          isSelected={selectedTab === Tab.Approval}>
           <StyledPlaylistAddCheckIcon fontSize="large" />
           {t('for_approval')}
         </StyledTabButton>
-        <StyledTabButton onClick={() => setSelectedTab(Tab.Doi)} isSelected={selectedTab === Tab.Doi}>
+        <StyledTabButton
+          data-testid="doi-requests-button"
+          onClick={() => setSelectedTab(Tab.Doi)}
+          isSelected={selectedTab === Tab.Doi}>
           <StyledLinkIcon fontSize="large" />
           {t('doi_requests')}
         </StyledTabButton>
