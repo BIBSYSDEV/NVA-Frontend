@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux';
 import { RootStore } from './redux/reducers/rootReducer';
 import { checkIfAppAdmin, checkIfPublisher, checkIfCurator } from './utils/authorization';
 import PublicProfile from './pages/publication/PublicProfile';
-import InstututionPage from './pages/InstitutionsPage';
+import AdminCustomerInstututionPage from './pages/AdminCustomerInstitutionsPage';
 import WorklistPage from './pages/worklist/WorklistPage';
 
 const AppRoutes: FC = () => {
@@ -26,8 +26,8 @@ const AppRoutes: FC = () => {
       {isPublisher && <Route exact path="/publication" component={EditPublication} />}
       {isPublisher && <Route exact path="/publication/:id" component={EditPublication} />}
       {isPublisher && <Route exact path="/my-publications" component={MyPublications} />}
-      {isAppAdmin && <Route exact path="/admin-institutions" component={InstututionPage} />}
       {isCurator && <Route exact path="/worklist" component={WorklistPage} />}
+      {isAppAdmin && <Route exact path="/admin-institutions" component={AdminCustomerInstututionPage} />}
       {user.isLoggedIn && <Route exact path="/public-profile/:userName" component={PublicProfile} />}
       <Route exact path="/search" component={Search} />
       <Route exact path="/publication/:publicationId" component={PublicationPage} />

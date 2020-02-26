@@ -4,6 +4,7 @@ import LinkIcon from '@material-ui/icons/Link';
 import PlaylistAddCheckIcon from '@material-ui/icons/PlaylistAddCheck';
 import styled from 'styled-components';
 import DoiRequests from './DoiRequests';
+import PublicationsForApproval from './PublicationsForApproval';
 import Card from '../../components/Card';
 
 const StyledTabsContainer = styled.div`
@@ -59,18 +60,24 @@ const WorklistPage: FC = () => {
   return (
     <>
       <StyledTabsContainer>
-        <StyledTabButton onClick={() => setSelectedTab(Tab.Approval)} isSelected={selectedTab === Tab.Approval}>
+        <StyledTabButton
+          data-testid="for-approval-button"
+          onClick={() => setSelectedTab(Tab.Approval)}
+          isSelected={selectedTab === Tab.Approval}>
           <StyledPlaylistAddCheckIcon fontSize="large" />
           {t('for_approval')}
         </StyledTabButton>
-        <StyledTabButton onClick={() => setSelectedTab(Tab.Doi)} isSelected={selectedTab === Tab.Doi}>
+        <StyledTabButton
+          data-testid="doi-requests-button"
+          onClick={() => setSelectedTab(Tab.Doi)}
+          isSelected={selectedTab === Tab.Doi}>
           <StyledLinkIcon fontSize="large" />
           {t('doi_requests')}
         </StyledTabButton>
       </StyledTabsContainer>
 
       <StyledCard>
-        {selectedTab === Tab.Approval && <div>TODO: For Approval</div>}
+        {selectedTab === Tab.Approval && <PublicationsForApproval />}
         {selectedTab === Tab.Doi && <DoiRequests />}
       </StyledCard>
     </>
