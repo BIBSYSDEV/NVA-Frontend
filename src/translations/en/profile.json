@@ -50,6 +50,7 @@
     "add_institution": "Add institution",
     "edit_institution": "Edit institution",
     "institution": "Institution",
+    "no_institutions_found": "No institutions found",
     "search_for_institution": "Search for institution"
   }
 }

@@ -22,7 +22,9 @@ describe('User adds an institution to their profile', () => {
     cy.get('[data-testid=autosearch-institution]')
       .click({ force: true })
       .type('ntnu');
-    cy.contains('Norges teknisk-naturvitenskapelige universitet').click({ force: true });
+    cy.get('.MuiAutocomplete-option')
+      .contains('Norges teknisk-naturvitenskapelige universitet')
+      .click({ force: true });
     cy.get('[data-testid=unit-selector-0]')
       .click({ force: true })
       .type(' ');
