@@ -1,5 +1,4 @@
-import uuid from 'uuid';
-
+import { v4 as uuidv4 } from 'uuid';
 import { VariantType } from 'notistack';
 import { Notification } from '../../types/notification.types';
 
@@ -12,7 +11,7 @@ export const addNotification = (message: string, variant: VariantType = 'success
   notification: {
     message,
     variant,
-    key: uuid.v4(),
+    key: uuidv4(),
   },
 });
 

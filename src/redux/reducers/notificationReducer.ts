@@ -1,4 +1,4 @@
-import uuid from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 
 import i18n from '../../translations/i18n';
 import { Notification } from '../../types/notification.types';
@@ -23,7 +23,7 @@ export const notificationReducer = (
     case SET_USER_FAILURE:
     case SEARCH_FAILURE:
     case LOGIN_FAILURE:
-      return [...state, { key: uuid.v4(), ...action }];
+      return [...state, { key: uuidv4(), ...action }];
     case ADD_NOTIFICATION:
       return [...state, { ...action.notification }];
     case REMOVE_NOTIFICATION:
