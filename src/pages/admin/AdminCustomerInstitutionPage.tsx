@@ -5,15 +5,12 @@ import { useTranslation } from 'react-i18next';
 import { Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import { TextField } from '@material-ui/core';
+import { CustomerInstitutionFieldNames, emptyCustomerInstitution } from '../../types/customerInstitution.types';
 
 const StyledFieldWrapper = styled.div`
   margin: 1rem;
   flex: 1 0 40%;
 `;
-
-enum FieldNames {
-  NAME = 'name',
-}
 
 const AdminCustomerInstitutionPage: FC = () => {
   const { t } = useTranslation('publication');
@@ -21,16 +18,7 @@ const AdminCustomerInstitutionPage: FC = () => {
   return (
     <Card>
       <Formik
-        initialValues={{
-          name: '',
-          displayName: '',
-          shortName: '',
-          archiveName: '',
-          CNAME: '',
-          institutionDNS: '',
-          AdministrationId: '',
-          FeideOrganizationId: '',
-        }}
+        initialValues={emptyCustomerInstitution}
         validationSchema={Yup.object({
           name: Yup.string().required('Required'),
         })}
@@ -44,7 +32,7 @@ const AdminCustomerInstitutionPage: FC = () => {
           <StyledFieldWrapper>
             <Field
               aria-label="name"
-              name={FieldNames.NAME}
+              name={CustomerInstitutionFieldNames.NAME}
               label={t('common:name')}
               component={TextField}
               fullWidth

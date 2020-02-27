@@ -3,24 +3,52 @@
     "name": "Statped",
     "id": "1",
     "createdDate": "27.01.2020",
-    "contact": "Roger"
+    "contact": "Roger",
+    "displayName": "xxx",
+    "shortName": "xxx",
+    "archiveName": "xxx",
+    "CNAME": "xxx",
+    "institutionDNS": "xxx",
+    "AdministrationId": "xxx",
+    "FeideOrganizationId": "xxx"
   },
   {
     "name": "Anno Museeum",
     "id": "2",
     "createdDate": "27.01.2019",
-    "contact": "Børre"
+    "contact": "Børre",
+    "displayName": "xxx",
+    "shortName": "xxx",
+    "archiveName": "xxx",
+    "CNAME": "xxx",
+    "institutionDNS": "xxx",
+    "AdministrationId": "xxx",
+    "FeideOrganizationId": "xxx"
   },
   {
     "name": "Institutt for osteloff",
     "id": "3",
     "createdDate": "27.01.1780",
-    "contact": "Kjetil"
+    "contact": "Kjetil",
+    "displayName": "xxx",
+    "shortName": "xxx",
+    "archiveName": "xxx",
+    "CNAME": "xxx",
+    "institutionDNS": "xxx",
+    "AdministrationId": "xxx",
+    "FeideOrganizationId": "xxx"
   },
   {
     "name": "Norsk senter for økologisk landbruk",
     "id": "4",
     "createdDate": "27.01.2012",
-    "contact": "Rolf"
+    "contact": "Rolf",
+    "displayName": "xxx",
+    "shortName": "xxx",
+    "archiveName": "xxx",
+    "CNAME": "xxx",
+    "institutionDNS": "xxx",
+    "AdministrationId": "xxx",
+    "FeideOrganizationId": "xxx"
   }
 ]
