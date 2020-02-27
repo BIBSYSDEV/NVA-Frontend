@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 
-import { Avatar, Backdrop, Dialog, Fade } from '@material-ui/core';
+import { Avatar, Backdrop, Dialog, Fade, DialogTitle } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 
 import Heading from './Heading';
@@ -11,7 +11,7 @@ const StyledPaper = styled.div`
   margin: 1rem;
 `;
 
-const StyledHeaderContainer = styled.div`
+const StyledHeaderContainer = styled(DialogTitle)`
   display: flex;
   padding: 1rem 0;
   justify-content: space-between;
@@ -89,7 +89,7 @@ const Modal: FC<ModalProps> = ({
         timeout: 500,
       }}>
       <StyledWidth />
-      <StyledHeaderContainer>
+      <StyledHeaderContainer disableTypography>
         {headingIcon ? (
           <StyledInfoContainer>
             {headingIcon && <StyledAvatar src={headingIcon.src} alt={headingIcon.alt} />}
