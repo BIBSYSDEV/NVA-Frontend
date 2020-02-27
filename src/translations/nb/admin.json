@@ -1,3 +1,11 @@
 {
-  "add_institution": "Opprett institusjon"
+  "add_institution": "Opprett institusjon",
+  "administrationId": "AutentiseringsID for institusjonsadministrator",
+  "archiveName": "Arkivnavn",
+  "cname": "CNAME",
+  "displayName": "Visningsnavn på instutusjonen",
+  "feideOrganizationId": "Organisasjons ID i Feide",
+  "institutionDns": "Institusjonens DNS",
+  "organizationRegisterName": "Navn i organisasjonsregister",
+  "shortName": "Forkortet visningsnavn på instutusjonen"
 }
