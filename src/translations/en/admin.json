@@ -1,10 +1,10 @@
 {
   "add_institution": "Add institution",
-  "administrationId": "Authenticating ID for institution administrator",
+  "administrationId": "Authenticating id for institution administrator",
   "archiveName": "Archive name",
   "cname": "CNAME",
   "displayName": "Display name for the institution",
-  "feideOrganizationId": "Organization ID in Feide",
+  "feideOrganizationId": "Organization id in Feide",
   "institutionDns": "DNS for the institution",
   "organizationRegisterName": "Name in organization registry",
   "shortName": "Shortened display name"
