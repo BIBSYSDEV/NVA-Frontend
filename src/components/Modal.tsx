@@ -11,7 +11,7 @@ const StyledPaper = styled.div`
   margin: 1rem;
 `;
 
-const StyledHeaderContainer = styled(DialogTitle)`
+const StyledHeaderContainer = styled.div`
   display: flex;
   padding: 1rem 0;
   justify-content: space-between;
@@ -45,6 +45,10 @@ const StyledInfoContainer = styled.div`
   grid-template-columns: 1fr 7fr;
   grid-gap: 1rem;
   align-items: center;
+`;
+
+const StyledDialogTitle = styled(DialogTitle)`
+  padding: 0;
 `;
 
 interface ModalProps {
@@ -89,15 +93,17 @@ const Modal: FC<ModalProps> = ({
         timeout: 500,
       }}>
       <StyledWidth />
-      <StyledHeaderContainer disableTypography>
-        {headingIcon ? (
-          <StyledInfoContainer>
-            {headingIcon && <StyledAvatar src={headingIcon.src} alt={headingIcon.alt} />}
-            <Heading>{headingText}</Heading>
-          </StyledInfoContainer>
-        ) : (
-          <StyledHeading>{headingText}</StyledHeading>
-        )}
+      <StyledHeaderContainer>
+        <StyledDialogTitle disableTypography>
+          {headingIcon ? (
+            <StyledInfoContainer>
+              {headingIcon && <StyledAvatar src={headingIcon.src} alt={headingIcon.alt} />}
+              <StyledHeading>{headingText}</StyledHeading>
+            </StyledInfoContainer>
+          ) : (
+            <StyledHeading>{headingText}</StyledHeading>
+          )}
+        </StyledDialogTitle>
         {!disableEscape && <StyledCloseIcon onClick={handleClose} />}
       </StyledHeaderContainer>
 
