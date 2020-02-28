@@ -1,4 +1,4 @@
-import { FormikErrors, FormikProps, FormikTouched, useFormikContext } from 'formik';
+import { FormikErrors, FormikProps, FormikTouched, useFormikContext, getIn } from 'formik';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -13,7 +13,6 @@ import {
   ReferenceFieldNames,
   ReportFieldNames,
 } from '../../types/references.types';
-import { getObjectValueByFieldName } from '../../utils/helpers';
 import { DescriptionFieldNames } from './DescriptionPanel';
 
 const a11yProps = (tabDescription: string) => {
@@ -67,8 +66,8 @@ const hasTouchedError = (errors: FormikErrors<any>, touched: FormikTouched<any>,
   }
 
   return fieldNames.some(fieldName => {
-    const fieldHasError = !!getObjectValueByFieldName(errors, fieldName);
-    const fieldIsTouched = getObjectValueByFieldName(touched, fieldName);
+    const fieldHasError = !!getIn(errors, fieldName);
+    const fieldIsTouched = getIn(touched, fieldName);
     return fieldHasError && fieldIsTouched;
   });
 };

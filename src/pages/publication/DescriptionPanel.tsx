@@ -1,4 +1,4 @@
-import { Field, FieldArray, FormikProps, useFormikContext, FieldProps, FieldArrayRenderProps } from 'formik';
+import { Field, FieldArray, FormikProps, useFormikContext, FieldProps, FieldArrayRenderProps, getIn } from 'formik';
 import { TextField } from 'formik-material-ui';
 import React, { FC, useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -15,7 +15,6 @@ import ProjectRow from './description_tab/ProjectRow';
 import DatePickerField from './description_tab/DatePickerField';
 import { Project } from '../../types/project.types';
 import ChipInput from 'material-ui-chip-input';
-import { getObjectValueByFieldName } from '../../utils/helpers';
 import { orderedLanguages } from '../../types/language.types';
 import Heading from '../../components/Heading';
 import Card from '../../components/Card';
@@ -133,7 +132,7 @@ const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublicat
               <FieldArray name={DescriptionFieldNames.TAGS}>
                 {({ name, push, remove }: FieldArrayRenderProps) => (
                   <ChipInput
-                    value={getObjectValueByFieldName(values, name)}
+                    value={getIn(values, name)}
                     onAdd={tag => push(tag)}
                     onDelete={(_, index) => remove(index)}
                     aria-label="tags"
@@ -186,7 +185,7 @@ const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublicat
                     dataTestId="search_project"
                     placeholder={t('description.search_for_project')}
                   />
-                  {getObjectValueByFieldName(values, name).map(
+                  {getIn(values, name).map(
                     (project: Project, i: number) =>
                       project && (
                         <ProjectRow
