@@ -1,4 +1,4 @@
-import { Field, Formik, Form } from 'formik';
+import { Field, Formik, Form, FieldProps } from 'formik';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
@@ -41,7 +41,7 @@ const LinkPublicationForm: React.FC<LinkPublicationFormProps> = ({ handleSearch 
       <Form>
         <StyledInputBox>
           <Field name="doiUrl">
-            {({ field }: any) => (
+            {({ field }: FieldProps) => (
               <StyledTextField
                 variant="outlined"
                 label={t('publication.link')}

@@ -1,4 +1,4 @@
-import { Field, FieldArray, FormikProps, useFormikContext } from 'formik';
+import { Field, FieldArray, FormikProps, useFormikContext, FieldProps, FieldArrayRenderProps } from 'formik';
 import { TextField } from 'formik-material-ui';
 import React, { FC, useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -119,7 +119,7 @@ const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublicat
           <MultipleFieldWrapper>
             <StyledFieldWrapper>
               <Field name={DescriptionFieldNames.NPI_DISCIPLINE}>
-                {({ field: { name, value } }: any) => (
+                {({ field: { name, value } }: FieldProps) => (
                   <DisciplineSearch
                     setValueFunction={newValue => setFieldValue(name, newValue ?? emptyNpiDiscipline)}
                     dataTestId="search_npi"
@@ -131,7 +131,7 @@ const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublicat
             </StyledFieldWrapper>
             <StyledTagsField>
               <FieldArray name={DescriptionFieldNames.TAGS}>
-                {({ name, push, remove }) => (
+                {({ name, push, remove }: FieldArrayRenderProps) => (
                   <ChipInput
                     value={getObjectValueByFieldName(values, name)}
                     onAdd={tag => push(tag)}
@@ -179,7 +179,7 @@ const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublicat
 
           <StyledFieldWrapper>
             <FieldArray name={DescriptionFieldNames.PROJECTS}>
-              {({ name, insert, remove }) => (
+              {({ name, insert, remove }: FieldArrayRenderProps) => (
                 <>
                   <ProjectSearch
                     setValueFunction={newValue => insert(0, newValue)}

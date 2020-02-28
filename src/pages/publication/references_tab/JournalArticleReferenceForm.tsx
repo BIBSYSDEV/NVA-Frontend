@@ -1,4 +1,4 @@
-import { Field, FormikProps, useFormikContext } from 'formik';
+import { Field, FormikProps, useFormikContext, FieldProps } from 'formik';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
@@ -43,7 +43,7 @@ const JournalArticleReferenceForm: FC = () => {
   return (
     <>
       <Field name={JournalArticleFieldNames.TYPE} variant="outlined">
-        {({ field }: any) => (
+        {({ field }: FieldProps) => (
           <TextField select variant="outlined" fullWidth label={t('common:type')} {...field}>
             {Object.values(JournalArticleType).map(typeValue => (
               <MenuItem value={typeValue} key={typeValue}>
@@ -55,11 +55,11 @@ const JournalArticleReferenceForm: FC = () => {
       </Field>
 
       <Field name={JournalArticleFieldNames.DOI}>
-        {({ field }: any) => <TextField variant="outlined" label={t('references.doi')} {...field} />}
+        {({ field }: FieldProps) => <TextField variant="outlined" label={t('references.doi')} {...field} />}
       </Field>
 
       <Field name={JournalArticleFieldNames.PUBLISHER}>
-        {({ field: { name, value } }: any) => (
+        {({ field: { name, value } }: FieldProps) => (
           <>
             <PublicationChannelSearch
               clearSearchField={value === emptyPublisher}
@@ -82,25 +82,27 @@ const JournalArticleReferenceForm: FC = () => {
       </Field>
       <StyledArticleDetail>
         <Field name={JournalArticleFieldNames.VOLUME}>
-          {({ field }: any) => <TextField variant="outlined" label={t('references.volume')} {...field} />}
+          {({ field }: FieldProps) => <TextField variant="outlined" label={t('references.volume')} {...field} />}
         </Field>
 
         <Field name={JournalArticleFieldNames.ISSUE}>
-          {({ field }: any) => <TextField variant="outlined" label={t('references.issue')} {...field} />}
+          {({ field }: FieldProps) => <TextField variant="outlined" label={t('references.issue')} {...field} />}
         </Field>
 
         <Field name={JournalArticleFieldNames.PAGES_FROM}>
-          {({ field }: any) => <TextField variant="outlined" label={t('references.pages_from')} {...field} />}
+          {({ field }: FieldProps) => <TextField variant="outlined" label={t('references.pages_from')} {...field} />}
         </Field>
 
         <Field name={JournalArticleFieldNames.PAGES_TO}>
-          {({ field }: any) => <TextField variant="outlined" label={t('references.pages_to')} {...field} />}
+          {({ field }: FieldProps) => <TextField variant="outlined" label={t('references.pages_to')} {...field} />}
         </Field>
 
         <StyledLabel>{t('references.or')}</StyledLabel>
 
         <Field name={JournalArticleFieldNames.ARTICLE_NUMBER}>
-          {({ field }: any) => <TextField variant="outlined" label={t('references.article_number')} {...field} />}
+          {({ field }: FieldProps) => (
+            <TextField variant="outlined" label={t('references.article_number')} {...field} />
+          )}
         </Field>
       </StyledArticleDetail>
       <StyledPeerReview>
