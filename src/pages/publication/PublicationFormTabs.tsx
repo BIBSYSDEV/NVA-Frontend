@@ -60,7 +60,11 @@ export const PublicationFormTabs: FC<PublicationFormTabsProps> = ({ handleTabCha
   );
 };
 
-const hasTouchedError = (errors: FormikErrors<any>, touched: FormikTouched<any>, fieldNames: string[]): boolean => {
+const hasTouchedError = (
+  errors: FormikErrors<Publication>,
+  touched: FormikTouched<Publication>,
+  fieldNames: string[]
+): boolean => {
   if (!Object.keys(errors).length || !Object.keys(touched).length || !fieldNames.length) {
     return false;
   }
