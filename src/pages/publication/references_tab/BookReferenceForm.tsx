@@ -1,4 +1,4 @@
-import { Field, FormikProps, useFormikContext } from 'formik';
+import { Field, FormikProps, useFormikContext, FieldProps } from 'formik';
 import React, { ChangeEvent, FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
@@ -43,7 +43,7 @@ const BookReferenceForm: FC = () => {
   return (
     <>
       <Field name={BookFieldNames.TYPE}>
-        {({ field }: any) => (
+        {({ field }: FieldProps) => (
           <TextField select variant="outlined" label={t('common:type')} {...field} fullWidth>
             {Object.values(BookType).map(typeValue => (
               <MenuItem value={typeValue} key={typeValue}>
@@ -55,7 +55,7 @@ const BookReferenceForm: FC = () => {
       </Field>
 
       <Field name={BookFieldNames.PUBLISHER}>
-        {({ field: { name, value } }: any) => (
+        {({ field: { name, value } }: FieldProps) => (
           <>
             <PublicationChannelSearch
               clearSearchField={value === emptyPublisher}
@@ -77,7 +77,7 @@ const BookReferenceForm: FC = () => {
         )}
       </Field>
       <Field name={BookFieldNames.ISBN}>
-        {({ field }: any) => (
+        {({ field }: FieldProps) => (
           <TextField data-testid="isbn" variant="outlined" label={t('references.isbn')} {...field} />
         )}
       </Field>
@@ -87,7 +87,7 @@ const BookReferenceForm: FC = () => {
         </StyledPeerReview>
         <StyledTextBook>
           <Field name={BookFieldNames.TEXT_BOOK}>
-            {({ field: { name, value } }: any) => (
+            {({ field: { name, value } }: FieldProps) => (
               <>
                 <Label>{t('references.is_text_book')}</Label>
                 <FormControlLabel
@@ -107,7 +107,7 @@ const BookReferenceForm: FC = () => {
         </StyledTextBook>
       </StyledSection>
       <Field name={BookFieldNames.NUMBER_OF_PAGES}>
-        {({ field }: any) => (
+        {({ field }: FieldProps) => (
           <TextField
             data-testid="number_of_pages"
             variant="outlined"
@@ -119,7 +119,7 @@ const BookReferenceForm: FC = () => {
       <SubHeading>{t('references.series')}</SubHeading>
       <Label>{t('references.series_info')}</Label>
       <Field name={BookFieldNames.SERIES}>
-        {({ field: { name, value } }: any) => (
+        {({ field: { name, value } }: FieldProps) => (
           <>
             <PublicationChannelSearch
               dataTestId="autosearch-series"

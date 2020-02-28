@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Field } from 'formik';
+import { Field, FieldProps } from 'formik';
 import { TextField } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
 import styled from 'styled-components';
@@ -51,7 +51,7 @@ const ChapterReferenceForm: React.FC = () => {
       </StyledInfoBox>
 
       <Field name={ChapterFieldNames.LINK}>
-        {({ field }: any) => (
+        {({ field }: FieldProps) => (
           <TextField
             data-testid="chapter-link"
             aria-label="DOI-link"
@@ -78,7 +78,7 @@ const ChapterReferenceForm: React.FC = () => {
 
       <StyledPageNumberWrapper>
         <Field name={ChapterFieldNames.PAGES_FROM}>
-          {({ field }: any) => (
+          {({ field }: FieldProps) => (
             <StyledPageNumberField
               variant="outlined"
               data-testid="chapter-pages-from"
@@ -91,7 +91,7 @@ const ChapterReferenceForm: React.FC = () => {
           <RemoveIcon />
         </StyledDashIconWrapper>
         <Field name={ChapterFieldNames.PAGES_TO}>
-          {({ field }: any) => (
+          {({ field }: FieldProps) => (
             <StyledPageNumberField
               data-testid="chapter-pages-to"
               variant="outlined"
