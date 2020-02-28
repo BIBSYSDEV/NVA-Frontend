@@ -23,11 +23,6 @@ interface UppyCompleteArgs extends UppyArgs {
   parts: AwsS3Part[];
 }
 
-export interface UppyCompletePart {
-  PartNumber: string;
-  ETag: string;
-}
-
 export const createUppy = (): UppyType =>
   Uppy<Uppy.StrictTypes>({
     autoProceed: true,
