@@ -1,5 +1,5 @@
-import { Uppy } from '@uppy/core';
-import AwsS3Multipart from '@uppy/aws-s3-multipart';
+import Uppy from '@uppy/core';
+import AwsS3Multipart, { AwsS3Part } from '@uppy/aws-s3-multipart';
 import {
   createMultipartUpload,
   listParts,
@@ -20,7 +20,7 @@ interface UppyPrepareArgs extends UppyArgs {
 }
 
 interface UppyCompleteArgs extends UppyArgs {
-  parts: UppyCompletePart[];
+  parts: AwsS3Part[];
 }
 
 export interface UppyCompletePart {
@@ -29,7 +29,7 @@ export interface UppyCompletePart {
 }
 
 export const createUppy = (): UppyType =>
-  new Uppy({
+  Uppy<Uppy.StrictTypes>({
     autoProceed: true,
   }).use(AwsS3Multipart, {
     abortMultipartUpload: async (_: File, { uploadId, key }: UppyArgs) => await abortMultipartUpload(uploadId, key),
