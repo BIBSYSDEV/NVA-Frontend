@@ -3,7 +3,7 @@ import { Auth } from 'aws-amplify';
 import { Dispatch } from 'redux';
 
 import { loginSuccess, logoutSuccess } from '../redux/actions/authActions';
-import { clearUser, setUser, setUserFailure } from '../redux/actions/userActions';
+import { clearUser, setUser } from '../redux/actions/userActions';
 import { RootStore } from '../redux/reducers/rootReducer';
 import i18n from '../translations/i18n';
 import { USE_MOCK_DATA } from '../utils/constants';
@@ -34,7 +34,7 @@ export const getCurrentAuthenticatedUser = () => {
           // NOTE: getSession must be called to authenticate user before calling getUserAttributes
           cognitoUser.getUserAttributes((error: any) => {
             if (error) {
-              dispatch(setUserFailure(i18n.t('feedback:error.get_user')));
+              dispatch(addNotification(i18n.t('feedback:error.get_user', NotificationVariant.Error)));
             } else {
               dispatch(setUser(cognitoUser.attributes));
             }
@@ -44,7 +44,7 @@ export const getCurrentAuthenticatedUser = () => {
     } catch {
       const store = getState();
       if (store.user.isLoggedIn) {
-        dispatch(setUserFailure(i18n.t('feedback:error.get_user')));
+        dispatch(addNotification(i18n.t('feedback:error.get_user', NotificationVariant.Error)));
       }
     }
   };
