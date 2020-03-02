@@ -1,4 +1,4 @@
-import { Field, FormikProps, useFormikContext } from 'formik';
+import { Field, FormikProps, useFormikContext, FieldProps } from 'formik';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
@@ -30,7 +30,7 @@ const ReportReferenceForm: FC = () => {
   return (
     <>
       <Field name={ReportFieldNames.TYPE}>
-        {({ field }: any) => (
+        {({ field }: FieldProps) => (
           <TextField select variant="outlined" fullWidth label={t('common:type')} {...field}>
             {Object.values(ReportType).map(typeValue => (
               <MenuItem value={typeValue} key={typeValue}>
@@ -42,7 +42,7 @@ const ReportReferenceForm: FC = () => {
       </Field>
 
       <Field name={ReportFieldNames.PUBLISHER}>
-        {({ field: { name, value } }: any) => (
+        {({ field: { name, value } }: FieldProps) => (
           <>
             <PublicationChannelSearch
               clearSearchField={value === emptyPublisher}
@@ -64,13 +64,13 @@ const ReportReferenceForm: FC = () => {
         )}
       </Field>
       <Field name={ReportFieldNames.ISBN}>
-        {({ field }: any) => (
+        {({ field }: FieldProps) => (
           <TextField data-testid="isbn" variant="outlined" label={t('references.isbn')} {...field} />
         )}
       </Field>
       <div>
         <Field name={ReportFieldNames.NUMBER_OF_PAGES}>
-          {({ field }: any) => (
+          {({ field }: FieldProps) => (
             <TextField
               data-testid="number_of_pages"
               variant="outlined"
@@ -83,7 +83,7 @@ const ReportReferenceForm: FC = () => {
       <StyledHeading>{t('references.series')}</StyledHeading>
       <StyledLabel>{t('references.series_info')}</StyledLabel>
       <Field name={ReportFieldNames.SERIES}>
-        {({ field: { name, value } }: any) => (
+        {({ field: { name, value } }: FieldProps) => (
           <>
             <PublicationChannelSearch
               clearSearchField={value === emptyPublisher}

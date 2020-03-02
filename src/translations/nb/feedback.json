@@ -25,6 +25,7 @@
     "update_publication": "Kunne ikke oppdatere publikasjon"
   },
   "success": {
+    "created_authority": "Forfatteridentitet er opprettet",
     "create_publication": "Publikasjonen er opprettet",
     "delete_identifier": "Identifikatoren ble slettet",
     "login": "Logget inn",

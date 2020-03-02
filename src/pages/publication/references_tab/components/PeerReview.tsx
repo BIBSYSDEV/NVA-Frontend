@@ -1,4 +1,4 @@
-import { Field, FormikProps, useFormikContext } from 'formik';
+import { Field, FormikProps, useFormikContext, FieldProps } from 'formik';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -19,7 +19,7 @@ const PeerReview: FC<PeerReviewProps> = ({ fieldName, label }) => {
 
   return (
     <Field name={fieldName}>
-      {({ field: { name, value } }: any) => (
+      {({ field: { name, value } }: FieldProps) => (
         <>
           <Label>{label}</Label>
           <FormControl>

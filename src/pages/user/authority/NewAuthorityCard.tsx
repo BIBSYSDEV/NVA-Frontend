@@ -59,7 +59,7 @@ const NewAuthorityCard: React.FC = () => {
       dispatch(addNotification(authority.error, 'error'));
     } else {
       dispatch(setAuthorityData(authority));
-      dispatch(addNotification('authority.created_authority'));
+      dispatch(addNotification(t('feedback:success.created_authority')));
     }
     setLoading(false);
   };
