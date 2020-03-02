@@ -2,12 +2,14 @@ import { CognitoUserSession } from 'amazon-cognito-identity-js';
 import { Auth } from 'aws-amplify';
 import { Dispatch } from 'redux';
 
-import { loginSuccess, logoutSuccess, refreshTokenFailure } from '../redux/actions/authActions';
+import { loginSuccess, logoutSuccess } from '../redux/actions/authActions';
 import { clearUser, setUser, setUserFailure } from '../redux/actions/userActions';
 import { RootStore } from '../redux/reducers/rootReducer';
 import i18n from '../translations/i18n';
 import { USE_MOCK_DATA } from '../utils/constants';
 import { mockUser } from '../utils/testfiles/mock_feide_user';
+import { addNotification } from '../redux/actions/notificationActions';
+import { NotificationVariant } from '../types/notification.types';
 
 export const login = () => {
   return async (dispatch: Dispatch) => {
@@ -64,12 +66,12 @@ export const refreshToken = () => {
       if (!currentSession.isValid()) {
         cognitoUser.refreshSession(currentSession.getRefreshToken(), (error: any) => {
           if (error) {
-            dispatch(refreshTokenFailure(error));
+            dispatch(addNotification(error, NotificationVariant.Error));
           }
         });
       }
     } catch (e) {
-      dispatch(refreshTokenFailure(e));
+      dispatch(addNotification(e, NotificationVariant.Error));
     }
   };
 };
