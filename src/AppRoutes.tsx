@@ -14,6 +14,7 @@ import PublicProfile from './pages/publication/PublicProfile';
 import AdminCustomerInstitutionPage from './pages/admin/AdminCustomerInstitutionPage';
 import AdminCustomerInstitutionsPage from './pages/admin/AdminCustomerInstitutionsPage';
 import WorklistPage from './pages/worklist/WorklistPage';
+import AdminUsersPage from './pages/admin/AdminUsersPage';
 
 const AppRoutes: FC = () => {
   const user = useSelector((store: RootStore) => store.user);
@@ -30,6 +31,7 @@ const AppRoutes: FC = () => {
       {isCurator && <Route exact path="/worklist" component={WorklistPage} />}
       {isAppAdmin && <Route exact path="/admin-institutions" component={AdminCustomerInstitutionsPage} />}
       {isAppAdmin && <Route exact path="/admin-institution" component={AdminCustomerInstitutionPage} />}
+      {isAppAdmin && <Route exact path="/admin-institution-users" component={AdminUsersPage} />}
       {user.isLoggedIn && <Route exact path="/public-profile/:userName" component={PublicProfile} />}
       <Route exact path="/search" component={Search} />
       <Route exact path="/publication/:publicationId" component={PublicationPage} />

@@ -3,6 +3,8 @@ import { Authority, emptyAuthority } from './authority.types';
 export enum RoleName {
   PUBLISHER = 'Publisher',
   CURATOR = 'Curator',
+  ADMIN = 'Admin',
+  EDITOR = 'Editor',
 }
 
 export enum Affiliation {
@@ -37,7 +39,14 @@ export interface User {
   organizationId: string;
   externalOrcid: string;
   affiliations: Affiliation[];
+  createdDate?: string;
+  lastLoginDate?: string;
 }
+
+export type UserAdmin = Pick<
+  User,
+  'name' | 'id' | 'externalOrcid' | 'createdDate' | 'createdDate' | 'lastLoginDate' | 'roles'
+>;
 
 export interface FeideUser {
   name: string;

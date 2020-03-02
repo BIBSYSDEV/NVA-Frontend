@@ -102,6 +102,14 @@ const Menu: React.FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
           </StyledMenuItem>
         )}
 
+        {isAppAdmin && (
+          <StyledMenuItem
+            data-testid="menu-admin-institution-users-button"
+            onClick={() => handleClickMenuItem('/admin-institution-users')}>
+            {t('common:users')}
+          </StyledMenuItem>
+        )}
+
         {isCurator && (
           <StyledMenuItem data-testid="menu-my-worklist-button" onClick={() => handleClickMenuItem('/worklist')}>
             {t('workLists:my_worklist')}

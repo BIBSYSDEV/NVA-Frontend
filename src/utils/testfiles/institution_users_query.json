@@ -1,0 +1,34 @@
+[
+  {
+    "id": "eirik.nilsen@unit.no",
+    "name": "Eirik Nilsen",
+    "externalOrcid": "1234-1234-1234-1234",
+    "lastLoginDate": "2020-03-01",
+    "createdDate": "2020-01-01",
+    "roles": ["Admin", "Curator", "Editor"]
+  },
+  {
+    "id": "eirik.hansen@unit.no",
+    "name": "Eirik Hansen",
+    "externalOrcid": "7890-7890-7890-7890",
+    "lastLoginDate": "2020-02-01",
+    "createdDate": "2020-01-02",
+    "roles": ["Curator"]
+  },
+  {
+    "id": "per.hansen@unit.no",
+    "name": "Per Hansen",
+    "externalOrcid": "3456-3456-3456-3456",
+    "lastLoginDate": "2020-02-10",
+    "createdDate": "2020-02-01",
+    "roles": ["Editor"]
+  },
+  {
+    "id": "per.hansen@unit.no",
+    "name": "Per Hansen",
+    "externalOrcid": "3456-3456-3456-3456",
+    "lastLoginDate": "2020-02-10",
+    "createdDate": "2020-02-01",
+    "roles": ["Publisher"]
+  }
+]
