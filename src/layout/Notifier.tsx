@@ -32,7 +32,7 @@ const Notifier: React.FC = () => {
         vertical: 'bottom',
         horizontal: 'left',
       }}
-      open={!!notification}
+      open={true}
       autoHideDuration={autoHideDuration[notification.variant]}
       onClose={handleClose}
       TransitionComponent={Fade}
