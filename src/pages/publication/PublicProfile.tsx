@@ -13,6 +13,7 @@ import NormalText from '../../components/NormalText';
 import { ORCID_BASE_URL } from '../../utils/constants';
 import LabelTextLine from './../../components/LabelTextLine';
 import Heading from '../../components/Heading';
+import { NotificationVariant } from '../../types/notification.types';
 
 const StyledWrapper = styled.div`
   text-align: center;
@@ -40,7 +41,7 @@ const PublicProfile: FC = () => {
       setIsLoading(true);
       const publications = await getMyPublications();
       if (publications?.error) {
-        dispatch(addNotification(t('feedback:error.get_publications'), 'error'));
+        dispatch(addNotification(t('feedback:error.get_publications'), NotificationVariant.Error));
       } else {
         setPublications(publications);
       }

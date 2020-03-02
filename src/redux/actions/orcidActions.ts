@@ -1,4 +1,4 @@
-import { VariantType } from 'notistack';
+import { NotificationVariant } from '../../types/notification.types';
 
 export const ORCID_REQUEST_FAILURE = 'orcid request failure';
 export const SET_EXTERNAL_ORCID = 'set external orcid';
@@ -6,7 +6,7 @@ export const SET_EXTERNAL_ORCID = 'set external orcid';
 export const orcidRequestFailure = (message: string): OrcidRequestFailureAction => ({
   type: ORCID_REQUEST_FAILURE,
   message,
-  variant: 'error',
+  variant: NotificationVariant.Error,
 });
 
 export const setExternalOrcid = (orcid: string): SetExternalOrcidAction => ({
@@ -17,7 +17,7 @@ export const setExternalOrcid = (orcid: string): SetExternalOrcidAction => ({
 interface OrcidRequestFailureAction {
   type: typeof ORCID_REQUEST_FAILURE;
   message: string;
-  variant: VariantType;
+  variant: NotificationVariant;
 }
 
 interface SetExternalOrcidAction {

@@ -1,7 +1,6 @@
-import { VariantType } from 'notistack';
-
 import { Authority } from '../../types/authority.types';
 import { FeideUser } from '../../types/user.types';
+import { NotificationVariant } from '../../types/notification.types';
 
 // ACTION TYPES
 export const CLEAR_USER = 'clear user';
@@ -23,7 +22,7 @@ export const setUser = (user: FeideUser): SetUserAction => ({
 export const setUserFailure = (message: string): SetUserFailureAction => ({
   type: SET_USER_FAILURE,
   message,
-  variant: 'error',
+  variant: NotificationVariant.Error,
 });
 
 export const setAuthorityData = (authority: Authority): SetAuthorityAction => ({
@@ -52,7 +51,7 @@ interface SetAuthorityAction {
 interface SetUserFailureAction {
   type: typeof SET_USER_FAILURE;
   message: string;
-  variant: VariantType;
+  variant: NotificationVariant;
 }
 
 interface SetPossibleAuthoritiesAction {

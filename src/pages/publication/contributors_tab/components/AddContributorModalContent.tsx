@@ -14,6 +14,7 @@ import { Authority, emptyAuthority } from '../../../../types/authority.types';
 import { debounce } from '../../../../utils/debounce';
 import AuthorityCard from '../../../user/authority/AuthorityCard';
 import NormalText from '../../../../components/NormalText';
+import { NotificationVariant } from '../../../../types/notification.types';
 
 const StyledClickableDiv = styled.div`
   cursor: pointer;
@@ -69,7 +70,7 @@ const AddContributorModalContent: FC<AddContributorModalContentProps> = ({ addAu
         setMatchingAuthorities(response);
         setSearchSummary({ isLoading: false, searchTerm, results: response.length });
       } else {
-        dispatch(addNotification(t('feedback:error.get_authorities'), 'error'));
+        dispatch(addNotification(t('feedback:error.get_authorities'), NotificationVariant.Error));
       }
     }),
     [dispatch, t]

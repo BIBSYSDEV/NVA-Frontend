@@ -12,6 +12,7 @@ import styled from 'styled-components';
 import { PublicationPreview } from '../../types/publication.types';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { Link as RouterLink } from 'react-router-dom';
+import { NotificationVariant } from '../../types/notification.types';
 
 const StyledWrapper = styled.div`
   text-align: center;
@@ -34,7 +35,7 @@ const MyPublications: FC = () => {
       setIsLoading(true);
       const publications = await getMyPublications();
       if (publications?.error) {
-        dispatch(addNotification(i18n.t('feedback:error.get_publications'), 'error'));
+        dispatch(addNotification(i18n.t('feedback:error.get_publications'), NotificationVariant.Error));
       } else {
         setPublications(publications);
       }

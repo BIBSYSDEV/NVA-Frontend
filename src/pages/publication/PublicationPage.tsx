@@ -17,6 +17,7 @@ import PublicationPageSeries from './publication_page/PublicationPageSeries';
 import NotFound from '../errorpages/NotFound';
 import Card from '../../components/Card';
 import Heading from '../../components/Heading';
+import { NotificationVariant } from '../../types/notification.types';
 
 const StyledContentWrapper = styled.div`
   display: flex;
@@ -55,7 +56,7 @@ const PublicationPage: FC<PublicationPageProps> = ({ publicationId }) => {
       setIsLoadingPublication(true);
       const publication = await getPublication(publicationId);
       if (publication?.error) {
-        dispatch(addNotification(i18n.t('feedback:error.get_publication'), 'error'));
+        dispatch(addNotification(i18n.t('feedback:error.get_publication'), NotificationVariant.Error));
       } else {
         setPublication(publication);
       }

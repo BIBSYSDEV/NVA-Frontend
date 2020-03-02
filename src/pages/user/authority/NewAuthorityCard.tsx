@@ -9,6 +9,7 @@ import { addNotification } from '../../../redux/actions/notificationActions';
 import { setAuthorityData } from '../../../redux/actions/userActions';
 import { RootStore } from '../../../redux/reducers/rootReducer';
 import { createAuthority } from '../../../api/authorityApi';
+import { NotificationVariant } from '../../../types/notification.types';
 
 const StyledBoxContent = styled.div`
   display: grid;
@@ -56,7 +57,7 @@ const NewAuthorityCard: React.FC = () => {
     setLoading(true);
     const authority = await createAuthority(user);
     if (authority?.error) {
-      dispatch(addNotification(authority.error, 'error'));
+      dispatch(addNotification(authority.error, NotificationVariant.Error));
     } else {
       dispatch(setAuthorityData(authority));
       dispatch(addNotification(t('feedback:success.created_authority')));

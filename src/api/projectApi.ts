@@ -5,6 +5,7 @@ import { addNotification } from '../redux/actions/notificationActions';
 import i18n from '../translations/i18n';
 import { StatusCode } from '../utils/constants';
 import { getIdToken } from './userApi';
+import { NotificationVariant } from '../types/notification.types';
 
 export enum ProjectsApiPaths {
   PROJECTS = '/cristin-projects',
@@ -22,9 +23,9 @@ export const searchProjectsByTitle = async (query: string, dispatch: Dispatch) =
     if (response.status === StatusCode.OK) {
       return response.data;
     } else {
-      dispatch(addNotification(i18n.t('feedback:error.get_project'), 'error'));
+      dispatch(addNotification(i18n.t('feedback:error.get_project'), NotificationVariant.Error));
     }
   } catch {
-    dispatch(addNotification(i18n.t('feedback:error.get_project'), 'error'));
+    dispatch(addNotification(i18n.t('feedback:error.get_project'), NotificationVariant.Error));
   }
 };

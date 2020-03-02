@@ -1,4 +1,4 @@
-import { VariantType } from 'notistack';
+import { NotificationVariant } from '../../types/notification.types';
 
 export const LOGIN_FAILURE = 'login failure';
 export const REFRESH_TOKEN_FAILURE = 'refresh token failure';
@@ -16,25 +16,25 @@ export const logoutSuccess = (): LogoutSuccessAction => ({
 export const loginFailure = (message: string): LoginFailureAction => ({
   type: LOGIN_FAILURE,
   message,
-  variant: 'error',
+  variant: NotificationVariant.Error,
 });
 
 export const refreshTokenFailure = (message: string): RefreshTokenFailureAction => ({
   type: REFRESH_TOKEN_FAILURE,
   message,
-  variant: 'error',
+  variant: NotificationVariant.Error,
 });
 
 interface LoginFailureAction {
   type: typeof LOGIN_FAILURE;
   message: string;
-  variant: VariantType;
+  variant: NotificationVariant;
 }
 
 interface RefreshTokenFailureAction {
   type: typeof REFRESH_TOKEN_FAILURE;
   message: string;
-  variant: VariantType;
+  variant: NotificationVariant;
 }
 
 interface LoginSuccessAction {

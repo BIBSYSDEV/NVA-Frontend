@@ -7,6 +7,7 @@ import { Publication } from '../types/publication.types';
 import { SEARCH_RESULTS_PER_PAGE, StatusCode } from '../utils/constants';
 import { searchFailure, searchForPublications } from '../redux/actions/searchActions';
 import { getIdToken } from './userApi';
+import { NotificationVariant } from '../types/notification.types';
 
 export enum PublicationsApiPaths {
   SEARCH = '/publications',
@@ -32,10 +33,10 @@ export const createNewPublicationFromDoi = async (doiUrl: string, dispatch: Disp
     if (response.status === StatusCode.OK) {
       dispatch(addNotification(i18n.t('feedback:success.create_publication')));
     } else {
-      dispatch(addNotification(i18n.t('feedback:error.create_publication'), 'error'));
+      dispatch(addNotification(i18n.t('feedback:error.create_publication'), NotificationVariant.Error));
     }
   } catch {
-    dispatch(addNotification(i18n.t('feedback:error.create_publication'), 'error'));
+    dispatch(addNotification(i18n.t('feedback:error.create_publication'), NotificationVariant.Error));
   }
 };
 
@@ -50,17 +51,17 @@ export const createNewPublication = async (publication: Publication, dispatch: D
     if (response.status === StatusCode.OK) {
       dispatch(addNotification(i18n.t('feedback:success.create_publication')));
     } else {
-      dispatch(addNotification(i18n.t('feedback:error.create_publication'), 'error'));
+      dispatch(addNotification(i18n.t('feedback:error.create_publication'), NotificationVariant.Error));
     }
   } catch {
-    dispatch(addNotification(i18n.t('feedback:error.create_publication'), 'error'));
+    dispatch(addNotification(i18n.t('feedback:error.create_publication'), NotificationVariant.Error));
   }
 };
 
 export const updatePublication = async (publication: Publication, dispatch: Dispatch) => {
   const { id } = publication;
   if (!id) {
-    dispatch(addNotification(i18n.t('feedback:error.update_publication'), 'error'));
+    dispatch(addNotification(i18n.t('feedback:error.update_publication'), NotificationVariant.Error));
     return;
   }
   const idToken = await getIdToken();
@@ -73,10 +74,10 @@ export const updatePublication = async (publication: Publication, dispatch: Disp
     if (response.status === StatusCode.OK) {
       dispatch(addNotification(i18n.t('feedback:success.update_publication')));
     } else {
-      dispatch(addNotification(i18n.t('feedback:error.update_publication'), 'error'));
+      dispatch(addNotification(i18n.t('feedback:error.update_publication'), NotificationVariant.Error));
     }
   } catch {
-    dispatch(addNotification(i18n.t('feedback:error.update_publication'), 'error'));
+    dispatch(addNotification(i18n.t('feedback:error.update_publication'), NotificationVariant.Error));
   }
 };
 

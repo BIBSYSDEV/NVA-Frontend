@@ -6,6 +6,7 @@ import Progress from '../../components/Progress';
 import SubHeading from '../../components/SubHeading';
 import { useDispatch } from 'react-redux';
 import { addNotification } from '../../redux/actions/notificationActions';
+import { NotificationVariant } from '../../types/notification.types';
 
 const PublicationsForApproval: FC = () => {
   const { t } = useTranslation('workLists');
@@ -17,7 +18,7 @@ const PublicationsForApproval: FC = () => {
     const fetchPublicationsForApproval = async () => {
       const publicationsForApprovalResponse = await getPublicationsForApproval();
       if (publicationsForApprovalResponse.error) {
-        dispatch(addNotification(publicationsForApprovalResponse.error, 'error'));
+        dispatch(addNotification(publicationsForApprovalResponse.error, NotificationVariant.Error));
       } else {
         setPublicationsForApproval(publicationsForApprovalResponse);
       }

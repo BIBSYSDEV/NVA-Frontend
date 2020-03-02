@@ -6,6 +6,7 @@ import Progress from '../../components/Progress';
 import SubHeading from '../../components/SubHeading';
 import { useDispatch } from 'react-redux';
 import { addNotification } from '../../redux/actions/notificationActions';
+import { NotificationVariant } from '../../types/notification.types';
 
 const DoiRequests: FC = () => {
   const { t } = useTranslation('workLists');
@@ -17,7 +18,7 @@ const DoiRequests: FC = () => {
     const fetchDoiRequests = async () => {
       const doiRequestsResponse = await getDoiRequests();
       if (doiRequestsResponse.error) {
-        dispatch(addNotification(doiRequestsResponse.error, 'error'));
+        dispatch(addNotification(doiRequestsResponse.error, NotificationVariant.Error));
       } else {
         setDoiRequests(doiRequestsResponse);
       }
