@@ -25,6 +25,7 @@ phases:
     commands:
       - env
       - npm install
+      - pip3 install aws-sam-cli
   build:
     commands:
       - npm run build
