@@ -28,6 +28,7 @@ const Notifier: React.FC = () => {
 
   return notification ? (
     <Snackbar
+      data-testid="snackbar"
       anchorOrigin={{
         vertical: 'bottom',
         horizontal: 'left',
