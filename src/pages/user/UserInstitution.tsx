@@ -20,7 +20,7 @@ import {
 } from '../../types/institution.types';
 import { updateInstitutionForAuthority } from '../../api/authorityApi';
 import { setAuthorityData } from '../../redux/actions/userActions';
-import { addNotification } from '../../redux/actions/notificationActions';
+import { setNotification } from '../../redux/actions/notificationActions';
 import { getParentUnits } from '../../api/institutionApi';
 import { NotificationVariant } from '../../types/notification.types';
 
@@ -56,7 +56,7 @@ const UserInstitution: FC = () => {
         }
       }
       if (user.authority.orgunitids.length > 0 && units.length === 0) {
-        dispatch(addNotification(t('feedback:error.get_parent_units'), NotificationVariant.Error));
+        dispatch(setNotification(t('feedback:error.get_parent_units'), NotificationVariant.Error));
       }
       setUnits(units);
     };
@@ -72,7 +72,7 @@ const UserInstitution: FC = () => {
   const updateAuthorityAndDispatch = async (id: string, scn: string) => {
     const updatedAuthority = await updateInstitutionForAuthority(id, scn);
     if (updatedAuthority.error) {
-      dispatch(addNotification(updatedAuthority.error, NotificationVariant.Error));
+      dispatch(setNotification(updatedAuthority.error, NotificationVariant.Error));
     } else if (updatedAuthority) {
       dispatch(setAuthorityData(updatedAuthority));
     }
@@ -87,7 +87,7 @@ const UserInstitution: FC = () => {
         await updateAuthorityAndDispatch(lastSubunit.id, user.authority.systemControlNumber);
       }
     } catch (error) {
-      dispatch(addNotification(t('feedback:error.update_authority'), NotificationVariant.Error));
+      dispatch(setNotification(t('feedback:error.update_authority'), NotificationVariant.Error));
     }
     // TODO: remove this when we get data from backend
     const filteredSubunits = subunits.filter((subunit: InstitutionUnitBase) => subunit.name !== '');

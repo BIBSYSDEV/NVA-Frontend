@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 import { Button, Radio } from '@material-ui/core';
 import Progress from '../../../components/Progress';
-import { addNotification } from '../../../redux/actions/notificationActions';
+import { setNotification } from '../../../redux/actions/notificationActions';
 import { setAuthorityData } from '../../../redux/actions/userActions';
 import { RootStore } from '../../../redux/reducers/rootReducer';
 import { createAuthority } from '../../../api/authorityApi';
@@ -57,10 +57,10 @@ const NewAuthorityCard: React.FC = () => {
     setLoading(true);
     const authority = await createAuthority(user);
     if (authority?.error) {
-      dispatch(addNotification(authority.error, NotificationVariant.Error));
+      dispatch(setNotification(authority.error, NotificationVariant.Error));
     } else {
       dispatch(setAuthorityData(authority));
-      dispatch(addNotification(t('feedback:success.created_authority')));
+      dispatch(setNotification(t('feedback:success.created_authority')));
     }
     setLoading(false);
   };

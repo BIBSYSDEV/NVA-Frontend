@@ -1,7 +1,7 @@
 import Axios from 'axios';
 import { Dispatch } from 'redux';
 
-import { addNotification } from '../redux/actions/notificationActions';
+import { setNotification } from '../redux/actions/notificationActions';
 import i18n from '../translations/i18n';
 import { Publication } from '../types/publication.types';
 import { SEARCH_RESULTS_PER_PAGE, StatusCode } from '../utils/constants';
@@ -31,12 +31,12 @@ export const createNewPublicationFromDoi = async (doiUrl: string, dispatch: Disp
       },
     });
     if (response.status === StatusCode.OK) {
-      dispatch(addNotification(i18n.t('feedback:success.create_publication')));
+      dispatch(setNotification(i18n.t('feedback:success.create_publication')));
     } else {
-      dispatch(addNotification(i18n.t('feedback:error.create_publication'), NotificationVariant.Error));
+      dispatch(setNotification(i18n.t('feedback:error.create_publication'), NotificationVariant.Error));
     }
   } catch {
-    dispatch(addNotification(i18n.t('feedback:error.create_publication'), NotificationVariant.Error));
+    dispatch(setNotification(i18n.t('feedback:error.create_publication'), NotificationVariant.Error));
   }
 };
 
@@ -49,19 +49,19 @@ export const createNewPublication = async (publication: Publication, dispatch: D
       },
     });
     if (response.status === StatusCode.OK) {
-      dispatch(addNotification(i18n.t('feedback:success.create_publication')));
+      dispatch(setNotification(i18n.t('feedback:success.create_publication')));
     } else {
-      dispatch(addNotification(i18n.t('feedback:error.create_publication'), NotificationVariant.Error));
+      dispatch(setNotification(i18n.t('feedback:error.create_publication'), NotificationVariant.Error));
     }
   } catch {
-    dispatch(addNotification(i18n.t('feedback:error.create_publication'), NotificationVariant.Error));
+    dispatch(setNotification(i18n.t('feedback:error.create_publication'), NotificationVariant.Error));
   }
 };
 
 export const updatePublication = async (publication: Publication, dispatch: Dispatch) => {
   const { id } = publication;
   if (!id) {
-    dispatch(addNotification(i18n.t('feedback:error.update_publication'), NotificationVariant.Error));
+    dispatch(setNotification(i18n.t('feedback:error.update_publication'), NotificationVariant.Error));
     return;
   }
   const idToken = await getIdToken();
@@ -72,12 +72,12 @@ export const updatePublication = async (publication: Publication, dispatch: Disp
       },
     });
     if (response.status === StatusCode.OK) {
-      dispatch(addNotification(i18n.t('feedback:success.update_publication')));
+      dispatch(setNotification(i18n.t('feedback:success.update_publication')));
     } else {
-      dispatch(addNotification(i18n.t('feedback:error.update_publication'), NotificationVariant.Error));
+      dispatch(setNotification(i18n.t('feedback:error.update_publication'), NotificationVariant.Error));
     }
   } catch {
-    dispatch(addNotification(i18n.t('feedback:error.update_publication'), NotificationVariant.Error));
+    dispatch(setNotification(i18n.t('feedback:error.update_publication'), NotificationVariant.Error));
   }
 };
 
@@ -156,10 +156,10 @@ export const search = async (searchTerm: string, dispatch: Dispatch, offset?: nu
       const result = response.data.slice(currentOffset, currentOffset + SEARCH_RESULTS_PER_PAGE);
       dispatch(searchForPublications(result, searchTerm, response.data.length, offset));
     } else {
-      dispatch(addNotification(i18n.t('feedback:error.search', NotificationVariant.Error)));
+      dispatch(setNotification(i18n.t('feedback:error.search', NotificationVariant.Error)));
     }
   } catch {
-    dispatch(addNotification(i18n.t('feedback:error.search', NotificationVariant.Error)));
+    dispatch(setNotification(i18n.t('feedback:error.search', NotificationVariant.Error)));
   }
 };
 

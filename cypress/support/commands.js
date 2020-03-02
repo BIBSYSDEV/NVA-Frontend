@@ -1,5 +1,5 @@
 import { setUser } from '../../src/redux/actions/userActions';
-import { addNotification, removeNotification } from '../../src/redux/actions/notificationActions';
+import { setNotification, removeNotification } from '../../src/redux/actions/notificationActions';
 
 Cypress.Commands.add('mocklogin', () => {
   // log in
@@ -20,10 +20,10 @@ Cypress.Commands.add('setUserInRedux', user => {
     .then(store => store.dispatch(setUser(user)));
 });
 
-Cypress.Commands.add('addNotificationInRedux', (message, variant) => {
+Cypress.Commands.add('setNotificationInRedux', (message, variant) => {
   cy.window()
     .its('store') // Redux store must be exposed via window.store
-    .then(store => store.dispatch(addNotification(message, variant)));
+    .then(store => store.dispatch(setNotification(message, variant)));
 });
 
 Cypress.Commands.add('removeNotificationInRedux', () => {

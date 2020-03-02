@@ -6,7 +6,7 @@ import { AutoSearch } from '../../../../components/AutoSearch';
 import { debounce } from '../../../../utils/debounce';
 import { RecursiveInstitutionUnit } from '../../../../types/institution.types';
 import { getInstitutionAndSubunits } from '../../../../api/institutionApi';
-import { addNotification } from '../../../../redux/actions/notificationActions';
+import { setNotification } from '../../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../../types/notification.types';
 
 interface InstitutionSearchProps {
@@ -42,7 +42,7 @@ const InstitutionSearch: FC<InstitutionSearchProps> = ({
           }))
         );
       } else {
-        dispatch(addNotification(t('error.search', NotificationVariant.Error)));
+        dispatch(setNotification(t('error.search', NotificationVariant.Error)));
       }
     }),
     [dispatch, t]

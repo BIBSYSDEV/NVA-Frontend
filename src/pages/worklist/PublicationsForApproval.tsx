@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import Progress from '../../components/Progress';
 import SubHeading from '../../components/SubHeading';
 import { useDispatch } from 'react-redux';
-import { addNotification } from '../../redux/actions/notificationActions';
+import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 
 const PublicationsForApproval: FC = () => {
@@ -18,7 +18,7 @@ const PublicationsForApproval: FC = () => {
     const fetchPublicationsForApproval = async () => {
       const publicationsForApprovalResponse = await getPublicationsForApproval();
       if (publicationsForApprovalResponse.error) {
-        dispatch(addNotification(publicationsForApprovalResponse.error, NotificationVariant.Error));
+        dispatch(setNotification(publicationsForApprovalResponse.error, NotificationVariant.Error));
       } else {
         setPublicationsForApproval(publicationsForApprovalResponse);
       }

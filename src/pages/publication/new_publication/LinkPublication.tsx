@@ -11,7 +11,7 @@ import LinkPublicationForm from './LinkPublicationForm';
 import PublicationExpansionPanel from './PublicationExpansionPanel';
 import { Doi } from '../../../types/publication.types';
 import { useDispatch } from 'react-redux';
-import { addNotification } from '../../../redux/actions/notificationActions';
+import { setNotification } from '../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../types/notification.types';
 
 const StyledBody = styled.div`
@@ -61,7 +61,7 @@ const LinkPublicationPanel: FC<LinkPublicationPanelProps> = ({ expanded, onChang
     const doiPublication = await getPublicationByDoi(values.doiUrl);
     if (doiPublication?.error) {
       setNoHit(true);
-      dispatch(addNotification(t('feedback:error.get_doi'), NotificationVariant.Error));
+      dispatch(setNotification(t('feedback:error.get_doi'), NotificationVariant.Error));
     } else if (!doiPublication) {
       setNoHit(true);
     } else {

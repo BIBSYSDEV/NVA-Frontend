@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addNotification } from '../../redux/actions/notificationActions';
+import { setNotification } from '../../redux/actions/notificationActions';
 import { PublishedPublicationPreview } from '../../types/publication.types';
 import { CircularProgress } from '@material-ui/core';
 import styled from 'styled-components';
@@ -41,7 +41,7 @@ const PublicProfile: FC = () => {
       setIsLoading(true);
       const publications = await getMyPublications();
       if (publications?.error) {
-        dispatch(addNotification(t('feedback:error.get_publications'), NotificationVariant.Error));
+        dispatch(setNotification(t('feedback:error.get_publications'), NotificationVariant.Error));
       } else {
         setPublications(publications);
       }

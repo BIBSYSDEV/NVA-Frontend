@@ -4,7 +4,7 @@ import { Dispatch } from 'redux';
 import { setExternalOrcid } from '../../redux/actions/orcidActions';
 import i18n from '../../translations/i18n';
 import { ORCID_USER_INFO_URL, StatusCode } from '../../utils/constants';
-import { addNotification } from '../../redux/actions/notificationActions';
+import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 
 export const getOrcidInfo = (orcidAccessToken: string) => {
@@ -21,10 +21,10 @@ export const getOrcidInfo = (orcidAccessToken: string) => {
       if (response.status === StatusCode.OK) {
         dispatch(setExternalOrcid(response.data.sub));
       } else {
-        dispatch(addNotification(i18n.t('feedback:error.get_orcid', NotificationVariant.Error)));
+        dispatch(setNotification(i18n.t('feedback:error.get_orcid', NotificationVariant.Error)));
       }
     } catch {
-      dispatch(addNotification(i18n.t('feedback:error.get_orcid', NotificationVariant.Error)));
+      dispatch(setNotification(i18n.t('feedback:error.get_orcid', NotificationVariant.Error)));
     }
   };
 };

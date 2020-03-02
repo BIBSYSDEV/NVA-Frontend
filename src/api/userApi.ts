@@ -8,7 +8,7 @@ import { RootStore } from '../redux/reducers/rootReducer';
 import i18n from '../translations/i18n';
 import { USE_MOCK_DATA } from '../utils/constants';
 import { mockUser } from '../utils/testfiles/mock_feide_user';
-import { addNotification } from '../redux/actions/notificationActions';
+import { setNotification } from '../redux/actions/notificationActions';
 import { NotificationVariant } from '../types/notification.types';
 
 export const login = () => {
@@ -34,7 +34,7 @@ export const getCurrentAuthenticatedUser = () => {
           // NOTE: getSession must be called to authenticate user before calling getUserAttributes
           cognitoUser.getUserAttributes((error: any) => {
             if (error) {
-              dispatch(addNotification(i18n.t('feedback:error.get_user', NotificationVariant.Error)));
+              dispatch(setNotification(i18n.t('feedback:error.get_user', NotificationVariant.Error)));
             } else {
               dispatch(setUser(cognitoUser.attributes));
             }
@@ -44,7 +44,7 @@ export const getCurrentAuthenticatedUser = () => {
     } catch {
       const store = getState();
       if (store.user.isLoggedIn) {
-        dispatch(addNotification(i18n.t('feedback:error.get_user', NotificationVariant.Error)));
+        dispatch(setNotification(i18n.t('feedback:error.get_user', NotificationVariant.Error)));
       }
     }
   };
@@ -66,12 +66,12 @@ export const refreshToken = () => {
       if (!currentSession.isValid()) {
         cognitoUser.refreshSession(currentSession.getRefreshToken(), (error: any) => {
           if (error) {
-            dispatch(addNotification(error, NotificationVariant.Error));
+            dispatch(setNotification(error, NotificationVariant.Error));
           }
         });
       }
     } catch (e) {
-      dispatch(addNotification(e, NotificationVariant.Error));
+      dispatch(setNotification(e, NotificationVariant.Error));
     }
   };
 };

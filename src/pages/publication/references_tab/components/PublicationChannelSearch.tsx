@@ -8,7 +8,7 @@ import { Publisher } from '../../../../types/references.types';
 import { PublicationTableNumber } from '../../../../utils/constants';
 import { debounce } from '../../../../utils/debounce';
 import { NotificationVariant } from '../../../../types/notification.types';
-import { addNotification } from '../../../../redux/actions/notificationActions';
+import { setNotification } from '../../../../redux/actions/notificationActions';
 
 interface PublicationChannelSearchProps {
   clearSearchField: boolean;
@@ -37,7 +37,7 @@ const PublicationChannelSearch: FC<PublicationChannelSearchProps> = ({
       if (response) {
         setSearchResults(response.filter((publisher: Publisher) => publisher.title));
       } else {
-        dispatch(addNotification(t('error.search', NotificationVariant.Error)));
+        dispatch(setNotification(t('error.search', NotificationVariant.Error)));
       }
     }),
     [dispatch, t, publicationTable]

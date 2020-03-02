@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import { getPublication } from '../../api/publicationApi';
-import { addNotification } from '../../redux/actions/notificationActions';
+import { setNotification } from '../../redux/actions/notificationActions';
 import i18n from '../../translations/i18n';
 import { useDispatch } from 'react-redux';
 import { CircularProgress, Link } from '@material-ui/core';
@@ -56,7 +56,7 @@ const PublicationPage: FC<PublicationPageProps> = ({ publicationId }) => {
       setIsLoadingPublication(true);
       const publication = await getPublication(publicationId);
       if (publication?.error) {
-        dispatch(addNotification(i18n.t('feedback:error.get_publication'), NotificationVariant.Error));
+        dispatch(setNotification(i18n.t('feedback:error.get_publication'), NotificationVariant.Error));
       } else {
         setPublication(publication);
       }

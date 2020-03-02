@@ -7,7 +7,7 @@ describe('Snackbar', () => {
   it('The user should be able to see their user details', () => {
     // Test error snackbar
     let notificationMessage = 'An error occurred';
-    cy.addNotificationInRedux(notificationMessage, 'error');
+    cy.setNotificationInRedux(notificationMessage, 'error');
     cy.get('[data-testid=snackbar]')
       .children()
       .should('have.class', 'MuiAlert-filledError')
@@ -15,7 +15,7 @@ describe('Snackbar', () => {
 
     // Test Success snackbar
     notificationMessage = 'Something actually went well';
-    cy.addNotificationInRedux(notificationMessage, 'success');
+    cy.setNotificationInRedux(notificationMessage, 'success');
     cy.get('[data-testid=snackbar]')
       .children()
       .should('have.class', 'MuiAlert-filledSuccess')
@@ -23,7 +23,7 @@ describe('Snackbar', () => {
 
     // Test Info snackbar
     notificationMessage = 'This is some information';
-    cy.addNotificationInRedux(notificationMessage, 'info');
+    cy.setNotificationInRedux(notificationMessage, 'info');
     cy.get('[data-testid=snackbar]')
       .children()
       .should('have.class', 'MuiAlert-filledInfo')
@@ -31,7 +31,7 @@ describe('Snackbar', () => {
 
     // Test warning snackbar
     notificationMessage = 'Mind the gap';
-    cy.addNotificationInRedux(notificationMessage, 'warning');
+    cy.setNotificationInRedux(notificationMessage, 'warning');
     cy.get('[data-testid=snackbar]')
       .children()
       .should('have.class', 'MuiAlert-filledWarning')
