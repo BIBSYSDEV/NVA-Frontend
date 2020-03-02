@@ -24,6 +24,7 @@
     "update_publication": "Could not update publication"
   },
   "success": {
+    "created_authority": "Created author ID",
     "create_publication": "New publication created",
     "login": "Logged in",
     "update_authority": "Updated authority",

@@ -12,7 +12,7 @@ import {
   Button,
 } from '@material-ui/core';
 import { Contributor, emptyContributor } from '../../../../types/contributor.types';
-import { Field } from 'formik';
+import { Field, FieldProps } from 'formik';
 import AddContributor from '../AddContributor';
 import { useTranslation } from 'react-i18next';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -36,7 +36,7 @@ const SortableItem = SortableElement(({ contributor, placement, onDelete }: Sort
       <TableCell align="left">
         <SubHeading>{contributor.name}</SubHeading>
         <Field name={`contributors[${index}].corresponding`}>
-          {({ field }: any) => (
+          {({ field }: FieldProps) => (
             <FormControlLabel
               control={<Checkbox checked={field.value} {...field} />}
               label={t('publication:contributors.corresponding')}
@@ -46,7 +46,7 @@ const SortableItem = SortableElement(({ contributor, placement, onDelete }: Sort
         <div>
           {contributor.corresponding && (
             <Field name={`contributors[${index}].email`}>
-              {({ field }: any) => <TextField variant="outlined" label={t('common:email')} {...field} />}
+              {({ field }: FieldProps) => <TextField variant="outlined" label={t('common:email')} {...field} />}
             </Field>
           )}
         </div>

@@ -1,7 +1,7 @@
 import Axios from 'axios';
 import { getIdToken } from './userApi';
-import { File } from '../types/file.types';
-import { UppyCompletePart } from '../utils/uppy-config';
+import { AwsS3Part } from '@uppy/aws-s3-multipart';
+import { UppyFile } from '@uppy/core';
 
 export enum FileUploadApiPaths {
   CREATE = '/upload/create',
@@ -26,7 +26,7 @@ export const abortMultipartUpload = async (uploadId: string, key: string) => {
   return response.data;
 };
 
-export const completeMultipartUpload = async (uploadId: string, key: string, parts: UppyCompletePart[]) => {
+export const completeMultipartUpload = async (uploadId: string, key: string, parts: AwsS3Part[]) => {
   const payload = {
     uploadId,
     key,
@@ -41,11 +41,11 @@ export const completeMultipartUpload = async (uploadId: string, key: string, par
   });
   return response.data;
 };
-export const createMultipartUpload = async (file: File) => {
+export const createMultipartUpload = async (file: UppyFile) => {
   const payload = {
     filename: file.name,
     size: file.data.size,
-    lastmodified: file.data.lastModified,
+    lastmodified: (file.data as File).lastModified,
     mimetype: file.data.type,
   };
 
