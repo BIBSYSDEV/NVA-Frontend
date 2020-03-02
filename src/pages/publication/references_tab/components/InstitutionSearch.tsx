@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { AutoSearch } from '../../../../components/AutoSearch';
 import { searchFailure } from '../../../../redux/actions/searchActions';
 import { debounce } from '../../../../utils/debounce';
-import { RecursiveUnit } from '../../../../types/institution.types';
+import { RecursiveInstitutionUnit } from '../../../../types/institution.types';
 import { getInstitutionAndSubunits } from '../../../../api/institutionApi';
 
 interface InstitutionSearchProps {
@@ -25,7 +25,7 @@ const InstitutionSearch: FC<InstitutionSearchProps> = ({
   placeholder,
   disabled,
 }) => {
-  const [searchResults, setSearchResults] = useState<RecursiveUnit[]>([]);
+  const [searchResults, setSearchResults] = useState<RecursiveInstitutionUnit[]>([]);
 
   const dispatch = useDispatch();
   const { t } = useTranslation('feedback');
@@ -35,7 +35,7 @@ const InstitutionSearch: FC<InstitutionSearchProps> = ({
       const response = await getInstitutionAndSubunits(searchTerm);
       if (response) {
         setSearchResults(
-          response.map((unit: RecursiveUnit) => ({
+          response.map((unit: RecursiveInstitutionUnit) => ({
             ...unit,
             title: unit.name,
           }))

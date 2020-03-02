@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 import Label from '../../../components/Label';
-import { Unit, UnitBase } from '../../../types/institution.types';
+import { InstitutionUnit, InstitutionUnitBase } from '../../../types/institution.types';
 
 const StyledSelectedInstitution = styled.div`
   margin-top: 0.5rem;
@@ -17,13 +17,13 @@ const StyledInstitutionText = styled.div`
 `;
 
 interface InstitutionCardProps {
-  unit: Unit;
+  unit: InstitutionUnit;
 }
 
 const InstitutionCard: FC<InstitutionCardProps> = ({ unit }) => (
   <StyledSelectedInstitution data-testid="institution-presentation">
     <Label>{unit.name}</Label>
-    {unit.subunits?.map((subunit: UnitBase) => (
+    {unit.subunits?.map((subunit: InstitutionUnitBase) => (
       <StyledInstitutionText key={subunit.id} data-testid="institution-presentation-subunit">
         {subunit.name}
       </StyledInstitutionText>

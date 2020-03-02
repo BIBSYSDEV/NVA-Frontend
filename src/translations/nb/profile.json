@@ -49,9 +49,8 @@
   "organization": {
     "add_institution": "Legg til institusjon",
     "edit_institution": "Endre institusjon",
-    "faculty": "",
-    "institute": "",
     "institution": "Institusjon",
+    "no_institutions_found": "Ingen institusjoner funnet",
     "search_for_institution": "Søk etter institusjon"
   }
 }

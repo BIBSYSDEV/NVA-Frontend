@@ -12,15 +12,16 @@ import { Formik, FormikProps, Field, FieldProps } from 'formik';
 import InstitutionSearch from '../publication/references_tab/components/InstitutionSearch';
 import {
   emptyRecursiveUnit,
-  UnitBase,
-  Unit,
+  InstitutionUnitBase,
+  InstitutionUnit,
   emptyFormikUnit,
-  FormikUnitFieldNames,
-  FormikUnit,
+  FormikInstitutionUnitFieldNames,
+  FormikInstitutionUnit,
 } from '../../types/institution.types';
 import { updateInstitutionForAuthority } from '../../api/authorityApi';
 import { setAuthorityData } from '../../redux/actions/userActions';
 import { addNotification } from '../../redux/actions/notificationActions';
+import { getParentUnits } from '../../api/institutionApi';
 
 const StyledButtonContainer = styled.div`
   display: flex;
@@ -39,14 +40,29 @@ const StyledInstitutionSearchContainer = styled.div`
 const UserInstitution: FC = () => {
   const user = useSelector((state: RootStore) => state.user);
   const [open, setOpen] = useState(false);
-  const [units, setUnits] = useState<Unit[]>([]);
+  const [units, setUnits] = useState<InstitutionUnit[]>([]);
   const { t } = useTranslation('profile');
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // TODO get units from authority based on orgunitids
-    // setUnits(response)
-  }, []);
+    const getUnitsForUser = async () => {
+      let units: InstitutionUnit[] = [];
+      for (let orgunitid in user.authority.orgunitids) {
+        const currentSubunitid = user.authority.orgunitids[orgunitid];
+        const unit = await getParentUnits(currentSubunitid);
+        if (!unit.error) {
+          units.push(unit);
+        }
+      }
+      if (user.authority.orgunitids.length > 0 && units.length === 0) {
+        dispatch(addNotification(t('feedback:error.get_parent_units'), 'error'));
+      }
+      setUnits(units);
+    };
+    if (user.authority.orgunitids?.length > 0) {
+      getUnitsForUser();
+    }
+  }, [user.authority.orgunitids, dispatch, t]);
 
   const toggleOpen = () => {
     setOpen(!open);
@@ -61,25 +77,25 @@ const UserInstitution: FC = () => {
     }
   };
 
-  const handleAddInstitution = async ({ name, id, subunits }: Unit) => {
+  const handleAddInstitution = async ({ name, id, subunits }: InstitutionUnit) => {
     try {
       if (subunits.length === 0) {
         await updateAuthorityAndDispatch(id, user.authority.systemControlNumber);
       } else {
-        const lastSubunitId = subunits.slice(-1)[0];
-        await updateAuthorityAndDispatch(lastSubunitId.id, user.authority.systemControlNumber);
+        const lastSubunit = subunits.slice(-1)[0];
+        await updateAuthorityAndDispatch(lastSubunit.id, user.authority.systemControlNumber);
       }
     } catch (error) {
       dispatch(addNotification(t('feedback:error.update_authority'), 'error'));
     }
     // TODO: remove this when we get data from backend
-    const filteredSubunits = subunits.filter((subunit: UnitBase) => subunit.name !== '');
+    const filteredSubunits = subunits.filter((subunit: InstitutionUnitBase) => subunit.name !== '');
     setUnits([...units, { id, name, subunits: filteredSubunits }]);
 
     setOpen(false);
   };
 
-  const onSubmit = async (values: FormikUnit, { resetForm }: any) => {
+  const onSubmit = async (values: FormikInstitutionUnit, { resetForm }: any) => {
     handleAddInstitution({ name: values.name, id: values.id, subunits: values.subunits });
     resetForm(emptyFormikUnit);
   };
@@ -87,12 +103,14 @@ const UserInstitution: FC = () => {
   return (
     <Card>
       <Heading>{t('heading.organizations')}</Heading>
-      {units?.map((unit: Unit, index: number) => (
-        <InstitutionCard key={index} unit={unit} />
-      ))}
+      {units.length > 0 ? (
+        units.map((unit: InstitutionUnit, index: number) => <InstitutionCard key={index} unit={unit} />)
+      ) : (
+        <i>{t('organization.no_institutions_found')}</i>
+      )}
       <Formik enableReinitialize initialValues={emptyFormikUnit} onSubmit={onSubmit} validateOnChange={false}>
-        {({ values, setFieldValue, handleSubmit, resetForm }: FormikProps<FormikUnit>) => (
-          <Field name={FormikUnitFieldNames.UNIT}>
+        {({ values, setFieldValue, handleSubmit, resetForm }: FormikProps<FormikInstitutionUnit>) => (
+          <Field name={FormikInstitutionUnitFieldNames.UNIT}>
             {({ field: { name, value } }: FieldProps) =>
               open && (
                 <StyledInstitutionSearchContainer>
@@ -101,8 +119,8 @@ const UserInstitution: FC = () => {
                     label={t('organization.institution')}
                     clearSearchField={values.name === ''}
                     setValueFunction={inputValue => {
-                      setFieldValue(FormikUnitFieldNames.NAME, inputValue.name);
-                      setFieldValue(FormikUnitFieldNames.ID, inputValue.id);
+                      setFieldValue(FormikInstitutionUnitFieldNames.NAME, inputValue.name);
+                      setFieldValue(FormikInstitutionUnitFieldNames.ID, inputValue.id);
                       setFieldValue(name, inputValue ?? emptyRecursiveUnit);
                     }}
                     placeholder={t('organization.search_for_institution')}

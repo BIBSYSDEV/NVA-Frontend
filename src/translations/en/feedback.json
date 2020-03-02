@@ -11,6 +11,7 @@
     "get_institutions": "Could not retrieve institutions",
     "get_project": "Search for projects failed",
     "get_orcid": "Could not get data from ORCID",
+    "get_parent_units": "Could not retrieve institutions",
     "get_publications": "Could not retrieve publications",
     "get_publication": "Could not get publication",
     "get_session": "Invalid session. Please log in again.",

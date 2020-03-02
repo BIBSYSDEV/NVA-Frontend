@@ -13,7 +13,8 @@ const PublicationPage = lazy(() => import('./pages/publication/PublicationPage')
 const User = lazy(() => import('./pages/user/User'));
 const NotFound = lazy(() => import('./pages/errorpages/NotFound'));
 const PublicProfile = lazy(() => import('./pages/publication/PublicProfile'));
-const AdminCustomerInstututionPage = lazy(() => import('./pages/AdminCustomerInstitutionsPage'));
+const AdminCustomerInstitutionPage = lazy(() => import('./pages/admin/AdminCustomerInstitutionPage'));
+const AdminCustomerInstitutionsPage = lazy(() => import('./pages/admin/AdminCustomerInstitutionsPage'));
 const WorklistPage = lazy(() => import('./pages/worklist/WorklistPage'));
 
 const AppRoutes: FC = () => {
@@ -30,7 +31,8 @@ const AppRoutes: FC = () => {
         {isPublisher && <Route exact path="/publication/:id" component={EditPublication} />}
         {isPublisher && <Route exact path="/my-publications" component={MyPublications} />}
         {isCurator && <Route exact path="/worklist" component={WorklistPage} />}
-        {isAppAdmin && <Route exact path="/admin-institutions" component={AdminCustomerInstututionPage} />}
+        {isAppAdmin && <Route exact path="/admin-institutions" component={AdminCustomerInstitutionsPage} />}
+        {isAppAdmin && <Route exact path="/admin-institution" component={AdminCustomerInstitutionPage} />}
         {user.isLoggedIn && <Route exact path="/public-profile/:userName" component={PublicProfile} />}
         <Route exact path="/search" component={Search} />
         <Route exact path="/publication/:publicationId" component={PublicationPage} />
