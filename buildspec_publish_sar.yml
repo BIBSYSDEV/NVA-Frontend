@@ -31,7 +31,7 @@ phases:
       - npm run build
   post_build:
     commands:
-      - sam package --debug --template-file ./templates/template.yaml --s3-bucket $S3_BUCKET --output-template-file sampackaged.yaml
+      - sam package --debug --template-file ./templates/sar_application_template.yml --s3-bucket $S3_BUCKET --output-template-file sampackaged.yaml
       - sam publish --template sampackaged.yaml
 
 artifacts:
