@@ -165,6 +165,15 @@ Resources:
                   - 'ssm:GetParameters'
                   - 'secretsmanager:GetSecretValue'
                 Resource: '*'
+        - PolicyName: applicationRepository
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - 'serverlessrepo:CreateApplication'
+                Resource:
+                  - !Sub 'arn:aws:serverlessrepo:${AWS::Region}:${AWS::AccountId}:applications/*'
 
   PublishArtifactStoreBucket:
     Type: AWS::S3::Bucket
