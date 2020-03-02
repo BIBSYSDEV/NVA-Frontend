@@ -24,6 +24,7 @@
     "update_publication": "Kunne ikke oppdatere publikasjon"
   },
   "success": {
+    "created_authority": "Forfatteridentitet er opprettet",
     "create_publication": "Publikasjonen er opprettet",
     "login": "Logget inn",
     "update_authority": "Forfatter er oppdatert",
