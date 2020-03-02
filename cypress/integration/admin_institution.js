@@ -26,5 +26,13 @@ describe('User administers institutions ', () => {
 
     // Open new institution page
     cy.get('[data-testid=add-institution-button]').click({ force: true });
+
+    cy.get('[data-testid=customer-instituiton-name-input]').type('institutt for osteloff');
+    cy.get('[data-testid=customer-instituiton-display-name-input]').type('Institutt for osteloff!');
+    cy.get('[data-testid=customer-instituiton-short-name-input]').type('OSTEINSTITUTTET');
+    cy.get('[data-testid=customer-instituiton-archive-name-input]').type('Jarlsberg');
+    cy.get('[data-testid=customer-instituiton-cname-input]').type('www.osteloff.com');
+
+    cy.get('[data-testid=customer-instituiton-feide-organization-id-input]').click({ force: true });
   });
 });
