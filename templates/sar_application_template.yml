@@ -1,0 +1,144 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+
+Description: >
+  Definition of NVA frontend
+
+Metadata:
+  AWS::ServerlessRepo::Application:
+    Name: NVA-Frontend
+    Description: Frontend for NVA
+    Author: Unit
+    SemanticVersion: 1.0.10
+    SpdxLicenseId: MIT
+    LicenseUrl: ../LICENSE
+
+Parameters:
+  AmazonCognitoDomain:
+    Type: String
+    Description: Domain to use for the sign-up and sign-in pages that are hosted by Amazon Cognito
+  FrontendDomain:
+    Type: String
+    Description: Domainname to distribute the fronted application onto
+  BackendDomain:
+    Description: Domainname for the backend api
+    Type: String
+  DomainCertificateArn:
+    Type: String
+    Description: ARN  of certificate to assign to the assosiated Domain
+  CognitoIdentityPoolId:
+    Description: Identifier of the IdentityPool assosiated with the UserPool
+    Type: String
+  UserPoolId:
+    Type: String
+    Description: Identifier of the UserPool in Cognito
+  UserPoolAppClientId:
+    Type: String
+    Description: Identifier to use for the app clients to access this user pool
+  RedirectSignInUrl:
+    Type: String
+  RedirectSignOutUrl:
+    Type: String
+
+Resources:
+  DeploymentLayer:
+    Type: AWS::Serverless::Application
+    Properties:
+      Location:
+        ApplicationId: arn:aws:serverlessrepo:us-east-1:375983427419:applications/deploy-to-s3
+        SemanticVersion: 2.4.2
+
+  SiteSource:
+    Type: AWS::Serverless::Function
+    Properties:
+      Layers:
+        - !GetAtt DeploymentLayer.Outputs.Arn
+      CodeUri: ../build/
+      AutoPublishAlias: live
+      Runtime: python3.6
+      Handler: deployer.resource_handler
+      Timeout: 600
+      Policies:
+        - S3FullAccessPolicy:
+            BucketName: !Ref FrontendBucket
+
+  DeploymentResource:
+    Type: AWS::CloudFormation::CustomResource
+    Properties:
+      ServiceToken: !GetAtt SiteSource.Arn
+      Version: !Ref 'SiteSource.Version'
+      TargetBucket: !Ref FrontendBucket
+      Acl: 'public-read'
+      CacheControlMaxAge: 600
+      Substitutions:
+        FilePattern: 'static/js/*.js'
+        Values:
+          REPLACE_AWS_COGNITO_IDENTITY_POOL_ID: !Ref CognitoIdentityPoolId
+          REPLACE_AWS_USER_POOLS_ID: !Ref UserPoolId
+          REPLACE_AWS_USER_POOLS_WEB_CLIENT_ID: !Ref UserPoolAppClientId
+          REPLACE_DOMAIN: !Ref AmazonCognitoDomain
+          REPLACE_API_URL: !Ref BackendDomain
+          REPLACE_REDIRECT_SIGN_IN: !Ref RedirectSignInUrl
+          REPLACE_REDIRECT_SIGN_OUT: !Ref RedirectSignOutUrl
+          REPLACE_REACT_APP_AWS_REGION: !Ref 'AWS::Region'
+
+  FrontendBucket:
+    Type: 'AWS::S3::Bucket'
+
+  FrontendBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref FrontendBucket
+      PolicyDocument:
+        Statement:
+          Action:
+            - 's3:GetObject'
+          Effect: 'Allow'
+          Resource: !Sub 'arn:aws:s3:::${FrontendBucket}/*'
+          Principal:
+            AWS: !Sub 'arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity ${CloudFrontOriginAccessIdentity}'
+  CloudFrontOriginAccessIdentity:
+    Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
+    Properties:
+      CloudFrontOriginAccessIdentityConfig:
+        Comment: !Sub '${FrontendBucket}-access-identity'
+  NvaCloudFrontDistribution:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        Aliases:
+          - !Ref FrontendDomain
+        Origins:
+          - DomainName: !Sub '${FrontendBucket}.s3.amazonaws.com'
+            Id: !Sub 'S3-${FrontendBucket}'
+            S3OriginConfig:
+              OriginAccessIdentity: !Sub 'origin-access-identity/cloudfront/${CloudFrontOriginAccessIdentity}'
+        Enabled: true
+        Comment: NVA frontend distribution
+        DefaultCacheBehavior:
+          AllowedMethods:
+            - GET
+            - HEAD
+          TargetOriginId: !Sub 'S3-${FrontendBucket}'
+          ForwardedValues:
+            QueryString: false
+            Cookies:
+              Forward: none
+          ViewerProtocolPolicy: allow-all
+        DefaultRootObject: 'index.html'
+        PriceClass: PriceClass_100
+        Restrictions:
+          GeoRestriction:
+            RestrictionType: none
+        ViewerCertificate:
+          AcmCertificateArn: !Ref DomainCertificateArn
+          SslSupportMethod: sni-only
+        CustomErrorResponses:
+          - ErrorCode: 404
+            ErrorCachingMinTTL: 10
+            ResponseCode: 200
+            ResponsePagePath: '/index.html'
+          - ErrorCode: 403
+            ErrorCachingMinTTL: 10
+            ResponseCode: 200
+            ResponsePagePath: '/index.html'
