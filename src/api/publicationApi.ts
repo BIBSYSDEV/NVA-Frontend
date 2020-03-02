@@ -5,7 +5,7 @@ import { addNotification } from '../redux/actions/notificationActions';
 import i18n from '../translations/i18n';
 import { Publication } from '../types/publication.types';
 import { SEARCH_RESULTS_PER_PAGE, StatusCode } from '../utils/constants';
-import { searchFailure, searchForPublications } from '../redux/actions/searchActions';
+import { searchForPublications } from '../redux/actions/searchActions';
 import { getIdToken } from './userApi';
 import { NotificationVariant } from '../types/notification.types';
 
@@ -156,10 +156,10 @@ export const search = async (searchTerm: string, dispatch: Dispatch, offset?: nu
       const result = response.data.slice(currentOffset, currentOffset + SEARCH_RESULTS_PER_PAGE);
       dispatch(searchForPublications(result, searchTerm, response.data.length, offset));
     } else {
-      dispatch(searchFailure(i18n.t('feedback:error.search')));
+      dispatch(addNotification(i18n.t('feedback:error.search', NotificationVariant.Error)));
     }
   } catch {
-    dispatch(searchFailure(i18n.t('feedback:error.search')));
+    dispatch(addNotification(i18n.t('feedback:error.search', NotificationVariant.Error)));
   }
 };
 

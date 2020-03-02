@@ -3,10 +3,11 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 
 import { AutoSearch } from '../../../../components/AutoSearch';
-import { searchFailure } from '../../../../redux/actions/searchActions';
 import { debounce } from '../../../../utils/debounce';
 import { RecursiveInstitutionUnit } from '../../../../types/institution.types';
 import { getInstitutionAndSubunits } from '../../../../api/institutionApi';
+import { addNotification } from '../../../../redux/actions/notificationActions';
+import { NotificationVariant } from '../../../../types/notification.types';
 
 interface InstitutionSearchProps {
   clearSearchField: boolean;
@@ -41,7 +42,7 @@ const InstitutionSearch: FC<InstitutionSearchProps> = ({
           }))
         );
       } else {
-        dispatch(searchFailure(t('error.search')));
+        dispatch(addNotification(t('error.search', NotificationVariant.Error)));
       }
     }),
     [dispatch, t]
