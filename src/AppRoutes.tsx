@@ -1,21 +1,21 @@
-import React, { FC } from 'react';
-import { Route, Switch } from 'react-router';
-import Dashboard from './pages/dashboard/Dashboard';
-import EditPublication from './pages/publication/EditPublication';
-import MyPublications from './pages/publication/MyPublications';
-import Search from './pages/search/Search';
-import PublicationPage from './pages/publication/PublicationPage';
-import User from './pages/user/User';
-import NotFound from './pages/errorpages/NotFound';
+import React, { FC, Suspense, lazy } from 'react';
+import { Switch, Route } from 'react-router';
 import { useSelector } from 'react-redux';
 import { RootStore } from './redux/reducers/rootReducer';
-import { checkIfAppAdmin, checkIfCurator, checkIfPublisher } from './utils/authorization';
-import PublicProfile from './pages/publication/PublicProfile';
-import AdminCustomerInstitutionPage from './pages/admin/AdminCustomerInstitutionPage';
-import AdminCustomerInstitutionsPage from './pages/admin/AdminCustomerInstitutionsPage';
-import WorklistPage from './pages/worklist/WorklistPage';
+import { checkIfAppAdmin, checkIfPublisher, checkIfCurator } from './utils/authorization';
 import AdminUsersPage from './pages/admin/AdminUsersPage';
 
+const Dashboard = lazy(() => import('./pages/dashboard/Dashboard'));
+const EditPublication = lazy(() => import('./pages/publication/EditPublication'));
+const MyPublications = lazy(() => import('./pages/publication/MyPublications'));
+const Search = lazy(() => import('./pages/search/Search'));
+const PublicationPage = lazy(() => import('./pages/publication/PublicationPage'));
+const User = lazy(() => import('./pages/user/User'));
+const NotFound = lazy(() => import('./pages/errorpages/NotFound'));
+const PublicProfile = lazy(() => import('./pages/publication/PublicProfile'));
+const AdminCustomerInstitutionPage = lazy(() => import('./pages/admin/AdminCustomerInstitutionPage'));
+const AdminCustomerInstitutionsPage = lazy(() => import('./pages/admin/AdminCustomerInstitutionsPage'));
+const WorklistPage = lazy(() => import('./pages/worklist/WorklistPage'));
 const AppRoutes: FC = () => {
   const user = useSelector((store: RootStore) => store.user);
   const isPublisher = checkIfPublisher(user);
