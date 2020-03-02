@@ -128,7 +128,11 @@ const AdminCustomerInstitutionPage: FC = () => {
             />
           </StyledFieldWrapper>
           <StyledButtonContainer>
-            <Button color="primary" variant="contained" onClick={onClickSave}>
+            <Button
+              color="primary"
+              data-testid="customer-instituiton-save-button"
+              variant="contained"
+              onClick={onClickSave}>
               {t('common:save')}
             </Button>
           </StyledButtonContainer>

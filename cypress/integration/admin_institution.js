@@ -32,7 +32,10 @@ describe('User administers institutions ', () => {
     cy.get('[data-testid=customer-instituiton-short-name-input]').type('OSTEINSTITUTTET');
     cy.get('[data-testid=customer-instituiton-archive-name-input]').type('Jarlsberg');
     cy.get('[data-testid=customer-instituiton-cname-input]').type('www.osteloff.com');
+    cy.get('[data-testid=customer-instituiton-institution-dns-input]').type('1.1.1.1');
+    cy.get('[data-testid=customer-instituiton-administrator-id-input]').type('12345676');
+    cy.get('[data-testid=customer-instituiton-feide-organization-id-input]').type('2345667');
 
-    cy.get('[data-testid=customer-instituiton-feide-organization-id-input]').click({ force: true });
+    cy.get('[data-testid=customer-instituiton-save-button]').click({ force: true });
   });
 });
