@@ -20,15 +20,6 @@ Parameters:
     Description: GitHub repo branch name. It defaults to master if not specified.
     Type: String
     Default: master
-#  FrontendBucketName:
-#    Description: Bucket name for frontend. Must be all lower case, numbers and '-', '_'
-#    Type: String
-#  UseMockData:
-#    Description: Set true to use mock data for testing purposes
-#    Type: String
-#  CloudfrontDistribution:
-#    Description: Id for Cloudfront Distribution, used to invalidate files to reset cache
-#    Type: String
 
 Resources:
   CodeBuildProject:
@@ -191,7 +182,7 @@ Resources:
         - JsonPath: '$.ref'
           MatchEquals: refs/heads/master
       TargetPipeline: !Ref PublishFrontendPipeline
-      TargetAction: GitHubSourceMaster
+      TargetAction: GitHubSource
       Name: !Sub '${GitHubRepo}-Webhook'
       TargetPipelineVersion: !GetAtt PublishFrontendPipeline.Version
       RegisterWithThirdParty: true
