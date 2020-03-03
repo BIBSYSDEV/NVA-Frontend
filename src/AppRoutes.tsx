@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { RootStore } from './redux/reducers/rootReducer';
 import { checkIfAppAdmin, checkIfPublisher, checkIfCurator } from './utils/authorization';
 import AdminUsersPage from './pages/admin/AdminUsersPage';
+import DelayedFallback from './components/DelayedFallback';
 
 const Dashboard = lazy(() => import('./pages/dashboard/Dashboard'));
 const EditPublication = lazy(() => import('./pages/publication/EditPublication'));
@@ -23,23 +24,25 @@ const AppRoutes: FC = () => {
   const isCurator = checkIfCurator(user);
 
   return (
-    <Switch>
-      <Route exact path="/" component={Dashboard} />
-      {isPublisher && <Route exact path="/publication" component={EditPublication} />}
-      {isPublisher && <Route exact path="/publication/:id" component={EditPublication} />}
-      {isPublisher && <Route exact path="/my-publications" component={MyPublications} />}
-      {isCurator && <Route exact path="/worklist" component={WorklistPage} />}
-      {isAppAdmin && <Route exact path="/admin-institutions" component={AdminCustomerInstitutionsPage} />}
-      {isAppAdmin && <Route exact path="/admin-institution" component={AdminCustomerInstitutionPage} />}
-      {isAppAdmin && <Route exact path="/admin-institution-users" component={AdminUsersPage} />}
-      {user.isLoggedIn && <Route exact path="/public-profile/:userName" component={PublicProfile} />}
-      <Route exact path="/search" component={Search} />
-      <Route exact path="/publication/:publicationId" component={PublicationPage} />
-      <Route exact path="/search/:searchTerm" component={Search} />
-      <Route exact path="/search/:searchTerm/:offset" component={Search} />
-      {user.isLoggedIn && <Route exact path="/user" component={User} />}
-      <Route path="*" component={NotFound} />
-    </Switch>
+    <Suspense fallback={<DelayedFallback />}>
+      <Switch>
+        <Route exact path="/" component={Dashboard} />
+        {isPublisher && <Route exact path="/publication" component={EditPublication} />}
+        {isPublisher && <Route exact path="/publication/:id" component={EditPublication} />}
+        {isPublisher && <Route exact path="/my-publications" component={MyPublications} />}
+        {isCurator && <Route exact path="/worklist" component={WorklistPage} />}
+        {isAppAdmin && <Route exact path="/admin-institutions" component={AdminCustomerInstitutionsPage} />}
+        {isAppAdmin && <Route exact path="/admin-institution" component={AdminCustomerInstitutionPage} />}
+        {isAppAdmin && <Route exact path="/admin-institution-users" component={AdminUsersPage} />}
+        {user.isLoggedIn && <Route exact path="/public-profile/:userName" component={PublicProfile} />}
+        <Route exact path="/search" component={Search} />
+        <Route exact path="/publication/:publicationId" component={PublicationPage} />
+        <Route exact path="/search/:searchTerm" component={Search} />
+        <Route exact path="/search/:searchTerm/:offset" component={Search} />
+        {user.isLoggedIn && <Route exact path="/user" component={User} />}
+        <Route path="*" component={NotFound} />
+      </Switch>
+    </Suspense>
   );
 };
 

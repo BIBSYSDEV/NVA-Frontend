@@ -6,15 +6,28 @@ import SubHeading from '../../components/SubHeading';
 import { useSelector } from 'react-redux';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { UserAdmin, RoleName } from '../../types/user.types';
+import styled from 'styled-components';
+import Card from '../../components/Card';
+import { Button } from '@material-ui/core';
+import UserList from './UserList';
+
+const StyledButton = styled(Button)`
+  margin-top: 1rem;
+`;
+
+const StyledContainer = styled.div`
+  margin-bottom: 2rem;
+`;
 
 const AdminUsersPage: FC = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('profile');
   const user = useSelector((store: RootStore) => store.user);
   const [userList, setUserList] = useState<UserAdmin[]>([]);
 
   useEffect(() => {
     const getUsers = async () => {
       const users = await listInstitutionUsers(user.institution);
+      console.log(users);
       // TODO backend
       // if (users?.error) {
       //   dispatch(addNotification(t('feedback:error.get_publications'), 'error'));
@@ -24,38 +37,39 @@ const AdminUsersPage: FC = () => {
     };
 
     getUsers();
-  });
+  }, [user.institution]);
 
   return (
-    <>
-      <div>
-        <Heading>{t('user_administration')}</Heading>
-      </div>
-      <div>
-        <SubHeading>{t('institution_admins')}</SubHeading>
-        {userList
-          .filter(user => user.roles.find(role => role === RoleName.ADMIN))
-          .map(user => {
-            return <div>{user.name}</div>;
-          })}
-      </div>
-      <div>
-        <SubHeading>{t('curators')}</SubHeading>
-        {userList
-          .filter(user => user.roles.find(role => role === RoleName.CURATOR))
-          .map(user => {
-            return <div>{user.name}</div>;
-          })}
-      </div>
-      <div>
-        <SubHeading>{t('editor')}</SubHeading>
-        {userList
-          .filter(user => user.roles.find(role => role === RoleName.EDITOR))
-          .map(user => {
-            return <div>{user.name}</div>;
-          })}
-      </div>
-    </>
+    <Card>
+      <Heading>{t('organization.user_administration')}</Heading>
+      <SubHeading>{t('roles.institution_admins')}</SubHeading>
+      <StyledContainer>
+        {userList.filter(user => user.roles.find(role => role === RoleName.ADMIN)) && (
+          <UserList userList={userList.filter(user => user.roles.find(role => role === RoleName.ADMIN))} />
+        )}
+        <StyledButton color="primary" variant="outlined">
+          {t('users.new_institution_admin')}
+        </StyledButton>
+      </StyledContainer>
+      <SubHeading>{t('roles.curators')}</SubHeading>
+      <StyledContainer>
+        {userList.filter(user => user.roles.find(role => role === RoleName.CURATOR)) && (
+          <UserList userList={userList.filter(user => user.roles.find(role => role === RoleName.CURATOR))} />
+        )}
+        <StyledButton color="primary" variant="outlined">
+          {t('users.new_curator')}
+        </StyledButton>
+      </StyledContainer>
+      <SubHeading>{t('roles.editors')}</SubHeading>
+      <StyledContainer>
+        {userList.filter(user => user.roles.find(role => role === RoleName.EDITOR)) && (
+          <UserList userList={userList.filter(user => user.roles.find(role => role === RoleName.EDITOR))} />
+        )}
+        <StyledButton color="primary" variant="outlined">
+          {t('users.new_editor')}
+        </StyledButton>
+      </StyledContainer>
+    </Card>
   );
 };
 

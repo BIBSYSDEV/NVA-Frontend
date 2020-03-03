@@ -41,7 +41,10 @@
   },
   "roles": {
     "curator": "Kurator",
+    "curators": "Kuratorer",
     "curator_description": "Kurator er tilgangen alle som kan godkjenne og publisere for andre har",
+    "editors": "Redaktører",
+    "institution_admins": "Instiution adminer",
     "publisher": "Utgiver",
     "publisher_description": "Utgiver er den tilgangen ansatte på institusjonen har. Gir tilgang til å registrere egne publikasjoner"
   },
@@ -50,6 +53,15 @@
     "edit_institution": "Endre institusjon",
     "institution": "Institusjon",
     "no_institutions_found": "Ingen institusjoner funnet",
-    "search_for_institution": "Søk etter institusjon"
+    "search_for_institution": "Søk etter institusjon",
+    "user_administration": "Brukeradministrasjon"
+  },
+  "users": {
+    "authentication_id": "Autentiserings ID",
+    "created_date": "Opprettet",
+    "last_login_date": "Sist innlogget",
+    "new_curator": "Ny kurator",
+    "new_editor": "Ny redaktør",
+    "new_institution_admin": "Ny institusjonsadmin"
   }
 }

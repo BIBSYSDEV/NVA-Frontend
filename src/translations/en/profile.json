@@ -41,7 +41,10 @@
   },
   "roles": {
     "curator": "Curator",
+    "curators": "Curators",
     "curator_description": "A Curator is a person whom has access to approve and publish other researcher's work",
+    "editors": "Editors",
+    "institution_admins": "Institution admins",
     "publisher": "Publisher",
     "publisher_description": "A Publisher is a person whom is employed at the organization. A publisher has also access to register their own publications"
   },
@@ -50,6 +53,15 @@
     "edit_institution": "Edit institution",
     "institution": "Institution",
     "no_institutions_found": "No institutions found",
-    "search_for_institution": "Search for institution"
+    "search_for_institution": "Search for institution",
+    "user_administration": "User administration"
+  },
+  "users": {
+    "authentication_id": "Authentication ID",
+    "created_date": "Created",
+    "last_login_date": "Last login",
+    "new_institution_admin": "New institution admin",
+    "new_curator": "New curator",
+    "new_editor": "New editor"
   }
 }

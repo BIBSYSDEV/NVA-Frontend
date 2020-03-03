@@ -106,6 +106,7 @@ export const listInstitutionUsers = (cristinUnitId: string) => {
   // } catch {
   //   return null;
   // }
+
   return mockInstitutionUsersResponse.map(user => ({
     ...user,
     roles: user.roles.map(roleName => RoleName[roleName as keyof typeof RoleName]),
