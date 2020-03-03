@@ -54,17 +54,6 @@
     "edit_institution": "Edit institution",
     "institution": "Institution",
     "no_institutions_found": "No institutions found",
-    "search_for_institution": "Search for institution",
-    "user_administration": "User administration"
-  },
-  "users": {
-    "auto_assign_creators": "Employees are automaticaly assigned role as creator at login if the are registred as this in 'eduPersonAffiliation': Employee, Staff, Member",
-    "authentication_id": "Authentication ID",
-    "created_date": "Created",
-    "creator_info": "Who is able to publish?",
-    "last_login_date": "Last login",
-    "new_institution_admin": "New institution admin",
-    "new_curator": "New curator",
-    "new_editor": "New editor"
+    "search_for_institution": "Search for institution"
   }
 }

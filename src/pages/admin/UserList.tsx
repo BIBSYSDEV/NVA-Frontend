@@ -21,7 +21,7 @@ interface UserListProps {
 }
 
 const UserList: FC<UserListProps> = ({ userList }) => {
-  const { t } = useTranslation('profile');
+  const { t } = useTranslation('admin');
 
   return (
     <StyledTable>
@@ -46,22 +46,20 @@ const UserList: FC<UserListProps> = ({ userList }) => {
         </TableRow>
       </TableHead>
       <TableBody>
-        {userList.map(user => {
-          return (
-            <StyledTableRow key={user.id}>
-              <TableCell>{user.id}</TableCell>
-              <TableCell>{user.name}</TableCell>
-              <TableCell>{user.externalOrcid}</TableCell>
-              <TableCell>{user.lastLoginDate}</TableCell>
-              <TableCell>{user.createdDate}</TableCell>
-              <TableCell>
-                <Button color="secondary" variant="contained">
-                  {t('common:delete')}
-                </Button>
-              </TableCell>
-            </StyledTableRow>
-          );
-        })}
+        {userList.map(user => (
+          <StyledTableRow key={user.id}>
+            <TableCell>{user.id}</TableCell>
+            <TableCell>{user.name}</TableCell>
+            <TableCell>{user.externalOrcid}</TableCell>
+            <TableCell>{user.lastLoginDate}</TableCell>
+            <TableCell>{user.createdDate}</TableCell>
+            <TableCell>
+              <Button color="secondary" variant="contained">
+                {t('common:delete')}
+              </Button>
+            </TableCell>
+          </StyledTableRow>
+        ))}
       </TableBody>
     </StyledTable>
   );

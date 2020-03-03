@@ -41,6 +41,10 @@ export interface User {
   affiliations: Affiliation[];
   createdDate?: string;
   lastLoginDate?: string;
+  isAppAdmin: boolean;
+  isCurator: boolean;
+  isPublisher: boolean;
+  isInstitutionAdmin: boolean;
 }
 
 export type UserAdmin = Pick<
@@ -81,4 +85,8 @@ export const emptyUser: User = {
   affiliations: [],
   familyName: '',
   givenName: '',
+  isAppAdmin: false,
+  isCurator: false,
+  isInstitutionAdmin: false,
+  isPublisher: false,
 };

@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { listInstitutionUsers } from '../../api/userApi';
+import { listInstitutionUsers } from '../../api/userAdminApi';
 import Heading from '../../components/Heading';
 import SubHeading from '../../components/SubHeading';
 import { useSelector } from 'react-redux';
@@ -21,7 +21,7 @@ const StyledContainer = styled.div`
 `;
 
 const AdminUsersPage: FC = () => {
-  const { t } = useTranslation('profile');
+  const { t } = useTranslation('admin');
   const user = useSelector((store: RootStore) => store.user);
   const [userList, setUserList] = useState<UserAdmin[]>([]);
   const [autoAssignCreators, setAutoAssignCreators] = useState(true);
@@ -44,38 +44,36 @@ const AdminUsersPage: FC = () => {
     setAutoAssignCreators(!autoAssignCreators);
   };
 
+  const filterUsersOnRole = (roleFilter: RoleName) => {
+    return userList.filter(user => user.roles.some(role => role === roleFilter));
+  };
+
   return (
     <Card>
-      <Heading>{t('organization.user_administration')}</Heading>
-      <SubHeading>{t('roles.institution_admins')}</SubHeading>
+      <Heading>{t('users.user_administration')}</Heading>
+      <SubHeading>{t('profile:roles.institution_admins')}</SubHeading>
       <StyledContainer>
-        {userList.filter(user => user.roles.find(role => role === RoleName.ADMIN)) && (
-          <UserList userList={userList.filter(user => user.roles.find(role => role === RoleName.ADMIN))} />
-        )}
+        {filterUsersOnRole(RoleName.ADMIN) && <UserList userList={filterUsersOnRole(RoleName.ADMIN)} />}
         <StyledButton color="primary" variant="outlined">
           {t('users.new_institution_admin')}
         </StyledButton>
       </StyledContainer>
-      <SubHeading>{t('roles.curators')}</SubHeading>
+      <SubHeading>{t('profile:roles.curators')}</SubHeading>
       <StyledContainer>
-        {userList.filter(user => user.roles.find(role => role === RoleName.CURATOR)) && (
-          <UserList userList={userList.filter(user => user.roles.find(role => role === RoleName.CURATOR))} />
-        )}
+        {filterUsersOnRole(RoleName.CURATOR) && <UserList userList={filterUsersOnRole(RoleName.CURATOR)} />}
         <StyledButton color="primary" variant="outlined">
           {t('users.new_curator')}
         </StyledButton>
       </StyledContainer>
-      <SubHeading>{t('roles.editors')}</SubHeading>
+      <SubHeading>{t('profile:roles.editors')}</SubHeading>
       <StyledContainer>
-        {userList.filter(user => user.roles.find(role => role === RoleName.EDITOR)) && (
-          <UserList userList={userList.filter(user => user.roles.find(role => role === RoleName.EDITOR))} />
-        )}
+        {filterUsersOnRole(RoleName.EDITOR) && <UserList userList={filterUsersOnRole(RoleName.EDITOR)} />}
         <StyledButton color="primary" variant="outlined">
           {t('users.new_editor')}
         </StyledButton>
       </StyledContainer>
       <StyledContainer>
-        <SubHeading>{t('roles.creator')}</SubHeading>
+        <SubHeading>{t('profile:roles.creator')}</SubHeading>
         <NormalText>{t('users.creator_info')}</NormalText>
         <FormControlLabel
           control={<Checkbox checked={autoAssignCreators} />}

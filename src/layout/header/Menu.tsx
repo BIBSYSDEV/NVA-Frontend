@@ -8,8 +8,6 @@ import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import { useSelector } from 'react-redux';
 import { RootStore } from '../../redux/reducers/rootReducer';
-import { checkIfAppAdmin, checkIfPublisher, checkIfCurator } from '../../utils/authorization';
-import { checkIfInstitutionAdmin } from './../../utils/authorization';
 
 interface MenuProps {
   handleLogout: () => void;
@@ -57,11 +55,6 @@ const Menu: React.FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
     history.push(newPath);
   };
 
-  const isPublisher = checkIfPublisher(user);
-  const isCurator = checkIfCurator(user);
-  const isAppAdmin = checkIfAppAdmin(user);
-  const isInstitutionAdmin = checkIfInstitutionAdmin(user);
-
   return (
     <StyledMenu>
       <StyledMenuButton
@@ -88,7 +81,7 @@ const Menu: React.FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
           {t('profile:my_profile')}
         </StyledMenuItem>
 
-        {isPublisher && (
+        {user.isPublisher && (
           <StyledMenuItem
             data-testid="menu-my-publications-button"
             onClick={() => handleClickMenuItem('/my-publications')}>
@@ -96,7 +89,7 @@ const Menu: React.FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
           </StyledMenuItem>
         )}
 
-        {isAppAdmin && (
+        {user.isAppAdmin && (
           <StyledMenuItem
             data-testid="menu-admin-institution-button"
             onClick={() => handleClickMenuItem('/admin-institutions')}>
@@ -104,7 +97,7 @@ const Menu: React.FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
           </StyledMenuItem>
         )}
 
-        {isInstitutionAdmin && (
+        {user.isInstitutionAdmin && (
           <StyledMenuItem
             data-testid="menu-admin-institution-users-button"
             onClick={() => handleClickMenuItem('/admin-institution-users')}>
@@ -112,7 +105,7 @@ const Menu: React.FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
           </StyledMenuItem>
         )}
 
-        {isCurator && (
+        {user.isCurator && (
           <StyledMenuItem data-testid="menu-my-worklist-button" onClick={() => handleClickMenuItem('/worklist')}>
             {t('workLists:my_worklist')}
           </StyledMenuItem>
