@@ -13,7 +13,7 @@
 
 # misc
 .DS_Store
-.env.local
+_spanish_soup_env.local
 .env.development.local
 .env.test.local
 .env.production.local
@@ -38,3 +38,4 @@ cypress/videos
 
 a_frontend_parent_template.yml
 templates/frontend_parent_template copy.yml
+/.aws-sam/
