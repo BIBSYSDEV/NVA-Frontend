@@ -2,7 +2,7 @@ import React, { FC, Suspense, lazy } from 'react';
 import { Switch, Route } from 'react-router';
 import { useSelector } from 'react-redux';
 import { RootStore } from './redux/reducers/rootReducer';
-import { checkIfAppAdmin, checkIfPublisher, checkIfCurator } from './utils/authorization';
+import { checkIfAppAdmin, checkIfPublisher, checkIfCurator, checkIfInstitutionAdmin } from './utils/authorization';
 import AdminUsersPage from './pages/admin/AdminUsersPage';
 import DelayedFallback from './components/DelayedFallback';
 
@@ -22,6 +22,7 @@ const AppRoutes: FC = () => {
   const isPublisher = checkIfPublisher(user);
   const isAppAdmin = checkIfAppAdmin(user);
   const isCurator = checkIfCurator(user);
+  const isInstitutionAdmin = checkIfInstitutionAdmin(user);
 
   return (
     <Suspense fallback={<DelayedFallback />}>
@@ -33,7 +34,7 @@ const AppRoutes: FC = () => {
         {isCurator && <Route exact path="/worklist" component={WorklistPage} />}
         {isAppAdmin && <Route exact path="/admin-institutions" component={AdminCustomerInstitutionsPage} />}
         {isAppAdmin && <Route exact path="/admin-institution" component={AdminCustomerInstitutionPage} />}
-        {isAppAdmin && <Route exact path="/admin-institution-users" component={AdminUsersPage} />}
+        {isInstitutionAdmin && <Route exact path="/admin-institution-users" component={AdminUsersPage} />}
         {user.isLoggedIn && <Route exact path="/public-profile/:userName" component={PublicProfile} />}
         <Route exact path="/search" component={Search} />
         <Route exact path="/publication/:publicationId" component={PublicationPage} />

@@ -9,6 +9,7 @@ import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import { useSelector } from 'react-redux';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { checkIfAppAdmin, checkIfPublisher, checkIfCurator } from '../../utils/authorization';
+import { checkIfInstitutionAdmin } from './../../utils/authorization';
 
 interface MenuProps {
   handleLogout: () => void;
@@ -59,6 +60,7 @@ const Menu: React.FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
   const isPublisher = checkIfPublisher(user);
   const isCurator = checkIfCurator(user);
   const isAppAdmin = checkIfAppAdmin(user);
+  const isInstitutionAdmin = checkIfInstitutionAdmin(user);
 
   return (
     <StyledMenu>
@@ -102,7 +104,7 @@ const Menu: React.FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
           </StyledMenuItem>
         )}
 
-        {isAppAdmin && (
+        {isInstitutionAdmin && (
           <StyledMenuItem
             data-testid="menu-admin-institution-users-button"
             onClick={() => handleClickMenuItem('/admin-institution-users')}>
