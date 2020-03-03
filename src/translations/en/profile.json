@@ -40,11 +40,12 @@
     "your_orcid": "Your ORCID"
   },
   "roles": {
+    "creator": "Creator",
     "curator": "Curator",
     "curators": "Curators",
     "curator_description": "A Curator is a person whom has access to approve and publish other researcher's work",
     "editors": "Editors",
-    "institution_admins": "Institution admins",
+    "institution_admins": "Institution administrators",
     "publisher": "Publisher",
     "publisher_description": "A Publisher is a person whom is employed at the organization. A publisher has also access to register their own publications"
   },
@@ -57,8 +58,10 @@
     "user_administration": "User administration"
   },
   "users": {
+    "auto_assign_creators": "Employees are automaticaly assigned role as creator at login if the are registred as this in 'eduPersonAffiliation': Employee, Staff, Member",
     "authentication_id": "Authentication ID",
     "created_date": "Created",
+    "creator_info": "Who is able to publish?",
     "last_login_date": "Last login",
     "new_institution_admin": "New institution admin",
     "new_curator": "New curator",

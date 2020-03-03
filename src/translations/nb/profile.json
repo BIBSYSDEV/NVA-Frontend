@@ -40,6 +40,7 @@
     "your_orcid": "Din ORCID"
   },
   "roles": {
+    "creator": "Registrator",
     "curator": "Kurator",
     "curators": "Kuratorer",
     "curator_description": "Kurator er tilgangen alle som kan godkjenne og publisere for andre har",
@@ -57,8 +58,10 @@
     "user_administration": "Brukeradministrasjon"
   },
   "users": {
+    "auto_assign_creators": "Ansatte får automatisk rolle som registrator ved pålogging hvis de er registrert med dette i 'eduPersonAffiliation': Employee, Staff, Member",
     "authentication_id": "Autentiserings ID",
     "created_date": "Opprettet",
+    "creator_info": "Hvem skal få tilgang til å registrere?",
     "last_login_date": "Sist innlogget",
     "new_curator": "Ny kurator",
     "new_editor": "Ny redaktør",

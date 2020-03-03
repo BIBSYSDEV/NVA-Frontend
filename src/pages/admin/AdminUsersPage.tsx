@@ -8,8 +8,9 @@ import { RootStore } from '../../redux/reducers/rootReducer';
 import { UserAdmin, RoleName } from '../../types/user.types';
 import styled from 'styled-components';
 import Card from '../../components/Card';
-import { Button } from '@material-ui/core';
+import { Button, FormControlLabel, Checkbox } from '@material-ui/core';
 import UserList from './UserList';
+import NormalText from './../../components/NormalText';
 
 const StyledButton = styled(Button)`
   margin-top: 1rem;
@@ -23,6 +24,7 @@ const AdminUsersPage: FC = () => {
   const { t } = useTranslation('profile');
   const user = useSelector((store: RootStore) => store.user);
   const [userList, setUserList] = useState<UserAdmin[]>([]);
+  const [autoAssignCreators, setAutoAssignCreators] = useState(true);
 
   useEffect(() => {
     const getUsers = async () => {
@@ -38,6 +40,10 @@ const AdminUsersPage: FC = () => {
 
     getUsers();
   }, [user.institution]);
+
+  const handleCheckAutoAssignCreators = () => {
+    setAutoAssignCreators(!autoAssignCreators);
+  };
 
   return (
     <Card>
@@ -68,6 +74,15 @@ const AdminUsersPage: FC = () => {
         <StyledButton color="primary" variant="outlined">
           {t('users.new_editor')}
         </StyledButton>
+      </StyledContainer>
+      <StyledContainer>
+        <SubHeading>{t('roles.creator')}</SubHeading>
+        <NormalText>{t('users.creator_info')}</NormalText>
+        <FormControlLabel
+          control={<Checkbox checked={autoAssignCreators} />}
+          onChange={handleCheckAutoAssignCreators}
+          label={t('users.auto_assign_creators')}
+        />
       </StyledContainer>
     </Card>
   );
