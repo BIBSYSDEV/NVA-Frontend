@@ -139,9 +139,9 @@ Resources:
             Statement:
               - Effect: Allow
                 Action:
-                  - 'logs:CreateLogGroup'
-                  - 'logs:CreateLogStream'
-                  - 'logs:PutLogEvents'
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
                 Resource:
                   - !Sub 'arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/codebuild/*'
                   - !Sub 'arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/codebuild/*:*'
@@ -151,9 +151,9 @@ Resources:
             Statement:
               - Effect: Allow
                 Action:
-                  - 's3:GetObject'
-                  - 's3:GetObjectVersion'
-                  - 's3:PutObject'
+                  - s3:GetObject
+                  - s3:GetObjectVersion
+                  - s3:PutObject
                 Resource:
                   - !Sub 'arn:aws:s3:::${PublishArtifactStoreBucket}/*'
         - PolicyName: secretsPolicy
@@ -162,8 +162,8 @@ Resources:
             Statement:
               - Effect: Allow
                 Action:
-                  - 'ssm:GetParameters'
-                  - 'secretsmanager:GetSecretValue'
+                  - ssm:GetParameters
+                  - secretsmanager:GetSecretValue
                 Resource: '*'
         - PolicyName: applicationRepository
           PolicyDocument:
@@ -171,15 +171,42 @@ Resources:
             Statement:
               - Effect: Allow
                 Action:
-                  - 'serverlessrepo:CreateApplication'
+                  - serverlessrepo:CreateApplication
+                  - serverlessrepo:CreateApplicationVersion
+                  - serverlessrepo:UpdateApplication
+                  - serverlessrepo:GetApplication
+                  - serverlessrepo:PutApplication
                 Resource:
                   - !Sub 'arn:aws:serverlessrepo:${AWS::Region}:${AWS::AccountId}:applications/*'
+        - PolicyName: anyApplicationRepository
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - serverlessrepo:GetApplication
+                Resource: '*'
 
   PublishArtifactStoreBucket:
     Type: AWS::S3::Bucket
     Properties:
       VersioningConfiguration:
         Status: Enabled
+
+  PublishArtifactStoreBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref PublishArtifactStoreBucket
+      PolicyDocument:
+        Statement:
+          - Action:
+              - 's3:GetObject'
+            Effect: 'Allow'
+            Resource:
+              - !Sub 'arn:aws:s3:::${PublishArtifactStoreBucket}/*'
+            Principal:
+              Service:
+                - serverlessrepo.amazonaws.com
 
   PublishFrontendPipelineWebhook:
     Type: AWS::CodePipeline::Webhook
