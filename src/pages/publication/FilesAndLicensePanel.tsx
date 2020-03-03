@@ -40,6 +40,7 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab
   const { t } = useTranslation('publication');
   const { values }: FormikProps<Publication> = useFormikContext();
   const [isLicenseModalOpen, setIsLicenseModalOpen] = useState(false);
+  const shouldAllowMultipleFiles = true;
 
   const uploadedFiles = values[FilesFieldNames.FILES];
   const referenceType = values.reference.type;
@@ -58,7 +59,11 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab
           <>
             <Card>
               <Heading>{t('files_and_license.upload_files')}</Heading>
-              <FileUploader uppy={uppy} addFile={file => insert(0, file)} />
+              <FileUploader
+                uppy={uppy}
+                shouldAllowMultipleFiles={shouldAllowMultipleFiles}
+                addFile={file => insert(0, file)}
+              />
             </Card>
             {uploadedFiles.length > 0 && (
               <>

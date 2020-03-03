@@ -56,7 +56,8 @@ const EditPublication: FC = () => {
   const [expanded, setExpanded] = useState<string | false>(false);
   const [showForm, setShowForm] = useState(!!id);
   const { t } = useTranslation();
-  const [uppy] = useState(createUppy());
+  const shouldAllowMultipleFiles = true;
+  const [uppy] = useState(createUppy(shouldAllowMultipleFiles));
 
   useEffect(() => {
     return () => uppy && uppy.close();

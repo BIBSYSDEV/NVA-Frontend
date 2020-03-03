@@ -24,6 +24,11 @@ const StyledFileCard = styled.div`
 const LoadPublication: React.FC<LoadPublicationProps> = ({ expanded, onChange, uppy, openForm }) => {
   const { t } = useTranslation('publication');
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
+  const shouldAllowMultipleFiles = true;
+
+  useEffect(() => {
+    return () => uppy && uppy.close();
+  }, [uppy]);
 
   useEffect(() => {
     if (uppy && !uppy.hasUploadSuccessEventListener) {
@@ -50,7 +55,7 @@ const LoadPublication: React.FC<LoadPublicationProps> = ({ expanded, onChange, u
       ariaControls="publication-method-file">
       {uppy ? (
         <>
-          <UppyDashboard uppy={uppy} />
+          <UppyDashboard uppy={uppy} shouldAllowMultipleFiles={shouldAllowMultipleFiles} />
           {uploadedFiles.map(file => (
             <StyledFileCard key={file.id}>
               <FileCard

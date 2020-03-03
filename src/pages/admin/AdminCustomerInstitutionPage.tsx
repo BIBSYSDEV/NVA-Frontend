@@ -1,12 +1,20 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import Card from '../../components/Card';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import { Button, TextField } from '@material-ui/core';
-import { CustomerInstitutionFieldNames, emptyCustomerInstitution } from '../../types/customerInstitution.types';
+import {
+  CustomerInstitutionFieldNames,
+  emptyCustomerInstitution,
+  emptyInstitutionLogoFile,
+  InstitutionLogoFile,
+} from '../../types/customerInstitution.types';
 import Heading from '../../components/Heading';
+import UppyDashboard from '../../components/UppyDashboard';
+import { createUppy } from '../../utils/uppy-config';
+import Label from '../../components/Label';
 
 const StyledFieldWrapper = styled.div`
   margin: 1rem;
@@ -19,16 +27,47 @@ const StyledButtonContainer = styled.div`
   display: flex;
   justify-content: flex-end;
 `;
+
 const AdminCustomerInstitutionPage: FC = () => {
   const { t } = useTranslation('admin');
+  const shouldAllowMultipleFiles = false;
+
+  const [uppy] = useState(createUppy(shouldAllowMultipleFiles));
+  const [uploadedFile, setUploadedFile] = useState<InstitutionLogoFile>(emptyInstitutionLogoFile);
+  const initialValues = emptyCustomerInstitution;
+
+  useEffect(() => {
+    if (uppy && !uppy.hasUploadSuccessEventListener) {
+      const addFile = (newFile: InstitutionLogoFile) => {
+        setUploadedFile(newFile);
+      };
+
+      uppy.on('upload-success', addFile);
+      uppy.hasUploadSuccessEventListener = true;
+
+      return () => {
+        uppy.off('upload-success', addFile);
+        uppy.hasUploadSuccessEventListener = false;
+      };
+    }
+  }, [uppy, uploadedFile]);
 
   const onClickSave = () => {};
 
   return (
     <Card>
       <Heading>{t('add_institution')}</Heading>
+      {uppy && (
+        <>
+          <Card>
+            <Label>{t('institution_logo')}</Label>
+            <UppyDashboard uppy={uppy} shouldAllowMultipleFiles={shouldAllowMultipleFiles} />
+            {uploadedFile && <div>{uploadedFile.name}</div>}
+          </Card>
+        </>
+      )}
       <Formik
-        initialValues={emptyCustomerInstitution}
+        initialValues={initialValues}
         validationSchema={Yup.object({
           name: Yup.string().required('Required'),
         })}

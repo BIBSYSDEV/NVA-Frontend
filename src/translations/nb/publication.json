@@ -36,8 +36,10 @@
   "files_and_license": {
     "accepted_version": "Akseptert versjon",
     "administrative_contract": "Administrativ avtale",
-    "browse": "velg filer",
+    "browse": "velg",
+    "drag_file": "Dra fil hit eller",
     "drag_files": "Dra filer hit eller",
+    "drop_file_here": "Slipp filen din her",
     "drop_here": "Slipp filene dine her",
     "embargo_date": "Dato for utsatt publisering i arkivet",
     "files": "Filer",

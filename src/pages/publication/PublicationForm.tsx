@@ -26,7 +26,7 @@ interface PublicationFormProps {
   id?: string;
 }
 
-const PublicationForm: FC<PublicationFormProps> = ({ uppy = createUppy(), id }) => {
+const PublicationForm: FC<PublicationFormProps> = ({ uppy = createUppy(true), id }) => {
   const { t } = useTranslation('publication');
   const [tabNumber, setTabNumber] = useState(0);
   const [initialValues, setInitialValues] = useState(emptyPublication);
