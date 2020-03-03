@@ -1,0 +1,33 @@
+{
+  "error": {
+    "404_page": "Beklager, men vi kan ikke finne siden du ser etter. (Http feilkode 404)",
+    "create_authority": "Kunne ikke opprette autoritet",
+    "create_publication": "Kunne ikke opprette publikasjon",
+    "get_approvable_publications": "Kunne ikke hente publikasjoner som venter godkjenning",
+    "get_authority": "Kunne ikke hente autoritet",
+    "get_authorities": "Kunne ikke hente autoriteter",
+    "get_doi": "Kunne ikke hente lenkedata",
+    "get_doi_requests": "Kunne ikke hente DOI-forespørsler",
+    "get_institutions": "Kunne ikke laste inn institusjoner",
+    "get_project": "Søk på prosjekt feilet",
+    "get_orcid": "Kunne ikke hente data fra ORCID",
+    "get_parent_units": "Kunne ikke hente institusjoner",
+    "get_publications": "Kunne ikke laste inn publikasjoner",
+    "get_publication": "Kunne ikke laste inn publikasjon",
+    "get_session": "Økten er utløpt. Vennligst logg inn på nytt.",
+    "get_user": "Kunne ikke hente bruker",
+    "login": "Kunne ikke logge inn",
+    "orcid_login": "Kunne ikke logge inn på ORCID",
+    "search": "Søk feilet",
+    "search_institutions": "Kunne ikke finne institusjon",
+    "update_authority": "Kunne ikke oppdatere autoritet",
+    "update_publication": "Kunne ikke oppdatere publikasjon"
+  },
+  "success": {
+    "created_authority": "Forfatteridentitet er opprettet",
+    "create_publication": "Publikasjonen er opprettet",
+    "login": "Logget inn",
+    "update_authority": "Forfatter er oppdatert",
+    "update_publication": "Publikasjonen er oppdatert"
+  }
+}

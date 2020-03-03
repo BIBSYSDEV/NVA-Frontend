@@ -1,0 +1,33 @@
+language: node_js
+node_js:
+  - 'stable'
+cache:
+  npm: true
+  directories:
+    - ~/.cache
+env:
+  global:
+    - REACT_APP_USE_MOCK=true
+    - REACT_APP_AWS_COGNITO_IDENTITY_POOL_ID=XXX
+    - REACT_APP_AWS_USER_POOLS_ID=XXX
+    - REACT_APP_AWS_USER_POOLS_WEB_CLIENT_ID=XXX
+    - REACT_APP_DOMAIN=XXX
+    - REACT_APP_REDIRECT_SIGN_IN=XXX
+    - REACT_APP_REDIRECT_SIGN_OUT=XXX
+    - REACT_APP_ORCID_CLIENT_ID=XXX
+    - REACT_APP_ORCID_CLIENT_SECRET=XXX
+    - REACT_APP_ORCID_REDIRECT_URI=https://dev.nva.aws.unit.no
+    - REACT_APP_ORCID_BASE_URL=https://sandbox.orcid.org
+    - REACT_APP_API_URL=https://api.dev.nva.aws.unit.no
+addons:
+  apt:
+    packages:
+      # Ubuntu 16+ does not install this dependency by default, so we need to install it ourselves
+      - libgconf-2-4
+install:
+  - npm ci
+script:
+  - npm run build
+  - npm run test:react
+  - npm run test:cypress --coverage
+  - npx nyc report

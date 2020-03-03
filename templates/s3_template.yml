@@ -1,0 +1,12 @@
+AWSTemplateFormatVersion: '2010-09-09'
+
+Description: >
+  This template creates a S3 bucket for the NVA frontend
+
+Resources:
+  FrontendBucket:
+    Type: 'AWS::S3::Bucket'
+
+Outputs:
+  BucketName:
+    Value: !Ref FrontendBucket

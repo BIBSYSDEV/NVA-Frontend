@@ -1,0 +1,55 @@
+{
+  "applications": "Applikasjoner",
+  "authority": {
+    "connect_authority": "Koble til din forfatteridentitet",
+    "connected_info": "Du har en tilkoblet forfatter ID",
+    "create_authority": "Opprett forfatteridentitet",
+    "description_no_authority_found": "Vi finner ikke en forfatteridentitet som passer med ditt navn (hentet fra din pålogging til denne tjenesten). Det vil derfor opprettes en ny forfatteridentitet, slik at du kan ta i bruk denne tjenesten. Om navnet over ikke stemmer med deg, så må du ta kontakt med kurator ved din institusjon for å få korrigert din forfatteridentitet.",
+    "last_publication": "Siste publikasjon",
+    "no_publications_found": "Ingen utgivelser funnet",
+    "not_connected_info": "For å identifisere deg som forfatter trenger vi en kobling til biblioteksystemet.",
+    "search_summary": "{{results}} treff for \"{{searchTerm}}\"",
+    "see_profile": "Se forfatterprofil"
+  },
+  "heading": {
+    "author_info": "Forfatter ID",
+    "connect_authority": "Koble til din forfatter ID",
+    "contact_info": "Kontaktinformasjon",
+    "language": "Språk",
+    "organizations": "Tilhørighet",
+    "roles": "Roller",
+    "user_info": "Brukerinformasjon"
+  },
+  "id": "ID",
+  "info_feide": "Info hentet fra Feide",
+  "info_nva": "Info hentet fra NVA",
+  "my_profile": "Min profil",
+  "my_public_profile": "Min offentlige profil",
+  "orcid": {
+    "create_or_connect": "Opprett eller koble til din ORCID",
+    "description_what_is_orcid": "Beskrivelse av ORCID",
+    "description_why_use_orcid": "Med ORCID blir det enklere å identifisere deg som forfatter. Vi kan også hente informasjon fra ORCID, som kan gjøre det raskere for deg å registrere dine publikasjoner.",
+    "login": "Logg inn på din ORCID-konto eller lag ny dersom du ikke har konto",
+    "orcid": "ORCID",
+    "registration": "Registrering",
+    "skip_this_step": "Hopp over nå (kan gjøres under 'profil' senere)",
+    "suggestions": "Forslag fra ORCID",
+    "suggestions_description": "Forslag fra ORCID...",
+    "what": "Hva er ORCID?",
+    "why": "Hvorfor ber vi om ORCID?",
+    "your_orcid": "Din ORCID"
+  },
+  "roles": {
+    "curator": "Kurator",
+    "curator_description": "Kurator er tilgangen alle som kan godkjenne og publisere for andre har",
+    "publisher": "Utgiver",
+    "publisher_description": "Utgiver er den tilgangen ansatte på institusjonen har. Gir tilgang til å registrere egne publikasjoner"
+  },
+  "organization": {
+    "add_institution": "Legg til institusjon",
+    "edit_institution": "Endre institusjon",
+    "institution": "Institusjon",
+    "no_institutions_found": "Ingen institusjoner funnet",
+    "search_for_institution": "Søk etter institusjon"
+  }
+}

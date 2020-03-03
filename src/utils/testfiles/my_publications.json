@@ -1,0 +1,90 @@
+[
+  {
+    "id": "12345678",
+    "title": "A longitudinal analysis of estimation, counting skills, and mathematical ability across the first school year.",
+    "createdDate": "1941-04-25",
+    "status": "draft",
+    "createdBy": "Kåre Kåresen"
+  },
+  {
+    "id": "4327439",
+    "title": "Relationships between number line estimation, counting, and mathematical abilities. Ninety-nine 5-year-olds were tested on 4 occasions at 3 monthly intervals. Correlations between the 3 types of ability were evident, but while the quality of children's estimations changed over time and performance on the mathematical tasks improve.",
+    "createdDate": "2019-01-01",
+    "status": "draft",
+    "createdBy": "Kari Karisen"
+  },
+  {
+    "id": "53453453",
+    "title": "Potchefstroom electronic law journal : PER = Potchefstroomse elektroniese regsblad",
+    "createdDate": "2020-01-01",
+    "status": "draft",
+    "createdBy": "Arne Arnesen"
+  },
+  {
+    "id": "3333439",
+    "title": "Attføring av attføringen : særlig om stoffmisbrukere : hedersskrift til Per Alveberg",
+    "createdDate": "2021-01-01",
+    "status": "rejected",
+    "createdBy": "Bob Boffaloe"
+  },
+  {
+    "id": "3533439",
+    "title": "Attføring av attføringen : særlig om stoffmisbrukere : hedersskrift til Per Alveberg",
+    "createdDate": "2021-01-01",
+    "status": "published",
+    "createdBy": "Bob Ryder",
+    "publicationDate": {
+      "year": "2021",
+      "month": "01",
+      "day": "01"
+    },
+    "authors": [
+      {
+        "name": "Oddny Osteloff",
+        "institutions": [
+          {
+            "id": "194.61.55.0",
+            "name": "NTNU, Fakultet for arkitektur og design, Institutt for arkitektur og teknologi"
+          }
+        ],
+        "type": "author"
+      }
+    ],
+    "reference": {
+      "type": "book",
+      "book": {
+        "publisher": "Bokforlaget AS"
+      }
+    }
+  },
+  {
+    "id": "12345679",
+    "title": "A longitudinal analysis of estimation, counting skills, and mathematical ability across the first school year.",
+    "createdDate": "1941-04-25",
+    "status": "published",
+    "createdBy": "Bob Maggio",
+    "publicationDate": {
+      "year": "1941",
+      "month": "04",
+      "day": "25"
+    },
+    "authors": [
+      {
+        "name": "Oddny Osteloff",
+        "institutions": [
+          {
+            "id": "194.61.55.0",
+            "name": "NTNU, Fakultet for arkitektur og design, Institutt for arkitektur og teknologi"
+          }
+        ],
+        "type": "author"
+      }
+    ],
+    "reference": {
+      "type": "journalArticle",
+      "journalArticle": {
+        "publisher": "The Very Scientific Journal"
+      }
+    }
+  }
+]

@@ -1,0 +1,33 @@
+{
+  "error": {
+    "404_page": "The page you requested could not be found. (Http error code 404)",
+    "create_authority": "Could not create authority",
+    "create_publication": "Could not create publication",
+    "get_approvable_publications": "Could not fetch publications awaiting approval",
+    "get_authority": "Could not retrieve authority",
+    "get_authorities": "Could not retrieve authorities",
+    "get_doi": "Could not retrieve link data",
+    "get_doi_requests": "Could not retrieve DOI requests",
+    "get_institutions": "Could not retrieve institutions",
+    "get_project": "Search for projects failed",
+    "get_orcid": "Could not get data from ORCID",
+    "get_parent_units": "Could not retrieve institutions",
+    "get_publications": "Could not retrieve publications",
+    "get_publication": "Could not get publication",
+    "get_session": "Invalid session. Please log in again.",
+    "get_user": "Failed to get user",
+    "login": "Login failed",
+    "orcid_login": "ORCID login failed",
+    "search": "Search failed",
+    "search_institutions": "Could not find institution",
+    "update_authority": "Could not update authority",
+    "update_publication": "Could not update publication"
+  },
+  "success": {
+    "created_authority": "Created author ID",
+    "create_publication": "New publication created",
+    "login": "Logged in",
+    "update_authority": "Updated authority",
+    "update_publication": "Updated publication"
+  }
+}

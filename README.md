@@ -1,8 +1,34 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+# Environment variables
 
-In the project directory, you can run:
+We are using environment variables in this project.<br>
+To be able to run this app, you need to create a .env file with the following fields:<br>
+
+    REACT_APP_AWS_COGNITO_IDENTITY_POOL_ID=eu-west-1:XXXXXXXXXX
+    REACT_APP_AWS_REGION=eu-west-1
+    REACT_APP_AWS_USER_POOLS_ID=eu-west-XXXXXXXXXX
+    REACT_APP_AWS_USER_POOLS_WEB_CLIENT_ID=XXXXXXXXXX
+    REACT_APP_DOMAIN=XXXXXXXXX.auth.eu-west-1.amazoncognito.com
+    REACT_APP_REDIRECT_SIGN_IN=XXXXXXXXXX
+    REACT_APP_REDIRECT_SIGN_OUT=XXXXXXXXXX
+    REACT_APP_ORCID_CLIENT_ID=XXXXXXXXXX
+    REACT_APP_ORCID_CLIENT_SECRET=XXXXXXXXXX
+    REACT_APP_ORCID_REDIRECT_URI=XXXXXXXXXX
+    REACT_APP_ORCID_BASE_URL=XXXXXXXXXX
+    REACT_APP_ALMA_API_URL=https://api-eu.hosted.exlibrisgroup.com
+    REACT_APP_API_URL=https://api.dev.nva.aws.unit.no
+
+To use mock data, you need to add this variable to the .env file:<br>
+`REACT_APP_USE_MOCK=true`
+
+# Generate code coverage
+
+`npx nyc report`
+
+coverage report: `coverage/lcov-report/index.html`
+
+# Available Scripts
 
 ### `npm start`
 
@@ -12,10 +38,13 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.<br>
 You will also see any lint errors in the console.
 
-### `npm test`
+### `npm run test:cypress`
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Runs cypress tests
+
+### `npm run test:react`
+
+Runs React testing library tests
 
 ### `npm run build`
 
@@ -36,9 +65,3 @@ If you aren’t satisfied with the build tool and configuration choices, you can
 Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).

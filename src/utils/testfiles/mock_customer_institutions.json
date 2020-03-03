@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Statped",
+    "id": "1",
+    "createdDate": "27.01.2020",
+    "contact": "Roger"
+  },
+  {
+    "name": "Anno Museeum",
+    "id": "2",
+    "createdDate": "27.01.2019",
+    "contact": "Børre"
+  },
+  {
+    "name": "Institutt for osteloff",
+    "id": "3",
+    "createdDate": "27.01.1780",
+    "contact": "Kjetil"
+  },
+  {
+    "name": "Norsk senter for økologisk landbruk",
+    "id": "4",
+    "createdDate": "27.01.2012",
+    "contact": "Rolf"
+  }
+]

@@ -1,0 +1,74 @@
+AWSTemplateFormatVersion: '2010-09-09'
+
+Description: >
+  This template creates a CloudFront distribution for a web application
+
+Parameters:
+  NvaFrontendBucketName:
+    Description: Name of S3 bucket for frontend
+    Type: String
+  DomainCertificateArn:
+    Description: Certificate to use for this domain
+    Type: String
+
+Resources:
+  NvaFrontendBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref NvaFrontendBucketName
+      PolicyDocument:
+        Statement:
+          Action:
+            - 's3:GetObject'
+          Effect: 'Allow'
+          Resource: !Sub 'arn:aws:s3:::${NvaFrontendBucketName}/*'
+          Principal:
+            AWS: !Sub 'arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity ${CloudFrontOriginAccessIdentity}'
+  CloudFrontOriginAccessIdentity:
+    Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
+    Properties:
+      CloudFrontOriginAccessIdentityConfig:
+        Comment: !Sub '${NvaFrontendBucketName}-access-identity'
+  NvaCloudFrontDistribution:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        Aliases:
+          - frontend.{{resolve:ssm:phase:1}}.nva.aws.unit.no
+        Origins:
+          - DomainName: !Sub '${NvaFrontendBucketName}.s3.amazonaws.com'
+            Id: !Sub 'S3-${NvaFrontendBucketName}'
+            S3OriginConfig:
+              OriginAccessIdentity: !Sub 'origin-access-identity/cloudfront/${CloudFrontOriginAccessIdentity}'
+        Enabled: true
+        Comment: NVA frontend distribution
+        DefaultCacheBehavior:
+          AllowedMethods:
+            - GET
+            - HEAD
+          TargetOriginId: !Sub 'S3-${NvaFrontendBucketName}'
+          ForwardedValues:
+            QueryString: false
+            Cookies:
+              Forward: none
+          ViewerProtocolPolicy: allow-all
+        DefaultRootObject: 'index.html'
+        PriceClass: PriceClass_100
+        Restrictions:
+          GeoRestriction:
+            RestrictionType: none
+        ViewerCertificate:
+          AcmCertificateArn: !Ref DomainCertificateArn
+          SslSupportMethod: sni-only
+        CustomErrorResponses:
+          - ErrorCode: 404
+            ErrorCachingMinTTL: 10
+            ResponseCode: 200
+            ResponsePagePath: '/index.html'
+          - ErrorCode: 403
+            ErrorCachingMinTTL: 10
+            ResponseCode: 200
+            ResponsePagePath: '/index.html'
+Outputs:
+  CloudFrontDistribution:
+    Value: !Ref NvaCloudFrontDistribution

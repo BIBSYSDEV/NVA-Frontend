@@ -1,0 +1,116 @@
+{
+  "chapter": {
+    "anthology": "Publisert i",
+    "info": "Den antologien kapittelet er publisert i må være registrert først",
+    "link": "Link til publikasjon"
+  },
+  "contributors": {
+    "add_author": "Legg til forfatter",
+    "add_authors": "Legg til flere forfattere",
+    "add_other_contributor": "Legg til flere",
+    "authors": "Forfattere",
+    "corresponding": "Korresponderende",
+    "type": "Bidragstype",
+    "verify_person": "Verifiser"
+  },
+  "description": {
+    "abstract": "Sammendrag",
+    "date_published": "Publiseringsdato",
+    "description": "Beskrivelse",
+    "financed_by": "Finansiert av",
+    "npi_disciplines": "NPI Fagfelt",
+    "primary_language": "Hovedspråk for innhold",
+    "project_association": "Prosjekttilknytning",
+    "project_id": "Prosjekt-ID",
+    "search_for_npi_discipline": "Søk etter NPI-fagfelt",
+    "search_for_project": "Søk etter prosjekt",
+    "tags": "Nøkkelord",
+    "tags_helper": "Trykk Enter for å legge til nøkkelord",
+    "year_only": "Kun årstall"
+  },
+  "feedback": {
+    "invalid_url": "Ugyldig lenke",
+    "minimum_one_contributor": "Du må ha minst en forfatter på denne publikasjonen",
+    "required_field": "Påkrevd felt"
+  },
+  "files_and_license": {
+    "accepted_version": "Akseptert versjon",
+    "administrative_contract": "Administrativ avtale",
+    "browse": "velg filer",
+    "drag_files": "Dra filer hit eller",
+    "drop_here": "Slipp filene dine her",
+    "embargo_date": "Dato for utsatt publisering i arkivet",
+    "files": "Filer",
+    "info_from_publication_channel_register": {
+      "no_open_publishment": "Unit har ingen avtale om åpen publisering med utgiver av valgt tidsskrift",
+      "open_access": "Open Access",
+      "open_publishment": "Unit har inngått avtale om åpen publisering av valgt tidsskrift",
+      "title": "Informasjon fra Kanalregister"
+    },
+    "license": "Lisens",
+    "licenses": "Lisenser",
+    "published_version": "Publisert versjon",
+    "select_version": "Velg versjon",
+    "title": "Filnavn",
+    "upload_files": "Last opp filer",
+    "uploaded_size": "Lastet opp {{size}} kB"
+  },
+  "heading": {
+    "contributors": "Bidragsytere",
+    "description": "Beskrivelse",
+    "files_and_license": "Filer og lisens",
+    "publication": "Publikasjon",
+    "publish_settings": "Publiseringsvalg",
+    "references": "Referanser",
+    "submission": "Innsending",
+    "summary": "Oppsummering"
+  },
+  "publication": {
+    "link_publication_description": "Feks. DOI lenke, lenke til artikkel, lenke til video av foredrag etc.",
+    "link_to_publication": "Link til publikasjon",
+    "load_file": "Last opp fil",
+    "link": "Link"
+  },
+  "references": {
+    "article_number": "Artikkelnummer",
+    "doi": "DOI",
+    "is_peer_reviewed": "Ja, den er fagfellevurdert",
+    "is_not_peer_reviewed": "Nei, den er ikke fagfellevurdert",
+    "is_text_book": "Er boken en lærebok?",
+    "isbn": "ISBN",
+    "issn": "ISSN",
+    "issue": "Hefte",
+    "journal": "Tidsskrift",
+    "journal_not_found": "Finner du ikke tidsskriftet?",
+    "level": "Nivå i NPI",
+    "number_of_pages": "Totalt antall sider",
+    "nvi_header": "Norsk vitenskapsindeks - NVI",
+    "nvi_success": "Denne publikasjonen kan inngå i NVI",
+    "nvi_fail_rated_line1": "Denne publikajsonen kan ikke inngå i NVI, da valgt tidsskrift er ikke på nivå 1 eller 2.",
+    "nvi_fail_rated_line2": "(Tidsskriftets nivå i Kanaregisteret kan bli endret, slik at publikasjonen likevel kan inngå i NVI)",
+    "nvi_fail_no_peer_review": "Denne publikasjonen kan ikke inngå i NVI, da den ikke er fagfellevurdert.",
+    "or": "Eller",
+    "pages_from": "Sidetall fra",
+    "pages_to": "til",
+    "peer_review": "Er publikasjonen fagfellevurdert?",
+    "peer_reviewed": "Fagfellevurdert",
+    "remove": "Fjern",
+    "search_for_journal": "Søk etter tidsskrift",
+    "search_for_publisher": "Søk etter utgiver",
+    "search_for_series": "Søk etter serie",
+    "series": "Serie",
+    "series_info": "Hvis boken inngår i en serie",
+    "specialization": "Studieretning",
+    "subtype": "Undertype",
+    "text_book": "Lærebok",
+    "text_book_yes": "Ja, boken er en lærebok",
+    "volume": "Volum"
+  },
+  "status": {
+    "draft": "Kladd",
+    "rejected": "Avvist"
+  },
+  "submission": {
+    "ask_for_doi": "Be om DOI for denne registreringen (anbefales ikke dersom ressursen allerede har en DOI)"
+  }
+}

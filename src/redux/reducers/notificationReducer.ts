@@ -1,0 +1,48 @@
+import { v4 as uuidv4 } from 'uuid';
+
+import i18n from '../../translations/i18n';
+import { Notification } from '../../types/notification.types';
+import { AuthActions, LOGIN_FAILURE, REFRESH_TOKEN_FAILURE } from '../actions/authActions';
+import {
+  ADD_NOTIFICATION,
+  CLEAR_NOTIFICATIONS,
+  NotificationActions,
+  REMOVE_NOTIFICATION,
+} from '../actions/notificationActions';
+import { ORCID_REQUEST_FAILURE, OrcidActions } from '../actions/orcidActions';
+import { SEARCH_FAILURE, SearchActions } from '../actions/searchActions';
+import { SET_USER_FAILURE, SET_USER_SUCCESS, UserActions } from '../actions/userActions';
+
+export const notificationReducer = (
+  state: Notification[] = [],
+  action: NotificationActions | AuthActions | OrcidActions | UserActions | NotificationActions | SearchActions
+) => {
+  switch (action.type) {
+    case ORCID_REQUEST_FAILURE:
+    case REFRESH_TOKEN_FAILURE:
+    case SET_USER_FAILURE:
+    case SEARCH_FAILURE:
+    case LOGIN_FAILURE:
+      return [...state, { key: uuidv4(), ...action }];
+    case ADD_NOTIFICATION:
+      return [...state, { ...action.notification }];
+    case REMOVE_NOTIFICATION:
+      return state.filter(notification => notification.key !== action.key);
+    case SET_USER_SUCCESS:
+      return dismissNotification(state, 'feedback:error.get_user');
+    case CLEAR_NOTIFICATIONS:
+      return [];
+    default:
+      return state;
+  }
+};
+
+const dismissNotification = (state: Notification[], translationKey: string): Notification[] => {
+  const itemToKeep = state.find(notification => notification.message === i18n.t(translationKey));
+  if (itemToKeep) {
+    const filteredNotifications = state.filter(notification => notification.message !== itemToKeep.message);
+    return [...filteredNotifications, { ...itemToKeep, dismissed: true }];
+  } else {
+    return state;
+  }
+};
