@@ -48,7 +48,7 @@ const UserList: FC<UserListProps> = ({ userList }) => {
       <TableBody>
         {userList.map(user => {
           return (
-            <StyledTableRow>
+            <StyledTableRow key={user.id}>
               <TableCell>{user.id}</TableCell>
               <TableCell>{user.name}</TableCell>
               <TableCell>{user.externalOrcid}</TableCell>

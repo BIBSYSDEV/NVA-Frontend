@@ -29,7 +29,6 @@ const AdminUsersPage: FC = () => {
   useEffect(() => {
     const getUsers = async () => {
       const users = await listInstitutionUsers(user.institution);
-      console.log(users);
       // TODO backend
       // if (users?.error) {
       //   dispatch(addNotification(t('feedback:error.get_publications'), 'error'));
