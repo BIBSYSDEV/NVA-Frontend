@@ -1,14 +1,14 @@
 {
   "add_institution": "Add institution",
-  "administrationId": "Authenticating id for institution administrator",
-  "archiveName": "Archive name",
+  "administration_id": "Authenticating id for institution administrator",
+  "archive_name": "Archive name",
   "cname": "CNAME",
-  "displayName": "Display name for the institution",
+  "display_name": "Display name for the institution",
   "feedback": {
     "required_field": "Required field"
   },
-  "feideOrganizationId": "Organization id in Feide",
-  "institutionDns": "DNS for the institution",
+  "feide_organization_id": "Organization id in Feide",
+  "institution_dns": "DNS for the institution",
   "organization_register_name": "Name in organization registry",
-  "shortName": "Shortened display name"
+  "short_name": "Shortened display name"
 }

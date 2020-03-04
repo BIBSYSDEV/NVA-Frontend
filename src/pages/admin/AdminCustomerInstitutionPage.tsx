@@ -50,7 +50,7 @@ const AdminCustomerInstitutionPage: FC = () => {
           <StyledField
             aria-label={CustomerInstitutionFieldNames.DISPLAY_NAME}
             name={CustomerInstitutionFieldNames.DISPLAY_NAME}
-            label={t('displayName')}
+            label={t('display_name')}
             component={TextField}
             fullWidth
             variant="outlined"
@@ -59,7 +59,7 @@ const AdminCustomerInstitutionPage: FC = () => {
           <StyledField
             aria-label={CustomerInstitutionFieldNames.SHORT_NAME}
             name={CustomerInstitutionFieldNames.SHORT_NAME}
-            label={t('shortName')}
+            label={t('short_name')}
             component={TextField}
             fullWidth
             variant="outlined"
@@ -68,7 +68,7 @@ const AdminCustomerInstitutionPage: FC = () => {
           <StyledField
             aria-label={CustomerInstitutionFieldNames.ARCHIVE_NAME}
             name={CustomerInstitutionFieldNames.ARCHIVE_NAME}
-            label={t('archiveName')}
+            label={t('archive_name')}
             component={TextField}
             fullWidth
             variant="outlined"
@@ -86,7 +86,7 @@ const AdminCustomerInstitutionPage: FC = () => {
           <StyledField
             aria-label={CustomerInstitutionFieldNames.INSTITUTION_DNS}
             name={CustomerInstitutionFieldNames.INSTITUTION_DNS}
-            label={t('institutionDns')}
+            label={t('institution_dns')}
             component={TextField}
             fullWidth
             variant="outlined"
@@ -95,7 +95,7 @@ const AdminCustomerInstitutionPage: FC = () => {
           <StyledField
             aria-label={CustomerInstitutionFieldNames.ADMINISTRATION_ID}
             name={CustomerInstitutionFieldNames.ADMINISTRATION_ID}
-            label={t('administrationId')}
+            label={t('administration_id')}
             component={TextField}
             fullWidth
             variant="outlined"
@@ -104,7 +104,7 @@ const AdminCustomerInstitutionPage: FC = () => {
           <StyledField
             aria-label={CustomerInstitutionFieldNames.FEIDE_ORGANIZATION_ID}
             name={CustomerInstitutionFieldNames.FEIDE_ORGANIZATION_ID}
-            label={t('feideOrganizationId')}
+            label={t('feide_organization_id')}
             component={TextField}
             fullWidth
             variant="outlined"
