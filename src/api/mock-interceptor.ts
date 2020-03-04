@@ -5,7 +5,8 @@ import { Authority } from '../types/authority.types';
 import OrcidResponse from '../types/orcid.types';
 import { API_URL, ORCID_USER_INFO_URL } from '../utils/constants';
 import mockDoiLookupResponse from '../utils/testfiles/doi_lookup_response.json';
-import mockInstitutionResponse from '../utils/testfiles/institution_query.json';
+import mockInstitutionResponse from '../utils/testfiles/institutions/institution_query.json';
+import mockUnitResponse from '../utils/testfiles/institutions/unit_response.json';
 import mockAuthoritiesResponse from '../utils/testfiles/mock_authorities_response.json';
 import mockProjects from '../utils/testfiles/projects_real.json';
 import mockPublication from '../utils/testfiles/publication_generated.json';
@@ -34,7 +35,7 @@ const mockSingleAuthorityResponseWithFeide: Authority = {
   systemControlNumber: '901790000000',
   feideids: ['tu@unit.no'],
   orcids: [],
-  orgunitids: ['194.0.0.0', '194.67.0.0', '194.31.15.15'],
+  orgunitids: [],
   handles: [],
   birthDate: '1941-04-25 00:00:00.000',
 };
@@ -44,7 +45,17 @@ const mockSingleAuthorityResponse: Authority = {
   systemControlNumber: '901790000000',
   feideids: ['tu@unit.no'],
   orcids: [],
-  orgunitids: ['194.0.0.0', '194.67.0.0', '194.31.15.15'],
+  orgunitids: [],
+  handles: [],
+  birthDate: '1941-04-25 00:00:00.000',
+};
+
+const mockSingleAuthorityResponseAfterDeletion: Authority = {
+  name: 'Test User',
+  systemControlNumber: '901790000000',
+  feideids: ['tu@unit.no'],
+  orcids: [],
+  orgunitids: [],
   handles: [],
   birthDate: '1941-04-25 00:00:00.000',
 };
@@ -54,88 +65,9 @@ const mockSingleAuthorityResponseWithOrcid: Authority = {
   systemControlNumber: '901790000000',
   feideids: ['osteloff@unit.no'],
   orcids: ['0000-0001-2345-6789'],
-  orgunitids: [],
+  orgunitids: ['194.65.20.10'],
   handles: [],
   birthDate: '1941-04-25 00:00:00.000',
-};
-
-const mockFirstUnitResponse = { id: '194.0.0.0', name: 'Norges teknisk-naturvitenskapelige universitet', subunits: [] };
-const mockSecondUnitResponse = {
-  id: '194.0.0.0',
-  name: 'Norges teknisk-naturvitenskapelige universitet',
-  subunits: [
-    {
-      id: '194.65.0.0',
-      name: 'Fakultet for osteloff',
-      unitName: {
-        nb: 'Fakultet for osteloff',
-      },
-      cristinUser: false,
-      institution: {
-        acronym: 'NTNU',
-      },
-      uri: 'https://api.cristin.no/v2/units/194.65.0.0',
-      acronym: 'MH',
-      subunits: [],
-    },
-  ],
-};
-const mockThirdUnitResponse = {
-  id: '194.0.0.0',
-  name: 'Norges teknisk-naturvitenskapelige universitet',
-  unitName: {
-    nb: 'Norges teknisk-naturvitenskapelige universitet',
-  },
-  cristinUser: false,
-  institution: {
-    cristin_institution_id: '194',
-    url: 'https://api.cristin.no/v2/institutions/194',
-  },
-  subunits: [
-    {
-      id: '194.65.0.0',
-      name: 'Fakultet for medisin og helsevitenskap',
-      unitName: {
-        nb: 'Fakultet for medisin og helsevitenskap',
-      },
-      cristinUser: false,
-      institution: {
-        acronym: 'NTNU',
-      },
-      uri: 'https://api.cristin.no/v2/units/194.65.0.0',
-      acronym: 'MH',
-      subunits: [
-        {
-          id: '194.65.20.0',
-          name: 'Institutt for samfunnsmedisin og sykepleie',
-          unitName: {
-            nb: 'Institutt for samfunnsmedisin og sykepleie',
-          },
-          cristinUser: false,
-          institution: {
-            acronym: 'NTNU',
-          },
-          uri: 'https://api.cristin.no/v2/units/194.65.20.0',
-          acronym: 'MH-ISM',
-          subunits: [
-            {
-              id: '194.65.20.10',
-              name: 'Allmennmedisinsk forskningsenhet i Trondheim',
-              unitName: {
-                nb: 'Allmennmedisinsk forskningsenhet i Trondheim',
-              },
-              cristinUser: false,
-              institution: {
-                acronym: 'NTNU',
-              },
-              uri: 'https://api.cristin.no/v2/units/194.65.20.10',
-              acronym: 'AFE',
-            },
-          ],
-        },
-      ],
-    },
-  ],
 };
 
 const mockCreateUpload = { uploadId: 'asd', key: 'sfd' };
@@ -189,6 +121,11 @@ export const interceptRequestsOnMock = () => {
   mock.onPut(new RegExp(`${API_URL}${AuthorityApiPaths.AUTHORITY}/*`)).replyOnce(200, mockSingleAuthorityResponse);
   mock.onPut(new RegExp(`${API_URL}${AuthorityApiPaths.AUTHORITY}/*`)).reply(200, mockSingleAuthorityResponseWithOrcid);
 
+  // Remove orgunitid from Authority
+  mock
+    .onDelete(new RegExp(`${API_URL}${AuthorityApiPaths.AUTHORITY}/*`))
+    .reply(200, mockSingleAuthorityResponseAfterDeletion);
+
   // create authority
   mock.onPost(new RegExp(`${API_URL}${AuthorityApiPaths.AUTHORITY}/*`)).reply(200, mockSingleAuthorityResponse);
 
@@ -199,9 +136,9 @@ export const interceptRequestsOnMock = () => {
 
   // Institution Registry
   mock.onGet(new RegExp(`${API_URL}${InstituionApiPaths.INSTITUTION}\\?name=*`)).reply(200, mockInstitutionResponse);
-  mock.onGet(new RegExp(`${API_URL}${InstituionApiPaths.INSTITUTION}\\?id=*`)).replyOnce(200, mockFirstUnitResponse);
-  mock.onGet(new RegExp(`${API_URL}${InstituionApiPaths.INSTITUTION}\\?id=*`)).replyOnce(200, mockSecondUnitResponse);
-  mock.onGet(new RegExp(`${API_URL}${InstituionApiPaths.INSTITUTION}\\?id=*`)).replyOnce(200, mockThirdUnitResponse);
+  mock.onGet(new RegExp(`${API_URL}${InstituionApiPaths.INSTITUTION}\\?id=*`)).replyOnce(200, mockUnitResponse);
+  // After deletion of institution
+  mock.onGet(new RegExp(`${API_URL}${InstituionApiPaths.INSTITUTION}\\?id=*`)).replyOnce(200, []);
 
   // SEARCH
   mock.onGet(new RegExp(`${PublicationsApiPaths.SEARCH}/*`)).reply(200, mockPublications);

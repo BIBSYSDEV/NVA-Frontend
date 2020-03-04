@@ -42,13 +42,13 @@ const InstitutionCard: FC<InstitutionCardProps> = ({ unit }) => {
   const { t } = useTranslation('common');
   const user = useSelector((state: RootStore) => state.user);
   const dispatch = useDispatch();
+  const organizationUnitId = unit.subunits.length > 0 ? unit.subunits.slice(-1)[0].id : unit.id;
 
   const handleRemoveInstitution = async () => {
-    const idToRemove = unit.subunits.length > 0 ? unit.subunits.slice(-1)[0].id : unit.id;
     const updatedAuthority = await removeIdFromAuthority(
       user.authority.systemControlNumber,
       AuthorityQualifiers.ORGUNIT_ID,
-      idToRemove
+      organizationUnitId
     );
     if (updatedAuthority.error) {
       dispatch(addNotification(updatedAuthority.error, 'error'));
@@ -69,7 +69,10 @@ const InstitutionCard: FC<InstitutionCardProps> = ({ unit }) => {
         ))}
       </StyledTextContainer>
       <StyledButtonContainer>
-        <Button color="secondary" data-testid={`delete-publication-${unit.id}`} onClick={handleRemoveInstitution}>
+        <Button
+          color="secondary"
+          data-testid={`button-delete-institution-${organizationUnitId}`}
+          onClick={handleRemoveInstitution}>
           <DeleteIcon />
           {t('remove')}
         </Button>
