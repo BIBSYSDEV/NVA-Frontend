@@ -9,8 +9,8 @@
     "archiveName": "xxx",
     "CNAME": "xxx",
     "institutionDNS": "xxx",
-    "AdministrationId": "xxx",
-    "FeideOrganizationId": "xxx",
+    "administrationId": "xxx",
+    "feideOrganizationId": "xxx",
     "logoFile": { "id": "1", "name": "logo.png" }
   },
   {
@@ -23,8 +23,8 @@
     "archiveName": "xxx",
     "CNAME": "xxx",
     "institutionDNS": "xxx",
-    "AdministrationId": "xxx",
-    "FeideOrganizationId": "xxx",
+    "administrationId": "xxx",
+    "feideOrganizationId": "xxx",
     "logoFile": { "id": "1", "name": "logo.png" }
   },
   {
@@ -37,8 +37,8 @@
     "archiveName": "xxx",
     "CNAME": "xxx",
     "institutionDNS": "xxx",
-    "AdministrationId": "xxx",
-    "FeideOrganizationId": "xxx",
+    "administrationId": "xxx",
+    "feideOrganizationId": "xxx",
     "logoFile": { "id": "1", "name": "logo.png" }
   },
   {
@@ -51,8 +51,8 @@
     "archiveName": "xxx",
     "CNAME": "xxx",
     "institutionDNS": "xxx",
-    "AdministrationId": "xxx",
-    "FeideOrganizationId": "xxx",
+    "administrationId": "xxx",
+    "feideOrganizationId": "xxx",
     "logoFile": { "id": "1", "name": "logo.png" }
   }
 ]

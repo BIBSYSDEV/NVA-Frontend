@@ -16,8 +16,8 @@ export interface CustomerInstitution {
   archiveName: string;
   CNAME: string;
   institutionDNS: string;
-  AdministrationId: string;
-  FeideOrganizationId: string;
+  administrationId: string;
+  feideOrganizationId: string;
   createdDate: string;
   contact: string;
   logoFile: InstitutionLogoFile;
@@ -31,8 +31,8 @@ export const emptyCustomerInstitution: CustomerInstitution = {
   archiveName: '',
   CNAME: '',
   institutionDNS: '',
-  AdministrationId: '',
-  FeideOrganizationId: '',
+  administrationId: '',
+  feideOrganizationId: '',
   contact: '',
   createdDate: '',
   logoFile: emptyInstitutionLogoFile,

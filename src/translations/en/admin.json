@@ -4,8 +4,11 @@
   "archiveName": "Archive name",
   "cname": "CNAME",
   "displayName": "Display name for the institution",
+  "feedback": {
+    "required_field": "Required field"
+  },
   "feideOrganizationId": "Organization id in Feide",
   "institutionDns": "DNS for the institution",
-  "organizationRegisterName": "Name in organization registry",
+  "organization_register_name": "Name in organization registry",
   "shortName": "Shortened display name"
 }

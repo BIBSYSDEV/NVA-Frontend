@@ -4,8 +4,11 @@
   "archiveName": "Arkivnavn",
   "cname": "CNAME",
   "displayName": "Visningsnavn på instutusjonen",
+  "feedback": {
+    "required_field": "Påkrevd felt"
+  },
   "feideOrganizationId": "Organisasjonens id i Feide",
   "institutionDns": "Institusjonens DNS",
-  "organizationRegisterName": "Navn i organisasjonsregister",
+  "organization_register_name": "Navn i organisasjonsregister",
   "shortName": "Forkortet visningsnavn på instutusjonen"
 }
