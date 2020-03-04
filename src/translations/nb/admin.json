@@ -2,7 +2,7 @@
   "add_institution": "Opprett institusjon",
   "users": {
     "auto_assign_creators": "Ansatte får automatisk rolle som registrator ved pålogging hvis de er registrert med dette i 'eduPersonAffiliation': Employee, Staff, Member",
-    "authentication_id": "Autentiseringsid",
+    "authentication_id": "Autentiserings-id",
     "created_date": "Opprettet",
     "creator_info": "Hvem skal få tilgang til å registrere?",
     "last_login_date": "Sist innlogget",
