@@ -13,7 +13,7 @@ export enum PublicationsApiPaths {
   CREATE_WITH_DOI = '/publications/doi',
   INSERT_RESOURCE = '/publications/insert-resource',
   UPDATE_RESOURCE = '/publications/update-resource',
-  FETCH_RESOURCE = '/publication',
+  FETCH_RESOURCE = '/publications/fetch-resource',
   FETCH_MY_RESOURCES = '/publications/fetch-my-resources',
   DOI_LOOKUP = '/doi-fetch',
   DOI_REQUESTS = '/publications/doi-requests',
