@@ -43,10 +43,12 @@ interface PublicationListProps {
 
 const PublicationList: FC<PublicationListProps> = ({ publications }) => {
   const { t } = useTranslation();
+  const [openModal, setOpenModal] = useState(false);
   const [deletePublicationId, setDeletePublicationId] = useState('');
   const [deletePublicationTitle, setDeletePublicationTitle] = useState();
 
   const handleOnClick = (publication: PublicationPreview) => {
+    setOpenModal(true);
     setDeletePublicationId(publication.id);
     setDeletePublicationTitle(publication.title);
   };
@@ -107,12 +109,8 @@ const PublicationList: FC<PublicationListProps> = ({ publications }) => {
             ))}
         </TableBody>
       </StyledTable>
-      {deletePublicationId && (
-        <DeletePublicationModal
-          id={deletePublicationId}
-          title={deletePublicationTitle}
-          setDeletePublicationId={setDeletePublicationId}
-        />
+      {openModal && (
+        <DeletePublicationModal id={deletePublicationId} title={deletePublicationTitle} setOpenModal={setOpenModal} />
       )}
     </>
   );

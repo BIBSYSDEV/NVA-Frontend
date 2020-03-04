@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 import Modal from './../../components/Modal';
 import { useTranslation } from 'react-i18next';
 import { DialogActions, DialogContent, Button } from '@material-ui/core';
@@ -12,26 +12,23 @@ const StyledTitleContainer = styled.div`
 interface DeletePublicationModalProps {
   id: string;
   title: string;
-  setDeletePublicationId: (id: string) => void;
+  setOpenModal: (open: boolean) => void;
 }
 
-const DeletePublicationModal: FC<DeletePublicationModalProps> = ({ id, title, setDeletePublicationId }) => {
-  const [openModal, setOpenModal] = useState(!!id);
+const DeletePublicationModal: FC<DeletePublicationModalProps> = ({ id, title, setOpenModal }) => {
   const { t } = useTranslation();
 
   const cancelDelete = () => {
-    setDeletePublicationId('');
     setOpenModal(false);
   };
 
   const deletePublication = () => {
     // delete publication here
-    setDeletePublicationId('');
     setOpenModal(false);
   };
 
   return (
-    <Modal openModal={openModal} headingText={t('workLists:delete_publication_heading')}>
+    <Modal openModal headingText={t('workLists:delete_publication_heading')}>
       <DialogContent>
         <NormalText> {t('workLists:delete_publication_message')}</NormalText>
         <StyledTitleContainer>
