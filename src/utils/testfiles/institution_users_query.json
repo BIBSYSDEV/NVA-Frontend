@@ -5,7 +5,7 @@
     "externalOrcid": "1234-1234-1234-1234",
     "lastLoginDate": "2020-03-01",
     "createdDate": "2020-01-01",
-    "roles": ["ADMIN", "CURATOR", "EDITOR"]
+    "roles": ["Admin", "Curator"]
   },
   {
     "id": "eirik.hansen@somewhere.org",
@@ -13,7 +13,7 @@
     "externalOrcid": "7890-7890-7890-7890",
     "lastLoginDate": "2020-02-01",
     "createdDate": "2020-01-02",
-    "roles": ["CURATOR"]
+    "roles": ["Curator"]
   },
   {
     "id": "per.hansen@somewhere.org",
@@ -21,7 +21,7 @@
     "externalOrcid": "3456-3456-3456-3456",
     "lastLoginDate": "2020-02-10",
     "createdDate": "2020-02-01",
-    "roles": ["EDITOR"]
+    "roles": ["Curator"]
   },
   {
     "id": "per.hansen@somewhere.org",
@@ -29,6 +29,6 @@
     "externalOrcid": "3456-3456-3456-3456",
     "lastLoginDate": "2020-02-10",
     "createdDate": "2020-02-01",
-    "roles": ["PUBLISHER"]
+    "roles": ["Publisher"]
   }
 ]

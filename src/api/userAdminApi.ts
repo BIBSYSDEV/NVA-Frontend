@@ -1,7 +1,11 @@
 import mockInstitutionUsersResponse from '../utils/testfiles/institution_users_query.json';
 import { RoleName } from '../types/user.types';
 
-export const listInstitutionUsers = (cristinUnitId: string) => {
+export enum UsersApiPaths {
+  USERS = '/users',
+}
+
+export const getInstitutionUsers = (cristinUnitId: string) => {
   // TODO: get institution users from endpoint
   // BACKEND NOT FINISHED YET
   // const idToken = await getIdToken();

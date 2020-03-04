@@ -1,10 +1,10 @@
 import { Authority, emptyAuthority } from './authority.types';
 
 export enum RoleName {
-  PUBLISHER = 'PUBLISHER',
-  CURATOR = 'CURATOR',
-  ADMIN = 'ADMIN',
-  EDITOR = 'EDITOR',
+  PUBLISHER = 'Publisher',
+  CURATOR = 'Curator',
+  ADMIN = 'Admin',
+  EDITOR = 'Editor',
 }
 
 export enum Affiliation {

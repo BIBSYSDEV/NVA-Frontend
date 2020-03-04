@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { listInstitutionUsers } from '../../api/userAdminApi';
+import { getInstitutionUsers } from '../../api/userAdminApi';
 import Heading from '../../components/Heading';
 import SubHeading from '../../components/SubHeading';
 import { useSelector } from 'react-redux';
@@ -28,7 +28,7 @@ const AdminUsersPage: FC = () => {
 
   useEffect(() => {
     const getUsers = async () => {
-      const users = await listInstitutionUsers(user.institution);
+      const users = await getInstitutionUsers(user.institution);
       // TODO backend
       // if (users?.error) {
       //   dispatch(addNotification(t('feedback:error.get_publications'), 'error'));
@@ -44,30 +44,32 @@ const AdminUsersPage: FC = () => {
     setAutoAssignCreators(!autoAssignCreators);
   };
 
-  const filterUsersOnRole = (roleFilter: RoleName) => {
+  const filterUsersByRole = (roleFilter: RoleName) => {
     return userList.filter(user => user.roles.some(role => role === roleFilter));
   };
+
+  console.log(userList);
 
   return (
     <Card>
       <Heading>{t('users.user_administration')}</Heading>
       <SubHeading>{t('profile:roles.institution_admins')}</SubHeading>
       <StyledContainer>
-        {filterUsersOnRole(RoleName.ADMIN) && <UserList userList={filterUsersOnRole(RoleName.ADMIN)} />}
+        <UserList userList={filterUsersByRole(RoleName.ADMIN)} />
         <StyledButton color="primary" variant="outlined">
           {t('users.new_institution_admin')}
         </StyledButton>
       </StyledContainer>
       <SubHeading>{t('profile:roles.curators')}</SubHeading>
       <StyledContainer>
-        {filterUsersOnRole(RoleName.CURATOR) && <UserList userList={filterUsersOnRole(RoleName.CURATOR)} />}
+        <UserList userList={filterUsersByRole(RoleName.CURATOR)} />
         <StyledButton color="primary" variant="outlined">
           {t('users.new_curator')}
         </StyledButton>
       </StyledContainer>
       <SubHeading>{t('profile:roles.editors')}</SubHeading>
       <StyledContainer>
-        {filterUsersOnRole(RoleName.EDITOR) && <UserList userList={filterUsersOnRole(RoleName.EDITOR)} />}
+        <UserList userList={filterUsersByRole(RoleName.EDITOR)} />
         <StyledButton color="primary" variant="outlined">
           {t('users.new_editor')}
         </StyledButton>

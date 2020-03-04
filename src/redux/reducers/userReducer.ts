@@ -27,22 +27,20 @@ export const userReducer = (state: User = emptyUser, action: UserActions | Orcid
         .map(affiliationString => affiliationString.trim())
         .filter(affiliation => affiliation) as Affiliation[];
       const roles = action.user['custom:applicationRoles'].split(',') as RoleName[];
-      const isLoggedIn = true;
-      const email = action.user.email;
       const user: Partial<User> = {
         name: action.user.name,
-        email,
+        email: action.user.email,
         id: action.user['custom:feideId'],
         institution: action.user['custom:orgName'],
         roles,
         application: action.user['custom:application'] as ApplicationName,
-        isLoggedIn,
+        isLoggedIn: true,
         organizationId: getOrganizationIdByOrganizationNumber(action.user['custom:orgNumber']),
         affiliations,
         givenName: action.user.given_name,
         familyName: action.user.family_name,
         isPublisher: affiliations.some(userAffiliation => publisherAffiliations.includes(userAffiliation)),
-        isAppAdmin: email.endsWith('@unit.no'),
+        isAppAdmin: action.user.email.endsWith('@unit.no'),
         isInstitutionAdmin: roles.some(role => role === RoleName.ADMIN),
         isCurator: affiliations.some(userAffiliation => curatorAffiliations.includes(userAffiliation)),
       };

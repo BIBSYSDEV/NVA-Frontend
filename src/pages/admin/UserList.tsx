@@ -23,7 +23,9 @@ interface UserListProps {
 const UserList: FC<UserListProps> = ({ userList }) => {
   const { t } = useTranslation('admin');
 
-  return (
+  console.log(userList);
+
+  return userList?.length > 0 ? (
     <StyledTable>
       <TableHead>
         <TableRow>
@@ -62,6 +64,8 @@ const UserList: FC<UserListProps> = ({ userList }) => {
         ))}
       </TableBody>
     </StyledTable>
+  ) : (
+    <></>
   );
 };
 

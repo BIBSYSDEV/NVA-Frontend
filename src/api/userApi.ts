@@ -9,10 +9,6 @@ import i18n from '../translations/i18n';
 import { USE_MOCK_DATA } from '../utils/constants';
 import { mockUser } from '../utils/testfiles/mock_feide_user';
 
-export enum UsersApiPaths {
-  USERS = '/users',
-}
-
 export const login = () => {
   return async (dispatch: Dispatch) => {
     if (USE_MOCK_DATA) {
