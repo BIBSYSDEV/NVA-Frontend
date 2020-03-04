@@ -27,10 +27,6 @@ const LoadPublication: React.FC<LoadPublicationProps> = ({ expanded, onChange, u
   const shouldAllowMultipleFiles = true;
 
   useEffect(() => {
-    return () => uppy && uppy.close();
-  }, [uppy]);
-
-  useEffect(() => {
     if (uppy && !uppy.hasUploadSuccessEventListener) {
       const addFile = (newFile: File) => {
         setUploadedFiles([newFile, ...uploadedFiles]);

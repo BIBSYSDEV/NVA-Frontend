@@ -29,10 +29,10 @@ const StyledButtonContainer = styled.div`
   justify-content: flex-end;
 `;
 
+const shouldAllowMultipleFiles = false;
+
 const AdminCustomerInstitutionPage: FC = () => {
   const { t } = useTranslation('admin');
-  const shouldAllowMultipleFiles = false;
-
   const [uppy] = useState(createUppy(shouldAllowMultipleFiles));
   const [uploadedFile, setUploadedFile] = useState<InstitutionLogoFile>(emptyInstitutionLogoFile);
   const initialValues = emptyCustomerInstitution;
@@ -57,13 +57,11 @@ const AdminCustomerInstitutionPage: FC = () => {
     <Card>
       <Heading>{t('add_institution')}</Heading>
       {uppy && (
-        <>
-          <Card>
-            <Label>{t('institution_logo')}</Label>
-            <UppyDashboard uppy={uppy} shouldAllowMultipleFiles={shouldAllowMultipleFiles} />
-            {uploadedFile && <div>{uploadedFile.name}</div>}
-          </Card>
-        </>
+        <Card>
+          <Label>{t('institution_logo')}</Label>
+          <UppyDashboard uppy={uppy} shouldAllowMultipleFiles={shouldAllowMultipleFiles} />
+          {uploadedFile && <div>{uploadedFile.name}</div>}
+        </Card>
       )}
       <Formik
         initialValues={initialValues}
