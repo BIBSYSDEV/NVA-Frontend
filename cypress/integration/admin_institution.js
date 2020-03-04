@@ -16,7 +16,7 @@ describe('User administers institutions ', () => {
 
     cy.contains('Institutt for osteloff');
     cy.contains('Kjetil');
-    cy.contains('27.01.1780');
+    cy.contains('1780-01-27');
   });
 
   it('The User should be able to add an institution', () => {
