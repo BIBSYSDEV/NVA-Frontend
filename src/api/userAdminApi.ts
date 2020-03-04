@@ -19,6 +19,6 @@ export const listInstitutionUsers = (cristinUnitId: string) => {
 
   return mockInstitutionUsersResponse.map(user => ({
     ...user,
-    roles: user.roles.map(roleName => RoleName[roleName as keyof typeof RoleName]),
+    roles: user.roles as RoleName[],
   }));
 };
