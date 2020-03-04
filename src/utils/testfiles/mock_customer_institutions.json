@@ -7,8 +7,8 @@
     "displayName": "xxx",
     "shortName": "xxx",
     "archiveName": "xxx",
-    "CNAME": "xxx",
-    "institutionDNS": "xxx",
+    "cname": "xxx",
+    "institutionDns": "xxx",
     "administrationId": "xxx",
     "feideOrganizationId": "xxx"
   },
@@ -20,8 +20,8 @@
     "displayName": "xxx",
     "shortName": "xxx",
     "archiveName": "xxx",
-    "CNAME": "xxx",
-    "institutionDNS": "xxx",
+    "cname": "xxx",
+    "institutionDns": "xxx",
     "administrationId": "xxx",
     "feideOrganizationId": "xxx"
   },
@@ -33,8 +33,8 @@
     "displayName": "xxx",
     "shortName": "xxx",
     "archiveName": "xxx",
-    "CNAME": "xxx",
-    "institutionDNS": "xxx",
+    "cname": "xxx",
+    "institutionDns": "xxx",
     "administrationId": "xxx",
     "feideOrganizationId": "xxx"
   },
@@ -46,8 +46,8 @@
     "displayName": "xxx",
     "shortName": "xxx",
     "archiveName": "xxx",
-    "CNAME": "xxx",
-    "institutionDNS": "xxx",
+    "cname": "xxx",
+    "institutionDns": "xxx",
     "administrationId": "xxx",
     "feideOrganizationId": "xxx"
   }

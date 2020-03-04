@@ -4,8 +4,8 @@ export interface CustomerInstitution {
   displayName: string;
   shortName: string;
   archiveName: string;
-  CNAME: string;
-  institutionDNS: string;
+  cname: string;
+  institutionDns: string;
   administrationId: string;
   feideOrganizationId: string;
   createdDate: string;
@@ -18,8 +18,8 @@ export const emptyCustomerInstitution: CustomerInstitution = {
   displayName: '',
   shortName: '',
   archiveName: '',
-  CNAME: '',
-  institutionDNS: '',
+  cname: '',
+  institutionDns: '',
   administrationId: '',
   feideOrganizationId: '',
   contact: '',
@@ -31,8 +31,8 @@ export enum CustomerInstitutionFieldNames {
   DISPLAY_NAME = 'displayName',
   SHORT_NAME = 'shortName',
   ARCHIVE_NAME = 'archiveName',
-  CNAME = 'CNAME',
-  INSTITUTION_DNS = 'institutionDNS',
+  CNAME = 'cname',
+  INSTITUTION_DNS = 'institutionDns',
   ADMINISTRATION_ID = 'administrationId',
   FEIDE_ORGANIZATION_ID = 'feideOrganizationId',
 }
