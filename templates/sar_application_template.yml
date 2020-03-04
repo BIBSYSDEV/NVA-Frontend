@@ -39,6 +39,15 @@ Parameters:
     Type: String
   RedirectSignOutUrl:
     Type: String
+  OrcidClientID:
+    Type: String
+  OrcidClientSecret:
+    Type: String
+    NoEcho: true
+  OrcidRedirectUri:
+    Type: String
+  OrcidBaseUrl:
+    Type: String
 
 Resources:
   DeploymentLayer:
@@ -81,6 +90,10 @@ Resources:
           REPLACE_REDIRECT_SIGN_IN: !Ref RedirectSignInUrl
           REPLACE_REDIRECT_SIGN_OUT: !Ref RedirectSignOutUrl
           REPLACE_REACT_APP_AWS_REGION: !Ref 'AWS::Region'
+          REPLACE_REACT_APP_ORCID_CLIENT_ID: !Ref OrcidClientID
+          REPLACE_REACT_APP_ORCID_CLIENT_SECRET: !Ref OrcidClientSecret
+          REPLACE_REACT_APP_ORCID_REDIRECT_URI: !Ref OrcidRedirectUri
+          REPLACE_REACT_APP_ORCID_BASE_URL: !Ref OrcidBaseUrl
 
   FrontendBucket:
     Type: 'AWS::S3::Bucket'
