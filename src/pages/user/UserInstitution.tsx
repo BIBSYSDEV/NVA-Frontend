@@ -8,7 +8,7 @@ import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import InstitutionSelector from './institution/InstitutionSelector';
 import Heading from '../../components/Heading';
-import { Formik, FormikProps, Field, FieldProps, useFormikContext } from 'formik';
+import { Formik, FormikProps, Field, FieldProps } from 'formik';
 import InstitutionSearch from '../publication/references_tab/components/InstitutionSearch';
 import {
   emptyRecursiveUnit,
@@ -19,8 +19,9 @@ import {
 } from '../../types/institution.types';
 import { updateInstitutionForAuthority } from '../../api/authorityApi';
 import { setAuthorityData } from '../../redux/actions/userActions';
-import { addNotification } from '../../redux/actions/notificationActions';
+import { setNotification } from '../../redux/actions/notificationActions';
 import { getParentUnits } from '../../api/institutionApi';
+import { NotificationVariant } from '../../types/notification.types';
 import NormalText from '../../components/NormalText';
 
 const StyledButtonContainer = styled.div`
@@ -56,7 +57,7 @@ const UserInstitution: FC = () => {
         }
       }
       if (user.authority.orgunitids.length > 0 && units.length === 0) {
-        dispatch(addNotification(t('feedback:error.get_parent_units'), 'error'));
+        dispatch(setNotification(t('feedback:error.get_parent_units'), NotificationVariant.Error));
       }
       setUnits(units);
     };
@@ -74,7 +75,7 @@ const UserInstitution: FC = () => {
   const updateAuthorityAndDispatch = async (id: string, scn: string) => {
     const updatedAuthority = await updateInstitutionForAuthority(id, scn);
     if (updatedAuthority.error) {
-      dispatch(addNotification(updatedAuthority.error, 'error'));
+      dispatch(setNotification(updatedAuthority.error, NotificationVariant.Error));
     } else if (updatedAuthority) {
       dispatch(setAuthorityData(updatedAuthority));
     }
@@ -89,7 +90,7 @@ const UserInstitution: FC = () => {
         await updateAuthorityAndDispatch(lastSubunit.id, user.authority.systemControlNumber);
       }
     } catch (error) {
-      dispatch(addNotification(t('feedback:error.update_authority'), 'error'));
+      dispatch(setNotification(t('feedback:error.update_authority'), NotificationVariant.Error));
     }
     // TODO: remove this when we get data from backend
     const filteredSubunits = subunits.filter((subunit: InstitutionUnitBase) => subunit.name !== '');

@@ -9,13 +9,13 @@ import { userReducer } from './userReducer';
 import { publicationReducer } from './publicationReducer';
 
 export interface RootStore {
-  notifications: Notification[];
+  notification: Notification;
   search: Search;
   user: User;
 }
 
 export default combineReducers({
-  notifications: notificationReducer,
+  notification: notificationReducer,
   search: searchReducer,
   user: userReducer,
   publications: publicationReducer,

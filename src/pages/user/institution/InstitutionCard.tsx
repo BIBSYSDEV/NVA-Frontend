@@ -8,7 +8,8 @@ import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootStore } from '../../../redux/reducers/rootReducer';
 import { AuthorityQualifiers, removeIdFromAuthority } from '../../../api/authorityApi';
-import { addNotification } from '../../../redux/actions/notificationActions';
+import { setNotification } from '../../../redux/actions/notificationActions';
+import { NotificationVariant } from '../../../types/notification.types';
 import { setAuthorityData } from '../../../redux/actions/userActions';
 import NormalText from '../../../components/NormalText';
 import {
@@ -63,10 +64,10 @@ const InstitutionCard: FC<InstitutionCardProps> = ({ onEdit, unit }) => {
       organizationUnitId
     );
     if (updatedAuthority.error) {
-      dispatch(addNotification(updatedAuthority.error, 'error'));
+      dispatch(setNotification(updatedAuthority.error, NotificationVariant.Error));
     } else if (updatedAuthority) {
       dispatch(setAuthorityData(updatedAuthority));
-      dispatch(addNotification(t('feedback:success.delete_identifier')));
+      dispatch(setNotification(t('feedback:success.delete_identifier')));
     }
   };
 
