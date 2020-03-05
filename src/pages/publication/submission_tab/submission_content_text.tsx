@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const StyledSubmissionContentText = styled.div`
+const StyledSubmissionContentText = styled.span`
   margin-bottom: 0.3rem;
   font-weight: bold;
 `;
