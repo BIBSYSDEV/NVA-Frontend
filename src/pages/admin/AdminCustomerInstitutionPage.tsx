@@ -1,8 +1,11 @@
 import React, { FC, useEffect, useState } from 'react';
 import Card from '../../components/Card';
-import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { Field, Form, Formik } from 'formik';
+import { Button } from '@material-ui/core';
+import { TextField } from 'formik-material-ui';
+import Heading from '../../components/Heading';
+import styled from 'styled-components';
 import * as Yup from 'yup';
 import {
   CustomerInstitutionFieldNames,
@@ -10,12 +13,12 @@ import {
   emptyInstitutionLogoFile,
   InstitutionLogoFile,
 } from '../../types/customerInstitution.types';
-import { Button } from '@material-ui/core';
-import { TextField } from 'formik-material-ui';
-import Heading from '../../components/Heading';
+
 import UppyDashboard from '../../components/UppyDashboard';
 import { createUppy } from '../../utils/uppy-config';
 import Label from '../../components/Label';
+
+const shouldAllowMultipleFiles = false;
 
 const StyledField = styled(Field)`
   margin: 1rem;
@@ -28,9 +31,6 @@ const StyledButtonContainer = styled.div`
   display: flex;
   justify-content: flex-end;
 `;
-
-const shouldAllowMultipleFiles = false;
-
 const AdminCustomerInstitutionPage: FC = () => {
   const { t } = useTranslation('admin');
   const [uppy] = useState(createUppy(shouldAllowMultipleFiles));
@@ -64,7 +64,7 @@ const AdminCustomerInstitutionPage: FC = () => {
         </Card>
       )}
       <Formik
-        initialValues={initialValues}
+        initialValues={emptyCustomerInstitution}
         validationSchema={Yup.object({
           name: Yup.string().required(t('feedback.required_field')),
         })}
