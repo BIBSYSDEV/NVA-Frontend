@@ -9,6 +9,7 @@
   },
   "feide_organization_id": "Organization id in Feide",
   "institution_dns": "DNS for the institution",
+  "institution_logo": "Institution logo",
   "organization_register_name": "Name in organization registry",
   "short_name": "Shortened display name"
 }
