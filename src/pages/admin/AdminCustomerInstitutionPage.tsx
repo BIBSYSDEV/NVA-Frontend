@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react';
 import Card from '../../components/Card';
 import { useTranslation } from 'react-i18next';
-import { Field, Form, Formik } from 'formik';
+import { Field, FieldArray, FieldArrayRenderProps, Form, Formik, getIn } from 'formik';
 import { Button } from '@material-ui/core';
 import { TextField } from 'formik-material-ui';
 import Heading from '../../components/Heading';
@@ -12,6 +12,12 @@ import { createUppy } from '../../utils/uppy-config';
 import Label from '../../components/Label';
 import InstitutionLogoFileUploader from './InstitutionLogoFileUploader';
 import FileCard from '../publication/files_and_license_tab/FileCard';
+import ProjectSearch from '../publication/description_tab/ProjectSearch';
+import { Project } from '../../types/project.types';
+import ProjectRow from '../publication/description_tab/ProjectRow';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import { DescriptionFieldNames } from '../publication/DescriptionPanel';
+import Header from '../../layout/header/Header';
 
 const shouldAllowMultipleFiles = false;
 
@@ -77,6 +83,32 @@ const AdminCustomerInstitutionPage: FC = () => {
             variant="outlined"
             inputProps={{ 'data-testid': 'customer-instituiton-name-input' }}
           />
+          {/*<Card>*/}
+          {/*  <Header>{t('description.project_association')}</Header>*/}
+          {/*  <FieldArray name={CustomerInstitutionFieldNames.NAME}>*/}
+          {/*    {({ name, insert, remove }: FieldArrayRenderProps) => (*/}
+          {/*      <>*/}
+          {/*        <ProjectSearch*/}
+          {/*          setValueFunction={newValue => insert(0, newValue)}*/}
+          {/*          dataTestId="search_project"*/}
+          {/*          placeholder={t('description.search_for_project')}*/}
+          {/*        />*/}
+          {/*        {getIn(values, name).map(*/}
+          {/*          (project: Project, i: number) =>*/}
+          {/*            project && (*/}
+          {/*              <ProjectRow*/}
+          {/*                key={project.cristinProjectId}*/}
+          {/*                project={project}*/}
+          {/*                onClickRemove={() => remove(i)}*/}
+          {/*                dataTestId={`selected_project${i}`}*/}
+          {/*              />*/}
+          {/*            )*/}
+          {/*        )}*/}
+          {/*      </>*/}
+          {/*    )}*/}
+          {/*  </FieldArray>*/}
+          {/*</Card>*/}
+
           <Field
             aria-label={CustomerInstitutionFieldNames.DISPLAY_NAME}
             name={CustomerInstitutionFieldNames.DISPLAY_NAME}
