@@ -1,8 +1,11 @@
-import { VariantType } from 'notistack';
+export enum NotificationVariant {
+  Error = 'error',
+  Info = 'info',
+  Success = 'success',
+  Warning = 'warning',
+}
 
 export interface Notification {
   message: string;
-  variant: VariantType;
-  key: string;
-  dismissed?: boolean;
+  variant: NotificationVariant;
 }

@@ -26,7 +26,7 @@ const AdminCustomerInstitutionsPage: FC = () => {
       setIsLoading(true);
       const institutions = await getAllCustomerInstitutions();
       // if (institutions?.error) {
-      //   dispatch(addNotification(t('feedback:error.get_institutions'), 'error'));
+      //   dispatch(setNotification(t('feedback:error.get_institutions'), NotificationVariant.Error));
       // } else {
       setInstitutions(institutions);
       // }

@@ -4,10 +4,11 @@ import { useDispatch } from 'react-redux';
 
 import { getPublishers } from '../../../../api/publicationChannelApi';
 import { AutoSearch } from '../../../../components/AutoSearch';
-import { searchFailure } from '../../../../redux/actions/searchActions';
 import { Publisher } from '../../../../types/references.types';
 import { PublicationTableNumber } from '../../../../utils/constants';
 import { debounce } from '../../../../utils/debounce';
+import { NotificationVariant } from '../../../../types/notification.types';
+import { setNotification } from '../../../../redux/actions/notificationActions';
 
 interface PublicationChannelSearchProps {
   clearSearchField: boolean;
@@ -36,7 +37,7 @@ const PublicationChannelSearch: FC<PublicationChannelSearchProps> = ({
       if (response) {
         setSearchResults(response.filter((publisher: Publisher) => publisher.title));
       } else {
-        dispatch(searchFailure(t('error.search')));
+        dispatch(setNotification(t('error.search', NotificationVariant.Error)));
       }
     }),
     [dispatch, t, publicationTable]
