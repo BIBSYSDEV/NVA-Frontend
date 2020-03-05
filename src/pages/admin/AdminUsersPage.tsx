@@ -44,8 +44,6 @@ const AdminUsersPage: FC = () => {
     return userList.filter(user => user.roles.some(role => role === roleFilter));
   };
 
-  console.log(userList);
-
   return (
     <Card>
       <Heading>{t('users.user_administration')}</Heading>
