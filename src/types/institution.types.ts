@@ -12,8 +12,6 @@ export interface FormikInstitutionUnit extends InstitutionUnitBase {
   unit: RecursiveInstitutionUnit;
 }
 
-export type InstitutionUnit = Pick<FormikInstitutionUnit, 'name' | 'id' | 'subunits'>;
-
 export const emptyRecursiveUnit: RecursiveInstitutionUnit = {
   name: '',
   id: '',

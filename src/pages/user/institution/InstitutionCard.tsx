@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Label from '../../../components/Label';
 import { Button } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootStore } from '../../../redux/reducers/rootReducer';
@@ -10,7 +11,12 @@ import { AuthorityQualifiers, removeIdFromAuthority } from '../../../api/authori
 import { addNotification } from '../../../redux/actions/notificationActions';
 import { setAuthorityData } from '../../../redux/actions/userActions';
 import NormalText from '../../../components/NormalText';
-import { InstitutionUnit, InstitutionUnitBase } from '../../../types/institution.types';
+import {
+  InstitutionUnitBase,
+  FormikInstitutionUnitFieldNames,
+  FormikInstitutionUnit,
+} from '../../../types/institution.types';
+import { FormikProps, useFormikContext } from 'formik';
 
 const StyledSelectedInstitution = styled.div`
   display: grid;
@@ -34,15 +40,21 @@ const StyledButtonContainer = styled.div`
   align-items: center;
 `;
 
+const StyledEditButton = styled(Button)`
+  margin-right: 0.5rem;
+`;
+
 interface InstitutionCardProps {
-  unit: InstitutionUnit;
+  onEdit: () => void;
+  unit: FormikInstitutionUnit;
 }
 
-const InstitutionCard: FC<InstitutionCardProps> = ({ unit }) => {
+const InstitutionCard: FC<InstitutionCardProps> = ({ onEdit, unit }) => {
   const { t } = useTranslation('common');
   const user = useSelector((state: RootStore) => state.user);
   const dispatch = useDispatch();
   const organizationUnitId = unit.subunits.length > 0 ? unit.subunits.slice(-1)[0].id : unit.id;
+  const { setFieldValue }: FormikProps<FormikInstitutionUnit> = useFormikContext();
 
   const handleRemoveInstitution = async () => {
     const updatedAuthority = await removeIdFromAuthority(
@@ -58,6 +70,14 @@ const InstitutionCard: FC<InstitutionCardProps> = ({ unit }) => {
     }
   };
 
+  const handleEditInstitution = async () => {
+    onEdit();
+    setFieldValue(FormikInstitutionUnitFieldNames.ID, unit.id);
+    setFieldValue(FormikInstitutionUnitFieldNames.NAME, unit.name);
+    setFieldValue(FormikInstitutionUnitFieldNames.SUBUNITS, unit.subunits);
+    setFieldValue(FormikInstitutionUnitFieldNames.UNIT, unit.unit);
+  };
+
   return (
     <StyledSelectedInstitution data-testid="institution-presentation">
       <StyledTextContainer>
@@ -69,6 +89,13 @@ const InstitutionCard: FC<InstitutionCardProps> = ({ unit }) => {
         ))}
       </StyledTextContainer>
       <StyledButtonContainer>
+        <StyledEditButton
+          color="primary"
+          data-testid={`button-edit-institution-${organizationUnitId}`}
+          onClick={handleEditInstitution}>
+          <EditIcon />
+          {t('edit')}
+        </StyledEditButton>
         <Button
           color="secondary"
           data-testid={`button-delete-institution-${organizationUnitId}`}
