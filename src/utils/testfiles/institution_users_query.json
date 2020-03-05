@@ -5,7 +5,7 @@
     "externalOrcid": "1234-1234-1234-1234",
     "lastLoginDate": "2020-03-01",
     "createdDate": "2020-01-01",
-    "roles": ["Admin", "Curator"]
+    "roles": ["Admin", "Appadmin", "Curator"]
   },
   {
     "id": "eirik.hansen@somewhere.org",

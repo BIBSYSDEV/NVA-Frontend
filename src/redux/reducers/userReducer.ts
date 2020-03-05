@@ -10,9 +10,6 @@ import {
   UserActions,
 } from '../actions/userActions';
 
-const publisherAffiliations = [Affiliation.EMPLOYEE, Affiliation.STAFF, Affiliation.MEMBER];
-const curatorAffiliations = publisherAffiliations;
-
 export const userReducer = (state: User = emptyUser, action: UserActions | OrcidActions | AuthActions) => {
   switch (action.type) {
     case CLEAR_USER:
@@ -39,10 +36,10 @@ export const userReducer = (state: User = emptyUser, action: UserActions | Orcid
         affiliations,
         givenName: action.user.given_name,
         familyName: action.user.family_name,
-        isPublisher: affiliations.some(userAffiliation => publisherAffiliations.includes(userAffiliation)),
-        isAppAdmin: action.user.email.endsWith('@unit.no'),
+        isPublisher: roles.some(role => role === RoleName.PUBLISHER),
+        isAppAdmin: roles.some(role => role === RoleName.APPADMIN),
         isInstitutionAdmin: roles.some(role => role === RoleName.ADMIN),
-        isCurator: affiliations.some(userAffiliation => curatorAffiliations.includes(userAffiliation)),
+        isCurator: roles.some(role => role === RoleName.CURATOR),
       };
       return {
         ...state,
