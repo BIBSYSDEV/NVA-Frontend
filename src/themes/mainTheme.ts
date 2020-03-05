@@ -71,11 +71,6 @@ export default createMuiTheme({
         textTransform: 'none',
       },
     },
-    MuiSnackbarContent: {
-      root: {
-        color: Colors.Background,
-      },
-    },
     MuiLink: {
       root: {
         color: Colors.Link,

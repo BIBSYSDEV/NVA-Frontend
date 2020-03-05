@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 
 import styled from 'styled-components';
 import { Button, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
@@ -9,6 +9,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import Label from '../../components/Label';
 import NormalText from '../../components/NormalText';
 import { Link as RouterLink } from 'react-router-dom';
+import DeletePublicationModal from './DeletePublicationModal';
 
 const StyledTableRow = styled(TableRow)`
   background-color: ${props => props.theme.palette.box.main};
@@ -42,57 +43,76 @@ interface PublicationListProps {
 
 const PublicationList: FC<PublicationListProps> = ({ publications }) => {
   const { t } = useTranslation();
+  const [openModal, setOpenModal] = useState(false);
+  const [deletePublicationId, setDeletePublicationId] = useState('');
+  const [deletePublicationTitle, setDeletePublicationTitle] = useState();
+
+  const handleOnClick = (publication: PublicationPreview) => {
+    setOpenModal(true);
+    setDeletePublicationId(publication.id);
+    setDeletePublicationTitle(publication.title);
+  };
+
   return (
-    <StyledTable>
-      <TableHead>
-        <TableRow>
-          <TableCell>
-            <Label>{t('workLists:publication_name')}</Label>
-          </TableCell>
-          <TableCell>
-            <Label>{t('common:status')}</Label>
-          </TableCell>
-          <TableCell>
-            <Label>{t('common:date')}</Label>
-          </TableCell>
-          <TableCell />
-          <TableCell />
-        </TableRow>
-      </TableHead>
-      <TableBody>
-        {publications
-          .filter(publication => publication.status !== PublicationStatus.PUBLISHED)
-          .map(publication => (
-            <StyledTableRow key={publication.id}>
-              <TableCell component="th" scope="row">
-                <NormalText>{publication.title}</NormalText>
-              </TableCell>
-              <StyledTableCellForStatus>
-                <NormalText>{t(`publication:status.${publication.status}`)}</NormalText>
-              </StyledTableCellForStatus>
-              <StyledTableCellForDate>
-                <NormalText>{publication.createdDate}</NormalText>
-              </StyledTableCellForDate>
-              <TableCell>
-                <Button
-                  color="primary"
-                  component={RouterLink}
-                  to={`/publication/${publication.id}`}
-                  data-testid={`edit-publication-${publication.id}`}>
-                  <StyledEditIcon />
-                  <NormalText>{t('common:edit')}</NormalText>
-                </Button>
-              </TableCell>
-              <TableCell>
-                <Button color="secondary" variant="outlined" data-testid={`delete-publication-${publication.id}`}>
-                  <StyledDeleteIcon />
-                  {t('common:remove')}
-                </Button>
-              </TableCell>
-            </StyledTableRow>
-          ))}
-      </TableBody>
-    </StyledTable>
+    <>
+      <StyledTable>
+        <TableHead>
+          <TableRow>
+            <TableCell>
+              <Label>{t('workLists:publication_name')}</Label>
+            </TableCell>
+            <TableCell>
+              <Label>{t('common:status')}</Label>
+            </TableCell>
+            <TableCell>
+              <Label>{t('common:date')}</Label>
+            </TableCell>
+            <TableCell />
+            <TableCell />
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {publications
+            .filter(publication => publication.status !== PublicationStatus.PUBLISHED)
+            .map(publication => (
+              <StyledTableRow key={publication.id}>
+                <TableCell component="th" scope="row">
+                  <NormalText>{publication.title}</NormalText>
+                </TableCell>
+                <StyledTableCellForStatus>
+                  <NormalText>{t(`publication:status.${publication.status}`)}</NormalText>
+                </StyledTableCellForStatus>
+                <StyledTableCellForDate>
+                  <NormalText>{publication.createdDate}</NormalText>
+                </StyledTableCellForDate>
+                <TableCell>
+                  <Button
+                    color="primary"
+                    component={RouterLink}
+                    to={`/publication/${publication.id}`}
+                    data-testid={`edit-publication-${publication.id}`}>
+                    <StyledEditIcon />
+                    <NormalText>{t('common:edit')}</NormalText>
+                  </Button>
+                </TableCell>
+                <TableCell>
+                  <Button
+                    color="secondary"
+                    variant="outlined"
+                    data-testid={`delete-publication-${publication.id}`}
+                    onClick={() => handleOnClick(publication)}>
+                    <StyledDeleteIcon />
+                    {t('common:remove')}
+                  </Button>
+                </TableCell>
+              </StyledTableRow>
+            ))}
+        </TableBody>
+      </StyledTable>
+      {openModal && (
+        <DeletePublicationModal id={deletePublicationId} title={deletePublicationTitle} setOpenModal={setOpenModal} />
+      )}
+    </>
   );
 };
 

@@ -1,5 +1,16 @@
 {
   "add_institution": "Opprett institusjon",
+  "administration_id": "Autentiserings-id for institusjonsadministrator",
+  "archive_name": "Arkivnavn",
+  "cname": "CNAME",
+  "display_name": "Visningsnavn på instutusjonen",
+  "feedback": {
+    "required_field": "Påkrevd felt"
+  },
+  "feide_organization_id": "Organisasjonens id i Feide",
+  "institution_dns": "Institusjonens DNS",
+  "organization_register_name": "Navn i organisasjonsregister",
+  "short_name": "Forkortet visningsnavn på instutusjonen",
   "users": {
     "auto_assign_creators": "Ansatte får automatisk rolle som registrator ved pålogging hvis de er registrert med dette i 'eduPersonAffiliation': Employee, Staff, Member",
     "authentication_id": "Autentiserings-id",

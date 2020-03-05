@@ -1,5 +1,16 @@
 {
   "add_institution": "Add institution",
+  "administration_id": "Authenticating id for institution administrator",
+  "archive_name": "Archive name",
+  "cname": "CNAME",
+  "display_name": "Display name for the institution",
+  "feedback": {
+    "required_field": "Required field"
+  },
+  "feide_organization_id": "Organization id in Feide",
+  "institution_dns": "DNS for the institution",
+  "organization_register_name": "Name in organization registry",
+  "short_name": "Shortened display name",
   "users": {
     "auto_assign_creators": "Employees are automaticaly assigned role as creator at login if the are registred as this in 'eduPersonAffiliation': Employee, Staff, Member",
     "authentication_id": "Authentication ID",

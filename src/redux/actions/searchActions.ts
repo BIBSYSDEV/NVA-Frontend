@@ -1,10 +1,7 @@
-import { VariantType } from 'notistack';
-
 import { PublicationMetadata } from '../../types/publication.types';
 
 export const SEARCH_FOR_PUBLICATIONS = 'search for publications';
 export const CLEAR_SEARCH = 'clear search';
-export const SEARCH_FAILURE = 'search failure';
 
 export const searchForPublications = (
   publications: PublicationMetadata[],
@@ -17,12 +14,6 @@ export const searchForPublications = (
   searchTerm,
   totalNumberOfHits,
   offset: offset ? offset : 0,
-});
-
-export const searchFailure = (message: string): SearchFailureAction => ({
-  type: SEARCH_FAILURE,
-  message,
-  variant: 'error',
 });
 
 export const clearSearch = (): ClearSearchAction => ({
@@ -41,10 +32,4 @@ interface ClearSearchAction {
   type: typeof CLEAR_SEARCH;
 }
 
-interface SearchFailureAction {
-  type: typeof SEARCH_FAILURE;
-  message: string;
-  variant: VariantType;
-}
-
-export type SearchActions = SearchForPublicationsAction | ClearSearchAction | SearchFailureAction;
+export type SearchActions = SearchForPublicationsAction | ClearSearchAction;

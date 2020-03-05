@@ -7,6 +7,10 @@ Parameters:
   NvaFrontendBucketName:
     Description: Name of S3 bucket for frontend
     Type: String
+  DomainCertificateArn:
+    Description: Certificate to use for this domain
+    Type: String
+
 Resources:
   NvaFrontendBucketPolicy:
     Type: AWS::S3::BucketPolicy
@@ -54,7 +58,7 @@ Resources:
           GeoRestriction:
             RestrictionType: none
         ViewerCertificate:
-          AcmCertificateArn: '{{resolve:ssm:domainCertificateArn:1}}'
+          AcmCertificateArn: !Ref DomainCertificateArn
           SslSupportMethod: sni-only
         CustomErrorResponses:
           - ErrorCode: 404
