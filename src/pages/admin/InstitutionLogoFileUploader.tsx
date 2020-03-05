@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import { Uppy } from '../../../types/file.types';
-import UppyDashboard from '../../../components/UppyDashboard';
+import { Uppy } from '../../types/file.types';
+import UppyDashboard from '../../components/UppyDashboard';
 
 interface InstitutionLogoFileUploaderProps {
   setFile: (file: File) => void;

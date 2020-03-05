@@ -10,8 +10,7 @@ import * as Yup from 'yup';
 import { CustomerInstitutionFieldNames, emptyCustomerInstitution } from '../../types/customerInstitution.types';
 import { createUppy } from '../../utils/uppy-config';
 import Label from '../../components/Label';
-import DeleteIcon from '@material-ui/icons/Delete';
-import InstitutionLogoFileUploader from '../publication/files_and_license_tab/InstitutionLogoFileUploader';
+import InstitutionLogoFileUploader from './InstitutionLogoFileUploader';
 import FileCard from '../publication/files_and_license_tab/FileCard';
 
 const shouldAllowMultipleFiles = false;
@@ -20,18 +19,13 @@ const StyledLogoUploadWrapper = styled(Card)`
   margin-top: 1rem;
 `;
 
-const FileWrapper = styled(Card)`
-  margin-top: 1rem;
-  display: flex;
-  justify-content: space-between;
-`;
-
 const StyledButtonContainer = styled.div`
   margin-top: 2rem;
   margin-right: 1rem;
   display: flex;
   justify-content: flex-end;
 `;
+
 const AdminCustomerInstitutionPage: FC = () => {
   const { t } = useTranslation('admin');
   const [uppy] = useState(createUppy(shouldAllowMultipleFiles));
@@ -54,7 +48,6 @@ const AdminCustomerInstitutionPage: FC = () => {
           <Field name="logoFile">
             {({ field: { value, name }, form }: any) => (
               <StyledLogoUploadWrapper>
-                {console.log(value)}
                 <Label>{t('institution_logo')}</Label>
                 <InstitutionLogoFileUploader
                   uppy={uppy}
