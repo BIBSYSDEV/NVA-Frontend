@@ -10,8 +10,7 @@
     "cname": "xxx",
     "institutionDns": "xxx",
     "administrationId": "xxx",
-    "feideOrganizationId": "xxx",
-    "logoFile": { "id": "1", "name": "logo.png" }
+    "feideOrganizationId": "xxx"
   },
   {
     "name": "Anno Museeum",
@@ -24,8 +23,7 @@
     "cname": "xxx",
     "institutionDns": "xxx",
     "administrationId": "xxx",
-    "feideOrganizationId": "xxx",
-    "logoFile": { "id": "1", "name": "logo.png" }
+    "feideOrganizationId": "xxx"
   },
   {
     "name": "Institutt for osteloff",
@@ -38,8 +36,7 @@
     "cname": "xxx",
     "institutionDns": "xxx",
     "administrationId": "xxx",
-    "feideOrganizationId": "xxx",
-    "logoFile": { "id": "1", "name": "logo.png" }
+    "feideOrganizationId": "xxx"
   },
   {
     "name": "Norsk senter for økologisk landbruk",
@@ -52,7 +49,6 @@
     "cname": "xxx",
     "institutionDns": "xxx",
     "administrationId": "xxx",
-    "feideOrganizationId": "xxx",
-    "logoFile": { "id": "1", "name": "logo.png" }
+    "feideOrganizationId": "xxx"
   }
 ]

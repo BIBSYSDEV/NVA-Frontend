@@ -1,13 +1,3 @@
-export interface InstitutionLogoFile {
-  id: string;
-  name: string;
-}
-
-export const emptyInstitutionLogoFile: InstitutionLogoFile = {
-  id: '',
-  name: '',
-};
-
 export interface CustomerInstitution {
   id: string;
   name: string;
@@ -20,7 +10,7 @@ export interface CustomerInstitution {
   feideOrganizationId: string;
   createdDate: string;
   contact: string;
-  logoFile: InstitutionLogoFile;
+  logoFile?: File;
 }
 
 export const emptyCustomerInstitution: CustomerInstitution = {
@@ -35,7 +25,6 @@ export const emptyCustomerInstitution: CustomerInstitution = {
   feideOrganizationId: '',
   contact: '',
   createdDate: '',
-  logoFile: emptyInstitutionLogoFile,
 };
 
 export enum CustomerInstitutionFieldNames {
