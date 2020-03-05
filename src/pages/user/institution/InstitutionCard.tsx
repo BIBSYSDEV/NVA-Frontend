@@ -1,34 +1,84 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 import Label from '../../../components/Label';
+import { Button } from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/Delete';
+import { useTranslation } from 'react-i18next';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootStore } from '../../../redux/reducers/rootReducer';
+import { AuthorityQualifiers, removeIdFromAuthority } from '../../../api/authorityApi';
+import { addNotification } from '../../../redux/actions/notificationActions';
+import { setAuthorityData } from '../../../redux/actions/userActions';
+import NormalText from '../../../components/NormalText';
 import { InstitutionUnit, InstitutionUnitBase } from '../../../types/institution.types';
 
 const StyledSelectedInstitution = styled.div`
+  display: grid;
+  grid-template-areas: 'text button';
+  grid-template-columns: auto 7rem;
   margin-top: 0.5rem;
-  padding-top: 0.5rem;
-  padding-left: 0.5rem;
+  padding: 0.5rem;
   background-color: ${({ theme }) => theme.palette.background.default};
   min-height: 5rem;
   border-radius: 4px;
 `;
 
-const StyledInstitutionText = styled.div`
-  height: 1.5rem;
+const StyledTextContainer = styled.div`
+  grid-area: text;
+`;
+
+const StyledButtonContainer = styled.div`
+  grid-area: button;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 `;
 
 interface InstitutionCardProps {
   unit: InstitutionUnit;
 }
 
-const InstitutionCard: FC<InstitutionCardProps> = ({ unit }) => (
-  <StyledSelectedInstitution data-testid="institution-presentation">
-    <Label>{unit.name}</Label>
-    {unit.subunits?.map((subunit: InstitutionUnitBase) => (
-      <StyledInstitutionText key={subunit.id} data-testid="institution-presentation-subunit">
-        {subunit.name}
-      </StyledInstitutionText>
-    ))}
-  </StyledSelectedInstitution>
-);
+const InstitutionCard: FC<InstitutionCardProps> = ({ unit }) => {
+  const { t } = useTranslation('common');
+  const user = useSelector((state: RootStore) => state.user);
+  const dispatch = useDispatch();
+  const organizationUnitId = unit.subunits.length > 0 ? unit.subunits.slice(-1)[0].id : unit.id;
+
+  const handleRemoveInstitution = async () => {
+    const updatedAuthority = await removeIdFromAuthority(
+      user.authority.systemControlNumber,
+      AuthorityQualifiers.ORGUNIT_ID,
+      organizationUnitId
+    );
+    if (updatedAuthority.error) {
+      dispatch(addNotification(updatedAuthority.error, 'error'));
+    } else if (updatedAuthority) {
+      dispatch(setAuthorityData(updatedAuthority));
+      dispatch(addNotification(t('feedback:success.delete_identifier')));
+    }
+  };
+
+  return (
+    <StyledSelectedInstitution data-testid="institution-presentation">
+      <StyledTextContainer>
+        <Label>{unit.name}</Label>
+        {unit.subunits?.map((subunit: InstitutionUnitBase) => (
+          <NormalText key={subunit.id} data-testid="institution-presentation-subunit">
+            {subunit.name}
+          </NormalText>
+        ))}
+      </StyledTextContainer>
+      <StyledButtonContainer>
+        <Button
+          color="secondary"
+          data-testid={`button-delete-institution-${organizationUnitId}`}
+          onClick={handleRemoveInstitution}>
+          <DeleteIcon />
+          {t('remove')}
+        </Button>
+      </StyledButtonContainer>
+    </StyledSelectedInstitution>
+  );
+};
 
 export default InstitutionCard;

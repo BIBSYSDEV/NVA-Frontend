@@ -3,6 +3,7 @@
     "404_page": "The page you requested could not be found. (Http error code 404)",
     "create_authority": "Could not create authority",
     "create_publication": "Could not create publication",
+    "delete_identifier": "Could not delete identifier",
     "get_approvable_publications": "Could not fetch publications awaiting approval",
     "get_authority": "Could not retrieve authority",
     "get_authorities": "Could not retrieve authorities",
@@ -26,6 +27,7 @@
   "success": {
     "created_authority": "Created author ID",
     "create_publication": "New publication created",
+    "delete_identifier": "Deleted identifier",
     "login": "Logged in",
     "update_authority": "Updated authority",
     "update_publication": "Updated publication"

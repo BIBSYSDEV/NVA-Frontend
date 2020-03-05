@@ -11,6 +11,12 @@ export enum AuthorityApiPaths {
   AUTHORITY = '/authority',
 }
 
+export enum AuthorityQualifiers {
+  FEIDE_ID = 'feideid',
+  ORCID = 'orcid',
+  ORGUNIT_ID = 'orgunitid',
+}
+
 export const getAuthorities = async (name: string, dispatch: Dispatch) => {
   const url = encodeURI(`${AuthorityApiPaths.AUTHORITY}?name=${name}`);
 
@@ -82,6 +88,32 @@ export const createAuthority = async (user: User) => {
   } catch (error) {
     return {
       error: i18n.t('feedback:error.create_authority'),
+    };
+  }
+};
+
+export const removeIdFromAuthority = async (
+  systemControlNumber: string,
+  qualifier: AuthorityQualifiers,
+  identifier: string
+) => {
+  const url = `${AuthorityApiPaths.AUTHORITY}/${systemControlNumber}/identifiers/${qualifier}/${identifier}`;
+
+  try {
+    const idToken = await getIdToken();
+    const headers = {
+      Authorization: `Bearer ${idToken}`,
+    };
+
+    const response = await Axios.delete(url, { headers });
+    if (response.status === StatusCode.OK) {
+      return response.data;
+    } else {
+      return null;
+    }
+  } catch {
+    return {
+      error: i18n.t('feedback:error.delete_identifier'),
     };
   }
 };
