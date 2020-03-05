@@ -52,6 +52,10 @@ const UserList: FC<UserListProps> = ({ userList, role, buttonText }) => {
     setAddUser(false);
   };
 
+  const handleSubmitUser = () => {
+    // add user with role, how?
+  };
+
   return (
     <>
       {userList?.length > 0 && (
@@ -96,7 +100,9 @@ const UserList: FC<UserListProps> = ({ userList, role, buttonText }) => {
                 <TableCell>
                   <TextField label={t('users.authentication_id')} variant="outlined" size="small" />
                 </TableCell>
-                <TableCell />
+                <TableCell>
+                  <TextField label={t('common:name')} variant="outlined" size="small" />
+                </TableCell>
                 <TableCell />
                 <TableCell />
                 <TableCell />
