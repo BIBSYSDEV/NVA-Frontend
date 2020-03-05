@@ -10,8 +10,8 @@ import { Fade } from '@material-ui/core';
 
 const autoHideDuration = {
   [NotificationVariant.Error]: null,
-  [NotificationVariant.Info]: 6000,
-  [NotificationVariant.Success]: 6000,
+  [NotificationVariant.Info]: 3000,
+  [NotificationVariant.Success]: 3000,
   [NotificationVariant.Warning]: null,
 };
 
