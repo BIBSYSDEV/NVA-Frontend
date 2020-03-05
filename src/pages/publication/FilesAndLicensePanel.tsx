@@ -57,11 +57,14 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab
       <FieldArray name={FilesFieldNames.FILES}>
         {({ insert, remove, replace }) => (
           <>
-            <FileUploader
-              uppy={uppy}
-              shouldAllowMultipleFiles={shouldAllowMultipleFiles}
-              addFile={file => insert(0, file)}
-            />
+            <Card>
+              <Heading>{t('files_and_license.upload_files')}</Heading>
+              <FileUploader
+                uppy={uppy}
+                shouldAllowMultipleFiles={shouldAllowMultipleFiles}
+                addFile={file => insert(0, file)}
+              />
+            </Card>
             {uploadedFiles.length > 0 && (
               <>
                 <StyledUploadedFiles>
