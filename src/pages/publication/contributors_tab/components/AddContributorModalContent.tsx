@@ -9,11 +9,12 @@ import { getAuthorities } from '../../../../api/authorityApi';
 import Label from '../../../../components/Label';
 import Progress from '../../../../components/Progress';
 import SearchBar from '../../../../components/SearchBar';
-import { addNotification } from '../../../../redux/actions/notificationActions';
+import { setNotification } from '../../../../redux/actions/notificationActions';
 import { Authority, emptyAuthority } from '../../../../types/authority.types';
 import { debounce } from '../../../../utils/debounce';
 import AuthorityCard from '../../../user/authority/AuthorityCard';
 import NormalText from '../../../../components/NormalText';
+import { NotificationVariant } from '../../../../types/notification.types';
 
 const StyledClickableDiv = styled.div`
   cursor: pointer;
@@ -69,7 +70,7 @@ const AddContributorModalContent: FC<AddContributorModalContentProps> = ({ addAu
         setMatchingAuthorities(response);
         setSearchSummary({ isLoading: false, searchTerm, results: response.length });
       } else {
-        dispatch(addNotification(t('feedback:error.get_authorities'), 'error'));
+        dispatch(setNotification(t('feedback:error.get_authorities'), NotificationVariant.Error));
       }
     }),
     [dispatch, t]

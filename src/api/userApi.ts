@@ -2,12 +2,14 @@ import { CognitoUserSession } from 'amazon-cognito-identity-js';
 import { Auth } from 'aws-amplify';
 import { Dispatch } from 'redux';
 
-import { loginSuccess, logoutSuccess, refreshTokenFailure } from '../redux/actions/authActions';
-import { clearUser, setUser, setUserFailure } from '../redux/actions/userActions';
+import { loginSuccess, logoutSuccess } from '../redux/actions/authActions';
+import { clearUser, setUser } from '../redux/actions/userActions';
 import { RootStore } from '../redux/reducers/rootReducer';
 import i18n from '../translations/i18n';
 import { USE_MOCK_DATA } from '../utils/constants';
 import { mockUser } from '../utils/testfiles/mock_feide_user';
+import { setNotification } from '../redux/actions/notificationActions';
+import { NotificationVariant } from '../types/notification.types';
 
 export const login = () => {
   return async (dispatch: Dispatch) => {
@@ -32,7 +34,7 @@ export const getCurrentAuthenticatedUser = () => {
           // NOTE: getSession must be called to authenticate user before calling getUserAttributes
           cognitoUser.getUserAttributes((error: any) => {
             if (error) {
-              dispatch(setUserFailure(i18n.t('feedback:error.get_user')));
+              dispatch(setNotification(i18n.t('feedback:error.get_user', NotificationVariant.Error)));
             } else {
               dispatch(setUser(cognitoUser.attributes));
             }
@@ -42,7 +44,7 @@ export const getCurrentAuthenticatedUser = () => {
     } catch {
       const store = getState();
       if (store.user.isLoggedIn) {
-        dispatch(setUserFailure(i18n.t('feedback:error.get_user')));
+        dispatch(setNotification(i18n.t('feedback:error.get_user', NotificationVariant.Error)));
       }
     }
   };
@@ -64,12 +66,12 @@ export const refreshToken = () => {
       if (!currentSession.isValid()) {
         cognitoUser.refreshSession(currentSession.getRefreshToken(), (error: any) => {
           if (error) {
-            dispatch(refreshTokenFailure(error));
+            dispatch(setNotification(error, NotificationVariant.Error));
           }
         });
       }
     } catch (e) {
-      dispatch(refreshTokenFailure(e));
+      dispatch(setNotification(e, NotificationVariant.Error));
     }
   };
 };

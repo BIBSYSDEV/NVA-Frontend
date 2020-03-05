@@ -4,7 +4,7 @@ import Card from '../../components/Card';
 import Heading from '../../components/Heading';
 import PublicationList from './PublicationList';
 import { getMyPublications } from '../../api/publicationApi';
-import { addNotification } from '../../redux/actions/notificationActions';
+import { setNotification } from '../../redux/actions/notificationActions';
 import i18n from '../../translations/i18n';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, CircularProgress } from '@material-ui/core';
@@ -12,6 +12,7 @@ import styled from 'styled-components';
 import { PublicationPreview } from '../../types/publication.types';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { Link as RouterLink } from 'react-router-dom';
+import { NotificationVariant } from '../../types/notification.types';
 
 const StyledWrapper = styled.div`
   text-align: center;
@@ -34,7 +35,7 @@ const MyPublications: FC = () => {
       setIsLoading(true);
       const publications = await getMyPublications();
       if (publications?.error) {
-        dispatch(addNotification(i18n.t('feedback:error.get_publications'), 'error'));
+        dispatch(setNotification(i18n.t('feedback:error.get_publications'), NotificationVariant.Error));
       } else {
         setPublications(publications);
       }
