@@ -15,9 +15,8 @@ const InstitutionLogoFileUploader: React.FC<InstitutionLogoFileUploaderProps> = 
 }) => {
   useEffect(() => {
     if (uppy && !uppy.hasUploadSuccessEventListener) {
-      uppy.on('upload-success', (file: File) => {
-        setFile(file);
-      });
+      uppy.on('upload-success', (file: File) => setFile(file));
+
       // Avoid duplicating event listener
       uppy.hasUploadSuccessEventListener = true;
     }
