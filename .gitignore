@@ -19,6 +19,7 @@ _spanish_soup_env.local
 .env.production.local
 .env
 .env.production
+.env.local
 
 npm-debug.log*
 yarn-debug.log*
