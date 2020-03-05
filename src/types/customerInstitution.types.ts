@@ -36,4 +36,5 @@ export enum CustomerInstitutionFieldNames {
   INSTITUTION_DNS = 'institutionDns',
   ADMINISTRATION_ID = 'administrationId',
   FEIDE_ORGANIZATION_ID = 'feideOrganizationId',
+  LOGO_FILE = 'logoFile',
 }

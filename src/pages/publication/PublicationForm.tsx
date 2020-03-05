@@ -15,7 +15,8 @@ import { PublicationFormTabs } from './PublicationFormTabs';
 import ReferencesPanel from './ReferencesPanel';
 import SubmissionPanel from './SubmissionPanel';
 import { emptyFile, File, Uppy } from '../../types/file.types';
-import { getPublication } from './../../api/publicationApi';
+import { getPublication } from '../../api/publicationApi';
+const shouldAllowMultipleFiles = false;
 
 const StyledPublication = styled.div`
   width: 100%;
@@ -26,7 +27,7 @@ interface PublicationFormProps {
   id?: string;
 }
 
-const PublicationForm: FC<PublicationFormProps> = ({ uppy = createUppy(true), id }) => {
+const PublicationForm: FC<PublicationFormProps> = ({ uppy = createUppy(shouldAllowMultipleFiles), id }) => {
   const { t } = useTranslation('publication');
   const [tabNumber, setTabNumber] = useState(0);
   const [initialValues, setInitialValues] = useState(emptyPublication);

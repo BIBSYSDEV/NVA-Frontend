@@ -45,7 +45,7 @@ const AdminCustomerInstitutionPage: FC = () => {
           }, 400);
         }}>
         <Form>
-          <Field name="logoFile">
+          <Field name={CustomerInstitutionFieldNames.LOGO_FILE}>
             {({ field: { value, name }, form }: any) => (
               <StyledLogoUploadWrapper>
                 <Label>{t('institution_logo')}</Label>
