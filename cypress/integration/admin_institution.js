@@ -16,7 +16,7 @@ describe('User administers institutions ', () => {
 
     cy.contains('Institutt for osteloff');
     cy.contains('Kjetil');
-    cy.contains('27.01.1780');
+    cy.contains('1780-01-27');
   });
 
   it('The User should be able to add an institution', () => {
@@ -26,5 +26,16 @@ describe('User administers institutions ', () => {
 
     // Open new institution page
     cy.get('[data-testid=add-institution-button]').click({ force: true });
+
+    cy.get('[data-testid=customer-instituiton-name-input]').type('institutt for osteloff');
+    cy.get('[data-testid=customer-instituiton-display-name-input]').type('Institutt for osteloff!');
+    cy.get('[data-testid=customer-instituiton-short-name-input]').type('OSTEINSTITUTTET');
+    cy.get('[data-testid=customer-instituiton-archive-name-input]').type('Jarlsberg');
+    cy.get('[data-testid=customer-instituiton-cname-input]').type('www.osteloff.com');
+    cy.get('[data-testid=customer-instituiton-institution-dns-input]').type('1.1.1.1');
+    cy.get('[data-testid=customer-instituiton-administrator-id-input]').type('12345676');
+    cy.get('[data-testid=customer-instituiton-feide-organization-id-input]').type('2345667');
+
+    cy.get('[data-testid=customer-instituiton-save-button]').click({ force: true });
   });
 });

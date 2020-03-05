@@ -1,0 +1,224 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+
+Description: >
+  This template creates a CodePipeline pipeline for serverless web applications that a) pulls source from github,
+  b) builds the a serverless web application and c) publishes the artifacts to AWS SAR
+
+Parameters:
+  GitHubOAuthToken:
+    Description: OAuth token used by AWS CodePipeline to connect to GitHub
+    NoEcho: true
+    Type: String
+  GitHubOwner:
+    Description: GitHub username owning the repo
+    Type: String
+  GitHubRepo:
+    Description: GitHub repo name
+    Type: String
+  GitHubBranch:
+    Description: GitHub repo branch name. It defaults to master if not specified.
+    Type: String
+    Default: master
+
+Resources:
+  CodeBuildProject:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      ServiceRole: !GetAtt PublishCodeBuildServiceRole.Arn
+      Artifacts:
+        Type: CODEPIPELINE
+      Environment:
+        ComputeType: BUILD_GENERAL1_SMALL
+        Image: aws/codebuild/standard:3.0
+        Type: LINUX_CONTAINER
+        EnvironmentVariables:
+          - Name: S3_BUCKET
+            Type: PLAINTEXT
+            Value: !Ref PublishArtifactStoreBucket
+          - Name: REACT_APP_AWS_REGION
+            Type: PLAINTEXT
+            Value: !Ref 'AWS::Region'
+      Source:
+        Type: CODEPIPELINE
+        BuildSpec: buildspec_publish_sar.yml
+
+  PublishFrontendPipeline:
+    Type: AWS::CodePipeline::Pipeline
+    Properties:
+      ArtifactStore:
+        Type: S3
+        Location:
+          Ref: PublishArtifactStoreBucket
+      RoleArn: !GetAtt PublishPipelineRole.Arn
+      Stages:
+        - Name: Source
+          Actions:
+            - Name: GitHubSource
+              ActionTypeId:
+                Category: Source
+                Owner: ThirdParty
+                Provider: GitHub
+                Version: '1'
+              Configuration:
+                Owner: !Ref GitHubOwner
+                OAuthToken: !Ref GitHubOAuthToken
+                Repo: !Ref GitHubRepo
+                Branch: !Ref GitHubBranch
+                PollForSourceChanges: true
+              OutputArtifacts:
+                - Name: SourceArtifact
+              RunOrder: 1
+        - Name: Build
+          Actions:
+            - Name: Build
+              ActionTypeId:
+                Category: Build
+                Owner: AWS
+                Provider: CodeBuild
+                Version: '1'
+              Configuration:
+                ProjectName: !GetAtt CodeBuildProject.Arn
+                EnvironmentVariables: !Sub
+                  - '[{"name":"S3_BUCKET","value":"${PublishArtifactStoreBucket}","type":"PLAINTEXT"}]'
+                  - PublishArtifactStoreBucket: !Ref PublishArtifactStoreBucket
+              InputArtifacts:
+                - Name: SourceArtifact
+              OutputArtifacts:
+                - Name: BuildArtifact
+              RunOrder: 1
+
+  PublishPipelineRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action: ['sts:AssumeRole']
+            Effect: Allow
+            Principal:
+              Service: [codepipeline.amazonaws.com]
+        Version: '2012-10-17'
+      Path: /
+      Policies:
+        - PolicyName: CodePipelineAccess
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Action:
+                  - 's3:ListBucket'
+                  - 's3:GetBucketVersioning'
+                  - 's3:PutObject'
+                  - 's3:GetObject'
+                  - 's3:GetObjectVersion'
+                Effect: Allow
+                Resource:
+                  - !Sub ${PublishArtifactStoreBucket.Arn}/*
+              - Action:
+                  - 'codebuild:StartBuild'
+                  - 'codebuild:BatchGetBuilds'
+                Effect: Allow
+                Resource: !GetAtt CodeBuildProject.Arn
+
+  PublishCodeBuildServiceRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Action:
+              - 'sts:AssumeRole'
+            Effect: Allow
+            Principal:
+              Service:
+                - codebuild.amazonaws.com
+      Path: /
+      Policies:
+        - PolicyName: CodeBuildLogs
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource:
+                  - !Sub 'arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/codebuild/*'
+                  - !Sub 'arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/codebuild/*:*'
+        - PolicyName: BucketPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - s3:GetObject
+                  - s3:GetObjectVersion
+                  - s3:PutObject
+                Resource:
+                  - !Sub 'arn:aws:s3:::${PublishArtifactStoreBucket}/*'
+        - PolicyName: secretsPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - ssm:GetParameters
+                  - secretsmanager:GetSecretValue
+                Resource: '*'
+        - PolicyName: applicationRepository
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - serverlessrepo:CreateApplication
+                  - serverlessrepo:CreateApplicationVersion
+                  - serverlessrepo:UpdateApplication
+                  - serverlessrepo:GetApplication
+                  - serverlessrepo:PutApplication
+                Resource:
+                  - !Sub 'arn:aws:serverlessrepo:${AWS::Region}:${AWS::AccountId}:applications/*'
+        - PolicyName: anyApplicationRepository
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - serverlessrepo:GetApplication
+                Resource: '*'
+
+  PublishArtifactStoreBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      VersioningConfiguration:
+        Status: Enabled
+
+  PublishArtifactStoreBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref PublishArtifactStoreBucket
+      PolicyDocument:
+        Statement:
+          - Action:
+              - 's3:GetObject'
+            Effect: 'Allow'
+            Resource:
+              - !Sub 'arn:aws:s3:::${PublishArtifactStoreBucket}/*'
+            Principal:
+              Service:
+                - serverlessrepo.amazonaws.com
+
+  PublishFrontendPipelineWebhook:
+    Type: AWS::CodePipeline::Webhook
+    Properties:
+      Authentication: GITHUB_HMAC
+      AuthenticationConfiguration:
+        SecretToken: !Ref GitHubOAuthToken
+      Filters:
+        - JsonPath: '$.ref'
+          MatchEquals: refs/heads/master
+      TargetPipeline: !Ref PublishFrontendPipeline
+      TargetAction: GitHubSource
+      Name: !Sub '${GitHubRepo}-Webhook'
+      TargetPipelineVersion: !GetAtt PublishFrontendPipeline.Version
+      RegisterWithThirdParty: true

@@ -8,13 +8,7 @@ import { Button, CircularProgress } from '@material-ui/core';
 import InstitutionList from './InstitutionList';
 import { Link as RouterLink } from 'react-router-dom';
 import styled from 'styled-components';
-
-export interface DummyCustomerInstitution {
-  name: string;
-  id: string;
-  createdDate: string;
-  contact: string;
-}
+import { CustomerInstitution } from '../../types/customerInstitution.types';
 
 const StyledButtonWrapper = styled.div`
   display: flex;
@@ -25,7 +19,7 @@ const AdminCustomerInstitutionsPage: FC = () => {
   const { t } = useTranslation('admin');
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
-  const [institutions, setInstitutions] = useState<DummyCustomerInstitution[]>([]);
+  const [institutions, setInstitutions] = useState<CustomerInstitution[]>([]);
 
   useEffect(() => {
     const loadData = async () => {
