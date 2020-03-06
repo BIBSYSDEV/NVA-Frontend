@@ -138,10 +138,12 @@ Resources:
           import boto3
           import sys
           import json
+          import datetime
 
           def handler(event, context):
               client = boto3.client('cloudfront')
 
+              timestamp_string = datetime.datetime.utcnow().strftime("%Y%m%d%H%M%S")
               data = event['CodePipeline.job']['data']
               param = json.loads(data['actionConfiguration']['configuration'].get('UserParameters','{}'))
               distributionId = param['distribution_id']
@@ -149,7 +151,7 @@ Resources:
               codepipeline = boto3.client('codepipeline')
               job = event['CodePipeline.job']['id'];
               try:
-                client.create_invalidation(
+                response = client.create_invalidation(
                     DistributionId=distributionId,
                     InvalidationBatch={
                         'Paths': {
@@ -158,8 +160,18 @@ Resources:
                                 '/*',
                             ]
                         },
-                        'CallerReference': '0'
+                        'CallerReference': timestamp_string
                     }
+                )
+
+                print(json.dumps(response, default=str))
+
+                waiter = client.get_waiter('invalidation_completed')
+
+                # Waits up to 10 mins
+                waiter.wait(
+                  DistributionId=distributionId,
+                  Id=invalidation_id
                 )
               except:
                 print("Exception:",sys.exc_info()[0])
@@ -171,8 +183,8 @@ Resources:
       Role: !GetAtt InvalidateCloudfrontDistributionFunctionRole.Arn
       Handler: index.handler
       Description: Lambda to invalidate Cloudfront distribution
-      Runtime: python3.7
-      Timeout: 30
+      Runtime: python3.8
+      Timeout: 900
 
   CleanUpBucketBeforeDeploy:
     Type: AWS::Lambda::Function
@@ -206,7 +218,7 @@ Resources:
       Role: !GetAtt CleanUpBucketBeforeDeployFunctionRole.Arn
       Handler: index.handler
       Description: Lambda to clean S3 bucket before deploy
-      Runtime: python3.7
+      Runtime: python3.8
       Timeout: 30
 
   PipelineRole:
