@@ -28,7 +28,13 @@ describe('User administers institutions ', () => {
     // Open new institution page
     cy.get('[data-testid=add-institution-button]').click({ force: true });
 
-    cy.get('[data-testid=customer-instituiton-name-input]').type('institutt for osteloff');
+    cy.get('[data-testid=autosearch-institution]')
+      .click({ force: true })
+      .type('ntnu');
+    cy.get('.MuiAutocomplete-option')
+      .contains('Norges teknisk-naturvitenskapelige universitet')
+      .click({ force: true });
+
     cy.get('[data-testid=customer-instituiton-display-name-input]').type('Institutt for osteloff!');
     cy.get('[data-testid=customer-instituiton-short-name-input]').type('OSTEINSTITUTTET');
     cy.get('[data-testid=customer-instituiton-archive-name-input]').type('Jarlsberg');

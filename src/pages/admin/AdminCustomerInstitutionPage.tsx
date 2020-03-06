@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react';
 import Card from '../../components/Card';
 import { useTranslation } from 'react-i18next';
-import { Field, FieldArray, FieldArrayRenderProps, FieldProps, Form, Formik, getIn } from 'formik';
+import { Field, FieldProps, Form, Formik } from 'formik';
 import { Button } from '@material-ui/core';
 import { TextField } from 'formik-material-ui';
 import Heading from '../../components/Heading';
@@ -12,15 +12,7 @@ import { createUppy } from '../../utils/uppy-config';
 import Label from '../../components/Label';
 import InstitutionLogoFileUploader from './InstitutionLogoFileUploader';
 import FileCard from '../publication/files_and_license_tab/FileCard';
-import ProjectSearch from '../publication/description_tab/ProjectSearch';
-import { Project } from '../../types/project.types';
-import ProjectRow from '../publication/description_tab/ProjectRow';
-import { MuiPickersUtilsProvider } from '@material-ui/pickers';
-import { DescriptionFieldNames } from '../publication/DescriptionPanel';
-import Header from '../../layout/header/Header';
-import { emptyRecursiveUnit, FormikInstitutionUnitFieldNames } from '../../types/institution.types';
 import InstitutionSearch from '../publication/references_tab/components/InstitutionSearch';
-import InstitutionSelector from '../user/institution/InstitutionSelector';
 
 const shouldAllowMultipleFiles = false;
 
