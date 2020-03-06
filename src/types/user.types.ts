@@ -2,7 +2,7 @@ import { Authority, emptyAuthority } from './authority.types';
 
 export enum RoleName {
   ADMIN = 'Admin',
-  APP_ADMIN = 'Appadmin',
+  APP_ADMIN = 'App-admin',
   CURATOR = 'Curator',
   EDITOR = 'Editor',
   PUBLISHER = 'Publisher',
