@@ -24,7 +24,6 @@ export const userReducer = (state: User = emptyUser, action: UserActions | Orcid
         .map(affiliationString => affiliationString.trim())
         .filter(affiliation => affiliation) as Affiliation[];
       const roles = action.user['custom:applicationRoles'].split(',') as RoleName[];
-      console.log(roles);
       const user: Partial<User> = {
         name: action.user.name,
         email: action.user.email,
