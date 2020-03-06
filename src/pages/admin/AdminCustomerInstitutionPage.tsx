@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react';
 import Card from '../../components/Card';
 import { useTranslation } from 'react-i18next';
-import { Field, FieldArray, FieldArrayRenderProps, Form, Formik, getIn } from 'formik';
+import { Field, FieldArray, FieldArrayRenderProps, FieldProps, Form, Formik, getIn } from 'formik';
 import { Button } from '@material-ui/core';
 import { TextField } from 'formik-material-ui';
 import Heading from '../../components/Heading';
@@ -18,6 +18,9 @@ import ProjectRow from '../publication/description_tab/ProjectRow';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { DescriptionFieldNames } from '../publication/DescriptionPanel';
 import Header from '../../layout/header/Header';
+import { emptyRecursiveUnit, FormikInstitutionUnitFieldNames } from '../../types/institution.types';
+import InstitutionSearch from '../publication/references_tab/components/InstitutionSearch';
+import InstitutionSelector from '../user/institution/InstitutionSelector';
 
 const shouldAllowMultipleFiles = false;
 
@@ -52,7 +55,7 @@ const AdminCustomerInstitutionPage: FC = () => {
         }}>
         <Form>
           <Field name={CustomerInstitutionFieldNames.LOGO_FILE}>
-            {({ field: { value, name }, form }: any) => (
+            {({ field: { value, name }, form }: FieldProps) => (
               <StyledLogoUploadWrapper>
                 <Label>{t('institution_logo')}</Label>
                 <InstitutionLogoFileUploader
@@ -74,40 +77,22 @@ const AdminCustomerInstitutionPage: FC = () => {
               </StyledLogoUploadWrapper>
             )}
           </Field>
-          <Field
-            aria-label={CustomerInstitutionFieldNames.NAME}
-            name={CustomerInstitutionFieldNames.NAME}
-            label={t('organization_register_name')}
-            component={TextField}
-            fullWidth
-            variant="outlined"
-            inputProps={{ 'data-testid': 'customer-instituiton-name-input' }}
-          />
-          {/*<Card>*/}
-          {/*  <Header>{t('description.project_association')}</Header>*/}
-          {/*  <FieldArray name={CustomerInstitutionFieldNames.NAME}>*/}
-          {/*    {({ name, insert, remove }: FieldArrayRenderProps) => (*/}
-          {/*      <>*/}
-          {/*        <ProjectSearch*/}
-          {/*          setValueFunction={newValue => insert(0, newValue)}*/}
-          {/*          dataTestId="search_project"*/}
-          {/*          placeholder={t('description.search_for_project')}*/}
-          {/*        />*/}
-          {/*        {getIn(values, name).map(*/}
-          {/*          (project: Project, i: number) =>*/}
-          {/*            project && (*/}
-          {/*              <ProjectRow*/}
-          {/*                key={project.cristinProjectId}*/}
-          {/*                project={project}*/}
-          {/*                onClickRemove={() => remove(i)}*/}
-          {/*                dataTestId={`selected_project${i}`}*/}
-          {/*              />*/}
-          {/*            )*/}
-          {/*        )}*/}
-          {/*      </>*/}
-          {/*    )}*/}
-          {/*  </FieldArray>*/}
-          {/*</Card>*/}
+          <Field name={CustomerInstitutionFieldNames.NAME}>
+            {({ field: { value, name }, form }: FieldProps) => (
+              <div>
+                <InstitutionSearch
+                  dataTestId="autosearch-institution"
+                  label={t('organization_register_name')}
+                  clearSearchField={value.name === ''}
+                  setValueFunction={inputValue => {
+                    form.setFieldValue(CustomerInstitutionFieldNames.NAME, inputValue.name);
+                    form.setFieldValue(CustomerInstitutionFieldNames.ID, inputValue.id);
+                  }}
+                  placeholder={t('profile:organization.search_for_institution')}
+                />
+              </div>
+            )}
+          </Field>
 
           <Field
             aria-label={CustomerInstitutionFieldNames.DISPLAY_NAME}
