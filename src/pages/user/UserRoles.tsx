@@ -5,7 +5,6 @@ import IconLabelTextLine from '../../components/IconLabelTextLine';
 import { User } from '../../types/user.types';
 import Card from '../../components/Card';
 import Heading from '../../components/Heading';
-import { checkIfPublisher, checkIfCurator } from '../../utils/authorization';
 
 interface UserRolesProps {
   user: User;
@@ -13,13 +12,11 @@ interface UserRolesProps {
 
 const UserRoles: React.FC<UserRolesProps> = ({ user }) => {
   const { t } = useTranslation('profile');
-  const isPublisher = checkIfPublisher(user);
-  const isCurator = checkIfCurator(user);
 
   return (
     <Card>
       <Heading>{t('heading.roles')}</Heading>
-      {isPublisher && (
+      {user.isPublisher && (
         <IconLabelTextLine
           dataTestId="user-role"
           icon="create"
@@ -27,7 +24,7 @@ const UserRoles: React.FC<UserRolesProps> = ({ user }) => {
           text={t('roles.publisher_description')}
         />
       )}
-      {isCurator && (
+      {user.isCurator && (
         <IconLabelTextLine
           dataTestId="user-role"
           icon="all_inbox"

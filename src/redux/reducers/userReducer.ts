@@ -36,6 +36,10 @@ export const userReducer = (state: User = emptyUser, action: UserActions | Orcid
         affiliations,
         givenName: action.user.given_name,
         familyName: action.user.family_name,
+        isPublisher: roles.some(role => role === RoleName.PUBLISHER),
+        isAppAdmin: roles.some(role => role === RoleName.APP_ADMIN),
+        isInstitutionAdmin: roles.some(role => role === RoleName.ADMIN),
+        isCurator: roles.some(role => role === RoleName.CURATOR),
       };
       return {
         ...state,
