@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react';
 import Card from '../../components/Card';
 import { useTranslation } from 'react-i18next';
-import { Field, Form, Formik } from 'formik';
+import { Field, FieldProps, Form, Formik } from 'formik';
 import { Button } from '@material-ui/core';
 import { TextField } from 'formik-material-ui';
 import Heading from '../../components/Heading';
@@ -46,7 +46,7 @@ const AdminCustomerInstitutionPage: FC = () => {
         }}>
         <Form>
           <Field name={CustomerInstitutionFieldNames.LOGO_FILE}>
-            {({ field: { value, name }, form }: any) => (
+            {({ field: { value, name }, form }: FieldProps) => (
               <StyledLogoUploadWrapper>
                 <Label>{t('institution_logo')}</Label>
                 <InstitutionLogoFileUploader
