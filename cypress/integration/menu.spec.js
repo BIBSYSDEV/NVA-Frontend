@@ -2,7 +2,7 @@ import { mockUser } from '../../src/utils/testfiles/mock_feide_user';
 
 // Weird array format for affiliation is due to current format delivered by FEIDE
 const authorizedUser = { ...mockUser, 'custom:affiliation': '[member, employee, staff]', email: 'ost@unit.no' };
-const unauthorizedUser = { ...mockUser, 'custom:affiliation': '[]', email: 'ost@loff.org' };
+const unauthorizedUser = { ...mockUser, 'custom:applicationRoles': '' };
 
 describe('Menu', () => {
   beforeEach(() => {
