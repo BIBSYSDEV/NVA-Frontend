@@ -93,6 +93,35 @@ export const createAuthority = async (user: User) => {
   }
 };
 
+export const addQualifierIdForAuthority = async (
+  systemControlNumber: string,
+  qualifier: AuthorityQualifiers,
+  identifier: string
+) => {
+  const url = `${AuthorityApiPaths.AUTHORITY}/${systemControlNumber}/identifiers/${qualifier}/${identifier}`;
+
+  try {
+    const idToken = await getIdToken();
+    const headers = {
+      Authorization: `Bearer ${idToken}`,
+    };
+    const response = await Axios.post(url, { headers });
+    if (response.status === StatusCode.OK) {
+      return response.data;
+    } else if (response.status === StatusCode.NO_CONTENT) {
+      return;
+    } else {
+      return {
+        error: i18n.t('feedback:error.update_authority'),
+      };
+    }
+  } catch (error) {
+    return {
+      error: i18n.t('feedback:error.update_authority'),
+    };
+  }
+};
+
 export const updateQualifierIdForAuthority = async (
   systemControlNumber: string,
   qualifier: AuthorityQualifiers,
@@ -120,7 +149,7 @@ export const updateQualifierIdForAuthority = async (
   }
 };
 
-export const removeIdFromAuthority = async (
+export const removeQualifierIdFromAuthority = async (
   systemControlNumber: string,
   qualifier: AuthorityQualifiers,
   identifier: string

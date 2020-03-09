@@ -17,11 +17,7 @@ import {
   FormikInstitutionUnitFieldNames,
   FormikInstitutionUnit,
 } from '../../types/institution.types';
-import {
-  updateInstitutionForAuthority,
-  AuthorityQualifiers,
-  updateQualifierIdForAuthority,
-} from '../../api/authorityApi';
+import { AuthorityQualifiers, updateQualifierIdForAuthority, addQualifierIdForAuthority } from '../../api/authorityApi';
 import { setAuthorityData } from '../../redux/actions/userActions';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { getParentUnits } from '../../api/institutionApi';
@@ -76,8 +72,8 @@ const UserInstitution: FC = () => {
     setOpen(!open);
   };
 
-  const updateAuthorityAndDispatch = async (id: string, scn: string) => {
-    const updatedAuthority = await updateInstitutionForAuthority(id, scn);
+  const addOrgunitIdToAuthorityAndDispatch = async (id: string, scn: string) => {
+    const updatedAuthority = await addQualifierIdForAuthority(scn, AuthorityQualifiers.ORGUNIT_ID, id);
     if (updatedAuthority.error) {
       dispatch(setNotification(updatedAuthority.error, NotificationVariant.Error));
     } else if (updatedAuthority) {
@@ -88,10 +84,10 @@ const UserInstitution: FC = () => {
   const handleAddInstitution = async ({ name, id, subunits, unit }: FormikInstitutionUnit) => {
     try {
       if (subunits.length === 0) {
-        await updateAuthorityAndDispatch(id, user.authority.systemControlNumber);
+        await addOrgunitIdToAuthorityAndDispatch(id, user.authority.systemControlNumber);
       } else {
         const lastSubunit = subunits.slice(-1)[0];
-        await updateAuthorityAndDispatch(lastSubunit.id, user.authority.systemControlNumber);
+        await addOrgunitIdToAuthorityAndDispatch(lastSubunit.id, user.authority.systemControlNumber);
       }
     } catch (error) {
       dispatch(setNotification(t('feedback:error.update_authority'), NotificationVariant.Error));
