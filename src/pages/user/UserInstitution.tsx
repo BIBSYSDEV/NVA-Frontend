@@ -127,6 +127,7 @@ const UserInstitution: FC = () => {
       });
       resetForm(emptyFormikUnit);
     }
+    setOpen(false);
     setOpenEdit(false);
   };
 
@@ -174,7 +175,7 @@ const UserInstitution: FC = () => {
                           color="primary"
                           disabled={!values.unit}
                           data-testid="institution-add-button">
-                          {t('common:add')}
+                          {openEdit ? t('common:edit') : t('common:add')}
                         </StyledButton>
                         <StyledButton
                           onClick={() => {
