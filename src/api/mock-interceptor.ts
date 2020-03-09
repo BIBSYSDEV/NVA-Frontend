@@ -120,6 +120,9 @@ export const interceptRequestsOnMock = () => {
     .replyOnce(200, mockSingleAuthorityResponseWithFeide);
   mock.onPut(new RegExp(`${API_URL}${AuthorityApiPaths.AUTHORITY}/*`)).replyOnce(200, mockSingleAuthorityResponse);
   mock.onPut(new RegExp(`${API_URL}${AuthorityApiPaths.AUTHORITY}/*`)).reply(200, mockSingleAuthorityResponseWithOrcid);
+  mock
+    .onPost(new RegExp(`${API_URL}${AuthorityApiPaths.AUTHORITY}/901790000000/identifiers/orgunitid/*`))
+    .replyOnce(200, mockSingleAuthorityResponseWithOrcid);
 
   // Remove orgunitid from Authority
   mock
