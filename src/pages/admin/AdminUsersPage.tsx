@@ -8,13 +8,9 @@ import { RootStore } from '../../redux/reducers/rootReducer';
 import { UserAdmin, RoleName } from '../../types/user.types';
 import styled from 'styled-components';
 import Card from '../../components/Card';
-import { Button, FormControlLabel, Checkbox } from '@material-ui/core';
+import { FormControlLabel, Checkbox } from '@material-ui/core';
 import UserList from './UserList';
 import NormalText from './../../components/NormalText';
-
-const StyledButton = styled(Button)`
-  margin-top: 1rem;
-`;
 
 const StyledContainer = styled.div`
   margin-bottom: 2rem;
@@ -53,24 +49,30 @@ const AdminUsersPage: FC = () => {
       <Heading>{t('users.user_administration')}</Heading>
       <SubHeading>{t('profile:roles.institution_admins')}</SubHeading>
       <StyledContainer>
-        <UserList userList={filterUsersByRole(RoleName.ADMIN)} />
-        <StyledButton color="primary" variant="outlined">
-          {t('users.new_institution_admin')}
-        </StyledButton>
+        <UserList
+          cristinUnitId={user.institution}
+          userList={filterUsersByRole(RoleName.ADMIN)}
+          role={RoleName.ADMIN}
+          buttonText={t('users.new_institution_admin')}
+        />
       </StyledContainer>
       <SubHeading>{t('profile:roles.curators')}</SubHeading>
       <StyledContainer>
-        <UserList userList={filterUsersByRole(RoleName.CURATOR)} />
-        <StyledButton color="primary" variant="outlined">
-          {t('users.new_curator')}
-        </StyledButton>
+        <UserList
+          cristinUnitId={user.institution}
+          userList={filterUsersByRole(RoleName.CURATOR)}
+          role={RoleName.CURATOR}
+          buttonText={t('users.new_curator')}
+        />
       </StyledContainer>
       <SubHeading>{t('profile:roles.editors')}</SubHeading>
       <StyledContainer>
-        <UserList userList={filterUsersByRole(RoleName.EDITOR)} />
-        <StyledButton color="primary" variant="outlined">
-          {t('users.new_editor')}
-        </StyledButton>
+        <UserList
+          cristinUnitId={user.institution}
+          userList={filterUsersByRole(RoleName.EDITOR)}
+          role={RoleName.EDITOR}
+          buttonText={t('users.new_editor')}
+        />
       </StyledContainer>
       <StyledContainer>
         <SubHeading>{t('profile:roles.creator')}</SubHeading>
