@@ -4,7 +4,7 @@ import { Table, TableHead, TableRow, TableCell, TableBody, Button, TextField } f
 import Label from './../../components/Label';
 import { useTranslation } from 'react-i18next';
 import { UserAdmin, RoleName } from '../../types/user.types';
-import { addUser as addRoleUser } from '../../api/userAdminApi';
+import { addUserToInstitution } from '../../api/userAdminApi';
 
 const StyledTable = styled(Table)`
   width: 100%;
@@ -42,27 +42,24 @@ const StyledButton = styled(Button)`
 `;
 
 interface UserListProps {
+  cristinUnitId: string;
   userList: UserAdmin[];
   role: RoleName;
   buttonText: string;
 }
 
-const UserList: FC<UserListProps> = ({ userList, role, buttonText }) => {
+const UserList: FC<UserListProps> = ({ userList, role, buttonText, cristinUnitId }) => {
   const { t } = useTranslation('admin');
   const [addUser, setAddUser] = useState(false);
 
-  const handleAddUser = () => {
-    setAddUser(true);
-  };
-
-  const handleCancelAdd = () => {
-    setAddUser(false);
+  const toggleAddUser = () => {
+    setAddUser(!addUser);
   };
 
   const handleSubmitUser = () => {
     // add user with role, how?
     const authenticationId = '';
-    addRoleUser(authenticationId, role);
+    addUserToInstitution(cristinUnitId, authenticationId, role);
   };
 
   const handleChangeAuthenticationId = () => {};
@@ -121,14 +118,11 @@ const UserList: FC<UserListProps> = ({ userList, role, buttonText }) => {
                 <TableCell>
                   <TextField label={t('common:name')} variant="outlined" size="small" onChange={handleChangeName} />
                 </TableCell>
-                <TableCell />
-                <TableCell />
-                <TableCell />
-                <TableCell align="right">
+                <TableCell colSpan={4} align="right">
                   <StyledButton color="primary" variant="contained" onClick={handleSubmitUser}>
                     {t('common:add')}
                   </StyledButton>
-                  <StyledButton color="secondary" variant="contained" onClick={handleCancelAdd}>
+                  <StyledButton color="secondary" variant="contained" onClick={toggleAddUser}>
                     {t('common:cancel')}
                   </StyledButton>
                 </TableCell>
@@ -137,7 +131,7 @@ const UserList: FC<UserListProps> = ({ userList, role, buttonText }) => {
           </TableBody>
         </StyledTable>
       )}
-      <StyledButton color="primary" variant="outlined" onClick={handleAddUser} disabled={addUser}>
+      <StyledButton color="primary" variant="outlined" onClick={toggleAddUser} disabled={addUser}>
         {buttonText}
       </StyledButton>
     </>

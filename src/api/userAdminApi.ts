@@ -27,7 +27,7 @@ export const getInstitutionUsers = (cristinUnitId: string) => {
   }));
 };
 
-export const addUser = (authenticationId: string, role: RoleName) => {
+export const addUserToInstitution = (cristinUnitId: string, authenticationId: string, role: RoleName) => {
   // TODO: add new user to institution
   // BACKEND DOES NOT EXIST YET
   // const idToken = await getIdToken();

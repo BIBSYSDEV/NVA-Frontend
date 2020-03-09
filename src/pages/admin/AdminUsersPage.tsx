@@ -50,6 +50,7 @@ const AdminUsersPage: FC = () => {
       <SubHeading>{t('profile:roles.institution_admins')}</SubHeading>
       <StyledContainer>
         <UserList
+          cristinUnitId={user.institution}
           userList={filterUsersByRole(RoleName.ADMIN)}
           role={RoleName.ADMIN}
           buttonText={t('users.new_institution_admin')}
@@ -58,6 +59,7 @@ const AdminUsersPage: FC = () => {
       <SubHeading>{t('profile:roles.curators')}</SubHeading>
       <StyledContainer>
         <UserList
+          cristinUnitId={user.institution}
           userList={filterUsersByRole(RoleName.CURATOR)}
           role={RoleName.CURATOR}
           buttonText={t('users.new_curator')}
@@ -66,6 +68,7 @@ const AdminUsersPage: FC = () => {
       <SubHeading>{t('profile:roles.editors')}</SubHeading>
       <StyledContainer>
         <UserList
+          cristinUnitId={user.institution}
           userList={filterUsersByRole(RoleName.EDITOR)}
           role={RoleName.EDITOR}
           buttonText={t('users.new_editor')}
