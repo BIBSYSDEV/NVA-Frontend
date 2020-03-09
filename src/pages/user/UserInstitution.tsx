@@ -99,8 +99,6 @@ const UserInstitution: FC = () => {
     // TODO: remove this when we get data from backend
     const filteredSubunits = subunits.filter((subunit: InstitutionUnitBase) => subunit.name !== '');
     setUnits([...units, { id, name, subunits: filteredSubunits, unit }]);
-
-    setOpen(false);
   };
 
   const onSubmit = async (values: FormikInstitutionUnit, { resetForm }: any) => {
@@ -119,7 +117,7 @@ const UserInstitution: FC = () => {
         dispatch(setNotification(t('feedback:success.update_identifier')));
       }
     } else {
-      handleAddInstitution({
+      await handleAddInstitution({
         name: values.name,
         id: values.id,
         subunits: values.subunits,

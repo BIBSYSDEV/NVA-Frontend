@@ -7,7 +7,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootStore } from '../../../redux/reducers/rootReducer';
-import { AuthorityQualifiers, removeIdFromAuthority } from '../../../api/authorityApi';
+import { AuthorityQualifiers, removeQualifierIdFromAuthority } from '../../../api/authorityApi';
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../types/notification.types';
 import { setAuthorityData } from '../../../redux/actions/userActions';
@@ -58,7 +58,7 @@ const InstitutionCard: FC<InstitutionCardProps> = ({ onEdit, unit }) => {
   const { setFieldValue }: FormikProps<FormikInstitutionUnit> = useFormikContext();
 
   const handleRemoveInstitution = async () => {
-    const updatedAuthority = await removeIdFromAuthority(
+    const updatedAuthority = await removeQualifierIdFromAuthority(
       user.authority.systemControlNumber,
       AuthorityQualifiers.ORGUNIT_ID,
       organizationUnitId
