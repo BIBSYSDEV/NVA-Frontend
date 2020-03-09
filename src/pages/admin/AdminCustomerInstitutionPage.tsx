@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import Card from '../../components/Card';
 import { useTranslation } from 'react-i18next';
 import { Field, FieldProps, Form, Formik } from 'formik';
@@ -30,6 +30,10 @@ const StyledButtonContainer = styled.div`
 const AdminCustomerInstitutionPage: FC = () => {
   const { t } = useTranslation('admin');
   const [uppy] = useState(createUppy(shouldAllowMultipleFiles));
+
+  useEffect(() => {
+    return () => uppy && uppy.close();
+  }, [uppy]);
 
   return (
     <Card>
@@ -85,15 +89,11 @@ const AdminCustomerInstitutionPage: FC = () => {
               </div>
             )}
           </Field>
-
-          <Field
-            aria-label={CustomerInstitutionFieldNames.DISPLAY_NAME}
-            name={CustomerInstitutionFieldNames.DISPLAY_NAME}
-            label={t('display_name')}
-            component={TextField}
-            fullWidth
-            variant="outlined"
-            inputProps={{ 'data-testid': 'customer-instituiton-display-name-input' }}
+          aria-label={CustomerInstitutionFieldNames.DISPLAY_NAME}
+          name={CustomerInstitutionFieldNames.DISPLAY_NAME}
+          label={t('display_name')}
+          component={TextField}
+          fullWidth variant="outlined" inputProps={{ 'data-testid': 'customer-instituiton-display-name-input' }}
           />
           <Field
             aria-label={CustomerInstitutionFieldNames.SHORT_NAME}

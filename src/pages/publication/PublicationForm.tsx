@@ -16,6 +16,7 @@ import ReferencesPanel from './ReferencesPanel';
 import SubmissionPanel from './SubmissionPanel';
 import { emptyFile, File, Uppy } from '../../types/file.types';
 import { getPublication } from '../../api/publicationApi';
+
 const shouldAllowMultipleFiles = false;
 
 const StyledPublication = styled.div`

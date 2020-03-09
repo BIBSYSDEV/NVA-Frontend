@@ -14,6 +14,8 @@ import PublicationChannelInfoCard from './files_and_license_tab/PublicationChann
 import NormalText from '../../components/NormalText';
 import Label from '../../components/Label';
 
+const shouldAllowMultipleFiles = true;
+
 const StyledUploadedFiles = styled(Card)`
   display: flex;
   flex-direction: column;
