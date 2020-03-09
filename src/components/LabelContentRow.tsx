@@ -15,7 +15,7 @@ const StyledLabel = styled(NormalText)`
   font-weight: normal;
 `;
 
-const StyledText = styled(NormalText)`
+const StyledText = styled.div`
   display: inline-block;
   font-weight: bold;
   flex: 1;

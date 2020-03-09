@@ -1,5 +1,5 @@
 import LabelContentRow from '../../../components/LabelContentRow';
-import React, { Fragment } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormikProps, useFormikContext } from 'formik';
 import { Publication } from '../../../types/publication.types';
@@ -12,13 +12,10 @@ const SubmissionContributors: React.FC = () => {
   return (
     <LabelContentRow label={t('heading.contributors')}>
       {values.contributors.map(contributor => (
-        <Fragment key={contributor.name}>
-          <SubmissionContentText>
-            {contributor.name}
-            {contributor.institutions.map(institution => institution?.name && `(${institution.name})`)}
-          </SubmissionContentText>
-          <br />
-        </Fragment>
+        <SubmissionContentText key={contributor.name}>
+          {contributor.name}
+          {contributor.institutions.map(institution => institution?.name && `(${institution.name})`)}
+        </SubmissionContentText>
       ))}
     </LabelContentRow>
   );
