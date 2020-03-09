@@ -127,7 +127,7 @@ const PublicationForm: FC<PublicationFormProps> = ({ uppy = createUppy(), id }) 
     const getPublicationById = async (id: string) => {
       const publication = await getPublication(id);
       if (!publication.error) {
-        setInitialValues(publication);
+        // setInitialValues(publication);
       }
     };
 
