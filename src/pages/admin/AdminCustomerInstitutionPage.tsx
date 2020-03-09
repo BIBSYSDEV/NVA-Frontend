@@ -12,6 +12,7 @@ import { createUppy } from '../../utils/uppy-config';
 import Label from '../../components/Label';
 import InstitutionLogoFileUploader from './InstitutionLogoFileUploader';
 import FileCard from '../publication/files_and_license_tab/FileCard';
+import InstitutionSearch from '../publication/references_tab/components/InstitutionSearch';
 
 const shouldAllowMultipleFiles = false;
 
@@ -72,15 +73,20 @@ const AdminCustomerInstitutionPage: FC = () => {
               </StyledLogoUploadWrapper>
             )}
           </Field>
-          <Field
-            aria-label={CustomerInstitutionFieldNames.NAME}
-            name={CustomerInstitutionFieldNames.NAME}
-            label={t('organization_register_name')}
-            component={TextField}
-            fullWidth
-            variant="outlined"
-            inputProps={{ 'data-testid': 'customer-instituiton-name-input' }}
-          />
+          <Field name={CustomerInstitutionFieldNames.NAME}>
+            {({ field: { value, name }, form }: FieldProps) => (
+              <InstitutionSearch
+                dataTestId="autosearch-institution"
+                label={t('organization_register_name')}
+                clearSearchField={value.name === ''}
+                setValueFunction={inputValue => {
+                  form.setFieldValue(CustomerInstitutionFieldNames.NAME, inputValue.name);
+                  form.setFieldValue(CustomerInstitutionFieldNames.ID, inputValue.id);
+                }}
+                placeholder={t('profile:organization.search_for_institution')}
+              />
+            )}
+          </Field>
           <Field
             aria-label={CustomerInstitutionFieldNames.DISPLAY_NAME}
             name={CustomerInstitutionFieldNames.DISPLAY_NAME}

@@ -28,6 +28,7 @@ export const emptyCustomerInstitution: CustomerInstitution = {
 };
 
 export enum CustomerInstitutionFieldNames {
+  ID = 'id',
   NAME = 'name',
   DISPLAY_NAME = 'displayName',
   SHORT_NAME = 'shortName',
