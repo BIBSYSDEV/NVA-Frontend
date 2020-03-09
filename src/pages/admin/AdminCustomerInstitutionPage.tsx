@@ -75,18 +75,16 @@ const AdminCustomerInstitutionPage: FC = () => {
           </Field>
           <Field name={CustomerInstitutionFieldNames.NAME}>
             {({ field: { value, name }, form }: FieldProps) => (
-              <div>
-                <InstitutionSearch
-                  dataTestId="autosearch-institution"
-                  label={t('organization_register_name')}
-                  clearSearchField={value.name === ''}
-                  setValueFunction={inputValue => {
-                    form.setFieldValue(CustomerInstitutionFieldNames.NAME, inputValue.name);
-                    form.setFieldValue(CustomerInstitutionFieldNames.ID, inputValue.id);
-                  }}
-                  placeholder={t('profile:organization.search_for_institution')}
-                />
-              </div>
+              <InstitutionSearch
+                dataTestId="autosearch-institution"
+                label={t('organization_register_name')}
+                clearSearchField={value.name === ''}
+                setValueFunction={inputValue => {
+                  form.setFieldValue(CustomerInstitutionFieldNames.NAME, inputValue.name);
+                  form.setFieldValue(CustomerInstitutionFieldNames.ID, inputValue.id);
+                }}
+                placeholder={t('profile:organization.search_for_institution')}
+              />
             )}
           </Field>
           <Field
