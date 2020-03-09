@@ -108,20 +108,15 @@ const PublicationForm: FC<PublicationFormProps> = ({ uppy = createUppy(), id }) 
   });
 
   useEffect(() => {
-    // TODO: Fetch publication by ID in URL
-    const searchParams = new URLSearchParams(window.location.search);
-    const title = searchParams.get('title') || '';
-
     // Get files uploaded from new publication view
     const files = Object.values(uppy.getState().files).map(file => ({ ...emptyFile, ...(file as File) }));
 
-    setInitialValues({
-      ...emptyPublication,
-      title: {
-        nb: title,
-      },
-      files,
-    });
+    if (files?.length) {
+      setInitialValues({
+        ...emptyPublication,
+        files,
+      });
+    }
   }, [uppy]);
 
   useEffect(() => {
@@ -131,7 +126,9 @@ const PublicationForm: FC<PublicationFormProps> = ({ uppy = createUppy(), id }) 
   useEffect(() => {
     const getPublicationById = async (id: string) => {
       const publication = await getPublication(id);
-      setInitialValues(publication);
+      if (!publication.error) {
+        setInitialValues(publication);
+      }
     };
 
     if (id) {

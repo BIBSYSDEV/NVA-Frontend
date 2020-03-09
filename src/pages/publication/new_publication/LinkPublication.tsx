@@ -46,7 +46,7 @@ const LinkPublicationPanel: FC<LinkPublicationPanelProps> = ({ expanded, onChang
     if (!doi) {
       return;
     }
-    history.push({ search: `?id=${doi.identifier}` });
+    history.push(`/publication/${doi.identifier}`);
     openForm();
   };
 
