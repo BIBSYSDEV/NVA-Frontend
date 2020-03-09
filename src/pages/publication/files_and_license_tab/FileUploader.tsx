@@ -5,9 +5,10 @@ import UppyDashboard from '../../../components/UppyDashboard';
 interface FileUploaderProps {
   addFile: (file: File) => void;
   uppy: Uppy;
+  shouldAllowMultipleFiles: boolean;
 }
 
-const FileUploader: React.FC<FileUploaderProps> = ({ addFile, uppy }) => {
+const FileUploader: React.FC<FileUploaderProps> = ({ addFile, uppy, shouldAllowMultipleFiles }) => {
   useEffect(() => {
     if (uppy && !uppy.hasUploadSuccessEventListener) {
       uppy.on('upload-success', (file: File) => {
@@ -21,7 +22,7 @@ const FileUploader: React.FC<FileUploaderProps> = ({ addFile, uppy }) => {
     }
   }, [addFile, uppy]);
 
-  return uppy ? <UppyDashboard uppy={uppy} /> : null;
+  return uppy ? <UppyDashboard uppy={uppy} shouldAllowMultipleFiles={shouldAllowMultipleFiles} /> : null;
 };
 
 export default FileUploader;

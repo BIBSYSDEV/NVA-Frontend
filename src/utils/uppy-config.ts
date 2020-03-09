@@ -23,9 +23,10 @@ interface UppyCompleteArgs extends UppyArgs {
   parts: AwsS3Part[];
 }
 
-export const createUppy = (): UppyType =>
+export const createUppy = (shouldAllowMultipleFiles: boolean): UppyType =>
   Uppy<Uppy.StrictTypes>({
     autoProceed: true,
+    restrictions: { maxNumberOfFiles: shouldAllowMultipleFiles ? null : 1 },
   }).use(AwsS3Multipart, {
     abortMultipartUpload: async (_: UppyFile, { uploadId, key }: UppyArgs) => await abortMultipartUpload(uploadId, key),
     completeMultipartUpload: async (_: UppyFile, { uploadId, key, parts }: UppyCompleteArgs) =>

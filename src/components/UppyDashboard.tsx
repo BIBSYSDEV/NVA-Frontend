@@ -13,12 +13,13 @@ const StyledDashboard = styled.div`
 
 interface FileUploaderProps {
   uppy: Uppy;
+  shouldAllowMultipleFiles: boolean;
 }
 
 const uploaderMaxWidthPx = 10000;
 const uploaderMaxHeightPx = 200;
 
-const UppyDashboard: React.FC<FileUploaderProps> = ({ uppy }) => {
+const UppyDashboard: React.FC<FileUploaderProps> = ({ uppy, shouldAllowMultipleFiles }) => {
   const { t } = useTranslation('publication');
 
   return uppy ? (
@@ -33,9 +34,13 @@ const UppyDashboard: React.FC<FileUploaderProps> = ({ uppy }) => {
         height={uploaderMaxHeightPx}
         locale={{
           strings: {
-            dropPaste: `${t('files_and_license.drag_files')} %{browse}`,
+            dropPaste: shouldAllowMultipleFiles
+              ? `${t('files_and_license.drag_files')} %{browse}`
+              : `${t('files_and_license.drag_file')} %{browse}`,
             browse: t('files_and_license.browse'),
-            dropHint: t('files_and_license.drop_here'),
+            dropHint: shouldAllowMultipleFiles
+              ? t('files_and_license.drop_here')
+              : t('files_and_license.drop_single_file_here'),
           },
         }}
       />
