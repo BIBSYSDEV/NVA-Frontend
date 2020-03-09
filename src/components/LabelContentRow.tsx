@@ -15,7 +15,7 @@ const StyledLabel = styled(NormalText)`
   font-weight: normal;
 `;
 
-const StyledText = styled.div`
+const StyledTextContainer = styled.div`
   display: inline-block;
   font-weight: bold;
   flex: 1;
@@ -32,7 +32,7 @@ const LabelContentRow: React.FC<LabelContentRowProps> = ({ label, children, data
   return (
     <StyledRow data-testid={dataTestId}>
       <StyledLabel>{label}</StyledLabel>
-      <StyledText>{children}</StyledText>
+      <StyledTextContainer>{children}</StyledTextContainer>
     </StyledRow>
   );
 };
