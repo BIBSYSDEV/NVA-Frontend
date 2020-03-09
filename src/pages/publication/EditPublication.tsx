@@ -51,12 +51,13 @@ const StyledButton = styled(Button)`
   margin: 1rem;
 `;
 
+const shouldAllowMultipleFiles = true;
+
 const EditPublication: FC = () => {
   const { id } = useParams();
   const [expanded, setExpanded] = useState<string | false>(false);
   const [showForm, setShowForm] = useState(!!id);
   const { t } = useTranslation();
-  const shouldAllowMultipleFiles = true;
   const [uppy] = useState(createUppy(shouldAllowMultipleFiles));
 
   useEffect(() => {
