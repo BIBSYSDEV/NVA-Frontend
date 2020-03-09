@@ -10,6 +10,8 @@ import FileCard from '../files_and_license_tab/FileCard';
 import styled from 'styled-components';
 import { Button } from '@material-ui/core';
 
+const shouldAllowMultipleFiles = true;
+
 interface LoadPublicationProps {
   expanded: boolean;
   onChange: (event: React.ChangeEvent<any>, isExpanded: boolean) => void;
@@ -20,8 +22,6 @@ interface LoadPublicationProps {
 const StyledFileCard = styled.div`
   margin-top: 1rem;
 `;
-
-const shouldAllowMultipleFiles = true;
 
 const LoadPublication: React.FC<LoadPublicationProps> = ({ expanded, onChange, uppy, openForm }) => {
   const { t } = useTranslation('publication');

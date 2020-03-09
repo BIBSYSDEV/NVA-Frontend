@@ -13,6 +13,8 @@ import Card from '../../components/Card';
 import { createUppy } from '../../utils/uppy-config';
 import NormalText from '../../components/NormalText';
 
+const shouldAllowMultipleFiles = true;
+
 const StyledEditPublication = styled.div`
   width: 100%;
   padding-top: 2rem;
@@ -50,8 +52,6 @@ const StyledCard = styled(Card)`
 const StyledButton = styled(Button)`
   margin: 1rem;
 `;
-
-const shouldAllowMultipleFiles = true;
 
 const EditPublication: FC = () => {
   const { id } = useParams();
