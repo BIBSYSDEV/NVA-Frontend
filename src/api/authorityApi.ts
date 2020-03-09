@@ -93,6 +93,33 @@ export const createAuthority = async (user: User) => {
   }
 };
 
+export const updateQualifierIdForAuthority = async (
+  systemControlNumber: string,
+  qualifier: AuthorityQualifiers,
+  identifier: string,
+  updatedIdentifier: string
+) => {
+  const url = `${AuthorityApiPaths.AUTHORITY}/${systemControlNumber}/identifiers/${qualifier}/${identifier}/update/${updatedIdentifier}`;
+
+  try {
+    const idToken = await getIdToken();
+    const headers = {
+      Authorization: `Bearer ${idToken}`,
+    };
+
+    const response = await Axios.put(url, { headers });
+    if (response.status === StatusCode.OK) {
+      return response.data;
+    } else {
+      return null;
+    }
+  } catch {
+    return {
+      error: i18n.t('feedback:error.update_identifier'),
+    };
+  }
+};
+
 export const removeIdFromAuthority = async (
   systemControlNumber: string,
   qualifier: AuthorityQualifiers,

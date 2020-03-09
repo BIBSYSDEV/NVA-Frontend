@@ -17,7 +17,11 @@ import {
   FormikInstitutionUnitFieldNames,
   FormikInstitutionUnit,
 } from '../../types/institution.types';
-import { updateInstitutionForAuthority } from '../../api/authorityApi';
+import {
+  updateInstitutionForAuthority,
+  AuthorityQualifiers,
+  updateQualifierIdForAuthority,
+} from '../../api/authorityApi';
 import { setAuthorityData } from '../../redux/actions/userActions';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { getParentUnits } from '../../api/institutionApi';
@@ -100,8 +104,29 @@ const UserInstitution: FC = () => {
   };
 
   const onSubmit = async (values: FormikInstitutionUnit, { resetForm }: any) => {
-    handleAddInstitution({ name: values.name, id: values.id, subunits: values.subunits, unit: values.unit });
-    resetForm(emptyFormikUnit);
+    if (openEdit) {
+      const organizationUnitId = values.subunits.length > 0 ? values.subunits.slice(-1)[0].id : values.id;
+      const updatedAuthority = await updateQualifierIdForAuthority(
+        user.authority.systemControlNumber,
+        AuthorityQualifiers.ORGUNIT_ID,
+        values.editId!,
+        organizationUnitId
+      );
+      if (updatedAuthority.error) {
+        dispatch(setNotification(updatedAuthority.error, NotificationVariant.Error));
+      } else if (updatedAuthority) {
+        dispatch(setAuthorityData(updatedAuthority));
+        dispatch(setNotification(t('feedback:success.update_identifier')));
+      }
+    } else {
+      handleAddInstitution({
+        name: values.name,
+        id: values.id,
+        subunits: values.subunits,
+        unit: values.unit,
+      });
+      resetForm(emptyFormikUnit);
+    }
     setOpenEdit(false);
   };
 
@@ -155,6 +180,7 @@ const UserInstitution: FC = () => {
                           onClick={() => {
                             toggleOpen();
                             resetForm({});
+                            setOpenEdit(false);
                           }}
                           variant="contained"
                           color="secondary">

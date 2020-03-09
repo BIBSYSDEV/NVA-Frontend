@@ -77,6 +77,7 @@ const InstitutionCard: FC<InstitutionCardProps> = ({ onEdit, unit }) => {
     setFieldValue(FormikInstitutionUnitFieldNames.NAME, unit.name);
     setFieldValue(FormikInstitutionUnitFieldNames.SUBUNITS, unit.subunits);
     setFieldValue(FormikInstitutionUnitFieldNames.UNIT, unit.unit);
+    setFieldValue(FormikInstitutionUnitFieldNames.EDIT_ID, organizationUnitId);
   };
 
   return (
