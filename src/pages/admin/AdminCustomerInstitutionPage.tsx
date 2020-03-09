@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import Card from '../../components/Card';
 import { useTranslation } from 'react-i18next';
 import { Field, FieldProps, Form, Formik } from 'formik';
@@ -29,6 +29,10 @@ const StyledButtonContainer = styled.div`
 const AdminCustomerInstitutionPage: FC = () => {
   const { t } = useTranslation('admin');
   const [uppy] = useState(createUppy(shouldAllowMultipleFiles));
+
+  useEffect(() => {
+    return () => uppy && uppy.close();
+  }, [uppy]);
 
   return (
     <Card>
