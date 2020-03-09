@@ -89,11 +89,14 @@ const AdminCustomerInstitutionPage: FC = () => {
               </div>
             )}
           </Field>
-          aria-label={CustomerInstitutionFieldNames.DISPLAY_NAME}
-          name={CustomerInstitutionFieldNames.DISPLAY_NAME}
-          label={t('display_name')}
-          component={TextField}
-          fullWidth variant="outlined" inputProps={{ 'data-testid': 'customer-instituiton-display-name-input' }}
+          <Field
+            aria-label={CustomerInstitutionFieldNames.DISPLAY_NAME}
+            name={CustomerInstitutionFieldNames.DISPLAY_NAME}
+            label={t('display_name')}
+            component={TextField}
+            fullWidth
+            variant="outlined"
+            inputProps={{ 'data-testid': 'customer-instituiton-display-name-input' }}
           />
           <Field
             aria-label={CustomerInstitutionFieldNames.SHORT_NAME}

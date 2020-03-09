@@ -42,7 +42,6 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab
   const { t } = useTranslation('publication');
   const { values }: FormikProps<Publication> = useFormikContext();
   const [isLicenseModalOpen, setIsLicenseModalOpen] = useState(false);
-  const shouldAllowMultipleFiles = true;
 
   const uploadedFiles = values[FilesFieldNames.FILES];
   const referenceType = values.reference.type;

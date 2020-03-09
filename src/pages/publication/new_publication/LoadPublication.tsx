@@ -26,7 +26,6 @@ const StyledFileCard = styled.div`
 const LoadPublication: React.FC<LoadPublicationProps> = ({ expanded, onChange, uppy, openForm }) => {
   const { t } = useTranslation('publication');
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
-  const shouldAllowMultipleFiles = true;
 
   useEffect(() => {
     if (uppy && !uppy.hasUploadSuccessEventListener) {
