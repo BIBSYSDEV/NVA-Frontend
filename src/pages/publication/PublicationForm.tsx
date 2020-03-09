@@ -108,6 +108,7 @@ const PublicationForm: FC<PublicationFormProps> = ({ uppy = createUppy(), id }) 
   });
 
   useEffect(() => {
+    // TODO: Fetch publication by ID in URL
     const searchParams = new URLSearchParams(window.location.search);
     const title = searchParams.get('title') || '';
 
