@@ -11,7 +11,6 @@ import { NotificationVariant } from '../types/notification.types';
 
 export enum PublicationsApiPaths {
   SEARCH = '/publications',
-  CREATE_WITH_DOI = '/publications/doi',
   INSERT_RESOURCE = '/publications/insert-resource',
   UPDATE_RESOURCE = '/publications/update-resource',
   FETCH_RESOURCE = '/publications/fetch-resource',
@@ -20,25 +19,6 @@ export enum PublicationsApiPaths {
   DOI_REQUESTS = '/publications/doi-requests',
   FOR_APPROVAL = '/publications/approval',
 }
-
-export const createNewPublicationFromDoi = async (doiUrl: string, dispatch: Dispatch) => {
-  const payload = { doiUrl };
-  try {
-    const idToken = await getIdToken();
-    const response = await Axios.post(PublicationsApiPaths.CREATE_WITH_DOI, payload, {
-      headers: {
-        Authorization: `Bearer ${idToken}`,
-      },
-    });
-    if (response.status === StatusCode.OK) {
-      dispatch(setNotification(i18n.t('feedback:success.create_publication')));
-    } else {
-      dispatch(setNotification(i18n.t('feedback:error.create_publication'), NotificationVariant.Error));
-    }
-  } catch {
-    dispatch(setNotification(i18n.t('feedback:error.create_publication'), NotificationVariant.Error));
-  }
-};
 
 export const createNewPublication = async (publication: Publication, dispatch: Dispatch) => {
   try {

@@ -93,9 +93,6 @@ export const interceptRequestsOnMock = () => {
   //PUBLICATION
   mock.onGet(new RegExp(`${PublicationsApiPaths.FETCH_RESOURCE}/*`)).reply(200, mockPublication);
 
-  // Create publication from doi
-  mock.onPost(new RegExp(`${PublicationsApiPaths.CREATE_WITH_DOI}`)).reply(200, mockPublications[0]);
-
   // lookup DOI
   mock.onPost(new RegExp(`${PublicationsApiPaths.DOI_LOOKUP}/*`)).reply(200, mockDoiLookupResponse);
 

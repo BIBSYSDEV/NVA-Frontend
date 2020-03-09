@@ -71,6 +71,7 @@ export type PublishedPublicationPreview = Pick<
 >;
 
 export interface Doi {
+  identifier: string; // NVA identifier
   title: string;
 }
 
