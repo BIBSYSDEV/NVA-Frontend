@@ -19,7 +19,7 @@ export enum PublicationsApiPaths {
   FOR_APPROVAL = '/publications/approval',
 }
 
-export const updatePublication = async (publication: Publication, dispatch: Dispatch) => {
+export const updatePublication = async (publication: Publication) => {
   const { identifier } = publication;
   if (!identifier) {
     return { error: i18n.t('feedback:error.update_publication') };
