@@ -11,7 +11,6 @@ import { NotificationVariant } from '../types/notification.types';
 
 export enum PublicationsApiPaths {
   SEARCH = '/publications',
-  INSERT_RESOURCE = '/publications/insert-resource',
   UPDATE_RESOURCE = '/publications/update-resource',
   FETCH_RESOURCE = '/publication',
   FETCH_MY_RESOURCES = '/publications/fetch-my-resources',
@@ -20,29 +19,10 @@ export enum PublicationsApiPaths {
   FOR_APPROVAL = '/publications/approval',
 }
 
-export const createNewPublication = async (publication: Publication, dispatch: Dispatch) => {
-  try {
-    const idToken = await getIdToken();
-    const response = await Axios.post(PublicationsApiPaths.INSERT_RESOURCE, publication, {
-      headers: {
-        Authorization: `Bearer ${idToken}`,
-      },
-    });
-    if (response.status === StatusCode.OK) {
-      dispatch(setNotification(i18n.t('feedback:success.create_publication')));
-    } else {
-      dispatch(setNotification(i18n.t('feedback:error.create_publication'), NotificationVariant.Error));
-    }
-  } catch {
-    dispatch(setNotification(i18n.t('feedback:error.create_publication'), NotificationVariant.Error));
-  }
-};
-
 export const updatePublication = async (publication: Publication, dispatch: Dispatch) => {
   const { identifier } = publication;
   if (!identifier) {
-    dispatch(setNotification(i18n.t('feedback:error.update_publication'), NotificationVariant.Error));
-    return;
+    return { error: i18n.t('feedback:error.update_publication') };
   }
   const idToken = await getIdToken();
   try {
@@ -52,12 +32,12 @@ export const updatePublication = async (publication: Publication, dispatch: Disp
       },
     });
     if (response.status === StatusCode.OK) {
-      dispatch(setNotification(i18n.t('feedback:success.update_publication')));
+      return i18n.t('feedback:success.update_publication');
     } else {
-      dispatch(setNotification(i18n.t('feedback:error.update_publication'), NotificationVariant.Error));
+      return { error: i18n.t('feedback:error.update_publication') };
     }
   } catch {
-    dispatch(setNotification(i18n.t('feedback:error.update_publication'), NotificationVariant.Error));
+    return { error: i18n.t('feedback:error.update_publication') };
   }
 };
 
