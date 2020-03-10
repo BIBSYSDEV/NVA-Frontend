@@ -110,7 +110,7 @@ const EditPublication: FC = () => {
           </StyledButton>
         </>
       ) : (
-        <PublicationForm uppy={uppy} id={id} />
+        <PublicationForm uppy={uppy} id={id} closeForm={() => setShowForm(false)} />
       )}
     </>
   );
