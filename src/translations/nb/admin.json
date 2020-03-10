@@ -9,6 +9,18 @@
   },
   "feide_organization_id": "Organisasjonens id i Feide",
   "institution_dns": "Institusjonens DNS",
+  "institution_logo": "Institutionslogo",
   "organization_register_name": "Navn i organisasjonsregister",
-  "short_name": "Forkortet visningsnavn på instutusjonen"
+  "short_name": "Forkortet visningsnavn på instutusjonen",
+  "users": {
+    "auto_assign_creators": "Ansatte får automatisk rolle som registrator ved pålogging hvis de er registrert med dette i 'eduPersonAffiliation': Employee, Staff, Member",
+    "authentication_id": "Autentiserings-id",
+    "created_date": "Opprettet",
+    "creator_info": "Hvem skal få tilgang til å registrere?",
+    "last_login_date": "Sist innlogget",
+    "new_curator": "Ny kurator",
+    "new_editor": "Ny redaktør",
+    "new_institution_admin": "Ny institusjonsadmin",
+    "user_administration": "Brukeradministrasjon"
+  }
 }

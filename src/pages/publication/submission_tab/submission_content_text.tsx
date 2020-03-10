@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import NormalText from '../../../components/NormalText';
 
-const StyledSubmissionContentText = styled.div`
+const StyledSubmissionContentText = styled(NormalText)`
   margin-bottom: 0.3rem;
   font-weight: bold;
 `;

@@ -13,6 +13,8 @@ import Card from '../../components/Card';
 import { createUppy } from '../../utils/uppy-config';
 import NormalText from '../../components/NormalText';
 
+const shouldAllowMultipleFiles = true;
+
 const StyledEditPublication = styled.div`
   width: 100%;
   padding-top: 2rem;
@@ -56,7 +58,7 @@ const EditPublication: FC = () => {
   const [expanded, setExpanded] = useState<string | false>(false);
   const [showForm, setShowForm] = useState(!!id);
   const { t } = useTranslation();
-  const [uppy] = useState(createUppy());
+  const [uppy] = useState(createUppy(shouldAllowMultipleFiles));
 
   useEffect(() => {
     return () => uppy && uppy.close();
