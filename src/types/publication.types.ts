@@ -38,11 +38,15 @@ interface NpiDiscipline {
   mainDiscipline: string;
 }
 
+export const emptyNpiDiscipline: NpiDiscipline = {
+  title: '',
+  mainDiscipline: '',
+};
+
 export interface Publication {
   modified: string; // date?
   createdDate: string; // date?
   createdBy: string;
-  npiDiscipline: NpiDiscipline;
   doiLink: string;
   publicationDate: {
     year: string;
@@ -68,6 +72,7 @@ interface PublicationEntityDescription {
   abstract: string;
   description: string;
   tags: string[];
+  npiDiscipline: NpiDiscipline;
 }
 
 const emptyPublicationEntityDescription: PublicationEntityDescription = {
@@ -75,6 +80,7 @@ const emptyPublicationEntityDescription: PublicationEntityDescription = {
   abstract: '',
   description: '',
   tags: [],
+  npiDiscipline: emptyNpiDiscipline,
 };
 
 export type PublicationPreview = Pick<
@@ -91,16 +97,10 @@ export interface Doi {
   title: string;
 }
 
-export const emptyNpiDiscipline = {
-  title: '',
-  mainDiscipline: '',
-};
-
 export const emptyPublication: Publication = {
   modified: '', // date?
   createdDate: '', // date?
   createdBy: '',
-  npiDiscipline: emptyNpiDiscipline,
   doiLink: '',
   publicationDate: {
     year: '',
