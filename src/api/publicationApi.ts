@@ -112,7 +112,7 @@ export const search = async (searchTerm: string, dispatch: Dispatch, offset?: nu
         Authorization: `Bearer ${idToken}`,
       },
     });
-    console.log(response);
+
     if (response.status === StatusCode.OK) {
       const currentOffset = offset || 0;
       const result = response.data.slice(currentOffset, currentOffset + SEARCH_RESULTS_PER_PAGE);
