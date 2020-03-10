@@ -42,7 +42,7 @@ const UserInstitution: FC = () => {
   const user = useSelector((state: RootStore) => state.user);
   const [open, setOpen] = useState(false);
   const [units, setUnits] = useState<FormikInstitutionUnit[]>([]);
-  const [openEdit, setOpenEdit] = useState(false);
+  const [editMode, setEditMode] = useState(false);
   const { t } = useTranslation('profile');
   const dispatch = useDispatch();
 
@@ -98,12 +98,12 @@ const UserInstitution: FC = () => {
   };
 
   const onSubmit = async (values: FormikInstitutionUnit, { resetForm }: any) => {
-    if (openEdit) {
+    if (editMode && values.editId) {
       const organizationUnitId = values.subunits.length > 0 ? values.subunits.slice(-1)[0].id : values.id;
       const updatedAuthority = await updateQualifierIdForAuthority(
         user.authority.systemControlNumber,
         AuthorityQualifiers.ORGUNIT_ID,
-        values.editId!,
+        values.editId,
         organizationUnitId
       );
       if (updatedAuthority.error) {
@@ -122,12 +122,12 @@ const UserInstitution: FC = () => {
       resetForm(emptyFormikUnit);
     }
     setOpen(false);
-    setOpenEdit(false);
+    setEditMode(false);
   };
 
   const handleEdit = () => {
     setOpen(true);
-    setOpenEdit(true);
+    setEditMode(true);
   };
 
   return (
@@ -138,7 +138,7 @@ const UserInstitution: FC = () => {
           <Field name={FormikInstitutionUnitFieldNames.UNIT}>
             {({ field: { name, value } }: FieldProps) => (
               <>
-                {!openEdit && units.length > 0 ? (
+                {!editMode && units.length > 0 ? (
                   units.map((unit: FormikInstitutionUnit, index: number) => (
                     <InstitutionCard key={index} unit={unit} onEdit={handleEdit} />
                   ))
@@ -149,7 +149,7 @@ const UserInstitution: FC = () => {
                   <StyledInstitutionSearchContainer>
                     <InstitutionSearch
                       dataTestId="autosearch-institution"
-                      disabled={openEdit}
+                      disabled={editMode}
                       label={t('organization.institution')}
                       clearSearchField={values.name === ''}
                       setValueFunction={inputValue => {
@@ -157,7 +157,7 @@ const UserInstitution: FC = () => {
                         setFieldValue(FormikInstitutionUnitFieldNames.ID, inputValue.id);
                         setFieldValue(name, inputValue ?? emptyRecursiveUnit);
                       }}
-                      placeholder={openEdit ? values.name : t('organization.search_for_institution')}
+                      placeholder={editMode ? values.name : t('organization.search_for_institution')}
                     />
                     {values.unit && (
                       <>
@@ -169,13 +169,13 @@ const UserInstitution: FC = () => {
                           color="primary"
                           disabled={!values.unit}
                           data-testid="institution-add-button">
-                          {openEdit ? t('common:edit') : t('common:add')}
+                          {editMode ? t('common:edit') : t('common:add')}
                         </StyledButton>
                         <StyledButton
                           onClick={() => {
                             toggleOpen();
                             resetForm({});
-                            setOpenEdit(false);
+                            setEditMode(false);
                           }}
                           variant="contained"
                           color="secondary">
