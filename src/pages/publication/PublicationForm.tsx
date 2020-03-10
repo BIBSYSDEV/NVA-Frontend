@@ -19,7 +19,6 @@ import { getPublication } from '../../api/publicationApi';
 import { useDispatch } from 'react-redux';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
-import Progress from '../../components/Progress';
 
 const shouldAllowMultipleFiles = false;
 
@@ -38,7 +37,6 @@ const PublicationForm: FC<PublicationFormProps> = ({ uppy = createUppy(shouldAll
   const [tabNumber, setTabNumber] = useState(0);
   const [initialValues, setInitialValues] = useState(emptyPublication);
   const dispatch = useDispatch();
-  const [isLoading, setIsLoading] = useState(true);
 
   const validationSchema = Yup.object().shape({
     title: Yup.object().shape({
@@ -136,11 +134,10 @@ const PublicationForm: FC<PublicationFormProps> = ({ uppy = createUppy(shouldAll
     const getPublicationById = async (id: string) => {
       const publication = await getPublication(id);
       if (publication.error) {
-        dispatch(setNotification(publication.error, NotificationVariant.Error));
         closeForm();
+        dispatch(setNotification(publication.error, NotificationVariant.Error));
       } else {
         setInitialValues({ ...emptyPublication, ...publication });
-        setIsLoading(false);
       }
     };
 
@@ -161,38 +158,34 @@ const PublicationForm: FC<PublicationFormProps> = ({ uppy = createUppy(shouldAll
 
   return (
     <StyledPublication>
-      {isLoading ? (
-        <Progress />
-      ) : (
-        <Formik
-          enableReinitialize
-          initialValues={initialValues}
-          validationSchema={validationSchema}
-          onSubmit={(values: Publication) => savePublication(values)}
-          validateOnChange={false}>
-          {({ values }: FormikProps<Publication>) => (
-            <Form>
-              <PublicationFormTabs tabNumber={tabNumber} handleTabChange={handleTabChange} />
-              {tabNumber === 0 && (
-                <DescriptionPanel goToNextTab={goToNextTab} savePublication={() => savePublication(values)} />
-              )}
-              {tabNumber === 1 && (
-                <ReferencesPanel goToNextTab={goToNextTab} savePublication={() => savePublication(values)} />
-              )}
-              {tabNumber === 2 && (
-                <ContributorsPanel goToNextTab={goToNextTab} savePublication={() => savePublication(values)} />
-              )}
-              {tabNumber === 3 && <FilesAndLicensePanel goToNextTab={goToNextTab} uppy={uppy} />}
+      <Formik
+        enableReinitialize
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={(values: Publication) => savePublication(values)}
+        validateOnChange={false}>
+        {({ values }: FormikProps<Publication>) => (
+          <Form>
+            <PublicationFormTabs tabNumber={tabNumber} handleTabChange={handleTabChange} />
+            {tabNumber === 0 && (
+              <DescriptionPanel goToNextTab={goToNextTab} savePublication={() => savePublication(values)} />
+            )}
+            {tabNumber === 1 && (
+              <ReferencesPanel goToNextTab={goToNextTab} savePublication={() => savePublication(values)} />
+            )}
+            {tabNumber === 2 && (
+              <ContributorsPanel goToNextTab={goToNextTab} savePublication={() => savePublication(values)} />
+            )}
+            {tabNumber === 3 && <FilesAndLicensePanel goToNextTab={goToNextTab} uppy={uppy} />}
 
-              {tabNumber === 4 && (
-                <TabPanel ariaLabel="submission">
-                  <SubmissionPanel savePublication={() => savePublication(values)} />
-                </TabPanel>
-              )}
-            </Form>
-          )}
-        </Formik>
-      )}
+            {tabNumber === 4 && (
+              <TabPanel ariaLabel="submission">
+                <SubmissionPanel savePublication={() => savePublication(values)} />
+              </TabPanel>
+            )}
+          </Form>
+        )}
+      </Formik>
     </StyledPublication>
   );
 };
