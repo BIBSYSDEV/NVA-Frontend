@@ -48,7 +48,6 @@ export interface Publication {
   createdDate: string; // date?
   createdBy: string;
   doiLink: string;
-  projects: Project[];
   reference: Reference;
   authors: Contributor[];
   contributors: Contributor[];
@@ -73,6 +72,7 @@ interface PublicationEntityDescription {
     day: string;
   };
   language: LanguageCodes;
+  projects: Project[];
 }
 
 const emptyPublicationEntityDescription: PublicationEntityDescription = {
@@ -87,6 +87,7 @@ const emptyPublicationEntityDescription: PublicationEntityDescription = {
     day: '',
   },
   language: LanguageCodes.NORWEGIAN_BOKMAL,
+  projects: [],
 };
 
 export type PublicationPreview = Pick<
@@ -108,7 +109,7 @@ export const emptyPublication: Publication = {
   createdDate: '', // date?
   createdBy: '',
   doiLink: '',
-  projects: [],
+
   reference: emptyReference,
   authors: [],
   contributors: [], // TODO: Merge with authors

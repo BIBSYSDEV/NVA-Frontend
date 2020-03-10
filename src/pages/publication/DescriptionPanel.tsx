@@ -47,7 +47,7 @@ export enum DescriptionFieldNames {
   PUBLICATION_MONTH = 'entityDescription.date.month',
   PUBLICATION_DAY = 'entityDescription.date.day',
   LANGUAGE = 'entityDescription.language',
-  PROJECTS = 'projects',
+  PROJECTS = 'entityDescription.projects',
 }
 
 interface DescriptionPanelProps {

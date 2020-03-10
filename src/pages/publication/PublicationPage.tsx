@@ -119,9 +119,9 @@ const PublicationPage: FC<PublicationPageProps> = ({ publicationId }) => {
                     </LabelContentRowForPublicationPage>
                   )}
                   <PublicationPageJournal publication={publication} />
-                  {publication.projects.length > 0 && (
+                  {publication.entityDescription.projects.length > 0 && (
                     <LabelContentRowForPublicationPage label={t('description.project_association')}>
-                      {publication.projects?.[0].titles?.[0].title}
+                      {publication.entityDescription.projects?.[0].titles?.[0].title}
                     </LabelContentRowForPublicationPage>
                   )}
                   <PublicationPageSeries publication={publication} />
