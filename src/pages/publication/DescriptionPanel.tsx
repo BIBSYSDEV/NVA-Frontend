@@ -46,7 +46,7 @@ export enum DescriptionFieldNames {
   PUBLICATION_YEAR = 'entityDescription.date.year',
   PUBLICATION_MONTH = 'entityDescription.date.month',
   PUBLICATION_DAY = 'entityDescription.date.day',
-  LANGUAGE = 'language',
+  LANGUAGE = 'entityDescription.language',
   PROJECTS = 'projects',
 }
 

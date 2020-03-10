@@ -9,7 +9,7 @@ const SubmissionDescription: React.FC = () => {
   const { t } = useTranslation('publication');
   const { values }: FormikProps<Publication> = useFormikContext();
 
-  const { mainTitle, abstract, description, npiDiscipline, tags, date } = values.entityDescription;
+  const { mainTitle, abstract, description, npiDiscipline, tags, date, language } = values.entityDescription;
 
   return (
     <>
@@ -21,7 +21,7 @@ const SubmissionDescription: React.FC = () => {
         {npiDiscipline.title && `- ${npiDiscipline.title}`}
       </LabelContentRow>
       <LabelContentRow label={t('description.tags')}>{tags.join(', ')}</LabelContentRow>
-      <LabelContentRow label={t('common:language')}>{t(`languages:${values.language}`)}</LabelContentRow>
+      <LabelContentRow label={t('common:language')}>{t(`languages:${language}`)}</LabelContentRow>
       <LabelContentRow label={t('description.date_published')}>
         {date.year}
         {date.month && `-${date.month}`}

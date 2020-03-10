@@ -48,7 +48,6 @@ export interface Publication {
   createdDate: string; // date?
   createdBy: string;
   doiLink: string;
-  language: string; // enum?
   projects: Project[];
   reference: Reference;
   authors: Contributor[];
@@ -73,6 +72,7 @@ interface PublicationEntityDescription {
     month: string;
     day: string;
   };
+  language: LanguageCodes;
 }
 
 const emptyPublicationEntityDescription: PublicationEntityDescription = {
@@ -86,6 +86,7 @@ const emptyPublicationEntityDescription: PublicationEntityDescription = {
     month: '',
     day: '',
   },
+  language: LanguageCodes.NORWEGIAN_BOKMAL,
 };
 
 export type PublicationPreview = Pick<
@@ -107,7 +108,6 @@ export const emptyPublication: Publication = {
   createdDate: '', // date?
   createdBy: '',
   doiLink: '',
-  language: LanguageCodes.NORWEGIAN_BOKMAL,
   projects: [],
   reference: emptyReference,
   authors: [],
