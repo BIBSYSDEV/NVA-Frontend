@@ -32,7 +32,7 @@ export const updatePublication = async (publication: Publication, dispatch: Disp
       },
     });
     if (response.status === StatusCode.OK) {
-      return i18n.t('feedback:success.update_publication');
+      return response.data;
     } else {
       return { error: i18n.t('feedback:error.update_publication') };
     }
