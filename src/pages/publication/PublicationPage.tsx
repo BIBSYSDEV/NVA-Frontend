@@ -88,9 +88,9 @@ const PublicationPage: FC<PublicationPageProps> = ({ publicationId }) => {
                   )}
                   <StyledSidebarCard>
                     <LabelContentRowForPublicationPage label={t('description.date_published')}>
-                      {publication.publicationDate.year}
-                      {publication.publicationDate.month && `-${publication.publicationDate.month}`}
-                      {publication.publicationDate.day && `-${publication.publicationDate.day}`}
+                      {publication.entityDescription.date.year}
+                      {publication.entityDescription.date.month && `-${publication.entityDescription.date.month}`}
+                      {publication.entityDescription.date.day && `-${publication.entityDescription.date.day}`}
                     </LabelContentRowForPublicationPage>
                     <LabelContentRowForPublicationPage label={t('references.isbn')}>
                       {publication?.reference?.book?.isbn || publication?.reference?.report?.isbn}

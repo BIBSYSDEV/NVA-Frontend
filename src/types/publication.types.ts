@@ -48,11 +48,6 @@ export interface Publication {
   createdDate: string; // date?
   createdBy: string;
   doiLink: string;
-  publicationDate: {
-    year: string;
-    month: string;
-    day: string;
-  };
   language: string; // enum?
   projects: Project[];
   reference: Reference;
@@ -73,6 +68,11 @@ interface PublicationEntityDescription {
   description: string;
   tags: string[];
   npiDiscipline: NpiDiscipline;
+  date: {
+    year: string;
+    month: string;
+    day: string;
+  };
 }
 
 const emptyPublicationEntityDescription: PublicationEntityDescription = {
@@ -81,6 +81,11 @@ const emptyPublicationEntityDescription: PublicationEntityDescription = {
   description: '',
   tags: [],
   npiDiscipline: emptyNpiDiscipline,
+  date: {
+    year: '',
+    month: '',
+    day: '',
+  },
 };
 
 export type PublicationPreview = Pick<
@@ -89,7 +94,7 @@ export type PublicationPreview = Pick<
 >;
 export type PublishedPublicationPreview = Pick<
   Publication & PublicationEntityDescription,
-  'identifier' | 'mainTitle' | 'publicationDate' | 'reference' | 'authors' | 'status'
+  'identifier' | 'mainTitle' | 'date' | 'reference' | 'authors' | 'status'
 >;
 
 export interface Doi {
@@ -102,11 +107,6 @@ export const emptyPublication: Publication = {
   createdDate: '', // date?
   createdBy: '',
   doiLink: '',
-  publicationDate: {
-    year: '',
-    month: '',
-    day: '',
-  },
   language: LanguageCodes.NORWEGIAN_BOKMAL,
   projects: [],
   reference: emptyReference,

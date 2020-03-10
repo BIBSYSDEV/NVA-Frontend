@@ -43,9 +43,9 @@ export enum DescriptionFieldNames {
   DESCRIPTION = 'entityDescription.description',
   NPI_DISCIPLINE = 'entityDescription.npiDiscipline',
   TAGS = 'entityDescription.tags',
-  PUBLICATION_YEAR = 'publicationDate.year',
-  PUBLICATION_MONTH = 'publicationDate.month',
-  PUBLICATION_DAY = 'publicationDate.day',
+  PUBLICATION_YEAR = 'entityDescription.date.year',
+  PUBLICATION_MONTH = 'entityDescription.date.month',
+  PUBLICATION_DAY = 'entityDescription.date.day',
   LANGUAGE = 'language',
   PROJECTS = 'projects',
 }
