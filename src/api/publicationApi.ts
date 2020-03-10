@@ -10,7 +10,7 @@ import { getIdToken } from './userApi';
 import { NotificationVariant } from '../types/notification.types';
 
 export enum PublicationsApiPaths {
-  SEARCH = '/publications',
+  SEARCH = '/search/publications',
   UPDATE_RESOURCE = '/publications/update-resource',
   FETCH_RESOURCE = '/publication',
   FETCH_MY_RESOURCES = '/publications/fetch-my-resources',
@@ -112,9 +112,11 @@ export const search = async (searchTerm: string, dispatch: Dispatch, offset?: nu
         Authorization: `Bearer ${idToken}`,
       },
     });
+    console.log(response);
     if (response.status === StatusCode.OK) {
       const currentOffset = offset || 0;
       const result = response.data.slice(currentOffset, currentOffset + SEARCH_RESULTS_PER_PAGE);
+
       dispatch(searchForPublications(result, searchTerm, response.data.length, offset));
     } else {
       dispatch(setNotification(i18n.t('feedback:error.search', NotificationVariant.Error)));

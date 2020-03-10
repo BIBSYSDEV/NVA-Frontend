@@ -78,6 +78,9 @@ const mockCompleteUpload = {};
 export const interceptRequestsOnMock = () => {
   const mock = new MockAdapter(Axios);
 
+  // SEARCH
+  mock.onGet(new RegExp(`${PublicationsApiPaths.SEARCH}/*`)).reply(200, mockPublications);
+
   // File Upload
   mock.onPost(new RegExp(FileUploadApiPaths.CREATE)).reply(200, mockCreateUpload);
   mock.onPost(new RegExp(FileUploadApiPaths.PREPARE)).reply(200, mockPrepareUpload);
@@ -137,9 +140,7 @@ export const interceptRequestsOnMock = () => {
   // After deletion of institution
   mock.onGet(new RegExp(`${API_URL}${InstituionApiPaths.INSTITUTION}\\?id=*`)).replyOnce(200, []);
 
-  // SEARCH
-  mock.onGet(new RegExp(`${PublicationsApiPaths.SEARCH}/*`)).reply(200, mockPublications);
-
+  console.log(PublicationsApiPaths.FETCH_RESOURCE, PublicationsApiPaths.SEARCH);
   mock.onAny().reply(function(config) {
     throw new Error('Could not find mock for ' + config.url);
   });
