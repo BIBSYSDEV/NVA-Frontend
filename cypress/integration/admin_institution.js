@@ -3,8 +3,9 @@ import { mockUser } from '../../src/utils/testfiles/mock_feide_user';
 const authorizedUser = { ...mockUser, 'custom:affiliation': '[member, employee, staff]', email: 'ost@unit.no' }; //@unit.no-address resolves to app admin
 
 describe('User administers institutions ', () => {
-  before('Given that the user is logged in as Application administrator:', () => {
+  beforeEach('Given that the user is logged in as Application administrator:', () => {
     cy.visit('/');
+    cy.server();
     cy.get('[data-testid=menu-login-button]').click({ force: true });
     cy.setUserInRedux(authorizedUser);
   });
@@ -27,7 +28,13 @@ describe('User administers institutions ', () => {
     // Open new institution page
     cy.get('[data-testid=add-institution-button]').click({ force: true });
 
-    cy.get('[data-testid=customer-instituiton-name-input]').type('institutt for osteloff');
+    cy.get('[data-testid=autosearch-institution]')
+      .click({ force: true })
+      .type('ntnu');
+    cy.get('.MuiAutocomplete-option')
+      .contains('Norges teknisk-naturvitenskapelige universitet')
+      .click({ force: true });
+
     cy.get('[data-testid=customer-instituiton-display-name-input]').type('Institutt for osteloff!');
     cy.get('[data-testid=customer-instituiton-short-name-input]').type('OSTEINSTITUTTET');
     cy.get('[data-testid=customer-instituiton-archive-name-input]').type('Jarlsberg');
@@ -37,5 +44,25 @@ describe('User administers institutions ', () => {
     cy.get('[data-testid=customer-instituiton-feide-organization-id-input]').type('2345667');
 
     cy.get('[data-testid=customer-instituiton-save-button]').click({ force: true });
+  });
+
+  it('The user should be able to upload a file for an institution', () => {
+    // Open administer institutions page
+    cy.get('[data-testid=menu]').click({ force: true });
+    cy.get('[data-testid=menu-admin-institution-button]').click({ force: true });
+
+    // Open new institution page
+    cy.get('[data-testid=add-institution-button]').click({ force: true });
+
+    // Mock Uppys upload requests to S3 Bucket
+    cy.route({
+      method: 'PUT',
+      url: 'https://file-upload.com/files/', // Must match URL set in mock-interceptor, which cannot be imported into a test
+      response: '',
+      headers: { ETag: 'etag' },
+    });
+
+    cy.get('input[type=file]').uploadFile('img.jpg');
+    cy.get('[data-testid=uploaded-file-card]').should('be.visible');
   });
 });

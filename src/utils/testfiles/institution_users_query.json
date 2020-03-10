@@ -2,7 +2,7 @@
   {
     "id": "eirik.nilsen@somewhere.org",
     "name": "Eirik Nilsen",
-    "externalOrcid": "1234-1234-1234-1234",
+    "externalOrcid": "",
     "lastLoginDate": "2020-03-01",
     "createdDate": "2020-01-01",
     "roles": ["Admin", "Appadmin", "Curator"]

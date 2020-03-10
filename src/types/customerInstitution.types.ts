@@ -10,6 +10,7 @@ export interface CustomerInstitution {
   feideOrganizationId: string;
   createdDate: string;
   contact: string;
+  logoFile?: File;
 }
 
 export const emptyCustomerInstitution: CustomerInstitution = {
@@ -27,6 +28,7 @@ export const emptyCustomerInstitution: CustomerInstitution = {
 };
 
 export enum CustomerInstitutionFieldNames {
+  ID = 'id',
   NAME = 'name',
   DISPLAY_NAME = 'displayName',
   SHORT_NAME = 'shortName',
@@ -35,4 +37,5 @@ export enum CustomerInstitutionFieldNames {
   INSTITUTION_DNS = 'institutionDns',
   ADMINISTRATION_ID = 'administrationId',
   FEIDE_ORGANIZATION_ID = 'feideOrganizationId',
+  LOGO_FILE = 'logoFile',
 }

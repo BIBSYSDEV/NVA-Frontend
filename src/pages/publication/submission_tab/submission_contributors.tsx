@@ -10,18 +10,14 @@ const SubmissionContributors: React.FC = () => {
   const { values }: FormikProps<Publication> = useFormikContext();
 
   return (
-    <>
-      <LabelContentRow label={t('heading.contributors')}>
-        {values.contributors.map(contributor => {
-          return (
-            <SubmissionContentText>
-              {contributor.name}
-              {contributor.institutions.map(institution => institution?.name && `(${institution.name})`)}
-            </SubmissionContentText>
-          );
-        })}
-      </LabelContentRow>
-    </>
+    <LabelContentRow label={t('heading.contributors')}>
+      {values.contributors.map(contributor => (
+        <SubmissionContentText key={contributor.name}>
+          {contributor.name}
+          {contributor.institutions.map(institution => institution?.name && `(${institution.name})`)}
+        </SubmissionContentText>
+      ))}
+    </LabelContentRow>
   );
 };
 
