@@ -60,7 +60,7 @@ const BookReferenceForm: FC = () => {
             <PublicationChannelSearch
               clearSearchField={value === emptyPublisher}
               dataTestId="autosearch-publisher"
-              label={t('references.publisher')}
+              label={t('common:publisher')}
               publicationTable={PublicationTableNumber.PUBLISHERS}
               setValueFunction={inputValue => setFieldValue(name, inputValue ?? emptyPublisher)}
               placeholder={t('references.search_for_publisher')}

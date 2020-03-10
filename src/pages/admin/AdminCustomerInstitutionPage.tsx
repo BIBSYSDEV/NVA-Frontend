@@ -1,17 +1,23 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import Card from '../../components/Card';
-import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
-import { Field, Form, Formik } from 'formik';
-import * as Yup from 'yup';
+import { Field, FieldProps, Form, Formik } from 'formik';
 import { Button } from '@material-ui/core';
 import { TextField } from 'formik-material-ui';
-import { CustomerInstitutionFieldNames, emptyCustomerInstitution } from '../../types/customerInstitution.types';
 import Heading from '../../components/Heading';
+import styled from 'styled-components';
+import * as Yup from 'yup';
+import { CustomerInstitutionFieldNames, emptyCustomerInstitution } from '../../types/customerInstitution.types';
+import { createUppy } from '../../utils/uppy-config';
+import Label from '../../components/Label';
+import InstitutionLogoFileUploader from './InstitutionLogoFileUploader';
+import FileCard from '../publication/files_and_license_tab/FileCard';
+import InstitutionSearch from '../publication/references_tab/components/InstitutionSearch';
 
-const StyledField = styled(Field)`
-  margin: 1rem;
-  flex: 1 0 40%;
+const shouldAllowMultipleFiles = false;
+
+const StyledLogoUploadWrapper = styled(Card)`
+  margin-top: 1rem;
 `;
 
 const StyledButtonContainer = styled.div`
@@ -20,8 +26,14 @@ const StyledButtonContainer = styled.div`
   display: flex;
   justify-content: flex-end;
 `;
+
 const AdminCustomerInstitutionPage: FC = () => {
   const { t } = useTranslation('admin');
+  const [uppy] = useState(createUppy(shouldAllowMultipleFiles));
+
+  useEffect(() => {
+    return () => uppy && uppy.close();
+  }, [uppy]);
 
   return (
     <Card>
@@ -38,16 +50,44 @@ const AdminCustomerInstitutionPage: FC = () => {
           }, 400);
         }}>
         <Form>
-          <StyledField
-            aria-label={CustomerInstitutionFieldNames.NAME}
-            name={CustomerInstitutionFieldNames.NAME}
-            label={t('organization_register_name')}
-            component={TextField}
-            fullWidth
-            variant="outlined"
-            inputProps={{ 'data-testid': 'customer-instituiton-name-input' }}
-          />
-          <StyledField
+          <Field name={CustomerInstitutionFieldNames.LOGO_FILE}>
+            {({ field: { value, name }, form }: FieldProps) => (
+              <StyledLogoUploadWrapper>
+                <Label>{t('institution_logo')}</Label>
+                <InstitutionLogoFileUploader
+                  uppy={uppy}
+                  shouldAllowMultipleFiles={shouldAllowMultipleFiles}
+                  setFile={file => {
+                    form.setFieldValue(name, file);
+                  }}
+                />
+                {value?.name && (
+                  <FileCard
+                    file={value}
+                    removeFile={() => {
+                      uppy.removeFile(value.id);
+                      form.setFieldValue(name, {});
+                    }}
+                  />
+                )}
+              </StyledLogoUploadWrapper>
+            )}
+          </Field>
+          <Field name={CustomerInstitutionFieldNames.NAME}>
+            {({ field: { value, name }, form }: FieldProps) => (
+              <InstitutionSearch
+                dataTestId="autosearch-institution"
+                label={t('organization_register_name')}
+                clearSearchField={value.name === ''}
+                setValueFunction={inputValue => {
+                  form.setFieldValue(CustomerInstitutionFieldNames.NAME, inputValue.name);
+                  form.setFieldValue(CustomerInstitutionFieldNames.ID, inputValue.id);
+                }}
+                placeholder={t('profile:organization.search_for_institution')}
+              />
+            )}
+          </Field>
+          <Field
             aria-label={CustomerInstitutionFieldNames.DISPLAY_NAME}
             name={CustomerInstitutionFieldNames.DISPLAY_NAME}
             label={t('display_name')}
@@ -56,7 +96,7 @@ const AdminCustomerInstitutionPage: FC = () => {
             variant="outlined"
             inputProps={{ 'data-testid': 'customer-instituiton-display-name-input' }}
           />
-          <StyledField
+          <Field
             aria-label={CustomerInstitutionFieldNames.SHORT_NAME}
             name={CustomerInstitutionFieldNames.SHORT_NAME}
             label={t('short_name')}
@@ -65,7 +105,7 @@ const AdminCustomerInstitutionPage: FC = () => {
             variant="outlined"
             inputProps={{ 'data-testid': 'customer-instituiton-short-name-input' }}
           />
-          <StyledField
+          <Field
             aria-label={CustomerInstitutionFieldNames.ARCHIVE_NAME}
             name={CustomerInstitutionFieldNames.ARCHIVE_NAME}
             label={t('archive_name')}
@@ -74,7 +114,7 @@ const AdminCustomerInstitutionPage: FC = () => {
             variant="outlined"
             inputProps={{ 'data-testid': 'customer-instituiton-archive-name-input' }}
           />
-          <StyledField
+          <Field
             aria-label={CustomerInstitutionFieldNames.CNAME}
             name={CustomerInstitutionFieldNames.CNAME}
             label={t('cname')}
@@ -83,7 +123,7 @@ const AdminCustomerInstitutionPage: FC = () => {
             variant="outlined"
             inputProps={{ 'data-testid': 'customer-instituiton-cname-input' }}
           />
-          <StyledField
+          <Field
             aria-label={CustomerInstitutionFieldNames.INSTITUTION_DNS}
             name={CustomerInstitutionFieldNames.INSTITUTION_DNS}
             label={t('institution_dns')}
@@ -92,7 +132,7 @@ const AdminCustomerInstitutionPage: FC = () => {
             variant="outlined"
             inputProps={{ 'data-testid': 'customer-instituiton-institution-dns-input' }}
           />
-          <StyledField
+          <Field
             aria-label={CustomerInstitutionFieldNames.ADMINISTRATION_ID}
             name={CustomerInstitutionFieldNames.ADMINISTRATION_ID}
             label={t('administration_id')}
@@ -101,7 +141,7 @@ const AdminCustomerInstitutionPage: FC = () => {
             variant="outlined"
             inputProps={{ 'data-testid': 'customer-instituiton-administrator-id-input' }}
           />
-          <StyledField
+          <Field
             aria-label={CustomerInstitutionFieldNames.FEIDE_ORGANIZATION_ID}
             name={CustomerInstitutionFieldNames.FEIDE_ORGANIZATION_ID}
             label={t('feide_organization_id')}

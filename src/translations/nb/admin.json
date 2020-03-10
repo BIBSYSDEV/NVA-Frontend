@@ -9,6 +9,7 @@
   },
   "feide_organization_id": "Organisasjonens id i Feide",
   "institution_dns": "Institusjonens DNS",
+  "institution_logo": "Institutionslogo",
   "organization_register_name": "Navn i organisasjonsregister",
   "short_name": "Forkortet visningsnavn på instutusjonen",
   "users": {
