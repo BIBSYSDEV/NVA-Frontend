@@ -39,7 +39,7 @@ interface NpiDiscipline {
 }
 
 export interface Publication {
-  id: string;
+  identifier: string;
   modified: string; // date?
   createdDate: string; // date?
   createdBy: string;
@@ -62,12 +62,22 @@ export interface Publication {
   files: File[];
   status: PublicationStatus;
   shouldCreateDoi: boolean;
+
+  entityDescription: PublicationEntityDescription;
 }
 
-export type PublicationPreview = Pick<Publication, 'id' | 'title' | 'createdDate' | 'status' | 'createdBy'>;
+interface PublicationEntityDescription {
+  mainTitle: string;
+}
+
+const emptyPublicationEntityDescription: PublicationEntityDescription = {
+  mainTitle: '',
+};
+
+export type PublicationPreview = Pick<Publication, 'identifier' | 'title' | 'createdDate' | 'status' | 'createdBy'>;
 export type PublishedPublicationPreview = Pick<
   Publication,
-  'id' | 'title' | 'publicationDate' | 'reference' | 'authors' | 'status'
+  'identifier' | 'title' | 'publicationDate' | 'reference' | 'authors' | 'status'
 >;
 
 export interface Doi {
@@ -81,7 +91,7 @@ export const emptyNpiDiscipline = {
 };
 
 export const emptyPublication: Publication = {
-  id: '',
+  identifier: '',
   modified: '', // date?
   createdDate: '', // date?
   createdBy: '',
@@ -106,4 +116,6 @@ export const emptyPublication: Publication = {
   files: [],
   status: PublicationStatus.DRAFT,
   shouldCreateDoi: false,
+
+  entityDescription: emptyPublicationEntityDescription,
 };

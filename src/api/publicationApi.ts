@@ -39,14 +39,14 @@ export const createNewPublication = async (publication: Publication, dispatch: D
 };
 
 export const updatePublication = async (publication: Publication, dispatch: Dispatch) => {
-  const { id } = publication;
-  if (!id) {
+  const { identifier } = publication;
+  if (!identifier) {
     dispatch(setNotification(i18n.t('feedback:error.update_publication'), NotificationVariant.Error));
     return;
   }
   const idToken = await getIdToken();
   try {
-    const response = await Axios.put(`${PublicationsApiPaths.UPDATE_RESOURCE}/${id}`, publication, {
+    const response = await Axios.put(`${PublicationsApiPaths.UPDATE_RESOURCE}/${identifier}`, publication, {
       headers: {
         Authorization: `Bearer ${idToken}`,
       },

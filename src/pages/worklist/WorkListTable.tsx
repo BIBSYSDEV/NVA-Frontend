@@ -44,7 +44,7 @@ const WorklistTable: FC<WorklistTableProps> = ({ publications }) => {
       </TableHead>
       <TableBody>
         {publications.map(publication => (
-          <StyledTableRow key={publication.id}>
+          <StyledTableRow key={publication.identifier}>
             <StyledCell component="th" scope="row">
               <NormalText>{publication.title}</NormalText>
             </StyledCell>
