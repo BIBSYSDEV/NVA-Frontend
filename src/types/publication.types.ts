@@ -42,8 +42,6 @@ export interface Publication {
   modified: string; // date?
   createdDate: string; // date?
   createdBy: string;
-  abstract: string;
-  description: string;
   npiDiscipline: NpiDiscipline;
   tags: string[];
   doiLink: string;
@@ -68,10 +66,14 @@ export interface Publication {
 
 interface PublicationEntityDescription {
   mainTitle: string;
+  abstract: string;
+  description: string;
 }
 
 const emptyPublicationEntityDescription: PublicationEntityDescription = {
   mainTitle: '',
+  abstract: '',
+  description: '',
 };
 
 export type PublicationPreview = Pick<
@@ -97,8 +99,6 @@ export const emptyPublication: Publication = {
   modified: '', // date?
   createdDate: '', // date?
   createdBy: '',
-  abstract: '',
-  description: '',
   npiDiscipline: emptyNpiDiscipline,
   tags: [],
   doiLink: '',

@@ -103,14 +103,14 @@ const PublicationPage: FC<PublicationPageProps> = ({ publicationId }) => {
                       <Link href={publication.doiLink}>{publication.doiLink}</Link>
                     </LabelContentRowForPublicationPage>
                   )}
-                  {publication.abstract && (
+                  {publication.entityDescription.abstract && (
                     <LabelContentRowForPublicationPage label={t('description.abstract')}>
-                      {publication.abstract}
+                      {publication.entityDescription.abstract}
                     </LabelContentRowForPublicationPage>
                   )}
-                  {publication.description && (
+                  {publication.entityDescription.description && (
                     <LabelContentRowForPublicationPage label={t('description.description')}>
-                      {publication.description}
+                      {publication.entityDescription.description}
                     </LabelContentRowForPublicationPage>
                   )}
                   {publication.tags && (
