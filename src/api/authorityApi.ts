@@ -86,7 +86,7 @@ export const createAuthority = async (user: User) => {
         error: i18n.t('feedback:error.create_authority'),
       };
     }
-  } catch (error) {
+  } catch {
     return {
       error: i18n.t('feedback:error.create_authority'),
     };
@@ -115,7 +115,7 @@ export const addQualifierIdForAuthority = async (
         error: i18n.t('feedback:error.update_authority'),
       };
     }
-  } catch (error) {
+  } catch {
     return {
       error: i18n.t('feedback:error.update_authority'),
     };
@@ -192,7 +192,7 @@ const updateAuthorityAndHandleErrors = async (url: string, body: any) => {
         error: i18n.t('feedback:error.update_authority'),
       };
     }
-  } catch (error) {
+  } catch {
     return {
       error: i18n.t('feedback:error.update_authority'),
     };

@@ -72,7 +72,7 @@ const UserInstitution: FC = () => {
     setOpen(!open);
   };
 
-  const addOrgunitIdToAuthorityAndDispatch = async (id: string, scn: string) => {
+  const addOrgunitIdToAuthorityAndDispatchNotification = async (id: string, scn: string) => {
     const updatedAuthority = await addQualifierIdForAuthority(scn, AuthorityQualifiers.ORGUNIT_ID, id);
     if (updatedAuthority.error) {
       dispatch(setNotification(updatedAuthority.error, NotificationVariant.Error));
@@ -84,10 +84,10 @@ const UserInstitution: FC = () => {
   const handleAddInstitution = async ({ name, id, subunits, unit }: FormikInstitutionUnit) => {
     try {
       if (subunits.length === 0) {
-        await addOrgunitIdToAuthorityAndDispatch(id, user.authority.systemControlNumber);
+        await addOrgunitIdToAuthorityAndDispatchNotification(id, user.authority.systemControlNumber);
       } else {
         const lastSubunit = subunits.slice(-1)[0];
-        await addOrgunitIdToAuthorityAndDispatch(lastSubunit.id, user.authority.systemControlNumber);
+        await addOrgunitIdToAuthorityAndDispatchNotification(lastSubunit.id, user.authority.systemControlNumber);
       }
     } catch (error) {
       dispatch(setNotification(t('feedback:error.update_authority'), NotificationVariant.Error));
@@ -99,7 +99,7 @@ const UserInstitution: FC = () => {
 
   const onSubmit = async (values: FormikInstitutionUnit, { resetForm }: any) => {
     if (editMode && values.editId) {
-      const organizationUnitId = values.subunits.length > 0 ? values.subunits.slice(-1)[0].id : values.id;
+      const organizationUnitId = values.subunits.length > 0 ? values.subunits.pop()!.id : values.id;
       const updatedAuthority = await updateQualifierIdForAuthority(
         user.authority.systemControlNumber,
         AuthorityQualifiers.ORGUNIT_ID,
