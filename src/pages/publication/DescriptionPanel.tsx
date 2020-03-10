@@ -38,7 +38,7 @@ const StyledFieldHeader = styled.header`
 `;
 
 export enum DescriptionFieldNames {
-  TITLE = 'title.nb',
+  TITLE = 'entityDescription.mainTitle',
   ABSTRACT = 'abstract',
   DESCRIPTION = 'description',
   NPI_DISCIPLINE = 'npiDiscipline',

@@ -29,7 +29,6 @@
     "create_publication": "New publication created",
     "delete_identifier": "Deleted identifier",
     "login": "Logged in",
-    "update_authority": "Updated authority",
-    "update_publication": "Updated publication"
+    "update_authority": "Updated authority"
   }
 }

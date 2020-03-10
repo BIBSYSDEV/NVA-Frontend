@@ -29,7 +29,6 @@
     "create_publication": "Publikasjonen er opprettet",
     "delete_identifier": "Identifikatoren ble slettet",
     "login": "Logget inn",
-    "update_authority": "Forfatter er oppdatert",
-    "update_publication": "Publikasjonen er oppdatert"
+    "update_authority": "Forfatter er oppdatert"
   }
 }

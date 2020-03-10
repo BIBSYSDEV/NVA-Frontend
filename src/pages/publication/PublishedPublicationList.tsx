@@ -69,9 +69,9 @@ const PublishedPublicationList: FC<PublicationListProps> = ({ publications }) =>
           {publications
             .filter(publication => publication.status === PublicationStatus.PUBLISHED)
             .map(publication => (
-              <StyledTableRow key={publication.id}>
+              <StyledTableRow key={publication.identifier}>
                 <TableCell component="th" scope="row">
-                  <NormalText>{publication.title}</NormalText>
+                  <NormalText>{publication.mainTitle}</NormalText>
                   <StyledAuthor>
                     <NormalText>
                       {publication.authors[0].name}, {publication.authors[0].institutions[0].name}
