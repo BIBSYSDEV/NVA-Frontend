@@ -42,7 +42,7 @@ export enum DescriptionFieldNames {
   ABSTRACT = 'entityDescription.abstract',
   DESCRIPTION = 'entityDescription.description',
   NPI_DISCIPLINE = 'npiDiscipline',
-  TAGS = 'tags',
+  TAGS = 'entityDescription.tags',
   PUBLICATION_YEAR = 'publicationDate.year',
   PUBLICATION_MONTH = 'publicationDate.month',
   PUBLICATION_DAY = 'publicationDate.day',
