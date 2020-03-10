@@ -63,6 +63,7 @@ export const updatePublication = async (publication: Publication, dispatch: Disp
 
 export const getPublication = async (id: string) => {
   const url = `${PublicationsApiPaths.FETCH_RESOURCE}/${id}`;
+
   try {
     const idToken = await getIdToken();
     const response = await Axios.get(url, {
@@ -75,8 +76,8 @@ export const getPublication = async (id: string) => {
     } else {
       return null;
     }
-  } catch (error) {
-    return { error };
+  } catch {
+    return { error: i18n.t('feedback:error.get_publication') };
   }
 };
 
