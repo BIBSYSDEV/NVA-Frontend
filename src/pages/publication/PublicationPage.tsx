@@ -73,7 +73,7 @@ const PublicationPage: FC<PublicationPageProps> = ({ publicationId }) => {
         <ContentPage>
           {publication ? (
             <>
-              <Heading>{publication.title?.no}</Heading>
+              <Heading>{publication.entityDescription.mainTitle}</Heading>
               {publication.authors && <PublicationPageAuthors authors={publication.authors} />}
               <StyledContentWrapper>
                 <StyledSidebar>

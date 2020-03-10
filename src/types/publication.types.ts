@@ -39,11 +39,9 @@ interface NpiDiscipline {
 }
 
 export interface Publication {
-  identifier: string;
   modified: string; // date?
   createdDate: string; // date?
   createdBy: string;
-  title: { [key: string]: string };
   abstract: string;
   description: string;
   npiDiscipline: NpiDiscipline;
@@ -63,6 +61,8 @@ export interface Publication {
   status: PublicationStatus;
   shouldCreateDoi: boolean;
 
+  // Fields from backend
+  identifier: string;
   entityDescription: PublicationEntityDescription;
 }
 
@@ -74,10 +74,13 @@ const emptyPublicationEntityDescription: PublicationEntityDescription = {
   mainTitle: '',
 };
 
-export type PublicationPreview = Pick<Publication, 'identifier' | 'title' | 'createdDate' | 'status' | 'createdBy'>;
+export type PublicationPreview = Pick<
+  Publication & PublicationEntityDescription,
+  'identifier' | 'mainTitle' | 'createdDate' | 'status' | 'createdBy'
+>;
 export type PublishedPublicationPreview = Pick<
-  Publication,
-  'identifier' | 'title' | 'publicationDate' | 'reference' | 'authors' | 'status'
+  Publication & PublicationEntityDescription,
+  'identifier' | 'mainTitle' | 'publicationDate' | 'reference' | 'authors' | 'status'
 >;
 
 export interface Doi {
@@ -91,13 +94,9 @@ export const emptyNpiDiscipline = {
 };
 
 export const emptyPublication: Publication = {
-  identifier: '',
   modified: '', // date?
   createdDate: '', // date?
   createdBy: '',
-  title: {
-    nb: '',
-  },
   abstract: '',
   description: '',
   npiDiscipline: emptyNpiDiscipline,
@@ -117,5 +116,7 @@ export const emptyPublication: Publication = {
   status: PublicationStatus.DRAFT,
   shouldCreateDoi: false,
 
+  // Fields from backend
+  identifier: '',
   entityDescription: emptyPublicationEntityDescription,
 };

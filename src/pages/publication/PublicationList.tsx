@@ -50,7 +50,7 @@ const PublicationList: FC<PublicationListProps> = ({ publications }) => {
   const handleOnClick = (publication: PublicationPreview) => {
     setOpenModal(true);
     setDeletePublicationId(publication.identifier);
-    setDeletePublicationTitle(publication.title);
+    setDeletePublicationTitle(publication.mainTitle);
   };
 
   return (
@@ -77,7 +77,7 @@ const PublicationList: FC<PublicationListProps> = ({ publications }) => {
             .map(publication => (
               <StyledTableRow key={publication.identifier}>
                 <TableCell component="th" scope="row">
-                  <NormalText>{publication.title}</NormalText>
+                  <NormalText>{publication.mainTitle}</NormalText>
                 </TableCell>
                 <StyledTableCellForStatus>
                   <NormalText>{t(`publication:status.${publication.status}`)}</NormalText>
