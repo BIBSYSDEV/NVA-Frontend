@@ -137,7 +137,7 @@ const PublicationForm: FC<PublicationFormProps> = ({ uppy = createUppy(shouldAll
         closeForm();
         dispatch(setNotification(publication.error, NotificationVariant.Error));
       } else {
-        // setInitialValues(publication);
+        setInitialValues(publication);
       }
     };
 
