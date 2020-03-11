@@ -24,7 +24,7 @@ const AppRoutes: FC = () => {
       <Switch>
         <Route exact path="/" component={Dashboard} />
         {user.isPublisher && <Route exact path="/publication" component={EditPublication} />}
-        {user.isPublisher && <Route exact path="/publication/:id" component={EditPublication} />}
+        {user.isPublisher && <Route exact path="/publication/:identifier" component={EditPublication} />}
         {user.isPublisher && <Route exact path="/my-publications" component={MyPublications} />}
         {user.isCurator && <Route exact path="/worklist" component={WorklistPage} />}
         {user.isAppAdmin && <Route exact path="/admin-institutions" component={AdminCustomerInstitutionsPage} />}

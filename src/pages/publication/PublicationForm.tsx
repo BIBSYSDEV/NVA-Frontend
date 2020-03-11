@@ -30,10 +30,14 @@ const StyledPublication = styled.div`
 interface PublicationFormProps {
   uppy: Uppy;
   closeForm: () => void;
-  id?: string;
+  identifier?: string;
 }
 
-const PublicationForm: FC<PublicationFormProps> = ({ uppy = createUppy(shouldAllowMultipleFiles), id, closeForm }) => {
+const PublicationForm: FC<PublicationFormProps> = ({
+  uppy = createUppy(shouldAllowMultipleFiles),
+  identifier,
+  closeForm,
+}) => {
   const { t } = useTranslation('publication');
   const [tabNumber, setTabNumber] = useState(0);
   const [initialValues, setInitialValues] = useState(emptyPublication);
@@ -143,10 +147,10 @@ const PublicationForm: FC<PublicationFormProps> = ({ uppy = createUppy(shouldAll
       }
     };
 
-    if (id) {
-      getPublicationById(id);
+    if (identifier) {
+      getPublicationById(identifier);
     }
-  }, [id, closeForm, dispatch]);
+  }, [identifier, closeForm, dispatch]);
 
   const handleTabChange = (_: React.ChangeEvent<{}>, newTabNumber: number) => {
     setTabNumber(newTabNumber);

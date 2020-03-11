@@ -34,7 +34,7 @@ export const updatePublication = async (publication: Publication) => {
     if (response.status === StatusCode.OK) {
       return response.data;
     } else {
-      return { error: i18n.t('feedback:error.update_publication') };
+      return null;
     }
   } catch {
     return { error: i18n.t('feedback:error.update_publication') };
