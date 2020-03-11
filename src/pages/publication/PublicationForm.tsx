@@ -141,7 +141,7 @@ const PublicationForm: FC<PublicationFormProps> = ({
         closeForm();
         dispatch(setNotification(publication.error, NotificationVariant.Error));
       } else {
-        // setInitialValues(publication);
+        setInitialValues({ ...emptyPublication, ...publication });
       }
     };
 
