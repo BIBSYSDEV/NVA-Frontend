@@ -40,7 +40,9 @@
     },
     "authors": [
       {
-        "name": "Oddny Osteloff",
+        "identity": {
+          "name": "Oddny Osteloff"
+        },
         "institutions": [
           {
             "id": "194.61.55.0",
@@ -70,7 +72,9 @@
     },
     "authors": [
       {
-        "name": "Oddny Osteloff",
+        "identity": {
+          "name": "Oddny Osteloff"
+        },
         "institutions": [
           {
             "id": "194.61.55.0",

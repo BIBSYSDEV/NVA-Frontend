@@ -1,5 +1,4 @@
 export interface Contributor {
-  name: string;
   institutions: Institution[];
   type: ContributorType | '';
   orcid?: string;
@@ -21,7 +20,6 @@ interface Institution {
 }
 
 export const emptyContributor: Contributor = {
-  name: '',
   institutions: [],
   type: '',
   orcid: '',

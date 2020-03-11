@@ -14,7 +14,7 @@ interface PublicationPageProps {
 const PublicationPageAuthors: FC<PublicationPageProps> = ({ authors }) => (
   <NormalText>
     {authors.map((author, index) => {
-      return <StyledAuthor key={index}>{author.name}</StyledAuthor>;
+      return <StyledAuthor key={index}>{author.identity.name}</StyledAuthor>;
     })}
   </NormalText>
 );

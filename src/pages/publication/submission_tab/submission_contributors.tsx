@@ -12,8 +12,8 @@ const SubmissionContributors: React.FC = () => {
   return (
     <LabelContentRow label={t('heading.contributors')}>
       {values.contributors.map(contributor => (
-        <SubmissionContentText key={contributor.name}>
-          {contributor.name}
+        <SubmissionContentText key={contributor.identity.name}>
+          {contributor.identity.name}
           {contributor.institutions.map(institution => institution?.name && `(${institution.name})`)}
         </SubmissionContentText>
       ))}
