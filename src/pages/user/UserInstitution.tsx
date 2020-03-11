@@ -23,6 +23,7 @@ import { setNotification } from '../../redux/actions/notificationActions';
 import { getParentUnits } from '../../api/institutionApi';
 import { NotificationVariant } from '../../types/notification.types';
 import NormalText from '../../components/NormalText';
+import InstitutionCardList from './institution/InstitutionCardList';
 
 const StyledButtonContainer = styled.div`
   display: flex;
@@ -41,32 +42,9 @@ const StyledInstitutionSearchContainer = styled.div`
 const UserInstitution: FC = () => {
   const user = useSelector((state: RootStore) => state.user);
   const [open, setOpen] = useState(false);
-  const [units, setUnits] = useState<FormikInstitutionUnit[]>([]);
   const [editMode, setEditMode] = useState(false);
   const { t } = useTranslation('profile');
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    const getUnitsForUser = async () => {
-      let units: FormikInstitutionUnit[] = [];
-      for (let orgunitid in user.authority.orgunitids) {
-        const currentSubunitid = user.authority.orgunitids[orgunitid];
-        const unit = await getParentUnits(currentSubunitid);
-        if (!unit.error) {
-          units.push(unit);
-        }
-      }
-      if (user.authority.orgunitids.length > 0 && units.length === 0) {
-        dispatch(setNotification(t('feedback:error.get_parent_units'), NotificationVariant.Error));
-      }
-      setUnits(units);
-    };
-    if (user.authority.orgunitids?.length > 0) {
-      getUnitsForUser();
-    } else {
-      setUnits([]);
-    }
-  }, [user.authority.orgunitids, dispatch, t]);
 
   const toggleOpen = () => {
     setOpen(!open);
@@ -86,15 +64,12 @@ const UserInstitution: FC = () => {
       if (subunits.length === 0) {
         await addOrgunitIdToAuthorityAndDispatchNotification(id, user.authority.systemControlNumber);
       } else {
-        const lastSubunit = subunits.slice(-1)[0];
-        await addOrgunitIdToAuthorityAndDispatchNotification(lastSubunit.id, user.authority.systemControlNumber);
+        const lastSubunit = subunits.pop();
+        await addOrgunitIdToAuthorityAndDispatchNotification(lastSubunit!.id, user.authority.systemControlNumber);
       }
     } catch (error) {
       dispatch(setNotification(t('feedback:error.update_authority'), NotificationVariant.Error));
     }
-    // TODO: remove this when we get data from backend
-    const filteredSubunits = subunits.filter((subunit: InstitutionUnitBase) => subunit.name !== '');
-    setUnits([...units, { id, name, subunits: filteredSubunits, unit }]);
   };
 
   const handleSubmit = async (values: FormikInstitutionUnit, { resetForm }: any) => {
@@ -135,14 +110,10 @@ const UserInstitution: FC = () => {
       <Heading>{t('heading.organizations')}</Heading>
       <Formik enableReinitialize initialValues={emptyFormikUnit} onSubmit={handleSubmit} validateOnChange={false}>
         <Form>
+          {!editMode && <InstitutionCardList onEdit={handleEdit} open={open} />}
           <Field name={FormikInstitutionUnitFieldNames.UNIT}>
             {({ field: { name, value }, form: { values, setFieldValue, resetForm } }: FieldProps) => (
               <>
-                {!editMode && units.length > 0
-                  ? units.map((unit: FormikInstitutionUnit, index: number) => (
-                      <InstitutionCard key={index} unit={unit} onEdit={handleEdit} />
-                    ))
-                  : !open && <NormalText>{t('organization.no_institutions_found')}</NormalText>}
                 {open && (
                   <StyledInstitutionSearchContainer>
                     <InstitutionSearch
@@ -157,14 +128,14 @@ const UserInstitution: FC = () => {
                       }}
                       placeholder={editMode ? values.name : t('organization.search_for_institution')}
                     />
-                    {values.unit && (
+                    {value && (
                       <>
                         <InstitutionSelector counter={0} unit={value} />
                         <StyledButton
                           variant="contained"
                           type="submit"
                           color="primary"
-                          disabled={!values.unit}
+                          disabled={!value}
                           data-testid="institution-add-button">
                           {editMode ? t('common:edit') : t('common:add')}
                         </StyledButton>
