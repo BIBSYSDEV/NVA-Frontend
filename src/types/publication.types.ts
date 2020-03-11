@@ -73,6 +73,7 @@ interface PublicationEntityDescription {
   };
   language: LanguageCodes;
   projects: Project[];
+  contributors: Contributor[];
 }
 
 const emptyPublicationEntityDescription: PublicationEntityDescription = {
@@ -88,6 +89,18 @@ const emptyPublicationEntityDescription: PublicationEntityDescription = {
   },
   language: LanguageCodes.NORWEGIAN_BOKMAL,
   projects: [],
+  contributors: [
+    // {
+    //   identity: {
+    //     id: '123',
+    //     name: 'Navnesen, Navn',
+    //     orcId: 'orc123',
+    //     arpId: 'arp123',
+    //   },
+    //   role: 'Creator',
+    //   sequence: 0,
+    // },
+  ],
 };
 
 export type PublicationPreview = Pick<

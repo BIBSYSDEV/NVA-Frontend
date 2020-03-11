@@ -3,9 +3,15 @@ export interface Contributor {
   institutions: Institution[];
   type: ContributorType | '';
   orcid?: string;
+  systemControlNumber?: string;
+
+  // New model backend
   corresponding?: boolean;
   email?: string;
-  systemControlNumber?: string;
+  identity: {
+    name: string;
+  };
+  sequence: number;
 }
 
 interface Institution {
@@ -19,9 +25,15 @@ export const emptyContributor: Contributor = {
   institutions: [],
   type: '',
   orcid: '',
+  systemControlNumber: '',
+
+  // New model
   corresponding: false,
   email: '',
-  systemControlNumber: '',
+  identity: {
+    name: '',
+  },
+  sequence: 0,
 };
 
 enum ContributorType {
