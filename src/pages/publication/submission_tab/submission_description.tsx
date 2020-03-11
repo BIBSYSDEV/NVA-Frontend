@@ -9,7 +9,7 @@ const SubmissionDescription: React.FC = () => {
   const { t } = useTranslation('publication');
   const { values }: FormikProps<Publication> = useFormikContext();
 
-  const { mainTitle, abstract, description, npiDiscipline, tags, date, language } = values.entityDescription;
+  const { mainTitle, abstract, description, npiDiscipline, tags, date, language, projects } = values.entityDescription;
 
   return (
     <>
@@ -28,7 +28,7 @@ const SubmissionDescription: React.FC = () => {
         {date.day && `-${date.day}`}
       </LabelContentRow>
       <LabelContentRow label={t('description.project_association')}>
-        {values.entityDescription.projects.map(project => (
+        {projects.map(project => (
           <SubmissionContentText key={project.cristinProjectId}>{project.titles?.[0]?.title}</SubmissionContentText>
         ))}
       </LabelContentRow>

@@ -4,7 +4,7 @@ import { setNotification } from '../../redux/actions/notificationActions';
 import i18n from '../../translations/i18n';
 import { useDispatch } from 'react-redux';
 import { CircularProgress, Link } from '@material-ui/core';
-import { Publication } from '../../types/publication.types';
+import { Publication, emptyPublication } from '../../types/publication.types';
 import styled from 'styled-components';
 import ContentPage from '../../components/ContentPage';
 import { useTranslation } from 'react-i18next';
@@ -65,6 +65,10 @@ const PublicationPage: FC<PublicationPageProps> = ({ publicationId }) => {
     loadData();
   }, [dispatch, publicationId]);
 
+  const { mainTitle, abstract, description, tags, date, projects } = publication
+    ? publication.entityDescription
+    : emptyPublication.entityDescription;
+
   return (
     <>
       {isLoadingPublication ? (
@@ -73,7 +77,7 @@ const PublicationPage: FC<PublicationPageProps> = ({ publicationId }) => {
         <ContentPage>
           {publication ? (
             <>
-              <Heading>{publication.entityDescription.mainTitle}</Heading>
+              <Heading>{mainTitle}</Heading>
               {publication.authors && <PublicationPageAuthors authors={publication.authors} />}
               <StyledContentWrapper>
                 <StyledSidebar>
@@ -88,9 +92,9 @@ const PublicationPage: FC<PublicationPageProps> = ({ publicationId }) => {
                   )}
                   <StyledSidebarCard>
                     <LabelContentRowForPublicationPage label={t('description.date_published')}>
-                      {publication.entityDescription.date.year}
-                      {publication.entityDescription.date.month && `-${publication.entityDescription.date.month}`}
-                      {publication.entityDescription.date.day && `-${publication.entityDescription.date.day}`}
+                      {date.year}
+                      {date.month && `-${date.month}`}
+                      {date.day && `-${date.day}`}
                     </LabelContentRowForPublicationPage>
                     <LabelContentRowForPublicationPage label={t('references.isbn')}>
                       {publication?.reference?.book?.isbn || publication?.reference?.report?.isbn}
@@ -103,25 +107,25 @@ const PublicationPage: FC<PublicationPageProps> = ({ publicationId }) => {
                       <Link href={publication.doiLink}>{publication.doiLink}</Link>
                     </LabelContentRowForPublicationPage>
                   )}
-                  {publication.entityDescription.abstract && (
+                  {abstract && (
                     <LabelContentRowForPublicationPage label={t('description.abstract')}>
-                      {publication.entityDescription.abstract}
+                      {abstract}
                     </LabelContentRowForPublicationPage>
                   )}
-                  {publication.entityDescription.description && (
+                  {description && (
                     <LabelContentRowForPublicationPage label={t('description.description')}>
-                      {publication.entityDescription.description}
+                      {description}
                     </LabelContentRowForPublicationPage>
                   )}
-                  {publication.entityDescription.tags && (
+                  {tags && (
                     <LabelContentRowForPublicationPage label={t('description.tags')}>
-                      {publication.entityDescription.tags}
+                      {tags}
                     </LabelContentRowForPublicationPage>
                   )}
                   <PublicationPageJournal publication={publication} />
-                  {publication.entityDescription.projects.length > 0 && (
+                  {projects.length > 0 && (
                     <LabelContentRowForPublicationPage label={t('description.project_association')}>
-                      {publication.entityDescription.projects?.[0].titles?.[0].title}
+                      {projects?.[0].titles?.[0].title}
                     </LabelContentRowForPublicationPage>
                   )}
                   <PublicationPageSeries publication={publication} />
