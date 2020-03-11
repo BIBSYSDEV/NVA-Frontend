@@ -10,9 +10,8 @@ export interface RecursiveInstitutionUnit extends InstitutionUnitBase {
 export interface FormikInstitutionUnit extends InstitutionUnitBase {
   subunits: InstitutionUnitBase[];
   unit: RecursiveInstitutionUnit;
+  editId?: string;
 }
-
-export type InstitutionUnit = Pick<FormikInstitutionUnit, 'name' | 'id' | 'subunits'>;
 
 export const emptyRecursiveUnit: RecursiveInstitutionUnit = {
   name: '',
@@ -32,6 +31,7 @@ export enum FormikInstitutionUnitFieldNames {
   ID = 'id',
   SUBUNITS = 'subunits',
   UNIT = 'unit',
+  EDIT_ID = 'editId',
 }
 
 export interface InstitutionUnitResponseType {

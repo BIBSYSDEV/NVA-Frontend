@@ -1,6 +1,5 @@
-import React, { useState, FC, useEffect } from 'react';
+import React, { useState, FC } from 'react';
 import Card from '../../components/Card';
-import InstitutionCard from './institution/InstitutionCard';
 import { Button } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootStore } from './../../redux/reducers/rootReducer';
@@ -8,22 +7,19 @@ import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import InstitutionSelector from './institution/InstitutionSelector';
 import Heading from '../../components/Heading';
-import { Formik, FormikProps, Field, FieldProps } from 'formik';
+import { Formik, Field, FieldProps, Form } from 'formik';
 import InstitutionSearch from '../publication/references_tab/components/InstitutionSearch';
 import {
   emptyRecursiveUnit,
-  InstitutionUnitBase,
-  InstitutionUnit,
   emptyFormikUnit,
   FormikInstitutionUnitFieldNames,
   FormikInstitutionUnit,
 } from '../../types/institution.types';
-import { updateInstitutionForAuthority } from '../../api/authorityApi';
+import { AuthorityQualifiers, updateQualifierIdForAuthority, addQualifierIdForAuthority } from '../../api/authorityApi';
 import { setAuthorityData } from '../../redux/actions/userActions';
 import { setNotification } from '../../redux/actions/notificationActions';
-import { getParentUnits } from '../../api/institutionApi';
 import { NotificationVariant } from '../../types/notification.types';
-import NormalText from '../../components/NormalText';
+import InstitutionCardList from './institution/InstitutionCardList';
 
 const StyledButtonContainer = styled.div`
   display: flex;
@@ -42,38 +38,16 @@ const StyledInstitutionSearchContainer = styled.div`
 const UserInstitution: FC = () => {
   const user = useSelector((state: RootStore) => state.user);
   const [open, setOpen] = useState(false);
-  const [units, setUnits] = useState<InstitutionUnit[]>([]);
+  const [editMode, setEditMode] = useState(false);
   const { t } = useTranslation('profile');
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    const getUnitsForUser = async () => {
-      let units: InstitutionUnit[] = [];
-      for (let orgunitid in user.authority.orgunitids) {
-        const currentSubunitid = user.authority.orgunitids[orgunitid];
-        const unit = await getParentUnits(currentSubunitid);
-        if (!unit.error) {
-          units.push(unit);
-        }
-      }
-      if (user.authority.orgunitids.length > 0 && units.length === 0) {
-        dispatch(setNotification(t('feedback:error.get_parent_units'), NotificationVariant.Error));
-      }
-      setUnits(units);
-    };
-    if (user.authority.orgunitids?.length > 0) {
-      getUnitsForUser();
-    } else {
-      setUnits([]);
-    }
-  }, [user.authority.orgunitids, dispatch, t]);
 
   const toggleOpen = () => {
     setOpen(!open);
   };
 
-  const updateAuthorityAndDispatch = async (id: string, scn: string) => {
-    const updatedAuthority = await updateInstitutionForAuthority(id, scn);
+  const addOrgunitIdToAuthorityAndDispatchNotification = async (id: string, scn: string) => {
+    const updatedAuthority = await addQualifierIdForAuthority(scn, AuthorityQualifiers.ORGUNIT_ID, id);
     if (updatedAuthority.error) {
       dispatch(setNotification(updatedAuthority.error, NotificationVariant.Error));
     } else if (updatedAuthority) {
@@ -81,82 +55,104 @@ const UserInstitution: FC = () => {
     }
   };
 
-  const handleAddInstitution = async ({ name, id, subunits }: InstitutionUnit) => {
+  const handleAddInstitution = async ({ name, id, subunits, unit }: FormikInstitutionUnit) => {
     try {
       if (subunits.length === 0) {
-        await updateAuthorityAndDispatch(id, user.authority.systemControlNumber);
+        await addOrgunitIdToAuthorityAndDispatchNotification(id, user.authority.systemControlNumber);
       } else {
-        const lastSubunit = subunits.slice(-1)[0];
-        await updateAuthorityAndDispatch(lastSubunit.id, user.authority.systemControlNumber);
+        const lastSubunit = subunits.pop();
+        await addOrgunitIdToAuthorityAndDispatchNotification(lastSubunit!.id, user.authority.systemControlNumber);
       }
     } catch (error) {
       dispatch(setNotification(t('feedback:error.update_authority'), NotificationVariant.Error));
     }
-    // TODO: remove this when we get data from backend
-    const filteredSubunits = subunits.filter((subunit: InstitutionUnitBase) => subunit.name !== '');
-    setUnits([...units, { id, name, subunits: filteredSubunits }]);
-
-    setOpen(false);
   };
 
-  const onSubmit = async (values: FormikInstitutionUnit, { resetForm }: any) => {
-    handleAddInstitution({ name: values.name, id: values.id, subunits: values.subunits });
-    resetForm(emptyFormikUnit);
+  const handleSubmit = async (values: FormikInstitutionUnit, { resetForm }: any) => {
+    if (editMode && values.editId) {
+      const organizationUnitId = values.subunits.length > 0 ? values.subunits.pop()!.id : values.id;
+      const updatedAuthority = await updateQualifierIdForAuthority(
+        user.authority.systemControlNumber,
+        AuthorityQualifiers.ORGUNIT_ID,
+        values.editId,
+        organizationUnitId
+      );
+      if (updatedAuthority.error) {
+        dispatch(setNotification(updatedAuthority.error, NotificationVariant.Error));
+      } else if (updatedAuthority) {
+        dispatch(setAuthorityData(updatedAuthority));
+        dispatch(setNotification(t('feedback:success.update_identifier')));
+      }
+    } else {
+      await handleAddInstitution({
+        name: values.name,
+        id: values.id,
+        subunits: values.subunits,
+        unit: values.unit,
+      });
+      resetForm(emptyFormikUnit);
+    }
+    setOpen(false);
+    setEditMode(false);
+  };
+
+  const handleEdit = () => {
+    setOpen(true);
+    setEditMode(true);
   };
 
   return (
     <Card>
       <Heading>{t('heading.organizations')}</Heading>
-      {units.length > 0 ? (
-        units.map((unit: InstitutionUnit, index: number) => <InstitutionCard key={index} unit={unit} />)
-      ) : (
-        <>{!open && <NormalText>{t('organization.no_institutions_found')}</NormalText>}</>
-      )}
-      <Formik enableReinitialize initialValues={emptyFormikUnit} onSubmit={onSubmit} validateOnChange={false}>
-        {({ values, setFieldValue, handleSubmit, resetForm }: FormikProps<FormikInstitutionUnit>) => (
+      <Formik enableReinitialize initialValues={emptyFormikUnit} onSubmit={handleSubmit} validateOnChange={false}>
+        <Form>
+          {!editMode && <InstitutionCardList onEdit={handleEdit} open={open} />}
           <Field name={FormikInstitutionUnitFieldNames.UNIT}>
-            {({ field: { name, value } }: FieldProps) =>
-              open && (
-                <StyledInstitutionSearchContainer>
-                  <InstitutionSearch
-                    dataTestId="autosearch-institution"
-                    label={t('organization.institution')}
-                    clearSearchField={values.name === ''}
-                    setValueFunction={inputValue => {
-                      setFieldValue(FormikInstitutionUnitFieldNames.NAME, inputValue.name);
-                      setFieldValue(FormikInstitutionUnitFieldNames.ID, inputValue.id);
-                      setFieldValue(name, inputValue ?? emptyRecursiveUnit);
-                    }}
-                    placeholder={t('organization.search_for_institution')}
-                  />
-                  {values.unit && (
-                    <>
-                      <InstitutionSelector counter={0} unit={value} />
-                      <StyledButton
-                        onClick={() => handleSubmit()}
-                        variant="contained"
-                        type="submit"
-                        color="primary"
-                        disabled={!values.unit}
-                        data-testid="institution-add-button">
-                        {t('common:add')}
-                      </StyledButton>
-                      <StyledButton
-                        onClick={() => {
-                          toggleOpen();
-                          resetForm({});
-                        }}
-                        variant="contained"
-                        color="secondary">
-                        {t('common:cancel')}
-                      </StyledButton>
-                    </>
-                  )}
-                </StyledInstitutionSearchContainer>
-              )
-            }
+            {({ field: { name, value }, form: { values, setFieldValue, resetForm } }: FieldProps) => (
+              <>
+                {open && (
+                  <StyledInstitutionSearchContainer>
+                    <InstitutionSearch
+                      dataTestId="autosearch-institution"
+                      disabled={editMode}
+                      label={t('organization.institution')}
+                      clearSearchField={values.name === ''}
+                      setValueFunction={inputValue => {
+                        setFieldValue(FormikInstitutionUnitFieldNames.NAME, inputValue.name);
+                        setFieldValue(FormikInstitutionUnitFieldNames.ID, inputValue.id);
+                        setFieldValue(name, inputValue ?? emptyRecursiveUnit);
+                      }}
+                      placeholder={editMode ? values.name : t('organization.search_for_institution')}
+                    />
+                    {value && (
+                      <>
+                        <InstitutionSelector counter={0} unit={value} />
+                        <StyledButton
+                          variant="contained"
+                          type="submit"
+                          color="primary"
+                          disabled={!value}
+                          data-testid="institution-add-button">
+                          {editMode ? t('common:edit') : t('common:add')}
+                        </StyledButton>
+                        <StyledButton
+                          onClick={() => {
+                            toggleOpen();
+                            resetForm({});
+                            setEditMode(false);
+                          }}
+                          variant="contained"
+                          color="secondary">
+                          {t('common:cancel')}
+                        </StyledButton>
+                      </>
+                    )}
+                  </StyledInstitutionSearchContainer>
+                )}
+              </>
+            )}
           </Field>
-        )}
+        </Form>
       </Formik>
       {!open && (
         <StyledButtonContainer>

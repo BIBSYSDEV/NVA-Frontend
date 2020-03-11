@@ -86,14 +86,70 @@ export const createAuthority = async (user: User) => {
         error: i18n.t('feedback:error.create_authority'),
       };
     }
-  } catch (error) {
+  } catch {
     return {
       error: i18n.t('feedback:error.create_authority'),
     };
   }
 };
 
-export const removeIdFromAuthority = async (
+export const addQualifierIdForAuthority = async (
+  systemControlNumber: string,
+  qualifier: AuthorityQualifiers,
+  identifier: string
+) => {
+  const url = `${AuthorityApiPaths.AUTHORITY}/${systemControlNumber}/identifiers/${qualifier}/${identifier}`;
+
+  try {
+    const idToken = await getIdToken();
+    const headers = {
+      Authorization: `Bearer ${idToken}`,
+    };
+    const response = await Axios.post(url, { headers });
+    if (response.status === StatusCode.OK) {
+      return response.data;
+    } else if (response.status === StatusCode.NO_CONTENT) {
+      return;
+    } else {
+      return {
+        error: i18n.t('feedback:error.update_authority'),
+      };
+    }
+  } catch {
+    return {
+      error: i18n.t('feedback:error.update_authority'),
+    };
+  }
+};
+
+export const updateQualifierIdForAuthority = async (
+  systemControlNumber: string,
+  qualifier: AuthorityQualifiers,
+  identifier: string,
+  updatedIdentifier: string
+) => {
+  const url = `${AuthorityApiPaths.AUTHORITY}/${systemControlNumber}/identifiers/${qualifier}/${identifier}/update/${updatedIdentifier}`;
+
+  try {
+    const idToken = await getIdToken();
+    const headers = {
+      Authorization: `Bearer ${idToken}`,
+    };
+
+    const response = await Axios.put(url, { headers });
+    if (response.status === StatusCode.OK) {
+      return response.data;
+    } else {
+      return null;
+    }
+  } catch {
+    return {
+      error: i18n.t('feedback:error.update_identifier'),
+    };
+  }
+};
+
+export const removeQualifierIdFromAuthority = async (
   systemControlNumber: string,
   qualifier: AuthorityQualifiers,
   identifier: string
@@ -136,7 +192,7 @@ const updateAuthorityAndHandleErrors = async (url: string, body: any) => {
         error: i18n.t('feedback:error.update_authority'),
       };
     }
-  } catch (error) {
+  } catch {
     return {
       error: i18n.t('feedback:error.update_authority'),
     };

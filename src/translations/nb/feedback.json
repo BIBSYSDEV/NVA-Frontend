@@ -22,6 +22,7 @@
     "search": "Søk feilet",
     "search_institutions": "Kunne ikke finne institusjon",
     "update_authority": "Kunne ikke oppdatere autoritet",
+    "update_identifier": "Kunne ikke oppdatere identifikatoren",
     "update_publication": "Kunne ikke oppdatere publikasjon"
   },
   "success": {
@@ -29,6 +30,8 @@
     "create_publication": "Publikasjonen er opprettet",
     "delete_identifier": "Identifikatoren ble slettet",
     "login": "Logget inn",
-    "update_authority": "Forfatter er oppdatert"
+    "update_authority": "Forfatter er oppdatert",
+    "update_identifier": "Identifikatoren er oppdatert",
+    "update_publication": "Publikasjonen er oppdatert"
   }
 }

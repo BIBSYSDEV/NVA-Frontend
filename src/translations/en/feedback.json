@@ -22,6 +22,7 @@
     "search": "Search failed",
     "search_institutions": "Could not find institution",
     "update_authority": "Could not update authority",
+    "update_identifier": "Could not update identifier",
     "update_publication": "Could not update publication"
   },
   "success": {
@@ -29,6 +30,8 @@
     "create_publication": "New publication created",
     "delete_identifier": "Deleted identifier",
     "login": "Logged in",
-    "update_authority": "Updated authority"
+    "update_authority": "Updated authority",
+    "update_identifier": "Updated identifier",
+    "update_publication": "Updated publication"
   }
 }
