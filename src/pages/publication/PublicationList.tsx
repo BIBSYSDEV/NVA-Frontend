@@ -49,8 +49,8 @@ const PublicationList: FC<PublicationListProps> = ({ publications }) => {
 
   const handleOnClick = (publication: PublicationPreview) => {
     setOpenModal(true);
-    setDeletePublicationId(publication.id);
-    setDeletePublicationTitle(publication.title);
+    setDeletePublicationId(publication.identifier);
+    setDeletePublicationTitle(publication.mainTitle);
   };
 
   return (
@@ -75,9 +75,9 @@ const PublicationList: FC<PublicationListProps> = ({ publications }) => {
           {publications
             .filter(publication => publication.status !== PublicationStatus.PUBLISHED)
             .map(publication => (
-              <StyledTableRow key={publication.id}>
+              <StyledTableRow key={publication.identifier}>
                 <TableCell component="th" scope="row">
-                  <NormalText>{publication.title}</NormalText>
+                  <NormalText>{publication.mainTitle}</NormalText>
                 </TableCell>
                 <StyledTableCellForStatus>
                   <NormalText>{t(`publication:status.${publication.status}`)}</NormalText>
@@ -89,8 +89,8 @@ const PublicationList: FC<PublicationListProps> = ({ publications }) => {
                   <Button
                     color="primary"
                     component={RouterLink}
-                    to={`/publication/${publication.id}`}
-                    data-testid={`edit-publication-${publication.id}`}>
+                    to={`/publication/${publication.identifier}`}
+                    data-testid={`edit-publication-${publication.identifier}`}>
                     <StyledEditIcon />
                     <NormalText>{t('common:edit')}</NormalText>
                   </Button>
@@ -99,7 +99,7 @@ const PublicationList: FC<PublicationListProps> = ({ publications }) => {
                   <Button
                     color="secondary"
                     variant="outlined"
-                    data-testid={`delete-publication-${publication.id}`}
+                    data-testid={`delete-publication-${publication.identifier}`}
                     onClick={() => handleOnClick(publication)}>
                     <StyledDeleteIcon />
                     {t('common:remove')}

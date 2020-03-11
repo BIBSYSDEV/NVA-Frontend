@@ -10,79 +10,40 @@ import { getIdToken } from './userApi';
 import { NotificationVariant } from '../types/notification.types';
 
 export enum PublicationsApiPaths {
-  SEARCH = '/publications',
-  CREATE_WITH_DOI = '/publications/doi',
-  INSERT_RESOURCE = '/publications/insert-resource',
+  SEARCH = '/search/publications',
   UPDATE_RESOURCE = '/publications/update-resource',
-  FETCH_RESOURCE = '/publications/fetch-resource',
+  FETCH_RESOURCE = '/publication',
   FETCH_MY_RESOURCES = '/publications/fetch-my-resources',
   DOI_LOOKUP = '/doi-fetch',
   DOI_REQUESTS = '/publications/doi-requests',
   FOR_APPROVAL = '/publications/approval',
 }
 
-export const createNewPublicationFromDoi = async (doiUrl: string, dispatch: Dispatch) => {
-  const payload = { doiUrl };
-  try {
-    const idToken = await getIdToken();
-    const response = await Axios.post(PublicationsApiPaths.CREATE_WITH_DOI, payload, {
-      headers: {
-        Authorization: `Bearer ${idToken}`,
-      },
-    });
-    if (response.status === StatusCode.OK) {
-      dispatch(setNotification(i18n.t('feedback:success.create_publication')));
-    } else {
-      dispatch(setNotification(i18n.t('feedback:error.create_publication'), NotificationVariant.Error));
-    }
-  } catch {
-    dispatch(setNotification(i18n.t('feedback:error.create_publication'), NotificationVariant.Error));
-  }
-};
-
-export const createNewPublication = async (publication: Publication, dispatch: Dispatch) => {
-  try {
-    const idToken = await getIdToken();
-    const response = await Axios.post(PublicationsApiPaths.INSERT_RESOURCE, publication, {
-      headers: {
-        Authorization: `Bearer ${idToken}`,
-      },
-    });
-    if (response.status === StatusCode.OK) {
-      dispatch(setNotification(i18n.t('feedback:success.create_publication')));
-    } else {
-      dispatch(setNotification(i18n.t('feedback:error.create_publication'), NotificationVariant.Error));
-    }
-  } catch {
-    dispatch(setNotification(i18n.t('feedback:error.create_publication'), NotificationVariant.Error));
-  }
-};
-
-export const updatePublication = async (publication: Publication, dispatch: Dispatch) => {
-  const { id } = publication;
-  if (!id) {
-    dispatch(setNotification(i18n.t('feedback:error.update_publication'), NotificationVariant.Error));
-    return;
+export const updatePublication = async (publication: Publication) => {
+  const { identifier } = publication;
+  if (!identifier) {
+    return { error: i18n.t('feedback:error.update_publication') };
   }
   const idToken = await getIdToken();
   try {
-    const response = await Axios.put(`${PublicationsApiPaths.UPDATE_RESOURCE}/${id}`, publication, {
+    const response = await Axios.put(`${PublicationsApiPaths.UPDATE_RESOURCE}/${identifier}`, publication, {
       headers: {
         Authorization: `Bearer ${idToken}`,
       },
     });
     if (response.status === StatusCode.OK) {
-      dispatch(setNotification(i18n.t('feedback:success.update_publication')));
+      return response.data;
     } else {
-      dispatch(setNotification(i18n.t('feedback:error.update_publication'), NotificationVariant.Error));
+      return null;
     }
   } catch {
-    dispatch(setNotification(i18n.t('feedback:error.update_publication'), NotificationVariant.Error));
+    return { error: i18n.t('feedback:error.update_publication') };
   }
 };
 
 export const getPublication = async (id: string) => {
   const url = `${PublicationsApiPaths.FETCH_RESOURCE}/${id}`;
+
   try {
     const idToken = await getIdToken();
     const response = await Axios.get(url, {
@@ -95,8 +56,8 @@ export const getPublication = async (id: string) => {
     } else {
       return null;
     }
-  } catch (error) {
-    return { error };
+  } catch {
+    return { error: i18n.t('feedback:error.get_publication') };
   }
 };
 
@@ -151,9 +112,11 @@ export const search = async (searchTerm: string, dispatch: Dispatch, offset?: nu
         Authorization: `Bearer ${idToken}`,
       },
     });
+
     if (response.status === StatusCode.OK) {
       const currentOffset = offset || 0;
       const result = response.data.slice(currentOffset, currentOffset + SEARCH_RESULTS_PER_PAGE);
+
       dispatch(searchForPublications(result, searchTerm, response.data.length, offset));
     } else {
       dispatch(setNotification(i18n.t('feedback:error.search', NotificationVariant.Error)));

@@ -46,10 +46,7 @@ const LinkPublicationPanel: FC<LinkPublicationPanelProps> = ({ expanded, onChang
     if (!doi) {
       return;
     }
-    // TODO: Create new publication with DOI
-
-    // TODO: Set created publication id as URL param
-    history.push({ search: `?title=${doi.title}` });
+    history.push(`/publication/${doi.identifier}`);
     openForm();
   };
 
