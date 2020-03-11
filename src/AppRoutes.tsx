@@ -32,7 +32,7 @@ const AppRoutes: FC = () => {
         {user.isInstitutionAdmin && <Route exact path="/admin-institution-users" component={AdminUsersPage} />}
         {user.isLoggedIn && <Route exact path="/public-profile/:userName" component={PublicProfile} />}
         <Route exact path="/search" component={Search} />
-        <Route exact path="/publication/:publicationId" component={PublicationPage} />
+        <Route exact path="/publication/:publicationId/public" component={PublicationPage} />
         <Route exact path="/search/:searchTerm" component={Search} />
         <Route exact path="/search/:searchTerm/:offset" component={Search} />
         {user.isLoggedIn && <Route exact path="/user" component={User} />}
