@@ -54,9 +54,9 @@ const StyledButton = styled(Button)`
 `;
 
 const EditPublication: FC = () => {
-  const { id } = useParams();
+  const { identifier } = useParams();
   const [expanded, setExpanded] = useState<string | false>(false);
-  const [showForm, setShowForm] = useState(!!id);
+  const [showForm, setShowForm] = useState(!!identifier);
   const { t } = useTranslation();
   const [uppy] = useState(createUppy(shouldAllowMultipleFiles));
 
@@ -110,7 +110,7 @@ const EditPublication: FC = () => {
           </StyledButton>
         </>
       ) : (
-        <PublicationForm uppy={uppy} id={id} />
+        <PublicationForm uppy={uppy} identifier={identifier} closeForm={() => setShowForm(false)} />
       )}
     </>
   );

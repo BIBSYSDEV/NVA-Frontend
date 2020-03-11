@@ -39,7 +39,7 @@ const SubmissionPanel: React.FC<SubmissionPanelProps> = ({ savePublication }) =>
 
   const publishPublication = () => {
     savePublication();
-    history.push(`/publication/${values.id}`);
+    history.push(`/publication/${values.identifier}`);
   };
 
   return (

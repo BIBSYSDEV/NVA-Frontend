@@ -16,6 +16,9 @@ import ReferencesPanel from './ReferencesPanel';
 import SubmissionPanel from './SubmissionPanel';
 import { emptyFile, File, Uppy } from '../../types/file.types';
 import { getPublication } from '../../api/publicationApi';
+import { useDispatch } from 'react-redux';
+import { setNotification } from '../../redux/actions/notificationActions';
+import { NotificationVariant } from '../../types/notification.types';
 
 const shouldAllowMultipleFiles = false;
 
@@ -25,13 +28,19 @@ const StyledPublication = styled.div`
 
 interface PublicationFormProps {
   uppy: Uppy;
-  id?: string;
+  closeForm: () => void;
+  identifier?: string;
 }
 
-const PublicationForm: FC<PublicationFormProps> = ({ uppy = createUppy(shouldAllowMultipleFiles), id }) => {
+const PublicationForm: FC<PublicationFormProps> = ({
+  uppy = createUppy(shouldAllowMultipleFiles),
+  identifier,
+  closeForm,
+}) => {
   const { t } = useTranslation('publication');
   const [tabNumber, setTabNumber] = useState(0);
   const [initialValues, setInitialValues] = useState(emptyPublication);
+  const dispatch = useDispatch();
 
   const validationSchema = Yup.object().shape({
     title: Yup.object().shape({
@@ -110,20 +119,15 @@ const PublicationForm: FC<PublicationFormProps> = ({ uppy = createUppy(shouldAll
   });
 
   useEffect(() => {
-    // TODO: Fetch publication by ID in URL
-    const searchParams = new URLSearchParams(window.location.search);
-    const title = searchParams.get('title') || '';
-
     // Get files uploaded from new publication view
     const files = Object.values(uppy.getState().files).map(file => ({ ...emptyFile, ...(file as File) }));
 
-    setInitialValues({
-      ...emptyPublication,
-      title: {
-        nb: title,
-      },
-      files,
-    });
+    if (files?.length) {
+      setInitialValues({
+        ...emptyPublication,
+        files,
+      });
+    }
   }, [uppy]);
 
   useEffect(() => {
@@ -133,13 +137,18 @@ const PublicationForm: FC<PublicationFormProps> = ({ uppy = createUppy(shouldAll
   useEffect(() => {
     const getPublicationById = async (id: string) => {
       const publication = await getPublication(id);
-      setInitialValues(publication);
+      if (publication.error) {
+        closeForm();
+        dispatch(setNotification(publication.error, NotificationVariant.Error));
+      } else {
+        setInitialValues({ ...emptyPublication, ...publication });
+      }
     };
 
-    if (id) {
-      getPublicationById(id);
+    if (identifier) {
+      getPublicationById(identifier);
     }
-  }, [id]);
+  }, [identifier, closeForm, dispatch]);
 
   const handleTabChange = (_: React.ChangeEvent<{}>, newTabNumber: number) => {
     setTabNumber(newTabNumber);
