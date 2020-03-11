@@ -38,22 +38,16 @@ interface NpiDiscipline {
   mainDiscipline: string;
 }
 
+export const emptyNpiDiscipline: NpiDiscipline = {
+  title: '',
+  mainDiscipline: '',
+};
+
 export interface Publication {
   modified: string; // date?
   createdDate: string; // date?
   createdBy: string;
-  abstract: string;
-  description: string;
-  npiDiscipline: NpiDiscipline;
-  tags: string[];
   doiLink: string;
-  publicationDate: {
-    year: string;
-    month: string;
-    day: string;
-  };
-  language: string; // enum?
-  projects: Project[];
   reference: Reference;
   authors: Contributor[];
   contributors: Contributor[];
@@ -68,10 +62,32 @@ export interface Publication {
 
 interface PublicationEntityDescription {
   mainTitle: string;
+  abstract: string;
+  description: string;
+  tags: string[];
+  npiDiscipline: NpiDiscipline;
+  date: {
+    year: string;
+    month: string;
+    day: string;
+  };
+  language: LanguageCodes;
+  projects: Project[];
 }
 
 const emptyPublicationEntityDescription: PublicationEntityDescription = {
   mainTitle: '',
+  abstract: '',
+  description: '',
+  tags: [],
+  npiDiscipline: emptyNpiDiscipline,
+  date: {
+    year: '',
+    month: '',
+    day: '',
+  },
+  language: LanguageCodes.NORWEGIAN_BOKMAL,
+  projects: [],
 };
 
 export type PublicationPreview = Pick<
@@ -80,7 +96,7 @@ export type PublicationPreview = Pick<
 >;
 export type PublishedPublicationPreview = Pick<
   Publication & PublicationEntityDescription,
-  'identifier' | 'mainTitle' | 'publicationDate' | 'reference' | 'authors' | 'status'
+  'identifier' | 'mainTitle' | 'date' | 'reference' | 'authors' | 'status'
 >;
 
 export interface Doi {
@@ -88,27 +104,12 @@ export interface Doi {
   title: string;
 }
 
-export const emptyNpiDiscipline = {
-  title: '',
-  mainDiscipline: '',
-};
-
 export const emptyPublication: Publication = {
   modified: '', // date?
   createdDate: '', // date?
   createdBy: '',
-  abstract: '',
-  description: '',
-  npiDiscipline: emptyNpiDiscipline,
-  tags: [],
   doiLink: '',
-  publicationDate: {
-    year: '',
-    month: '',
-    day: '',
-  },
-  language: LanguageCodes.NORWEGIAN_BOKMAL,
-  projects: [],
+
   reference: emptyReference,
   authors: [],
   contributors: [], // TODO: Merge with authors

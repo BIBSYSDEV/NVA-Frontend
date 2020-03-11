@@ -19,6 +19,7 @@ import { getPublication } from '../../api/publicationApi';
 import { useDispatch } from 'react-redux';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
+import deepmerge from 'deepmerge';
 
 const shouldAllowMultipleFiles = false;
 
@@ -141,7 +142,8 @@ const PublicationForm: FC<PublicationFormProps> = ({
         closeForm();
         dispatch(setNotification(publication.error, NotificationVariant.Error));
       } else {
-        setInitialValues({ ...emptyPublication, ...publication });
+        // TODO: revisit necessity of deepmerge when backend model has all fields
+        setInitialValues(deepmerge(emptyPublication, publication));
       }
     };
 

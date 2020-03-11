@@ -39,15 +39,15 @@ const StyledFieldHeader = styled.header`
 
 export enum DescriptionFieldNames {
   TITLE = 'entityDescription.mainTitle',
-  ABSTRACT = 'abstract',
-  DESCRIPTION = 'description',
-  NPI_DISCIPLINE = 'npiDiscipline',
-  TAGS = 'tags',
-  PUBLICATION_YEAR = 'publicationDate.year',
-  PUBLICATION_MONTH = 'publicationDate.month',
-  PUBLICATION_DAY = 'publicationDate.day',
-  LANGUAGE = 'language',
-  PROJECTS = 'projects',
+  ABSTRACT = 'entityDescription.abstract',
+  DESCRIPTION = 'entityDescription.description',
+  NPI_DISCIPLINE = 'entityDescription.npiDiscipline',
+  TAGS = 'entityDescription.tags',
+  PUBLICATION_YEAR = 'entityDescription.date.year',
+  PUBLICATION_MONTH = 'entityDescription.date.month',
+  PUBLICATION_DAY = 'entityDescription.date.day',
+  LANGUAGE = 'entityDescription.language',
+  PROJECTS = 'entityDescription.projects',
 }
 
 interface DescriptionPanelProps {

@@ -9,26 +9,26 @@ const SubmissionDescription: React.FC = () => {
   const { t } = useTranslation('publication');
   const { values }: FormikProps<Publication> = useFormikContext();
 
-  const { mainTitle } = values.entityDescription;
+  const { mainTitle, abstract, description, npiDiscipline, tags, date, language, projects } = values.entityDescription;
 
   return (
     <>
       <LabelContentRow label={t('common:title')}>{mainTitle}</LabelContentRow>
-      <LabelContentRow label={t('description.abstract')}>{values.abstract}</LabelContentRow>
-      <LabelContentRow label={t('description.description')}>{values.description}</LabelContentRow>
+      <LabelContentRow label={t('description.abstract')}>{abstract}</LabelContentRow>
+      <LabelContentRow label={t('description.description')}>{description}</LabelContentRow>
       <LabelContentRow label={t('description.npi_disciplines')}>
-        {values.npiDiscipline.mainDiscipline}
-        {values.npiDiscipline.title && `- ${values.npiDiscipline.title}`}
+        {npiDiscipline.mainDiscipline}
+        {npiDiscipline.title && `- ${npiDiscipline.title}`}
       </LabelContentRow>
-      <LabelContentRow label={t('description.tags')}>{values.tags.join(', ')}</LabelContentRow>
-      <LabelContentRow label={t('common:language')}>{t(`languages:${values.language}`)}</LabelContentRow>
+      <LabelContentRow label={t('description.tags')}>{tags.join(', ')}</LabelContentRow>
+      <LabelContentRow label={t('common:language')}>{t(`languages:${language}`)}</LabelContentRow>
       <LabelContentRow label={t('description.date_published')}>
-        {values.publicationDate.year}
-        {values.publicationDate.month && `-${values.publicationDate.month}`}
-        {values.publicationDate.day && `-${values.publicationDate.day}`}
+        {date.year}
+        {date.month && `-${date.month}`}
+        {date.day && `-${date.day}`}
       </LabelContentRow>
       <LabelContentRow label={t('description.project_association')}>
-        {values.projects.map(project => (
+        {projects.map(project => (
           <SubmissionContentText key={project.cristinProjectId}>{project.titles?.[0]?.title}</SubmissionContentText>
         ))}
       </LabelContentRow>
