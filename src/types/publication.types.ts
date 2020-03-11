@@ -49,8 +49,6 @@ export interface Publication {
   createdBy: string;
   doiLink: string;
   reference: Reference;
-  authors: Contributor[];
-  contributors: Contributor[];
   files: File[];
   status: PublicationStatus;
   shouldCreateDoi: boolean;
@@ -89,18 +87,7 @@ const emptyPublicationEntityDescription: PublicationEntityDescription = {
   },
   language: LanguageCodes.NORWEGIAN_BOKMAL,
   projects: [],
-  contributors: [
-    // {
-    //   identity: {
-    //     id: '123',
-    //     name: 'Navnesen, Navn',
-    //     orcId: 'orc123',
-    //     arpId: 'arp123',
-    //   },
-    //   role: 'Creator',
-    //   sequence: 0,
-    // },
-  ],
+  contributors: [],
 };
 
 export type PublicationPreview = Pick<
@@ -109,7 +96,7 @@ export type PublicationPreview = Pick<
 >;
 export type PublishedPublicationPreview = Pick<
   Publication & PublicationEntityDescription,
-  'identifier' | 'mainTitle' | 'date' | 'reference' | 'authors' | 'status'
+  'identifier' | 'mainTitle' | 'date' | 'reference' | 'contributors' | 'status'
 >;
 
 export interface Doi {
@@ -124,8 +111,6 @@ export const emptyPublication: Publication = {
   doiLink: '',
 
   reference: emptyReference,
-  authors: [],
-  contributors: [], // TODO: Merge with authors
   files: [],
   status: PublicationStatus.DRAFT,
   shouldCreateDoi: false,

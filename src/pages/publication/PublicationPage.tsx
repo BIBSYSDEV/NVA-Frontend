@@ -65,7 +65,7 @@ const PublicationPage: FC<PublicationPageProps> = ({ publicationId }) => {
     loadData();
   }, [dispatch, publicationId]);
 
-  const { mainTitle, abstract, description, tags, date, projects } = publication
+  const { mainTitle, abstract, description, tags, date, projects, contributors } = publication
     ? publication.entityDescription
     : emptyPublication.entityDescription;
 
@@ -78,7 +78,7 @@ const PublicationPage: FC<PublicationPageProps> = ({ publicationId }) => {
           {publication ? (
             <>
               <Heading>{mainTitle}</Heading>
-              {publication.authors && <PublicationPageAuthors authors={publication.authors} />}
+              {contributors && <PublicationPageAuthors contributors={contributors} />}
               <StyledContentWrapper>
                 <StyledSidebar>
                   <StyledSidebarCard>

@@ -7,11 +7,15 @@ import SubmissionContentText from './submission_content_text';
 
 const SubmissionContributors: React.FC = () => {
   const { t } = useTranslation('publication');
-  const { values }: FormikProps<Publication> = useFormikContext();
+  const {
+    values: {
+      entityDescription: { contributors },
+    },
+  }: FormikProps<Publication> = useFormikContext();
 
   return (
     <LabelContentRow label={t('heading.contributors')}>
-      {values.contributors.map(contributor => (
+      {contributors.map(contributor => (
         <SubmissionContentText key={contributor.identity.name}>
           {contributor.identity.name}
           {contributor.institutions.map(institution => institution?.name && `(${institution.name})`)}

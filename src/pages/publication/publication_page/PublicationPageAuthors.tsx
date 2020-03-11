@@ -8,13 +8,13 @@ const StyledAuthor = styled.span`
 `;
 
 interface PublicationPageProps {
-  authors: Contributor[];
+  contributors: Contributor[];
 }
 
-const PublicationPageAuthors: FC<PublicationPageProps> = ({ authors }) => (
+const PublicationPageAuthors: FC<PublicationPageProps> = ({ contributors }) => (
   <NormalText>
-    {authors.map((author, index) => {
-      return <StyledAuthor key={index}>{author.identity.name}</StyledAuthor>;
+    {contributors.map((contributor, index) => {
+      return <StyledAuthor key={index}>{contributor.identity.name}</StyledAuthor>;
     })}
   </NormalText>
 );

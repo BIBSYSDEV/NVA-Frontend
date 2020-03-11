@@ -38,20 +38,6 @@
       "month": "01",
       "day": "01"
     },
-    "authors": [
-      {
-        "identity": {
-          "name": "Oddny Osteloff"
-        },
-        "institutions": [
-          {
-            "id": "194.61.55.0",
-            "name": "NTNU, Fakultet for arkitektur og design, Institutt for arkitektur og teknologi"
-          }
-        ],
-        "type": "author"
-      }
-    ],
     "reference": {
       "type": "book",
       "book": {
@@ -70,20 +56,6 @@
       "month": "04",
       "day": "25"
     },
-    "authors": [
-      {
-        "identity": {
-          "name": "Oddny Osteloff"
-        },
-        "institutions": [
-          {
-            "id": "194.61.55.0",
-            "name": "NTNU, Fakultet for arkitektur og design, Institutt for arkitektur og teknologi"
-          }
-        ],
-        "type": "author"
-      }
-    ],
     "reference": {
       "type": "journalArticle",
       "journalArticle": {
