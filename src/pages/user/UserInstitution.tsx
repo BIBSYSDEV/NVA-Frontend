@@ -8,7 +8,7 @@ import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import InstitutionSelector from './institution/InstitutionSelector';
 import Heading from '../../components/Heading';
-import { Formik, FormikProps, Field, FieldProps } from 'formik';
+import { Formik, Field, FieldProps, Form } from 'formik';
 import InstitutionSearch from '../publication/references_tab/components/InstitutionSearch';
 import {
   emptyRecursiveUnit,
@@ -97,7 +97,7 @@ const UserInstitution: FC = () => {
     setUnits([...units, { id, name, subunits: filteredSubunits, unit }]);
   };
 
-  const onSubmit = async (values: FormikInstitutionUnit, { resetForm }: any) => {
+  const handleSubmit = async (values: FormikInstitutionUnit, { resetForm }: any) => {
     if (editMode && values.editId) {
       const organizationUnitId = values.subunits.length > 0 ? values.subunits.pop()!.id : values.id;
       const updatedAuthority = await updateQualifierIdForAuthority(
@@ -133,18 +133,16 @@ const UserInstitution: FC = () => {
   return (
     <Card>
       <Heading>{t('heading.organizations')}</Heading>
-      <Formik enableReinitialize initialValues={emptyFormikUnit} onSubmit={onSubmit} validateOnChange={false}>
-        {({ values, setFieldValue, handleSubmit, resetForm }: FormikProps<FormikInstitutionUnit>) => (
+      <Formik enableReinitialize initialValues={emptyFormikUnit} onSubmit={handleSubmit} validateOnChange={false}>
+        <Form>
           <Field name={FormikInstitutionUnitFieldNames.UNIT}>
-            {({ field: { name, value } }: FieldProps) => (
+            {({ field: { name, value }, form: { values, setFieldValue, resetForm } }: FieldProps) => (
               <>
-                {!editMode && units.length > 0 ? (
-                  units.map((unit: FormikInstitutionUnit, index: number) => (
-                    <InstitutionCard key={index} unit={unit} onEdit={handleEdit} />
-                  ))
-                ) : (
-                  <>{!open && <NormalText>{t('organization.no_institutions_found')}</NormalText>}</>
-                )}
+                {!editMode && units.length > 0
+                  ? units.map((unit: FormikInstitutionUnit, index: number) => (
+                      <InstitutionCard key={index} unit={unit} onEdit={handleEdit} />
+                    ))
+                  : !open && <NormalText>{t('organization.no_institutions_found')}</NormalText>}
                 {open && (
                   <StyledInstitutionSearchContainer>
                     <InstitutionSearch
@@ -163,7 +161,6 @@ const UserInstitution: FC = () => {
                       <>
                         <InstitutionSelector counter={0} unit={value} />
                         <StyledButton
-                          onClick={() => handleSubmit()}
                           variant="contained"
                           type="submit"
                           color="primary"
@@ -188,7 +185,7 @@ const UserInstitution: FC = () => {
               </>
             )}
           </Field>
-        )}
+        </Form>
       </Formik>
       {!open && (
         <StyledButtonContainer>
