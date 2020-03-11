@@ -1,6 +1,5 @@
-import React, { useState, FC, useEffect } from 'react';
+import React, { useState, FC } from 'react';
 import Card from '../../components/Card';
-import InstitutionCard from './institution/InstitutionCard';
 import { Button } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootStore } from './../../redux/reducers/rootReducer';
@@ -12,7 +11,6 @@ import { Formik, Field, FieldProps, Form } from 'formik';
 import InstitutionSearch from '../publication/references_tab/components/InstitutionSearch';
 import {
   emptyRecursiveUnit,
-  InstitutionUnitBase,
   emptyFormikUnit,
   FormikInstitutionUnitFieldNames,
   FormikInstitutionUnit,
@@ -20,9 +18,7 @@ import {
 import { AuthorityQualifiers, updateQualifierIdForAuthority, addQualifierIdForAuthority } from '../../api/authorityApi';
 import { setAuthorityData } from '../../redux/actions/userActions';
 import { setNotification } from '../../redux/actions/notificationActions';
-import { getParentUnits } from '../../api/institutionApi';
 import { NotificationVariant } from '../../types/notification.types';
-import NormalText from '../../components/NormalText';
 import InstitutionCardList from './institution/InstitutionCardList';
 
 const StyledButtonContainer = styled.div`

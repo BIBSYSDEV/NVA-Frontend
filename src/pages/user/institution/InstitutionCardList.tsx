@@ -1,6 +1,6 @@
 import React, { FC, useState, useEffect } from 'react';
 import InstitutionCard from './InstitutionCard';
-import { FormikInstitutionUnit, InstitutionUnitBase } from '../../../types/institution.types';
+import { FormikInstitutionUnit } from '../../../types/institution.types';
 import NormalText from '../../../components/NormalText';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootStore } from '../../../redux/reducers/rootReducer';
