@@ -1,7 +1,6 @@
 export interface Contributor {
   institutions: Institution[];
   type: ContributorType | '';
-  orcid?: string;
   systemControlNumber?: string;
 
   // New model backend
@@ -22,7 +21,6 @@ interface Institution {
 export const emptyContributor: Contributor = {
   institutions: [],
   type: '',
-  orcid: '',
   systemControlNumber: '',
 
   // New model
