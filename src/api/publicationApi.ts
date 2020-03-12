@@ -3,7 +3,7 @@ import { Dispatch } from 'redux';
 
 import { setNotification } from '../redux/actions/notificationActions';
 import i18n from '../translations/i18n';
-import { Publication } from '../types/publication.types';
+import { BackendPublication } from '../types/publication.types';
 import { SEARCH_RESULTS_PER_PAGE, StatusCode } from '../utils/constants';
 import { searchForPublications } from '../redux/actions/searchActions';
 import { getIdToken } from './userApi';
@@ -11,22 +11,21 @@ import { NotificationVariant } from '../types/notification.types';
 
 export enum PublicationsApiPaths {
   SEARCH = '/search/publications',
-  UPDATE_RESOURCE = '/publications/update-resource',
-  FETCH_RESOURCE = '/publication',
+  PUBLICATION = '/publication',
   FETCH_MY_RESOURCES = '/publications/fetch-my-resources',
   DOI_LOOKUP = '/doi-fetch',
   DOI_REQUESTS = '/publications/doi-requests',
   FOR_APPROVAL = '/publications/approval',
 }
 
-export const updatePublication = async (publication: Publication) => {
+export const updatePublication = async (publication: BackendPublication) => {
   const { identifier } = publication;
   if (!identifier) {
     return { error: i18n.t('feedback:error.update_publication') };
   }
   const idToken = await getIdToken();
   try {
-    const response = await Axios.put(`${PublicationsApiPaths.UPDATE_RESOURCE}/${identifier}`, publication, {
+    const response = await Axios.put(`${PublicationsApiPaths.PUBLICATION}/${identifier}`, publication, {
       headers: {
         Authorization: `Bearer ${idToken}`,
       },
@@ -42,7 +41,7 @@ export const updatePublication = async (publication: Publication) => {
 };
 
 export const getPublication = async (id: string) => {
-  const url = `${PublicationsApiPaths.FETCH_RESOURCE}/${id}`;
+  const url = `${PublicationsApiPaths.PUBLICATION}/${id}`;
 
   try {
     const idToken = await getIdToken();
