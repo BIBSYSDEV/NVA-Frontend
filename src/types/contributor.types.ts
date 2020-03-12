@@ -1,8 +1,6 @@
 // For available roles, see https://github.com/BIBSYSDEV/nva-datamodel-java/blob/develop/src/main/java/no/unit/nva/model/Role.java
 enum ContributorRole {
-  Creator = 'Creator',
-  Author = 'Author',
-  Supervisor = 'Supervisor',
+  CREATOR = 'Creator',
 }
 
 export interface Contributor {
