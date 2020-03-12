@@ -33,7 +33,7 @@ const SortableItem = SortableElement(({ contributor, placement, onDelete }: Sort
   const index = placement - 1;
 
   return (
-    <TableRow tabIndex={0} key={contributor.systemControlNumber}>
+    <TableRow tabIndex={0} key={contributor.identity.id}>
       <TableCell align="left">
         <SubHeading>{contributor.identity.name}</SubHeading>
         <Field name={`${ContributorFieldNames.CONTRIBUTORS}[${index}].corresponding`}>
@@ -110,12 +110,12 @@ const SortableTable: FC<SortableTableProps> = ({ listOfContributors, push, remov
       onAuthorSelected={authority => {
         const contributor: Contributor = {
           ...emptyContributor,
-          systemControlNumber: authority.systemControlNumber,
           institutions: authority.orgunitids.map(orgunit => ({
             id: orgunit,
             name: orgunit,
           })),
           identity: {
+            id: authority.systemControlNumber,
             name: authority.name,
           },
           sequence: listOfContributors.length, // TODO: Update this when moving elements in table

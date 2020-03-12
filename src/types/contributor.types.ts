@@ -1,12 +1,12 @@
 export interface Contributor {
   institutions: Institution[];
   type: ContributorType | '';
-  systemControlNumber?: string;
 
   // New model backend
   corresponding?: boolean;
   email?: string;
   identity: {
+    id: string;
     name: string;
   };
   sequence: number;
@@ -21,12 +21,12 @@ interface Institution {
 export const emptyContributor: Contributor = {
   institutions: [],
   type: '',
-  systemControlNumber: '',
 
   // New model
   corresponding: false,
   email: '',
   identity: {
+    id: '',
     name: '',
   },
   sequence: 0,
