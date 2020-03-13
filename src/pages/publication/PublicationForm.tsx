@@ -20,6 +20,7 @@ import { useDispatch } from 'react-redux';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import deepmerge from 'deepmerge';
+import Progress from '../../components/Progress';
 
 const shouldAllowMultipleFiles = false;
 
@@ -42,6 +43,7 @@ const PublicationForm: FC<PublicationFormProps> = ({
   const [tabNumber, setTabNumber] = useState(0);
   const [initialValues, setInitialValues] = useState(emptyPublication);
   const [publicationValues, setPublicationValues] = useState(); // TODO: remove this when backend model fits frontend model
+  const [isLoading, setIsLoading] = useState(!!identifier);
   const dispatch = useDispatch();
 
   const validationSchema = Yup.object().shape({
@@ -146,6 +148,7 @@ const PublicationForm: FC<PublicationFormProps> = ({
         // TODO: revisit necessity of deepmerge when backend model has all fields
         setInitialValues(deepmerge(emptyPublication, publication));
         setPublicationValues(publication);
+        setIsLoading(false);
       }
     };
 
@@ -174,7 +177,9 @@ const PublicationForm: FC<PublicationFormProps> = ({
     }
   };
 
-  return (
+  return isLoading ? (
+    <Progress />
+  ) : (
     <StyledPublication>
       <Formik
         enableReinitialize
