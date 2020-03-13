@@ -36,8 +36,9 @@ describe('User opens an item in the My Publication list', () => {
     cy.contains('Test User');
 
     // Files and licenses tab
-    cy.get('[data-testid=nav-tabpanel-files-and-license]').click({ force: true });
-    cy.contains('Osteloff book publisher');
+    // TODO: Commented out until publisher is added to new data model
+    // cy.get('[data-testid=nav-tabpanel-files-and-license]').click({ force: true });
+    // cy.contains('Osteloff book publisher');
 
     // Submission tab
     cy.get('[data-testid=nav-tabpanel-submission]').click({ force: true });

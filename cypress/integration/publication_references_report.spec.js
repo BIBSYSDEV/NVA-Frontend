@@ -15,8 +15,8 @@ describe('Publication: References: Report', () => {
     cy.get('[data-testid=reference_type]')
       .click({ force: true })
       .type(' '); //makes the select options open
-    cy.get('[data-testid=reference_type-report]').should('be.visible');
-    cy.get('[data-testid=reference_type-report]').click({ force: true });
+    cy.get('[data-testid=reference_type-Report]').should('be.visible');
+    cy.get('[data-testid=reference_type-Report]').click({ force: true });
 
     cy.get('[data-testid=reference_type-heading]').contains('Report');
 

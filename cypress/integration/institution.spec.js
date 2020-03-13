@@ -40,7 +40,7 @@ describe('My profile: Institutions', () => {
   });
 
   it('The user should be able to remove an insitution from their profile', () => {
-    cy.get('[data-testid=button-delete-institution-194\\.65\\.20\\.10]').click({ force: true });
+    cy.get('[data-testid=button-delete-institution-194\\.65\\.20\\.0]').click({ force: true });
 
     cy.get('Fakultet for medisin og helsevitenskap').should('not.exist');
   });
