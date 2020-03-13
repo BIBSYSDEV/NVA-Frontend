@@ -30,7 +30,7 @@ const StyledLicenseDescription = styled.article`
 `;
 
 enum FilesFieldNames {
-  FILES = 'files',
+  FILES = 'fileSet',
 }
 
 interface FilesAndLicensePanelProps {
@@ -48,7 +48,7 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab
   const toggleLicenseModal = () => {
     setIsLicenseModalOpen(!isLicenseModalOpen);
   };
-
+  console.log(values.fileSet);
   return (
     <TabPanel ariaLabel="files and license" goToNextTab={goToNextTab}>
       {/* {publisher?.title && <PublicationChannelInfoCard publisher={publisher} />} */}
