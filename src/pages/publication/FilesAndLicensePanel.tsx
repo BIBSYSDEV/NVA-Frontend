@@ -10,7 +10,7 @@ import Modal from '../../components/Modal';
 import { licenses, Uppy } from '../../types/file.types';
 import Card from '../../components/Card';
 import Heading from '../../components/Heading';
-import PublicationChannelInfoCard from './files_and_license_tab/PublicationChannelInfoCard';
+// import PublicationChannelInfoCard from './files_and_license_tab/PublicationChannelInfoCard';
 import NormalText from '../../components/NormalText';
 import Label from '../../components/Label';
 
@@ -44,8 +44,7 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab
   const [isLicenseModalOpen, setIsLicenseModalOpen] = useState(false);
 
   const uploadedFiles = values[FilesFieldNames.FILES];
-  const referenceType = values.reference.type;
-  const publisher = referenceType ? values.reference[referenceType]?.publisher : null;
+  // TODO: Get publisher
 
   const toggleLicenseModal = () => {
     setIsLicenseModalOpen(!isLicenseModalOpen);
@@ -53,7 +52,7 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab
 
   return (
     <TabPanel ariaLabel="files and license" goToNextTab={goToNextTab}>
-      {publisher?.title && <PublicationChannelInfoCard publisher={publisher} />}
+      {/* {publisher?.title && <PublicationChannelInfoCard publisher={publisher} />} */}
 
       <FieldArray name={FilesFieldNames.FILES}>
         {({ insert, remove, replace }) => (

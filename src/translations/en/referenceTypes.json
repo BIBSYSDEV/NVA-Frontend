@@ -1,9 +1,9 @@
 {
-  "book": "Book",
-  "chapter": "Chapter",
-  "degree": "Degree",
-  "journalArticle": "Publication in Journal",
-  "report": "Report",
+  "Book": "Book",
+  "Chapter": "Chapter",
+  "Degree": "Degree",
+  "JournalArticle": "Publication in Journal",
+  "Report": "Report",
   "subtypes_report": {
     "report": "Report",
     "researchReport": "Research report",

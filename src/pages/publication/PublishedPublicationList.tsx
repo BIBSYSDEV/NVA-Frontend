@@ -84,7 +84,7 @@ const PublishedPublicationList: FC<PublicationListProps> = ({ publications }) =>
                   </NormalText>
                 </StyledTableCellForPublisher>
                 <StyledTableCellForType>
-                  <NormalText>{t('referenceTypes:' + publication.reference.type)}</NormalText>
+                  <NormalText>{t('referenceTypes:' + publication.publicationType)}</NormalText>
                 </StyledTableCellForType>
                 <StyledTableCellForDate>
                   <NormalText>{publication.date?.year}</NormalText>

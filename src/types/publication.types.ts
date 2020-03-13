@@ -2,7 +2,7 @@ import { Contributor } from './contributor.types';
 import { File } from './file.types';
 import { LanguageCodes } from './language.types';
 import { Project } from './project.types';
-import { emptyReference, Reference } from './references.types';
+import { emptyReference, Reference, ReferenceType } from './references.types';
 
 export enum PublicationType {
   TEXT = 'text',
@@ -73,6 +73,7 @@ interface PublicationEntityDescription {
   };
   language: LanguageCodes;
   projects: Project[];
+  publicationType: ReferenceType | '';
 }
 
 const emptyPublicationEntityDescription: PublicationEntityDescription = {
@@ -88,6 +89,7 @@ const emptyPublicationEntityDescription: PublicationEntityDescription = {
   },
   language: LanguageCodes.NORWEGIAN_BOKMAL,
   projects: [],
+  publicationType: '',
 };
 
 export type PublicationPreview = Pick<
@@ -96,7 +98,7 @@ export type PublicationPreview = Pick<
 >;
 export type PublishedPublicationPreview = Pick<
   Publication & PublicationEntityDescription,
-  'identifier' | 'mainTitle' | 'date' | 'reference' | 'authors' | 'status'
+  'identifier' | 'mainTitle' | 'date' | 'reference' | 'authors' | 'status' | 'publicationType'
 >;
 
 export interface Doi {

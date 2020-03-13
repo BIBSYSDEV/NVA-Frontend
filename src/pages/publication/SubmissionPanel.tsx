@@ -42,6 +42,8 @@ const SubmissionPanel: React.FC<SubmissionPanelProps> = ({ savePublication }) =>
     history.push(`/publication/${values.identifier}/public`);
   };
 
+  const { publicationType } = values.entityDescription;
+
   return (
     <TabPanel ariaLabel="submission">
       <Card>
@@ -52,11 +54,11 @@ const SubmissionPanel: React.FC<SubmissionPanelProps> = ({ savePublication }) =>
         </Card>
         <Card>
           <SubHeading>{t('heading.references')}</SubHeading>
-          {values.reference.type === ReferenceType.BOOK && <SubmissionBook />}
-          {values.reference.type === ReferenceType.DEGREE && <SubmissionDegree />}
-          {values.reference.type === ReferenceType.CHAPTER && <SubmissionChapter />}
-          {values.reference.type === ReferenceType.REPORT && <SubmissionReport />}
-          {values.reference.type === ReferenceType.PUBLICATION_IN_JOURNAL && <SubmissionJournalPublication />}
+          {publicationType === ReferenceType.BOOK && <SubmissionBook />}
+          {publicationType === ReferenceType.DEGREE && <SubmissionDegree />}
+          {publicationType === ReferenceType.CHAPTER && <SubmissionChapter />}
+          {publicationType === ReferenceType.REPORT && <SubmissionReport />}
+          {publicationType === ReferenceType.PUBLICATION_IN_JOURNAL && <SubmissionJournalPublication />}
         </Card>
         <Card>
           <SubHeading>{t('heading.contributors')}</SubHeading>
