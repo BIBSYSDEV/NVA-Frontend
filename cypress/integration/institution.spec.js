@@ -29,6 +29,10 @@ describe('My profile: Institutions', () => {
       .click({ force: true })
       .type(' ');
     cy.contains('Institutt for samfunnsmedisin og sykepleie').click({ force: true });
+    cy.get('[data-testid=unit-selector-2]')
+      .click({ force: true })
+      .type(' ');
+    cy.contains('Allmennmedisinsk forskningsenhet i Trondheim').click({ force: true });
 
     cy.get('[data-testid=institution-add-button]').click({ force: true });
 
@@ -37,10 +41,11 @@ describe('My profile: Institutions', () => {
     cy.contains('Norges teknisk-naturvitenskapelige universitet').should('be.visible');
     cy.contains('Fakultet for medisin og helsevitenskap').should('be.visible');
     cy.contains('Institutt for samfunnsmedisin og sykepleie').should('be.visible');
+    cy.contains('Allmennmedisinsk forskningsenhet i Trondheim').should('be.visible');
   });
 
   it('The user should be able to remove an insitution from their profile', () => {
-    cy.get('[data-testid=button-delete-institution-194\\.65\\.20\\.0]').click({ force: true });
+    cy.get('[data-testid=button-delete-institution-194\\.65\\.20\\.10]').click({ force: true });
 
     cy.get('Fakultet for medisin og helsevitenskap').should('not.exist');
   });
