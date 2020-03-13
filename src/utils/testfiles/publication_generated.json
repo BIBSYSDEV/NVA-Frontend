@@ -1,22 +1,26 @@
 {
   "contributors": [
     {
-      "name": "Test User",
       "institutions": [],
       "type": "",
       "orcid": "",
       "corresponding": true,
       "email": "test@test.no",
-      "systemControlNumber": "901790000000"
+      "identity": {
+        "id": "901790000000",
+        "name": "Test User"
+      }
     },
     {
-      "name": "Osteloff, Oddny",
       "institutions": [],
       "type": "",
       "orcid": "",
       "corresponding": false,
       "email": "",
-      "systemControlNumber": "901790000001"
+      "identity": {
+        "id": "901790000001",
+        "name": "Osteloff, Oddny"
+      }
     }
   ],
   "identifier": "12345679",

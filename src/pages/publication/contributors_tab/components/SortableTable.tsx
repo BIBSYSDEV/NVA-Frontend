@@ -19,6 +19,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 
 import SubHeading from '../../../../components/SubHeading';
 import { removeDuplicatesByScn } from '../../../../utils/helpers';
+import { ContributorFieldNames } from '../../ContributorsPanel';
 
 interface SortableItemProps {
   contributor: Contributor;
@@ -32,10 +33,10 @@ const SortableItem = SortableElement(({ contributor, placement, onDelete }: Sort
   const index = placement - 1;
 
   return (
-    <TableRow tabIndex={0} key={contributor.systemControlNumber}>
+    <TableRow tabIndex={0} key={contributor.identity.id}>
       <TableCell align="left">
-        <SubHeading>{contributor.name}</SubHeading>
-        <Field name={`contributors[${index}].corresponding`}>
+        <SubHeading>{contributor.identity.name}</SubHeading>
+        <Field name={`${ContributorFieldNames.CONTRIBUTORS}[${index}].corresponding`}>
           {({ field }: FieldProps) => (
             <FormControlLabel
               control={<Checkbox checked={field.value} {...field} />}
@@ -45,7 +46,7 @@ const SortableItem = SortableElement(({ contributor, placement, onDelete }: Sort
         </Field>
         <div>
           {contributor.corresponding && (
-            <Field name={`contributors[${index}].email`}>
+            <Field name={`${ContributorFieldNames.CONTRIBUTORS}[${index}].email`}>
               {({ field }: FieldProps) => <TextField variant="outlined" label={t('common:email')} {...field} />}
             </Field>
           )}
@@ -83,13 +84,7 @@ const SortableList = SortableContainer(({ contributors, onDelete }: SortableList
     <Table>
       <TableBody>
         {uniqueContributors.map((contributor: Contributor, index: number) => (
-          <SortableItem
-            index={index}
-            contributor={contributor}
-            key={contributor.systemControlNumber}
-            placement={index + 1}
-            onDelete={onDelete}
-          />
+          <SortableItem index={index} contributor={contributor} key={index} placement={index + 1} onDelete={onDelete} />
         ))}
       </TableBody>
     </Table>
@@ -115,12 +110,15 @@ const SortableTable: FC<SortableTableProps> = ({ listOfContributors, push, remov
       onAuthorSelected={authority => {
         const contributor: Contributor = {
           ...emptyContributor,
-          name: authority.name,
-          systemControlNumber: authority.systemControlNumber,
           institutions: authority.orgunitids.map(orgunit => ({
             id: orgunit,
             name: orgunit,
           })),
+          identity: {
+            id: authority.systemControlNumber,
+            name: authority.name,
+          },
+          sequence: listOfContributors.length, // TODO: Update this when moving elements in table
         };
         push(contributor);
       }}
