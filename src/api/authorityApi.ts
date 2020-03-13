@@ -4,7 +4,6 @@ import { Dispatch } from 'redux';
 import { setNotification } from '../redux/actions/notificationActions';
 import i18n from '../translations/i18n';
 import { StatusCode } from '../utils/constants';
-import { getIdToken } from './userApi';
 import { User } from '../types/user.types';
 import { NotificationVariant } from '../types/notification.types';
 
@@ -21,14 +20,8 @@ export enum AuthorityQualifiers {
 export const getAuthorities = async (name: string, dispatch: Dispatch) => {
   const url = encodeURI(`${AuthorityApiPaths.AUTHORITY}?name=${name}`);
 
-  // remove when Authorization headers are set for all requests
-  const idToken = await getIdToken();
-  const headers = {
-    Authorization: `Bearer ${idToken}`,
-  };
-
   try {
-    const response = await Axios.get(url, { headers });
+    const response = await Axios.get(url);
 
     if (response.status === StatusCode.OK) {
       return response.data;
@@ -70,13 +63,8 @@ export const updateInstitutionForAuthority = async (orgunitid: string, systemCon
 export const createAuthority = async (user: User) => {
   const url = AuthorityApiPaths.AUTHORITY;
 
-  // remove when Authorization headers are set for all requests
-  const idToken = await getIdToken();
-  const headers = {
-    Authorization: `Bearer ${idToken}`,
-  };
   try {
-    const response = await Axios.post(url, { invertedname: `${user.familyName},${user.givenName}` }, { headers });
+    const response = await Axios.post(url, { invertedname: `${user.familyName},${user.givenName}` });
     if (response.status === StatusCode.OK) {
       return response.data;
     } else if (response.status === StatusCode.NO_CONTENT) {
@@ -101,11 +89,7 @@ export const addQualifierIdForAuthority = async (
   const url = `${AuthorityApiPaths.AUTHORITY}/${systemControlNumber}/identifiers/${qualifier}/${identifier}`;
 
   try {
-    const idToken = await getIdToken();
-    const headers = {
-      Authorization: `Bearer ${idToken}`,
-    };
-    const response = await Axios.post(url, { headers });
+    const response = await Axios.post(url);
     if (response.status === StatusCode.OK) {
       return response.data;
     } else if (response.status === StatusCode.NO_CONTENT) {
@@ -131,12 +115,7 @@ export const updateQualifierIdForAuthority = async (
   const url = `${AuthorityApiPaths.AUTHORITY}/${systemControlNumber}/identifiers/${qualifier}/${identifier}/update/${updatedIdentifier}`;
 
   try {
-    const idToken = await getIdToken();
-    const headers = {
-      Authorization: `Bearer ${idToken}`,
-    };
-
-    const response = await Axios.put(url, { headers });
+    const response = await Axios.put(url);
     if (response.status === StatusCode.OK) {
       return response.data;
     } else {
@@ -157,12 +136,7 @@ export const removeQualifierIdFromAuthority = async (
   const url = `${AuthorityApiPaths.AUTHORITY}/${systemControlNumber}/identifiers/${qualifier}/${identifier}`;
 
   try {
-    const idToken = await getIdToken();
-    const headers = {
-      Authorization: `Bearer ${idToken}`,
-    };
-
-    const response = await Axios.delete(url, { headers });
+    const response = await Axios.delete(url);
     if (response.status === StatusCode.OK) {
       return response.data;
     } else {
@@ -176,13 +150,8 @@ export const removeQualifierIdFromAuthority = async (
 };
 
 const updateAuthorityAndHandleErrors = async (url: string, body: any) => {
-  // remove when Authorization headers are set for all requests
-  const idToken = await getIdToken();
-  const headers = {
-    Authorization: `Bearer ${idToken}`,
-  };
   try {
-    const response = await Axios.put(url, body, { headers });
+    const response = await Axios.put(url, body);
     if (response.status === StatusCode.OK) {
       return response.data;
     } else if (response.status === StatusCode.NO_CONTENT) {

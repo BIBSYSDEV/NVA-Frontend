@@ -1,5 +1,4 @@
 import Axios from 'axios';
-import { getIdToken } from './userApi';
 import mockInstitutionResponse from '../utils/testfiles/institutions/institution_query.json';
 import { InstitutionUnitResponseType, InstitutionUnitBase } from '../types/institution.types';
 import { StatusCode } from '../utils/constants';
@@ -13,14 +12,10 @@ export enum InstituionApiPaths {
 export const getInstitutionAndSubunits = async (searchTerm: string) => {
   // TODO: get institutions from endpoint
   // BACKEND NOT FINISHED YET
-  // const idToken = await getIdToken();
-  // const headers = {
-  //   Authorization: `Bearer ${idToken}`,
-  // };
   // const url = `${InstituionApiPaths.INSTITUTION}?name=${searchTerm}`;
 
   // try {
-  //   const response = await Axios.get(url, { headers });
+  //   const response = await Axios.get(url);
   //   return response.data;
   // } catch {
   //   return null;
@@ -32,12 +27,8 @@ export const getParentUnits = async (subunitid: string) => {
   // TODO: get institutions from endpoint
   // BACKEND NOT FINISHED YET
   try {
-    const idToken = await getIdToken();
-    const headers = {
-      Authorization: `Bearer ${idToken}`,
-    };
     const url = `${InstituionApiPaths.INSTITUTION}?id=${subunitid}`;
-    const response = await Axios.get(url, { headers });
+    const response = await Axios.get(url);
     if (response.status === StatusCode.OK) {
       const { id, name, subunits } = response.data;
 

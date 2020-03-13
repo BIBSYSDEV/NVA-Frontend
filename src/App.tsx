@@ -6,7 +6,7 @@ import { BrowserRouter } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { getAuthorities, updateInstitutionForAuthority } from './api/authorityApi';
-import { getCurrentAuthenticatedUser } from './api/userApi';
+import { getCurrentAuthenticatedUser, getIdToken } from './api/userApi';
 import Breadcrumbs from './layout/Breadcrumbs';
 import Footer from './layout/Footer';
 import Header from './layout/header/Header';
@@ -43,10 +43,9 @@ const App: React.FC = () => {
     const setAxiosHeaders = async () => {
       // Set global config of axios requests
       Axios.defaults.baseURL = API_URL;
-      // Uncomment this when we use our backend only
-      // const idToken = await getIdToken();
+      const idToken = await getIdToken();
       Axios.defaults.headers.common = {
-        //   Authorization: `Bearer ${idToken}`,
+        Authorization: `Bearer ${idToken}`,
         Accept: 'application/json',
       };
       Axios.defaults.headers.post['Content-Type'] = 'application/json';

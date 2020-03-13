@@ -8,14 +8,10 @@ export enum UsersApiPaths {
 export const getInstitutionUsers = (cristinUnitId: string) => {
   // TODO: get institution users from endpoint
   // BACKEND NOT FINISHED YET
-  // const idToken = await getIdToken();
-  // const headers = {
-  //   Authorization: `Bearer ${idToken}`,
-  // };
   // const url = `${UsersApiPaths.USERS}/${cristinUnitId}`;
 
   // try {
-  //   const response = await Axios.get(url, { headers });
+  //   const response = await Axios.get(url);
   //   return response.data;
   // } catch {
   //   return null;
@@ -30,13 +26,9 @@ export const getInstitutionUsers = (cristinUnitId: string) => {
 export const addUserToInstitution = (cristinUnitId: string, authenticationId: string, role: RoleName) => {
   // TODO: add new user to institution
   // BACKEND DOES NOT EXIST YET
-  // const idToken = await getIdToken();
-  // const headers = {
-  //   Authorization: `Bearer ${idToken}`,
-  // };
   // const url = `${UsersApiPaths.USERS}/${cristinUnitId}/`;
   // try {
-  //   const response = await Axios.get(url, { headers });
+  //   const response = await Axios.get(url);
   //   return response.data;
   // } catch {
   //   return null;

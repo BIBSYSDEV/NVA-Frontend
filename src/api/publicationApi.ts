@@ -6,7 +6,6 @@ import i18n from '../translations/i18n';
 import { BackendPublication } from '../types/publication.types';
 import { SEARCH_RESULTS_PER_PAGE, StatusCode } from '../utils/constants';
 import { searchForPublications } from '../redux/actions/searchActions';
-import { getIdToken } from './userApi';
 import { NotificationVariant } from '../types/notification.types';
 
 export enum PublicationsApiPaths {
@@ -23,13 +22,8 @@ export const updatePublication = async (publication: BackendPublication) => {
   if (!identifier) {
     return { error: i18n.t('feedback:error.update_publication') };
   }
-  const idToken = await getIdToken();
   try {
-    const response = await Axios.put(`${PublicationsApiPaths.PUBLICATION}/${identifier}`, publication, {
-      headers: {
-        Authorization: `Bearer ${idToken}`,
-      },
-    });
+    const response = await Axios.put(`${PublicationsApiPaths.PUBLICATION}/${identifier}`, publication);
     if (response.status === StatusCode.OK) {
       return response.data;
     } else {
@@ -44,12 +38,7 @@ export const getPublication = async (id: string) => {
   const url = `${PublicationsApiPaths.PUBLICATION}/${id}`;
 
   try {
-    const idToken = await getIdToken();
-    const response = await Axios.get(url, {
-      headers: {
-        Authorization: `Bearer ${idToken}`,
-      },
-    });
+    const response = await Axios.get(url);
     if (response.status === StatusCode.OK) {
       return response.data;
     } else {
@@ -63,12 +52,7 @@ export const getPublication = async (id: string) => {
 export const getMyPublications = async () => {
   const url = PublicationsApiPaths.FETCH_MY_RESOURCES;
   try {
-    const idToken = await getIdToken();
-    const response = await Axios.get(url, {
-      headers: {
-        Authorization: `Bearer ${idToken}`,
-      },
-    });
+    const response = await Axios.get(url);
     if (response.status === StatusCode.OK) {
       return response.data;
     } else {
@@ -81,13 +65,11 @@ export const getMyPublications = async () => {
 
 export const getPublicationByDoi = async (doiUrl: string) => {
   try {
-    const idToken = await getIdToken();
     const response = await Axios.post(
       `${PublicationsApiPaths.DOI_LOOKUP}/`,
       { doiUrl },
       {
         headers: {
-          Authorization: `Bearer ${idToken}`,
           Accept: 'application/vnd.citationstyles.csl+json',
         },
       }
@@ -105,12 +87,7 @@ export const getPublicationByDoi = async (doiUrl: string) => {
 
 export const search = async (searchTerm: string, dispatch: Dispatch, offset?: number) => {
   try {
-    const idToken = await getIdToken();
-    const response = await Axios.get(`${PublicationsApiPaths.SEARCH}/${searchTerm}`, {
-      headers: {
-        Authorization: `Bearer ${idToken}`,
-      },
-    });
+    const response = await Axios.get(`${PublicationsApiPaths.SEARCH}/${searchTerm}`);
 
     if (response.status === StatusCode.OK) {
       const currentOffset = offset || 0;
@@ -128,12 +105,7 @@ export const search = async (searchTerm: string, dispatch: Dispatch, offset?: nu
 // Fetch publications where creator also wanted a DOI to be created
 export const getDoiRequests = async () => {
   try {
-    const idToken = await getIdToken();
-    const response = await Axios.get(PublicationsApiPaths.DOI_REQUESTS, {
-      headers: {
-        Authorization: `Bearer ${idToken}`,
-      },
-    });
+    const response = await Axios.get(PublicationsApiPaths.DOI_REQUESTS);
 
     if (response.status === StatusCode.OK) {
       return response.data;
@@ -148,12 +120,7 @@ export const getDoiRequests = async () => {
 // Fetch publications ready for approval
 export const getPublicationsForApproval = async () => {
   try {
-    const idToken = await getIdToken();
-    const response = await Axios.get(PublicationsApiPaths.FOR_APPROVAL, {
-      headers: {
-        Authorization: `Bearer ${idToken}`,
-      },
-    });
+    const response = await Axios.get(PublicationsApiPaths.FOR_APPROVAL);
 
     if (response.status === StatusCode.OK) {
       return response.data;
