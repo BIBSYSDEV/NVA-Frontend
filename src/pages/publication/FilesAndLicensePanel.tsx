@@ -44,7 +44,6 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab
   const [isLicenseModalOpen, setIsLicenseModalOpen] = useState(false);
 
   const uploadedFiles = values[FilesFieldNames.FILES];
-  // TODO: Get publisher
 
   const toggleLicenseModal = () => {
     setIsLicenseModalOpen(!isLicenseModalOpen);
