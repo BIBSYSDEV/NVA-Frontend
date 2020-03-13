@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import * as Yup from 'yup';
 
 import TabPanel from '../../components/TabPanel/TabPanel';
-import { emptyPublication, Publication } from '../../types/publication.types';
+import { emptyPublication, Publication, BackendPublication } from '../../types/publication.types';
 import { ReferenceType } from '../../types/references.types';
 import { createUppy } from '../../utils/uppy-config';
 import ContributorsPanel from './ContributorsPanel';
@@ -15,7 +15,7 @@ import { PublicationFormTabs } from './PublicationFormTabs';
 import ReferencesPanel from './ReferencesPanel';
 import SubmissionPanel from './SubmissionPanel';
 import { emptyFile, File, Uppy } from '../../types/file.types';
-import { getPublication } from '../../api/publicationApi';
+import { getPublication, updatePublication } from '../../api/publicationApi';
 import { useDispatch } from 'react-redux';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
@@ -41,6 +41,7 @@ const PublicationForm: FC<PublicationFormProps> = ({
   const { t } = useTranslation('publication');
   const [tabNumber, setTabNumber] = useState(0);
   const [initialValues, setInitialValues] = useState(emptyPublication);
+  const [publicationValues, setPublicationValues] = useState(); // TODO: remove this when backend model fits frontend model
   const dispatch = useDispatch();
 
   const validationSchema = Yup.object().shape({
@@ -144,6 +145,7 @@ const PublicationForm: FC<PublicationFormProps> = ({
       } else {
         // TODO: revisit necessity of deepmerge when backend model has all fields
         setInitialValues(deepmerge(emptyPublication, publication));
+        setPublicationValues(publication);
       }
     };
 
@@ -160,7 +162,17 @@ const PublicationForm: FC<PublicationFormProps> = ({
     setTabNumber(tabNumber + 1);
   };
 
-  const savePublication = async (values: Publication) => {};
+  const savePublication = async (values: BackendPublication) => {
+    const updatedPublication = await updatePublication({
+      ...publicationValues,
+      entityDescription: values.entityDescription,
+    });
+    if (updatedPublication.error) {
+      dispatch(setNotification(updatedPublication.error, NotificationVariant.Error));
+    } else {
+      dispatch(setNotification(t('feedback:success.update_publication')));
+    }
+  };
 
   return (
     <StyledPublication>

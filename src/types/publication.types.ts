@@ -43,7 +43,13 @@ export const emptyNpiDiscipline: NpiDiscipline = {
   mainDiscipline: '',
 };
 
-export interface Publication {
+// TODO: rename to Publication once all fields are mapped
+export interface BackendPublication {
+  identifier: string;
+  entityDescription: PublicationEntityDescription;
+}
+
+export interface Publication extends BackendPublication {
   modified: string; // date?
   createdDate: string; // date?
   createdBy: string;
@@ -52,10 +58,6 @@ export interface Publication {
   files: File[];
   status: PublicationStatus;
   shouldCreateDoi: boolean;
-
-  // Fields from backend
-  identifier: string;
-  entityDescription: PublicationEntityDescription;
 }
 
 interface PublicationEntityDescription {
