@@ -9,7 +9,7 @@ import { FormikProps, useFormikContext, FieldArray, getIn } from 'formik';
 import { Publication } from '../../types/publication.types';
 
 export enum ContributorFieldNames {
-  CONTRIBUTORS = 'contributors',
+  CONTRIBUTORS = 'entityDescription.contributors',
   TYPE = 'type',
   NAME = 'name',
   CORRESPONDING = 'corresponding',

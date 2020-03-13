@@ -4,28 +4,32 @@
     "mainTitle": "A longitudinal analysis of estimation, counting skills, and mathematical ability across the first school year.",
     "createdDate": "1941-04-25",
     "status": "draft",
-    "createdBy": "Kåre Kåresen"
+    "createdBy": "Kåre Kåresen",
+    "contributors": []
   },
   {
     "identifier": "4327439",
     "mainTitle": "Relationships between number line estimation, counting, and mathematical abilities. Ninety-nine 5-year-olds were tested on 4 occasions at 3 monthly intervals. Correlations between the 3 types of ability were evident, but while the quality of children's estimations changed over time and performance on the mathematical tasks improve.",
     "createdDate": "2019-01-01",
     "status": "draft",
-    "createdBy": "Kari Karisen"
+    "createdBy": "Kari Karisen",
+    "contributors": []
   },
   {
     "identifier": "53453453",
     "mainTitle": "Potchefstroom electronic law journal : PER = Potchefstroomse elektroniese regsblad",
     "createdDate": "2020-01-01",
     "status": "draft",
-    "createdBy": "Arne Arnesen"
+    "createdBy": "Arne Arnesen",
+    "contributors": []
   },
   {
     "identifier": "3333439",
     "mainTitle": "Attføring av attføringen : særlig om stoffmisbrukere : hedersskrift til Per Alveberg",
     "createdDate": "2021-01-01",
     "status": "rejected",
-    "createdBy": "Bob Boffaloe"
+    "createdBy": "Bob Boffaloe",
+    "contributors": []
   },
   {
     "identifier": "3533439",
@@ -38,24 +42,13 @@
       "month": "01",
       "day": "01"
     },
-    "authors": [
-      {
-        "name": "Oddny Osteloff",
-        "institutions": [
-          {
-            "id": "194.61.55.0",
-            "name": "NTNU, Fakultet for arkitektur og design, Institutt for arkitektur og teknologi"
-          }
-        ],
-        "type": "author"
-      }
-    ],
     "reference": {
       "type": "book",
       "book": {
         "publisher": "Bokforlaget AS"
       }
-    }
+    },
+    "contributors": []
   },
   {
     "identifier": "12345679",
@@ -68,23 +61,12 @@
       "month": "04",
       "day": "25"
     },
-    "authors": [
-      {
-        "name": "Oddny Osteloff",
-        "institutions": [
-          {
-            "id": "194.61.55.0",
-            "name": "NTNU, Fakultet for arkitektur og design, Institutt for arkitektur og teknologi"
-          }
-        ],
-        "type": "author"
-      }
-    ],
     "reference": {
       "type": "journalArticle",
       "journalArticle": {
         "publisher": "The Very Scientific Journal"
       }
-    }
+    },
+    "contributors": []
   }
 ]
