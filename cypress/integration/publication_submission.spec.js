@@ -27,7 +27,7 @@ describe('Publication: Description', () => {
     cy.get('[data-testid=reference_type]')
       .click({ force: true })
       .type(' ');
-    cy.get('[data-testid=reference_type-book]').click({ force: true });
+    cy.get('[data-testid=reference_type-Book]').click({ force: true });
     cy.get('[data-testid=isbn]').type(isbn);
 
     cy.get('[data-testid=nav-tabpanel-submission]').click({ force: true });

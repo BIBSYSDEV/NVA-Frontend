@@ -40,13 +40,13 @@ interface ReferencesPanelProps {
 const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, savePublication }) => {
   const { t } = useTranslation('publication');
   const { values, setFieldTouched }: FormikProps<Publication> = useFormikContext();
-  const { type } = values.reference;
+  const { publicationType } = values.entityDescription;
 
   // Validation messages won't show on fields that are not touched
   const setAllFieldsTouched = useCallback(() => {
     Object.values(ReferenceFieldNames).forEach(fieldName => setFieldTouched(fieldName));
 
-    switch (type) {
+    switch (publicationType) {
       case ReferenceType.BOOK:
         Object.values(BookFieldNames).forEach(fieldName => setFieldTouched(fieldName));
         break;
@@ -65,7 +65,7 @@ const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, savePubl
       default:
         break;
     }
-  }, [setFieldTouched, type]);
+  }, [setFieldTouched, publicationType]);
 
   useEffect(() => {
     // Set all fields as touched if user navigates away from this panel ( on unmount)
@@ -75,7 +75,7 @@ const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, savePubl
   return (
     <TabPanel ariaLabel="references" goToNextTab={goToNextTab} onClickSave={() => savePublication()}>
       <StyledSelectContainer>
-        <Field name={ReferenceFieldNames.REFERENCE_TYPE}>
+        <Field name={ReferenceFieldNames.PUBLICATION_TYPE}>
           {({ field, meta: { error, touched } }: FieldProps) => (
             <FormControl fullWidth error={!!error && touched}>
               <TextField select variant="outlined" {...field} label={t('common:type')} data-testid="reference_type">
@@ -86,22 +86,22 @@ const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, savePubl
                 ))}
               </TextField>
               <FormHelperText>
-                <ErrorMessage name={ReferenceFieldNames.REFERENCE_TYPE} />
+                <ErrorMessage name={ReferenceFieldNames.PUBLICATION_TYPE} />
               </FormHelperText>
             </FormControl>
           )}
         </Field>
       </StyledSelectContainer>
 
-      {type && (
+      {publicationType && (
         <StyledBox>
           <Card>
-            <Heading data-testid="reference_type-heading">{t(`referenceTypes:${type}`)}</Heading>
-            {type === ReferenceType.BOOK && <BookReferenceForm />}
-            {type === ReferenceType.CHAPTER && <ChapterReferenceForm />}
-            {type === ReferenceType.REPORT && <ReportReferenceForm />}
-            {type === ReferenceType.DEGREE && <DegreeReferenceForm />}
-            {type === ReferenceType.PUBLICATION_IN_JOURNAL && <JournalArticleReferenceForm />}
+            <Heading data-testid="reference_type-heading">{t(`referenceTypes:${publicationType}`)}</Heading>
+            {publicationType === ReferenceType.BOOK && <BookReferenceForm />}
+            {publicationType === ReferenceType.CHAPTER && <ChapterReferenceForm />}
+            {publicationType === ReferenceType.REPORT && <ReportReferenceForm />}
+            {publicationType === ReferenceType.DEGREE && <DegreeReferenceForm />}
+            {publicationType === ReferenceType.PUBLICATION_IN_JOURNAL && <JournalArticleReferenceForm />}
           </Card>
         </StyledBox>
       )}

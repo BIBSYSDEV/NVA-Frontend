@@ -1,5 +1,4 @@
 export interface Reference {
-  type: ReferenceType | '';
   journalArticle?: JournalArticle;
   book?: Book;
   report?: Report;
@@ -114,7 +113,6 @@ const emptyChapterReference: Chapter = {
 };
 
 export const emptyReference: Reference = {
-  type: '',
   journalArticle: emptyJournalArticleReference,
   book: emptyBookReference,
   report: emptyReportReference,
@@ -122,12 +120,13 @@ export const emptyReference: Reference = {
   chapter: emptyChapterReference,
 };
 
+// For valid values, see https://github.com/BIBSYSDEV/nva-datamodel-java/blob/develop/src/main/java/no/unit/nva/model/PublicationType.java
 export enum ReferenceType {
-  PUBLICATION_IN_JOURNAL = 'journalArticle',
-  BOOK = 'book',
-  REPORT = 'report',
-  DEGREE = 'degree',
-  CHAPTER = 'chapter',
+  PUBLICATION_IN_JOURNAL = 'JournalArticle',
+  BOOK = 'Book',
+  REPORT = 'Report',
+  DEGREE = 'Degree',
+  CHAPTER = 'Chapter',
 }
 
 export enum JournalArticleType {
@@ -158,7 +157,7 @@ export enum DegreeType {
 
 // Enums representing name of fields used by Formik
 export enum ReferenceFieldNames {
-  REFERENCE_TYPE = 'reference.type',
+  PUBLICATION_TYPE = 'entityDescription.publicationType',
 }
 
 export enum JournalArticleFieldNames {

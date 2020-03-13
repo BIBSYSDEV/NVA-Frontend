@@ -1,9 +1,9 @@
 {
-  "book": "Bok",
-  "chapter": "Kapittel",
-  "degree": "Grad",
-  "journalArticle": "Publikasjon i tidsskrift",
-  "report": "Rapport",
+  "Book": "Bok",
+  "Chapter": "Kapittel",
+  "Degree": "Grad",
+  "JournalArticle": "Publikasjon i tidsskrift",
+  "Report": "Rapport",
   "subtypes_report": {
     "report": "Rapport",
     "researchReport": "Forskningsrapport",

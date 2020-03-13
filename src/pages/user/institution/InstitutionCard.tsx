@@ -54,7 +54,7 @@ const InstitutionCard: FC<InstitutionCardProps> = ({ onEdit, unit }) => {
   const { t } = useTranslation('common');
   const user = useSelector((state: RootStore) => state.user);
   const dispatch = useDispatch();
-  const organizationUnitId = unit.subunits.length > 0 ? unit.subunits.pop()!.id : unit.id;
+  const organizationUnitId = unit.subunits.length > 0 ? unit.subunits.slice(-1)[0].id : unit.id;
   const { setFieldValue }: FormikProps<FormikInstitutionUnit> = useFormikContext();
 
   const handleRemoveInstitution = async () => {

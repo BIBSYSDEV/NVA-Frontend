@@ -27,8 +27,8 @@
   "createdDate": "2020",
   "license": "UNIT_CCBY",
   "doiLink": "https://doi.org/10.1098/rspb.2018.0085",
+
   "reference": {
-    "type": "book",
     "book": {
       "type": "anthology",
       "publisher": {
@@ -59,7 +59,7 @@
     "tags": ["Ost", "Loff", "Majones"],
     "language": "nb",
     "npiDiscipline": { "title": "Anestesi, intensiv, akutt", "mainDiscipline": "Medisin og helsefag" },
-    "publicationDate": {
+    "date": {
       "year": "1480",
       "month": "12",
       "day": "12"
@@ -76,6 +76,7 @@
         "grantId": "12312",
         "financedBy": "NTNU"
       }
-    ]
+    ],
+    "publicationType": "JournalArticle"
   }
 }
