@@ -69,7 +69,7 @@ const LinkPublicationPanel: FC<LinkPublicationPanelProps> = ({ expanded, onChang
 
   return (
     <PublicationExpansionPanel
-      headerLabel={t('publication:publication.link_to_publication')}
+      headerLabel={t('publication:publication.start_with_link_to_publication')}
       icon={<LinkIcon className="icon" />}
       expanded={expanded}
       onChange={onChange}

@@ -71,11 +71,10 @@
     "link_publication_description": "E.g. DOI link, link to article, link to video of lecture etc.",
     "link_to_publication": "Link to publication",
     "load_file": "Load file",
-    "link": "Link"
+    "start_with_link_to_publication": "Start with a link to publication"
   },
   "references": {
     "article_number": "Article number",
-    "doi": "DOI",
     "is_peer_reviewed": "The publication is peer reviewed",
     "is_not_peer_reviewed": "The publication is not peer reviewed",
     "is_text_book": "Is this a textbook?",

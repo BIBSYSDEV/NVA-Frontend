@@ -69,13 +69,12 @@
   },
   "publication": {
     "link_publication_description": "Feks. DOI lenke, lenke til artikkel, lenke til video av foredrag etc.",
-    "link_to_publication": "Link til publikasjon",
+    "link_to_publication": "Lenke til publikasjon",
     "load_file": "Last opp fil",
-    "link": "Link"
+    "start_with_link_to_publication": "Start med en lenke til publikasjon"
   },
   "references": {
     "article_number": "Artikkelnummer",
-    "doi": "DOI",
     "is_peer_reviewed": "Ja, den er fagfellevurdert",
     "is_not_peer_reviewed": "Nei, den er ikke fagfellevurdert",
     "is_text_book": "Er boken en lærebok?",

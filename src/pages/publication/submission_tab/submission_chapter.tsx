@@ -10,7 +10,7 @@ const SubmissionChapter: React.FC = () => {
 
   return (
     <>
-      <LabelContentRow label={t('common:type')}>{t('referenceTypes:chapter')}</LabelContentRow>
+      <LabelContentRow label={t('common:type')}>{t('referenceTypes:Chapter')}</LabelContentRow>
       <LabelContentRow label={t('chapter.anthology')}>{values.reference.chapter?.anthology?.isbn}</LabelContentRow>
       <LabelContentRow label={t('chapter.link')}>{values.reference.chapter?.link}</LabelContentRow>
       <LabelContentRow label={t('references.pages_from')}>{values.reference.chapter?.pagesFrom}</LabelContentRow>
