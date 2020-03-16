@@ -8,14 +8,14 @@ import { getIdToken } from './userApi';
 import { NotificationVariant } from '../types/notification.types';
 
 export enum ProjectsApiPaths {
-  PROJECTS = '/cristin-projects',
+  PROJECT = '/project',
 }
 
 export const searchProjectsByTitle = async (query: string, dispatch: Dispatch) => {
   const titleQuery = `title=${encodeURIComponent(query)}`;
   try {
     const idToken = await getIdToken();
-    const response = await Axios.get(`${ProjectsApiPaths.PROJECTS}?${titleQuery}`, {
+    const response = await Axios.get(`${ProjectsApiPaths.PROJECT}?${titleQuery}`, {
       headers: {
         Authorization: `Bearer ${idToken}`,
       },
