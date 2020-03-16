@@ -47,6 +47,7 @@ export const emptyNpiDiscipline: NpiDiscipline = {
 export interface BackendPublication {
   identifier: string;
   entityDescription: PublicationEntityDescription;
+  fileSet: File[];
 }
 
 export interface Publication extends BackendPublication {
@@ -55,7 +56,6 @@ export interface Publication extends BackendPublication {
   createdBy: string;
   doiLink: string;
   reference: Reference;
-  files: File[];
   status: PublicationStatus;
   shouldCreateDoi: boolean;
 }
@@ -115,11 +115,11 @@ export const emptyPublication: Publication = {
   doiLink: '',
 
   reference: emptyReference,
-  files: [],
   status: PublicationStatus.DRAFT,
   shouldCreateDoi: false,
 
   // Fields from backend
   identifier: '',
   entityDescription: emptyPublicationEntityDescription,
+  fileSet: [],
 };

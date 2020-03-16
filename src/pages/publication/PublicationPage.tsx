@@ -1,7 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import { getPublication } from '../../api/publicationApi';
 import { setNotification } from '../../redux/actions/notificationActions';
-import i18n from '../../translations/i18n';
 import { useDispatch } from 'react-redux';
 import { CircularProgress, Link } from '@material-ui/core';
 import { Publication, emptyPublication } from '../../types/publication.types';
@@ -12,7 +11,6 @@ import LabelContentRowForPublicationPage from './publication_page/LabelContentRo
 import PublicationPageAuthors from './publication_page/PublicationPageAuthors';
 import PublicationPageFiles from './publication_page/PublicationPageFiles';
 import PublicationPageJournal from './publication_page/PublicationPageJournal';
-// import NormalText from '../../components/NormalText';
 import PublicationPageSeries from './publication_page/PublicationPageSeries';
 import NotFound from '../errorpages/NotFound';
 import Card from '../../components/Card';
@@ -54,7 +52,7 @@ const PublicationPage: FC = () => {
       setIsLoadingPublication(true);
       const publication = await getPublication(identifier!);
       if (publication?.error) {
-        dispatch(setNotification(i18n.t('feedback:error.get_publication'), NotificationVariant.Error));
+        dispatch(setNotification(publication.error, NotificationVariant.Error));
       } else {
         setPublication(publication);
       }
@@ -84,9 +82,9 @@ const PublicationPage: FC = () => {
                   {/* <StyledSidebarCard>
                     TODO: Put affiliations to contributors here
                   </StyledSidebarCard> */}
-                  {publication.files && (
+                  {publication.fileSet && (
                     <StyledSidebarCard>
-                      <PublicationPageFiles files={publication.files} />
+                      <PublicationPageFiles files={publication.fileSet} />
                     </StyledSidebarCard>
                   )}
                   <StyledSidebarCard>

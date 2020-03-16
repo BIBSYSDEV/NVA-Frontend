@@ -14,7 +14,7 @@ import {
   RadioGroup,
   TextField,
 } from '@material-ui/core';
-import { File, License, licenses } from '../../../types/file.types';
+import { File, licenses, LicenseNames } from '../../../types/file.types';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import { useTranslation } from 'react-i18next';
@@ -157,31 +157,34 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, updateFile, toggl
                     fullWidth
                     SelectProps={{
                       renderValue: (option: any) => {
-                        const selectedLicense = licenses.find((license: License) => license.name === option);
+                        const selectedLicense = licenses.find(license => license.identifier === option);
                         return selectedLicense ? (
                           <StyledVerticalAlign>
-                            <img src={selectedLicense.image} alt={selectedLicense.name} />
+                            <img src={selectedLicense.image} alt={selectedLicense.identifier} />
                             <StyledLicenseName>{option}</StyledLicenseName>
                           </StyledVerticalAlign>
                         ) : null;
                       },
                     }}
                     variant="outlined"
-                    value={file.license}
+                    value={file.license?.identifier || ''}
                     label={t('files_and_license.license')}
                     onChange={({ target: { value } }) =>
                       updateFile({
                         ...file,
-                        license: value,
+                        license: {
+                          identifier: value as LicenseNames,
+                          labels: { nb: value },
+                        },
                       })
                     }>
-                    {licenses.map((license: License) => (
-                      <MenuItem key={license.name} value={license.name} divider dense>
+                    {licenses.map(license => (
+                      <MenuItem key={license.identifier} value={license.identifier} divider dense>
                         <ListItemIcon>
-                          <img src={license.image} alt={license.name} />
+                          <img src={license.image} alt={license.identifier} />
                         </ListItemIcon>
                         <ListItemText>
-                          <StyledLicenseName>{license.name}</StyledLicenseName>
+                          <StyledLicenseName>{license.identifier}</StyledLicenseName>
                         </ListItemText>
                       </MenuItem>
                     ))}
