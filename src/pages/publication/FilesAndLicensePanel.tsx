@@ -48,7 +48,7 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab
   const toggleLicenseModal = () => {
     setIsLicenseModalOpen(!isLicenseModalOpen);
   };
-  console.log(values.fileSet);
+
   return (
     <TabPanel ariaLabel="files and license" goToNextTab={goToNextTab}>
       {/* {publisher?.title && <PublicationChannelInfoCard publisher={publisher} />} */}
@@ -88,9 +88,9 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab
       </FieldArray>
       <Modal headingText={t('files_and_license.licenses')} openModal={isLicenseModalOpen} onClose={toggleLicenseModal}>
         {licenses.map(license => (
-          <StyledLicenseDescription key={license.name}>
-            <Label>{license.name}</Label>
-            <img src={license.image} alt={license.name} />
+          <StyledLicenseDescription key={license.identifier}>
+            <Label>{license.identifier}</Label>
+            <img src={license.image} alt={license.identifier} />
             <NormalText>{license.description}</NormalText>
           </StyledLicenseDescription>
         ))}
