@@ -93,10 +93,7 @@ const EditPublication: FC = () => {
             </StyledSelectorWrapper>
             <StyledCard>
               <Heading>{t('common:information')}</Heading>
-              <NormalText>
-                Velg ressursen du ønsker å registrere eller publisere ved å laste opp ressurs eller lenke til en
-                publikasjon.
-              </NormalText>
+              <NormalText>{t('publication:publication.info_text')}</NormalText>
             </StyledCard>
           </StyledEditPublication>
           {/* temporary button so that we can navigate to schema */}

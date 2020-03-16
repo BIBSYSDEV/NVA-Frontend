@@ -68,6 +68,7 @@
     "summary": "Summary"
   },
   "publication": {
+    "info_text": "Select the resource you wish to register or publish by uploading a resource or link to a publication.",
     "link_publication_description": "E.g. DOI link, link to article, link to video of lecture etc.",
     "link_to_publication": "Link to publication",
     "load_file": "Load file",
