@@ -83,7 +83,13 @@ const SortableList = SortableContainer(({ contributors, onDelete }: SortableList
     <Table>
       <TableBody>
         {uniqueContributors.map((contributor: Contributor, index: number) => (
-          <SortableItem index={index} contributor={contributor} key={index} placement={index + 1} onDelete={onDelete} />
+          <SortableItem
+            index={index}
+            contributor={contributor}
+            key={contributor.identity.id || contributor.identity.name}
+            placement={index + 1}
+            onDelete={onDelete}
+          />
         ))}
       </TableBody>
     </Table>
@@ -98,12 +104,13 @@ interface SortableTableProps {
 }
 
 const SortableTable: FC<SortableTableProps> = ({ listOfContributors, push, remove, swap }) => {
-  const { setFieldValue }: FormikProps<Publication> = useFormikContext();
+  const { setFieldValue, values }: FormikProps<Publication> = useFormikContext();
 
   const handleOnSortEnd = ({ oldIndex, newIndex }: any) => {
-    setFieldValue(`${ContributorFieldNames.CONTRIBUTORS}[${oldIndex}].sequence`, newIndex);
-    setFieldValue(`${ContributorFieldNames.CONTRIBUTORS}[${newIndex}].sequence`, oldIndex);
     swap(oldIndex, newIndex);
+    for (let index in values.entityDescription.contributors) {
+      setFieldValue(`${ContributorFieldNames.CONTRIBUTORS}[${index}].sequence`, +index);
+    }
   };
   return (
     <>
