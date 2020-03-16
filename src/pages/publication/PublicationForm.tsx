@@ -129,7 +129,7 @@ const PublicationForm: FC<PublicationFormProps> = ({
     if (files?.length) {
       setInitialValues({
         ...emptyPublication,
-        files,
+        fileSet: files,
       });
     }
   }, [uppy]);

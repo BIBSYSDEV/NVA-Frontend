@@ -85,9 +85,9 @@ const PublicationPage: FC<PublicationPageProps> = ({ publicationId }) => {
                     <NormalText>NTNU institutt for osteloff</NormalText>
                     <NormalText>SINTEF Teknologi og samfunn</NormalText>
                   </StyledSidebarCard>
-                  {publication.files && (
+                  {publication.fileSet && (
                     <StyledSidebarCard>
-                      <PublicationPageFiles files={publication.files} />
+                      <PublicationPageFiles files={publication.fileSet} />
                     </StyledSidebarCard>
                   )}
                   <StyledSidebarCard>
