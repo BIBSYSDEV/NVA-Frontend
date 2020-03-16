@@ -55,7 +55,9 @@ const JournalArticleReferenceForm: FC = () => {
       </Field>
 
       <Field name={JournalArticleFieldNames.DOI}>
-        {({ field }: FieldProps) => <TextField variant="outlined" label={t('references.doi')} {...field} />}
+        {({ field }: FieldProps) => (
+          <TextField variant="outlined" fullWidth label={t('publication.link_to_publication')} {...field} />
+        )}
       </Field>
 
       <Field name={JournalArticleFieldNames.PUBLISHER}>
@@ -64,7 +66,7 @@ const JournalArticleReferenceForm: FC = () => {
             <PublicationChannelSearch
               clearSearchField={value === emptyPublisher}
               dataTestId="autosearch-journal"
-              label={t('publication:references.journal')}
+              label={t('references.journal')}
               publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
               setValueFunction={inputValue => setFieldValue(name, inputValue ?? emptyPublisher)}
               placeholder={t('references.search_for_journal')}

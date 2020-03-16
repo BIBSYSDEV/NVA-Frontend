@@ -1,9 +1,9 @@
 import React, { FC, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { Button, Link as MuiLink } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 
 import LinkPublication from './new_publication/LinkPublication';
 import LoadPublication from './new_publication/LoadPublication';
@@ -39,6 +39,7 @@ const StyledSelectorWrapper = styled.div`
 const StyledCard = styled(Card)`
   padding: 1rem;
   max-width: 25rem;
+  max-height: 9rem;
   flex: 1;
   @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
     max-width: inherit;
@@ -92,16 +93,7 @@ const EditPublication: FC = () => {
             </StyledSelectorWrapper>
             <StyledCard>
               <Heading>{t('common:information')}</Heading>
-              <NormalText>
-                Velg publikasjoner Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-                velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt
-                in culpa qui officia deserunt mollit anim id est laborum.
-              </NormalText>
-              <MuiLink component={Link} to={'/'} underline={'none'}>
-                Hvilke type publikasjoner kan jeg laste opp
-              </MuiLink>
+              <NormalText>{t('publication:publication.info_text')}</NormalText>
             </StyledCard>
           </StyledEditPublication>
           {/* temporary button so that we can navigate to schema */}

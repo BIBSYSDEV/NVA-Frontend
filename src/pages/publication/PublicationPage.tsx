@@ -103,7 +103,7 @@ const PublicationPage: FC<PublicationPageProps> = ({ publicationId }) => {
                 </StyledSidebar>
                 <StyledMainContent>
                   {publication.doiLink && (
-                    <LabelContentRowForPublicationPage label={t('references.doi')}>
+                    <LabelContentRowForPublicationPage label={t('publication.link_to_publication')}>
                       <Link href={publication.doiLink}>{publication.doiLink}</Link>
                     </LabelContentRowForPublicationPage>
                   )}
