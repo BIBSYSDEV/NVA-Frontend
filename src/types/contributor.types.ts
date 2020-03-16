@@ -3,18 +3,28 @@ enum ContributorRole {
   CREATOR = 'Creator',
 }
 
-export interface Contributor {
-  institutions: Institution[];
+enum ContributorType {
+  CONTRIBUTOR = 'Contributor',
+}
 
-  // New model backend
+enum ContributorIdentityType {
+  IDENTITY = 'Identity',
+}
+
+export interface Contributor {
   corresponding?: boolean;
   email?: string;
+  institutions: Institution[];
+  role: ContributorRole | '';
+
+  // New model backend
   identity: {
     id: string;
     name: string;
+    type: ContributorIdentityType;
   };
   sequence: number;
-  role: ContributorRole | '';
+  type: ContributorType;
 }
 
 interface Institution {
@@ -24,15 +34,17 @@ interface Institution {
 }
 
 export const emptyContributor: Contributor = {
-  institutions: [],
-
-  // New model
   corresponding: false,
   email: '',
+  institutions: [],
+  role: '',
+
+  // New model
   identity: {
     id: '',
     name: '',
+    type: ContributorIdentityType.IDENTITY,
   },
   sequence: 0,
-  role: '',
+  type: ContributorType.CONTRIBUTOR,
 };
