@@ -18,7 +18,8 @@ const SubmissionContributors: React.FC = () => {
       {contributors.map(contributor => (
         <SubmissionContentText key={contributor.identity.name}>
           {contributor.identity.name}
-          {contributor.institutions.map(institution => institution?.name && `(${institution.name})`)}
+          {/* TODO: update mapping of institutions once we get this from backend */}
+          {contributor.institutions?.map(institution => institution?.name && `(${institution.name})`)}
         </SubmissionContentText>
       ))}
     </LabelContentRow>
