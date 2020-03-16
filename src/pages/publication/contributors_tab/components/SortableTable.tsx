@@ -12,14 +12,15 @@ import {
   Button,
 } from '@material-ui/core';
 import { Contributor, emptyContributor } from '../../../../types/contributor.types';
-import { Field, FieldProps } from 'formik';
+import { Field, FieldProps, FormikProps, useFormikContext } from 'formik';
 import AddContributor from '../AddContributor';
 import { useTranslation } from 'react-i18next';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 import SubHeading from '../../../../components/SubHeading';
-import { removeDuplicatesByScn } from '../../../../utils/helpers';
+import { removeContributorDuplicatesById } from '../../../../utils/helpers';
 import { ContributorFieldNames } from '../../ContributorsPanel';
+import { Publication } from '../../../../types/publication.types';
 
 interface SortableItemProps {
   contributor: Contributor;
@@ -58,14 +59,12 @@ const SortableItem = SortableElement(({ contributor, placement, onDelete }: Sort
         ))}
       </TableCell>
       <TableCell align="right">
+        <div>{placement}</div>
         <div>
-          <div>{placement}</div>
-          <div>
-            <Button color="secondary" onClick={() => onDelete(index)}>
-              <DeleteIcon />
-              {t('common:remove')}
-            </Button>
-          </div>
+          <Button color="secondary" onClick={() => onDelete(index)}>
+            <DeleteIcon />
+            {t('common:remove')}
+          </Button>
         </div>
       </TableCell>
     </TableRow>
@@ -79,7 +78,7 @@ interface SortableListProps {
 }
 
 const SortableList = SortableContainer(({ contributors, onDelete }: SortableListProps) => {
-  const uniqueContributors = removeDuplicatesByScn(contributors);
+  const uniqueContributors = removeContributorDuplicatesById(contributors);
   return (
     <Table>
       <TableBody>
@@ -98,32 +97,43 @@ interface SortableTableProps {
   swap: (oldIndex: number, newIndex: number) => void;
 }
 
-const SortableTable: FC<SortableTableProps> = ({ listOfContributors, push, remove, swap }) => (
-  <>
-    <SortableList
-      contributors={listOfContributors}
-      onSortEnd={({ oldIndex, newIndex }: any) => swap(oldIndex, newIndex)}
-      onDelete={index => remove(index)}
-      distance={10}
-    />
-    <AddContributor
-      onAuthorSelected={authority => {
-        const contributor: Contributor = {
-          ...emptyContributor,
-          institutions: authority.orgunitids.map(orgunit => ({
-            id: orgunit,
-            name: orgunit,
-          })),
-          identity: {
-            id: authority.systemControlNumber,
-            name: authority.name,
-          },
-          sequence: listOfContributors.length, // TODO: Update this when moving elements in table
-        };
-        push(contributor);
-      }}
-    />
-  </>
-);
+const SortableTable: FC<SortableTableProps> = ({ listOfContributors, push, remove, swap }) => {
+  const { setFieldValue }: FormikProps<Publication> = useFormikContext();
+
+  const handleOnSortEnd = ({ oldIndex, newIndex }: any) => {
+    setFieldValue(`${ContributorFieldNames.CONTRIBUTORS}[${oldIndex}].sequence`, newIndex);
+    setFieldValue(`${ContributorFieldNames.CONTRIBUTORS}[${newIndex}].sequence`, oldIndex);
+    swap(oldIndex, newIndex);
+  };
+  return (
+    <>
+      <SortableList
+        contributors={listOfContributors}
+        onSortEnd={handleOnSortEnd}
+        onDelete={index => remove(index)}
+        distance={10}
+      />
+      <AddContributor
+        onAuthorSelected={authority => {
+          const contributor: Contributor = {
+            ...emptyContributor,
+            // TODO: add institution when available from backend
+            // institutions: authority.orgunitids.map(orgunit => ({
+            //   id: orgunit,
+            //   name: orgunit,
+            // })),
+            identity: {
+              ...emptyContributor.identity,
+              id: authority.systemControlNumber,
+              name: authority.name,
+            },
+            sequence: listOfContributors.length,
+          };
+          push(contributor);
+        }}
+      />
+    </>
+  );
+};
 
 export default SortableTable;
