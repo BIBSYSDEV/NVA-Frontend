@@ -36,11 +36,7 @@ const OrcidModal: FC = () => {
     if (USE_MOCK_DATA) {
       history.push('/user/#access_token=12343123');
     } else {
-      window.open(
-        ORCID_SIGN_IN_URL,
-        '_blank',
-        'toolbar=no, scrollbars=yes, width=500, height=600, top=500, left=500, rel="noopener noreferrer"'
-      );
+      window.location.assign(ORCID_SIGN_IN_URL);
     }
   };
 
