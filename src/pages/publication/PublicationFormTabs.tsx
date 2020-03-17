@@ -39,7 +39,8 @@ interface PublicationFormTabsProps {
 
 export const PublicationFormTabs: FC<PublicationFormTabsProps> = ({ handleTabChange, tabNumber }) => {
   const { t } = useTranslation('publication');
-  const { errors, touched }: FormikProps<Publication> = useFormikContext();
+  const { errors, touched, values }: FormikProps<Publication> = useFormikContext();
+  const submissionLabel = getIn(values, ReferenceFieldNames.DOI) ? t('heading.registration') : t('heading.publishing');
 
   return (
     <Tabs variant="fullWidth" value={tabNumber} onChange={handleTabChange} aria-label="navigation" textColor="primary">
@@ -55,7 +56,7 @@ export const PublicationFormTabs: FC<PublicationFormTabsProps> = ({ handleTabCha
       />
       <LinkTab label={`3. ${t('heading.contributors')}`} {...a11yProps('contributors')} error={false} />
       <LinkTab label={`4. ${t('heading.files_and_license')}`} {...a11yProps('files-and-license')} />
-      <LinkTab label={`5. ${t('heading.submission')}`} {...a11yProps('submission')} />
+      <LinkTab label={`5. ${submissionLabel}`} {...a11yProps('submission')} />
     </Tabs>
   );
 };
