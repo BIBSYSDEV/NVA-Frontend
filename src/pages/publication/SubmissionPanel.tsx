@@ -58,13 +58,13 @@ const SubmissionPanel: React.FC<SubmissionPanelProps> = ({ savePublication }) =>
           <LabelContentRow label={t('common:type')}>
             {publicationType && t(`referenceTypes:${publicationType}`)}
           </LabelContentRow>
-          <LabelContentRow label={t('publication.link_to_publication')}>
-            {doiUrl && (
+          {doiUrl && (
+            <LabelContentRow label={t('publication.link_to_publication')}>
               <Link href={doiUrl} target="_blank" rel="noopener noreferrer">
                 {doiUrl}
               </Link>
-            )}
-          </LabelContentRow>
+            </LabelContentRow>
+          )}
           {publicationType === ReferenceType.BOOK && <SubmissionBook />}
           {publicationType === ReferenceType.DEGREE && <SubmissionDegree />}
           {publicationType === ReferenceType.CHAPTER && <SubmissionChapter />}
