@@ -10,7 +10,6 @@ const SubmissionDegree: React.FC = () => {
 
   return (
     <>
-      <LabelContentRow label={t('common:type')}>{t('referenceTypes:Degree')}</LabelContentRow>
       <LabelContentRow label={t('references.subtype')}>
         {values.reference.degree?.type && t(`referenceTypes:subtypes_degree.${values.reference.degree.type}`)}
       </LabelContentRow>

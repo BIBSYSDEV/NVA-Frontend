@@ -14,6 +14,7 @@ import PublicationChannelSearch from './components/PublicationChannelSearch';
 import PublisherRow from './components/PublisherRow';
 import SubHeading from '../../../components/SubHeading';
 import Label from '../../../components/Label';
+import DoiField from './components/DoiField';
 
 const StyledSection = styled.div`
   display: grid;
@@ -53,6 +54,8 @@ const BookReferenceForm: FC = () => {
           </TextField>
         )}
       </Field>
+
+      <DoiField />
 
       <Field name={BookFieldNames.PUBLISHER}>
         {({ field: { name, value } }: FieldProps) => (

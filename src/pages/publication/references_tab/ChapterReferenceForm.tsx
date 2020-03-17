@@ -8,6 +8,7 @@ import RemoveIcon from '@material-ui/icons/Remove';
 import { ChapterFieldNames } from '../../../types/references.types';
 import { AutoSearch } from '../../../components/AutoSearch';
 import NviValidation from './components/NviValidation';
+import DoiField from './components/DoiField';
 
 const StyledInfoBox = styled.div`
   margin-top: 1rem;
@@ -50,19 +51,7 @@ const ChapterReferenceForm: React.FC = () => {
         {t('chapter.info')}
       </StyledInfoBox>
 
-      <Field name={ChapterFieldNames.LINK}>
-        {({ field }: FieldProps) => (
-          <TextField
-            data-testid="chapter-link"
-            aria-label="DOI-link"
-            name="doiUrl"
-            variant="outlined"
-            fullWidth
-            label={t('publication:chapter.link')}
-            {...field}
-          />
-        )}
-      </Field>
+      <DoiField />
 
       <Field name={ChapterFieldNames.ANTHOLOGY}>
         {() => (

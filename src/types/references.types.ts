@@ -14,7 +14,6 @@ interface JournalArticle {
   pagesFrom: string;
   pagesTo: string;
   peerReview: boolean;
-  link: string;
   articleNumber: string;
 }
 
@@ -52,7 +51,6 @@ export interface Publisher {
 }
 
 interface Chapter {
-  link: string;
   pagesFrom: string;
   pagesTo: string;
   anthology: Book;
@@ -79,7 +77,6 @@ const emptyBookReference: Book = {
 
 const emptyJournalArticleReference: JournalArticle = {
   type: '',
-  link: '',
   publisher: emptyPublisher,
   volume: '',
   issue: '',
@@ -105,7 +102,6 @@ const emptyDegreeReference: Degree = {
 };
 
 const emptyChapterReference: Chapter = {
-  link: '',
   pagesFrom: '',
   pagesTo: '',
   anthology: emptyBookReference,
@@ -158,11 +154,11 @@ export enum DegreeType {
 // Enums representing name of fields used by Formik
 export enum ReferenceFieldNames {
   PUBLICATION_TYPE = 'entityDescription.publicationType',
+  DOI = 'entityDescription.doiUrl',
 }
 
 export enum JournalArticleFieldNames {
   TYPE = 'reference.journalArticle.type',
-  DOI = 'reference.journalArticle.doi',
   PUBLISHER = 'reference.journalArticle.publisher',
   VOLUME = 'reference.journalArticle.volume',
   ISSUE = 'reference.journalArticle.issue',
@@ -198,7 +194,6 @@ export enum DegreeFieldNames {
 }
 
 export enum ChapterFieldNames {
-  LINK = 'reference.chapter.link',
   ANTHOLOGY = 'reference.chapter.anthology',
   PAGES_FROM = 'reference.chapter.pagesFrom',
   PAGES_TO = 'reference.chapter.pagesTo',

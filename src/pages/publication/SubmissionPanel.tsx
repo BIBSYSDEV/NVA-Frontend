@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import TabPanel from '../../components/TabPanel/TabPanel';
 import { FormikProps, useFormikContext, Field, FieldProps } from 'formik';
 import { Publication } from '../../types/publication.types';
-import { Button, FormControlLabel, Checkbox } from '@material-ui/core';
+import { Button, FormControlLabel, Checkbox, Link } from '@material-ui/core';
 import styled from 'styled-components';
 import SubmissionBook from './submission_tab/submission_book';
 import SubmissionDegree from './submission_tab/submission_degree';
@@ -19,6 +19,7 @@ import Heading from '../../components/Heading';
 import SubHeading from '../../components/SubHeading';
 import Card from '../../components/Card';
 import { useHistory } from 'react-router';
+import LabelContentRow from '../../components/LabelContentRow';
 
 const StyledPublishButton = styled(Button)`
   margin-top: 0.5rem;
@@ -42,7 +43,7 @@ const SubmissionPanel: React.FC<SubmissionPanelProps> = ({ savePublication }) =>
     history.push(`/publication/${values.identifier}/public`);
   };
 
-  const { publicationType } = values.entityDescription;
+  const { publicationType, doiUrl } = values.entityDescription;
 
   return (
     <TabPanel ariaLabel="submission">
@@ -54,6 +55,16 @@ const SubmissionPanel: React.FC<SubmissionPanelProps> = ({ savePublication }) =>
         </Card>
         <Card>
           <SubHeading>{t('heading.references')}</SubHeading>
+          <LabelContentRow label={t('common:type')}>
+            {publicationType && t(`referenceTypes:${publicationType}`)}
+          </LabelContentRow>
+          {doiUrl && (
+            <LabelContentRow label={t('publication.link_to_publication')}>
+              <Link href={doiUrl} target="_blank" rel="noopener noreferrer">
+                {doiUrl}
+              </Link>
+            </LabelContentRow>
+          )}
           {publicationType === ReferenceType.BOOK && <SubmissionBook />}
           {publicationType === ReferenceType.DEGREE && <SubmissionDegree />}
           {publicationType === ReferenceType.CHAPTER && <SubmissionChapter />}
