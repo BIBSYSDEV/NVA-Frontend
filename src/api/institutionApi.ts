@@ -6,8 +6,7 @@ import { StatusCode } from '../utils/constants';
 import i18n from '../translations/i18n';
 
 export enum InstituionApiPaths {
-  INSTITUTION = '/cristin-institutions',
-  UNIT = '/cristin-institutions/unit',
+  INSTITUTION = '/institution',
 }
 
 export const getInstitutionAndSubunits = async (searchTerm: string) => {

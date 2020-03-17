@@ -1,7 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import { getPublication } from '../../api/publicationApi';
 import { setNotification } from '../../redux/actions/notificationActions';
-import i18n from '../../translations/i18n';
 import { useDispatch } from 'react-redux';
 import { CircularProgress, Link } from '@material-ui/core';
 import { Publication, emptyPublication } from '../../types/publication.types';
@@ -12,12 +11,12 @@ import LabelContentRowForPublicationPage from './publication_page/LabelContentRo
 import PublicationPageAuthors from './publication_page/PublicationPageAuthors';
 import PublicationPageFiles from './publication_page/PublicationPageFiles';
 import PublicationPageJournal from './publication_page/PublicationPageJournal';
-import NormalText from '../../components/NormalText';
 import PublicationPageSeries from './publication_page/PublicationPageSeries';
 import NotFound from '../errorpages/NotFound';
 import Card from '../../components/Card';
 import Heading from '../../components/Heading';
 import { NotificationVariant } from '../../types/notification.types';
+import { useParams } from 'react-router';
 
 const StyledContentWrapper = styled.div`
   display: flex;
@@ -41,11 +40,8 @@ const StyledSidebarCard = styled(Card)`
   padding: 0.5rem;
 `;
 
-interface PublicationPageProps {
-  publicationId: string;
-}
-
-const PublicationPage: FC<PublicationPageProps> = ({ publicationId }) => {
+const PublicationPage: FC = () => {
+  const { identifier } = useParams();
   const dispatch = useDispatch();
   const [isLoadingPublication, setIsLoadingPublication] = useState(false);
   const [publication, setPublication] = useState<Publication>();
@@ -54,16 +50,18 @@ const PublicationPage: FC<PublicationPageProps> = ({ publicationId }) => {
   useEffect(() => {
     const loadData = async () => {
       setIsLoadingPublication(true);
-      const publication = await getPublication(publicationId);
+      const publication = await getPublication(identifier!);
       if (publication?.error) {
-        dispatch(setNotification(i18n.t('feedback:error.get_publication'), NotificationVariant.Error));
+        dispatch(setNotification(publication.error, NotificationVariant.Error));
       } else {
         setPublication(publication);
       }
       setIsLoadingPublication(false);
     };
-    loadData();
-  }, [dispatch, publicationId]);
+    if (identifier) {
+      loadData();
+    }
+  }, [dispatch, identifier]);
 
   const { mainTitle, abstract, description, tags, date, projects, contributors, doiUrl } = publication
     ? publication.entityDescription
@@ -81,10 +79,9 @@ const PublicationPage: FC<PublicationPageProps> = ({ publicationId }) => {
               {contributors && <PublicationPageAuthors contributors={contributors} />}
               <StyledContentWrapper>
                 <StyledSidebar>
-                  <StyledSidebarCard>
-                    <NormalText>NTNU institutt for osteloff</NormalText>
-                    <NormalText>SINTEF Teknologi og samfunn</NormalText>
-                  </StyledSidebarCard>
+                  {/* <StyledSidebarCard>
+                    TODO: Put affiliations to contributors here
+                  </StyledSidebarCard> */}
                   {publication.fileSet && (
                     <StyledSidebarCard>
                       <PublicationPageFiles files={publication.fileSet} />
@@ -95,9 +92,6 @@ const PublicationPage: FC<PublicationPageProps> = ({ publicationId }) => {
                       {date.year}
                       {date.month && `-${date.month}`}
                       {date.day && `-${date.day}`}
-                    </LabelContentRowForPublicationPage>
-                    <LabelContentRowForPublicationPage label={t('references.isbn')}>
-                      {publication?.reference?.book?.isbn || publication?.reference?.report?.isbn}
                     </LabelContentRowForPublicationPage>
                   </StyledSidebarCard>
                 </StyledSidebar>
@@ -123,7 +117,7 @@ const PublicationPage: FC<PublicationPageProps> = ({ publicationId }) => {
                     </LabelContentRowForPublicationPage>
                   )}
                   <PublicationPageJournal publication={publication} />
-                  {projects.length > 0 && (
+                  {projects?.length > 0 && (
                     <LabelContentRowForPublicationPage label={t('description.project_association')}>
                       {projects?.[0].titles?.[0].title}
                     </LabelContentRowForPublicationPage>
