@@ -14,7 +14,6 @@ interface JournalArticle {
   pagesFrom: string;
   pagesTo: string;
   peerReview: boolean;
-  link: string;
   articleNumber: string;
 }
 
@@ -52,7 +51,6 @@ export interface Publisher {
 }
 
 interface Chapter {
-  link: string;
   pagesFrom: string;
   pagesTo: string;
   anthology: Book;
@@ -79,7 +77,6 @@ const emptyBookReference: Book = {
 
 const emptyJournalArticleReference: JournalArticle = {
   type: '',
-  link: '',
   publisher: emptyPublisher,
   volume: '',
   issue: '',
@@ -105,7 +102,6 @@ const emptyDegreeReference: Degree = {
 };
 
 const emptyChapterReference: Chapter = {
-  link: '',
   pagesFrom: '',
   pagesTo: '',
   anthology: emptyBookReference,

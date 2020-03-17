@@ -10,7 +10,6 @@ const SubmissionJournalPublication: React.FC = () => {
 
   return (
     <>
-      <LabelContentRow label={t('common:type')}>{t('referenceTypes:JournalArticle')}</LabelContentRow>
       <LabelContentRow label={t('references.subtype')}>
         {values.reference.journalArticle?.type &&
           t(`referenceTypes:subtypes_journal_article.${values.reference.journalArticle.type}`)}
@@ -24,9 +23,6 @@ const SubmissionJournalPublication: React.FC = () => {
       <LabelContentRow label={t('references.pages_to')}>{values.reference.journalArticle?.pagesTo}</LabelContentRow>
       <LabelContentRow label={t('references.peer_reviewed')}>
         {values.reference.journalArticle?.peerReview ? t('common:yes') : t('common:no')}
-      </LabelContentRow>
-      <LabelContentRow label={t('publication.link_to_publication')}>
-        {values.reference.journalArticle?.link}
       </LabelContentRow>
       <LabelContentRow label={t('references.article_number')}>
         {values.reference.journalArticle?.articleNumber}

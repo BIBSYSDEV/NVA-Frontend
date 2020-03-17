@@ -1,8 +1,7 @@
 {
   "chapter": {
     "anthology": "Published in",
-    "info": "The anthology this chapter is published in must be registered in advance",
-    "link": "Link to publication"
+    "info": "The anthology this chapter is published in must be registered in advance"
   },
   "contributors": {
     "add_author": "Add author",
