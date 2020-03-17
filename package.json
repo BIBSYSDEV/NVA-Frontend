@@ -97,7 +97,7 @@
     "@types/styled-components": "^5.0.1",
     "@types/uuid": "^7.0.0",
     "@types/yup": "^0.26.32",
-    "@typescript-eslint/parser": "^2.23.0",
+    "@typescript-eslint/parser": "^2.24.0",
     "amazon-cognito-identity-js": "^3.2.2",
     "axios-mock-adapter": "^1.17.0",
     "cypress": "^4.1.0",
