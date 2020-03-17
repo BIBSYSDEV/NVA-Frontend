@@ -28,6 +28,7 @@ enum Colors {
   TabBackground = '#f3c19d',
   Disabled = '#bbb',
   Danger = '#ff5555',
+  Success = '#c8e6c9',
 }
 
 export default createMuiTheme({
@@ -59,6 +60,9 @@ export default createMuiTheme({
     },
     background: {
       default: Colors.Background,
+    },
+    success: {
+      main: Colors.Success,
     },
   },
   typography: {

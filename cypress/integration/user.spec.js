@@ -28,6 +28,7 @@ describe('User connects to their Authority', () => {
       .click({ force: true })
       .contains('Test User');
     cy.get('[data-testid=connect-author-button]').click({ force: true });
+    cy.get('[data-testid=modal_next]').click({ force: true });
 
     // connect orcid
     cy.get('[data-testid=connect-to-orcid]').click({ force: true });
