@@ -39,7 +39,7 @@ interface AuthorityCardProps {
   isSelected?: boolean;
 }
 
-const AuthorityCard: React.FC<AuthorityCardProps> = ({ authority, isConnected, isSelected }) => {
+const AuthorityCard: React.FC<AuthorityCardProps> = ({ authority, isConnected = false, isSelected }) => {
   const [publication, setPublication] = useState<AlmaPublication>();
   const dispatch = useDispatch();
   const { t } = useTranslation('profile');
@@ -56,7 +56,7 @@ const AuthorityCard: React.FC<AuthorityCardProps> = ({ authority, isConnected, i
   }, [dispatch, authority.systemControlNumber, authority.name]);
 
   return (
-    <StyledBoxContent isConnected={isConnected || false}>
+    <StyledBoxContent isConnected={isConnected}>
       <StyledAuthority>
         {!isConnected && <Radio color="primary" checked={isSelected} />}
         {authority?.name}

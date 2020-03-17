@@ -41,7 +41,7 @@ const AuthorityOrcidModal: FC = () => {
   const onHomePage = location.pathname === '/';
 
   const [hasClickedNext, setHasClickedNext] = useState(false);
-  const [openOrcidModal, setOpenOrcidModal] = useState(noOrcid && onHomePage && hasClickedNext);
+  const [openOrcidModal, setOpenOrcidModal] = useState(false);
   const [openAuthorityModal, setOpenAuthorityModal] = useState(noAuthority && onHomePage);
 
   useEffect(() => {
@@ -74,7 +74,12 @@ const AuthorityOrcidModal: FC = () => {
           )}
           {noOrcid && (
             <StyledButtonContainer>
-              <Button color="primary" variant="contained" onClick={handleNextClick} disabled={noAuthority}>
+              <Button
+                color="primary"
+                variant="contained"
+                data-testid="modal_next"
+                onClick={handleNextClick}
+                disabled={noAuthority}>
                 {t('next')}
               </Button>
             </StyledButtonContainer>
