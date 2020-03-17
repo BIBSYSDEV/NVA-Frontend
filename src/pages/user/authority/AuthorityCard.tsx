@@ -35,11 +35,11 @@ const StyledAuthority = styled.div`
 
 interface AuthorityCardProps {
   authority: Authority;
-  isSelected?: boolean;
   isConnected?: boolean;
+  isSelected?: boolean;
 }
 
-const AuthorityCard: React.FC<AuthorityCardProps> = ({ authority, isSelected, isConnected }) => {
+const AuthorityCard: React.FC<AuthorityCardProps> = ({ authority, isConnected, isSelected }) => {
   const [publication, setPublication] = useState<AlmaPublication>();
   const dispatch = useDispatch();
   const { t } = useTranslation('profile');
