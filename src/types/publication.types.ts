@@ -54,7 +54,6 @@ export interface Publication extends BackendPublication {
   modified: string; // date?
   createdDate: string; // date?
   createdBy: string;
-  doiLink: string;
   reference: Reference;
   status: PublicationStatus;
   shouldCreateDoi: boolean;
@@ -75,6 +74,7 @@ interface PublicationEntityDescription {
   projects: Project[];
   publicationType: ReferenceType | '';
   contributors: Contributor[];
+  doiUrl: string;
 }
 
 const emptyPublicationEntityDescription: PublicationEntityDescription = {
@@ -92,6 +92,7 @@ const emptyPublicationEntityDescription: PublicationEntityDescription = {
   projects: [],
   publicationType: '',
   contributors: [],
+  doiUrl: '',
 };
 
 export type PublicationPreview = Pick<
@@ -112,7 +113,6 @@ export const emptyPublication: Publication = {
   modified: '', // date?
   createdDate: '', // date?
   createdBy: '',
-  doiLink: '',
 
   reference: emptyReference,
   status: PublicationStatus.DRAFT,

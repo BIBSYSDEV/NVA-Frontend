@@ -2,7 +2,6 @@ import { Field, FormikProps, useFormikContext, FieldProps } from 'formik';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-
 import { MenuItem, TextField } from '@material-ui/core';
 
 import { Publication } from '../../../types/publication.types';
@@ -12,6 +11,7 @@ import NviValidation from './components/NviValidation';
 import PeerReview from './components/PeerReview';
 import PublicationChannelSearch from './components/PublicationChannelSearch';
 import PublisherRow from './components/PublisherRow';
+import DoiField from './components/DoiField';
 
 const StyledArticleDetail = styled.div`
   display: grid;
@@ -54,11 +54,7 @@ const JournalArticleReferenceForm: FC = () => {
         )}
       </Field>
 
-      <Field name={JournalArticleFieldNames.DOI}>
-        {({ field }: FieldProps) => (
-          <TextField variant="outlined" fullWidth label={t('publication.link_to_publication')} {...field} />
-        )}
-      </Field>
+      <DoiField />
 
       <Field name={JournalArticleFieldNames.PUBLISHER}>
         {({ field: { name, value } }: FieldProps) => (

@@ -10,6 +10,7 @@ import { emptyPublisher, DegreeFieldNames, DegreeType } from '../../../types/ref
 import { PublicationTableNumber } from '../../../utils/constants';
 import PublicationChannelSearch from './components/PublicationChannelSearch';
 import PublisherRow from './components/PublisherRow';
+import DoiField from './components/DoiField';
 
 const StyledLabel = styled.div`
   color: ${({ theme }) => theme.palette.text.primary};
@@ -40,6 +41,8 @@ const DegreeReferenceForm: React.FC = () => {
           </TextField>
         )}
       </Field>
+
+      <DoiField />
 
       <Field name={DegreeFieldNames.PUBLISHER}>
         {({ field: { name, value } }: FieldProps) => (

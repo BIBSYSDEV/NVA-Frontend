@@ -65,7 +65,7 @@ const PublicationPage: FC<PublicationPageProps> = ({ publicationId }) => {
     loadData();
   }, [dispatch, publicationId]);
 
-  const { mainTitle, abstract, description, tags, date, projects, contributors } = publication
+  const { mainTitle, abstract, description, tags, date, projects, contributors, doiUrl } = publication
     ? publication.entityDescription
     : emptyPublication.entityDescription;
 
@@ -102,9 +102,9 @@ const PublicationPage: FC<PublicationPageProps> = ({ publicationId }) => {
                   </StyledSidebarCard>
                 </StyledSidebar>
                 <StyledMainContent>
-                  {publication.doiLink && (
+                  {doiUrl && (
                     <LabelContentRowForPublicationPage label={t('publication.link_to_publication')}>
-                      <Link href={publication.doiLink}>{publication.doiLink}</Link>
+                      <Link href={doiUrl}>{doiUrl}</Link>
                     </LabelContentRowForPublicationPage>
                   )}
                   {abstract && (

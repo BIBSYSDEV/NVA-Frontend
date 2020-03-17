@@ -76,6 +76,8 @@
   },
   "references": {
     "article_number": "Artikkelnummer",
+    "delete_doi_title": "Endre type?",
+    "delete_doi_text": "Om du fjerner lenke til publikasjon vil du endre fra registrering til publisering. Ønsker du å fortsette?",
     "is_peer_reviewed": "Ja, den er fagfellevurdert",
     "is_not_peer_reviewed": "Nei, den er ikke fagfellevurdert",
     "is_text_book": "Er boken en lærebok?",

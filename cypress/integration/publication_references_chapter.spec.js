@@ -20,9 +20,6 @@ describe('Publication: References: Chapter', () => {
 
     cy.get('[data-testid=reference_type-heading]').contains('Chapter');
 
-    // fill out LINK field
-    cy.get('[data-testid=chapter-link]').type('http://www.banan.no');
-
     // fill out anthologoy-search
     cy.get('[data-testid=chapter-autosearch-anthology]').should('be.visible');
 
