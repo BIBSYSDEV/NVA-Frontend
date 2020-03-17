@@ -11,6 +11,7 @@ import { RootStore } from '../../../redux/reducers/rootReducer';
 import orcidLogo from '../../../resources/images/orcid_logo.svg';
 import OrcidModal from '../OrcidModal';
 import { ConnectAuthority } from './ConnectAuthority';
+import AuthorityCard from './AuthorityCard';
 
 const StyledButtonContainer = styled.div`
   display: flex;
@@ -26,6 +27,10 @@ const StyledButton = styled(Button)`
   width: 22rem;
 `;
 
+const StyledNormalText = styled.div`
+  margin-top: 1rem;
+`;
+
 const AuthorityOrcidModal: FC = () => {
   const { t } = useTranslation('common');
   const user = useSelector((store: RootStore) => store.user);
@@ -35,15 +40,16 @@ const AuthorityOrcidModal: FC = () => {
   const noAuthority = user.authority?.systemControlNumber === '';
   const onHomePage = location.pathname === '/';
 
-  const [openOrcidModal, setOpenOrcidModal] = useState(!noAuthority && noOrcid && onHomePage);
+  const [hasClickedNext, setHasClickedNext] = useState(false);
+  const [openOrcidModal, setOpenOrcidModal] = useState(noOrcid && onHomePage && hasClickedNext);
   const [openAuthorityModal, setOpenAuthorityModal] = useState(noAuthority && onHomePage);
 
   useEffect(() => {
-    setOpenOrcidModal(!noAuthority && noOrcid && onHomePage);
-    setOpenAuthorityModal(noAuthority && onHomePage);
-  }, [noAuthority, noOrcid, onHomePage]);
+    setOpenOrcidModal(noOrcid && onHomePage && hasClickedNext);
+  }, [noOrcid, onHomePage, hasClickedNext]);
 
   const handleNextClick = () => {
+    setHasClickedNext(true);
     setOpenOrcidModal(true);
     setOpenAuthorityModal(false);
   };
@@ -58,7 +64,14 @@ const AuthorityOrcidModal: FC = () => {
         ariaLabelledBy="connect-author-modal"
         headingText={t('profile:authority.connect_authority')}>
         <>
-          <ConnectAuthority />
+          {noAuthority ? (
+            <ConnectAuthority />
+          ) : (
+            <>
+              <AuthorityCard authority={user.authority} isConnected />
+              <StyledNormalText>{t('profile:authority.connected_authority')}</StyledNormalText>
+            </>
+          )}
           {noOrcid && (
             <StyledButtonContainer>
               <Button color="primary" variant="contained" onClick={handleNextClick} disabled={noAuthority}>

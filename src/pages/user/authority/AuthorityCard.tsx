@@ -11,12 +11,13 @@ import { Authority } from '../../../types/authority.types';
 import { AlmaPublication } from '../../../types/publication.types';
 import NormalText from '../../../components/NormalText';
 
-const StyledBoxContent = styled.div`
+const StyledBoxContent = styled.div<{ isConnected: boolean }>`
   display: grid;
   grid-template-columns: 2fr 2fr;
-  background-color: ${({ theme }) => theme.palette.box.main};
   padding: 1rem;
   height: 5.5rem;
+  ${({ isConnected, theme }) =>
+    isConnected ? `background-color: ${theme.palette.success.main}` : `background-color: ${theme.palette.box.main}`};
 `;
 
 const StyledPublicationContent = styled.div`
@@ -34,10 +35,11 @@ const StyledAuthority = styled.div`
 
 interface AuthorityCardProps {
   authority: Authority;
-  isSelected: boolean;
+  isSelected?: boolean;
+  isConnected?: boolean;
 }
 
-const AuthorityCard: React.FC<AuthorityCardProps> = ({ authority, isSelected }) => {
+const AuthorityCard: React.FC<AuthorityCardProps> = ({ authority, isSelected, isConnected }) => {
   const [publication, setPublication] = useState<AlmaPublication>();
   const dispatch = useDispatch();
   const { t } = useTranslation('profile');
@@ -54,9 +56,9 @@ const AuthorityCard: React.FC<AuthorityCardProps> = ({ authority, isSelected }) 
   }, [dispatch, authority.systemControlNumber, authority.name]);
 
   return (
-    <StyledBoxContent>
+    <StyledBoxContent isConnected={isConnected || false}>
       <StyledAuthority>
-        <Radio color="primary" checked={isSelected} />
+        {!isConnected && <Radio color="primary" checked={isSelected} />}
         {authority?.name}
       </StyledAuthority>
       <StyledPublicationContent>
