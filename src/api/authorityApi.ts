@@ -9,7 +9,7 @@ import { User } from '../types/user.types';
 import { NotificationVariant } from '../types/notification.types';
 
 export enum AuthorityApiPaths {
-  AUTHORITY = '/authority',
+  PERSON = '/person',
 }
 
 export enum AuthorityQualifiers {
@@ -19,7 +19,7 @@ export enum AuthorityQualifiers {
 }
 
 export const getAuthorities = async (name: string, dispatch: Dispatch) => {
-  const url = encodeURI(`${AuthorityApiPaths.AUTHORITY}?name=${name}`);
+  const url = encodeURI(`${AuthorityApiPaths.PERSON}?name=${name}`);
 
   // remove when Authorization headers are set for all requests
   const idToken = await getIdToken();
@@ -45,7 +45,7 @@ export const updateFeideForAuthority = async (feideid: string, systemControlNumb
     return;
   }
 
-  const url = `${AuthorityApiPaths.AUTHORITY}/${systemControlNumber}`;
+  const url = `${AuthorityApiPaths.PERSON}/${systemControlNumber}`;
   return await updateAuthorityAndHandleErrors(url, { feideid });
 };
 
@@ -54,7 +54,7 @@ export const updateOrcidForAuthority = async (orcid: string, systemControlNumber
     return;
   }
 
-  const url = `${AuthorityApiPaths.AUTHORITY}/${systemControlNumber}`;
+  const url = `${AuthorityApiPaths.PERSON}/${systemControlNumber}`;
   return await updateAuthorityAndHandleErrors(url, { orcid });
 };
 
@@ -63,12 +63,12 @@ export const updateInstitutionForAuthority = async (orgunitid: string, systemCon
     return;
   }
 
-  const url = `${AuthorityApiPaths.AUTHORITY}/${systemControlNumber}`;
+  const url = `${AuthorityApiPaths.PERSON}/${systemControlNumber}`;
   return await updateAuthorityAndHandleErrors(url, { orgunitid });
 };
 
 export const createAuthority = async (user: User) => {
-  const url = AuthorityApiPaths.AUTHORITY;
+  const url = AuthorityApiPaths.PERSON;
 
   // remove when Authorization headers are set for all requests
   const idToken = await getIdToken();
@@ -98,7 +98,7 @@ export const addQualifierIdForAuthority = async (
   qualifier: AuthorityQualifiers,
   identifier: string
 ) => {
-  const url = `${AuthorityApiPaths.AUTHORITY}/${systemControlNumber}/identifiers/${qualifier}/${identifier}`;
+  const url = `${AuthorityApiPaths.PERSON}/${systemControlNumber}/identifiers/${qualifier}/${identifier}`;
 
   try {
     const idToken = await getIdToken();
@@ -128,7 +128,7 @@ export const updateQualifierIdForAuthority = async (
   identifier: string,
   updatedIdentifier: string
 ) => {
-  const url = `${AuthorityApiPaths.AUTHORITY}/${systemControlNumber}/identifiers/${qualifier}/${identifier}/update/${updatedIdentifier}`;
+  const url = `${AuthorityApiPaths.PERSON}/${systemControlNumber}/identifiers/${qualifier}/${identifier}/update/${updatedIdentifier}`;
 
   try {
     const idToken = await getIdToken();
@@ -154,7 +154,7 @@ export const removeQualifierIdFromAuthority = async (
   qualifier: AuthorityQualifiers,
   identifier: string
 ) => {
-  const url = `${AuthorityApiPaths.AUTHORITY}/${systemControlNumber}/identifiers/${qualifier}/${identifier}`;
+  const url = `${AuthorityApiPaths.PERSON}/${systemControlNumber}/identifiers/${qualifier}/${identifier}`;
 
   try {
     const idToken = await getIdToken();
