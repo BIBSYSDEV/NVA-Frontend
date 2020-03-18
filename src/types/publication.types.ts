@@ -47,6 +47,17 @@ export interface NpiDiscipline {
   mainDiscipline: string;
 }
 
+export interface NpiSubject {
+  id: string;
+  subjectArea: string;
+  subdomains: NpiSubdomain[];
+}
+
+export interface NpiSubdomain {
+  id: string;
+  name: string;
+}
+
 export const emptyNpiDiscipline: NpiDiscipline = {
   id: '',
   name: '',
