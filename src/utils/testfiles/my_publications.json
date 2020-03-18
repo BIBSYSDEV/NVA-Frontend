@@ -5,7 +5,8 @@
     "createdDate": "1941-04-25",
     "status": "draft",
     "createdBy": "Kåre Kåresen",
-    "contributors": []
+    "contributors": [],
+    "publisher": { "title": "Publisher1" }
   },
   {
     "identifier": "4327439",
@@ -13,7 +14,8 @@
     "createdDate": "2019-01-01",
     "status": "draft",
     "createdBy": "Kari Karisen",
-    "contributors": []
+    "contributors": [],
+    "publisher": { "title": "Publisher1" }
   },
   {
     "identifier": "53453453",
@@ -21,7 +23,8 @@
     "createdDate": "2020-01-01",
     "status": "draft",
     "createdBy": "Arne Arnesen",
-    "contributors": []
+    "contributors": [],
+    "publisher": { "title": "Publisher1" }
   },
   {
     "identifier": "3333439",
@@ -29,7 +32,8 @@
     "createdDate": "2021-01-01",
     "status": "rejected",
     "createdBy": "Bob Boffaloe",
-    "contributors": []
+    "contributors": [],
+    "publisher": { "title": "Publisher1" }
   },
   {
     "identifier": "3533439",
@@ -42,13 +46,8 @@
       "month": "01",
       "day": "01"
     },
-    "reference": {
-      "type": "book",
-      "book": {
-        "publisher": "Bokforlaget AS"
-      }
-    },
-    "contributors": []
+    "contributors": [],
+    "publisher": { "title": "Publisher1" }
   },
   {
     "identifier": "12345679",
@@ -61,12 +60,7 @@
       "month": "04",
       "day": "25"
     },
-    "reference": {
-      "type": "journalArticle",
-      "journalArticle": {
-        "publisher": "The Very Scientific Journal"
-      }
-    },
-    "contributors": []
+    "contributors": [],
+    "publisher": { "title": "Publisher1" }
   }
 ]
