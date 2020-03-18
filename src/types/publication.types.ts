@@ -33,13 +33,15 @@ export interface AlmaPublication {
   title: string;
 }
 
-interface NpiDiscipline {
-  title: string;
+export interface NpiDiscipline {
+  id: string;
+  name: string;
   mainDiscipline: string;
 }
 
 export const emptyNpiDiscipline: NpiDiscipline = {
-  title: '',
+  id: '',
+  name: '',
   mainDiscipline: '',
 };
 
@@ -64,7 +66,7 @@ interface PublicationEntityDescription {
   abstract: string;
   description: string;
   tags: string[];
-  npiDiscipline: NpiDiscipline;
+  npiDiscipline: string;
   date: {
     year: string;
     month: string;
@@ -82,7 +84,7 @@ const emptyPublicationEntityDescription: PublicationEntityDescription = {
   abstract: '',
   description: '',
   tags: [],
-  npiDiscipline: emptyNpiDiscipline,
+  npiDiscipline: '',
   date: {
     year: '',
     month: '',

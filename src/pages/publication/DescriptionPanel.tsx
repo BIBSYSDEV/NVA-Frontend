@@ -8,7 +8,7 @@ import DateFnsUtils from '@date-io/date-fns';
 import { MenuItem } from '@material-ui/core';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import TabPanel from '../../components/TabPanel/TabPanel';
-import { emptyNpiDiscipline, Publication } from '../../types/publication.types';
+import { Publication } from '../../types/publication.types';
 import DisciplineSearch from './description_tab/DisciplineSearch';
 import ProjectSearch from './description_tab/ProjectSearch';
 import ProjectRow from './description_tab/ProjectRow';
@@ -18,6 +18,7 @@ import ChipInput from 'material-ui-chip-input';
 import { orderedLanguages } from '../../types/language.types';
 import Heading from '../../components/Heading';
 import Card from '../../components/Card';
+import { getNpiDiscipline } from '../../utils/npiDisciplines';
 
 const MultipleFieldWrapper = styled.div`
   display: flex;
@@ -119,10 +120,11 @@ const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublicat
             <StyledFieldWrapper>
               <Field name={DescriptionFieldNames.NPI_DISCIPLINE}>
                 {({ field: { name, value } }: FieldProps) => (
+                  // TODO: when we have a service for getting npiDisciplines by id this must be updated (only id is stored in backend for now)
                   <DisciplineSearch
-                    setValueFunction={newValue => setFieldValue(name, newValue ?? emptyNpiDiscipline)}
+                    setValueFunction={npiDiscipline => setFieldValue(name, npiDiscipline.id ?? '')}
                     dataTestId="search_npi"
-                    value={value.title}
+                    value={getNpiDiscipline(value).name}
                     placeholder={t('description.search_for_npi_discipline')}
                   />
                 )}

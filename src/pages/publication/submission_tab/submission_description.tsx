@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { FormikProps, useFormikContext } from 'formik';
 import { Publication } from '../../../types/publication.types';
 import SubmissionContentText from './submission_content_text';
+import { getNpiDiscipline } from '../../../utils/npiDisciplines';
 
 const SubmissionDescription: React.FC = () => {
   const { t } = useTranslation('publication');
@@ -11,14 +12,16 @@ const SubmissionDescription: React.FC = () => {
 
   const { mainTitle, abstract, description, npiDiscipline, tags, date, language, projects } = values.entityDescription;
 
+  const { name, mainDiscipline } = getNpiDiscipline(npiDiscipline);
+
   return (
     <>
       <LabelContentRow label={t('common:title')}>{mainTitle}</LabelContentRow>
       <LabelContentRow label={t('description.abstract')}>{abstract}</LabelContentRow>
       <LabelContentRow label={t('description.description')}>{description}</LabelContentRow>
       <LabelContentRow label={t('description.npi_disciplines')}>
-        {npiDiscipline.mainDiscipline}
-        {npiDiscipline.title && `- ${npiDiscipline.title}`}
+        {mainDiscipline}
+        {`- ${name}`}
       </LabelContentRow>
       <LabelContentRow label={t('description.tags')}>{tags.join(', ')}</LabelContentRow>
       <LabelContentRow label={t('common:language')}>{t(`languages:${language}`)}</LabelContentRow>
