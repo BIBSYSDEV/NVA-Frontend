@@ -38,12 +38,12 @@ const BookReferenceForm: FC = () => {
   const { t } = useTranslation('publication');
   const { setFieldValue, values }: FormikProps<Publication> = useFormikContext();
 
-  const isRatedBook = values.reference?.book?.publisher?.level;
-  const isPeerReviewed = values.reference?.book?.peerReview;
+  const isRatedBook = values.entityDescription.publisher.level;
+  const isPeerReviewed = values.entityDescription.peerReview;
 
   return (
     <>
-      <Field name={BookFieldNames.TYPE}>
+      <Field name={BookFieldNames.SUB_TYPE}>
         {({ field }: FieldProps) => (
           <TextField select variant="outlined" label={t('common:type')} {...field} fullWidth>
             {Object.values(BookType).map(typeValue => (

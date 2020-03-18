@@ -10,11 +10,13 @@ interface PublicationPageJournalProps {
 const PublicationPageJournal: FC<PublicationPageJournalProps> = ({ publication }) => {
   const { t } = useTranslation('publication');
 
+  const { publisher } = publication.entityDescription;
+
   return (
     <>
-      {publication.reference?.journalArticle?.publisher && (
+      {publisher.title && (
         <LabelContentRowForPublicationPage label={t('references.journal')}>
-          {publication.reference?.journalArticle?.publisher}
+          {publisher.title}
         </LabelContentRowForPublicationPage>
       )}
     </>

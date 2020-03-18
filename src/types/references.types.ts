@@ -1,47 +1,3 @@
-export interface Reference {
-  journalArticle?: JournalArticle;
-  book?: Book;
-  report?: Report;
-  degree?: Degree;
-  chapter?: Chapter;
-}
-
-interface JournalArticle {
-  type: JournalArticleType | '';
-  publisher: Publisher;
-  volume: string;
-  issue: string;
-  pagesFrom: string;
-  pagesTo: string;
-  peerReview: boolean;
-  articleNumber: string;
-}
-
-interface Book {
-  type: BookType | '';
-  publisher: Publisher;
-  isbn: string;
-  peerReview: boolean;
-  textBook: boolean;
-  numberOfPages: string;
-  series: Publisher;
-}
-
-interface Report {
-  type: ReportType | '';
-  publisher: Publisher;
-  isbn: string;
-  numberOfPages: string;
-  series: Publisher;
-}
-
-interface Degree {
-  type: DegreeType | '';
-  publisher: Publisher;
-  specialization: string;
-  series: Publisher;
-}
-
 export interface Publisher {
   title: string;
   printIssn: string;
@@ -50,70 +6,12 @@ export interface Publisher {
   openAccess: boolean;
 }
 
-interface Chapter {
-  pagesFrom: string;
-  pagesTo: string;
-  anthology: Book;
-  publisher: Publisher;
-}
-
 export const emptyPublisher: Publisher = {
   printIssn: '',
   onlineIssn: '',
   level: null,
   title: '',
   openAccess: false,
-};
-
-const emptyBookReference: Book = {
-  type: '',
-  publisher: emptyPublisher,
-  isbn: '',
-  peerReview: false,
-  textBook: false,
-  numberOfPages: '',
-  series: emptyPublisher,
-};
-
-const emptyJournalArticleReference: JournalArticle = {
-  type: '',
-  publisher: emptyPublisher,
-  volume: '',
-  issue: '',
-  peerReview: false,
-  pagesFrom: '',
-  pagesTo: '',
-  articleNumber: '',
-};
-
-const emptyReportReference: Report = {
-  type: '',
-  publisher: emptyPublisher,
-  isbn: '',
-  numberOfPages: '',
-  series: emptyPublisher,
-};
-
-const emptyDegreeReference: Degree = {
-  type: '',
-  publisher: emptyPublisher,
-  specialization: '',
-  series: emptyPublisher,
-};
-
-const emptyChapterReference: Chapter = {
-  pagesFrom: '',
-  pagesTo: '',
-  anthology: emptyBookReference,
-  publisher: emptyPublisher,
-};
-
-export const emptyReference: Reference = {
-  journalArticle: emptyJournalArticleReference,
-  book: emptyBookReference,
-  report: emptyReportReference,
-  degree: emptyDegreeReference,
-  chapter: emptyChapterReference,
 };
 
 // For valid values, see https://github.com/BIBSYSDEV/nva-datamodel-java/blob/develop/src/main/java/no/unit/nva/model/PublicationType.java
@@ -126,29 +24,29 @@ export enum ReferenceType {
 }
 
 export enum JournalArticleType {
-  ARTICLE = 'article',
-  SHORT_COMMUNICATION = 'shortCommunication',
-  EDITORIAL = 'editorial',
-  LETTER = 'letter',
-  REVIEW = 'review',
+  ARTICLE = 'Article',
+  SHORT_COMMUNICATION = 'ShortCommunication',
+  EDITORIAL = 'Editorial',
+  LETTER = 'Letter',
+  REVIEW = 'Review',
 }
 
 export enum BookType {
-  MONOGRAPHY = 'monography',
-  ANTHOLOGY = 'anthology',
+  MONOGRAPHY = 'Monography',
+  ANTHOLOGY = 'Anthology',
 }
 
 export enum ReportType {
-  REPORT = 'report',
-  RESEARCH_REPORT = 'researchReport',
-  POLICY_REPORT = 'policyReport',
-  WORKING_PAPER = 'workingPaper',
+  REPORT = 'Report',
+  RESEARCH_REPORT = 'ResearchReport',
+  POLICY_REPORT = 'PolicyReport',
+  WORKING_PAPER = 'WorkingPaper',
 }
 
 export enum DegreeType {
-  BACHELOR = 'bachelor',
-  MASTER = 'master',
-  DOCTORATE = 'doctorate',
+  BACHELOR = 'Bachelor',
+  MASTER = 'Master',
+  DOCTORATE = 'Doctorate',
 }
 
 // Enums representing name of fields used by Formik
@@ -158,44 +56,43 @@ export enum ReferenceFieldNames {
 }
 
 export enum JournalArticleFieldNames {
-  TYPE = 'reference.journalArticle.type',
-  PUBLISHER = 'reference.journalArticle.publisher',
-  VOLUME = 'reference.journalArticle.volume',
-  ISSUE = 'reference.journalArticle.issue',
-  PAGES_FROM = 'reference.journalArticle.pagesFrom',
-  PAGES_TO = 'reference.journalArticle.pagesTo',
-  ARTICLE_NUMBER = 'reference.journalArticle.articleNumber',
-  PEER_REVIEW = 'reference.journalArticle.peerReview',
+  SUB_TYPE = 'entityDescription.publicationSubtype',
+  PUBLISHER = 'entityDescription.publisher',
+  VOLUME = 'entityDescription.volume',
+  ISSUE = 'entityDescription.issue',
+  PAGES_FROM = 'entityDescription.pagesFrom',
+  PAGES_TO = 'entityDescription.pagesTo',
+  ARTICLE_NUMBER = 'entityDescription.articleNumber',
+  PEER_REVIEW = 'entityDescription.peerReview',
 }
 
 export enum BookFieldNames {
-  TYPE = 'reference.book.type',
-  PUBLISHER = 'reference.book.publisher',
-  ISBN = 'reference.book.isbn',
-  PEER_REVIEW = 'reference.book.peerReview',
-  TEXT_BOOK = 'reference.book.textBook',
-  NUMBER_OF_PAGES = 'reference.book.numberOfPages',
-  SERIES = 'reference.book.series',
+  SUB_TYPE = 'entityDescription.publicationSubtype',
+  PUBLISHER = 'entityDescription.publisher',
+  ISBN = 'entityDescription.isbn',
+  PEER_REVIEW = 'entityDescription.peerReview',
+  TEXT_BOOK = 'entityDescription.textBook',
+  NUMBER_OF_PAGES = 'entityDescription.numberOfPages',
+  SERIES = 'entityDescription.series',
 }
 
 export enum ReportFieldNames {
-  TYPE = 'reference.report.type',
-  PUBLISHER = 'reference.report.publisher',
-  ISBN = 'reference.report.isbn',
-  NUMBER_OF_PAGES = 'reference.report.numberOfPages',
-  SERIES = 'reference.report.series',
+  SUB_TYPE = 'entityDescription.publicationSubtype',
+  PUBLISHER = 'entityDescription.publisher',
+  ISBN = 'entityDescription.isbn',
+  NUMBER_OF_PAGES = 'entityDescription.numberOfPages',
+  SERIES = 'entityDescription.series',
 }
 
 export enum DegreeFieldNames {
-  TYPE = 'reference.degree.type',
-  PUBLISHER = 'reference.degree.publisher',
-  SPECIALISATION = 'reference.degree.numberOfPages',
-  SERIES = 'reference.degree.series',
+  SUB_TYPE = 'entityDescription.publicationSubtype',
+  PUBLISHER = 'entityDescription.publisher',
+  SPECIALISATION = 'entityDescription.numberOfPages',
+  SERIES = 'entityDescription.series',
 }
 
 export enum ChapterFieldNames {
-  ANTHOLOGY = 'reference.chapter.anthology',
-  PAGES_FROM = 'reference.chapter.pagesFrom',
-  PAGES_TO = 'reference.chapter.pagesTo',
-  PUBLISHER = 'reference.chapter.publisher',
+  PUBLISHER = 'entityDescription.publisher',
+  PAGES_FROM = 'entityDescription.pagesFrom',
+  PAGES_TO = 'entityDescription.pagesTo',
 }

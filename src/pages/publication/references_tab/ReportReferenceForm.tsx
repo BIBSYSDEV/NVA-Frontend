@@ -30,7 +30,7 @@ const ReportReferenceForm: FC = () => {
 
   return (
     <>
-      <Field name={ReportFieldNames.TYPE}>
+      <Field name={ReportFieldNames.SUB_TYPE}>
         {({ field }: FieldProps) => (
           <TextField select variant="outlined" fullWidth label={t('common:type')} {...field}>
             {Object.values(ReportType).map(typeValue => (

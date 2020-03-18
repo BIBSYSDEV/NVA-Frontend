@@ -7,22 +7,21 @@ import { Publication } from '../../../types/publication.types';
 const SubmissionBook: React.FC = () => {
   const { t } = useTranslation('publication');
   const { values }: FormikProps<Publication> = useFormikContext();
+  const { publicationSubtype, peerReview, publisher, series, textBook, numberOfPages, isbn } = values.entityDescription;
 
   return (
     <>
       <LabelContentRow label={t('references.subtype')}>
-        {values.reference.book?.type && t(`referenceTypes:subtypes_book.${values.reference.book.type}`)}
+        {publicationSubtype && t(`referenceTypes:subtypes_book.${publicationSubtype}`)}
       </LabelContentRow>
-      <LabelContentRow label={t('common:publisher')}>{values.reference.book?.publisher?.title}</LabelContentRow>
+      <LabelContentRow label={t('common:publisher')}>{publisher.title}</LabelContentRow>
       <LabelContentRow label={t('references.peer_reviewed')}>
-        {values.reference.book?.peerReview ? t('common:yes') : t('common:no')}
+        {peerReview ? t('common:yes') : t('common:no')}
       </LabelContentRow>
-      <LabelContentRow label={t('references.text_book')}>
-        {values.reference.book?.textBook ? t('common:yes') : t('common:no')}
-      </LabelContentRow>
-      <LabelContentRow label={t('references.series')}>{values.reference.book?.series?.title}</LabelContentRow>
-      <LabelContentRow label={t('references.issn')}>{values.reference.book?.isbn}</LabelContentRow>
-      <LabelContentRow label={t('references.number_of_pages')}>{values.reference.book?.numberOfPages}</LabelContentRow>
+      <LabelContentRow label={t('references.text_book')}>{textBook ? t('common:yes') : t('common:no')}</LabelContentRow>
+      <LabelContentRow label={t('references.series')}>{series.title}</LabelContentRow>
+      <LabelContentRow label={t('references.issn')}>{isbn}</LabelContentRow>
+      <LabelContentRow label={t('references.number_of_pages')}>{numberOfPages}</LabelContentRow>
     </>
   );
 };

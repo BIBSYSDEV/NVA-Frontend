@@ -53,7 +53,7 @@ const ChapterReferenceForm: React.FC = () => {
 
       <DoiField />
 
-      <Field name={ChapterFieldNames.ANTHOLOGY}>
+      <Field>
         {() => (
           <AutoSearch
             dataTestId="chapter-autosearch-anthology"
