@@ -18,7 +18,6 @@ import { useTranslation } from 'react-i18next';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 import SubHeading from '../../../../components/SubHeading';
-import { removeContributorDuplicatesById } from '../../../../utils/helpers';
 import { ContributorFieldNames } from '../../ContributorsPanel';
 import { Publication } from '../../../../types/publication.types';
 
@@ -77,24 +76,21 @@ interface SortableListProps {
   onSortEnd: ({ oldIndex, newIndex }: any) => void;
 }
 
-const SortableList = SortableContainer(({ contributors, onDelete }: SortableListProps) => {
-  const uniqueContributors = removeContributorDuplicatesById(contributors);
-  return (
-    <Table>
-      <TableBody>
-        {uniqueContributors.map((contributor: Contributor, index: number) => (
-          <SortableItem
-            index={index}
-            contributor={contributor}
-            key={contributor.identity.id || contributor.identity.name}
-            placement={index + 1}
-            onDelete={onDelete}
-          />
-        ))}
-      </TableBody>
-    </Table>
-  );
-});
+const SortableList = SortableContainer(({ contributors, onDelete }: SortableListProps) => (
+  <Table>
+    <TableBody>
+      {contributors.map((contributor: Contributor, index: number) => (
+        <SortableItem
+          index={index}
+          contributor={contributor}
+          key={contributor.identity.id || contributor.identity.name}
+          placement={index + 1}
+          onDelete={onDelete}
+        />
+      ))}
+    </TableBody>
+  </Table>
+));
 
 interface SortableTableProps {
   listOfContributors: Contributor[];
