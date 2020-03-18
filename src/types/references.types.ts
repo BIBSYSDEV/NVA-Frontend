@@ -1,6 +1,5 @@
 export interface Reference {
   book?: Book;
-  degree?: Degree;
   chapter?: Chapter;
 }
 
@@ -11,13 +10,6 @@ interface Book {
   peerReview: boolean;
   textBook: boolean;
   numberOfPages: string;
-  series: Publisher;
-}
-
-interface Degree {
-  type: DegreeType | '';
-  publisher: Publisher;
-  specialization: string;
   series: Publisher;
 }
 
@@ -54,13 +46,6 @@ const emptyBookReference: Book = {
   series: emptyPublisher,
 };
 
-const emptyDegreeReference: Degree = {
-  type: '',
-  publisher: emptyPublisher,
-  specialization: '',
-  series: emptyPublisher,
-};
-
 const emptyChapterReference: Chapter = {
   pagesFrom: '',
   pagesTo: '',
@@ -70,8 +55,6 @@ const emptyChapterReference: Chapter = {
 
 export const emptyReference: Reference = {
   book: emptyBookReference,
-  // report: emptyReportReference,
-  degree: emptyDegreeReference,
   chapter: emptyChapterReference,
 };
 
@@ -105,9 +88,9 @@ export enum ReportType {
 }
 
 export enum DegreeType {
-  BACHELOR = 'bachelor',
-  MASTER = 'master',
-  DOCTORATE = 'doctorate',
+  BACHELOR = 'Bachelor',
+  MASTER = 'Master',
+  DOCTORATE = 'Doctorate',
 }
 
 // Enums representing name of fields used by Formik
@@ -146,10 +129,10 @@ export enum ReportFieldNames {
 }
 
 export enum DegreeFieldNames {
-  TYPE = 'reference.degree.type',
-  PUBLISHER = 'reference.degree.publisher',
-  SPECIALISATION = 'reference.degree.numberOfPages',
-  SERIES = 'reference.degree.series',
+  SUB_TYPE = 'entityDescription.publicationSubtype',
+  PUBLISHER = 'entityDescription.publisher',
+  SPECIALISATION = 'entityDescription.numberOfPages',
+  SERIES = 'entityDescription.series',
 }
 
 export enum ChapterFieldNames {

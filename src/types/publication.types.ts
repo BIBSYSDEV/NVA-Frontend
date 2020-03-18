@@ -10,6 +10,7 @@ import {
   emptyPublisher,
   Publisher,
   ReportType,
+  DegreeType,
 } from './references.types';
 
 export enum PublicationType {
@@ -81,7 +82,7 @@ interface PublicationEntityDescription {
   language: LanguageCodes;
   projects: Project[];
   publicationType: ReferenceType | '';
-  publicationSubtype: JournalArticleType | ReportType | '';
+  publicationSubtype: JournalArticleType | ReportType | DegreeType | '';
   contributors: Contributor[];
   doiUrl: string;
   publisher: Publisher;
@@ -94,6 +95,7 @@ interface PublicationEntityDescription {
   isbn: string;
   numberOfPages: string;
   series: Publisher;
+  specialization: string;
 }
 
 const emptyPublicationEntityDescription: PublicationEntityDescription = {
@@ -124,6 +126,7 @@ const emptyPublicationEntityDescription: PublicationEntityDescription = {
   isbn: '',
   numberOfPages: '',
   series: emptyPublisher,
+  specialization: '',
 };
 
 export type PublicationPreview = Pick<

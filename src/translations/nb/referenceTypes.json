@@ -22,8 +22,8 @@
     "anthology": "Antologi"
   },
   "subtypes_degree": {
-    "bachelor": "Bachelorgrad",
-    "doctorate": "Doktorgrad",
-    "master": "Mastergrad"
+    "Bachelor": "Bachelorgrad",
+    "Doctorate": "Doktorgrad",
+    "Master": "Mastergrad"
   }
 }

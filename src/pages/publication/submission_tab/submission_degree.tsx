@@ -8,16 +8,16 @@ const SubmissionDegree: React.FC = () => {
   const { t } = useTranslation('publication');
   const { values }: FormikProps<Publication> = useFormikContext();
 
+  const { publicationSubtype, publisher, specialization, series } = values.entityDescription;
+
   return (
     <>
       <LabelContentRow label={t('references.subtype')}>
-        {values.reference.degree?.type && t(`referenceTypes:subtypes_degree.${values.reference.degree.type}`)}
+        {publicationSubtype && t(`referenceTypes:subtypes_degree.${publicationSubtype}`)}
       </LabelContentRow>
-      <LabelContentRow label={t('common:publisher')}>{values.reference.degree?.publisher?.title}</LabelContentRow>
-      <LabelContentRow label={t('references.specialization')}>
-        {values.reference.degree?.specialization}
-      </LabelContentRow>
-      <LabelContentRow label={t('references.series')}>{values.reference.degree?.series?.title}</LabelContentRow>
+      <LabelContentRow label={t('common:publisher')}>{publisher.title}</LabelContentRow>
+      <LabelContentRow label={t('references.specialization')}>{specialization}</LabelContentRow>
+      <LabelContentRow label={t('references.series')}>{series.title}</LabelContentRow>
     </>
   );
 };
