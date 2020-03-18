@@ -5,25 +5,25 @@
   "JournalArticle": "Publication in Journal",
   "Report": "Report",
   "subtypes_report": {
-    "report": "Report",
-    "researchReport": "Research report",
-    "policyReport": "Policy report",
-    "workingPaper": "Working paper"
+    "Report": "Report",
+    "ResearchReport": "Research report",
+    "PolicyReport": "Policy report",
+    "WorkingPaper": "Working paper"
   },
   "subtypes_journal_article": {
-    "article": "Article",
-    "editorial": "Editorial",
-    "letter": "Letter",
-    "review": "Review",
-    "shortCommunication": "Short communication"
+    "Article": "Article",
+    "Editorial": "Editorial",
+    "Letter": "Letter",
+    "Review": "Review",
+    "ShortCommunication": "Short communication"
   },
   "subtypes_book": {
-    "monography": "Monography",
-    "anthology": "Anthology"
+    "Monography": "Monography",
+    "Anthology": "Anthology"
   },
   "subtypes_degree": {
-    "bachelor": "Bachelor",
-    "doctorate": "Doctorate",
-    "master": "Master"
+    "Bachelor": "Bachelor",
+    "Doctorate": "Doctorate",
+    "Master": "Master"
   }
 }

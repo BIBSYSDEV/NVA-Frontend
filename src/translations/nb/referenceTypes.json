@@ -5,25 +5,25 @@
   "JournalArticle": "Publikasjon i tidsskrift",
   "Report": "Rapport",
   "subtypes_report": {
-    "report": "Rapport",
-    "researchReport": "Forskningsrapport",
-    "policyReport": "Policyrapport",
-    "workingPaper": "Arbeidsnotat"
+    "Report": "Rapport",
+    "ResearchReport": "Forskningsrapport",
+    "PolicyReport": "Policyrapport",
+    "WorkingPaper": "Arbeidsnotat"
   },
   "subtypes_journal_article": {
-    "article": "Artikkel",
-    "editorial": "Leder",
-    "letter": "Brev til redaktør",
-    "review": "Anmeldelse",
-    "shortCommunication": "Short communication"
+    "Article": "Artikkel",
+    "Editorial": "Leder",
+    "Letter": "Brev til redaktør",
+    "Review": "Anmeldelse",
+    "ShortCommunication": "Short communication"
   },
   "subtypes_book": {
-    "monography": "Monografi",
-    "anthology": "Antologi"
+    "Monography": "Monografi",
+    "Anthology": "Antologi"
   },
   "subtypes_degree": {
-    "bachelor": "Bachelorgrad",
-    "doctorate": "Doktorgrad",
-    "master": "Mastergrad"
+    "Bachelor": "Bachelorgrad",
+    "Doctorate": "Doktorgrad",
+    "Master": "Mastergrad"
   }
 }

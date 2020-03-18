@@ -11,7 +11,7 @@ const StyledRow = styled.div`
 
 const StyledLabel = styled(NormalText)`
   display: inline-block;
-  min-width: 15rem;
+  min-width: 17rem;
   font-weight: normal;
 `;
 

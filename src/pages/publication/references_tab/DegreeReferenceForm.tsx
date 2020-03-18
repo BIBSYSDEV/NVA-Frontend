@@ -30,7 +30,7 @@ const DegreeReferenceForm: React.FC = () => {
 
   return (
     <>
-      <Field name={DegreeFieldNames.TYPE}>
+      <Field name={DegreeFieldNames.SUB_TYPE}>
         {({ field }: FieldProps) => (
           <TextField select variant="outlined" fullWidth label={t('common:type')} {...field}>
             {Object.values(DegreeType).map(typeValue => (

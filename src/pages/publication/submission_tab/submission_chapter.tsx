@@ -7,12 +7,13 @@ import { Publication } from '../../../types/publication.types';
 const SubmissionChapter: React.FC = () => {
   const { t } = useTranslation('publication');
   const { values }: FormikProps<Publication> = useFormikContext();
+  const { isbn, pagesFrom, pagesTo } = values.entityDescription;
 
   return (
     <>
-      <LabelContentRow label={t('chapter.anthology')}>{values.reference.chapter?.anthology?.isbn}</LabelContentRow>
-      <LabelContentRow label={t('references.pages_from')}>{values.reference.chapter?.pagesFrom}</LabelContentRow>
-      <LabelContentRow label={t('references.pages_to')}>{values.reference.chapter?.pagesTo}</LabelContentRow>
+      <LabelContentRow label={t('chapter.anthology')}>{isbn}</LabelContentRow>
+      <LabelContentRow label={t('references.pages_from')}>{pagesFrom}</LabelContentRow>
+      <LabelContentRow label={t('references.pages_to')}>{pagesTo}</LabelContentRow>
     </>
   );
 };

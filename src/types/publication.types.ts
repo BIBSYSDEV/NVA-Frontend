@@ -2,7 +2,15 @@ import { Contributor } from './contributor.types';
 import { File } from './file.types';
 import { LanguageCodes } from './language.types';
 import { Project } from './project.types';
-import { emptyReference, Reference, ReferenceType } from './references.types';
+import {
+  ReferenceType,
+  JournalArticleType,
+  emptyPublisher,
+  Publisher,
+  ReportType,
+  DegreeType,
+  BookType,
+} from './references.types';
 
 export enum PublicationType {
   TEXT = 'text',
@@ -56,7 +64,6 @@ export interface Publication extends BackendPublication {
   modified: string; // date?
   createdDate: string; // date?
   createdBy: string;
-  reference: Reference;
   status: PublicationStatus;
   shouldCreateDoi: boolean;
 }
@@ -75,8 +82,21 @@ interface PublicationEntityDescription {
   language: LanguageCodes;
   projects: Project[];
   publicationType: ReferenceType | '';
+  publicationSubtype: JournalArticleType | ReportType | DegreeType | BookType | '';
   contributors: Contributor[];
   doiUrl: string;
+  publisher: Publisher;
+  volume: string;
+  issue: string;
+  pagesFrom: string;
+  pagesTo: string;
+  peerReview: boolean;
+  articleNumber: string;
+  isbn: string;
+  numberOfPages: string;
+  series: Publisher;
+  specialization: string;
+  textBook: boolean;
 }
 
 const emptyPublicationEntityDescription: PublicationEntityDescription = {
@@ -95,6 +115,19 @@ const emptyPublicationEntityDescription: PublicationEntityDescription = {
   publicationType: '',
   contributors: [],
   doiUrl: '',
+  publicationSubtype: '',
+  publisher: emptyPublisher,
+  volume: '',
+  issue: '',
+  pagesFrom: '',
+  pagesTo: '',
+  peerReview: false,
+  articleNumber: '',
+  isbn: '',
+  numberOfPages: '',
+  series: emptyPublisher,
+  specialization: '',
+  textBook: false,
 };
 
 export type PublicationPreview = Pick<
@@ -103,7 +136,7 @@ export type PublicationPreview = Pick<
 >;
 export type PublishedPublicationPreview = Pick<
   Publication & PublicationEntityDescription,
-  'identifier' | 'mainTitle' | 'date' | 'reference' | 'contributors' | 'status' | 'publicationType'
+  'identifier' | 'mainTitle' | 'date' | 'publisher' | 'contributors' | 'status' | 'publicationType'
 >;
 
 export interface Doi {
@@ -115,8 +148,6 @@ export const emptyPublication: Publication = {
   modified: '', // date?
   createdDate: '', // date?
   createdBy: '',
-
-  reference: emptyReference,
   status: PublicationStatus.DRAFT,
   shouldCreateDoi: false,
 
