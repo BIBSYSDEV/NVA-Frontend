@@ -1,5 +1,6 @@
 {
   "add": "Legg til",
+  "back_to_home": "Tilbake til startsiden",
   "cancel": "Avbryt",
   "contact_person": "Kontaktperson",
   "date": "Dato",
@@ -12,6 +13,7 @@
   "institutions": "Institusjoner",
   "language": "Språk",
   "loading": "Laster",
+  "logged_out": "Du er nå logget ut",
   "name": "Navn",
   "next": "Neste",
   "no": "Nei",

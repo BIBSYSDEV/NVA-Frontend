@@ -16,6 +16,8 @@ const PublicProfile = lazy(() => import('./pages/publication/PublicProfile'));
 const AdminCustomerInstitutionPage = lazy(() => import('./pages/admin/AdminCustomerInstitutionPage'));
 const AdminCustomerInstitutionsPage = lazy(() => import('./pages/admin/AdminCustomerInstitutionsPage'));
 const WorklistPage = lazy(() => import('./pages/worklist/WorklistPage'));
+const Logout = lazy(() => import('./layout/Logout'));
+
 const AppRoutes: FC = () => {
   const user = useSelector((store: RootStore) => store.user);
 
@@ -36,6 +38,7 @@ const AppRoutes: FC = () => {
         <Route exact path="/search/:searchTerm" component={Search} />
         <Route exact path="/search/:searchTerm/:offset" component={Search} />
         {user.isLoggedIn && <Route exact path="/user" component={User} />}
+        {!user.isLoggedIn && <Route exact path="/logout" component={Logout} />}
         <Route path="*" component={NotFound} />
       </Switch>
     </Suspense>

@@ -1,5 +1,6 @@
 {
   "add": "Add",
+  "back_to_home": "Back to home",
   "cancel": "Cancel",
   "contact_person": "Contact",
   "date": "Date",
@@ -12,6 +13,7 @@
   "institutions": "Institutions",
   "language": "Language",
   "loading": "Loading",
+  "logged_out": "You are now logged out",
   "name": "Name",
   "next": "Next",
   "no": "No",
