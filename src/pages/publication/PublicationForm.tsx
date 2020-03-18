@@ -19,7 +19,7 @@ import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import deepmerge from 'deepmerge';
 import Progress from '../../components/Progress';
-import { getPublicationValidationSchema } from './PublicationFormValidationSchema';
+import { publicationValidationSchema } from './PublicationFormValidationSchema';
 
 const shouldAllowMultipleFiles = false;
 
@@ -107,7 +107,7 @@ const PublicationForm: FC<PublicationFormProps> = ({
       <Formik
         enableReinitialize
         initialValues={initialValues}
-        validationSchema={getPublicationValidationSchema(t)}
+        validationSchema={publicationValidationSchema}
         onSubmit={(values: Publication) => savePublication(values)}
         validateOnChange={false}>
         {({ values }: FormikProps<Publication>) => (
