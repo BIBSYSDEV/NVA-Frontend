@@ -18,8 +18,8 @@
     "ShortCommunication": "Short communication"
   },
   "subtypes_book": {
-    "monography": "Monografi",
-    "anthology": "Antologi"
+    "Monography": "Monografi",
+    "Anthology": "Antologi"
   },
   "subtypes_degree": {
     "Bachelor": "Bachelorgrad",

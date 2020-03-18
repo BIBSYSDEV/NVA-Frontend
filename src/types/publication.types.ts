@@ -11,6 +11,7 @@ import {
   Publisher,
   ReportType,
   DegreeType,
+  BookType,
 } from './references.types';
 
 export enum PublicationType {
@@ -82,7 +83,7 @@ interface PublicationEntityDescription {
   language: LanguageCodes;
   projects: Project[];
   publicationType: ReferenceType | '';
-  publicationSubtype: JournalArticleType | ReportType | DegreeType | '';
+  publicationSubtype: JournalArticleType | ReportType | DegreeType | BookType | '';
   contributors: Contributor[];
   doiUrl: string;
   publisher: Publisher;
@@ -96,6 +97,7 @@ interface PublicationEntityDescription {
   numberOfPages: string;
   series: Publisher;
   specialization: string;
+  textBook: boolean;
 }
 
 const emptyPublicationEntityDescription: PublicationEntityDescription = {
@@ -127,6 +129,7 @@ const emptyPublicationEntityDescription: PublicationEntityDescription = {
   numberOfPages: '',
   series: emptyPublisher,
   specialization: '',
+  textBook: false,
 };
 
 export type PublicationPreview = Pick<

@@ -1,5 +1,4 @@
 export interface Reference {
-  book?: Book;
   chapter?: Chapter;
 }
 
@@ -54,7 +53,6 @@ const emptyChapterReference: Chapter = {
 };
 
 export const emptyReference: Reference = {
-  book: emptyBookReference,
   chapter: emptyChapterReference,
 };
 
@@ -76,8 +74,8 @@ export enum JournalArticleType {
 }
 
 export enum BookType {
-  MONOGRAPHY = 'monography',
-  ANTHOLOGY = 'anthology',
+  MONOGRAPHY = 'Monography',
+  ANTHOLOGY = 'Anthology',
 }
 
 export enum ReportType {
@@ -111,13 +109,13 @@ export enum JournalArticleFieldNames {
 }
 
 export enum BookFieldNames {
-  TYPE = 'reference.book.type',
-  PUBLISHER = 'reference.book.publisher',
-  ISBN = 'reference.book.isbn',
-  PEER_REVIEW = 'reference.book.peerReview',
-  TEXT_BOOK = 'reference.book.textBook',
-  NUMBER_OF_PAGES = 'reference.book.numberOfPages',
-  SERIES = 'reference.book.series',
+  SUB_TYPE = 'entityDescription.publicationSubtype',
+  PUBLISHER = 'entityDescription.publisher',
+  ISBN = 'entityDescription.isbn',
+  PEER_REVIEW = 'entityDescription.peerReview',
+  TEXT_BOOK = 'entityDescription.textBook',
+  NUMBER_OF_PAGES = 'entityDescription.numberOfPages',
+  SERIES = 'entityDescription.series',
 }
 
 export enum ReportFieldNames {
