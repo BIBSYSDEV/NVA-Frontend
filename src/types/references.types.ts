@@ -1,20 +1,8 @@
 export interface Reference {
-  journalArticle?: JournalArticle;
   book?: Book;
   report?: Report;
   degree?: Degree;
   chapter?: Chapter;
-}
-
-interface JournalArticle {
-  type: JournalArticleType | '';
-  publisher: Publisher;
-  volume: string;
-  issue: string;
-  pagesFrom: string;
-  pagesTo: string;
-  peerReview: boolean;
-  articleNumber: string;
 }
 
 interface Book {
@@ -75,17 +63,6 @@ const emptyBookReference: Book = {
   series: emptyPublisher,
 };
 
-const emptyJournalArticleReference: JournalArticle = {
-  type: '',
-  publisher: emptyPublisher,
-  volume: '',
-  issue: '',
-  peerReview: false,
-  pagesFrom: '',
-  pagesTo: '',
-  articleNumber: '',
-};
-
 const emptyReportReference: Report = {
   type: '',
   publisher: emptyPublisher,
@@ -109,7 +86,6 @@ const emptyChapterReference: Chapter = {
 };
 
 export const emptyReference: Reference = {
-  journalArticle: emptyJournalArticleReference,
   book: emptyBookReference,
   report: emptyReportReference,
   degree: emptyDegreeReference,
@@ -126,11 +102,11 @@ export enum ReferenceType {
 }
 
 export enum JournalArticleType {
-  ARTICLE = 'article',
-  SHORT_COMMUNICATION = 'shortCommunication',
-  EDITORIAL = 'editorial',
-  LETTER = 'letter',
-  REVIEW = 'review',
+  ARTICLE = 'Article',
+  SHORT_COMMUNICATION = 'ShortCommunication',
+  EDITORIAL = 'Editorial',
+  LETTER = 'Letter',
+  REVIEW = 'Review',
 }
 
 export enum BookType {
@@ -158,14 +134,14 @@ export enum ReferenceFieldNames {
 }
 
 export enum JournalArticleFieldNames {
-  TYPE = 'reference.journalArticle.type',
-  PUBLISHER = 'reference.journalArticle.publisher',
-  VOLUME = 'reference.journalArticle.volume',
-  ISSUE = 'reference.journalArticle.issue',
-  PAGES_FROM = 'reference.journalArticle.pagesFrom',
-  PAGES_TO = 'reference.journalArticle.pagesTo',
-  ARTICLE_NUMBER = 'reference.journalArticle.articleNumber',
-  PEER_REVIEW = 'reference.journalArticle.peerReview',
+  SUB_TYPE = 'entityDescription.publicationSubtype',
+  PUBLISHER = 'entityDescription.publisher',
+  VOLUME = 'entityDescription.volume',
+  ISSUE = 'entityDescription.issue',
+  PAGES_FROM = 'entityDescription.pagesFrom',
+  PAGES_TO = 'entityDescription.pagesTo',
+  ARTICLE_NUMBER = 'entityDescription.articleNumber',
+  PEER_REVIEW = 'entityDescription.peerReview',
 }
 
 export enum BookFieldNames {

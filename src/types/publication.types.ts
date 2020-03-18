@@ -2,7 +2,14 @@ import { Contributor } from './contributor.types';
 import { File } from './file.types';
 import { LanguageCodes } from './language.types';
 import { Project } from './project.types';
-import { emptyReference, Reference, ReferenceType } from './references.types';
+import {
+  emptyReference,
+  Reference,
+  ReferenceType,
+  JournalArticleType,
+  emptyPublisher,
+  Publisher,
+} from './references.types';
 
 export enum PublicationType {
   TEXT = 'text',
@@ -75,6 +82,16 @@ interface PublicationEntityDescription {
   publicationType: ReferenceType | '';
   contributors: Contributor[];
   doiUrl: string;
+  publicationSubtype: JournalArticleType | '';
+  publisher: Publisher;
+
+  // Journal Article fields
+  volume: string;
+  issue: string;
+  pagesFrom: string;
+  pagesTo: string;
+  peerReview: boolean;
+  articleNumber: string;
 }
 
 const emptyPublicationEntityDescription: PublicationEntityDescription = {
@@ -93,6 +110,15 @@ const emptyPublicationEntityDescription: PublicationEntityDescription = {
   publicationType: '',
   contributors: [],
   doiUrl: '',
+  publicationSubtype: '',
+  publisher: emptyPublisher,
+
+  volume: '',
+  issue: '',
+  pagesFrom: '',
+  pagesTo: '',
+  peerReview: false,
+  articleNumber: '',
 };
 
 export type PublicationPreview = Pick<

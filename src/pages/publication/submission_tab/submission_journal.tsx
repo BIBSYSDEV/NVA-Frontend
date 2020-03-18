@@ -8,24 +8,30 @@ const SubmissionJournalPublication: React.FC = () => {
   const { t } = useTranslation('publication');
   const { values }: FormikProps<Publication> = useFormikContext();
 
+  const {
+    publicationSubtype,
+    publisher,
+    volume,
+    issue,
+    pagesFrom,
+    pagesTo,
+    peerReview,
+    articleNumber,
+  } = values.entityDescription;
+
   return (
     <>
       <LabelContentRow label={t('references.subtype')}>
-        {values.reference.journalArticle?.type &&
-          t(`referenceTypes:subtypes_journal_article.${values.reference.journalArticle.type}`)}
+        {publicationSubtype && t(`referenceTypes:subtypes_journal_article.${publicationSubtype}`)}
       </LabelContentRow>
-      <LabelContentRow label={t('common:publisher')}>
-        {values.reference.journalArticle?.publisher?.title}
-      </LabelContentRow>
-      <LabelContentRow label={t('references.volume')}>{values.reference.journalArticle?.volume}</LabelContentRow>
-      <LabelContentRow label={t('references.issue')}>{values.reference.journalArticle?.issue}</LabelContentRow>
-      <LabelContentRow label={t('references.pages_from')}>{values.reference.journalArticle?.pagesFrom}</LabelContentRow>
-      <LabelContentRow label={t('references.pages_to')}>{values.reference.journalArticle?.pagesTo}</LabelContentRow>
+      <LabelContentRow label={t('common:publisher')}>{publisher.title}</LabelContentRow>
+      <LabelContentRow label={t('references.volume')}>{volume}</LabelContentRow>
+      <LabelContentRow label={t('references.issue')}>{issue}</LabelContentRow>
+      <LabelContentRow label={t('references.pages_from')}>{pagesFrom}</LabelContentRow>
+      <LabelContentRow label={t('references.pages_to')}>{pagesTo}</LabelContentRow>
+      <LabelContentRow label={t('references.article_number')}>{articleNumber}</LabelContentRow>
       <LabelContentRow label={t('references.peer_reviewed')}>
-        {values.reference.journalArticle?.peerReview ? t('common:yes') : t('common:no')}
-      </LabelContentRow>
-      <LabelContentRow label={t('references.article_number')}>
-        {values.reference.journalArticle?.articleNumber}
+        {peerReview ? t('common:yes') : t('common:no')}
       </LabelContentRow>
     </>
   );

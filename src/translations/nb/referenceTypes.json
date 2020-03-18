@@ -11,11 +11,11 @@
     "workingPaper": "Arbeidsnotat"
   },
   "subtypes_journal_article": {
-    "article": "Artikkel",
-    "editorial": "Leder",
-    "letter": "Brev til redaktør",
-    "review": "Anmeldelse",
-    "shortCommunication": "Short communication"
+    "Article": "Artikkel",
+    "Editorial": "Leder",
+    "Letter": "Brev til redaktør",
+    "Review": "Anmeldelse",
+    "ShortCommunication": "Short communication"
   },
   "subtypes_book": {
     "monography": "Monografi",

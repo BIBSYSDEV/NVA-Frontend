@@ -11,11 +11,11 @@
     "workingPaper": "Working paper"
   },
   "subtypes_journal_article": {
-    "article": "Article",
-    "editorial": "Editorial",
-    "letter": "Letter",
-    "review": "Review",
-    "shortCommunication": "Short communication"
+    "Article": "Article",
+    "Editorial": "Editorial",
+    "Letter": "Letter",
+    "Review": "Review",
+    "ShortCommunication": "Short communication"
   },
   "subtypes_book": {
     "monography": "Monography",

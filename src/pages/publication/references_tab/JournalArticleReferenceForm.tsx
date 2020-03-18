@@ -37,12 +37,12 @@ const JournalArticleReferenceForm: FC = () => {
   const { t } = useTranslation('publication');
   const { setFieldValue, values }: FormikProps<Publication> = useFormikContext();
 
-  const isRatedJournal = values.reference?.journalArticle?.publisher?.level;
-  const isPeerReviewed = values.reference?.journalArticle?.peerReview;
+  const isRatedJournal = values.entityDescription.publisher.level;
+  const isPeerReviewed = values.entityDescription.peerReview;
 
   return (
     <>
-      <Field name={JournalArticleFieldNames.TYPE} variant="outlined">
+      <Field name={JournalArticleFieldNames.SUB_TYPE} variant="outlined">
         {({ field }: FieldProps) => (
           <TextField select variant="outlined" fullWidth label={t('common:type')} {...field}>
             {Object.values(JournalArticleType).map(typeValue => (
