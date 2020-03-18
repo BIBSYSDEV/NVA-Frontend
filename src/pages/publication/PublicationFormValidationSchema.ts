@@ -9,7 +9,7 @@ export const publicationValidationSchema = Yup.object().shape({
     abstract: Yup.string(),
     description: Yup.string(),
     tags: Yup.array().of(Yup.string()),
-    npiDiscipline: Yup.object(), // TODO
+    npiDiscipline: Yup.string(),
     date: Yup.object().shape({
       year: Yup.string(),
       month: Yup.string(),
