@@ -10,7 +10,7 @@ import Modal from '../../components/Modal';
 import { licenses, Uppy } from '../../types/file.types';
 import Card from '../../components/Card';
 import Heading from '../../components/Heading';
-// import PublicationChannelInfoCard from './files_and_license_tab/PublicationChannelInfoCard';
+import PublicationChannelInfoCard from './files_and_license_tab/PublicationChannelInfoCard';
 import NormalText from '../../components/NormalText';
 import Label from '../../components/Label';
 
@@ -43,15 +43,18 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab
   const { values }: FormikProps<Publication> = useFormikContext();
   const [isLicenseModalOpen, setIsLicenseModalOpen] = useState(false);
 
-  const uploadedFiles = values[FilesFieldNames.FILES];
-
   const toggleLicenseModal = () => {
     setIsLicenseModalOpen(!isLicenseModalOpen);
   };
 
+  const {
+    fileSet,
+    entityDescription: { publisher },
+  } = values;
+
   return (
     <TabPanel ariaLabel="files and license" goToNextTab={goToNextTab}>
-      {/* {publisher?.title && <PublicationChannelInfoCard publisher={publisher} />} */}
+      {publisher.title && <PublicationChannelInfoCard publisher={publisher} />}
 
       <FieldArray name={FilesFieldNames.FILES}>
         {({ insert, remove, replace }) => (
@@ -64,11 +67,11 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab
                 addFile={file => insert(0, file)}
               />
             </Card>
-            {uploadedFiles.length > 0 && (
+            {fileSet.length > 0 && (
               <>
                 <StyledUploadedFiles>
                   <Heading>{t('files_and_license.files')}</Heading>
-                  {uploadedFiles.map((file, index) => (
+                  {fileSet.map((file, index) => (
                     <FileCard
                       key={file.id}
                       file={file}
