@@ -1,17 +1,3 @@
-export interface Reference {
-  chapter?: Chapter;
-}
-
-interface Book {
-  type: BookType | '';
-  publisher: Publisher;
-  isbn: string;
-  peerReview: boolean;
-  textBook: boolean;
-  numberOfPages: string;
-  series: Publisher;
-}
-
 export interface Publisher {
   title: string;
   printIssn: string;
@@ -20,40 +6,12 @@ export interface Publisher {
   openAccess: boolean;
 }
 
-interface Chapter {
-  pagesFrom: string;
-  pagesTo: string;
-  anthology: Book;
-  publisher: Publisher;
-}
-
 export const emptyPublisher: Publisher = {
   printIssn: '',
   onlineIssn: '',
   level: null,
   title: '',
   openAccess: false,
-};
-
-const emptyBookReference: Book = {
-  type: '',
-  publisher: emptyPublisher,
-  isbn: '',
-  peerReview: false,
-  textBook: false,
-  numberOfPages: '',
-  series: emptyPublisher,
-};
-
-const emptyChapterReference: Chapter = {
-  pagesFrom: '',
-  pagesTo: '',
-  anthology: emptyBookReference,
-  publisher: emptyPublisher,
-};
-
-export const emptyReference: Reference = {
-  chapter: emptyChapterReference,
 };
 
 // For valid values, see https://github.com/BIBSYSDEV/nva-datamodel-java/blob/develop/src/main/java/no/unit/nva/model/PublicationType.java
@@ -134,8 +92,7 @@ export enum DegreeFieldNames {
 }
 
 export enum ChapterFieldNames {
-  ANTHOLOGY = 'reference.chapter.anthology',
-  PAGES_FROM = 'reference.chapter.pagesFrom',
-  PAGES_TO = 'reference.chapter.pagesTo',
-  PUBLISHER = 'reference.chapter.publisher',
+  PUBLISHER = 'entityDescription.publisher',
+  PAGES_FROM = 'entityDescription.pagesFrom',
+  PAGES_TO = 'entityDescription.pagesTo',
 }

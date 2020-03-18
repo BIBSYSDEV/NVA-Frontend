@@ -3,8 +3,6 @@ import { File } from './file.types';
 import { LanguageCodes } from './language.types';
 import { Project } from './project.types';
 import {
-  emptyReference,
-  Reference,
   ReferenceType,
   JournalArticleType,
   emptyPublisher,
@@ -64,7 +62,6 @@ export interface Publication extends BackendPublication {
   modified: string; // date?
   createdDate: string; // date?
   createdBy: string;
-  reference: Reference;
   status: PublicationStatus;
   shouldCreateDoi: boolean;
 }
@@ -118,7 +115,6 @@ const emptyPublicationEntityDescription: PublicationEntityDescription = {
   doiUrl: '',
   publicationSubtype: '',
   publisher: emptyPublisher,
-
   volume: '',
   issue: '',
   pagesFrom: '',
@@ -138,7 +134,7 @@ export type PublicationPreview = Pick<
 >;
 export type PublishedPublicationPreview = Pick<
   Publication & PublicationEntityDescription,
-  'identifier' | 'mainTitle' | 'date' | 'reference' | 'contributors' | 'status' | 'publicationType'
+  'identifier' | 'mainTitle' | 'date' | 'publisher' | 'contributors' | 'status' | 'publicationType'
 >;
 
 export interface Doi {
@@ -150,8 +146,6 @@ export const emptyPublication: Publication = {
   modified: '', // date?
   createdDate: '', // date?
   createdBy: '',
-
-  reference: emptyReference,
   status: PublicationStatus.DRAFT,
   shouldCreateDoi: false,
 
