@@ -20,7 +20,7 @@ const SubmissionFilesAndLicenses: React.FC = () => {
           {!file.administrativeContract && (
             <>
               <LabelContentRow label={t('files_and_license.published_version')}>
-                {file.isPublished ? t('common:yes') : t('common:no')}
+                {file.isPublished !== null ? (file.isPublished ? t('common:yes') : t('common:no')) : ''}
               </LabelContentRow>
               <LabelContentRow label={t('files_and_license.embargo_date')}>
                 {file.embargoDate?.toLocaleDateString()}
