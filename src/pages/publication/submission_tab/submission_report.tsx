@@ -8,17 +8,17 @@ const SubmissionReport: React.FC = () => {
   const { t } = useTranslation('publication');
   const { values }: FormikProps<Publication> = useFormikContext();
 
+  const { publicationSubtype, publisher, isbn, series, numberOfPages } = values.entityDescription;
+
   return (
     <>
       <LabelContentRow label={t('references.subtype')}>
-        {values.reference.report?.type && t(`referenceTypes:subtypes_report.${values.reference.report.type}`)}
+        {publicationSubtype && t(`referenceTypes:subtypes_report.${publicationSubtype}`)}
       </LabelContentRow>
-      <LabelContentRow label={t('common:publisher')}>{values.reference.report?.publisher?.title}</LabelContentRow>
-      <LabelContentRow label={t('references.isbn')}>{values.reference.report?.isbn}</LabelContentRow>
-      <LabelContentRow label={t('references.series')}>{values.reference.report?.series?.title}</LabelContentRow>
-      <LabelContentRow label={t('references.number_of_pages')}>
-        {values.reference.report?.numberOfPages}
-      </LabelContentRow>
+      <LabelContentRow label={t('common:publisher')}>{publisher.title}</LabelContentRow>
+      <LabelContentRow label={t('references.isbn')}>{isbn}</LabelContentRow>
+      <LabelContentRow label={t('references.series')}>{series.title}</LabelContentRow>
+      <LabelContentRow label={t('references.number_of_pages')}>{numberOfPages}</LabelContentRow>
     </>
   );
 };

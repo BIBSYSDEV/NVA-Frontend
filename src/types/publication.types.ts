@@ -9,6 +9,7 @@ import {
   JournalArticleType,
   emptyPublisher,
   Publisher,
+  ReportType,
 } from './references.types';
 
 export enum PublicationType {
@@ -80,18 +81,19 @@ interface PublicationEntityDescription {
   language: LanguageCodes;
   projects: Project[];
   publicationType: ReferenceType | '';
+  publicationSubtype: JournalArticleType | ReportType | '';
   contributors: Contributor[];
   doiUrl: string;
-  publicationSubtype: JournalArticleType | '';
   publisher: Publisher;
-
-  // Journal Article fields
   volume: string;
   issue: string;
   pagesFrom: string;
   pagesTo: string;
   peerReview: boolean;
   articleNumber: string;
+  isbn: string;
+  numberOfPages: string;
+  series: Publisher;
 }
 
 const emptyPublicationEntityDescription: PublicationEntityDescription = {
@@ -119,6 +121,9 @@ const emptyPublicationEntityDescription: PublicationEntityDescription = {
   pagesTo: '',
   peerReview: false,
   articleNumber: '',
+  isbn: '',
+  numberOfPages: '',
+  series: emptyPublisher,
 };
 
 export type PublicationPreview = Pick<

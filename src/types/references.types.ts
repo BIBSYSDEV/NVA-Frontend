@@ -1,6 +1,5 @@
 export interface Reference {
   book?: Book;
-  report?: Report;
   degree?: Degree;
   chapter?: Chapter;
 }
@@ -11,14 +10,6 @@ interface Book {
   isbn: string;
   peerReview: boolean;
   textBook: boolean;
-  numberOfPages: string;
-  series: Publisher;
-}
-
-interface Report {
-  type: ReportType | '';
-  publisher: Publisher;
-  isbn: string;
   numberOfPages: string;
   series: Publisher;
 }
@@ -63,14 +54,6 @@ const emptyBookReference: Book = {
   series: emptyPublisher,
 };
 
-const emptyReportReference: Report = {
-  type: '',
-  publisher: emptyPublisher,
-  isbn: '',
-  numberOfPages: '',
-  series: emptyPublisher,
-};
-
 const emptyDegreeReference: Degree = {
   type: '',
   publisher: emptyPublisher,
@@ -87,7 +70,7 @@ const emptyChapterReference: Chapter = {
 
 export const emptyReference: Reference = {
   book: emptyBookReference,
-  report: emptyReportReference,
+  // report: emptyReportReference,
   degree: emptyDegreeReference,
   chapter: emptyChapterReference,
 };
@@ -115,10 +98,10 @@ export enum BookType {
 }
 
 export enum ReportType {
-  REPORT = 'report',
-  RESEARCH_REPORT = 'researchReport',
-  POLICY_REPORT = 'policyReport',
-  WORKING_PAPER = 'workingPaper',
+  REPORT = 'Report',
+  RESEARCH_REPORT = 'ResearchReport',
+  POLICY_REPORT = 'PolicyReport',
+  WORKING_PAPER = 'WorkingPaper',
 }
 
 export enum DegreeType {
@@ -155,11 +138,11 @@ export enum BookFieldNames {
 }
 
 export enum ReportFieldNames {
-  TYPE = 'reference.report.type',
-  PUBLISHER = 'reference.report.publisher',
-  ISBN = 'reference.report.isbn',
-  NUMBER_OF_PAGES = 'reference.report.numberOfPages',
-  SERIES = 'reference.report.series',
+  SUB_TYPE = 'entityDescription.publicationSubtype',
+  PUBLISHER = 'entityDescription.publisher',
+  ISBN = 'entityDescription.isbn',
+  NUMBER_OF_PAGES = 'entityDescription.numberOfPages',
+  SERIES = 'entityDescription.series',
 }
 
 export enum DegreeFieldNames {
