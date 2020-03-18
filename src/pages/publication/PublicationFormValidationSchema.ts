@@ -1,0 +1,62 @@
+import * as Yup from 'yup';
+import { ReferenceType, JournalArticleType, BookType, DegreeType, ReportType } from '../../types/references.types';
+import { LanguageCodes } from '../../types/language.types';
+import i18n from '../../translations/i18n';
+
+export const publicationValidationSchema = Yup.object().shape({
+  entityDescription: Yup.object().shape({
+    mainTitle: Yup.string().required(i18n.t('publication:feedback.required_field')),
+    abstract: Yup.string(),
+    description: Yup.string(),
+    tags: Yup.array().of(Yup.string()),
+    npiDiscipline: Yup.object(), // TODO
+    date: Yup.object().shape({
+      year: Yup.string(),
+      month: Yup.string(),
+      day: Yup.string(),
+    }),
+    language: Yup.string().oneOf(Object.values(LanguageCodes)),
+    projects: Yup.array().of(Yup.object()), // TODO
+    publicationType: Yup.string()
+      .oneOf(Object.values(ReferenceType))
+      .required(i18n.t('publication:feedback.required_field')),
+    publicationSubtype: Yup.string()
+      .when('publicationType', {
+        is: ReferenceType.PUBLICATION_IN_JOURNAL,
+        then: Yup.string().oneOf(Object.values(JournalArticleType)),
+      })
+      .when('publicationType', {
+        is: ReferenceType.BOOK,
+        then: Yup.string().oneOf(Object.values(BookType)),
+      })
+      .when('publicationType', {
+        is: ReferenceType.REPORT,
+        then: Yup.string().oneOf(Object.values(ReportType)),
+      })
+      .when('publicationType', {
+        is: ReferenceType.DEGREE,
+        then: Yup.string().oneOf(Object.values(DegreeType)),
+      })
+      .when('publicationType', {
+        is: ReferenceType.CHAPTER,
+        then: Yup.string().length(0),
+      }),
+    contributors: Yup.array()
+      .of(Yup.object()) // TODO
+      .min(1, i18n.t('publication:feedback.minimum_one_contributor')),
+    doiUrl: Yup.string().url(),
+    publisher: Yup.object(), // TODO
+    volume: Yup.string(),
+    issue: Yup.string(),
+    pagesFrom: Yup.string(),
+    pagesTo: Yup.string(),
+    peerReview: Yup.boolean(),
+    articleNumber: Yup.string(),
+    isbn: Yup.string(),
+    numberOfPages: Yup.string(),
+    series: Yup.object(),
+    specialization: Yup.string(),
+    textBook: Yup.boolean(),
+  }),
+  fileSet: Yup.array().of(Yup.object()), // TODO
+});

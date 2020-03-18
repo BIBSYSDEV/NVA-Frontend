@@ -2,11 +2,9 @@ import { Form, Formik, FormikProps } from 'formik';
 import React, { FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import * as Yup from 'yup';
 
 import TabPanel from '../../components/TabPanel/TabPanel';
 import { emptyPublication, Publication, BackendPublication } from '../../types/publication.types';
-import { ReferenceType } from '../../types/references.types';
 import { createUppy } from '../../utils/uppy-config';
 import ContributorsPanel from './ContributorsPanel';
 import DescriptionPanel from './DescriptionPanel';
@@ -21,6 +19,7 @@ import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import deepmerge from 'deepmerge';
 import Progress from '../../components/Progress';
+import { publicationValidationSchema } from './PublicationFormValidationSchema';
 
 const shouldAllowMultipleFiles = false;
 
@@ -45,82 +44,6 @@ const PublicationForm: FC<PublicationFormProps> = ({
   const [publicationValues, setPublicationValues] = useState(); // TODO: remove this when backend model fits frontend model
   const [isLoading, setIsLoading] = useState(!!identifier);
   const dispatch = useDispatch();
-
-  const validationSchema = Yup.object().shape({
-    title: Yup.object().shape({
-      nb: Yup.string().required(t('publication:feedback.required_field')),
-    }),
-
-    reference: Yup.object().shape({
-      type: Yup.string().required(t('publication:feedback.required_field')),
-
-      journalArticle: Yup.object().when('type', {
-        is: ReferenceType.PUBLICATION_IN_JOURNAL,
-        then: Yup.object().shape({
-          type: Yup.string(),
-          doi: Yup.string().url(),
-          journal: Yup.object(),
-          volume: Yup.number(),
-          issue: Yup.number(),
-          pagesFrom: Yup.number(),
-          pagesTo: Yup.number(),
-          articleNumber: Yup.string(),
-          peerReview: Yup.bool(),
-        }),
-      }),
-
-      book: Yup.object().when('type', {
-        is: ReferenceType.BOOK,
-        then: Yup.object().shape({
-          type: Yup.string(),
-          publisher: Yup.object(),
-          isbn: Yup.string(),
-          peerReview: Yup.bool(),
-          textBook: Yup.bool(),
-          numberOfPages: Yup.string(),
-          series: Yup.string(),
-        }),
-      }),
-
-      chapter: Yup.object().when('type', {
-        is: ReferenceType.CHAPTER,
-        then: Yup.object().shape({
-          link: Yup.string().url(),
-          pagesFrom: Yup.number(),
-          pagesTo: Yup.number(),
-        }),
-      }),
-
-      report: Yup.object().when('type', {
-        is: ReferenceType.REPORT,
-        then: Yup.object().shape({
-          type: Yup.string(),
-          publisher: Yup.object(),
-          isbn: Yup.string(),
-          numberOfPages: Yup.string(),
-          series: Yup.string(),
-        }),
-      }),
-    }),
-    contributors: Yup.array()
-      .of(
-        Yup.object().shape({
-          type: Yup.string(),
-          name: Yup.string(),
-          corresponding: Yup.bool(),
-          email: Yup.string(),
-          orcid: Yup.string(),
-          systemControlNumber: Yup.string(),
-          institutions: Yup.array().of(
-            Yup.object().shape({
-              id: Yup.string(),
-              name: Yup.string(),
-            })
-          ),
-        })
-      )
-      .min(1, t('publication:feedback.minimum_one_contributor')),
-  });
 
   useEffect(() => {
     // Get files uploaded from new publication view
@@ -184,7 +107,7 @@ const PublicationForm: FC<PublicationFormProps> = ({
       <Formik
         enableReinitialize
         initialValues={initialValues}
-        validationSchema={validationSchema}
+        validationSchema={publicationValidationSchema}
         onSubmit={(values: Publication) => savePublication(values)}
         validateOnChange={false}>
         {({ values }: FormikProps<Publication>) => (

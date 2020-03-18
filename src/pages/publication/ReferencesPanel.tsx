@@ -78,7 +78,13 @@ const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, savePubl
         <Field name={ReferenceFieldNames.PUBLICATION_TYPE}>
           {({ field, meta: { error, touched } }: FieldProps) => (
             <FormControl fullWidth error={!!error && touched}>
-              <TextField select variant="outlined" {...field} label={t('common:type')} data-testid="reference_type">
+              <TextField
+                select
+                variant="outlined"
+                {...field}
+                label={t('common:type')}
+                error={!!error && touched}
+                data-testid="reference_type">
                 {Object.values(ReferenceType).map(typeValue => (
                   <MenuItem value={typeValue} key={typeValue} data-testid={`reference_type-${typeValue}`}>
                     {t(`referenceTypes:${typeValue}`)}
