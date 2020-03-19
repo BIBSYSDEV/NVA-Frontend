@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import { FormControl, FormControlLabel, Radio, RadioGroup } from '@material-ui/core';
 
-import { Publication } from '../../../../types/publication.types';
+import { FormikPublication } from '../../../../types/publication.types';
 import Label from '../../../../components/Label';
 
 interface PeerReviewProps {
@@ -15,7 +15,7 @@ interface PeerReviewProps {
 const PeerReview: FC<PeerReviewProps> = ({ fieldName, label }) => {
   const { t } = useTranslation('publication');
 
-  const { setFieldValue }: FormikProps<Publication> = useFormikContext();
+  const { setFieldValue }: FormikProps<FormikPublication> = useFormikContext();
 
   return (
     <Field name={fieldName}>

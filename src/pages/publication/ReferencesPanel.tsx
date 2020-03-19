@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { FormControl, FormHelperText, MenuItem, TextField } from '@material-ui/core';
 
 import TabPanel from '../../components/TabPanel/TabPanel';
-import { Publication } from '../../types/publication.types';
+import { FormikPublication } from '../../types/publication.types';
 import {
   BookFieldNames,
   ChapterFieldNames,
@@ -39,7 +39,7 @@ interface ReferencesPanelProps {
 
 const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, savePublication }) => {
   const { t } = useTranslation('publication');
-  const { values, setFieldTouched }: FormikProps<Publication> = useFormikContext();
+  const { values, setFieldTouched }: FormikProps<FormikPublication> = useFormikContext();
   const { publicationType } = values.entityDescription;
 
   // Validation messages won't show on fields that are not touched

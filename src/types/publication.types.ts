@@ -65,13 +65,12 @@ export const emptyNpiDiscipline: NpiDiscipline = {
 };
 
 export interface Publication {
-  identifier: string;
+  readonly identifier: string;
+  readonly createdDate: string;
+  readonly owner: string;
+  readonly status: PublicationStatus;
   entityDescription: PublicationEntityDescription;
   fileSet: File[];
-  createdDate: string;
-  owner: string;
-  status: PublicationStatus;
-  shouldCreateDoi: boolean;
 }
 
 interface PublicationEntityDescription {
@@ -103,6 +102,10 @@ interface PublicationEntityDescription {
   series: Publisher;
   specialization: string;
   textBook: boolean;
+}
+
+export interface FormikPublication extends Publication {
+  shouldCreateDoi: boolean;
 }
 
 const emptyPublicationEntityDescription: PublicationEntityDescription = {
@@ -150,14 +153,12 @@ export interface Doi {
   title: string;
 }
 
-export const emptyPublication: Publication = {
+export const emptyPublication: FormikPublication = {
+  identifier: '',
   createdDate: '',
   owner: '',
   status: PublicationStatus.DRAFT,
-  shouldCreateDoi: false,
-
-  // Fields from backend
-  identifier: '',
   entityDescription: emptyPublicationEntityDescription,
   fileSet: [],
+  shouldCreateDoi: false,
 };

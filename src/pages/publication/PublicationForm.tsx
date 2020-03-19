@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
 import TabPanel from '../../components/TabPanel/TabPanel';
-import { emptyPublication, Publication } from '../../types/publication.types';
+import { emptyPublication, FormikPublication } from '../../types/publication.types';
 import { createUppy } from '../../utils/uppy-config';
 import ContributorsPanel from './ContributorsPanel';
 import DescriptionPanel from './DescriptionPanel';
@@ -88,7 +88,7 @@ const PublicationForm: FC<PublicationFormProps> = ({
     setTabNumber(tabNumber + 1);
   };
 
-  const savePublication = async (values: Publication) => {
+  const savePublication = async (values: FormikPublication) => {
     const updatedPublication = await updatePublication({
       ...publicationValues,
       entityDescription: values.entityDescription,
@@ -108,9 +108,9 @@ const PublicationForm: FC<PublicationFormProps> = ({
         enableReinitialize
         initialValues={initialValues}
         validationSchema={publicationValidationSchema}
-        onSubmit={(values: Publication) => savePublication(values)}
+        onSubmit={(values: FormikPublication) => savePublication(values)}
         validateOnChange={false}>
-        {({ values }: FormikProps<Publication>) => (
+        {({ values }: FormikProps<FormikPublication>) => (
           <Form>
             <PublicationFormTabs tabNumber={tabNumber} handleTabChange={handleTabChange} />
             {tabNumber === 0 && (

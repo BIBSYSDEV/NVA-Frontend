@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { MenuItem, TextField } from '@material-ui/core';
 
-import { Publication } from '../../../types/publication.types';
+import { FormikPublication } from '../../../types/publication.types';
 import { emptyPublisher, JournalArticleFieldNames, JournalArticleType } from '../../../types/references.types';
 import { PublicationTableNumber } from '../../../utils/constants';
 import NviValidation from './components/NviValidation';
@@ -35,7 +35,7 @@ const StyledPeerReview = styled.div`
 
 const JournalArticleReferenceForm: FC = () => {
   const { t } = useTranslation('publication');
-  const { setFieldValue, values }: FormikProps<Publication> = useFormikContext();
+  const { setFieldValue, values }: FormikProps<FormikPublication> = useFormikContext();
 
   const isRatedJournal = values.entityDescription.publisher.level;
   const isPeerReviewed = values.entityDescription.peerReview;

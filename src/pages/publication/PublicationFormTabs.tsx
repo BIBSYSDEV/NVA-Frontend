@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { Tabs } from '@material-ui/core';
 
 import LinkTab from '../../components/TabPanel/LinkTab';
-import { Publication } from '../../types/publication.types';
+import { FormikPublication } from '../../types/publication.types';
 import {
   BookFieldNames,
   ChapterFieldNames,
@@ -39,7 +39,7 @@ interface PublicationFormTabsProps {
 
 export const PublicationFormTabs: FC<PublicationFormTabsProps> = ({ handleTabChange, tabNumber }) => {
   const { t } = useTranslation('publication');
-  const { errors, touched, values }: FormikProps<Publication> = useFormikContext();
+  const { errors, touched, values }: FormikProps<FormikPublication> = useFormikContext();
   const submissionLabel = getIn(values, ReferenceFieldNames.DOI) ? t('heading.registration') : t('heading.publishing');
 
   return (
@@ -62,8 +62,8 @@ export const PublicationFormTabs: FC<PublicationFormTabsProps> = ({ handleTabCha
 };
 
 const hasTouchedError = (
-  errors: FormikErrors<Publication>,
-  touched: FormikTouched<Publication>,
+  errors: FormikErrors<FormikPublication>,
+  touched: FormikTouched<FormikPublication>,
   fieldNames: string[]
 ): boolean => {
   if (!Object.keys(errors).length || !Object.keys(touched).length || !fieldNames.length) {
