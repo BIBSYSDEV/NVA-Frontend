@@ -1,96 +1,370 @@
-{
-  "Humanities": [
-    "Archaeology and Conservation",
-    "Architecture and Design",
-    "Asian and African Studies",
-    "Dance",
-    "English Studies",
-    "Philosophy and History of Ideas",
-    "Classical Studies",
-    "History",
-    "Ethnology",
-    "Art History",
-    "Linguistics",
-    "Literature",
-    "Media and Communication",
-    "Musicology",
-    "Scandinavian Studies",
-    "Romance Studies",
-    "Slavonic Studies",
-    "Theatre and Drama",
-    "Theology and religion",
-    "Interdisciplinary Humanities",
-    "Germanic Studies"
-  ],
-  "Natural Sciences and Engineering": [
-    "Applied geology, petroleum science and engineering",
-    "Biology",
-    "Biotechnology",
-    "Civil Engineering",
-    "Computer and information science, Computer engineering",
-    "Electronics and cybernetics",
-    "Electric power engineering",
-    "Energy",
-    "Physics",
-    "General Technology",
-    "Earth sciences",
-    "Industrial engineering and management",
-    "Informatics",
-    "Chemistry",
-    "Chemical Engineering",
-    "Marine Technology",
-    "Mechanical engineering",
-    "Mathematics",
-    "Materials Science and Engineering",
-    "Environmental technology and industrial ecology",
-    "Networks and network based services",
-    "Interdisciplinary Natural Sciences",
-    "Multidisciplinar technology"
-  ],
-  "Social Science": [
-    "Library and Information Science",
-    "Geography",
-    "Gender Studies",
-    "Education and Educational Research",
-    "Law",
-    "Economics",
-    "Anthropology",
-    "Social Work",
-    "Sociology",
-    "Political Science",
-    "Interdisciplinary Social Sciences",
-    "Development Studies",
-    "Business and Finance"
-  ],
-  "Health Sciences": [
-    "Anaesthesia, Emergency and Intensive Care",
-    "Biomedicine",
-    "Dermatology and Venerology",
-    "Endocrinology",
-    "Nutrition",
-    "Pharmacology and Toxicology",
-    "Gastroenterology and Hepatology",
-    "General Medicine",
-    "Geriatrics",
-    "Gynecology and Obstetrics",
-    "Haematology",
-    "Cardiovascular and Respiratory Systems",
-    "Sport Sciences",
-    "Infectious Diseases",
-    "Surgical Sciences",
-    "Nephrology",
-    "Neurology",
-    "Dentistry",
-    "Oncology",
-    "Pediatrics",
-    "Psychiatry",
-    "Psychology",
-    "Radiology, Nuclear Medicine and Medical Imaging",
-    "Rheumatology",
-    "Public, Environmental and Occupational Health",
-    "Nursing",
-    "Veterinary Medicine",
-    "Otorhinolaryngology",
-    "Ophthalmology"
-  ]
-}
+[
+  {
+    "id": "0001",
+    "subjectArea": "Humanities",
+    "subdomains": [
+      {
+        "id": "1003",
+        "name": "Archaeology and Conservation"
+      },
+      {
+        "id": "1004",
+        "name": "Architecture and Design"
+      },
+      {
+        "id": "1013",
+        "name": "Art History"
+      },
+      {
+        "id": "1005",
+        "name": "Asian and African Studies"
+      },
+      {
+        "id": "1009",
+        "name": "Classical Studies"
+      },
+      {
+        "id": "1006",
+        "name": "Dance"
+      },
+      {
+        "id": "1007",
+        "name": "English Studies"
+      },
+      {
+        "id": "1012",
+        "name": "Ethnology"
+      },
+      {
+        "id": "1024",
+        "name": "Germanic Studies"
+      },
+      {
+        "id": "1010",
+        "name": "History"
+      },
+      {
+        "id": "1023",
+        "name": "Interdisciplinary Humanities"
+      },
+      {
+        "id": "1014",
+        "name": "Linguistics "
+      },
+      {
+        "id": "1015",
+        "name": "Literature"
+      },
+      {
+        "id": "1016",
+        "name": "Media and Communication"
+      },
+      {
+        "id": "1017",
+        "name": "Musicology"
+      },
+      {
+        "id": "1008",
+        "name": "Philosophy and History of Ideas"
+      },
+      {
+        "id": "1019",
+        "name": "Romance Studies"
+      },
+      {
+        "id": "1018",
+        "name": "Scandinavian Studies"
+      },
+      {
+        "id": "1020",
+        "name": "Slavonic Studies"
+      },
+      {
+        "id": "1021",
+        "name": "Theatre and Drama"
+      },
+      {
+        "id": "1022",
+        "name": "Theology and religion"
+      }
+    ]
+  },
+  {
+    "id": "0002",
+    "subjectArea": "Social Science",
+    "subdomains": [
+      {
+        "id": "1030",
+        "name": "Anthropology"
+      },
+      {
+        "id": "1035",
+        "name": "Business and Finance"
+      },
+      {
+        "id": "1033",
+        "name": "Development Studies"
+      },
+      {
+        "id": "1029",
+        "name": "Economics"
+      },
+      {
+        "id": "1027",
+        "name": "Education and Educational Research"
+      },
+      {
+        "id": "1011",
+        "name": "Gender Studies"
+      },
+      {
+        "id": "1026",
+        "name": "Geography"
+      },
+      {
+        "id": "1034",
+        "name": "Interdisciplinary Social Sciences"
+      },
+      {
+        "id": "1028",
+        "name": "Law"
+      },
+      {
+        "id": "1025",
+        "name": "Library and Information Science"
+      },
+      {
+        "id": "1032",
+        "name": "Political Science"
+      },
+      {
+        "id": "1060",
+        "name": "Social Work"
+      },
+      {
+        "id": "1031",
+        "name": "Sociology"
+      }
+    ]
+  },
+  {
+    "id": "0003",
+    "subjectArea": "Health Sciences",
+    "subdomains": [
+      {
+        "id": "1062",
+        "name": "Anaesthesia, Emergency and Intensive Care"
+      },
+      {
+        "id": "1063",
+        "name": "Biomedicine"
+      },
+      {
+        "id": "1071",
+        "name": "Cardiovascular and Respiratory Systems"
+      },
+      {
+        "id": "1084",
+        "name": "Dentistry"
+      },
+      {
+        "id": "1064",
+        "name": "Dermatology and Venerology"
+      },
+      {
+        "id": "1065",
+        "name": "Endocrinology"
+      },
+      {
+        "id": "1066",
+        "name": "Gastroenterology and Hepatology"
+      },
+      {
+        "id": "1067",
+        "name": "General Medicine"
+      },
+      {
+        "id": "1068",
+        "name": "Geriatrics"
+      },
+      {
+        "id": "1069",
+        "name": "Gynecology and Obstetrics"
+      },
+      {
+        "id": "1070",
+        "name": "Haematology"
+      },
+      {
+        "id": "1072",
+        "name": "Infectious Diseases"
+      },
+      {
+        "id": "1074",
+        "name": "Nephrology"
+      },
+      {
+        "id": "1075",
+        "name": "Neurology"
+      },
+      {
+        "id": "1086",
+        "name": "Nursing"
+      },
+      {
+        "id": "1144",
+        "name": "Nutrition"
+      },
+      {
+        "id": "1076",
+        "name": "Oncology"
+      },
+      {
+        "id": "1083",
+        "name": "Ophthalmology"
+      },
+      {
+        "id": "1082",
+        "name": "Otorhinolaryngology"
+      },
+      {
+        "id": "1077",
+        "name": "Pediatrics"
+      },
+      {
+        "id": "1059",
+        "name": "Pharmacology and Toxicology"
+      },
+      {
+        "id": "1078",
+        "name": "Psychiatry"
+      },
+      {
+        "id": "1085",
+        "name": "Psychology"
+      },
+      {
+        "id": "1081",
+        "name": "Public, Environmental and Occupational Health"
+      },
+      {
+        "id": "1079",
+        "name": "Radiology, Nuclear Medicine and Medical Imaging"
+      },
+      {
+        "id": "1080",
+        "name": "Rheumatology"
+      },
+      {
+        "id": "1061",
+        "name": "Sport Sciences"
+      },
+      {
+        "id": "1073",
+        "name": "Surgical Sciences"
+      },
+      {
+        "id": "1087",
+        "name": "Veterinary Medicine"
+      }
+    ]
+  },
+  {
+    "id": "0004",
+    "subjectArea": "Natural Sciences and Engineering",
+    "subdomains": [
+      {
+        "id": "1042",
+        "name": "Applied geology, petroleum science and engineering"
+      },
+      {
+        "id": "1036",
+        "name": "Biology"
+      },
+      {
+        "id": "1043",
+        "name": "Biotechnology"
+      },
+      {
+        "id": "1050",
+        "name": "Chemical Engineering"
+      },
+      {
+        "id": "1040",
+        "name": "Chemistry"
+      },
+      {
+        "id": "1044",
+        "name": "Civil Engineering"
+      },
+      {
+        "id": "1045",
+        "name": "Computer and information science, Computer engineering"
+      },
+      {
+        "id": "1038",
+        "name": "Earth sciences"
+      },
+      {
+        "id": "1047",
+        "name": "Electric power engineering"
+      },
+      {
+        "id": "1046",
+        "name": "Electronics and cybernetics"
+      },
+      {
+        "id": "1048",
+        "name": "Energy"
+      },
+      {
+        "id": "1054",
+        "name": "Environmental technology and industrial ecology"
+      },
+      {
+        "id": "1056",
+        "name": "General Technology"
+      },
+      {
+        "id": "1049",
+        "name": "Industrial engineering and management"
+      },
+      {
+        "id": "1039",
+        "name": "Informatics"
+      },
+      {
+        "id": "1058",
+        "name": "Interdisciplinary Natural Sciences"
+      },
+      {
+        "id": "1051",
+        "name": "Marine Technology"
+      },
+      {
+        "id": "1053",
+        "name": "Materials Science and Engineering"
+      },
+      {
+        "id": "1041",
+        "name": "Mathematics"
+      },
+      {
+        "id": "1052",
+        "name": "Mechanical engineering"
+      },
+      {
+        "id": "1057",
+        "name": "Multidisciplinar technology"
+      },
+      {
+        "id": "1055",
+        "name": "Networks and network based services"
+      },
+      {
+        "id": "1037",
+        "name": "Physics"
+      }
+    ]
+  }
+]
