@@ -14,7 +14,7 @@ const PublicationPageJournal: FC<PublicationPageJournalProps> = ({ publication }
 
   return (
     <>
-      {publisher.title && (
+      {publisher?.title && (
         <LabelContentRowForPublicationPage label={t('references.journal')}>
           {publisher.title}
         </LabelContentRowForPublicationPage>
