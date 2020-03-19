@@ -6,7 +6,7 @@ import AutoSearch from '../../../components/AutoSearch';
 import { Project } from '../../../types/project.types';
 import { debounce } from '../../../utils/debounce';
 import { useFormikContext, FormikProps } from 'formik';
-import { Publication } from '../../../types/publication.types';
+import { FormikPublication } from '../../../types/publication.types';
 
 interface ProjectSearchProps {
   dataTestId: string;
@@ -17,7 +17,7 @@ interface ProjectSearchProps {
 const ProjectSearch: FC<ProjectSearchProps> = ({ dataTestId, setValueFunction, placeholder }) => {
   const [searchResults, setSearchResults] = useState<Project[]>([]);
   const dispatch = useDispatch();
-  const { values }: FormikProps<Publication> = useFormikContext();
+  const { values }: FormikProps<FormikPublication> = useFormikContext();
 
   const debouncedSearch = useCallback(
     debounce(async (searchTerm: string) => {

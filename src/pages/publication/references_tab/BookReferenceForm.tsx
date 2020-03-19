@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 import { Checkbox, FormControlLabel, MenuItem, TextField } from '@material-ui/core';
 
-import { Publication } from '../../../types/publication.types';
+import { FormikPublication } from '../../../types/publication.types';
 import { BookFieldNames, BookType, emptyPublisher } from '../../../types/references.types';
 import { PublicationTableNumber } from '../../../utils/constants';
 import NviValidation from './components/NviValidation';
@@ -36,7 +36,7 @@ const StyledTextBook = styled.div`
 
 const BookReferenceForm: FC = () => {
   const { t } = useTranslation('publication');
-  const { setFieldValue, values }: FormikProps<Publication> = useFormikContext();
+  const { setFieldValue, values }: FormikProps<FormikPublication> = useFormikContext();
 
   const isRatedBook = values.entityDescription.publisher.level;
   const isPeerReviewed = values.entityDescription.peerReview;

@@ -64,19 +64,13 @@ export const emptyNpiDiscipline: NpiDiscipline = {
   mainDiscipline: '',
 };
 
-// TODO: rename to Publication once all fields are mapped
-export interface BackendPublication {
-  identifier: string;
+export interface Publication {
+  readonly identifier: string;
+  readonly createdDate: string;
+  readonly owner: string;
+  readonly status: PublicationStatus;
   entityDescription: PublicationEntityDescription;
   fileSet: File[];
-}
-
-export interface Publication extends BackendPublication {
-  modified: string; // date?
-  createdDate: string; // date?
-  createdBy: string;
-  status: PublicationStatus;
-  shouldCreateDoi: boolean;
 }
 
 interface PublicationEntityDescription {
@@ -108,6 +102,10 @@ interface PublicationEntityDescription {
   series: Publisher;
   specialization: string;
   textBook: boolean;
+}
+
+export interface FormikPublication extends Publication {
+  shouldCreateDoi: boolean;
 }
 
 const emptyPublicationEntityDescription: PublicationEntityDescription = {
@@ -143,7 +141,7 @@ const emptyPublicationEntityDescription: PublicationEntityDescription = {
 
 export type PublicationPreview = Pick<
   Publication & PublicationEntityDescription,
-  'identifier' | 'mainTitle' | 'createdDate' | 'status' | 'createdBy'
+  'identifier' | 'mainTitle' | 'createdDate' | 'status' | 'owner'
 >;
 export type PublishedPublicationPreview = Pick<
   Publication & PublicationEntityDescription,
@@ -155,15 +153,12 @@ export interface Doi {
   title: string;
 }
 
-export const emptyPublication: Publication = {
-  modified: '', // date?
-  createdDate: '', // date?
-  createdBy: '',
-  status: PublicationStatus.DRAFT,
-  shouldCreateDoi: false,
-
-  // Fields from backend
+export const emptyPublication: FormikPublication = {
   identifier: '',
+  createdDate: '',
+  owner: '',
+  status: PublicationStatus.DRAFT,
   entityDescription: emptyPublicationEntityDescription,
   fileSet: [],
+  shouldCreateDoi: false,
 };

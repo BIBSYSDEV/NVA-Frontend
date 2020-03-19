@@ -19,7 +19,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 
 import SubHeading from '../../../../components/SubHeading';
 import { ContributorFieldNames } from '../../ContributorsPanel';
-import { Publication } from '../../../../types/publication.types';
+import { FormikPublication } from '../../../../types/publication.types';
 
 interface SortableItemProps {
   contributor: Contributor;
@@ -100,7 +100,7 @@ interface SortableTableProps {
 }
 
 const SortableTable: FC<SortableTableProps> = ({ listOfContributors, push, remove, swap }) => {
-  const { setFieldValue, values }: FormikProps<Publication> = useFormikContext();
+  const { setFieldValue, values }: FormikProps<FormikPublication> = useFormikContext();
 
   const handleOnSortEnd = ({ oldIndex, newIndex }: any) => {
     swap(oldIndex, newIndex);

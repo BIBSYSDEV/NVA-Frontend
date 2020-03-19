@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import TabPanel from '../../components/TabPanel/TabPanel';
 import { FormikProps, useFormikContext, Field, FieldProps } from 'formik';
-import { Publication } from '../../types/publication.types';
+import { FormikPublication } from '../../types/publication.types';
 import { Button, FormControlLabel, Checkbox, Link } from '@material-ui/core';
 import styled from 'styled-components';
 import SubmissionBook from './submission_tab/submission_book';
@@ -35,7 +35,7 @@ interface SubmissionPanelProps {
 
 const SubmissionPanel: React.FC<SubmissionPanelProps> = ({ savePublication }) => {
   const { t } = useTranslation('publication');
-  const { values, setFieldValue }: FormikProps<Publication> = useFormikContext();
+  const { values, setFieldValue }: FormikProps<FormikPublication> = useFormikContext();
   const history = useHistory();
 
   const publishPublication = () => {

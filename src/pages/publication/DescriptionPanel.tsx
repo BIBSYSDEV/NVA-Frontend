@@ -8,7 +8,7 @@ import DateFnsUtils from '@date-io/date-fns';
 import { MenuItem } from '@material-ui/core';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import TabPanel from '../../components/TabPanel/TabPanel';
-import { Publication } from '../../types/publication.types';
+import { FormikPublication } from '../../types/publication.types';
 import DisciplineSearch from './description_tab/DisciplineSearch';
 import ProjectSearch from './description_tab/ProjectSearch';
 import ProjectRow from './description_tab/ProjectRow';
@@ -58,7 +58,7 @@ interface DescriptionPanelProps {
 
 const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublication }) => {
   const { t } = useTranslation('publication');
-  const { setFieldTouched, setFieldValue, values }: FormikProps<Publication> = useFormikContext();
+  const { setFieldTouched, setFieldValue, values }: FormikProps<FormikPublication> = useFormikContext();
 
   // Validation messages won't show on fields that are not touched
   const setAllFieldsTouched = useCallback(() => {

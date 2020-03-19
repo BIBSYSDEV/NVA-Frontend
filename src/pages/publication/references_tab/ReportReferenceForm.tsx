@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 import { MenuItem, TextField } from '@material-ui/core';
 
-import { Publication } from '../../../types/publication.types';
+import { FormikPublication } from '../../../types/publication.types';
 import { emptyPublisher, ReportFieldNames, ReportType } from '../../../types/references.types';
 import { PublicationTableNumber } from '../../../utils/constants';
 import PublicationChannelSearch from './components/PublicationChannelSearch';
@@ -26,7 +26,7 @@ const StyledHeading = styled.div`
 const ReportReferenceForm: FC = () => {
   const { t } = useTranslation('publication');
 
-  const { setFieldValue }: FormikProps<Publication> = useFormikContext();
+  const { setFieldValue }: FormikProps<FormikPublication> = useFormikContext();
 
   return (
     <>
