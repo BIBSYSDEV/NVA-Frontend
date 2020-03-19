@@ -68,7 +68,7 @@ export interface Publication extends BackendPublication {
 
 interface PublicationEntityDescription {
   mainTitle: string;
-  abstract: string;
+  mainLanguageAbstract: string;
   description: string;
   tags: string[];
   npiDiscipline: NpiDiscipline;
@@ -99,7 +99,7 @@ interface PublicationEntityDescription {
 
 const emptyPublicationEntityDescription: PublicationEntityDescription = {
   mainTitle: '',
-  abstract: '',
+  mainLanguageAbstract: '',
   description: '',
   tags: [],
   npiDiscipline: emptyNpiDiscipline,

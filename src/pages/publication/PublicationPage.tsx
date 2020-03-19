@@ -63,7 +63,7 @@ const PublicationPage: FC = () => {
     }
   }, [dispatch, identifier]);
 
-  const { mainTitle, abstract, description, tags, date, projects, contributors, doiUrl } = publication
+  const { mainTitle, mainLanguageAbstract, description, tags, date, projects, contributors, doiUrl } = publication
     ? publication.entityDescription
     : emptyPublication.entityDescription;
 
@@ -101,9 +101,9 @@ const PublicationPage: FC = () => {
                       <Link href={doiUrl}>{doiUrl}</Link>
                     </LabelContentRowForPublicationPage>
                   )}
-                  {abstract && (
+                  {mainLanguageAbstract && (
                     <LabelContentRowForPublicationPage label={t('description.abstract')}>
-                      {abstract}
+                      {mainLanguageAbstract}
                     </LabelContentRowForPublicationPage>
                   )}
                   {description && (

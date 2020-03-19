@@ -9,12 +9,21 @@ const SubmissionDescription: React.FC = () => {
   const { t } = useTranslation('publication');
   const { values }: FormikProps<Publication> = useFormikContext();
 
-  const { mainTitle, abstract, description, npiDiscipline, tags, date, language, projects } = values.entityDescription;
+  const {
+    mainTitle,
+    mainLanguageAbstract,
+    description,
+    npiDiscipline,
+    tags,
+    date,
+    language,
+    projects,
+  } = values.entityDescription;
 
   return (
     <>
       <LabelContentRow label={t('common:title')}>{mainTitle}</LabelContentRow>
-      <LabelContentRow label={t('description.abstract')}>{abstract}</LabelContentRow>
+      <LabelContentRow label={t('description.abstract')}>{mainLanguageAbstract}</LabelContentRow>
       <LabelContentRow label={t('description.description')}>{description}</LabelContentRow>
       <LabelContentRow label={t('description.npi_disciplines')}>
         {npiDiscipline.mainDiscipline}

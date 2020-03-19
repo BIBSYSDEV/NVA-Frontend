@@ -6,7 +6,7 @@ import i18n from '../../translations/i18n';
 export const publicationValidationSchema = Yup.object().shape({
   entityDescription: Yup.object().shape({
     mainTitle: Yup.string().required(i18n.t('publication:feedback.required_field')),
-    abstract: Yup.string(),
+    mainLanguageAbstract: Yup.string(),
     description: Yup.string(),
     tags: Yup.array().of(Yup.string()),
     npiDiscipline: Yup.object(), // TODO
