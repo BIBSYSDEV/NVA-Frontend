@@ -41,7 +41,6 @@ const PublicationForm: FC<PublicationFormProps> = ({
   const { t } = useTranslation('publication');
   const [tabNumber, setTabNumber] = useState(0);
   const [initialValues, setInitialValues] = useState(emptyPublication);
-  const [publicationValues, setPublicationValues] = useState(); // TODO: remove this when backend model fits frontend model
   const [isLoading, setIsLoading] = useState(!!identifier);
   const dispatch = useDispatch();
 
@@ -70,7 +69,6 @@ const PublicationForm: FC<PublicationFormProps> = ({
       } else {
         // TODO: revisit necessity of deepmerge when backend model has all fields
         setInitialValues(deepmerge(emptyPublication, publication));
-        setPublicationValues(publication);
         setIsLoading(false);
       }
     };
@@ -89,10 +87,9 @@ const PublicationForm: FC<PublicationFormProps> = ({
   };
 
   const savePublication = async (values: FormikPublication) => {
-    const updatedPublication = await updatePublication({
-      ...publicationValues,
-      entityDescription: values.entityDescription,
-    });
+    const { shouldCreateDoi, ...newPublication } = values;
+
+    const updatedPublication = await updatePublication(newPublication);
     if (updatedPublication.error) {
       dispatch(setNotification(updatedPublication.error, NotificationVariant.Error));
     } else {
