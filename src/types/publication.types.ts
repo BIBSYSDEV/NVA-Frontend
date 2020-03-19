@@ -84,7 +84,7 @@ interface PublicationEntityDescription {
   abstract: string;
   description: string;
   tags: string[];
-  npiDiscipline: string;
+  npiSubjectHeading: string;
   date: {
     year: string;
     month: string;
@@ -115,7 +115,7 @@ const emptyPublicationEntityDescription: PublicationEntityDescription = {
   abstract: '',
   description: '',
   tags: [],
-  npiDiscipline: '',
+  npiSubjectHeading: '',
   date: {
     year: '',
     month: '',

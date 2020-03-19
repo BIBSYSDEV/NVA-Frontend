@@ -9,9 +9,6 @@ export const getNpiDiscipline = (id: string): NpiDiscipline => {
     const foundSubdomain = discipline.subdomains.find((subdomain: NpiSubdomain) => subdomain.id === id);
     if (foundSubdomain) {
       npiDiscipline = { ...foundSubdomain, mainDiscipline: discipline.subjectArea };
-      return;
-    } else {
-      return;
     }
   });
 

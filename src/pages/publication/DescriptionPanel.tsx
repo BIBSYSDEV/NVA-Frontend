@@ -42,7 +42,7 @@ export enum DescriptionFieldNames {
   TITLE = 'entityDescription.mainTitle',
   ABSTRACT = 'entityDescription.abstract',
   DESCRIPTION = 'entityDescription.description',
-  NPI_DISCIPLINE = 'entityDescription.npiDiscipline',
+  NPI_SUBJECT_HEADING = 'entityDescription.npiSubjectHeading',
   TAGS = 'entityDescription.tags',
   PUBLICATION_YEAR = 'entityDescription.date.year',
   PUBLICATION_MONTH = 'entityDescription.date.month',
@@ -118,11 +118,11 @@ const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublicat
           </StyledFieldWrapper>
           <MultipleFieldWrapper>
             <StyledFieldWrapper>
-              <Field name={DescriptionFieldNames.NPI_DISCIPLINE}>
+              <Field name={DescriptionFieldNames.NPI_SUBJECT_HEADING}>
                 {({ field: { name, value } }: FieldProps) => (
                   // TODO: when we have a service for getting npiDisciplines by id this must be updated (only id is stored in backend for now)
                   <DisciplineSearch
-                    setValueFunction={npiDiscipline => setFieldValue(name, npiDiscipline.id ?? '')}
+                    setValueFunction={npiDiscipline => setFieldValue(name, npiDiscipline?.id ?? '')}
                     dataTestId="search_npi"
                     value={getNpiDiscipline(value).name}
                     placeholder={t('description.search_for_npi_discipline')}
