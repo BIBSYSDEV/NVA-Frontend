@@ -64,17 +64,12 @@ export const emptyNpiDiscipline: NpiDiscipline = {
   mainDiscipline: '',
 };
 
-// TODO: rename to Publication once all fields are mapped
-export interface BackendPublication {
+export interface Publication {
   identifier: string;
   entityDescription: PublicationEntityDescription;
   fileSet: File[];
-}
-
-export interface Publication extends BackendPublication {
-  modified: string; // date?
-  createdDate: string; // date?
-  createdBy: string;
+  createdDate: string;
+  owner: string;
   status: PublicationStatus;
   shouldCreateDoi: boolean;
 }
@@ -143,7 +138,7 @@ const emptyPublicationEntityDescription: PublicationEntityDescription = {
 
 export type PublicationPreview = Pick<
   Publication & PublicationEntityDescription,
-  'identifier' | 'mainTitle' | 'createdDate' | 'status' | 'createdBy'
+  'identifier' | 'mainTitle' | 'createdDate' | 'status' | 'owner'
 >;
 export type PublishedPublicationPreview = Pick<
   Publication & PublicationEntityDescription,
@@ -156,9 +151,8 @@ export interface Doi {
 }
 
 export const emptyPublication: Publication = {
-  modified: '', // date?
-  createdDate: '', // date?
-  createdBy: '',
+  createdDate: '',
+  owner: '',
   status: PublicationStatus.DRAFT,
   shouldCreateDoi: false,
 

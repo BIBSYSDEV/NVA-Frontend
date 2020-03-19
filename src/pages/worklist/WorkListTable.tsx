@@ -49,7 +49,7 @@ const WorklistTable: FC<WorklistTableProps> = ({ publications }) => {
               <NormalText>{publication.mainTitle}</NormalText>
             </StyledCell>
             <StyledCell>
-              <NormalText>{publication.createdBy}</NormalText>
+              <NormalText>{publication.owner}</NormalText>
             </StyledCell>
             <StyledCell>
               <NormalText>{publication.createdDate}</NormalText>

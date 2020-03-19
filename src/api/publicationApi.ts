@@ -3,7 +3,7 @@ import { Dispatch } from 'redux';
 
 import { setNotification } from '../redux/actions/notificationActions';
 import i18n from '../translations/i18n';
-import { BackendPublication } from '../types/publication.types';
+import { Publication } from '../types/publication.types';
 import { SEARCH_RESULTS_PER_PAGE, StatusCode } from '../utils/constants';
 import { searchForPublications } from '../redux/actions/searchActions';
 import { getIdToken } from './userApi';
@@ -18,7 +18,7 @@ export enum PublicationsApiPaths {
   FOR_APPROVAL = '/publications/approval',
 }
 
-export const updatePublication = async (publication: BackendPublication) => {
+export const updatePublication = async (publication: Publication) => {
   const { identifier } = publication;
   if (!identifier) {
     return { error: i18n.t('feedback:error.update_publication') };

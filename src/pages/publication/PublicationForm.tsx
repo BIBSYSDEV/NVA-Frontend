@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
 import TabPanel from '../../components/TabPanel/TabPanel';
-import { emptyPublication, Publication, BackendPublication } from '../../types/publication.types';
+import { emptyPublication, Publication } from '../../types/publication.types';
 import { createUppy } from '../../utils/uppy-config';
 import ContributorsPanel from './ContributorsPanel';
 import DescriptionPanel from './DescriptionPanel';
@@ -88,7 +88,7 @@ const PublicationForm: FC<PublicationFormProps> = ({
     setTabNumber(tabNumber + 1);
   };
 
-  const savePublication = async (values: BackendPublication) => {
+  const savePublication = async (values: Publication) => {
     const updatedPublication = await updatePublication({
       ...publicationValues,
       entityDescription: values.entityDescription,
