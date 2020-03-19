@@ -59,7 +59,7 @@ export const AutoSearch: FC<AutoSearchProps> = ({
 
   return (
     <Autocomplete
-      disableOpenOnFocus
+      openOnFocus={false}
       open={displayValue.title.length >= MINIMUM_SEARCH_CHARACTERS && open}
       onClose={() => {
         setOpen(false);
