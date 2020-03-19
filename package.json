@@ -96,7 +96,7 @@
     "@types/react-router-dom": "^5.1.3",
     "@types/styled-components": "^5.0.1",
     "@types/uuid": "^7.0.0",
-    "@types/yup": "^0.26.32",
+    "@types/yup": "^0.26.33",
     "@typescript-eslint/parser": "^2.24.0",
     "amazon-cognito-identity-js": "^3.2.2",
     "axios-mock-adapter": "^1.17.0",
