@@ -45,7 +45,7 @@ const PublicationList: FC<PublicationListProps> = ({ publications }) => {
   const { t } = useTranslation();
   const [openModal, setOpenModal] = useState(false);
   const [deletePublicationId, setDeletePublicationId] = useState('');
-  const [deletePublicationTitle, setDeletePublicationTitle] = useState();
+  const [deletePublicationTitle, setDeletePublicationTitle] = useState('');
 
   const handleOnClick = (publication: PublicationPreview) => {
     setOpenModal(true);
