@@ -1,5 +1,5 @@
-import { CognitoUserSession } from 'amazon-cognito-identity-js';
 import { Auth } from 'aws-amplify';
+import { CognitoUserSession } from 'amazon-cognito-identity-js';
 import { Dispatch } from 'redux';
 
 import { loginSuccess, logoutSuccess } from '../redux/actions/authActions';
