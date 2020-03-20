@@ -16,7 +16,7 @@ const StyledBoxContent = styled.div`
   grid-template-areas:
     'authority authority authority'
     'description description description'
-    '. . create-button';
+    'cancel-button . create-button';
   grid-template-columns: 1fr 3fr 3fr;
   background-color: ${({ theme }) => theme.palette.box.main};
   padding: 1rem;
@@ -38,6 +38,11 @@ const StyledButton = styled(Button)`
   margin-top: 2rem;
 `;
 
+const StyledCancelButton = styled(Button)`
+  grid-area: cancel-button;
+  margin-top: 2rem;
+`;
+
 const StyledProgressContainer = styled.div`
   display: flex;
   justify-content: space-around;
@@ -48,10 +53,11 @@ const StyledProgressContainer = styled.div`
 `;
 
 interface NewAuthorityCardProps {
-  description: string;
+  hasMatchingAuthorities: boolean;
+  onClickCancel: () => void;
 }
 
-const NewAuthorityCard: FC<NewAuthorityCardProps> = ({ description }) => {
+const NewAuthorityCard: FC<NewAuthorityCardProps> = ({ hasMatchingAuthorities, onClickCancel }) => {
   const dispatch = useDispatch();
   const user = useSelector((store: RootStore) => store.user);
   const [loading, setLoading] = useState(false);
@@ -81,7 +87,11 @@ const NewAuthorityCard: FC<NewAuthorityCardProps> = ({ description }) => {
             <Radio color="primary" checked />
             {user.name}
           </StyledAuthority>
-          <StyledDescription>{description}</StyledDescription>
+          <StyledDescription>
+            {hasMatchingAuthorities
+              ? t('authority.description_create_own_authority')
+              : t('authority.description_no_authority_found')}
+          </StyledDescription>
           <StyledButton
             data-testid="create-author-button"
             color="primary"
@@ -90,6 +100,16 @@ const NewAuthorityCard: FC<NewAuthorityCardProps> = ({ description }) => {
             onClick={handleCreateAuthority}>
             {t('authority.create_authority')}
           </StyledButton>
+          {hasMatchingAuthorities && (
+            <StyledCancelButton
+              data-testid="cancel-create-author-button"
+              color="secondary"
+              variant="contained"
+              size="large"
+              onClick={onClickCancel}>
+              {t('common:cancel')}
+            </StyledCancelButton>
+          )}
         </StyledBoxContent>
       )}
     </>

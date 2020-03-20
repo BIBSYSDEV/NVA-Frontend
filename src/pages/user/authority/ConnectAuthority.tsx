@@ -47,6 +47,10 @@ export const ConnectAuthority: FC = () => {
     }
   }, [user.possibleAuthorities]);
 
+  const toggleOpenNewAuthorityCard = () => {
+    setOpenNewAuthorityCard(!openNewAuthorityCard);
+  };
+
   const updateAuthorityForUser = async () => {
     const selectedAuthority = matchingAuthorities.find(
       auth => auth.systemControlNumber === selectedSystemControlNumber
@@ -86,7 +90,7 @@ export const ConnectAuthority: FC = () => {
               </StyledClickableDiv>
             ))}
             <StyledButtonContainer>
-              <Button color="primary" variant="text" onClick={() => setOpenNewAuthorityCard(true)}>
+              <Button color="primary" variant="text" onClick={toggleOpenNewAuthorityCard}>
                 {t('authority.create_own_authority')}
               </Button>
             </StyledButtonContainer>
@@ -103,11 +107,8 @@ export const ConnectAuthority: FC = () => {
         )}
         {(!hasMatchingAuthorities || openNewAuthorityCard) && (
           <NewAuthorityCard
-            description={
-              hasMatchingAuthorities
-                ? t('authority.description_create_own_authority')
-                : t('authority.description_no_authority_found')
-            }
+            hasMatchingAuthorities={hasMatchingAuthorities}
+            onClickCancel={toggleOpenNewAuthorityCard}
           />
         )}
       </StyledAuthorityContainer>
