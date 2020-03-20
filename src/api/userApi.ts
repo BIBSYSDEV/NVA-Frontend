@@ -29,7 +29,7 @@ export const getCurrentAuthenticatedUser = () => {
       cognitoUser?.getSession(async (error: any, session: CognitoUserSession) => {
         if (error || !session.isValid()) {
           const currentSession = await Auth.currentSession();
-          cognitoUser.refreshSession(currentSession.getRefreshToken(), () => {});
+          cognitoUser.refreshSession(currentSession.getRefreshToken());
         } else {
           // NOTE: getSession must be called to authenticate user before calling getUserAttributes
           cognitoUser.getUserAttributes((error: any) => {
