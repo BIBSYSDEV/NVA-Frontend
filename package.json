@@ -26,7 +26,7 @@
     "i18next-browser-languagedetector": "^4.0.2",
     "material-ui-chip-input": "^2.0.0-beta.2",
     "material-ui-flat-pagination": "^4.1.0",
-    "react": "^16.13.0",
+    "react": "^16.13.1",
     "react-dom": "^16.13.0",
     "react-i18next": "^11.3.3",
     "react-redux": "^7.2.0",
