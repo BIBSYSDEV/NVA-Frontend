@@ -12,6 +12,11 @@ import { Authority } from '../../../types/authority.types';
 import AuthorityCard from './AuthorityCard';
 import NewAuthorityCard from './NewAuthorityCard';
 
+const StyledButtonContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
+
 const StyledAuthorityContainer = styled.div`
   > * {
     margin-top: 1rem;
@@ -30,9 +35,11 @@ const StyledSubHeading = styled.div`
 export const ConnectAuthority: FC = () => {
   const [matchingAuthorities, setMatchingAuthorities] = useState<Authority[]>([]);
   const [selectedSystemControlNumber, setSelectedSystemControlNumber] = useState('');
+  const [openNewAuthorityCard, setOpenNewAuthorityCard] = useState(false);
   const user = useSelector((store: RootStore) => store.user);
   const dispatch = useDispatch();
   const { t } = useTranslation('profile');
+  const hasMatchingAuthorities = matchingAuthorities.length > 0;
 
   useEffect(() => {
     if (user.possibleAuthorities.length > 0) {
@@ -62,7 +69,7 @@ export const ConnectAuthority: FC = () => {
   return (
     <>
       <StyledAuthorityContainer>
-        {matchingAuthorities.length > 0 ? (
+        {hasMatchingAuthorities && !openNewAuthorityCard && (
           <>
             <StyledSubHeading>
               {t('authority.search_summary', { results: matchingAuthorities?.length ?? 0, searchTerm: user.name })}
@@ -78,6 +85,11 @@ export const ConnectAuthority: FC = () => {
                 />
               </StyledClickableDiv>
             ))}
+            <StyledButtonContainer>
+              <Button color="primary" variant="text" onClick={() => setOpenNewAuthorityCard(true)}>
+                {t('authority.create_own_authority')}
+              </Button>
+            </StyledButtonContainer>
             <Button
               data-testid="connect-author-button"
               color="primary"
@@ -88,8 +100,15 @@ export const ConnectAuthority: FC = () => {
               {t('authority.connect_authority')}
             </Button>
           </>
-        ) : (
-          <NewAuthorityCard />
+        )}
+        {(!hasMatchingAuthorities || openNewAuthorityCard) && (
+          <NewAuthorityCard
+            description={
+              hasMatchingAuthorities
+                ? t('authority.description_create_own_authority')
+                : t('authority.description_no_authority_found')
+            }
+          />
         )}
       </StyledAuthorityContainer>
     </>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
@@ -21,7 +21,6 @@ const StyledBoxContent = styled.div`
   background-color: ${({ theme }) => theme.palette.box.main};
   padding: 1rem;
   align-items: center;
-  height: 16rem;
 `;
 
 const StyledAuthority = styled.div`
@@ -31,6 +30,7 @@ const StyledAuthority = styled.div`
 const StyledDescription = styled.div`
   grid-area: description;
   margin-left: 0.7rem;
+  white-space: pre-wrap;
 `;
 
 const StyledButton = styled(Button)`
@@ -47,7 +47,11 @@ const StyledProgressContainer = styled.div`
   padding: 2rem;
 `;
 
-const NewAuthorityCard: React.FC = () => {
+interface NewAuthorityCardProps {
+  description: string;
+}
+
+const NewAuthorityCard: FC<NewAuthorityCardProps> = ({ description }) => {
   const dispatch = useDispatch();
   const user = useSelector((store: RootStore) => store.user);
   const [loading, setLoading] = useState(false);
@@ -77,7 +81,7 @@ const NewAuthorityCard: React.FC = () => {
             <Radio color="primary" checked />
             {user.name}
           </StyledAuthority>
-          <StyledDescription>{t('authority.description_no_authority_found')}</StyledDescription>
+          <StyledDescription>{description}</StyledDescription>
           <StyledButton
             data-testid="create-author-button"
             color="primary"
