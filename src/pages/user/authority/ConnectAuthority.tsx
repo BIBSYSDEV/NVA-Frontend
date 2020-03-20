@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
@@ -33,19 +33,13 @@ const StyledSubHeading = styled.div`
 `;
 
 export const ConnectAuthority: FC = () => {
-  const [matchingAuthorities, setMatchingAuthorities] = useState<Authority[]>([]);
   const [selectedSystemControlNumber, setSelectedSystemControlNumber] = useState('');
   const [openNewAuthorityCard, setOpenNewAuthorityCard] = useState(false);
   const user = useSelector((store: RootStore) => store.user);
   const dispatch = useDispatch();
   const { t } = useTranslation('profile');
+  const matchingAuthorities = user.possibleAuthorities ?? [];
   const hasMatchingAuthorities = matchingAuthorities.length > 0;
-
-  useEffect(() => {
-    if (user.possibleAuthorities.length > 0) {
-      setMatchingAuthorities(user.possibleAuthorities);
-    }
-  }, [user.possibleAuthorities]);
 
   const toggleOpenNewAuthorityCard = () => {
     setOpenNewAuthorityCard(!openNewAuthorityCard);
@@ -106,10 +100,7 @@ export const ConnectAuthority: FC = () => {
           </>
         )}
         {(!hasMatchingAuthorities || openNewAuthorityCard) && (
-          <NewAuthorityCard
-            hasMatchingAuthorities={hasMatchingAuthorities}
-            onClickCancel={toggleOpenNewAuthorityCard}
-          />
+          <NewAuthorityCard onClickCancel={toggleOpenNewAuthorityCard} />
         )}
       </StyledAuthorityContainer>
     </>

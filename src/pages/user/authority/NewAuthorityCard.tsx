@@ -53,15 +53,15 @@ const StyledProgressContainer = styled.div`
 `;
 
 interface NewAuthorityCardProps {
-  hasMatchingAuthorities: boolean;
   onClickCancel: () => void;
 }
 
-const NewAuthorityCard: FC<NewAuthorityCardProps> = ({ hasMatchingAuthorities, onClickCancel }) => {
+const NewAuthorityCard: FC<NewAuthorityCardProps> = ({ onClickCancel }) => {
   const dispatch = useDispatch();
   const user = useSelector((store: RootStore) => store.user);
   const [loading, setLoading] = useState(false);
   const { t } = useTranslation('profile');
+  const hasMatchingAuthorities = user.possibleAuthorities.length > 0;
 
   const handleCreateAuthority = async () => {
     setLoading(true);
@@ -72,7 +72,6 @@ const NewAuthorityCard: FC<NewAuthorityCardProps> = ({ hasMatchingAuthorities, o
       dispatch(setAuthorityData(authority));
       dispatch(setNotification(t('feedback:success.created_authority')));
     }
-    setLoading(false);
   };
 
   return (
