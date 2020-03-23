@@ -98,7 +98,7 @@
     "@types/uuid": "^7.0.2",
     "@types/yup": "^0.26.33",
     "@typescript-eslint/parser": "^2.24.0",
-    "axios-mock-adapter": "^1.17.0",
+    "axios-mock-adapter": "^1.18.1",
     "cypress": "^4.2.0",
     "eslint-plugin-prettier": "^3.1.2",
     "faker": "^4.1.0",
