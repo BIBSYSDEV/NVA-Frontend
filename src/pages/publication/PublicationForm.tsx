@@ -105,8 +105,7 @@ const PublicationForm: FC<PublicationFormProps> = ({
         enableReinitialize
         initialValues={initialValues}
         validationSchema={publicationValidationSchema}
-        onSubmit={(values: FormikPublication) => savePublication(values)}
-        validateOnChange={false}>
+        onSubmit={(values: FormikPublication) => savePublication(values)}>
         {({ values }: FormikProps<FormikPublication>) => (
           <Form>
             <PublicationFormTabs tabNumber={tabNumber} handleTabChange={handleTabChange} />

@@ -3,7 +3,7 @@ import React, { ChangeEvent, FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import { Checkbox, FormControlLabel, MenuItem, TextField } from '@material-ui/core';
+import { Checkbox, FormControlLabel, TextField } from '@material-ui/core';
 
 import { FormikPublication } from '../../../types/publication.types';
 import { BookFieldNames, BookType, emptyPublisher } from '../../../types/references.types';
@@ -15,6 +15,7 @@ import PublisherRow from './components/PublisherRow';
 import SubHeading from '../../../components/SubHeading';
 import Label from '../../../components/Label';
 import DoiField from './components/DoiField';
+import SelectTypeField from './components/SelectTypeField';
 
 const StyledSection = styled.div`
   display: grid;
@@ -43,17 +44,11 @@ const BookReferenceForm: FC = () => {
 
   return (
     <>
-      <Field name={BookFieldNames.SUB_TYPE}>
-        {({ field }: FieldProps) => (
-          <TextField select variant="outlined" label={t('common:type')} {...field} fullWidth>
-            {Object.values(BookType).map(typeValue => (
-              <MenuItem value={typeValue} key={typeValue}>
-                {t(`referenceTypes:subtypes_book.${typeValue}`)}
-              </MenuItem>
-            ))}
-          </TextField>
-        )}
-      </Field>
+      <SelectTypeField
+        fieldName={BookFieldNames.SUB_TYPE}
+        options={Object.values(BookType)}
+        i18nKeyPrefix="referenceTypes:subtypes_book."
+      />
 
       <DoiField />
 

@@ -3,7 +3,7 @@ import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import { MenuItem, TextField } from '@material-ui/core';
+import { TextField } from '@material-ui/core';
 
 import { FormikPublication } from '../../../types/publication.types';
 import { emptyPublisher, ReportFieldNames, ReportType } from '../../../types/references.types';
@@ -11,6 +11,7 @@ import { PublicationTableNumber } from '../../../utils/constants';
 import PublicationChannelSearch from './components/PublicationChannelSearch';
 import PublisherRow from './components/PublisherRow';
 import DoiField from './components/DoiField';
+import SelectTypeField from './components/SelectTypeField';
 
 const StyledLabel = styled.div`
   color: ${({ theme }) => theme.palette.text.primary};
@@ -30,17 +31,11 @@ const ReportReferenceForm: FC = () => {
 
   return (
     <>
-      <Field name={ReportFieldNames.SUB_TYPE}>
-        {({ field }: FieldProps) => (
-          <TextField select variant="outlined" fullWidth label={t('common:type')} {...field}>
-            {Object.values(ReportType).map(typeValue => (
-              <MenuItem value={typeValue} key={typeValue}>
-                {t(`referenceTypes:subtypes_report.${typeValue}`)}
-              </MenuItem>
-            ))}
-          </TextField>
-        )}
-      </Field>
+      <SelectTypeField
+        fieldName={ReportFieldNames.SUB_TYPE}
+        options={Object.values(ReportType)}
+        i18nKeyPrefix="referenceTypes:subtypes_report."
+      />
 
       <DoiField />
 

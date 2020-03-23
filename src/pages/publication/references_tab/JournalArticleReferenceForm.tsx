@@ -2,7 +2,7 @@ import { Field, FormikProps, useFormikContext, FieldProps } from 'formik';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { MenuItem, TextField } from '@material-ui/core';
+import { TextField } from '@material-ui/core';
 
 import { FormikPublication } from '../../../types/publication.types';
 import { emptyPublisher, JournalArticleFieldNames, JournalArticleType } from '../../../types/references.types';
@@ -12,6 +12,7 @@ import PeerReview from './components/PeerReview';
 import PublicationChannelSearch from './components/PublicationChannelSearch';
 import PublisherRow from './components/PublisherRow';
 import DoiField from './components/DoiField';
+import SelectTypeField from './components/SelectTypeField';
 
 const StyledArticleDetail = styled.div`
   display: grid;
@@ -42,20 +43,15 @@ const JournalArticleReferenceForm: FC = () => {
 
   return (
     <>
-      <Field name={JournalArticleFieldNames.SUB_TYPE} variant="outlined">
-        {({ field }: FieldProps) => (
-          <TextField select variant="outlined" fullWidth label={t('common:type')} {...field}>
-            {Object.values(JournalArticleType).map(typeValue => (
-              <MenuItem value={typeValue} key={typeValue}>
-                {t(`referenceTypes:subtypes_journal_article.${typeValue}`)}
-              </MenuItem>
-            ))}
-          </TextField>
-        )}
-      </Field>
+      <SelectTypeField
+        fieldName={JournalArticleFieldNames.SUB_TYPE}
+        options={Object.values(JournalArticleType)}
+        i18nKeyPrefix="referenceTypes:subtypes_journal_article."
+      />
 
       <DoiField />
 
+      {/* TODO: BURDE GENERALISERES OG BRUKES FOR ALLE TYPER? ALSO: ERROR MSG */}
       <Field name={JournalArticleFieldNames.PUBLISHER}>
         {({ field: { name, value } }: FieldProps) => (
           <>
