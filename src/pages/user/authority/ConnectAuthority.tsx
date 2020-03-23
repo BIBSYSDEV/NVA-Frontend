@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 import { Button } from '@material-ui/core';
 
-import { updateFeideForAuthority, updateInstitutionForAuthority } from '../../../api/authorityApi';
+import { addQualifierIdForAuthority, AuthorityQualifiers } from '../../../api/authorityApi';
 import { setAuthorityData } from '../../../redux/actions/userActions';
 import { RootStore } from '../../../redux/reducers/rootReducer';
 import { Authority } from '../../../types/authority.types';
@@ -51,13 +51,18 @@ export const ConnectAuthority: FC = () => {
     );
 
     if (selectedAuthority) {
-      const updatedAuthorityWithFeide: Authority = await updateFeideForAuthority(user.id, selectedSystemControlNumber);
+      const updatedAuthorityWithFeide: Authority = await addQualifierIdForAuthority(
+        selectedSystemControlNumber,
+        AuthorityQualifiers.FEIDE_ID,
+        user.id
+      );
       if (updatedAuthorityWithFeide?.orgunitids.includes(user.organizationId)) {
         dispatch(setAuthorityData(updatedAuthorityWithFeide));
       } else {
-        const updatedAuthorityWithOrganizationId = await updateInstitutionForAuthority(
-          user.organizationId,
-          selectedSystemControlNumber
+        const updatedAuthorityWithOrganizationId = await addQualifierIdForAuthority(
+          selectedSystemControlNumber,
+          AuthorityQualifiers.ORGUNIT_ID,
+          user.organizationId
         );
         dispatch(setAuthorityData(updatedAuthorityWithOrganizationId));
       }
