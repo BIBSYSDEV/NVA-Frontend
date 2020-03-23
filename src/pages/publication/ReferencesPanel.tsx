@@ -38,28 +38,28 @@ interface ReferencesPanelProps {
 
 const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, savePublication }) => {
   const { t } = useTranslation('publication');
-  const { values, setFieldTouched }: FormikProps<FormikPublication> = useFormikContext();
+  const { values, setFieldTouched, setFieldValue }: FormikProps<FormikPublication> = useFormikContext();
   const { publicationType } = values.entityDescription;
 
   // Validation messages won't show on fields that are not touched
   const setAllFieldsTouched = useCallback(() => {
-    Object.values(ReferenceFieldNames).forEach(fieldName => setFieldTouched(fieldName));
+    Object.values(ReferenceFieldNames).forEach((fieldName) => setFieldTouched(fieldName));
 
     switch (publicationType) {
       case ReferenceType.BOOK:
-        Object.values(BookFieldNames).forEach(fieldName => setFieldTouched(fieldName));
+        Object.values(BookFieldNames).forEach((fieldName) => setFieldTouched(fieldName));
         break;
       case ReferenceType.PUBLICATION_IN_JOURNAL:
-        Object.values(JournalArticleFieldNames).forEach(fieldName => setFieldTouched(fieldName));
+        Object.values(JournalArticleFieldNames).forEach((fieldName) => setFieldTouched(fieldName));
         break;
       case ReferenceType.REPORT:
-        Object.values(ReportFieldNames).forEach(fieldName => setFieldTouched(fieldName));
+        Object.values(ReportFieldNames).forEach((fieldName) => setFieldTouched(fieldName));
         break;
       case ReferenceType.CHAPTER:
-        Object.values(ChapterFieldNames).forEach(fieldName => setFieldTouched(fieldName));
+        Object.values(ChapterFieldNames).forEach((fieldName) => setFieldTouched(fieldName));
         break;
       case ReferenceType.DEGREE:
-        Object.values(DegreeFieldNames).forEach(fieldName => setFieldTouched(fieldName));
+        Object.values(DegreeFieldNames).forEach((fieldName) => setFieldTouched(fieldName));
         break;
       default:
         break;
@@ -74,7 +74,11 @@ const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, savePubl
   return (
     <TabPanel ariaLabel="references" goToNextTab={goToNextTab} onClickSave={() => savePublication()}>
       <StyledSelectContainer>
-        <SelectTypeField fieldName={ReferenceFieldNames.PUBLICATION_TYPE} options={Object.values(ReferenceType)} />
+        <SelectTypeField
+          fieldName={ReferenceFieldNames.PUBLICATION_TYPE}
+          options={Object.values(ReferenceType)}
+          onChangeExtension={() => setFieldValue(JournalArticleFieldNames.SUB_TYPE, '')}
+        />
       </StyledSelectContainer>
 
       {publicationType && (

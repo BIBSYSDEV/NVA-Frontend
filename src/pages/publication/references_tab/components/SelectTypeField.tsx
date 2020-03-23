@@ -6,9 +6,10 @@ import { useTranslation } from 'react-i18next';
 interface SelectTypeFieldProps {
   fieldName: string;
   options: string[];
+  onChangeExtension?: () => void;
 }
 
-const SelectTypeField: FC<SelectTypeFieldProps> = ({ fieldName, options }) => {
+const SelectTypeField: FC<SelectTypeFieldProps> = ({ fieldName, options, onChangeExtension }) => {
   const { t } = useTranslation();
 
   return (
@@ -23,7 +24,11 @@ const SelectTypeField: FC<SelectTypeFieldProps> = ({ fieldName, options }) => {
           label={t('common:type')}
           error={!!error && touched}
           SelectProps={{ MenuProps: { autoFocus: false } }}
-          helperText={<ErrorMessage name={field.name} />}>
+          helperText={<ErrorMessage name={field.name} />}
+          onChange={(event: React.ChangeEvent<any>) => {
+            field.onChange(event);
+            onChangeExtension && onChangeExtension();
+          }}>
           {options.map((typeValue) => (
             <MenuItem value={typeValue} key={typeValue} data-testid={`reference_type-${typeValue}`}>
               {t(`referenceTypes:${typeValue}`)}
