@@ -23,19 +23,27 @@ export const publicationValidationSchema = Yup.object().shape({
     publicationSubtype: Yup.string()
       .when('publicationType', {
         is: ReferenceType.PUBLICATION_IN_JOURNAL,
-        then: Yup.string().oneOf(Object.values(JournalArticleType)),
+        then: Yup.string()
+          .oneOf(Object.values(JournalArticleType))
+          .required(i18n.t('publication:feedback.required_field')),
       })
       .when('publicationType', {
         is: ReferenceType.BOOK,
-        then: Yup.string().oneOf(Object.values(BookType)),
+        then: Yup.string()
+          .oneOf(Object.values(BookType))
+          .required(i18n.t('publication:feedback.required_field')),
       })
       .when('publicationType', {
         is: ReferenceType.REPORT,
-        then: Yup.string().oneOf(Object.values(ReportType)),
+        then: Yup.string()
+          .oneOf(Object.values(ReportType))
+          .required(i18n.t('publication:feedback.required_field')),
       })
       .when('publicationType', {
         is: ReferenceType.DEGREE,
-        then: Yup.string().oneOf(Object.values(DegreeType)),
+        then: Yup.string()
+          .oneOf(Object.values(DegreeType))
+          .required(i18n.t('publication:feedback.required_field')),
       })
       .when('publicationType', {
         is: ReferenceType.CHAPTER,
@@ -45,12 +53,19 @@ export const publicationValidationSchema = Yup.object().shape({
       .of(Yup.object()) // TODO
       .min(1, i18n.t('publication:feedback.minimum_one_contributor')),
     doiUrl: Yup.string().url(),
-    publisher: Yup.object(), // TODO
+    publisher: Yup.object()
+      .shape({
+        title: Yup.string().required(i18n.t('publication:feedback.required_field')),
+      })
+      .required(i18n.t('publication:feedback.required_field')), // TODO
     volume: Yup.string(),
     issue: Yup.string(),
     pagesFrom: Yup.string(),
     pagesTo: Yup.string(),
-    peerReview: Yup.boolean(),
+    peerReview: Yup.boolean().when('publicationSubtype', {
+      is: subtype => [ReferenceType.PUBLICATION_IN_JOURNAL, ReferenceType.BOOK, ReferenceType.REPORT].includes(subtype),
+      then: Yup.boolean().required(i18n.t('publication:feedback.required_field')),
+    }),
     articleNumber: Yup.string(),
     isbn: Yup.string(),
     numberOfPages: Yup.string(),
