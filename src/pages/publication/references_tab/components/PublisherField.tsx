@@ -19,29 +19,31 @@ const PublisherField: FC<PublisherFieldProps> = ({
   placeholder,
 }) => {
   return (
-    <Field name={fieldName}>
-      {({ field: { name, value }, form: { setFieldValue } }: FieldProps) => (
-        <>
-          <PublicationChannelSearch
-            clearSearchField={value === emptyPublisher}
-            dataTestId="autosearch-journal"
-            label={label}
-            publicationTable={publicationTable}
-            setValueFunction={inputValue => setFieldValue(name, inputValue ?? emptyPublisher)}
-            placeholder={placeholder}
-          />
-          {value && (
-            <PublisherRow
-              dataTestId="autosearch-results-journal"
-              publisher={value}
+    <>
+      <Field name={fieldName}>
+        {({ field: { name, value }, form: { setFieldValue }, meta: { error, touched } }: FieldProps) => (
+          <>
+            <PublicationChannelSearch
+              clearSearchField={value === emptyPublisher}
+              dataTestId="autosearch-journal"
               label={label}
-              onClickDelete={() => setFieldValue(name, emptyPublisher)}
+              publicationTable={publicationTable}
+              setValueFunction={inputValue => setFieldValue(name, inputValue ?? emptyPublisher)}
+              placeholder={placeholder}
+              errorMessage={touched ? error : ''}
             />
-          )}
-        </>
-      )}
-    </Field>
-    // TODO: Error message
+            {value && (
+              <PublisherRow
+                dataTestId="autosearch-results-journal"
+                publisher={value}
+                label={label}
+                onClickDelete={() => setFieldValue(name, emptyPublisher)}
+              />
+            )}
+          </>
+        )}
+      </Field>
+    </>
   );
 };
 

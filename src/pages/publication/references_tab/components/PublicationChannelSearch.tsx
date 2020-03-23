@@ -17,6 +17,7 @@ interface PublicationChannelSearchProps {
   publicationTable: PublicationTableNumber;
   setValueFunction: (value: any) => void;
   placeholder?: string;
+  errorMessage?: string;
 }
 
 const PublicationChannelSearch: FC<PublicationChannelSearchProps> = ({
@@ -26,6 +27,7 @@ const PublicationChannelSearch: FC<PublicationChannelSearchProps> = ({
   publicationTable,
   setValueFunction,
   placeholder,
+  errorMessage,
 }) => {
   const [searchResults, setSearchResults] = useState<Publisher[]>([]);
   const dispatch = useDispatch();
@@ -52,6 +54,7 @@ const PublicationChannelSearch: FC<PublicationChannelSearchProps> = ({
       setValueFunction={setValueFunction}
       label={label}
       placeholder={placeholder}
+      errorMessage={errorMessage}
     />
   );
 };
