@@ -52,7 +52,17 @@ export const createAuthority = async (user: User) => {
     const response = await Axios.post(url, { invertedname: `${user.familyName},${user.givenName}` }, { headers });
     if (response.status === StatusCode.OK) {
       // TODO: check with backend why we suddenly get a list with one element as response when creating new authority
-      return response.data[0];
+      const systemControlNumber = response.data[0].systemControlNumber;
+      const updatedAuthority = await addQualifierIdForAuthority(
+        systemControlNumber,
+        AuthorityQualifiers.FEIDE_ID,
+        user.id
+      );
+      if (updatedAuthority) {
+        return updatedAuthority;
+      } else {
+        return response.data[0];
+      }
     } else if (response.status === StatusCode.NO_CONTENT) {
       return;
     } else {
