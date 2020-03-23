@@ -16,6 +16,7 @@ import SubHeading from '../../../components/SubHeading';
 import Label from '../../../components/Label';
 import DoiField from './components/DoiField';
 import SelectTypeField from './components/SelectTypeField';
+import PublisherField from './components/PublisherField';
 
 const StyledSection = styled.div`
   display: grid;
@@ -52,28 +53,12 @@ const BookReferenceForm: FC = () => {
 
       <DoiField />
 
-      <Field name={BookFieldNames.PUBLISHER}>
-        {({ field: { name, value } }: FieldProps) => (
-          <>
-            <PublicationChannelSearch
-              clearSearchField={value === emptyPublisher}
-              dataTestId="autosearch-publisher"
-              label={t('common:publisher')}
-              publicationTable={PublicationTableNumber.PUBLISHERS}
-              setValueFunction={inputValue => setFieldValue(name, inputValue ?? emptyPublisher)}
-              placeholder={t('references.search_for_publisher')}
-            />
-            {value.title && (
-              <PublisherRow
-                dataTestId="autosearch-results-publisher"
-                label={t('common:publisher')}
-                publisher={value}
-                onClickDelete={() => setFieldValue(name, emptyPublisher)}
-              />
-            )}
-          </>
-        )}
-      </Field>
+      <PublisherField
+        fieldName={BookFieldNames.PUBLISHER}
+        label={t('common:publisher')}
+        placeholder={t('references.search_for_publisher')}
+      />
+
       <Field name={BookFieldNames.ISBN}>
         {({ field }: FieldProps) => (
           <TextField data-testid="isbn" variant="outlined" label={t('references.isbn')} {...field} />

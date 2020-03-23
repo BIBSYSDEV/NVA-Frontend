@@ -12,6 +12,7 @@ import PublicationChannelSearch from './components/PublicationChannelSearch';
 import PublisherRow from './components/PublisherRow';
 import DoiField from './components/DoiField';
 import SelectTypeField from './components/SelectTypeField';
+import PublisherField from './components/PublisherField';
 
 const StyledLabel = styled.div`
   color: ${({ theme }) => theme.palette.text.primary};
@@ -39,28 +40,12 @@ const ReportReferenceForm: FC = () => {
 
       <DoiField />
 
-      <Field name={ReportFieldNames.PUBLISHER}>
-        {({ field: { name, value } }: FieldProps) => (
-          <>
-            <PublicationChannelSearch
-              clearSearchField={value === emptyPublisher}
-              dataTestId="autosearch-publisher"
-              label={t('common:publisher')}
-              publicationTable={PublicationTableNumber.PUBLISHERS}
-              setValueFunction={inputValue => setFieldValue(name, inputValue ?? emptyPublisher)}
-              placeholder={t('references.search_for_publisher')}
-            />
-            {value.title && (
-              <PublisherRow
-                dataTestId="autosearch-results-publisher"
-                label={t('common:publisher')}
-                publisher={value}
-                onClickDelete={() => setFieldValue(name, emptyPublisher)}
-              />
-            )}
-          </>
-        )}
-      </Field>
+      <PublisherField
+        fieldName={ReportFieldNames.PUBLISHER}
+        label={t('common:publisher')}
+        placeholder={t('references.search_for_publisher')}
+      />
+
       <Field name={ReportFieldNames.ISBN}>
         {({ field }: FieldProps) => (
           <TextField data-testid="isbn" variant="outlined" label={t('references.isbn')} {...field} />
