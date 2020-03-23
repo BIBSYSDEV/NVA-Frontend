@@ -29,21 +29,15 @@ export const publicationValidationSchema = Yup.object().shape({
       })
       .when('publicationType', {
         is: ReferenceType.BOOK,
-        then: Yup.string()
-          .oneOf(Object.values(BookType))
-          .required(i18n.t('publication:feedback.required_field')),
+        then: Yup.string().oneOf(Object.values(BookType)).required(i18n.t('publication:feedback.required_field')),
       })
       .when('publicationType', {
         is: ReferenceType.REPORT,
-        then: Yup.string()
-          .oneOf(Object.values(ReportType))
-          .required(i18n.t('publication:feedback.required_field')),
+        then: Yup.string().oneOf(Object.values(ReportType)).required(i18n.t('publication:feedback.required_field')),
       })
       .when('publicationType', {
         is: ReferenceType.DEGREE,
-        then: Yup.string()
-          .oneOf(Object.values(DegreeType))
-          .required(i18n.t('publication:feedback.required_field')),
+        then: Yup.string().oneOf(Object.values(DegreeType)).required(i18n.t('publication:feedback.required_field')),
       })
       .when('publicationType', {
         is: ReferenceType.CHAPTER,
@@ -64,7 +58,8 @@ export const publicationValidationSchema = Yup.object().shape({
     pagesFrom: Yup.string(),
     pagesTo: Yup.string(),
     peerReview: Yup.boolean().when('publicationSubtype', {
-      is: subtype => [ReferenceType.PUBLICATION_IN_JOURNAL, ReferenceType.BOOK, ReferenceType.REPORT].includes(subtype),
+      is: (subtype) =>
+        [ReferenceType.PUBLICATION_IN_JOURNAL, ReferenceType.BOOK, ReferenceType.REPORT].includes(subtype),
       then: Yup.boolean().required(i18n.t('publication:feedback.required_field')),
     }),
     articleNumber: Yup.string(),

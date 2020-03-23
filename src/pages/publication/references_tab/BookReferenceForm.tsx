@@ -45,11 +45,7 @@ const BookReferenceForm: FC = () => {
 
   return (
     <>
-      <SelectTypeField
-        fieldName={BookFieldNames.SUB_TYPE}
-        options={Object.values(BookType)}
-        i18nKeyPrefix="referenceTypes:subtypes_book."
-      />
+      <SelectTypeField fieldName={BookFieldNames.SUB_TYPE} options={Object.values(BookType)} />
 
       <DoiField />
 
@@ -109,7 +105,7 @@ const BookReferenceForm: FC = () => {
               clearSearchField={value === emptyPublisher}
               label={t('common:title')}
               publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
-              setValueFunction={inputValue => setFieldValue(name, inputValue ?? emptyPublisher)}
+              setValueFunction={(inputValue) => setFieldValue(name, inputValue ?? emptyPublisher)}
               placeholder={t('references.search_for_series')}
             />
             {value.title && (

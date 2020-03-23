@@ -42,11 +42,7 @@ const JournalArticleReferenceForm: FC = () => {
 
   return (
     <>
-      <SelectTypeField
-        fieldName={JournalArticleFieldNames.SUB_TYPE}
-        options={Object.values(JournalArticleType)}
-        i18nKeyPrefix="referenceTypes:subtypes_journal_article."
-      />
+      <SelectTypeField fieldName={JournalArticleFieldNames.SUB_TYPE} options={Object.values(JournalArticleType)} />
 
       <DoiField />
 

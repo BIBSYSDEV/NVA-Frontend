@@ -6,11 +6,10 @@ import { useTranslation } from 'react-i18next';
 interface SelectTypeFieldProps {
   fieldName: string;
   options: string[];
-  i18nKeyPrefix?: string;
 }
 
-const SelectTypeField: FC<SelectTypeFieldProps> = ({ fieldName, options, i18nKeyPrefix = 'referenceTypes:' }) => {
-  const { t } = useTranslation('publication');
+const SelectTypeField: FC<SelectTypeFieldProps> = ({ fieldName, options }) => {
+  const { t } = useTranslation();
 
   return (
     <Field name={fieldName} variant="outlined">
@@ -25,9 +24,9 @@ const SelectTypeField: FC<SelectTypeFieldProps> = ({ fieldName, options, i18nKey
           error={!!error && touched}
           SelectProps={{ MenuProps: { autoFocus: false } }}
           helperText={<ErrorMessage name={field.name} />}>
-          {options.map(typeValue => (
+          {options.map((typeValue) => (
             <MenuItem value={typeValue} key={typeValue} data-testid={`reference_type-${typeValue}`}>
-              {t(`${i18nKeyPrefix}${typeValue}`)}
+              {t(`referenceTypes:${typeValue}`)}
             </MenuItem>
           ))}
         </TextField>

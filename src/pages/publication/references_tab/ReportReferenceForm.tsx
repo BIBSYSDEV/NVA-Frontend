@@ -32,11 +32,7 @@ const ReportReferenceForm: FC = () => {
 
   return (
     <>
-      <SelectTypeField
-        fieldName={ReportFieldNames.SUB_TYPE}
-        options={Object.values(ReportType)}
-        i18nKeyPrefix="referenceTypes:subtypes_report."
-      />
+      <SelectTypeField fieldName={ReportFieldNames.SUB_TYPE} options={Object.values(ReportType)} />
 
       <DoiField />
 
@@ -73,7 +69,7 @@ const ReportReferenceForm: FC = () => {
               dataTestId="autosearch-series"
               label={t('common:title')}
               publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
-              setValueFunction={inputValue => setFieldValue(name, inputValue ?? emptyPublisher)}
+              setValueFunction={(inputValue) => setFieldValue(name, inputValue ?? emptyPublisher)}
               placeholder={t('references.search_for_series')}
             />
             {value.title && (

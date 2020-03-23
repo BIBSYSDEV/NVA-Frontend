@@ -1,29 +1,20 @@
 {
+  "Anthology": "Anthology",
+  "Article": "Article",
+  "Bachelor": "Bachelor",
   "Book": "Book",
   "Chapter": "Chapter",
   "Degree": "Degree",
+  "Doctorate": "Doctorate",
+  "Editorial": "Editorial",
   "JournalArticle": "Publication in Journal",
+  "Letter": "Letter",
+  "Master": "Master",
+  "Monography": "Monography",
+  "PolicyReport": "Policy report",
   "Report": "Report",
-  "subtypes_report": {
-    "Report": "Report",
-    "ResearchReport": "Research report",
-    "PolicyReport": "Policy report",
-    "WorkingPaper": "Working paper"
-  },
-  "subtypes_journal_article": {
-    "Article": "Article",
-    "Editorial": "Editorial",
-    "Letter": "Letter",
-    "Review": "Review",
-    "ShortCommunication": "Short communication"
-  },
-  "subtypes_book": {
-    "Monography": "Monography",
-    "Anthology": "Anthology"
-  },
-  "subtypes_degree": {
-    "Bachelor": "Bachelor",
-    "Doctorate": "Doctorate",
-    "Master": "Master"
-  }
+  "ResearchReport": "Research report",
+  "Review": "Review",
+  "ShortCommunication": "Short communication",
+  "WorkingPaper": "Working paper"
 }

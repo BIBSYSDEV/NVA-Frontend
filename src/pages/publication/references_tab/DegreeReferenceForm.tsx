@@ -30,11 +30,7 @@ const DegreeReferenceForm: React.FC = () => {
 
   return (
     <>
-      <SelectTypeField
-        fieldName={DegreeFieldNames.SUB_TYPE}
-        options={Object.values(DegreeType)}
-        i18nKeyPrefix="referenceTypes:subtypes_degree."
-      />
+      <SelectTypeField fieldName={DegreeFieldNames.SUB_TYPE} options={Object.values(DegreeType)} />
 
       <DoiField />
 
@@ -54,7 +50,7 @@ const DegreeReferenceForm: React.FC = () => {
               dataTestId="autosearch-series"
               label={t('common:title')}
               publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
-              setValueFunction={inputValue => setFieldValue(name, inputValue ?? emptyPublisher)}
+              setValueFunction={(inputValue) => setFieldValue(name, inputValue ?? emptyPublisher)}
               placeholder={t('references.search_for_series')}
             />
             {value.title && (
