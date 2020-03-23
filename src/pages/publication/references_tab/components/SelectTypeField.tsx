@@ -16,6 +16,7 @@ const SelectTypeField: FC<SelectTypeFieldProps> = ({ fieldName, options, i18nKey
     <Field name={fieldName} variant="outlined">
       {({ field, meta: { error, touched } }: FieldProps) => (
         <TextField
+          data-testid="reference_type"
           select
           variant="outlined"
           fullWidth
@@ -25,7 +26,7 @@ const SelectTypeField: FC<SelectTypeFieldProps> = ({ fieldName, options, i18nKey
           SelectProps={{ MenuProps: { autoFocus: false } }}
           helperText={<ErrorMessage name={field.name} />}>
           {options.map(typeValue => (
-            <MenuItem value={typeValue} key={typeValue}>
+            <MenuItem value={typeValue} key={typeValue} data-testid={`reference_type-${typeValue}`}>
               {t(`${i18nKeyPrefix}${typeValue}`)}
             </MenuItem>
           ))}

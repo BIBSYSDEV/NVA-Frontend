@@ -35,11 +35,11 @@ const StyledPeerReview = styled.div`
 
 const JournalArticleReferenceForm: FC = () => {
   const { t } = useTranslation('publication');
-  const { values, errors }: FormikProps<FormikPublication> = useFormikContext();
+  const { values }: FormikProps<FormikPublication> = useFormikContext();
 
   const isRatedJournal = values.entityDescription.publisher?.level;
   const isPeerReviewed = values.entityDescription.peerReview;
-  console.log(errors.entityDescription);
+
   return (
     <>
       <SelectTypeField

@@ -25,7 +25,7 @@ const PublisherField: FC<PublisherFieldProps> = ({
           <>
             <PublicationChannelSearch
               clearSearchField={value === emptyPublisher}
-              dataTestId="autosearch-journal"
+              dataTestId="autosearch-publisher"
               label={label}
               publicationTable={publicationTable}
               setValueFunction={inputValue => setFieldValue(name, inputValue ?? emptyPublisher)}
@@ -34,7 +34,7 @@ const PublisherField: FC<PublisherFieldProps> = ({
             />
             {value && (
               <PublisherRow
-                dataTestId="autosearch-results-journal"
+                dataTestId="autosearch-results-publisher"
                 publisher={value}
                 label={label}
                 onClickDelete={() => setFieldValue(name, emptyPublisher)}
