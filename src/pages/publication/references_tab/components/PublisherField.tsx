@@ -30,7 +30,7 @@ const PublisherField: FC<PublisherFieldProps> = ({
             setValueFunction={inputValue => setFieldValue(name, inputValue ?? emptyPublisher)}
             placeholder={placeholder}
           />
-          {value.title && (
+          {value && (
             <PublisherRow
               dataTestId="autosearch-results-journal"
               publisher={value}

@@ -54,10 +54,11 @@ export const publicationValidationSchema = Yup.object().shape({
       .min(1, i18n.t('publication:feedback.minimum_one_contributor')),
     doiUrl: Yup.string().url(),
     publisher: Yup.object()
+      .nullable()
       .shape({
-        title: Yup.string().required(i18n.t('publication:feedback.required_field')),
+        title: Yup.string(),
       })
-      .required(i18n.t('publication:feedback.required_field')), // TODO
+      .required(i18n.t('publication:feedback.required_field')),
     volume: Yup.string(),
     issue: Yup.string(),
     pagesFrom: Yup.string(),

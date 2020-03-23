@@ -81,7 +81,7 @@ const PublishedPublicationList: FC<PublicationListProps> = ({ publications }) =>
                   </StyledAuthor>
                 </TableCell>
                 <StyledTableCellForPublisher>
-                  <NormalText>{publication.publisher.title}</NormalText>
+                  <NormalText>{publication.publisher?.title}</NormalText>
                 </StyledTableCellForPublisher>
                 <StyledTableCellForType>
                   <NormalText>{t('referenceTypes:' + publication.publicationType)}</NormalText>

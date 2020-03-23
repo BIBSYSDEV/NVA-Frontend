@@ -90,7 +90,7 @@ interface PublicationEntityDescription {
   publicationSubtype: JournalArticleType | ReportType | DegreeType | BookType | '';
   contributors: Contributor[];
   doiUrl: string;
-  publisher: Publisher;
+  publisher: Publisher | null;
   volume: string;
   issue: string;
   pagesFrom: string;
@@ -125,7 +125,7 @@ const emptyPublicationEntityDescription: PublicationEntityDescription = {
   contributors: [],
   doiUrl: '',
   publicationSubtype: '',
-  publisher: emptyPublisher,
+  publisher: null,
   volume: '',
   issue: '',
   pagesFrom: '',
