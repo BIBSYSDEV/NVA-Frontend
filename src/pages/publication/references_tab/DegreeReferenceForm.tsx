@@ -3,14 +3,14 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import { MenuItem, TextField } from '@material-ui/core';
-
 import { FormikPublication } from '../../../types/publication.types';
 import { emptyPublisher, DegreeFieldNames, DegreeType } from '../../../types/references.types';
 import { PublicationTableNumber } from '../../../utils/constants';
 import PublicationChannelSearch from './components/PublicationChannelSearch';
 import PublisherRow from './components/PublisherRow';
 import DoiField from './components/DoiField';
+import SelectTypeField from './components/SelectTypeField';
+import PublisherField from './components/PublisherField';
 
 const StyledLabel = styled.div`
   color: ${({ theme }) => theme.palette.text.primary};
@@ -30,42 +30,16 @@ const DegreeReferenceForm: React.FC = () => {
 
   return (
     <>
-      <Field name={DegreeFieldNames.SUB_TYPE}>
-        {({ field }: FieldProps) => (
-          <TextField select variant="outlined" fullWidth label={t('common:type')} {...field}>
-            {Object.values(DegreeType).map(typeValue => (
-              <MenuItem value={typeValue} key={typeValue}>
-                {t(`referenceTypes:subtypes_degree.${typeValue}`)}
-              </MenuItem>
-            ))}
-          </TextField>
-        )}
-      </Field>
+      <SelectTypeField fieldName={DegreeFieldNames.SUB_TYPE} options={Object.values(DegreeType)} />
 
       <DoiField />
 
-      <Field name={DegreeFieldNames.PUBLISHER}>
-        {({ field: { name, value } }: FieldProps) => (
-          <>
-            <PublicationChannelSearch
-              clearSearchField={value === emptyPublisher}
-              dataTestId="autosearch-publisher"
-              label={t('common:publisher')}
-              publicationTable={PublicationTableNumber.PUBLISHERS}
-              setValueFunction={inputValue => setFieldValue(name, inputValue ?? emptyPublisher)}
-              placeholder={t('references.search_for_publisher')}
-            />
-            {value.title && (
-              <PublisherRow
-                dataTestId="autosearch-results-publisher"
-                label={t('common:publisher')}
-                publisher={value}
-                onClickDelete={() => setFieldValue(name, emptyPublisher)}
-              />
-            )}
-          </>
-        )}
-      </Field>
+      <PublisherField
+        fieldName={DegreeFieldNames.PUBLISHER}
+        label={t('common:publisher')}
+        placeholder={t('references.search_for_publisher')}
+      />
+
       <StyledHeading>{t('references.series')}</StyledHeading>
       <StyledLabel>{t('references.series_info')}</StyledLabel>
       <Field name={DegreeFieldNames.SERIES}>
@@ -76,7 +50,7 @@ const DegreeReferenceForm: React.FC = () => {
               dataTestId="autosearch-series"
               label={t('common:title')}
               publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
-              setValueFunction={inputValue => setFieldValue(name, inputValue ?? emptyPublisher)}
+              setValueFunction={(inputValue) => setFieldValue(name, inputValue ?? emptyPublisher)}
               placeholder={t('references.search_for_series')}
             />
             {value.title && (

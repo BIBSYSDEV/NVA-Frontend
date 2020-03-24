@@ -1,9 +1,7 @@
-import { ErrorMessage, Field, FormikProps, useFormikContext, FieldProps } from 'formik';
+import { FormikProps, useFormikContext } from 'formik';
 import React, { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-
-import { FormControl, FormHelperText, MenuItem, TextField } from '@material-ui/core';
 
 import TabPanel from '../../components/TabPanel/TabPanel';
 import { FormikPublication } from '../../types/publication.types';
@@ -23,6 +21,7 @@ import JournalArticleReferenceForm from './references_tab/JournalArticleReferenc
 import ReportReferenceForm from './references_tab/ReportReferenceForm';
 import Card from '../../components/Card';
 import Heading from '../../components/Heading';
+import SelectTypeField from './references_tab/components/SelectTypeField';
 
 const StyledBox = styled.div`
   margin-top: 1rem;
@@ -39,28 +38,28 @@ interface ReferencesPanelProps {
 
 const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, savePublication }) => {
   const { t } = useTranslation('publication');
-  const { values, setFieldTouched }: FormikProps<FormikPublication> = useFormikContext();
+  const { values, setFieldTouched, setFieldValue }: FormikProps<FormikPublication> = useFormikContext();
   const { publicationType } = values.entityDescription;
 
   // Validation messages won't show on fields that are not touched
   const setAllFieldsTouched = useCallback(() => {
-    Object.values(ReferenceFieldNames).forEach(fieldName => setFieldTouched(fieldName));
+    Object.values(ReferenceFieldNames).forEach((fieldName) => setFieldTouched(fieldName));
 
     switch (publicationType) {
       case ReferenceType.BOOK:
-        Object.values(BookFieldNames).forEach(fieldName => setFieldTouched(fieldName));
+        Object.values(BookFieldNames).forEach((fieldName) => setFieldTouched(fieldName));
         break;
       case ReferenceType.PUBLICATION_IN_JOURNAL:
-        Object.values(JournalArticleFieldNames).forEach(fieldName => setFieldTouched(fieldName));
+        Object.values(JournalArticleFieldNames).forEach((fieldName) => setFieldTouched(fieldName));
         break;
       case ReferenceType.REPORT:
-        Object.values(ReportFieldNames).forEach(fieldName => setFieldTouched(fieldName));
+        Object.values(ReportFieldNames).forEach((fieldName) => setFieldTouched(fieldName));
         break;
       case ReferenceType.CHAPTER:
-        Object.values(ChapterFieldNames).forEach(fieldName => setFieldTouched(fieldName));
+        Object.values(ChapterFieldNames).forEach((fieldName) => setFieldTouched(fieldName));
         break;
       case ReferenceType.DEGREE:
-        Object.values(DegreeFieldNames).forEach(fieldName => setFieldTouched(fieldName));
+        Object.values(DegreeFieldNames).forEach((fieldName) => setFieldTouched(fieldName));
         break;
       default:
         break;
@@ -75,28 +74,11 @@ const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, savePubl
   return (
     <TabPanel ariaLabel="references" goToNextTab={goToNextTab} onClickSave={() => savePublication()}>
       <StyledSelectContainer>
-        <Field name={ReferenceFieldNames.PUBLICATION_TYPE}>
-          {({ field, meta: { error, touched } }: FieldProps) => (
-            <FormControl fullWidth error={!!error && touched}>
-              <TextField
-                select
-                variant="outlined"
-                {...field}
-                label={t('common:type')}
-                error={!!error && touched}
-                data-testid="reference_type">
-                {Object.values(ReferenceType).map(typeValue => (
-                  <MenuItem value={typeValue} key={typeValue} data-testid={`reference_type-${typeValue}`}>
-                    {t(`referenceTypes:${typeValue}`)}
-                  </MenuItem>
-                ))}
-              </TextField>
-              <FormHelperText>
-                <ErrorMessage name={ReferenceFieldNames.PUBLICATION_TYPE} />
-              </FormHelperText>
-            </FormControl>
-          )}
-        </Field>
+        <SelectTypeField
+          fieldName={ReferenceFieldNames.PUBLICATION_TYPE}
+          options={Object.values(ReferenceType)}
+          onChangeExtension={() => setFieldValue(JournalArticleFieldNames.SUB_TYPE, '')}
+        />
       </StyledSelectContainer>
 
       {publicationType && (

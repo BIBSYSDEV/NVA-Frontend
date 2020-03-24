@@ -3,7 +3,7 @@ import React, { ChangeEvent, FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import { Checkbox, FormControlLabel, MenuItem, TextField } from '@material-ui/core';
+import { Checkbox, FormControlLabel, TextField } from '@material-ui/core';
 
 import { FormikPublication } from '../../../types/publication.types';
 import { BookFieldNames, BookType, emptyPublisher } from '../../../types/references.types';
@@ -15,6 +15,8 @@ import PublisherRow from './components/PublisherRow';
 import SubHeading from '../../../components/SubHeading';
 import Label from '../../../components/Label';
 import DoiField from './components/DoiField';
+import SelectTypeField from './components/SelectTypeField';
+import PublisherField from './components/PublisherField';
 
 const StyledSection = styled.div`
   display: grid;
@@ -38,47 +40,21 @@ const BookReferenceForm: FC = () => {
   const { t } = useTranslation('publication');
   const { setFieldValue, values }: FormikProps<FormikPublication> = useFormikContext();
 
-  const isRatedBook = values.entityDescription.publisher.level;
+  const isRatedBook = values.entityDescription.publisher?.level;
   const isPeerReviewed = values.entityDescription.peerReview;
 
   return (
     <>
-      <Field name={BookFieldNames.SUB_TYPE}>
-        {({ field }: FieldProps) => (
-          <TextField select variant="outlined" label={t('common:type')} {...field} fullWidth>
-            {Object.values(BookType).map(typeValue => (
-              <MenuItem value={typeValue} key={typeValue}>
-                {t(`referenceTypes:subtypes_book.${typeValue}`)}
-              </MenuItem>
-            ))}
-          </TextField>
-        )}
-      </Field>
+      <SelectTypeField fieldName={BookFieldNames.SUB_TYPE} options={Object.values(BookType)} />
 
       <DoiField />
 
-      <Field name={BookFieldNames.PUBLISHER}>
-        {({ field: { name, value } }: FieldProps) => (
-          <>
-            <PublicationChannelSearch
-              clearSearchField={value === emptyPublisher}
-              dataTestId="autosearch-publisher"
-              label={t('common:publisher')}
-              publicationTable={PublicationTableNumber.PUBLISHERS}
-              setValueFunction={inputValue => setFieldValue(name, inputValue ?? emptyPublisher)}
-              placeholder={t('references.search_for_publisher')}
-            />
-            {value.title && (
-              <PublisherRow
-                dataTestId="autosearch-results-publisher"
-                label={t('common:publisher')}
-                publisher={value}
-                onClickDelete={() => setFieldValue(name, emptyPublisher)}
-              />
-            )}
-          </>
-        )}
-      </Field>
+      <PublisherField
+        fieldName={BookFieldNames.PUBLISHER}
+        label={t('common:publisher')}
+        placeholder={t('references.search_for_publisher')}
+      />
+
       <Field name={BookFieldNames.ISBN}>
         {({ field }: FieldProps) => (
           <TextField data-testid="isbn" variant="outlined" label={t('references.isbn')} {...field} />
@@ -129,7 +105,7 @@ const BookReferenceForm: FC = () => {
               clearSearchField={value === emptyPublisher}
               label={t('common:title')}
               publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
-              setValueFunction={inputValue => setFieldValue(name, inputValue ?? emptyPublisher)}
+              setValueFunction={(inputValue) => setFieldValue(name, inputValue ?? emptyPublisher)}
               placeholder={t('references.search_for_series')}
             />
             {value.title && (

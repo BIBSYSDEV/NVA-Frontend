@@ -2,16 +2,16 @@ import { Field, FormikProps, useFormikContext, FieldProps } from 'formik';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { MenuItem, TextField } from '@material-ui/core';
+import { TextField } from '@material-ui/core';
 
 import { FormikPublication } from '../../../types/publication.types';
-import { emptyPublisher, JournalArticleFieldNames, JournalArticleType } from '../../../types/references.types';
+import { JournalArticleFieldNames, JournalArticleType } from '../../../types/references.types';
 import { PublicationTableNumber } from '../../../utils/constants';
 import NviValidation from './components/NviValidation';
 import PeerReview from './components/PeerReview';
-import PublicationChannelSearch from './components/PublicationChannelSearch';
-import PublisherRow from './components/PublisherRow';
 import DoiField from './components/DoiField';
+import SelectTypeField from './components/SelectTypeField';
+import PublisherField from './components/PublisherField';
 
 const StyledArticleDetail = styled.div`
   display: grid;
@@ -35,49 +35,24 @@ const StyledPeerReview = styled.div`
 
 const JournalArticleReferenceForm: FC = () => {
   const { t } = useTranslation('publication');
-  const { setFieldValue, values }: FormikProps<FormikPublication> = useFormikContext();
+  const { values }: FormikProps<FormikPublication> = useFormikContext();
 
-  const isRatedJournal = values.entityDescription.publisher.level;
+  const isRatedJournal = values.entityDescription.publisher?.level;
   const isPeerReviewed = values.entityDescription.peerReview;
 
   return (
     <>
-      <Field name={JournalArticleFieldNames.SUB_TYPE} variant="outlined">
-        {({ field }: FieldProps) => (
-          <TextField select variant="outlined" fullWidth label={t('common:type')} {...field}>
-            {Object.values(JournalArticleType).map(typeValue => (
-              <MenuItem value={typeValue} key={typeValue}>
-                {t(`referenceTypes:subtypes_journal_article.${typeValue}`)}
-              </MenuItem>
-            ))}
-          </TextField>
-        )}
-      </Field>
+      <SelectTypeField fieldName={JournalArticleFieldNames.SUB_TYPE} options={Object.values(JournalArticleType)} />
 
       <DoiField />
 
-      <Field name={JournalArticleFieldNames.PUBLISHER}>
-        {({ field: { name, value } }: FieldProps) => (
-          <>
-            <PublicationChannelSearch
-              clearSearchField={value === emptyPublisher}
-              dataTestId="autosearch-journal"
-              label={t('references.journal')}
-              publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
-              setValueFunction={inputValue => setFieldValue(name, inputValue ?? emptyPublisher)}
-              placeholder={t('references.search_for_journal')}
-            />
-            {value.title && (
-              <PublisherRow
-                dataTestId="autosearch-results-journal"
-                publisher={value}
-                label={t('references.journal')}
-                onClickDelete={() => setFieldValue(name, emptyPublisher)}
-              />
-            )}
-          </>
-        )}
-      </Field>
+      <PublisherField
+        fieldName={JournalArticleFieldNames.PUBLISHER}
+        publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
+        label={t('references.journal')}
+        placeholder={t('references.search_for_journal')}
+      />
+
       <StyledArticleDetail>
         <Field name={JournalArticleFieldNames.VOLUME}>
           {({ field }: FieldProps) => <TextField variant="outlined" label={t('references.volume')} {...field} />}

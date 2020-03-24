@@ -15,7 +15,7 @@ const SubmissionDegree: React.FC = () => {
       <LabelContentRow label={t('references.subtype')}>
         {publicationSubtype && t(`referenceTypes:subtypes_degree.${publicationSubtype}`)}
       </LabelContentRow>
-      <LabelContentRow label={t('common:publisher')}>{publisher.title}</LabelContentRow>
+      <LabelContentRow label={t('common:publisher')}>{publisher?.title}</LabelContentRow>
       <LabelContentRow label={t('references.specialization')}>{specialization}</LabelContentRow>
       <LabelContentRow label={t('references.series')}>{series.title}</LabelContentRow>
     </>

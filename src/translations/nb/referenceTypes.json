@@ -1,29 +1,20 @@
 {
+  "Anthology": "Antologi",
+  "Article": "Artikkel",
+  "Bachelor": "Bachelorgrad",
   "Book": "Bok",
   "Chapter": "Kapittel",
   "Degree": "Grad",
+  "Doctorate": "Doktorgrad",
+  "Editorial": "Leder",
   "JournalArticle": "Publikasjon i tidsskrift",
+  "Letter": "Brev til redaktør",
+  "Master": "Mastergrad",
+  "Monography": "Monografi",
+  "PolicyReport": "Policyrapport",
   "Report": "Rapport",
-  "subtypes_report": {
-    "Report": "Rapport",
-    "ResearchReport": "Forskningsrapport",
-    "PolicyReport": "Policyrapport",
-    "WorkingPaper": "Arbeidsnotat"
-  },
-  "subtypes_journal_article": {
-    "Article": "Artikkel",
-    "Editorial": "Leder",
-    "Letter": "Brev til redaktør",
-    "Review": "Anmeldelse",
-    "ShortCommunication": "Short communication"
-  },
-  "subtypes_book": {
-    "Monography": "Monografi",
-    "Anthology": "Antologi"
-  },
-  "subtypes_degree": {
-    "Bachelor": "Bachelorgrad",
-    "Doctorate": "Doktorgrad",
-    "Master": "Mastergrad"
-  }
+  "ResearchReport": "Forskningsrapport",
+  "Review": "Anmeldelse",
+  "ShortCommunication": "Short communication",
+  "WorkingPaper": "Arbeidsnotat"
 }

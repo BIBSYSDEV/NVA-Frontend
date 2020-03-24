@@ -14,7 +14,7 @@ const SubmissionBook: React.FC = () => {
       <LabelContentRow label={t('references.subtype')}>
         {publicationSubtype && t(`referenceTypes:subtypes_book.${publicationSubtype}`)}
       </LabelContentRow>
-      <LabelContentRow label={t('common:publisher')}>{publisher.title}</LabelContentRow>
+      <LabelContentRow label={t('common:publisher')}>{publisher?.title}</LabelContentRow>
       <LabelContentRow label={t('references.peer_reviewed')}>
         {peerReview ? t('common:yes') : t('common:no')}
       </LabelContentRow>

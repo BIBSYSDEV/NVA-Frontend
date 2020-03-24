@@ -54,7 +54,7 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab
 
   return (
     <TabPanel ariaLabel="files and license" goToNextTab={goToNextTab}>
-      {publisher.title && <PublicationChannelInfoCard publisher={publisher} />}
+      {publisher && <PublicationChannelInfoCard publisher={publisher} />}
 
       <FieldArray name={FilesFieldNames.FILES}>
         {({ insert, remove, replace }) => (

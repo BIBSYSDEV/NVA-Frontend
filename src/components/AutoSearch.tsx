@@ -24,6 +24,7 @@ interface AutoSearchProps {
   displaySelection?: boolean;
   label?: string;
   placeholder?: string;
+  errorMessage?: string;
 }
 
 export const AutoSearch: FC<AutoSearchProps> = ({
@@ -36,6 +37,7 @@ export const AutoSearch: FC<AutoSearchProps> = ({
   displaySelection,
   label,
   placeholder,
+  errorMessage,
 }) => {
   const [displayValue, setDisplayValue] = useState<any>(emptyValue);
   const [open, setOpen] = useState(false);
@@ -119,6 +121,8 @@ export const AutoSearch: FC<AutoSearchProps> = ({
               </>
             ),
           }}
+          error={!!errorMessage}
+          helperText={errorMessage}
         />
       )}
     />

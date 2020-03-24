@@ -24,7 +24,7 @@ const SubmissionJournalPublication: React.FC = () => {
       <LabelContentRow label={t('references.subtype')}>
         {publicationSubtype && t(`referenceTypes:subtypes_journal_article.${publicationSubtype}`)}
       </LabelContentRow>
-      <LabelContentRow label={t('common:publisher')}>{publisher.title}</LabelContentRow>
+      <LabelContentRow label={t('common:publisher')}>{publisher?.title}</LabelContentRow>
       <LabelContentRow label={t('references.volume')}>{volume}</LabelContentRow>
       <LabelContentRow label={t('references.issue')}>{issue}</LabelContentRow>
       <LabelContentRow label={t('references.pages_from')}>{pagesFrom}</LabelContentRow>
