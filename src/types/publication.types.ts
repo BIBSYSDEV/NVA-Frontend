@@ -89,7 +89,6 @@ interface PublicationEntityDescription {
   publicationType: ReferenceType | '';
   publicationSubtype: JournalArticleType | ReportType | DegreeType | BookType | '';
   contributors: Contributor[];
-  peerReview: boolean;
   isbn: string;
   numberOfPages: string;
   series: Publisher;
@@ -101,6 +100,7 @@ interface PublicationEntityDescription {
       volume: string;
       issue: string;
       articleNumber: string;
+      peerReviewed: boolean;
       pages: {
         begin: string;
         end: string;
@@ -130,7 +130,6 @@ const emptyPublicationEntityDescription: PublicationEntityDescription = {
   publicationType: '',
   contributors: [],
   publicationSubtype: '',
-  peerReview: false,
   isbn: '',
   numberOfPages: '',
   series: emptyPublisher,
@@ -142,6 +141,7 @@ const emptyPublicationEntityDescription: PublicationEntityDescription = {
       volume: '',
       issue: '',
       articleNumber: '',
+      peerReviewed: false,
       pages: {
         begin: '',
         end: '',

@@ -63,14 +63,14 @@ export enum JournalArticleFieldNames {
   PAGES_FROM = 'entityDescription.reference.publicationInstance.pages.begin',
   PAGES_TO = 'entityDescription.reference.publicationInstance.pages.end',
   ARTICLE_NUMBER = 'entityDescription.reference.publicationInstance.articleNumber',
-  PEER_REVIEW = 'entityDescription.peerReview',
+  PEER_REVIEW = 'entityDescription.reference.publicationInstance.peerReviewed',
 }
 
 export enum BookFieldNames {
   SUB_TYPE = 'entityDescription.publicationSubtype',
   PUBLISHER = 'entityDescription.reference.publicationContext',
   ISBN = 'entityDescription.isbn',
-  PEER_REVIEW = 'entityDescription.peerReview',
+  PEER_REVIEW = 'entityDescription.reference.publicationInstance.peerReviewed',
   TEXT_BOOK = 'entityDescription.textBook',
   NUMBER_OF_PAGES = 'entityDescription.numberOfPages',
   SERIES = 'entityDescription.series',

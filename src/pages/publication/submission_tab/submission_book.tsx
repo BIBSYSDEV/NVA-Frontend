@@ -9,12 +9,14 @@ const SubmissionBook: React.FC = () => {
   const { values }: FormikProps<FormikPublication> = useFormikContext();
   const {
     publicationSubtype,
-    peerReview,
     series,
     textBook,
     numberOfPages,
     isbn,
-    reference: { publicationContext },
+    reference: {
+      publicationContext,
+      publicationInstance: { peerReviewed },
+    },
   } = values.entityDescription;
 
   return (
@@ -24,7 +26,7 @@ const SubmissionBook: React.FC = () => {
       </LabelContentRow>
       <LabelContentRow label={t('common:publisher')}>{publicationContext?.title}</LabelContentRow>
       <LabelContentRow label={t('references.peer_reviewed')}>
-        {peerReview ? t('common:yes') : t('common:no')}
+        {peerReviewed ? t('common:yes') : t('common:no')}
       </LabelContentRow>
       <LabelContentRow label={t('references.text_book')}>{textBook ? t('common:yes') : t('common:no')}</LabelContentRow>
       <LabelContentRow label={t('references.series')}>{series.title}</LabelContentRow>
