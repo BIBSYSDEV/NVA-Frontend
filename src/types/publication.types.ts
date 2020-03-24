@@ -89,7 +89,6 @@ interface PublicationEntityDescription {
   publicationType: ReferenceType | '';
   publicationSubtype: JournalArticleType | ReportType | DegreeType | BookType | '';
   contributors: Contributor[];
-  doiUrl: string;
   publisher: Publisher | null;
   volume: string;
   issue: string;
@@ -102,6 +101,9 @@ interface PublicationEntityDescription {
   series: Publisher;
   specialization: string;
   textBook: boolean;
+  reference: {
+    doi: string;
+  };
 }
 
 export interface FormikPublication extends Publication {
@@ -123,7 +125,7 @@ const emptyPublicationEntityDescription: PublicationEntityDescription = {
   projects: [],
   publicationType: '',
   contributors: [],
-  doiUrl: '',
+
   publicationSubtype: '',
   publisher: null,
   volume: '',
@@ -137,6 +139,9 @@ const emptyPublicationEntityDescription: PublicationEntityDescription = {
   series: emptyPublisher,
   specialization: '',
   textBook: false,
+  reference: {
+    doi: '',
+  },
 };
 
 export type PublicationPreview = Pick<

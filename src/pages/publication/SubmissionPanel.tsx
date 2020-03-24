@@ -43,7 +43,7 @@ const SubmissionPanel: React.FC<SubmissionPanelProps> = ({ savePublication }) =>
     history.push(`/publication/${values.identifier}/public`);
   };
 
-  const { publicationType, doiUrl } = values.entityDescription;
+  const { publicationType, reference } = values.entityDescription;
 
   return (
     <TabPanel ariaLabel="submission">
@@ -58,10 +58,10 @@ const SubmissionPanel: React.FC<SubmissionPanelProps> = ({ savePublication }) =>
           <LabelContentRow label={t('common:type')}>
             {publicationType && t(`referenceTypes:${publicationType}`)}
           </LabelContentRow>
-          {doiUrl && (
+          {reference.doi && (
             <LabelContentRow label={t('publication.link_to_publication')}>
-              <Link href={doiUrl} target="_blank" rel="noopener noreferrer">
-                {doiUrl}
+              <Link href={reference.doi} target="_blank" rel="noopener noreferrer">
+                {reference.doi}
               </Link>
             </LabelContentRow>
           )}

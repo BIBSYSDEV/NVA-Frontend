@@ -52,7 +52,7 @@ export enum DegreeType {
 // Enums representing name of fields used by Formik
 export enum ReferenceFieldNames {
   PUBLICATION_TYPE = 'entityDescription.publicationType',
-  DOI = 'entityDescription.doiUrl',
+  DOI = 'entityDescription.reference.doi',
 }
 
 export enum JournalArticleFieldNames {

@@ -63,7 +63,7 @@ const PublicationPage: FC = () => {
     }
   }, [dispatch, identifier]);
 
-  const { mainTitle, abstract, description, tags, date, projects, contributors, doiUrl } = publication
+  const { mainTitle, abstract, description, tags, date, projects, contributors, reference } = publication
     ? publication.entityDescription
     : emptyPublication.entityDescription;
 
@@ -96,9 +96,9 @@ const PublicationPage: FC = () => {
                   </StyledSidebarCard>
                 </StyledSidebar>
                 <StyledMainContent>
-                  {doiUrl && (
+                  {reference.doi && (
                     <LabelContentRowForPublicationPage label={t('publication.link_to_publication')}>
-                      <Link href={doiUrl}>{doiUrl}</Link>
+                      <Link href={reference.doi}>{reference.doi}</Link>
                     </LabelContentRowForPublicationPage>
                   )}
                   {abstract && (
