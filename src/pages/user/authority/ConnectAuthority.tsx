@@ -72,7 +72,7 @@ export const ConnectAuthority: FC = () => {
   return (
     <>
       <StyledAuthorityContainer>
-        {hasMatchingAuthorities && !openNewAuthorityCard && (
+        {hasMatchingAuthorities && !openNewAuthorityCard ? (
           <>
             <StyledSubHeading>
               {t('authority.search_summary', { results: matchingAuthorities?.length ?? 0, searchTerm: user.name })}
@@ -103,8 +103,7 @@ export const ConnectAuthority: FC = () => {
               {t('authority.connect_authority')}
             </Button>
           </>
-        )}
-        {(!hasMatchingAuthorities || openNewAuthorityCard) && (
+        ) : (
           <NewAuthorityCard onClickCancel={toggleOpenNewAuthorityCard} />
         )}
       </StyledAuthorityContainer>
