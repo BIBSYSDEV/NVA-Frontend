@@ -20,6 +20,7 @@ import SubHeading from '../../components/SubHeading';
 import Card from '../../components/Card';
 import { useHistory } from 'react-router';
 import LabelContentRow from '../../components/LabelContentRow';
+import NormalText from '../../components/NormalText';
 
 const StyledPublishButton = styled(Button)`
   margin-top: 0.5rem;
@@ -58,10 +59,10 @@ const SubmissionPanel: React.FC<SubmissionPanelProps> = ({ savePublication }) =>
         <StyledCard>
           <Heading>{t('heading.validation_errors')}</Heading>
           {Object.entries(validationErrors).map(([key, value]) => (
-            <p key={key}>
+            <NormalText key={key}>
               <b>{t(`formikValues:entityDescription.${key}`)}: </b>
               {value}
-            </p>
+            </NormalText>
           ))}
         </StyledCard>
       )}

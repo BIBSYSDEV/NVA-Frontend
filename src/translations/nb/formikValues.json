@@ -3,8 +3,8 @@
     "contributors": "Forfattere",
     "mainTitle": "Tittel",
     "peerReview": "Fagfellevurdert",
-    "publicationType": "Publikasjonstype",
     "publicationSubtype": "Publikasjonssubtype",
+    "publicationType": "Publikasjonstype",
     "publisher": "Utgiver"
   }
 }
