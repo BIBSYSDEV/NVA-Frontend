@@ -58,11 +58,11 @@ export enum ReferenceFieldNames {
 export enum JournalArticleFieldNames {
   SUB_TYPE = 'entityDescription.publicationSubtype',
   PUBLISHER = 'entityDescription.publisher',
-  VOLUME = 'entityDescription.volume',
-  ISSUE = 'entityDescription.issue',
-  PAGES_FROM = 'entityDescription.pagesFrom',
-  PAGES_TO = 'entityDescription.pagesTo',
-  ARTICLE_NUMBER = 'entityDescription.articleNumber',
+  VOLUME = 'entityDescription.reference.publicationInstance.volume',
+  ISSUE = 'entityDescription.reference.publicationInstance.issue',
+  PAGES_FROM = 'entityDescription.reference.publicationInstance.pages.begin',
+  PAGES_TO = 'entityDescription.reference.publicationInstance.pages.end',
+  ARTICLE_NUMBER = 'entityDescription.reference.publicationInstance.articleNumber',
   PEER_REVIEW = 'entityDescription.peerReview',
 }
 
@@ -93,6 +93,6 @@ export enum DegreeFieldNames {
 
 export enum ChapterFieldNames {
   PUBLISHER = 'entityDescription.publisher',
-  PAGES_FROM = 'entityDescription.pagesFrom',
-  PAGES_TO = 'entityDescription.pagesTo',
+  PAGES_FROM = 'entityDescription.reference.publicationInstance.pages.begin',
+  PAGES_TO = 'entityDescription.reference.publicationInstance.pages.end',
 }

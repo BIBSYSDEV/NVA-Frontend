@@ -90,12 +90,7 @@ interface PublicationEntityDescription {
   publicationSubtype: JournalArticleType | ReportType | DegreeType | BookType | '';
   contributors: Contributor[];
   publisher: Publisher | null;
-  volume: string;
-  issue: string;
-  pagesFrom: string;
-  pagesTo: string;
   peerReview: boolean;
-  articleNumber: string;
   isbn: string;
   numberOfPages: string;
   series: Publisher;
@@ -103,6 +98,15 @@ interface PublicationEntityDescription {
   textBook: boolean;
   reference: {
     doi: string;
+    publicationInstance: {
+      volume: string;
+      issue: string;
+      articleNumber: string;
+      pages: {
+        begin: string;
+        end: string;
+      };
+    };
   };
 }
 
@@ -128,12 +132,7 @@ const emptyPublicationEntityDescription: PublicationEntityDescription = {
 
   publicationSubtype: '',
   publisher: null,
-  volume: '',
-  issue: '',
-  pagesFrom: '',
-  pagesTo: '',
   peerReview: false,
-  articleNumber: '',
   isbn: '',
   numberOfPages: '',
   series: emptyPublisher,
@@ -141,6 +140,15 @@ const emptyPublicationEntityDescription: PublicationEntityDescription = {
   textBook: false,
   reference: {
     doi: '',
+    publicationInstance: {
+      volume: '',
+      issue: '',
+      articleNumber: '',
+      pages: {
+        begin: '',
+        end: '',
+      },
+    },
   },
 };
 

@@ -62,7 +62,7 @@ const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublicat
 
   // Validation messages won't show on fields that are not touched
   const setAllFieldsTouched = useCallback(() => {
-    Object.values(DescriptionFieldNames).forEach(fieldName => setFieldTouched(fieldName));
+    Object.values(DescriptionFieldNames).forEach((fieldName) => setFieldTouched(fieldName));
   }, [setFieldTouched]);
 
   useEffect(() => {
@@ -122,7 +122,7 @@ const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublicat
                 {({ field: { name, value } }: FieldProps) => (
                   // TODO: when we have a service for getting npiDisciplines by id this must be updated (only id is stored in backend for now)
                   <DisciplineSearch
-                    setValueFunction={npiDiscipline => setFieldValue(name, npiDiscipline?.id ?? '')}
+                    setValueFunction={(npiDiscipline) => setFieldValue(name, npiDiscipline?.id ?? '')}
                     dataTestId="search_npi"
                     value={getNpiDiscipline(value).name}
                     placeholder={t('description.search_for_npi_discipline')}
@@ -135,7 +135,7 @@ const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublicat
                 {({ name, push, remove }: FieldArrayRenderProps) => (
                   <ChipInput
                     value={getIn(values, name)}
-                    onAdd={tag => push(tag)}
+                    onAdd={(tag) => push(tag)}
                     onDelete={(_, index) => remove(index)}
                     aria-label="tags"
                     label={t('description.tags')}
@@ -166,7 +166,7 @@ const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublicat
                 component={TextField}
                 select
                 label={t('description.primary_language')}>
-                {orderedLanguages.map(code => (
+                {orderedLanguages.map((code) => (
                   <MenuItem value={code} key={code} data-testid={`publication-language-${code}`}>
                     {t(`languages:${code}`)}
                   </MenuItem>
@@ -183,7 +183,7 @@ const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublicat
               {({ name, insert, remove }: FieldArrayRenderProps) => (
                 <>
                   <ProjectSearch
-                    setValueFunction={newValue => insert(0, newValue)}
+                    setValueFunction={(newValue) => insert(0, newValue)}
                     dataTestId="search_project"
                     placeholder={t('description.search_for_project')}
                   />
