@@ -68,11 +68,20 @@ export const publicationValidationSchema = Yup.object().shape({
         articleNumber: Yup.string(),
         volume: Yup.string(),
         issue: Yup.string(),
+        // peerReviewed: Yup.boolean(),
         pages: Yup.object().shape({
           begin: Yup.string(),
           end: Yup.string(),
         }),
       }),
+      publicationContext: Yup.object()
+        .nullable()
+        .shape({
+          name: Yup.string(),
+          level: Yup.number(),
+          openAccess: Yup.boolean(),
+        })
+        .required(i18n.t('publication:feedback.required_field')),
     }),
   }),
   fileSet: Yup.array().of(Yup.object()), // TODO

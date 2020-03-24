@@ -89,7 +89,6 @@ interface PublicationEntityDescription {
   publicationType: ReferenceType | '';
   publicationSubtype: JournalArticleType | ReportType | DegreeType | BookType | '';
   contributors: Contributor[];
-  publisher: Publisher | null;
   peerReview: boolean;
   isbn: string;
   numberOfPages: string;
@@ -107,6 +106,7 @@ interface PublicationEntityDescription {
         end: string;
       };
     };
+    publicationContext: Publisher | null;
   };
 }
 
@@ -129,9 +129,7 @@ const emptyPublicationEntityDescription: PublicationEntityDescription = {
   projects: [],
   publicationType: '',
   contributors: [],
-
   publicationSubtype: '',
-  publisher: null,
   peerReview: false,
   isbn: '',
   numberOfPages: '',
@@ -149,6 +147,7 @@ const emptyPublicationEntityDescription: PublicationEntityDescription = {
         end: '',
       },
     },
+    publicationContext: null,
   },
 };
 
@@ -158,7 +157,7 @@ export type PublicationPreview = Pick<
 >;
 export type PublishedPublicationPreview = Pick<
   Publication & PublicationEntityDescription,
-  'identifier' | 'mainTitle' | 'date' | 'publisher' | 'contributors' | 'status' | 'publicationType'
+  'identifier' | 'mainTitle' | 'date' | 'reference' | 'contributors' | 'status' | 'publicationType'
 >;
 
 export interface Doi {

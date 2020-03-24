@@ -57,7 +57,7 @@ export enum ReferenceFieldNames {
 
 export enum JournalArticleFieldNames {
   SUB_TYPE = 'entityDescription.publicationSubtype',
-  PUBLISHER = 'entityDescription.publisher',
+  PUBLISHER = 'entityDescription.reference.publicationContext',
   VOLUME = 'entityDescription.reference.publicationInstance.volume',
   ISSUE = 'entityDescription.reference.publicationInstance.issue',
   PAGES_FROM = 'entityDescription.reference.publicationInstance.pages.begin',
@@ -68,7 +68,7 @@ export enum JournalArticleFieldNames {
 
 export enum BookFieldNames {
   SUB_TYPE = 'entityDescription.publicationSubtype',
-  PUBLISHER = 'entityDescription.publisher',
+  PUBLISHER = 'entityDescription.reference.publicationContext',
   ISBN = 'entityDescription.isbn',
   PEER_REVIEW = 'entityDescription.peerReview',
   TEXT_BOOK = 'entityDescription.textBook',
@@ -78,7 +78,7 @@ export enum BookFieldNames {
 
 export enum ReportFieldNames {
   SUB_TYPE = 'entityDescription.publicationSubtype',
-  PUBLISHER = 'entityDescription.publisher',
+  PUBLISHER = 'entityDescription.reference.publicationContext',
   ISBN = 'entityDescription.isbn',
   NUMBER_OF_PAGES = 'entityDescription.numberOfPages',
   SERIES = 'entityDescription.series',
@@ -86,13 +86,13 @@ export enum ReportFieldNames {
 
 export enum DegreeFieldNames {
   SUB_TYPE = 'entityDescription.publicationSubtype',
-  PUBLISHER = 'entityDescription.publisher',
+  PUBLISHER = 'entityDescription.reference.publicationContext',
   SPECIALISATION = 'entityDescription.numberOfPages',
   SERIES = 'entityDescription.series',
 }
 
 export enum ChapterFieldNames {
-  PUBLISHER = 'entityDescription.publisher',
+  PUBLISHER = 'entityDescription.reference.publicationContext',
   PAGES_FROM = 'entityDescription.reference.publicationInstance.pages.begin',
   PAGES_TO = 'entityDescription.reference.publicationInstance.pages.end',
 }

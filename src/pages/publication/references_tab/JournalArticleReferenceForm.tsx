@@ -37,7 +37,7 @@ const JournalArticleReferenceForm: FC = () => {
   const { t } = useTranslation('publication');
   const { values }: FormikProps<FormikPublication> = useFormikContext();
 
-  const isRatedJournal = values.entityDescription.publisher?.level;
+  const isRatedJournal = values.entityDescription.reference.publicationContext?.level;
   const isPeerReviewed = values.entityDescription.peerReview;
 
   return (

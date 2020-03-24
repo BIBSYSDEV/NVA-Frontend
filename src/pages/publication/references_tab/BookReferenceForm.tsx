@@ -40,7 +40,7 @@ const BookReferenceForm: FC = () => {
   const { t } = useTranslation('publication');
   const { setFieldValue, values }: FormikProps<FormikPublication> = useFormikContext();
 
-  const isRatedBook = values.entityDescription.publisher?.level;
+  const isRatedBook = values.entityDescription.reference.publicationContext?.level;
   const isPeerReviewed = values.entityDescription.peerReview;
 
   return (

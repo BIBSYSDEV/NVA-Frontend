@@ -49,12 +49,14 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab
 
   const {
     fileSet,
-    entityDescription: { publisher },
+    entityDescription: {
+      reference: { publicationContext },
+    },
   } = values;
 
   return (
     <TabPanel ariaLabel="files and license" goToNextTab={goToNextTab}>
-      {publisher && <PublicationChannelInfoCard publisher={publisher} />}
+      {publicationContext && <PublicationChannelInfoCard publisher={publicationContext} />}
 
       <FieldArray name={FilesFieldNames.FILES}>
         {({ insert, remove, replace }) => (
@@ -64,7 +66,7 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab
               <FileUploader
                 uppy={uppy}
                 shouldAllowMultipleFiles={shouldAllowMultipleFiles}
-                addFile={file => insert(0, file)}
+                addFile={(file) => insert(0, file)}
               />
             </Card>
             {fileSet.length > 0 && (
@@ -79,7 +81,7 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab
                         uppy.removeFile(file.id);
                         remove(index);
                       }}
-                      updateFile={newFile => replace(index, newFile)}
+                      updateFile={(newFile) => replace(index, newFile)}
                       toggleLicenseModal={toggleLicenseModal}
                     />
                   ))}
@@ -90,7 +92,7 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab
         )}
       </FieldArray>
       <Modal headingText={t('files_and_license.licenses')} openModal={isLicenseModalOpen} onClose={toggleLicenseModal}>
-        {licenses.map(license => (
+        {licenses.map((license) => (
           <StyledLicenseDescription key={license.identifier}>
             <Label>{license.identifier}</Label>
             <img src={license.image} alt={license.identifier} />

@@ -7,14 +7,22 @@ import { FormikPublication } from '../../../types/publication.types';
 const SubmissionBook: React.FC = () => {
   const { t } = useTranslation('publication');
   const { values }: FormikProps<FormikPublication> = useFormikContext();
-  const { publicationSubtype, peerReview, publisher, series, textBook, numberOfPages, isbn } = values.entityDescription;
+  const {
+    publicationSubtype,
+    peerReview,
+    series,
+    textBook,
+    numberOfPages,
+    isbn,
+    reference: { publicationContext },
+  } = values.entityDescription;
 
   return (
     <>
       <LabelContentRow label={t('references.subtype')}>
         {publicationSubtype && t(`referenceTypes:subtypes_book.${publicationSubtype}`)}
       </LabelContentRow>
-      <LabelContentRow label={t('common:publisher')}>{publisher?.title}</LabelContentRow>
+      <LabelContentRow label={t('common:publisher')}>{publicationContext?.title}</LabelContentRow>
       <LabelContentRow label={t('references.peer_reviewed')}>
         {peerReview ? t('common:yes') : t('common:no')}
       </LabelContentRow>
