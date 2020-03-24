@@ -15,7 +15,7 @@ export const emptyPublisher: Publisher = {
 };
 
 // For valid values, see https://github.com/BIBSYSDEV/nva-datamodel-java/blob/develop/src/main/java/no/unit/nva/model/PublicationType.java
-export enum ReferenceType {
+export enum PublicationType {
   PUBLICATION_IN_JOURNAL = 'JournalArticle',
   BOOK = 'Book',
   REPORT = 'Report',

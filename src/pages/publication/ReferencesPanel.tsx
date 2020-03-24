@@ -11,8 +11,8 @@ import {
   DegreeFieldNames,
   JournalArticleFieldNames,
   ReferenceFieldNames,
-  ReferenceType,
   ReportFieldNames,
+  PublicationType,
 } from '../../types/references.types';
 import BookForm from './references_tab/BookForm';
 import ChapterForm from './references_tab/ChapterForm';
@@ -46,19 +46,19 @@ const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, savePubl
     Object.values(ReferenceFieldNames).forEach((fieldName) => setFieldTouched(fieldName));
 
     switch (publicationType) {
-      case ReferenceType.BOOK:
+      case PublicationType.BOOK:
         Object.values(BookFieldNames).forEach((fieldName) => setFieldTouched(fieldName));
         break;
-      case ReferenceType.PUBLICATION_IN_JOURNAL:
+      case PublicationType.PUBLICATION_IN_JOURNAL:
         Object.values(JournalArticleFieldNames).forEach((fieldName) => setFieldTouched(fieldName));
         break;
-      case ReferenceType.REPORT:
+      case PublicationType.REPORT:
         Object.values(ReportFieldNames).forEach((fieldName) => setFieldTouched(fieldName));
         break;
-      case ReferenceType.CHAPTER:
+      case PublicationType.CHAPTER:
         Object.values(ChapterFieldNames).forEach((fieldName) => setFieldTouched(fieldName));
         break;
-      case ReferenceType.DEGREE:
+      case PublicationType.DEGREE:
         Object.values(DegreeFieldNames).forEach((fieldName) => setFieldTouched(fieldName));
         break;
       default:
@@ -76,7 +76,7 @@ const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, savePubl
       <StyledSelectContainer>
         <SelectTypeField
           fieldName={ReferenceFieldNames.PUBLICATION_TYPE}
-          options={Object.values(ReferenceType)}
+          options={Object.values(PublicationType)}
           onChangeExtension={() => setFieldValue(JournalArticleFieldNames.SUB_TYPE, '')}
         />
       </StyledSelectContainer>
@@ -85,11 +85,11 @@ const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, savePubl
         <StyledBox>
           <Card>
             <Heading data-testid="publication_type-heading">{t(`publicationTypes:${publicationType}`)}</Heading>
-            {publicationType === ReferenceType.BOOK && <BookForm />}
-            {publicationType === ReferenceType.CHAPTER && <ChapterForm />}
-            {publicationType === ReferenceType.REPORT && <ReportForm />}
-            {publicationType === ReferenceType.DEGREE && <DegreeForm />}
-            {publicationType === ReferenceType.PUBLICATION_IN_JOURNAL && <JournalArticleForm />}
+            {publicationType === PublicationType.BOOK && <BookForm />}
+            {publicationType === PublicationType.CHAPTER && <ChapterForm />}
+            {publicationType === PublicationType.REPORT && <ReportForm />}
+            {publicationType === PublicationType.DEGREE && <DegreeForm />}
+            {publicationType === PublicationType.PUBLICATION_IN_JOURNAL && <JournalArticleForm />}
           </Card>
         </StyledBox>
       )}

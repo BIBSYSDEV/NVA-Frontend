@@ -3,7 +3,7 @@ import { File } from './file.types';
 import { LanguageCodes } from './language.types';
 import { Project } from './project.types';
 import {
-  ReferenceType,
+  PublicationType,
   JournalArticleType,
   emptyPublisher,
   Publisher,
@@ -11,11 +11,6 @@ import {
   DegreeType,
   BookType,
 } from './references.types';
-
-export enum PublicationType {
-  TEXT = 'text',
-  FILE = 'file',
-}
 
 export enum PublicationStatus {
   DRAFT = 'draft',
@@ -86,7 +81,7 @@ interface PublicationEntityDescription {
   };
   language: LanguageCodes;
   projects: Project[];
-  publicationType: ReferenceType | '';
+  publicationType: PublicationType | '';
   publicationSubtype: JournalArticleType | ReportType | DegreeType | BookType | '';
   contributors: Contributor[];
   isbn: string;

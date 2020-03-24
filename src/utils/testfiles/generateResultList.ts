@@ -1,4 +1,5 @@
-import { PublicationMetadata, PublicationType } from '../../types/publication.types';
+import { PublicationMetadata } from '../../types/publication.types';
+import { PublicationType } from '../../types/references.types';
 
 const faker = require('faker');
 const fs = require('fs');
