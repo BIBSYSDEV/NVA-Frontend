@@ -46,28 +46,34 @@ export const publicationValidationSchema = Yup.object().shape({
     contributors: Yup.array()
       .of(Yup.object()) // TODO
       .min(1, i18n.t('publication:feedback.minimum_one_contributor')),
-    doiUrl: Yup.string().url(),
     publisher: Yup.object()
       .nullable()
       .shape({
         title: Yup.string(),
       })
       .required(i18n.t('publication:feedback.required_field')),
-    volume: Yup.string(),
-    issue: Yup.string(),
-    pagesFrom: Yup.string(),
-    pagesTo: Yup.string(),
     peerReview: Yup.boolean().when('publicationSubtype', {
       is: (subtype) =>
         [ReferenceType.PUBLICATION_IN_JOURNAL, ReferenceType.BOOK, ReferenceType.REPORT].includes(subtype),
       then: Yup.boolean().required(i18n.t('publication:feedback.required_field')),
     }),
-    articleNumber: Yup.string(),
     isbn: Yup.string(),
     numberOfPages: Yup.string(),
     series: Yup.object(),
     specialization: Yup.string(),
     textBook: Yup.boolean(),
+    reference: Yup.object().shape({
+      doi: Yup.string(),
+      publicationInstance: Yup.object().shape({
+        articleNumber: Yup.string(),
+        volume: Yup.string(),
+        issue: Yup.string(),
+        pages: Yup.object().shape({
+          begin: Yup.string(),
+          end: Yup.string(),
+        }),
+      }),
+    }),
   }),
   fileSet: Yup.array().of(Yup.object()), // TODO
 });
