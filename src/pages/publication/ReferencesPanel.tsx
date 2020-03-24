@@ -14,11 +14,11 @@ import {
   ReferenceType,
   ReportFieldNames,
 } from '../../types/references.types';
-import BookReferenceForm from './references_tab/BookReferenceForm';
-import ChapterReferenceForm from './references_tab/ChapterReferenceForm';
-import DegreeReferenceForm from './references_tab/DegreeReferenceForm';
-import JournalArticleReferenceForm from './references_tab/JournalArticleReferenceForm';
-import ReportReferenceForm from './references_tab/ReportReferenceForm';
+import BookForm from './references_tab/BookForm';
+import ChapterForm from './references_tab/ChapterForm';
+import DegreeForm from './references_tab/DegreeForm';
+import JournalArticleForm from './references_tab/JournalArticleForm';
+import ReportForm from './references_tab/ReportForm';
 import Card from '../../components/Card';
 import Heading from '../../components/Heading';
 import SelectTypeField from './references_tab/components/SelectTypeField';
@@ -85,11 +85,11 @@ const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, savePubl
         <StyledBox>
           <Card>
             <Heading data-testid="publication_type-heading">{t(`publicationTypes:${publicationType}`)}</Heading>
-            {publicationType === ReferenceType.BOOK && <BookReferenceForm />}
-            {publicationType === ReferenceType.CHAPTER && <ChapterReferenceForm />}
-            {publicationType === ReferenceType.REPORT && <ReportReferenceForm />}
-            {publicationType === ReferenceType.DEGREE && <DegreeReferenceForm />}
-            {publicationType === ReferenceType.PUBLICATION_IN_JOURNAL && <JournalArticleReferenceForm />}
+            {publicationType === ReferenceType.BOOK && <BookForm />}
+            {publicationType === ReferenceType.CHAPTER && <ChapterForm />}
+            {publicationType === ReferenceType.REPORT && <ReportForm />}
+            {publicationType === ReferenceType.DEGREE && <DegreeForm />}
+            {publicationType === ReferenceType.PUBLICATION_IN_JOURNAL && <JournalArticleForm />}
           </Card>
         </StyledBox>
       )}

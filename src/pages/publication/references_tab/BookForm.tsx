@@ -36,7 +36,7 @@ const StyledTextBook = styled.div`
   grid-area: text-book;
 `;
 
-const BookReferenceForm: FC = () => {
+const BookForm: FC = () => {
   const { t } = useTranslation('publication');
   const { setFieldValue, values }: FormikProps<FormikPublication> = useFormikContext();
 
@@ -127,4 +127,4 @@ const BookReferenceForm: FC = () => {
   );
 };
 
-export default BookReferenceForm;
+export default BookForm;

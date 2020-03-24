@@ -1,10 +1,12 @@
 import { Field, FormikProps, useFormikContext, FieldProps } from 'formik';
-import React from 'react';
+import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
+import { TextField } from '@material-ui/core';
+
 import { FormikPublication } from '../../../types/publication.types';
-import { emptyPublisher, DegreeFieldNames, DegreeType } from '../../../types/references.types';
+import { emptyPublisher, ReportFieldNames, ReportType } from '../../../types/references.types';
 import { PublicationTableNumber } from '../../../utils/constants';
 import PublicationChannelSearch from './components/PublicationChannelSearch';
 import PublisherRow from './components/PublisherRow';
@@ -23,26 +25,43 @@ const StyledHeading = styled.div`
   padding-top: 1.5rem;
 `;
 
-const DegreeReferenceForm: React.FC = () => {
+const ReportForm: FC = () => {
   const { t } = useTranslation('publication');
 
   const { setFieldValue }: FormikProps<FormikPublication> = useFormikContext();
 
   return (
     <>
-      <SelectTypeField fieldName={DegreeFieldNames.SUB_TYPE} options={Object.values(DegreeType)} />
+      <SelectTypeField fieldName={ReportFieldNames.SUB_TYPE} options={Object.values(ReportType)} />
 
       <DoiField />
 
       <PublisherField
-        fieldName={DegreeFieldNames.PUBLISHER}
+        fieldName={ReportFieldNames.PUBLISHER}
         label={t('common:publisher')}
         placeholder={t('references.search_for_publisher')}
       />
 
+      <Field name={ReportFieldNames.ISBN}>
+        {({ field }: FieldProps) => (
+          <TextField data-testid="isbn" variant="outlined" label={t('references.isbn')} {...field} />
+        )}
+      </Field>
+      <div>
+        <Field name={ReportFieldNames.NUMBER_OF_PAGES}>
+          {({ field }: FieldProps) => (
+            <TextField
+              data-testid="number_of_pages"
+              variant="outlined"
+              label={t('references.number_of_pages')}
+              {...field}
+            />
+          )}
+        </Field>
+      </div>
       <StyledHeading>{t('references.series')}</StyledHeading>
       <StyledLabel>{t('references.series_info')}</StyledLabel>
-      <Field name={DegreeFieldNames.SERIES}>
+      <Field name={ReportFieldNames.SERIES}>
         {({ field: { name, value } }: FieldProps) => (
           <>
             <PublicationChannelSearch
@@ -68,4 +87,4 @@ const DegreeReferenceForm: React.FC = () => {
   );
 };
 
-export default DegreeReferenceForm;
+export default ReportForm;

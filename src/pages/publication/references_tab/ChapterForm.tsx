@@ -41,7 +41,7 @@ const StyledPageNumberField = styled(TextField)`
   width: 10rem;
 `;
 
-const ChapterReferenceForm: React.FC = () => {
+const ChapterForm: React.FC = () => {
   const { t } = useTranslation('publication');
 
   return (
@@ -96,4 +96,4 @@ const ChapterReferenceForm: React.FC = () => {
   );
 };
 
-export default ChapterReferenceForm;
+export default ChapterForm;

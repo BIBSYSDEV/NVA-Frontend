@@ -33,7 +33,7 @@ const StyledPeerReview = styled.div`
   background-color: ${({ theme }) => theme.palette.background.default};
 `;
 
-const JournalArticleReferenceForm: FC = () => {
+const JournalArticleForm: FC = () => {
   const { t } = useTranslation('publication');
   const { values }: FormikProps<FormikPublication> = useFormikContext();
 
@@ -89,4 +89,4 @@ const JournalArticleReferenceForm: FC = () => {
   );
 };
 
-export default JournalArticleReferenceForm;
+export default JournalArticleForm;
