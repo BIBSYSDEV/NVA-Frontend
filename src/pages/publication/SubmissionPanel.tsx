@@ -25,6 +25,11 @@ const StyledPublishButton = styled(Button)`
   margin-top: 0.5rem;
 `;
 
+const StyledCard = styled(Card)`
+  border: 3px solid ${({ theme }) => theme.palette.danger.main};
+  background-color: ${({ theme }) => theme.palette.danger.light};
+`;
+
 enum PublishSettingFieldName {
   SHOULD_CREATE_DOI = 'shouldCreateDoi',
 }
@@ -35,7 +40,7 @@ interface SubmissionPanelProps {
 
 const SubmissionPanel: React.FC<SubmissionPanelProps> = ({ savePublication }) => {
   const { t } = useTranslation('publication');
-  const { values, setFieldValue }: FormikProps<FormikPublication> = useFormikContext();
+  const { errors, values, setFieldValue }: FormikProps<FormikPublication> = useFormikContext();
   const history = useHistory();
 
   const publishPublication = () => {
@@ -45,8 +50,21 @@ const SubmissionPanel: React.FC<SubmissionPanelProps> = ({ savePublication }) =>
 
   const { publicationType, doiUrl } = values.entityDescription;
 
+  const validationErrors = errors.entityDescription;
+
   return (
     <TabPanel ariaLabel="submission">
+      {validationErrors && (
+        <StyledCard>
+          <Heading>{t('heading.validation_errors')}</Heading>
+          {Object.entries(validationErrors).map(([key, value]) => (
+            <p key={key}>
+              <b>{t(`formikValues:entityDescription.${key}`)}: </b>
+              {value}
+            </p>
+          ))}
+        </StyledCard>
+      )}
       <Card>
         <Heading>{t('heading.summary')}</Heading>
         <Card>
@@ -84,14 +102,25 @@ const SubmissionPanel: React.FC<SubmissionPanelProps> = ({ savePublication }) =>
           <Field name={PublishSettingFieldName.SHOULD_CREATE_DOI}>
             {({ field: { name, value } }: FieldProps) => (
               <FormControlLabel
-                control={<Checkbox color="primary" checked={value} onChange={() => setFieldValue(name, !value)} />}
+                control={
+                  <Checkbox
+                    color="primary"
+                    checked={value}
+                    onChange={() => setFieldValue(name, !value)}
+                    disabled={!!validationErrors}
+                  />
+                }
                 label={t('submission.ask_for_doi')}
               />
             )}
           </Field>
         </Card>
       </Card>
-      <StyledPublishButton color="primary" variant="contained" onClick={publishPublication}>
+      <StyledPublishButton
+        color="primary"
+        variant="contained"
+        onClick={publishPublication}
+        disabled={!!validationErrors}>
         {t('common:publish')}
       </StyledPublishButton>
     </TabPanel>

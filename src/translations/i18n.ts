@@ -7,6 +7,7 @@ import breadcrumbsEn from './en/breadcrumbs.json';
 import commonEn from './en/common.json';
 import disciplinesEn from './en/disciplines.json';
 import feedbackEn from './en/feedback.json';
+import formikValuesEn from './en/formikValues.json';
 import languagesEn from './en/languages.json';
 import profileEn from './en/profile.json';
 import publicationEn from './en/publication.json';
@@ -19,6 +20,7 @@ import breadcrumbsNb from './nb/breadcrumbs.json';
 import commonNb from './nb/common.json';
 import disciplinesNb from './nb/disciplines.json';
 import feedbackNb from './nb/feedback.json';
+import formikValuesNb from './nb/formikValues.json';
 import languagesNb from './nb/languages.json';
 import profileNb from './nb/profile.json';
 import publicationNb from './nb/publication.json';
@@ -37,6 +39,7 @@ i18n.use(LanguageDetector).init({
       disciplines: disciplinesEn,
       languages: languagesEn,
       feedback: feedbackEn,
+      formikValues: formikValuesEn,
       profile: profileEn,
       publication: publicationEn,
       referenceTypes: referenceTypesEn,
@@ -50,6 +53,7 @@ i18n.use(LanguageDetector).init({
       disciplines: disciplinesNb,
       languages: languagesNb,
       feedback: feedbackNb,
+      formikValues: formikValuesNb,
       profile: profileNb,
       publication: publicationNb,
       referenceTypes: referenceTypesNb,

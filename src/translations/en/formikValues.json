@@ -1,0 +1,10 @@
+{
+  "entityDescription": {
+    "contributors": "Contributors",
+    "mainTitle": "Title",
+    "peerReview": "Peer review",
+    "publicationType": "Publication type",
+    "publicationSubtype": "Publication subtype",
+    "publisher": "Publisher"
+  }
+}
