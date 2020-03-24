@@ -12,18 +12,14 @@ describe('Publication: References: Report', () => {
     cy.get('[data-testid=nav-tabpanel-references]').click({ force: true });
 
     // choose Report type
-    cy.get('[data-testid=reference_type]')
-      .click({ force: true })
-      .type(' '); //makes the select options open
-    cy.get('[data-testid=reference_type-Report]').should('be.visible');
-    cy.get('[data-testid=reference_type-Report]').click({ force: true });
+    cy.get('[data-testid=publication_type]').click({ force: true }).type(' '); //makes the select options open
+    cy.get('[data-testid=publication_type-Report]').should('be.visible');
+    cy.get('[data-testid=publication_type-Report]').click({ force: true });
 
-    cy.get('[data-testid=reference_type-heading]').contains('Report');
+    cy.get('[data-testid=publication_type-heading]').contains('Report');
 
     // search for and select a publisher
-    cy.get('[data-testid=autosearch-publisher]')
-      .click({ force: true })
-      .type('Test');
+    cy.get('[data-testid=autosearch-publisher]').click({ force: true }).type('Test');
     cy.contains('Novum Testamentum').click({ force: true });
     cy.get('[data-testid=autosearch-results-publisher]').contains('Novum Testamentum');
 
@@ -34,9 +30,7 @@ describe('Publication: References: Report', () => {
     cy.get('[data-testid=number_of_pages]').type('483');
 
     // search and select a series
-    cy.get('[data-testid=autosearch-series]')
-      .click({ force: true })
-      .type('Test');
+    cy.get('[data-testid=autosearch-series]').click({ force: true }).type('Test');
     cy.contains('New Testament Studies').click({ force: true });
     cy.get('[data-testid=autosearch-results-series]').contains('New Testament Studies');
   });

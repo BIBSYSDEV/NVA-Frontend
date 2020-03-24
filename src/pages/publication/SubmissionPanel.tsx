@@ -56,7 +56,7 @@ const SubmissionPanel: React.FC<SubmissionPanelProps> = ({ savePublication }) =>
         <Card>
           <SubHeading>{t('heading.references')}</SubHeading>
           <LabelContentRow label={t('common:type')}>
-            {publicationType && t(`referenceTypes:${publicationType}`)}
+            {publicationType && t(`publicationTypes:${publicationType}`)}
           </LabelContentRow>
           {reference.doi && (
             <LabelContentRow label={t('publication.link_to_publication')}>

@@ -10,7 +10,7 @@ import feedbackEn from './en/feedback.json';
 import languagesEn from './en/languages.json';
 import profileEn from './en/profile.json';
 import publicationEn from './en/publication.json';
-import referenceTypesEn from './en/referenceTypes.json';
+import publicationTypesEn from './en/publicationTypes.json';
 import translationsEn from './en/translations.json';
 import workListsEn from './en/workLists.json';
 
@@ -22,7 +22,7 @@ import feedbackNb from './nb/feedback.json';
 import languagesNb from './nb/languages.json';
 import profileNb from './nb/profile.json';
 import publicationNb from './nb/publication.json';
-import referenceTypesNb from './nb/referenceTypes.json';
+import publicationTypesNb from './nb/publicationTypes.json';
 import translationsNb from './nb/translations.json';
 import workListsNb from './nb/workLists.json';
 
@@ -39,7 +39,7 @@ i18n.use(LanguageDetector).init({
       feedback: feedbackEn,
       profile: profileEn,
       publication: publicationEn,
-      referenceTypes: referenceTypesEn,
+      publicationTypes: publicationTypesEn,
       translations: translationsEn,
       workLists: workListsEn,
     },
@@ -52,7 +52,7 @@ i18n.use(LanguageDetector).init({
       feedback: feedbackNb,
       profile: profileNb,
       publication: publicationNb,
-      referenceTypes: referenceTypesNb,
+      publicationTypes: publicationTypesNb,
       translations: translationsNb,
       workLists: workListsNb,
     },

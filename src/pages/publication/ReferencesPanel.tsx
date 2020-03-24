@@ -84,7 +84,7 @@ const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, savePubl
       {publicationType && (
         <StyledBox>
           <Card>
-            <Heading data-testid="reference_type-heading">{t(`referenceTypes:${publicationType}`)}</Heading>
+            <Heading data-testid="publication_type-heading">{t(`publicationTypes:${publicationType}`)}</Heading>
             {publicationType === ReferenceType.BOOK && <BookReferenceForm />}
             {publicationType === ReferenceType.CHAPTER && <ChapterReferenceForm />}
             {publicationType === ReferenceType.REPORT && <ReportReferenceForm />}
