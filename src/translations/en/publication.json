@@ -65,7 +65,8 @@
     "publishing": "Publish",
     "references": "References",
     "registration": "Register",
-    "summary": "Summary"
+    "summary": "Summary",
+    "validation_errors": "Validation errors"
   },
   "publication": {
     "info_text": "Select the resource you wish to register or publish by uploading a resource or link to a publication.",
