@@ -52,10 +52,6 @@ Parameters:
     Type: String
   AlmaApiUrl:
     Type: String
-  AuthorityRegisterApiUrl:
-    Type: String
-  PublicationChannelApiUrl:
-    Type: String
 
 
 Resources:
@@ -107,6 +103,7 @@ Resources:
 
   FrontendBucket:
     Type: 'AWS::S3::Bucket'
+
 
   FrontendBucketPolicy:
     Type: AWS::S3::BucketPolicy
