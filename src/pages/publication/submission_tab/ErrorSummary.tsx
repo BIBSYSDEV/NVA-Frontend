@@ -17,7 +17,7 @@ const ErrorSummary: FC = () => {
   const { errors }: FormikProps<FormikPublication> = useFormikContext();
   const validationErrors = errors.entityDescription || {};
 
-  const flattendErrors = Object.entries(validationErrors)
+  const flattenedErrors = Object.entries(validationErrors)
     .map(([fieldName, errorMessage]) => {
       if (typeof errorMessage === 'object') {
         return Object.entries(errorMessage).map(([fieldName2, errorMessage2]) => ({
@@ -29,10 +29,10 @@ const ErrorSummary: FC = () => {
     })
     .flat();
 
-  return flattendErrors.length > 0 ? (
+  return flattenedErrors.length > 0 ? (
     <StyledCard>
       <Heading>{t('heading.validation_errors')}</Heading>
-      {flattendErrors.map(({ fieldName, errorMessage }) => (
+      {flattenedErrors.map(({ fieldName, errorMessage }) => (
         <NormalText key={fieldName}>
           <b>{t(`formikValues:entityDescription.${fieldName}`)}: </b>
           {errorMessage}
