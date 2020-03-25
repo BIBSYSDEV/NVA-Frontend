@@ -3,6 +3,7 @@
     "contributors": "Forfattere",
     "mainTitle": "Tittel",
     "peerReview": "Fagfellevurdert",
+    "publicationContext": "Utgiver",
     "publicationSubtype": "Publikasjonssubtype",
     "publicationType": "Publikasjonstype",
     "publisher": "Utgiver"

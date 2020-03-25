@@ -3,6 +3,7 @@
     "contributors": "Contributors",
     "mainTitle": "Title",
     "peerReview": "Peer review",
+    "publicationContext": "Publisher",
     "publicationSubtype": "Publication subtype",
     "publicationType": "Publication type",
     "publisher": "Publisher"
