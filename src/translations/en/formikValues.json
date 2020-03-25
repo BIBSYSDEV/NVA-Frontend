@@ -5,7 +5,6 @@
     "peerReview": "Peer review",
     "publicationContext": "Publisher",
     "publicationSubtype": "Publication subtype",
-    "publicationType": "Publication type",
-    "publisher": "Publisher"
+    "publicationType": "Publication type"
   }
 }
