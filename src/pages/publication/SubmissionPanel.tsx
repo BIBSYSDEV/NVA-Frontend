@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import TabPanel from '../../components/TabPanel/TabPanel';
@@ -14,7 +14,7 @@ import SubmissionJournalPublication from './submission_tab/submission_journal';
 import SubmissionDescription from './submission_tab/submission_description';
 import SubmissionFilesAndLicenses from './submission_tab/submission_files_licenses';
 import SubmissionContributors from './submission_tab/submission_contributors';
-import { PublicationType } from '../../types/publicationFieldNames';
+import { PublicationType, PublicationFieldNames, DescriptionFieldNames } from '../../types/publicationFieldNames';
 import Heading from '../../components/Heading';
 import SubHeading from '../../components/SubHeading';
 import Card from '../../components/Card';
@@ -36,8 +36,17 @@ interface SubmissionPanelProps {
 
 const SubmissionPanel: React.FC<SubmissionPanelProps> = ({ savePublication }) => {
   const { t } = useTranslation('publication');
-  const { errors, values, setFieldValue }: FormikProps<FormikPublication> = useFormikContext();
+  const { errors, setFieldTouched, setFieldValue, values }: FormikProps<FormikPublication> = useFormikContext();
   const history = useHistory();
+
+  const setAllFieldsTouched = useCallback(() => {
+    Object.values(DescriptionFieldNames).forEach((fieldName) => setFieldTouched(fieldName));
+    Object.values(PublicationFieldNames).forEach((fieldName) => setFieldTouched(fieldName));
+  }, [setFieldTouched]);
+
+  useEffect(() => {
+    setAllFieldsTouched();
+  }, [setAllFieldsTouched]);
 
   const publishPublication = () => {
     savePublication();
