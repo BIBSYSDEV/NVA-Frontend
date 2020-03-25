@@ -50,6 +50,13 @@ Parameters:
     Type: String
   OrcidBaseUrl:
     Type: String
+  AlmaApiUrl:
+    Type: String
+  AuthorityRegisterApiUrl:
+    Type: String
+  PublicationChannelApiUrl:
+    Type: String
+
 
 Resources:
   DeploymentLayer:
@@ -96,7 +103,9 @@ Resources:
           REPLACE_REACT_APP_ORCID_CLIENT_SECRET: !Ref OrcidClientSecret
           REPLACE_REACT_APP_ORCID_REDIRECT_URI: !Ref OrcidRedirectUri
           REPLACE_REACT_APP_ORCID_BASE_URL: !Ref OrcidBaseUrl
-
+          REPLACE_ALMA_API_URL: !Ref AlmaApiUrl
+          REPLACE_AUTHORITY_REGISTER_API_URL: !Ref AuthorityRegisterApiUrl
+          REPLACE_PUBLICATION_CHANNEL_API_URL: !Ref  PublicationChannelApiUrl
   FrontendBucket:
     Type: 'AWS::S3::Bucket'
 
