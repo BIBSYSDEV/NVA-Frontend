@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import ClearIcon from '@material-ui/icons/Clear';
 import { useTranslation } from 'react-i18next';
 import { FormikPublication } from '../../../../types/publication.types';
-import { PublicationFieldNames } from '../../../../types/references.types';
+import { PublicationFieldNames } from '../../../../types/publicationFieldNames';
 import ConfirmDialog from '../../../../components/ConfirmDialog';
 
 const StyledClearIcon = styled(ClearIcon)`

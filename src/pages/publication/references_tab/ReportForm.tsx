@@ -5,8 +5,8 @@ import styled from 'styled-components';
 
 import { TextField } from '@material-ui/core';
 
-import { FormikPublication } from '../../../types/publication.types';
-import { emptyPublisher, PublicationFieldNames, ReportType } from '../../../types/references.types';
+import { FormikPublication, emptyPublisher } from '../../../types/publication.types';
+import { PublicationFieldNames, ReportType } from '../../../types/publicationFieldNames';
 import { PublicationTableNumber } from '../../../utils/constants';
 import PublicationChannelSearch from './components/PublicationChannelSearch';
 import PublisherRow from './components/PublisherRow';
@@ -69,7 +69,7 @@ const ReportForm: FC = () => {
               dataTestId="autosearch-series"
               label={t('common:title')}
               publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
-              setValueFunction={inputValue => setFieldValue(name, inputValue ?? emptyPublisher)}
+              setValueFunction={(inputValue) => setFieldValue(name, inputValue ?? emptyPublisher)}
               placeholder={t('references.search_for_series')}
             />
             {value.title && (

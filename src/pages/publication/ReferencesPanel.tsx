@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 import TabPanel from '../../components/TabPanel/TabPanel';
 import { FormikPublication } from '../../types/publication.types';
-import { PublicationType, PublicationFieldNames } from '../../types/references.types';
+import { PublicationType, PublicationFieldNames } from '../../types/publicationFieldNames';
 import BookForm from './references_tab/BookForm';
 import ChapterForm from './references_tab/ChapterForm';
 import DegreeForm from './references_tab/DegreeForm';
@@ -35,7 +35,7 @@ const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, savePubl
 
   // Validation messages won't show on fields that are not touched
   const setAllFieldsTouched = useCallback(() => {
-    Object.values(PublicationFieldNames).forEach(fieldName => setFieldTouched(fieldName));
+    Object.values(PublicationFieldNames).forEach((fieldName) => setFieldTouched(fieldName));
   }, [setFieldTouched]);
 
   useEffect(() => {

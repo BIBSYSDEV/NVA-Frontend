@@ -1,5 +1,11 @@
 import * as Yup from 'yup';
-import { PublicationType, JournalArticleType, BookType, DegreeType, ReportType } from '../../types/references.types';
+import {
+  PublicationType,
+  JournalArticleType,
+  BookType,
+  DegreeType,
+  ReportType,
+} from '../../types/publicationFieldNames';
 import { LanguageCodes } from '../../types/language.types';
 import i18n from '../../translations/i18n';
 

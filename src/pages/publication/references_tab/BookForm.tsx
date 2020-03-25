@@ -5,8 +5,8 @@ import styled from 'styled-components';
 
 import { Checkbox, FormControlLabel, TextField } from '@material-ui/core';
 
-import { FormikPublication } from '../../../types/publication.types';
-import { PublicationFieldNames, BookType, emptyPublisher } from '../../../types/references.types';
+import { FormikPublication, emptyPublisher } from '../../../types/publication.types';
+import { PublicationFieldNames, BookType } from '../../../types/publicationFieldNames';
 import { PublicationTableNumber } from '../../../utils/constants';
 import NviValidation from './components/NviValidation';
 import PeerReview from './components/PeerReview';
@@ -108,7 +108,7 @@ const BookForm: FC = () => {
               clearSearchField={value === emptyPublisher}
               label={t('common:title')}
               publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
-              setValueFunction={inputValue => setFieldValue(name, inputValue ?? emptyPublisher)}
+              setValueFunction={(inputValue) => setFieldValue(name, inputValue ?? emptyPublisher)}
               placeholder={t('references.search_for_series')}
             />
             {value.title && (

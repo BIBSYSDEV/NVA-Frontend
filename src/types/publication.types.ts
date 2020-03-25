@@ -2,15 +2,7 @@ import { Contributor } from './contributor.types';
 import { File } from './file.types';
 import { LanguageCodes } from './language.types';
 import { Project } from './project.types';
-import {
-  PublicationType,
-  JournalArticleType,
-  emptyPublisher,
-  Publisher,
-  ReportType,
-  DegreeType,
-  BookType,
-} from './references.types';
+import { PublicationType, JournalArticleType, ReportType, DegreeType, BookType } from './publicationFieldNames';
 
 export enum PublicationStatus {
   DRAFT = 'draft',
@@ -31,6 +23,22 @@ export interface PublicationMetadata {
   titles: TitleType;
   type: PublicationType;
 }
+
+export interface Publisher {
+  title: string;
+  printIssn: string;
+  onlineIssn: string;
+  level: number | null;
+  openAccess: boolean;
+}
+
+export const emptyPublisher: Publisher = {
+  printIssn: '',
+  onlineIssn: '',
+  level: null,
+  title: '',
+  openAccess: false,
+};
 
 export interface AlmaPublication {
   title: string;

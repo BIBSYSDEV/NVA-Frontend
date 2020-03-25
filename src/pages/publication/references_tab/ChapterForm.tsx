@@ -5,7 +5,7 @@ import { TextField } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
 import styled from 'styled-components';
 import RemoveIcon from '@material-ui/icons/Remove';
-import { PublicationFieldNames } from '../../../types/references.types';
+import { PublicationFieldNames } from '../../../types/publicationFieldNames';
 import { AutoSearch } from '../../../components/AutoSearch';
 import NviValidation from './components/NviValidation';
 import DoiField from './components/DoiField';

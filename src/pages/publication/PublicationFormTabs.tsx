@@ -6,7 +6,7 @@ import { Tabs } from '@material-ui/core';
 
 import LinkTab from '../../components/TabPanel/LinkTab';
 import { FormikPublication } from '../../types/publication.types';
-import { PublicationFieldNames, DescriptionFieldNames } from '../../types/references.types';
+import { PublicationFieldNames, DescriptionFieldNames } from '../../types/publicationFieldNames';
 
 const a11yProps = (tabDescription: string) => {
   return {
@@ -59,7 +59,7 @@ const hasTouchedError = (
     return false;
   }
 
-  return fieldNames.some(fieldName => {
+  return fieldNames.some((fieldName) => {
     const fieldHasError = !!getIn(errors, fieldName);
     const fieldIsTouched = getIn(touched, fieldName);
     return fieldHasError && fieldIsTouched;

@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { TextField } from '@material-ui/core';
 
 import { FormikPublication } from '../../../types/publication.types';
-import { PublicationFieldNames, JournalArticleType } from '../../../types/references.types';
+import { PublicationFieldNames, JournalArticleType } from '../../../types/publicationFieldNames';
 import { PublicationTableNumber } from '../../../utils/constants';
 import NviValidation from './components/NviValidation';
 import PeerReview from './components/PeerReview';

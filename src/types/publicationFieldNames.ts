@@ -1,19 +1,3 @@
-export interface Publisher {
-  title: string;
-  printIssn: string;
-  onlineIssn: string;
-  level: number | null;
-  openAccess: boolean;
-}
-
-export const emptyPublisher: Publisher = {
-  printIssn: '',
-  onlineIssn: '',
-  level: null,
-  title: '',
-  openAccess: false,
-};
-
 // For valid values, see https://github.com/BIBSYSDEV/nva-datamodel-java/blob/develop/src/main/java/no/unit/nva/model/PublicationType.java
 export enum PublicationType {
   PUBLICATION_IN_JOURNAL = 'JournalArticle',
