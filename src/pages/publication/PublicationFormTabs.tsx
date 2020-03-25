@@ -6,7 +6,7 @@ import { Tabs } from '@material-ui/core';
 
 import LinkTab from '../../components/TabPanel/LinkTab';
 import { FormikPublication } from '../../types/publication.types';
-import { PublicationFieldNames } from '../../types/references.types';
+import { PublicationFieldNames, DescriptionFieldNames } from '../../types/references.types';
 
 const a11yProps = (tabDescription: string) => {
   return {
@@ -16,6 +16,7 @@ const a11yProps = (tabDescription: string) => {
   };
 };
 
+const descriptionFieldNames = Object.values(DescriptionFieldNames);
 const publicationFieldNames = Object.values(PublicationFieldNames);
 
 interface PublicationFormTabsProps {
@@ -35,7 +36,7 @@ export const PublicationFormTabs: FC<PublicationFormTabsProps> = ({ handleTabCha
       <LinkTab
         label={`1. ${t('heading.description')}`}
         {...a11yProps('description')}
-        error={hasTouchedError(errors, touched, publicationFieldNames)}
+        error={hasTouchedError(errors, touched, descriptionFieldNames)}
       />
       <LinkTab
         label={`2. ${t('heading.references')}`}

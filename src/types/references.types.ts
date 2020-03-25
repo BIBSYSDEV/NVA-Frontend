@@ -51,38 +51,31 @@ export enum DegreeType {
 
 // Enums representing name of fields used by Formik
 export enum PublicationFieldNames {
-  ABSTRACT = 'entityDescription.abstract',
-
   ARTICLE_NUMBER = 'entityDescription.reference.publicationInstance.articleNumber',
-  DESCRIPTION = 'entityDescription.description',
-
   DOI = 'entityDescription.reference.doi',
   ISBN = 'entityDescription.isbn',
   ISSUE = 'entityDescription.reference.publicationInstance.issue',
-  LANGUAGE = 'entityDescription.language',
-
-  NPI_SUBJECT_HEADING = 'entityDescription.npiSubjectHeading',
-
   NUMBER_OF_PAGES = 'entityDescription.numberOfPages',
   PAGES_FROM = 'entityDescription.reference.publicationInstance.pages.begin',
   PAGES_TO = 'entityDescription.reference.publicationInstance.pages.end',
   PEER_REVIEW = 'entityDescription.reference.publicationInstance.peerReviewed',
-  PROJECTS = 'entityDescription.projects',
-
-  PUBLICATION_DAY = 'entityDescription.date.day',
-
-  PUBLICATION_MONTH = 'entityDescription.date.month',
-
   PUBLICATION_TYPE = 'entityDescription.publicationType',
-  PUBLICATION_YEAR = 'entityDescription.date.year',
-
   PUBLISHER = 'entityDescription.reference.publicationContext',
   SERIES = 'entityDescription.series',
   SUB_TYPE = 'entityDescription.publicationSubtype',
-  TAGS = 'entityDescription.tags',
-
   TEXT_BOOK = 'entityDescription.textBook',
-  TITLE = 'entityDescription.mainTitle',
-
   VOLUME = 'entityDescription.reference.publicationInstance.volume',
+}
+
+export enum DescriptionFieldNames {
+  ABSTRACT = 'entityDescription.abstract',
+  DESCRIPTION = 'entityDescription.description',
+  LANGUAGE = 'entityDescription.language',
+  NPI_SUBJECT_HEADING = 'entityDescription.npiSubjectHeading',
+  PROJECTS = 'entityDescription.projects',
+  PUBLICATION_DAY = 'entityDescription.date.day',
+  PUBLICATION_MONTH = 'entityDescription.date.month',
+  PUBLICATION_YEAR = 'entityDescription.date.year',
+  TAGS = 'entityDescription.tags',
+  TITLE = 'entityDescription.mainTitle',
 }

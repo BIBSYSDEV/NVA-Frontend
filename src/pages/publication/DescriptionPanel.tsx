@@ -19,7 +19,7 @@ import { orderedLanguages } from '../../types/language.types';
 import Heading from '../../components/Heading';
 import Card from '../../components/Card';
 import { getNpiDiscipline } from '../../utils/npiDisciplines';
-import { PublicationFieldNames } from '../../types/references.types';
+import { DescriptionFieldNames } from '../../types/references.types';
 
 const MultipleFieldWrapper = styled.div`
   display: flex;
@@ -50,7 +50,7 @@ const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublicat
 
   // Validation messages won't show on fields that are not touched
   const setAllFieldsTouched = useCallback(() => {
-    Object.values(PublicationFieldNames).forEach(fieldName => setFieldTouched(fieldName));
+    Object.values(DescriptionFieldNames).forEach(fieldName => setFieldTouched(fieldName));
   }, [setFieldTouched]);
 
   useEffect(() => {
@@ -71,7 +71,7 @@ const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublicat
           <StyledFieldWrapper>
             <Field
               aria-label="title"
-              name={PublicationFieldNames.TITLE}
+              name={DescriptionFieldNames.TITLE}
               label={t('common:title')}
               component={TextField}
               fullWidth
@@ -82,7 +82,7 @@ const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublicat
           <StyledFieldWrapper>
             <Field
               aria-label="abstract"
-              name={PublicationFieldNames.ABSTRACT}
+              name={DescriptionFieldNames.ABSTRACT}
               label={t('description.abstract')}
               component={TextField}
               multiline
@@ -94,7 +94,7 @@ const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublicat
           <StyledFieldWrapper>
             <Field
               aria-label="description"
-              name={PublicationFieldNames.DESCRIPTION}
+              name={DescriptionFieldNames.DESCRIPTION}
               label={t('description.description')}
               component={TextField}
               multiline
@@ -106,7 +106,7 @@ const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublicat
           </StyledFieldWrapper>
           <MultipleFieldWrapper>
             <StyledFieldWrapper>
-              <Field name={PublicationFieldNames.NPI_SUBJECT_HEADING}>
+              <Field name={DescriptionFieldNames.NPI_SUBJECT_HEADING}>
                 {({ field: { name, value } }: FieldProps) => (
                   // TODO: when we have a service for getting npiDisciplines by id this must be updated (only id is stored in backend for now)
                   <DisciplineSearch
@@ -119,7 +119,7 @@ const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublicat
               </Field>
             </StyledFieldWrapper>
             <StyledTagsField>
-              <FieldArray name={PublicationFieldNames.TAGS}>
+              <FieldArray name={DescriptionFieldNames.TAGS}>
                 {({ name, push, remove }: FieldArrayRenderProps) => (
                   <ChipInput
                     value={getIn(values, name)}
@@ -139,15 +139,15 @@ const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublicat
           <MultipleFieldWrapper>
             <StyledFieldWrapper>
               <DatePickerField
-                yearFieldName={PublicationFieldNames.PUBLICATION_YEAR}
-                monthFieldName={PublicationFieldNames.PUBLICATION_MONTH}
-                dayFieldName={PublicationFieldNames.PUBLICATION_DAY}
+                yearFieldName={DescriptionFieldNames.PUBLICATION_YEAR}
+                monthFieldName={DescriptionFieldNames.PUBLICATION_MONTH}
+                dayFieldName={DescriptionFieldNames.PUBLICATION_DAY}
               />
             </StyledFieldWrapper>
 
             <StyledFieldWrapper>
               <Field
-                name={PublicationFieldNames.LANGUAGE}
+                name={DescriptionFieldNames.LANGUAGE}
                 aria-label="language"
                 variant="outlined"
                 fullWidth
@@ -167,7 +167,7 @@ const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublicat
           <StyledFieldHeader>{t('description.project_association')}</StyledFieldHeader>
 
           <StyledFieldWrapper>
-            <FieldArray name={PublicationFieldNames.PROJECTS}>
+            <FieldArray name={DescriptionFieldNames.PROJECTS}>
               {({ name, insert, remove }: FieldArrayRenderProps) => (
                 <>
                   <ProjectSearch
