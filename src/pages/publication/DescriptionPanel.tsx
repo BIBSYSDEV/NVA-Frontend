@@ -15,7 +15,7 @@ import ProjectRow from './description_tab/ProjectRow';
 import DatePickerField from './description_tab/DatePickerField';
 import { Project } from '../../types/project.types';
 import ChipInput from 'material-ui-chip-input';
-import { orderedLanguages } from '../../types/language.types';
+import { publicationLanguages } from '../../types/language.types';
 import Heading from '../../components/Heading';
 import Card from '../../components/Card';
 import { getNpiDiscipline } from '../../utils/npiDisciplines';
@@ -154,9 +154,9 @@ const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublicat
                 component={TextField}
                 select
                 label={t('description.primary_language')}>
-                {orderedLanguages.map((code) => (
-                  <MenuItem value={code} key={code} data-testid={`publication-language-${code}`}>
-                    {t(`languages:${code}`)}
+                {publicationLanguages.map(({ id, value }) => (
+                  <MenuItem value={value} key={id} data-testid={`publication-language-${id}`}>
+                    {t(`languages:${id}`)}
                   </MenuItem>
                 ))}
               </Field>

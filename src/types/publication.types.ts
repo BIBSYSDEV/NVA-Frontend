@@ -1,6 +1,6 @@
 import { Contributor } from './contributor.types';
 import { File } from './file.types';
-import { LanguageCodes } from './language.types';
+import { LanguageValues } from './language.types';
 import { Project } from './project.types';
 import { PublicationType, JournalArticleType, ReportType, DegreeType, BookType } from './publicationFieldNames';
 
@@ -87,7 +87,7 @@ interface PublicationEntityDescription {
     month: string;
     day: string;
   };
-  language: LanguageCodes;
+  language: LanguageValues;
   projects: Project[];
   publicationType: PublicationType | '';
   publicationSubtype: JournalArticleType | ReportType | DegreeType | BookType | '';
@@ -128,7 +128,7 @@ const emptyPublicationEntityDescription: PublicationEntityDescription = {
     month: '',
     day: '',
   },
-  language: LanguageCodes.NORWEGIAN_BOKMAL,
+  language: LanguageValues.NORWEGIAN_BOKMAL,
   projects: [],
   publicationType: '',
   contributors: [],
