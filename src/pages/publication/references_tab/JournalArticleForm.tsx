@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { TextField } from '@material-ui/core';
 
 import { FormikPublication } from '../../../types/publication.types';
-import { PublicationFieldNames, JournalArticleType } from '../../../types/publicationFieldNames';
+import { ReferenceFieldNames, JournalArticleType } from '../../../types/publicationFieldNames';
 import { PublicationTableNumber } from '../../../utils/constants';
 import NviValidation from './components/NviValidation';
 import PeerReview from './components/PeerReview';
@@ -45,44 +45,44 @@ const JournalArticleForm: FC = () => {
 
   return (
     <>
-      <SelectTypeField fieldName={PublicationFieldNames.SUB_TYPE} options={Object.values(JournalArticleType)} />
+      <SelectTypeField fieldName={ReferenceFieldNames.SUB_TYPE} options={Object.values(JournalArticleType)} />
 
       <DoiField />
 
       <PublisherField
-        fieldName={PublicationFieldNames.PUBLISHER}
+        fieldName={ReferenceFieldNames.PUBLISHER}
         publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
         label={t('references.journal')}
         placeholder={t('references.search_for_journal')}
       />
 
       <StyledArticleDetail>
-        <Field name={PublicationFieldNames.VOLUME}>
+        <Field name={ReferenceFieldNames.VOLUME}>
           {({ field }: FieldProps) => <TextField variant="outlined" label={t('references.volume')} {...field} />}
         </Field>
 
-        <Field name={PublicationFieldNames.ISSUE}>
+        <Field name={ReferenceFieldNames.ISSUE}>
           {({ field }: FieldProps) => <TextField variant="outlined" label={t('references.issue')} {...field} />}
         </Field>
 
-        <Field name={PublicationFieldNames.PAGES_FROM}>
+        <Field name={ReferenceFieldNames.PAGES_FROM}>
           {({ field }: FieldProps) => <TextField variant="outlined" label={t('references.pages_from')} {...field} />}
         </Field>
 
-        <Field name={PublicationFieldNames.PAGES_TO}>
+        <Field name={ReferenceFieldNames.PAGES_TO}>
           {({ field }: FieldProps) => <TextField variant="outlined" label={t('references.pages_to')} {...field} />}
         </Field>
 
         <StyledLabel>{t('references.or')}</StyledLabel>
 
-        <Field name={PublicationFieldNames.ARTICLE_NUMBER}>
+        <Field name={ReferenceFieldNames.ARTICLE_NUMBER}>
           {({ field }: FieldProps) => (
             <TextField variant="outlined" label={t('references.article_number')} {...field} />
           )}
         </Field>
       </StyledArticleDetail>
       <StyledPeerReview>
-        <PeerReview fieldName={PublicationFieldNames.PEER_REVIEW} label={t('references.peer_review')} />
+        <PeerReview fieldName={ReferenceFieldNames.PEER_REVIEW} label={t('references.peer_review')} />
       </StyledPeerReview>
       <NviValidation isPeerReviewed={peerReviewed} isRated={isRatedJournal} dataTestId="nvi_journal" />
     </>

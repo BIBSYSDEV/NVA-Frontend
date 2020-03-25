@@ -6,7 +6,7 @@ import { Tabs } from '@material-ui/core';
 
 import LinkTab from '../../components/TabPanel/LinkTab';
 import { FormikPublication } from '../../types/publication.types';
-import { PublicationFieldNames, DescriptionFieldNames } from '../../types/publicationFieldNames';
+import { ReferenceFieldNames, DescriptionFieldNames } from '../../types/publicationFieldNames';
 
 const a11yProps = (tabDescription: string) => {
   return {
@@ -17,7 +17,7 @@ const a11yProps = (tabDescription: string) => {
 };
 
 const descriptionFieldNames = Object.values(DescriptionFieldNames);
-const publicationFieldNames = Object.values(PublicationFieldNames);
+const referenceFieldNames = Object.values(ReferenceFieldNames);
 
 interface PublicationFormTabsProps {
   handleTabChange: (_: React.ChangeEvent<{}>, newValue: number) => void;
@@ -27,9 +27,7 @@ interface PublicationFormTabsProps {
 export const PublicationFormTabs: FC<PublicationFormTabsProps> = ({ handleTabChange, tabNumber }) => {
   const { t } = useTranslation('publication');
   const { errors, touched, values }: FormikProps<FormikPublication> = useFormikContext();
-  const submissionLabel = getIn(values, PublicationFieldNames.DOI)
-    ? t('heading.registration')
-    : t('heading.publishing');
+  const submissionLabel = getIn(values, ReferenceFieldNames.DOI) ? t('heading.registration') : t('heading.publishing');
 
   return (
     <Tabs variant="fullWidth" value={tabNumber} onChange={handleTabChange} aria-label="navigation" textColor="primary">
@@ -41,7 +39,7 @@ export const PublicationFormTabs: FC<PublicationFormTabsProps> = ({ handleTabCha
       <LinkTab
         label={`2. ${t('heading.references')}`}
         {...a11yProps('references')}
-        error={hasTouchedError(errors, touched, publicationFieldNames)}
+        error={hasTouchedError(errors, touched, referenceFieldNames)}
       />
       <LinkTab label={`3. ${t('heading.contributors')}`} {...a11yProps('contributors')} error={false} />
       <LinkTab label={`4. ${t('heading.files_and_license')}`} {...a11yProps('files-and-license')} />

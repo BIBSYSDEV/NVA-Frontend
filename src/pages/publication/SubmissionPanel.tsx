@@ -14,7 +14,7 @@ import SubmissionJournalPublication from './submission_tab/submission_journal';
 import SubmissionDescription from './submission_tab/submission_description';
 import SubmissionFilesAndLicenses from './submission_tab/submission_files_licenses';
 import SubmissionContributors from './submission_tab/submission_contributors';
-import { PublicationType, PublicationFieldNames, DescriptionFieldNames } from '../../types/publicationFieldNames';
+import { PublicationType, ReferenceFieldNames, DescriptionFieldNames } from '../../types/publicationFieldNames';
 import Heading from '../../components/Heading';
 import SubHeading from '../../components/SubHeading';
 import Card from '../../components/Card';
@@ -41,7 +41,7 @@ const SubmissionPanel: React.FC<SubmissionPanelProps> = ({ savePublication }) =>
 
   const setAllFieldsTouched = useCallback(() => {
     Object.values(DescriptionFieldNames).forEach((fieldName) => setFieldTouched(fieldName));
-    Object.values(PublicationFieldNames).forEach((fieldName) => setFieldTouched(fieldName));
+    Object.values(ReferenceFieldNames).forEach((fieldName) => setFieldTouched(fieldName));
   }, [setFieldTouched]);
 
   useEffect(() => {

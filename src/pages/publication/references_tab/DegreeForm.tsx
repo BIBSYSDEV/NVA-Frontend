@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
 import { FormikPublication, emptyPublisher } from '../../../types/publication.types';
-import { PublicationFieldNames, DegreeType } from '../../../types/publicationFieldNames';
+import { ReferenceFieldNames, DegreeType } from '../../../types/publicationFieldNames';
 import { PublicationTableNumber } from '../../../utils/constants';
 import PublicationChannelSearch from './components/PublicationChannelSearch';
 import PublisherRow from './components/PublisherRow';
@@ -30,19 +30,19 @@ const DegreeForm: React.FC = () => {
 
   return (
     <>
-      <SelectTypeField fieldName={PublicationFieldNames.SUB_TYPE} options={Object.values(DegreeType)} />
+      <SelectTypeField fieldName={ReferenceFieldNames.SUB_TYPE} options={Object.values(DegreeType)} />
 
       <DoiField />
 
       <PublisherField
-        fieldName={PublicationFieldNames.PUBLISHER}
+        fieldName={ReferenceFieldNames.PUBLISHER}
         label={t('common:publisher')}
         placeholder={t('references.search_for_publisher')}
       />
 
       <StyledHeading>{t('references.series')}</StyledHeading>
       <StyledLabel>{t('references.series_info')}</StyledLabel>
-      <Field name={PublicationFieldNames.SERIES}>
+      <Field name={ReferenceFieldNames.SERIES}>
         {({ field: { name, value } }: FieldProps) => (
           <>
             <PublicationChannelSearch

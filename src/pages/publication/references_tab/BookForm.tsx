@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { Checkbox, FormControlLabel, TextField } from '@material-ui/core';
 
 import { FormikPublication, emptyPublisher } from '../../../types/publication.types';
-import { PublicationFieldNames, BookType } from '../../../types/publicationFieldNames';
+import { ReferenceFieldNames, BookType } from '../../../types/publicationFieldNames';
 import { PublicationTableNumber } from '../../../utils/constants';
 import NviValidation from './components/NviValidation';
 import PeerReview from './components/PeerReview';
@@ -48,27 +48,27 @@ const BookForm: FC = () => {
 
   return (
     <>
-      <SelectTypeField fieldName={PublicationFieldNames.SUB_TYPE} options={Object.values(BookType)} />
+      <SelectTypeField fieldName={ReferenceFieldNames.SUB_TYPE} options={Object.values(BookType)} />
 
       <DoiField />
 
       <PublisherField
-        fieldName={PublicationFieldNames.PUBLISHER}
+        fieldName={ReferenceFieldNames.PUBLISHER}
         label={t('common:publisher')}
         placeholder={t('references.search_for_publisher')}
       />
 
-      <Field name={PublicationFieldNames.ISBN}>
+      <Field name={ReferenceFieldNames.ISBN}>
         {({ field }: FieldProps) => (
           <TextField data-testid="isbn" variant="outlined" label={t('references.isbn')} {...field} />
         )}
       </Field>
       <StyledSection>
         <StyledPeerReview>
-          <PeerReview fieldName={PublicationFieldNames.PEER_REVIEW} label={t('references.peer_review')} />
+          <PeerReview fieldName={ReferenceFieldNames.PEER_REVIEW} label={t('references.peer_review')} />
         </StyledPeerReview>
         <StyledTextBook>
-          <Field name={PublicationFieldNames.TEXT_BOOK}>
+          <Field name={ReferenceFieldNames.TEXT_BOOK}>
             {({ field: { name, value } }: FieldProps) => (
               <>
                 <Label>{t('references.is_text_book')}</Label>
@@ -88,7 +88,7 @@ const BookForm: FC = () => {
           </Field>
         </StyledTextBook>
       </StyledSection>
-      <Field name={PublicationFieldNames.NUMBER_OF_PAGES}>
+      <Field name={ReferenceFieldNames.NUMBER_OF_PAGES}>
         {({ field }: FieldProps) => (
           <TextField
             data-testid="number_of_pages"
@@ -100,7 +100,7 @@ const BookForm: FC = () => {
       </Field>
       <SubHeading>{t('references.series')}</SubHeading>
       <Label>{t('references.series_info')}</Label>
-      <Field name={PublicationFieldNames.SERIES}>
+      <Field name={ReferenceFieldNames.SERIES}>
         {({ field: { name, value } }: FieldProps) => (
           <>
             <PublicationChannelSearch
