@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 import { PublicationType, JournalArticleType, BookType, DegreeType, ReportType } from '../../types/references.types';
-import { LanguageCodes } from '../../types/language.types';
+import { LanguageValues } from '../../types/language.types';
 import i18n from '../../translations/i18n';
 
 export const publicationValidationSchema = Yup.object().shape({
@@ -15,7 +15,7 @@ export const publicationValidationSchema = Yup.object().shape({
       month: Yup.string(),
       day: Yup.string(),
     }),
-    language: Yup.string().oneOf(Object.values(LanguageCodes)),
+    language: Yup.string().url().oneOf(Object.values(LanguageValues)),
     projects: Yup.array().of(Yup.object()), // TODO
     publicationType: Yup.string()
       .oneOf(Object.values(PublicationType))
