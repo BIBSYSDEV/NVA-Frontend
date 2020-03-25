@@ -29,7 +29,6 @@ import translationsNb from './nb/translations.json';
 import workListsNb from './nb/workLists.json';
 
 export const defaultLanguage = LanguageCodes.NORWEGIAN_BOKMAL;
-console.log(defaultLanguage);
 
 i18n.use(LanguageDetector).init({
   resources: {

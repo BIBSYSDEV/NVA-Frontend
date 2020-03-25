@@ -74,7 +74,7 @@ const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublicat
     setAllFieldsTouched();
     savePublication();
   };
-  console.log(values);
+
   return (
     <TabPanel ariaLabel="description" goToNextTab={goToNextTab} onClickSave={validateAndSave}>
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
