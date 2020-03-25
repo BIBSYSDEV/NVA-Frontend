@@ -65,7 +65,8 @@
     "publishing": "Publiser",
     "references": "Referanser",
     "registration": "Registrer",
-    "summary": "Oppsummering"
+    "summary": "Oppsummering",
+    "validation_errors": "Valideringsfeil"
   },
   "publication": {
     "info_text": "Velg ressursen du ønsker å registrere eller publisere ved å laste opp ressurs eller lenke til en publikasjon.",
