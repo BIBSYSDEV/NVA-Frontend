@@ -20,15 +20,10 @@ import SubHeading from '../../components/SubHeading';
 import Card from '../../components/Card';
 import { useHistory } from 'react-router';
 import LabelContentRow from '../../components/LabelContentRow';
-import NormalText from '../../components/NormalText';
+import ErrorSummary from './submission_tab/ErrorSummary';
 
 const StyledPublishButton = styled(Button)`
   margin-top: 0.5rem;
-`;
-
-const StyledCard = styled(Card)`
-  border: 3px solid ${({ theme }) => theme.palette.danger.main};
-  background-color: ${({ theme }) => theme.palette.danger.light};
 `;
 
 enum PublishSettingFieldName {
@@ -50,22 +45,11 @@ const SubmissionPanel: React.FC<SubmissionPanelProps> = ({ savePublication }) =>
   };
 
   const { publicationType, reference } = values.entityDescription;
-
   const validationErrors = errors.entityDescription;
 
   return (
     <TabPanel ariaLabel="submission">
-      {validationErrors && (
-        <StyledCard>
-          <Heading>{t('heading.validation_errors')}</Heading>
-          {Object.entries(validationErrors).map(([key, value]) => (
-            <NormalText key={key}>
-              <b>{t(`formikValues:entityDescription.${key}`)}: </b>
-              {value}
-            </NormalText>
-          ))}
-        </StyledCard>
-      )}
+      <ErrorSummary />
       <Card>
         <Heading>{t('heading.summary')}</Heading>
         <Card>
