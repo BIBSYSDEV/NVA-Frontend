@@ -1,9 +1,9 @@
 {
   "entityDescription": {
-    "contributors": "Contributors",
-    "mainTitle": "Title",
-    "peerReview": "Peer review",
-    "publicationContext": "Publisher",
+    "contributors": "$t(publication:contributors.authors)",
+    "mainTitle": "$t(common:title)",
+    "peerReview": "$t(publication:references.peer_reviewed)",
+    "publicationContext": "$t(common:publisher)",
     "publicationSubtype": "Publication subtype",
     "publicationType": "Publication type"
   }
