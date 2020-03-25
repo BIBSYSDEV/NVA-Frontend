@@ -15,7 +15,7 @@ export const emptyPublisher: Publisher = {
 };
 
 // For valid values, see https://github.com/BIBSYSDEV/nva-datamodel-java/blob/develop/src/main/java/no/unit/nva/model/PublicationType.java
-export enum ReferenceType {
+export enum PublicationType {
   PUBLICATION_IN_JOURNAL = 'JournalArticle',
   BOOK = 'Book',
   REPORT = 'Report',
@@ -52,25 +52,25 @@ export enum DegreeType {
 // Enums representing name of fields used by Formik
 export enum ReferenceFieldNames {
   PUBLICATION_TYPE = 'entityDescription.publicationType',
-  DOI = 'entityDescription.doiUrl',
+  DOI = 'entityDescription.reference.doi',
 }
 
 export enum JournalArticleFieldNames {
   SUB_TYPE = 'entityDescription.publicationSubtype',
-  PUBLISHER = 'entityDescription.publisher',
-  VOLUME = 'entityDescription.volume',
-  ISSUE = 'entityDescription.issue',
-  PAGES_FROM = 'entityDescription.pagesFrom',
-  PAGES_TO = 'entityDescription.pagesTo',
-  ARTICLE_NUMBER = 'entityDescription.articleNumber',
-  PEER_REVIEW = 'entityDescription.peerReview',
+  PUBLISHER = 'entityDescription.reference.publicationContext',
+  VOLUME = 'entityDescription.reference.publicationInstance.volume',
+  ISSUE = 'entityDescription.reference.publicationInstance.issue',
+  PAGES_FROM = 'entityDescription.reference.publicationInstance.pages.begin',
+  PAGES_TO = 'entityDescription.reference.publicationInstance.pages.end',
+  ARTICLE_NUMBER = 'entityDescription.reference.publicationInstance.articleNumber',
+  PEER_REVIEW = 'entityDescription.reference.publicationInstance.peerReviewed',
 }
 
 export enum BookFieldNames {
   SUB_TYPE = 'entityDescription.publicationSubtype',
-  PUBLISHER = 'entityDescription.publisher',
+  PUBLISHER = 'entityDescription.reference.publicationContext',
   ISBN = 'entityDescription.isbn',
-  PEER_REVIEW = 'entityDescription.peerReview',
+  PEER_REVIEW = 'entityDescription.reference.publicationInstance.peerReviewed',
   TEXT_BOOK = 'entityDescription.textBook',
   NUMBER_OF_PAGES = 'entityDescription.numberOfPages',
   SERIES = 'entityDescription.series',
@@ -78,7 +78,7 @@ export enum BookFieldNames {
 
 export enum ReportFieldNames {
   SUB_TYPE = 'entityDescription.publicationSubtype',
-  PUBLISHER = 'entityDescription.publisher',
+  PUBLISHER = 'entityDescription.reference.publicationContext',
   ISBN = 'entityDescription.isbn',
   NUMBER_OF_PAGES = 'entityDescription.numberOfPages',
   SERIES = 'entityDescription.series',
@@ -86,13 +86,13 @@ export enum ReportFieldNames {
 
 export enum DegreeFieldNames {
   SUB_TYPE = 'entityDescription.publicationSubtype',
-  PUBLISHER = 'entityDescription.publisher',
+  PUBLISHER = 'entityDescription.reference.publicationContext',
   SPECIALISATION = 'entityDescription.numberOfPages',
   SERIES = 'entityDescription.series',
 }
 
 export enum ChapterFieldNames {
-  PUBLISHER = 'entityDescription.publisher',
-  PAGES_FROM = 'entityDescription.pagesFrom',
-  PAGES_TO = 'entityDescription.pagesTo',
+  PUBLISHER = 'entityDescription.reference.publicationContext',
+  PAGES_FROM = 'entityDescription.reference.publicationInstance.pages.begin',
+  PAGES_TO = 'entityDescription.reference.publicationInstance.pages.end',
 }

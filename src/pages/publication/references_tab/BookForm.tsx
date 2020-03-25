@@ -36,12 +36,15 @@ const StyledTextBook = styled.div`
   grid-area: text-book;
 `;
 
-const BookReferenceForm: FC = () => {
+const BookForm: FC = () => {
   const { t } = useTranslation('publication');
   const { setFieldValue, values }: FormikProps<FormikPublication> = useFormikContext();
 
-  const isRatedBook = values.entityDescription.publisher?.level;
-  const isPeerReviewed = values.entityDescription.peerReview;
+  const {
+    publicationContext,
+    publicationInstance: { peerReviewed },
+  } = values.entityDescription.reference;
+  const isRatedBook = !!publicationContext?.level;
 
   return (
     <>
@@ -119,9 +122,9 @@ const BookReferenceForm: FC = () => {
           </>
         )}
       </Field>
-      <NviValidation isPeerReviewed={!!isPeerReviewed} isRated={!!isRatedBook} dataTestId="nvi_book" />
+      <NviValidation isPeerReviewed={peerReviewed} isRated={isRatedBook} dataTestId="nvi_book" />
     </>
   );
 };
 
-export default BookReferenceForm;
+export default BookForm;

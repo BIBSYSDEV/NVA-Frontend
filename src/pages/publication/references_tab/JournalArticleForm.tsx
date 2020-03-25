@@ -33,12 +33,15 @@ const StyledPeerReview = styled.div`
   background-color: ${({ theme }) => theme.palette.background.default};
 `;
 
-const JournalArticleReferenceForm: FC = () => {
+const JournalArticleForm: FC = () => {
   const { t } = useTranslation('publication');
   const { values }: FormikProps<FormikPublication> = useFormikContext();
 
-  const isRatedJournal = values.entityDescription.publisher?.level;
-  const isPeerReviewed = values.entityDescription.peerReview;
+  const {
+    publicationContext,
+    publicationInstance: { peerReviewed },
+  } = values.entityDescription.reference;
+  const isRatedJournal = !!publicationContext?.level;
 
   return (
     <>
@@ -81,9 +84,9 @@ const JournalArticleReferenceForm: FC = () => {
       <StyledPeerReview>
         <PeerReview fieldName={JournalArticleFieldNames.PEER_REVIEW} label={t('references.peer_review')} />
       </StyledPeerReview>
-      <NviValidation isPeerReviewed={!!isPeerReviewed} isRated={!!isRatedJournal} dataTestId="nvi_journal" />
+      <NviValidation isPeerReviewed={peerReviewed} isRated={isRatedJournal} dataTestId="nvi_journal" />
     </>
   );
 };
 
-export default JournalArticleReferenceForm;
+export default JournalArticleForm;

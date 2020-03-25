@@ -3,7 +3,7 @@ import { File } from './file.types';
 import { LanguageCodes } from './language.types';
 import { Project } from './project.types';
 import {
-  ReferenceType,
+  PublicationType,
   JournalArticleType,
   emptyPublisher,
   Publisher,
@@ -11,11 +11,6 @@ import {
   DegreeType,
   BookType,
 } from './references.types';
-
-export enum PublicationType {
-  TEXT = 'text',
-  FILE = 'file',
-}
 
 export enum PublicationStatus {
   DRAFT = 'draft',
@@ -86,22 +81,28 @@ interface PublicationEntityDescription {
   };
   language: LanguageCodes;
   projects: Project[];
-  publicationType: ReferenceType | '';
+  publicationType: PublicationType | '';
   publicationSubtype: JournalArticleType | ReportType | DegreeType | BookType | '';
   contributors: Contributor[];
-  doiUrl: string;
-  publisher: Publisher | null;
-  volume: string;
-  issue: string;
-  pagesFrom: string;
-  pagesTo: string;
-  peerReview: boolean;
-  articleNumber: string;
   isbn: string;
   numberOfPages: string;
   series: Publisher;
   specialization: string;
   textBook: boolean;
+  reference: {
+    doi: string;
+    publicationInstance: {
+      volume: string;
+      issue: string;
+      articleNumber: string;
+      peerReviewed: boolean;
+      pages: {
+        begin: string;
+        end: string;
+      };
+    };
+    publicationContext: Publisher | null;
+  };
 }
 
 export interface FormikPublication extends Publication {
@@ -123,20 +124,26 @@ const emptyPublicationEntityDescription: PublicationEntityDescription = {
   projects: [],
   publicationType: '',
   contributors: [],
-  doiUrl: '',
   publicationSubtype: '',
-  publisher: null,
-  volume: '',
-  issue: '',
-  pagesFrom: '',
-  pagesTo: '',
-  peerReview: false,
-  articleNumber: '',
   isbn: '',
   numberOfPages: '',
   series: emptyPublisher,
   specialization: '',
   textBook: false,
+  reference: {
+    doi: '',
+    publicationInstance: {
+      volume: '',
+      issue: '',
+      articleNumber: '',
+      peerReviewed: false,
+      pages: {
+        begin: '',
+        end: '',
+      },
+    },
+    publicationContext: null,
+  },
 };
 
 export type PublicationPreview = Pick<
@@ -145,7 +152,7 @@ export type PublicationPreview = Pick<
 >;
 export type PublishedPublicationPreview = Pick<
   Publication & PublicationEntityDescription,
-  'identifier' | 'mainTitle' | 'date' | 'publisher' | 'contributors' | 'status' | 'publicationType'
+  'identifier' | 'mainTitle' | 'date' | 'reference' | 'contributors' | 'status' | 'publicationType'
 >;
 
 export interface Doi {

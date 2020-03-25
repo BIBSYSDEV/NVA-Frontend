@@ -14,7 +14,7 @@ import SubmissionJournalPublication from './submission_tab/submission_journal';
 import SubmissionDescription from './submission_tab/submission_description';
 import SubmissionFilesAndLicenses from './submission_tab/submission_files_licenses';
 import SubmissionContributors from './submission_tab/submission_contributors';
-import { ReferenceType } from '../../types/references.types';
+import { PublicationType } from '../../types/references.types';
 import Heading from '../../components/Heading';
 import SubHeading from '../../components/SubHeading';
 import Card from '../../components/Card';
@@ -49,7 +49,7 @@ const SubmissionPanel: React.FC<SubmissionPanelProps> = ({ savePublication }) =>
     history.push(`/publication/${values.identifier}/public`);
   };
 
-  const { publicationType, doiUrl } = values.entityDescription;
+  const { publicationType, reference } = values.entityDescription;
 
   const validationErrors = errors.entityDescription;
 
@@ -75,20 +75,20 @@ const SubmissionPanel: React.FC<SubmissionPanelProps> = ({ savePublication }) =>
         <Card>
           <SubHeading>{t('heading.references')}</SubHeading>
           <LabelContentRow label={t('common:type')}>
-            {publicationType && t(`referenceTypes:${publicationType}`)}
+            {publicationType && t(`publicationTypes:${publicationType}`)}
           </LabelContentRow>
-          {doiUrl && (
+          {reference.doi && (
             <LabelContentRow label={t('publication.link_to_publication')}>
-              <Link href={doiUrl} target="_blank" rel="noopener noreferrer">
-                {doiUrl}
+              <Link href={reference.doi} target="_blank" rel="noopener noreferrer">
+                {reference.doi}
               </Link>
             </LabelContentRow>
           )}
-          {publicationType === ReferenceType.BOOK && <SubmissionBook />}
-          {publicationType === ReferenceType.DEGREE && <SubmissionDegree />}
-          {publicationType === ReferenceType.CHAPTER && <SubmissionChapter />}
-          {publicationType === ReferenceType.REPORT && <SubmissionReport />}
-          {publicationType === ReferenceType.PUBLICATION_IN_JOURNAL && <SubmissionJournalPublication />}
+          {publicationType === PublicationType.BOOK && <SubmissionBook />}
+          {publicationType === PublicationType.DEGREE && <SubmissionDegree />}
+          {publicationType === PublicationType.CHAPTER && <SubmissionChapter />}
+          {publicationType === PublicationType.REPORT && <SubmissionReport />}
+          {publicationType === PublicationType.PUBLICATION_IN_JOURNAL && <SubmissionJournalPublication />}
         </Card>
         <Card>
           <SubHeading>{t('heading.contributors')}</SubHeading>
