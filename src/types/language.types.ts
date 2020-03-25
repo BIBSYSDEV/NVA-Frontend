@@ -1,5 +1,3 @@
-import { EnumDictionary } from './common.types';
-
 export enum LanguageCodes {
   NORWEGIAN_BOKMAL = 'nb',
   NORWEGIAN_NYNORSK = 'nn',
@@ -19,21 +17,13 @@ export enum LanguageCodes {
   OTHER = 'xx',
 }
 
-export enum PageLanguageCodes {
-  NORWEGIAN_BOKMAL = 'nb-NO',
-  ENGLISH = 'en-US',
-}
-
-export const pageLanguages: EnumDictionary<string, string> = {
-  [PageLanguageCodes.NORWEGIAN_BOKMAL]: 'Norsk (bokmål)',
-  [PageLanguageCodes.ENGLISH]: 'English',
-};
-
 export enum LanguageValues {
   NORWEGIAN_BOKMAL = 'http://lexvo.org/id/iso639-3/nob',
   NORWEGIAN_NYNORSK = 'http://lexvo.org/id/iso639-3/nno',
   ENGLISH = 'http://lexvo.org/id/iso639-3/eng',
 }
+
+export const pageLanguages = [LanguageCodes.NORWEGIAN_BOKMAL, LanguageCodes.ENGLISH];
 
 export const publicationLanguages = [
   { id: LanguageCodes.ENGLISH, value: LanguageValues.ENGLISH },
