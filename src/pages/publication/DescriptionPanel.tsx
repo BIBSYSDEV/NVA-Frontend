@@ -19,6 +19,7 @@ import { orderedLanguages } from '../../types/language.types';
 import Heading from '../../components/Heading';
 import Card from '../../components/Card';
 import { getNpiDiscipline } from '../../utils/npiDisciplines';
+import { PublicationFieldNames } from '../../types/references.types';
 
 const MultipleFieldWrapper = styled.div`
   display: flex;
@@ -38,19 +39,6 @@ const StyledFieldHeader = styled.header`
   font-size: 1.5rem;
 `;
 
-export enum DescriptionFieldNames {
-  TITLE = 'entityDescription.mainTitle',
-  ABSTRACT = 'entityDescription.abstract',
-  DESCRIPTION = 'entityDescription.description',
-  NPI_SUBJECT_HEADING = 'entityDescription.npiSubjectHeading',
-  TAGS = 'entityDescription.tags',
-  PUBLICATION_YEAR = 'entityDescription.date.year',
-  PUBLICATION_MONTH = 'entityDescription.date.month',
-  PUBLICATION_DAY = 'entityDescription.date.day',
-  LANGUAGE = 'entityDescription.language',
-  PROJECTS = 'entityDescription.projects',
-}
-
 interface DescriptionPanelProps {
   goToNextTab: (event: React.MouseEvent<any>) => void;
   savePublication: () => void;
@@ -62,7 +50,7 @@ const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublicat
 
   // Validation messages won't show on fields that are not touched
   const setAllFieldsTouched = useCallback(() => {
-    Object.values(DescriptionFieldNames).forEach((fieldName) => setFieldTouched(fieldName));
+    Object.values(PublicationFieldNames).forEach(fieldName => setFieldTouched(fieldName));
   }, [setFieldTouched]);
 
   useEffect(() => {
@@ -83,7 +71,7 @@ const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublicat
           <StyledFieldWrapper>
             <Field
               aria-label="title"
-              name={DescriptionFieldNames.TITLE}
+              name={PublicationFieldNames.TITLE}
               label={t('common:title')}
               component={TextField}
               fullWidth
@@ -94,7 +82,7 @@ const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublicat
           <StyledFieldWrapper>
             <Field
               aria-label="abstract"
-              name={DescriptionFieldNames.ABSTRACT}
+              name={PublicationFieldNames.ABSTRACT}
               label={t('description.abstract')}
               component={TextField}
               multiline
@@ -106,7 +94,7 @@ const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublicat
           <StyledFieldWrapper>
             <Field
               aria-label="description"
-              name={DescriptionFieldNames.DESCRIPTION}
+              name={PublicationFieldNames.DESCRIPTION}
               label={t('description.description')}
               component={TextField}
               multiline
@@ -118,11 +106,11 @@ const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublicat
           </StyledFieldWrapper>
           <MultipleFieldWrapper>
             <StyledFieldWrapper>
-              <Field name={DescriptionFieldNames.NPI_SUBJECT_HEADING}>
+              <Field name={PublicationFieldNames.NPI_SUBJECT_HEADING}>
                 {({ field: { name, value } }: FieldProps) => (
                   // TODO: when we have a service for getting npiDisciplines by id this must be updated (only id is stored in backend for now)
                   <DisciplineSearch
-                    setValueFunction={(npiDiscipline) => setFieldValue(name, npiDiscipline?.id ?? '')}
+                    setValueFunction={npiDiscipline => setFieldValue(name, npiDiscipline?.id ?? '')}
                     dataTestId="search_npi"
                     value={getNpiDiscipline(value).name}
                     placeholder={t('description.search_for_npi_discipline')}
@@ -131,11 +119,11 @@ const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublicat
               </Field>
             </StyledFieldWrapper>
             <StyledTagsField>
-              <FieldArray name={DescriptionFieldNames.TAGS}>
+              <FieldArray name={PublicationFieldNames.TAGS}>
                 {({ name, push, remove }: FieldArrayRenderProps) => (
                   <ChipInput
                     value={getIn(values, name)}
-                    onAdd={(tag) => push(tag)}
+                    onAdd={tag => push(tag)}
                     onDelete={(_, index) => remove(index)}
                     aria-label="tags"
                     label={t('description.tags')}
@@ -151,22 +139,22 @@ const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublicat
           <MultipleFieldWrapper>
             <StyledFieldWrapper>
               <DatePickerField
-                yearFieldName={DescriptionFieldNames.PUBLICATION_YEAR}
-                monthFieldName={DescriptionFieldNames.PUBLICATION_MONTH}
-                dayFieldName={DescriptionFieldNames.PUBLICATION_DAY}
+                yearFieldName={PublicationFieldNames.PUBLICATION_YEAR}
+                monthFieldName={PublicationFieldNames.PUBLICATION_MONTH}
+                dayFieldName={PublicationFieldNames.PUBLICATION_DAY}
               />
             </StyledFieldWrapper>
 
             <StyledFieldWrapper>
               <Field
-                name={DescriptionFieldNames.LANGUAGE}
+                name={PublicationFieldNames.LANGUAGE}
                 aria-label="language"
                 variant="outlined"
                 fullWidth
                 component={TextField}
                 select
                 label={t('description.primary_language')}>
-                {orderedLanguages.map((code) => (
+                {orderedLanguages.map(code => (
                   <MenuItem value={code} key={code} data-testid={`publication-language-${code}`}>
                     {t(`languages:${code}`)}
                   </MenuItem>
@@ -179,11 +167,11 @@ const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublicat
           <StyledFieldHeader>{t('description.project_association')}</StyledFieldHeader>
 
           <StyledFieldWrapper>
-            <FieldArray name={DescriptionFieldNames.PROJECTS}>
+            <FieldArray name={PublicationFieldNames.PROJECTS}>
               {({ name, insert, remove }: FieldArrayRenderProps) => (
                 <>
                   <ProjectSearch
-                    setValueFunction={(newValue) => insert(0, newValue)}
+                    setValueFunction={newValue => insert(0, newValue)}
                     dataTestId="search_project"
                     placeholder={t('description.search_for_project')}
                   />

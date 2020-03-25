@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
 import { FormikPublication } from '../../../types/publication.types';
-import { emptyPublisher, DegreeFieldNames, DegreeType } from '../../../types/references.types';
+import { emptyPublisher, PublicationFieldNames, DegreeType } from '../../../types/references.types';
 import { PublicationTableNumber } from '../../../utils/constants';
 import PublicationChannelSearch from './components/PublicationChannelSearch';
 import PublisherRow from './components/PublisherRow';
@@ -30,19 +30,19 @@ const DegreeForm: React.FC = () => {
 
   return (
     <>
-      <SelectTypeField fieldName={DegreeFieldNames.SUB_TYPE} options={Object.values(DegreeType)} />
+      <SelectTypeField fieldName={PublicationFieldNames.SUB_TYPE} options={Object.values(DegreeType)} />
 
       <DoiField />
 
       <PublisherField
-        fieldName={DegreeFieldNames.PUBLISHER}
+        fieldName={PublicationFieldNames.PUBLISHER}
         label={t('common:publisher')}
         placeholder={t('references.search_for_publisher')}
       />
 
       <StyledHeading>{t('references.series')}</StyledHeading>
       <StyledLabel>{t('references.series_info')}</StyledLabel>
-      <Field name={DegreeFieldNames.SERIES}>
+      <Field name={PublicationFieldNames.SERIES}>
         {({ field: { name, value } }: FieldProps) => (
           <>
             <PublicationChannelSearch
@@ -50,7 +50,7 @@ const DegreeForm: React.FC = () => {
               dataTestId="autosearch-series"
               label={t('common:title')}
               publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
-              setValueFunction={(inputValue) => setFieldValue(name, inputValue ?? emptyPublisher)}
+              setValueFunction={inputValue => setFieldValue(name, inputValue ?? emptyPublisher)}
               placeholder={t('references.search_for_series')}
             />
             {value.title && (

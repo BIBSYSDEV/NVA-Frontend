@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { Checkbox, FormControlLabel, TextField } from '@material-ui/core';
 
 import { FormikPublication } from '../../../types/publication.types';
-import { BookFieldNames, BookType, emptyPublisher } from '../../../types/references.types';
+import { PublicationFieldNames, BookType, emptyPublisher } from '../../../types/references.types';
 import { PublicationTableNumber } from '../../../utils/constants';
 import NviValidation from './components/NviValidation';
 import PeerReview from './components/PeerReview';
@@ -48,27 +48,27 @@ const BookForm: FC = () => {
 
   return (
     <>
-      <SelectTypeField fieldName={BookFieldNames.SUB_TYPE} options={Object.values(BookType)} />
+      <SelectTypeField fieldName={PublicationFieldNames.SUB_TYPE} options={Object.values(BookType)} />
 
       <DoiField />
 
       <PublisherField
-        fieldName={BookFieldNames.PUBLISHER}
+        fieldName={PublicationFieldNames.PUBLISHER}
         label={t('common:publisher')}
         placeholder={t('references.search_for_publisher')}
       />
 
-      <Field name={BookFieldNames.ISBN}>
+      <Field name={PublicationFieldNames.ISBN}>
         {({ field }: FieldProps) => (
           <TextField data-testid="isbn" variant="outlined" label={t('references.isbn')} {...field} />
         )}
       </Field>
       <StyledSection>
         <StyledPeerReview>
-          <PeerReview fieldName={BookFieldNames.PEER_REVIEW} label={t('references.peer_review')} />
+          <PeerReview fieldName={PublicationFieldNames.PEER_REVIEW} label={t('references.peer_review')} />
         </StyledPeerReview>
         <StyledTextBook>
-          <Field name={BookFieldNames.TEXT_BOOK}>
+          <Field name={PublicationFieldNames.TEXT_BOOK}>
             {({ field: { name, value } }: FieldProps) => (
               <>
                 <Label>{t('references.is_text_book')}</Label>
@@ -88,7 +88,7 @@ const BookForm: FC = () => {
           </Field>
         </StyledTextBook>
       </StyledSection>
-      <Field name={BookFieldNames.NUMBER_OF_PAGES}>
+      <Field name={PublicationFieldNames.NUMBER_OF_PAGES}>
         {({ field }: FieldProps) => (
           <TextField
             data-testid="number_of_pages"
@@ -100,7 +100,7 @@ const BookForm: FC = () => {
       </Field>
       <SubHeading>{t('references.series')}</SubHeading>
       <Label>{t('references.series_info')}</Label>
-      <Field name={BookFieldNames.SERIES}>
+      <Field name={PublicationFieldNames.SERIES}>
         {({ field: { name, value } }: FieldProps) => (
           <>
             <PublicationChannelSearch
@@ -108,7 +108,7 @@ const BookForm: FC = () => {
               clearSearchField={value === emptyPublisher}
               label={t('common:title')}
               publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
-              setValueFunction={(inputValue) => setFieldValue(name, inputValue ?? emptyPublisher)}
+              setValueFunction={inputValue => setFieldValue(name, inputValue ?? emptyPublisher)}
               placeholder={t('references.search_for_series')}
             />
             {value.title && (

@@ -58,12 +58,25 @@ const SubmissionPanel: React.FC<SubmissionPanelProps> = ({ savePublication }) =>
       {validationErrors && (
         <StyledCard>
           <Heading>{t('heading.validation_errors')}</Heading>
-          {Object.entries(validationErrors).map(([key, value]) => (
-            <NormalText key={key}>
-              <b>{t(`formikValues:entityDescription.${key}`)}: </b>
-              {value}
-            </NormalText>
-          ))}
+          {Object.entries(validationErrors).map(([key, value]) => {
+            if (value instanceof Object) {
+              return Object.entries(value).map(([key, value]) => {
+                return (
+                  <NormalText key={key}>
+                    <b>{t(`formikValues:entityDescription.${key}`)}: </b>
+                    {value}
+                  </NormalText>
+                );
+              });
+            } else {
+              return (
+                <NormalText key={key}>
+                  <b>{t(`formikValues:entityDescription.${key}`)}: </b>
+                  {value}
+                </NormalText>
+              );
+            }
+          })}
         </StyledCard>
       )}
       <Card>

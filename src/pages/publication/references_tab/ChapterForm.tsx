@@ -5,7 +5,7 @@ import { TextField } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
 import styled from 'styled-components';
 import RemoveIcon from '@material-ui/icons/Remove';
-import { ChapterFieldNames } from '../../../types/references.types';
+import { PublicationFieldNames } from '../../../types/references.types';
 import { AutoSearch } from '../../../components/AutoSearch';
 import NviValidation from './components/NviValidation';
 import DoiField from './components/DoiField';
@@ -66,7 +66,7 @@ const ChapterForm: React.FC = () => {
       </Field>
 
       <StyledPageNumberWrapper>
-        <Field name={ChapterFieldNames.PAGES_FROM}>
+        <Field name={PublicationFieldNames.PAGES_FROM}>
           {({ field }: FieldProps) => (
             <StyledPageNumberField
               variant="outlined"
@@ -79,7 +79,7 @@ const ChapterForm: React.FC = () => {
         <StyledDashIconWrapper>
           <RemoveIcon />
         </StyledDashIconWrapper>
-        <Field name={ChapterFieldNames.PAGES_TO}>
+        <Field name={PublicationFieldNames.PAGES_TO}>
           {({ field }: FieldProps) => (
             <StyledPageNumberField
               data-testid="chapter-pages-to"

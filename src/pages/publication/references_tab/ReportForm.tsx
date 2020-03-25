@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { TextField } from '@material-ui/core';
 
 import { FormikPublication } from '../../../types/publication.types';
-import { emptyPublisher, ReportFieldNames, ReportType } from '../../../types/references.types';
+import { emptyPublisher, PublicationFieldNames, ReportType } from '../../../types/references.types';
 import { PublicationTableNumber } from '../../../utils/constants';
 import PublicationChannelSearch from './components/PublicationChannelSearch';
 import PublisherRow from './components/PublisherRow';
@@ -32,23 +32,23 @@ const ReportForm: FC = () => {
 
   return (
     <>
-      <SelectTypeField fieldName={ReportFieldNames.SUB_TYPE} options={Object.values(ReportType)} />
+      <SelectTypeField fieldName={PublicationFieldNames.SUB_TYPE} options={Object.values(ReportType)} />
 
       <DoiField />
 
       <PublisherField
-        fieldName={ReportFieldNames.PUBLISHER}
+        fieldName={PublicationFieldNames.PUBLISHER}
         label={t('common:publisher')}
         placeholder={t('references.search_for_publisher')}
       />
 
-      <Field name={ReportFieldNames.ISBN}>
+      <Field name={PublicationFieldNames.ISBN}>
         {({ field }: FieldProps) => (
           <TextField data-testid="isbn" variant="outlined" label={t('references.isbn')} {...field} />
         )}
       </Field>
       <div>
-        <Field name={ReportFieldNames.NUMBER_OF_PAGES}>
+        <Field name={PublicationFieldNames.NUMBER_OF_PAGES}>
           {({ field }: FieldProps) => (
             <TextField
               data-testid="number_of_pages"
@@ -61,7 +61,7 @@ const ReportForm: FC = () => {
       </div>
       <StyledHeading>{t('references.series')}</StyledHeading>
       <StyledLabel>{t('references.series_info')}</StyledLabel>
-      <Field name={ReportFieldNames.SERIES}>
+      <Field name={PublicationFieldNames.SERIES}>
         {({ field: { name, value } }: FieldProps) => (
           <>
             <PublicationChannelSearch
@@ -69,7 +69,7 @@ const ReportForm: FC = () => {
               dataTestId="autosearch-series"
               label={t('common:title')}
               publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
-              setValueFunction={(inputValue) => setFieldValue(name, inputValue ?? emptyPublisher)}
+              setValueFunction={inputValue => setFieldValue(name, inputValue ?? emptyPublisher)}
               placeholder={t('references.search_for_series')}
             />
             {value.title && (

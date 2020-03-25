@@ -50,49 +50,39 @@ export enum DegreeType {
 }
 
 // Enums representing name of fields used by Formik
-export enum ReferenceFieldNames {
-  PUBLICATION_TYPE = 'entityDescription.publicationType',
-  DOI = 'entityDescription.reference.doi',
-}
+export enum PublicationFieldNames {
+  ABSTRACT = 'entityDescription.abstract',
 
-export enum JournalArticleFieldNames {
-  SUB_TYPE = 'entityDescription.publicationSubtype',
-  PUBLISHER = 'entityDescription.reference.publicationContext',
-  VOLUME = 'entityDescription.reference.publicationInstance.volume',
-  ISSUE = 'entityDescription.reference.publicationInstance.issue',
-  PAGES_FROM = 'entityDescription.reference.publicationInstance.pages.begin',
-  PAGES_TO = 'entityDescription.reference.publicationInstance.pages.end',
   ARTICLE_NUMBER = 'entityDescription.reference.publicationInstance.articleNumber',
-  PEER_REVIEW = 'entityDescription.reference.publicationInstance.peerReviewed',
-}
+  DESCRIPTION = 'entityDescription.description',
 
-export enum BookFieldNames {
-  SUB_TYPE = 'entityDescription.publicationSubtype',
-  PUBLISHER = 'entityDescription.reference.publicationContext',
+  DOI = 'entityDescription.reference.doi',
   ISBN = 'entityDescription.isbn',
-  PEER_REVIEW = 'entityDescription.reference.publicationInstance.peerReviewed',
-  TEXT_BOOK = 'entityDescription.textBook',
+  ISSUE = 'entityDescription.reference.publicationInstance.issue',
+  LANGUAGE = 'entityDescription.language',
+
+  NPI_SUBJECT_HEADING = 'entityDescription.npiSubjectHeading',
+
   NUMBER_OF_PAGES = 'entityDescription.numberOfPages',
-  SERIES = 'entityDescription.series',
-}
-
-export enum ReportFieldNames {
-  SUB_TYPE = 'entityDescription.publicationSubtype',
-  PUBLISHER = 'entityDescription.reference.publicationContext',
-  ISBN = 'entityDescription.isbn',
-  NUMBER_OF_PAGES = 'entityDescription.numberOfPages',
-  SERIES = 'entityDescription.series',
-}
-
-export enum DegreeFieldNames {
-  SUB_TYPE = 'entityDescription.publicationSubtype',
-  PUBLISHER = 'entityDescription.reference.publicationContext',
-  SPECIALISATION = 'entityDescription.numberOfPages',
-  SERIES = 'entityDescription.series',
-}
-
-export enum ChapterFieldNames {
-  PUBLISHER = 'entityDescription.reference.publicationContext',
   PAGES_FROM = 'entityDescription.reference.publicationInstance.pages.begin',
   PAGES_TO = 'entityDescription.reference.publicationInstance.pages.end',
+  PEER_REVIEW = 'entityDescription.reference.publicationInstance.peerReviewed',
+  PROJECTS = 'entityDescription.projects',
+
+  PUBLICATION_DAY = 'entityDescription.date.day',
+
+  PUBLICATION_MONTH = 'entityDescription.date.month',
+
+  PUBLICATION_TYPE = 'entityDescription.publicationType',
+  PUBLICATION_YEAR = 'entityDescription.date.year',
+
+  PUBLISHER = 'entityDescription.reference.publicationContext',
+  SERIES = 'entityDescription.series',
+  SUB_TYPE = 'entityDescription.publicationSubtype',
+  TAGS = 'entityDescription.tags',
+
+  TEXT_BOOK = 'entityDescription.textBook',
+  TITLE = 'entityDescription.mainTitle',
+
+  VOLUME = 'entityDescription.reference.publicationInstance.volume',
 }
