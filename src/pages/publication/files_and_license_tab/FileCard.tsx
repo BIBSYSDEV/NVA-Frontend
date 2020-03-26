@@ -145,6 +145,7 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, updateFile, toggl
                         embargoDate: value,
                       })
                     }
+                    disablePast
                     value={file.embargoDate}
                     autoOk
                     format={'dd.MM.yyyy'}

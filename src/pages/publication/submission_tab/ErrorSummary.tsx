@@ -27,7 +27,7 @@ const ErrorSummary: FC = () => {
       <Heading>{t('heading.validation_errors')}</Heading>
       {flattenedErrors.map(({ fieldName, errorMessage }) => (
         <NormalText key={fieldName}>
-          <b>{t(`formikValues:entityDescription.${fieldName}`)}: </b>
+          <b>{t(`formikValues:${fieldName}`)}: </b>
           {errorMessage}
         </NormalText>
       ))}
