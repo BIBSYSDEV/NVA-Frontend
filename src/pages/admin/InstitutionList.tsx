@@ -9,9 +9,9 @@ import { Link as RouterLink } from 'react-router-dom';
 import { CustomerInstitution } from '../../types/customerInstitution.types';
 
 const StyledTableRow = styled(TableRow)`
-  background-color: ${props => props.theme.palette.box.main};
+  background-color: ${(props) => props.theme.palette.box.main};
   :nth-child(odd) {
-    background-color: ${props => props.theme.palette.background.default};
+    background-color: ${(props) => props.theme.palette.background.default};
   }
 `;
 
@@ -48,7 +48,7 @@ const InstitutionList: FC<InstitutionListProps> = ({ institutions }) => {
         </TableRow>
       </TableHead>
       <TableBody>
-        {institutions.map(institution => (
+        {institutions.map((institution) => (
           <StyledTableRow key={institution.id}>
             <TableCell component="th" scope="row">
               <NormalText>{institution.name}</NormalText>
@@ -60,7 +60,7 @@ const InstitutionList: FC<InstitutionListProps> = ({ institutions }) => {
               <NormalText>{institution.contact}</NormalText>
             </StyledSmallCell>
             <TableCell>
-              <Button color="primary" component={RouterLink} to="/">
+              <Button color="primary" component={RouterLink} to={`/admin-institutions/${institution.id}`}>
                 <NormalText>{t('edit')}</NormalText>
               </Button>
             </TableCell>

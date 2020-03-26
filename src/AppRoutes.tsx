@@ -30,7 +30,9 @@ const AppRoutes: FC = () => {
         {user.isPublisher && <Route exact path="/my-publications" component={MyPublications} />}
         {user.isCurator && <Route exact path="/worklist" component={WorklistPage} />}
         {user.isAppAdmin && <Route exact path="/admin-institutions" component={AdminCustomerInstitutionsPage} />}
-        {user.isAppAdmin && <Route exact path="/admin-institution" component={AdminCustomerInstitutionPage} />}
+        {user.isAppAdmin && (
+          <Route exact path="/admin-institutions/:identifier" component={AdminCustomerInstitutionPage} />
+        )}
         {user.isInstitutionAdmin && <Route exact path="/admin-institution-users" component={AdminUsersPage} />}
         {user.isLoggedIn && <Route exact path="/public-profile/:userName" component={PublicProfile} />}
         <Route exact path="/search" component={Search} />

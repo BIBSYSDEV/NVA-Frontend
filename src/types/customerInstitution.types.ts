@@ -11,6 +11,7 @@ export interface CustomerInstitution {
   createdDate: string;
   contact: string;
   logoFile?: File;
+  error?: string;
 }
 
 export const emptyCustomerInstitution: CustomerInstitution = {
