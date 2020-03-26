@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 
 import { getPublishers } from '../../../../api/publicationChannelApi';
 import { AutoSearch } from '../../../../components/AutoSearch';
-import { Publisher } from '../../../../types/references.types';
+import { Publisher } from '../../../../types/publication.types';
 import { PublicationTableNumber } from '../../../../utils/constants';
 import { debounce } from '../../../../utils/debounce';
 import { NotificationVariant } from '../../../../types/notification.types';
@@ -49,7 +49,7 @@ const PublicationChannelSearch: FC<PublicationChannelSearchProps> = ({
     <AutoSearch
       clearSearchField={clearSearchField}
       dataTestId={dataTestId}
-      onInputChange={value => search(value)}
+      onInputChange={(value) => search(value)}
       searchResults={searchResults}
       setValueFunction={setValueFunction}
       label={label}

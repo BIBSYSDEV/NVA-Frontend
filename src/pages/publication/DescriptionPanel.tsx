@@ -15,10 +15,11 @@ import ProjectRow from './description_tab/ProjectRow';
 import DatePickerField from './description_tab/DatePickerField';
 import { Project } from '../../types/project.types';
 import ChipInput from 'material-ui-chip-input';
-import { orderedLanguages } from '../../types/language.types';
+import { publicationLanguages } from '../../types/language.types';
 import Heading from '../../components/Heading';
 import Card from '../../components/Card';
 import { getNpiDiscipline } from '../../utils/npiDisciplines';
+import { DescriptionFieldNames } from '../../types/publicationFieldNames';
 
 const MultipleFieldWrapper = styled.div`
   display: flex;
@@ -37,19 +38,6 @@ const StyledFieldHeader = styled.header`
   margin: 1rem;
   font-size: 1.5rem;
 `;
-
-export enum DescriptionFieldNames {
-  TITLE = 'entityDescription.mainTitle',
-  ABSTRACT = 'entityDescription.abstract',
-  DESCRIPTION = 'entityDescription.description',
-  NPI_SUBJECT_HEADING = 'entityDescription.npiSubjectHeading',
-  TAGS = 'entityDescription.tags',
-  PUBLICATION_YEAR = 'entityDescription.date.year',
-  PUBLICATION_MONTH = 'entityDescription.date.month',
-  PUBLICATION_DAY = 'entityDescription.date.day',
-  LANGUAGE = 'entityDescription.language',
-  PROJECTS = 'entityDescription.projects',
-}
 
 interface DescriptionPanelProps {
   goToNextTab: (event: React.MouseEvent<any>) => void;
@@ -166,9 +154,9 @@ const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublicat
                 component={TextField}
                 select
                 label={t('description.primary_language')}>
-                {orderedLanguages.map((code) => (
-                  <MenuItem value={code} key={code} data-testid={`publication-language-${code}`}>
-                    {t(`languages:${code}`)}
+                {publicationLanguages.map(({ id, value }) => (
+                  <MenuItem value={value} key={id} data-testid={`publication-language-${id}`}>
+                    {t(`languages:${id}`)}
                   </MenuItem>
                 ))}
               </Field>
