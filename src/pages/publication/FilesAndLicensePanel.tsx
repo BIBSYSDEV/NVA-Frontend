@@ -59,7 +59,7 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab
       {publicationContext && <PublicationChannelInfoCard publisher={publicationContext} />}
 
       <FieldArray name={FilesFieldNames.FILES}>
-        {({ insert, remove, replace }) => (
+        {({ insert, remove, name }) => (
           <>
             <Card>
               <Heading>{t('files_and_license.upload_files')}</Heading>
@@ -81,8 +81,8 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab
                         uppy.removeFile(file.id);
                         remove(index);
                       }}
-                      updateFile={(newFile) => replace(index, newFile)}
                       toggleLicenseModal={toggleLicenseModal}
+                      baseFieldName={`${name}[${index}]`}
                     />
                   ))}
                 </StyledUploadedFiles>

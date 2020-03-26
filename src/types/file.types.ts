@@ -79,7 +79,7 @@ export interface File {
     type: string;
   };
   administrativeAgreement: boolean;
-  publisherAuthority: boolean | null;
+  publisherAuthority: boolean;
   embargoDate: Date | null;
   license: License | null;
 }
@@ -94,7 +94,7 @@ export const emptyFile: File = {
     type: '',
   },
   administrativeAgreement: false,
-  publisherAuthority: null,
+  publisherAuthority: false,
   embargoDate: null,
   license: null,
 };
