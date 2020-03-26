@@ -53,7 +53,6 @@ Parameters:
   AlmaApiUrl:
     Type: String
 
-
 Resources:
   DeploymentLayer:
     Type: AWS::Serverless::Application
