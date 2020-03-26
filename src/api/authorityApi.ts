@@ -40,33 +40,6 @@ export const getAuthorities = async (name: string, dispatch: Dispatch) => {
   }
 };
 
-export const updateFeideForAuthority = async (feideid: string, systemControlNumber: string) => {
-  if (!feideid) {
-    return;
-  }
-
-  const url = `${AuthorityApiPaths.PERSON}/${systemControlNumber}`;
-  return await updateAuthorityAndHandleErrors(url, { feideid });
-};
-
-export const updateOrcidForAuthority = async (orcid: string, systemControlNumber: string) => {
-  if (!orcid) {
-    return;
-  }
-
-  const url = `${AuthorityApiPaths.PERSON}/${systemControlNumber}`;
-  return await updateAuthorityAndHandleErrors(url, { orcid });
-};
-
-export const updateInstitutionForAuthority = async (orgunitid: string, systemControlNumber: string) => {
-  if (!orgunitid) {
-    return;
-  }
-
-  const url = `${AuthorityApiPaths.PERSON}/${systemControlNumber}`;
-  return await updateAuthorityAndHandleErrors(url, { orgunitid });
-};
-
 export const createAuthority = async (user: User) => {
   const url = AuthorityApiPaths.PERSON;
 
@@ -78,7 +51,18 @@ export const createAuthority = async (user: User) => {
   try {
     const response = await Axios.post(url, { invertedname: `${user.familyName},${user.givenName}` }, { headers });
     if (response.status === StatusCode.OK) {
-      return response.data;
+      // TODO: check with backend why we suddenly get a list with one element as response when creating new authority
+      const systemControlNumber = response.data[0].systemControlNumber;
+      const updatedAuthority = await addQualifierIdForAuthority(
+        systemControlNumber,
+        AuthorityQualifiers.FEIDE_ID,
+        user.id
+      );
+      if (updatedAuthority) {
+        return updatedAuthority;
+      } else {
+        return response.data[0];
+      }
     } else if (response.status === StatusCode.NO_CONTENT) {
       return;
     } else {
@@ -171,30 +155,6 @@ export const removeQualifierIdFromAuthority = async (
   } catch {
     return {
       error: i18n.t('feedback:error.delete_identifier'),
-    };
-  }
-};
-
-const updateAuthorityAndHandleErrors = async (url: string, body: any) => {
-  // remove when Authorization headers are set for all requests
-  const idToken = await getIdToken();
-  const headers = {
-    Authorization: `Bearer ${idToken}`,
-  };
-  try {
-    const response = await Axios.put(url, body, { headers });
-    if (response.status === StatusCode.OK) {
-      return response.data;
-    } else if (response.status === StatusCode.NO_CONTENT) {
-      return;
-    } else {
-      return {
-        error: i18n.t('feedback:error.update_authority'),
-      };
-    }
-  } catch {
-    return {
-      error: i18n.t('feedback:error.update_authority'),
     };
   }
 };
