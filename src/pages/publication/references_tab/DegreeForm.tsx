@@ -3,8 +3,8 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import { FormikPublication } from '../../../types/publication.types';
-import { emptyPublisher, DegreeFieldNames, DegreeType } from '../../../types/references.types';
+import { FormikPublication, emptyPublisher } from '../../../types/publication.types';
+import { ReferenceFieldNames, DegreeType } from '../../../types/publicationFieldNames';
 import { PublicationTableNumber } from '../../../utils/constants';
 import PublicationChannelSearch from './components/PublicationChannelSearch';
 import PublisherRow from './components/PublisherRow';
@@ -30,19 +30,19 @@ const DegreeForm: React.FC = () => {
 
   return (
     <>
-      <SelectTypeField fieldName={DegreeFieldNames.SUB_TYPE} options={Object.values(DegreeType)} />
+      <SelectTypeField fieldName={ReferenceFieldNames.SUB_TYPE} options={Object.values(DegreeType)} />
 
       <DoiField />
 
       <PublisherField
-        fieldName={DegreeFieldNames.PUBLISHER}
+        fieldName={ReferenceFieldNames.PUBLISHER}
         label={t('common:publisher')}
         placeholder={t('references.search_for_publisher')}
       />
 
       <StyledHeading>{t('references.series')}</StyledHeading>
       <StyledLabel>{t('references.series_info')}</StyledLabel>
-      <Field name={DegreeFieldNames.SERIES}>
+      <Field name={ReferenceFieldNames.SERIES}>
         {({ field: { name, value } }: FieldProps) => (
           <>
             <PublicationChannelSearch

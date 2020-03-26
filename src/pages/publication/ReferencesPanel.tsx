@@ -5,15 +5,7 @@ import styled from 'styled-components';
 
 import TabPanel from '../../components/TabPanel/TabPanel';
 import { FormikPublication } from '../../types/publication.types';
-import {
-  BookFieldNames,
-  ChapterFieldNames,
-  DegreeFieldNames,
-  JournalArticleFieldNames,
-  ReferenceFieldNames,
-  ReportFieldNames,
-  PublicationType,
-} from '../../types/references.types';
+import { PublicationType, ReferenceFieldNames } from '../../types/publicationFieldNames';
 import BookForm from './references_tab/BookForm';
 import ChapterForm from './references_tab/ChapterForm';
 import DegreeForm from './references_tab/DegreeForm';
@@ -44,30 +36,10 @@ const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, savePubl
   // Validation messages won't show on fields that are not touched
   const setAllFieldsTouched = useCallback(() => {
     Object.values(ReferenceFieldNames).forEach((fieldName) => setFieldTouched(fieldName));
-
-    switch (publicationType) {
-      case PublicationType.BOOK:
-        Object.values(BookFieldNames).forEach((fieldName) => setFieldTouched(fieldName));
-        break;
-      case PublicationType.PUBLICATION_IN_JOURNAL:
-        Object.values(JournalArticleFieldNames).forEach((fieldName) => setFieldTouched(fieldName));
-        break;
-      case PublicationType.REPORT:
-        Object.values(ReportFieldNames).forEach((fieldName) => setFieldTouched(fieldName));
-        break;
-      case PublicationType.CHAPTER:
-        Object.values(ChapterFieldNames).forEach((fieldName) => setFieldTouched(fieldName));
-        break;
-      case PublicationType.DEGREE:
-        Object.values(DegreeFieldNames).forEach((fieldName) => setFieldTouched(fieldName));
-        break;
-      default:
-        break;
-    }
-  }, [setFieldTouched, publicationType]);
+  }, [setFieldTouched]);
 
   useEffect(() => {
-    // Set all fields as touched if user navigates away from this panel ( on unmount)
+    // Set all fields as touched if user navigates away from this panel (on unmount)
     return () => setAllFieldsTouched();
   }, [setAllFieldsTouched]);
 
@@ -77,7 +49,7 @@ const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, savePubl
         <SelectTypeField
           fieldName={ReferenceFieldNames.PUBLICATION_TYPE}
           options={Object.values(PublicationType)}
-          onChangeExtension={() => setFieldValue(JournalArticleFieldNames.SUB_TYPE, '')}
+          onChangeExtension={() => setFieldValue(ReferenceFieldNames.SUB_TYPE, '')}
         />
       </StyledSelectContainer>
 
