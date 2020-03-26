@@ -7,6 +7,7 @@ import { Tabs } from '@material-ui/core';
 import LinkTab from '../../components/TabPanel/LinkTab';
 import { FormikPublication } from '../../types/publication.types';
 import { ReferenceFieldNames, DescriptionFieldNames } from '../../types/publicationFieldNames';
+import { getAllFileFields } from '../../utils/formik-fields';
 
 const a11yProps = (tabDescription: string) => {
   return {
@@ -42,7 +43,11 @@ export const PublicationFormTabs: FC<PublicationFormTabsProps> = ({ handleTabCha
         error={hasTouchedError(errors, touched, referenceFieldNames)}
       />
       <LinkTab label={`3. ${t('heading.contributors')}`} {...a11yProps('contributors')} error={false} />
-      <LinkTab label={`4. ${t('heading.files_and_license')}`} {...a11yProps('files-and-license')} />
+      <LinkTab
+        label={`4. ${t('heading.files_and_license')}`}
+        {...a11yProps('files-and-license')}
+        error={hasTouchedError(errors, touched, getAllFileFields(values.fileSet.length))}
+      />
       <LinkTab label={`5. ${submissionLabel}`} {...a11yProps('submission')} />
     </Tabs>
   );

@@ -21,6 +21,7 @@ import Card from '../../components/Card';
 import { useHistory } from 'react-router';
 import LabelContentRow from '../../components/LabelContentRow';
 import ErrorSummary from './submission_tab/ErrorSummary';
+import { getAllFileFields } from '../../utils/formik-fields';
 
 const StyledPublishButton = styled(Button)`
   margin-top: 0.5rem;
@@ -42,7 +43,11 @@ const SubmissionPanel: React.FC<SubmissionPanelProps> = ({ savePublication }) =>
   const setAllFieldsTouched = useCallback(() => {
     Object.values(DescriptionFieldNames).forEach((fieldName) => setFieldTouched(fieldName));
     Object.values(ReferenceFieldNames).forEach((fieldName) => setFieldTouched(fieldName));
-  }, [setFieldTouched]);
+
+    // File fields
+    const fileFieldNames = getAllFileFields(values.fileSet.length);
+    fileFieldNames.forEach((fieldName) => setFieldTouched(fieldName));
+  }, [values, setFieldTouched]);
 
   useEffect(() => {
     setAllFieldsTouched();

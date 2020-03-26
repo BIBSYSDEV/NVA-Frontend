@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import TabPanel from '../../components/TabPanel/TabPanel';
 import FileUploader from './files_and_license_tab/FileUploader';
 import FileCard from './files_and_license_tab/FileCard';
 import styled from 'styled-components';
-import { FieldArray, FormikProps, useFormikContext } from 'formik';
+import { FieldArray, FormikProps, useFormikContext, ErrorMessage } from 'formik';
 import { FormikPublication } from '../../types/publication.types';
 import Modal from '../../components/Modal';
 import { licenses, Uppy } from '../../types/file.types';
@@ -13,6 +13,8 @@ import Heading from '../../components/Heading';
 import PublicationChannelInfoCard from './files_and_license_tab/PublicationChannelInfoCard';
 import NormalText from '../../components/NormalText';
 import Label from '../../components/Label';
+import { FormHelperText } from '@material-ui/core';
+import { getAllFileFields } from '../../utils/formik-fields';
 
 const shouldAllowMultipleFiles = true;
 
@@ -40,8 +42,22 @@ interface FilesAndLicensePanelProps {
 
 const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab, uppy }) => {
   const { t } = useTranslation('publication');
-  const { values }: FormikProps<FormikPublication> = useFormikContext();
+  const { values, setFieldTouched }: FormikProps<FormikPublication> = useFormikContext();
   const [isLicenseModalOpen, setIsLicenseModalOpen] = useState(false);
+
+  const valuesRef = useRef(values);
+  useEffect(() => {
+    valuesRef.current = values;
+  }, [values]);
+
+  // Set all fields to touched on unmount
+  useEffect(() => {
+    return () => {
+      // Use valuesRef to avoid trigging this useEffect on every values update
+      const fieldNames = getAllFileFields(valuesRef.current.fileSet.length);
+      fieldNames.forEach((fieldName) => setFieldTouched(fieldName));
+    };
+  }, [setFieldTouched]);
 
   const toggleLicenseModal = () => {
     setIsLicenseModalOpen(!isLicenseModalOpen);
@@ -68,7 +84,13 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab
                 shouldAllowMultipleFiles={shouldAllowMultipleFiles}
                 addFile={(file) => insert(0, file)}
               />
+              {values.fileSet.length === 0 && (
+                <FormHelperText error>
+                  <ErrorMessage name={name} />
+                </FormHelperText>
+              )}
             </Card>
+
             {fileSet.length > 0 && (
               <>
                 <StyledUploadedFiles>
