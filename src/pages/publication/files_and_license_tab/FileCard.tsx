@@ -94,11 +94,11 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, updateFile, toggl
             control={
               <Checkbox
                 color="primary"
-                checked={file.administrativeContract}
+                checked={file.administrativeAgreement}
                 onChange={() =>
                   updateFile({
                     ...file,
-                    administrativeContract: !file.administrativeContract,
+                    administrativeAgreement: !file.administrativeAgreement,
                   })
                 }
               />
@@ -106,27 +106,29 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, updateFile, toggl
             label={t('files_and_license.administrative_contract')}
           />
 
-          {!file.administrativeContract && (
+          {!file.administrativeAgreement && (
             <StyledFileInfo>
               <StyledFormControl>
                 <FormLabel component="legend">{t('files_and_license.select_version')}</FormLabel>
                 <RadioGroup
                   aria-label="version"
-                  value={file.isPublished ? 'published' : 'accepted'}
-                  onChange={event =>
+                  value={file.publisherAuthority ? 'published' : 'accepted'}
+                  onChange={(event) =>
                     updateFile({
                       ...file,
-                      isPublished: event.target.value === 'published',
+                      publisherAuthority: event.target.value === 'published',
                     })
                   }>
                   <FormControlLabel
                     value="accepted"
-                    control={<Radio color="primary" checked={file.isPublished !== null && !file.isPublished} />}
+                    control={
+                      <Radio color="primary" checked={file.publisherAuthority !== null && !file.publisherAuthority} />
+                    }
                     label={t('files_and_license.accepted_version')}
                   />
                   <FormControlLabel
                     value="published"
-                    control={<Radio color="primary" checked={!!file.isPublished} />}
+                    control={<Radio color="primary" checked={!!file.publisherAuthority} />}
                     label={t('files_and_license.published_version')}
                   />
                 </RadioGroup>
@@ -137,7 +139,7 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, updateFile, toggl
                   <KeyboardDatePicker
                     inputVariant="outlined"
                     label={t('files_and_license.embargo_date')}
-                    onChange={value =>
+                    onChange={(value) =>
                       updateFile({
                         ...file,
                         embargoDate: value,
@@ -157,7 +159,7 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, updateFile, toggl
                     fullWidth
                     SelectProps={{
                       renderValue: (option: any) => {
-                        const selectedLicense = licenses.find(license => license.identifier === option);
+                        const selectedLicense = licenses.find((license) => license.identifier === option);
                         return selectedLicense ? (
                           <StyledVerticalAlign>
                             <img src={selectedLicense.image} alt={selectedLicense.identifier} />
@@ -178,7 +180,7 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, updateFile, toggl
                         },
                       })
                     }>
-                    {licenses.map(license => (
+                    {licenses.map((license) => (
                       <MenuItem key={license.identifier} value={license.identifier} divider dense>
                         <ListItemIcon>
                           <img src={license.image} alt={license.identifier} />

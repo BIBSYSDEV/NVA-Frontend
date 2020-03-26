@@ -15,7 +15,7 @@ const StyledCard = styled(Card)`
 const ErrorSummary: FC = () => {
   const { t } = useTranslation('publication');
   const { errors }: FormikProps<FormikPublication> = useFormikContext();
-  const validationErrors = errors.entityDescription || {};
+  const validationErrors = errors.entityDescription || {}; // TODO: include fileSet
 
   const flattenedErrors = Object.entries(validationErrors)
     .map(([fieldName, errorMessage]) => {

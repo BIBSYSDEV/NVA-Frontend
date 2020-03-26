@@ -78,10 +78,10 @@ export interface File {
     lastModified?: number;
     type: string;
   };
-  administrativeContract?: boolean;
-  isPublished?: boolean | null;
-  embargoDate?: Date | null;
-  license?: License | null;
+  administrativeAgreement: boolean;
+  publisherAuthority: boolean | null;
+  embargoDate: Date | null;
+  license: License | null;
 }
 
 export const emptyFile: File = {
@@ -93,8 +93,8 @@ export const emptyFile: File = {
     lastModified: 0,
     type: '',
   },
-  administrativeContract: false,
-  isPublished: null,
+  administrativeAgreement: false,
+  publisherAuthority: null,
   embargoDate: null,
   license: null,
 };

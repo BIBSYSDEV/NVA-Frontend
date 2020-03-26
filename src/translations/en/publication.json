@@ -30,6 +30,7 @@
   "feedback": {
     "invalid_url": "Invalid URL",
     "minimum_one_contributor": "You need to have at least one author registered for this publication",
+    "minimum_one_file": "You need to have at least one file uploaded for this publication",
     "required_field": "Required field"
   },
   "files_and_license": {
