@@ -19,6 +19,7 @@ import { publicationLanguages } from '../../types/language.types';
 import Heading from '../../components/Heading';
 import Card from '../../components/Card';
 import { getNpiDiscipline } from '../../utils/npiDisciplines';
+import { DescriptionFieldNames } from '../../types/publicationFieldNames';
 
 const MultipleFieldWrapper = styled.div`
   display: flex;
@@ -37,19 +38,6 @@ const StyledFieldHeader = styled.header`
   margin: 1rem;
   font-size: 1.5rem;
 `;
-
-export enum DescriptionFieldNames {
-  TITLE = 'entityDescription.mainTitle',
-  ABSTRACT = 'entityDescription.abstract',
-  DESCRIPTION = 'entityDescription.description',
-  NPI_SUBJECT_HEADING = 'entityDescription.npiSubjectHeading',
-  TAGS = 'entityDescription.tags',
-  PUBLICATION_YEAR = 'entityDescription.date.year',
-  PUBLICATION_MONTH = 'entityDescription.date.month',
-  PUBLICATION_DAY = 'entityDescription.date.day',
-  LANGUAGE = 'entityDescription.language',
-  PROJECTS = 'entityDescription.projects',
-}
 
 interface DescriptionPanelProps {
   goToNextTab: (event: React.MouseEvent<any>) => void;

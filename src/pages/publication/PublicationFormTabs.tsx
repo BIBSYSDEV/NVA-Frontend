@@ -6,14 +6,7 @@ import { Tabs } from '@material-ui/core';
 
 import LinkTab from '../../components/TabPanel/LinkTab';
 import { FormikPublication } from '../../types/publication.types';
-import {
-  BookFieldNames,
-  ChapterFieldNames,
-  JournalArticleFieldNames,
-  ReferenceFieldNames,
-  ReportFieldNames,
-} from '../../types/references.types';
-import { DescriptionFieldNames } from './DescriptionPanel';
+import { ReferenceFieldNames, DescriptionFieldNames } from '../../types/publicationFieldNames';
 
 const a11yProps = (tabDescription: string) => {
   return {
@@ -24,13 +17,7 @@ const a11yProps = (tabDescription: string) => {
 };
 
 const descriptionFieldNames = Object.values(DescriptionFieldNames);
-const referenceFieldNames = [
-  ...Object.values(ReferenceFieldNames),
-  ...Object.values(JournalArticleFieldNames),
-  ...Object.values(BookFieldNames),
-  ...Object.values(ChapterFieldNames),
-  ...Object.values(ReportFieldNames),
-];
+const referenceFieldNames = Object.values(ReferenceFieldNames);
 
 interface PublicationFormTabsProps {
   handleTabChange: (_: React.ChangeEvent<{}>, newValue: number) => void;
@@ -70,7 +57,7 @@ const hasTouchedError = (
     return false;
   }
 
-  return fieldNames.some(fieldName => {
+  return fieldNames.some((fieldName) => {
     const fieldHasError = !!getIn(errors, fieldName);
     const fieldIsTouched = getIn(touched, fieldName);
     return fieldHasError && fieldIsTouched;
