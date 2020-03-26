@@ -97,7 +97,7 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, toggleLicenseModa
           <Field name={`${baseFieldName}.${SpecificFileFieldNames.ADMINISTRATIVE_AGREEMENT}`}>
             {({ field }: FieldProps) => (
               <FormControlLabel
-                control={<Checkbox color="primary" {...field} />}
+                control={<Checkbox color="primary" {...field} checked={field.value} />}
                 label={t('files_and_license.administrative_contract')}
               />
             )}
