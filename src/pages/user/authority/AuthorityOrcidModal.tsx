@@ -58,7 +58,7 @@ const AuthorityOrcidModal: FC = () => {
     <>
       <Modal
         dataTestId="connect-author-modal"
-        disableEscape
+        disableEscape={noAuthority}
         openModal={openAuthorityModal}
         onClose={() => setOpenAuthorityModal(false)}
         ariaLabelledBy="connect-author-modal"
