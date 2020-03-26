@@ -5,15 +5,8 @@ import { useTranslation } from 'react-i18next';
 import { Tabs } from '@material-ui/core';
 
 import LinkTab from '../../components/TabPanel/LinkTab';
-import { Publication } from '../../types/publication.types';
-import {
-  BookFieldNames,
-  ChapterFieldNames,
-  JournalArticleFieldNames,
-  ReferenceFieldNames,
-  ReportFieldNames,
-} from '../../types/references.types';
-import { DescriptionFieldNames } from './DescriptionPanel';
+import { FormikPublication } from '../../types/publication.types';
+import { ReferenceFieldNames, DescriptionFieldNames } from '../../types/publicationFieldNames';
 
 const a11yProps = (tabDescription: string) => {
   return {
@@ -24,13 +17,7 @@ const a11yProps = (tabDescription: string) => {
 };
 
 const descriptionFieldNames = Object.values(DescriptionFieldNames);
-const referenceFieldNames = [
-  ...Object.values(ReferenceFieldNames),
-  ...Object.values(JournalArticleFieldNames),
-  ...Object.values(BookFieldNames),
-  ...Object.values(ChapterFieldNames),
-  ...Object.values(ReportFieldNames),
-];
+const referenceFieldNames = Object.values(ReferenceFieldNames);
 
 interface PublicationFormTabsProps {
   handleTabChange: (_: React.ChangeEvent<{}>, newValue: number) => void;
@@ -39,7 +26,8 @@ interface PublicationFormTabsProps {
 
 export const PublicationFormTabs: FC<PublicationFormTabsProps> = ({ handleTabChange, tabNumber }) => {
   const { t } = useTranslation('publication');
-  const { errors, touched }: FormikProps<Publication> = useFormikContext();
+  const { errors, touched, values }: FormikProps<FormikPublication> = useFormikContext();
+  const submissionLabel = getIn(values, ReferenceFieldNames.DOI) ? t('heading.registration') : t('heading.publishing');
 
   return (
     <Tabs variant="fullWidth" value={tabNumber} onChange={handleTabChange} aria-label="navigation" textColor="primary">
@@ -55,21 +43,21 @@ export const PublicationFormTabs: FC<PublicationFormTabsProps> = ({ handleTabCha
       />
       <LinkTab label={`3. ${t('heading.contributors')}`} {...a11yProps('contributors')} error={false} />
       <LinkTab label={`4. ${t('heading.files_and_license')}`} {...a11yProps('files-and-license')} />
-      <LinkTab label={`5. ${t('heading.submission')}`} {...a11yProps('submission')} />
+      <LinkTab label={`5. ${submissionLabel}`} {...a11yProps('submission')} />
     </Tabs>
   );
 };
 
 const hasTouchedError = (
-  errors: FormikErrors<Publication>,
-  touched: FormikTouched<Publication>,
+  errors: FormikErrors<FormikPublication>,
+  touched: FormikTouched<FormikPublication>,
   fieldNames: string[]
 ): boolean => {
   if (!Object.keys(errors).length || !Object.keys(touched).length || !fieldNames.length) {
     return false;
   }
 
-  return fieldNames.some(fieldName => {
+  return fieldNames.some((fieldName) => {
     const fieldHasError = !!getIn(errors, fieldName);
     const fieldIsTouched = getIn(touched, fieldName);
     return fieldHasError && fieldIsTouched;

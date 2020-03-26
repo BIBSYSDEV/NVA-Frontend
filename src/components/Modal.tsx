@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 
-import { Avatar, Backdrop, Dialog, Fade } from '@material-ui/core';
+import { Avatar, Backdrop, Dialog, Fade, DialogTitle } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 
 import Heading from './Heading';
@@ -47,6 +47,10 @@ const StyledInfoContainer = styled.div`
   align-items: center;
 `;
 
+const StyledDialogTitle = styled(DialogTitle)`
+  padding: 0;
+`;
+
 interface ModalProps {
   ariaDescribedBy?: string;
   ariaLabelledBy?: string;
@@ -90,14 +94,16 @@ const Modal: FC<ModalProps> = ({
       }}>
       <StyledWidth />
       <StyledHeaderContainer>
-        {headingIcon ? (
-          <StyledInfoContainer>
-            {headingIcon && <StyledAvatar src={headingIcon.src} alt={headingIcon.alt} />}
-            <Heading>{headingText}</Heading>
-          </StyledInfoContainer>
-        ) : (
-          <StyledHeading>{headingText}</StyledHeading>
-        )}
+        <StyledDialogTitle disableTypography>
+          {headingIcon ? (
+            <StyledInfoContainer>
+              {headingIcon && <StyledAvatar src={headingIcon.src} alt={headingIcon.alt} />}
+              <StyledHeading>{headingText}</StyledHeading>
+            </StyledInfoContainer>
+          ) : (
+            <StyledHeading>{headingText}</StyledHeading>
+          )}
+        </StyledDialogTitle>
         {!disableEscape && <StyledCloseIcon onClick={handleClose} />}
       </StyledHeaderContainer>
 

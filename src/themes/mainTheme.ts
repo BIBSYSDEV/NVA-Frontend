@@ -28,6 +28,8 @@ enum Colors {
   TabBackground = '#f3c19d',
   Disabled = '#bbb',
   Danger = '#ff5555',
+  DangerLight = '#ffbbbb',
+  Success = '#c8e6c9',
 }
 
 export default createMuiTheme({
@@ -51,7 +53,7 @@ export default createMuiTheme({
     box: {
       main: Colors.Box,
     },
-    danger: { main: Colors.Danger },
+    danger: { main: Colors.Danger, light: Colors.DangerLight },
     text: {
       primary: Colors.PrimaryText,
       secondary: Colors.SecondaryText,
@@ -59,6 +61,9 @@ export default createMuiTheme({
     },
     background: {
       default: Colors.Background,
+    },
+    success: {
+      main: Colors.Success,
     },
   },
   typography: {
@@ -69,11 +74,6 @@ export default createMuiTheme({
     MuiButton: {
       root: {
         textTransform: 'none',
-      },
-    },
-    MuiSnackbarContent: {
-      root: {
-        color: Colors.Background,
       },
     },
     MuiLink: {

@@ -12,13 +12,14 @@ import {
   Button,
 } from '@material-ui/core';
 import { Contributor, emptyContributor } from '../../../../types/contributor.types';
-import { Field, FieldProps } from 'formik';
+import { Field, FieldProps, FormikProps, useFormikContext } from 'formik';
 import AddContributor from '../AddContributor';
 import { useTranslation } from 'react-i18next';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 import SubHeading from '../../../../components/SubHeading';
-import { removeDuplicatesByScn } from '../../../../utils/helpers';
+import { ContributorFieldNames } from '../../ContributorsPanel';
+import { FormikPublication } from '../../../../types/publication.types';
 
 interface SortableItemProps {
   contributor: Contributor;
@@ -32,10 +33,10 @@ const SortableItem = SortableElement(({ contributor, placement, onDelete }: Sort
   const index = placement - 1;
 
   return (
-    <TableRow tabIndex={0} key={contributor.systemControlNumber}>
+    <TableRow tabIndex={0} key={contributor.identity.id}>
       <TableCell align="left">
-        <SubHeading>{contributor.name}</SubHeading>
-        <Field name={`contributors[${index}].corresponding`}>
+        <SubHeading>{contributor.identity.name}</SubHeading>
+        <Field name={`${ContributorFieldNames.CONTRIBUTORS}[${index}].corresponding`}>
           {({ field }: FieldProps) => (
             <FormControlLabel
               control={<Checkbox checked={field.value} {...field} />}
@@ -45,7 +46,7 @@ const SortableItem = SortableElement(({ contributor, placement, onDelete }: Sort
         </Field>
         <div>
           {contributor.corresponding && (
-            <Field name={`contributors[${index}].email`}>
+            <Field name={`${ContributorFieldNames.CONTRIBUTORS}[${index}].email`}>
               {({ field }: FieldProps) => <TextField variant="outlined" label={t('common:email')} {...field} />}
             </Field>
           )}
@@ -57,14 +58,12 @@ const SortableItem = SortableElement(({ contributor, placement, onDelete }: Sort
         ))}
       </TableCell>
       <TableCell align="right">
+        <div>{placement}</div>
         <div>
-          <div>{placement}</div>
-          <div>
-            <Button color="secondary" onClick={() => onDelete(index)}>
-              <DeleteIcon />
-              {t('common:remove')}
-            </Button>
-          </div>
+          <Button color="secondary" onClick={() => onDelete(index)}>
+            <DeleteIcon />
+            {t('common:remove')}
+          </Button>
         </div>
       </TableCell>
     </TableRow>
@@ -77,24 +76,21 @@ interface SortableListProps {
   onSortEnd: ({ oldIndex, newIndex }: any) => void;
 }
 
-const SortableList = SortableContainer(({ contributors, onDelete }: SortableListProps) => {
-  const uniqueContributors = removeDuplicatesByScn(contributors);
-  return (
-    <Table>
-      <TableBody>
-        {uniqueContributors.map((contributor: Contributor, index: number) => (
-          <SortableItem
-            index={index}
-            contributor={contributor}
-            key={contributor.systemControlNumber}
-            placement={index + 1}
-            onDelete={onDelete}
-          />
-        ))}
-      </TableBody>
-    </Table>
-  );
-});
+const SortableList = SortableContainer(({ contributors, onDelete }: SortableListProps) => (
+  <Table>
+    <TableBody>
+      {contributors.map((contributor: Contributor, index: number) => (
+        <SortableItem
+          index={index}
+          contributor={contributor}
+          key={contributor.identity.id || contributor.identity.name}
+          placement={index + 1}
+          onDelete={onDelete}
+        />
+      ))}
+    </TableBody>
+  </Table>
+));
 
 interface SortableTableProps {
   listOfContributors: Contributor[];
@@ -103,29 +99,44 @@ interface SortableTableProps {
   swap: (oldIndex: number, newIndex: number) => void;
 }
 
-const SortableTable: FC<SortableTableProps> = ({ listOfContributors, push, remove, swap }) => (
-  <>
-    <SortableList
-      contributors={listOfContributors}
-      onSortEnd={({ oldIndex, newIndex }: any) => swap(oldIndex, newIndex)}
-      onDelete={index => remove(index)}
-      distance={10}
-    />
-    <AddContributor
-      onAuthorSelected={authority => {
-        const contributor: Contributor = {
-          ...emptyContributor,
-          name: authority.name,
-          systemControlNumber: authority.systemControlNumber,
-          institutions: authority.orgunitids.map(orgunit => ({
-            id: orgunit,
-            name: orgunit,
-          })),
-        };
-        push(contributor);
-      }}
-    />
-  </>
-);
+const SortableTable: FC<SortableTableProps> = ({ listOfContributors, push, remove, swap }) => {
+  const { setFieldValue, values }: FormikProps<FormikPublication> = useFormikContext();
+
+  const handleOnSortEnd = ({ oldIndex, newIndex }: any) => {
+    swap(oldIndex, newIndex);
+    for (let index in values.entityDescription.contributors) {
+      setFieldValue(`${ContributorFieldNames.CONTRIBUTORS}[${index}].sequence`, +index);
+    }
+  };
+  return (
+    <>
+      <SortableList
+        contributors={listOfContributors}
+        onSortEnd={handleOnSortEnd}
+        onDelete={index => remove(index)}
+        distance={10}
+      />
+      <AddContributor
+        onAuthorSelected={authority => {
+          const contributor: Contributor = {
+            ...emptyContributor,
+            // TODO: add institution when available from backend
+            // institutions: authority.orgunitids.map(orgunit => ({
+            //   id: orgunit,
+            //   name: orgunit,
+            // })),
+            identity: {
+              ...emptyContributor.identity,
+              id: authority.systemControlNumber,
+              name: authority.name,
+            },
+            sequence: listOfContributors.length,
+          };
+          push(contributor);
+        }}
+      />
+    </>
+  );
+};
 
 export default SortableTable;

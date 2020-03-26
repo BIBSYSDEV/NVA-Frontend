@@ -2,26 +2,27 @@ import LabelContentRow from '../../../components/LabelContentRow';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormikProps, useFormikContext } from 'formik';
-import { Publication } from '../../../types/publication.types';
+import { FormikPublication } from '../../../types/publication.types';
 import SubmissionContentText from './submission_content_text';
 
 const SubmissionContributors: React.FC = () => {
   const { t } = useTranslation('publication');
-  const { values }: FormikProps<Publication> = useFormikContext();
+  const {
+    values: {
+      entityDescription: { contributors },
+    },
+  }: FormikProps<FormikPublication> = useFormikContext();
 
   return (
-    <>
-      <LabelContentRow label={t('heading.contributors')}>
-        {values.contributors.map(contributor => {
-          return (
-            <SubmissionContentText>
-              {contributor.name}
-              {contributor.institutions.map(institution => institution?.name && `(${institution.name})`)}
-            </SubmissionContentText>
-          );
-        })}
-      </LabelContentRow>
-    </>
+    <LabelContentRow label={t('heading.contributors')}>
+      {contributors.map(contributor => (
+        <SubmissionContentText key={contributor.identity.name}>
+          {contributor.identity.name}
+          {/* TODO: update mapping of institutions once we get this from backend */}
+          {contributor.institutions?.map(institution => institution?.name && `(${institution.name})`)}
+        </SubmissionContentText>
+      ))}
+    </LabelContentRow>
   );
 };
 

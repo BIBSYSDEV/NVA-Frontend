@@ -2,23 +2,27 @@ import LabelContentRow from '../../../components/LabelContentRow';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormikProps, useFormikContext } from 'formik';
-import { Publication } from '../../../types/publication.types';
+import { FormikPublication } from '../../../types/publication.types';
 
 const SubmissionDegree: React.FC = () => {
   const { t } = useTranslation('publication');
-  const { values }: FormikProps<Publication> = useFormikContext();
+  const { values }: FormikProps<FormikPublication> = useFormikContext();
+
+  const {
+    publicationSubtype,
+    specialization,
+    series,
+    reference: { publicationContext },
+  } = values.entityDescription;
 
   return (
     <>
-      <LabelContentRow label={t('common:type')}>{t('referenceTypes:degree')}</LabelContentRow>
       <LabelContentRow label={t('references.subtype')}>
-        {values.reference.degree?.type && t(`referenceTypes:subtypes_degree.${values.reference.degree.type}`)}
+        {publicationSubtype && t(`publicationTypes:subtypes_degree.${publicationSubtype}`)}
       </LabelContentRow>
-      <LabelContentRow label={t('common:publisher')}>{values.reference.degree?.publisher?.title}</LabelContentRow>
-      <LabelContentRow label={t('references.specialization')}>
-        {values.reference.degree?.specialization}
-      </LabelContentRow>
-      <LabelContentRow label={t('references.series')}>{values.reference.degree?.series?.title}</LabelContentRow>
+      <LabelContentRow label={t('common:publisher')}>{publicationContext?.title}</LabelContentRow>
+      <LabelContentRow label={t('references.specialization')}>{specialization}</LabelContentRow>
+      <LabelContentRow label={t('references.series')}>{series.title}</LabelContentRow>
     </>
   );
 };

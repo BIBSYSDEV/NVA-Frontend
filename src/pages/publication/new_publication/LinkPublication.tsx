@@ -11,7 +11,8 @@ import LinkPublicationForm from './LinkPublicationForm';
 import PublicationExpansionPanel from './PublicationExpansionPanel';
 import { Doi } from '../../../types/publication.types';
 import { useDispatch } from 'react-redux';
-import { addNotification } from '../../../redux/actions/notificationActions';
+import { setNotification } from '../../../redux/actions/notificationActions';
+import { NotificationVariant } from '../../../types/notification.types';
 
 const StyledBody = styled.div`
   width: 100%;
@@ -45,10 +46,7 @@ const LinkPublicationPanel: FC<LinkPublicationPanelProps> = ({ expanded, onChang
     if (!doi) {
       return;
     }
-    // TODO: Create new publication with DOI
-
-    // TODO: Set created publication id as URL param
-    history.push({ search: `?title=${doi.title}` });
+    history.push(`/publication/${doi.identifier}`);
     openForm();
   };
 
@@ -60,7 +58,7 @@ const LinkPublicationPanel: FC<LinkPublicationPanelProps> = ({ expanded, onChang
     const doiPublication = await getPublicationByDoi(values.doiUrl);
     if (doiPublication?.error) {
       setNoHit(true);
-      dispatch(addNotification(t('feedback:error.get_doi'), 'error'));
+      dispatch(setNotification(t('feedback:error.get_doi'), NotificationVariant.Error));
     } else if (!doiPublication) {
       setNoHit(true);
     } else {
@@ -71,7 +69,7 @@ const LinkPublicationPanel: FC<LinkPublicationPanelProps> = ({ expanded, onChang
 
   return (
     <PublicationExpansionPanel
-      headerLabel={t('publication:publication.link_to_publication')}
+      headerLabel={t('publication:publication.start_with_link_to_publication')}
       icon={<LinkIcon className="icon" />}
       expanded={expanded}
       onChange={onChange}

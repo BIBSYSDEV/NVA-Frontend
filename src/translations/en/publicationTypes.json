@@ -1,0 +1,20 @@
+{
+  "Anthology": "Anthology",
+  "Article": "Article",
+  "Bachelor": "Bachelor",
+  "Book": "Book",
+  "Chapter": "Chapter",
+  "Degree": "Degree",
+  "Doctorate": "Doctorate",
+  "Editorial": "Editorial",
+  "JournalArticle": "Publication in Journal",
+  "Letter": "Letter",
+  "Master": "Master",
+  "Monography": "Monography",
+  "PolicyReport": "Policy report",
+  "Report": "Report",
+  "ResearchReport": "Research report",
+  "Review": "Review",
+  "ShortCommunication": "Short communication",
+  "WorkingPaper": "Working paper"
+}

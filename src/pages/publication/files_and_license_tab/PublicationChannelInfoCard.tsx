@@ -1,5 +1,5 @@
 import React from 'react';
-import { Publisher } from '../../../types/references.types';
+import { Publisher } from '../../../types/publication.types';
 import Card from '../../../components/Card';
 import Heading from '../../../components/Heading';
 import Label from '../../../components/Label';

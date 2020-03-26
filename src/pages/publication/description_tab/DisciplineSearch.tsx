@@ -19,11 +19,12 @@ interface DisciplineType {
 const DisciplineSearch: FC<DisciplineSearchProps> = ({ dataTestId, setValueFunction, value, placeholder }) => {
   const { t } = useTranslation();
 
-  const searchResults = Object.entries(disciplines)
-    .map(([mainDiscipline, subDisciplines]) =>
-      subDisciplines.map(subDiscipline => ({
-        title: t(`disciplines:${subDiscipline}`),
-        mainDiscipline: t(`disciplines:${mainDiscipline}`),
+  const searchResults = disciplines
+    .map(mainDiscipline =>
+      mainDiscipline.subdomains.map(subDiscipline => ({
+        title: t(`disciplines:${subDiscipline.name}`),
+        mainDiscipline: t(`disciplines:${mainDiscipline.subjectArea}`),
+        id: subDiscipline.id,
       }))
     )
     .flat();

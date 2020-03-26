@@ -4,10 +4,11 @@ import { useDispatch } from 'react-redux';
 
 import { getPublishers } from '../../../../api/publicationChannelApi';
 import { AutoSearch } from '../../../../components/AutoSearch';
-import { searchFailure } from '../../../../redux/actions/searchActions';
-import { Publisher } from '../../../../types/references.types';
+import { Publisher } from '../../../../types/publication.types';
 import { PublicationTableNumber } from '../../../../utils/constants';
 import { debounce } from '../../../../utils/debounce';
+import { NotificationVariant } from '../../../../types/notification.types';
+import { setNotification } from '../../../../redux/actions/notificationActions';
 
 interface PublicationChannelSearchProps {
   clearSearchField: boolean;
@@ -16,6 +17,7 @@ interface PublicationChannelSearchProps {
   publicationTable: PublicationTableNumber;
   setValueFunction: (value: any) => void;
   placeholder?: string;
+  errorMessage?: string;
 }
 
 const PublicationChannelSearch: FC<PublicationChannelSearchProps> = ({
@@ -25,6 +27,7 @@ const PublicationChannelSearch: FC<PublicationChannelSearchProps> = ({
   publicationTable,
   setValueFunction,
   placeholder,
+  errorMessage,
 }) => {
   const [searchResults, setSearchResults] = useState<Publisher[]>([]);
   const dispatch = useDispatch();
@@ -36,7 +39,7 @@ const PublicationChannelSearch: FC<PublicationChannelSearchProps> = ({
       if (response) {
         setSearchResults(response.filter((publisher: Publisher) => publisher.title));
       } else {
-        dispatch(searchFailure(t('error.search')));
+        dispatch(setNotification(t('error.search', NotificationVariant.Error)));
       }
     }),
     [dispatch, t, publicationTable]
@@ -46,11 +49,12 @@ const PublicationChannelSearch: FC<PublicationChannelSearchProps> = ({
     <AutoSearch
       clearSearchField={clearSearchField}
       dataTestId={dataTestId}
-      onInputChange={value => search(value)}
+      onInputChange={(value) => search(value)}
       searchResults={searchResults}
       setValueFunction={setValueFunction}
       label={label}
       placeholder={placeholder}
+      errorMessage={errorMessage}
     />
   );
 };

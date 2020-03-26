@@ -24,10 +24,8 @@ describe('Publication: Description', () => {
 
     // choose Book type and fill inn some data
     cy.get('[data-testid=nav-tabpanel-references]').click({ force: true });
-    cy.get('[data-testid=reference_type]')
-      .click({ force: true })
-      .type(' ');
-    cy.get('[data-testid=reference_type-book]').click({ force: true });
+    cy.get('[data-testid=publication_type]').click({ force: true }).type(' ');
+    cy.get('[data-testid=publication_type-Book]').click({ force: true });
     cy.get('[data-testid=isbn]').type(isbn);
 
     cy.get('[data-testid=nav-tabpanel-submission]').click({ force: true });

@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import TabPanel from '../../components/TabPanel/TabPanel';
 import { FormikProps, useFormikContext, Field, FieldProps } from 'formik';
-import { Publication } from '../../types/publication.types';
-import { Button, FormControlLabel, Checkbox } from '@material-ui/core';
+import { FormikPublication } from '../../types/publication.types';
+import { Button, FormControlLabel, Checkbox, Link } from '@material-ui/core';
 import styled from 'styled-components';
 import SubmissionBook from './submission_tab/submission_book';
 import SubmissionDegree from './submission_tab/submission_degree';
@@ -14,11 +14,13 @@ import SubmissionJournalPublication from './submission_tab/submission_journal';
 import SubmissionDescription from './submission_tab/submission_description';
 import SubmissionFilesAndLicenses from './submission_tab/submission_files_licenses';
 import SubmissionContributors from './submission_tab/submission_contributors';
-import { ReferenceType } from '../../types/references.types';
+import { PublicationType, ReferenceFieldNames, DescriptionFieldNames } from '../../types/publicationFieldNames';
 import Heading from '../../components/Heading';
 import SubHeading from '../../components/SubHeading';
 import Card from '../../components/Card';
 import { useHistory } from 'react-router';
+import LabelContentRow from '../../components/LabelContentRow';
+import ErrorSummary from './submission_tab/ErrorSummary';
 
 const StyledPublishButton = styled(Button)`
   margin-top: 0.5rem;
@@ -34,16 +36,29 @@ interface SubmissionPanelProps {
 
 const SubmissionPanel: React.FC<SubmissionPanelProps> = ({ savePublication }) => {
   const { t } = useTranslation('publication');
-  const { values, setFieldValue }: FormikProps<Publication> = useFormikContext();
+  const { errors, setFieldTouched, setFieldValue, values }: FormikProps<FormikPublication> = useFormikContext();
   const history = useHistory();
+
+  const setAllFieldsTouched = useCallback(() => {
+    Object.values(DescriptionFieldNames).forEach((fieldName) => setFieldTouched(fieldName));
+    Object.values(ReferenceFieldNames).forEach((fieldName) => setFieldTouched(fieldName));
+  }, [setFieldTouched]);
+
+  useEffect(() => {
+    setAllFieldsTouched();
+  }, [setAllFieldsTouched]);
 
   const publishPublication = () => {
     savePublication();
-    history.push(`/publication/${values.id}`);
+    history.push(`/publication/${values.identifier}/public`);
   };
+
+  const { publicationType, reference } = values.entityDescription;
+  const validationErrors = errors.entityDescription;
 
   return (
     <TabPanel ariaLabel="submission">
+      <ErrorSummary />
       <Card>
         <Heading>{t('heading.summary')}</Heading>
         <Card>
@@ -52,11 +67,21 @@ const SubmissionPanel: React.FC<SubmissionPanelProps> = ({ savePublication }) =>
         </Card>
         <Card>
           <SubHeading>{t('heading.references')}</SubHeading>
-          {values.reference.type === ReferenceType.BOOK && <SubmissionBook />}
-          {values.reference.type === ReferenceType.DEGREE && <SubmissionDegree />}
-          {values.reference.type === ReferenceType.CHAPTER && <SubmissionChapter />}
-          {values.reference.type === ReferenceType.REPORT && <SubmissionReport />}
-          {values.reference.type === ReferenceType.PUBLICATION_IN_JOURNAL && <SubmissionJournalPublication />}
+          <LabelContentRow label={t('common:type')}>
+            {publicationType && t(`publicationTypes:${publicationType}`)}
+          </LabelContentRow>
+          {reference.doi && (
+            <LabelContentRow label={t('publication.link_to_publication')}>
+              <Link href={reference.doi} target="_blank" rel="noopener noreferrer">
+                {reference.doi}
+              </Link>
+            </LabelContentRow>
+          )}
+          {publicationType === PublicationType.BOOK && <SubmissionBook />}
+          {publicationType === PublicationType.DEGREE && <SubmissionDegree />}
+          {publicationType === PublicationType.CHAPTER && <SubmissionChapter />}
+          {publicationType === PublicationType.REPORT && <SubmissionReport />}
+          {publicationType === PublicationType.PUBLICATION_IN_JOURNAL && <SubmissionJournalPublication />}
         </Card>
         <Card>
           <SubHeading>{t('heading.contributors')}</SubHeading>
@@ -71,14 +96,25 @@ const SubmissionPanel: React.FC<SubmissionPanelProps> = ({ savePublication }) =>
           <Field name={PublishSettingFieldName.SHOULD_CREATE_DOI}>
             {({ field: { name, value } }: FieldProps) => (
               <FormControlLabel
-                control={<Checkbox color="primary" checked={value} onChange={() => setFieldValue(name, !value)} />}
+                control={
+                  <Checkbox
+                    color="primary"
+                    checked={value}
+                    onChange={() => setFieldValue(name, !value)}
+                    disabled={!!validationErrors}
+                  />
+                }
                 label={t('submission.ask_for_doi')}
               />
             )}
           </Field>
         </Card>
       </Card>
-      <StyledPublishButton color="primary" variant="contained" onClick={publishPublication}>
+      <StyledPublishButton
+        color="primary"
+        variant="contained"
+        onClick={publishPublication}
+        disabled={!!validationErrors}>
         {t('common:publish')}
       </StyledPublishButton>
     </TabPanel>

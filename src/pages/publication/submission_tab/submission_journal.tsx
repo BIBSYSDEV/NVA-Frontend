@@ -2,32 +2,33 @@ import LabelContentRow from '../../../components/LabelContentRow';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormikProps, useFormikContext } from 'formik';
-import { Publication } from '../../../types/publication.types';
+import { FormikPublication } from '../../../types/publication.types';
 
 const SubmissionJournalPublication: React.FC = () => {
   const { t } = useTranslation('publication');
-  const { values }: FormikProps<Publication> = useFormikContext();
+  const { values }: FormikProps<FormikPublication> = useFormikContext();
+
+  const {
+    publicationSubtype,
+    reference: {
+      publicationInstance: { volume, issue, pages, articleNumber, peerReviewed },
+      publicationContext,
+    },
+  } = values.entityDescription;
 
   return (
     <>
-      <LabelContentRow label={t('common:type')}>{t('referenceTypes:journalArticle')}</LabelContentRow>
       <LabelContentRow label={t('references.subtype')}>
-        {values.reference.journalArticle?.type &&
-          t(`referenceTypes:subtypes_journal_article.${values.reference.journalArticle.type}`)}
+        {publicationSubtype && t(`publicationTypes:${publicationSubtype}`)}
       </LabelContentRow>
-      <LabelContentRow label={t('common:publisher')}>
-        {values.reference.journalArticle?.publisher?.title}
-      </LabelContentRow>
-      <LabelContentRow label={t('references.volume')}>{values.reference.journalArticle?.volume}</LabelContentRow>
-      <LabelContentRow label={t('references.issue')}>{values.reference.journalArticle?.issue}</LabelContentRow>
-      <LabelContentRow label={t('references.pages_from')}>{values.reference.journalArticle?.pagesFrom}</LabelContentRow>
-      <LabelContentRow label={t('references.pages_to')}>{values.reference.journalArticle?.pagesTo}</LabelContentRow>
+      <LabelContentRow label={t('common:publisher')}>{publicationContext?.title}</LabelContentRow>
+      <LabelContentRow label={t('references.volume')}>{volume}</LabelContentRow>
+      <LabelContentRow label={t('references.issue')}>{issue}</LabelContentRow>
+      <LabelContentRow label={t('references.pages_from')}>{pages.begin}</LabelContentRow>
+      <LabelContentRow label={t('references.pages_to')}>{pages.end}</LabelContentRow>
+      <LabelContentRow label={t('references.article_number')}>{articleNumber}</LabelContentRow>
       <LabelContentRow label={t('references.peer_reviewed')}>
-        {values.reference.journalArticle?.peerReview ? t('common:yes') : t('common:no')}
-      </LabelContentRow>
-      <LabelContentRow label={t('references.doi')}>{values.reference.journalArticle?.link}</LabelContentRow>
-      <LabelContentRow label={t('references.article_number')}>
-        {values.reference.journalArticle?.articleNumber}
+        {peerReviewed ? t('common:yes') : t('common:no')}
       </LabelContentRow>
     </>
   );

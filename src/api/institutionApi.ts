@@ -1,13 +1,12 @@
 import Axios from 'axios';
 import { getIdToken } from './userApi';
-import mockInstitutionResponse from '../utils/testfiles/institution_query.json';
+import mockInstitutionResponse from '../utils/testfiles/institutions/institution_query.json';
 import { InstitutionUnitResponseType, InstitutionUnitBase } from '../types/institution.types';
 import { StatusCode } from '../utils/constants';
 import i18n from '../translations/i18n';
 
 export enum InstituionApiPaths {
-  INSTITUTION = '/cristin-institutions',
-  UNIT = '/cristin-institutions/unit',
+  INSTITUTION = '/institution',
 }
 
 export const getInstitutionAndSubunits = async (searchTerm: string) => {
