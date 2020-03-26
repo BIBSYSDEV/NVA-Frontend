@@ -16,7 +16,7 @@ const SelectTypeField: FC<SelectTypeFieldProps> = ({ fieldName, options, onChang
     <Field name={fieldName} variant="outlined">
       {({ field, meta: { error, touched } }: FieldProps) => (
         <TextField
-          data-testid="reference_type"
+          data-testid="publication_type"
           select
           variant="outlined"
           fullWidth
@@ -30,8 +30,8 @@ const SelectTypeField: FC<SelectTypeFieldProps> = ({ fieldName, options, onChang
             onChangeExtension && onChangeExtension();
           }}>
           {options.map((typeValue) => (
-            <MenuItem value={typeValue} key={typeValue} data-testid={`reference_type-${typeValue}`}>
-              {t(`referenceTypes:${typeValue}`)}
+            <MenuItem value={typeValue} key={typeValue} data-testid={`publication_type-${typeValue}`}>
+              {t(`publicationTypes:${typeValue}`)}
             </MenuItem>
           ))}
         </TextField>

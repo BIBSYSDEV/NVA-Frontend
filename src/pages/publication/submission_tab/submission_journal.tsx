@@ -10,28 +10,25 @@ const SubmissionJournalPublication: React.FC = () => {
 
   const {
     publicationSubtype,
-    publisher,
-    volume,
-    issue,
-    pagesFrom,
-    pagesTo,
-    peerReview,
-    articleNumber,
+    reference: {
+      publicationInstance: { volume, issue, pages, articleNumber, peerReviewed },
+      publicationContext,
+    },
   } = values.entityDescription;
 
   return (
     <>
       <LabelContentRow label={t('references.subtype')}>
-        {publicationSubtype && t(`referenceTypes:subtypes_journal_article.${publicationSubtype}`)}
+        {publicationSubtype && t(`publicationTypes:${publicationSubtype}`)}
       </LabelContentRow>
-      <LabelContentRow label={t('common:publisher')}>{publisher?.title}</LabelContentRow>
+      <LabelContentRow label={t('common:publisher')}>{publicationContext?.title}</LabelContentRow>
       <LabelContentRow label={t('references.volume')}>{volume}</LabelContentRow>
       <LabelContentRow label={t('references.issue')}>{issue}</LabelContentRow>
-      <LabelContentRow label={t('references.pages_from')}>{pagesFrom}</LabelContentRow>
-      <LabelContentRow label={t('references.pages_to')}>{pagesTo}</LabelContentRow>
+      <LabelContentRow label={t('references.pages_from')}>{pages.begin}</LabelContentRow>
+      <LabelContentRow label={t('references.pages_to')}>{pages.end}</LabelContentRow>
       <LabelContentRow label={t('references.article_number')}>{articleNumber}</LabelContentRow>
       <LabelContentRow label={t('references.peer_reviewed')}>
-        {peerReview ? t('common:yes') : t('common:no')}
+        {peerReviewed ? t('common:yes') : t('common:no')}
       </LabelContentRow>
     </>
   );

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import TabPanel from '../../components/TabPanel/TabPanel';
@@ -14,12 +14,13 @@ import SubmissionJournalPublication from './submission_tab/submission_journal';
 import SubmissionDescription from './submission_tab/submission_description';
 import SubmissionFilesAndLicenses from './submission_tab/submission_files_licenses';
 import SubmissionContributors from './submission_tab/submission_contributors';
-import { ReferenceType } from '../../types/references.types';
+import { PublicationType, ReferenceFieldNames, DescriptionFieldNames } from '../../types/publicationFieldNames';
 import Heading from '../../components/Heading';
 import SubHeading from '../../components/SubHeading';
 import Card from '../../components/Card';
 import { useHistory } from 'react-router';
 import LabelContentRow from '../../components/LabelContentRow';
+import ErrorSummary from './submission_tab/ErrorSummary';
 
 const StyledPublishButton = styled(Button)`
   margin-top: 0.5rem;
@@ -35,18 +36,29 @@ interface SubmissionPanelProps {
 
 const SubmissionPanel: React.FC<SubmissionPanelProps> = ({ savePublication }) => {
   const { t } = useTranslation('publication');
-  const { values, setFieldValue }: FormikProps<FormikPublication> = useFormikContext();
+  const { errors, setFieldTouched, setFieldValue, values }: FormikProps<FormikPublication> = useFormikContext();
   const history = useHistory();
+
+  const setAllFieldsTouched = useCallback(() => {
+    Object.values(DescriptionFieldNames).forEach((fieldName) => setFieldTouched(fieldName));
+    Object.values(ReferenceFieldNames).forEach((fieldName) => setFieldTouched(fieldName));
+  }, [setFieldTouched]);
+
+  useEffect(() => {
+    setAllFieldsTouched();
+  }, [setAllFieldsTouched]);
 
   const publishPublication = () => {
     savePublication();
     history.push(`/publication/${values.identifier}/public`);
   };
 
-  const { publicationType, doiUrl } = values.entityDescription;
+  const { publicationType, reference } = values.entityDescription;
+  const validationErrors = errors.entityDescription;
 
   return (
     <TabPanel ariaLabel="submission">
+      <ErrorSummary />
       <Card>
         <Heading>{t('heading.summary')}</Heading>
         <Card>
@@ -56,20 +68,20 @@ const SubmissionPanel: React.FC<SubmissionPanelProps> = ({ savePublication }) =>
         <Card>
           <SubHeading>{t('heading.references')}</SubHeading>
           <LabelContentRow label={t('common:type')}>
-            {publicationType && t(`referenceTypes:${publicationType}`)}
+            {publicationType && t(`publicationTypes:${publicationType}`)}
           </LabelContentRow>
-          {doiUrl && (
+          {reference.doi && (
             <LabelContentRow label={t('publication.link_to_publication')}>
-              <Link href={doiUrl} target="_blank" rel="noopener noreferrer">
-                {doiUrl}
+              <Link href={reference.doi} target="_blank" rel="noopener noreferrer">
+                {reference.doi}
               </Link>
             </LabelContentRow>
           )}
-          {publicationType === ReferenceType.BOOK && <SubmissionBook />}
-          {publicationType === ReferenceType.DEGREE && <SubmissionDegree />}
-          {publicationType === ReferenceType.CHAPTER && <SubmissionChapter />}
-          {publicationType === ReferenceType.REPORT && <SubmissionReport />}
-          {publicationType === ReferenceType.PUBLICATION_IN_JOURNAL && <SubmissionJournalPublication />}
+          {publicationType === PublicationType.BOOK && <SubmissionBook />}
+          {publicationType === PublicationType.DEGREE && <SubmissionDegree />}
+          {publicationType === PublicationType.CHAPTER && <SubmissionChapter />}
+          {publicationType === PublicationType.REPORT && <SubmissionReport />}
+          {publicationType === PublicationType.PUBLICATION_IN_JOURNAL && <SubmissionJournalPublication />}
         </Card>
         <Card>
           <SubHeading>{t('heading.contributors')}</SubHeading>
@@ -84,14 +96,25 @@ const SubmissionPanel: React.FC<SubmissionPanelProps> = ({ savePublication }) =>
           <Field name={PublishSettingFieldName.SHOULD_CREATE_DOI}>
             {({ field: { name, value } }: FieldProps) => (
               <FormControlLabel
-                control={<Checkbox color="primary" checked={value} onChange={() => setFieldValue(name, !value)} />}
+                control={
+                  <Checkbox
+                    color="primary"
+                    checked={value}
+                    onChange={() => setFieldValue(name, !value)}
+                    disabled={!!validationErrors}
+                  />
+                }
                 label={t('submission.ask_for_doi')}
               />
             )}
           </Field>
         </Card>
       </Card>
-      <StyledPublishButton color="primary" variant="contained" onClick={publishPublication}>
+      <StyledPublishButton
+        color="primary"
+        variant="contained"
+        onClick={publishPublication}
+        disabled={!!validationErrors}>
         {t('common:publish')}
       </StyledPublishButton>
     </TabPanel>

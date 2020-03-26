@@ -1,16 +1,17 @@
 import i18n from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 
-import { PageLanguageCodes } from '../types/language.types';
+import { LanguageCodes } from '../types/language.types';
 import adminEn from './en/admin.json';
 import breadcrumbsEn from './en/breadcrumbs.json';
 import commonEn from './en/common.json';
 import disciplinesEn from './en/disciplines.json';
 import feedbackEn from './en/feedback.json';
+import formikValuesEn from './en/formikValues.json';
 import languagesEn from './en/languages.json';
 import profileEn from './en/profile.json';
 import publicationEn from './en/publication.json';
-import referenceTypesEn from './en/referenceTypes.json';
+import publicationTypesEn from './en/publicationTypes.json';
 import translationsEn from './en/translations.json';
 import workListsEn from './en/workLists.json';
 
@@ -19,14 +20,15 @@ import breadcrumbsNb from './nb/breadcrumbs.json';
 import commonNb from './nb/common.json';
 import disciplinesNb from './nb/disciplines.json';
 import feedbackNb from './nb/feedback.json';
+import formikValuesNb from './nb/formikValues.json';
 import languagesNb from './nb/languages.json';
 import profileNb from './nb/profile.json';
 import publicationNb from './nb/publication.json';
-import referenceTypesNb from './nb/referenceTypes.json';
+import publicationTypesNb from './nb/publicationTypes.json';
 import translationsNb from './nb/translations.json';
 import workListsNb from './nb/workLists.json';
 
-export const defaultLanguage = PageLanguageCodes.NORWEGIAN_BOKMAL;
+export const defaultLanguage = localStorage.getItem('i18nextLng') || LanguageCodes.NORWEGIAN_BOKMAL;
 
 i18n.use(LanguageDetector).init({
   resources: {
@@ -37,9 +39,10 @@ i18n.use(LanguageDetector).init({
       disciplines: disciplinesEn,
       languages: languagesEn,
       feedback: feedbackEn,
+      formikValues: formikValuesEn,
       profile: profileEn,
       publication: publicationEn,
-      referenceTypes: referenceTypesEn,
+      publicationTypes: publicationTypesEn,
       translations: translationsEn,
       workLists: workListsEn,
     },
@@ -50,13 +53,15 @@ i18n.use(LanguageDetector).init({
       disciplines: disciplinesNb,
       languages: languagesNb,
       feedback: feedbackNb,
+      formikValues: formikValuesNb,
       profile: profileNb,
       publication: publicationNb,
-      referenceTypes: referenceTypesNb,
+      publicationTypes: publicationTypesNb,
       translations: translationsNb,
       workLists: workListsNb,
     },
   },
+  lng: defaultLanguage,
   fallbackLng: defaultLanguage,
   debug: false,
   ns: ['breadcrumbs', 'common', 'languages', 'feedback', 'profile', 'translations'],

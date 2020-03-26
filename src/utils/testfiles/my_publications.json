@@ -7,11 +7,13 @@
     "createdBy": "Kåre Kåresen",
     "contributors": [],
     "publicationType": "JournalArticle",
-    "publisher": {
-      "level": 2,
-      "onlineIssn": "1469-8145",
-      "title": "New Testament Studies",
-      "printIssn": "0028-6885"
+    "reference": {
+      "publicationContext": {
+        "level": 2,
+        "onlineIssn": "1469-8145",
+        "title": "New Testament Studies",
+        "printIssn": "0028-6885"
+      }
     }
   },
   {
@@ -22,11 +24,13 @@
     "createdBy": "Kari Karisen",
     "contributors": [],
     "publicationType": "JournalArticle",
-    "publisher": {
-      "title": "Novum Testamentum",
-      "printIssn": "0048-1009",
-      "onlineIssn": "1568-5365",
-      "level": 2
+    "reference": {
+      "publicationContext": {
+        "title": "Novum Testamentum",
+        "printIssn": "0048-1009",
+        "onlineIssn": "1568-5365",
+        "level": 2
+      }
     }
   },
   {
@@ -37,11 +41,13 @@
     "createdBy": "Arne Arnesen",
     "contributors": [],
     "publicationType": "JournalArticle",
-    "publisher": {
-      "title": "Scandinavian Journal of the Old Testament",
-      "printIssn": "0901-8328",
-      "onlineIssn": "1502-7244",
-      "level": 2
+    "reference": {
+      "publicationContext": {
+        "title": "Scandinavian Journal of the Old Testament",
+        "printIssn": "0901-8328",
+        "onlineIssn": "1502-7244",
+        "level": 2
+      }
     }
   },
   {
@@ -52,11 +58,13 @@
     "createdBy": "Bob Boffaloe",
     "contributors": [],
     "publicationType": "JournalArticle",
-    "publisher": {
-      "title": "Journal for the Study of the New Testament",
-      "printIssn": "0142-064X",
-      "onlineIssn": "1745-5294",
-      "level": 2
+    "reference": {
+      "publicationContext": {
+        "title": "Journal for the Study of the New Testament",
+        "printIssn": "0142-064X",
+        "onlineIssn": "1745-5294",
+        "level": 2
+      }
     }
   },
   {
@@ -65,18 +73,20 @@
     "createdDate": "2021-01-01",
     "status": "published",
     "createdBy": "Bob Ryder",
-    "publicationDate": {
+    "date": {
       "year": "2021",
       "month": "01",
       "day": "01"
     },
     "contributors": [],
     "publicationType": "JournalArticle",
-    "publisher": {
-      "title": "American Journal of Physiology - Gastrointestinal and Liver Physiology",
-      "printIssn": null,
-      "onlineIssn": "1522-1547",
-      "level": null
+    "reference": {
+      "publicationContext": {
+        "title": "American Journal of Physiology - Gastrointestinal and Liver Physiology",
+        "printIssn": null,
+        "onlineIssn": "1522-1547",
+        "level": null
+      }
     }
   },
   {
@@ -85,18 +95,20 @@
     "createdDate": "1941-04-25",
     "status": "published",
     "createdBy": "Bob Maggio",
-    "publicationDate": {
+    "date": {
       "year": "1941",
       "month": "04",
       "day": "25"
     },
     "contributors": [],
     "publicationType": "Book",
-    "publisher": {
-      "title": "Arbeiten zum Neuen Testament und Judentum",
-      "printIssn": "0170-8856",
-      "onlineIssn": null,
-      "level": null
+    "reference": {
+      "publicationContext": {
+        "title": "Arbeiten zum Neuen Testament und Judentum",
+        "printIssn": "0170-8856",
+        "onlineIssn": null,
+        "level": null
+      }
     }
   }
 ]

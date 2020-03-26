@@ -17,9 +17,9 @@ const StyledHeading = styled(Heading)`
 `;
 
 const StyledTableRow = styled(TableRow)`
-  background-color: ${props => props.theme.palette.box.main};
+  background-color: ${(props) => props.theme.palette.box.main};
   :nth-child(odd) {
-    background-color: ${props => props.theme.palette.background.default};
+    background-color: ${(props) => props.theme.palette.background.default};
   }
 `;
 
@@ -54,7 +54,7 @@ const PublishedPublicationList: FC<PublicationListProps> = ({ publications }) =>
   return (
     <StyledCard>
       <StyledHeading>{`${t('common:publications')} (${
-        publications.filter(publication => publication.status === PublicationStatus.PUBLISHED).length
+        publications.filter((publication) => publication.status === PublicationStatus.PUBLISHED).length
       })`}</StyledHeading>
       <StyledTable>
         <TableHead>
@@ -67,8 +67,8 @@ const PublishedPublicationList: FC<PublicationListProps> = ({ publications }) =>
         </TableHead>
         <TableBody>
           {publications
-            .filter(publication => publication.status === PublicationStatus.PUBLISHED)
-            .map(publication => (
+            .filter((publication) => publication.status === PublicationStatus.PUBLISHED)
+            .map((publication) => (
               <StyledTableRow key={publication.identifier}>
                 <TableCell component="th" scope="row">
                   <NormalText>{publication.mainTitle}</NormalText>
@@ -81,10 +81,10 @@ const PublishedPublicationList: FC<PublicationListProps> = ({ publications }) =>
                   </StyledAuthor>
                 </TableCell>
                 <StyledTableCellForPublisher>
-                  <NormalText>{publication.publisher?.title}</NormalText>
+                  <NormalText>{publication.reference.publicationContext?.title}</NormalText>
                 </StyledTableCellForPublisher>
                 <StyledTableCellForType>
-                  <NormalText>{t('referenceTypes:' + publication.publicationType)}</NormalText>
+                  <NormalText>{t(`publicationTypes:${publication.publicationType}`)}</NormalText>
                 </StyledTableCellForType>
                 <StyledTableCellForDate>
                   <NormalText>{publication.date?.year}</NormalText>

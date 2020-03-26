@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import { Button } from '@material-ui/core';
 
-import { Publisher } from '../../../../types/references.types';
+import { Publisher } from '../../../../types/publication.types';
 import Label from '../../../../components/Label';
 
 const StyledPublisherRow = styled.div`

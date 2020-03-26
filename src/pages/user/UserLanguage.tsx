@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-
 import { MenuItem, Select } from '@material-ui/core';
 
-import { defaultLanguage } from '../../translations/i18n';
 import { pageLanguages } from '../../types/language.types';
 import Card from '../../components/Card';
 import Heading from '../../components/Heading';
@@ -16,13 +14,7 @@ const StyledSelect = styled(Select)`
 `;
 
 const UserLanguage: React.FC = () => {
-  const [languageSelected, setLanguageSelected] = useState<string>(defaultLanguage);
   const { t, i18n } = useTranslation('profile');
-
-  useEffect(() => {
-    const previouslySelectedLanguage = i18n.language;
-    setLanguageSelected(previouslySelectedLanguage);
-  }, [i18n.language]);
 
   const handleLanguageChange = (event: React.ChangeEvent<any>) => {
     const language = event.target.value;
@@ -34,12 +26,12 @@ const UserLanguage: React.FC = () => {
       <Heading>{t('heading.language')}</Heading>
       <StyledSelect
         variant="outlined"
-        value={languageSelected}
+        value={i18n.language}
         onChange={handleLanguageChange}
         data-testid="language-selector">
-        {Object.entries(pageLanguages).map(([languageCode, languageName]) => (
-          <MenuItem value={languageCode} key={languageCode} data-testid={`user-language-${languageCode}`}>
-            {languageName}
+        {pageLanguages.map((language) => (
+          <MenuItem value={language} key={language} data-testid={`user-language-${language}`}>
+            {t(`languages:${language}`)}
           </MenuItem>
         ))}
       </StyledSelect>

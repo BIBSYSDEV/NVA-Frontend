@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { Field, FieldProps } from 'formik';
 import PublicationChannelSearch from './PublicationChannelSearch';
-import { emptyPublisher } from '../../../../types/references.types';
+import { emptyPublisher } from '../../../../types/publication.types';
 import { PublicationTableNumber } from '../../../../utils/constants';
 import PublisherRow from './PublisherRow';
 
@@ -28,7 +28,7 @@ const PublisherField: FC<PublisherFieldProps> = ({
               dataTestId="autosearch-publisher"
               label={label}
               publicationTable={publicationTable}
-              setValueFunction={inputValue => setFieldValue(name, inputValue ?? emptyPublisher)}
+              setValueFunction={(inputValue) => setFieldValue(name, inputValue ?? emptyPublisher)}
               placeholder={placeholder}
               errorMessage={touched ? error : ''}
             />
