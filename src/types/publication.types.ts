@@ -1,13 +1,8 @@
 import { Contributor } from './contributor.types';
 import { File } from './file.types';
-import { LanguageCodes } from './language.types';
+import { LanguageValues } from './language.types';
 import { Project } from './project.types';
-import { emptyReference, Reference } from './references.types';
-
-export enum PublicationType {
-  TEXT = 'text',
-  FILE = 'file',
-}
+import { PublicationType, JournalArticleType, ReportType, DegreeType, BookType } from './publicationFieldNames';
 
 export enum PublicationStatus {
   DRAFT = 'draft',
@@ -29,80 +24,156 @@ export interface PublicationMetadata {
   type: PublicationType;
 }
 
+export interface Publisher {
+  title: string;
+  printIssn: string;
+  onlineIssn: string;
+  level: number | null;
+  openAccess: boolean;
+}
+
+export const emptyPublisher: Publisher = {
+  printIssn: '',
+  onlineIssn: '',
+  level: null,
+  title: '',
+  openAccess: false,
+};
+
 export interface AlmaPublication {
   title: string;
 }
 
-interface NpiDiscipline {
-  title: string;
+export interface NpiDiscipline {
+  id: string;
+  name: string;
   mainDiscipline: string;
 }
 
-export interface Publication {
+export interface NpiSubject {
   id: string;
-  modified: string; // date?
-  createdDate: string; // date?
-  createdBy: string;
-  title: { [key: string]: string };
+  subjectArea: string;
+  subdomains: NpiSubdomain[];
+}
+
+export interface NpiSubdomain {
+  id: string;
+  name: string;
+}
+
+export const emptyNpiDiscipline: NpiDiscipline = {
+  id: '',
+  name: '',
+  mainDiscipline: '',
+};
+
+export interface Publication {
+  readonly identifier: string;
+  readonly createdDate: string;
+  readonly owner: string;
+  readonly status: PublicationStatus;
+  entityDescription: PublicationEntityDescription;
+  fileSet: File[];
+}
+
+interface PublicationEntityDescription {
+  mainTitle: string;
   abstract: string;
   description: string;
-  npiDiscipline: NpiDiscipline;
   tags: string[];
-  doiLink: string;
-  publicationDate: {
+  npiSubjectHeading: string;
+  date: {
     year: string;
     month: string;
     day: string;
   };
-  language: string; // enum?
+  language: LanguageValues;
   projects: Project[];
-  reference: Reference;
-  authors: Contributor[];
+  publicationType: PublicationType | '';
+  publicationSubtype: JournalArticleType | ReportType | DegreeType | BookType | '';
   contributors: Contributor[];
-  files: File[];
-  status: PublicationStatus;
+  isbn: string;
+  numberOfPages: string;
+  series: Publisher;
+  specialization: string;
+  textBook: boolean;
+  reference: {
+    doi: string;
+    publicationInstance: {
+      volume: string;
+      issue: string;
+      articleNumber: string;
+      peerReviewed: boolean;
+      pages: {
+        begin: string;
+        end: string;
+      };
+    };
+    publicationContext: Publisher | null;
+  };
+}
+
+export interface FormikPublication extends Publication {
   shouldCreateDoi: boolean;
 }
 
-export type PublicationPreview = Pick<Publication, 'id' | 'title' | 'createdDate' | 'status' | 'createdBy'>;
-export type PublishedPublicationPreview = Pick<
-  Publication,
-  'id' | 'title' | 'publicationDate' | 'reference' | 'authors' | 'status'
->;
-
-export interface Doi {
-  title: string;
-}
-
-export const emptyNpiDiscipline = {
-  title: '',
-  mainDiscipline: '',
-};
-
-export const emptyPublication: Publication = {
-  id: '',
-  modified: '', // date?
-  createdDate: '', // date?
-  createdBy: '',
-  title: {
-    nb: '',
-  },
+const emptyPublicationEntityDescription: PublicationEntityDescription = {
+  mainTitle: '',
   abstract: '',
   description: '',
-  npiDiscipline: emptyNpiDiscipline,
   tags: [],
-  doiLink: '',
-  publicationDate: {
+  npiSubjectHeading: '',
+  date: {
     year: '',
     month: '',
     day: '',
   },
-  language: LanguageCodes.NORWEGIAN_BOKMAL,
+  language: LanguageValues.NORWEGIAN_BOKMAL,
   projects: [],
-  reference: emptyReference,
-  authors: [],
-  contributors: [], // TODO: Merge with authors
-  files: [],
+  publicationType: '',
+  contributors: [],
+  publicationSubtype: '',
+  isbn: '',
+  numberOfPages: '',
+  series: emptyPublisher,
+  specialization: '',
+  textBook: false,
+  reference: {
+    doi: '',
+    publicationInstance: {
+      volume: '',
+      issue: '',
+      articleNumber: '',
+      peerReviewed: false,
+      pages: {
+        begin: '',
+        end: '',
+      },
+    },
+    publicationContext: null,
+  },
+};
+
+export type PublicationPreview = Pick<
+  Publication & PublicationEntityDescription,
+  'identifier' | 'mainTitle' | 'createdDate' | 'status' | 'owner'
+>;
+export type PublishedPublicationPreview = Pick<
+  Publication & PublicationEntityDescription,
+  'identifier' | 'mainTitle' | 'date' | 'reference' | 'contributors' | 'status' | 'publicationType'
+>;
+
+export interface Doi {
+  identifier: string; // NVA identifier
+  title: string;
+}
+
+export const emptyPublication: FormikPublication = {
+  identifier: '',
+  createdDate: '',
+  owner: '',
   status: PublicationStatus.DRAFT,
+  entityDescription: emptyPublicationEntityDescription,
+  fileSet: [],
   shouldCreateDoi: false,
 };

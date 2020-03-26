@@ -5,7 +5,7 @@ import FileUploader from './files_and_license_tab/FileUploader';
 import FileCard from './files_and_license_tab/FileCard';
 import styled from 'styled-components';
 import { FieldArray, FormikProps, useFormikContext } from 'formik';
-import { Publication } from '../../types/publication.types';
+import { FormikPublication } from '../../types/publication.types';
 import Modal from '../../components/Modal';
 import { licenses, Uppy } from '../../types/file.types';
 import Card from '../../components/Card';
@@ -13,6 +13,8 @@ import Heading from '../../components/Heading';
 import PublicationChannelInfoCard from './files_and_license_tab/PublicationChannelInfoCard';
 import NormalText from '../../components/NormalText';
 import Label from '../../components/Label';
+
+const shouldAllowMultipleFiles = true;
 
 const StyledUploadedFiles = styled(Card)`
   display: flex;
@@ -28,7 +30,7 @@ const StyledLicenseDescription = styled.article`
 `;
 
 enum FilesFieldNames {
-  FILES = 'files',
+  FILES = 'fileSet',
 }
 
 interface FilesAndLicensePanelProps {
@@ -38,33 +40,40 @@ interface FilesAndLicensePanelProps {
 
 const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab, uppy }) => {
   const { t } = useTranslation('publication');
-  const { values }: FormikProps<Publication> = useFormikContext();
+  const { values }: FormikProps<FormikPublication> = useFormikContext();
   const [isLicenseModalOpen, setIsLicenseModalOpen] = useState(false);
-
-  const uploadedFiles = values[FilesFieldNames.FILES];
-  const referenceType = values.reference.type;
-  const publisher = referenceType ? values.reference[referenceType]?.publisher : null;
 
   const toggleLicenseModal = () => {
     setIsLicenseModalOpen(!isLicenseModalOpen);
   };
 
+  const {
+    fileSet,
+    entityDescription: {
+      reference: { publicationContext },
+    },
+  } = values;
+
   return (
     <TabPanel ariaLabel="files and license" goToNextTab={goToNextTab}>
-      {publisher?.title && <PublicationChannelInfoCard publisher={publisher} />}
+      {publicationContext && <PublicationChannelInfoCard publisher={publicationContext} />}
 
       <FieldArray name={FilesFieldNames.FILES}>
         {({ insert, remove, replace }) => (
           <>
             <Card>
               <Heading>{t('files_and_license.upload_files')}</Heading>
-              <FileUploader uppy={uppy} addFile={file => insert(0, file)} />
+              <FileUploader
+                uppy={uppy}
+                shouldAllowMultipleFiles={shouldAllowMultipleFiles}
+                addFile={(file) => insert(0, file)}
+              />
             </Card>
-            {uploadedFiles.length > 0 && (
+            {fileSet.length > 0 && (
               <>
                 <StyledUploadedFiles>
                   <Heading>{t('files_and_license.files')}</Heading>
-                  {uploadedFiles.map((file, index) => (
+                  {fileSet.map((file, index) => (
                     <FileCard
                       key={file.id}
                       file={file}
@@ -72,7 +81,7 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab
                         uppy.removeFile(file.id);
                         remove(index);
                       }}
-                      updateFile={newFile => replace(index, newFile)}
+                      updateFile={(newFile) => replace(index, newFile)}
                       toggleLicenseModal={toggleLicenseModal}
                     />
                   ))}
@@ -83,10 +92,10 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab
         )}
       </FieldArray>
       <Modal headingText={t('files_and_license.licenses')} openModal={isLicenseModalOpen} onClose={toggleLicenseModal}>
-        {licenses.map(license => (
-          <StyledLicenseDescription key={license.name}>
-            <Label>{license.name}</Label>
-            <img src={license.image} alt={license.name} />
+        {licenses.map((license) => (
+          <StyledLicenseDescription key={license.identifier}>
+            <Label>{license.identifier}</Label>
+            <img src={license.image} alt={license.identifier} />
             <NormalText>{license.description}</NormalText>
           </StyledLicenseDescription>
         ))}

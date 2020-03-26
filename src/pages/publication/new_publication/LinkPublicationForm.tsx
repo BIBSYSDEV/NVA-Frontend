@@ -44,7 +44,7 @@ const LinkPublicationForm: React.FC<LinkPublicationFormProps> = ({ handleSearch 
             {({ field }: FieldProps) => (
               <StyledTextField
                 variant="outlined"
-                label={t('publication.link')}
+                label={t('publication.link_to_publication')}
                 fullWidth
                 aria-label="DOI-link"
                 inputProps={{ 'data-testid': 'new-publication-link-input' }}

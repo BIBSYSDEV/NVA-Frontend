@@ -5,9 +5,10 @@ import { TextField } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
 import styled from 'styled-components';
 import RemoveIcon from '@material-ui/icons/Remove';
-import { ChapterFieldNames } from '../../../types/references.types';
+import { ReferenceFieldNames } from '../../../types/publicationFieldNames';
 import { AutoSearch } from '../../../components/AutoSearch';
 import NviValidation from './components/NviValidation';
+import DoiField from './components/DoiField';
 
 const StyledInfoBox = styled.div`
   margin-top: 1rem;
@@ -40,7 +41,7 @@ const StyledPageNumberField = styled(TextField)`
   width: 10rem;
 `;
 
-const ChapterReferenceForm: React.FC = () => {
+const ChapterForm: React.FC = () => {
   const { t } = useTranslation('publication');
 
   return (
@@ -50,21 +51,9 @@ const ChapterReferenceForm: React.FC = () => {
         {t('chapter.info')}
       </StyledInfoBox>
 
-      <Field name={ChapterFieldNames.LINK}>
-        {({ field }: FieldProps) => (
-          <TextField
-            data-testid="chapter-link"
-            aria-label="DOI-link"
-            name="doiUrl"
-            variant="outlined"
-            fullWidth
-            label={t('publication:chapter.link')}
-            {...field}
-          />
-        )}
-      </Field>
+      <DoiField />
 
-      <Field name={ChapterFieldNames.ANTHOLOGY}>
+      <Field>
         {() => (
           <AutoSearch
             dataTestId="chapter-autosearch-anthology"
@@ -77,7 +66,7 @@ const ChapterReferenceForm: React.FC = () => {
       </Field>
 
       <StyledPageNumberWrapper>
-        <Field name={ChapterFieldNames.PAGES_FROM}>
+        <Field name={ReferenceFieldNames.PAGES_FROM}>
           {({ field }: FieldProps) => (
             <StyledPageNumberField
               variant="outlined"
@@ -90,7 +79,7 @@ const ChapterReferenceForm: React.FC = () => {
         <StyledDashIconWrapper>
           <RemoveIcon />
         </StyledDashIconWrapper>
-        <Field name={ChapterFieldNames.PAGES_TO}>
+        <Field name={ReferenceFieldNames.PAGES_TO}>
           {({ field }: FieldProps) => (
             <StyledPageNumberField
               data-testid="chapter-pages-to"
@@ -107,4 +96,4 @@ const ChapterReferenceForm: React.FC = () => {
   );
 };
 
-export default ChapterReferenceForm;
+export default ChapterForm;

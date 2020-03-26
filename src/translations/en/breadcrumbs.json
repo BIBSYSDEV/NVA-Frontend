@@ -1,10 +1,13 @@
 {
   "admin-institution": "Administer institution",
   "admin-institutions": "Administer institutions",
+  "admin-institution-users": "Administer users",
   "authority": "Authority",
   "home": "Home",
+  "logout": "Logged out",
   "new-publication": "New publication",
   "my-publications": "My publications",
+  "public": "Public version",
   "public-profile": "Public profile",
   "publication": "Publication",
   "user": "My profile",

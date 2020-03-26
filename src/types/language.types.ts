@@ -1,5 +1,3 @@
-import { EnumDictionary } from './common.types';
-
 export enum LanguageCodes {
   NORWEGIAN_BOKMAL = 'nb',
   NORWEGIAN_NYNORSK = 'nn',
@@ -19,31 +17,16 @@ export enum LanguageCodes {
   OTHER = 'xx',
 }
 
-export const orderedLanguages = [
-  LanguageCodes.NORWEGIAN_BOKMAL,
-  LanguageCodes.NORWEGIAN_NYNORSK,
-  LanguageCodes.ENGLISH,
-  LanguageCodes.DANISH,
-  LanguageCodes.FINNISH,
-  LanguageCodes.FRENCH,
-  LanguageCodes.ICELANDIC,
-  LanguageCodes.ITALIAN,
-  LanguageCodes.DUTCH,
-  LanguageCodes.PORTUGUESE,
-  LanguageCodes.RUSSIAN,
-  LanguageCodes.SAMI,
-  LanguageCodes.SPANISH,
-  LanguageCodes.SWEDISH,
-  LanguageCodes.GERMAN,
-  LanguageCodes.OTHER,
-];
-
-export enum PageLanguageCodes {
-  NORWEGIAN_BOKMAL = 'nb-NO',
-  ENGLISH = 'en-US',
+export enum LanguageValues {
+  NORWEGIAN_BOKMAL = 'http://lexvo.org/id/iso639-3/nob',
+  NORWEGIAN_NYNORSK = 'http://lexvo.org/id/iso639-3/nno',
+  ENGLISH = 'http://lexvo.org/id/iso639-3/eng',
 }
 
-export const pageLanguages: EnumDictionary<string, string> = {
-  [PageLanguageCodes.NORWEGIAN_BOKMAL]: 'Norsk (bokmål)',
-  [PageLanguageCodes.ENGLISH]: 'English',
-};
+export const pageLanguages = [LanguageCodes.NORWEGIAN_BOKMAL, LanguageCodes.ENGLISH];
+
+export const publicationLanguages = [
+  { id: LanguageCodes.ENGLISH, value: LanguageValues.ENGLISH },
+  { id: LanguageCodes.NORWEGIAN_BOKMAL, value: LanguageValues.NORWEGIAN_BOKMAL },
+  { id: LanguageCodes.NORWEGIAN_NYNORSK, value: LanguageValues.NORWEGIAN_NYNORSK },
+];

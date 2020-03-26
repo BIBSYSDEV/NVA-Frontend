@@ -3,13 +3,16 @@ import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import { MenuItem, TextField } from '@material-ui/core';
+import { TextField } from '@material-ui/core';
 
-import { Publication } from '../../../types/publication.types';
-import { emptyPublisher, ReportFieldNames, ReportType } from '../../../types/references.types';
+import { FormikPublication, emptyPublisher } from '../../../types/publication.types';
+import { ReferenceFieldNames, ReportType } from '../../../types/publicationFieldNames';
 import { PublicationTableNumber } from '../../../utils/constants';
 import PublicationChannelSearch from './components/PublicationChannelSearch';
 import PublisherRow from './components/PublisherRow';
+import DoiField from './components/DoiField';
+import SelectTypeField from './components/SelectTypeField';
+import PublisherField from './components/PublisherField';
 
 const StyledLabel = styled.div`
   color: ${({ theme }) => theme.palette.text.primary};
@@ -22,54 +25,30 @@ const StyledHeading = styled.div`
   padding-top: 1.5rem;
 `;
 
-const ReportReferenceForm: FC = () => {
+const ReportForm: FC = () => {
   const { t } = useTranslation('publication');
 
-  const { setFieldValue }: FormikProps<Publication> = useFormikContext();
+  const { setFieldValue }: FormikProps<FormikPublication> = useFormikContext();
 
   return (
     <>
-      <Field name={ReportFieldNames.TYPE}>
-        {({ field }: FieldProps) => (
-          <TextField select variant="outlined" fullWidth label={t('common:type')} {...field}>
-            {Object.values(ReportType).map(typeValue => (
-              <MenuItem value={typeValue} key={typeValue}>
-                {t(`referenceTypes:subtypes_report.${typeValue}`)}
-              </MenuItem>
-            ))}
-          </TextField>
-        )}
-      </Field>
+      <SelectTypeField fieldName={ReferenceFieldNames.SUB_TYPE} options={Object.values(ReportType)} />
 
-      <Field name={ReportFieldNames.PUBLISHER}>
-        {({ field: { name, value } }: FieldProps) => (
-          <>
-            <PublicationChannelSearch
-              clearSearchField={value === emptyPublisher}
-              dataTestId="autosearch-publisher"
-              label={t('common:publisher')}
-              publicationTable={PublicationTableNumber.PUBLISHERS}
-              setValueFunction={inputValue => setFieldValue(name, inputValue ?? emptyPublisher)}
-              placeholder={t('references.search_for_publisher')}
-            />
-            {value.title && (
-              <PublisherRow
-                dataTestId="autosearch-results-publisher"
-                label={t('common:publisher')}
-                publisher={value}
-                onClickDelete={() => setFieldValue(name, emptyPublisher)}
-              />
-            )}
-          </>
-        )}
-      </Field>
-      <Field name={ReportFieldNames.ISBN}>
+      <DoiField />
+
+      <PublisherField
+        fieldName={ReferenceFieldNames.PUBLISHER}
+        label={t('common:publisher')}
+        placeholder={t('references.search_for_publisher')}
+      />
+
+      <Field name={ReferenceFieldNames.ISBN}>
         {({ field }: FieldProps) => (
           <TextField data-testid="isbn" variant="outlined" label={t('references.isbn')} {...field} />
         )}
       </Field>
       <div>
-        <Field name={ReportFieldNames.NUMBER_OF_PAGES}>
+        <Field name={ReferenceFieldNames.NUMBER_OF_PAGES}>
           {({ field }: FieldProps) => (
             <TextField
               data-testid="number_of_pages"
@@ -82,7 +61,7 @@ const ReportReferenceForm: FC = () => {
       </div>
       <StyledHeading>{t('references.series')}</StyledHeading>
       <StyledLabel>{t('references.series_info')}</StyledLabel>
-      <Field name={ReportFieldNames.SERIES}>
+      <Field name={ReferenceFieldNames.SERIES}>
         {({ field: { name, value } }: FieldProps) => (
           <>
             <PublicationChannelSearch
@@ -90,7 +69,7 @@ const ReportReferenceForm: FC = () => {
               dataTestId="autosearch-series"
               label={t('common:title')}
               publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
-              setValueFunction={inputValue => setFieldValue(name, inputValue ?? emptyPublisher)}
+              setValueFunction={(inputValue) => setFieldValue(name, inputValue ?? emptyPublisher)}
               placeholder={t('references.search_for_series')}
             />
             {value.title && (
@@ -108,4 +87,4 @@ const ReportReferenceForm: FC = () => {
   );
 };
 
-export default ReportReferenceForm;
+export default ReportForm;

@@ -12,16 +12,11 @@ describe('Publication: References: Chapter', () => {
     cy.get('[data-testid=nav-tabpanel-references]').click({ force: true });
 
     // choose Report type
-    cy.get('[data-testid=reference_type]')
-      .click({ force: true })
-      .type(' '); //makes the select options open
-    cy.get('[data-testid=reference_type-chapter]').should('be.visible');
-    cy.get('[data-testid=reference_type-chapter]').click({ force: true });
+    cy.get('[data-testid=publication_type]').click({ force: true }).type(' '); //makes the select options open
+    cy.get('[data-testid=publication_type-Chapter]').should('be.visible');
+    cy.get('[data-testid=publication_type-Chapter]').click({ force: true });
 
-    cy.get('[data-testid=reference_type-heading]').contains('Chapter');
-
-    // fill out LINK field
-    cy.get('[data-testid=chapter-link]').type('http://www.banan.no');
+    cy.get('[data-testid=publication_type-heading]').contains('Chapter');
 
     // fill out anthologoy-search
     cy.get('[data-testid=chapter-autosearch-anthology]').should('be.visible');

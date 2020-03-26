@@ -1,43 +1,48 @@
-import { useSnackbar } from 'notistack';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import Snackbar from '@material-ui/core/Snackbar';
+import Alert from '@material-ui/lab/Alert';
 
 import { removeNotification } from '../redux/actions/notificationActions';
 import { RootStore } from '../redux/reducers/rootReducer';
+import { NotificationVariant } from '../types/notification.types';
+import { Fade } from '@material-ui/core';
+
+const autoHideDuration = {
+  [NotificationVariant.Error]: null,
+  [NotificationVariant.Info]: 3000,
+  [NotificationVariant.Success]: 3000,
+  [NotificationVariant.Warning]: null,
+};
 
 const Notifier: React.FC = () => {
-  const notifications = useSelector((store: RootStore) => store.notifications);
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const notification = useSelector((store: RootStore) => store.notification);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    notifications.forEach(notification => {
-      const options = {
-        key: notification.key,
-        variant: notification.variant,
-        onClick: () => {
-          closeSnackbar(notification.key);
-        },
-        preventDuplicate: true,
-      };
-      if (notification.dismissed) {
-        closeSnackbar(notification.key);
-        dispatch(removeNotification(notification.key));
-      } else {
-        if (notification.variant === 'error') {
-          enqueueSnackbar(notification.message, {
-            ...options,
-            persist: true,
-          });
-        } else {
-          enqueueSnackbar(notification.message, { ...options });
-          dispatch(removeNotification(notification.key));
-        }
-      }
-    });
-  }, [notifications, closeSnackbar, dispatch, enqueueSnackbar]);
+  const handleClose = (_?: React.SyntheticEvent, reason?: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    dispatch(removeNotification());
+  };
 
-  return null;
+  return notification ? (
+    <Snackbar
+      data-testid="snackbar"
+      anchorOrigin={{
+        vertical: 'bottom',
+        horizontal: 'left',
+      }}
+      open={true}
+      autoHideDuration={autoHideDuration[notification.variant]}
+      onClose={handleClose}
+      TransitionComponent={Fade}
+      transitionDuration={100}>
+      <Alert onClose={handleClose} variant="filled" severity={notification.variant}>
+        {notification.message}
+      </Alert>
+    </Snackbar>
+  ) : null;
 };
 
 export default Notifier;

@@ -5,8 +5,8 @@ import { Button, Table, TableBody, TableCell, TableHead, TableRow } from '@mater
 import { useTranslation } from 'react-i18next';
 import Label from '../../components/Label';
 import NormalText from '../../components/NormalText';
-import { DummyCustomerInstitution } from './AdminCustomerInstitutionsPage';
 import { Link as RouterLink } from 'react-router-dom';
+import { CustomerInstitution } from '../../types/customerInstitution.types';
 
 const StyledTableRow = styled(TableRow)`
   background-color: ${props => props.theme.palette.box.main};
@@ -25,7 +25,7 @@ const StyledSmallCell = styled(TableCell)`
   }
 `;
 interface InstitutionListProps {
-  institutions: DummyCustomerInstitution[];
+  institutions: CustomerInstitution[];
 }
 
 const InstitutionList: FC<InstitutionListProps> = ({ institutions }) => {

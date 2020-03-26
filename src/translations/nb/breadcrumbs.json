@@ -1,10 +1,13 @@
 {
   "admin-institution": "Administrer institusjon",
   "admin-institutions": "Administrer institusjoner",
+  "admin-institution-users": "Administrer brukere",
   "authority": "Autoritet",
   "home": "Hjem",
+  "logout": "Logget ut",
   "new-publication": "Ny publikasjon",
   "my-publications": "Mine publikasjoner",
+  "public": "Offentlig versjon",
   "public-profile": "Offentlig profil",
   "publication": "Publikasjon",
   "user": "Min profil",

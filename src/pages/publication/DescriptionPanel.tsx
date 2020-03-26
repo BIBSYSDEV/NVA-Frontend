@@ -8,16 +8,18 @@ import DateFnsUtils from '@date-io/date-fns';
 import { MenuItem } from '@material-ui/core';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import TabPanel from '../../components/TabPanel/TabPanel';
-import { emptyNpiDiscipline, Publication } from '../../types/publication.types';
+import { FormikPublication } from '../../types/publication.types';
 import DisciplineSearch from './description_tab/DisciplineSearch';
 import ProjectSearch from './description_tab/ProjectSearch';
 import ProjectRow from './description_tab/ProjectRow';
 import DatePickerField from './description_tab/DatePickerField';
 import { Project } from '../../types/project.types';
 import ChipInput from 'material-ui-chip-input';
-import { orderedLanguages } from '../../types/language.types';
+import { publicationLanguages } from '../../types/language.types';
 import Heading from '../../components/Heading';
 import Card from '../../components/Card';
+import { getNpiDiscipline } from '../../utils/npiDisciplines';
+import { DescriptionFieldNames } from '../../types/publicationFieldNames';
 
 const MultipleFieldWrapper = styled.div`
   display: flex;
@@ -37,19 +39,6 @@ const StyledFieldHeader = styled.header`
   font-size: 1.5rem;
 `;
 
-export enum DescriptionFieldNames {
-  TITLE = 'title.nb',
-  ABSTRACT = 'abstract',
-  DESCRIPTION = 'description',
-  NPI_DISCIPLINE = 'npiDiscipline',
-  TAGS = 'tags',
-  PUBLICATION_YEAR = 'publicationDate.year',
-  PUBLICATION_MONTH = 'publicationDate.month',
-  PUBLICATION_DAY = 'publicationDate.day',
-  LANGUAGE = 'language',
-  PROJECTS = 'projects',
-}
-
 interface DescriptionPanelProps {
   goToNextTab: (event: React.MouseEvent<any>) => void;
   savePublication: () => void;
@@ -57,11 +46,11 @@ interface DescriptionPanelProps {
 
 const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublication }) => {
   const { t } = useTranslation('publication');
-  const { setFieldTouched, setFieldValue, values }: FormikProps<Publication> = useFormikContext();
+  const { setFieldTouched, setFieldValue, values }: FormikProps<FormikPublication> = useFormikContext();
 
   // Validation messages won't show on fields that are not touched
   const setAllFieldsTouched = useCallback(() => {
-    Object.values(DescriptionFieldNames).forEach(fieldName => setFieldTouched(fieldName));
+    Object.values(DescriptionFieldNames).forEach((fieldName) => setFieldTouched(fieldName));
   }, [setFieldTouched]);
 
   useEffect(() => {
@@ -117,12 +106,13 @@ const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublicat
           </StyledFieldWrapper>
           <MultipleFieldWrapper>
             <StyledFieldWrapper>
-              <Field name={DescriptionFieldNames.NPI_DISCIPLINE}>
+              <Field name={DescriptionFieldNames.NPI_SUBJECT_HEADING}>
                 {({ field: { name, value } }: FieldProps) => (
+                  // TODO: when we have a service for getting npiDisciplines by id this must be updated (only id is stored in backend for now)
                   <DisciplineSearch
-                    setValueFunction={newValue => setFieldValue(name, newValue ?? emptyNpiDiscipline)}
+                    setValueFunction={(npiDiscipline) => setFieldValue(name, npiDiscipline?.id ?? '')}
                     dataTestId="search_npi"
-                    value={value.title}
+                    value={getNpiDiscipline(value).name}
                     placeholder={t('description.search_for_npi_discipline')}
                   />
                 )}
@@ -133,7 +123,7 @@ const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublicat
                 {({ name, push, remove }: FieldArrayRenderProps) => (
                   <ChipInput
                     value={getIn(values, name)}
-                    onAdd={tag => push(tag)}
+                    onAdd={(tag) => push(tag)}
                     onDelete={(_, index) => remove(index)}
                     aria-label="tags"
                     label={t('description.tags')}
@@ -164,9 +154,9 @@ const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublicat
                 component={TextField}
                 select
                 label={t('description.primary_language')}>
-                {orderedLanguages.map(code => (
-                  <MenuItem value={code} key={code} data-testid={`publication-language-${code}`}>
-                    {t(`languages:${code}`)}
+                {publicationLanguages.map(({ id, value }) => (
+                  <MenuItem value={value} key={id} data-testid={`publication-language-${id}`}>
+                    {t(`languages:${id}`)}
                   </MenuItem>
                 ))}
               </Field>
@@ -181,7 +171,7 @@ const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublicat
               {({ name, insert, remove }: FieldArrayRenderProps) => (
                 <>
                   <ProjectSearch
-                    setValueFunction={newValue => insert(0, newValue)}
+                    setValueFunction={(newValue) => insert(0, newValue)}
                     dataTestId="search_project"
                     placeholder={t('description.search_for_project')}
                   />

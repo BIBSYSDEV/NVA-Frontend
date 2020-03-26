@@ -1,8 +1,11 @@
 import { Authority, emptyAuthority } from './authority.types';
 
 export enum RoleName {
-  PUBLISHER = 'Publisher',
+  ADMIN = 'Admin',
+  APP_ADMIN = 'App-admin',
   CURATOR = 'Curator',
+  EDITOR = 'Editor',
+  PUBLISHER = 'Publisher',
 }
 
 export enum Affiliation {
@@ -37,7 +40,18 @@ export interface User {
   organizationId: string;
   externalOrcid: string;
   affiliations: Affiliation[];
+  createdDate?: string;
+  lastLoginDate?: string;
+  isAppAdmin: boolean;
+  isCurator: boolean;
+  isPublisher: boolean;
+  isInstitutionAdmin: boolean;
 }
+
+export type UserAdmin = Pick<
+  User,
+  'name' | 'id' | 'externalOrcid' | 'createdDate' | 'createdDate' | 'lastLoginDate' | 'roles'
+>;
 
 export interface FeideUser {
   name: string;
@@ -72,4 +86,8 @@ export const emptyUser: User = {
   affiliations: [],
   familyName: '',
   givenName: '',
+  isAppAdmin: false,
+  isCurator: false,
+  isInstitutionAdmin: false,
+  isPublisher: false,
 };

@@ -1,8 +1,7 @@
 {
   "chapter": {
     "anthology": "Published in",
-    "info": "The anthology this chapter is published in must be registered in advance",
-    "link": "Link to publication"
+    "info": "The anthology this chapter is published in must be registered in advance"
   },
   "contributors": {
     "add_author": "Add author",
@@ -37,7 +36,9 @@
     "accepted_version": "Accepted version",
     "administrative_contract": "Administrative contract",
     "browse": "browse",
+    "drag_file": "Drag file here or",
     "drag_files": "Drag files here or",
+    "drop_file_here": "Drop your file here",
     "drop_here": "Drop your files here",
     "embargo_date": "Date for delayed publishing in archive",
     "files": "Files",
@@ -61,19 +62,23 @@
     "files_and_license": "Files and License",
     "publication": "Publication",
     "publish_settings": "Publish settings",
+    "publishing": "Publish",
     "references": "References",
-    "submission": "Submission",
-    "summary": "Summary"
+    "registration": "Register",
+    "summary": "Summary",
+    "validation_errors": "Validation errors"
   },
   "publication": {
+    "info_text": "Select the resource you wish to register or publish by uploading a resource or link to a publication.",
     "link_publication_description": "E.g. DOI link, link to article, link to video of lecture etc.",
     "link_to_publication": "Link to publication",
     "load_file": "Load file",
-    "link": "Link"
+    "start_with_link_to_publication": "Start with a link to a publication"
   },
   "references": {
     "article_number": "Article number",
-    "doi": "DOI",
+    "delete_doi_title": "Change type?",
+    "delete_doi_text": "Removing the link to the publication will change it from a registration to a new publication. Do you want to continue?",
     "is_peer_reviewed": "The publication is peer reviewed",
     "is_not_peer_reviewed": "The publication is not peer reviewed",
     "is_text_book": "Is this a textbook?",

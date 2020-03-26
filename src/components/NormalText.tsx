@@ -3,7 +3,7 @@ import { Typography } from '@material-ui/core';
 import styled from 'styled-components';
 
 const StyledTypography = styled(Typography)`
-  font-size: 0.8rem;
+  font-size: 1rem;
 `;
 
 interface NormalTextProps {

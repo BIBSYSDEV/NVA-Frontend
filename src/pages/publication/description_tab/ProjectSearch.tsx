@@ -5,7 +5,8 @@ import { searchProjectsByTitle } from '../../../api/projectApi';
 import AutoSearch from '../../../components/AutoSearch';
 import { Project } from '../../../types/project.types';
 import { debounce } from '../../../utils/debounce';
-import { useFormikContext } from 'formik';
+import { useFormikContext, FormikProps } from 'formik';
+import { FormikPublication } from '../../../types/publication.types';
 
 interface ProjectSearchProps {
   dataTestId: string;
@@ -16,7 +17,7 @@ interface ProjectSearchProps {
 const ProjectSearch: FC<ProjectSearchProps> = ({ dataTestId, setValueFunction, placeholder }) => {
   const [searchResults, setSearchResults] = useState<Project[]>([]);
   const dispatch = useDispatch();
-  const { values } = useFormikContext();
+  const { values }: FormikProps<FormikPublication> = useFormikContext();
 
   const debouncedSearch = useCallback(
     debounce(async (searchTerm: string) => {
@@ -24,7 +25,7 @@ const ProjectSearch: FC<ProjectSearchProps> = ({ dataTestId, setValueFunction, p
       if (response) {
         const unselectedProjects = response.filter(
           (project: Project) =>
-            !values.projects.some(
+            !values.entityDescription.projects.some(
               (selectedProject: any) => selectedProject.cristinProjectId === project.cristinProjectId
             )
         );

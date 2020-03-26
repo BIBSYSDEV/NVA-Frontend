@@ -1,8 +1,10 @@
 {
   "add": "Add",
+  "back_to_home": "Back to home",
   "cancel": "Cancel",
   "contact_person": "Contact",
   "date": "Date",
+  "delete": "Delete",
   "do_not_show_again": "Do not show this again",
   "edit": "Edit",
   "email": "Email",
@@ -11,6 +13,7 @@
   "institutions": "Institutions",
   "language": "Language",
   "loading": "Loading",
+  "logged_out": "You are now logged out",
   "name": "Name",
   "next": "Next",
   "no": "No",
@@ -30,6 +33,7 @@
   "status": "Status",
   "title": "Title",
   "type": "Type",
+  "users": "Users",
   "year": "Year",
   "yes": "Yes"
 }

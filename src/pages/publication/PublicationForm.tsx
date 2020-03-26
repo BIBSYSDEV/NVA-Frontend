@@ -2,11 +2,9 @@ import { Form, Formik, FormikProps } from 'formik';
 import React, { FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import * as Yup from 'yup';
 
 import TabPanel from '../../components/TabPanel/TabPanel';
-import { emptyPublication, Publication } from '../../types/publication.types';
-import { ReferenceType } from '../../types/references.types';
+import { emptyPublication, FormikPublication } from '../../types/publication.types';
 import { createUppy } from '../../utils/uppy-config';
 import ContributorsPanel from './ContributorsPanel';
 import DescriptionPanel from './DescriptionPanel';
@@ -15,7 +13,15 @@ import { PublicationFormTabs } from './PublicationFormTabs';
 import ReferencesPanel from './ReferencesPanel';
 import SubmissionPanel from './SubmissionPanel';
 import { emptyFile, File, Uppy } from '../../types/file.types';
-import { getPublication } from './../../api/publicationApi';
+import { getPublication, updatePublication } from '../../api/publicationApi';
+import { useDispatch } from 'react-redux';
+import { setNotification } from '../../redux/actions/notificationActions';
+import { NotificationVariant } from '../../types/notification.types';
+import deepmerge from 'deepmerge';
+import Progress from '../../components/Progress';
+import { publicationValidationSchema } from './PublicationFormValidationSchema';
+
+const shouldAllowMultipleFiles = false;
 
 const StyledPublication = styled.div`
   width: 100%;
@@ -23,105 +29,31 @@ const StyledPublication = styled.div`
 
 interface PublicationFormProps {
   uppy: Uppy;
-  id?: string;
+  closeForm: () => void;
+  identifier?: string;
 }
 
-const PublicationForm: FC<PublicationFormProps> = ({ uppy = createUppy(), id }) => {
+const PublicationForm: FC<PublicationFormProps> = ({
+  uppy = createUppy(shouldAllowMultipleFiles),
+  identifier,
+  closeForm,
+}) => {
   const { t } = useTranslation('publication');
   const [tabNumber, setTabNumber] = useState(0);
   const [initialValues, setInitialValues] = useState(emptyPublication);
-
-  const validationSchema = Yup.object().shape({
-    title: Yup.object().shape({
-      nb: Yup.string().required(t('publication:feedback.required_field')),
-    }),
-
-    reference: Yup.object().shape({
-      type: Yup.string().required(t('publication:feedback.required_field')),
-
-      journalArticle: Yup.object().when('type', {
-        is: ReferenceType.PUBLICATION_IN_JOURNAL,
-        then: Yup.object().shape({
-          type: Yup.string(),
-          doi: Yup.string().url(),
-          journal: Yup.object(),
-          volume: Yup.number(),
-          issue: Yup.number(),
-          pagesFrom: Yup.number(),
-          pagesTo: Yup.number(),
-          articleNumber: Yup.string(),
-          peerReview: Yup.bool(),
-        }),
-      }),
-
-      book: Yup.object().when('type', {
-        is: ReferenceType.BOOK,
-        then: Yup.object().shape({
-          type: Yup.string(),
-          publisher: Yup.object(),
-          isbn: Yup.string(),
-          peerReview: Yup.bool(),
-          textBook: Yup.bool(),
-          numberOfPages: Yup.string(),
-          series: Yup.string(),
-        }),
-      }),
-
-      chapter: Yup.object().when('type', {
-        is: ReferenceType.CHAPTER,
-        then: Yup.object().shape({
-          link: Yup.string().url(),
-          pagesFrom: Yup.number(),
-          pagesTo: Yup.number(),
-        }),
-      }),
-
-      report: Yup.object().when('type', {
-        is: ReferenceType.REPORT,
-        then: Yup.object().shape({
-          type: Yup.string(),
-          publisher: Yup.object(),
-          isbn: Yup.string(),
-          numberOfPages: Yup.string(),
-          series: Yup.string(),
-        }),
-      }),
-    }),
-    contributors: Yup.array()
-      .of(
-        Yup.object().shape({
-          type: Yup.string(),
-          name: Yup.string(),
-          corresponding: Yup.bool(),
-          email: Yup.string(),
-          orcid: Yup.string(),
-          systemControlNumber: Yup.string(),
-          institutions: Yup.array().of(
-            Yup.object().shape({
-              id: Yup.string(),
-              name: Yup.string(),
-            })
-          ),
-        })
-      )
-      .min(1, t('publication:feedback.minimum_one_contributor')),
-  });
+  const [isLoading, setIsLoading] = useState(!!identifier);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    // TODO: Fetch publication by ID in URL
-    const searchParams = new URLSearchParams(window.location.search);
-    const title = searchParams.get('title') || '';
-
     // Get files uploaded from new publication view
     const files = Object.values(uppy.getState().files).map(file => ({ ...emptyFile, ...(file as File) }));
 
-    setInitialValues({
-      ...emptyPublication,
-      title: {
-        nb: title,
-      },
-      files,
-    });
+    if (files?.length) {
+      setInitialValues({
+        ...emptyPublication,
+        fileSet: files,
+      });
+    }
   }, [uppy]);
 
   useEffect(() => {
@@ -131,13 +63,20 @@ const PublicationForm: FC<PublicationFormProps> = ({ uppy = createUppy(), id }) 
   useEffect(() => {
     const getPublicationById = async (id: string) => {
       const publication = await getPublication(id);
-      setInitialValues(publication);
+      if (publication.error) {
+        closeForm();
+        dispatch(setNotification(publication.error, NotificationVariant.Error));
+      } else {
+        // TODO: revisit necessity of deepmerge when backend model has all fields
+        setInitialValues(deepmerge(emptyPublication, publication));
+        setIsLoading(false);
+      }
     };
 
-    if (id) {
-      getPublicationById(id);
+    if (identifier) {
+      getPublicationById(identifier);
     }
-  }, [id]);
+  }, [identifier, closeForm, dispatch]);
 
   const handleTabChange = (_: React.ChangeEvent<{}>, newTabNumber: number) => {
     setTabNumber(newTabNumber);
@@ -147,17 +86,27 @@ const PublicationForm: FC<PublicationFormProps> = ({ uppy = createUppy(), id }) 
     setTabNumber(tabNumber + 1);
   };
 
-  const savePublication = async (values: Publication) => {};
+  const savePublication = async (values: FormikPublication) => {
+    const { shouldCreateDoi, ...newPublication } = values;
 
-  return (
+    const updatedPublication = await updatePublication(newPublication);
+    if (updatedPublication.error) {
+      dispatch(setNotification(updatedPublication.error, NotificationVariant.Error));
+    } else {
+      dispatch(setNotification(t('feedback:success.update_publication')));
+    }
+  };
+
+  return isLoading ? (
+    <Progress />
+  ) : (
     <StyledPublication>
       <Formik
         enableReinitialize
         initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={(values: Publication) => savePublication(values)}
-        validateOnChange={false}>
-        {({ values }: FormikProps<Publication>) => (
+        validationSchema={publicationValidationSchema}
+        onSubmit={(values: FormikPublication) => savePublication(values)}>
+        {({ values }: FormikProps<FormikPublication>) => (
           <Form>
             <PublicationFormTabs tabNumber={tabNumber} handleTabChange={handleTabChange} />
             {tabNumber === 0 && (

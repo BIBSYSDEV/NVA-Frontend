@@ -6,7 +6,6 @@ import { Link as RouterLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { Button } from '@material-ui/core';
 import { RootStore } from '../../redux/reducers/rootReducer';
-import { checkIfPublisher } from '../../utils/authorization';
 
 const StyledAdminMenu = styled.div`
   background-color: ${({ theme }) => theme.palette.box.main};
@@ -26,9 +25,7 @@ const AdminMenu: FC = () => {
   const history = useHistory();
   const { t } = useTranslation();
 
-  const isPublisher = checkIfPublisher(user);
-
-  return isPublisher ? (
+  return user.isPublisher ? (
     <>
       {history.location.pathname !== '/publication' && (
         <StyledAdminMenu>

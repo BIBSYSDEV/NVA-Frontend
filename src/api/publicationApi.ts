@@ -1,87 +1,48 @@
 import Axios from 'axios';
 import { Dispatch } from 'redux';
 
-import { addNotification } from '../redux/actions/notificationActions';
+import { setNotification } from '../redux/actions/notificationActions';
 import i18n from '../translations/i18n';
 import { Publication } from '../types/publication.types';
 import { SEARCH_RESULTS_PER_PAGE, StatusCode } from '../utils/constants';
-import { searchFailure, searchForPublications } from '../redux/actions/searchActions';
+import { searchForPublications } from '../redux/actions/searchActions';
 import { getIdToken } from './userApi';
+import { NotificationVariant } from '../types/notification.types';
 
 export enum PublicationsApiPaths {
-  SEARCH = '/publications',
-  CREATE_WITH_DOI = '/publications/doi',
-  INSERT_RESOURCE = '/publications/insert-resource',
-  UPDATE_RESOURCE = '/publications/update-resource',
-  FETCH_RESOURCE = '/publications/fetch-resource',
+  SEARCH = '/search/publications',
+  PUBLICATION = '/publication',
   FETCH_MY_RESOURCES = '/publications/fetch-my-resources',
   DOI_LOOKUP = '/doi-fetch',
   DOI_REQUESTS = '/publications/doi-requests',
   FOR_APPROVAL = '/publications/approval',
 }
 
-export const createNewPublicationFromDoi = async (doiUrl: string, dispatch: Dispatch) => {
-  const payload = { doiUrl };
-  try {
-    const idToken = await getIdToken();
-    const response = await Axios.post(PublicationsApiPaths.CREATE_WITH_DOI, payload, {
-      headers: {
-        Authorization: `Bearer ${idToken}`,
-      },
-    });
-    if (response.status === StatusCode.OK) {
-      dispatch(addNotification(i18n.t('feedback:success.create_publication')));
-    } else {
-      dispatch(addNotification(i18n.t('feedback:error.create_publication'), 'error'));
-    }
-  } catch {
-    dispatch(addNotification(i18n.t('feedback:error.create_publication'), 'error'));
-  }
-};
-
-export const createNewPublication = async (publication: Publication, dispatch: Dispatch) => {
-  try {
-    const idToken = await getIdToken();
-    const response = await Axios.post(PublicationsApiPaths.INSERT_RESOURCE, publication, {
-      headers: {
-        Authorization: `Bearer ${idToken}`,
-      },
-    });
-    if (response.status === StatusCode.OK) {
-      dispatch(addNotification(i18n.t('feedback:success.create_publication')));
-    } else {
-      dispatch(addNotification(i18n.t('feedback:error.create_publication'), 'error'));
-    }
-  } catch {
-    dispatch(addNotification(i18n.t('feedback:error.create_publication'), 'error'));
-  }
-};
-
-export const updatePublication = async (publication: Publication, dispatch: Dispatch) => {
-  const { id } = publication;
-  if (!id) {
-    dispatch(addNotification(i18n.t('feedback:error.update_publication'), 'error'));
-    return;
+export const updatePublication = async (publication: Publication) => {
+  const { identifier } = publication;
+  if (!identifier) {
+    return { error: i18n.t('feedback:error.update_publication') };
   }
   const idToken = await getIdToken();
   try {
-    const response = await Axios.put(`${PublicationsApiPaths.UPDATE_RESOURCE}/${id}`, publication, {
+    const response = await Axios.put(`${PublicationsApiPaths.PUBLICATION}/${identifier}`, publication, {
       headers: {
         Authorization: `Bearer ${idToken}`,
       },
     });
     if (response.status === StatusCode.OK) {
-      dispatch(addNotification(i18n.t('feedback:success.update_publication')));
+      return response.data;
     } else {
-      dispatch(addNotification(i18n.t('feedback:error.update_publication'), 'error'));
+      return null;
     }
   } catch {
-    dispatch(addNotification(i18n.t('feedback:error.update_publication'), 'error'));
+    return { error: i18n.t('feedback:error.update_publication') };
   }
 };
 
 export const getPublication = async (id: string) => {
-  const url = `${PublicationsApiPaths.FETCH_RESOURCE}/${id}`;
+  const url = `${PublicationsApiPaths.PUBLICATION}/${id}`;
+
   try {
     const idToken = await getIdToken();
     const response = await Axios.get(url, {
@@ -94,8 +55,8 @@ export const getPublication = async (id: string) => {
     } else {
       return null;
     }
-  } catch (error) {
-    return { error };
+  } catch {
+    return { error: i18n.t('feedback:error.get_publication') };
   }
 };
 
@@ -150,15 +111,17 @@ export const search = async (searchTerm: string, dispatch: Dispatch, offset?: nu
         Authorization: `Bearer ${idToken}`,
       },
     });
+
     if (response.status === StatusCode.OK) {
       const currentOffset = offset || 0;
       const result = response.data.slice(currentOffset, currentOffset + SEARCH_RESULTS_PER_PAGE);
+
       dispatch(searchForPublications(result, searchTerm, response.data.length, offset));
     } else {
-      dispatch(searchFailure(i18n.t('feedback:error.search')));
+      dispatch(setNotification(i18n.t('feedback:error.search', NotificationVariant.Error)));
     }
   } catch {
-    dispatch(searchFailure(i18n.t('feedback:error.search')));
+    dispatch(setNotification(i18n.t('feedback:error.search', NotificationVariant.Error)));
   }
 };
 

@@ -1,18 +1,25 @@
 import Axios from 'axios';
 import { Dispatch } from 'redux';
 
-import { addNotification } from '../redux/actions/notificationActions';
+import { setNotification } from '../redux/actions/notificationActions';
 import i18n from '../translations/i18n';
 import { StatusCode } from '../utils/constants';
 import { getIdToken } from './userApi';
 import { User } from '../types/user.types';
+import { NotificationVariant } from '../types/notification.types';
 
 export enum AuthorityApiPaths {
-  AUTHORITY = '/authority',
+  PERSON = '/person',
+}
+
+export enum AuthorityQualifiers {
+  FEIDE_ID = 'feideid',
+  ORCID = 'orcid',
+  ORGUNIT_ID = 'orgunitid',
 }
 
 export const getAuthorities = async (name: string, dispatch: Dispatch) => {
-  const url = encodeURI(`${AuthorityApiPaths.AUTHORITY}?name=${name}`);
+  const url = encodeURI(`${AuthorityApiPaths.PERSON}?name=${name}`);
 
   // remove when Authorization headers are set for all requests
   const idToken = await getIdToken();
@@ -26,10 +33,10 @@ export const getAuthorities = async (name: string, dispatch: Dispatch) => {
     if (response.status === StatusCode.OK) {
       return response.data;
     } else {
-      dispatch(addNotification(i18n.t('feedback:error.get_authorities'), 'error'));
+      dispatch(setNotification(i18n.t('feedback:error.get_authorities'), NotificationVariant.Error));
     }
   } catch {
-    dispatch(addNotification(i18n.t('feedback:error.get_authorities'), 'error'));
+    dispatch(setNotification(i18n.t('feedback:error.get_authorities'), NotificationVariant.Error));
   }
 };
 
@@ -38,7 +45,7 @@ export const updateFeideForAuthority = async (feideid: string, systemControlNumb
     return;
   }
 
-  const url = `${AuthorityApiPaths.AUTHORITY}/${systemControlNumber}`;
+  const url = `${AuthorityApiPaths.PERSON}/${systemControlNumber}`;
   return await updateAuthorityAndHandleErrors(url, { feideid });
 };
 
@@ -47,7 +54,7 @@ export const updateOrcidForAuthority = async (orcid: string, systemControlNumber
     return;
   }
 
-  const url = `${AuthorityApiPaths.AUTHORITY}/${systemControlNumber}`;
+  const url = `${AuthorityApiPaths.PERSON}/${systemControlNumber}`;
   return await updateAuthorityAndHandleErrors(url, { orcid });
 };
 
@@ -56,12 +63,12 @@ export const updateInstitutionForAuthority = async (orgunitid: string, systemCon
     return;
   }
 
-  const url = `${AuthorityApiPaths.AUTHORITY}/${systemControlNumber}`;
+  const url = `${AuthorityApiPaths.PERSON}/${systemControlNumber}`;
   return await updateAuthorityAndHandleErrors(url, { orgunitid });
 };
 
 export const createAuthority = async (user: User) => {
-  const url = AuthorityApiPaths.AUTHORITY;
+  const url = AuthorityApiPaths.PERSON;
 
   // remove when Authorization headers are set for all requests
   const idToken = await getIdToken();
@@ -79,9 +86,91 @@ export const createAuthority = async (user: User) => {
         error: i18n.t('feedback:error.create_authority'),
       };
     }
-  } catch (error) {
+  } catch {
     return {
       error: i18n.t('feedback:error.create_authority'),
+    };
+  }
+};
+
+export const addQualifierIdForAuthority = async (
+  systemControlNumber: string,
+  qualifier: AuthorityQualifiers,
+  identifier: string
+) => {
+  const url = `${AuthorityApiPaths.PERSON}/${systemControlNumber}/identifiers/${qualifier}/${identifier}`;
+
+  try {
+    const idToken = await getIdToken();
+    const headers = {
+      Authorization: `Bearer ${idToken}`,
+    };
+    const response = await Axios.post(url, { headers });
+    if (response.status === StatusCode.OK) {
+      return response.data;
+    } else if (response.status === StatusCode.NO_CONTENT) {
+      return;
+    } else {
+      return {
+        error: i18n.t('feedback:error.update_authority'),
+      };
+    }
+  } catch {
+    return {
+      error: i18n.t('feedback:error.update_authority'),
+    };
+  }
+};
+
+export const updateQualifierIdForAuthority = async (
+  systemControlNumber: string,
+  qualifier: AuthorityQualifiers,
+  identifier: string,
+  updatedIdentifier: string
+) => {
+  const url = `${AuthorityApiPaths.PERSON}/${systemControlNumber}/identifiers/${qualifier}/${identifier}/update/${updatedIdentifier}`;
+
+  try {
+    const idToken = await getIdToken();
+    const headers = {
+      Authorization: `Bearer ${idToken}`,
+    };
+
+    const response = await Axios.put(url, { headers });
+    if (response.status === StatusCode.OK) {
+      return response.data;
+    } else {
+      return null;
+    }
+  } catch {
+    return {
+      error: i18n.t('feedback:error.update_identifier'),
+    };
+  }
+};
+
+export const removeQualifierIdFromAuthority = async (
+  systemControlNumber: string,
+  qualifier: AuthorityQualifiers,
+  identifier: string
+) => {
+  const url = `${AuthorityApiPaths.PERSON}/${systemControlNumber}/identifiers/${qualifier}/${identifier}`;
+
+  try {
+    const idToken = await getIdToken();
+    const headers = {
+      Authorization: `Bearer ${idToken}`,
+    };
+
+    const response = await Axios.delete(url, { headers });
+    if (response.status === StatusCode.OK) {
+      return response.data;
+    } else {
+      return null;
+    }
+  } catch {
+    return {
+      error: i18n.t('feedback:error.delete_identifier'),
     };
   }
 };
@@ -103,7 +192,7 @@ const updateAuthorityAndHandleErrors = async (url: string, body: any) => {
         error: i18n.t('feedback:error.update_authority'),
       };
     }
-  } catch (error) {
+  } catch {
     return {
       error: i18n.t('feedback:error.update_authority'),
     };

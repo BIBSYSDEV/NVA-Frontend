@@ -2,6 +2,7 @@
   "applications": "Applikasjoner",
   "authority": {
     "connect_authority": "Koble til din forfatteridentitet",
+    "connected_authority": "Din forfatteridentitet er koblet til",
     "connected_info": "Du har en tilkoblet forfatter ID",
     "create_authority": "Opprett forfatteridentitet",
     "description_no_authority_found": "Vi finner ikke en forfatteridentitet som passer med ditt navn (hentet fra din pålogging til denne tjenesten). Det vil derfor opprettes en ny forfatteridentitet, slik at du kan ta i bruk denne tjenesten. Om navnet over ikke stemmer med deg, så må du ta kontakt med kurator ved din institusjon for å få korrigert din forfatteridentitet.",
@@ -40,8 +41,12 @@
     "your_orcid": "Din ORCID"
   },
   "roles": {
+    "creator": "Registrator",
     "curator": "Kurator",
+    "curators": "Kuratorer",
     "curator_description": "Kurator er tilgangen alle som kan godkjenne og publisere for andre har",
+    "editors": "Redaktører",
+    "institution_admins": "Institusjonsadministratorer",
     "publisher": "Utgiver",
     "publisher_description": "Utgiver er den tilgangen ansatte på institusjonen har. Gir tilgang til å registrere egne publikasjoner"
   },
