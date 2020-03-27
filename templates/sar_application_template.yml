@@ -103,7 +103,6 @@ Resources:
   FrontendBucket:
     Type: 'AWS::S3::Bucket'
 
-
   FrontendBucketPolicy:
     Type: AWS::S3::BucketPolicy
     Properties:

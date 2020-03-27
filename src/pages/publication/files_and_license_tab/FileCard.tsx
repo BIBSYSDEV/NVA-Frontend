@@ -24,6 +24,9 @@ import HelpIcon from '@material-ui/icons/Help';
 import SubHeading from '../../../components/SubHeading';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Label from '../../../components/Label';
+import { Field, FieldProps, FormikProps, useFormikContext, ErrorMessage } from 'formik';
+import { FormikPublication } from '../../../types/publication.types';
+import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 
 const StyledDescription = styled.div`
   font-style: italic;
@@ -74,12 +77,13 @@ const StyledActions = styled.div`
 interface FileCardProps {
   file: File;
   removeFile: () => void;
-  updateFile?: (newFile: File) => void;
   toggleLicenseModal?: () => void;
+  baseFieldName?: string;
 }
 
-const FileCard: React.FC<FileCardProps> = ({ file, removeFile, updateFile, toggleLicenseModal }) => {
+const FileCard: React.FC<FileCardProps> = ({ file, removeFile, toggleLicenseModal, baseFieldName }) => {
   const { t } = useTranslation('publication');
+  const { setFieldValue }: FormikProps<FormikPublication> = useFormikContext();
 
   return (
     <Card data-testid="uploaded-file-card">
@@ -88,107 +92,101 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, updateFile, toggl
         {t('files_and_license.uploaded_size', { size: Math.round(file.data.size / 1000) })}
       </StyledDescription>
 
-      {updateFile && (
+      {baseFieldName && (
         <>
-          <FormControlLabel
-            control={
-              <Checkbox
-                color="primary"
-                checked={file.administrativeContract}
-                onChange={() =>
-                  updateFile({
-                    ...file,
-                    administrativeContract: !file.administrativeContract,
-                  })
-                }
+          <Field name={`${baseFieldName}.${SpecificFileFieldNames.ADMINISTRATIVE_AGREEMENT}`}>
+            {({ field }: FieldProps) => (
+              <FormControlLabel
+                control={<Checkbox color="primary" {...field} checked={field.value} />}
+                label={t('files_and_license.administrative_contract')}
               />
-            }
-            label={t('files_and_license.administrative_contract')}
-          />
+            )}
+          </Field>
 
-          {!file.administrativeContract && (
+          {!file.administrativeAgreement && (
             <StyledFileInfo>
-              <StyledFormControl>
-                <FormLabel component="legend">{t('files_and_license.select_version')}</FormLabel>
-                <RadioGroup
-                  aria-label="version"
-                  value={file.isPublished ? 'published' : 'accepted'}
-                  onChange={event =>
-                    updateFile({
-                      ...file,
-                      isPublished: event.target.value === 'published',
-                    })
-                  }>
-                  <FormControlLabel
-                    value="accepted"
-                    control={<Radio color="primary" checked={file.isPublished !== null && !file.isPublished} />}
-                    label={t('files_and_license.accepted_version')}
-                  />
-                  <FormControlLabel
-                    value="published"
-                    control={<Radio color="primary" checked={!!file.isPublished} />}
-                    label={t('files_and_license.published_version')}
-                  />
-                </RadioGroup>
-              </StyledFormControl>
+              <Field name={`${baseFieldName}.${SpecificFileFieldNames.PUBLISHER_AUTHORITY}`}>
+                {({ field }: FieldProps) => (
+                  <StyledFormControl>
+                    <FormLabel component="legend">{t('files_and_license.select_version')}</FormLabel>
+                    <RadioGroup
+                      aria-label="version"
+                      {...field}
+                      onChange={(event) => setFieldValue(field.name, event.target.value === 'published')}>
+                      <FormControlLabel
+                        value="accepted"
+                        control={<Radio color="primary" checked={field.value !== null && !field.value} />}
+                        label={t('files_and_license.accepted_version')}
+                      />
+                      <FormControlLabel
+                        value="published"
+                        control={<Radio color="primary" checked={field.value} />}
+                        label={t('files_and_license.published_version')}
+                      />
+                    </RadioGroup>
+                  </StyledFormControl>
+                )}
+              </Field>
 
               <StyledFormControl>
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                  <KeyboardDatePicker
-                    inputVariant="outlined"
-                    label={t('files_and_license.embargo_date')}
-                    onChange={value =>
-                      updateFile({
-                        ...file,
-                        embargoDate: value,
-                      })
-                    }
-                    value={file.embargoDate}
-                    autoOk
-                    format={'dd.MM.yyyy'}
-                  />
+                  <Field name={`${baseFieldName}.${SpecificFileFieldNames.EMBARGO_DATE}`}>
+                    {({ field, meta: { error, touched } }: FieldProps) => (
+                      <KeyboardDatePicker
+                        inputVariant="outlined"
+                        label={t('files_and_license.embargo_date')}
+                        {...field}
+                        onChange={(value) => setFieldValue(field.name, value)}
+                        disablePast
+                        autoOk
+                        format={'dd.MM.yyyy'}
+                        error={!!error && touched}
+                        helperText={<ErrorMessage name={field.name} />}
+                      />
+                    )}
+                  </Field>
                 </MuiPickersUtilsProvider>
               </StyledFormControl>
 
               <StyledFormControl>
                 <StyledVerticalAlign>
-                  <StyledSelect
-                    select
-                    fullWidth
-                    SelectProps={{
-                      renderValue: (option: any) => {
-                        const selectedLicense = licenses.find(license => license.identifier === option);
-                        return selectedLicense ? (
-                          <StyledVerticalAlign>
-                            <img src={selectedLicense.image} alt={selectedLicense.identifier} />
-                            <StyledLicenseName>{option}</StyledLicenseName>
-                          </StyledVerticalAlign>
-                        ) : null;
-                      },
-                    }}
-                    variant="outlined"
-                    value={file.license?.identifier || ''}
-                    label={t('files_and_license.license')}
-                    onChange={({ target: { value } }) =>
-                      updateFile({
-                        ...file,
-                        license: {
-                          identifier: value as LicenseNames,
-                          labels: { nb: value },
-                        },
-                      })
-                    }>
-                    {licenses.map(license => (
-                      <MenuItem key={license.identifier} value={license.identifier} divider dense>
-                        <ListItemIcon>
-                          <img src={license.image} alt={license.identifier} />
-                        </ListItemIcon>
-                        <ListItemText>
-                          <StyledLicenseName>{license.identifier}</StyledLicenseName>
-                        </ListItemText>
-                      </MenuItem>
-                    ))}
-                  </StyledSelect>
+                  <Field name={`${baseFieldName}.${SpecificFileFieldNames.LICENSE}`}>
+                    {({ field, meta: { error, touched } }: FieldProps) => (
+                      <StyledSelect
+                        select
+                        fullWidth
+                        SelectProps={{
+                          renderValue: (option: any) => {
+                            const selectedLicense = licenses.find((license) => license.identifier === option);
+                            return selectedLicense ? (
+                              <StyledVerticalAlign>
+                                <img src={selectedLicense.image} alt={selectedLicense.identifier} />
+                                <StyledLicenseName>{option}</StyledLicenseName>
+                              </StyledVerticalAlign>
+                            ) : null;
+                          },
+                        }}
+                        variant="outlined"
+                        value={field.value?.identifier || ''}
+                        error={!!error && touched}
+                        helperText={<ErrorMessage name={field.name} />}
+                        label={t('files_and_license.license')}
+                        onChange={({ target: { value } }) =>
+                          setFieldValue(field.name, { identifier: value as LicenseNames, labels: { nb: value } })
+                        }>
+                        {licenses.map((license) => (
+                          <MenuItem key={license.identifier} value={license.identifier} divider dense>
+                            <ListItemIcon>
+                              <img src={license.image} alt={license.identifier} />
+                            </ListItemIcon>
+                            <ListItemText>
+                              <StyledLicenseName>{license.identifier}</StyledLicenseName>
+                            </ListItemText>
+                          </MenuItem>
+                        ))}
+                      </StyledSelect>
+                    )}
+                  </Field>
                   <IconButton size="small" onClick={toggleLicenseModal}>
                     <HelpIcon />
                   </IconButton>

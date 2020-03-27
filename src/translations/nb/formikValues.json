@@ -1,10 +1,12 @@
 {
-  "entityDescription": {
-    "contributors": "$t(publication:contributors.authors)",
-    "mainTitle": "$t(common:title)",
-    "peerReview": "$t(publication:references.peer_reviewed)",
-    "publicationContext": "$t(common:publisher)",
-    "publicationSubtype": "Publikasjonssubtype",
-    "publicationType": "Publikasjonstype"
-  }
+  "contributors": "$t(publication:contributors.authors)",
+  "embargoDate": "$t(publication:files_and_license.embargo_date)",
+  "fileSet": "$t(publication:heading.files_and_license)",
+  "license": "$t(publication:files_and_license.license)",
+  "mainTitle": "$t(common:title)",
+  "peerReview": "$t(publication:references.peer_reviewed)",
+  "publicationContext": "$t(common:publisher)",
+  "publicationSubtype": "Publikasjonssubtype",
+  "publicationType": "Publikasjonstype",
+  "publisherAuthority": "$t(publication:files_and_license.published_version)"
 }

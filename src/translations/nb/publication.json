@@ -30,6 +30,7 @@
   "feedback": {
     "invalid_url": "Ugyldig lenke",
     "minimum_one_contributor": "Du må ha minst en forfatter på denne publikasjonen",
+    "minimum_one_file": "Du må laste opp minst en fil for denne publikasjonen",
     "required_field": "Påkrevd felt"
   },
   "files_and_license": {

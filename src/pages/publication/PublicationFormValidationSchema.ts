@@ -9,9 +9,15 @@ import {
 import { LanguageValues } from '../../types/language.types';
 import i18n from '../../translations/i18n';
 
+const ErrorMessage = {
+  REQUIRED: i18n.t('publication:feedback.required_field'),
+  MISSING_CONTRIBUTOR: i18n.t('publication:feedback.minimum_one_contributor'),
+  MISSING_FILE: i18n.t('publication:feedback.minimum_one_file'),
+};
+
 export const publicationValidationSchema = Yup.object().shape({
   entityDescription: Yup.object().shape({
-    mainTitle: Yup.string().required(i18n.t('publication:feedback.required_field')),
+    mainTitle: Yup.string().required(ErrorMessage.REQUIRED),
     abstract: Yup.string(),
     description: Yup.string(),
     tags: Yup.array().of(Yup.string()),
@@ -23,27 +29,23 @@ export const publicationValidationSchema = Yup.object().shape({
     }),
     language: Yup.string().url().oneOf(Object.values(LanguageValues)),
     projects: Yup.array().of(Yup.object()), // TODO
-    publicationType: Yup.string()
-      .oneOf(Object.values(PublicationType))
-      .required(i18n.t('publication:feedback.required_field')),
+    publicationType: Yup.string().oneOf(Object.values(PublicationType)).required(ErrorMessage.REQUIRED),
     publicationSubtype: Yup.string()
       .when('publicationType', {
         is: PublicationType.PUBLICATION_IN_JOURNAL,
-        then: Yup.string()
-          .oneOf(Object.values(JournalArticleType))
-          .required(i18n.t('publication:feedback.required_field')),
+        then: Yup.string().oneOf(Object.values(JournalArticleType)).required(ErrorMessage.REQUIRED),
       })
       .when('publicationType', {
         is: PublicationType.BOOK,
-        then: Yup.string().oneOf(Object.values(BookType)).required(i18n.t('publication:feedback.required_field')),
+        then: Yup.string().oneOf(Object.values(BookType)).required(ErrorMessage.REQUIRED),
       })
       .when('publicationType', {
         is: PublicationType.REPORT,
-        then: Yup.string().oneOf(Object.values(ReportType)).required(i18n.t('publication:feedback.required_field')),
+        then: Yup.string().oneOf(Object.values(ReportType)).required(ErrorMessage.REQUIRED),
       })
       .when('publicationType', {
         is: PublicationType.DEGREE,
-        then: Yup.string().oneOf(Object.values(DegreeType)).required(i18n.t('publication:feedback.required_field')),
+        then: Yup.string().oneOf(Object.values(DegreeType)).required(ErrorMessage.REQUIRED),
       })
       .when('publicationType', {
         is: PublicationType.CHAPTER,
@@ -51,17 +53,17 @@ export const publicationValidationSchema = Yup.object().shape({
       }),
     contributors: Yup.array()
       .of(Yup.object()) // TODO
-      .min(1, i18n.t('publication:feedback.minimum_one_contributor')),
+      .min(1, ErrorMessage.MISSING_CONTRIBUTOR),
     publisher: Yup.object()
       .nullable()
       .shape({
         title: Yup.string(),
       })
-      .required(i18n.t('publication:feedback.required_field')),
+      .required(ErrorMessage.REQUIRED),
     peerReview: Yup.boolean().when('publicationSubtype', {
       is: (subtype) =>
         [PublicationType.PUBLICATION_IN_JOURNAL, PublicationType.BOOK, PublicationType.REPORT].includes(subtype),
-      then: Yup.boolean().required(i18n.t('publication:feedback.required_field')),
+      then: Yup.boolean().required(ErrorMessage.REQUIRED),
     }),
     isbn: Yup.string(),
     numberOfPages: Yup.string(),
@@ -87,8 +89,32 @@ export const publicationValidationSchema = Yup.object().shape({
           level: Yup.number(),
           openAccess: Yup.boolean(),
         })
-        .required(i18n.t('publication:feedback.required_field')),
+        .required(ErrorMessage.REQUIRED),
     }),
   }),
-  fileSet: Yup.array().of(Yup.object()), // TODO
+  fileSet: Yup.array()
+    .of(
+      Yup.object().shape({
+        administrativeAgreement: Yup.boolean(),
+        embargoDate: Yup.date()
+          .nullable()
+          .when('administrativeAgreement', {
+            is: false,
+            then: Yup.date().nullable().min(new Date()).required(ErrorMessage.REQUIRED),
+          }),
+        publisherAuthority: Yup.boolean()
+          .nullable()
+          .when('administrativeAgreement', {
+            is: false,
+            then: Yup.boolean().required(ErrorMessage.REQUIRED),
+          }),
+        license: Yup.object()
+          .nullable()
+          .when('administrativeAgreement', {
+            is: false,
+            then: Yup.object().required(ErrorMessage.REQUIRED),
+          }),
+      })
+    )
+    .min(1, ErrorMessage.MISSING_FILE),
 });
