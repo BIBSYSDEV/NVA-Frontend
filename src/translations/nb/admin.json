@@ -4,6 +4,7 @@
   "archive_name": "Arkivnavn",
   "cname": "CNAME",
   "display_name": "Visningsnavn på instutusjonen",
+  "edit_institution": "Endre institusjon",
   "feedback": {
     "required_field": "Påkrevd felt"
   },

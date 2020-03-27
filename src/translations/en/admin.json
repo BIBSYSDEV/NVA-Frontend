@@ -4,6 +4,7 @@
   "archive_name": "Archive name",
   "cname": "CNAME",
   "display_name": "Display name for the institution",
+  "edit_institution": "Edit institution",
   "feedback": {
     "required_field": "Required field"
   },
