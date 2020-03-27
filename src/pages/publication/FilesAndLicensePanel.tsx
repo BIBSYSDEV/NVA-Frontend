@@ -14,7 +14,7 @@ import PublicationChannelInfoCard from './files_and_license_tab/PublicationChann
 import NormalText from '../../components/NormalText';
 import Label from '../../components/Label';
 import { FormHelperText } from '@material-ui/core';
-import { getAllFileFields } from '../../utils/formik-fields';
+import { getAllFileFields } from '../../utils/formik-helpers';
 
 const shouldAllowMultipleFiles = true;
 

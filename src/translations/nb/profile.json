@@ -5,6 +5,8 @@
     "connected_authority": "Din forfatteridentitet er koblet til",
     "connected_info": "Du har en tilkoblet forfatter ID",
     "create_authority": "Opprett forfatteridentitet",
+    "create_own_authority": "Opprett meg som forfatter",
+    "description_create_own_authority": "Du har valgt å ikke ta i bruk en eksisterende forfatteridentitet, som har publisert tidligere og oppretter nå en ny forfatteridentitet. \n\nDet er ikke ønskelig å opprette nye forfatteridentiteter. Sjekk publikasjonene til de forfatteridentitetene som har likt navn som deg, og vær sikker på at du ikke oppretter en duplikatidentitet. \n\nOm du ser noe feil i publikasjonene som er koblet til det som er din forfatteridentitet, så koble deg på denne identiteten og ta kontakt med kurator på din institusjon for å få rettet feilen. \n\nOm navnet over ikke stemmer med deg, så må du ta kontakt med din kurator ved din institusjon for å få korrigert din forfatteridentitet. [Lenke til kontaktskjema her]",
     "description_no_authority_found": "Vi finner ikke en forfatteridentitet som passer med ditt navn (hentet fra din pålogging til denne tjenesten). Det vil derfor opprettes en ny forfatteridentitet, slik at du kan ta i bruk denne tjenesten. Om navnet over ikke stemmer med deg, så må du ta kontakt med kurator ved din institusjon for å få korrigert din forfatteridentitet.",
     "last_publication": "Siste publikasjon",
     "no_publications_found": "Ingen utgivelser funnet",

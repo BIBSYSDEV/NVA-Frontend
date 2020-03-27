@@ -21,7 +21,7 @@ import Card from '../../components/Card';
 import { useHistory } from 'react-router';
 import LabelContentRow from '../../components/LabelContentRow';
 import ErrorSummary from './submission_tab/ErrorSummary';
-import { getAllFileFields } from '../../utils/formik-fields';
+import { getAllFileFields } from '../../utils/formik-helpers';
 
 const StyledPublishButton = styled(Button)`
   margin-top: 0.5rem;

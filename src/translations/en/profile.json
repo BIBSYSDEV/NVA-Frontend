@@ -5,6 +5,8 @@
     "connected_authority": "Your author identity is connected",
     "connected_info": "You have a connected author ID",
     "create_authority": "Create author ID",
+    "create_own_authority": "Create new author ID",
+    "description_create_own_authority": "There exists author identities which matches your name. You can still create a new one.",
     "description_no_authority_found": "We cannot find an author identity which matches with your name (retrieved from your login account). A new author identity will be created in order for you to use this service. If the name does not match your name, you need to contact your curator at your institution in order to correct it.",
     "last_publication": "Last publication",
     "no_publications_found": "No publications found",

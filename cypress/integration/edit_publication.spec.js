@@ -10,10 +10,6 @@ describe('User opens an item in the My Publication list', () => {
     cy.get('[data-testid=author-radio-button]').eq(1).click({ force: true }).contains('Test User');
     cy.get('[data-testid=connect-author-button]').click({ force: true });
 
-    // connect orcid
-    cy.get('[data-testid=open-orcid-modal]').click({ force: true });
-    cy.get('[data-testid=connect-to-orcid]').click({ force: true });
-
     // Open My Publications
     cy.get('[data-testid=menu]').click({ force: true });
     cy.get('[data-testid=menu-my-publications-button]').click({ force: true });

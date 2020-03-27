@@ -6,7 +6,7 @@ import styled from 'styled-components';
 
 import { Link as MuiLink } from '@material-ui/core';
 
-import { updateOrcidForAuthority } from '../../api/authorityApi';
+import { addQualifierIdForAuthority, AuthorityQualifiers } from '../../api/authorityApi';
 import { getOrcidInfo } from '../../api/external/orcidApi';
 import ButtonModal from '../../components/ButtonModal';
 import { setAuthorityData } from '../../redux/actions/userActions';
@@ -65,7 +65,11 @@ const User: React.FC = () => {
   useEffect(() => {
     const updateOrcid = async () => {
       if (user.authority?.systemControlNumber && !user.authority?.orcids.includes(user.externalOrcid)) {
-        const updatedAuthority = await updateOrcidForAuthority(user.externalOrcid, user.authority.systemControlNumber);
+        const updatedAuthority = await addQualifierIdForAuthority(
+          user.authority.systemControlNumber,
+          AuthorityQualifiers.ORCID,
+          user.externalOrcid
+        );
         dispatch(setAuthorityData(updatedAuthority));
       }
     };

@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { getAuthorities, updateInstitutionForAuthority } from './api/authorityApi';
+import { getAuthorities, AuthorityQualifiers, addQualifierIdForAuthority } from './api/authorityApi';
 import { getCurrentAuthenticatedUser } from './api/userApi';
 import Breadcrumbs from './layout/Breadcrumbs';
 import Footer from './layout/Footer';
@@ -67,8 +67,8 @@ const App: React.FC = () => {
         Amplify.configure(awsConfig);
       }
       dispatch(getCurrentAuthenticatedUser());
-      Hub.listen('auth', data => hubListener(data, dispatch));
-      return () => Hub.remove('auth', data => hubListener(data, dispatch));
+      Hub.listen('auth', (data) => hubListener(data, dispatch));
+      return () => Hub.remove('auth', (data) => hubListener(data, dispatch));
     }
   }, [dispatch, user.isLoggedIn]);
 
@@ -77,12 +77,13 @@ const App: React.FC = () => {
       const authorities = await getAuthorities(user.name, dispatch);
       if (authorities) {
         const filteredAuthorities: Authority[] = authorities.filter((auth: Authority) =>
-          auth.feideids.some(id => id === user.id)
+          auth.feideids.some((id) => id === user.id)
         );
         if (filteredAuthorities.length === 1) {
-          const updatedAuthority = await updateInstitutionForAuthority(
-            user.organizationId,
-            filteredAuthorities[0].systemControlNumber
+          const updatedAuthority = await addQualifierIdForAuthority(
+            filteredAuthorities[0].systemControlNumber,
+            AuthorityQualifiers.ORGUNIT_ID,
+            user.organizationId
           );
           if (!updatedAuthority || updatedAuthority?.error) {
             dispatch(setAuthorityData(filteredAuthorities[0]));

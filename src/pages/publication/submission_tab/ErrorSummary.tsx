@@ -1,11 +1,12 @@
 import React, { FC } from 'react';
-import { FormikProps, useFormikContext, FormikErrors } from 'formik';
+import { FormikProps, useFormikContext } from 'formik';
 import styled from 'styled-components';
 import { FormikPublication } from '../../../types/publication.types';
 import Heading from '../../../components/Heading';
 import NormalText from '../../../components/NormalText';
 import { useTranslation } from 'react-i18next';
 import Card from '../../../components/Card';
+import { flattenFormikErrors } from '../../../utils/formik-helpers';
 
 const StyledCard = styled(Card)`
   border: 3px solid ${({ theme }) => theme.palette.danger.main};
@@ -20,7 +21,7 @@ interface FormikError {
 const ErrorSummary: FC = () => {
   const { t } = useTranslation('publication');
   const { errors }: FormikProps<FormikPublication> = useFormikContext();
-  const flattenedErrors = flattenErrors(errors);
+  const flattenedErrors = flattenFormikErrors(errors);
 
   return flattenedErrors.length > 0 ? (
     <StyledCard>
@@ -33,18 +34,6 @@ const ErrorSummary: FC = () => {
       ))}
     </StyledCard>
   ) : null;
-};
-
-// Convert all errors from nested object to flat array
-const flattenErrors = (validationErrors: FormikErrors<any>): FormikError[] => {
-  return Object.entries(validationErrors)
-    .map(([fieldName, errorMessage]) => {
-      if (typeof errorMessage === 'object' && errorMessage !== null) {
-        return flattenErrors(errorMessage as FormikErrors<any>);
-      }
-      return { fieldName, errorMessage };
-    })
-    .flat();
 };
 
 export default ErrorSummary;

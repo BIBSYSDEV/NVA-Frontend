@@ -53,7 +53,6 @@ Parameters:
   AlmaApiUrl:
     Type: String
 
-
 Resources:
   DeploymentLayer:
     Type: AWS::Serverless::Application
@@ -103,7 +102,6 @@ Resources:
 
   FrontendBucket:
     Type: 'AWS::S3::Bucket'
-
 
   FrontendBucketPolicy:
     Type: AWS::S3::BucketPolicy

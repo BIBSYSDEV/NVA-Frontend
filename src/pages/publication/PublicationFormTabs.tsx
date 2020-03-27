@@ -1,4 +1,4 @@
-import { FormikErrors, FormikProps, FormikTouched, useFormikContext, getIn } from 'formik';
+import { FormikProps, useFormikContext, getIn } from 'formik';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -7,7 +7,7 @@ import { Tabs } from '@material-ui/core';
 import LinkTab from '../../components/TabPanel/LinkTab';
 import { FormikPublication } from '../../types/publication.types';
 import { ReferenceFieldNames, DescriptionFieldNames } from '../../types/publicationFieldNames';
-import { getAllFileFields } from '../../utils/formik-fields';
+import { hasTouchedError, getAllFileFields } from '../../utils/formik-helpers';
 
 const a11yProps = (tabDescription: string) => {
   return {
@@ -51,20 +51,4 @@ export const PublicationFormTabs: FC<PublicationFormTabsProps> = ({ handleTabCha
       <LinkTab label={`5. ${submissionLabel}`} {...a11yProps('submission')} />
     </Tabs>
   );
-};
-
-const hasTouchedError = (
-  errors: FormikErrors<FormikPublication>,
-  touched: FormikTouched<FormikPublication>,
-  fieldNames: string[]
-): boolean => {
-  if (!Object.keys(errors).length || !Object.keys(touched).length || !fieldNames.length) {
-    return false;
-  }
-
-  return fieldNames.some((fieldName) => {
-    const fieldHasError = !!getIn(errors, fieldName);
-    const fieldIsTouched = getIn(touched, fieldName);
-    return fieldHasError && fieldIsTouched;
-  });
 };
