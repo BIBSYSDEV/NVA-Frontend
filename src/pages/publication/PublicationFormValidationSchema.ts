@@ -8,6 +8,7 @@ import {
 } from '../../types/publicationFieldNames';
 import { LanguageValues } from '../../types/language.types';
 import i18n from '../../translations/i18n';
+import { ContributorRole } from '../../types/contributor.types';
 
 const ErrorMessage = {
   REQUIRED: i18n.t('publication:feedback.required_field'),
@@ -52,7 +53,14 @@ export const publicationValidationSchema = Yup.object().shape({
         then: Yup.string().length(0),
       }),
     contributors: Yup.array()
-      .of(Yup.object()) // TODO
+      .of(
+        Yup.object().shape({
+          affiliations: Yup.array().of(Yup.object()),
+          corresponding: Yup.boolean(),
+          role: Yup.string().oneOf(Object.values(ContributorRole)).required(ErrorMessage.REQUIRED), // TODO
+          sequence: Yup.number(),
+        })
+      )
       .min(1, ErrorMessage.MISSING_CONTRIBUTOR),
     publisher: Yup.object()
       .nullable()

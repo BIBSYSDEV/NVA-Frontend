@@ -18,8 +18,8 @@ import { useTranslation } from 'react-i18next';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 import SubHeading from '../../../../components/SubHeading';
-import { ContributorFieldNames } from '../../ContributorsPanel';
 import { FormikPublication } from '../../../../types/publication.types';
+import { ContributorFieldNames } from '../../../../types/publicationFieldNames';
 
 interface SortableItemProps {
   contributor: Contributor;
@@ -53,8 +53,8 @@ const SortableItem = SortableElement(({ contributor, placement, onDelete }: Sort
         </div>
       </TableCell>
       <TableCell align="left">
-        {contributor.institutions?.map(institution => (
-          <div key={`${institution.id}`}>{institution.name}</div>
+        {contributor.affiliations?.map((affiliation) => (
+          <div key={`${affiliation.id}`}>{affiliation.name}</div>
         ))}
       </TableCell>
       <TableCell align="right">
@@ -113,11 +113,11 @@ const SortableTable: FC<SortableTableProps> = ({ listOfContributors, push, remov
       <SortableList
         contributors={listOfContributors}
         onSortEnd={handleOnSortEnd}
-        onDelete={index => remove(index)}
+        onDelete={(index) => remove(index)}
         distance={10}
       />
       <AddContributor
-        onAuthorSelected={authority => {
+        onAuthorSelected={(authority) => {
           const contributor: Contributor = {
             ...emptyContributor,
             // TODO: add institution when available from backend

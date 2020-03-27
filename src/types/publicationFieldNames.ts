@@ -75,3 +75,16 @@ export enum SpecificFileFieldNames {
   EMBARGO_DATE = 'embargoDate',
   LICENSE = 'license',
 }
+
+export enum ContributorFieldNames {
+  CONTRIBUTORS = 'entityDescription.contributors',
+}
+
+// The following fields should be present in "entityDescription.contributors[index].<KEY>"
+export enum SpecificContributorFieldNames {
+  AFFILIATIONS = 'affiliations',
+  CORRESPONDING = 'corresponding',
+  EMAIL = 'email',
+  ROLE = 'role',
+  SEQUENCE = 'sequence',
+}

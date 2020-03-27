@@ -1,5 +1,10 @@
 import { FormikErrors, FormikTouched, getIn } from 'formik';
-import { FileFieldNames, SpecificFileFieldNames } from '../types/publicationFieldNames';
+import {
+  FileFieldNames,
+  SpecificFileFieldNames,
+  SpecificContributorFieldNames,
+  ContributorFieldNames,
+} from '../types/publicationFieldNames';
 
 interface CustomError {
   fieldName: string;
@@ -40,6 +45,18 @@ export const getAllFileFields = (numberOfUploadedFiles: number) => {
     for (let index = 0; index < numberOfUploadedFiles; index++) {
       for (const fileField of Object.values(SpecificFileFieldNames)) {
         fieldNames.push(`${FileFieldNames.FILE_SET}[${index}].${fileField}`);
+      }
+    }
+  }
+  return fieldNames;
+};
+
+export const getAllContributorFields = (numberOfContributors: number) => {
+  let fieldNames: string[] = Object.values(ContributorFieldNames);
+  if (numberOfContributors > 0) {
+    for (let index = 0; index < numberOfContributors; index++) {
+      for (const fileField of Object.values(SpecificContributorFieldNames)) {
+        fieldNames.push(`${ContributorFieldNames.CONTRIBUTORS}[${index}].${fileField}`);
       }
     }
   }

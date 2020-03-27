@@ -15,11 +15,11 @@ const SubmissionContributors: React.FC = () => {
 
   return (
     <LabelContentRow label={t('heading.contributors')}>
-      {contributors.map(contributor => (
+      {contributors.map((contributor) => (
         <SubmissionContentText key={contributor.identity.name}>
           {contributor.identity.name}
           {/* TODO: update mapping of institutions once we get this from backend */}
-          {contributor.institutions?.map(institution => institution?.name && `(${institution.name})`)}
+          {contributor.affiliations?.map((affiliation) => affiliation?.name && `(${affiliation.name})`)}
         </SubmissionContentText>
       ))}
     </LabelContentRow>

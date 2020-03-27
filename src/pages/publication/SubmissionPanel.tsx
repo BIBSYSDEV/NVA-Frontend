@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import TabPanel from '../../components/TabPanel/TabPanel';
@@ -21,7 +21,7 @@ import Card from '../../components/Card';
 import { useHistory } from 'react-router';
 import LabelContentRow from '../../components/LabelContentRow';
 import ErrorSummary from './submission_tab/ErrorSummary';
-import { getAllFileFields } from '../../utils/formik-helpers';
+import { getAllFileFields, getAllContributorFields } from '../../utils/formik-helpers';
 
 const StyledPublishButton = styled(Button)`
   margin-top: 0.5rem;
@@ -40,18 +40,20 @@ const SubmissionPanel: React.FC<SubmissionPanelProps> = ({ savePublication }) =>
   const { errors, setFieldTouched, setFieldValue, values }: FormikProps<FormikPublication> = useFormikContext();
   const history = useHistory();
 
-  const setAllFieldsTouched = useCallback(() => {
-    Object.values(DescriptionFieldNames).forEach((fieldName) => setFieldTouched(fieldName));
-    Object.values(ReferenceFieldNames).forEach((fieldName) => setFieldTouched(fieldName));
-
-    // File fields
-    const fileFieldNames = getAllFileFields(values.fileSet.length);
-    fileFieldNames.forEach((fieldName) => setFieldTouched(fieldName));
-  }, [values, setFieldTouched]);
+  const valuesRef = useRef(values);
+  useEffect(() => {
+    valuesRef.current = values;
+  }, [values]);
 
   useEffect(() => {
-    setAllFieldsTouched();
-  }, [setAllFieldsTouched]);
+    const fieldNames = [
+      ...Object.values(DescriptionFieldNames),
+      ...Object.values(ReferenceFieldNames),
+      ...getAllContributorFields(valuesRef.current.entityDescription.contributors.length),
+      ...getAllFileFields(valuesRef.current.fileSet.length),
+    ];
+    fieldNames.forEach((fieldName) => setFieldTouched(fieldName));
+  }, [setFieldTouched]);
 
   const publishPublication = () => {
     savePublication();
@@ -106,7 +108,7 @@ const SubmissionPanel: React.FC<SubmissionPanelProps> = ({ savePublication }) =>
                     color="primary"
                     checked={value}
                     onChange={() => setFieldValue(name, !value)}
-                    disabled={!!validationErrors}
+                    // disabled={!!validationErrors}
                   />
                 }
                 label={t('submission.ask_for_doi')}

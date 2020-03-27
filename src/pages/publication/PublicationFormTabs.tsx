@@ -1,4 +1,4 @@
-import { FormikProps, useFormikContext, getIn } from 'formik';
+import { FormikProps, useFormikContext } from 'formik';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -7,7 +7,7 @@ import { Tabs } from '@material-ui/core';
 import LinkTab from '../../components/TabPanel/LinkTab';
 import { FormikPublication } from '../../types/publication.types';
 import { ReferenceFieldNames, DescriptionFieldNames } from '../../types/publicationFieldNames';
-import { hasTouchedError, getAllFileFields } from '../../utils/formik-helpers';
+import { hasTouchedError, getAllFileFields, getAllContributorFields } from '../../utils/formik-helpers';
 
 const a11yProps = (tabDescription: string) => {
   return {
@@ -28,7 +28,13 @@ interface PublicationFormTabsProps {
 export const PublicationFormTabs: FC<PublicationFormTabsProps> = ({ handleTabChange, tabNumber }) => {
   const { t } = useTranslation('publication');
   const { errors, touched, values }: FormikProps<FormikPublication> = useFormikContext();
-  const submissionLabel = getIn(values, ReferenceFieldNames.DOI) ? t('heading.registration') : t('heading.publishing');
+  const {
+    entityDescription: {
+      contributors,
+      reference: { doi },
+    },
+    fileSet,
+  } = values;
 
   return (
     <Tabs variant="fullWidth" value={tabNumber} onChange={handleTabChange} aria-label="navigation" textColor="primary">
@@ -42,13 +48,17 @@ export const PublicationFormTabs: FC<PublicationFormTabsProps> = ({ handleTabCha
         {...a11yProps('references')}
         error={hasTouchedError(errors, touched, referenceFieldNames)}
       />
-      <LinkTab label={`3. ${t('heading.contributors')}`} {...a11yProps('contributors')} error={false} />
+      <LinkTab
+        label={`3. ${t('heading.contributors')}`}
+        {...a11yProps('contributors')}
+        error={hasTouchedError(errors, touched, getAllContributorFields(contributors.length))}
+      />
       <LinkTab
         label={`4. ${t('heading.files_and_license')}`}
         {...a11yProps('files-and-license')}
-        error={hasTouchedError(errors, touched, getAllFileFields(values.fileSet.length))}
+        error={hasTouchedError(errors, touched, getAllFileFields(fileSet.length))}
       />
-      <LinkTab label={`5. ${submissionLabel}`} {...a11yProps('submission')} />
+      <LinkTab label={`5. ${doi ? t('heading.registration') : t('heading.publishing')}`} {...a11yProps('submission')} />
     </Tabs>
   );
 };
