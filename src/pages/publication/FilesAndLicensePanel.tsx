@@ -45,16 +45,16 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab
   const { values, setFieldTouched }: FormikProps<FormikPublication> = useFormikContext();
   const [isLicenseModalOpen, setIsLicenseModalOpen] = useState(false);
 
-  const valuesRef = useRef(values);
+  const filesLengthRef = useRef(values.fileSet.length);
   useEffect(() => {
-    valuesRef.current = values;
-  }, [values]);
+    filesLengthRef.current = values.fileSet.length;
+  }, [values.fileSet.length]);
 
   // Set all fields to touched on unmount
   useEffect(() => {
     return () => {
-      // Use valuesRef to avoid trigging this useEffect on every values update
-      const fieldNames = getAllFileFields(valuesRef.current.fileSet.length);
+      // Use filesLengthRef to avoid trigging this useEffect on every values update
+      const fieldNames = getAllFileFields(filesLengthRef.current);
       fieldNames.forEach((fieldName) => setFieldTouched(fieldName));
     };
   }, [setFieldTouched]);
