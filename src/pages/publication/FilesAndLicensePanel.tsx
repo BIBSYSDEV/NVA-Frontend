@@ -44,17 +44,23 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab
   const { t } = useTranslation('publication');
   const { values, setFieldTouched }: FormikProps<FormikPublication> = useFormikContext();
   const [isLicenseModalOpen, setIsLicenseModalOpen] = useState(false);
+  const {
+    fileSet,
+    entityDescription: {
+      reference: { publicationContext },
+    },
+  } = values;
 
-  const valuesRef = useRef(values);
+  const filesLengthRef = useRef(fileSet.length);
   useEffect(() => {
-    valuesRef.current = values;
-  }, [values]);
+    filesLengthRef.current = fileSet.length;
+  }, [fileSet.length]);
 
   // Set all fields to touched on unmount
   useEffect(() => {
     return () => {
-      // Use valuesRef to avoid trigging this useEffect on every values update
-      const fieldNames = getAllFileFields(valuesRef.current.fileSet.length);
+      // Use filesLengthRef to avoid trigging this useEffect on every values update
+      const fieldNames = getAllFileFields(filesLengthRef.current);
       fieldNames.forEach((fieldName) => setFieldTouched(fieldName));
     };
   }, [setFieldTouched]);
@@ -62,13 +68,6 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab
   const toggleLicenseModal = () => {
     setIsLicenseModalOpen(!isLicenseModalOpen);
   };
-
-  const {
-    fileSet,
-    entityDescription: {
-      reference: { publicationContext },
-    },
-  } = values;
 
   return (
     <TabPanel ariaLabel="files and license" goToNextTab={goToNextTab}>
@@ -84,7 +83,7 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab
                 shouldAllowMultipleFiles={shouldAllowMultipleFiles}
                 addFile={(file) => insert(0, file)}
               />
-              {values.fileSet.length === 0 && (
+              {fileSet.length === 0 && (
                 <FormHelperText error>
                   <ErrorMessage name={name} />
                 </FormHelperText>
