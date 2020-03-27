@@ -5,6 +5,7 @@ import {
   SpecificContributorFieldNames,
   ContributorFieldNames,
 } from '../types/publicationFieldNames';
+import { Contributor } from '../types/contributor.types';
 
 interface CustomError {
   fieldName: string;
@@ -41,24 +42,25 @@ export const hasTouchedError = (
 
 export const getAllFileFields = (numberOfUploadedFiles: number) => {
   let fieldNames: string[] = Object.values(FileFieldNames);
-  if (numberOfUploadedFiles > 0) {
-    for (let index = 0; index < numberOfUploadedFiles; index++) {
-      for (const fileField of Object.values(SpecificFileFieldNames)) {
-        fieldNames.push(`${FileFieldNames.FILE_SET}[${index}].${fileField}`);
-      }
+  for (let index = 0; index < numberOfUploadedFiles; index++) {
+    const baseFieldName = `${FileFieldNames.FILE_SET}[${index}]`;
+    for (const fileField of Object.values(SpecificFileFieldNames)) {
+      fieldNames.push(`${baseFieldName}.${fileField}`);
     }
   }
   return fieldNames;
 };
 
-export const getAllContributorFields = (numberOfContributors: number) => {
+export const getAllContributorFields = (contributors: Contributor[]) => {
   let fieldNames: string[] = Object.values(ContributorFieldNames);
-  if (numberOfContributors > 0) {
-    for (let index = 0; index < numberOfContributors; index++) {
-      for (const fileField of Object.values(SpecificContributorFieldNames)) {
-        fieldNames.push(`${ContributorFieldNames.CONTRIBUTORS}[${index}].${fileField}`);
+  contributors.forEach((contributor, index) => {
+    const baseFieldName = `${ContributorFieldNames.CONTRIBUTORS}[${index}]`;
+    for (const fileField of Object.values(SpecificContributorFieldNames)) {
+      // Don't include email field if user is not corresponding
+      if (!SpecificContributorFieldNames.EMAIL || contributor.corresponding) {
+        fieldNames.push(`${baseFieldName}.${fileField}`);
       }
     }
-  }
+  });
   return fieldNames;
 };

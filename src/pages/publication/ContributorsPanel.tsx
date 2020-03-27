@@ -1,11 +1,12 @@
 import React, { FC, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import { FormHelperText } from '@material-ui/core';
+import { FormikProps, useFormikContext, FieldArray, ErrorMessage } from 'formik';
 
 import Card from '../../components/Card';
 import Heading from '../../components/Heading';
 import TabPanel from '../../components/TabPanel/TabPanel';
 import SortableTable from './contributors_tab/components/SortableTable';
-import { FormikProps, useFormikContext, FieldArray } from 'formik';
 import { FormikPublication } from '../../types/publication.types';
 import { ContributorFieldNames } from '../../types/publicationFieldNames';
 import { getAllContributorFields } from '../../utils/formik-helpers';
@@ -24,16 +25,16 @@ const ContributorsPanel: FC<ContributorsPanelProps> = ({ goToNextTab, savePublic
     },
   }: FormikProps<FormikPublication> = useFormikContext();
 
-  const contributorsLengthRef = useRef(contributors.length);
+  const contributorsRef = useRef(contributors);
   useEffect(() => {
-    contributorsLengthRef.current = contributors.length;
-  }, [contributors.length]);
+    contributorsRef.current = contributors;
+  }, [contributors]);
 
   // Set all fields to touched on unmount
   useEffect(() => {
     return () => {
       // Use contributorsLengthRef to avoid trigging this useEffect on every values update
-      const fieldNames = getAllContributorFields(contributorsLengthRef.current);
+      const fieldNames = getAllContributorFields(contributorsRef.current);
       fieldNames.forEach((fieldName) => setFieldTouched(fieldName));
     };
   }, [setFieldTouched]);
@@ -43,8 +44,15 @@ const ContributorsPanel: FC<ContributorsPanelProps> = ({ goToNextTab, savePublic
       <Card>
         <Heading>{t('contributors.authors')}</Heading>
         <FieldArray name={ContributorFieldNames.CONTRIBUTORS}>
-          {({ push, remove, swap }) => (
-            <SortableTable listOfContributors={contributors} push={push} remove={remove} swap={swap} />
+          {({ push, remove, swap, name }) => (
+            <>
+              <SortableTable listOfContributors={contributors} push={push} remove={remove} swap={swap} />
+              {contributors.length === 0 && (
+                <FormHelperText error>
+                  <ErrorMessage name={name} />
+                </FormHelperText>
+              )}
+            </>
           )}
         </FieldArray>
       </Card>
