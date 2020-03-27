@@ -22,6 +22,7 @@ import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import { useDispatch } from 'react-redux';
 import { getInstitution } from '../../api/customerInstitutionsApi';
+import Progress from '../../components/Progress';
 
 const shouldAllowMultipleFiles = false;
 
@@ -39,10 +40,13 @@ const StyledButtonContainer = styled.div`
 const AdminCustomerInstitutionPage: FC = () => {
   const { t } = useTranslation('admin');
   const [uppy] = useState(createUppy(shouldAllowMultipleFiles));
-  const [initialValues, setInitialValues] = useState<CustomerInstitution>(emptyCustomerInstitution);
   const { identifier } = useParams();
-  const dispatch = useDispatch();
   const editMode = identifier !== 'new';
+  const [initialValues, setInitialValues] = useState<CustomerInstitution | {}>(
+    editMode ? {} : emptyCustomerInstitution
+  );
+  const [isLoading, setIsLoading] = useState(editMode);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     return () => uppy && uppy.close();
@@ -55,6 +59,7 @@ const AdminCustomerInstitutionPage: FC = () => {
         dispatch(setNotification(institution.error, NotificationVariant.Error));
       } else {
         setInitialValues(institution);
+        setIsLoading(false);
       }
     };
 
@@ -63,7 +68,9 @@ const AdminCustomerInstitutionPage: FC = () => {
     }
   }, [identifier, dispatch, editMode]);
 
-  return (
+  return isLoading ? (
+    <Progress />
+  ) : (
     <Card>
       <Heading>{t(editMode ? 'edit_institution' : 'add_institution')}</Heading>
       <Formik
