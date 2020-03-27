@@ -35,6 +35,8 @@
     "login": "Logg inn på din ORCID-konto eller lag ny dersom du ikke har konto",
     "orcid": "ORCID",
     "registration": "Registrering",
+    "remove_connection": "Fjern kobling til ORCID",
+    "remove_connection_text": "Er du sikker på at du vil fjerne koblingen til ORCID?",
     "skip_this_step": "Hopp over nå (kan gjøres under 'profil' senere)",
     "suggestions": "Forslag fra ORCID",
     "suggestions_description": "Forslag fra ORCID...",
