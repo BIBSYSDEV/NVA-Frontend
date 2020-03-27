@@ -44,11 +44,17 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab
   const { t } = useTranslation('publication');
   const { values, setFieldTouched }: FormikProps<FormikPublication> = useFormikContext();
   const [isLicenseModalOpen, setIsLicenseModalOpen] = useState(false);
+  const {
+    fileSet,
+    entityDescription: {
+      reference: { publicationContext },
+    },
+  } = values;
 
-  const filesLengthRef = useRef(values.fileSet.length);
+  const filesLengthRef = useRef(fileSet.length);
   useEffect(() => {
-    filesLengthRef.current = values.fileSet.length;
-  }, [values.fileSet.length]);
+    filesLengthRef.current = fileSet.length;
+  }, [fileSet.length]);
 
   // Set all fields to touched on unmount
   useEffect(() => {
@@ -62,13 +68,6 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab
   const toggleLicenseModal = () => {
     setIsLicenseModalOpen(!isLicenseModalOpen);
   };
-
-  const {
-    fileSet,
-    entityDescription: {
-      reference: { publicationContext },
-    },
-  } = values;
 
   return (
     <TabPanel ariaLabel="files and license" goToNextTab={goToNextTab}>
@@ -84,7 +83,7 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab
                 shouldAllowMultipleFiles={shouldAllowMultipleFiles}
                 addFile={(file) => insert(0, file)}
               />
-              {values.fileSet.length === 0 && (
+              {fileSet.length === 0 && (
                 <FormHelperText error>
                   <ErrorMessage name={name} />
                 </FormHelperText>
