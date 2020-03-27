@@ -147,7 +147,7 @@ export const interceptRequestsOnMock = () => {
   // After deletion of institution
   mock.onGet(new RegExp(`${API_URL}${InstituionApiPaths.INSTITUTION}\\?id=*`)).replyOnce(200, []);
 
-  mock.onAny().reply(function(config) {
+  mock.onAny().reply(function (config) {
     throw new Error('Could not find mock for ' + config.url);
   });
 };

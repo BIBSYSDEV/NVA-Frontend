@@ -47,7 +47,7 @@ export const ConnectAuthority: FC = () => {
 
   const updateAuthorityForUser = async () => {
     const selectedAuthority = matchingAuthorities.find(
-      auth => auth.systemControlNumber === selectedSystemControlNumber
+      (auth) => auth.systemControlNumber === selectedSystemControlNumber
     );
 
     if (selectedAuthority) {
@@ -77,7 +77,7 @@ export const ConnectAuthority: FC = () => {
             <StyledSubHeading>
               {t('authority.search_summary', { results: matchingAuthorities?.length ?? 0, searchTerm: user.name })}
             </StyledSubHeading>
-            {matchingAuthorities.map(authority => (
+            {matchingAuthorities.map((authority) => (
               <StyledClickableDiv
                 data-testid="author-radio-button"
                 key={authority.systemControlNumber}

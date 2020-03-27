@@ -67,8 +67,8 @@ const App: React.FC = () => {
         Amplify.configure(awsConfig);
       }
       dispatch(getCurrentAuthenticatedUser());
-      Hub.listen('auth', data => hubListener(data, dispatch));
-      return () => Hub.remove('auth', data => hubListener(data, dispatch));
+      Hub.listen('auth', (data) => hubListener(data, dispatch));
+      return () => Hub.remove('auth', (data) => hubListener(data, dispatch));
     }
   }, [dispatch, user.isLoggedIn]);
 
@@ -77,7 +77,7 @@ const App: React.FC = () => {
       const authorities = await getAuthorities(user.name, dispatch);
       if (authorities) {
         const filteredAuthorities: Authority[] = authorities.filter((auth: Authority) =>
-          auth.feideids.some(id => id === user.id)
+          auth.feideids.some((id) => id === user.id)
         );
         if (filteredAuthorities.length === 1) {
           const updatedAuthority = await addQualifierIdForAuthority(

@@ -24,7 +24,7 @@ import HelpIcon from '@material-ui/icons/Help';
 import SubHeading from '../../../components/SubHeading';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Label from '../../../components/Label';
-import { Field, FieldProps, FormikProps, useFormikContext } from 'formik';
+import { Field, FieldProps, FormikProps, useFormikContext, ErrorMessage } from 'formik';
 import { FormikPublication } from '../../../types/publication.types';
 import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 
@@ -97,7 +97,7 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, toggleLicenseModa
           <Field name={`${baseFieldName}.${SpecificFileFieldNames.ADMINISTRATIVE_AGREEMENT}`}>
             {({ field }: FieldProps) => (
               <FormControlLabel
-                control={<Checkbox color="primary" {...field} />}
+                control={<Checkbox color="primary" {...field} checked={field.value} />}
                 label={t('files_and_license.administrative_contract')}
               />
             )}
@@ -131,7 +131,7 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, toggleLicenseModa
               <StyledFormControl>
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
                   <Field name={`${baseFieldName}.${SpecificFileFieldNames.EMBARGO_DATE}`}>
-                    {({ field }: FieldProps) => (
+                    {({ field, meta: { error, touched } }: FieldProps) => (
                       <KeyboardDatePicker
                         inputVariant="outlined"
                         label={t('files_and_license.embargo_date')}
@@ -140,6 +140,8 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, toggleLicenseModa
                         disablePast
                         autoOk
                         format={'dd.MM.yyyy'}
+                        error={!!error && touched}
+                        helperText={<ErrorMessage name={field.name} />}
                       />
                     )}
                   </Field>
@@ -149,7 +151,7 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, toggleLicenseModa
               <StyledFormControl>
                 <StyledVerticalAlign>
                   <Field name={`${baseFieldName}.${SpecificFileFieldNames.LICENSE}`}>
-                    {({ field }: FieldProps) => (
+                    {({ field, meta: { error, touched } }: FieldProps) => (
                       <StyledSelect
                         select
                         fullWidth
@@ -166,6 +168,8 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, toggleLicenseModa
                         }}
                         variant="outlined"
                         value={field.value?.identifier || ''}
+                        error={!!error && touched}
+                        helperText={<ErrorMessage name={field.name} />}
                         label={t('files_and_license.license')}
                         onChange={({ target: { value } }) =>
                           setFieldValue(field.name, { identifier: value as LicenseNames, labels: { nb: value } })
