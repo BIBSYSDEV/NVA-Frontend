@@ -12,7 +12,7 @@ import FilesAndLicensePanel from './FilesAndLicensePanel';
 import { PublicationFormTabs } from './PublicationFormTabs';
 import ReferencesPanel from './ReferencesPanel';
 import SubmissionPanel from './SubmissionPanel';
-import { emptyFile, File, Uppy } from '../../types/file.types';
+import { emptyFile, Uppy } from '../../types/file.types';
 import { getPublication, updatePublication } from '../../api/publicationApi';
 import { useDispatch } from 'react-redux';
 import { setNotification } from '../../redux/actions/notificationActions';
@@ -46,7 +46,7 @@ const PublicationForm: FC<PublicationFormProps> = ({
 
   useEffect(() => {
     // Get files uploaded from new publication view
-    const files = Object.values(uppy.getState().files).map(file => ({ ...emptyFile, ...(file as File) }));
+    const files = Object.values(uppy.getState().files).map((file) => ({ ...emptyFile, ...file }));
 
     if (files?.length) {
       setInitialValues({

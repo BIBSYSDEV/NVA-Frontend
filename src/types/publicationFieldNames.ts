@@ -63,3 +63,15 @@ export enum DescriptionFieldNames {
   TAGS = 'entityDescription.tags',
   TITLE = 'entityDescription.mainTitle',
 }
+
+export enum FileFieldNames {
+  FILE_SET = 'fileSet',
+}
+
+// The following fields should be present in "fileSet[index].<KEY>"
+export enum SpecificFileFieldNames {
+  ADMINISTRATIVE_AGREEMENT = 'administrativeAgreement',
+  PUBLISHER_AUTHORITY = 'publisherAuthority',
+  EMBARGO_DATE = 'embargoDate',
+  LICENSE = 'license',
+}
