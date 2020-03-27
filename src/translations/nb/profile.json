@@ -15,7 +15,7 @@
     "see_profile": "Se forfatterprofil"
   },
   "heading": {
-    "author_info": "Forfatter ID",
+    "author_info": "Forfatteridentitet",
     "connect_authority": "Koble til din forfatter ID",
     "contact_info": "Kontaktinformasjon",
     "language": "Språk",
@@ -24,7 +24,6 @@
     "user_info": "Brukerinformasjon"
   },
   "id": "ID",
-  "info_feide": "Info hentet fra Feide",
   "info_nva": "Info hentet fra NVA",
   "my_profile": "Min profil",
   "my_public_profile": "Min offentlige profil",

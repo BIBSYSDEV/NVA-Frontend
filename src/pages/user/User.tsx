@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router';
 import styled from 'styled-components';
 
-import { Link as MuiLink } from '@material-ui/core';
-
+import { Link as MuiLink, Button } from '@material-ui/core';
+import { Link as RouterLink } from 'react-router-dom';
 import { addQualifierIdForAuthority, AuthorityQualifiers } from '../../api/authorityApi';
 import { getOrcidInfo } from '../../api/external/orcidApi';
 import ButtonModal from '../../components/ButtonModal';
@@ -23,12 +23,12 @@ import UserInstitution from './UserInstitution';
 const StyledUserPage = styled.div`
   display: grid;
   @media (min-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
-    grid-template-areas: 'secondary-info primary-info';
+    grid-template-areas: 'top top' 'secondary-info primary-info';
     grid-template-columns: 1fr 3fr;
   }
   grid-gap: 3rem;
   font-size: 1rem;
-  grid-template-areas: 'primary-info' 'secondary-info';
+  grid-template-areas: 'top' 'primary-info' 'secondary-info';
 `;
 
 const StyledSecondaryUserInfo = styled.div`
@@ -42,6 +42,12 @@ const StyledPrimaryUserInfo = styled.div`
   display: grid;
   grid-area: primary-info;
   grid-row-gap: 3rem;
+`;
+
+const StyledButtonWrapper = styled.div`
+  grid-area: top;
+  display: flex;
+  justify-content: flex-end;
 `;
 
 const User: React.FC = () => {
@@ -79,6 +85,15 @@ const User: React.FC = () => {
   }, [user.authority, dispatch, user.externalOrcid]);
   return (
     <StyledUserPage>
+      <StyledButtonWrapper>
+        <Button
+          color="primary"
+          component={RouterLink}
+          to={`/public-profile/${user.name}`}
+          data-testid="public-profile-button">
+          {t('workLists:go_to_public_profile')}
+        </Button>
+      </StyledButtonWrapper>
       <StyledSecondaryUserInfo>
         <Card>
           <Heading>{t('common:picture')}</Heading>
