@@ -42,6 +42,7 @@ const AdminCustomerInstitutionPage: FC = () => {
   const [initialValues, setInitialValues] = useState<CustomerInstitution>(emptyCustomerInstitution);
   const { identifier } = useParams();
   const dispatch = useDispatch();
+  const editMode = identifier !== 'new';
 
   useEffect(() => {
     return () => uppy && uppy.close();
@@ -57,14 +58,14 @@ const AdminCustomerInstitutionPage: FC = () => {
       }
     };
 
-    if (identifier && identifier !== 'new') {
+    if (identifier && editMode) {
       getInstitutionById(identifier);
     }
   }, [identifier, dispatch]);
 
   return (
     <Card>
-      <Heading>{t('add_institution')}</Heading>
+      <Heading>{t(editMode ? 'edit_institution' : 'add_institution')}</Heading>
       <Formik
         enableReinitialize
         initialValues={initialValues}
