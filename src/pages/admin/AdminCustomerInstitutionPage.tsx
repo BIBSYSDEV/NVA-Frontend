@@ -61,7 +61,7 @@ const AdminCustomerInstitutionPage: FC = () => {
     if (identifier && editMode) {
       getInstitutionById(identifier);
     }
-  }, [identifier, dispatch]);
+  }, [identifier, dispatch, editMode]);
 
   return (
     <Card>
