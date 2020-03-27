@@ -9,6 +9,8 @@ import InstitutionList from './InstitutionList';
 import { Link as RouterLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { CustomerInstitution } from '../../types/customerInstitution.types';
+import { setNotification } from '../../redux/actions/notificationActions';
+import { NotificationVariant } from '../../types/notification.types';
 
 const StyledButtonWrapper = styled.div`
   display: flex;
@@ -24,12 +26,12 @@ const AdminCustomerInstitutionsPage: FC = () => {
   useEffect(() => {
     const loadData = async () => {
       setIsLoading(true);
-      const institutions = await getAllCustomerInstitutions();
-      // if (institutions?.error) {
-      //   dispatch(setNotification(t('feedback:error.get_institutions'), NotificationVariant.Error));
-      // } else {
-      setInstitutions(institutions);
-      // }
+      const institutions: any = await getAllCustomerInstitutions();
+      if (institutions?.error) {
+        dispatch(setNotification(institutions.error, NotificationVariant.Error));
+      } else {
+        setInstitutions(institutions);
+      }
       setIsLoading(false);
     };
     loadData();
@@ -39,7 +41,11 @@ const AdminCustomerInstitutionsPage: FC = () => {
     <Card>
       <Heading>{t('common:institutions')}</Heading>
       <StyledButtonWrapper>
-        <Button color="primary" component={RouterLink} to={`/admin-institution`} data-testid="add-institution-button">
+        <Button
+          color="primary"
+          component={RouterLink}
+          to="/admin-institutions/new"
+          data-testid="add-institution-button">
           {t('add_institution')}
         </Button>
       </StyledButtonWrapper>

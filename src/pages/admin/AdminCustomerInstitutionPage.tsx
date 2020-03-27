@@ -7,12 +7,22 @@ import { TextField } from 'formik-material-ui';
 import Heading from '../../components/Heading';
 import styled from 'styled-components';
 import * as Yup from 'yup';
-import { CustomerInstitutionFieldNames, emptyCustomerInstitution } from '../../types/customerInstitution.types';
+import {
+  CustomerInstitutionFieldNames,
+  emptyCustomerInstitution,
+  CustomerInstitution,
+} from '../../types/customerInstitution.types';
 import { createUppy } from '../../utils/uppy-config';
 import Label from '../../components/Label';
 import InstitutionLogoFileUploader from './InstitutionLogoFileUploader';
 import FileCard from '../publication/files_and_license_tab/FileCard';
 import InstitutionSearch from '../publication/references_tab/components/InstitutionSearch';
+import { useParams } from 'react-router-dom';
+import { setNotification } from '../../redux/actions/notificationActions';
+import { NotificationVariant } from '../../types/notification.types';
+import { useDispatch } from 'react-redux';
+import { getInstitution } from '../../api/customerInstitutionsApi';
+import Progress from '../../components/Progress';
 
 const shouldAllowMultipleFiles = false;
 
@@ -30,24 +40,47 @@ const StyledButtonContainer = styled.div`
 const AdminCustomerInstitutionPage: FC = () => {
   const { t } = useTranslation('admin');
   const [uppy] = useState(createUppy(shouldAllowMultipleFiles));
+  const { identifier } = useParams();
+  const editMode = identifier !== 'new';
+  const [initialValues, setInitialValues] = useState<CustomerInstitution | {}>(
+    editMode ? {} : emptyCustomerInstitution
+  );
+  const [isLoading, setIsLoading] = useState(editMode);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     return () => uppy && uppy.close();
   }, [uppy]);
 
-  return (
+  useEffect(() => {
+    const getInstitutionById = async (id: string) => {
+      const institution: any = await getInstitution(id);
+      if (institution?.error) {
+        dispatch(setNotification(institution.error, NotificationVariant.Error));
+      } else {
+        setInitialValues(institution);
+        setIsLoading(false);
+      }
+    };
+
+    if (identifier && editMode) {
+      getInstitutionById(identifier);
+    }
+  }, [identifier, dispatch, editMode]);
+
+  return isLoading ? (
+    <Progress />
+  ) : (
     <Card>
-      <Heading>{t('add_institution')}</Heading>
+      <Heading>{t(editMode ? 'edit_institution' : 'add_institution')}</Heading>
       <Formik
-        initialValues={emptyCustomerInstitution}
+        enableReinitialize
+        initialValues={initialValues}
         validationSchema={Yup.object({
           name: Yup.string().required(t('feedback.required_field')),
         })}
-        onSubmit={(values, { setSubmitting }) => {
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
-            setSubmitting(false);
-          }, 400);
+        onSubmit={(values) => {
+          console.log('values', values);
         }}>
         <Form>
           <Field name={CustomerInstitutionFieldNames.LOGO_FILE}>
@@ -57,7 +90,7 @@ const AdminCustomerInstitutionPage: FC = () => {
                 <InstitutionLogoFileUploader
                   uppy={uppy}
                   shouldAllowMultipleFiles={shouldAllowMultipleFiles}
-                  setFile={file => {
+                  setFile={(file) => {
                     form.setFieldValue(name, file);
                   }}
                 />
@@ -79,8 +112,8 @@ const AdminCustomerInstitutionPage: FC = () => {
                 dataTestId="autosearch-institution"
                 label={t('organization_register_name')}
                 clearSearchField={value.name === ''}
-                setValueFunction={inputValue => {
-                  form.setFieldValue(CustomerInstitutionFieldNames.NAME, inputValue.name);
+                setValueFunction={(inputValue) => {
+                  form.setFieldValue(name, inputValue.name);
                   form.setFieldValue(CustomerInstitutionFieldNames.ID, inputValue.id);
                 }}
                 placeholder={t('profile:organization.search_for_institution')}
