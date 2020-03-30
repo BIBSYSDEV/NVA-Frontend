@@ -36,7 +36,9 @@ export const hasTouchedError = (
   return fieldNames.some((fieldName) => {
     const fieldHasError = !!getIn(errors, fieldName);
     const fieldIsTouched = getIn(touched, fieldName);
-    return fieldHasError && fieldIsTouched;
+    // Touched data can be inconsistent with array of null or undefined elements when adding elements dynamically
+    // to a FieldArray, so check for value to be true explicitly, otherwise an empty array will also be true
+    return fieldHasError && fieldIsTouched === true;
   });
 };
 
@@ -45,6 +47,7 @@ export const getAllFileFields = (numberOfUploadedFiles: number) => {
   for (let index = 0; index < numberOfUploadedFiles; index++) {
     const baseFieldName = `${FileFieldNames.FILE_SET}[${index}]`;
     for (const fileField of Object.values(SpecificFileFieldNames)) {
+      // TODO: if adminAgrrement
       fieldNames.push(`${baseFieldName}.${fileField}`);
     }
   }

@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormHelperText } from '@material-ui/core';
-import { FormikProps, useFormikContext, FieldArray, ErrorMessage } from 'formik';
+import { FormikProps, useFormikContext, FieldArray, ErrorMessage, FieldArrayRenderProps } from 'formik';
 
 import Card from '../../components/Card';
 import Heading from '../../components/Heading';
@@ -44,7 +44,7 @@ const ContributorsPanel: FC<ContributorsPanelProps> = ({ goToNextTab, savePublic
       <Card>
         <Heading>{t('contributors.authors')}</Heading>
         <FieldArray name={ContributorFieldNames.CONTRIBUTORS}>
-          {({ push, remove, swap, name }) => (
+          {({ push, remove, swap, name }: FieldArrayRenderProps) => (
             <>
               <SortableTable listOfContributors={contributors} push={push} remove={remove} swap={swap} />
               {contributors.length === 0 && (

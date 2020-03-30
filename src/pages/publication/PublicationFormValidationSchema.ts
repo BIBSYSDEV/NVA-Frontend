@@ -13,6 +13,7 @@ const ErrorMessage = {
   REQUIRED: i18n.t('publication:feedback.required_field'),
   MISSING_CONTRIBUTOR: i18n.t('publication:feedback.minimum_one_contributor'),
   MISSING_FILE: i18n.t('publication:feedback.minimum_one_file'),
+  //TODO: invalid format
 };
 
 export const publicationValidationSchema = Yup.object().shape({

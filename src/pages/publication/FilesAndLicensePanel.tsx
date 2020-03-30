@@ -4,7 +4,7 @@ import TabPanel from '../../components/TabPanel/TabPanel';
 import FileUploader from './files_and_license_tab/FileUploader';
 import FileCard from './files_and_license_tab/FileCard';
 import styled from 'styled-components';
-import { FieldArray, FormikProps, useFormikContext, ErrorMessage } from 'formik';
+import { FieldArray, FormikProps, useFormikContext, ErrorMessage, FieldArrayRenderProps } from 'formik';
 import { FormikPublication } from '../../types/publication.types';
 import Modal from '../../components/Modal';
 import { licenses, Uppy } from '../../types/file.types';
@@ -74,7 +74,7 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab
       {publicationContext && <PublicationChannelInfoCard publisher={publicationContext} />}
 
       <FieldArray name={FilesFieldNames.FILES}>
-        {({ insert, remove, name }) => (
+        {({ insert, remove, name }: FieldArrayRenderProps) => (
           <>
             <Card>
               <Heading>{t('files_and_license.upload_files')}</Heading>
