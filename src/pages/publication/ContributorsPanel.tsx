@@ -33,7 +33,7 @@ const ContributorsPanel: FC<ContributorsPanelProps> = ({ goToNextTab, savePublic
   // Set all fields to touched on unmount
   useEffect(
     () => () => {
-      // Use contributorsLengthRef to avoid trigging this useEffect on every values update
+      // Use contributorsRef to avoid trigging this useEffect on every values update
       const fieldNames = getAllContributorFields(contributorsRef.current);
       fieldNames.forEach((fieldName) => setFieldTouched(fieldName));
     },

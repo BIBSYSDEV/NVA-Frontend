@@ -59,7 +59,7 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab
   // Set all fields to touched on unmount
   useEffect(
     () => () => {
-      // Use filesLengthRef to avoid trigging this useEffect on every values update
+      // Use filesRef to avoid trigging this useEffect on every values update
       const fieldNames = getAllFileFields(filesSetRef.current);
       fieldNames.forEach((fieldName) => setFieldTouched(fieldName));
     },
