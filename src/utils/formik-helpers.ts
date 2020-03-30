@@ -6,6 +6,7 @@ import {
   ContributorFieldNames,
 } from '../types/publicationFieldNames';
 import { Contributor } from '../types/contributor.types';
+import { File } from '../types/file.types';
 
 interface CustomError {
   fieldName: string;
@@ -42,15 +43,18 @@ export const hasTouchedError = (
   });
 };
 
-export const getAllFileFields = (numberOfUploadedFiles: number) => {
+export const getAllFileFields = (fileSet: File[]) => {
   let fieldNames: string[] = Object.values(FileFieldNames);
-  for (let index = 0; index < numberOfUploadedFiles; index++) {
+  fileSet.forEach((file, index) => {
     const baseFieldName = `${FileFieldNames.FILE_SET}[${index}]`;
-    for (const fileField of Object.values(SpecificFileFieldNames)) {
-      // TODO: if adminAgrrement
-      fieldNames.push(`${baseFieldName}.${fileField}`);
+    if (file.administrativeAgreement) {
+      fieldNames.push(`${baseFieldName}.${SpecificFileFieldNames.ADMINISTRATIVE_AGREEMENT}`);
+    } else {
+      for (const fileField of Object.values(SpecificFileFieldNames)) {
+        fieldNames.push(`${baseFieldName}.${fileField}`);
+      }
     }
-  }
+  });
   return fieldNames;
 };
 

@@ -56,7 +56,7 @@ export const PublicationFormTabs: FC<PublicationFormTabsProps> = ({ handleTabCha
       <LinkTab
         label={`4. ${t('heading.files_and_license')}`}
         {...a11yProps('files-and-license')}
-        error={hasTouchedError(errors, touched, getAllFileFields(fileSet.length))}
+        error={hasTouchedError(errors, touched, getAllFileFields(fileSet))}
       />
       <LinkTab label={`5. ${doi ? t('heading.registration') : t('heading.publishing')}`} {...a11yProps('submission')} />
     </Tabs>

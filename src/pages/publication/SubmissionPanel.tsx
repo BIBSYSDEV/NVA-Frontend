@@ -50,7 +50,7 @@ const SubmissionPanel: React.FC<SubmissionPanelProps> = ({ savePublication }) =>
       ...Object.values(DescriptionFieldNames),
       ...Object.values(ReferenceFieldNames),
       ...getAllContributorFields(valuesRef.current.entityDescription.contributors),
-      ...getAllFileFields(valuesRef.current.fileSet.length),
+      ...getAllFileFields(valuesRef.current.fileSet),
     ];
     fieldNames.forEach((fieldName) => setFieldTouched(fieldName));
   }, [setFieldTouched]);
