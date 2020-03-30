@@ -18,6 +18,7 @@ import { removeQualifierIdFromAuthority, AuthorityQualifiers } from '../../api/a
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import { setAuthorityData } from '../../redux/actions/userActions';
+import { setExternalOrcid } from '../../redux/actions/orcidActions';
 
 const StyledInformation = styled.div`
   margin-bottom: 1rem;
@@ -59,6 +60,7 @@ const UserOrcid: FC = () => {
     if (updatedAuthority.error) {
       dispatch(setNotification(updatedAuthority.error, NotificationVariant.Error));
     } else if (updatedAuthority) {
+      dispatch(setExternalOrcid(''));
       dispatch(setAuthorityData(updatedAuthority));
       dispatch(setNotification(t('feedback:success.delete_identifier')));
     }
