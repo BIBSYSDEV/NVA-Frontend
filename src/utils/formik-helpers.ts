@@ -38,7 +38,7 @@ export const hasTouchedError = (
     const fieldHasError = !!getIn(errors, fieldName);
     const fieldIsTouched = getIn(touched, fieldName);
     // Touched data can be inconsistent with array of null or undefined elements when adding elements dynamically
-    // to a FieldArray, so check for value to be true explicitly, otherwise an empty array will also be true
+    // to a FieldArray, so check for value to be true explicitly, otherwise any array will also be true
     return fieldHasError && fieldIsTouched === true;
   });
 };
@@ -47,9 +47,8 @@ export const getAllFileFields = (fileSet: File[]) => {
   let fieldNames: string[] = Object.values(FileFieldNames);
   fileSet.forEach((file, index) => {
     const baseFieldName = `${FileFieldNames.FILE_SET}[${index}]`;
-    if (file.administrativeAgreement) {
-      fieldNames.push(`${baseFieldName}.${SpecificFileFieldNames.ADMINISTRATIVE_AGREEMENT}`);
-    } else {
+    fieldNames.push(`${baseFieldName}.${SpecificFileFieldNames.ADMINISTRATIVE_AGREEMENT}`);
+    if (!file.administrativeAgreement) {
       for (const fileField of Object.values(SpecificFileFieldNames)) {
         fieldNames.push(`${baseFieldName}.${fileField}`);
       }
