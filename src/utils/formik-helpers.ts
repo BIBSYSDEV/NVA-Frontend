@@ -44,29 +44,36 @@ export const hasTouchedError = (
 };
 
 export const getAllFileFields = (fileSet: File[]) => {
-  let fieldNames: string[] = Object.values(FileFieldNames);
-  fileSet.forEach((file, index) => {
-    const baseFieldName = `${FileFieldNames.FILE_SET}[${index}]`;
-    fieldNames.push(`${baseFieldName}.${SpecificFileFieldNames.ADMINISTRATIVE_AGREEMENT}`);
-    if (!file.administrativeAgreement) {
-      for (const fileField of Object.values(SpecificFileFieldNames)) {
-        fieldNames.push(`${baseFieldName}.${fileField}`);
+  let fieldNames: string[] = [];
+  if (fileSet.length === 0) {
+    fieldNames.push(FileFieldNames.FILE_SET);
+  } else {
+    fileSet.forEach((file, index) => {
+      const baseFieldName = `${FileFieldNames.FILE_SET}[${index}]`;
+      fieldNames.push(`${baseFieldName}.${SpecificFileFieldNames.ADMINISTRATIVE_AGREEMENT}`);
+      if (!file.administrativeAgreement) {
+        fieldNames.push(`${baseFieldName}.${SpecificFileFieldNames.PUBLISHER_AUTHORITY}`);
+        fieldNames.push(`${baseFieldName}.${SpecificFileFieldNames.EMBARGO_DATE}`);
+        fieldNames.push(`${baseFieldName}.${SpecificFileFieldNames.LICENSE}`);
       }
-    }
-  });
+    });
+  }
   return fieldNames;
 };
 
 export const getAllContributorFields = (contributors: Contributor[]) => {
-  let fieldNames: string[] = Object.values(ContributorFieldNames);
-  contributors.forEach((contributor, index) => {
-    const baseFieldName = `${ContributorFieldNames.CONTRIBUTORS}[${index}]`;
-    for (const fileField of Object.values(SpecificContributorFieldNames)) {
-      // Don't include email field if user is not corresponding
-      if (!SpecificContributorFieldNames.EMAIL || contributor.corresponding) {
-        fieldNames.push(`${baseFieldName}.${fileField}`);
+  let fieldNames: string[] = [];
+  if (contributors.length === 0) {
+    fieldNames.push(ContributorFieldNames.CONTRIBUTORS);
+  } else {
+    contributors.forEach((contributor, index) => {
+      const baseFieldName = `${ContributorFieldNames.CONTRIBUTORS}[${index}]`;
+      fieldNames.push(`${baseFieldName}.${SpecificContributorFieldNames.SEQUENCE}`);
+      fieldNames.push(`${baseFieldName}.${SpecificContributorFieldNames.CORRESPONDING}`);
+      if (contributor.corresponding) {
+        fieldNames.push(`${baseFieldName}.${SpecificContributorFieldNames.EMAIL}`);
       }
-    }
-  });
+    });
+  }
   return fieldNames;
 };
