@@ -57,13 +57,14 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab
   }, [fileSet]);
 
   // Set all fields to touched on unmount
-  useEffect(() => {
-    return () => {
+  useEffect(
+    () => () => {
       // Use filesLengthRef to avoid trigging this useEffect on every values update
       const fieldNames = getAllFileFields(filesSetRef.current);
       fieldNames.forEach((fieldName) => setFieldTouched(fieldName));
-    };
-  }, [setFieldTouched]);
+    },
+    [setFieldTouched]
+  );
 
   const toggleLicenseModal = () => {
     setIsLicenseModalOpen(!isLicenseModalOpen);

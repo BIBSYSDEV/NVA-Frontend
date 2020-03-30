@@ -31,13 +31,14 @@ const ContributorsPanel: FC<ContributorsPanelProps> = ({ goToNextTab, savePublic
   }, [contributors]);
 
   // Set all fields to touched on unmount
-  useEffect(() => {
-    return () => {
+  useEffect(
+    () => () => {
       // Use contributorsLengthRef to avoid trigging this useEffect on every values update
       const fieldNames = getAllContributorFields(contributorsRef.current);
       fieldNames.forEach((fieldName) => setFieldTouched(fieldName));
-    };
-  }, [setFieldTouched]);
+    },
+    [setFieldTouched]
+  );
 
   return (
     <TabPanel ariaLabel="references" goToNextTab={goToNextTab} onClickSave={savePublication}>
