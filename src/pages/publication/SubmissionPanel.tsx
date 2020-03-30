@@ -108,7 +108,7 @@ const SubmissionPanel: React.FC<SubmissionPanelProps> = ({ savePublication }) =>
                     color="primary"
                     checked={value}
                     onChange={() => setFieldValue(name, !value)}
-                    // disabled={!!validationErrors}
+                    disabled={!!validationErrors}
                   />
                 }
                 label={t('submission.ask_for_doi')}
