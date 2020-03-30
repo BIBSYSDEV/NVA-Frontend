@@ -13,7 +13,7 @@ const ErrorMessage = {
   REQUIRED: i18n.t('publication:feedback.required_field'),
   MISSING_CONTRIBUTOR: i18n.t('publication:feedback.minimum_one_contributor'),
   MISSING_FILE: i18n.t('publication:feedback.minimum_one_file'),
-  //TODO: invalid format
+  INVALID_FORMAT: i18n.t('publication:feedback.invalid_format'),
 };
 
 export const publicationValidationSchema = Yup.object().shape({
@@ -55,13 +55,11 @@ export const publicationValidationSchema = Yup.object().shape({
     contributors: Yup.array()
       .of(
         Yup.object().shape({
-          // affiliations: Yup.array().of(Yup.object()),
           corresponding: Yup.boolean(),
           email: Yup.string().when('corresponding', {
             is: true,
-            then: Yup.string().email().required(ErrorMessage.REQUIRED),
+            then: Yup.string().email(ErrorMessage.INVALID_FORMAT).required(ErrorMessage.REQUIRED),
           }),
-          // role: Yup.string().oneOf(Object.values(ContributorRole)).required(ErrorMessage.REQUIRED), // TODO
           sequence: Yup.number().min(0),
         })
       )
