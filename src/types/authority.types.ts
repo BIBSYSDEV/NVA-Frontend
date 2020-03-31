@@ -7,13 +7,3 @@ export interface Authority {
   birthDate?: string;
   handles: string[];
 }
-
-export const emptyAuthority = {
-  name: '',
-  systemControlNumber: '',
-  feideids: [],
-  orcids: [],
-  orgunitids: [],
-  birthDate: '',
-  handles: [],
-};
