@@ -16,7 +16,7 @@
     "@uppy/core": "^1.9.0",
     "@uppy/dashboard": "^1.7.0",
     "@uppy/react": "^1.5.0",
-    "aws-amplify": "^2.2.7",
+    "aws-amplify": "^2.3.0",
     "axios": "^0.19.2",
     "date-fns": "^2.11.1",
     "deepmerge": "^4.2.2",
