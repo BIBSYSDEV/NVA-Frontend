@@ -58,6 +58,7 @@ const App: React.FC = () => {
   const dispatch = useDispatch();
   const user = useSelector((store: RootStore) => store.user);
   const [showAuthorityOrcidModal, setShowAuthorityOrcidModal] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (USE_MOCK_DATA) {
@@ -74,6 +75,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     const getAuthority = async () => {
+      setLoading(true);
       const authorities = await getAuthorities(user.name, dispatch);
       if (authorities) {
         const filteredAuthorities: Authority[] = authorities.filter((auth: Authority) =>
@@ -93,12 +95,17 @@ const App: React.FC = () => {
         } else {
           dispatch(setPossibleAuthorities(authorities));
         }
+        setLoading(false);
       }
     };
     if (user.name) {
       getAuthority();
     }
   }, [dispatch, user.name, user.id, user.organizationId]);
+
+  useEffect(() => {
+    !loading && user.authority?.systemControlNumber && setShowAuthorityOrcidModal(false);
+  }, [loading, user.authority]);
 
   useEffect(() => {
     setTimeout(() => {
