@@ -104,8 +104,11 @@ const App: React.FC = () => {
   }, [dispatch, user.name, user.id, user.organizationId]);
 
   useEffect(() => {
-    !loading && user.authority?.systemControlNumber && setShowAuthorityOrcidModal(false);
-  }, [loading, user.authority]);
+    !loading &&
+      user.authority?.systemControlNumber &&
+      user.authority?.orcids.length > 0 &&
+      setShowAuthorityOrcidModal(false);
+  }, [loading, user.authority, showAuthorityOrcidModal]);
 
   useEffect(() => {
     setTimeout(() => {
