@@ -9,7 +9,7 @@ import LabelTextLine from '../../components/LabelTextLine';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import orcidIcon from '../../resources/images/orcid_logo.svg';
 import { ORCID_BASE_URL } from '../../utils/constants';
-import OrcidModal from './OrcidModal';
+import OrcidModalContent from './OrcidModalContent';
 import Heading from '../../components/Heading';
 import Card from '../../components/Card';
 import { Avatar, Button } from '@material-ui/core';
@@ -42,8 +42,8 @@ const StyledAvatar = styled(Avatar)`
 
 const UserOrcid: FC = () => {
   const { t } = useTranslation('profile');
-  const user = useSelector((state: RootStore) => state.user);
-  const listOfOrcids = user.authority?.orcids;
+  const authority = useSelector((state: RootStore) => state.user.authority);
+  const listOfOrcids = authority ? authority.orcids : [];
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
   const dispatch = useDispatch();
 
@@ -52,8 +52,11 @@ const UserOrcid: FC = () => {
   };
 
   const removeOrcid = async (id: string) => {
+    if (!authority) {
+      return;
+    }
     const updatedAuthority = await removeQualifierIdFromAuthority(
-      user.authority.systemControlNumber,
+      authority.systemControlNumber,
       AuthorityQualifiers.ORCID,
       id
     );
@@ -106,7 +109,7 @@ const UserOrcid: FC = () => {
             buttonText={t('profile:orcid.create_or_connect')}
             dataTestId="open-orcid-modal"
             headingText={t('profile:orcid.create_or_connect')}>
-            <OrcidModal />
+            <OrcidModalContent />
           </ButtonModal>
         </>
       )}

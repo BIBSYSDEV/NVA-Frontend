@@ -9,7 +9,7 @@ import { Button } from '@material-ui/core';
 import Modal from '../../../components/Modal';
 import { RootStore } from '../../../redux/reducers/rootReducer';
 import orcidLogo from '../../../resources/images/orcid_logo.svg';
-import OrcidModal from '../OrcidModal';
+import OrcidModalContent from '../OrcidModalContent';
 import { ConnectAuthority } from './ConnectAuthority';
 import AuthorityCard from './AuthorityCard';
 
@@ -37,7 +37,7 @@ const AuthorityOrcidModal: FC = () => {
   const { location } = useHistory();
 
   const noOrcid = user.authority?.orcids === undefined || user.authority?.orcids.length === 0;
-  const noAuthority = user.authority?.systemControlNumber === '';
+  const noAuthority = !user.authority;
   const onHomePage = location.pathname === '/';
 
   const [hasClickedNext, setHasClickedNext] = useState(false);
@@ -64,13 +64,13 @@ const AuthorityOrcidModal: FC = () => {
         ariaLabelledBy="connect-author-modal"
         headingText={t('profile:authority.connect_authority')}>
         <>
-          {noAuthority ? (
-            <ConnectAuthority />
-          ) : (
+          {user.authority ? (
             <>
               <AuthorityCard authority={user.authority} isConnected />
               <StyledNormalText>{t('profile:authority.connected_authority')}</StyledNormalText>
             </>
+          ) : (
+            <ConnectAuthority />
           )}
           {noOrcid && (
             <StyledButtonContainer>
@@ -93,7 +93,7 @@ const AuthorityOrcidModal: FC = () => {
         onClose={() => setOpenOrcidModal(false)}
         headingIcon={{ src: orcidLogo, alt: 'ORCID iD icon' }}
         headingText={t('profile:orcid.create_or_connect')}>
-        <OrcidModal />
+        <OrcidModalContent />
         <StyledSkipButtonContainer>
           <StyledButton color="default" variant="outlined" onClick={() => setOpenOrcidModal(false)}>
             {t('profile:orcid.skip_this_step')}

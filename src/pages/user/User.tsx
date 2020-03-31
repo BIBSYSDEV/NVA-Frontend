@@ -57,8 +57,8 @@ const User: React.FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const hasHandles = user.authority?.handles?.length > 0;
-  const hasFeide = user.authority?.feideids?.length > 0;
+  const hasHandles = user.authority && user.authority.handles?.length > 0;
+  const hasFeide = user.authority && user.authority.feideids?.length > 0;
 
   useEffect(() => {
     const orcidAccessToken = new URLSearchParams(location.hash.replace('#', '?')).get('access_token') || '';
@@ -70,7 +70,7 @@ const User: React.FC = () => {
 
   useEffect(() => {
     const updateOrcid = async () => {
-      if (user.authority?.systemControlNumber && !user.authority?.orcids.includes(user.externalOrcid)) {
+      if (user.authority && !user.authority.orcids.includes(user.externalOrcid)) {
         const updatedAuthority = await addQualifierIdForAuthority(
           user.authority.systemControlNumber,
           AuthorityQualifiers.ORCID,
@@ -112,7 +112,9 @@ const User: React.FC = () => {
           {hasFeide ? (
             <>
               <p data-testid="author-connected-info">{t('authority.connected_info')}</p>
-              {hasHandles && <MuiLink href={user.authority.handles?.[0]}>{t('authority.see_profile')}</MuiLink>}
+              {hasHandles && (
+                <MuiLink href={user.authority ? user.authority.handles?.[0] : ''}>{t('authority.see_profile')}</MuiLink>
+              )}
             </>
           ) : (
             <>

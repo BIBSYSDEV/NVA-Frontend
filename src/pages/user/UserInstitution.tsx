@@ -36,7 +36,7 @@ const StyledInstitutionSearchContainer = styled.div`
 `;
 
 const UserInstitution: FC = () => {
-  const user = useSelector((state: RootStore) => state.user);
+  const authority = useSelector((state: RootStore) => state.user.authority);
   const [open, setOpen] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const { t } = useTranslation('profile');
@@ -55,13 +55,15 @@ const UserInstitution: FC = () => {
     }
   };
 
-  const handleAddInstitution = async ({ name, id, subunits, unit }: FormikInstitutionUnit) => {
+  const handleAddInstitution = async ({ id, subunits }: FormikInstitutionUnit) => {
     try {
-      if (subunits.length === 0) {
-        await addOrgunitIdToAuthorityAndDispatchNotification(id, user.authority.systemControlNumber);
-      } else {
-        const lastSubunit = subunits.pop();
-        await addOrgunitIdToAuthorityAndDispatchNotification(lastSubunit!.id, user.authority.systemControlNumber);
+      if (authority) {
+        if (subunits.length === 0) {
+          await addOrgunitIdToAuthorityAndDispatchNotification(id, authority.systemControlNumber);
+        } else {
+          const lastSubunit = subunits.pop();
+          await addOrgunitIdToAuthorityAndDispatchNotification(lastSubunit!.id, authority.systemControlNumber);
+        }
       }
     } catch (error) {
       dispatch(setNotification(t('feedback:error.update_authority'), NotificationVariant.Error));
@@ -69,10 +71,10 @@ const UserInstitution: FC = () => {
   };
 
   const handleSubmit = async (values: FormikInstitutionUnit, { resetForm }: any) => {
-    if (editMode && values.editId) {
+    if (editMode && values.editId && authority) {
       const organizationUnitId = values.subunits.length > 0 ? values.subunits.pop()!.id : values.id;
       const updatedAuthority = await updateQualifierIdForAuthority(
-        user.authority.systemControlNumber,
+        authority.systemControlNumber,
         AuthorityQualifiers.ORGUNIT_ID,
         values.editId,
         organizationUnitId
@@ -117,7 +119,7 @@ const UserInstitution: FC = () => {
                       disabled={editMode}
                       label={t('organization.institution')}
                       clearSearchField={values.name === ''}
-                      setValueFunction={inputValue => {
+                      setValueFunction={(inputValue) => {
                         setFieldValue(FormikInstitutionUnitFieldNames.NAME, inputValue.name);
                         setFieldValue(FormikInstitutionUnitFieldNames.ID, inputValue.id);
                         setFieldValue(name, inputValue ?? emptyRecursiveUnit);
@@ -160,7 +162,7 @@ const UserInstitution: FC = () => {
             variant="contained"
             color="primary"
             onClick={toggleOpen}
-            disabled={!user.authority?.systemControlNumber}
+            disabled={!authority}
             data-testid="add-new-institution-button">
             {t('organization.add_institution')}
           </Button>
