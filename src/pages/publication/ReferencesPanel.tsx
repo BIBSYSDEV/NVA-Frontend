@@ -38,10 +38,13 @@ const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, savePubl
     Object.values(ReferenceFieldNames).forEach((fieldName) => setFieldTouched(fieldName));
   }, [setFieldTouched]);
 
-  useEffect(() => {
-    // Set all fields as touched if user navigates away from this panel (on unmount)
-    return () => setAllFieldsTouched();
-  }, [setAllFieldsTouched]);
+  useEffect(
+    () => () => {
+      // Set all fields as touched if user navigates away from this panel (on unmount)
+      setAllFieldsTouched();
+    },
+    [setAllFieldsTouched]
+  );
 
   return (
     <TabPanel ariaLabel="references" goToNextTab={goToNextTab} onClickSave={() => savePublication()}>

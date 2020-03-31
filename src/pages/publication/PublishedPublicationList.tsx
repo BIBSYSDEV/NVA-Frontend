@@ -75,7 +75,7 @@ const PublishedPublicationList: FC<PublicationListProps> = ({ publications }) =>
                   <StyledAuthor>
                     {publication.contributors.length > 0 && (
                       <NormalText>
-                        {publication.contributors[0].identity.name}, {publication.contributors[0].institutions[0].name}
+                        {publication.contributors[0].identity.name}, {publication.contributors[0].affiliations[0].name}
                       </NormalText>
                     )}
                   </StyledAuthor>
