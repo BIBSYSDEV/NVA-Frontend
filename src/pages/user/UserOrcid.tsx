@@ -9,7 +9,7 @@ import LabelTextLine from '../../components/LabelTextLine';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import orcidIcon from '../../resources/images/orcid_logo.svg';
 import { ORCID_BASE_URL } from '../../utils/constants';
-import OrcidModal from './OrcidModal';
+import OrcidModalContent from './OrcidModalContent';
 import Heading from '../../components/Heading';
 import Card from '../../components/Card';
 import { Avatar, Button } from '@material-ui/core';
@@ -109,7 +109,7 @@ const UserOrcid: FC = () => {
             buttonText={t('profile:orcid.create_or_connect')}
             dataTestId="open-orcid-modal"
             headingText={t('profile:orcid.create_or_connect')}>
-            <OrcidModal />
+            <OrcidModalContent />
           </ButtonModal>
         </>
       )}

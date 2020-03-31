@@ -9,7 +9,7 @@ import { Button } from '@material-ui/core';
 import Modal from '../../../components/Modal';
 import { RootStore } from '../../../redux/reducers/rootReducer';
 import orcidLogo from '../../../resources/images/orcid_logo.svg';
-import OrcidModal from '../OrcidModal';
+import OrcidModalContent from '../OrcidModalContent';
 import { ConnectAuthority } from './ConnectAuthority';
 import AuthorityCard from './AuthorityCard';
 
@@ -93,7 +93,7 @@ const AuthorityOrcidModal: FC = () => {
         onClose={() => setOpenOrcidModal(false)}
         headingIcon={{ src: orcidLogo, alt: 'ORCID iD icon' }}
         headingText={t('profile:orcid.create_or_connect')}>
-        <OrcidModal />
+        <OrcidModalContent />
         <StyledSkipButtonContainer>
           <StyledButton color="default" variant="outlined" onClick={() => setOpenOrcidModal(false)}>
             {t('profile:orcid.skip_this_step')}

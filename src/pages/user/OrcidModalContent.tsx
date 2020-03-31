@@ -28,7 +28,7 @@ const StyledOrcidDescription = styled(DialogContent)`
   padding: 0.5rem;
 `;
 
-const OrcidModal: FC = () => {
+const OrcidModalContent: FC = () => {
   const { t } = useTranslation('profile');
   const history = useHistory();
 
@@ -64,4 +64,4 @@ const OrcidModal: FC = () => {
   );
 };
 
-export default OrcidModal;
+export default OrcidModalContent;
