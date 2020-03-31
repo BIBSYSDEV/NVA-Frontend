@@ -58,7 +58,7 @@ const User: React.FC = () => {
   const history = useHistory();
 
   const hasHandles = user.authority && user.authority.handles?.length > 0;
-  const hasFeide = user.authority && user.authority?.feideids?.length > 0;
+  const hasFeide = user.authority && user.authority.feideids?.length > 0;
 
   useEffect(() => {
     const orcidAccessToken = new URLSearchParams(location.hash.replace('#', '?')).get('access_token') || '';
