@@ -42,8 +42,8 @@ const StyledAvatar = styled(Avatar)`
 
 const UserOrcid: FC = () => {
   const { t } = useTranslation('profile');
-  const user = useSelector((state: RootStore) => state.user);
-  const listOfOrcids = user.authority?.orcids;
+  const authority = useSelector((state: RootStore) => state.user.authority);
+  const listOfOrcids = authority ? authority.orcids : [];
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
   const dispatch = useDispatch();
 
@@ -52,8 +52,11 @@ const UserOrcid: FC = () => {
   };
 
   const removeOrcid = async (id: string) => {
+    if (!authority) {
+      return;
+    }
     const updatedAuthority = await removeQualifierIdFromAuthority(
-      user.authority.systemControlNumber,
+      authority.systemControlNumber,
       AuthorityQualifiers.ORCID,
       id
     );

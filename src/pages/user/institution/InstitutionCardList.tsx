@@ -15,7 +15,7 @@ interface InstitutionCardListProps {
 }
 
 const InstitutionCardList: FC<InstitutionCardListProps> = ({ onEdit, open }) => {
-  const user = useSelector((state: RootStore) => state.user);
+  const authority = useSelector((state: RootStore) => state.user.authority);
   const dispatch = useDispatch();
   const { t } = useTranslation('profile');
   const [units, setUnits] = useState<FormikInstitutionUnit[]>([]);
@@ -23,24 +23,26 @@ const InstitutionCardList: FC<InstitutionCardListProps> = ({ onEdit, open }) => 
   useEffect(() => {
     const getUnitsForUser = async () => {
       let units: FormikInstitutionUnit[] = [];
-      for (let orgunitid in user.authority.orgunitids) {
-        const currentSubunitid = user.authority.orgunitids[orgunitid];
-        const unit = await getParentUnits(currentSubunitid);
-        if (!unit.error) {
-          units.push(unit);
+      if (authority) {
+        for (let orgunitid in authority.orgunitids) {
+          const currentSubunitid = authority.orgunitids[orgunitid];
+          const unit = await getParentUnits(currentSubunitid);
+          if (!unit.error) {
+            units.push(unit);
+          }
         }
-      }
-      if (user.authority.orgunitids.length > 0 && units.length === 0) {
-        dispatch(setNotification(t('feedback:error.get_parent_units'), NotificationVariant.Error));
+        if (authority.orgunitids.length > 0 && units.length === 0) {
+          dispatch(setNotification(t('feedback:error.get_parent_units'), NotificationVariant.Error));
+        }
       }
       setUnits(units);
     };
-    if (user.authority.orgunitids?.length > 0) {
+    if (authority && authority.orgunitids?.length > 0) {
       getUnitsForUser();
     } else {
       setUnits([]);
     }
-  }, [user.authority.orgunitids, dispatch, t]);
+  }, [authority, dispatch, t]);
 
   return (
     <>

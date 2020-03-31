@@ -1,4 +1,4 @@
-import { Authority, emptyAuthority } from './authority.types';
+import { Authority } from './authority.types';
 
 export enum RoleName {
   ADMIN = 'Admin',
@@ -34,7 +34,7 @@ export interface User {
   institution: string;
   roles: RoleName[];
   application: ApplicationName;
-  authority: Authority;
+  authority: Authority | null;
   isLoggedIn: boolean;
   possibleAuthorities: Authority[];
   organizationId: string;
@@ -78,7 +78,7 @@ export const emptyUser: User = {
   institution: '',
   roles: [],
   application: ApplicationName.NONE,
-  authority: emptyAuthority,
+  authority: null,
   isLoggedIn: false,
   possibleAuthorities: [],
   organizationId: '',
