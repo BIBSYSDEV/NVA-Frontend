@@ -53,10 +53,13 @@ const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublicat
     Object.values(DescriptionFieldNames).forEach((fieldName) => setFieldTouched(fieldName));
   }, [setFieldTouched]);
 
-  useEffect(() => {
-    // Set all fields as touched if user navigates away from this panel (on unmount)
-    return () => setAllFieldsTouched();
-  }, [setAllFieldsTouched]);
+  useEffect(
+    () => () => {
+      // Set all fields as touched if user navigates away from this panel (on unmount)
+      setAllFieldsTouched();
+    },
+    [setAllFieldsTouched]
+  );
 
   const validateAndSave = () => {
     setAllFieldsTouched();

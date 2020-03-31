@@ -28,6 +28,7 @@
     "year_only": "Year only"
   },
   "feedback": {
+    "invalid_format": "Invalid format",
     "invalid_url": "Invalid URL",
     "minimum_one_contributor": "You need to have at least one author registered for this publication",
     "minimum_one_file": "You need to have at least one file uploaded for this publication",
