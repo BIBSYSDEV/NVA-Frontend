@@ -1,6 +1,7 @@
 {
   "contributors": "$t(publication:contributors.authors)",
   "embargoDate": "$t(publication:files_and_license.embargo_date)",
+  "files": "$t(publication:files_and_license.files)",
   "fileSet": "$t(publication:heading.files_and_license)",
   "license": "$t(publication:files_and_license.license)",
   "mainTitle": "$t(common:title)",

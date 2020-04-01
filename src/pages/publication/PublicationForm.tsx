@@ -46,7 +46,13 @@ const PublicationForm: FC<PublicationFormProps> = ({
 
   useEffect(() => {
     // Get files uploaded from new publication view
-    const files = Object.values(uppy.getState().files).map((file) => ({ ...emptyFile, ...file }));
+    const files = Object.values(uppy.getState().files).map((file) => ({
+      ...emptyFile,
+      identifier: file.id,
+      name: file.name,
+      mimeType: file.type ?? '',
+      size: file.size,
+    }));
 
     if (files?.length) {
       setInitialValues({

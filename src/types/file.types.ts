@@ -63,11 +63,12 @@ export const licenses: LicenseInfo[] = [
 ];
 
 interface License {
-  type?: string; // TODO: remove this when fixed in backend
   identifier: LicenseNames;
   labels: {
     [key: string]: string;
   };
+  link: string;
+  type?: string; // TODO: remove this when fixed in backend
 }
 
 export interface FileSet {
@@ -76,34 +77,28 @@ export interface FileSet {
 }
 
 export interface File {
-  type?: string; // TODO: remove this when fixed in backend
   identifier: string;
   name: string;
-  preview?: string;
-  data: {
-    size: number;
-    lastModified?: number;
-    type: string;
-  };
+  size: number;
+  mimeType: string;
   administrativeAgreement: boolean;
   publisherAuthority: boolean;
   embargoDate: Date | null;
   license: License | null;
+  preview?: string;
+  type?: string; // TODO: remove this when fixed in backend
 }
 
 export const emptyFile: File = {
   identifier: '',
   name: '',
-  preview: '',
-  data: {
-    size: 0,
-    lastModified: 0,
-    type: '',
-  },
+  size: 0,
+  mimeType: '',
   administrativeAgreement: false,
   publisherAuthority: false,
   embargoDate: null,
   license: null,
+  preview: '',
 };
 
 export interface Uppy extends UppyType<StrictTypes> {
