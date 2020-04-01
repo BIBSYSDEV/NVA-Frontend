@@ -74,7 +74,7 @@ export interface Publication {
   readonly owner: string;
   readonly status: PublicationStatus;
   entityDescription: PublicationEntityDescription;
-  fileSet: FileSet; //TODO: map fileSet correctly according to datamodel
+  fileSet: FileSet;
 }
 
 interface PublicationEntityDescription {
@@ -99,21 +99,21 @@ interface PublicationEntityDescription {
   specialization: string;
   textBook: boolean;
   reference: {
-    type: string; //TODO: remove this when backend has fixed Reference
     doi: string;
     publicationInstance: {
-      type: string; //TODO: remove this when backend has fixed Reference
       volume: string;
       issue: string;
       articleNumber: string;
       peerReviewed: boolean;
       pages: {
-        type: string; //TODO: remove this when backend has fixed Reference
         begin: string;
         end: string;
+        type?: string; //TODO: remove this when backend has fixed Reference
       };
+      type?: string; //TODO: remove this when backend has fixed Reference
     };
     publicationContext: Publisher | null;
+    type?: string; //TODO: remove this when backend has fixed Reference
   };
 }
 

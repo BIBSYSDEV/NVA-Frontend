@@ -72,8 +72,8 @@ interface License {
 }
 
 export interface FileSet {
-  type: string;
   files: File[];
+  type?: string; // TODO: remove this when fixed in backend
 }
 
 export interface File {
