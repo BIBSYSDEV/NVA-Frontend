@@ -12,15 +12,16 @@ enum ContributorIdentityType {
 }
 
 export interface Contributor {
+  affiliations: Institution[];
   corresponding?: boolean;
   email?: string;
-
-  // New model backend
-  affiliations: Institution[];
   identity: {
-    id: string;
+    id?: string;
     name: string;
     type: ContributorIdentityType;
+    orcId?: string;
+    arpId?: string;
+    isAuthorized: boolean; // Only used by frontend to identify if authority has FEIDE-ID
   };
   role: ContributorRole | '';
   sequence: number;
@@ -34,17 +35,15 @@ interface Institution {
 }
 
 export const emptyContributor: Contributor = {
+  affiliations: [],
   corresponding: false,
   email: '',
-  affiliations: [],
-  role: '',
-
-  // New model
   identity: {
-    id: '',
     name: '',
     type: ContributorIdentityType.IDENTITY,
+    isAuthorized: false,
   },
+  role: '',
   sequence: 0,
   type: ContributorType.CONTRIBUTOR,
 };

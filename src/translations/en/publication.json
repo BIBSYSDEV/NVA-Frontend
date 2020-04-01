@@ -10,6 +10,7 @@
     "authors": "Authors",
     "corresponding": "Corresponding",
     "type": "Contributor type",
+    "unauthorized_author_identity": "Unauthorized author identity",
     "verify_person": "Verify"
   },
   "description": {

@@ -9,16 +9,23 @@ import {
   TableRow,
   TextField,
   Button,
+  Tooltip,
 } from '@material-ui/core';
 import { Field, FieldProps, FormikProps, useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
 import DeleteIcon from '@material-ui/icons/Delete';
+import WarningIcon from '@material-ui/icons/Warning';
 
 import { ContributorFieldNames, SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
 import { Contributor, emptyContributor } from '../../../../types/contributor.types';
 import { FormikPublication } from '../../../../types/publication.types';
 import SubHeading from '../../../../components/SubHeading';
 import AddContributor from '../AddContributor';
+import styled from 'styled-components';
+
+const StyledWarningIcon = styled(WarningIcon)`
+  color: ${({ theme }) => theme.palette.danger.main};
+`;
 
 interface SortableItemProps {
   contributor: Contributor;
@@ -35,7 +42,15 @@ const SortableItem = SortableElement(({ contributor, placement, onDelete }: Sort
   return (
     <TableRow tabIndex={0} key={contributor.identity.id}>
       <TableCell align="left">
-        <SubHeading>{contributor.identity.name}</SubHeading>
+        <SubHeading>
+          {contributor.identity.name}{' '}
+          {!contributor.identity.isAuthorized && (
+            <Tooltip title={t('publication:contributors.unauthorized_author_identity')}>
+              <StyledWarningIcon />
+            </Tooltip>
+          )}
+        </SubHeading>
+
         <Field name={`${baseFieldName}.${SpecificContributorFieldNames.CORRESPONDING}`}>
           {({ field }: FieldProps) => (
             <FormControlLabel
@@ -138,8 +153,10 @@ const SortableTable: FC<SortableTableProps> = ({ listOfContributors, push, remov
             // })),
             identity: {
               ...emptyContributor.identity,
-              id: authority.systemControlNumber,
+              arpId: authority.systemControlNumber,
+              orcId: authority.orcids.length > 0 ? authority.orcids[0] : '',
               name: authority.name,
+              isAuthorized: authority.feideids?.length > 0,
             },
             sequence: listOfContributors.length,
           };

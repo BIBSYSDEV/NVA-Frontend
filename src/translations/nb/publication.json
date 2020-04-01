@@ -10,6 +10,7 @@
     "authors": "Forfattere",
     "corresponding": "Korresponderende",
     "type": "Bidragstype",
+    "unauthorized_author_identity": "Ukjent forfatteridentitet",
     "verify_person": "Verifiser"
   },
   "description": {
