@@ -6,7 +6,7 @@ describe('User administers institutions ', () => {
   beforeEach('Given that the user is logged in as Application administrator:', () => {
     cy.visit('/');
     cy.server();
-    cy.get('[data-testid=menu-login-button]').click({ force: true });
+    cy.mocklogin();
     cy.setUserInRedux(authorizedUser);
   });
 
@@ -28,12 +28,8 @@ describe('User administers institutions ', () => {
     // Open new institution page
     cy.get('[data-testid=add-institution-button]').click({ force: true });
 
-    cy.get('[data-testid=autosearch-institution]')
-      .click({ force: true })
-      .type('ntnu');
-    cy.get('.MuiAutocomplete-option')
-      .contains('Norges teknisk-naturvitenskapelige universitet')
-      .click({ force: true });
+    cy.get('[data-testid=autosearch-institution]').click({ force: true }).type('ntnu');
+    cy.get('.MuiAutocomplete-option').contains('Norges teknisk-naturvitenskapelige universitet').click({ force: true });
 
     cy.get('[data-testid=customer-instituiton-display-name-input]').type('Institutt for osteloff!');
     cy.get('[data-testid=customer-instituiton-short-name-input]').type('OSTEINSTITUTTET');
