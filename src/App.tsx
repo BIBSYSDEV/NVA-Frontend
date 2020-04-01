@@ -17,7 +17,7 @@ import { setAuthorityData, setPossibleAuthorities, setUser } from './redux/actio
 import { RootStore } from './redux/reducers/rootReducer';
 import { Authority } from './types/authority.types';
 import { awsConfig } from './utils/aws-config';
-import { API_URL, USE_MOCK_DATA } from './utils/constants';
+import { API_URL, DEBOUNCE_INTERVAL_MODAL, USE_MOCK_DATA } from './utils/constants';
 import { hubListener } from './utils/hub-listener';
 import { mockUser } from './utils/testfiles/mock_feide_user';
 import AppRoutes from './AppRoutes';
@@ -57,9 +57,8 @@ const App: React.FC = () => {
 
   const dispatch = useDispatch();
   const user = useSelector((store: RootStore) => store.user);
-  // Authority/Orcid modal should always be opened on first login
-  const [showAuthorityOrcidModal, setShowAuthorityOrcidModal] = useState(!localStorage.getItem('previouslyLoggedIn'));
-  const [loadingAuthority, setLoadingAuthority] = useState(true);
+  const [showAuthorityOrcidModal, setShowAuthorityOrcidModal] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (USE_MOCK_DATA) {
@@ -76,6 +75,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     const getAuthority = async () => {
+      setLoading(true);
       const authorities = await getAuthorities(user.name, dispatch);
       if (authorities) {
         const filteredAuthorities: Authority[] = authorities.filter((auth: Authority) =>
@@ -94,15 +94,32 @@ const App: React.FC = () => {
           }
         } else {
           dispatch(setPossibleAuthorities(authorities));
-          setShowAuthorityOrcidModal(true);
         }
-        setLoadingAuthority(false);
+        setLoading(false);
       }
     };
     if (user.name) {
       getAuthority();
     }
   }, [dispatch, user.name, user.id, user.organizationId]);
+
+  useEffect(() => {
+    !loading &&
+      user.authority?.systemControlNumber &&
+      user.authority?.orcids.length > 0 &&
+      setShowAuthorityOrcidModal(false);
+  }, [loading, user.authority, showAuthorityOrcidModal]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      user.id &&
+        (user.authority?.orcids === undefined ||
+          user.authority?.orcids.length === 0 ||
+          user.authority?.feideids === undefined ||
+          user.authority?.feideids.length === 0) &&
+        setShowAuthorityOrcidModal(true);
+    }, DEBOUNCE_INTERVAL_MODAL);
+  }, [user.id, user.authority]);
 
   return (
     <BrowserRouter>
@@ -111,12 +128,12 @@ const App: React.FC = () => {
         <Header />
         <AdminMenu />
         <Breadcrumbs />
+        {showAuthorityOrcidModal && <AuthorityOrcidModal />}
         <StyledContent>
           <AppRoutes />
         </StyledContent>
         <Footer />
       </StyledApp>
-      {!loadingAuthority && showAuthorityOrcidModal && <AuthorityOrcidModal authority={user.authority} />}
     </BrowserRouter>
   );
 };

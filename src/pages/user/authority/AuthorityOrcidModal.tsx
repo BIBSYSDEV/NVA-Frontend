@@ -1,14 +1,17 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
 import styled from 'styled-components';
+
 import { Button } from '@material-ui/core';
 
 import Modal from '../../../components/Modal';
+import { RootStore } from '../../../redux/reducers/rootReducer';
 import orcidLogo from '../../../resources/images/orcid_logo.svg';
 import OrcidModalContent from '../OrcidModalContent';
 import { ConnectAuthority } from './ConnectAuthority';
 import AuthorityCard from './AuthorityCard';
-import { Authority } from '../../../types/authority.types';
 
 const StyledButtonContainer = styled.div`
   display: flex;
@@ -28,38 +31,42 @@ const StyledNormalText = styled.div`
   margin-top: 1rem;
 `;
 
-interface AuthorityOrcidModalProps {
-  authority: Authority | null;
-}
-
-const AuthorityOrcidModal: FC<AuthorityOrcidModalProps> = ({ authority }) => {
+const AuthorityOrcidModal: FC = () => {
   const { t } = useTranslation('common');
-  const [openOrcidModal, setOpenOrcidModal] = useState(false);
-  const [openAuthorityModal, setOpenAuthorityModal] = useState(true);
+  const user = useSelector((store: RootStore) => store.user);
+  const { location } = useHistory();
 
-  const noOrcid = !authority || !authority.orcids || authority.orcids.length === 0;
+  const noOrcid = user.authority?.orcids === undefined || user.authority?.orcids.length === 0;
+  const noAuthority = !user.authority;
+  const onHomePage = location.pathname === '/';
+
+  const [hasClickedNext, setHasClickedNext] = useState(false);
+  const [openOrcidModal, setOpenOrcidModal] = useState(false);
+  const [openAuthorityModal, setOpenAuthorityModal] = useState(noAuthority && onHomePage);
+
+  useEffect(() => {
+    setOpenOrcidModal(noOrcid && onHomePage && hasClickedNext);
+  }, [noOrcid, onHomePage, hasClickedNext]);
 
   const handleNextClick = () => {
+    setHasClickedNext(true);
     setOpenOrcidModal(true);
     setOpenAuthorityModal(false);
-
-    // Set previouslyLoggedIn in localStorage to avoid opening this modal on every login
-    localStorage.setItem('previouslyLoggedIn', 'true');
   };
 
   return (
     <>
       <Modal
         dataTestId="connect-author-modal"
-        disableEscape={!authority}
+        disableEscape={noAuthority}
         openModal={openAuthorityModal}
         onClose={() => setOpenAuthorityModal(false)}
         ariaLabelledBy="connect-author-modal"
         headingText={t('profile:authority.connect_authority')}>
         <>
-          {authority ? (
+          {user.authority ? (
             <>
-              <AuthorityCard authority={authority} isConnected />
+              <AuthorityCard authority={user.authority} isConnected />
               <StyledNormalText>{t('profile:authority.connected_authority')}</StyledNormalText>
             </>
           ) : (
@@ -72,7 +79,7 @@ const AuthorityOrcidModal: FC<AuthorityOrcidModalProps> = ({ authority }) => {
                 variant="contained"
                 data-testid="modal_next"
                 onClick={handleNextClick}
-                disabled={!authority}>
+                disabled={noAuthority}>
                 {t('next')}
               </Button>
             </StyledButtonContainer>
