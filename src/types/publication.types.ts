@@ -1,5 +1,5 @@
 import { Contributor } from './contributor.types';
-// import { File } from './file.types';
+import { FileSet } from './file.types';
 import { LanguageValues } from './language.types';
 import { Project } from './project.types';
 import { PublicationType, JournalArticleType, ReportType, DegreeType, BookType } from './publicationFieldNames';
@@ -74,7 +74,7 @@ export interface Publication {
   readonly owner: string;
   readonly status: PublicationStatus;
   entityDescription: PublicationEntityDescription;
-  fileSet: any; //TODO: map fileSet correctly according to datamodel
+  fileSet: FileSet; //TODO: map fileSet correctly according to datamodel
 }
 
 interface PublicationEntityDescription {
@@ -190,17 +190,7 @@ export const emptyPublication: FormikPublication = {
   entityDescription: emptyPublicationEntityDescription,
   fileSet: {
     type: 'FileSet',
-    files: [
-      {
-        type: 'File',
-        identifier: '',
-        name: '',
-        license: {
-          type: 'License',
-          identifier: '',
-        },
-      },
-    ],
+    files: [],
   },
   shouldCreateDoi: false,
 };

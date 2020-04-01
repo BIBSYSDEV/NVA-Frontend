@@ -102,29 +102,31 @@ export const publicationValidationSchema = Yup.object().shape({
         .required(ErrorMessage.REQUIRED),
     }),
   }),
-  fileSet: Yup.array()
-    .of(
-      Yup.object().shape({
-        administrativeAgreement: Yup.boolean(),
-        embargoDate: Yup.date()
-          .nullable()
-          .when('administrativeAgreement', {
-            is: false,
-            then: Yup.date().nullable().min(new Date()).required(ErrorMessage.REQUIRED),
-          }),
-        publisherAuthority: Yup.boolean()
-          .nullable()
-          .when('administrativeAgreement', {
-            is: false,
-            then: Yup.boolean().required(ErrorMessage.REQUIRED),
-          }),
-        license: Yup.object()
-          .nullable()
-          .when('administrativeAgreement', {
-            is: false,
-            then: Yup.object().required(ErrorMessage.REQUIRED),
-          }),
-      })
-    )
-    .min(1, ErrorMessage.MISSING_FILE),
+  fileSet: Yup.object().shape({
+    files: Yup.array()
+      .of(
+        Yup.object().shape({
+          administrativeAgreement: Yup.boolean(),
+          embargoDate: Yup.date()
+            .nullable()
+            .when('administrativeAgreement', {
+              is: false,
+              then: Yup.date().nullable().min(new Date()).required(ErrorMessage.REQUIRED),
+            }),
+          publisherAuthority: Yup.boolean()
+            .nullable()
+            .when('administrativeAgreement', {
+              is: false,
+              then: Yup.boolean().required(ErrorMessage.REQUIRED),
+            }),
+          license: Yup.object()
+            .nullable()
+            .when('administrativeAgreement', {
+              is: false,
+              then: Yup.object().required(ErrorMessage.REQUIRED),
+            }),
+        })
+      )
+      .min(1, ErrorMessage.MISSING_FILE),
+  }),
 });

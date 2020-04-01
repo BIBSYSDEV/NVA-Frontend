@@ -63,14 +63,21 @@ export const licenses: LicenseInfo[] = [
 ];
 
 interface License {
+  type?: string; // TODO: remove this when fixed in backend
   identifier: LicenseNames;
   labels: {
     [key: string]: string;
   };
 }
 
+export interface FileSet {
+  type: string;
+  files: File[];
+}
+
 export interface File {
-  id: string;
+  type?: string; // TODO: remove this when fixed in backend
+  identifier: string;
   name: string;
   preview?: string;
   data: {
@@ -85,7 +92,7 @@ export interface File {
 }
 
 export const emptyFile: File = {
-  id: '',
+  identifier: '',
   name: '',
   preview: '',
   data: {

@@ -66,6 +66,7 @@ export enum DescriptionFieldNames {
 
 export enum FileFieldNames {
   FILE_SET = 'fileSet',
+  FILES = 'fileSet.files',
 }
 
 // The following fields should be present in "fileSet[index].<KEY>"
