@@ -157,14 +157,7 @@ const emptyPublicationEntityDescription: PublicationEntityDescription = {
         end: '',
       },
     },
-    publicationContext: {
-      type: 'PublicationContext', //TODO: remove this when backend has fixed Reference
-      title: '',
-      level: null,
-      onlineIssn: '',
-      openAccess: false,
-      printIssn: '',
-    },
+    publicationContext: null,
   },
 };
 
