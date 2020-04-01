@@ -59,7 +59,7 @@ const App: React.FC = () => {
   const user = useSelector((store: RootStore) => store.user);
   // Authority/Orcid modal should always be opened on first login
   const [showAuthorityOrcidModal, setShowAuthorityOrcidModal] = useState(!localStorage.getItem('previouslyLoggedIn'));
-  const [loadingPerson, setLoadingPerson] = useState(true);
+  const [loadingAuthority, setLoadingAuthority] = useState(true);
 
   useEffect(() => {
     if (USE_MOCK_DATA) {
@@ -96,7 +96,7 @@ const App: React.FC = () => {
           dispatch(setPossibleAuthorities(authorities));
           setShowAuthorityOrcidModal(true);
         }
-        setLoadingPerson(false);
+        setLoadingAuthority(false);
       }
     };
     if (user.name) {
@@ -116,7 +116,7 @@ const App: React.FC = () => {
         </StyledContent>
         <Footer />
       </StyledApp>
-      {!loadingPerson && showAuthorityOrcidModal && <AuthorityOrcidModal authority={user.authority} />}
+      {!loadingAuthority && showAuthorityOrcidModal && <AuthorityOrcidModal authority={user.authority} />}
     </BrowserRouter>
   );
 };
