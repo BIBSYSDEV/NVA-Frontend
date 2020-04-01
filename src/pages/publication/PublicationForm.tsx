@@ -93,6 +93,7 @@ const PublicationForm: FC<PublicationFormProps> = ({
     if (updatedPublication.error) {
       dispatch(setNotification(updatedPublication.error, NotificationVariant.Error));
     } else {
+      setInitialValues(deepmerge(emptyPublication, updatedPublication));
       dispatch(setNotification(t('feedback:success.update_publication')));
     }
   };

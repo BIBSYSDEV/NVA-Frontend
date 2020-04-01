@@ -1,5 +1,5 @@
 import { Contributor } from './contributor.types';
-import { File } from './file.types';
+// import { File } from './file.types';
 import { LanguageValues } from './language.types';
 import { Project } from './project.types';
 import { PublicationType, JournalArticleType, ReportType, DegreeType, BookType } from './publicationFieldNames';
@@ -25,6 +25,7 @@ export interface PublicationMetadata {
 }
 
 export interface Publisher {
+  type?: string; //TODO: remove this when backend has fixed Reference
   title: string;
   printIssn: string;
   onlineIssn: string;
@@ -73,7 +74,7 @@ export interface Publication {
   readonly owner: string;
   readonly status: PublicationStatus;
   entityDescription: PublicationEntityDescription;
-  fileSet: File[];
+  fileSet: any; //TODO: map fileSet correctly according to datamodel
 }
 
 interface PublicationEntityDescription {
@@ -98,13 +99,16 @@ interface PublicationEntityDescription {
   specialization: string;
   textBook: boolean;
   reference: {
+    type: string; //TODO: remove this when backend has fixed Reference
     doi: string;
     publicationInstance: {
+      type: string; //TODO: remove this when backend has fixed Reference
       volume: string;
       issue: string;
       articleNumber: string;
       peerReviewed: boolean;
       pages: {
+        type: string; //TODO: remove this when backend has fixed Reference
         begin: string;
         end: string;
       };
@@ -139,18 +143,28 @@ const emptyPublicationEntityDescription: PublicationEntityDescription = {
   specialization: '',
   textBook: false,
   reference: {
+    type: 'Reference', //TODO: remove this when backend has fixed Reference
     doi: '',
     publicationInstance: {
+      type: 'PublicationInstance', //TODO: remove this when backend has fixed Reference
       volume: '',
       issue: '',
       articleNumber: '',
       peerReviewed: false,
       pages: {
+        type: 'Pages', //TODO: remove this when backend has fixed Reference
         begin: '',
         end: '',
       },
     },
-    publicationContext: null,
+    publicationContext: {
+      type: 'PublicationContext', //TODO: remove this when backend has fixed Reference
+      title: '',
+      level: null,
+      onlineIssn: '',
+      openAccess: false,
+      printIssn: '',
+    },
   },
 };
 
@@ -174,6 +188,19 @@ export const emptyPublication: FormikPublication = {
   owner: '',
   status: PublicationStatus.DRAFT,
   entityDescription: emptyPublicationEntityDescription,
-  fileSet: [],
+  fileSet: {
+    type: 'FileSet',
+    files: [
+      {
+        type: 'File',
+        identifier: '',
+        name: '',
+        license: {
+          type: 'License',
+          identifier: '',
+        },
+      },
+    ],
+  },
   shouldCreateDoi: false,
 };

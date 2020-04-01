@@ -95,7 +95,7 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab
               <>
                 <StyledUploadedFiles>
                   <Heading>{t('files_and_license.files')}</Heading>
-                  {fileSet.map((file, index) => (
+                  {fileSet.map((file: any, index: number) => (
                     <FileCard
                       key={file.id}
                       file={file}

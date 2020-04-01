@@ -1,7 +1,7 @@
 import { FormikErrors, FormikTouched, getIn } from 'formik';
 import {
   FileFieldNames,
-  SpecificFileFieldNames,
+  // SpecificFileFieldNames,
   SpecificContributorFieldNames,
   ContributorFieldNames,
 } from '../types/publicationFieldNames';
@@ -48,15 +48,16 @@ export const getAllFileFields = (fileSet: File[]) => {
   if (fileSet.length === 0) {
     fieldNames.push(FileFieldNames.FILE_SET);
   } else {
-    fileSet.forEach((file, index) => {
-      const baseFieldName = `${FileFieldNames.FILE_SET}[${index}]`;
-      fieldNames.push(`${baseFieldName}.${SpecificFileFieldNames.ADMINISTRATIVE_AGREEMENT}`);
-      if (!file.administrativeAgreement) {
-        fieldNames.push(`${baseFieldName}.${SpecificFileFieldNames.PUBLISHER_AUTHORITY}`);
-        fieldNames.push(`${baseFieldName}.${SpecificFileFieldNames.EMBARGO_DATE}`);
-        fieldNames.push(`${baseFieldName}.${SpecificFileFieldNames.LICENSE}`);
-      }
-    });
+    //TODO: fix this when files is mapped correctly to datamodel
+    // fileSet.forEach((file, index) => {
+    //   const baseFieldName = `${FileFieldNames.FILE_SET}[${index}]`;
+    //   fieldNames.push(`${baseFieldName}.${SpecificFileFieldNames.ADMINISTRATIVE_AGREEMENT}`);
+    //   if (!file.administrativeAgreement) {
+    //     fieldNames.push(`${baseFieldName}.${SpecificFileFieldNames.PUBLISHER_AUTHORITY}`);
+    //     fieldNames.push(`${baseFieldName}.${SpecificFileFieldNames.EMBARGO_DATE}`);
+    //     fieldNames.push(`${baseFieldName}.${SpecificFileFieldNames.LICENSE}`);
+    //   }
+    // });
   }
   return fieldNames;
 };
