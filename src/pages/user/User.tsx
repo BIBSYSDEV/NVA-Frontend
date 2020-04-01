@@ -8,10 +8,8 @@ import { Link as MuiLink, Button } from '@material-ui/core';
 import { Link as RouterLink } from 'react-router-dom';
 import { addQualifierIdForAuthority, AuthorityQualifiers } from '../../api/authorityApi';
 import { getOrcidInfo } from '../../api/external/orcidApi';
-import ButtonModal from '../../components/ButtonModal';
 import { setAuthorityData } from '../../redux/actions/userActions';
 import { RootStore } from '../../redux/reducers/rootReducer';
-import { ConnectAuthority } from './authority/ConnectAuthority';
 import UserInfo from './UserInfo';
 import UserLanguage from './UserLanguage';
 import UserOrcid from './UserOrcid';
@@ -57,9 +55,6 @@ const User: React.FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const hasHandles = user.authority && user.authority.handles?.length > 0;
-  const hasFeide = user.authority && user.authority.feideids?.length > 0;
-
   useEffect(() => {
     const orcidAccessToken = new URLSearchParams(location.hash.replace('#', '?')).get('access_token') || '';
     if (orcidAccessToken) {
@@ -83,6 +78,7 @@ const User: React.FC = () => {
       updateOrcid();
     }
   }, [user.authority, dispatch, user.externalOrcid]);
+
   return (
     <StyledUserPage>
       <StyledButtonWrapper>
@@ -109,23 +105,12 @@ const User: React.FC = () => {
         <UserInfo user={user} />
         <Card>
           <Heading>{t('heading.author_info')}</Heading>
-          {hasFeide ? (
+          {user.authority && user.authority.feideids?.length > 0 && (
             <>
               <p data-testid="author-connected-info">{t('authority.connected_info')}</p>
-              {hasHandles && (
-                <MuiLink href={user.authority ? user.authority.handles?.[0] : ''}>{t('authority.see_profile')}</MuiLink>
+              {user.authority.handles?.length > 0 && (
+                <MuiLink href={user.authority ? user.authority.handles[0] : ''}>{t('authority.see_profile')}</MuiLink>
               )}
-            </>
-          ) : (
-            <>
-              <p>{t('authority.not_connected_info')}</p>
-              <ButtonModal
-                buttonText={t('authority.connect_authority')}
-                dataTestId="connect-author-modal"
-                ariaLabelledBy="connect-author-modal"
-                headingText={t('authority.connect_authority')}>
-                <ConnectAuthority />
-              </ButtonModal>
             </>
           )}
         </Card>
