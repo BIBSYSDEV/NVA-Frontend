@@ -15,6 +15,7 @@ import { Field, FieldProps, FormikProps, useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
 import DeleteIcon from '@material-ui/icons/Delete';
 import WarningIcon from '@material-ui/icons/Warning';
+import CheckIcon from '@material-ui/icons/Check';
 
 import { ContributorFieldNames, SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
 import { Contributor, emptyContributor } from '../../../../types/contributor.types';
@@ -24,7 +25,11 @@ import AddContributor from '../AddContributor';
 import styled from 'styled-components';
 
 const StyledWarningIcon = styled(WarningIcon)`
-  color: ${({ theme }) => theme.palette.danger.main};
+  color: ${({ theme }) => theme.palette.warning.main};
+`;
+
+const StyledCheckIcon = styled(CheckIcon)`
+  color: ${({ theme }) => theme.palette.success.main};
 `;
 
 interface SortableItemProps {
@@ -44,8 +49,12 @@ const SortableItem = SortableElement(({ contributor, placement, onDelete }: Sort
       <TableCell align="left">
         <SubHeading>
           {contributor.identity.name}{' '}
-          {!contributor.identity.isAuthorized && (
-            <Tooltip title={t('publication:contributors.unauthorized_author_identity')}>
+          {contributor.identity.arpId ? (
+            <Tooltip title={t('publication:contributors.known_author_identity')}>
+              <StyledCheckIcon />
+            </Tooltip>
+          ) : (
+            <Tooltip title={t('publication:contributors.unknown_author_identity')}>
               <StyledWarningIcon />
             </Tooltip>
           )}
@@ -156,7 +165,6 @@ const SortableTable: FC<SortableTableProps> = ({ listOfContributors, push, remov
               arpId: authority.systemControlNumber,
               orcId: authority.orcids.length > 0 ? authority.orcids[0] : '',
               name: authority.name,
-              isAuthorized: authority.feideids?.length > 0,
             },
             sequence: listOfContributors.length,
           };

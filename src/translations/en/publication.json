@@ -9,8 +9,9 @@
     "add_other_contributor": "Add more contributors",
     "authors": "Authors",
     "corresponding": "Corresponding",
+    "known_author_identity": "Confirmed author identity",
     "type": "Contributor type",
-    "unauthorized_author_identity": "Unauthorized author identity",
+    "unknown_author_identity": "Unknown author identity",
     "verify_person": "Verify"
   },
   "description": {

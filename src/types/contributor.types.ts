@@ -21,7 +21,6 @@ export interface Contributor {
     type: ContributorIdentityType;
     orcId?: string;
     arpId?: string;
-    isAuthorized: boolean; // Only used by frontend to identify if authority has FEIDE-ID
   };
   role: ContributorRole | '';
   sequence: number;
@@ -41,7 +40,6 @@ export const emptyContributor: Contributor = {
   identity: {
     name: '',
     type: ContributorIdentityType.IDENTITY,
-    isAuthorized: false,
   },
   role: '',
   sequence: 0,
