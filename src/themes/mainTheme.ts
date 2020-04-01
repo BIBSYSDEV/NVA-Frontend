@@ -29,7 +29,6 @@ enum Colors {
   Disabled = '#bbb',
   Danger = '#ff5555',
   DangerLight = '#ffbbbb',
-  Success = '#c8e6c9',
 }
 
 export default createMuiTheme({
@@ -61,9 +60,6 @@ export default createMuiTheme({
     },
     background: {
       default: Colors.Background,
-    },
-    success: {
-      main: Colors.Success,
     },
   },
   typography: {
