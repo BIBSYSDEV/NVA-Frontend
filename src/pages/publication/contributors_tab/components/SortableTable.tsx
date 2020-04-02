@@ -32,6 +32,10 @@ const StyledCheckIcon = styled(CheckIcon)`
   color: ${({ theme }) => theme.palette.success.main};
 `;
 
+const StyledAddAuthorButton = styled(Button)`
+  margin-top: 1rem;
+`;
+
 interface SortableItemProps {
   contributor: Contributor;
   placement: number;
@@ -182,9 +186,13 @@ const SortableTable: FC<SortableTableProps> = ({ listOfContributors, push, remov
         distance={10}
         setInitialSearchTerm={setInitialSearchTerm}
       />
-      <Button onClick={toggleContributorModal} variant="contained" color="primary" data-testid="add-contributor">
+      <StyledAddAuthorButton
+        onClick={toggleContributorModal}
+        variant="contained"
+        color="primary"
+        data-testid="add-contributor">
         {t('contributors.add_author')}
-      </Button>
+      </StyledAddAuthorButton>
       <AddContributor
         initialSearchTerm={initialSearchTerm}
         open={openContributorModal}
