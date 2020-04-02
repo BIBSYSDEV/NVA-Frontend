@@ -43,13 +43,13 @@ export const hasTouchedError = (
   });
 };
 
-export const getAllFileFields = (fileSet: File[]) => {
+export const getAllFileFields = (files: File[]) => {
   let fieldNames: string[] = [];
-  if (fileSet.length === 0) {
-    fieldNames.push(FileFieldNames.FILE_SET);
+  if (files.length === 0) {
+    fieldNames.push(FileFieldNames.FILES);
   } else {
-    fileSet.forEach((file, index) => {
-      const baseFieldName = `${FileFieldNames.FILE_SET}[${index}]`;
+    files.forEach((file, index) => {
+      const baseFieldName = `${FileFieldNames.FILES}[${index}]`;
       fieldNames.push(`${baseFieldName}.${SpecificFileFieldNames.ADMINISTRATIVE_AGREEMENT}`);
       if (!file.administrativeAgreement) {
         fieldNames.push(`${baseFieldName}.${SpecificFileFieldNames.PUBLISHER_AUTHORITY}`);

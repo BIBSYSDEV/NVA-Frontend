@@ -46,12 +46,18 @@ const PublicationForm: FC<PublicationFormProps> = ({
 
   useEffect(() => {
     // Get files uploaded from new publication view
-    const files = Object.values(uppy.getState().files).map((file) => ({ ...emptyFile, ...file }));
+    const files = Object.values(uppy.getState().files).map((file) => ({
+      ...emptyFile,
+      identifier: file.id,
+      name: file.name,
+      mimeType: file.type ?? '',
+      size: file.size,
+    }));
 
     if (files?.length) {
       setInitialValues({
         ...emptyPublication,
-        fileSet: files,
+        fileSet: { files },
       });
     }
   }, [uppy]);
@@ -93,6 +99,7 @@ const PublicationForm: FC<PublicationFormProps> = ({
     if (updatedPublication.error) {
       dispatch(setNotification(updatedPublication.error, NotificationVariant.Error));
     } else {
+      setInitialValues(deepmerge(emptyPublication, updatedPublication));
       dispatch(setNotification(t('feedback:success.update_publication')));
     }
   };
