@@ -5,8 +5,7 @@ describe('Publication', () => {
   });
 
   it('The user should be able to start registration with a DOI link', () => {
-    cy.get('[data-testid=menu-login-button]').click({ force: true });
-
+    cy.mocklogin();
     cy.get('[data-testid=new-publication-button]').click({ force: true });
     cy.url().should('include', '/publication');
 

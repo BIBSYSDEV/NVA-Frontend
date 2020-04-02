@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { File, emptyFile, Uppy } from '../../../types/file.types';
 import UppyDashboard from '../../../components/UppyDashboard';
+import { UppyFile } from '@uppy/core';
 
 interface FileUploaderProps {
   addFile: (file: File) => void;
@@ -11,10 +12,13 @@ interface FileUploaderProps {
 const FileUploader: React.FC<FileUploaderProps> = ({ addFile, uppy, shouldAllowMultipleFiles }) => {
   useEffect(() => {
     if (uppy && !uppy.hasUploadSuccessEventListener) {
-      uppy.on('upload-success', (file: File) => {
+      uppy.on('upload-success', (file: UppyFile) => {
         addFile({
           ...emptyFile,
-          ...file,
+          identifier: file.id,
+          name: file.name,
+          mimeType: file.type ?? '',
+          size: file.size,
         });
       });
       // Avoid duplicating event listener

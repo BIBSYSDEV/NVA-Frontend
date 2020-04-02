@@ -1,5 +1,5 @@
 // For available roles, see https://github.com/BIBSYSDEV/nva-datamodel-java/blob/develop/src/main/java/no/unit/nva/model/Role.java
-enum ContributorRole {
+export enum ContributorRole {
   CREATOR = 'Creator',
 }
 
@@ -12,17 +12,17 @@ enum ContributorIdentityType {
 }
 
 export interface Contributor {
+  affiliations: Institution[];
   corresponding?: boolean;
   email?: string;
-  institutions: Institution[];
-  role: ContributorRole | '';
-
-  // New model backend
   identity: {
-    id: string;
+    id?: string;
     name: string;
     type: ContributorIdentityType;
+    orcId?: string;
+    arpId?: string;
   };
+  role: ContributorRole | '';
   sequence: number;
   type: ContributorType;
 }
@@ -34,17 +34,14 @@ interface Institution {
 }
 
 export const emptyContributor: Contributor = {
+  affiliations: [],
   corresponding: false,
   email: '',
-  institutions: [],
-  role: '',
-
-  // New model
   identity: {
-    id: '',
     name: '',
     type: ContributorIdentityType.IDENTITY,
   },
+  role: '',
   sequence: 0,
   type: ContributorType.CONTRIBUTOR,
 };

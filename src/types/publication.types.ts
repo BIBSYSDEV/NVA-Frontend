@@ -1,5 +1,5 @@
 import { Contributor } from './contributor.types';
-import { File } from './file.types';
+import { FileSet } from './file.types';
 import { LanguageValues } from './language.types';
 import { Project } from './project.types';
 import { PublicationType, JournalArticleType, ReportType, DegreeType, BookType } from './publicationFieldNames';
@@ -25,6 +25,7 @@ export interface PublicationMetadata {
 }
 
 export interface Publisher {
+  type?: string; //TODO: remove this when backend has fixed Reference
   title: string;
   printIssn: string;
   onlineIssn: string;
@@ -73,7 +74,7 @@ export interface Publication {
   readonly owner: string;
   readonly status: PublicationStatus;
   entityDescription: PublicationEntityDescription;
-  fileSet: File[];
+  fileSet: FileSet;
 }
 
 interface PublicationEntityDescription {
@@ -107,9 +108,12 @@ interface PublicationEntityDescription {
       pages: {
         begin: string;
         end: string;
+        type?: string; //TODO: remove this when backend has fixed Reference
       };
+      type?: string; //TODO: remove this when backend has fixed Reference
     };
     publicationContext: Publisher | null;
+    type?: string; //TODO: remove this when backend has fixed Reference
   };
 }
 
@@ -139,13 +143,16 @@ const emptyPublicationEntityDescription: PublicationEntityDescription = {
   specialization: '',
   textBook: false,
   reference: {
+    type: 'Reference', //TODO: remove this when backend has fixed Reference
     doi: '',
     publicationInstance: {
+      type: 'PublicationInstance', //TODO: remove this when backend has fixed Reference
       volume: '',
       issue: '',
       articleNumber: '',
       peerReviewed: false,
       pages: {
+        type: 'Pages', //TODO: remove this when backend has fixed Reference
         begin: '',
         end: '',
       },
@@ -174,6 +181,9 @@ export const emptyPublication: FormikPublication = {
   owner: '',
   status: PublicationStatus.DRAFT,
   entityDescription: emptyPublicationEntityDescription,
-  fileSet: [],
+  fileSet: {
+    type: 'FileSet',
+    files: [],
+  },
   shouldCreateDoi: false,
 };

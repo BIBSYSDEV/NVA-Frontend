@@ -89,7 +89,7 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, toggleLicenseModa
     <Card data-testid="uploaded-file-card">
       <SubHeading>{file.name}</SubHeading>
       <StyledDescription>
-        {t('files_and_license.uploaded_size', { size: Math.round(file.data.size / 1000) })}
+        {t('files_and_license.uploaded_size', { size: Math.round(file.size / 1000) })}
       </StyledDescription>
 
       {baseFieldName && (

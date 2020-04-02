@@ -13,11 +13,6 @@ const StyledCard = styled(Card)`
   background-color: ${({ theme }) => theme.palette.danger.light};
 `;
 
-interface FormikError {
-  fieldName: string;
-  errorMessage: string;
-}
-
 const ErrorSummary: FC = () => {
   const { t } = useTranslation('publication');
   const { errors }: FormikProps<FormikPublication> = useFormikContext();

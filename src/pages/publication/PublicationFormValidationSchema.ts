@@ -13,6 +13,7 @@ const ErrorMessage = {
   REQUIRED: i18n.t('publication:feedback.required_field'),
   MISSING_CONTRIBUTOR: i18n.t('publication:feedback.minimum_one_contributor'),
   MISSING_FILE: i18n.t('publication:feedback.minimum_one_file'),
+  INVALID_FORMAT: i18n.t('publication:feedback.invalid_format'),
 };
 
 export const publicationValidationSchema = Yup.object().shape({
@@ -52,7 +53,16 @@ export const publicationValidationSchema = Yup.object().shape({
         then: Yup.string().length(0),
       }),
     contributors: Yup.array()
-      .of(Yup.object()) // TODO
+      .of(
+        Yup.object().shape({
+          corresponding: Yup.boolean(),
+          email: Yup.string().when('corresponding', {
+            is: true,
+            then: Yup.string().email(ErrorMessage.INVALID_FORMAT).required(ErrorMessage.REQUIRED),
+          }),
+          sequence: Yup.number().min(0),
+        })
+      )
       .min(1, ErrorMessage.MISSING_CONTRIBUTOR),
     publisher: Yup.object()
       .nullable()
@@ -92,29 +102,31 @@ export const publicationValidationSchema = Yup.object().shape({
         .required(ErrorMessage.REQUIRED),
     }),
   }),
-  fileSet: Yup.array()
-    .of(
-      Yup.object().shape({
-        administrativeAgreement: Yup.boolean(),
-        embargoDate: Yup.date()
-          .nullable()
-          .when('administrativeAgreement', {
-            is: false,
-            then: Yup.date().nullable().min(new Date()).required(ErrorMessage.REQUIRED),
-          }),
-        publisherAuthority: Yup.boolean()
-          .nullable()
-          .when('administrativeAgreement', {
-            is: false,
-            then: Yup.boolean().required(ErrorMessage.REQUIRED),
-          }),
-        license: Yup.object()
-          .nullable()
-          .when('administrativeAgreement', {
-            is: false,
-            then: Yup.object().required(ErrorMessage.REQUIRED),
-          }),
-      })
-    )
-    .min(1, ErrorMessage.MISSING_FILE),
+  fileSet: Yup.object().shape({
+    files: Yup.array()
+      .of(
+        Yup.object().shape({
+          administrativeAgreement: Yup.boolean(),
+          embargoDate: Yup.date()
+            .nullable()
+            .when('administrativeAgreement', {
+              is: false,
+              then: Yup.date().nullable().min(new Date()).required(ErrorMessage.REQUIRED),
+            }),
+          publisherAuthority: Yup.boolean()
+            .nullable()
+            .when('administrativeAgreement', {
+              is: false,
+              then: Yup.boolean().required(ErrorMessage.REQUIRED),
+            }),
+          license: Yup.object()
+            .nullable()
+            .when('administrativeAgreement', {
+              is: false,
+              then: Yup.object().required(ErrorMessage.REQUIRED),
+            }),
+        })
+      )
+      .min(1, ErrorMessage.MISSING_FILE),
+  }),
 });

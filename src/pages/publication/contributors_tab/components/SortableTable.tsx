@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
-
 import {
   Checkbox,
   FormControlLabel,
@@ -10,16 +9,28 @@ import {
   TableRow,
   TextField,
   Button,
+  Tooltip,
 } from '@material-ui/core';
-import { Contributor, emptyContributor } from '../../../../types/contributor.types';
 import { Field, FieldProps, FormikProps, useFormikContext } from 'formik';
-import AddContributor from '../AddContributor';
 import { useTranslation } from 'react-i18next';
 import DeleteIcon from '@material-ui/icons/Delete';
+import WarningIcon from '@material-ui/icons/Warning';
+import CheckIcon from '@material-ui/icons/Check';
 
-import SubHeading from '../../../../components/SubHeading';
-import { ContributorFieldNames } from '../../ContributorsPanel';
+import { ContributorFieldNames, SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
+import { Contributor, emptyContributor } from '../../../../types/contributor.types';
 import { FormikPublication } from '../../../../types/publication.types';
+import SubHeading from '../../../../components/SubHeading';
+import AddContributor from '../AddContributor';
+import styled from 'styled-components';
+
+const StyledWarningIcon = styled(WarningIcon)`
+  color: ${({ theme }) => theme.palette.warning.main};
+`;
+
+const StyledCheckIcon = styled(CheckIcon)`
+  color: ${({ theme }) => theme.palette.success.main};
+`;
 
 interface SortableItemProps {
   contributor: Contributor;
@@ -31,12 +42,25 @@ const SortableItem = SortableElement(({ contributor, placement, onDelete }: Sort
   const { t } = useTranslation();
 
   const index = placement - 1;
+  const baseFieldName = `${ContributorFieldNames.CONTRIBUTORS}[${index}]`;
 
   return (
     <TableRow tabIndex={0} key={contributor.identity.id}>
       <TableCell align="left">
-        <SubHeading>{contributor.identity.name}</SubHeading>
-        <Field name={`${ContributorFieldNames.CONTRIBUTORS}[${index}].corresponding`}>
+        <SubHeading>
+          {contributor.identity.name}{' '}
+          {contributor.identity.arpId ? (
+            <Tooltip title={t('publication:contributors.known_author_identity')}>
+              <StyledCheckIcon />
+            </Tooltip>
+          ) : (
+            <Tooltip title={t('publication:contributors.unknown_author_identity')}>
+              <StyledWarningIcon />
+            </Tooltip>
+          )}
+        </SubHeading>
+
+        <Field name={`${baseFieldName}.${SpecificContributorFieldNames.CORRESPONDING}`}>
           {({ field }: FieldProps) => (
             <FormControlLabel
               control={<Checkbox checked={field.value} {...field} />}
@@ -46,15 +70,23 @@ const SortableItem = SortableElement(({ contributor, placement, onDelete }: Sort
         </Field>
         <div>
           {contributor.corresponding && (
-            <Field name={`${ContributorFieldNames.CONTRIBUTORS}[${index}].email`}>
-              {({ field }: FieldProps) => <TextField variant="outlined" label={t('common:email')} {...field} />}
+            <Field name={`${baseFieldName}.${SpecificContributorFieldNames.EMAIL}`}>
+              {({ field, meta: { error, touched } }: FieldProps) => (
+                <TextField
+                  variant="outlined"
+                  label={t('common:email')}
+                  {...field}
+                  error={touched && !!error}
+                  helperText={touched && error}
+                />
+              )}
             </Field>
           )}
         </div>
       </TableCell>
       <TableCell align="left">
-        {contributor.institutions?.map(institution => (
-          <div key={`${institution.id}`}>{institution.name}</div>
+        {contributor.affiliations?.map((affiliation) => (
+          <div key={`${affiliation.id}`}>{affiliation.name}</div>
         ))}
       </TableCell>
       <TableCell align="right">
@@ -105,7 +137,10 @@ const SortableTable: FC<SortableTableProps> = ({ listOfContributors, push, remov
   const handleOnSortEnd = ({ oldIndex, newIndex }: any) => {
     swap(oldIndex, newIndex);
     for (let index in values.entityDescription.contributors) {
-      setFieldValue(`${ContributorFieldNames.CONTRIBUTORS}[${index}].sequence`, +index);
+      setFieldValue(
+        `${ContributorFieldNames.CONTRIBUTORS}[${index}].${SpecificContributorFieldNames.SEQUENCE}`,
+        +index
+      );
     }
   };
   return (
@@ -113,11 +148,11 @@ const SortableTable: FC<SortableTableProps> = ({ listOfContributors, push, remov
       <SortableList
         contributors={listOfContributors}
         onSortEnd={handleOnSortEnd}
-        onDelete={index => remove(index)}
+        onDelete={(index) => remove(index)}
         distance={10}
       />
       <AddContributor
-        onAuthorSelected={authority => {
+        onAuthorSelected={(authority) => {
           const contributor: Contributor = {
             ...emptyContributor,
             // TODO: add institution when available from backend
@@ -127,7 +162,8 @@ const SortableTable: FC<SortableTableProps> = ({ listOfContributors, push, remov
             // })),
             identity: {
               ...emptyContributor.identity,
-              id: authority.systemControlNumber,
+              arpId: authority.systemControlNumber,
+              orcId: authority.orcids.length > 0 ? authority.orcids[0] : '',
               name: authority.name,
             },
             sequence: listOfContributors.length,

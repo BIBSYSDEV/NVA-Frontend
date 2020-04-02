@@ -65,13 +65,26 @@ export enum DescriptionFieldNames {
 }
 
 export enum FileFieldNames {
-  FILE_SET = 'fileSet',
+  FILES = 'fileSet.files',
 }
 
-// The following fields should be present in "fileSet[index].<KEY>"
+// The following fields should be present in "fileSet.files[index].<KEY>"
 export enum SpecificFileFieldNames {
   ADMINISTRATIVE_AGREEMENT = 'administrativeAgreement',
   PUBLISHER_AUTHORITY = 'publisherAuthority',
   EMBARGO_DATE = 'embargoDate',
   LICENSE = 'license',
+}
+
+export enum ContributorFieldNames {
+  CONTRIBUTORS = 'entityDescription.contributors',
+}
+
+// The following fields should be present in "entityDescription.contributors[index].<KEY>"
+export enum SpecificContributorFieldNames {
+  AFFILIATIONS = 'affiliations', // TODO
+  CORRESPONDING = 'corresponding',
+  EMAIL = 'email',
+  ROLE = 'role', // TODO
+  SEQUENCE = 'sequence',
 }

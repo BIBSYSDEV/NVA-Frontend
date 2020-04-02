@@ -5,33 +5,15 @@ describe('My profile: Institutions', () => {
   });
 
   it('The user should be able to add an institution to their profile', () => {
-    // connect author
-    cy.get('[data-testid=connect-author-modal]').click({ force: true });
-    cy.get('[data-testid=author-radio-button]')
-      .eq(1)
-      .click({ force: true })
-      .contains('Test User');
-    cy.get('[data-testid=connect-author-button]').click({ force: true });
-
     // add institution
     cy.get('[data-testid=add-new-institution-button]').click({ force: true });
-    cy.get('[data-testid=autosearch-institution]')
-      .click({ force: true })
-      .type('ntnu');
-    cy.get('.MuiAutocomplete-option')
-      .contains('Norges teknisk-naturvitenskapelige universitet')
-      .click({ force: true });
-    cy.get('[data-testid=unit-selector-0]')
-      .click({ force: true })
-      .type(' ');
+    cy.get('[data-testid=autosearch-institution]').click({ force: true }).type('ntnu');
+    cy.get('.MuiAutocomplete-option').contains('Norges teknisk-naturvitenskapelige universitet').click({ force: true });
+    cy.get('[data-testid=unit-selector-0]').click({ force: true }).type(' ');
     cy.contains('Fakultet for medisin og helsevitenskap').click({ force: true });
-    cy.get('[data-testid=unit-selector-1]')
-      .click({ force: true })
-      .type(' ');
+    cy.get('[data-testid=unit-selector-1]').click({ force: true }).type(' ');
     cy.contains('Institutt for samfunnsmedisin og sykepleie').click({ force: true });
-    cy.get('[data-testid=unit-selector-2]')
-      .click({ force: true })
-      .type(' ');
+    cy.get('[data-testid=unit-selector-2]').click({ force: true }).type(' ');
     cy.contains('Allmennmedisinsk forskningsenhet i Trondheim').click({ force: true });
 
     cy.get('[data-testid=institution-add-button]').click({ force: true });

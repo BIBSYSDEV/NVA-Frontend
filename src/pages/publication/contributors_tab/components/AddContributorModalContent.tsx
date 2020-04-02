@@ -10,7 +10,7 @@ import Label from '../../../../components/Label';
 import Progress from '../../../../components/Progress';
 import SearchBar from '../../../../components/SearchBar';
 import { setNotification } from '../../../../redux/actions/notificationActions';
-import { Authority, emptyAuthority } from '../../../../types/authority.types';
+import { Authority } from '../../../../types/authority.types';
 import { debounce } from '../../../../utils/debounce';
 import AuthorityCard from '../../../user/authority/AuthorityCard';
 import NormalText from '../../../../components/NormalText';
@@ -55,7 +55,7 @@ const AddContributorModalContent: FC<AddContributorModalContentProps> = ({ addAu
   const { t } = useTranslation('publication');
 
   const [matchingAuthorities, setMatchingAuthorities] = useState<Authority[]>([]);
-  const [selectedAuthor, setSelectedAuthor] = useState<Authority>(emptyAuthority);
+  const [selectedAuthor, setSelectedAuthor] = useState<Authority | null>(null);
   const [searchSummary, setSearchSummary] = useState<SearchSummary>({
     isLoading: false,
     searchTerm: '',
@@ -97,14 +97,14 @@ const AddContributorModalContent: FC<AddContributorModalContentProps> = ({ addAu
               results: searchSummary.results,
             })}
           </StyledLabel>
-          {matchingAuthorities?.map(authority => (
+          {matchingAuthorities?.map((authority) => (
             <StyledClickableDiv
               data-testid="author-radio-button"
               key={authority.systemControlNumber}
               onClick={() => setSelectedAuthor(authority)}>
               <AuthorityCard
                 authority={authority}
-                isSelected={selectedAuthor.systemControlNumber === authority.systemControlNumber}
+                isSelected={selectedAuthor?.systemControlNumber === authority.systemControlNumber}
               />
             </StyledClickableDiv>
           ))}
@@ -112,8 +112,8 @@ const AddContributorModalContent: FC<AddContributorModalContentProps> = ({ addAu
             <Button
               color="primary"
               data-testid="connect-author-button"
-              disabled={!selectedAuthor.systemControlNumber}
-              onClick={() => addAuthor(selectedAuthor)}
+              disabled={!selectedAuthor}
+              onClick={() => selectedAuthor && addAuthor(selectedAuthor)}
               size="large"
               variant="contained">
               {t('common:add')}

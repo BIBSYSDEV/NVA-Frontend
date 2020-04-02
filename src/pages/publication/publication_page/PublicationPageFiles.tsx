@@ -20,8 +20,8 @@ interface PublicationPageFilesProps {
 
 const PublicationPageFiles: FC<PublicationPageFilesProps> = ({ files }) => (
   <>
-    {files.map(file => (
-      <StyledFileIconWrapper key={file.id}>
+    {files.map((file) => (
+      <StyledFileIconWrapper key={file.identifier}>
         <StyledFileIcon />
       </StyledFileIconWrapper>
     ))}

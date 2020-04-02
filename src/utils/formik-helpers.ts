@@ -1,5 +1,12 @@
 import { FormikErrors, FormikTouched, getIn } from 'formik';
-import { FileFieldNames, SpecificFileFieldNames } from '../types/publicationFieldNames';
+import {
+  FileFieldNames,
+  SpecificFileFieldNames,
+  SpecificContributorFieldNames,
+  ContributorFieldNames,
+} from '../types/publicationFieldNames';
+import { Contributor } from '../types/contributor.types';
+import { File } from '../types/file.types';
 
 interface CustomError {
   fieldName: string;
@@ -30,18 +37,43 @@ export const hasTouchedError = (
   return fieldNames.some((fieldName) => {
     const fieldHasError = !!getIn(errors, fieldName);
     const fieldIsTouched = getIn(touched, fieldName);
-    return fieldHasError && fieldIsTouched;
+    // Touched data can be inconsistent with array of null or undefined elements when adding elements dynamically
+    // to a FieldArray, so check for value to be true explicitly, otherwise any array will also be true
+    return fieldHasError && fieldIsTouched === true;
   });
 };
 
-export const getAllFileFields = (numberOfUploadedFiles: number) => {
-  let fieldNames: string[] = Object.values(FileFieldNames);
-  if (numberOfUploadedFiles > 0) {
-    for (let index = 0; index < numberOfUploadedFiles; index++) {
-      for (const fileField of Object.values(SpecificFileFieldNames)) {
-        fieldNames.push(`${FileFieldNames.FILE_SET}[${index}].${fileField}`);
+export const getAllFileFields = (files: File[]) => {
+  let fieldNames: string[] = [];
+  if (files.length === 0) {
+    fieldNames.push(FileFieldNames.FILES);
+  } else {
+    files.forEach((file, index) => {
+      const baseFieldName = `${FileFieldNames.FILES}[${index}]`;
+      fieldNames.push(`${baseFieldName}.${SpecificFileFieldNames.ADMINISTRATIVE_AGREEMENT}`);
+      if (!file.administrativeAgreement) {
+        fieldNames.push(`${baseFieldName}.${SpecificFileFieldNames.PUBLISHER_AUTHORITY}`);
+        fieldNames.push(`${baseFieldName}.${SpecificFileFieldNames.EMBARGO_DATE}`);
+        fieldNames.push(`${baseFieldName}.${SpecificFileFieldNames.LICENSE}`);
       }
-    }
+    });
+  }
+  return fieldNames;
+};
+
+export const getAllContributorFields = (contributors: Contributor[]) => {
+  let fieldNames: string[] = [];
+  if (contributors.length === 0) {
+    fieldNames.push(ContributorFieldNames.CONTRIBUTORS);
+  } else {
+    contributors.forEach((contributor, index) => {
+      const baseFieldName = `${ContributorFieldNames.CONTRIBUTORS}[${index}]`;
+      fieldNames.push(`${baseFieldName}.${SpecificContributorFieldNames.SEQUENCE}`);
+      fieldNames.push(`${baseFieldName}.${SpecificContributorFieldNames.CORRESPONDING}`);
+      if (contributor.corresponding) {
+        fieldNames.push(`${baseFieldName}.${SpecificContributorFieldNames.EMAIL}`);
+      }
+    });
   }
   return fieldNames;
 };

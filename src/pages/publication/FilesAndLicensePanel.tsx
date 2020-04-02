@@ -4,7 +4,7 @@ import TabPanel from '../../components/TabPanel/TabPanel';
 import FileUploader from './files_and_license_tab/FileUploader';
 import FileCard from './files_and_license_tab/FileCard';
 import styled from 'styled-components';
-import { FieldArray, FormikProps, useFormikContext, ErrorMessage } from 'formik';
+import { FieldArray, FormikProps, useFormikContext, ErrorMessage, FieldArrayRenderProps } from 'formik';
 import { FormikPublication } from '../../types/publication.types';
 import Modal from '../../components/Modal';
 import { licenses, Uppy } from '../../types/file.types';
@@ -15,6 +15,7 @@ import NormalText from '../../components/NormalText';
 import Label from '../../components/Label';
 import { FormHelperText } from '@material-ui/core';
 import { getAllFileFields } from '../../utils/formik-helpers';
+import { FileFieldNames } from '../../types/publicationFieldNames';
 
 const shouldAllowMultipleFiles = true;
 
@@ -31,10 +32,6 @@ const StyledLicenseDescription = styled.article`
   margin-bottom: 1rem;
 `;
 
-enum FilesFieldNames {
-  FILES = 'fileSet',
-}
-
 interface FilesAndLicensePanelProps {
   goToNextTab: (event: React.MouseEvent<any>) => void;
   uppy: Uppy;
@@ -44,38 +41,38 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab
   const { t } = useTranslation('publication');
   const { values, setFieldTouched }: FormikProps<FormikPublication> = useFormikContext();
   const [isLicenseModalOpen, setIsLicenseModalOpen] = useState(false);
-
-  const valuesRef = useRef(values);
-  useEffect(() => {
-    valuesRef.current = values;
-  }, [values]);
-
-  // Set all fields to touched on unmount
-  useEffect(() => {
-    return () => {
-      // Use valuesRef to avoid trigging this useEffect on every values update
-      const fieldNames = getAllFileFields(valuesRef.current.fileSet.length);
-      fieldNames.forEach((fieldName) => setFieldTouched(fieldName));
-    };
-  }, [setFieldTouched]);
-
-  const toggleLicenseModal = () => {
-    setIsLicenseModalOpen(!isLicenseModalOpen);
-  };
-
   const {
-    fileSet,
+    fileSet: { files },
     entityDescription: {
       reference: { publicationContext },
     },
   } = values;
 
+  const filesRef = useRef(files);
+  useEffect(() => {
+    filesRef.current = files;
+  }, [files]);
+
+  // Set all fields to touched on unmount
+  useEffect(
+    () => () => {
+      // Use filesRef to avoid trigging this useEffect on every values update
+      const fieldNames = getAllFileFields(filesRef.current);
+      fieldNames.forEach((fieldName) => setFieldTouched(fieldName));
+    },
+    [setFieldTouched]
+  );
+
+  const toggleLicenseModal = () => {
+    setIsLicenseModalOpen(!isLicenseModalOpen);
+  };
+
   return (
     <TabPanel ariaLabel="files and license" goToNextTab={goToNextTab}>
       {publicationContext && <PublicationChannelInfoCard publisher={publicationContext} />}
 
-      <FieldArray name={FilesFieldNames.FILES}>
-        {({ insert, remove, name }) => (
+      <FieldArray name={FileFieldNames.FILES}>
+        {({ insert, remove, name }: FieldArrayRenderProps) => (
           <>
             <Card>
               <Heading>{t('files_and_license.upload_files')}</Heading>
@@ -84,23 +81,23 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab
                 shouldAllowMultipleFiles={shouldAllowMultipleFiles}
                 addFile={(file) => insert(0, file)}
               />
-              {values.fileSet.length === 0 && (
+              {files.length === 0 && (
                 <FormHelperText error>
                   <ErrorMessage name={name} />
                 </FormHelperText>
               )}
             </Card>
 
-            {fileSet.length > 0 && (
+            {files.length > 0 && (
               <>
                 <StyledUploadedFiles>
                   <Heading>{t('files_and_license.files')}</Heading>
-                  {fileSet.map((file, index) => (
+                  {files.map((file, index) => (
                     <FileCard
-                      key={file.id}
+                      key={file.identifier}
                       file={file}
                       removeFile={() => {
-                        uppy.removeFile(file.id);
+                        uppy.removeFile(file.identifier);
                         remove(index);
                       }}
                       toggleLicenseModal={toggleLicenseModal}

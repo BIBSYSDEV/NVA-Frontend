@@ -10,8 +10,8 @@ const SubmissionFilesAndLicenses: React.FC = () => {
 
   return (
     <>
-      {values.fileSet.map((file) => (
-        <React.Fragment key={file.id}>
+      {values.fileSet.files.map((file) => (
+        <React.Fragment key={file.identifier}>
           <hr />
           <LabelContentRow label={t('files_and_license.title')}>{file.name}</LabelContentRow>
           <LabelContentRow label={t('files_and_license.administrative_contract')}>

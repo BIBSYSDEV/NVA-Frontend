@@ -10,12 +10,11 @@
     "description_no_authority_found": "We cannot find an author identity which matches with your name (retrieved from your login account). A new author identity will be created in order for you to use this service. If the name does not match your name, you need to contact your curator at your institution in order to correct it.",
     "last_publication": "Last publication",
     "no_publications_found": "No publications found",
-    "not_connected_info": "To be identified as an author we need a to the library system",
     "search_summary": "{{results}} results for \"{{searchTerm}}\"",
     "see_profile": "See author profile"
   },
   "heading": {
-    "author_info": "Author ID",
+    "author_info": "Author identity",
     "connect_authority": "Connect your author ID",
     "contact_info": "Contact",
     "language": "Language",
@@ -24,7 +23,6 @@
     "user_info": "User information"
   },
   "id": "ID",
-  "info_feide": "Info retrieved from Feide",
   "info_nva": "Info retrieved from NVA",
   "my_profile": "My profile",
   "my_public_profile": "My public profile",
@@ -35,6 +33,8 @@
     "login": "Log in to your ORCID account or create new ORCID account",
     "orcid": "ORCID",
     "registration": "Registration",
+    "remove_connection": "Remove connection to ORCID",
+    "remove_connection_text": "Are you sure you want to remove the connection to ORCID?",
     "skip_this_step": "Skip this step (can be configured in 'profile' later)",
     "suggestions": "Suggestions from ORCID",
     "suggestions_description": "Suggestions from ORCID...",

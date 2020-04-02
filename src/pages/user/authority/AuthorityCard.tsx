@@ -17,7 +17,7 @@ const StyledBoxContent = styled.div<{ isConnected: boolean }>`
   padding: 1rem;
   height: 5.5rem;
   ${({ isConnected, theme }) =>
-    isConnected ? `background-color: ${theme.palette.success.main}` : `background-color: ${theme.palette.box.main}`};
+    isConnected ? `background-color: ${theme.palette.success.light}` : `background-color: ${theme.palette.box.main}`};
 `;
 
 const StyledPublicationContent = styled.div`
