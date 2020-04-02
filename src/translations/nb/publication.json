@@ -9,7 +9,9 @@
     "add_other_contributor": "Legg til flere",
     "authors": "Forfattere",
     "corresponding": "Korresponderende",
+    "known_author_identity": "Har forfatteridentitet",
     "type": "Bidragstype",
+    "unknown_author_identity": "Mangler forfatteridentitet",
     "verify_person": "Verifiser"
   },
   "description": {

@@ -12,15 +12,15 @@ enum ContributorIdentityType {
 }
 
 export interface Contributor {
+  affiliations: Institution[];
   corresponding?: boolean;
   email?: string;
-
-  // New model backend
-  affiliations: Institution[];
   identity: {
-    id: string;
+    id?: string;
     name: string;
     type: ContributorIdentityType;
+    orcId?: string;
+    arpId?: string;
   };
   role: ContributorRole | '';
   sequence: number;
@@ -34,17 +34,14 @@ interface Institution {
 }
 
 export const emptyContributor: Contributor = {
+  affiliations: [],
   corresponding: false,
   email: '',
-  affiliations: [],
-  role: '',
-
-  // New model
   identity: {
-    id: '',
     name: '',
     type: ContributorIdentityType.IDENTITY,
   },
+  role: '',
   sequence: 0,
   type: ContributorType.CONTRIBUTOR,
 };
