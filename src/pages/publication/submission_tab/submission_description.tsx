@@ -18,7 +18,7 @@ const SubmissionDescription: React.FC = () => {
     tags,
     date,
     language,
-    projects,
+    project,
   } = values.entityDescription;
 
   const { name, mainDiscipline } = getNpiDiscipline(npiSubjectHeading);
@@ -40,9 +40,7 @@ const SubmissionDescription: React.FC = () => {
         {date.day && `-${date.day}`}
       </LabelContentRow>
       <LabelContentRow label={t('description.project_association')}>
-        {projects.map(project => (
-          <SubmissionContentText key={project.cristinProjectId}>{project.titles?.[0]?.title}</SubmissionContentText>
-        ))}
+        {project && <SubmissionContentText key={project.id}>{project.name}</SubmissionContentText>}
       </LabelContentRow>
     </>
   );

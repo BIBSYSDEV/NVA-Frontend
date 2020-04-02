@@ -89,7 +89,7 @@ interface PublicationEntityDescription {
     day: string;
   };
   language: LanguageValues;
-  projects: Project[];
+  project: Project | null;
   publicationType: PublicationType | '';
   publicationSubtype: JournalArticleType | ReportType | DegreeType | BookType | '';
   contributors: Contributor[];
@@ -133,7 +133,7 @@ const emptyPublicationEntityDescription: PublicationEntityDescription = {
     day: '',
   },
   language: LanguageValues.NORWEGIAN_BOKMAL,
-  projects: [],
+  project: null,
   publicationType: '',
   contributors: [],
   publicationSubtype: '',
