@@ -11,6 +11,7 @@
     "connect_author_identity": "Connect author identity",
     "corresponding": "Corresponding",
     "known_author_identity": "Connected author identity",
+    "prefilled_name": "Prefilled name",
     "type": "Contributor type",
     "unknown_author_identity": "Unknown author identity",
     "verify_person": "Verify"

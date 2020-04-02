@@ -14,6 +14,7 @@ import { Authority } from '../../../../types/authority.types';
 import AuthorityCard from '../../../user/authority/AuthorityCard';
 import NormalText from '../../../../components/NormalText';
 import { NotificationVariant } from '../../../../types/notification.types';
+import SubHeading from '../../../../components/SubHeading';
 
 const StyledClickableDiv = styled.div`
   cursor: pointer;
@@ -37,6 +38,10 @@ const StyledProgressContainer = styled.div`
 
 const StyledLabel = styled(Label)`
   padding: 0.5rem;
+`;
+
+const StyledSubHeading = styled(SubHeading)`
+  margin-bottom: 1rem;
 `;
 
 interface SearchSummary {
@@ -83,7 +88,7 @@ const AddContributorModalContent: FC<AddContributorModalContentProps> = ({ addAu
     }
   }, [search, initialSearchTerm]);
 
-  const handleSearch = async (searchTerm: string) => {
+  const handleSearch = (searchTerm: string) => {
     if (searchTerm.length) {
       search(searchTerm);
     }
@@ -91,6 +96,11 @@ const AddContributorModalContent: FC<AddContributorModalContentProps> = ({ addAu
 
   return (
     <>
+      {initialSearchTerm && (
+        <StyledSubHeading>
+          {t('publication:contributors.prefilled_name')}: {initialSearchTerm}
+        </StyledSubHeading>
+      )}
       <SearchBar handleSearch={handleSearch} resetSearchInput={false} initialSearchTerm={initialSearchTerm} />
       {searchSummary.isLoading ? (
         <StyledProgressContainer>

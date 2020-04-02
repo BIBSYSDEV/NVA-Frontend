@@ -31,7 +31,7 @@ const AddContributorModal: FC<AddContributorModalProps> = ({
     <Modal
       ariaDescribedBy="add-contributor-modal"
       ariaLabelledBy="add-contributor-modal"
-      headingText={t('contributors.add_author')}
+      headingText={initialSearchTerm ? t('contributors.connect_author_identity') : t('contributors.add_author')}
       onClose={toggleModal}
       openModal={open}>
       <AddContributorModalContent addAuthor={addAuthor} initialSearchTerm={initialSearchTerm} />
