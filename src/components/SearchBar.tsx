@@ -22,11 +22,12 @@ const StyledInputBase = styled(InputBase)`
 interface SearchBarProps {
   handleSearch: (searchTerm: string) => void;
   resetSearchInput: boolean;
+  initialSearchTerm?: string;
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({ resetSearchInput, handleSearch }) => {
+const SearchBar: React.FC<SearchBarProps> = ({ resetSearchInput, handleSearch, initialSearchTerm = '' }) => {
   const { t } = useTranslation();
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
 
   useEffect(() => {
     if (resetSearchInput) {

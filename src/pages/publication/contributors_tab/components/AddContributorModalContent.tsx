@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useState } from 'react';
+import React, { FC, useCallback, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
@@ -48,9 +48,10 @@ interface SearchSummary {
 
 interface AddContributorModalContentProps {
   addAuthor: (selectedAuthor: Authority) => void;
+  initialSearchTerm?: string;
 }
 
-const AddContributorModalContent: FC<AddContributorModalContentProps> = ({ addAuthor }) => {
+const AddContributorModalContent: FC<AddContributorModalContentProps> = ({ addAuthor, initialSearchTerm = '' }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation('publication');
 
@@ -76,15 +77,22 @@ const AddContributorModalContent: FC<AddContributorModalContentProps> = ({ addAu
     [dispatch, t]
   );
 
+  useEffect(() => {
+    // Trigger search if initialSearchTerm is given
+    if (initialSearchTerm) {
+      search(initialSearchTerm);
+    }
+  }, [search, initialSearchTerm]);
+
   const handleSearch = async (searchTerm: string) => {
     if (searchTerm.length) {
-      await search(searchTerm);
+      search(searchTerm);
     }
   };
 
   return (
     <>
-      <SearchBar handleSearch={handleSearch} resetSearchInput={false} />
+      <SearchBar handleSearch={handleSearch} resetSearchInput={false} initialSearchTerm={initialSearchTerm} />
       {searchSummary.isLoading ? (
         <StyledProgressContainer>
           <Progress size={100} />
@@ -121,7 +129,7 @@ const AddContributorModalContent: FC<AddContributorModalContentProps> = ({ addAu
           </StyledButtonContainer>
         </>
       ) : (
-        <NormalText>{t('common:no_hits')}</NormalText>
+        searchSummary.searchTerm && <NormalText>{t('common:no_hits')}</NormalText>
       )}
     </>
   );
