@@ -12,9 +12,9 @@ import { Link as RouterLink } from 'react-router-dom';
 import DeletePublicationModal from './DeletePublicationModal';
 
 const StyledTableRow = styled(TableRow)`
-  background-color: ${props => props.theme.palette.box.main};
+  background-color: ${(props) => props.theme.palette.box.main};
   :nth-child(odd) {
-    background-color: ${props => props.theme.palette.background.default};
+    background-color: ${(props) => props.theme.palette.background.default};
   }
 `;
 
@@ -73,8 +73,8 @@ const PublicationList: FC<PublicationListProps> = ({ publications }) => {
         </TableHead>
         <TableBody>
           {publications
-            .filter(publication => publication.status !== PublicationStatus.PUBLISHED)
-            .map(publication => (
+            .filter((publication) => publication.status !== PublicationStatus.PUBLISHED)
+            .map((publication) => (
               <StyledTableRow key={publication.identifier}>
                 <TableCell component="th" scope="row">
                   <NormalText>{publication.mainTitle}</NormalText>
@@ -83,7 +83,7 @@ const PublicationList: FC<PublicationListProps> = ({ publications }) => {
                   <NormalText>{t(`publication:status.${publication.status}`)}</NormalText>
                 </StyledTableCellForStatus>
                 <StyledTableCellForDate>
-                  <NormalText>{publication.createdDate}</NormalText>
+                  <NormalText>{new Date(publication.createdDate).toLocaleString()}</NormalText>
                 </StyledTableCellForDate>
                 <TableCell>
                   <Button
@@ -102,7 +102,7 @@ const PublicationList: FC<PublicationListProps> = ({ publications }) => {
                     data-testid={`delete-publication-${publication.identifier}`}
                     onClick={() => handleOnClick(publication)}>
                     <StyledDeleteIcon />
-                    {t('common:remove')}
+                    {t('common:delete')}
                   </Button>
                 </TableCell>
               </StyledTableRow>

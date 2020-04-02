@@ -12,7 +12,7 @@ import { NotificationVariant } from '../types/notification.types';
 export enum PublicationsApiPaths {
   SEARCH = '/search/publications',
   PUBLICATION = '/publication',
-  PUBLICATIONS_BY_OWNER = '/publications/by-owner',
+  PUBLICATIONS_BY_OWNER = '/publication/by-owner',
   DOI_LOOKUP = '/doi-fetch',
   DOI_REQUESTS = '/publications/doi-requests',
   FOR_APPROVAL = '/publications/approval',
@@ -70,7 +70,7 @@ export const getMyPublications = async () => {
       },
     });
     if (response.status === StatusCode.OK) {
-      return response.data;
+      return response.data.publications;
     } else {
       return [];
     }
