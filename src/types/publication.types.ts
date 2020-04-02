@@ -113,18 +113,7 @@ interface PublicationEntityDescription {
   textBook: boolean;
   reference: {
     doi: string;
-    publicationInstance: {
-      volume: string;
-      issue: string;
-      articleNumber: string;
-      pages: {
-        begin: string;
-        end: string;
-        type?: string; //TODO: remove this when backend has fixed Reference
-      };
-      peerReviewed: boolean;
-      type?: string; //TODO: remove this when backend has fixed Reference
-    };
+    publicationInstance: PublicationInstance;
     publicationContext: Publisher | null;
     type?: string; //TODO: remove this when backend has fixed Reference
   };
