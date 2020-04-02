@@ -28,7 +28,9 @@ const PublisherField: FC<PublisherFieldProps> = ({
               dataTestId="autosearch-publisher"
               label={label}
               publicationTable={publicationTable}
-              setValueFunction={(inputValue) => setFieldValue(name, inputValue ?? emptyPublisher)}
+              setValueFunction={
+                (inputValue) => setFieldValue(name, { ...inputValue, type: 'PublicationContext' } ?? emptyPublisher) //TODO: remove type when fixed in backend
+              }
               placeholder={placeholder}
               errorMessage={touched ? error : ''}
             />
