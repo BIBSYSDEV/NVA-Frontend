@@ -53,13 +53,13 @@ const LoadPublication: React.FC<LoadPublicationProps> = ({ expanded, onChange, u
       {uppy ? (
         <>
           <UppyDashboard uppy={uppy} shouldAllowMultipleFiles={shouldAllowMultipleFiles} />
-          {uploadedFiles.map(file => (
-            <StyledFileCard key={file.id}>
+          {uploadedFiles.map((file) => (
+            <StyledFileCard key={file.identifier}>
               <FileCard
                 file={file}
                 removeFile={() => {
-                  setUploadedFiles(uploadedFiles.filter(uploadedFile => uploadedFile.id !== file.id));
-                  uppy.removeFile(file.id);
+                  setUploadedFiles(uploadedFiles.filter((uploadedFile) => uploadedFile.identifier !== file.identifier));
+                  uppy.removeFile(file.identifier);
                 }}
               />
             </StyledFileCard>

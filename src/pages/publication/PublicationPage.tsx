@@ -84,7 +84,7 @@ const PublicationPage: FC = () => {
                   </StyledSidebarCard> */}
                   {publication.fileSet && (
                     <StyledSidebarCard>
-                      <PublicationPageFiles files={publication.fileSet} />
+                      <PublicationPageFiles files={publication.fileSet.files} />
                     </StyledSidebarCard>
                   )}
                   <StyledSidebarCard>
