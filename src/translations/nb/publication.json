@@ -116,8 +116,10 @@
     "volume": "Volum"
   },
   "status": {
-    "draft": "Kladd",
-    "rejected": "Avvist"
+    "Draft": "Kladd",
+    "New": "Ny",
+    "Published": "Publisert",
+    "Rejected": "Avvist"
   },
   "submission": {
     "ask_for_doi": "Be om DOI for denne registreringen (anbefales ikke dersom ressursen allerede har en DOI)"

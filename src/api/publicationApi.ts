@@ -12,7 +12,7 @@ import { NotificationVariant } from '../types/notification.types';
 export enum PublicationsApiPaths {
   SEARCH = '/search/publications',
   PUBLICATION = '/publication',
-  FETCH_MY_RESOURCES = '/publications/fetch-my-resources',
+  PUBLICATIONS_BY_OWNER = '/publication/by-owner',
   DOI_LOOKUP = '/doi-fetch',
   DOI_REQUESTS = '/publications/doi-requests',
   FOR_APPROVAL = '/publications/approval',
@@ -61,7 +61,7 @@ export const getPublication = async (id: string) => {
 };
 
 export const getMyPublications = async () => {
-  const url = PublicationsApiPaths.FETCH_MY_RESOURCES;
+  const url = PublicationsApiPaths.PUBLICATIONS_BY_OWNER;
   try {
     const idToken = await getIdToken();
     const response = await Axios.get(url, {
@@ -70,7 +70,7 @@ export const getMyPublications = async () => {
       },
     });
     if (response.status === StatusCode.OK) {
-      return response.data;
+      return response.data.publications;
     } else {
       return [];
     }

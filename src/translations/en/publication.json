@@ -116,8 +116,10 @@
     "volume": "Volume"
   },
   "status": {
-    "draft": "Draft",
-    "rejected": "Rejected"
+    "Draft": "Draft",
+    "New": "New",
+    "Published": "Published",
+    "Rejected": "Rejected"
   },
   "submission": {
     "ask_for_doi": "Ask for DOI for this registration"
