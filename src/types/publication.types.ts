@@ -31,6 +31,7 @@ export interface Publisher {
   onlineIssn: string;
   level: number | null;
   openAccess: boolean;
+  peerReviewed: boolean;
 }
 
 export const emptyPublisher: Publisher = {
@@ -39,6 +40,7 @@ export const emptyPublisher: Publisher = {
   level: null,
   title: '',
   openAccess: false,
+  peerReviewed: false,
 };
 
 export interface AlmaPublication {
@@ -104,7 +106,6 @@ interface PublicationEntityDescription {
       volume: string;
       issue: string;
       articleNumber: string;
-      peerReviewed: boolean;
       pages: {
         begin: string;
         end: string;
@@ -150,7 +151,6 @@ const emptyPublicationEntityDescription: PublicationEntityDescription = {
       volume: '',
       issue: '',
       articleNumber: '',
-      peerReviewed: false,
       pages: {
         type: 'Pages', //TODO: remove this when backend has fixed Reference
         begin: '',

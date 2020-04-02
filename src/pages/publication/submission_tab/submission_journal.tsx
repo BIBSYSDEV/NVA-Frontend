@@ -11,7 +11,7 @@ const SubmissionJournalPublication: React.FC = () => {
   const {
     publicationSubtype,
     reference: {
-      publicationInstance: { volume, issue, pages, articleNumber, peerReviewed },
+      publicationInstance: { volume, issue, pages, articleNumber },
       publicationContext,
     },
   } = values.entityDescription;
@@ -28,7 +28,7 @@ const SubmissionJournalPublication: React.FC = () => {
       <LabelContentRow label={t('references.pages_to')}>{pages.end}</LabelContentRow>
       <LabelContentRow label={t('references.article_number')}>{articleNumber}</LabelContentRow>
       <LabelContentRow label={t('references.peer_reviewed')}>
-        {peerReviewed ? t('common:yes') : t('common:no')}
+        {publicationContext?.peerReviewed ? t('common:yes') : t('common:no')}
       </LabelContentRow>
     </>
   );
