@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 import {
   Checkbox,
@@ -21,7 +21,7 @@ import { ContributorFieldNames, SpecificContributorFieldNames } from '../../../.
 import { Contributor, emptyContributor } from '../../../../types/contributor.types';
 import { FormikPublication } from '../../../../types/publication.types';
 import SubHeading from '../../../../components/SubHeading';
-import AddContributor from '../AddContributor';
+import AddContributor from '../AddContributorModal';
 import styled from 'styled-components';
 
 const StyledWarningIcon = styled(WarningIcon)`
@@ -32,83 +32,112 @@ const StyledCheckIcon = styled(CheckIcon)`
   color: ${({ theme }) => theme.palette.success.main};
 `;
 
+const StyledAddAuthorButton = styled(Button)`
+  margin-top: 1rem;
+`;
+
+interface UnverifiedContributor {
+  name: string;
+  index: number;
+}
+
 interface SortableItemProps {
   contributor: Contributor;
   placement: number;
   onDelete: (index: number) => void;
+  setUnverifiedContributor: (unverifiedContributor: UnverifiedContributor) => void;
 }
 
-const SortableItem = SortableElement(({ contributor, placement, onDelete }: SortableItemProps) => {
-  const { t } = useTranslation();
+const SortableItem = SortableElement(
+  ({ contributor, placement, onDelete, setUnverifiedContributor }: SortableItemProps) => {
+    const { t } = useTranslation();
 
-  const index = placement - 1;
-  const baseFieldName = `${ContributorFieldNames.CONTRIBUTORS}[${index}]`;
+    const index = placement - 1;
+    const baseFieldName = `${ContributorFieldNames.CONTRIBUTORS}[${index}]`;
 
-  return (
-    <TableRow tabIndex={0} key={contributor.identity.id}>
-      <TableCell align="left">
-        <SubHeading>
-          {contributor.identity.name}{' '}
+    return (
+      <TableRow tabIndex={0} key={contributor.identity.id}>
+        <TableCell align="left">
+          <SubHeading>
+            {contributor.identity.name}{' '}
+            {contributor.identity.arpId ? (
+              <Tooltip title={t('publication:contributors.known_author_identity')}>
+                <StyledCheckIcon />
+              </Tooltip>
+            ) : (
+              <Tooltip title={t('publication:contributors.unknown_author_identity')}>
+                <StyledWarningIcon />
+              </Tooltip>
+            )}
+          </SubHeading>
+
           {contributor.identity.arpId ? (
-            <Tooltip title={t('publication:contributors.known_author_identity')}>
-              <StyledCheckIcon />
-            </Tooltip>
+            <>
+              <Field name={`${baseFieldName}.${SpecificContributorFieldNames.CORRESPONDING}`}>
+                {({ field }: FieldProps) => (
+                  <FormControlLabel
+                    control={<Checkbox checked={field.value} {...field} />}
+                    label={t('publication:contributors.corresponding')}
+                  />
+                )}
+              </Field>
+              <div>
+                {contributor.corresponding && (
+                  <Field name={`${baseFieldName}.${SpecificContributorFieldNames.EMAIL}`}>
+                    {({ field, meta: { error, touched } }: FieldProps) => (
+                      <TextField
+                        variant="outlined"
+                        label={t('common:email')}
+                        {...field}
+                        error={touched && !!error}
+                        helperText={touched && error}
+                      />
+                    )}
+                  </Field>
+                )}
+              </div>
+            </>
           ) : (
-            <Tooltip title={t('publication:contributors.unknown_author_identity')}>
-              <StyledWarningIcon />
-            </Tooltip>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() =>
+                setUnverifiedContributor({
+                  name: contributor.identity.name,
+                  index: index,
+                })
+              }>
+              {t('publication:contributors.connect_author_identity')}
+            </Button>
           )}
-        </SubHeading>
-
-        <Field name={`${baseFieldName}.${SpecificContributorFieldNames.CORRESPONDING}`}>
-          {({ field }: FieldProps) => (
-            <FormControlLabel
-              control={<Checkbox checked={field.value} {...field} />}
-              label={t('publication:contributors.corresponding')}
-            />
-          )}
-        </Field>
-        <div>
-          {contributor.corresponding && (
-            <Field name={`${baseFieldName}.${SpecificContributorFieldNames.EMAIL}`}>
-              {({ field, meta: { error, touched } }: FieldProps) => (
-                <TextField
-                  variant="outlined"
-                  label={t('common:email')}
-                  {...field}
-                  error={touched && !!error}
-                  helperText={touched && error}
-                />
-              )}
-            </Field>
-          )}
-        </div>
-      </TableCell>
-      <TableCell align="left">
-        {contributor.affiliations?.map((affiliation) => (
-          <div key={`${affiliation.id}`}>{affiliation.name}</div>
-        ))}
-      </TableCell>
-      <TableCell align="right">
-        <div>{placement}</div>
-        <div>
-          <Button color="secondary" onClick={() => onDelete(index)}>
-            <DeleteIcon />
-            {t('common:remove')}
-          </Button>
-        </div>
-      </TableCell>
-    </TableRow>
-  );
-});
+        </TableCell>
+        <TableCell align="left">
+          {contributor.affiliations?.map((affiliation) => (
+            <div key={`${affiliation.id}`}>{affiliation.name}</div>
+          ))}
+        </TableCell>
+        <TableCell align="right">
+          <div>{placement}</div>
+          <div>
+            <Button color="secondary" onClick={() => onDelete(index)}>
+              <DeleteIcon />
+              {t('common:remove')}
+            </Button>
+          </div>
+        </TableCell>
+      </TableRow>
+    );
+  }
+);
 
 interface SortableListProps {
   contributors: Contributor[];
   onDelete: (index: number) => void;
   onSortEnd: ({ oldIndex, newIndex }: any) => void;
+  setUnverifiedContributor: (unverifiedContributor: UnverifiedContributor) => void;
 }
 
-const SortableList = SortableContainer(({ contributors, onDelete }: SortableListProps) => (
+const SortableList = SortableContainer(({ contributors, onDelete, setUnverifiedContributor }: SortableListProps) => (
   <Table>
     <TableBody>
       {contributors.map((contributor: Contributor, index: number) => (
@@ -118,6 +147,7 @@ const SortableList = SortableContainer(({ contributors, onDelete }: SortableList
           key={contributor.identity.id || contributor.identity.name}
           placement={index + 1}
           onDelete={onDelete}
+          setUnverifiedContributor={setUnverifiedContributor}
         />
       ))}
     </TableBody>
@@ -129,10 +159,28 @@ interface SortableTableProps {
   push: (obj: any) => void;
   remove: (index: number) => void;
   swap: (oldIndex: number, newIndex: number) => void;
+  replace: (index: number, value: any) => void;
 }
 
-const SortableTable: FC<SortableTableProps> = ({ listOfContributors, push, remove, swap }) => {
+const SortableTable: FC<SortableTableProps> = ({ listOfContributors, push, remove, swap, replace }) => {
   const { setFieldValue, values }: FormikProps<FormikPublication> = useFormikContext();
+  const [openContributorModal, setOpenContributorModal] = useState(false);
+  const [unverifiedContributor, setUnverifiedContributor] = useState<UnverifiedContributor | null>(null);
+  const { t } = useTranslation('publication');
+
+  const toggleContributorModal = () => {
+    if (unverifiedContributor) {
+      setUnverifiedContributor(null);
+    }
+    setOpenContributorModal(!openContributorModal);
+  };
+
+  useEffect(() => {
+    if (unverifiedContributor) {
+      // Open modal if user has selected a unverified contributor
+      setOpenContributorModal(true);
+    }
+  }, [unverifiedContributor]);
 
   const handleOnSortEnd = ({ oldIndex, newIndex }: any) => {
     swap(oldIndex, newIndex);
@@ -143,6 +191,7 @@ const SortableTable: FC<SortableTableProps> = ({ listOfContributors, push, remov
       );
     }
   };
+
   return (
     <>
       <SortableList
@@ -150,8 +199,19 @@ const SortableTable: FC<SortableTableProps> = ({ listOfContributors, push, remov
         onSortEnd={handleOnSortEnd}
         onDelete={(index) => remove(index)}
         distance={10}
+        setUnverifiedContributor={setUnverifiedContributor}
       />
+      <StyledAddAuthorButton
+        onClick={toggleContributorModal}
+        variant="contained"
+        color="primary"
+        data-testid="add-contributor">
+        {t('contributors.add_author')}
+      </StyledAddAuthorButton>
       <AddContributor
+        initialSearchTerm={unverifiedContributor?.name}
+        open={openContributorModal}
+        toggleModal={toggleContributorModal}
         onAuthorSelected={(authority) => {
           const contributor: Contributor = {
             ...emptyContributor,
@@ -168,7 +228,8 @@ const SortableTable: FC<SortableTableProps> = ({ listOfContributors, push, remov
             },
             sequence: listOfContributors.length,
           };
-          push(contributor);
+
+          !unverifiedContributor ? push(contributor) : replace(unverifiedContributor.index, contributor);
         }}
       />
     </>
