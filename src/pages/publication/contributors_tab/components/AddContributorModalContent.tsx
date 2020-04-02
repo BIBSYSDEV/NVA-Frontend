@@ -11,7 +11,6 @@ import Progress from '../../../../components/Progress';
 import SearchBar from '../../../../components/SearchBar';
 import { setNotification } from '../../../../redux/actions/notificationActions';
 import { Authority } from '../../../../types/authority.types';
-import { debounce } from '../../../../utils/debounce';
 import AuthorityCard from '../../../user/authority/AuthorityCard';
 import NormalText from '../../../../components/NormalText';
 import { NotificationVariant } from '../../../../types/notification.types';
@@ -64,7 +63,7 @@ const AddContributorModalContent: FC<AddContributorModalContentProps> = ({ addAu
   });
 
   const search = useCallback(
-    debounce(async (searchTerm: string) => {
+    async (searchTerm: string) => {
       setSearchSummary({ isLoading: true, searchTerm, results: 0 });
       const response = await getAuthorities(searchTerm, dispatch);
       if (response) {
@@ -73,7 +72,7 @@ const AddContributorModalContent: FC<AddContributorModalContentProps> = ({ addAu
       } else {
         dispatch(setNotification(t('feedback:error.get_authorities'), NotificationVariant.Error));
       }
-    }),
+    },
     [dispatch, t]
   );
 
