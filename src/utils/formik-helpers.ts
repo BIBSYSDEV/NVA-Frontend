@@ -46,10 +46,10 @@ export const hasTouchedError = (
 export const getAllFileFields = (files: File[]) => {
   let fieldNames: string[] = [];
   if (files.length === 0) {
-    fieldNames.push(FileFieldNames.FILE_SET);
+    fieldNames.push(FileFieldNames.FILES);
   } else {
     files.forEach((file, index) => {
-      const baseFieldName = `${FileFieldNames.FILE_SET}[${index}]`;
+      const baseFieldName = `${FileFieldNames.FILES}[${index}]`;
       fieldNames.push(`${baseFieldName}.${SpecificFileFieldNames.ADMINISTRATIVE_AGREEMENT}`);
       if (!file.administrativeAgreement) {
         fieldNames.push(`${baseFieldName}.${SpecificFileFieldNames.PUBLISHER_AUTHORITY}`);
