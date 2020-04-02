@@ -60,29 +60,43 @@ const SortableItem = SortableElement(({ contributor, placement, onDelete }: Sort
           )}
         </SubHeading>
 
-        <Field name={`${baseFieldName}.${SpecificContributorFieldNames.CORRESPONDING}`}>
-          {({ field }: FieldProps) => (
-            <FormControlLabel
-              control={<Checkbox checked={field.value} {...field} />}
-              label={t('publication:contributors.corresponding')}
-            />
-          )}
-        </Field>
-        <div>
-          {contributor.corresponding && (
-            <Field name={`${baseFieldName}.${SpecificContributorFieldNames.EMAIL}`}>
-              {({ field, meta: { error, touched } }: FieldProps) => (
-                <TextField
-                  variant="outlined"
-                  label={t('common:email')}
-                  {...field}
-                  error={touched && !!error}
-                  helperText={touched && error}
+        {contributor.identity.arpId ? (
+          <>
+            <Field name={`${baseFieldName}.${SpecificContributorFieldNames.CORRESPONDING}`}>
+              {({ field }: FieldProps) => (
+                <FormControlLabel
+                  control={<Checkbox checked={field.value} {...field} />}
+                  label={t('publication:contributors.corresponding')}
                 />
               )}
             </Field>
-          )}
-        </div>
+            <div>
+              {contributor.corresponding && (
+                <Field name={`${baseFieldName}.${SpecificContributorFieldNames.EMAIL}`}>
+                  {({ field, meta: { error, touched } }: FieldProps) => (
+                    <TextField
+                      variant="outlined"
+                      label={t('common:email')}
+                      {...field}
+                      error={touched && !!error}
+                      helperText={touched && error}
+                    />
+                  )}
+                </Field>
+              )}
+            </div>
+          </>
+        ) : (
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => {
+              /*TODO*/
+              console.log('CLICK');
+            }}>
+            {t('publication:contributors.connect_author_identity')}
+          </Button>
+        )}
       </TableCell>
       <TableCell align="left">
         {contributor.affiliations?.map((affiliation) => (
