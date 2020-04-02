@@ -36,15 +36,20 @@ const StyledAddAuthorButton = styled(Button)`
   margin-top: 1rem;
 `;
 
+interface UnverifiedContributor {
+  name: string;
+  index: number;
+}
+
 interface SortableItemProps {
   contributor: Contributor;
   placement: number;
   onDelete: (index: number) => void;
-  setInitialSearchTerm: (initialSearchTerm: string) => void;
+  setUnverifiedContributor: (unverifiedContributor: UnverifiedContributor) => void;
 }
 
 const SortableItem = SortableElement(
-  ({ contributor, placement, onDelete, setInitialSearchTerm }: SortableItemProps) => {
+  ({ contributor, placement, onDelete, setUnverifiedContributor }: SortableItemProps) => {
     const { t } = useTranslation();
 
     const index = placement - 1;
@@ -93,7 +98,15 @@ const SortableItem = SortableElement(
               </div>
             </>
           ) : (
-            <Button variant="contained" color="primary" onClick={() => setInitialSearchTerm(contributor.identity.name)}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() =>
+                setUnverifiedContributor({
+                  name: contributor.identity.name,
+                  index: index,
+                })
+              }>
               {t('publication:contributors.connect_author_identity')}
             </Button>
           )}
@@ -121,10 +134,10 @@ interface SortableListProps {
   contributors: Contributor[];
   onDelete: (index: number) => void;
   onSortEnd: ({ oldIndex, newIndex }: any) => void;
-  setInitialSearchTerm: (initialSearchTerm: string) => void;
+  setUnverifiedContributor: (unverifiedContributor: UnverifiedContributor) => void;
 }
 
-const SortableList = SortableContainer(({ contributors, onDelete, setInitialSearchTerm }: SortableListProps) => (
+const SortableList = SortableContainer(({ contributors, onDelete, setUnverifiedContributor }: SortableListProps) => (
   <Table>
     <TableBody>
       {contributors.map((contributor: Contributor, index: number) => (
@@ -134,7 +147,7 @@ const SortableList = SortableContainer(({ contributors, onDelete, setInitialSear
           key={contributor.identity.id || contributor.identity.name}
           placement={index + 1}
           onDelete={onDelete}
-          setInitialSearchTerm={setInitialSearchTerm}
+          setUnverifiedContributor={setUnverifiedContributor}
         />
       ))}
     </TableBody>
@@ -146,26 +159,28 @@ interface SortableTableProps {
   push: (obj: any) => void;
   remove: (index: number) => void;
   swap: (oldIndex: number, newIndex: number) => void;
+  replace: (index: number, value: any) => void;
 }
 
-const SortableTable: FC<SortableTableProps> = ({ listOfContributors, push, remove, swap }) => {
+const SortableTable: FC<SortableTableProps> = ({ listOfContributors, push, remove, swap, replace }) => {
   const { setFieldValue, values }: FormikProps<FormikPublication> = useFormikContext();
   const [openContributorModal, setOpenContributorModal] = useState(false);
-  const [initialSearchTerm, setInitialSearchTerm] = useState('');
+  const [unverifiedContributor, setUnverifiedContributor] = useState<UnverifiedContributor | null>(null);
   const { t } = useTranslation('publication');
 
   const toggleContributorModal = () => {
-    if (initialSearchTerm) {
-      setInitialSearchTerm('');
+    if (unverifiedContributor) {
+      setUnverifiedContributor(null);
     }
     setOpenContributorModal(!openContributorModal);
   };
 
   useEffect(() => {
-    if (initialSearchTerm) {
+    if (unverifiedContributor) {
+      // Open modal if user has selected a unverified contributor
       setOpenContributorModal(true);
     }
-  }, [initialSearchTerm]);
+  }, [unverifiedContributor]);
 
   const handleOnSortEnd = ({ oldIndex, newIndex }: any) => {
     swap(oldIndex, newIndex);
@@ -184,7 +199,7 @@ const SortableTable: FC<SortableTableProps> = ({ listOfContributors, push, remov
         onSortEnd={handleOnSortEnd}
         onDelete={(index) => remove(index)}
         distance={10}
-        setInitialSearchTerm={setInitialSearchTerm}
+        setUnverifiedContributor={setUnverifiedContributor}
       />
       <StyledAddAuthorButton
         onClick={toggleContributorModal}
@@ -194,7 +209,7 @@ const SortableTable: FC<SortableTableProps> = ({ listOfContributors, push, remov
         {t('contributors.add_author')}
       </StyledAddAuthorButton>
       <AddContributor
-        initialSearchTerm={initialSearchTerm}
+        initialSearchTerm={unverifiedContributor?.name}
         open={openContributorModal}
         toggleModal={toggleContributorModal}
         onAuthorSelected={(authority) => {
@@ -213,7 +228,8 @@ const SortableTable: FC<SortableTableProps> = ({ listOfContributors, push, remov
             },
             sequence: listOfContributors.length,
           };
-          push(contributor);
+
+          !unverifiedContributor ? push(contributor) : replace(unverifiedContributor.index, contributor);
         }}
       />
     </>
