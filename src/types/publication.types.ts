@@ -31,7 +31,6 @@ export interface Publisher {
   onlineIssn: string;
   level: number | null;
   openAccess: boolean;
-  peerReviewed: boolean;
 }
 
 export const emptyPublisher: Publisher = {
@@ -40,7 +39,6 @@ export const emptyPublisher: Publisher = {
   level: null,
   title: '',
   openAccess: false,
-  peerReviewed: false,
 };
 
 export interface AlmaPublication {
@@ -79,6 +77,19 @@ export interface Publication {
   fileSet: FileSet;
 }
 
+interface PublicationInstance {
+  articleNumber: string;
+  issue: string;
+  pages: {
+    begin: string;
+    end: string;
+    type?: string; // TODO: remove this when backend has fixed Reference
+  };
+  peerReviewed: boolean;
+  type?: string; // TODO: remove this when backend has fixed Reference
+  volume: string;
+}
+
 interface PublicationEntityDescription {
   mainTitle: string;
   abstract: string;
@@ -111,6 +122,7 @@ interface PublicationEntityDescription {
         end: string;
         type?: string; //TODO: remove this when backend has fixed Reference
       };
+      peerReviewed: boolean;
       type?: string; //TODO: remove this when backend has fixed Reference
     };
     publicationContext: Publisher | null;
@@ -121,6 +133,19 @@ interface PublicationEntityDescription {
 export interface FormikPublication extends Publication {
   shouldCreateDoi: boolean;
 }
+
+const emptyPublicationInstance: PublicationInstance = {
+  type: 'PublicationInstance', //TODO: remove this when backend has fixed Reference
+  volume: '',
+  issue: '',
+  articleNumber: '',
+  pages: {
+    type: 'Pages', //TODO: remove this when backend has fixed Reference
+    begin: '',
+    end: '',
+  },
+  peerReviewed: false,
+};
 
 const emptyPublicationEntityDescription: PublicationEntityDescription = {
   mainTitle: '',
@@ -146,17 +171,7 @@ const emptyPublicationEntityDescription: PublicationEntityDescription = {
   reference: {
     type: 'Reference', //TODO: remove this when backend has fixed Reference
     doi: '',
-    publicationInstance: {
-      type: 'PublicationInstance', //TODO: remove this when backend has fixed Reference
-      volume: '',
-      issue: '',
-      articleNumber: '',
-      pages: {
-        type: 'Pages', //TODO: remove this when backend has fixed Reference
-        begin: '',
-        end: '',
-      },
-    },
+    publicationInstance: emptyPublicationInstance,
     publicationContext: null,
   },
 };

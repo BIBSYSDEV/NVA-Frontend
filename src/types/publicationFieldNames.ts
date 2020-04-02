@@ -42,7 +42,7 @@ export enum ReferenceFieldNames {
   NUMBER_OF_PAGES = 'entityDescription.numberOfPages',
   PAGES_FROM = 'entityDescription.reference.publicationInstance.pages.begin',
   PAGES_TO = 'entityDescription.reference.publicationInstance.pages.end',
-  PEER_REVIEW = 'entityDescription.reference.publicationContext.peerReviewed',
+  PEER_REVIEW = 'entityDescription.reference.publicationInstance.peerReviewed',
   PUBLICATION_TYPE = 'entityDescription.publicationType',
   PUBLISHER = 'entityDescription.reference.publicationContext',
   SERIES = 'entityDescription.series',

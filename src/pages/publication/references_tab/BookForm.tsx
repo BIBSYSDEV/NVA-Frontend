@@ -39,7 +39,10 @@ const StyledTextBook = styled.div`
 const BookForm: FC = () => {
   const { t } = useTranslation('publication');
   const { setFieldValue, values }: FormikProps<FormikPublication> = useFormikContext();
-  const { publicationContext } = values.entityDescription.reference;
+  const {
+    publicationContext,
+    publicationInstance: { peerReviewed },
+  } = values.entityDescription.reference;
 
   return (
     <>
@@ -117,11 +120,7 @@ const BookForm: FC = () => {
           </>
         )}
       </Field>
-      <NviValidation
-        isPeerReviewed={!!publicationContext?.peerReviewed}
-        isRated={!!publicationContext?.level}
-        dataTestId="nvi_book"
-      />
+      <NviValidation isPeerReviewed={peerReviewed} isRated={!!publicationContext?.level} dataTestId="nvi_book" />
     </>
   );
 };
