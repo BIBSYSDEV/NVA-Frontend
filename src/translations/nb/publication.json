@@ -8,8 +8,10 @@
     "add_authors": "Legg til flere forfattere",
     "add_other_contributor": "Legg til flere",
     "authors": "Forfattere",
+    "connect_author_identity": "Tilknytt forfatteridentitet",
     "corresponding": "Korresponderende",
-    "known_author_identity": "Har forfatteridentitet",
+    "known_author_identity": "Har tilknyttet forfatteridentitet",
+    "prefilled_name": "Forhåndsutfylt navn",
     "type": "Bidragstype",
     "unknown_author_identity": "Mangler forfatteridentitet",
     "verify_person": "Verifiser"
@@ -116,8 +118,10 @@
     "volume": "Volum"
   },
   "status": {
-    "draft": "Kladd",
-    "rejected": "Avvist"
+    "Draft": "Kladd",
+    "New": "Ny",
+    "Published": "Publisert",
+    "Rejected": "Avvist"
   },
   "submission": {
     "ask_for_doi": "Be om DOI for denne registreringen (anbefales ikke dersom ressursen allerede har en DOI)"

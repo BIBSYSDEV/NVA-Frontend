@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useState } from 'react';
+import React, { FC, useCallback, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
@@ -11,10 +11,10 @@ import Progress from '../../../../components/Progress';
 import SearchBar from '../../../../components/SearchBar';
 import { setNotification } from '../../../../redux/actions/notificationActions';
 import { Authority } from '../../../../types/authority.types';
-import { debounce } from '../../../../utils/debounce';
 import AuthorityCard from '../../../user/authority/AuthorityCard';
 import NormalText from '../../../../components/NormalText';
 import { NotificationVariant } from '../../../../types/notification.types';
+import SubHeading from '../../../../components/SubHeading';
 
 const StyledClickableDiv = styled.div`
   cursor: pointer;
@@ -40,6 +40,10 @@ const StyledLabel = styled(Label)`
   padding: 0.5rem;
 `;
 
+const StyledSubHeading = styled(SubHeading)`
+  margin-bottom: 1rem;
+`;
+
 interface SearchSummary {
   isLoading: boolean;
   searchTerm: string;
@@ -48,9 +52,10 @@ interface SearchSummary {
 
 interface AddContributorModalContentProps {
   addAuthor: (selectedAuthor: Authority) => void;
+  initialSearchTerm?: string;
 }
 
-const AddContributorModalContent: FC<AddContributorModalContentProps> = ({ addAuthor }) => {
+const AddContributorModalContent: FC<AddContributorModalContentProps> = ({ addAuthor, initialSearchTerm = '' }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation('publication');
 
@@ -63,7 +68,7 @@ const AddContributorModalContent: FC<AddContributorModalContentProps> = ({ addAu
   });
 
   const search = useCallback(
-    debounce(async (searchTerm: string) => {
+    async (searchTerm: string) => {
       setSearchSummary({ isLoading: true, searchTerm, results: 0 });
       const response = await getAuthorities(searchTerm, dispatch);
       if (response) {
@@ -72,19 +77,31 @@ const AddContributorModalContent: FC<AddContributorModalContentProps> = ({ addAu
       } else {
         dispatch(setNotification(t('feedback:error.get_authorities'), NotificationVariant.Error));
       }
-    }),
+    },
     [dispatch, t]
   );
 
-  const handleSearch = async (searchTerm: string) => {
+  useEffect(() => {
+    // Trigger search if initialSearchTerm is given
+    if (initialSearchTerm) {
+      search(initialSearchTerm);
+    }
+  }, [search, initialSearchTerm]);
+
+  const handleSearch = (searchTerm: string) => {
     if (searchTerm.length) {
-      await search(searchTerm);
+      search(searchTerm);
     }
   };
 
   return (
     <>
-      <SearchBar handleSearch={handleSearch} resetSearchInput={false} />
+      {initialSearchTerm && (
+        <StyledSubHeading>
+          {t('publication:contributors.prefilled_name')}: {initialSearchTerm}
+        </StyledSubHeading>
+      )}
+      <SearchBar handleSearch={handleSearch} resetSearchInput={false} initialSearchTerm={initialSearchTerm} />
       {searchSummary.isLoading ? (
         <StyledProgressContainer>
           <Progress size={100} />
@@ -121,7 +138,7 @@ const AddContributorModalContent: FC<AddContributorModalContentProps> = ({ addAu
           </StyledButtonContainer>
         </>
       ) : (
-        <NormalText>{t('common:no_hits')}</NormalText>
+        searchSummary.searchTerm && <NormalText>{t('common:no_hits')}</NormalText>
       )}
     </>
   );
