@@ -23,6 +23,7 @@ import { FormikPublication } from '../../../../types/publication.types';
 import SubHeading from '../../../../components/SubHeading';
 import AddContributor from '../AddContributorModal';
 import styled from 'styled-components';
+import AffiliationsCell from './AffiliationsCell';
 
 const StyledWarningIcon = styled(WarningIcon)`
   color: ${({ theme }) => theme.palette.warning.main};
@@ -112,9 +113,9 @@ const SortableItem = SortableElement(
           )}
         </TableCell>
         <TableCell align="left">
-          {contributor.affiliations?.map((affiliation) => (
-            <div key={`${affiliation.id}`}>{Object.values(affiliation.labels)[0]}</div>
-          ))}
+          {contributor.identity && ( // TODO: Hide if not arpId?
+            <AffiliationsCell affiliations={contributor.affiliations} baseFieldName={baseFieldName} />
+          )}
         </TableCell>
         <TableCell align="right">
           <div>{placement}</div>

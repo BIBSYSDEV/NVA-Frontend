@@ -4,6 +4,7 @@
     "info": "Den antologien kapittelet er publisert i må være registrert først"
   },
   "contributors": {
+    "add_affiliation": "Legg til tilknytning",
     "add_author": "Legg til forfatter",
     "add_authors": "Legg til flere forfattere",
     "add_other_contributor": "Legg til flere",

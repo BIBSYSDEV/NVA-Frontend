@@ -27,7 +27,7 @@ export interface Contributor {
   type: ContributorType;
 }
 
-interface Institution {
+export interface Institution {
   id: string;
   labels: {
     [key: string]: string;

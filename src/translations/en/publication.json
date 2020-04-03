@@ -4,6 +4,7 @@
     "info": "The anthology this chapter is published in must be registered in advance"
   },
   "contributors": {
+    "add_affiliation": "Add affiliation",
     "add_author": "Add author",
     "add_authors": "Add authors",
     "add_other_contributor": "Add more contributors",
