@@ -1,29 +1,48 @@
 export interface Project {
-  cristinProjectId: string;
-  mainLanguage: string;
-  titles: ProjectTitle[];
-  participants: ProjectParticipant[];
-  institutions: ProjectInstitution[];
-  fundings: ProjectFundings[];
+  id: string;
+  name: string;
+  grants?: Grant[];
+  approvals?: Approval[];
 }
 
-interface ProjectTitle {
+interface Grant {
+  id: string;
+  source: string;
+}
+
+interface Approval {
+  applicationCode: string;
+  approvedBy: string;
+  approvalStatus: string;
+  date: Date;
+}
+
+export interface CristinProject {
+  cristinProjectId: string;
+  mainLanguage: string;
+  titles: CristinProjectTitle[];
+  participants: CristinProjectParticipant[];
+  institutions: CristinProjectInstitution[];
+  fundings: CristinProjectFunding[];
+}
+
+interface CristinProjectTitle {
   title: string;
   language: string;
 }
 
-interface ProjectParticipant {
+interface CristinProjectParticipant {
   cristinPersonId: string;
   fullName: string;
 }
 
-interface ProjectInstitution {
+interface CristinProjectInstitution {
   cristinInstitutionId: string;
   name: string;
   language: string;
 }
 
-interface ProjectFundings {
+export interface CristinProjectFunding {
   fundingSourceCode: string;
   projectCode: string;
 }

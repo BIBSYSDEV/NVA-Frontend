@@ -60,13 +60,13 @@ const ProjectRow: FC<ProjectRowProps> = ({ project, onClickRemove, dataTestId })
   return (
     <StyledRow data-testid={dataTestId}>
       <StyledTitleLabel>{t('common:title')}</StyledTitleLabel>
-      <StyledTitle>{project.titles?.[0]?.title}</StyledTitle>
+      <StyledTitle>{project.name}</StyledTitle>
       <>
         <StyledGrantLabel>{t('publication:description.project_id')}</StyledGrantLabel>
-        <StyledGrant>{project.fundings?.[0]?.projectCode}</StyledGrant>
+        <StyledGrant>{project.grants?.[0]?.id}</StyledGrant>
 
         <StyledFinancedByLabel>{t('publication:description.financed_by')}</StyledFinancedByLabel>
-        <StyledFinancedBy>{project.fundings?.[0]?.fundingSourceCode}</StyledFinancedBy>
+        <StyledFinancedBy>{project.grants?.[0]?.source}</StyledFinancedBy>
       </>
       <StyledAction>
         <Button data-testid={`${dataTestId}_remove_button`} color="secondary" onClick={onClickRemove}>
