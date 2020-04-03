@@ -63,7 +63,7 @@ const PublicationPage: FC = () => {
     }
   }, [dispatch, identifier]);
 
-  const { mainTitle, abstract, description, tags, date, project, contributors, reference } = publication
+  const { mainTitle, abstract, description, tags, date, contributors, reference } = publication
     ? publication.entityDescription
     : emptyPublication.entityDescription;
 
@@ -117,9 +117,9 @@ const PublicationPage: FC = () => {
                     </LabelContentRowForPublicationPage>
                   )}
                   <PublicationPageJournal publication={publication} />
-                  {project && (
+                  {publication.project && (
                     <LabelContentRowForPublicationPage label={t('description.project_association')}>
-                      {project.name}
+                      {publication.project.name}
                     </LabelContentRowForPublicationPage>
                   )}
                   <PublicationPageSeries publication={publication} />

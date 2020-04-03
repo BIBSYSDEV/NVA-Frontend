@@ -11,15 +11,9 @@ const SubmissionDescription: React.FC = () => {
   const { values }: FormikProps<FormikPublication> = useFormikContext();
 
   const {
-    mainTitle,
-    abstract,
-    description,
-    npiSubjectHeading,
-    tags,
-    date,
-    language,
+    entityDescription: { mainTitle, abstract, description, npiSubjectHeading, tags, date, language },
     project,
-  } = values.entityDescription;
+  } = values;
 
   const { name, mainDiscipline } = getNpiDiscipline(npiSubjectHeading);
 
