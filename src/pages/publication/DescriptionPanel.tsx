@@ -19,6 +19,7 @@ import Heading from '../../components/Heading';
 import Card from '../../components/Card';
 import { getNpiDiscipline } from '../../utils/npiDisciplines';
 import { DescriptionFieldNames } from '../../types/publicationFieldNames';
+import { emptyProject } from '../../types/project.types';
 
 const MultipleFieldWrapper = styled.div`
   display: flex;
@@ -173,7 +174,7 @@ const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublicat
               {({ field: { name, value } }: FieldProps) => (
                 <>
                   <ProjectSearch
-                    setValueFunction={(newValue) => setFieldValue(name, newValue)}
+                    setValueFunction={(newValue) => setFieldValue(name, { ...emptyProject, ...newValue })}
                     dataTestId="search_project"
                     placeholder={t('description.search_for_project')}
                   />

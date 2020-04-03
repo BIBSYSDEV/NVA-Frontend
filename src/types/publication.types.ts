@@ -25,7 +25,6 @@ export interface PublicationMetadata {
 }
 
 export interface Publisher {
-  type?: string; //TODO: remove this when backend has fixed Reference
   title: string;
   printIssn: string;
   onlineIssn: string;
@@ -84,10 +83,8 @@ interface PublicationInstance {
   pages: {
     begin: string;
     end: string;
-    type?: string; // TODO: remove this when backend has fixed Reference
   };
   peerReviewed: boolean;
-  type?: string; // TODO: remove this when backend has fixed Reference
   volume: string;
 }
 
@@ -115,7 +112,6 @@ interface PublicationEntityDescription {
     doi: string;
     publicationInstance: PublicationInstance;
     publicationContext: Publisher | null;
-    type?: string; //TODO: remove this when backend has fixed Reference
   };
 }
 
@@ -124,12 +120,10 @@ export interface FormikPublication extends Publication {
 }
 
 const emptyPublicationInstance: PublicationInstance = {
-  type: 'PublicationInstance', //TODO: remove this when backend has fixed Reference
   volume: '',
   issue: '',
   articleNumber: '',
   pages: {
-    type: 'Pages', //TODO: remove this when backend has fixed Reference
     begin: '',
     end: '',
   },
@@ -157,7 +151,6 @@ const emptyPublicationEntityDescription: PublicationEntityDescription = {
   specialization: '',
   textBook: false,
   reference: {
-    type: 'Reference', //TODO: remove this when backend has fixed Reference
     doi: '',
     publicationInstance: emptyPublicationInstance,
     publicationContext: null,

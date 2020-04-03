@@ -3,11 +3,21 @@ export interface Project {
   name: string;
   grants?: Grant[];
   approvals?: Approval[];
+  type?: string;
 }
+
+export const emptyProject: Project = {
+  id: '',
+  name: '',
+  grants: [],
+  approvals: [],
+  type: 'ResearchProject',
+};
 
 interface Grant {
   id: string;
   source: string;
+  type?: string;
 }
 
 interface Approval {
