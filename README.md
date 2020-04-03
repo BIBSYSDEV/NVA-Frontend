@@ -28,6 +28,12 @@ To use mock data, you need to add this variable to the .env file:<br>
 
 coverage report: `coverage/lcov-report/index.html`
 
+# Generate test files using faker.js
+
+Generate your desired structure of the object/list. (Example: generateProjectList.ts)<br>
+Navigate to the folder your test file is in.<br><br>
+Run `npx tsc && npx ts-node generateProjectList` to generate.
+
 # Available Scripts
 
 ### `npm start`

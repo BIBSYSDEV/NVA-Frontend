@@ -75,6 +75,7 @@ export interface Publication {
   readonly status: PublicationStatus;
   entityDescription: PublicationEntityDescription;
   fileSet: FileSet;
+  project: Project | null;
 }
 
 interface PublicationInstance {
@@ -102,7 +103,6 @@ interface PublicationEntityDescription {
     day: string;
   };
   language: LanguageValues;
-  projects: Project[];
   publicationType: PublicationType | '';
   publicationSubtype: JournalArticleType | ReportType | DegreeType | BookType | '';
   contributors: Contributor[];
@@ -148,7 +148,6 @@ const emptyPublicationEntityDescription: PublicationEntityDescription = {
     day: '',
   },
   language: LanguageValues.NORWEGIAN_BOKMAL,
-  projects: [],
   publicationType: '',
   contributors: [],
   publicationSubtype: '',
@@ -190,4 +189,5 @@ export const emptyPublication: FormikPublication = {
     files: [],
   },
   shouldCreateDoi: false,
+  project: null,
 };

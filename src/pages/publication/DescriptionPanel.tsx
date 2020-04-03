@@ -13,7 +13,6 @@ import DisciplineSearch from './description_tab/DisciplineSearch';
 import ProjectSearch from './description_tab/ProjectSearch';
 import ProjectRow from './description_tab/ProjectRow';
 import DatePickerField from './description_tab/DatePickerField';
-import { Project } from '../../types/project.types';
 import ChipInput from 'material-ui-chip-input';
 import { publicationLanguages } from '../../types/language.types';
 import Heading from '../../components/Heading';
@@ -170,28 +169,25 @@ const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublicat
           <StyledFieldHeader>{t('description.project_association')}</StyledFieldHeader>
 
           <StyledFieldWrapper>
-            <FieldArray name={DescriptionFieldNames.PROJECTS}>
-              {({ name, insert, remove }: FieldArrayRenderProps) => (
+            <Field name={DescriptionFieldNames.PROJECT}>
+              {({ field: { name, value } }: FieldProps) => (
                 <>
                   <ProjectSearch
-                    setValueFunction={(newValue) => insert(0, newValue)}
+                    setValueFunction={(newValue) => setFieldValue(name, newValue)}
                     dataTestId="search_project"
                     placeholder={t('description.search_for_project')}
                   />
-                  {getIn(values, name).map(
-                    (project: Project, i: number) =>
-                      project && (
-                        <ProjectRow
-                          key={project.cristinProjectId}
-                          project={project}
-                          onClickRemove={() => remove(i)}
-                          dataTestId={`selected_project${i}`}
-                        />
-                      )
+                  {value && (
+                    <ProjectRow
+                      key={value.id}
+                      project={value}
+                      onClickRemove={() => setFieldValue(name, null)}
+                      dataTestId="selected_project"
+                    />
                   )}
                 </>
               )}
-            </FieldArray>
+            </Field>
           </StyledFieldWrapper>
         </Card>
       </MuiPickersUtilsProvider>
