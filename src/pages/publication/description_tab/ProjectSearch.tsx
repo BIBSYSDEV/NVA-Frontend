@@ -24,7 +24,6 @@ const ProjectSearch: FC<ProjectSearchProps> = ({ dataTestId, setValueFunction, p
           response.map((project: CristinProject) => ({
             id: project.cristinProjectId,
             name: project.titles?.[0]?.title,
-            title: project.titles?.[0]?.title,
             grants: project.fundings.map((funding: CristinProjectFunding) => ({
               id: funding.projectCode,
               source: funding.fundingSourceCode,
