@@ -12,15 +12,13 @@ describe('Publication: Description', () => {
     // TODO: Change this when DOI-link is used
     cy.get('[data-testid=new-schema-button]').click({ force: true });
 
-    cy.get('[data-testid=search_project]')
-      .click({ force: true })
-      .type('phd');
+    cy.get('[data-testid=search_project]').click({ force: true }).type('phd');
     cy.contains('PhD prosjekt: Selvbestemmelse uten ord').click({ force: true });
 
-    cy.get('[data-testid=selected_project0]').contains('PhD prosjekt: Selvbestemmelse uten ord');
+    cy.get('[data-testid=selected_project]').contains('PhD prosjekt: Selvbestemmelse uten ord');
 
-    cy.get('[data-testid=selected_project0_remove_button]').click({ force: true });
+    cy.get('[data-testid=selected_project_remove_button]').click({ force: true });
 
-    cy.get('[data-testid=selected_project0]').should('not.exist');
+    cy.get('[data-testid=selected_project]').should('not.exist');
   });
 });

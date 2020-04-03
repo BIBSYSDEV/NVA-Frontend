@@ -32,6 +32,8 @@ describe('User opens an item in the My Publication list', () => {
 
     // Submission tab
     cy.get('[data-testid=nav-tabpanel-submission]').click({ force: true });
-    cy.contains('Optimalisert osteloffproduksjon i 2019');
+    cy.contains(
+      'Computer simulations show that Neanderthal facial morphology represents adaptation to cold and high energy demands, but not heavy biting'
+    );
   });
 });
