@@ -19,7 +19,9 @@ const SubmissionContributors: React.FC = () => {
         <SubmissionContentText key={contributor.identity.name}>
           {contributor.identity.name}
           {/* TODO: update mapping of institutions once we get this from backend */}
-          {contributor.affiliations?.map((affiliation) => affiliation?.name && `(${affiliation.name})`)}
+          {contributor.affiliations?.map(
+            (affiliation) => affiliation?.labels && `(${Object.values(affiliation.labels)[0]})`
+          )}
         </SubmissionContentText>
       ))}
     </LabelContentRow>

@@ -29,8 +29,9 @@ export interface Contributor {
 
 interface Institution {
   id: string;
-  name: string;
-  institution?: Institution;
+  labels: {
+    [key: string]: string;
+  };
 }
 
 export const emptyContributor: Contributor = {

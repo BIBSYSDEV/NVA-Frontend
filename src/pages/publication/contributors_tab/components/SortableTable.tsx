@@ -113,7 +113,7 @@ const SortableItem = SortableElement(
         </TableCell>
         <TableCell align="left">
           {contributor.affiliations?.map((affiliation) => (
-            <div key={`${affiliation.id}`}>{affiliation.name}</div>
+            <div key={`${affiliation.id}`}>{Object.values(affiliation.labels)[0]}</div>
           ))}
         </TableCell>
         <TableCell align="right">
