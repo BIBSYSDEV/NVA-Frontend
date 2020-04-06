@@ -125,7 +125,13 @@ const PublicationForm: FC<PublicationFormProps> = ({
             {tabNumber === 2 && (
               <ContributorsPanel goToNextTab={goToNextTab} savePublication={() => savePublication(values)} />
             )}
-            {tabNumber === 3 && <FilesAndLicensePanel goToNextTab={goToNextTab} uppy={uppy} />}
+            {tabNumber === 3 && (
+              <FilesAndLicensePanel
+                goToNextTab={goToNextTab}
+                savePublication={() => savePublication(values)}
+                uppy={uppy}
+              />
+            )}
 
             {tabNumber === 4 && (
               <TabPanel ariaLabel="submission">
