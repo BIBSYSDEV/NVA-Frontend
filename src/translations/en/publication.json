@@ -36,6 +36,7 @@
     "invalid_url": "Invalid URL",
     "minimum_one_contributor": "You need to have at least one author registered for this publication",
     "minimum_one_file": "You need to have at least one file uploaded for this publication",
+    "date_must_be_in_future": "Date must be in future",
     "required_field": "Required field"
   },
   "files_and_license": {
