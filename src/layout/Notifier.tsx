@@ -9,10 +9,10 @@ import { NotificationVariant } from '../types/notification.types';
 import { Fade } from '@material-ui/core';
 
 const autoHideDuration = {
-  [NotificationVariant.Error]: null,
+  [NotificationVariant.Error]: 6000,
   [NotificationVariant.Info]: 3000,
   [NotificationVariant.Success]: 3000,
-  [NotificationVariant.Warning]: null,
+  [NotificationVariant.Warning]: 6000,
 };
 
 const Notifier: React.FC = () => {
