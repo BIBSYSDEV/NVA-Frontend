@@ -24,7 +24,7 @@ const SubmissionDescription: React.FC = () => {
       <LabelContentRow label={t('description.description')}>{description}</LabelContentRow>
       <LabelContentRow label={t('description.npi_disciplines')}>
         {mainDiscipline}
-        {`- ${name}`}
+        {name && ` - ${name}`}
       </LabelContentRow>
       <LabelContentRow label={t('description.tags')}>{tags.join(', ')}</LabelContentRow>
       <LabelContentRow label={t('common:language')}>{t(`languages:${language}`)}</LabelContentRow>
