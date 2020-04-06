@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
@@ -21,9 +21,16 @@ const Notifier: React.FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
+  const notificationRef = useRef(notification);
+  useEffect(() => {
+    notificationRef.current = notification;
+  }, [notification]);
+
   useEffect(() => {
     // Remove snackbar when navigating to a different page
-    dispatch(removeNotification());
+    if (notificationRef.current) {
+      dispatch(removeNotification());
+    }
   }, [dispatch, history.location.pathname]);
 
   const handleClose = (_?: React.SyntheticEvent, reason?: string) => {
