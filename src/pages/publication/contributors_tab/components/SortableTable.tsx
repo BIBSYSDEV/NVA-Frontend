@@ -99,17 +99,19 @@ const SortableItem = SortableElement(
             )}
           </div>
 
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() =>
-              setUnverifiedContributor({
-                name: contributor.identity.name,
-                index: index,
-              })
-            }>
-            {t('publication:contributors.connect_author_identity')}
-          </Button>
+          {!contributor.identity.arpId && (
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() =>
+                setUnverifiedContributor({
+                  name: contributor.identity.name,
+                  index: index,
+                })
+              }>
+              {t('publication:contributors.connect_author_identity')}
+            </Button>
+          )}
         </TableCell>
         <TableCell align="left">
           {contributor.affiliations?.map((affiliation) => (
