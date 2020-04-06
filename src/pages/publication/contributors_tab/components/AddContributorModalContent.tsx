@@ -21,6 +21,7 @@ const StyledClickableDiv = styled.div`
   align-items: center;
   background-color: ${({ theme }) => theme.palette.box.main};
   padding-right: 0.5rem;
+  margin-bottom: 0.5rem;
 `;
 
 const StyledButtonContainer = styled.div`
