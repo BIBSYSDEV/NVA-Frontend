@@ -36,6 +36,10 @@ const StyledAddAuthorButton = styled(Button)`
   margin-top: 1rem;
 `;
 
+const StyledEmailTextField = styled(TextField)`
+  margin-bottom: 0.5rem;
+`;
+
 interface UnverifiedContributor {
   name: string;
   index: number;
@@ -71,45 +75,41 @@ const SortableItem = SortableElement(
             )}
           </SubHeading>
 
-          {contributor.identity.arpId ? (
-            <>
-              <Field name={`${baseFieldName}.${SpecificContributorFieldNames.CORRESPONDING}`}>
-                {({ field }: FieldProps) => (
-                  <FormControlLabel
-                    control={<Checkbox checked={field.value} {...field} />}
-                    label={t('publication:contributors.corresponding')}
+          <Field name={`${baseFieldName}.${SpecificContributorFieldNames.CORRESPONDING}`}>
+            {({ field }: FieldProps) => (
+              <FormControlLabel
+                control={<Checkbox checked={field.value} {...field} />}
+                label={t('publication:contributors.corresponding')}
+              />
+            )}
+          </Field>
+          <div>
+            {contributor.corresponding && (
+              <Field name={`${baseFieldName}.${SpecificContributorFieldNames.EMAIL}`}>
+                {({ field, meta: { error, touched } }: FieldProps) => (
+                  <StyledEmailTextField
+                    variant="outlined"
+                    label={t('common:email')}
+                    {...field}
+                    error={touched && !!error}
+                    helperText={touched && error}
                   />
                 )}
               </Field>
-              <div>
-                {contributor.corresponding && (
-                  <Field name={`${baseFieldName}.${SpecificContributorFieldNames.EMAIL}`}>
-                    {({ field, meta: { error, touched } }: FieldProps) => (
-                      <TextField
-                        variant="outlined"
-                        label={t('common:email')}
-                        {...field}
-                        error={touched && !!error}
-                        helperText={touched && error}
-                      />
-                    )}
-                  </Field>
-                )}
-              </div>
-            </>
-          ) : (
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={() =>
-                setUnverifiedContributor({
-                  name: contributor.identity.name,
-                  index: index,
-                })
-              }>
-              {t('publication:contributors.connect_author_identity')}
-            </Button>
-          )}
+            )}
+          </div>
+
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() =>
+              setUnverifiedContributor({
+                name: contributor.identity.name,
+                index: index,
+              })
+            }>
+            {t('publication:contributors.connect_author_identity')}
+          </Button>
         </TableCell>
         <TableCell align="left">
           {contributor.affiliations?.map((affiliation) => (
