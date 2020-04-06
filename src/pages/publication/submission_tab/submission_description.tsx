@@ -16,7 +16,8 @@ const SubmissionDescription: React.FC = () => {
     project,
   } = values;
   const { name, mainDiscipline } = getNpiDiscipline(npiSubjectHeading);
-  const languageId = publicationLanguages.find((language2) => language2.value === language)?.id ?? '';
+  const languageId =
+    publicationLanguages.find((publicationLanguage) => publicationLanguage.value === language)?.id ?? '';
 
   return (
     <>
