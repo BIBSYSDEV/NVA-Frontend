@@ -23,7 +23,7 @@ const StyledButtonWrapper = styled.div`
 const AdminMenu: FC = () => {
   const user = useSelector((state: RootStore) => state.user);
   const history = useHistory();
-  const { t } = useTranslation();
+  const { t } = useTranslation('publication');
 
   return user.isPublisher ? (
     <>

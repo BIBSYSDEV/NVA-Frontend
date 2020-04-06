@@ -74,6 +74,7 @@
     "summary": "Summary",
     "validation_errors": "Validation errors"
   },
+  "new_publication": "New publication",
   "publication": {
     "info_text": "Select the resource you wish to register or publish by uploading a resource or link to a publication.",
     "link_publication_description": "E.g. DOI link, link to article, link to video of lecture etc.",
