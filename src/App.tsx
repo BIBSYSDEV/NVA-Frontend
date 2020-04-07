@@ -6,7 +6,7 @@ import { BrowserRouter } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { getAuthorities, AuthorityQualifiers, addQualifierIdForAuthority } from './api/authorityApi';
-import { getCurrentAuthenticatedUser } from './api/userApi';
+import { getCurrentUserAttributes } from './api/userApi';
 import Breadcrumbs from './layout/Breadcrumbs';
 import Footer from './layout/Footer';
 import Header from './layout/header/Header';
@@ -21,6 +21,8 @@ import { API_URL, USE_MOCK_DATA } from './utils/constants';
 import { hubListener } from './utils/hub-listener';
 import { mockUser } from './utils/testfiles/mock_feide_user';
 import AppRoutes from './AppRoutes';
+import { setNotification } from './redux/actions/notificationActions';
+import { NotificationVariant } from './types/notification.types';
 
 const StyledApp = styled.div`
   min-height: 100vh;
@@ -68,8 +70,21 @@ const App: React.FC = () => {
       if (!user.isLoggedIn) {
         Amplify.configure(awsConfig);
       }
-      dispatch(getCurrentAuthenticatedUser());
-      Hub.listen('auth', (data) => hubListener(data, dispatch));
+
+      const getUser = async () => {
+        const currentUser = await getCurrentUserAttributes();
+        if (currentUser && !currentUser.error) {
+          dispatch(setUser(currentUser));
+        } else if (currentUser.error && user.isLoggedIn) {
+          dispatch(setNotification(currentUser.error, NotificationVariant.Error));
+        }
+      };
+      getUser();
+
+      Hub.listen('auth', (data) => {
+        hubListener(data, dispatch);
+      });
+
       return () => Hub.remove('auth', (data) => hubListener(data, dispatch));
     }
   }, [dispatch, user.isLoggedIn]);
