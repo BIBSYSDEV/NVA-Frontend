@@ -18,9 +18,6 @@ describe('Publication: References: Chapter', () => {
 
     cy.get('[data-testid=publication_type-heading]').contains('Chapter');
 
-    // fill out anthologoy-search
-    cy.get('[data-testid=chapter-autosearch-anthology]').should('be.visible');
-
     // fill out number of page-number fields
     cy.get('[data-testid=chapter-pages-from]').type('1');
     cy.get('[data-testid=chapter-pages-to]').type('42');

@@ -47,7 +47,7 @@ const AutoLookup: FC<AutoLookupProps> = ({
         setValueFunction(value);
       }}
       value={displayValue}
-      renderInput={params => (
+      renderInput={(params) => (
         <TextField
           {...params}
           data-testid={dataTestId}
