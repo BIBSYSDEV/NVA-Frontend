@@ -74,6 +74,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     if (USE_MOCK_DATA) {
+      setIsLoadingUser(false);
       user.isLoggedIn && dispatch(setUser(mockUser));
     } else {
       if (!user.isLoggedIn) {
