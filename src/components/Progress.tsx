@@ -11,7 +11,7 @@ const Progress: FC<ProgressProps> = ({ size }) => {
 
   useEffect(() => {
     const tick = () => {
-      setProgress(oldProgress => (oldProgress + 1) % 100);
+      setProgress((oldProgress) => (oldProgress + 1) % 100);
     };
 
     const timer = setInterval(tick, 20);
