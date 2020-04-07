@@ -55,8 +55,8 @@ export const publicationValidationSchema = Yup.object().shape({
     contributors: Yup.array()
       .of(
         Yup.object().shape({
-          corresponding: Yup.boolean(),
-          email: Yup.string().when('corresponding', {
+          correspondingAuthor: Yup.boolean(),
+          email: Yup.string().when('correspondingAuthor', {
             is: true,
             then: Yup.string().email(ErrorMessage.INVALID_FORMAT).required(ErrorMessage.REQUIRED),
           }),

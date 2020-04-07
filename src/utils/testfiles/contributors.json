@@ -13,7 +13,7 @@
       { "id": "2", "name": "BIBSYS" }
     ],
     "orcid": "some orcid",
-    "corresponding": true,
+    "correspondingAuthor": true,
     "email": "en@unit.no",
     "type": "Author",
     "systemControlNumber": "1234321"
@@ -24,7 +24,7 @@
       { "id": "1", "name": "Unit" },
       { "id": "2", "name": "BIBSYS" }
     ],
-    "corresponding": false,
+    "correspondingAuthor": false,
     "type": "Author",
     "email": "pcb@unit.no",
     "systemControlNumber": "2432432"
@@ -32,7 +32,7 @@
   {
     "name": "Sarah Serussi",
     "institutions": [{ "id": "1", "name": "Unit" }],
-    "corresponding": false,
+    "correspondingAuthor": false,
     "type": "Author",
     "email": "sase@unit.no",
     "systemControlNumber": ""
@@ -40,7 +40,7 @@
   {
     "name": "Kjetil Møkkelgjerd",
     "institutions": [],
-    "corresponding": false,
+    "correspondingAuthor": false,
     "type": "Author",
     "email": "",
     "systemControlNumber": "9845784"
@@ -48,7 +48,7 @@
   {
     "name": "Svenn Gjetø",
     "institutions": [{ "id": "1", "name": "Unit" }],
-    "corresponding": false,
+    "correspondingAuthor": false,
     "type": "Editor",
     "email": "",
     "systemControlNumber": "83743746"
@@ -56,7 +56,7 @@
   {
     "name": "Nikolai Fikse Raanes",
     "institutions": [],
-    "corresponding": false,
+    "correspondingAuthor": false,
     "type": "Photographer",
     "email": "",
     "systemControlNumber": ""
