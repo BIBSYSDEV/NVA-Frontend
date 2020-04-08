@@ -38,7 +38,7 @@ const DisciplineSearch: FC<DisciplineSearchProps> = ({ dataTestId, setValueFunct
       options={searchResults}
       groupBy={(discipline) => discipline.mainDiscipline}
       onChange={(_: object, value: NpiDiscipline | null) => setValueFunction(value)}
-      value={value}
+      value={value.id ? value : null}
       getOptionLabel={(option) => option.title || option.name || ''}
       getOptionSelected={(option, value) => value.id === option.id} // TODO: Remove?
       renderInput={(params) => (
