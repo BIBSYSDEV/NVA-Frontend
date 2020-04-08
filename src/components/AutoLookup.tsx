@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC } from 'react';
 import styled from 'styled-components';
 
 import { TextField } from '@material-ui/core';
@@ -17,7 +17,7 @@ interface AutoLookupProps {
   dataTestId?: string;
   groupBy?: (options: any) => string;
   placeholder?: string;
-  value?: string;
+  value?: any;
 }
 
 const AutoLookup: FC<AutoLookupProps> = ({
@@ -29,24 +29,14 @@ const AutoLookup: FC<AutoLookupProps> = ({
   placeholder,
   value,
 }) => {
-  const [displayValue, setDisplayValue] = useState<any>({ title: value });
-
-  useEffect(() => {
-    if (!value) {
-      setDisplayValue({ title: '' });
-    }
-    setDisplayValue({ title: value });
-  }, [value]);
-
   return (
     <Autocomplete
       options={options}
       groupBy={groupBy}
-      getOptionLabel={(option: any) => option.title || ''}
-      onChange={(_: object, value: string | null) => {
-        setValueFunction(value);
-      }}
-      value={displayValue}
+      onChange={(_: object, value: any) => setValueFunction(value)}
+      value={value}
+      getOptionLabel={(option: any) => option.title || option.name || ''}
+      getOptionSelected={(option: any, value) => value.id === option.id}
       renderInput={(params) => (
         <TextField
           {...params}

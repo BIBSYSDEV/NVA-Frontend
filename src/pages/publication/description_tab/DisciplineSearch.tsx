@@ -7,7 +7,7 @@ import disciplines from '../../../resources/disciplines.json';
 interface DisciplineSearchProps {
   dataTestId: string;
   setValueFunction: (value: any) => void;
-  value: string;
+  value: any;
   placeholder?: string;
 }
 
@@ -20,8 +20,8 @@ const DisciplineSearch: FC<DisciplineSearchProps> = ({ dataTestId, setValueFunct
   const { t } = useTranslation();
 
   const searchResults = disciplines
-    .map(mainDiscipline =>
-      mainDiscipline.subdomains.map(subDiscipline => ({
+    .map((mainDiscipline) =>
+      mainDiscipline.subdomains.map((subDiscipline) => ({
         title: t(`disciplines:${subDiscipline.name}`),
         mainDiscipline: t(`disciplines:${mainDiscipline.subjectArea}`),
         id: subDiscipline.id,

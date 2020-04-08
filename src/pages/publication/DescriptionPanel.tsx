@@ -115,7 +115,7 @@ const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublicat
                   <DisciplineSearch
                     setValueFunction={(npiDiscipline) => setFieldValue(name, npiDiscipline?.id ?? '')}
                     dataTestId="search_npi"
-                    value={getNpiDiscipline(value).name}
+                    value={getNpiDiscipline(value)}
                     placeholder={t('description.search_for_npi_discipline')}
                   />
                 )}
