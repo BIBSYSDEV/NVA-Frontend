@@ -46,7 +46,8 @@ export interface AlmaPublication {
 
 export interface NpiDiscipline {
   id: string;
-  name: string;
+  name?: string; // TODO: REMOVE
+  title?: string;
   mainDiscipline: string;
 }
 
