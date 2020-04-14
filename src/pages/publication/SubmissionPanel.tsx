@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import TabPanel from '../../components/TabPanel/TabPanel';
 import { FormikProps, useFormikContext, Field, FieldProps } from 'formik';
 import { FormikPublication } from '../../types/publication.types';
-import { Button, FormControlLabel, Checkbox, Link } from '@material-ui/core';
+import { Button, FormControlLabel, Checkbox } from '@material-ui/core';
 import styled from 'styled-components';
 import SubmissionBook from './submission_tab/submission_book';
 import SubmissionDegree from './submission_tab/submission_degree';
@@ -22,6 +22,7 @@ import { useHistory } from 'react-router';
 import LabelContentRow from '../../components/LabelContentRow';
 import ErrorSummary from './submission_tab/ErrorSummary';
 import { getAllFileFields, getAllContributorFields } from '../../utils/formik-helpers';
+import { DOI_PREFIX } from '../../utils/constants';
 
 const StyledPublishButton = styled(Button)`
   margin-top: 0.5rem;
@@ -79,9 +80,7 @@ const SubmissionPanel: React.FC<SubmissionPanelProps> = ({ savePublication }) =>
           </LabelContentRow>
           {reference.doi && (
             <LabelContentRow label={t('publication.link_to_publication')}>
-              <Link href={reference.doi} target="_blank" rel="noopener noreferrer">
-                {reference.doi}
-              </Link>
+              {`${DOI_PREFIX}${reference.doi}`}
             </LabelContentRow>
           )}
           {publicationType === PublicationType.BOOK && <SubmissionBook />}
