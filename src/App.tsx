@@ -6,7 +6,7 @@ import { BrowserRouter } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { getAuthorities, AuthorityQualifiers, addQualifierIdForAuthority } from './api/authorityApi';
-import { getCurrentAuthenticatedUser } from './api/userApi';
+import { getCurrentUserAttributes } from './api/userApi';
 import Breadcrumbs from './layout/Breadcrumbs';
 import Footer from './layout/Footer';
 import Header from './layout/header/Header';
@@ -20,6 +20,9 @@ import { API_URL, USE_MOCK_DATA } from './utils/constants';
 import { hubListener } from './utils/hub-listener';
 import { mockUser } from './utils/testfiles/mock_feide_user';
 import AppRoutes from './AppRoutes';
+import { setNotification } from './redux/actions/notificationActions';
+import { NotificationVariant } from './types/notification.types';
+import Progress from './components/Progress';
 
 const StyledApp = styled.div`
   min-height: 100vh;
@@ -35,6 +38,13 @@ const StyledContent = styled.div`
   max-width: ${({ theme }) => theme.breakpoints.values.lg + 'px'};
   align-items: center;
   flex-grow: 1;
+`;
+
+const ProgressContainer = styled.div`
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const App: React.FC = () => {
@@ -59,16 +69,32 @@ const App: React.FC = () => {
   // Authority/Orcid modal should always be opened on first login
   const [showAuthorityOrcidModal, setShowAuthorityOrcidModal] = useState(!localStorage.getItem('previouslyLoggedIn'));
   const [loadingAuthority, setLoadingAuthority] = useState(true);
+  const [isLoadingUser, setIsLoadingUser] = useState(true);
 
   useEffect(() => {
     if (USE_MOCK_DATA) {
+      setIsLoadingUser(false);
       user.isLoggedIn && dispatch(setUser(mockUser));
     } else {
       if (!user.isLoggedIn) {
         Amplify.configure(awsConfig);
       }
-      dispatch(getCurrentAuthenticatedUser());
-      Hub.listen('auth', (data) => hubListener(data, dispatch));
+
+      const getUser = async () => {
+        const currentUser = await getCurrentUserAttributes();
+        if (currentUser && !currentUser.error) {
+          dispatch(setUser(currentUser));
+        } else if (currentUser.error && user.isLoggedIn) {
+          dispatch(setNotification(currentUser.error, NotificationVariant.Error));
+        }
+        setIsLoadingUser(false);
+      };
+      getUser();
+
+      Hub.listen('auth', (data) => {
+        hubListener(data, dispatch);
+      });
+
       return () => Hub.remove('auth', (data) => hubListener(data, dispatch));
     }
   }, [dispatch, user.isLoggedIn]);
@@ -103,7 +129,11 @@ const App: React.FC = () => {
     }
   }, [dispatch, user.name, user.id, user.organizationId]);
 
-  return (
+  return isLoadingUser ? (
+    <ProgressContainer>
+      <Progress />
+    </ProgressContainer>
+  ) : (
     <BrowserRouter>
       <StyledApp>
         <Notifier />
