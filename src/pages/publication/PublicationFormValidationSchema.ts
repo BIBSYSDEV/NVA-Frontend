@@ -97,7 +97,7 @@ export const publicationValidationSchema = Yup.object().shape({
         .nullable()
         .shape({
           name: Yup.string(),
-          level: Yup.number(),
+          level: Yup.mixed(), // TODO: Set correct type when backend is ready
           openAccess: Yup.boolean(),
         })
         .required(ErrorMessage.REQUIRED),
