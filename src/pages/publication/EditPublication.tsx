@@ -98,7 +98,7 @@ const EditPublication: FC = () => {
           </StyledEditPublication>
           {/* temporary button so that we can navigate to schema */}
           <StyledButton color="primary" variant="contained" data-testid="new-schema-button" onClick={handleClick}>
-            {t('new_publication')}
+            {t('publication:new_publication')}
           </StyledButton>
         </>
       ) : (

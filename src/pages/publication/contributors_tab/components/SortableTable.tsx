@@ -36,6 +36,10 @@ const StyledAddAuthorButton = styled(Button)`
   margin-top: 1rem;
 `;
 
+const StyledEmailTextField = styled(TextField)`
+  margin-bottom: 0.5rem;
+`;
+
 interface UnverifiedContributor {
   name: string;
   index: number;
@@ -71,33 +75,31 @@ const SortableItem = SortableElement(
             )}
           </SubHeading>
 
-          {contributor.identity.arpId ? (
-            <>
-              <Field name={`${baseFieldName}.${SpecificContributorFieldNames.CORRESPONDING}`}>
-                {({ field }: FieldProps) => (
-                  <FormControlLabel
-                    control={<Checkbox checked={field.value} {...field} />}
-                    label={t('publication:contributors.corresponding')}
+          <Field name={`${baseFieldName}.${SpecificContributorFieldNames.CORRESPONDING}`}>
+            {({ field }: FieldProps) => (
+              <FormControlLabel
+                control={<Checkbox checked={field.value} {...field} />}
+                label={t('publication:contributors.corresponding')}
+              />
+            )}
+          </Field>
+          <div>
+            {contributor.correspondingAuthor && (
+              <Field name={`${baseFieldName}.${SpecificContributorFieldNames.EMAIL}`}>
+                {({ field, meta: { error, touched } }: FieldProps) => (
+                  <StyledEmailTextField
+                    variant="outlined"
+                    label={t('common:email')}
+                    {...field}
+                    error={touched && !!error}
+                    helperText={touched && error}
                   />
                 )}
               </Field>
-              <div>
-                {contributor.corresponding && (
-                  <Field name={`${baseFieldName}.${SpecificContributorFieldNames.EMAIL}`}>
-                    {({ field, meta: { error, touched } }: FieldProps) => (
-                      <TextField
-                        variant="outlined"
-                        label={t('common:email')}
-                        {...field}
-                        error={touched && !!error}
-                        helperText={touched && error}
-                      />
-                    )}
-                  </Field>
-                )}
-              </div>
-            </>
-          ) : (
+            )}
+          </div>
+
+          {!contributor.identity.arpId && (
             <Button
               variant="contained"
               color="primary"

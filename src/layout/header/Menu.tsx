@@ -82,6 +82,12 @@ const Menu: React.FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
         </StyledMenuItem>
 
         {user.isPublisher && (
+          <StyledMenuItem data-testid="menu-new-publication-button" onClick={() => handleClickMenuItem('/publication')}>
+            {t('publication:new_publication')}
+          </StyledMenuItem>
+        )}
+
+        {user.isPublisher && (
           <StyledMenuItem
             data-testid="menu-my-publications-button"
             onClick={() => handleClickMenuItem('/my-publications')}>

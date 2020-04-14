@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
@@ -7,17 +7,31 @@ import { removeNotification } from '../redux/actions/notificationActions';
 import { RootStore } from '../redux/reducers/rootReducer';
 import { NotificationVariant } from '../types/notification.types';
 import { Fade } from '@material-ui/core';
+import { useHistory } from 'react-router';
 
 const autoHideDuration = {
-  [NotificationVariant.Error]: null,
+  [NotificationVariant.Error]: 6000,
   [NotificationVariant.Info]: 3000,
   [NotificationVariant.Success]: 3000,
-  [NotificationVariant.Warning]: null,
+  [NotificationVariant.Warning]: 6000,
 };
 
 const Notifier: React.FC = () => {
   const notification = useSelector((store: RootStore) => store.notification);
   const dispatch = useDispatch();
+  const history = useHistory();
+
+  const notificationRef = useRef(notification);
+  useEffect(() => {
+    notificationRef.current = notification;
+  }, [notification]);
+
+  useEffect(() => {
+    // Remove snackbar when navigating to a different page
+    if (notificationRef.current) {
+      dispatch(removeNotification());
+    }
+  }, [dispatch, history.location.pathname]);
 
   const handleClose = (_?: React.SyntheticEvent, reason?: string) => {
     if (reason === 'clickaway') {

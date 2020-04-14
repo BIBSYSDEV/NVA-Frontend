@@ -1,5 +1,5 @@
 describe('Snackbar', () => {
-  beforeEach(() => {
+  before(() => {
     cy.server();
     cy.visit('/');
   });
