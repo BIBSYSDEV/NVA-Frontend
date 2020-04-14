@@ -14,6 +14,7 @@ const ErrorMessage = {
   MISSING_CONTRIBUTOR: i18n.t('publication:feedback.minimum_one_contributor'),
   MISSING_FILE: i18n.t('publication:feedback.minimum_one_file'),
   INVALID_FORMAT: i18n.t('publication:feedback.invalid_format'),
+  MUST_BE_FUTURE: i18n.t('publication:feedback.date_must_be_in_future'),
 };
 
 export const publicationValidationSchema = Yup.object().shape({
@@ -111,7 +112,10 @@ export const publicationValidationSchema = Yup.object().shape({
             .nullable()
             .when('administrativeAgreement', {
               is: false,
-              then: Yup.date().nullable().min(new Date()).required(ErrorMessage.REQUIRED),
+              then: Yup.date()
+                .nullable()
+                .min(new Date(), ErrorMessage.MUST_BE_FUTURE)
+                .typeError(ErrorMessage.INVALID_FORMAT),
             }),
           publisherAuthority: Yup.boolean()
             .nullable()
