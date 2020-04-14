@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
 import { Field, FieldProps } from 'formik';
 import PublicationChannelSearch from './PublicationChannelSearch';
-import { emptyPublisher } from '../../../../types/publication.types';
 import { PublicationTableNumber } from '../../../../utils/constants';
 import PublisherRow from './PublisherRow';
 
@@ -19,33 +18,31 @@ const PublisherField: FC<PublisherFieldProps> = ({
   placeholder,
 }) => {
   return (
-    <>
-      <Field name={fieldName}>
-        {({ field: { name, value }, form: { setFieldValue }, meta: { error, touched } }: FieldProps) => (
-          <>
-            <PublicationChannelSearch
-              clearSearchField={value === emptyPublisher}
-              dataTestId="autosearch-publisher"
+    <Field name={fieldName}>
+      {({ field: { name, value }, form: { setFieldValue }, meta: { error, touched } }: FieldProps) => (
+        <>
+          <PublicationChannelSearch
+            clearSearchField={value === null}
+            dataTestId="autosearch-publisher"
+            label={label}
+            publicationTable={publicationTable}
+            setValueFunction={
+              (inputValue) => setFieldValue(name, { ...inputValue, type: 'PublicationContext' }) //TODO: remove type when fixed in backend
+            }
+            placeholder={placeholder}
+            errorMessage={touched ? error : ''}
+          />
+          {value && (
+            <PublisherRow
+              dataTestId="autosearch-results-publisher"
+              publisher={value}
               label={label}
-              publicationTable={publicationTable}
-              setValueFunction={
-                (inputValue) => setFieldValue(name, { ...inputValue, type: 'PublicationContext' } ?? emptyPublisher) //TODO: remove type when fixed in backend
-              }
-              placeholder={placeholder}
-              errorMessage={touched && !value ? error : ''}
+              onClickDelete={() => setFieldValue(name, null)}
             />
-            {value && (
-              <PublisherRow
-                dataTestId="autosearch-results-publisher"
-                publisher={value}
-                label={label}
-                onClickDelete={() => setFieldValue(name, emptyPublisher)}
-              />
-            )}
-          </>
-        )}
-      </Field>
-    </>
+          )}
+        </>
+      )}
+    </Field>
   );
 };
 

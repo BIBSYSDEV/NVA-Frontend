@@ -36,6 +36,7 @@
     "invalid_url": "Ugyldig lenke",
     "minimum_one_contributor": "Du må ha minst en forfatter på denne publikasjonen",
     "minimum_one_file": "Du må laste opp minst en fil for denne publikasjonen",
+    "date_must_be_in_future": "Dato må være i fremtiden",
     "required_field": "Påkrevd felt"
   },
   "files_and_license": {
@@ -74,6 +75,7 @@
     "summary": "Oppsummering",
     "validation_errors": "Valideringsfeil"
   },
+  "new_publication": "Ny publikasjon",
   "publication": {
     "info_text": "Velg ressursen du ønsker å registrere eller publisere ved å laste opp ressurs eller lenke til en publikasjon.",
     "link_publication_description": "Feks. DOI lenke, lenke til artikkel, lenke til video av foredrag etc.",
