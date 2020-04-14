@@ -17,7 +17,6 @@ import ChipInput from 'material-ui-chip-input';
 import { publicationLanguages } from '../../types/language.types';
 import Heading from '../../components/Heading';
 import Card from '../../components/Card';
-import { getNpiDiscipline } from '../../utils/npiDisciplines';
 import { DescriptionFieldNames } from '../../types/publicationFieldNames';
 import { emptyProject } from '../../types/project.types';
 
@@ -115,7 +114,7 @@ const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublicat
                   <DisciplineSearch
                     setValueFunction={(npiDiscipline) => setFieldValue(name, npiDiscipline?.id ?? '')}
                     dataTestId="search_npi"
-                    value={getNpiDiscipline(value)}
+                    value={value}
                     placeholder={t('description.search_for_npi_discipline')}
                   />
                 )}

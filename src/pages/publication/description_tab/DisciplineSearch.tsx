@@ -5,8 +5,8 @@ import { TextField } from '@material-ui/core';
 import styled from 'styled-components';
 import SearchIcon from '@material-ui/icons/Search';
 
-import disciplines from '../../../resources/disciplines.json';
 import { NpiDiscipline } from '../../../types/publication.types';
+import { disciplineOptions, getNpiDiscipline } from '../../../utils/npiDisciplines';
 
 const StyledSearchIcon = styled(SearchIcon)`
   margin-left: 0.5rem;
@@ -23,24 +23,13 @@ interface DisciplineSearchProps {
 const DisciplineSearch: FC<DisciplineSearchProps> = ({ dataTestId, setValueFunction, value, placeholder }) => {
   const { t } = useTranslation();
 
-  const searchResults: NpiDiscipline[] = disciplines
-    .map((mainDiscipline) =>
-      mainDiscipline.subdomains.map((subDiscipline) => ({
-        title: t(`disciplines:${subDiscipline.name}`),
-        mainDiscipline: t(`disciplines:${mainDiscipline.subjectArea}`),
-        id: subDiscipline.id,
-      }))
-    )
-    .flat();
-
   return (
     <Autocomplete
-      options={searchResults}
+      options={disciplineOptions}
       groupBy={(discipline) => discipline.mainDiscipline}
       onChange={(_: object, value: NpiDiscipline | null) => setValueFunction(value)}
-      value={value.id ? value : null}
-      getOptionLabel={(option) => option.title || option.name || ''}
-      getOptionSelected={(option, value) => value.id === option.id} // TODO: Remove?
+      value={getNpiDiscipline(value)}
+      getOptionLabel={(option) => option.name}
       renderInput={(params) => (
         <TextField
           {...params}
