@@ -11,7 +11,6 @@ import Breadcrumbs from './layout/Breadcrumbs';
 import Footer from './layout/Footer';
 import Header from './layout/header/Header';
 import Notifier from './layout/Notifier';
-import AdminMenu from './pages/dashboard/AdminMenu';
 import AuthorityOrcidModal from './pages/user/authority/AuthorityOrcidModal';
 import { setAuthorityData, setPossibleAuthorities, setUser } from './redux/actions/userActions';
 import { RootStore } from './redux/reducers/rootReducer';
@@ -109,7 +108,6 @@ const App: React.FC = () => {
       <StyledApp>
         <Notifier />
         <Header />
-        <AdminMenu />
         <Breadcrumbs />
         <StyledContent>
           <AppRoutes />
