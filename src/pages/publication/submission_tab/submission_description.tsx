@@ -3,7 +3,6 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormikProps, useFormikContext } from 'formik';
 import { FormikPublication } from '../../../types/publication.types';
-import SubmissionContentText from './submission_content_text';
 import { getNpiDiscipline } from '../../../utils/npiDisciplines';
 import { publicationLanguages } from '../../../types/language.types';
 
@@ -35,9 +34,7 @@ const SubmissionDescription: React.FC = () => {
         {date.month && `-${date.month}`}
         {date.day && `-${date.day}`}
       </LabelContentRow>
-      <LabelContentRow label={t('description.project_association')}>
-        {project && <SubmissionContentText key={project.id}>{project.name}</SubmissionContentText>}
-      </LabelContentRow>
+      <LabelContentRow label={t('description.project_association')}>{project?.name}</LabelContentRow>
     </>
   );
 };
