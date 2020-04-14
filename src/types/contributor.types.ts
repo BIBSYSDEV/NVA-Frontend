@@ -13,7 +13,7 @@ enum ContributorIdentityType {
 
 export interface Contributor {
   affiliations: Institution[];
-  corresponding?: boolean;
+  correspondingAuthor?: boolean;
   email?: string;
   identity: {
     id?: string;
@@ -35,7 +35,7 @@ interface Institution {
 
 export const emptyContributor: Contributor = {
   affiliations: [],
-  corresponding: false,
+  correspondingAuthor: false,
   email: '',
   identity: {
     name: '',

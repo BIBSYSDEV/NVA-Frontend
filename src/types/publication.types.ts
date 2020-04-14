@@ -50,22 +50,10 @@ export interface NpiDiscipline {
   mainDiscipline: string;
 }
 
-export interface NpiSubject {
-  id: string;
-  subjectArea: string;
-  subdomains: NpiSubdomain[];
-}
-
-export interface NpiSubdomain {
+interface NpiSubdomain {
   id: string;
   name: string;
 }
-
-export const emptyNpiDiscipline: NpiDiscipline = {
-  id: '',
-  name: '',
-  mainDiscipline: '',
-};
 
 export interface Publication {
   readonly identifier: string;

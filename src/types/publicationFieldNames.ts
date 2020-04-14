@@ -83,7 +83,7 @@ export enum ContributorFieldNames {
 // The following fields should be present in "entityDescription.contributors[index].<KEY>"
 export enum SpecificContributorFieldNames {
   AFFILIATIONS = 'affiliations', // TODO
-  CORRESPONDING = 'corresponding',
+  CORRESPONDING = 'correspondingAuthor',
   EMAIL = 'email',
   ROLE = 'role', // TODO
   SEQUENCE = 'sequence',

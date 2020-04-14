@@ -4,7 +4,7 @@
       "institutions": [],
       "type": "",
       "orcid": "",
-      "corresponding": true,
+      "correspondingAuthor": true,
       "email": "test@test.no",
       "identity": {
         "id": "901790000000",
@@ -15,7 +15,7 @@
       "institutions": [],
       "type": "",
       "orcid": "",
-      "corresponding": false,
+      "correspondingAuthor": false,
       "email": "",
       "identity": {
         "id": "901790000001",
