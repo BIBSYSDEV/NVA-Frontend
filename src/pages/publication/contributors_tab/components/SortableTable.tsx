@@ -84,7 +84,7 @@ const SortableItem = SortableElement(
             )}
           </Field>
           <div>
-            {contributor.corresponding && (
+            {contributor.correspondingAuthor && (
               <Field name={`${baseFieldName}.${SpecificContributorFieldNames.EMAIL}`}>
                 {({ field, meta: { error, touched } }: FieldProps) => (
                   <StyledEmailTextField

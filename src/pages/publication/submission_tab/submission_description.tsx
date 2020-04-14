@@ -5,6 +5,7 @@ import { FormikProps, useFormikContext } from 'formik';
 import { FormikPublication } from '../../../types/publication.types';
 import SubmissionContentText from './submission_content_text';
 import { getNpiDiscipline } from '../../../utils/npiDisciplines';
+import { publicationLanguages } from '../../../types/language.types';
 
 const SubmissionDescription: React.FC = () => {
   const { t } = useTranslation('publication');
@@ -14,8 +15,9 @@ const SubmissionDescription: React.FC = () => {
     entityDescription: { mainTitle, abstract, description, npiSubjectHeading, tags, date, language },
     project,
   } = values;
-
   const { name, mainDiscipline } = getNpiDiscipline(npiSubjectHeading);
+  const languageId =
+    publicationLanguages.find((publicationLanguage) => publicationLanguage.value === language)?.id ?? '';
 
   return (
     <>
@@ -24,10 +26,10 @@ const SubmissionDescription: React.FC = () => {
       <LabelContentRow label={t('description.description')}>{description}</LabelContentRow>
       <LabelContentRow label={t('description.npi_disciplines')}>
         {mainDiscipline}
-        {`- ${name}`}
+        {name && ` - ${name}`}
       </LabelContentRow>
       <LabelContentRow label={t('description.tags')}>{tags.join(', ')}</LabelContentRow>
-      <LabelContentRow label={t('common:language')}>{t(`languages:${language}`)}</LabelContentRow>
+      <LabelContentRow label={t('common:language')}>{t(`languages:${languageId}`)}</LabelContentRow>
       <LabelContentRow label={t('description.date_published')}>
         {date.year}
         {date.month && `-${date.month}`}
