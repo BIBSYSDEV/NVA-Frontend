@@ -22,6 +22,7 @@ import { useHistory } from 'react-router';
 import LabelContentRow from '../../components/LabelContentRow';
 import ErrorSummary from './submission_tab/ErrorSummary';
 import { getAllFileFields, getAllContributorFields } from '../../utils/formik-helpers';
+import { DOI_PREFIX } from '../../utils/constants';
 
 const StyledPublishButton = styled(Button)`
   margin-top: 0.5rem;
@@ -79,7 +80,7 @@ const SubmissionPanel: React.FC<SubmissionPanelProps> = ({ savePublication }) =>
           </LabelContentRow>
           {reference.doi && (
             <LabelContentRow label={t('publication.link_to_publication')}>
-              {`https://www.doi.org/${reference.doi}`}
+              {`${DOI_PREFIX}${reference.doi}`}
             </LabelContentRow>
           )}
           {publicationType === PublicationType.BOOK && <SubmissionBook />}
