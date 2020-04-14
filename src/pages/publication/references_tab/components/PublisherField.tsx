@@ -32,7 +32,7 @@ const PublisherField: FC<PublisherFieldProps> = ({
                 (inputValue) => setFieldValue(name, { ...inputValue, type: 'PublicationContext' } ?? emptyPublisher) //TODO: remove type when fixed in backend
               }
               placeholder={placeholder}
-              errorMessage={touched ? error : ''}
+              errorMessage={touched && !value ? error : ''}
             />
             {value && (
               <PublisherRow
