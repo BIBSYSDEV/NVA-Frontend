@@ -8,7 +8,8 @@ describe('Publication: Contributors', () => {
     cy.mocklogin();
 
     // navigate to Contributors (update this when functionality for starting a registration is done)
-    cy.get('[data-testid=new-publication-button]').click({ force: true });
+    cy.get('[data-testid=menu]').click({ force: true });
+    cy.get('[data-testid=menu-new-publication-button]').click({ force: true });
     cy.get('[data-testid=new-schema-button]').click({ force: true });
     cy.get('[data-testid=nav-tabpanel-contributors]').click({ force: true });
 

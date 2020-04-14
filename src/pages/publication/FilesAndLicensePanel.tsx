@@ -35,9 +35,10 @@ const StyledLicenseDescription = styled.article`
 interface FilesAndLicensePanelProps {
   goToNextTab: (event: React.MouseEvent<any>) => void;
   uppy: Uppy;
+  savePublication: () => void;
 }
 
-const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab, uppy }) => {
+const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab, uppy, savePublication }) => {
   const { t } = useTranslation('publication');
   const { values, setFieldTouched }: FormikProps<FormikPublication> = useFormikContext();
   const [isLicenseModalOpen, setIsLicenseModalOpen] = useState(false);
@@ -68,7 +69,7 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab
   };
 
   return (
-    <TabPanel ariaLabel="files and license" goToNextTab={goToNextTab}>
+    <TabPanel ariaLabel="files and license" goToNextTab={goToNextTab} onClickSave={savePublication}>
       {publicationContext && <PublicationChannelInfoCard publisher={publicationContext} />}
 
       <FieldArray name={FileFieldNames.FILES}>
