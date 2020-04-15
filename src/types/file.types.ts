@@ -89,6 +89,7 @@ export interface File {
 }
 
 export const emptyFile: File = {
+  type: 'File',
   identifier: '',
   name: '',
   size: 0,
