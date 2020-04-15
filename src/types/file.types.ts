@@ -85,11 +85,11 @@ export interface File {
   publisherAuthority: boolean;
   embargoDate: Date | null;
   license: License | null;
-  preview?: string;
   type?: string; // TODO: remove this when fixed in backend
 }
 
 export const emptyFile: File = {
+  type: 'File',
   identifier: '',
   name: '',
   size: 0,
@@ -98,7 +98,6 @@ export const emptyFile: File = {
   publisherAuthority: false,
   embargoDate: null,
   license: null,
-  preview: '',
 };
 
 export interface Uppy extends UppyType<StrictTypes> {
