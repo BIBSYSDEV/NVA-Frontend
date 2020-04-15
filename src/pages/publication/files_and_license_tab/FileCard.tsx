@@ -7,7 +7,6 @@ import {
   FormControlLabel,
   FormLabel,
   IconButton,
-  Link,
   ListItemText,
   MenuItem,
   Radio,
@@ -30,10 +29,6 @@ import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 
 const StyledDescription = styled.div`
   font-style: italic;
-`;
-
-const StyledPreview = styled(Link)`
-  margin-right: 1rem;
 `;
 
 const StyledFormControl = styled(FormControl)`
@@ -172,7 +167,11 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, toggleLicenseModa
                         helperText={<ErrorMessage name={field.name} />}
                         label={t('files_and_license.license')}
                         onChange={({ target: { value } }) =>
-                          setFieldValue(field.name, { identifier: value as LicenseNames, labels: { nb: value } })
+                          setFieldValue(field.name, {
+                            type: 'License',
+                            identifier: value as LicenseNames,
+                            labels: { nb: value },
+                          })
                         }>
                         {licenses.map((license) => (
                           <MenuItem key={license.identifier} value={license.identifier} divider dense>
@@ -198,13 +197,6 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, toggleLicenseModa
       )}
 
       <StyledActions>
-        {file.preview && (
-          <StyledPreview href={file.preview} target="_blank">
-            <Button color="primary" variant="contained">
-              {t('common:preview')}
-            </Button>
-          </StyledPreview>
-        )}
         <Button variant="contained" color="secondary" onClick={removeFile}>
           <DeleteIcon />
           {t('common:remove')}
