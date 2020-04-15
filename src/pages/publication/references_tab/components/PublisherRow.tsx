@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import { Button } from '@material-ui/core';
 
-import { Publisher } from '../../../../types/publication.types';
+import { Publisher, levelMap } from '../../../../types/publication.types';
 import Label from '../../../../components/Label';
 
 const StyledPublisherRow = styled.div`
@@ -50,12 +50,15 @@ interface PublisherRowProps {
 const PublisherRow: React.FC<PublisherRowProps> = ({ dataTestId, publisher, label, onClickDelete }) => {
   const { t } = useTranslation('publication');
 
+  const { level, title } = publisher;
+  const publisherLevel = typeof level === 'string' ? levelMap[level] : level;
+
   return (
     <StyledPublisherRow data-testid={dataTestId}>
       <StyledTitle>{label}</StyledTitle>
       <StyledLevelLabel>{t('references.level')}</StyledLevelLabel>
-      <StyledTitleText>{publisher.title}</StyledTitleText>
-      <StyledLevelText>{publisher.level}</StyledLevelText>
+      <StyledTitleText>{title}</StyledTitleText>
+      <StyledLevelText>{publisherLevel}</StyledLevelText>
       <StyledButton variant="contained" color="secondary" onClick={onClickDelete}>
         {t('common:remove')}
       </StyledButton>
