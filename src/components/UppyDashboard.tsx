@@ -41,6 +41,10 @@ const UppyDashboard: React.FC<FileUploaderProps> = ({ uppy, shouldAllowMultipleF
             dropHint: shouldAllowMultipleFiles
               ? t('files_and_license.drop_here')
               : t('files_and_license.drop_single_file_here'),
+            uploadXFiles: {
+              0: t('files_and_license.upload_one_file'),
+              1: t('files_and_license.upload_x_files'),
+            },
           },
         }}
       />
