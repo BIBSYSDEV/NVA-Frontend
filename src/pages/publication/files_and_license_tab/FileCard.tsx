@@ -167,7 +167,11 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, toggleLicenseModa
                         helperText={<ErrorMessage name={field.name} />}
                         label={t('files_and_license.license')}
                         onChange={({ target: { value } }) =>
-                          setFieldValue(field.name, { identifier: value as LicenseNames, labels: { nb: value } })
+                          setFieldValue(field.name, {
+                            type: 'License',
+                            identifier: value as LicenseNames,
+                            labels: { nb: value },
+                          })
                         }>
                         {licenses.map((license) => (
                           <MenuItem key={license.identifier} value={license.identifier} divider dense>
