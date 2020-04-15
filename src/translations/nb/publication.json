@@ -61,6 +61,8 @@
     "select_version": "Velg versjon",
     "title": "Filnavn",
     "upload_files": "Last opp filer",
+    "upload_one_file": "Last opp %{smart_count} fil",
+    "upload_x_files": "Last opp %{smart_count} filer",
     "uploaded_size": "Lastet opp {{size}} kB"
   },
   "heading": {
