@@ -3,12 +3,20 @@ import { FileSet } from './file.types';
 import { LanguageValues } from './language.types';
 import { Project } from './project.types';
 import { PublicationType, JournalArticleType, ReportType, DegreeType, BookType } from './publicationFieldNames';
+import { EnumDictionary } from './common.types';
 
 export enum PublicationStatus {
   DRAFT = 'draft',
   REJECTED = 'rejected',
   PUBLISHED = 'published',
 }
+
+export const levelMap: EnumDictionary<string, number | null> = {
+  NO_LEVEL: null,
+  LEVEL_0: 0,
+  LEVEL_1: 1,
+  LEVEL_2: 2,
+};
 
 interface TitleType {
   [key: string]: string;
@@ -28,7 +36,7 @@ export interface Publisher {
   title: string;
   printIssn: string;
   onlineIssn: string;
-  level: number | null;
+  level: string | number | null;
   openAccess: boolean;
 }
 
