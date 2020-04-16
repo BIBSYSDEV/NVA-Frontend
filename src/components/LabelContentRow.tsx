@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import styled from 'styled-components';
 import NormalText from './NormalText';
 
@@ -33,13 +33,7 @@ interface LabelContentRowProps {
   multiple?: boolean;
 }
 
-const LabelContentRow: React.FC<LabelContentRowProps> = ({
-  label,
-  children,
-  dataTestId,
-  multiple,
-  minimal = false,
-}) => (
+const LabelContentRow: FC<LabelContentRowProps> = ({ label, children, dataTestId, multiple, minimal = false }) => (
   <StyledRow data-testid={dataTestId}>
     <StyledLabel minimal={minimal}>{label}</StyledLabel>
     {multiple ? (
