@@ -15,7 +15,7 @@ import Card from '../../components/Card';
 import Heading from '../../components/Heading';
 import SelectTypeField from './references_tab/components/SelectTypeField';
 
-const StyledBox = styled.div`
+const StyledCard = styled(Card)`
   margin-top: 1rem;
 `;
 
@@ -55,16 +55,14 @@ const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, savePubl
       </StyledSelectContainer>
 
       {publicationType && (
-        <StyledBox>
-          <Card>
-            <Heading data-testid="publication_type-heading">{t(`publicationTypes:${publicationType}`)}</Heading>
-            {publicationType === PublicationType.BOOK && <BookForm />}
-            {publicationType === PublicationType.CHAPTER && <ChapterForm />}
-            {publicationType === PublicationType.REPORT && <ReportForm />}
-            {publicationType === PublicationType.DEGREE && <DegreeForm />}
-            {publicationType === PublicationType.PUBLICATION_IN_JOURNAL && <JournalArticleForm />}
-          </Card>
-        </StyledBox>
+        <StyledCard>
+          <Heading data-testid="publication_type-heading">{t(`publicationTypes:${publicationType}`)}</Heading>
+          {publicationType === PublicationType.BOOK && <BookForm />}
+          {publicationType === PublicationType.CHAPTER && <ChapterForm />}
+          {publicationType === PublicationType.REPORT && <ReportForm />}
+          {publicationType === PublicationType.DEGREE && <DegreeForm />}
+          {publicationType === PublicationType.PUBLICATION_IN_JOURNAL && <JournalArticleForm />}
+        </StyledCard>
       )}
     </TabPanel>
   );
