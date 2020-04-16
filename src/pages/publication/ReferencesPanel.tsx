@@ -48,7 +48,7 @@ const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, savePubl
           onChangeExtension={() => {
             // Reset specific values when changing publicationType
             setFieldValue(ReferenceFieldNames.SUB_TYPE, '');
-            setFieldValue(ReferenceFieldNames.PUBLISHER, null);
+            setFieldValue(ReferenceFieldNames.PUBLICATION_CONTEXT, null);
             Object.values(ReferenceFieldNames).forEach((fieldName) => setFieldTouched(fieldName, false));
           }}
         />
