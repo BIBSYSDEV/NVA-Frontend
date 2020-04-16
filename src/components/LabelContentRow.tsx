@@ -9,7 +9,7 @@ const StyledRow = styled.div`
   font-size: 0.8rem;
 `;
 
-const StyledLabel = styled(NormalText)<{ minimal: boolean }>`
+const StyledLabel = styled(({ minimal: boolean, ...props }) => <NormalText {...props} />)`
   display: inline-block;
   font-weight: bold;
   ${({ minimal }) => (minimal ? `padding-right: 1rem;` : `min-width: 17rem;`)}
