@@ -33,6 +33,7 @@ export interface PublicationMetadata {
 }
 
 export interface Publisher {
+  type?: string;
   title: string;
   printIssn: string;
   onlineIssn: string;
@@ -56,11 +57,6 @@ export interface NpiDiscipline {
   id: string;
   name: string;
   mainDiscipline: string;
-}
-
-interface NpiSubdomain {
-  id: string;
-  name: string;
 }
 
 export interface Publication {

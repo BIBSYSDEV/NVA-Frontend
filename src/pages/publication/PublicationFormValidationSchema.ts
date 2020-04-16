@@ -65,12 +65,6 @@ export const publicationValidationSchema = Yup.object().shape({
         })
       )
       .min(1, ErrorMessage.MISSING_CONTRIBUTOR),
-    publisher: Yup.object()
-      .nullable()
-      .shape({
-        title: Yup.string(),
-      })
-      .required(ErrorMessage.REQUIRED),
     peerReview: Yup.boolean().when('publicationSubtype', {
       is: (subtype) =>
         [PublicationType.PUBLICATION_IN_JOURNAL, PublicationType.BOOK, PublicationType.REPORT].includes(subtype),

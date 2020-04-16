@@ -1,5 +1,5 @@
 import { FormikProps, useFormikContext } from 'formik';
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
@@ -33,17 +33,10 @@ const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, savePubl
   const { values, setFieldTouched, setFieldValue }: FormikProps<FormikPublication> = useFormikContext();
   const { publicationType } = values.entityDescription;
 
-  // Validation messages won't show on fields that are not touched
-  const setAllFieldsTouched = useCallback(() => {
-    Object.values(ReferenceFieldNames).forEach((fieldName) => setFieldTouched(fieldName));
-  }, [setFieldTouched]);
-
   useEffect(
-    () => () => {
-      // Set all fields as touched if user navigates away from this panel (on unmount)
-      setAllFieldsTouched();
-    },
-    [setAllFieldsTouched]
+    // Set all fields as touched if user navigates away from this panel (on unmount)
+    () => () => Object.values(ReferenceFieldNames).forEach((fieldName) => setFieldTouched(fieldName)),
+    [setFieldTouched]
   );
 
   return (
@@ -52,7 +45,12 @@ const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, savePubl
         <SelectTypeField
           fieldName={ReferenceFieldNames.PUBLICATION_TYPE}
           options={Object.values(PublicationType)}
-          onChangeExtension={() => setFieldValue(ReferenceFieldNames.SUB_TYPE, '')}
+          onChangeExtension={() => {
+            // Reset specific values when changing publicationType
+            setFieldValue(ReferenceFieldNames.SUB_TYPE, '');
+            setFieldValue(ReferenceFieldNames.PUBLISHER, null);
+            Object.values(ReferenceFieldNames).forEach((fieldName) => setFieldTouched(fieldName, false));
+          }}
         />
       </StyledSelectContainer>
 
