@@ -70,6 +70,7 @@ export interface Publication {
 }
 
 interface PublicationInstance {
+  type: string;
   articleNumber: string;
   issue: string;
   pages: {
@@ -112,6 +113,7 @@ export interface FormikPublication extends Publication {
 }
 
 const emptyPublicationInstance: PublicationInstance = {
+  type: '',
   volume: '',
   issue: '',
   articleNumber: '',

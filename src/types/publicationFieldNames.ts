@@ -44,6 +44,7 @@ export enum ReferenceFieldNames {
   PAGES_TO = 'entityDescription.reference.publicationInstance.pages.end',
   PEER_REVIEW = 'entityDescription.reference.publicationInstance.peerReviewed',
   PUBLICATION_CONTEXT = 'entityDescription.reference.publicationContext',
+  PUBLICATION_INSTANCE_TYPE = 'entityDescription.reference.publicationInstance.type',
   PUBLICATION_TYPE = 'entityDescription.publicationType',
   SERIES = 'entityDescription.series',
   SUB_TYPE = 'entityDescription.publicationSubtype',

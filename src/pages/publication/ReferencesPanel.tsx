@@ -31,7 +31,7 @@ interface ReferencesPanelProps {
 const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, savePublication }) => {
   const { t } = useTranslation('publication');
   const { values, setFieldTouched, setFieldValue }: FormikProps<FormikPublication> = useFormikContext();
-  const { publicationType } = values.entityDescription;
+  const { publicationType, publicationSubtype } = values.entityDescription;
 
   useEffect(
     // Set all fields as touched if user navigates away from this panel (on unmount)
@@ -39,19 +39,23 @@ const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, savePubl
     [setFieldTouched]
   );
 
+  useEffect(() => {
+    // Ensure some values are reset when publicationType changes
+    setFieldValue(ReferenceFieldNames.SUB_TYPE, '');
+    setFieldValue(ReferenceFieldNames.PUBLICATION_CONTEXT, null);
+    // Avoid showing potential errors instantly
+    Object.values(ReferenceFieldNames).forEach((fieldName) => setFieldTouched(fieldName, false));
+  }, [setFieldValue, setFieldTouched, publicationType]);
+
+  useEffect(() => {
+    // Update publicationInstance's type when publicationSubtype changes
+    setFieldValue(ReferenceFieldNames.PUBLICATION_INSTANCE_TYPE, publicationSubtype);
+  }, [setFieldValue, publicationSubtype]);
+
   return (
     <TabPanel ariaLabel="references" goToNextTab={goToNextTab} onClickSave={() => savePublication()}>
       <StyledSelectContainer>
-        <SelectTypeField
-          fieldName={ReferenceFieldNames.PUBLICATION_TYPE}
-          options={Object.values(PublicationType)}
-          onChangeExtension={() => {
-            // Reset specific values when changing publicationType
-            setFieldValue(ReferenceFieldNames.SUB_TYPE, '');
-            setFieldValue(ReferenceFieldNames.PUBLICATION_CONTEXT, null);
-            Object.values(ReferenceFieldNames).forEach((fieldName) => setFieldTouched(fieldName, false));
-          }}
-        />
+        <SelectTypeField fieldName={ReferenceFieldNames.PUBLICATION_TYPE} options={Object.values(PublicationType)} />
       </StyledSelectContainer>
 
       {publicationType && (
