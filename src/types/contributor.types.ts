@@ -1,30 +1,24 @@
+import { BackendType, BackendTypeNames } from './publication.types';
+
 // For available roles, see https://github.com/BIBSYSDEV/nva-datamodel-java/blob/develop/src/main/java/no/unit/nva/model/Role.java
 export enum ContributorRole {
   CREATOR = 'Creator',
 }
 
-enum ContributorType {
-  CONTRIBUTOR = 'Contributor',
+interface Identity extends BackendType {
+  id?: string;
+  name: string;
+  orcId?: string;
+  arpId?: string;
 }
 
-enum ContributorIdentityType {
-  IDENTITY = 'Identity',
-}
-
-export interface Contributor {
+export interface Contributor extends BackendType {
   affiliations: Institution[];
   correspondingAuthor?: boolean;
   email?: string;
-  identity: {
-    id?: string;
-    name: string;
-    type: ContributorIdentityType;
-    orcId?: string;
-    arpId?: string;
-  };
+  identity: Identity;
   role: ContributorRole | '';
   sequence: number;
-  type: ContributorType;
 }
 
 interface Institution {
@@ -39,9 +33,9 @@ export const emptyContributor: Contributor = {
   email: '',
   identity: {
     name: '',
-    type: ContributorIdentityType.IDENTITY,
+    type: BackendTypeNames.IDENTITY,
   },
   role: '',
   sequence: 0,
-  type: ContributorType.CONTRIBUTOR,
+  type: BackendTypeNames.CONTRIBUTOR,
 };

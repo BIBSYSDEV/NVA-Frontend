@@ -1,9 +1,10 @@
-export interface Project {
+import { BackendType, BackendTypeNames } from './publication.types';
+
+export interface Project extends BackendType {
   id: string;
   name: string;
   grants?: Grant[];
   approvals?: Approval[];
-  type?: string;
 }
 
 export const emptyProject: Project = {
@@ -11,16 +12,15 @@ export const emptyProject: Project = {
   name: '',
   grants: [],
   approvals: [],
-  type: 'ResearchProject',
+  type: BackendTypeNames.RESEARCH_PROJECT,
 };
 
-interface Grant {
+interface Grant extends BackendType {
   id: string;
   source: string;
-  type?: string;
 }
 
-interface Approval {
+interface Approval extends BackendType {
   applicationCode: string;
   approvedBy: string;
   approvalStatus: string;
