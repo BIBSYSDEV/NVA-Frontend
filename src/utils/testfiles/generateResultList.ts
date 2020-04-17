@@ -1,4 +1,3 @@
-import { PublicationMetadata } from '../../types/publication.types';
 import { PublicationType } from '../../types/publicationFieldNames';
 
 const faker = require('faker');
@@ -12,7 +11,7 @@ const generateRandomPublicationType = () =>
 const convertToSentence = (sentence: string) => sentence.charAt(0).toUpperCase() + sentence.slice(1);
 
 const generatePublications: any = () => {
-  let publications: PublicationMetadata[] = [];
+  let publications: any[] = [];
   for (let i = 0; i < NUMBER_OF_PUBLICATIONS; i++) {
     let publication: any = {};
     publication.creators = [];

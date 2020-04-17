@@ -10,11 +10,10 @@ import ImageIcon from '@material-ui/icons/Image';
 
 import { search } from '../../api/publicationApi';
 import { RootStore } from '../../redux/reducers/rootReducer';
-import { PublicationMetadata } from '../../types/publication.types';
 import { SEARCH_RESULTS_PER_PAGE } from '../../utils/constants';
 
 interface SearchResultsProps {
-  publications: PublicationMetadata[];
+  publications: any[];
   searchTerm: string;
 }
 
@@ -43,7 +42,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ publications, searchTerm 
       {offset + publications.length})
       <List>
         {publications &&
-          publications.map(publication => (
+          publications.map((publication) => (
             <ListItem key={publication.handle}>
               <ListItemIcon>
                 <ImageIcon />

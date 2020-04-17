@@ -5,6 +5,22 @@ import { Project } from './project.types';
 import { PublicationType, JournalArticleType, ReportType, DegreeType, BookType } from './publicationFieldNames';
 import { EnumDictionary } from './common.types';
 
+export enum BackendTypeNames {
+  APPROVAL = 'Approval',
+  CONTRIBUTOR = 'Contributor',
+  ENTITY_DESCRIPTION = 'EntityDescription',
+  FILE = 'File',
+  FILE_SET = 'FileSet',
+  GRANT = 'Grant',
+  IDENTITY = 'Identity',
+  LICENSE = 'License',
+  PAGES = 'Pages',
+  PUBLICATION = 'Publication',
+  PUBLICATION_DATE = 'PublicationDate',
+  REFERENCE = 'Reference',
+  RESEARCH_PROJECT = 'ResearchProject',
+}
+
 export enum PublicationStatus {
   DRAFT = 'draft',
   REJECTED = 'rejected',
@@ -18,18 +34,8 @@ export const levelMap: EnumDictionary<string, number | null> = {
   LEVEL_2: 2,
 };
 
-interface TitleType {
-  [key: string]: string;
-}
-
-export interface PublicationMetadata {
-  creators: string[];
-  handle: string;
-  license: string;
-  publicationYear: number;
-  publisher: string;
-  titles: TitleType;
-  type: PublicationType;
+export interface BackendType {
+  type: BackendTypeNames;
 }
 
 export interface Publisher {
@@ -59,7 +65,7 @@ export interface NpiDiscipline {
   mainDiscipline: string;
 }
 
-export interface Publication {
+export interface Publication extends BackendType {
   readonly identifier: string;
   readonly createdDate: string;
   readonly owner: string;
@@ -69,29 +75,39 @@ export interface Publication {
   project: Project | null;
 }
 
+interface PublicationDate extends BackendType {
+  year: string;
+  month: string;
+  day: string;
+}
+
+interface PublicationPages extends BackendType {
+  begin: string;
+  end: string;
+}
+
 interface PublicationInstance {
   type: string;
   articleNumber: string;
   issue: string;
-  pages: {
-    begin: string;
-    end: string;
-  };
+  pages: PublicationPages;
   peerReviewed: boolean;
   volume: string;
 }
 
-interface PublicationEntityDescription {
+interface PublicationReference extends BackendType {
+  doi: string;
+  publicationInstance: PublicationInstance;
+  publicationContext: Publisher | null;
+}
+
+interface PublicationEntityDescription extends BackendType {
   mainTitle: string;
   abstract: string;
   description: string;
   tags: string[];
   npiSubjectHeading: string;
-  date: {
-    year: string;
-    month: string;
-    day: string;
-  };
+  date: PublicationDate;
   language: LanguageValues;
   publicationType: PublicationType | '';
   publicationSubtype: JournalArticleType | ReportType | DegreeType | BookType | '';
@@ -101,40 +117,50 @@ interface PublicationEntityDescription {
   series: Publisher;
   specialization: string;
   textBook: boolean;
-  reference: {
-    doi: string;
-    publicationInstance: PublicationInstance;
-    publicationContext: Publisher | null;
-  };
+  reference: PublicationReference;
 }
 
 export interface FormikPublication extends Publication {
   shouldCreateDoi: boolean;
 }
 
+const emptyDate: PublicationDate = {
+  type: BackendTypeNames.PUBLICATION_DATE,
+  year: '',
+  month: '',
+  day: '',
+};
+
+const emptyPages: PublicationPages = {
+  type: BackendTypeNames.PAGES,
+  begin: '',
+  end: '',
+};
+
 const emptyPublicationInstance: PublicationInstance = {
   type: '',
   volume: '',
   issue: '',
   articleNumber: '',
-  pages: {
-    begin: '',
-    end: '',
-  },
+  pages: emptyPages,
   peerReviewed: false,
 };
 
+const emptyReference: PublicationReference = {
+  type: BackendTypeNames.REFERENCE,
+  doi: '',
+  publicationInstance: emptyPublicationInstance,
+  publicationContext: null,
+};
+
 const emptyPublicationEntityDescription: PublicationEntityDescription = {
+  type: BackendTypeNames.ENTITY_DESCRIPTION,
   mainTitle: '',
   abstract: '',
   description: '',
   tags: [],
   npiSubjectHeading: '',
-  date: {
-    year: '',
-    month: '',
-    day: '',
-  },
+  date: emptyDate,
   language: LanguageValues.NORWEGIAN_BOKMAL,
   publicationType: '',
   contributors: [],
@@ -144,11 +170,7 @@ const emptyPublicationEntityDescription: PublicationEntityDescription = {
   series: emptyPublisher,
   specialization: '',
   textBook: false,
-  reference: {
-    doi: '',
-    publicationInstance: emptyPublicationInstance,
-    publicationContext: null,
-  },
+  reference: emptyReference,
 };
 
 export type PublicationPreview = Pick<
@@ -166,13 +188,14 @@ export interface Doi {
 }
 
 export const emptyPublication: FormikPublication = {
+  type: BackendTypeNames.PUBLICATION,
   identifier: '',
   createdDate: '',
   owner: '',
   status: PublicationStatus.DRAFT,
   entityDescription: emptyPublicationEntityDescription,
   fileSet: {
-    type: 'FileSet',
+    type: BackendTypeNames.FILE_SET,
     files: [],
   },
   shouldCreateDoi: false,
