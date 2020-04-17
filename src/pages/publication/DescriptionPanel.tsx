@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import DateFnsUtils from '@date-io/date-fns';
 import { MenuItem } from '@material-ui/core';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
-import TabPanel from '../../components/TabPanel/TabPanel';
+import TabPanel, { TabPanelCommonProps } from '../../components/TabPanel/TabPanel';
 import { FormikPublication } from '../../types/publication.types';
 import DisciplineSearch from './description_tab/DisciplineSearch';
 import ProjectSearch from './description_tab/ProjectSearch';
@@ -38,12 +38,11 @@ const StyledFieldHeader = styled.header`
   font-size: 1.5rem;
 `;
 
-interface DescriptionPanelProps {
-  goToNextTab: (event: React.MouseEvent<any>) => void;
+interface DescriptionPanelProps extends TabPanelCommonProps {
   savePublication: () => void;
 }
 
-const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublication }) => {
+const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, isSaving, savePublication }) => {
   const { t } = useTranslation('publication');
   const { setFieldTouched, setFieldValue, values }: FormikProps<FormikPublication> = useFormikContext();
 
@@ -66,7 +65,7 @@ const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublicat
   };
 
   return (
-    <TabPanel ariaLabel="description" goToNextTab={goToNextTab} onClickSave={validateAndSave}>
+    <TabPanel ariaLabel="description" goToNextTab={goToNextTab} onClickSave={validateAndSave} isSaving={isSaving}>
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <Card>
           <Heading>{t('heading.description')}</Heading>

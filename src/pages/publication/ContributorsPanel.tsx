@@ -5,18 +5,17 @@ import { FormikProps, useFormikContext, FieldArray, ErrorMessage, FieldArrayRend
 
 import Card from '../../components/Card';
 import Heading from '../../components/Heading';
-import TabPanel from '../../components/TabPanel/TabPanel';
+import TabPanel, { TabPanelCommonProps } from '../../components/TabPanel/TabPanel';
 import SortableTable from './contributors_tab/components/SortableTable';
 import { FormikPublication } from '../../types/publication.types';
 import { ContributorFieldNames } from '../../types/publicationFieldNames';
 import { getAllContributorFields } from '../../utils/formik-helpers';
 
-interface ContributorsPanelProps {
-  goToNextTab: (event: React.MouseEvent<any>) => void;
+interface ContributorsPanelProps extends TabPanelCommonProps {
   savePublication: () => void;
 }
 
-const ContributorsPanel: FC<ContributorsPanelProps> = ({ goToNextTab, savePublication }) => {
+const ContributorsPanel: FC<ContributorsPanelProps> = ({ goToNextTab, isSaving, savePublication }) => {
   const { t } = useTranslation('publication');
   const {
     setFieldTouched,
@@ -41,7 +40,7 @@ const ContributorsPanel: FC<ContributorsPanelProps> = ({ goToNextTab, savePublic
   );
 
   return (
-    <TabPanel ariaLabel="references" goToNextTab={goToNextTab} onClickSave={savePublication}>
+    <TabPanel ariaLabel="references" goToNextTab={goToNextTab} onClickSave={savePublication} isSaving={isSaving}>
       <Card>
         <Heading>{t('contributors.authors')}</Heading>
         <FieldArray name={ContributorFieldNames.CONTRIBUTORS}>

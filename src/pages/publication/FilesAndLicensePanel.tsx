@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import TabPanel from '../../components/TabPanel/TabPanel';
+import TabPanel, { TabPanelCommonProps } from '../../components/TabPanel/TabPanel';
 import FileUploader from './files_and_license_tab/FileUploader';
 import FileCard from './files_and_license_tab/FileCard';
 import styled from 'styled-components';
@@ -32,13 +32,17 @@ const StyledLicenseDescription = styled.article`
   margin-bottom: 1rem;
 `;
 
-interface FilesAndLicensePanelProps {
-  goToNextTab: (event: React.MouseEvent<any>) => void;
-  uppy: Uppy;
+interface FilesAndLicensePanelProps extends TabPanelCommonProps {
   savePublication: () => void;
+  uppy: Uppy;
 }
 
-const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab, uppy, savePublication }) => {
+const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({
+  goToNextTab,
+  isSaving,
+  savePublication,
+  uppy,
+}) => {
   const { t } = useTranslation('publication');
   const { values, setFieldTouched }: FormikProps<FormikPublication> = useFormikContext();
   const [isLicenseModalOpen, setIsLicenseModalOpen] = useState(false);
@@ -69,7 +73,7 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({ goToNextTab
   };
 
   return (
-    <TabPanel ariaLabel="files and license" goToNextTab={goToNextTab} onClickSave={savePublication}>
+    <TabPanel ariaLabel="files and license" goToNextTab={goToNextTab} onClickSave={savePublication} isSaving={isSaving}>
       {publicationContext && <PublicationChannelInfoCard publisher={publicationContext} />}
 
       <FieldArray name={FileFieldNames.FILES}>

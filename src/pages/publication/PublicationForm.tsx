@@ -42,6 +42,7 @@ const PublicationForm: FC<PublicationFormProps> = ({
   const [tabNumber, setTabNumber] = useState(0);
   const [initialValues, setInitialValues] = useState(emptyPublication);
   const [isLoading, setIsLoading] = useState(!!identifier);
+  const [isSaving, setIsSaving] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -94,7 +95,7 @@ const PublicationForm: FC<PublicationFormProps> = ({
 
   const savePublication = async (values: FormikPublication) => {
     const { shouldCreateDoi, ...newPublication } = values;
-
+    setIsSaving(true);
     const updatedPublication = await updatePublication(newPublication);
     if (updatedPublication.error) {
       dispatch(setNotification(updatedPublication.error, NotificationVariant.Error));
@@ -102,6 +103,7 @@ const PublicationForm: FC<PublicationFormProps> = ({
       setInitialValues(deepmerge(emptyPublication, updatedPublication));
       dispatch(setNotification(t('feedback:success.update_publication')));
     }
+    setIsSaving(false);
   };
 
   return isLoading ? (
@@ -117,24 +119,37 @@ const PublicationForm: FC<PublicationFormProps> = ({
           <Form>
             <PublicationFormTabs tabNumber={tabNumber} handleTabChange={handleTabChange} />
             {tabNumber === 0 && (
-              <DescriptionPanel goToNextTab={goToNextTab} savePublication={() => savePublication(values)} />
+              <DescriptionPanel
+                goToNextTab={goToNextTab}
+                savePublication={() => savePublication(values)}
+                isSaving={isSaving}
+              />
             )}
             {tabNumber === 1 && (
-              <ReferencesPanel goToNextTab={goToNextTab} savePublication={() => savePublication(values)} />
+              <ReferencesPanel
+                goToNextTab={goToNextTab}
+                savePublication={() => savePublication(values)}
+                isSaving={isSaving}
+              />
             )}
             {tabNumber === 2 && (
-              <ContributorsPanel goToNextTab={goToNextTab} savePublication={() => savePublication(values)} />
+              <ContributorsPanel
+                goToNextTab={goToNextTab}
+                savePublication={() => savePublication(values)}
+                isSaving={isSaving}
+              />
             )}
             {tabNumber === 3 && (
               <FilesAndLicensePanel
                 goToNextTab={goToNextTab}
+                isSaving={isSaving}
                 savePublication={() => savePublication(values)}
                 uppy={uppy}
               />
             )}
 
             {tabNumber === 4 && (
-              <TabPanel ariaLabel="submission">
+              <TabPanel ariaLabel="submission" isSaving={isSaving}>
                 <SubmissionPanel savePublication={() => savePublication(values)} />
               </TabPanel>
             )}

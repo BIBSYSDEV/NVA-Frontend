@@ -1,15 +1,9 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
 import { Button } from '@material-ui/core';
-
-interface TabPanelProps {
-  ariaLabel: string;
-  children?: React.ReactNode;
-  goToNextTab?: (event: React.MouseEvent<any>) => void;
-  onClickSave?: (event: React.MouseEvent<any>) => void;
-}
+import Progress from '../Progress';
 
 const StyledDiv = styled.div`
   margin-top: 2rem;
@@ -22,7 +16,24 @@ const StyledButton = styled(Button)`
   margin-right: 0.5rem;
 `;
 
-const TabPanel: React.FC<TabPanelProps> = ({ children, goToNextTab, onClickSave }) => {
+const StyledProgressContainer = styled.div`
+  padding-left: 1rem;
+  display: flex;
+  align-items: center;
+`;
+
+export interface TabPanelCommonProps {
+  goToNextTab?: (event: React.MouseEvent<any>) => void;
+  isSaving?: boolean;
+}
+
+interface TabPanelProps extends TabPanelCommonProps {
+  ariaLabel: string;
+  children?: React.ReactNode;
+  onClickSave?: (event: React.MouseEvent<any>) => void;
+}
+
+const TabPanel: FC<TabPanelProps> = ({ children, goToNextTab, isSaving, onClickSave }) => {
   const { t } = useTranslation();
 
   return (
@@ -36,6 +47,11 @@ const TabPanel: React.FC<TabPanelProps> = ({ children, goToNextTab, onClickSave 
       {onClickSave && (
         <StyledButton variant="contained" onClick={onClickSave}>
           {t('common:save')}
+          {isSaving && (
+            <StyledProgressContainer>
+              <Progress size={15} thickness={5} />
+            </StyledProgressContainer>
+          )}
         </StyledButton>
       )}
     </StyledDiv>
