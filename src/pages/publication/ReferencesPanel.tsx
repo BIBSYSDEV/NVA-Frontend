@@ -40,14 +40,6 @@ const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, savePubl
   );
 
   useEffect(() => {
-    // Ensure some values are reset when publicationType changes
-    setFieldValue(ReferenceFieldNames.SUB_TYPE, '');
-    setFieldValue(ReferenceFieldNames.PUBLICATION_CONTEXT, null);
-    // Avoid showing potential errors instantly
-    Object.values(ReferenceFieldNames).forEach((fieldName) => setFieldTouched(fieldName, false));
-  }, [setFieldValue, setFieldTouched, publicationType]);
-
-  useEffect(() => {
     // Update publicationInstance's type when publicationSubtype changes
     setFieldValue(ReferenceFieldNames.PUBLICATION_INSTANCE_TYPE, publicationSubtype);
   }, [setFieldValue, publicationSubtype]);
@@ -55,7 +47,17 @@ const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, savePubl
   return (
     <TabPanel ariaLabel="references" goToNextTab={goToNextTab} onClickSave={() => savePublication()}>
       <StyledSelectContainer>
-        <SelectTypeField fieldName={ReferenceFieldNames.PUBLICATION_TYPE} options={Object.values(PublicationType)} />
+        <SelectTypeField
+          fieldName={ReferenceFieldNames.PUBLICATION_TYPE}
+          options={Object.values(PublicationType)}
+          onChangeExtension={() => {
+            // Ensure some values are reset when publicationType changes
+            setFieldValue(ReferenceFieldNames.SUB_TYPE, '');
+            setFieldValue(ReferenceFieldNames.PUBLICATION_CONTEXT, null);
+            // Avoid showing potential errors instantly
+            Object.values(ReferenceFieldNames).forEach((fieldName) => setFieldTouched(fieldName, false));
+          }}
+        />
       </StyledSelectContainer>
 
       {publicationType && (
