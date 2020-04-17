@@ -16,7 +16,7 @@ const Progress: FC<CircularProgressProps> = ({ size, ...props }) => {
     };
   }, []);
 
-  return <CircularProgress variant="determinate" value={progress} size={size} {...props} />;
+  return <CircularProgress size={size} variant="determinate" value={progress} {...props} />;
 };
 
 export default Progress;

@@ -40,7 +40,7 @@ const ContributorsPanel: FC<ContributorsPanelProps> = ({ goToNextTab, isSaving, 
   );
 
   return (
-    <TabPanel ariaLabel="references" goToNextTab={goToNextTab} onClickSave={savePublication} isSaving={isSaving}>
+    <TabPanel ariaLabel="references" goToNextTab={goToNextTab} isSaving={isSaving} onClickSave={savePublication}>
       <Card>
         <Heading>{t('contributors.authors')}</Heading>
         <FieldArray name={ContributorFieldNames.CONTRIBUTORS}>

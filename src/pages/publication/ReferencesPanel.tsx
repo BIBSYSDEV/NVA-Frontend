@@ -49,8 +49,8 @@ const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, isSaving
     <TabPanel
       ariaLabel="references"
       goToNextTab={goToNextTab}
-      onClickSave={() => savePublication()}
-      isSaving={isSaving}>
+      isSaving={isSaving}
+      onClickSave={() => savePublication()}>
       <StyledSelectContainer>
         <SelectTypeField
           fieldName={ReferenceFieldNames.PUBLICATION_TYPE}

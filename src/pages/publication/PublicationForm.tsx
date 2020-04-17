@@ -28,8 +28,8 @@ const StyledPublication = styled.div`
 `;
 
 interface PublicationFormProps {
-  uppy: Uppy;
   closeForm: () => void;
+  uppy: Uppy;
   identifier?: string;
 }
 
@@ -121,22 +121,22 @@ const PublicationForm: FC<PublicationFormProps> = ({
             {tabNumber === 0 && (
               <DescriptionPanel
                 goToNextTab={goToNextTab}
-                savePublication={() => savePublication(values)}
                 isSaving={isSaving}
+                savePublication={() => savePublication(values)}
               />
             )}
             {tabNumber === 1 && (
               <ReferencesPanel
                 goToNextTab={goToNextTab}
-                savePublication={() => savePublication(values)}
                 isSaving={isSaving}
+                savePublication={() => savePublication(values)}
               />
             )}
             {tabNumber === 2 && (
               <ContributorsPanel
                 goToNextTab={goToNextTab}
-                savePublication={() => savePublication(values)}
                 isSaving={isSaving}
+                savePublication={() => savePublication(values)}
               />
             )}
             {tabNumber === 3 && (

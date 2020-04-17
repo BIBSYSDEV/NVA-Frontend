@@ -73,7 +73,7 @@ const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({
   };
 
   return (
-    <TabPanel ariaLabel="files and license" goToNextTab={goToNextTab} onClickSave={savePublication} isSaving={isSaving}>
+    <TabPanel ariaLabel="files and license" goToNextTab={goToNextTab} isSaving={isSaving} onClickSave={savePublication}>
       {publicationContext && <PublicationChannelInfoCard publisher={publicationContext} />}
 
       <FieldArray name={FileFieldNames.FILES}>

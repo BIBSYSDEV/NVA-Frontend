@@ -65,7 +65,7 @@ const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, isSaving, sa
   };
 
   return (
-    <TabPanel ariaLabel="description" goToNextTab={goToNextTab} onClickSave={validateAndSave} isSaving={isSaving}>
+    <TabPanel ariaLabel="description" goToNextTab={goToNextTab} isSaving={isSaving} onClickSave={validateAndSave}>
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <Card>
           <Heading>{t('heading.description')}</Heading>
