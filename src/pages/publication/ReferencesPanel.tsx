@@ -1,5 +1,5 @@
 import { FormikProps, useFormikContext } from 'formik';
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
@@ -27,7 +27,7 @@ interface ReferencesPanelProps extends TabPanelCommonProps {
   savePublication: () => void;
 }
 
-const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, isSaving, savePublication }) => {
+const ReferencesPanel: FC<ReferencesPanelProps> = ({ goToNextTab, isSaving, savePublication }) => {
   const { t } = useTranslation('publication');
   const { values, setFieldTouched, setFieldValue }: FormikProps<FormikPublication> = useFormikContext();
   const { publicationType } = values.entityDescription;

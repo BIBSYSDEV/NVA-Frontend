@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import TabPanel, { TabPanelCommonProps } from '../../components/TabPanel/TabPanel';
 import FileUploader from './files_and_license_tab/FileUploader';
@@ -37,12 +37,7 @@ interface FilesAndLicensePanelProps extends TabPanelCommonProps {
   uppy: Uppy;
 }
 
-const FilesAndLicensePanel: React.FC<FilesAndLicensePanelProps> = ({
-  goToNextTab,
-  isSaving,
-  savePublication,
-  uppy,
-}) => {
+const FilesAndLicensePanel: FC<FilesAndLicensePanelProps> = ({ goToNextTab, isSaving, savePublication, uppy }) => {
   const { t } = useTranslation('publication');
   const { values, setFieldTouched }: FormikProps<FormikPublication> = useFormikContext();
   const [isLicenseModalOpen, setIsLicenseModalOpen] = useState(false);
