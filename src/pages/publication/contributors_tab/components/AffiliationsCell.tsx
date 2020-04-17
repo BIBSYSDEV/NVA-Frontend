@@ -11,8 +11,9 @@ import { useTranslation } from 'react-i18next';
 import NormalText from '../../../../components/NormalText';
 import styled from 'styled-components';
 
-const StyledNormalText = styled(NormalText)`
-  margin-bottom: 1rem;
+const StyledAffiliationsCell = styled.div`
+  display: flex;
+  flex-direction: row;
 `;
 
 interface AffiliationsCellProps {
@@ -45,7 +46,18 @@ const AffiliationsCell: FC<AffiliationsCellProps> = ({ affiliations, baseFieldNa
   return (
     <>
       {affiliations?.map((affiliation) => (
-        <AffiliationElement key={affiliation.id} affiliation={affiliation} />
+        <StyledAffiliationsCell>
+          <NormalText>{Object.values(affiliation.labels)[0]}</NormalText>
+          <Button
+            onClick={() =>
+              setFieldValue(
+                `${baseFieldName}.${SpecificContributorFieldNames.AFFILIATIONS}`,
+                affiliations.filter((affiliation2) => affiliation2.id !== affiliation.id)
+              )
+            }>
+            {t('contributors.remove_affiliation')}
+          </Button>
+        </StyledAffiliationsCell>
       ))}
       <Button variant="contained" color="primary" onClick={toggleAffiliationModal}>
         {t('contributors.add_affiliation')}
@@ -55,14 +67,6 @@ const AffiliationsCell: FC<AffiliationsCellProps> = ({ affiliations, baseFieldNa
       </Modal>
     </>
   );
-};
-
-interface AffiliationElementProps {
-  affiliation: Institution;
-}
-
-const AffiliationElement: FC<AffiliationElementProps> = ({ affiliation }) => {
-  return <StyledNormalText>{Object.values(affiliation.labels)[0]}</StyledNormalText>;
 };
 
 export default AffiliationsCell;
