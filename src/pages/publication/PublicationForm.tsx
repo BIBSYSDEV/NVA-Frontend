@@ -170,7 +170,7 @@ const PublicationForm: FC<PublicationFormProps> = ({
                   {t('common:next')}
                 </StyledButton>
 
-                <StyledButton variant="contained" onClick={() => savePublication(values)}>
+                <StyledButton disabled={isSaving} onClick={() => savePublication(values)} variant="contained">
                   {t('common:save')}
                   {isSaving && (
                     <StyledProgressContainer>

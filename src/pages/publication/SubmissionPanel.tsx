@@ -51,6 +51,7 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication }
   const { t } = useTranslation('publication');
   const { errors, setFieldTouched, setFieldValue, values }: FormikProps<FormikPublication> = useFormikContext();
   const history = useHistory();
+  const { publicationType, reference } = values.entityDescription;
 
   const valuesRef = useRef(values);
   useEffect(() => {
@@ -71,9 +72,6 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication }
     // TODO: change status from draft to published
     history.push(`/publication/${values.identifier}/public`);
   };
-
-  const { publicationType, reference } = values.entityDescription;
-  const validationErrors = errors.entityDescription;
 
   return (
     <>
@@ -118,7 +116,7 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication }
                     color="primary"
                     checked={value}
                     onChange={() => setFieldValue(name, !value)}
-                    disabled={!!validationErrors}
+                    disabled={!!errors.entityDescription || !!errors.fileSet}
                   />
                 }
                 label={t('submission.ask_for_doi')}
@@ -132,10 +130,10 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication }
           color="primary"
           variant="contained"
           onClick={publishPublication}
-          disabled={!!errors.entityDescription}>
+          disabled={!!errors.entityDescription || !!errors.fileSet}>
           {t('common:publish')}
         </StyledButton>
-        <StyledButton variant="contained" onClick={() => savePublication(values)}>
+        <StyledButton disabled={isSaving} onClick={() => savePublication(values)} variant="contained">
           {t('common:save')}
           {isSaving && (
             <StyledProgressContainer>
