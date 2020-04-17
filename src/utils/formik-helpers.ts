@@ -70,7 +70,7 @@ export const getAllContributorFields = (contributors: Contributor[]) => {
       const baseFieldName = `${ContributorFieldNames.CONTRIBUTORS}[${index}]`;
       fieldNames.push(`${baseFieldName}.${SpecificContributorFieldNames.SEQUENCE}`);
       fieldNames.push(`${baseFieldName}.${SpecificContributorFieldNames.CORRESPONDING}`);
-      if (contributor.corresponding) {
+      if (contributor.correspondingAuthor) {
         fieldNames.push(`${baseFieldName}.${SpecificContributorFieldNames.EMAIL}`);
       }
     });

@@ -12,7 +12,7 @@ import FilesAndLicensePanel from './FilesAndLicensePanel';
 import { PublicationFormTabs } from './PublicationFormTabs';
 import ReferencesPanel from './ReferencesPanel';
 import SubmissionPanel from './SubmissionPanel';
-import { emptyFile, Uppy } from '../../types/file.types';
+import { emptyFile, Uppy, emptyFileSet } from '../../types/file.types';
 import { getPublication, updatePublication } from '../../api/publicationApi';
 import { useDispatch } from 'react-redux';
 import { setNotification } from '../../redux/actions/notificationActions';
@@ -57,7 +57,7 @@ const PublicationForm: FC<PublicationFormProps> = ({
     if (files?.length) {
       setInitialValues({
         ...emptyPublication,
-        fileSet: { files },
+        fileSet: { ...emptyFileSet, files },
       });
     }
   }, [uppy]);
@@ -125,7 +125,13 @@ const PublicationForm: FC<PublicationFormProps> = ({
             {tabNumber === 2 && (
               <ContributorsPanel goToNextTab={goToNextTab} savePublication={() => savePublication(values)} />
             )}
-            {tabNumber === 3 && <FilesAndLicensePanel goToNextTab={goToNextTab} uppy={uppy} />}
+            {tabNumber === 3 && (
+              <FilesAndLicensePanel
+                goToNextTab={goToNextTab}
+                savePublication={() => savePublication(values)}
+                uppy={uppy}
+              />
+            )}
 
             {tabNumber === 4 && (
               <TabPanel ariaLabel="submission">

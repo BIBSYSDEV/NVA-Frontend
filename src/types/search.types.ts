@@ -1,7 +1,5 @@
-import { PublicationMetadata } from './publication.types';
-
 export interface Search {
-  publications: PublicationMetadata[];
+  publications: any[];
   searchTerm: string;
   offset: number;
   totalNumberOfHits: number;

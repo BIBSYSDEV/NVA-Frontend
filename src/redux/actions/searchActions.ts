@@ -1,10 +1,8 @@
-import { PublicationMetadata } from '../../types/publication.types';
-
 export const SEARCH_FOR_PUBLICATIONS = 'search for publications';
 export const CLEAR_SEARCH = 'clear search';
 
 export const searchForPublications = (
-  publications: PublicationMetadata[],
+  publications: any[],
   searchTerm: string,
   totalNumberOfHits: number,
   offset?: number
@@ -22,7 +20,7 @@ export const clearSearch = (): ClearSearchAction => ({
 
 interface SearchForPublicationsAction {
   type: typeof SEARCH_FOR_PUBLICATIONS;
-  publications: PublicationMetadata[];
+  publications: any[];
   searchTerm: string;
   totalNumberOfHits: number;
   offset?: number;

@@ -59,6 +59,7 @@ describe('User administers institutions ', () => {
     });
 
     cy.get('input[type=file]').uploadFile('img.jpg');
+    cy.get('.uppy-StatusBar-actionBtn--upload').click({ force: true });
     cy.get('[data-testid=uploaded-file-card]').should('be.visible');
   });
 });

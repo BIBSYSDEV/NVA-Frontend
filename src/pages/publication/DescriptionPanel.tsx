@@ -13,13 +13,12 @@ import DisciplineSearch from './description_tab/DisciplineSearch';
 import ProjectSearch from './description_tab/ProjectSearch';
 import ProjectRow from './description_tab/ProjectRow';
 import DatePickerField from './description_tab/DatePickerField';
-import { Project } from '../../types/project.types';
 import ChipInput from 'material-ui-chip-input';
 import { publicationLanguages } from '../../types/language.types';
 import Heading from '../../components/Heading';
 import Card from '../../components/Card';
-import { getNpiDiscipline } from '../../utils/npiDisciplines';
 import { DescriptionFieldNames } from '../../types/publicationFieldNames';
+import { emptyProject } from '../../types/project.types';
 
 const MultipleFieldWrapper = styled.div`
   display: flex;
@@ -115,7 +114,7 @@ const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublicat
                   <DisciplineSearch
                     setValueFunction={(npiDiscipline) => setFieldValue(name, npiDiscipline?.id ?? '')}
                     dataTestId="search_npi"
-                    value={getNpiDiscipline(value).name}
+                    value={value}
                     placeholder={t('description.search_for_npi_discipline')}
                   />
                 )}
@@ -170,28 +169,25 @@ const DescriptionPanel: FC<DescriptionPanelProps> = ({ goToNextTab, savePublicat
           <StyledFieldHeader>{t('description.project_association')}</StyledFieldHeader>
 
           <StyledFieldWrapper>
-            <FieldArray name={DescriptionFieldNames.PROJECTS}>
-              {({ name, insert, remove }: FieldArrayRenderProps) => (
+            <Field name={DescriptionFieldNames.PROJECT}>
+              {({ field: { name, value } }: FieldProps) => (
                 <>
                   <ProjectSearch
-                    setValueFunction={(newValue) => insert(0, newValue)}
+                    setValueFunction={(newValue) => setFieldValue(name, { ...emptyProject, ...newValue })}
                     dataTestId="search_project"
                     placeholder={t('description.search_for_project')}
                   />
-                  {getIn(values, name).map(
-                    (project: Project, i: number) =>
-                      project && (
-                        <ProjectRow
-                          key={project.cristinProjectId}
-                          project={project}
-                          onClickRemove={() => remove(i)}
-                          dataTestId={`selected_project${i}`}
-                        />
-                      )
+                  {value && (
+                    <ProjectRow
+                      key={value.id}
+                      project={value}
+                      onClickRemove={() => setFieldValue(name, null)}
+                      dataTestId="selected_project"
+                    />
                   )}
                 </>
               )}
-            </FieldArray>
+            </Field>
           </StyledFieldWrapper>
         </Card>
       </MuiPickersUtilsProvider>

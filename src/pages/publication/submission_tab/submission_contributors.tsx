@@ -3,7 +3,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormikProps, useFormikContext } from 'formik';
 import { FormikPublication } from '../../../types/publication.types';
-import SubmissionContentText from './submission_content_text';
+import NormalText from '../../../components/NormalText';
 
 const SubmissionContributors: React.FC = () => {
   const { t } = useTranslation('publication');
@@ -14,15 +14,14 @@ const SubmissionContributors: React.FC = () => {
   }: FormikProps<FormikPublication> = useFormikContext();
 
   return (
-    <LabelContentRow label={t('heading.contributors')}>
+    <LabelContentRow label={t('heading.contributors')} multiple>
       {contributors.map((contributor) => (
-        <SubmissionContentText key={contributor.identity.name}>
+        <NormalText key={contributor.identity.name}>
           {contributor.identity.name}
-          {/* TODO: update mapping of institutions once we get this from backend */}
           {contributor.affiliations?.map(
             (affiliation) => affiliation?.labels && `(${Object.values(affiliation.labels)[0]})`
           )}
-        </SubmissionContentText>
+        </NormalText>
       ))}
     </LabelContentRow>
   );

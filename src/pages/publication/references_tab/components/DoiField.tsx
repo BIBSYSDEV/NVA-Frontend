@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { FormikPublication } from '../../../../types/publication.types';
 import { ReferenceFieldNames } from '../../../../types/publicationFieldNames';
 import ConfirmDialog from '../../../../components/ConfirmDialog';
+import { DOI_PREFIX } from '../../../../utils/constants';
 
 const StyledClearIcon = styled(ClearIcon)`
   color: ${({ theme }) => theme.palette.danger.main};
@@ -43,7 +44,7 @@ const DoiField: FC = () => {
             </InputAdornment>
           ),
         }}
-        value={doiUrl}
+        value={`${DOI_PREFIX}${doiUrl}`}
       />
 
       <ConfirmDialog

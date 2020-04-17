@@ -14,6 +14,7 @@ const ErrorMessage = {
   MISSING_CONTRIBUTOR: i18n.t('publication:feedback.minimum_one_contributor'),
   MISSING_FILE: i18n.t('publication:feedback.minimum_one_file'),
   INVALID_FORMAT: i18n.t('publication:feedback.invalid_format'),
+  MUST_BE_FUTURE: i18n.t('publication:feedback.date_must_be_in_future'),
 };
 
 export const publicationValidationSchema = Yup.object().shape({
@@ -55,8 +56,8 @@ export const publicationValidationSchema = Yup.object().shape({
     contributors: Yup.array()
       .of(
         Yup.object().shape({
-          corresponding: Yup.boolean(),
-          email: Yup.string().when('corresponding', {
+          correspondingAuthor: Yup.boolean(),
+          email: Yup.string().when('correspondingAuthor', {
             is: true,
             then: Yup.string().email(ErrorMessage.INVALID_FORMAT).required(ErrorMessage.REQUIRED),
           }),
@@ -96,7 +97,7 @@ export const publicationValidationSchema = Yup.object().shape({
         .nullable()
         .shape({
           name: Yup.string(),
-          level: Yup.number(),
+          level: Yup.mixed(),
           openAccess: Yup.boolean(),
         })
         .required(ErrorMessage.REQUIRED),
@@ -111,7 +112,10 @@ export const publicationValidationSchema = Yup.object().shape({
             .nullable()
             .when('administrativeAgreement', {
               is: false,
-              then: Yup.date().nullable().min(new Date()).required(ErrorMessage.REQUIRED),
+              then: Yup.date()
+                .nullable()
+                .min(new Date(), ErrorMessage.MUST_BE_FUTURE)
+                .typeError(ErrorMessage.INVALID_FORMAT),
             }),
           publisherAuthority: Yup.boolean()
             .nullable()

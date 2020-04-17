@@ -93,15 +93,15 @@ export const AutoSearch: FC<AutoSearchProps> = ({
           setOptions([]);
         }
       }}
-      getOptionLabel={(option: any) => option.title || ''}
+      getOptionLabel={(option: any) => option.title || option.name || ''}
       options={options}
       loading={loading}
       blurOnSelect
       value={displayValue}
       noOptionsText={t('no_hits')}
-      filterOptions={options => options}
+      filterOptions={(options) => options}
       disabled={disabled}
-      renderInput={params => (
+      renderInput={(params) => (
         <TextField
           {...params}
           data-testid={dataTestId}

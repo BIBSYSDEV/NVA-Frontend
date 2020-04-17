@@ -37,6 +37,7 @@
     "invalid_url": "Invalid URL",
     "minimum_one_contributor": "You need to have at least one author registered for this publication",
     "minimum_one_file": "You need to have at least one file uploaded for this publication",
+    "date_must_be_in_future": "Date must be in future",
     "required_field": "Required field"
   },
   "files_and_license": {
@@ -61,6 +62,8 @@
     "select_version": "Select version",
     "title": "File name",
     "upload_files": "Upload Files",
+    "upload_one_file": "Upload %{smart_count} file",
+    "upload_x_files": "Upload %{smart_count} files",
     "uploaded_size": "Uploaded {{size}} kB"
   },
   "heading": {
@@ -75,6 +78,7 @@
     "summary": "Summary",
     "validation_errors": "Validation errors"
   },
+  "new_publication": "New publication",
   "publication": {
     "info_text": "Select the resource you wish to register or publish by uploading a resource or link to a publication.",
     "link_publication_description": "E.g. DOI link, link to article, link to video of lecture etc.",

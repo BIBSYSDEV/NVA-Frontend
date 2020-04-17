@@ -1,5 +1,6 @@
 import * as LicenseImages from '../resources/images/licenses';
 import { Uppy as UppyType, StrictTypes } from '@uppy/core';
+import { BackendType, BackendTypeNames } from './publication.types';
 
 export enum LicenseNames {
   CC_BY = 'CC BY',
@@ -62,21 +63,19 @@ export const licenses: LicenseInfo[] = [
   },
 ];
 
-interface License {
+interface License extends BackendType {
   identifier: LicenseNames;
   labels: {
     [key: string]: string;
   };
   link: string;
-  type?: string; // TODO: remove this when fixed in backend
 }
 
-export interface FileSet {
+export interface FileSet extends BackendType {
   files: File[];
-  type?: string; // TODO: remove this when fixed in backend
 }
 
-export interface File {
+export interface File extends BackendType {
   identifier: string;
   name: string;
   size: number;
@@ -85,11 +84,10 @@ export interface File {
   publisherAuthority: boolean;
   embargoDate: Date | null;
   license: License | null;
-  preview?: string;
-  type?: string; // TODO: remove this when fixed in backend
 }
 
 export const emptyFile: File = {
+  type: BackendTypeNames.FILE,
   identifier: '',
   name: '',
   size: 0,
@@ -98,7 +96,11 @@ export const emptyFile: File = {
   publisherAuthority: false,
   embargoDate: null,
   license: null,
-  preview: '',
+};
+
+export const emptyFileSet: FileSet = {
+  type: BackendTypeNames.FILE_SET,
+  files: [],
 };
 
 export interface Uppy extends UppyType<StrictTypes> {

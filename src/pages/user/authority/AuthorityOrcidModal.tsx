@@ -41,8 +41,11 @@ const AuthorityOrcidModal: FC<AuthorityOrcidModalProps> = ({ authority }) => {
 
   const handleNextClick = () => {
     setOpenOrcidModal(true);
-    setOpenAuthorityModal(false);
+    handleClose();
+  };
 
+  const handleClose = () => {
+    setOpenAuthorityModal(false);
     // Set previouslyLoggedIn in localStorage to avoid opening this modal on every login
     localStorage.setItem('previouslyLoggedIn', 'true');
   };
@@ -53,7 +56,7 @@ const AuthorityOrcidModal: FC<AuthorityOrcidModalProps> = ({ authority }) => {
         dataTestId="connect-author-modal"
         disableEscape={!authority}
         openModal={openAuthorityModal}
-        onClose={() => setOpenAuthorityModal(false)}
+        onClose={handleClose}
         ariaLabelledBy="connect-author-modal"
         headingText={t('profile:authority.connect_authority')}>
         <>

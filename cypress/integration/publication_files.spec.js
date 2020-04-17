@@ -7,7 +7,8 @@ describe('Publication: File upload', () => {
   it('The user should be able to upload a file', () => {
     cy.mocklogin();
 
-    cy.get('[data-testid=new-publication-button]').click({ force: true });
+    cy.get('[data-testid=menu]').click({ force: true });
+    cy.get('[data-testid=menu-new-publication-button]').click({ force: true });
     cy.get('[data-testid=new-schema-button]').click({ force: true });
     cy.get('[data-testid=nav-tabpanel-files-and-license]').click({ force: true });
 
@@ -20,6 +21,7 @@ describe('Publication: File upload', () => {
     });
 
     cy.get('input[type=file]').uploadFile('img.jpg');
+    cy.get('.uppy-StatusBar-actionBtn--upload').click({ force: true });
     cy.get('[data-testid=uploaded-file-card]').should('be.visible');
   });
 });
