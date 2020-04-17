@@ -1,7 +1,5 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, FC } from 'react';
 import { useTranslation } from 'react-i18next';
-
-import TabPanel from '../../components/TabPanel/TabPanel';
 import { FormikProps, useFormikContext, Field, FieldProps } from 'formik';
 import { FormikPublication } from '../../types/publication.types';
 import { Button, FormControlLabel, Checkbox } from '@material-ui/core';
@@ -23,9 +21,21 @@ import LabelContentRow from '../../components/LabelContentRow';
 import ErrorSummary from './submission_tab/ErrorSummary';
 import { getAllFileFields, getAllContributorFields } from '../../utils/formik-helpers';
 import { DOI_PREFIX } from '../../utils/constants';
+import Progress from '../../components/Progress';
 
-const StyledPublishButton = styled(Button)`
-  margin-top: 0.5rem;
+const StyledButtonContainer = styled.div`
+  margin-bottom: 1rem;
+`;
+
+const StyledButton = styled(Button)`
+  margin-top: 1rem;
+  margin-right: 0.5rem;
+`;
+
+const StyledProgressContainer = styled.div`
+  padding-left: 1rem;
+  display: flex;
+  align-items: center;
 `;
 
 enum PublishSettingFieldName {
@@ -33,13 +43,15 @@ enum PublishSettingFieldName {
 }
 
 interface SubmissionPanelProps {
-  savePublication: () => void;
+  isSaving: boolean;
+  savePublication: (values: FormikPublication) => void;
 }
 
-const SubmissionPanel: React.FC<SubmissionPanelProps> = ({ savePublication }) => {
+const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication }) => {
   const { t } = useTranslation('publication');
   const { errors, setFieldTouched, setFieldValue, values }: FormikProps<FormikPublication> = useFormikContext();
   const history = useHistory();
+  const { publicationType, reference } = values.entityDescription;
 
   const valuesRef = useRef(values);
   useEffect(() => {
@@ -57,15 +69,12 @@ const SubmissionPanel: React.FC<SubmissionPanelProps> = ({ savePublication }) =>
   }, [setFieldTouched]);
 
   const publishPublication = () => {
-    savePublication();
+    // TODO: change status from draft to published
     history.push(`/publication/${values.identifier}/public`);
   };
 
-  const { publicationType, reference } = values.entityDescription;
-  const validationErrors = errors.entityDescription;
-
   return (
-    <TabPanel ariaLabel="submission">
+    <>
       <ErrorSummary />
       <Card>
         <Heading>{t('heading.summary')}</Heading>
@@ -107,7 +116,7 @@ const SubmissionPanel: React.FC<SubmissionPanelProps> = ({ savePublication }) =>
                     color="primary"
                     checked={value}
                     onChange={() => setFieldValue(name, !value)}
-                    disabled={!!validationErrors}
+                    disabled={!!errors.entityDescription || !!errors.fileSet}
                   />
                 }
                 label={t('submission.ask_for_doi')}
@@ -116,14 +125,24 @@ const SubmissionPanel: React.FC<SubmissionPanelProps> = ({ savePublication }) =>
           </Field>
         </Card>
       </Card>
-      <StyledPublishButton
-        color="primary"
-        variant="contained"
-        onClick={publishPublication}
-        disabled={!!validationErrors}>
-        {t('common:publish')}
-      </StyledPublishButton>
-    </TabPanel>
+      <StyledButtonContainer>
+        <StyledButton
+          color="primary"
+          variant="contained"
+          onClick={publishPublication}
+          disabled={!!errors.entityDescription || !!errors.fileSet}>
+          {t('common:publish')}
+        </StyledButton>
+        <StyledButton disabled={isSaving} onClick={() => savePublication(values)} variant="contained">
+          {t('common:save')}
+          {isSaving && (
+            <StyledProgressContainer>
+              <Progress size={15} thickness={5} />
+            </StyledProgressContainer>
+          )}
+        </StyledButton>
+      </StyledButtonContainer>
+    </>
   );
 };
 
