@@ -2,8 +2,6 @@ import { FormikProps, useFormikContext } from 'formik';
 import React, { useCallback, useEffect, FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-
-import TabPanel, { TabPanelCommonProps } from '../../components/TabPanel/TabPanel';
 import { FormikPublication } from '../../types/publication.types';
 import { PublicationType, ReferenceFieldNames } from '../../types/publicationFieldNames';
 import BookForm from './references_tab/BookForm';
@@ -23,11 +21,7 @@ const StyledSelectContainer = styled.div`
   width: 50%;
 `;
 
-interface ReferencesPanelProps extends TabPanelCommonProps {
-  savePublication: () => void;
-}
-
-const ReferencesPanel: FC<ReferencesPanelProps> = ({ goToNextTab, isSaving, savePublication }) => {
+const ReferencesPanel: FC = () => {
   const { t } = useTranslation('publication');
   const { values, setFieldTouched, setFieldValue }: FormikProps<FormikPublication> = useFormikContext();
   const { publicationType } = values.entityDescription;
@@ -46,11 +40,7 @@ const ReferencesPanel: FC<ReferencesPanelProps> = ({ goToNextTab, isSaving, save
   );
 
   return (
-    <TabPanel
-      ariaLabel="references"
-      goToNextTab={goToNextTab}
-      isSaving={isSaving}
-      onClickSave={() => savePublication()}>
+    <>
       <StyledSelectContainer>
         <SelectTypeField
           fieldName={ReferenceFieldNames.PUBLICATION_TYPE}
@@ -71,7 +61,7 @@ const ReferencesPanel: FC<ReferencesPanelProps> = ({ goToNextTab, isSaving, save
           </Card>
         </StyledBox>
       )}
-    </TabPanel>
+    </>
   );
 };
 

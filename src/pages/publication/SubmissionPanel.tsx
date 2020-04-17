@@ -1,7 +1,5 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, FC } from 'react';
 import { useTranslation } from 'react-i18next';
-
-import TabPanel from '../../components/TabPanel/TabPanel';
 import { FormikProps, useFormikContext, Field, FieldProps } from 'formik';
 import { FormikPublication } from '../../types/publication.types';
 import { Button, FormControlLabel, Checkbox } from '@material-ui/core';
@@ -32,11 +30,7 @@ enum PublishSettingFieldName {
   SHOULD_CREATE_DOI = 'shouldCreateDoi',
 }
 
-interface SubmissionPanelProps {
-  savePublication: () => void;
-}
-
-const SubmissionPanel: React.FC<SubmissionPanelProps> = ({ savePublication }) => {
+const SubmissionPanel: FC = () => {
   const { t } = useTranslation('publication');
   const { errors, setFieldTouched, setFieldValue, values }: FormikProps<FormikPublication> = useFormikContext();
   const history = useHistory();
@@ -57,7 +51,7 @@ const SubmissionPanel: React.FC<SubmissionPanelProps> = ({ savePublication }) =>
   }, [setFieldTouched]);
 
   const publishPublication = () => {
-    savePublication();
+    // TODO: change status from draft to published
     history.push(`/publication/${values.identifier}/public`);
   };
 
@@ -65,7 +59,7 @@ const SubmissionPanel: React.FC<SubmissionPanelProps> = ({ savePublication }) =>
   const validationErrors = errors.entityDescription;
 
   return (
-    <TabPanel ariaLabel="submission">
+    <>
       <ErrorSummary />
       <Card>
         <Heading>{t('heading.summary')}</Heading>
@@ -123,7 +117,7 @@ const SubmissionPanel: React.FC<SubmissionPanelProps> = ({ savePublication }) =>
         disabled={!!validationErrors}>
         {t('common:publish')}
       </StyledPublishButton>
-    </TabPanel>
+    </>
   );
 };
 

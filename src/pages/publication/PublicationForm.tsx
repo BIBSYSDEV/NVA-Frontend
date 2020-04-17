@@ -2,8 +2,6 @@ import { Form, Formik, FormikProps } from 'formik';
 import React, { FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-
-import TabPanel from '../../components/TabPanel/TabPanel';
 import { emptyPublication, FormikPublication } from '../../types/publication.types';
 import { createUppy } from '../../utils/uppy-config';
 import ContributorsPanel from './ContributorsPanel';
@@ -20,11 +18,32 @@ import { NotificationVariant } from '../../types/notification.types';
 import deepmerge from 'deepmerge';
 import Progress from '../../components/Progress';
 import { publicationValidationSchema } from './PublicationFormValidationSchema';
+import { Button } from '@material-ui/core';
 
 const shouldAllowMultipleFiles = false;
 
 const StyledPublication = styled.div`
   width: 100%;
+`;
+
+const StyledPanel = styled.div`
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+`;
+
+const StyledButtonContainer = styled.div`
+  margin-bottom: 1rem;
+`;
+
+const StyledButton = styled(Button)`
+  margin-top: 1rem;
+  margin-right: 0.5rem;
+`;
+
+const StyledProgressContainer = styled.div`
+  padding-left: 1rem;
+  display: flex;
+  align-items: center;
 `;
 
 interface PublicationFormProps {
@@ -116,44 +135,49 @@ const PublicationForm: FC<PublicationFormProps> = ({
         validationSchema={publicationValidationSchema}
         onSubmit={(values: FormikPublication) => savePublication(values)}>
         {({ values }: FormikProps<FormikPublication>) => (
-          <Form>
-            <PublicationFormTabs tabNumber={tabNumber} handleTabChange={handleTabChange} />
-            {tabNumber === 0 && (
-              <DescriptionPanel
-                goToNextTab={goToNextTab}
-                isSaving={isSaving}
-                savePublication={() => savePublication(values)}
-              />
-            )}
-            {tabNumber === 1 && (
-              <ReferencesPanel
-                goToNextTab={goToNextTab}
-                isSaving={isSaving}
-                savePublication={() => savePublication(values)}
-              />
-            )}
-            {tabNumber === 2 && (
-              <ContributorsPanel
-                goToNextTab={goToNextTab}
-                isSaving={isSaving}
-                savePublication={() => savePublication(values)}
-              />
-            )}
-            {tabNumber === 3 && (
-              <FilesAndLicensePanel
-                goToNextTab={goToNextTab}
-                isSaving={isSaving}
-                savePublication={() => savePublication(values)}
-                uppy={uppy}
-              />
-            )}
-
-            {tabNumber === 4 && (
-              <TabPanel ariaLabel="submission" isSaving={isSaving}>
-                <SubmissionPanel savePublication={() => savePublication(values)} />
-              </TabPanel>
-            )}
-          </Form>
+          <>
+            <Form>
+              <PublicationFormTabs tabNumber={tabNumber} handleTabChange={handleTabChange} />
+              {tabNumber === 0 && (
+                <StyledPanel>
+                  <DescriptionPanel aria-label="description" />
+                </StyledPanel>
+              )}
+              {tabNumber === 1 && (
+                <StyledPanel aria-label="references">
+                  <ReferencesPanel />
+                </StyledPanel>
+              )}
+              {tabNumber === 2 && (
+                <StyledPanel aria-label="references">
+                  <ContributorsPanel />
+                </StyledPanel>
+              )}
+              {tabNumber === 3 && (
+                <StyledPanel aria-label="files and license">
+                  <FilesAndLicensePanel uppy={uppy} />
+                </StyledPanel>
+              )}
+              {tabNumber === 4 && (
+                <StyledPanel aria-label="submission">
+                  <SubmissionPanel />
+                </StyledPanel>
+              )}
+            </Form>
+            <StyledButtonContainer>
+              <StyledButton color="primary" variant="contained" onClick={goToNextTab}>
+                {t('common:next')}
+              </StyledButton>
+              <StyledButton variant="contained" onClick={() => savePublication(values)}>
+                {t('common:save')}
+                {isSaving && (
+                  <StyledProgressContainer>
+                    <Progress size={15} thickness={5} />
+                  </StyledProgressContainer>
+                )}
+              </StyledButton>
+            </StyledButtonContainer>
+          </>
         )}
       </Formik>
     </StyledPublication>
