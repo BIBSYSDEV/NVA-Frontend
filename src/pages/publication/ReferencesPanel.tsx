@@ -50,7 +50,7 @@ const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, savePubl
         <SelectTypeField
           fieldName={ReferenceFieldNames.PUBLICATION_TYPE}
           options={Object.values(PublicationType)}
-          onChangeExtension={() => {
+          onChangeType={() => {
             // Ensure some values are reset when publicationType changes
             setFieldValue(ReferenceFieldNames.SUB_TYPE, '');
             setFieldValue(ReferenceFieldNames.PUBLICATION_CONTEXT, null);
