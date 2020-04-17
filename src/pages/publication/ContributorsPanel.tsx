@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { FormHelperText } from '@material-ui/core';
 import { FormikProps, useFormikContext, FieldArray, ErrorMessage, FieldArrayRenderProps } from 'formik';
 import Heading from '../../components/Heading';
+import Card from '../../components/Card';
 import SortableTable from './contributors_tab/components/SortableTable';
 import { FormikPublication } from '../../types/publication.types';
 import { ContributorFieldNames } from '../../types/publicationFieldNames';
@@ -33,7 +34,7 @@ const ContributorsPanel: FC = () => {
   );
 
   return (
-    <>
+    <Card>
       <Heading>{t('contributors.authors')}</Heading>
       <FieldArray name={ContributorFieldNames.CONTRIBUTORS}>
         {({ push, remove, swap, replace, name }: FieldArrayRenderProps) => (
@@ -53,7 +54,7 @@ const ContributorsPanel: FC = () => {
           </>
         )}
       </FieldArray>
-    </>
+    </Card>
   );
 };
 
