@@ -4,7 +4,7 @@ import SelectInstitution from '../../../../components/SelectInstitution';
 import { Button } from '@material-ui/core';
 import Modal from '../../../../components/Modal';
 import { useFormikContext, FormikProps } from 'formik';
-import { FormikPublication } from '../../../../types/publication.types';
+import { FormikPublication, BackendTypeNames } from '../../../../types/publication.types';
 import { SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
 import { FormikInstitutionUnit } from '../../../../types/institution.types';
 import { useTranslation } from 'react-i18next';
@@ -31,6 +31,7 @@ const AffiliationsCell: FC<AffiliationsCellProps> = ({ affiliations, baseFieldNa
     // TODO: Set hierarchy in state? get from backend?
     const mostSpecificUnit = value.subunits.pop() ?? value;
     const addedAffiliation: Institution = {
+      type: BackendTypeNames.ORGANIZATION,
       id: mostSpecificUnit.id,
       labels: {
         nb: mostSpecificUnit.name,

@@ -14,6 +14,7 @@ export enum BackendTypeNames {
   GRANT = 'Grant',
   IDENTITY = 'Identity',
   LICENSE = 'License',
+  ORGANIZATION = 'Organization',
   PAGES = 'Pages',
   PUBLICATION = 'Publication',
   PUBLICATION_DATE = 'PublicationDate',

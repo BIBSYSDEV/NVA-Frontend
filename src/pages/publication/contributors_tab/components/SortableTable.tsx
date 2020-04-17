@@ -115,7 +115,7 @@ const SortableItem = SortableElement(
           )}
         </TableCell>
         <TableCell align="left">
-          {contributor.identity && ( // TODO: Hide if not arpId?
+          {contributor.identity && (
             <AffiliationsCell affiliations={contributor.affiliations} baseFieldName={baseFieldName} />
           )}
         </TableCell>

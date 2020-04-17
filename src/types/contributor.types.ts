@@ -21,7 +21,7 @@ export interface Contributor extends BackendType {
   sequence: number;
 }
 
-export interface Institution {
+export interface Institution extends BackendType {
   id: string;
   labels: {
     [key: string]: string;
