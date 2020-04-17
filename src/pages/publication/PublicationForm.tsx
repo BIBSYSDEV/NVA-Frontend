@@ -160,23 +160,26 @@ const PublicationForm: FC<PublicationFormProps> = ({
               )}
               {tabNumber === 4 && (
                 <StyledPanel aria-label="submission">
-                  <SubmissionPanel />
+                  <SubmissionPanel isSaving={isSaving} savePublication={savePublication} />
                 </StyledPanel>
               )}
             </Form>
-            <StyledButtonContainer>
-              <StyledButton color="primary" variant="contained" onClick={goToNextTab}>
-                {t('common:next')}
-              </StyledButton>
-              <StyledButton variant="contained" onClick={() => savePublication(values)}>
-                {t('common:save')}
-                {isSaving && (
-                  <StyledProgressContainer>
-                    <Progress size={15} thickness={5} />
-                  </StyledProgressContainer>
-                )}
-              </StyledButton>
-            </StyledButtonContainer>
+            {tabNumber !== 4 && (
+              <StyledButtonContainer>
+                <StyledButton color="primary" variant="contained" onClick={goToNextTab}>
+                  {t('common:next')}
+                </StyledButton>
+
+                <StyledButton variant="contained" onClick={() => savePublication(values)}>
+                  {t('common:save')}
+                  {isSaving && (
+                    <StyledProgressContainer>
+                      <Progress size={15} thickness={5} />
+                    </StyledProgressContainer>
+                  )}
+                </StyledButton>
+              </StyledButtonContainer>
+            )}
           </>
         )}
       </Formik>
