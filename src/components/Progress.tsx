@@ -1,12 +1,8 @@
 import React, { FC, useEffect, useState } from 'react';
 
-import { CircularProgress } from '@material-ui/core';
+import { CircularProgress, CircularProgressProps } from '@material-ui/core';
 
-interface ProgressProps {
-  size?: number;
-}
-
-const Progress: FC<ProgressProps> = ({ size }) => {
+const Progress: FC<CircularProgressProps> = ({ size, ...props }) => {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
@@ -20,7 +16,7 @@ const Progress: FC<ProgressProps> = ({ size }) => {
     };
   }, []);
 
-  return <CircularProgress variant="determinate" value={progress} size={size} />;
+  return <CircularProgress size={size} variant="determinate" value={progress} {...props} />;
 };
 
 export default Progress;

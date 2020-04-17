@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import { Tabs } from '@material-ui/core';
 
-import LinkTab from '../../components/TabPanel/LinkTab';
+import LinkTab from '../../components/LinkTab';
 import { FormikPublication } from '../../types/publication.types';
 import { ReferenceFieldNames, DescriptionFieldNames } from '../../types/publicationFieldNames';
 import { hasTouchedError, getAllFileFields, getAllContributorFields } from '../../utils/formik-helpers';
