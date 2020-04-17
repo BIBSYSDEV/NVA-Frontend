@@ -9,6 +9,8 @@
     "add_authors": "Add authors",
     "add_other_contributor": "Add more contributors",
     "authors": "Authors",
+    "confirm_remove_affiliation_text": "Are you sure you want to remove the affiliation to {{affiliationName}} for {{contributorName}}?",
+    "confirm_remove_affiliation_title": "Remove affiliation?",
     "connect_author_identity": "Connect author identity",
     "corresponding": "Corresponding",
     "known_author_identity": "Connected author identity",

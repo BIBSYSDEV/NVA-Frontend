@@ -10,6 +10,7 @@ import { FormikInstitutionUnit } from '../../../../types/institution.types';
 import { useTranslation } from 'react-i18next';
 import NormalText from '../../../../components/NormalText';
 import styled from 'styled-components';
+import ConfirmDialog from '../../../../components/ConfirmDialog';
 
 const StyledAffiliationsCell = styled.div`
   display: flex;
@@ -19,11 +20,13 @@ const StyledAffiliationsCell = styled.div`
 interface AffiliationsCellProps {
   affiliations: Institution[];
   baseFieldName: string;
+  contributorName: string;
 }
 
-const AffiliationsCell: FC<AffiliationsCellProps> = ({ affiliations, baseFieldName }) => {
+const AffiliationsCell: FC<AffiliationsCellProps> = ({ affiliations, baseFieldName, contributorName }) => {
   const { t } = useTranslation('publication');
   const [openAffiliationModal, setOpenAffiliationModal] = useState(false);
+  const [affiliationToRemove, setAffiliationToRemove] = useState<Institution | null>(null);
   const { setFieldValue }: FormikProps<FormikPublication> = useFormikContext();
 
   const toggleAffiliationModal = () => setOpenAffiliationModal(!openAffiliationModal);
@@ -46,25 +49,37 @@ const AffiliationsCell: FC<AffiliationsCellProps> = ({ affiliations, baseFieldNa
   return (
     <>
       {affiliations?.map((affiliation) => (
-        <StyledAffiliationsCell>
+        <StyledAffiliationsCell key={affiliation.id}>
           <NormalText>{Object.values(affiliation.labels)[0]}</NormalText>
-          <Button
-            onClick={() =>
-              setFieldValue(
-                `${baseFieldName}.${SpecificContributorFieldNames.AFFILIATIONS}`,
-                affiliations.filter((affiliation2) => affiliation2.id !== affiliation.id)
-              )
-            }>
-            {t('contributors.remove_affiliation')}
-          </Button>
+          <Button onClick={() => setAffiliationToRemove(affiliation)}>{t('contributors.remove_affiliation')}</Button>
         </StyledAffiliationsCell>
       ))}
       <Button variant="contained" color="primary" onClick={toggleAffiliationModal}>
         {t('contributors.add_affiliation')}
       </Button>
+
+      {/* Modal for adding affiliation */}
       <Modal openModal={openAffiliationModal} onClose={toggleAffiliationModal} headingText="Velg institusjon">
         <SelectInstitution onClose={toggleAffiliationModal} onSubmit={addAffiliation}></SelectInstitution>
       </Modal>
+
+      {/* Confirm dialog for removing affiliation */}
+      <ConfirmDialog
+        open={!!affiliationToRemove}
+        title={t('contributors.confirm_remove_affiliation_title')}
+        text={t('contributors.confirm_remove_affiliation_text', {
+          affiliationName: Object.values(affiliationToRemove?.labels ?? {})[0],
+          contributorName: contributorName,
+        })}
+        onAccept={() => {
+          setFieldValue(
+            `${baseFieldName}.${SpecificContributorFieldNames.AFFILIATIONS}`,
+            affiliations.filter((affiliation) => affiliation.id !== affiliationToRemove?.id)
+          );
+          setAffiliationToRemove(null);
+        }}
+        onCancel={() => setAffiliationToRemove(null)}
+      />
     </>
   );
 };

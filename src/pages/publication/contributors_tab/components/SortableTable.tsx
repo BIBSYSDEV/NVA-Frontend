@@ -116,7 +116,11 @@ const SortableItem = SortableElement(
         </TableCell>
         <TableCell align="left">
           {contributor.identity && (
-            <AffiliationsCell affiliations={contributor.affiliations} baseFieldName={baseFieldName} />
+            <AffiliationsCell
+              affiliations={contributor.affiliations}
+              baseFieldName={baseFieldName}
+              contributorName={contributor.identity.name}
+            />
           )}
         </TableCell>
         <TableCell align="right">

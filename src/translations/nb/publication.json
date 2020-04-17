@@ -9,6 +9,8 @@
     "add_authors": "Legg til flere forfattere",
     "add_other_contributor": "Legg til flere",
     "authors": "Forfattere",
+    "confirm_remove_affiliation_text": "Er du sikker på at du ønsker du å fjerne tilknytningen til {{affiliationName}} for {{contributorName}}?",
+    "confirm_remove_affiliation_title": "Fjerne tilknytning?",
     "connect_author_identity": "Tilknytt forfatteridentitet",
     "corresponding": "Korresponderende",
     "known_author_identity": "Har tilknyttet forfatteridentitet",
