@@ -141,7 +141,8 @@ const SortableItem = SortableElement(
             title={t('contributors.confirm_remove_contributor_title')}
             text={t('contributors.confirm_remove_contributor_text', { contributorName: contributor.identity.name })}
             onAccept={() => onDelete(index)}
-            onCancel={() => setOpenRemoveContributor(false)}></ConfirmDialog>
+            onCancel={() => setOpenRemoveContributor(false)}
+          />
         )}
       </TableRow>
     );

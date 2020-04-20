@@ -77,8 +77,11 @@ const AffiliationsCell: FC<AffiliationsCellProps> = ({ affiliations, baseFieldNa
       </Button>
 
       {/* Modal for adding affiliation */}
-      <Modal openModal={openAffiliationModal} onClose={toggleAffiliationModal} headingText="Velg institusjon">
-        <SelectInstitution onClose={toggleAffiliationModal} onSubmit={addAffiliation}></SelectInstitution>
+      <Modal
+        openModal={openAffiliationModal}
+        onClose={toggleAffiliationModal}
+        headingText={t('contributors.select_institution')}>
+        <SelectInstitution onClose={toggleAffiliationModal} onSubmit={addAffiliation} />
       </Modal>
 
       {/* Confirm dialog for removing affiliation */}
