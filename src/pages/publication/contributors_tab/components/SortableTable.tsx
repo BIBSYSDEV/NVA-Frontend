@@ -25,6 +25,7 @@ import SubHeading from '../../../../components/SubHeading';
 import AddContributor from '../AddContributorModal';
 import styled from 'styled-components';
 import AffiliationsCell from './AffiliationsCell';
+import ConfirmDialog from '../../../../components/ConfirmDialog';
 
 const StyledWarningIcon = styled(WarningIcon)`
   color: ${({ theme }) => theme.palette.warning.main};
@@ -56,7 +57,8 @@ interface SortableItemProps {
 
 const SortableItem = SortableElement(
   ({ contributor, placement, onDelete, setUnverifiedContributor }: SortableItemProps) => {
-    const { t } = useTranslation();
+    const { t } = useTranslation('publication');
+    const [openRemoveContributor, setOpenRemoveContributor] = useState(false);
 
     const index = placement - 1;
     const baseFieldName = `${ContributorFieldNames.CONTRIBUTORS}[${index}]`;
@@ -67,11 +69,11 @@ const SortableItem = SortableElement(
           <SubHeading>
             {contributor.identity.name}{' '}
             {contributor.identity.arpId ? (
-              <Tooltip title={t('publication:contributors.known_author_identity')}>
+              <Tooltip title={t('contributors.known_author_identity')}>
                 <StyledCheckIcon />
               </Tooltip>
             ) : (
-              <Tooltip title={t('publication:contributors.unknown_author_identity')}>
+              <Tooltip title={t('contributors.unknown_author_identity')}>
                 <StyledWarningIcon />
               </Tooltip>
             )}
@@ -81,7 +83,7 @@ const SortableItem = SortableElement(
             {({ field }: FieldProps) => (
               <FormControlLabel
                 control={<Checkbox checked={field.value} {...field} />}
-                label={t('publication:contributors.corresponding')}
+                label={t('contributors.corresponding')}
               />
             )}
           </Field>
@@ -112,7 +114,7 @@ const SortableItem = SortableElement(
                   index: index,
                 })
               }>
-              {t('publication:contributors.connect_author_identity')}
+              {t('contributors.connect_author_identity')}
             </Button>
           )}
         </TableCell>
@@ -127,11 +129,20 @@ const SortableItem = SortableElement(
         </TableCell>
         <TableCell align="right">
           <SubHeading>#{placement}</SubHeading>
-          <Button color="secondary" variant="contained" size="small" onClick={() => onDelete(index)}>
+          <Button color="secondary" variant="contained" size="small" onClick={() => setOpenRemoveContributor(true)}>
             <DeleteIcon />
-            {t('publication:contributors.remove_contributor')}
+            {t('contributors.remove_contributor')}
           </Button>
         </TableCell>
+
+        {openRemoveContributor && (
+          <ConfirmDialog
+            open={openRemoveContributor}
+            title={t('contributors.confirm_remove_contributor_title')}
+            text={t('contributors.confirm_remove_contributor_text', { contributorName: contributor.identity.name })}
+            onAccept={() => onDelete(index)}
+            onCancel={() => setOpenRemoveContributor(false)}></ConfirmDialog>
+        )}
       </TableRow>
     );
   }

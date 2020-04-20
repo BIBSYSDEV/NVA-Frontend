@@ -11,6 +11,8 @@
     "authors": "Forfattere",
     "confirm_remove_affiliation_text": "Er du sikker på at du ønsker du å fjerne tilknytningen til {{affiliationName}} for {{contributorName}}?",
     "confirm_remove_affiliation_title": "Fjerne tilknytning?",
+    "confirm_remove_contributor_text": "Er du sikker på at du ønsker å fjerne {{contributorName}} fra listen over bidragsytere?",
+    "confirm_remove_contributor_title": "Fjerne bidragsyter?",
     "connect_author_identity": "Tilknytt forfatteridentitet",
     "corresponding": "Korresponderende",
     "known_author_identity": "Har tilknyttet forfatteridentitet",

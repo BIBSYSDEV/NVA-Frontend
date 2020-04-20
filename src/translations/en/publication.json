@@ -11,6 +11,8 @@
     "authors": "Authors",
     "confirm_remove_affiliation_text": "Are you sure you want to remove the affiliation to {{affiliationName}} for {{contributorName}}?",
     "confirm_remove_affiliation_title": "Remove affiliation?",
+    "confirm_remove_contributor_text": "Are you sure you want to remove {{contributorName}} from list of contributors?",
+    "confirm_remove_contributor_title": "Remove contributor?",
     "connect_author_identity": "Connect author identity",
     "corresponding": "Corresponding",
     "known_author_identity": "Connected author identity",
