@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react';
 import { Institution } from '../../../../types/contributor.types';
-import SelectInstitution from '../../../../components/SelectInstitution';
 import { Button } from '@material-ui/core';
+import SelectInstitution from '../../../../components/SelectInstitution';
 import Modal from '../../../../components/Modal';
 import { useFormikContext, FormikProps } from 'formik';
 import { FormikPublication, BackendTypeNames } from '../../../../types/publication.types';
@@ -11,10 +11,16 @@ import { useTranslation } from 'react-i18next';
 import NormalText from '../../../../components/NormalText';
 import styled from 'styled-components';
 import ConfirmDialog from '../../../../components/ConfirmDialog';
+import AddIcon from '@material-ui/icons/Add';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 const StyledAffiliationsCell = styled.div`
   display: flex;
   flex-direction: row;
+`;
+
+const StyledRemoveAffiliationButton = styled(Button)`
+  margin-left: 1rem;
 `;
 
 interface AffiliationsCellProps {
@@ -51,10 +57,17 @@ const AffiliationsCell: FC<AffiliationsCellProps> = ({ affiliations, baseFieldNa
       {affiliations?.map((affiliation) => (
         <StyledAffiliationsCell key={affiliation.id}>
           <NormalText>{Object.values(affiliation.labels)[0]}</NormalText>
-          <Button onClick={() => setAffiliationToRemove(affiliation)}>{t('contributors.remove_affiliation')}</Button>
+          <StyledRemoveAffiliationButton
+            variant="text"
+            size="small"
+            onClick={() => setAffiliationToRemove(affiliation)}>
+            <DeleteIcon />
+            {t('common:remove')}
+          </StyledRemoveAffiliationButton>
         </StyledAffiliationsCell>
       ))}
-      <Button variant="contained" color="primary" onClick={toggleAffiliationModal}>
+      <Button variant="text" size="small" onClick={toggleAffiliationModal}>
+        <AddIcon />
         {t('contributors.add_affiliation')}
       </Button>
 

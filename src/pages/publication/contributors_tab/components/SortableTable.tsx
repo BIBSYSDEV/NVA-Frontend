@@ -16,6 +16,7 @@ import { useTranslation } from 'react-i18next';
 import DeleteIcon from '@material-ui/icons/Delete';
 import WarningIcon from '@material-ui/icons/Warning';
 import CheckIcon from '@material-ui/icons/Check';
+import AddIcon from '@material-ui/icons/Add';
 
 import { ContributorFieldNames, SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
 import { Contributor, emptyContributor } from '../../../../types/contributor.types';
@@ -104,6 +105,7 @@ const SortableItem = SortableElement(
             <Button
               variant="contained"
               color="primary"
+              size="small"
               onClick={() =>
                 setUnverifiedContributor({
                   name: contributor.identity.name,
@@ -124,13 +126,11 @@ const SortableItem = SortableElement(
           )}
         </TableCell>
         <TableCell align="right">
-          <div>{placement}</div>
-          <div>
-            <Button color="secondary" onClick={() => onDelete(index)}>
-              <DeleteIcon />
-              {t('common:remove')}
-            </Button>
-          </div>
+          <SubHeading>#{placement}</SubHeading>
+          <Button color="secondary" variant="contained" size="small" onClick={() => onDelete(index)}>
+            <DeleteIcon />
+            {t('publication:contributors.remove_contributor')}
+          </Button>
         </TableCell>
       </TableRow>
     );
@@ -213,6 +213,7 @@ const SortableTable: FC<SortableTableProps> = ({ listOfContributors, push, remov
         variant="contained"
         color="primary"
         data-testid="add-contributor">
+        <AddIcon />
         {t('contributors.add_author')}
       </StyledAddAuthorButton>
       <AddContributor
