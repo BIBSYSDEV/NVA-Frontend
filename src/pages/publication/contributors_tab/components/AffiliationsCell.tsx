@@ -13,6 +13,7 @@ import styled from 'styled-components';
 import ConfirmDialog from '../../../../components/ConfirmDialog';
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
+import { publicationLanguages, LanguageCodes } from '../../../../types/language.types';
 
 const StyledAffiliationsCell = styled.div`
   display: flex;
@@ -33,18 +34,22 @@ const AffiliationsCell: FC<AffiliationsCellProps> = ({ affiliations, baseFieldNa
   const { t } = useTranslation('publication');
   const [openAffiliationModal, setOpenAffiliationModal] = useState(false);
   const [affiliationToRemove, setAffiliationToRemove] = useState<Institution | null>(null);
-  const { setFieldValue }: FormikProps<FormikPublication> = useFormikContext();
+  const { values, setFieldValue }: FormikProps<FormikPublication> = useFormikContext();
 
   const toggleAffiliationModal = () => setOpenAffiliationModal(!openAffiliationModal);
 
   const addAffiliation = (value: FormikInstitutionUnit) => {
     // TODO: Set hierarchy in state? get from backend?
     const mostSpecificUnit = value.subunits.pop() ?? value;
+    const labelKey =
+      publicationLanguages.find((language) => language.value === values.entityDescription.language)?.id ??
+      LanguageCodes.ENGLISH;
+
     const addedAffiliation: Institution = {
       type: BackendTypeNames.ORGANIZATION,
       id: mostSpecificUnit.id,
       labels: {
-        nb: mostSpecificUnit.name,
+        [labelKey]: mostSpecificUnit.name,
       },
     };
     const newAffiliations = affiliations ? [...affiliations, addedAffiliation] : [addedAffiliation];
