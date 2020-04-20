@@ -36,13 +36,11 @@ const AddContributorModal: FC<AddContributorModalProps> = ({
     onAuthorSelected(author);
   };
 
+  const toggleCreateNewAuthor = () => setCreateNewAuthor(!createNewAuthor);
+
   const handleCloseModal = () => {
     toggleModal();
-    setCreateNewAuthor(false);
-  };
-
-  const handleClickNewAuthor = () => {
-    setCreateNewAuthor(true);
+    toggleCreateNewAuthor();
   };
 
   return (
@@ -64,7 +62,7 @@ const AddContributorModal: FC<AddContributorModalProps> = ({
         <>
           <AddContributorModalContent addAuthor={addAuthor} initialSearchTerm={initialSearchTerm} />
           <StyledButtonContainer>
-            <Button color="primary" onClick={handleClickNewAuthor}>
+            <Button color="primary" onClick={toggleCreateNewAuthor}>
               {t('contributors.create_new_author')}
             </Button>
           </StyledButtonContainer>

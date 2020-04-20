@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, FC } from 'react';
 import { Formik, Form, Field } from 'formik';
 import { emptyNewContributor } from '../../../../types/contributor.types';
 import { Collapse, Button } from '@material-ui/core';
@@ -22,7 +22,7 @@ const StyledDescription = styled(NormalText)`
   white-space: pre-wrap;
 `;
 
-const CreateContributorModalContent = () => {
+const CreateContributorModalContent: FC = () => {
   const [readMore, setReadMore] = useState(false);
   const { t } = useTranslation('common');
 
@@ -46,22 +46,20 @@ const CreateContributorModalContent = () => {
           )}
         </StyledSmallButtonContainer>
         <Field
-          aria-label="firstName"
+          aria-label="first name"
           name="firstName"
           label={t('first_name')}
           component={TextField}
           fullWidth
           variant="outlined"
-          inputProps={{ 'data-testid': 'publication-title-input' }}
         />
         <Field
-          aria-label="lastName"
+          aria-label="last name"
           name="lastName"
           label={t('last_name')}
           component={TextField}
           fullWidth
           variant="outlined"
-          inputProps={{ 'data-testid': 'publication-title-input' }}
         />
         <StyledButtonContainer>
           <Button type="submit" color="primary" variant="contained">
