@@ -19,10 +19,10 @@ const StyledFormControl = styled(FormControl)`
 
 interface InstitutionSelectorProps {
   unit: RecursiveInstitutionUnit;
-  counter: number;
+  counter?: number;
 }
 
-const InstitutionSelector: FC<InstitutionSelectorProps> = ({ unit, counter }) => {
+const InstitutionSelector: FC<InstitutionSelectorProps> = ({ unit, counter = 0 }) => {
   const { values, setFieldValue }: FormikProps<FormikInstitutionUnit> = useFormikContext();
 
   const handleChange = (newValue: string, previousValue: string) => {

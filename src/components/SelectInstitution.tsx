@@ -1,4 +1,4 @@
-import React, { useState, FC } from 'react';
+import React, { FC } from 'react';
 import { Button } from '@material-ui/core';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
@@ -23,22 +23,20 @@ const StyledInstitutionSearchContainer = styled.div`
 
 interface SelectInstitutionProps {
   onSubmit: (values: FormikInstitutionUnit) => void;
-  onClose: () => void;
+  onClose?: () => void;
 }
 
 const SelectInstitution: FC<SelectInstitutionProps> = ({ onSubmit, onClose }) => {
-  const [editMode, setEditMode] = useState(false);
   const { t } = useTranslation('profile');
 
   return (
-    <Formik enableReinitialize initialValues={emptyFormikUnit} onSubmit={onSubmit} validateOnChange={false}>
+    <Formik initialValues={emptyFormikUnit} onSubmit={onSubmit} validateOnChange={false}>
       <Form>
         <Field name={FormikInstitutionUnitFieldNames.UNIT}>
           {({ field: { name, value }, form: { values, setFieldValue, resetForm } }: FieldProps) => (
             <StyledInstitutionSearchContainer>
               <InstitutionSearch
                 dataTestId="autosearch-institution"
-                disabled={editMode}
                 label={t('organization.institution')}
                 clearSearchField={values.name === ''}
                 setValueFunction={(inputValue) => {
@@ -46,30 +44,31 @@ const SelectInstitution: FC<SelectInstitutionProps> = ({ onSubmit, onClose }) =>
                   setFieldValue(FormikInstitutionUnitFieldNames.ID, inputValue.id);
                   setFieldValue(name, inputValue ?? emptyRecursiveUnit);
                 }}
-                placeholder={editMode ? values.name : t('organization.search_for_institution')}
+                placeholder={t('organization.search_for_institution')}
               />
               {value.name && (
                 <>
-                  <InstitutionSelector counter={0} unit={value} />
+                  <InstitutionSelector unit={value} />
                   <StyledButton
                     variant="contained"
                     type="submit"
                     color="primary"
                     disabled={!value}
                     data-testid="institution-add-button">
-                    {editMode ? t('common:edit') : t('common:add')}
+                    {t('common:add')}
                   </StyledButton>
                 </>
               )}
-              <StyledButton
-                onClick={() => {
-                  resetForm({});
-                  setEditMode(false);
-                  onClose && onClose();
-                }}
-                variant="contained">
-                {t('common:cancel')}
-              </StyledButton>
+              {onClose && (
+                <StyledButton
+                  onClick={() => {
+                    resetForm({});
+                    onClose();
+                  }}
+                  variant="contained">
+                  {t('common:cancel')}
+                </StyledButton>
+              )}
             </StyledInstitutionSearchContainer>
           )}
         </Field>
