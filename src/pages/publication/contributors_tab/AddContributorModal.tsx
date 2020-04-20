@@ -1,13 +1,17 @@
 import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-
 import Modal from '../../../components/Modal';
 import { Authority } from '../../../types/authority.types';
 import AddContributorModalContent from './components/AddContributorModalContent';
 import { Button } from '@material-ui/core';
-import { Formik, Form, Field } from 'formik';
-import { emptyNewContributor } from '../../../types/contributor.types';
-import { TextField } from 'formik-material-ui';
+import styled from 'styled-components';
+import CreateContributorModalContent from './components/CreateContributorModalContent';
+
+const StyledButtonContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+`;
 
 interface AddContributorModalProps {
   onAuthorSelected: (author: Authority) => void;
@@ -55,53 +59,15 @@ const AddContributorModal: FC<AddContributorModalProps> = ({
       onClose={handleCloseModal}
       openModal={open}>
       {createNewAuthor ? (
-        <Formik
-          initialValues={emptyNewContributor}
-          onSubmit={(values) => console.log('create new author here', values)}>
-          <Form>
-            <p>
-              Personregisteret inneholder personer med opphavsrett til publiserte vitenskapelige arbeid som er
-              tilgjengelig i institusjonens bibliotek, vitenarkiv eller er del av Norsk Vitenskapsindeks. Også omtalte
-              personer kan bli registrert.
-            </p>
-            <Field
-              aria-label="firstName"
-              name="firstName"
-              label={t('common:first_name')}
-              component={TextField}
-              fullWidth
-              variant="outlined"
-              inputProps={{ 'data-testid': 'publication-title-input' }}
-            />
-            <Field
-              aria-label="lastName"
-              name="lastName"
-              label={t('common:last_name')}
-              component={TextField}
-              fullWidth
-              variant="outlined"
-              inputProps={{ 'data-testid': 'publication-title-input' }}
-            />
-            <Field
-              aria-label="messageToCurator"
-              name="messageToCurator"
-              label={t('common:message_to_curator')}
-              component={TextField}
-              multiline
-              rows="4"
-              fullWidth
-              variant="outlined"
-              inputProps={{ 'data-testid': 'message_to_curator' }}
-            />
-            <Button type="submit" color="primary" variant="contained">
-              Opprett
-            </Button>
-          </Form>
-        </Formik>
+        <CreateContributorModalContent />
       ) : (
         <>
           <AddContributorModalContent addAuthor={addAuthor} initialSearchTerm={initialSearchTerm} />
-          <Button onClick={handleClickNewAuthor}>Opprett ny forfatter</Button>
+          <StyledButtonContainer>
+            <Button color="primary" onClick={handleClickNewAuthor}>
+              {t('contributors.create_new_author')}
+            </Button>
+          </StyledButtonContainer>
         </>
       )}
     </Modal>

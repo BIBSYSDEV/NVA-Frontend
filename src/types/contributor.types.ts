@@ -43,11 +43,9 @@ export const emptyContributor: Contributor = {
 export interface NewContributor {
   firstName: string;
   lastName: string;
-  messageToCurator?: string;
 }
 
 export const emptyNewContributor: NewContributor = {
   firstName: '',
   lastName: '',
-  messageToCurator: '',
 };
