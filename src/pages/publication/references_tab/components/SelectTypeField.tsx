@@ -27,7 +27,7 @@ const SelectTypeField: FC<SelectTypeFieldProps> = ({ fieldName, options, onChang
           helperText={<ErrorMessage name={field.name} />}
           onChange={(event: React.ChangeEvent<any>) => {
             field.onChange(event);
-            onChangeType && onChangeType();
+            onChangeType?.();
           }}>
           {options.map((typeValue) => (
             <MenuItem value={typeValue} key={typeValue} data-testid={`publication_type-${typeValue}`}>
