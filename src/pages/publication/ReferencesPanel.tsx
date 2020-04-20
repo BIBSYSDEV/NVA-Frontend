@@ -1,9 +1,7 @@
 import { FormikProps, useFormikContext } from 'formik';
-import React, { useEffect } from 'react';
+import React, { useEffect, FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-
-import TabPanel from '../../components/TabPanel/TabPanel';
 import { FormikPublication } from '../../types/publication.types';
 import { PublicationType, ReferenceFieldNames } from '../../types/publicationFieldNames';
 import BookForm from './references_tab/BookForm';
@@ -23,12 +21,7 @@ const StyledSelectContainer = styled.div`
   width: 50%;
 `;
 
-interface ReferencesPanelProps {
-  goToNextTab: () => void;
-  savePublication: () => void;
-}
-
-const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, savePublication }) => {
+const ReferencesPanel: FC = () => {
   const { t } = useTranslation('publication');
   const { values, setFieldTouched, setFieldValue }: FormikProps<FormikPublication> = useFormikContext();
   const { publicationType, publicationSubtype } = values.entityDescription;
@@ -45,7 +38,7 @@ const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, savePubl
   }, [setFieldValue, publicationSubtype]);
 
   return (
-    <TabPanel ariaLabel="references" goToNextTab={goToNextTab} onClickSave={() => savePublication()}>
+    <>
       <StyledSelectContainer>
         <SelectTypeField
           fieldName={ReferenceFieldNames.PUBLICATION_TYPE}
@@ -70,7 +63,7 @@ const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, savePubl
           {publicationType === PublicationType.PUBLICATION_IN_JOURNAL && <JournalArticleForm />}
         </StyledCard>
       )}
-    </TabPanel>
+    </>
   );
 };
 
