@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import styled from 'styled-components';
 import {
   Button,
@@ -23,7 +23,7 @@ import HelpIcon from '@material-ui/icons/Help';
 import SubHeading from '../../../components/SubHeading';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Label from '../../../components/Label';
-import { Field, FieldProps, FormikProps, useFormikContext, ErrorMessage } from 'formik';
+import { Field, FieldProps, FormikProps, ErrorMessage } from 'formik';
 import { FormikPublication } from '../../../types/publication.types';
 import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 
@@ -72,13 +72,13 @@ const StyledActions = styled.div`
 interface FileCardProps {
   file: File;
   removeFile: () => void;
-  toggleLicenseModal?: () => void;
   baseFieldName?: string;
+  form?: FormikProps<FormikPublication>;
+  toggleLicenseModal?: () => void;
 }
 
-const FileCard: React.FC<FileCardProps> = ({ file, removeFile, toggleLicenseModal, baseFieldName }) => {
+const FileCard: FC<FileCardProps> = ({ file, removeFile, baseFieldName, form, toggleLicenseModal }) => {
   const { t } = useTranslation('publication');
-  const { setFieldValue }: FormikProps<FormikPublication> = useFormikContext();
 
   return (
     <Card data-testid="uploaded-file-card">
@@ -107,7 +107,7 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, toggleLicenseModa
                     <RadioGroup
                       aria-label="version"
                       {...field}
-                      onChange={(event) => setFieldValue(field.name, event.target.value === 'published')}>
+                      onChange={(event) => form?.setFieldValue(field.name, event.target.value === 'published')}>
                       <FormControlLabel
                         value="accepted"
                         control={<Radio color="primary" checked={field.value !== null && !field.value} />}
@@ -131,7 +131,7 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, toggleLicenseModa
                         inputVariant="outlined"
                         label={t('files_and_license.embargo_date')}
                         {...field}
-                        onChange={(value) => setFieldValue(field.name, value)}
+                        onChange={(value) => form?.setFieldValue(field.name, value)}
                         disablePast
                         autoOk
                         format={'dd.MM.yyyy'}
@@ -167,7 +167,7 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, toggleLicenseModa
                         helperText={<ErrorMessage name={field.name} />}
                         label={t('files_and_license.license')}
                         onChange={({ target: { value } }) =>
-                          setFieldValue(field.name, {
+                          form?.setFieldValue(field.name, {
                             type: 'License',
                             identifier: value as LicenseNames,
                             labels: { nb: value },
