@@ -18,10 +18,14 @@ import { publicationLanguages, LanguageCodes } from '../../../../types/language.
 const StyledAffiliationsCell = styled.div`
   display: flex;
   flex-direction: row;
+  align-items: center;
 `;
 
 const StyledRemoveAffiliationButton = styled(Button)`
   margin-left: 1rem;
+`;
+const StyledAddAffiliationButton = styled(Button)`
+  margin-top: 0.5rem;
 `;
 
 interface AffiliationsCellProps {
@@ -63,7 +67,7 @@ const AffiliationsCell: FC<AffiliationsCellProps> = ({ affiliations, baseFieldNa
         <StyledAffiliationsCell key={affiliation.id}>
           <NormalText>{Object.values(affiliation.labels)[0]}</NormalText>
           <StyledRemoveAffiliationButton
-            variant="text"
+            variant="outlined"
             size="small"
             onClick={() => setAffiliationToRemove(affiliation)}>
             <DeleteIcon />
@@ -71,10 +75,10 @@ const AffiliationsCell: FC<AffiliationsCellProps> = ({ affiliations, baseFieldNa
           </StyledRemoveAffiliationButton>
         </StyledAffiliationsCell>
       ))}
-      <Button variant="text" size="small" onClick={toggleAffiliationModal}>
+      <StyledAddAffiliationButton variant="outlined" size="small" onClick={toggleAffiliationModal}>
         <AddIcon />
         {t('contributors.add_affiliation')}
-      </Button>
+      </StyledAddAffiliationButton>
 
       {/* Modal for adding affiliation */}
       <Modal
