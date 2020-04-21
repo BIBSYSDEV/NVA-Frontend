@@ -54,101 +54,92 @@ interface UnverifiedContributor {
 
 interface SortableItemProps {
   contributor: Contributor;
-  onDelete: (index: number) => void;
+  onRemoveContributorClick: () => void;
   setUnverifiedContributor: (unverifiedContributor: UnverifiedContributor) => void;
 }
 
-const SortableItem = SortableElement(({ contributor, onDelete, setUnverifiedContributor }: SortableItemProps) => {
-  const { t } = useTranslation('publication');
-  const [openRemoveContributor, setOpenRemoveContributor] = useState(false);
+const SortableItem = SortableElement(
+  ({ contributor, onRemoveContributorClick, setUnverifiedContributor }: SortableItemProps) => {
+    const { t } = useTranslation('publication');
 
-  const index = contributor.sequence - 1;
-  const baseFieldName = `${ContributorFieldNames.CONTRIBUTORS}[${index}]`;
+    const index = contributor.sequence - 1;
+    const baseFieldName = `${ContributorFieldNames.CONTRIBUTORS}[${index}]`;
 
-  return (
-    <TableRow tabIndex={0} key={contributor.identity.id}>
-      <TableCell align="left">
-        <SubHeading>
-          {contributor.identity.name}{' '}
-          {contributor.identity.arpId ? (
-            <Tooltip title={t('contributors.known_author_identity')}>
-              <StyledCheckIcon />
-            </Tooltip>
-          ) : (
-            <Tooltip title={t('contributors.unknown_author_identity')}>
-              <StyledWarningIcon />
-            </Tooltip>
+    return (
+      <TableRow tabIndex={0} key={contributor.identity.id}>
+        <TableCell align="left">
+          <SubHeading>
+            {contributor.identity.name}{' '}
+            {contributor.identity.arpId ? (
+              <Tooltip title={t('contributors.known_author_identity')}>
+                <StyledCheckIcon />
+              </Tooltip>
+            ) : (
+              <Tooltip title={t('contributors.unknown_author_identity')}>
+                <StyledWarningIcon />
+              </Tooltip>
+            )}
+          </SubHeading>
+
+          <Field name={`${baseFieldName}.${SpecificContributorFieldNames.CORRESPONDING}`}>
+            {({ field }: FieldProps) => (
+              <FormControlLabel
+                control={<Checkbox checked={field.value} {...field} />}
+                label={t('contributors.corresponding')}
+              />
+            )}
+          </Field>
+          <div>
+            {contributor.correspondingAuthor && (
+              <Field name={`${baseFieldName}.${SpecificContributorFieldNames.EMAIL}`}>
+                {({ field, meta: { error, touched } }: FieldProps) => (
+                  <StyledEmailTextField
+                    variant="outlined"
+                    label={t('common:email')}
+                    {...field}
+                    error={touched && !!error}
+                    helperText={touched && error}
+                  />
+                )}
+              </Field>
+            )}
+          </div>
+
+          {!contributor.identity.arpId && (
+            <Button
+              variant="contained"
+              color="primary"
+              size="small"
+              onClick={() =>
+                setUnverifiedContributor({
+                  name: contributor.identity.name,
+                  index,
+                })
+              }>
+              {t('contributors.connect_author_identity')}
+            </Button>
           )}
-        </SubHeading>
-
-        <Field name={`${baseFieldName}.${SpecificContributorFieldNames.CORRESPONDING}`}>
-          {({ field }: FieldProps) => (
-            <FormControlLabel
-              control={<Checkbox checked={field.value} {...field} />}
-              label={t('contributors.corresponding')}
+        </TableCell>
+        <TableCell align="left">
+          {contributor.identity && (
+            <AffiliationsCell
+              affiliations={contributor.affiliations}
+              baseFieldName={baseFieldName}
+              contributorName={contributor.identity.name}
             />
           )}
-        </Field>
-        <div>
-          {contributor.correspondingAuthor && (
-            <Field name={`${baseFieldName}.${SpecificContributorFieldNames.EMAIL}`}>
-              {({ field, meta: { error, touched } }: FieldProps) => (
-                <StyledEmailTextField
-                  variant="outlined"
-                  label={t('common:email')}
-                  {...field}
-                  error={touched && !!error}
-                  helperText={touched && error}
-                />
-              )}
-            </Field>
-          )}
-        </div>
-
-        {!contributor.identity.arpId && (
-          <Button
-            variant="contained"
-            color="primary"
-            size="small"
-            onClick={() =>
-              setUnverifiedContributor({
-                name: contributor.identity.name,
-                index,
-              })
-            }>
-            {t('contributors.connect_author_identity')}
+        </TableCell>
+        <TableCell align="right">
+          <SubHeading>#{contributor.sequence}</SubHeading>
+          <Button color="secondary" variant="contained" size="small" onClick={onRemoveContributorClick}>
+            <DeleteIcon />
+            {t('contributors.remove_contributor')}
           </Button>
-        )}
-      </TableCell>
-      <TableCell align="left">
-        {contributor.identity && (
-          <AffiliationsCell
-            affiliations={contributor.affiliations}
-            baseFieldName={baseFieldName}
-            contributorName={contributor.identity.name}
-          />
-        )}
-      </TableCell>
-      <TableCell align="right">
-        <SubHeading>#{contributor.sequence}</SubHeading>
-        <Button color="secondary" variant="contained" size="small" onClick={() => setOpenRemoveContributor(true)}>
-          <DeleteIcon />
-          {t('contributors.remove_contributor')}
-        </Button>
-      </TableCell>
-
-      {openRemoveContributor && (
-        <ConfirmDialog
-          open={openRemoveContributor}
-          title={t('contributors.confirm_remove_contributor_title')}
-          text={t('contributors.confirm_remove_contributor_text', { contributorName: contributor.identity.name })}
-          onAccept={() => onDelete(index)}
-          onCancel={() => setOpenRemoveContributor(false)}
-        />
-      )}
-    </TableRow>
-  );
-});
+        </TableCell>
+      </TableRow>
+    );
+  }
+);
 
 interface SortableListProps {
   contributors: Contributor[];
@@ -157,21 +148,46 @@ interface SortableListProps {
   setUnverifiedContributor: (unverifiedContributor: UnverifiedContributor) => void;
 }
 
-const SortableList = SortableContainer(({ contributors, onDelete, setUnverifiedContributor }: SortableListProps) => (
-  <Table>
-    <TableBody>
-      {contributors.map((contributor: Contributor, index: number) => (
-        <SortableItem
-          index={index}
-          contributor={contributor}
-          key={contributor.identity.id || contributor.identity.name}
-          onDelete={onDelete}
-          setUnverifiedContributor={setUnverifiedContributor}
+const SortableList = SortableContainer(({ contributors, onDelete, setUnverifiedContributor }: SortableListProps) => {
+  const { t } = useTranslation('publication');
+  const [contributorToRemove, setContributorToRemove] = useState<Contributor | null>(null);
+
+  const closeConfirmDialog = () => {
+    setContributorToRemove(null);
+  };
+
+  return (
+    <>
+      <Table>
+        <TableBody>
+          {contributors.map((contributor: Contributor, index: number) => (
+            <SortableItem
+              index={index}
+              contributor={contributor}
+              key={contributor.identity.id || contributor.identity.name}
+              onRemoveContributorClick={() => setContributorToRemove(contributor)}
+              setUnverifiedContributor={setUnverifiedContributor}
+            />
+          ))}
+        </TableBody>
+      </Table>
+      {contributorToRemove && (
+        <ConfirmDialog
+          open={!!contributorToRemove}
+          title={t('contributors.confirm_remove_contributor_title')}
+          text={t('contributors.confirm_remove_contributor_text', {
+            contributorName: contributorToRemove.identity.name,
+          })}
+          onAccept={() => {
+            onDelete(contributorToRemove.sequence - 1);
+            closeConfirmDialog();
+          }}
+          onCancel={closeConfirmDialog}
         />
-      ))}
-    </TableBody>
-  </Table>
-));
+      )}
+    </>
+  );
+});
 
 interface SortableTableProps {
   push: (obj: any) => void;
