@@ -26,6 +26,10 @@ import AddContributor from '../AddContributorModal';
 import styled from 'styled-components';
 import AffiliationsCell from './AffiliationsCell';
 import ConfirmDialog from '../../../../components/ConfirmDialog';
+import { useDispatch } from 'react-redux';
+import { setNotification } from '../../../../redux/actions/notificationActions';
+import { NotificationVariant } from '../../../../types/notification.types';
+import { Authority } from '../../../../types/authority.types';
 
 const StyledWarningIcon = styled(WarningIcon)`
   color: ${({ theme }) => theme.palette.warning.main};
@@ -182,10 +186,11 @@ interface SortableTableProps {
 }
 
 const SortableTable: FC<SortableTableProps> = ({ listOfContributors, push, remove, swap, replace }) => {
+  const { t } = useTranslation('publication');
+  const dispatch = useDispatch();
   const { setFieldValue, values }: FormikProps<FormikPublication> = useFormikContext();
   const [openContributorModal, setOpenContributorModal] = useState(false);
   const [unverifiedContributor, setUnverifiedContributor] = useState<UnverifiedContributor | null>(null);
-  const { t } = useTranslation('publication');
 
   const toggleContributorModal = () => {
     if (unverifiedContributor) {
@@ -211,6 +216,28 @@ const SortableTable: FC<SortableTableProps> = ({ listOfContributors, push, remov
     }
   };
 
+  const onAuthorSelected = (authority: Authority) => {
+    if (listOfContributors.some((contributor) => contributor.identity.arpId === authority.systemControlNumber)) {
+      dispatch(setNotification(t('contributors.author_already_added'), NotificationVariant.Info));
+      return;
+    }
+    const contributor: Contributor = {
+      ...emptyContributor,
+      identity: {
+        ...emptyContributor.identity,
+        arpId: authority.systemControlNumber,
+        orcId: authority.orcids.length > 0 ? authority.orcids[0] : '',
+        name: authority.name,
+      },
+      sequence: listOfContributors.length,
+    };
+    if (!unverifiedContributor) {
+      push(contributor);
+    } else {
+      replace(unverifiedContributor.index, contributor);
+    }
+  };
+
   return (
     <>
       <SortableList
@@ -232,25 +259,7 @@ const SortableTable: FC<SortableTableProps> = ({ listOfContributors, push, remov
         initialSearchTerm={unverifiedContributor?.name}
         open={openContributorModal}
         toggleModal={toggleContributorModal}
-        onAuthorSelected={(authority) => {
-          const contributor: Contributor = {
-            ...emptyContributor,
-            // TODO: add institution when available from backend
-            // institutions: authority.orgunitids.map(orgunit => ({
-            //   id: orgunit,
-            //   name: orgunit,
-            // })),
-            identity: {
-              ...emptyContributor.identity,
-              arpId: authority.systemControlNumber,
-              orcId: authority.orcids.length > 0 ? authority.orcids[0] : '',
-              name: authority.name,
-            },
-            sequence: listOfContributors.length,
-          };
-
-          !unverifiedContributor ? push(contributor) : replace(unverifiedContributor.index, contributor);
-        }}
+        onAuthorSelected={onAuthorSelected}
       />
     </>
   );

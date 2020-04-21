@@ -8,6 +8,7 @@
     "add_author": "Add author",
     "add_authors": "Add authors",
     "add_other_contributor": "Add more contributors",
+    "author_already_added": "Chosen author are already added",
     "authors": "Authors",
     "confirm_remove_affiliation_text": "Are you sure you want to remove the affiliation to {{affiliationName}} for {{contributorName}}?",
     "confirm_remove_affiliation_title": "Remove affiliation?",

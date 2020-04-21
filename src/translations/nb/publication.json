@@ -8,6 +8,7 @@
     "add_author": "Legg til forfatter",
     "add_authors": "Legg til flere forfattere",
     "add_other_contributor": "Legg til flere",
+    "author_already_added": "Valgt forfatter er allerde lagt inn",
     "authors": "Forfattere",
     "confirm_remove_affiliation_text": "Er du sikker på at du ønsker du å fjerne tilknytningen til {{affiliationName}} for {{contributorName}}?",
     "confirm_remove_affiliation_title": "Fjerne tilknytning?",
