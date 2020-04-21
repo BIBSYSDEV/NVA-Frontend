@@ -54,104 +54,101 @@ interface UnverifiedContributor {
 
 interface SortableItemProps {
   contributor: Contributor;
-  placement: number;
   onDelete: (index: number) => void;
   setUnverifiedContributor: (unverifiedContributor: UnverifiedContributor) => void;
 }
 
-const SortableItem = SortableElement(
-  ({ contributor, placement, onDelete, setUnverifiedContributor }: SortableItemProps) => {
-    const { t } = useTranslation('publication');
-    const [openRemoveContributor, setOpenRemoveContributor] = useState(false);
+const SortableItem = SortableElement(({ contributor, onDelete, setUnverifiedContributor }: SortableItemProps) => {
+  const { t } = useTranslation('publication');
+  const [openRemoveContributor, setOpenRemoveContributor] = useState(false);
 
-    const index = placement - 1;
-    const baseFieldName = `${ContributorFieldNames.CONTRIBUTORS}[${index}]`;
+  const index = contributor.sequence - 1;
+  const baseFieldName = `${ContributorFieldNames.CONTRIBUTORS}[${index}]`;
 
-    return (
-      <TableRow tabIndex={0} key={contributor.identity.id}>
-        <TableCell align="left">
-          <SubHeading>
-            {contributor.identity.name}{' '}
-            {contributor.identity.arpId ? (
-              <Tooltip title={t('contributors.known_author_identity')}>
-                <StyledCheckIcon />
-              </Tooltip>
-            ) : (
-              <Tooltip title={t('contributors.unknown_author_identity')}>
-                <StyledWarningIcon />
-              </Tooltip>
-            )}
-          </SubHeading>
-
-          <Field name={`${baseFieldName}.${SpecificContributorFieldNames.CORRESPONDING}`}>
-            {({ field }: FieldProps) => (
-              <FormControlLabel
-                control={<Checkbox checked={field.value} {...field} />}
-                label={t('contributors.corresponding')}
-              />
-            )}
-          </Field>
-          <div>
-            {contributor.correspondingAuthor && (
-              <Field name={`${baseFieldName}.${SpecificContributorFieldNames.EMAIL}`}>
-                {({ field, meta: { error, touched } }: FieldProps) => (
-                  <StyledEmailTextField
-                    variant="outlined"
-                    label={t('common:email')}
-                    {...field}
-                    error={touched && !!error}
-                    helperText={touched && error}
-                  />
-                )}
-              </Field>
-            )}
-          </div>
-
-          {!contributor.identity.arpId && (
-            <Button
-              variant="contained"
-              color="primary"
-              size="small"
-              onClick={() =>
-                setUnverifiedContributor({
-                  name: contributor.identity.name,
-                  index: index,
-                })
-              }>
-              {t('contributors.connect_author_identity')}
-            </Button>
+  return (
+    <TableRow tabIndex={0} key={contributor.identity.id}>
+      <TableCell align="left">
+        <SubHeading>
+          {contributor.identity.name}{' '}
+          {contributor.identity.arpId ? (
+            <Tooltip title={t('contributors.known_author_identity')}>
+              <StyledCheckIcon />
+            </Tooltip>
+          ) : (
+            <Tooltip title={t('contributors.unknown_author_identity')}>
+              <StyledWarningIcon />
+            </Tooltip>
           )}
-        </TableCell>
-        <TableCell align="left">
-          {contributor.identity && (
-            <AffiliationsCell
-              affiliations={contributor.affiliations}
-              baseFieldName={baseFieldName}
-              contributorName={contributor.identity.name}
+        </SubHeading>
+
+        <Field name={`${baseFieldName}.${SpecificContributorFieldNames.CORRESPONDING}`}>
+          {({ field }: FieldProps) => (
+            <FormControlLabel
+              control={<Checkbox checked={field.value} {...field} />}
+              label={t('contributors.corresponding')}
             />
           )}
-        </TableCell>
-        <TableCell align="right">
-          <SubHeading>#{placement}</SubHeading>
-          <Button color="secondary" variant="contained" size="small" onClick={() => setOpenRemoveContributor(true)}>
-            <DeleteIcon />
-            {t('contributors.remove_contributor')}
-          </Button>
-        </TableCell>
+        </Field>
+        <div>
+          {contributor.correspondingAuthor && (
+            <Field name={`${baseFieldName}.${SpecificContributorFieldNames.EMAIL}`}>
+              {({ field, meta: { error, touched } }: FieldProps) => (
+                <StyledEmailTextField
+                  variant="outlined"
+                  label={t('common:email')}
+                  {...field}
+                  error={touched && !!error}
+                  helperText={touched && error}
+                />
+              )}
+            </Field>
+          )}
+        </div>
 
-        {openRemoveContributor && (
-          <ConfirmDialog
-            open={openRemoveContributor}
-            title={t('contributors.confirm_remove_contributor_title')}
-            text={t('contributors.confirm_remove_contributor_text', { contributorName: contributor.identity.name })}
-            onAccept={() => onDelete(index)}
-            onCancel={() => setOpenRemoveContributor(false)}
+        {!contributor.identity.arpId && (
+          <Button
+            variant="contained"
+            color="primary"
+            size="small"
+            onClick={() =>
+              setUnverifiedContributor({
+                name: contributor.identity.name,
+                index,
+              })
+            }>
+            {t('contributors.connect_author_identity')}
+          </Button>
+        )}
+      </TableCell>
+      <TableCell align="left">
+        {contributor.identity && (
+          <AffiliationsCell
+            affiliations={contributor.affiliations}
+            baseFieldName={baseFieldName}
+            contributorName={contributor.identity.name}
           />
         )}
-      </TableRow>
-    );
-  }
-);
+      </TableCell>
+      <TableCell align="right">
+        <SubHeading>#{contributor.sequence}</SubHeading>
+        <Button color="secondary" variant="contained" size="small" onClick={() => setOpenRemoveContributor(true)}>
+          <DeleteIcon />
+          {t('contributors.remove_contributor')}
+        </Button>
+      </TableCell>
+
+      {openRemoveContributor && (
+        <ConfirmDialog
+          open={openRemoveContributor}
+          title={t('contributors.confirm_remove_contributor_title')}
+          text={t('contributors.confirm_remove_contributor_text', { contributorName: contributor.identity.name })}
+          onAccept={() => onDelete(index)}
+          onCancel={() => setOpenRemoveContributor(false)}
+        />
+      )}
+    </TableRow>
+  );
+});
 
 interface SortableListProps {
   contributors: Contributor[];
@@ -168,7 +165,6 @@ const SortableList = SortableContainer(({ contributors, onDelete, setUnverifiedC
           index={index}
           contributor={contributor}
           key={contributor.identity.id || contributor.identity.name}
-          placement={index + 1}
           onDelete={onDelete}
           setUnverifiedContributor={setUnverifiedContributor}
         />
