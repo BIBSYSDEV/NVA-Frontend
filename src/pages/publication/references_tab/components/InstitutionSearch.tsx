@@ -8,6 +8,7 @@ import { RecursiveInstitutionUnit } from '../../../../types/institution.types';
 import { getInstitutionAndSubunits } from '../../../../api/institutionApi';
 import { setNotification } from '../../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../../types/notification.types';
+import { filterInstitutions } from '../../../../utils/institutions-helpers';
 
 interface InstitutionSearchProps {
   clearSearchField: boolean;
@@ -16,6 +17,7 @@ interface InstitutionSearchProps {
   setValueFunction: (value: any) => void;
   placeholder?: string;
   disabled?: boolean;
+  excludeInstitutionIds?: string[];
 }
 
 const InstitutionSearch: FC<InstitutionSearchProps> = ({
@@ -25,6 +27,7 @@ const InstitutionSearch: FC<InstitutionSearchProps> = ({
   setValueFunction,
   placeholder,
   disabled,
+  excludeInstitutionIds,
 }) => {
   const [searchResults, setSearchResults] = useState<RecursiveInstitutionUnit[]>([]);
 
@@ -35,12 +38,10 @@ const InstitutionSearch: FC<InstitutionSearchProps> = ({
     debounce(async (searchTerm: string) => {
       const response = await getInstitutionAndSubunits(searchTerm);
       if (response) {
-        setSearchResults(
-          response.map((unit: RecursiveInstitutionUnit) => ({
-            ...unit,
-            title: unit.name,
-          }))
-        );
+        const relevantInstitutions = excludeInstitutionIds
+          ? filterInstitutions(response, excludeInstitutionIds)
+          : response;
+        setSearchResults(relevantInstitutions);
       } else {
         dispatch(setNotification(t('error.search', NotificationVariant.Error)));
       }

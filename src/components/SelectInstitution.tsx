@@ -24,9 +24,10 @@ const StyledInstitutionSearchContainer = styled.div`
 interface SelectInstitutionProps {
   onSubmit: (values: FormikInstitutionUnit) => void;
   onClose?: () => void;
+  excludeAffiliationIds?: string[];
 }
 
-const SelectInstitution: FC<SelectInstitutionProps> = ({ onSubmit, onClose }) => {
+const SelectInstitution: FC<SelectInstitutionProps> = ({ onSubmit, onClose, excludeAffiliationIds }) => {
   const { t } = useTranslation('profile');
 
   return (
@@ -44,6 +45,7 @@ const SelectInstitution: FC<SelectInstitutionProps> = ({ onSubmit, onClose }) =>
                   setFieldValue(FormikInstitutionUnitFieldNames.ID, inputValue.id);
                   setFieldValue(name, inputValue ?? emptyRecursiveUnit);
                 }}
+                excludeInstitutionIds={excludeAffiliationIds}
                 placeholder={t('organization.search_for_institution')}
               />
               {value.name && (
