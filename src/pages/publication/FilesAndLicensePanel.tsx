@@ -70,7 +70,7 @@ const FilesAndLicensePanel: FC<FilesAndLicensePanelProps> = ({ uppy }) => {
       {publicationContext && <PublicationChannelInfoCard publisher={publicationContext} />}
 
       <FieldArray name={FileFieldNames.FILES}>
-        {({ insert, remove, name, form }: FieldArrayRenderProps) => (
+        {({ insert, remove, name }: FieldArrayRenderProps) => (
           <>
             <Card>
               <Heading>{t('files_and_license.upload_files')}</Heading>
@@ -94,7 +94,6 @@ const FilesAndLicensePanel: FC<FilesAndLicensePanelProps> = ({ uppy }) => {
                     <FileCard
                       key={file.identifier}
                       file={file}
-                      form={form}
                       removeFile={() => {
                         uppy.removeFile(file.identifier);
                         remove(index);
