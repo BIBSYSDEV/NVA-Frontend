@@ -1,8 +1,7 @@
 import React, { useState, FC } from 'react';
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form, Field, FieldProps } from 'formik';
 import { emptyNewContributor } from '../../../../types/contributor.types';
-import { Collapse, Button } from '@material-ui/core';
-import { TextField } from 'formik-material-ui';
+import { Collapse, Button, TextField } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import NormalText from '../../../../components/NormalText';
@@ -41,22 +40,16 @@ const CreateContributorModalContent: FC = () => {
             {t(readMore ? 'read_less' : 'read_more')}
           </Button>
         </StyledSmallButtonContainer>
-        <Field
-          aria-label="first name"
-          name="firstName"
-          label={t('first_name')}
-          component={TextField}
-          fullWidth
-          variant="outlined"
-        />
-        <Field
-          aria-label="last name"
-          name="lastName"
-          label={t('last_name')}
-          component={TextField}
-          fullWidth
-          variant="outlined"
-        />
+        <Field name="firstName">
+          {({ field }: FieldProps) => (
+            <TextField {...field} aria-label="first name" fullWidth label={t('first_name')} variant="outlined" />
+          )}
+        </Field>
+        <Field name="lastName">
+          {({ field }: FieldProps) => (
+            <TextField {...field} aria-label="last name" fullWidth label={t('last_name')} variant="outlined" />
+          )}
+        </Field>
         <StyledButtonContainer>
           <Button type="submit" color="primary" variant="contained">
             {t('create_authority')}
