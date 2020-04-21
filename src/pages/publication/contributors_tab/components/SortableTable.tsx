@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC, useState, useEffect, useCallback } from 'react';
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 import {
   Checkbox,
@@ -178,17 +178,21 @@ const SortableList = SortableContainer(({ contributors, onDelete, setUnverifiedC
 ));
 
 interface SortableTableProps {
-  listOfContributors: Contributor[];
   push: (obj: any) => void;
   remove: (index: number) => void;
-  swap: (oldIndex: number, newIndex: number) => void;
+  move: (oldIndex: number, newIndex: number) => void;
   replace: (index: number, value: any) => void;
 }
 
-const SortableTable: FC<SortableTableProps> = ({ listOfContributors, push, remove, swap, replace }) => {
+const SortableTable: FC<SortableTableProps> = ({ push, remove, move, replace }) => {
   const { t } = useTranslation('publication');
   const dispatch = useDispatch();
-  const { setFieldValue, values }: FormikProps<FormikPublication> = useFormikContext();
+  const {
+    setFieldValue,
+    values: {
+      entityDescription: { contributors },
+    },
+  }: FormikProps<FormikPublication> = useFormikContext();
   const [openContributorModal, setOpenContributorModal] = useState(false);
   const [unverifiedContributor, setUnverifiedContributor] = useState<UnverifiedContributor | null>(null);
 
@@ -206,42 +210,60 @@ const SortableTable: FC<SortableTableProps> = ({ listOfContributors, push, remov
     }
   }, [unverifiedContributor]);
 
-  const handleOnSortEnd = ({ oldIndex, newIndex }: any) => {
-    swap(oldIndex, newIndex);
-    for (let index in values.entityDescription.contributors) {
-      setFieldValue(
-        `${ContributorFieldNames.CONTRIBUTORS}[${index}].${SpecificContributorFieldNames.SEQUENCE}`,
-        +index
-      );
+  const updateSequences = useCallback(() => {
+    // Ensure that sequence values are continuous
+    for (let index in contributors) {
+      const correctSequence = +index + 1;
+      if (contributors[index].sequence !== correctSequence) {
+        setFieldValue(
+          `${ContributorFieldNames.CONTRIBUTORS}[${index}].${SpecificContributorFieldNames.SEQUENCE}`,
+          correctSequence
+        );
+      }
     }
+  }, [setFieldValue, contributors]);
+
+  useEffect(() => {
+    updateSequences();
+  }, [updateSequences, contributors.length]);
+
+  const handleOnSortEnd = ({ oldIndex, newIndex }: any) => {
+    move(oldIndex, newIndex);
+    updateSequences();
   };
 
   const onAuthorSelected = (authority: Authority) => {
-    if (listOfContributors.some((contributor) => contributor.identity.arpId === authority.systemControlNumber)) {
+    if (contributors.some((contributor) => contributor.identity.arpId === authority.systemControlNumber)) {
       dispatch(setNotification(t('contributors.author_already_added'), NotificationVariant.Info));
       return;
     }
-    const contributor: Contributor = {
-      ...emptyContributor,
-      identity: {
-        ...emptyContributor.identity,
-        arpId: authority.systemControlNumber,
-        orcId: authority.orcids.length > 0 ? authority.orcids[0] : '',
-        name: authority.name,
-      },
-      sequence: listOfContributors.length,
+
+    const identity = {
+      ...emptyContributor.identity,
+      arpId: authority.systemControlNumber,
+      orcId: authority.orcids.length > 0 ? authority.orcids[0] : '',
+      name: authority.name,
     };
+
     if (!unverifiedContributor) {
-      push(contributor);
+      const newContributor: Contributor = {
+        ...emptyContributor,
+        identity,
+      };
+      push(newContributor);
     } else {
-      replace(unverifiedContributor.index, contributor);
+      const verifiedContributor: Contributor = {
+        ...contributors[unverifiedContributor.index],
+        identity,
+      };
+      replace(unverifiedContributor.index, verifiedContributor);
     }
   };
 
   return (
     <>
       <SortableList
-        contributors={listOfContributors}
+        contributors={contributors}
         onSortEnd={handleOnSortEnd}
         onDelete={(index) => remove(index)}
         distance={10}

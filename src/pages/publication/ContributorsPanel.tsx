@@ -37,15 +37,9 @@ const ContributorsPanel: FC = () => {
     <Card>
       <Heading>{t('contributors.authors')}</Heading>
       <FieldArray name={ContributorFieldNames.CONTRIBUTORS}>
-        {({ push, remove, swap, replace, name }: FieldArrayRenderProps) => (
+        {({ push, remove, move, replace, name }: FieldArrayRenderProps) => (
           <>
-            <SortableTable
-              listOfContributors={contributors}
-              push={push}
-              remove={remove}
-              swap={swap}
-              replace={replace}
-            />
+            <SortableTable push={push} remove={remove} move={move} replace={replace} />
             {contributors.length === 0 && (
               <FormHelperText error>
                 <ErrorMessage name={name} />
