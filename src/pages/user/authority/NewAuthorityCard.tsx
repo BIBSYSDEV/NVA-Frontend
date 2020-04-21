@@ -97,7 +97,7 @@ const NewAuthorityCard: FC<NewAuthorityCardProps> = ({ onClickCancel }) => {
             variant="contained"
             size="large"
             onClick={handleCreateAuthority}>
-            {t('authority.create_authority')}
+            {t('common:create_authority')}
           </StyledButton>
           {hasMatchingAuthorities && (
             <StyledCancelButton
