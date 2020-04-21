@@ -13,7 +13,7 @@
     "@types/react-router": "^5.1.5",
     "@types/react-truncate": "^2.3.3",
     "@uppy/aws-s3-multipart": "^1.6.2",
-    "@uppy/core": "^1.10.1",
+    "@uppy/core": "^1.10.2",
     "@uppy/dashboard": "^1.8.3",
     "@uppy/react": "^1.6.2",
     "aws-amplify": "^3.0.8",
