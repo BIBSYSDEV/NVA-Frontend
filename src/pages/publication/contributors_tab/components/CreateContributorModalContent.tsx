@@ -26,6 +26,8 @@ const CreateContributorModalContent: FC = () => {
   const [readMore, setReadMore] = useState(false);
   const { t } = useTranslation('common');
 
+  const toggleReadMore = () => setReadMore(!readMore);
+
   return (
     <Formik
       initialValues={emptyNewContributor}
@@ -35,15 +37,9 @@ const CreateContributorModalContent: FC = () => {
           <StyledDescription>{t('description_create_authority')}</StyledDescription>
         </Collapse>
         <StyledSmallButtonContainer>
-          {!readMore ? (
-            <Button color="primary" onClick={() => setReadMore(true)}>
-              {t('read_more')}
-            </Button>
-          ) : (
-            <Button color="primary" onClick={() => setReadMore(false)}>
-              {t('read_less')}
-            </Button>
-          )}
+          <Button color="primary" onClick={toggleReadMore}>
+            {t(readMore ? 'read_less' : 'read_more')}
+          </Button>
         </StyledSmallButtonContainer>
         <Field
           aria-label="first name"
