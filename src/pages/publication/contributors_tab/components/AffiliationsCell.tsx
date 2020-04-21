@@ -43,6 +43,9 @@ const AffiliationsCell: FC<AffiliationsCellProps> = ({ affiliations, baseFieldNa
   const toggleAffiliationModal = () => setOpenAffiliationModal(!openAffiliationModal);
 
   const addAffiliation = (value: FormikInstitutionUnit) => {
+    if (!value.id) {
+      return;
+    }
     // TODO: Set hierarchy in state? get from backend?
     const mostSpecificUnit = value.subunits.pop() ?? value;
     const labelKey =
