@@ -84,7 +84,7 @@ const AffiliationsCell: FC<AffiliationsCellProps> = ({ affiliations, baseFieldNa
         <SelectInstitution
           onClose={toggleAffiliationModal}
           onSubmit={addAffiliation}
-          excludeAffiliationIds={affiliations.map((affiliation) => affiliation.id)}
+          excludeAffiliationIds={affiliations?.map((affiliation) => affiliation.id)}
         />
       </Modal>
 
