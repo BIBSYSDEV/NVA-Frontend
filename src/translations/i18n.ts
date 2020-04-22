@@ -32,7 +32,7 @@ export const defaultLanguage = localStorage.getItem('i18nextLng') || LanguageCod
 
 i18n.use(LanguageDetector).init({
   resources: {
-    en: {
+    eng: {
       admin: adminEn,
       breadcrumbs: breadcrumbsEn,
       common: commonEn,
@@ -46,7 +46,7 @@ i18n.use(LanguageDetector).init({
       translations: translationsEn,
       workLists: workListsEn,
     },
-    nb: {
+    nob: {
       admin: adminNb,
       breadcrumbs: breadcrumbsNb,
       common: commonNb,
