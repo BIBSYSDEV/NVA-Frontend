@@ -7,7 +7,7 @@
       "status": "draft",
       "createdBy": "Kåre Kåresen",
       "contributors": [],
-      "publicationType": "JournalArticle",
+      "publicationType": "JournalContent",
       "reference": {
         "publicationContext": {
           "level": 2,
@@ -24,7 +24,7 @@
       "status": "draft",
       "createdBy": "Kari Karisen",
       "contributors": [],
-      "publicationType": "JournalArticle",
+      "publicationType": "JournalContent",
       "reference": {
         "publicationContext": {
           "title": "Novum Testamentum",
@@ -41,7 +41,7 @@
       "status": "draft",
       "createdBy": "Arne Arnesen",
       "contributors": [],
-      "publicationType": "JournalArticle",
+      "publicationType": "JournalContent",
       "reference": {
         "publicationContext": {
           "title": "Scandinavian Journal of the Old Testament",
@@ -58,7 +58,7 @@
       "status": "rejected",
       "createdBy": "Bob Boffaloe",
       "contributors": [],
-      "publicationType": "JournalArticle",
+      "publicationType": "JournalContent",
       "reference": {
         "publicationContext": {
           "title": "Journal for the Study of the New Testament",
@@ -80,7 +80,7 @@
         "day": "01"
       },
       "contributors": [],
-      "publicationType": "JournalArticle",
+      "publicationType": "JournalContent",
       "reference": {
         "publicationContext": {
           "title": "American Journal of Physiology - Gastrointestinal and Liver Physiology",
