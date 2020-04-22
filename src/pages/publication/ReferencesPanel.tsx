@@ -1,5 +1,5 @@
 import { FormikProps, useFormikContext } from 'formik';
-import React, { useCallback, useEffect, FC } from 'react';
+import React, { useEffect, FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { FormikPublication } from '../../types/publication.types';
@@ -13,7 +13,7 @@ import Card from '../../components/Card';
 import Heading from '../../components/Heading';
 import SelectTypeField from './references_tab/components/SelectTypeField';
 
-const StyledBox = styled.div`
+const StyledCard = styled(Card)`
   margin-top: 1rem;
 `;
 
@@ -24,20 +24,18 @@ const StyledSelectContainer = styled.div`
 const ReferencesPanel: FC = () => {
   const { t } = useTranslation('publication');
   const { values, setFieldTouched, setFieldValue }: FormikProps<FormikPublication> = useFormikContext();
-  const { publicationType } = values.entityDescription;
-
-  // Validation messages won't show on fields that are not touched
-  const setAllFieldsTouched = useCallback(() => {
-    Object.values(ReferenceFieldNames).forEach((fieldName) => setFieldTouched(fieldName));
-  }, [setFieldTouched]);
+  const { publicationType, publicationSubtype } = values.entityDescription;
 
   useEffect(
-    () => () => {
-      // Set all fields as touched if user navigates away from this panel (on unmount)
-      setAllFieldsTouched();
-    },
-    [setAllFieldsTouched]
+    // Set all fields as touched if user navigates away from this panel (on unmount)
+    () => () => Object.values(ReferenceFieldNames).forEach((fieldName) => setFieldTouched(fieldName)),
+    [setFieldTouched]
   );
+
+  useEffect(() => {
+    // Update publicationInstance's type when publicationSubtype changes
+    setFieldValue(ReferenceFieldNames.PUBLICATION_INSTANCE_TYPE, publicationSubtype);
+  }, [setFieldValue, publicationSubtype]);
 
   return (
     <>
@@ -45,21 +43,25 @@ const ReferencesPanel: FC = () => {
         <SelectTypeField
           fieldName={ReferenceFieldNames.PUBLICATION_TYPE}
           options={Object.values(PublicationType)}
-          onChangeExtension={() => setFieldValue(ReferenceFieldNames.SUB_TYPE, '')}
+          onChangeType={() => {
+            // Ensure some values are reset when publicationType changes
+            setFieldValue(ReferenceFieldNames.SUB_TYPE, '');
+            setFieldValue(ReferenceFieldNames.PUBLICATION_CONTEXT, null);
+            // Avoid showing potential errors instantly
+            Object.values(ReferenceFieldNames).forEach((fieldName) => setFieldTouched(fieldName, false));
+          }}
         />
       </StyledSelectContainer>
 
       {publicationType && (
-        <StyledBox>
-          <Card>
-            <Heading data-testid="publication_type-heading">{t(`publicationTypes:${publicationType}`)}</Heading>
-            {publicationType === PublicationType.BOOK && <BookForm />}
-            {publicationType === PublicationType.CHAPTER && <ChapterForm />}
-            {publicationType === PublicationType.REPORT && <ReportForm />}
-            {publicationType === PublicationType.DEGREE && <DegreeForm />}
-            {publicationType === PublicationType.PUBLICATION_IN_JOURNAL && <JournalArticleForm />}
-          </Card>
-        </StyledBox>
+        <StyledCard>
+          <Heading data-testid="publication_type-heading">{t(`publicationTypes:${publicationType}`)}</Heading>
+          {publicationType === PublicationType.BOOK && <BookForm />}
+          {publicationType === PublicationType.CHAPTER && <ChapterForm />}
+          {publicationType === PublicationType.REPORT && <ReportForm />}
+          {publicationType === PublicationType.DEGREE && <DegreeForm />}
+          {publicationType === PublicationType.PUBLICATION_IN_JOURNAL && <JournalArticleForm />}
+        </StyledCard>
       )}
     </>
   );

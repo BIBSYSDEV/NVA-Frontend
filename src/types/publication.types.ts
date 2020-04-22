@@ -36,10 +36,10 @@ export const levelMap: EnumDictionary<string, number | null> = {
 };
 
 export interface BackendType {
-  type: BackendTypeNames;
+  type: BackendTypeNames | '';
 }
 
-export interface Publisher {
+export interface Publisher extends BackendType {
   title: string;
   printIssn: string;
   onlineIssn: string;
@@ -48,6 +48,7 @@ export interface Publisher {
 }
 
 export const emptyPublisher: Publisher = {
+  type: '',
   printIssn: '',
   onlineIssn: '',
   level: null,
@@ -86,7 +87,7 @@ interface PublicationPages extends BackendType {
   end: string;
 }
 
-interface PublicationInstance {
+interface PublicationInstance extends BackendType {
   articleNumber: string;
   issue: string;
   pages: PublicationPages;
@@ -137,6 +138,7 @@ const emptyPages: PublicationPages = {
 };
 
 const emptyPublicationInstance: PublicationInstance = {
+  type: '',
   volume: '',
   issue: '',
   articleNumber: '',
