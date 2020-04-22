@@ -28,7 +28,11 @@ import publicationTypesNb from './nb/publicationTypes.json';
 import translationsNb from './nb/translations.json';
 import workListsNb from './nb/workLists.json';
 
-export const defaultLanguage = localStorage.getItem('i18nextLng') || LanguageCodes.NORWEGIAN_BOKMAL;
+const previousLanguage = localStorage.getItem('i18nextLng');
+export const defaultLanguage =
+  previousLanguage && Object.values(LanguageCodes).includes(previousLanguage as LanguageCodes)
+    ? previousLanguage
+    : LanguageCodes.NORWEGIAN_BOKMAL;
 
 i18n.use(LanguageDetector).init({
   resources: {
