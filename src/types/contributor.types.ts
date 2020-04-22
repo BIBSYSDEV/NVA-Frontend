@@ -21,10 +21,11 @@ export interface Contributor extends BackendType {
   sequence: number;
 }
 
-interface Institution {
+export interface Institution extends BackendType {
   id: string;
-  name: string;
-  institution?: Institution;
+  labels: {
+    [key: string]: string;
+  };
 }
 
 export const emptyContributor: Contributor = {

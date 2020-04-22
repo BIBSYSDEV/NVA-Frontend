@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC, useState, useEffect, useCallback } from 'react';
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 import {
   Checkbox,
@@ -16,6 +16,7 @@ import { useTranslation } from 'react-i18next';
 import DeleteIcon from '@material-ui/icons/Delete';
 import WarningIcon from '@material-ui/icons/Warning';
 import CheckIcon from '@material-ui/icons/Check';
+import AddIcon from '@material-ui/icons/Add';
 
 import { ContributorFieldNames, SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
 import { Contributor, emptyContributor } from '../../../../types/contributor.types';
@@ -23,6 +24,12 @@ import { FormikPublication } from '../../../../types/publication.types';
 import SubHeading from '../../../../components/SubHeading';
 import AddContributor from '../AddContributorModal';
 import styled from 'styled-components';
+import AffiliationsCell from './AffiliationsCell';
+import ConfirmDialog from '../../../../components/ConfirmDialog';
+import { useDispatch } from 'react-redux';
+import { setNotification } from '../../../../redux/actions/notificationActions';
+import { NotificationVariant } from '../../../../types/notification.types';
+import { Authority } from '../../../../types/authority.types';
 
 const StyledWarningIcon = styled(WarningIcon)`
   color: ${({ theme }) => theme.palette.warning.main};
@@ -47,16 +54,15 @@ interface UnverifiedContributor {
 
 interface SortableItemProps {
   contributor: Contributor;
-  placement: number;
-  onDelete: (index: number) => void;
+  onRemoveContributorClick: () => void;
   setUnverifiedContributor: (unverifiedContributor: UnverifiedContributor) => void;
 }
 
 const SortableItem = SortableElement(
-  ({ contributor, placement, onDelete, setUnverifiedContributor }: SortableItemProps) => {
-    const { t } = useTranslation();
+  ({ contributor, onRemoveContributorClick, setUnverifiedContributor }: SortableItemProps) => {
+    const { t } = useTranslation('publication');
 
-    const index = placement - 1;
+    const index = contributor.sequence - 1;
     const baseFieldName = `${ContributorFieldNames.CONTRIBUTORS}[${index}]`;
 
     return (
@@ -65,11 +71,11 @@ const SortableItem = SortableElement(
           <SubHeading>
             {contributor.identity.name}{' '}
             {contributor.identity.arpId ? (
-              <Tooltip title={t('publication:contributors.known_author_identity')}>
+              <Tooltip title={t('contributors.known_author_identity')}>
                 <StyledCheckIcon />
               </Tooltip>
             ) : (
-              <Tooltip title={t('publication:contributors.unknown_author_identity')}>
+              <Tooltip title={t('contributors.unknown_author_identity')}>
                 <StyledWarningIcon />
               </Tooltip>
             )}
@@ -78,8 +84,8 @@ const SortableItem = SortableElement(
           <Field name={`${baseFieldName}.${SpecificContributorFieldNames.CORRESPONDING}`}>
             {({ field }: FieldProps) => (
               <FormControlLabel
-                control={<Checkbox checked={field.value} {...field} />}
-                label={t('publication:contributors.corresponding')}
+                control={<Checkbox checked={!!field.value} {...field} />}
+                label={t('contributors.corresponding')}
               />
             )}
           </Field>
@@ -91,6 +97,7 @@ const SortableItem = SortableElement(
                     variant="outlined"
                     label={t('common:email')}
                     {...field}
+                    value={field.value || ''}
                     error={touched && !!error}
                     helperText={touched && error}
                   />
@@ -103,29 +110,32 @@ const SortableItem = SortableElement(
             <Button
               variant="contained"
               color="primary"
+              size="small"
               onClick={() =>
                 setUnverifiedContributor({
                   name: contributor.identity.name,
-                  index: index,
+                  index,
                 })
               }>
-              {t('publication:contributors.connect_author_identity')}
+              {t('contributors.connect_author_identity')}
             </Button>
           )}
         </TableCell>
         <TableCell align="left">
-          {contributor.affiliations?.map((affiliation) => (
-            <div key={`${affiliation.id}`}>{affiliation.name}</div>
-          ))}
+          {contributor.identity && (
+            <AffiliationsCell
+              affiliations={contributor.affiliations}
+              baseFieldName={baseFieldName}
+              contributorName={contributor.identity.name}
+            />
+          )}
         </TableCell>
         <TableCell align="right">
-          <div>{placement}</div>
-          <div>
-            <Button color="secondary" onClick={() => onDelete(index)}>
-              <DeleteIcon />
-              {t('common:remove')}
-            </Button>
-          </div>
+          <SubHeading>#{contributor.sequence}</SubHeading>
+          <Button color="secondary" variant="contained" size="small" onClick={onRemoveContributorClick}>
+            <DeleteIcon />
+            {t('contributors.remove_contributor')}
+          </Button>
         </TableCell>
       </TableRow>
     );
@@ -139,36 +149,65 @@ interface SortableListProps {
   setUnverifiedContributor: (unverifiedContributor: UnverifiedContributor) => void;
 }
 
-const SortableList = SortableContainer(({ contributors, onDelete, setUnverifiedContributor }: SortableListProps) => (
-  <Table>
-    <TableBody>
-      {contributors.map((contributor: Contributor, index: number) => (
-        <SortableItem
-          index={index}
-          contributor={contributor}
-          key={contributor.identity.id || contributor.identity.name}
-          placement={index + 1}
-          onDelete={onDelete}
-          setUnverifiedContributor={setUnverifiedContributor}
+const SortableList = SortableContainer(({ contributors, onDelete, setUnverifiedContributor }: SortableListProps) => {
+  const { t } = useTranslation('publication');
+  const [contributorToRemove, setContributorToRemove] = useState<Contributor | null>(null);
+
+  const closeConfirmDialog = () => {
+    setContributorToRemove(null);
+  };
+
+  return (
+    <>
+      <Table>
+        <TableBody>
+          {contributors.map((contributor: Contributor, index: number) => (
+            <SortableItem
+              index={index}
+              contributor={contributor}
+              key={contributor.identity.id || contributor.identity.name}
+              onRemoveContributorClick={() => setContributorToRemove(contributor)}
+              setUnverifiedContributor={setUnverifiedContributor}
+            />
+          ))}
+        </TableBody>
+      </Table>
+      {contributorToRemove && (
+        <ConfirmDialog
+          open={!!contributorToRemove}
+          title={t('contributors.confirm_remove_contributor_title')}
+          text={t('contributors.confirm_remove_contributor_text', {
+            contributorName: contributorToRemove.identity.name,
+          })}
+          onAccept={() => {
+            onDelete(contributorToRemove.sequence - 1);
+            closeConfirmDialog();
+          }}
+          onCancel={closeConfirmDialog}
         />
-      ))}
-    </TableBody>
-  </Table>
-));
+      )}
+    </>
+  );
+});
 
 interface SortableTableProps {
-  listOfContributors: Contributor[];
   push: (obj: any) => void;
   remove: (index: number) => void;
-  swap: (oldIndex: number, newIndex: number) => void;
+  move: (oldIndex: number, newIndex: number) => void;
   replace: (index: number, value: any) => void;
 }
 
-const SortableTable: FC<SortableTableProps> = ({ listOfContributors, push, remove, swap, replace }) => {
-  const { setFieldValue, values }: FormikProps<FormikPublication> = useFormikContext();
+const SortableTable: FC<SortableTableProps> = ({ push, remove, move, replace }) => {
+  const { t } = useTranslation('publication');
+  const dispatch = useDispatch();
+  const {
+    setFieldValue,
+    values: {
+      entityDescription: { contributors },
+    },
+  }: FormikProps<FormikPublication> = useFormikContext();
   const [openContributorModal, setOpenContributorModal] = useState(false);
   const [unverifiedContributor, setUnverifiedContributor] = useState<UnverifiedContributor | null>(null);
-  const { t } = useTranslation('publication');
 
   const toggleContributorModal = () => {
     if (unverifiedContributor) {
@@ -184,20 +223,60 @@ const SortableTable: FC<SortableTableProps> = ({ listOfContributors, push, remov
     }
   }, [unverifiedContributor]);
 
+  const updateSequences = useCallback(() => {
+    // Ensure that sequence values are continuous
+    for (let index in contributors) {
+      const correctSequence = +index + 1;
+      if (contributors[index].sequence !== correctSequence) {
+        setFieldValue(
+          `${ContributorFieldNames.CONTRIBUTORS}[${index}].${SpecificContributorFieldNames.SEQUENCE}`,
+          correctSequence
+        );
+      }
+    }
+  }, [setFieldValue, contributors]);
+
+  useEffect(() => {
+    updateSequences();
+  }, [updateSequences, contributors.length]);
+
   const handleOnSortEnd = ({ oldIndex, newIndex }: any) => {
-    swap(oldIndex, newIndex);
-    for (let index in values.entityDescription.contributors) {
-      setFieldValue(
-        `${ContributorFieldNames.CONTRIBUTORS}[${index}].${SpecificContributorFieldNames.SEQUENCE}`,
-        +index
-      );
+    move(oldIndex, newIndex);
+    updateSequences();
+  };
+
+  const onAuthorSelected = (authority: Authority) => {
+    if (contributors.some((contributor) => contributor.identity.arpId === authority.systemControlNumber)) {
+      dispatch(setNotification(t('contributors.author_already_added'), NotificationVariant.Info));
+      return;
+    }
+
+    const identity = {
+      ...emptyContributor.identity,
+      arpId: authority.systemControlNumber,
+      orcId: authority.orcids.length > 0 ? authority.orcids[0] : '',
+      name: authority.name,
+    };
+
+    if (!unverifiedContributor) {
+      const newContributor: Contributor = {
+        ...emptyContributor,
+        identity,
+      };
+      push(newContributor);
+    } else {
+      const verifiedContributor: Contributor = {
+        ...contributors[unverifiedContributor.index],
+        identity,
+      };
+      replace(unverifiedContributor.index, verifiedContributor);
     }
   };
 
   return (
     <>
       <SortableList
-        contributors={listOfContributors}
+        contributors={contributors}
         onSortEnd={handleOnSortEnd}
         onDelete={(index) => remove(index)}
         distance={10}
@@ -208,31 +287,14 @@ const SortableTable: FC<SortableTableProps> = ({ listOfContributors, push, remov
         variant="contained"
         color="primary"
         data-testid="add-contributor">
+        <AddIcon />
         {t('contributors.add_author')}
       </StyledAddAuthorButton>
       <AddContributor
         initialSearchTerm={unverifiedContributor?.name}
         open={openContributorModal}
         toggleModal={toggleContributorModal}
-        onAuthorSelected={(authority) => {
-          const contributor: Contributor = {
-            ...emptyContributor,
-            // TODO: add institution when available from backend
-            // institutions: authority.orgunitids.map(orgunit => ({
-            //   id: orgunit,
-            //   name: orgunit,
-            // })),
-            identity: {
-              ...emptyContributor.identity,
-              arpId: authority.systemControlNumber,
-              orcId: authority.orcids.length > 0 ? authority.orcids[0] : '',
-              name: authority.name,
-            },
-            sequence: listOfContributors.length,
-          };
-
-          !unverifiedContributor ? push(contributor) : replace(unverifiedContributor.index, contributor);
-        }}
+        onAuthorSelected={onAuthorSelected}
       />
     </>
   );
