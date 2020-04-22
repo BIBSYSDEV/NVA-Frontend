@@ -8,6 +8,9 @@ import NormalText from '../../../../components/NormalText';
 import { createAuthority } from '../../../../api/authorityApi';
 import { Authority } from '../../../../types/authority.types';
 import Progress from '../../../../components/Progress';
+import { useDispatch } from 'react-redux';
+import { setNotification } from '../../../../redux/actions/notificationActions';
+import { NotificationVariant } from '../../../../types/notification.types';
 
 const StyledButtonContainer = styled.div`
   display: flex;
@@ -42,13 +45,18 @@ const CreateContributorModalContent: FC<CreateContributorModalContentProps> = ({
   const [readMore, setReadMore] = useState(false);
   const [loading, setLoading] = useState(false);
   const { t } = useTranslation('common');
+  const dispatch = useDispatch();
 
   const toggleReadMore = () => setReadMore(!readMore);
 
   const handleSubmit = async (values: FormikValues) => {
     setLoading(true);
     const createdAuthority = await createAuthority(values.firstName, values.lastName);
-    addAuthor(createdAuthority);
+    if (createdAuthority?.error) {
+      dispatch(setNotification(createdAuthority.error, NotificationVariant.Error));
+    } else {
+      addAuthor(createdAuthority);
+    }
     handleCloseModal();
   };
 
