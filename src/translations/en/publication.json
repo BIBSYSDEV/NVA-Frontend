@@ -4,14 +4,23 @@
     "info": "The anthology this chapter is published in must be registered in advance"
   },
   "contributors": {
+    "add_affiliation": "Add affiliation",
     "add_author": "Add author",
     "add_authors": "Add authors",
     "add_other_contributor": "Add more contributors",
+    "author_already_added": "Chosen author is already added",
     "authors": "Authors",
+    "confirm_remove_affiliation_text": "Are you sure you want to remove the affiliation to {{affiliationName}} for {{contributorName}}?",
+    "confirm_remove_affiliation_title": "Remove affiliation?",
+    "confirm_remove_contributor_text": "Are you sure you want to remove {{contributorName}} from list of contributors?",
+    "confirm_remove_contributor_title": "Remove contributor?",
     "connect_author_identity": "Connect author identity",
     "corresponding": "Corresponding",
+    "create_new_author": "Create new author",
     "known_author_identity": "Connected author identity",
     "prefilled_name": "Prefilled name",
+    "remove_contributor": "Remove contributor",
+    "select_institution": "Select institution",
     "type": "Contributor type",
     "unknown_author_identity": "Unknown author identity",
     "verify_person": "Verify"

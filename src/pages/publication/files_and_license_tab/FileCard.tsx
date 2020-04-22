@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import styled from 'styled-components';
 import {
   Button,
@@ -23,8 +23,7 @@ import HelpIcon from '@material-ui/icons/Help';
 import SubHeading from '../../../components/SubHeading';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Label from '../../../components/Label';
-import { Field, FieldProps, FormikProps, useFormikContext, ErrorMessage } from 'formik';
-import { FormikPublication } from '../../../types/publication.types';
+import { Field, FieldProps, ErrorMessage } from 'formik';
 import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 
 const StyledDescription = styled.div`
@@ -72,13 +71,12 @@ const StyledActions = styled.div`
 interface FileCardProps {
   file: File;
   removeFile: () => void;
-  toggleLicenseModal?: () => void;
   baseFieldName?: string;
+  toggleLicenseModal?: () => void;
 }
 
-const FileCard: React.FC<FileCardProps> = ({ file, removeFile, toggleLicenseModal, baseFieldName }) => {
+const FileCard: FC<FileCardProps> = ({ file, removeFile, baseFieldName, toggleLicenseModal }) => {
   const { t } = useTranslation('publication');
-  const { setFieldValue }: FormikProps<FormikPublication> = useFormikContext();
 
   return (
     <Card data-testid="uploaded-file-card">
@@ -101,13 +99,13 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, toggleLicenseModa
           {!file.administrativeAgreement && (
             <StyledFileInfo>
               <Field name={`${baseFieldName}.${SpecificFileFieldNames.PUBLISHER_AUTHORITY}`}>
-                {({ field }: FieldProps) => (
+                {({ field, form }: FieldProps) => (
                   <StyledFormControl>
                     <FormLabel component="legend">{t('files_and_license.select_version')}</FormLabel>
                     <RadioGroup
                       aria-label="version"
                       {...field}
-                      onChange={(event) => setFieldValue(field.name, event.target.value === 'published')}>
+                      onChange={(event) => form.setFieldValue(field.name, event.target.value === 'published')}>
                       <FormControlLabel
                         value="accepted"
                         control={<Radio color="primary" checked={field.value !== null && !field.value} />}
@@ -126,12 +124,12 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, toggleLicenseModa
               <StyledFormControl>
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
                   <Field name={`${baseFieldName}.${SpecificFileFieldNames.EMBARGO_DATE}`}>
-                    {({ field, meta: { error, touched } }: FieldProps) => (
+                    {({ field, form, meta: { error, touched } }: FieldProps) => (
                       <KeyboardDatePicker
                         inputVariant="outlined"
                         label={t('files_and_license.embargo_date')}
                         {...field}
-                        onChange={(value) => setFieldValue(field.name, value)}
+                        onChange={(value) => form.setFieldValue(field.name, value)}
                         disablePast
                         autoOk
                         format={'dd.MM.yyyy'}
@@ -146,7 +144,7 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, toggleLicenseModa
               <StyledFormControl>
                 <StyledVerticalAlign>
                   <Field name={`${baseFieldName}.${SpecificFileFieldNames.LICENSE}`}>
-                    {({ field, meta: { error, touched } }: FieldProps) => (
+                    {({ field, form, meta: { error, touched } }: FieldProps) => (
                       <StyledSelect
                         select
                         fullWidth
@@ -167,7 +165,7 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, toggleLicenseModa
                         helperText={<ErrorMessage name={field.name} />}
                         label={t('files_and_license.license')}
                         onChange={({ target: { value } }) =>
-                          setFieldValue(field.name, {
+                          form.setFieldValue(field.name, {
                             type: 'License',
                             identifier: value as LicenseNames,
                             labels: { nb: value },

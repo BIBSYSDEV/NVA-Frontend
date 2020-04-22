@@ -62,10 +62,11 @@ const NewAuthorityCard: FC<NewAuthorityCardProps> = ({ onClickCancel }) => {
   const [loading, setLoading] = useState(false);
   const { t } = useTranslation('profile');
   const hasMatchingAuthorities = user.possibleAuthorities.length > 0;
+  const { familyName, givenName, id, name } = user;
 
   const handleCreateAuthority = async () => {
     setLoading(true);
-    const authority = await createAuthority(user);
+    const authority = await createAuthority(givenName, familyName, id);
     if (authority?.error) {
       dispatch(setNotification(authority.error, NotificationVariant.Error));
     } else {
@@ -84,7 +85,7 @@ const NewAuthorityCard: FC<NewAuthorityCardProps> = ({ onClickCancel }) => {
         <StyledBoxContent>
           <StyledAuthority>
             <Radio color="primary" checked />
-            {user.name}
+            {name}
           </StyledAuthority>
           <StyledDescription>
             {hasMatchingAuthorities
@@ -97,7 +98,7 @@ const NewAuthorityCard: FC<NewAuthorityCardProps> = ({ onClickCancel }) => {
             variant="contained"
             size="large"
             onClick={handleCreateAuthority}>
-            {t('authority.create_authority')}
+            {t('common:create_authority')}
           </StyledButton>
           {hasMatchingAuthorities && (
             <StyledCancelButton

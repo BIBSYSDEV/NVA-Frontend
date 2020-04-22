@@ -2,8 +2,6 @@ import { Form, Formik, FormikProps } from 'formik';
 import React, { FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-
-import TabPanel from '../../components/TabPanel/TabPanel';
 import { emptyPublication, FormikPublication } from '../../types/publication.types';
 import { createUppy } from '../../utils/uppy-config';
 import ContributorsPanel from './ContributorsPanel';
@@ -20,6 +18,7 @@ import { NotificationVariant } from '../../types/notification.types';
 import deepmerge from 'deepmerge';
 import Progress from '../../components/Progress';
 import { publicationValidationSchema } from './PublicationFormValidationSchema';
+import { Button } from '@material-ui/core';
 
 const shouldAllowMultipleFiles = false;
 
@@ -27,9 +26,29 @@ const StyledPublication = styled.div`
   width: 100%;
 `;
 
+const StyledPanel = styled.div`
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+`;
+
+const StyledButtonContainer = styled.div`
+  margin-bottom: 1rem;
+`;
+
+const StyledButton = styled(Button)`
+  margin-top: 1rem;
+  margin-right: 0.5rem;
+`;
+
+const StyledProgressContainer = styled.div`
+  padding-left: 1rem;
+  display: flex;
+  align-items: center;
+`;
+
 interface PublicationFormProps {
-  uppy: Uppy;
   closeForm: () => void;
+  uppy: Uppy;
   identifier?: string;
 }
 
@@ -42,6 +61,7 @@ const PublicationForm: FC<PublicationFormProps> = ({
   const [tabNumber, setTabNumber] = useState(0);
   const [initialValues, setInitialValues] = useState(emptyPublication);
   const [isLoading, setIsLoading] = useState(!!identifier);
+  const [isSaving, setIsSaving] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -94,7 +114,7 @@ const PublicationForm: FC<PublicationFormProps> = ({
 
   const savePublication = async (values: FormikPublication) => {
     const { shouldCreateDoi, ...newPublication } = values;
-
+    setIsSaving(true);
     const updatedPublication = await updatePublication(newPublication);
     if (updatedPublication.error) {
       dispatch(setNotification(updatedPublication.error, NotificationVariant.Error));
@@ -102,6 +122,7 @@ const PublicationForm: FC<PublicationFormProps> = ({
       setInitialValues(deepmerge(emptyPublication, updatedPublication));
       dispatch(setNotification(t('feedback:success.update_publication')));
     }
+    setIsSaving(false);
   };
 
   return isLoading ? (
@@ -112,33 +133,55 @@ const PublicationForm: FC<PublicationFormProps> = ({
         enableReinitialize
         initialValues={initialValues}
         validationSchema={publicationValidationSchema}
+        validateOnChange={false}
         onSubmit={(values: FormikPublication) => savePublication(values)}>
         {({ values }: FormikProps<FormikPublication>) => (
-          <Form>
-            <PublicationFormTabs tabNumber={tabNumber} handleTabChange={handleTabChange} />
-            {tabNumber === 0 && (
-              <DescriptionPanel goToNextTab={goToNextTab} savePublication={() => savePublication(values)} />
-            )}
-            {tabNumber === 1 && (
-              <ReferencesPanel goToNextTab={goToNextTab} savePublication={() => savePublication(values)} />
-            )}
-            {tabNumber === 2 && (
-              <ContributorsPanel goToNextTab={goToNextTab} savePublication={() => savePublication(values)} />
-            )}
-            {tabNumber === 3 && (
-              <FilesAndLicensePanel
-                goToNextTab={goToNextTab}
-                savePublication={() => savePublication(values)}
-                uppy={uppy}
-              />
-            )}
+          <>
+            <Form>
+              <PublicationFormTabs tabNumber={tabNumber} handleTabChange={handleTabChange} />
+              {tabNumber === 0 && (
+                <StyledPanel>
+                  <DescriptionPanel aria-label="description" />
+                </StyledPanel>
+              )}
+              {tabNumber === 1 && (
+                <StyledPanel aria-label="references">
+                  <ReferencesPanel />
+                </StyledPanel>
+              )}
+              {tabNumber === 2 && (
+                <StyledPanel aria-label="references">
+                  <ContributorsPanel />
+                </StyledPanel>
+              )}
+              {tabNumber === 3 && (
+                <StyledPanel aria-label="files and license">
+                  <FilesAndLicensePanel uppy={uppy} />
+                </StyledPanel>
+              )}
+              {tabNumber === 4 && (
+                <StyledPanel aria-label="submission">
+                  <SubmissionPanel isSaving={isSaving} savePublication={savePublication} />
+                </StyledPanel>
+              )}
+            </Form>
+            {tabNumber !== 4 && (
+              <StyledButtonContainer>
+                <StyledButton color="primary" variant="contained" onClick={goToNextTab}>
+                  {t('common:next')}
+                </StyledButton>
 
-            {tabNumber === 4 && (
-              <TabPanel ariaLabel="submission">
-                <SubmissionPanel savePublication={() => savePublication(values)} />
-              </TabPanel>
+                <StyledButton disabled={isSaving} onClick={() => savePublication(values)} variant="contained">
+                  {t('common:save')}
+                  {isSaving && (
+                    <StyledProgressContainer>
+                      <Progress size={15} thickness={5} />
+                    </StyledProgressContainer>
+                  )}
+                </StyledButton>
+              </StyledButtonContainer>
             )}
-          </Form>
+          </>
         )}
       </Formik>
     </StyledPublication>

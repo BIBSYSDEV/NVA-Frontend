@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Tab } from '@material-ui/core';
 import { useTheme } from '@material-ui/core/styles';
 
@@ -8,7 +8,7 @@ interface LinkTabProps {
   label?: string;
 }
 
-const LinkTab: React.FC<LinkTabProps> = ({ error, ...rest }) => {
+const LinkTab: FC<LinkTabProps> = ({ error, ...rest }) => {
   const theme = useTheme();
 
   const styledTab = error ? { color: theme.palette.error.main } : undefined;

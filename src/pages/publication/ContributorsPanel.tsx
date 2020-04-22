@@ -2,21 +2,14 @@ import React, { FC, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormHelperText } from '@material-ui/core';
 import { FormikProps, useFormikContext, FieldArray, ErrorMessage, FieldArrayRenderProps } from 'formik';
-
-import Card from '../../components/Card';
 import Heading from '../../components/Heading';
-import TabPanel from '../../components/TabPanel/TabPanel';
+import Card from '../../components/Card';
 import SortableTable from './contributors_tab/components/SortableTable';
 import { FormikPublication } from '../../types/publication.types';
 import { ContributorFieldNames } from '../../types/publicationFieldNames';
 import { getAllContributorFields } from '../../utils/formik-helpers';
 
-interface ContributorsPanelProps {
-  goToNextTab: (event: React.MouseEvent<any>) => void;
-  savePublication: () => void;
-}
-
-const ContributorsPanel: FC<ContributorsPanelProps> = ({ goToNextTab, savePublication }) => {
+const ContributorsPanel: FC = () => {
   const { t } = useTranslation('publication');
   const {
     setFieldTouched,
@@ -41,29 +34,21 @@ const ContributorsPanel: FC<ContributorsPanelProps> = ({ goToNextTab, savePublic
   );
 
   return (
-    <TabPanel ariaLabel="references" goToNextTab={goToNextTab} onClickSave={savePublication}>
-      <Card>
-        <Heading>{t('contributors.authors')}</Heading>
-        <FieldArray name={ContributorFieldNames.CONTRIBUTORS}>
-          {({ push, remove, swap, replace, name }: FieldArrayRenderProps) => (
-            <>
-              <SortableTable
-                listOfContributors={contributors}
-                push={push}
-                remove={remove}
-                swap={swap}
-                replace={replace}
-              />
-              {contributors.length === 0 && (
-                <FormHelperText error>
-                  <ErrorMessage name={name} />
-                </FormHelperText>
-              )}
-            </>
-          )}
-        </FieldArray>
-      </Card>
-    </TabPanel>
+    <Card>
+      <Heading>{t('contributors.authors')}</Heading>
+      <FieldArray name={ContributorFieldNames.CONTRIBUTORS}>
+        {({ push, remove, move, replace, name }: FieldArrayRenderProps) => (
+          <>
+            <SortableTable push={push} remove={remove} move={move} replace={replace} />
+            {contributors.length === 0 && (
+              <FormHelperText error>
+                <ErrorMessage name={name} />
+              </FormHelperText>
+            )}
+          </>
+        )}
+      </FieldArray>
+    </Card>
   );
 };
 

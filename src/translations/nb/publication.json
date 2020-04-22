@@ -4,14 +4,23 @@
     "info": "Den antologien kapittelet er publisert i må være registrert først"
   },
   "contributors": {
+    "add_affiliation": "Legg til tilknytning",
     "add_author": "Legg til forfatter",
     "add_authors": "Legg til flere forfattere",
     "add_other_contributor": "Legg til flere",
+    "author_already_added": "Valgt forfatter er allerede lagt til",
     "authors": "Forfattere",
+    "confirm_remove_affiliation_text": "Er du sikker på at du ønsker å fjerne tilknytningen til {{affiliationName}} for {{contributorName}}?",
+    "confirm_remove_affiliation_title": "Fjerne tilknytning?",
+    "confirm_remove_contributor_text": "Er du sikker på at du ønsker å fjerne {{contributorName}} fra listen over bidragsytere?",
+    "confirm_remove_contributor_title": "Fjerne bidragsyter?",
     "connect_author_identity": "Tilknytt forfatteridentitet",
     "corresponding": "Korresponderende",
+    "create_new_author": "Opprett ny forfatter",
     "known_author_identity": "Har tilknyttet forfatteridentitet",
     "prefilled_name": "Forhåndsutfylt navn",
+    "remove_contributor": "Fjern bidragsyter",
+    "select_institution": "Velg institusjon",
     "type": "Bidragstype",
     "unknown_author_identity": "Mangler forfatteridentitet",
     "verify_person": "Verifiser"
