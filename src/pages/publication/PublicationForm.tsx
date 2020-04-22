@@ -116,7 +116,6 @@ const PublicationForm: FC<PublicationFormProps> = ({
     const { shouldCreateDoi, ...newPublication } = values;
     setIsSaving(true);
     const updatedPublication = await updatePublication(newPublication);
-
     if (updatedPublication.error) {
       dispatch(setNotification(updatedPublication.error, NotificationVariant.Error));
     } else {

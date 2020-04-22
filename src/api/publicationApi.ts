@@ -30,7 +30,7 @@ export const updatePublication = async (publication: Publication) => {
         Authorization: `Bearer ${idToken}`,
       },
     });
-    if (true) {
+    if (response.status === StatusCode.OK) {
       return response.data;
     } else {
       return null;
