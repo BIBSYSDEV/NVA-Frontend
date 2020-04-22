@@ -15,8 +15,8 @@ const StyledButtonContainer = styled.div`
 
 interface AddContributorModalProps {
   onAuthorSelected: (author: Authority) => void;
-  toggleModal: () => void;
   open: boolean;
+  toggleModal: () => void;
   initialSearchTerm?: string;
 }
 
@@ -55,7 +55,7 @@ const AddContributorModal: FC<AddContributorModalProps> = ({
       onClose={handleCloseModal}
       openModal={open}>
       {createNewAuthor ? (
-        <CreateContributorModalContent />
+        <CreateContributorModalContent addAuthor={addAuthor} handleCloseModal={handleCloseModal} />
       ) : (
         <>
           <AddContributorModalContent addAuthor={addAuthor} initialSearchTerm={initialSearchTerm} />

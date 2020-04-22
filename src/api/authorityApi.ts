@@ -5,7 +5,6 @@ import { setNotification } from '../redux/actions/notificationActions';
 import i18n from '../translations/i18n';
 import { StatusCode } from '../utils/constants';
 import { getIdToken } from './userApi';
-import { User } from '../types/user.types';
 import { NotificationVariant } from '../types/notification.types';
 
 export enum AuthorityApiPaths {
@@ -40,7 +39,7 @@ export const getAuthorities = async (name: string, dispatch: Dispatch) => {
   }
 };
 
-export const createAuthority = async (user: User) => {
+export const createAuthority = async (firstName: string, lastName: string, feideId?: string) => {
   const url = AuthorityApiPaths.PERSON;
 
   // remove when Authorization headers are set for all requests
@@ -49,17 +48,19 @@ export const createAuthority = async (user: User) => {
     Authorization: `Bearer ${idToken}`,
   };
   try {
-    const response = await Axios.post(url, { invertedname: `${user.familyName},${user.givenName}` }, { headers });
+    const response = await Axios.post(url, { invertedname: `${lastName}, ${firstName}` }, { headers });
     if (response.status === StatusCode.OK) {
       // TODO: check with backend why we suddenly get a list with one element as response when creating new authority
-      const systemControlNumber = response.data[0].systemControlNumber;
-      const updatedAuthority = await addQualifierIdForAuthority(
-        systemControlNumber,
-        AuthorityQualifiers.FEIDE_ID,
-        user.id
-      );
-      if (updatedAuthority) {
-        return updatedAuthority;
+      if (feideId) {
+        const systemControlNumber = response.data[0].systemControlNumber;
+        const updatedAuthority = await addQualifierIdForAuthority(
+          systemControlNumber,
+          AuthorityQualifiers.FEIDE_ID,
+          feideId
+        );
+        if (updatedAuthority) {
+          return updatedAuthority;
+        }
       } else {
         return response.data[0];
       }
