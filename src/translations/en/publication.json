@@ -10,6 +10,7 @@
     "authors": "Authors",
     "connect_author_identity": "Connect author identity",
     "corresponding": "Corresponding",
+    "create_new_author": "Create new author",
     "known_author_identity": "Connected author identity",
     "prefilled_name": "Prefilled name",
     "type": "Contributor type",
