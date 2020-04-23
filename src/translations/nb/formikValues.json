@@ -6,7 +6,7 @@
   "mainTitle": "$t(common:title)",
   "peerReview": "$t(publication:references.peer_reviewed)",
   "publicationContext": "$t(common:publisher)",
-  "publicationSubtype": "Publikasjonssubtype",
   "publicationType": "Publikasjonstype",
-  "publisherAuthority": "$t(publication:files_and_license.published_version)"
+  "publisherAuthority": "$t(publication:files_and_license.published_version)",
+  "type": "Publikasjonsundertype"
 }
