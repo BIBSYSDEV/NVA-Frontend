@@ -13,9 +13,9 @@ import {
   CustomerInstitution,
 } from '../../types/customerInstitution.types';
 import { createUppy } from '../../utils/uppy-config';
-import Label from '../../components/Label';
-import InstitutionLogoFileUploader from './InstitutionLogoFileUploader';
-import FileCard from '../publication/files_and_license_tab/FileCard';
+// import Label from '../../components/Label';
+// import InstitutionLogoFileUploader from './InstitutionLogoFileUploader';
+// import FileCard from '../publication/files_and_license_tab/FileCard';
 import InstitutionSearch from '../publication/references_tab/components/InstitutionSearch';
 import { useParams, useHistory } from 'react-router-dom';
 import { setNotification } from '../../redux/actions/notificationActions';
@@ -26,9 +26,9 @@ import Progress from '../../components/Progress';
 
 const shouldAllowMultipleFiles = false;
 
-const StyledLogoUploadWrapper = styled(Card)`
-  margin-top: 1rem;
-`;
+// const StyledLogoUploadWrapper = styled(Card)`
+//   margin-top: 1rem;
+// `;
 
 const StyledButtonContainer = styled.div`
   margin-top: 2rem;
@@ -92,7 +92,8 @@ const AdminCustomerInstitutionPage: FC = () => {
         })}
         onSubmit={handleSubmit}>
         <Form>
-          <Field name={CustomerInstitutionFieldNames.LOGO_FILE}>
+          {/* TODO uncomment when backend has support for logo */}
+          {/* <Field name={CustomerInstitutionFieldNames.LOGO_FILE}>
             {({ field: { value, name }, form }: FieldProps) => (
               <StyledLogoUploadWrapper>
                 <Label>{t('institution_logo')}</Label>
@@ -114,12 +115,13 @@ const AdminCustomerInstitutionPage: FC = () => {
                 )}
               </StyledLogoUploadWrapper>
             )}
-          </Field>
+          </Field> */}
           <Field name={CustomerInstitutionFieldNames.NAME}>
             {({ field: { value, name }, form }: FieldProps) => (
               <InstitutionSearch
                 dataTestId="autosearch-institution"
                 label={t('organization_register_name')}
+                initialValue={value ?? ''}
                 clearSearchField={value.name === ''}
                 setValueFunction={(inputValue) => {
                   form.setFieldValue(name, inputValue.name);
