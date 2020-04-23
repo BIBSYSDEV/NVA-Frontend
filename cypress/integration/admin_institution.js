@@ -42,7 +42,8 @@ describe('User administers institutions ', () => {
     cy.get('[data-testid=customer-instituiton-save-button]').click({ force: true });
   });
 
-  it('The user should be able to upload a file for an institution', () => {
+  // TODO: unskip when backend has support for uploading file
+  it.skip('The user should be able to upload a file for an institution', () => {
     // Open administer institutions page
     cy.get('[data-testid=menu]').click({ force: true });
     cy.get('[data-testid=menu-admin-institution-button]').click({ force: true });
