@@ -37,6 +37,12 @@ const StyledButtonContainer = styled.div`
   justify-content: flex-end;
 `;
 
+const StyledProgressContainer = styled.div`
+  padding-left: 1rem;
+  display: flex;
+  align-items: center;
+`;
+
 const AdminCustomerInstitutionPage: FC = () => {
   const { t } = useTranslation('admin');
   const [uppy] = useState(createUppy(shouldAllowMultipleFiles));
@@ -44,6 +50,7 @@ const AdminCustomerInstitutionPage: FC = () => {
   const editMode = identifier !== 'new';
   const [initialValues, setInitialValues] = useState<CustomerInstitution>(emptyCustomerInstitution);
   const [isLoading, setIsLoading] = useState(editMode);
+  const [isSaving, setIsSaving] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -69,13 +76,17 @@ const AdminCustomerInstitutionPage: FC = () => {
 
   const handleSubmit = async (values: CustomerInstitution) => {
     if (!editMode) {
+      setIsSaving(true);
       const customerValues = { ...values, createdDate: new Date().toISOString() }; // TODO: remove setting createdDate when fixed in backend
       const createdCustomer = await createCustomerInstitution(customerValues);
-      if (!createdCustomer.error) {
+      if (createdCustomer?.error) {
+        dispatch(setNotification(createdCustomer.error, NotificationVariant.Error));
+      } else {
         history.push(`/admin-institutions/${createdCustomer.identifier}`);
         setInitialValues(createdCustomer);
         dispatch(setNotification(t('feedback:success.created_customer')));
       }
+      setIsSaving(false);
     }
     // TODO: edit publication
   };
@@ -197,7 +208,12 @@ const AdminCustomerInstitutionPage: FC = () => {
           />
           <StyledButtonContainer>
             <Button color="primary" data-testid="customer-instituiton-save-button" variant="contained" type="submit">
-              {t('common:save')}
+              {editMode ? t('common:save') : t('common:create')}
+              {isSaving && (
+                <StyledProgressContainer>
+                  <Progress size={15} thickness={5} />
+                </StyledProgressContainer>
+              )}
             </Button>
           </StyledButtonContainer>
         </Form>
