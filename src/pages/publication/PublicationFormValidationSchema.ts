@@ -17,6 +17,71 @@ const ErrorMessage = {
   MUST_BE_FUTURE: i18n.t('publication:feedback.date_must_be_in_future'),
 };
 
+const contributorValidationSchema = {
+  correspondingAuthor: Yup.boolean(),
+  email: Yup.string().when('correspondingAuthor', {
+    is: true,
+    then: Yup.string().email(ErrorMessage.INVALID_FORMAT).required(ErrorMessage.REQUIRED),
+  }),
+  sequence: Yup.number().min(0),
+};
+
+const fileValidationSchema = {
+  administrativeAgreement: Yup.boolean(),
+  embargoDate: Yup.date()
+    .nullable()
+    .when('administrativeAgreement', {
+      is: false,
+      then: Yup.date().nullable().min(new Date(), ErrorMessage.MUST_BE_FUTURE).typeError(ErrorMessage.INVALID_FORMAT),
+    }),
+  publisherAuthority: Yup.boolean()
+    .nullable()
+    .when('administrativeAgreement', {
+      is: false,
+      then: Yup.boolean().required(ErrorMessage.REQUIRED),
+    }),
+  license: Yup.object()
+    .nullable()
+    .when('administrativeAgreement', {
+      is: false,
+      then: Yup.object().required(ErrorMessage.REQUIRED),
+    }),
+};
+
+const journalContentValidationSchema = {
+  type: Yup.string().oneOf(Object.values(JournalArticleType)).required(ErrorMessage.REQUIRED),
+  peerReviewed: Yup.boolean().required(ErrorMessage.REQUIRED),
+  articleNumber: Yup.string(),
+  volume: Yup.string(),
+  issue: Yup.string(),
+  pages: Yup.object().shape({
+    begin: Yup.string(),
+    end: Yup.string(),
+  }),
+};
+
+const bookValidationSchema = {
+  type: Yup.string().oneOf(Object.values(BookType)).required(ErrorMessage.REQUIRED),
+  isbn: Yup.string(),
+  numberOfPages: Yup.string(),
+  textBook: Yup.boolean(),
+  peerReviewed: Yup.boolean().required(ErrorMessage.REQUIRED),
+};
+
+const reportValidationSchema = {
+  type: Yup.string().oneOf(Object.values(ReportType)).required(ErrorMessage.REQUIRED),
+  isbn: Yup.string(),
+  numberOfPages: Yup.string(),
+};
+
+const degreeValidationSchema = {
+  type: Yup.string().oneOf(Object.values(DegreeType)).required(ErrorMessage.REQUIRED),
+};
+
+const chapterValidationSchema = {
+  type: Yup.string().length(0),
+};
+
 export const publicationValidationSchema = Yup.object().shape({
   entityDescription: Yup.object().shape({
     mainTitle: Yup.string().required(ErrorMessage.REQUIRED),
@@ -33,65 +98,31 @@ export const publicationValidationSchema = Yup.object().shape({
     projects: Yup.array().of(Yup.object()), // TODO
     publicationType: Yup.string().oneOf(Object.values(PublicationType)).required(ErrorMessage.REQUIRED),
     contributors: Yup.array()
-      .of(
-        Yup.object().shape({
-          correspondingAuthor: Yup.boolean(),
-          email: Yup.string().when('correspondingAuthor', {
-            is: true,
-            then: Yup.string().email(ErrorMessage.INVALID_FORMAT).required(ErrorMessage.REQUIRED),
-          }),
-          sequence: Yup.number().min(0),
-        })
-      )
+      .of(Yup.object().shape(contributorValidationSchema))
       .min(1, ErrorMessage.MISSING_CONTRIBUTOR),
-    isbn: Yup.string(),
-    numberOfPages: Yup.string(),
-    series: Yup.object(),
-    specialization: Yup.string(),
-    textBook: Yup.boolean(),
     reference: Yup.object().shape({
       doi: Yup.string(),
-
       publicationInstance: Yup.object()
         .when('$publicationType', {
           is: PublicationType.PUBLICATION_IN_JOURNAL,
-          then: Yup.object().shape({
-            type: Yup.string().oneOf(Object.values(JournalArticleType)).required(ErrorMessage.REQUIRED),
-            peerReviewed: Yup.boolean().required(ErrorMessage.REQUIRED),
-            articleNumber: Yup.string(),
-            volume: Yup.string(),
-            issue: Yup.string(),
-            pages: Yup.object().shape({
-              begin: Yup.string(),
-              end: Yup.string(),
-            }),
-          }),
+          then: Yup.object().shape(journalContentValidationSchema),
         })
         .when('$publicationType', {
           is: PublicationType.BOOK,
-          then: Yup.object().shape({
-            type: Yup.string().oneOf(Object.values(BookType)).required(ErrorMessage.REQUIRED),
-          }),
+          then: Yup.object().shape(bookValidationSchema),
         })
         .when('$publicationType', {
           is: PublicationType.REPORT,
-          then: Yup.object().shape({
-            type: Yup.string().oneOf(Object.values(ReportType)).required(ErrorMessage.REQUIRED),
-          }),
+          then: Yup.object().shape(reportValidationSchema),
         })
         .when('$publicationType', {
           is: PublicationType.DEGREE,
-          then: Yup.object().shape({
-            type: Yup.string().oneOf(Object.values(DegreeType)).required(ErrorMessage.REQUIRED),
-          }),
+          then: Yup.object().shape(degreeValidationSchema),
         })
         .when('$publicationType', {
           is: PublicationType.CHAPTER,
-          then: Yup.object().shape({
-            type: Yup.string().length(0),
-          }),
+          then: Yup.object().shape(chapterValidationSchema),
         }),
-
       publicationContext: Yup.object()
         .nullable()
         .shape({
@@ -103,33 +134,6 @@ export const publicationValidationSchema = Yup.object().shape({
     }),
   }),
   fileSet: Yup.object().shape({
-    files: Yup.array()
-      .of(
-        Yup.object().shape({
-          administrativeAgreement: Yup.boolean(),
-          embargoDate: Yup.date()
-            .nullable()
-            .when('administrativeAgreement', {
-              is: false,
-              then: Yup.date()
-                .nullable()
-                .min(new Date(), ErrorMessage.MUST_BE_FUTURE)
-                .typeError(ErrorMessage.INVALID_FORMAT),
-            }),
-          publisherAuthority: Yup.boolean()
-            .nullable()
-            .when('administrativeAgreement', {
-              is: false,
-              then: Yup.boolean().required(ErrorMessage.REQUIRED),
-            }),
-          license: Yup.object()
-            .nullable()
-            .when('administrativeAgreement', {
-              is: false,
-              then: Yup.object().required(ErrorMessage.REQUIRED),
-            }),
-        })
-      )
-      .min(1, ErrorMessage.MISSING_FILE),
+    files: Yup.array().of(Yup.object().shape(fileValidationSchema)).min(1, ErrorMessage.MISSING_FILE),
   }),
 });
