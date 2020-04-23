@@ -12,7 +12,7 @@
   "institution_dns": "Institusjonens DNS",
   "institution_logo": "Institutionslogo",
   "organization_register_name": "Navn i organisasjonsregister",
-  "short_name": "Forkortet visningsnavn på instutusjonen",
+  "short_name": "Forkortet visningsnavn på institusjonen",
   "users": {
     "auto_assign_creators": "Ansatte får automatisk rolle som registrator ved pålogging hvis de er registrert med dette i 'eduPersonAffiliation': Employee, Staff, Member",
     "authentication_id": "Autentiserings-id",
