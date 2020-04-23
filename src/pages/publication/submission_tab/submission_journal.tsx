@@ -9,18 +9,15 @@ const SubmissionJournalPublication: React.FC = () => {
   const { values }: FormikProps<FormikPublication> = useFormikContext();
 
   const {
-    publicationSubtype,
     reference: {
-      publicationInstance: { volume, issue, pages, articleNumber, peerReviewed },
+      publicationInstance: { type, volume, issue, pages, articleNumber, peerReviewed },
       publicationContext,
     },
   } = values.entityDescription;
 
   return (
     <>
-      <LabelContentRow label={t('references.subtype')}>
-        {publicationSubtype && t(`publicationTypes:${publicationSubtype}`)}
-      </LabelContentRow>
+      <LabelContentRow label={t('references.subtype')}>{type && t(`publicationTypes:${type}`)}</LabelContentRow>
       <LabelContentRow label={t('references.journal')}>{publicationContext?.title}</LabelContentRow>
       <LabelContentRow label={t('references.volume')}>{volume}</LabelContentRow>
       <LabelContentRow label={t('references.issue')}>{issue}</LabelContentRow>
