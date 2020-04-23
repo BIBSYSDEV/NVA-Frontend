@@ -15,7 +15,7 @@ export enum BackendTypeNames {
   IDENTITY = 'Identity',
   LICENSE = 'License',
   ORGANIZATION = 'Organization',
-  PAGES = 'Pages',
+  PAGES = 'Range', // TODO: set this when backend has decided what it means
   PUBLICATION = 'Publication',
   PUBLICATION_DATE = 'PublicationDate',
   REFERENCE = 'Reference',
