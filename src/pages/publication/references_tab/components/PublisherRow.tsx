@@ -62,7 +62,7 @@ const PublisherRow: React.FC<PublisherRowProps> = ({ dataTestId, publisher, labe
   useEffect(() => {
     const setLevel = async (title: string) => {
       const response = await getPublishers(title, PublicationTableNumber.PUBLICATION_CHANNELS);
-      // TODO: book = PublicationTableNumber.PUBLISHERS ?
+      // TODO: set level in doi-fetch ? book = PublicationTableNumber.PUBLISHERS ? needs further discussion
       if (response) {
         const publisherLevel = response?.filter((publisher: Partial<Publisher>) => publisher.title === title)[0]?.level;
         if (publisherLevel) {
