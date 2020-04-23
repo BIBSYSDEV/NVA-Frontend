@@ -21,7 +21,11 @@ import { useParams, useHistory } from 'react-router-dom';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import { useDispatch } from 'react-redux';
-import { getInstitution, createCustomerInstitution } from '../../api/customerInstitutionsApi';
+import {
+  getInstitution,
+  createCustomerInstitution,
+  updateCustomerInstitution,
+} from '../../api/customerInstitutionsApi';
 import Progress from '../../components/Progress';
 
 const shouldAllowMultipleFiles = false;
@@ -59,8 +63,8 @@ const AdminCustomerInstitutionPage: FC = () => {
   }, [uppy]);
 
   useEffect(() => {
-    const getInstitutionById = async (id: string) => {
-      const institution: any = await getInstitution(id);
+    const getInstitutionById = async (identifier: string) => {
+      const institution: CustomerInstitution = await getInstitution(identifier);
       if (institution?.error) {
         dispatch(setNotification(institution.error, NotificationVariant.Error));
       } else {
@@ -75,8 +79,8 @@ const AdminCustomerInstitutionPage: FC = () => {
   }, [identifier, dispatch, editMode]);
 
   const handleSubmit = async (values: CustomerInstitution) => {
+    setIsSaving(true);
     if (!editMode) {
-      setIsSaving(true);
       const customerValues = { ...values, createdDate: new Date().toISOString() }; // TODO: remove setting createdDate when fixed in backend
       const createdCustomer = await createCustomerInstitution(customerValues);
       if (createdCustomer?.error) {
@@ -86,9 +90,16 @@ const AdminCustomerInstitutionPage: FC = () => {
         setInitialValues(createdCustomer);
         dispatch(setNotification(t('feedback:success.created_customer')));
       }
-      setIsSaving(false);
+    } else {
+      const updatedCustomer = await updateCustomerInstitution(values);
+      if (updatedCustomer?.error) {
+        dispatch(setNotification(updatedCustomer.error, NotificationVariant.Error));
+      } else {
+        setInitialValues(updatedCustomer);
+        dispatch(setNotification(t('feedback:success.update_customer')));
+      }
     }
-    // TODO: edit publication
+    setIsSaving(false);
   };
 
   return isLoading ? (
@@ -137,7 +148,6 @@ const AdminCustomerInstitutionPage: FC = () => {
                 clearSearchField={value.name === ''}
                 setValueFunction={(inputValue) => {
                   form.setFieldValue(name, inputValue.name);
-                  form.setFieldValue(CustomerInstitutionFieldNames.ID, inputValue.id);
                 }}
                 placeholder={t('profile:organization.search_for_institution')}
               />

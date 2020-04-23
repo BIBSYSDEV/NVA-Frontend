@@ -49,7 +49,7 @@ const InstitutionList: FC<InstitutionListProps> = ({ institutions }) => {
       </TableHead>
       <TableBody>
         {institutions.map((institution) => (
-          <StyledTableRow key={institution.id}>
+          <StyledTableRow key={institution.identifier}>
             <TableCell component="th" scope="row">
               <NormalText>{institution.name}</NormalText>
             </TableCell>
@@ -60,7 +60,7 @@ const InstitutionList: FC<InstitutionListProps> = ({ institutions }) => {
               <NormalText>{institution.contact}</NormalText>
             </StyledSmallCell>
             <TableCell>
-              <Button color="primary" component={RouterLink} to={`/admin-institutions/${institution.id}`}>
+              <Button color="primary" component={RouterLink} to={`/admin-institutions/${institution.identifier}`}>
                 <NormalText>{t('edit')}</NormalText>
               </Button>
             </TableCell>
