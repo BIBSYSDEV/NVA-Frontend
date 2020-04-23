@@ -24,18 +24,13 @@ const StyledSelectContainer = styled.div`
 const ReferencesPanel: FC = () => {
   const { t } = useTranslation('publication');
   const { values, setFieldTouched, setFieldValue }: FormikProps<FormikPublication> = useFormikContext();
-  const { publicationType, publicationSubtype } = values.entityDescription;
+  const { publicationType } = values.entityDescription;
 
   useEffect(
     // Set all fields as touched if user navigates away from this panel (on unmount)
     () => () => Object.values(ReferenceFieldNames).forEach((fieldName) => setFieldTouched(fieldName)),
     [setFieldTouched]
   );
-
-  useEffect(() => {
-    // Update publicationInstance's type when publicationSubtype changes
-    setFieldValue(ReferenceFieldNames.PUBLICATION_INSTANCE_TYPE, publicationSubtype);
-  }, [setFieldValue, publicationSubtype]);
 
   return (
     <>
