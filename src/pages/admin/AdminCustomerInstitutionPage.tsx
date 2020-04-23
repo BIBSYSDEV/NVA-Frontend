@@ -17,7 +17,7 @@ import Label from '../../components/Label';
 import InstitutionLogoFileUploader from './InstitutionLogoFileUploader';
 import FileCard from '../publication/files_and_license_tab/FileCard';
 import InstitutionSearch from '../publication/references_tab/components/InstitutionSearch';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import { useDispatch } from 'react-redux';
@@ -45,6 +45,7 @@ const AdminCustomerInstitutionPage: FC = () => {
   const [initialValues, setInitialValues] = useState<CustomerInstitution>(emptyCustomerInstitution);
   const [isLoading, setIsLoading] = useState(editMode);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   useEffect(() => {
     return () => uppy && uppy.close();
@@ -70,6 +71,8 @@ const AdminCustomerInstitutionPage: FC = () => {
     if (!editMode) {
       const createdCustomer = await createCustomerInstitution(values);
       if (!createdCustomer.error) {
+        history.push(`/admin-institutions/${createdCustomer.identifier}`);
+        setInitialValues(createdCustomer);
         dispatch(setNotification(t('feedback:success.created_customer')));
       }
     }
