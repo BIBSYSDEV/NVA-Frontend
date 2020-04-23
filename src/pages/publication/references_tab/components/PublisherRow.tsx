@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
 import { Button } from '@material-ui/core';
 
-import { Publisher, levelMap } from '../../../../types/publication.types';
+import { Publisher, levelMap, FormikPublication } from '../../../../types/publication.types';
 import Label from '../../../../components/Label';
+import { getPublishers } from '../../../../api/publicationChannelApi';
+import { PublicationTableNumber } from '../../../../utils/constants';
+import { FormikProps, useFormikContext } from 'formik';
+import { ReferenceFieldNames } from '../../../../types/publicationFieldNames';
 
 const StyledPublisherRow = styled.div`
   margin: 1rem 0;
@@ -50,8 +54,30 @@ interface PublisherRowProps {
 const PublisherRow: React.FC<PublisherRowProps> = ({ dataTestId, publisher, label, onClickDelete }) => {
   const { t } = useTranslation('publication');
 
+  const { setFieldValue }: FormikProps<FormikPublication> = useFormikContext();
+
   const { level, title } = publisher;
   const publisherLevel = typeof level === 'string' ? levelMap[level] : level;
+
+  useEffect(() => {
+    const setLevel = async (title: string) => {
+      const response = await getPublishers(title, PublicationTableNumber.PUBLICATION_CHANNELS);
+      // TODO: book = PublicationTableNumber.PUBLISHERS ?
+      if (response) {
+        const publisherLevel = response?.filter((publisher: Partial<Publisher>) => publisher.title === title)[0]?.level;
+        if (publisherLevel) {
+          const levelAsEnum = Object.keys(levelMap).find((key) => levelMap[key] === publisherLevel);
+          setFieldValue(`${ReferenceFieldNames.PUBLICATION_CONTEXT}.level`, levelAsEnum);
+        }
+      } else {
+        setFieldValue(`${ReferenceFieldNames.PUBLICATION_CONTEXT}.level`, '');
+      }
+    };
+
+    if (title && !level) {
+      setLevel(title);
+    }
+  }, [level, setFieldValue, title]);
 
   return (
     <StyledPublisherRow data-testid={dataTestId}>
