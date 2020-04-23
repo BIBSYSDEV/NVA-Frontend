@@ -19,6 +19,7 @@ import deepmerge from 'deepmerge';
 import Progress from '../../components/Progress';
 import { publicationValidationSchema } from './PublicationFormValidationSchema';
 import { Button } from '@material-ui/core';
+import { useLocation } from 'react-router';
 
 const shouldAllowMultipleFiles = false;
 
@@ -63,6 +64,14 @@ const PublicationForm: FC<PublicationFormProps> = ({
   const [isLoading, setIsLoading] = useState(!!identifier);
   const [isSaving, setIsSaving] = useState(false);
   const dispatch = useDispatch();
+  const location = useLocation();
+
+  useEffect(
+    () => () => {
+      alert('TODO: Use <ConfirmDialog />');
+    },
+    [location.pathname]
+  );
 
   useEffect(() => {
     // Get files uploaded from new publication view
