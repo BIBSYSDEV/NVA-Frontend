@@ -51,41 +51,47 @@ export const publicationValidationSchema = Yup.object().shape({
     textBook: Yup.boolean(),
     reference: Yup.object().shape({
       doi: Yup.string(),
-      publicationInstance: Yup.object().shape({
-        type: Yup.string()
-          .when('$publicationType', {
-            is: PublicationType.PUBLICATION_IN_JOURNAL,
-            then: Yup.string().oneOf(Object.values(JournalArticleType)).required(ErrorMessage.REQUIRED),
-          })
-          .when('$publicationType', {
-            is: PublicationType.BOOK,
-            then: Yup.string().oneOf(Object.values(BookType)).required(ErrorMessage.REQUIRED),
-          })
-          .when('$publicationType', {
-            is: PublicationType.REPORT,
-            then: Yup.string().oneOf(Object.values(ReportType)).required(ErrorMessage.REQUIRED),
-          })
-          .when('$publicationType', {
-            is: PublicationType.DEGREE,
-            then: Yup.string().oneOf(Object.values(DegreeType)).required(ErrorMessage.REQUIRED),
-          })
-          .when('$publicationType', {
-            is: PublicationType.CHAPTER,
-            then: Yup.string().length(0),
+
+      publicationInstance: Yup.object()
+        .when('$publicationType', {
+          is: PublicationType.PUBLICATION_IN_JOURNAL,
+          then: Yup.object().shape({
+            type: Yup.string().oneOf(Object.values(JournalArticleType)).required(ErrorMessage.REQUIRED),
+            peerReviewed: Yup.boolean().required(ErrorMessage.REQUIRED),
+            articleNumber: Yup.string(),
+            volume: Yup.string(),
+            issue: Yup.string(),
+            pages: Yup.object().shape({
+              begin: Yup.string(),
+              end: Yup.string(),
+            }),
           }),
-        articleNumber: Yup.string(),
-        volume: Yup.string(),
-        issue: Yup.string(),
-        peerReviewed: Yup.boolean().when('$publicationInstanceType', {
-          is: (subtype) =>
-            [PublicationType.PUBLICATION_IN_JOURNAL, PublicationType.BOOK, PublicationType.REPORT].includes(subtype),
-          then: Yup.boolean().required(ErrorMessage.REQUIRED),
+        })
+        .when('$publicationType', {
+          is: PublicationType.BOOK,
+          then: Yup.object().shape({
+            type: Yup.string().oneOf(Object.values(BookType)).required(ErrorMessage.REQUIRED),
+          }),
+        })
+        .when('$publicationType', {
+          is: PublicationType.REPORT,
+          then: Yup.object().shape({
+            type: Yup.string().oneOf(Object.values(ReportType)).required(ErrorMessage.REQUIRED),
+          }),
+        })
+        .when('$publicationType', {
+          is: PublicationType.DEGREE,
+          then: Yup.object().shape({
+            type: Yup.string().oneOf(Object.values(DegreeType)).required(ErrorMessage.REQUIRED),
+          }),
+        })
+        .when('$publicationType', {
+          is: PublicationType.CHAPTER,
+          then: Yup.object().shape({
+            type: Yup.string().length(0),
+          }),
         }),
-        pages: Yup.object().shape({
-          begin: Yup.string(),
-          end: Yup.string(),
-        }),
-      }),
+
       publicationContext: Yup.object()
         .nullable()
         .shape({
