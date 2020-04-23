@@ -69,7 +69,8 @@ const AdminCustomerInstitutionPage: FC = () => {
 
   const handleSubmit = async (values: CustomerInstitution) => {
     if (!editMode) {
-      const createdCustomer = await createCustomerInstitution(values);
+      const customerValues = { ...values, createdDate: new Date().toISOString() }; // TODO: remove setting createdDate when fixed in backend
+      const createdCustomer = await createCustomerInstitution(customerValues);
       if (!createdCustomer.error) {
         history.push(`/admin-institutions/${createdCustomer.identifier}`);
         setInitialValues(createdCustomer);
