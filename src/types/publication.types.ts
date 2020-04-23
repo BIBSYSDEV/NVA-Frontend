@@ -16,7 +16,7 @@ export enum BackendTypeNames {
   IDENTITY = 'Identity',
   LICENSE = 'License',
   ORGANIZATION = 'Organization',
-  PAGES = 'Pages',
+  PAGES = 'Range', // TODO: set this when backend has decided what it means
   PUBLICATION = 'Publication',
   PUBLICATION_DATE = 'PublicationDate',
   REFERENCE = 'Reference',
@@ -88,7 +88,8 @@ interface PublicationPages extends BackendType {
   end: string;
 }
 
-interface PublicationInstance extends BackendType {
+interface PublicationInstance {
+  type: JournalArticleType | ReportType | DegreeType | BookType | '';
   articleNumber: string;
   issue: string;
   pages: PublicationPages;
@@ -111,7 +112,6 @@ interface PublicationEntityDescription extends BackendType {
   date: PublicationDate;
   language: LanguageValues;
   publicationType: PublicationType | '';
-  publicationSubtype: JournalArticleType | ReportType | DegreeType | BookType | '';
   contributors: Contributor[];
   isbn: string;
   numberOfPages: string;
@@ -165,7 +165,6 @@ const emptyPublicationEntityDescription: PublicationEntityDescription = {
   language: LanguageValues.NORWEGIAN_BOKMAL,
   publicationType: '',
   contributors: [],
-  publicationSubtype: '',
   isbn: '',
   numberOfPages: '',
   series: emptyPublisher,

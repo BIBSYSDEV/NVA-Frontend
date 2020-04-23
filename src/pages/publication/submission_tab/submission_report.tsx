@@ -9,17 +9,16 @@ const SubmissionReport: React.FC = () => {
   const { values }: FormikProps<FormikPublication> = useFormikContext();
 
   const {
-    publicationSubtype,
     isbn,
     series,
     numberOfPages,
-    reference: { publicationContext },
+    reference: { publicationContext, publicationInstance },
   } = values.entityDescription;
 
   return (
     <>
       <LabelContentRow label={t('references.subtype')}>
-        {publicationSubtype && t(`publicationTypes:subtypes_report.${publicationSubtype}`)}
+        {publicationInstance.type && t(`publicationTypes:subtypes_report.${publicationInstance.type}`)}
       </LabelContentRow>
       <LabelContentRow label={t('common:publisher')}>{publicationContext?.title}</LabelContentRow>
       <LabelContentRow label={t('references.isbn')}>{isbn}</LabelContentRow>

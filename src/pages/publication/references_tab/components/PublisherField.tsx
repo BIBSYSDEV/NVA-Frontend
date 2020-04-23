@@ -3,6 +3,7 @@ import { Field, FieldProps } from 'formik';
 import PublicationChannelSearch from './PublicationChannelSearch';
 import { PublicationTableNumber } from '../../../../utils/constants';
 import PublisherRow from './PublisherRow';
+import { Publisher, levelMap } from '../../../../types/publication.types';
 
 interface PublisherFieldProps {
   fieldName: string;
@@ -17,6 +18,11 @@ const PublisherField: FC<PublisherFieldProps> = ({
   label,
   placeholder,
 }) => {
+  const mapPublisher = (selectedPublisher: Publisher) => {
+    const levelAsEnum = Object.keys(levelMap).find((key) => levelMap[key] === selectedPublisher.level);
+    return { ...selectedPublisher, level: levelAsEnum, type: 'PublicationContext' }; //TODO: remove type when fixed in backend
+  };
+
   return (
     <Field name={fieldName}>
       {({ field: { name, value }, form: { setFieldValue }, meta: { error, touched } }: FieldProps) => (
@@ -26,9 +32,7 @@ const PublisherField: FC<PublisherFieldProps> = ({
             dataTestId="autosearch-publisher"
             label={label}
             publicationTable={publicationTable}
-            setValueFunction={
-              (selectedPublisher) => setFieldValue(name, { ...selectedPublisher, type: 'PublicationContext' }) //TODO: remove type when fixed in backend
-            }
+            setValueFunction={(selectedPublisher) => setFieldValue(name, mapPublisher(selectedPublisher))}
             placeholder={placeholder}
             errorMessage={touched ? error : ''}
           />
