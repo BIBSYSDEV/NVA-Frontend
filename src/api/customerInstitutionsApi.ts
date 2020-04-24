@@ -1,4 +1,4 @@
-import { CustomerInstitution, emptyCustomerInstitution } from '../types/customerInstitution.types';
+import { CustomerInstitution } from '../types/customerInstitution.types';
 import { getIdToken } from './userApi';
 import Axios from 'axios';
 import i18n from '../translations/i18n';
@@ -56,11 +56,7 @@ export const createCustomerInstitution = async (customer: CustomerInstitution) =
     const headers = {
       Authorization: `Bearer ${idToken}`,
     };
-    const response = await Axios.post(
-      CustomerInstituionApiPaths.CUSTOMER_INSTITUTION,
-      { ...emptyCustomerInstitution, ...customer },
-      { headers }
-    );
+    const response = await Axios.post(CustomerInstituionApiPaths.CUSTOMER_INSTITUTION, customer, { headers });
     if (response.status === StatusCode.CREATED) {
       return response.data;
     } else {
@@ -81,7 +77,7 @@ export const updateCustomerInstitution = async (customer: CustomerInstitution) =
     };
     const response = await Axios.put(
       `${CustomerInstituionApiPaths.CUSTOMER_INSTITUTION}/${customer.identifier}`,
-      { ...emptyCustomerInstitution, ...customer },
+      customer,
       { headers }
     );
     if (response.status === StatusCode.OK) {
