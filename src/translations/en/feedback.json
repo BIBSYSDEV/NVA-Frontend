@@ -9,7 +9,7 @@
     "get_authority": "Could not retrieve authority",
     "get_authorities": "Could not retrieve authorities",
     "get_customer": "Could not retrieve customer institution",
-    "get_customers": "Could not retrive customer institutions",
+    "get_customers": "Could not retrieve customer institutions",
     "get_doi": "Could not retrieve link data",
     "get_doi_requests": "Could not retrieve DOI requests",
     "get_institutions": "Could not retrieve institutions",

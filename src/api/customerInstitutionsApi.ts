@@ -4,7 +4,7 @@ import Axios from 'axios';
 import i18n from '../translations/i18n';
 import { StatusCode } from '../utils/constants';
 
-export enum CustomerInstituionApiPaths {
+export enum CustomerInstitutionApiPaths {
   CUSTOMER_INSTITUTION = '/customer',
 }
 
@@ -14,7 +14,7 @@ export const getAllCustomerInstitutions = async () => {
     const headers = {
       Authorization: `Bearer ${idToken}`,
     };
-    const response = await Axios.get(CustomerInstituionApiPaths.CUSTOMER_INSTITUTION, {
+    const response = await Axios.get(CustomerInstitutionApiPaths.CUSTOMER_INSTITUTION, {
       headers,
     });
     if (response.status === StatusCode.OK) {
@@ -35,7 +35,7 @@ export const getInstitution = async (identifier: string) => {
     const headers = {
       Authorization: `Bearer ${idToken}`,
     };
-    const response = await Axios.get(`${CustomerInstituionApiPaths.CUSTOMER_INSTITUTION}/${identifier}`, {
+    const response = await Axios.get(`${CustomerInstitutionApiPaths.CUSTOMER_INSTITUTION}/${identifier}`, {
       headers,
     });
     if (response.status === StatusCode.OK) {
@@ -56,7 +56,7 @@ export const createCustomerInstitution = async (customer: CustomerInstitution) =
     const headers = {
       Authorization: `Bearer ${idToken}`,
     };
-    const response = await Axios.post(CustomerInstituionApiPaths.CUSTOMER_INSTITUTION, customer, { headers });
+    const response = await Axios.post(CustomerInstitutionApiPaths.CUSTOMER_INSTITUTION, customer, { headers });
     if (response.status === StatusCode.CREATED) {
       return response.data;
     } else {
@@ -76,7 +76,7 @@ export const updateCustomerInstitution = async (customer: CustomerInstitution) =
       Authorization: `Bearer ${idToken}`,
     };
     const response = await Axios.put(
-      `${CustomerInstituionApiPaths.CUSTOMER_INSTITUTION}/${customer.identifier}`,
+      `${CustomerInstitutionApiPaths.CUSTOMER_INSTITUTION}/${customer.identifier}`,
       customer,
       { headers }
     );

@@ -21,7 +21,7 @@ import { ProjectsApiPaths } from './projectApi';
 import { PublicationsApiPaths } from './publicationApi';
 import { PublicationChannelApiPaths } from './publicationChannelApi';
 import { FileUploadApiPaths } from './fileUploadApi';
-import { CustomerInstituionApiPaths } from './customerInstitutionsApi';
+import { CustomerInstitutionApiPaths } from './customerInstitutionsApi';
 
 const mockOrcidResponse: OrcidResponse = {
   id: 'https://sandbox.orcid.org/0000-0001-2345-6789',
@@ -139,16 +139,16 @@ export const interceptRequestsOnMock = () => {
 
   //memberinstitutions
   mock
-    .onGet(new RegExp(`${API_URL}${CustomerInstituionApiPaths.CUSTOMER_INSTITUTION}`))
+    .onGet(new RegExp(`${API_URL}${CustomerInstitutionApiPaths.CUSTOMER_INSTITUTION}`))
     .replyOnce(200, mockCustomerInstitutions);
   mock
-    .onGet(new RegExp(`${API_URL}${CustomerInstituionApiPaths.CUSTOMER_INSTITUTION}/*`))
+    .onGet(new RegExp(`${API_URL}${CustomerInstitutionApiPaths.CUSTOMER_INSTITUTION}/*`))
     .reply(200, mockCustomerInstitution);
   mock
-    .onPut(new RegExp(`${API_URL}${CustomerInstituionApiPaths.CUSTOMER_INSTITUTION}/*`))
+    .onPut(new RegExp(`${API_URL}${CustomerInstitutionApiPaths.CUSTOMER_INSTITUTION}/*`))
     .reply(200, mockCustomerInstitution);
   mock
-    .onPost(new RegExp(`${API_URL}${CustomerInstituionApiPaths.CUSTOMER_INSTITUTION}`))
+    .onPost(new RegExp(`${API_URL}${CustomerInstitutionApiPaths.CUSTOMER_INSTITUTION}`))
     .reply(201, mockCustomerInstitution);
 
   // Institution Registry
