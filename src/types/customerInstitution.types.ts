@@ -1,4 +1,6 @@
-export interface CustomerInstitution {
+import { BackendType, BackendTypeNames } from './publication.types';
+
+export interface CustomerInstitution extends BackendType {
   id: string;
   name: string;
   displayName: string;
@@ -15,6 +17,7 @@ export interface CustomerInstitution {
 }
 
 export const emptyCustomerInstitution: CustomerInstitution = {
+  type: BackendTypeNames.CUSTOMER,
   id: '',
   name: '',
   displayName: '',

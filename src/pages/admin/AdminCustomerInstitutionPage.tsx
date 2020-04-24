@@ -13,22 +13,22 @@ import {
   CustomerInstitution,
 } from '../../types/customerInstitution.types';
 import { createUppy } from '../../utils/uppy-config';
-import Label from '../../components/Label';
-import InstitutionLogoFileUploader from './InstitutionLogoFileUploader';
-import FileCard from '../publication/files_and_license_tab/FileCard';
+// import Label from '../../components/Label';
+// import InstitutionLogoFileUploader from './InstitutionLogoFileUploader';
+// import FileCard from '../publication/files_and_license_tab/FileCard';
 import InstitutionSearch from '../publication/references_tab/components/InstitutionSearch';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import { useDispatch } from 'react-redux';
-import { getInstitution } from '../../api/customerInstitutionsApi';
+import { getInstitution, createCustomerInstitution } from '../../api/customerInstitutionsApi';
 import Progress from '../../components/Progress';
 
 const shouldAllowMultipleFiles = false;
 
-const StyledLogoUploadWrapper = styled(Card)`
-  margin-top: 1rem;
-`;
+// const StyledLogoUploadWrapper = styled(Card)`
+//   margin-top: 1rem;
+// `;
 
 const StyledButtonContainer = styled.div`
   margin-top: 2rem;
@@ -37,16 +37,22 @@ const StyledButtonContainer = styled.div`
   justify-content: flex-end;
 `;
 
+const StyledProgressContainer = styled.div`
+  padding-left: 1rem;
+  display: flex;
+  align-items: center;
+`;
+
 const AdminCustomerInstitutionPage: FC = () => {
   const { t } = useTranslation('admin');
   const [uppy] = useState(createUppy(shouldAllowMultipleFiles));
   const { identifier } = useParams();
   const editMode = identifier !== 'new';
-  const [initialValues, setInitialValues] = useState<CustomerInstitution | {}>(
-    editMode ? {} : emptyCustomerInstitution
-  );
+  const [initialValues, setInitialValues] = useState<CustomerInstitution>(emptyCustomerInstitution);
   const [isLoading, setIsLoading] = useState(editMode);
+  const [isSaving, setIsSaving] = useState(false);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   useEffect(() => {
     return () => uppy && uppy.close();
@@ -68,6 +74,23 @@ const AdminCustomerInstitutionPage: FC = () => {
     }
   }, [identifier, dispatch, editMode]);
 
+  const handleSubmit = async (values: CustomerInstitution) => {
+    if (!editMode) {
+      setIsSaving(true);
+      const customerValues = { ...values, createdDate: new Date().toISOString() }; // TODO: remove setting createdDate when fixed in backend
+      const createdCustomer = await createCustomerInstitution(customerValues);
+      if (!createdCustomer || createdCustomer?.error) {
+        dispatch(setNotification(createdCustomer.error, NotificationVariant.Error));
+      } else {
+        history.push(`/admin-institutions/${createdCustomer.identifier}`);
+        setInitialValues(createdCustomer);
+        dispatch(setNotification(t('feedback:success.created_customer')));
+      }
+      setIsSaving(false);
+    }
+    // TODO: edit publication
+  };
+
   return isLoading ? (
     <Progress />
   ) : (
@@ -79,11 +102,10 @@ const AdminCustomerInstitutionPage: FC = () => {
         validationSchema={Yup.object({
           name: Yup.string().required(t('feedback.required_field')),
         })}
-        onSubmit={(values) => {
-          console.log('values', values);
-        }}>
+        onSubmit={handleSubmit}>
         <Form>
-          <Field name={CustomerInstitutionFieldNames.LOGO_FILE}>
+          {/* TODO uncomment when backend has support for logo */}
+          {/* <Field name={CustomerInstitutionFieldNames.LOGO_FILE}>
             {({ field: { value, name }, form }: FieldProps) => (
               <StyledLogoUploadWrapper>
                 <Label>{t('institution_logo')}</Label>
@@ -105,12 +127,13 @@ const AdminCustomerInstitutionPage: FC = () => {
                 )}
               </StyledLogoUploadWrapper>
             )}
-          </Field>
+          </Field> */}
           <Field name={CustomerInstitutionFieldNames.NAME}>
             {({ field: { value, name }, form }: FieldProps) => (
               <InstitutionSearch
                 dataTestId="autosearch-institution"
                 label={t('organization_register_name')}
+                initialValue={value ?? ''}
                 clearSearchField={value.name === ''}
                 setValueFunction={(inputValue) => {
                   form.setFieldValue(name, inputValue.name);
@@ -185,7 +208,12 @@ const AdminCustomerInstitutionPage: FC = () => {
           />
           <StyledButtonContainer>
             <Button color="primary" data-testid="customer-instituiton-save-button" variant="contained" type="submit">
-              {t('common:save')}
+              {editMode ? t('common:save') : t('common:create')}
+              {isSaving && (
+                <StyledProgressContainer>
+                  <Progress size={15} thickness={5} />
+                </StyledProgressContainer>
+              )}
             </Button>
           </StyledButtonContainer>
         </Form>
