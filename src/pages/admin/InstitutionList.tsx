@@ -54,10 +54,10 @@ const InstitutionList: FC<InstitutionListProps> = ({ institutions }) => {
               <NormalText>{institution.name}</NormalText>
             </TableCell>
             <StyledSmallCell>
-              <NormalText>{institution.createdDate}</NormalText>
+              <NormalText>{new Date(institution.createdDate).toLocaleDateString()}</NormalText>
             </StyledSmallCell>
             <StyledSmallCell>
-              <NormalText>{institution.contact}</NormalText>
+              <NormalText>{institution.administrationId}</NormalText>
             </StyledSmallCell>
             <TableCell>
               <Button color="primary" component={RouterLink} to={`/admin-institutions/${institution.identifier}`}>

@@ -1,4 +1,3 @@
-import mockCustomerInstitutions from '../utils/testfiles/mock_customer_institutions.json';
 import { CustomerInstitution, emptyCustomerInstitution } from '../types/customerInstitution.types';
 import { getIdToken } from './userApi';
 import Axios from 'axios';
@@ -10,8 +9,24 @@ export enum CustomerInstituionApiPaths {
 }
 
 export const getAllCustomerInstitutions = async () => {
-  // TODO: get all  publications
-  return mockCustomerInstitutions;
+  try {
+    const idToken = await getIdToken();
+    const headers = {
+      Authorization: `Bearer ${idToken}`,
+    };
+    const response = await Axios.get(CustomerInstituionApiPaths.CUSTOMER_INSTITUTION, {
+      headers,
+    });
+    if (response.status === StatusCode.OK) {
+      return response.data;
+    } else {
+      return null;
+    }
+  } catch {
+    return {
+      error: i18n.t('feedback:error.get_customers'),
+    };
+  }
 };
 
 export const getInstitution = async (identifier: string) => {
