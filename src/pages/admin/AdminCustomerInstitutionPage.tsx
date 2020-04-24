@@ -79,7 +79,7 @@ const AdminCustomerInstitutionPage: FC = () => {
       setIsSaving(true);
       const customerValues = { ...values, createdDate: new Date().toISOString() }; // TODO: remove setting createdDate when fixed in backend
       const createdCustomer = await createCustomerInstitution(customerValues);
-      if (createdCustomer?.error) {
+      if (!createdCustomer || createdCustomer?.error) {
         dispatch(setNotification(createdCustomer.error, NotificationVariant.Error));
       } else {
         history.push(`/admin-institutions/${createdCustomer.identifier}`);
