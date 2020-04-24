@@ -8,6 +8,7 @@
     "get_approvable_publications": "Kunne ikke hente publikasjoner som venter godkjenning",
     "get_authority": "Kunne ikke hente autoritet",
     "get_authorities": "Kunne ikke hente autoriteter",
+    "get_customer": "Kunne ikke hente institusjon",
     "get_doi": "Kunne ikke hente lenkedata",
     "get_doi_requests": "Kunne ikke hente DOI-forespørsler",
     "get_institutions": "Kunne ikke laste inn institusjoner",
@@ -23,6 +24,7 @@
     "search": "Søk feilet",
     "search_institutions": "Kunne ikke finne institusjon",
     "update_authority": "Kunne ikke oppdatere autoritet",
+    "update_customer": "Kunne ikke oppdatere institusjon",
     "update_identifier": "Kunne ikke oppdatere identifikatoren",
     "update_publication": "Kunne ikke oppdatere publikasjon"
   },
@@ -33,6 +35,7 @@
     "delete_identifier": "Identifikatoren ble slettet",
     "login": "Logget inn",
     "update_authority": "Forfatter er oppdatert",
+    "update_customer": "Institusjon er oppdatert",
     "update_identifier": "Identifikatoren er oppdatert",
     "update_publication": "Publikasjonen er oppdatert"
   }

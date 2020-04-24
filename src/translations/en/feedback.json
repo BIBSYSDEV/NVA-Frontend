@@ -8,6 +8,7 @@
     "get_approvable_publications": "Could not fetch publications awaiting approval",
     "get_authority": "Could not retrieve authority",
     "get_authorities": "Could not retrieve authorities",
+    "get_customer": "Could not retrieve customer institution",
     "get_doi": "Could not retrieve link data",
     "get_doi_requests": "Could not retrieve DOI requests",
     "get_institutions": "Could not retrieve institutions",
@@ -23,6 +24,7 @@
     "search": "Search failed",
     "search_institutions": "Could not find institution",
     "update_authority": "Could not update authority",
+    "update_customer": "Could not update customer institution",
     "update_identifier": "Could not update identifier",
     "update_publication": "Could not update publication"
   },
@@ -33,6 +35,7 @@
     "delete_identifier": "Deleted identifier",
     "login": "Logged in",
     "update_authority": "Updated authority",
+    "update_customer": "Updated customer institution",
     "update_identifier": "Updated identifier",
     "update_publication": "Updated publication"
   }

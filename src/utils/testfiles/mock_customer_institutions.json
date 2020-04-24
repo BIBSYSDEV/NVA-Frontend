@@ -1,7 +1,7 @@
 [
   {
     "name": "Norwegian University of Science and Technology",
-    "id": "1",
+    "identifier": "1",
     "createdDate": "2020-11-01",
     "contact": "Tiril",
     "displayName": "Norges teknisk-naturvitenskapelige universitet",
@@ -14,7 +14,7 @@
   },
   {
     "name": "Statped",
-    "id": "2",
+    "identifier": "2",
     "createdDate": "2020-11-01",
     "contact": "Roger",
     "displayName": "xxx",
@@ -27,7 +27,7 @@
   },
   {
     "name": "Anno Museeum",
-    "id": "3",
+    "identifier": "3",
     "createdDate": "2020-11-01",
     "contact": "Børre",
     "displayName": "xxx",
@@ -40,7 +40,7 @@
   },
   {
     "name": "Institutt for osteloff",
-    "id": "4",
+    "identifier": "4",
     "createdDate": "1780-01-27",
     "contact": "Kjetil",
     "displayName": "xxx",
@@ -53,7 +53,7 @@
   },
   {
     "name": "Norsk senter for økologisk landbruk",
-    "id": "5",
+    "identifier": "5",
     "createdDate": "2012-11-11",
     "contact": "Rolf",
     "displayName": "xxx",

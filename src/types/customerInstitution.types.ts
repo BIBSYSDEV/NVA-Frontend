@@ -1,7 +1,7 @@
 import { BackendType, BackendTypeNames } from './publication.types';
 
 export interface CustomerInstitution extends BackendType {
-  id: string;
+  identifier: string;
   name: string;
   displayName: string;
   shortName: string;
@@ -18,7 +18,7 @@ export interface CustomerInstitution extends BackendType {
 
 export const emptyCustomerInstitution: CustomerInstitution = {
   type: BackendTypeNames.CUSTOMER,
-  id: '',
+  identifier: '',
   name: '',
   displayName: '',
   shortName: '',
@@ -32,7 +32,7 @@ export const emptyCustomerInstitution: CustomerInstitution = {
 };
 
 export enum CustomerInstitutionFieldNames {
-  ID = 'id',
+  IDENTIFIER = 'identifier',
   NAME = 'name',
   DISPLAY_NAME = 'displayName',
   SHORT_NAME = 'shortName',
