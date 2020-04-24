@@ -1,5 +1,5 @@
 import mockCustomerInstitutions from '../utils/testfiles/mock_customer_institutions.json';
-import { CustomerInstitution, emptyCustomerInstitution } from '../types/customerInstitution.types';
+import { CustomerInstitution } from '../types/customerInstitution.types';
 import { getIdToken } from './userApi';
 import Axios from 'axios';
 import i18n from '../translations/i18n';
