@@ -20,7 +20,9 @@ export const getAllCustomerInstitutions = async () => {
     if (response.status === StatusCode.OK) {
       return response.data;
     } else {
-      return null;
+      return {
+        error: i18n.t('feedback:error.get_customers'),
+      };
     }
   } catch {
     return {
@@ -41,7 +43,9 @@ export const getInstitution = async (identifier: string) => {
     if (response.status === StatusCode.OK) {
       return response.data;
     } else {
-      return null;
+      return {
+        error: i18n.t('feedback:error.get_customer'),
+      };
     }
   } catch {
     return {
@@ -60,7 +64,9 @@ export const createCustomerInstitution = async (customer: CustomerInstitution) =
     if (response.status === StatusCode.CREATED) {
       return response.data;
     } else {
-      return null;
+      return {
+        error: i18n.t('feedback:error.create_customer'),
+      };
     }
   } catch {
     return {
@@ -83,7 +89,9 @@ export const updateCustomerInstitution = async (customer: CustomerInstitution) =
     if (response.status === StatusCode.OK) {
       return response.data;
     } else {
-      return null;
+      return {
+        error: i18n.t('feedback:error.update_customer'),
+      };
     }
   } catch {
     return {

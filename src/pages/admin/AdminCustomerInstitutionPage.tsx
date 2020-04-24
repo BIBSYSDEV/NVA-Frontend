@@ -92,7 +92,7 @@ const AdminCustomerInstitutionPage: FC = () => {
       }
     } else {
       const updatedCustomer = await updateCustomerInstitution(values);
-      if (updatedCustomer?.error) {
+      if (!updatedCustomer || updatedCustomer?.error) {
         dispatch(setNotification(updatedCustomer.error, NotificationVariant.Error));
       } else {
         setInitialValues(updatedCustomer);

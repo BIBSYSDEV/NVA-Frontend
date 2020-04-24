@@ -34,7 +34,7 @@ const AdminCustomerInstitutionsPage: FC = () => {
     const loadData = async () => {
       setIsLoading(true);
       const institutions: any = await getAllCustomerInstitutions();
-      if (!institutions || institutions?.error) {
+      if (institutions?.error) {
         dispatch(setNotification(institutions.error, NotificationVariant.Error));
       } else {
         setInstitutions(institutions);
