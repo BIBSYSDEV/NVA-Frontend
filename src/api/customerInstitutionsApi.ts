@@ -41,11 +41,7 @@ export const createCustomerInstitution = async (customer: CustomerInstitution) =
     const headers = {
       Authorization: `Bearer ${idToken}`,
     };
-    const response = await Axios.post(
-      CustomerInstituionApiPaths.CUSTOMER_INSTITUTION,
-      { ...emptyCustomerInstitution, ...customer },
-      { headers }
-    );
+    const response = await Axios.post(CustomerInstituionApiPaths.CUSTOMER_INSTITUTION, customer, { headers });
     if (response.status === StatusCode.CREATED) {
       return response.data;
     } else {
