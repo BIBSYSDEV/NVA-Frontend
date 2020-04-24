@@ -66,7 +66,7 @@ export const updateCustomerInstitution = async (customer: CustomerInstitution) =
     };
     const response = await Axios.put(
       `${CustomerInstituionApiPaths.CUSTOMER_INSTITUTION}/${customer.identifier}`,
-      { ...emptyCustomerInstitution, ...customer },
+      customer,
       { headers }
     );
     if (response.status === StatusCode.OK) {
