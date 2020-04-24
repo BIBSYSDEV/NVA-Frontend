@@ -32,7 +32,7 @@ const InstitutionList: FC<InstitutionListProps> = ({ institutions }) => {
   const { t } = useTranslation('common');
 
   return (
-    <StyledTable>
+    <StyledTable data-testid="customer-institutions-list">
       <TableHead>
         <TableRow>
           <TableCell>

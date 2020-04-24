@@ -14,9 +14,9 @@ describe('User administers institutions ', () => {
   });
 
   it('The User should be able to open admin page for institutions from the menu', () => {
+    cy.get('[data-testid=customer-institutions-list]');
     cy.contains('Norges teknisk-naturvitenskapelige universitet');
     cy.contains('tiril@ntnu.no');
-    cy.contains('1.11.2020');
   });
 
   it('The User should be able to add an institution', () => {
