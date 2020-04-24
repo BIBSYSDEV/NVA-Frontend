@@ -1,9 +1,8 @@
 [
   {
-    "name": "Norwegian University of Science and Technology",
+    "name": "Norges teknisk-naturvitenskapelige universitet",
     "identifier": "1",
     "createdDate": "2020-11-01",
-    "contact": "Tiril",
     "displayName": "Norges teknisk-naturvitenskapelige universitet",
     "shortName": "NTNU",
     "archiveName": "NTNU Open",
@@ -22,46 +21,43 @@
     "archiveName": "xxx",
     "cname": "xxx",
     "institutionDns": "xxx",
-    "administrationId": "xxx",
+    "administrationId": "roger@statped.no",
     "feideOrganizationId": "xxx"
   },
   {
     "name": "Anno Museeum",
     "identifier": "3",
     "createdDate": "2020-11-01",
-    "contact": "Børre",
     "displayName": "xxx",
     "shortName": "xxx",
     "archiveName": "xxx",
     "cname": "xxx",
     "institutionDns": "xxx",
-    "administrationId": "xxx",
+    "administrationId": "borre@annomuseum.no",
     "feideOrganizationId": "xxx"
   },
   {
     "name": "Institutt for osteloff",
     "identifier": "4",
-    "createdDate": "1780-01-27",
-    "contact": "Kjetil",
+    "createdDate": "2020-01-27",
     "displayName": "xxx",
     "shortName": "xxx",
     "archiveName": "xxx",
     "cname": "xxx",
     "institutionDns": "xxx",
-    "administrationId": "xxx",
+    "administrationId": "kjetil@osteloff.no",
     "feideOrganizationId": "xxx"
   },
   {
     "name": "Norsk senter for økologisk landbruk",
     "identifier": "5",
     "createdDate": "2012-11-11",
-    "contact": "Rolf",
     "displayName": "xxx",
     "shortName": "xxx",
     "archiveName": "xxx",
     "cname": "xxx",
     "institutionDns": "xxx",
-    "administrationId": "xxx",
+    "administrationId": "rolf@noroc.no",
     "feideOrganizationId": "xxx"
   }
 ]

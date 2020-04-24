@@ -9,6 +9,7 @@
     "get_authority": "Kunne ikke hente autoritet",
     "get_authorities": "Kunne ikke hente autoriteter",
     "get_customer": "Kunne ikke hente institusjon",
+    "get_customers": "Kunne ikke hente institusjoner",
     "get_doi": "Kunne ikke hente lenkedata",
     "get_doi_requests": "Kunne ikke hente DOI-forespørsler",
     "get_institutions": "Kunne ikke laste inn institusjoner",

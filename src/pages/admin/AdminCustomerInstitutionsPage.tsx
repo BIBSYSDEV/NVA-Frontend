@@ -4,17 +4,24 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { getAllCustomerInstitutions } from '../../api/customerInstitutionsApi';
 import Card from '../../components/Card';
-import { Button, CircularProgress } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import InstitutionList from './InstitutionList';
 import { Link as RouterLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { CustomerInstitution } from '../../types/customerInstitution.types';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
+import Progress from '../../components/Progress';
 
 const StyledButtonWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
+`;
+
+const StyledProgressContainer = styled.div`
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 `;
 
 const AdminCustomerInstitutionsPage: FC = () => {
@@ -49,7 +56,13 @@ const AdminCustomerInstitutionsPage: FC = () => {
           {t('add_institution')}
         </Button>
       </StyledButtonWrapper>
-      {isLoading ? <CircularProgress color="inherit" size={20} /> : <InstitutionList institutions={institutions} />}
+      {isLoading ? (
+        <StyledProgressContainer>
+          <Progress />
+        </StyledProgressContainer>
+      ) : (
+        <InstitutionList institutions={institutions} />
+      )}
     </Card>
   );
 };
