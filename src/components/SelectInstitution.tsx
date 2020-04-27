@@ -112,7 +112,7 @@ const SelectInstitution: FC<SelectInstitutionProps> = ({ onSubmit, onClose }) =>
               />
               {fetchingDepartment && <StyledProgress />}
 
-              {selectedInstitution && <InstitutionSelector unit={selectedInstitution} fieldNamePrefix={name} />}
+              {selectedInstitution && <InstitutionSelector units={selectedInstitution} fieldNamePrefix={name} />}
 
               <StyledButton
                 variant="contained"

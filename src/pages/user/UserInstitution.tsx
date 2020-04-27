@@ -128,7 +128,7 @@ const UserInstitution: FC = () => {
                     />
                     {value && (
                       <>
-                        <InstitutionSelector unit={value} />
+                        <InstitutionSelector units={value} />
                         <StyledButton
                           variant="contained"
                           type="submit"
