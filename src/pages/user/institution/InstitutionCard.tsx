@@ -46,7 +46,7 @@ const StyledEditButton = styled(Button)`
 `;
 
 interface InstitutionCardProps {
-  onEdit: () => void;
+  onEdit?: () => void;
   unit: FormikInstitutionUnit;
 }
 
@@ -76,7 +76,7 @@ const InstitutionCard: FC<InstitutionCardProps> = ({ onEdit, unit }) => {
   };
 
   const handleEditInstitution = async () => {
-    onEdit();
+    // onEdit();
     setFieldValue(FormikInstitutionUnitFieldNames.ID, unit.id);
     setFieldValue(FormikInstitutionUnitFieldNames.NAME, unit.name);
     setFieldValue(FormikInstitutionUnitFieldNames.SUBUNITS, unit.subunits);
