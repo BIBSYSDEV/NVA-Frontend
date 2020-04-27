@@ -15,7 +15,6 @@ import { useDispatch } from 'react-redux';
 import { getInstitutions, getDepartment } from '../api/institutionApi';
 import { setNotification } from '../redux/actions/notificationActions';
 import { NotificationVariant } from '../types/notification.types';
-// import { filterInstitutions } from '../utils/institutions-helpers';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Progress from './Progress';
 
@@ -35,10 +34,9 @@ const StyledProgress = styled(Progress)`
 interface SelectInstitutionProps {
   onSubmit: (values: FormikInstitutionUnit) => void;
   onClose?: () => void;
-  excludeAffiliationIds?: string[];
 }
 
-const SelectInstitution: FC<SelectInstitutionProps> = ({ onSubmit, onClose, excludeAffiliationIds }) => {
+const SelectInstitution: FC<SelectInstitutionProps> = ({ onSubmit, onClose }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const [institutions, setInstitutions] = useState<InstitutionUnitBase[]>([]);
@@ -54,15 +52,12 @@ const SelectInstitution: FC<SelectInstitutionProps> = ({ onSubmit, onClose, excl
       if (response?.error) {
         dispatch(setNotification(response.error, NotificationVariant.Error));
       } else {
-        const relevantInstitutions = excludeAffiliationIds // TODO: revisit use of excludeAffiliationIds
-          ? response.filter((institution: any) => !excludeAffiliationIds.includes(institution.id))
-          : response;
-        setInstitutions(relevantInstitutions);
+        setInstitutions(response);
       }
       setFetchingInstitutions(false);
     };
     fetchInstitutions();
-  }, [dispatch, excludeAffiliationIds]);
+  }, [dispatch]);
 
   const fetchDepartment = async (institutionId: string) => {
     setFetchingDepartment(true);

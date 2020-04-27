@@ -15,6 +15,9 @@ import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { publicationLanguages, LanguageCodes } from '../../../../types/language.types';
 import { getMostSpecificUnit } from '../../../../utils/institutions-helpers';
+import { useDispatch } from 'react-redux';
+import { setNotification } from '../../../../redux/actions/notificationActions';
+import { NotificationVariant } from '../../../../types/notification.types';
 
 const StyledAffiliationsCell = styled.div`
   display: flex;
@@ -37,9 +40,10 @@ interface AffiliationsCellProps {
 
 const AffiliationsCell: FC<AffiliationsCellProps> = ({ affiliations, baseFieldName, contributorName }) => {
   const { t } = useTranslation('publication');
+  const disptach = useDispatch();
+  const { values, setFieldValue }: FormikProps<FormikPublication> = useFormikContext();
   const [openAffiliationModal, setOpenAffiliationModal] = useState(false);
   const [affiliationToRemove, setAffiliationToRemove] = useState<Institution | null>(null);
-  const { values, setFieldValue }: FormikProps<FormikPublication> = useFormikContext();
 
   const toggleAffiliationModal = () => setOpenAffiliationModal(!openAffiliationModal);
 
@@ -49,6 +53,13 @@ const AffiliationsCell: FC<AffiliationsCellProps> = ({ affiliations, baseFieldNa
     }
 
     const mostSpecificUnit = getMostSpecificUnit(value.unit);
+
+    // Avoid adding same unit twice
+    if (affiliations?.some((affiliation) => affiliation.id === mostSpecificUnit.id)) {
+      disptach(setNotification(t('contributors.add_duplicate_affiliation'), NotificationVariant.Info));
+      return;
+    }
+
     // TODO: Set hierarchy in state? get from backend?
 
     const labelKey =
@@ -91,11 +102,7 @@ const AffiliationsCell: FC<AffiliationsCellProps> = ({ affiliations, baseFieldNa
         openModal={openAffiliationModal}
         onClose={toggleAffiliationModal}
         headingText={t('contributors.select_institution')}>
-        <SelectInstitution
-          onClose={toggleAffiliationModal}
-          onSubmit={addAffiliation}
-          excludeAffiliationIds={affiliations?.map((affiliation) => affiliation.id)}
-        />
+        <SelectInstitution onClose={toggleAffiliationModal} onSubmit={addAffiliation} />
       </Modal>
 
       {/* Confirm dialog for removing affiliation */}
