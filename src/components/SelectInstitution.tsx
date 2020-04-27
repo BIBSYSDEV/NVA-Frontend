@@ -17,6 +17,7 @@ import { setNotification } from '../redux/actions/notificationActions';
 import { NotificationVariant } from '../types/notification.types';
 // import { filterInstitutions } from '../utils/institutions-helpers';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import Progress from './Progress';
 
 const StyledButton = styled(Button)`
   margin: 0.5rem;
@@ -24,6 +25,11 @@ const StyledButton = styled(Button)`
 
 const StyledInstitutionSearchContainer = styled.div`
   width: 30rem;
+`;
+
+const StyledProgress = styled(Progress)`
+  display: block;
+  margin: 1rem;
 `;
 
 interface SelectInstitutionProps {
@@ -37,6 +43,7 @@ const SelectInstitution: FC<SelectInstitutionProps> = ({ onSubmit, onClose, excl
   const dispatch = useDispatch();
   const [institutions, setInstitutions] = useState<InstitutionUnitBase[]>([]);
   const [selectedInstitution, setSelectedInstitution] = useState<RecursiveInstitutionUnit[]>();
+  const [fetchingDepartment, setFetchingDepartment] = useState(false);
 
   useEffect(() => {
     // TODO: This only needs to be done once (not for each SelectInstitution)
@@ -55,7 +62,9 @@ const SelectInstitution: FC<SelectInstitutionProps> = ({ onSubmit, onClose, excl
   }, [dispatch, excludeAffiliationIds]);
 
   const fetchDepartment = async (institutionId: string) => {
+    setFetchingDepartment(true);
     const response = await getDepartment(institutionId);
+    setFetchingDepartment(false);
     if (!response || response.error) {
       dispatch(setNotification(response.error, NotificationVariant.Error));
       return;
@@ -92,20 +101,19 @@ const SelectInstitution: FC<SelectInstitutionProps> = ({ onSubmit, onClose, excl
                   />
                 )}
               />
-              {/* TODO: Spinner when fetching department */}
-              {value && selectedInstitution && (
-                <>
-                  <InstitutionSelector unit={selectedInstitution} fieldNamePrefix={name} />
-                  <StyledButton
-                    variant="contained"
-                    type="submit"
-                    color="primary"
-                    disabled={!value}
-                    data-testid="institution-add-button">
-                    {t('common:add')}
-                  </StyledButton>
-                </>
-              )}
+              {fetchingDepartment && <StyledProgress />}
+
+              {selectedInstitution && <InstitutionSelector unit={selectedInstitution} fieldNamePrefix={name} />}
+
+              <StyledButton
+                variant="contained"
+                type="submit"
+                color="primary"
+                disabled={!value || fetchingDepartment}
+                data-testid="institution-add-button">
+                {t('common:add')}
+              </StyledButton>
+
               {onClose && (
                 <StyledButton
                   onClick={() => {
