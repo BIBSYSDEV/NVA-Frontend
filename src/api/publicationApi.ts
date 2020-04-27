@@ -30,7 +30,8 @@ export const updatePublication = async (publication: Publication) => {
         Authorization: `Bearer ${idToken}`,
       },
     });
-    if (response.status === StatusCode.OK) {
+    if (response.status === StatusCode.OK || response.status === StatusCode.ACCEPTED) {
+      // TODO: temporarily allow accepted status code. remove when fixed in backend
       return response.data;
     } else {
       return null;

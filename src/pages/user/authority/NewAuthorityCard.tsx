@@ -69,10 +69,12 @@ const NewAuthorityCard: FC<NewAuthorityCardProps> = ({ onClickCancel }) => {
     const authority = await createAuthority(givenName, familyName, id);
     if (authority?.error) {
       dispatch(setNotification(authority.error, NotificationVariant.Error));
+      onClickCancel();
     } else {
       dispatch(setAuthorityData(authority));
       dispatch(setNotification(t('feedback:success.created_authority')));
     }
+    setLoading(false);
   };
 
   return (

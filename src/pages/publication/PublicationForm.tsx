@@ -1,4 +1,4 @@
-import { Form, Formik, FormikProps } from 'formik';
+import { Form, Formik, FormikProps, yupToFormErrors, validateYupSchema } from 'formik';
 import React, { FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
@@ -125,13 +125,26 @@ const PublicationForm: FC<PublicationFormProps> = ({
     const { shouldCreateDoi, ...newPublication } = values;
     setIsSaving(true);
     const updatedPublication = await updatePublication(newPublication);
-    if (updatedPublication.error) {
+    if (updatedPublication?.error) {
       dispatch(setNotification(updatedPublication.error, NotificationVariant.Error));
     } else {
       setInitialValues(deepmerge(emptyPublication, updatedPublication));
       dispatch(setNotification(t('feedback:success.update_publication')));
     }
     setIsSaving(false);
+  };
+
+  const validateForm = (values: FormikPublication) => {
+    const { publicationType, reference: publicationInstance } = values.entityDescription;
+    try {
+      validateYupSchema<FormikPublication>(values, publicationValidationSchema, true, {
+        publicationInstanceType: publicationInstance.type,
+        publicationType,
+      });
+    } catch (err) {
+      return yupToFormErrors(err);
+    }
+    return {};
   };
 
   return isLoading ? (
@@ -141,7 +154,7 @@ const PublicationForm: FC<PublicationFormProps> = ({
       <Formik
         enableReinitialize
         initialValues={initialValues}
-        validationSchema={publicationValidationSchema}
+        validate={validateForm}
         validateOnChange={false}
         onSubmit={(values: FormikPublication) => savePublication(values)}>
         {({ values }: FormikProps<FormikPublication>) => (
