@@ -42,19 +42,19 @@ const SelectInstitution: FC<SelectInstitutionProps> = ({ onSubmit, onClose }) =>
   const dispatch = useDispatch();
   const institutions = useSelector((store: RootStore) => store.institutions);
   const [selectedInstitution, setSelectedInstitution] = useState<RecursiveInstitutionUnit[]>();
-  const [fetchingInstitutions, setFetchingInstitutions] = useState(false);
-  const [fetchingDepartment, setFetchingDepartment] = useState(false);
+  const [isLoadingInstitutions, setIsLoadingInstitutions] = useState(false);
+  const [isLoadingDepartment, setIsLoadingDepartment] = useState(false);
 
   useEffect(() => {
     const fetchInstitutions = async () => {
-      setFetchingInstitutions(true);
+      setIsLoadingInstitutions(true);
       const response = await getInstitutions();
       if (response?.error) {
         dispatch(setNotification(response.error, NotificationVariant.Error));
       } else {
         dispatch(setInstitutions(response));
       }
-      setFetchingInstitutions(false);
+      setIsLoadingInstitutions(false);
     };
     // Institutions should not change, so ensure we fetch only once
     if (!institutions || institutions.length === 0) {
@@ -63,7 +63,7 @@ const SelectInstitution: FC<SelectInstitutionProps> = ({ onSubmit, onClose }) =>
   }, [dispatch, institutions]);
 
   const fetchDepartment = async (institutionId: string) => {
-    setFetchingDepartment(true);
+    setIsLoadingDepartment(true);
     const response = await getDepartment(institutionId);
     if (!response || response.error) {
       dispatch(setNotification(response.error, NotificationVariant.Error));
@@ -71,7 +71,7 @@ const SelectInstitution: FC<SelectInstitutionProps> = ({ onSubmit, onClose }) =>
       const subunits = JSON.parse(response.json).subunits;
       setSelectedInstitution(subunits);
     }
-    setFetchingDepartment(false);
+    setIsLoadingDepartment(false);
   };
 
   return (
@@ -102,7 +102,7 @@ const SelectInstitution: FC<SelectInstitutionProps> = ({ onSubmit, onClose }) =>
                       ...params.InputProps,
                       endAdornment: (
                         <>
-                          {fetchingInstitutions && <CircularProgress size={20} />}
+                          {isLoadingInstitutions && <CircularProgress size={20} />}
                           {params.InputProps.endAdornment}
                         </>
                       ),
@@ -110,7 +110,7 @@ const SelectInstitution: FC<SelectInstitutionProps> = ({ onSubmit, onClose }) =>
                   />
                 )}
               />
-              {fetchingDepartment && <StyledProgress />}
+              {isLoadingDepartment && <StyledProgress />}
 
               {selectedInstitution && <InstitutionSelector units={selectedInstitution} fieldNamePrefix={name} />}
 
@@ -118,7 +118,7 @@ const SelectInstitution: FC<SelectInstitutionProps> = ({ onSubmit, onClose }) =>
                 variant="contained"
                 type="submit"
                 color="primary"
-                disabled={!value || fetchingDepartment}
+                disabled={!value || isLoadingDepartment}
                 data-testid="institution-add-button">
                 {t('common:add')}
               </StyledButton>

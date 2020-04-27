@@ -4,13 +4,13 @@ import { InstitutionUnitResponseType, InstitutionUnitBase } from '../types/insti
 import { StatusCode } from '../utils/constants';
 import i18n from '../translations/i18n';
 
-export enum InstituionApiPaths {
+export enum InstitutionApiPaths {
   INSTITUTIONS = '/institutions-proxy/institutions',
   DEPARTMENTS = '/institutions-proxy/departments',
 }
 
 export const getInstitutions = async () => {
-  const url = InstituionApiPaths.INSTITUTIONS;
+  const url = InstitutionApiPaths.INSTITUTIONS;
   try {
     const idToken = await getIdToken();
     const headers = {
@@ -28,7 +28,7 @@ export const getInstitutions = async () => {
 };
 
 export const getDepartment = async (departmentUri: string) => {
-  const url = `${InstituionApiPaths.DEPARTMENTS}?uri=${departmentUri}`;
+  const url = `${InstitutionApiPaths.DEPARTMENTS}?uri=${departmentUri}`;
   try {
     const idToken = await getIdToken();
     const headers = {
@@ -53,7 +53,7 @@ export const getParentUnits = async (subunitid: string) => {
     const headers = {
       Authorization: `Bearer ${idToken}`,
     };
-    const url = `${InstituionApiPaths.INSTITUTIONS}?id=${subunitid}`;
+    const url = `${InstitutionApiPaths.INSTITUTIONS}?id=${subunitid}`;
     const response = await Axios.get(url, { headers });
     if (response.status === StatusCode.OK) {
       const { id, name, subunits } = response.data;

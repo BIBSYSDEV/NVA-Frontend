@@ -16,7 +16,7 @@ import mockNsdPublisers from '../utils/testfiles/publishersFromNsd.json';
 import mockCustomerInstitutions from '../utils/testfiles/mock_customer_institutions.json';
 import mockCustomerInstitution from '../utils/testfiles/mock_customer_institution.json';
 import { AuthorityApiPaths } from './authorityApi';
-import { InstituionApiPaths } from './institutionApi';
+import { InstitutionApiPaths } from './institutionApi';
 import { ProjectsApiPaths } from './projectApi';
 import { PublicationsApiPaths } from './publicationApi';
 import { PublicationChannelApiPaths } from './publicationChannelApi';
@@ -152,10 +152,10 @@ export const interceptRequestsOnMock = () => {
     .reply(201, mockCustomerInstitution);
 
   // Institution Registry
-  mock.onGet(new RegExp(`${API_URL}${InstituionApiPaths.INSTITUTIONS}\\?name=*`)).reply(200, mockInstitutionResponse);
-  mock.onGet(new RegExp(`${API_URL}${InstituionApiPaths.INSTITUTIONS}\\?id=*`)).replyOnce(200, mockUnitResponse);
+  mock.onGet(new RegExp(`${API_URL}${InstitutionApiPaths.INSTITUTIONS}\\?name=*`)).reply(200, mockInstitutionResponse);
+  mock.onGet(new RegExp(`${API_URL}${InstitutionApiPaths.INSTITUTIONS}\\?id=*`)).replyOnce(200, mockUnitResponse);
   // After deletion of institution
-  mock.onGet(new RegExp(`${API_URL}${InstituionApiPaths.INSTITUTIONS}\\?id=*`)).replyOnce(200, []);
+  mock.onGet(new RegExp(`${API_URL}${InstitutionApiPaths.INSTITUTIONS}\\?id=*`)).replyOnce(200, []);
 
   mock.onAny().reply(function (config) {
     throw new Error('Could not find mock for ' + config.url);
