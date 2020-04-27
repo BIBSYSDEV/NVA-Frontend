@@ -154,9 +154,11 @@ const PublicationForm: FC<PublicationFormProps> = ({
         {({ dirty, values }: FormikProps<FormikPublication>) => (
           <>
             <RouteLeavingGuard
-              when={dirty}
+              modalDescription={t('modal_unsaved_changes_description')}
+              modalHeading={t('modal_unsaved_changes_heading')}
               navigate={(path) => history.push(path)}
-              shouldBlockNavigation={() => (dirty ? true : false)}
+              shouldBlockNavigation={dirty}
+              when={dirty}
             />
             <Form>
               <PublicationFormTabs tabNumber={tabNumber} handleTabChange={handleTabChange} />

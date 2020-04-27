@@ -1,26 +1,28 @@
 import { Location } from 'history';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, FC } from 'react';
 import { Prompt } from 'react-router-dom';
 import ConfirmDialog from './ConfirmDialog';
-import { useTranslation } from 'react-i18next';
 
-interface Props {
-  when?: boolean | undefined;
+interface RouteLeavingGuardProps {
+  modalDescription: string;
+  modalHeading: string;
   navigate: (path: string) => void;
-  shouldBlockNavigation: (location: Location) => boolean;
+  shouldBlockNavigation: boolean;
+  when?: boolean | undefined;
 }
-const RouteLeavingGuard = ({ when, navigate, shouldBlockNavigation }: Props) => {
+const RouteLeavingGuard: FC<RouteLeavingGuardProps> = ({
+  modalDescription,
+  modalHeading,
+  navigate,
+  shouldBlockNavigation,
+  when,
+}) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [lastLocation, setLastLocation] = useState<Location | null>(null);
   const [confirmedNavigation, setConfirmedNavigation] = useState(false);
-  const { t } = useTranslation('publication');
-
-  const closeModal = () => {
-    setModalVisible(false);
-  };
 
   const handleBlockedNavigation = (nextLocation: Location): boolean => {
-    if (!confirmedNavigation && shouldBlockNavigation(nextLocation)) {
+    if (!confirmedNavigation && shouldBlockNavigation) {
       setModalVisible(true);
       setLastLocation(nextLocation);
       return false;
@@ -45,10 +47,10 @@ const RouteLeavingGuard = ({ when, navigate, shouldBlockNavigation }: Props) => 
       <Prompt when={when} message={handleBlockedNavigation} />
       <ConfirmDialog
         open={modalVisible}
-        title={t('modal_unsaved_changes_heading')}
-        text={t('modal_unsaved_changes_description')}
+        title={modalHeading}
+        text={modalDescription}
         onAccept={handleConfirmNavigationClick}
-        onCancel={closeModal}
+        onCancel={() => setModalVisible(false)}
       />
     </>
   );
