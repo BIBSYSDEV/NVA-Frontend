@@ -9,40 +9,40 @@ interface RouteLeavingGuardProps {
   shouldBlockNavigation: boolean;
 }
 const RouteLeavingGuard: FC<RouteLeavingGuardProps> = ({ modalDescription, modalHeading, shouldBlockNavigation }) => {
-  const [modalVisible, setModalVisible] = useState(false);
-  const [lastLocation, setLastLocation] = useState<Location | null>(null);
+  const [showModal, setShowModal] = useState(false);
+  const [nextLocation, setNextLocation] = useState<Location | null>(null);
   const [confirmedNavigation, setConfirmedNavigation] = useState(false);
   const history = useHistory();
 
   const handleBlockedNavigation = (nextLocation: Location): boolean => {
     if (!confirmedNavigation && shouldBlockNavigation) {
-      setModalVisible(true);
-      setLastLocation(nextLocation);
+      setShowModal(true);
+      setNextLocation(nextLocation);
       return false;
     }
     return true;
   };
 
   const handleConfirmNavigationClick = () => {
-    setModalVisible(false);
+    setShowModal(false);
     setConfirmedNavigation(true);
   };
 
   useEffect(() => {
-    if (confirmedNavigation && lastLocation) {
-      history.push(lastLocation.pathname);
+    if (confirmedNavigation && nextLocation) {
+      history.push(nextLocation.pathname);
     }
-  }, [confirmedNavigation, lastLocation, history]);
+  }, [confirmedNavigation, nextLocation, history]);
 
   return (
     <>
       <Prompt when={shouldBlockNavigation} message={handleBlockedNavigation} />
       <ConfirmDialog
-        open={modalVisible}
+        open={showModal}
         title={modalHeading}
         text={modalDescription}
         onAccept={handleConfirmNavigationClick}
-        onCancel={() => setModalVisible(false)}
+        onCancel={() => setShowModal(false)}
       />
     </>
   );
