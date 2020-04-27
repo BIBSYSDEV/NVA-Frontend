@@ -23,6 +23,7 @@ const StyledAffiliationsCell = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  margin-top: 0.5rem;
 `;
 
 const StyledRemoveAffiliationButton = styled(Button)`
