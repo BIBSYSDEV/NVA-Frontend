@@ -7,16 +7,17 @@ import { Formik, Field, FieldProps, Form } from 'formik';
 import {
   FormikInstitutionUnit,
   FormikInstitutionUnitFieldNames,
-  InstitutionUnitBase,
   RecursiveInstitutionUnit,
 } from '../types/institution.types';
 import InstitutionSelector from '../pages/user/institution/InstitutionSelector';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getInstitutions, getDepartment } from '../api/institutionApi';
 import { setNotification } from '../redux/actions/notificationActions';
 import { NotificationVariant } from '../types/notification.types';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Progress from './Progress';
+import { RootStore } from '../redux/reducers/rootReducer';
+import { setInstitutions } from '../redux/actions/institutionActions';
 
 const StyledButton = styled(Button)`
   margin: 0.5rem;
@@ -39,25 +40,27 @@ interface SelectInstitutionProps {
 const SelectInstitution: FC<SelectInstitutionProps> = ({ onSubmit, onClose }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const [institutions, setInstitutions] = useState<InstitutionUnitBase[]>([]);
+  const institutions = useSelector((store: RootStore) => store.institutions);
   const [selectedInstitution, setSelectedInstitution] = useState<RecursiveInstitutionUnit[]>();
   const [fetchingInstitutions, setFetchingInstitutions] = useState(false);
   const [fetchingDepartment, setFetchingDepartment] = useState(false);
 
   useEffect(() => {
-    // TODO: This only needs to be done once (not for each SelectInstitution)
     const fetchInstitutions = async () => {
       setFetchingInstitutions(true);
       const response = await getInstitutions();
       if (response?.error) {
         dispatch(setNotification(response.error, NotificationVariant.Error));
       } else {
-        setInstitutions(response);
+        dispatch(setInstitutions(response));
       }
       setFetchingInstitutions(false);
     };
-    fetchInstitutions();
-  }, [dispatch]);
+    // Institutions should not change, so ensure we fetch only once
+    if (!institutions || institutions.length === 0) {
+      fetchInstitutions();
+    }
+  }, [dispatch, institutions]);
 
   const fetchDepartment = async (institutionId: string) => {
     setFetchingDepartment(true);

@@ -26,13 +26,13 @@ export const emptyFormikUnit: FormikInstitutionUnit = {
 };
 
 export enum FormikInstitutionUnitFieldNames {
+  SUB_UNIT = 'subunit',
+  UNIT = 'unit',
+  // TODO: Remove these:
   NAME = 'name',
   ID = 'id',
   SUBUNITS = 'subunits',
   EDIT_ID = 'editId',
-  // NEW
-  SUB_UNIT = 'subunit',
-  UNIT = 'unit',
 }
 
 export interface InstitutionUnitResponseType {
