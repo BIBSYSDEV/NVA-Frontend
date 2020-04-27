@@ -19,7 +19,6 @@ import deepmerge from 'deepmerge';
 import Progress from '../../components/Progress';
 import { publicationValidationSchema } from './PublicationFormValidationSchema';
 import { Button } from '@material-ui/core';
-import { useHistory } from 'react-router';
 import RouteLeavingGuard from '../../components/RouteLeavingGuard';
 
 const shouldAllowMultipleFiles = false;
@@ -65,7 +64,6 @@ const PublicationForm: FC<PublicationFormProps> = ({
   const [isLoading, setIsLoading] = useState(!!identifier);
   const [isSaving, setIsSaving] = useState(false);
   const dispatch = useDispatch();
-  const history = useHistory();
 
   useEffect(() => {
     // Get files uploaded from new publication view
@@ -156,7 +154,6 @@ const PublicationForm: FC<PublicationFormProps> = ({
             <RouteLeavingGuard
               modalDescription={t('modal_unsaved_changes_description')}
               modalHeading={t('modal_unsaved_changes_heading')}
-              navigate={(path) => history.push(path)}
               shouldBlockNavigation={dirty}
             />
             <Form>

@@ -1,23 +1,18 @@
 import { Location } from 'history';
 import React, { useEffect, useState, FC } from 'react';
-import { Prompt } from 'react-router-dom';
+import { Prompt, useHistory } from 'react-router-dom';
 import ConfirmDialog from './ConfirmDialog';
 
 interface RouteLeavingGuardProps {
   modalDescription: string;
   modalHeading: string;
-  navigate: (path: string) => void;
   shouldBlockNavigation: boolean;
 }
-const RouteLeavingGuard: FC<RouteLeavingGuardProps> = ({
-  modalDescription,
-  modalHeading,
-  navigate,
-  shouldBlockNavigation,
-}) => {
+const RouteLeavingGuard: FC<RouteLeavingGuardProps> = ({ modalDescription, modalHeading, shouldBlockNavigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [lastLocation, setLastLocation] = useState<Location | null>(null);
   const [confirmedNavigation, setConfirmedNavigation] = useState(false);
+  const history = useHistory();
 
   const handleBlockedNavigation = (nextLocation: Location): boolean => {
     if (!confirmedNavigation && shouldBlockNavigation) {
@@ -35,9 +30,9 @@ const RouteLeavingGuard: FC<RouteLeavingGuardProps> = ({
 
   useEffect(() => {
     if (confirmedNavigation && lastLocation) {
-      navigate(lastLocation.pathname);
+      history.push(lastLocation.pathname);
     }
-  }, [confirmedNavigation, lastLocation, navigate]);
+  }, [confirmedNavigation, lastLocation, history]);
 
   return (
     <>
