@@ -20,14 +20,12 @@ interface InstitutionSelectorProps {
 
 const InstitutionSelector: FC<InstitutionSelectorProps> = ({ unit, fieldNamePrefix = '' }) => {
   const { t } = useTranslation('common');
-  console.log('RERENDER', unit);
 
   return (
     <StyledInstitutionSelector>
       <Field name={`${fieldNamePrefix}.subunit`}>
         {({ field: { name, value }, form: { setFieldValue } }: FieldProps) => (
           <>
-            {/* {console.log(name, value)} */}
             <Autocomplete
               options={unit}
               getOptionLabel={(option: any) => option.name}

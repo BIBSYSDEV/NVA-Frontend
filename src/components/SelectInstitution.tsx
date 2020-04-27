@@ -79,16 +79,15 @@ const SelectInstitution: FC<SelectInstitutionProps> = ({ onSubmit, onClose, excl
         <Field name={FormikInstitutionUnitFieldNames.UNIT}>
           {({ field: { name, value }, form: { values, setFieldValue, resetForm } }: FieldProps) => (
             <StyledInstitutionSearchContainer>
-              {console.log(values)}
               <Autocomplete
                 options={institutions}
                 getOptionLabel={(option: RecursiveInstitutionUnit) => option.name}
                 noOptionsText={t('common:no_hits')}
                 onChange={(_: any, value: any) => {
+                  setSelectedInstitution(undefined);
                   if (value) {
                     fetchDepartment(value.id);
                   }
-                  // TODO: handle new top level value when lower are set (reset lower levels)
                   setFieldValue(name, value);
                 }}
                 renderInput={(params) => (
