@@ -17,7 +17,7 @@ interface InstitutionSelectorProps {
 }
 
 const InstitutionSelector: FC<InstitutionSelectorProps> = ({ units, fieldNamePrefix = '' }) => {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation('institution');
 
   return (
     <StyledInstitutionSelector>
@@ -35,8 +35,8 @@ const InstitutionSelector: FC<InstitutionSelectorProps> = ({ units, fieldNamePre
                 <TextField
                   // inputProps={{ 'data-testid': 'autosearch-institution' }}
                   {...params}
-                  label={t('institution.subunit')}
-                  placeholder={t('institution.search_subunit')}
+                  label={t('subunit')}
+                  placeholder={t('search_subunit')}
                   variant="outlined"
                 />
               )}

@@ -38,7 +38,7 @@ interface SelectInstitutionProps {
 }
 
 const SelectInstitution: FC<SelectInstitutionProps> = ({ onSubmit, onClose }) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('common');
   const dispatch = useDispatch();
   const institutions = useSelector((store: RootStore) => store.institutions);
   const [selectedInstitution, setSelectedInstitution] = useState<RecursiveInstitutionUnit[]>();
@@ -83,7 +83,7 @@ const SelectInstitution: FC<SelectInstitutionProps> = ({ onSubmit, onClose }) =>
               <Autocomplete
                 options={institutions}
                 getOptionLabel={(option: RecursiveInstitutionUnit) => option.name}
-                noOptionsText={t('common:no_hits')}
+                noOptionsText={t('no_hits')}
                 onChange={(_: any, value: any) => {
                   setSelectedInstitution(undefined);
                   if (value) {
@@ -95,8 +95,8 @@ const SelectInstitution: FC<SelectInstitutionProps> = ({ onSubmit, onClose }) =>
                   <TextField
                     // inputProps={{ 'data-testid': 'autosearch-institution' }}
                     {...params}
-                    label={t('common:institution.institution')}
-                    placeholder={t('common:institution.search_institution')}
+                    label={t('institution')}
+                    placeholder={t('institution:search_institution')}
                     variant="outlined"
                     InputProps={{
                       ...params.InputProps,
@@ -120,7 +120,7 @@ const SelectInstitution: FC<SelectInstitutionProps> = ({ onSubmit, onClose }) =>
                 color="primary"
                 disabled={!value || isLoadingDepartment}
                 data-testid="institution-add-button">
-                {t('common:add')}
+                {t('add')}
               </StyledButton>
 
               {onClose && (
@@ -130,7 +130,7 @@ const SelectInstitution: FC<SelectInstitutionProps> = ({ onSubmit, onClose }) =>
                     onClose();
                   }}
                   variant="contained">
-                  {t('common:cancel')}
+                  {t('cancel')}
                 </StyledButton>
               )}
             </StyledInstitutionSearchContainer>
