@@ -138,5 +138,7 @@
   },
   "submission": {
     "ask_for_doi": "Ask for DOI for this registration"
-  }
+  },
+  "modal_unsaved_changes_description": "You have unsaved changes. Are you sure you want to leave this page?",
+  "modal_unsaved_changes_heading": "Leave without saving?"
 }

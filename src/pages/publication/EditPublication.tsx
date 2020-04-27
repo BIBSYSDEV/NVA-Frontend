@@ -75,7 +75,7 @@ const EditPublication: FC = () => {
 
   return (
     <>
-      {!showForm ? (
+      {!showForm || !identifier ? (
         <>
           <StyledEditPublication>
             <StyledSelectorWrapper>

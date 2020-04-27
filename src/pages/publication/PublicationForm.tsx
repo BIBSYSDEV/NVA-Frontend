@@ -19,7 +19,8 @@ import deepmerge from 'deepmerge';
 import Progress from '../../components/Progress';
 import { publicationValidationSchema } from './PublicationFormValidationSchema';
 import { Button } from '@material-ui/core';
-import { useLocation } from 'react-router';
+import { useHistory } from 'react-router';
+import RouteLeavingGuard from '../../components/RouteLeavingGuard';
 
 const shouldAllowMultipleFiles = false;
 
@@ -64,14 +65,7 @@ const PublicationForm: FC<PublicationFormProps> = ({
   const [isLoading, setIsLoading] = useState(!!identifier);
   const [isSaving, setIsSaving] = useState(false);
   const dispatch = useDispatch();
-  const location = useLocation();
-
-  useEffect(
-    () => () => {
-      alert('TODO: Use <ConfirmDialog />');
-    },
-    [location.pathname]
-  );
+  const history = useHistory();
 
   useEffect(() => {
     // Get files uploaded from new publication view
@@ -92,7 +86,7 @@ const PublicationForm: FC<PublicationFormProps> = ({
   }, [uppy]);
 
   useEffect(() => {
-    return () => uppy && uppy.close();
+    return () => uppy && uppy.reset();
   }, [uppy]);
 
   useEffect(() => {
@@ -157,8 +151,13 @@ const PublicationForm: FC<PublicationFormProps> = ({
         validate={validateForm}
         validateOnChange={false}
         onSubmit={(values: FormikPublication) => savePublication(values)}>
-        {({ values }: FormikProps<FormikPublication>) => (
+        {({ dirty, values }: FormikProps<FormikPublication>) => (
           <>
+            <RouteLeavingGuard
+              when={dirty}
+              navigate={(path) => history.push(path)}
+              shouldBlockNavigation={() => (dirty ? true : false)}
+            />
             <Form>
               <PublicationFormTabs tabNumber={tabNumber} handleTabChange={handleTabChange} />
               {tabNumber === 0 && (
