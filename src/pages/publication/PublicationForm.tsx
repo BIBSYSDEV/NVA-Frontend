@@ -158,7 +158,6 @@ const PublicationForm: FC<PublicationFormProps> = ({
               modalHeading={t('modal_unsaved_changes_heading')}
               navigate={(path) => history.push(path)}
               shouldBlockNavigation={dirty}
-              when={dirty}
             />
             <Form>
               <PublicationFormTabs tabNumber={tabNumber} handleTabChange={handleTabChange} />

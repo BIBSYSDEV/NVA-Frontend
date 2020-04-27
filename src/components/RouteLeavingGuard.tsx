@@ -8,14 +8,12 @@ interface RouteLeavingGuardProps {
   modalHeading: string;
   navigate: (path: string) => void;
   shouldBlockNavigation: boolean;
-  when?: boolean | undefined;
 }
 const RouteLeavingGuard: FC<RouteLeavingGuardProps> = ({
   modalDescription,
   modalHeading,
   navigate,
   shouldBlockNavigation,
-  when,
 }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [lastLocation, setLastLocation] = useState<Location | null>(null);
@@ -37,14 +35,13 @@ const RouteLeavingGuard: FC<RouteLeavingGuardProps> = ({
 
   useEffect(() => {
     if (confirmedNavigation && lastLocation) {
-      // Navigate to the previous blocked location with your navigate function
       navigate(lastLocation.pathname);
     }
   }, [confirmedNavigation, lastLocation, navigate]);
 
   return (
     <>
-      <Prompt when={when} message={handleBlockedNavigation} />
+      <Prompt when={shouldBlockNavigation} message={handleBlockedNavigation} />
       <ConfirmDialog
         open={modalVisible}
         title={modalHeading}
