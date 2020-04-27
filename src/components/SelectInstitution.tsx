@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
-import { Button, TextField } from '@material-ui/core';
+import { Button, TextField, CircularProgress } from '@material-ui/core';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { Formik, Field, FieldProps, Form } from 'formik';
@@ -43,11 +43,13 @@ const SelectInstitution: FC<SelectInstitutionProps> = ({ onSubmit, onClose, excl
   const dispatch = useDispatch();
   const [institutions, setInstitutions] = useState<InstitutionUnitBase[]>([]);
   const [selectedInstitution, setSelectedInstitution] = useState<RecursiveInstitutionUnit[]>();
+  const [fetchingInstitutions, setFetchingInstitutions] = useState(false);
   const [fetchingDepartment, setFetchingDepartment] = useState(false);
 
   useEffect(() => {
     // TODO: This only needs to be done once (not for each SelectInstitution)
     const fetchInstitutions = async () => {
+      setFetchingInstitutions(true);
       const response = await getInstitutions();
       if (response?.error) {
         dispatch(setNotification(response.error, NotificationVariant.Error));
@@ -57,6 +59,7 @@ const SelectInstitution: FC<SelectInstitutionProps> = ({ onSubmit, onClose, excl
           : response;
         setInstitutions(relevantInstitutions);
       }
+      setFetchingInstitutions(false);
     };
     fetchInstitutions();
   }, [dispatch, excludeAffiliationIds]);
@@ -77,7 +80,7 @@ const SelectInstitution: FC<SelectInstitutionProps> = ({ onSubmit, onClose, excl
     <Formik initialValues={{}} onSubmit={onSubmit}>
       <Form>
         <Field name={FormikInstitutionUnitFieldNames.UNIT}>
-          {({ field: { name, value }, form: { values, setFieldValue, resetForm } }: FieldProps) => (
+          {({ field: { name, value }, form: { setFieldValue, resetForm } }: FieldProps) => (
             <StyledInstitutionSearchContainer>
               <Autocomplete
                 options={institutions}
@@ -97,6 +100,15 @@ const SelectInstitution: FC<SelectInstitutionProps> = ({ onSubmit, onClose, excl
                     label={t('common:institution.institution')}
                     placeholder={t('common:institution.search_institution')}
                     variant="outlined"
+                    InputProps={{
+                      ...params.InputProps,
+                      endAdornment: (
+                        <>
+                          {fetchingInstitutions && <CircularProgress size={20} />}
+                          {params.InputProps.endAdornment}
+                        </>
+                      ),
+                    }}
                   />
                 )}
               />
