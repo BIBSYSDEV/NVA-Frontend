@@ -20,10 +20,10 @@ export const getInstitutions = async () => {
     if (response.status === StatusCode.OK) {
       return response.data;
     } else {
-      return i18n.t('feedback:error.get_institutions');
+      return { error: i18n.t('feedback:error.get_institutions') };
     }
   } catch {
-    return i18n.t('feedback:error.get_institutions');
+    return { error: i18n.t('feedback:error.get_institutions') };
   }
 };
 
@@ -38,10 +38,10 @@ export const getDepartment = async (departmentUri: string) => {
     if (response.status === StatusCode.OK) {
       return response.data;
     } else {
-      return i18n.t('feedback:error.get_institution');
+      return { error: i18n.t('feedback:error.get_institution') };
     }
   } catch {
-    return i18n.t('feedback:error.get_institution');
+    return { error: i18n.t('feedback:error.get_institution') };
   }
 };
 
