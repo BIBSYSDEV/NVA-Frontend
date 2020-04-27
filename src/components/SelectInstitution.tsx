@@ -65,13 +65,13 @@ const SelectInstitution: FC<SelectInstitutionProps> = ({ onSubmit, onClose }) =>
   const fetchDepartment = async (institutionId: string) => {
     setFetchingDepartment(true);
     const response = await getDepartment(institutionId);
-    setFetchingDepartment(false);
     if (!response || response.error) {
       dispatch(setNotification(response.error, NotificationVariant.Error));
-      return;
+    } else {
+      const subunits = JSON.parse(response.json).subunits;
+      setSelectedInstitution(subunits);
     }
-    const subunits = JSON.parse(response.json).subunits;
-    setSelectedInstitution(subunits);
+    setFetchingDepartment(false);
   };
 
   return (
