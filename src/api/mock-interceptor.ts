@@ -142,10 +142,10 @@ export const interceptRequestsOnMock = () => {
     .reply(200, mockCustomerInstitutions);
 
   // Institution Registry
-  mock.onGet(new RegExp(`${API_URL}${InstituionApiPaths.INSTITUTION}\\?name=*`)).reply(200, mockInstitutionResponse);
-  mock.onGet(new RegExp(`${API_URL}${InstituionApiPaths.INSTITUTION}\\?id=*`)).replyOnce(200, mockUnitResponse);
+  mock.onGet(new RegExp(`${API_URL}${InstituionApiPaths.INSTITUTIONS}\\?name=*`)).reply(200, mockInstitutionResponse);
+  mock.onGet(new RegExp(`${API_URL}${InstituionApiPaths.INSTITUTIONS}\\?id=*`)).replyOnce(200, mockUnitResponse);
   // After deletion of institution
-  mock.onGet(new RegExp(`${API_URL}${InstituionApiPaths.INSTITUTION}\\?id=*`)).replyOnce(200, []);
+  mock.onGet(new RegExp(`${API_URL}${InstituionApiPaths.INSTITUTIONS}\\?id=*`)).replyOnce(200, []);
 
   mock.onAny().reply(function (config) {
     throw new Error('Could not find mock for ' + config.url);

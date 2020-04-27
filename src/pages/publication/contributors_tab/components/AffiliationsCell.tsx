@@ -14,6 +14,7 @@ import ConfirmDialog from '../../../../components/ConfirmDialog';
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { publicationLanguages, LanguageCodes } from '../../../../types/language.types';
+import { getMostSpecificUnit } from '../../../../utils/institutions-helpers';
 
 const StyledAffiliationsCell = styled.div`
   display: flex;
@@ -43,11 +44,13 @@ const AffiliationsCell: FC<AffiliationsCellProps> = ({ affiliations, baseFieldNa
   const toggleAffiliationModal = () => setOpenAffiliationModal(!openAffiliationModal);
 
   const addAffiliation = (value: FormikInstitutionUnit) => {
-    if (!value.id) {
+    if (!value.unit) {
       return;
     }
+
+    const mostSpecificUnit = getMostSpecificUnit(value.unit);
     // TODO: Set hierarchy in state? get from backend?
-    const mostSpecificUnit = value.subunits.pop() ?? value;
+
     const labelKey =
       publicationLanguages.find((language) => language.value === values.entityDescription.language)?.id ??
       LanguageCodes.ENGLISH;

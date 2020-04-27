@@ -12,8 +12,12 @@
   "email": "Email",
   "first_name": "First name",
   "information": "Information",
-  "institution": "Institution",
-  "institutions": "Institutions",
+  "institution": {
+    "institution": "Institution",
+    "search_institution": "Search for institution",
+    "search_subunit": "Search for subunit",
+    "subunit": "Subunit"
+  },
   "language": "Language",
   "last_name": "Last name",
   "loading": "Loading",

@@ -12,8 +12,12 @@
   "email": "Epost",
   "first_name": "Fornavn",
   "information": "Informasjon",
-  "institution": "Institusjon",
-  "institutions": "Institusjoner",
+  "institution": {
+    "institution": "Institusjon",
+    "search_institution": "Søk etter institusjon",
+    "search_subunit": "Søk etter underinstitusjon",
+    "subunit": "Underinstitusjon"
+  },
   "language": "Språk",
   "last_name": "Etternavn",
   "loading": "Laster",
