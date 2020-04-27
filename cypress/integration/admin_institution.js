@@ -20,7 +20,7 @@ describe('User administers institutions ', () => {
     cy.contains('1780-01-27');
   });
 
-  it('The User should be able to add an institution', () => {
+  it.skip('The User should be able to add an institution', () => {
     // Open administer institutions page
     cy.get('[data-testid=menu]').click({ force: true });
     cy.get('[data-testid=menu-admin-institution-button]').click({ force: true });

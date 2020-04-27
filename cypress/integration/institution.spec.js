@@ -1,4 +1,4 @@
-describe('My profile: Institutions', () => {
+describe.skip('My profile: Institutions', () => {
   before('Given that the user is logged in:', () => {
     cy.visit('/');
     cy.mocklogin();
