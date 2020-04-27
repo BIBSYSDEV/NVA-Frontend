@@ -8,6 +8,7 @@ import { EnumDictionary } from './common.types';
 export enum BackendTypeNames {
   APPROVAL = 'Approval',
   CONTRIBUTOR = 'Contributor',
+  CUSTOMER = 'Customer',
   ENTITY_DESCRIPTION = 'EntityDescription',
   FILE = 'File',
   FILE_SET = 'FileSet',

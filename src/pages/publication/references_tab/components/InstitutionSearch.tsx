@@ -15,9 +15,10 @@ interface InstitutionSearchProps {
   dataTestId: string;
   label: string;
   setValueFunction: (value: any) => void;
-  placeholder?: string;
   disabled?: boolean;
   excludeInstitutionIds?: string[];
+  initialValue?: string;
+  placeholder?: string;
 }
 
 const InstitutionSearch: FC<InstitutionSearchProps> = ({
@@ -25,9 +26,10 @@ const InstitutionSearch: FC<InstitutionSearchProps> = ({
   dataTestId,
   label,
   setValueFunction,
-  placeholder,
   disabled,
   excludeInstitutionIds,
+  initialValue,
+  placeholder,
 }) => {
   const [searchResults, setSearchResults] = useState<RecursiveInstitutionUnit[]>([]);
 
@@ -53,13 +55,14 @@ const InstitutionSearch: FC<InstitutionSearchProps> = ({
     <AutoSearch
       clearSearchField={clearSearchField}
       dataTestId={dataTestId}
+      disabled={!!disabled}
+      displaySelection
+      initialValue={initialValue}
+      label={label}
       onInputChange={search}
+      placeholder={placeholder}
       searchResults={searchResults}
       setValueFunction={setValueFunction}
-      label={label}
-      placeholder={placeholder}
-      displaySelection
-      disabled={!!disabled}
     />
   );
 };

@@ -32,7 +32,7 @@ const InstitutionList: FC<InstitutionListProps> = ({ institutions }) => {
   const { t } = useTranslation('common');
 
   return (
-    <StyledTable>
+    <StyledTable data-testid="customer-institutions-list">
       <TableHead>
         <TableRow>
           <TableCell>
@@ -49,18 +49,22 @@ const InstitutionList: FC<InstitutionListProps> = ({ institutions }) => {
       </TableHead>
       <TableBody>
         {institutions.map((institution) => (
-          <StyledTableRow key={institution.id}>
+          <StyledTableRow key={institution.identifier}>
             <TableCell component="th" scope="row">
               <NormalText>{institution.name}</NormalText>
             </TableCell>
             <StyledSmallCell>
-              <NormalText>{institution.createdDate}</NormalText>
+              <NormalText>{new Date(institution.createdDate).toLocaleDateString()}</NormalText>
             </StyledSmallCell>
             <StyledSmallCell>
-              <NormalText>{institution.contact}</NormalText>
+              <NormalText>{institution.administrationId}</NormalText>
             </StyledSmallCell>
             <TableCell>
-              <Button color="primary" component={RouterLink} to={`/admin-institutions/${institution.id}`}>
+              <Button
+                color="primary"
+                component={RouterLink}
+                data-testid={`edit-institution-${institution.shortName}`}
+                to={`/admin-institutions/${institution.identifier}`}>
                 <NormalText>{t('edit')}</NormalText>
               </Button>
             </TableCell>

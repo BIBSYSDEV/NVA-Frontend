@@ -2,11 +2,14 @@
   "error": {
     "404_page": "The page you requested could not be found. (Http error code 404)",
     "create_authority": "Could not create authority",
+    "create_customer": "Could not create customer institution",
     "create_publication": "Could not create publication",
     "delete_identifier": "Could not delete identifier",
     "get_approvable_publications": "Could not fetch publications awaiting approval",
     "get_authority": "Could not retrieve authority",
     "get_authorities": "Could not retrieve authorities",
+    "get_customer": "Could not retrieve customer institution",
+    "get_customers": "Could not retrieve customer institutions",
     "get_doi": "Could not retrieve link data",
     "get_doi_requests": "Could not retrieve DOI requests",
     "get_institutions": "Could not retrieve institutions",
@@ -22,15 +25,18 @@
     "orcid_login": "ORCID login failed",
     "search": "Search failed",
     "update_authority": "Could not update authority",
+    "update_customer": "Could not update customer institution",
     "update_identifier": "Could not update identifier",
     "update_publication": "Could not update publication"
   },
   "success": {
     "created_authority": "Created author ID",
+    "created_customer": "Created customer institution",
     "create_publication": "New publication created",
     "delete_identifier": "Deleted identifier",
     "login": "Logged in",
     "update_authority": "Updated authority",
+    "update_customer": "Updated customer institution",
     "update_identifier": "Updated identifier",
     "update_publication": "Updated publication"
   }

@@ -130,6 +130,7 @@ const FileCard: FC<FileCardProps> = ({ file, removeFile, baseFieldName, toggleLi
                         label={t('files_and_license.embargo_date')}
                         {...field}
                         onChange={(value) => form.setFieldValue(field.name, value)}
+                        value={field.value ?? null}
                         disablePast
                         autoOk
                         format={'dd.MM.yyyy'}

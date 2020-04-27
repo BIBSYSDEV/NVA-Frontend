@@ -1,5 +1,7 @@
-export interface CustomerInstitution {
-  id: string;
+import { BackendType, BackendTypeNames } from './publication.types';
+
+export interface CustomerInstitution extends BackendType {
+  identifier: string;
   name: string;
   displayName: string;
   shortName: string;
@@ -9,13 +11,13 @@ export interface CustomerInstitution {
   administrationId: string;
   feideOrganizationId: string;
   createdDate: string;
-  contact: string;
   logoFile?: File;
   error?: string;
 }
 
 export const emptyCustomerInstitution: CustomerInstitution = {
-  id: '',
+  type: BackendTypeNames.CUSTOMER,
+  identifier: '',
   name: '',
   displayName: '',
   shortName: '',
@@ -24,12 +26,11 @@ export const emptyCustomerInstitution: CustomerInstitution = {
   institutionDns: '',
   administrationId: '',
   feideOrganizationId: '',
-  contact: '',
   createdDate: '',
 };
 
 export enum CustomerInstitutionFieldNames {
-  ID = 'id',
+  IDENTIFIER = 'identifier',
   NAME = 'name',
   DISPLAY_NAME = 'displayName',
   SHORT_NAME = 'shortName',
