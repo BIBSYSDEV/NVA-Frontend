@@ -92,7 +92,7 @@ const AdminCustomerInstitutionPage: FC = () => {
       }
     } else {
       const updatedCustomer = await updateCustomerInstitution(values);
-      if (updatedCustomer?.error) {
+      if (!updatedCustomer || updatedCustomer?.error) {
         dispatch(setNotification(updatedCustomer.error, NotificationVariant.Error));
       } else {
         setInitialValues(updatedCustomer);
@@ -145,7 +145,7 @@ const AdminCustomerInstitutionPage: FC = () => {
                 dataTestId="autosearch-institution"
                 label={t('organization_register_name')}
                 initialValue={value ?? ''}
-                clearSearchField={value.name === ''}
+                clearSearchField={value?.name === ''}
                 setValueFunction={(inputValue) => {
                   form.setFieldValue(name, inputValue.name);
                 }}
@@ -160,7 +160,7 @@ const AdminCustomerInstitutionPage: FC = () => {
             component={TextField}
             fullWidth
             variant="outlined"
-            inputProps={{ 'data-testid': 'customer-instituiton-display-name-input' }}
+            inputProps={{ 'data-testid': 'customer-institution-display-name-input' }}
           />
           <Field
             aria-label={CustomerInstitutionFieldNames.SHORT_NAME}
@@ -169,7 +169,7 @@ const AdminCustomerInstitutionPage: FC = () => {
             component={TextField}
             fullWidth
             variant="outlined"
-            inputProps={{ 'data-testid': 'customer-instituiton-short-name-input' }}
+            inputProps={{ 'data-testid': 'customer-institution-short-name-input' }}
           />
           <Field
             aria-label={CustomerInstitutionFieldNames.ARCHIVE_NAME}
@@ -178,7 +178,7 @@ const AdminCustomerInstitutionPage: FC = () => {
             component={TextField}
             fullWidth
             variant="outlined"
-            inputProps={{ 'data-testid': 'customer-instituiton-archive-name-input' }}
+            inputProps={{ 'data-testid': 'customer-institution-archive-name-input' }}
           />
           <Field
             aria-label={CustomerInstitutionFieldNames.CNAME}
@@ -187,7 +187,7 @@ const AdminCustomerInstitutionPage: FC = () => {
             component={TextField}
             fullWidth
             variant="outlined"
-            inputProps={{ 'data-testid': 'customer-instituiton-cname-input' }}
+            inputProps={{ 'data-testid': 'customer-institution-cname-input' }}
           />
           <Field
             aria-label={CustomerInstitutionFieldNames.INSTITUTION_DNS}
@@ -196,7 +196,7 @@ const AdminCustomerInstitutionPage: FC = () => {
             component={TextField}
             fullWidth
             variant="outlined"
-            inputProps={{ 'data-testid': 'customer-instituiton-institution-dns-input' }}
+            inputProps={{ 'data-testid': 'customer-institution-institution-dns-input' }}
           />
           <Field
             aria-label={CustomerInstitutionFieldNames.ADMINISTRATION_ID}
@@ -205,7 +205,7 @@ const AdminCustomerInstitutionPage: FC = () => {
             component={TextField}
             fullWidth
             variant="outlined"
-            inputProps={{ 'data-testid': 'customer-instituiton-administrator-id-input' }}
+            inputProps={{ 'data-testid': 'customer-institution-administrator-id-input' }}
           />
           <Field
             aria-label={CustomerInstitutionFieldNames.FEIDE_ORGANIZATION_ID}
@@ -214,10 +214,10 @@ const AdminCustomerInstitutionPage: FC = () => {
             component={TextField}
             fullWidth
             variant="outlined"
-            inputProps={{ 'data-testid': 'customer-instituiton-feide-organization-id-input' }}
+            inputProps={{ 'data-testid': 'customer-institution-feide-organization-id-input' }}
           />
           <StyledButtonContainer>
-            <Button color="primary" data-testid="customer-instituiton-save-button" variant="contained" type="submit">
+            <Button color="primary" data-testid="customer-institution-save-button" variant="contained" type="submit">
               {editMode ? t('common:save') : t('common:create')}
               {isSaving && (
                 <StyledProgressContainer>
