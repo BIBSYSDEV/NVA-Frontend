@@ -298,6 +298,7 @@ Resources:
                   - 'cloudfront:CreateInvalidation'
                   - 'codepipeline:PutJobSuccessResult'
                   - 'codepipeline:PutJobFailureResult'
+                  - 'cloudfront:GetInvalidation'
                 Resource: '*'
 
   CleanUpBucketBeforeDeployFunctionRole:
