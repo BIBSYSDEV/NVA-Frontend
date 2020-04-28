@@ -53,8 +53,11 @@ const UserInstitution: FC = () => {
     const mostSpecificUnit = getMostSpecificUnit(value.unit);
     const newUnitId = mostSpecificUnit.id.split('/').pop();
 
-    if (authority?.orgunitids.includes(newUnitId)) {
-      dispatch(setNotification(t('FINNES'), NotificationVariant.Info));
+    if (!newUnitId) {
+      return;
+    } else if (authority?.orgunitids.includes(newUnitId)) {
+      dispatch(setNotification(t('feedback:info.affiliation_already_exists'), NotificationVariant.Info));
+      return;
     }
 
     if (authority) {
@@ -67,7 +70,7 @@ const UserInstitution: FC = () => {
         dispatch(setNotification(updatedAuthority.error, NotificationVariant.Error));
       } else if (updatedAuthority) {
         dispatch(setAuthorityData(updatedAuthority));
-        dispatch(setNotification(t('TODO'), NotificationVariant.Success));
+        dispatch(setNotification(t('feedback:success.added_affiliation'), NotificationVariant.Success));
       }
     }
     setOpen(false);
