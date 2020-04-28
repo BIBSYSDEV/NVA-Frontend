@@ -54,11 +54,11 @@ const InstitutionCard: FC<InstitutionCardProps> = ({ onEdit, unit }) => {
   const { t } = useTranslation('common');
   const authority = useSelector((state: RootStore) => state.user.authority);
   const dispatch = useDispatch();
-  const organizationUnitId = unit.subunits.length > 0 ? unit.subunits.slice(-1)[0].id : unit.id;
+  const organizationUnitId = unit?.subunits && unit.subunits.length > 0 ? unit.subunits.slice(-1)[0].id : unit.id;
   const { setFieldValue }: FormikProps<FormikInstitutionUnit> = useFormikContext();
 
   const handleRemoveInstitution = async () => {
-    if (!authority) {
+    if (!authority || !organizationUnitId) {
       return;
     }
     const updatedAuthority = await removeQualifierIdFromAuthority(

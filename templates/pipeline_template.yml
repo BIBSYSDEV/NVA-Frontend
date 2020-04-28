@@ -139,9 +139,12 @@ Resources:
           import sys
           import json
           import datetime
+          import traceback
 
           def handler(event, context):
               client = boto3.client('cloudfront')
+
+              print(json.dumps(event, default=str))
 
               timestamp_string = datetime.datetime.utcnow().strftime("%Y%m%d%H%M%S")
               data = event['CodePipeline.job']['data']
@@ -174,6 +177,7 @@ Resources:
                   Id=invalidation_id
                 )
               except:
+                traceback.print_exc()
                 print("Exception:",sys.exc_info()[0])
                 codepipeline.put_job_failure_result(jobId=job);
                 return "Invalidation failed"
@@ -294,6 +298,7 @@ Resources:
                   - 'cloudfront:CreateInvalidation'
                   - 'codepipeline:PutJobSuccessResult'
                   - 'codepipeline:PutJobFailureResult'
+                  - 'cloudfront:GetInvalidation'
                 Resource: '*'
 
   CleanUpBucketBeforeDeployFunctionRole:

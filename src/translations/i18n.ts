@@ -9,6 +9,7 @@ import disciplinesEn from './en/disciplines.json';
 import feedbackEn from './en/feedback.json';
 import formikValuesEn from './en/formikValues.json';
 import infopagesEn from './en/infopages.json';
+import institutionEn from './en/institution.json';
 import languagesEn from './en/languages.json';
 import profileEn from './en/profile.json';
 import publicationEn from './en/publication.json';
@@ -23,6 +24,7 @@ import disciplinesNb from './nb/disciplines.json';
 import feedbackNb from './nb/feedback.json';
 import formikValuesNb from './nb/formikValues.json';
 import infopagesNb from './nb/infopages.json';
+import institutionNb from './nb/institution.json';
 import languagesNb from './nb/languages.json';
 import profileNb from './nb/profile.json';
 import publicationNb from './nb/publication.json';
@@ -46,6 +48,7 @@ i18n.use(LanguageDetector).init({
       feedback: feedbackEn,
       formikValues: formikValuesEn,
       infopages: infopagesEn,
+      institution: institutionEn,
       languages: languagesEn,
       profile: profileEn,
       publication: publicationEn,
@@ -61,6 +64,7 @@ i18n.use(LanguageDetector).init({
       feedback: feedbackNb,
       formikValues: formikValuesNb,
       infopages: infopagesNb,
+      institution: institutionNb,
       languages: languagesNb,
       profile: profileNb,
       publication: publicationNb,

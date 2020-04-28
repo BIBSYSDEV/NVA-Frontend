@@ -5,11 +5,11 @@ import { useDispatch } from 'react-redux';
 import { AutoSearch } from '../../../../components/AutoSearch';
 import { debounce } from '../../../../utils/debounce';
 import { RecursiveInstitutionUnit } from '../../../../types/institution.types';
-import { getInstitutionAndSubunits } from '../../../../api/institutionApi';
+import { getInstitutions } from '../../../../api/institutionApi';
 import { setNotification } from '../../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../../types/notification.types';
 import { filterInstitutions } from '../../../../utils/institutions-helpers';
-
+// TODO: SLETT?
 interface InstitutionSearchProps {
   clearSearchField: boolean;
   dataTestId: string;
@@ -38,7 +38,7 @@ const InstitutionSearch: FC<InstitutionSearchProps> = ({
 
   const search = useCallback(
     debounce(async (searchTerm: string) => {
-      const response = await getInstitutionAndSubunits(searchTerm);
+      const response = await getInstitutions();
       if (response) {
         const relevantInstitutions = excludeInstitutionIds
           ? filterInstitutions(response, excludeInstitutionIds)

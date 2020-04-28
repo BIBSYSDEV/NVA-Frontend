@@ -19,7 +19,7 @@ describe('User administers institutions ', () => {
     cy.contains('tiril@ntnu.no');
   });
 
-  it('The User should be able to add an institution', () => {
+  it.skip('The User should be able to add an institution', () => {
     cy.get('[data-testid=add-institution-button]').click({ force: true });
 
     cy.get('[data-testid=autosearch-institution]').click({ force: true }).type('ntnu');

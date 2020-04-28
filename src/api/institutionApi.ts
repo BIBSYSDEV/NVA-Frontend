@@ -1,30 +1,50 @@
-import Axios from 'axios';
+import Axios, { CancelToken } from 'axios';
 import { getIdToken } from './userApi';
-import mockInstitutionResponse from '../utils/testfiles/institutions/institution_query.json';
 import { InstitutionUnitResponseType, InstitutionUnitBase } from '../types/institution.types';
 import { StatusCode } from '../utils/constants';
 import i18n from '../translations/i18n';
 
-export enum InstituionApiPaths {
-  INSTITUTION = '/institution',
+export enum InstitutionApiPaths {
+  INSTITUTIONS = '/institutions-proxy/institutions',
+  DEPARTMENTS = '/institutions-proxy/departments',
 }
 
-export const getInstitutionAndSubunits = async (searchTerm: string) => {
-  // TODO: get institutions from endpoint
-  // BACKEND NOT FINISHED YET
-  // const idToken = await getIdToken();
-  // const headers = {
-  //   Authorization: `Bearer ${idToken}`,
-  // };
-  // const url = `${InstituionApiPaths.INSTITUTION}?name=${searchTerm}`;
+export const getInstitutions = async () => {
+  const url = InstitutionApiPaths.INSTITUTIONS;
+  try {
+    const idToken = await getIdToken();
+    const headers = {
+      Authorization: `Bearer ${idToken}`,
+    };
+    const response = await Axios.get(url, { headers });
+    if (response.status === StatusCode.OK) {
+      return response.data;
+    } else {
+      return { error: i18n.t('feedback:error.get_institutions') };
+    }
+  } catch {
+    return { error: i18n.t('feedback:error.get_institutions') };
+  }
+};
 
-  // try {
-  //   const response = await Axios.get(url, { headers });
-  //   return response.data;
-  // } catch {
-  //   return null;
-  // }
-  return mockInstitutionResponse;
+export const getDepartment = async (departmentUri: string, cancelToken?: CancelToken) => {
+  const url = `${InstitutionApiPaths.DEPARTMENTS}?uri=${departmentUri}`;
+  try {
+    const idToken = await getIdToken();
+    const headers = {
+      Authorization: `Bearer ${idToken}`,
+    };
+    const response = await Axios.get(url, { headers, cancelToken });
+    if (response.status === StatusCode.OK) {
+      return response.data;
+    } else {
+      return { error: i18n.t('feedback:error.get_institution') };
+    }
+  } catch (error) {
+    if (!Axios.isCancel(error)) {
+      return { error: i18n.t('feedback:error.get_institution') };
+    }
+  }
 };
 
 export const getParentUnits = async (subunitid: string) => {
@@ -35,7 +55,7 @@ export const getParentUnits = async (subunitid: string) => {
     const headers = {
       Authorization: `Bearer ${idToken}`,
     };
-    const url = `${InstituionApiPaths.INSTITUTION}?id=${subunitid}`;
+    const url = `${InstitutionApiPaths.INSTITUTIONS}?id=${subunitid}`;
     const response = await Axios.get(url, { headers });
     if (response.status === StatusCode.OK) {
       const { id, name, subunits } = response.data;
