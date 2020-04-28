@@ -33,11 +33,11 @@ const OrderInformation: FC = () => {
         <br />
         <NormalText>
           <Trans i18nKey="common:order_information_links">
-            <MuiLink href={ContactInformation.NVA_TEST_WEBSITE} target="_blank" rel="noopener noreferrer">
-              {ContactInformation.NVA_TEST_WEBSITE}
+            <MuiLink href={`https://${ContactInformation.NVA_TEST_WEBSITE}`} target="_blank" rel="noopener noreferrer">
+              {{ website: ContactInformation.NVA_TEST_WEBSITE }}
             </MuiLink>
             <MuiLink href={`mailto:${ContactInformation.NVA_EMAIL}`} target="_blank" rel="noopener noreferrer">
-              {ContactInformation.NVA_EMAIL}
+              {{ mailto: ContactInformation.NVA_EMAIL }}
             </MuiLink>
           </Trans>
         </NormalText>
