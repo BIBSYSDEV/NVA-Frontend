@@ -19,6 +19,7 @@ import deepmerge from 'deepmerge';
 import Progress from '../../components/Progress';
 import { publicationValidationSchema } from './PublicationFormValidationSchema';
 import { Button } from '@material-ui/core';
+import RouteLeavingGuard from '../../components/RouteLeavingGuard';
 
 const shouldAllowMultipleFiles = false;
 
@@ -83,7 +84,7 @@ const PublicationForm: FC<PublicationFormProps> = ({
   }, [uppy]);
 
   useEffect(() => {
-    return () => uppy && uppy.close();
+    return () => uppy && uppy.reset();
   }, [uppy]);
 
   useEffect(() => {
@@ -148,8 +149,13 @@ const PublicationForm: FC<PublicationFormProps> = ({
         validate={validateForm}
         validateOnChange={false}
         onSubmit={(values: FormikPublication) => savePublication(values)}>
-        {({ values }: FormikProps<FormikPublication>) => (
+        {({ dirty, values }: FormikProps<FormikPublication>) => (
           <>
+            <RouteLeavingGuard
+              modalDescription={t('modal_unsaved_changes_description')}
+              modalHeading={t('modal_unsaved_changes_heading')}
+              shouldBlockNavigation={dirty}
+            />
             <Form>
               <PublicationFormTabs tabNumber={tabNumber} handleTabChange={handleTabChange} />
               {tabNumber === 0 && (
