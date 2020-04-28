@@ -66,10 +66,8 @@ const SelectInstitution: FC<SelectInstitutionProps> = ({ onSubmit, onClose }) =>
   const fetchDepartment = async (institutionId: string) => {
     setIsLoadingDepartment(true);
     const response = await getDepartment(institutionId);
-    if (!isLoadingDepartment) {
-      // Ignore response if user has changed search and received response
-      return;
-    } else if (!response || response.error) {
+    // TODO: Cancel request when changing institution (NP-837)
+    if (!response || response.error) {
       dispatch(setNotification(response.error, NotificationVariant.Error));
     } else {
       const subunits = JSON.parse(response.json).subunits;
