@@ -34,7 +34,7 @@ export const getDepartment = async (departmentUri: string, cancelToken?: CancelT
     const headers = {
       Authorization: `Bearer ${idToken}`,
     };
-    const response = await Axios.get(url, { headers, cancelToken: cancelToken });
+    const response = await Axios.get(url, { headers, cancelToken });
     if (response.status === StatusCode.OK) {
       return response.data;
     } else {
