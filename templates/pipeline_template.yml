@@ -168,7 +168,9 @@ Resources:
                 )
 
                 print(json.dumps(response, default=str))
-
+                
+                invalidation_id = response['Invalidation']['Id'];
+                
                 waiter = client.get_waiter('invalidation_completed')
 
                 # Waits up to 10 mins
