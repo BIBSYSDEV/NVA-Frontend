@@ -22,17 +22,23 @@ const StyledHeading = styled(Heading)`
   padding-bottom: 1rem;
 `;
 
+const StyledNormalText = styled(NormalText)`
+  padding-top: 1rem;
+`;
+
 const OrderInformation: FC = () => {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation('infopages');
 
   return (
-    <StyledInformationWrapper data-testid="order-information" aria-label={t('order_information_heading')}>
+    <StyledInformationWrapper
+      data-testid="order-information"
+      aria-label={t('order_information.order_information_heading')}>
       <Card>
-        <StyledHeading>{t('order_information_heading')}</StyledHeading>
-        <NormalText>{t('order_information_description')}</NormalText>
-        <br />
-        <NormalText>
-          <Trans i18nKey="common:order_information_links">
+        <StyledHeading>{t('order_information.order_information_heading')}</StyledHeading>
+        <NormalText>{t('order_information.order_information_description')}</NormalText>
+
+        <StyledNormalText>
+          <Trans i18nKey="infopages:order_information.order_information_links">
             <MuiLink href={`https://${ContactInformation.NVA_TEST_WEBSITE}`} target="_blank" rel="noopener noreferrer">
               {{ website: ContactInformation.NVA_TEST_WEBSITE }}
             </MuiLink>
@@ -40,7 +46,7 @@ const OrderInformation: FC = () => {
               {{ mailto: ContactInformation.NVA_EMAIL }}
             </MuiLink>
           </Trans>
-        </NormalText>
+        </StyledNormalText>
       </Card>
     </StyledInformationWrapper>
   );
