@@ -7,6 +7,7 @@
     "add_affiliation": "Add affiliation",
     "add_author": "Add author",
     "add_authors": "Add authors",
+    "add_duplicate_affiliation": "Affiliation is already added",
     "add_other_contributor": "Add more contributors",
     "author_already_added": "Chosen author is already added",
     "authors": "Authors",

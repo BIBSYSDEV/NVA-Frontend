@@ -1,4 +1,4 @@
-import { RecursiveInstitutionUnit } from '../types/institution.types';
+import { RecursiveInstitutionUnit, FormikInstitutionUnit, InstitutionUnitBase } from '../types/institution.types';
 
 // Exclude institutions on any level (root, subunit, subunit of subunit, etc) that has a matching id in excludeIds
 export const filterInstitutions = (
@@ -11,4 +11,12 @@ export const filterInstitutions = (
     }
     return !excludeIds.includes(institution.id);
   });
+};
+
+// Find the most specific unit in hierarchy
+export const getMostSpecificUnit = (values: FormikInstitutionUnit): InstitutionUnitBase => {
+  if (values.subunit) {
+    return getMostSpecificUnit(values.subunit);
+  }
+  return values as InstitutionUnitBase;
 };

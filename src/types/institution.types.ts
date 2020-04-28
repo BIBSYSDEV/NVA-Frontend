@@ -7,9 +7,10 @@ export interface RecursiveInstitutionUnit extends InstitutionUnitBase {
   subunits?: RecursiveInstitutionUnit[];
 }
 
-export interface FormikInstitutionUnit extends InstitutionUnitBase {
-  subunits: InstitutionUnitBase[];
-  unit: RecursiveInstitutionUnit;
+export interface FormikInstitutionUnit extends Partial<InstitutionUnitBase> {
+  subunits?: InstitutionUnitBase[];
+  subunit?: InstitutionUnitBase;
+  unit?: RecursiveInstitutionUnit;
   editId?: string;
 }
 
@@ -20,17 +21,17 @@ export const emptyRecursiveUnit: RecursiveInstitutionUnit = {
 };
 
 export const emptyFormikUnit: FormikInstitutionUnit = {
-  name: '',
-  id: '',
   subunits: [],
   unit: emptyRecursiveUnit,
 };
 
 export enum FormikInstitutionUnitFieldNames {
+  SUB_UNIT = 'subunit',
+  UNIT = 'unit',
+  // TODO: Remove these:
   NAME = 'name',
   ID = 'id',
   SUBUNITS = 'subunits',
-  UNIT = 'unit',
   EDIT_ID = 'editId',
 }
 
