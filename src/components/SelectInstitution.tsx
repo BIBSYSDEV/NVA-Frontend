@@ -19,6 +19,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import Progress from './Progress';
 import { RootStore } from '../redux/reducers/rootReducer';
 import { setInstitutions } from '../redux/actions/institutionActions';
+import NormalText from './NormalText';
 
 const StyledButton = styled(Button)`
   margin: 0.5rem;
@@ -28,8 +29,7 @@ const StyledInstitutionSearchContainer = styled.div`
   width: 30rem;
 `;
 
-const StyledProgress = styled(Progress)`
-  display: block;
+const StyledLoadingInfo = styled.div`
   margin: 1rem;
 `;
 
@@ -114,7 +114,12 @@ const SelectInstitution: FC<SelectInstitutionProps> = ({ onSubmit, onClose }) =>
                   />
                 )}
               />
-              {isLoadingDepartment && <StyledProgress />}
+              {isLoadingDepartment && (
+                <StyledLoadingInfo>
+                  <NormalText>{t('institution:loading_department')}</NormalText>
+                  <Progress />
+                </StyledLoadingInfo>
+              )}
 
               {selectedInstitutionSubunits && (
                 <InstitutionSelector units={selectedInstitutionSubunits} fieldNamePrefix={name} />
