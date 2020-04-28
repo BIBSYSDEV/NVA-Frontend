@@ -22,3 +22,8 @@ export enum PublicationTableNumber {
   PUBLISHERS = 850,
   PUBLICATION_CHANNELS = 851,
 }
+
+export enum ContactInformation {
+  NVA_TEST_WEBSITE = 'test.nva.unit.no',
+  NVA_EMAIL = 'xxx@unit.no',
+}
