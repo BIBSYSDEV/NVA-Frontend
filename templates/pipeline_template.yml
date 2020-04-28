@@ -183,7 +183,7 @@ Resources:
       Role: !GetAtt InvalidateCloudfrontDistributionFunctionRole.Arn
       Handler: index.handler
       Description: Lambda to invalidate Cloudfront distribution
-      Runtime: python3.8
+      Runtime: python3.7
       Timeout: 900
 
   CleanUpBucketBeforeDeploy:
@@ -218,7 +218,7 @@ Resources:
       Role: !GetAtt CleanUpBucketBeforeDeployFunctionRole.Arn
       Handler: index.handler
       Description: Lambda to clean S3 bucket before deploy
-      Runtime: python3.8
+      Runtime: python3.7
       Timeout: 30
 
   PipelineRole:

@@ -22,6 +22,7 @@ import { PublicationsApiPaths } from './publicationApi';
 import { PublicationChannelApiPaths } from './publicationChannelApi';
 import { FileUploadApiPaths } from './fileUploadApi';
 import { CustomerInstitutionApiPaths } from './customerInstitutionsApi';
+import { emptyPublication } from '../types/publication.types';
 
 const mockOrcidResponse: OrcidResponse = {
   id: 'https://sandbox.orcid.org/0000-0001-2345-6789',
@@ -95,6 +96,7 @@ export const interceptRequestsOnMock = () => {
   mock.onGet(new RegExp(`${PublicationsApiPaths.FOR_APPROVAL}/*`)).reply(200, mockMyPublications);
 
   //PUBLICATION
+  mock.onGet(new RegExp(`${PublicationsApiPaths.PUBLICATION}/new`)).reply(200, emptyPublication);
   mock.onGet(new RegExp(`${PublicationsApiPaths.PUBLICATION}/*`)).reply(200, mockPublication);
 
   // lookup DOI
