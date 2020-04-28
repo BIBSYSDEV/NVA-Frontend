@@ -1,8 +1,9 @@
-import React, { FC, useEffect, useState, ChangeEvent } from 'react';
+import React, { FC, useEffect, useState, ChangeEvent, useRef } from 'react';
 import { Button, TextField, CircularProgress } from '@material-ui/core';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { Formik, Field, FieldProps, Form } from 'formik';
+import Axios, { CancelTokenSource } from 'axios';
 
 import {
   FormikInstitutionUnit,
@@ -63,11 +64,22 @@ const SelectInstitution: FC<SelectInstitutionProps> = ({ onSubmit, onClose }) =>
     }
   }, [dispatch, institutions]);
 
+  // Allow cancellation of fetching department
+  const cancelSourceRef = useRef<CancelTokenSource>();
+
   const fetchDepartment = async (institutionId: string) => {
     setIsLoadingDepartment(true);
-    const response = await getDepartment(institutionId);
-    // TODO: Cancel request when changing institution (NP-837)
-    if (!response || response.error) {
+
+    // Create new source to allow cancellation of this request if a newer is initiated later
+    const cancelSource = Axios.CancelToken.source();
+    cancelSourceRef.current = cancelSource;
+
+    const response = await getDepartment(institutionId, cancelSource.token);
+    if (!response) {
+      // No response means request has been cancelled. Return without resetting isLoadingDepartment since
+      // this might override loading state set by a newer request
+      return;
+    } else if (response.error) {
       dispatch(setNotification(response.error, NotificationVariant.Error));
     } else {
       const subunits = JSON.parse(response.json).subunits;
@@ -87,6 +99,10 @@ const SelectInstitution: FC<SelectInstitutionProps> = ({ onSubmit, onClose }) =>
                 getOptionLabel={(option: RecursiveInstitutionUnit) => option.name}
                 noOptionsText={t('no_hits')}
                 onChange={(_: ChangeEvent<{}>, value: InstitutionUnitBase | null) => {
+                  if (isLoadingDepartment) {
+                    // Cancel potential previous request in progress
+                    cancelSourceRef.current?.cancel();
+                  }
                   setSelectedInstitutionSubunits(undefined);
                   if (value) {
                     fetchDepartment(value.id);
