@@ -143,6 +143,8 @@ Resources:
           def handler(event, context):
               client = boto3.client('cloudfront')
 
+              print(json.dumps(event, default=str))
+
               timestamp_string = datetime.datetime.utcnow().strftime("%Y%m%d%H%M%S")
               data = event['CodePipeline.job']['data']
               param = json.loads(data['actionConfiguration']['configuration'].get('UserParameters','{}'))
