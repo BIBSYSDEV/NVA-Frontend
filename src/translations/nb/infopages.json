@@ -7,5 +7,9 @@
     "description": "Tjenesten er under etablering og kun inviterte pilot-institusjoner kan ta den i bruk, i 2020. Alle institusjoner kan be om å bli å pilot-institusjoner, dokumenter bakgrunn for ønsket. Unit prioriterer institusjoner som ikke  har et etablert vitenarkiv og som har enkle behov for vitenarkiv. Institusjoner som bruker Cristin eller har et fungerende vitenarkiv bør vente til 2021 med å ta ibruk tjenesten (pga store overlappende manuelle arbeidsfunksjoner).",
     "heading": "Bestillingsinformasjon",
     "links": "Alle institusjoner er velkommen på <0>{{website}}</0> for å gi  tilbakemelding til Unit. Ris, ros eller nye ønsker og endringsforslag kan sendes på epost til <1>{{mailto}}</1>."
+  },
+  "privacy_policy": {
+    "description": "beskrivelse",
+    "heading": "Personvernerklæring"
   }
 }
