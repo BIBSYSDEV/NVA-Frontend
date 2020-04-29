@@ -11,6 +11,9 @@ export const ORCID_SIGN_IN_URL = `${ORCID_BASE_URL}/signin?oauth&client_id=${pro
 export const API_URL = process.env.REACT_APP_API_URL;
 export const DOI_PREFIX = 'https://www.doi.org/';
 
+export const CRISTIN_UNITS_BASE_URL = 'https://api.cristin.no/v2/units/';
+export const CRISTIN_INSTITUTIONS_BASE_URL = 'https://api.cristin.no/v2/institutions/';
+
 export enum StatusCode {
   OK = 200,
   CREATED = 201,

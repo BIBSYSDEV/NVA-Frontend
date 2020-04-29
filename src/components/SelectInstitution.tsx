@@ -82,8 +82,7 @@ const SelectInstitution: FC<SelectInstitutionProps> = ({ onSubmit, onClose }) =>
     } else if (response.error) {
       dispatch(setNotification(response.error, NotificationVariant.Error));
     } else {
-      const subunits = JSON.parse(response.json).subunits;
-      setSelectedInstitutionSubunits(subunits);
+      setSelectedInstitutionSubunits(response.subunits);
     }
     setIsLoadingDepartment(false);
   };
@@ -92,7 +91,7 @@ const SelectInstitution: FC<SelectInstitutionProps> = ({ onSubmit, onClose }) =>
     <Formik initialValues={{}} onSubmit={onSubmit}>
       <Form>
         <Field name={FormikInstitutionUnitFieldNames.UNIT}>
-          {({ field: { name, value }, form: { setFieldValue } }: FieldProps) => (
+          {({ field: { name, value }, form: { setFieldValue, isSubmitting } }: FieldProps) => (
             <StyledInstitutionSearchContainer>
               <Autocomplete
                 options={institutions}
@@ -113,11 +112,14 @@ const SelectInstitution: FC<SelectInstitutionProps> = ({ onSubmit, onClose }) =>
                 }}
                 renderInput={(params) => (
                   <TextField
-                    // inputProps={{ 'data-testid': 'autosearch-institution' }}
                     {...params}
                     label={t('institution')}
                     placeholder={t('institution:search_institution')}
                     variant="outlined"
+                    inputProps={{
+                      ...params.inputProps,
+                      'data-testid': 'autocomplete-institution',
+                    }}
                     InputProps={{
                       ...params.InputProps,
                       endAdornment: (
@@ -145,7 +147,7 @@ const SelectInstitution: FC<SelectInstitutionProps> = ({ onSubmit, onClose }) =>
                 variant="contained"
                 type="submit"
                 color="primary"
-                disabled={!value || isLoadingDepartment}
+                disabled={!value || isLoadingDepartment || isSubmitting}
                 data-testid="institution-add-button">
                 {t('add')}
               </StyledButton>

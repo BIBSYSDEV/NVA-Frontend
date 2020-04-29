@@ -29,10 +29,15 @@
     "update_identifier": "Could not update identifier",
     "update_publication": "Could not update publication"
   },
+  "info": {
+    "affiliation_already_exists": "Affiliation already exists"
+  },
   "success": {
+    "added_affiliation": "Affiliation was added",
     "created_authority": "Created author ID",
     "created_customer": "Created customer institution",
     "create_publication": "New publication created",
+    "delete_affiliation": "Deleted affiliation",
     "delete_identifier": "Deleted identifier",
     "login": "Logged in",
     "update_authority": "Updated authority",

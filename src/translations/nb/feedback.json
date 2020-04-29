@@ -29,10 +29,15 @@
     "update_identifier": "Kunne ikke oppdatere identifikatoren",
     "update_publication": "Kunne ikke oppdatere publikasjon"
   },
+  "info": {
+    "affiliation_already_exists": "Tilknytningen finnes allerede"
+  },
   "success": {
+    "added_affiliation": "Tilknytning er lagt til",
     "created_authority": "Forfatteridentitet er opprettet",
     "created_customer": "Institusjon er opprettet",
     "create_publication": "Publikasjonen er opprettet",
+    "delete_affiliation": "Tilknytningen ble slettet",
     "delete_identifier": "Identifikatoren ble slettet",
     "login": "Logget inn",
     "update_authority": "Forfatter er oppdatert",

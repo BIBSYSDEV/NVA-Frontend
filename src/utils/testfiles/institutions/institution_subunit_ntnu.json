@@ -1,0 +1,23 @@
+{
+  "id": "https://api.cristin.no/v2/units/194.0.0.0",
+  "type": "Institution",
+  "name": "Norwegian University of Science and Technology",
+  "subunits": [
+    {
+      "id": "https://api.cristin.no/v2/units/194.65.0.0",
+      "name": "Faculty of Medicine and Health Sciences",
+      "subunits": [
+        {
+          "id": "https://api.cristin.no/v2/units/194.65.20.0",
+          "name": "Department of Public Health and Nursing",
+          "subunits": [
+            {
+              "id": "https://api.cristin.no/v2/units/194.65.20.10",
+              "name": "Allmennmedisinsk forskningsenhet i Trondheim"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

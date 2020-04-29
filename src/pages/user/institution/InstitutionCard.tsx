@@ -1,31 +1,29 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import Label from '../../../components/Label';
+import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
-import { useTranslation } from 'react-i18next';
-import { useSelector, useDispatch } from 'react-redux';
-import { RootStore } from '../../../redux/reducers/rootReducer';
-import { AuthorityQualifiers, removeQualifierIdFromAuthority } from '../../../api/authorityApi';
+
+import { getDepartment } from '../../../api/institutionApi';
+import Card from '../../../components/Card';
+import NormalText from '../../../components/NormalText';
+import { RecursiveInstitutionUnit } from '../../../types/institution.types';
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../types/notification.types';
+import Label from '../../../components/Label';
+import Progress from '../../../components/Progress';
+import { RootStore } from '../../../redux/reducers/rootReducer';
+import { AuthorityQualifiers, removeQualifierIdFromAuthority } from '../../../api/authorityApi';
 import { setAuthorityData } from '../../../redux/actions/userActions';
-import NormalText from '../../../components/NormalText';
-import {
-  InstitutionUnitBase,
-  FormikInstitutionUnitFieldNames,
-  FormikInstitutionUnit,
-} from '../../../types/institution.types';
-import { FormikProps, useFormikContext } from 'formik';
+import { CRISTIN_UNITS_BASE_URL, CRISTIN_INSTITUTIONS_BASE_URL } from '../../../utils/constants';
 
-const StyledSelectedInstitution = styled.div`
+const StyledCard = styled(Card)`
   display: grid;
   grid-template-areas: 'text button';
   grid-template-columns: auto 7rem;
   margin-top: 0.5rem;
   padding: 0.5rem;
-  background-color: ${({ theme }) => theme.palette.background.default};
   min-height: 5rem;
   border-radius: 4px;
 `;
@@ -41,75 +39,109 @@ const StyledButtonContainer = styled.div`
   align-items: center;
 `;
 
-const StyledEditButton = styled(Button)`
-  margin-right: 0.5rem;
+const StyledButtonProgressContainer = styled.div`
+  margin-left: 1rem;
+  display: flex;
+  align-items: center;
 `;
 
 interface InstitutionCardProps {
-  onEdit: () => void;
-  unit: FormikInstitutionUnit;
+  orgunitId: string;
 }
 
-const InstitutionCard: FC<InstitutionCardProps> = ({ onEdit, unit }) => {
+const InstitutionCard: FC<InstitutionCardProps> = ({ orgunitId }) => {
   const { t } = useTranslation('common');
-  const authority = useSelector((state: RootStore) => state.user.authority);
   const dispatch = useDispatch();
-  const organizationUnitId = unit?.subunits && unit.subunits.length > 0 ? unit.subunits.slice(-1)[0].id : unit.id;
-  const { setFieldValue }: FormikProps<FormikInstitutionUnit> = useFormikContext();
+  const authority = useSelector((state: RootStore) => state.user.authority);
+  const [unit, setUnit] = useState<RecursiveInstitutionUnit>();
+  const [isLoadingUnit, setIsLoadingUnit] = useState(false);
+  const [isRemovingAffiliation, setIsRemovingAffiliation] = useState(false);
+
+  useEffect(() => {
+    const fetchDepartment = async () => {
+      setIsLoadingUnit(true);
+      // TODO: NP-844 should ensure we have URIs from start (not IDs)
+      const isSubunit = orgunitId.includes('.');
+      const unitUri = isSubunit
+        ? `${CRISTIN_UNITS_BASE_URL}${orgunitId}`
+        : `${CRISTIN_INSTITUTIONS_BASE_URL}${orgunitId}`;
+      const response = await getDepartment(unitUri);
+
+      if (response?.error) {
+        dispatch(setNotification(response.error, NotificationVariant.Error));
+      } else {
+        if (!isSubunit) {
+          // Remove subunits from institution, since we only care about top-level in this case
+          delete response.subunits;
+        }
+        setUnit(response);
+      }
+      setIsLoadingUnit(false);
+    };
+
+    fetchDepartment();
+  }, [dispatch, orgunitId]);
 
   const handleRemoveInstitution = async () => {
-    if (!authority || !organizationUnitId) {
+    if (!authority || !orgunitId) {
       return;
     }
+    setIsRemovingAffiliation(true);
     const updatedAuthority = await removeQualifierIdFromAuthority(
       authority.systemControlNumber,
       AuthorityQualifiers.ORGUNIT_ID,
-      organizationUnitId
+      orgunitId
     );
     if (updatedAuthority.error) {
       dispatch(setNotification(updatedAuthority.error, NotificationVariant.Error));
     } else if (updatedAuthority) {
       dispatch(setAuthorityData(updatedAuthority));
-      dispatch(setNotification(t('feedback:success.delete_identifier')));
+      dispatch(setNotification(t('feedback:success.delete_affiliation')));
     }
   };
 
-  const handleEditInstitution = async () => {
-    onEdit();
-    setFieldValue(FormikInstitutionUnitFieldNames.ID, unit.id);
-    setFieldValue(FormikInstitutionUnitFieldNames.NAME, unit.name);
-    setFieldValue(FormikInstitutionUnitFieldNames.SUBUNITS, unit.subunits);
-    setFieldValue(FormikInstitutionUnitFieldNames.UNIT, unit.unit);
-    setFieldValue(FormikInstitutionUnitFieldNames.EDIT_ID, organizationUnitId);
-  };
-
   return (
-    <StyledSelectedInstitution data-testid="institution-presentation">
-      <StyledTextContainer>
-        <Label>{unit.name}</Label>
-        {unit.subunits?.map((subunit: InstitutionUnitBase) => (
-          <NormalText key={subunit.id} data-testid="institution-presentation-subunit">
-            {subunit.name}
-          </NormalText>
-        ))}
-      </StyledTextContainer>
-      <StyledButtonContainer>
-        <StyledEditButton
-          color="primary"
-          data-testid={`button-edit-institution-${organizationUnitId}`}
-          onClick={handleEditInstitution}>
-          <EditIcon />
-          {t('edit')}
-        </StyledEditButton>
-        <Button
-          color="secondary"
-          data-testid={`button-delete-institution-${organizationUnitId}`}
-          onClick={handleRemoveInstitution}>
-          <DeleteIcon />
-          {t('remove')}
-        </Button>
-      </StyledButtonContainer>
-    </StyledSelectedInstitution>
+    <StyledCard data-testid="institution-presentation">
+      {isLoadingUnit ? (
+        <Progress />
+      ) : (
+        <>
+          <StyledTextContainer>
+            <Label>{unit?.name}</Label>
+            {unit?.subunits && <UnitRow unit={unit.subunits[0]} />}
+          </StyledTextContainer>
+          <StyledButtonContainer>
+            <Button
+              variant="outlined"
+              color="secondary"
+              data-testid={`button-delete-institution-${orgunitId}`}
+              disabled={isRemovingAffiliation}
+              onClick={handleRemoveInstitution}>
+              <DeleteIcon />
+              {t('remove')}
+              {isRemovingAffiliation && (
+                <StyledButtonProgressContainer>
+                  <Progress size={15} thickness={5} />
+                </StyledButtonProgressContainer>
+              )}
+            </Button>
+          </StyledButtonContainer>
+        </>
+      )}
+    </StyledCard>
+  );
+};
+
+interface UnitRowProps {
+  unit: RecursiveInstitutionUnit;
+}
+
+const UnitRow: FC<UnitRowProps> = ({ unit }) => {
+  return (
+    <>
+      <NormalText>{unit.name}</NormalText>
+      {unit.subunits && <UnitRow unit={unit.subunits[0]} />}
+    </>
   );
 };
 
