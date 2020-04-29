@@ -20,14 +20,16 @@ import styled from 'styled-components';
 // import { FormikProps, useFormikContext } from 'formik';
 import { getDepartment } from '../../../api/institutionApi';
 import SubHeading from '../../../components/SubHeading';
+import Card from '../../../components/Card';
+import NormalText from '../../../components/NormalText';
+import { RecursiveInstitutionUnit } from '../../../types/institution.types';
 
-const StyledSelectedInstitution = styled.div`
+const StyledSelectedInstitution = styled(Card)`
   display: grid;
   grid-template-areas: 'text button';
   grid-template-columns: auto 7rem;
   margin-top: 0.5rem;
   padding: 0.5rem;
-  background-color: ${({ theme }) => theme.palette.background.default};
   min-height: 5rem;
   border-radius: 4px;
 `;
@@ -55,7 +57,7 @@ const InstitutionCard: FC<InstitutionCardProps> = ({ orgunitId }) => {
   // const authority = useSelector((state: RootStore) => state.user.authority);
   // const { t } = useTranslation('common');
   // const dispatch = useDispatch();
-  const [unit, setUnit] = useState<any>();
+  const [unit, setUnit] = useState<RecursiveInstitutionUnit>();
 
   useEffect(() => {
     const fetchDepartment = async () => {
@@ -105,7 +107,7 @@ const InstitutionCard: FC<InstitutionCardProps> = ({ orgunitId }) => {
   //   setFieldValue(FormikInstitutionUnitFieldNames.UNIT, unit.unit);
   //   setFieldValue(FormikInstitutionUnitFieldNames.EDIT_ID, organizationUnitId);
   // };
-  // console.log(orgunitId, unit);
+
   return (
     <StyledSelectedInstitution data-testid="institution-presentation">
       <StyledTextContainer>
@@ -141,10 +143,14 @@ const InstitutionCard: FC<InstitutionCardProps> = ({ orgunitId }) => {
   );
 };
 
-const UnitRow: FC<any> = ({ unit }) => {
+interface UnitRowProps {
+  unit: RecursiveInstitutionUnit;
+}
+
+const UnitRow: FC<UnitRowProps> = ({ unit }) => {
   return (
     <>
-      <p>{unit.name}</p>
+      <NormalText>{unit.name}</NormalText>
       {unit.subunits && <UnitRow unit={unit.subunits[0]} />}
     </>
   );
