@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next';
 const StyledDashboard = styled.div`
   display: grid;
   grid-template-areas: 'search-bar' 'other-content';
-  grid-template-rows: 2rem 15rem;
+  grid-template-rows: 2rem auto;
   row-gap: 1rem;
   justify-items: center;
   padding-top: 4rem;
