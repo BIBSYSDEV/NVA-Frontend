@@ -63,7 +63,7 @@ const UserInstitution: FC = () => {
 
     if (authority) {
       const updatedAuthority = await addQualifierIdForAuthority(
-        authority?.systemControlNumber,
+        authority.systemControlNumber,
         AuthorityQualifiers.ORGUNIT_ID,
         newUnitId
       );
