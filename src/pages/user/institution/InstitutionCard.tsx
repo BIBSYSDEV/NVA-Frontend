@@ -16,6 +16,7 @@ import Progress from '../../../components/Progress';
 import { RootStore } from '../../../redux/reducers/rootReducer';
 import { AuthorityQualifiers, removeQualifierIdFromAuthority } from '../../../api/authorityApi';
 import { setAuthorityData } from '../../../redux/actions/userActions';
+import { CRISTIN_UNITS_BASE_URL, CRISTIN_INSTITUTIONS_BASE_URL } from '../../../utils/constants';
 
 const StyledCard = styled(Card)`
   display: grid;
@@ -61,8 +62,8 @@ const InstitutionCard: FC<InstitutionCardProps> = ({ orgunitId }) => {
       setIsLoadingUnit(true);
       const isSubunit = orgunitId.includes('.');
       const unitUri = isSubunit
-        ? `https://api.cristin.no/v2/units/${orgunitId}`
-        : `https://api.cristin.no/v2/institutions/${orgunitId}`;
+        ? `${CRISTIN_UNITS_BASE_URL}${orgunitId}`
+        : `${CRISTIN_INSTITUTIONS_BASE_URL}${orgunitId}`;
       const response = await getDepartment(unitUri);
       if (response?.error) {
         dispatch(setNotification(response.error, NotificationVariant.Error));

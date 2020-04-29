@@ -1,6 +1,5 @@
 import Axios, { CancelToken } from 'axios';
 import { getIdToken } from './userApi';
-import { InstitutionUnitBase, RecursiveInstitutionUnit } from '../types/institution.types';
 import { StatusCode } from '../utils/constants';
 import i18n from '../translations/i18n';
 
@@ -9,7 +8,7 @@ export enum InstitutionApiPaths {
   DEPARTMENTS = '/institutions-proxy/departments',
 }
 
-export const getInstitutions = async (): Promise<InstitutionUnitBase & any> => {
+export const getInstitutions = async () => {
   const url = InstitutionApiPaths.INSTITUTIONS;
   try {
     const idToken = await getIdToken();
@@ -27,10 +26,7 @@ export const getInstitutions = async (): Promise<InstitutionUnitBase & any> => {
   }
 };
 
-export const getDepartment = async (
-  departmentUri: string,
-  cancelToken?: CancelToken
-): Promise<RecursiveInstitutionUnit & any> => {
+export const getDepartment = async (departmentUri: string, cancelToken?: CancelToken) => {
   const url = `${InstitutionApiPaths.DEPARTMENTS}?uri=${departmentUri}`;
   try {
     const idToken = await getIdToken();
