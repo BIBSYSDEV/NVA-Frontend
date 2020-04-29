@@ -66,6 +66,7 @@ const InstitutionCard: FC<InstitutionCardProps> = ({ orgunitId }) => {
         ? `${CRISTIN_UNITS_BASE_URL}${orgunitId}`
         : `${CRISTIN_INSTITUTIONS_BASE_URL}${orgunitId}`;
       const response = await getDepartment(unitUri);
+
       if (response?.error) {
         dispatch(setNotification(response.error, NotificationVariant.Error));
       } else {

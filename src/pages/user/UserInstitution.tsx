@@ -27,14 +27,6 @@ const StyledButtonContainer = styled.div`
   margin-top: 1rem;
 `;
 
-// const StyledButton = styled(Button)`
-//   margin: 0.5rem;
-// `;
-
-// const StyledInstitutionSearchContainer = styled.div`
-//   width: 30rem;
-// `;
-
 const UserInstitution: FC = () => {
   const authority = useSelector((state: RootStore) => state.user.authority);
   const [openUnitForm, setOpenUnitForm] = useState(false);
