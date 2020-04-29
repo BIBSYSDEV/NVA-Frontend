@@ -1,11 +1,15 @@
 {
   "description": {
-    "description": "description_description",
+    "description": "description",
     "heading": "Description"
   },
   "order_information": {
-    "description": "order_information_description",
+    "description": "description",
     "heading": "Order information",
     "links": "All institutions are welcome at <0>{{website}}</0> to give feedback to Unit. Please send your feedback via email to <1>{{mailto}}</1>."
+  },
+  "privacy_policy": {
+    "description": "description",
+    "heading": "Privacy policy"
   }
 }
