@@ -9,6 +9,7 @@ import { RecursiveInstitutionUnit } from '../../../types/institution.types';
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../types/notification.types';
 import Label from '../../../components/Label';
+import Progress from '../../../components/Progress';
 
 const StyledCard = styled(Card)`
   display: grid;
@@ -44,9 +45,11 @@ const InstitutionCard: FC<InstitutionCardProps> = ({ orgunitId }) => {
   // const { t } = useTranslation('common');
   const dispatch = useDispatch();
   const [unit, setUnit] = useState<RecursiveInstitutionUnit>();
+  const [isLoadingUnit, setIsLoadingUnit] = useState(false);
 
   useEffect(() => {
     const fetchDepartment = async () => {
+      setIsLoadingUnit(true);
       const isSubunit = orgunitId.includes('.');
       const unitUri = isSubunit
         ? `https://api.cristin.no/v2/units/${orgunitId}`
@@ -62,6 +65,7 @@ const InstitutionCard: FC<InstitutionCardProps> = ({ orgunitId }) => {
         }
         setUnit(unit);
       }
+      setIsLoadingUnit(false);
     };
 
     fetchDepartment();
@@ -98,10 +102,15 @@ const InstitutionCard: FC<InstitutionCardProps> = ({ orgunitId }) => {
 
   return (
     <StyledCard data-testid="institution-presentation">
-      <StyledTextContainer>
-        <Label>{unit?.name}</Label>
-        {unit?.subunits && <UnitRow unit={unit.subunits[0]} />}
-      </StyledTextContainer>
+      {isLoadingUnit ? (
+        <Progress />
+      ) : (
+        <StyledTextContainer>
+          {isLoadingUnit && <Progress />}
+          <Label>{unit?.name}</Label>
+          {unit?.subunits && <UnitRow unit={unit.subunits[0]} />}
+        </StyledTextContainer>
+      )}
 
       {/* <StyledTextContainer>
         <Label>{unit.name}</Label>
