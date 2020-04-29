@@ -37,6 +37,7 @@
     "created_authority": "Forfatteridentitet er opprettet",
     "created_customer": "Institusjon er opprettet",
     "create_publication": "Publikasjonen er opprettet",
+    "delete_affiliation": "Tilknytningen ble slettet",
     "delete_identifier": "Identifikatoren ble slettet",
     "login": "Logget inn",
     "update_authority": "Forfatter er oppdatert",

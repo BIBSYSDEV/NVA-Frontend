@@ -38,6 +38,12 @@ const StyledButtonContainer = styled.div`
   align-items: center;
 `;
 
+const StyledButtonProgressContainer = styled.div`
+  margin-left: 1rem;
+  display: flex;
+  align-items: center;
+`;
+
 interface InstitutionCardProps {
   orgunitId: string;
 }
@@ -48,6 +54,7 @@ const InstitutionCard: FC<InstitutionCardProps> = ({ orgunitId }) => {
   const authority = useSelector((state: RootStore) => state.user.authority);
   const [unit, setUnit] = useState<RecursiveInstitutionUnit>();
   const [isLoadingUnit, setIsLoadingUnit] = useState(false);
+  const [isRemovingAffiliation, setIsRemovingAffiliation] = useState(false);
 
   useEffect(() => {
     const fetchDepartment = async () => {
@@ -77,6 +84,7 @@ const InstitutionCard: FC<InstitutionCardProps> = ({ orgunitId }) => {
     if (!authority || !orgunitId) {
       return;
     }
+    setIsRemovingAffiliation(true);
     const updatedAuthority = await removeQualifierIdFromAuthority(
       authority.systemControlNumber,
       AuthorityQualifiers.ORGUNIT_ID,
@@ -86,7 +94,7 @@ const InstitutionCard: FC<InstitutionCardProps> = ({ orgunitId }) => {
       dispatch(setNotification(updatedAuthority.error, NotificationVariant.Error));
     } else if (updatedAuthority) {
       dispatch(setAuthorityData(updatedAuthority));
-      dispatch(setNotification(t('feedback:success.delete_identifier')));
+      dispatch(setNotification(t('feedback:success.delete_affiliation')));
     }
   };
 
@@ -105,9 +113,15 @@ const InstitutionCard: FC<InstitutionCardProps> = ({ orgunitId }) => {
               variant="outlined"
               color="secondary"
               data-testid={`button-delete-institution-${orgunitId}`}
+              disabled={isRemovingAffiliation}
               onClick={handleRemoveInstitution}>
               <DeleteIcon />
               {t('remove')}
+              {isRemovingAffiliation && (
+                <StyledButtonProgressContainer>
+                  <Progress size={15} thickness={5} />
+                </StyledButtonProgressContainer>
+              )}
             </Button>
           </StyledButtonContainer>
         </>

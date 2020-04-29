@@ -37,6 +37,7 @@
     "created_authority": "Created author ID",
     "created_customer": "Created customer institution",
     "create_publication": "New publication created",
+    "delete_affiliation": "Deleted affiliation",
     "delete_identifier": "Deleted identifier",
     "login": "Logged in",
     "update_authority": "Updated authority",
