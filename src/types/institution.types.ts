@@ -34,14 +34,3 @@ export enum FormikInstitutionUnitFieldNames {
   SUBUNITS = 'subunits',
   EDIT_ID = 'editId',
 }
-
-export interface InstitutionUnitResponseType {
-  id: string;
-  name: string;
-  unitName: object;
-  cristinUser: boolean;
-  institution: object;
-  uri: string;
-  acronym: string;
-  subunits: InstitutionUnitResponseType[];
-}
