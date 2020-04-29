@@ -1,11 +1,11 @@
 {
   "description": {
-    "description_description": "description_description",
-    "description_heading": "Description"
+    "description": "description_description",
+    "heading": "Description"
   },
   "order_information": {
-    "order_information_description": "order_information_description",
-    "order_information_heading": "Order information",
-    "order_information_links": "All institutions are welcome at <0>{{website}}</0> to give feedback to Unit. Please send your feedback via email to <1>{{mailto}}</1>."
+    "description": "order_information_description",
+    "heading": "Order information",
+    "links": "All institutions are welcome at <0>{{website}}</0> to give feedback to Unit. Please send your feedback via email to <1>{{mailto}}</1>."
   }
 }

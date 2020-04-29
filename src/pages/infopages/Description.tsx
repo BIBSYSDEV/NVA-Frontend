@@ -28,10 +28,10 @@ const Description: FC = () => {
   const { t } = useTranslation('infopages');
 
   return (
-    <StyledInformationWrapper data-testid="description" aria-label={t('description.description_heading')}>
+    <StyledInformationWrapper data-testid="description" aria-label={t('description.heading')}>
       <Card>
-        <StyledHeading>{t('description.description_heading')}</StyledHeading>
-        <StyledDescription>{t('description.description_description')}</StyledDescription>
+        <StyledHeading>{t('description.heading')}</StyledHeading>
+        <StyledDescription>{t('description.description')}</StyledDescription>
       </Card>
     </StyledInformationWrapper>
   );
