@@ -1,30 +1,16 @@
 import React, { FC, useEffect, useState } from 'react';
 import styled from 'styled-components';
-// import Label from '../../../components/Label';
-// import { Button } from '@material-ui/core';
-// import DeleteIcon from '@material-ui/icons/Delete';
-// import EditIcon from '@material-ui/icons/Edit';
-// import { useTranslation } from 'react-i18next';
-// import { useSelector, useDispatch } from 'react-redux';
-// import { RootStore } from '../../../redux/reducers/rootReducer';
-// import { AuthorityQualifiers, removeQualifierIdFromAuthority } from '../../../api/authorityApi';
-// import { setNotification } from '../../../redux/actions/notificationActions';
-// import { NotificationVariant } from '../../../types/notification.types';
-// import { setAuthorityData } from '../../../redux/actions/userActions';
-// import NormalText from '../../../components/NormalText';
-// import {
-//   InstitutionUnitBase,
-//   FormikInstitutionUnitFieldNames,
-//   FormikInstitutionUnit,
-// } from '../../../types/institution.types';
-// import { FormikProps, useFormikContext } from 'formik';
+import { useDispatch } from 'react-redux';
+
 import { getDepartment } from '../../../api/institutionApi';
-import SubHeading from '../../../components/SubHeading';
 import Card from '../../../components/Card';
 import NormalText from '../../../components/NormalText';
 import { RecursiveInstitutionUnit } from '../../../types/institution.types';
+import { setNotification } from '../../../redux/actions/notificationActions';
+import { NotificationVariant } from '../../../types/notification.types';
+import Label from '../../../components/Label';
 
-const StyledSelectedInstitution = styled(Card)`
+const StyledCard = styled(Card)`
   display: grid;
   grid-template-areas: 'text button';
   grid-template-columns: auto 7rem;
@@ -56,7 +42,7 @@ interface InstitutionCardProps {
 const InstitutionCard: FC<InstitutionCardProps> = ({ orgunitId }) => {
   // const authority = useSelector((state: RootStore) => state.user.authority);
   // const { t } = useTranslation('common');
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const [unit, setUnit] = useState<RecursiveInstitutionUnit>();
 
   useEffect(() => {
@@ -66,18 +52,20 @@ const InstitutionCard: FC<InstitutionCardProps> = ({ orgunitId }) => {
         ? `https://api.cristin.no/v2/units/${orgunitId}`
         : `https://api.cristin.no/v2/institutions/${orgunitId}`;
       const response = await getDepartment(unitUri);
-      try {
+      if (response?.error) {
+        dispatch(setNotification(response.error, NotificationVariant.Error));
+      } else {
         const unit = JSON.parse(response.json);
         if (!isSubunit) {
           // Remove subunits from institution, since we only care about top-level in this case
           delete unit.subunits;
         }
         setUnit(unit);
-      } catch {}
+      }
     };
 
     fetchDepartment();
-  }, [orgunitId]);
+  }, [dispatch, orgunitId]);
 
   // const organizationUnitId = unit?.subunits && unit.subunits.length > 0 ? unit.subunits.slice(-1)[0].id : unit.id;
   // const { setFieldValue }: FormikProps<FormikInstitutionUnit> = useFormikContext();
@@ -109,9 +97,9 @@ const InstitutionCard: FC<InstitutionCardProps> = ({ orgunitId }) => {
   // };
 
   return (
-    <StyledSelectedInstitution data-testid="institution-presentation">
+    <StyledCard data-testid="institution-presentation">
       <StyledTextContainer>
-        <SubHeading>{unit?.name}</SubHeading>
+        <Label>{unit?.name}</Label>
         {unit?.subunits && <UnitRow unit={unit.subunits[0]} />}
       </StyledTextContainer>
 
@@ -139,7 +127,7 @@ const InstitutionCard: FC<InstitutionCardProps> = ({ orgunitId }) => {
           {t('remove')}
         </Button>
       </StyledButtonContainer> */}
-    </StyledSelectedInstitution>
+    </StyledCard>
   );
 };
 
