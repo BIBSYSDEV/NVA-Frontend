@@ -1,6 +1,9 @@
 import React, { FC, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import { Button } from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 import { getDepartment } from '../../../api/institutionApi';
 import Card from '../../../components/Card';
@@ -10,6 +13,9 @@ import { setNotification } from '../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../types/notification.types';
 import Label from '../../../components/Label';
 import Progress from '../../../components/Progress';
+import { RootStore } from '../../../redux/reducers/rootReducer';
+import { AuthorityQualifiers, removeQualifierIdFromAuthority } from '../../../api/authorityApi';
+import { setAuthorityData } from '../../../redux/actions/userActions';
 
 const StyledCard = styled(Card)`
   display: grid;
@@ -25,25 +31,21 @@ const StyledTextContainer = styled.div`
   grid-area: text;
 `;
 
-// const StyledButtonContainer = styled.div`
-//   grid-area: button;
-//   display: flex;
-//   justify-content: flex-end;
-//   align-items: center;
-// `;
-
-// const StyledEditButton = styled(Button)`
-//   margin-right: 0.5rem;
-// `;
+const StyledButtonContainer = styled.div`
+  grid-area: button;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+`;
 
 interface InstitutionCardProps {
   orgunitId: string;
 }
 
 const InstitutionCard: FC<InstitutionCardProps> = ({ orgunitId }) => {
-  // const authority = useSelector((state: RootStore) => state.user.authority);
-  // const { t } = useTranslation('common');
+  const { t } = useTranslation('common');
   const dispatch = useDispatch();
+  const authority = useSelector((state: RootStore) => state.user.authority);
   const [unit, setUnit] = useState<RecursiveInstitutionUnit>();
   const [isLoadingUnit, setIsLoadingUnit] = useState(false);
 
@@ -71,71 +73,45 @@ const InstitutionCard: FC<InstitutionCardProps> = ({ orgunitId }) => {
     fetchDepartment();
   }, [dispatch, orgunitId]);
 
-  // const organizationUnitId = unit?.subunits && unit.subunits.length > 0 ? unit.subunits.slice(-1)[0].id : unit.id;
-  // const { setFieldValue }: FormikProps<FormikInstitutionUnit> = useFormikContext();
-
-  // const handleRemoveInstitution = async () => {
-  //   if (!authority || !orgunitId) {
-  //     return;
-  //   }
-  //   const updatedAuthority = await removeQualifierIdFromAuthority(
-  //     authority.systemControlNumber,
-  //     AuthorityQualifiers.ORGUNIT_ID,
-  //     orgunitId
-  //   );
-  //   if (updatedAuthority.error) {
-  //     dispatch(setNotification(updatedAuthority.error, NotificationVariant.Error));
-  //   } else if (updatedAuthority) {
-  //     dispatch(setAuthorityData(updatedAuthority));
-  //     dispatch(setNotification(t('feedback:success.delete_identifier')));
-  //   }
-  // };
-
-  // const handleEditInstitution = async () => {
-  //   // onEdit();
-  //   setFieldValue(FormikInstitutionUnitFieldNames.ID, unit.id);
-  //   setFieldValue(FormikInstitutionUnitFieldNames.NAME, unit.name);
-  //   setFieldValue(FormikInstitutionUnitFieldNames.SUBUNITS, unit.subunits);
-  //   setFieldValue(FormikInstitutionUnitFieldNames.UNIT, unit.unit);
-  //   setFieldValue(FormikInstitutionUnitFieldNames.EDIT_ID, organizationUnitId);
-  // };
+  const handleRemoveInstitution = async () => {
+    if (!authority || !orgunitId) {
+      return;
+    }
+    const updatedAuthority = await removeQualifierIdFromAuthority(
+      authority.systemControlNumber,
+      AuthorityQualifiers.ORGUNIT_ID,
+      orgunitId
+    );
+    if (updatedAuthority.error) {
+      dispatch(setNotification(updatedAuthority.error, NotificationVariant.Error));
+    } else if (updatedAuthority) {
+      dispatch(setAuthorityData(updatedAuthority));
+      dispatch(setNotification(t('feedback:success.delete_identifier')));
+    }
+  };
 
   return (
     <StyledCard data-testid="institution-presentation">
       {isLoadingUnit ? (
         <Progress />
       ) : (
-        <StyledTextContainer>
-          {isLoadingUnit && <Progress />}
-          <Label>{unit?.name}</Label>
-          {unit?.subunits && <UnitRow unit={unit.subunits[0]} />}
-        </StyledTextContainer>
+        <>
+          <StyledTextContainer>
+            <Label>{unit?.name}</Label>
+            {unit?.subunits && <UnitRow unit={unit.subunits[0]} />}
+          </StyledTextContainer>
+          <StyledButtonContainer>
+            <Button
+              variant="outlined"
+              color="secondary"
+              data-testid={`button-delete-institution-${orgunitId}`}
+              onClick={handleRemoveInstitution}>
+              <DeleteIcon />
+              {t('remove')}
+            </Button>
+          </StyledButtonContainer>
+        </>
       )}
-
-      {/* <StyledTextContainer>
-        <Label>{unit.name}</Label>
-        {unit.subunits?.map((subunit: InstitutionUnitBase) => (
-          <NormalText key={subunit.id} data-testid="institution-presentation-subunit">
-            {subunit.name}
-          </NormalText>
-        ))}
-      </StyledTextContainer>
-      <StyledButtonContainer>
-        <StyledEditButton
-          color="primary"
-          data-testid={`button-edit-institution-${organizationUnitId}`}
-          onClick={handleEditInstitution}>
-          <EditIcon />
-          {t('edit')}
-        </StyledEditButton>
-        <Button
-          color="secondary"
-          data-testid={`button-delete-institution-${organizationUnitId}`}
-          onClick={handleRemoveInstitution}>
-          <DeleteIcon />
-          {t('remove')}
-        </Button>
-      </StyledButtonContainer> */}
     </StyledCard>
   );
 };
