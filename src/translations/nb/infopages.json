@@ -1,7 +1,11 @@
 {
+  "description": {
+    "description_description": "Arkivet har grunnlagsdata fra mange ulike prosesser slik at registreringsprosessen i Vitenarkivet skal bli effektiv, samtidig som kvaliteten på metadata skal bli god. For eksempel er data fra internasjonal vitenskapelig publisering (ORCID, DOI og andre metadata), gradsutdeling, Kanalregisteret (inklusiv Unit-avtaler om tilgang til åpen publisering) og ulike masterdatakilder (person, institusjon og forskningsprosjekt) integrert i arbeidsprosessen i arkivet. \n\nArkivet har støtte for utsatt publisering, slik at manuelle oppgaver skal kunne ferdigstilles - uavhengig av ønsket publiseringstidspunkt. Materiale som ikke skal bli offentlig tilgjengelig, skal ikke lagres i Nasjonalt Vitenarkiv.",
+    "description_heading": "Beskrivelse"
+  },
   "order_information": {
-    "order_information_heading": "Bestillingsinformasjon",
     "order_information_description": "Tjenesten er under etablering og kun inviterte pilot-institusjoner kan ta den i bruk, i 2020. Alle institusjoner kan be om å bli å pilot-institusjoner, dokumenter bakgrunn for ønsket. Unit prioriterer institusjoner som ikke  har et etablert vitenarkiv og som har enkle behov for vitenarkiv. Institusjoner som bruker Cristin eller har et fungerende vitenarkiv bør vente til 2021 med å ta ibruk tjenesten (pga store overlappende manuelle arbeidsfunksjoner).",
+    "order_information_heading": "Bestillingsinformasjon",
     "order_information_links": "Alle institusjoner er velkommen på <0>{{website}}</0> for å gi  tilbakemelding til Unit. Ris, ros eller nye ønsker og endringsforslag kan sendes på epost til <1>{{mailto}}</1>."
   }
 }
