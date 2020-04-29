@@ -27,22 +27,22 @@ const StyledPrivacyPolicyContainer = styled.div`
 `;
 
 const Footer: FC = () => {
-  const { t } = useTranslation('');
+  const { t } = useTranslation('infopages');
 
   return (
     <StyledFooter>
       <StyledLogoContainer>
-        <NormalText>{t('delivered_by')}</NormalText>
+        <NormalText>{t('common:delivered_by')}</NormalText>
         <img src={logo} alt="UNIT logo" />
       </StyledLogoContainer>
       <StyledPrivacyPolicyContainer>
         <MuiLink
-          aria-label={t('infopages:privacy_policy.heading')}
+          aria-label={t('privacy_policy.heading')}
           color="primary"
           component={Link}
           to="/privacy-policy"
           data-testid="privacy_policy_link">
-          {t('infopages:privacy_policy.heading')}
+          {t('privacy_policy.heading')}
         </MuiLink>
       </StyledPrivacyPolicyContainer>
     </StyledFooter>
