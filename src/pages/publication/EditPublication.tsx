@@ -72,6 +72,7 @@ const EditPublication: FC = () => {
 
   const handleClick = () => {
     setShowForm(true);
+    uppy.reset();
   };
 
   const handleTemporaryButtonClick = () => {
