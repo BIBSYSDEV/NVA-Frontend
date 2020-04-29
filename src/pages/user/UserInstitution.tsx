@@ -19,6 +19,7 @@ import { addQualifierIdForAuthority, AuthorityQualifiers } from '../../api/autho
 import { setNotification } from '../../redux/actions/notificationActions';
 import { setAuthorityData } from '../../redux/actions/userActions';
 import { NotificationVariant } from '../../types/notification.types';
+import InstitutionCard from './institution/InstitutionCard';
 
 const StyledButtonContainer = styled.div`
   display: flex;
@@ -26,23 +27,23 @@ const StyledButtonContainer = styled.div`
   margin-top: 1rem;
 `;
 
-const StyledButton = styled(Button)`
-  margin: 0.5rem;
-`;
+// const StyledButton = styled(Button)`
+//   margin: 0.5rem;
+// `;
 
-const StyledInstitutionSearchContainer = styled.div`
-  width: 30rem;
-`;
+// const StyledInstitutionSearchContainer = styled.div`
+//   width: 30rem;
+// `;
 
 const UserInstitution: FC = () => {
   const authority = useSelector((state: RootStore) => state.user.authority);
-  const [open, setOpen] = useState(false);
+  const [openUnitForm, setOpenUnitForm] = useState(false);
 
   const { t } = useTranslation('profile');
   const dispatch = useDispatch();
 
-  const toggleOpen = () => {
-    setOpen(!open);
+  const toggleUnitForm = () => {
+    setOpenUnitForm(!openUnitForm);
   };
 
   const handleSubmit = async (value: FormikInstitutionUnit) => {
@@ -73,21 +74,24 @@ const UserInstitution: FC = () => {
         dispatch(setNotification(t('feedback:success.added_affiliation'), NotificationVariant.Success));
       }
     }
-    setOpen(false);
+    setOpenUnitForm(false);
   };
 
   return (
     <Card>
       <Heading>{t('heading.organizations')}</Heading>
-      {/* <InstitutionCardList /> */}
-      {open ? (
-        <SelectInstitution onSubmit={handleSubmit} onClose={toggleOpen} />
+      {authority?.orgunitids.map((orgunitId) => (
+        <InstitutionCard key={orgunitId} orgunitId={orgunitId} />
+      ))}
+
+      {openUnitForm ? (
+        <SelectInstitution onSubmit={handleSubmit} onClose={toggleUnitForm} />
       ) : (
         <StyledButtonContainer>
           <Button
             variant="contained"
             color="primary"
-            onClick={toggleOpen}
+            onClick={toggleUnitForm}
             disabled={!authority}
             data-testid="add-new-institution-button">
             {t('organization.add_institution')}

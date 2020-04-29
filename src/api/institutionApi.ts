@@ -47,6 +47,7 @@ export const getDepartment = async (departmentUri: string, cancelToken?: CancelT
   }
 };
 
+// TODO REMOVE ALL BELOW
 export const getParentUnits = async (subunitid: string) => {
   // TODO: get institutions from endpoint
   // BACKEND NOT FINISHED YET
