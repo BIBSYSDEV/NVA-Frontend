@@ -35,7 +35,7 @@ export const getDepartment = async (departmentUri: string, cancelToken?: CancelT
     };
     const response = await Axios.get(url, { headers, cancelToken });
     if (response.status === StatusCode.OK) {
-      return response.data;
+      return JSON.parse(response.data.json); // TODO: Update when NP-816 is done
     } else {
       return { error: i18n.t('feedback:error.get_institution') };
     }

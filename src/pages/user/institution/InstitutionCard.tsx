@@ -60,6 +60,7 @@ const InstitutionCard: FC<InstitutionCardProps> = ({ orgunitId }) => {
   useEffect(() => {
     const fetchDepartment = async () => {
       setIsLoadingUnit(true);
+      // TODO: NP-844 should ensure we have URIs from start (not IDs)
       const isSubunit = orgunitId.includes('.');
       const unitUri = isSubunit
         ? `${CRISTIN_UNITS_BASE_URL}${orgunitId}`
@@ -68,12 +69,11 @@ const InstitutionCard: FC<InstitutionCardProps> = ({ orgunitId }) => {
       if (response?.error) {
         dispatch(setNotification(response.error, NotificationVariant.Error));
       } else {
-        const unit = JSON.parse(response.json);
         if (!isSubunit) {
           // Remove subunits from institution, since we only care about top-level in this case
-          delete unit.subunits;
+          delete response.subunits;
         }
-        setUnit(unit);
+        setUnit(response);
       }
       setIsLoadingUnit(false);
     };
