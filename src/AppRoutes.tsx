@@ -5,6 +5,7 @@ import { RootStore } from './redux/reducers/rootReducer';
 import AdminUsersPage from './pages/admin/AdminUsersPage';
 import DelayedFallback from './components/DelayedFallback';
 import OrderInformation from './pages/infopages/OrderInformation';
+import Description from './pages/infopages/Description';
 
 const Dashboard = lazy(() => import('./pages/dashboard/Dashboard'));
 const EditPublication = lazy(() => import('./pages/publication/EditPublication'));
@@ -43,6 +44,7 @@ const AppRoutes: FC = () => {
         {user.isLoggedIn && <Route exact path="/user" component={User} />}
         {!user.isLoggedIn && <Route exact path="/logout" component={Logout} />}
         <Route exact path="/order-information" component={OrderInformation} />
+        <Route exact path="/description" component={Description} />
         <Route path="*" component={NotFound} />
       </Switch>
     </Suspense>
