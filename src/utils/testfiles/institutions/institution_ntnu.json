@@ -1,0 +1,445 @@
+{
+  "id": "https://api.cristin.no/v2/units/194.0.0.0",
+  "type": "Institution",
+  "name": "Norwegian University of Science and Technology",
+  "subunits": [
+    {
+      "id": "https://api.cristin.no/v2/units/194.20.21.0",
+      "name": "Vice-Rector Ålesund",
+      "subunits": [
+        {
+          "id": "https://api.cristin.no/v2/units/194.20.22.0",
+          "name": "Property and operations section, Ålesund"
+        }
+      ]
+    },
+    {
+      "id": "https://api.cristin.no/v2/units/194.64.0.0",
+      "name": "Faculty of Engineering",
+      "subunits": [
+        {
+          "id": "https://api.cristin.no/v2/units/194.64.91.0",
+          "name": "Department of Civil and Environmental Engineering"
+        },
+        {
+          "id": "https://api.cristin.no/v2/units/194.64.1.0",
+          "name": "IV Faculty Administration"
+        },
+        {
+          "id": "https://api.cristin.no/v2/units/194.64.25.0",
+          "name": "Department of Energy and Process Engineering"
+        },
+        {
+          "id": "https://api.cristin.no/v2/units/194.64.90.0",
+          "name": "Department of Geoscience and Petroleum"
+        },
+        {
+          "id": "https://api.cristin.no/v2/units/194.64.94.0",
+          "name": "Department of Manufacturing and Civil Engineering"
+        },
+        {
+          "id": "https://api.cristin.no/v2/units/194.64.80.0",
+          "name": "Centre for autonomous marine operations and systems"
+        },
+        {
+          "id": "https://api.cristin.no/v2/units/194.64.92.0",
+          "name": "Department of Mechanical and Industrial Engineering"
+        },
+        {
+          "id": "https://api.cristin.no/v2/units/194.64.20.0",
+          "name": "Department of Marine Technology"
+        },
+        {
+          "id": "https://api.cristin.no/v2/units/194.64.93.0",
+          "name": "Department of Ocean Operations and Civil Engineering"
+        },
+        {
+          "id": "https://api.cristin.no/v2/units/194.64.45.0",
+          "name": "Department of Structural Engineering"
+        }
+      ]
+    },
+    {
+      "id": "https://api.cristin.no/v2/units/194.14.0.0",
+      "name": "Pro-Rector for Education",
+      "subunits": [
+        {
+          "id": "https://api.cristin.no/v2/units/194.14.30.0",
+          "name": "NTNU University Library"
+        }
+      ]
+    },
+    {
+      "id": "https://api.cristin.no/v2/units/194.67.0.0",
+      "name": "Faculty of Social and Educational Sciences",
+      "subunits": [
+        {
+          "id": "https://api.cristin.no/v2/units/194.67.90.0",
+          "name": "Department of Social Work"
+        },
+        {
+          "id": "https://api.cristin.no/v2/units/194.67.80.0",
+          "name": "Department of Teacher Education",
+          "subunits": [
+            {
+              "id": "https://api.cristin.no/v2/units/194.67.80.40",
+              "name": "The Norwegian Centre for Writing Education and Research (The Writing Centre)"
+            },
+            {
+              "id": "https://api.cristin.no/v2/units/194.67.80.30",
+              "name": "Norwegian Centre for Mathematics Education"
+            }
+          ]
+        },
+        {
+          "id": "https://api.cristin.no/v2/units/194.67.70.0",
+          "name": "Department of Education and Lifelong Learning"
+        },
+        {
+          "id": "https://api.cristin.no/v2/units/194.67.45.0",
+          "name": "Department of Social Anthropology"
+        },
+        {
+          "id": "https://api.cristin.no/v2/units/194.67.40.0",
+          "name": "Department of Psychology"
+        },
+        {
+          "id": "https://api.cristin.no/v2/units/194.67.25.0",
+          "name": "Department of Sociology and Political Science"
+        },
+        {
+          "id": "https://api.cristin.no/v2/units/194.67.10.0",
+          "name": "Department of Geography"
+        },
+        {
+          "id": "https://api.cristin.no/v2/units/194.67.1.0",
+          "name": "SU Faculty Administration"
+        }
+      ]
+    },
+    {
+      "id": "https://api.cristin.no/v2/units/194.61.0.0",
+      "name": "Faculty of Architecture and Design",
+      "subunits": [
+        {
+          "id": "https://api.cristin.no/v2/units/194.61.55.0",
+          "name": "Department of Architecture and Technology"
+        },
+        {
+          "id": "https://api.cristin.no/v2/units/194.61.50.0",
+          "name": "Department of Architecture and Planning"
+        },
+        {
+          "id": "https://api.cristin.no/v2/units/194.61.45.0",
+          "name": "Department of Design"
+        },
+        {
+          "id": "https://api.cristin.no/v2/units/194.61.30.0",
+          "name": "Trondheim Academy of Fine Art"
+        },
+        {
+          "id": "https://api.cristin.no/v2/units/194.61.1.0",
+          "name": "AD Faculty Administration"
+        }
+      ]
+    },
+    {
+      "id": "https://api.cristin.no/v2/units/194.31.0.0",
+      "name": "NTNU University Museum",
+      "subunits": [
+        {
+          "id": "https://api.cristin.no/v2/units/194.31.15.15",
+          "name": "National Laboratory for Age Determination"
+        },
+        {
+          "id": "https://api.cristin.no/v2/units/194.31.15.0",
+          "name": "Department of Public Outreach and Exhibitions"
+        },
+        {
+          "id": "https://api.cristin.no/v2/units/194.31.10.0",
+          "name": "Department of Natural History"
+        },
+        {
+          "id": "https://api.cristin.no/v2/units/194.31.5.0",
+          "name": "Department of Archaeology and Cultural History"
+        },
+        {
+          "id": "https://api.cristin.no/v2/units/194.31.1.0",
+          "name": "Museum administration"
+        }
+      ]
+    },
+    {
+      "id": "https://api.cristin.no/v2/units/194.66.0.0",
+      "name": "Faculty of Natural Sciences",
+      "subunits": [
+        {
+          "id": "https://api.cristin.no/v2/units/194.66.20.0",
+          "name": "Department of Physics"
+        },
+        {
+          "id": "https://api.cristin.no/v2/units/194.66.1.0",
+          "name": "NV Faculty Administration"
+        },
+        {
+          "id": "https://api.cristin.no/v2/units/194.66.10.0",
+          "name": "Department of Biology"
+        },
+        {
+          "id": "https://api.cristin.no/v2/units/194.66.45.0",
+          "name": "Department of Biological Sciences Ålesund"
+        },
+        {
+          "id": "https://api.cristin.no/v2/units/194.66.50.0",
+          "name": "Research Infrastructure"
+        },
+        {
+          "id": "https://api.cristin.no/v2/units/194.66.25.0",
+          "name": "Department of Chemistry"
+        },
+        {
+          "id": "https://api.cristin.no/v2/units/194.66.40.0",
+          "name": "Department of Biomedical Laboratory Science"
+        },
+        {
+          "id": "https://api.cristin.no/v2/units/194.66.30.0",
+          "name": "Department of Chemical Engineering"
+        },
+        {
+          "id": "https://api.cristin.no/v2/units/194.66.35.0",
+          "name": "Department of Materials Science and Engineering"
+        },
+        {
+          "id": "https://api.cristin.no/v2/units/194.66.15.0",
+          "name": "Department of Biotechnology and Food Science"
+        }
+      ]
+    },
+    {
+      "id": "https://api.cristin.no/v2/units/194.60.0.0",
+      "name": "Faculty of Economics and Management",
+      "subunits": [
+        {
+          "id": "https://api.cristin.no/v2/units/194.60.25.0",
+          "name": "Department of Industrial Economics and Technology Management"
+        },
+        {
+          "id": "https://api.cristin.no/v2/units/194.60.20.0",
+          "name": "Department of Economics"
+        },
+        {
+          "id": "https://api.cristin.no/v2/units/194.60.15.0",
+          "name": "Department of International Business"
+        },
+        {
+          "id": "https://api.cristin.no/v2/units/194.60.10.0",
+          "name": "NTNU Business School"
+        },
+        {
+          "id": "https://api.cristin.no/v2/units/194.60.1.0",
+          "name": "Economics and Management Faculty Administration"
+        }
+      ]
+    },
+    {
+      "id": "https://api.cristin.no/v2/units/194.62.0.0",
+      "name": "Faculty of Humanities",
+      "subunits": [
+        {
+          "id": "https://api.cristin.no/v2/units/194.62.35.0",
+          "name": "Department of Art and Media Studies"
+        },
+        {
+          "id": "https://api.cristin.no/v2/units/194.62.40.0",
+          "name": "Department of Interdisciplinary Studies of Culture"
+        },
+        {
+          "id": "https://api.cristin.no/v2/units/194.62.45.0",
+          "name": "Department of Music"
+        },
+        {
+          "id": "https://api.cristin.no/v2/units/194.62.1.0",
+          "name": "HF faculty administration"
+        },
+        {
+          "id": "https://api.cristin.no/v2/units/194.62.60.0",
+          "name": "Department of Language and Literature"
+        },
+        {
+          "id": "https://api.cristin.no/v2/units/194.62.70.0",
+          "name": "Department of Philosophy and Religious Studies"
+        },
+        {
+          "id": "https://api.cristin.no/v2/units/194.62.80.0",
+          "name": "Institutt for moderne samfunnshistorie"
+        },
+        {
+          "id": "https://api.cristin.no/v2/units/194.62.65.0",
+          "name": "Department of Historical Studies"
+        },
+        {
+          "id": "https://api.cristin.no/v2/units/194.62.75.0",
+          "name": "Institutt for historiske og klassiske studier"
+        }
+      ]
+    },
+    {
+      "id": "https://api.cristin.no/v2/units/194.63.0.0",
+      "name": "Faculty of Information Technology and Electrical Engineering",
+      "subunits": [
+        {
+          "id": "https://api.cristin.no/v2/units/194.63.55.0",
+          "name": "Department of ICT and Natural Sciences"
+        },
+        {
+          "id": "https://api.cristin.no/v2/units/194.63.35.0",
+          "name": "Department of Electronic Systems"
+        },
+        {
+          "id": "https://api.cristin.no/v2/units/194.63.30.0",
+          "name": "Department of Information Security and Communication Technology"
+        },
+        {
+          "id": "https://api.cristin.no/v2/units/194.63.25.0",
+          "name": "Department of Engineering Cybernetics"
+        },
+        {
+          "id": "https://api.cristin.no/v2/units/194.63.20.0",
+          "name": "Department of Electric Power Engineering"
+        },
+        {
+          "id": "https://api.cristin.no/v2/units/194.63.15.0",
+          "name": "Department of Mathematical Sciences"
+        },
+        {
+          "id": "https://api.cristin.no/v2/units/194.63.10.0",
+          "name": "Department of Computer Science"
+        },
+        {
+          "id": "https://api.cristin.no/v2/units/194.63.1.0",
+          "name": "IE Faculty Administration",
+          "subunits": [
+            {
+              "id": "https://api.cristin.no/v2/units/194.63.1.20",
+              "name": "The National Centre for Science Recruitment"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "https://api.cristin.no/v2/units/194.16.0.0",
+      "name": "Director, Organization",
+      "subunits": [
+        {
+          "id": "https://api.cristin.no/v2/units/194.16.90.0",
+          "name": "Communication Division"
+        }
+      ]
+    },
+    {
+      "id": "https://api.cristin.no/v2/units/194.20.11.0",
+      "name": "Vice-Rector Gjøvik",
+      "subunits": [
+        {
+          "id": "https://api.cristin.no/v2/units/194.20.12.0",
+          "name": "Property and operations section, Gjøvik"
+        }
+      ]
+    },
+    {
+      "id": "https://api.cristin.no/v2/units/194.17.0.0",
+      "name": "Pro-Rector for Innovation"
+    },
+    {
+      "id": "https://api.cristin.no/v2/units/194.12.0.0",
+      "name": "Rector",
+      "subunits": [
+        {
+          "id": "https://api.cristin.no/v2/units/194.12.1.0",
+          "name": "Rector and Board"
+        }
+      ]
+    },
+    {
+      "id": "https://api.cristin.no/v2/units/194.65.0.0",
+      "name": "Faculty of Medicine and Health Sciences",
+      "subunits": [
+        {
+          "id": "https://api.cristin.no/v2/units/194.65.70.0",
+          "name": "Department of Health Sciences Gjøvik",
+          "subunits": [
+            {
+              "id": "https://api.cristin.no/v2/units/194.65.70.20",
+              "name": "Center for Care Research"
+            }
+          ]
+        },
+        {
+          "id": "https://api.cristin.no/v2/units/194.65.80.0",
+          "name": "Department of Health Sciences Ålesund"
+        },
+        {
+          "id": "https://api.cristin.no/v2/units/194.65.60.0",
+          "name": "Kavli Institute for Systems Neuroscience"
+        },
+        {
+          "id": "https://api.cristin.no/v2/units/194.65.25.0",
+          "name": "Department of Circulation and Medical Imaging"
+        },
+        {
+          "id": "https://api.cristin.no/v2/units/194.65.20.0",
+          "name": "Department of Public Health and Nursing",
+          "subunits": [
+            {
+              "id": "https://api.cristin.no/v2/units/194.65.20.15",
+              "name": "HUNT Research Centre"
+            },
+            {
+              "id": "https://api.cristin.no/v2/units/194.65.20.10",
+              "name": "Allmennmedisinsk forskningsenhet i Trondheim"
+            }
+          ]
+        },
+        {
+          "id": "https://api.cristin.no/v2/units/194.65.1.0",
+          "name": "MH Faculty Administration"
+        },
+        {
+          "id": "https://api.cristin.no/v2/units/194.65.15.0",
+          "name": "Department of Clinical and Molecular Medicine"
+        },
+        {
+          "id": "https://api.cristin.no/v2/units/194.65.35.0",
+          "name": "Department of Mental Health",
+          "subunits": [
+            {
+              "id": "https://api.cristin.no/v2/units/194.65.35.20",
+              "name": "The National Institute on Intellectual Disability and Community"
+            },
+            {
+              "id": "https://api.cristin.no/v2/units/194.65.35.5",
+              "name": "Regional Centre for Child and Youth Mental Health and Child Welfare"
+            }
+          ]
+        },
+        {
+          "id": "https://api.cristin.no/v2/units/194.65.30.0",
+          "name": "Department of Neuromedicine and Movement Science"
+        }
+      ]
+    },
+    {
+      "id": "https://api.cristin.no/v2/units/194.35.0.0",
+      "name": "Enheter under Kunnskapdepartementet og Utdanningdirektoratet"
+    },
+    {
+      "id": "https://api.cristin.no/v2/units/194.13.0.0",
+      "name": "Pro-Rector for Research"
+    },
+    {
+      "id": "https://api.cristin.no/v2/units/194.15.0.0",
+      "name": "Director of Finance and Property"
+    }
+  ]
+}

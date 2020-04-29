@@ -33,8 +33,11 @@ const InstitutionSelector: FC<InstitutionSelectorProps> = ({ units, fieldNamePre
               }}
               renderInput={(params) => (
                 <TextField
-                  // inputProps={{ 'data-testid': 'autosearch-institution' }}
                   {...params}
+                  inputProps={{
+                    ...params.inputProps,
+                    'data-testid': 'unit-selector',
+                  }}
                   label={t('subunit')}
                   placeholder={t('search_subunit')}
                   variant="outlined"

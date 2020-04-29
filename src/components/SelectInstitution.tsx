@@ -112,11 +112,14 @@ const SelectInstitution: FC<SelectInstitutionProps> = ({ onSubmit, onClose }) =>
                 }}
                 renderInput={(params) => (
                   <TextField
-                    // inputProps={{ 'data-testid': 'autosearch-institution' }}
                     {...params}
                     label={t('institution')}
                     placeholder={t('institution:search_institution')}
                     variant="outlined"
+                    inputProps={{
+                      ...params.inputProps,
+                      'data-testid': 'autocomplete-institution',
+                    }}
                     InputProps={{
                       ...params.InputProps,
                       endAdornment: (

@@ -16,6 +16,7 @@ export const getInstitutions = async () => {
       Authorization: `Bearer ${idToken}`,
     };
     const response = await Axios.get(url, { headers });
+
     if (response.status === StatusCode.OK) {
       return response.data;
     } else {
@@ -35,7 +36,11 @@ export const getDepartment = async (departmentUri: string, cancelToken?: CancelT
     };
     const response = await Axios.get(url, { headers, cancelToken });
     if (response.status === StatusCode.OK) {
-      return JSON.parse(response.data.json); // TODO: Update when NP-816 is done
+      if (response.data.json) {
+        return JSON.parse(response.data.json); // TODO: Remove this when NP-816 is done
+      } else {
+        return response.data;
+      }
     } else {
       return { error: i18n.t('feedback:error.get_institution') };
     }

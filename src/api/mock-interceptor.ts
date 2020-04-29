@@ -6,7 +6,8 @@ import OrcidResponse from '../types/orcid.types';
 import { API_URL, ORCID_USER_INFO_URL } from '../utils/constants';
 import mockDoiLookupResponse from '../utils/testfiles/doi_lookup_response.json';
 import mockInstitutionResponse from '../utils/testfiles/institutions/institution_query.json';
-import mockUnitResponse from '../utils/testfiles/institutions/unit_response.json';
+import mockNtnuResponse from '../utils/testfiles/institutions/institution_ntnu.json';
+import mockNtnuSubunitResponse from '../utils/testfiles/institutions/institution_subunit_ntnu.json';
 import mockAuthoritiesResponse from '../utils/testfiles/mock_authorities_response.json';
 import mockProjects from '../utils/testfiles/projects_real.json';
 import mockPublication from '../utils/testfiles/publication_generated.json';
@@ -154,10 +155,15 @@ export const interceptRequestsOnMock = () => {
     .reply(201, mockCustomerInstitution);
 
   // Institution Registry
-  mock.onGet(new RegExp(`${API_URL}${InstitutionApiPaths.INSTITUTIONS}\\?name=*`)).reply(200, mockInstitutionResponse);
-  mock.onGet(new RegExp(`${API_URL}${InstitutionApiPaths.INSTITUTIONS}\\?id=*`)).replyOnce(200, mockUnitResponse);
-  // After deletion of institution
-  mock.onGet(new RegExp(`${API_URL}${InstitutionApiPaths.INSTITUTIONS}\\?id=*`)).replyOnce(200, []);
+  mock.onGet(new RegExp(`${API_URL}${InstitutionApiPaths.INSTITUTIONS}`)).reply(200, mockInstitutionResponse);
+  mock
+    .onGet(new RegExp(`${API_URL}${InstitutionApiPaths.DEPARTMENTS}\\?uri=https://api.cristin.no/v2/institutions/194`))
+    .replyOnce(200, mockNtnuResponse);
+  mock
+    .onGet(
+      new RegExp(`${API_URL}${InstitutionApiPaths.DEPARTMENTS}\\?uri=https://api.cristin.no/v2/units/194.65.20.10`)
+    )
+    .replyOnce(200, mockNtnuSubunitResponse);
 
   mock.onAny().reply(function (config) {
     throw new Error('Could not find mock for ' + config.url);

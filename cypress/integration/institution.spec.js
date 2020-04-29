@@ -1,4 +1,4 @@
-describe.skip('My profile: Institutions', () => {
+describe('My profile: Institutions', () => {
   before('Given that the user is logged in:', () => {
     cy.visit('/');
     cy.mocklogin();
@@ -7,22 +7,22 @@ describe.skip('My profile: Institutions', () => {
   it('The user should be able to add an institution to their profile', () => {
     // add institution
     cy.get('[data-testid=add-new-institution-button]').click({ force: true });
-    cy.get('[data-testid=autosearch-institution]').click({ force: true }).type('ntnu');
-    cy.get('.MuiAutocomplete-option').contains('Norges teknisk-naturvitenskapelige universitet').click({ force: true });
-    cy.get('[data-testid=unit-selector-0]').click({ force: true }).type(' ');
-    cy.contains('Fakultet for medisin og helsevitenskap').click({ force: true });
-    cy.get('[data-testid=unit-selector-1]').click({ force: true }).type(' ');
-    cy.contains('Institutt for samfunnsmedisin og sykepleie').click({ force: true });
-    cy.get('[data-testid=unit-selector-2]').click({ force: true }).type(' ');
+    cy.get('[data-testid=autocomplete-institution]').click({ force: true }).type('norwegian univ');
+    cy.get('.MuiAutocomplete-option').contains('Norwegian University of Science and Technology').click({ force: true });
+    cy.get('[data-testid=unit-selector]').eq(0).click({ force: true }).type('health');
+    cy.contains('Faculty of Medicine and Health Sciences').click({ force: true });
+    cy.get('[data-testid=unit-selector]').eq(1).click({ force: true }).type('health');
+    cy.contains('Department of Public Health and Nursing').click({ force: true });
+    cy.get('[data-testid=unit-selector]').eq(2).click({ force: true }).type(' ');
     cy.contains('Allmennmedisinsk forskningsenhet i Trondheim').click({ force: true });
 
     cy.get('[data-testid=institution-add-button]').click({ force: true });
 
     // check that institution is added to user profile
     cy.get('[data-testid=institution-presentation]').should('be.visible');
-    cy.contains('Norges teknisk-naturvitenskapelige universitet').should('be.visible');
-    cy.contains('Fakultet for medisin og helsevitenskap').should('be.visible');
-    cy.contains('Institutt for samfunnsmedisin og sykepleie').should('be.visible');
+    cy.contains('Norwegian University of Science and Technology').should('be.visible');
+    cy.contains('Faculty of Medicine and Health Sciences').should('be.visible');
+    cy.contains('Department of Public Health and Nursing').should('be.visible');
     cy.contains('Allmennmedisinsk forskningsenhet i Trondheim').should('be.visible');
   });
 
