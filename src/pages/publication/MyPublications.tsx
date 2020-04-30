@@ -9,7 +9,7 @@ import i18n from '../../translations/i18n';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, CircularProgress } from '@material-ui/core';
 import styled from 'styled-components';
-import { PublicationPreview } from '../../types/publication.types';
+import { PublicationPreview, PublicationStatus } from '../../types/publication.types';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { Link as RouterLink } from 'react-router-dom';
 import { NotificationVariant } from '../../types/notification.types';
@@ -46,7 +46,9 @@ const MyPublications: FC = () => {
 
   return (
     <Card>
-      <Heading>{t('workLists:my_publications')}</Heading>
+      <Heading>{`${t('workLists:my_publications')} (${
+        publications.filter((publication) => publication.status !== PublicationStatus.PUBLISHED).length
+      })`}</Heading>
       <StyledButtonWrapper>
         <Button
           color="primary"
