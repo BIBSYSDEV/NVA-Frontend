@@ -44,11 +44,13 @@ const MyPublications: FC = () => {
     loadData();
   }, [dispatch]);
 
+  const publicationsToDisplay = publications
+    .filter((publication) => publication.status !== PublicationStatus.PUBLISHED)
+    .sort((a, b) => new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime());
+
   return (
     <Card>
-      <Heading>{`${t('workLists:my_publications')} (${
-        publications.filter((publication) => publication.status !== PublicationStatus.PUBLISHED).length
-      })`}</Heading>
+      <Heading>{`${t('workLists:my_publications')} (${publicationsToDisplay.length})`}</Heading>
       <StyledButtonWrapper>
         <Button
           color="primary"
@@ -59,7 +61,11 @@ const MyPublications: FC = () => {
         </Button>
       </StyledButtonWrapper>
       <StyledWrapper>
-        {isLoading ? <CircularProgress color="inherit" size={20} /> : <PublicationList publications={publications} />}
+        {isLoading ? (
+          <CircularProgress color="inherit" size={20} />
+        ) : (
+          <PublicationList publications={publicationsToDisplay} />
+        )}
       </StyledWrapper>
     </Card>
   );

@@ -74,7 +74,7 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication }
   }, [setFieldTouched]);
 
   const onClickPublish = async () => {
-    savePublication(values);
+    await savePublication(values);
     const publishedPublication = await publishPublication(values.identifier);
     if (publishedPublication?.error) {
       dispatch(setNotification(publishedPublication.error, NotificationVariant.Error));
