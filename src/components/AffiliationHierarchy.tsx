@@ -7,22 +7,18 @@ interface AffiliationHierarchyProps {
   unit: RecursiveInstitutionUnit;
 }
 
-const AffiliationHierarchy: FC<AffiliationHierarchyProps> = ({ unit }) => {
-  return (
-    <>
-      <Label>{unit.name}</Label>
-      {unit?.subunits && <SubUnitRow unit={unit.subunits[0]} />}
-    </>
-  );
-};
+const AffiliationHierarchy: FC<AffiliationHierarchyProps> = ({ unit }) => (
+  <>
+    <Label>{unit.name}</Label>
+    {unit?.subunits && <SubUnitRow unit={unit.subunits[0]} />}
+  </>
+);
 
-const SubUnitRow: FC<AffiliationHierarchyProps> = ({ unit }) => {
-  return (
-    <>
-      <NormalText>{unit.name}</NormalText>
-      {unit.subunits && <SubUnitRow unit={unit.subunits[0]} />}
-    </>
-  );
-};
+const SubUnitRow: FC<AffiliationHierarchyProps> = ({ unit }) => (
+  <>
+    <NormalText>{unit.name}</NormalText>
+    {unit.subunits && <SubUnitRow unit={unit.subunits[0]} />}
+  </>
+);
 
 export default AffiliationHierarchy;
