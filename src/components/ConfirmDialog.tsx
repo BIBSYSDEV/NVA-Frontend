@@ -19,7 +19,7 @@ interface ConfirmDialogProps {
   disableAccept?: boolean;
 }
 
-const ConfirmDialog: FC<ConfirmDialogProps> = ({ open, title, text, onAccept, onCancel, disableAccept }) => {
+const ConfirmDialog: FC<ConfirmDialogProps> = ({ open, title, text, onAccept, onCancel, disableAccept = false }) => {
   const { t } = useTranslation('common');
 
   return (
