@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -11,9 +11,6 @@ import { RecursiveInstitutionUnit } from '../../../types/institution.types';
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../types/notification.types';
 import Progress from '../../../components/Progress';
-import { RootStore } from '../../../redux/reducers/rootReducer';
-import { AuthorityQualifiers, removeQualifierIdFromAuthority } from '../../../api/authorityApi';
-import { setAuthorityData } from '../../../redux/actions/userActions';
 import { CRISTIN_UNITS_BASE_URL, CRISTIN_INSTITUTIONS_BASE_URL } from '../../../utils/constants';
 import AffiliationHierarchy from '../../../components/AffiliationHierarchy';
 
@@ -38,23 +35,16 @@ const StyledButtonContainer = styled.div`
   align-items: center;
 `;
 
-const StyledButtonProgressContainer = styled.div`
-  margin-left: 1rem;
-  display: flex;
-  align-items: center;
-`;
-
 interface InstitutionCardProps {
   orgunitId: string;
+  setAffiliationIdToRemove: (orgunitId: string) => void;
 }
 
-const InstitutionCard: FC<InstitutionCardProps> = ({ orgunitId }) => {
+const InstitutionCard: FC<InstitutionCardProps> = ({ orgunitId, setAffiliationIdToRemove }) => {
   const { t } = useTranslation('common');
   const dispatch = useDispatch();
-  const authority = useSelector((state: RootStore) => state.user.authority);
   const [unit, setUnit] = useState<RecursiveInstitutionUnit>();
   const [isLoadingUnit, setIsLoadingUnit] = useState(false);
-  const [isRemovingAffiliation, setIsRemovingAffiliation] = useState(false);
 
   useEffect(() => {
     const fetchDepartment = async () => {
@@ -81,24 +71,6 @@ const InstitutionCard: FC<InstitutionCardProps> = ({ orgunitId }) => {
     fetchDepartment();
   }, [dispatch, orgunitId]);
 
-  const handleRemoveInstitution = async () => {
-    if (!authority || !orgunitId) {
-      return;
-    }
-    setIsRemovingAffiliation(true);
-    const updatedAuthority = await removeQualifierIdFromAuthority(
-      authority.systemControlNumber,
-      AuthorityQualifiers.ORGUNIT_ID,
-      orgunitId
-    );
-    if (updatedAuthority.error) {
-      dispatch(setNotification(updatedAuthority.error, NotificationVariant.Error));
-    } else if (updatedAuthority) {
-      dispatch(setAuthorityData(updatedAuthority));
-      dispatch(setNotification(t('feedback:success.delete_affiliation')));
-    }
-  };
-
   return (
     <StyledCard data-testid="institution-presentation">
       {isLoadingUnit ? (
@@ -111,15 +83,9 @@ const InstitutionCard: FC<InstitutionCardProps> = ({ orgunitId }) => {
               variant="outlined"
               color="secondary"
               data-testid={`button-delete-institution-${orgunitId}`}
-              disabled={isRemovingAffiliation}
-              onClick={handleRemoveInstitution}>
+              onClick={() => setAffiliationIdToRemove(orgunitId)}>
               <DeleteIcon />
               {t('remove')}
-              {isRemovingAffiliation && (
-                <StyledButtonProgressContainer>
-                  <Progress size={15} thickness={5} />
-                </StyledButtonProgressContainer>
-              )}
             </Button>
           </StyledButtonContainer>
         </>
