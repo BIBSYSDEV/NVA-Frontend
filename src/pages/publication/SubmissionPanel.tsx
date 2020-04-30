@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, FC, useState } from 'react';
+import React, { useEffect, useRef, FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormikProps, useFormikContext, Field, FieldProps } from 'formik';
 import { FormikPublication } from '../../types/publication.types';

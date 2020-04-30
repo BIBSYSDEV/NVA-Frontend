@@ -7,6 +7,7 @@ import { PublishedPublicationPreview, PublicationStatus } from '../../types/publ
 import Card from '../../components/Card';
 import Heading from '../../components/Heading';
 import NormalText from '../../components/NormalText';
+import { useHistory } from 'react-router';
 
 const StyledCard = styled(Card)`
   width: 100%;
@@ -39,18 +40,18 @@ const StyledTableCellForType = styled(TableCell)`
   width: 15%;
 `;
 
-const StyledAuthor = styled.div`
-  font-style: italic;
-  font-size: 0.8rem;
-  padding-top: 0.2rem;
-`;
-
 interface PublicationListProps {
   publications: PublishedPublicationPreview[];
 }
 
 const PublishedPublicationList: FC<PublicationListProps> = ({ publications }) => {
   const { t } = useTranslation();
+  const history = useHistory();
+
+  const handleOpenPublication = (id: string) => {
+    history.push(`/publication/${id}/public`);
+  };
+
   return (
     <StyledCard>
       <StyledHeading>{`${t('common:publications')} (${
@@ -72,26 +73,24 @@ const PublishedPublicationList: FC<PublicationListProps> = ({ publications }) =>
               <StyledTableRow key={publication.identifier}>
                 <TableCell component="th" scope="row">
                   <NormalText>{publication.mainTitle}</NormalText>
-                  <StyledAuthor>
-                    {publication.contributors.length > 0 && (
-                      <NormalText>
-                        {publication.contributors[0].identity.name},{' '}
-                        {Object.values(publication.contributors[0].affiliations[0].labels)[0]}
-                      </NormalText>
-                    )}
-                  </StyledAuthor>
                 </TableCell>
                 <StyledTableCellForPublisher>
-                  <NormalText>{publication.reference.publicationContext?.title}</NormalText>
+                  <NormalText>{publication?.reference?.publicationContext?.title}</NormalText>
                 </StyledTableCellForPublisher>
                 <StyledTableCellForType>
-                  <NormalText>{t(`publicationTypes:${publication.publicationType}`)}</NormalText>
+                  {publication?.publicationType && (
+                    <NormalText>{t(`publicationTypes:${publication.publicationType}`)}</NormalText>
+                  )}
                 </StyledTableCellForType>
                 <StyledTableCellForDate>
-                  <NormalText>{publication.date?.year}</NormalText>
+                  <NormalText>{new Date(publication.createdDate).getFullYear()}</NormalText>
                 </StyledTableCellForDate>
                 <TableCell>
-                  <Button color="primary" variant="outlined" data-testid="read-button">
+                  <Button
+                    color="primary"
+                    variant="outlined"
+                    data-testid="read-button"
+                    onClick={() => handleOpenPublication(publication.identifier)}>
                     <NormalText>{t('common:read')}</NormalText>
                   </Button>
                 </TableCell>
