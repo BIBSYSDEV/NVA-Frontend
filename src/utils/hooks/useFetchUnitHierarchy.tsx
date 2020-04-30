@@ -7,6 +7,7 @@ import { getDepartment } from '../../api/institutionApi';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import { isValidUrl } from '../isValidUrl';
+import Axios from 'axios';
 
 // This hook should only be used when fetching the hierarchy of a given unit and not if it is desired
 // to access all subunits of the given unit.
@@ -16,6 +17,8 @@ const useFetchUnitHierarchy = (unitId: string): [RecursiveInstitutionUnit | unde
   const [unit, setUnit] = useState<RecursiveInstitutionUnit | undefined>();
 
   useEffect(() => {
+    const cancelSource = Axios.CancelToken.source();
+
     const fetchDepartment = async () => {
       setIsLoading(true);
       // TODO: NP-844 should ensure we have URIs from start (not IDs)
@@ -24,21 +27,25 @@ const useFetchUnitHierarchy = (unitId: string): [RecursiveInstitutionUnit | unde
         : unitId.includes('.') // Check if root level institution
         ? `${CRISTIN_UNITS_BASE_URL}${unitId}`
         : `${CRISTIN_INSTITUTIONS_BASE_URL}${unitId}`;
-      const response = await getDepartment(unitUri);
 
-      if (response?.error) {
-        dispatch(setNotification(response.error, NotificationVariant.Error));
-      } else {
-        if (response.subunits && response.subunits.length > 1) {
-          // Remove subunits from institution, since we only care about top-level in this case
-          // NOTE: This means we cannot use this hook to get all subunits
-          delete response.subunits;
+      const response = await getDepartment(unitUri, cancelSource.token);
+      if (response) {
+        setIsLoading(false);
+        if (response.error) {
+          dispatch(setNotification(response.error, NotificationVariant.Error));
+        } else {
+          if (response.subunits && response.subunits.length > 1) {
+            // Remove subunits from institution, since we only care about top-level in this case
+            // NOTE: This means we cannot use this hook to get all subunits
+            delete response.subunits;
+          }
+          setUnit(response);
         }
-        setUnit(response);
       }
-      setIsLoading(false);
     };
     fetchDepartment();
+
+    return () => cancelSource.cancel();
   }, [dispatch, unitId]);
 
   return [unit, isLoading];
