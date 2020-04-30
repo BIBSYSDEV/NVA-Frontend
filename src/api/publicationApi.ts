@@ -65,8 +65,8 @@ export const publishPublication = async (identifier: string) => {
   if (!identifier) {
     return { error: i18n.t('feedback:error.publish_publication') };
   }
-  const idToken = await getIdToken();
   try {
+    const idToken = await getIdToken();
     const response = await Axios.put(
       `${PublicationsApiPaths.PUBLICATION}/${identifier}/publish`,
       {},
