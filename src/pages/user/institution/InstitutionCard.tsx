@@ -1,19 +1,13 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC } from 'react';
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 
-import { getDepartment } from '../../../api/institutionApi';
 import Card from '../../../components/Card';
-import NormalText from '../../../components/NormalText';
-import { RecursiveInstitutionUnit } from '../../../types/institution.types';
-import { setNotification } from '../../../redux/actions/notificationActions';
-import { NotificationVariant } from '../../../types/notification.types';
-import Label from '../../../components/Label';
 import Progress from '../../../components/Progress';
-import { CRISTIN_UNITS_BASE_URL, CRISTIN_INSTITUTIONS_BASE_URL } from '../../../utils/constants';
+import AffiliationHierarchy from '../../../components/AffiliationHierarchy';
+import useFetchUnitHierarchy from '../../../utils/hooks/useFetchUnitHierarchy';
 
 const StyledCard = styled(Card)`
   display: grid;
@@ -43,45 +37,15 @@ interface InstitutionCardProps {
 
 const InstitutionCard: FC<InstitutionCardProps> = ({ orgunitId, setAffiliationIdToRemove }) => {
   const { t } = useTranslation('common');
-  const dispatch = useDispatch();
-  const [unit, setUnit] = useState<RecursiveInstitutionUnit>();
-  const [isLoadingUnit, setIsLoadingUnit] = useState(false);
-
-  useEffect(() => {
-    const fetchDepartment = async () => {
-      setIsLoadingUnit(true);
-      // TODO: NP-844 should ensure we have URIs from start (not IDs)
-      const isSubunit = orgunitId.includes('.');
-      const unitUri = isSubunit
-        ? `${CRISTIN_UNITS_BASE_URL}${orgunitId}`
-        : `${CRISTIN_INSTITUTIONS_BASE_URL}${orgunitId}`;
-      const response = await getDepartment(unitUri);
-
-      if (response?.error) {
-        dispatch(setNotification(response.error, NotificationVariant.Error));
-      } else {
-        if (!isSubunit) {
-          // Remove subunits from institution, since we only care about top-level in this case
-          delete response.subunits;
-        }
-        setUnit(response);
-      }
-      setIsLoadingUnit(false);
-    };
-
-    fetchDepartment();
-  }, [dispatch, orgunitId]);
+  const [unit, isLoadingUnitHierarchy] = useFetchUnitHierarchy(orgunitId);
 
   return (
     <StyledCard data-testid="institution-presentation">
-      {isLoadingUnit ? (
+      {isLoadingUnitHierarchy ? (
         <Progress />
       ) : (
         <>
-          <StyledTextContainer>
-            <Label>{unit?.name}</Label>
-            {unit?.subunits && <UnitRow unit={unit.subunits[0]} />}
-          </StyledTextContainer>
+          <StyledTextContainer>{unit && <AffiliationHierarchy unit={unit} />}</StyledTextContainer>
           <StyledButtonContainer>
             <Button
               variant="outlined"
@@ -95,19 +59,6 @@ const InstitutionCard: FC<InstitutionCardProps> = ({ orgunitId, setAffiliationId
         </>
       )}
     </StyledCard>
-  );
-};
-
-interface UnitRowProps {
-  unit: RecursiveInstitutionUnit;
-}
-
-const UnitRow: FC<UnitRowProps> = ({ unit }) => {
-  return (
-    <>
-      <NormalText>{unit.name}</NormalText>
-      {unit.subunits && <UnitRow unit={unit.subunits[0]} />}
-    </>
   );
 };
 

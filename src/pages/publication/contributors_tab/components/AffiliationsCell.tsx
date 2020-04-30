@@ -8,7 +8,6 @@ import { FormikPublication, BackendTypeNames } from '../../../../types/publicati
 import { SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
 import { FormikInstitutionUnit } from '../../../../types/institution.types';
 import { useTranslation } from 'react-i18next';
-import NormalText from '../../../../components/NormalText';
 import styled from 'styled-components';
 import ConfirmDialog from '../../../../components/ConfirmDialog';
 import AddIcon from '@material-ui/icons/Add';
@@ -18,19 +17,17 @@ import { getMostSpecificUnit } from '../../../../utils/institutions-helpers';
 import { useDispatch } from 'react-redux';
 import { setNotification } from '../../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../../types/notification.types';
+import useFetchUnitHierarchy from '../../../../utils/hooks/useFetchUnitHierarchy';
+import AffiliationHierarchy from '../../../../components/AffiliationHierarchy';
+import Progress from '../../../../components/Progress';
+import Card from '../../../../components/Card';
 
-const StyledAffiliationsCell = styled.div`
+const StyledCard = styled(Card)`
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-top: 0.5rem;
-`;
-
-const StyledRemoveAffiliationButton = styled(Button)`
-  margin-left: 1rem;
-`;
-const StyledAddAffiliationButton = styled(Button)`
-  margin-top: 0.5rem;
+  justify-content: space-between;
+  padding: 1rem;
 `;
 
 interface AffiliationsCellProps {
@@ -61,8 +58,6 @@ const AffiliationsCell: FC<AffiliationsCellProps> = ({ affiliations, baseFieldNa
       return;
     }
 
-    // TODO: Set hierarchy in state? get from backend?
-
     const labelKey =
       publicationLanguages.find((language) => language.value === values.entityDescription.language)?.id ??
       LanguageCodes.ENGLISH;
@@ -82,21 +77,18 @@ const AffiliationsCell: FC<AffiliationsCellProps> = ({ affiliations, baseFieldNa
   return (
     <>
       {affiliations?.map((affiliation) => (
-        <StyledAffiliationsCell key={affiliation.id}>
-          <NormalText>{Object.values(affiliation.labels)[0]}</NormalText>
-          <StyledRemoveAffiliationButton
-            variant="outlined"
-            size="small"
-            onClick={() => setAffiliationToRemove(affiliation)}>
+        <StyledCard key={affiliation.id}>
+          <AffiliationElement unitUri={affiliation.id} />
+          <Button variant="outlined" size="small" onClick={() => setAffiliationToRemove(affiliation)}>
             <DeleteIcon />
             {t('common:remove')}
-          </StyledRemoveAffiliationButton>
-        </StyledAffiliationsCell>
+          </Button>
+        </StyledCard>
       ))}
-      <StyledAddAffiliationButton variant="outlined" size="small" onClick={toggleAffiliationModal}>
+      <Button variant="outlined" size="small" onClick={toggleAffiliationModal}>
         <AddIcon />
         {t('contributors.add_affiliation')}
-      </StyledAddAffiliationButton>
+      </Button>
 
       {/* Modal for adding affiliation */}
       <Modal
@@ -125,6 +117,16 @@ const AffiliationsCell: FC<AffiliationsCellProps> = ({ affiliations, baseFieldNa
       />
     </>
   );
+};
+
+interface AffiliationElementProps {
+  unitUri: string;
+}
+
+const AffiliationElement: FC<AffiliationElementProps> = ({ unitUri }) => {
+  const [unit, isLoadingUnitHierarchy] = useFetchUnitHierarchy(unitUri);
+
+  return <div>{isLoadingUnitHierarchy ? <Progress /> : unit ? <AffiliationHierarchy unit={unit} /> : null}</div>;
 };
 
 export default AffiliationsCell;
