@@ -8,18 +8,18 @@ import { useTranslation } from 'react-i18next';
 import Heading from '../../components/Heading';
 
 import { FormikInstitutionUnit } from '../../types/institution.types';
-// import { AuthorityQualifiers, addQualifierIdForAuthority } from '../../api/authorityApi';
-// import { setAuthorityData } from '../../redux/actions/userActions';
-// import { setNotification } from '../../redux/actions/notificationActions';
-// import { NotificationVariant } from '../../types/notification.types';
-// import InstitutionCardList from './institution/InstitutionCardList';
 import SelectInstitution from '../../components/SelectInstitution';
 import { getMostSpecificUnit } from '../../utils/institutions-helpers';
-import { addQualifierIdForAuthority, AuthorityQualifiers } from '../../api/authorityApi';
+import {
+  addQualifierIdForAuthority,
+  AuthorityQualifiers,
+  removeQualifierIdFromAuthority,
+} from '../../api/authorityApi';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { setAuthorityData } from '../../redux/actions/userActions';
 import { NotificationVariant } from '../../types/notification.types';
 import InstitutionCard from './institution/InstitutionCard';
+import ConfirmDialog from '../../components/ConfirmDialog';
 
 const StyledButtonContainer = styled.div`
   display: flex;
@@ -30,12 +30,32 @@ const StyledButtonContainer = styled.div`
 const UserInstitution: FC = () => {
   const authority = useSelector((state: RootStore) => state.user.authority);
   const [openUnitForm, setOpenUnitForm] = useState(false);
+  const [affiliationIdToRemove, setAffiliationIdToRemove] = useState('');
 
   const { t } = useTranslation('profile');
   const dispatch = useDispatch();
 
   const toggleUnitForm = () => {
     setOpenUnitForm(!openUnitForm);
+  };
+
+  const removeAffiliation = async () => {
+    if (!authority || !affiliationIdToRemove) {
+      return;
+    }
+
+    const updatedAuthority = await removeQualifierIdFromAuthority(
+      authority.systemControlNumber,
+      AuthorityQualifiers.ORGUNIT_ID,
+      affiliationIdToRemove
+    );
+    if (updatedAuthority.error) {
+      dispatch(setNotification(updatedAuthority.error, NotificationVariant.Error));
+    } else if (updatedAuthority) {
+      dispatch(setAuthorityData(updatedAuthority));
+      dispatch(setNotification(t('feedback:success.delete_affiliation')));
+    }
+    setAffiliationIdToRemove('');
   };
 
   const handleSubmit = async (value: FormikInstitutionUnit) => {
@@ -70,27 +90,36 @@ const UserInstitution: FC = () => {
   };
 
   return (
-    <Card>
-      <Heading>{t('heading.organizations')}</Heading>
-      {authority?.orgunitids.map((orgunitId) => (
-        <InstitutionCard key={orgunitId} orgunitId={orgunitId} />
-      ))}
+    <>
+      <Card>
+        <Heading>{t('heading.organizations')}</Heading>
+        {authority?.orgunitids.map((orgunitId) => (
+          <InstitutionCard key={orgunitId} orgunitId={orgunitId} setAffiliationIdToRemove={setAffiliationIdToRemove} />
+        ))}
 
-      {openUnitForm ? (
-        <SelectInstitution onSubmit={handleSubmit} onClose={toggleUnitForm} />
-      ) : (
-        <StyledButtonContainer>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={toggleUnitForm}
-            disabled={!authority}
-            data-testid="add-new-institution-button">
-            {t('organization.add_institution')}
-          </Button>
-        </StyledButtonContainer>
-      )}
-    </Card>
+        {openUnitForm ? (
+          <SelectInstitution onSubmit={handleSubmit} onClose={toggleUnitForm} />
+        ) : (
+          <StyledButtonContainer>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={toggleUnitForm}
+              disabled={!authority}
+              data-testid="add-new-institution-button">
+              {t('organization.add_institution')}
+            </Button>
+          </StyledButtonContainer>
+        )}
+      </Card>
+      <ConfirmDialog
+        open={!!affiliationIdToRemove}
+        title={t('organization.confirm_remove_affiliation_title')}
+        text={t('organization.confirm_remove_affiliation_text')}
+        onAccept={removeAffiliation}
+        onCancel={() => setAffiliationIdToRemove('')}
+      />
+    </>
   );
 };
 

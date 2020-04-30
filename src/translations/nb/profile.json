@@ -53,6 +53,8 @@
   },
   "organization": {
     "add_institution": "Legg til institusjon",
+    "confirm_remove_affiliation_text": "Er du sikker på at du ønsker å fjerne denne tilknytningen?",
+    "confirm_remove_affiliation_title": "Fjerne tilknytning?",
     "edit_institution": "Endre institusjon",
     "institution": "Institusjon",
     "no_institutions_found": "Ingen institusjoner funnet",
