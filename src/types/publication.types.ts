@@ -24,9 +24,8 @@ export enum BackendTypeNames {
 }
 
 export enum PublicationStatus {
-  DRAFT = 'draft',
-  REJECTED = 'rejected',
-  PUBLISHED = 'published',
+  NEW = 'New',
+  PUBLISHED = 'Published',
 }
 
 export const levelMap: EnumDictionary<string, number | null> = {
@@ -179,7 +178,7 @@ export type PublicationPreview = Pick<
 >;
 export type PublishedPublicationPreview = Pick<
   Publication & PublicationEntityDescription,
-  'identifier' | 'mainTitle' | 'date' | 'reference' | 'contributors' | 'status' | 'publicationType'
+  'identifier' | 'mainTitle' | 'createdDate' | 'reference' | 'contributors' | 'status' | 'publicationType'
 >;
 
 export interface Doi {
@@ -192,7 +191,7 @@ export const emptyPublication: FormikPublication = {
   identifier: '',
   createdDate: '',
   owner: '',
-  status: PublicationStatus.DRAFT,
+  status: PublicationStatus.NEW,
   entityDescription: emptyPublicationEntityDescription,
   fileSet: {
     type: BackendTypeNames.FILE_SET,

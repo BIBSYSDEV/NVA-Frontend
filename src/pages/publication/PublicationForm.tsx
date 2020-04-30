@@ -2,7 +2,7 @@ import { Form, Formik, FormikProps, yupToFormErrors, validateYupSchema } from 'f
 import React, { FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { emptyPublication, FormikPublication } from '../../types/publication.types';
+import { emptyPublication, FormikPublication, PublicationStatus } from '../../types/publication.types';
 import { createUppy } from '../../utils/uppy-config';
 import ContributorsPanel from './ContributorsPanel';
 import DescriptionPanel from './DescriptionPanel';
@@ -20,6 +20,7 @@ import Progress from '../../components/Progress';
 import { publicationValidationSchema } from './PublicationFormValidationSchema';
 import { Button } from '@material-ui/core';
 import RouteLeavingGuard from '../../components/RouteLeavingGuard';
+import { useHistory } from 'react-router';
 
 const shouldAllowMultipleFiles = false;
 
@@ -64,6 +65,7 @@ const PublicationForm: FC<PublicationFormProps> = ({
   const [isLoading, setIsLoading] = useState(!!identifier);
   const [isSaving, setIsSaving] = useState(false);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   useEffect(() => {
     // Get files uploaded from new publication view
@@ -93,6 +95,8 @@ const PublicationForm: FC<PublicationFormProps> = ({
       if (publication.error) {
         closeForm();
         dispatch(setNotification(publication.error, NotificationVariant.Error));
+      } else if (publication.status === PublicationStatus.PUBLISHED) {
+        history.push(`/publication/${id}/public`);
       } else {
         // TODO: revisit necessity of deepmerge when backend model has all fields
         setInitialValues(deepmerge(emptyPublication, publication));
@@ -103,7 +107,7 @@ const PublicationForm: FC<PublicationFormProps> = ({
     if (identifier) {
       getPublicationById(identifier);
     }
-  }, [identifier, closeForm, dispatch]);
+  }, [identifier, closeForm, dispatch, history]);
 
   const handleTabChange = (_: React.ChangeEvent<{}>, newTabNumber: number) => {
     setTabNumber(newTabNumber);
