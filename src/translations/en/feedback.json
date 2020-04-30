@@ -23,6 +23,7 @@
     "get_user": "Failed to get user",
     "login": "Login failed",
     "orcid_login": "ORCID login failed",
+    "publish_publication": "Could not publish publication",
     "search": "Search failed",
     "update_authority": "Could not update authority",
     "update_customer": "Could not update customer institution",

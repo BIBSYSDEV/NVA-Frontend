@@ -75,10 +75,10 @@ const PublishedPublicationList: FC<PublicationListProps> = ({ publications }) =>
                   <NormalText>{publication.mainTitle}</NormalText>
                 </TableCell>
                 <StyledTableCellForPublisher>
-                  <NormalText>{publication?.reference?.publicationContext?.title}</NormalText>
+                  <NormalText>{publication.reference?.publicationContext?.title}</NormalText>
                 </StyledTableCellForPublisher>
                 <StyledTableCellForType>
-                  {publication?.publicationType && (
+                  {publication.publicationType && (
                     <NormalText>{t(`publicationTypes:${publication.publicationType}`)}</NormalText>
                   )}
                 </StyledTableCellForType>

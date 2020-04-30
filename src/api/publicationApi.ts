@@ -79,7 +79,7 @@ export const publishPublication = async (identifier: string) => {
     if (response.status === StatusCode.OK || response.status === StatusCode.ACCEPTED) {
       return response.data;
     } else {
-      return null;
+      return { error: i18n.t('feedback:error.publish_publication') };
     }
   } catch {
     return { error: i18n.t('feedback:error.publish_publication') };
