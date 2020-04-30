@@ -1,6 +1,14 @@
 import React, { FC } from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
+import styled from 'styled-components';
+import Progress from './Progress';
+
+const StyledButtonProgressContainer = styled.div`
+  margin-left: 1rem;
+  display: flex;
+  align-items: center;
+`;
 
 interface ConfirmDialogProps {
   open: boolean;
@@ -26,6 +34,11 @@ const ConfirmDialog: FC<ConfirmDialogProps> = ({ open, title, text, onAccept, on
         </Button>
         <Button onClick={onAccept} color="primary" variant="contained" disabled={disableAccept}>
           {t('common:yes')}
+          {disableAccept && (
+            <StyledButtonProgressContainer>
+              <Progress size={15} thickness={5} />
+            </StyledButtonProgressContainer>
+          )}
         </Button>
       </DialogActions>
     </Dialog>
