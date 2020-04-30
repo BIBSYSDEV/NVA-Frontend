@@ -28,7 +28,7 @@ describe('My profile: Institutions', () => {
 
   it('The user should be able to remove an insitution from their profile', () => {
     cy.get('[data-testid=button-delete-institution-194\\.65\\.20\\.10]').click({ force: true });
-
-    cy.get('Fakultet for medisin og helsevitenskap').should('not.exist');
+    cy.get('[data-testid=accept-button]').click({ force: true });
+    cy.contains('Allmennmedisinsk forskningsenhet i Trondheim').should('not.be.visible');
   });
 });

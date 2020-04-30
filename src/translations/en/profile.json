@@ -53,6 +53,8 @@
   },
   "organization": {
     "add_institution": "Add institution",
+    "confirm_remove_affiliation_text": "Are you sure you want to remove this affiliation?",
+    "confirm_remove_affiliation_title": "Remove affiliation?",
     "edit_institution": "Edit institution",
     "institution": "Institution",
     "no_institutions_found": "No institutions found",
