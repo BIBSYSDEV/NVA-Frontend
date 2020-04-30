@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, FC } from 'react';
+import React, { useEffect, useRef, FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormikProps, useFormikContext, Field, FieldProps } from 'formik';
 import { FormikPublication } from '../../types/publication.types';
@@ -22,6 +22,10 @@ import ErrorSummary from './submission_tab/ErrorSummary';
 import { getAllFileFields, getAllContributorFields } from '../../utils/formik-helpers';
 import { DOI_PREFIX } from '../../utils/constants';
 import Progress from '../../components/Progress';
+import { publishPublication } from '../../api/publicationApi';
+import { useDispatch } from 'react-redux';
+import { setNotification } from '../../redux/actions/notificationActions';
+import { NotificationVariant } from '../../types/notification.types';
 
 const StyledButtonContainer = styled.div`
   margin-bottom: 1rem;
@@ -49,9 +53,10 @@ interface SubmissionPanelProps {
 
 const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication }) => {
   const { t } = useTranslation('publication');
-  const { errors, setFieldTouched, setFieldValue, values }: FormikProps<FormikPublication> = useFormikContext();
+  const { setFieldTouched, setFieldValue, values, isValid }: FormikProps<FormikPublication> = useFormikContext();
   const history = useHistory();
   const { publicationType, reference } = values.entityDescription;
+  const dispatch = useDispatch();
 
   const valuesRef = useRef(values);
   useEffect(() => {
@@ -68,9 +73,14 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication }
     fieldNames.forEach((fieldName) => setFieldTouched(fieldName));
   }, [setFieldTouched]);
 
-  const publishPublication = () => {
-    // TODO: change status from draft to published
-    history.push(`/publication/${values.identifier}/public`);
+  const onClickPublish = async () => {
+    savePublication(values);
+    const publishedPublication = await publishPublication(values.identifier);
+    if (publishedPublication?.error) {
+      dispatch(setNotification(publishedPublication.error, NotificationVariant.Error));
+    } else {
+      history.push(`/publication/${values.identifier}/public`);
+    }
   };
 
   return (
@@ -116,7 +126,7 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication }
                     color="primary"
                     checked={value}
                     onChange={() => setFieldValue(name, !value)}
-                    disabled={!!errors.entityDescription || !!errors.fileSet}
+                    disabled={!isValid}
                   />
                 }
                 label={t('submission.ask_for_doi')}
@@ -126,11 +136,7 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication }
         </Card>
       </Card>
       <StyledButtonContainer>
-        <StyledButton
-          color="primary"
-          variant="contained"
-          onClick={publishPublication}
-          disabled={!!errors.entityDescription || !!errors.fileSet}>
+        <StyledButton color="primary" variant="contained" onClick={onClickPublish} disabled={isSaving || !isValid}>
           {t('common:publish')}
         </StyledButton>
         <StyledButton disabled={isSaving} onClick={() => savePublication(values)} variant="contained">

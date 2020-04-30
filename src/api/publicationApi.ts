@@ -61,6 +61,31 @@ export const getPublication = async (id: string) => {
   }
 };
 
+export const publishPublication = async (identifier: string) => {
+  if (!identifier) {
+    return { error: i18n.t('feedback:error.publish_publication') };
+  }
+  const idToken = await getIdToken();
+  try {
+    const response = await Axios.put(
+      `${PublicationsApiPaths.PUBLICATION}/${identifier}/publish`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${idToken}`,
+        },
+      }
+    );
+    if (response.status === StatusCode.OK || response.status === StatusCode.ACCEPTED) {
+      return response.data;
+    } else {
+      return null;
+    }
+  } catch {
+    return { error: i18n.t('feedback:error.publish_publication') };
+  }
+};
+
 export const getMyPublications = async () => {
   const url = PublicationsApiPaths.PUBLICATIONS_BY_OWNER;
   try {
