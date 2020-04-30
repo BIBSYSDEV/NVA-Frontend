@@ -1,0 +1,47 @@
+import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+
+import { RecursiveInstitutionUnit } from '../../types/institution.types';
+import { CRISTIN_UNITS_BASE_URL, CRISTIN_INSTITUTIONS_BASE_URL } from '../constants';
+import { getDepartment } from '../../api/institutionApi';
+import { setNotification } from '../../redux/actions/notificationActions';
+import { NotificationVariant } from '../../types/notification.types';
+import { isValidUrl } from '../isValidUrl';
+
+// This hook should only be used when fetching the hierarchy of a given unit and not if it is desired
+// to access all subunits of the given unit.
+const useFetchUnitHierarchy = (unitId: string): [RecursiveInstitutionUnit | undefined, boolean] => {
+  const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false);
+  const [unit, setUnit] = useState<RecursiveInstitutionUnit | undefined>();
+
+  useEffect(() => {
+    const fetchDepartment = async () => {
+      setIsLoading(true);
+      // TODO: NP-844 should ensure we have URIs from start (not IDs)
+      const unitUri = isValidUrl(unitId)
+        ? unitId
+        : unitId.includes('.') // Check if root level institution
+        ? `${CRISTIN_UNITS_BASE_URL}${unitId}`
+        : `${CRISTIN_INSTITUTIONS_BASE_URL}${unitId}`;
+      const response = await getDepartment(unitUri);
+
+      if (response?.error) {
+        dispatch(setNotification(response.error, NotificationVariant.Error));
+      } else {
+        if (response.subunits && response.subunits.length > 1) {
+          // Remove subunits from institution, since we only care about top-level in this case
+          // NOTE: This means we cannot use this hook to get all subunits
+          delete response.subunits;
+        }
+        setUnit(response);
+      }
+      setIsLoading(false);
+    };
+    fetchDepartment();
+  }, [dispatch, unitId]);
+
+  return [unit, isLoading];
+};
+
+export default useFetchUnitHierarchy;

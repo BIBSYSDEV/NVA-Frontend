@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setNotification } from '../../redux/actions/notificationActions';
-import { PublishedPublicationPreview } from '../../types/publication.types';
+import { PublishedPublicationPreview, PublicationStatus } from '../../types/publication.types';
 import { CircularProgress } from '@material-ui/core';
 import styled from 'styled-components';
 import { getMyPublications } from '../../api/publicationApi';
@@ -23,7 +23,7 @@ const StyledWrapper = styled.div`
 
 const StyledUserInfo = styled.div`
   display: flex;
-  background-color: ${props => props.theme.palette.background.default};
+  background-color: ${(props) => props.theme.palette.background.default};
   align-content: flex-start;
   width: 100%;
   padding: 0.5rem;
@@ -50,6 +50,10 @@ const PublicProfile: FC = () => {
     loadData();
   }, [dispatch, t]);
 
+  const publishedPublications = publications.filter(
+    (publication) => publication.status === PublicationStatus.PUBLISHED
+  );
+
   return (
     <>
       <StyledUserInfo>
@@ -68,7 +72,7 @@ const PublicProfile: FC = () => {
               />
             );
           })}
-          {user.authority?.orgunitids.map(orgunitid => (
+          {user.authority?.orgunitids.map((orgunitid) => (
             <NormalText key={orgunitid}>{orgunitid}</NormalText>
           ))}
         </Card>
@@ -77,7 +81,7 @@ const PublicProfile: FC = () => {
         {isLoading ? (
           <CircularProgress color="inherit" size={20} />
         ) : (
-          <PublishedPublicationList publications={publications} />
+          <PublishedPublicationList publications={publishedPublications} />
         )}
       </StyledWrapper>
     </>
