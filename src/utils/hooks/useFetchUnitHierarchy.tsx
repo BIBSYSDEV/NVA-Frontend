@@ -10,10 +10,10 @@ import { isValidUrl } from '../isValidUrl';
 
 // This hook should only be used when fetching the hierarchy of a given unit and not if it is desired
 // to access all subunits of the given unit.
-const useFetchUnitHierarchy = (unitId: string) => {
+const useFetchUnitHierarchy = (unitId: string): [RecursiveInstitutionUnit | undefined, boolean] => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
-  const [unit, setUnit] = useState<RecursiveInstitutionUnit>();
+  const [unit, setUnit] = useState<RecursiveInstitutionUnit | undefined>();
 
   useEffect(() => {
     const fetchDepartment = async () => {
@@ -41,7 +41,7 @@ const useFetchUnitHierarchy = (unitId: string) => {
     fetchDepartment();
   }, [dispatch, unitId]);
 
-  return { unit, isLoading };
+  return [unit, isLoading];
 };
 
 export default useFetchUnitHierarchy;
