@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
 import styled from 'styled-components';
@@ -8,6 +8,7 @@ import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import { useSelector } from 'react-redux';
 import { RootStore } from '../../redux/reducers/rootReducer';
+import NormalText from '../../components/NormalText';
 
 interface MenuProps {
   handleLogout: () => void;
@@ -40,7 +41,18 @@ const StyledMenuItem = styled(MenuItem)`
   border-bottom: 1px solid ${({ theme }) => theme.palette.box.main};
 `;
 
-const Menu: React.FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
+const StyledAdminMenu = styled.div`
+  padding-left: 1rem;
+  border-bottom: 1px solid ${({ theme }) => theme.palette.box.main};
+`;
+
+const StyledNormalText = styled(NormalText)`
+  font-weight: bold;
+  padding-top: 0.5rem;
+  text-transform: uppercase;
+`;
+
+const Menu: FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
   const user = useSelector((store: RootStore) => store.user);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const { t } = useTranslation();
@@ -77,10 +89,6 @@ const Menu: React.FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
           vertical: 'bottom',
           horizontal: 'left',
         }}>
-        <StyledMenuItem data-testid="menu-user-profile-button" onClick={() => handleClickMenuItem('/user')}>
-          {t('profile:my_profile')}
-        </StyledMenuItem>
-
         {user.isPublisher && (
           <StyledMenuItem data-testid="menu-new-publication-button" onClick={() => handleClickMenuItem('/publication')}>
             {t('publication:new_publication')}
@@ -96,11 +104,14 @@ const Menu: React.FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
         )}
 
         {user.isAppAdmin && (
-          <StyledMenuItem
-            data-testid="menu-admin-institution-button"
-            onClick={() => handleClickMenuItem('/admin-institutions')}>
-            {t('common:institutions')}
-          </StyledMenuItem>
+          <StyledAdminMenu>
+            <StyledNormalText>{t('common:admin')}</StyledNormalText>
+            <MenuItem
+              data-testid="menu-admin-institution-button"
+              onClick={() => handleClickMenuItem('/admin-institutions')}>
+              {t('common:institutions')}
+            </MenuItem>
+          </StyledAdminMenu>
         )}
 
         {user.isInstitutionAdmin && (
@@ -116,7 +127,9 @@ const Menu: React.FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
             {t('workLists:my_worklist')}
           </StyledMenuItem>
         )}
-
+        <StyledMenuItem data-testid="menu-user-profile-button" onClick={() => handleClickMenuItem('/user')}>
+          {t('profile:my_profile')}
+        </StyledMenuItem>
         <StyledMenuItem onClick={handleLogout} data-testid="menu-logout-button">
           {t('logout')}
         </StyledMenuItem>
