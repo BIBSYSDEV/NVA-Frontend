@@ -7,16 +7,15 @@ import DeleteIcon from '@material-ui/icons/Delete';
 
 import { getDepartment } from '../../../api/institutionApi';
 import Card from '../../../components/Card';
-import NormalText from '../../../components/NormalText';
 import { RecursiveInstitutionUnit } from '../../../types/institution.types';
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../types/notification.types';
-import Label from '../../../components/Label';
 import Progress from '../../../components/Progress';
 import { RootStore } from '../../../redux/reducers/rootReducer';
 import { AuthorityQualifiers, removeQualifierIdFromAuthority } from '../../../api/authorityApi';
 import { setAuthorityData } from '../../../redux/actions/userActions';
 import { CRISTIN_UNITS_BASE_URL, CRISTIN_INSTITUTIONS_BASE_URL } from '../../../utils/constants';
+import AffiliationHierarchy from '../../../components/AffiliationHierarchy';
 
 const StyledCard = styled(Card)`
   display: grid;
@@ -106,10 +105,7 @@ const InstitutionCard: FC<InstitutionCardProps> = ({ orgunitId }) => {
         <Progress />
       ) : (
         <>
-          <StyledTextContainer>
-            <Label>{unit?.name}</Label>
-            {unit?.subunits && <UnitRow unit={unit.subunits[0]} />}
-          </StyledTextContainer>
+          <StyledTextContainer>{unit && <AffiliationHierarchy unit={unit} />}</StyledTextContainer>
           <StyledButtonContainer>
             <Button
               variant="outlined"
@@ -129,19 +125,6 @@ const InstitutionCard: FC<InstitutionCardProps> = ({ orgunitId }) => {
         </>
       )}
     </StyledCard>
-  );
-};
-
-interface UnitRowProps {
-  unit: RecursiveInstitutionUnit;
-}
-
-const UnitRow: FC<UnitRowProps> = ({ unit }) => {
-  return (
-    <>
-      <NormalText>{unit.name}</NormalText>
-      {unit.subunits && <UnitRow unit={unit.subunits[0]} />}
-    </>
   );
 };
 
