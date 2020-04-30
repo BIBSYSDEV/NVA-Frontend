@@ -31,6 +31,7 @@ const UserInstitution: FC = () => {
   const authority = useSelector((state: RootStore) => state.user.authority);
   const [openUnitForm, setOpenUnitForm] = useState(false);
   const [affiliationIdToRemove, setAffiliationIdToRemove] = useState('');
+  const [isRemovingAffiliation, setIsRemovingAffiliation] = useState(false);
 
   const { t } = useTranslation('profile');
   const dispatch = useDispatch();
@@ -43,7 +44,7 @@ const UserInstitution: FC = () => {
     if (!authority || !affiliationIdToRemove) {
       return;
     }
-
+    setIsRemovingAffiliation(true);
     const updatedAuthority = await removeQualifierIdFromAuthority(
       authority.systemControlNumber,
       AuthorityQualifiers.ORGUNIT_ID,
@@ -56,6 +57,7 @@ const UserInstitution: FC = () => {
       dispatch(setNotification(t('feedback:success.delete_affiliation')));
     }
     setAffiliationIdToRemove('');
+    setIsRemovingAffiliation(false);
   };
 
   const handleSubmit = async (value: FormikInstitutionUnit) => {
@@ -118,6 +120,7 @@ const UserInstitution: FC = () => {
         text={t('organization.confirm_remove_affiliation_text')}
         onAccept={removeAffiliation}
         onCancel={() => setAffiliationIdToRemove('')}
+        disableAccept={isRemovingAffiliation}
       />
     </>
   );

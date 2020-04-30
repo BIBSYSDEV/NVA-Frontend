@@ -8,9 +8,10 @@ interface ConfirmDialogProps {
   text: string;
   onAccept: () => void;
   onCancel: () => void;
+  disableAccept?: boolean;
 }
 
-const ConfirmDialog: FC<ConfirmDialogProps> = ({ open, title, text, onAccept, onCancel }) => {
+const ConfirmDialog: FC<ConfirmDialogProps> = ({ open, title, text, onAccept, onCancel, disableAccept }) => {
   const { t } = useTranslation('common');
 
   return (
@@ -23,7 +24,7 @@ const ConfirmDialog: FC<ConfirmDialogProps> = ({ open, title, text, onAccept, on
         <Button onClick={onCancel} variant="contained">
           {t('common:no')}
         </Button>
-        <Button onClick={onAccept} color="primary" variant="contained">
+        <Button onClick={onAccept} color="primary" variant="contained" disabled={disableAccept}>
           {t('common:yes')}
         </Button>
       </DialogActions>
