@@ -9,7 +9,7 @@ import i18n from '../../translations/i18n';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, CircularProgress } from '@material-ui/core';
 import styled from 'styled-components';
-import { PublicationPreview } from '../../types/publication.types';
+import { PublicationPreview, PublicationStatus } from '../../types/publication.types';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { Link as RouterLink } from 'react-router-dom';
 import { NotificationVariant } from '../../types/notification.types';
@@ -44,9 +44,13 @@ const MyPublications: FC = () => {
     loadData();
   }, [dispatch]);
 
+  const publicationsToDisplay = publications
+    .filter((publication) => publication.status !== PublicationStatus.PUBLISHED)
+    .sort((a, b) => new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime());
+
   return (
     <Card>
-      <Heading>{t('workLists:my_publications')}</Heading>
+      <Heading>{`${t('workLists:my_publications')} (${publicationsToDisplay.length})`}</Heading>
       <StyledButtonWrapper>
         <Button
           color="primary"
@@ -57,7 +61,11 @@ const MyPublications: FC = () => {
         </Button>
       </StyledButtonWrapper>
       <StyledWrapper>
-        {isLoading ? <CircularProgress color="inherit" size={20} /> : <PublicationList publications={publications} />}
+        {isLoading ? (
+          <CircularProgress color="inherit" size={20} />
+        ) : (
+          <PublicationList publications={publicationsToDisplay} />
+        )}
       </StyledWrapper>
     </Card>
   );
