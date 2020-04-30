@@ -37,11 +37,11 @@ interface InstitutionCardProps {
 
 const InstitutionCard: FC<InstitutionCardProps> = ({ orgunitId, setAffiliationIdToRemove }) => {
   const { t } = useTranslation('common');
-  const [unit, isLoading] = useFetchUnitHierarchy(orgunitId);
+  const [unit, isLoadingUnitHierarchy] = useFetchUnitHierarchy(orgunitId);
 
   return (
     <StyledCard data-testid="institution-presentation">
-      {isLoading ? (
+      {isLoadingUnitHierarchy ? (
         <Progress />
       ) : (
         <>

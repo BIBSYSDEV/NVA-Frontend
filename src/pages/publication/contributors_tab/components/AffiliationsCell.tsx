@@ -120,9 +120,9 @@ const AffiliationsCell: FC<AffiliationsCellProps> = ({ affiliations, baseFieldNa
 };
 
 const AffiliationElement: FC<any> = ({ unitUri }) => {
-  const [unit, isLoading] = useFetchUnitHierarchy(unitUri);
+  const [unit, isLoadingUnitHierarchy] = useFetchUnitHierarchy(unitUri);
 
-  return <div>{isLoading ? <Progress /> : unit ? <AffiliationHierarchy unit={unit} /> : null}</div>;
+  return <div>{isLoadingUnitHierarchy ? <Progress /> : unit ? <AffiliationHierarchy unit={unit} /> : null}</div>;
 };
 
 export default AffiliationsCell;
