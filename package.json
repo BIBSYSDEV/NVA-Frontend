@@ -83,7 +83,7 @@
     "all": true
   },
   "devDependencies": {
-    "@cypress/code-coverage": "^3.4.1",
+    "@cypress/code-coverage": "^3.7.0",
     "@cypress/instrument-cra": "^1.1.1",
     "@cypress/webpack-preprocessor": "^5.1.2",
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
