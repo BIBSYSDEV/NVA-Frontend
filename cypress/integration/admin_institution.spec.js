@@ -19,21 +19,17 @@ describe('User administers institutions ', () => {
     cy.contains('tiril@ntnu.no');
   });
 
-  it.skip('The User should be able to add an institution', () => {
+  it('The User should be able to add an institution', () => {
     cy.get('[data-testid=add-institution-button]').click({ force: true });
 
-    cy.get('[data-testid=autosearch-institution]').click({ force: true }).type('ntnu');
-    cy.get('.MuiAutocomplete-option').contains('Norges teknisk-naturvitenskapelige universitet').click({ force: true });
-
-    cy.get('[data-testid=customer-institution-display-name-input]').type(
-      'Norges teknisk-naturvitenskapelige universitet'
-    );
+    cy.get('[data-testid=customer-institution-name-input]').click({ force: true }).type('ntnu');
+    cy.get('.MuiAutocomplete-option').contains('Norwegian University of Science and Technology').click({ force: true });
     cy.get('[data-testid=customer-institution-short-name-input]').type('NTNU');
     cy.get('[data-testid=customer-institution-archive-name-input]').type('NTNU Open');
     cy.get('[data-testid=customer-institution-cname-input]').type('ntnu.unit.nva.no');
     cy.get('[data-testid=customer-institution-institution-dns-input]').type('1.1.1.1');
     cy.get('[data-testid=customer-institution-administrator-id-input]').type('tiril@ntnu.no');
-    cy.get('[data-testid=customer-institution-feide-organization-id-input]').type('ntnu@ntnu.no');
+    cy.get('[data-testid=customer-institution-feide-organization-id-input]').type('NO919477822');
 
     cy.get('[data-testid=customer-institution-save-button]').click({ force: true });
     cy.get('[data-testid=snackbar]').contains('Created customer institution');

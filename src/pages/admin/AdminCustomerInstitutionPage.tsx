@@ -169,7 +169,7 @@ const AdminCustomerInstitutionPage: FC = () => {
                         variant="outlined"
                         inputProps={{
                           ...params.inputProps,
-                          'data-testid': 'autocomplete-institution',
+                          'data-testid': 'customer-institution-name-input',
                         }}
                         InputProps={{
                           ...params.InputProps,
