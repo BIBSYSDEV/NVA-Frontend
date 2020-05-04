@@ -54,7 +54,6 @@ const AdminCustomerInstitutionPage: FC = () => {
   const editMode = identifier !== 'new';
   const [initialValues, setInitialValues] = useState<CustomerInstitution>(emptyCustomerInstitution);
   const [isLoading, setIsLoading] = useState(editMode);
-  const [isSaving, setIsSaving] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -79,7 +78,6 @@ const AdminCustomerInstitutionPage: FC = () => {
   }, [identifier, dispatch, editMode]);
 
   const handleSubmit = async (values: CustomerInstitution) => {
-    setIsSaving(true);
     if (!editMode) {
       const customerValues = { ...values, createdDate: new Date().toISOString() }; // TODO: remove setting createdDate when fixed in backend
       const createdCustomer = await createCustomerInstitution(customerValues);
@@ -99,7 +97,6 @@ const AdminCustomerInstitutionPage: FC = () => {
         dispatch(setNotification(t('feedback:success.update_customer')));
       }
     }
-    setIsSaving(false);
   };
 
   return isLoading ? (
@@ -114,9 +111,10 @@ const AdminCustomerInstitutionPage: FC = () => {
           name: Yup.string().required(t('feedback.required_field')),
         })}
         onSubmit={handleSubmit}>
-        <Form>
-          {/* TODO uncomment when backend has support for logo */}
-          {/* <Field name={CustomerInstitutionFieldNames.LOGO_FILE}>
+        {({ isSubmitting }) => (
+          <Form>
+            {/* TODO uncomment when backend has support for logo */}
+            {/* <Field name={CustomerInstitutionFieldNames.LOGO_FILE}>
             {({ field: { value, name }, form }: FieldProps) => (
               <StyledLogoUploadWrapper>
                 <Label>{t('institution_logo')}</Label>
@@ -139,94 +137,100 @@ const AdminCustomerInstitutionPage: FC = () => {
               </StyledLogoUploadWrapper>
             )}
           </Field> */}
-          <Field name={CustomerInstitutionFieldNames.NAME}>
-            {({ field: { value, name }, form }: FieldProps) => (
-              <InstitutionSearch
-                dataTestId="autosearch-institution"
-                label={t('organization_register_name')}
-                initialValue={value ?? ''}
-                clearSearchField={value?.name === ''}
-                setValueFunction={(inputValue) => {
-                  form.setFieldValue(name, inputValue.name);
-                }}
-                placeholder={t('profile:organization.search_for_institution')}
-              />
-            )}
-          </Field>
-          <Field
-            aria-label={CustomerInstitutionFieldNames.DISPLAY_NAME}
-            name={CustomerInstitutionFieldNames.DISPLAY_NAME}
-            label={t('display_name')}
-            component={TextField}
-            fullWidth
-            variant="outlined"
-            inputProps={{ 'data-testid': 'customer-institution-display-name-input' }}
-          />
-          <Field
-            aria-label={CustomerInstitutionFieldNames.SHORT_NAME}
-            name={CustomerInstitutionFieldNames.SHORT_NAME}
-            label={t('short_name')}
-            component={TextField}
-            fullWidth
-            variant="outlined"
-            inputProps={{ 'data-testid': 'customer-institution-short-name-input' }}
-          />
-          <Field
-            aria-label={CustomerInstitutionFieldNames.ARCHIVE_NAME}
-            name={CustomerInstitutionFieldNames.ARCHIVE_NAME}
-            label={t('archive_name')}
-            component={TextField}
-            fullWidth
-            variant="outlined"
-            inputProps={{ 'data-testid': 'customer-institution-archive-name-input' }}
-          />
-          <Field
-            aria-label={CustomerInstitutionFieldNames.CNAME}
-            name={CustomerInstitutionFieldNames.CNAME}
-            label={t('cname')}
-            component={TextField}
-            fullWidth
-            variant="outlined"
-            inputProps={{ 'data-testid': 'customer-institution-cname-input' }}
-          />
-          <Field
-            aria-label={CustomerInstitutionFieldNames.INSTITUTION_DNS}
-            name={CustomerInstitutionFieldNames.INSTITUTION_DNS}
-            label={t('institution_dns')}
-            component={TextField}
-            fullWidth
-            variant="outlined"
-            inputProps={{ 'data-testid': 'customer-institution-institution-dns-input' }}
-          />
-          <Field
-            aria-label={CustomerInstitutionFieldNames.ADMINISTRATION_ID}
-            name={CustomerInstitutionFieldNames.ADMINISTRATION_ID}
-            label={t('administration_id')}
-            component={TextField}
-            fullWidth
-            variant="outlined"
-            inputProps={{ 'data-testid': 'customer-institution-administrator-id-input' }}
-          />
-          <Field
-            aria-label={CustomerInstitutionFieldNames.FEIDE_ORGANIZATION_ID}
-            name={CustomerInstitutionFieldNames.FEIDE_ORGANIZATION_ID}
-            label={t('feide_organization_id')}
-            component={TextField}
-            fullWidth
-            variant="outlined"
-            inputProps={{ 'data-testid': 'customer-institution-feide-organization-id-input' }}
-          />
-          <StyledButtonContainer>
-            <Button color="primary" data-testid="customer-institution-save-button" variant="contained" type="submit">
-              {editMode ? t('common:save') : t('common:create')}
-              {isSaving && (
-                <StyledProgressContainer>
-                  <Progress size={15} thickness={5} />
-                </StyledProgressContainer>
+            <Field name={CustomerInstitutionFieldNames.NAME}>
+              {({ field: { value, name }, form }: FieldProps) => (
+                <InstitutionSearch
+                  dataTestId="autosearch-institution"
+                  label={t('organization_register_name')}
+                  initialValue={value ?? ''}
+                  clearSearchField={value?.name === ''}
+                  setValueFunction={(inputValue) => {
+                    form.setFieldValue(name, inputValue.name);
+                  }}
+                  placeholder={t('profile:organization.search_for_institution')}
+                />
               )}
-            </Button>
-          </StyledButtonContainer>
-        </Form>
+            </Field>
+            <Field
+              aria-label={CustomerInstitutionFieldNames.DISPLAY_NAME}
+              name={CustomerInstitutionFieldNames.DISPLAY_NAME}
+              label={t('display_name')}
+              component={TextField}
+              fullWidth
+              variant="outlined"
+              inputProps={{ 'data-testid': 'customer-institution-display-name-input' }}
+            />
+            <Field
+              aria-label={CustomerInstitutionFieldNames.SHORT_NAME}
+              name={CustomerInstitutionFieldNames.SHORT_NAME}
+              label={t('short_name')}
+              component={TextField}
+              fullWidth
+              variant="outlined"
+              inputProps={{ 'data-testid': 'customer-institution-short-name-input' }}
+            />
+            <Field
+              aria-label={CustomerInstitutionFieldNames.ARCHIVE_NAME}
+              name={CustomerInstitutionFieldNames.ARCHIVE_NAME}
+              label={t('archive_name')}
+              component={TextField}
+              fullWidth
+              variant="outlined"
+              inputProps={{ 'data-testid': 'customer-institution-archive-name-input' }}
+            />
+            <Field
+              aria-label={CustomerInstitutionFieldNames.CNAME}
+              name={CustomerInstitutionFieldNames.CNAME}
+              label={t('cname')}
+              component={TextField}
+              fullWidth
+              variant="outlined"
+              inputProps={{ 'data-testid': 'customer-institution-cname-input' }}
+            />
+            <Field
+              aria-label={CustomerInstitutionFieldNames.INSTITUTION_DNS}
+              name={CustomerInstitutionFieldNames.INSTITUTION_DNS}
+              label={t('institution_dns')}
+              component={TextField}
+              fullWidth
+              variant="outlined"
+              inputProps={{ 'data-testid': 'customer-institution-institution-dns-input' }}
+            />
+            <Field
+              aria-label={CustomerInstitutionFieldNames.ADMINISTRATION_ID}
+              name={CustomerInstitutionFieldNames.ADMINISTRATION_ID}
+              label={t('administration_id')}
+              component={TextField}
+              fullWidth
+              variant="outlined"
+              inputProps={{ 'data-testid': 'customer-institution-administrator-id-input' }}
+            />
+            <Field
+              aria-label={CustomerInstitutionFieldNames.FEIDE_ORGANIZATION_ID}
+              name={CustomerInstitutionFieldNames.FEIDE_ORGANIZATION_ID}
+              label={t('feide_organization_id')}
+              component={TextField}
+              fullWidth
+              variant="outlined"
+              inputProps={{ 'data-testid': 'customer-institution-feide-organization-id-input' }}
+            />
+            <StyledButtonContainer>
+              <Button
+                color="primary"
+                data-testid="customer-institution-save-button"
+                variant="contained"
+                type="submit"
+                disabled={isSubmitting}>
+                {editMode ? t('common:save') : t('common:create')}
+                {isSubmitting && (
+                  <StyledProgressContainer>
+                    <Progress size={15} thickness={5} />
+                  </StyledProgressContainer>
+                )}
+              </Button>
+            </StyledButtonContainer>
+          </Form>
+        )}
       </Formik>
     </Card>
   );
