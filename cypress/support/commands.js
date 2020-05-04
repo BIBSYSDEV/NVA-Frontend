@@ -17,6 +17,13 @@ Cypress.Commands.add('mocklogin', () => {
   cy.get('[data-testid=user-language-eng]').click({ force: true });
 });
 
+Cypress.Commands.add('startPublicationWithDoi', () => {
+  cy.get('[data-testid=new-publication-link]').click({ force: true });
+  cy.get('[data-testid=new-publication-link-input]').type('https://doi.org/10.1098/rspb.2018.0085');
+  cy.get('[data-testid=doi-search-button]').click({ force: true });
+  cy.get('[data-testid=publication-link-next-button]').click({ force: true });
+});
+
 Cypress.Commands.add('setUserInRedux', (user) => {
   cy.window()
     .its('store') // Redux store must be exposed via window.store
