@@ -149,6 +149,14 @@ const AdminCustomerInstitutionPage: FC = () => {
                     options={institutions}
                     value={institutions.find((i) => i.name === value) ?? null}
                     getOptionLabel={(option: RecursiveInstitutionUnit) => option.name}
+                    filterOptions={(options: RecursiveInstitutionUnit[], state: any) => {
+                      const inputValue = state.inputValue.toLowerCase();
+                      return options.filter(
+                        (option) =>
+                          option.name.toLowerCase().includes(inputValue) ||
+                          option.acronym.toLowerCase().includes(inputValue)
+                      );
+                    }}
                     noOptionsText={t('common:no_hits')}
                     onChange={(_: ChangeEvent<{}>, value: InstitutionUnitBase | null) => {
                       setFieldValue(name, value?.name ?? '');

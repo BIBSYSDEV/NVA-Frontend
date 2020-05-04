@@ -77,6 +77,14 @@ const SelectInstitution: FC<SelectInstitutionProps> = ({ onSubmit, onClose }) =>
               <Autocomplete
                 options={institutions}
                 getOptionLabel={(option: RecursiveInstitutionUnit) => option.name}
+                filterOptions={(options: RecursiveInstitutionUnit[], state: any) => {
+                  const inputValue = state.inputValue.toLowerCase();
+                  return options.filter(
+                    (option) =>
+                      option.name.toLowerCase().includes(inputValue) ||
+                      option.acronym.toLowerCase().includes(inputValue)
+                  );
+                }}
                 noOptionsText={t('no_hits')}
                 onChange={(_: ChangeEvent<{}>, value: InstitutionUnitBase | null) => {
                   if (isLoadingDepartment) {

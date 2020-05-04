@@ -1,4 +1,5 @@
 export interface InstitutionUnitBase {
+  acronym: string;
   name: string;
   id: string;
 }
