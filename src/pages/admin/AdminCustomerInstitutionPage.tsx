@@ -29,6 +29,7 @@ import Progress from '../../components/Progress';
 import useFetchInstitutions from '../../utils/hooks/useFetchInstitutions';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { RecursiveInstitutionUnit, InstitutionUnitBase } from '../../types/institution.types';
+import { FilterOptionsState } from '@material-ui/lab/useAutocomplete';
 
 // const shouldAllowMultipleFiles = false;
 
@@ -148,7 +149,10 @@ const AdminCustomerInstitutionPage: FC = () => {
                   options={institutions}
                   value={institutions.find((i) => i.name === value) ?? null}
                   getOptionLabel={(option: RecursiveInstitutionUnit) => option.name}
-                  filterOptions={(options: RecursiveInstitutionUnit[], state: any) => {
+                  filterOptions={(
+                    options: RecursiveInstitutionUnit[],
+                    state: FilterOptionsState<RecursiveInstitutionUnit>
+                  ) => {
                     const inputValue = state.inputValue.toLowerCase();
                     return options.filter(
                       (option) =>
