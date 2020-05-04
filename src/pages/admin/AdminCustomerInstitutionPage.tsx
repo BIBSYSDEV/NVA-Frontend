@@ -12,7 +12,7 @@ import {
   emptyCustomerInstitution,
   CustomerInstitution,
 } from '../../types/customerInstitution.types';
-import { createUppy } from '../../utils/uppy-config';
+// import { createUppy } from '../../utils/uppy-config';
 // import Label from '../../components/Label';
 // import InstitutionLogoFileUploader from './InstitutionLogoFileUploader';
 // import FileCard from '../publication/files_and_license_tab/FileCard';
@@ -30,7 +30,7 @@ import useFetchInstitutions from '../../utils/hooks/useFetchInstitutions';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { RecursiveInstitutionUnit, InstitutionUnitBase } from '../../types/institution.types';
 
-const shouldAllowMultipleFiles = false;
+// const shouldAllowMultipleFiles = false;
 
 // const StyledLogoUploadWrapper = styled(Card)`
 //   margin-top: 1rem;
@@ -51,7 +51,7 @@ const StyledProgressContainer = styled.div`
 
 const AdminCustomerInstitutionPage: FC = () => {
   const { t } = useTranslation('admin');
-  const [uppy] = useState(createUppy(shouldAllowMultipleFiles));
+  // const [uppy] = useState(createUppy(shouldAllowMultipleFiles));
   const { identifier } = useParams();
   const editMode = identifier !== 'new';
   const [initialValues, setInitialValues] = useState<CustomerInstitution>(emptyCustomerInstitution);
@@ -60,9 +60,9 @@ const AdminCustomerInstitutionPage: FC = () => {
   const history = useHistory();
   const [institutions, isLoadingInstitutions] = useFetchInstitutions();
 
-  useEffect(() => {
-    return () => uppy && uppy.close();
-  }, [uppy]);
+  // useEffect(() => {
+  //   return () => uppy && uppy.close();
+  // }, [uppy]);
 
   useEffect(() => {
     const getInstitutionById = async (identifier: string) => {
