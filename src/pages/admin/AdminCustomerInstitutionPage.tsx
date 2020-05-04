@@ -12,10 +12,6 @@ import {
   emptyCustomerInstitution,
   CustomerInstitution,
 } from '../../types/customerInstitution.types';
-// import { createUppy } from '../../utils/uppy-config';
-// import Label from '../../components/Label';
-// import InstitutionLogoFileUploader from './InstitutionLogoFileUploader';
-// import FileCard from '../publication/files_and_license_tab/FileCard';
 import { useParams, useHistory } from 'react-router-dom';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
@@ -30,12 +26,6 @@ import useFetchInstitutions from '../../utils/hooks/useFetchInstitutions';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { RecursiveInstitutionUnit, InstitutionUnitBase } from '../../types/institution.types';
 import { FilterOptionsState } from '@material-ui/lab/useAutocomplete';
-
-// const shouldAllowMultipleFiles = false;
-
-// const StyledLogoUploadWrapper = styled(Card)`
-//   margin-top: 1rem;
-// `;
 
 const StyledButtonContainer = styled.div`
   margin-top: 2rem;
@@ -52,7 +42,6 @@ const StyledProgressContainer = styled.div`
 
 const AdminCustomerInstitutionPage: FC = () => {
   const { t } = useTranslation('admin');
-  // const [uppy] = useState(createUppy(shouldAllowMultipleFiles));
   const { identifier } = useParams();
   const editMode = identifier !== 'new';
   const [initialValues, setInitialValues] = useState<CustomerInstitution>(emptyCustomerInstitution);
@@ -60,10 +49,6 @@ const AdminCustomerInstitutionPage: FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [institutions, isLoadingInstitutions] = useFetchInstitutions();
-
-  // useEffect(() => {
-  //   return () => uppy && uppy.close();
-  // }, [uppy]);
 
   useEffect(() => {
     const getInstitutionById = async (identifier: string) => {
@@ -117,31 +102,6 @@ const AdminCustomerInstitutionPage: FC = () => {
         onSubmit={handleSubmit}>
         {({ isSubmitting }) => (
           <Form>
-            {/* TODO uncomment when backend has support for logo */}
-            {/* <Field name={CustomerInstitutionFieldNames.LOGO_FILE}>
-            {({ field: { value, name }, form }: FieldProps) => (
-              <StyledLogoUploadWrapper>
-                <Label>{t('institution_logo')}</Label>
-                <InstitutionLogoFileUploader
-                  uppy={uppy}
-                  shouldAllowMultipleFiles={shouldAllowMultipleFiles}
-                  setFile={(file) => {
-                    form.setFieldValue(name, file);
-                  }}
-                />
-                {value?.name && (
-                  <FileCard
-                    file={value}
-                    removeFile={() => {
-                      uppy.removeFile(value.id);
-                      form.setFieldValue(name, {});
-                    }}
-                  />
-                )}
-              </StyledLogoUploadWrapper>
-            )}
-          </Field> */}
-
             <Field name={CustomerInstitutionFieldNames.NAME}>
               {({ field: { name, value }, form: { setFieldValue } }: FieldProps) => (
                 <Autocomplete

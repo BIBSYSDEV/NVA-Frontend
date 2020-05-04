@@ -43,26 +43,4 @@ describe('User administers institutions ', () => {
     cy.get('[data-testid=customer-institution-save-button]').click({ force: true });
     cy.get('[data-testid=snackbar]').contains('Updated customer institution');
   });
-
-  // TODO: unskip when backend has support for uploading file
-  it.skip('The user should be able to upload a file for an institution', () => {
-    // Open administer institutions page
-    cy.get('[data-testid=menu]').click({ force: true });
-    cy.get('[data-testid=menu-admin-institution-button]').click({ force: true });
-
-    // Open new institution page
-    cy.get('[data-testid=add-institution-button]').click({ force: true });
-
-    // Mock Uppys upload requests to S3 Bucket
-    cy.route({
-      method: 'PUT',
-      url: 'https://file-upload.com/files/', // Must match URL set in mock-interceptor, which cannot be imported into a test
-      response: '',
-      headers: { ETag: 'etag' },
-    });
-
-    cy.get('input[type=file]').uploadFile('img.jpg');
-    cy.get('.uppy-StatusBar-actionBtn--upload').click({ force: true });
-    cy.get('[data-testid=uploaded-file-card]').should('be.visible');
-  });
 });
