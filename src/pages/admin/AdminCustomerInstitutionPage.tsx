@@ -1,8 +1,8 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useState, ChangeEvent } from 'react';
 import Card from '../../components/Card';
 import { useTranslation } from 'react-i18next';
 import { Field, FieldProps, Form, Formik } from 'formik';
-import { Button } from '@material-ui/core';
+import { Button, CircularProgress, TextField as MuiTextField } from '@material-ui/core';
 import { TextField } from 'formik-material-ui';
 import Heading from '../../components/Heading';
 import styled from 'styled-components';
@@ -16,7 +16,6 @@ import { createUppy } from '../../utils/uppy-config';
 // import Label from '../../components/Label';
 // import InstitutionLogoFileUploader from './InstitutionLogoFileUploader';
 // import FileCard from '../publication/files_and_license_tab/FileCard';
-import InstitutionSearch from '../publication/references_tab/components/InstitutionSearch';
 import { useParams, useHistory } from 'react-router-dom';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
@@ -27,6 +26,9 @@ import {
   updateCustomerInstitution,
 } from '../../api/customerInstitutionsApi';
 import Progress from '../../components/Progress';
+import useFetchInstitutions from '../../utils/hooks/useFetchInstitutions';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import { RecursiveInstitutionUnit, InstitutionUnitBase } from '../../types/institution.types';
 
 const shouldAllowMultipleFiles = false;
 
@@ -56,6 +58,7 @@ const AdminCustomerInstitutionPage: FC = () => {
   const [isLoading, setIsLoading] = useState(editMode);
   const dispatch = useDispatch();
   const history = useHistory();
+  const [institutions, isLoadingInstitutions] = useFetchInstitutions();
 
   useEffect(() => {
     return () => uppy && uppy.close();
@@ -137,20 +140,45 @@ const AdminCustomerInstitutionPage: FC = () => {
               </StyledLogoUploadWrapper>
             )}
           </Field> */}
+
             <Field name={CustomerInstitutionFieldNames.NAME}>
-              {({ field: { value, name }, form }: FieldProps) => (
-                <InstitutionSearch
-                  dataTestId="autosearch-institution"
-                  label={t('organization_register_name')}
-                  initialValue={value ?? ''}
-                  clearSearchField={value?.name === ''}
-                  setValueFunction={(inputValue) => {
-                    form.setFieldValue(name, inputValue.name);
-                  }}
-                  placeholder={t('profile:organization.search_for_institution')}
-                />
+              {({ field: { name, value }, form: { setFieldValue } }: FieldProps) => (
+                <>
+                  <Autocomplete
+                    disabled={editMode}
+                    options={institutions}
+                    value={institutions.find((i) => i.name === value) ?? null}
+                    getOptionLabel={(option: RecursiveInstitutionUnit) => option.name}
+                    noOptionsText={t('common:no_hits')}
+                    onChange={(_: ChangeEvent<{}>, value: InstitutionUnitBase | null) => {
+                      setFieldValue(name, value?.name ?? '');
+                    }}
+                    renderInput={(params) => (
+                      <MuiTextField
+                        {...params}
+                        label={t('organization_register_name')}
+                        placeholder={t('institution:search_institution')}
+                        variant="outlined"
+                        inputProps={{
+                          ...params.inputProps,
+                          'data-testid': 'autocomplete-institution',
+                        }}
+                        InputProps={{
+                          ...params.InputProps,
+                          endAdornment: (
+                            <>
+                              {isLoadingInstitutions && <CircularProgress size={20} />}
+                              {params.InputProps.endAdornment}
+                            </>
+                          ),
+                        }}
+                      />
+                    )}
+                  />
+                </>
               )}
             </Field>
+
             <Field
               aria-label={CustomerInstitutionFieldNames.DISPLAY_NAME}
               name={CustomerInstitutionFieldNames.DISPLAY_NAME}
