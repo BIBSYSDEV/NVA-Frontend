@@ -5,11 +5,17 @@ import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 
 import PublicationExpansionPanel from './PublicationExpansionPanel';
 import UppyDashboard from '../../../components/UppyDashboard';
-import { Uppy, emptyFile } from '../../../types/file.types';
+import { File, Uppy, emptyFile, emptyFileSet } from '../../../types/file.types';
 import FileCard from '../files_and_license_tab/FileCard';
 import styled from 'styled-components';
 import { Button } from '@material-ui/core';
 import { UppyFile } from '@uppy/core';
+import { emptyPublication } from '../../../types/publication.types';
+import { createPublication } from '../../../api/publicationApi';
+import { useHistory } from 'react-router';
+import { useDispatch } from 'react-redux';
+import { setNotification } from '../../../redux/actions/notificationActions';
+import { NotificationVariant } from '../../../types/notification.types';
 
 const shouldAllowMultipleFiles = true;
 
@@ -26,15 +32,26 @@ const StyledFileCard = styled.div`
 
 const LoadPublication: FC<LoadPublicationProps> = ({ expanded, onChange, openForm, uppy }) => {
   const { t } = useTranslation('publication');
-  const [uploadedFiles, setUploadedFiles] = useState<UppyFile[]>([]);
+  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+  const history = useHistory();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (uppy && !uppy.hasUploadSuccessEventListener) {
-      const addFile = (newFile: UppyFile) => {
-        setUploadedFiles([newFile, ...uploadedFiles]);
+      const addFile = (newFile: File) => {
+        setUploadedFile(newFile);
       };
 
-      uppy.on('upload-success', addFile);
+      uppy.on('upload-success', (file: UppyFile, response: any) => {
+        const newFile = {
+          ...emptyFile,
+          identifier: response.uploadURL, // In reality an ID from completeMultipartUpload endpoint
+          name: file.name,
+          mimeType: file.type ?? '',
+          size: file.size,
+        };
+        addFile(newFile);
+      });
       uppy.hasUploadSuccessEventListener = true;
 
       return () => {
@@ -42,7 +59,28 @@ const LoadPublication: FC<LoadPublicationProps> = ({ expanded, onChange, openFor
         uppy.hasUploadSuccessEventListener = false;
       };
     }
-  }, [uppy, uploadedFiles]);
+  }, [uppy, uploadedFile]);
+
+  const createEmptyPublication = async () => {
+    console.log('create');
+    if (uploadedFile) {
+      console.log('uploadedFile', uploadedFile);
+      const emptyPublicationWithFiles = {
+        ...emptyPublication,
+        fileSet: {
+          ...emptyFileSet,
+          files: [uploadedFile],
+        },
+      };
+      const publication = await createPublication(emptyPublication);
+      if (publication?.identifier) {
+        openForm();
+        history.push(`/publication/${publication.identifier}`);
+      } else {
+        dispatch(setNotification(t('feedback:error.create_publication'), NotificationVariant.Error));
+      }
+    }
+  };
 
   return (
     <PublicationExpansionPanel
@@ -54,21 +92,27 @@ const LoadPublication: FC<LoadPublicationProps> = ({ expanded, onChange, openFor
       {uppy ? (
         <>
           <UppyDashboard uppy={uppy} shouldAllowMultipleFiles={shouldAllowMultipleFiles} />
-          {uploadedFiles.map((file) => (
-            <StyledFileCard key={file.id}>
-              <FileCard
-                file={{ ...emptyFile, identifier: file.id, name: file.name, size: file.size }}
-                removeFile={() => {
-                  setUploadedFiles(uploadedFiles.filter((uploadedFile) => uploadedFile.id !== file.id));
-                  uppy.removeFile(file.id);
-                }}
-              />
-            </StyledFileCard>
-          ))}
-          {uploadedFiles.length > 0 && (
-            <Button color="primary" variant="contained" onClick={openForm}>
-              {t('common:start')}
-            </Button>
+          {uploadedFile && (
+            <>
+              <StyledFileCard key={uploadedFile.identifier}>
+                <FileCard
+                  file={{
+                    ...emptyFile,
+                    identifier: uploadedFile.identifier,
+                    name: uploadedFile.name,
+                    size: uploadedFile.size,
+                  }}
+                  removeFile={() => {
+                    setUploadedFile(null);
+                    uppy.removeFile(uploadedFile.identifier);
+                  }}
+                />
+              </StyledFileCard>
+
+              <Button color="primary" variant="contained" onClick={createEmptyPublication}>
+                {t('common:start')}
+              </Button>
+            </>
           )}
         </>
       ) : null}
