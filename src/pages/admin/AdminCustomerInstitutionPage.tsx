@@ -143,47 +143,45 @@ const AdminCustomerInstitutionPage: FC = () => {
 
             <Field name={CustomerInstitutionFieldNames.NAME}>
               {({ field: { name, value }, form: { setFieldValue } }: FieldProps) => (
-                <>
-                  <Autocomplete
-                    disabled={editMode}
-                    options={institutions}
-                    value={institutions.find((i) => i.name === value) ?? null}
-                    getOptionLabel={(option: RecursiveInstitutionUnit) => option.name}
-                    filterOptions={(options: RecursiveInstitutionUnit[], state: any) => {
-                      const inputValue = state.inputValue.toLowerCase();
-                      return options.filter(
-                        (option) =>
-                          option.name.toLowerCase().includes(inputValue) ||
-                          option.acronym.toLowerCase().includes(inputValue)
-                      );
-                    }}
-                    noOptionsText={t('common:no_hits')}
-                    onChange={(_: ChangeEvent<{}>, value: InstitutionUnitBase | null) => {
-                      setFieldValue(name, value?.name ?? '');
-                    }}
-                    renderInput={(params) => (
-                      <MuiTextField
-                        {...params}
-                        label={t('organization_register_name')}
-                        placeholder={t('institution:search_institution')}
-                        variant="outlined"
-                        inputProps={{
-                          ...params.inputProps,
-                          'data-testid': 'customer-institution-name-input',
-                        }}
-                        InputProps={{
-                          ...params.InputProps,
-                          endAdornment: (
-                            <>
-                              {isLoadingInstitutions && <CircularProgress size={20} />}
-                              {params.InputProps.endAdornment}
-                            </>
-                          ),
-                        }}
-                      />
-                    )}
-                  />
-                </>
+                <Autocomplete
+                  disabled={editMode}
+                  options={institutions}
+                  value={institutions.find((i) => i.name === value) ?? null}
+                  getOptionLabel={(option: RecursiveInstitutionUnit) => option.name}
+                  filterOptions={(options: RecursiveInstitutionUnit[], state: any) => {
+                    const inputValue = state.inputValue.toLowerCase();
+                    return options.filter(
+                      (option) =>
+                        option.name.toLowerCase().includes(inputValue) ||
+                        option.acronym.toLowerCase().includes(inputValue)
+                    );
+                  }}
+                  noOptionsText={t('common:no_hits')}
+                  onChange={(_: ChangeEvent<{}>, value: InstitutionUnitBase | null) => {
+                    setFieldValue(name, value?.name ?? '');
+                  }}
+                  renderInput={(params) => (
+                    <MuiTextField
+                      {...params}
+                      label={t('organization_register_name')}
+                      placeholder={t('institution:search_institution')}
+                      variant="outlined"
+                      inputProps={{
+                        ...params.inputProps,
+                        'data-testid': 'customer-institution-name-input',
+                      }}
+                      InputProps={{
+                        ...params.InputProps,
+                        endAdornment: (
+                          <>
+                            {isLoadingInstitutions && <CircularProgress size={20} />}
+                            {params.InputProps.endAdornment}
+                          </>
+                        ),
+                      }}
+                    />
+                  )}
+                />
               )}
             </Field>
 
