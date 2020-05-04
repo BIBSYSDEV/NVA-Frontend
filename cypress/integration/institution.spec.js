@@ -7,7 +7,7 @@ describe('My profile: Institutions', () => {
   it('The user should be able to add an institution to their profile', () => {
     // add institution
     cy.get('[data-testid=add-new-institution-button]').click({ force: true });
-    cy.get('[data-testid=autocomplete-institution]').click({ force: true }).type('norwegian univ');
+    cy.get('[data-testid=autocomplete-institution]').click({ force: true }).type('ntnu');
     cy.get('.MuiAutocomplete-option').contains('Norwegian University of Science and Technology').click({ force: true });
     cy.get('[data-testid=unit-selector]').eq(0).click({ force: true }).type('health');
     cy.contains('Faculty of Medicine and Health Sciences').click({ force: true });
