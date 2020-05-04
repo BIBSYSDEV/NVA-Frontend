@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState, ChangeEvent, useRef } from 'react';
+import React, { FC, useState, ChangeEvent, useRef } from 'react';
 import { Button, TextField, CircularProgress } from '@material-ui/core';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
@@ -12,15 +12,14 @@ import {
   InstitutionUnitBase,
 } from '../types/institution.types';
 import InstitutionSelector from '../pages/user/institution/InstitutionSelector';
-import { useDispatch, useSelector } from 'react-redux';
-import { getInstitutions, getDepartment } from '../api/institutionApi';
+import { useDispatch } from 'react-redux';
+import { getDepartment } from '../api/institutionApi';
 import { setNotification } from '../redux/actions/notificationActions';
 import { NotificationVariant } from '../types/notification.types';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Progress from './Progress';
-import { RootStore } from '../redux/reducers/rootReducer';
-import { setInstitutions } from '../redux/actions/institutionActions';
 import NormalText from './NormalText';
+import useFetchInstitutions from '../utils/hooks/useFetchInstitutions';
 
 const StyledButton = styled(Button)`
   margin: 0.5rem;
@@ -42,27 +41,9 @@ interface SelectInstitutionProps {
 const SelectInstitution: FC<SelectInstitutionProps> = ({ onSubmit, onClose }) => {
   const { t } = useTranslation('common');
   const dispatch = useDispatch();
-  const institutions = useSelector((store: RootStore) => store.institutions);
   const [selectedInstitutionSubunits, setSelectedInstitutionSubunits] = useState<RecursiveInstitutionUnit[]>();
-  const [isLoadingInstitutions, setIsLoadingInstitutions] = useState(false);
   const [isLoadingDepartment, setIsLoadingDepartment] = useState(false);
-
-  useEffect(() => {
-    const fetchInstitutions = async () => {
-      setIsLoadingInstitutions(true);
-      const response = await getInstitutions();
-      if (response?.error) {
-        dispatch(setNotification(response.error, NotificationVariant.Error));
-      } else {
-        dispatch(setInstitutions(response));
-      }
-      setIsLoadingInstitutions(false);
-    };
-    // Institutions should not change, so ensure we fetch only once
-    if (!institutions || institutions.length === 0) {
-      fetchInstitutions();
-    }
-  }, [dispatch, institutions]);
+  const [institutions, isLoadingInstitutions] = useFetchInstitutions();
 
   // Allow cancellation of fetching department
   const cancelSourceRef = useRef<CancelTokenSource>();
