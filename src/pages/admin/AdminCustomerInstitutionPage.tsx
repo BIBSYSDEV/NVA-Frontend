@@ -1,8 +1,8 @@
-import React, { FC, useEffect, useState, ChangeEvent } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import Card from '../../components/Card';
 import { useTranslation } from 'react-i18next';
 import { Field, FieldProps, Form, Formik } from 'formik';
-import { Button, CircularProgress, TextField as MuiTextField } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import { TextField } from 'formik-material-ui';
 import Heading from '../../components/Heading';
 import styled from 'styled-components';
@@ -23,9 +23,7 @@ import {
 } from '../../api/customerInstitutionsApi';
 import Progress from '../../components/Progress';
 import useFetchInstitutions from '../../utils/hooks/useFetchInstitutions';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import { RecursiveInstitutionUnit, InstitutionUnitBase } from '../../types/institution.types';
-import { FilterOptionsState } from '@material-ui/lab/useAutocomplete';
+import InstitutionAutocomplete from '../../components/institution/InstitutionAutocomplete';
 
 const StyledButtonContainer = styled.div`
   margin-top: 2rem;
@@ -104,47 +102,12 @@ const AdminCustomerInstitutionPage: FC = () => {
           <Form>
             <Field name={CustomerInstitutionFieldNames.NAME}>
               {({ field: { name, value }, form: { setFieldValue } }: FieldProps) => (
-                <Autocomplete
-                  disabled={editMode}
-                  options={institutions}
+                <InstitutionAutocomplete
+                  institutions={institutions}
+                  isLoading={isLoadingInstitutions}
                   value={institutions.find((i) => i.name === value) ?? null}
-                  getOptionLabel={(option: RecursiveInstitutionUnit) => option.name}
-                  filterOptions={(
-                    options: RecursiveInstitutionUnit[],
-                    state: FilterOptionsState<RecursiveInstitutionUnit>
-                  ) => {
-                    const inputValue = state.inputValue.toLowerCase();
-                    return options.filter(
-                      (option) =>
-                        option.name.toLowerCase().includes(inputValue) ||
-                        option.acronym.toLowerCase().includes(inputValue)
-                    );
-                  }}
-                  noOptionsText={t('common:no_hits')}
-                  onChange={(_: ChangeEvent<{}>, value: InstitutionUnitBase | null) => {
-                    setFieldValue(name, value?.name ?? '');
-                  }}
-                  renderInput={(params) => (
-                    <MuiTextField
-                      {...params}
-                      label={t('organization_register_name')}
-                      placeholder={t('institution:search_institution')}
-                      variant="outlined"
-                      inputProps={{
-                        ...params.inputProps,
-                        'data-testid': 'customer-institution-name-input',
-                      }}
-                      InputProps={{
-                        ...params.InputProps,
-                        endAdornment: (
-                          <>
-                            {isLoadingInstitutions && <CircularProgress size={20} />}
-                            {params.InputProps.endAdornment}
-                          </>
-                        ),
-                      }}
-                    />
-                  )}
+                  onChange={(value) => setFieldValue(name, value?.name ?? '')}
+                  disabled={editMode}
                 />
               )}
             </Field>

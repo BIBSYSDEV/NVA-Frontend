@@ -1,5 +1,5 @@
-import React, { FC, useState, ChangeEvent, useRef } from 'react';
-import { Button, TextField, CircularProgress } from '@material-ui/core';
+import React, { FC, useState, useRef } from 'react';
+import { Button } from '@material-ui/core';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { Formik, Field, FieldProps, Form } from 'formik';
@@ -9,17 +9,16 @@ import {
   FormikInstitutionUnit,
   FormikInstitutionUnitFieldNames,
   RecursiveInstitutionUnit,
-  InstitutionUnitBase,
 } from '../types/institution.types';
 import InstitutionSelector from '../pages/user/institution/InstitutionSelector';
 import { useDispatch } from 'react-redux';
 import { getDepartment } from '../api/institutionApi';
 import { setNotification } from '../redux/actions/notificationActions';
 import { NotificationVariant } from '../types/notification.types';
-import Autocomplete from '@material-ui/lab/Autocomplete';
 import Progress from './Progress';
 import NormalText from './NormalText';
 import useFetchInstitutions from '../utils/hooks/useFetchInstitutions';
+import InstitutionAutocomplete from './institution/InstitutionAutocomplete';
 
 const StyledButton = styled(Button)`
   margin: 0.5rem;
@@ -74,19 +73,11 @@ const SelectInstitution: FC<SelectInstitutionProps> = ({ onSubmit, onClose }) =>
         <Field name={FormikInstitutionUnitFieldNames.UNIT}>
           {({ field: { name, value }, form: { setFieldValue, isSubmitting } }: FieldProps) => (
             <StyledInstitutionSearchContainer>
-              <Autocomplete
-                options={institutions}
-                getOptionLabel={(option: RecursiveInstitutionUnit) => option.name}
-                filterOptions={(options: RecursiveInstitutionUnit[], state: any) => {
-                  const inputValue = state.inputValue.toLowerCase();
-                  return options.filter(
-                    (option) =>
-                      option.name.toLowerCase().includes(inputValue) ||
-                      option.acronym.toLowerCase().includes(inputValue)
-                  );
-                }}
-                noOptionsText={t('no_hits')}
-                onChange={(_: ChangeEvent<{}>, value: InstitutionUnitBase | null) => {
+              <InstitutionAutocomplete
+                institutions={institutions}
+                isLoading={isLoadingInstitutions}
+                value={value}
+                onChange={(value) => {
                   if (isLoadingDepartment) {
                     // Cancel potential previous request in progress
                     cancelSourceRef.current?.cancel();
@@ -99,28 +90,8 @@ const SelectInstitution: FC<SelectInstitutionProps> = ({ onSubmit, onClose }) =>
                   }
                   setFieldValue(name, value);
                 }}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label={t('institution')}
-                    placeholder={t('institution:search_institution')}
-                    variant="outlined"
-                    inputProps={{
-                      ...params.inputProps,
-                      'data-testid': 'autocomplete-institution',
-                    }}
-                    InputProps={{
-                      ...params.InputProps,
-                      endAdornment: (
-                        <>
-                          {isLoadingInstitutions && <CircularProgress size={20} />}
-                          {params.InputProps.endAdornment}
-                        </>
-                      ),
-                    }}
-                  />
-                )}
               />
+
               {isLoadingDepartment && (
                 <StyledLoadingInfo>
                   <NormalText>{t('institution:loading_department')}</NormalText>
