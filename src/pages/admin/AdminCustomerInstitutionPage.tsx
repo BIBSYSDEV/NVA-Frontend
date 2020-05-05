@@ -106,7 +106,11 @@ const AdminCustomerInstitutionPage: FC = () => {
                   institutions={institutions}
                   isLoading={isLoadingInstitutions}
                   value={institutions.find((i) => i.name === value) ?? null}
-                  onChange={(value) => setFieldValue(name, value?.name ?? '')}
+                  onChange={(value) => {
+                    setFieldValue(name, value?.name ?? '');
+                    setFieldValue(CustomerInstitutionFieldNames.DISPLAY_NAME, value?.name ?? '');
+                    setFieldValue(CustomerInstitutionFieldNames.SHORT_NAME, value?.acronym ?? '');
+                  }}
                   disabled={editMode}
                 />
               )}
