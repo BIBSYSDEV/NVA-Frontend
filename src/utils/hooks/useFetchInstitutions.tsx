@@ -9,8 +9,7 @@ import Axios from 'axios';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { setInstitutions } from '../../redux/actions/institutionActions';
 
-// This hook should only be used when fetching the hierarchy of a given unit and not if it is desired
-// to access all subunits of the given unit.
+// This hook is used to fetch all top-level institutions
 const useFetchInstitutions = (): [InstitutionUnitBase[], boolean] => {
   const dispatch = useDispatch();
   const institutions = useSelector((store: RootStore) => store.institutions);
