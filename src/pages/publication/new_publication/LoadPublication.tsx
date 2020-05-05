@@ -5,12 +5,11 @@ import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 
 import PublicationExpansionPanel from './PublicationExpansionPanel';
 import UppyDashboard from '../../../components/UppyDashboard';
-import { File, Uppy, emptyFile, emptyFileSet } from '../../../types/file.types';
+import { File, Uppy, emptyFile } from '../../../types/file.types';
 import FileCard from '../files_and_license_tab/FileCard';
 import styled from 'styled-components';
 import { Button } from '@material-ui/core';
 import { UppyFile } from '@uppy/core';
-import { emptyPublication } from '../../../types/publication.types';
 import { createPublication } from '../../../api/publicationApi';
 import { useHistory } from 'react-router';
 import { useDispatch } from 'react-redux';
@@ -65,14 +64,8 @@ const LoadPublication: FC<LoadPublicationProps> = ({ expanded, onChange, openFor
     console.log('create');
     if (uploadedFile) {
       console.log('uploadedFile', uploadedFile);
-      const emptyPublicationWithFiles = {
-        ...emptyPublication,
-        fileSet: {
-          ...emptyFileSet,
-          files: [uploadedFile],
-        },
-      };
-      const publication = await createPublication(emptyPublication);
+      const publication = await createPublication();
+      console.log('publication', publication);
       if (publication?.identifier) {
         openForm();
         history.push(`/publication/${publication.identifier}`);

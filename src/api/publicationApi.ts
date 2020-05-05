@@ -18,14 +18,17 @@ export enum PublicationsApiPaths {
   FOR_APPROVAL = '/publications/approval',
 }
 
-export const createPublication = async (publication: Publication) => {
+export const createPublication = async () => {
   try {
     const idToken = await getIdToken();
-    const response = await Axios.post(PublicationsApiPaths.PUBLICATION, publication, {
-      headers: { Authorization: `Bearer ${idToken}` },
-    });
+    const response = await Axios.post(
+      PublicationsApiPaths.PUBLICATION,
+      {},
+      {
+        headers: { Authorization: `Bearer ${idToken}` },
+      }
+    );
     if (response.status === StatusCode.OK || response.status === StatusCode.ACCEPTED) {
-      // TODO: temporarily allow accepted status code. remove when fixed in backend
       return response.data;
     } else {
       return { error: i18n.t('feedback:error.create_publication') };
