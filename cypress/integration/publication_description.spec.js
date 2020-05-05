@@ -10,8 +10,7 @@ describe('Publication: Description', () => {
     cy.get('[data-testid=menu]').click({ force: true });
     cy.get('[data-testid=menu-new-publication-button]').click({ force: true });
 
-    // TODO: Change this when DOI-link is used
-    cy.get('[data-testid=new-schema-button]').click({ force: true });
+    cy.startPublicationWithDoi();
 
     cy.get('[data-testid=search_project]').click({ force: true }).type('phd');
     cy.contains('PhD prosjekt: Selvbestemmelse uten ord').click({ force: true });

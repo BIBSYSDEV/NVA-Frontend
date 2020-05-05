@@ -36,6 +36,7 @@ const ReferencesPanel: FC = () => {
     <>
       <StyledSelectContainer>
         <SelectTypeField
+          dataTestId="publication_type_top"
           fieldName={ReferenceFieldNames.PUBLICATION_TYPE}
           options={Object.values(PublicationType)}
           onChangeType={() => {
