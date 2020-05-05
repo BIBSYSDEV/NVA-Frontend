@@ -1,4 +1,4 @@
-import React, { useEffect, useState, FC } from 'react';
+import React, { useEffect, useState, FC, Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
@@ -31,14 +31,14 @@ const StyledFileCard = styled.div`
 
 const LoadPublication: FC<LoadPublicationProps> = ({ expanded, onChange, openForm, uppy }) => {
   const { t } = useTranslation('publication');
-  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+  const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
   const history = useHistory();
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (uppy && !uppy.hasUploadSuccessEventListener) {
       const addFile = (newFile: File) => {
-        setUploadedFile(newFile);
+        setUploadedFiles([newFile, ...uploadedFiles]);
       };
 
       uppy.on('upload-success', (file: UppyFile, response: any) => {
@@ -58,14 +58,11 @@ const LoadPublication: FC<LoadPublicationProps> = ({ expanded, onChange, openFor
         uppy.hasUploadSuccessEventListener = false;
       };
     }
-  }, [uppy, uploadedFile]);
+  }, [uppy, uploadedFiles]);
 
   const createEmptyPublication = async () => {
-    console.log('create');
-    if (uploadedFile) {
-      console.log('uploadedFile', uploadedFile);
+    if (uploadedFiles) {
       const publication = await createPublication();
-      console.log('publication', publication);
       if (publication?.identifier) {
         openForm();
         history.push(`/publication/${publication.identifier}`);
@@ -85,19 +82,21 @@ const LoadPublication: FC<LoadPublicationProps> = ({ expanded, onChange, openFor
       {uppy ? (
         <>
           <UppyDashboard uppy={uppy} shouldAllowMultipleFiles={shouldAllowMultipleFiles} />
-          {uploadedFile && (
-            <>
-              <StyledFileCard key={uploadedFile.identifier}>
+          {uploadedFiles.map((file) => (
+            <Fragment key={file.identifier}>
+              <StyledFileCard>
                 <FileCard
                   file={{
                     ...emptyFile,
-                    identifier: uploadedFile.identifier,
-                    name: uploadedFile.name,
-                    size: uploadedFile.size,
+                    identifier: file.identifier,
+                    name: file.name,
+                    size: file.size,
                   }}
                   removeFile={() => {
-                    setUploadedFile(null);
-                    uppy.removeFile(uploadedFile.identifier);
+                    setUploadedFiles(
+                      uploadedFiles.filter((uploadedFile) => uploadedFile.identifier !== file.identifier)
+                    );
+                    uppy.removeFile(file.identifier);
                   }}
                 />
               </StyledFileCard>
@@ -105,8 +104,8 @@ const LoadPublication: FC<LoadPublicationProps> = ({ expanded, onChange, openFor
               <Button color="primary" variant="contained" onClick={createEmptyPublication}>
                 {t('common:start')}
               </Button>
-            </>
-          )}
+            </Fragment>
+          ))}
         </>
       ) : null}
     </PublicationExpansionPanel>

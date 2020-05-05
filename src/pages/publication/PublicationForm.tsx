@@ -68,30 +68,21 @@ const PublicationForm: FC<PublicationFormProps> = ({
   const history = useHistory();
 
   useEffect(() => {
-    // Get files uploaded from new publication view
-    const files = Object.values(uppy.getState().files).map((file) => ({
-      ...emptyFile,
-      identifier: file.id,
-      name: file.name,
-      mimeType: file.type ?? '',
-      size: file.size,
-    }));
-
-    if (files?.length) {
-      setInitialValues({
-        ...emptyPublication,
-        fileSet: { ...emptyFileSet, files },
-      });
-    }
-  }, [uppy]);
-
-  useEffect(() => {
     return () => uppy && uppy.reset();
   }, [uppy]);
 
   useEffect(() => {
     const getPublicationById = async (id: string) => {
+      const files = Object.values(uppy.getState().files).map((file) => ({
+        ...emptyFile,
+        identifier: file.response?.uploadURL ?? file.id,
+        name: file.name,
+        mimeType: file.type ?? '',
+        size: file.size,
+      }));
+
       const publication = await getPublication(id);
+
       if (publication.error) {
         closeForm();
         dispatch(setNotification(publication.error, NotificationVariant.Error));
@@ -99,7 +90,15 @@ const PublicationForm: FC<PublicationFormProps> = ({
         history.push(`/publication/${id}/public`);
       } else {
         // TODO: revisit necessity of deepmerge when backend model has all fields
-        setInitialValues(deepmerge(emptyPublication, publication));
+        setInitialValues(
+          deepmerge(
+            {
+              ...emptyPublication,
+              fileSet: { ...emptyFileSet, files },
+            },
+            publication
+          )
+        );
         setIsLoading(false);
       }
     };
@@ -107,7 +106,7 @@ const PublicationForm: FC<PublicationFormProps> = ({
     if (identifier) {
       getPublicationById(identifier);
     }
-  }, [identifier, closeForm, dispatch, history]);
+  }, [identifier, closeForm, dispatch, history, uppy]);
 
   const handleTabChange = (_: React.ChangeEvent<{}>, newTabNumber: number) => {
     setTabNumber(newTabNumber);

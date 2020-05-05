@@ -21,14 +21,10 @@ export enum PublicationsApiPaths {
 export const createPublication = async () => {
   try {
     const idToken = await getIdToken();
-    const response = await Axios.post(
-      PublicationsApiPaths.PUBLICATION,
-      {},
-      {
-        headers: { Authorization: `Bearer ${idToken}` },
-      }
-    );
-    if (response.status === StatusCode.OK || response.status === StatusCode.ACCEPTED) {
+    const response = await Axios.post(PublicationsApiPaths.PUBLICATION, null, {
+      headers: { Authorization: `Bearer ${idToken}` },
+    });
+    if (response.status === StatusCode.CREATED) {
       return response.data;
     } else {
       return { error: i18n.t('feedback:error.create_publication') };
