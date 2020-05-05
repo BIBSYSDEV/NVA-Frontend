@@ -22,7 +22,7 @@ describe('User administers institutions ', () => {
   it('The User should be able to add an institution', () => {
     cy.get('[data-testid=add-institution-button]').click({ force: true });
 
-    cy.get('[data-testid=customer-institution-name-input]').click({ force: true }).type('ntnu');
+    cy.get('[data-testid=autocomplete-institution]').click({ force: true }).type('ntnu');
     cy.get('.MuiAutocomplete-option').contains('Norwegian University of Science and Technology').click({ force: true });
     cy.get('[data-testid=customer-institution-short-name-input]').type('NTNU');
     cy.get('[data-testid=customer-institution-archive-name-input]').type('NTNU Open');

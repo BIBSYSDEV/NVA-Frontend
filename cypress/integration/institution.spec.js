@@ -9,11 +9,11 @@ describe('My profile: Institutions', () => {
     cy.get('[data-testid=add-new-institution-button]').click({ force: true });
     cy.get('[data-testid=autocomplete-institution]').click({ force: true }).type('ntnu');
     cy.get('.MuiAutocomplete-option').contains('Norwegian University of Science and Technology').click({ force: true });
-    cy.get('[data-testid=unit-selector]').eq(0).click({ force: true }).type('health');
+    cy.get('[data-testid=autocomplete-institution]').eq(1).click({ force: true }).type('health');
     cy.contains('Faculty of Medicine and Health Sciences').click({ force: true });
-    cy.get('[data-testid=unit-selector]').eq(1).click({ force: true }).type('health');
+    cy.get('[data-testid=autocomplete-institution]').eq(2).click({ force: true }).type('health');
     cy.contains('Department of Public Health and Nursing').click({ force: true });
-    cy.get('[data-testid=unit-selector]').eq(2).click({ force: true }).type(' ');
+    cy.get('[data-testid=autocomplete-institution]').eq(3).click({ force: true }).type(' ');
     cy.contains('Allmennmedisinsk forskningsenhet i Trondheim').click({ force: true });
 
     cy.get('[data-testid=institution-add-button]').click({ force: true });
