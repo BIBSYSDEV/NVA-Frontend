@@ -15,6 +15,13 @@ import { useHistory } from 'react-router';
 import { useDispatch } from 'react-redux';
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../types/notification.types';
+import Progress from '../../../components/Progress';
+
+const StyledProgressContainer = styled.div`
+  padding-left: 1rem;
+  display: flex;
+  align-items: center;
+`;
 
 const shouldAllowMultipleFiles = true;
 
@@ -32,6 +39,7 @@ const StyledFileCard = styled.div`
 const LoadPublication: FC<LoadPublicationProps> = ({ expanded, onChange, openForm, uppy }) => {
   const { t } = useTranslation('publication');
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -61,6 +69,7 @@ const LoadPublication: FC<LoadPublicationProps> = ({ expanded, onChange, openFor
   }, [uppy, uploadedFiles]);
 
   const createEmptyPublication = async () => {
+    setIsLoading(true);
     const publication = await createPublication();
     if (publication?.identifier) {
       openForm();
@@ -69,6 +78,8 @@ const LoadPublication: FC<LoadPublicationProps> = ({ expanded, onChange, openFor
       dispatch(setNotification(t('feedback:error.create_publication'), NotificationVariant.Error));
     }
   };
+
+  //TODO: handle navigate away
 
   return (
     <PublicationExpansionPanel
@@ -97,8 +108,13 @@ const LoadPublication: FC<LoadPublicationProps> = ({ expanded, onChange, openFor
             </StyledFileCard>
           ))}
           {uploadedFiles.length > 0 && (
-            <Button color="primary" variant="contained" onClick={createEmptyPublication}>
+            <Button color="primary" variant="contained" onClick={createEmptyPublication} disabled={isLoading}>
               {t('common:start')}
+              {isLoading && (
+                <StyledProgressContainer>
+                  <Progress size={15} thickness={5} />
+                </StyledProgressContainer>
+              )}
             </Button>
           )}
         </>
