@@ -22,12 +22,14 @@ const InstitutionAutocomplete: FC<InstitutionAutocompleteProps> = ({
   disabled = false,
 }) => {
   const { t } = useTranslation('common');
+
   return (
     <Autocomplete
       disabled={disabled}
       options={institutions}
       getOptionLabel={(option: InstitutionUnitBase) => option.name}
-      value={value}
+      getOptionSelected={(option: InstitutionUnitBase, value: InstitutionUnitBase) => option.id === value.id}
+      value={value ?? null}
       filterOptions={(options: InstitutionUnitBase[], state: FilterOptionsState<InstitutionUnitBase>) => {
         const inputValue = state.inputValue.toLowerCase();
         return options.filter(
