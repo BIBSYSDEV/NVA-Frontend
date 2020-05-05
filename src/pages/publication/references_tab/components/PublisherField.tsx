@@ -35,7 +35,13 @@ const PublisherField: FC<PublisherFieldProps> = ({
             publicationTable={publicationTable}
             setValueFunction={(selectedPublisher) => setFieldValue(name, mapPublisher(selectedPublisher, value.type))}
             placeholder={placeholder}
-            errorMessage={touched ? error : ''}
+            errorMessage={
+              touched && error
+                ? typeof error === 'object'
+                  ? (Object.values(error)[0] as string) // Use first message if error is an object
+                  : error
+                : ''
+            }
           />
           {value.title && (
             <PublisherRow

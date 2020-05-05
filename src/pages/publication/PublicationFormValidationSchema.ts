@@ -122,14 +122,12 @@ export const publicationValidationSchema = Yup.object().shape({
           is: PublicationType.CHAPTER,
           then: Yup.object().shape(chapterValidationSchema),
         }),
-      publicationContext: Yup.object()
-        .nullable()
-        .shape({
-          name: Yup.string(),
-          level: Yup.mixed(),
-          openAccess: Yup.boolean(),
-        })
-        .required(ErrorMessage.REQUIRED),
+      publicationContext: Yup.object().shape({
+        type: Yup.string().required(ErrorMessage.REQUIRED),
+        title: Yup.string().required(ErrorMessage.REQUIRED),
+        level: Yup.mixed(),
+        openAccess: Yup.boolean(),
+      }),
     }),
   }),
   fileSet: Yup.object().shape({
