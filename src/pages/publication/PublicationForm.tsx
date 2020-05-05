@@ -131,11 +131,13 @@ const PublicationForm: FC<PublicationFormProps> = ({
   };
 
   const validateForm = (values: FormikPublication) => {
-    const { publicationType, reference: publicationInstance } = values.entityDescription;
+    const {
+      reference: { publicationInstance, publicationContext },
+    } = values.entityDescription;
     try {
       validateYupSchema<FormikPublication>(values, publicationValidationSchema, true, {
         publicationInstanceType: publicationInstance.type,
-        publicationType,
+        publicationContextType: publicationContext.type,
       });
     } catch (err) {
       return yupToFormErrors(err);

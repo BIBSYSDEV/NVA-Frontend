@@ -48,7 +48,7 @@ const fileValidationSchema = {
     }),
 };
 
-const journalContentValidationSchema = {
+const journalValidationSchema = {
   type: Yup.string().oneOf(Object.values(JournalArticleType)).required(ErrorMessage.REQUIRED),
   peerReviewed: Yup.boolean().required(ErrorMessage.REQUIRED),
   articleNumber: Yup.string(),
@@ -96,30 +96,29 @@ export const publicationValidationSchema = Yup.object().shape({
     }),
     language: Yup.string().url().oneOf(Object.values(LanguageValues)),
     projects: Yup.array().of(Yup.object()), // TODO
-    publicationType: Yup.string().oneOf(Object.values(PublicationType)).required(ErrorMessage.REQUIRED),
     contributors: Yup.array()
       .of(Yup.object().shape(contributorValidationSchema))
       .min(1, ErrorMessage.MISSING_CONTRIBUTOR),
     reference: Yup.object().shape({
       doi: Yup.string(),
       publicationInstance: Yup.object()
-        .when('$publicationType', {
+        .when('$publicationContextType', {
           is: PublicationType.PUBLICATION_IN_JOURNAL,
-          then: Yup.object().shape(journalContentValidationSchema),
+          then: Yup.object().shape(journalValidationSchema),
         })
-        .when('$publicationType', {
+        .when('$publicationContextType', {
           is: PublicationType.BOOK,
           then: Yup.object().shape(bookValidationSchema),
         })
-        .when('$publicationType', {
+        .when('$publicationContextType', {
           is: PublicationType.REPORT,
           then: Yup.object().shape(reportValidationSchema),
         })
-        .when('$publicationType', {
+        .when('$publicationContextType', {
           is: PublicationType.DEGREE,
           then: Yup.object().shape(degreeValidationSchema),
         })
-        .when('$publicationType', {
+        .when('$publicationContextType', {
           is: PublicationType.CHAPTER,
           then: Yup.object().shape(chapterValidationSchema),
         }),

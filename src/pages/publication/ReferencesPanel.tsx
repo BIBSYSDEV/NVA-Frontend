@@ -24,7 +24,7 @@ const StyledSelectContainer = styled.div`
 const ReferencesPanel: FC = () => {
   const { t } = useTranslation('publication');
   const { values, setFieldTouched, setFieldValue }: FormikProps<FormikPublication> = useFormikContext();
-  const { publicationType } = values.entityDescription;
+  const publicationContextType = values.entityDescription.reference.publicationContext.type;
 
   useEffect(
     // Set all fields as touched if user navigates away from this panel (on unmount)
@@ -37,7 +37,7 @@ const ReferencesPanel: FC = () => {
       <StyledSelectContainer>
         <SelectTypeField
           dataTestId="publication_type_top"
-          fieldName={ReferenceFieldNames.PUBLICATION_TYPE}
+          fieldName={ReferenceFieldNames.PUBLICATION_CONTEXT_TYPE}
           options={Object.values(PublicationType)}
           onChangeType={() => {
             // Ensure some values are reset when publicationType changes
@@ -49,14 +49,14 @@ const ReferencesPanel: FC = () => {
         />
       </StyledSelectContainer>
 
-      {publicationType && (
+      {publicationContextType && (
         <StyledCard>
-          <Heading data-testid="publication_type-heading">{t(`publicationTypes:${publicationType}`)}</Heading>
-          {publicationType === PublicationType.BOOK && <BookForm />}
-          {publicationType === PublicationType.CHAPTER && <ChapterForm />}
-          {publicationType === PublicationType.REPORT && <ReportForm />}
-          {publicationType === PublicationType.DEGREE && <DegreeForm />}
-          {publicationType === PublicationType.PUBLICATION_IN_JOURNAL && <JournalArticleForm />}
+          <Heading data-testid="publication_type-heading">{t(`publicationTypes:${publicationContextType}`)}</Heading>
+          {publicationContextType === PublicationType.BOOK && <BookForm />}
+          {publicationContextType === PublicationType.CHAPTER && <ChapterForm />}
+          {publicationContextType === PublicationType.REPORT && <ReportForm />}
+          {publicationContextType === PublicationType.DEGREE && <DegreeForm />}
+          {publicationContextType === PublicationType.PUBLICATION_IN_JOURNAL && <JournalArticleForm />}
         </StyledCard>
       )}
     </>

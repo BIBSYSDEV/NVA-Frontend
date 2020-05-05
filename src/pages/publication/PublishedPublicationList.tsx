@@ -74,9 +74,7 @@ const PublishedPublicationList: FC<PublicationListProps> = ({ publications }) =>
                 <NormalText>{publication.reference?.publicationContext?.title}</NormalText>
               </StyledTableCellForPublisher>
               <StyledTableCellForType>
-                {publication.publicationType && (
-                  <NormalText>{t(`publicationTypes:${publication.publicationType}`)}</NormalText>
-                )}
+                {publication.type && <NormalText>{t(`publicationTypes:${publication.type}`)}</NormalText>}
               </StyledTableCellForType>
               <StyledTableCellForDate>
                 <NormalText>{new Date(publication.createdDate).getFullYear()}</NormalText>
