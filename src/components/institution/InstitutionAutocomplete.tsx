@@ -17,7 +17,7 @@ interface InstitutionAutocompleteProps {
 const InstitutionAutocomplete: FC<InstitutionAutocompleteProps> = ({
   institutions,
   onChange,
-  value,
+  value = null,
   isLoading = false,
   disabled = false,
 }) => {
@@ -29,7 +29,7 @@ const InstitutionAutocomplete: FC<InstitutionAutocompleteProps> = ({
       options={institutions}
       getOptionLabel={(option: InstitutionUnitBase) => option.name}
       getOptionSelected={(option: InstitutionUnitBase, value: InstitutionUnitBase) => option.id === value.id}
-      value={value ?? null}
+      value={value}
       filterOptions={(options: InstitutionUnitBase[], state: FilterOptionsState<InstitutionUnitBase>) => {
         const inputValue = state.inputValue.toLowerCase();
         return options.filter(
