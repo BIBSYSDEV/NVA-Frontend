@@ -7,7 +7,7 @@ interface SelectTypeFieldProps {
   fieldName: string;
   options: string[];
   dataTestId?: string;
-  onChangeType?: () => void;
+  onChangeType?: (value: string) => void;
 }
 
 const SelectTypeField: FC<SelectTypeFieldProps> = ({
@@ -31,10 +31,9 @@ const SelectTypeField: FC<SelectTypeFieldProps> = ({
           error={!!error && touched}
           SelectProps={{ MenuProps: { autoFocus: false } }}
           helperText={<ErrorMessage name={field.name} />}
-          onChange={(event: React.ChangeEvent<any>) => {
-            field.onChange(event);
-            onChangeType?.();
-          }}>
+          onChange={(event: React.ChangeEvent<any>) =>
+            onChangeType ? onChangeType(event.target.value) : field.onChange(event)
+          }>
           {options.map((typeValue) => (
             <MenuItem value={typeValue} key={typeValue} data-testid={`publication_type-${typeValue}`}>
               {t(`publicationTypes:${typeValue}`)}

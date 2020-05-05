@@ -39,10 +39,10 @@ const ReferencesPanel: FC = () => {
           dataTestId="publication_type_top"
           fieldName={ReferenceFieldNames.PUBLICATION_CONTEXT_TYPE}
           options={Object.values(PublicationType)}
-          onChangeType={() => {
-            // Ensure some values are reset when publicationType changes
+          onChangeType={(newPublicationContextType) => {
+            // Ensure some values are reset when publication type changes
             setFieldValue(ReferenceFieldNames.SUB_TYPE, '');
-            setFieldValue(ReferenceFieldNames.PUBLICATION_CONTEXT, null);
+            setFieldValue(ReferenceFieldNames.PUBLICATION_CONTEXT, { type: newPublicationContextType });
             // Avoid showing potential errors instantly
             Object.values(ReferenceFieldNames).forEach((fieldName) => setFieldTouched(fieldName, false));
           }}
