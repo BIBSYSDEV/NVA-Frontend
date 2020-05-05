@@ -9,16 +9,16 @@ import {
   FormikInstitutionUnit,
   FormikInstitutionUnitFieldNames,
   RecursiveInstitutionUnit,
-} from '../types/institution.types';
-import InstitutionSelector from '../pages/user/institution/InstitutionSelector';
+} from '../../types/institution.types';
+import InstitutionSelector from '../../pages/user/institution/InstitutionSelector';
 import { useDispatch } from 'react-redux';
-import { getDepartment } from '../api/institutionApi';
-import { setNotification } from '../redux/actions/notificationActions';
-import { NotificationVariant } from '../types/notification.types';
-import Progress from './Progress';
-import NormalText from './NormalText';
-import useFetchInstitutions from '../utils/hooks/useFetchInstitutions';
-import InstitutionAutocomplete from './institution/InstitutionAutocomplete';
+import { getDepartment } from '../../api/institutionApi';
+import { setNotification } from '../../redux/actions/notificationActions';
+import { NotificationVariant } from '../../types/notification.types';
+import Progress from '../Progress';
+import NormalText from '../NormalText';
+import useFetchInstitutions from '../../utils/hooks/useFetchInstitutions';
+import InstitutionAutocomplete from './InstitutionAutocomplete';
 
 const StyledButton = styled(Button)`
   margin: 0.5rem;
