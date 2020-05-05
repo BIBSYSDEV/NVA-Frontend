@@ -152,12 +152,12 @@ const PublicationForm: FC<PublicationFormProps> = ({
         validate={validateForm}
         validateOnChange={false}
         onSubmit={(values: FormikPublication) => savePublication(values)}>
-        {({ dirty, values }: FormikProps<FormikPublication>) => (
+        {({ dirty, values, isValid }: FormikProps<FormikPublication>) => (
           <>
             <RouteLeavingGuard
               modalDescription={t('modal_unsaved_changes_description')}
               modalHeading={t('modal_unsaved_changes_heading')}
-              shouldBlockNavigation={dirty}
+              shouldBlockNavigation={dirty || !isValid}
             />
             <Form>
               <PublicationFormTabs tabNumber={tabNumber} handleTabChange={handleTabChange} />

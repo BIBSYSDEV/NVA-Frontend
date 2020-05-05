@@ -79,8 +79,6 @@ const LoadPublication: FC<LoadPublicationProps> = ({ expanded, onChange, openFor
     }
   };
 
-  //TODO: handle navigate away
-
   return (
     <PublicationExpansionPanel
       headerLabel={t('publication:publication.load_file')}
