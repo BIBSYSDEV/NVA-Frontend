@@ -10,14 +10,19 @@ interface SelectTypeFieldProps {
   onChangeType?: () => void;
 }
 
-const SelectTypeField: FC<SelectTypeFieldProps> = ({ fieldName, options, dataTestId, onChangeType }) => {
+const SelectTypeField: FC<SelectTypeFieldProps> = ({
+  fieldName,
+  options,
+  dataTestId = 'publication_type',
+  onChangeType,
+}) => {
   const { t } = useTranslation();
 
   return (
     <Field name={fieldName} variant="outlined">
       {({ field, meta: { error, touched } }: FieldProps) => (
         <TextField
-          data-testid={dataTestId ?? 'publication_type'}
+          data-testid={dataTestId}
           select
           variant="outlined"
           fullWidth
