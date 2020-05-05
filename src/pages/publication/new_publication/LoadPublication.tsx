@@ -81,6 +81,7 @@ const LoadPublication: FC<LoadPublicationProps> = ({ expanded, onChange, openFor
 
   return (
     <PublicationExpansionPanel
+      dataTestId="new-publication-file"
       headerLabel={t('publication:publication.load_file')}
       icon={<CloudDownloadIcon />}
       expanded={expanded}
@@ -106,7 +107,12 @@ const LoadPublication: FC<LoadPublicationProps> = ({ expanded, onChange, openFor
             </StyledFileCard>
           ))}
           {uploadedFiles.length > 0 && (
-            <Button color="primary" variant="contained" onClick={createEmptyPublication} disabled={isLoading}>
+            <Button
+              color="primary"
+              data-testid="publication-file-start-button"
+              variant="contained"
+              onClick={createEmptyPublication}
+              disabled={isLoading}>
               {t('common:start')}
               {isLoading && (
                 <StyledProgressContainer>
