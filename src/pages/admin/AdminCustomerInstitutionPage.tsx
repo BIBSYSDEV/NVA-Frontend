@@ -117,8 +117,8 @@ const AdminCustomerInstitutionPage: FC = () => {
             </Field>
 
             <Field
-              aria-label={CustomerInstitutionFieldNames.DISPLAY_NAME}
               name={CustomerInstitutionFieldNames.DISPLAY_NAME}
+              aria-label={t('display_name')}
               label={t('display_name')}
               component={TextField}
               fullWidth
@@ -126,8 +126,8 @@ const AdminCustomerInstitutionPage: FC = () => {
               inputProps={{ 'data-testid': 'customer-institution-display-name-input' }}
             />
             <Field
-              aria-label={CustomerInstitutionFieldNames.SHORT_NAME}
               name={CustomerInstitutionFieldNames.SHORT_NAME}
+              aria-label={t('short_name')}
               label={t('short_name')}
               component={TextField}
               fullWidth
@@ -135,8 +135,8 @@ const AdminCustomerInstitutionPage: FC = () => {
               inputProps={{ 'data-testid': 'customer-institution-short-name-input' }}
             />
             <Field
-              aria-label={CustomerInstitutionFieldNames.ARCHIVE_NAME}
               name={CustomerInstitutionFieldNames.ARCHIVE_NAME}
+              aria-label={t('archive_name')}
               label={t('archive_name')}
               component={TextField}
               fullWidth
@@ -144,8 +144,8 @@ const AdminCustomerInstitutionPage: FC = () => {
               inputProps={{ 'data-testid': 'customer-institution-archive-name-input' }}
             />
             <Field
-              aria-label={CustomerInstitutionFieldNames.CNAME}
               name={CustomerInstitutionFieldNames.CNAME}
+              aria-label={t('cname')}
               label={t('cname')}
               component={TextField}
               fullWidth
@@ -153,8 +153,8 @@ const AdminCustomerInstitutionPage: FC = () => {
               inputProps={{ 'data-testid': 'customer-institution-cname-input' }}
             />
             <Field
-              aria-label={CustomerInstitutionFieldNames.INSTITUTION_DNS}
               name={CustomerInstitutionFieldNames.INSTITUTION_DNS}
+              aria-label={t('institution_dns')}
               label={t('institution_dns')}
               component={TextField}
               fullWidth
@@ -162,8 +162,8 @@ const AdminCustomerInstitutionPage: FC = () => {
               inputProps={{ 'data-testid': 'customer-institution-institution-dns-input' }}
             />
             <Field
-              aria-label={CustomerInstitutionFieldNames.ADMINISTRATION_ID}
               name={CustomerInstitutionFieldNames.ADMINISTRATION_ID}
+              aria-label={t('administration_id')}
               label={t('administration_id')}
               component={TextField}
               fullWidth
@@ -171,8 +171,8 @@ const AdminCustomerInstitutionPage: FC = () => {
               inputProps={{ 'data-testid': 'customer-institution-administrator-id-input' }}
             />
             <Field
-              aria-label={CustomerInstitutionFieldNames.FEIDE_ORGANIZATION_ID}
               name={CustomerInstitutionFieldNames.FEIDE_ORGANIZATION_ID}
+              aria-label={t('feide_organization_id')}
               label={t('feide_organization_id')}
               component={TextField}
               fullWidth
