@@ -1,6 +1,8 @@
 const ErrorMessages = {
   REQUIRED: 'Required field',
+  INVALID_FORMAT: 'Invalid format',
   INVALID_DATE: 'Invalid Date Format',
+  MISSING_AUTHOR: 'You need to have at least one author registered for this publication',
 };
 
 describe('User opens publication form and can see validation errors', () => {
@@ -71,5 +73,31 @@ describe('User opens publication form and can see validation errors', () => {
     cy.contains(ErrorMessages.REQUIRED).should('not.be.visible');
 
     // TODO: Book type, Report type, etc
+  });
+
+  it('The User should be able to see validation errors on contributors tab', () => {
+    cy.get('[data-testid=nav-tabpanel-contributors]').click({ force: true });
+    cy.contains(ErrorMessages.MISSING_AUTHOR).should('be.visible');
+
+    // Add author
+    cy.get('[data-testid=add-contributor]').click({ force: true });
+    cy.get('[data-testid=search-input]').click({ force: true }).type('test');
+    cy.get('[data-testid=search-button]').click({ force: true });
+    cy.get('[data-testid=author-radio-button]').eq(0).click({ force: true });
+    cy.get('[data-testid=connect-author-button]').click({ force: true });
+    cy.contains(ErrorMessages.MISSING_AUTHOR).should('not.be.visible');
+
+    // Set corresponding (and email)
+    cy.get('[data-testid=author-corresponding-checkbox]').click({ force: true });
+    cy.contains(ErrorMessages.REQUIRED).should('not.be.visible');
+    cy.get('[data-testid=nav-tabpanel-references]').click({ force: true });
+    cy.get('[data-testid=nav-tabpanel-contributors]').click({ force: true });
+    cy.contains(ErrorMessages.REQUIRED).should('be.visible');
+
+    cy.get('[data-testid=author-email-input]').click({ force: true }).type('test');
+    cy.contains(ErrorMessages.INVALID_FORMAT).should('be.visible');
+    cy.get('[data-testid=author-email-input]').click({ force: true }).type('@email.com');
+    cy.contains(ErrorMessages.INVALID_FORMAT).should('not.be.visible');
+    cy.contains(ErrorMessages.REQUIRED).should('not.be.visible');
   });
 });
