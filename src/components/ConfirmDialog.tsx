@@ -25,12 +25,9 @@ const ConfirmDialog: FC<ConfirmDialogProps> = ({ open, title, text, onAccept, on
         <Button data-testid="cancel-button" variant="contained" onClick={onCancel}>
           {t('common:no')}
         </Button>
-        <ButtonWithProgress
-          buttonText={t('common:yes')}
-          data-testid="accept-button"
-          isLoading={disableAccept}
-          onClick={onAccept}
-        />
+        <ButtonWithProgress data-testid="accept-button" isLoading={disableAccept} onClick={onAccept}>
+          {t('common:yes')}
+        </ButtonWithProgress>
       </DialogActions>
     </Dialog>
   );

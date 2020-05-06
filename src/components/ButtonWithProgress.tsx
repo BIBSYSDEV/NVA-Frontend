@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, ReactNode } from 'react';
 import { Button } from '@material-ui/core';
 import Progress from './Progress';
 import styled from 'styled-components';
@@ -10,16 +10,16 @@ const StyledProgressContainer = styled.div`
 `;
 
 interface ButtonWithProgressProps {
-  buttonText: string;
+  children: ReactNode;
   isLoading: boolean;
   onClick?: () => void;
   type?: 'submit' | 'reset' | 'button';
 }
 
-const ButtonWithProgress: FC<ButtonWithProgressProps> = ({ buttonText, isLoading, onClick, type }) => {
+const ButtonWithProgress: FC<ButtonWithProgressProps> = ({ children, isLoading, onClick, type }) => {
   return (
     <Button color="primary" disabled={isLoading} onClick={onClick} type={type} variant="contained">
-      {buttonText}
+      {children}
       {isLoading && (
         <StyledProgressContainer>
           <Progress size={15} thickness={5} />

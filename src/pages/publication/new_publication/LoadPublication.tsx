@@ -99,11 +99,11 @@ const LoadPublication: FC<LoadPublicationProps> = ({ expanded, onChange, openFor
           ))}
           {uploadedFiles.length > 0 && (
             <ButtonWithProgress
-              buttonText={t('common:start')}
               data-testid="publication-file-start-button"
               isLoading={isLoading}
-              onClick={createEmptyPublication}
-            />
+              onClick={createEmptyPublication}>
+              {t('common:start')}
+            </ButtonWithProgress>
           )}
         </>
       ) : null}

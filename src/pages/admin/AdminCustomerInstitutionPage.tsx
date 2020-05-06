@@ -211,12 +211,9 @@ const AdminCustomerInstitutionPage: FC = () => {
             inputProps={{ 'data-testid': 'customer-institution-feide-organization-id-input' }}
           />
           <StyledButtonContainer>
-            <ButtonWithProgress
-              buttonText={editMode ? t('common:save') : t('common:create')}
-              data-testid="customer-institution-save-button"
-              isLoading={isSaving}
-              type="submit"
-            />
+            <ButtonWithProgress data-testid="customer-institution-save-button" isLoading={isSaving} type="submit">
+              {editMode ? t('common:save') : t('common:create')}
+            </ButtonWithProgress>
           </StyledButtonContainer>
         </Form>
       </Formik>

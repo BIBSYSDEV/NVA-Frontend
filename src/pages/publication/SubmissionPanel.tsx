@@ -138,11 +138,9 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication }
         </StyledButtonContainer>
 
         <StyledButtonContainer>
-          <ButtonWithProgress
-            buttonText={t('common:save')}
-            isLoading={isSaving}
-            onClick={() => savePublication(values)}
-          />
+          <ButtonWithProgress isLoading={isSaving} onClick={() => savePublication(values)}>
+            {t('common:save')}
+          </ButtonWithProgress>
         </StyledButtonContainer>
       </StyledButtonGroupContainer>
     </>
