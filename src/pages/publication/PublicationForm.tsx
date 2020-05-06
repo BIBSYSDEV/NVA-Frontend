@@ -21,6 +21,7 @@ import { publicationValidationSchema } from './PublicationFormValidationSchema';
 import { Button } from '@material-ui/core';
 import RouteLeavingGuard from '../../components/RouteLeavingGuard';
 import { useHistory } from 'react-router';
+import ButtonWithProgress from '../../components/ButtonWithProgress';
 
 const shouldAllowMultipleFiles = false;
 
@@ -33,19 +34,14 @@ const StyledPanel = styled.div`
   margin-bottom: 1rem;
 `;
 
-const StyledButtonContainer = styled.div`
+const StyledButtonGroupContainer = styled.div`
   margin-bottom: 1rem;
 `;
 
-const StyledButton = styled(Button)`
+const StyledButtonContainer = styled.div`
+  display: inline-block;
   margin-top: 1rem;
   margin-right: 0.5rem;
-`;
-
-const StyledProgressContainer = styled.div`
-  padding-left: 1rem;
-  display: flex;
-  align-items: center;
 `;
 
 interface PublicationFormProps {
@@ -68,30 +64,21 @@ const PublicationForm: FC<PublicationFormProps> = ({
   const history = useHistory();
 
   useEffect(() => {
-    // Get files uploaded from new publication view
-    const files = Object.values(uppy.getState().files).map((file) => ({
-      ...emptyFile,
-      identifier: file.id,
-      name: file.name,
-      mimeType: file.type ?? '',
-      size: file.size,
-    }));
-
-    if (files?.length) {
-      setInitialValues({
-        ...emptyPublication,
-        fileSet: { ...emptyFileSet, files },
-      });
-    }
-  }, [uppy]);
-
-  useEffect(() => {
     return () => uppy && uppy.reset();
   }, [uppy]);
 
   useEffect(() => {
     const getPublicationById = async (id: string) => {
+      const files = Object.values(uppy.getState().files).map((file) => ({
+        ...emptyFile,
+        identifier: file.response?.uploadURL ?? file.id,
+        name: file.name,
+        mimeType: file.type ?? '',
+        size: file.size,
+      }));
+
       const publication = await getPublication(id);
+
       if (publication.error) {
         closeForm();
         dispatch(setNotification(publication.error, NotificationVariant.Error));
@@ -99,7 +86,15 @@ const PublicationForm: FC<PublicationFormProps> = ({
         history.push(`/publication/${id}/public`);
       } else {
         // TODO: revisit necessity of deepmerge when backend model has all fields
-        setInitialValues(deepmerge(emptyPublication, publication));
+        setInitialValues(
+          deepmerge(
+            {
+              ...emptyPublication,
+              fileSet: { ...emptyFileSet, files },
+            },
+            publication
+          )
+        );
         setIsLoading(false);
       }
     };
@@ -107,7 +102,7 @@ const PublicationForm: FC<PublicationFormProps> = ({
     if (identifier) {
       getPublicationById(identifier);
     }
-  }, [identifier, closeForm, dispatch, history]);
+  }, [identifier, closeForm, dispatch, history, uppy]);
 
   const handleTabChange = (_: React.ChangeEvent<{}>, newTabNumber: number) => {
     setTabNumber(newTabNumber);
@@ -153,12 +148,12 @@ const PublicationForm: FC<PublicationFormProps> = ({
         validate={validateForm}
         validateOnChange={false}
         onSubmit={(values: FormikPublication) => savePublication(values)}>
-        {({ dirty, values }: FormikProps<FormikPublication>) => (
+        {({ dirty, values, isValid }: FormikProps<FormikPublication>) => (
           <>
             <RouteLeavingGuard
               modalDescription={t('modal_unsaved_changes_description')}
               modalHeading={t('modal_unsaved_changes_heading')}
-              shouldBlockNavigation={dirty}
+              shouldBlockNavigation={dirty || !isValid}
             />
             <Form>
               <PublicationFormTabs tabNumber={tabNumber} handleTabChange={handleTabChange} />
@@ -189,20 +184,19 @@ const PublicationForm: FC<PublicationFormProps> = ({
               )}
             </Form>
             {tabNumber !== 4 && (
-              <StyledButtonContainer>
-                <StyledButton color="primary" variant="contained" onClick={goToNextTab}>
-                  {t('common:next')}
-                </StyledButton>
+              <StyledButtonGroupContainer>
+                <StyledButtonContainer>
+                  <Button color="primary" variant="contained" onClick={goToNextTab}>
+                    {t('common:next')}
+                  </Button>
+                </StyledButtonContainer>
 
-                <StyledButton disabled={isSaving} onClick={() => savePublication(values)} variant="contained">
-                  {t('common:save')}
-                  {isSaving && (
-                    <StyledProgressContainer>
-                      <Progress size={15} thickness={5} />
-                    </StyledProgressContainer>
-                  )}
-                </StyledButton>
-              </StyledButtonContainer>
+                <StyledButtonContainer>
+                  <ButtonWithProgress isLoading={isSaving} onClick={() => savePublication(values)}>
+                    {t('common:save')}
+                  </ButtonWithProgress>
+                </StyledButtonContainer>
+              </StyledButtonGroupContainer>
             )}
           </>
         )}

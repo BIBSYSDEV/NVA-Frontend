@@ -2,7 +2,6 @@ import React, { FC, useEffect, useState } from 'react';
 import Card from '../../components/Card';
 import { useTranslation } from 'react-i18next';
 import { Field, FieldProps, Form, Formik } from 'formik';
-import { Button } from '@material-ui/core';
 import { TextField } from 'formik-material-ui';
 import Heading from '../../components/Heading';
 import styled from 'styled-components';
@@ -24,18 +23,13 @@ import {
 import Progress from '../../components/Progress';
 import useFetchInstitutions from '../../utils/hooks/useFetchInstitutions';
 import InstitutionAutocomplete from '../../components/institution/InstitutionAutocomplete';
+import ButtonWithProgress from '../../components/ButtonWithProgress';
 
 const StyledButtonContainer = styled.div`
   margin-top: 2rem;
   margin-right: 1rem;
   display: flex;
   justify-content: flex-end;
-`;
-
-const StyledProgressContainer = styled.div`
-  padding-left: 1rem;
-  display: flex;
-  align-items: center;
 `;
 
 const AdminCustomerInstitutionPage: FC = () => {
@@ -180,19 +174,9 @@ const AdminCustomerInstitutionPage: FC = () => {
               inputProps={{ 'data-testid': 'customer-institution-feide-organization-id-input' }}
             />
             <StyledButtonContainer>
-              <Button
-                color="primary"
-                data-testid="customer-institution-save-button"
-                variant="contained"
-                type="submit"
-                disabled={isSubmitting}>
+              <ButtonWithProgress data-testid="customer-institution-save-button" isLoading={isSubmitting} type="submit">
                 {editMode ? t('common:save') : t('common:create')}
-                {isSubmitting && (
-                  <StyledProgressContainer>
-                    <Progress size={15} thickness={5} />
-                  </StyledProgressContainer>
-                )}
-              </Button>
+              </ButtonWithProgress>
             </StyledButtonContainer>
           </Form>
         )}
