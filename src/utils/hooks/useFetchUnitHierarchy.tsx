@@ -9,8 +9,7 @@ import { NotificationVariant } from '../../types/notification.types';
 import { isValidUrl } from '../isValidUrl';
 import Axios from 'axios';
 
-// This hook should only be used when fetching the hierarchy of a given unit and not if it is desired
-// to access all subunits of the given unit.
+// This hook is used to fetch the top-down hierarchy of any given sub-unit
 const useFetchUnitHierarchy = (unitId: string): [RecursiveInstitutionUnit | undefined, boolean] => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);

@@ -6,17 +6,23 @@ import { useTranslation } from 'react-i18next';
 interface SelectTypeFieldProps {
   fieldName: string;
   options: string[];
+  dataTestId?: string;
   onChangeType?: () => void;
 }
 
-const SelectTypeField: FC<SelectTypeFieldProps> = ({ fieldName, options, onChangeType }) => {
+const SelectTypeField: FC<SelectTypeFieldProps> = ({
+  fieldName,
+  options,
+  dataTestId = 'publication_type',
+  onChangeType,
+}) => {
   const { t } = useTranslation();
 
   return (
     <Field name={fieldName} variant="outlined">
       {({ field, meta: { error, touched } }: FieldProps) => (
         <TextField
-          data-testid="publication_type"
+          data-testid={dataTestId}
           select
           variant="outlined"
           fullWidth

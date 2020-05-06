@@ -6,7 +6,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 
 import Card from '../../../components/Card';
 import Progress from '../../../components/Progress';
-import AffiliationHierarchy from '../../../components/AffiliationHierarchy';
+import AffiliationHierarchy from '../../../components/institution/AffiliationHierarchy';
 import useFetchUnitHierarchy from '../../../utils/hooks/useFetchUnitHierarchy';
 
 const StyledCard = styled(Card)`

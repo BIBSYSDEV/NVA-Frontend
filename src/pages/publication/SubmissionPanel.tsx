@@ -12,14 +12,13 @@ import SubmissionJournalPublication from './submission_tab/submission_journal';
 import SubmissionDescription from './submission_tab/submission_description';
 import SubmissionFilesAndLicenses from './submission_tab/submission_files_licenses';
 import SubmissionContributors from './submission_tab/submission_contributors';
-import { PublicationType, ReferenceFieldNames, DescriptionFieldNames } from '../../types/publicationFieldNames';
+import { PublicationType, requiredFieldNames } from '../../types/publicationFieldNames';
 import Heading from '../../components/Heading';
 import SubHeading from '../../components/SubHeading';
 import Card from '../../components/Card';
 import { useHistory } from 'react-router';
 import LabelContentRow from '../../components/LabelContentRow';
 import ErrorSummary from './submission_tab/ErrorSummary';
-import { getAllFileFields, getAllContributorFields } from '../../utils/formik-helpers';
 import { DOI_PREFIX } from '../../utils/constants';
 import { publishPublication } from '../../api/publicationApi';
 import { useDispatch } from 'react-redux';
@@ -59,13 +58,7 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication }
   }, [values]);
 
   useEffect(() => {
-    const fieldNames = [
-      ...Object.values(DescriptionFieldNames),
-      ...Object.values(ReferenceFieldNames),
-      ...getAllContributorFields(valuesRef.current.entityDescription.contributors),
-      ...getAllFileFields(valuesRef.current.fileSet.files),
-    ];
-    fieldNames.forEach((fieldName) => setFieldTouched(fieldName));
+    requiredFieldNames.forEach((fieldName) => setFieldTouched(fieldName));
   }, [setFieldTouched]);
 
   const onClickPublish = async () => {
