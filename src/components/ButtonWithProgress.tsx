@@ -16,17 +16,15 @@ interface ButtonWithProgressProps {
   type?: 'submit' | 'reset' | 'button';
 }
 
-const ButtonWithProgress: FC<ButtonWithProgressProps> = ({ children, isLoading, onClick, type }) => {
-  return (
-    <Button color="primary" disabled={isLoading} onClick={onClick} type={type} variant="contained">
-      {children}
-      {isLoading && (
-        <StyledProgressContainer>
-          <Progress size={15} thickness={5} />
-        </StyledProgressContainer>
-      )}
-    </Button>
-  );
-};
+const ButtonWithProgress: FC<ButtonWithProgressProps> = ({ children, isLoading, onClick, type, ...props }) => (
+  <Button color="primary" disabled={isLoading} onClick={onClick} type={type} variant="contained" {...props}>
+    {children}
+    {isLoading && (
+      <StyledProgressContainer>
+        <Progress size={15} thickness={5} />
+      </StyledProgressContainer>
+    )}
+  </Button>
+);
 
 export default ButtonWithProgress;
