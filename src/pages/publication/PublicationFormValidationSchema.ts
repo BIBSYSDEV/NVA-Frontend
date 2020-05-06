@@ -48,7 +48,7 @@ const fileValidationSchema = {
     }),
 };
 
-const journalContentValidationSchema = {
+const journalValidationSchema = {
   type: Yup.string().oneOf(Object.values(JournalArticleType)).required(ErrorMessage.REQUIRED),
   peerReviewed: Yup.boolean().required(ErrorMessage.REQUIRED),
   articleNumber: Yup.string(),
@@ -96,41 +96,38 @@ export const publicationValidationSchema = Yup.object().shape({
     }),
     language: Yup.string().url().oneOf(Object.values(LanguageValues)),
     projects: Yup.array().of(Yup.object()), // TODO
-    publicationType: Yup.string().oneOf(Object.values(PublicationType)).required(ErrorMessage.REQUIRED),
     contributors: Yup.array()
       .of(Yup.object().shape(contributorValidationSchema))
       .min(1, ErrorMessage.MISSING_CONTRIBUTOR),
     reference: Yup.object().shape({
       doi: Yup.string(),
       publicationInstance: Yup.object()
-        .when('$publicationType', {
+        .when('$publicationContextType', {
           is: PublicationType.PUBLICATION_IN_JOURNAL,
-          then: Yup.object().shape(journalContentValidationSchema),
+          then: Yup.object().shape(journalValidationSchema),
         })
-        .when('$publicationType', {
+        .when('$publicationContextType', {
           is: PublicationType.BOOK,
           then: Yup.object().shape(bookValidationSchema),
         })
-        .when('$publicationType', {
+        .when('$publicationContextType', {
           is: PublicationType.REPORT,
           then: Yup.object().shape(reportValidationSchema),
         })
-        .when('$publicationType', {
+        .when('$publicationContextType', {
           is: PublicationType.DEGREE,
           then: Yup.object().shape(degreeValidationSchema),
         })
-        .when('$publicationType', {
+        .when('$publicationContextType', {
           is: PublicationType.CHAPTER,
           then: Yup.object().shape(chapterValidationSchema),
         }),
-      publicationContext: Yup.object()
-        .nullable()
-        .shape({
-          name: Yup.string(),
-          level: Yup.mixed(),
-          openAccess: Yup.boolean(),
-        })
-        .required(ErrorMessage.REQUIRED),
+      publicationContext: Yup.object().shape({
+        type: Yup.string().required(ErrorMessage.REQUIRED),
+        title: Yup.string().required(ErrorMessage.REQUIRED),
+        level: Yup.mixed(),
+        openAccess: Yup.boolean(),
+      }),
     }),
   }),
   fileSet: Yup.object().shape({

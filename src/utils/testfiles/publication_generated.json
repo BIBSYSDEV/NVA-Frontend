@@ -1,7 +1,7 @@
 {
   "contributors": [
     {
-      "institutions": [],
+      "affiliations": [],
       "type": "",
       "orcid": "",
       "correspondingAuthor": true,
@@ -12,7 +12,7 @@
       }
     },
     {
-      "institutions": [],
+      "affiliations": [],
       "type": "",
       "orcid": "",
       "correspondingAuthor": false,
@@ -77,6 +77,10 @@
         "financedBy": "NTNU"
       }
     ],
-    "publicationType": "JournalContent"
+    "reference": {
+      "publicationContext": {
+        "type": "Journal"
+      }
+    }
   }
 }

@@ -49,8 +49,9 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication }
   const { t } = useTranslation('publication');
   const { setFieldTouched, setFieldValue, values, isValid }: FormikProps<FormikPublication> = useFormikContext();
   const history = useHistory();
-  const { publicationType, reference } = values.entityDescription;
   const dispatch = useDispatch();
+  const { reference } = values.entityDescription;
+  const publicationContextType = reference.publicationContext.type;
 
   const valuesRef = useRef(values);
   useEffect(() => {
@@ -83,18 +84,18 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication }
         <Card>
           <SubHeading>{t('heading.references')}</SubHeading>
           <LabelContentRow label={t('common:type')}>
-            {publicationType && t(`publicationTypes:${publicationType}`)}
+            {publicationContextType && t(`publicationTypes:${publicationContextType}`)}
           </LabelContentRow>
           {reference.doi && (
             <LabelContentRow label={t('publication.link_to_publication')}>
               {`${DOI_PREFIX}${reference.doi}`}
             </LabelContentRow>
           )}
-          {publicationType === PublicationType.BOOK && <SubmissionBook />}
-          {publicationType === PublicationType.DEGREE && <SubmissionDegree />}
-          {publicationType === PublicationType.CHAPTER && <SubmissionChapter />}
-          {publicationType === PublicationType.REPORT && <SubmissionReport />}
-          {publicationType === PublicationType.PUBLICATION_IN_JOURNAL && <SubmissionJournalPublication />}
+          {publicationContextType === PublicationType.BOOK && <SubmissionBook />}
+          {publicationContextType === PublicationType.DEGREE && <SubmissionDegree />}
+          {publicationContextType === PublicationType.CHAPTER && <SubmissionChapter />}
+          {publicationContextType === PublicationType.REPORT && <SubmissionReport />}
+          {publicationContextType === PublicationType.PUBLICATION_IN_JOURNAL && <SubmissionJournalPublication />}
         </Card>
         <Card>
           <SubHeading>{t('heading.contributors')}</SubHeading>

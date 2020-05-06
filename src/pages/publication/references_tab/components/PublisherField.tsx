@@ -4,6 +4,7 @@ import PublicationChannelSearch from './PublicationChannelSearch';
 import { PublicationTableNumber } from '../../../../utils/constants';
 import PublisherRow from './PublisherRow';
 import { Publisher, levelMap } from '../../../../types/publication.types';
+import { PublicationType } from '../../../../types/publicationFieldNames';
 
 interface PublisherFieldProps {
   fieldName: string;
@@ -18,9 +19,9 @@ const PublisherField: FC<PublisherFieldProps> = ({
   label,
   placeholder,
 }) => {
-  const mapPublisher = (selectedPublisher: Publisher) => {
+  const mapPublisher = (selectedPublisher: Publisher, type: PublicationType) => {
     const levelAsEnum = Object.keys(levelMap).find((key) => levelMap[key] === selectedPublisher.level);
-    return { ...selectedPublisher, level: levelAsEnum, type: 'PublicationContext' }; //TODO: remove type when fixed in backend
+    return { ...selectedPublisher, level: levelAsEnum, type }; //TODO: remove type when this is implemented as part of channel register (NP-774)
   };
 
   return (
@@ -32,16 +33,26 @@ const PublisherField: FC<PublisherFieldProps> = ({
             dataTestId="autosearch-publisher"
             label={label}
             publicationTable={publicationTable}
-            setValueFunction={(selectedPublisher) => setFieldValue(name, mapPublisher(selectedPublisher))}
+            setValueFunction={(selectedPublisher) => setFieldValue(name, mapPublisher(selectedPublisher, value.type))}
             placeholder={placeholder}
-            errorMessage={touched ? error : ''}
+            errorMessage={
+              touched && error
+                ? typeof error === 'object'
+                  ? (Object.values(error)[0] as string) // Use first message if error is an object
+                  : error
+                : ''
+            }
           />
-          {value && (
+          {value.title && (
             <PublisherRow
               dataTestId="autosearch-results-publisher"
               publisher={value}
               label={label}
-              onClickDelete={() => setFieldValue(name, null)}
+              onClickDelete={() =>
+                setFieldValue(name, {
+                  type: value.type, // Remove everything except the type
+                })
+              }
             />
           )}
         </>
