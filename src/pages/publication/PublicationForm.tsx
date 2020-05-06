@@ -153,7 +153,6 @@ const PublicationForm: FC<PublicationFormProps> = ({
         enableReinitialize
         initialValues={initialValues}
         validate={validateForm}
-        validateOnChange={true}
         onSubmit={(values: FormikPublication) => savePublication(values)}>
         {({ dirty, values }: FormikProps<FormikPublication>) => (
           <>
