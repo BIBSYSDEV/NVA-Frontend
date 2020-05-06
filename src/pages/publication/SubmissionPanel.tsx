@@ -21,25 +21,20 @@ import LabelContentRow from '../../components/LabelContentRow';
 import ErrorSummary from './submission_tab/ErrorSummary';
 import { getAllFileFields, getAllContributorFields } from '../../utils/formik-helpers';
 import { DOI_PREFIX } from '../../utils/constants';
-import Progress from '../../components/Progress';
 import { publishPublication } from '../../api/publicationApi';
 import { useDispatch } from 'react-redux';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
+import ButtonWithProgress from '../../components/ButtonWithProgress';
 
-const StyledButtonContainer = styled.div`
+const StyledButtonGroupContainer = styled.div`
   margin-bottom: 1rem;
 `;
 
-const StyledButton = styled(Button)`
+const StyledButtonContainer = styled.div`
+  display: inline-block;
   margin-top: 1rem;
   margin-right: 0.5rem;
-`;
-
-const StyledProgressContainer = styled.div`
-  padding-left: 1rem;
-  display: flex;
-  align-items: center;
 `;
 
 enum PublishSettingFieldName {
@@ -135,19 +130,21 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication }
           </Field>
         </Card>
       </Card>
-      <StyledButtonContainer>
-        <StyledButton color="primary" variant="contained" onClick={onClickPublish} disabled={isSaving || !isValid}>
-          {t('common:publish')}
-        </StyledButton>
-        <StyledButton disabled={isSaving} onClick={() => savePublication(values)} variant="contained">
-          {t('common:save')}
-          {isSaving && (
-            <StyledProgressContainer>
-              <Progress size={15} thickness={5} />
-            </StyledProgressContainer>
-          )}
-        </StyledButton>
-      </StyledButtonContainer>
+      <StyledButtonGroupContainer>
+        <StyledButtonContainer>
+          <Button color="primary" variant="contained" onClick={onClickPublish} disabled={isSaving || !isValid}>
+            {t('common:publish')}
+          </Button>
+        </StyledButtonContainer>
+
+        <StyledButtonContainer>
+          <ButtonWithProgress
+            buttonText={t('common:save')}
+            isLoading={isSaving}
+            onClick={() => savePublication(values)}
+          />
+        </StyledButtonContainer>
+      </StyledButtonGroupContainer>
     </>
   );
 };

@@ -2,7 +2,6 @@ import React, { FC, useEffect, useState } from 'react';
 import Card from '../../components/Card';
 import { useTranslation } from 'react-i18next';
 import { Field, FieldProps, Form, Formik } from 'formik';
-import { Button } from '@material-ui/core';
 import { TextField } from 'formik-material-ui';
 import Heading from '../../components/Heading';
 import styled from 'styled-components';
@@ -27,6 +26,7 @@ import {
   updateCustomerInstitution,
 } from '../../api/customerInstitutionsApi';
 import Progress from '../../components/Progress';
+import ButtonWithProgress from '../../components/ButtonWithProgress';
 
 const shouldAllowMultipleFiles = false;
 
@@ -39,12 +39,6 @@ const StyledButtonContainer = styled.div`
   margin-right: 1rem;
   display: flex;
   justify-content: flex-end;
-`;
-
-const StyledProgressContainer = styled.div`
-  padding-left: 1rem;
-  display: flex;
-  align-items: center;
 `;
 
 const AdminCustomerInstitutionPage: FC = () => {
@@ -217,14 +211,12 @@ const AdminCustomerInstitutionPage: FC = () => {
             inputProps={{ 'data-testid': 'customer-institution-feide-organization-id-input' }}
           />
           <StyledButtonContainer>
-            <Button color="primary" data-testid="customer-institution-save-button" variant="contained" type="submit">
-              {editMode ? t('common:save') : t('common:create')}
-              {isSaving && (
-                <StyledProgressContainer>
-                  <Progress size={15} thickness={5} />
-                </StyledProgressContainer>
-              )}
-            </Button>
+            <ButtonWithProgress
+              buttonText={editMode ? t('common:save') : t('common:create')}
+              data-testid="customer-institution-save-button"
+              isLoading={isSaving}
+              type="submit"
+            />
           </StyledButtonContainer>
         </Form>
       </Formik>

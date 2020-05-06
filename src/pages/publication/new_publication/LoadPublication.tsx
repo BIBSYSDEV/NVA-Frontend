@@ -1,26 +1,21 @@
 import React, { useEffect, useState, FC } from 'react';
 import { useTranslation } from 'react-i18next';
-
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
-
 import PublicationExpansionPanel from './PublicationExpansionPanel';
 import UppyDashboard from '../../../components/UppyDashboard';
 import { File, Uppy, emptyFile } from '../../../types/file.types';
 import FileCard from '../files_and_license_tab/FileCard';
 import styled from 'styled-components';
-import { Button } from '@material-ui/core';
 import { UppyFile } from '@uppy/core';
 import { createPublication } from '../../../api/publicationApi';
 import { useHistory } from 'react-router';
 import { useDispatch } from 'react-redux';
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../types/notification.types';
-import Progress from '../../../components/Progress';
+import ButtonWithProgress from '../../../components/ButtonWithProgress';
 
-const StyledProgressContainer = styled.div`
-  padding-left: 1rem;
-  display: flex;
-  align-items: center;
+const StyledFileCard = styled.div`
+  margin-top: 1rem;
 `;
 
 const shouldAllowMultipleFiles = true;
@@ -31,10 +26,6 @@ interface LoadPublicationProps {
   openForm: () => void;
   uppy: Uppy;
 }
-
-const StyledFileCard = styled.div`
-  margin-top: 1rem;
-`;
 
 const LoadPublication: FC<LoadPublicationProps> = ({ expanded, onChange, openForm, uppy }) => {
   const { t } = useTranslation('publication');
@@ -107,19 +98,12 @@ const LoadPublication: FC<LoadPublicationProps> = ({ expanded, onChange, openFor
             </StyledFileCard>
           ))}
           {uploadedFiles.length > 0 && (
-            <Button
-              color="primary"
+            <ButtonWithProgress
+              buttonText={t('common:start')}
               data-testid="publication-file-start-button"
-              variant="contained"
+              isLoading={isLoading}
               onClick={createEmptyPublication}
-              disabled={isLoading}>
-              {t('common:start')}
-              {isLoading && (
-                <StyledProgressContainer>
-                  <Progress size={15} thickness={5} />
-                </StyledProgressContainer>
-              )}
-            </Button>
+            />
           )}
         </>
       ) : null}

@@ -21,6 +21,7 @@ import { publicationValidationSchema } from './PublicationFormValidationSchema';
 import { Button } from '@material-ui/core';
 import RouteLeavingGuard from '../../components/RouteLeavingGuard';
 import { useHistory } from 'react-router';
+import ButtonWithProgress from '../../components/ButtonWithProgress';
 
 const shouldAllowMultipleFiles = false;
 
@@ -33,19 +34,14 @@ const StyledPanel = styled.div`
   margin-bottom: 1rem;
 `;
 
-const StyledButtonContainer = styled.div`
+const StyledButtonGroupContainer = styled.div`
   margin-bottom: 1rem;
 `;
 
-const StyledButton = styled(Button)`
+const StyledButtonContainer = styled.div`
+  display: inline-block;
   margin-top: 1rem;
   margin-right: 0.5rem;
-`;
-
-const StyledProgressContainer = styled.div`
-  padding-left: 1rem;
-  display: flex;
-  align-items: center;
 `;
 
 interface PublicationFormProps {
@@ -188,20 +184,21 @@ const PublicationForm: FC<PublicationFormProps> = ({
               )}
             </Form>
             {tabNumber !== 4 && (
-              <StyledButtonContainer>
-                <StyledButton color="primary" variant="contained" onClick={goToNextTab}>
-                  {t('common:next')}
-                </StyledButton>
+              <StyledButtonGroupContainer>
+                <StyledButtonContainer>
+                  <Button color="primary" variant="contained" onClick={goToNextTab}>
+                    {t('common:next')}
+                  </Button>
+                </StyledButtonContainer>
 
-                <StyledButton disabled={isSaving} onClick={() => savePublication(values)} variant="contained">
-                  {t('common:save')}
-                  {isSaving && (
-                    <StyledProgressContainer>
-                      <Progress size={15} thickness={5} />
-                    </StyledProgressContainer>
-                  )}
-                </StyledButton>
-              </StyledButtonContainer>
+                <StyledButtonContainer>
+                  <ButtonWithProgress
+                    buttonText={t('common:save')}
+                    isLoading={isSaving}
+                    onClick={() => savePublication(values)}
+                  />
+                </StyledButtonContainer>
+              </StyledButtonGroupContainer>
             )}
           </>
         )}
