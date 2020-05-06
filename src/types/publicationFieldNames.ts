@@ -44,6 +44,7 @@ export enum ReferenceFieldNames {
   PAGES_TO = 'entityDescription.reference.publicationInstance.pages.end',
   PEER_REVIEW = 'entityDescription.reference.publicationInstance.peerReviewed',
   PUBLICATION_CONTEXT = 'entityDescription.reference.publicationContext',
+  PUBLICATION_CONTEXT_TITLE = 'entityDescription.reference.publicationContext.title',
   PUBLICATION_CONTEXT_TYPE = 'entityDescription.reference.publicationContext.type',
   PUBLICATION_INSTANCE_TYPE = 'entityDescription.reference.publicationInstance.type',
   SERIES = 'entityDescription.series',
@@ -92,7 +93,7 @@ export enum SpecificContributorFieldNames {
 
 export const requiredFieldNames = [
   DescriptionFieldNames.TITLE,
-  ReferenceFieldNames.PUBLICATION_CONTEXT,
+  ReferenceFieldNames.PUBLICATION_CONTEXT_TITLE,
   ReferenceFieldNames.PUBLICATION_CONTEXT_TYPE,
   ContributorFieldNames.CONTRIBUTORS,
   FileFieldNames.FILES,
