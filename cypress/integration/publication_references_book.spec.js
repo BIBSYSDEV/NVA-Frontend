@@ -15,11 +15,11 @@ describe('Publication: References: Book', () => {
     cy.get('[data-testid=nav-tabpanel-references]').click({ force: true });
 
     // choose Book type
-    cy.get('[data-testid=publication_type_top]').click({ force: true }).type(' '); //makes the select options open
-    cy.get('[data-testid=publication_type-Book]').should('be.visible');
-    cy.get('[data-testid=publication_type-Book]').click({ force: true });
+    cy.get('[data-testid=publication-context-type]').click({ force: true }).type(' '); //makes the select options open
+    cy.get('[data-testid=publication-instance-type-Book]').should('be.visible');
+    cy.get('[data-testid=publication-instance-type-Book]').click({ force: true });
 
-    cy.get('[data-testid=publication_type-heading]').contains('Book');
+    cy.get('[data-testid=publication-instance-type-heading]').contains('Book');
 
     // search for and select a publisher
     cy.get('[data-testid=autosearch-publisher]').click({ force: true }).type('Test');
