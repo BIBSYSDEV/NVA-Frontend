@@ -1,9 +1,9 @@
 const ErrorMessages = {
-  REQUIRED: 'Required field',
-  INVALID_FORMAT: 'Invalid format',
   INVALID_DATE: 'Invalid Date Format',
-  MISSING_AUTHOR: 'You need to have at least one author registered for this publication',
+  INVALID_FORMAT: 'Invalid format',
+  MISSING_AUTHORS: 'You need to have at least one author registered for this publication',
   MISSING_FILES: 'You need to have at least one file uploaded for this publication',
+  REQUIRED: 'Required field',
 };
 
 describe('User opens publication form and can see validation errors', () => {
@@ -22,15 +22,11 @@ describe('User opens publication form and can see validation errors', () => {
   it('The User should be able to see validation summary on submission tab', () => {
     // TODO: Test if tab is marked with error
     cy.get('[data-testid=nav-tabpanel-submission]').click({ force: true });
-    cy.get('[data-testid=error-summary-card]').contains('Title: Required field');
-    cy.get('[data-testid=error-summary-card]').contains('Publication type: Required field');
-    cy.get('[data-testid=error-summary-card]').contains(
-      'Authors: You need to have at least one author registered for this publication'
-    );
-    cy.get('[data-testid=error-summary-card]').contains('Publisher: Required field');
-    cy.get('[data-testid=error-summary-card]').contains(
-      'Files: You need to have at least one file uploaded for this publication'
-    );
+    cy.get('[data-testid=error-summary-card]').contains(`Title: ${ErrorMessages.REQUIRED}`);
+    cy.get('[data-testid=error-summary-card]').contains(`Publication type: ${ErrorMessages.REQUIRED}`);
+    cy.get('[data-testid=error-summary-card]').contains(`Authors: ${ErrorMessages.MISSING_AUTHORS}`);
+    cy.get('[data-testid=error-summary-card]').contains(`Publisher: ${ErrorMessages.REQUIRED}`);
+    cy.get('[data-testid=error-summary-card]').contains(`Files: ${ErrorMessages.MISSING_FILES}`);
   });
 
   it('The User should be able to see validation errors on description tab', () => {
@@ -78,7 +74,7 @@ describe('User opens publication form and can see validation errors', () => {
 
   it('The User should be able to see validation errors on contributors tab', () => {
     cy.get('[data-testid=nav-tabpanel-contributors]').click({ force: true });
-    cy.contains(ErrorMessages.MISSING_AUTHOR).should('be.visible');
+    cy.contains(ErrorMessages.MISSING_AUTHORS).should('be.visible');
 
     // Add author
     cy.get('[data-testid=add-contributor]').click({ force: true });
@@ -86,7 +82,7 @@ describe('User opens publication form and can see validation errors', () => {
     cy.get('[data-testid=search-button]').click({ force: true });
     cy.get('[data-testid=author-radio-button]').eq(0).click({ force: true });
     cy.get('[data-testid=connect-author-button]').click({ force: true });
-    cy.contains(ErrorMessages.MISSING_AUTHOR).should('not.be.visible');
+    cy.contains(ErrorMessages.MISSING_AUTHORS).should('not.be.visible');
 
     // Set corresponding (and email)
     cy.get('[data-testid=author-corresponding-checkbox]').click({ force: true });
