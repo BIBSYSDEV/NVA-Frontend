@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, FC } from 'react';
 import { Link } from 'react-router-dom';
 import { Link as MuiLink } from '@material-ui/core';
 import styled from 'styled-components';
@@ -11,33 +11,30 @@ const StyledLine = styled.div`
 `;
 
 const StyledLabel = styled(NormalText)`
-  display: inline-block;
   width: 6rem;
   min-width: 6rem;
 `;
 
 const StyledContent = styled.div`
-  display: inline-block;
   flex: 1;
-  min-width: 30rem;
 `;
 
 interface LabelTextLineProps {
   label: string;
-  linkText?: any;
-  dataTestId?: string;
-  internalLink?: string;
-  externalLink?: string;
   children?: ReactNode;
+  dataTestId?: string;
+  externalLink?: string;
+  internalLink?: string;
+  linkText?: string;
 }
 
-const LabelTextLine: React.FC<LabelTextLineProps> = ({
+const LabelTextLine: FC<LabelTextLineProps> = ({
   label,
-  linkText,
-  dataTestId,
-  internalLink,
-  externalLink,
   children,
+  dataTestId,
+  externalLink,
+  internalLink,
+  linkText,
 }) => (
   <StyledLine>
     <StyledLabel>{label}:</StyledLabel>

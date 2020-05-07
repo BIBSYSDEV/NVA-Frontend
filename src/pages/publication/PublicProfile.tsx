@@ -34,7 +34,7 @@ const PublicProfile: FC = () => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
   const [publications, setPublications] = useState<PublishedPublicationPreview[]>([]);
-  const { t } = useTranslation();
+  const { t } = useTranslation('profile');
   const user = useSelector((store: RootStore) => store.user);
   const [units, isLoadingMultiple] = useFetchMultipleUnits(user.authority?.orgunitids);
 
@@ -61,7 +61,7 @@ const PublicProfile: FC = () => {
       <StyledUserInfo>
         <Card>
           <Heading>{user.name}</Heading>
-          <LabelTextLine label={t('profile:heading.organizations')}>
+          <LabelTextLine label={t('heading.organizations')}>
             {isLoadingMultiple ? (
               <CircularProgress color="inherit" size={20} />
             ) : (
@@ -75,7 +75,7 @@ const PublicProfile: FC = () => {
               <LabelTextLine
                 key={orcid}
                 dataTestId={'orcid-info'}
-                label={t('profile:orcid.orcid')}
+                label={t('orcid.orcid')}
                 linkText={orcidLink}
                 externalLink={orcidLink}
               />
