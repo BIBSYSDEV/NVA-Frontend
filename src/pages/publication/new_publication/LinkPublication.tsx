@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { useHistory } from 'react-router';
 
-import { Button } from '@material-ui/core';
+import { Button, CircularProgress } from '@material-ui/core';
 import LinkIcon from '@material-ui/icons/Link';
 
 import { getPublicationByDoi } from '../../../api/publicationApi';
@@ -28,6 +28,10 @@ const StyledTitle = styled.div`
   margin-bottom: 1rem;
 `;
 
+const StyledCircularProgress = styled(CircularProgress)`
+  margin-top: 1rem;
+`;
+
 interface LinkPublicationPanelProps {
   expanded: boolean;
   onChange: (event: React.ChangeEvent<any>, isExpanded: boolean) => void;
@@ -50,7 +54,7 @@ const LinkPublicationPanel: FC<LinkPublicationPanelProps> = ({ expanded, onChang
     openForm();
   };
 
-  const handleSearch = async (values: any) => {
+  const handleSearch = async (values: { doiUrl: string }) => {
     setLoading(true);
     setNoHit(false);
     setDoi(null);
@@ -78,7 +82,7 @@ const LinkPublicationPanel: FC<LinkPublicationPanelProps> = ({ expanded, onChang
       <StyledBody>
         {t('publication:publication.link_publication_description')}
         <LinkPublicationForm handleSearch={handleSearch} />
-        {loading && <p>{t('common:loading')}...</p>}
+        {loading && <StyledCircularProgress color="inherit" size={20} />}
         {noHit && <p>{t('common:no_hits')}</p>}
         {doi && (
           <>
