@@ -44,7 +44,7 @@
   "fileSet": {
     "files": [
       {
-        "id": "3214324",
+        "identifier": "3214324",
         "name": "filename.pdf",
         "data": {
           "size": 123456,
