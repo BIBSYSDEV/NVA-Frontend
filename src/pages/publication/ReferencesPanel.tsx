@@ -36,7 +36,7 @@ const ReferencesPanel: FC = () => {
     <>
       <StyledSelectContainer>
         <SelectTypeField
-          dataTestId="publication_type_top"
+          dataTestId="publication-context-type"
           fieldName={ReferenceFieldNames.PUBLICATION_CONTEXT_TYPE}
           options={Object.values(PublicationType)}
           onChangeType={(newPublicationContextType) => {
@@ -51,7 +51,9 @@ const ReferencesPanel: FC = () => {
 
       {publicationContextType && (
         <StyledCard>
-          <Heading data-testid="publication_type-heading">{t(`publicationTypes:${publicationContextType}`)}</Heading>
+          <Heading data-testid="publication-instance-type-heading">
+            {t(`publicationTypes:${publicationContextType}`)}
+          </Heading>
           {publicationContextType === PublicationType.BOOK && <BookForm />}
           {publicationContextType === PublicationType.CHAPTER && <ChapterForm />}
           {publicationContextType === PublicationType.REPORT && <ReportForm />}

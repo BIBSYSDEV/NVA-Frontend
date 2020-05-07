@@ -9,7 +9,7 @@ import {
 import { LanguageValues } from '../../types/language.types';
 import i18n from '../../translations/i18n';
 
-const ErrorMessage = {
+export const ErrorMessage = {
   REQUIRED: i18n.t('publication:feedback.required_field'),
   MISSING_CONTRIBUTOR: i18n.t('publication:feedback.minimum_one_contributor'),
   MISSING_FILE: i18n.t('publication:feedback.minimum_one_file'),

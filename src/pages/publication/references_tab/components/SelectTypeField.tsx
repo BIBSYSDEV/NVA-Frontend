@@ -13,7 +13,7 @@ interface SelectTypeFieldProps {
 const SelectTypeField: FC<SelectTypeFieldProps> = ({
   fieldName,
   options,
-  dataTestId = 'publication_type',
+  dataTestId = 'publication-instance-type',
   onChangeType,
 }) => {
   const { t } = useTranslation();
@@ -35,7 +35,7 @@ const SelectTypeField: FC<SelectTypeFieldProps> = ({
             onChangeType ? onChangeType(event.target.value) : field.onChange(event)
           }>
           {options.map((typeValue) => (
-            <MenuItem value={typeValue} key={typeValue} data-testid={`publication_type-${typeValue}`}>
+            <MenuItem value={typeValue} key={typeValue} data-testid={`publication-instance-type-${typeValue}`}>
               {t(`publicationTypes:${typeValue}`)}
             </MenuItem>
           ))}

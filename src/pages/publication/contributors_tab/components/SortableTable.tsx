@@ -84,6 +84,7 @@ const SortableItem = SortableElement(
           <Field name={`${baseFieldName}.${SpecificContributorFieldNames.CORRESPONDING}`}>
             {({ field }: FieldProps) => (
               <FormControlLabel
+                data-testid="author-corresponding-checkbox"
                 control={<Checkbox checked={!!field.value} {...field} />}
                 label={t('contributors.corresponding')}
               />
@@ -94,6 +95,7 @@ const SortableItem = SortableElement(
               <Field name={`${baseFieldName}.${SpecificContributorFieldNames.EMAIL}`}>
                 {({ field, meta: { error, touched } }: FieldProps) => (
                   <StyledEmailTextField
+                    data-testid="author-email-input"
                     variant="outlined"
                     label={t('common:email')}
                     {...field}
