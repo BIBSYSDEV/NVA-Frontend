@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { ReactNode, FC } from 'react';
 import { Link } from 'react-router-dom';
 import { Link as MuiLink } from '@material-ui/core';
 import styled from 'styled-components';
+import NormalText from './NormalText';
 
 const StyledLine = styled.div`
   padding-bottom: 0.5rem;
@@ -9,41 +10,49 @@ const StyledLine = styled.div`
   flex-wrap: wrap;
 `;
 
-const StyledLabel = styled.div`
-  display: inline-block;
-  width: 10rem;
-  min-width: 10rem;
+const StyledLabel = styled(NormalText)`
+  width: 6rem;
+  min-width: 6rem;
 `;
 
-const StyledText = styled.div`
-  display: inline-block;
-  font-weight: bold;
+const StyledContent = styled.div`
   flex: 1;
-  min-width: 30rem;
 `;
 
 interface LabelTextLineProps {
   label: string;
-  text: string;
+  children?: ReactNode;
   dataTestId?: string;
-  internalLink?: string;
   externalLink?: string;
+  internalLink?: string;
+  linkText?: string;
 }
 
-const LabelTextLine: React.FC<LabelTextLineProps> = ({ label, text, dataTestId, internalLink, externalLink }) => (
+const LabelTextLine: FC<LabelTextLineProps> = ({
+  label,
+  children,
+  dataTestId,
+  externalLink,
+  internalLink,
+  linkText,
+}) => (
   <StyledLine>
     <StyledLabel>{label}:</StyledLabel>
     {externalLink && (
       <MuiLink href={externalLink} target="_blank" rel="noopener noreferrer">
-        <StyledText data-testid={dataTestId}>{text}</StyledText>
+        <StyledContent data-testid={dataTestId}>
+          <NormalText>{linkText ?? externalLink}</NormalText>
+        </StyledContent>
       </MuiLink>
     )}
     {internalLink && (
       <MuiLink component={Link} to={internalLink}>
-        <StyledText data-testid={dataTestId}>{text}</StyledText>
+        <StyledContent data-testid={dataTestId}>
+          <NormalText>{linkText ?? internalLink}</NormalText>
+        </StyledContent>
       </MuiLink>
     )}
-    {!(internalLink || externalLink) && <StyledText data-testid={dataTestId}>{text}</StyledText>}
+    {children && <StyledContent data-testid={dataTestId}>{children}</StyledContent>}
   </StyledLine>
 );
 

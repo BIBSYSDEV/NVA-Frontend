@@ -1,6 +1,6 @@
 // For valid values, see https://github.com/BIBSYSDEV/nva-datamodel-java/blob/develop/src/main/java/no/unit/nva/model/PublicationType.java
 export enum PublicationType {
-  PUBLICATION_IN_JOURNAL = 'JournalContent',
+  PUBLICATION_IN_JOURNAL = 'Journal',
   BOOK = 'Book',
   REPORT = 'Report',
   DEGREE = 'Degree',
@@ -44,8 +44,9 @@ export enum ReferenceFieldNames {
   PAGES_TO = 'entityDescription.reference.publicationInstance.pages.end',
   PEER_REVIEW = 'entityDescription.reference.publicationInstance.peerReviewed',
   PUBLICATION_CONTEXT = 'entityDescription.reference.publicationContext',
+  PUBLICATION_CONTEXT_TITLE = 'entityDescription.reference.publicationContext.title',
+  PUBLICATION_CONTEXT_TYPE = 'entityDescription.reference.publicationContext.type',
   PUBLICATION_INSTANCE_TYPE = 'entityDescription.reference.publicationInstance.type',
-  PUBLICATION_TYPE = 'entityDescription.publicationType',
   SERIES = 'entityDescription.series',
   SUB_TYPE = 'entityDescription.reference.publicationInstance.type',
   TEXT_BOOK = 'entityDescription.textBook',
@@ -92,8 +93,8 @@ export enum SpecificContributorFieldNames {
 
 export const requiredFieldNames = [
   DescriptionFieldNames.TITLE,
-  ReferenceFieldNames.PUBLICATION_CONTEXT,
-  ReferenceFieldNames.PUBLICATION_TYPE,
+  ReferenceFieldNames.PUBLICATION_CONTEXT_TITLE,
+  ReferenceFieldNames.PUBLICATION_CONTEXT_TYPE,
   ContributorFieldNames.CONTRIBUTORS,
   FileFieldNames.FILES,
 ];

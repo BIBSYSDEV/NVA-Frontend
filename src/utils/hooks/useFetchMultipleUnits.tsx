@@ -9,17 +9,16 @@ import { NotificationVariant } from '../../types/notification.types';
 import { isValidUrl } from '../isValidUrl';
 import Axios from 'axios';
 
-// This hook is used to fetch the top-down hierarchy of any given sub-unit
-const useFetchUnitHierarchy = (unitId: string): [RecursiveInstitutionUnit | undefined, boolean] => {
+// This hook is used to fetch the top-down hierarchy of units given an array of unitIds
+const useFetchMultipleUnits = (unitIds: string[] | undefined): [RecursiveInstitutionUnit[] | undefined, boolean] => {
   const dispatch = useDispatch();
-  const [isLoading, setIsLoading] = useState(false);
-  const [unit, setUnit] = useState<RecursiveInstitutionUnit | undefined>();
+  const [isLoading, setIsLoading] = useState(true);
+  const [units, setUnits] = useState<RecursiveInstitutionUnit[]>([]);
 
   useEffect(() => {
     const cancelSource = Axios.CancelToken.source();
 
-    const fetchDepartment = async () => {
-      setIsLoading(true);
+    const fetchDepartment = async (unitId: string) => {
       // TODO: NP-844 should ensure we have URIs from start (not IDs)
       const unitUri = isValidUrl(unitId)
         ? unitId
@@ -29,25 +28,34 @@ const useFetchUnitHierarchy = (unitId: string): [RecursiveInstitutionUnit | unde
 
       const response = await getDepartment(unitUri, cancelSource.token);
       if (response) {
-        setIsLoading(false);
         if (response.error) {
           dispatch(setNotification(response.error, NotificationVariant.Error));
         } else {
-          if (response.subunits && response.subunits.length > 1) {
-            // Remove subunits from institution, since we only care about top-level in this case
-            // NOTE: This means we cannot use this hook to get all subunits
-            delete response.subunits;
-          }
-          setUnit(response);
+          return response;
         }
       }
     };
-    fetchDepartment();
+    if (unitIds && unitIds.length > 0) {
+      setIsLoading(true);
+      unitIds.forEach(async (unitId) => {
+        const unit = await fetchDepartment(unitId);
+        if (unit) {
+          setUnits((u) => {
+            if (u.length === unitIds.length - 1) {
+              setIsLoading(false);
+            }
+            return [...u, unit];
+          });
+        }
+      });
+    } else {
+      setIsLoading(false);
+    }
 
     return () => cancelSource.cancel();
-  }, [dispatch, unitId]);
+  }, [dispatch, unitIds]);
 
-  return [unit, isLoading];
+  return [units, isLoading];
 };
 
-export default useFetchUnitHierarchy;
+export default useFetchMultipleUnits;

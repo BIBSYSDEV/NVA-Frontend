@@ -14,6 +14,7 @@ import { ORCID_BASE_URL } from '../../utils/constants';
 import LabelTextLine from './../../components/LabelTextLine';
 import Heading from '../../components/Heading';
 import { NotificationVariant } from '../../types/notification.types';
+import useFetchMultipleUnits from '../../utils/hooks/useFetchMultipleUnits';
 
 const StyledWrapper = styled.div`
   text-align: center;
@@ -33,8 +34,9 @@ const PublicProfile: FC = () => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
   const [publications, setPublications] = useState<PublishedPublicationPreview[]>([]);
-  const { t } = useTranslation();
+  const { t } = useTranslation('profile');
   const user = useSelector((store: RootStore) => store.user);
+  const [units, isLoadingMultiple] = useFetchMultipleUnits(user.authority?.orgunitids);
 
   useEffect(() => {
     const loadData = async () => {
@@ -59,22 +61,33 @@ const PublicProfile: FC = () => {
       <StyledUserInfo>
         <Card>
           <Heading>{user.name}</Heading>
-          <LabelTextLine dataTestId="profile-email" label={t('common:email')} text={user.email} />
+          {isLoadingMultiple ? (
+            <CircularProgress color="inherit" size={20} />
+          ) : (
+            units &&
+            units.length > 0 && (
+              <LabelTextLine label={t('heading.organizations')}>
+                {units.map((unit) => (
+                  <NormalText key={unit.id}>{unit.name}</NormalText>
+                ))}
+              </LabelTextLine>
+            )
+          )}
           {user.authority?.orcids.map((orcid: string) => {
             const orcidLink = `${ORCID_BASE_URL}/${orcid}`;
             return (
               <LabelTextLine
                 key={orcid}
                 dataTestId={'orcid-info'}
-                label={t('profile:orcid.orcid')}
-                text={orcidLink}
+                label={t('orcid.orcid')}
+                linkText={orcidLink}
                 externalLink={orcidLink}
               />
             );
           })}
-          {user.authority?.orgunitids.map((orgunitid) => (
-            <NormalText key={orgunitid}>{orgunitid}</NormalText>
-          ))}
+          <LabelTextLine dataTestId="profile-email" label={t('common:email')}>
+            <NormalText>{user.email}</NormalText>
+          </LabelTextLine>
         </Card>
       </StyledUserInfo>
       <StyledWrapper>

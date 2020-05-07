@@ -24,7 +24,7 @@ const StyledSelectContainer = styled.div`
 const ReferencesPanel: FC = () => {
   const { t } = useTranslation('publication');
   const { values, setFieldTouched, setFieldValue }: FormikProps<FormikPublication> = useFormikContext();
-  const { publicationType } = values.entityDescription;
+  const publicationContextType = values.entityDescription.reference.publicationContext.type;
 
   useEffect(
     // Set all fields as touched if user navigates away from this panel (on unmount)
@@ -36,26 +36,29 @@ const ReferencesPanel: FC = () => {
     <>
       <StyledSelectContainer>
         <SelectTypeField
-          fieldName={ReferenceFieldNames.PUBLICATION_TYPE}
+          dataTestId="publication-context-type"
+          fieldName={ReferenceFieldNames.PUBLICATION_CONTEXT_TYPE}
           options={Object.values(PublicationType)}
-          onChangeType={() => {
-            // Ensure some values are reset when publicationType changes
+          onChangeType={(newPublicationContextType) => {
+            // Ensure some values are reset when publication type changes
             setFieldValue(ReferenceFieldNames.SUB_TYPE, '');
-            setFieldValue(ReferenceFieldNames.PUBLICATION_CONTEXT, null);
+            setFieldValue(ReferenceFieldNames.PUBLICATION_CONTEXT, { type: newPublicationContextType });
             // Avoid showing potential errors instantly
             Object.values(ReferenceFieldNames).forEach((fieldName) => setFieldTouched(fieldName, false));
           }}
         />
       </StyledSelectContainer>
 
-      {publicationType && (
+      {publicationContextType && (
         <StyledCard>
-          <Heading data-testid="publication_type-heading">{t(`publicationTypes:${publicationType}`)}</Heading>
-          {publicationType === PublicationType.BOOK && <BookForm />}
-          {publicationType === PublicationType.CHAPTER && <ChapterForm />}
-          {publicationType === PublicationType.REPORT && <ReportForm />}
-          {publicationType === PublicationType.DEGREE && <DegreeForm />}
-          {publicationType === PublicationType.PUBLICATION_IN_JOURNAL && <JournalArticleForm />}
+          <Heading data-testid="publication-instance-type-heading">
+            {t(`publicationTypes:${publicationContextType}`)}
+          </Heading>
+          {publicationContextType === PublicationType.BOOK && <BookForm />}
+          {publicationContextType === PublicationType.CHAPTER && <ChapterForm />}
+          {publicationContextType === PublicationType.REPORT && <ReportForm />}
+          {publicationContextType === PublicationType.DEGREE && <DegreeForm />}
+          {publicationContextType === PublicationType.PUBLICATION_IN_JOURNAL && <JournalArticleForm />}
         </StyledCard>
       )}
     </>

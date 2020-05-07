@@ -1,9 +1,10 @@
 import { Field, Formik, Form, FieldProps } from 'formik';
-import React from 'react';
+import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import * as Yup from 'yup';
-import { Button, TextField } from '@material-ui/core';
+import { TextField } from '@material-ui/core';
+import ButtonWithProgress from '../../../components/ButtonWithProgress';
 
 const StyledInputBox = styled.div`
   display: flex;
@@ -16,47 +17,44 @@ const StyledTextField = styled(TextField)`
 `;
 
 interface LinkPublicationFormProps {
-  handleSearch: (values: any) => void;
+  handleSearch: (values: { doiUrl: string }) => void;
 }
 
-const LinkPublicationForm: React.FC<LinkPublicationFormProps> = ({ handleSearch }) => {
+const LinkPublicationForm: FC<LinkPublicationFormProps> = ({ handleSearch }) => {
   const { t } = useTranslation('publication');
 
   const publicationSchema = Yup.object().shape({
-    doiUrl: Yup.string()
-      .url(t('feedback.invalid_url'))
-      .required(t('feedback.required_field')),
+    doiUrl: Yup.string().url(t('feedback.invalid_url')).required(t('feedback.required_field')),
   });
 
   return (
     <Formik
-      onSubmit={(values, { setSubmitting }) => {
-        handleSearch(values);
-        setSubmitting(false);
-      }}
+      onSubmit={handleSearch}
       initialValues={{
         doiUrl: '',
       }}
       validationSchema={publicationSchema}>
-      <Form>
-        <StyledInputBox>
-          <Field name="doiUrl">
-            {({ field }: FieldProps) => (
-              <StyledTextField
-                variant="outlined"
-                label={t('publication.link_to_publication')}
-                fullWidth
-                aria-label="DOI-link"
-                inputProps={{ 'data-testid': 'new-publication-link-input' }}
-                {...field}
-              />
-            )}
-          </Field>
-          <Button color="primary" variant="contained" type="submit" data-testid="doi-search-button">
-            {t('common:search')}
-          </Button>
-        </StyledInputBox>
-      </Form>
+      {({ isSubmitting }) => (
+        <Form>
+          <StyledInputBox>
+            <Field name="doiUrl">
+              {({ field }: FieldProps) => (
+                <StyledTextField
+                  variant="outlined"
+                  label={t('publication.link_to_publication')}
+                  fullWidth
+                  aria-label="DOI-link"
+                  inputProps={{ 'data-testid': 'new-publication-link-input' }}
+                  {...field}
+                />
+              )}
+            </Field>
+            <ButtonWithProgress data-testid="doi-search-button" isLoading={isSubmitting} type="submit">
+              {t('common:search')}
+            </ButtonWithProgress>
+          </StyledInputBox>
+        </Form>
+      )}
     </Formik>
   );
 };

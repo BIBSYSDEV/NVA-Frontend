@@ -60,6 +60,7 @@ const DescriptionPanel: FC = () => {
         <Heading>{t('heading.description')}</Heading>
         <StyledFieldWrapper>
           <Field
+            data-testid="publication-title-field"
             aria-label="title"
             name={DescriptionFieldNames.TITLE}
             label={t('common:title')}
@@ -127,7 +128,7 @@ const DescriptionPanel: FC = () => {
         </MultipleFieldWrapper>
 
         <MultipleFieldWrapper>
-          <StyledFieldWrapper>
+          <StyledFieldWrapper data-testid="date-published-field">
             <DatePickerField
               yearFieldName={DescriptionFieldNames.PUBLICATION_YEAR}
               monthFieldName={DescriptionFieldNames.PUBLICATION_MONTH}

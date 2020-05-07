@@ -18,6 +18,22 @@ export enum PublicationsApiPaths {
   FOR_APPROVAL = '/publications/approval',
 }
 
+export const createPublication = async () => {
+  try {
+    const idToken = await getIdToken();
+    const response = await Axios.post(PublicationsApiPaths.PUBLICATION, null, {
+      headers: { Authorization: `Bearer ${idToken}` },
+    });
+    if (response.status === StatusCode.CREATED) {
+      return response.data;
+    } else {
+      return { error: i18n.t('feedback:error.create_publication') };
+    }
+  } catch {
+    return { error: i18n.t('feedback:error.create_publication') };
+  }
+};
+
 export const updatePublication = async (publication: Publication) => {
   const { identifier } = publication;
   if (!identifier) {

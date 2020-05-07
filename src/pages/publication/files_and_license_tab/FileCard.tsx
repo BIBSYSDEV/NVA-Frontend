@@ -126,6 +126,7 @@ const FileCard: FC<FileCardProps> = ({ file, removeFile, baseFieldName, toggleLi
                   <Field name={`${baseFieldName}.${SpecificFileFieldNames.EMBARGO_DATE}`}>
                     {({ field, form, meta: { error, touched } }: FieldProps) => (
                       <KeyboardDatePicker
+                        data-testid="uploaded-file-embargo-date"
                         inputVariant="outlined"
                         label={t('files_and_license.embargo_date')}
                         {...field}
@@ -147,6 +148,7 @@ const FileCard: FC<FileCardProps> = ({ file, removeFile, baseFieldName, toggleLi
                   <Field name={`${baseFieldName}.${SpecificFileFieldNames.LICENSE}`}>
                     {({ field, form, meta: { error, touched } }: FieldProps) => (
                       <StyledSelect
+                        data-testid="uploaded-file-select-license"
                         select
                         fullWidth
                         SelectProps={{
@@ -173,7 +175,12 @@ const FileCard: FC<FileCardProps> = ({ file, removeFile, baseFieldName, toggleLi
                           })
                         }>
                         {licenses.map((license) => (
-                          <MenuItem key={license.identifier} value={license.identifier} divider dense>
+                          <MenuItem
+                            data-testid="license-item"
+                            key={license.identifier}
+                            value={license.identifier}
+                            divider
+                            dense>
                             <ListItemIcon>
                               <img src={license.image} alt={license.identifier} />
                             </ListItemIcon>
