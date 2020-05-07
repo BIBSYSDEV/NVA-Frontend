@@ -128,4 +128,9 @@ describe('User opens publication form and can see validation errors', () => {
     cy.get('[data-testid=license-item]').eq(0).click({ force: true });
     cy.contains(ErrorMessages.REQUIRED).should('not.be.visible');
   });
+
+  it('The user navigates to submission tab and see no errors', () => {
+    cy.get('[data-testid=nav-tabpanel-submission]').click({ force: true });
+    cy.get('[data-testid=error-summary-card]').should('not.be.visible');
+  });
 });
