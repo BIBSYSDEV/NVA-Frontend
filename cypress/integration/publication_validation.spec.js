@@ -51,9 +51,9 @@ describe('User opens publication form and can see validation errors', () => {
     // Journal type
     cy.get('[data-testid=publication-context-type]').click({ force: true }).type(' ');
     cy.get('[data-testid=publication-instance-type-Journal]').click({ force: true });
-
     // No errors should be displayed when user has just selected new context type
-    // cy.contains(ErrorMessage.REQUIRED).should('not.be.visible'); // TODO: Fix bug
+    cy.contains(ErrorMessage.REQUIRED).should('not.be.visible');
+    // TODO: ErrorMessage.REQUIRED Should be visible when removing publisher
 
     cy.get('[data-testid=nav-tabpanel-description]').click({ force: true });
     cy.get('[data-testid=nav-tabpanel-references]').click({ force: true });

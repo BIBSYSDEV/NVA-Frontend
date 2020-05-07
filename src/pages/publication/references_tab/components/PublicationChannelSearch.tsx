@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useState } from 'react';
+import React, { FC, useCallback, useState, ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 
@@ -17,7 +17,7 @@ interface PublicationChannelSearchProps {
   publicationTable: PublicationTableNumber;
   setValueFunction: (value: any) => void;
   placeholder?: string;
-  errorMessage?: string;
+  errorMessage?: ReactNode;
 }
 
 const PublicationChannelSearch: FC<PublicationChannelSearchProps> = ({
