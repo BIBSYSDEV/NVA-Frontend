@@ -3,6 +3,7 @@ const ErrorMessages = {
   INVALID_FORMAT: 'Invalid format',
   INVALID_DATE: 'Invalid Date Format',
   MISSING_AUTHOR: 'You need to have at least one author registered for this publication',
+  MISSING_FILES: 'You need to have at least one file uploaded for this publication',
 };
 
 describe('User opens publication form and can see validation errors', () => {
@@ -12,6 +13,10 @@ describe('User opens publication form and can see validation errors', () => {
     cy.get('[data-testid=menu]').click({ force: true });
     cy.get('[data-testid=menu-my-publications-button]').click({ force: true });
     cy.get('[data-testid=edit-publication-4327439]').click({ force: true });
+  });
+
+  beforeEach(() => {
+    cy.server();
   });
 
   it('The User should be able to see validation summary on submission tab', () => {
@@ -39,15 +44,11 @@ describe('User opens publication form and can see validation errors', () => {
     // Date published field
     cy.get('[data-testid=date-published-field]')
       .parent()
-      .within(() => {
-        cy.get("input[type='text']").click({ force: true }).type('999');
-      });
+      .within(() => cy.get("input[type='text']").click({ force: true }).type('999'));
     cy.get('[data-testid=date-published-field]').contains(ErrorMessages.INVALID_DATE).should('be.visible');
     cy.get('[data-testid=date-published-field]')
       .parent()
-      .within(() => {
-        cy.get("input[type='text']").clear().click({ force: true }).type('01.01.2000');
-      });
+      .within(() => cy.get("input[type='text']").clear().click({ force: true }).type('01.01.2000'));
     cy.get('[data-testid=date-published-field]').contains(ErrorMessages.INVALID_DATE).should('not.be.visible');
   });
 
@@ -98,6 +99,33 @@ describe('User opens publication form and can see validation errors', () => {
     cy.contains(ErrorMessages.INVALID_FORMAT).should('be.visible');
     cy.get('[data-testid=author-email-input]').click({ force: true }).type('@email.com');
     cy.contains(ErrorMessages.INVALID_FORMAT).should('not.be.visible');
+    cy.contains(ErrorMessages.REQUIRED).should('not.be.visible');
+  });
+
+  it('The User should be able to see validation errors on files tab', () => {
+    cy.get('[data-testid="nav-tabpanel-files-and-license"]').click({ force: true });
+    cy.contains(ErrorMessages.MISSING_FILES).should('be.visible');
+
+    // Mock Uppys upload requests to S3 Bucket
+    cy.route({
+      method: 'PUT',
+      url: 'https://file-upload.com/files/', // Must match URL set in mock-interceptor, which cannot be imported into a test
+      response: '',
+      headers: { ETag: 'etag' },
+    });
+    cy.get('input[type=file]').uploadFile('img.jpg');
+    cy.get('.uppy-StatusBar-actionBtn--upload').click({ force: true });
+    cy.get('[data-testid=uploaded-file-card]').should('be.visible');
+    cy.contains(ErrorMessages.MISSING_FILES).should('not.be.visible');
+    cy.contains(ErrorMessages.REQUIRED).should('not.be.visible');
+
+    cy.get('[data-testid=nav-tabpanel-contributors]').click({ force: true });
+    cy.get('[data-testid=nav-tabpanel-files-and-license]').click({ force: true });
+    cy.contains(ErrorMessages.REQUIRED).should('be.visible');
+    cy.get('[data-testid=uploaded-file-select-license]')
+      .parent()
+      .within(() => cy.get('.MuiSelect-root').click({ force: true }));
+    cy.get('[data-testid=license-item]').eq(0).click({ force: true });
     cy.contains(ErrorMessages.REQUIRED).should('not.be.visible');
   });
 });
