@@ -20,10 +20,10 @@ import {
   createCustomerInstitution,
   updateCustomerInstitution,
 } from '../../api/customerInstitutionsApi';
-import Progress from '../../components/Progress';
 import useFetchInstitutions from '../../utils/hooks/useFetchInstitutions';
 import InstitutionAutocomplete from '../../components/institution/InstitutionAutocomplete';
 import ButtonWithProgress from '../../components/ButtonWithProgress';
+import { CircularProgress } from '@material-ui/core';
 
 const StyledButtonContainer = styled.div`
   margin-top: 2rem;
@@ -81,7 +81,7 @@ const AdminCustomerInstitutionPage: FC = () => {
   };
 
   return isLoading ? (
-    <Progress />
+    <CircularProgress />
   ) : (
     <Card>
       <Heading>{t(editMode ? 'edit_institution' : 'add_institution')}</Heading>

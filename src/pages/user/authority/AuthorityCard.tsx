@@ -3,13 +3,12 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import Truncate from 'react-truncate';
 import styled from 'styled-components';
-import { Radio } from '@material-ui/core';
+import { Radio, CircularProgress } from '@material-ui/core';
 
 import { getAlmaPublication } from '../../../api/almaApi';
 import { Authority } from '../../../types/authority.types';
 import { AlmaPublication } from '../../../types/publication.types';
 import NormalText from '../../../components/NormalText';
-import Progress from '../../../components/Progress';
 
 const StyledBoxContent = styled.div<{ isConnected: boolean }>`
   display: grid;
@@ -66,7 +65,7 @@ const AuthorityCard: React.FC<AuthorityCardProps> = ({ authority, isConnected = 
       <StyledPublicationContent>
         <StyledPublicationInfo>{t('authority.last_publication')}</StyledPublicationInfo>
         {isLoadingPublication ? (
-          <Progress />
+          <CircularProgress />
         ) : publication?.title ? (
           <Truncate lines={2} ellipsis={<span>...</span>}>
             <NormalText>{publication.title}</NormalText>

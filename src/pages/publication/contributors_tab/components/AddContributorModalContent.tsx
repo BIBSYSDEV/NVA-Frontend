@@ -3,11 +3,10 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
-import { Button } from '@material-ui/core';
+import { Button, CircularProgress } from '@material-ui/core';
 
 import { getAuthorities } from '../../../../api/authorityApi';
 import Label from '../../../../components/Label';
-import Progress from '../../../../components/Progress';
 import SearchBar from '../../../../components/SearchBar';
 import { setNotification } from '../../../../redux/actions/notificationActions';
 import { Authority } from '../../../../types/authority.types';
@@ -105,7 +104,7 @@ const AddContributorModalContent: FC<AddContributorModalContentProps> = ({ addAu
       <SearchBar handleSearch={handleSearch} resetSearchInput={false} initialSearchTerm={initialSearchTerm} />
       {searchSummary.isLoading ? (
         <StyledProgressContainer>
-          <Progress size={100} />
+          <CircularProgress size={100} />
         </StyledProgressContainer>
       ) : matchingAuthorities?.length > 0 ? (
         <>

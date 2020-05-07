@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react';
 import { Institution } from '../../../../types/contributor.types';
-import { Button } from '@material-ui/core';
+import { Button, CircularProgress } from '@material-ui/core';
 import SelectInstitution from '../../../../components/institution/SelectInstitution';
 import Modal from '../../../../components/Modal';
 import { useFormikContext, FormikProps } from 'formik';
@@ -19,7 +19,6 @@ import { setNotification } from '../../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../../types/notification.types';
 import useFetchUnitHierarchy from '../../../../utils/hooks/useFetchUnitHierarchy';
 import AffiliationHierarchy from '../../../../components/institution/AffiliationHierarchy';
-import Progress from '../../../../components/Progress';
 import Card from '../../../../components/Card';
 
 const StyledCard = styled(Card)`
@@ -126,7 +125,9 @@ interface AffiliationElementProps {
 const AffiliationElement: FC<AffiliationElementProps> = ({ unitUri }) => {
   const [unit, isLoadingUnitHierarchy] = useFetchUnitHierarchy(unitUri);
 
-  return <div>{isLoadingUnitHierarchy ? <Progress /> : unit ? <AffiliationHierarchy unit={unit} /> : null}</div>;
+  return (
+    <div>{isLoadingUnitHierarchy ? <CircularProgress /> : unit ? <AffiliationHierarchy unit={unit} /> : null}</div>
+  );
 };
 
 export default AffiliationsCell;
