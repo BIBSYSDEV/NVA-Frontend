@@ -111,7 +111,15 @@ describe('User opens publication form and can see validation errors', () => {
     cy.contains(ErrorMessage.MISSING_FILE).should('not.be.visible');
     cy.contains(ErrorMessage.REQUIRED).should('not.be.visible');
 
-    //TODO: Embargo field
+    // Embargo field
+    cy.get('[data-testid=uploaded-file-embargo-date]')
+      .parent()
+      .within(() => cy.get("input[type='text']").click({ force: true }).type('01.01.2000'));
+    // cy.contains(ErrorMessage.MUST_BE_FUTURE).should('be.visible'); // TODO: Set error message
+    cy.get('[data-testid=uploaded-file-embargo-date]')
+      .parent()
+      .within(() => cy.get("input[type='text']").clear().click({ force: true }).type('01.01.3000'));
+    cy.contains(ErrorMessage.MUST_BE_FUTURE).should('not.be.visible');
 
     // Lincense field
     cy.get('[data-testid=nav-tabpanel-contributors]').click({ force: true });

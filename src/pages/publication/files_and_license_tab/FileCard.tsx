@@ -126,6 +126,7 @@ const FileCard: FC<FileCardProps> = ({ file, removeFile, baseFieldName, toggleLi
                   <Field name={`${baseFieldName}.${SpecificFileFieldNames.EMBARGO_DATE}`}>
                     {({ field, form, meta: { error, touched } }: FieldProps) => (
                       <KeyboardDatePicker
+                        data-testid="uploaded-file-embargo-date"
                         inputVariant="outlined"
                         label={t('files_and_license.embargo_date')}
                         {...field}
