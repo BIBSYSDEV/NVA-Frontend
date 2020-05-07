@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { Link as MuiLink } from '@material-ui/core';
 import styled from 'styled-components';
+import NormalText from './NormalText';
 
 const StyledLine = styled.div`
   padding-bottom: 0.5rem;
@@ -9,41 +10,52 @@ const StyledLine = styled.div`
   flex-wrap: wrap;
 `;
 
-const StyledLabel = styled.div`
+const StyledLabel = styled(NormalText)`
   display: inline-block;
-  width: 10rem;
-  min-width: 10rem;
+  width: 6rem;
+  min-width: 6rem;
 `;
 
-const StyledText = styled.div`
+const StyledContent = styled.div`
   display: inline-block;
-  font-weight: bold;
   flex: 1;
   min-width: 30rem;
 `;
 
 interface LabelTextLineProps {
   label: string;
-  text: string;
+  linkText?: any;
   dataTestId?: string;
   internalLink?: string;
   externalLink?: string;
+  children?: ReactNode;
 }
 
-const LabelTextLine: React.FC<LabelTextLineProps> = ({ label, text, dataTestId, internalLink, externalLink }) => (
+const LabelTextLine: React.FC<LabelTextLineProps> = ({
+  label,
+  linkText,
+  dataTestId,
+  internalLink,
+  externalLink,
+  children,
+}) => (
   <StyledLine>
     <StyledLabel>{label}:</StyledLabel>
     {externalLink && (
       <MuiLink href={externalLink} target="_blank" rel="noopener noreferrer">
-        <StyledText data-testid={dataTestId}>{text}</StyledText>
+        <StyledContent data-testid={dataTestId}>
+          <NormalText>{linkText ?? externalLink}</NormalText>
+        </StyledContent>
       </MuiLink>
     )}
     {internalLink && (
       <MuiLink component={Link} to={internalLink}>
-        <StyledText data-testid={dataTestId}>{text}</StyledText>
+        <StyledContent data-testid={dataTestId}>
+          <NormalText>{linkText ?? internalLink}</NormalText>
+        </StyledContent>
       </MuiLink>
     )}
-    {!(internalLink || externalLink) && <StyledText data-testid={dataTestId}>{text}</StyledText>}
+    {children && <StyledContent>{children}</StyledContent>}
   </StyledLine>
 );
 

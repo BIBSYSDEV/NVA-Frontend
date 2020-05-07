@@ -84,7 +84,7 @@ const UserOrcid: FC = () => {
               <LabelTextLine
                 dataTestId={'orcid-info'}
                 label={t('orcid.your_orcid')}
-                text={orcidLink}
+                linkText={orcidLink}
                 externalLink={orcidLink}
               />
               <StyledButton onClick={toggleConfirmDialog} variant="contained" color="secondary">
