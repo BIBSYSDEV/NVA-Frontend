@@ -114,12 +114,15 @@ describe('User opens publication form and can see validation errors', () => {
     // Embargo field
     cy.get('[data-testid=uploaded-file-embargo-date]')
       .parent()
-      .within(() => cy.get("input[type='text']").click({ force: true }).type('01.01.2000').blur());
-    cy.get('[data-testid=uploaded-file-embargo-date]').contains(ErrorMessage.MUST_BE_FUTURE).should('be.visible');
-    cy.get('[data-testid=uploaded-file-embargo-date]')
-      .parent()
-      .within(() => cy.get("input[type='text']").clear().click({ force: true }).type('01.01.3000'));
-    cy.contains(ErrorMessage.MUST_BE_FUTURE).should('not.be.visible');
+      .within(() => {
+        cy.get("input[type='text']").click({ force: true }).type('01.01.').blur();
+        cy.contains(ErrorMessage.INVALID_FORMAT).should('be.visible');
+        cy.get("input[type='text']").click({ force: true }).type('2000');
+        cy.contains(ErrorMessage.INVALID_FORMAT).should('not.be.visible');
+        cy.contains(ErrorMessage.MUST_BE_FUTURE).should('be.visible');
+        cy.get("input[type='text']").clear().click({ force: true }).type('01.01.3000');
+        cy.contains(ErrorMessage.MUST_BE_FUTURE).should('not.be.visible');
+      });
 
     // Lincense field
     cy.get('[data-testid=nav-tabpanel-contributors]').click({ force: true });
