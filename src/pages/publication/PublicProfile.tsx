@@ -61,14 +61,18 @@ const PublicProfile: FC = () => {
       <StyledUserInfo>
         <Card>
           <Heading>{user.name}</Heading>
-          <LabelTextLine label={t('heading.organizations')}>
-            {isLoadingMultiple ? (
-              <CircularProgress color="inherit" size={20} />
-            ) : (
-              units?.map((unit) => <NormalText key={unit.id}>{unit.name}</NormalText>)
-            )}
-          </LabelTextLine>
-
+          {isLoadingMultiple ? (
+            <CircularProgress color="inherit" size={20} />
+          ) : (
+            units &&
+            units.length > 0 && (
+              <LabelTextLine label={t('heading.organizations')}>
+                {units.map((unit) => (
+                  <NormalText key={unit.id}>{unit.name}</NormalText>
+                ))}
+              </LabelTextLine>
+            )
+          )}
           {user.authority?.orcids.map((orcid: string) => {
             const orcidLink = `${ORCID_BASE_URL}/${orcid}`;
             return (

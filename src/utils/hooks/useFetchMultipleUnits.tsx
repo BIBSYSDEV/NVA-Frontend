@@ -19,7 +19,6 @@ const useFetchMultipleUnits = (unitIds: string[] | undefined): [RecursiveInstitu
     const cancelSource = Axios.CancelToken.source();
 
     const fetchDepartment = async (unitId: string) => {
-      setIsLoading(true);
       // TODO: NP-844 should ensure we have URIs from start (not IDs)
       const unitUri = isValidUrl(unitId)
         ? unitId
@@ -29,7 +28,6 @@ const useFetchMultipleUnits = (unitIds: string[] | undefined): [RecursiveInstitu
 
       const response = await getDepartment(unitUri, cancelSource.token);
       if (response) {
-        setIsLoading(false);
         if (response.error) {
           dispatch(setNotification(response.error, NotificationVariant.Error));
         } else {
@@ -37,12 +35,14 @@ const useFetchMultipleUnits = (unitIds: string[] | undefined): [RecursiveInstitu
         }
       }
     };
-    if (unitIds) {
+    if (unitIds && unitIds.length > 0) {
       unitIds.forEach(async (unitId) => {
+        setIsLoading(true);
         const unit = await fetchDepartment(unitId);
         if (unit) {
           setUnits((u) => [...u, unit]);
         }
+        setIsLoading(false);
       });
     }
 
