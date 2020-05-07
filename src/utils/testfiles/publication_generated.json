@@ -46,6 +46,7 @@
       {
         "identifier": "3214324",
         "name": "filename.pdf",
+        "administrativeAgreement": false,
         "data": {
           "size": 123456,
           "type": "pdf"

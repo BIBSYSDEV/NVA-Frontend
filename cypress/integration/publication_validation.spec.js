@@ -114,8 +114,8 @@ describe('User opens publication form and can see validation errors', () => {
     // Embargo field
     cy.get('[data-testid=uploaded-file-embargo-date]')
       .parent()
-      .within(() => cy.get("input[type='text']").click({ force: true }).type('01.01.2000'));
-    // cy.contains(ErrorMessage.MUST_BE_FUTURE).should('be.visible'); // TODO: Set error message
+      .within(() => cy.get("input[type='text']").click({ force: true }).type('01.01.2000').blur());
+    cy.get('[data-testid=uploaded-file-embargo-date]').contains(ErrorMessage.MUST_BE_FUTURE).should('be.visible');
     cy.get('[data-testid=uploaded-file-embargo-date]')
       .parent()
       .within(() => cy.get("input[type='text']").clear().click({ force: true }).type('01.01.3000'));
