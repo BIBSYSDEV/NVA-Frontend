@@ -71,11 +71,11 @@ const SortableItem = SortableElement(
           <SubHeading>
             {contributor.identity.name}{' '}
             {contributor.identity.arpId ? (
-              <Tooltip title={t('contributors.known_author_identity')}>
+              <Tooltip title={t('contributors.known_author_identity') as string}>
                 <StyledCheckIcon />
               </Tooltip>
             ) : (
-              <Tooltip title={t('contributors.unknown_author_identity')}>
+              <Tooltip title={t('contributors.unknown_author_identity') as string}>
                 <StyledWarningIcon />
               </Tooltip>
             )}
