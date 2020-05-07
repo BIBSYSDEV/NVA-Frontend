@@ -12,7 +12,7 @@ import Axios from 'axios';
 // This hook is used to fetch the top-down hierarchy of units given an array of unitIds
 const useFetchMultipleUnits = (unitIds: string[] | undefined): [RecursiveInstitutionUnit[] | undefined, boolean] => {
   const dispatch = useDispatch();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [units, setUnits] = useState<RecursiveInstitutionUnit[]>([]);
 
   useEffect(() => {
@@ -36,14 +36,20 @@ const useFetchMultipleUnits = (unitIds: string[] | undefined): [RecursiveInstitu
       }
     };
     if (unitIds && unitIds.length > 0) {
+      setIsLoading(true);
       unitIds.forEach(async (unitId) => {
-        setIsLoading(true);
         const unit = await fetchDepartment(unitId);
         if (unit) {
-          setUnits((u) => [...u, unit]);
+          setUnits((u) => {
+            if (u.length === unitIds.length - 1) {
+              setIsLoading(false);
+            }
+            return [...u, unit];
+          });
         }
-        setIsLoading(false);
       });
+    } else {
+      setIsLoading(false);
     }
 
     return () => cancelSource.cancel();
