@@ -52,7 +52,7 @@ const LabelTextLine: FC<LabelTextLineProps> = ({
         </StyledContent>
       </MuiLink>
     )}
-    {children && <StyledContent>{children}</StyledContent>}
+    {children && <StyledContent data-testid={dataTestId}>{children}</StyledContent>}
   </StyledLine>
 );
 
