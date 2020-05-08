@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 
-import { Button, Radio } from '@material-ui/core';
-import Progress from '../../../components/Progress';
+import { Button, Radio, CircularProgress } from '@material-ui/core';
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { setAuthorityData } from '../../../redux/actions/userActions';
 import { RootStore } from '../../../redux/reducers/rootReducer';
@@ -16,12 +15,11 @@ const StyledBoxContent = styled.div`
   grid-template-areas:
     'authority authority authority'
     'description description description'
-    '. . create-button';
+    'cancel-button . create-button';
   grid-template-columns: 1fr 3fr 3fr;
   background-color: ${({ theme }) => theme.palette.box.main};
   padding: 1rem;
   align-items: center;
-  height: 16rem;
 `;
 
 const StyledAuthority = styled.div`
@@ -31,10 +29,16 @@ const StyledAuthority = styled.div`
 const StyledDescription = styled.div`
   grid-area: description;
   margin-left: 0.7rem;
+  white-space: pre-wrap;
 `;
 
 const StyledButton = styled(Button)`
   grid-area: create-button;
+  margin-top: 2rem;
+`;
+
+const StyledCancelButton = styled(Button)`
+  grid-area: cancel-button;
   margin-top: 2rem;
 `;
 
@@ -47,17 +51,24 @@ const StyledProgressContainer = styled.div`
   padding: 2rem;
 `;
 
-const NewAuthorityCard: React.FC = () => {
+interface NewAuthorityCardProps {
+  onClickCancel: () => void;
+}
+
+const NewAuthorityCard: FC<NewAuthorityCardProps> = ({ onClickCancel }) => {
   const dispatch = useDispatch();
   const user = useSelector((store: RootStore) => store.user);
   const [loading, setLoading] = useState(false);
   const { t } = useTranslation('profile');
+  const hasMatchingAuthorities = user.possibleAuthorities.length > 0;
+  const { familyName, givenName, id, name } = user;
 
   const handleCreateAuthority = async () => {
     setLoading(true);
-    const authority = await createAuthority(user);
+    const authority = await createAuthority(givenName, familyName, id);
     if (authority?.error) {
       dispatch(setNotification(authority.error, NotificationVariant.Error));
+      onClickCancel();
     } else {
       dispatch(setAuthorityData(authority));
       dispatch(setNotification(t('feedback:success.created_authority')));
@@ -69,23 +80,37 @@ const NewAuthorityCard: React.FC = () => {
     <>
       {loading ? (
         <StyledProgressContainer>
-          <Progress size={100} />
+          <CircularProgress size={100} />
         </StyledProgressContainer>
       ) : (
         <StyledBoxContent>
           <StyledAuthority>
             <Radio color="primary" checked />
-            {user.name}
+            {name}
           </StyledAuthority>
-          <StyledDescription>{t('authority.description_no_authority_found')}</StyledDescription>
+          <StyledDescription>
+            {hasMatchingAuthorities
+              ? t('authority.description_create_own_authority')
+              : t('authority.description_no_authority_found')}
+          </StyledDescription>
           <StyledButton
             data-testid="create-author-button"
             color="primary"
             variant="contained"
             size="large"
             onClick={handleCreateAuthority}>
-            {t('authority.create_authority')}
+            {t('common:create_authority')}
           </StyledButton>
+          {hasMatchingAuthorities && (
+            <StyledCancelButton
+              data-testid="cancel-create-author-button"
+              color="secondary"
+              variant="contained"
+              size="large"
+              onClick={onClickCancel}>
+              {t('common:cancel')}
+            </StyledCancelButton>
+          )}
         </StyledBoxContent>
       )}
     </>

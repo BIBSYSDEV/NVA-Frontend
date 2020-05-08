@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import styled from 'styled-components';
 import NormalText from './NormalText';
 
@@ -9,32 +9,39 @@ const StyledRow = styled.div`
   font-size: 0.8rem;
 `;
 
-const StyledLabel = styled(NormalText)`
-  display: inline-block;
-  min-width: 17rem;
-  font-weight: normal;
-`;
-
-const StyledTextContainer = styled.div`
+const StyledLabel = styled(({ minimal: boolean, ...props }) => <NormalText {...props} />)`
   display: inline-block;
   font-weight: bold;
+  ${({ minimal }) => (minimal ? `padding-right: 1rem;` : `min-width: 17rem;`)}
+`;
+
+const StyledSingleRowContainer = styled(NormalText)`
+  display: inline-block;
   flex: 1;
-  min-width: 60%;
+`;
+
+const StyledMultipleRowContainer = styled.div`
+  display: inline-block;
+  flex: 1;
 `;
 
 interface LabelContentRowProps {
   label: string;
   children: any;
   dataTestId?: string;
+  minimal?: boolean;
+  multiple?: boolean;
 }
 
-const LabelContentRow: React.FC<LabelContentRowProps> = ({ label, children, dataTestId }) => {
-  return (
-    <StyledRow data-testid={dataTestId}>
-      <StyledLabel>{label}</StyledLabel>
-      <StyledTextContainer>{children}</StyledTextContainer>
-    </StyledRow>
-  );
-};
+const LabelContentRow: FC<LabelContentRowProps> = ({ label, children, dataTestId, multiple, minimal = false }) => (
+  <StyledRow data-testid={dataTestId}>
+    <StyledLabel minimal={minimal}>{label}</StyledLabel>
+    {multiple ? (
+      <StyledMultipleRowContainer>{children}</StyledMultipleRowContainer>
+    ) : (
+      <StyledSingleRowContainer>{children}</StyledSingleRowContainer>
+    )}
+  </StyledRow>
+);
 
 export default LabelContentRow;

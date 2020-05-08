@@ -7,9 +7,12 @@ describe('Publication: Contributors', () => {
   it('The user should be able to open the Add Contributor modal', () => {
     cy.mocklogin();
 
-    // navigate to Contributors (update this when functionality for starting a registration is done)
-    cy.get('[data-testid=new-publication-button]').click({ force: true });
-    cy.get('[data-testid=new-schema-button]').click({ force: true });
+    // navigate to Contributors
+    cy.get('[data-testid=menu]').click({ force: true });
+    cy.get('[data-testid=menu-new-publication-button]').click({ force: true });
+
+    cy.startPublicationWithDoi();
+
     cy.get('[data-testid=nav-tabpanel-contributors]').click({ force: true });
 
     // click Add Contributor button

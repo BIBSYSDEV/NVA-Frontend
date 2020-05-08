@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useState, ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
@@ -22,9 +22,10 @@ interface AutoSearchProps {
   dataTestId?: string;
   disabled?: boolean;
   displaySelection?: boolean;
+  errorMessage?: ReactNode;
+  initialValue?: string;
   label?: string;
   placeholder?: string;
-  errorMessage?: string;
 }
 
 export const AutoSearch: FC<AutoSearchProps> = ({
@@ -35,11 +36,12 @@ export const AutoSearch: FC<AutoSearchProps> = ({
   dataTestId,
   disabled,
   displaySelection,
+  errorMessage,
+  initialValue,
   label,
   placeholder,
-  errorMessage,
 }) => {
-  const [displayValue, setDisplayValue] = useState<any>(emptyValue);
+  const [displayValue, setDisplayValue] = useState<any>(initialValue ? { title: initialValue } : emptyValue);
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -61,14 +63,12 @@ export const AutoSearch: FC<AutoSearchProps> = ({
 
   return (
     <Autocomplete
-      openOnFocus={false}
-      open={displayValue.title.length >= MINIMUM_SEARCH_CHARACTERS && open}
-      onClose={() => {
-        setOpen(false);
-      }}
-      onOpen={() => {
-        setOpen(true);
-      }}
+      blurOnSelect
+      disabled={disabled}
+      filterOptions={(options) => options}
+      getOptionLabel={(option: any) => option.title || option.name || ''}
+      loading={loading}
+      noOptionsText={t('no_hits')}
       onChange={(_: object, value: string | null) => {
         if (value) {
           setValueFunction(value);
@@ -77,6 +77,9 @@ export const AutoSearch: FC<AutoSearchProps> = ({
           }
           setOptions([]);
         }
+      }}
+      onClose={() => {
+        setOpen(false);
       }}
       onInputChange={(_: any, value: string, reason: string) => {
         setDisplayValue({ title: value });
@@ -93,15 +96,13 @@ export const AutoSearch: FC<AutoSearchProps> = ({
           setOptions([]);
         }
       }}
-      getOptionLabel={(option: any) => option.title || ''}
+      onOpen={() => {
+        setOpen(true);
+      }}
+      open={displayValue.title.length >= MINIMUM_SEARCH_CHARACTERS && open}
+      openOnFocus={false}
       options={options}
-      loading={loading}
-      blurOnSelect
-      value={displayValue}
-      noOptionsText={t('no_hits')}
-      filterOptions={options => options}
-      disabled={disabled}
-      renderInput={params => (
+      renderInput={(params) => (
         <TextField
           {...params}
           data-testid={dataTestId}
@@ -125,6 +126,7 @@ export const AutoSearch: FC<AutoSearchProps> = ({
           helperText={errorMessage}
         />
       )}
+      value={displayValue}
     />
   );
 };

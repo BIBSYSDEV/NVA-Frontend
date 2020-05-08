@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 import styled from 'styled-components';
 import DescriptionIcon from '@material-ui/icons/DescriptionOutlined';
 import { File } from '../../../types/file.types';
+import NormalText from '../../../components/NormalText';
 
 const StyledFileIcon = styled(DescriptionIcon)`
   width: 100px;
@@ -20,9 +21,10 @@ interface PublicationPageFilesProps {
 
 const PublicationPageFiles: FC<PublicationPageFilesProps> = ({ files }) => (
   <>
-    {files.map(file => (
-      <StyledFileIconWrapper key={file.id}>
+    {files.map((file) => (
+      <StyledFileIconWrapper key={file.identifier}>
         <StyledFileIcon />
+        <NormalText>{file.name}</NormalText>
       </StyledFileIconWrapper>
     ))}
   </>

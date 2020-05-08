@@ -1,10 +1,10 @@
 {
   "contributors": [
     {
-      "institutions": [],
+      "affiliations": [],
       "type": "",
       "orcid": "",
-      "corresponding": true,
+      "correspondingAuthor": true,
       "email": "test@test.no",
       "identity": {
         "id": "901790000000",
@@ -12,10 +12,10 @@
       }
     },
     {
-      "institutions": [],
+      "affiliations": [],
       "type": "",
       "orcid": "",
-      "corresponding": false,
+      "correspondingAuthor": false,
       "email": "",
       "identity": {
         "id": "901790000001",
@@ -41,16 +41,19 @@
       }
     }
   },
-  "files": [
-    {
-      "id": "3214324",
-      "name": "filename.pdf",
-      "data": {
-        "size": 123456,
-        "type": "pdf"
+  "fileSet": {
+    "files": [
+      {
+        "identifier": "3214324",
+        "name": "filename.pdf",
+        "administrativeAgreement": false,
+        "data": {
+          "size": 123456,
+          "type": "pdf"
+        }
       }
-    }
-  ],
+    ]
+  },
   "publisher": "Littel - Tromp",
   "entityDescription": {
     "mainTitle": "Computer simulations show that Neanderthal facial morphology represents adaptation to cold and high energy demands, but not heavy biting",
@@ -77,6 +80,10 @@
         "financedBy": "NTNU"
       }
     ],
-    "publicationType": "JournalArticle"
+    "reference": {
+      "publicationContext": {
+        "type": "Journal"
+      }
+    }
   }
 }

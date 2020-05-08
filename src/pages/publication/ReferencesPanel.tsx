@@ -1,9 +1,7 @@
 import { FormikProps, useFormikContext } from 'formik';
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect, FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-
-import TabPanel from '../../components/TabPanel/TabPanel';
 import { FormikPublication } from '../../types/publication.types';
 import { PublicationType, ReferenceFieldNames } from '../../types/publicationFieldNames';
 import BookForm from './references_tab/BookForm';
@@ -15,7 +13,7 @@ import Card from '../../components/Card';
 import Heading from '../../components/Heading';
 import SelectTypeField from './references_tab/components/SelectTypeField';
 
-const StyledBox = styled.div`
+const StyledCard = styled(Card)`
   margin-top: 1rem;
 `;
 
@@ -23,49 +21,47 @@ const StyledSelectContainer = styled.div`
   width: 50%;
 `;
 
-interface ReferencesPanelProps {
-  goToNextTab: () => void;
-  savePublication: () => void;
-}
-
-const ReferencesPanel: React.FC<ReferencesPanelProps> = ({ goToNextTab, savePublication }) => {
+const ReferencesPanel: FC = () => {
   const { t } = useTranslation('publication');
   const { values, setFieldTouched, setFieldValue }: FormikProps<FormikPublication> = useFormikContext();
-  const { publicationType } = values.entityDescription;
+  const publicationContextType = values.entityDescription.reference.publicationContext.type;
 
-  // Validation messages won't show on fields that are not touched
-  const setAllFieldsTouched = useCallback(() => {
-    Object.values(ReferenceFieldNames).forEach((fieldName) => setFieldTouched(fieldName));
-  }, [setFieldTouched]);
-
-  useEffect(() => {
+  useEffect(
     // Set all fields as touched if user navigates away from this panel (on unmount)
-    return () => setAllFieldsTouched();
-  }, [setAllFieldsTouched]);
+    () => () => Object.values(ReferenceFieldNames).forEach((fieldName) => setFieldTouched(fieldName)),
+    [setFieldTouched]
+  );
 
   return (
-    <TabPanel ariaLabel="references" goToNextTab={goToNextTab} onClickSave={() => savePublication()}>
+    <>
       <StyledSelectContainer>
         <SelectTypeField
-          fieldName={ReferenceFieldNames.PUBLICATION_TYPE}
+          dataTestId="publication-context-type"
+          fieldName={ReferenceFieldNames.PUBLICATION_CONTEXT_TYPE}
           options={Object.values(PublicationType)}
-          onChangeExtension={() => setFieldValue(ReferenceFieldNames.SUB_TYPE, '')}
+          onChangeType={(newPublicationContextType) => {
+            // Ensure some values are reset when publication type changes
+            setFieldValue(ReferenceFieldNames.SUB_TYPE, '');
+            setFieldValue(ReferenceFieldNames.PUBLICATION_CONTEXT, { type: newPublicationContextType });
+            // Avoid showing potential errors instantly
+            Object.values(ReferenceFieldNames).forEach((fieldName) => setFieldTouched(fieldName, false));
+          }}
         />
       </StyledSelectContainer>
 
-      {publicationType && (
-        <StyledBox>
-          <Card>
-            <Heading data-testid="publication_type-heading">{t(`publicationTypes:${publicationType}`)}</Heading>
-            {publicationType === PublicationType.BOOK && <BookForm />}
-            {publicationType === PublicationType.CHAPTER && <ChapterForm />}
-            {publicationType === PublicationType.REPORT && <ReportForm />}
-            {publicationType === PublicationType.DEGREE && <DegreeForm />}
-            {publicationType === PublicationType.PUBLICATION_IN_JOURNAL && <JournalArticleForm />}
-          </Card>
-        </StyledBox>
+      {publicationContextType && (
+        <StyledCard>
+          <Heading data-testid="publication-instance-type-heading">
+            {t(`publicationTypes:${publicationContextType}`)}
+          </Heading>
+          {publicationContextType === PublicationType.BOOK && <BookForm />}
+          {publicationContextType === PublicationType.CHAPTER && <ChapterForm />}
+          {publicationContextType === PublicationType.REPORT && <ReportForm />}
+          {publicationContextType === PublicationType.DEGREE && <DegreeForm />}
+          {publicationContextType === PublicationType.PUBLICATION_IN_JOURNAL && <JournalArticleForm />}
+        </StyledCard>
       )}
-    </TabPanel>
+    </>
   );
 };
 

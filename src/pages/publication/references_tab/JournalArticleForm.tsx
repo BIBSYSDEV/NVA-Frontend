@@ -36,12 +36,10 @@ const StyledPeerReview = styled.div`
 const JournalArticleForm: FC = () => {
   const { t } = useTranslation('publication');
   const { values }: FormikProps<FormikPublication> = useFormikContext();
-
   const {
     publicationContext,
     publicationInstance: { peerReviewed },
   } = values.entityDescription.reference;
-  const isRatedJournal = !!publicationContext?.level;
 
   return (
     <>
@@ -50,7 +48,7 @@ const JournalArticleForm: FC = () => {
       <DoiField />
 
       <PublisherField
-        fieldName={ReferenceFieldNames.PUBLISHER}
+        fieldName={ReferenceFieldNames.PUBLICATION_CONTEXT}
         publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
         label={t('references.journal')}
         placeholder={t('references.search_for_journal')}
@@ -84,7 +82,7 @@ const JournalArticleForm: FC = () => {
       <StyledPeerReview>
         <PeerReview fieldName={ReferenceFieldNames.PEER_REVIEW} label={t('references.peer_review')} />
       </StyledPeerReview>
-      <NviValidation isPeerReviewed={peerReviewed} isRated={isRatedJournal} dataTestId="nvi_journal" />
+      <NviValidation isPeerReviewed={peerReviewed} isRated={!!publicationContext?.level} dataTestId="nvi_journal" />
     </>
   );
 };

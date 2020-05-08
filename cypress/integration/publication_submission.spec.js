@@ -1,36 +1,20 @@
-describe('Publication: Description', () => {
+describe('Publication: Submission', () => {
   beforeEach(() => {
     cy.visit('/');
     cy.server();
   });
 
-  it('The user should be able to add and remove projects', () => {
+  it('The user should be able to navigate to submission tab', () => {
     cy.mocklogin();
 
-    const title = 'Sample title';
-    const description = 'Sample description.';
+    cy.get('[data-testid=menu]').click({ force: true });
+    cy.get('[data-testid=menu-new-publication-button]').click({ force: true });
 
-    const isbn = '9788202485238';
-
-    cy.get('[data-testid=new-publication-button]').click({ force: true });
-
-    // TODO: Change this when DOI-link is used
-    cy.get('[data-testid=new-schema-button]').click({ force: true });
-
-    // choose fill inn some values on description-tab
-    cy.get('[data-testid=nav-tabpanel-description]').click({ force: true });
-    cy.get('[data-testid=publication-title-input]').type(title);
-    cy.get('[data-testid=publication-description-input]').type(description);
-
-    // choose Book type and fill inn some data
-    cy.get('[data-testid=nav-tabpanel-references]').click({ force: true });
-    cy.get('[data-testid=publication_type]').click({ force: true }).type(' ');
-    cy.get('[data-testid=publication_type-Book]').click({ force: true });
-    cy.get('[data-testid=isbn]').type(isbn);
+    cy.startPublicationWithDoi();
 
     cy.get('[data-testid=nav-tabpanel-submission]').click({ force: true });
-    cy.contains(title);
-    cy.contains(isbn);
-    cy.contains(description);
+    cy.contains(
+      'Computer simulations show that Neanderthal facial morphology represents adaptation to cold and high energy demands, but not heavy biting'
+    );
   });
 });

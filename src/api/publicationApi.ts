@@ -12,11 +12,27 @@ import { NotificationVariant } from '../types/notification.types';
 export enum PublicationsApiPaths {
   SEARCH = '/search/publications',
   PUBLICATION = '/publication',
-  FETCH_MY_RESOURCES = '/publications/fetch-my-resources',
+  PUBLICATIONS_BY_OWNER = '/publication/by-owner',
   DOI_LOOKUP = '/doi-fetch',
   DOI_REQUESTS = '/publications/doi-requests',
   FOR_APPROVAL = '/publications/approval',
 }
+
+export const createPublication = async () => {
+  try {
+    const idToken = await getIdToken();
+    const response = await Axios.post(PublicationsApiPaths.PUBLICATION, null, {
+      headers: { Authorization: `Bearer ${idToken}` },
+    });
+    if (response.status === StatusCode.CREATED) {
+      return response.data;
+    } else {
+      return { error: i18n.t('feedback:error.create_publication') };
+    }
+  } catch {
+    return { error: i18n.t('feedback:error.create_publication') };
+  }
+};
 
 export const updatePublication = async (publication: Publication) => {
   const { identifier } = publication;
@@ -30,7 +46,8 @@ export const updatePublication = async (publication: Publication) => {
         Authorization: `Bearer ${idToken}`,
       },
     });
-    if (response.status === StatusCode.OK) {
+    if (response.status === StatusCode.OK || response.status === StatusCode.ACCEPTED) {
+      // TODO: temporarily allow accepted status code. remove when fixed in backend
       return response.data;
     } else {
       return null;
@@ -60,8 +77,33 @@ export const getPublication = async (id: string) => {
   }
 };
 
+export const publishPublication = async (identifier: string) => {
+  if (!identifier) {
+    return { error: i18n.t('feedback:error.publish_publication') };
+  }
+  try {
+    const idToken = await getIdToken();
+    const response = await Axios.put(
+      `${PublicationsApiPaths.PUBLICATION}/${identifier}/publish`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${idToken}`,
+        },
+      }
+    );
+    if (response.status === StatusCode.OK || response.status === StatusCode.ACCEPTED) {
+      return response.data;
+    } else {
+      return { error: i18n.t('feedback:error.publish_publication') };
+    }
+  } catch {
+    return { error: i18n.t('feedback:error.publish_publication') };
+  }
+};
+
 export const getMyPublications = async () => {
-  const url = PublicationsApiPaths.FETCH_MY_RESOURCES;
+  const url = PublicationsApiPaths.PUBLICATIONS_BY_OWNER;
   try {
     const idToken = await getIdToken();
     const response = await Axios.get(url, {
@@ -70,7 +112,7 @@ export const getMyPublications = async () => {
       },
     });
     if (response.status === StatusCode.OK) {
-      return response.data;
+      return response.data.publications;
     } else {
       return [];
     }

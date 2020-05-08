@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, FormEvent, ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
@@ -22,11 +22,12 @@ const StyledInputBase = styled(InputBase)`
 interface SearchBarProps {
   handleSearch: (searchTerm: string) => void;
   resetSearchInput: boolean;
+  initialSearchTerm?: string;
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({ resetSearchInput, handleSearch }) => {
+const SearchBar: React.FC<SearchBarProps> = ({ resetSearchInput, handleSearch, initialSearchTerm = '' }) => {
   const { t } = useTranslation();
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
 
   useEffect(() => {
     if (resetSearchInput) {
@@ -38,12 +39,13 @@ const SearchBar: React.FC<SearchBarProps> = ({ resetSearchInput, handleSearch })
     setSearchTerm(searchTerm);
   }, [searchTerm]);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    event.stopPropagation();
     handleSearch(searchTerm);
   };
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
   };
 

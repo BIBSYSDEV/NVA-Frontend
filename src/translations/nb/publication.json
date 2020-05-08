@@ -4,12 +4,26 @@
     "info": "Den antologien kapittelet er publisert i må være registrert først"
   },
   "contributors": {
+    "add_affiliation": "Legg til tilknytning",
     "add_author": "Legg til forfatter",
     "add_authors": "Legg til flere forfattere",
+    "add_duplicate_affiliation": "Tilknytningen er allerede lagt til",
     "add_other_contributor": "Legg til flere",
+    "author_already_added": "Valgt forfatter er allerede lagt til",
     "authors": "Forfattere",
+    "confirm_remove_affiliation_text": "Er du sikker på at du ønsker å fjerne tilknytningen til {{affiliationName}} for {{contributorName}}?",
+    "confirm_remove_affiliation_title": "Fjerne tilknytning?",
+    "confirm_remove_contributor_text": "Er du sikker på at du ønsker å fjerne {{contributorName}} fra listen over bidragsytere?",
+    "confirm_remove_contributor_title": "Fjerne bidragsyter?",
+    "connect_author_identity": "Tilknytt forfatteridentitet",
     "corresponding": "Korresponderende",
+    "create_new_author": "Opprett ny forfatter",
+    "known_author_identity": "Har tilknyttet forfatteridentitet",
+    "prefilled_name": "Forhåndsutfylt navn",
+    "remove_contributor": "Fjern bidragsyter",
+    "select_institution": "Velg institusjon",
     "type": "Bidragstype",
+    "unknown_author_identity": "Mangler forfatteridentitet",
     "verify_person": "Verifiser"
   },
   "description": {
@@ -28,8 +42,11 @@
     "year_only": "Kun årstall"
   },
   "feedback": {
+    "invalid_format": "Ugyldig format",
     "invalid_url": "Ugyldig lenke",
     "minimum_one_contributor": "Du må ha minst en forfatter på denne publikasjonen",
+    "minimum_one_file": "Du må laste opp minst en fil for denne publikasjonen",
+    "date_must_be_in_future": "Dato må være i fremtiden",
     "required_field": "Påkrevd felt"
   },
   "files_and_license": {
@@ -54,6 +71,8 @@
     "select_version": "Velg versjon",
     "title": "Filnavn",
     "upload_files": "Last opp filer",
+    "upload_one_file": "Last opp %{smart_count} fil",
+    "upload_x_files": "Last opp %{smart_count} filer",
     "uploaded_size": "Lastet opp {{size}} kB"
   },
   "heading": {
@@ -68,6 +87,7 @@
     "summary": "Oppsummering",
     "validation_errors": "Valideringsfeil"
   },
+  "new_publication": "Ny publikasjon",
   "publication": {
     "info_text": "Velg ressursen du ønsker å registrere eller publisere ved å laste opp ressurs eller lenke til en publikasjon.",
     "link_publication_description": "Feks. DOI lenke, lenke til artikkel, lenke til video av foredrag etc.",
@@ -112,10 +132,14 @@
     "volume": "Volum"
   },
   "status": {
-    "draft": "Kladd",
-    "rejected": "Avvist"
+    "Draft": "Kladd",
+    "New": "Ny",
+    "Published": "Publisert",
+    "Rejected": "Avvist"
   },
   "submission": {
     "ask_for_doi": "Be om DOI for denne registreringen (anbefales ikke dersom ressursen allerede har en DOI)"
-  }
+  },
+  "modal_unsaved_changes_description": "Du har gjort endringer som ikke er lagret. Er du sikker på at du vil forlate denne siden?",
+  "modal_unsaved_changes_heading": "Forlate siden uten å ha lagret?"
 }

@@ -5,22 +5,24 @@ import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { getAuthorities, updateInstitutionForAuthority } from './api/authorityApi';
-import { getCurrentAuthenticatedUser } from './api/userApi';
+import { getAuthorities, AuthorityQualifiers, addQualifierIdForAuthority } from './api/authorityApi';
+import { getCurrentUserAttributes } from './api/userApi';
 import Breadcrumbs from './layout/Breadcrumbs';
 import Footer from './layout/Footer';
 import Header from './layout/header/Header';
 import Notifier from './layout/Notifier';
-import AdminMenu from './pages/dashboard/AdminMenu';
 import AuthorityOrcidModal from './pages/user/authority/AuthorityOrcidModal';
 import { setAuthorityData, setPossibleAuthorities, setUser } from './redux/actions/userActions';
 import { RootStore } from './redux/reducers/rootReducer';
 import { Authority } from './types/authority.types';
 import { awsConfig } from './utils/aws-config';
-import { API_URL, DEBOUNCE_INTERVAL_MODAL, USE_MOCK_DATA } from './utils/constants';
+import { API_URL, USE_MOCK_DATA } from './utils/constants';
 import { hubListener } from './utils/hub-listener';
 import { mockUser } from './utils/testfiles/mock_feide_user';
 import AppRoutes from './AppRoutes';
+import { setNotification } from './redux/actions/notificationActions';
+import { NotificationVariant } from './types/notification.types';
+import { CircularProgress } from '@material-ui/core';
 
 const StyledApp = styled.div`
   min-height: 100vh;
@@ -36,6 +38,13 @@ const StyledContent = styled.div`
   max-width: ${({ theme }) => theme.breakpoints.values.lg + 'px'};
   align-items: center;
   flex-grow: 1;
+`;
+
+const ProgressContainer = styled.div`
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const App: React.FC = () => {
@@ -57,18 +66,36 @@ const App: React.FC = () => {
 
   const dispatch = useDispatch();
   const user = useSelector((store: RootStore) => store.user);
-  const [showAuthorityOrcidModal, setShowAuthorityOrcidModal] = useState(false);
+  // Authority/Orcid modal should always be opened on first login
+  const [showAuthorityOrcidModal, setShowAuthorityOrcidModal] = useState(!localStorage.getItem('previouslyLoggedIn'));
+  const [loadingAuthority, setLoadingAuthority] = useState(true);
+  const [isLoadingUser, setIsLoadingUser] = useState(true);
 
   useEffect(() => {
     if (USE_MOCK_DATA) {
+      setIsLoadingUser(false);
       user.isLoggedIn && dispatch(setUser(mockUser));
     } else {
       if (!user.isLoggedIn) {
         Amplify.configure(awsConfig);
       }
-      dispatch(getCurrentAuthenticatedUser());
-      Hub.listen('auth', data => hubListener(data, dispatch));
-      return () => Hub.remove('auth', data => hubListener(data, dispatch));
+
+      const getUser = async () => {
+        const currentUser = await getCurrentUserAttributes();
+        if (currentUser && !currentUser.error) {
+          dispatch(setUser(currentUser));
+        } else if (currentUser.error && user.isLoggedIn) {
+          dispatch(setNotification(currentUser.error, NotificationVariant.Error));
+        }
+        setIsLoadingUser(false);
+      };
+      getUser();
+
+      Hub.listen('auth', (data) => {
+        hubListener(data, dispatch);
+      });
+
+      return () => Hub.remove('auth', (data) => hubListener(data, dispatch));
     }
   }, [dispatch, user.isLoggedIn]);
 
@@ -77,12 +104,13 @@ const App: React.FC = () => {
       const authorities = await getAuthorities(user.name, dispatch);
       if (authorities) {
         const filteredAuthorities: Authority[] = authorities.filter((auth: Authority) =>
-          auth.feideids.some(id => id === user.id)
+          auth.feideids.some((id) => id === user.id)
         );
         if (filteredAuthorities.length === 1) {
-          const updatedAuthority = await updateInstitutionForAuthority(
-            user.organizationId,
-            filteredAuthorities[0].systemControlNumber
+          const updatedAuthority = await addQualifierIdForAuthority(
+            filteredAuthorities[0].systemControlNumber,
+            AuthorityQualifiers.ORGUNIT_ID,
+            user.organizationId
           );
           if (!updatedAuthority || updatedAuthority?.error) {
             dispatch(setAuthorityData(filteredAuthorities[0]));
@@ -91,7 +119,9 @@ const App: React.FC = () => {
           }
         } else {
           dispatch(setPossibleAuthorities(authorities));
+          setShowAuthorityOrcidModal(true);
         }
+        setLoadingAuthority(false);
       }
     };
     if (user.name) {
@@ -99,30 +129,22 @@ const App: React.FC = () => {
     }
   }, [dispatch, user.name, user.id, user.organizationId]);
 
-  useEffect(() => {
-    setTimeout(() => {
-      user.id &&
-        (user.authority?.orcids === undefined ||
-          user.authority?.orcids.length === 0 ||
-          user.authority?.feideids === undefined ||
-          user.authority?.feideids.length === 0) &&
-        setShowAuthorityOrcidModal(true);
-    }, DEBOUNCE_INTERVAL_MODAL);
-  }, [user.id, user.authority]);
-
-  return (
+  return isLoadingUser ? (
+    <ProgressContainer>
+      <CircularProgress />
+    </ProgressContainer>
+  ) : (
     <BrowserRouter>
       <StyledApp>
         <Notifier />
         <Header />
-        <AdminMenu />
         <Breadcrumbs />
-        {showAuthorityOrcidModal && <AuthorityOrcidModal />}
         <StyledContent>
           <AppRoutes />
         </StyledContent>
         <Footer />
       </StyledApp>
+      {!loadingAuthority && showAuthorityOrcidModal && <AuthorityOrcidModal authority={user.authority} />}
     </BrowserRouter>
   );
 };

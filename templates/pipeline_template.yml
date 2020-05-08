@@ -139,9 +139,12 @@ Resources:
           import sys
           import json
           import datetime
+          import traceback
 
           def handler(event, context):
               client = boto3.client('cloudfront')
+
+              print(json.dumps(event, default=str))
 
               timestamp_string = datetime.datetime.utcnow().strftime("%Y%m%d%H%M%S")
               data = event['CodePipeline.job']['data']
@@ -165,7 +168,9 @@ Resources:
                 )
 
                 print(json.dumps(response, default=str))
-
+                
+                invalidation_id = response['Invalidation']['Id'];
+                
                 waiter = client.get_waiter('invalidation_completed')
 
                 # Waits up to 10 mins
@@ -174,6 +179,7 @@ Resources:
                   Id=invalidation_id
                 )
               except:
+                traceback.print_exc()
                 print("Exception:",sys.exc_info()[0])
                 codepipeline.put_job_failure_result(jobId=job);
                 return "Invalidation failed"
@@ -183,7 +189,7 @@ Resources:
       Role: !GetAtt InvalidateCloudfrontDistributionFunctionRole.Arn
       Handler: index.handler
       Description: Lambda to invalidate Cloudfront distribution
-      Runtime: python3.8
+      Runtime: python3.7
       Timeout: 900
 
   CleanUpBucketBeforeDeploy:
@@ -218,7 +224,7 @@ Resources:
       Role: !GetAtt CleanUpBucketBeforeDeployFunctionRole.Arn
       Handler: index.handler
       Description: Lambda to clean S3 bucket before deploy
-      Runtime: python3.8
+      Runtime: python3.7
       Timeout: 30
 
   PipelineRole:
@@ -294,6 +300,7 @@ Resources:
                   - 'cloudfront:CreateInvalidation'
                   - 'codepipeline:PutJobSuccessResult'
                   - 'codepipeline:PutJobFailureResult'
+                  - 'cloudfront:GetInvalidation'
                 Resource: '*'
 
   CleanUpBucketBeforeDeployFunctionRole:

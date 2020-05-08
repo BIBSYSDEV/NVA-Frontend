@@ -6,17 +6,23 @@ import { useTranslation } from 'react-i18next';
 interface SelectTypeFieldProps {
   fieldName: string;
   options: string[];
-  onChangeExtension?: () => void;
+  dataTestId?: string;
+  onChangeType?: (value: string) => void;
 }
 
-const SelectTypeField: FC<SelectTypeFieldProps> = ({ fieldName, options, onChangeExtension }) => {
+const SelectTypeField: FC<SelectTypeFieldProps> = ({
+  fieldName,
+  options,
+  dataTestId = 'publication-instance-type',
+  onChangeType,
+}) => {
   const { t } = useTranslation();
 
   return (
     <Field name={fieldName} variant="outlined">
       {({ field, meta: { error, touched } }: FieldProps) => (
         <TextField
-          data-testid="publication_type"
+          data-testid={dataTestId}
           select
           variant="outlined"
           fullWidth
@@ -25,12 +31,11 @@ const SelectTypeField: FC<SelectTypeFieldProps> = ({ fieldName, options, onChang
           error={!!error && touched}
           SelectProps={{ MenuProps: { autoFocus: false } }}
           helperText={<ErrorMessage name={field.name} />}
-          onChange={(event: React.ChangeEvent<any>) => {
-            field.onChange(event);
-            onChangeExtension && onChangeExtension();
-          }}>
+          onChange={(event: React.ChangeEvent<any>) =>
+            onChangeType ? onChangeType(event.target.value) : field.onChange(event)
+          }>
           {options.map((typeValue) => (
-            <MenuItem value={typeValue} key={typeValue} data-testid={`publication_type-${typeValue}`}>
+            <MenuItem value={typeValue} key={typeValue} data-testid={`publication-instance-type-${typeValue}`}>
               {t(`publicationTypes:${typeValue}`)}
             </MenuItem>
           ))}

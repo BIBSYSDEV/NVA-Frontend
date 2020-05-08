@@ -5,21 +5,21 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootStore } from './../../redux/reducers/rootReducer';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
-import InstitutionSelector from './institution/InstitutionSelector';
 import Heading from '../../components/Heading';
-import { Formik, Field, FieldProps, Form } from 'formik';
-import InstitutionSearch from '../publication/references_tab/components/InstitutionSearch';
+
+import { FormikInstitutionUnit } from '../../types/institution.types';
+import SelectInstitution from '../../components/institution/SelectInstitution';
+import { getMostSpecificUnit } from '../../utils/institutions-helpers';
 import {
-  emptyRecursiveUnit,
-  emptyFormikUnit,
-  FormikInstitutionUnitFieldNames,
-  FormikInstitutionUnit,
-} from '../../types/institution.types';
-import { AuthorityQualifiers, updateQualifierIdForAuthority, addQualifierIdForAuthority } from '../../api/authorityApi';
-import { setAuthorityData } from '../../redux/actions/userActions';
+  addQualifierIdForAuthority,
+  AuthorityQualifiers,
+  removeQualifierIdFromAuthority,
+} from '../../api/authorityApi';
 import { setNotification } from '../../redux/actions/notificationActions';
+import { setAuthorityData } from '../../redux/actions/userActions';
 import { NotificationVariant } from '../../types/notification.types';
-import InstitutionCardList from './institution/InstitutionCardList';
+import InstitutionCard from './institution/InstitutionCard';
+import ConfirmDialog from '../../components/ConfirmDialog';
 
 const StyledButtonContainer = styled.div`
   display: flex;
@@ -27,146 +27,102 @@ const StyledButtonContainer = styled.div`
   margin-top: 1rem;
 `;
 
-const StyledButton = styled(Button)`
-  margin: 0.5rem;
-`;
-
-const StyledInstitutionSearchContainer = styled.div`
-  width: 30rem;
-`;
-
 const UserInstitution: FC = () => {
-  const user = useSelector((state: RootStore) => state.user);
-  const [open, setOpen] = useState(false);
-  const [editMode, setEditMode] = useState(false);
+  const authority = useSelector((state: RootStore) => state.user.authority);
+  const [openUnitForm, setOpenUnitForm] = useState(false);
+  const [affiliationIdToRemove, setAffiliationIdToRemove] = useState('');
+  const [isRemovingAffiliation, setIsRemovingAffiliation] = useState(false);
+
   const { t } = useTranslation('profile');
   const dispatch = useDispatch();
 
-  const toggleOpen = () => {
-    setOpen(!open);
+  const toggleUnitForm = () => {
+    setOpenUnitForm(!openUnitForm);
   };
 
-  const addOrgunitIdToAuthorityAndDispatchNotification = async (id: string, scn: string) => {
-    const updatedAuthority = await addQualifierIdForAuthority(scn, AuthorityQualifiers.ORGUNIT_ID, id);
+  const removeAffiliation = async () => {
+    if (!authority || !affiliationIdToRemove) {
+      return;
+    }
+    setIsRemovingAffiliation(true);
+    const updatedAuthority = await removeQualifierIdFromAuthority(
+      authority.systemControlNumber,
+      AuthorityQualifiers.ORGUNIT_ID,
+      affiliationIdToRemove
+    );
     if (updatedAuthority.error) {
       dispatch(setNotification(updatedAuthority.error, NotificationVariant.Error));
     } else if (updatedAuthority) {
       dispatch(setAuthorityData(updatedAuthority));
+      dispatch(setNotification(t('feedback:success.delete_affiliation')));
     }
+    setAffiliationIdToRemove('');
+    setIsRemovingAffiliation(false);
   };
 
-  const handleAddInstitution = async ({ name, id, subunits, unit }: FormikInstitutionUnit) => {
-    try {
-      if (subunits.length === 0) {
-        await addOrgunitIdToAuthorityAndDispatchNotification(id, user.authority.systemControlNumber);
-      } else {
-        const lastSubunit = subunits.pop();
-        await addOrgunitIdToAuthorityAndDispatchNotification(lastSubunit!.id, user.authority.systemControlNumber);
-      }
-    } catch (error) {
-      dispatch(setNotification(t('feedback:error.update_authority'), NotificationVariant.Error));
+  const handleSubmit = async (value: FormikInstitutionUnit) => {
+    if (!value.unit) {
+      return;
     }
-  };
 
-  const handleSubmit = async (values: FormikInstitutionUnit, { resetForm }: any) => {
-    if (editMode && values.editId) {
-      const organizationUnitId = values.subunits.length > 0 ? values.subunits.pop()!.id : values.id;
-      const updatedAuthority = await updateQualifierIdForAuthority(
-        user.authority.systemControlNumber,
+    const mostSpecificUnit = getMostSpecificUnit(value.unit);
+    const newUnitId = mostSpecificUnit.id.split('/').pop();
+
+    if (!newUnitId) {
+      return;
+    } else if (authority?.orgunitids.includes(newUnitId)) {
+      dispatch(setNotification(t('feedback:info.affiliation_already_exists'), NotificationVariant.Info));
+      return;
+    }
+
+    if (authority) {
+      const updatedAuthority = await addQualifierIdForAuthority(
+        authority.systemControlNumber,
         AuthorityQualifiers.ORGUNIT_ID,
-        values.editId,
-        organizationUnitId
+        newUnitId
       );
       if (updatedAuthority.error) {
         dispatch(setNotification(updatedAuthority.error, NotificationVariant.Error));
       } else if (updatedAuthority) {
         dispatch(setAuthorityData(updatedAuthority));
-        dispatch(setNotification(t('feedback:success.update_identifier')));
+        dispatch(setNotification(t('feedback:success.added_affiliation'), NotificationVariant.Success));
       }
-    } else {
-      await handleAddInstitution({
-        name: values.name,
-        id: values.id,
-        subunits: values.subunits,
-        unit: values.unit,
-      });
-      resetForm(emptyFormikUnit);
     }
-    setOpen(false);
-    setEditMode(false);
-  };
-
-  const handleEdit = () => {
-    setOpen(true);
-    setEditMode(true);
+    setOpenUnitForm(false);
   };
 
   return (
-    <Card>
-      <Heading>{t('heading.organizations')}</Heading>
-      <Formik enableReinitialize initialValues={emptyFormikUnit} onSubmit={handleSubmit} validateOnChange={false}>
-        <Form>
-          {!editMode && <InstitutionCardList onEdit={handleEdit} open={open} />}
-          <Field name={FormikInstitutionUnitFieldNames.UNIT}>
-            {({ field: { name, value }, form: { values, setFieldValue, resetForm } }: FieldProps) => (
-              <>
-                {open && (
-                  <StyledInstitutionSearchContainer>
-                    <InstitutionSearch
-                      dataTestId="autosearch-institution"
-                      disabled={editMode}
-                      label={t('organization.institution')}
-                      clearSearchField={values.name === ''}
-                      setValueFunction={inputValue => {
-                        setFieldValue(FormikInstitutionUnitFieldNames.NAME, inputValue.name);
-                        setFieldValue(FormikInstitutionUnitFieldNames.ID, inputValue.id);
-                        setFieldValue(name, inputValue ?? emptyRecursiveUnit);
-                      }}
-                      placeholder={editMode ? values.name : t('organization.search_for_institution')}
-                    />
-                    {value && (
-                      <>
-                        <InstitutionSelector counter={0} unit={value} />
-                        <StyledButton
-                          variant="contained"
-                          type="submit"
-                          color="primary"
-                          disabled={!value}
-                          data-testid="institution-add-button">
-                          {editMode ? t('common:edit') : t('common:add')}
-                        </StyledButton>
-                        <StyledButton
-                          onClick={() => {
-                            toggleOpen();
-                            resetForm({});
-                            setEditMode(false);
-                          }}
-                          variant="contained"
-                          color="secondary">
-                          {t('common:cancel')}
-                        </StyledButton>
-                      </>
-                    )}
-                  </StyledInstitutionSearchContainer>
-                )}
-              </>
-            )}
-          </Field>
-        </Form>
-      </Formik>
-      {!open && (
-        <StyledButtonContainer>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={toggleOpen}
-            disabled={!user.authority?.systemControlNumber}
-            data-testid="add-new-institution-button">
-            {t('organization.add_institution')}
-          </Button>
-        </StyledButtonContainer>
-      )}
-    </Card>
+    <>
+      <Card>
+        <Heading>{t('heading.organizations')}</Heading>
+        {authority?.orgunitids.map((orgunitId) => (
+          <InstitutionCard key={orgunitId} orgunitId={orgunitId} setAffiliationIdToRemove={setAffiliationIdToRemove} />
+        ))}
+
+        {openUnitForm ? (
+          <SelectInstitution onSubmit={handleSubmit} onClose={toggleUnitForm} />
+        ) : (
+          <StyledButtonContainer>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={toggleUnitForm}
+              disabled={!authority}
+              data-testid="add-new-institution-button">
+              {t('organization.add_institution')}
+            </Button>
+          </StyledButtonContainer>
+        )}
+      </Card>
+      <ConfirmDialog
+        open={!!affiliationIdToRemove}
+        title={t('organization.confirm_remove_affiliation_title')}
+        text={t('organization.confirm_remove_affiliation_text')}
+        onAccept={removeAffiliation}
+        onCancel={() => setAffiliationIdToRemove('')}
+        disableAccept={isRemovingAffiliation}
+      />
+    </>
   );
 };
 

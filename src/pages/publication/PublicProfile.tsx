@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setNotification } from '../../redux/actions/notificationActions';
-import { PublishedPublicationPreview } from '../../types/publication.types';
+import { PublishedPublicationPreview, PublicationStatus } from '../../types/publication.types';
 import { CircularProgress } from '@material-ui/core';
 import styled from 'styled-components';
 import { getMyPublications } from '../../api/publicationApi';
@@ -14,6 +14,7 @@ import { ORCID_BASE_URL } from '../../utils/constants';
 import LabelTextLine from './../../components/LabelTextLine';
 import Heading from '../../components/Heading';
 import { NotificationVariant } from '../../types/notification.types';
+import useFetchMultipleUnits from '../../utils/hooks/useFetchMultipleUnits';
 
 const StyledWrapper = styled.div`
   text-align: center;
@@ -23,7 +24,7 @@ const StyledWrapper = styled.div`
 
 const StyledUserInfo = styled.div`
   display: flex;
-  background-color: ${props => props.theme.palette.background.default};
+  background-color: ${(props) => props.theme.palette.background.default};
   align-content: flex-start;
   width: 100%;
   padding: 0.5rem;
@@ -33,8 +34,9 @@ const PublicProfile: FC = () => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
   const [publications, setPublications] = useState<PublishedPublicationPreview[]>([]);
-  const { t } = useTranslation();
+  const { t } = useTranslation('profile');
   const user = useSelector((store: RootStore) => store.user);
+  const [units, isLoadingMultiple] = useFetchMultipleUnits(user.authority?.orgunitids);
 
   useEffect(() => {
     const loadData = async () => {
@@ -50,34 +52,49 @@ const PublicProfile: FC = () => {
     loadData();
   }, [dispatch, t]);
 
+  const publishedPublications = publications.filter(
+    (publication) => publication.status === PublicationStatus.PUBLISHED
+  );
+
   return (
     <>
       <StyledUserInfo>
         <Card>
           <Heading>{user.name}</Heading>
-          <LabelTextLine dataTestId="profile-email" label={t('common:email')} text={user.email} />
+          {isLoadingMultiple ? (
+            <CircularProgress color="inherit" size={20} />
+          ) : (
+            units &&
+            units.length > 0 && (
+              <LabelTextLine label={t('heading.organizations')}>
+                {units.map((unit) => (
+                  <NormalText key={unit.id}>{unit.name}</NormalText>
+                ))}
+              </LabelTextLine>
+            )
+          )}
           {user.authority?.orcids.map((orcid: string) => {
             const orcidLink = `${ORCID_BASE_URL}/${orcid}`;
             return (
               <LabelTextLine
                 key={orcid}
                 dataTestId={'orcid-info'}
-                label={t('profile:orcid.orcid')}
-                text={orcidLink}
+                label={t('orcid.orcid')}
+                linkText={orcidLink}
                 externalLink={orcidLink}
               />
             );
           })}
-          {user.authority?.orgunitids.map(orgunitid => (
-            <NormalText key={orgunitid}>{orgunitid}</NormalText>
-          ))}
+          <LabelTextLine dataTestId="profile-email" label={t('common:email')}>
+            <NormalText>{user.email}</NormalText>
+          </LabelTextLine>
         </Card>
       </StyledUserInfo>
       <StyledWrapper>
         {isLoading ? (
           <CircularProgress color="inherit" size={20} />
         ) : (
-          <PublishedPublicationList publications={publications} />
+          <PublishedPublicationList publications={publishedPublications} />
         )}
       </StyledWrapper>
     </>

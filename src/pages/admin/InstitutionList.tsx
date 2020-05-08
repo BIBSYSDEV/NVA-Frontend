@@ -9,9 +9,9 @@ import { Link as RouterLink } from 'react-router-dom';
 import { CustomerInstitution } from '../../types/customerInstitution.types';
 
 const StyledTableRow = styled(TableRow)`
-  background-color: ${props => props.theme.palette.box.main};
+  background-color: ${(props) => props.theme.palette.box.main};
   :nth-child(odd) {
-    background-color: ${props => props.theme.palette.background.default};
+    background-color: ${(props) => props.theme.palette.background.default};
   }
 `;
 
@@ -32,7 +32,7 @@ const InstitutionList: FC<InstitutionListProps> = ({ institutions }) => {
   const { t } = useTranslation('common');
 
   return (
-    <StyledTable>
+    <StyledTable data-testid="customer-institutions-list">
       <TableHead>
         <TableRow>
           <TableCell>
@@ -48,19 +48,23 @@ const InstitutionList: FC<InstitutionListProps> = ({ institutions }) => {
         </TableRow>
       </TableHead>
       <TableBody>
-        {institutions.map(institution => (
-          <StyledTableRow key={institution.id}>
+        {institutions.map((institution) => (
+          <StyledTableRow key={institution.identifier}>
             <TableCell component="th" scope="row">
               <NormalText>{institution.name}</NormalText>
             </TableCell>
             <StyledSmallCell>
-              <NormalText>{institution.createdDate}</NormalText>
+              <NormalText>{new Date(institution.createdDate).toLocaleDateString()}</NormalText>
             </StyledSmallCell>
             <StyledSmallCell>
-              <NormalText>{institution.contact}</NormalText>
+              <NormalText>{institution.administrationId}</NormalText>
             </StyledSmallCell>
             <TableCell>
-              <Button color="primary" component={RouterLink} to="/">
+              <Button
+                color="primary"
+                component={RouterLink}
+                data-testid={`edit-institution-${institution.shortName}`}
+                to={`/admin-institutions/${institution.identifier}`}>
                 <NormalText>{t('edit')}</NormalText>
               </Button>
             </TableCell>

@@ -10,17 +10,17 @@ const SubmissionFilesAndLicenses: React.FC = () => {
 
   return (
     <>
-      {values.fileSet.map(file => (
-        <React.Fragment key={file.id}>
+      {values.fileSet.files.map((file) => (
+        <React.Fragment key={file.identifier}>
           <hr />
           <LabelContentRow label={t('files_and_license.title')}>{file.name}</LabelContentRow>
           <LabelContentRow label={t('files_and_license.administrative_contract')}>
-            {file.administrativeContract ? t('common:yes') : t('common:no')}
+            {file.administrativeAgreement ? t('common:yes') : t('common:no')}
           </LabelContentRow>
-          {!file.administrativeContract && (
+          {!file.administrativeAgreement && (
             <>
               <LabelContentRow label={t('files_and_license.published_version')}>
-                {file.isPublished !== null ? (file.isPublished ? t('common:yes') : t('common:no')) : ''}
+                {file.publisherAuthority !== null ? (file.publisherAuthority ? t('common:yes') : t('common:no')) : ''}
               </LabelContentRow>
               <LabelContentRow label={t('files_and_license.embargo_date')}>
                 {file.embargoDate?.toLocaleDateString()}

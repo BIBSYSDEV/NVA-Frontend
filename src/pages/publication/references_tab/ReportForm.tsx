@@ -37,7 +37,7 @@ const ReportForm: FC = () => {
       <DoiField />
 
       <PublisherField
-        fieldName={ReferenceFieldNames.PUBLISHER}
+        fieldName={ReferenceFieldNames.PUBLICATION_CONTEXT}
         label={t('common:publisher')}
         placeholder={t('references.search_for_publisher')}
       />

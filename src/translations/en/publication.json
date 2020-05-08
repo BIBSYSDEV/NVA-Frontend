@@ -4,12 +4,26 @@
     "info": "The anthology this chapter is published in must be registered in advance"
   },
   "contributors": {
+    "add_affiliation": "Add affiliation",
     "add_author": "Add author",
     "add_authors": "Add authors",
+    "add_duplicate_affiliation": "Affiliation is already added",
     "add_other_contributor": "Add more contributors",
+    "author_already_added": "Chosen author is already added",
     "authors": "Authors",
+    "confirm_remove_affiliation_text": "Are you sure you want to remove the affiliation to {{affiliationName}} for {{contributorName}}?",
+    "confirm_remove_affiliation_title": "Remove affiliation?",
+    "confirm_remove_contributor_text": "Are you sure you want to remove {{contributorName}} from list of contributors?",
+    "confirm_remove_contributor_title": "Remove contributor?",
+    "connect_author_identity": "Connect author identity",
     "corresponding": "Corresponding",
+    "create_new_author": "Create new author",
+    "known_author_identity": "Connected author identity",
+    "prefilled_name": "Prefilled name",
+    "remove_contributor": "Remove contributor",
+    "select_institution": "Select institution",
     "type": "Contributor type",
+    "unknown_author_identity": "Unknown author identity",
     "verify_person": "Verify"
   },
   "description": {
@@ -28,8 +42,11 @@
     "year_only": "Year only"
   },
   "feedback": {
+    "invalid_format": "Invalid format",
     "invalid_url": "Invalid URL",
     "minimum_one_contributor": "You need to have at least one author registered for this publication",
+    "minimum_one_file": "You need to have at least one file uploaded for this publication",
+    "date_must_be_in_future": "Date must be in future",
     "required_field": "Required field"
   },
   "files_and_license": {
@@ -54,6 +71,8 @@
     "select_version": "Select version",
     "title": "File name",
     "upload_files": "Upload Files",
+    "upload_one_file": "Upload %{smart_count} file",
+    "upload_x_files": "Upload %{smart_count} files",
     "uploaded_size": "Uploaded {{size}} kB"
   },
   "heading": {
@@ -68,6 +87,7 @@
     "summary": "Summary",
     "validation_errors": "Validation errors"
   },
+  "new_publication": "New publication",
   "publication": {
     "info_text": "Select the resource you wish to register or publish by uploading a resource or link to a publication.",
     "link_publication_description": "E.g. DOI link, link to article, link to video of lecture etc.",
@@ -112,10 +132,14 @@
     "volume": "Volume"
   },
   "status": {
-    "draft": "Draft",
-    "rejected": "Rejected"
+    "Draft": "Draft",
+    "New": "New",
+    "Published": "Published",
+    "Rejected": "Rejected"
   },
   "submission": {
     "ask_for_doi": "Ask for DOI for this registration"
-  }
+  },
+  "modal_unsaved_changes_description": "You have unsaved changes. Are you sure you want to leave this page?",
+  "modal_unsaved_changes_heading": "Leave without saving?"
 }

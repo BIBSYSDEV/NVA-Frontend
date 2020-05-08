@@ -6,7 +6,8 @@ import OrcidResponse from '../types/orcid.types';
 import { API_URL, ORCID_USER_INFO_URL } from '../utils/constants';
 import mockDoiLookupResponse from '../utils/testfiles/doi_lookup_response.json';
 import mockInstitutionResponse from '../utils/testfiles/institutions/institution_query.json';
-import mockUnitResponse from '../utils/testfiles/institutions/unit_response.json';
+import mockNtnuResponse from '../utils/testfiles/institutions/institution_ntnu.json';
+import mockNtnuSubunitResponse from '../utils/testfiles/institutions/institution_subunit_ntnu.json';
 import mockAuthoritiesResponse from '../utils/testfiles/mock_authorities_response.json';
 import mockProjects from '../utils/testfiles/projects_real.json';
 import mockPublication from '../utils/testfiles/publication_generated.json';
@@ -14,13 +15,15 @@ import mockPublications from '../utils/testfiles/publications_45_random_results_
 import mockMyPublications from '../utils/testfiles/my_publications.json';
 import mockNsdPublisers from '../utils/testfiles/publishersFromNsd.json';
 import mockCustomerInstitutions from '../utils/testfiles/mock_customer_institutions.json';
+import mockCustomerInstitution from '../utils/testfiles/mock_customer_institution.json';
 import { AuthorityApiPaths } from './authorityApi';
-import { InstituionApiPaths } from './institutionApi';
+import { InstitutionApiPaths } from './institutionApi';
 import { ProjectsApiPaths } from './projectApi';
 import { PublicationsApiPaths } from './publicationApi';
 import { PublicationChannelApiPaths } from './publicationChannelApi';
 import { FileUploadApiPaths } from './fileUploadApi';
-import { CustomerInstituionApiPaths } from './customerInstitutionsApi';
+import { CustomerInstitutionApiPaths } from './customerInstitutionsApi';
+import { emptyPublication } from '../types/publication.types';
 
 const mockOrcidResponse: OrcidResponse = {
   id: 'https://sandbox.orcid.org/0000-0001-2345-6789',
@@ -87,13 +90,15 @@ export const interceptRequestsOnMock = () => {
   mock.onPost(new RegExp(FileUploadApiPaths.COMPLETE)).reply(200, mockCompleteUpload);
 
   //MY PUBLICATIONS
-  mock.onGet(new RegExp(`${PublicationsApiPaths.FETCH_MY_RESOURCES}/*`)).reply(200, mockMyPublications);
+  mock.onGet(new RegExp(`${PublicationsApiPaths.PUBLICATIONS_BY_OWNER}/*`)).reply(200, mockMyPublications);
 
   // WORKLIST
   mock.onGet(new RegExp(`${PublicationsApiPaths.DOI_REQUESTS}/*`)).reply(200, mockMyPublications);
   mock.onGet(new RegExp(`${PublicationsApiPaths.FOR_APPROVAL}/*`)).reply(200, mockMyPublications);
 
   //PUBLICATION
+  mock.onGet(new RegExp(`${PublicationsApiPaths.PUBLICATION}/new`)).reply(200, emptyPublication);
+  mock.onGet(new RegExp(`${PublicationsApiPaths.PUBLICATION}/4327439`)).reply(200, emptyPublication);
   mock.onGet(new RegExp(`${PublicationsApiPaths.PUBLICATION}/*`)).reply(200, mockPublication);
 
   // lookup DOI
@@ -118,11 +123,15 @@ export const interceptRequestsOnMock = () => {
   mock
     .onPut(new RegExp(`${API_URL}${AuthorityApiPaths.PERSON}/*`))
     .replyOnce(200, mockSingleAuthorityResponseWithFeide);
-  mock.onPut(new RegExp(`${API_URL}${AuthorityApiPaths.PERSON}/*`)).replyOnce(200, mockSingleAuthorityResponse);
-  mock.onPut(new RegExp(`${API_URL}${AuthorityApiPaths.PERSON}/*`)).reply(200, mockSingleAuthorityResponseWithOrcid);
   mock
     .onPost(new RegExp(`${API_URL}${AuthorityApiPaths.PERSON}/901790000000/identifiers/orgunitid/*`))
-    .replyOnce(200, mockSingleAuthorityResponseWithOrcid);
+    .replyOnce(200, mockSingleAuthorityResponse);
+  mock
+    .onPost(new RegExp(`${API_URL}${AuthorityApiPaths.PERSON}/901790000000/identifiers/orcid/*`))
+    .reply(200, mockSingleAuthorityResponseWithOrcid);
+  mock
+    .onPost(new RegExp(`${API_URL}${AuthorityApiPaths.PERSON}/901790000000/identifiers/orgunitid/*`))
+    .reply(200, mockSingleAuthorityResponseWithOrcid);
 
   // Remove orgunitid from Authority
   mock
@@ -134,16 +143,30 @@ export const interceptRequestsOnMock = () => {
 
   //memberinstitutions
   mock
-    .onGet(new RegExp(`${API_URL}${CustomerInstituionApiPaths.CUSTOMER_INSTITUTION}/*`))
-    .reply(200, mockCustomerInstitutions);
+    .onGet(new RegExp(`${API_URL}${CustomerInstitutionApiPaths.CUSTOMER_INSTITUTION}`))
+    .replyOnce(200, mockCustomerInstitutions);
+  mock
+    .onGet(new RegExp(`${API_URL}${CustomerInstitutionApiPaths.CUSTOMER_INSTITUTION}/*`))
+    .reply(200, mockCustomerInstitution);
+  mock
+    .onPut(new RegExp(`${API_URL}${CustomerInstitutionApiPaths.CUSTOMER_INSTITUTION}/*`))
+    .reply(200, mockCustomerInstitution);
+  mock
+    .onPost(new RegExp(`${API_URL}${CustomerInstitutionApiPaths.CUSTOMER_INSTITUTION}`))
+    .reply(201, mockCustomerInstitution);
 
   // Institution Registry
-  mock.onGet(new RegExp(`${API_URL}${InstituionApiPaths.INSTITUTION}\\?name=*`)).reply(200, mockInstitutionResponse);
-  mock.onGet(new RegExp(`${API_URL}${InstituionApiPaths.INSTITUTION}\\?id=*`)).replyOnce(200, mockUnitResponse);
-  // After deletion of institution
-  mock.onGet(new RegExp(`${API_URL}${InstituionApiPaths.INSTITUTION}\\?id=*`)).replyOnce(200, []);
+  mock.onGet(new RegExp(`${API_URL}${InstitutionApiPaths.INSTITUTIONS}`)).reply(200, mockInstitutionResponse);
+  mock
+    .onGet(new RegExp(`${API_URL}${InstitutionApiPaths.DEPARTMENTS}\\?uri=https://api.cristin.no/v2/institutions/194`))
+    .replyOnce(200, mockNtnuResponse);
+  mock
+    .onGet(
+      new RegExp(`${API_URL}${InstitutionApiPaths.DEPARTMENTS}\\?uri=https://api.cristin.no/v2/units/194.65.20.10`)
+    )
+    .replyOnce(200, mockNtnuSubunitResponse);
 
-  mock.onAny().reply(function(config) {
+  mock.onAny().reply(function (config) {
     throw new Error('Could not find mock for ' + config.url);
   });
 };

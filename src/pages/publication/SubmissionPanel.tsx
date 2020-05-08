@@ -1,10 +1,8 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useRef, FC } from 'react';
 import { useTranslation } from 'react-i18next';
-
-import TabPanel from '../../components/TabPanel/TabPanel';
 import { FormikProps, useFormikContext, Field, FieldProps } from 'formik';
 import { FormikPublication } from '../../types/publication.types';
-import { Button, FormControlLabel, Checkbox, Link } from '@material-ui/core';
+import { Button, FormControlLabel, Checkbox } from '@material-ui/core';
 import styled from 'styled-components';
 import SubmissionBook from './submission_tab/submission_book';
 import SubmissionDegree from './submission_tab/submission_degree';
@@ -14,16 +12,28 @@ import SubmissionJournalPublication from './submission_tab/submission_journal';
 import SubmissionDescription from './submission_tab/submission_description';
 import SubmissionFilesAndLicenses from './submission_tab/submission_files_licenses';
 import SubmissionContributors from './submission_tab/submission_contributors';
-import { PublicationType, ReferenceFieldNames, DescriptionFieldNames } from '../../types/publicationFieldNames';
+import { PublicationType, requiredFieldNames } from '../../types/publicationFieldNames';
 import Heading from '../../components/Heading';
 import SubHeading from '../../components/SubHeading';
 import Card from '../../components/Card';
 import { useHistory } from 'react-router';
 import LabelContentRow from '../../components/LabelContentRow';
 import ErrorSummary from './submission_tab/ErrorSummary';
+import { DOI_PREFIX } from '../../utils/constants';
+import { publishPublication } from '../../api/publicationApi';
+import { useDispatch } from 'react-redux';
+import { setNotification } from '../../redux/actions/notificationActions';
+import { NotificationVariant } from '../../types/notification.types';
+import ButtonWithProgress from '../../components/ButtonWithProgress';
 
-const StyledPublishButton = styled(Button)`
-  margin-top: 0.5rem;
+const StyledButtonGroupContainer = styled.div`
+  margin-bottom: 1rem;
+`;
+
+const StyledButtonContainer = styled.div`
+  display: inline-block;
+  margin-top: 1rem;
+  margin-right: 0.5rem;
 `;
 
 enum PublishSettingFieldName {
@@ -31,33 +41,39 @@ enum PublishSettingFieldName {
 }
 
 interface SubmissionPanelProps {
-  savePublication: () => void;
+  isSaving: boolean;
+  savePublication: (values: FormikPublication) => void;
 }
 
-const SubmissionPanel: React.FC<SubmissionPanelProps> = ({ savePublication }) => {
+const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication }) => {
   const { t } = useTranslation('publication');
-  const { errors, setFieldTouched, setFieldValue, values }: FormikProps<FormikPublication> = useFormikContext();
+  const { setFieldTouched, setFieldValue, values, isValid }: FormikProps<FormikPublication> = useFormikContext();
   const history = useHistory();
+  const dispatch = useDispatch();
+  const { reference } = values.entityDescription;
+  const publicationContextType = reference.publicationContext.type;
 
-  const setAllFieldsTouched = useCallback(() => {
-    Object.values(DescriptionFieldNames).forEach((fieldName) => setFieldTouched(fieldName));
-    Object.values(ReferenceFieldNames).forEach((fieldName) => setFieldTouched(fieldName));
-  }, [setFieldTouched]);
+  const valuesRef = useRef(values);
+  useEffect(() => {
+    valuesRef.current = values;
+  }, [values]);
 
   useEffect(() => {
-    setAllFieldsTouched();
-  }, [setAllFieldsTouched]);
+    requiredFieldNames.forEach((fieldName) => setFieldTouched(fieldName));
+  }, [setFieldTouched]);
 
-  const publishPublication = () => {
-    savePublication();
-    history.push(`/publication/${values.identifier}/public`);
+  const onClickPublish = async () => {
+    await savePublication(values);
+    const publishedPublication = await publishPublication(values.identifier);
+    if (publishedPublication?.error) {
+      dispatch(setNotification(publishedPublication.error, NotificationVariant.Error));
+    } else {
+      history.push(`/publication/${values.identifier}/public`);
+    }
   };
 
-  const { publicationType, reference } = values.entityDescription;
-  const validationErrors = errors.entityDescription;
-
   return (
-    <TabPanel ariaLabel="submission">
+    <>
       <ErrorSummary />
       <Card>
         <Heading>{t('heading.summary')}</Heading>
@@ -68,20 +84,18 @@ const SubmissionPanel: React.FC<SubmissionPanelProps> = ({ savePublication }) =>
         <Card>
           <SubHeading>{t('heading.references')}</SubHeading>
           <LabelContentRow label={t('common:type')}>
-            {publicationType && t(`publicationTypes:${publicationType}`)}
+            {publicationContextType && t(`publicationTypes:${publicationContextType}`)}
           </LabelContentRow>
           {reference.doi && (
             <LabelContentRow label={t('publication.link_to_publication')}>
-              <Link href={reference.doi} target="_blank" rel="noopener noreferrer">
-                {reference.doi}
-              </Link>
+              {`${DOI_PREFIX}${reference.doi}`}
             </LabelContentRow>
           )}
-          {publicationType === PublicationType.BOOK && <SubmissionBook />}
-          {publicationType === PublicationType.DEGREE && <SubmissionDegree />}
-          {publicationType === PublicationType.CHAPTER && <SubmissionChapter />}
-          {publicationType === PublicationType.REPORT && <SubmissionReport />}
-          {publicationType === PublicationType.PUBLICATION_IN_JOURNAL && <SubmissionJournalPublication />}
+          {publicationContextType === PublicationType.BOOK && <SubmissionBook />}
+          {publicationContextType === PublicationType.DEGREE && <SubmissionDegree />}
+          {publicationContextType === PublicationType.CHAPTER && <SubmissionChapter />}
+          {publicationContextType === PublicationType.REPORT && <SubmissionReport />}
+          {publicationContextType === PublicationType.PUBLICATION_IN_JOURNAL && <SubmissionJournalPublication />}
         </Card>
         <Card>
           <SubHeading>{t('heading.contributors')}</SubHeading>
@@ -101,7 +115,7 @@ const SubmissionPanel: React.FC<SubmissionPanelProps> = ({ savePublication }) =>
                     color="primary"
                     checked={value}
                     onChange={() => setFieldValue(name, !value)}
-                    disabled={!!validationErrors}
+                    disabled={!isValid}
                   />
                 }
                 label={t('submission.ask_for_doi')}
@@ -110,14 +124,20 @@ const SubmissionPanel: React.FC<SubmissionPanelProps> = ({ savePublication }) =>
           </Field>
         </Card>
       </Card>
-      <StyledPublishButton
-        color="primary"
-        variant="contained"
-        onClick={publishPublication}
-        disabled={!!validationErrors}>
-        {t('common:publish')}
-      </StyledPublishButton>
-    </TabPanel>
+      <StyledButtonGroupContainer>
+        <StyledButtonContainer>
+          <Button color="primary" variant="contained" onClick={onClickPublish} disabled={isSaving || !isValid}>
+            {t('common:publish')}
+          </Button>
+        </StyledButtonContainer>
+
+        <StyledButtonContainer>
+          <ButtonWithProgress isLoading={isSaving} onClick={() => savePublication(values)}>
+            {t('common:save')}
+          </ButtonWithProgress>
+        </StyledButtonContainer>
+      </StyledButtonGroupContainer>
+    </>
   );
 };
 

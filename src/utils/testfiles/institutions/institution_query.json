@@ -1,438 +1,667 @@
 [
   {
-    "id": "194.0.0.0",
-    "name": "Norges teknisk-naturvitenskapelige universitet",
-    "subunits": [
-      {
-        "id": "194.67.0.0",
-        "name": "Fakultet for samfunns- og utdanningsvitenskap",
-        "subunits": [
-          {
-            "id": "194.67.90.0",
-            "name": "Institutt for sosialt arbeid"
-          },
-          {
-            "id": "194.67.80.0",
-            "name": "Institutt for lærerutdanning",
-            "subunits": [
-              {
-                "id": "194.67.80.40",
-                "name": "Nasjonalt senter for skriveopplæring og skriveforsking"
-              },
-              {
-                "id": "194.67.80.30",
-                "name": "Nasjonalt senter for matematikk i opplæringen"
-              }
-            ]
-          },
-          {
-            "id": "194.67.70.0",
-            "name": "Institutt for pedagogikk og livslang læring"
-          },
-          {
-            "id": "194.67.45.0",
-            "name": "Institutt for sosialantropologi"
-          },
-          {
-            "id": "194.67.40.0",
-            "name": "Institutt for psykologi"
-          },
-          {
-            "id": "194.67.25.0",
-            "name": "Institutt for sosiologi og statsvitenskap"
-          },
-          {
-            "id": "194.67.10.0",
-            "name": "Institutt for geografi"
-          },
-          {
-            "id": "194.67.1.0",
-            "name": "SU fakultetsadministrasjon"
-          }
-        ]
-      },
-      {
-        "id": "194.66.0.0",
-        "name": "Fakultet for naturvitenskap",
-        "subunits": [
-          {
-            "id": "194.66.50.0",
-            "name": "Felles forskningsinfrastruktur"
-          },
-          {
-            "id": "194.66.45.0",
-            "name": "Institutt for biologiske fag Ålesund"
-          },
-          {
-            "id": "194.66.40.0",
-            "name": "Institutt for bioingeniørfag"
-          },
-          {
-            "id": "194.66.35.0",
-            "name": "Institutt for materialteknologi"
-          },
-          {
-            "id": "194.66.30.0",
-            "name": "Institutt for kjemisk prosessteknologi"
-          },
-          {
-            "id": "194.66.25.0",
-            "name": "Institutt for kjemi"
-          },
-          {
-            "id": "194.66.20.0",
-            "name": "Institutt for fysikk"
-          },
-          {
-            "id": "194.66.15.0",
-            "name": "Institutt for bioteknologi og matvitenskap"
-          },
-          {
-            "id": "194.66.10.0",
-            "name": "Institutt for biologi"
-          },
-          {
-            "id": "194.66.1.0",
-            "name": "NV fakultetsadministrasjon"
-          }
-        ]
-      },
-      {
-        "id": "194.65.0.0",
-        "name": "Fakultet for medisin og helsevitenskap",
-        "subunits": [
-          {
-            "id": "194.65.80.0",
-            "name": "Institutt for helsevitenskap Ålesund"
-          },
-          {
-            "id": "194.65.70.0",
-            "name": "Institutt for helsevitenskap Gjøvik",
-            "subunits": [
-              {
-                "id": "194.65.70.20",
-                "name": "Senter for omsorgsforskning"
-              }
-            ]
-          },
-          {
-            "id": "194.65.60.0",
-            "name": "Kavliinstitutt for nevrovitenskap"
-          },
-          {
-            "id": "194.65.35.0",
-            "name": "Institutt for psykisk helse",
-            "subunits": [
-              {
-                "id": "194.65.35.5",
-                "name": "RKBU Midt-Norge - Regionalt kunnskapssenter for barn og unge - psykisk helse og barnevern"
-              },
-              {
-                "id": "194.65.35.20",
-                "name": "Nasjonalt kompetansemiljø om utviklingshemming (NAKU)"
-              }
-            ]
-          },
-          {
-            "id": "194.65.30.0",
-            "name": "Institutt for nevromedisin og bevegelsesvitenskap"
-          },
-          {
-            "id": "194.65.25.0",
-            "name": "Institutt for sirkulasjon og bildediagnostikk"
-          },
-          {
-            "id": "194.65.20.0",
-            "name": "Institutt for samfunnsmedisin og sykepleie",
-            "subunits": [
-              {
-                "id": "194.65.20.15",
-                "name": "Helseundersøkelsen i Nord-Trøndelag"
-              },
-              {
-                "id": "194.65.20.10",
-                "name": "Allmennmedisinsk forskningsenhet i Trondheim"
-              }
-            ]
-          },
-          {
-            "id": "194.65.15.0",
-            "name": "Institutt for klinisk og molekylær medisin"
-          },
-          {
-            "id": "194.65.1.0",
-            "name": "MH fakultetsadministrasjon"
-          }
-        ]
-      },
-      {
-        "id": "194.64.0.0",
-        "name": "Fakultet for ingeniørvitenskap",
-        "subunits": [
-          {
-            "id": "194.64.94.0",
-            "name": "Institutt for vareproduksjon og byggteknikk"
-          },
-          {
-            "id": "194.64.93.0",
-            "name": "Institutt for havromsoperasjoner og byggteknikk"
-          },
-          {
-            "id": "194.64.92.0",
-            "name": "Institutt for maskinteknikk og produksjon"
-          },
-          {
-            "id": "194.64.91.0",
-            "name": "Institutt for bygg- og miljøteknikk"
-          },
-          {
-            "id": "194.64.90.0",
-            "name": "Institutt for geovitenskap og petroleum"
-          },
-          {
-            "id": "194.64.80.0",
-            "name": "Senter for autonome marine operasjoner og systemer"
-          },
-          {
-            "id": "194.64.45.0",
-            "name": "Institutt for konstruksjonsteknikk"
-          },
-          {
-            "id": "194.64.25.0",
-            "name": "Institutt for energi- og prosessteknikk"
-          },
-          {
-            "id": "194.64.20.0",
-            "name": "Institutt for marin teknikk"
-          },
-          {
-            "id": "194.64.1.0",
-            "name": "IV fakultetsadministrasjon"
-          }
-        ]
-      },
-      {
-        "id": "194.63.0.0",
-        "name": "Fakultet for informasjonsteknologi og elektroteknikk",
-        "subunits": [
-          {
-            "id": "194.63.55.0",
-            "name": "Institutt for IKT og realfag"
-          },
-          {
-            "id": "194.63.35.0",
-            "name": "Institutt for elektroniske systemer"
-          },
-          {
-            "id": "194.63.30.0",
-            "name": "Institutt for informasjonssikkerhet og kommunikasjonsteknologi"
-          },
-          {
-            "id": "194.63.25.0",
-            "name": "Institutt for teknisk kybernetikk"
-          },
-          {
-            "id": "194.63.20.0",
-            "name": "Institutt for elkraftteknikk"
-          },
-          {
-            "id": "194.63.15.0",
-            "name": "Institutt for matematiske fag"
-          },
-          {
-            "id": "194.63.10.0",
-            "name": "Institutt for datateknologi og informatikk"
-          },
-          {
-            "id": "194.63.1.0",
-            "name": "IE fakultetsadministrasjon",
-            "subunits": [
-              {
-                "id": "194.63.1.20",
-                "name": "Nasjonalt senter for realfagsrekruttering"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "id": "194.62.0.0",
-        "name": "Det humanistiske fakultet",
-        "subunits": [
-          {
-            "id": "194.62.70.0",
-            "name": "Institutt for filosofi og religionsvitenskap"
-          },
-          {
-            "id": "194.62.65.0",
-            "name": "Institutt for historiske studier"
-          },
-          {
-            "id": "194.62.60.0",
-            "name": "Institutt for språk og litteratur"
-          },
-          {
-            "id": "194.62.45.0",
-            "name": "Institutt for musikk"
-          },
-          {
-            "id": "194.62.40.0",
-            "name": "Institutt for tverrfaglige kulturstudier"
-          },
-          {
-            "id": "194.62.35.0",
-            "name": "Institutt for kunst- og medievitenskap"
-          },
-          {
-            "id": "194.62.1.0",
-            "name": "HF fakultetsadministrasjon"
-          }
-        ]
-      },
-      {
-        "id": "194.61.0.0",
-        "name": "Fakultet for arkitektur og design",
-        "subunits": [
-          {
-            "id": "194.61.55.0",
-            "name": "Institutt for arkitektur og teknologi"
-          },
-          {
-            "id": "194.61.50.0",
-            "name": "Institutt for arkitektur og planlegging"
-          },
-          {
-            "id": "194.61.45.0",
-            "name": "Institutt for design"
-          },
-          {
-            "id": "194.61.30.0",
-            "name": "Kunstakademiet i Trondheim"
-          },
-          {
-            "id": "194.61.1.0",
-            "name": "AD fakultetsadministrasjon"
-          }
-        ]
-      },
-      {
-        "id": "194.60.0.0",
-        "name": "Fakultet for økonomi",
-        "subunits": [
-          {
-            "id": "194.60.25.0",
-            "name": "Institutt for industriell økonomi og teknologiledelse"
-          },
-          {
-            "id": "194.60.20.0",
-            "name": "Institutt for samfunnsøkonomi"
-          },
-          {
-            "id": "194.60.15.0",
-            "name": "Institutt for internasjonal forretningsdrift"
-          },
-          {
-            "id": "194.60.10.0",
-            "name": "NTNU Handelshøyskolen"
-          },
-          {
-            "id": "194.60.1.0",
-            "name": "ØK fakultetsadministrasjon"
-          }
-        ]
-      },
-      {
-        "id": "194.35.0.0",
-        "name": "Enheter under Kunnskapdepartementet og Utdanningdirektoratet"
-      },
-      {
-        "id": "194.31.0.0",
-        "name": "NTNU Vitenskapsmuseet",
-        "subunits": [
-          {
-            "id": "194.31.5.0",
-            "name": "Institutt for arkeologi og kulturhistorie"
-          },
-          {
-            "id": "194.31.15.0",
-            "name": "Seksjon for formidling",
-            "subunits": [
-              {
-                "id": "194.31.15.15",
-                "name": "Nasjonallaboratoriene for datering"
-              }
-            ]
-          },
-          {
-            "id": "194.31.10.0",
-            "name": "Institutt for naturhistorie"
-          },
-          {
-            "id": "194.31.1.0",
-            "name": "Vitenskapsmuseet administrasjon"
-          }
-        ]
-      },
-      {
-        "id": "194.17.0.0",
-        "name": "Prorektor for nyskaping",
-        "subunits": [
-          {
-            "id": "194.20.22.0",
-            "name": "Seksjon for eiendom og drift i Ålesund"
-          },
-          {
-            "id": "194.20.21.0",
-            "name": "Viserektor Ålesund"
-          },
-          {
-            "id": "194.20.12.0",
-            "name": "Seksjon for eiendom og drift i Gjøvik"
-          },
-          {
-            "id": "194.20.11.0",
-            "name": "Viserektor Gjøvik"
-          }
-        ]
-      },
-      {
-        "id": "194.16.0.0",
-        "name": "Organisasjonsdirektør",
-        "subunits": [
-          {
-            "id": "194.16.90.0",
-            "name": "Kommunikasjonsavdelingen"
-          }
-        ]
-      },
-      {
-        "id": "194.15.0.0",
-        "name": "Økonomi- og eiendomsdirektør"
-      },
-      {
-        "id": "194.14.0.0",
-        "name": "Prorektor for utdanning",
-        "subunits": [
-          {
-            "id": "194.14.30.0",
-            "name": "NTNU Universitetsbiblioteket"
-          }
-        ]
-      },
-      {
-        "id": "194.13.0.0",
-        "name": "Prorektor for forskning"
-      },
-      {
-        "id": "194.12.0.0",
-        "name": "Rektor",
-        "subunits": [
-          {
-            "id": "194.12.1.0",
-            "name": "Rektor og styre"
-          }
-        ]
-      }
-    ]
+    "id": "https://api.cristin.no/v2/institutions/1305",
+    "name": "The National Museum of Art, Architecture and Design",
+    "acronym": "NMK"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/150",
+    "name": "Norwegian School of Sport Sciences",
+    "acronym": "NIH"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/1525",
+    "name": "Steiner College of Education",
+    "acronym": "STEINER"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/1526",
+    "name": "Barratt Due Institute of Music",
+    "acronym": "BARRATDUE"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/158",
+    "name": "BI Norwegian Business School",
+    "acronym": "BI"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/1615",
+    "name": "Kristiania University College",
+    "acronym": "HK"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/1620",
+    "name": "Bjørknes College",
+    "acronym": "BJORKNES"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/1622",
+    "name": "The Norwegian University College for Agriculture and Rural Development",
+    "acronym": "HLB"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/1624",
+    "name": "Norwegian School of Leadership and Theology",
+    "acronym": "HLT"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/1627",
+    "name": "Norwegian Armed Forces",
+    "acronym": "FHS"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/1661",
+    "name": "University College of Norwegian Correctional Service",
+    "acronym": "KRUS"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/178",
+    "name": "Norwegian Academy of Music",
+    "acronym": "NMH"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/184",
+    "name": "University of Bergen",
+    "acronym": "UIB"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/185",
+    "name": "University of Oslo",
+    "acronym": "UIO"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/186",
+    "name": "UiT The Arctic University of Norway",
+    "acronym": "UIT"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/189",
+    "name": "The Oslo School of Architecture and Design",
+    "acronym": "AHO"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/190",
+    "name": "MF Norwegian School of Theology, Religion and Society",
+    "acronym": "MF"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/1900",
+    "name": "Northern Norway Regional Health Authority",
+    "acronym": "HELSENORD"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/1901",
+    "name": "Finnmark Hospital Trust",
+    "acronym": "HELSEFINNM"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/1902",
+    "name": "University Hospital of North Norway",
+    "acronym": "UNN"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/1904",
+    "name": "Nordland Hospital Trust",
+    "acronym": "HELSENSS"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/1905",
+    "name": "Helgeland Hospital",
+    "acronym": "HELGELAND"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/1906",
+    "name": "Northern Norway Hospital Pharmacy Trust",
+    "acronym": "APOTEKNORD"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/191",
+    "name": "Norwegian School of Economics",
+    "acronym": "NHH"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/1918",
+    "name": "Nord Trondelag Hospital Trust",
+    "acronym": "HELSENTRØN"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/1919",
+    "name": "Central Norway Hospital Pharmacies Trust",
+    "acronym": "APOTEKMN"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/192",
+    "name": "Norwegian University of Life Sciences",
+    "acronym": "NMBU"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/1920",
+    "name": "St. Olavs Hospital, Trondheim University Hospital",
+    "acronym": "STOLAV"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/1924",
+    "name": "Møre og Romsdal Hospital Trust",
+    "acronym": "HELSEMR"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/1932",
+    "name": "District General Hospital of Fonna",
+    "acronym": "HELSEFONNA"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/1933",
+    "name": "Western Norway Hospital Pharmacy Trust",
+    "acronym": "SAV"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/1935",
+    "name": "Førde Hospital Trust",
+    "acronym": "HELSEFØRDE"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/1936",
+    "name": "Bergen Hospital Trust - Haukeland University Hospital",
+    "acronym": "HAUKELAND"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/1937",
+    "name": "Private Foundation Trusts in Western Norway",
+    "acronym": "PIHV"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/1938",
+    "name": "Stavanger Hospital Trust - Stavanger University Hospital",
+    "acronym": "SUS"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/194",
+    "name": "Norwegian University of Science and Technology",
+    "acronym": "NTNU"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/195",
+    "name": "The University Centre in Svalbard",
+    "acronym": "UNIS"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/1958",
+    "name": "Vestfold Hospital Trust",
+    "acronym": "VESTFOLD"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/1959",
+    "name": "Telemark Hospital Trust",
+    "acronym": "TELEMARK"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/1965",
+    "name": "Sørlandet Hospital Trust",
+    "acronym": "SØRLAND"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/1972",
+    "name": "Akershus University Hospital Trust",
+    "acronym": "AHUS"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/1982",
+    "name": "Sunnaas Rehabilitation Hospital",
+    "acronym": "SUNNAAS"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/1983",
+    "name": "Østfold Hospital Trust",
+    "acronym": "ØSTFOLD"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/1986",
+    "name": "South Eastern Norway Hospital Pharmacies Regional Health Authority",
+    "acronym": "APOTEKØST"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/1990",
+    "name": "Diakonhjemmet Hospital",
+    "acronym": "DIAKONSYK"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/1991",
+    "name": "Innlandet Hospital Trust",
+    "acronym": "INNLANDET"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/1992",
+    "name": "Lovisenberg Diakonale Hospital",
+    "acronym": "LDS"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/1993",
+    "name": "Martina Hansens Hospital",
+    "acronym": "MHH"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/2003",
+    "name": "Hospital for Rheumatic Diseases",
+    "acronym": "REVMA"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/201",
+    "name": "University of Agder",
+    "acronym": "UIA"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/2012",
+    "name": "Oslo University Hospital",
+    "acronym": "OUS"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/2017",
+    "name": "Vestre Viken Hospital Trust",
+    "acronym": "VV"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/20202",
+    "name": "Unit – The Norwegian Directorate for ICT and Joint Services in Higher Education and Research",
+    "acronym": "UNIT"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/2023",
+    "name": "Betanien Hospital Skien",
+    "acronym": "BETANIENH"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/203",
+    "name": "Western Norway University of Applied Sciences",
+    "acronym": "HVL"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/2031",
+    "name": "LHL-clinics",
+    "acronym": "LHLKLIN"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/204",
+    "name": "Nord University",
+    "acronym": "NORD"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/2052",
+    "name": "Western Norway Regional Health Authority IKT",
+    "acronym": "HVIKT"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/2056",
+    "name": "Private Foundation Trust in Southeastern Norway",
+    "acronym": "PIHSØ"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/2057",
+    "name": "NORCE Norwegian Research Centre AS",
+    "acronym": "NORCE"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/2060",
+    "name": "Public Dental Service Competence Centres",
+    "acronym": "THTKS"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/209",
+    "name": "Inland Norway University of Applied Sciences",
+    "acronym": "HINN"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/211",
+    "name": "Molde University College - Specialized University in Logistics",
+    "acronym": "HIM"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/215",
+    "name": "Oslomet - Oslo Metropolitan University",
+    "acronym": "OSLOMET"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/217",
+    "name": "University of Stavanger",
+    "acronym": "UIS"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/222",
+    "name": "University of South-Eastern Norway",
+    "acronym": "USN"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/223",
+    "name": "Volda University College",
+    "acronym": "HVO"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/224",
+    "name": "Østfold University College",
+    "acronym": "HIØ"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/230",
+    "name": "Lovisenberg Deaconal University College",
+    "acronym": "LDH"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/231",
+    "name": "Sámi University of Applied Sciences",
+    "acronym": "SA/SH"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/233",
+    "name": "Norwegian Police University College",
+    "acronym": "PHS"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/251",
+    "name": "VID Specialized University",
+    "acronym": "VID"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/253",
+    "name": "Queen Maud University College of Early Childhood Education",
+    "acronym": "DMMH"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/254",
+    "name": "NLA University College",
+    "acronym": "NLA"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/255",
+    "name": "Ansgar University College",
+    "acronym": "AHS"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/258",
+    "name": "Fjellhaug International University College",
+    "acronym": "FIH"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/260",
+    "name": "Oslo National Academy of the Arts",
+    "acronym": "KHIO"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/5737",
+    "name": "The Cancer Registry of Norway",
+    "acronym": "KREFTREG"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/5931",
+    "name": "The National Library of Norway",
+    "acronym": "NB"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/5932",
+    "name": "Statistics Norway",
+    "acronym": "SSB"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/6070",
+    "name": "The National Archival Services of Norway",
+    "acronym": "RIKSARKIV"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/6077",
+    "name": "Norwegian Center for Studies on Violence and Traumatic Stress",
+    "acronym": "NKVTS"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/6228",
+    "name": "Norut Northern Research Institute Narvik",
+    "acronym": "NORUTNA"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/6281",
+    "name": "Valnesfjord Health Sport Center",
+    "acronym": "VHSS"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/7401",
+    "name": "SINTEF",
+    "acronym": "SINTEF"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/7403",
+    "name": "NTNU Social Research",
+    "acronym": "SAMFORSK"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/7407",
+    "name": "Ostfold Research",
+    "acronym": "ØSTFORSK"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/7416",
+    "name": "Chr. Michelsen Institute",
+    "acronym": "CMI"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/7419",
+    "name": "Norwegian Meteorological Institute (MET Norway)",
+    "acronym": "MET"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/7425",
+    "name": "Fafo Institute for Labour and Social Research",
+    "acronym": "FAFO"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/7428",
+    "name": "Norwegian Defence Research Establishment",
+    "acronym": "FFI"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/7430",
+    "name": "Fridtjof Nansen Institute",
+    "acronym": "NANSEN"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/7431",
+    "name": "Institute of Marine Research",
+    "acronym": "HAVFORSK"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/7435",
+    "name": "PRIO - Peace Research Institute",
+    "acronym": "PRIO"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/7437",
+    "name": "Institute for Social Research",
+    "acronym": "ISF"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/7443",
+    "name": "Møre og Romsdal Research Foundation",
+    "acronym": "MF"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/7444",
+    "name": "Nansen Environmental and Remote Sensing Center",
+    "acronym": "NERSC"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/7446",
+    "name": "Nordland Research Foundation",
+    "acronym": "NORDLFORSK"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/7448",
+    "name": "Trøndelag R&D Institute",
+    "acronym": "TFOU"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/7451",
+    "name": "Geological Survey of Norway",
+    "acronym": "NGU"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/7452",
+    "name": "Norwegian Geotechnical Institute",
+    "acronym": "NGI"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/7453",
+    "name": "NORSAR - The Norwegian Seismic Array",
+    "acronym": "NORSAR"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/7460",
+    "name": "NILU - Norwegian Institute for Air Research",
+    "acronym": "NILU"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/7463",
+    "name": "NIFU Nordic Institute for Studies in Innovation, Research and Education",
+    "acronym": "NIFU"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/7464",
+    "name": "Norwegian Institute of Water Research",
+    "acronym": "NIVA"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/7466",
+    "name": "Norwegian Polar Research Institute",
+    "acronym": "NPI"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/7467",
+    "name": "Norwegian Computing Center",
+    "acronym": "NR"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/7471",
+    "name": "Norwegian Institute of International Affairs",
+    "acronym": "NUPI"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/7475",
+    "name": "CICERO Center for International Climate Research",
+    "acronym": "CICERO"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/7476",
+    "name": "National Institute of Occupational Health",
+    "acronym": "STAMI"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/7480",
+    "name": "Telemark Research Institute",
+    "acronym": "TF"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/7482",
+    "name": "Institute of Transport Economics",
+    "acronym": "TØI"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/7484",
+    "name": "Western Norway Research Institute",
+    "acronym": "VF"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/7492",
+    "name": "Institute for Energy Technology",
+    "acronym": "IFE"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/7495",
+    "name": "Ragnar Frisch Centre for Economic Research",
+    "acronym": "FRISCH"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/7497",
+    "name": "Norwegian Veterinary Institute",
+    "acronym": "VETINST"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/7501",
+    "name": "RURALIS – Institute for Rural and Regional Research",
+    "acronym": "RURALIS"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/7502",
+    "name": "Norwegian Institute of Public Health",
+    "acronym": "FHI"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/7511",
+    "name": "Norwegian Institute for Nature Research",
+    "acronym": "NINA"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/7520",
+    "name": "Nordic Institute of Dental Materials",
+    "acronym": "NIOM"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/7530",
+    "name": "Norwegian Institute for Cultural Heritage Research",
+    "acronym": "NIKU"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/7539",
+    "name": "RBUP Oslo",
+    "acronym": "RBUP"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/7543",
+    "name": "Nofima, The Norwegian Institute of Food, Fisheries and Aquaculture Research",
+    "acronym": "NOFIMA"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/7548",
+    "name": "SINTEF Energy Research",
+    "acronym": "SINTEFEN"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/7566",
+    "name": "SINTEF Ocean",
+    "acronym": "OCEAN"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/7572",
+    "name": "Centre for Applied Research at NHH",
+    "acronym": "SNF"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/7582",
+    "name": "Frambu",
+    "acronym": "FRAMBU"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/7585",
+    "name": "Norwegian Centre for Organic Agriculture",
+    "acronym": "NORSØK"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/7600",
+    "name": "UNI Research Polytec",
+    "acronym": "POLYTEC"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/7602",
+    "name": "Modum Mental Health Centre",
+    "acronym": "MODUMBAD"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/7630",
+    "name": "SINTEF Raufoss Manufacturing AS",
+    "acronym": "SRAUFOSS"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/7677",
+    "name": "Norwegian Institute of Bioeconomy Research",
+    "acronym": "NIBIO"
+  },
+  {
+    "id": "https://api.cristin.no/v2/institutions/9200",
+    "name": "Cristin",
+    "acronym": "CRISTIN"
   }
 ]

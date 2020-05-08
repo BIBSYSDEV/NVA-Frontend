@@ -1,10 +1,13 @@
 {
-  "entityDescription": {
-    "contributors": "$t(publication:contributors.authors)",
-    "mainTitle": "$t(common:title)",
-    "peerReview": "$t(publication:references.peer_reviewed)",
-    "publicationContext": "$t(common:publisher)",
-    "publicationSubtype": "Publikasjonssubtype",
-    "publicationType": "Publikasjonstype"
-  }
+  "entityDescription-contributors": "$t(publication:contributors.authors)",
+  "entityDescription-contributors-email": "$t(common:email)",
+  "entityDescription-mainTitle": "$t(common:title)",
+  "entityDescription-reference-publicationContext-title": "$t(common:publisher)",
+  "entityDescription-reference-publicationContext-type": "Publikasjonstype",
+  "entityDescription-reference-publicationInstance-peerReviewed": "$t(publication:references.peer_reviewed)",
+  "entityDescription-reference-publicationInstance-type": "Publikasjonsundertype",
+  "fileSet-files": "$t(publication:files_and_license.files)",
+  "fileSet-files-embargoDate": "$t(publication:files_and_license.embargo_date)",
+  "fileSet-files-license": "$t(publication:files_and_license.license)",
+  "fileSet-files-publisherAuthority": "$t(publication:files_and_license.published_version)"
 }

@@ -8,6 +8,8 @@ import commonEn from './en/common.json';
 import disciplinesEn from './en/disciplines.json';
 import feedbackEn from './en/feedback.json';
 import formikValuesEn from './en/formikValues.json';
+import infopagesEn from './en/infopages.json';
+import institutionEn from './en/institution.json';
 import languagesEn from './en/languages.json';
 import profileEn from './en/profile.json';
 import publicationEn from './en/publication.json';
@@ -21,6 +23,8 @@ import commonNb from './nb/common.json';
 import disciplinesNb from './nb/disciplines.json';
 import feedbackNb from './nb/feedback.json';
 import formikValuesNb from './nb/formikValues.json';
+import infopagesNb from './nb/infopages.json';
+import institutionNb from './nb/institution.json';
 import languagesNb from './nb/languages.json';
 import profileNb from './nb/profile.json';
 import publicationNb from './nb/publication.json';
@@ -28,32 +32,40 @@ import publicationTypesNb from './nb/publicationTypes.json';
 import translationsNb from './nb/translations.json';
 import workListsNb from './nb/workLists.json';
 
-export const defaultLanguage = localStorage.getItem('i18nextLng') || LanguageCodes.NORWEGIAN_BOKMAL;
+const previousLanguage = localStorage.getItem('i18nextLng');
+export const defaultLanguage =
+  previousLanguage && Object.values(LanguageCodes).includes(previousLanguage as LanguageCodes)
+    ? previousLanguage
+    : LanguageCodes.NORWEGIAN_BOKMAL;
 
 i18n.use(LanguageDetector).init({
   resources: {
-    en: {
+    eng: {
       admin: adminEn,
       breadcrumbs: breadcrumbsEn,
       common: commonEn,
       disciplines: disciplinesEn,
-      languages: languagesEn,
       feedback: feedbackEn,
       formikValues: formikValuesEn,
+      infopages: infopagesEn,
+      institution: institutionEn,
+      languages: languagesEn,
       profile: profileEn,
       publication: publicationEn,
       publicationTypes: publicationTypesEn,
       translations: translationsEn,
       workLists: workListsEn,
     },
-    nb: {
+    nob: {
       admin: adminNb,
       breadcrumbs: breadcrumbsNb,
       common: commonNb,
       disciplines: disciplinesNb,
-      languages: languagesNb,
       feedback: feedbackNb,
       formikValues: formikValuesNb,
+      infopages: infopagesNb,
+      institution: institutionNb,
+      languages: languagesNb,
       profile: profileNb,
       publication: publicationNb,
       publicationTypes: publicationTypesNb,
@@ -64,7 +76,7 @@ i18n.use(LanguageDetector).init({
   lng: defaultLanguage,
   fallbackLng: defaultLanguage,
   debug: false,
-  ns: ['breadcrumbs', 'common', 'languages', 'feedback', 'profile', 'translations'],
+  ns: ['breadcrumbs', 'common', 'feedback', 'infopages', 'languages', 'profile', 'translations'],
   defaultNS: 'translations',
   interpolation: {
     formatSeparator: ',',

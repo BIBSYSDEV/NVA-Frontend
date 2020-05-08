@@ -1,5 +1,6 @@
 import * as LicenseImages from '../resources/images/licenses';
 import { Uppy as UppyType, StrictTypes } from '@uppy/core';
+import { BackendType, BackendTypeNames } from './publication.types';
 
 export enum LicenseNames {
   CC_BY = 'CC BY',
@@ -62,41 +63,44 @@ export const licenses: LicenseInfo[] = [
   },
 ];
 
-interface License {
+interface License extends BackendType {
   identifier: LicenseNames;
   labels: {
     [key: string]: string;
   };
+  link: string;
 }
 
-export interface File {
-  id: string;
+export interface FileSet extends BackendType {
+  files: File[];
+}
+
+export interface File extends BackendType {
+  identifier: string;
   name: string;
-  preview?: string;
-  data: {
-    size: number;
-    lastModified?: number;
-    type: string;
-  };
-  administrativeContract?: boolean;
-  isPublished?: boolean | null;
-  embargoDate?: Date | null;
-  license?: License | null;
+  size: number;
+  mimeType: string;
+  administrativeAgreement: boolean;
+  publisherAuthority: boolean;
+  embargoDate: Date | null;
+  license: License | null;
 }
 
 export const emptyFile: File = {
-  id: '',
+  type: BackendTypeNames.FILE,
+  identifier: '',
   name: '',
-  preview: '',
-  data: {
-    size: 0,
-    lastModified: 0,
-    type: '',
-  },
-  administrativeContract: false,
-  isPublished: null,
+  size: 0,
+  mimeType: '',
+  administrativeAgreement: false,
+  publisherAuthority: false,
   embargoDate: null,
   license: null,
+};
+
+export const emptyFileSet: FileSet = {
+  type: BackendTypeNames.FILE_SET,
+  files: [],
 };
 
 export interface Uppy extends UppyType<StrictTypes> {

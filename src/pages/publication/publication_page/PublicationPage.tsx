@@ -1,22 +1,21 @@
 import React, { FC, useEffect, useState } from 'react';
-import { getPublication } from '../../api/publicationApi';
-import { setNotification } from '../../redux/actions/notificationActions';
+import { getPublication } from '../../../api/publicationApi';
+import { setNotification } from '../../../redux/actions/notificationActions';
 import { useDispatch } from 'react-redux';
 import { CircularProgress, Link } from '@material-ui/core';
-import { Publication, emptyPublication } from '../../types/publication.types';
+import { Publication, emptyPublication } from '../../../types/publication.types';
 import styled from 'styled-components';
-import ContentPage from '../../components/ContentPage';
+import ContentPage from '../../../components/ContentPage';
 import { useTranslation } from 'react-i18next';
-import LabelContentRowForPublicationPage from './publication_page/LabelContentRowForPublicationPage';
-import PublicationPageAuthors from './publication_page/PublicationPageAuthors';
-import PublicationPageFiles from './publication_page/PublicationPageFiles';
-import PublicationPageJournal from './publication_page/PublicationPageJournal';
-import PublicationPageSeries from './publication_page/PublicationPageSeries';
-import NotFound from '../errorpages/NotFound';
-import Card from '../../components/Card';
-import Heading from '../../components/Heading';
-import { NotificationVariant } from '../../types/notification.types';
+import PublicationPageAuthors from './PublicationPageAuthors';
+import PublicationPageFiles from './PublicationPageFiles';
+import NotFound from '../../errorpages/NotFound';
+import Card from '../../../components/Card';
+import Heading from '../../../components/Heading';
+import { NotificationVariant } from '../../../types/notification.types';
 import { useParams } from 'react-router';
+import { DOI_PREFIX } from '../../../utils/constants';
+import LabelContentRow from '../../../components/LabelContentRow';
 
 const StyledContentWrapper = styled.div`
   display: flex;
@@ -63,9 +62,16 @@ const PublicationPage: FC = () => {
     }
   }, [dispatch, identifier]);
 
-  const { mainTitle, abstract, description, tags, date, projects, contributors, reference } = publication
-    ? publication.entityDescription
-    : emptyPublication.entityDescription;
+  const {
+    mainTitle,
+    abstract,
+    description,
+    tags,
+    date,
+    contributors,
+    reference: { doi, publicationContext },
+    series,
+  } = publication ? publication.entityDescription : emptyPublication.entityDescription;
 
   return (
     <>
@@ -84,45 +90,53 @@ const PublicationPage: FC = () => {
                   </StyledSidebarCard> */}
                   {publication.fileSet && (
                     <StyledSidebarCard>
-                      <PublicationPageFiles files={publication.fileSet} />
+                      <PublicationPageFiles files={publication.fileSet.files} />
                     </StyledSidebarCard>
                   )}
                   <StyledSidebarCard>
-                    <LabelContentRowForPublicationPage label={t('description.date_published')}>
+                    <LabelContentRow minimal label={t('description.date_published')}>
                       {date.year}
                       {date.month && `-${date.month}`}
                       {date.day && `-${date.day}`}
-                    </LabelContentRowForPublicationPage>
+                    </LabelContentRow>
                   </StyledSidebarCard>
                 </StyledSidebar>
                 <StyledMainContent>
-                  {reference.doi && (
-                    <LabelContentRowForPublicationPage label={t('publication.link_to_publication')}>
-                      <Link href={reference.doi}>{reference.doi}</Link>
-                    </LabelContentRowForPublicationPage>
+                  {doi && (
+                    <LabelContentRow minimal label={t('publication.link_to_publication')}>
+                      <Link href={`${DOI_PREFIX}${doi}`}>{`${DOI_PREFIX}${doi}`}</Link>
+                    </LabelContentRow>
                   )}
                   {abstract && (
-                    <LabelContentRowForPublicationPage label={t('description.abstract')}>
+                    <LabelContentRow minimal label={t('description.abstract')}>
                       {abstract}
-                    </LabelContentRowForPublicationPage>
+                    </LabelContentRow>
                   )}
                   {description && (
-                    <LabelContentRowForPublicationPage label={t('description.description')}>
+                    <LabelContentRow minimal label={t('description.description')}>
                       {description}
-                    </LabelContentRowForPublicationPage>
+                    </LabelContentRow>
                   )}
                   {tags && (
-                    <LabelContentRowForPublicationPage label={t('description.tags')}>
+                    <LabelContentRow minimal label={t('description.tags')}>
                       {tags}
-                    </LabelContentRowForPublicationPage>
+                    </LabelContentRow>
                   )}
-                  <PublicationPageJournal publication={publication} />
-                  {projects?.length > 0 && (
-                    <LabelContentRowForPublicationPage label={t('description.project_association')}>
-                      {projects?.[0].titles?.[0].title}
-                    </LabelContentRowForPublicationPage>
+                  {publicationContext && (
+                    <LabelContentRow minimal label={t('references.journal')}>
+                      {publicationContext.title}
+                    </LabelContentRow>
                   )}
-                  <PublicationPageSeries publication={publication} />
+                  {publication.project && (
+                    <LabelContentRow minimal label={t('description.project_association')}>
+                      {publication.project.name}
+                    </LabelContentRow>
+                  )}
+                  {series && (
+                    <LabelContentRow minimal label={t('references.series')}>
+                      {series.title}
+                    </LabelContentRow>
+                  )}
                 </StyledMainContent>
               </StyledContentWrapper>
             </>

@@ -1,31 +1,19 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
-import Label from '../../../components/Label';
-import { Button } from '@material-ui/core';
-import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
 import { useTranslation } from 'react-i18next';
-import { useSelector, useDispatch } from 'react-redux';
-import { RootStore } from '../../../redux/reducers/rootReducer';
-import { AuthorityQualifiers, removeQualifierIdFromAuthority } from '../../../api/authorityApi';
-import { setNotification } from '../../../redux/actions/notificationActions';
-import { NotificationVariant } from '../../../types/notification.types';
-import { setAuthorityData } from '../../../redux/actions/userActions';
-import NormalText from '../../../components/NormalText';
-import {
-  InstitutionUnitBase,
-  FormikInstitutionUnitFieldNames,
-  FormikInstitutionUnit,
-} from '../../../types/institution.types';
-import { FormikProps, useFormikContext } from 'formik';
+import { Button, CircularProgress } from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/Delete';
 
-const StyledSelectedInstitution = styled.div`
+import Card from '../../../components/Card';
+import AffiliationHierarchy from '../../../components/institution/AffiliationHierarchy';
+import useFetchUnitHierarchy from '../../../utils/hooks/useFetchUnitHierarchy';
+
+const StyledCard = styled(Card)`
   display: grid;
   grid-template-areas: 'text button';
   grid-template-columns: auto 7rem;
   margin-top: 0.5rem;
   padding: 0.5rem;
-  background-color: ${({ theme }) => theme.palette.background.default};
   min-height: 5rem;
   border-radius: 4px;
 `;
@@ -41,72 +29,35 @@ const StyledButtonContainer = styled.div`
   align-items: center;
 `;
 
-const StyledEditButton = styled(Button)`
-  margin-right: 0.5rem;
-`;
-
 interface InstitutionCardProps {
-  onEdit: () => void;
-  unit: FormikInstitutionUnit;
+  orgunitId: string;
+  setAffiliationIdToRemove: (orgunitId: string) => void;
 }
 
-const InstitutionCard: FC<InstitutionCardProps> = ({ onEdit, unit }) => {
+const InstitutionCard: FC<InstitutionCardProps> = ({ orgunitId, setAffiliationIdToRemove }) => {
   const { t } = useTranslation('common');
-  const user = useSelector((state: RootStore) => state.user);
-  const dispatch = useDispatch();
-  const organizationUnitId = unit.subunits.length > 0 ? unit.subunits.slice(-1)[0].id : unit.id;
-  const { setFieldValue }: FormikProps<FormikInstitutionUnit> = useFormikContext();
-
-  const handleRemoveInstitution = async () => {
-    const updatedAuthority = await removeQualifierIdFromAuthority(
-      user.authority.systemControlNumber,
-      AuthorityQualifiers.ORGUNIT_ID,
-      organizationUnitId
-    );
-    if (updatedAuthority.error) {
-      dispatch(setNotification(updatedAuthority.error, NotificationVariant.Error));
-    } else if (updatedAuthority) {
-      dispatch(setAuthorityData(updatedAuthority));
-      dispatch(setNotification(t('feedback:success.delete_identifier')));
-    }
-  };
-
-  const handleEditInstitution = async () => {
-    onEdit();
-    setFieldValue(FormikInstitutionUnitFieldNames.ID, unit.id);
-    setFieldValue(FormikInstitutionUnitFieldNames.NAME, unit.name);
-    setFieldValue(FormikInstitutionUnitFieldNames.SUBUNITS, unit.subunits);
-    setFieldValue(FormikInstitutionUnitFieldNames.UNIT, unit.unit);
-    setFieldValue(FormikInstitutionUnitFieldNames.EDIT_ID, organizationUnitId);
-  };
+  const [unit, isLoadingUnitHierarchy] = useFetchUnitHierarchy(orgunitId);
 
   return (
-    <StyledSelectedInstitution data-testid="institution-presentation">
-      <StyledTextContainer>
-        <Label>{unit.name}</Label>
-        {unit.subunits?.map((subunit: InstitutionUnitBase) => (
-          <NormalText key={subunit.id} data-testid="institution-presentation-subunit">
-            {subunit.name}
-          </NormalText>
-        ))}
-      </StyledTextContainer>
-      <StyledButtonContainer>
-        <StyledEditButton
-          color="primary"
-          data-testid={`button-edit-institution-${organizationUnitId}`}
-          onClick={handleEditInstitution}>
-          <EditIcon />
-          {t('edit')}
-        </StyledEditButton>
-        <Button
-          color="secondary"
-          data-testid={`button-delete-institution-${organizationUnitId}`}
-          onClick={handleRemoveInstitution}>
-          <DeleteIcon />
-          {t('remove')}
-        </Button>
-      </StyledButtonContainer>
-    </StyledSelectedInstitution>
+    <StyledCard data-testid="institution-presentation">
+      {isLoadingUnitHierarchy ? (
+        <CircularProgress />
+      ) : (
+        <>
+          <StyledTextContainer>{unit && <AffiliationHierarchy unit={unit} />}</StyledTextContainer>
+          <StyledButtonContainer>
+            <Button
+              variant="outlined"
+              color="secondary"
+              data-testid={`button-delete-institution-${orgunitId}`}
+              onClick={() => setAffiliationIdToRemove(orgunitId)}>
+              <DeleteIcon />
+              {t('remove')}
+            </Button>
+          </StyledButtonContainer>
+        </>
+      )}
+    </StyledCard>
   );
 };
 

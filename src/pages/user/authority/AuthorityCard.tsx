@@ -3,8 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import Truncate from 'react-truncate';
 import styled from 'styled-components';
-
-import { Radio } from '@material-ui/core';
+import { Radio, CircularProgress } from '@material-ui/core';
 
 import { getAlmaPublication } from '../../../api/almaApi';
 import { Authority } from '../../../types/authority.types';
@@ -17,7 +16,7 @@ const StyledBoxContent = styled.div<{ isConnected: boolean }>`
   padding: 1rem;
   height: 5.5rem;
   ${({ isConnected, theme }) =>
-    isConnected ? `background-color: ${theme.palette.success.main}` : `background-color: ${theme.palette.box.main}`};
+    isConnected ? `background-color: ${theme.palette.success.light}` : `background-color: ${theme.palette.box.main}`};
 `;
 
 const StyledPublicationContent = styled.div`
@@ -40,19 +39,21 @@ interface AuthorityCardProps {
 }
 
 const AuthorityCard: React.FC<AuthorityCardProps> = ({ authority, isConnected = false, isSelected }) => {
-  const [publication, setPublication] = useState<AlmaPublication>();
+  const [publication, setPublication] = useState<AlmaPublication | null>(null);
+  const [isLoadingPublication, setIsLoadingPublication] = useState(true);
   const dispatch = useDispatch();
   const { t } = useTranslation('profile');
 
   useEffect(() => {
-    const fetchAuthorities = async () => {
+    const fetchLastPublication = async () => {
       const retrievedPublication = await getAlmaPublication(authority.systemControlNumber, authority.name);
       if (!retrievedPublication.error) {
         setPublication(retrievedPublication);
       }
+      setIsLoadingPublication(false);
     };
 
-    fetchAuthorities();
+    fetchLastPublication();
   }, [dispatch, authority.systemControlNumber, authority.name]);
 
   return (
@@ -62,13 +63,13 @@ const AuthorityCard: React.FC<AuthorityCardProps> = ({ authority, isConnected = 
         {authority?.name}
       </StyledAuthority>
       <StyledPublicationContent>
-        {publication?.title ? (
-          <>
-            <StyledPublicationInfo>{t('authority.last_publication')}</StyledPublicationInfo>
-            <Truncate lines={2} ellipsis={<span>...</span>}>
-              <NormalText>{publication.title}</NormalText>
-            </Truncate>
-          </>
+        <StyledPublicationInfo>{t('authority.last_publication')}</StyledPublicationInfo>
+        {isLoadingPublication ? (
+          <CircularProgress />
+        ) : publication?.title ? (
+          <Truncate lines={2} ellipsis={<span>...</span>}>
+            <NormalText>{publication.title}</NormalText>
+          </Truncate>
         ) : (
           <i>{t('authority.no_publications_found')}</i>
         )}

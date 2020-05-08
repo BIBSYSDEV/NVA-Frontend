@@ -2,8 +2,11 @@ import { setUser } from '../../src/redux/actions/userActions';
 import { setNotification, removeNotification } from '../../src/redux/actions/notificationActions';
 
 Cypress.Commands.add('mocklogin', () => {
-  // log in
   cy.get('[data-testid=menu-login-button]').click({ force: true });
+  cy.get('[data-testid=author-radio-button]').eq(1).click({ force: true });
+  cy.get('[data-testid=connect-author-button]').click({ force: true });
+  cy.get('[data-testid=modal_next]').click({ force: true });
+  cy.get('[data-testid=skip-connect-to-orcid]').click({ force: true });
 
   // navigate to profile
   cy.get('[data-testid=menu]').click({ force: true });
@@ -11,7 +14,14 @@ Cypress.Commands.add('mocklogin', () => {
 
   // need to set language to english in order to check that the translated values are correct
   cy.get('[data-testid=language-selector] .MuiSelect-root').click({ force: true });
-  cy.get('[data-testid=user-language-en]').click({ force: true });
+  cy.get('[data-testid=user-language-eng]').click({ force: true });
+});
+
+Cypress.Commands.add('startPublicationWithDoi', () => {
+  cy.get('[data-testid=new-publication-link]').click({ force: true });
+  cy.get('[data-testid=new-publication-link-input]').type('https://doi.org/10.1098/rspb.2018.0085');
+  cy.get('[data-testid=doi-search-button]').click({ force: true });
+  cy.get('[data-testid=publication-link-next-button]').click({ force: true });
 });
 
 Cypress.Commands.add('setUserInRedux', (user) => {

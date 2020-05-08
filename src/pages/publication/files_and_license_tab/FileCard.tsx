@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import styled from 'styled-components';
 import {
   Button,
@@ -7,7 +7,6 @@ import {
   FormControlLabel,
   FormLabel,
   IconButton,
-  Link,
   ListItemText,
   MenuItem,
   Radio,
@@ -24,13 +23,11 @@ import HelpIcon from '@material-ui/icons/Help';
 import SubHeading from '../../../components/SubHeading';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Label from '../../../components/Label';
+import { Field, FieldProps, ErrorMessage } from 'formik';
+import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 
 const StyledDescription = styled.div`
   font-style: italic;
-`;
-
-const StyledPreview = styled(Link)`
-  margin-right: 1rem;
 `;
 
 const StyledFormControl = styled(FormControl)`
@@ -74,121 +71,127 @@ const StyledActions = styled.div`
 interface FileCardProps {
   file: File;
   removeFile: () => void;
-  updateFile?: (newFile: File) => void;
+  baseFieldName?: string;
   toggleLicenseModal?: () => void;
 }
 
-const FileCard: React.FC<FileCardProps> = ({ file, removeFile, updateFile, toggleLicenseModal }) => {
+const FileCard: FC<FileCardProps> = ({ file, removeFile, baseFieldName, toggleLicenseModal }) => {
   const { t } = useTranslation('publication');
 
   return (
     <Card data-testid="uploaded-file-card">
       <SubHeading>{file.name}</SubHeading>
       <StyledDescription>
-        {t('files_and_license.uploaded_size', { size: Math.round(file.data.size / 1000) })}
+        {t('files_and_license.uploaded_size', { size: Math.round(file.size / 1000) })}
       </StyledDescription>
 
-      {updateFile && (
+      {baseFieldName && (
         <>
-          <FormControlLabel
-            control={
-              <Checkbox
-                color="primary"
-                checked={file.administrativeContract}
-                onChange={() =>
-                  updateFile({
-                    ...file,
-                    administrativeContract: !file.administrativeContract,
-                  })
-                }
+          <Field name={`${baseFieldName}.${SpecificFileFieldNames.ADMINISTRATIVE_AGREEMENT}`}>
+            {({ field }: FieldProps) => (
+              <FormControlLabel
+                control={<Checkbox color="primary" {...field} checked={field.value} />}
+                label={t('files_and_license.administrative_contract')}
               />
-            }
-            label={t('files_and_license.administrative_contract')}
-          />
+            )}
+          </Field>
 
-          {!file.administrativeContract && (
+          {!file.administrativeAgreement && (
             <StyledFileInfo>
-              <StyledFormControl>
-                <FormLabel component="legend">{t('files_and_license.select_version')}</FormLabel>
-                <RadioGroup
-                  aria-label="version"
-                  value={file.isPublished ? 'published' : 'accepted'}
-                  onChange={event =>
-                    updateFile({
-                      ...file,
-                      isPublished: event.target.value === 'published',
-                    })
-                  }>
-                  <FormControlLabel
-                    value="accepted"
-                    control={<Radio color="primary" checked={file.isPublished !== null && !file.isPublished} />}
-                    label={t('files_and_license.accepted_version')}
-                  />
-                  <FormControlLabel
-                    value="published"
-                    control={<Radio color="primary" checked={!!file.isPublished} />}
-                    label={t('files_and_license.published_version')}
-                  />
-                </RadioGroup>
-              </StyledFormControl>
+              <Field name={`${baseFieldName}.${SpecificFileFieldNames.PUBLISHER_AUTHORITY}`}>
+                {({ field, form }: FieldProps) => (
+                  <StyledFormControl>
+                    <FormLabel component="legend">{t('files_and_license.select_version')}</FormLabel>
+                    <RadioGroup
+                      aria-label="version"
+                      {...field}
+                      onChange={(event) => form.setFieldValue(field.name, event.target.value === 'published')}>
+                      <FormControlLabel
+                        value="accepted"
+                        control={<Radio color="primary" checked={field.value !== null && !field.value} />}
+                        label={t('files_and_license.accepted_version')}
+                      />
+                      <FormControlLabel
+                        value="published"
+                        control={<Radio color="primary" checked={field.value} />}
+                        label={t('files_and_license.published_version')}
+                      />
+                    </RadioGroup>
+                  </StyledFormControl>
+                )}
+              </Field>
 
               <StyledFormControl>
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                  <KeyboardDatePicker
-                    inputVariant="outlined"
-                    label={t('files_and_license.embargo_date')}
-                    onChange={value =>
-                      updateFile({
-                        ...file,
-                        embargoDate: value,
-                      })
-                    }
-                    value={file.embargoDate}
-                    autoOk
-                    format={'dd.MM.yyyy'}
-                  />
+                  <Field name={`${baseFieldName}.${SpecificFileFieldNames.EMBARGO_DATE}`}>
+                    {({ field, form, meta: { error, touched } }: FieldProps) => (
+                      <KeyboardDatePicker
+                        data-testid="uploaded-file-embargo-date"
+                        inputVariant="outlined"
+                        label={t('files_and_license.embargo_date')}
+                        {...field}
+                        onChange={(value) => form.setFieldValue(field.name, value)}
+                        value={field.value ?? null}
+                        disablePast
+                        autoOk
+                        format={'dd.MM.yyyy'}
+                        error={!!error && touched}
+                        helperText={<ErrorMessage name={field.name} />}
+                      />
+                    )}
+                  </Field>
                 </MuiPickersUtilsProvider>
               </StyledFormControl>
 
               <StyledFormControl>
                 <StyledVerticalAlign>
-                  <StyledSelect
-                    select
-                    fullWidth
-                    SelectProps={{
-                      renderValue: (option: any) => {
-                        const selectedLicense = licenses.find(license => license.identifier === option);
-                        return selectedLicense ? (
-                          <StyledVerticalAlign>
-                            <img src={selectedLicense.image} alt={selectedLicense.identifier} />
-                            <StyledLicenseName>{option}</StyledLicenseName>
-                          </StyledVerticalAlign>
-                        ) : null;
-                      },
-                    }}
-                    variant="outlined"
-                    value={file.license?.identifier || ''}
-                    label={t('files_and_license.license')}
-                    onChange={({ target: { value } }) =>
-                      updateFile({
-                        ...file,
-                        license: {
-                          identifier: value as LicenseNames,
-                          labels: { nb: value },
-                        },
-                      })
-                    }>
-                    {licenses.map(license => (
-                      <MenuItem key={license.identifier} value={license.identifier} divider dense>
-                        <ListItemIcon>
-                          <img src={license.image} alt={license.identifier} />
-                        </ListItemIcon>
-                        <ListItemText>
-                          <StyledLicenseName>{license.identifier}</StyledLicenseName>
-                        </ListItemText>
-                      </MenuItem>
-                    ))}
-                  </StyledSelect>
+                  <Field name={`${baseFieldName}.${SpecificFileFieldNames.LICENSE}`}>
+                    {({ field, form, meta: { error, touched } }: FieldProps) => (
+                      <StyledSelect
+                        data-testid="uploaded-file-select-license"
+                        select
+                        fullWidth
+                        SelectProps={{
+                          renderValue: (option: any) => {
+                            const selectedLicense = licenses.find((license) => license.identifier === option);
+                            return selectedLicense ? (
+                              <StyledVerticalAlign>
+                                <img src={selectedLicense.image} alt={selectedLicense.identifier} />
+                                <StyledLicenseName>{option}</StyledLicenseName>
+                              </StyledVerticalAlign>
+                            ) : null;
+                          },
+                        }}
+                        variant="outlined"
+                        value={field.value?.identifier || ''}
+                        error={!!error && touched}
+                        helperText={<ErrorMessage name={field.name} />}
+                        label={t('files_and_license.license')}
+                        onChange={({ target: { value } }) =>
+                          form.setFieldValue(field.name, {
+                            type: 'License',
+                            identifier: value as LicenseNames,
+                            labels: { nb: value },
+                          })
+                        }>
+                        {licenses.map((license) => (
+                          <MenuItem
+                            data-testid="license-item"
+                            key={license.identifier}
+                            value={license.identifier}
+                            divider
+                            dense>
+                            <ListItemIcon>
+                              <img src={license.image} alt={license.identifier} />
+                            </ListItemIcon>
+                            <ListItemText>
+                              <StyledLicenseName>{license.identifier}</StyledLicenseName>
+                            </ListItemText>
+                          </MenuItem>
+                        ))}
+                      </StyledSelect>
+                    )}
+                  </Field>
                   <IconButton size="small" onClick={toggleLicenseModal}>
                     <HelpIcon />
                   </IconButton>
@@ -200,13 +203,6 @@ const FileCard: React.FC<FileCardProps> = ({ file, removeFile, updateFile, toggl
       )}
 
       <StyledActions>
-        {file.preview && (
-          <StyledPreview href={file.preview} target="_blank">
-            <Button color="primary" variant="contained">
-              {t('common:preview')}
-            </Button>
-          </StyledPreview>
-        )}
         <Button variant="contained" color="secondary" onClick={removeFile}>
           <DeleteIcon />
           {t('common:remove')}

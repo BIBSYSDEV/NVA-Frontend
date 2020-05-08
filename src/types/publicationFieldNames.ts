@@ -1,6 +1,6 @@
 // For valid values, see https://github.com/BIBSYSDEV/nva-datamodel-java/blob/develop/src/main/java/no/unit/nva/model/PublicationType.java
 export enum PublicationType {
-  PUBLICATION_IN_JOURNAL = 'JournalArticle',
+  PUBLICATION_IN_JOURNAL = 'Journal',
   BOOK = 'Book',
   REPORT = 'Report',
   DEGREE = 'Degree',
@@ -8,7 +8,7 @@ export enum PublicationType {
 }
 
 export enum JournalArticleType {
-  ARTICLE = 'Article',
+  ARTICLE = 'JournalArticle',
   SHORT_COMMUNICATION = 'ShortCommunication',
   EDITORIAL = 'Editorial',
   LETTER = 'Letter',
@@ -43,10 +43,12 @@ export enum ReferenceFieldNames {
   PAGES_FROM = 'entityDescription.reference.publicationInstance.pages.begin',
   PAGES_TO = 'entityDescription.reference.publicationInstance.pages.end',
   PEER_REVIEW = 'entityDescription.reference.publicationInstance.peerReviewed',
-  PUBLICATION_TYPE = 'entityDescription.publicationType',
-  PUBLISHER = 'entityDescription.reference.publicationContext',
+  PUBLICATION_CONTEXT = 'entityDescription.reference.publicationContext',
+  PUBLICATION_CONTEXT_TITLE = 'entityDescription.reference.publicationContext.title',
+  PUBLICATION_CONTEXT_TYPE = 'entityDescription.reference.publicationContext.type',
+  PUBLICATION_INSTANCE_TYPE = 'entityDescription.reference.publicationInstance.type',
   SERIES = 'entityDescription.series',
-  SUB_TYPE = 'entityDescription.publicationSubtype',
+  SUB_TYPE = 'entityDescription.reference.publicationInstance.type',
   TEXT_BOOK = 'entityDescription.textBook',
   VOLUME = 'entityDescription.reference.publicationInstance.volume',
 }
@@ -56,10 +58,43 @@ export enum DescriptionFieldNames {
   DESCRIPTION = 'entityDescription.description',
   LANGUAGE = 'entityDescription.language',
   NPI_SUBJECT_HEADING = 'entityDescription.npiSubjectHeading',
-  PROJECTS = 'entityDescription.projects',
+  PROJECT = 'project',
   PUBLICATION_DAY = 'entityDescription.date.day',
   PUBLICATION_MONTH = 'entityDescription.date.month',
   PUBLICATION_YEAR = 'entityDescription.date.year',
   TAGS = 'entityDescription.tags',
   TITLE = 'entityDescription.mainTitle',
 }
+
+export enum FileFieldNames {
+  FILES = 'fileSet.files',
+}
+
+// The following fields should be present in "fileSet.files[index].<KEY>"
+export enum SpecificFileFieldNames {
+  ADMINISTRATIVE_AGREEMENT = 'administrativeAgreement',
+  PUBLISHER_AUTHORITY = 'publisherAuthority',
+  EMBARGO_DATE = 'embargoDate',
+  LICENSE = 'license',
+}
+
+export enum ContributorFieldNames {
+  CONTRIBUTORS = 'entityDescription.contributors',
+}
+
+// The following fields should be present in "entityDescription.contributors[index].<KEY>"
+export enum SpecificContributorFieldNames {
+  AFFILIATIONS = 'affiliations', // TODO
+  CORRESPONDING = 'correspondingAuthor',
+  EMAIL = 'email',
+  ROLE = 'role', // TODO
+  SEQUENCE = 'sequence',
+}
+
+export const requiredFieldNames = [
+  DescriptionFieldNames.TITLE,
+  ReferenceFieldNames.PUBLICATION_CONTEXT_TITLE,
+  ReferenceFieldNames.PUBLICATION_CONTEXT_TYPE,
+  ContributorFieldNames.CONTRIBUTORS,
+  FileFieldNames.FILES,
+];

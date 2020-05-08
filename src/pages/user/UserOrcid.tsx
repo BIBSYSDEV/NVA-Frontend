@@ -1,20 +1,34 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 import ButtonModal from '../../components/ButtonModal';
 import LabelTextLine from '../../components/LabelTextLine';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import orcidIcon from '../../resources/images/orcid_logo.svg';
 import { ORCID_BASE_URL } from '../../utils/constants';
-import OrcidModal from './OrcidModal';
+import OrcidModalContent from './OrcidModalContent';
 import Heading from '../../components/Heading';
 import Card from '../../components/Card';
-import { Avatar } from '@material-ui/core';
+import { Avatar, Button } from '@material-ui/core';
+import ConfirmDialog from '../../components/ConfirmDialog';
+import { removeQualifierIdFromAuthority, AuthorityQualifiers } from '../../api/authorityApi';
+import { setNotification } from '../../redux/actions/notificationActions';
+import { NotificationVariant } from '../../types/notification.types';
+import { setAuthorityData } from '../../redux/actions/userActions';
+import { setExternalOrcid } from '../../redux/actions/orcidActions';
 
 const StyledInformation = styled.div`
   margin-bottom: 1rem;
+`;
+
+const StyledOrcidLine = styled.div`
+  display: flex;
+  margin-top: 1rem;
+  align-items: center;
+  justify-content: space-between;
 `;
 
 const StyledAvatar = styled(Avatar)`
@@ -24,9 +38,34 @@ const StyledAvatar = styled(Avatar)`
 `;
 
 const UserOrcid: FC = () => {
-  const { t } = useTranslation();
-  const user = useSelector((state: RootStore) => state.user);
-  const listOfOrcids = user.authority?.orcids;
+  const { t } = useTranslation('profile');
+  const authority = useSelector((state: RootStore) => state.user.authority);
+  const listOfOrcids = authority ? authority.orcids : [];
+  const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
+  const dispatch = useDispatch();
+
+  const toggleConfirmDialog = () => {
+    setOpenConfirmDialog(!openConfirmDialog);
+  };
+
+  const removeOrcid = async (id: string) => {
+    if (!authority) {
+      return;
+    }
+    const updatedAuthority = await removeQualifierIdFromAuthority(
+      authority.systemControlNumber,
+      AuthorityQualifiers.ORCID,
+      id
+    );
+    if (updatedAuthority.error) {
+      dispatch(setNotification(updatedAuthority.error, NotificationVariant.Error));
+    } else if (updatedAuthority) {
+      dispatch(setExternalOrcid(''));
+      dispatch(setAuthorityData(updatedAuthority));
+      dispatch(setNotification(t('feedback:success.delete_identifier')));
+    }
+    toggleConfirmDialog();
+  };
 
   return (
     <Card>
@@ -38,13 +77,26 @@ const UserOrcid: FC = () => {
         listOfOrcids.map((orcid: string) => {
           const orcidLink = `${ORCID_BASE_URL}/${orcid}`;
           return (
-            <LabelTextLine
-              key={orcid}
-              dataTestId={'orcid-info'}
-              label={t('profile:orcid.your_orcid')}
-              text={orcidLink}
-              externalLink={orcidLink}
-            />
+            <StyledOrcidLine key={orcid}>
+              <LabelTextLine
+                dataTestId={'orcid-info'}
+                label={t('orcid.your_orcid')}
+                linkText={orcidLink}
+                externalLink={orcidLink}
+              />
+              <Button onClick={toggleConfirmDialog} variant="contained" color="secondary">
+                <DeleteIcon />
+                {t('orcid.remove_connection')}
+              </Button>
+
+              <ConfirmDialog
+                open={openConfirmDialog}
+                title={t('orcid.remove_connection')}
+                text={t('orcid.remove_connection_text')}
+                onAccept={() => removeOrcid(orcid)}
+                onCancel={toggleConfirmDialog}
+              />
+            </StyledOrcidLine>
           );
         })
       ) : (
@@ -54,7 +106,7 @@ const UserOrcid: FC = () => {
             buttonText={t('profile:orcid.create_or_connect')}
             dataTestId="open-orcid-modal"
             headingText={t('profile:orcid.create_or_connect')}>
-            <OrcidModal />
+            <OrcidModalContent />
           </ButtonModal>
         </>
       )}

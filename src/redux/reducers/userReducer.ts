@@ -21,8 +21,8 @@ export const userReducer = (state: User = emptyUser, action: UserActions | Orcid
       const affiliations = action.user['custom:affiliation']
         .replace(/[[\]]/g, '')
         .split(',')
-        .map(affiliationString => affiliationString.trim())
-        .filter(affiliation => affiliation) as Affiliation[];
+        .map((affiliationString) => affiliationString.trim())
+        .filter((affiliation) => affiliation) as Affiliation[];
       const roles = action.user['custom:applicationRoles'].split(',') as RoleName[];
       const user: Partial<User> = {
         name: action.user.name,
@@ -36,10 +36,10 @@ export const userReducer = (state: User = emptyUser, action: UserActions | Orcid
         affiliations,
         givenName: action.user.given_name,
         familyName: action.user.family_name,
-        isPublisher: roles.some(role => role === RoleName.PUBLISHER),
-        isAppAdmin: roles.some(role => role === RoleName.APP_ADMIN),
-        isInstitutionAdmin: roles.some(role => role === RoleName.ADMIN),
-        isCurator: roles.some(role => role === RoleName.CURATOR),
+        isPublisher: roles.some((role) => role === RoleName.PUBLISHER),
+        isAppAdmin: roles.some((role) => role === RoleName.APP_ADMIN) || action.user.email.endsWith('@unit.no'), // TODO: temporarily set app admin role based on email
+        isInstitutionAdmin: roles.some((role) => role === RoleName.ADMIN),
+        isCurator: roles.some((role) => role === RoleName.CURATOR),
       };
       return {
         ...state,

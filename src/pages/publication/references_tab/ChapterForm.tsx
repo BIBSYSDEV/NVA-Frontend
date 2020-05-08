@@ -6,7 +6,6 @@ import InfoIcon from '@material-ui/icons/Info';
 import styled from 'styled-components';
 import RemoveIcon from '@material-ui/icons/Remove';
 import { ReferenceFieldNames } from '../../../types/publicationFieldNames';
-import { AutoSearch } from '../../../components/AutoSearch';
 import NviValidation from './components/NviValidation';
 import DoiField from './components/DoiField';
 
@@ -52,18 +51,6 @@ const ChapterForm: React.FC = () => {
       </StyledInfoBox>
 
       <DoiField />
-
-      <Field>
-        {() => (
-          <AutoSearch
-            dataTestId="chapter-autosearch-anthology"
-            label={t('publication:chapter.anthology')}
-            searchResults={() => {}}
-            setValueFunction={() => {}}
-            onInputChange={() => {}}
-          />
-        )}
-      </Field>
 
       <StyledPageNumberWrapper>
         <Field name={ReferenceFieldNames.PAGES_FROM}>

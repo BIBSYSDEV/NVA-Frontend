@@ -1,4 +1,5 @@
 export interface InstitutionUnitBase {
+  acronym?: string;
   name: string;
   id: string;
 }
@@ -7,40 +8,12 @@ export interface RecursiveInstitutionUnit extends InstitutionUnitBase {
   subunits?: RecursiveInstitutionUnit[];
 }
 
-export interface FormikInstitutionUnit extends InstitutionUnitBase {
-  subunits: InstitutionUnitBase[];
-  unit: RecursiveInstitutionUnit;
-  editId?: string;
+export interface FormikInstitutionUnit extends Partial<RecursiveInstitutionUnit> {
+  subunit?: InstitutionUnitBase;
+  unit?: RecursiveInstitutionUnit;
 }
-
-export const emptyRecursiveUnit: RecursiveInstitutionUnit = {
-  name: '',
-  id: '',
-  subunits: [],
-};
-
-export const emptyFormikUnit: FormikInstitutionUnit = {
-  name: '',
-  id: '',
-  subunits: [],
-  unit: emptyRecursiveUnit,
-};
 
 export enum FormikInstitutionUnitFieldNames {
-  NAME = 'name',
-  ID = 'id',
-  SUBUNITS = 'subunits',
+  SUB_UNIT = 'subunit',
   UNIT = 'unit',
-  EDIT_ID = 'editId',
-}
-
-export interface InstitutionUnitResponseType {
-  id: string;
-  name: string;
-  unitName: object;
-  cristinUser: boolean;
-  institution: object;
-  uri: string;
-  acronym: string;
-  subunits: InstitutionUnitResponseType[];
 }
