@@ -106,6 +106,21 @@ describe('User opens publication form and can see validation errors', () => {
     cy.get('[data-testid=author-email-input]').click({ force: true }).type('@email.com');
     cy.contains(ErrorMessage.INVALID_FORMAT).should('not.be.visible');
     cy.contains(ErrorMessage.REQUIRED).should('not.be.visible');
+
+    // Add author and set corresponding without setting email
+    cy.get('[data-testid=add-contributor]').click({ force: true });
+    cy.get('[data-testid=search-input]').click({ force: true }).type('test');
+    cy.get('[data-testid=search-button]').click({ force: true });
+    cy.get('[data-testid=author-radio-button]').eq(1).click({ force: true });
+    cy.get('[data-testid=connect-author-button]').click({ force: true });
+    cy.get('[data-testid=author-corresponding-checkbox]').eq(1).click({ force: true });
+    cy.get('[data-testid=nav-tabpanel-submission]').click({ force: true });
+    cy.get('[data-testid=nav-tabpanel-contributors]').click({ force: true });
+    cy.contains(ErrorMessage.REQUIRED).should('be.visible');
+    cy.get('[data-testid=nav-tabpanel-contributors]').should('have.class', 'error-tab');
+    cy.get('[data-testid=author-email-input]').eq(1).click({ force: true }).type('test@email.com');
+    cy.contains(ErrorMessage.REQUIRED).should('not.be.visible');
+    cy.get('[data-testid=nav-tabpanel-contributors]').should('not.have.class', 'error-tab');
   });
 
   it('The User should be able to see validation errors on files tab', () => {
