@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import Progress from './Progress';
 import styled from 'styled-components';
+import { CircularProgress } from '@material-ui/core';
 
 const StyledProgressContainer = styled.div`
   display: flex;
@@ -23,7 +23,7 @@ const DelayedFallback = () => {
     <>
       {show && (
         <StyledProgressContainer>
-          <Progress size={50} />
+          <CircularProgress size={50} />
         </StyledProgressContainer>
       )}
     </>

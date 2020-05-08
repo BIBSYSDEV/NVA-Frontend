@@ -1,5 +1,5 @@
 import React, { FC, useState, useRef } from 'react';
-import { Button } from '@material-ui/core';
+import { Button, CircularProgress } from '@material-ui/core';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { Formik, Field, FieldProps, Form } from 'formik';
@@ -15,7 +15,6 @@ import { useDispatch } from 'react-redux';
 import { getDepartment } from '../../api/institutionApi';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
-import Progress from '../Progress';
 import NormalText from '../NormalText';
 import useFetchInstitutions from '../../utils/hooks/useFetchInstitutions';
 import InstitutionAutocomplete from './InstitutionAutocomplete';
@@ -95,7 +94,7 @@ const SelectInstitution: FC<SelectInstitutionProps> = ({ onSubmit, onClose }) =>
               {isLoadingDepartment && (
                 <StyledLoadingInfo>
                   <NormalText>{t('institution:loading_department')}</NormalText>
-                  <Progress />
+                  <CircularProgress />
                 </StyledLoadingInfo>
               )}
 
