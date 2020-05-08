@@ -16,13 +16,20 @@ describe('User opens publication form and can see validation errors', () => {
   });
 
   it('The User should be able to see validation summary on submission tab', () => {
-    // TODO: Test if tab is marked with error
     cy.get('[data-testid=nav-tabpanel-submission]').click({ force: true });
-    cy.get('[data-testid=error-summary-card]').contains(`Title: ${ErrorMessage.REQUIRED}`);
-    cy.get('[data-testid=error-summary-card]').contains(`Publication type: ${ErrorMessage.REQUIRED}`);
-    cy.get('[data-testid=error-summary-card]').contains(`Authors: ${ErrorMessage.MISSING_CONTRIBUTOR}`);
-    cy.get('[data-testid=error-summary-card]').contains(`Publisher: ${ErrorMessage.REQUIRED}`);
-    cy.get('[data-testid=error-summary-card]').contains(`Files: ${ErrorMessage.MISSING_FILE}`);
+
+    // Error messages
+    cy.get('[data-testid=error-summary-card]')
+      .parent()
+      .within(() => {
+        cy.contains(`Publication type: ${ErrorMessage.REQUIRED}`);
+        cy.contains(`Authors: ${ErrorMessage.MISSING_CONTRIBUTOR}`);
+        cy.contains(`Publisher: ${ErrorMessage.REQUIRED}`);
+        cy.contains(`Files: ${ErrorMessage.MISSING_FILE}`);
+      });
+
+    // Error tabs
+    cy.get('.error-tab').should('have.length', 4);
   });
 
   it('The User should be able to see validation errors on description tab', () => {
@@ -145,5 +152,6 @@ describe('User opens publication form and can see validation errors', () => {
   it('The user navigates to submission tab and see no errors', () => {
     cy.get('[data-testid=nav-tabpanel-submission]').click({ force: true });
     cy.get('[data-testid=error-summary-card]').should('not.be.visible');
+    cy.get('.error-tab').should('have.length', 0);
   });
 });
