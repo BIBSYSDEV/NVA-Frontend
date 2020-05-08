@@ -3,7 +3,7 @@ version: 0.2
 env:
   variables:
     REACT_APP_AWS_COGNITO_IDENTITY_POOL_ID: '${REPLACE_AWS_COGNITO_IDENTITY_POOL_ID}'
-    REACT_APP_AWS_REGION: '${REPLACE_REACT_APP_AWS_REGION}'
+    REACT_APP_AWS_REGION: '${REPLACE_AWS_REGION}'
     REACT_APP_AWS_USER_POOLS_ID: '${REPLACE_AWS_USER_POOLS_ID}'
     REACT_APP_AWS_USER_POOLS_WEB_CLIENT_ID: '${REPLACE_AWS_USER_POOLS_WEB_CLIENT_ID}'
     REACT_APP_DOMAIN: '${REPLACE_DOMAIN}'
@@ -29,7 +29,7 @@ phases:
       - npm run build
   post_build:
     commands:
-      - sam package --debug --template-file ./templates/sar_application_template.yml --s3-bucket $S3_BUCKET --output-template-file sampackaged.yaml
+      - sam package --template-file ./templates/sar_application_template.yml --s3-bucket $S3_BUCKET --output-template-file sampackaged.yaml
       - sam publish --template sampackaged.yaml
 
 artifacts:

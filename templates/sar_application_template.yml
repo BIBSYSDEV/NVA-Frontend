@@ -11,7 +11,7 @@ Metadata:
     Name: NVA-Frontend
     Description: Frontend for NVA
     Author: Unit
-    SemanticVersion: 1.1.2
+    SemanticVersion: 1.1.4
     SpdxLicenseId: MIT
     LicenseUrl: ../LICENSE
 
@@ -93,11 +93,11 @@ Resources:
           REPLACE_API_URL: !Ref BackendDomain
           REPLACE_REDIRECT_SIGN_IN: !Ref RedirectSignInUrl
           REPLACE_REDIRECT_SIGN_OUT: !Ref RedirectSignOutUrl
-          REPLACE_REACT_APP_AWS_REGION: !Ref 'AWS::Region'
-          REPLACE_REACT_APP_ORCID_CLIENT_ID: !Ref OrcidClientID
-          REPLACE_REACT_APP_ORCID_CLIENT_SECRET: !Ref OrcidClientSecret
-          REPLACE_REACT_APP_ORCID_REDIRECT_URI: !Ref OrcidRedirectUri
-          REPLACE_REACT_APP_ORCID_BASE_URL: !Ref OrcidBaseUrl
+          REPLACE_AWS_REGION: !Ref 'AWS::Region'
+          REPLACE_ORCID_CLIENT_ID: !Ref OrcidClientID
+          REPLACE_ORCID_CLIENT_SECRET: !Ref OrcidClientSecret
+          REPLACE_ORCID_REDIRECT_URI: !Ref OrcidRedirectUri
+          REPLACE_ORCID_BASE_URL: !Ref OrcidBaseUrl
           REPLACE_ALMA_API_URL: !Ref AlmaApiUrl
 
   FrontendBucket:
