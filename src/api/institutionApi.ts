@@ -4,8 +4,8 @@ import { StatusCode } from '../utils/constants';
 import i18n from '../translations/i18n';
 
 export enum InstitutionApiPaths {
-  INSTITUTIONS = '/institutions-proxy/institutions',
-  DEPARTMENTS = '/institutions-proxy/departments',
+  INSTITUTIONS = '/institution/institutions',
+  DEPARTMENTS = '/institution/departments',
 }
 
 export const getInstitutions = async () => {
