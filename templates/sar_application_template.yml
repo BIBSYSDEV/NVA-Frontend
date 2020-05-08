@@ -11,7 +11,7 @@ Metadata:
     Name: NVA-Frontend
     Description: Frontend for NVA
     Author: Unit
-    SemanticVersion: 1.1.2
+    SemanticVersion: 1.1.3
     SpdxLicenseId: MIT
     LicenseUrl: ../LICENSE
 
