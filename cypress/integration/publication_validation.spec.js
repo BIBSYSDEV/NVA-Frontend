@@ -53,14 +53,21 @@ describe('User opens publication form and can see validation errors', () => {
     cy.get('[data-testid=publication-instance-type-Journal]').click({ force: true });
     // No errors should be displayed when user has just selected new context type
     cy.contains(ErrorMessage.REQUIRED).should('not.be.visible');
-    // TODO: ErrorMessage.REQUIRED Should be visible when removing publisher
 
     cy.get('[data-testid=nav-tabpanel-description]').click({ force: true });
     cy.get('[data-testid=nav-tabpanel-references]').click({ force: true });
     cy.get(`p:contains(${ErrorMessage.REQUIRED})`).should('have.length', 2);
 
+    // publicationInstance type
     cy.get('[data-testid=publication-instance-type]').click({ force: true }).type(' ');
     cy.get('[data-testid=publication-instance-type-JournalArticle]').click({ force: true });
+
+    // Publisher (publicationContext) field
+    cy.get('[data-testid=autosearch-publisher]').click({ force: true }).type('natur');
+    cy.contains('testament').click({ force: true });
+    cy.contains(ErrorMessage.REQUIRED).should('not.be.visible');
+    cy.get('[data-testid=remove-publisher]').click({ force: true });
+    cy.contains(ErrorMessage.REQUIRED).should('be.visible');
     cy.get('[data-testid=autosearch-publisher]').click({ force: true }).type('natur');
     cy.contains('testament').click({ force: true });
     cy.contains(ErrorMessage.REQUIRED).should('not.be.visible');

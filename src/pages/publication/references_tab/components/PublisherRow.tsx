@@ -85,7 +85,7 @@ const PublisherRow: React.FC<PublisherRowProps> = ({ dataTestId, publisher, labe
       <StyledLevelLabel>{t('references.level')}</StyledLevelLabel>
       <StyledTitleText>{title}</StyledTitleText>
       <StyledLevelText>{publisherLevel}</StyledLevelText>
-      <StyledButton variant="contained" color="secondary" onClick={onClickDelete}>
+      <StyledButton data-testid="remove-publisher" variant="contained" color="secondary" onClick={onClickDelete}>
         {t('common:remove')}
       </StyledButton>
     </StyledPublisherRow>
