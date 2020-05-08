@@ -41,7 +41,7 @@ const PublisherField: FC<PublisherFieldProps> = ({
               error && touched.entityDescription?.reference?.publicationContext?.title ? (
                 // Must use global touched variable instead of what is in meta, since meta.touched always will
                 // evaluate to true if it is a object (as in this case). Even though this field will update
-                // the whole object, we only want to show error massage if we are missing the title property.
+                // the whole object, we only want to show error message if we are missing the title property.
                 <ErrorMessage name={`${fieldName}.title`} />
               ) : (
                 ''
