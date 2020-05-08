@@ -28,10 +28,7 @@ const StyledOrcidLine = styled.div`
   display: flex;
   margin-top: 1rem;
   align-items: center;
-`;
-
-const StyledButton = styled(Button)`
-  justify-content: flex-end;
+  justify-content: space-between;
 `;
 
 const StyledAvatar = styled(Avatar)`
@@ -84,13 +81,13 @@ const UserOrcid: FC = () => {
               <LabelTextLine
                 dataTestId={'orcid-info'}
                 label={t('orcid.your_orcid')}
-                text={orcidLink}
+                linkText={orcidLink}
                 externalLink={orcidLink}
               />
-              <StyledButton onClick={toggleConfirmDialog} variant="contained" color="secondary">
+              <Button onClick={toggleConfirmDialog} variant="contained" color="secondary">
                 <DeleteIcon />
                 {t('orcid.remove_connection')}
-              </StyledButton>
+              </Button>
 
               <ConfirmDialog
                 open={openConfirmDialog}

@@ -1,6 +1,5 @@
 import React, { FC, ReactNode } from 'react';
-import { Button } from '@material-ui/core';
-import Progress from './Progress';
+import { Button, CircularProgress } from '@material-ui/core';
 import styled from 'styled-components';
 
 const StyledProgressContainer = styled.div`
@@ -21,7 +20,7 @@ const ButtonWithProgress: FC<ButtonWithProgressProps> = ({ children, isLoading, 
     {children}
     {isLoading && (
       <StyledProgressContainer>
-        <Progress size={15} thickness={5} />
+        <CircularProgress size={15} thickness={5} />
       </StyledProgressContainer>
     )}
   </Button>

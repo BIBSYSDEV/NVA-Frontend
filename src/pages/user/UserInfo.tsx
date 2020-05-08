@@ -16,9 +16,15 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
   return (
     <Card>
       <Heading>{t('profile:heading.user_info')}</Heading>
-      <LabelTextLine dataTestId="user-name" label={t('common:name')} text={user.name} />
-      <LabelTextLine dataTestId="user-id" label={t('profile:id')} text={user.id} />
-      <LabelTextLine dataTestId="user-email" label={t('common:email')} text={user.email} />
+      <LabelTextLine dataTestId="user-name" label={t('common:name')}>
+        {user.name}
+      </LabelTextLine>
+      <LabelTextLine dataTestId="user-id" label={t('profile:id')}>
+        {user.id}
+      </LabelTextLine>
+      <LabelTextLine dataTestId="user-email" label={t('common:email')}>
+        {user.email}
+      </LabelTextLine>
     </Card>
   );
 };

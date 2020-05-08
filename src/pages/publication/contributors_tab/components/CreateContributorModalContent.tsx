@@ -1,13 +1,12 @@
 import React, { useState, FC } from 'react';
 import { Formik, Form, Field, FieldProps, FormikValues } from 'formik';
 import { emptyNewContributor } from '../../../../types/contributor.types';
-import { Collapse, Button, TextField } from '@material-ui/core';
+import { Collapse, Button, TextField, CircularProgress } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import NormalText from '../../../../components/NormalText';
 import { createAuthority } from '../../../../api/authorityApi';
 import { Authority } from '../../../../types/authority.types';
-import Progress from '../../../../components/Progress';
 import { useDispatch } from 'react-redux';
 import { setNotification } from '../../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../../types/notification.types';
@@ -64,7 +63,7 @@ const CreateContributorModalContent: FC<CreateContributorModalContentProps> = ({
     <>
       {loading ? (
         <StyledProgressContainer>
-          <Progress size={100} />
+          <CircularProgress size={100} />
         </StyledProgressContainer>
       ) : (
         <Formik initialValues={emptyNewContributor} onSubmit={handleSubmit}>
