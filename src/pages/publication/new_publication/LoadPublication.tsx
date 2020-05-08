@@ -66,6 +66,7 @@ const LoadPublication: FC<LoadPublicationProps> = ({ expanded, onChange, openFor
       openForm();
       history.push(`/publication/${publication.identifier}`);
     } else {
+      setIsLoading(false);
       dispatch(setNotification(t('feedback:error.create_publication'), NotificationVariant.Error));
     }
   };

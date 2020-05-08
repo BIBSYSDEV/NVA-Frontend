@@ -16,13 +16,20 @@ describe('User opens publication form and can see validation errors', () => {
   });
 
   it('The User should be able to see validation summary on submission tab', () => {
-    // TODO: Test if tab is marked with error
     cy.get('[data-testid=nav-tabpanel-submission]').click({ force: true });
-    cy.get('[data-testid=error-summary-card]').contains(`Title: ${ErrorMessage.REQUIRED}`);
-    cy.get('[data-testid=error-summary-card]').contains(`Publication type: ${ErrorMessage.REQUIRED}`);
-    cy.get('[data-testid=error-summary-card]').contains(`Authors: ${ErrorMessage.MISSING_CONTRIBUTOR}`);
-    cy.get('[data-testid=error-summary-card]').contains(`Publisher: ${ErrorMessage.REQUIRED}`);
-    cy.get('[data-testid=error-summary-card]').contains(`Files: ${ErrorMessage.MISSING_FILE}`);
+
+    // Error messages
+    cy.get('[data-testid=error-summary-card]')
+      .parent()
+      .within(() => {
+        cy.contains(`Publication type: ${ErrorMessage.REQUIRED}`);
+        cy.contains(`Authors: ${ErrorMessage.MISSING_CONTRIBUTOR}`);
+        cy.contains(`Publisher: ${ErrorMessage.REQUIRED}`);
+        cy.contains(`Files: ${ErrorMessage.MISSING_FILE}`);
+      });
+
+    // Error tabs
+    cy.get('.error-tab').should('have.length', 4);
   });
 
   it('The User should be able to see validation errors on description tab', () => {
@@ -51,16 +58,23 @@ describe('User opens publication form and can see validation errors', () => {
     // Journal type
     cy.get('[data-testid=publication-context-type]').click({ force: true }).type(' ');
     cy.get('[data-testid=publication-instance-type-Journal]').click({ force: true });
-
     // No errors should be displayed when user has just selected new context type
-    // cy.contains(ErrorMessage.REQUIRED).should('not.be.visible'); // TODO: Fix bug
+    cy.contains(ErrorMessage.REQUIRED).should('not.be.visible');
 
     cy.get('[data-testid=nav-tabpanel-description]').click({ force: true });
     cy.get('[data-testid=nav-tabpanel-references]').click({ force: true });
     cy.get(`p:contains(${ErrorMessage.REQUIRED})`).should('have.length', 2);
 
+    // publicationInstance type
     cy.get('[data-testid=publication-instance-type]').click({ force: true }).type(' ');
     cy.get('[data-testid=publication-instance-type-JournalArticle]').click({ force: true });
+
+    // Publisher (publicationContext) field
+    cy.get('[data-testid=autosearch-publisher]').click({ force: true }).type('natur');
+    cy.contains('testament').click({ force: true });
+    cy.contains(ErrorMessage.REQUIRED).should('not.be.visible');
+    cy.get('[data-testid=remove-publisher]').click({ force: true });
+    cy.contains(ErrorMessage.REQUIRED).should('be.visible');
     cy.get('[data-testid=autosearch-publisher]').click({ force: true }).type('natur');
     cy.contains('testament').click({ force: true });
     cy.contains(ErrorMessage.REQUIRED).should('not.be.visible');
@@ -114,12 +128,15 @@ describe('User opens publication form and can see validation errors', () => {
     // Embargo field
     cy.get('[data-testid=uploaded-file-embargo-date]')
       .parent()
-      .within(() => cy.get("input[type='text']").click({ force: true }).type('01.01.2000'));
-    // cy.contains(ErrorMessage.MUST_BE_FUTURE).should('be.visible'); // TODO: Set error message
-    cy.get('[data-testid=uploaded-file-embargo-date]')
-      .parent()
-      .within(() => cy.get("input[type='text']").clear().click({ force: true }).type('01.01.3000'));
-    cy.contains(ErrorMessage.MUST_BE_FUTURE).should('not.be.visible');
+      .within(() => {
+        cy.get("input[type='text']").click({ force: true }).type('01.01.').blur();
+        cy.contains(ErrorMessage.INVALID_FORMAT).should('be.visible');
+        cy.get("input[type='text']").click({ force: true }).type('2000');
+        cy.contains(ErrorMessage.INVALID_FORMAT).should('not.be.visible');
+        cy.contains(ErrorMessage.MUST_BE_FUTURE).should('be.visible');
+        cy.get("input[type='text']").clear().click({ force: true }).type('01.01.3000');
+        cy.contains(ErrorMessage.MUST_BE_FUTURE).should('not.be.visible');
+      });
 
     // Lincense field
     cy.get('[data-testid=nav-tabpanel-contributors]').click({ force: true });
@@ -135,5 +152,6 @@ describe('User opens publication form and can see validation errors', () => {
   it('The user navigates to submission tab and see no errors', () => {
     cy.get('[data-testid=nav-tabpanel-submission]').click({ force: true });
     cy.get('[data-testid=error-summary-card]').should('not.be.visible');
+    cy.get('.error-tab').should('have.length', 0);
   });
 });

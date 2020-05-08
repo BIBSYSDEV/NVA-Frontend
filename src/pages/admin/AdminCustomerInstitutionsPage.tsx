@@ -4,14 +4,13 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { getAllCustomerInstitutions } from '../../api/customerInstitutionsApi';
 import Card from '../../components/Card';
-import { Button } from '@material-ui/core';
+import { Button, CircularProgress } from '@material-ui/core';
 import InstitutionList from './InstitutionList';
 import { Link as RouterLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { CustomerInstitution } from '../../types/customerInstitution.types';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
-import Progress from '../../components/Progress';
 
 const StyledButtonWrapper = styled.div`
   display: flex;
@@ -58,7 +57,7 @@ const AdminCustomerInstitutionsPage: FC = () => {
       </StyledButtonWrapper>
       {isLoading ? (
         <StyledProgressContainer>
-          <Progress />
+          <CircularProgress />
         </StyledProgressContainer>
       ) : (
         <InstitutionList institutions={institutions} />

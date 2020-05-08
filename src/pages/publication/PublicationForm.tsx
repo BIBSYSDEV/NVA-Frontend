@@ -16,9 +16,8 @@ import { useDispatch } from 'react-redux';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import deepmerge from 'deepmerge';
-import Progress from '../../components/Progress';
 import { publicationValidationSchema } from './PublicationFormValidationSchema';
-import { Button } from '@material-ui/core';
+import { Button, CircularProgress } from '@material-ui/core';
 import RouteLeavingGuard from '../../components/RouteLeavingGuard';
 import { useHistory } from 'react-router';
 import ButtonWithProgress from '../../components/ButtonWithProgress';
@@ -141,7 +140,7 @@ const PublicationForm: FC<PublicationFormProps> = ({
   };
 
   return isLoading ? (
-    <Progress />
+    <CircularProgress />
   ) : (
     <StyledPublication>
       <Formik

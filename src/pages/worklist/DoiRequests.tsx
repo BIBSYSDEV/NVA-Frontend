@@ -2,11 +2,11 @@ import React, { FC, useState, useEffect } from 'react';
 import { getDoiRequests } from '../../api/publicationApi';
 import WorklistTable from './WorkListTable';
 import { useTranslation } from 'react-i18next';
-import Progress from '../../components/Progress';
 import SubHeading from '../../components/SubHeading';
 import { useDispatch } from 'react-redux';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
+import { CircularProgress } from '@material-ui/core';
 
 const DoiRequests: FC = () => {
   const { t } = useTranslation('workLists');
@@ -28,7 +28,7 @@ const DoiRequests: FC = () => {
   }, [dispatch]);
 
   return isLoading ? (
-    <Progress />
+    <CircularProgress />
   ) : doiRequests.length > 0 ? (
     <WorklistTable publications={doiRequests} />
   ) : (

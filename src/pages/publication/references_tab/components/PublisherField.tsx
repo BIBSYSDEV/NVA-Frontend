@@ -1,9 +1,9 @@
 import React, { FC } from 'react';
-import { Field, FieldProps } from 'formik';
+import { Field, FieldProps, ErrorMessage, FormikProps, useFormikContext } from 'formik';
 import PublicationChannelSearch from './PublicationChannelSearch';
 import { PublicationTableNumber } from '../../../../utils/constants';
 import PublisherRow from './PublisherRow';
-import { Publisher, levelMap } from '../../../../types/publication.types';
+import { Publisher, levelMap, FormikPublication } from '../../../../types/publication.types';
 import { PublicationType } from '../../../../types/publicationFieldNames';
 
 interface PublisherFieldProps {
@@ -19,6 +19,8 @@ const PublisherField: FC<PublisherFieldProps> = ({
   label,
   placeholder,
 }) => {
+  const { touched }: FormikProps<FormikPublication> = useFormikContext();
+
   const mapPublisher = (selectedPublisher: Publisher, type: PublicationType) => {
     const levelAsEnum = Object.keys(levelMap).find((key) => levelMap[key] === selectedPublisher.level);
     return { ...selectedPublisher, level: levelAsEnum, type }; //TODO: remove type when this is implemented as part of channel register (NP-774)
@@ -26,7 +28,7 @@ const PublisherField: FC<PublisherFieldProps> = ({
 
   return (
     <Field name={fieldName}>
-      {({ field: { name, value }, form: { setFieldValue }, meta: { error, touched } }: FieldProps) => (
+      {({ field: { name, value }, form: { setFieldValue }, meta: { error } }: FieldProps) => (
         <>
           <PublicationChannelSearch
             clearSearchField={value === null}
@@ -36,13 +38,17 @@ const PublisherField: FC<PublisherFieldProps> = ({
             setValueFunction={(selectedPublisher) => setFieldValue(name, mapPublisher(selectedPublisher, value.type))}
             placeholder={placeholder}
             errorMessage={
-              touched && error
-                ? typeof error === 'object'
-                  ? (Object.values(error)[0] as string) // Use first message if error is an object
-                  : error
-                : ''
+              error && touched.entityDescription?.reference?.publicationContext?.title ? (
+                // Must use global touched variable instead of what is in meta, since meta.touched always will
+                // evaluate to true if it is a object (as in this case). Even though this field will update
+                // the whole object, we only want to show error message if we are missing the title property.
+                <ErrorMessage name={`${fieldName}.title`} />
+              ) : (
+                ''
+              )
             }
           />
+
           {value.title && (
             <PublisherRow
               dataTestId="autosearch-results-publisher"
