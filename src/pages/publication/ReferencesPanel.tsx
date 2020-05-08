@@ -2,7 +2,7 @@ import { FormikProps, useFormikContext } from 'formik';
 import React, { useEffect, FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { FormikPublication } from '../../types/publication.types';
+import { FormikPublication, touchedReferenceTab } from '../../types/publication.types';
 import { PublicationType, ReferenceFieldNames } from '../../types/publicationFieldNames';
 import BookForm from './references_tab/BookForm';
 import ChapterForm from './references_tab/ChapterForm';
@@ -23,13 +23,13 @@ const StyledSelectContainer = styled.div`
 
 const ReferencesPanel: FC = () => {
   const { t } = useTranslation('publication');
-  const { values, setFieldTouched, setFieldValue }: FormikProps<FormikPublication> = useFormikContext();
+  const { values, setTouched, setFieldTouched, setFieldValue }: FormikProps<FormikPublication> = useFormikContext();
   const publicationContextType = values.entityDescription.reference.publicationContext.type;
 
   useEffect(
     // Set all fields as touched if user navigates away from this panel (on unmount)
-    () => () => Object.values(ReferenceFieldNames).forEach((fieldName) => setFieldTouched(fieldName)),
-    [setFieldTouched]
+    () => () => setTouched(touchedReferenceTab),
+    [setTouched]
   );
 
   return (

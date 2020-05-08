@@ -5,14 +5,13 @@ import { FormikProps, useFormikContext, FieldArray, ErrorMessage, FieldArrayRend
 import Heading from '../../components/Heading';
 import Card from '../../components/Card';
 import SortableTable from './contributors_tab/components/SortableTable';
-import { FormikPublication } from '../../types/publication.types';
+import { FormikPublication, touchedContributorTab } from '../../types/publication.types';
 import { ContributorFieldNames } from '../../types/publicationFieldNames';
-import { getAllContributorFields } from '../../utils/formik-helpers';
 
 const ContributorsPanel: FC = () => {
   const { t } = useTranslation('publication');
   const {
-    setFieldTouched,
+    setTouched,
     values: {
       entityDescription: { contributors },
     },
@@ -27,10 +26,11 @@ const ContributorsPanel: FC = () => {
   useEffect(
     () => () => {
       // Use contributorsRef to avoid trigging this useEffect on every values update
-      const fieldNames = getAllContributorFields(contributorsRef.current);
-      fieldNames.forEach((fieldName) => setFieldTouched(fieldName));
+      setTouched(touchedContributorTab(contributorsRef.current));
+      // const fieldNames = getAllContributorFields(contributorsRef.current);
+      // fieldNames.forEach((fieldName) => setFieldTouched(fieldName));
     },
-    [setFieldTouched]
+    [setTouched]
   );
 
   return (

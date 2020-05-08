@@ -52,7 +52,7 @@ export const hasTouchedError = (
 
   return fieldNames.some((fieldName) => {
     const fieldHasError = !!getIn(errors, fieldName);
-    const fieldIsTouched = getIn(touched, fieldName);
+    const fieldIsTouched = !!getIn(touched, fieldName);
     // Touched data can be inconsistent with array of null or undefined elements when adding elements dynamically
     // to a FieldArray, so check for value to be true explicitly, otherwise any array will also be true
     return fieldHasError && fieldIsTouched === true;

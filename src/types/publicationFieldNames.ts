@@ -90,11 +90,3 @@ export enum SpecificContributorFieldNames {
   ROLE = 'role', // TODO
   SEQUENCE = 'sequence',
 }
-
-export const requiredFieldNames = [
-  DescriptionFieldNames.TITLE,
-  ReferenceFieldNames.PUBLICATION_CONTEXT_TITLE,
-  ReferenceFieldNames.PUBLICATION_CONTEXT_TYPE,
-  ContributorFieldNames.CONTRIBUTORS,
-  FileFieldNames.FILES,
-];

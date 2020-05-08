@@ -1,13 +1,13 @@
 import { Field, FieldArray, FormikProps, useFormikContext, FieldProps, FieldArrayRenderProps, getIn } from 'formik';
 import { TextField } from 'formik-material-ui';
-import React, { FC, useCallback, useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
 import DateFnsUtils from '@date-io/date-fns';
 import { MenuItem } from '@material-ui/core';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
-import { FormikPublication } from '../../types/publication.types';
+import { FormikPublication, touchedDescriptionTab } from '../../types/publication.types';
 import DisciplineSearch from './description_tab/DisciplineSearch';
 import ProjectSearch from './description_tab/ProjectSearch';
 import ProjectRow from './description_tab/ProjectRow';
@@ -39,19 +39,12 @@ const StyledFieldHeader = styled.header`
 
 const DescriptionPanel: FC = () => {
   const { t } = useTranslation('publication');
-  const { setFieldTouched, setFieldValue, values }: FormikProps<FormikPublication> = useFormikContext();
-
-  // Validation messages won't show on fields that are not touched
-  const setAllFieldsTouched = useCallback(() => {
-    Object.values(DescriptionFieldNames).forEach((fieldName) => setFieldTouched(fieldName));
-  }, [setFieldTouched]);
+  const { setTouched, setFieldValue, values }: FormikProps<FormikPublication> = useFormikContext();
 
   useEffect(
-    () => () => {
-      // Set all fields as touched if user navigates away from this panel (on unmount)
-      setAllFieldsTouched();
-    },
-    [setAllFieldsTouched]
+    // Set all fields as touched if user navigates away from this panel (on unmount)
+    () => () => setTouched(touchedDescriptionTab),
+    [setTouched]
   );
 
   return (
