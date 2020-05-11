@@ -49,6 +49,8 @@ describe('User opens publication form and can see validation errors', () => {
       .parent()
       .within(() => cy.get("input[type='text']").clear().click({ force: true }).type('01.01.2000'));
     cy.get('[data-testid=date-published-field]').contains('Invalid Date Format').should('not.be.visible');
+
+    cy.get('[data-testid=nav-tabpanel-description]').should('not.have.class', 'error-tab');
   });
 
   it('The User should be able to see validation errors on reference tab', () => {
@@ -96,6 +98,8 @@ describe('User opens publication form and can see validation errors', () => {
     cy.get('[data-testid=article-number-field]').click({ force: true }).type('{backspace}{backspace}1');
 
     // TODO pages.to should be bigger than pages.from
+
+    cy.get('[data-testid=nav-tabpanel-references]').should('not.have.class', 'error-tab');
 
     // TODO: Book type, Report type, etc
   });
@@ -158,19 +162,6 @@ describe('User opens publication form and can see validation errors', () => {
     cy.contains(ErrorMessage.MISSING_FILE).should('not.be.visible');
     cy.contains(ErrorMessage.REQUIRED).should('not.be.visible');
 
-    // Embargo field
-    cy.get('[data-testid=uploaded-file-embargo-date]')
-      .parent()
-      .within(() => {
-        cy.get("input[type='text']").click({ force: true }).type('01.01.').blur();
-        cy.contains(ErrorMessage.INVALID_FORMAT).should('be.visible');
-        cy.get("input[type='text']").click({ force: true }).type('2000');
-        cy.contains(ErrorMessage.INVALID_FORMAT).should('not.be.visible');
-        cy.contains(ErrorMessage.MUST_BE_FUTURE).should('be.visible');
-        cy.get("input[type='text']").clear().click({ force: true }).type('01.01.3000');
-        cy.contains(ErrorMessage.MUST_BE_FUTURE).should('not.be.visible');
-      });
-
     // Lincense field
     cy.get('[data-testid=nav-tabpanel-contributors]').click({ force: true });
     cy.get('[data-testid=nav-tabpanel-files-and-license]').click({ force: true });
@@ -180,6 +171,21 @@ describe('User opens publication form and can see validation errors', () => {
       .within(() => cy.get('.MuiSelect-root').click({ force: true }));
     cy.get('[data-testid=license-item]').eq(0).click({ force: true });
     cy.contains(ErrorMessage.REQUIRED).should('not.be.visible');
+
+    // Embargo field
+    cy.get('[data-testid=uploaded-file-embargo-date]')
+      .parent()
+      .within(() => {
+        cy.get("input[type='text']").click({ force: true }).type('0101').blur();
+        cy.contains(ErrorMessage.INVALID_FORMAT).should('be.visible');
+        cy.get("input[type='text']").click({ force: true }).type('2000');
+        cy.contains(ErrorMessage.INVALID_FORMAT).should('not.be.visible');
+        cy.contains(ErrorMessage.MUST_BE_FUTURE).should('be.visible');
+        cy.get("input[type='text']").clear().click({ force: true }).type('01.01.3000');
+        cy.contains(ErrorMessage.MUST_BE_FUTURE).should('not.be.visible');
+      });
+
+    cy.get('[data-testid=nav-tabpanel-files-and-license]').should('not.have.class', 'error-tab');
   });
 
   it('The user navigates to submission tab and see no errors', () => {
