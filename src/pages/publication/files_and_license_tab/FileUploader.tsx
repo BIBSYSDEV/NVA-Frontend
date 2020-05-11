@@ -1,15 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, FC } from 'react';
 import { File, emptyFile, Uppy } from '../../../types/file.types';
 import UppyDashboard from '../../../components/UppyDashboard';
 import { UppyFile } from '@uppy/core';
 
 interface FileUploaderProps {
   addFile: (file: File) => void;
-  uppy: Uppy;
   shouldAllowMultipleFiles: boolean;
+  uppy: Uppy;
 }
 
-const FileUploader: React.FC<FileUploaderProps> = ({ addFile, uppy, shouldAllowMultipleFiles }) => {
+const FileUploader: FC<FileUploaderProps> = ({ addFile, shouldAllowMultipleFiles, uppy }) => {
   useEffect(() => {
     if (uppy && !uppy.hasUploadSuccessEventListener) {
       uppy.on('upload-success', (file: UppyFile, response: any) => {
@@ -25,6 +25,9 @@ const FileUploader: React.FC<FileUploaderProps> = ({ addFile, uppy, shouldAllowM
       // Avoid duplicating event listener
       uppy.hasUploadSuccessEventListener = true;
     }
+    return () => {
+      uppy.hasUploadSuccessEventListener = false;
+    };
   }, [addFile, uppy]);
 
   return uppy ? <UppyDashboard uppy={uppy} shouldAllowMultipleFiles={shouldAllowMultipleFiles} /> : null;
