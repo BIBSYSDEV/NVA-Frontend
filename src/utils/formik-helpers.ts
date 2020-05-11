@@ -8,6 +8,7 @@ import {
 import { Contributor } from '../types/contributor.types';
 import { File } from '../types/file.types';
 import { FormikPublication } from '../types/publication.types';
+import deepmerge, { Options } from 'deepmerge';
 
 interface CustomError {
   fieldName: string;
@@ -148,3 +149,8 @@ export const touchedFilesTabFields = (files: File[]): FormikTouched<FormikPublic
     })),
   },
 });
+
+const overwriteArrayMerge = (destinationArray: any[], sourceArray: any[], options?: Options) => sourceArray;
+export const mergeTouchedFields = (touchedArray: FormikTouched<FormikPublication>[]) => {
+  return deepmerge.all(touchedArray, { arrayMerge: overwriteArrayMerge });
+};

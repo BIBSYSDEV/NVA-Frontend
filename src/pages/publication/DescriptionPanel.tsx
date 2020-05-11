@@ -1,24 +1,24 @@
 import { Field, FieldArray, FormikProps, useFormikContext, FieldProps, FieldArrayRenderProps, getIn } from 'formik';
 import { TextField } from 'formik-material-ui';
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-
 import DateFnsUtils from '@date-io/date-fns';
 import { MenuItem } from '@material-ui/core';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import ChipInput from 'material-ui-chip-input';
+
 import { FormikPublication } from '../../types/publication.types';
 import DisciplineSearch from './description_tab/DisciplineSearch';
 import ProjectSearch from './description_tab/ProjectSearch';
 import ProjectRow from './description_tab/ProjectRow';
 import DatePickerField from './description_tab/DatePickerField';
-import ChipInput from 'material-ui-chip-input';
 import { publicationLanguages } from '../../types/language.types';
 import Heading from '../../components/Heading';
 import Card from '../../components/Card';
 import { DescriptionFieldNames } from '../../types/publicationFieldNames';
 import { emptyProject } from '../../types/project.types';
-import { touchedDescriptionTabFields } from '../../utils/formik-helpers';
+import { touchedDescriptionTabFields, mergeTouchedFields } from '../../utils/formik-helpers';
 
 const MultipleFieldWrapper = styled.div`
   display: flex;
@@ -40,11 +40,16 @@ const StyledFieldHeader = styled.header`
 
 const DescriptionPanel: FC = () => {
   const { t } = useTranslation('publication');
-  const { setTouched, setFieldValue, values }: FormikProps<FormikPublication> = useFormikContext();
+  const { setTouched, touched, setFieldValue, values }: FormikProps<FormikPublication> = useFormikContext();
+
+  const touchedRef = useRef(touched);
+  useEffect(() => {
+    touchedRef.current = touched;
+  }, [touched]);
 
   useEffect(
     // Set all fields as touched if user navigates away from this panel (on unmount)
-    () => () => setTouched(touchedDescriptionTabFields),
+    () => () => setTouched(mergeTouchedFields([touchedRef.current, touchedDescriptionTabFields])),
     [setTouched]
   );
 

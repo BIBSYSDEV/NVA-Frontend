@@ -14,7 +14,7 @@ import PublicationChannelInfoCard from './files_and_license_tab/PublicationChann
 import NormalText from '../../components/NormalText';
 import Label from '../../components/Label';
 import { FileFieldNames } from '../../types/publicationFieldNames';
-import { touchedFilesTabFields } from '../../utils/formik-helpers';
+import { touchedFilesTabFields, mergeTouchedFields } from '../../utils/formik-helpers';
 
 const shouldAllowMultipleFiles = true;
 
@@ -37,7 +37,7 @@ interface FilesAndLicensePanelProps {
 
 const FilesAndLicensePanel: FC<FilesAndLicensePanelProps> = ({ uppy }) => {
   const { t } = useTranslation('publication');
-  const { values, setTouched }: FormikProps<FormikPublication> = useFormikContext();
+  const { values, setTouched, touched }: FormikProps<FormikPublication> = useFormikContext();
   const [isLicenseModalOpen, setIsLicenseModalOpen] = useState(false);
   const {
     fileSet: { files },
@@ -51,10 +51,15 @@ const FilesAndLicensePanel: FC<FilesAndLicensePanelProps> = ({ uppy }) => {
     filesRef.current = files;
   }, [files]);
 
+  const touchedRef = useRef(touched);
+  useEffect(() => {
+    touchedRef.current = touched;
+  }, [touched]);
+
   useEffect(
     // Set all fields to touched on unmount
     // Use contributorsRef to avoid trigging this useEffect on every values update
-    () => () => setTouched(touchedFilesTabFields(filesRef.current)),
+    () => () => setTouched(mergeTouchedFields([touchedRef.current, touchedFilesTabFields(filesRef.current)])),
     [setTouched]
   );
 

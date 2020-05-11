@@ -25,12 +25,12 @@ import { useDispatch } from 'react-redux';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import ButtonWithProgress from '../../components/ButtonWithProgress';
-import deepmerge from 'deepmerge';
 import {
   touchedFilesTabFields,
   touchedContributorTabFields,
   touchedDescriptionTabFields,
   touchedReferenceTabFields,
+  mergeTouchedFields,
 } from '../../utils/formik-helpers';
 
 const StyledButtonGroupContainer = styled.div`
@@ -63,19 +63,15 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication }
   } = values;
   const publicationContextType = reference.publicationContext.type;
 
-  useEffect(
-    () =>
-      setTouched(
-        deepmerge(
-          deepmerge(
-            deepmerge(touchedDescriptionTabFields, touchedReferenceTabFields),
-            touchedContributorTabFields(contributors)
-          ),
-          touchedFilesTabFields(files)
-        )
-      ),
-    [contributors, files, setTouched]
-  );
+  useEffect(() => {
+    const touchedForm = mergeTouchedFields([
+      touchedDescriptionTabFields,
+      touchedReferenceTabFields,
+      touchedContributorTabFields(contributors),
+      touchedFilesTabFields(files),
+    ]);
+    setTouched(touchedForm);
+  }, [contributors, files, setTouched]);
 
   const onClickPublish = async () => {
     await savePublication(values);

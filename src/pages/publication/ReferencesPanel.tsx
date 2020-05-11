@@ -1,5 +1,5 @@
 import { FormikProps, useFormikContext } from 'formik';
-import React, { useEffect, FC } from 'react';
+import React, { useEffect, FC, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { FormikPublication } from '../../types/publication.types';
@@ -12,7 +12,7 @@ import ReportForm from './references_tab/ReportForm';
 import Card from '../../components/Card';
 import Heading from '../../components/Heading';
 import SelectTypeField from './references_tab/components/SelectTypeField';
-import { touchedReferenceTabFields } from '../../utils/formik-helpers';
+import { touchedReferenceTabFields, mergeTouchedFields } from '../../utils/formik-helpers';
 
 const StyledCard = styled(Card)`
   margin-top: 1rem;
@@ -24,12 +24,23 @@ const StyledSelectContainer = styled.div`
 
 const ReferencesPanel: FC = () => {
   const { t } = useTranslation('publication');
-  const { values, setTouched, setFieldTouched, setFieldValue }: FormikProps<FormikPublication> = useFormikContext();
+  const {
+    values,
+    setTouched,
+    setFieldTouched,
+    setFieldValue,
+    touched,
+  }: FormikProps<FormikPublication> = useFormikContext();
   const publicationContextType = values.entityDescription.reference.publicationContext.type;
+
+  const touchedRef = useRef(touched);
+  useEffect(() => {
+    touchedRef.current = touched;
+  }, [touched]);
 
   useEffect(
     // Set all fields as touched if user navigates away from this panel (on unmount)
-    () => () => setTouched(touchedReferenceTabFields),
+    () => () => setTouched(mergeTouchedFields([touchedRef.current, touchedReferenceTabFields])),
     [setTouched]
   );
 
