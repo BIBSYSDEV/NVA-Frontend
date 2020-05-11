@@ -118,11 +118,17 @@ export const touchedReferenceTabFields: FormikTouched<FormikPublication> = {
       publicationContext: {
         type: true,
         title: true,
-        // TODO
       },
       publicationInstance: {
         type: true,
-        // TODO
+        articleNumber: true,
+        issue: true,
+        pages: {
+          begin: true,
+          end: true,
+        },
+        peerReviewed: true,
+        volume: true,
       },
     },
   },
