@@ -220,6 +220,6 @@ Resources:
         - JsonPath: "$.action"
           MatchEquals: released
       TargetPipeline: !Ref PublishFrontendPipeline
-      TargetAction: GitHubSourceMaster
+      TargetAction: GitHubSource
       TargetPipelineVersion: !GetAtt PublishFrontendPipeline.Version
       RegisterWithThirdParty: true
