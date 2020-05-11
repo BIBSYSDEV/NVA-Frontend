@@ -11,9 +11,10 @@ Metadata:
     Name: NVA-Frontend
     Description: Frontend for NVA
     Author: Unit
-    SemanticVersion: 1.1.4
     SpdxLicenseId: MIT
     LicenseUrl: ../LICENSE
+    Labels: ['${CODEBUILD_RESOLVED_SOURCE_VERSION}', '${GIT_REPO}', '@${BUILD_TIMESTAMP}']
+    # SemanticVersion: is set via SAM command line
 
 Parameters:
   AmazonCognitoDomain:
