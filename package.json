@@ -39,7 +39,7 @@
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0",
     "styled-components": "^5.1.0",
-    "ts-loader": "^7.0.2",
+    "ts-loader": "^7.0.3",
     "yup": "^0.28.4"
   },
   "scripts": {
@@ -94,7 +94,7 @@
     "@types/react-redux": "^7.1.8",
     "@types/react-router-dom": "^5.1.5",
     "@types/styled-components": "^5.1.0",
-    "@types/yup": "^0.28.0",
+    "@types/yup": "^0.28.1",
     "@typescript-eslint/parser": "^2.30.0",
     "axios-mock-adapter": "^1.18.1",
     "cypress": "^4.5.0",
@@ -107,7 +107,7 @@
     "prettier": "^2.0.5",
     "pretty-quick": "^2.0.1",
     "start-server-and-test": "^1.11.0",
-    "ts-node": "^8.9.1",
+    "ts-node": "^8.10.1",
     "typescript": "^3.8.3"
   }
 }
