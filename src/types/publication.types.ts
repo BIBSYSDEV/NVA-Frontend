@@ -1,10 +1,9 @@
 import { Contributor } from './contributor.types';
-import { File, FileSet } from './file.types';
+import { FileSet } from './file.types';
 import { LanguageValues } from './language.types';
 import { Project } from './project.types';
 import { PublicationType, JournalArticleType, ReportType, DegreeType, BookType } from './publicationFieldNames';
 import { EnumDictionary } from './common.types';
-import { FormikTouched } from 'formik';
 
 export enum BackendTypeNames {
   APPROVAL = 'Approval',
@@ -208,57 +207,3 @@ export const emptyPublication: FormikPublication = {
   shouldCreateDoi: false,
   project: null,
 };
-
-export const touchedDescriptionTab: FormikTouched<FormikPublication> = {
-  entityDescription: {
-    abstract: true,
-    date: {
-      day: true,
-      month: true,
-      year: true,
-    },
-    description: true,
-    language: true,
-    mainTitle: true,
-    npiSubjectHeading: true,
-    tags: true,
-  },
-};
-
-export const touchedReferenceTab: FormikTouched<FormikPublication> = {
-  entityDescription: {
-    reference: {
-      publicationContext: {
-        type: true,
-        title: true,
-        // TODO
-      },
-      publicationInstance: {
-        type: true,
-        // TODO
-      },
-    },
-  },
-};
-
-export const touchedContributorTab = (contributors: Contributor[]): FormikTouched<FormikPublication> => ({
-  entityDescription: {
-    contributors: contributors.map((contributor) => ({
-      affiliations: [],
-      correspondingAuthor: true,
-      sequence: true,
-      email: contributor.correspondingAuthor,
-    })),
-  },
-});
-
-export const touchedFilesTab = (files: File[]): FormikTouched<FormikPublication> => ({
-  fileSet: {
-    files: files.map((file) => ({
-      administrativeAgreement: true,
-      publisherAuthority: !file.administrativeAgreement,
-      embargoDate: !file.administrativeAgreement,
-      license: !file.administrativeAgreement,
-    })),
-  },
-});

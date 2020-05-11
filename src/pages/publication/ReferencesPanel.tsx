@@ -2,7 +2,7 @@ import { FormikProps, useFormikContext } from 'formik';
 import React, { useEffect, FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { FormikPublication, touchedReferenceTab } from '../../types/publication.types';
+import { FormikPublication } from '../../types/publication.types';
 import { PublicationType, ReferenceFieldNames } from '../../types/publicationFieldNames';
 import BookForm from './references_tab/BookForm';
 import ChapterForm from './references_tab/ChapterForm';
@@ -12,6 +12,7 @@ import ReportForm from './references_tab/ReportForm';
 import Card from '../../components/Card';
 import Heading from '../../components/Heading';
 import SelectTypeField from './references_tab/components/SelectTypeField';
+import { touchedReferenceTabFields } from '../../utils/formik-helpers';
 
 const StyledCard = styled(Card)`
   margin-top: 1rem;
@@ -28,7 +29,7 @@ const ReferencesPanel: FC = () => {
 
   useEffect(
     // Set all fields as touched if user navigates away from this panel (on unmount)
-    () => () => setTouched(touchedReferenceTab),
+    () => () => setTouched(touchedReferenceTabFields),
     [setTouched]
   );
 

@@ -7,6 +7,7 @@ import {
 } from '../types/publicationFieldNames';
 import { Contributor } from '../types/contributor.types';
 import { File } from '../types/file.types';
+import { FormikPublication } from '../types/publication.types';
 
 interface CustomError {
   fieldName: string;
@@ -93,3 +94,57 @@ export const getAllContributorFields = (contributors: Contributor[]) => {
   }
   return fieldNames;
 };
+
+export const touchedDescriptionTabFields: FormikTouched<FormikPublication> = {
+  entityDescription: {
+    abstract: true,
+    date: {
+      day: true,
+      month: true,
+      year: true,
+    },
+    description: true,
+    language: true,
+    mainTitle: true,
+    npiSubjectHeading: true,
+    tags: true,
+  },
+};
+
+export const touchedReferenceTabFields: FormikTouched<FormikPublication> = {
+  entityDescription: {
+    reference: {
+      publicationContext: {
+        type: true,
+        title: true,
+        // TODO
+      },
+      publicationInstance: {
+        type: true,
+        // TODO
+      },
+    },
+  },
+};
+
+export const touchedContributorTabFields = (contributors: Contributor[]): FormikTouched<FormikPublication> => ({
+  entityDescription: {
+    contributors: contributors.map((contributor) => ({
+      affiliations: [],
+      correspondingAuthor: true,
+      sequence: true,
+      email: contributor.correspondingAuthor,
+    })),
+  },
+});
+
+export const touchedFilesTabFields = (files: File[]): FormikTouched<FormikPublication> => ({
+  fileSet: {
+    files: files.map((file) => ({
+      administrativeAgreement: true,
+      publisherAuthority: !file.administrativeAgreement,
+      embargoDate: !file.administrativeAgreement,
+      license: !file.administrativeAgreement,
+    })),
+  },
+});

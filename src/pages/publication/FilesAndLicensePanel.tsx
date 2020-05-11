@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef, FC } from 'react';
 import { useTranslation } from 'react-i18next';
-import FileUploader from './files_and_license_tab/FileUploader';
-import FileCard from './files_and_license_tab/FileCard';
 import styled from 'styled-components';
 import { FieldArray, FormikProps, useFormikContext, ErrorMessage, FieldArrayRenderProps } from 'formik';
-import { FormikPublication, Publisher, touchedFilesTab } from '../../types/publication.types';
+import { FormHelperText } from '@material-ui/core';
+import FileUploader from './files_and_license_tab/FileUploader';
+import FileCard from './files_and_license_tab/FileCard';
+import { FormikPublication, Publisher } from '../../types/publication.types';
 import Modal from '../../components/Modal';
 import { licenses, Uppy } from '../../types/file.types';
 import Card from '../../components/Card';
@@ -12,8 +13,8 @@ import Heading from '../../components/Heading';
 import PublicationChannelInfoCard from './files_and_license_tab/PublicationChannelInfoCard';
 import NormalText from '../../components/NormalText';
 import Label from '../../components/Label';
-import { FormHelperText } from '@material-ui/core';
 import { FileFieldNames } from '../../types/publicationFieldNames';
+import { touchedFilesTabFields } from '../../utils/formik-helpers';
 
 const shouldAllowMultipleFiles = true;
 
@@ -53,7 +54,7 @@ const FilesAndLicensePanel: FC<FilesAndLicensePanelProps> = ({ uppy }) => {
   useEffect(
     // Set all fields to touched on unmount
     // Use contributorsRef to avoid trigging this useEffect on every values update
-    () => () => setTouched(touchedFilesTab(filesRef.current)),
+    () => () => setTouched(touchedFilesTabFields(filesRef.current)),
     [setTouched]
   );
 

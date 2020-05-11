@@ -1,13 +1,7 @@
 import React, { useEffect, FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormikProps, useFormikContext, Field, FieldProps } from 'formik';
-import {
-  FormikPublication,
-  touchedDescriptionTab,
-  touchedReferenceTab,
-  touchedContributorTab,
-  touchedFilesTab,
-} from '../../types/publication.types';
+import { FormikPublication } from '../../types/publication.types';
 import { Button, FormControlLabel, Checkbox } from '@material-ui/core';
 import styled from 'styled-components';
 import SubmissionBook from './submission_tab/submission_book';
@@ -32,6 +26,12 @@ import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import ButtonWithProgress from '../../components/ButtonWithProgress';
 import deepmerge from 'deepmerge';
+import {
+  touchedFilesTabFields,
+  touchedContributorTabFields,
+  touchedDescriptionTabFields,
+  touchedReferenceTabFields,
+} from '../../utils/formik-helpers';
 
 const StyledButtonGroupContainer = styled.div`
   margin-bottom: 1rem;
@@ -67,8 +67,11 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication }
     () =>
       setTouched(
         deepmerge(
-          deepmerge(deepmerge(touchedDescriptionTab, touchedReferenceTab), touchedContributorTab(contributors)),
-          touchedFilesTab(files)
+          deepmerge(
+            deepmerge(touchedDescriptionTabFields, touchedReferenceTabFields),
+            touchedContributorTabFields(contributors)
+          ),
+          touchedFilesTabFields(files)
         )
       ),
     [contributors, files, setTouched]

@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import DateFnsUtils from '@date-io/date-fns';
 import { MenuItem } from '@material-ui/core';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
-import { FormikPublication, touchedDescriptionTab } from '../../types/publication.types';
+import { FormikPublication } from '../../types/publication.types';
 import DisciplineSearch from './description_tab/DisciplineSearch';
 import ProjectSearch from './description_tab/ProjectSearch';
 import ProjectRow from './description_tab/ProjectRow';
@@ -18,6 +18,7 @@ import Heading from '../../components/Heading';
 import Card from '../../components/Card';
 import { DescriptionFieldNames } from '../../types/publicationFieldNames';
 import { emptyProject } from '../../types/project.types';
+import { touchedDescriptionTabFields } from '../../utils/formik-helpers';
 
 const MultipleFieldWrapper = styled.div`
   display: flex;
@@ -43,7 +44,7 @@ const DescriptionPanel: FC = () => {
 
   useEffect(
     // Set all fields as touched if user navigates away from this panel (on unmount)
-    () => () => setTouched(touchedDescriptionTab),
+    () => () => setTouched(touchedDescriptionTabFields),
     [setTouched]
   );
 

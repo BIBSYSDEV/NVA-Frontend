@@ -5,8 +5,9 @@ import { FormikProps, useFormikContext, FieldArray, ErrorMessage, FieldArrayRend
 import Heading from '../../components/Heading';
 import Card from '../../components/Card';
 import SortableTable from './contributors_tab/components/SortableTable';
-import { FormikPublication, touchedContributorTab } from '../../types/publication.types';
+import { FormikPublication } from '../../types/publication.types';
 import { ContributorFieldNames } from '../../types/publicationFieldNames';
+import { touchedContributorTabFields } from '../../utils/formik-helpers';
 
 const ContributorsPanel: FC = () => {
   const { t } = useTranslation('publication');
@@ -25,7 +26,7 @@ const ContributorsPanel: FC = () => {
   useEffect(
     // Set all fields to touched on unmount
     // Use contributorsRef to avoid trigging this useEffect on every values update
-    () => () => setTouched(touchedContributorTab(contributorsRef.current)),
+    () => () => setTouched(touchedContributorTabFields(contributorsRef.current)),
     [setTouched]
   );
 
