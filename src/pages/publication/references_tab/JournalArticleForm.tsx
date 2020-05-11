@@ -1,4 +1,4 @@
-import { Field, FormikProps, useFormikContext, FieldProps } from 'formik';
+import { Field, FormikProps, useFormikContext, FieldProps, ErrorMessage } from 'formik';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
@@ -56,26 +56,69 @@ const JournalArticleForm: FC = () => {
 
       <StyledArticleDetail>
         <Field name={ReferenceFieldNames.VOLUME}>
-          {({ field }: FieldProps) => <TextField variant="outlined" label={t('references.volume')} {...field} />}
+          {({ field, meta: { error, touched } }: FieldProps) => (
+            <TextField
+              data-testId="volume-field"
+              variant="outlined"
+              label={t('references.volume')}
+              {...field}
+              error={touched && !!error}
+              helperText={<ErrorMessage name={field.name} />}
+            />
+          )}
         </Field>
 
         <Field name={ReferenceFieldNames.ISSUE}>
-          {({ field }: FieldProps) => <TextField variant="outlined" label={t('references.issue')} {...field} />}
+          {({ field, meta: { error, touched } }: FieldProps) => (
+            <TextField
+              data-testId="issue-field"
+              variant="outlined"
+              label={t('references.issue')}
+              {...field}
+              error={touched && !!error}
+              helperText={<ErrorMessage name={field.name} />}
+            />
+          )}
         </Field>
 
         <Field name={ReferenceFieldNames.PAGES_FROM}>
-          {({ field }: FieldProps) => <TextField variant="outlined" label={t('references.pages_from')} {...field} />}
+          {({ field, meta: { error, touched } }: FieldProps) => (
+            <TextField
+              data-testId="pages-from-field"
+              variant="outlined"
+              label={t('references.pages_from')}
+              {...field}
+              error={touched && !!error}
+              helperText={<ErrorMessage name={field.name} />}
+            />
+          )}
         </Field>
 
         <Field name={ReferenceFieldNames.PAGES_TO}>
-          {({ field }: FieldProps) => <TextField variant="outlined" label={t('references.pages_to')} {...field} />}
+          {({ field, meta: { error, touched } }: FieldProps) => (
+            <TextField
+              data-testId="pages-to-field"
+              variant="outlined"
+              label={t('references.pages_to')}
+              {...field}
+              error={touched && !!error}
+              helperText={<ErrorMessage name={field.name} />}
+            />
+          )}
         </Field>
 
         <StyledLabel>{t('references.or')}</StyledLabel>
 
         <Field name={ReferenceFieldNames.ARTICLE_NUMBER}>
-          {({ field }: FieldProps) => (
-            <TextField variant="outlined" label={t('references.article_number')} {...field} />
+          {({ field, meta: { error, touched } }: FieldProps) => (
+            <TextField
+              data-testId="article-number-field"
+              variant="outlined"
+              label={t('references.article_number')}
+              {...field}
+              error={touched && !!error}
+              helperText={<ErrorMessage name={field.name} />}
+            />
           )}
         </Field>
       </StyledArticleDetail>

@@ -79,6 +79,24 @@ describe('User opens publication form and can see validation errors', () => {
     cy.contains('testament').click({ force: true });
     cy.contains(ErrorMessage.REQUIRED).should('not.be.visible');
 
+    cy.get('[data-testid=volume-field]').click({ force: true }).type('-1');
+    cy.get('[data-testid=issue-field]').click({ force: true }).type('-1');
+    cy.get('[data-testid=pages-from-field]').click({ force: true }).type('-1');
+    cy.get('[data-testid=pages-to-field]').click({ force: true }).type('-1');
+    cy.get('[data-testid=article-number-field]').click({ force: true }).type('-1');
+    cy.get('[data-testid=volume-field]').contains(ErrorMessage.MUST_BE_POSITIVE);
+    cy.get('[data-testid=issue-field]').contains(ErrorMessage.MUST_BE_POSITIVE);
+    cy.get('[data-testid=pages-from-field]').contains(ErrorMessage.MUST_BE_POSITIVE);
+    cy.get('[data-testid=pages-to-field]').contains(ErrorMessage.MUST_BE_POSITIVE);
+    cy.get('[data-testid=article-number-field]').contains(ErrorMessage.MUST_BE_POSITIVE);
+    cy.get('[data-testid=volume-field]').click({ force: true }).type('{backspace}{backspace}1');
+    cy.get('[data-testid=issue-field]').click({ force: true }).type('{backspace}{backspace}1');
+    cy.get('[data-testid=pages-from-field]').click({ force: true }).type('{backspace}{backspace}0');
+    cy.get('[data-testid=pages-to-field]').click({ force: true }).type('{backspace}{backspace}10');
+    cy.get('[data-testid=article-number-field]').click({ force: true }).type('{backspace}{backspace}1');
+
+    // TODO pages.to should be bigger than pages.from
+
     // TODO: Book type, Report type, etc
   });
 
