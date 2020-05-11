@@ -2,7 +2,7 @@ AWSTemplateFormatVersion: '2010-09-09'
 Transform: 'AWS::Serverless-2016-10-31'
 
 Description: >
-  Publish Frontend 1.0
+  Publish Frontend 1.1 with webhook
   This template creates a CodePipeline pipeline for serverless web applications that a) pulls source from github,
   b) builds the a serverless web application and c) publishes the artifacts to AWS SAR
 
