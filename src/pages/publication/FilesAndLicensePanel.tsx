@@ -4,7 +4,7 @@ import FileUploader from './files_and_license_tab/FileUploader';
 import FileCard from './files_and_license_tab/FileCard';
 import styled from 'styled-components';
 import { FieldArray, FormikProps, useFormikContext, ErrorMessage, FieldArrayRenderProps } from 'formik';
-import { FormikPublication, Publisher } from '../../types/publication.types';
+import { FormikPublication, Publisher, touchedFilesTab } from '../../types/publication.types';
 import Modal from '../../components/Modal';
 import { licenses, Uppy } from '../../types/file.types';
 import Card from '../../components/Card';
@@ -13,7 +13,6 @@ import PublicationChannelInfoCard from './files_and_license_tab/PublicationChann
 import NormalText from '../../components/NormalText';
 import Label from '../../components/Label';
 import { FormHelperText } from '@material-ui/core';
-import { getAllFileFields } from '../../utils/formik-helpers';
 import { FileFieldNames } from '../../types/publicationFieldNames';
 
 const shouldAllowMultipleFiles = true;
@@ -37,7 +36,7 @@ interface FilesAndLicensePanelProps {
 
 const FilesAndLicensePanel: FC<FilesAndLicensePanelProps> = ({ uppy }) => {
   const { t } = useTranslation('publication');
-  const { values, setFieldTouched }: FormikProps<FormikPublication> = useFormikContext();
+  const { values, setTouched }: FormikProps<FormikPublication> = useFormikContext();
   const [isLicenseModalOpen, setIsLicenseModalOpen] = useState(false);
   const {
     fileSet: { files },
@@ -51,14 +50,11 @@ const FilesAndLicensePanel: FC<FilesAndLicensePanelProps> = ({ uppy }) => {
     filesRef.current = files;
   }, [files]);
 
-  // Set all fields to touched on unmount
   useEffect(
-    () => () => {
-      // Use filesRef to avoid trigging this useEffect on every values update
-      const fieldNames = getAllFileFields(filesRef.current);
-      fieldNames.forEach((fieldName) => setFieldTouched(fieldName));
-    },
-    [setFieldTouched]
+    // Set all fields to touched on unmount
+    // Use contributorsRef to avoid trigging this useEffect on every values update
+    () => () => setTouched(touchedFilesTab(filesRef.current)),
+    [setTouched]
   );
 
   const toggleLicenseModal = () => {

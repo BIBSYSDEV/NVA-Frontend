@@ -22,14 +22,10 @@ const ContributorsPanel: FC = () => {
     contributorsRef.current = contributors;
   }, [contributors]);
 
-  // Set all fields to touched on unmount
   useEffect(
-    () => () => {
-      // Use contributorsRef to avoid trigging this useEffect on every values update
-      setTouched(touchedContributorTab(contributorsRef.current));
-      // const fieldNames = getAllContributorFields(contributorsRef.current);
-      // fieldNames.forEach((fieldName) => setFieldTouched(fieldName));
-    },
+    // Set all fields to touched on unmount
+    // Use contributorsRef to avoid trigging this useEffect on every values update
+    () => () => setTouched(touchedContributorTab(contributorsRef.current)),
     [setTouched]
   );
 

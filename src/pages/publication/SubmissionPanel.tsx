@@ -57,17 +57,22 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication }
   const { setFieldValue, setTouched, values, isValid }: FormikProps<FormikPublication> = useFormikContext();
   const history = useHistory();
   const dispatch = useDispatch();
-  const { contributors, reference } = values.entityDescription;
+  const {
+    entityDescription: { contributors, reference },
+    fileSet: { files },
+  } = values;
   const publicationContextType = reference.publicationContext.type;
 
-  useEffect(() => {
-    setTouched(
-      deepmerge(
-        deepmerge(deepmerge(touchedDescriptionTab, touchedReferenceTab), touchedContributorTab(contributors)),
-        touchedFilesTab
-      )
-    );
-  }, [contributors, setTouched]);
+  useEffect(
+    () =>
+      setTouched(
+        deepmerge(
+          deepmerge(deepmerge(touchedDescriptionTab, touchedReferenceTab), touchedContributorTab(contributors)),
+          touchedFilesTab(files)
+        )
+      ),
+    [contributors, files, setTouched]
+  );
 
   const onClickPublish = async () => {
     await savePublication(values);

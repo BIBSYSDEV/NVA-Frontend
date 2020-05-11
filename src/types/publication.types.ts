@@ -1,5 +1,5 @@
 import { Contributor } from './contributor.types';
-import { FileSet } from './file.types';
+import { File, FileSet } from './file.types';
 import { LanguageValues } from './language.types';
 import { Project } from './project.types';
 import { PublicationType, JournalArticleType, ReportType, DegreeType, BookType } from './publicationFieldNames';
@@ -241,19 +241,24 @@ export const touchedReferenceTab: FormikTouched<FormikPublication> = {
   },
 };
 
-export const touchedContributorTab = (contributors: Contributor[]): FormikTouched<FormikPublication> => {
-  return {
-    entityDescription: {
-      contributors: contributors.map((contributor) => ({
-        affiliations: [],
-        correspondingAuthor: true,
-        sequence: true,
-        email: contributor.correspondingAuthor,
-      })),
-    },
-  };
-};
+export const touchedContributorTab = (contributors: Contributor[]): FormikTouched<FormikPublication> => ({
+  entityDescription: {
+    contributors: contributors.map((contributor) => ({
+      affiliations: [],
+      correspondingAuthor: true,
+      sequence: true,
+      email: contributor.correspondingAuthor,
+    })),
+  },
+});
 
-export const touchedFilesTab: FormikTouched<FormikPublication> = {
-  fileSet: { files: [] },
-};
+export const touchedFilesTab = (files: File[]): FormikTouched<FormikPublication> => ({
+  fileSet: {
+    files: files.map((file) => ({
+      administrativeAgreement: true,
+      publisherAuthority: !file.administrativeAgreement,
+      embargoDate: !file.administrativeAgreement,
+      license: !file.administrativeAgreement,
+    })),
+  },
+});
