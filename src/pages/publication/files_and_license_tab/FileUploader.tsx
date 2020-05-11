@@ -25,9 +25,6 @@ const FileUploader: FC<FileUploaderProps> = ({ addFile, shouldAllowMultipleFiles
       // Avoid duplicating event listener
       uppy.hasUploadSuccessEventListener = true;
     }
-    return () => {
-      uppy.hasUploadSuccessEventListener = false;
-    };
   }, [addFile, uppy]);
 
   return uppy ? <UppyDashboard uppy={uppy} shouldAllowMultipleFiles={shouldAllowMultipleFiles} /> : null;
