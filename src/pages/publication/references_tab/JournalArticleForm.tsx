@@ -58,7 +58,7 @@ const JournalArticleForm: FC = () => {
         <Field name={ReferenceFieldNames.VOLUME}>
           {({ field, meta: { error, touched } }: FieldProps) => (
             <TextField
-              data-testId="volume-field"
+              data-testid="volume-field"
               variant="outlined"
               label={t('references.volume')}
               {...field}
@@ -71,7 +71,7 @@ const JournalArticleForm: FC = () => {
         <Field name={ReferenceFieldNames.ISSUE}>
           {({ field, meta: { error, touched } }: FieldProps) => (
             <TextField
-              data-testId="issue-field"
+              data-testid="issue-field"
               variant="outlined"
               label={t('references.issue')}
               {...field}
@@ -84,7 +84,7 @@ const JournalArticleForm: FC = () => {
         <Field name={ReferenceFieldNames.PAGES_FROM}>
           {({ field, meta: { error, touched } }: FieldProps) => (
             <TextField
-              data-testId="pages-from-field"
+              data-testid="pages-from-field"
               variant="outlined"
               label={t('references.pages_from')}
               {...field}
@@ -97,7 +97,7 @@ const JournalArticleForm: FC = () => {
         <Field name={ReferenceFieldNames.PAGES_TO}>
           {({ field, meta: { error, touched } }: FieldProps) => (
             <TextField
-              data-testId="pages-to-field"
+              data-testid="pages-to-field"
               variant="outlined"
               label={t('references.pages_to')}
               {...field}
@@ -112,7 +112,7 @@ const JournalArticleForm: FC = () => {
         <Field name={ReferenceFieldNames.ARTICLE_NUMBER}>
           {({ field, meta: { error, touched } }: FieldProps) => (
             <TextField
-              data-testId="article-number-field"
+              data-testid="article-number-field"
               variant="outlined"
               label={t('references.article_number')}
               {...field}
