@@ -2,7 +2,7 @@ AWSTemplateFormatVersion: '2010-09-09'
 Transform: 'AWS::Serverless-2016-10-31'
 
 Description: >
-  Publish Frontend 1.0
+  Publish Frontend 1.1 with webhook
   This template creates a CodePipeline pipeline for serverless web applications that a) pulls source from github,
   b) builds the a serverless web application and c) publishes the artifacts to AWS SAR
 
@@ -66,7 +66,7 @@ Resources:
                 OAuthToken: !Ref GitHubOAuthToken
                 Repo: !Ref GitHubRepo
                 Branch: !Ref GitHubBranch
-                PollForSourceChanges: true
+                PollForSourceChanges: false
               OutputArtifacts:
                 - Name: SourceArtifact
               RunOrder: 1
@@ -81,8 +81,9 @@ Resources:
               Configuration:
                 ProjectName: !GetAtt CodeBuildProject.Arn
                 EnvironmentVariables: !Sub
-                  - '[{"name":"S3_BUCKET","value":"${PublishArtifactStoreBucket}","type":"PLAINTEXT"}]'
+                  - '[{"name":"S3_BUCKET","value":"${PublishArtifactStoreBucket}","type":"PLAINTEXT"}, {"name":"GIT_REPO","value":"${GitRepo}","type":"PLAINTEXT"}]'
                   - PublishArtifactStoreBucket: !Ref PublishArtifactStoreBucket
+                    GitRepo: !Ref GitHubRepo
               InputArtifacts:
                 - Name: SourceArtifact
               OutputArtifacts:
@@ -208,3 +209,17 @@ Resources:
             Principal:
               Service:
                 - serverlessrepo.amazonaws.com
+
+  PublishVersionPipelineWebhook:
+    Type: AWS::CodePipeline::Webhook
+    Properties:
+      Authentication: GITHUB_HMAC
+      AuthenticationConfiguration:
+        SecretToken: !Ref GitHubOAuthToken
+      Filters:
+        - JsonPath: '$.action'
+          MatchEquals: released
+      TargetPipeline: !Ref PublishFrontendPipeline
+      TargetAction: GitHubSource
+      TargetPipelineVersion: !GetAtt PublishFrontendPipeline.Version
+      RegisterWithThirdParty: true

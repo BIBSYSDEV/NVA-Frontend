@@ -35,7 +35,7 @@ const LoadPublication: FC<LoadPublicationProps> = ({ expanded, onChange, openFor
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (uppy && !uppy.hasUploadSuccessEventListener) {
+    if (uppy) {
       const addFile = (newFile: File) => {
         setUploadedFiles([newFile, ...uploadedFiles]);
       };
