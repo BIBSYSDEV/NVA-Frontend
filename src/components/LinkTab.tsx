@@ -15,6 +15,7 @@ const LinkTab: FC<LinkTabProps> = ({ error, ...rest }) => {
 
   return (
     <Tab
+      className={error ? 'error-tab' : undefined}
       component="a"
       onClick={(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
         event.preventDefault();

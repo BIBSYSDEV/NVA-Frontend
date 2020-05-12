@@ -45,6 +45,10 @@ const UppyDashboard: React.FC<FileUploaderProps> = ({ uppy, shouldAllowMultipleF
               0: t('files_and_license.upload_one_file'),
               1: t('files_and_license.upload_x_files'),
             },
+            uploadXNewFiles: {
+              0: t('files_and_license.upload_one_more_file'),
+              1: t('files_and_license.upload_x_more_files'),
+            },
           },
         }}
       />

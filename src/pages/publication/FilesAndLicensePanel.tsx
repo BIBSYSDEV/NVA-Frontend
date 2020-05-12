@@ -87,23 +87,21 @@ const FilesAndLicensePanel: FC<FilesAndLicensePanelProps> = ({ uppy }) => {
             </Card>
 
             {files.length > 0 && (
-              <>
-                <StyledUploadedFiles>
-                  <Heading>{t('files_and_license.files')}</Heading>
-                  {files.map((file, index) => (
-                    <FileCard
-                      key={file.identifier}
-                      file={file}
-                      removeFile={() => {
-                        uppy.removeFile(file.identifier);
-                        remove(index);
-                      }}
-                      toggleLicenseModal={toggleLicenseModal}
-                      baseFieldName={`${name}[${index}]`}
-                    />
-                  ))}
-                </StyledUploadedFiles>
-              </>
+              <StyledUploadedFiles>
+                <Heading>{t('files_and_license.files')}</Heading>
+                {files.map((file, index) => (
+                  <FileCard
+                    key={index}
+                    file={file}
+                    removeFile={() => {
+                      uppy.removeFile(file.identifier);
+                      remove(index);
+                    }}
+                    toggleLicenseModal={toggleLicenseModal}
+                    baseFieldName={`${name}[${index}]`}
+                  />
+                ))}
+              </StyledUploadedFiles>
             )}
           </>
         )}

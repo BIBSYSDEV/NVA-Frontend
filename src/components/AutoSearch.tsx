@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useState, ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
@@ -22,7 +22,7 @@ interface AutoSearchProps {
   dataTestId?: string;
   disabled?: boolean;
   displaySelection?: boolean;
-  errorMessage?: string;
+  errorMessage?: ReactNode;
   initialValue?: string;
   label?: string;
   placeholder?: string;

@@ -3,7 +3,7 @@ version: 0.2
 env:
   variables:
     REACT_APP_AWS_COGNITO_IDENTITY_POOL_ID: '${REPLACE_AWS_COGNITO_IDENTITY_POOL_ID}'
-    REACT_APP_AWS_REGION: '${REPLACE_REACT_APP_AWS_REGION}'
+    REACT_APP_AWS_REGION: '${REPLACE_AWS_REGION}'
     REACT_APP_AWS_USER_POOLS_ID: '${REPLACE_AWS_USER_POOLS_ID}'
     REACT_APP_AWS_USER_POOLS_WEB_CLIENT_ID: '${REPLACE_AWS_USER_POOLS_WEB_CLIENT_ID}'
     REACT_APP_DOMAIN: '${REPLACE_DOMAIN}'
@@ -24,14 +24,22 @@ phases:
       - env
       - npm install
       - pip3 install aws-sam-cli
+      - apt install -q -y jq
+
   build:
     commands:
       - npm run build
   post_build:
     commands:
-      - sam package --debug --template-file ./templates/sar_application_template.yml --s3-bucket $S3_BUCKET --output-template-file sampackaged.yaml
-      - sam publish --template sampackaged.yaml
-
+      - sam package --template-file ./templates/sar_application_template.yml --s3-bucket $S3_BUCKET --output-template-file sampackaged_raw.yaml
+      # Setting a timestamp for the build in labels
+      - BUILD_TIMESTAMP=$(date -Iseconds)
+      # Getting latest version tag from git
+      - APPLICATION_VERSION=$(curl -s  https://api.github.com/repos/BIBSYSDEV/$GIT_REPO/releases/latest | jq -r '.tag_name')
+      # Updating metadata.labels in template
+      - envsubst '${CODEBUILD_RESOLVED_SOURCE_VERSION},${GIT_REPO},${BUILD_TIMESTAMP}' < sampackaged_raw.yaml > sampackaged.yaml
+      # publishing to SAR
+      - sam publish  --semantic-version $APPLICATION_VERSION  --template sampackaged.yaml
 artifacts:
   files:
     - '**/*'
