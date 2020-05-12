@@ -71,11 +71,11 @@ const SortableItem = SortableElement(
           <SubHeading>
             {contributor.identity.name}{' '}
             {contributor.identity.arpId ? (
-              <Tooltip title={t('contributors.known_author_identity')}>
+              <Tooltip title={t('contributors.known_author_identity') as string}>
                 <StyledCheckIcon />
               </Tooltip>
             ) : (
-              <Tooltip title={t('contributors.unknown_author_identity')}>
+              <Tooltip title={t('contributors.unknown_author_identity') as string}>
                 <StyledWarningIcon />
               </Tooltip>
             )}
@@ -84,6 +84,7 @@ const SortableItem = SortableElement(
           <Field name={`${baseFieldName}.${SpecificContributorFieldNames.CORRESPONDING}`}>
             {({ field }: FieldProps) => (
               <FormControlLabel
+                data-testid="author-corresponding-checkbox"
                 control={<Checkbox checked={!!field.value} {...field} />}
                 label={t('contributors.corresponding')}
               />
@@ -94,6 +95,7 @@ const SortableItem = SortableElement(
               <Field name={`${baseFieldName}.${SpecificContributorFieldNames.EMAIL}`}>
                 {({ field, meta: { error, touched } }: FieldProps) => (
                   <StyledEmailTextField
+                    data-testid="author-email-input"
                     variant="outlined"
                     label={t('common:email')}
                     {...field}

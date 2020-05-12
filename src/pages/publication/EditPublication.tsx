@@ -1,10 +1,7 @@
 import React, { FC, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-
-import { Button } from '@material-ui/core';
-
 import LinkPublication from './new_publication/LinkPublication';
 import LoadPublication from './new_publication/LoadPublication';
 import PublicationForm from './PublicationForm';
@@ -50,17 +47,12 @@ const StyledCard = styled(Card)`
   }
 `;
 
-const StyledButton = styled(Button)`
-  margin: 1rem;
-`;
-
 const EditPublication: FC = () => {
   const { identifier } = useParams();
   const [expanded, setExpanded] = useState<string | false>(false);
   const [showForm, setShowForm] = useState(!!identifier);
   const { t } = useTranslation();
   const [uppy] = useState(createUppy(shouldAllowMultipleFiles));
-  const history = useHistory();
 
   useEffect(() => {
     return () => uppy && uppy.close();
@@ -73,11 +65,6 @@ const EditPublication: FC = () => {
   const handleClick = () => {
     setShowForm(true);
     uppy.reset();
-  };
-
-  const handleTemporaryButtonClick = () => {
-    setShowForm(true);
-    history.push('/publication/new');
   };
 
   return (
@@ -103,14 +90,6 @@ const EditPublication: FC = () => {
               <NormalText>{t('publication:publication.info_text')}</NormalText>
             </StyledCard>
           </StyledEditPublication>
-          {/* temporary button so that we can navigate to schema */}
-          <StyledButton
-            color="primary"
-            variant="contained"
-            data-testid="new-schema-button"
-            onClick={handleTemporaryButtonClick}>
-            {t('publication:new_publication')}
-          </StyledButton>
         </>
       ) : (
         <PublicationForm uppy={uppy} identifier={identifier} closeForm={() => setShowForm(false)} />

@@ -19,7 +19,7 @@ const ErrorSummary: FC = () => {
   const flattenedErrors = flattenFormikErrors(errors);
 
   return flattenedErrors.length > 0 ? (
-    <StyledCard>
+    <StyledCard data-testid="error-summary-card">
       <Heading>{t('heading.validation_errors')}</Heading>
       {flattenedErrors.map(({ fieldName, errorMessage }) => (
         <NormalText key={fieldName}>

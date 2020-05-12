@@ -1,13 +1,13 @@
 {
-  "name": "Norges teknisk-naturvitenskapelige universitet",
+  "name": "Norwegian University of Science and Technology",
   "identifier": "1",
   "createdDate": "2020-11-01",
   "contact": "Tiril",
-  "displayName": "Norges teknisk-naturvitenskapelige universitet",
+  "displayName": "Norwegian University of Science and Technology",
   "shortName": "NTNU",
   "archiveName": "NTNU Open",
   "cname": "ntnu.unit.nva.no",
   "institutionDns": "1.1.1.1",
   "administrationId": "tiril@ntnu.no",
-  "feideOrganizationId": "ntnu@ntnu.no"
+  "feideOrganizationId": "NO919477822"
 }

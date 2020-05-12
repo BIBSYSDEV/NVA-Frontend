@@ -14,13 +14,29 @@ interface CustomError {
 }
 
 // Convert all errors from nested object to flat array
-export const flattenFormikErrors = (validationErrors: FormikErrors<any>): CustomError[] => {
+export const flattenFormikErrors = (
+  validationErrors: FormikErrors<any>,
+  fieldNamePrefix: string = ''
+): CustomError[] => {
   return Object.entries(validationErrors)
     .map(([fieldName, errorMessage]) => {
+      const fieldPath = fieldNamePrefix ? `${fieldNamePrefix}-${fieldName}` : fieldName;
       if (typeof errorMessage === 'object' && errorMessage !== null) {
-        return flattenFormikErrors(errorMessage as FormikErrors<any>);
+        if (Array.isArray(errorMessage)) {
+          // Merge errors in array, and ignore their indexes
+          const groupErrors = (errorMessage as FormikErrors<any>[]).reduce(
+            (result, current) => ({ ...result, ...current }),
+            {}
+          );
+          return flattenFormikErrors(groupErrors, fieldPath);
+        } else {
+          return flattenFormikErrors(errorMessage as FormikErrors<any>, fieldPath);
+        }
       }
-      return { fieldName, errorMessage };
+      return {
+        fieldName: fieldPath,
+        errorMessage,
+      };
     })
     .flat();
 };

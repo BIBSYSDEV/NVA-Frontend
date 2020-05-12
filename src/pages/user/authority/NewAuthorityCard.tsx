@@ -3,8 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 
-import { Button, Radio } from '@material-ui/core';
-import Progress from '../../../components/Progress';
+import { Button, Radio, CircularProgress } from '@material-ui/core';
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { setAuthorityData } from '../../../redux/actions/userActions';
 import { RootStore } from '../../../redux/reducers/rootReducer';
@@ -81,7 +80,7 @@ const NewAuthorityCard: FC<NewAuthorityCardProps> = ({ onClickCancel }) => {
     <>
       {loading ? (
         <StyledProgressContainer>
-          <Progress size={100} />
+          <CircularProgress size={100} />
         </StyledProgressContainer>
       ) : (
         <StyledBoxContent>

@@ -22,7 +22,7 @@ import { mockUser } from './utils/testfiles/mock_feide_user';
 import AppRoutes from './AppRoutes';
 import { setNotification } from './redux/actions/notificationActions';
 import { NotificationVariant } from './types/notification.types';
-import Progress from './components/Progress';
+import { CircularProgress } from '@material-ui/core';
 
 const StyledApp = styled.div`
   min-height: 100vh;
@@ -131,7 +131,7 @@ const App: React.FC = () => {
 
   return isLoadingUser ? (
     <ProgressContainer>
-      <Progress />
+      <CircularProgress />
     </ProgressContainer>
   ) : (
     <BrowserRouter>

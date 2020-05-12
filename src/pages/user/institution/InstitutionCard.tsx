@@ -1,12 +1,11 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
-import { Button } from '@material-ui/core';
+import { Button, CircularProgress } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 import Card from '../../../components/Card';
-import Progress from '../../../components/Progress';
-import AffiliationHierarchy from '../../../components/AffiliationHierarchy';
+import AffiliationHierarchy from '../../../components/institution/AffiliationHierarchy';
 import useFetchUnitHierarchy from '../../../utils/hooks/useFetchUnitHierarchy';
 
 const StyledCard = styled(Card)`
@@ -42,7 +41,7 @@ const InstitutionCard: FC<InstitutionCardProps> = ({ orgunitId, setAffiliationId
   return (
     <StyledCard data-testid="institution-presentation">
       {isLoadingUnitHierarchy ? (
-        <Progress />
+        <CircularProgress />
       ) : (
         <>
           <StyledTextContainer>{unit && <AffiliationHierarchy unit={unit} />}</StyledTextContainer>

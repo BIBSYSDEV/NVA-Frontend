@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import Heading from '../../components/Heading';
 
 import { FormikInstitutionUnit } from '../../types/institution.types';
-import SelectInstitution from '../../components/SelectInstitution';
+import SelectInstitution from '../../components/institution/SelectInstitution';
 import { getMostSpecificUnit } from '../../utils/institutions-helpers';
 import {
   addQualifierIdForAuthority,

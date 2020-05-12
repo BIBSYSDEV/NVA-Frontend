@@ -9,7 +9,9 @@ describe('Publication: File upload', () => {
 
     cy.get('[data-testid=menu]').click({ force: true });
     cy.get('[data-testid=menu-new-publication-button]').click({ force: true });
-    cy.get('[data-testid=new-schema-button]').click({ force: true });
+
+    cy.startPublicationWithDoi();
+
     cy.get('[data-testid=nav-tabpanel-files-and-license]').click({ force: true });
 
     // Mock Uppys upload requests to S3 Bucket

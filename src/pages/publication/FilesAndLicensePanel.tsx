@@ -4,7 +4,7 @@ import FileUploader from './files_and_license_tab/FileUploader';
 import FileCard from './files_and_license_tab/FileCard';
 import styled from 'styled-components';
 import { FieldArray, FormikProps, useFormikContext, ErrorMessage, FieldArrayRenderProps } from 'formik';
-import { FormikPublication } from '../../types/publication.types';
+import { FormikPublication, Publisher } from '../../types/publication.types';
 import Modal from '../../components/Modal';
 import { licenses, Uppy } from '../../types/file.types';
 import Card from '../../components/Card';
@@ -67,7 +67,7 @@ const FilesAndLicensePanel: FC<FilesAndLicensePanelProps> = ({ uppy }) => {
 
   return (
     <>
-      {publicationContext && <PublicationChannelInfoCard publisher={publicationContext} />}
+      {publicationContext && <PublicationChannelInfoCard publisher={publicationContext as Publisher} />}
 
       <FieldArray name={FileFieldNames.FILES}>
         {({ insert, remove, name }: FieldArrayRenderProps) => (

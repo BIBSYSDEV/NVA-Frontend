@@ -12,34 +12,28 @@ import SubmissionJournalPublication from './submission_tab/submission_journal';
 import SubmissionDescription from './submission_tab/submission_description';
 import SubmissionFilesAndLicenses from './submission_tab/submission_files_licenses';
 import SubmissionContributors from './submission_tab/submission_contributors';
-import { PublicationType, ReferenceFieldNames, DescriptionFieldNames } from '../../types/publicationFieldNames';
+import { PublicationType, requiredFieldNames } from '../../types/publicationFieldNames';
 import Heading from '../../components/Heading';
 import SubHeading from '../../components/SubHeading';
 import Card from '../../components/Card';
 import { useHistory } from 'react-router';
 import LabelContentRow from '../../components/LabelContentRow';
 import ErrorSummary from './submission_tab/ErrorSummary';
-import { getAllFileFields, getAllContributorFields } from '../../utils/formik-helpers';
 import { DOI_PREFIX } from '../../utils/constants';
-import Progress from '../../components/Progress';
 import { publishPublication } from '../../api/publicationApi';
 import { useDispatch } from 'react-redux';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
+import ButtonWithProgress from '../../components/ButtonWithProgress';
 
-const StyledButtonContainer = styled.div`
+const StyledButtonGroupContainer = styled.div`
   margin-bottom: 1rem;
 `;
 
-const StyledButton = styled(Button)`
+const StyledButtonContainer = styled.div`
+  display: inline-block;
   margin-top: 1rem;
   margin-right: 0.5rem;
-`;
-
-const StyledProgressContainer = styled.div`
-  padding-left: 1rem;
-  display: flex;
-  align-items: center;
 `;
 
 enum PublishSettingFieldName {
@@ -55,8 +49,9 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication }
   const { t } = useTranslation('publication');
   const { setFieldTouched, setFieldValue, values, isValid }: FormikProps<FormikPublication> = useFormikContext();
   const history = useHistory();
-  const { publicationType, reference } = values.entityDescription;
   const dispatch = useDispatch();
+  const { reference } = values.entityDescription;
+  const publicationContextType = reference.publicationContext.type;
 
   const valuesRef = useRef(values);
   useEffect(() => {
@@ -64,13 +59,7 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication }
   }, [values]);
 
   useEffect(() => {
-    const fieldNames = [
-      ...Object.values(DescriptionFieldNames),
-      ...Object.values(ReferenceFieldNames),
-      ...getAllContributorFields(valuesRef.current.entityDescription.contributors),
-      ...getAllFileFields(valuesRef.current.fileSet.files),
-    ];
-    fieldNames.forEach((fieldName) => setFieldTouched(fieldName));
+    requiredFieldNames.forEach((fieldName) => setFieldTouched(fieldName));
   }, [setFieldTouched]);
 
   const onClickPublish = async () => {
@@ -95,18 +84,18 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication }
         <Card>
           <SubHeading>{t('heading.references')}</SubHeading>
           <LabelContentRow label={t('common:type')}>
-            {publicationType && t(`publicationTypes:${publicationType}`)}
+            {publicationContextType && t(`publicationTypes:${publicationContextType}`)}
           </LabelContentRow>
           {reference.doi && (
             <LabelContentRow label={t('publication.link_to_publication')}>
               {`${DOI_PREFIX}${reference.doi}`}
             </LabelContentRow>
           )}
-          {publicationType === PublicationType.BOOK && <SubmissionBook />}
-          {publicationType === PublicationType.DEGREE && <SubmissionDegree />}
-          {publicationType === PublicationType.CHAPTER && <SubmissionChapter />}
-          {publicationType === PublicationType.REPORT && <SubmissionReport />}
-          {publicationType === PublicationType.PUBLICATION_IN_JOURNAL && <SubmissionJournalPublication />}
+          {publicationContextType === PublicationType.BOOK && <SubmissionBook />}
+          {publicationContextType === PublicationType.DEGREE && <SubmissionDegree />}
+          {publicationContextType === PublicationType.CHAPTER && <SubmissionChapter />}
+          {publicationContextType === PublicationType.REPORT && <SubmissionReport />}
+          {publicationContextType === PublicationType.PUBLICATION_IN_JOURNAL && <SubmissionJournalPublication />}
         </Card>
         <Card>
           <SubHeading>{t('heading.contributors')}</SubHeading>
@@ -135,19 +124,19 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication }
           </Field>
         </Card>
       </Card>
-      <StyledButtonContainer>
-        <StyledButton color="primary" variant="contained" onClick={onClickPublish} disabled={isSaving || !isValid}>
-          {t('common:publish')}
-        </StyledButton>
-        <StyledButton disabled={isSaving} onClick={() => savePublication(values)} variant="contained">
-          {t('common:save')}
-          {isSaving && (
-            <StyledProgressContainer>
-              <Progress size={15} thickness={5} />
-            </StyledProgressContainer>
-          )}
-        </StyledButton>
-      </StyledButtonContainer>
+      <StyledButtonGroupContainer>
+        <StyledButtonContainer>
+          <Button color="primary" variant="contained" onClick={onClickPublish} disabled={isSaving || !isValid}>
+            {t('common:publish')}
+          </Button>
+        </StyledButtonContainer>
+
+        <StyledButtonContainer>
+          <ButtonWithProgress isLoading={isSaving} onClick={() => savePublication(values)}>
+            {t('common:save')}
+          </ButtonWithProgress>
+        </StyledButtonContainer>
+      </StyledButtonGroupContainer>
     </>
   );
 };

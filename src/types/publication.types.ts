@@ -39,7 +39,8 @@ export interface BackendType {
   type: BackendTypeNames | '';
 }
 
-export interface Publisher extends BackendType {
+export interface Publisher {
+  type: string;
   title: string;
   printIssn: string;
   onlineIssn: string;
@@ -96,10 +97,14 @@ interface PublicationInstance {
   volume: string;
 }
 
+interface PublicationContext extends Partial<Publisher> {
+  type: PublicationType | '';
+}
+
 interface PublicationReference extends BackendType {
   doi: string;
   publicationInstance: PublicationInstance;
-  publicationContext: Publisher | null;
+  publicationContext: PublicationContext;
 }
 
 interface PublicationEntityDescription extends BackendType {
@@ -110,7 +115,6 @@ interface PublicationEntityDescription extends BackendType {
   npiSubjectHeading: string;
   date: PublicationDate;
   language: LanguageValues;
-  publicationType: PublicationType | '';
   contributors: Contributor[];
   isbn: string;
   numberOfPages: string;
@@ -146,11 +150,15 @@ const emptyPublicationInstance: PublicationInstance = {
   peerReviewed: false,
 };
 
+const emptyPublicationContext: PublicationContext = {
+  type: '',
+};
+
 const emptyReference: PublicationReference = {
   type: BackendTypeNames.REFERENCE,
   doi: '',
   publicationInstance: emptyPublicationInstance,
-  publicationContext: null,
+  publicationContext: emptyPublicationContext,
 };
 
 const emptyPublicationEntityDescription: PublicationEntityDescription = {
@@ -162,7 +170,6 @@ const emptyPublicationEntityDescription: PublicationEntityDescription = {
   npiSubjectHeading: '',
   date: emptyDate,
   language: LanguageValues.NORWEGIAN_BOKMAL,
-  publicationType: '',
   contributors: [],
   isbn: '',
   numberOfPages: '',
@@ -177,8 +184,8 @@ export type PublicationPreview = Pick<
   'identifier' | 'mainTitle' | 'createdDate' | 'status' | 'owner'
 >;
 export type PublishedPublicationPreview = Pick<
-  Publication & PublicationEntityDescription,
-  'identifier' | 'mainTitle' | 'createdDate' | 'reference' | 'contributors' | 'status' | 'publicationType'
+  Publication & PublicationEntityDescription & PublicationContext,
+  'identifier' | 'mainTitle' | 'createdDate' | 'reference' | 'contributors' | 'status' | 'type'
 >;
 
 export interface Doi {
