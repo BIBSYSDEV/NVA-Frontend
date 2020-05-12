@@ -176,12 +176,12 @@ describe('User opens publication form and can see validation errors', () => {
     cy.get('[data-testid=uploaded-file-embargo-date]')
       .parent()
       .within(() => {
-        cy.get("input[type='text']").click({ force: true }).type('0101').blur();
+        cy.get("input[type='text']").click({ force: true }).type('0101', { force: true }).blur();
         cy.contains(ErrorMessage.INVALID_FORMAT).should('be.visible');
-        cy.get("input[type='text']").click({ force: true }).type('2000');
+        cy.get("input[type='text']").click({ force: true }).type('2000', { force: true });
         cy.contains(ErrorMessage.INVALID_FORMAT).should('not.be.visible');
         cy.contains(ErrorMessage.MUST_BE_FUTURE).should('be.visible');
-        cy.get("input[type='text']").clear().click({ force: true }).type('01.01.3000');
+        cy.get("input[type='text']").clear().click({ force: true }).type('01013000', { force: true });
         cy.contains(ErrorMessage.MUST_BE_FUTURE).should('not.be.visible');
       });
 
