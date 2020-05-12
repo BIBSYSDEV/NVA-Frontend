@@ -7,13 +7,12 @@ import Card from '../../components/Card';
 import SortableTable from './contributors_tab/components/SortableTable';
 import { FormikPublication } from '../../types/publication.types';
 import { ContributorFieldNames } from '../../types/publicationFieldNames';
-import { touchedContributorTabFields, mergeTouchedFields } from '../../utils/formik-helpers';
+import { touchedContributorTabFields } from '../../utils/formik-helpers';
+import { PanelProps } from './PublicationFormContent';
 
-const ContributorsPanel: FC = () => {
+const ContributorsPanel: FC<PanelProps> = ({ setTouchedFields }) => {
   const { t } = useTranslation('publication');
   const {
-    setTouched,
-    touched,
     values: {
       entityDescription: { contributors },
     },
@@ -24,17 +23,11 @@ const ContributorsPanel: FC = () => {
     contributorsRef.current = contributors;
   }, [contributors]);
 
-  const touchedRef = useRef(touched);
-  useEffect(() => {
-    touchedRef.current = touched;
-  }, [touched]);
-
   useEffect(
     // Set all fields to touched on unmount
     // Use refs to avoid trigging this useEffect on every values update
-    () => () =>
-      setTouched(mergeTouchedFields([touchedRef.current, touchedContributorTabFields(contributorsRef.current)])),
-    [setTouched]
+    () => () => setTouchedFields(touchedContributorTabFields(contributorsRef.current)),
+    [setTouchedFields]
   );
 
   return (

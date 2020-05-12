@@ -32,6 +32,7 @@ import {
   touchedReferenceTabFields,
   mergeTouchedFields,
 } from '../../utils/formik-helpers';
+import { PanelProps } from './PublicationFormContent';
 
 const StyledButtonGroupContainer = styled.div`
   margin-bottom: 1rem;
@@ -47,14 +48,14 @@ enum PublishSettingFieldName {
   SHOULD_CREATE_DOI = 'shouldCreateDoi',
 }
 
-interface SubmissionPanelProps {
+interface SubmissionPanelProps extends PanelProps {
   isSaving: boolean;
   savePublication: (values: FormikPublication) => void;
 }
 
-const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication }) => {
+const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication, setTouchedFields }) => {
   const { t } = useTranslation('publication');
-  const { setFieldValue, setTouched, values, isValid }: FormikProps<FormikPublication> = useFormikContext();
+  const { setFieldValue, values, isValid }: FormikProps<FormikPublication> = useFormikContext();
   const history = useHistory();
   const dispatch = useDispatch();
   const {
@@ -70,8 +71,8 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication }
       touchedContributorTabFields(contributors),
       touchedFilesTabFields(files),
     ]);
-    setTouched(touchedForm);
-  }, [contributors, files, setTouched]);
+    setTouchedFields(touchedForm);
+  }, [setTouchedFields, contributors, files]);
 
   const onClickPublish = async () => {
     await savePublication(values);

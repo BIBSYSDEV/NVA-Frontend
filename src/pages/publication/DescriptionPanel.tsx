@@ -1,6 +1,6 @@
 import { Field, FieldArray, FormikProps, useFormikContext, FieldProps, FieldArrayRenderProps, getIn } from 'formik';
 import { TextField } from 'formik-material-ui';
-import React, { FC, useEffect, useRef } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import DateFnsUtils from '@date-io/date-fns';
@@ -18,7 +18,8 @@ import Heading from '../../components/Heading';
 import Card from '../../components/Card';
 import { DescriptionFieldNames } from '../../types/publicationFieldNames';
 import { emptyProject } from '../../types/project.types';
-import { touchedDescriptionTabFields, mergeTouchedFields } from '../../utils/formik-helpers';
+import { touchedDescriptionTabFields } from '../../utils/formik-helpers';
+import { PanelProps } from './PublicationFormContent';
 
 const MultipleFieldWrapper = styled.div`
   display: flex;
@@ -38,19 +39,14 @@ const StyledFieldHeader = styled.header`
   font-size: 1.5rem;
 `;
 
-const DescriptionPanel: FC = () => {
+const DescriptionPanel: FC<PanelProps> = ({ setTouchedFields }) => {
   const { t } = useTranslation('publication');
-  const { setTouched, touched, setFieldValue, values }: FormikProps<FormikPublication> = useFormikContext();
-
-  const touchedRef = useRef(touched);
-  useEffect(() => {
-    touchedRef.current = touched;
-  }, [touched]);
+  const { setFieldValue, values }: FormikProps<FormikPublication> = useFormikContext();
 
   useEffect(
     // Set all fields as touched if user navigates away from this panel (on unmount)
-    () => () => setTouched(mergeTouchedFields([touchedRef.current, touchedDescriptionTabFields])),
-    [setTouched]
+    () => () => setTouchedFields(touchedDescriptionTabFields),
+    [setTouchedFields]
   );
 
   return (
