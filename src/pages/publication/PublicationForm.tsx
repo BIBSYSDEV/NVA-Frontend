@@ -4,12 +4,7 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { emptyPublication, FormikPublication, PublicationStatus } from '../../types/publication.types';
 import { createUppy } from '../../utils/uppy-config';
-import ContributorsPanel from './ContributorsPanel';
-import DescriptionPanel from './DescriptionPanel';
-import FilesAndLicensePanel from './FilesAndLicensePanel';
 import { PublicationFormTabs } from './PublicationFormTabs';
-import ReferencesPanel from './ReferencesPanel';
-import SubmissionPanel from './SubmissionPanel';
 import { emptyFile, Uppy, emptyFileSet } from '../../types/file.types';
 import { getPublication, updatePublication } from '../../api/publicationApi';
 import { useDispatch } from 'react-redux';
@@ -21,16 +16,12 @@ import { Button, CircularProgress } from '@material-ui/core';
 import RouteLeavingGuard from '../../components/RouteLeavingGuard';
 import { useHistory } from 'react-router';
 import ButtonWithProgress from '../../components/ButtonWithProgress';
+import { PublicationFormContent } from './PublicationFormContent';
 
 const shouldAllowMultipleFiles = false;
 
 const StyledPublication = styled.div`
   width: 100%;
-`;
-
-const StyledPanel = styled.div`
-  margin-top: 2rem;
-  margin-bottom: 1rem;
 `;
 
 const StyledButtonGroupContainer = styled.div`
@@ -160,31 +151,12 @@ const PublicationForm: FC<PublicationFormProps> = ({
             />
             <Form>
               <PublicationFormTabs tabNumber={tabNumber} handleTabChange={handleTabChange} />
-              {tabNumber === 0 && (
-                <StyledPanel>
-                  <DescriptionPanel aria-label="description" />
-                </StyledPanel>
-              )}
-              {tabNumber === 1 && (
-                <StyledPanel aria-label="references">
-                  <ReferencesPanel />
-                </StyledPanel>
-              )}
-              {tabNumber === 2 && (
-                <StyledPanel aria-label="references">
-                  <ContributorsPanel />
-                </StyledPanel>
-              )}
-              {tabNumber === 3 && (
-                <StyledPanel aria-label="files and license">
-                  <FilesAndLicensePanel uppy={uppy} />
-                </StyledPanel>
-              )}
-              {tabNumber === 4 && (
-                <StyledPanel aria-label="submission">
-                  <SubmissionPanel isSaving={isSaving} savePublication={savePublication} />
-                </StyledPanel>
-              )}
+              <PublicationFormContent
+                tabNumber={tabNumber}
+                uppy={uppy}
+                isSaving={isSaving}
+                savePublication={savePublication}
+              />
             </Form>
             {tabNumber !== 4 && (
               <StyledButtonGroupContainer>

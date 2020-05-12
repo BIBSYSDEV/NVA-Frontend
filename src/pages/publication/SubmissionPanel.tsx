@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, FC } from 'react';
+import React, { useEffect, FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormikProps, useFormikContext, Field, FieldProps } from 'formik';
 import { FormikPublication } from '../../types/publication.types';
@@ -12,7 +12,7 @@ import SubmissionJournalPublication from './submission_tab/submission_journal';
 import SubmissionDescription from './submission_tab/submission_description';
 import SubmissionFilesAndLicenses from './submission_tab/submission_files_licenses';
 import SubmissionContributors from './submission_tab/submission_contributors';
-import { PublicationType, requiredFieldNames } from '../../types/publicationFieldNames';
+import { PublicationType } from '../../types/publicationFieldNames';
 import Heading from '../../components/Heading';
 import SubHeading from '../../components/SubHeading';
 import Card from '../../components/Card';
@@ -25,6 +25,14 @@ import { useDispatch } from 'react-redux';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import ButtonWithProgress from '../../components/ButtonWithProgress';
+import {
+  touchedFilesTabFields,
+  touchedContributorTabFields,
+  touchedDescriptionTabFields,
+  touchedReferenceTabFields,
+  mergeTouchedFields,
+} from '../../utils/formik-helpers';
+import { PanelProps } from './PublicationFormContent';
 
 const StyledButtonGroupContainer = styled.div`
   margin-bottom: 1rem;
@@ -40,27 +48,31 @@ enum PublishSettingFieldName {
   SHOULD_CREATE_DOI = 'shouldCreateDoi',
 }
 
-interface SubmissionPanelProps {
+interface SubmissionPanelProps extends PanelProps {
   isSaving: boolean;
   savePublication: (values: FormikPublication) => void;
 }
 
-const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication }) => {
+const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication, setTouchedFields }) => {
   const { t } = useTranslation('publication');
-  const { setFieldTouched, setFieldValue, values, isValid }: FormikProps<FormikPublication> = useFormikContext();
+  const { setFieldValue, values, isValid }: FormikProps<FormikPublication> = useFormikContext();
   const history = useHistory();
   const dispatch = useDispatch();
-  const { reference } = values.entityDescription;
+  const {
+    entityDescription: { contributors, reference },
+    fileSet: { files },
+  } = values;
   const publicationContextType = reference.publicationContext.type;
 
-  const valuesRef = useRef(values);
   useEffect(() => {
-    valuesRef.current = values;
-  }, [values]);
-
-  useEffect(() => {
-    requiredFieldNames.forEach((fieldName) => setFieldTouched(fieldName));
-  }, [setFieldTouched]);
+    const touchedForm = mergeTouchedFields([
+      touchedDescriptionTabFields,
+      touchedReferenceTabFields,
+      touchedContributorTabFields(contributors),
+      touchedFilesTabFields(files),
+    ]);
+    setTouchedFields(touchedForm);
+  }, [setTouchedFields, contributors, files]);
 
   const onClickPublish = async () => {
     await savePublication(values);

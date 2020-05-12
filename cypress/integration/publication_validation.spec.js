@@ -49,6 +49,8 @@ describe('User opens publication form and can see validation errors', () => {
       .parent()
       .within(() => cy.get("input[type='text']").clear().click({ force: true }).type('01.01.2000'));
     cy.get('[data-testid=date-published-field]').contains('Invalid Date Format').should('not.be.visible');
+
+    cy.get('[data-testid=nav-tabpanel-description]').should('not.have.class', 'error-tab');
   });
 
   it('The User should be able to see validation errors on reference tab', () => {
@@ -79,6 +81,27 @@ describe('User opens publication form and can see validation errors', () => {
     cy.contains('testament').click({ force: true });
     cy.contains(ErrorMessage.REQUIRED).should('not.be.visible');
 
+    cy.get('[data-testid=volume-field]').click({ force: true }).type('-1');
+    cy.get('[data-testid=issue-field]').click({ force: true }).type('-1');
+    cy.get('[data-testid=pages-from-field]').click({ force: true }).type('-1');
+    cy.get('[data-testid=pages-to-field]').click({ force: true }).type('-2');
+    cy.get('[data-testid=article-number-field]').click({ force: true }).type('-1');
+    cy.get('[data-testid=volume-field]').contains(ErrorMessage.MUST_BE_POSITIVE);
+    cy.get('[data-testid=issue-field]').contains(ErrorMessage.MUST_BE_POSITIVE);
+    cy.get('[data-testid=pages-from-field]').contains(ErrorMessage.MUST_BE_POSITIVE);
+    cy.get('[data-testid=pages-to-field]').contains(ErrorMessage.INVALID_PAGE_INTERVAL);
+    cy.get('[data-testid=article-number-field]').contains(ErrorMessage.MUST_BE_POSITIVE);
+    cy.get('[data-testid=volume-field]').click({ force: true }).type('{backspace}{backspace}1');
+    cy.get('[data-testid=issue-field]').click({ force: true }).type('{backspace}{backspace}1');
+    cy.get('[data-testid=pages-from-field]').click({ force: true }).type('{backspace}{backspace}2');
+    cy.get('[data-testid=pages-to-field]').click({ force: true }).type('{backspace}{backspace}1');
+    cy.get('[data-testid=pages-from-field]').contains(ErrorMessage.INVALID_PAGE_INTERVAL);
+    cy.get('[data-testid=pages-to-field]').contains(ErrorMessage.INVALID_PAGE_INTERVAL);
+    cy.get('[data-testid=pages-to-field]').click({ force: true }).type('0');
+    cy.get('[data-testid=article-number-field]').click({ force: true }).type('{backspace}{backspace}1');
+
+    cy.get('[data-testid=nav-tabpanel-references]').should('not.have.class', 'error-tab');
+
     // TODO: Book type, Report type, etc
   });
 
@@ -106,6 +129,21 @@ describe('User opens publication form and can see validation errors', () => {
     cy.get('[data-testid=author-email-input]').click({ force: true }).type('@email.com');
     cy.contains(ErrorMessage.INVALID_FORMAT).should('not.be.visible');
     cy.contains(ErrorMessage.REQUIRED).should('not.be.visible');
+
+    // Add author and set corresponding without setting email
+    cy.get('[data-testid=add-contributor]').click({ force: true });
+    cy.get('[data-testid=search-input]').click({ force: true }).type('test');
+    cy.get('[data-testid=search-button]').click({ force: true });
+    cy.get('[data-testid=author-radio-button]').eq(1).click({ force: true });
+    cy.get('[data-testid=connect-author-button]').click({ force: true });
+    cy.get('[data-testid=author-corresponding-checkbox]').eq(1).click({ force: true });
+    cy.get('[data-testid=nav-tabpanel-submission]').click({ force: true });
+    cy.get('[data-testid=nav-tabpanel-contributors]').click({ force: true });
+    cy.contains(ErrorMessage.REQUIRED).should('be.visible');
+    cy.get('[data-testid=nav-tabpanel-contributors]').should('have.class', 'error-tab');
+    cy.get('[data-testid=author-email-input]').eq(1).click({ force: true }).type('test@email.com');
+    cy.contains(ErrorMessage.REQUIRED).should('not.be.visible');
+    cy.get('[data-testid=nav-tabpanel-contributors]').should('not.have.class', 'error-tab');
   });
 
   it('The User should be able to see validation errors on files tab', () => {
@@ -124,19 +162,6 @@ describe('User opens publication form and can see validation errors', () => {
     cy.contains(ErrorMessage.MISSING_FILE).should('not.be.visible');
     cy.contains(ErrorMessage.REQUIRED).should('not.be.visible');
 
-    // Embargo field
-    cy.get('[data-testid=uploaded-file-embargo-date]')
-      .parent()
-      .within(() => {
-        cy.get("input[type='text']").click({ force: true }).type('01.01.').blur();
-        cy.contains(ErrorMessage.INVALID_FORMAT).should('be.visible');
-        cy.get("input[type='text']").click({ force: true }).type('2000');
-        cy.contains(ErrorMessage.INVALID_FORMAT).should('not.be.visible');
-        cy.contains(ErrorMessage.MUST_BE_FUTURE).should('be.visible');
-        cy.get("input[type='text']").clear().click({ force: true }).type('01.01.3000');
-        cy.contains(ErrorMessage.MUST_BE_FUTURE).should('not.be.visible');
-      });
-
     // Lincense field
     cy.get('[data-testid=nav-tabpanel-contributors]').click({ force: true });
     cy.get('[data-testid=nav-tabpanel-files-and-license]').click({ force: true });
@@ -146,6 +171,21 @@ describe('User opens publication form and can see validation errors', () => {
       .within(() => cy.get('.MuiSelect-root').click({ force: true }));
     cy.get('[data-testid=license-item]').eq(0).click({ force: true });
     cy.contains(ErrorMessage.REQUIRED).should('not.be.visible');
+
+    // Embargo field
+    cy.get('[data-testid=uploaded-file-embargo-date]')
+      .parent()
+      .within(() => {
+        cy.get("input[type='text']").click({ force: true }).type('0101', { force: true }).blur();
+        cy.contains(ErrorMessage.INVALID_FORMAT).should('be.visible');
+        cy.get("input[type='text']").click({ force: true }).type('2000', { force: true });
+        cy.contains(ErrorMessage.INVALID_FORMAT).should('not.be.visible');
+        cy.contains(ErrorMessage.MUST_BE_FUTURE).should('be.visible');
+        cy.get("input[type='text']").clear().click({ force: true }).type('01013000', { force: true });
+        cy.contains(ErrorMessage.MUST_BE_FUTURE).should('not.be.visible');
+      });
+
+    cy.get('[data-testid=nav-tabpanel-files-and-license]').should('not.have.class', 'error-tab');
   });
 
   it('The user navigates to submission tab and see no errors', () => {
