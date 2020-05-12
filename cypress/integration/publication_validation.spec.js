@@ -93,11 +93,12 @@ describe('User opens publication form and can see validation errors', () => {
     cy.get('[data-testid=article-number-field]').contains(ErrorMessage.MUST_BE_POSITIVE);
     cy.get('[data-testid=volume-field]').click({ force: true }).type('{backspace}{backspace}1');
     cy.get('[data-testid=issue-field]').click({ force: true }).type('{backspace}{backspace}1');
-    cy.get('[data-testid=pages-from-field]').click({ force: true }).type('{backspace}{backspace}0');
-    cy.get('[data-testid=pages-to-field]').click({ force: true }).type('{backspace}{backspace}10');
+    cy.get('[data-testid=pages-from-field]').click({ force: true }).type('{backspace}{backspace}2');
+    cy.get('[data-testid=pages-to-field]').click({ force: true }).type('{backspace}{backspace}1');
+    cy.get('[data-testid=pages-from-field]').contains(ErrorMessage.INVALID_PAGE_INTERVAL);
+    cy.get('[data-testid=pages-to-field]').contains(ErrorMessage.INVALID_PAGE_INTERVAL);
+    cy.get('[data-testid=pages-to-field]').click({ force: true }).type('0');
     cy.get('[data-testid=article-number-field]').click({ force: true }).type('{backspace}{backspace}1');
-
-    // TODO pages.to should be bigger than pages.from
 
     cy.get('[data-testid=nav-tabpanel-references]').should('not.have.class', 'error-tab');
 
