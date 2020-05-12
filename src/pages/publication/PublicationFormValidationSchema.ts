@@ -62,13 +62,10 @@ const journalValidationSchema = {
       .typeError(ErrorMessage.INVALID_FORMAT)
       .min(0, ErrorMessage.MUST_BE_POSITIVE)
       .max(Yup.ref('end'), ErrorMessage.INVALID_PAGE_INTERVAL),
-    end: Yup.number()
-      .typeError(ErrorMessage.INVALID_FORMAT)
-      .min(0, ErrorMessage.MUST_BE_POSITIVE)
-      .min(Yup.ref('begin'), ErrorMessage.INVALID_PAGE_INTERVAL),
+    end: Yup.number().typeError(ErrorMessage.INVALID_FORMAT).min(Yup.ref('begin'), ErrorMessage.INVALID_PAGE_INTERVAL),
   }),
 };
-Yup.ref('begin');
+
 const bookValidationSchema = {
   type: Yup.string().oneOf(Object.values(BookType)).required(ErrorMessage.REQUIRED),
   isbn: Yup.string(),
