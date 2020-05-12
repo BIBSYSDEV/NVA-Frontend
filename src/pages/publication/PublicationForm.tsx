@@ -53,9 +53,12 @@ const PublicationForm: FC<PublicationFormProps> = ({
   const dispatch = useDispatch();
   const history = useHistory();
 
-  useEffect(() => {
-    return () => uppy && uppy.reset();
-  }, [uppy]);
+  useEffect(
+    () => () => {
+      uppy && uppy.reset();
+    },
+    [uppy]
+  );
 
   useEffect(() => {
     const getPublicationById = async (id: string) => {

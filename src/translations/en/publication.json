@@ -75,7 +75,9 @@
     "title": "File name",
     "upload_files": "Upload Files",
     "upload_one_file": "Upload %{smart_count} file",
+    "upload_one_more_file": "Upload %{smart_count} more file",
     "upload_x_files": "Upload %{smart_count} files",
+    "upload_x_more_files": "Upload %{smart_count} files",
     "uploaded_size": "Uploaded {{size}} kB"
   },
   "heading": {

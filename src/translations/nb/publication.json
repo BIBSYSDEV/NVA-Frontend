@@ -75,7 +75,9 @@
     "title": "Filnavn",
     "upload_files": "Last opp filer",
     "upload_one_file": "Last opp %{smart_count} fil",
+    "upload_one_more_file": "Last opp %{smart_count} fil til",
     "upload_x_files": "Last opp %{smart_count} filer",
+    "upload_x_more_files": "Last opp %{smart_count} filer til",
     "uploaded_size": "Lastet opp {{size}} kB"
   },
   "heading": {
