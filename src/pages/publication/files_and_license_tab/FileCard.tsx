@@ -156,7 +156,7 @@ const FileCard: FC<FileCardProps> = ({ file, removeFile, baseFieldName, toggleLi
                             const selectedLicense = licenses.find((license) => license.identifier === option);
                             return selectedLicense ? (
                               <StyledVerticalAlign>
-                                <img src={selectedLicense.image} alt={selectedLicense.identifier} />
+                                <img src={selectedLicense.buttonImage} alt={selectedLicense.identifier} />
                                 <StyledLicenseName>{option}</StyledLicenseName>
                               </StyledVerticalAlign>
                             ) : null;
@@ -182,7 +182,7 @@ const FileCard: FC<FileCardProps> = ({ file, removeFile, baseFieldName, toggleLi
                             divider
                             dense>
                             <ListItemIcon>
-                              <img src={license.image} alt={license.identifier} />
+                              <img src={license.buttonImage} alt={license.identifier} />
                             </ListItemIcon>
                             <ListItemText>
                               <StyledLicenseName>{license.identifier}</StyledLicenseName>

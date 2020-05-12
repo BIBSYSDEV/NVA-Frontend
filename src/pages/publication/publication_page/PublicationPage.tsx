@@ -16,6 +16,10 @@ import { NotificationVariant } from '../../../types/notification.types';
 import { useParams } from 'react-router';
 import { DOI_PREFIX } from '../../../utils/constants';
 import LabelContentRow from '../../../components/LabelContentRow';
+import Label from '../../../components/Label';
+import NormalText from '../../../components/NormalText';
+import { licenses } from '../../../types/file.types';
+import { ccImage } from '../../../resources/images/licenses';
 
 const StyledContentWrapper = styled.div`
   display: flex;
@@ -37,6 +41,27 @@ const StyledMainContent = styled.div`
 
 const StyledSidebarCard = styled(Card)`
   padding: 0.5rem;
+`;
+
+const StyledLicenseCard = styled(Card)`
+  display: grid;
+  grid-template-areas: 'image label' 'image description';
+  align-items: center;
+  grid-gap: 0 1rem;
+  margin: 0.5rem 0;
+  padding: 1rem;
+`;
+
+const StyledImage = styled.img`
+  grid-area: image;
+`;
+
+const StyledLabel = styled(Label)`
+  grid-area: label;
+`;
+
+const StyledNormalText = styled(NormalText)`
+  grid-area: description;
 `;
 
 const PublicationPage: FC = () => {
@@ -72,6 +97,10 @@ const PublicationPage: FC = () => {
     reference: { doi, publicationContext },
     series,
   } = publication ? publication.entityDescription : emptyPublication.entityDescription;
+
+  // Show only the license for the first file for now
+  const currentLicense = publication?.fileSet?.files[0]?.license ?? null;
+  const selectedLicense = licenses.find((license) => license.identifier === currentLicense?.identifier);
 
   return (
     <>
@@ -126,6 +155,13 @@ const PublicationPage: FC = () => {
                     <LabelContentRow minimal label={t('references.journal')}>
                       {publicationContext.title}
                     </LabelContentRow>
+                  )}
+                  {currentLicense && selectedLicense && (
+                    <StyledLicenseCard>
+                      <StyledImage src={ccImage} alt={selectedLicense.identifier} />
+                      <StyledLabel>{selectedLicense.label}</StyledLabel>
+                      <StyledNormalText>{selectedLicense.description}</StyledNormalText>
+                    </StyledLicenseCard>
                   )}
                   {publication.project && (
                     <LabelContentRow minimal label={t('description.project_association')}>
