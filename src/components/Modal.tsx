@@ -89,6 +89,7 @@ const Modal: FC<ModalProps> = ({
       onClose={handleClose}
       closeAfterTransition
       BackdropComponent={Backdrop}
+      maxWidth={'lg'}
       BackdropProps={{
         timeout: 500,
       }}>
