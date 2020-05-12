@@ -85,7 +85,7 @@
   "devDependencies": {
     "@cypress/code-coverage": "^3.4.1",
     "@cypress/instrument-cra": "^1.1.1",
-    "@cypress/webpack-preprocessor": "^5.1.2",
+    "@cypress/webpack-preprocessor": "^5.2.0",
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
     "@types/jest": "^25.2.1",
     "@types/node": "^13.13.5",
