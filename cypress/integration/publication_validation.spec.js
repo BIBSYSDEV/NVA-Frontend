@@ -158,7 +158,6 @@ describe('User opens publication form and can see validation errors', () => {
       headers: { ETag: 'etag' },
     });
     cy.get('input[type=file]').uploadFile('img.jpg');
-    cy.get('.uppy-StatusBar-actionBtn--upload').click({ force: true });
     cy.get('[data-testid=uploaded-file-card]').should('be.visible');
     cy.contains(ErrorMessage.MISSING_FILE).should('not.be.visible');
     cy.contains(ErrorMessage.REQUIRED).should('not.be.visible');
