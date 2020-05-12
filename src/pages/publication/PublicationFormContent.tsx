@@ -49,27 +49,27 @@ export const PublicationFormContent: FC<PublicationFormContentProps> = ({
   return (
     <>
       {tabNumber === 0 && (
-        <StyledPanel aria-label="description">
+        <StyledPanel>
           <DescriptionPanel setTouchedFields={setTouchedFields} />
         </StyledPanel>
       )}
       {tabNumber === 1 && (
-        <StyledPanel aria-label="references">
+        <StyledPanel>
           <ReferencesPanel setTouchedFields={setTouchedFields} />
         </StyledPanel>
       )}
       {tabNumber === 2 && (
-        <StyledPanel aria-label="references">
+        <StyledPanel>
           <ContributorsPanel setTouchedFields={setTouchedFields} />
         </StyledPanel>
       )}
       {tabNumber === 3 && (
-        <StyledPanel aria-label="files and license">
+        <StyledPanel>
           <FilesAndLicensePanel setTouchedFields={setTouchedFields} uppy={uppy} />
         </StyledPanel>
       )}
       {tabNumber === 4 && (
-        <StyledPanel aria-label="submission">
+        <StyledPanel>
           <SubmissionPanel isSaving={isSaving} savePublication={savePublication} setTouchedFields={setTouchedFields} />
         </StyledPanel>
       )}
