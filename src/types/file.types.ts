@@ -45,35 +45,31 @@ export const licenses: LicenseInfo[] = [
   },
   {
     identifier: LicenseNames.CC_BY_NC,
-    label: 'Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)',
+    label: i18n.t('licenses:labels.cc_by_nc'),
     image: LicenseImages.ccByNcImage,
     buttonImage: LicenseImages.ccByNcButton,
-    description:
-      'This license lets others remix, adapt, and build upon your work non-commercially, and although their new works must also acknowledge you and be non-commercial, they don’t have to license their derivative works on the same terms.',
+    description: i18n.t('licenses:description.cc_by_nc'),
   },
   {
     identifier: LicenseNames.CC_BY_NC_SA,
-    label: 'Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)',
+    label: i18n.t('licenses:labels.cc_by_nc_sa'),
     image: LicenseImages.ccByNcSaImage,
     buttonImage: LicenseImages.ccByNcSaButton,
-    description:
-      'This license lets others remix, adapt, and build upon your work non-commercially, as long as they credit you and license their new creations under the identical terms.',
+    description: i18n.t('licenses:description.cc_by_nc_sa'),
   },
   {
     identifier: LicenseNames.CC_BY_NC_ND,
-    label: 'Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)',
+    label: i18n.t('licenses:labels.cc_by_nc_nd'),
     image: LicenseImages.ccByNcNdImage,
     buttonImage: LicenseImages.ccByNcNdButton,
-    description:
-      'This license is the most restrictive of our six main licenses, only allowing others to download your works and share them with others as long as they credit you, but they can’t change them in any way or use them commercially.',
+    description: i18n.t('licenses:description.cc_by_nc_nd'),
   },
   {
     identifier: LicenseNames.CC0,
-    label: 'CC 0',
+    label: i18n.t('licenses:labels.cc0'),
     image: LicenseImages.cc0Image,
     buttonImage: LicenseImages.cc0Button,
-    description:
-      'CC0 enables scientists, educators, artists and other creators and owners of copyright- or database-protected content to waive those interests in their works and thereby place them as completely as possible in the public domain, so that others may freely build upon, enhance and reuse the works for any purposes without restriction under copyright or database law.',
+    description: i18n.t('licenses:description.cc0'),
   },
 ];
 
