@@ -13,7 +13,7 @@ import useFetchUnitHierarchy from '../../../utils/hooks/useFetchUnitHierarchy';
 import AffiliationHierarchy from '../../../components/institution/AffiliationHierarchy';
 import Card from '../../../components/Card';
 
-const StyledBoxContent = styled(Card)<{ isConnected: boolean }>`
+const StyledBoxContent = styled(({ isConnected, ...rest }) => <Card {...rest} />)`
   display: grid;
   grid-template-columns: 1fr 2fr 2fr;
   grid-gap: 1.5rem;
