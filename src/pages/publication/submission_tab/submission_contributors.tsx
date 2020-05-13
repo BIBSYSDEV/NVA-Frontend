@@ -4,6 +4,11 @@ import { useTranslation } from 'react-i18next';
 import { FormikProps, useFormikContext } from 'formik';
 import { FormikPublication } from '../../../types/publication.types';
 import NormalText from '../../../components/NormalText';
+import styled from 'styled-components';
+
+const StyledAffiliationCount = styled.span`
+  margin-left: 0.5rem;
+`;
 
 const SubmissionContributors: React.FC = () => {
   const { t } = useTranslation('publication');
@@ -18,8 +23,10 @@ const SubmissionContributors: React.FC = () => {
       {contributors.map((contributor) => (
         <NormalText key={contributor.identity.name}>
           {contributor.identity.name}
-          {contributor.affiliations?.map(
-            (affiliation) => affiliation?.labels && `(${Object.values(affiliation.labels)[0]})`
+          {contributor.affiliations?.length > 0 && (
+            <StyledAffiliationCount>
+              ({t('submission.number_of_affiliations', { count: contributor.affiliations.length })})
+            </StyledAffiliationCount>
           )}
         </NormalText>
       ))}
