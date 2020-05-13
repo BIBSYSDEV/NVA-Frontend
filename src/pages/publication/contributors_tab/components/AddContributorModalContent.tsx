@@ -6,22 +6,13 @@ import styled from 'styled-components';
 import { Button, CircularProgress } from '@material-ui/core';
 
 import { getAuthorities } from '../../../../api/authorityApi';
-import Label from '../../../../components/Label';
 import SearchBar from '../../../../components/SearchBar';
 import { setNotification } from '../../../../redux/actions/notificationActions';
 import { Authority } from '../../../../types/authority.types';
-import AuthorityCard from '../../../user/authority/AuthorityCard';
 import NormalText from '../../../../components/NormalText';
 import { NotificationVariant } from '../../../../types/notification.types';
 import SubHeading from '../../../../components/SubHeading';
-
-const StyledClickableDiv = styled.div`
-  cursor: pointer;
-  align-items: center;
-  background-color: ${({ theme }) => theme.palette.box.main};
-  padding-right: 0.5rem;
-  margin-bottom: 0.5rem;
-`;
+import { AuthorityList } from '../../../user/authority/AuthorityList';
 
 const StyledButtonContainer = styled.div`
   display: flex;
@@ -34,10 +25,6 @@ const StyledProgressContainer = styled.div`
   justify-content: space-around;
   align-items: center;
   padding: 2rem;
-`;
-
-const StyledLabel = styled(Label)`
-  padding: 0.5rem;
 `;
 
 const StyledSubHeading = styled(SubHeading)`
@@ -108,23 +95,12 @@ const AddContributorModalContent: FC<AddContributorModalContentProps> = ({ addAu
         </StyledProgressContainer>
       ) : matchingAuthorities?.length > 0 ? (
         <>
-          <StyledLabel>
-            {t('profile:authority.search_summary', {
-              searchTerm: searchSummary.searchTerm,
-              results: searchSummary.results,
-            })}
-          </StyledLabel>
-          {matchingAuthorities?.map((authority) => (
-            <StyledClickableDiv
-              data-testid="author-radio-button"
-              key={authority.systemControlNumber}
-              onClick={() => setSelectedAuthor(authority)}>
-              <AuthorityCard
-                authority={authority}
-                isSelected={selectedAuthor?.systemControlNumber === authority.systemControlNumber}
-              />
-            </StyledClickableDiv>
-          ))}
+          <AuthorityList
+            authorities={matchingAuthorities}
+            selectedSystemControlNumber={selectedAuthor?.systemControlNumber}
+            onSelectAuthority={setSelectedAuthor}
+            searchTerm={searchSummary.searchTerm}
+          />
           <StyledButtonContainer>
             <Button
               color="primary"

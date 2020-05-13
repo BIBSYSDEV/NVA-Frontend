@@ -9,27 +9,25 @@ import { getAlmaPublication } from '../../../api/almaApi';
 import { Authority } from '../../../types/authority.types';
 import { AlmaPublication } from '../../../types/publication.types';
 import NormalText from '../../../components/NormalText';
+import useFetchUnitHierarchy from '../../../utils/hooks/useFetchUnitHierarchy';
+import AffiliationHierarchy from '../../../components/institution/AffiliationHierarchy';
 
 const StyledBoxContent = styled.div<{ isConnected: boolean }>`
   display: grid;
-  grid-template-columns: 2fr 2fr;
+  grid-template-columns: 1fr 2fr 2fr;
   padding: 1rem;
   height: 5.5rem;
   ${({ isConnected, theme }) =>
     isConnected ? `background-color: ${theme.palette.success.light}` : `background-color: ${theme.palette.box.main}`};
 `;
 
-const StyledPublicationContent = styled.div`
+const StyledContent = styled.div`
   align-self: center;
 `;
 
 const StyledPublicationInfo = styled.div`
   display: block;
   font-weight: bold;
-`;
-
-const StyledAuthority = styled.div`
-  align-self: center;
 `;
 
 interface AuthorityCardProps {
@@ -58,24 +56,45 @@ const AuthorityCard: React.FC<AuthorityCardProps> = ({ authority, isConnected = 
 
   return (
     <StyledBoxContent isConnected={isConnected}>
-      <StyledAuthority>
+      <StyledContent>
         {!isConnected && <Radio color="primary" checked={isSelected} />}
-        {authority?.name}
-      </StyledAuthority>
-      <StyledPublicationContent>
+        <NormalText>{authority?.name}</NormalText>
+      </StyledContent>
+      <StyledContent>
         <StyledPublicationInfo>{t('authority.last_publication')}</StyledPublicationInfo>
         {isLoadingPublication ? (
           <CircularProgress />
         ) : publication?.title ? (
-          <Truncate lines={2} ellipsis={<span>...</span>}>
-            <NormalText>{publication.title}</NormalText>
-          </Truncate>
+          <NormalText>
+            <Truncate lines={2}>{publication.title}</Truncate>
+          </NormalText>
         ) : (
-          <i>{t('authority.no_publications_found')}</i>
+          <NormalText>
+            <i>{t('authority.no_publications_found')}</i>
+          </NormalText>
         )}
-      </StyledPublicationContent>
+      </StyledContent>
+      <StyledContent>
+        {authority.orgunitids.length > 0 ? (
+          <AuthorityAffiliation unitId={authority.orgunitids[0]} />
+        ) : (
+          <NormalText>
+            <i>{t('Ingen tilknytninger')}</i>
+          </NormalText>
+        )}
+      </StyledContent>
     </StyledBoxContent>
   );
+};
+
+interface AuthorityAffiliationProps {
+  unitId: string;
+}
+
+const AuthorityAffiliation: React.FC<AuthorityAffiliationProps> = ({ unitId }) => {
+  const [unit, isLoadingUnit] = useFetchUnitHierarchy(unitId);
+
+  return isLoadingUnit ? <CircularProgress /> : unit ? <AffiliationHierarchy unit={unit} /> : null;
 };
 
 export default AuthorityCard;

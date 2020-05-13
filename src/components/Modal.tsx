@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 
-import { Avatar, Backdrop, Dialog, Fade, DialogTitle } from '@material-ui/core';
+import { Avatar, Backdrop, Dialog, Fade, DialogTitle, DialogProps } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 
 import Heading from './Heading';
@@ -51,7 +51,7 @@ const StyledDialogTitle = styled(DialogTitle)`
   padding: 0;
 `;
 
-interface ModalProps {
+interface ModalProps extends Partial<DialogProps> {
   ariaDescribedBy?: string;
   ariaLabelledBy?: string;
   children: any;
@@ -73,6 +73,7 @@ const Modal: FC<ModalProps> = ({
   headingText,
   onClose,
   openModal,
+  ...props
 }) => {
   const handleClose = () => {
     onClose && onClose();
@@ -80,6 +81,7 @@ const Modal: FC<ModalProps> = ({
 
   return (
     <Dialog
+      {...props}
       aria-labelledby={ariaDescribedBy}
       aria-describedby={ariaLabelledBy}
       data-testid={dataTestId}

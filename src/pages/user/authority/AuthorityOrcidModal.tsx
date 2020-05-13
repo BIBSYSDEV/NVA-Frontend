@@ -54,11 +54,12 @@ const AuthorityOrcidModal: FC<AuthorityOrcidModalProps> = ({ authority }) => {
     <>
       <Modal
         dataTestId="connect-author-modal"
+        ariaLabelledBy="connect-author-modal"
         disableEscape={!authority}
         openModal={openAuthorityModal}
         onClose={handleClose}
-        ariaLabelledBy="connect-author-modal"
-        headingText={t('profile:authority.connect_authority')}>
+        headingText={t('profile:authority.connect_authority')}
+        maxWidth="lg">
         <>
           {authority ? (
             <>
