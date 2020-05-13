@@ -143,7 +143,9 @@
     "Rejected": "Rejected"
   },
   "submission": {
-    "ask_for_doi": "Ask for DOI for this registration"
+    "ask_for_doi": "Ask for DOI for this registration",
+    "number_of_affiliations": "{{count}} affiliation",
+    "number_of_affiliations_plural": "{{count}} affiliations"
   },
   "modal_unsaved_changes_description": "You have unsaved changes. Are you sure you want to leave this page?",
   "modal_unsaved_changes_heading": "Leave without saving?"
