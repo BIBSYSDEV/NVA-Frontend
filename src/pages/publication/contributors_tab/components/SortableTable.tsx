@@ -20,7 +20,7 @@ import AddIcon from '@material-ui/icons/Add';
 
 import { ContributorFieldNames, SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
 import { Contributor, emptyContributor } from '../../../../types/contributor.types';
-import { FormikPublication } from '../../../../types/publication.types';
+import { FormikPublication, BackendTypeNames } from '../../../../types/publication.types';
 import SubHeading from '../../../../components/SubHeading';
 import AddContributor from '../AddContributorModal';
 import styled from 'styled-components';
@@ -30,6 +30,7 @@ import { useDispatch } from 'react-redux';
 import { setNotification } from '../../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../../types/notification.types';
 import { Authority } from '../../../../types/authority.types';
+import { getUnitUri } from '../../../../utils/unitUrl';
 
 const StyledWarningIcon = styled(WarningIcon)`
   color: ${({ theme }) => theme.palette.warning.main};
@@ -264,6 +265,10 @@ const SortableTable: FC<SortableTableProps> = ({ push, remove, move, replace }) 
       const newContributor: Contributor = {
         ...emptyContributor,
         identity,
+        affiliations: authority.orgunitids.map((unitId) => ({
+          type: BackendTypeNames.ORGANIZATION,
+          id: getUnitUri(unitId),
+        })),
       };
       push(newContributor);
     } else {
