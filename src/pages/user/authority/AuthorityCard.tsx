@@ -54,8 +54,6 @@ const AuthorityCard: React.FC<AuthorityCardProps> = ({ authority, isConnected = 
     fetchLastPublication();
   }, [dispatch, authority.systemControlNumber, authority.name]);
 
-  console.log('authority orgs', authority.orgunitids);
-
   return (
     <StyledBoxContent isConnected={isConnected}>
       <StyledContent>
@@ -67,9 +65,9 @@ const AuthorityCard: React.FC<AuthorityCardProps> = ({ authority, isConnected = 
         {isLoadingPublication ? (
           <CircularProgress />
         ) : publication?.title ? (
-          <Truncate lines={2} ellipsis={<span>...</span>}>
-            <NormalText>{publication.title}</NormalText>
-          </Truncate>
+          <NormalText>
+            <Truncate lines={2}>{publication.title}</Truncate>
+          </NormalText>
         ) : (
           <NormalText>
             <i>{t('authority.no_publications_found')}</i>
@@ -78,12 +76,7 @@ const AuthorityCard: React.FC<AuthorityCardProps> = ({ authority, isConnected = 
       </StyledContent>
       <StyledContent>
         {authority.orgunitids.length > 0 ? (
-          <>
-            <AuthorityAffiliation unitId={authority.orgunitids[0]} />
-            {authority.orgunitids.length > 1 && (
-              <NormalText>{authority.orgunitids.length - 1} andre tilknytninger</NormalText>
-            )}
-          </>
+          <AuthorityAffiliation unitId={authority.orgunitids[0]} />
         ) : (
           <NormalText>
             <i>{t('Ingen tilknytninger')}</i>
