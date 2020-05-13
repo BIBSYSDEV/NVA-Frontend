@@ -61,6 +61,7 @@ const StyledLabel = styled(Label)`
 
 const StyledNormalText = styled(NormalText)`
   grid-area: description;
+  white-space: pre-wrap;
 `;
 
 const PublicationPage: FC = () => {

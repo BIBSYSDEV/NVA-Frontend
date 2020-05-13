@@ -1,6 +1,7 @@
 import * as LicenseImages from '../resources/images/licenses';
 import { Uppy as UppyType, StrictTypes } from '@uppy/core';
 import { BackendType, BackendTypeNames } from './publication.types';
+import i18n from '../translations/i18n';
 
 export enum LicenseNames {
   CC_BY = 'CC BY',
@@ -23,11 +24,10 @@ interface LicenseInfo {
 export const licenses: LicenseInfo[] = [
   {
     identifier: LicenseNames.CC_BY,
-    label: 'Attribution 4.0 International (CC BY 4.0)',
+    label: i18n.t('licenses:labels.cc_by'),
     image: LicenseImages.ccByImage,
     buttonImage: LicenseImages.ccByButton,
-    description:
-      'This license lets others distribute, remix, adapt, and build upon your work, even commercially, as long as they credit you for the original creation. This is the most accommodating of licenses offered. Recommended for maximum dissemination and use of licensed materials.',
+    description: i18n.t('licenses:description.cc_by'),
   },
   {
     identifier: LicenseNames.CC_BY_SA,
@@ -35,7 +35,7 @@ export const licenses: LicenseInfo[] = [
     image: LicenseImages.ccBySaImage,
     buttonImage: LicenseImages.ccBySaButton,
     description:
-      'This license lets others remix, adapt, and build upon your work even for commercial purposes, as long as they credit you and license their new creations under the identical terms. This license is often compared to “copyleft” free and open source software licenses. All new works based on yours will carry the same license, so any derivatives will also allow commercial use. This is the license used by Wikipedia, and is recommended for materials that would benefit from incorporating content from Wikipedia and similarly licensed projects. ',
+      'This license lets others remix, adapt, and build upon your work even for commercial purposes, as long as they credit you and license their new creations under the identical terms. This license is often compared to “copyleft” free and open source software licenses. All new works based on yours will carry the same license, so any derivatives will also allow commercial use. This is the license used by Wikipedia, and is recommended for materials that would benefit from incorporating content from Wikipedia and similarly licensed projects.',
   },
   {
     identifier: LicenseNames.CC_BY_ND,
