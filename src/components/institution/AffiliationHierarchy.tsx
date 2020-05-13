@@ -5,11 +5,12 @@ import NormalText from '../NormalText';
 
 interface AffiliationHierarchyProps {
   unit: RecursiveInstitutionUnit;
+  boldTopLevel?: boolean;
 }
 
-const AffiliationHierarchy: FC<AffiliationHierarchyProps> = ({ unit }) => (
+const AffiliationHierarchy: FC<AffiliationHierarchyProps> = ({ unit, boldTopLevel = true }) => (
   <>
-    <Label>{unit.name}</Label>
+    {boldTopLevel ? <Label>{unit.name}</Label> : <NormalText>{unit.name}</NormalText>}
     {unit?.subunits && <SubUnitRow unit={unit.subunits[0]} />}
   </>
 );
