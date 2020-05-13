@@ -43,9 +43,12 @@
   },
   "feedback": {
     "invalid_format": "Invalid format",
+    "invalid_page_interval": "Invalid page interval",
     "invalid_url": "Invalid URL",
     "minimum_one_contributor": "You need to have at least one author registered for this publication",
     "minimum_one_file": "You need to have at least one file uploaded for this publication",
+    "must_be_min_1": "Value must be bigger than 1",
+    "must_be_positive": "Value must be positive",
     "date_must_be_in_future": "Date must be in future",
     "required_field": "Required field"
   },
@@ -72,7 +75,9 @@
     "title": "File name",
     "upload_files": "Upload Files",
     "upload_one_file": "Upload %{smart_count} file",
+    "upload_one_more_file": "Upload %{smart_count} more file",
     "upload_x_files": "Upload %{smart_count} files",
+    "upload_x_more_files": "Upload %{smart_count} files",
     "uploaded_size": "Uploaded {{size}} kB"
   },
   "heading": {

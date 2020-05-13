@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef, FC } from 'react';
 import { useTranslation } from 'react-i18next';
-import FileUploader from './files_and_license_tab/FileUploader';
-import FileCard from './files_and_license_tab/FileCard';
 import styled from 'styled-components';
 import { FieldArray, FormikProps, useFormikContext, ErrorMessage, FieldArrayRenderProps } from 'formik';
+import { FormHelperText } from '@material-ui/core';
+import FileUploader from './files_and_license_tab/FileUploader';
+import FileCard from './files_and_license_tab/FileCard';
 import { FormikPublication, Publisher } from '../../types/publication.types';
 import Modal from '../../components/Modal';
 import { licenses, Uppy } from '../../types/file.types';
@@ -12,9 +13,9 @@ import Heading from '../../components/Heading';
 import PublicationChannelInfoCard from './files_and_license_tab/PublicationChannelInfoCard';
 import NormalText from '../../components/NormalText';
 import Label from '../../components/Label';
-import { FormHelperText } from '@material-ui/core';
-import { getAllFileFields } from '../../utils/formik-helpers';
 import { FileFieldNames } from '../../types/publicationFieldNames';
+import { touchedFilesTabFields } from '../../utils/formik-helpers';
+import { PanelProps } from './PublicationFormContent';
 
 const shouldAllowMultipleFiles = true;
 
@@ -31,13 +32,13 @@ const StyledLicenseDescription = styled.article`
   margin-bottom: 1rem;
 `;
 
-interface FilesAndLicensePanelProps {
+interface FilesAndLicensePanelProps extends PanelProps {
   uppy: Uppy;
 }
 
-const FilesAndLicensePanel: FC<FilesAndLicensePanelProps> = ({ uppy }) => {
+const FilesAndLicensePanel: FC<FilesAndLicensePanelProps> = ({ uppy, setTouchedFields }) => {
   const { t } = useTranslation('publication');
-  const { values, setFieldTouched }: FormikProps<FormikPublication> = useFormikContext();
+  const { values }: FormikProps<FormikPublication> = useFormikContext();
   const [isLicenseModalOpen, setIsLicenseModalOpen] = useState(false);
   const {
     fileSet: { files },
@@ -51,14 +52,11 @@ const FilesAndLicensePanel: FC<FilesAndLicensePanelProps> = ({ uppy }) => {
     filesRef.current = files;
   }, [files]);
 
-  // Set all fields to touched on unmount
   useEffect(
-    () => () => {
-      // Use filesRef to avoid trigging this useEffect on every values update
-      const fieldNames = getAllFileFields(filesRef.current);
-      fieldNames.forEach((fieldName) => setFieldTouched(fieldName));
-    },
-    [setFieldTouched]
+    // Set all fields to touched on unmount
+    // Use filesRef to avoid trigging this useEffect on every values update
+    () => () => setTouchedFields(touchedFilesTabFields(filesRef.current)),
+    [setTouchedFields]
   );
 
   const toggleLicenseModal = () => {

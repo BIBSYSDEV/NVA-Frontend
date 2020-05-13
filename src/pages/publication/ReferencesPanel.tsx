@@ -12,6 +12,8 @@ import ReportForm from './references_tab/ReportForm';
 import Card from '../../components/Card';
 import Heading from '../../components/Heading';
 import SelectTypeField from './references_tab/components/SelectTypeField';
+import { touchedReferenceTabFields } from '../../utils/formik-helpers';
+import { PanelProps } from './PublicationFormContent';
 
 const StyledCard = styled(Card)`
   margin-top: 1rem;
@@ -21,15 +23,15 @@ const StyledSelectContainer = styled.div`
   width: 50%;
 `;
 
-const ReferencesPanel: FC = () => {
+const ReferencesPanel: FC<PanelProps> = ({ setTouchedFields }) => {
   const { t } = useTranslation('publication');
   const { values, setFieldTouched, setFieldValue }: FormikProps<FormikPublication> = useFormikContext();
   const publicationContextType = values.entityDescription.reference.publicationContext.type;
 
   useEffect(
     // Set all fields as touched if user navigates away from this panel (on unmount)
-    () => () => Object.values(ReferenceFieldNames).forEach((fieldName) => setFieldTouched(fieldName)),
-    [setFieldTouched]
+    () => () => setTouchedFields(touchedReferenceTabFields),
+    [setTouchedFields]
   );
 
   return (

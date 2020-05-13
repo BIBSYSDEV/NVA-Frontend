@@ -43,9 +43,12 @@
   },
   "feedback": {
     "invalid_format": "Ugyldig format",
+    "invalid_page_interval": "Ugyldig sideintervall",
     "invalid_url": "Ugyldig lenke",
     "minimum_one_contributor": "Du må ha minst en forfatter på denne publikasjonen",
     "minimum_one_file": "Du må laste opp minst en fil for denne publikasjonen",
+    "must_be_min_1": "Verdien må være større enn 0",
+    "must_be_positive": "Verdien må være positiv",
     "date_must_be_in_future": "Dato må være i fremtiden",
     "required_field": "Påkrevd felt"
   },
@@ -72,7 +75,9 @@
     "title": "Filnavn",
     "upload_files": "Last opp filer",
     "upload_one_file": "Last opp %{smart_count} fil",
+    "upload_one_more_file": "Last opp %{smart_count} fil til",
     "upload_x_files": "Last opp %{smart_count} filer",
+    "upload_x_more_files": "Last opp %{smart_count} filer til",
     "uploaded_size": "Lastet opp {{size}} kB"
   },
   "heading": {

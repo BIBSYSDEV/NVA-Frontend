@@ -2,7 +2,7 @@ AWSTemplateFormatVersion: '2010-09-09'
 Transform: 'AWS::Serverless-2016-10-31'
 
 Description: >
-  Version 1.0 Build/publish NVA frontend to SAR
+  Version 1.1 Build/publish NVA frontend to SAR
 
   Using SAR application 'deploy-to-s3 — version 2.4.2' to upload and patch javascript files
 
@@ -11,9 +11,10 @@ Metadata:
     Name: NVA-Frontend
     Description: Frontend for NVA
     Author: Unit
-    SemanticVersion: 1.1.4
     SpdxLicenseId: MIT
     LicenseUrl: ../LICENSE
+    Labels: ['${CODEBUILD_RESOLVED_SOURCE_VERSION}', '${GIT_REPO}', '@${BUILD_TIMESTAMP}']
+    # SemanticVersion: is set via SAM command line
 
 Parameters:
   AmazonCognitoDomain:
