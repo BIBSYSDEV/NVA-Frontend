@@ -31,19 +31,17 @@ export const licenses: LicenseInfo[] = [
   },
   {
     identifier: LicenseNames.CC_BY_SA,
-    label: 'Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)',
+    label: i18n.t('licenses:labels.cc_by_sa'),
     image: LicenseImages.ccBySaImage,
     buttonImage: LicenseImages.ccBySaButton,
-    description:
-      'This license lets others remix, adapt, and build upon your work even for commercial purposes, as long as they credit you and license their new creations under the identical terms. This license is often compared to “copyleft” free and open source software licenses. All new works based on yours will carry the same license, so any derivatives will also allow commercial use. This is the license used by Wikipedia, and is recommended for materials that would benefit from incorporating content from Wikipedia and similarly licensed projects.',
+    description: i18n.t('licenses:description.cc_by_sa'),
   },
   {
     identifier: LicenseNames.CC_BY_ND,
-    label: 'Attribution-NoDerivatives 4.0 International (CC BY-ND 4.0)',
+    label: i18n.t('licenses:labels.cc_by_nd'),
     image: LicenseImages.ccByNdImage,
     buttonImage: LicenseImages.ccByNdButton,
-    description:
-      'This license lets others reuse the work for any purpose, including commercially; however, it cannot be shared with others in adapted form, and credit must be provided to you.',
+    description: i18n.t('licenses:description.cc_by_nd'),
   },
   {
     identifier: LicenseNames.CC_BY_NC,
