@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import { Authority } from '../../../types/authority.types';
 import AuthorityCard from './AuthorityCard';
+import Label from '../../../components/Label';
 
 const StyledAuthorityContainer = styled.div`
   > * {
@@ -13,11 +14,6 @@ const StyledAuthorityContainer = styled.div`
 
 const StyledClickableDiv = styled.div`
   cursor: pointer;
-`;
-
-const StyledSubHeading = styled.div`
-  text-align: right;
-  font-weight: bold;
 `;
 
 interface AuthorityListProps {
@@ -35,23 +31,19 @@ export const AuthorityList: FC<AuthorityListProps> = ({
 }) => {
   const { t } = useTranslation('profile');
   return (
-    <>
-      <StyledAuthorityContainer>
-        <StyledSubHeading>
-          {t('authority.search_summary', { results: authorities?.length ?? 0, searchTerm: searchTerm })}
-        </StyledSubHeading>
-        {authorities.map((authority) => (
-          <StyledClickableDiv
-            data-testid="author-radio-button"
-            key={authority.systemControlNumber}
-            onClick={() => onSelectAuthority(authority)}>
-            <AuthorityCard
-              authority={authority}
-              isSelected={selectedSystemControlNumber === authority.systemControlNumber}
-            />
-          </StyledClickableDiv>
-        ))}
-      </StyledAuthorityContainer>
-    </>
+    <StyledAuthorityContainer>
+      <Label>{t('authority.search_summary', { results: authorities?.length ?? 0, searchTerm })}</Label>
+      {authorities.map((authority) => (
+        <StyledClickableDiv
+          data-testid="author-radio-button"
+          key={authority.systemControlNumber}
+          onClick={() => onSelectAuthority(authority)}>
+          <AuthorityCard
+            authority={authority}
+            isSelected={selectedSystemControlNumber === authority.systemControlNumber}
+          />
+        </StyledClickableDiv>
+      ))}
+    </StyledAuthorityContainer>
   );
 };

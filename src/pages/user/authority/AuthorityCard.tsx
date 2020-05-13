@@ -15,6 +15,7 @@ import AffiliationHierarchy from '../../../components/institution/AffiliationHie
 const StyledBoxContent = styled.div<{ isConnected: boolean }>`
   display: grid;
   grid-template-columns: 1fr 2fr 2fr;
+  grid-gap: 1rem;
   padding: 1rem;
   height: 5.5rem;
   ${({ isConnected, theme }) =>
@@ -23,11 +24,6 @@ const StyledBoxContent = styled.div<{ isConnected: boolean }>`
 
 const StyledContent = styled.div`
   align-self: center;
-`;
-
-const StyledPublicationInfo = styled.div`
-  display: block;
-  font-weight: bold;
 `;
 
 interface AuthorityCardProps {
@@ -61,12 +57,11 @@ const AuthorityCard: React.FC<AuthorityCardProps> = ({ authority, isConnected = 
         <NormalText>{authority?.name}</NormalText>
       </StyledContent>
       <StyledContent>
-        <StyledPublicationInfo>{t('authority.last_publication')}</StyledPublicationInfo>
         {isLoadingPublication ? (
           <CircularProgress />
         ) : publication?.title ? (
           <NormalText>
-            <Truncate lines={2}>{publication.title}</Truncate>
+            <Truncate lines={3}>{publication.title}</Truncate>
           </NormalText>
         ) : (
           <NormalText>
@@ -94,7 +89,7 @@ interface AuthorityAffiliationProps {
 const AuthorityAffiliation: React.FC<AuthorityAffiliationProps> = ({ unitId }) => {
   const [unit, isLoadingUnit] = useFetchUnitHierarchy(unitId);
 
-  return isLoadingUnit ? <CircularProgress /> : unit ? <AffiliationHierarchy unit={unit} /> : null;
+  return isLoadingUnit ? <CircularProgress /> : unit ? <AffiliationHierarchy unit={unit} boldTopLevel={false} /> : null;
 };
 
 export default AuthorityCard;
