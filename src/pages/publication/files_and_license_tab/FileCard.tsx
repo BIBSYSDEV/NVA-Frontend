@@ -56,7 +56,7 @@ const StyledSelect = styled(TextField)`
 `;
 
 const StyledLicenseImage = styled.img`
-  width: 50%;
+  width: 40%;
 `;
 
 const StyledLicenseOptionImage = styled.img`
@@ -74,6 +74,7 @@ const StyledLicenseOptionName = styled(Label)`
 const StyledVerticalAlign = styled.div`
   display: flex;
   align-items: center;
+  margin-top: -0.25rem;
 `;
 
 const StyledActions = styled.div`
