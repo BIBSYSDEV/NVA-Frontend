@@ -46,7 +46,7 @@ const PublicationForm: FC<PublicationFormProps> = ({
   closeForm,
 }) => {
   const { t } = useTranslation('publication');
-  const [tabNumber, setTabNumber] = useState(2);
+  const [tabNumber, setTabNumber] = useState(0);
   const [initialValues, setInitialValues] = useState(emptyPublication);
   const [isLoading, setIsLoading] = useState(!!identifier);
   const [isSaving, setIsSaving] = useState(false);
