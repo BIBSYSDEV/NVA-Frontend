@@ -19,7 +19,6 @@ import LabelContentRow from '../../../components/LabelContentRow';
 import Label from '../../../components/Label';
 import NormalText from '../../../components/NormalText';
 import { licenses } from '../../../types/file.types';
-import { ccImage } from '../../../resources/images/licenses';
 
 const StyledContentWrapper = styled.div`
   display: flex;
@@ -158,7 +157,7 @@ const PublicationPage: FC = () => {
                   )}
                   {currentLicense && selectedLicense && (
                     <StyledLicenseCard>
-                      <StyledImage src={ccImage} alt={selectedLicense.identifier} />
+                      <StyledImage src={selectedLicense.image} alt={selectedLicense.identifier} />
                       <StyledLabel>{selectedLicense.label}</StyledLabel>
                       <StyledNormalText>{selectedLicense.description}</StyledNormalText>
                     </StyledLicenseCard>
