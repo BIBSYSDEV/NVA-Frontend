@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import Truncate from 'react-truncate';
@@ -11,19 +11,23 @@ import { AlmaPublication } from '../../../types/publication.types';
 import NormalText from '../../../components/NormalText';
 import useFetchUnitHierarchy from '../../../utils/hooks/useFetchUnitHierarchy';
 import AffiliationHierarchy from '../../../components/institution/AffiliationHierarchy';
+import Card from '../../../components/Card';
 
-const StyledBoxContent = styled.div<{ isConnected: boolean }>`
+const StyledBoxContent = styled(Card)<{ isConnected: boolean }>`
   display: grid;
   grid-template-columns: 1fr 2fr 2fr;
   grid-gap: 1rem;
-  padding: 1rem;
-  height: 5.5rem;
+  padding: 0.5rem;
   ${({ isConnected, theme }) =>
     isConnected ? `background-color: ${theme.palette.success.light}` : `background-color: ${theme.palette.box.main}`};
 `;
 
-const StyledContent = styled.div`
+const StyledCenteredContent = styled.div`
   align-self: center;
+`;
+
+const StyledNameCell = styled(StyledCenteredContent)`
+  display: flex;
 `;
 
 interface AuthorityCardProps {
@@ -32,7 +36,7 @@ interface AuthorityCardProps {
   isSelected?: boolean;
 }
 
-const AuthorityCard: React.FC<AuthorityCardProps> = ({ authority, isConnected = false, isSelected }) => {
+const AuthorityCard: FC<AuthorityCardProps> = ({ authority, isConnected = false, isSelected }) => {
   const [publication, setPublication] = useState<AlmaPublication | null>(null);
   const [isLoadingPublication, setIsLoadingPublication] = useState(true);
   const dispatch = useDispatch();
@@ -52,24 +56,28 @@ const AuthorityCard: React.FC<AuthorityCardProps> = ({ authority, isConnected = 
 
   return (
     <StyledBoxContent isConnected={isConnected}>
-      <StyledContent>
+      <StyledNameCell>
         {!isConnected && <Radio color="primary" checked={isSelected} />}
-        <NormalText>{authority?.name}</NormalText>
-      </StyledContent>
-      <StyledContent>
+        <StyledCenteredContent>
+          <NormalText>{authority?.name}</NormalText>
+        </StyledCenteredContent>
+      </StyledNameCell>
+      <StyledCenteredContent>
         {isLoadingPublication ? (
           <CircularProgress />
         ) : publication?.title ? (
           <NormalText>
-            <Truncate lines={3}>{publication.title}</Truncate>
+            <Truncate lines={3} ellipsis={'...'}>
+              {publication.title}
+            </Truncate>
           </NormalText>
         ) : (
           <NormalText>
             <i>{t('authority.no_publications_found')}</i>
           </NormalText>
         )}
-      </StyledContent>
-      <StyledContent>
+      </StyledCenteredContent>
+      <StyledCenteredContent>
         {authority.orgunitids.length > 0 ? (
           <AuthorityAffiliation unitId={authority.orgunitids[0]} />
         ) : (
@@ -77,7 +85,7 @@ const AuthorityCard: React.FC<AuthorityCardProps> = ({ authority, isConnected = 
             <i>{t('authority.no_affiliations_found')}</i>
           </NormalText>
         )}
-      </StyledContent>
+      </StyledCenteredContent>
     </StyledBoxContent>
   );
 };
