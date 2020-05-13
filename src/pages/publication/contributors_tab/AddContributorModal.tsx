@@ -53,7 +53,8 @@ const AddContributorModal: FC<AddContributorModalProps> = ({
           : t('contributors.add_author')
       }
       onClose={handleCloseModal}
-      openModal={open}>
+      openModal={open}
+      maxWidth="lg">
       {createNewAuthor ? (
         <CreateContributorModalContent addAuthor={addAuthor} handleCloseModal={handleCloseModal} />
       ) : (

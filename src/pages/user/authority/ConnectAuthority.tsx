@@ -2,15 +2,14 @@ import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-
 import { Button } from '@material-ui/core';
 
 import { addQualifierIdForAuthority, AuthorityQualifiers } from '../../../api/authorityApi';
 import { setAuthorityData } from '../../../redux/actions/userActions';
 import { RootStore } from '../../../redux/reducers/rootReducer';
 import { Authority } from '../../../types/authority.types';
-import AuthorityCard from './AuthorityCard';
 import NewAuthorityCard from './NewAuthorityCard';
+import { AuthorityList } from './AuthorityList';
 
 const StyledButtonContainer = styled.div`
   display: flex;
@@ -21,15 +20,6 @@ const StyledAuthorityContainer = styled.div`
   > * {
     margin-top: 1rem;
   }
-`;
-
-const StyledClickableDiv = styled.div`
-  cursor: pointer;
-`;
-
-const StyledSubHeading = styled.div`
-  text-align: right;
-  font-weight: bold;
 `;
 
 export const ConnectAuthority: FC = () => {
@@ -74,20 +64,14 @@ export const ConnectAuthority: FC = () => {
       <StyledAuthorityContainer>
         {hasMatchingAuthorities && !openNewAuthorityCard ? (
           <>
-            <StyledSubHeading>
-              {t('authority.search_summary', { results: matchingAuthorities?.length ?? 0, searchTerm: user.name })}
-            </StyledSubHeading>
-            {matchingAuthorities.map((authority) => (
-              <StyledClickableDiv
-                data-testid="author-radio-button"
-                key={authority.systemControlNumber}
-                onClick={() => setSelectedSystemControlNumber(authority.systemControlNumber)}>
-                <AuthorityCard
-                  authority={authority}
-                  isSelected={selectedSystemControlNumber === authority.systemControlNumber}
-                />
-              </StyledClickableDiv>
-            ))}
+            <AuthorityList
+              authorities={matchingAuthorities}
+              selectedSystemControlNumber={selectedSystemControlNumber}
+              onSelectAuthority={(authority: Authority) =>
+                setSelectedSystemControlNumber(authority.systemControlNumber)
+              }
+              searchTerm={user.name}
+            />
             <StyledButtonContainer>
               <Button color="primary" variant="text" onClick={toggleOpenNewAuthorityCard}>
                 {t('authority.create_own_authority')}
