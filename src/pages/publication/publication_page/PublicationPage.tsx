@@ -45,8 +45,9 @@ const StyledSidebarCard = styled(Card)`
 const StyledLicenseCard = styled(Card)`
   display: grid;
   grid-template-areas: 'image label' 'image description';
+  column-gap: 1rem;
   align-items: center;
-  grid-gap: 0 1rem;
+  justify-content: left;
   margin: 0.5rem 0;
   padding: 1rem;
 `;
