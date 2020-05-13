@@ -13,12 +13,12 @@ export enum FileApiPaths {
 }
 
 export const downloadFile = async (publicationId: string, fileId: string) => {
-  const url = `${FileApiPaths.DOWNLOAD}/${publicationId}/files/${fileId}/generate`;
+  const url = `${FileApiPaths.DOWNLOAD}/${publicationId}/files/${fileId}`;
   try {
     const idToken = await getIdToken();
     const response = await Axios.get(url, { headers: { Authorization: `Bearer ${idToken}` } });
     if (response) {
-      console.log('response', response);
+      return response.data.presignedDownloadUrl;
     } else {
       console.log('error response');
     }

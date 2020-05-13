@@ -31,10 +31,14 @@ interface PublicationPageFilesProps {
 const PublicationPageFiles: FC<PublicationPageFilesProps> = ({ files }) => {
   const { identifier } = useParams();
   const { t } = useTranslation('common');
+
   const handleDownload = async (fileId: string) => {
     const file = await downloadFile(identifier, fileId);
-    console.log('file', file);
+    if (file) {
+      window.open(file);
+    }
   };
+
   return (
     <>
       {files.map((file) => (
