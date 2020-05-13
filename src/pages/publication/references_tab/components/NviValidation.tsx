@@ -4,15 +4,15 @@ import styled from 'styled-components';
 
 import CancelIcon from '@material-ui/icons/Cancel';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import Card from '../../../../components/Card';
 
-const StyledNviValidation = styled.div`
+const StyledNviValidation = styled(Card)`
   margin-top: 1rem;
   display: grid;
   grid-template-columns: 4rem auto;
   grid-template-areas:
     'icon header'
     'icon information';
-  background-color: ${({ theme }) => theme.palette.background.default};
   padding: 1rem 0;
 `;
 
