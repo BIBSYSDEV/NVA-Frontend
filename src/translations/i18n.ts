@@ -86,4 +86,15 @@ i18n.use(LanguageDetector).init({
   },
 });
 
+// Seems like i18next require 4-letter languages for pluralization to work out of box, so we must add our own rules
+// https://github.com/i18next/i18next/issues/1061#issuecomment-395528467
+i18n.services.pluralResolver.addRule('nob', {
+  numbers: [1, 2],
+  plurals: (n: number) => Number(n !== 1),
+});
+i18n.services.pluralResolver.addRule('eng', {
+  numbers: [1, 2],
+  plurals: (n: number) => Number(n !== 1),
+});
+
 export default i18n;

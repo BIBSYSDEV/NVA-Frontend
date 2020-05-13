@@ -16,7 +16,7 @@ import Card from '../../../components/Card';
 const StyledBoxContent = styled(Card)<{ isConnected: boolean }>`
   display: grid;
   grid-template-columns: 1fr 2fr 2fr;
-  grid-gap: 1rem;
+  grid-gap: 1.5rem;
   padding: 0.5rem;
   ${({ isConnected, theme }) =>
     isConnected ? `background-color: ${theme.palette.success.light}` : `background-color: ${theme.palette.box.main}`};
@@ -67,9 +67,7 @@ const AuthorityCard: FC<AuthorityCardProps> = ({ authority, isConnected = false,
           <CircularProgress />
         ) : publication?.title ? (
           <NormalText>
-            <Truncate lines={3} ellipsis={'...'}>
-              {publication.title}
-            </Truncate>
+            <Truncate lines={3}>{publication.title}</Truncate>
           </NormalText>
         ) : (
           <NormalText>
@@ -79,7 +77,12 @@ const AuthorityCard: FC<AuthorityCardProps> = ({ authority, isConnected = false,
       </StyledCenteredContent>
       <StyledCenteredContent>
         {authority.orgunitids.length > 0 ? (
-          <AuthorityAffiliation unitId={authority.orgunitids[0]} />
+          <>
+            <AuthorityAffiliation unitId={authority.orgunitids[0]} />
+            {authority.orgunitids.length > 1 && (
+              <i>{t('authority.other_affiliations', { count: authority.orgunitids.length - 1 })}</i>
+            )}
+          </>
         ) : (
           <NormalText>
             <i>{t('authority.no_affiliations_found')}</i>
