@@ -74,7 +74,7 @@ const AuthorityCard: React.FC<AuthorityCardProps> = ({ authority, isConnected = 
           <AuthorityAffiliation unitId={authority.orgunitids[0]} />
         ) : (
           <NormalText>
-            <i>{t('Ingen tilknytninger')}</i>
+            <i>{t('authority.no_affiliations_found')}</i>
           </NormalText>
         )}
       </StyledContent>
