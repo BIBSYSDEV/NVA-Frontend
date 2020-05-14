@@ -6,7 +6,7 @@ import {
   prepareUploadPart,
   abortMultipartUpload,
   completeMultipartUpload,
-} from '../api/fileUploadApi';
+} from '../api/fileApi';
 import { Uppy as UppyType } from '../types/file.types';
 
 interface UppyArgs {

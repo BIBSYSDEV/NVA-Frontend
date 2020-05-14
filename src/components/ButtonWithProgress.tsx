@@ -1,5 +1,5 @@
-import React, { FC, ReactNode } from 'react';
-import { Button, CircularProgress } from '@material-ui/core';
+import React, { FC } from 'react';
+import { Button, CircularProgress, ButtonProps } from '@material-ui/core';
 import styled from 'styled-components';
 
 const StyledProgressContainer = styled.div`
@@ -8,16 +8,13 @@ const StyledProgressContainer = styled.div`
   align-items: center;
 `;
 
-interface ButtonWithProgressProps {
-  children: ReactNode;
+interface ButtonWithProgressProps extends ButtonProps {
   isLoading: boolean;
-  onClick?: () => void;
-  type?: 'submit' | 'reset' | 'button';
 }
 
-const ButtonWithProgress: FC<ButtonWithProgressProps> = ({ children, isLoading, onClick, type, ...props }) => (
-  <Button color="primary" disabled={isLoading} onClick={onClick} type={type} variant="contained" {...props}>
-    {children}
+const ButtonWithProgress: FC<ButtonWithProgressProps> = ({ isLoading, ...props }) => (
+  <Button color="primary" disabled={isLoading} variant="contained" {...props}>
+    {props.children}
     {isLoading && (
       <StyledProgressContainer>
         <CircularProgress size={15} thickness={5} />

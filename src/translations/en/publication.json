@@ -11,7 +11,7 @@
     "add_other_contributor": "Add more contributors",
     "author_already_added": "Chosen author is already added",
     "authors": "Authors",
-    "confirm_remove_affiliation_text": "Are you sure you want to remove the affiliation to {{affiliationName}} for {{contributorName}}?",
+    "confirm_remove_affiliation_text": "Are you sure you want to remove this affiliation?",
     "confirm_remove_affiliation_title": "Remove affiliation?",
     "confirm_remove_contributor_text": "Are you sure you want to remove {{contributorName}} from list of contributors?",
     "confirm_remove_contributor_title": "Remove contributor?",

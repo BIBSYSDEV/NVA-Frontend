@@ -51,15 +51,17 @@ const MyPublications: FC = () => {
   return (
     <Card>
       <Heading>{`${t('workLists:my_publications')} (${publicationsToDisplay.length})`}</Heading>
-      <StyledButtonWrapper>
-        <Button
-          color="primary"
-          component={RouterLink}
-          to={`/public-profile/${user.name}`}
-          data-testid="public-profile-button">
-          {t('workLists:go_to_public_profile')}
-        </Button>
-      </StyledButtonWrapper>
+      {user.authority && (
+        <StyledButtonWrapper>
+          <Button
+            color="primary"
+            component={RouterLink}
+            to={`/profile/${user.authority.systemControlNumber}`}
+            data-testid="public-profile-button">
+            {t('workLists:go_to_public_profile')}
+          </Button>
+        </StyledButtonWrapper>
+      )}
       <StyledWrapper>
         {isLoading ? (
           <CircularProgress color="inherit" size={20} />

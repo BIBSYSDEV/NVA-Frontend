@@ -11,7 +11,7 @@
     "add_other_contributor": "Legg til flere",
     "author_already_added": "Valgt forfatter er allerede lagt til",
     "authors": "Forfattere",
-    "confirm_remove_affiliation_text": "Er du sikker på at du ønsker å fjerne tilknytningen til {{affiliationName}} for {{contributorName}}?",
+    "confirm_remove_affiliation_text": "Er du sikker på at du ønsker å fjerne denne tilknytningen?",
     "confirm_remove_affiliation_title": "Fjerne tilknytning?",
     "confirm_remove_contributor_text": "Er du sikker på at du ønsker å fjerne {{contributorName}} fra listen over bidragsytere?",
     "confirm_remove_contributor_title": "Fjerne bidragsyter?",
