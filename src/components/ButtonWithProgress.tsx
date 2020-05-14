@@ -9,15 +9,12 @@ const StyledProgressContainer = styled.div`
 `;
 
 interface ButtonWithProgressProps extends ButtonProps {
-  children: ReactNode;
   isLoading: boolean;
-  onClick?: () => void;
-  type?: 'submit' | 'reset' | 'button';
 }
 
-const ButtonWithProgress: FC<ButtonWithProgressProps> = ({ children, isLoading, onClick, type, ...props }) => (
-  <Button color="primary" disabled={isLoading} onClick={onClick} type={type} variant="contained" {...props}>
-    {children}
+const ButtonWithProgress: FC<ButtonWithProgressProps> = ({ isLoading, ...props }) => (
+  <Button color="primary" disabled={isLoading} variant="contained" {...props}>
+    {props.children}
     {isLoading && (
       <StyledProgressContainer>
         <CircularProgress size={15} thickness={5} />
