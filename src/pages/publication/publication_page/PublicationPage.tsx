@@ -178,7 +178,7 @@ const PublicationPage: FC = () => {
                       <StyledLabel>{t('description.tags')}</StyledLabel>
                       {tags.map((tag) => (
                         <StyledTag key={tag}>
-                          <Chip label={tag} />{' '}
+                          <Chip label={tag} />
                         </StyledTag>
                       ))}
                     </StyledTagContainer>
