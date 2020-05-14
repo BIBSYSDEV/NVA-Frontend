@@ -11,6 +11,7 @@ import formikValuesEn from './en/formikValues.json';
 import infopagesEn from './en/infopages.json';
 import institutionEn from './en/institution.json';
 import languagesEn from './en/languages.json';
+import licensesEn from './en/licenses.json';
 import profileEn from './en/profile.json';
 import publicationEn from './en/publication.json';
 import publicationTypesEn from './en/publicationTypes.json';
@@ -26,6 +27,7 @@ import formikValuesNb from './nb/formikValues.json';
 import infopagesNb from './nb/infopages.json';
 import institutionNb from './nb/institution.json';
 import languagesNb from './nb/languages.json';
+import licensesNb from './nb/licenses.json';
 import profileNb from './nb/profile.json';
 import publicationNb from './nb/publication.json';
 import publicationTypesNb from './nb/publicationTypes.json';
@@ -50,6 +52,7 @@ i18n.use(LanguageDetector).init({
       infopages: infopagesEn,
       institution: institutionEn,
       languages: languagesEn,
+      licenses: licensesEn,
       profile: profileEn,
       publication: publicationEn,
       publicationTypes: publicationTypesEn,
@@ -66,6 +69,7 @@ i18n.use(LanguageDetector).init({
       infopages: infopagesNb,
       institution: institutionNb,
       languages: languagesNb,
+      licenses: licensesNb,
       profile: profileNb,
       publication: publicationNb,
       publicationTypes: publicationTypesNb,

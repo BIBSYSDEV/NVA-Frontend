@@ -143,7 +143,9 @@
     "Rejected": "Avvist"
   },
   "submission": {
-    "ask_for_doi": "Be om DOI for denne registreringen (anbefales ikke dersom ressursen allerede har en DOI)"
+    "ask_for_doi": "Be om DOI for denne registreringen (anbefales ikke dersom ressursen allerede har en DOI)",
+    "number_of_affiliations": "{{count}} tilknytning",
+    "number_of_affiliations_plural": "{{count}} tilknytninger"
   },
   "modal_unsaved_changes_description": "Du har gjort endringer som ikke er lagret. Er du sikker på at du vil forlate denne siden?",
   "modal_unsaved_changes_heading": "Forlate siden uten å ha lagret?"

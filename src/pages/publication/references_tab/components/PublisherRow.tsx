@@ -10,11 +10,11 @@ import { getPublishers } from '../../../../api/publicationChannelApi';
 import { PublicationTableNumber } from '../../../../utils/constants';
 import { FormikProps, useFormikContext } from 'formik';
 import { ReferenceFieldNames } from '../../../../types/publicationFieldNames';
+import Card from '../../../../components/Card';
 
-const StyledPublisherRow = styled.div`
+const StyledPublisherCard = styled(Card)`
   margin: 1rem 0;
   padding: 1rem;
-  background-color: ${({ theme }) => theme.palette.background.default};
   display: grid;
   grid-column-gap: 0.5rem;
   grid-template-areas:
@@ -80,7 +80,7 @@ const PublisherRow: React.FC<PublisherRowProps> = ({ dataTestId, publisher, labe
   }, [level, setFieldValue, title]);
 
   return (
-    <StyledPublisherRow data-testid={dataTestId}>
+    <StyledPublisherCard data-testid={dataTestId}>
       <StyledTitle>{label}</StyledTitle>
       <StyledLevelLabel>{t('references.level')}</StyledLevelLabel>
       <StyledTitleText>{title}</StyledTitleText>
@@ -88,7 +88,7 @@ const PublisherRow: React.FC<PublisherRowProps> = ({ dataTestId, publisher, labe
       <StyledButton data-testid="remove-publisher" variant="contained" color="secondary" onClick={onClickDelete}>
         {t('common:remove')}
       </StyledButton>
-    </StyledPublisherRow>
+    </StyledPublisherCard>
   );
 };
 

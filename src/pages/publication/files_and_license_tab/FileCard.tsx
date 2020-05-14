@@ -55,13 +55,26 @@ const StyledSelect = styled(TextField)`
   }
 `;
 
+const StyledLicenseImage = styled.img`
+  width: 40%;
+`;
+
+const StyledLicenseOptionImage = styled.img`
+  width: 70%;
+`;
+
 const StyledLicenseName = styled(Label)`
   margin-left: 0.5rem;
+`;
+
+const StyledLicenseOptionName = styled(Label)`
+  margin-left: -1.5rem;
 `;
 
 const StyledVerticalAlign = styled.div`
   display: flex;
   align-items: center;
+  margin-top: -0.25rem;
 `;
 
 const StyledActions = styled.div`
@@ -156,7 +169,10 @@ const FileCard: FC<FileCardProps> = ({ file, removeFile, baseFieldName, toggleLi
                             const selectedLicense = licenses.find((license) => license.identifier === option);
                             return selectedLicense ? (
                               <StyledVerticalAlign>
-                                <img src={selectedLicense.image} alt={selectedLicense.identifier} />
+                                <StyledLicenseImage
+                                  src={selectedLicense.buttonImage}
+                                  alt={selectedLicense.identifier}
+                                />
                                 <StyledLicenseName>{option}</StyledLicenseName>
                               </StyledVerticalAlign>
                             ) : null;
@@ -182,10 +198,10 @@ const FileCard: FC<FileCardProps> = ({ file, removeFile, baseFieldName, toggleLi
                             divider
                             dense>
                             <ListItemIcon>
-                              <img src={license.image} alt={license.identifier} />
+                              <StyledLicenseOptionImage src={license.buttonImage} alt={license.identifier} />
                             </ListItemIcon>
                             <ListItemText>
-                              <StyledLicenseName>{license.identifier}</StyledLicenseName>
+                              <StyledLicenseOptionName>{license.identifier}</StyledLicenseOptionName>
                             </ListItemText>
                           </MenuItem>
                         ))}

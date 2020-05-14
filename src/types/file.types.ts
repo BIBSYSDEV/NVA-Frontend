@@ -1,6 +1,7 @@
 import * as LicenseImages from '../resources/images/licenses';
 import { Uppy as UppyType, StrictTypes } from '@uppy/core';
 import { BackendType, BackendTypeNames } from './publication.types';
+import i18n from '../translations/i18n';
 
 export enum LicenseNames {
   CC_BY = 'CC BY',
@@ -12,54 +13,63 @@ export enum LicenseNames {
   CC0 = 'CC0',
 }
 
-export interface LicenseInfo {
+interface LicenseInfo {
   identifier: LicenseNames;
+  label: string;
   description: string;
   image: any;
+  buttonImage: any;
 }
 
 export const licenses: LicenseInfo[] = [
   {
     identifier: LicenseNames.CC_BY,
+    label: i18n.t('licenses:labels.cc_by'),
     image: LicenseImages.ccByImage,
-    description:
-      'This license lets others distribute, remix, adapt, and build upon your work, even commercially, as long as they credit you for the original creation. This is the most accommodating of licenses offered. Recommended for maximum dissemination and use of licensed materials.',
+    buttonImage: LicenseImages.ccByButton,
+    description: i18n.t('licenses:description.cc_by'),
   },
   {
     identifier: LicenseNames.CC_BY_SA,
+    label: i18n.t('licenses:labels.cc_by_sa'),
     image: LicenseImages.ccBySaImage,
-    description:
-      'This license lets others remix, adapt, and build upon your work even for commercial purposes, as long as they credit you and license their new creations under the identical terms. This license is often compared to “copyleft” free and open source software licenses. All new works based on yours will carry the same license, so any derivatives will also allow commercial use. This is the license used by Wikipedia, and is recommended for materials that would benefit from incorporating content from Wikipedia and similarly licensed projects. ',
+    buttonImage: LicenseImages.ccBySaButton,
+    description: i18n.t('licenses:description.cc_by_sa'),
   },
   {
     identifier: LicenseNames.CC_BY_ND,
+    label: i18n.t('licenses:labels.cc_by_nd'),
     image: LicenseImages.ccByNdImage,
-    description:
-      'This license lets others reuse the work for any purpose, including commercially; however, it cannot be shared with others in adapted form, and credit must be provided to you.',
+    buttonImage: LicenseImages.ccByNdButton,
+    description: i18n.t('licenses:description.cc_by_nd'),
   },
   {
     identifier: LicenseNames.CC_BY_NC,
+    label: i18n.t('licenses:labels.cc_by_nc'),
     image: LicenseImages.ccByNcImage,
-    description:
-      'This license lets others remix, adapt, and build upon your work non-commercially, and although their new works must also acknowledge you and be non-commercial, they don’t have to license their derivative works on the same terms.',
+    buttonImage: LicenseImages.ccByNcButton,
+    description: i18n.t('licenses:description.cc_by_nc'),
   },
   {
     identifier: LicenseNames.CC_BY_NC_SA,
+    label: i18n.t('licenses:labels.cc_by_nc_sa'),
     image: LicenseImages.ccByNcSaImage,
-    description:
-      'This license lets others remix, adapt, and build upon your work non-commercially, as long as they credit you and license their new creations under the identical terms.',
+    buttonImage: LicenseImages.ccByNcSaButton,
+    description: i18n.t('licenses:description.cc_by_nc_sa'),
   },
   {
     identifier: LicenseNames.CC_BY_NC_ND,
+    label: i18n.t('licenses:labels.cc_by_nc_nd'),
     image: LicenseImages.ccByNcNdImage,
-    description:
-      'This license is the most restrictive of our six main licenses, only allowing others to download your works and share them with others as long as they credit you, but they can’t change them in any way or use them commercially.',
+    buttonImage: LicenseImages.ccByNcNdButton,
+    description: i18n.t('licenses:description.cc_by_nc_nd'),
   },
   {
     identifier: LicenseNames.CC0,
+    label: i18n.t('licenses:labels.cc0'),
     image: LicenseImages.cc0Image,
-    description:
-      'CC0 enables scientists, educators, artists and other creators and owners of copyright- or database-protected content to waive those interests in their works and thereby place them as completely as possible in the public domain, so that others may freely build upon, enhance and reuse the works for any purposes without restriction under copyright or database law.',
+    buttonImage: LicenseImages.cc0Button,
+    description: i18n.t('licenses:description.cc0'),
   },
 ];
 

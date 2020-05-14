@@ -25,7 +25,6 @@ const StyledSection = styled.div`
   margin-top: 0.7rem;
   padding-top: 0.7rem;
   padding-left: 0.7rem;
-  background-color: ${({ theme }) => theme.palette.background.default};
 `;
 
 const StyledPeerReview = styled.div`
