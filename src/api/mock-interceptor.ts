@@ -21,7 +21,7 @@ import { InstitutionApiPaths } from './institutionApi';
 import { ProjectsApiPaths } from './projectApi';
 import { PublicationsApiPaths } from './publicationApi';
 import { PublicationChannelApiPaths } from './publicationChannelApi';
-import { FileUploadApiPaths } from './fileUploadApi';
+import { FileApiPaths } from './fileApi';
 import { CustomerInstitutionApiPaths } from './customerInstitutionsApi';
 import { emptyPublication } from '../types/publication.types';
 
@@ -85,9 +85,9 @@ export const interceptRequestsOnMock = () => {
   mock.onGet(new RegExp(`${PublicationsApiPaths.SEARCH}/*`)).reply(200, mockPublications);
 
   // File Upload
-  mock.onPost(new RegExp(FileUploadApiPaths.CREATE)).reply(200, mockCreateUpload);
-  mock.onPost(new RegExp(FileUploadApiPaths.PREPARE)).reply(200, mockPrepareUpload);
-  mock.onPost(new RegExp(FileUploadApiPaths.COMPLETE)).reply(200, mockCompleteUpload);
+  mock.onPost(new RegExp(FileApiPaths.CREATE)).reply(200, mockCreateUpload);
+  mock.onPost(new RegExp(FileApiPaths.PREPARE)).reply(200, mockPrepareUpload);
+  mock.onPost(new RegExp(FileApiPaths.COMPLETE)).reply(200, mockCompleteUpload);
 
   //MY PUBLICATIONS
   mock.onGet(new RegExp(`${PublicationsApiPaths.PUBLICATIONS_BY_OWNER}/*`)).reply(200, mockMyPublications);

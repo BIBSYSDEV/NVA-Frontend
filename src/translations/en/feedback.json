@@ -5,6 +5,7 @@
     "create_customer": "Could not create customer institution",
     "create_publication": "Could not create publication",
     "delete_identifier": "Could not delete identifier",
+    "download_file": "Could not download file",
     "get_approvable_publications": "Could not fetch publications awaiting approval",
     "get_authority": "Could not retrieve authority",
     "get_authorities": "Could not retrieve authorities",
