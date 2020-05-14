@@ -5,6 +5,7 @@
     "create_customer": "Kunne ikke opprette institusjon",
     "create_publication": "Kunne ikke opprette publikasjon",
     "delete_identifier": "Kunne ikke slette identifikatoren",
+    "download_file": "Kunne ikke laste ned fil",
     "get_approvable_publications": "Kunne ikke hente publikasjoner som venter godkjenning",
     "get_authority": "Kunne ikke hente autoritet",
     "get_authorities": "Kunne ikke hente autoriteter",
