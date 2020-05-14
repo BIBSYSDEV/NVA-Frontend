@@ -81,15 +81,17 @@ const User: React.FC = () => {
 
   return (
     <StyledUserPage>
-      <StyledButtonWrapper>
-        <Button
-          color="primary"
-          component={RouterLink}
-          to={`/public-profile/${user.name}`}
-          data-testid="public-profile-button">
-          {t('workLists:go_to_public_profile')}
-        </Button>
-      </StyledButtonWrapper>
+      {user.authority && (
+        <StyledButtonWrapper>
+          <Button
+            color="primary"
+            component={RouterLink}
+            to={`/profile/${user.authority.systemControlNumber}`}
+            data-testid="public-profile-button">
+            {t('workLists:go_to_public_profile')}
+          </Button>
+        </StyledButtonWrapper>
+      )}
       <StyledSecondaryUserInfo>
         <Card>
           <Heading>{t('common:picture')}</Heading>
