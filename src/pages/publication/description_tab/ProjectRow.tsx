@@ -4,10 +4,10 @@ import { Project } from '../../../types/project.types';
 import { Button } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { useTranslation } from 'react-i18next';
+import Card from '../../../components/Card';
 
-const StyledRow = styled.div`
+const StyledCard = styled(Card)`
   margin-top: 1rem;
-  background: ${({ theme }) => theme.palette.background.default};
   padding: 1rem;
   display: grid;
   grid-column-gap: 0.5rem;
@@ -58,7 +58,7 @@ const ProjectRow: FC<ProjectRowProps> = ({ project, onClickRemove, dataTestId })
   const { t } = useTranslation();
 
   return (
-    <StyledRow data-testid={dataTestId}>
+    <StyledCard data-testid={dataTestId}>
       <StyledTitleLabel>{t('common:title')}</StyledTitleLabel>
       <StyledTitle>{project.name}</StyledTitle>
       <>
@@ -74,7 +74,7 @@ const ProjectRow: FC<ProjectRowProps> = ({ project, onClickRemove, dataTestId })
           {t('common:remove')}
         </Button>
       </StyledAction>
-    </StyledRow>
+    </StyledCard>
   );
 };
 

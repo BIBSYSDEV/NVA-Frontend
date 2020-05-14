@@ -27,11 +27,9 @@ const AddContributorModal: FC<AddContributorModalProps> = ({
   initialSearchTerm,
 }) => {
   const { t } = useTranslation('publication');
-  const [addedAuthors, setAddedAuthors] = useState<Authority[]>([]);
   const [createNewAuthor, setCreateNewAuthor] = useState(false);
 
   const addAuthor = (author: Authority) => {
-    setAddedAuthors([...addedAuthors, author]);
     toggleModal();
     onAuthorSelected(author);
   };

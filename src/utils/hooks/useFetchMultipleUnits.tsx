@@ -2,11 +2,10 @@ import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { RecursiveInstitutionUnit } from '../../types/institution.types';
-import { CRISTIN_UNITS_BASE_URL, CRISTIN_INSTITUTIONS_BASE_URL } from '../constants';
 import { getDepartment } from '../../api/institutionApi';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
-import { isValidUrl } from '../isValidUrl';
+import { getUnitUri } from '../unitUrl';
 import Axios from 'axios';
 
 // This hook is used to fetch the top-down hierarchy of units given an array of unitIds
@@ -20,11 +19,7 @@ const useFetchMultipleUnits = (unitIds: string[] | undefined): [RecursiveInstitu
 
     const fetchDepartment = async (unitId: string) => {
       // TODO: NP-844 should ensure we have URIs from start (not IDs)
-      const unitUri = isValidUrl(unitId)
-        ? unitId
-        : unitId.includes('.') // Check if root level institution
-        ? `${CRISTIN_UNITS_BASE_URL}${unitId}`
-        : `${CRISTIN_INSTITUTIONS_BASE_URL}${unitId}`;
+      const unitUri = getUnitUri(unitId);
 
       const response = await getDepartment(unitUri, cancelSource.token);
       if (response) {
