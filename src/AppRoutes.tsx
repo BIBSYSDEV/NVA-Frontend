@@ -37,7 +37,7 @@ const AppRoutes: FC = () => {
           <Route exact path="/admin-institutions/:identifier" component={AdminCustomerInstitutionPage} />
         )}
         {user.isInstitutionAdmin && <Route exact path="/admin-institution-users" component={AdminUsersPage} />}
-        <Route exact path="/public-profile/:arpId" component={PublicProfile} />
+        <Route exact path="/profile/:arpId" component={PublicProfile} />
         <Route exact path="/search" component={Search} />
         <Route exact path="/publication/:identifier/public" component={PublicationPage} />
         <Route exact path="/search/:searchTerm" component={Search} />
