@@ -1,4 +1,4 @@
-import React, { FC, ReactNode } from 'react';
+import React, { FC } from 'react';
 import { Button, CircularProgress, ButtonProps } from '@material-ui/core';
 import styled from 'styled-components';
 
