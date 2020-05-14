@@ -106,10 +106,10 @@ const FilesAndLicensePanel: FC<FilesAndLicensePanelProps> = ({ uppy, setTouchedF
         )}
       </FieldArray>
       <Modal
-        fullScreen
         headingText={t('files_and_license.licenses')}
         openModal={isLicenseModalOpen}
-        onClose={toggleLicenseModal}>
+        onClose={toggleLicenseModal}
+        maxWidth="md">
         {licenses.map((license) => (
           <StyledLicenseDescription key={license.identifier}>
             <Label>{license.identifier}</Label>

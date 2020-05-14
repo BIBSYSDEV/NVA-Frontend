@@ -157,7 +157,7 @@ const PublicationPage: FC = () => {
                       {publicationContext.title}
                     </LabelContentRow>
                   )}
-                  {currentLicense && selectedLicense && (
+                  {selectedLicense && (
                     <StyledLicenseCard>
                       <StyledImage src={selectedLicense.image} alt={selectedLicense.identifier} />
                       <StyledLabel>{selectedLicense.label}</StyledLabel>
