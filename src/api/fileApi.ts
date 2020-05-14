@@ -2,14 +2,16 @@ import Axios from 'axios';
 import { getIdToken } from './userApi';
 import { AwsS3Part } from '@uppy/aws-s3-multipart';
 import { UppyFile } from '@uppy/core';
+import i18n from '../translations/i18n';
+import { StatusCode } from '../utils/constants';
 
 export enum FileApiPaths {
-  CREATE = '/upload/create',
-  LIST_PARTS = '/upload/listparts',
-  PREPARE = '/upload/prepare',
   ABORT = '/upload/abort',
   COMPLETE = '/upload/complete',
+  CREATE = '/upload/create',
   DOWNLOAD = '/download',
+  LIST_PARTS = '/upload/listparts',
+  PREPARE = '/upload/prepare',
 }
 
 export const downloadFile = async (publicationId: string, fileId: string) => {
@@ -17,13 +19,13 @@ export const downloadFile = async (publicationId: string, fileId: string) => {
   try {
     const idToken = await getIdToken();
     const response = await Axios.get(url, { headers: { Authorization: `Bearer ${idToken}` } });
-    if (response) {
+    if (response.status === StatusCode.OK) {
       return response.data.presignedDownloadUrl;
     } else {
-      console.log('error response');
+      return { error: i18n.t('feedback:error.download_file') };
     }
-  } catch (e) {
-    console.log('error', e);
+  } catch {
+    return { error: i18n.t('feedback:error.download_file') };
   }
 };
 
