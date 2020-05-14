@@ -30,6 +30,7 @@ const StyledUploadedFiles = styled(Card)`
 
 const StyledLicenseDescription = styled.article`
   margin-bottom: 1rem;
+  white-space: pre-wrap;
 `;
 
 interface FilesAndLicensePanelProps extends PanelProps {
@@ -104,11 +105,15 @@ const FilesAndLicensePanel: FC<FilesAndLicensePanelProps> = ({ uppy, setTouchedF
           </>
         )}
       </FieldArray>
-      <Modal headingText={t('files_and_license.licenses')} openModal={isLicenseModalOpen} onClose={toggleLicenseModal}>
+      <Modal
+        headingText={t('files_and_license.licenses')}
+        openModal={isLicenseModalOpen}
+        onClose={toggleLicenseModal}
+        maxWidth="md">
         {licenses.map((license) => (
           <StyledLicenseDescription key={license.identifier}>
             <Label>{license.identifier}</Label>
-            <img src={license.image} alt={license.identifier} />
+            <img src={license.buttonImage} alt={license.identifier} />
             <NormalText>{license.description}</NormalText>
           </StyledLicenseDescription>
         ))}
