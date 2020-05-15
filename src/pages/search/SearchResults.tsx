@@ -1,4 +1,3 @@
-import Pagination from 'material-ui-flat-pagination';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -6,11 +5,11 @@ import { useHistory } from 'react-router';
 import styled from 'styled-components';
 
 import { List, ListItem, ListItemIcon, ListItemText, Typography } from '@material-ui/core';
+import { Pagination } from '@material-ui/lab';
 import ImageIcon from '@material-ui/icons/Image';
 
 import { search } from '../../api/publicationApi';
 import { RootStore } from '../../redux/reducers/rootReducer';
-import { SEARCH_RESULTS_PER_PAGE } from '../../utils/constants';
 
 interface SearchResultsProps {
   publications: any[];
@@ -62,13 +61,8 @@ const SearchResults: React.FC<SearchResultsProps> = ({ publications, searchTerm 
             </ListItem>
           ))}
       </List>
-      <Pagination
-        data-testid="pagination"
-        limit={SEARCH_RESULTS_PER_PAGE}
-        offset={offset}
-        total={results.totalNumberOfHits}
-        onClick={(_, offset) => updateSearch(offset)}
-      />
+      {/* TODO: Pagination has no function atm */}
+      <Pagination data-testid="pagination" count={5} onClick={() => updateSearch(offset)} />
     </StyledSearchResults>
   );
 };
