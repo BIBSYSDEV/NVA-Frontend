@@ -9,7 +9,6 @@
     "@material-ui/lab": "^4.0.0-alpha.53",
     "@material-ui/pickers": "^3.2.10",
     "@material-ui/styles": "^4.9.13",
-    "@testing-library/react": "^10.0.4",
     "@uppy/aws-s3-multipart": "^1.6.4",
     "@uppy/core": "^1.10.4",
     "@uppy/dashboard": "^1.8.5",
