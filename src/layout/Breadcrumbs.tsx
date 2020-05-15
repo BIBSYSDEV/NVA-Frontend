@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useLocation } from 'react-router';
+import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -20,7 +20,7 @@ const Breadcrumbs: React.FC = () => {
   const location = useLocation();
   const { t } = useTranslation('breadcrumbs');
 
-  const pathNames = location.pathname.split('/').filter(x => x);
+  const pathNames = location.pathname.split('/').filter((x) => x);
 
   return (
     <>

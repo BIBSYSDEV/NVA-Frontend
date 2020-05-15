@@ -14,7 +14,7 @@ import deepmerge from 'deepmerge';
 import { publicationValidationSchema } from './PublicationFormValidationSchema';
 import { Button, CircularProgress } from '@material-ui/core';
 import RouteLeavingGuard from '../../components/RouteLeavingGuard';
-import { useHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
 import ButtonWithProgress from '../../components/ButtonWithProgress';
 import { PublicationFormContent } from './PublicationFormContent';
 

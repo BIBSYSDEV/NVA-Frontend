@@ -13,7 +13,7 @@ import NotFound from '../../errorpages/NotFound';
 import Card from '../../../components/Card';
 import Heading from '../../../components/Heading';
 import { NotificationVariant } from '../../../types/notification.types';
-import { useParams } from 'react-router';
+import { useParams } from 'react-router-dom';
 import { DOI_PREFIX } from '../../../utils/constants';
 import LabelContentRow from '../../../components/LabelContentRow';
 import Label from '../../../components/Label';

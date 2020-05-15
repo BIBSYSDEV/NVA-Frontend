@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { useHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
 
 import { Button, CircularProgress } from '@material-ui/core';
 import LinkIcon from '@material-ui/icons/Link';

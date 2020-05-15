@@ -1,5 +1,5 @@
 import React, { FC, Suspense, lazy } from 'react';
-import { Switch, Route } from 'react-router';
+import { Switch, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootStore } from './redux/reducers/rootReducer';
 import AdminUsersPage from './pages/admin/AdminUsersPage';

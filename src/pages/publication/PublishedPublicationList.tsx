@@ -7,7 +7,7 @@ import { PublishedPublicationPreview } from '../../types/publication.types';
 import Card from '../../components/Card';
 import Heading from '../../components/Heading';
 import NormalText from '../../components/NormalText';
-import { useHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
 
 const StyledCard = styled(Card)`
   width: 100%;

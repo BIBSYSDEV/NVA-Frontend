@@ -8,7 +8,7 @@ import FileCard from '../files_and_license_tab/FileCard';
 import styled from 'styled-components';
 import { UppyFile } from '@uppy/core';
 import { createPublication } from '../../../api/publicationApi';
-import { useHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../types/notification.types';
