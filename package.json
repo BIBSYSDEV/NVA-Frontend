@@ -39,7 +39,7 @@
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0",
     "styled-components": "^5.1.0",
-    "ts-loader": "^7.0.3",
+    "ts-loader": "^7.0.4",
     "yup": "^0.28.4"
   },
   "scripts": {
