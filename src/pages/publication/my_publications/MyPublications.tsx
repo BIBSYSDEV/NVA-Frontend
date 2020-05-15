@@ -10,11 +10,12 @@ import { setNotification } from '../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../types/notification.types';
 import { PublicationPreview, PublicationStatus } from '../../../types/publication.types';
 import PublicationList from './PublicationList';
+import TabButton from '../../../components/TabButton';
 
 const StyledContainer = styled.div`
   display: block;
   width: 100%;
-  margin: 0 2rem;
+  margin: 0 2rem 2rem 2rem;
 `;
 
 const StyledButtonWrapper = styled.div`
@@ -29,25 +30,6 @@ const StyledTabsContainer = styled.div`
   justify-content: center;
   padding-top: 2rem;
   margin: 0 1.5rem;
-`;
-
-const StyledTabButton = styled.button<{ isSelected: boolean }>`
-  all: unset;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  cursor: pointer;
-  width: 50%;
-  font-weight: bold;
-  font-size: 1.2rem;
-
-  ${({ isSelected, theme }) =>
-    isSelected &&
-    `
-      color: ${theme.palette.primary.main};
-      padding-bottom: 0.4rem;
-      border-bottom: 0.2rem solid;
-    `};
 `;
 
 const StyledProgressContainer = styled.div`
@@ -110,18 +92,18 @@ const MyPublications: FC = () => {
         )}
       </StyledButtonWrapper>
       <StyledTabsContainer>
-        <StyledTabButton
+        <TabButton
           data-testid="unpublished-button"
           onClick={() => setSelectedTab(Tab.Unpublished)}
           isSelected={selectedTab === Tab.Unpublished}>
           {t('unpublished_publications')} ({unPublishedPublications.length})
-        </StyledTabButton>
-        <StyledTabButton
+        </TabButton>
+        <TabButton
           data-testid="published-button"
           onClick={() => setSelectedTab(Tab.Published)}
           isSelected={selectedTab === Tab.Published}>
           {t('published_publications')} ({publishedPublications.length})
-        </StyledTabButton>
+        </TabButton>
       </StyledTabsContainer>
       {isLoading ? (
         <StyledProgressContainer>
