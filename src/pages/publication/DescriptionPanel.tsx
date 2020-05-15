@@ -102,12 +102,13 @@ const DescriptionPanel: FC<PanelProps> = ({ setTouchedFields }) => {
           </StyledFieldWrapper>
           <StyledFieldWrapper>
             <Field name={DescriptionFieldNames.TAGS}>
-              {({ field: { name } }: FieldProps) => (
+              {({ field }: FieldProps) => (
                 <Autocomplete
+                  {...field}
                   freeSolo
                   multiple
                   options={[]}
-                  onChange={(_: ChangeEvent<{}>, value: any) => setFieldValue(name, value)}
+                  onChange={(_: ChangeEvent<{}>, value: any) => setFieldValue(field.name, value)}
                   renderInput={(params) => (
                     <MuiTextField
                       {...params}
