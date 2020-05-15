@@ -1,18 +1,18 @@
 import React, { FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import Card from '../../components/Card';
-import Heading from '../../components/Heading';
+import Card from '../../../components/Card';
+import Heading from '../../../components/Heading';
 import PublicationList from './PublicationList';
-import { getMyPublications } from '../../api/publicationApi';
-import { setNotification } from '../../redux/actions/notificationActions';
-import i18n from '../../translations/i18n';
+import { getMyPublications } from '../../../api/publicationApi';
+import { setNotification } from '../../../redux/actions/notificationActions';
+import i18n from '../../../translations/i18n';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, CircularProgress } from '@material-ui/core';
 import styled from 'styled-components';
-import { PublicationPreview, PublicationStatus } from '../../types/publication.types';
-import { RootStore } from '../../redux/reducers/rootReducer';
+import { PublicationPreview, PublicationStatus } from '../../../types/publication.types';
+import { RootStore } from '../../../redux/reducers/rootReducer';
 import { Link as RouterLink } from 'react-router-dom';
-import { NotificationVariant } from '../../types/notification.types';
+import { NotificationVariant } from '../../../types/notification.types';
 
 const StyledWrapper = styled.div`
   text-align: center;
@@ -23,7 +23,7 @@ const StyledButtonWrapper = styled.div`
   justify-content: flex-end;
 `;
 
-const MyPublications: FC = () => {
+const UnpublishedPublications: FC = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const user = useSelector((store: RootStore) => store.user);
@@ -73,4 +73,4 @@ const MyPublications: FC = () => {
   );
 };
 
-export default MyPublications;
+export default UnpublishedPublications;

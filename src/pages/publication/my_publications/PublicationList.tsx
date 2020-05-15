@@ -3,13 +3,13 @@ import React, { FC, useState } from 'react';
 import styled from 'styled-components';
 import { Button, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import { PublicationPreview } from '../../types/publication.types';
+import { PublicationPreview } from '../../../types/publication.types';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
-import Label from '../../components/Label';
-import NormalText from '../../components/NormalText';
+import Label from '../../../components/Label';
+import NormalText from '../../../components/NormalText';
 import { Link as RouterLink } from 'react-router-dom';
-import DeletePublicationModal from './DeletePublicationModal';
+import DeletePublicationModal from '../DeletePublicationModal';
 
 const StyledTableRow = styled(TableRow)`
   background-color: ${(props) => props.theme.palette.box.main};

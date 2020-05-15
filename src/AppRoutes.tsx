@@ -10,7 +10,7 @@ import PrivacyPolicy from './pages/infopages/PrivacyPolicy';
 
 const Dashboard = lazy(() => import('./pages/dashboard/Dashboard'));
 const EditPublication = lazy(() => import('./pages/publication/EditPublication'));
-const MyPublications = lazy(() => import('./pages/publication/MyPublications'));
+const MyPublications = lazy(() => import('./pages/publication/my_publications/MyPublications'));
 const Search = lazy(() => import('./pages/search/Search'));
 const PublicationPage = lazy(() => import('./pages/publication/publication_page/PublicationPage'));
 const User = lazy(() => import('./pages/user/User'));
