@@ -1,12 +1,15 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
-import { Button } from '@material-ui/core';
+import { useSelector, useDispatch } from 'react-redux';
+import { Button, CircularProgress, Card } from '@material-ui/core';
 import styled from 'styled-components';
 import { RootStore } from '../../../redux/reducers/rootReducer';
 import { Link as RouterLink } from 'react-router-dom';
-import UnpublishedPublications from './UnpublishedPublications';
-import PublishedPublications from './PublishedPublications';
+import { getMyPublications } from '../../../api/publicationApi';
+import { setNotification } from '../../../redux/actions/notificationActions';
+import { NotificationVariant } from '../../../types/notification.types';
+import { PublicationPreview, PublicationStatus } from '../../../types/publication.types';
+import PublicationList from './PublicationList';
 
 const StyledContainer = styled.div`
   display: block;
@@ -17,6 +20,7 @@ const StyledButtonWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
   padding: 0 1rem;
+  height: 3rem;
 `;
 
 const StyledTabsContainer = styled.div`
@@ -45,6 +49,17 @@ const StyledTabButton = styled.button<{ isSelected: boolean }>`
     `};
 `;
 
+const StyledProgressContainer = styled.div`
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 2rem;
+`;
+
+const StyledCard = styled(Card)`
+  margin: 0 1.5rem;
+`;
+
 enum Tab {
   Published,
   Unpublished,
@@ -52,13 +67,38 @@ enum Tab {
 
 const MyPublications: FC = () => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   const user = useSelector((store: RootStore) => store.user);
   const [selectedTab, setSelectedTab] = useState(Tab.Unpublished);
+  const [isLoading, setIsLoading] = useState(true);
+  const [publications, setPublications] = useState<PublicationPreview[]>([]);
+
+  useEffect(() => {
+    const loadData = async () => {
+      setIsLoading(true);
+      const publications = await getMyPublications();
+      if (publications?.error) {
+        dispatch(setNotification(publications.error, NotificationVariant.Error));
+      } else {
+        setPublications(publications);
+      }
+      setIsLoading(false);
+    };
+    loadData();
+  }, [dispatch]);
+
+  const unPublishedPublications = publications
+    .filter((publication) => publication.status !== PublicationStatus.PUBLISHED)
+    .sort((a, b) => new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime());
+
+  const publishedPublications = publications
+    .filter((publication) => publication.status === PublicationStatus.PUBLISHED)
+    .sort((a, b) => new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime());
 
   return (
     <StyledContainer>
-      {user.authority && (
-        <StyledButtonWrapper>
+      <StyledButtonWrapper>
+        {user.authority && (
           <Button
             color="primary"
             component={RouterLink}
@@ -66,25 +106,33 @@ const MyPublications: FC = () => {
             data-testid="public-profile-button">
             {t('workLists:go_to_public_profile')}
           </Button>
-        </StyledButtonWrapper>
-      )}
+        )}
+      </StyledButtonWrapper>
       <StyledTabsContainer>
         <StyledTabButton
           data-testid="unpublished-button"
           onClick={() => setSelectedTab(Tab.Unpublished)}
           isSelected={selectedTab === Tab.Unpublished}>
-          {t('unpublished')}
+          {t('unpublished')} ({unPublishedPublications.length})
         </StyledTabButton>
         <StyledTabButton
           data-testid="published-button"
           onClick={() => setSelectedTab(Tab.Published)}
           isSelected={selectedTab === Tab.Published}>
-          {t('published')}
+          {t('published')} ({publishedPublications.length})
         </StyledTabButton>
       </StyledTabsContainer>
-
-      {selectedTab === Tab.Unpublished && <UnpublishedPublications />}
-      {selectedTab === Tab.Published && <PublishedPublications />}
+      {isLoading ? (
+        <StyledProgressContainer>
+          <CircularProgress color="primary" size={50} />
+        </StyledProgressContainer>
+      ) : (
+        <StyledCard>
+          <PublicationList
+            publications={selectedTab === Tab.Unpublished ? unPublishedPublications : publishedPublications}
+          />
+        </StyledCard>
+      )}
     </StyledContainer>
   );
 };

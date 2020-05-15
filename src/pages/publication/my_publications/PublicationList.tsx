@@ -3,7 +3,7 @@ import React, { FC, useState } from 'react';
 import styled from 'styled-components';
 import { Button, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import { PublicationPreview } from '../../../types/publication.types';
+import { PublicationPreview, PublicationStatus } from '../../../types/publication.types';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import Label from '../../../components/Label';
@@ -96,6 +96,7 @@ const PublicationList: FC<PublicationListProps> = ({ publications }) => {
               <TableCell>
                 <Button
                   color="secondary"
+                  disabled={publication.status === PublicationStatus.DELETED}
                   variant="outlined"
                   data-testid={`delete-publication-${publication.identifier}`}
                   onClick={() => handleOnClick(publication)}>
