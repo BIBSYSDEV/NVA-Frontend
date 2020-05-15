@@ -14,6 +14,7 @@ import PublicationList from './PublicationList';
 const StyledContainer = styled.div`
   display: block;
   width: 100%;
+  margin: 0 2rem;
 `;
 
 const StyledButtonWrapper = styled.div`
@@ -24,10 +25,10 @@ const StyledButtonWrapper = styled.div`
 `;
 
 const StyledTabsContainer = styled.div`
-  width: 100%;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   padding-top: 2rem;
+  margin: 0 1.5rem;
 `;
 
 const StyledTabButton = styled.button<{ isSelected: boolean }>`
@@ -36,7 +37,7 @@ const StyledTabButton = styled.button<{ isSelected: boolean }>`
   flex-direction: column;
   align-items: center;
   cursor: pointer;
-  width: 45%;
+  width: 50%;
   font-weight: bold;
   font-size: 1.2rem;
 
@@ -66,7 +67,7 @@ enum Tab {
 }
 
 const MyPublications: FC = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('workLists');
   const dispatch = useDispatch();
   const user = useSelector((store: RootStore) => store.user);
   const [selectedTab, setSelectedTab] = useState(Tab.Unpublished);
@@ -104,7 +105,7 @@ const MyPublications: FC = () => {
             component={RouterLink}
             to={`/profile/${user.authority.systemControlNumber}`}
             data-testid="public-profile-button">
-            {t('workLists:go_to_public_profile')}
+            {t('go_to_public_profile')}
           </Button>
         )}
       </StyledButtonWrapper>
@@ -113,13 +114,13 @@ const MyPublications: FC = () => {
           data-testid="unpublished-button"
           onClick={() => setSelectedTab(Tab.Unpublished)}
           isSelected={selectedTab === Tab.Unpublished}>
-          {t('unpublished')} ({unPublishedPublications.length})
+          {t('unpublished_publications')} ({unPublishedPublications.length})
         </StyledTabButton>
         <StyledTabButton
           data-testid="published-button"
           onClick={() => setSelectedTab(Tab.Published)}
           isSelected={selectedTab === Tab.Published}>
-          {t('published')} ({publishedPublications.length})
+          {t('published_publications')} ({publishedPublications.length})
         </StyledTabButton>
       </StyledTabsContainer>
       {isLoading ? (
