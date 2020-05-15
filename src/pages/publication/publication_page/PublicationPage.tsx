@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState } from 'react';
 import { getPublication } from '../../../api/publicationApi';
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { useDispatch } from 'react-redux';
-import { CircularProgress, Link } from '@material-ui/core';
+import { CircularProgress, Link, Chip } from '@material-ui/core';
 import { Publication, emptyPublication } from '../../../types/publication.types';
 import styled from 'styled-components';
 import ContentPage from '../../../components/ContentPage';
@@ -24,22 +24,23 @@ const StyledContentWrapper = styled.div`
   display: flex;
   padding-top: 1rem;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
     flex-direction: column;
   }
 `;
 
 const StyledSidebar = styled.div`
   min-width: 15rem;
+  padding: 1rem 0;
 `;
 
 const StyledMainContent = styled.div`
   flex: 1;
-  padding-left: 1rem;
+  padding: 1rem 2rem;
 `;
 
 const StyledSidebarCard = styled(Card)`
-  padding: 0.5rem;
+  padding: 1rem 0.5rem;
 `;
 
 const StyledLicenseCard = styled(Card)`
@@ -52,17 +53,40 @@ const StyledLicenseCard = styled(Card)`
   padding: 1rem;
 `;
 
-const StyledImage = styled.img`
+const StyledLicenseImage = styled.img`
   grid-area: image;
 `;
 
-const StyledLabel = styled(Label)`
+const StyledLicenseLabel = styled(Label)`
   grid-area: label;
 `;
 
 const StyledNormalText = styled(NormalText)`
   grid-area: description;
   white-space: pre-wrap;
+`;
+
+const StyledTextContainer = styled.div`
+  display: inline-block;
+  margin: 1rem 0;
+`;
+
+const StyledLabel = styled(Label)`
+  display: inline-block;
+`;
+
+const StyledTextDescription = styled(NormalText)`
+  display: inline;
+  margin-left: 1rem;
+`;
+
+const StyledTag = styled.div`
+  display: inline;
+  margin-left: 1rem;
+`;
+
+const StyledTagContainer = styled.div`
+  align-items: center;
 `;
 
 const PublicationPage: FC = () => {
@@ -138,19 +162,26 @@ const PublicationPage: FC = () => {
                     </LabelContentRow>
                   )}
                   {abstract && (
-                    <LabelContentRow minimal label={t('description.abstract')}>
-                      {abstract}
-                    </LabelContentRow>
+                    <StyledTextContainer>
+                      <StyledLabel>{t('description.abstract')}</StyledLabel>
+                      <StyledTextDescription>{abstract}</StyledTextDescription>
+                    </StyledTextContainer>
                   )}
                   {description && (
-                    <LabelContentRow minimal label={t('description.description')}>
-                      {description}
-                    </LabelContentRow>
+                    <StyledTextContainer>
+                      <StyledLabel>{t('description.description')}</StyledLabel>
+                      <StyledTextDescription>{description}</StyledTextDescription>
+                    </StyledTextContainer>
                   )}
                   {tags && (
-                    <LabelContentRow minimal label={t('description.tags')}>
-                      {tags}
-                    </LabelContentRow>
+                    <StyledTagContainer>
+                      <StyledLabel>{t('description.tags')}</StyledLabel>
+                      {tags.map((tag) => (
+                        <StyledTag key={tag}>
+                          <Chip label={tag} />
+                        </StyledTag>
+                      ))}
+                    </StyledTagContainer>
                   )}
                   {publicationContext && (
                     <LabelContentRow minimal label={t('references.journal')}>
@@ -159,8 +190,8 @@ const PublicationPage: FC = () => {
                   )}
                   {selectedLicense && (
                     <StyledLicenseCard>
-                      <StyledImage src={selectedLicense.image} alt={selectedLicense.identifier} />
-                      <StyledLabel>{selectedLicense.label}</StyledLabel>
+                      <StyledLicenseImage src={selectedLicense.image} alt={selectedLicense.identifier} />
+                      <StyledLicenseLabel>{selectedLicense.label}</StyledLicenseLabel>
                       <StyledNormalText>{selectedLicense.description}</StyledNormalText>
                     </StyledLicenseCard>
                   )}
