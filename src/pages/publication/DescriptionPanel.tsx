@@ -1,12 +1,12 @@
-import { Field, FieldArray, FormikProps, useFormikContext, FieldProps, FieldArrayRenderProps, getIn } from 'formik';
+import { Field, FormikProps, useFormikContext, FieldProps } from 'formik';
 import { TextField } from 'formik-material-ui';
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import DateFnsUtils from '@date-io/date-fns';
-import { MenuItem } from '@material-ui/core';
+import { MenuItem, TextField as MuiTextField } from '@material-ui/core';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
-import ChipInput from 'material-ui-chip-input';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 
 import { FormikPublication } from '../../types/publication.types';
 import DisciplineSearch from './description_tab/DisciplineSearch';
@@ -30,10 +30,6 @@ const StyledFieldWrapper = styled.div`
   flex: 1 0 40%;
 `;
 
-const StyledTagsField = styled(StyledFieldWrapper)`
-  margin-top: 2rem;
-`;
-
 const StyledFieldHeader = styled.header`
   margin: 1rem;
   font-size: 1.5rem;
@@ -41,7 +37,7 @@ const StyledFieldHeader = styled.header`
 
 const DescriptionPanel: FC<PanelProps> = ({ setTouchedFields }) => {
   const { t } = useTranslation('publication');
-  const { setFieldValue, values }: FormikProps<FormikPublication> = useFormikContext();
+  const { setFieldValue }: FormikProps<FormikPublication> = useFormikContext();
 
   useEffect(
     // Set all fields as touched if user navigates away from this panel (on unmount)
@@ -104,22 +100,27 @@ const DescriptionPanel: FC<PanelProps> = ({ setTouchedFields }) => {
               )}
             </Field>
           </StyledFieldWrapper>
-          <StyledTagsField>
-            <FieldArray name={DescriptionFieldNames.TAGS}>
-              {({ name, push, remove }: FieldArrayRenderProps) => (
-                <ChipInput
-                  value={getIn(values, name)}
-                  onAdd={(tag) => push(tag)}
-                  onDelete={(_, index) => remove(index)}
-                  aria-label="tags"
-                  label={t('description.tags')}
-                  helperText={t('description.tags_helper')}
-                  variant="outlined"
-                  fullWidth
+          <StyledFieldWrapper>
+            <Field name={DescriptionFieldNames.TAGS}>
+              {({ field: { name } }: FieldProps) => (
+                <Autocomplete
+                  freeSolo
+                  multiple
+                  options={[]}
+                  onChange={(_: ChangeEvent<{}>, value: any) => setFieldValue(name, value)}
+                  renderInput={(params) => (
+                    <MuiTextField
+                      {...params}
+                      label={t('description.tags')}
+                      helperText={t('description.tags_helper')}
+                      variant="outlined"
+                      fullWidth
+                    />
+                  )}
                 />
               )}
-            </FieldArray>
-          </StyledTagsField>
+            </Field>
+          </StyledFieldWrapper>
         </MultipleFieldWrapper>
 
         <MultipleFieldWrapper>
