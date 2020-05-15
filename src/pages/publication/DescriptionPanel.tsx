@@ -108,7 +108,7 @@ const DescriptionPanel: FC<PanelProps> = ({ setTouchedFields }) => {
                   freeSolo
                   multiple
                   options={[]}
-                  onChange={(_: ChangeEvent<{}>, value: any) => setFieldValue(field.name, value)}
+                  onChange={(_: ChangeEvent<{}>, value: string[] | string) => setFieldValue(field.name, value)}
                   renderInput={(params) => (
                     <MuiTextField
                       {...params}
