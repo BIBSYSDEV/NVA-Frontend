@@ -9,7 +9,6 @@ import { getPublication } from '../../api/publicationApi';
 
 const useFetchPublication = (identifier: string): [Publication | undefined, boolean] => {
   const dispatch = useDispatch();
-
   const [publication, setPublication] = useState<Publication | undefined>();
   const [isLoading, setIsLoading] = useState(false);
 

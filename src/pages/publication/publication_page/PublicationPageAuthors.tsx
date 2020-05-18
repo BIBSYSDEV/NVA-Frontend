@@ -12,13 +12,41 @@ interface PublicationPageProps {
   contributors: Contributor[];
 }
 
-const PublicationPageAuthors: FC<PublicationPageProps> = ({ contributors }) => (
-  <NormalText>
-    {contributors.map((contributor, index) => {
-      const { arpId, name } = contributor.identity;
-      return <StyledAuthor key={index}>{arpId ? <Link href={`/profile/${arpId}`}>{name}</Link> : name}</StyledAuthor>;
-    })}
-  </NormalText>
-);
+const PublicationPageAuthors: FC<PublicationPageProps> = ({ contributors }) => {
+  const distinctUnits = [
+    ...new Set(
+      contributors
+        .map((contributor) => contributor.affiliations)
+        .flat()
+        .filter((unit) => unit)
+        .map((unit) => unit.id)
+    ),
+  ];
+
+  return (
+    <>
+      <NormalText>
+        {contributors.map((contributor, index) => {
+          const { arpId, name } = contributor.identity;
+          const affiliationIndexes = contributor.affiliations?.map(
+            (affiliation) => distinctUnits.indexOf(affiliation.id) + 1
+          );
+
+          return (
+            <StyledAuthor key={index}>
+              {arpId ? <Link href={`/profile/${arpId}`}>{name}</Link> : name}{' '}
+              {affiliationIndexes?.length > 0 && <sup>{affiliationIndexes.join(',')}</sup>}
+            </StyledAuthor>
+          );
+        })}
+      </NormalText>
+      {distinctUnits.map((unit, index) => (
+        <p key={unit}>
+          <sup>{index + 1}</sup> {unit}
+        </p>
+      ))}
+    </>
+  );
+};
 
 export default PublicationPageAuthors;
