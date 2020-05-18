@@ -6,6 +6,7 @@
       "createdDate": "1941-04-25",
       "status": "draft",
       "createdBy": "Kåre Kåresen",
+      "owner": "kare@unit.no",
       "contributors": [],
       "publicationType": "Journal",
       "reference": {
@@ -23,6 +24,7 @@
       "createdDate": "2019-01-01",
       "status": "draft",
       "createdBy": "Kari Karisen",
+      "owner": "kari@ntnu.no",
       "contributors": [],
       "publicationType": "Journal",
       "reference": {
@@ -40,6 +42,7 @@
       "createdDate": "2020-01-01",
       "status": "draft",
       "createdBy": "Arne Arnesen",
+      "owner": "arne@uio.no",
       "contributors": [],
       "publicationType": "Journal",
       "reference": {
@@ -57,6 +60,7 @@
       "createdDate": "2021-01-01",
       "status": "rejected",
       "createdBy": "Bob Boffaloe",
+      "owner": "bob@boffaloe.com",
       "contributors": [],
       "publicationType": "Journal",
       "reference": {
@@ -74,6 +78,7 @@
       "createdDate": "2021-01-01",
       "status": "published",
       "createdBy": "Bob Ryder",
+      "owner": "bob@ryder.net",
       "date": {
         "year": "2021",
         "month": "01",
@@ -96,6 +101,7 @@
       "createdDate": "1941-04-25",
       "status": "published",
       "createdBy": "Bob Maggio",
+      "owner": "bob@maggio.com",
       "date": {
         "year": "1941",
         "month": "04",
