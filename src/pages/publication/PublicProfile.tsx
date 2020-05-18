@@ -15,6 +15,7 @@ import LabelTextLine from './../../components/LabelTextLine';
 import Heading from '../../components/Heading';
 import { NotificationVariant } from '../../types/notification.types';
 import useFetchMultipleUnits from '../../utils/hooks/useFetchMultipleUnits';
+import { getCommaSeparatedUnitString } from '../../utils/institutions-helpers';
 
 const StyledWrapper = styled.div`
   text-align: center;
@@ -68,7 +69,7 @@ const PublicProfile: FC = () => {
             units.length > 0 && (
               <LabelTextLine label={t('heading.organizations')}>
                 {units.map((unit) => (
-                  <NormalText key={unit.id}>{unit.name}</NormalText>
+                  <NormalText key={unit.id}>{getCommaSeparatedUnitString(unit)}</NormalText>
                 ))}
               </LabelTextLine>
             )
