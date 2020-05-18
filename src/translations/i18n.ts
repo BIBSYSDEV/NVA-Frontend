@@ -34,6 +34,8 @@ import publicationTypesNb from './nb/publicationTypes.json';
 import translationsNb from './nb/translations.json';
 import workListsNb from './nb/workLists.json';
 
+export const fallbackLanguage = LanguageCodes.NORWEGIAN_BOKMAL;
+
 i18n.use(LanguageDetector).init({
   resources: {
     eng: {
@@ -71,7 +73,7 @@ i18n.use(LanguageDetector).init({
       workLists: workListsNb,
     },
   },
-  fallbackLng: LanguageCodes.NORWEGIAN_BOKMAL,
+  fallbackLng: fallbackLanguage,
   debug: false,
   ns: ['breadcrumbs', 'common', 'feedback', 'infopages', 'languages', 'profile', 'translations'],
   defaultNS: 'translations',
