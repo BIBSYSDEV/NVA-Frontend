@@ -6,30 +6,12 @@ import styled from 'styled-components';
 import DoiRequests from './DoiRequests';
 import PublicationsForApproval from './PublicationsForApproval';
 import Card from '../../components/Card';
+import TabButton from '../../components/TabButton';
 
 const StyledTabsContainer = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-around;
-`;
-
-const StyledTabButton = styled.button<{ isSelected: boolean }>`
-  all: unset;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  cursor: pointer;
-  width: 45%;
-  font-weight: bold;
-  font-size: 1.2rem;
-
-  ${({ isSelected, theme }) =>
-    isSelected &&
-    `
-      color: ${theme.palette.primary.main};
-      padding-bottom: 0.4rem;
-      border-bottom: 0.2rem solid;
-    `};
 `;
 
 const StyledCard = styled(Card)`
@@ -60,20 +42,20 @@ const WorklistPage: FC = () => {
   return (
     <>
       <StyledTabsContainer>
-        <StyledTabButton
+        <TabButton
           data-testid="for-approval-button"
           onClick={() => setSelectedTab(Tab.Approval)}
           isSelected={selectedTab === Tab.Approval}>
           <StyledPlaylistAddCheckIcon fontSize="large" />
           {t('for_approval')}
-        </StyledTabButton>
-        <StyledTabButton
+        </TabButton>
+        <TabButton
           data-testid="doi-requests-button"
           onClick={() => setSelectedTab(Tab.Doi)}
           isSelected={selectedTab === Tab.Doi}>
           <StyledLinkIcon fontSize="large" />
           {t('doi_requests')}
-        </StyledTabButton>
+        </TabButton>
       </StyledTabsContainer>
 
       <StyledCard>

@@ -24,6 +24,8 @@ export enum BackendTypeNames {
 }
 
 export enum PublicationStatus {
+  DELETED = 'Deleted',
+  DRAFT = 'Draft',
   NEW = 'New',
   PUBLISHED = 'Published',
 }
