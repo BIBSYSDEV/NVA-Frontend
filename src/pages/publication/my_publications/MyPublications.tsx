@@ -70,7 +70,7 @@ const MyPublications: FC = () => {
     loadData();
   }, [dispatch]);
 
-  const unPublishedPublications = publications
+  const unpublishedPublications = publications
     .filter((publication) => publication.status !== PublicationStatus.PUBLISHED)
     .sort((a, b) => new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime());
 
@@ -96,7 +96,7 @@ const MyPublications: FC = () => {
           data-testid="unpublished-button"
           onClick={() => setSelectedTab(Tab.Unpublished)}
           isSelected={selectedTab === Tab.Unpublished}>
-          {t('unpublished_publications')} ({unPublishedPublications.length})
+          {t('unpublished_publications')} ({unpublishedPublications.length})
         </TabButton>
         <TabButton
           data-testid="published-button"
@@ -112,7 +112,7 @@ const MyPublications: FC = () => {
       ) : (
         <StyledCard>
           <PublicationList
-            publications={selectedTab === Tab.Unpublished ? unPublishedPublications : publishedPublications}
+            publications={selectedTab === Tab.Unpublished ? unpublishedPublications : publishedPublications}
           />
         </StyledCard>
       )}
