@@ -9,6 +9,7 @@
   "no_pending_doi_requests": "You don't have any awaiting DOI requests",
   "no_pending_publications": "You don't have any publications awaiting approval",
   "publication_name": "Publication name",
+  "published_publications": "Published publications",
   "submitter": "Submitter",
   "unpublished_publications": "Unpublished publications"
 }
