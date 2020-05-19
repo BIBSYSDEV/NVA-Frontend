@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { CircularProgress, TextField } from '@material-ui/core';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
-import { Field, FieldProps, Form, Formik } from 'formik';
+import { Field, FieldProps, Form, Formik, ErrorMessage } from 'formik';
 import { useParams, useHistory } from 'react-router-dom';
 
 import Card from '../../components/Card';
@@ -88,48 +88,62 @@ const AdminCustomerInstitutionPage: FC = () => {
       <Formik
         enableReinitialize
         initialValues={initialValues}
-        validationSchema={Yup.object({
-          name: Yup.string().required(t('feedback.required_field')),
+        validateOnChange
+        validationSchema={Yup.object().shape({
+          [CustomerInstitutionFieldNames.NAME]: Yup.string().required(t('feedback.required_field')),
+          [CustomerInstitutionFieldNames.DISPLAY_NAME]: Yup.string().required(t('feedback.required_field')),
+          [CustomerInstitutionFieldNames.SHORT_NAME]: Yup.string().required(t('feedback.required_field')),
+          [CustomerInstitutionFieldNames.ADMINISTRATION_ID]: Yup.string().required(t('feedback.required_field')),
+          [CustomerInstitutionFieldNames.FEIDE_ORGANIZATION_ID]: Yup.string().required(t('feedback.required_field')),
         })}
         onSubmit={handleSubmit}>
         {({ isSubmitting }) => (
           <Form>
             <Field name={CustomerInstitutionFieldNames.NAME}>
-              {({ field: { name, value }, form: { setFieldValue } }: FieldProps) => (
+              {({ field: { name, value }, form: { setValues }, meta: { touched, error } }: FieldProps) => (
                 <InstitutionAutocomplete
                   institutions={institutions}
                   isLoading={isLoadingInstitutions}
                   value={institutions.find((i) => i.name === value) ?? null}
-                  onChange={(value) => {
-                    setFieldValue(name, value?.name ?? '');
-                    setFieldValue(CustomerInstitutionFieldNames.DISPLAY_NAME, value?.name ?? '');
-                    setFieldValue(CustomerInstitutionFieldNames.SHORT_NAME, value?.acronym ?? '');
+                  onChange={(selectedInstitution) => {
+                    setValues({
+                      ...initialValues,
+                      name: selectedInstitution?.name ?? '',
+                      [CustomerInstitutionFieldNames.DISPLAY_NAME]: selectedInstitution?.name ?? '',
+                      [CustomerInstitutionFieldNames.SHORT_NAME]: selectedInstitution?.acronym ?? '',
+                    });
                   }}
                   disabled={editMode}
+                  error={touched && !!error}
+                  helperText={<ErrorMessage name={name} />}
                 />
               )}
             </Field>
 
             <Field name={CustomerInstitutionFieldNames.DISPLAY_NAME}>
-              {({ field }: FieldProps) => (
+              {({ field, meta: { touched, error } }: FieldProps) => (
                 <TextField
                   {...field}
                   label={t('display_name')}
                   fullWidth
                   variant="outlined"
                   inputProps={{ 'data-testid': 'customer-institution-display-name-input' }}
+                  error={touched && !!error}
+                  helperText={<ErrorMessage name={field.name} />}
                 />
               )}
             </Field>
 
             <Field name={CustomerInstitutionFieldNames.SHORT_NAME}>
-              {({ field }: FieldProps) => (
+              {({ field, meta: { touched, error } }: FieldProps) => (
                 <TextField
                   {...field}
                   label={t('short_name')}
                   fullWidth
                   variant="outlined"
                   inputProps={{ 'data-testid': 'customer-institution-short-name-input' }}
+                  error={touched && !!error}
+                  helperText={<ErrorMessage name={field.name} />}
                 />
               )}
             </Field>
@@ -171,25 +185,29 @@ const AdminCustomerInstitutionPage: FC = () => {
             </Field>
 
             <Field name={CustomerInstitutionFieldNames.ADMINISTRATION_ID}>
-              {({ field }: FieldProps) => (
+              {({ field, meta: { touched, error } }: FieldProps) => (
                 <TextField
                   {...field}
                   label={t('administration_id')}
                   fullWidth
                   variant="outlined"
                   inputProps={{ 'data-testid': 'customer-institution-administrator-id-input' }}
+                  error={touched && !!error}
+                  helperText={<ErrorMessage name={field.name} />}
                 />
               )}
             </Field>
 
             <Field name={CustomerInstitutionFieldNames.FEIDE_ORGANIZATION_ID}>
-              {({ field }: FieldProps) => (
+              {({ field, meta: { touched, error } }: FieldProps) => (
                 <TextField
                   {...field}
                   label={t('feide_organization_id')}
                   fullWidth
                   variant="outlined"
                   inputProps={{ 'data-testid': 'customer-institution-feide-organization-id-input' }}
+                  error={touched && !!error}
+                  helperText={<ErrorMessage name={field.name} />}
                 />
               )}
             </Field>
