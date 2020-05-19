@@ -2,7 +2,7 @@ import { Form, Formik, FormikProps, yupToFormErrors, validateYupSchema } from 'f
 import React, { FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { emptyPublication, FormikPublication, PublicationStatus } from '../../types/publication.types';
+import { emptyPublication, FormikPublication, PublicationStatus, PublicationTab } from '../../types/publication.types';
 import { createUppy } from '../../utils/uppy-config';
 import { PublicationFormTabs } from './PublicationFormTabs';
 import { emptyFile, Uppy, emptyFileSet } from '../../types/file.types';
@@ -48,7 +48,7 @@ const PublicationForm: FC<PublicationFormProps> = ({
 }) => {
   const user = useSelector((store: RootStore) => store.user);
   const { t } = useTranslation('publication');
-  const [tabNumber, setTabNumber] = useState(user.isCurator ? 4 : 0);
+  const [tabNumber, setTabNumber] = useState(user.isCurator ? PublicationTab.Submission : PublicationTab.Description);
   const [initialValues, setInitialValues] = useState(emptyPublication);
   const [isLoading, setIsLoading] = useState(!!identifier);
   const [isSaving, setIsSaving] = useState(false);
@@ -160,7 +160,7 @@ const PublicationForm: FC<PublicationFormProps> = ({
                 savePublication={savePublication}
               />
             </Form>
-            {tabNumber !== 4 && (
+            {tabNumber !== PublicationTab.Submission && (
               <StyledButtonGroupContainer>
                 <StyledButtonContainer>
                   <Button color="primary" variant="contained" onClick={goToNextTab}>

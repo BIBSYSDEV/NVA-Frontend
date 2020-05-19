@@ -30,6 +30,14 @@ export enum PublicationStatus {
   PUBLISHED = 'Published',
 }
 
+export enum PublicationTab {
+  Description = 0,
+  Reference = 1,
+  Contributors = 2,
+  FilesAndLicenses = 3,
+  Submission = 4,
+}
+
 export const levelMap: EnumDictionary<string, number | null> = {
   NO_LEVEL: null,
   LEVEL_0: 0,
