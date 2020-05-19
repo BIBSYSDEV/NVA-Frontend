@@ -18,7 +18,6 @@ describe('Menu', () => {
     cy.get('[data-testid=menu-new-publication-button]').should('be.visible');
     cy.get('[data-testid=menu-my-publications-button]').should('be.visible');
     cy.get('[data-testid=menu-admin-institution-button]').should('be.visible');
-    cy.get('[data-testid=menu-my-worklist-button]').should('be.visible');
     cy.get('[data-testid=menu-logout-button]').should('be.visible');
   });
 
@@ -30,7 +29,6 @@ describe('Menu', () => {
     cy.get('[data-testid=menu-new-publication-button]').should('not.be.visible');
     cy.get('[data-testid=menu-admin-institution-button]').should('not.be.visible');
     cy.get('[data-testid=menu-my-publications-button]').should('not.be.visible');
-    cy.get('[data-testid=menu-my-worklist-button]').should('not.be.visible');
   });
 
   it.skip('Unauthorized user should see 404-message when visiting protected URLs', () => {
