@@ -13,6 +13,7 @@ import {
 import { PublicationPreview } from '../../types/publication.types';
 import { useTranslation } from 'react-i18next';
 import Label from '../../components/Label';
+import { Link as RouterLink } from 'react-router-dom';
 import NormalText from '../../components/NormalText';
 import { getTranslatedLabelForDisplayedRows } from '../../utils/pagination';
 
@@ -78,7 +79,12 @@ const WorklistTable: FC<WorklistTableProps> = ({ publications }) => {
                   <NormalText>{publication.createdDate}</NormalText>
                 </StyledCell>
                 <TableCell>
-                  <Button color="primary" variant="contained">
+                  <Button
+                    color="primary"
+                    component={RouterLink}
+                    to={`/publication/${publication.identifier}`}
+                    data-testid={`open-publication-${publication.identifier}`}
+                    variant="contained">
                     <NormalText>{t('common:open')}</NormalText>
                   </Button>
                 </TableCell>
