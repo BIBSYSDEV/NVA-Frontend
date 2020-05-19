@@ -1,4 +1,4 @@
-import Axios from 'axios';
+import Axios, { CancelToken } from 'axios';
 import { Dispatch } from 'redux';
 
 import { setNotification } from '../redux/actions/notificationActions';
@@ -57,7 +57,7 @@ export const updatePublication = async (publication: Publication) => {
   }
 };
 
-export const getPublication = async (id: string) => {
+export const getPublication = async (id: string, cancelToken?: CancelToken) => {
   const url = `${PublicationsApiPaths.PUBLICATION}/${id}`;
 
   try {
@@ -66,6 +66,7 @@ export const getPublication = async (id: string) => {
       headers: {
         Authorization: `Bearer ${idToken}`,
       },
+      cancelToken,
     });
     if (response.status === StatusCode.OK) {
       return response.data;

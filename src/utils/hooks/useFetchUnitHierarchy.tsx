@@ -11,14 +11,13 @@ import Axios from 'axios';
 // This hook is used to fetch the top-down hierarchy of any given sub-unit
 const useFetchUnitHierarchy = (unitId: string): [RecursiveInstitutionUnit | undefined, boolean] => {
   const dispatch = useDispatch();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [unit, setUnit] = useState<RecursiveInstitutionUnit | undefined>();
 
   useEffect(() => {
     const cancelSource = Axios.CancelToken.source();
 
     const fetchDepartment = async () => {
-      setIsLoading(true);
       // TODO: NP-844 should ensure we have URIs from start (not IDs)
       const unitUri = getUnitUri(unitId);
 
