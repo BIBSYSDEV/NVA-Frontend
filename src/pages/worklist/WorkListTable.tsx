@@ -1,4 +1,4 @@
-import React, { FC, useState, ChangeEvent } from 'react';
+import React, { FC, useState, ChangeEvent, MouseEvent } from 'react';
 import styled from 'styled-components';
 import {
   TableRow,
@@ -14,6 +14,7 @@ import { PublicationPreview } from '../../types/publication.types';
 import { useTranslation } from 'react-i18next';
 import Label from '../../components/Label';
 import NormalText from '../../components/NormalText';
+import { getTranslatedLabelForDisplayedRows } from '../../utils/pagination';
 
 const StyledTableRow = styled(TableRow)`
   background-color: ${(props) => props.theme.palette.box.main};
@@ -37,7 +38,7 @@ const WorklistTable: FC<WorklistTableProps> = ({ publications }) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
-  const handleChangePage = (_: any, newPage: number) => {
+  const handleChangePage = (_: MouseEvent<HTMLButtonElement> | null, newPage: number) => {
     setPage(newPage);
   };
 
@@ -91,11 +92,7 @@ const WorklistTable: FC<WorklistTableProps> = ({ publications }) => {
         component="div"
         count={publications.length}
         labelRowsPerPage={t('common:rows_per_page')}
-        labelDisplayedRows={({ from, to, count }) =>
-          `${from}-${to === -1 ? count : to} ${t('common:of')} ${
-            count !== -1 ? count : `${t('common:more_than')} ${to}`
-          }`
-        }
+        labelDisplayedRows={({ from, to, count }) => getTranslatedLabelForDisplayedRows(from, to, count)}
         rowsPerPage={rowsPerPage}
         page={page}
         onChangePage={handleChangePage}
