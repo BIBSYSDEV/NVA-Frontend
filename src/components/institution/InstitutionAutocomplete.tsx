@@ -6,12 +6,11 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 
 import { InstitutionUnitBase } from '../../types/institution.types';
 
-interface InstitutionAutocompleteProps extends Pick<TextFieldProps, 'error' | 'helperText'> {
+interface InstitutionAutocompleteProps extends Pick<TextFieldProps, 'disabled' | 'error' | 'helperText'> {
   institutions: InstitutionUnitBase[];
   onChange: (value: InstitutionUnitBase | null) => void;
   value: InstitutionUnitBase | null;
   isLoading?: boolean;
-  disabled?: boolean;
 }
 
 const InstitutionAutocomplete: FC<InstitutionAutocompleteProps> = ({
@@ -27,7 +26,6 @@ const InstitutionAutocomplete: FC<InstitutionAutocompleteProps> = ({
 
   return (
     <Autocomplete
-      disabled={disabled}
       options={institutions}
       getOptionLabel={(option: InstitutionUnitBase) => option.name}
       getOptionSelected={(option: InstitutionUnitBase, value: InstitutionUnitBase) => option.id === value.id}
@@ -61,6 +59,7 @@ const InstitutionAutocomplete: FC<InstitutionAutocompleteProps> = ({
               </>
             ),
           }}
+          disabled={disabled}
           error={error}
           helperText={helperText}
         />
