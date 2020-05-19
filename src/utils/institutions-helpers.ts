@@ -1,4 +1,5 @@
 import { RecursiveInstitutionUnit, FormikInstitutionUnit, InstitutionUnitBase } from '../types/institution.types';
+import { Contributor } from '../types/contributor.types';
 
 // Exclude institutions on any level (root, subunit, subunit of subunit, etc) that has a matching id in excludeIds
 export const filterInstitutions = (
@@ -19,4 +20,25 @@ export const getMostSpecificUnit = (values: FormikInstitutionUnit): InstitutionU
     return getMostSpecificUnit(values.subunit);
   }
   return values as InstitutionUnitBase;
+};
+
+// Find distinct unit URIs for a set of contributors' affiliations
+export const getDistinctContributorUnits = (contributors: Contributor[]) => [
+  ...new Set(
+    contributors
+      .map((contributor) => contributor.affiliations)
+      .flat()
+      .filter((unit) => unit)
+      .map((unit) => unit.id)
+  ),
+];
+
+// Returns top-down comma separated unit names
+export const getCommaSeparatedUnitString = (unit: RecursiveInstitutionUnit, unitNames: string[] = []): string => {
+  unitNames.push(unit.name);
+  if (unit.subunits) {
+    return getCommaSeparatedUnitString(unit.subunits[0], unitNames);
+  } else {
+    return unitNames.join(', ');
+  }
 };

@@ -1,10 +1,8 @@
-import React, { FC, useEffect, useState } from 'react';
-import { getPublication } from '../../../api/publicationApi';
-import { setNotification } from '../../../redux/actions/notificationActions';
-import { useDispatch } from 'react-redux';
+import React, { FC } from 'react';
 import { CircularProgress, Link, Chip } from '@material-ui/core';
-import { Publication, emptyPublication } from '../../../types/publication.types';
 import styled from 'styled-components';
+
+import { emptyPublication } from '../../../types/publication.types';
 import ContentPage from '../../../components/ContentPage';
 import { useTranslation } from 'react-i18next';
 import PublicationPageAuthors from './PublicationPageAuthors';
@@ -12,13 +10,13 @@ import PublicationPageFiles from './PublicationPageFiles';
 import NotFound from '../../errorpages/NotFound';
 import Card from '../../../components/Card';
 import Heading from '../../../components/Heading';
-import { NotificationVariant } from '../../../types/notification.types';
 import { useParams } from 'react-router';
 import { DOI_PREFIX } from '../../../utils/constants';
 import LabelContentRow from '../../../components/LabelContentRow';
 import Label from '../../../components/Label';
 import NormalText from '../../../components/NormalText';
 import { licenses } from '../../../types/file.types';
+import useFetchPublication from '../../../utils/hooks/useFetchPublication';
 
 const StyledContentWrapper = styled.div`
   display: flex;
@@ -90,27 +88,9 @@ const StyledTagContainer = styled.div`
 `;
 
 const PublicationPage: FC = () => {
-  const { identifier } = useParams();
-  const dispatch = useDispatch();
-  const [isLoadingPublication, setIsLoadingPublication] = useState(false);
-  const [publication, setPublication] = useState<Publication>();
   const { t } = useTranslation('publication');
-
-  useEffect(() => {
-    const loadData = async () => {
-      setIsLoadingPublication(true);
-      const publication = await getPublication(identifier!);
-      if (publication?.error) {
-        dispatch(setNotification(publication.error, NotificationVariant.Error));
-      } else {
-        setPublication(publication);
-      }
-      setIsLoadingPublication(false);
-    };
-    if (identifier) {
-      loadData();
-    }
-  }, [dispatch, identifier]);
+  const { identifier } = useParams();
+  const [publication, isLoadingPublication] = useFetchPublication(identifier);
 
   const {
     mainTitle,
