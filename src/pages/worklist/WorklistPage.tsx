@@ -5,8 +5,8 @@ import PlaylistAddCheckIcon from '@material-ui/icons/PlaylistAddCheck';
 import styled from 'styled-components';
 import DoiRequests from './DoiRequests';
 import PublicationsForApproval from './PublicationsForApproval';
-import Card from '../../components/Card';
 import TabButton from '../../components/TabButton';
+import { Card } from '@material-ui/core';
 
 const StyledContainer = styled.div`
   display: block;
