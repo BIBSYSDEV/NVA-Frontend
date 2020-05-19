@@ -8,16 +8,22 @@ import PublicationsForApproval from './PublicationsForApproval';
 import Card from '../../components/Card';
 import TabButton from '../../components/TabButton';
 
-const StyledTabsContainer = styled.div`
+const StyledContainer = styled.div`
+  display: block;
   width: 100%;
+  margin: 0 2rem 2rem 2rem;
+`;
+
+const StyledTabsContainer = styled.div`
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
+  padding-top: 2rem;
+  margin: 0 1.5rem;
 `;
 
 const StyledCard = styled(Card)`
-  margin-top: 2rem;
-  text-align: center;
-  min-height: 5rem;
+  margin: 0 1.5rem;
+  width: auto;
 `;
 
 const StyledPlaylistAddCheckIcon = styled(PlaylistAddCheckIcon)`
@@ -40,7 +46,7 @@ const WorklistPage: FC = () => {
   const [selectedTab, setSelectedTab] = useState(Tab.Doi);
 
   return (
-    <>
+    <StyledContainer>
       <StyledTabsContainer>
         <TabButton
           data-testid="for-approval-button"
@@ -62,7 +68,7 @@ const WorklistPage: FC = () => {
         {selectedTab === Tab.Approval && <PublicationsForApproval />}
         {selectedTab === Tab.Doi && <DoiRequests />}
       </StyledCard>
-    </>
+    </StyledContainer>
   );
 };
 
