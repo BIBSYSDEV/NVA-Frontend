@@ -93,8 +93,8 @@ export const interceptRequestsOnMock = () => {
   mock.onGet(new RegExp(`${PublicationsApiPaths.PUBLICATIONS_BY_OWNER}/*`)).reply(200, mockMyPublications);
 
   // WORKLIST
-  mock.onGet(new RegExp(`${PublicationsApiPaths.DOI_REQUESTS}/*`)).reply(200, mockMyPublications);
-  mock.onGet(new RegExp(`${PublicationsApiPaths.FOR_APPROVAL}/*`)).reply(200, mockMyPublications);
+  mock.onGet(new RegExp(`${PublicationsApiPaths.DOI_REQUESTS}/*`)).reply(200, mockMyPublications.publications);
+  mock.onGet(new RegExp(`${PublicationsApiPaths.FOR_APPROVAL}/*`)).reply(200, mockMyPublications.publications);
 
   //PUBLICATION
   mock.onGet(new RegExp(`${PublicationsApiPaths.PUBLICATION}/new`)).reply(200, emptyPublication);
