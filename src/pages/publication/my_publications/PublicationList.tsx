@@ -1,4 +1,4 @@
-import React, { FC, useState, ChangeEvent } from 'react';
+import React, { FC, useState, ChangeEvent, MouseEvent } from 'react';
 
 import styled from 'styled-components';
 import {
@@ -55,7 +55,7 @@ const PublicationList: FC<PublicationListProps> = ({ publications }) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
-  const handleChangePage = (_: any, newPage: number) => {
+  const handleChangePage = (_: MouseEvent<HTMLButtonElement> | null, newPage: number) => {
     setPage(newPage);
   };
 
