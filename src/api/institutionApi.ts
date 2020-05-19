@@ -8,14 +8,14 @@ export enum InstitutionApiPaths {
   DEPARTMENTS = '/institution/departments',
 }
 
-export const getInstitutions = async () => {
+export const getInstitutions = async (cancelToken?: CancelToken) => {
   const url = InstitutionApiPaths.INSTITUTIONS;
   try {
     const idToken = await getIdToken();
     const headers = {
       Authorization: `Bearer ${idToken}`,
     };
-    const response = await Axios.get(url, { headers });
+    const response = await Axios.get(url, { headers, cancelToken });
 
     if (response.status === StatusCode.OK) {
       return response.data;

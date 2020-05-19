@@ -10,14 +10,13 @@ import { getPublication } from '../../api/publicationApi';
 const useFetchPublication = (identifier: string): [Publication | undefined, boolean] => {
   const dispatch = useDispatch();
   const [publication, setPublication] = useState<Publication | undefined>();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const cancelSource = Axios.CancelToken.source();
 
     const fetchPublication = async () => {
-      setIsLoading(true);
-      const publication = await getPublication(identifier);
+      const publication = await getPublication(identifier, cancelSource.token);
       if (publication?.error) {
         dispatch(setNotification(publication.error, NotificationVariant.Error));
       } else {

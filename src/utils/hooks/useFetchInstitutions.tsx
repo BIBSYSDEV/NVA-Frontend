@@ -13,14 +13,13 @@ import { setInstitutions } from '../../redux/actions/institutionActions';
 const useFetchInstitutions = (): [InstitutionUnitBase[], boolean] => {
   const dispatch = useDispatch();
   const institutions = useSelector((store: RootStore) => store.institutions);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const cancelSource = Axios.CancelToken.source();
 
     const fetchInstitutions = async () => {
-      setIsLoading(true);
-      const response = await getInstitutions();
+      const response = await getInstitutions(cancelSource.token);
       if (response?.error) {
         dispatch(setNotification(response.error, NotificationVariant.Error));
       } else {
