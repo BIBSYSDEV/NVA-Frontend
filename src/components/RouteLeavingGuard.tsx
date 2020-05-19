@@ -1,4 +1,3 @@
-import { Location } from 'history';
 import React, { useEffect, useState, FC } from 'react';
 import { Prompt, useHistory } from 'react-router-dom';
 import ConfirmDialog from './ConfirmDialog';
@@ -14,7 +13,7 @@ const RouteLeavingGuard: FC<RouteLeavingGuardProps> = ({ modalDescription, modal
   const [confirmedNavigation, setConfirmedNavigation] = useState(false);
   const history = useHistory();
 
-  const handleBlockedNavigation = (nextLocation: Location): boolean => {
+  const handleBlockedNavigation = (nextLocation: any): boolean => {
     if (!confirmedNavigation && shouldBlockNavigation) {
       setShowModal(true);
       setNextLocation(nextLocation);

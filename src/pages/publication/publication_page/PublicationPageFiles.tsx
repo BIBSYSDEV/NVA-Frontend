@@ -5,7 +5,7 @@ import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 import { File } from '../../../types/file.types';
 import NormalText from '../../../components/NormalText';
 import { downloadFile } from '../../../api/fileApi';
-import { useParams } from 'react-router';
+import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { setNotification } from '../../../redux/actions/notificationActions';

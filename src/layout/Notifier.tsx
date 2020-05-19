@@ -7,7 +7,7 @@ import { removeNotification } from '../redux/actions/notificationActions';
 import { RootStore } from '../redux/reducers/rootReducer';
 import { NotificationVariant } from '../types/notification.types';
 import { Fade } from '@material-ui/core';
-import { useHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
 
 const autoHideDuration = {
   [NotificationVariant.Error]: 6000,

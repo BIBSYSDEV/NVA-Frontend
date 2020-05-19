@@ -3,9 +3,10 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { MenuItem, Select } from '@material-ui/core';
 
-import { pageLanguages } from '../../types/language.types';
+import { pageLanguages, LanguageCodes } from '../../types/language.types';
 import Card from '../../components/Card';
 import Heading from '../../components/Heading';
+import { fallbackLanguage } from '../../translations/i18n';
 
 const StyledSelect = styled(Select)`
   margin-top: 1rem;
@@ -21,12 +22,16 @@ const UserLanguage: React.FC = () => {
     i18n.changeLanguage(language);
   };
 
+  const selectedLanguage = Object.values(LanguageCodes).some((language) => language === i18n.language)
+    ? i18n.language
+    : fallbackLanguage;
+
   return (
     <Card>
       <Heading>{t('heading.language')}</Heading>
       <StyledSelect
         variant="outlined"
-        value={i18n.language}
+        value={selectedLanguage}
         onChange={handleLanguageChange}
         data-testid="language-selector">
         {pageLanguages.map((language) => (

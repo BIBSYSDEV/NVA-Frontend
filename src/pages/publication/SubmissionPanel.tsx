@@ -16,7 +16,7 @@ import { PublicationType } from '../../types/publicationFieldNames';
 import Heading from '../../components/Heading';
 import SubHeading from '../../components/SubHeading';
 import Card from '../../components/Card';
-import { useHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
 import LabelContentRow from '../../components/LabelContentRow';
 import ErrorSummary from './submission_tab/ErrorSummary';
 import { DOI_PREFIX } from '../../utils/constants';

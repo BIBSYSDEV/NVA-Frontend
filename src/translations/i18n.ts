@@ -34,11 +34,7 @@ import publicationTypesNb from './nb/publicationTypes.json';
 import translationsNb from './nb/translations.json';
 import workListsNb from './nb/workLists.json';
 
-const previousLanguage = localStorage.getItem('i18nextLng');
-export const defaultLanguage =
-  previousLanguage && Object.values(LanguageCodes).includes(previousLanguage as LanguageCodes)
-    ? previousLanguage
-    : LanguageCodes.NORWEGIAN_BOKMAL;
+export const fallbackLanguage = LanguageCodes.NORWEGIAN_BOKMAL;
 
 i18n.use(LanguageDetector).init({
   resources: {
@@ -77,8 +73,7 @@ i18n.use(LanguageDetector).init({
       workLists: workListsNb,
     },
   },
-  lng: defaultLanguage,
-  fallbackLng: defaultLanguage,
+  fallbackLng: fallbackLanguage,
   debug: false,
   ns: ['breadcrumbs', 'common', 'feedback', 'infopages', 'languages', 'profile', 'translations'],
   defaultNS: 'translations',
