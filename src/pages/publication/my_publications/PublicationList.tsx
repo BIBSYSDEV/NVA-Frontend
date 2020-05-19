@@ -19,6 +19,7 @@ import Label from '../../../components/Label';
 import NormalText from '../../../components/NormalText';
 import { Link as RouterLink } from 'react-router-dom';
 import DeletePublicationModal from '../DeletePublicationModal';
+import { getTranslatedLabelForDisplayedRows } from '../../../utils/pagination';
 
 const StyledTableRow = styled(TableRow)`
   background-color: ${(props) => props.theme.palette.box.main};
@@ -131,11 +132,7 @@ const PublicationList: FC<PublicationListProps> = ({ publications }) => {
         component="div"
         count={publications.length}
         labelRowsPerPage={t('common:rows_per_page')}
-        labelDisplayedRows={({ from, to, count }) =>
-          `${from}-${to === -1 ? count : to} ${t('common:of')} ${
-            count !== -1 ? count : `${t('common:more_than')} ${to}`
-          }`
-        }
+        labelDisplayedRows={({ from, to, count }) => getTranslatedLabelForDisplayedRows(from, to, count)}
         rowsPerPage={rowsPerPage}
         page={page}
         onChangePage={handleChangePage}
