@@ -1,20 +1,21 @@
 import React, { FC, useEffect, useState } from 'react';
-import Card from '../../components/Card';
+import * as Yup from 'yup';
+import { useDispatch } from 'react-redux';
+import { CircularProgress, TextField } from '@material-ui/core';
+import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { Field, FieldProps, Form, Formik } from 'formik';
-import { TextField } from 'formik-material-ui';
+import { useParams, useHistory } from 'react-router-dom';
+
+import Card from '../../components/Card';
 import Heading from '../../components/Heading';
-import styled from 'styled-components';
-import * as Yup from 'yup';
 import {
   CustomerInstitutionFieldNames,
   emptyCustomerInstitution,
   CustomerInstitution,
 } from '../../types/customerInstitution.types';
-import { useParams, useHistory } from 'react-router-dom';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
-import { useDispatch } from 'react-redux';
 import {
   getInstitution,
   createCustomerInstitution,
@@ -23,7 +24,6 @@ import {
 import useFetchInstitutions from '../../utils/hooks/useFetchInstitutions';
 import InstitutionAutocomplete from '../../components/institution/InstitutionAutocomplete';
 import ButtonWithProgress from '../../components/ButtonWithProgress';
-import { CircularProgress } from '@material-ui/core';
 
 const StyledButtonContainer = styled.div`
   margin-top: 2rem;
@@ -110,69 +110,90 @@ const AdminCustomerInstitutionPage: FC = () => {
               )}
             </Field>
 
-            <Field
-              name={CustomerInstitutionFieldNames.DISPLAY_NAME}
-              aria-label={t('display_name')}
-              label={t('display_name')}
-              component={TextField}
-              fullWidth
-              variant="outlined"
-              inputProps={{ 'data-testid': 'customer-institution-display-name-input' }}
-            />
-            <Field
-              name={CustomerInstitutionFieldNames.SHORT_NAME}
-              aria-label={t('short_name')}
-              label={t('short_name')}
-              component={TextField}
-              fullWidth
-              variant="outlined"
-              inputProps={{ 'data-testid': 'customer-institution-short-name-input' }}
-            />
-            <Field
-              name={CustomerInstitutionFieldNames.ARCHIVE_NAME}
-              aria-label={t('archive_name')}
-              label={t('archive_name')}
-              component={TextField}
-              fullWidth
-              variant="outlined"
-              inputProps={{ 'data-testid': 'customer-institution-archive-name-input' }}
-            />
-            <Field
-              name={CustomerInstitutionFieldNames.CNAME}
-              aria-label={t('cname')}
-              label={t('cname')}
-              component={TextField}
-              fullWidth
-              variant="outlined"
-              inputProps={{ 'data-testid': 'customer-institution-cname-input' }}
-            />
-            <Field
-              name={CustomerInstitutionFieldNames.INSTITUTION_DNS}
-              aria-label={t('institution_dns')}
-              label={t('institution_dns')}
-              component={TextField}
-              fullWidth
-              variant="outlined"
-              inputProps={{ 'data-testid': 'customer-institution-institution-dns-input' }}
-            />
-            <Field
-              name={CustomerInstitutionFieldNames.ADMINISTRATION_ID}
-              aria-label={t('administration_id')}
-              label={t('administration_id')}
-              component={TextField}
-              fullWidth
-              variant="outlined"
-              inputProps={{ 'data-testid': 'customer-institution-administrator-id-input' }}
-            />
-            <Field
-              name={CustomerInstitutionFieldNames.FEIDE_ORGANIZATION_ID}
-              aria-label={t('feide_organization_id')}
-              label={t('feide_organization_id')}
-              component={TextField}
-              fullWidth
-              variant="outlined"
-              inputProps={{ 'data-testid': 'customer-institution-feide-organization-id-input' }}
-            />
+            <Field name={CustomerInstitutionFieldNames.DISPLAY_NAME}>
+              {({ field }: FieldProps) => (
+                <TextField
+                  {...field}
+                  label={t('display_name')}
+                  fullWidth
+                  variant="outlined"
+                  inputProps={{ 'data-testid': 'customer-institution-display-name-input' }}
+                />
+              )}
+            </Field>
+
+            <Field name={CustomerInstitutionFieldNames.SHORT_NAME}>
+              {({ field }: FieldProps) => (
+                <TextField
+                  {...field}
+                  label={t('short_name')}
+                  fullWidth
+                  variant="outlined"
+                  inputProps={{ 'data-testid': 'customer-institution-short-name-input' }}
+                />
+              )}
+            </Field>
+
+            <Field name={CustomerInstitutionFieldNames.ARCHIVE_NAME}>
+              {({ field }: FieldProps) => (
+                <TextField
+                  {...field}
+                  label={t('archive_name')}
+                  fullWidth
+                  variant="outlined"
+                  inputProps={{ 'data-testid': 'customer-institution-archive-name-input' }}
+                />
+              )}
+            </Field>
+
+            <Field name={CustomerInstitutionFieldNames.CNAME}>
+              {({ field }: FieldProps) => (
+                <TextField
+                  {...field}
+                  label={t('cname')}
+                  fullWidth
+                  variant="outlined"
+                  inputProps={{ 'data-testid': 'customer-institution-cname-input' }}
+                />
+              )}
+            </Field>
+
+            <Field name={CustomerInstitutionFieldNames.INSTITUTION_DNS}>
+              {({ field }: FieldProps) => (
+                <TextField
+                  {...field}
+                  label={t('institution_dns')}
+                  fullWidth
+                  variant="outlined"
+                  inputProps={{ 'data-testid': 'customer-institution-institution-dns-input' }}
+                />
+              )}
+            </Field>
+
+            <Field name={CustomerInstitutionFieldNames.ADMINISTRATION_ID}>
+              {({ field }: FieldProps) => (
+                <TextField
+                  {...field}
+                  label={t('administration_id')}
+                  fullWidth
+                  variant="outlined"
+                  inputProps={{ 'data-testid': 'customer-institution-administrator-id-input' }}
+                />
+              )}
+            </Field>
+
+            <Field name={CustomerInstitutionFieldNames.FEIDE_ORGANIZATION_ID}>
+              {({ field }: FieldProps) => (
+                <TextField
+                  {...field}
+                  label={t('feide_organization_id')}
+                  fullWidth
+                  variant="outlined"
+                  inputProps={{ 'data-testid': 'customer-institution-feide-organization-id-input' }}
+                />
+              )}
+            </Field>
+
             <StyledButtonContainer>
               <ButtonWithProgress data-testid="customer-institution-save-button" isLoading={isSubmitting} type="submit">
                 {editMode ? t('common:save') : t('common:create')}
