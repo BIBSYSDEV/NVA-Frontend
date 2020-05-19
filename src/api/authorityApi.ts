@@ -1,4 +1,4 @@
-import Axios from 'axios';
+import Axios, { CancelToken } from 'axios';
 import { Dispatch } from 'redux';
 
 import { setNotification } from '../redux/actions/notificationActions';
@@ -16,6 +16,28 @@ export enum AuthorityQualifiers {
   ORCID = 'orcid',
   ORGUNIT_ID = 'orgunitid',
 }
+
+export const getAuthority = async (arpId: string, cancelToken?: CancelToken) => {
+  const url = encodeURI(`${AuthorityApiPaths.PERSON}?arpId=${arpId}`);
+
+  // remove when Authorization headers are set for all requests
+  const idToken = await getIdToken();
+  const headers = {
+    Authorization: `Bearer ${idToken}`,
+  };
+
+  try {
+    const response = await Axios.get(url, { headers, cancelToken });
+
+    if (response.status === StatusCode.OK) {
+      return response.data;
+    } else {
+      return { error: i18n.t('feedback:error.get_authority') };
+    }
+  } catch {
+    return { error: i18n.t('feedback:error.get_authority') };
+  }
+};
 
 export const getAuthorities = async (name: string, dispatch: Dispatch) => {
   const url = encodeURI(`${AuthorityApiPaths.PERSON}?name=${name}`);

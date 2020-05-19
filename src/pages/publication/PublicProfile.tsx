@@ -1,20 +1,21 @@
 import React, { FC, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { setNotification } from '../../redux/actions/notificationActions';
-import { PublishedPublicationPreview, PublicationStatus } from '../../types/publication.types';
+import { useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { CircularProgress } from '@material-ui/core';
 import styled from 'styled-components';
+import { useParams } from 'react-router-dom';
+
+import { setNotification } from '../../redux/actions/notificationActions';
+import { PublishedPublicationPreview, PublicationStatus } from '../../types/publication.types';
 import { getMyPublications } from '../../api/publicationApi';
 import PublishedPublicationList from './PublishedPublicationList';
 import Card from '../../components/Card';
-import { useTranslation } from 'react-i18next';
-import { RootStore } from '../../redux/reducers/rootReducer';
-import NormalText from '../../components/NormalText';
 import { ORCID_BASE_URL } from '../../utils/constants';
 import LabelTextLine from './../../components/LabelTextLine';
 import Heading from '../../components/Heading';
 import { NotificationVariant } from '../../types/notification.types';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
+import useFetchAuthority from '../../utils/hooks/useFetchAuthority';
 
 const StyledWrapper = styled.div`
   text-align: center;
@@ -31,11 +32,61 @@ const StyledUserInfo = styled.div`
 `;
 
 const PublicProfile: FC = () => {
+  const { t } = useTranslation('profile');
+  const { arpId } = useParams();
+  const [authority, isLoadingUser] = useFetchAuthority(arpId);
+
+  return (
+    <>
+      {isLoadingUser ? (
+        <CircularProgress />
+      ) : (
+        authority && (
+          <>
+            <StyledUserInfo>
+              <Card>
+                <Heading>{authority.name}</Heading>
+                {authority.orgunitids.length > 0 && (
+                  <LabelTextLine label={t('heading.organizations')}>
+                    {authority.orgunitids.map((unitId) => (
+                      <AffiliationHierarchy key={unitId} unitUri={unitId} commaSeparated />
+                    ))}
+                  </LabelTextLine>
+                )}
+                {authority?.orcids.map((orcid: string) => {
+                  const orcidLink = `${ORCID_BASE_URL}/${orcid}`;
+                  return (
+                    <LabelTextLine
+                      key={orcid}
+                      dataTestId={'orcid-info'}
+                      label={t('orcid.orcid')}
+                      linkText={orcidLink}
+                      externalLink={orcidLink}
+                    />
+                  );
+                })}
+              </Card>
+            </StyledUserInfo>
+            <StyledWrapper>
+              <PublicProfilePublicationsProps arpId={arpId} />
+            </StyledWrapper>
+          </>
+        )
+      )}
+    </>
+  );
+};
+
+interface PublicProfilePublicationsProps {
+  arpId: string;
+}
+
+// TODO: Fetch publications of given user
+const PublicProfilePublicationsProps: FC<PublicProfilePublicationsProps> = ({ arpId }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation('profile');
   const [isLoading, setIsLoading] = useState(true);
   const [publications, setPublications] = useState<PublishedPublicationPreview[]>([]);
-  const user = useSelector((store: RootStore) => store.user);
 
   useEffect(() => {
     const loadData = async () => {
@@ -55,44 +106,11 @@ const PublicProfile: FC = () => {
     (publication) => publication.status === PublicationStatus.PUBLISHED
   );
 
-  return (
-    <>
-      <StyledUserInfo>
-        <Card>
-          <Heading>{user.name}</Heading>
-          {user.authority?.orgunitids && user.authority.orgunitids.length > 0 && (
-            <LabelTextLine label={t('heading.organizations')}>
-              {user.authority.orgunitids.map((unitId) => (
-                <AffiliationHierarchy key={unitId} unitUri={unitId} commaSeparated />
-              ))}
-            </LabelTextLine>
-          )}
-          {user.authority?.orcids.map((orcid: string) => {
-            const orcidLink = `${ORCID_BASE_URL}/${orcid}`;
-            return (
-              <LabelTextLine
-                key={orcid}
-                dataTestId={'orcid-info'}
-                label={t('orcid.orcid')}
-                linkText={orcidLink}
-                externalLink={orcidLink}
-              />
-            );
-          })}
-          <LabelTextLine dataTestId="profile-email" label={t('common:email')}>
-            <NormalText>{user.email}</NormalText>
-          </LabelTextLine>
-        </Card>
-      </StyledUserInfo>
-      <StyledWrapper>
-        {isLoading ? (
-          <CircularProgress color="inherit" size={20} />
-        ) : (
-          <PublishedPublicationList publications={publishedPublications} />
-        )}
-      </StyledWrapper>
-    </>
-  );
+  return isLoading ? (
+    <CircularProgress />
+  ) : publications ? (
+    <PublishedPublicationList publications={publishedPublications} />
+  ) : null;
 };
 
 export default PublicProfile;
