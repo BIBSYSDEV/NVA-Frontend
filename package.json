@@ -18,7 +18,6 @@
     "date-fns": "^2.13.0",
     "deepmerge": "^4.2.2",
     "formik": "^2.1.4",
-    "formik-material-ui": "1.0.0",
     "i18next": "^19.4.4",
     "i18next-browser-languagedetector": "^4.1.1",
     "react": "^16.13.1",
