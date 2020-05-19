@@ -49,10 +49,11 @@ const DescriptionPanel: FC<PanelProps> = ({ setTouchedFields }) => {
       <Card>
         <Heading>{t('heading.description')}</Heading>
         <StyledFieldWrapper>
-          <Field data-testid="publication-title-field" name={DescriptionFieldNames.TITLE}>
+          <Field name={DescriptionFieldNames.TITLE}>
             {({ field, meta: { touched, error } }: FieldProps) => (
               <TextField
                 {...field}
+                data-testid="publication-title-field"
                 inputProps={{ 'data-testid': 'publication-title-input' }}
                 variant="outlined"
                 fullWidth
@@ -66,15 +67,7 @@ const DescriptionPanel: FC<PanelProps> = ({ setTouchedFields }) => {
         <StyledFieldWrapper>
           <Field name={DescriptionFieldNames.ABSTRACT}>
             {({ field }: FieldProps) => (
-              <TextField
-                {...field}
-                inputProps={{ 'data-testid': 'publication-title-input' }}
-                variant="outlined"
-                fullWidth
-                multiline
-                rows="4"
-                label={t('description.abstract')}
-              />
+              <TextField {...field} variant="outlined" fullWidth multiline rows="4" label={t('description.abstract')} />
             )}
           </Field>
         </StyledFieldWrapper>
@@ -83,7 +76,6 @@ const DescriptionPanel: FC<PanelProps> = ({ setTouchedFields }) => {
             {({ field }: FieldProps) => (
               <TextField
                 {...field}
-                inputProps={{ 'data-testid': 'publication-description-input' }}
                 label={t('description.description')}
                 multiline
                 rows="4"
