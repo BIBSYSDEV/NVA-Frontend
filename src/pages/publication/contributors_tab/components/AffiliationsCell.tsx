@@ -32,10 +32,9 @@ const StyledCard = styled(Card)`
 interface AffiliationsCellProps {
   affiliations: Institution[];
   baseFieldName: string;
-  contributorName: string;
 }
 
-const AffiliationsCell: FC<AffiliationsCellProps> = ({ affiliations, baseFieldName, contributorName }) => {
+const AffiliationsCell: FC<AffiliationsCellProps> = ({ affiliations, baseFieldName }) => {
   const { t } = useTranslation('publication');
   const disptach = useDispatch();
   const { values, setFieldValue }: FormikProps<FormikPublication> = useFormikContext();
