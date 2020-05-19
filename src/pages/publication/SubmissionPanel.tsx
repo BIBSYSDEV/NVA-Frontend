@@ -21,7 +21,7 @@ import LabelContentRow from '../../components/LabelContentRow';
 import ErrorSummary from './submission_tab/ErrorSummary';
 import { DOI_PREFIX } from '../../utils/constants';
 import { publishPublication } from '../../api/publicationApi';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import ButtonWithProgress from '../../components/ButtonWithProgress';
@@ -33,6 +33,7 @@ import {
   mergeTouchedFields,
 } from '../../utils/formik-helpers';
 import { PanelProps } from './PublicationFormContent';
+import { RootStore } from '../../redux/reducers/rootReducer';
 
 const StyledButtonGroupContainer = styled.div`
   margin-bottom: 1rem;
@@ -54,6 +55,7 @@ interface SubmissionPanelProps extends PanelProps {
 }
 
 const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication, setTouchedFields }) => {
+  const user = useSelector((store: RootStore) => store.user);
   const { t } = useTranslation('publication');
   const { setFieldValue, values, isValid }: FormikProps<FormikPublication> = useFormikContext();
   const history = useHistory();
@@ -82,6 +84,10 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication, 
     } else {
       history.push(`/publication/${values.identifier}/public`);
     }
+  };
+
+  const onClickCreateDoi = () => {
+    // TODO: create doi here
   };
 
   return (
@@ -137,12 +143,20 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication, 
         </Card>
       </Card>
       <StyledButtonGroupContainer>
-        <StyledButtonContainer>
-          <Button color="primary" variant="contained" onClick={onClickPublish} disabled={isSaving || !isValid}>
-            {t('common:publish')}
-          </Button>
-        </StyledButtonContainer>
-
+        {/* TODO: need to check if the author also has made a request for doi in the conditional below */}
+        {user.isCurator ? (
+          <StyledButtonContainer>
+            <Button color="primary" variant="contained" onClick={onClickCreateDoi} disabled={isSaving || !isValid}>
+              {t('common:create_doi')}
+            </Button>
+          </StyledButtonContainer>
+        ) : (
+          <StyledButtonContainer>
+            <Button color="primary" variant="contained" onClick={onClickPublish} disabled={isSaving || !isValid}>
+              {t('common:publish')}
+            </Button>
+          </StyledButtonContainer>
+        )}
         <StyledButtonContainer>
           <ButtonWithProgress isLoading={isSaving} onClick={() => savePublication(values)}>
             {t('common:save')}

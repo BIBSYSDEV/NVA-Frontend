@@ -48,7 +48,7 @@ const PublicationForm: FC<PublicationFormProps> = ({
 }) => {
   const user = useSelector((store: RootStore) => store.user);
   const { t } = useTranslation('publication');
-  const [tabNumber, setTabNumber] = useState(0);
+  const [tabNumber, setTabNumber] = useState(user.isCurator ? 4 : 0);
   const [initialValues, setInitialValues] = useState(emptyPublication);
   const [isLoading, setIsLoading] = useState(!!identifier);
   const [isSaving, setIsSaving] = useState(false);
