@@ -17,6 +17,7 @@ import Label from '../../../components/Label';
 import NormalText from '../../../components/NormalText';
 import { licenses } from '../../../types/file.types';
 import useFetchPublication from '../../../utils/hooks/useFetchPublication';
+import { getNpiDiscipline } from '../../../utils/npiDisciplines';
 
 const StyledContentWrapper = styled.div`
   display: flex;
@@ -93,14 +94,15 @@ const PublicPublication: FC = () => {
   const [publication, isLoadingPublication] = useFetchPublication(identifier);
 
   const {
-    mainTitle,
     abstract,
-    description,
-    tags,
-    date,
     contributors,
+    date,
+    description,
+    mainTitle,
+    npiSubjectHeading,
     reference: { doi, publicationContext },
     series,
+    tags,
   } = publication ? publication.entityDescription : emptyPublication.entityDescription;
 
   // Show only the license for the first file for now
@@ -128,7 +130,7 @@ const PublicPublication: FC = () => {
                     </StyledSidebarCard>
                   )}
                   <StyledSidebarCard>
-                    <LabelContentRow minimal label={t('description.date_published')}>
+                    <LabelContentRow minimal label={`${t('description.date_published')}:`}>
                       {date.year}
                       {date.month && `-${date.month}`}
                       {date.day && `-${date.day}`}
@@ -137,25 +139,25 @@ const PublicPublication: FC = () => {
                 </StyledSidebar>
                 <StyledMainContent>
                   {doi && (
-                    <LabelContentRow minimal label={t('publication.link_to_publication')}>
+                    <LabelContentRow minimal label={`${t('publication.link_to_publication')}:`}>
                       <Link href={`${DOI_PREFIX}${doi}`}>{`${DOI_PREFIX}${doi}`}</Link>
                     </LabelContentRow>
                   )}
                   {abstract && (
                     <StyledTextContainer>
-                      <StyledLabel>{t('description.abstract')}</StyledLabel>
+                      <StyledLabel>{`${t('description.abstract')}:`}</StyledLabel>
                       <StyledTextDescription>{abstract}</StyledTextDescription>
                     </StyledTextContainer>
                   )}
                   {description && (
                     <StyledTextContainer>
-                      <StyledLabel>{t('description.description')}</StyledLabel>
+                      <StyledLabel>{`${t('description.description')}:`}</StyledLabel>
                       <StyledTextDescription>{description}</StyledTextDescription>
                     </StyledTextContainer>
                   )}
                   {tags && (
                     <StyledTagContainer>
-                      <StyledLabel>{t('description.tags')}</StyledLabel>
+                      <StyledLabel>{`${t('description.tags')}:`}</StyledLabel>
                       {tags.map((tag) => (
                         <StyledTag key={tag}>
                           <Chip label={tag} />
@@ -164,8 +166,13 @@ const PublicPublication: FC = () => {
                     </StyledTagContainer>
                   )}
                   {publicationContext && (
-                    <LabelContentRow minimal label={t('references.journal')}>
+                    <LabelContentRow minimal label={`${t('references.journal')}:`}>
                       {publicationContext.title}
+                    </LabelContentRow>
+                  )}
+                  {npiSubjectHeading && (
+                    <LabelContentRow minimal label={`${t('description.npi_disciplines')}:`}>
+                      {getNpiDiscipline(npiSubjectHeading)?.name}
                     </LabelContentRow>
                   )}
                   {selectedLicense && (
@@ -180,12 +187,12 @@ const PublicPublication: FC = () => {
                     </StyledLicenseCard>
                   )}
                   {publication.project && (
-                    <LabelContentRow minimal label={t('description.project_association')}>
+                    <LabelContentRow minimal label={`${t('description.project_association')}:`}>
                       {publication.project.name}
                     </LabelContentRow>
                   )}
                   {series && (
-                    <LabelContentRow minimal label={t('references.series')}>
+                    <LabelContentRow minimal label={`${t('references.series')}:`}>
                       {series.title}
                     </LabelContentRow>
                   )}
