@@ -33,12 +33,12 @@ export const getDistinctContributorUnits = (contributors: Contributor[]) => [
   ),
 ];
 
-// Returns top-down comma separated unit names
-export const getCommaSeparatedUnitString = (unit: RecursiveInstitutionUnit, unitNames: string[] = []): string => {
+// Returns top-down unit names: ["Level1", "Level2", (etc.)]
+export const getUnitHierarchyNames = (unit: RecursiveInstitutionUnit, unitNames: string[] = []): string[] => {
   unitNames.push(unit.name);
   if (unit.subunits) {
-    return getCommaSeparatedUnitString(unit.subunits[0], unitNames);
+    return getUnitHierarchyNames(unit.subunits[0], unitNames);
   } else {
-    return unitNames.join(', ');
+    return unitNames;
   }
 };

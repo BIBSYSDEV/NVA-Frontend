@@ -1,25 +1,40 @@
-import React, { FC } from 'react';
-import { RecursiveInstitutionUnit } from '../../types/institution.types';
+import React, { FC, Fragment } from 'react';
+import { CircularProgress } from '@material-ui/core';
+
 import Label from '../Label';
 import NormalText from '../NormalText';
+import useFetchUnitHierarchy from '../../utils/hooks/useFetchUnitHierarchy';
+import { getUnitHierarchyNames } from '../../utils/institutions-helpers';
 
 interface AffiliationHierarchyProps {
-  unit: RecursiveInstitutionUnit;
-  boldTopLevel?: boolean;
+  unitUri: string;
+  commaSeparated?: boolean; // Comma separated or line breaks
+  boldTopLevel?: boolean; // Only relevant if commaSeparated=false
 }
 
-const AffiliationHierarchy: FC<AffiliationHierarchyProps> = ({ unit, boldTopLevel = true }) => (
-  <>
-    {boldTopLevel ? <Label>{unit.name}</Label> : <NormalText>{unit.name}</NormalText>}
-    {unit?.subunits && <SubUnitRow unit={unit.subunits[0]} />}
-  </>
-);
+export const AffiliationHierarchy: FC<AffiliationHierarchyProps> = ({
+  unitUri,
+  commaSeparated = false,
+  boldTopLevel = true,
+}) => {
+  const [unit, isLoadingUnit] = useFetchUnitHierarchy(unitUri);
+  const unitNames = unit ? getUnitHierarchyNames(unit) : [];
 
-const SubUnitRow: FC<AffiliationHierarchyProps> = ({ unit }) => (
-  <>
-    <NormalText>{unit.name}</NormalText>
-    {unit.subunits && <SubUnitRow unit={unit.subunits[0]} />}
-  </>
-);
+  return isLoadingUnit ? (
+    <CircularProgress size={20} />
+  ) : unit ? (
+    commaSeparated ? (
+      <NormalText>{unitNames.join(', ')}</NormalText>
+    ) : (
+      <div>
+        {unitNames.map((unitName, index) => (
+          <Fragment key={unitName}>
+            {index === 0 && boldTopLevel ? <Label>{unitName}</Label> : <NormalText>{unitName}</NormalText>}
+          </Fragment>
+        ))}
+      </div>
+    )
+  ) : null;
+};
 
 export default AffiliationHierarchy;

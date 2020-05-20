@@ -9,7 +9,6 @@ import { getAlmaPublication } from '../../../api/almaApi';
 import { Authority } from '../../../types/authority.types';
 import { AlmaPublication } from '../../../types/publication.types';
 import NormalText from '../../../components/NormalText';
-import useFetchUnitHierarchy from '../../../utils/hooks/useFetchUnitHierarchy';
 import AffiliationHierarchy from '../../../components/institution/AffiliationHierarchy';
 import Card from '../../../components/Card';
 
@@ -78,7 +77,7 @@ const AuthorityCard: FC<AuthorityCardProps> = ({ authority, isConnected = false,
       <StyledCenteredContent>
         {authority.orgunitids.length > 0 ? (
           <>
-            <AuthorityAffiliation unitId={authority.orgunitids[0]} />
+            <AffiliationHierarchy unitUri={authority.orgunitids[0]} boldTopLevel={false} />
             {authority.orgunitids.length > 1 && (
               <i>{t('authority.other_affiliations', { count: authority.orgunitids.length - 1 })}</i>
             )}
@@ -91,16 +90,6 @@ const AuthorityCard: FC<AuthorityCardProps> = ({ authority, isConnected = false,
       </StyledCenteredContent>
     </StyledBoxContent>
   );
-};
-
-interface AuthorityAffiliationProps {
-  unitId: string;
-}
-
-const AuthorityAffiliation: React.FC<AuthorityAffiliationProps> = ({ unitId }) => {
-  const [unit, isLoadingUnit] = useFetchUnitHierarchy(unitId);
-
-  return isLoadingUnit ? <CircularProgress /> : unit ? <AffiliationHierarchy unit={unit} boldTopLevel={false} /> : null;
 };
 
 export default AuthorityCard;

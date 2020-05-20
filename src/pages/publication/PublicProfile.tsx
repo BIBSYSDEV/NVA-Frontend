@@ -14,8 +14,7 @@ import { ORCID_BASE_URL } from '../../utils/constants';
 import LabelTextLine from './../../components/LabelTextLine';
 import Heading from '../../components/Heading';
 import { NotificationVariant } from '../../types/notification.types';
-import useFetchMultipleUnits from '../../utils/hooks/useFetchMultipleUnits';
-import { getCommaSeparatedUnitString } from '../../utils/institutions-helpers';
+import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
 
 const StyledWrapper = styled.div`
   text-align: center;
@@ -33,11 +32,10 @@ const StyledUserInfo = styled.div`
 
 const PublicProfile: FC = () => {
   const dispatch = useDispatch();
+  const { t } = useTranslation('profile');
   const [isLoading, setIsLoading] = useState(true);
   const [publications, setPublications] = useState<PublishedPublicationPreview[]>([]);
-  const { t } = useTranslation('profile');
   const user = useSelector((store: RootStore) => store.user);
-  const [units, isLoadingMultiple] = useFetchMultipleUnits(user.authority?.orgunitids);
 
   useEffect(() => {
     const loadData = async () => {
@@ -62,17 +60,12 @@ const PublicProfile: FC = () => {
       <StyledUserInfo>
         <Card>
           <Heading>{user.name}</Heading>
-          {isLoadingMultiple ? (
-            <CircularProgress color="inherit" size={20} />
-          ) : (
-            units &&
-            units.length > 0 && (
-              <LabelTextLine label={t('heading.organizations')}>
-                {units.map((unit) => (
-                  <NormalText key={unit.id}>{getCommaSeparatedUnitString(unit)}</NormalText>
-                ))}
-              </LabelTextLine>
-            )
+          {user.authority?.orgunitids && user.authority.orgunitids.length > 0 && (
+            <LabelTextLine label={t('heading.organizations')}>
+              {user.authority.orgunitids.map((unitId) => (
+                <AffiliationHierarchy key={unitId} unitUri={unitId} commaSeparated />
+              ))}
+            </LabelTextLine>
           )}
           {user.authority?.orcids.map((orcid: string) => {
             const orcidLink = `${ORCID_BASE_URL}/${orcid}`;

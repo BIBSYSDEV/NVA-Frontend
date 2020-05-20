@@ -1,14 +1,14 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
-import { Link, CircularProgress, IconButton } from '@material-ui/core';
+import { Link, IconButton } from '@material-ui/core';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 
 import { Contributor } from '../../../types/contributor.types';
 import NormalText from '../../../components/NormalText';
-import useFetchUnitHierarchy from '../../../utils/hooks/useFetchUnitHierarchy';
-import { getCommaSeparatedUnitString, getDistinctContributorUnits } from '../../../utils/institutions-helpers';
+import { getDistinctContributorUnits } from '../../../utils/institutions-helpers';
 import OrcidLogo from '../../../resources/images/orcid_logo.svg';
 import { ORCID_BASE_URL } from '../../../utils/constants';
+import AffiliationHierarchy from '../../../components/institution/AffiliationHierarchy';
 
 const StyledAuthor = styled.span`
   margin-right: 1rem;
@@ -17,6 +17,14 @@ const StyledAuthor = styled.span`
 const StyledAffiliationsContainer = styled.div`
   margin-top: 0.5rem;
   padding-left: 1rem;
+
+  > div:not(:first-child) {
+    margin-top: 0.2rem;
+  }
+`;
+
+const StyedAffiliationWithIndex = styled.div`
+  display: flex;
 `;
 
 interface PublicPublicationProps {
@@ -59,29 +67,16 @@ const PublicPublicationAuthors: FC<PublicPublicationProps> = ({ contributors }) 
       </NormalText>
       <StyledAffiliationsContainer>
         {distinctUnits.map((unitUri, index) => (
-          <PublicationPageAffiliation key={unitUri} unitUri={unitUri} index={index + 1} />
+          <StyedAffiliationWithIndex key={unitUri}>
+            <sup>{index + 1}</sup>
+            <i>
+              <AffiliationHierarchy key={unitUri} unitUri={unitUri} commaSeparated />
+            </i>
+          </StyedAffiliationWithIndex>
         ))}
       </StyledAffiliationsContainer>
     </>
   );
-};
-
-interface PublicationPageAffiliationProps {
-  unitUri: string;
-  index: number;
-}
-
-const PublicationPageAffiliation: FC<PublicationPageAffiliationProps> = ({ unitUri, index }) => {
-  const [unit, isLoadingUnit] = useFetchUnitHierarchy(unitUri);
-
-  return isLoadingUnit ? (
-    <CircularProgress size={20} />
-  ) : unit ? (
-    <NormalText>
-      <sup>{index}</sup>
-      <i>{getCommaSeparatedUnitString(unit)}</i>
-    </NormalText>
-  ) : null;
 };
 
 export default PublicPublicationAuthors;
