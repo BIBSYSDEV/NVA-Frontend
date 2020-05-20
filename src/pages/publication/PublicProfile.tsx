@@ -1,21 +1,17 @@
-import React, { FC, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CircularProgress } from '@material-ui/core';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 
-import { setNotification } from '../../redux/actions/notificationActions';
-import { PublishedPublicationPreview, PublicationStatus } from '../../types/publication.types';
-import { getMyPublications } from '../../api/publicationApi';
+import { PublishedPublicationPreview } from '../../types/publication.types';
 import PublishedPublicationList from './PublishedPublicationList';
 import Card from '../../components/Card';
-import { ORCID_BASE_URL } from '../../utils/constants';
 import LabelTextLine from './../../components/LabelTextLine';
 import Heading from '../../components/Heading';
-import { NotificationVariant } from '../../types/notification.types';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
 import useFetchAuthority from '../../utils/hooks/useFetchAuthority';
+import { ORCID_BASE_URL } from '../../utils/constants';
 
 const StyledWrapper = styled.div`
   text-align: center;
@@ -68,7 +64,7 @@ const PublicProfile: FC = () => {
               </Card>
             </StyledUserInfo>
             <StyledWrapper>
-              <PublicProfilePublicationsProps arpId={arpId} />
+              <PublicProfilePublications arpId={arpId} />
             </StyledWrapper>
           </>
         )
@@ -81,36 +77,11 @@ interface PublicProfilePublicationsProps {
   arpId: string;
 }
 
-// TODO: Fetch publications of given user
-const PublicProfilePublicationsProps: FC<PublicProfilePublicationsProps> = ({ arpId }) => {
-  const dispatch = useDispatch();
-  const { t } = useTranslation('profile');
-  const [isLoading, setIsLoading] = useState(true);
-  const [publications, setPublications] = useState<PublishedPublicationPreview[]>([]);
+const PublicProfilePublications: FC<PublicProfilePublicationsProps> = ({ arpId }) => {
+  // TODO: Fetch publications by arpId
+  const publications: PublishedPublicationPreview[] = [];
 
-  useEffect(() => {
-    const loadData = async () => {
-      setIsLoading(true);
-      const publications = await getMyPublications();
-      if (publications?.error) {
-        dispatch(setNotification(t('feedback:error.get_publications'), NotificationVariant.Error));
-      } else {
-        setPublications(publications);
-      }
-      setIsLoading(false);
-    };
-    loadData();
-  }, [dispatch, t]);
-
-  const publishedPublications = publications.filter(
-    (publication) => publication.status === PublicationStatus.PUBLISHED
-  );
-
-  return isLoading ? (
-    <CircularProgress />
-  ) : publications ? (
-    <PublishedPublicationList publications={publishedPublications} />
-  ) : null;
+  return <PublishedPublicationList publications={publications} />;
 };
 
 export default PublicProfile;
