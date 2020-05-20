@@ -17,6 +17,14 @@ const StyledAuthor = styled.span`
 const StyledAffiliationsContainer = styled.div`
   margin-top: 0.5rem;
   padding-left: 1rem;
+
+  > div:not(:first-child) {
+    margin-top: 0.2rem;
+  }
+`;
+
+const StyedAffiliationWithIndex = styled.div`
+  display: flex;
 `;
 
 interface PublicPublicationProps {
@@ -59,12 +67,12 @@ const PublicPublicationAuthors: FC<PublicPublicationProps> = ({ contributors }) 
       </NormalText>
       <StyledAffiliationsContainer>
         {distinctUnits.map((unitUri, index) => (
-          <NormalText key={unitUri}>
-            <sup>{index}</sup>
+          <StyedAffiliationWithIndex key={unitUri}>
+            <sup>{index + 1}</sup>
             <i>
               <AffiliationHierarchy key={unitUri} unitUri={unitUri} commaSeparated />
             </i>
-          </NormalText>
+          </StyedAffiliationWithIndex>
         ))}
       </StyledAffiliationsContainer>
     </>

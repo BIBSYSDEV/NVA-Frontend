@@ -63,9 +63,7 @@ const PublicProfile: FC = () => {
           {user.authority?.orgunitids && user.authority.orgunitids.length > 0 && (
             <LabelTextLine label={t('heading.organizations')}>
               {user.authority.orgunitids.map((unitId) => (
-                <NormalText key={unitId}>
-                  <AffiliationHierarchy unitUri={unitId} commaSeparated />
-                </NormalText>
+                <AffiliationHierarchy key={unitId} unitUri={unitId} commaSeparated />
               ))}
             </LabelTextLine>
           )}

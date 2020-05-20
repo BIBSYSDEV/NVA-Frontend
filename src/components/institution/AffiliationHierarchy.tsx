@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, Fragment } from 'react';
 import { CircularProgress } from '@material-ui/core';
 
 import Label from '../Label';
@@ -24,13 +24,15 @@ export const AffiliationHierarchy: FC<AffiliationHierarchyProps> = ({
     <CircularProgress size={20} />
   ) : unit ? (
     commaSeparated ? (
-      <>{unitNames.join(', ')}</>
+      <NormalText>{unitNames.join(', ')}</NormalText>
     ) : (
-      <>
-        {unitNames.map((unitName, index) =>
-          index === 0 && boldTopLevel ? <Label>{unitName}</Label> : <NormalText>{unitName}</NormalText>
-        )}
-      </>
+      <div>
+        {unitNames.map((unitName, index) => (
+          <Fragment key={unitName}>
+            {index === 0 && boldTopLevel ? <Label>{unitName}</Label> : <NormalText>{unitName}</NormalText>}
+          </Fragment>
+        ))}
+      </div>
     )
   ) : null;
 };
