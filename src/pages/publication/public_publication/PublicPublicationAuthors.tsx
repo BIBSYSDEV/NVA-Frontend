@@ -1,12 +1,12 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 import { Link, CircularProgress, IconButton } from '@material-ui/core';
+import MailOutlineIcon from '@material-ui/icons/MailOutline';
 
 import { Contributor } from '../../../types/contributor.types';
 import NormalText from '../../../components/NormalText';
 import useFetchUnitHierarchy from '../../../utils/hooks/useFetchUnitHierarchy';
 import { getCommaSeparatedUnitString, getDistinctContributorUnits } from '../../../utils/institutions-helpers';
-import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import OrcidLogo from '../../../resources/images/orcid_logo.svg';
 import { ORCID_BASE_URL } from '../../../utils/constants';
 
@@ -19,11 +19,11 @@ const StyledAffiliationsContainer = styled.div`
   padding-left: 1rem;
 `;
 
-interface PublicationPageProps {
+interface PublicPublicationProps {
   contributors: Contributor[];
 }
 
-const PublicationPageAuthors: FC<PublicationPageProps> = ({ contributors }) => {
+const PublicPublicationAuthors: FC<PublicPublicationProps> = ({ contributors }) => {
   const distinctUnits = getDistinctContributorUnits(contributors);
 
   return (
@@ -84,4 +84,4 @@ const PublicationPageAffiliation: FC<PublicationPageAffiliationProps> = ({ unitU
   ) : null;
 };
 
-export default PublicationPageAuthors;
+export default PublicPublicationAuthors;
