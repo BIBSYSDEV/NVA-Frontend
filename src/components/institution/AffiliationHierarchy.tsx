@@ -9,7 +9,7 @@ import { getUnitHierarchyNames } from '../../utils/institutions-helpers';
 interface AffiliationHierarchyProps {
   unitUri: string;
   commaSeparated?: boolean; // Comma separated or line breaks
-  boldTopLevel?: boolean; // Only relevant if commaSeparated=true
+  boldTopLevel?: boolean; // Only relevant if commaSeparated=false
 }
 
 export const AffiliationHierarchy: FC<AffiliationHierarchyProps> = ({
