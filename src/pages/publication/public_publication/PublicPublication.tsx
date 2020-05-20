@@ -5,8 +5,8 @@ import styled from 'styled-components';
 import { emptyPublication } from '../../../types/publication.types';
 import ContentPage from '../../../components/ContentPage';
 import { useTranslation } from 'react-i18next';
-import PublicationPageAuthors from './PublicPublicationAuthors';
-import PublicationPageFiles from './PublicPublicationFiles';
+import PublicationPageAuthors from './PublicationPageAuthors';
+import PublicPublicationFiles from './PublicPublicationFiles';
 import NotFound from '../../errorpages/NotFound';
 import Card from '../../../components/Card';
 import Heading from '../../../components/Heading';
@@ -124,7 +124,7 @@ const PublicPublication: FC = () => {
                   </StyledSidebarCard> */}
                   {publication.fileSet && (
                     <StyledSidebarCard>
-                      <PublicationPageFiles files={publication.fileSet.files} />
+                      <PublicPublicationFiles files={publication.fileSet.files} />
                     </StyledSidebarCard>
                   )}
                   <StyledSidebarCard>
@@ -171,7 +171,11 @@ const PublicPublication: FC = () => {
                   {selectedLicense && (
                     <StyledLicenseCard>
                       <StyledLicenseImage src={selectedLicense.image} alt={selectedLicense.identifier} />
-                      <StyledLicenseLabel>{selectedLicense.label}</StyledLicenseLabel>
+                      <StyledLicenseLabel>
+                        <Link href={selectedLicense.link} target="_blank" rel="noopener noreferrer">
+                          {selectedLicense.label}
+                        </Link>
+                      </StyledLicenseLabel>
                       <StyledNormalText>{selectedLicense.description}</StyledNormalText>
                     </StyledLicenseCard>
                   )}

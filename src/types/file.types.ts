@@ -29,7 +29,7 @@ export const licenses: LicenseInfo[] = [
     identifier: LicenseNames.CC_BY,
     image: LicenseImages.ccByImage,
     label: i18n.t('licenses:labels.cc_by'),
-    link: '',
+    link: i18n.t('licenses:links.cc_by'),
   },
   {
     buttonImage: LicenseImages.ccBySaButton,
@@ -37,7 +37,7 @@ export const licenses: LicenseInfo[] = [
     identifier: LicenseNames.CC_BY_SA,
     image: LicenseImages.ccBySaImage,
     label: i18n.t('licenses:labels.cc_by_sa'),
-    link: '',
+    link: i18n.t('licenses:links.cc_by_sa'),
   },
   {
     buttonImage: LicenseImages.ccByNdButton,
@@ -45,7 +45,7 @@ export const licenses: LicenseInfo[] = [
     identifier: LicenseNames.CC_BY_ND,
     image: LicenseImages.ccByNdImage,
     label: i18n.t('licenses:labels.cc_by_nd'),
-    link: '',
+    link: i18n.t('licenses:links.cc_by_nd'),
   },
   {
     identifier: LicenseNames.CC_BY_NC,
@@ -53,7 +53,7 @@ export const licenses: LicenseInfo[] = [
     image: LicenseImages.ccByNcImage,
     buttonImage: LicenseImages.ccByNcButton,
     description: i18n.t('licenses:description.cc_by_nc'),
-    link: '',
+    link: i18n.t('licenses:links.cc_by_nc'),
   },
   {
     buttonImage: LicenseImages.ccByNcSaButton,
@@ -61,7 +61,7 @@ export const licenses: LicenseInfo[] = [
     identifier: LicenseNames.CC_BY_NC_SA,
     image: LicenseImages.ccByNcSaImage,
     label: i18n.t('licenses:labels.cc_by_nc_sa'),
-    link: '',
+    link: i18n.t('licenses:links.cc_by_nc_sa'),
   },
   {
     buttonImage: LicenseImages.ccByNcNdButton,
@@ -69,7 +69,7 @@ export const licenses: LicenseInfo[] = [
     identifier: LicenseNames.CC_BY_NC_ND,
     image: LicenseImages.ccByNcNdImage,
     label: i18n.t('licenses:labels.cc_by_nc_nd'),
-    link: '',
+    link: i18n.t('licenses:links.cc_by_nc_nd'),
   },
   {
     buttonImage: LicenseImages.cc0Button,
@@ -77,7 +77,7 @@ export const licenses: LicenseInfo[] = [
     identifier: LicenseNames.CC0,
     image: LicenseImages.cc0Image,
     label: i18n.t('licenses:labels.cc0'),
-    link: '',
+    link: i18n.t('licenses:links.cc0'),
   },
 ];
 
