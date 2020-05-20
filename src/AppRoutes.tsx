@@ -12,7 +12,7 @@ const Dashboard = lazy(() => import('./pages/dashboard/Dashboard'));
 const EditPublication = lazy(() => import('./pages/publication/EditPublication'));
 const MyPublications = lazy(() => import('./pages/publication/my_publications/MyPublications'));
 const Search = lazy(() => import('./pages/search/Search'));
-const PublicationPage = lazy(() => import('./pages/publication/publication_page/PublicationPage'));
+const PublicPublication = lazy(() => import('./pages/publication/public_publication/PublicPublication'));
 const User = lazy(() => import('./pages/user/User'));
 const NotFound = lazy(() => import('./pages/errorpages/NotFound'));
 const PublicProfile = lazy(() => import('./pages/publication/PublicProfile'));
@@ -39,7 +39,7 @@ const AppRoutes: FC = () => {
         {user.isInstitutionAdmin && <Route exact path="/admin-institution-users" component={AdminUsersPage} />}
         <Route exact path="/profile/:arpId" component={PublicProfile} />
         <Route exact path="/search" component={Search} />
-        <Route exact path="/publication/:identifier/public" component={PublicationPage} />
+        <Route exact path="/publication/:identifier/public" component={PublicPublication} />
         <Route exact path="/search/:searchTerm" component={Search} />
         <Route exact path="/search/:searchTerm/:offset" component={Search} />
         {user.isLoggedIn && <Route exact path="/user" component={User} />}

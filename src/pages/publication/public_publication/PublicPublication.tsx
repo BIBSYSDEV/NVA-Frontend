@@ -5,8 +5,8 @@ import styled from 'styled-components';
 import { emptyPublication } from '../../../types/publication.types';
 import ContentPage from '../../../components/ContentPage';
 import { useTranslation } from 'react-i18next';
-import PublicationPageAuthors from './PublicationPageAuthors';
-import PublicationPageFiles from './PublicationPageFiles';
+import PublicationPageAuthors from './PublicPublicationAuthors';
+import PublicationPageFiles from './PublicPublicationFiles';
 import NotFound from '../../errorpages/NotFound';
 import Card from '../../../components/Card';
 import Heading from '../../../components/Heading';
@@ -87,7 +87,7 @@ const StyledTagContainer = styled.div`
   align-items: center;
 `;
 
-const PublicationPage: FC = () => {
+const PublicPublication: FC = () => {
   const { t } = useTranslation('publication');
   const { identifier } = useParams();
   const [publication, isLoadingPublication] = useFetchPublication(identifier);
@@ -197,4 +197,4 @@ const PublicationPage: FC = () => {
   );
 };
 
-export default PublicationPage;
+export default PublicPublication;

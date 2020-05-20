@@ -14,34 +14,38 @@ export enum LicenseNames {
 }
 
 interface LicenseInfo {
-  identifier: LicenseNames;
-  label: string;
-  description: string;
-  image: any;
   buttonImage: any;
+  description: string;
+  identifier: LicenseNames;
+  image: any;
+  label: string;
+  link: string;
 }
 
 export const licenses: LicenseInfo[] = [
   {
-    identifier: LicenseNames.CC_BY,
-    label: i18n.t('licenses:labels.cc_by'),
-    image: LicenseImages.ccByImage,
     buttonImage: LicenseImages.ccByButton,
     description: i18n.t('licenses:description.cc_by'),
+    identifier: LicenseNames.CC_BY,
+    image: LicenseImages.ccByImage,
+    label: i18n.t('licenses:labels.cc_by'),
+    link: '',
   },
   {
-    identifier: LicenseNames.CC_BY_SA,
-    label: i18n.t('licenses:labels.cc_by_sa'),
-    image: LicenseImages.ccBySaImage,
     buttonImage: LicenseImages.ccBySaButton,
     description: i18n.t('licenses:description.cc_by_sa'),
+    identifier: LicenseNames.CC_BY_SA,
+    image: LicenseImages.ccBySaImage,
+    label: i18n.t('licenses:labels.cc_by_sa'),
+    link: '',
   },
   {
-    identifier: LicenseNames.CC_BY_ND,
-    label: i18n.t('licenses:labels.cc_by_nd'),
-    image: LicenseImages.ccByNdImage,
     buttonImage: LicenseImages.ccByNdButton,
     description: i18n.t('licenses:description.cc_by_nd'),
+    identifier: LicenseNames.CC_BY_ND,
+    image: LicenseImages.ccByNdImage,
+    label: i18n.t('licenses:labels.cc_by_nd'),
+    link: '',
   },
   {
     identifier: LicenseNames.CC_BY_NC,
@@ -49,27 +53,31 @@ export const licenses: LicenseInfo[] = [
     image: LicenseImages.ccByNcImage,
     buttonImage: LicenseImages.ccByNcButton,
     description: i18n.t('licenses:description.cc_by_nc'),
+    link: '',
   },
   {
-    identifier: LicenseNames.CC_BY_NC_SA,
-    label: i18n.t('licenses:labels.cc_by_nc_sa'),
-    image: LicenseImages.ccByNcSaImage,
     buttonImage: LicenseImages.ccByNcSaButton,
     description: i18n.t('licenses:description.cc_by_nc_sa'),
+    identifier: LicenseNames.CC_BY_NC_SA,
+    image: LicenseImages.ccByNcSaImage,
+    label: i18n.t('licenses:labels.cc_by_nc_sa'),
+    link: '',
   },
   {
-    identifier: LicenseNames.CC_BY_NC_ND,
-    label: i18n.t('licenses:labels.cc_by_nc_nd'),
-    image: LicenseImages.ccByNcNdImage,
     buttonImage: LicenseImages.ccByNcNdButton,
     description: i18n.t('licenses:description.cc_by_nc_nd'),
+    identifier: LicenseNames.CC_BY_NC_ND,
+    image: LicenseImages.ccByNcNdImage,
+    label: i18n.t('licenses:labels.cc_by_nc_nd'),
+    link: '',
   },
   {
-    identifier: LicenseNames.CC0,
-    label: i18n.t('licenses:labels.cc0'),
-    image: LicenseImages.cc0Image,
     buttonImage: LicenseImages.cc0Button,
     description: i18n.t('licenses:description.cc0'),
+    identifier: LicenseNames.CC0,
+    image: LicenseImages.cc0Image,
+    label: i18n.t('licenses:labels.cc0'),
+    link: '',
   },
 ];
 
