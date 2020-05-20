@@ -76,7 +76,7 @@ const AffiliationsCell: FC<AffiliationsCellProps> = ({ affiliations, baseFieldNa
       {affiliations?.map((affiliation) => (
         <StyledCard key={affiliation.id}>
           <div>
-            <AffiliationHierarchy unitUri={affiliation.id} boldTopLevel={false} />
+            <AffiliationHierarchy unitUri={affiliation.id} />
           </div>
           <Button variant="outlined" size="small" onClick={() => setAffiliationToRemove(affiliation)}>
             <DeleteIcon />

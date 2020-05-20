@@ -1,14 +1,14 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 import { Link, IconButton } from '@material-ui/core';
+import MailOutlineIcon from '@material-ui/icons/MailOutline';
 
 import { Contributor } from '../../../types/contributor.types';
 import NormalText from '../../../components/NormalText';
 import { getDistinctContributorUnits } from '../../../utils/institutions-helpers';
-import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import OrcidLogo from '../../../resources/images/orcid_logo.svg';
 import { ORCID_BASE_URL } from '../../../utils/constants';
-import { AffiliationHierarchy } from '../../../components/institution/AffiliationHierarchy';
+import AffiliationHierarchy from '../../../components/institution/AffiliationHierarchy';
 
 const StyledAuthor = styled.span`
   margin-right: 1rem;
@@ -60,9 +60,9 @@ const PublicPublicationAuthors: FC<PublicPublicationProps> = ({ contributors }) 
       <StyledAffiliationsContainer>
         {distinctUnits.map((unitUri, index) => (
           <NormalText key={unitUri}>
-            <sup>{index + 1}</sup>
+            <sup>{index}</sup>
             <i>
-              <AffiliationHierarchy unitUri={unitUri} commaSeparated />
+              <AffiliationHierarchy key={unitUri} unitUri={unitUri} commaSeparated />
             </i>
           </NormalText>
         ))}
