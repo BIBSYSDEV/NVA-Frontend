@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { emptyPublication } from '../../../types/publication.types';
 import ContentPage from '../../../components/ContentPage';
 import { useTranslation } from 'react-i18next';
-import PublicationPageAuthors from './PublicationPageAuthors';
+import PublicPublicationAuthors from './PublicPublicationAuthors';
 import PublicPublicationFiles from './PublicPublicationFiles';
 import NotFound from '../../errorpages/NotFound';
 import Card from '../../../components/Card';
@@ -116,7 +116,7 @@ const PublicPublication: FC = () => {
           {publication ? (
             <>
               <Heading>{mainTitle}</Heading>
-              {contributors && <PublicationPageAuthors contributors={contributors} />}
+              {contributors && <PublicPublicationAuthors contributors={contributors} />}
               <StyledContentWrapper>
                 <StyledSidebar>
                   {/* <StyledSidebarCard>
