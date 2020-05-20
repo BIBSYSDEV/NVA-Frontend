@@ -2,12 +2,12 @@ import { Form, Formik, FormikProps, yupToFormErrors, validateYupSchema } from 'f
 import React, { FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { emptyPublication, FormikPublication, PublicationStatus } from '../../types/publication.types';
+import { emptyPublication, FormikPublication, PublicationStatus, PublicationTab } from '../../types/publication.types';
 import { createUppy } from '../../utils/uppy-config';
 import { PublicationFormTabs } from './PublicationFormTabs';
 import { emptyFile, Uppy, emptyFileSet } from '../../types/file.types';
 import { getPublication, updatePublication } from '../../api/publicationApi';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import deepmerge from 'deepmerge';
@@ -17,6 +17,7 @@ import RouteLeavingGuard from '../../components/RouteLeavingGuard';
 import { useHistory } from 'react-router-dom';
 import ButtonWithProgress from '../../components/ButtonWithProgress';
 import { PublicationFormContent } from './PublicationFormContent';
+import { RootStore } from '../../redux/reducers/rootReducer';
 
 const shouldAllowMultipleFiles = false;
 
@@ -45,8 +46,9 @@ const PublicationForm: FC<PublicationFormProps> = ({
   identifier,
   closeForm,
 }) => {
+  const user = useSelector((store: RootStore) => store.user);
   const { t } = useTranslation('publication');
-  const [tabNumber, setTabNumber] = useState(0);
+  const [tabNumber, setTabNumber] = useState(user.isCurator ? PublicationTab.Submission : PublicationTab.Description);
   const [initialValues, setInitialValues] = useState(emptyPublication);
   const [isLoading, setIsLoading] = useState(!!identifier);
   const [isSaving, setIsSaving] = useState(false);
@@ -75,7 +77,7 @@ const PublicationForm: FC<PublicationFormProps> = ({
       if (publication.error) {
         closeForm();
         dispatch(setNotification(publication.error, NotificationVariant.Error));
-      } else if (publication.status === PublicationStatus.PUBLISHED) {
+      } else if (publication.status === PublicationStatus.PUBLISHED && !user.isCurator) {
         history.push(`/publication/${id}/public`);
       } else {
         // TODO: revisit necessity of deepmerge when backend model has all fields
@@ -95,7 +97,7 @@ const PublicationForm: FC<PublicationFormProps> = ({
     if (identifier) {
       getPublicationById(identifier);
     }
-  }, [identifier, closeForm, dispatch, history, uppy]);
+  }, [identifier, closeForm, dispatch, history, uppy, user.isCurator]);
 
   const handleTabChange = (_: React.ChangeEvent<{}>, newTabNumber: number) => {
     setTabNumber(newTabNumber);
@@ -158,7 +160,7 @@ const PublicationForm: FC<PublicationFormProps> = ({
                 savePublication={savePublication}
               />
             </Form>
-            {tabNumber !== 4 && (
+            {tabNumber !== PublicationTab.Submission && (
               <StyledButtonGroupContainer>
                 <StyledButtonContainer>
                   <Button color="primary" variant="contained" onClick={goToNextTab}>

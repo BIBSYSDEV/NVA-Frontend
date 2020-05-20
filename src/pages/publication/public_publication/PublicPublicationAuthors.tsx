@@ -19,11 +19,11 @@ const StyledAffiliationsContainer = styled.div`
   padding-left: 1rem;
 `;
 
-interface PublicationPageProps {
+interface PublicPublicationProps {
   contributors: Contributor[];
 }
 
-const PublicationPageAuthors: FC<PublicationPageProps> = ({ contributors }) => {
+const PublicPublicationAuthors: FC<PublicPublicationProps> = ({ contributors }) => {
   const distinctUnits = getDistinctContributorUnits(contributors);
 
   return (
@@ -71,4 +71,4 @@ const PublicationPageAuthors: FC<PublicationPageProps> = ({ contributors }) => {
   );
 };
 
-export default PublicationPageAuthors;
+export default PublicPublicationAuthors;

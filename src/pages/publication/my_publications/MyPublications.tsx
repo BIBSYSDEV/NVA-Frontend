@@ -41,6 +41,7 @@ const StyledProgressContainer = styled.div`
 
 const StyledCard = styled(Card)`
   margin: 0 1.5rem;
+  width: auto;
 `;
 
 enum Tab {

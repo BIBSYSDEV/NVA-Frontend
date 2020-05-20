@@ -2,7 +2,7 @@ import { FormikProps, useFormikContext, FormikTouched } from 'formik';
 import React, { FC, useCallback, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 
-import { FormikPublication } from '../../types/publication.types';
+import { FormikPublication, PublicationTab } from '../../types/publication.types';
 import DescriptionPanel from './DescriptionPanel';
 import ReferencesPanel from './ReferencesPanel';
 import ContributorsPanel from './ContributorsPanel';
@@ -48,27 +48,27 @@ export const PublicationFormContent: FC<PublicationFormContentProps> = ({
 
   return (
     <>
-      {tabNumber === 0 && (
+      {tabNumber === PublicationTab.Description && (
         <StyledPanel>
           <DescriptionPanel setTouchedFields={setTouchedFields} />
         </StyledPanel>
       )}
-      {tabNumber === 1 && (
+      {tabNumber === PublicationTab.Reference && (
         <StyledPanel>
           <ReferencesPanel setTouchedFields={setTouchedFields} />
         </StyledPanel>
       )}
-      {tabNumber === 2 && (
+      {tabNumber === PublicationTab.Contributors && (
         <StyledPanel>
           <ContributorsPanel setTouchedFields={setTouchedFields} />
         </StyledPanel>
       )}
-      {tabNumber === 3 && (
+      {tabNumber === PublicationTab.FilesAndLicenses && (
         <StyledPanel>
           <FilesAndLicensePanel setTouchedFields={setTouchedFields} uppy={uppy} />
         </StyledPanel>
       )}
-      {tabNumber === 4 && (
+      {tabNumber === PublicationTab.Submission && (
         <StyledPanel>
           <SubmissionPanel isSaving={isSaving} savePublication={savePublication} setTouchedFields={setTouchedFields} />
         </StyledPanel>
