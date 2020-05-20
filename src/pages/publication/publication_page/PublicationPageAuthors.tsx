@@ -59,7 +59,12 @@ const PublicationPageAuthors: FC<PublicationPageProps> = ({ contributors }) => {
       </NormalText>
       <StyledAffiliationsContainer>
         {distinctUnits.map((unitUri, index) => (
-          <PublicationPageAffiliation key={unitUri} unitUri={unitUri} index={index + 1} />
+          <NormalText>
+            <sup>{index + 1}</sup>
+            <i>
+              <PublicationPageAffiliation key={unitUri} unitUri={unitUri} />
+            </i>
+          </NormalText>
         ))}
       </StyledAffiliationsContainer>
     </>
@@ -68,20 +73,12 @@ const PublicationPageAuthors: FC<PublicationPageProps> = ({ contributors }) => {
 
 interface PublicationPageAffiliationProps {
   unitUri: string;
-  index: number;
 }
 
-const PublicationPageAffiliation: FC<PublicationPageAffiliationProps> = ({ unitUri, index }) => {
+export const PublicationPageAffiliation: FC<PublicationPageAffiliationProps> = ({ unitUri }) => {
   const [unit, isLoadingUnit] = useFetchUnitHierarchy(unitUri);
 
-  return isLoadingUnit ? (
-    <CircularProgress size={20} />
-  ) : unit ? (
-    <NormalText>
-      <sup>{index}</sup>
-      <i>{getCommaSeparatedUnitString(unit)}</i>
-    </NormalText>
-  ) : null;
+  return isLoadingUnit ? <CircularProgress size={20} /> : unit ? <>{getCommaSeparatedUnitString(unit)}</> : null;
 };
 
 export default PublicationPageAuthors;
