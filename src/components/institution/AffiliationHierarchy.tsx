@@ -4,7 +4,7 @@ import { CircularProgress } from '@material-ui/core';
 import Label from '../Label';
 import NormalText from '../NormalText';
 import useFetchUnitHierarchy from '../../utils/hooks/useFetchUnitHierarchy';
-import { getUnitHierarchyStrings } from '../../utils/institutions-helpers';
+import { getUnitHierarchyNames } from '../../utils/institutions-helpers';
 
 interface AffiliationHierarchyProps {
   unitUri: string;
@@ -18,7 +18,7 @@ export const AffiliationHierarchy: FC<AffiliationHierarchyProps> = ({
   boldTopLevel = true,
 }) => {
   const [unit, isLoadingUnit] = useFetchUnitHierarchy(unitUri);
-  const unitNames = unit ? getUnitHierarchyStrings(unit) : [];
+  const unitNames = unit ? getUnitHierarchyNames(unit) : [];
 
   return isLoadingUnit ? (
     <CircularProgress size={20} />
