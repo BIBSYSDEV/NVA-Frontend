@@ -27,11 +27,11 @@ const StyledButtonWithProgress = styled(ButtonWithProgress)`
   margin: 1rem;
 `;
 
-interface PublicationPageFilesProps {
+interface PublicPublicationFilesProps {
   files: File[];
 }
 
-const PublicationPageFiles: FC<PublicationPageFilesProps> = ({ files }) => {
+const PublicPublicationFiles: FC<PublicPublicationFilesProps> = ({ files }) => {
   const { identifier } = useParams();
   const { t } = useTranslation('common');
   const dispatch = useDispatch();
@@ -66,4 +66,4 @@ const PublicationPageFiles: FC<PublicationPageFilesProps> = ({ files }) => {
   );
 };
 
-export default PublicationPageFiles;
+export default PublicPublicationFiles;

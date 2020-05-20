@@ -6,7 +6,7 @@ import { emptyPublication } from '../../../types/publication.types';
 import ContentPage from '../../../components/ContentPage';
 import { useTranslation } from 'react-i18next';
 import PublicationPageAuthors from './PublicationPageAuthors';
-import PublicationPageFiles from './PublicationPageFiles';
+import PublicPublicationFiles from './PublicPublicationFiles';
 import NotFound from '../../errorpages/NotFound';
 import Card from '../../../components/Card';
 import Heading from '../../../components/Heading';
@@ -87,7 +87,7 @@ const StyledTagContainer = styled.div`
   align-items: center;
 `;
 
-const PublicationPage: FC = () => {
+const PublicPublication: FC = () => {
   const { t } = useTranslation('publication');
   const { identifier } = useParams();
   const [publication, isLoadingPublication] = useFetchPublication(identifier);
@@ -124,7 +124,7 @@ const PublicationPage: FC = () => {
                   </StyledSidebarCard> */}
                   {publication.fileSet && (
                     <StyledSidebarCard>
-                      <PublicationPageFiles files={publication.fileSet.files} />
+                      <PublicPublicationFiles files={publication.fileSet.files} />
                     </StyledSidebarCard>
                   )}
                   <StyledSidebarCard>
@@ -171,7 +171,11 @@ const PublicationPage: FC = () => {
                   {selectedLicense && (
                     <StyledLicenseCard>
                       <StyledLicenseImage src={selectedLicense.image} alt={selectedLicense.identifier} />
-                      <StyledLicenseLabel>{selectedLicense.label}</StyledLicenseLabel>
+                      <StyledLicenseLabel>
+                        <Link href={selectedLicense.link} target="_blank" rel="noopener noreferrer">
+                          {selectedLicense.label}
+                        </Link>
+                      </StyledLicenseLabel>
                       <StyledNormalText>{selectedLicense.description}</StyledNormalText>
                     </StyledLicenseCard>
                   )}
@@ -197,4 +201,4 @@ const PublicationPage: FC = () => {
   );
 };
 
-export default PublicationPage;
+export default PublicPublication;
