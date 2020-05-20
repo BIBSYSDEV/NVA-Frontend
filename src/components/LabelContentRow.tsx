@@ -7,12 +7,13 @@ const StyledRow = styled.div`
   display: flex;
   flex-wrap: wrap;
   font-size: 0.8rem;
+  align-items: center;
 `;
 
 const StyledLabel = styled(({ minimal: boolean, ...props }) => <NormalText {...props} />)`
   display: inline-block;
   font-weight: bold;
-  ${({ minimal }) => (minimal ? `padding-right: 1rem;` : `min-width: 17rem;`)}
+  ${({ minimal }) => (minimal ? `width: 10rem;` : `min-width: 17rem;`)}
 `;
 
 const StyledSingleRowContainer = styled(NormalText)`

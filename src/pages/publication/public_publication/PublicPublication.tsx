@@ -81,11 +81,7 @@ const StyledTextDescription = styled(NormalText)`
 
 const StyledTag = styled.div`
   display: inline;
-  margin-left: 1rem;
-`;
-
-const StyledTagContainer = styled.div`
-  align-items: center;
+  margin-right: 1rem;
 `;
 
 const PublicPublication: FC = () => {
@@ -100,7 +96,7 @@ const PublicPublication: FC = () => {
     description,
     mainTitle,
     npiSubjectHeading,
-    reference: { doi, publicationContext },
+    reference: { doi, publicationContext, publicationInstance },
     series,
     tags,
   } = publication ? publication.entityDescription : emptyPublication.entityDescription;
@@ -129,13 +125,6 @@ const PublicPublication: FC = () => {
                       <PublicPublicationFiles files={publication.fileSet.files} />
                     </StyledSidebarCard>
                   )}
-                  <StyledSidebarCard>
-                    <LabelContentRow minimal label={`${t('description.date_published')}:`}>
-                      {date.year}
-                      {date.month && `-${date.month}`}
-                      {date.day && `-${date.day}`}
-                    </LabelContentRow>
-                  </StyledSidebarCard>
                 </StyledSidebar>
                 <StyledMainContent>
                   {doi && (
@@ -156,18 +145,38 @@ const PublicPublication: FC = () => {
                     </StyledTextContainer>
                   )}
                   {tags && (
-                    <StyledTagContainer>
-                      <StyledLabel>{`${t('description.tags')}:`}</StyledLabel>
+                    <LabelContentRow minimal multiple label={`${t('description.tags')}:`}>
                       {tags.map((tag) => (
                         <StyledTag key={tag}>
                           <Chip label={tag} />
                         </StyledTag>
                       ))}
-                    </StyledTagContainer>
+                    </LabelContentRow>
                   )}
                   {publicationContext && (
-                    <LabelContentRow minimal label={`${t('references.journal')}:`}>
-                      {publicationContext.title}
+                    <LabelContentRow minimal multiple label={`${t('references.journal')}:`}>
+                      <NormalText>{publicationContext.title}</NormalText>
+                      {publicationContext?.onlineIssn && `${t('references.issn')} ${publicationContext.onlineIssn}`}
+                    </LabelContentRow>
+                  )}
+                  {publicationInstance && (
+                    <LabelContentRow minimal label={`${t('common:details')}:`}>
+                      {publicationInstance?.volume && `${t('references.volume')} ${publicationInstance.volume}`}
+                      {publicationInstance?.issue && `, ${t('references.issue')} ${publicationInstance.issue}`}
+                      {publicationInstance?.pages?.begin &&
+                        publicationInstance?.pages?.end &&
+                        `, ${t('references.pages')} ${publicationInstance.pages.begin}-${
+                          publicationInstance.pages.end
+                        }`}
+                      {publicationInstance?.articleNumber &&
+                        `, ${t('references.article_number')} ${publicationInstance.articleNumber}`}
+                    </LabelContentRow>
+                  )}
+                  {date && (
+                    <LabelContentRow minimal label={`${t('description.date_published')}:`}>
+                      {date.year}
+                      {date.month && `-${date.month}`}
+                      {date.day && `-${date.day}`}
                     </LabelContentRow>
                   )}
                   {npiSubjectHeading && (
