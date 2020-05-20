@@ -15,7 +15,7 @@
     "@uppy/react": "^1.6.5",
     "aws-amplify": "^3.0.8",
     "axios": "^0.19.2",
-    "date-fns": "^2.13.0",
+    "date-fns": "^2.14.0",
     "deepmerge": "^4.2.2",
     "formik": "^2.1.4",
     "i18next": "^19.4.4",
