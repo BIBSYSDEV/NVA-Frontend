@@ -39,9 +39,8 @@ const StyledButtonGroupContainer = styled.div`
   margin-bottom: 1rem;
 `;
 
-const StyledButtonContainer = styled.div`
+const StyledButton = styled(Button)`
   display: inline-block;
-  margin-top: 1rem;
   margin-right: 0.5rem;
 `;
 
@@ -150,29 +149,30 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication, 
         {/* TODO: need to check if the author also has made a request for doi in the conditional below */}
         {user.isCurator ? (
           <>
-            <StyledButtonContainer>
-              <Button color="primary" variant="contained" onClick={onClickCreateDoi} disabled={isSaving || !isValid}>
-                {t('common:create_doi')}
-              </Button>
-            </StyledButtonContainer>
-            <StyledButtonContainer>
-              <Button color="secondary" variant="outlined" onClick={onClickRejectDoi} disabled={isSaving || !isValid}>
-                {t('common:reject_doi')}
-              </Button>
-            </StyledButtonContainer>
+            <StyledButton
+              color="primary"
+              variant="contained"
+              onClick={onClickCreateDoi}
+              disabled={isSaving || !isValid}>
+              {t('common:create_doi')}
+            </StyledButton>
+            <StyledButton
+              color="secondary"
+              variant="outlined"
+              onClick={onClickRejectDoi}
+              disabled={isSaving || !isValid}>
+              {t('common:reject_doi')}
+            </StyledButton>
           </>
         ) : (
-          <StyledButtonContainer>
-            <Button color="primary" variant="contained" onClick={onClickPublish} disabled={isSaving || !isValid}>
-              {t('common:publish')}
-            </Button>
-          </StyledButtonContainer>
+          <StyledButton color="primary" variant="contained" onClick={onClickPublish} disabled={isSaving || !isValid}>
+            {t('common:publish')}
+          </StyledButton>
         )}
-        <StyledButtonContainer>
-          <ButtonWithProgress isLoading={isSaving} onClick={() => savePublication(values)}>
-            {t('common:save')}
-          </ButtonWithProgress>
-        </StyledButtonContainer>
+
+        <ButtonWithProgress isLoading={isSaving} onClick={() => savePublication(values)}>
+          {t('common:save')}
+        </ButtonWithProgress>
       </StyledButtonGroupContainer>
     </>
   );
