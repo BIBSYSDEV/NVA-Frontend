@@ -1,52 +1,38 @@
 import React, { FC } from 'react';
-import { RecursiveInstitutionUnit } from '../../types/institution.types';
+import { CircularProgress } from '@material-ui/core';
+
 import Label from '../Label';
 import NormalText from '../NormalText';
 import useFetchUnitHierarchy from '../../utils/hooks/useFetchUnitHierarchy';
-import { getCommaSeparatedUnitString } from '../../utils/institutions-helpers';
-import { CircularProgress } from '@material-ui/core';
+import { getUnitHierarchyStrings } from '../../utils/institutions-helpers';
 
-interface PublicationPageAffiliationProps {
+interface AffiliationHierarchyProps {
   unitUri: string;
-  commaSeparated?: boolean;
-  boldTopLevel?: boolean;
+  commaSeparated?: boolean; // Comma separated or line breaks
+  boldTopLevel?: boolean; // Only relevant if commaSeparated=true
 }
 
-export const PublicationPageAffiliation: FC<PublicationPageAffiliationProps> = ({
+export const AffiliationHierarchy: FC<AffiliationHierarchyProps> = ({
   unitUri,
   commaSeparated = false,
   boldTopLevel = true,
 }) => {
   const [unit, isLoadingUnit] = useFetchUnitHierarchy(unitUri);
+  const unitNames = unit ? getUnitHierarchyStrings(unit) : [];
 
   return isLoadingUnit ? (
     <CircularProgress size={20} />
   ) : unit ? (
     commaSeparated ? (
-      <>{getCommaSeparatedUnitString(unit)}</>
+      <>{unitNames.join(', ')}</>
     ) : (
-      <AffiliationHierarchy unit={unit} boldTopLevel={boldTopLevel} />
+      <>
+        {unitNames.map((unitName, index) =>
+          index === 0 && boldTopLevel ? <Label>{unitName}</Label> : <NormalText>{unitName}</NormalText>
+        )}
+      </>
     )
   ) : null;
 };
-
-interface AffiliationHierarchyProps {
-  unit: RecursiveInstitutionUnit;
-  boldTopLevel?: boolean;
-}
-
-const AffiliationHierarchy: FC<AffiliationHierarchyProps> = ({ unit, boldTopLevel = true }) => (
-  <>
-    {boldTopLevel ? <Label>{unit.name}</Label> : <NormalText>{unit.name}</NormalText>}
-    {unit?.subunits && <SubUnitRow unit={unit.subunits[0]} />}
-  </>
-);
-
-const SubUnitRow: FC<AffiliationHierarchyProps> = ({ unit }) => (
-  <>
-    <NormalText>{unit.name}</NormalText>
-    {unit.subunits && <SubUnitRow unit={unit.subunits[0]} />}
-  </>
-);
 
 export default AffiliationHierarchy;

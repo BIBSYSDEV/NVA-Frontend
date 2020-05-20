@@ -8,7 +8,7 @@ import { getDistinctContributorUnits } from '../../../utils/institutions-helpers
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import OrcidLogo from '../../../resources/images/orcid_logo.svg';
 import { ORCID_BASE_URL } from '../../../utils/constants';
-import { PublicationPageAffiliation } from '../../../components/institution/AffiliationHierarchy';
+import { AffiliationHierarchy } from '../../../components/institution/AffiliationHierarchy';
 
 const StyledAuthor = styled.span`
   margin-right: 1rem;
@@ -59,10 +59,10 @@ const PublicPublicationAuthors: FC<PublicPublicationProps> = ({ contributors }) 
       </NormalText>
       <StyledAffiliationsContainer>
         {distinctUnits.map((unitUri, index) => (
-          <NormalText>
+          <NormalText key={unitUri}>
             <sup>{index + 1}</sup>
             <i>
-              <PublicationPageAffiliation key={unitUri} unitUri={unitUri} />
+              <AffiliationHierarchy unitUri={unitUri} commaSeparated />
             </i>
           </NormalText>
         ))}

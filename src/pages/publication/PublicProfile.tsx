@@ -14,7 +14,7 @@ import { ORCID_BASE_URL } from '../../utils/constants';
 import LabelTextLine from './../../components/LabelTextLine';
 import Heading from '../../components/Heading';
 import { NotificationVariant } from '../../types/notification.types';
-import { PublicationPageAffiliation } from '../../components/institution/AffiliationHierarchy';
+import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
 
 const StyledWrapper = styled.div`
   text-align: center;
@@ -64,7 +64,7 @@ const PublicProfile: FC = () => {
             <LabelTextLine label={t('heading.organizations')}>
               {user.authority.orgunitids.map((unitId) => (
                 <NormalText key={unitId}>
-                  <PublicationPageAffiliation unitUri={unitId} />
+                  <AffiliationHierarchy unitUri={unitId} commaSeparated />
                 </NormalText>
               ))}
             </LabelTextLine>
