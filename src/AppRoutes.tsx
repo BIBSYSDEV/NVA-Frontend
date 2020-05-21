@@ -28,29 +28,51 @@ const AppRoutes: FC = () => {
     <Suspense fallback={<DelayedFallback />}>
       <Switch>
         <Route exact path="/" component={Dashboard} />
-        {user.isPublisher && <Route exact path="/publication" component={EditPublication} />}
-        {user.isPublisher && <Route exact path="/publication/:identifier" component={EditPublication} />}
-        {user.isPublisher && <Route exact path="/my-publications" component={MyPublications} />}
-        {user.isCurator && <Route exact path="/worklist" component={WorklistPage} />}
-        {user.isAppAdmin && <Route exact path="/admin-institutions" component={AdminCustomerInstitutionsPage} />}
-        {user.isAppAdmin && (
-          <Route exact path="/admin-institutions/:identifier" component={AdminCustomerInstitutionPage} />
-        )}
-        {user.isInstitutionAdmin && <Route exact path="/admin-institution-users" component={AdminUsersPage} />}
+        <Route exact path="/description" component={Description} />
+        <Route exact path="/order-information" component={OrderInformation} />
+        <Route exact path="/privacy-policy" component={PrivacyPolicy} />
         <Route exact path="/profile/:arpId" component={PublicProfile} />
-        <Route exact path="/search" component={Search} />
         <Route exact path="/publication/:identifier/public" component={PublicPublication} />
+        <Route exact path="/search" component={Search} />
         <Route exact path="/search/:searchTerm" component={Search} />
         <Route exact path="/search/:searchTerm/:offset" component={Search} />
-        {user.isLoggedIn && <Route exact path="/user" component={User} />}
-        {!user.isLoggedIn && <Route exact path="/logout" component={Logout} />}
-        <Route exact path="/order-information" component={OrderInformation} />
-        <Route exact path="/description" component={Description} />
-        <Route exact path="/privacy-policy" component={PrivacyPolicy} />
+
+        {user.isLoggedIn ? (
+          <>
+            <Route exact path="/user" component={User} />
+            {user.isPublisher && <PublisherRoutes />}
+            {user.isCurator && <CuratorRoutes />}
+            {user.isAppAdmin && <AppAdminRoutes />}
+            {user.isInstitutionAdmin && <InstitutionAdminRoutes />}
+          </>
+        ) : (
+          <Route exact path="/logout" component={Logout} />
+        )}
+
+        {/* NotFound must be last, otherwise it will catch all routes */}
         <Route path="*" component={NotFound} />
       </Switch>
     </Suspense>
   );
 };
+
+const PublisherRoutes: FC = () => (
+  <>
+    <Route exact path="/publication" component={EditPublication} />
+    <Route exact path="/publication/:identifier" component={EditPublication} />
+    <Route exact path="/my-publications" component={MyPublications} />
+  </>
+);
+
+const CuratorRoutes: FC = () => <Route exact path="/worklist" component={WorklistPage} />;
+
+const AppAdminRoutes: FC = () => (
+  <>
+    <Route exact path="/admin-institutions" component={AdminCustomerInstitutionsPage} />
+    <Route exact path="/admin-institutions/:identifier" component={AdminCustomerInstitutionPage} />
+  </>
+);
+
+const InstitutionAdminRoutes: FC = () => <Route exact path="/admin-institution-users" component={AdminUsersPage} />;
 
 export default AppRoutes;
