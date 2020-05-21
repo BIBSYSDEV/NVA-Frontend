@@ -42,9 +42,10 @@ const PublicPublicationAuthors: FC<PublicPublicationProps> = ({ contributors }) 
             identity: { arpId, name, orcId },
             email,
           } = contributor;
-          const affiliationIndexes = contributor.affiliations?.map(
-            (affiliation) => distinctUnits.indexOf(affiliation.id) + 1
-          );
+          const affiliationIndexes = contributor.affiliations
+            ?.map((affiliation) => distinctUnits.indexOf(affiliation.id) + 1)
+            .sort();
+
           return (
             <StyledAuthor key={index}>
               {arpId ? <Link href={`/profile/${arpId}`}>{name}</Link> : name}
