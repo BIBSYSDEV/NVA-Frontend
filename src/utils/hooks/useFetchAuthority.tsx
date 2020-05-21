@@ -10,20 +10,21 @@ import { Authority } from '../../types/authority.types';
 const useFetchAuthority = (arpId: string): [Authority | undefined, boolean] => {
   const dispatch = useDispatch();
   const [authority, setAuthority] = useState<Authority | undefined>();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const cancelSource = Axios.CancelToken.source();
 
     const fetchAuthority = async () => {
-      setIsLoading(true);
       const fetchedAuthority = await getAuthority(arpId, cancelSource.token);
-      if (fetchedAuthority?.error) {
-        dispatch(setNotification(fetchedAuthority.error, NotificationVariant.Error));
-      } else {
-        setAuthority(fetchedAuthority);
+      if (fetchedAuthority) {
+        setIsLoading(false);
+        if (fetchedAuthority.error) {
+          dispatch(setNotification(fetchedAuthority.error, NotificationVariant.Error));
+        } else {
+          setAuthority(fetchedAuthority);
+        }
       }
-      setIsLoading(false);
     };
     fetchAuthority();
 

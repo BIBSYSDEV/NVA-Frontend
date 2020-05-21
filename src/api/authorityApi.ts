@@ -34,8 +34,10 @@ export const getAuthority = async (arpId: string, cancelToken?: CancelToken) => 
     } else {
       return { error: i18n.t('feedback:error.get_authority') };
     }
-  } catch {
-    return { error: i18n.t('feedback:error.get_authority') };
+  } catch (error) {
+    if (!Axios.isCancel(error)) {
+      return { error: i18n.t('feedback:error.get_authority') };
+    }
   }
 };
 
