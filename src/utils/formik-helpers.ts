@@ -37,7 +37,7 @@ export const flattenFormikErrors = (
       }
       return {
         fieldName: fieldPath,
-        errorMessage,
+        errorMessage: errorMessage as string,
       };
     })
     .flat();
