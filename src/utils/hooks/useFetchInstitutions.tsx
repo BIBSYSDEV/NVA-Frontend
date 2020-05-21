@@ -20,12 +20,14 @@ const useFetchInstitutions = (): [InstitutionUnitBase[], boolean] => {
 
     const fetchInstitutions = async () => {
       const response = await getInstitutions(cancelSource.token);
-      if (response?.error) {
-        dispatch(setNotification(response.error, NotificationVariant.Error));
-      } else {
-        dispatch(setInstitutions(response));
+      if (response) {
+        setIsLoading(false);
+        if (response.error) {
+          dispatch(setNotification(response.error, NotificationVariant.Error));
+        } else {
+          dispatch(setInstitutions(response));
+        }
       }
-      setIsLoading(false);
     };
     // Institutions should not change, so ensure we fetch only once
     if (!institutions || institutions.length === 0) {
