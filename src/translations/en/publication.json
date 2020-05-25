@@ -120,6 +120,7 @@
     "nvi_fail_rated_line2": "(The journal's level may be changed in the Publication Channel Registry, so the publication can ble included in NVI)",
     "nvi_fail_no_peer_review": "This publication can not be incuded in NVI, since it's not peer reviewed.",
     "or": "Or",
+    "pages": "Pages",
     "pages_from": "Pages from",
     "pages_to": "to",
     "peer_review": "Is the publication peer reviewed?",
