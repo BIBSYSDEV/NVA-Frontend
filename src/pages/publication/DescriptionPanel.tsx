@@ -19,6 +19,7 @@ import { DescriptionFieldNames } from '../../types/publicationFieldNames';
 import { emptyProject } from '../../types/project.types';
 import { touchedDescriptionTabFields } from '../../utils/formik-helpers';
 import { PanelProps } from './PublicationFormContent';
+import SubHeading from '../../components/SubHeading';
 
 const NpiAndTagsWrapper = styled.div`
   display: grid;
@@ -143,7 +144,7 @@ const DescriptionPanel: FC<PanelProps> = ({ setTouchedFields }) => {
         </DateAndLanguageWrapper>
       </StyledMainCard>
       <Card>
-        <Heading>{t('description.project_association')}</Heading>
+        <SubHeading>{t('description.project_association')}</SubHeading>
 
         <Field name={DescriptionFieldNames.PROJECT}>
           {({ field: { name, value } }: FieldProps) => (

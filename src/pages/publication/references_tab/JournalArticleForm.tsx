@@ -13,6 +13,11 @@ import DoiField from './components/DoiField';
 import SelectTypeField from './components/SelectTypeField';
 import PublisherField from './components/PublisherField';
 
+const StyledContent = styled.div`
+  display: grid;
+  gap: 1rem;
+`;
+
 const StyledArticleDetail = styled.div`
   display: grid;
   grid-template-areas: 'volume issue from to or article';
@@ -29,12 +34,6 @@ const StyledLabel = styled.div`
   justify-self: center;
 `;
 
-const StyledPeerReview = styled.div`
-  margin-top: 0.7rem;
-  padding-top: 0.7rem;
-  padding-left: 0.7rem;
-`;
-
 const JournalArticleForm: FC = () => {
   const { t } = useTranslation('publication');
   const { values }: FormikProps<FormikPublication> = useFormikContext();
@@ -44,7 +43,7 @@ const JournalArticleForm: FC = () => {
   } = values.entityDescription.reference;
 
   return (
-    <>
+    <StyledContent>
       <SelectTypeField fieldName={ReferenceFieldNames.SUB_TYPE} options={Object.values(JournalArticleType)} />
 
       <DoiField />
@@ -124,11 +123,9 @@ const JournalArticleForm: FC = () => {
           )}
         </Field>
       </StyledArticleDetail>
-      <StyledPeerReview>
-        <PeerReview fieldName={ReferenceFieldNames.PEER_REVIEW} label={t('references.peer_review')} />
-      </StyledPeerReview>
+      <PeerReview fieldName={ReferenceFieldNames.PEER_REVIEW} label={t('references.peer_review')} />
       <NviValidation isPeerReviewed={peerReviewed} isRated={!!publicationContext?.level} dataTestId="nvi_journal" />
-    </>
+    </StyledContent>
   );
 };
 
