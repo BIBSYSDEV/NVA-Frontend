@@ -65,7 +65,7 @@ const ReportForm: FC = () => {
         <Field name={ReferenceFieldNames.NUMBER_OF_PAGES}>
           {({ field }: FieldProps) => (
             <StyledTextField
-              data-testid="number_of_pages"
+              inputProps={{ 'data-testid': 'number_of_pages' }}
               variant="outlined"
               label={t('references.number_of_pages')}
               {...field}
