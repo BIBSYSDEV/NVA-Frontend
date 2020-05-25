@@ -112,30 +112,32 @@ const BookForm: FC = () => {
           </Field>
         </StyledTextBook>
       </StyledSection>
-      <SubHeading>{t('references.series')}</SubHeading>
-      <Label>{t('references.series_info')}</Label>
-      <Field name={ReferenceFieldNames.SERIES}>
-        {({ field: { name, value } }: FieldProps) => (
-          <>
-            <PublicationChannelSearch
-              dataTestId="autosearch-series"
-              clearSearchField={value === emptyPublisher}
-              label={t('common:title')}
-              publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
-              setValueFunction={(inputValue) => setFieldValue(name, inputValue ?? emptyPublisher)}
-              placeholder={t('references.search_for_series')}
-            />
-            {value.title && (
-              <PublisherRow
-                dataTestId="autosearch-results-series"
+      <div>
+        <SubHeading>{t('references.series')}</SubHeading>
+        <Label>{t('references.series_info')}</Label>
+        <Field name={ReferenceFieldNames.SERIES}>
+          {({ field: { name, value } }: FieldProps) => (
+            <>
+              <PublicationChannelSearch
+                dataTestId="autosearch-series"
+                clearSearchField={value === emptyPublisher}
                 label={t('common:title')}
-                publisher={value}
-                onClickDelete={() => setFieldValue(name, emptyPublisher)}
+                publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
+                setValueFunction={(inputValue) => setFieldValue(name, inputValue ?? emptyPublisher)}
+                placeholder={t('references.search_for_series')}
               />
-            )}
-          </>
-        )}
-      </Field>
+              {value.title && (
+                <PublisherRow
+                  dataTestId="autosearch-results-series"
+                  label={t('common:title')}
+                  publisher={value}
+                  onClickDelete={() => setFieldValue(name, emptyPublisher)}
+                />
+              )}
+            </>
+          )}
+        </Field>
+      </div>
       <NviValidation isPeerReviewed={peerReviewed} isRated={!!publicationContext?.level} dataTestId="nvi_book" />
     </StyledContent>
   );

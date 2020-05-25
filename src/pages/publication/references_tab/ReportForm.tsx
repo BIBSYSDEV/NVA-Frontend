@@ -13,16 +13,30 @@ import PublisherRow from './components/PublisherRow';
 import DoiField from './components/DoiField';
 import SelectTypeField from './components/SelectTypeField';
 import PublisherField from './components/PublisherField';
+import SubHeading from '../../../components/SubHeading';
+import Label from '../../../components/Label';
 
-const StyledLabel = styled.div`
-  color: ${({ theme }) => theme.palette.text.primary};
-  font-size: 1rem;
-  font-weight: bold;
+const StyledContent = styled.div`
+  display: grid;
+  gap: 1rem;
 `;
 
-const StyledHeading = styled.div`
-  font-size: 1.5rem;
-  padding-top: 1.5rem;
+const StyledSection = styled.div`
+  display: grid;
+  gap: 1rem;
+  grid-template-areas: 'isbn number-of-pages';
+  grid-template-columns: 1fr 2fr;
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+    grid-template-areas: 'isbn' 'number-of-pages';
+    grid-template-columns: 1fr;
+  }
+`;
+
+const StyledTextField = styled(TextField)`
+  display: inline;
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+    display: grid;
+  }
 `;
 
 const ReportForm: FC = () => {
@@ -31,7 +45,7 @@ const ReportForm: FC = () => {
   const { setFieldValue }: FormikProps<FormikPublication> = useFormikContext();
 
   return (
-    <>
+    <StyledContent>
       <SelectTypeField fieldName={ReferenceFieldNames.SUB_TYPE} options={Object.values(ReportType)} />
 
       <DoiField />
@@ -41,16 +55,16 @@ const ReportForm: FC = () => {
         label={t('common:publisher')}
         placeholder={t('references.search_for_publisher')}
       />
+      <StyledSection>
+        <Field name={ReferenceFieldNames.ISBN}>
+          {({ field }: FieldProps) => (
+            <StyledTextField data-testid="isbn" variant="outlined" label={t('references.isbn')} {...field} />
+          )}
+        </Field>
 
-      <Field name={ReferenceFieldNames.ISBN}>
-        {({ field }: FieldProps) => (
-          <TextField data-testid="isbn" variant="outlined" label={t('references.isbn')} {...field} />
-        )}
-      </Field>
-      <div>
         <Field name={ReferenceFieldNames.NUMBER_OF_PAGES}>
           {({ field }: FieldProps) => (
-            <TextField
+            <StyledTextField
               data-testid="number_of_pages"
               variant="outlined"
               label={t('references.number_of_pages')}
@@ -58,32 +72,34 @@ const ReportForm: FC = () => {
             />
           )}
         </Field>
-      </div>
-      <StyledHeading>{t('references.series')}</StyledHeading>
-      <StyledLabel>{t('references.series_info')}</StyledLabel>
-      <Field name={ReferenceFieldNames.SERIES}>
-        {({ field: { name, value } }: FieldProps) => (
-          <>
-            <PublicationChannelSearch
-              clearSearchField={value === emptyPublisher}
-              dataTestId="autosearch-series"
-              label={t('common:title')}
-              publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
-              setValueFunction={(inputValue) => setFieldValue(name, inputValue ?? emptyPublisher)}
-              placeholder={t('references.search_for_series')}
-            />
-            {value.title && (
-              <PublisherRow
-                dataTestId="autosearch-results-series"
+      </StyledSection>
+      <div>
+        <SubHeading>{t('references.series')}</SubHeading>
+        <Label>{t('references.series_info')}</Label>
+        <Field name={ReferenceFieldNames.SERIES}>
+          {({ field: { name, value } }: FieldProps) => (
+            <>
+              <PublicationChannelSearch
+                clearSearchField={value === emptyPublisher}
+                dataTestId="autosearch-series"
                 label={t('common:title')}
-                publisher={value}
-                onClickDelete={() => setFieldValue(name, emptyPublisher)}
+                publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
+                setValueFunction={(inputValue) => setFieldValue(name, inputValue ?? emptyPublisher)}
+                placeholder={t('references.search_for_series')}
               />
-            )}
-          </>
-        )}
-      </Field>
-    </>
+              {value.title && (
+                <PublisherRow
+                  dataTestId="autosearch-results-series"
+                  label={t('common:title')}
+                  publisher={value}
+                  onClickDelete={() => setFieldValue(name, emptyPublisher)}
+                />
+              )}
+            </>
+          )}
+        </Field>
+      </div>
+    </StyledContent>
   );
 };
 
