@@ -8,6 +8,7 @@ import LinkTab from '../../components/LinkTab';
 import { FormikPublication } from '../../types/publication.types';
 import { ReferenceFieldNames, DescriptionFieldNames } from '../../types/publicationFieldNames';
 import { hasTouchedError, getAllFileFields, getAllContributorFields } from '../../utils/formik-helpers';
+import { isMobile } from '../../utils/constants';
 
 const a11yProps = (tabDescription: string) => {
   return {
@@ -39,26 +40,29 @@ export const PublicationFormTabs: FC<PublicationFormTabsProps> = ({ handleTabCha
   return (
     <Tabs variant="fullWidth" value={tabNumber} onChange={handleTabChange} aria-label="navigation" textColor="primary">
       <LinkTab
-        label={`1. ${t('heading.description')}`}
+        label={`1. ${isMobile ? '' : t('heading.description')}`}
         {...a11yProps('description')}
         error={hasTouchedError(errors, touched, descriptionFieldNames)}
       />
       <LinkTab
-        label={`2. ${t('heading.references')}`}
+        label={`2. ${isMobile ? '' : t('heading.references')}`}
         {...a11yProps('references')}
         error={hasTouchedError(errors, touched, referenceFieldNames)}
       />
       <LinkTab
-        label={`3. ${t('heading.contributors')}`}
+        label={`3. ${isMobile ? '' : t('heading.contributors')}`}
         {...a11yProps('contributors')}
         error={hasTouchedError(errors, touched, getAllContributorFields(contributors))}
       />
       <LinkTab
-        label={`4. ${t('heading.files_and_license')}`}
+        label={`4. ${isMobile ? '' : t('heading.files_and_license')}`}
         {...a11yProps('files-and-license')}
         error={hasTouchedError(errors, touched, getAllFileFields(files))}
       />
-      <LinkTab label={`5. ${doi ? t('heading.registration') : t('heading.publishing')}`} {...a11yProps('submission')} />
+      <LinkTab
+        label={`5. ${isMobile ? '' : doi ? t('heading.registration') : t('heading.publishing')}`}
+        {...a11yProps('submission')}
+      />
     </Tabs>
   );
 };
