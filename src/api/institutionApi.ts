@@ -22,8 +22,10 @@ export const getInstitutions = async (cancelToken?: CancelToken) => {
     } else {
       return { error: i18n.t('feedback:error.get_institutions') };
     }
-  } catch {
-    return { error: i18n.t('feedback:error.get_institutions') };
+  } catch (error) {
+    if (!Axios.isCancel(error)) {
+      return { error: i18n.t('feedback:error.get_institutions') };
+    }
   }
 };
 

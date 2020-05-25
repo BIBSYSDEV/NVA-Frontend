@@ -17,12 +17,14 @@ const useFetchPublication = (identifier: string): [Publication | undefined, bool
 
     const fetchPublication = async () => {
       const publication = await getPublication(identifier, cancelSource.token);
-      if (publication?.error) {
-        dispatch(setNotification(publication.error, NotificationVariant.Error));
-      } else {
-        setPublication(publication);
+      if (publication) {
+        setIsLoading(false);
+        if (publication.error) {
+          dispatch(setNotification(publication.error, NotificationVariant.Error));
+        } else {
+          setPublication(publication);
+        }
       }
-      setIsLoading(false);
     };
 
     fetchPublication();

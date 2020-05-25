@@ -71,10 +71,12 @@ export const getPublication = async (id: string, cancelToken?: CancelToken) => {
     if (response.status === StatusCode.OK) {
       return response.data;
     } else {
-      return null;
+      return { error: i18n.t('feedback:error.get_publication') };
     }
-  } catch {
-    return { error: i18n.t('feedback:error.get_publication') };
+  } catch (error) {
+    if (!Axios.isCancel(error)) {
+      return { error: i18n.t('feedback:error.get_publication') };
+    }
   }
 };
 
