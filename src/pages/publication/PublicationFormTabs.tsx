@@ -8,6 +8,7 @@ import LinkTab from '../../components/LinkTab';
 import { FormikPublication } from '../../types/publication.types';
 import { ReferenceFieldNames, DescriptionFieldNames } from '../../types/publicationFieldNames';
 import { hasTouchedError, getAllFileFields, getAllContributorFields } from '../../utils/formik-helpers';
+import { isMobile } from '../../utils/constants';
 
 const a11yProps = (tabDescription: string) => {
   return {
@@ -40,10 +41,10 @@ export const PublicationFormTabs: FC<PublicationFormTabsProps> = ({ handleTabCha
     <Tabs
       aria-label="navigation"
       onChange={handleTabChange}
-      scrollButtons="on"
+      scrollButtons={isMobile ? 'on' : 'off'}
       textColor="primary"
       value={tabNumber}
-      variant="scrollable">
+      variant={isMobile ? 'scrollable' : 'fullWidth'}>
       <LinkTab
         label={`1. ${t('heading.description')}`}
         {...a11yProps('description')}

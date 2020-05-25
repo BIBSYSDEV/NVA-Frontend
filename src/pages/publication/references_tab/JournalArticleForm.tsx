@@ -15,9 +15,12 @@ import PublisherField from './components/PublisherField';
 
 const StyledArticleDetail = styled.div`
   display: grid;
-  grid-template-columns: auto auto auto auto auto auto;
+  grid-template-areas: 'volume issue from to or article';
   grid-column-gap: 1rem;
   align-content: center;
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+    grid-template-areas: 'volume' 'issue' 'from' 'to' 'or' 'article';
+  }
 `;
 
 const StyledLabel = styled.div`
