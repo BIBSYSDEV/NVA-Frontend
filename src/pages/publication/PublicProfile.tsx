@@ -49,7 +49,7 @@ const PublicProfile: FC = () => {
                     ))}
                   </LabelTextLine>
                 )}
-                {authority?.orcids.map((orcid: string) => {
+                {authority.orcids.map((orcid: string) => {
                   const orcidLink = `${ORCID_BASE_URL}/${orcid}`;
                   return (
                     <LabelTextLine
