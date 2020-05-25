@@ -20,13 +20,13 @@ export enum AuthorityQualifiers {
 export const getAuthority = async (arpId: string, cancelToken?: CancelToken) => {
   const url = encodeURI(`${AuthorityApiPaths.PERSON}?arpId=${arpId}`);
 
-  // remove when Authorization headers are set for all requests
-  const idToken = await getIdToken();
-  const headers = {
-    Authorization: `Bearer ${idToken}`,
-  };
-
   try {
+    // remove when Authorization headers are set for all requests
+    const idToken = await getIdToken();
+    const headers = {
+      Authorization: `Bearer ${idToken}`,
+    };
+
     const response = await Axios.get(url, { headers, cancelToken });
 
     if (response.status === StatusCode.OK) {
@@ -44,13 +44,13 @@ export const getAuthority = async (arpId: string, cancelToken?: CancelToken) => 
 export const getAuthorities = async (name: string, dispatch: Dispatch) => {
   const url = encodeURI(`${AuthorityApiPaths.PERSON}?name=${name}`);
 
-  // remove when Authorization headers are set for all requests
-  const idToken = await getIdToken();
-  const headers = {
-    Authorization: `Bearer ${idToken}`,
-  };
-
   try {
+    // remove when Authorization headers are set for all requests
+    const idToken = await getIdToken();
+    const headers = {
+      Authorization: `Bearer ${idToken}`,
+    };
+
     const response = await Axios.get(url, { headers });
 
     if (response.status === StatusCode.OK) {
@@ -66,12 +66,13 @@ export const getAuthorities = async (name: string, dispatch: Dispatch) => {
 export const createAuthority = async (firstName: string, lastName: string, feideId?: string) => {
   const url = AuthorityApiPaths.PERSON;
 
-  // remove when Authorization headers are set for all requests
-  const idToken = await getIdToken();
-  const headers = {
-    Authorization: `Bearer ${idToken}`,
-  };
   try {
+    // remove when Authorization headers are set for all requests
+    const idToken = await getIdToken();
+    const headers = {
+      Authorization: `Bearer ${idToken}`,
+    };
+
     const response = await Axios.post(url, { invertedname: `${lastName}, ${firstName}` }, { headers });
     if (response.status === StatusCode.OK) {
       if (feideId) {
