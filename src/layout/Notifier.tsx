@@ -7,7 +7,7 @@ import { removeNotification } from '../redux/actions/notificationActions';
 import { RootStore } from '../redux/reducers/rootReducer';
 import { NotificationVariant } from '../types/notification.types';
 import { Fade } from '@material-ui/core';
-import { useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 const autoHideDuration = {
   [NotificationVariant.Error]: 6000,
@@ -19,7 +19,7 @@ const autoHideDuration = {
 const Notifier: React.FC = () => {
   const notification = useSelector((store: RootStore) => store.notification);
   const dispatch = useDispatch();
-  const history = useHistory();
+  const location = useLocation();
 
   const notificationRef = useRef(notification);
   useEffect(() => {
@@ -31,7 +31,7 @@ const Notifier: React.FC = () => {
     if (notificationRef.current) {
       dispatch(removeNotification());
     }
-  }, [dispatch, history.location.pathname]);
+  }, [dispatch, location.pathname]);
 
   const handleClose = (_?: React.SyntheticEvent, reason?: string) => {
     if (reason === 'clickaway') {
