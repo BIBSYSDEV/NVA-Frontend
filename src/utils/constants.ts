@@ -1,5 +1,3 @@
-import mainTheme from '../themes/mainTheme';
-
 export const USE_MOCK_DATA = process.env.REACT_APP_USE_MOCK === 'true';
 
 export const SEARCH_RESULTS_PER_PAGE = 10;
@@ -15,8 +13,6 @@ export const DOI_PREFIX = 'https://www.doi.org/';
 
 export const CRISTIN_UNITS_BASE_URL = 'https://api.cristin.no/v2/units/';
 export const CRISTIN_INSTITUTIONS_BASE_URL = 'https://api.cristin.no/v2/institutions/';
-
-export const isMobile = window.innerWidth < mainTheme.breakpoints.values.sm;
 
 export enum StatusCode {
   OK = 200,

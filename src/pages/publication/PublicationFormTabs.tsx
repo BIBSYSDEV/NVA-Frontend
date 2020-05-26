@@ -8,6 +8,20 @@ import LinkTab from '../../components/LinkTab';
 import { FormikPublication } from '../../types/publication.types';
 import { ReferenceFieldNames, DescriptionFieldNames } from '../../types/publicationFieldNames';
 import { hasTouchedError, getAllFileFields, getAllContributorFields } from '../../utils/formik-helpers';
+import styled from 'styled-components';
+
+const StyledLinkTab = styled(LinkTab)`
+  margin: auto;
+`;
+
+const StyledTabs = styled(Tabs)`
+  background-color: ${({ theme }) => theme.overrides.MuiTab.root.background};
+  @media (min-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+    .MuiTabs-flexContainer {
+      justify-content: center;
+    }
+  }
+`;
 
 const a11yProps = (tabDescription: string) => {
   return {
@@ -37,34 +51,37 @@ export const PublicationFormTabs: FC<PublicationFormTabsProps> = ({ handleTabCha
   } = values;
 
   return (
-    <Tabs
+    <StyledTabs
       aria-label="navigation"
       onChange={handleTabChange}
       scrollButtons="auto"
       textColor="primary"
       value={tabNumber}
-      variant="fullWidth">
-      <LinkTab
+      variant="scrollable">
+      <StyledLinkTab
         label={`1. ${t('heading.description')}`}
         {...a11yProps('description')}
         error={hasTouchedError(errors, touched, descriptionFieldNames)}
       />
-      <LinkTab
+      <StyledLinkTab
         label={`2. ${t('heading.references')}`}
         {...a11yProps('references')}
         error={hasTouchedError(errors, touched, referenceFieldNames)}
       />
-      <LinkTab
+      <StyledLinkTab
         label={`3. ${t('heading.contributors')}`}
         {...a11yProps('contributors')}
         error={hasTouchedError(errors, touched, getAllContributorFields(contributors))}
       />
-      <LinkTab
+      <StyledLinkTab
         label={`4. ${t('heading.files_and_license')}`}
         {...a11yProps('files-and-license')}
         error={hasTouchedError(errors, touched, getAllFileFields(files))}
       />
-      <LinkTab label={`5. ${doi ? t('heading.registration') : t('heading.publishing')}`} {...a11yProps('submission')} />
-    </Tabs>
+      <StyledLinkTab
+        label={`5. ${doi ? t('heading.registration') : t('heading.publishing')}`}
+        {...a11yProps('submission')}
+      />
+    </StyledTabs>
   );
 };
