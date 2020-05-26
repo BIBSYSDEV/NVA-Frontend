@@ -10,10 +10,6 @@ import { ReferenceFieldNames, DescriptionFieldNames } from '../../types/publicat
 import { hasTouchedError, getAllFileFields, getAllContributorFields } from '../../utils/formik-helpers';
 import styled from 'styled-components';
 
-const StyledLinkTab = styled(LinkTab)`
-  margin: auto;
-`;
-
 const StyledTabs = styled(Tabs)`
   background-color: ${({ theme }) => theme.overrides.MuiTab.root.background};
   @media (min-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
@@ -58,30 +54,27 @@ export const PublicationFormTabs: FC<PublicationFormTabsProps> = ({ handleTabCha
       textColor="primary"
       value={tabNumber}
       variant="scrollable">
-      <StyledLinkTab
+      <LinkTab
         label={`1. ${t('heading.description')}`}
         {...a11yProps('description')}
         error={hasTouchedError(errors, touched, descriptionFieldNames)}
       />
-      <StyledLinkTab
+      <LinkTab
         label={`2. ${t('heading.references')}`}
         {...a11yProps('references')}
         error={hasTouchedError(errors, touched, referenceFieldNames)}
       />
-      <StyledLinkTab
+      <LinkTab
         label={`3. ${t('heading.contributors')}`}
         {...a11yProps('contributors')}
         error={hasTouchedError(errors, touched, getAllContributorFields(contributors))}
       />
-      <StyledLinkTab
+      <LinkTab
         label={`4. ${t('heading.files_and_license')}`}
         {...a11yProps('files-and-license')}
         error={hasTouchedError(errors, touched, getAllFileFields(files))}
       />
-      <StyledLinkTab
-        label={`5. ${doi ? t('heading.registration') : t('heading.publishing')}`}
-        {...a11yProps('submission')}
-      />
+      <LinkTab label={`5. ${doi ? t('heading.registration') : t('heading.publishing')}`} {...a11yProps('submission')} />
     </StyledTabs>
   );
 };
