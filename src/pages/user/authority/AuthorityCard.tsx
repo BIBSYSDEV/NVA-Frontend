@@ -15,10 +15,14 @@ import Card from '../../../components/Card';
 const StyledBoxContent = styled(({ isConnected, ...rest }) => <Card {...rest} />)`
   display: grid;
   grid-template-columns: 1fr 2fr 2fr;
-  grid-gap: 1.5rem;
+  gap: 1.5rem;
   padding: 0.5rem;
   ${({ isConnected, theme }) =>
     isConnected ? `background-color: ${theme.palette.success.light}` : `background-color: ${theme.palette.box.main}`};
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
 `;
 
 const StyledCenteredContent = styled.div`

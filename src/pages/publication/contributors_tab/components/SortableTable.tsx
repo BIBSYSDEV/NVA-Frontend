@@ -10,6 +10,7 @@ import {
   TextField,
   Button,
   Tooltip,
+  TableContainer,
 } from '@material-ui/core';
 import { Field, FieldProps, FormikProps, useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
@@ -69,6 +70,7 @@ const SortableItem = SortableElement(
     return (
       <TableRow tabIndex={0} key={contributor.identity.id}>
         <TableCell align="left">
+          <SubHeading>#{contributor.sequence}</SubHeading>
           <SubHeading>
             {contributor.identity.name}{' '}
             {contributor.identity.arpId ? (
@@ -130,7 +132,6 @@ const SortableItem = SortableElement(
           )}
         </TableCell>
         <TableCell align="right">
-          <SubHeading>#{contributor.sequence}</SubHeading>
           <Button color="secondary" variant="contained" size="small" onClick={onRemoveContributorClick}>
             <DeleteIcon />
             {t('contributors.remove_contributor')}
@@ -157,7 +158,7 @@ const SortableList = SortableContainer(({ contributors, onDelete, setUnverifiedC
   };
 
   return (
-    <>
+    <TableContainer>
       <Table>
         <TableBody>
           {contributors.map((contributor: Contributor, index: number) => (
@@ -185,7 +186,7 @@ const SortableList = SortableContainer(({ contributors, onDelete, setUnverifiedC
           onCancel={closeConfirmDialog}
         />
       )}
-    </>
+    </TableContainer>
   );
 });
 
