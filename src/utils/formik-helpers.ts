@@ -156,7 +156,7 @@ export const touchedFilesTabFields = (files: File[]): FormikTouched<FormikPublic
   },
 });
 
-const overwriteArrayMerge = (destinationArray: any[], sourceArray: any[], options?: Options) => sourceArray;
-export const mergeTouchedFields = (touchedArray: FormikTouched<FormikPublication>[]) => {
-  return deepmerge.all(touchedArray, { arrayMerge: overwriteArrayMerge });
-};
+export const overwriteArrayMerge = (destinationArray: any[], sourceArray: any[], options?: Options) => sourceArray;
+
+export const mergeTouchedFields = (touchedArray: FormikTouched<FormikPublication>[]) =>
+  deepmerge.all(touchedArray, { arrayMerge: overwriteArrayMerge });
