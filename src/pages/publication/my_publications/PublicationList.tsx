@@ -28,19 +28,12 @@ const StyledTableRow = styled(TableRow)`
   }
 `;
 
-const StyledTableCellForStatus = styled(TableCell)`
-  width: 10%;
-`;
-const StyledTableCellForDate = styled(TableCell)`
-  width: 15%;
+const StyledNormalTextWithIcon = styled(NormalText)`
+  margin-left: 0.5rem;
 `;
 
-const StyledEditIcon = styled(EditIcon)`
-  margin-right: 0.5rem;
-`;
-
-const StyledDeleteIcon = styled(DeleteIcon)`
-  margin-right: 0.5rem;
+const StyledLabel = styled(Label)`
+  min-width: 12rem;
 `;
 
 interface PublicationListProps {
@@ -77,7 +70,7 @@ const PublicationList: FC<PublicationListProps> = ({ publications }) => {
           <TableHead>
             <TableRow>
               <TableCell>
-                <Label>{t('workLists:publication_name')}</Label>
+                <StyledLabel>{t('workLists:publication_name')}</StyledLabel>
               </TableCell>
               <TableCell>
                 <Label>{t('common:status')}</Label>
@@ -95,20 +88,20 @@ const PublicationList: FC<PublicationListProps> = ({ publications }) => {
                 <TableCell component="th" scope="row">
                   <NormalText>{publication.mainTitle}</NormalText>
                 </TableCell>
-                <StyledTableCellForStatus>
+                <TableCell>
                   <NormalText>{t(`publication:status.${publication.status}`)}</NormalText>
-                </StyledTableCellForStatus>
-                <StyledTableCellForDate>
+                </TableCell>
+                <TableCell>
                   <NormalText>{new Date(publication.createdDate).toLocaleString()}</NormalText>
-                </StyledTableCellForDate>
+                </TableCell>
                 <TableCell>
                   <Button
                     color="primary"
                     component={RouterLink}
                     to={`/publication/${publication.identifier}`}
                     data-testid={`edit-publication-${publication.identifier}`}>
-                    <StyledEditIcon />
-                    <NormalText>{t('common:edit')}</NormalText>
+                    <EditIcon />
+                    <StyledNormalTextWithIcon>{t('common:edit')}</StyledNormalTextWithIcon>
                   </Button>
                 </TableCell>
                 <TableCell>
@@ -118,8 +111,8 @@ const PublicationList: FC<PublicationListProps> = ({ publications }) => {
                     variant="outlined"
                     data-testid={`delete-publication-${publication.identifier}`}
                     onClick={() => handleOnClick(publication)}>
-                    <StyledDeleteIcon />
-                    {t('common:delete')}
+                    <DeleteIcon />
+                    <StyledNormalTextWithIcon>{t('common:delete')}</StyledNormalTextWithIcon>
                   </Button>
                 </TableCell>
               </StyledTableRow>
