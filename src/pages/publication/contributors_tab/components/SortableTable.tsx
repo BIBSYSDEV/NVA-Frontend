@@ -10,6 +10,7 @@ import {
   TextField,
   Button,
   Tooltip,
+  TableContainer,
 } from '@material-ui/core';
 import { Field, FieldProps, FormikProps, useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
@@ -46,12 +47,6 @@ const StyledAddAuthorButton = styled(Button)`
 
 const StyledEmailTextField = styled(TextField)`
   margin-bottom: 0.5rem;
-`;
-
-const StyledContainer = styled.div`
-  overflow-x: auto;
-  margin-right: auto;
-  margin-left: auto;
 `;
 
 interface UnverifiedContributor {
@@ -163,7 +158,7 @@ const SortableList = SortableContainer(({ contributors, onDelete, setUnverifiedC
   };
 
   return (
-    <StyledContainer>
+    <TableContainer>
       <Table>
         <TableBody>
           {contributors.map((contributor: Contributor, index: number) => (
@@ -191,7 +186,7 @@ const SortableList = SortableContainer(({ contributors, onDelete, setUnverifiedC
           onCancel={closeConfirmDialog}
         />
       )}
-    </StyledContainer>
+    </TableContainer>
   );
 });
 
