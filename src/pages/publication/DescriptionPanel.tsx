@@ -24,18 +24,22 @@ import SubHeading from '../../components/SubHeading';
 const NpiAndTagsWrapper = styled.div`
   display: grid;
   grid-template-areas: 'npi tags';
+  grid-template-columns: 1fr 1fr;
   column-gap: 1rem;
   @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
     grid-template-areas: 'npi' 'tags';
+    grid-template-columns: 1fr;
   }
 `;
 
 const DateAndLanguageWrapper = styled.div`
   display: grid;
   grid-template-areas: 'datepicker year-only language';
+  grid-template-columns: 1fr 1fr 2fr;
   column-gap: 1rem;
   @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
     grid-template-areas: 'datepicker' 'year-only' 'language';
+    grid-template-columns: 1fr;
   }
 `;
 
