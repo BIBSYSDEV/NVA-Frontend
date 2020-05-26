@@ -21,6 +21,10 @@ const StyledCard = styled(Card)`
 
 const StyledSelectContainer = styled.div`
   width: 50%;
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+    padding: 0 1rem;
+    width: 100%;
+  }
 `;
 
 const ReferencesPanel: FC<PanelProps> = ({ setTouchedFields }) => {

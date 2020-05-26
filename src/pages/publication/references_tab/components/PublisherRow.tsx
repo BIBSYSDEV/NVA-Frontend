@@ -11,6 +11,7 @@ import { PublicationTableNumber } from '../../../../utils/constants';
 import { FormikProps, useFormikContext } from 'formik';
 import { ReferenceFieldNames } from '../../../../types/publicationFieldNames';
 import Card from '../../../../components/Card';
+import NormalText from '../../../../components/NormalText';
 
 const StyledPublisherCard = styled(Card)`
   margin: 1rem 0;
@@ -21,6 +22,12 @@ const StyledPublisherCard = styled(Card)`
     'titleLabel levelLabel button'
     'title level button';
   grid-template-columns: 7fr 6fr 2fr;
+  align-items: center;
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+    grid-template-areas: 'titleLabel title title' 'levelLabel level level' '. . button';
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
+  }
 `;
 
 const StyledTitle = styled(Label)`
@@ -31,11 +38,11 @@ const StyledLevelLabel = styled(Label)`
   grid-area: levelLabel;
 `;
 
-const StyledTitleText = styled.div`
+const StyledTitleText = styled(NormalText)`
   grid-area: title;
 `;
 
-const StyledLevelText = styled.div`
+const StyledLevelText = styled(NormalText)`
   grid-area: level;
 `;
 
