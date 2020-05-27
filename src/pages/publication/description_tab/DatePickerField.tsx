@@ -54,6 +54,7 @@ const DatePickerField = ({ yearFieldName, monthFieldName, dayFieldName }: DatePi
   return (
     <>
       <KeyboardDatePicker
+        data-testid="date-published-field"
         inputVariant="outlined"
         label={t('description.date_published')}
         onChange={setDate}
