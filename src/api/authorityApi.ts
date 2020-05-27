@@ -1,11 +1,8 @@
 import Axios, { CancelToken } from 'axios';
-import { Dispatch } from 'redux';
 
-import { setNotification } from '../redux/actions/notificationActions';
 import i18n from '../translations/i18n';
 import { StatusCode } from '../utils/constants';
 import { getIdToken } from './userApi';
-import { NotificationVariant } from '../types/notification.types';
 
 export enum AuthorityApiPaths {
   PERSON = '/person',
@@ -41,7 +38,7 @@ export const getAuthority = async (arpId: string, cancelToken?: CancelToken) => 
   }
 };
 
-export const getAuthorities = async (name: string, dispatch: Dispatch) => {
+export const getAuthorities = async (name: string, cancelToken?: CancelToken) => {
   const url = encodeURI(`${AuthorityApiPaths.PERSON}?name=${name}`);
 
   try {
@@ -51,15 +48,17 @@ export const getAuthorities = async (name: string, dispatch: Dispatch) => {
       Authorization: `Bearer ${idToken}`,
     };
 
-    const response = await Axios.get(url, { headers });
+    const response = await Axios.get(url, { headers, cancelToken });
 
     if (response.status === StatusCode.OK) {
       return response.data;
     } else {
-      dispatch(setNotification(i18n.t('feedback:error.get_authorities'), NotificationVariant.Error));
+      return { error: i18n.t('feedback:error.get_authorities') };
     }
-  } catch {
-    dispatch(setNotification(i18n.t('feedback:error.get_authorities'), NotificationVariant.Error));
+  } catch (error) {
+    if (!Axios.isCancel(error)) {
+      return { error: i18n.t('feedback:error.get_authorities') };
+    }
   }
 };
 
