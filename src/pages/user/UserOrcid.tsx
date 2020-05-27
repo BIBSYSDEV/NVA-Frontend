@@ -25,16 +25,26 @@ const StyledInformation = styled.div`
 `;
 
 const StyledOrcidLine = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-areas: 'text button';
+  grid-template-columns: 2fr 1fr;
+  gap: 1rem;
+  align-items: start;
   margin-top: 1rem;
-  align-items: center;
-  justify-content: space-between;
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+    grid-template-areas: 'text' 'button';
+    grid-template-columns: 1fr;
+  }
 `;
 
 const StyledAvatar = styled(Avatar)`
   display: inline-flex;
   margin-right: 0.5rem;
   top: 0.5rem;
+`;
+
+const StyledButton = styled(Button)`
+  justify-self: right;
 `;
 
 const UserOrcid: FC = () => {
@@ -84,10 +94,10 @@ const UserOrcid: FC = () => {
                 linkText={orcidLink}
                 externalLink={orcidLink}
               />
-              <Button onClick={toggleConfirmDialog} variant="contained" color="secondary">
+              <StyledButton onClick={toggleConfirmDialog} variant="contained" color="secondary">
                 <DeleteIcon />
                 {t('orcid.remove_connection')}
-              </Button>
+              </StyledButton>
 
               <ConfirmDialog
                 open={openConfirmDialog}
