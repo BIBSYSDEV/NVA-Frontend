@@ -75,7 +75,7 @@
     "all": true
   },
   "devDependencies": {
-    "@cypress/code-coverage": "^3.4.1",
+    "@cypress/code-coverage": "^3.7.6",
     "@cypress/instrument-cra": "^1.1.1",
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
     "@types/jest": "^25.2.1",
