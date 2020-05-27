@@ -121,7 +121,6 @@ const PublicationForm: FC<PublicationFormProps> = ({
   };
 
   const validateForm = (values: FormikPublication) => {
-    console.log('validate');
     const {
       reference: { publicationInstance, publicationContext },
     } = values.entityDescription;
