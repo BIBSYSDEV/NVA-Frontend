@@ -25,6 +25,9 @@ const StyledButton = styled(Button)`
 
 const StyledInstitutionSearchContainer = styled.div`
   width: 30rem;
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+    width: 100%;
+  }
 `;
 
 const StyledLoadingInfo = styled.div`

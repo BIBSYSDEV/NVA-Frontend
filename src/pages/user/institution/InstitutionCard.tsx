@@ -15,6 +15,11 @@ const StyledCard = styled(Card)`
   padding: 0.5rem;
   min-height: 5rem;
   border-radius: 4px;
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+    grid-template-areas: 'text' 'button';
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
 `;
 
 const StyledTextContainer = styled.div`
