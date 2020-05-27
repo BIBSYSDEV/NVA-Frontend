@@ -61,13 +61,7 @@ export const getPublication = async (id: string, cancelToken?: CancelToken) => {
   const url = `${PublicationsApiPaths.PUBLICATION}/${id}`;
 
   try {
-    const idToken = await getIdToken();
-    const response = await Axios.get(url, {
-      headers: {
-        Authorization: `Bearer ${idToken}`,
-      },
-      cancelToken,
-    });
+    const response = await Axios.get(url, { cancelToken });
     if (response.status === StatusCode.OK) {
       return response.data;
     } else {
