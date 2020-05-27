@@ -46,11 +46,10 @@ export const updatePublication = async (publication: Publication) => {
         Authorization: `Bearer ${idToken}`,
       },
     });
-    if (response.status === StatusCode.OK || response.status === StatusCode.ACCEPTED) {
-      // TODO: temporarily allow accepted status code. remove when fixed in backend
+    if (response.status === StatusCode.OK) {
       return response.data;
     } else {
-      return null;
+      return { error: i18n.t('feedback:error.update_publication') };
     }
   } catch {
     return { error: i18n.t('feedback:error.update_publication') };
