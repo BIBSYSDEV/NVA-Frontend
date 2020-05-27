@@ -1,5 +1,5 @@
-import React, { FC, useState, useEffect, useCallback } from 'react';
-import { SortableContainer, SortableElement } from 'react-sortable-hoc';
+import React, { FC, useState, useEffect } from 'react';
+import { SortableContainer, SortableElement, SortEnd } from 'react-sortable-hoc';
 import {
   Checkbox,
   FormControlLabel,
@@ -12,12 +12,13 @@ import {
   Tooltip,
   TableContainer,
 } from '@material-ui/core';
-import { Field, FieldProps, FormikProps, useFormikContext } from 'formik';
+import { Field, FieldProps, FormikProps, useFormikContext, FieldArrayRenderProps, move } from 'formik';
 import { useTranslation } from 'react-i18next';
 import DeleteIcon from '@material-ui/icons/Delete';
 import WarningIcon from '@material-ui/icons/Warning';
 import CheckIcon from '@material-ui/icons/Check';
 import AddIcon from '@material-ui/icons/Add';
+import deepmerge from 'deepmerge';
 
 import { ContributorFieldNames, SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
 import { Contributor, emptyContributor } from '../../../../types/contributor.types';
@@ -32,6 +33,7 @@ import { setNotification } from '../../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../../types/notification.types';
 import { Authority } from '../../../../types/authority.types';
 import { getUnitUri } from '../../../../utils/unitUrl';
+import { overwriteArrayMerge } from '../../../../utils/formik-helpers';
 
 const StyledWarningIcon = styled(WarningIcon)`
   color: ${({ theme }) => theme.palette.warning.main};
@@ -63,7 +65,6 @@ interface SortableItemProps {
 const SortableItem = SortableElement(
   ({ contributor, onRemoveContributorClick, setUnverifiedContributor }: SortableItemProps) => {
     const { t } = useTranslation('publication');
-
     const index = contributor.sequence - 1;
     const baseFieldName = `${ContributorFieldNames.CONTRIBUTORS}[${index}]`;
 
@@ -145,7 +146,7 @@ const SortableItem = SortableElement(
 interface SortableListProps {
   contributors: Contributor[];
   onDelete: (index: number) => void;
-  onSortEnd: ({ oldIndex, newIndex }: any) => void;
+  onSortEnd: ({ oldIndex, newIndex }: SortEnd) => void;
   setUnverifiedContributor: (unverifiedContributor: UnverifiedContributor) => void;
 }
 
@@ -190,22 +191,15 @@ const SortableList = SortableContainer(({ contributors, onDelete, setUnverifiedC
   );
 });
 
-interface SortableTableProps {
-  push: (obj: any) => void;
-  remove: (index: number) => void;
-  move: (oldIndex: number, newIndex: number) => void;
-  replace: (index: number, value: any) => void;
-}
+interface SortableTableProps extends Pick<FieldArrayRenderProps, 'push' | 'remove' | 'replace'> {}
 
-const SortableTable: FC<SortableTableProps> = ({ push, remove, move, replace }) => {
+const SortableTable: FC<SortableTableProps> = ({ push, remove, replace }) => {
   const { t } = useTranslation('publication');
   const dispatch = useDispatch();
+  const { values, setValues }: FormikProps<FormikPublication> = useFormikContext();
   const {
-    setFieldValue,
-    values: {
-      entityDescription: { contributors },
-    },
-  }: FormikProps<FormikPublication> = useFormikContext();
+    entityDescription: { contributors },
+  } = values;
   const [openContributorModal, setOpenContributorModal] = useState(false);
   const [unverifiedContributor, setUnverifiedContributor] = useState<UnverifiedContributor | null>(null);
 
@@ -223,26 +217,16 @@ const SortableTable: FC<SortableTableProps> = ({ push, remove, move, replace }) 
     }
   }, [unverifiedContributor]);
 
-  const updateSequences = useCallback(() => {
-    // Ensure that sequence values are continuous
-    for (let index in contributors) {
-      const correctSequence = +index + 1;
-      if (contributors[index].sequence !== correctSequence) {
-        setFieldValue(
-          `${ContributorFieldNames.CONTRIBUTORS}[${index}].${SpecificContributorFieldNames.SEQUENCE}`,
-          correctSequence
-        );
-      }
-    }
-  }, [setFieldValue, contributors]);
-
-  useEffect(() => {
-    updateSequences();
-  }, [updateSequences, contributors.length]);
-
-  const handleOnSortEnd = ({ oldIndex, newIndex }: any) => {
-    move(oldIndex, newIndex);
-    updateSequences();
+  const handleOnSortEnd = ({ oldIndex, newIndex }: SortEnd) => {
+    const reorderedContributors = move(contributors, oldIndex, newIndex) as Contributor[];
+    // Ensure incrementing sequence values
+    const newContributors = reorderedContributors.map((contributor, index) => ({
+      ...contributor,
+      sequence: index + 1,
+    }));
+    setValues(
+      deepmerge(values, { entityDescription: { contributors: newContributors } }, { arrayMerge: overwriteArrayMerge })
+    );
   };
 
   const onAuthorSelected = (authority: Authority) => {
@@ -266,6 +250,7 @@ const SortableTable: FC<SortableTableProps> = ({ push, remove, move, replace }) 
           type: BackendTypeNames.ORGANIZATION,
           id: getUnitUri(unitId),
         })),
+        sequence: contributors.length + 1,
       };
       push(newContributor);
     } else {
