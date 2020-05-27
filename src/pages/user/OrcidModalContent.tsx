@@ -13,10 +13,11 @@ const StyledButtonContainer = styled(DialogActions)`
   display: flex;
   justify-content: center;
   margin: 1rem 0;
+  padding: 0;
 `;
 
 const StyledButton = styled(Button)`
-  width: 22rem;
+  max-width: 22rem;
 `;
 
 const StyledSubHeading = styled(Label)`
