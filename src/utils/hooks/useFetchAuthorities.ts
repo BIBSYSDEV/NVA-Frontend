@@ -8,8 +8,8 @@ import { getAuthorities } from '../../api/authorityApi';
 import { Authority } from '../../types/authority.types';
 
 const useFetchAuthorities = (
-  initialSearchTerm: string
-): [Authority[] | undefined, boolean, (searchTerm: string) => void, string] => {
+  initialSearchTerm: string | undefined
+): [Authority[] | undefined, boolean, (searchTerm: string) => void, string | undefined] => {
   const dispatch = useDispatch();
   const [authorities, setAuthorities] = useState<Authority[] | undefined>();
   const [isLoading, setIsLoading] = useState(false);
@@ -23,7 +23,7 @@ const useFetchAuthorities = (
     const cancelSource = Axios.CancelToken.source();
     const fetchAuthorities = async () => {
       setIsLoading(true);
-      const fetchedAuthorities = await getAuthorities(searchTerm, cancelSource.token);
+      const fetchedAuthorities = await getAuthorities(searchTerm!, cancelSource.token);
       if (fetchedAuthorities) {
         setIsLoading(false);
         if (fetchedAuthorities.error) {

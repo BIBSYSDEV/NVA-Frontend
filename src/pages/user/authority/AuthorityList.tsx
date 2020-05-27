@@ -27,7 +27,7 @@ export const AuthorityList: FC<AuthorityListProps> = ({
   authorities,
   searchTerm,
   onSelectAuthority,
-  selectedSystemControlNumber = '',
+  selectedSystemControlNumber,
 }) => {
   const { t } = useTranslation('profile');
   return (
