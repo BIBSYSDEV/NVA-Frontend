@@ -95,7 +95,7 @@ export const publishPublication = async (identifier: string) => {
         },
       }
     );
-    if (response.status === StatusCode.OK || response.status === StatusCode.ACCEPTED) {
+    if (response.status === StatusCode.OK) {
       return response.data;
     } else {
       return { error: i18n.t('feedback:error.publish_publication') };
