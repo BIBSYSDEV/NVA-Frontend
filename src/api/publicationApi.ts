@@ -4,6 +4,7 @@ import { Dispatch } from 'redux';
 import { setNotification } from '../redux/actions/notificationActions';
 import i18n from '../translations/i18n';
 import { Publication } from '../types/publication.types';
+import { PublicationFileSet } from '../types/file.types';
 import { SEARCH_RESULTS_PER_PAGE, StatusCode } from '../utils/constants';
 import { searchForPublications } from '../redux/actions/searchActions';
 import { getIdToken } from './userApi';
@@ -18,7 +19,7 @@ export enum PublicationsApiPaths {
   FOR_APPROVAL = '/publications/approval',
 }
 
-export const createPublication = async (partialPublication?: any) => {
+export const createPublication = async (partialPublication?: PublicationFileSet) => {
   try {
     const idToken = await getIdToken();
     const response = await Axios.post(PublicationsApiPaths.PUBLICATION, partialPublication, {

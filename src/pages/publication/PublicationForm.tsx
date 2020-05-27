@@ -2,10 +2,16 @@ import { Form, Formik, FormikProps, yupToFormErrors, validateYupSchema } from 'f
 import React, { FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { emptyPublication, FormikPublication, PublicationStatus, PublicationTab } from '../../types/publication.types';
+import {
+  emptyPublication,
+  FormikPublication,
+  PublicationStatus,
+  PublicationTab,
+  BackendTypeNames,
+} from '../../types/publication.types';
 import { createUppy } from '../../utils/uppy-config';
 import { PublicationFormTabs } from './PublicationFormTabs';
-import { emptyFile, Uppy, emptyFileSet } from '../../types/file.types';
+import { emptyFile, Uppy } from '../../types/file.types';
 import { getPublication, updatePublication } from '../../api/publicationApi';
 import { useDispatch, useSelector } from 'react-redux';
 import { setNotification } from '../../redux/actions/notificationActions';
@@ -85,7 +91,7 @@ const PublicationForm: FC<PublicationFormProps> = ({
           deepmerge(
             {
               ...emptyPublication,
-              fileSet: { ...emptyFileSet, files },
+              fileSet: { type: BackendTypeNames.FILE_SET, files },
             },
             publication
           )
