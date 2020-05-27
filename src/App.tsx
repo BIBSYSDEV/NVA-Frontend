@@ -129,8 +129,10 @@ const App: FC = () => {
         }
       }
     };
-    getAuthority();
-  }, [dispatch, authorities, user.id, user.organizationId]);
+    if (user.name) {
+      getAuthority();
+    }
+  }, [dispatch, authorities, user.id, user.organizationId, user.name]);
 
   return isLoadingUser ? (
     <ProgressContainer>
