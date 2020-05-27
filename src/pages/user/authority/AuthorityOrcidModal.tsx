@@ -21,7 +21,7 @@ const StyledSkipButtonContainer = styled.div`
 `;
 
 const StyledButton = styled(Button)`
-  width: 22rem;
+  max-width: 22rem;
 `;
 
 const StyledNormalText = styled.div`
