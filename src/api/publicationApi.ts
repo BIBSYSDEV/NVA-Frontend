@@ -18,10 +18,10 @@ export enum PublicationsApiPaths {
   FOR_APPROVAL = '/publications/approval',
 }
 
-export const createPublication = async () => {
+export const createPublication = async (partialPublication?: any) => {
   try {
     const idToken = await getIdToken();
-    const response = await Axios.post(PublicationsApiPaths.PUBLICATION, null, {
+    const response = await Axios.post(PublicationsApiPaths.PUBLICATION, partialPublication, {
       headers: { Authorization: `Bearer ${idToken}` },
     });
     if (response.status === StatusCode.CREATED) {
