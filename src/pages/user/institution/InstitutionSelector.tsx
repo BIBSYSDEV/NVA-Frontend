@@ -7,6 +7,9 @@ import InstitutionAutocomplete from '../../../components/institution/Institution
 
 const StyledInstitutionSelector = styled.div`
   width: 30rem;
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+    width: 100%;
+  }
 `;
 
 interface InstitutionSelectorProps {
