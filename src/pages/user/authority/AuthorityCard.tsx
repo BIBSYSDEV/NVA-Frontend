@@ -1,16 +1,13 @@
-import React, { useEffect, useState, FC } from 'react';
+import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
 import Truncate from 'react-truncate';
 import styled from 'styled-components';
 import { Radio, CircularProgress } from '@material-ui/core';
-
-import { getAlmaPublication } from '../../../api/almaApi';
 import { Authority } from '../../../types/authority.types';
-import { AlmaPublication } from '../../../types/publication.types';
 import NormalText from '../../../components/NormalText';
 import AffiliationHierarchy from '../../../components/institution/AffiliationHierarchy';
 import Card from '../../../components/Card';
+import useFetchLastPublication from '../../../utils/hooks/useFetchLastPublication';
 
 const StyledBoxContent = styled(({ isConnected, ...rest }) => <Card {...rest} />)`
   display: grid;
@@ -40,22 +37,11 @@ interface AuthorityCardProps {
 }
 
 const AuthorityCard: FC<AuthorityCardProps> = ({ authority, isConnected = false, isSelected }) => {
-  const [publication, setPublication] = useState<AlmaPublication | null>(null);
-  const [isLoadingPublication, setIsLoadingPublication] = useState(true);
-  const dispatch = useDispatch();
   const { t } = useTranslation('profile');
-
-  useEffect(() => {
-    const fetchLastPublication = async () => {
-      const retrievedPublication = await getAlmaPublication(authority.systemControlNumber, authority.name);
-      if (!retrievedPublication.error) {
-        setPublication(retrievedPublication);
-      }
-      setIsLoadingPublication(false);
-    };
-
-    fetchLastPublication();
-  }, [dispatch, authority.systemControlNumber, authority.name]);
+  const [almaPublication, isLoadingAlmaPublication] = useFetchLastPublication(
+    authority.systemControlNumber,
+    authority.name
+  );
 
   return (
     <StyledBoxContent isConnected={isConnected}>
@@ -66,11 +52,11 @@ const AuthorityCard: FC<AuthorityCardProps> = ({ authority, isConnected = false,
         </StyledCenteredContent>
       </StyledNameCell>
       <StyledCenteredContent>
-        {isLoadingPublication ? (
+        {isLoadingAlmaPublication ? (
           <CircularProgress />
-        ) : publication?.title ? (
+        ) : almaPublication?.title ? (
           <NormalText>
-            <Truncate lines={3}>{publication.title}</Truncate>
+            <Truncate lines={3}>{almaPublication.title}</Truncate>
           </NormalText>
         ) : (
           <NormalText>

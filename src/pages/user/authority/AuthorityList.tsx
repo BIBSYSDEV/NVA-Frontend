@@ -23,13 +23,14 @@ interface AuthorityListProps {
   selectedSystemControlNumber?: string;
 }
 
-export const AuthorityList: FC<AuthorityListProps> = ({
+const AuthorityList: FC<AuthorityListProps> = ({
   authorities,
   searchTerm,
   onSelectAuthority,
-  selectedSystemControlNumber = '',
+  selectedSystemControlNumber,
 }) => {
   const { t } = useTranslation('profile');
+
   return (
     <StyledAuthorityContainer>
       <Label>{t('authority.search_summary', { results: authorities?.length ?? 0, searchTerm })}</Label>
@@ -47,3 +48,5 @@ export const AuthorityList: FC<AuthorityListProps> = ({
     </StyledAuthorityContainer>
   );
 };
+
+export default AuthorityList;

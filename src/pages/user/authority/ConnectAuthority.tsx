@@ -9,7 +9,7 @@ import { setAuthorityData } from '../../../redux/actions/userActions';
 import { RootStore } from '../../../redux/reducers/rootReducer';
 import { Authority } from '../../../types/authority.types';
 import NewAuthorityCard from './NewAuthorityCard';
-import { AuthorityList } from './AuthorityList';
+import AuthorityList from './AuthorityList';
 
 const StyledButtonContainer = styled.div`
   display: flex;
