@@ -25,5 +25,4 @@ export const getAlmaPublication = async (
       return { error: i18n.t('feedback:error.get_last_publication') };
     }
   }
-  return [];
 };

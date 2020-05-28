@@ -16,7 +16,6 @@ const useFetchLastPublication = (systemControlNumber: string, name: string): [Al
 
     const fetchLastPublication = async () => {
       const retrievedPublication = await getAlmaPublication(systemControlNumber, name, cancelSource.token);
-      console.log('fetched publication for ', name);
       if (retrievedPublication) {
         setIsLoading(false);
         if (retrievedPublication.error) {
@@ -32,7 +31,6 @@ const useFetchLastPublication = (systemControlNumber: string, name: string): [Al
     return () => {
       if (systemControlNumber && name) {
         cancelSource.cancel();
-        console.log('cancelled fetch publication for', name);
       }
     };
   }, [dispatch, name, systemControlNumber]);
