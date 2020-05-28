@@ -25,8 +25,14 @@ const useFetchLastPublication = (systemControlNumber: string, name: string): [Al
         }
       }
     };
-    fetchLastPublication();
-    return () => cancelSource.cancel();
+    if (systemControlNumber && name) {
+      fetchLastPublication();
+    }
+    return () => {
+      if (systemControlNumber && name) {
+        cancelSource.cancel();
+      }
+    };
   }, [dispatch, name, systemControlNumber]);
 
   return [publication, isLoading];

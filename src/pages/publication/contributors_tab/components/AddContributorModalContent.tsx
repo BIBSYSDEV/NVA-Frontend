@@ -8,7 +8,7 @@ import SearchBar from '../../../../components/SearchBar';
 import { Authority } from '../../../../types/authority.types';
 import NormalText from '../../../../components/NormalText';
 import SubHeading from '../../../../components/SubHeading';
-import { AuthorityList } from '../../../user/authority/AuthorityList';
+import AuthorityList from '../../../user/authority/AuthorityList';
 import useFetchAuthorities from '../../../../utils/hooks/useFetchAuthorities';
 
 const StyledButtonContainer = styled.div`

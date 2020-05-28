@@ -37,7 +37,11 @@ const useFetchAuthorities = (
       fetchAuthorities();
     }
 
-    return () => cancelSource.cancel();
+    return () => {
+      if (searchTerm) {
+        cancelSource.cancel();
+      }
+    };
   }, [dispatch, searchTerm]);
 
   return [authorities, isLoading, handleNewSearchTerm, searchTerm];

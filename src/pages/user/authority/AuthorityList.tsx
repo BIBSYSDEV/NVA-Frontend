@@ -23,7 +23,7 @@ interface AuthorityListProps {
   selectedSystemControlNumber?: string;
 }
 
-export const AuthorityList: FC<AuthorityListProps> = ({
+const AuthorityList: FC<AuthorityListProps> = ({
   authorities,
   searchTerm,
   onSelectAuthority,
@@ -47,3 +47,5 @@ export const AuthorityList: FC<AuthorityListProps> = ({
     </StyledAuthorityContainer>
   );
 };
+
+export default AuthorityList;
