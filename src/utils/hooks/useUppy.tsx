@@ -5,9 +5,12 @@ import { createUppy } from '../uppy-config';
 const useUppy = (shouldAllowMultipleFiles: boolean = true): Uppy => {
   const [uppy] = useState(createUppy(shouldAllowMultipleFiles));
 
-  useEffect(() => {
-    return () => uppy && uppy.close();
-  }, [uppy]);
+  useEffect(
+    () => () => {
+      uppy && uppy.close();
+    },
+    [uppy]
+  );
 
   return uppy;
 };
