@@ -89,8 +89,12 @@ interface License extends BackendType {
   link: string;
 }
 
-export interface FileSet extends BackendType {
+interface FileSet extends BackendType {
   files: File[];
+}
+
+export interface PublicationFileSet {
+  fileSet: FileSet;
 }
 
 export interface File extends BackendType {
@@ -114,11 +118,6 @@ export const emptyFile: File = {
   publisherAuthority: false,
   embargoDate: null,
   license: null,
-};
-
-export const emptyFileSet: FileSet = {
-  type: BackendTypeNames.FILE_SET,
-  files: [],
 };
 
 export interface Uppy extends UppyType<StrictTypes> {

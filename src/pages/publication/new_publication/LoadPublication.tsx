@@ -13,6 +13,7 @@ import { useDispatch } from 'react-redux';
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../types/notification.types';
 import ButtonWithProgress from '../../../components/ButtonWithProgress';
+import { BackendTypeNames } from '../../../types/publication.types';
 
 const StyledFileCard = styled.div`
   margin-top: 1rem;
@@ -59,9 +60,15 @@ const LoadPublication: FC<LoadPublicationProps> = ({ expanded, onChange, openFor
     }
   }, [uppy, uploadedFiles]);
 
-  const createEmptyPublication = async () => {
+  const createPublicationWithFiles = async () => {
     setIsLoading(true);
-    const publication = await createPublication();
+    const publicationPayload = {
+      fileSet: {
+        type: BackendTypeNames.FILE_SET,
+        files: uploadedFiles,
+      },
+    };
+    const publication = await createPublication(publicationPayload);
     if (publication?.identifier) {
       openForm();
       history.push(`/publication/${publication.identifier}`);
@@ -102,7 +109,7 @@ const LoadPublication: FC<LoadPublicationProps> = ({ expanded, onChange, openFor
             <ButtonWithProgress
               data-testid="publication-file-start-button"
               isLoading={isLoading}
-              onClick={createEmptyPublication}>
+              onClick={createPublicationWithFiles}>
               {t('common:start')}
             </ButtonWithProgress>
           )}

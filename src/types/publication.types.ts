@@ -1,5 +1,5 @@
 import { Contributor } from './contributor.types';
-import { FileSet } from './file.types';
+import { PublicationFileSet } from './file.types';
 import { LanguageValues } from './language.types';
 import { Project } from './project.types';
 import { PublicationType, JournalArticleType, ReportType, DegreeType, BookType } from './publicationFieldNames';
@@ -77,13 +77,12 @@ export interface NpiDiscipline {
   mainDiscipline: string;
 }
 
-export interface Publication extends BackendType {
+export interface Publication extends BackendType, PublicationFileSet {
   readonly identifier: string;
   readonly createdDate: string;
   readonly owner: string;
   readonly status: PublicationStatus;
   entityDescription: PublicationEntityDescription;
-  fileSet: FileSet;
   project: Project | null;
 }
 

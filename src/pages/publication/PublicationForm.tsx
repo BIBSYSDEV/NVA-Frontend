@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { emptyPublication, FormikPublication, PublicationStatus, PublicationTab } from '../../types/publication.types';
 import { createUppy } from '../../utils/uppy-config';
 import { PublicationFormTabs } from './PublicationFormTabs';
-import { emptyFile, Uppy, emptyFileSet } from '../../types/file.types';
+import { Uppy } from '../../types/file.types';
 import { getPublication, updatePublication } from '../../api/publicationApi';
 import { useDispatch, useSelector } from 'react-redux';
 import { setNotification } from '../../redux/actions/notificationActions';
@@ -64,16 +64,7 @@ const PublicationForm: FC<PublicationFormProps> = ({
 
   useEffect(() => {
     const getPublicationById = async (id: string) => {
-      const files = Object.values(uppy.getState().files).map((file) => ({
-        ...emptyFile,
-        identifier: file.response?.uploadURL ?? file.id,
-        name: file.name,
-        mimeType: file.type ?? '',
-        size: file.size,
-      }));
-
       const publication = await getPublication(id);
-
       if (publication.error) {
         closeForm();
         dispatch(setNotification(publication.error, NotificationVariant.Error));
@@ -81,15 +72,7 @@ const PublicationForm: FC<PublicationFormProps> = ({
         history.push(`/publication/${id}/public`);
       } else {
         // TODO: revisit necessity of deepmerge when backend model has all fields
-        setInitialValues(
-          deepmerge(
-            {
-              ...emptyPublication,
-              fileSet: { ...emptyFileSet, files },
-            },
-            publication
-          )
-        );
+        setInitialValues(deepmerge(emptyPublication, publication));
         setIsLoading(false);
       }
     };
@@ -97,7 +80,7 @@ const PublicationForm: FC<PublicationFormProps> = ({
     if (identifier) {
       getPublicationById(identifier);
     }
-  }, [identifier, closeForm, dispatch, history, uppy, user.isCurator]);
+  }, [identifier, closeForm, dispatch, history, user.isCurator]);
 
   const handleTabChange = (_: React.ChangeEvent<{}>, newTabNumber: number) => {
     setTabNumber(newTabNumber);

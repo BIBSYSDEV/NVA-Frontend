@@ -4,6 +4,7 @@ import { Dispatch } from 'redux';
 import { setNotification } from '../redux/actions/notificationActions';
 import i18n from '../translations/i18n';
 import { Publication } from '../types/publication.types';
+import { PublicationFileSet } from '../types/file.types';
 import { SEARCH_RESULTS_PER_PAGE, StatusCode } from '../utils/constants';
 import { searchForPublications } from '../redux/actions/searchActions';
 import { getIdToken } from './userApi';
@@ -18,10 +19,10 @@ export enum PublicationsApiPaths {
   FOR_APPROVAL = '/publications/approval',
 }
 
-export const createPublication = async () => {
+export const createPublication = async (partialPublication?: PublicationFileSet) => {
   try {
     const idToken = await getIdToken();
-    const response = await Axios.post(PublicationsApiPaths.PUBLICATION, null, {
+    const response = await Axios.post(PublicationsApiPaths.PUBLICATION, partialPublication, {
       headers: { Authorization: `Bearer ${idToken}` },
     });
     if (response.status === StatusCode.CREATED) {
@@ -46,11 +47,10 @@ export const updatePublication = async (publication: Publication) => {
         Authorization: `Bearer ${idToken}`,
       },
     });
-    if (response.status === StatusCode.OK || response.status === StatusCode.ACCEPTED) {
-      // TODO: temporarily allow accepted status code. remove when fixed in backend
+    if (response.status === StatusCode.OK) {
       return response.data;
     } else {
-      return null;
+      return { error: i18n.t('feedback:error.update_publication') };
     }
   } catch {
     return { error: i18n.t('feedback:error.update_publication') };
@@ -89,7 +89,7 @@ export const publishPublication = async (identifier: string) => {
         },
       }
     );
-    if (response.status === StatusCode.OK || response.status === StatusCode.ACCEPTED) {
+    if (response.status === StatusCode.OK) {
       return response.data;
     } else {
       return { error: i18n.t('feedback:error.publish_publication') };
