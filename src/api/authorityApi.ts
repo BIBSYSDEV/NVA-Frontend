@@ -21,14 +21,7 @@ export const getAuthority = async (arpId: string, cancelToken?: CancelToken) => 
   const url = encodeURI(`${AuthorityApiPaths.PERSON}?arpId=${arpId}`);
 
   try {
-    // remove when Authorization headers are set for all requests
-    const idToken = await getIdToken();
-    const headers = {
-      Authorization: `Bearer ${idToken}`,
-    };
-
-    const response = await Axios.get(url, { headers, cancelToken });
-
+    const response = await Axios.get(url, { cancelToken });
     if (response.status === StatusCode.OK) {
       return response.data;
     } else {
