@@ -1,39 +1,39 @@
 import React, { useEffect, useState, FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
-import PublicationExpansionPanel from './PublicationExpansionPanel';
-import UppyDashboard from '../../../components/UppyDashboard';
-import { File, Uppy, emptyFile } from '../../../types/file.types';
-import FileCard from '../files_and_license_tab/FileCard';
 import styled from 'styled-components';
 import { UppyFile } from '@uppy/core';
-import { createPublication } from '../../../api/publicationApi';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+
+import PublicationExpansionPanel from './PublicationExpansionPanel';
+import UppyDashboard from '../../../components/UppyDashboard';
+import { File, emptyFile } from '../../../types/file.types';
+import FileCard from '../files_and_license_tab/FileCard';
+import { createPublication } from '../../../api/publicationApi';
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../types/notification.types';
 import ButtonWithProgress from '../../../components/ButtonWithProgress';
 import { BackendTypeNames } from '../../../types/publication.types';
+import useUppy from '../../../utils/hooks/useUppy';
 
 const StyledFileCard = styled.div`
   margin-top: 1rem;
 `;
 
-const shouldAllowMultipleFiles = true;
-
 interface LoadPublicationProps {
   expanded: boolean;
   onChange: (event: React.ChangeEvent<any>, isExpanded: boolean) => void;
   openForm: () => void;
-  uppy: Uppy;
 }
 
-const LoadPublication: FC<LoadPublicationProps> = ({ expanded, onChange, openForm, uppy }) => {
+const LoadPublication: FC<LoadPublicationProps> = ({ expanded, onChange, openForm }) => {
   const { t } = useTranslation('publication');
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
   const dispatch = useDispatch();
+  const uppy = useUppy();
 
   useEffect(() => {
     if (uppy) {
@@ -88,7 +88,7 @@ const LoadPublication: FC<LoadPublicationProps> = ({ expanded, onChange, openFor
       ariaControls="publication-method-file">
       {uppy ? (
         <>
-          <UppyDashboard uppy={uppy} shouldAllowMultipleFiles={shouldAllowMultipleFiles} />
+          <UppyDashboard uppy={uppy} />
           {uploadedFiles.map((file) => (
             <StyledFileCard key={file.identifier}>
               <FileCard

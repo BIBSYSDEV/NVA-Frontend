@@ -17,8 +17,6 @@ import { FileFieldNames } from '../../types/publicationFieldNames';
 import { touchedFilesTabFields } from '../../utils/formik-helpers';
 import { PanelProps } from './PublicationFormContent';
 
-const shouldAllowMultipleFiles = true;
-
 const StyledUploadedFiles = styled(Card)`
   display: flex;
   flex-direction: column;
@@ -73,11 +71,7 @@ const FilesAndLicensePanel: FC<FilesAndLicensePanelProps> = ({ uppy, setTouchedF
           <>
             <Card>
               <Heading>{t('files_and_license.upload_files')}</Heading>
-              <FileUploader
-                uppy={uppy}
-                shouldAllowMultipleFiles={shouldAllowMultipleFiles}
-                addFile={(file) => insert(0, file)}
-              />
+              <FileUploader uppy={uppy} addFile={(file) => insert(0, file)} />
               {files.length === 0 && (
                 <FormHelperText error>
                   <ErrorMessage name={name} />

@@ -5,14 +5,9 @@ import UppyDashboard from '../../components/UppyDashboard';
 interface InstitutionLogoFileUploaderProps {
   setFile: (file: File) => void;
   uppy: Uppy;
-  shouldAllowMultipleFiles: boolean;
 }
 
-const InstitutionLogoFileUploader: React.FC<InstitutionLogoFileUploaderProps> = ({
-  setFile,
-  uppy,
-  shouldAllowMultipleFiles,
-}) => {
+const InstitutionLogoFileUploader: React.FC<InstitutionLogoFileUploaderProps> = ({ setFile, uppy }) => {
   useEffect(() => {
     if (uppy && !uppy.hasUploadSuccessEventListener) {
       uppy.on('upload-success', (file: File) => setFile(file));
@@ -22,7 +17,7 @@ const InstitutionLogoFileUploader: React.FC<InstitutionLogoFileUploaderProps> = 
     }
   }, [setFile, uppy]);
 
-  return uppy ? <UppyDashboard uppy={uppy} shouldAllowMultipleFiles={shouldAllowMultipleFiles} /> : null;
+  return uppy ? <UppyDashboard uppy={uppy} /> : null;
 };
 
 export default InstitutionLogoFileUploader;

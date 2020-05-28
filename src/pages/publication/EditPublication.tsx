@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
@@ -7,10 +7,7 @@ import LoadPublication from './new_publication/LoadPublication';
 import PublicationForm from './PublicationForm';
 import Heading from '../../components/Heading';
 import Card from '../../components/Card';
-import { createUppy } from '../../utils/uppy-config';
 import NormalText from '../../components/NormalText';
-
-const shouldAllowMultipleFiles = true;
 
 const StyledEditPublication = styled.div`
   width: 100%;
@@ -52,11 +49,6 @@ const EditPublication: FC = () => {
   const [expanded, setExpanded] = useState<string | false>(false);
   const [showForm, setShowForm] = useState(!!identifier);
   const { t } = useTranslation();
-  const [uppy] = useState(createUppy(shouldAllowMultipleFiles));
-
-  useEffect(() => {
-    return () => uppy && uppy.close();
-  }, [uppy]);
 
   const handleChange = (panel: string) => (_: React.ChangeEvent<any>, isExpanded: boolean) => {
     setExpanded(isExpanded ? panel : false);
@@ -64,7 +56,6 @@ const EditPublication: FC = () => {
 
   const handleClick = () => {
     setShowForm(true);
-    uppy.reset();
   };
 
   return (
@@ -76,7 +67,6 @@ const EditPublication: FC = () => {
               <LoadPublication
                 expanded={expanded === 'load-panel'}
                 onChange={handleChange('load-panel')}
-                uppy={uppy}
                 openForm={() => setShowForm(true)}
               />
               <LinkPublication
@@ -92,7 +82,7 @@ const EditPublication: FC = () => {
           </StyledEditPublication>
         </>
       ) : (
-        <PublicationForm uppy={uppy} identifier={identifier} closeForm={() => setShowForm(false)} />
+        <PublicationForm identifier={identifier} closeForm={() => setShowForm(false)} />
       )}
     </>
   );
