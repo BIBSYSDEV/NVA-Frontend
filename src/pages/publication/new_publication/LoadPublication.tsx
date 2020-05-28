@@ -1,13 +1,11 @@
-import React, { useEffect, useState, FC } from 'react';
+import React, { useState, FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 import styled from 'styled-components';
-import { UppyFile } from '@uppy/core';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import PublicationExpansionPanel from './PublicationExpansionPanel';
-import UppyDashboard from '../../../components/UppyDashboard';
 import { File, emptyFile } from '../../../types/file.types';
 import FileCard from '../files_and_license_tab/FileCard';
 import { createPublication } from '../../../api/publicationApi';
@@ -16,6 +14,7 @@ import { NotificationVariant } from '../../../types/notification.types';
 import ButtonWithProgress from '../../../components/ButtonWithProgress';
 import { BackendTypeNames } from '../../../types/publication.types';
 import useUppy from '../../../utils/hooks/useUppy';
+import FileUploader from '../files_and_license_tab/FileUploader';
 
 const StyledFileCard = styled.div`
   margin-top: 1rem;
@@ -34,31 +33,6 @@ const LoadPublication: FC<LoadPublicationProps> = ({ expanded, onChange, openFor
   const history = useHistory();
   const dispatch = useDispatch();
   const uppy = useUppy();
-
-  useEffect(() => {
-    if (uppy) {
-      const addFile = (newFile: File) => {
-        setUploadedFiles([newFile, ...uploadedFiles]);
-      };
-
-      uppy.on('upload-success', (file: UppyFile, response: any) => {
-        const newFile = {
-          ...emptyFile,
-          identifier: response.uploadURL, // In reality an ID from completeMultipartUpload endpoint
-          name: file.name,
-          mimeType: file.type ?? '',
-          size: file.size,
-        };
-        addFile(newFile);
-      });
-      uppy.hasUploadSuccessEventListener = true;
-
-      return () => {
-        uppy.off('upload-success', addFile);
-        uppy.hasUploadSuccessEventListener = false;
-      };
-    }
-  }, [uppy, uploadedFiles]);
 
   const createPublicationWithFiles = async () => {
     setIsLoading(true);
@@ -88,7 +62,7 @@ const LoadPublication: FC<LoadPublicationProps> = ({ expanded, onChange, openFor
       ariaControls="publication-method-file">
       {uppy ? (
         <>
-          <UppyDashboard uppy={uppy} />
+          <FileUploader uppy={uppy} addFile={(newFile: File) => setUploadedFiles((files) => [newFile, ...files])} />
           {uploadedFiles.map((file) => (
             <StyledFileCard key={file.identifier}>
               <FileCard
