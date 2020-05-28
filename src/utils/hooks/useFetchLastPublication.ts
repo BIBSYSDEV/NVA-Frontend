@@ -15,7 +15,7 @@ const useFetchLastPublication = (systemControlNumber: string, name: string): [Al
     const cancelSource = Axios.CancelToken.source();
 
     const fetchLastPublication = async () => {
-      const retrievedPublication = await getAlmaPublication(systemControlNumber, name);
+      const retrievedPublication = await getAlmaPublication(systemControlNumber, name, cancelSource.token);
       if (retrievedPublication) {
         setIsLoading(false);
         if (retrievedPublication.error) {
