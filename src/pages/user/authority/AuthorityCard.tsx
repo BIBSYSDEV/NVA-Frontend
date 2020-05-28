@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import Truncate from 'react-truncate';
 import styled from 'styled-components';
@@ -42,6 +42,11 @@ const AuthorityCard: FC<AuthorityCardProps> = ({ authority, isConnected = false,
     authority.systemControlNumber,
     authority.name
   );
+
+  useEffect(() => {
+    console.log('mounted card');
+    return () => console.log('unmounted card');
+  }, []);
 
   return (
     <StyledBoxContent isConnected={isConnected}>

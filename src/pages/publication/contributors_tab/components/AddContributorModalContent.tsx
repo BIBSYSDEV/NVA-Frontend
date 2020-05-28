@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
@@ -37,6 +37,11 @@ const AddContributorModalContent: FC<AddContributorModalContentProps> = ({ addAu
   const { t } = useTranslation('publication');
   const [selectedAuthor, setSelectedAuthor] = useState<Authority | null>(null);
   const [authorities, isLoadingAuthorities, handleNewSearchTerm, searchTerm] = useFetchAuthorities(initialSearchTerm);
+
+  useEffect(() => {
+    console.log('mounted modal');
+    return () => console.log('unmounted modal');
+  }, []);
 
   return (
     <>

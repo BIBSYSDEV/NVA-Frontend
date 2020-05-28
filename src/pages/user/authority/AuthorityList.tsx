@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
@@ -30,6 +30,12 @@ const AuthorityList: FC<AuthorityListProps> = ({
   selectedSystemControlNumber,
 }) => {
   const { t } = useTranslation('profile');
+
+  useEffect(() => {
+    console.log('mounted list');
+    return () => console.log('unmounted list');
+  }, []);
+
   return (
     <StyledAuthorityContainer>
       <Label>{t('authority.search_summary', { results: authorities?.length ?? 0, searchTerm })}</Label>

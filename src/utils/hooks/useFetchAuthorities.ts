@@ -19,11 +19,14 @@ const useFetchAuthorities = (
     setSearchTerm(searchTerm);
   };
 
+  console.log('searchTerm', searchTerm);
+
   useEffect(() => {
     const cancelSource = Axios.CancelToken.source();
     const fetchAuthorities = async () => {
       setIsLoading(true);
       const fetchedAuthorities = await getAuthorities(searchTerm!, cancelSource.token);
+      console.log('fetched authorities');
       if (fetchedAuthorities) {
         setIsLoading(false);
         if (fetchedAuthorities.error) {
@@ -40,6 +43,7 @@ const useFetchAuthorities = (
     return () => {
       if (searchTerm) {
         cancelSource.cancel();
+        console.log('cancelled fetch authority');
       }
     };
   }, [dispatch, searchTerm]);
