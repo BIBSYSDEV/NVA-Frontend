@@ -23,8 +23,6 @@ const useFetchMyPublications = (): [PublicationPreview[] | [], boolean] => {
         } else {
           setPublications(myPublications);
         }
-      } else {
-        dispatch(setNotification(myPublications.error, NotificationVariant.Error));
       }
     };
     fetchMyPublications();
