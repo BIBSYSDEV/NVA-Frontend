@@ -23,6 +23,8 @@ const useFetchLastPublication = (systemControlNumber: string, name: string): [Al
         } else {
           setPublication(retrievedPublication);
         }
+      } else {
+        dispatch(setNotification(retrievedPublication.error, NotificationVariant.Error));
       }
     };
     if (systemControlNumber && name) {

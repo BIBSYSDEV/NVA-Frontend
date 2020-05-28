@@ -33,7 +33,7 @@ interface AddContributorModalContentProps {
   initialSearchTerm?: string;
 }
 
-const AddContributorModalContent: FC<AddContributorModalContentProps> = ({ addAuthor, initialSearchTerm }) => {
+const AddContributorModalContent: FC<AddContributorModalContentProps> = ({ addAuthor, initialSearchTerm = '' }) => {
   const { t } = useTranslation('publication');
   const [selectedAuthor, setSelectedAuthor] = useState<Authority | null>(null);
   const [authorities, isLoadingAuthorities, handleNewSearchTerm, searchTerm] = useFetchAuthorities(initialSearchTerm);
