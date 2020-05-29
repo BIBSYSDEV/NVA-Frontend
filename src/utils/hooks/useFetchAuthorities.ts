@@ -31,8 +31,6 @@ const useFetchAuthorities = (
         } else {
           setAuthorities(fetchedAuthorities);
         }
-      } else {
-        dispatch(setNotification(fetchedAuthorities.error, NotificationVariant.Error));
       }
     };
     if (searchTerm) {
