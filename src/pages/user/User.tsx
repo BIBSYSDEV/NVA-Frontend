@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
@@ -48,7 +48,7 @@ const StyledButtonWrapper = styled.div`
   justify-content: flex-end;
 `;
 
-const User: React.FC = () => {
+const User: FC = () => {
   const { t } = useTranslation('profile');
   const user = useSelector((state: RootStore) => state.user);
   const location = useLocation();
@@ -102,12 +102,7 @@ const User: React.FC = () => {
         <Card>
           <Heading>{t('heading.author_info')}</Heading>
           {user.authority && user.authority.feideids?.length > 0 && (
-            <>
-              <p data-testid="author-connected-info">{t('authority.connected_info')}</p>
-              {user.authority.handles?.length > 0 && (
-                <MuiLink href={user.authority ? user.authority.handles[0] : ''}>{t('authority.see_profile')}</MuiLink>
-              )}
-            </>
+            <p data-testid="author-connected-info">{t('authority.connected_info')}</p>
           )}
         </Card>
         <UserOrcid />
