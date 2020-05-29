@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { Link as MuiLink, Button } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import { Link as RouterLink } from 'react-router-dom';
 import { addQualifierIdForAuthority, AuthorityQualifiers } from '../../api/authorityApi';
 import { getOrcidInfo } from '../../api/external/orcidApi';

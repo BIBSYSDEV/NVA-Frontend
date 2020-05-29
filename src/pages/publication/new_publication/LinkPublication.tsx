@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 
-import { Button, CircularProgress } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import LinkIcon from '@material-ui/icons/Link';
 
 import { getPublicationByDoi } from '../../../api/publicationApi';
@@ -26,10 +26,6 @@ const StyledHeading = styled.span`
 const StyledTitle = styled.div`
   font-weight: bold;
   margin-bottom: 1rem;
-`;
-
-const StyledCircularProgress = styled(CircularProgress)`
-  margin-top: 1rem;
 `;
 
 interface LinkPublicationPanelProps {
