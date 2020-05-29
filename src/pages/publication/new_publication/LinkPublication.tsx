@@ -41,7 +41,6 @@ interface LinkPublicationPanelProps {
 const LinkPublicationPanel: FC<LinkPublicationPanelProps> = ({ expanded, onChange, openForm }) => {
   const { t } = useTranslation();
   const [doi, setDoi] = useState<Doi | null>(null);
-  const [loading, setLoading] = useState(false);
   const [noHit, setNoHit] = useState(false);
   const history = useHistory();
   const dispatch = useDispatch();
@@ -55,7 +54,6 @@ const LinkPublicationPanel: FC<LinkPublicationPanelProps> = ({ expanded, onChang
   };
 
   const handleSearch = async (values: { doiUrl: string }) => {
-    setLoading(true);
     setNoHit(false);
     setDoi(null);
 
@@ -68,7 +66,6 @@ const LinkPublicationPanel: FC<LinkPublicationPanelProps> = ({ expanded, onChang
     } else {
       setDoi(doiPublication);
     }
-    setLoading(false);
   };
 
   return (
@@ -82,7 +79,6 @@ const LinkPublicationPanel: FC<LinkPublicationPanelProps> = ({ expanded, onChang
       <StyledBody>
         {t('publication:publication.link_publication_description')}
         <LinkPublicationForm handleSearch={handleSearch} />
-        {loading && <StyledCircularProgress color="inherit" size={20} />}
         {noHit && <p>{t('common:no_hits')}</p>}
         {doi && (
           <>
