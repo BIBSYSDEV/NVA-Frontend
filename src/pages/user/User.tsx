@@ -21,7 +21,7 @@ import UserInstitution from './UserInstitution';
 const StyledUserPage = styled.div`
   display: grid;
   @media (min-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
-    grid-template-areas: 'top top' 'secondary-info primary-info';
+    grid-template-areas: 'top top' 'secondary-info primary-info' '. primary-info';
     grid-template-columns: 1fr 3fr;
   }
   grid-gap: 3rem;
@@ -32,7 +32,7 @@ const StyledUserPage = styled.div`
 const StyledSecondaryUserInfo = styled.div`
   display: grid;
   grid-area: secondary-info;
-  grid-template-areas: 'profile-image' 'contact-info' 'language' 'roles';
+  grid-template-areas: 'language' 'roles';
   grid-row-gap: 3rem;
 `;
 
@@ -93,12 +93,6 @@ const User: React.FC = () => {
         </StyledButtonWrapper>
       )}
       <StyledSecondaryUserInfo>
-        <Card>
-          <Heading>{t('common:picture')}</Heading>
-        </Card>
-        <Card>
-          <Heading>{t('heading.contact_info')}</Heading>
-        </Card>
         <UserLanguage />
         <UserRoles user={user} />
       </StyledSecondaryUserInfo>
