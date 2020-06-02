@@ -2,11 +2,11 @@ import { Form, Formik, FormikProps, yupToFormErrors, validateYupSchema } from 'f
 import React, { FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { emptyPublication, FormikPublication, PublicationStatus, PublicationTab } from '../../types/publication.types';
+import { emptyPublication, FormikPublication, PublicationTab } from '../../types/publication.types';
 import { createUppy } from '../../utils/uppy-config';
 import { PublicationFormTabs } from './PublicationFormTabs';
 import { Uppy } from '../../types/file.types';
-import { getPublication, updatePublication } from '../../api/publicationApi';
+import { updatePublication } from '../../api/publicationApi';
 import { useDispatch, useSelector } from 'react-redux';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
@@ -14,10 +14,10 @@ import deepmerge from 'deepmerge';
 import { publicationValidationSchema } from './PublicationFormValidationSchema';
 import { Button, CircularProgress } from '@material-ui/core';
 import RouteLeavingGuard from '../../components/RouteLeavingGuard';
-import { useHistory } from 'react-router-dom';
 import ButtonWithProgress from '../../components/ButtonWithProgress';
 import { PublicationFormContent } from './PublicationFormContent';
 import { RootStore } from '../../redux/reducers/rootReducer';
+import useFetchPublication from '../../utils/hooks/useFetchPublication';
 
 const shouldAllowMultipleFiles = false;
 
@@ -49,11 +49,15 @@ const PublicationForm: FC<PublicationFormProps> = ({
   const user = useSelector((store: RootStore) => store.user);
   const { t } = useTranslation('publication');
   const [tabNumber, setTabNumber] = useState(user.isCurator ? PublicationTab.Submission : PublicationTab.Description);
-  const [initialValues, setInitialValues] = useState(emptyPublication);
-  const [isLoading, setIsLoading] = useState(!!identifier);
   const [isSaving, setIsSaving] = useState(false);
   const dispatch = useDispatch();
-  const history = useHistory();
+  const [publication, isLoadingPublication, handleSetPublication] = useFetchPublication(identifier, true);
+
+  useEffect(() => {
+    if (!publication && !isLoadingPublication) {
+      closeForm();
+    }
+  }, [closeForm, publication, isLoadingPublication]);
 
   useEffect(
     () => () => {
@@ -61,26 +65,6 @@ const PublicationForm: FC<PublicationFormProps> = ({
     },
     [uppy]
   );
-
-  useEffect(() => {
-    const getPublicationById = async (id: string) => {
-      const publication = await getPublication(id);
-      if (publication.error) {
-        closeForm();
-        dispatch(setNotification(publication.error, NotificationVariant.Error));
-      } else if (publication.status === PublicationStatus.PUBLISHED && !user.isCurator) {
-        history.push(`/publication/${id}/public`);
-      } else {
-        // TODO: revisit necessity of deepmerge when backend model has all fields
-        setInitialValues(deepmerge(emptyPublication, publication));
-        setIsLoading(false);
-      }
-    };
-
-    if (identifier) {
-      getPublicationById(identifier);
-    }
-  }, [identifier, closeForm, dispatch, history, user.isCurator]);
 
   const handleTabChange = (_: React.ChangeEvent<{}>, newTabNumber: number) => {
     setTabNumber(newTabNumber);
@@ -97,7 +81,7 @@ const PublicationForm: FC<PublicationFormProps> = ({
     if (updatedPublication?.error) {
       dispatch(setNotification(updatedPublication.error, NotificationVariant.Error));
     } else {
-      setInitialValues(deepmerge(emptyPublication, updatedPublication));
+      handleSetPublication(deepmerge(emptyPublication, updatedPublication));
       dispatch(setNotification(t('feedback:success.update_publication')));
     }
     setIsSaving(false);
@@ -118,13 +102,13 @@ const PublicationForm: FC<PublicationFormProps> = ({
     return {};
   };
 
-  return isLoading ? (
+  return isLoadingPublication ? (
     <CircularProgress />
   ) : (
     <StyledPublication>
       <Formik
         enableReinitialize
-        initialValues={initialValues}
+        initialValues={publication ?? emptyPublication}
         validate={validateForm}
         onSubmit={(values: FormikPublication) => savePublication(values)}>
         {({ dirty, values, isValid }: FormikProps<FormikPublication>) => (
