@@ -85,9 +85,11 @@ const AdminCustomerInstitutionPage: FC = () => {
             <Field name={CustomerInstitutionFieldNames.NAME}>
               {({ field: { name, value }, form: { setValues }, meta: { touched, error } }: FieldProps) => (
                 <InstitutionAutocomplete
+                  disabled={editMode}
+                  error={touched && !!error}
+                  helperText={<ErrorMessage name={name} />}
                   institutions={institutions}
-                  isLoading={isLoadingInstitutions}
-                  value={institutions.find((i) => i.name === value) ?? null}
+                  isLoading={editMode ? false : isLoadingInstitutions}
                   onChange={(selectedInstitution) => {
                     setValues({
                       ...customerInstitution,
@@ -96,9 +98,8 @@ const AdminCustomerInstitutionPage: FC = () => {
                       [CustomerInstitutionFieldNames.SHORT_NAME]: selectedInstitution?.acronym ?? '',
                     });
                   }}
-                  disabled={editMode}
-                  error={touched && !!error}
-                  helperText={<ErrorMessage name={name} />}
+                  readOnlyValue={value}
+                  value={institutions.find((i) => i.name === value) ?? null}
                 />
               )}
             </Field>

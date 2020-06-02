@@ -11,21 +11,24 @@ interface InstitutionAutocompleteProps extends Pick<TextFieldProps, 'disabled' |
   onChange: (value: InstitutionUnitBase | null) => void;
   value: InstitutionUnitBase | null;
   isLoading?: boolean;
+  readOnlyValue?: string;
 }
 
 const InstitutionAutocomplete: FC<InstitutionAutocompleteProps> = ({
+  disabled,
+  error,
+  helperText,
   institutions,
   onChange,
   value = null,
   isLoading = false,
-  disabled,
-  error,
-  helperText,
+  readOnlyValue,
 }) => {
   const { t } = useTranslation('common');
 
   return (
     <Autocomplete
+      disabled={disabled}
       options={institutions}
       getOptionLabel={(option: InstitutionUnitBase) => option.name}
       getOptionSelected={(option: InstitutionUnitBase, value: InstitutionUnitBase) => option.id === value.id}
@@ -42,7 +45,7 @@ const InstitutionAutocomplete: FC<InstitutionAutocompleteProps> = ({
       renderInput={(params) => (
         <TextField
           {...params}
-          label={t('institution')}
+          label={readOnlyValue ?? t('institution')}
           placeholder={t('institution:search_institution')}
           variant="outlined"
           inputProps={{
@@ -54,12 +57,11 @@ const InstitutionAutocomplete: FC<InstitutionAutocompleteProps> = ({
             ...params.InputProps,
             endAdornment: (
               <>
-                {isLoading && <CircularProgress size={20} />}
+                {isLoading && institutions.length === 0 && <CircularProgress size={20} />}
                 {params.InputProps.endAdornment}
               </>
             ),
           }}
-          disabled={disabled}
           error={error}
           helperText={helperText}
         />
