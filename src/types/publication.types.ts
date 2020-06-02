@@ -134,7 +134,6 @@ interface PublicationEntityDescription extends BackendType {
 }
 
 export interface FormikPublication extends Publication {
-  error?: string;
   shouldCreateDoi: boolean;
 }
 

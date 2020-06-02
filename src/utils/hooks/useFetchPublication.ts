@@ -30,10 +30,8 @@ const useFetchPublication = (
     const fetchPublication = async () => {
       const publication = await getPublication(identifier!, cancelSource.token);
       if (publication) {
-        setIsLoading(false);
         if (publication.error) {
           dispatch(setNotification(publication.error, NotificationVariant.Error));
-          setPublication({ ...emptyPublication, error: publication.error });
         } else if (editMode) {
           if (publication.status === PublicationStatus.PUBLISHED && !user.isCurator) {
             history.push(`/publication/${identifier}/public`);
@@ -43,6 +41,7 @@ const useFetchPublication = (
         } else {
           setPublication(publication);
         }
+        setIsLoading(false);
       }
     };
     if (identifier) {

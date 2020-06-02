@@ -54,10 +54,10 @@ const PublicationForm: FC<PublicationFormProps> = ({
   const [publication, isLoadingPublication, handleSetPublication] = useFetchPublication(identifier, true);
 
   useEffect(() => {
-    if (publication?.error) {
+    if (!publication && !isLoadingPublication) {
       closeForm();
     }
-  }, [closeForm, publication]);
+  }, [closeForm, publication, isLoadingPublication]);
 
   useEffect(
     () => () => {
