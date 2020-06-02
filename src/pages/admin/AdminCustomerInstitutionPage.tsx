@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC } from 'react';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
 import { CircularProgress, TextField } from '@material-ui/core';
@@ -11,19 +11,16 @@ import Card from '../../components/Card';
 import Heading from '../../components/Heading';
 import {
   CustomerInstitutionFieldNames,
-  emptyCustomerInstitution,
   CustomerInstitution,
+  emptyCustomerInstitution,
 } from '../../types/customerInstitution.types';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
-import {
-  getInstitution,
-  createCustomerInstitution,
-  updateCustomerInstitution,
-} from '../../api/customerInstitutionsApi';
+import { createCustomerInstitution, updateCustomerInstitution } from '../../api/customerInstitutionsApi';
 import useFetchInstitutions from '../../utils/hooks/useFetchInstitutions';
 import InstitutionAutocomplete from '../../components/institution/InstitutionAutocomplete';
 import ButtonWithProgress from '../../components/ButtonWithProgress';
+import { useFetchCustomerInstitution } from '../../utils/hooks/useFetchCustomerInstitution';
 
 const StyledButtonContainer = styled.div`
   margin-top: 2rem;
@@ -36,27 +33,13 @@ const AdminCustomerInstitutionPage: FC = () => {
   const { t } = useTranslation('admin');
   const { identifier } = useParams();
   const editMode = identifier !== 'new';
-  const [initialValues, setInitialValues] = useState<CustomerInstitution>(emptyCustomerInstitution);
-  const [isLoading, setIsLoading] = useState(editMode);
   const dispatch = useDispatch();
   const history = useHistory();
   const [institutions, isLoadingInstitutions] = useFetchInstitutions();
-
-  useEffect(() => {
-    const getInstitutionById = async (identifier: string) => {
-      const institution: CustomerInstitution = await getInstitution(identifier);
-      if (institution?.error) {
-        dispatch(setNotification(institution.error, NotificationVariant.Error));
-      } else {
-        setInitialValues(institution);
-        setIsLoading(false);
-      }
-    };
-
-    if (identifier && editMode) {
-      getInstitutionById(identifier);
-    }
-  }, [identifier, dispatch, editMode]);
+  const [customerInstitution, isLoadingCustomerInstitution, handleSetCustomerInstitution] = useFetchCustomerInstitution(
+    identifier,
+    editMode
+  );
 
   const handleSubmit = async (values: CustomerInstitution) => {
     if (!editMode) {
@@ -66,7 +49,7 @@ const AdminCustomerInstitutionPage: FC = () => {
         dispatch(setNotification(createdCustomer.error, NotificationVariant.Error));
       } else {
         history.push(`/admin-institutions/${createdCustomer.identifier}`);
-        setInitialValues(createdCustomer);
+        handleSetCustomerInstitution(createdCustomer);
         dispatch(setNotification(t('feedback:success.created_customer')));
       }
     } else {
@@ -74,20 +57,20 @@ const AdminCustomerInstitutionPage: FC = () => {
       if (!updatedCustomer || updatedCustomer?.error) {
         dispatch(setNotification(updatedCustomer.error, NotificationVariant.Error));
       } else {
-        setInitialValues(updatedCustomer);
+        handleSetCustomerInstitution(updatedCustomer);
         dispatch(setNotification(t('feedback:success.update_customer')));
       }
     }
   };
 
-  return isLoading ? (
+  return isLoadingCustomerInstitution ? (
     <CircularProgress />
   ) : (
     <Card>
       <Heading>{t(editMode ? 'edit_institution' : 'add_institution')}</Heading>
       <Formik
         enableReinitialize
-        initialValues={initialValues}
+        initialValues={customerInstitution ?? emptyCustomerInstitution}
         validateOnChange
         validationSchema={Yup.object().shape({
           [CustomerInstitutionFieldNames.NAME]: Yup.string().required(t('feedback.required_field')),
@@ -107,7 +90,7 @@ const AdminCustomerInstitutionPage: FC = () => {
                   value={institutions.find((i) => i.name === value) ?? null}
                   onChange={(selectedInstitution) => {
                     setValues({
-                      ...initialValues,
+                      ...customerInstitution,
                       name: selectedInstitution?.name ?? '',
                       [CustomerInstitutionFieldNames.DISPLAY_NAME]: selectedInstitution?.name ?? '',
                       [CustomerInstitutionFieldNames.SHORT_NAME]: selectedInstitution?.acronym ?? '',

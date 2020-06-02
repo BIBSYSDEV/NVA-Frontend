@@ -99,7 +99,7 @@ export const publishPublication = async (identifier: string) => {
   }
 };
 
-export const getMyPublications = async () => {
+export const getMyPublications = async (cancelToken?: CancelToken) => {
   const url = PublicationsApiPaths.PUBLICATIONS_BY_OWNER;
   try {
     const idToken = await getIdToken();
@@ -107,14 +107,17 @@ export const getMyPublications = async () => {
       headers: {
         Authorization: `Bearer ${idToken}`,
       },
+      cancelToken,
     });
     if (response.status === StatusCode.OK) {
       return response.data.publications;
     } else {
-      return [];
+      return { error: i18n.t('feedback:error.get_publications') };
     }
   } catch (error) {
-    return { error };
+    if (!Axios.isCancel(error)) {
+      return { error: i18n.t('feedback:error.get_publications') };
+    }
   }
 };
 
