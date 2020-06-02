@@ -14,9 +14,9 @@ const useFetchPublication = (
   identifier: string | undefined,
   editMode: boolean = false,
   closeForm?: () => void
-): [FormikPublication, boolean, (values: FormikPublication) => void] => {
+): [FormikPublication | undefined, boolean, (values: FormikPublication) => void] => {
   const dispatch = useDispatch();
-  const [publication, setPublication] = useState<FormikPublication>(emptyPublication);
+  const [publication, setPublication] = useState<FormikPublication>();
   const [isLoading, setIsLoading] = useState(!!identifier);
   const history = useHistory();
   const user = useSelector((store: RootStore) => store.user);
