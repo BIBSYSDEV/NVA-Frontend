@@ -12,8 +12,7 @@ import deepmerge from 'deepmerge';
 
 const useFetchPublication = (
   identifier: string | undefined,
-  editMode: boolean = false,
-  closeForm?: () => void
+  editMode: boolean = false
 ): [FormikPublication | undefined, boolean, (values: FormikPublication) => void] => {
   const dispatch = useDispatch();
   const [publication, setPublication] = useState<FormikPublication>();
@@ -31,10 +30,8 @@ const useFetchPublication = (
     const fetchPublication = async () => {
       const publication = await getPublication(identifier!, cancelSource.token);
       if (publication) {
-        setIsLoading(false);
         if (publication.error) {
           dispatch(setNotification(publication.error, NotificationVariant.Error));
-          closeForm?.();
         } else if (editMode) {
           if (publication.status === PublicationStatus.PUBLISHED && !user.isCurator) {
             history.push(`/publication/${identifier}/public`);
@@ -44,6 +41,7 @@ const useFetchPublication = (
         } else {
           setPublication(publication);
         }
+        setIsLoading(false);
       }
     };
     if (identifier) {
@@ -55,7 +53,7 @@ const useFetchPublication = (
         cancelSource.cancel();
       }
     };
-  }, [dispatch, identifier, closeForm, editMode, history, user.isCurator]);
+  }, [dispatch, identifier, editMode, history, user.isCurator]);
 
   return [publication, isLoading, handleSetPublication];
 };
