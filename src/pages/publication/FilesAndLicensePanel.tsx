@@ -45,7 +45,7 @@ const FilesAndLicensePanel: FC<FilesAndLicensePanelProps> = ({ uppy, setTouchedF
   const { values }: FormikProps<FormikPublication> = useFormikContext();
   const [isLicenseModalOpen, setIsLicenseModalOpen] = useState(false);
   const {
-    fileSet: { files },
+    fileSet: { files = [] },
     entityDescription: {
       reference: { publicationContext },
     },
