@@ -6,7 +6,7 @@ import { PublicationPreview } from '../../types/publication.types';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 
-const useFetchMyPublications = (): [PublicationPreview[] | [], boolean] => {
+const useFetchMyPublications = (): [PublicationPreview[], boolean] => {
   const dispatch = useDispatch();
 
   const [publications, setPublications] = useState<PublicationPreview[]>([]);
