@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { FieldArray, FormikProps, useFormikContext, ErrorMessage, FieldArrayRenderProps } from 'formik';
 import { FormHelperText } from '@material-ui/core';
+import { UppyFile } from '@uppy/core';
+
 import FileUploader from './files_and_license_tab/FileUploader';
 import FileCard from './files_and_license_tab/FileCard';
 import { FormikPublication, Publisher } from '../../types/publication.types';
@@ -16,6 +18,9 @@ import Label from '../../components/Label';
 import { FileFieldNames } from '../../types/publicationFieldNames';
 import { touchedFilesTabFields } from '../../utils/formik-helpers';
 import { PanelProps } from './PublicationFormContent';
+import { NotificationVariant } from '../../types/notification.types';
+import { autoHideDuration } from '../../utils/constants';
+import { File } from '../../types/file.types';
 
 const StyledUploadedFiles = styled(Card)`
   display: flex;
@@ -57,6 +62,24 @@ const FilesAndLicensePanel: FC<FilesAndLicensePanelProps> = ({ uppy, setTouchedF
     () => () => setTouchedFields(touchedFilesTabFields(filesRef.current)),
     [setTouchedFields]
   );
+
+  useEffect(() => {
+    // Avoid adding duplicated files (file names) to an exisiting publication,
+    // since files could have been uploaded in another session without being in uppy's current state
+    uppy.setOptions({
+      onBeforeFileAdded: (currentFile: UppyFile) => {
+        if (filesRef.current.some((file: File) => file.name === currentFile.name)) {
+          uppy.info(
+            t('files_and_license.no_duplicates', { fileName: currentFile.name }),
+            NotificationVariant.Error,
+            autoHideDuration[NotificationVariant.Error]
+          );
+          return false;
+        }
+        return true;
+      },
+    });
+  }, [t, uppy, filesRef]);
 
   const toggleLicenseModal = () => {
     setIsLicenseModalOpen(!isLicenseModalOpen);
