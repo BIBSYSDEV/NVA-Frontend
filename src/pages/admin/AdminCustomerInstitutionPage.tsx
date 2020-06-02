@@ -9,7 +9,11 @@ import { useParams, useHistory } from 'react-router-dom';
 
 import Card from '../../components/Card';
 import Heading from '../../components/Heading';
-import { CustomerInstitutionFieldNames, CustomerInstitution } from '../../types/customerInstitution.types';
+import {
+  CustomerInstitutionFieldNames,
+  CustomerInstitution,
+  emptyCustomerInstitution,
+} from '../../types/customerInstitution.types';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import { createCustomerInstitution, updateCustomerInstitution } from '../../api/customerInstitutionsApi';
@@ -66,7 +70,7 @@ const AdminCustomerInstitutionPage: FC = () => {
       <Heading>{t(editMode ? 'edit_institution' : 'add_institution')}</Heading>
       <Formik
         enableReinitialize
-        initialValues={customerInstitution}
+        initialValues={customerInstitution ?? emptyCustomerInstitution}
         validateOnChange
         validationSchema={Yup.object().shape({
           [CustomerInstitutionFieldNames.NAME]: Yup.string().required(t('feedback.required_field')),

@@ -48,10 +48,12 @@ export const getCustomerInstitution = async (identifier: string, cancelToken?: C
         error: i18n.t('feedback:error.get_customer'),
       };
     }
-  } catch {
-    return {
-      error: i18n.t('feedback:error.get_customer'),
-    };
+  } catch (error) {
+    if (!Axios.isCancel(error)) {
+      return {
+        error: i18n.t('feedback:error.get_customer'),
+      };
+    }
   }
 };
 

@@ -1,18 +1,18 @@
 import { useEffect, useState } from 'react';
 import Axios from 'axios';
 import { useDispatch } from 'react-redux';
-import { CustomerInstitution, emptyCustomerInstitution } from '../../types/customerInstitution.types';
+import { CustomerInstitution } from '../../types/customerInstitution.types';
 import { getCustomerInstitution } from '../../api/customerInstitutionsApi';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 
 export const useFetchCustomerInstitution = (
   identifier: string,
-  editMode: boolean
-): [CustomerInstitution, boolean, (customerInstitution: CustomerInstitution) => void] => {
+  editMode: boolean = false
+): [CustomerInstitution | undefined, boolean, (customerInstitution: CustomerInstitution) => void] => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
-  const [customerInstitution, setCustomerInstitution] = useState<CustomerInstitution>(emptyCustomerInstitution);
+  const [customerInstitution, setCustomerInstitution] = useState<CustomerInstitution>();
 
   const handleSetCustomerInstitution = (customerInstitution: CustomerInstitution) => {
     setCustomerInstitution(customerInstitution);
