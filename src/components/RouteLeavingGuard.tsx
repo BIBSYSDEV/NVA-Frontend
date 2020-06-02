@@ -9,14 +9,16 @@ interface RouteLeavingGuardProps {
 }
 const RouteLeavingGuard: FC<RouteLeavingGuardProps> = ({ modalDescription, modalHeading, shouldBlockNavigation }) => {
   const [showModal, setShowModal] = useState(false);
-  const [nextLocation, setNextLocation] = useState<Location | null>(null);
+  const [nextLocation, setNextLocation] = useState<string | null>(null);
   const [confirmedNavigation, setConfirmedNavigation] = useState(false);
   const history = useHistory();
 
   const handleBlockedNavigation = (nextLocation: any): boolean => {
-    if (!confirmedNavigation && shouldBlockNavigation) {
+    const currentLocation = history.location.pathname;
+    const newLocation = nextLocation.pathname;
+    if (!confirmedNavigation && shouldBlockNavigation && currentLocation !== newLocation) {
       setShowModal(true);
-      setNextLocation(nextLocation);
+      setNextLocation(newLocation);
       return false;
     }
     return true;
@@ -29,7 +31,7 @@ const RouteLeavingGuard: FC<RouteLeavingGuardProps> = ({ modalDescription, modal
 
   useEffect(() => {
     if (confirmedNavigation && nextLocation) {
-      history.push(nextLocation.pathname);
+      history.push(nextLocation);
     }
   }, [confirmedNavigation, nextLocation, history]);
 
