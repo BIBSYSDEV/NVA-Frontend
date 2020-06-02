@@ -1,12 +1,17 @@
 import React, { FC, Suspense, lazy } from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { RootStore } from './redux/reducers/rootReducer';
 import AdminUsersPage from './pages/admin/AdminUsersPage';
 import DelayedFallback from './components/DelayedFallback';
 import OrderInformation from './pages/infopages/OrderInformation';
 import Description from './pages/infopages/Description';
 import PrivacyPolicy from './pages/infopages/PrivacyPolicy';
+import {
+  LoggedInRoute,
+  PublisherRoute,
+  CuratorRoute,
+  AppAdminRoute,
+  InstitutionAdminRoute,
+} from './utils/routes/Routes';
 
 const Dashboard = lazy(() => import('./pages/dashboard/Dashboard'));
 const EditPublication = lazy(() => import('./pages/publication/EditPublication'));
@@ -21,58 +26,42 @@ const AdminCustomerInstitutionsPage = lazy(() => import('./pages/admin/AdminCust
 const WorklistPage = lazy(() => import('./pages/worklist/WorklistPage'));
 const Logout = lazy(() => import('./layout/Logout'));
 
-const AppRoutes: FC = () => {
-  const user = useSelector((store: RootStore) => store.user);
+const AppRoutes: FC = () => (
+  <Suspense fallback={<DelayedFallback />}>
+    <Switch>
+      <Route exact path="/" component={Dashboard} />
+      <Route exact path="/description" component={Description} />
+      <Route exact path="/order-information" component={OrderInformation} />
+      <Route exact path="/privacy-policy" component={PrivacyPolicy} />
+      <Route exact path="/profile/:arpId" component={PublicProfile} />
+      <Route exact path="/publication/:identifier/public" component={PublicPublication} />
+      <Route exact path="/search" component={Search} />
+      <Route exact path="/search/:searchTerm" component={Search} />
+      <Route exact path="/search/:searchTerm/:offset" component={Search} />
+      <Route exact path="/logout" component={Logout} />
 
-  return (
-    <Suspense fallback={<DelayedFallback />}>
-      <Switch>
-        <Route exact path="/" component={Dashboard} />
-        <Route exact path="/description" component={Description} />
-        <Route exact path="/order-information" component={OrderInformation} />
-        <Route exact path="/privacy-policy" component={PrivacyPolicy} />
-        <Route exact path="/profile/:arpId" component={PublicProfile} />
-        <Route exact path="/publication/:identifier/public" component={PublicPublication} />
-        <Route exact path="/search" component={Search} />
-        <Route exact path="/search/:searchTerm" component={Search} />
-        <Route exact path="/search/:searchTerm/:offset" component={Search} />
+      {/* LoggedInRoute */}
+      <LoggedInRoute exact path="/user" component={User} />
 
-        {user.isLoggedIn ? (
-          <>
-            <Route exact path="/user" component={User} />
-            {user.isPublisher && <PublisherRoutes />}
-            {user.isCurator && <CuratorRoutes />}
-            {user.isAppAdmin && <AppAdminRoutes />}
-            {user.isInstitutionAdmin && <InstitutionAdminRoutes />}
-          </>
-        ) : (
-          <Route exact path="/logout" component={Logout} />
-        )}
+      {/* PublisherRoutes */}
+      <PublisherRoute exact path="/publication" component={EditPublication} />
+      <PublisherRoute exact path="/publication/:identifier" component={EditPublication} />
+      <PublisherRoute exact path="/my-publications" component={MyPublications} />
 
-        {/* NotFound must be last, otherwise it will catch all routes */}
-        <Route path="*" component={NotFound} />
-      </Switch>
-    </Suspense>
-  );
-};
+      {/* CuratorRoutes */}
+      <CuratorRoute exact path="/worklist" component={WorklistPage} />
 
-const PublisherRoutes: FC = () => (
-  <>
-    <Route exact path="/publication" component={EditPublication} />
-    <Route exact path="/publication/:identifier" component={EditPublication} />
-    <Route exact path="/my-publications" component={MyPublications} />
-  </>
+      {/* AppAdminRoutes */}
+      <AppAdminRoute exact path="/admin-institutions" component={AdminCustomerInstitutionsPage} />
+      <AppAdminRoute exact path="/admin-institutions/:identifier" component={AdminCustomerInstitutionPage} />
+
+      {/* InstitutionAdminRoutes */}
+      <InstitutionAdminRoute exact path="/admin-institution-users" component={AdminUsersPage} />
+
+      {/* NotFound must be last, otherwise it will catch all routes */}
+      <Route path="*" component={NotFound} />
+    </Switch>
+  </Suspense>
 );
-
-const CuratorRoutes: FC = () => <Route exact path="/worklist" component={WorklistPage} />;
-
-const AppAdminRoutes: FC = () => (
-  <>
-    <Route exact path="/admin-institutions" component={AdminCustomerInstitutionsPage} />
-    <Route exact path="/admin-institutions/:identifier" component={AdminCustomerInstitutionPage} />
-  </>
-);
-
-const InstitutionAdminRoutes: FC = () => <Route exact path="/admin-institution-users" component={AdminUsersPage} />;
 
 export default AppRoutes;
