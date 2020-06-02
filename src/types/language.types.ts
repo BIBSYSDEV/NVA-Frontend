@@ -34,6 +34,7 @@ export enum LanguageValues {
   SWEDISH = 'http://lexvo.org/id/iso639-3/swe',
   GERMAN = 'http://lexvo.org/id/iso639-3/ger',
   OTHER = 'http://lexvo.org/id/iso639-3/mis',
+  NONE = '',
 }
 
 export const pageLanguages = [LanguageCodes.NORWEGIAN_BOKMAL, LanguageCodes.ENGLISH];

@@ -136,7 +136,13 @@ const DescriptionPanel: FC<PanelProps> = ({ setTouchedFields }) => {
 
           <Field name={DescriptionFieldNames.LANGUAGE}>
             {({ field }: FieldProps) => (
-              <TextField {...field} variant="outlined" fullWidth select label={t('description.primary_language')}>
+              <TextField
+                {...field}
+                fullWidth
+                label={t('description.primary_language')}
+                placeholder={t('description.primary_language')}
+                select
+                variant="outlined">
                 {publicationLanguages.map(({ id, value }) => (
                   <MenuItem value={value} key={id} data-testid={`publication-language-${id}`}>
                     {t(`languages:${id}`)}
