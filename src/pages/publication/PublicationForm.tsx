@@ -53,13 +53,6 @@ const PublicationForm: FC<PublicationFormProps> = ({ identifier, closeForm }) =>
     }
   }, [closeForm, publication, isLoadingPublication]);
 
-  useEffect(
-    () => () => {
-      uppy && uppy.reset();
-    },
-    [uppy]
-  );
-
   const handleTabChange = (_: React.ChangeEvent<{}>, newTabNumber: number) => {
     setTabNumber(newTabNumber);
   };
