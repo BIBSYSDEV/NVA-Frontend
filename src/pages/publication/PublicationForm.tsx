@@ -51,7 +51,13 @@ const PublicationForm: FC<PublicationFormProps> = ({
   const [tabNumber, setTabNumber] = useState(user.isCurator ? PublicationTab.Submission : PublicationTab.Description);
   const [isSaving, setIsSaving] = useState(false);
   const dispatch = useDispatch();
-  const [publication, isLoadingPublication, handleSetPublication] = useFetchPublication(identifier, true, closeForm);
+  const [publication, isLoadingPublication, handleSetPublication] = useFetchPublication(identifier, true);
+
+  useEffect(() => {
+    if (publication?.error) {
+      closeForm();
+    }
+  }, [closeForm, publication]);
 
   useEffect(
     () => () => {
