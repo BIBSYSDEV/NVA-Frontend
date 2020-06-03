@@ -11,7 +11,6 @@ interface InstitutionAutocompleteProps extends Pick<TextFieldProps, 'disabled' |
   onChange: (value: InstitutionUnitBase | null) => void;
   value: InstitutionUnitBase | null;
   isLoading?: boolean;
-  readOnlyValue?: string;
 }
 
 const InstitutionAutocomplete: FC<InstitutionAutocompleteProps> = ({
@@ -22,7 +21,6 @@ const InstitutionAutocomplete: FC<InstitutionAutocompleteProps> = ({
   onChange,
   value = null,
   isLoading = false,
-  readOnlyValue,
 }) => {
   const { t } = useTranslation('common');
 
@@ -45,7 +43,7 @@ const InstitutionAutocomplete: FC<InstitutionAutocompleteProps> = ({
       renderInput={(params) => (
         <TextField
           {...params}
-          label={readOnlyValue ?? t('institution')}
+          label={t('institution')}
           placeholder={t('institution:search_institution')}
           variant="outlined"
           inputProps={{

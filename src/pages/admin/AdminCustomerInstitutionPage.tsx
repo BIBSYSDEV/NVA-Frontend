@@ -83,22 +83,18 @@ const AdminCustomerInstitutionPage: FC = () => {
         {({ isSubmitting }) => (
           <Form>
             <Field name={CustomerInstitutionFieldNames.NAME}>
-              {({ field: { name, value }, form: { setValues }, meta: { touched, error } }: FieldProps) => (
+              {({ field: { name, value }, form: { setFieldValue }, meta: { touched, error } }: FieldProps) => (
                 <InstitutionAutocomplete
                   disabled={editMode}
                   error={touched && !!error}
                   helperText={<ErrorMessage name={name} />}
                   institutions={institutions}
-                  isLoading={editMode ? false : isLoadingInstitutions}
+                  isLoading={!editMode && isLoadingInstitutions}
                   onChange={(selectedInstitution) => {
-                    setValues({
-                      ...customerInstitution,
-                      name: selectedInstitution?.name ?? '',
-                      [CustomerInstitutionFieldNames.DISPLAY_NAME]: selectedInstitution?.name ?? '',
-                      [CustomerInstitutionFieldNames.SHORT_NAME]: selectedInstitution?.acronym ?? '',
-                    });
+                    setFieldValue(name, selectedInstitution?.name);
+                    setFieldValue(CustomerInstitutionFieldNames.DISPLAY_NAME, selectedInstitution?.name);
+                    setFieldValue(CustomerInstitutionFieldNames.SHORT_NAME, selectedInstitution?.acronym);
                   }}
-                  readOnlyValue={value}
                   value={institutions.find((i) => i.name === value) ?? null}
                 />
               )}
