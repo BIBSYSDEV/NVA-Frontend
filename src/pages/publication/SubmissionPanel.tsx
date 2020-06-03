@@ -19,7 +19,6 @@ import Card from '../../components/Card';
 import { useHistory } from 'react-router-dom';
 import LabelContentRow from '../../components/LabelContentRow';
 import ErrorSummary from './submission_tab/ErrorSummary';
-import { DOI_PREFIX } from '../../utils/constants';
 import { publishPublication } from '../../api/publicationApi';
 import { useDispatch, useSelector } from 'react-redux';
 import { setNotification } from '../../redux/actions/notificationActions';
@@ -108,9 +107,7 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication, 
             {publicationContextType && t(`publicationTypes:${publicationContextType}`)}
           </LabelContentRow>
           {reference.doi && (
-            <LabelContentRow label={t('publication.link_to_publication')}>
-              {`${DOI_PREFIX}${reference.doi}`}
-            </LabelContentRow>
+            <LabelContentRow label={t('publication.link_to_publication')}>{reference.doi}</LabelContentRow>
           )}
           {publicationContextType === PublicationType.BOOK && <SubmissionBook />}
           {publicationContextType === PublicationType.DEGREE && <SubmissionDegree />}
