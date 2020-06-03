@@ -53,7 +53,7 @@ const AuthorityCard: FC<AuthorityCardProps> = ({ authority, isConnected = false,
       </StyledNameCell>
       <StyledCenteredContent>
         {isLoadingAlmaPublication ? (
-          <CircularProgress />
+          <CircularProgress size={20} />
         ) : almaPublication?.title ? (
           <NormalText>
             <Truncate lines={3}>{almaPublication.title}</Truncate>

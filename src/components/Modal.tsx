@@ -9,9 +9,11 @@ import Heading from './Heading';
 const StyledPaper = styled.div`
   background-color: ${({ theme }) => theme.palette.background};
   margin: 1rem;
+  min-width: 40rem;
   max-width: 40rem;
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
     margin-top: 0;
+    min-width: auto;
   }
 `;
 

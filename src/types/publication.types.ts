@@ -178,7 +178,7 @@ const emptyPublicationEntityDescription: PublicationEntityDescription = {
   tags: [],
   npiSubjectHeading: '',
   date: emptyDate,
-  language: LanguageValues.NORWEGIAN_BOKMAL,
+  language: LanguageValues.NONE,
   contributors: [],
   isbn: '',
   numberOfPages: '',

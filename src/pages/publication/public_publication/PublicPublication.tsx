@@ -105,6 +105,14 @@ const PublicPublication: FC = () => {
   const currentLicense = publication?.fileSet?.files[0]?.license ?? null;
   const selectedLicense = licenses.find((license) => license.identifier === currentLicense?.identifier);
 
+  const displayDate = (date: { year: string; month?: string; day?: string }) => {
+    if (date.month && date.day) {
+      return new Date(+date.year, +date.month - 1, +date.day).toLocaleDateString();
+    } else {
+      return date.year;
+    }
+  };
+
   return (
     <>
       {isLoadingPublication ? (
@@ -174,9 +182,7 @@ const PublicPublication: FC = () => {
                   )}
                   {date && (
                     <LabelContentRow minimal label={`${t('description.date_published')}:`}>
-                      {date.year}
-                      {date.month && `-${date.month}`}
-                      {date.day && `-${date.day}`}
+                      {displayDate(date)}
                     </LabelContentRow>
                   )}
                   {npiSubjectHeading && (
