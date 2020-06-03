@@ -83,7 +83,7 @@ const AdminCustomerInstitutionPage: FC = () => {
         {({ isSubmitting }) => (
           <Form>
             <Field name={CustomerInstitutionFieldNames.NAME}>
-              {({ field: { name, value }, form: { setFieldValue }, meta: { touched, error } }: FieldProps) => (
+              {({ field: { name, value }, form: { setValues }, meta: { touched, error } }: FieldProps) => (
                 <InstitutionAutocomplete
                   disabled={editMode}
                   error={touched && !!error}
@@ -91,9 +91,13 @@ const AdminCustomerInstitutionPage: FC = () => {
                   institutions={institutions}
                   isLoading={!editMode && isLoadingInstitutions}
                   onChange={(selectedInstitution) => {
-                    setFieldValue(name, selectedInstitution?.name ?? '');
-                    setFieldValue(CustomerInstitutionFieldNames.DISPLAY_NAME, selectedInstitution?.name ?? '');
-                    setFieldValue(CustomerInstitutionFieldNames.SHORT_NAME, selectedInstitution?.acronym ?? '');
+                    setValues({
+                      ...emptyCustomerInstitution,
+                      ...customerInstitution,
+                      name: selectedInstitution?.name ?? '',
+                      [CustomerInstitutionFieldNames.DISPLAY_NAME]: selectedInstitution?.name ?? '',
+                      [CustomerInstitutionFieldNames.SHORT_NAME]: selectedInstitution?.acronym ?? '',
+                    });
                   }}
                   value={institutions.find((i) => i.name === value) ?? null}
                 />
