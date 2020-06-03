@@ -11,14 +11,14 @@ const StyledDashboard = styled.div`
   overflow: auto;
 `;
 
-interface FileUploaderProps {
+interface UppyDashboardProps {
   uppy: Uppy;
 }
 
 const uploaderMaxWidthPx = 10000;
 const uploaderMaxHeightPx = 200;
 
-const UppyDashboard: React.FC<FileUploaderProps> = ({ uppy }) => {
+const UppyDashboard: React.FC<UppyDashboardProps> = ({ uppy }) => {
   const { t } = useTranslation('publication');
   const multipleFilesAllowed = (uppy as any).opts.restrictions.maxNumberOfFiles !== 1;
 

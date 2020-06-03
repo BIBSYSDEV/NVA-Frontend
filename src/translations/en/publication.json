@@ -70,7 +70,7 @@
     },
     "license": "License",
     "licenses": "Licenses",
-    "no_duplicates": "Cannot add \"{{fileName}}\", since a file with the same name already exists",
+    "no_duplicates": "Cannot add \"{{fileName}}\", because a file with the same name already exists",
     "published_version": "Published version",
     "select_version": "Select version",
     "title": "File name",

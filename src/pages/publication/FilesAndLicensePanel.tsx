@@ -19,7 +19,7 @@ import { FileFieldNames } from '../../types/publicationFieldNames';
 import { touchedFilesTabFields } from '../../utils/formik-helpers';
 import { PanelProps } from './PublicationFormContent';
 import { NotificationVariant } from '../../types/notification.types';
-import { autoHideDuration } from '../../utils/constants';
+import { autoHideNotificationDuration } from '../../utils/constants';
 import { File } from '../../types/file.types';
 
 const StyledUploadedFiles = styled(Card)`
@@ -71,8 +71,8 @@ const FilesAndLicensePanel: FC<FilesAndLicensePanelProps> = ({ uppy, setTouchedF
         if (filesRef.current.some((file: File) => file.name === currentFile.name)) {
           uppy.info(
             t('files_and_license.no_duplicates', { fileName: currentFile.name }),
-            NotificationVariant.Error,
-            autoHideDuration[NotificationVariant.Error]
+            NotificationVariant.Info,
+            autoHideNotificationDuration[NotificationVariant.Error]
           );
           return false;
         }

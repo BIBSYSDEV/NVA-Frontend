@@ -7,7 +7,7 @@ import { useLocation } from 'react-router-dom';
 
 import { removeNotification } from '../redux/actions/notificationActions';
 import { RootStore } from '../redux/reducers/rootReducer';
-import { autoHideDuration } from '../utils/constants';
+import { autoHideNotificationDuration } from '../utils/constants';
 
 const Notifier: React.FC = () => {
   const notification = useSelector((store: RootStore) => store.notification);
@@ -41,7 +41,7 @@ const Notifier: React.FC = () => {
         horizontal: 'left',
       }}
       open={true}
-      autoHideDuration={autoHideDuration[notification.variant]}
+      autoHideDuration={autoHideNotificationDuration[notification.variant]}
       onClose={handleClose}
       TransitionComponent={Fade}
       transitionDuration={100}>

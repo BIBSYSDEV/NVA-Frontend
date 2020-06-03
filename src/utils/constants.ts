@@ -33,7 +33,7 @@ export enum ContactInformation {
   NVA_EMAIL = 'xxx@unit.no',
 }
 
-export const autoHideDuration = {
+export const autoHideNotificationDuration = {
   [NotificationVariant.Error]: 6000,
   [NotificationVariant.Info]: 3000,
   [NotificationVariant.Success]: 3000,
