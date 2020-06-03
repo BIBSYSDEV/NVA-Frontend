@@ -1,25 +1,23 @@
-import { Form, Formik, FormikProps, yupToFormErrors, validateYupSchema } from 'formik';
 import React, { FC, useEffect, useState } from 'react';
+import { Form, Formik, FormikProps, yupToFormErrors, validateYupSchema } from 'formik';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
+import deepmerge from 'deepmerge';
+import { CircularProgress, Button } from '@material-ui/core';
+
 import { emptyPublication, FormikPublication, PublicationTab } from '../../types/publication.types';
-import { createUppy } from '../../utils/uppy-config';
 import { PublicationFormTabs } from './PublicationFormTabs';
-import { Uppy } from '../../types/file.types';
 import { updatePublication } from '../../api/publicationApi';
 import { useDispatch, useSelector } from 'react-redux';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
-import deepmerge from 'deepmerge';
 import { publicationValidationSchema } from './PublicationFormValidationSchema';
-import { Button, CircularProgress } from '@material-ui/core';
 import RouteLeavingGuard from '../../components/RouteLeavingGuard';
 import ButtonWithProgress from '../../components/ButtonWithProgress';
 import { PublicationFormContent } from './PublicationFormContent';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import useFetchPublication from '../../utils/hooks/useFetchPublication';
-
-const shouldAllowMultipleFiles = false;
+import useUppy from '../../utils/hooks/useUppy';
 
 const StyledPublication = styled.div`
   width: 100%;
@@ -37,20 +35,16 @@ const StyledButtonContainer = styled.div`
 
 interface PublicationFormProps {
   closeForm: () => void;
-  uppy: Uppy;
   identifier?: string;
 }
 
-const PublicationForm: FC<PublicationFormProps> = ({
-  uppy = createUppy(shouldAllowMultipleFiles),
-  identifier,
-  closeForm,
-}) => {
+const PublicationForm: FC<PublicationFormProps> = ({ identifier, closeForm }) => {
   const user = useSelector((store: RootStore) => store.user);
   const { t } = useTranslation('publication');
   const [tabNumber, setTabNumber] = useState(user.isCurator ? PublicationTab.Submission : PublicationTab.Description);
   const [isSaving, setIsSaving] = useState(false);
   const dispatch = useDispatch();
+  const uppy = useUppy();
   const [publication, isLoadingPublication, handleSetPublication] = useFetchPublication(identifier, true);
 
   useEffect(() => {
@@ -58,13 +52,6 @@ const PublicationForm: FC<PublicationFormProps> = ({
       closeForm();
     }
   }, [closeForm, publication, isLoadingPublication]);
-
-  useEffect(
-    () => () => {
-      uppy && uppy.reset();
-    },
-    [uppy]
-  );
 
   const handleTabChange = (_: React.ChangeEvent<{}>, newTabNumber: number) => {
     setTabNumber(newTabNumber);

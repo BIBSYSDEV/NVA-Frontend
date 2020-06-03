@@ -1,3 +1,5 @@
+import { NotificationVariant } from '../types/notification.types';
+
 export const USE_MOCK_DATA = process.env.REACT_APP_USE_MOCK === 'true';
 
 export const SEARCH_RESULTS_PER_PAGE = 10;
@@ -30,3 +32,10 @@ export enum ContactInformation {
   NVA_TEST_WEBSITE = 'test.nva.unit.no',
   NVA_EMAIL = 'xxx@unit.no',
 }
+
+export const autoHideNotificationDuration = {
+  [NotificationVariant.Error]: 6000,
+  [NotificationVariant.Info]: 3000,
+  [NotificationVariant.Success]: 3000,
+  [NotificationVariant.Warning]: 6000,
+};

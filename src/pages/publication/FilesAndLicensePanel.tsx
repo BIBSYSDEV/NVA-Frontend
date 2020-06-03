@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { FieldArray, FormikProps, useFormikContext, ErrorMessage, FieldArrayRenderProps } from 'formik';
 import { FormHelperText } from '@material-ui/core';
+import { UppyFile } from '@uppy/core';
+
 import FileUploader from './files_and_license_tab/FileUploader';
 import FileCard from './files_and_license_tab/FileCard';
 import { FormikPublication, Publisher } from '../../types/publication.types';
@@ -16,8 +18,9 @@ import Label from '../../components/Label';
 import { FileFieldNames } from '../../types/publicationFieldNames';
 import { touchedFilesTabFields } from '../../utils/formik-helpers';
 import { PanelProps } from './PublicationFormContent';
-
-const shouldAllowMultipleFiles = true;
+import { NotificationVariant } from '../../types/notification.types';
+import { autoHideNotificationDuration } from '../../utils/constants';
+import { File } from '../../types/file.types';
 
 const StyledUploadedFiles = styled(Card)`
   display: flex;
@@ -42,7 +45,7 @@ const FilesAndLicensePanel: FC<FilesAndLicensePanelProps> = ({ uppy, setTouchedF
   const { values }: FormikProps<FormikPublication> = useFormikContext();
   const [isLicenseModalOpen, setIsLicenseModalOpen] = useState(false);
   const {
-    fileSet: { files },
+    fileSet: { files = [] },
     entityDescription: {
       reference: { publicationContext },
     },
@@ -60,6 +63,24 @@ const FilesAndLicensePanel: FC<FilesAndLicensePanelProps> = ({ uppy, setTouchedF
     [setTouchedFields]
   );
 
+  useEffect(() => {
+    // Avoid adding duplicated file names to an existing publication,
+    // since files could have been uploaded in another session without being in uppy's current state
+    uppy.setOptions({
+      onBeforeFileAdded: (currentFile: UppyFile) => {
+        if (filesRef.current.some((file: File) => file.name === currentFile.name)) {
+          uppy.info(
+            t('files_and_license.no_duplicates', { fileName: currentFile.name }),
+            NotificationVariant.Info,
+            autoHideNotificationDuration[NotificationVariant.Error]
+          );
+          return false;
+        }
+        return true;
+      },
+    });
+  }, [t, uppy, filesRef]);
+
   const toggleLicenseModal = () => {
     setIsLicenseModalOpen(!isLicenseModalOpen);
   };
@@ -73,11 +94,7 @@ const FilesAndLicensePanel: FC<FilesAndLicensePanelProps> = ({ uppy, setTouchedF
           <>
             <Card>
               <Heading>{t('files_and_license.upload_files')}</Heading>
-              <FileUploader
-                uppy={uppy}
-                shouldAllowMultipleFiles={shouldAllowMultipleFiles}
-                addFile={(file) => insert(0, file)}
-              />
+              <FileUploader uppy={uppy} addFile={(file) => insert(0, file)} />
               {files.length === 0 && (
                 <FormHelperText error>
                   <ErrorMessage name={name} />

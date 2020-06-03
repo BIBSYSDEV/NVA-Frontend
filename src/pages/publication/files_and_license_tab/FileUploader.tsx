@@ -5,11 +5,10 @@ import { UppyFile } from '@uppy/core';
 
 interface FileUploaderProps {
   addFile: (file: File) => void;
-  shouldAllowMultipleFiles: boolean;
   uppy: Uppy;
 }
 
-const FileUploader: FC<FileUploaderProps> = ({ addFile, shouldAllowMultipleFiles, uppy }) => {
+const FileUploader: FC<FileUploaderProps> = ({ addFile, uppy }) => {
   useEffect(() => {
     if (uppy && !uppy.hasUploadSuccessEventListener) {
       uppy.on('upload-success', (file: UppyFile, response: any) => {
@@ -27,7 +26,7 @@ const FileUploader: FC<FileUploaderProps> = ({ addFile, shouldAllowMultipleFiles
     }
   }, [addFile, uppy]);
 
-  return uppy ? <UppyDashboard uppy={uppy} shouldAllowMultipleFiles={shouldAllowMultipleFiles} /> : null;
+  return uppy ? <UppyDashboard uppy={uppy} /> : null;
 };
 
 export default FileUploader;
