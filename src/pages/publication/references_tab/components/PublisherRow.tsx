@@ -1,14 +1,13 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-
 import { Button } from '@material-ui/core';
+import { FormikProps, useFormikContext } from 'formik';
 
 import { Publisher, levelMap, FormikPublication } from '../../../../types/publication.types';
 import Label from '../../../../components/Label';
 import { getPublishers } from '../../../../api/publicationChannelApi';
 import { PublicationTableNumber } from '../../../../utils/constants';
-import { FormikProps, useFormikContext } from 'formik';
 import { ReferenceFieldNames } from '../../../../types/publicationFieldNames';
 import Card from '../../../../components/Card';
 import NormalText from '../../../../components/NormalText';
@@ -74,10 +73,10 @@ const PublisherRow: React.FC<PublisherRowProps> = ({ dataTestId, publisher, labe
         const publisherLevel = response?.filter((publisher: Partial<Publisher>) => publisher.title === title)[0]?.level;
         if (publisherLevel) {
           const levelAsEnum = Object.keys(levelMap).find((key) => levelMap[key] === publisherLevel);
-          setFieldValue(`${ReferenceFieldNames.PUBLICATION_CONTEXT}.level`, levelAsEnum);
+          setFieldValue(ReferenceFieldNames.PUBLICATION_CONTEXT_LEVEL, levelAsEnum);
         }
       } else {
-        setFieldValue(`${ReferenceFieldNames.PUBLICATION_CONTEXT}.level`, '');
+        setFieldValue(ReferenceFieldNames.PUBLICATION_CONTEXT_LEVEL, '');
       }
     };
 
