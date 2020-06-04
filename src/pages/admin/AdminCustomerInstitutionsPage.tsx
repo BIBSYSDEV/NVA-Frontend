@@ -11,16 +11,11 @@ import styled from 'styled-components';
 import { CustomerInstitution } from '../../types/customerInstitution.types';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
+import { ProgressWrapper } from '../../components/styled/wrappers';
 
 const StyledButtonWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
-`;
-
-const StyledProgressContainer = styled.div`
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
 `;
 
 const AdminCustomerInstitutionsPage: FC = () => {
@@ -56,9 +51,9 @@ const AdminCustomerInstitutionsPage: FC = () => {
         </Button>
       </StyledButtonWrapper>
       {isLoading ? (
-        <StyledProgressContainer>
+        <ProgressWrapper>
           <CircularProgress />
-        </StyledProgressContainer>
+        </ProgressWrapper>
       ) : (
         <InstitutionList institutions={institutions} />
       )}

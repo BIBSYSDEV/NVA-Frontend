@@ -9,6 +9,7 @@ import { setAuthorityData } from '../../../redux/actions/userActions';
 import { RootStore } from '../../../redux/reducers/rootReducer';
 import { createAuthority } from '../../../api/authorityApi';
 import { NotificationVariant } from '../../../types/notification.types';
+import { ProgressWrapper } from '../../../components/styled/wrappers';
 
 const StyledBoxContent = styled.div`
   display: grid;
@@ -53,19 +54,6 @@ const StyledCancelButton = styled(Button)`
   }
 `;
 
-const StyledProgressContainer = styled.div`
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  width: 36rem;
-  height: 16rem;
-  padding: 2rem;
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-    width: auto;
-    height: auto;
-  }
-`;
-
 interface NewAuthorityCardProps {
   onClickCancel: () => void;
 }
@@ -94,9 +82,9 @@ const NewAuthorityCard: FC<NewAuthorityCardProps> = ({ onClickCancel }) => {
   return (
     <>
       {loading ? (
-        <StyledProgressContainer>
+        <ProgressWrapper>
           <CircularProgress size={100} />
-        </StyledProgressContainer>
+        </ProgressWrapper>
       ) : (
         <StyledBoxContent>
           <StyledAuthority>

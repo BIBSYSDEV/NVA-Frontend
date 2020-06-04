@@ -9,6 +9,7 @@ import { PublicationStatus } from '../../../types/publication.types';
 import PublicationList from './PublicationList';
 import TabButton from '../../../components/TabButton';
 import useFetchMyPublications from '../../../utils/hooks/useFetchMyPublications';
+import { ProgressWrapper } from '../../../components/styled/wrappers';
 
 const StyledContainer = styled.div`
   display: block;
@@ -28,13 +29,6 @@ const StyledTabsContainer = styled.div`
   justify-content: center;
   padding-top: 2rem;
   margin: 0 1.5rem;
-`;
-
-const StyledProgressContainer = styled.div`
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 2rem;
 `;
 
 const StyledCard = styled(Card)`
@@ -89,9 +83,9 @@ const MyPublications: FC = () => {
         </TabButton>
       </StyledTabsContainer>
       {isLoading ? (
-        <StyledProgressContainer>
+        <ProgressWrapper>
           <CircularProgress color="primary" size={50} />
-        </StyledProgressContainer>
+        </ProgressWrapper>
       ) : (
         <StyledCard>
           <PublicationList

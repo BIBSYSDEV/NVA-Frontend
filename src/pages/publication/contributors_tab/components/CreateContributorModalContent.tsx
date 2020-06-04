@@ -10,6 +10,7 @@ import { Authority } from '../../../../types/authority.types';
 import { useDispatch } from 'react-redux';
 import { setNotification } from '../../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../../types/notification.types';
+import { ProgressWrapper } from '../../../../components/styled/wrappers';
 
 const StyledButtonContainer = styled.div`
   display: flex;
@@ -24,15 +25,6 @@ const StyledSmallButtonContainer = styled.div`
 
 const StyledDescription = styled(NormalText)`
   white-space: pre-wrap;
-`;
-
-const StyledProgressContainer = styled.div`
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  width: 36rem;
-  height: 16rem;
-  padding: 2rem;
 `;
 
 interface CreateContributorModalContentProps {
@@ -62,9 +54,9 @@ const CreateContributorModalContent: FC<CreateContributorModalContentProps> = ({
   return (
     <>
       {loading ? (
-        <StyledProgressContainer>
+        <ProgressWrapper>
           <CircularProgress size={100} />
-        </StyledProgressContainer>
+        </ProgressWrapper>
       ) : (
         <Formik initialValues={emptyNewContributor} onSubmit={handleSubmit}>
           <Form>
