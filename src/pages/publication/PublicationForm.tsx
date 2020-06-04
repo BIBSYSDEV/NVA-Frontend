@@ -4,8 +4,9 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import deepmerge from 'deepmerge';
 import { CircularProgress, Button } from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
 
-import { emptyPublication, FormikPublication, PublicationTab } from '../../types/publication.types';
+import { emptyPublication, FormikPublication, PublicationTab, PublicationStatus } from '../../types/publication.types';
 import { PublicationFormTabs } from './PublicationFormTabs';
 import { updatePublication } from '../../api/publicationApi';
 import { useDispatch, useSelector } from 'react-redux';
@@ -45,13 +46,21 @@ const PublicationForm: FC<PublicationFormProps> = ({ identifier, closeForm }) =>
   const [isSaving, setIsSaving] = useState(false);
   const dispatch = useDispatch();
   const uppy = useUppy();
-  const [publication, isLoadingPublication, handleSetPublication] = useFetchPublication(identifier, true);
+  const history = useHistory();
+  const [publication, isLoadingPublication, handleSetPublication] = useFetchPublication(identifier);
 
   useEffect(() => {
     if (!publication && !isLoadingPublication) {
       closeForm();
     }
   }, [closeForm, publication, isLoadingPublication]);
+
+  useEffect(() => {
+    // Redirect to public page if non-curator is opening a published publication
+    if (publication?.status === PublicationStatus.PUBLISHED && !user.isCurator) {
+      history.push(`/publication/${identifier}/public`);
+    }
+  }, [history, identifier, publication, user.isCurator]);
 
   const handleTabChange = (_: React.ChangeEvent<{}>, newTabNumber: number) => {
     setTabNumber(newTabNumber);
@@ -95,7 +104,7 @@ const PublicationForm: FC<PublicationFormProps> = ({ identifier, closeForm }) =>
     <StyledPublication>
       <Formik
         enableReinitialize
-        initialValues={publication ?? emptyPublication}
+        initialValues={publication ? deepmerge(emptyPublication, publication) : emptyPublication}
         validate={validateForm}
         onSubmit={(values: FormikPublication) => savePublication(values)}>
         {({ dirty, values, isValid }: FormikProps<FormikPublication>) => (
