@@ -8,12 +8,10 @@ import NormalText from '../../../../components/NormalText';
 import SubHeading from '../../../../components/SubHeading';
 import AuthorityList from '../../../user/authority/AuthorityList';
 import useFetchAuthorities from '../../../../utils/hooks/useFetchAuthorities';
-import { ProgressWrapper } from '../../../../components/styled/Wrappers';
+import { ProgressWrapper, RightAlignedButtonWrapper } from '../../../../components/styled/Wrappers';
 
-const StyledButtonContainer = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 1rem;
+const StyledButtonContainer = styled(RightAlignedButtonWrapper)`
+  margin: 1rem 0;
 `;
 
 const StyledSubHeading = styled(SubHeading)`

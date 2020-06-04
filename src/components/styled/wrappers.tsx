@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import NormalText from '../NormalText';
 
 const StyledInformationWrapper = styled.div`
   width: 60%;
@@ -32,4 +33,12 @@ const StyledRightAlignedButtonWrapper = styled.div`
 
 export const RightAlignedButtonWrapper = ({ children, ...props }: any) => (
   <StyledRightAlignedButtonWrapper {...props}>{children}</StyledRightAlignedButtonWrapper>
+);
+
+const StyledNormalTextPreWrapped = styled(NormalText)`
+  white-space: pre-wrap;
+`;
+
+export const NormalTextPreWrapped = ({ children, ...props }: any) => (
+  <StyledNormalTextPreWrapped {...props}>{children}</StyledNormalTextPreWrapped>
 );

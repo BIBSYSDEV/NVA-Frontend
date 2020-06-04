@@ -4,22 +4,19 @@ import { emptyNewContributor } from '../../../../types/contributor.types';
 import { Collapse, Button, TextField, CircularProgress } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import NormalText from '../../../../components/NormalText';
 import { createAuthority } from '../../../../api/authorityApi';
 import { Authority } from '../../../../types/authority.types';
 import { useDispatch } from 'react-redux';
 import { setNotification } from '../../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../../types/notification.types';
-import { ProgressWrapper, RightAlignedButtonWrapper } from '../../../../components/styled/Wrappers';
+import {
+  ProgressWrapper,
+  RightAlignedButtonWrapper,
+  NormalTextPreWrapped,
+} from '../../../../components/styled/Wrappers';
 
-const StyledButtonContainer = styled.div`
-  display: flex;
-  justify-content: flex-end;
+const StyledButtonContainer = styled(RightAlignedButtonWrapper)`
   margin-top: 1rem;
-`;
-
-const StyledDescription = styled(NormalText)`
-  white-space: pre-wrap;
 `;
 
 interface CreateContributorModalContentProps {
@@ -56,7 +53,7 @@ const CreateContributorModalContent: FC<CreateContributorModalContentProps> = ({
         <Formik initialValues={emptyNewContributor} onSubmit={handleSubmit}>
           <Form>
             <Collapse in={readMore} collapsedHeight="4.5rem">
-              <StyledDescription>{t('description_create_authority')}</StyledDescription>
+              <NormalTextPreWrapped>{t('description_create_authority')}</NormalTextPreWrapped>
             </Collapse>
             <RightAlignedButtonWrapper>
               <Button color="primary" onClick={toggleReadMore}>

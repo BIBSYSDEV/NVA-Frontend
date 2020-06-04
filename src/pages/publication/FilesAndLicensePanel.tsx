@@ -21,6 +21,7 @@ import { PanelProps } from './PublicationFormContent';
 import { NotificationVariant } from '../../types/notification.types';
 import { autoHideNotificationDuration } from '../../utils/constants';
 import { File } from '../../types/file.types';
+import { NormalTextPreWrapped } from '../../components/styled/Wrappers';
 
 const StyledUploadedFiles = styled(Card)`
   display: flex;
@@ -31,9 +32,8 @@ const StyledUploadedFiles = styled(Card)`
   }
 `;
 
-const StyledLicenseDescription = styled.article`
+const StyledLicenseDescription = styled(NormalTextPreWrapped)`
   margin-bottom: 1rem;
-  white-space: pre-wrap;
 `;
 
 interface FilesAndLicensePanelProps extends PanelProps {

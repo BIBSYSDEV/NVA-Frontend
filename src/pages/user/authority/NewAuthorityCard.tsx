@@ -9,7 +9,7 @@ import { setAuthorityData } from '../../../redux/actions/userActions';
 import { RootStore } from '../../../redux/reducers/rootReducer';
 import { createAuthority } from '../../../api/authorityApi';
 import { NotificationVariant } from '../../../types/notification.types';
-import { ProgressWrapper } from '../../../components/styled/Wrappers';
+import { ProgressWrapper, NormalTextPreWrapped } from '../../../components/styled/Wrappers';
 
 const StyledBoxContent = styled.div`
   display: grid;
@@ -32,10 +32,9 @@ const StyledAuthority = styled.div`
   grid-area: authority;
 `;
 
-const StyledDescription = styled.div`
+const StyledDescription = styled(NormalTextPreWrapped)`
   grid-area: description;
   margin-left: 0.7rem;
-  white-space: pre-wrap;
 `;
 
 const StyledButton = styled(Button)`

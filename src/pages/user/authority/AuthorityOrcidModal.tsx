@@ -9,10 +9,9 @@ import OrcidModalContent from '../OrcidModalContent';
 import { ConnectAuthority } from './ConnectAuthority';
 import AuthorityCard from './AuthorityCard';
 import { Authority } from '../../../types/authority.types';
+import { RightAlignedButtonWrapper } from '../../../components/styled/Wrappers';
 
-const StyledButtonContainer = styled.div`
-  display: flex;
-  justify-content: flex-end;
+const StyledButtonContainer = styled(RightAlignedButtonWrapper)`
   margin-top: 2rem;
 `;
 
