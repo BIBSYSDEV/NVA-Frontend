@@ -8,7 +8,7 @@ import NormalText from '../../../../components/NormalText';
 import SubHeading from '../../../../components/SubHeading';
 import AuthorityList from '../../../user/authority/AuthorityList';
 import useFetchAuthorities from '../../../../utils/hooks/useFetchAuthorities';
-import { ProgressWrapper, RightAlignedButtonWrapper } from '../../../../components/styled/Wrappers1';
+import { ProgressWrapper, RightAlignedButtonWrapper } from '../../../../components/styled/Wrappers';
 
 const StyledButtonContainer = styled(RightAlignedButtonWrapper)`
   margin: 1rem 0;

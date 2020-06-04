@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import Heading from '../../components/Heading';
 
 import Card from '../../components/Card';
-import { InformationWrapper, NormalTextPreWrapped } from '../../components/styled/Wrappers1';
+import { InformationWrapper, NormalTextPreWrapped } from '../../components/styled/Wrappers';
 
 const StyledHeading = styled(Heading)`
   text-align: center;

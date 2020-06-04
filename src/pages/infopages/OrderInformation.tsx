@@ -7,7 +7,7 @@ import { Link as MuiLink } from '@material-ui/core';
 
 import Card from '../../components/Card';
 import { ContactInformation } from '../../utils/constants';
-import { InformationWrapper } from '../../components/styled/Wrappers1';
+import { InformationWrapper } from '../../components/styled/Wrappers';
 
 const StyledHeading = styled(Heading)`
   text-align: center;

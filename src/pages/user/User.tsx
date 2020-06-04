@@ -17,7 +17,7 @@ import UserRoles from './UserRoles';
 import Card from '../../components/Card';
 import Heading from '../../components/Heading';
 import UserInstitution from './UserInstitution';
-import { RightAlignedButtonWrapper } from '../../components/styled/Wrappers1';
+import { RightAlignedButtonWrapper } from '../../components/styled/Wrappers';
 
 const StyledUserPage = styled.div`
   display: grid;

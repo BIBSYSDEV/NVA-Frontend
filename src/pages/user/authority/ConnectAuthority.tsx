@@ -10,7 +10,7 @@ import { RootStore } from '../../../redux/reducers/rootReducer';
 import { Authority } from '../../../types/authority.types';
 import NewAuthorityCard from './NewAuthorityCard';
 import AuthorityList from './AuthorityList';
-import { RightAlignedButtonWrapper } from '../../../components/styled/Wrappers1';
+import { RightAlignedButtonWrapper } from '../../../components/styled/Wrappers';
 
 const StyledAuthorityContainer = styled.div`
   > * {

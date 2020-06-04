@@ -6,7 +6,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 
 import Card from '../../../components/Card';
 import AffiliationHierarchy from '../../../components/institution/AffiliationHierarchy';
-import { RightAlignedButtonWrapper } from '../../../components/styled/Wrappers1';
+import { RightAlignedButtonWrapper } from '../../../components/styled/Wrappers';
 
 const StyledCard = styled(Card)`
   display: grid;

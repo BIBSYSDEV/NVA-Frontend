@@ -9,7 +9,7 @@ import { PublicationStatus } from '../../../types/publication.types';
 import PublicationList from './PublicationList';
 import TabButton from '../../../components/TabButton';
 import useFetchMyPublications from '../../../utils/hooks/useFetchMyPublications';
-import { ProgressWrapper, RightAlignedButtonWrapper } from '../../../components/styled/Wrappers1';
+import { ProgressWrapper, RightAlignedButtonWrapper } from '../../../components/styled/Wrappers';
 
 const StyledContainer = styled.div`
   display: block;

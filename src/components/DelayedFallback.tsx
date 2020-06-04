@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { CircularProgress } from '@material-ui/core';
-import { ProgressWrapper } from './styled/Wrappers1';
+import { ProgressWrapper } from './styled/Wrappers';
 
 const DelayedFallback = () => {
   const [show, setShow] = useState(false);

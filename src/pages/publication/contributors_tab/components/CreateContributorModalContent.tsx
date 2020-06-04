@@ -13,7 +13,7 @@ import {
   ProgressWrapper,
   RightAlignedButtonWrapper,
   NormalTextPreWrapped,
-} from '../../../../components/styled/Wrappers1';
+} from '../../../../components/styled/Wrappers';
 
 const StyledButtonContainer = styled(RightAlignedButtonWrapper)`
   margin-top: 1rem;

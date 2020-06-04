@@ -5,7 +5,7 @@ import { Authority } from '../../../types/authority.types';
 import AddContributorModalContent from './components/AddContributorModalContent';
 import { Button } from '@material-ui/core';
 import CreateContributorModalContent from './components/CreateContributorModalContent';
-import { RightAlignedButtonWrapper } from '../../../components/styled/Wrappers1';
+import { RightAlignedButtonWrapper } from '../../../components/styled/Wrappers';
 
 interface AddContributorModalProps {
   onAuthorSelected: (author: Authority) => void;

@@ -17,7 +17,7 @@ import NormalText from '../../../components/NormalText';
 import { licenses } from '../../../types/file.types';
 import useFetchPublication from '../../../utils/hooks/useFetchPublication';
 import { getNpiDiscipline } from '../../../utils/npiDisciplines';
-import { NormalTextPreWrapped } from '../../../components/styled/Wrappers1';
+import { NormalTextPreWrapped } from '../../../components/styled/Wrappers';
 
 const StyledContentWrapper = styled.div`
   display: flex;

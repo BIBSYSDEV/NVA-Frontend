@@ -21,7 +21,7 @@ import { PanelProps } from './PublicationFormContent';
 import { NotificationVariant } from '../../types/notification.types';
 import { autoHideNotificationDuration } from '../../utils/constants';
 import { File } from '../../types/file.types';
-import { NormalTextPreWrapped } from '../../components/styled/Wrappers1';
+import { NormalTextPreWrapped } from '../../components/styled/Wrappers';
 
 const StyledUploadedFiles = styled(Card)`
   display: flex;

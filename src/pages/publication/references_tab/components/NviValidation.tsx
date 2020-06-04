@@ -6,7 +6,7 @@ import CancelIcon from '@material-ui/icons/Cancel';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import Card from '../../../../components/Card';
 import SubHeading from '../../../../components/SubHeading';
-import { NormalTextPreWrapped } from '../../../../components/styled/Wrappers1';
+import { NormalTextPreWrapped } from '../../../../components/styled/Wrappers';
 
 const StyledNviValidation = styled(Card)`
   margin-top: 1rem;
