@@ -10,8 +10,8 @@ const StyledInformationWrapper = styled.div`
   padding-bottom: 1rem;
 `;
 
-export const InformationWrapper = ({ children, ...rest }: any) => (
-  <StyledInformationWrapper {...rest}>{children}</StyledInformationWrapper>
+export const InformationWrapper = ({ children, ...props }: any) => (
+  <StyledInformationWrapper {...props}>{children}</StyledInformationWrapper>
 );
 
 const StyledProgressWrapper = styled.div`
@@ -21,6 +21,15 @@ const StyledProgressWrapper = styled.div`
   padding: 2rem;
 `;
 
-export const ProgressWrapper = ({ children, ...rest }: any) => (
-  <StyledProgressWrapper {...rest}>{children}</StyledProgressWrapper>
+export const ProgressWrapper = ({ children, ...props }: any) => (
+  <StyledProgressWrapper {...props}>{children}</StyledProgressWrapper>
+);
+
+const StyledRightAlignedButtonWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
+
+export const RightAlignedButtonWrapper = ({ children, ...props }: any) => (
+  <StyledRightAlignedButtonWrapper {...props}>{children}</StyledRightAlignedButtonWrapper>
 );

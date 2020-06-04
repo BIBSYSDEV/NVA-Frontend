@@ -8,7 +8,7 @@ import NormalText from '../../../../components/NormalText';
 import SubHeading from '../../../../components/SubHeading';
 import AuthorityList from '../../../user/authority/AuthorityList';
 import useFetchAuthorities from '../../../../utils/hooks/useFetchAuthorities';
-import { ProgressWrapper } from '../../../../components/styled/wrappers';
+import { ProgressWrapper } from '../../../../components/styled/Wrappers';
 
 const StyledButtonContainer = styled.div`
   display: flex;

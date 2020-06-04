@@ -5,7 +5,7 @@ import Heading from '../../components/Heading';
 import NormalText from '../../components/NormalText';
 
 import Card from '../../components/Card';
-import { InformationWrapper } from '../../components/styled/wrappers';
+import { InformationWrapper } from '../../components/styled/Wrappers';
 
 const StyledHeading = styled(Heading)`
   text-align: center;

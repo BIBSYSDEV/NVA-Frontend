@@ -10,17 +10,12 @@ import { Authority } from '../../../../types/authority.types';
 import { useDispatch } from 'react-redux';
 import { setNotification } from '../../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../../types/notification.types';
-import { ProgressWrapper } from '../../../../components/styled/wrappers';
+import { ProgressWrapper, RightAlignedButtonWrapper } from '../../../../components/styled/Wrappers';
 
 const StyledButtonContainer = styled.div`
   display: flex;
   justify-content: flex-end;
   margin-top: 1rem;
-`;
-
-const StyledSmallButtonContainer = styled.div`
-  display: flex;
-  justify-content: flex-end;
 `;
 
 const StyledDescription = styled(NormalText)`
@@ -63,11 +58,11 @@ const CreateContributorModalContent: FC<CreateContributorModalContentProps> = ({
             <Collapse in={readMore} collapsedHeight="4.5rem">
               <StyledDescription>{t('description_create_authority')}</StyledDescription>
             </Collapse>
-            <StyledSmallButtonContainer>
+            <RightAlignedButtonWrapper>
               <Button color="primary" onClick={toggleReadMore}>
                 {t(readMore ? 'read_less' : 'read_more')}
               </Button>
-            </StyledSmallButtonContainer>
+            </RightAlignedButtonWrapper>
             <Field name="firstName">
               {({ field }: FieldProps) => (
                 <TextField {...field} aria-label="first name" fullWidth label={t('first_name')} variant="outlined" />

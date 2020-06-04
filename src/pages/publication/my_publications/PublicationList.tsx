@@ -20,6 +20,7 @@ import NormalText from '../../../components/NormalText';
 import { Link as RouterLink } from 'react-router-dom';
 import DeletePublicationModal from '../DeletePublicationModal';
 import { getTranslatedLabelForDisplayedRows } from '../../../utils/pagination';
+import Card from '../../../components/Card';
 
 const StyledTableRow = styled(TableRow)`
   background-color: ${(props) => props.theme.palette.box.main};
@@ -64,7 +65,7 @@ const PublicationList: FC<PublicationListProps> = ({ publications }) => {
   };
 
   return (
-    <>
+    <Card>
       <TableContainer>
         <Table>
           <TableHead>
@@ -134,7 +135,7 @@ const PublicationList: FC<PublicationListProps> = ({ publications }) => {
       {openModal && (
         <DeletePublicationModal id={deletePublicationId} title={deletePublicationTitle} setOpenModal={setOpenModal} />
       )}
-    </>
+    </Card>
   );
 };
 

@@ -3,7 +3,6 @@ import Card from '../../components/Card';
 import { Button } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootStore } from './../../redux/reducers/rootReducer';
-import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import Heading from '../../components/Heading';
 
@@ -20,12 +19,7 @@ import { setAuthorityData } from '../../redux/actions/userActions';
 import { NotificationVariant } from '../../types/notification.types';
 import InstitutionCard from './institution/InstitutionCard';
 import ConfirmDialog from '../../components/ConfirmDialog';
-
-const StyledButtonContainer = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 1rem;
-`;
+import { RightAlignedButtonWrapper } from '../../components/styled/Wrappers';
 
 const UserInstitution: FC = () => {
   const authority = useSelector((state: RootStore) => state.user.authority);
@@ -102,7 +96,7 @@ const UserInstitution: FC = () => {
         {openUnitForm ? (
           <SelectInstitution onSubmit={handleSubmit} onClose={toggleUnitForm} />
         ) : (
-          <StyledButtonContainer>
+          <RightAlignedButtonWrapper>
             <Button
               variant="contained"
               color="primary"
@@ -111,7 +105,7 @@ const UserInstitution: FC = () => {
               data-testid="add-new-institution-button">
               {t('organization.add_institution')}
             </Button>
-          </StyledButtonContainer>
+          </RightAlignedButtonWrapper>
         )}
       </Card>
       <ConfirmDialog

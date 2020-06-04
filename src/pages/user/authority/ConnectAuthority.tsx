@@ -10,11 +10,7 @@ import { RootStore } from '../../../redux/reducers/rootReducer';
 import { Authority } from '../../../types/authority.types';
 import NewAuthorityCard from './NewAuthorityCard';
 import AuthorityList from './AuthorityList';
-
-const StyledButtonContainer = styled.div`
-  display: flex;
-  justify-content: flex-end;
-`;
+import { RightAlignedButtonWrapper } from '../../../components/styled/Wrappers';
 
 const StyledAuthorityContainer = styled.div`
   > * {
@@ -72,11 +68,11 @@ export const ConnectAuthority: FC = () => {
               }
               searchTerm={user.name}
             />
-            <StyledButtonContainer>
+            <RightAlignedButtonWrapper>
               <Button color="primary" variant="text" onClick={toggleOpenNewAuthorityCard}>
                 {t('authority.create_own_authority')}
               </Button>
-            </StyledButtonContainer>
+            </RightAlignedButtonWrapper>
             <Button
               data-testid="connect-author-button"
               color="primary"

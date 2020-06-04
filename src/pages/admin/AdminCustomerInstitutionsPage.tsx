@@ -7,16 +7,10 @@ import Card from '../../components/Card';
 import { Button, CircularProgress } from '@material-ui/core';
 import InstitutionList from './InstitutionList';
 import { Link as RouterLink } from 'react-router-dom';
-import styled from 'styled-components';
 import { CustomerInstitution } from '../../types/customerInstitution.types';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
-import { ProgressWrapper } from '../../components/styled/wrappers';
-
-const StyledButtonWrapper = styled.div`
-  display: flex;
-  justify-content: flex-end;
-`;
+import { ProgressWrapper, RightAlignedButtonWrapper } from '../../components/styled/Wrappers';
 
 const AdminCustomerInstitutionsPage: FC = () => {
   const { t } = useTranslation('admin');
@@ -41,7 +35,7 @@ const AdminCustomerInstitutionsPage: FC = () => {
   return (
     <Card>
       <Heading>{t('common:institutions')}</Heading>
-      <StyledButtonWrapper>
+      <RightAlignedButtonWrapper>
         <Button
           color="primary"
           component={RouterLink}
@@ -49,7 +43,7 @@ const AdminCustomerInstitutionsPage: FC = () => {
           data-testid="add-institution-button">
           {t('add_institution')}
         </Button>
-      </StyledButtonWrapper>
+      </RightAlignedButtonWrapper>
       {isLoading ? (
         <ProgressWrapper>
           <CircularProgress />
