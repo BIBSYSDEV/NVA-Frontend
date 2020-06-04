@@ -50,11 +50,7 @@ const ReportForm: FC = () => {
 
       <DoiField />
 
-      <PublisherField
-        fieldName={ReferenceFieldNames.PUBLICATION_CONTEXT}
-        label={t('common:publisher')}
-        placeholder={t('references.search_for_publisher')}
-      />
+      <PublisherField label={t('common:publisher')} placeholder={t('references.search_for_publisher')} />
       <StyledSection>
         <Field name={ReferenceFieldNames.ISBN}>
           {({ field }: FieldProps) => (

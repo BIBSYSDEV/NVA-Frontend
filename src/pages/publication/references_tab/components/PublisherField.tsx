@@ -4,17 +4,19 @@ import PublicationChannelSearch from './PublicationChannelSearch';
 import { PublicationTableNumber } from '../../../../utils/constants';
 import PublisherRow from './PublisherRow';
 import { Publisher, levelMap, FormikPublication } from '../../../../types/publication.types';
-import { PublicationType } from '../../../../types/publicationFieldNames';
+import {
+  PublicationType,
+  contextTypeBaseFieldName,
+  ReferenceFieldNames,
+} from '../../../../types/publicationFieldNames';
 
 interface PublisherFieldProps {
-  fieldName: string;
   publicationTable?: PublicationTableNumber;
   label: string;
   placeholder: string;
 }
 
 const PublisherField: FC<PublisherFieldProps> = ({
-  fieldName,
   publicationTable = PublicationTableNumber.PUBLISHERS,
   label,
   placeholder,
@@ -27,7 +29,7 @@ const PublisherField: FC<PublisherFieldProps> = ({
   };
 
   return (
-    <Field name={fieldName}>
+    <Field name={contextTypeBaseFieldName}>
       {({ field: { name, value }, form: { setFieldValue }, meta: { error } }: FieldProps) => (
         <>
           <PublicationChannelSearch
@@ -42,7 +44,7 @@ const PublisherField: FC<PublisherFieldProps> = ({
                 // Must use global touched variable instead of what is in meta, since meta.touched always will
                 // evaluate to true if it is a object (as in this case). Even though this field will update
                 // the whole object, we only want to show error message if we are missing the title property.
-                <ErrorMessage name={`${fieldName}.title`} />
+                <ErrorMessage name={ReferenceFieldNames.PUBLICATION_CONTEXT_TITLE} />
               ) : (
                 ''
               )

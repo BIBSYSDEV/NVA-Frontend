@@ -34,6 +34,8 @@ export enum DegreeType {
 }
 
 // Enums representing name of fields used by Formik
+export const contextTypeBaseFieldName = 'entityDescription.reference.publicationContext';
+
 export enum ReferenceFieldNames {
   ARTICLE_NUMBER = 'entityDescription.reference.publicationInstance.articleNumber',
   DOI = 'entityDescription.reference.doi',
@@ -43,7 +45,7 @@ export enum ReferenceFieldNames {
   PAGES_FROM = 'entityDescription.reference.publicationInstance.pages.begin',
   PAGES_TO = 'entityDescription.reference.publicationInstance.pages.end',
   PEER_REVIEW = 'entityDescription.reference.publicationInstance.peerReviewed',
-  PUBLICATION_CONTEXT = 'entityDescription.reference.publicationContext',
+  PUBLICATION_CONTEXT_LEVEL = 'entityDescription.reference.publicationContext.level',
   PUBLICATION_CONTEXT_TITLE = 'entityDescription.reference.publicationContext.title',
   PUBLICATION_CONTEXT_TYPE = 'entityDescription.reference.publicationContext.type',
   PUBLICATION_INSTANCE_TYPE = 'entityDescription.reference.publicationInstance.type',
