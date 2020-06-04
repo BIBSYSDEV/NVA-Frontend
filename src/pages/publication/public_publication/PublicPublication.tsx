@@ -11,7 +11,6 @@ import NotFound from '../../errorpages/NotFound';
 import Card from '../../../components/Card';
 import Heading from '../../../components/Heading';
 import { useParams } from 'react-router-dom';
-import { DOI_PREFIX } from '../../../utils/constants';
 import LabelContentRow from '../../../components/LabelContentRow';
 import Label from '../../../components/Label';
 import NormalText from '../../../components/NormalText';
@@ -137,7 +136,7 @@ const PublicPublication: FC = () => {
                 <StyledMainContent>
                   {doi && (
                     <LabelContentRow minimal label={`${t('publication.link_to_publication')}:`}>
-                      <Link href={`${DOI_PREFIX}${doi}`}>{`${DOI_PREFIX}${doi}`}</Link>
+                      <Link href={doi}>{doi}</Link>
                     </LabelContentRow>
                   )}
                   {abstract && (
