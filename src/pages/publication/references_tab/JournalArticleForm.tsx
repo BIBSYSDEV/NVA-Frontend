@@ -49,7 +49,6 @@ const JournalArticleForm: FC = () => {
       <DoiField />
 
       <PublisherField
-        fieldName={ReferenceFieldNames.PUBLICATION_CONTEXT}
         publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
         label={t('references.journal')}
         placeholder={t('references.search_for_journal')}

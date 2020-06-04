@@ -3,7 +3,7 @@ import React, { useEffect, FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { FormikPublication } from '../../types/publication.types';
-import { PublicationType, ReferenceFieldNames } from '../../types/publicationFieldNames';
+import { PublicationType, ReferenceFieldNames, contextTypeBaseFieldName } from '../../types/publicationFieldNames';
 import BookForm from './references_tab/BookForm';
 import ChapterForm from './references_tab/ChapterForm';
 import DegreeForm from './references_tab/DegreeForm';
@@ -29,7 +29,7 @@ const StyledSelectContainer = styled.div`
 
 const ReferencesPanel: FC<PanelProps> = ({ setTouchedFields }) => {
   const { t } = useTranslation('publication');
-  const { values, setFieldTouched, setFieldValue }: FormikProps<FormikPublication> = useFormikContext();
+  const { values, setTouched, setFieldValue, touched }: FormikProps<FormikPublication> = useFormikContext();
   const publicationContextType = values.entityDescription.reference.publicationContext.type;
 
   useEffect(
@@ -38,6 +38,25 @@ const ReferencesPanel: FC<PanelProps> = ({ setTouchedFields }) => {
     [setTouchedFields]
   );
 
+  const onChangeType = (newPublicationContextType: string) => {
+    // Ensure some values are reset when publication type changes
+    setFieldValue(ReferenceFieldNames.SUB_TYPE, '', false);
+    setFieldValue(contextTypeBaseFieldName, { type: newPublicationContextType }, false);
+
+    // Avoid showing potential errors instantly
+    setTouched({
+      ...touched,
+      entityDescription: {
+        ...touched.entityDescription,
+        reference: {
+          ...touched.entityDescription?.reference,
+          publicationContext: {},
+          publicationInstance: {},
+        },
+      },
+    });
+  };
+
   return (
     <>
       <StyledSelectContainer>
@@ -45,13 +64,7 @@ const ReferencesPanel: FC<PanelProps> = ({ setTouchedFields }) => {
           dataTestId="publication-context-type"
           fieldName={ReferenceFieldNames.PUBLICATION_CONTEXT_TYPE}
           options={Object.values(PublicationType)}
-          onChangeType={(newPublicationContextType) => {
-            // Ensure some values are reset when publication type changes
-            setFieldValue(ReferenceFieldNames.SUB_TYPE, '');
-            setFieldValue(ReferenceFieldNames.PUBLICATION_CONTEXT, { type: newPublicationContextType });
-            // Avoid showing potential errors instantly
-            Object.values(ReferenceFieldNames).forEach((fieldName) => setFieldTouched(fieldName, false));
-          }}
+          onChangeType={onChangeType}
         />
       </StyledSelectContainer>
 
