@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import styled from 'styled-components';
 import NormalText from '../NormalText';
 
@@ -11,7 +11,7 @@ const StyledInformationWrapper = styled.div`
   padding-bottom: 1rem;
 `;
 
-export const InformationWrapper = ({ children, ...props }: any) => (
+export const InformationWrapper: FC = ({ children, ...props }: any) => (
   <StyledInformationWrapper {...props}>{children}</StyledInformationWrapper>
 );
 
@@ -22,7 +22,7 @@ const StyledProgressWrapper = styled.div`
   padding: 2rem;
 `;
 
-export const ProgressWrapper = ({ children, ...props }: any) => (
+export const ProgressWrapper: FC = ({ children, ...props }: any) => (
   <StyledProgressWrapper {...props}>{children}</StyledProgressWrapper>
 );
 
@@ -31,7 +31,7 @@ const StyledRightAlignedButtonWrapper = styled.div`
   justify-content: flex-end;
 `;
 
-export const RightAlignedButtonWrapper = ({ children, ...props }: any) => (
+export const RightAlignedButtonWrapper: FC = ({ children, ...props }: any) => (
   <StyledRightAlignedButtonWrapper {...props}>{children}</StyledRightAlignedButtonWrapper>
 );
 
@@ -39,6 +39,6 @@ const StyledNormalTextPreWrapped = styled(NormalText)`
   white-space: pre-wrap;
 `;
 
-export const NormalTextPreWrapped = ({ children, ...props }: any) => (
+export const NormalTextPreWrapped: FC = ({ children, ...props }: any) => (
   <StyledNormalTextPreWrapped {...props}>{children}</StyledNormalTextPreWrapped>
 );
