@@ -8,9 +8,9 @@ import { NotificationVariant } from '../../types/notification.types';
 
 const useFetchMyPublications = (): [PublicationPreview[], boolean] => {
   const dispatch = useDispatch();
-
   const [publications, setPublications] = useState<PublicationPreview[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     const cancelSource = Axios.CancelToken.source();
 
@@ -26,7 +26,10 @@ const useFetchMyPublications = (): [PublicationPreview[], boolean] => {
       }
     };
     fetchMyPublications();
+
+    return () => cancelSource.cancel();
   }, [dispatch]);
+
   return [publications, isLoading];
 };
 
