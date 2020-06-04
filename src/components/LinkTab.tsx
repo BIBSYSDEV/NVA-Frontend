@@ -1,7 +1,11 @@
 import React, { FC } from 'react';
 import { Tab } from '@material-ui/core';
 import { useTheme } from '@material-ui/core/styles';
+import styled from 'styled-components';
 
+const StyledTab = styled(Tab)`
+  margin: auto;
+`;
 interface LinkTabProps {
   error?: boolean;
   href?: string;
@@ -14,9 +18,8 @@ const LinkTab: FC<LinkTabProps> = ({ error, ...rest }) => {
   const styledTab = error ? { color: theme.palette.error.main } : undefined;
 
   return (
-    <Tab
+    <StyledTab
       className={error ? 'error-tab' : undefined}
-      component="a"
       onClick={(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
         event.preventDefault();
       }}

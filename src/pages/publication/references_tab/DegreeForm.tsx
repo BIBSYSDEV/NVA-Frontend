@@ -34,11 +34,7 @@ const DegreeForm: React.FC = () => {
 
       <DoiField />
 
-      <PublisherField
-        fieldName={ReferenceFieldNames.PUBLICATION_CONTEXT}
-        label={t('common:publisher')}
-        placeholder={t('references.search_for_publisher')}
-      />
+      <PublisherField label={t('common:publisher')} placeholder={t('references.search_for_publisher')} />
 
       <StyledHeading>{t('references.series')}</StyledHeading>
       <StyledLabel>{t('references.series_info')}</StyledLabel>

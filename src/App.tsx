@@ -1,11 +1,11 @@
 import Amplify, { Hub } from 'aws-amplify';
 import Axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { getAuthorities, AuthorityQualifiers, addQualifierIdForAuthority } from './api/authorityApi';
+import { AuthorityQualifiers, addQualifierIdForAuthority } from './api/authorityApi';
 import { getCurrentUserAttributes } from './api/userApi';
 import Breadcrumbs from './layout/Breadcrumbs';
 import Footer from './layout/Footer';
@@ -23,6 +23,7 @@ import AppRoutes from './AppRoutes';
 import { setNotification } from './redux/actions/notificationActions';
 import { NotificationVariant } from './types/notification.types';
 import { CircularProgress } from '@material-ui/core';
+import useFetchAuthorities from './utils/hooks/useFetchAuthorities';
 
 const StyledApp = styled.div`
   min-height: 100vh;
@@ -47,7 +48,7 @@ const ProgressContainer = styled.div`
   justify-content: center;
 `;
 
-const App: React.FC = () => {
+const App: FC = () => {
   useEffect(() => {
     const setAxiosHeaders = async () => {
       // Set global config of axios requests
@@ -68,8 +69,8 @@ const App: React.FC = () => {
   const user = useSelector((store: RootStore) => store.user);
   // Authority/Orcid modal should always be opened on first login
   const [showAuthorityOrcidModal, setShowAuthorityOrcidModal] = useState(!localStorage.getItem('previouslyLoggedIn'));
-  const [loadingAuthority, setLoadingAuthority] = useState(true);
   const [isLoadingUser, setIsLoadingUser] = useState(true);
+  const [authorities, isLoadingAuthorities, handleNewSearchTerm] = useFetchAuthorities(user.name);
 
   useEffect(() => {
     if (USE_MOCK_DATA) {
@@ -100,8 +101,13 @@ const App: React.FC = () => {
   }, [dispatch, user.isLoggedIn]);
 
   useEffect(() => {
+    if (user?.name) {
+      handleNewSearchTerm(user.name);
+    }
+  }, [user, handleNewSearchTerm]);
+
+  useEffect(() => {
     const getAuthority = async () => {
-      const authorities = await getAuthorities(user.name, dispatch);
       if (authorities) {
         const filteredAuthorities: Authority[] = authorities.filter((auth: Authority) =>
           auth.feideids.some((id) => id === user.id)
@@ -121,13 +127,12 @@ const App: React.FC = () => {
           dispatch(setPossibleAuthorities(authorities));
           setShowAuthorityOrcidModal(true);
         }
-        setLoadingAuthority(false);
       }
     };
     if (user.name) {
       getAuthority();
     }
-  }, [dispatch, user.name, user.id, user.organizationId]);
+  }, [dispatch, authorities, user.id, user.organizationId, user.name]);
 
   return isLoadingUser ? (
     <ProgressContainer>
@@ -144,7 +149,7 @@ const App: React.FC = () => {
         </StyledContent>
         <Footer />
       </StyledApp>
-      {!loadingAuthority && showAuthorityOrcidModal && <AuthorityOrcidModal authority={user.authority} />}
+      {!isLoadingAuthorities && showAuthorityOrcidModal && <AuthorityOrcidModal authority={user.authority} />}
     </BrowserRouter>
   );
 };

@@ -1,6 +1,7 @@
 import * as LicenseImages from '../resources/images/licenses';
 import { Uppy as UppyType, StrictTypes } from '@uppy/core';
 import { BackendType, BackendTypeNames } from './publication.types';
+import i18n from '../translations/i18n';
 
 export enum LicenseNames {
   CC_BY = 'CC BY',
@@ -12,54 +13,71 @@ export enum LicenseNames {
   CC0 = 'CC0',
 }
 
-export interface LicenseInfo {
-  identifier: LicenseNames;
+interface LicenseInfo {
+  buttonImage: any;
   description: string;
+  identifier: LicenseNames;
   image: any;
+  label: string;
+  link: string;
 }
 
 export const licenses: LicenseInfo[] = [
   {
+    buttonImage: LicenseImages.ccByButton,
+    description: i18n.t('licenses:description.cc_by'),
     identifier: LicenseNames.CC_BY,
     image: LicenseImages.ccByImage,
-    description:
-      'This license lets others distribute, remix, adapt, and build upon your work, even commercially, as long as they credit you for the original creation. This is the most accommodating of licenses offered. Recommended for maximum dissemination and use of licensed materials.',
+    label: i18n.t('licenses:labels.cc_by'),
+    link: i18n.t('licenses:links.cc_by'),
   },
   {
+    buttonImage: LicenseImages.ccBySaButton,
+    description: i18n.t('licenses:description.cc_by_sa'),
     identifier: LicenseNames.CC_BY_SA,
     image: LicenseImages.ccBySaImage,
-    description:
-      'This license lets others remix, adapt, and build upon your work even for commercial purposes, as long as they credit you and license their new creations under the identical terms. This license is often compared to “copyleft” free and open source software licenses. All new works based on yours will carry the same license, so any derivatives will also allow commercial use. This is the license used by Wikipedia, and is recommended for materials that would benefit from incorporating content from Wikipedia and similarly licensed projects. ',
+    label: i18n.t('licenses:labels.cc_by_sa'),
+    link: i18n.t('licenses:links.cc_by_sa'),
   },
   {
+    buttonImage: LicenseImages.ccByNdButton,
+    description: i18n.t('licenses:description.cc_by_nd'),
     identifier: LicenseNames.CC_BY_ND,
     image: LicenseImages.ccByNdImage,
-    description:
-      'This license lets others reuse the work for any purpose, including commercially; however, it cannot be shared with others in adapted form, and credit must be provided to you.',
+    label: i18n.t('licenses:labels.cc_by_nd'),
+    link: i18n.t('licenses:links.cc_by_nd'),
   },
   {
     identifier: LicenseNames.CC_BY_NC,
+    label: i18n.t('licenses:labels.cc_by_nc'),
     image: LicenseImages.ccByNcImage,
-    description:
-      'This license lets others remix, adapt, and build upon your work non-commercially, and although their new works must also acknowledge you and be non-commercial, they don’t have to license their derivative works on the same terms.',
+    buttonImage: LicenseImages.ccByNcButton,
+    description: i18n.t('licenses:description.cc_by_nc'),
+    link: i18n.t('licenses:links.cc_by_nc'),
   },
   {
+    buttonImage: LicenseImages.ccByNcSaButton,
+    description: i18n.t('licenses:description.cc_by_nc_sa'),
     identifier: LicenseNames.CC_BY_NC_SA,
     image: LicenseImages.ccByNcSaImage,
-    description:
-      'This license lets others remix, adapt, and build upon your work non-commercially, as long as they credit you and license their new creations under the identical terms.',
+    label: i18n.t('licenses:labels.cc_by_nc_sa'),
+    link: i18n.t('licenses:links.cc_by_nc_sa'),
   },
   {
+    buttonImage: LicenseImages.ccByNcNdButton,
+    description: i18n.t('licenses:description.cc_by_nc_nd'),
     identifier: LicenseNames.CC_BY_NC_ND,
     image: LicenseImages.ccByNcNdImage,
-    description:
-      'This license is the most restrictive of our six main licenses, only allowing others to download your works and share them with others as long as they credit you, but they can’t change them in any way or use them commercially.',
+    label: i18n.t('licenses:labels.cc_by_nc_nd'),
+    link: i18n.t('licenses:links.cc_by_nc_nd'),
   },
   {
+    buttonImage: LicenseImages.cc0Button,
+    description: i18n.t('licenses:description.cc0'),
     identifier: LicenseNames.CC0,
     image: LicenseImages.cc0Image,
-    description:
-      'CC0 enables scientists, educators, artists and other creators and owners of copyright- or database-protected content to waive those interests in their works and thereby place them as completely as possible in the public domain, so that others may freely build upon, enhance and reuse the works for any purposes without restriction under copyright or database law.',
+    label: i18n.t('licenses:labels.cc0'),
+    link: i18n.t('licenses:links.cc0'),
   },
 ];
 
@@ -71,8 +89,12 @@ interface License extends BackendType {
   link: string;
 }
 
-export interface FileSet extends BackendType {
+interface FileSet extends BackendType {
   files: File[];
+}
+
+export interface PublicationFileSet {
+  fileSet: FileSet;
 }
 
 export interface File extends BackendType {
@@ -96,11 +118,6 @@ export const emptyFile: File = {
   publisherAuthority: false,
   embargoDate: null,
   license: null,
-};
-
-export const emptyFileSet: FileSet = {
-  type: BackendTypeNames.FILE_SET,
-  files: [],
 };
 
 export interface Uppy extends UppyType<StrictTypes> {

@@ -11,6 +11,7 @@ import formikValuesEn from './en/formikValues.json';
 import infopagesEn from './en/infopages.json';
 import institutionEn from './en/institution.json';
 import languagesEn from './en/languages.json';
+import licensesEn from './en/licenses.json';
 import profileEn from './en/profile.json';
 import publicationEn from './en/publication.json';
 import publicationTypesEn from './en/publicationTypes.json';
@@ -26,17 +27,14 @@ import formikValuesNb from './nb/formikValues.json';
 import infopagesNb from './nb/infopages.json';
 import institutionNb from './nb/institution.json';
 import languagesNb from './nb/languages.json';
+import licensesNb from './nb/licenses.json';
 import profileNb from './nb/profile.json';
 import publicationNb from './nb/publication.json';
 import publicationTypesNb from './nb/publicationTypes.json';
 import translationsNb from './nb/translations.json';
 import workListsNb from './nb/workLists.json';
 
-const previousLanguage = localStorage.getItem('i18nextLng');
-export const defaultLanguage =
-  previousLanguage && Object.values(LanguageCodes).includes(previousLanguage as LanguageCodes)
-    ? previousLanguage
-    : LanguageCodes.NORWEGIAN_BOKMAL;
+export const fallbackLanguage = LanguageCodes.NORWEGIAN_BOKMAL;
 
 i18n.use(LanguageDetector).init({
   resources: {
@@ -50,6 +48,7 @@ i18n.use(LanguageDetector).init({
       infopages: infopagesEn,
       institution: institutionEn,
       languages: languagesEn,
+      licenses: licensesEn,
       profile: profileEn,
       publication: publicationEn,
       publicationTypes: publicationTypesEn,
@@ -66,6 +65,7 @@ i18n.use(LanguageDetector).init({
       infopages: infopagesNb,
       institution: institutionNb,
       languages: languagesNb,
+      licenses: licensesNb,
       profile: profileNb,
       publication: publicationNb,
       publicationTypes: publicationTypesNb,
@@ -73,8 +73,7 @@ i18n.use(LanguageDetector).init({
       workLists: workListsNb,
     },
   },
-  lng: defaultLanguage,
-  fallbackLng: defaultLanguage,
+  fallbackLng: fallbackLanguage,
   debug: false,
   ns: ['breadcrumbs', 'common', 'feedback', 'infopages', 'languages', 'profile', 'translations'],
   defaultNS: 'translations',
@@ -84,6 +83,17 @@ i18n.use(LanguageDetector).init({
   react: {
     wait: true,
   },
+});
+
+// Seems like i18next require 4-letter languages for pluralization to work out of box, so we must add our own rules
+// https://github.com/i18next/i18next/issues/1061#issuecomment-395528467
+i18n.services.pluralResolver.addRule('nob', {
+  numbers: [1, 2],
+  plurals: (n: number) => Number(n !== 1),
+});
+i18n.services.pluralResolver.addRule('eng', {
+  numbers: [1, 2],
+  plurals: (n: number) => Number(n !== 1),
 });
 
 export default i18n;

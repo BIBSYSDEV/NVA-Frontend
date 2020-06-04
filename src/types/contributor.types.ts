@@ -23,7 +23,7 @@ export interface Contributor extends BackendType {
 
 export interface Institution extends BackendType {
   id: string;
-  labels: {
+  labels?: {
     [key: string]: string;
   };
 }

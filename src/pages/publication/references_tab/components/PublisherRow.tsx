@@ -1,26 +1,32 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-
 import { Button } from '@material-ui/core';
+import { FormikProps, useFormikContext } from 'formik';
 
 import { Publisher, levelMap, FormikPublication } from '../../../../types/publication.types';
 import Label from '../../../../components/Label';
 import { getPublishers } from '../../../../api/publicationChannelApi';
 import { PublicationTableNumber } from '../../../../utils/constants';
-import { FormikProps, useFormikContext } from 'formik';
 import { ReferenceFieldNames } from '../../../../types/publicationFieldNames';
+import Card from '../../../../components/Card';
+import NormalText from '../../../../components/NormalText';
 
-const StyledPublisherRow = styled.div`
+const StyledPublisherCard = styled(Card)`
   margin: 1rem 0;
   padding: 1rem;
-  background-color: ${({ theme }) => theme.palette.background.default};
   display: grid;
   grid-column-gap: 0.5rem;
   grid-template-areas:
     'titleLabel levelLabel button'
     'title level button';
   grid-template-columns: 7fr 6fr 2fr;
+  align-items: center;
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+    grid-template-areas: 'titleLabel title title' 'levelLabel level level' '. . button';
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
+  }
 `;
 
 const StyledTitle = styled(Label)`
@@ -31,11 +37,11 @@ const StyledLevelLabel = styled(Label)`
   grid-area: levelLabel;
 `;
 
-const StyledTitleText = styled.div`
+const StyledTitleText = styled(NormalText)`
   grid-area: title;
 `;
 
-const StyledLevelText = styled.div`
+const StyledLevelText = styled(NormalText)`
   grid-area: level;
 `;
 
@@ -67,10 +73,10 @@ const PublisherRow: React.FC<PublisherRowProps> = ({ dataTestId, publisher, labe
         const publisherLevel = response?.filter((publisher: Partial<Publisher>) => publisher.title === title)[0]?.level;
         if (publisherLevel) {
           const levelAsEnum = Object.keys(levelMap).find((key) => levelMap[key] === publisherLevel);
-          setFieldValue(`${ReferenceFieldNames.PUBLICATION_CONTEXT}.level`, levelAsEnum);
+          setFieldValue(ReferenceFieldNames.PUBLICATION_CONTEXT_LEVEL, levelAsEnum);
         }
       } else {
-        setFieldValue(`${ReferenceFieldNames.PUBLICATION_CONTEXT}.level`, '');
+        setFieldValue(ReferenceFieldNames.PUBLICATION_CONTEXT_LEVEL, '');
       }
     };
 
@@ -80,7 +86,7 @@ const PublisherRow: React.FC<PublisherRowProps> = ({ dataTestId, publisher, labe
   }, [level, setFieldValue, title]);
 
   return (
-    <StyledPublisherRow data-testid={dataTestId}>
+    <StyledPublisherCard data-testid={dataTestId}>
       <StyledTitle>{label}</StyledTitle>
       <StyledLevelLabel>{t('references.level')}</StyledLevelLabel>
       <StyledTitleText>{title}</StyledTitleText>
@@ -88,7 +94,7 @@ const PublisherRow: React.FC<PublisherRowProps> = ({ dataTestId, publisher, labe
       <StyledButton data-testid="remove-publisher" variant="contained" color="secondary" onClick={onClickDelete}>
         {t('common:remove')}
       </StyledButton>
-    </StyledPublisherRow>
+    </StyledPublisherCard>
   );
 };
 

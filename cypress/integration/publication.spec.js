@@ -41,7 +41,6 @@ describe('Publication', () => {
     });
 
     cy.get('input[type=file]').uploadFile('img.jpg');
-    cy.get('.uppy-StatusBar-actionBtn--upload').click({ force: true });
     cy.get('[data-testid=uploaded-file-card]').should('be.visible');
 
     cy.get('[data-testid=publication-file-start-button]').click({ force: true });

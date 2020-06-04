@@ -1,6 +1,6 @@
 import { CustomerInstitution } from '../types/customerInstitution.types';
 import { getIdToken } from './userApi';
-import Axios from 'axios';
+import Axios, { CancelToken } from 'axios';
 import i18n from '../translations/i18n';
 import { StatusCode } from '../utils/constants';
 
@@ -31,7 +31,7 @@ export const getAllCustomerInstitutions = async () => {
   }
 };
 
-export const getInstitution = async (identifier: string) => {
+export const getCustomerInstitution = async (identifier: string, cancelToken?: CancelToken) => {
   try {
     const idToken = await getIdToken();
     const headers = {
@@ -39,6 +39,7 @@ export const getInstitution = async (identifier: string) => {
     };
     const response = await Axios.get(`${CustomerInstitutionApiPaths.CUSTOMER_INSTITUTION}/${identifier}`, {
       headers,
+      cancelToken,
     });
     if (response.status === StatusCode.OK) {
       return response.data;
@@ -47,10 +48,12 @@ export const getInstitution = async (identifier: string) => {
         error: i18n.t('feedback:error.get_customer'),
       };
     }
-  } catch {
-    return {
-      error: i18n.t('feedback:error.get_customer'),
-    };
+  } catch (error) {
+    if (!Axios.isCancel(error)) {
+      return {
+        error: i18n.t('feedback:error.get_customer'),
+      };
+    }
   }
 };
 

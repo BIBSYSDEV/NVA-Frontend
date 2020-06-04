@@ -20,6 +20,11 @@ const StyledBoxContent = styled.div`
   background-color: ${({ theme }) => theme.palette.box.main};
   padding: 1rem;
   align-items: center;
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+    grid-template-areas: 'authority' 'description' 'create-button' 'cancel-button';
+    grid-template-columns: 1fr;
+    padding: 0;
+  }
 `;
 
 const StyledAuthority = styled.div`
@@ -35,11 +40,17 @@ const StyledDescription = styled.div`
 const StyledButton = styled(Button)`
   grid-area: create-button;
   margin-top: 2rem;
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+    margin-top: 1rem;
+  }
 `;
 
 const StyledCancelButton = styled(Button)`
   grid-area: cancel-button;
   margin-top: 2rem;
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+    margin-top: 1rem;
+  }
 `;
 
 const StyledProgressContainer = styled.div`
@@ -49,6 +60,10 @@ const StyledProgressContainer = styled.div`
   width: 36rem;
   height: 16rem;
   padding: 2rem;
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+    width: auto;
+    height: auto;
+  }
 `;
 
 interface NewAuthorityCardProps {

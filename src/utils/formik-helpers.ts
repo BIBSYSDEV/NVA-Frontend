@@ -7,6 +7,8 @@ import {
 } from '../types/publicationFieldNames';
 import { Contributor } from '../types/contributor.types';
 import { File } from '../types/file.types';
+import { FormikPublication } from '../types/publication.types';
+import deepmerge, { Options } from 'deepmerge';
 
 interface CustomError {
   fieldName: string;
@@ -35,7 +37,7 @@ export const flattenFormikErrors = (
       }
       return {
         fieldName: fieldPath,
-        errorMessage,
+        errorMessage: errorMessage as string,
       };
     })
     .flat();
@@ -52,10 +54,10 @@ export const hasTouchedError = (
 
   return fieldNames.some((fieldName) => {
     const fieldHasError = !!getIn(errors, fieldName);
-    const fieldIsTouched = getIn(touched, fieldName);
+    const fieldIsTouched = !!getIn(touched, fieldName);
     // Touched data can be inconsistent with array of null or undefined elements when adding elements dynamically
-    // to a FieldArray, so check for value to be true explicitly, otherwise any array will also be true
-    return fieldHasError && fieldIsTouched === true;
+    // to a FieldArray, so ensure it is a boolean value
+    return fieldHasError && fieldIsTouched;
   });
 };
 
@@ -93,3 +95,68 @@ export const getAllContributorFields = (contributors: Contributor[]) => {
   }
   return fieldNames;
 };
+
+export const touchedDescriptionTabFields: FormikTouched<FormikPublication> = {
+  entityDescription: {
+    abstract: true,
+    date: {
+      day: true,
+      month: true,
+      year: true,
+    },
+    description: true,
+    language: true,
+    mainTitle: true,
+    npiSubjectHeading: true,
+    tags: true,
+  },
+};
+
+export const touchedReferenceTabFields: FormikTouched<FormikPublication> = {
+  entityDescription: {
+    reference: {
+      publicationContext: {
+        type: true,
+        title: true,
+      },
+      publicationInstance: {
+        type: true,
+        articleNumber: true,
+        issue: true,
+        pages: {
+          begin: true,
+          end: true,
+        },
+        peerReviewed: true,
+        volume: true,
+      },
+    },
+  },
+};
+
+export const touchedContributorTabFields = (contributors: Contributor[]): FormikTouched<FormikPublication> => ({
+  entityDescription: {
+    contributors: contributors.map((contributor) => ({
+      affiliations: [],
+      correspondingAuthor: true,
+      sequence: true,
+      email: contributor.correspondingAuthor,
+    })),
+  },
+});
+
+export const touchedFilesTabFields = (files: File[]): FormikTouched<FormikPublication> => ({
+  fileSet: {
+    files: files.map((file) => ({
+      administrativeAgreement: true,
+      publisherAuthority: !file.administrativeAgreement,
+      embargoDate: !file.administrativeAgreement,
+      license: !file.administrativeAgreement,
+    })),
+  },
+});
+
+export const overwriteArrayMerge = (destinationArray: any[], sourceArray: any[], options?: Options) => sourceArray;
+
+export const mergeTouchedFields = (touchedArray: FormikTouched<FormikPublication>[]) =>
+  deepmerge.all(touchedArray, { arrayMerge: overwriteArrayMerge });

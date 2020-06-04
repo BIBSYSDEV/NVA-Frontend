@@ -1,25 +1,26 @@
-import { FC, ChangeEvent } from 'react';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import React from 'react';
-import { InstitutionUnitBase } from '../../types/institution.types';
-import { TextField, CircularProgress } from '@material-ui/core';
+import React, { FC, ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
+import { TextField, CircularProgress, TextFieldProps } from '@material-ui/core';
 import { FilterOptionsState } from '@material-ui/lab/useAutocomplete';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 
-interface InstitutionAutocompleteProps {
+import { InstitutionUnitBase } from '../../types/institution.types';
+
+interface InstitutionAutocompleteProps extends Pick<TextFieldProps, 'disabled' | 'error' | 'helperText'> {
   institutions: InstitutionUnitBase[];
   onChange: (value: InstitutionUnitBase | null) => void;
   value: InstitutionUnitBase | null;
   isLoading?: boolean;
-  disabled?: boolean;
 }
 
 const InstitutionAutocomplete: FC<InstitutionAutocompleteProps> = ({
+  disabled,
+  error,
+  helperText,
   institutions,
   onChange,
   value = null,
   isLoading = false,
-  disabled = false,
 }) => {
   const { t } = useTranslation('common');
 
@@ -54,11 +55,13 @@ const InstitutionAutocomplete: FC<InstitutionAutocompleteProps> = ({
             ...params.InputProps,
             endAdornment: (
               <>
-                {isLoading && <CircularProgress size={20} />}
+                {isLoading && institutions.length === 0 && <CircularProgress size={20} />}
                 {params.InputProps.endAdornment}
               </>
             ),
           }}
+          error={error}
+          helperText={helperText}
         />
       )}
     />

@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react';
 import { Institution } from '../../../../types/contributor.types';
-import { Button, CircularProgress } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import SelectInstitution from '../../../../components/institution/SelectInstitution';
 import Modal from '../../../../components/Modal';
 import { useFormikContext, FormikProps } from 'formik';
@@ -17,7 +17,6 @@ import { getMostSpecificUnit } from '../../../../utils/institutions-helpers';
 import { useDispatch } from 'react-redux';
 import { setNotification } from '../../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../../types/notification.types';
-import useFetchUnitHierarchy from '../../../../utils/hooks/useFetchUnitHierarchy';
 import AffiliationHierarchy from '../../../../components/institution/AffiliationHierarchy';
 import Card from '../../../../components/Card';
 
@@ -32,10 +31,9 @@ const StyledCard = styled(Card)`
 interface AffiliationsCellProps {
   affiliations: Institution[];
   baseFieldName: string;
-  contributorName: string;
 }
 
-const AffiliationsCell: FC<AffiliationsCellProps> = ({ affiliations, baseFieldName, contributorName }) => {
+const AffiliationsCell: FC<AffiliationsCellProps> = ({ affiliations, baseFieldName }) => {
   const { t } = useTranslation('publication');
   const disptach = useDispatch();
   const { values, setFieldValue }: FormikProps<FormikPublication> = useFormikContext();
@@ -77,7 +75,7 @@ const AffiliationsCell: FC<AffiliationsCellProps> = ({ affiliations, baseFieldNa
     <>
       {affiliations?.map((affiliation) => (
         <StyledCard key={affiliation.id}>
-          <AffiliationElement unitUri={affiliation.id} />
+          <AffiliationHierarchy unitUri={affiliation.id} />
           <Button variant="outlined" size="small" onClick={() => setAffiliationToRemove(affiliation)}>
             <DeleteIcon />
             {t('common:remove')}
@@ -101,10 +99,7 @@ const AffiliationsCell: FC<AffiliationsCellProps> = ({ affiliations, baseFieldNa
       <ConfirmDialog
         open={!!affiliationToRemove}
         title={t('contributors.confirm_remove_affiliation_title')}
-        text={t('contributors.confirm_remove_affiliation_text', {
-          affiliationName: Object.values(affiliationToRemove?.labels ?? {})[0],
-          contributorName: contributorName,
-        })}
+        text={t('contributors.confirm_remove_affiliation_text')}
         onAccept={() => {
           setFieldValue(
             `${baseFieldName}.${SpecificContributorFieldNames.AFFILIATIONS}`,
@@ -115,18 +110,6 @@ const AffiliationsCell: FC<AffiliationsCellProps> = ({ affiliations, baseFieldNa
         onCancel={() => setAffiliationToRemove(null)}
       />
     </>
-  );
-};
-
-interface AffiliationElementProps {
-  unitUri: string;
-}
-
-const AffiliationElement: FC<AffiliationElementProps> = ({ unitUri }) => {
-  const [unit, isLoadingUnitHierarchy] = useFetchUnitHierarchy(unitUri);
-
-  return (
-    <div>{isLoadingUnitHierarchy ? <CircularProgress /> : unit ? <AffiliationHierarchy unit={unit} /> : null}</div>
   );
 };
 

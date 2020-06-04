@@ -8,6 +8,16 @@ import LinkTab from '../../components/LinkTab';
 import { FormikPublication } from '../../types/publication.types';
 import { ReferenceFieldNames, DescriptionFieldNames } from '../../types/publicationFieldNames';
 import { hasTouchedError, getAllFileFields, getAllContributorFields } from '../../utils/formik-helpers';
+import styled from 'styled-components';
+
+const StyledTabs = styled(Tabs)`
+  background-color: ${({ theme }) => theme.overrides.MuiTab.root.background};
+  @media (min-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+    .MuiTabs-flexContainer {
+      justify-content: center;
+    }
+  }
+`;
 
 const a11yProps = (tabDescription: string) => {
   return {
@@ -33,11 +43,17 @@ export const PublicationFormTabs: FC<PublicationFormTabsProps> = ({ handleTabCha
       contributors,
       reference: { doi },
     },
-    fileSet: { files },
+    fileSet: { files = [] },
   } = values;
 
   return (
-    <Tabs variant="fullWidth" value={tabNumber} onChange={handleTabChange} aria-label="navigation" textColor="primary">
+    <StyledTabs
+      aria-label="navigation"
+      onChange={handleTabChange}
+      scrollButtons="auto"
+      textColor="primary"
+      value={tabNumber}
+      variant="scrollable">
       <LinkTab
         label={`1. ${t('heading.description')}`}
         {...a11yProps('description')}
@@ -59,6 +75,6 @@ export const PublicationFormTabs: FC<PublicationFormTabsProps> = ({ handleTabCha
         error={hasTouchedError(errors, touched, getAllFileFields(files))}
       />
       <LinkTab label={`5. ${doi ? t('heading.registration') : t('heading.publishing')}`} {...a11yProps('submission')} />
-    </Tabs>
+    </StyledTabs>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, FC } from 'react';
+import React, { useEffect, FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormikProps, useFormikContext, Field, FieldProps } from 'formik';
 import { FormikPublication } from '../../types/publication.types';
@@ -12,27 +12,34 @@ import SubmissionJournalPublication from './submission_tab/submission_journal';
 import SubmissionDescription from './submission_tab/submission_description';
 import SubmissionFilesAndLicenses from './submission_tab/submission_files_licenses';
 import SubmissionContributors from './submission_tab/submission_contributors';
-import { PublicationType, requiredFieldNames } from '../../types/publicationFieldNames';
+import { PublicationType } from '../../types/publicationFieldNames';
 import Heading from '../../components/Heading';
 import SubHeading from '../../components/SubHeading';
 import Card from '../../components/Card';
-import { useHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
 import LabelContentRow from '../../components/LabelContentRow';
 import ErrorSummary from './submission_tab/ErrorSummary';
-import { DOI_PREFIX } from '../../utils/constants';
 import { publishPublication } from '../../api/publicationApi';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import ButtonWithProgress from '../../components/ButtonWithProgress';
+import {
+  touchedFilesTabFields,
+  touchedContributorTabFields,
+  touchedDescriptionTabFields,
+  touchedReferenceTabFields,
+  mergeTouchedFields,
+} from '../../utils/formik-helpers';
+import { PanelProps } from './PublicationFormContent';
+import { RootStore } from '../../redux/reducers/rootReducer';
 
 const StyledButtonGroupContainer = styled.div`
   margin-bottom: 1rem;
 `;
 
-const StyledButtonContainer = styled.div`
+const StyledButton = styled(Button)`
   display: inline-block;
-  margin-top: 1rem;
   margin-right: 0.5rem;
 `;
 
@@ -40,27 +47,32 @@ enum PublishSettingFieldName {
   SHOULD_CREATE_DOI = 'shouldCreateDoi',
 }
 
-interface SubmissionPanelProps {
+interface SubmissionPanelProps extends PanelProps {
   isSaving: boolean;
   savePublication: (values: FormikPublication) => void;
 }
 
-const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication }) => {
+const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication, setTouchedFields }) => {
+  const user = useSelector((store: RootStore) => store.user);
   const { t } = useTranslation('publication');
-  const { setFieldTouched, setFieldValue, values, isValid }: FormikProps<FormikPublication> = useFormikContext();
+  const { setFieldValue, values, isValid }: FormikProps<FormikPublication> = useFormikContext();
   const history = useHistory();
   const dispatch = useDispatch();
-  const { reference } = values.entityDescription;
+  const {
+    entityDescription: { contributors, reference },
+    fileSet: { files },
+  } = values;
   const publicationContextType = reference.publicationContext.type;
 
-  const valuesRef = useRef(values);
   useEffect(() => {
-    valuesRef.current = values;
-  }, [values]);
-
-  useEffect(() => {
-    requiredFieldNames.forEach((fieldName) => setFieldTouched(fieldName));
-  }, [setFieldTouched]);
+    const touchedForm = mergeTouchedFields([
+      touchedDescriptionTabFields,
+      touchedReferenceTabFields,
+      touchedContributorTabFields(contributors),
+      touchedFilesTabFields(files),
+    ]);
+    setTouchedFields(touchedForm);
+  }, [setTouchedFields, contributors, files]);
 
   const onClickPublish = async () => {
     await savePublication(values);
@@ -70,6 +82,14 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication }
     } else {
       history.push(`/publication/${values.identifier}/public`);
     }
+  };
+
+  const onClickCreateDoi = () => {
+    // TODO: create doi here
+  };
+
+  const onClickRejectDoi = () => {
+    // TODO: reject doi here
   };
 
   return (
@@ -87,9 +107,7 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication }
             {publicationContextType && t(`publicationTypes:${publicationContextType}`)}
           </LabelContentRow>
           {reference.doi && (
-            <LabelContentRow label={t('publication.link_to_publication')}>
-              {`${DOI_PREFIX}${reference.doi}`}
-            </LabelContentRow>
+            <LabelContentRow label={t('publication.link_to_publication')}>{reference.doi}</LabelContentRow>
           )}
           {publicationContextType === PublicationType.BOOK && <SubmissionBook />}
           {publicationContextType === PublicationType.DEGREE && <SubmissionDegree />}
@@ -125,17 +143,33 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication }
         </Card>
       </Card>
       <StyledButtonGroupContainer>
-        <StyledButtonContainer>
-          <Button color="primary" variant="contained" onClick={onClickPublish} disabled={isSaving || !isValid}>
+        {/* TODO: need to check if the author also has made a request for doi in the conditional below */}
+        {user.isCurator ? (
+          <>
+            <StyledButton
+              color="primary"
+              variant="contained"
+              onClick={onClickCreateDoi}
+              disabled={isSaving || !isValid}>
+              {t('common:create_doi')}
+            </StyledButton>
+            <StyledButton
+              color="secondary"
+              variant="outlined"
+              onClick={onClickRejectDoi}
+              disabled={isSaving || !isValid}>
+              {t('common:reject_doi')}
+            </StyledButton>
+          </>
+        ) : (
+          <StyledButton color="primary" variant="contained" onClick={onClickPublish} disabled={isSaving || !isValid}>
             {t('common:publish')}
-          </Button>
-        </StyledButtonContainer>
+          </StyledButton>
+        )}
 
-        <StyledButtonContainer>
-          <ButtonWithProgress isLoading={isSaving} onClick={() => savePublication(values)}>
-            {t('common:save')}
-          </ButtonWithProgress>
-        </StyledButtonContainer>
+        <ButtonWithProgress isLoading={isSaving} onClick={() => savePublication(values)}>
+          {t('common:save')}
+        </ButtonWithProgress>
       </StyledButtonGroupContainer>
     </>
   );

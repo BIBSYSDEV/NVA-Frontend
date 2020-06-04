@@ -1,36 +1,26 @@
-import { Form, Formik, FormikProps, yupToFormErrors, validateYupSchema } from 'formik';
 import React, { FC, useEffect, useState } from 'react';
+import { Form, Formik, FormikProps, yupToFormErrors, validateYupSchema } from 'formik';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { emptyPublication, FormikPublication, PublicationStatus } from '../../types/publication.types';
-import { createUppy } from '../../utils/uppy-config';
-import ContributorsPanel from './ContributorsPanel';
-import DescriptionPanel from './DescriptionPanel';
-import FilesAndLicensePanel from './FilesAndLicensePanel';
+import deepmerge from 'deepmerge';
+import { CircularProgress, Button } from '@material-ui/core';
+
+import { emptyPublication, FormikPublication, PublicationTab } from '../../types/publication.types';
 import { PublicationFormTabs } from './PublicationFormTabs';
-import ReferencesPanel from './ReferencesPanel';
-import SubmissionPanel from './SubmissionPanel';
-import { emptyFile, Uppy, emptyFileSet } from '../../types/file.types';
-import { getPublication, updatePublication } from '../../api/publicationApi';
-import { useDispatch } from 'react-redux';
+import { updatePublication } from '../../api/publicationApi';
+import { useDispatch, useSelector } from 'react-redux';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
-import deepmerge from 'deepmerge';
 import { publicationValidationSchema } from './PublicationFormValidationSchema';
-import { Button, CircularProgress } from '@material-ui/core';
 import RouteLeavingGuard from '../../components/RouteLeavingGuard';
-import { useHistory } from 'react-router';
 import ButtonWithProgress from '../../components/ButtonWithProgress';
-
-const shouldAllowMultipleFiles = false;
+import { PublicationFormContent } from './PublicationFormContent';
+import { RootStore } from '../../redux/reducers/rootReducer';
+import useFetchPublication from '../../utils/hooks/useFetchPublication';
+import useUppy from '../../utils/hooks/useUppy';
 
 const StyledPublication = styled.div`
   width: 100%;
-`;
-
-const StyledPanel = styled.div`
-  margin-top: 2rem;
-  margin-bottom: 1rem;
 `;
 
 const StyledButtonGroupContainer = styled.div`
@@ -45,63 +35,23 @@ const StyledButtonContainer = styled.div`
 
 interface PublicationFormProps {
   closeForm: () => void;
-  uppy: Uppy;
   identifier?: string;
 }
 
-const PublicationForm: FC<PublicationFormProps> = ({
-  uppy = createUppy(shouldAllowMultipleFiles),
-  identifier,
-  closeForm,
-}) => {
+const PublicationForm: FC<PublicationFormProps> = ({ identifier, closeForm }) => {
+  const user = useSelector((store: RootStore) => store.user);
   const { t } = useTranslation('publication');
-  const [tabNumber, setTabNumber] = useState(0);
-  const [initialValues, setInitialValues] = useState(emptyPublication);
-  const [isLoading, setIsLoading] = useState(!!identifier);
+  const [tabNumber, setTabNumber] = useState(user.isCurator ? PublicationTab.Submission : PublicationTab.Description);
   const [isSaving, setIsSaving] = useState(false);
   const dispatch = useDispatch();
-  const history = useHistory();
+  const uppy = useUppy();
+  const [publication, isLoadingPublication, handleSetPublication] = useFetchPublication(identifier, true);
 
   useEffect(() => {
-    return () => uppy && uppy.reset();
-  }, [uppy]);
-
-  useEffect(() => {
-    const getPublicationById = async (id: string) => {
-      const files = Object.values(uppy.getState().files).map((file) => ({
-        ...emptyFile,
-        identifier: file.response?.uploadURL ?? file.id,
-        name: file.name,
-        mimeType: file.type ?? '',
-        size: file.size,
-      }));
-
-      const publication = await getPublication(id);
-
-      if (publication.error) {
-        closeForm();
-        dispatch(setNotification(publication.error, NotificationVariant.Error));
-      } else if (publication.status === PublicationStatus.PUBLISHED) {
-        history.push(`/publication/${id}/public`);
-      } else {
-        // TODO: revisit necessity of deepmerge when backend model has all fields
-        setInitialValues(
-          deepmerge(
-            {
-              ...emptyPublication,
-              fileSet: { ...emptyFileSet, files },
-            },
-            publication
-          )
-        );
-        setIsLoading(false);
-      }
-    };
-
-    if (identifier) {
-      getPublicationById(identifier);
+    if (!publication && !isLoadingPublication) {
+      closeForm();
     }
-  }, [identifier, closeForm, dispatch, history, uppy]);
+  }, [closeForm, publication, isLoadingPublication]);
 
   const handleTabChange = (_: React.ChangeEvent<{}>, newTabNumber: number) => {
     setTabNumber(newTabNumber);
@@ -118,7 +68,7 @@ const PublicationForm: FC<PublicationFormProps> = ({
     if (updatedPublication?.error) {
       dispatch(setNotification(updatedPublication.error, NotificationVariant.Error));
     } else {
-      setInitialValues(deepmerge(emptyPublication, updatedPublication));
+      handleSetPublication(deepmerge(emptyPublication, updatedPublication));
       dispatch(setNotification(t('feedback:success.update_publication')));
     }
     setIsSaving(false);
@@ -139,13 +89,13 @@ const PublicationForm: FC<PublicationFormProps> = ({
     return {};
   };
 
-  return isLoading ? (
+  return isLoadingPublication ? (
     <CircularProgress />
   ) : (
     <StyledPublication>
       <Formik
         enableReinitialize
-        initialValues={initialValues}
+        initialValues={publication ?? emptyPublication}
         validate={validateForm}
         onSubmit={(values: FormikPublication) => savePublication(values)}>
         {({ dirty, values, isValid }: FormikProps<FormikPublication>) => (
@@ -157,33 +107,14 @@ const PublicationForm: FC<PublicationFormProps> = ({
             />
             <Form>
               <PublicationFormTabs tabNumber={tabNumber} handleTabChange={handleTabChange} />
-              {tabNumber === 0 && (
-                <StyledPanel>
-                  <DescriptionPanel aria-label="description" />
-                </StyledPanel>
-              )}
-              {tabNumber === 1 && (
-                <StyledPanel aria-label="references">
-                  <ReferencesPanel />
-                </StyledPanel>
-              )}
-              {tabNumber === 2 && (
-                <StyledPanel aria-label="references">
-                  <ContributorsPanel />
-                </StyledPanel>
-              )}
-              {tabNumber === 3 && (
-                <StyledPanel aria-label="files and license">
-                  <FilesAndLicensePanel uppy={uppy} />
-                </StyledPanel>
-              )}
-              {tabNumber === 4 && (
-                <StyledPanel aria-label="submission">
-                  <SubmissionPanel isSaving={isSaving} savePublication={savePublication} />
-                </StyledPanel>
-              )}
+              <PublicationFormContent
+                tabNumber={tabNumber}
+                uppy={uppy}
+                isSaving={isSaving}
+                savePublication={savePublication}
+              />
             </Form>
-            {tabNumber !== 4 && (
+            {tabNumber !== PublicationTab.Submission && (
               <StyledButtonGroupContainer>
                 <StyledButtonContainer>
                   <Button color="primary" variant="contained" onClick={goToNextTab}>

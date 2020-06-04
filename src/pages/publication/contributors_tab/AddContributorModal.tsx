@@ -27,11 +27,9 @@ const AddContributorModal: FC<AddContributorModalProps> = ({
   initialSearchTerm,
 }) => {
   const { t } = useTranslation('publication');
-  const [addedAuthors, setAddedAuthors] = useState<Authority[]>([]);
   const [createNewAuthor, setCreateNewAuthor] = useState(false);
 
   const addAuthor = (author: Authority) => {
-    setAddedAuthors([...addedAuthors, author]);
     toggleModal();
     onAuthorSelected(author);
   };
@@ -53,7 +51,8 @@ const AddContributorModal: FC<AddContributorModalProps> = ({
           : t('contributors.add_author')
       }
       onClose={handleCloseModal}
-      openModal={open}>
+      openModal={open}
+      maxWidth="lg">
       {createNewAuthor ? (
         <CreateContributorModalContent addAuthor={addAuthor} handleCloseModal={handleCloseModal} />
       ) : (

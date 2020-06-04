@@ -13,8 +13,11 @@ export const ErrorMessage = {
   REQUIRED: i18n.t('publication:feedback.required_field'),
   MISSING_CONTRIBUTOR: i18n.t('publication:feedback.minimum_one_contributor'),
   MISSING_FILE: i18n.t('publication:feedback.minimum_one_file'),
+  INVALID_PAGE_INTERVAL: i18n.t('publication:feedback.invalid_page_interval'),
   INVALID_FORMAT: i18n.t('publication:feedback.invalid_format'),
   MUST_BE_FUTURE: i18n.t('publication:feedback.date_must_be_in_future'),
+  MUST_BE_POSITIVE: i18n.t('publication:feedback.must_be_positive'),
+  MUST_BE_MIN_1: i18n.t('publication:feedback.must_be_min_1'),
 };
 
 const contributorValidationSchema = {
@@ -51,19 +54,22 @@ const fileValidationSchema = {
 const journalValidationSchema = {
   type: Yup.string().oneOf(Object.values(JournalArticleType)).required(ErrorMessage.REQUIRED),
   peerReviewed: Yup.boolean().required(ErrorMessage.REQUIRED),
-  articleNumber: Yup.string(),
-  volume: Yup.string(),
-  issue: Yup.string(),
+  articleNumber: Yup.number().typeError(ErrorMessage.INVALID_FORMAT).min(0, ErrorMessage.MUST_BE_POSITIVE),
+  volume: Yup.number().typeError(ErrorMessage.INVALID_FORMAT).min(0, ErrorMessage.MUST_BE_POSITIVE),
+  issue: Yup.number().typeError(ErrorMessage.INVALID_FORMAT).min(0, ErrorMessage.MUST_BE_POSITIVE),
   pages: Yup.object().shape({
-    begin: Yup.string(),
-    end: Yup.string(),
+    begin: Yup.number()
+      .typeError(ErrorMessage.INVALID_FORMAT)
+      .min(0, ErrorMessage.MUST_BE_POSITIVE)
+      .max(Yup.ref('end'), ErrorMessage.INVALID_PAGE_INTERVAL),
+    end: Yup.number().typeError(ErrorMessage.INVALID_FORMAT).min(Yup.ref('begin'), ErrorMessage.INVALID_PAGE_INTERVAL),
   }),
 };
 
 const bookValidationSchema = {
   type: Yup.string().oneOf(Object.values(BookType)).required(ErrorMessage.REQUIRED),
   isbn: Yup.string(),
-  numberOfPages: Yup.string(),
+  numberOfPages: Yup.number().typeError(ErrorMessage.INVALID_FORMAT).min(1, ErrorMessage.MUST_BE_MIN_1),
   textBook: Yup.boolean(),
   peerReviewed: Yup.boolean().required(ErrorMessage.REQUIRED),
 };
@@ -71,7 +77,7 @@ const bookValidationSchema = {
 const reportValidationSchema = {
   type: Yup.string().oneOf(Object.values(ReportType)).required(ErrorMessage.REQUIRED),
   isbn: Yup.string(),
-  numberOfPages: Yup.string(),
+  numberOfPages: Yup.number().typeError(ErrorMessage.INVALID_FORMAT).min(1, ErrorMessage.MUST_BE_MIN_1),
 };
 
 const degreeValidationSchema = {

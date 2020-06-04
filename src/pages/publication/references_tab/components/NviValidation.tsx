@@ -4,26 +4,27 @@ import styled from 'styled-components';
 
 import CancelIcon from '@material-ui/icons/Cancel';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import Card from '../../../../components/Card';
+import SubHeading from '../../../../components/SubHeading';
+import NormalText from '../../../../components/NormalText';
 
-const StyledNviValidation = styled.div`
+const StyledNviValidation = styled(Card)`
   margin-top: 1rem;
   display: grid;
   grid-template-columns: 4rem auto;
   grid-template-areas:
     'icon header'
     'icon information';
-  background-color: ${({ theme }) => theme.palette.background.default};
-  padding: 1rem 0;
+  gap: 1rem;
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+    grid-template-areas: 'header icon' 'information information';
+    grid-template-columns: 4fr 1fr;
+  }
 `;
 
-const StyledNviHeader = styled.div`
-  font-size: 1.5rem;
-  font-weight: bold;
-  grid-area: header;
-`;
-
-const StyledNviInformation = styled.div`
+const StyledNviInformation = styled(NormalText)`
   grid-area: information;
+  white-space: pre-wrap;
 `;
 
 const StyledCheckCircleIcon = styled(CheckCircleIcon)`
@@ -51,7 +52,7 @@ const NviValidation: FC<NviValidationProps> = ({ dataTestId, isPeerReviewed, isR
 
   return (
     <StyledNviValidation data-testid={dataTestId}>
-      <StyledNviHeader>{t('references.nvi_header')}</StyledNviHeader>
+      <SubHeading>{t('references.nvi_header')}</SubHeading>
       {isPeerReviewed ? (
         isRated ? (
           <>
@@ -61,18 +62,13 @@ const NviValidation: FC<NviValidationProps> = ({ dataTestId, isPeerReviewed, isR
         ) : (
           <>
             <StyledCancelIcon />
-            <StyledNviInformation>
-              <div>{t('references.nvi_fail_rated_line1')}</div>
-              <div>{t('references.nvi_fail_rated_line2')}</div>
-            </StyledNviInformation>
+            <StyledNviInformation>{t('references.nvi_fail_not_rated')}</StyledNviInformation>
           </>
         )
       ) : (
         <>
           <StyledCancelIcon />
-          <StyledNviInformation>
-            <div>{t('references.nvi_fail_no_peer_review')}</div>
-          </StyledNviInformation>
+          <StyledNviInformation>{t('references.nvi_fail_no_peer_review')}</StyledNviInformation>
         </>
       )}
     </StyledNviValidation>

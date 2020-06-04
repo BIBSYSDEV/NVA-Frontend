@@ -1,12 +1,11 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
-import { Button, CircularProgress } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 import Card from '../../../components/Card';
 import AffiliationHierarchy from '../../../components/institution/AffiliationHierarchy';
-import useFetchUnitHierarchy from '../../../utils/hooks/useFetchUnitHierarchy';
 
 const StyledCard = styled(Card)`
   display: grid;
@@ -16,6 +15,11 @@ const StyledCard = styled(Card)`
   padding: 0.5rem;
   min-height: 5rem;
   border-radius: 4px;
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+    grid-template-areas: 'text' 'button';
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
 `;
 
 const StyledTextContainer = styled.div`
@@ -36,27 +40,22 @@ interface InstitutionCardProps {
 
 const InstitutionCard: FC<InstitutionCardProps> = ({ orgunitId, setAffiliationIdToRemove }) => {
   const { t } = useTranslation('common');
-  const [unit, isLoadingUnitHierarchy] = useFetchUnitHierarchy(orgunitId);
 
   return (
     <StyledCard data-testid="institution-presentation">
-      {isLoadingUnitHierarchy ? (
-        <CircularProgress />
-      ) : (
-        <>
-          <StyledTextContainer>{unit && <AffiliationHierarchy unit={unit} />}</StyledTextContainer>
-          <StyledButtonContainer>
-            <Button
-              variant="outlined"
-              color="secondary"
-              data-testid={`button-delete-institution-${orgunitId}`}
-              onClick={() => setAffiliationIdToRemove(orgunitId)}>
-              <DeleteIcon />
-              {t('remove')}
-            </Button>
-          </StyledButtonContainer>
-        </>
-      )}
+      <StyledTextContainer>
+        <AffiliationHierarchy unitUri={orgunitId} />
+      </StyledTextContainer>
+      <StyledButtonContainer>
+        <Button
+          variant="outlined"
+          color="secondary"
+          data-testid={`button-delete-institution-${orgunitId}`}
+          onClick={() => setAffiliationIdToRemove(orgunitId)}>
+          <DeleteIcon />
+          {t('remove')}
+        </Button>
+      </StyledButtonContainer>
     </StyledCard>
   );
 };

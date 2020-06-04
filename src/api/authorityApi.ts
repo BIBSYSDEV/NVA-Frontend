@@ -1,11 +1,8 @@
-import Axios from 'axios';
-import { Dispatch } from 'redux';
+import Axios, { CancelToken } from 'axios';
 
-import { setNotification } from '../redux/actions/notificationActions';
 import i18n from '../translations/i18n';
 import { StatusCode } from '../utils/constants';
 import { getIdToken } from './userApi';
-import { NotificationVariant } from '../types/notification.types';
 
 export enum AuthorityApiPaths {
   PERSON = '/person',
@@ -17,37 +14,57 @@ export enum AuthorityQualifiers {
   ORGUNIT_ID = 'orgunitid',
 }
 
-export const getAuthorities = async (name: string, dispatch: Dispatch) => {
-  const url = encodeURI(`${AuthorityApiPaths.PERSON}?name=${name}`);
-
-  // remove when Authorization headers are set for all requests
-  const idToken = await getIdToken();
-  const headers = {
-    Authorization: `Bearer ${idToken}`,
-  };
+export const getAuthority = async (arpId: string, cancelToken?: CancelToken) => {
+  const url = encodeURI(`${AuthorityApiPaths.PERSON}?arpId=${arpId}`);
 
   try {
-    const response = await Axios.get(url, { headers });
+    const response = await Axios.get(url, { cancelToken });
+    if (response.status === StatusCode.OK) {
+      return response.data;
+    } else {
+      return { error: i18n.t('feedback:error.get_authority') };
+    }
+  } catch (error) {
+    if (!Axios.isCancel(error)) {
+      return { error: i18n.t('feedback:error.get_authority') };
+    }
+  }
+};
+
+export const getAuthorities = async (name: string, cancelToken?: CancelToken) => {
+  const url = encodeURI(`${AuthorityApiPaths.PERSON}?name=${name}`);
+
+  try {
+    // remove when Authorization headers are set for all requests
+    const idToken = await getIdToken();
+    const headers = {
+      Authorization: `Bearer ${idToken}`,
+    };
+
+    const response = await Axios.get(url, { headers, cancelToken });
 
     if (response.status === StatusCode.OK) {
       return response.data;
     } else {
-      dispatch(setNotification(i18n.t('feedback:error.get_authorities'), NotificationVariant.Error));
+      return { error: i18n.t('feedback:error.get_authorities') };
     }
-  } catch {
-    dispatch(setNotification(i18n.t('feedback:error.get_authorities'), NotificationVariant.Error));
+  } catch (error) {
+    if (!Axios.isCancel(error)) {
+      return { error: i18n.t('feedback:error.get_authorities') };
+    }
   }
 };
 
 export const createAuthority = async (firstName: string, lastName: string, feideId?: string) => {
   const url = AuthorityApiPaths.PERSON;
 
-  // remove when Authorization headers are set for all requests
-  const idToken = await getIdToken();
-  const headers = {
-    Authorization: `Bearer ${idToken}`,
-  };
   try {
+    // remove when Authorization headers are set for all requests
+    const idToken = await getIdToken();
+    const headers = {
+      Authorization: `Bearer ${idToken}`,
+    };
+
     const response = await Axios.post(url, { invertedname: `${lastName}, ${firstName}` }, { headers });
     if (response.status === StatusCode.OK) {
       if (feideId) {

@@ -1,5 +1,5 @@
 import { Contributor } from './contributor.types';
-import { FileSet } from './file.types';
+import { PublicationFileSet } from './file.types';
 import { LanguageValues } from './language.types';
 import { Project } from './project.types';
 import { PublicationType, JournalArticleType, ReportType, DegreeType, BookType } from './publicationFieldNames';
@@ -24,8 +24,18 @@ export enum BackendTypeNames {
 }
 
 export enum PublicationStatus {
+  DELETED = 'Deleted',
+  DRAFT = 'Draft',
   NEW = 'New',
   PUBLISHED = 'Published',
+}
+
+export enum PublicationTab {
+  Description = 0,
+  Reference = 1,
+  Contributors = 2,
+  FilesAndLicenses = 3,
+  Submission = 4,
 }
 
 export const levelMap: EnumDictionary<string, number | null> = {
@@ -67,13 +77,12 @@ export interface NpiDiscipline {
   mainDiscipline: string;
 }
 
-export interface Publication extends BackendType {
+export interface Publication extends BackendType, PublicationFileSet {
   readonly identifier: string;
   readonly createdDate: string;
   readonly owner: string;
   readonly status: PublicationStatus;
   entityDescription: PublicationEntityDescription;
-  fileSet: FileSet;
   project: Project | null;
 }
 
@@ -169,7 +178,7 @@ const emptyPublicationEntityDescription: PublicationEntityDescription = {
   tags: [],
   npiSubjectHeading: '',
   date: emptyDate,
-  language: LanguageValues.NORWEGIAN_BOKMAL,
+  language: LanguageValues.NONE,
   contributors: [],
   isbn: '',
   numberOfPages: '',

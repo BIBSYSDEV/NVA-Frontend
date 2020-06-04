@@ -11,7 +11,7 @@
     "add_other_contributor": "Add more contributors",
     "author_already_added": "Chosen author is already added",
     "authors": "Authors",
-    "confirm_remove_affiliation_text": "Are you sure you want to remove the affiliation to {{affiliationName}} for {{contributorName}}?",
+    "confirm_remove_affiliation_text": "Are you sure you want to remove this affiliation?",
     "confirm_remove_affiliation_title": "Remove affiliation?",
     "confirm_remove_contributor_text": "Are you sure you want to remove {{contributorName}} from list of contributors?",
     "confirm_remove_contributor_title": "Remove contributor?",
@@ -43,9 +43,12 @@
   },
   "feedback": {
     "invalid_format": "Invalid format",
+    "invalid_page_interval": "Invalid page interval",
     "invalid_url": "Invalid URL",
     "minimum_one_contributor": "You need to have at least one author registered for this publication",
     "minimum_one_file": "You need to have at least one file uploaded for this publication",
+    "must_be_min_1": "Value must be bigger than 1",
+    "must_be_positive": "Value must be positive",
     "date_must_be_in_future": "Date must be in future",
     "required_field": "Required field"
   },
@@ -67,12 +70,15 @@
     },
     "license": "License",
     "licenses": "Licenses",
+    "no_duplicates": "Cannot add \"{{fileName}}\", because a file with the same name already exists",
     "published_version": "Published version",
     "select_version": "Select version",
     "title": "File name",
     "upload_files": "Upload Files",
     "upload_one_file": "Upload %{smart_count} file",
+    "upload_one_more_file": "Upload %{smart_count} more file",
     "upload_x_files": "Upload %{smart_count} files",
+    "upload_x_more_files": "Upload %{smart_count} files",
     "uploaded_size": "Uploaded {{size}} kB"
   },
   "heading": {
@@ -111,10 +117,10 @@
     "number_of_pages": "Total number of pages",
     "nvi_header": "Norwegian Scientific Index - NVI",
     "nvi_success": "This publication can be included in NVI",
-    "nvi_fail_rated_line1": "This publication can not be included in NVI, since selected journal is not at level 1 or 2.",
-    "nvi_fail_rated_line2": "(The journal's level may be changed in the Publication Channel Registry, so the publication can ble included in NVI)",
+    "nvi_fail_not_rated": "This publication can not be included in NVI, since selected journal is not at level 1 or 2. \n\n(The journal's level may be changed in the Publication Channel Registry, so the publication can ble included in NVI)",
     "nvi_fail_no_peer_review": "This publication can not be incuded in NVI, since it's not peer reviewed.",
     "or": "Or",
+    "pages": "Pages",
     "pages_from": "Pages from",
     "pages_to": "to",
     "peer_review": "Is the publication peer reviewed?",
@@ -138,7 +144,9 @@
     "Rejected": "Rejected"
   },
   "submission": {
-    "ask_for_doi": "Ask for DOI for this registration"
+    "ask_for_doi": "Ask for DOI for this registration",
+    "number_of_affiliations": "{{count}} affiliation",
+    "number_of_affiliations_plural": "{{count}} affiliations"
   },
   "modal_unsaved_changes_description": "You have unsaved changes. Are you sure you want to leave this page?",
   "modal_unsaved_changes_heading": "Leave without saving?"

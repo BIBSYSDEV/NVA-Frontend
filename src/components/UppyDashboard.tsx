@@ -11,16 +11,16 @@ const StyledDashboard = styled.div`
   overflow: auto;
 `;
 
-interface FileUploaderProps {
+interface UppyDashboardProps {
   uppy: Uppy;
-  shouldAllowMultipleFiles: boolean;
 }
 
 const uploaderMaxWidthPx = 10000;
 const uploaderMaxHeightPx = 200;
 
-const UppyDashboard: React.FC<FileUploaderProps> = ({ uppy, shouldAllowMultipleFiles }) => {
+const UppyDashboard: React.FC<UppyDashboardProps> = ({ uppy }) => {
   const { t } = useTranslation('publication');
+  const multipleFilesAllowed = (uppy as any).opts.restrictions.maxNumberOfFiles !== 1;
 
   return uppy ? (
     <StyledDashboard>
@@ -34,16 +34,20 @@ const UppyDashboard: React.FC<FileUploaderProps> = ({ uppy, shouldAllowMultipleF
         height={uploaderMaxHeightPx}
         locale={{
           strings: {
-            dropPaste: shouldAllowMultipleFiles
+            dropPaste: multipleFilesAllowed
               ? `${t('files_and_license.drag_files')} %{browse}`
               : `${t('files_and_license.drag_file')} %{browse}`,
             browse: t('files_and_license.browse'),
-            dropHint: shouldAllowMultipleFiles
+            dropHint: multipleFilesAllowed
               ? t('files_and_license.drop_here')
               : t('files_and_license.drop_single_file_here'),
             uploadXFiles: {
               0: t('files_and_license.upload_one_file'),
               1: t('files_and_license.upload_x_files'),
+            },
+            uploadXNewFiles: {
+              0: t('files_and_license.upload_one_more_file'),
+              1: t('files_and_license.upload_x_more_files'),
             },
           },
         }}

@@ -11,7 +11,7 @@
     "add_other_contributor": "Legg til flere",
     "author_already_added": "Valgt forfatter er allerede lagt til",
     "authors": "Forfattere",
-    "confirm_remove_affiliation_text": "Er du sikker på at du ønsker å fjerne tilknytningen til {{affiliationName}} for {{contributorName}}?",
+    "confirm_remove_affiliation_text": "Er du sikker på at du ønsker å fjerne denne tilknytningen?",
     "confirm_remove_affiliation_title": "Fjerne tilknytning?",
     "confirm_remove_contributor_text": "Er du sikker på at du ønsker å fjerne {{contributorName}} fra listen over bidragsytere?",
     "confirm_remove_contributor_title": "Fjerne bidragsyter?",
@@ -43,9 +43,12 @@
   },
   "feedback": {
     "invalid_format": "Ugyldig format",
+    "invalid_page_interval": "Ugyldig sideintervall",
     "invalid_url": "Ugyldig lenke",
     "minimum_one_contributor": "Du må ha minst en forfatter på denne publikasjonen",
     "minimum_one_file": "Du må laste opp minst en fil for denne publikasjonen",
+    "must_be_min_1": "Verdien må være større enn 0",
+    "must_be_positive": "Verdien må være positiv",
     "date_must_be_in_future": "Dato må være i fremtiden",
     "required_field": "Påkrevd felt"
   },
@@ -67,12 +70,15 @@
     },
     "license": "Lisens",
     "licenses": "Lisenser",
+    "no_duplicates": "Kunne ikke legge til \"{{fileName}}\", siden en fil med samme navn allerede finnes",
     "published_version": "Publisert versjon",
     "select_version": "Velg versjon",
     "title": "Filnavn",
     "upload_files": "Last opp filer",
     "upload_one_file": "Last opp %{smart_count} fil",
+    "upload_one_more_file": "Last opp %{smart_count} fil til",
     "upload_x_files": "Last opp %{smart_count} filer",
+    "upload_x_more_files": "Last opp %{smart_count} filer til",
     "uploaded_size": "Lastet opp {{size}} kB"
   },
   "heading": {
@@ -111,10 +117,10 @@
     "number_of_pages": "Totalt antall sider",
     "nvi_header": "Norsk vitenskapsindeks - NVI",
     "nvi_success": "Denne publikasjonen kan inngå i NVI",
-    "nvi_fail_rated_line1": "Denne publikajsonen kan ikke inngå i NVI, da valgt tidsskrift er ikke på nivå 1 eller 2.",
-    "nvi_fail_rated_line2": "(Tidsskriftets nivå i Kanaregisteret kan bli endret, slik at publikasjonen likevel kan inngå i NVI)",
+    "nvi_fail_not_rated": "Denne publikajsonen kan ikke inngå i NVI, da valgt tidsskrift er ikke på nivå 1 eller 2. \n\n(Tidsskriftets nivå i Kanalregisteret kan bli endret, slik at publikasjonen likevel kan inngå i NVI)",
     "nvi_fail_no_peer_review": "Denne publikasjonen kan ikke inngå i NVI, da den ikke er fagfellevurdert.",
     "or": "Eller",
+    "pages": "Sidetall",
     "pages_from": "Sidetall fra",
     "pages_to": "til",
     "peer_review": "Er publikasjonen fagfellevurdert?",
@@ -138,7 +144,9 @@
     "Rejected": "Avvist"
   },
   "submission": {
-    "ask_for_doi": "Be om DOI for denne registreringen (anbefales ikke dersom ressursen allerede har en DOI)"
+    "ask_for_doi": "Be om DOI for denne registreringen (anbefales ikke dersom ressursen allerede har en DOI)",
+    "number_of_affiliations": "{{count}} tilknytning",
+    "number_of_affiliations_plural": "{{count}} tilknytninger"
   },
   "modal_unsaved_changes_description": "Du har gjort endringer som ikke er lagret. Er du sikker på at du vil forlate denne siden?",
   "modal_unsaved_changes_heading": "Forlate siden uten å ha lagret?"

@@ -1,27 +1,15 @@
-import React, { FC, useCallback, useState, useEffect } from 'react';
+import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
 import { Button, CircularProgress } from '@material-ui/core';
 
-import { getAuthorities } from '../../../../api/authorityApi';
-import Label from '../../../../components/Label';
 import SearchBar from '../../../../components/SearchBar';
-import { setNotification } from '../../../../redux/actions/notificationActions';
 import { Authority } from '../../../../types/authority.types';
-import AuthorityCard from '../../../user/authority/AuthorityCard';
 import NormalText from '../../../../components/NormalText';
-import { NotificationVariant } from '../../../../types/notification.types';
 import SubHeading from '../../../../components/SubHeading';
-
-const StyledClickableDiv = styled.div`
-  cursor: pointer;
-  align-items: center;
-  background-color: ${({ theme }) => theme.palette.box.main};
-  padding-right: 0.5rem;
-  margin-bottom: 0.5rem;
-`;
+import AuthorityList from '../../../user/authority/AuthorityList';
+import useFetchAuthorities from '../../../../utils/hooks/useFetchAuthorities';
 
 const StyledButtonContainer = styled.div`
   display: flex;
@@ -36,19 +24,9 @@ const StyledProgressContainer = styled.div`
   padding: 2rem;
 `;
 
-const StyledLabel = styled(Label)`
-  padding: 0.5rem;
-`;
-
 const StyledSubHeading = styled(SubHeading)`
   margin-bottom: 1rem;
 `;
-
-interface SearchSummary {
-  isLoading: boolean;
-  searchTerm: string;
-  results: number;
-}
 
 interface AddContributorModalContentProps {
   addAuthor: (selectedAuthor: Authority) => void;
@@ -56,43 +34,9 @@ interface AddContributorModalContentProps {
 }
 
 const AddContributorModalContent: FC<AddContributorModalContentProps> = ({ addAuthor, initialSearchTerm = '' }) => {
-  const dispatch = useDispatch();
   const { t } = useTranslation('publication');
-
-  const [matchingAuthorities, setMatchingAuthorities] = useState<Authority[]>([]);
   const [selectedAuthor, setSelectedAuthor] = useState<Authority | null>(null);
-  const [searchSummary, setSearchSummary] = useState<SearchSummary>({
-    isLoading: false,
-    searchTerm: '',
-    results: 0,
-  });
-
-  const search = useCallback(
-    async (searchTerm: string) => {
-      setSearchSummary({ isLoading: true, searchTerm, results: 0 });
-      const response = await getAuthorities(searchTerm, dispatch);
-      if (response) {
-        setMatchingAuthorities(response);
-        setSearchSummary({ isLoading: false, searchTerm, results: response.length });
-      } else {
-        dispatch(setNotification(t('feedback:error.get_authorities'), NotificationVariant.Error));
-      }
-    },
-    [dispatch, t]
-  );
-
-  useEffect(() => {
-    // Trigger search if initialSearchTerm is given
-    if (initialSearchTerm) {
-      search(initialSearchTerm);
-    }
-  }, [search, initialSearchTerm]);
-
-  const handleSearch = (searchTerm: string) => {
-    if (searchTerm.length) {
-      search(searchTerm);
-    }
-  };
+  const [authorities, isLoadingAuthorities, handleNewSearchTerm, searchTerm] = useFetchAuthorities(initialSearchTerm);
 
   return (
     <>
@@ -101,30 +45,21 @@ const AddContributorModalContent: FC<AddContributorModalContentProps> = ({ addAu
           {t('publication:contributors.prefilled_name')}: {initialSearchTerm}
         </StyledSubHeading>
       )}
-      <SearchBar handleSearch={handleSearch} resetSearchInput={false} initialSearchTerm={initialSearchTerm} />
-      {searchSummary.isLoading ? (
+      <SearchBar handleSearch={handleNewSearchTerm} resetSearchInput={false} initialSearchTerm={initialSearchTerm} />
+      {isLoadingAuthorities ? (
         <StyledProgressContainer>
           <CircularProgress size={100} />
         </StyledProgressContainer>
-      ) : matchingAuthorities?.length > 0 ? (
+      ) : authorities && authorities.length > 0 ? (
         <>
-          <StyledLabel>
-            {t('profile:authority.search_summary', {
-              searchTerm: searchSummary.searchTerm,
-              results: searchSummary.results,
-            })}
-          </StyledLabel>
-          {matchingAuthorities?.map((authority) => (
-            <StyledClickableDiv
-              data-testid="author-radio-button"
-              key={authority.systemControlNumber}
-              onClick={() => setSelectedAuthor(authority)}>
-              <AuthorityCard
-                authority={authority}
-                isSelected={selectedAuthor?.systemControlNumber === authority.systemControlNumber}
-              />
-            </StyledClickableDiv>
-          ))}
+          {searchTerm && (
+            <AuthorityList
+              authorities={authorities}
+              selectedSystemControlNumber={selectedAuthor?.systemControlNumber}
+              onSelectAuthority={setSelectedAuthor}
+              searchTerm={searchTerm}
+            />
+          )}
           <StyledButtonContainer>
             <Button
               color="primary"
@@ -138,7 +73,7 @@ const AddContributorModalContent: FC<AddContributorModalContentProps> = ({ addAu
           </StyledButtonContainer>
         </>
       ) : (
-        searchSummary.searchTerm && <NormalText>{t('common:no_hits')}</NormalText>
+        searchTerm && <NormalText>{t('common:no_hits')}</NormalText>
       )}
     </>
   );

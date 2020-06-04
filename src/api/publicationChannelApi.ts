@@ -2,7 +2,7 @@ import Axios from 'axios';
 import { PublicationTableNumber } from '../utils/constants';
 
 export enum PublicationChannelApiPaths {
-  SEARCH = '/publication-channel/search',
+  SEARCH = '/channel/search',
 }
 
 export const getPublishers = async (searchTerm: string, publicationTable: PublicationTableNumber) => {
