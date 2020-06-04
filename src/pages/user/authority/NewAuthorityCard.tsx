@@ -9,7 +9,7 @@ import { setAuthorityData } from '../../../redux/actions/userActions';
 import { RootStore } from '../../../redux/reducers/rootReducer';
 import { createAuthority } from '../../../api/authorityApi';
 import { NotificationVariant } from '../../../types/notification.types';
-import { ProgressWrapper, NormalTextPreWrapped } from '../../../components/styled/Wrappers';
+import { ProgressWrapper, NormalTextPreWrapped } from '../../../components/styled/Wrappers1';
 
 const StyledBoxContent = styled.div`
   display: grid;

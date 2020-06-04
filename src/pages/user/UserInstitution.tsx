@@ -19,7 +19,7 @@ import { setAuthorityData } from '../../redux/actions/userActions';
 import { NotificationVariant } from '../../types/notification.types';
 import InstitutionCard from './institution/InstitutionCard';
 import ConfirmDialog from '../../components/ConfirmDialog';
-import { RightAlignedButtonWrapper } from '../../components/styled/Wrappers';
+import { RightAlignedButtonWrapper } from '../../components/styled/Wrappers1';
 
 const UserInstitution: FC = () => {
   const authority = useSelector((state: RootStore) => state.user.authority);

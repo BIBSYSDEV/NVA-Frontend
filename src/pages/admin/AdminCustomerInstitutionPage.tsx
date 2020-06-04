@@ -21,7 +21,7 @@ import useFetchInstitutions from '../../utils/hooks/useFetchInstitutions';
 import InstitutionAutocomplete from '../../components/institution/InstitutionAutocomplete';
 import ButtonWithProgress from '../../components/ButtonWithProgress';
 import { useFetchCustomerInstitution } from '../../utils/hooks/useFetchCustomerInstitution';
-import { RightAlignedButtonWrapper } from '../../components/styled/Wrappers';
+import { RightAlignedButtonWrapper } from '../../components/styled/Wrappers1';
 
 const StyledButtonContainer = styled(RightAlignedButtonWrapper)`
   margin-top: 2rem;

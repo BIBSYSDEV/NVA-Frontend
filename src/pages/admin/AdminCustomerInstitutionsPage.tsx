@@ -10,7 +10,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { CustomerInstitution } from '../../types/customerInstitution.types';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
-import { ProgressWrapper, RightAlignedButtonWrapper } from '../../components/styled/Wrappers';
+import { ProgressWrapper, RightAlignedButtonWrapper } from '../../components/styled/Wrappers1';
 
 const AdminCustomerInstitutionsPage: FC = () => {
   const { t } = useTranslation('admin');
