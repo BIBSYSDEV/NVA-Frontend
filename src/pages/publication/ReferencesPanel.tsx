@@ -38,6 +38,25 @@ const ReferencesPanel: FC<PanelProps> = ({ setTouchedFields }) => {
     [setTouchedFields]
   );
 
+  const onChangeType = (newPublicationContextType: string) => {
+    // Ensure some values are reset when publication type changes
+    setFieldValue(ReferenceFieldNames.SUB_TYPE, '', false);
+    setFieldValue(contextTypeBaseFieldName, { type: newPublicationContextType }, false);
+
+    // Avoid showing potential errors instantly
+    setTouched({
+      ...touched,
+      entityDescription: {
+        ...touched.entityDescription,
+        reference: {
+          ...touched.entityDescription?.reference,
+          publicationContext: {},
+          publicationInstance: {},
+        },
+      },
+    });
+  };
+
   return (
     <>
       <StyledSelectContainer>
@@ -45,24 +64,7 @@ const ReferencesPanel: FC<PanelProps> = ({ setTouchedFields }) => {
           dataTestId="publication-context-type"
           fieldName={ReferenceFieldNames.PUBLICATION_CONTEXT_TYPE}
           options={Object.values(PublicationType)}
-          onChangeType={(newPublicationContextType) => {
-            // Avoid showing potential errors instantly
-            setTouched({
-              ...touched,
-              entityDescription: {
-                ...touched.entityDescription,
-                reference: {
-                  ...touched.entityDescription?.reference,
-                  publicationContext: {},
-                  publicationInstance: {},
-                },
-              },
-            });
-
-            // Ensure some values are reset when publication type changes
-            setFieldValue(ReferenceFieldNames.SUB_TYPE, '');
-            setFieldValue(contextTypeBaseFieldName, { type: newPublicationContextType });
-          }}
+          onChangeType={onChangeType}
         />
       </StyledSelectContainer>
 
