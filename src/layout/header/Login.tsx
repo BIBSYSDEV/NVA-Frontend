@@ -18,7 +18,7 @@ const StyledLoginComponent = styled.div`
 const Login: React.FC = () => {
   const user = useSelector((state: RootStore) => state.user);
   const dispatch = useDispatch();
-  const { t } = useTranslation();
+  const { t } = useTranslation('authorization');
 
   const handleLogin = () => {
     dispatch(login());

@@ -15,13 +15,13 @@ const Forbidden: React.FC = () => {
   const { t } = useTranslation('authorization');
 
   return (
-    <div>
+    <section>
       <Heading>{t('forbidden')}</Heading>
       <NormalText>{t('forbidden_description')}</NormalText>
       <MuiLink component={Link} to="/">
         <StyledLinkText>{t('back_to_home')}</StyledLinkText>
       </MuiLink>
-    </div>
+    </section>
   );
 };
 
