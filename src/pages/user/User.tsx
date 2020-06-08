@@ -85,7 +85,7 @@ const User: FC = () => {
           <Button
             color="primary"
             component={RouterLink}
-            to={`/profile/${user.authority.systemControlNumber}`}
+            to={`/user/${user.authority.systemControlNumber}`}
             data-testid="public-profile-button">
             {t('workLists:go_to_public_profile')}
           </Button>
