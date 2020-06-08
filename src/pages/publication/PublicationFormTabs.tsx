@@ -43,7 +43,7 @@ export const PublicationFormTabs: FC<PublicationFormTabsProps> = ({ handleTabCha
       contributors,
       reference: { doi },
     },
-    fileSet: { files = [] },
+    fileSet: { files },
   } = values;
 
   return (
