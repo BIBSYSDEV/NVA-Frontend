@@ -1,10 +1,10 @@
 import React, { FC, useCallback, useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 
 import AutoSearch from '../../../components/AutoSearch';
 import { Project, CristinProject, CristinProjectFunding } from '../../../types/project.types';
 import { debounce } from '../../../utils/debounce';
 import useFetchProjects from '../../../utils/hooks/useFetchProjects';
+import { BackendTypeNames } from '../../../types/publication.types';
 
 interface ProjectSearchProps {
   dataTestId: string;
@@ -13,8 +13,7 @@ interface ProjectSearchProps {
 }
 
 const ProjectSearch: FC<ProjectSearchProps> = ({ dataTestId, setValueFunction, placeholder }) => {
-  const [searchResults, setSearchResults] = useState<any[]>([]);
-  const dispatch = useDispatch();
+  const [searchResults, setSearchResults] = useState<Project[]>([]);
   const [projects, isLoadingProjects, handleNewSearchTerm] = useFetchProjects('');
 
   const debouncedSearch = useCallback(
@@ -28,13 +27,15 @@ const ProjectSearch: FC<ProjectSearchProps> = ({ dataTestId, setValueFunction, p
     if (projects) {
       setSearchResults(
         projects.map((project: CristinProject) => ({
+          type: BackendTypeNames.RESEARCH_PROJECT,
           id: project.cristinProjectId,
           name: project.titles?.[0]?.title,
           grants: project.fundings.map((funding: CristinProjectFunding) => ({
             id: funding.projectCode,
             source: funding.fundingSourceCode,
-            type: 'Grant',
+            type: BackendTypeNames.GRANT,
           })),
+          approvals: [],
         }))
       );
     }
