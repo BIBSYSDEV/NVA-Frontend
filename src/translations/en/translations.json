@@ -1,6 +1,4 @@
 {
   "list_of_publications": "List of publications",
-  "login": "Log in",
-  "logout": "Log out",
   "results": "{{count}} result for '{{term}}'"
 }
