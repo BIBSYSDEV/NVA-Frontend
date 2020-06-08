@@ -1,10 +1,10 @@
-import React, { FC, useCallback, useState } from 'react';
+import React, { FC, useCallback, useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { searchProjectsByTitle } from '../../../api/projectApi';
 import AutoSearch from '../../../components/AutoSearch';
 import { Project, CristinProject, CristinProjectFunding } from '../../../types/project.types';
 import { debounce } from '../../../utils/debounce';
+import useFetchProjects from '../../../utils/hooks/useFetchProjects';
 
 interface ProjectSearchProps {
   dataTestId: string;
@@ -13,30 +13,32 @@ interface ProjectSearchProps {
 }
 
 const ProjectSearch: FC<ProjectSearchProps> = ({ dataTestId, setValueFunction, placeholder }) => {
-  const [searchResults, setSearchResults] = useState<Project[]>([]);
+  const [searchResults, setSearchResults] = useState<any[]>([]);
   const dispatch = useDispatch();
+  const [projects, isLoadingProjects, handleNewSearchTerm] = useFetchProjects('');
 
   const debouncedSearch = useCallback(
-    debounce(async (searchTerm: string) => {
-      const response = await searchProjectsByTitle(searchTerm, dispatch);
-      if (response) {
-        setSearchResults(
-          response.map((project: CristinProject) => ({
-            id: project.cristinProjectId,
-            name: project.titles?.[0]?.title,
-            grants: project.fundings.map((funding: CristinProjectFunding) => ({
-              id: funding.projectCode,
-              source: funding.fundingSourceCode,
-              type: 'Grant',
-            })),
-          }))
-        );
-      } else {
-        setSearchResults([]);
-      }
+    debounce((searchTerm: string) => {
+      handleNewSearchTerm(searchTerm);
     }),
-    [dispatch]
+    []
   );
+
+  useEffect(() => {
+    if (projects) {
+      setSearchResults(
+        projects.map((project: CristinProject) => ({
+          id: project.cristinProjectId,
+          name: project.titles?.[0]?.title,
+          grants: project.fundings.map((funding: CristinProjectFunding) => ({
+            id: funding.projectCode,
+            source: funding.fundingSourceCode,
+            type: 'Grant',
+          })),
+        }))
+      );
+    }
+  }, [projects]);
 
   return (
     <AutoSearch
