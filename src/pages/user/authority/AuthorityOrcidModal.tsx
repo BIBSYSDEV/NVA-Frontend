@@ -10,27 +10,33 @@ interface AuthorityOrcidModalProps {
   authority: Authority | null;
 }
 
+enum ModalType {
+  AUTHORITY = 'authority',
+  NONE = '',
+  ORCID = 'orcid',
+}
+
 const AuthorityOrcidModal: FC<AuthorityOrcidModalProps> = ({ authority }) => {
-  const [openModal, setOpenModal] = useState('authority');
+  const [openModal, setOpenModal] = useState(ModalType.AUTHORITY);
   const user = useSelector((store: RootStore) => store.user);
 
   const handleNextClick = () => {
     // Set previouslyLoggedIn in localStorage to avoid opening this modal on every login
     localStorage.setItem('previouslyLoggedIn', 'true');
 
-    setOpenModal('orcid');
+    setOpenModal(ModalType.ORCID);
   };
 
   const closeModal = () => {
-    setOpenModal('');
+    setOpenModal(ModalType.NONE);
   };
 
   return (
     <>
-      {openModal === 'authority' && (
+      {openModal === ModalType.AUTHORITY && (
         <AuthorityModal authority={user.authority} closeModal={closeModal} handleNextClick={handleNextClick} />
       )}
-      {openModal === 'orcid' && <OrcidModal closeModal={closeModal} />}
+      {openModal === ModalType.ORCID && <OrcidModal closeModal={closeModal} />}
     </>
   );
 };
