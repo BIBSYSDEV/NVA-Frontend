@@ -1,17 +1,14 @@
-import Axios from 'axios';
-import { Dispatch } from 'redux';
+import Axios, { CancelToken } from 'axios';
 
-import { setNotification } from '../redux/actions/notificationActions';
 import i18n from '../translations/i18n';
 import { StatusCode } from '../utils/constants';
 import { getIdToken } from './userApi';
-import { NotificationVariant } from '../types/notification.types';
 
 export enum ProjectsApiPaths {
   PROJECT = '/project',
 }
 
-export const searchProjectsByTitle = async (query: string, dispatch: Dispatch) => {
+export const searchProjectsByTitle = async (query: string, cancelToken?: CancelToken) => {
   const titleQuery = `title=${encodeURIComponent(query)}`;
   try {
     const idToken = await getIdToken();
@@ -19,13 +16,16 @@ export const searchProjectsByTitle = async (query: string, dispatch: Dispatch) =
       headers: {
         Authorization: `Bearer ${idToken}`,
       },
+      cancelToken,
     });
     if (response.status === StatusCode.OK) {
       return response.data;
     } else {
-      dispatch(setNotification(i18n.t('feedback:error.get_project'), NotificationVariant.Error));
+      return { error: i18n.t('feedback:error.get_project') };
     }
-  } catch {
-    dispatch(setNotification(i18n.t('feedback:error.get_project'), NotificationVariant.Error));
+  } catch (error) {
+    if (!Axios.isCancel(error)) {
+      return { error: i18n.t('feedback:error.get_project') };
+    }
   }
 };
