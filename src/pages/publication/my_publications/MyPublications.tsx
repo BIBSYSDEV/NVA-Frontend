@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Button, CircularProgress, Card } from '@material-ui/core';
+import { Button, CircularProgress } from '@material-ui/core';
 import styled from 'styled-components';
 import { RootStore } from '../../../redux/reducers/rootReducer';
 import { Link as RouterLink } from 'react-router-dom';
@@ -9,6 +9,7 @@ import { PublicationStatus } from '../../../types/publication.types';
 import PublicationList from './PublicationList';
 import TabButton from '../../../components/TabButton';
 import useFetchMyPublications from '../../../utils/hooks/useFetchMyPublications';
+import { StyledProgressWrapper, StyledRightAlignedButtonWrapper } from '../../../components/styled/Wrappers';
 
 const StyledContainer = styled.div`
   display: block;
@@ -16,30 +17,10 @@ const StyledContainer = styled.div`
   margin: 0 2rem 2rem 2rem;
 `;
 
-const StyledButtonWrapper = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  padding: 0 1rem;
-  height: 3rem;
-`;
-
 const StyledTabsContainer = styled.div`
   display: flex;
   justify-content: center;
   padding-top: 2rem;
-  margin: 0 1.5rem;
-`;
-
-const StyledProgressContainer = styled.div`
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 2rem;
-`;
-
-const StyledCard = styled(Card)`
-  margin: 0 1.5rem;
-  width: auto;
 `;
 
 enum Tab {
@@ -63,7 +44,7 @@ const MyPublications: FC = () => {
 
   return (
     <StyledContainer>
-      <StyledButtonWrapper>
+      <StyledRightAlignedButtonWrapper>
         {user.authority && (
           <Button
             color="primary"
@@ -73,7 +54,7 @@ const MyPublications: FC = () => {
             {t('go_to_public_profile')}
           </Button>
         )}
-      </StyledButtonWrapper>
+      </StyledRightAlignedButtonWrapper>
       <StyledTabsContainer>
         <TabButton
           data-testid="unpublished-button"
@@ -89,15 +70,13 @@ const MyPublications: FC = () => {
         </TabButton>
       </StyledTabsContainer>
       {isLoading ? (
-        <StyledProgressContainer>
+        <StyledProgressWrapper>
           <CircularProgress color="primary" size={50} />
-        </StyledProgressContainer>
+        </StyledProgressWrapper>
       ) : (
-        <StyledCard>
-          <PublicationList
-            publications={selectedTab === Tab.Unpublished ? unpublishedPublications : publishedPublications}
-          />
-        </StyledCard>
+        <PublicationList
+          publications={selectedTab === Tab.Unpublished ? unpublishedPublications : publishedPublications}
+        />
       )}
     </StyledContainer>
   );

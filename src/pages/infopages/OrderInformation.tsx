@@ -7,15 +7,7 @@ import { Link as MuiLink } from '@material-ui/core';
 
 import Card from '../../components/Card';
 import { ContactInformation } from '../../utils/constants';
-
-const StyledInformationWrapper = styled.div`
-  width: 60%;
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-    width: 90%;
-  }
-  padding-top: 4rem;
-  padding-bottom: 1rem;
-`;
+import { StyledInformationWrapper } from '../../components/styled/Wrappers';
 
 const StyledHeading = styled(Heading)`
   text-align: center;

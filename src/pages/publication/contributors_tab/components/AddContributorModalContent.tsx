@@ -1,27 +1,17 @@
 import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-
 import { Button, CircularProgress } from '@material-ui/core';
-
 import SearchBar from '../../../../components/SearchBar';
 import { Authority } from '../../../../types/authority.types';
 import NormalText from '../../../../components/NormalText';
 import SubHeading from '../../../../components/SubHeading';
 import AuthorityList from '../../../user/authority/AuthorityList';
 import useFetchAuthorities from '../../../../utils/hooks/useFetchAuthorities';
+import { StyledProgressWrapper, StyledRightAlignedButtonWrapper } from '../../../../components/styled/Wrappers';
 
-const StyledButtonContainer = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 1rem;
-`;
-
-const StyledProgressContainer = styled.div`
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 2rem;
+const StyledButtonContainer = styled(StyledRightAlignedButtonWrapper)`
+  margin: 1rem 0;
 `;
 
 const StyledSubHeading = styled(SubHeading)`
@@ -47,9 +37,9 @@ const AddContributorModalContent: FC<AddContributorModalContentProps> = ({ addAu
       )}
       <SearchBar handleSearch={handleNewSearchTerm} resetSearchInput={false} initialSearchTerm={initialSearchTerm} />
       {isLoadingAuthorities ? (
-        <StyledProgressContainer>
+        <StyledProgressWrapper>
           <CircularProgress size={100} />
-        </StyledProgressContainer>
+        </StyledProgressWrapper>
       ) : authorities && authorities.length > 0 ? (
         <>
           {searchTerm && (

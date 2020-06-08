@@ -17,6 +17,7 @@ import NormalText from '../../../components/NormalText';
 import { licenses } from '../../../types/file.types';
 import useFetchPublication from '../../../utils/hooks/useFetchPublication';
 import { getNpiDiscipline } from '../../../utils/npiDisciplines';
+import { StyledNormalTextPreWrapped } from '../../../components/styled/Wrappers';
 
 const StyledContentWrapper = styled.div`
   display: flex;
@@ -59,9 +60,8 @@ const StyledLicenseLabel = styled(Label)`
   grid-area: label;
 `;
 
-const StyledNormalText = styled(NormalText)`
+const StyledNormalText = styled(StyledNormalTextPreWrapped)`
   grid-area: description;
-  white-space: pre-wrap;
 `;
 
 const StyledTextContainer = styled.div`

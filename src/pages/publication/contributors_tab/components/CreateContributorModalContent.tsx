@@ -4,35 +4,19 @@ import { emptyNewContributor } from '../../../../types/contributor.types';
 import { Collapse, Button, TextField, CircularProgress } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import NormalText from '../../../../components/NormalText';
 import { createAuthority } from '../../../../api/authorityApi';
 import { Authority } from '../../../../types/authority.types';
 import { useDispatch } from 'react-redux';
 import { setNotification } from '../../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../../types/notification.types';
+import {
+  StyledProgressWrapper,
+  StyledRightAlignedButtonWrapper,
+  StyledNormalTextPreWrapped,
+} from '../../../../components/styled/Wrappers';
 
-const StyledButtonContainer = styled.div`
-  display: flex;
-  justify-content: flex-end;
+const StyledButtonContainer = styled(StyledRightAlignedButtonWrapper)`
   margin-top: 1rem;
-`;
-
-const StyledSmallButtonContainer = styled.div`
-  display: flex;
-  justify-content: flex-end;
-`;
-
-const StyledDescription = styled(NormalText)`
-  white-space: pre-wrap;
-`;
-
-const StyledProgressContainer = styled.div`
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  width: 36rem;
-  height: 16rem;
-  padding: 2rem;
 `;
 
 interface CreateContributorModalContentProps {
@@ -62,20 +46,20 @@ const CreateContributorModalContent: FC<CreateContributorModalContentProps> = ({
   return (
     <>
       {loading ? (
-        <StyledProgressContainer>
+        <StyledProgressWrapper>
           <CircularProgress size={100} />
-        </StyledProgressContainer>
+        </StyledProgressWrapper>
       ) : (
         <Formik initialValues={emptyNewContributor} onSubmit={handleSubmit}>
           <Form>
             <Collapse in={readMore} collapsedHeight="4.5rem">
-              <StyledDescription>{t('description_create_authority')}</StyledDescription>
+              <StyledNormalTextPreWrapped>{t('description_create_authority')}</StyledNormalTextPreWrapped>
             </Collapse>
-            <StyledSmallButtonContainer>
+            <StyledRightAlignedButtonWrapper>
               <Button color="primary" onClick={toggleReadMore}>
                 {t(readMore ? 'read_less' : 'read_more')}
               </Button>
-            </StyledSmallButtonContainer>
+            </StyledRightAlignedButtonWrapper>
             <Field name="firstName">
               {({ field }: FieldProps) => (
                 <TextField {...field} aria-label="first name" fullWidth label={t('first_name')} variant="outlined" />

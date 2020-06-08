@@ -21,12 +21,10 @@ import useFetchInstitutions from '../../utils/hooks/useFetchInstitutions';
 import InstitutionAutocomplete from '../../components/institution/InstitutionAutocomplete';
 import ButtonWithProgress from '../../components/ButtonWithProgress';
 import { useFetchCustomerInstitution } from '../../utils/hooks/useFetchCustomerInstitution';
+import { StyledRightAlignedButtonWrapper } from '../../components/styled/Wrappers';
 
-const StyledButtonContainer = styled.div`
+const StyledButtonContainer = styled(StyledRightAlignedButtonWrapper)`
   margin-top: 2rem;
-  margin-right: 1rem;
-  display: flex;
-  justify-content: flex-end;
 `;
 
 const AdminCustomerInstitutionPage: FC = () => {

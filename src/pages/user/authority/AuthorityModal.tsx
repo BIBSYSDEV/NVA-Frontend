@@ -9,14 +9,14 @@ import { RootStore } from '../../../redux/reducers/rootReducer';
 import AuthorityCard from './AuthorityCard';
 import { ConnectAuthority } from './ConnectAuthority';
 import Modal from '../../../components/Modal';
+import { StyledRightAlignedButtonWrapper } from '../../../components/styled/Wrappers';
+import NormalText from '../../../components/NormalText';
 
-const StyledButtonContainer = styled.div`
-  display: flex;
-  justify-content: flex-end;
+const StyledButtonContainer = styled(StyledRightAlignedButtonWrapper)`
   margin-top: 2rem;
 `;
 
-const StyledNormalText = styled.div`
+const StyledNormalText = styled(NormalText)`
   margin-top: 1rem;
 `;
 

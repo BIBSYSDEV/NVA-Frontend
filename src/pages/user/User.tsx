@@ -17,6 +17,7 @@ import UserRoles from './UserRoles';
 import Card from '../../components/Card';
 import Heading from '../../components/Heading';
 import UserInstitution from './UserInstitution';
+import { StyledRightAlignedButtonWrapper } from '../../components/styled/Wrappers';
 
 const StyledUserPage = styled.div`
   display: grid;
@@ -42,10 +43,8 @@ const StyledPrimaryUserInfo = styled.div`
   grid-row-gap: 3rem;
 `;
 
-const StyledButtonWrapper = styled.div`
+const StyledButtonWrapper = styled(StyledRightAlignedButtonWrapper)`
   grid-area: top;
-  display: flex;
-  justify-content: flex-end;
 `;
 
 const User: FC = () => {
