@@ -16,7 +16,6 @@ import { publicationLanguages } from '../../types/language.types';
 import Heading from '../../components/Heading';
 import Card from '../../components/Card';
 import { DescriptionFieldNames } from '../../types/publicationFieldNames';
-import { emptyProject } from '../../types/project.types';
 import { touchedDescriptionTabFields } from '../../utils/formik-helpers';
 import { PanelProps } from './PublicationFormContent';
 import SubHeading from '../../components/SubHeading';
@@ -160,7 +159,7 @@ const DescriptionPanel: FC<PanelProps> = ({ setTouchedFields }) => {
           {({ field: { name, value } }: FieldProps) => (
             <>
               <ProjectSearch
-                setValueFunction={(newValue) => setFieldValue(name, { ...emptyProject, ...newValue })}
+                setValueFunction={(newValue) => setFieldValue(name, newValue)}
                 dataTestId="search_project"
                 placeholder={t('description.search_for_project')}
               />
