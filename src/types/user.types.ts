@@ -35,7 +35,6 @@ export interface User {
   roles: RoleName[];
   application: ApplicationName;
   authority: Authority | null;
-  isLoggedIn: boolean;
   possibleAuthorities: Authority[];
   organizationId: string;
   externalOrcid: string;
@@ -79,7 +78,6 @@ export const emptyUser: User = {
   roles: [],
   application: ApplicationName.NONE,
   authority: null,
-  isLoggedIn: false,
   possibleAuthorities: [],
   organizationId: '',
   externalOrcid: '',

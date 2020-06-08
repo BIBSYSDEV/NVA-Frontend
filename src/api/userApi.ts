@@ -2,7 +2,7 @@ import { Auth } from 'aws-amplify';
 import { CognitoUserSession } from 'amazon-cognito-identity-js';
 import { Dispatch } from 'redux';
 
-import { loginSuccess, logoutSuccess } from '../redux/actions/authActions';
+import { logoutSuccess } from '../redux/actions/authActions';
 import { clearUser, setUser } from '../redux/actions/userActions';
 import i18n from '../translations/i18n';
 import { USE_MOCK_DATA } from '../utils/constants';
@@ -15,7 +15,6 @@ export const login = () => {
   return async (dispatch: Dispatch) => {
     if (USE_MOCK_DATA) {
       dispatch(setUser(mockUser));
-      dispatch(loginSuccess());
     } else {
       Auth.federatedSignIn();
     }

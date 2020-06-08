@@ -1,6 +1,6 @@
 import { ApplicationName, emptyUser, RoleName, User, Affiliation } from '../../types/user.types';
 import { getOrganizationIdByOrganizationNumber } from '../../utils/customers';
-import { AuthActions, LOGIN_SUCCESS, LOGOUT_SUCCESS } from '../actions/authActions';
+import { AuthActions, LOGOUT_SUCCESS } from '../actions/authActions';
 import { OrcidActions, SET_EXTERNAL_ORCID } from '../actions/orcidActions';
 import {
   CLEAR_USER,
@@ -10,7 +10,7 @@ import {
   UserActions,
 } from '../actions/userActions';
 
-export const userReducer = (state: User = emptyUser, action: UserActions | OrcidActions | AuthActions) => {
+export const userReducer = (state: User | null = null, action: UserActions | OrcidActions | AuthActions) => {
   switch (action.type) {
     case CLEAR_USER:
       return {
@@ -31,7 +31,6 @@ export const userReducer = (state: User = emptyUser, action: UserActions | Orcid
         institution: action.user['custom:orgName'],
         roles,
         application: action.user['custom:application'] as ApplicationName,
-        isLoggedIn: true,
         organizationId: getOrganizationIdByOrganizationNumber(action.user['custom:orgNumber']),
         affiliations,
         givenName: action.user.given_name,
@@ -60,16 +59,8 @@ export const userReducer = (state: User = emptyUser, action: UserActions | Orcid
         ...state,
         possibleAuthorities: action.possibleAuthorities,
       };
-    case LOGIN_SUCCESS:
-      return {
-        ...state,
-        isLoggedIn: true,
-      };
     case LOGOUT_SUCCESS:
-      return {
-        ...state,
-        isLoggedIn: false,
-      };
+      return null;
     default:
       return state;
   }

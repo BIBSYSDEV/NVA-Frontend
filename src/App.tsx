@@ -68,24 +68,28 @@ const App: FC = () => {
   const dispatch = useDispatch();
   const user = useSelector((store: RootStore) => store.user);
   const [isLoadingUser, setIsLoadingUser] = useState(true);
-  const [authorities, isLoadingAuthorities, handleNewSearchTerm] = useFetchAuthorities(user.name);
+  const [authorities, isLoadingAuthorities, handleNewSearchTerm] = useFetchAuthorities(user?.name ?? '');
   const [authorityDataUpdated, setAuthorityDataUpdated] = useState(false);
 
   useEffect(() => {
+    console.log('Hi10');
     if (USE_MOCK_DATA) {
       setIsLoadingUser(false);
-      user.isLoggedIn && dispatch(setUser(mockUser));
+      dispatch(setUser(mockUser));
     } else {
-      if (!user.isLoggedIn) {
-        Amplify.configure(awsConfig);
-      }
+      Amplify.configure(awsConfig);
 
       const getUser = async () => {
+        console.log('get user');
         const currentUser = await getCurrentUserAttributes();
-        if (currentUser && !currentUser.error) {
-          dispatch(setUser(currentUser));
-        } else if (currentUser.error && user.isLoggedIn) {
-          dispatch(setNotification(currentUser.error, NotificationVariant.Error));
+        if (currentUser) {
+          console.log('response', currentUser);
+          if (currentUser.error) {
+            dispatch(setNotification(currentUser.error, NotificationVariant.Error));
+          } else {
+            console.log('SET USER DA', currentUser);
+            dispatch(setUser(currentUser));
+          }
         }
         setIsLoadingUser(false);
       };
@@ -97,15 +101,17 @@ const App: FC = () => {
 
       return () => Hub.remove('auth', (data) => hubListener(data, dispatch));
     }
-  }, [dispatch, user.isLoggedIn]);
+  }, [dispatch]);
 
   useEffect(() => {
-    if (user?.name) {
+    console.log('Hi2');
+    if (user?.name && authorities?.length === 0) {
       handleNewSearchTerm(user.name);
     }
-  }, [user, handleNewSearchTerm]);
+  }, [handleNewSearchTerm, authorities, user]);
 
   useEffect(() => {
+    console.log('Hi1');
     const getAuthority = async () => {
       if (authorities) {
         const filteredAuthorities: Authority[] = authorities.filter((auth: Authority) =>
@@ -128,10 +134,10 @@ const App: FC = () => {
         setAuthorityDataUpdated(true);
       }
     };
-    if (user.name) {
+    if (user?.name) {
       getAuthority();
     }
-  }, [dispatch, authorities, user.id, user.organizationId, user.name]);
+  }, [dispatch, authorities, user]);
 
   return isLoadingUser ? (
     <ProgressContainer>
