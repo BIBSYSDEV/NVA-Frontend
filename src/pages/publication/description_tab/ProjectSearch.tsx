@@ -14,7 +14,7 @@ interface ProjectSearchProps {
 
 const ProjectSearch: FC<ProjectSearchProps> = ({ dataTestId, setValueFunction, placeholder }) => {
   const [searchResults, setSearchResults] = useState<Project[]>([]);
-  const [projects, isLoadingProjects, handleNewSearchTerm] = useFetchProjects('');
+  const [projects, , handleNewSearchTerm] = useFetchProjects('');
 
   const debouncedSearch = useCallback(
     debounce((searchTerm: string) => {
