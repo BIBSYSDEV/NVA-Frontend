@@ -26,7 +26,7 @@ const PublicProfile: FC = () => {
   const history = useHistory();
 
   useEffect(() => {
-    history.push(`/user/${arpId}`, { title: authority?.name });
+    history.replace(`/user/${arpId}`, { title: authority?.name });
   }, [history, arpId, authority]);
 
   return (

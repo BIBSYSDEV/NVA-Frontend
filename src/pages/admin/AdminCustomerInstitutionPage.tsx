@@ -41,7 +41,7 @@ const AdminCustomerInstitutionPage: FC = () => {
 
   useEffect(() => {
     if (customerInstitution) {
-      history.push(`/admin-institutions/${customerInstitution.identifier}`, { title: customerInstitution.name });
+      history.replace(`/admin-institutions/${customerInstitution.identifier}`, { title: customerInstitution.name });
     }
   }, [history, customerInstitution]);
 

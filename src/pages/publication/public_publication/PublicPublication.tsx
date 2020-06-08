@@ -114,7 +114,7 @@ const PublicPublication: FC = () => {
   };
 
   useEffect(() => {
-    history.push(`/publication/${identifier}/public`, { title: mainTitle });
+    history.replace(`/publication/${identifier}/public`, { title: mainTitle });
   }, [history, identifier, mainTitle]);
 
   return (

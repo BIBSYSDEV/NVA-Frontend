@@ -56,7 +56,7 @@ const PublicationForm: FC<PublicationFormProps> = ({ identifier, closeForm }) =>
   }, [closeForm, publication, isLoadingPublication]);
 
   useEffect(() => {
-    history.push(`/publication/${identifier}`, { title: publication?.entityDescription?.mainTitle });
+    history.replace(`/publication/${identifier}`, { title: publication?.entityDescription?.mainTitle });
   }, [history, identifier, publication]);
 
   useEffect(() => {
