@@ -21,9 +21,11 @@ const AuthorityOrcidModal: FC<AuthorityOrcidModalProps> = ({ authority }) => {
   const user = useSelector((store: RootStore) => store.user);
 
   useEffect(() => {
-    // Set previouslyLoggedIn in localStorage to avoid opening this modal on every login
-    localStorage.setItem('previouslyLoggedIn', 'true');
-  }, []);
+    if (user.authority) {
+      // Set previouslyLoggedIn in localStorage to avoid opening this modal on every login
+      localStorage.setItem('previouslyLoggedIn', 'true');
+    }
+  }, [user.authority]);
 
   const handleNextClick = () => {
     setOpenModal(ModalType.ORCID);
