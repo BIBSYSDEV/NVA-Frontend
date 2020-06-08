@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { Link as MuiLink } from '@material-ui/core';
@@ -15,7 +15,7 @@ const StyledText = styled(NormalText)`
   margin-top: 1rem;
 `;
 
-const Logout: React.FC = () => {
+const Logout: FC = () => {
   const { t } = useTranslation('authorization');
 
   return (

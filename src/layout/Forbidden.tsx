@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { Link as MuiLink } from '@material-ui/core';
@@ -11,7 +11,7 @@ const StyledLinkText = styled(NormalText)`
   margin-top: 1rem;
 `;
 
-const Forbidden: React.FC = () => {
+const Forbidden: FC = () => {
   const { t } = useTranslation('authorization');
 
   return (

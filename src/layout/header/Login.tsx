@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
@@ -15,7 +15,7 @@ const StyledLoginComponent = styled.div`
   align-items: center;
 `;
 
-const Login: React.FC = () => {
+const Login: FC = () => {
   const user = useSelector((state: RootStore) => state.user);
   const dispatch = useDispatch();
   const { t } = useTranslation('authorization');
