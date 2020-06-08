@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
@@ -16,11 +16,10 @@ const StyledBreadcrumbs = styled.div`
   }
 `;
 
-const Breadcrumbs: React.FC = () => {
-  const location = useLocation();
+const Breadcrumbs: FC = () => {
+  const { pathname, state } = useLocation();
   const { t } = useTranslation('breadcrumbs');
-
-  const pathNames = location.pathname.split('/').filter((x) => x);
+  const pathNames = pathname.split('/').filter((x) => x);
 
   return (
     <>
@@ -30,8 +29,9 @@ const Breadcrumbs: React.FC = () => {
             <MuiLink component={Link} to="/">
               {t('home')}
             </MuiLink>
-            {pathNames.map((pathName, index) => {
-              const translatedValue = t(pathName);
+            {pathNames.map((pathName: string, index: number) => {
+              const isId = pathName.includes('-') && pathName.match('[\\d+]');
+              const translatedValue = isId && state?.title ? state.title : t(pathName);
               const lastBreadcrumb = index === pathNames.length - 1;
               const to = `/${pathNames.slice(0, index + 1).join('/')}`;
               return lastBreadcrumb ? (
