@@ -7,7 +7,7 @@ import { Link as MuiLink } from '@material-ui/core';
 
 import Card from '../../components/Card';
 import { ContactInformation } from '../../utils/constants';
-import { InformationWrapper } from '../../components/styled/Wrappers';
+import { StyledInformationWrapper } from '../../components/styled/Wrappers';
 
 const StyledHeading = styled(Heading)`
   text-align: center;
@@ -22,7 +22,7 @@ const OrderInformation: FC = () => {
   const { t } = useTranslation('infopages');
 
   return (
-    <InformationWrapper data-testid="order-information" aria-label={t('order_information.heading')}>
+    <StyledInformationWrapper data-testid="order-information" aria-label={t('order_information.heading')}>
       <Card>
         <StyledHeading>{t('order_information.heading')}</StyledHeading>
         <NormalText>{t('order_information.description')}</NormalText>
@@ -38,7 +38,7 @@ const OrderInformation: FC = () => {
           </Trans>
         </StyledNormalText>
       </Card>
-    </InformationWrapper>
+    </StyledInformationWrapper>
   );
 };
 

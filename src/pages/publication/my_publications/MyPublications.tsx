@@ -9,7 +9,7 @@ import { PublicationStatus } from '../../../types/publication.types';
 import PublicationList from './PublicationList';
 import TabButton from '../../../components/TabButton';
 import useFetchMyPublications from '../../../utils/hooks/useFetchMyPublications';
-import { ProgressWrapper, RightAlignedButtonWrapper } from '../../../components/styled/Wrappers';
+import { StyledProgressWrapper, StyledRightAlignedButtonWrapper } from '../../../components/styled/Wrappers';
 
 const StyledContainer = styled.div`
   display: block;
@@ -44,7 +44,7 @@ const MyPublications: FC = () => {
 
   return (
     <StyledContainer>
-      <RightAlignedButtonWrapper>
+      <StyledRightAlignedButtonWrapper>
         {user.authority && (
           <Button
             color="primary"
@@ -54,7 +54,7 @@ const MyPublications: FC = () => {
             {t('go_to_public_profile')}
           </Button>
         )}
-      </RightAlignedButtonWrapper>
+      </StyledRightAlignedButtonWrapper>
       <StyledTabsContainer>
         <TabButton
           data-testid="unpublished-button"
@@ -70,9 +70,9 @@ const MyPublications: FC = () => {
         </TabButton>
       </StyledTabsContainer>
       {isLoading ? (
-        <ProgressWrapper>
+        <StyledProgressWrapper>
           <CircularProgress color="primary" size={50} />
-        </ProgressWrapper>
+        </StyledProgressWrapper>
       ) : (
         <PublicationList
           publications={selectedTab === Tab.Unpublished ? unpublishedPublications : publishedPublications}

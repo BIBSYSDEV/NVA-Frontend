@@ -10,12 +10,12 @@ import { useDispatch } from 'react-redux';
 import { setNotification } from '../../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../../types/notification.types';
 import {
-  ProgressWrapper,
-  RightAlignedButtonWrapper,
-  NormalTextPreWrapped,
+  StyledProgressWrapper,
+  StyledRightAlignedButtonWrapper,
+  StyledNormalTextPreWrapped,
 } from '../../../../components/styled/Wrappers';
 
-const StyledButtonContainer = styled(RightAlignedButtonWrapper)`
+const StyledButtonContainer = styled(StyledRightAlignedButtonWrapper)`
   margin-top: 1rem;
 `;
 
@@ -46,20 +46,20 @@ const CreateContributorModalContent: FC<CreateContributorModalContentProps> = ({
   return (
     <>
       {loading ? (
-        <ProgressWrapper>
+        <StyledProgressWrapper>
           <CircularProgress size={100} />
-        </ProgressWrapper>
+        </StyledProgressWrapper>
       ) : (
         <Formik initialValues={emptyNewContributor} onSubmit={handleSubmit}>
           <Form>
             <Collapse in={readMore} collapsedHeight="4.5rem">
-              <NormalTextPreWrapped>{t('description_create_authority')}</NormalTextPreWrapped>
+              <StyledNormalTextPreWrapped>{t('description_create_authority')}</StyledNormalTextPreWrapped>
             </Collapse>
-            <RightAlignedButtonWrapper>
+            <StyledRightAlignedButtonWrapper>
               <Button color="primary" onClick={toggleReadMore}>
                 {t(readMore ? 'read_less' : 'read_more')}
               </Button>
-            </RightAlignedButtonWrapper>
+            </StyledRightAlignedButtonWrapper>
             <Field name="firstName">
               {({ field }: FieldProps) => (
                 <TextField {...field} aria-label="first name" fullWidth label={t('first_name')} variant="outlined" />

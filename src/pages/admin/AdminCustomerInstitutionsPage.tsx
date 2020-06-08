@@ -10,7 +10,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { CustomerInstitution } from '../../types/customerInstitution.types';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
-import { ProgressWrapper, RightAlignedButtonWrapper } from '../../components/styled/Wrappers';
+import { StyledProgressWrapper, StyledRightAlignedButtonWrapper } from '../../components/styled/Wrappers';
 
 const AdminCustomerInstitutionsPage: FC = () => {
   const { t } = useTranslation('admin');
@@ -35,7 +35,7 @@ const AdminCustomerInstitutionsPage: FC = () => {
   return (
     <Card>
       <Heading>{t('common:institutions')}</Heading>
-      <RightAlignedButtonWrapper>
+      <StyledRightAlignedButtonWrapper>
         <Button
           color="primary"
           component={RouterLink}
@@ -43,11 +43,11 @@ const AdminCustomerInstitutionsPage: FC = () => {
           data-testid="add-institution-button">
           {t('add_institution')}
         </Button>
-      </RightAlignedButtonWrapper>
+      </StyledRightAlignedButtonWrapper>
       {isLoading ? (
-        <ProgressWrapper>
+        <StyledProgressWrapper>
           <CircularProgress />
-        </ProgressWrapper>
+        </StyledProgressWrapper>
       ) : (
         <InstitutionList institutions={institutions} />
       )}

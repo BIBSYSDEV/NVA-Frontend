@@ -8,9 +8,9 @@ import NormalText from '../../../../components/NormalText';
 import SubHeading from '../../../../components/SubHeading';
 import AuthorityList from '../../../user/authority/AuthorityList';
 import useFetchAuthorities from '../../../../utils/hooks/useFetchAuthorities';
-import { ProgressWrapper, RightAlignedButtonWrapper } from '../../../../components/styled/Wrappers';
+import { StyledProgressWrapper, StyledRightAlignedButtonWrapper } from '../../../../components/styled/Wrappers';
 
-const StyledButtonContainer = styled(RightAlignedButtonWrapper)`
+const StyledButtonContainer = styled(StyledRightAlignedButtonWrapper)`
   margin: 1rem 0;
 `;
 
@@ -37,9 +37,9 @@ const AddContributorModalContent: FC<AddContributorModalContentProps> = ({ addAu
       )}
       <SearchBar handleSearch={handleNewSearchTerm} resetSearchInput={false} initialSearchTerm={initialSearchTerm} />
       {isLoadingAuthorities ? (
-        <ProgressWrapper>
+        <StyledProgressWrapper>
           <CircularProgress size={100} />
-        </ProgressWrapper>
+        </StyledProgressWrapper>
       ) : authorities && authorities.length > 0 ? (
         <>
           {searchTerm && (

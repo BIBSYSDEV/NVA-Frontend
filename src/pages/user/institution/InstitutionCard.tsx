@@ -6,7 +6,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 
 import Card from '../../../components/Card';
 import AffiliationHierarchy from '../../../components/institution/AffiliationHierarchy';
-import { RightAlignedButtonWrapper } from '../../../components/styled/Wrappers';
+import { StyledRightAlignedButtonWrapper } from '../../../components/styled/Wrappers';
 
 const StyledCard = styled(Card)`
   display: grid;
@@ -27,7 +27,7 @@ const StyledTextContainer = styled.div`
   grid-area: text;
 `;
 
-const StyledButtonContainer = styled(RightAlignedButtonWrapper)`
+const StyledButtonContainer = styled(StyledRightAlignedButtonWrapper)`
   grid-area: button;
   align-items: center;
 `;

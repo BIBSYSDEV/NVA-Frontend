@@ -9,7 +9,7 @@ import { setAuthorityData } from '../../../redux/actions/userActions';
 import { RootStore } from '../../../redux/reducers/rootReducer';
 import { createAuthority } from '../../../api/authorityApi';
 import { NotificationVariant } from '../../../types/notification.types';
-import { ProgressWrapper, NormalTextPreWrapped } from '../../../components/styled/Wrappers';
+import { StyledProgressWrapper, StyledNormalTextPreWrapped } from '../../../components/styled/Wrappers';
 
 const StyledBoxContent = styled.div`
   display: grid;
@@ -32,7 +32,7 @@ const StyledAuthority = styled.div`
   grid-area: authority;
 `;
 
-const StyledDescription = styled(NormalTextPreWrapped)`
+const StyledDescription = styled(StyledNormalTextPreWrapped)`
   grid-area: description;
   margin-left: 0.7rem;
 `;
@@ -81,9 +81,9 @@ const NewAuthorityCard: FC<NewAuthorityCardProps> = ({ onClickCancel }) => {
   return (
     <>
       {loading ? (
-        <ProgressWrapper>
+        <StyledProgressWrapper>
           <CircularProgress size={100} />
-        </ProgressWrapper>
+        </StyledProgressWrapper>
       ) : (
         <StyledBoxContent>
           <StyledAuthority>

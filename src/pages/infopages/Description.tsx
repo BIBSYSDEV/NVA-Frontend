@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import Heading from '../../components/Heading';
 import Card from '../../components/Card';
-import { InformationWrapper, NormalTextPreWrapped } from '../../components/styled/Wrappers';
+import { StyledInformationWrapper, StyledNormalTextPreWrapped } from '../../components/styled/Wrappers';
 
 const StyledHeading = styled(Heading)`
   text-align: center;
@@ -14,12 +14,12 @@ const Description: FC = () => {
   const { t } = useTranslation('infopages');
 
   return (
-    <InformationWrapper data-testid="description" aria-label={t('description.heading')}>
+    <StyledInformationWrapper data-testid="description" aria-label={t('description.heading')}>
       <Card>
         <StyledHeading>{t('description.heading')}</StyledHeading>
-        <NormalTextPreWrapped>{t('description.description')}</NormalTextPreWrapped>
+        <StyledNormalTextPreWrapped>{t('description.description')}</StyledNormalTextPreWrapped>
       </Card>
-    </InformationWrapper>
+    </StyledInformationWrapper>
   );
 };
 

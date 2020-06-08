@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import Heading from '../../components/Heading';
 
 import Card from '../../components/Card';
-import { InformationWrapper, NormalTextPreWrapped } from '../../components/styled/Wrappers';
+import { StyledInformationWrapper, StyledNormalTextPreWrapped } from '../../components/styled/Wrappers';
 
 const StyledHeading = styled(Heading)`
   text-align: center;
@@ -15,12 +15,12 @@ const PrivacyPolicy: FC = () => {
   const { t } = useTranslation('infopages');
 
   return (
-    <InformationWrapper data-testid="privacy-policy" aria-label={t('privacy_policy.heading')}>
+    <StyledInformationWrapper data-testid="privacy-policy" aria-label={t('privacy_policy.heading')}>
       <Card>
         <StyledHeading>{t('privacy_policy.heading')}</StyledHeading>
-        <NormalTextPreWrapped>{t('privacy_policy.description')}</NormalTextPreWrapped>
+        <StyledNormalTextPreWrapped>{t('privacy_policy.description')}</StyledNormalTextPreWrapped>
       </Card>
-    </InformationWrapper>
+    </StyledInformationWrapper>
   );
 };
 
