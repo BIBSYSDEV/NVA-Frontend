@@ -4,20 +4,16 @@ import Axios from 'axios';
 
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
-import { PublicationStatus, emptyPublication, FormikPublication } from '../../types/publication.types';
+import { FormikPublication } from '../../types/publication.types';
 import { getPublication } from '../../api/publicationApi';
-import { useHistory } from 'react-router-dom';
 import { RootStore } from '../../redux/reducers/rootReducer';
-import deepmerge from 'deepmerge';
 
 const useFetchPublication = (
-  identifier: string | undefined,
-  editMode: boolean = false
+  identifier: string | undefined
 ): [FormikPublication | undefined, boolean, (values: FormikPublication) => void] => {
   const dispatch = useDispatch();
   const [publication, setPublication] = useState<FormikPublication>();
   const [isLoading, setIsLoading] = useState(!!identifier);
-  const history = useHistory();
   const user = useSelector((store: RootStore) => store.user);
 
   const handleSetPublication = (values: FormikPublication) => {
@@ -32,12 +28,6 @@ const useFetchPublication = (
       if (publication) {
         if (publication.error) {
           dispatch(setNotification(publication.error, NotificationVariant.Error));
-        } else if (editMode) {
-          if (publication.status === PublicationStatus.PUBLISHED && !user.isCurator) {
-            history.push(`/publication/${identifier}/public`);
-          } else {
-            setPublication(deepmerge(emptyPublication, publication));
-          }
         } else {
           setPublication(publication);
         }
@@ -53,7 +43,7 @@ const useFetchPublication = (
         cancelSource.cancel();
       }
     };
-  }, [dispatch, identifier, editMode, history, user.isCurator]);
+  }, [dispatch, identifier, user.isCurator]);
 
   return [publication, isLoading, handleSetPublication];
 };
