@@ -1,6 +1,6 @@
 import React, { FC, ComponentType } from 'react';
 import { Route, RouteProps } from 'react-router-dom';
-import Forbidden from '../../layout/Forbidden';
+import Forbidden from '../../pages/errorpages/Forbidden';
 
 export interface PrivateRouteProps extends RouteProps {
   component: ComponentType<any>;
