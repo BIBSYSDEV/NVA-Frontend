@@ -131,7 +131,7 @@ const Menu: FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
           {t('profile:my_profile')}
         </StyledMenuItem>
         <StyledMenuItem onClick={handleLogout} data-testid="menu-logout-button">
-          {t('logout')}
+          {t('authorization:logout')}
         </StyledMenuItem>
       </StyledMuiMenu>
     </StyledMenu>

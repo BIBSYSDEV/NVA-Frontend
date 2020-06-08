@@ -67,10 +67,9 @@ const App: FC = () => {
 
   const dispatch = useDispatch();
   const user = useSelector((store: RootStore) => store.user);
-  // Authority/Orcid modal should always be opened on first login
-  const [showAuthorityOrcidModal, setShowAuthorityOrcidModal] = useState(!localStorage.getItem('previouslyLoggedIn'));
   const [isLoadingUser, setIsLoadingUser] = useState(true);
   const [authorities, isLoadingAuthorities, handleNewSearchTerm] = useFetchAuthorities(user.name);
+  const [authorityDataUpdated, setAuthorityDataUpdated] = useState(false);
 
   useEffect(() => {
     if (USE_MOCK_DATA) {
@@ -125,8 +124,8 @@ const App: FC = () => {
           }
         } else {
           dispatch(setPossibleAuthorities(authorities));
-          setShowAuthorityOrcidModal(true);
         }
+        setAuthorityDataUpdated(true);
       }
     };
     if (user.name) {
@@ -149,7 +148,9 @@ const App: FC = () => {
         </StyledContent>
         <Footer />
       </StyledApp>
-      {!isLoadingAuthorities && showAuthorityOrcidModal && <AuthorityOrcidModal authority={user.authority} />}
+      {!localStorage.getItem('previouslyLoggedIn') && !isLoadingAuthorities && authorityDataUpdated && (
+        <AuthorityOrcidModal authority={user.authority} />
+      )}
     </BrowserRouter>
   );
 };

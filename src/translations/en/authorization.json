@@ -1,0 +1,8 @@
+{
+  "back_to_home": "Back to home",
+  "forbidden": "Forbidden",
+  "forbidden_description": "You are not authorized to see the content on this page. Contact the administrator if you think this is wrong.",
+  "logged_out": "You are now logged out",
+  "login": "Log in",
+  "logout": "Log out"
+}
