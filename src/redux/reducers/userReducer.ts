@@ -1,22 +1,11 @@
-import { ApplicationName, emptyUser, RoleName, User, Affiliation } from '../../types/user.types';
+import { ApplicationName, RoleName, User, Affiliation } from '../../types/user.types';
 import { getOrganizationIdByOrganizationNumber } from '../../utils/customers';
 import { AuthActions, LOGOUT_SUCCESS } from '../actions/authActions';
 import { OrcidActions, SET_EXTERNAL_ORCID } from '../actions/orcidActions';
-import {
-  CLEAR_USER,
-  SET_AUTHORITY_DATA,
-  SET_POSSIBLE_AUTHORITIES,
-  SET_USER_SUCCESS,
-  UserActions,
-} from '../actions/userActions';
+import { SET_AUTHORITY_DATA, SET_POSSIBLE_AUTHORITIES, SET_USER_SUCCESS, UserActions } from '../actions/userActions';
 
 export const userReducer = (state: User | null = null, action: UserActions | OrcidActions | AuthActions) => {
   switch (action.type) {
-    case CLEAR_USER:
-      return {
-        ...state,
-        ...emptyUser,
-      };
     case SET_USER_SUCCESS:
       const affiliations = action.user['custom:affiliation']
         .replace(/[[\]]/g, '')

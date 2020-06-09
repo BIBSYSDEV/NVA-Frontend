@@ -3,7 +3,7 @@ import { CognitoUserSession } from 'amazon-cognito-identity-js';
 import { Dispatch } from 'redux';
 
 import { logoutSuccess } from '../redux/actions/authActions';
-import { clearUser, setUser } from '../redux/actions/userActions';
+import { setUser } from '../redux/actions/userActions';
 import i18n from '../translations/i18n';
 import { USE_MOCK_DATA } from '../utils/constants';
 import { mockUser } from '../utils/testfiles/mock_feide_user';
@@ -68,7 +68,6 @@ export const refreshToken = () => {
 export const logout = () => {
   return async (dispatch: Dispatch) => {
     if (USE_MOCK_DATA) {
-      dispatch(clearUser());
       dispatch(logoutSuccess());
     } else {
       Auth.signOut();
