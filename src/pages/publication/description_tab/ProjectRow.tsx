@@ -63,7 +63,7 @@ const ProjectRow: FC<ProjectRowProps> = ({ project, onClickRemove, dataTestId })
       <StyledTitle>{project.name}</StyledTitle>
       <>
         <StyledGrantLabel>{t('publication:description.project_id')}</StyledGrantLabel>
-        <StyledGrant>{project.grants?.[0]?.id}</StyledGrant>
+        <StyledGrant>{project.id}</StyledGrant>
 
         <StyledFinancedByLabel>{t('publication:description.financed_by')}</StyledFinancedByLabel>
         <StyledFinancedBy>{project.grants?.[0]?.source}</StyledFinancedBy>
