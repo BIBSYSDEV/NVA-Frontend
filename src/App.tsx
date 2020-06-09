@@ -53,10 +53,7 @@ const App: FC = () => {
     const setAxiosHeaders = async () => {
       // Set global config of axios requests
       Axios.defaults.baseURL = API_URL;
-      // Uncomment this when we use our backend only
-      // const idToken = await getIdToken();
       Axios.defaults.headers.common = {
-        //   Authorization: `Bearer ${idToken}`,
         Accept: 'application/json',
       };
       Axios.defaults.headers.post['Content-Type'] = 'application/json';
@@ -73,27 +70,12 @@ const App: FC = () => {
 
   useEffect(() => {
     console.log('Hi10');
+    // Setup aws-amplify
     if (USE_MOCK_DATA) {
       setIsLoadingUser(false);
       dispatch(setUser(mockUser));
     } else {
       Amplify.configure(awsConfig);
-
-      const getUser = async () => {
-        console.log('get user');
-        const currentUser = await getCurrentUserAttributes();
-        if (currentUser) {
-          console.log('response', currentUser);
-          if (currentUser.error) {
-            dispatch(setNotification(currentUser.error, NotificationVariant.Error));
-          } else {
-            console.log('SET USER DA', currentUser);
-            dispatch(setUser(currentUser));
-          }
-        }
-        setIsLoadingUser(false);
-      };
-      getUser();
 
       Hub.listen('auth', (data) => {
         hubListener(data, dispatch);
@@ -104,15 +86,34 @@ const App: FC = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    console.log('Hi2');
-    if (user?.name && authorities?.length === 0) {
-      handleNewSearchTerm(user.name);
-    }
-  }, [handleNewSearchTerm, authorities, user]);
+    // Fetch already authenticated user
+    const getUser = async () => {
+      console.log('Hi5');
+      const currentUser = await getCurrentUserAttributes();
+      if (currentUser) {
+        if (currentUser.error) {
+          dispatch(setNotification(currentUser.error, NotificationVariant.Error));
+        } else {
+          dispatch(setUser(currentUser));
+        }
+      }
+      setIsLoadingUser(false);
+    };
+    getUser();
+  }, [dispatch]);
 
   useEffect(() => {
-    console.log('Hi1');
+    // Update search term for fetching possible authorities
+    if (user?.name && !authorities && !isLoadingAuthorities) {
+      console.log('Hi2');
+      handleNewSearchTerm(user.name);
+    }
+  }, [handleNewSearchTerm, authorities, isLoadingAuthorities, user]);
+
+  useEffect(() => {
+    // Handle possible authorities
     const getAuthority = async () => {
+      console.log('Hi1');
       if (authorities) {
         const filteredAuthorities: Authority[] = authorities.filter((auth: Authority) =>
           auth.feideids.some((id) => id === user.id)
@@ -134,7 +135,7 @@ const App: FC = () => {
         setAuthorityDataUpdated(true);
       }
     };
-    if (user?.name) {
+    if (user?.name && !user.authority) {
       getAuthority();
     }
   }, [dispatch, authorities, user]);

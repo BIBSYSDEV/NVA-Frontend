@@ -20,7 +20,6 @@ const useFetchAuthorities = (
   };
 
   useEffect(() => {
-    console.log('fetching authoritis');
     const cancelSource = Axios.CancelToken.source();
     const fetchAuthorities = async () => {
       setIsLoading(true);
