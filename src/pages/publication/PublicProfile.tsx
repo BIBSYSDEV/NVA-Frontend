@@ -1,8 +1,8 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CircularProgress } from '@material-ui/core';
 import styled from 'styled-components';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 
 import Card from '../../components/Card';
 import LabelTextLine from './../../components/LabelTextLine';
@@ -23,6 +23,11 @@ const PublicProfile: FC = () => {
   const { t } = useTranslation('profile');
   const { arpId } = useParams();
   const [authority, isLoadingUser] = useFetchAuthority(arpId);
+  const history = useHistory();
+
+  useEffect(() => {
+    history.replace(`/user/${arpId}`, { title: authority?.name });
+  }, [history, arpId, authority]);
 
   return (
     <>

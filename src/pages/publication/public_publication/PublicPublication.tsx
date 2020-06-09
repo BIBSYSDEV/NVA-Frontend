@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { CircularProgress, Link, Chip } from '@material-ui/core';
 import styled from 'styled-components';
 
@@ -10,7 +10,7 @@ import PublicPublicationFiles from './PublicPublicationFiles';
 import NotFound from '../../errorpages/NotFound';
 import Card from '../../../components/Card';
 import Heading from '../../../components/Heading';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import LabelContentRow from '../../../components/LabelContentRow';
 import Label from '../../../components/Label';
 import NormalText from '../../../components/NormalText';
@@ -88,6 +88,7 @@ const PublicPublication: FC = () => {
   const { t } = useTranslation('publication');
   const { identifier } = useParams();
   const [publication, isLoadingPublication] = useFetchPublication(identifier);
+  const history = useHistory();
 
   const {
     abstract,
@@ -104,6 +105,10 @@ const PublicPublication: FC = () => {
   // Show only the license for the first file for now
   const currentLicense = publication?.fileSet?.files[0]?.license ?? null;
   const selectedLicense = licenses.find((license) => license.identifier === currentLicense?.identifier);
+
+  useEffect(() => {
+    history.replace(`/publication/${identifier}/public`, { title: mainTitle });
+  }, [history, identifier, mainTitle]);
 
   return (
     <>

@@ -49,7 +49,7 @@ const MyPublications: FC = () => {
           <Button
             color="primary"
             component={RouterLink}
-            to={`/profile/${user.authority.systemControlNumber}`}
+            to={`/user/${user.authority.systemControlNumber}`}
             data-testid="public-profile-button">
             {t('go_to_public_profile')}
           </Button>

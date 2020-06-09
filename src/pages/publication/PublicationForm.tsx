@@ -56,6 +56,10 @@ const PublicationForm: FC<PublicationFormProps> = ({ identifier, closeForm }) =>
   }, [closeForm, publication, isLoadingPublication]);
 
   useEffect(() => {
+    history.replace(`/publication/${identifier}`, { title: publication?.entityDescription?.mainTitle });
+  }, [history, identifier, publication]);
+
+  useEffect(() => {
     // Redirect to public page if non-curator is opening a published publication
     if (publication?.status === PublicationStatus.PUBLISHED && !user.isCurator) {
       history.push(`/publication/${identifier}/public`);
