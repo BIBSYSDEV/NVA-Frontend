@@ -11,6 +11,6 @@ describe('User opens their Public Profile from My Publications Page', () => {
 
     // Open Public Profile
     cy.get('[data-testid=public-profile-button]').click({ force: true });
-    cy.url().should('include', '/profile/');
+    cy.url().should('include', '/user');
   });
 });
