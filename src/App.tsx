@@ -71,24 +71,20 @@ const App: FC = () => {
   useEffect(() => {
     console.log('Hi10');
     // Setup aws-amplify
-    if (USE_MOCK_DATA) {
-      setIsLoadingUser(false);
-      dispatch(setUser(mockUser));
-    } else {
+    if (!USE_MOCK_DATA) {
       Amplify.configure(awsConfig);
-
       Hub.listen('auth', (data) => {
         hubListener(data, dispatch);
       });
-
       return () => Hub.remove('auth', (data) => hubListener(data, dispatch));
     }
   }, [dispatch]);
 
   useEffect(() => {
-    // Fetch already authenticated user
+    // Fetch attributes of authenticated user
     const getUser = async () => {
       console.log('Hi5');
+
       const currentUser = await getCurrentUserAttributes();
       if (currentUser) {
         if (currentUser.error) {
@@ -99,7 +95,13 @@ const App: FC = () => {
       }
       setIsLoadingUser(false);
     };
-    getUser();
+
+    if (USE_MOCK_DATA) {
+      setUser(mockUser);
+      setIsLoadingUser(false);
+    } else {
+      getUser();
+    }
   }, [dispatch]);
 
   useEffect(() => {
@@ -114,6 +116,7 @@ const App: FC = () => {
     // Handle possible authorities
     const getAuthority = async () => {
       console.log('Hi1');
+
       if (authorities) {
         const filteredAuthorities: Authority[] = authorities.filter((auth: Authority) =>
           auth.feideids.some((id) => id === user.id)
@@ -135,7 +138,7 @@ const App: FC = () => {
         setAuthorityDataUpdated(true);
       }
     };
-    if (user && !user.authority) {
+    if (user && !user.authority && user.possibleAuthorities.length === 0) {
       getAuthority();
     }
   }, [dispatch, authorities, user]);
