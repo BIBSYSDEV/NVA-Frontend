@@ -69,7 +69,6 @@ const App: FC = () => {
   const [authorityDataUpdated, setAuthorityDataUpdated] = useState(false);
 
   useEffect(() => {
-    console.log('Hi10');
     // Setup aws-amplify
     if (!USE_MOCK_DATA) {
       Amplify.configure(awsConfig);
@@ -83,8 +82,6 @@ const App: FC = () => {
   useEffect(() => {
     // Fetch attributes of authenticated user
     const getUser = async () => {
-      console.log('Hi5');
-
       const currentUser = await getCurrentUserAttributes();
       if (currentUser) {
         if (currentUser.error) {
@@ -107,7 +104,6 @@ const App: FC = () => {
   useEffect(() => {
     // Update search term for fetching possible authorities
     if (user?.name && !authorities && !isLoadingAuthorities) {
-      console.log('Hi2');
       handleNewSearchTerm(user.name);
     }
   }, [handleNewSearchTerm, authorities, isLoadingAuthorities, user]);
@@ -115,7 +111,6 @@ const App: FC = () => {
   useEffect(() => {
     // Handle possible authorities
     const getAuthority = async () => {
-      console.log('Hi1', authorities);
       if (authorities) {
         const filteredAuthorities: Authority[] = authorities.filter((auth: Authority) =>
           auth.feideids.some((id) => id === user.id)
