@@ -135,7 +135,7 @@ const App: FC = () => {
         setAuthorityDataUpdated(true);
       }
     };
-    if (user?.name && !user.authority) {
+    if (user && !user.authority) {
       getAuthority();
     }
   }, [dispatch, authorities, user]);

@@ -29,10 +29,7 @@ export const userReducer = (state: User | null = null, action: UserActions | Orc
         isInstitutionAdmin: roles.some((role) => role === RoleName.ADMIN),
         isCurator: roles.some((role) => role === RoleName.CURATOR),
       };
-      return {
-        ...state,
-        ...user,
-      };
+      return user;
     case SET_EXTERNAL_ORCID:
       return {
         ...state,
