@@ -2,6 +2,7 @@ import React, { FC, useState } from 'react';
 import styled from 'styled-components';
 import DescriptionIcon from '@material-ui/icons/DescriptionOutlined';
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
+import LockIcon from '@material-ui/icons/Lock';
 import { File } from '../../../types/file.types';
 import NormalText from '../../../components/NormalText';
 import { downloadFile } from '../../../api/fileApi';
@@ -25,6 +26,13 @@ const StyledFileIconWrapper = styled.div`
 
 const StyledButtonWithProgress = styled(ButtonWithProgress)`
   margin: 1rem;
+`;
+
+const StyledNormalText = styled(NormalText)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
 `;
 
 interface PublicPublicationFilesProps {
@@ -54,12 +62,19 @@ const PublicPublicationFiles: FC<PublicPublicationFilesProps> = ({ files }) => {
         <StyledFileIconWrapper key={file.identifier}>
           <StyledFileIcon />
           <NormalText>{file.name}</NormalText>
-          <StyledButtonWithProgress
-            isLoading={isLoadingFile}
-            endIcon={!isLoadingFile && <CloudDownloadIcon />}
-            onClick={() => handleDownload(file.identifier)}>
-            {t('download')}
-          </StyledButtonWithProgress>
+          {file.embargoDate && new Date(file.embargoDate) > new Date() ? (
+            <StyledNormalText>
+              <LockIcon />
+              {t('will_be_available')} {new Date(file.embargoDate).toLocaleDateString()}
+            </StyledNormalText>
+          ) : (
+            <StyledButtonWithProgress
+              isLoading={isLoadingFile}
+              endIcon={!isLoadingFile && <CloudDownloadIcon />}
+              onClick={() => handleDownload(file.identifier)}>
+              {t('download')}
+            </StyledButtonWithProgress>
+          )}
         </StyledFileIconWrapper>
       ))}
     </>
