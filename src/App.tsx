@@ -115,8 +115,7 @@ const App: FC = () => {
   useEffect(() => {
     // Handle possible authorities
     const getAuthority = async () => {
-      console.log('Hi1');
-
+      console.log('Hi1', authorities);
       if (authorities) {
         const filteredAuthorities: Authority[] = authorities.filter((auth: Authority) =>
           auth.feideids.some((id) => id === user.id)
@@ -138,7 +137,7 @@ const App: FC = () => {
         setAuthorityDataUpdated(true);
       }
     };
-    if (user && !user.authority && user.possibleAuthorities.length === 0) {
+    if (user && !user.authority && user.possibleAuthorities !== authorities) {
       getAuthority();
     }
   }, [dispatch, authorities, user]);
