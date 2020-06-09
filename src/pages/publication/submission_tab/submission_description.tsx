@@ -5,6 +5,7 @@ import { FormikProps, useFormikContext } from 'formik';
 import { FormikPublication } from '../../../types/publication.types';
 import { getNpiDiscipline } from '../../../utils/npiDisciplines';
 import { publicationLanguages } from '../../../types/language.types';
+import { displayDate } from '../../../utils/date-helpers';
 
 const SubmissionDescription: React.FC = () => {
   const { t } = useTranslation('publication');
@@ -28,11 +29,7 @@ const SubmissionDescription: React.FC = () => {
       </LabelContentRow>
       <LabelContentRow label={t('description.tags')}>{tags.join(', ')}</LabelContentRow>
       <LabelContentRow label={t('common:language')}>{t(`languages:${languageId}`)}</LabelContentRow>
-      <LabelContentRow label={t('description.date_published')}>
-        {date.year}
-        {date.month && `-${date.month}`}
-        {date.day && `-${date.day}`}
-      </LabelContentRow>
+      <LabelContentRow label={t('description.date_published')}>{displayDate(date)}</LabelContentRow>
       <LabelContentRow label={t('description.project_association')}>{project?.name}</LabelContentRow>
     </>
   );

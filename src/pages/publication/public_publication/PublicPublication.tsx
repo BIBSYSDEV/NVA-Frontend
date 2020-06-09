@@ -18,6 +18,7 @@ import { licenses } from '../../../types/file.types';
 import useFetchPublication from '../../../utils/hooks/useFetchPublication';
 import { getNpiDiscipline } from '../../../utils/npiDisciplines';
 import { StyledNormalTextPreWrapped } from '../../../components/styled/Wrappers';
+import { displayDate } from '../../../utils/date-helpers';
 
 const StyledContentWrapper = styled.div`
   display: flex;
@@ -104,14 +105,6 @@ const PublicPublication: FC = () => {
   // Show only the license for the first file for now
   const currentLicense = publication?.fileSet?.files[0]?.license ?? null;
   const selectedLicense = licenses.find((license) => license.identifier === currentLicense?.identifier);
-
-  const displayDate = (date: { year: string; month?: string; day?: string }) => {
-    if (date.month && date.day) {
-      return new Date(+date.year, +date.month - 1, +date.day).toLocaleDateString();
-    } else {
-      return date.year;
-    }
-  };
 
   useEffect(() => {
     history.replace(`/publication/${identifier}/public`, { title: mainTitle });
