@@ -2,24 +2,11 @@ import { Auth } from 'aws-amplify';
 import { CognitoUserSession } from 'amazon-cognito-identity-js';
 import { Dispatch } from 'redux';
 
-import { logoutSuccess } from '../redux/actions/authActions';
-import { setUser } from '../redux/actions/userActions';
 import i18n from '../translations/i18n';
 import { USE_MOCK_DATA } from '../utils/constants';
-import { mockUser } from '../utils/testfiles/mock_feide_user';
 import { setNotification } from '../redux/actions/notificationActions';
 import { NotificationVariant } from '../types/notification.types';
 import { FeideUser } from '../types/user.types';
-
-export const login = () => {
-  return async (dispatch: Dispatch) => {
-    if (USE_MOCK_DATA) {
-      dispatch(setUser(mockUser));
-    } else {
-      Auth.federatedSignIn();
-    }
-  };
-};
 
 export const getCurrentUserAttributes = async (): Promise<FeideUser | any> => {
   let userAttributes = undefined;
@@ -61,16 +48,6 @@ export const refreshToken = () => {
       }
     } catch (e) {
       dispatch(setNotification(e, NotificationVariant.Error));
-    }
-  };
-};
-
-export const logout = () => {
-  return async (dispatch: Dispatch) => {
-    if (USE_MOCK_DATA) {
-      dispatch(logoutSuccess());
-    } else {
-      Auth.signOut();
     }
   };
 };

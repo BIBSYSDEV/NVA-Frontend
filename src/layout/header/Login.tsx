@@ -2,12 +2,15 @@ import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-
+import { Auth } from 'aws-amplify';
 import { Button } from '@material-ui/core';
 
-import { login, logout } from '../../api/userApi';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import Menu from './Menu';
+import { USE_MOCK_DATA } from '../../utils/constants';
+import { logoutSuccess } from '../../redux/actions/authActions';
+import { setUser } from '../../redux/actions/userActions';
+import { mockUser } from '../../utils/testfiles/mock_feide_user';
 
 const StyledLoginComponent = styled.div`
   grid-area: auth;
@@ -21,11 +24,19 @@ const Login: FC = () => {
   const { t } = useTranslation('authorization');
 
   const handleLogin = () => {
-    dispatch(login());
+    if (USE_MOCK_DATA) {
+      dispatch(setUser(mockUser));
+    } else {
+      Auth.federatedSignIn();
+    }
   };
 
   const handleLogout = () => {
-    dispatch(logout());
+    if (USE_MOCK_DATA) {
+      dispatch(logoutSuccess());
+    } else {
+      Auth.signOut();
+    }
   };
 
   return (
