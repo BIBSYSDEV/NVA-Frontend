@@ -11,9 +11,11 @@ Parameters:
     Description: OAuth token used by AWS CodePipeline to connect to GitHub
     NoEcho: true
     Type: String
+    Default: '{{resolve:secretsmanager:githubtoken:SecretString}}'
   GitHubOwner:
     Description: GitHub username owning the repo
     Type: String
+    Default: BIBSYSDEV
   GitHubRepo:
     Description: GitHub repo name
     Type: String
