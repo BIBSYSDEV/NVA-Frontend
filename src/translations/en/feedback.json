@@ -34,7 +34,7 @@
   },
   "info": {
     "affiliation_already_exists": "Affiliation already exists",
-    "publishing_in_process": "Publication is in process..."
+    "publishing_publication": "Publishing publication..."
   },
   "success": {
     "added_affiliation": "Affiliation was added",
