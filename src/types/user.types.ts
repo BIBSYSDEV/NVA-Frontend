@@ -35,7 +35,6 @@ export interface User {
   roles: RoleName[];
   application: ApplicationName;
   authority: Authority | null;
-  isLoggedIn: boolean;
   possibleAuthorities: Authority[];
   organizationId: string;
   externalOrcid: string;
@@ -70,24 +69,3 @@ export interface FeideUser {
   given_name: string;
   family_name: string;
 }
-
-export const emptyUser: User = {
-  name: '',
-  email: '',
-  id: '',
-  institution: '',
-  roles: [],
-  application: ApplicationName.NONE,
-  authority: null,
-  isLoggedIn: false,
-  possibleAuthorities: [],
-  organizationId: '',
-  externalOrcid: '',
-  affiliations: [],
-  familyName: '',
-  givenName: '',
-  isAppAdmin: false,
-  isCurator: false,
-  isInstitutionAdmin: false,
-  isPublisher: false,
-};
