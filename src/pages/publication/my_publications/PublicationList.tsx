@@ -108,7 +108,8 @@ const PublicationList: FC<PublicationListProps> = ({ publications }) => {
                 <TableCell>
                   <Button
                     color="secondary"
-                    disabled={publication.status === PublicationStatus.DELETED}
+                    disabled
+                    // disabled={publication.status === PublicationStatus.DELETED}
                     variant="outlined"
                     data-testid={`delete-publication-${publication.identifier}`}
                     onClick={() => handleOnClick(publication)}>
