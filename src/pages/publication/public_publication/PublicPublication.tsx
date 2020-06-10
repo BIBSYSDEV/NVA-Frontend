@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { CircularProgress, Link, Chip } from '@material-ui/core';
 import styled from 'styled-components';
 
@@ -10,13 +10,15 @@ import PublicPublicationFiles from './PublicPublicationFiles';
 import NotFound from '../../errorpages/NotFound';
 import Card from '../../../components/Card';
 import Heading from '../../../components/Heading';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import LabelContentRow from '../../../components/LabelContentRow';
 import Label from '../../../components/Label';
 import NormalText from '../../../components/NormalText';
 import { licenses } from '../../../types/file.types';
 import useFetchPublication from '../../../utils/hooks/useFetchPublication';
 import { getNpiDiscipline } from '../../../utils/npiDisciplines';
+import { StyledNormalTextPreWrapped } from '../../../components/styled/Wrappers';
+import { displayDate } from '../../../utils/date-helpers';
 
 const StyledContentWrapper = styled.div`
   display: flex;
@@ -59,9 +61,8 @@ const StyledLicenseLabel = styled(Label)`
   grid-area: label;
 `;
 
-const StyledNormalText = styled(NormalText)`
+const StyledNormalText = styled(StyledNormalTextPreWrapped)`
   grid-area: description;
-  white-space: pre-wrap;
 `;
 
 const StyledTextContainer = styled.div`
@@ -87,6 +88,7 @@ const PublicPublication: FC = () => {
   const { t } = useTranslation('publication');
   const { identifier } = useParams();
   const [publication, isLoadingPublication] = useFetchPublication(identifier);
+  const history = useHistory();
 
   const {
     abstract,
@@ -104,13 +106,9 @@ const PublicPublication: FC = () => {
   const currentLicense = publication?.fileSet?.files[0]?.license ?? null;
   const selectedLicense = licenses.find((license) => license.identifier === currentLicense?.identifier);
 
-  const displayDate = (date: { year: string; month?: string; day?: string }) => {
-    if (date.month && date.day) {
-      return new Date(+date.year, +date.month - 1, +date.day).toLocaleDateString();
-    } else {
-      return date.year;
-    }
-  };
+  useEffect(() => {
+    history.replace(`/publication/${identifier}/public`, { title: mainTitle });
+  }, [history, identifier, mainTitle]);
 
   return (
     <>

@@ -4,14 +4,8 @@ import Modal from '../../../components/Modal';
 import { Authority } from '../../../types/authority.types';
 import AddContributorModalContent from './components/AddContributorModalContent';
 import { Button } from '@material-ui/core';
-import styled from 'styled-components';
 import CreateContributorModalContent from './components/CreateContributorModalContent';
-
-const StyledButtonContainer = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 1rem;
-`;
+import { StyledRightAlignedButtonWrapper } from '../../../components/styled/Wrappers';
 
 interface AddContributorModalProps {
   onAuthorSelected: (author: Authority) => void;
@@ -58,11 +52,11 @@ const AddContributorModal: FC<AddContributorModalProps> = ({
       ) : (
         <>
           <AddContributorModalContent addAuthor={addAuthor} initialSearchTerm={initialSearchTerm} />
-          <StyledButtonContainer>
+          <StyledRightAlignedButtonWrapper>
             <Button color="primary" onClick={() => setCreateNewAuthor(true)}>
               {t('contributors.create_new_author')}
             </Button>
-          </StyledButtonContainer>
+          </StyledRightAlignedButtonWrapper>
         </>
       )}
     </Modal>

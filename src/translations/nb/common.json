@@ -28,6 +28,7 @@
   "next": "Neste",
   "no": "Nei",
   "no_hits": "Ingen treff",
+  "no_title": "Ingen tittel",
   "of": "av",
   "open": "Åpne",
   "orcid": "ORCID",
@@ -48,6 +49,7 @@
   "title": "Tittel",
   "type": "Type",
   "users": "Brukere",
+  "will_be_available": "Blir tilgjengelig",
   "year": "År",
   "yes": "Ja"
 }

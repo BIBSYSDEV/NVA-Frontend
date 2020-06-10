@@ -9,6 +9,7 @@ import { setAuthorityData } from '../../../redux/actions/userActions';
 import { RootStore } from '../../../redux/reducers/rootReducer';
 import { createAuthority } from '../../../api/authorityApi';
 import { NotificationVariant } from '../../../types/notification.types';
+import { StyledProgressWrapper, StyledNormalTextPreWrapped } from '../../../components/styled/Wrappers';
 
 const StyledBoxContent = styled.div`
   display: grid;
@@ -31,10 +32,9 @@ const StyledAuthority = styled.div`
   grid-area: authority;
 `;
 
-const StyledDescription = styled.div`
+const StyledDescription = styled(StyledNormalTextPreWrapped)`
   grid-area: description;
   margin-left: 0.7rem;
-  white-space: pre-wrap;
 `;
 
 const StyledButton = styled(Button)`
@@ -50,19 +50,6 @@ const StyledCancelButton = styled(Button)`
   margin-top: 2rem;
   @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
     margin-top: 1rem;
-  }
-`;
-
-const StyledProgressContainer = styled.div`
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  width: 36rem;
-  height: 16rem;
-  padding: 2rem;
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-    width: auto;
-    height: auto;
   }
 `;
 
@@ -94,9 +81,9 @@ const NewAuthorityCard: FC<NewAuthorityCardProps> = ({ onClickCancel }) => {
   return (
     <>
       {loading ? (
-        <StyledProgressContainer>
+        <StyledProgressWrapper>
           <CircularProgress size={100} />
-        </StyledProgressContainer>
+        </StyledProgressWrapper>
       ) : (
         <StyledBoxContent>
           <StyledAuthority>

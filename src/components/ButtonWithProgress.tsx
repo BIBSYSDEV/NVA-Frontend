@@ -12,8 +12,8 @@ interface ButtonWithProgressProps extends ButtonProps {
   isLoading: boolean;
 }
 
-const ButtonWithProgress: FC<ButtonWithProgressProps> = ({ isLoading, ...props }) => (
-  <Button color="primary" disabled={isLoading} variant="contained" {...props}>
+const ButtonWithProgress: FC<ButtonWithProgressProps> = ({ disabled, isLoading, ...props }) => (
+  <Button color="primary" disabled={disabled || isLoading} variant="contained" {...props}>
     {props.children}
     {isLoading && (
       <StyledProgressContainer>

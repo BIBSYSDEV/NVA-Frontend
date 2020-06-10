@@ -53,10 +53,7 @@ const App: FC = () => {
     const setAxiosHeaders = async () => {
       // Set global config of axios requests
       Axios.defaults.baseURL = API_URL;
-      // Uncomment this when we use our backend only
-      // const idToken = await getIdToken();
       Axios.defaults.headers.common = {
-        //   Authorization: `Bearer ${idToken}`,
         Accept: 'application/json',
       };
       Axios.defaults.headers.post['Content-Type'] = 'application/json';
@@ -68,44 +65,51 @@ const App: FC = () => {
   const dispatch = useDispatch();
   const user = useSelector((store: RootStore) => store.user);
   const [isLoadingUser, setIsLoadingUser] = useState(true);
-  const [authorities, isLoadingAuthorities, handleNewSearchTerm] = useFetchAuthorities(user.name);
+  const [authorities, isLoadingAuthorities, handleNewAuthoritiesSearchTerm] = useFetchAuthorities(user?.name ?? '');
   const [authorityDataUpdated, setAuthorityDataUpdated] = useState(false);
 
   useEffect(() => {
-    if (USE_MOCK_DATA) {
-      setIsLoadingUser(false);
-      user.isLoggedIn && dispatch(setUser(mockUser));
-    } else {
-      if (!user.isLoggedIn) {
-        Amplify.configure(awsConfig);
-      }
-
-      const getUser = async () => {
-        const currentUser = await getCurrentUserAttributes();
-        if (currentUser && !currentUser.error) {
-          dispatch(setUser(currentUser));
-        } else if (currentUser.error && user.isLoggedIn) {
-          dispatch(setNotification(currentUser.error, NotificationVariant.Error));
-        }
-        setIsLoadingUser(false);
-      };
-      getUser();
-
+    // Setup aws-amplify
+    if (!USE_MOCK_DATA) {
+      Amplify.configure(awsConfig);
       Hub.listen('auth', (data) => {
         hubListener(data, dispatch);
       });
-
       return () => Hub.remove('auth', (data) => hubListener(data, dispatch));
     }
-  }, [dispatch, user.isLoggedIn]);
+  }, [dispatch]);
 
   useEffect(() => {
-    if (user?.name) {
-      handleNewSearchTerm(user.name);
+    // Fetch attributes of authenticated user
+    const getUser = async () => {
+      const currentUser = await getCurrentUserAttributes();
+      if (currentUser) {
+        if (currentUser.error) {
+          dispatch(setNotification(currentUser.error, NotificationVariant.Error));
+        } else {
+          dispatch(setUser(currentUser));
+        }
+      }
+      setIsLoadingUser(false);
+    };
+
+    if (USE_MOCK_DATA) {
+      setUser(mockUser);
+      setIsLoadingUser(false);
+    } else {
+      getUser();
     }
-  }, [user, handleNewSearchTerm]);
+  }, [dispatch]);
 
   useEffect(() => {
+    // Update search term for fetching possible authorities
+    if (user?.name && !authorities && !isLoadingAuthorities) {
+      handleNewAuthoritiesSearchTerm(user.name);
+    }
+  }, [handleNewAuthoritiesSearchTerm, authorities, isLoadingAuthorities, user]);
+
+  useEffect(() => {
+    // Handle possible authorities
     const getAuthority = async () => {
       if (authorities) {
         const filteredAuthorities: Authority[] = authorities.filter((auth: Authority) =>
@@ -128,10 +132,11 @@ const App: FC = () => {
         setAuthorityDataUpdated(true);
       }
     };
-    if (user.name) {
+    // Avoid infinite loop by breaking when new data is identical to existing data
+    if (user && !user.authority && user.possibleAuthorities !== authorities) {
       getAuthority();
     }
-  }, [dispatch, authorities, user.id, user.organizationId, user.name]);
+  }, [dispatch, authorities, user]);
 
   return isLoadingUser ? (
     <ProgressContainer>

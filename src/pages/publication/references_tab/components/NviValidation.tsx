@@ -6,7 +6,7 @@ import CancelIcon from '@material-ui/icons/Cancel';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import Card from '../../../../components/Card';
 import SubHeading from '../../../../components/SubHeading';
-import NormalText from '../../../../components/NormalText';
+import { StyledNormalTextPreWrapped } from '../../../../components/styled/Wrappers';
 
 const StyledNviValidation = styled(Card)`
   margin-top: 1rem;
@@ -22,9 +22,8 @@ const StyledNviValidation = styled(Card)`
   }
 `;
 
-const StyledNviInformation = styled(NormalText)`
+const StyledNviInformation = styled(StyledNormalTextPreWrapped)`
   grid-area: information;
-  white-space: pre-wrap;
 `;
 
 const StyledCheckCircleIcon = styled(CheckCircleIcon)`

@@ -48,7 +48,7 @@ const PublicPublicationAuthors: FC<PublicPublicationProps> = ({ contributors }) 
 
           return (
             <StyledAuthor key={index}>
-              {arpId ? <Link href={`/profile/${arpId}`}>{name}</Link> : name}
+              {arpId ? <Link href={`/user/${arpId}`}>{name}</Link> : name}
               <sup>
                 {affiliationIndexes?.length > 0 && affiliationIndexes.join(',')}
                 {email && (

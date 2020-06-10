@@ -12,7 +12,8 @@ import {
   TablePagination,
 } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import { PublicationPreview, PublicationStatus } from '../../../types/publication.types';
+import { PublicationPreview } from '../../../types/publication.types';
+// import { PublicationPreview, PublicationStatus } from '../../../types/publication.types';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import Label from '../../../components/Label';
@@ -20,6 +21,7 @@ import NormalText from '../../../components/NormalText';
 import { Link as RouterLink } from 'react-router-dom';
 import DeletePublicationModal from '../DeletePublicationModal';
 import { getTranslatedLabelForDisplayedRows } from '../../../utils/pagination';
+import Card from '../../../components/Card';
 
 const StyledTableRow = styled(TableRow)`
   background-color: ${(props) => props.theme.palette.box.main};
@@ -64,7 +66,7 @@ const PublicationList: FC<PublicationListProps> = ({ publications }) => {
   };
 
   return (
-    <>
+    <Card>
       <TableContainer>
         <Table>
           <TableHead>
@@ -107,7 +109,8 @@ const PublicationList: FC<PublicationListProps> = ({ publications }) => {
                 <TableCell>
                   <Button
                     color="secondary"
-                    disabled={publication.status === PublicationStatus.DELETED}
+                    disabled
+                    // disabled={publication.status === PublicationStatus.DELETED}
                     variant="outlined"
                     data-testid={`delete-publication-${publication.identifier}`}
                     onClick={() => handleOnClick(publication)}>
@@ -134,7 +137,7 @@ const PublicationList: FC<PublicationListProps> = ({ publications }) => {
       {openModal && (
         <DeletePublicationModal id={deletePublicationId} title={deletePublicationTitle} setOpenModal={setOpenModal} />
       )}
-    </>
+    </Card>
   );
 };
 

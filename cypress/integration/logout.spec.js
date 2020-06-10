@@ -1,8 +1,7 @@
 describe('Logout', () => {
   before('Given that the user is logged in:', () => {
     cy.visit('/');
-    cy.get('[data-testid=menu-login-button]').click({ force: true });
-    cy.get('[data-testid=menu]').contains('Test User');
+    cy.mocklogin();
   });
 
   it('The user should be able to log out', () => {

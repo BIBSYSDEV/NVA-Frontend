@@ -28,6 +28,7 @@
   "next": "Next",
   "no": "No",
   "no_hits": "No hits",
+  "no_title": "No title",
   "of": "of",
   "open": "Open",
   "orcid": "ORCID",
@@ -48,6 +49,7 @@
   "title": "Title",
   "type": "Type",
   "users": "Users",
+  "will_be_available": "Will be available",
   "year": "Year",
   "yes": "Yes"
 }

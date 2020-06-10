@@ -7,21 +7,10 @@ import Card from '../../components/Card';
 import { Button, CircularProgress } from '@material-ui/core';
 import InstitutionList from './InstitutionList';
 import { Link as RouterLink } from 'react-router-dom';
-import styled from 'styled-components';
 import { CustomerInstitution } from '../../types/customerInstitution.types';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
-
-const StyledButtonWrapper = styled.div`
-  display: flex;
-  justify-content: flex-end;
-`;
-
-const StyledProgressContainer = styled.div`
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-`;
+import { StyledProgressWrapper, StyledRightAlignedButtonWrapper } from '../../components/styled/Wrappers';
 
 const AdminCustomerInstitutionsPage: FC = () => {
   const { t } = useTranslation('admin');
@@ -46,7 +35,7 @@ const AdminCustomerInstitutionsPage: FC = () => {
   return (
     <Card>
       <Heading>{t('common:institutions')}</Heading>
-      <StyledButtonWrapper>
+      <StyledRightAlignedButtonWrapper>
         <Button
           color="primary"
           component={RouterLink}
@@ -54,11 +43,11 @@ const AdminCustomerInstitutionsPage: FC = () => {
           data-testid="add-institution-button">
           {t('add_institution')}
         </Button>
-      </StyledButtonWrapper>
+      </StyledRightAlignedButtonWrapper>
       {isLoading ? (
-        <StyledProgressContainer>
+        <StyledProgressWrapper>
           <CircularProgress />
-        </StyledProgressContainer>
+        </StyledProgressWrapper>
       ) : (
         <InstitutionList institutions={institutions} />
       )}

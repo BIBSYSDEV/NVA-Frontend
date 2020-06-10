@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
 import { CircularProgress, TextField } from '@material-ui/core';
@@ -21,12 +21,10 @@ import useFetchInstitutions from '../../utils/hooks/useFetchInstitutions';
 import InstitutionAutocomplete from '../../components/institution/InstitutionAutocomplete';
 import ButtonWithProgress from '../../components/ButtonWithProgress';
 import { useFetchCustomerInstitution } from '../../utils/hooks/useFetchCustomerInstitution';
+import { StyledRightAlignedButtonWrapper } from '../../components/styled/Wrappers';
 
-const StyledButtonContainer = styled.div`
+const StyledButtonContainer = styled(StyledRightAlignedButtonWrapper)`
   margin-top: 2rem;
-  margin-right: 1rem;
-  display: flex;
-  justify-content: flex-end;
 `;
 
 const AdminCustomerInstitutionPage: FC = () => {
@@ -40,6 +38,12 @@ const AdminCustomerInstitutionPage: FC = () => {
     identifier,
     editMode
   );
+
+  useEffect(() => {
+    if (customerInstitution) {
+      history.replace(`/admin-institutions/${customerInstitution.identifier}`, { title: customerInstitution.name });
+    }
+  }, [history, customerInstitution]);
 
   const handleSubmit = async (values: CustomerInstitution) => {
     if (!editMode) {
