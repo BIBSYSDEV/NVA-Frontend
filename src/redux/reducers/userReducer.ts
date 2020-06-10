@@ -1,22 +1,11 @@
-import { ApplicationName, emptyUser, RoleName, User, Affiliation } from '../../types/user.types';
+import { ApplicationName, RoleName, User, Affiliation } from '../../types/user.types';
 import { getOrganizationIdByOrganizationNumber } from '../../utils/customers';
-import { AuthActions, LOGIN_SUCCESS, LOGOUT_SUCCESS } from '../actions/authActions';
+import { AuthActions, LOGOUT_SUCCESS } from '../actions/authActions';
 import { OrcidActions, SET_EXTERNAL_ORCID } from '../actions/orcidActions';
-import {
-  CLEAR_USER,
-  SET_AUTHORITY_DATA,
-  SET_POSSIBLE_AUTHORITIES,
-  SET_USER_SUCCESS,
-  UserActions,
-} from '../actions/userActions';
+import { SET_AUTHORITY_DATA, SET_POSSIBLE_AUTHORITIES, SET_USER_SUCCESS, UserActions } from '../actions/userActions';
 
-export const userReducer = (state: User = emptyUser, action: UserActions | OrcidActions | AuthActions) => {
+export const userReducer = (state: User | null = null, action: UserActions | OrcidActions | AuthActions) => {
   switch (action.type) {
-    case CLEAR_USER:
-      return {
-        ...state,
-        ...emptyUser,
-      };
     case SET_USER_SUCCESS:
       const affiliations = action.user['custom:affiliation']
         .replace(/[[\]]/g, '')
@@ -31,7 +20,6 @@ export const userReducer = (state: User = emptyUser, action: UserActions | Orcid
         institution: action.user['custom:orgName'],
         roles,
         application: action.user['custom:application'] as ApplicationName,
-        isLoggedIn: true,
         organizationId: getOrganizationIdByOrganizationNumber(action.user['custom:orgNumber']),
         affiliations,
         givenName: action.user.given_name,
@@ -40,11 +28,9 @@ export const userReducer = (state: User = emptyUser, action: UserActions | Orcid
         isAppAdmin: roles.some((role) => role === RoleName.APP_ADMIN) || action.user.email.endsWith('@unit.no'), // TODO: temporarily set app admin role based on email
         isInstitutionAdmin: roles.some((role) => role === RoleName.ADMIN),
         isCurator: roles.some((role) => role === RoleName.CURATOR),
+        possibleAuthorities: [],
       };
-      return {
-        ...state,
-        ...user,
-      };
+      return user;
     case SET_EXTERNAL_ORCID:
       return {
         ...state,
@@ -60,16 +46,8 @@ export const userReducer = (state: User = emptyUser, action: UserActions | Orcid
         ...state,
         possibleAuthorities: action.possibleAuthorities,
       };
-    case LOGIN_SUCCESS:
-      return {
-        ...state,
-        isLoggedIn: true,
-      };
     case LOGOUT_SUCCESS:
-      return {
-        ...state,
-        isLoggedIn: false,
-      };
+      return null;
     default:
       return state;
   }
