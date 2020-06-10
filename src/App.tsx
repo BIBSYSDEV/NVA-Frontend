@@ -65,7 +65,7 @@ const App: FC = () => {
   const dispatch = useDispatch();
   const user = useSelector((store: RootStore) => store.user);
   const [isLoadingUser, setIsLoadingUser] = useState(true);
-  const [authorities, isLoadingAuthorities, handleNewSearchTerm] = useFetchAuthorities(user?.name ?? '');
+  const [authorities, isLoadingAuthorities, handleNewAuthoritiesSearchTerm] = useFetchAuthorities(user?.name ?? '');
   const [authorityDataUpdated, setAuthorityDataUpdated] = useState(false);
 
   useEffect(() => {
@@ -104,9 +104,9 @@ const App: FC = () => {
   useEffect(() => {
     // Update search term for fetching possible authorities
     if (user?.name && !authorities && !isLoadingAuthorities) {
-      handleNewSearchTerm(user.name);
+      handleNewAuthoritiesSearchTerm(user.name);
     }
-  }, [handleNewSearchTerm, authorities, isLoadingAuthorities, user]);
+  }, [handleNewAuthoritiesSearchTerm, authorities, isLoadingAuthorities, user]);
 
   useEffect(() => {
     // Handle possible authorities
@@ -132,6 +132,7 @@ const App: FC = () => {
         setAuthorityDataUpdated(true);
       }
     };
+    // Avoid infinite loop by breaking when new data is identical to existing data
     if (user && !user.authority && user.possibleAuthorities !== authorities) {
       getAuthority();
     }
