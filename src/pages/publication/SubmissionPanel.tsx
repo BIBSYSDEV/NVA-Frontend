@@ -1,4 +1,4 @@
-import React, { useEffect, FC } from 'react';
+import React, { useEffect, FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormikProps, useFormikContext, Field, FieldProps } from 'formik';
 import { FormikPublication } from '../../types/publication.types';
@@ -33,6 +33,7 @@ import {
 } from '../../utils/formik-helpers';
 import { PanelProps } from './PublicationFormContent';
 import { RootStore } from '../../redux/reducers/rootReducer';
+import { NAVIGATE_TO_PUBLIC_PUBLICATION_DURATION } from '../../utils/constants';
 
 const StyledButtonGroupContainer = styled.div`
   margin-bottom: 1rem;
@@ -40,6 +41,10 @@ const StyledButtonGroupContainer = styled.div`
 
 const StyledButton = styled(Button)`
   display: inline-block;
+  margin-right: 0.5rem;
+`;
+
+const StyledButtonWithProgress = styled(ButtonWithProgress)`
   margin-right: 0.5rem;
 `;
 
@@ -55,7 +60,8 @@ interface SubmissionPanelProps extends PanelProps {
 const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication, setTouchedFields }) => {
   const user = useSelector((store: RootStore) => store.user);
   const { t } = useTranslation('publication');
-  const { setFieldValue, values, isValid }: FormikProps<FormikPublication> = useFormikContext();
+  const { setFieldValue, values, isValid, dirty }: FormikProps<FormikPublication> = useFormikContext();
+  const [isPublishing, setIsPublishing] = useState(false);
   const history = useHistory();
   const dispatch = useDispatch();
   const {
@@ -75,10 +81,19 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication, 
   }, [setTouchedFields, contributors, files]);
 
   const onClickPublish = async () => {
-    await savePublication(values);
+    setIsPublishing(true);
+    if (dirty) {
+      await savePublication(values);
+    }
     const publishedPublication = await publishPublication(values.identifier);
     if (publishedPublication?.error) {
+      setIsPublishing(false);
       dispatch(setNotification(publishedPublication.error, NotificationVariant.Error));
+    } else if (publishedPublication?.info) {
+      dispatch(setNotification(publishedPublication.info, NotificationVariant.Info));
+      setTimeout(() => {
+        history.push(`/publication/${values.identifier}/public`);
+      }, NAVIGATE_TO_PUBLIC_PUBLICATION_DURATION);
     } else {
       history.push(`/publication/${values.identifier}/public`);
     }
@@ -162,12 +177,12 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication, 
             </StyledButton>
           </>
         ) : (
-          <StyledButton color="primary" variant="contained" onClick={onClickPublish} disabled={isSaving || !isValid}>
+          <StyledButtonWithProgress disabled={isSaving || !isValid} onClick={onClickPublish} isLoading={isPublishing}>
             {t('common:publish')}
-          </StyledButton>
+          </StyledButtonWithProgress>
         )}
 
-        <ButtonWithProgress isLoading={isSaving} onClick={() => savePublication(values)}>
+        <ButtonWithProgress disabled={isPublishing} isLoading={isSaving} onClick={() => savePublication(values)}>
           {t('common:save')}
         </ButtonWithProgress>
       </StyledButtonGroupContainer>

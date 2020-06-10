@@ -33,7 +33,8 @@
     "update_publication": "Kunne ikke oppdatere publikasjon"
   },
   "info": {
-    "affiliation_already_exists": "Tilknytningen finnes allerede"
+    "affiliation_already_exists": "Tilknytningen finnes allerede",
+    "publishing_in_process": "Publiserer publikasjon..."
   },
   "success": {
     "added_affiliation": "Tilknytning er lagt til",

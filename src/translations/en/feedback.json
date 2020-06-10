@@ -33,7 +33,8 @@
     "update_publication": "Could not update publication"
   },
   "info": {
-    "affiliation_already_exists": "Affiliation already exists"
+    "affiliation_already_exists": "Affiliation already exists",
+    "publishing_in_process": "Publication is in process..."
   },
   "success": {
     "added_affiliation": "Affiliation was added",
