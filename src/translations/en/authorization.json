@@ -1,8 +1,10 @@
 {
   "back_to_home": "Back to home",
+  "back_to_publication": "Back to publication",
   "forbidden": "Forbidden",
   "forbidden_description": "You are not authorized to see the content on this page. Contact the administrator if you think this is wrong.",
   "logged_out": "You are now logged out",
   "login": "Log in",
-  "logout": "Log out"
+  "logout": "Log out",
+  "publication_not_published": "This publication is not published yet."
 }

@@ -1,8 +1,10 @@
 {
   "back_to_home": "Tilbake til startsiden",
+  "back_to_publication": "Tilbake til publikasjonen",
   "forbidden": "Forbudt",
   "forbidden_description": "Du er ikke autorisert til å se innholdet på denne siden. Kontakt administrator om dette ikke stemmer.",
   "logged_out": "Du er nå logget ut",
   "login": "Logg inn",
-  "logout": "Logg ut"
+  "logout": "Logg ut",
+  "publication_not_published": "Denne publikasjonen er ikke publisert enda."
 }
