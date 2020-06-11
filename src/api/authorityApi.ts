@@ -101,6 +101,8 @@ export const addQualifierIdForAuthority = async (
 ) => {
   const url = `${AuthorityApiPaths.PERSON}/${systemControlNumber}/identifiers/${qualifier}/${identifier}`;
 
+  const error = i18n.t('feedback:error.update_authority', { qualifier: i18n.t(`common:${qualifier}`) });
+
   try {
     const idToken = await getIdToken();
     const headers = {
@@ -112,14 +114,10 @@ export const addQualifierIdForAuthority = async (
     } else if (response.status === StatusCode.NO_CONTENT) {
       return;
     } else {
-      return {
-        error: i18n.t('feedback:error.update_authority'),
-      };
+      return { error };
     }
   } catch {
-    return {
-      error: i18n.t('feedback:error.update_authority'),
-    };
+    return { error };
   }
 };
 
@@ -131,6 +129,8 @@ export const updateQualifierIdForAuthority = async (
 ) => {
   const url = `${AuthorityApiPaths.PERSON}/${systemControlNumber}/identifiers/${qualifier}/${identifier}/update/${updatedIdentifier}`;
 
+  const error = i18n.t('feedback:error.update_authority', { qualifier: i18n.t(`common:${qualifier}`) });
+
   try {
     const idToken = await getIdToken();
     const headers = {
@@ -141,12 +141,10 @@ export const updateQualifierIdForAuthority = async (
     if (response.status === StatusCode.OK) {
       return response.data;
     } else {
-      return null;
+      return { error };
     }
   } catch {
-    return {
-      error: i18n.t('feedback:error.update_identifier'),
-    };
+    return { error };
   }
 };
 
@@ -156,6 +154,8 @@ export const removeQualifierIdFromAuthority = async (
   identifier: string
 ) => {
   const url = `${AuthorityApiPaths.PERSON}/${systemControlNumber}/identifiers/${qualifier}/${identifier}`;
+
+  const error = i18n.t('feedback:error.delete_identifier', { qualifier: i18n.t(`common:${qualifier}`) });
 
   try {
     const idToken = await getIdToken();
@@ -167,11 +167,9 @@ export const removeQualifierIdFromAuthority = async (
     if (response.status === StatusCode.OK) {
       return response.data;
     } else {
-      return null;
+      return { error };
     }
   } catch {
-    return {
-      error: i18n.t('feedback:error.delete_identifier'),
-    };
+    return { error };
   }
 };

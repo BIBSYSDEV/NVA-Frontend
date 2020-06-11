@@ -18,6 +18,8 @@ import Card from '../../components/Card';
 import Heading from '../../components/Heading';
 import UserInstitution from './UserInstitution';
 import { StyledRightAlignedButtonWrapper } from '../../components/styled/Wrappers';
+import { setNotification } from '../../redux/actions/notificationActions';
+import { NotificationVariant } from '../../types/notification.types';
 
 const StyledUserPage = styled.div`
   display: grid;
@@ -64,13 +66,17 @@ const User: FC = () => {
 
   useEffect(() => {
     const updateOrcid = async () => {
-      if (user.authority && !user.authority.orcids.includes(user.externalOrcid)) {
+      if (user.authority?.orcids && !user.authority.orcids.includes(user.externalOrcid)) {
         const updatedAuthority = await addQualifierIdForAuthority(
           user.authority.systemControlNumber,
           AuthorityQualifiers.ORCID,
           user.externalOrcid
         );
-        dispatch(setAuthorityData(updatedAuthority));
+        if (updatedAuthority?.error) {
+          dispatch(setNotification(updatedAuthority.error, NotificationVariant.Error));
+        } else {
+          dispatch(setAuthorityData(updatedAuthority));
+        }
       }
     };
     if (user.externalOrcid) {
