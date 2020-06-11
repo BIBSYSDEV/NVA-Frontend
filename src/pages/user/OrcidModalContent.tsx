@@ -25,10 +25,6 @@ const StyledSubHeading = styled(Label)`
   font-weight: bold;
 `;
 
-const StyledOrcidDescription = styled(DialogContent)`
-  padding: 0.5rem;
-`;
-
 const OrcidModalContent: FC = () => {
   const { t } = useTranslation('profile');
   const history = useHistory();
@@ -43,13 +39,13 @@ const OrcidModalContent: FC = () => {
 
   return (
     <>
-      <StyledOrcidDescription dividers>
+      <DialogContent dividers>
         <NormalText>{t('orcid.login')}</NormalText>
         <StyledSubHeading>{t('orcid.why')}</StyledSubHeading>
         <NormalText>{t('orcid.description_why_use_orcid')}</NormalText>
         <StyledSubHeading>{t('orcid.what')}</StyledSubHeading>
         <NormalText>{t('orcid.description_what_is_orcid')}</NormalText>
-      </StyledOrcidDescription>
+      </DialogContent>
       <StyledButtonContainer>
         <StyledButton
           data-testid="connect-to-orcid"

@@ -9,7 +9,7 @@ import Heading from './Heading';
 const StyledPaper = styled.div`
   background-color: ${({ theme }) => theme.palette.background};
   margin: 1rem;
-  min-width: 40rem;
+  min-width: 35rem;
   max-width: 40rem;
   @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
     margin-top: 0;
@@ -19,15 +19,15 @@ const StyledPaper = styled.div`
 
 const StyledHeaderContainer = styled.div`
   display: grid;
-  padding: 1rem 0;
+  padding-top: 1rem;
   grid-template-areas: 'text cross';
-  grid-template-columns: 3fr 1fr;
+  grid-template-columns: auto 1fr;
   column-gap: 1rem;
 `;
 
 const StyledHeading = styled(Heading)`
   grid-area: text;
-  margin-left: 1rem;
+  margin-bottom: 0rem;
 `;
 
 const StyledCloseIcon = styled(CloseIcon)`

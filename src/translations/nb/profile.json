@@ -28,8 +28,8 @@
   "my_profile": "Min profil",
   "my_public_profile": "Min offentlige profil",
   "orcid": {
-    "create_or_connect": "Opprett eller koble til din ORCID",
-    "description_what_is_orcid": "Beskrivelse av ORCID",
+    "create_or_connect": "Opprett eller koble til din ORCID iD",
+    "description_what_is_orcid": "ORCID is an independent non-profit effort to provide an open registry of unique researcher identifiers and open services to link research activities and organizations to these identifiers.",
     "description_why_use_orcid": "Med ORCID blir det enklere å identifisere deg som forfatter. Vi kan også hente informasjon fra ORCID, som kan gjøre det raskere for deg å registrere dine publikasjoner.",
     "login": "Logg inn på din ORCID-konto eller lag ny dersom du ikke har konto",
     "orcid": "ORCID",
