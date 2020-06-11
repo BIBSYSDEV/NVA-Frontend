@@ -16,18 +16,14 @@ const StyledText = styled(NormalText)`
   margin-top: 1rem;
 `;
 
-interface NotPublishedProps {
-  publicationId: string;
-}
-
-const NotPublished: FC<NotPublishedProps> = ({ publicationId }) => {
+const NotPublished: FC = () => {
   const { t } = useTranslation('authorization');
 
   return (
     <StyledNotFoundWrapper data-testid="not_published">
       <Heading>{t('publication_not_published')}</Heading>
-      <MuiLink component={Link} to={`/publication/${publicationId}`}>
-        <StyledText>{t('back_to_publication')}</StyledText>
+      <MuiLink component={Link} to={'/'}>
+        <StyledText>{t('back_to_home')}</StyledText>
       </MuiLink>
     </StyledNotFoundWrapper>
   );

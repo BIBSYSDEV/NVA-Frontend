@@ -27,7 +27,7 @@ const PublicPublication: FC = () => {
         publication.status === PublicationStatus.PUBLISHED ? (
           <PublicPublicationContent publication={publication} />
         ) : (
-          <NotPublished publicationId={publication.identifier} />
+          <NotPublished />
         )
       ) : (
         <NotFound />
