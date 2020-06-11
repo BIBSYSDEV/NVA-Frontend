@@ -90,7 +90,7 @@ const UserInstitution: FC = () => {
       <Card>
         <Heading>{t('heading.organizations')}</Heading>
         {authority?.orgunitids &&
-          authority?.orgunitids.map((orgunitId) => (
+          authority.orgunitids.map((orgunitId) => (
             <InstitutionCard
               key={orgunitId}
               orgunitId={orgunitId}
