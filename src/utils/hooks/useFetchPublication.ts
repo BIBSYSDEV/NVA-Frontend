@@ -34,7 +34,6 @@ const useFetchPublication = (
         setIsLoading(false);
       }
     };
-
     if (identifier) {
       fetchPublication();
     }
