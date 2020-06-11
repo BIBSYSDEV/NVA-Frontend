@@ -89,9 +89,14 @@ const UserInstitution: FC = () => {
     <>
       <Card>
         <Heading>{t('heading.organizations')}</Heading>
-        {authority?.orgunitids.map((orgunitId) => (
-          <InstitutionCard key={orgunitId} orgunitId={orgunitId} setAffiliationIdToRemove={setAffiliationIdToRemove} />
-        ))}
+        {authority?.orgunitids &&
+          authority.orgunitids.map((orgunitId) => (
+            <InstitutionCard
+              key={orgunitId}
+              orgunitId={orgunitId}
+              setAffiliationIdToRemove={setAffiliationIdToRemove}
+            />
+          ))}
 
         {openUnitForm ? (
           <SelectInstitution onSubmit={handleSubmit} onClose={toggleUnitForm} />
