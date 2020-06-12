@@ -30,7 +30,7 @@
   "orcid": {
     "create_or_connect": "Create or connect your ORCID iD",
     "description_what_is_orcid": "ORCID is an independent non-profit effort to provide an open registry of unique researcher identifiers and open services to link research activities and organizations to these identifiers.",
-    "description_why_use_orcid": "By connecting your ORCID iD it will be easier to identify you as an author. When you click the “Create or connect to ORCID” button, we will ask you to share your iD using an authenticated process: either by registering for an ORCID iD or, if you already have one, by signing into your ORCID account, then granting us permission to get your ORCID iD. We do this to ensure that you are correctly identified and securely connecting your ORCID iD.",
+    "description_why_use_orcid": "By connecting your ORCID iD it will be easier to identify you as an author. When you click the “Create or connect to ORCID iD” button, we will ask you to share your iD using an authenticated process: either by registering for an ORCID iD or, if you already have one, by signing into your ORCID account, then granting us permission to get your ORCID iD. We do this to ensure that you are correctly identified and securely connecting your ORCID iD.",
     "login": "Log in to your ORCID account or create new ORCID account",
     "orcid": "ORCID",
     "registration": "Registration",
