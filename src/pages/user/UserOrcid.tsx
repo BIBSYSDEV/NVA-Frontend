@@ -27,8 +27,7 @@ const StyledOrcidLine = styled.div`
   display: grid;
   grid-template-areas: 'text button';
   grid-template-columns: 2fr 1fr;
-  gap: 1rem;
-  align-items: start;
+  align-items: center;
   margin-top: 1rem;
   @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
     grid-template-areas: 'text' 'button';
