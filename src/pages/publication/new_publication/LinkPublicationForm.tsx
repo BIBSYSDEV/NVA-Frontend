@@ -1,10 +1,10 @@
-import { Field, Formik, Form, FieldProps } from 'formik';
+import { Field, Formik, Form, FieldProps, ErrorMessage } from 'formik';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import * as Yup from 'yup';
 import { TextField } from '@material-ui/core';
 import ButtonWithProgress from '../../../components/ButtonWithProgress';
+import { doiValidationSchema } from '../PublicationFormValidationSchema';
 
 const StyledInputBox = styled.div`
   display: flex;
@@ -16,6 +16,14 @@ const StyledTextField = styled(TextField)`
   margin-right: 1rem;
 `;
 
+export interface DoiFormValues {
+  doiUrl: string;
+}
+
+const emptyDoiFormValues: DoiFormValues = {
+  doiUrl: '',
+};
+
 interface LinkPublicationFormProps {
   handleSearch: (values: { doiUrl: string }) => void;
 }
@@ -23,22 +31,13 @@ interface LinkPublicationFormProps {
 const LinkPublicationForm: FC<LinkPublicationFormProps> = ({ handleSearch }) => {
   const { t } = useTranslation('publication');
 
-  const publicationSchema = Yup.object().shape({
-    doiUrl: Yup.string().url(t('feedback.invalid_url')).required(t('feedback.required_field')),
-  });
-
   return (
-    <Formik
-      onSubmit={handleSearch}
-      initialValues={{
-        doiUrl: '',
-      }}
-      validationSchema={publicationSchema}>
-      {({ isSubmitting }) => (
+    <Formik onSubmit={handleSearch} initialValues={emptyDoiFormValues} validationSchema={doiValidationSchema}>
+      {({ isSubmitting, values, isValid }) => (
         <Form>
           <StyledInputBox>
             <Field name="doiUrl">
-              {({ field }: FieldProps) => (
+              {({ field, meta: { error, touched } }: FieldProps) => (
                 <StyledTextField
                   variant="outlined"
                   label={t('publication.link_to_publication')}
@@ -46,10 +45,16 @@ const LinkPublicationForm: FC<LinkPublicationFormProps> = ({ handleSearch }) => 
                   aria-label="DOI-link"
                   inputProps={{ 'data-testid': 'new-publication-link-input' }}
                   {...field}
+                  error={!!error && touched}
+                  helperText={<ErrorMessage name={field.name} />}
                 />
               )}
             </Field>
-            <ButtonWithProgress data-testid="doi-search-button" isLoading={isSubmitting} type="submit">
+            <ButtonWithProgress
+              data-testid="doi-search-button"
+              isLoading={isSubmitting}
+              disabled={!isValid || !values.doiUrl}
+              type="submit">
               {t('common:search')}
             </ButtonWithProgress>
           </StyledInputBox>
