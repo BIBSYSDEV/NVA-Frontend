@@ -22,12 +22,12 @@ const StyledHeaderContainer = styled.div`
   padding-top: 1rem;
   grid-template-areas: 'text cross';
   grid-template-columns: auto 1fr;
-  column-gap: 1rem;
+  margin-bottom: 1rem;
 `;
 
 const StyledHeading = styled(Heading)`
   grid-area: text;
-  margin-bottom: 0rem;
+  margin-left: 1rem;
 `;
 
 const StyledCloseIcon = styled(CloseIcon)`
@@ -50,7 +50,6 @@ const StyledInfoContainer = styled.div`
   display: grid;
   grid-template-areas: 'avatar text';
   grid-template-columns: 1fr 7fr;
-  grid-gap: 1rem;
   align-items: center;
   @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
     grid-template-areas: 'text text';

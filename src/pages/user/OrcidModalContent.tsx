@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { Button, DialogContent } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 
 import { ORCID_SIGN_IN_URL, USE_MOCK_DATA } from '../../utils/constants';
 import NormalText from '../../components/NormalText';
@@ -31,7 +31,7 @@ const OrcidModalContent: FC = () => {
   };
 
   return (
-    <DialogContent>
+    <>
       <NormalText>{t('orcid.login')}</NormalText>
       <StyledSubHeading>{t('orcid.why')}</StyledSubHeading>
       <NormalText>{t('orcid.description_why_use_orcid')}</NormalText>
@@ -48,7 +48,7 @@ const OrcidModalContent: FC = () => {
           {t('orcid.create_or_connect')}
         </Button>
       </StyledButtonContainer>
-    </DialogContent>
+    </>
   );
 };
 
