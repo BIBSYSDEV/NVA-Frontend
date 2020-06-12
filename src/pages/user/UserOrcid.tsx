@@ -36,12 +36,6 @@ const StyledOrcidLine = styled.div`
   }
 `;
 
-// const StyledAvatar = styled(Avatar)`
-//   display: inline-flex;
-//   margin-right: 0.5rem;
-//   top: 0.5rem;
-// `;
-
 const StyledButton = styled(Button)`
   justify-self: right;
 `;
