@@ -25,7 +25,7 @@ const OrcidModal: FC<OrcidModalProps> = ({ closeModal }) => {
       ariaLabelledBy="orcid-modal"
       openModal={true}
       onClose={closeModal}
-      maxWidth="md"
+      maxWidth="sm"
       headingIcon={{ src: orcidLogo, alt: 'ORCID iD icon' }}
       headingText={t('profile:orcid.create_or_connect')}>
       <OrcidModalContent />

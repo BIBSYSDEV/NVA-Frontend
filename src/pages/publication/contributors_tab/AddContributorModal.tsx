@@ -46,7 +46,8 @@ const AddContributorModal: FC<AddContributorModalProps> = ({
       }
       onClose={handleCloseModal}
       openModal={open}
-      maxWidth="lg">
+      fullWidth
+      maxWidth="md">
       {createNewAuthor ? (
         <CreateContributorModalContent addAuthor={addAuthor} handleCloseModal={handleCloseModal} />
       ) : (
