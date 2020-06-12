@@ -7,12 +7,13 @@ import { Button } from '@material-ui/core';
 import LinkIcon from '@material-ui/icons/Link';
 
 import { getPublicationByDoi } from '../../../api/publicationApi';
-import LinkPublicationForm from './LinkPublicationForm';
+import LinkPublicationForm, { DoiFormValues } from './LinkPublicationForm';
 import PublicationExpansionPanel from './PublicationExpansionPanel';
 import { Doi } from '../../../types/publication.types';
 import { useDispatch } from 'react-redux';
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../types/notification.types';
+import { doiValidationSchema } from '../PublicationFormValidationSchema';
 
 const StyledBody = styled.div`
   width: 100%;
@@ -49,11 +50,16 @@ const LinkPublicationPanel: FC<LinkPublicationPanelProps> = ({ expanded, onChang
     openForm();
   };
 
-  const handleSearch = async (values: { doiUrl: string }) => {
+  const handleSearch = async (values: DoiFormValues) => {
+    // Cast values according to validation schema to ensure doiUrl is trimmed
+    const trimmedValues = doiValidationSchema.cast(values);
+    const doiUrl = trimmedValues?.doiUrl as string;
+    const decodedDoiUrl = decodeURIComponent(doiUrl);
+
     setNoHit(false);
     setDoi(null);
 
-    const doiPublication = await getPublicationByDoi(values.doiUrl);
+    const doiPublication = await getPublicationByDoi(decodedDoiUrl);
     if (doiPublication?.error) {
       setNoHit(true);
       dispatch(setNotification(t('feedback:error.get_doi'), NotificationVariant.Error));
