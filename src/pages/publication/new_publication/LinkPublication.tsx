@@ -54,11 +54,12 @@ const LinkPublicationPanel: FC<LinkPublicationPanelProps> = ({ expanded, onChang
     // Cast values according to validation schema to ensure doiUrl is trimmed
     const trimmedValues = doiValidationSchema.cast(values);
     const doiUrl = trimmedValues?.doiUrl as string;
+    const decodedDoiUrl = decodeURIComponent(doiUrl);
 
     setNoHit(false);
     setDoi(null);
 
-    const doiPublication = await getPublicationByDoi(doiUrl);
+    const doiPublication = await getPublicationByDoi(decodedDoiUrl);
     if (doiPublication?.error) {
       setNoHit(true);
       dispatch(setNotification(t('feedback:error.get_doi'), NotificationVariant.Error));
