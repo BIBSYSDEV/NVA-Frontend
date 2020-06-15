@@ -15,7 +15,7 @@ export enum PublicationsApiPaths {
   PUBLICATION = '/publication',
   PUBLICATIONS_BY_OWNER = '/publication/by-owner',
   DOI_LOOKUP = '/doi-fetch',
-  DOI_REQUESTS = '/publications/doi-requests',
+  DOI_REQUESTS = '/doi/request',
   FOR_APPROVAL = '/publications/approval',
 }
 
@@ -171,9 +171,10 @@ export const search = async (searchTerm: string, dispatch: Dispatch, offset?: nu
 
 // Fetch publications where creator also wanted a DOI to be created
 export const getDoiRequests = async () => {
+  const url = `${PublicationsApiPaths.DOI_REQUESTS}?role=curator`;
   try {
     const idToken = await getIdToken();
-    const response = await Axios.get(PublicationsApiPaths.DOI_REQUESTS, {
+    const response = await Axios.get(url, {
       headers: {
         Authorization: `Bearer ${idToken}`,
       },
@@ -182,7 +183,7 @@ export const getDoiRequests = async () => {
     if (response.status === StatusCode.OK) {
       return response.data;
     } else {
-      return [];
+      return { error: i18n.t('feedback:error.get_doi_requests') };
     }
   } catch {
     return { error: i18n.t('feedback:error.get_doi_requests') };
