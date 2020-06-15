@@ -8,12 +8,11 @@ import PublicationForm from './PublicationForm';
 import Heading from '../../components/Heading';
 import Card from '../../components/Card';
 import NormalText from '../../components/NormalText';
+import { StyledCenterAlignedContentWrapper } from '../../components/styled/Wrappers';
 
-const StyledEditPublication = styled.div`
+const StyledEditPublication = styled(StyledCenterAlignedContentWrapper)`
   width: 100%;
   padding-top: 2rem;
-  display: flex;
-  justify-content: center;
   @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
     display: block;
     margin-right: 0;
