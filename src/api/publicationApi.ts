@@ -187,7 +187,7 @@ export const search = async (searchTerm: string, dispatch: Dispatch, offset?: nu
 };
 
 // Fetch publications where creator also wanted a DOI to be created
-export const getDoiRequests = async () => {
+export const getDoiRequests = async (cancelToken?: CancelToken) => {
   const url = `${PublicationsApiPaths.DOI_REQUESTS}?role=curator`;
   try {
     const idToken = await getIdToken();
@@ -195,6 +195,7 @@ export const getDoiRequests = async () => {
       headers: {
         Authorization: `Bearer ${idToken}`,
       },
+      cancelToken,
     });
 
     if (response.status === StatusCode.OK) {
@@ -202,8 +203,10 @@ export const getDoiRequests = async () => {
     } else {
       return { error: i18n.t('feedback:error.get_doi_requests') };
     }
-  } catch {
-    return { error: i18n.t('feedback:error.get_doi_requests') };
+  } catch (error) {
+    if (!Axios.isCancel(error)) {
+      return { error: i18n.t('feedback:error.get_doi_requests') };
+    }
   }
 };
 
