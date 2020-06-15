@@ -34,7 +34,7 @@ export enum ContactInformation {
 }
 
 export const autoHideNotificationDuration = {
-  [NotificationVariant.Error]: 6000,
+  [NotificationVariant.Error]: 9000,
   [NotificationVariant.Info]: 3000,
   [NotificationVariant.Success]: 3000,
   [NotificationVariant.Warning]: 6000,
