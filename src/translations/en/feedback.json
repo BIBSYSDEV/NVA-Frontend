@@ -29,7 +29,10 @@
     "search": "Search failed",
     "update_authority": "Could not update {{qualifier}} for authority",
     "update_customer": "Could not update customer institution",
-    "update_publication": "Could not update publication"
+    "update_publication": "Could not update publication",
+    "orcid": {
+      "access_denied": "Could not connect ORCID because access to ORCID account was denied"
+    }
   },
   "info": {
     "affiliation_already_exists": "Affiliation already exists",

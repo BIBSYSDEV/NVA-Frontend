@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
@@ -18,6 +18,7 @@ import { NotificationVariant } from '../../types/notification.types';
 import { setAuthorityData } from '../../redux/actions/userActions';
 import { setExternalOrcid } from '../../redux/actions/orcidActions';
 import Modal from '../../components/Modal';
+import { useLocation } from 'react-router-dom';
 
 const StyledInformation = styled.div`
   margin-bottom: 1rem;
@@ -55,6 +56,7 @@ const UserOrcid: FC = () => {
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const dispatch = useDispatch();
+  const location = useLocation();
 
   const toggleModal = () => {
     setOpenModal(!openModal);
@@ -63,6 +65,13 @@ const UserOrcid: FC = () => {
   const toggleConfirmDialog = () => {
     setOpenConfirmDialog(!openConfirmDialog);
   };
+
+  useEffect(() => {
+    const orcidError = new URLSearchParams(location.hash.replace('#', '?')).get('error');
+    if (orcidError) {
+      dispatch(setNotification(t(`feedback:error.orcid.${orcidError}`), NotificationVariant.Error));
+    }
+  }, [location.hash, dispatch, t]);
 
   const removeOrcid = async (id: string) => {
     if (!authority) {
