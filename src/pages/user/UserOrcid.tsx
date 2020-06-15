@@ -3,8 +3,6 @@ import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import DeleteIcon from '@material-ui/icons/Delete';
-
-import ButtonModal from '../../components/ButtonModal';
 import LabelTextLine from '../../components/LabelTextLine';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import orcidIcon from '../../resources/images/orcid_logo.svg';
@@ -19,6 +17,7 @@ import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import { setAuthorityData } from '../../redux/actions/userActions';
 import { setExternalOrcid } from '../../redux/actions/orcidActions';
+import Modal from '../../components/Modal';
 
 const StyledInformation = styled.div`
   margin-bottom: 1rem;
@@ -28,8 +27,7 @@ const StyledOrcidLine = styled.div`
   display: grid;
   grid-template-areas: 'text button';
   grid-template-columns: 2fr 1fr;
-  gap: 1rem;
-  align-items: start;
+  align-items: center;
   margin-top: 1rem;
   @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
     grid-template-areas: 'text' 'button';
@@ -37,14 +35,17 @@ const StyledOrcidLine = styled.div`
   }
 `;
 
-const StyledAvatar = styled(Avatar)`
-  display: inline-flex;
-  margin-right: 0.5rem;
-  top: 0.5rem;
-`;
-
 const StyledButton = styled(Button)`
   justify-self: right;
+`;
+
+const StyledHeadingWrapper = styled.div`
+  display: inline-flex;
+  align-items: center;
+`;
+
+const StyledHeading = styled(Heading)`
+  margin: 0 1rem;
 `;
 
 const UserOrcid: FC = () => {
@@ -52,7 +53,12 @@ const UserOrcid: FC = () => {
   const authority = useSelector((state: RootStore) => state.user.authority);
   const listOfOrcids = authority ? authority.orcids : [];
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
   const dispatch = useDispatch();
+
+  const toggleModal = () => {
+    setOpenModal(!openModal);
+  };
 
   const toggleConfirmDialog = () => {
     setOpenConfirmDialog(!openConfirmDialog);
@@ -79,10 +85,10 @@ const UserOrcid: FC = () => {
 
   return (
     <Card>
-      <Heading>
-        <StyledAvatar src={orcidIcon} alt="ORCID icon" />
-        {t('common:orcid')}
-      </Heading>
+      <StyledHeadingWrapper>
+        <Avatar src={orcidIcon} alt="ORCID icon" />
+        <StyledHeading>{t('common:orcid')}</StyledHeading>
+      </StyledHeadingWrapper>
       {listOfOrcids?.length > 0 ? (
         listOfOrcids.map((orcid: string) => {
           const orcidLink = `${ORCID_BASE_URL}/${orcid}`;
@@ -112,12 +118,16 @@ const UserOrcid: FC = () => {
       ) : (
         <>
           <StyledInformation>{t('profile:orcid.description_why_use_orcid')}</StyledInformation>
-          <ButtonModal
-            buttonText={t('profile:orcid.create_or_connect')}
-            dataTestId="open-orcid-modal"
-            headingText={t('profile:orcid.create_or_connect')}>
+          <Button color="primary" onClick={toggleModal} variant="contained">
+            {t('profile:orcid.create_or_connect')}
+          </Button>
+          <Modal
+            headingIcon={{ src: orcidIcon, alt: 'ORCID iD icon' }}
+            headingText={t('profile:orcid.create_or_connect')}
+            onClose={toggleModal}
+            openModal={openModal}>
             <OrcidModalContent />
-          </ButtonModal>
+          </Modal>
         </>
       )}
     </Card>

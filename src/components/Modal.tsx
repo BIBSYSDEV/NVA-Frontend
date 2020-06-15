@@ -17,10 +17,10 @@ const StyledPaper = styled.div`
 
 const StyledHeaderContainer = styled.div`
   display: grid;
-  padding: 1rem 0;
+  padding-top: 1rem;
   grid-template-areas: 'text cross';
-  grid-template-columns: 3fr 1fr;
-  column-gap: 1rem;
+  grid-template-columns: auto 1fr;
+  margin-bottom: 1rem;
 `;
 
 const StyledHeading = styled(Heading)`
@@ -48,7 +48,6 @@ const StyledInfoContainer = styled.div`
   display: grid;
   grid-template-areas: 'avatar text';
   grid-template-columns: 1fr 7fr;
-  grid-gap: 1rem;
   align-items: center;
   @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
     grid-template-areas: 'text text';
