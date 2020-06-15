@@ -31,7 +31,7 @@
     "update_customer": "Could not update customer institution",
     "update_publication": "Could not update publication",
     "orcid": {
-      "access_denied": "Could not connect ORCID because access to ORCID account was denied"
+      "access_denied": "Could not connect to ORCID because access to the ORCID account was denied"
     }
   },
   "info": {
