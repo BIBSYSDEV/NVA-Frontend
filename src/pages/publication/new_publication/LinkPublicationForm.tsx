@@ -33,7 +33,7 @@ const LinkPublicationForm: FC<LinkPublicationFormProps> = ({ handleSearch }) => 
 
   return (
     <Formik onSubmit={handleSearch} initialValues={emptyDoiFormValues} validationSchema={doiValidationSchema}>
-      {({ isSubmitting, values, isValid }) => (
+      {({ isSubmitting, isValid, dirty }) => (
         <Form>
           <StyledInputBox>
             <Field name="doiUrl">
@@ -53,7 +53,7 @@ const LinkPublicationForm: FC<LinkPublicationFormProps> = ({ handleSearch }) => 
             <ButtonWithProgress
               data-testid="doi-search-button"
               isLoading={isSubmitting}
-              disabled={!isValid || !values.doiUrl}
+              disabled={!isValid || !dirty}
               type="submit">
               {t('common:search')}
             </ButtonWithProgress>

@@ -55,9 +55,8 @@ const CreateContributorModalContent: FC<CreateContributorModalContentProps> = ({
         <Formik
           initialValues={emptyNewContributor}
           validationSchema={newContributorValidationSchema}
-          validateOnMount
           onSubmit={handleSubmit}>
-          {({ isValid }) => (
+          {({ isValid, isSubmitting, dirty }) => (
             <Form>
               <Collapse in={readMore} collapsedHeight="4.5rem">
                 <StyledNormalTextPreWrapped>{t('description_create_authority')}</StyledNormalTextPreWrapped>
@@ -94,7 +93,7 @@ const CreateContributorModalContent: FC<CreateContributorModalContentProps> = ({
                 )}
               </Field>
               <StyledButtonContainer>
-                <Button type="submit" color="primary" variant="contained" disabled={!isValid}>
+                <Button type="submit" color="primary" variant="contained" disabled={!isValid || !dirty || isSubmitting}>
                   {t('create_authority')}
                 </Button>
               </StyledButtonContainer>
