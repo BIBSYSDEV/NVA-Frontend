@@ -54,6 +54,7 @@ const UserOrcid: FC = () => {
   const listOfOrcids = authority ? authority.orcids : [];
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
   const [openModal, setOpenModal] = useState(false);
+  const [isRemovingOrcid, setIsRemovingOrcid] = useState(false);
   const dispatch = useDispatch();
 
   const toggleModal = () => {
@@ -68,6 +69,7 @@ const UserOrcid: FC = () => {
     if (!authority) {
       return;
     }
+    setIsRemovingOrcid(true);
     const updatedAuthority = await removeQualifierIdFromAuthority(
       authority.systemControlNumber,
       AuthorityQualifiers.ORCID,
@@ -75,6 +77,7 @@ const UserOrcid: FC = () => {
     );
     if (updatedAuthority.error) {
       dispatch(setNotification(updatedAuthority.error, NotificationVariant.Error));
+      setIsRemovingOrcid(false);
     } else if (updatedAuthority) {
       dispatch(setExternalOrcid(''));
       dispatch(setAuthorityData(updatedAuthority));
@@ -111,6 +114,7 @@ const UserOrcid: FC = () => {
                 text={t('orcid.remove_connection_text')}
                 onAccept={() => removeOrcid(orcid)}
                 onCancel={toggleConfirmDialog}
+                disableAccept={isRemovingOrcid}
               />
             </StyledOrcidLine>
           );
