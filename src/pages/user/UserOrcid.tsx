@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
@@ -20,6 +20,7 @@ import { setExternalOrcid } from '../../redux/actions/orcidActions';
 import Modal from '../../components/Modal';
 import { Link as MuiLink } from '@material-ui/core';
 import { StyledNormalTextPreWrapped } from '../../components/styled/Wrappers';
+import { useLocation } from 'react-router-dom';
 
 const StyledInformation = styled.div`
   margin-bottom: 1rem;
@@ -58,6 +59,7 @@ const UserOrcid: FC = () => {
   const [openModal, setOpenModal] = useState(false);
   const [isRemovingOrcid, setIsRemovingOrcid] = useState(false);
   const dispatch = useDispatch();
+  const location = useLocation();
 
   const toggleModal = () => {
     setOpenModal(!openModal);
@@ -66,6 +68,13 @@ const UserOrcid: FC = () => {
   const toggleConfirmDialog = () => {
     setOpenConfirmDialog(!openConfirmDialog);
   };
+
+  useEffect(() => {
+    const orcidError = new URLSearchParams(location.hash.replace('#', '?')).get('error');
+    if (orcidError) {
+      dispatch(setNotification(t(`feedback:error.orcid.${orcidError}`), NotificationVariant.Error));
+    }
+  }, [location.hash, dispatch, t]);
 
   const removeOrcid = async (id: string) => {
     if (!authority) {
