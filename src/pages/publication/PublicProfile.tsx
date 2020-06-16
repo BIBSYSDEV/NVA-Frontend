@@ -1,15 +1,16 @@
 import React, { FC, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
-import { CircularProgress } from '@material-ui/core';
+import { CircularProgress, IconButton } from '@material-ui/core';
 import styled from 'styled-components';
 import { useParams, useHistory } from 'react-router-dom';
-
+import orcidIcon from '../../resources/images/orcid_logo.svg';
 import Card from '../../components/Card';
-import LabelTextLine from './../../components/LabelTextLine';
 import Heading from '../../components/Heading';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
 import useFetchAuthority from '../../utils/hooks/useFetchAuthority';
 import { ORCID_BASE_URL } from '../../utils/constants';
+import { Link as MuiLink } from '@material-ui/core';
+import NormalText from '../../components/NormalText';
+import WorkIcon from '@material-ui/icons/Work';
 
 const StyledUserInfo = styled.div`
   display: flex;
@@ -19,8 +20,15 @@ const StyledUserInfo = styled.div`
   padding: 0.5rem;
 `;
 
+const StyledLine = styled.div`
+  display: grid;
+  grid-template-areas: 'icon text';
+  gap: 1rem;
+  justify-content: start;
+  margin-top: 1rem;
+`;
+
 const PublicProfile: FC = () => {
-  const { t } = useTranslation('profile');
   const { arpId } = useParams();
   const [authority, isLoadingUser] = useFetchAuthority(arpId);
   const history = useHistory();
@@ -39,22 +47,24 @@ const PublicProfile: FC = () => {
             <Card>
               <Heading>{authority.name}</Heading>
               {authority.orgunitids.length > 0 && (
-                <LabelTextLine label={t('heading.organizations')}>
+                <StyledLine>
+                  <WorkIcon />
                   {authority.orgunitids.map((unitId) => (
                     <AffiliationHierarchy key={unitId} unitUri={unitId} commaSeparated />
                   ))}
-                </LabelTextLine>
+                </StyledLine>
               )}
               {authority.orcids.map((orcid: string) => {
                 const orcidLink = `${ORCID_BASE_URL}/${orcid}`;
                 return (
-                  <LabelTextLine
-                    key={orcid}
-                    dataTestId={'orcid-info'}
-                    label={t('orcid.orcid')}
-                    linkText={orcidLink}
-                    externalLink={orcidLink}
-                  />
+                  <StyledLine key={orcid}>
+                    <IconButton size="small" href={orcidLink} key={orcid}>
+                      <img src={orcidIcon} height="20" alt="orcid" />
+                    </IconButton>
+                    <MuiLink href={orcidLink} target="_blank" rel="noopener noreferrer">
+                      <NormalText>{orcidLink}</NormalText>
+                    </MuiLink>
+                  </StyledLine>
                 );
               })}
             </Card>
