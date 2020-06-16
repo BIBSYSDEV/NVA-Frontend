@@ -18,6 +18,8 @@ import { NotificationVariant } from '../../types/notification.types';
 import { setAuthorityData } from '../../redux/actions/userActions';
 import { setExternalOrcid } from '../../redux/actions/orcidActions';
 import Modal from '../../components/Modal';
+import { Link as MuiLink } from '@material-ui/core';
+import { StyledNormalTextPreWrapped } from '../../components/styled/Wrappers';
 import { useLocation } from 'react-router-dom';
 
 const StyledInformation = styled.div`
@@ -55,6 +57,7 @@ const UserOrcid: FC = () => {
   const listOfOrcids = authority ? authority.orcids : [];
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
   const [openModal, setOpenModal] = useState(false);
+  const [isRemovingOrcid, setIsRemovingOrcid] = useState(false);
   const dispatch = useDispatch();
   const location = useLocation();
 
@@ -77,6 +80,7 @@ const UserOrcid: FC = () => {
     if (!authority) {
       return;
     }
+    setIsRemovingOrcid(true);
     const updatedAuthority = await removeQualifierIdFromAuthority(
       authority.systemControlNumber,
       AuthorityQualifiers.ORCID,
@@ -117,10 +121,16 @@ const UserOrcid: FC = () => {
               <ConfirmDialog
                 open={openConfirmDialog}
                 title={t('orcid.remove_connection')}
-                text={t('orcid.remove_connection_text')}
                 onAccept={() => removeOrcid(orcid)}
                 onCancel={toggleConfirmDialog}
-              />
+                disableAccept={isRemovingOrcid}>
+                <StyledNormalTextPreWrapped>
+                  {t('orcid.remove_connection_info')}{' '}
+                  <MuiLink href={ORCID_BASE_URL} target="_blank" rel="noopener noreferrer">
+                    {ORCID_BASE_URL}
+                  </MuiLink>
+                </StyledNormalTextPreWrapped>
+              </ConfirmDialog>
             </StyledOrcidLine>
           );
         })

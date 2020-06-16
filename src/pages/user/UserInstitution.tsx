@@ -20,6 +20,7 @@ import { NotificationVariant } from '../../types/notification.types';
 import InstitutionCard from './institution/InstitutionCard';
 import ConfirmDialog from '../../components/ConfirmDialog';
 import { StyledRightAlignedButtonWrapper } from '../../components/styled/Wrappers';
+import NormalText from '../../components/NormalText';
 
 const UserInstitution: FC = () => {
   const authority = useSelector((state: RootStore) => state.user.authority);
@@ -116,11 +117,11 @@ const UserInstitution: FC = () => {
       <ConfirmDialog
         open={!!affiliationIdToRemove}
         title={t('organization.confirm_remove_affiliation_title')}
-        text={t('organization.confirm_remove_affiliation_text')}
         onAccept={removeAffiliation}
         onCancel={() => setAffiliationIdToRemove('')}
-        disableAccept={isRemovingAffiliation}
-      />
+        disableAccept={isRemovingAffiliation}>
+        <NormalText>{t('organization.confirm_remove_affiliation_text')}</NormalText>
+      </ConfirmDialog>
     </>
   );
 };
