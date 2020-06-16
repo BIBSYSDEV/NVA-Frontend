@@ -88,7 +88,6 @@ const UserOrcid: FC = () => {
     );
     if (updatedAuthority.error) {
       dispatch(setNotification(updatedAuthority.error, NotificationVariant.Error));
-      setIsRemovingOrcid(false);
     } else if (updatedAuthority) {
       dispatch(setExternalOrcid(''));
       dispatch(setAuthorityData(updatedAuthority));
