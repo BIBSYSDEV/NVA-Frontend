@@ -116,11 +116,11 @@ const UserInstitution: FC = () => {
       <ConfirmDialog
         open={!!affiliationIdToRemove}
         title={t('organization.confirm_remove_affiliation_title')}
-        text={t('organization.confirm_remove_affiliation_text')}
         onAccept={removeAffiliation}
         onCancel={() => setAffiliationIdToRemove('')}
-        disableAccept={isRemovingAffiliation}
-      />
+        disableAccept={isRemovingAffiliation}>
+        {t('organization.confirm_remove_affiliation_text')}
+      </ConfirmDialog>
     </>
   );
 };

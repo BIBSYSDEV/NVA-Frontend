@@ -99,7 +99,6 @@ const AffiliationsCell: FC<AffiliationsCellProps> = ({ affiliations, baseFieldNa
       <ConfirmDialog
         open={!!affiliationToRemove}
         title={t('contributors.confirm_remove_affiliation_title')}
-        text={t('contributors.confirm_remove_affiliation_text')}
         onAccept={() => {
           setFieldValue(
             `${baseFieldName}.${SpecificContributorFieldNames.AFFILIATIONS}`,
@@ -107,8 +106,9 @@ const AffiliationsCell: FC<AffiliationsCellProps> = ({ affiliations, baseFieldNa
           );
           setAffiliationToRemove(null);
         }}
-        onCancel={() => setAffiliationToRemove(null)}
-      />
+        onCancel={() => setAffiliationToRemove(null)}>
+        {t('contributors.confirm_remove_affiliation_text')}
+      </ConfirmDialog>
     </>
   );
 };

@@ -177,15 +177,15 @@ const SortableList = SortableContainer(({ contributors, onDelete, setUnverifiedC
         <ConfirmDialog
           open={!!contributorToRemove}
           title={t('contributors.confirm_remove_contributor_title')}
-          text={t('contributors.confirm_remove_contributor_text', {
-            contributorName: contributorToRemove.identity.name,
-          })}
           onAccept={() => {
             onDelete(contributorToRemove.sequence - 1);
             closeConfirmDialog();
           }}
-          onCancel={closeConfirmDialog}
-        />
+          onCancel={closeConfirmDialog}>
+          {t('contributors.confirm_remove_contributor_text', {
+            contributorName: contributorToRemove.identity.name,
+          })}
+        </ConfirmDialog>
       )}
     </TableContainer>
   );

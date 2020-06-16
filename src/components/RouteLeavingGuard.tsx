@@ -41,10 +41,10 @@ const RouteLeavingGuard: FC<RouteLeavingGuardProps> = ({ modalDescription, modal
       <ConfirmDialog
         open={showModal}
         title={modalHeading}
-        text={modalDescription}
         onAccept={handleConfirmNavigationClick}
-        onCancel={() => setShowModal(false)}
-      />
+        onCancel={() => setShowModal(false)}>
+        {modalDescription}
+      </ConfirmDialog>
     </>
   );
 };

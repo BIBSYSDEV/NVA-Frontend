@@ -49,10 +49,10 @@ const DoiField: FC = () => {
       <ConfirmDialog
         open={openConfirmDialog}
         title={t('references.delete_doi_title')}
-        text={t('references.delete_doi_text')}
         onAccept={changeType}
-        onCancel={toggleConfirmDialog}
-      />
+        onCancel={toggleConfirmDialog}>
+        {t('references.delete_doi_text')}
+      </ConfirmDialog>
     </>
   ) : null;
 };

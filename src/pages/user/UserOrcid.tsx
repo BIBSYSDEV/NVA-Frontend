@@ -111,11 +111,11 @@ const UserOrcid: FC = () => {
               <ConfirmDialog
                 open={openConfirmDialog}
                 title={t('orcid.remove_connection')}
-                text={t('orcid.remove_connection_text')}
                 onAccept={() => removeOrcid(orcid)}
                 onCancel={toggleConfirmDialog}
-                disableAccept={isRemovingOrcid}
-              />
+                disableAccept={isRemovingOrcid}>
+                {t('orcid.remove_connection_text')}
+              </ConfirmDialog>
             </StyledOrcidLine>
           );
         })

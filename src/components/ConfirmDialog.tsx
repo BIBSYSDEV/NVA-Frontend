@@ -12,22 +12,29 @@ const StyledDialogContentText = styled(DialogContentText)`
 `;
 
 interface ConfirmDialogProps {
+  children: any;
   open: boolean;
   title: string;
-  text: string;
   onAccept: () => void;
   onCancel: () => void;
   disableAccept?: boolean;
 }
 
-const ConfirmDialog: FC<ConfirmDialogProps> = ({ open, title, text, onAccept, onCancel, disableAccept = false }) => {
+const ConfirmDialog: FC<ConfirmDialogProps> = ({
+  children,
+  open,
+  title,
+  onAccept,
+  onCancel,
+  disableAccept = false,
+}) => {
   const { t } = useTranslation('common');
 
   return (
     <Dialog open={open} onClose={onCancel}>
       <DialogTitle>{title}</DialogTitle>
       <DialogContent>
-        <StyledDialogContentText>{text}</StyledDialogContentText>
+        <StyledDialogContentText>{children}</StyledDialogContentText>
       </DialogContent>
       <DialogActions>
         <Button data-testid="cancel-button" variant="contained" onClick={onCancel}>
