@@ -10,8 +10,8 @@ import { setUser } from '../redux/actions/userActions';
 export const hubListener = async (data: any, dispatch: Dispatch<any>) => {
   switch (data.payload.event) {
     case 'signIn':
-      const loggedInUser = await Auth.currentUserInfo();
-      dispatch(setUser(loggedInUser.attributes));
+      const loggedInUser = (await Auth.currentSession()).getIdToken().payload;
+      dispatch(setUser(loggedInUser));
       break;
     case 'signOut':
       dispatch(logoutSuccess());
