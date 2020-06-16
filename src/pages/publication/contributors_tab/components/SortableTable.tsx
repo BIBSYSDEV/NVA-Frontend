@@ -34,6 +34,7 @@ import { NotificationVariant } from '../../../../types/notification.types';
 import { Authority } from '../../../../types/authority.types';
 import { getUnitUri } from '../../../../utils/unitUrl';
 import { overwriteArrayMerge } from '../../../../utils/formik-helpers';
+import NormalText from '../../../../components/NormalText';
 
 const StyledWarningIcon = styled(WarningIcon)`
   color: ${({ theme }) => theme.palette.warning.main};
@@ -182,9 +183,11 @@ const SortableList = SortableContainer(({ contributors, onDelete, setUnverifiedC
             closeConfirmDialog();
           }}
           onCancel={closeConfirmDialog}>
-          {t('contributors.confirm_remove_contributor_text', {
-            contributorName: contributorToRemove.identity.name,
-          })}
+          <NormalText>
+            {t('contributors.confirm_remove_contributor_text', {
+              contributorName: contributorToRemove.identity.name,
+            })}
+          </NormalText>
         </ConfirmDialog>
       )}
     </TableContainer>

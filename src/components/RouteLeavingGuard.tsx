@@ -1,6 +1,7 @@
 import React, { useEffect, useState, FC } from 'react';
 import { Prompt, useHistory } from 'react-router-dom';
 import ConfirmDialog from './ConfirmDialog';
+import NormalText from './NormalText';
 
 interface RouteLeavingGuardProps {
   modalDescription: string;
@@ -43,7 +44,7 @@ const RouteLeavingGuard: FC<RouteLeavingGuardProps> = ({ modalDescription, modal
         title={modalHeading}
         onAccept={handleConfirmNavigationClick}
         onCancel={() => setShowModal(false)}>
-        {modalDescription}
+        <NormalText>{modalDescription}</NormalText>
       </ConfirmDialog>
     </>
   );

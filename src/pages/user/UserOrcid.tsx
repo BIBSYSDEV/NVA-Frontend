@@ -18,6 +18,8 @@ import { NotificationVariant } from '../../types/notification.types';
 import { setAuthorityData } from '../../redux/actions/userActions';
 import { setExternalOrcid } from '../../redux/actions/orcidActions';
 import Modal from '../../components/Modal';
+import { Link as MuiLink } from '@material-ui/core';
+import { StyledNormalTextPreWrapped } from '../../components/styled/Wrappers';
 
 const StyledInformation = styled.div`
   margin-bottom: 1rem;
@@ -114,7 +116,12 @@ const UserOrcid: FC = () => {
                 onAccept={() => removeOrcid(orcid)}
                 onCancel={toggleConfirmDialog}
                 disableAccept={isRemovingOrcid}>
-                {t('orcid.remove_connection_text')}
+                <StyledNormalTextPreWrapped>
+                  {t('orcid.remove_connection_info')}{' '}
+                  <MuiLink href={ORCID_BASE_URL} target="_blank" rel="noopener noreferrer">
+                    {ORCID_BASE_URL}
+                  </MuiLink>
+                </StyledNormalTextPreWrapped>
               </ConfirmDialog>
             </StyledOrcidLine>
           );

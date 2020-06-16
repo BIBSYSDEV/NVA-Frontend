@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import ConfirmDialog from '../../components/ConfirmDialog';
+import NormalText from '../../components/NormalText';
 
 interface DeletePublicationModalProps {
   id: string;
@@ -21,9 +22,9 @@ const DeletePublicationModal: FC<DeletePublicationModalProps> = ({ id, title, se
       open
       onAccept={deletePublication}
       onCancel={() => setOpenModal(false)}
-      title={t('workLists:delete_publication_heading')}>{`${t('workLists:delete_publication_message')} "${
-      title ?? t('common:no_title')
-    }"`}</ConfirmDialog>
+      title={t('workLists:delete_publication_heading')}>
+      <NormalText>{`${t('workLists:delete_publication_message')} "${title ?? t('common:no_title')}"`}</NormalText>
+    </ConfirmDialog>
   );
 };
 

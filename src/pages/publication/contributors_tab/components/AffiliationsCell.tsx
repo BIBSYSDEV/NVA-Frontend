@@ -19,6 +19,7 @@ import { setNotification } from '../../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../../types/notification.types';
 import AffiliationHierarchy from '../../../../components/institution/AffiliationHierarchy';
 import Card from '../../../../components/Card';
+import NormalText from '../../../../components/NormalText';
 
 const StyledCard = styled(Card)`
   display: flex;
@@ -107,7 +108,7 @@ const AffiliationsCell: FC<AffiliationsCellProps> = ({ affiliations, baseFieldNa
           setAffiliationToRemove(null);
         }}
         onCancel={() => setAffiliationToRemove(null)}>
-        {t('contributors.confirm_remove_affiliation_text')}
+        <NormalText>{t('contributors.confirm_remove_affiliation_text')}</NormalText>
       </ConfirmDialog>
     </>
   );
