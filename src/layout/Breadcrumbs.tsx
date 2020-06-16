@@ -31,7 +31,8 @@ const Breadcrumbs: FC = () => {
             </MuiLink>
             {pathNames.map((pathName: string, index: number) => {
               const isId = pathName.match('[\\d+]');
-              const translatedValue = isId && state?.title ? state.title : t(pathName);
+              const castedState = state as any;
+              const translatedValue = isId && castedState?.title ? castedState.title : t(pathName);
               const lastBreadcrumb = index === pathNames.length - 1;
               const to = `/${pathNames.slice(0, index + 1).join('/')}`;
               return lastBreadcrumb ? (
