@@ -52,7 +52,7 @@ const PublicPublicationFile: FC<PublicPublicationFileProps> = ({ file }) => {
   const { t } = useTranslation('common');
   const dispatch = useDispatch();
   const [isLoadingFile, setIsLoadingFile] = useState(false);
-  const [currentFile, setCurrentFile] = useState('');
+  const [currentFileUrl, setCurrentFileUrl] = useState('');
 
   const handleDownload = async (fileId: string) => {
     setIsLoadingFile(true);
@@ -60,7 +60,7 @@ const PublicPublicationFile: FC<PublicPublicationFileProps> = ({ file }) => {
     if (!file || file?.error) {
       dispatch(setNotification(file.error, NotificationVariant.Error));
     } else {
-      setCurrentFile(file);
+      setCurrentFileUrl(file);
     }
     setIsLoadingFile(false);
   };
@@ -74,7 +74,7 @@ const PublicPublicationFile: FC<PublicPublicationFileProps> = ({ file }) => {
           <LockIcon />
           {t('will_be_available')} {new Date(file.embargoDate).toLocaleDateString()}
         </StyledNormalText>
-      ) : !currentFile ? (
+      ) : !currentFileUrl ? (
         <StyledButtonWithProgress
           isLoading={isLoadingFile}
           endIcon={!isLoadingFile && <CloudDownloadIcon />}
@@ -86,7 +86,7 @@ const PublicPublicationFile: FC<PublicPublicationFileProps> = ({ file }) => {
           variant="contained"
           color="primary"
           endIcon={<OpenInNewIcon />}
-          onClick={() => window.open(currentFile)}>
+          onClick={() => window.open(currentFileUrl)}>
           {t('open')}
         </StyledButton>
       )}
