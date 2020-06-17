@@ -15,7 +15,7 @@ export enum PublicationsApiPaths {
   PUBLICATION = '/publication',
   PUBLICATIONS_BY_OWNER = '/publication/by-owner',
   DOI_LOOKUP = '/doi-fetch',
-  DOI_REQUESTS = '/doi/request',
+  DOI_REQUESTS = '/doi-request',
   FOR_APPROVAL = '/publications/approval',
 }
 
