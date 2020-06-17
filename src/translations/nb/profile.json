@@ -35,7 +35,7 @@
     "orcid": "ORCID",
     "registration": "Registrering",
     "remove_connection": "Fjern kobling til ORCID",
-    "remove_connection_text": "Er du sikker på at du vil fjerne koblingen til ORCID?",
+    "remove_connection_info": "Er du sikker på at du vil fjerne koblingen til ORCID? \n\nDersom du ønsker å trekke tilbake Units godkjenning til å lese din ORCID, må du gå inn på din ORCID-profil.",
     "skip_this_step": "Hopp over nå (kan gjøres under 'profil' senere)",
     "suggestions": "Forslag fra ORCID",
     "suggestions_description": "Forslag fra ORCID...",
