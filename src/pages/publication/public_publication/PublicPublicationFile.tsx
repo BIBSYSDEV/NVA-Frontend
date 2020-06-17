@@ -2,6 +2,7 @@ import React, { FC, useState } from 'react';
 import styled from 'styled-components';
 import DescriptionIcon from '@material-ui/icons/DescriptionOutlined';
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
+import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import LockIcon from '@material-ui/icons/Lock';
 import { File } from '../../../types/file.types';
 import NormalText from '../../../components/NormalText';
@@ -12,6 +13,7 @@ import { useDispatch } from 'react-redux';
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../types/notification.types';
 import ButtonWithProgress from '../../../components/ButtonWithProgress';
+import { Button, Card } from '@material-ui/core';
 
 const StyledFileIcon = styled(DescriptionIcon)`
   width: 100px;
@@ -20,11 +22,11 @@ const StyledFileIcon = styled(DescriptionIcon)`
   padding: 0.5rem;
 `;
 
-const StyledFileIconWrapper = styled.div`
-  text-align: center;
+const StyledButtonWithProgress = styled(ButtonWithProgress)`
+  margin: 1rem;
 `;
 
-const StyledButtonWithProgress = styled(ButtonWithProgress)`
+const StyledButton = styled(Button)`
   margin: 1rem;
 `;
 
@@ -35,15 +37,22 @@ const StyledNormalText = styled(NormalText)`
   padding: 1rem;
 `;
 
-interface PublicPublicationFilesProps {
-  files: File[];
+const StyledSidebarCard = styled(Card)`
+  padding: 1rem 0.5rem;
+  margin-bottom: 1rem;
+  text-align: center;
+`;
+
+interface PublicPublicationFileProps {
+  file: File;
 }
 
-const PublicPublicationFiles: FC<PublicPublicationFilesProps> = ({ files }) => {
+const PublicPublicationFile: FC<PublicPublicationFileProps> = ({ file }) => {
   const { identifier } = useParams();
   const { t } = useTranslation('common');
   const dispatch = useDispatch();
   const [isLoadingFile, setIsLoadingFile] = useState(false);
+  const [currentFile, setCurrentFile] = useState('');
 
   const handleDownload = async (fileId: string) => {
     setIsLoadingFile(true);
@@ -51,34 +60,38 @@ const PublicPublicationFiles: FC<PublicPublicationFilesProps> = ({ files }) => {
     if (!file || file?.error) {
       dispatch(setNotification(file.error, NotificationVariant.Error));
     } else {
-      window.open(file);
+      setCurrentFile(file);
     }
     setIsLoadingFile(false);
   };
 
   return (
-    <>
-      {files.map((file) => (
-        <StyledFileIconWrapper key={file.identifier}>
-          <StyledFileIcon />
-          <NormalText>{file.name}</NormalText>
-          {file.embargoDate && new Date(file.embargoDate) > new Date() ? (
-            <StyledNormalText>
-              <LockIcon />
-              {t('will_be_available')} {new Date(file.embargoDate).toLocaleDateString()}
-            </StyledNormalText>
-          ) : (
-            <StyledButtonWithProgress
-              isLoading={isLoadingFile}
-              endIcon={!isLoadingFile && <CloudDownloadIcon />}
-              onClick={() => handleDownload(file.identifier)}>
-              {t('download')}
-            </StyledButtonWithProgress>
-          )}
-        </StyledFileIconWrapper>
-      ))}
-    </>
+    <StyledSidebarCard>
+      <StyledFileIcon />
+      <NormalText>{file.name}</NormalText>
+      {file.embargoDate && new Date(file.embargoDate) > new Date() ? (
+        <StyledNormalText>
+          <LockIcon />
+          {t('will_be_available')} {new Date(file.embargoDate).toLocaleDateString()}
+        </StyledNormalText>
+      ) : !currentFile ? (
+        <StyledButtonWithProgress
+          isLoading={isLoadingFile}
+          endIcon={!isLoadingFile && <CloudDownloadIcon />}
+          onClick={() => handleDownload(file.identifier)}>
+          {t('download')}
+        </StyledButtonWithProgress>
+      ) : (
+        <StyledButton
+          variant="contained"
+          color="primary"
+          endIcon={<OpenInNewIcon />}
+          onClick={() => window.open(currentFile)}>
+          {t('open')}
+        </StyledButton>
+      )}
+    </StyledSidebarCard>
   );
 };
 
-export default PublicPublicationFiles;
+export default PublicPublicationFile;
