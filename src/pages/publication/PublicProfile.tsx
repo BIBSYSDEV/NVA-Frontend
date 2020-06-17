@@ -1,5 +1,5 @@
 import React, { FC, useEffect } from 'react';
-import { CircularProgress, IconButton } from '@material-ui/core';
+import { CircularProgress, IconButton, Link as MuiLink } from '@material-ui/core';
 import styled from 'styled-components';
 import { useParams, useHistory } from 'react-router-dom';
 import orcidIcon from '../../resources/images/orcid_logo.svg';
@@ -8,7 +8,6 @@ import Heading from '../../components/Heading';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
 import useFetchAuthority from '../../utils/hooks/useFetchAuthority';
 import { ORCID_BASE_URL } from '../../utils/constants';
-import { Link as MuiLink } from '@material-ui/core';
 import NormalText from '../../components/NormalText';
 import WorkIcon from '@material-ui/icons/Work';
 
