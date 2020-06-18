@@ -16,8 +16,12 @@ import { NotificationVariant } from '../../../types/notification.types';
 import { setNotification } from '../../../redux/actions/notificationActions';
 
 const StyledAuthorityContainer = styled.div`
+  min-width: 20rem;
   > * {
     margin-top: 1rem;
+  }
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+    min-width: auto;
   }
 `;
 
