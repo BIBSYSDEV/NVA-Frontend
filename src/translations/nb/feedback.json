@@ -4,7 +4,7 @@
     "create_authority": "Kunne ikke opprette autoritet",
     "create_customer": "Kunne ikke opprette institusjon",
     "create_publication": "Kunne ikke opprette publikasjon",
-    "delete_identifier": "Kunne ikke slette identifikatoren",
+    "delete_identifier": "Kunne ikke slette {{qualifier}}",
     "download_file": "Kunne ikke laste ned fil",
     "get_approvable_publications": "Kunne ikke hente publikasjoner som venter godkjenning",
     "get_authority": "Kunne ikke hente autoritet",
@@ -27,10 +27,12 @@
     "orcid_login": "Kunne ikke logge inn på ORCID",
     "publish_publication": "Kunne ikke publisere publikasjon",
     "search": "Søk feilet",
-    "update_authority": "Kunne ikke oppdatere autoritet",
+    "update_authority": "Kunne ikke oppdatere {{qualifier}} for autoritet",
     "update_customer": "Kunne ikke oppdatere institusjon",
-    "update_identifier": "Kunne ikke oppdatere identifikatoren",
-    "update_publication": "Kunne ikke oppdatere publikasjon"
+    "update_publication": "Kunne ikke oppdatere publikasjon",
+    "orcid": {
+      "access_denied": "Kunne ikke koble til ORCID fordi tilgang til ORCID-kontoen ble avslått"
+    }
   },
   "info": {
     "affiliation_already_exists": "Tilknytningen finnes allerede",
@@ -46,7 +48,6 @@
     "login": "Logget inn",
     "update_authority": "Forfatter er oppdatert",
     "update_customer": "Institusjon er oppdatert",
-    "update_identifier": "Identifikatoren er oppdatert",
     "update_publication": "Publikasjonen er oppdatert"
   }
 }

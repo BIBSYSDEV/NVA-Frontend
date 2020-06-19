@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { FormikPublication } from '../../../../types/publication.types';
 import { ReferenceFieldNames } from '../../../../types/publicationFieldNames';
 import ConfirmDialog from '../../../../components/ConfirmDialog';
+import NormalText from '../../../../components/NormalText';
 
 const StyledClearIcon = styled(ClearIcon)`
   color: ${({ theme }) => theme.palette.danger.main};
@@ -49,10 +50,10 @@ const DoiField: FC = () => {
       <ConfirmDialog
         open={openConfirmDialog}
         title={t('references.delete_doi_title')}
-        text={t('references.delete_doi_text')}
         onAccept={changeType}
-        onCancel={toggleConfirmDialog}
-      />
+        onCancel={toggleConfirmDialog}>
+        <NormalText>{t('references.delete_doi_text')}</NormalText>
+      </ConfirmDialog>
     </>
   ) : null;
 };

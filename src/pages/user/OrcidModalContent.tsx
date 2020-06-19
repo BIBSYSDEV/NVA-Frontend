@@ -3,30 +3,19 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { Button, DialogContent, DialogActions } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 
 import { ORCID_SIGN_IN_URL, USE_MOCK_DATA } from '../../utils/constants';
 import NormalText from '../../components/NormalText';
 import Label from '../../components/Label';
+import { StyledCenterAlignedContentWrapper } from '../../components/styled/Wrappers';
 
-const StyledButtonContainer = styled(DialogActions)`
-  display: flex;
-  justify-content: center;
-  margin: 1rem 0;
-  padding: 0;
-`;
-
-const StyledButton = styled(Button)`
-  max-width: 22rem;
+const StyledButtonContainer = styled(StyledCenterAlignedContentWrapper)`
+  margin-top: 1rem;
 `;
 
 const StyledSubHeading = styled(Label)`
   margin: 1em 0;
-  font-weight: bold;
-`;
-
-const StyledOrcidDescription = styled(DialogContent)`
-  padding: 0.5rem;
 `;
 
 const OrcidModalContent: FC = () => {
@@ -43,15 +32,13 @@ const OrcidModalContent: FC = () => {
 
   return (
     <>
-      <StyledOrcidDescription dividers>
-        <NormalText>{t('orcid.login')}</NormalText>
-        <StyledSubHeading>{t('orcid.why')}</StyledSubHeading>
-        <NormalText>{t('orcid.description_why_use_orcid')}</NormalText>
-        <StyledSubHeading>{t('orcid.what')}</StyledSubHeading>
-        <NormalText>{t('orcid.description_what_is_orcid')}</NormalText>
-      </StyledOrcidDescription>
+      <NormalText>{t('orcid.login')}</NormalText>
+      <StyledSubHeading>{t('orcid.why')}</StyledSubHeading>
+      <NormalText>{t('orcid.description_why_use_orcid')}</NormalText>
+      <StyledSubHeading>{t('orcid.what')}</StyledSubHeading>
+      <NormalText>{t('orcid.description_what_is_orcid')}</NormalText>
       <StyledButtonContainer>
-        <StyledButton
+        <Button
           data-testid="connect-to-orcid"
           onClick={() => {
             openORCID();
@@ -59,7 +46,7 @@ const OrcidModalContent: FC = () => {
           color="primary"
           variant="contained">
           {t('orcid.create_or_connect')}
-        </StyledButton>
+        </Button>
       </StyledButtonContainer>
     </>
   );

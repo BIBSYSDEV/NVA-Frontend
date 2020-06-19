@@ -140,3 +140,12 @@ export const publicationValidationSchema = Yup.object().shape({
     files: Yup.array().of(Yup.object().shape(fileValidationSchema)).min(1, ErrorMessage.MISSING_FILE),
   }),
 });
+
+export const doiValidationSchema = Yup.object().shape({
+  doiUrl: Yup.string().trim().url(ErrorMessage.INVALID_FORMAT).required(ErrorMessage.REQUIRED),
+});
+
+export const newContributorValidationSchema = Yup.object().shape({
+  firstName: Yup.string().required(ErrorMessage.REQUIRED),
+  lastName: Yup.string().required(ErrorMessage.REQUIRED),
+});

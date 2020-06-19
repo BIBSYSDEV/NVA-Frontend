@@ -1,12 +1,13 @@
 import React, { useState, FC } from 'react';
-import { Formik, Form, Field, FieldProps, FormikValues } from 'formik';
-import { emptyNewContributor } from '../../../../types/contributor.types';
+import { Formik, Form, Field, FieldProps, FormikValues, ErrorMessage } from 'formik';
 import { Collapse, Button, TextField, CircularProgress } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
+import { useDispatch } from 'react-redux';
+
+import { emptyNewContributor } from '../../../../types/contributor.types';
 import { createAuthority } from '../../../../api/authorityApi';
 import { Authority } from '../../../../types/authority.types';
-import { useDispatch } from 'react-redux';
 import { setNotification } from '../../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../../types/notification.types';
 import {
@@ -14,6 +15,7 @@ import {
   StyledRightAlignedButtonWrapper,
   StyledNormalTextPreWrapped,
 } from '../../../../components/styled/Wrappers';
+import { newContributorValidationSchema } from '../../PublicationFormValidationSchema';
 
 const StyledButtonContainer = styled(StyledRightAlignedButtonWrapper)`
   margin-top: 1rem;
@@ -50,32 +52,53 @@ const CreateContributorModalContent: FC<CreateContributorModalContentProps> = ({
           <CircularProgress size={100} />
         </StyledProgressWrapper>
       ) : (
-        <Formik initialValues={emptyNewContributor} onSubmit={handleSubmit}>
-          <Form>
-            <Collapse in={readMore} collapsedHeight="4.5rem">
-              <StyledNormalTextPreWrapped>{t('description_create_authority')}</StyledNormalTextPreWrapped>
-            </Collapse>
-            <StyledRightAlignedButtonWrapper>
-              <Button color="primary" onClick={toggleReadMore}>
-                {t(readMore ? 'read_less' : 'read_more')}
-              </Button>
-            </StyledRightAlignedButtonWrapper>
-            <Field name="firstName">
-              {({ field }: FieldProps) => (
-                <TextField {...field} aria-label="first name" fullWidth label={t('first_name')} variant="outlined" />
-              )}
-            </Field>
-            <Field name="lastName">
-              {({ field }: FieldProps) => (
-                <TextField {...field} aria-label="last name" fullWidth label={t('last_name')} variant="outlined" />
-              )}
-            </Field>
-            <StyledButtonContainer>
-              <Button type="submit" color="primary" variant="contained">
-                {t('create_authority')}
-              </Button>
-            </StyledButtonContainer>
-          </Form>
+        <Formik
+          initialValues={emptyNewContributor}
+          validationSchema={newContributorValidationSchema}
+          onSubmit={handleSubmit}>
+          {({ isValid, isSubmitting, dirty }) => (
+            <Form>
+              <Collapse in={readMore} collapsedHeight="4.5rem">
+                <StyledNormalTextPreWrapped>{t('description_create_authority')}</StyledNormalTextPreWrapped>
+              </Collapse>
+              <StyledRightAlignedButtonWrapper>
+                <Button color="primary" onClick={toggleReadMore}>
+                  {t(readMore ? 'read_less' : 'read_more')}
+                </Button>
+              </StyledRightAlignedButtonWrapper>
+              <Field name="firstName">
+                {({ field, meta: { error, touched } }: FieldProps) => (
+                  <TextField
+                    {...field}
+                    aria-label="first name"
+                    fullWidth
+                    label={t('first_name')}
+                    variant="outlined"
+                    error={!!error && touched}
+                    helperText={<ErrorMessage name={field.name} />}
+                  />
+                )}
+              </Field>
+              <Field name="lastName">
+                {({ field, meta: { error, touched } }: FieldProps) => (
+                  <TextField
+                    {...field}
+                    aria-label="last name"
+                    fullWidth
+                    label={t('last_name')}
+                    variant="outlined"
+                    error={!!error && touched}
+                    helperText={<ErrorMessage name={field.name} />}
+                  />
+                )}
+              </Field>
+              <StyledButtonContainer>
+                <Button type="submit" color="primary" variant="contained" disabled={!isValid || !dirty || isSubmitting}>
+                  {t('create_authority')}
+                </Button>
+              </StyledButtonContainer>
+            </Form>
+          )}
         </Formik>
       )}
     </>

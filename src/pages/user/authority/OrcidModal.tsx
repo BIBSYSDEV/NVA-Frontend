@@ -9,10 +9,7 @@ import orcidLogo from '../../../resources/images/orcid_logo.svg';
 
 const StyledSkipButtonContainer = styled.div`
   text-align: center;
-`;
-
-const StyledButton = styled(Button)`
-  max-width: 22rem;
+  margin: 1rem 0;
 `;
 
 interface OrcidModalProps {
@@ -28,14 +25,14 @@ const OrcidModal: FC<OrcidModalProps> = ({ closeModal }) => {
       ariaLabelledBy="orcid-modal"
       openModal={true}
       onClose={closeModal}
-      maxWidth="lg"
+      maxWidth="sm"
       headingIcon={{ src: orcidLogo, alt: 'ORCID iD icon' }}
       headingText={t('profile:orcid.create_or_connect')}>
       <OrcidModalContent />
       <StyledSkipButtonContainer>
-        <StyledButton data-testid="skip-connect-to-orcid" color="default" variant="outlined" onClick={closeModal}>
+        <Button data-testid="skip-connect-to-orcid" color="default" variant="outlined" onClick={closeModal}>
           {t('profile:orcid.skip_this_step')}
-        </StyledButton>
+        </Button>
       </StyledSkipButtonContainer>
     </Modal>
   );

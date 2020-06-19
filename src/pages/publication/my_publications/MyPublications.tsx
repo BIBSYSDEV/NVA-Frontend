@@ -9,7 +9,11 @@ import { PublicationStatus } from '../../../types/publication.types';
 import PublicationList from './PublicationList';
 import TabButton from '../../../components/TabButton';
 import useFetchMyPublications from '../../../utils/hooks/useFetchMyPublications';
-import { StyledProgressWrapper, StyledRightAlignedButtonWrapper } from '../../../components/styled/Wrappers';
+import {
+  StyledProgressWrapper,
+  StyledRightAlignedButtonWrapper,
+  StyledCenterAlignedContentWrapper,
+} from '../../../components/styled/Wrappers';
 
 const StyledContainer = styled.div`
   display: block;
@@ -17,9 +21,7 @@ const StyledContainer = styled.div`
   margin: 0 2rem 2rem 2rem;
 `;
 
-const StyledTabsContainer = styled.div`
-  display: flex;
-  justify-content: center;
+const StyledTabsContainer = styled(StyledCenterAlignedContentWrapper)`
   padding-top: 2rem;
 `;
 

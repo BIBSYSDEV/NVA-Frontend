@@ -9,8 +9,6 @@ import Heading from './Heading';
 const StyledPaper = styled.div`
   background-color: ${({ theme }) => theme.palette.background};
   margin: 1rem;
-  min-width: 40rem;
-  max-width: 40rem;
   @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
     margin-top: 0;
     min-width: auto;
@@ -19,10 +17,10 @@ const StyledPaper = styled.div`
 
 const StyledHeaderContainer = styled.div`
   display: grid;
-  padding: 1rem 0;
+  padding-top: 1rem;
   grid-template-areas: 'text cross';
-  grid-template-columns: 3fr 1fr;
-  column-gap: 1rem;
+  grid-template-columns: auto 1fr;
+  margin-bottom: 1rem;
 `;
 
 const StyledHeading = styled(Heading)`
@@ -50,7 +48,6 @@ const StyledInfoContainer = styled.div`
   display: grid;
   grid-template-areas: 'avatar text';
   grid-template-columns: 1fr 7fr;
-  grid-gap: 1rem;
   align-items: center;
   @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
     grid-template-areas: 'text text';

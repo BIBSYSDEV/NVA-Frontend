@@ -7,6 +7,7 @@ import DoiRequests from './DoiRequests';
 import PublicationsForApproval from './PublicationsForApproval';
 import TabButton from '../../components/TabButton';
 import { Card } from '@material-ui/core';
+import { StyledCenterAlignedContentWrapper } from '../../components/styled/Wrappers';
 
 const StyledContainer = styled.div`
   display: block;
@@ -14,9 +15,7 @@ const StyledContainer = styled.div`
   margin: 0 2rem 2rem 2rem;
 `;
 
-const StyledTabsContainer = styled.div`
-  display: flex;
-  justify-content: center;
+const StyledTabsContainer = styled(StyledCenterAlignedContentWrapper)`
   padding-top: 2rem;
   margin: 0 1.5rem;
 `;

@@ -22,6 +22,11 @@ export const StyledRightAlignedButtonWrapper = styled.div`
   justify-content: flex-end;
 `;
 
+export const StyledCenterAlignedContentWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
 export const StyledNormalTextPreWrapped = styled(NormalText)`
   white-space: pre-wrap;
 `;

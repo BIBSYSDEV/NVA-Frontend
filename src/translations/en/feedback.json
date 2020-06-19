@@ -4,7 +4,7 @@
     "create_authority": "Could not create authority",
     "create_customer": "Could not create customer institution",
     "create_publication": "Could not create publication",
-    "delete_identifier": "Could not delete identifier",
+    "delete_identifier": "Could not delete {{qualifier}}",
     "download_file": "Could not download file",
     "get_approvable_publications": "Could not fetch publications awaiting approval",
     "get_authority": "Could not retrieve authority",
@@ -27,10 +27,12 @@
     "orcid_login": "ORCID login failed",
     "publish_publication": "Could not publish publication",
     "search": "Search failed",
-    "update_authority": "Could not update authority",
+    "update_authority": "Could not update {{qualifier}} for authority",
     "update_customer": "Could not update customer institution",
-    "update_identifier": "Could not update identifier",
-    "update_publication": "Could not update publication"
+    "update_publication": "Could not update publication",
+    "orcid": {
+      "access_denied": "Could not connect to ORCID because access to the ORCID account was denied"
+    }
   },
   "info": {
     "affiliation_already_exists": "Affiliation already exists",
@@ -46,7 +48,6 @@
     "login": "Logged in",
     "update_authority": "Updated authority",
     "update_customer": "Updated customer institution",
-    "update_identifier": "Updated identifier",
     "update_publication": "Updated publication"
   }
 }
