@@ -99,7 +99,7 @@ export const addQualifierIdForAuthority = async (
   qualifier: AuthorityQualifiers,
   identifier: string
 ) => {
-  const url = `${AuthorityApiPaths.PERSON}/${systemControlNumber}/identifiers/${qualifier}/${identifier}`;
+  const url = `${AuthorityApiPaths.PERSON}/${systemControlNumber}/identifiers/${qualifier}/add`;
 
   const error = i18n.t('feedback:error.update_authority', { qualifier: i18n.t(`common:${qualifier}`) });
 
@@ -108,7 +108,7 @@ export const addQualifierIdForAuthority = async (
     const headers = {
       Authorization: `Bearer ${idToken}`,
     };
-    const response = await Axios.post(url, { headers });
+    const response = await Axios.post(url, { identifier }, { headers });
     if (response.status === StatusCode.OK) {
       return response.data;
     } else if (response.status === StatusCode.NO_CONTENT) {
@@ -127,7 +127,7 @@ export const updateQualifierIdForAuthority = async (
   identifier: string,
   updatedIdentifier: string
 ) => {
-  const url = `${AuthorityApiPaths.PERSON}/${systemControlNumber}/identifiers/${qualifier}/${identifier}/update/${updatedIdentifier}`;
+  const url = `${AuthorityApiPaths.PERSON}/${systemControlNumber}/identifiers/${qualifier}/update`;
 
   const error = i18n.t('feedback:error.update_authority', { qualifier: i18n.t(`common:${qualifier}`) });
 
@@ -137,7 +137,7 @@ export const updateQualifierIdForAuthority = async (
       Authorization: `Bearer ${idToken}`,
     };
 
-    const response = await Axios.put(url, { headers });
+    const response = await Axios.post(url, { identifier, updatedIdentifier }, { headers });
     if (response.status === StatusCode.OK) {
       return response.data;
     } else {
@@ -153,7 +153,7 @@ export const removeQualifierIdFromAuthority = async (
   qualifier: AuthorityQualifiers,
   identifier: string
 ) => {
-  const url = `${AuthorityApiPaths.PERSON}/${systemControlNumber}/identifiers/${qualifier}/${identifier}`;
+  const url = `${AuthorityApiPaths.PERSON}/${systemControlNumber}/identifiers/${qualifier}/delete`;
 
   const error = i18n.t('feedback:error.delete_identifier', { qualifier: i18n.t(`common:${qualifier}`) });
 
@@ -163,7 +163,7 @@ export const removeQualifierIdFromAuthority = async (
       Authorization: `Bearer ${idToken}`,
     };
 
-    const response = await Axios.delete(url, { headers });
+    const response = await Axios.post(url, { identifier }, { headers });
     if (response.status === StatusCode.OK) {
       return response.data;
     } else {
