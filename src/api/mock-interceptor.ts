@@ -124,18 +124,18 @@ export const interceptRequestsOnMock = () => {
     .onPut(new RegExp(`${API_URL}${AuthorityApiPaths.PERSON}/*`))
     .replyOnce(200, mockSingleAuthorityResponseWithFeide);
   mock
-    .onPost(new RegExp(`${API_URL}${AuthorityApiPaths.PERSON}/901790000000/identifiers/orgunitid/*`))
+    .onPost(new RegExp(`${API_URL}${AuthorityApiPaths.PERSON}/901790000000/identifiers/orgunitid/add`))
     .replyOnce(200, mockSingleAuthorityResponse);
   mock
-    .onPost(new RegExp(`${API_URL}${AuthorityApiPaths.PERSON}/901790000000/identifiers/orcid/*`))
+    .onPost(new RegExp(`${API_URL}${AuthorityApiPaths.PERSON}/901790000000/identifiers/orcid/add`))
     .reply(200, mockSingleAuthorityResponseWithOrcid);
   mock
-    .onPost(new RegExp(`${API_URL}${AuthorityApiPaths.PERSON}/901790000000/identifiers/orgunitid/*`))
+    .onPost(new RegExp(`${API_URL}${AuthorityApiPaths.PERSON}/901790000000/identifiers/orgunitid/add`))
     .reply(200, mockSingleAuthorityResponseWithOrcid);
 
   // Remove orgunitid from Authority
   mock
-    .onDelete(new RegExp(`${API_URL}${AuthorityApiPaths.PERSON}/*`))
+    .onPost(new RegExp(`${API_URL}${AuthorityApiPaths.PERSON}/901790000000/identifiers/orgunitid/delete`))
     .reply(200, mockSingleAuthorityResponseAfterDeletion);
 
   // create authority
