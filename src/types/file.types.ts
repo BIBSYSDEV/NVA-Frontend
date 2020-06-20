@@ -4,6 +4,7 @@ import { BackendType, BackendTypeNames } from './publication.types';
 import i18n from '../translations/i18n';
 
 export enum LicenseNames {
+  CC = 'CC',
   CC_BY = 'CC BY',
   CC_BY_SA = 'CC BY-SA',
   CC_BY_ND = 'CC BY-ND',
@@ -23,6 +24,14 @@ interface LicenseInfo {
 }
 
 export const licenses: LicenseInfo[] = [
+  {
+    buttonImage: LicenseImages.ccButton,
+    description: i18n.t('licenses:description.cc'),
+    identifier: i18n.t('licenses:labels.cc'),
+    image: LicenseImages.ccImage,
+    label: i18n.t('licenses:labels.cc'),
+    link: i18n.t('licenses:links.cc'),
+  },
   {
     buttonImage: LicenseImages.ccByButton,
     description: i18n.t('licenses:description.cc_by'),
