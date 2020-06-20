@@ -168,9 +168,13 @@ const PublicPublicationContent: FC<PublicPublicationContentProps> = ({ publicati
             <StyledLicenseCard>
               <StyledLicenseImage src={selectedLicense.image} alt={selectedLicense.identifier} />
               <StyledLicenseLabel>
-                <Link href={selectedLicense.link} target="_blank" rel="noopener noreferrer">
-                  {selectedLicense.label}
-                </Link>
+                {selectedLicense.link ? (
+                  <Link href={selectedLicense.link} target="_blank" rel="noopener noreferrer">
+                    {selectedLicense.label}
+                  </Link>
+                ) : (
+                  <>{selectedLicense.label}</>
+                )}
               </StyledLicenseLabel>
               <StyledNormalText>{selectedLicense.description}</StyledNormalText>
             </StyledLicenseCard>
