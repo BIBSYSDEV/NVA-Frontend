@@ -118,10 +118,13 @@ export const interceptRequestsOnMock = () => {
   mock
     .onGet(new RegExp(`${API_URL}${AuthorityApiPaths.PERSON}\\?name=tu@unit.no`))
     .reply(200, mockSingleAuthorityResponse);
+  mock
+    .onGet(new RegExp(`${API_URL}${AuthorityApiPaths.PERSON}\\?arpId=901790000000`))
+    .reply(200, mockSingleAuthorityResponse);
 
   // update authority
   mock
-    .onPut(new RegExp(`${API_URL}${AuthorityApiPaths.PERSON}/*`))
+    .onPost(new RegExp(`${API_URL}${AuthorityApiPaths.PERSON}/901790000000/identifiers/*/update`))
     .replyOnce(200, mockSingleAuthorityResponseWithFeide);
   mock
     .onPost(new RegExp(`${API_URL}${AuthorityApiPaths.PERSON}/901790000000/identifiers/orgunitid/add`))
