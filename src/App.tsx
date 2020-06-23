@@ -82,7 +82,7 @@ const App: FC = () => {
   useEffect(() => {
     // Fetch attributes of authenticated user
     const getUser = async () => {
-      const currentUser = await getCurrentUserAttributes();
+      const currentUser = await getCurrentUserAttributes(dispatch);
       if (currentUser) {
         if (currentUser.error) {
           dispatch(setNotification(currentUser.error, NotificationVariant.Error));

@@ -7,8 +7,9 @@ import { USE_MOCK_DATA } from '../utils/constants';
 import { setNotification } from '../redux/actions/notificationActions';
 import { NotificationVariant } from '../types/notification.types';
 import { FeideUser } from '../types/user.types';
+import { setUser } from '../redux/actions/userActions';
 
-export const getCurrentUserAttributes = async (): Promise<FeideUser | any> => {
+export const getCurrentUserAttributes = async (dispatch: Dispatch): Promise<FeideUser | any> => {
   let userAttributes = undefined;
   try {
     const cognitoUser = await Auth.currentAuthenticatedUser();
@@ -17,7 +18,9 @@ export const getCurrentUserAttributes = async (): Promise<FeideUser | any> => {
         const currentSession = await Auth.currentSession();
         cognitoUser.refreshSession(currentSession.getRefreshToken());
       } else {
-        userAttributes = cognitoUser.attributes;
+        const loggedInUser = (await Auth.currentSession()).getIdToken().payload;
+        userAttributes = loggedInUser;
+        dispatch(setUser(loggedInUser));
       }
     });
   } catch {
