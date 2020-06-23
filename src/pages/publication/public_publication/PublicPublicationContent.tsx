@@ -173,7 +173,7 @@ const PublicPublicationContent: FC<PublicPublicationContentProps> = ({ publicati
                     {selectedLicense.label}
                   </Link>
                 ) : (
-                  <>{selectedLicense.label}</>
+                  selectedLicense.label
                 )}
               </StyledLicenseLabel>
               <StyledNormalText>{selectedLicense.description}</StyledNormalText>
