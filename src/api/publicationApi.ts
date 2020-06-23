@@ -13,6 +13,7 @@ import { NotificationVariant } from '../types/notification.types';
 export enum PublicationsApiPaths {
   SEARCH = '/search/publications',
   PUBLICATION = '/publication',
+  PUBLICATIONS = '/publications',
   PUBLICATIONS_BY_OWNER = '/publication/by-owner',
   DOI_LOOKUP = '/doi-fetch',
   DOI_REQUESTS = '/publications/doi-requests',
@@ -54,6 +55,23 @@ export const updatePublication = async (publication: Publication) => {
     }
   } catch {
     return { error: i18n.t('feedback:error.update_publication') };
+  }
+};
+
+export const getPublications = async (cancelToken?: CancelToken) => {
+  const url = PublicationsApiPaths.PUBLICATIONS;
+
+  try {
+    const response = await Axios.get(url, { cancelToken });
+    if (response.status === StatusCode.OK) {
+      return response.data;
+    } else {
+      return { error: i18n.t('feedback:error.get_publications') };
+    }
+  } catch (error) {
+    if (!Axios.isCancel(error)) {
+      return { error: i18n.t('feedback:error.get_publications') };
+    }
   }
 };
 
