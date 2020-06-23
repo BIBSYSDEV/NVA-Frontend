@@ -17,22 +17,26 @@ export enum AuthorityQualifiers {
 export const getAuthority = async (arpId: string, cancelToken?: CancelToken) => {
   const url = encodeURI(`${AuthorityApiPaths.PERSON}?arpId=${arpId}`);
 
+  const error = i18n.t('feedback:error.get_authority');
+
   try {
     const response = await Axios.get(url, { cancelToken });
     if (response.status === StatusCode.OK) {
       return response.data;
     } else {
-      return { error: i18n.t('feedback:error.get_authority') };
+      return { error };
     }
   } catch (error) {
     if (!Axios.isCancel(error)) {
-      return { error: i18n.t('feedback:error.get_authority') };
+      return { error };
     }
   }
 };
 
 export const getAuthorities = async (name: string, cancelToken?: CancelToken) => {
   const url = encodeURI(`${AuthorityApiPaths.PERSON}?name=${name}`);
+
+  const error = i18n.t('feedback:error.get_authorities');
 
   try {
     // remove when Authorization headers are set for all requests
@@ -46,17 +50,19 @@ export const getAuthorities = async (name: string, cancelToken?: CancelToken) =>
     if (response.status === StatusCode.OK) {
       return response.data;
     } else {
-      return { error: i18n.t('feedback:error.get_authorities') };
+      return { error };
     }
   } catch (error) {
     if (!Axios.isCancel(error)) {
-      return { error: i18n.t('feedback:error.get_authorities') };
+      return { error };
     }
   }
 };
 
 export const createAuthority = async (firstName: string, lastName: string, feideId?: string) => {
   const url = AuthorityApiPaths.PERSON;
+
+  const error = i18n.t('feedback:error.create_authority');
 
   try {
     // remove when Authorization headers are set for all requests
@@ -80,17 +86,11 @@ export const createAuthority = async (firstName: string, lastName: string, feide
       } else {
         return response.data;
       }
-    } else if (response.status === StatusCode.NO_CONTENT) {
-      return;
     } else {
-      return {
-        error: i18n.t('feedback:error.create_authority'),
-      };
+      return { error };
     }
   } catch {
-    return {
-      error: i18n.t('feedback:error.create_authority'),
-    };
+    return { error };
   }
 };
 
@@ -99,7 +99,7 @@ export const addQualifierIdForAuthority = async (
   qualifier: AuthorityQualifiers,
   identifier: string
 ) => {
-  const url = `${AuthorityApiPaths.PERSON}/${systemControlNumber}/identifiers/${qualifier}/${identifier}`;
+  const url = `${AuthorityApiPaths.PERSON}/${systemControlNumber}/identifiers/${qualifier}/add`;
 
   const error = i18n.t('feedback:error.update_authority', { qualifier: i18n.t(`common:${qualifier}`) });
 
@@ -108,11 +108,9 @@ export const addQualifierIdForAuthority = async (
     const headers = {
       Authorization: `Bearer ${idToken}`,
     };
-    const response = await Axios.post(url, { headers });
+    const response = await Axios.post(url, { identifier }, { headers });
     if (response.status === StatusCode.OK) {
       return response.data;
-    } else if (response.status === StatusCode.NO_CONTENT) {
-      return;
     } else {
       return { error };
     }
@@ -127,7 +125,7 @@ export const updateQualifierIdForAuthority = async (
   identifier: string,
   updatedIdentifier: string
 ) => {
-  const url = `${AuthorityApiPaths.PERSON}/${systemControlNumber}/identifiers/${qualifier}/${identifier}/update/${updatedIdentifier}`;
+  const url = `${AuthorityApiPaths.PERSON}/${systemControlNumber}/identifiers/${qualifier}/update`;
 
   const error = i18n.t('feedback:error.update_authority', { qualifier: i18n.t(`common:${qualifier}`) });
 
@@ -137,7 +135,7 @@ export const updateQualifierIdForAuthority = async (
       Authorization: `Bearer ${idToken}`,
     };
 
-    const response = await Axios.put(url, { headers });
+    const response = await Axios.post(url, { identifier, updatedIdentifier }, { headers });
     if (response.status === StatusCode.OK) {
       return response.data;
     } else {
@@ -153,7 +151,7 @@ export const removeQualifierIdFromAuthority = async (
   qualifier: AuthorityQualifiers,
   identifier: string
 ) => {
-  const url = `${AuthorityApiPaths.PERSON}/${systemControlNumber}/identifiers/${qualifier}/${identifier}`;
+  const url = `${AuthorityApiPaths.PERSON}/${systemControlNumber}/identifiers/${qualifier}/delete`;
 
   const error = i18n.t('feedback:error.delete_identifier', { qualifier: i18n.t(`common:${qualifier}`) });
 
@@ -163,7 +161,7 @@ export const removeQualifierIdFromAuthority = async (
       Authorization: `Bearer ${idToken}`,
     };
 
-    const response = await Axios.delete(url, { headers });
+    const response = await Axios.post(url, { identifier }, { headers });
     if (response.status === StatusCode.OK) {
       return response.data;
     } else {
