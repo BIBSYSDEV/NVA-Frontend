@@ -43,7 +43,7 @@ const useFetchPublication = (
         cancelSource.cancel();
       }
     };
-  }, [dispatch, identifier, user.isCurator]);
+  }, [dispatch, identifier, user]);
 
   return [publication, isLoading, handleSetPublication];
 };
