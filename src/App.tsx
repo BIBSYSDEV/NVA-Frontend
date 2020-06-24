@@ -20,8 +20,6 @@ import { API_URL, USE_MOCK_DATA } from './utils/constants';
 import { hubListener } from './utils/hub-listener';
 import { mockUser } from './utils/testfiles/mock_feide_user';
 import AppRoutes from './AppRoutes';
-import { setNotification } from './redux/actions/notificationActions';
-import { NotificationVariant } from './types/notification.types';
 import { CircularProgress } from '@material-ui/core';
 import useFetchAuthorities from './utils/hooks/useFetchAuthorities';
 
@@ -82,14 +80,7 @@ const App: FC = () => {
   useEffect(() => {
     // Fetch attributes of authenticated user
     const getUser = async () => {
-      const currentUser = await getCurrentUserAttributes(dispatch);
-      if (currentUser) {
-        if (currentUser.error) {
-          dispatch(setNotification(currentUser.error, NotificationVariant.Error));
-        } else {
-          dispatch(setUser(currentUser));
-        }
-      }
+      dispatch(getCurrentUserAttributes());
       setIsLoadingUser(false);
     };
 
