@@ -91,7 +91,7 @@ export const interceptRequestsOnMock = () => {
   mock.onPost(new RegExp(FileApiPaths.COMPLETE)).reply(200, mockCompleteUpload);
 
   // PUBLICATION LIST
-  mock.onGet(PublicationsApiPaths.PUBLICATIONS).reply(200, mockPublishedPublications);
+  mock.onGet(PublicationsApiPaths.PUBLICATION).reply(200, mockPublishedPublications);
 
   //MY PUBLICATIONS
   mock.onGet(new RegExp(`${PublicationsApiPaths.PUBLICATIONS_BY_OWNER}/*`)).reply(200, mockMyPublications);

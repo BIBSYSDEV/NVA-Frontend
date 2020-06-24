@@ -13,7 +13,6 @@ import { NotificationVariant } from '../types/notification.types';
 export enum PublicationsApiPaths {
   SEARCH = '/search/publications',
   PUBLICATION = '/publication',
-  PUBLICATIONS = '/publications',
   PUBLICATIONS_BY_OWNER = '/publication/by-owner',
   DOI_LOOKUP = '/doi-fetch',
   DOI_REQUESTS = '/publications/doi-requests',
@@ -59,7 +58,7 @@ export const updatePublication = async (publication: Publication) => {
 };
 
 export const getPublications = async (cancelToken?: CancelToken) => {
-  const url = PublicationsApiPaths.PUBLICATIONS;
+  const url = PublicationsApiPaths.PUBLICATION;
 
   try {
     const response = await Axios.get(url, { cancelToken });
