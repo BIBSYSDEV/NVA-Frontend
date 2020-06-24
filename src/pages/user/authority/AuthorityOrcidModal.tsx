@@ -19,7 +19,9 @@ const AuthorityOrcidModal: FC = () => {
     if (user.authority) {
       // Set previouslyLoggedIn in localStorage to avoid opening this modal on every login
       localStorage.setItem('previouslyLoggedIn', 'true');
-      setOpenModal(ModalType.NONE);
+      if (user.authority.orcids.length > 0) {
+        setOpenModal(ModalType.NONE);
+      }
     }
   }, [user.authority]);
 
