@@ -21,7 +21,6 @@ import { PanelProps } from './PublicationFormContent';
 import { NotificationVariant } from '../../types/notification.types';
 import { autoHideNotificationDuration } from '../../utils/constants';
 import { File } from '../../types/file.types';
-import { StyledNormalTextPreWrapped } from '../../components/styled/Wrappers';
 
 const StyledUploadedFiles = styled(Card)`
   display: flex;
@@ -32,8 +31,9 @@ const StyledUploadedFiles = styled(Card)`
   }
 `;
 
-const StyledLicenseDescription = styled(StyledNormalTextPreWrapped)`
+const StyledLicenseDescription = styled.div`
   margin-bottom: 1rem;
+  white-space: pre-wrap;
 `;
 
 interface FilesAndLicensePanelProps extends PanelProps {
@@ -126,7 +126,7 @@ const FilesAndLicensePanel: FC<FilesAndLicensePanelProps> = ({ uppy, setTouchedF
         headingText={t('files_and_license.licenses')}
         openModal={isLicenseModalOpen}
         onClose={toggleLicenseModal}
-        maxWidth="md">
+        maxWidth="sm">
         {licenses.map((license) => (
           <StyledLicenseDescription key={license.identifier}>
             <Label>{license.identifier}</Label>

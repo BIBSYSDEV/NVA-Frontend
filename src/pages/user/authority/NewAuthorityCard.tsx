@@ -10,6 +10,7 @@ import { RootStore } from '../../../redux/reducers/rootReducer';
 import { createAuthority } from '../../../api/authorityApi';
 import { NotificationVariant } from '../../../types/notification.types';
 import { StyledProgressWrapper, StyledNormalTextPreWrapped } from '../../../components/styled/Wrappers';
+import Label from '../../../components/Label';
 
 const StyledBoxContent = styled.div`
   display: grid;
@@ -30,6 +31,10 @@ const StyledBoxContent = styled.div`
 
 const StyledAuthority = styled.div`
   grid-area: authority;
+`;
+
+const StyledLabel = styled(Label)`
+  display: inline-grid;
 `;
 
 const StyledDescription = styled(StyledNormalTextPreWrapped)`
@@ -88,7 +93,7 @@ const NewAuthorityCard: FC<NewAuthorityCardProps> = ({ onClickCancel }) => {
         <StyledBoxContent>
           <StyledAuthority>
             <Radio color="primary" checked />
-            {name}
+            <StyledLabel>{name}</StyledLabel>
           </StyledAuthority>
           <StyledDescription>
             {hasMatchingAuthorities

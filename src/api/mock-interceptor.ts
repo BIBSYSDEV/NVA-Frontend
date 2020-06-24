@@ -118,24 +118,27 @@ export const interceptRequestsOnMock = () => {
   mock
     .onGet(new RegExp(`${API_URL}${AuthorityApiPaths.PERSON}\\?name=tu@unit.no`))
     .reply(200, mockSingleAuthorityResponse);
+  mock
+    .onGet(new RegExp(`${API_URL}${AuthorityApiPaths.PERSON}\\?arpId=901790000000`))
+    .reply(200, mockSingleAuthorityResponse);
 
   // update authority
   mock
-    .onPut(new RegExp(`${API_URL}${AuthorityApiPaths.PERSON}/*`))
+    .onPost(new RegExp(`${API_URL}${AuthorityApiPaths.PERSON}/901790000000/identifiers/*/update`))
     .replyOnce(200, mockSingleAuthorityResponseWithFeide);
   mock
-    .onPost(new RegExp(`${API_URL}${AuthorityApiPaths.PERSON}/901790000000/identifiers/orgunitid/*`))
+    .onPost(new RegExp(`${API_URL}${AuthorityApiPaths.PERSON}/901790000000/identifiers/orgunitid/add`))
     .replyOnce(200, mockSingleAuthorityResponse);
   mock
-    .onPost(new RegExp(`${API_URL}${AuthorityApiPaths.PERSON}/901790000000/identifiers/orcid/*`))
+    .onPost(new RegExp(`${API_URL}${AuthorityApiPaths.PERSON}/901790000000/identifiers/orcid/add`))
     .reply(200, mockSingleAuthorityResponseWithOrcid);
   mock
-    .onPost(new RegExp(`${API_URL}${AuthorityApiPaths.PERSON}/901790000000/identifiers/orgunitid/*`))
+    .onPost(new RegExp(`${API_URL}${AuthorityApiPaths.PERSON}/901790000000/identifiers/orgunitid/add`))
     .reply(200, mockSingleAuthorityResponseWithOrcid);
 
   // Remove orgunitid from Authority
   mock
-    .onDelete(new RegExp(`${API_URL}${AuthorityApiPaths.PERSON}/*`))
+    .onPost(new RegExp(`${API_URL}${AuthorityApiPaths.PERSON}/901790000000/identifiers/orgunitid/delete`))
     .reply(200, mockSingleAuthorityResponseAfterDeletion);
 
   // create authority
