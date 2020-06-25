@@ -7,20 +7,17 @@ import { SET_AUTHORITY_DATA, SET_POSSIBLE_AUTHORITIES, SET_USER_SUCCESS, UserAct
 export const userReducer = (state: User | null = null, action: UserActions | OrcidActions | AuthActions) => {
   switch (action.type) {
     case SET_USER_SUCCESS:
-      let affiliations;
-      let roles;
       const feideAffiliations = action.user['custom:affiliation'];
       const feideRoles = action.user['custom:applicationRoles'];
-      if (feideAffiliations) {
-        affiliations = feideAffiliations
-          .replace(/[[\]]/g, '')
-          .split(',')
-          .map((affiliationString) => affiliationString.trim())
-          .filter((affiliation) => affiliation) as Affiliation[];
-      }
-      if (feideRoles) {
-        roles = action.user['custom:applicationRoles'].split(',') as RoleName[];
-      }
+      const roles = feideRoles ? (feideRoles.split(',') as RoleName[]) : [];
+      const affiliations = feideAffiliations
+        ? (feideAffiliations
+            .replace(/[[\]]/g, '')
+            .split(',')
+            .map((affiliationString) => affiliationString.trim())
+            .filter((affiliation) => affiliation) as Affiliation[])
+        : [];
+
       const user: Partial<User> = {
         name: action.user.name,
         email: action.user.email,
@@ -32,12 +29,10 @@ export const userReducer = (state: User | null = null, action: UserActions | Orc
         affiliations,
         givenName: action.user.given_name,
         familyName: action.user.family_name,
-        isPublisher: roles ? roles.some((role) => role === RoleName.PUBLISHER) : false,
-        isAppAdmin: roles
-          ? roles.some((role) => role === RoleName.APP_ADMIN) || action.user.email.endsWith('@unit.no')
-          : false, // TODO: temporarily set app admin role based on email
-        isInstitutionAdmin: roles ? roles.some((role) => role === RoleName.ADMIN) : false,
-        isCurator: roles ? roles.some((role) => role === RoleName.CURATOR) : false,
+        isPublisher: roles.some((role) => role === RoleName.PUBLISHER),
+        isAppAdmin: roles.some((role) => role === RoleName.APP_ADMIN) || action.user.email.endsWith('@unit.no'), // TODO: temporarily set app admin role based on email
+        isInstitutionAdmin: roles.some((role) => role === RoleName.ADMIN),
+        isCurator: roles.some((role) => role === RoleName.CURATOR),
         possibleAuthorities: [],
       };
       return user;
