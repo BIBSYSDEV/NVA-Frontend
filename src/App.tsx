@@ -145,7 +145,7 @@ const App: FC = () => {
         <Footer />
       </StyledApp>
       {!localStorage.getItem('previouslyLoggedIn') && !isLoadingAuthorities && authorityDataUpdated && (
-        <AuthorityOrcidModal authority={user.authority} />
+        <AuthorityOrcidModal />
       )}
     </BrowserRouter>
   );
