@@ -25,10 +25,10 @@ interface LicenseInfo {
 
 export const licenses: LicenseInfo[] = [
   {
-    buttonImage: LicenseImages.ccButton,
+    buttonImage: LicenseImages.lockButton,
     description: i18n.t('licenses:description.cc'),
     identifier: i18n.t('licenses:labels.cc'),
-    image: LicenseImages.ccImage,
+    image: LicenseImages.lockImage,
     label: i18n.t('licenses:labels.cc'),
     link: i18n.t('licenses:links.cc'),
   },
