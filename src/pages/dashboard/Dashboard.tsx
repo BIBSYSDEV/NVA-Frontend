@@ -1,11 +1,8 @@
 import React, { FC, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { Link as MuiLink } from '@material-ui/core';
-import { search, getPublications } from '../../api/publicationApi';
-import SearchBar from '../../components/SearchBar';
+import { getPublications } from '../../api/publicationApi';
 import { useTranslation } from 'react-i18next';
 import LatestPublications from '../search/LatestPublications';
 
@@ -20,12 +17,12 @@ const StyledDashboard = styled.div`
 
 const StyledOtherContent = styled.div`
   grid-area: other-content;
-  padding-top: 2rem;
+  padding-bottom: 1.5rem;
 `;
 
 const StyledLinks = styled.div`
   > * {
-    margin: 0 0.5rem;
+    margin: 0.5rem;
   }
 `;
 
@@ -38,17 +35,8 @@ const StyledSearchBarContainer = styled.div`
 `;
 
 const Dashboard: FC = () => {
-  const history = useHistory();
-  const dispatch = useDispatch();
   const { t } = useTranslation();
   const [publications, setPublications] = useState([]);
-
-  const handleSearch = async (searchTerm: string) => {
-    if (searchTerm.length) {
-      await search(searchTerm, dispatch);
-      history.push(`/search/${searchTerm}`);
-    }
-  };
 
   useEffect(() => {
     const fetchPublications = async () => {
@@ -63,7 +51,6 @@ const Dashboard: FC = () => {
   return (
     <StyledDashboard>
       <StyledSearchBarContainer>
-        <SearchBar resetSearchInput handleSearch={handleSearch} />
         {publications?.length > 0 && <LatestPublications publications={publications} />}
       </StyledSearchBarContainer>
       <StyledOtherContent>

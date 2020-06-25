@@ -192,10 +192,15 @@ export type PublicationPreview = Pick<
   Publication & PublicationEntityDescription,
   'identifier' | 'mainTitle' | 'createdDate' | 'status' | 'owner'
 >;
+
 export type PublishedPublicationPreview = Pick<
   Publication & PublicationEntityDescription & PublicationContext,
   'identifier' | 'mainTitle' | 'createdDate' | 'reference' | 'contributors' | 'status' | 'type'
 >;
+
+export interface PublicationListItem extends PublicationPreview {
+  modifiedDate: string;
+}
 
 export interface Doi {
   identifier: string; // NVA identifier

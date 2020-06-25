@@ -1,31 +1,45 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 
-import { List, ListItem, ListItemIcon, ListItemText, Typography } from '@material-ui/core';
+import { List, ListItemText, Typography, ListItemAvatar, Avatar, Divider } from '@material-ui/core';
 import ImageIcon from '@material-ui/icons/Image';
 import { Link } from 'react-router-dom';
 import { Link as MuiLink } from '@material-ui/core';
 
-import { PublicationPreview } from '../../types/publication.types';
+import { PublicationListItem } from '../../types/publication.types';
+import Heading from '../../components/Heading';
+import { useTranslation } from 'react-i18next';
 
 interface LatestPublicationsProps {
-  publications: PublicationPreview[];
+  publications: PublicationListItem[];
 }
 
-const StyledSearchResults = styled.div`
+const StyledListContainer = styled.div`
   padding-bottom: 1rem;
 `;
 
+const StyledListItem = styled.li`
+  display: flex;
+  align-items: center;
+  padding-top: 0.5rem;
+`;
+
 const LatestPublications: FC<LatestPublicationsProps> = ({ publications }) => {
+  const { t } = useTranslation('publication');
+
   return (
-    <StyledSearchResults data-testid="search-results">
+    <StyledListContainer data-testid="search-results">
+      <Heading>{t('publication.newest_publications')}</Heading>
+      <Divider />
       <List>
         {publications &&
           publications.map((publication) => (
-            <ListItem key={publication.identifier}>
-              <ListItemIcon>
-                <ImageIcon />
-              </ListItemIcon>
+            <StyledListItem key={publication.identifier}>
+              <ListItemAvatar>
+                <Avatar>
+                  <ImageIcon />
+                </Avatar>
+              </ListItemAvatar>
 
               <ListItemText
                 data-testid="result-list-item"
@@ -36,14 +50,15 @@ const LatestPublications: FC<LatestPublicationsProps> = ({ publications }) => {
                 }
                 secondary={
                   <Typography component="span">
-                    {new Date(publication.createdDate).toLocaleDateString()} - {publication.owner}
+                    {new Date(publication.modifiedDate).toLocaleDateString()} - {publication.owner}
                   </Typography>
                 }
               />
-            </ListItem>
+            </StyledListItem>
           ))}
       </List>
-    </StyledSearchResults>
+      <Divider />
+    </StyledListContainer>
   );
 };
 
