@@ -9,6 +9,7 @@ import { setUser } from '../redux/actions/userActions';
 
 export const getCurrentUserAttributes = () => {
   return async (dispatch: Dispatch) => {
+    const loggedIn = localStorage.getItem('amplify-signin-with-hostedUI');
     try {
       const cognitoUser = await Auth.currentAuthenticatedUser();
       cognitoUser?.getSession(async (error: any, session: CognitoUserSession) => {
@@ -21,7 +22,9 @@ export const getCurrentUserAttributes = () => {
         }
       });
     } catch {
-      dispatch(setNotification(i18n.t('feedback:error.get_user', NotificationVariant.Error)));
+      if (loggedIn) {
+        dispatch(setNotification(i18n.t('feedback:error.get_user'), NotificationVariant.Error));
+      }
     }
   };
 };
