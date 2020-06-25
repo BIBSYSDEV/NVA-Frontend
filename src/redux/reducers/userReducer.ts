@@ -7,12 +7,17 @@ import { SET_AUTHORITY_DATA, SET_POSSIBLE_AUTHORITIES, SET_USER_SUCCESS, UserAct
 export const userReducer = (state: User | null = null, action: UserActions | OrcidActions | AuthActions) => {
   switch (action.type) {
     case SET_USER_SUCCESS:
-      const affiliations = action.user['custom:affiliation']
-        .replace(/[[\]]/g, '')
-        .split(',')
-        .map((affiliationString) => affiliationString.trim())
-        .filter((affiliation) => affiliation) as Affiliation[];
-      const roles = action.user['custom:applicationRoles'].split(',') as RoleName[];
+      const feideAffiliations = action.user['custom:affiliation'];
+      const feideRoles = action.user['custom:applicationRoles'];
+      const roles = feideRoles ? (feideRoles.split(',') as RoleName[]) : [];
+      const affiliations = feideAffiliations
+        ? (feideAffiliations
+            .replace(/[[\]]/g, '')
+            .split(',')
+            .map((affiliationString) => affiliationString.trim())
+            .filter((affiliation) => affiliation) as Affiliation[])
+        : [];
+
       const user: Partial<User> = {
         name: action.user.name,
         email: action.user.email,
