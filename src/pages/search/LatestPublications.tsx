@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 
-import { List, ListItemText, Typography, ListItemAvatar, Avatar, Divider } from '@material-ui/core';
+import { List, ListItemText, Typography, ListItemAvatar, Avatar, Divider, CircularProgress } from '@material-ui/core';
 import ImageIcon from '@material-ui/icons/Image';
 import { Link } from 'react-router-dom';
 import { Link as MuiLink } from '@material-ui/core';
@@ -9,10 +9,8 @@ import { Link as MuiLink } from '@material-ui/core';
 import { PublicationListItem } from '../../types/publication.types';
 import Heading from '../../components/Heading';
 import { useTranslation } from 'react-i18next';
-
-interface LatestPublicationsProps {
-  publications: PublicationListItem[];
-}
+import useFetchLatestPublications from '../../utils/hooks/useFetchLatestPublications';
+import { StyledProgressWrapper } from '../../components/styled/Wrappers';
 
 const StyledListContainer = styled.div`
   padding-bottom: 1rem;
@@ -24,40 +22,50 @@ const StyledListItem = styled.li`
   padding-top: 0.5rem;
 `;
 
-const LatestPublications: FC<LatestPublicationsProps> = ({ publications }) => {
+const LatestPublications: FC = () => {
   const { t } = useTranslation('publication');
+  const [publications, isLoadingPublications] = useFetchLatestPublications();
 
   return (
     <StyledListContainer data-testid="search-results">
-      <Heading>{t('publication.newest_publications')}</Heading>
-      <Divider />
-      <List>
-        {publications &&
-          publications.map((publication) => (
-            <StyledListItem key={publication.identifier}>
-              <ListItemAvatar>
-                <Avatar>
-                  <ImageIcon />
-                </Avatar>
-              </ListItemAvatar>
+      {isLoadingPublications ? (
+        <StyledProgressWrapper>
+          <CircularProgress />
+        </StyledProgressWrapper>
+      ) : (
+        publications.length > 0 && (
+          <>
+            <Heading>{t('publication.newest_publications')}</Heading>
+            <Divider />
+            <List>
+              {publications.map((publication: PublicationListItem) => (
+                <StyledListItem key={publication.identifier}>
+                  <ListItemAvatar>
+                    <Avatar>
+                      <ImageIcon />
+                    </Avatar>
+                  </ListItemAvatar>
 
-              <ListItemText
-                data-testid="result-list-item"
-                primary={
-                  <MuiLink component={Link} to={`/publication/${publication.identifier}/public`}>
-                    {publication.mainTitle}
-                  </MuiLink>
-                }
-                secondary={
-                  <Typography component="span">
-                    {new Date(publication.modifiedDate).toLocaleDateString()} - {publication.owner}
-                  </Typography>
-                }
-              />
-            </StyledListItem>
-          ))}
-      </List>
-      <Divider />
+                  <ListItemText
+                    data-testid="result-list-item"
+                    primary={
+                      <MuiLink component={Link} to={`/publication/${publication.identifier}/public`}>
+                        {publication.mainTitle}
+                      </MuiLink>
+                    }
+                    secondary={
+                      <Typography component="span">
+                        {new Date(publication.modifiedDate).toLocaleDateString()} - {publication.owner}
+                      </Typography>
+                    }
+                  />
+                </StyledListItem>
+              ))}
+            </List>
+            <Divider />
+          </>
+        )
+      )}
     </StyledListContainer>
   );
 };

@@ -1,8 +1,7 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { Link as MuiLink } from '@material-ui/core';
-import { getPublications } from '../../api/publicationApi';
 import { useTranslation } from 'react-i18next';
 import LatestPublications from '../search/LatestPublications';
 
@@ -36,22 +35,11 @@ const StyledSearchBarContainer = styled.div`
 
 const Dashboard: FC = () => {
   const { t } = useTranslation();
-  const [publications, setPublications] = useState([]);
-
-  useEffect(() => {
-    const fetchPublications = async () => {
-      const publications = await getPublications();
-      if (publications) {
-        setPublications(publications);
-      }
-    };
-    fetchPublications();
-  }, []);
 
   return (
     <StyledDashboard>
       <StyledSearchBarContainer>
-        {publications?.length > 0 && <LatestPublications publications={publications} />}
+        <LatestPublications />
       </StyledSearchBarContainer>
       <StyledOtherContent>
         <StyledLinks>
