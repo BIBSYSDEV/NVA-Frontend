@@ -161,7 +161,8 @@ export const removeQualifierIdFromAuthority = async (
       Authorization: `Bearer ${idToken}`,
     };
 
-    const response = await Axios.post(url, { identifier }, { headers });
+    const response = await Axios.delete(url, { data: { identifier }, headers });
+
     if (response.status === StatusCode.OK) {
       return response.data;
     } else {
