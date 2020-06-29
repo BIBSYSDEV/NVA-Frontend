@@ -16,7 +16,7 @@ const useFetchLatestPublications = (): [PublicationListItem[], boolean] => {
     const cancelSource = Axios.CancelToken.source();
 
     const fetchPublications = async () => {
-      const publications = await getPublications();
+      const publications = await getPublications(cancelSource.token);
       if (publications) {
         if (publications.error) {
           dispatch(setNotification(publications.error, NotificationVariant.Error));
