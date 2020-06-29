@@ -142,7 +142,7 @@ export const interceptRequestsOnMock = () => {
 
   // Remove orgunitid from Authority
   mock
-    .onPost(new RegExp(`${API_URL}${AuthorityApiPaths.PERSON}/901790000000/identifiers/orgunitid/delete`))
+    .onDelete(new RegExp(`${API_URL}${AuthorityApiPaths.PERSON}/901790000000/identifiers/orgunitid/delete`))
     .reply(200, mockSingleAuthorityResponseAfterDeletion);
 
   // create authority
