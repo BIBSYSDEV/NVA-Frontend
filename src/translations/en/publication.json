@@ -100,6 +100,7 @@
     "link_to_publication": "Link to publication",
     "load_file": "Load file",
     "newest_publications": "Newest publications",
+    "no_published_publications_yet": "There are no published publications yet",
     "start_with_link_to_publication": "Start with a link to a publication"
   },
   "references": {

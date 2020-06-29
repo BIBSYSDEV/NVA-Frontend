@@ -100,6 +100,7 @@
     "link_to_publication": "Lenke til publikasjon",
     "load_file": "Last opp fil",
     "newest_publications": "Nyeste publikasjoner",
+    "no_published_publications_yet": "Det finnes ingen publiserte publikasjoner enda",
     "start_with_link_to_publication": "Start med en lenke til en publikasjon"
   },
   "references": {
