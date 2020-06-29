@@ -1,12 +1,14 @@
 import { EnumDictionary } from '../types/common.types';
 
+// TODO: This data will be retrieved from backend soon
+// Cannot use computed values (constants) in enums
 enum CustomerOrganizationId {
-  UNIT = '20202.0.0.0',
-  STATPED = '5831.0.0.0', // Statped
-  NORDEMENS = '7581.0.0.0', // Nasjonalt kompetansesenter for aldring og helse
-  FIH = '258.0.0.0', // Fjellhaug internasjonale skole
-  ANNOM = '20355.0.0.0', // Anno museum
-  NORSOK = '7585.0.0.0', // Norsk senter for økologisk landbruk
+  UNIT = 'https://api.cristin.no/v2/units/20202.0.0.0',
+  STATPED = 'https://api.cristin.no/v2/units/5831.0.0.0', // Statped
+  NORDEMENS = 'https://api.cristin.no/v2/units/7581.0.0.0', // Nasjonalt kompetansesenter for aldring og helse
+  FIH = 'https://api.cristin.no/v2/units/258.0.0.0', // Fjellhaug internasjonale skole
+  ANNOM = 'https://api.cristin.no/v2/units/20355.0.0.0', // Anno museum
+  NORSOK = 'https://api.cristin.no/v2/units/7585.0.0.0', // Norsk senter for økologisk landbruk
 }
 
 // These values are composed by NO + organization number
