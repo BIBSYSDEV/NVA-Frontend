@@ -3,14 +3,13 @@ import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import DeleteIcon from '@material-ui/icons/Delete';
-import LabelTextLine from '../../components/LabelTextLine';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import orcidIcon from '../../resources/images/orcid_logo.svg';
 import { ORCID_BASE_URL } from '../../utils/constants';
 import OrcidModalContent from './OrcidModalContent';
 import Heading from '../../components/Heading';
 import Card from '../../components/Card';
-import { Avatar, Button } from '@material-ui/core';
+import { Button, IconButton } from '@material-ui/core';
 import ConfirmDialog from '../../components/ConfirmDialog';
 import { removeQualifierIdFromAuthority, AuthorityQualifiers } from '../../api/authorityApi';
 import { setNotification } from '../../redux/actions/notificationActions';
@@ -21,6 +20,7 @@ import Modal from '../../components/Modal';
 import { Link as MuiLink } from '@material-ui/core';
 import { StyledNormalTextPreWrapped } from '../../components/styled/Wrappers';
 import { useLocation } from 'react-router-dom';
+import NormalText from '../../components/NormalText';
 
 const StyledInformation = styled.div`
   margin-bottom: 1rem;
@@ -42,13 +42,19 @@ const StyledButton = styled(Button)`
   justify-self: right;
 `;
 
-const StyledHeadingWrapper = styled.div`
-  display: inline-flex;
+const StyledLine = styled.div`
   align-items: center;
+  display: flex;
+  flex-wrap: wrap;
 `;
 
-const StyledHeading = styled(Heading)`
-  margin: 0 1rem;
+const StyledContent = styled.div`
+  flex: 1;
+`;
+
+const StyledLabel = styled(NormalText)`
+  width: 6rem;
+  min-width: 6rem;
 `;
 
 const UserOrcid: FC = () => {
@@ -98,24 +104,27 @@ const UserOrcid: FC = () => {
 
   return (
     <Card>
-      <StyledHeadingWrapper>
-        <Avatar src={orcidIcon} alt="ORCID icon" />
-        <StyledHeading>{t('common:orcid')}</StyledHeading>
-      </StyledHeadingWrapper>
+      <Heading>{t('common:orcid')}</Heading>
       {listOfOrcids?.length > 0 ? (
         listOfOrcids.map((orcid: string) => {
           const orcidLink = `${ORCID_BASE_URL}/${orcid}`;
           return (
             <StyledOrcidLine key={orcid}>
-              <LabelTextLine
-                dataTestId={'orcid-info'}
-                label={t('orcid.your_orcid')}
-                linkText={orcidLink}
-                externalLink={orcidLink}
-              />
-              <StyledButton onClick={toggleConfirmDialog} variant="contained" color="secondary">
+              <StyledLine>
+                <StyledLabel>{t('orcid.your_orcid')}:</StyledLabel>
+                <IconButton size="small" href={orcidLink} key={orcid}>
+                  <img src={orcidIcon} height="20" alt="orcid" />
+                </IconButton>
+                <MuiLink href={orcidLink} target="_blank" rel="noopener noreferrer">
+                  <StyledContent data-testid="orcid-info">
+                    <NormalText>{orcidLink}</NormalText>
+                  </StyledContent>
+                </MuiLink>
+              </StyledLine>
+
+              <StyledButton onClick={toggleConfirmDialog} variant="outlined" color="secondary">
                 <DeleteIcon />
-                {t('orcid.remove_connection')}
+                {t('common:remove')}
               </StyledButton>
 
               <ConfirmDialog
@@ -137,7 +146,7 @@ const UserOrcid: FC = () => {
       ) : (
         <>
           <StyledInformation>{t('profile:orcid.description_why_use_orcid')}</StyledInformation>
-          <Button color="primary" onClick={toggleModal} variant="contained">
+          <Button color="primary" onClick={toggleModal} variant="contained" size="small">
             {t('profile:orcid.create_or_connect')}
           </Button>
           <Modal
