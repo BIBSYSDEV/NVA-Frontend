@@ -1,15 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import Axios from 'axios';
 
 import { RecursiveInstitutionUnit } from '../../types/institution.types';
 import { getDepartment } from '../../api/institutionApi';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
-import { getUnitUri } from '../unitUrl';
-import Axios from 'axios';
 
 // This hook is used to fetch the top-down hierarchy of any given sub-unit
-const useFetchUnitHierarchy = (unitId: string): [RecursiveInstitutionUnit | undefined, boolean] => {
+const useFetchUnitHierarchy = (unitUri: string): [RecursiveInstitutionUnit | undefined, boolean] => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
   const [unit, setUnit] = useState<RecursiveInstitutionUnit | undefined>();
@@ -18,9 +17,6 @@ const useFetchUnitHierarchy = (unitId: string): [RecursiveInstitutionUnit | unde
     const cancelSource = Axios.CancelToken.source();
 
     const fetchDepartment = async () => {
-      // TODO: NP-844 should ensure we have URIs from start (not IDs)
-      const unitUri = getUnitUri(unitId);
-
       const response = await getDepartment(unitUri, cancelSource.token);
       if (response) {
         setIsLoading(false);
@@ -39,7 +35,7 @@ const useFetchUnitHierarchy = (unitId: string): [RecursiveInstitutionUnit | unde
     fetchDepartment();
 
     return () => cancelSource.cancel();
-  }, [dispatch, unitId]);
+  }, [dispatch, unitUri]);
 
   return [unit, isLoading];
 };

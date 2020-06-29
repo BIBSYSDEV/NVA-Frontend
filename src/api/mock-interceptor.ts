@@ -69,7 +69,7 @@ const mockSingleAuthorityResponseWithOrcid: Authority = {
   systemControlNumber: '901790000000',
   feideids: ['osteloff@unit.no'],
   orcids: ['0000-0001-2345-6789'],
-  orgunitids: ['194.65.20.10'],
+  orgunitids: ['https://api.cristin.no/v2/units/194.65.20.10'],
   handles: [],
   birthDate: '1941-04-25 00:00:00.000',
 };
