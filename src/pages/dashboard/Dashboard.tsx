@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { Link as MuiLink } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import LatestPublications from '../search/LatestPublications';
+import LatestPublications from './LatestPublications';
 
 const StyledDashboard = styled.div`
   display: grid;
