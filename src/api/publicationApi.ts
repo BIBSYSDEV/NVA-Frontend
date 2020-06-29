@@ -57,6 +57,23 @@ export const updatePublication = async (publication: Publication) => {
   }
 };
 
+export const getPublications = async (cancelToken?: CancelToken) => {
+  const url = PublicationsApiPaths.PUBLICATION;
+
+  try {
+    const response = await Axios.get(url, { cancelToken });
+    if (response.status === StatusCode.OK) {
+      return response.data;
+    } else {
+      return { error: i18n.t('feedback:error.get_publications') };
+    }
+  } catch (error) {
+    if (!Axios.isCancel(error)) {
+      return { error: i18n.t('feedback:error.get_publications') };
+    }
+  }
+};
+
 export const getPublication = async (id: string, cancelToken?: CancelToken) => {
   const url = `${PublicationsApiPaths.PUBLICATION}/${id}`;
 
