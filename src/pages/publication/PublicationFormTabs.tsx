@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { Tabs } from '@material-ui/core';
 
 import LinkTab from '../../components/LinkTab';
-import { FormikPublication } from '../../types/publication.types';
+import { Publication } from '../../types/publication.types';
 import { ReferenceFieldNames, DescriptionFieldNames } from '../../types/publicationFieldNames';
 import { hasTouchedError, getAllFileFields, getAllContributorFields } from '../../utils/formik-helpers';
 import styled from 'styled-components';
@@ -37,7 +37,7 @@ interface PublicationFormTabsProps {
 
 export const PublicationFormTabs: FC<PublicationFormTabsProps> = ({ handleTabChange, tabNumber }) => {
   const { t } = useTranslation('publication');
-  const { errors, touched, values }: FormikProps<FormikPublication> = useFormikContext();
+  const { errors, touched, values }: FormikProps<Publication> = useFormikContext();
   const {
     entityDescription: {
       contributors,

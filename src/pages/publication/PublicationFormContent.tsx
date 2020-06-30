@@ -2,7 +2,7 @@ import { FormikProps, useFormikContext, FormikTouched } from 'formik';
 import React, { FC, useCallback, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 
-import { FormikPublication, PublicationTab } from '../../types/publication.types';
+import { Publication, PublicationTab } from '../../types/publication.types';
 import DescriptionPanel from './DescriptionPanel';
 import ReferencesPanel from './ReferencesPanel';
 import ContributorsPanel from './ContributorsPanel';
@@ -17,12 +17,12 @@ const StyledPanel = styled.div`
 `;
 
 export interface PanelProps {
-  setTouchedFields: (fieldsToTouch: FormikTouched<FormikPublication>) => void;
+  setTouchedFields: (fieldsToTouch: FormikTouched<Publication>) => void;
 }
 
 interface PublicationFormContentProps {
   isSaving: boolean;
-  savePublication: (values: FormikPublication) => void;
+  savePublication: (values: Publication) => void;
   tabNumber: number;
   uppy: Uppy;
 }
@@ -33,7 +33,7 @@ export const PublicationFormContent: FC<PublicationFormContentProps> = ({
   tabNumber,
   uppy,
 }) => {
-  const { touched, setTouched }: FormikProps<FormikPublication> = useFormikContext();
+  const { touched, setTouched }: FormikProps<Publication> = useFormikContext();
 
   const touchedRef = useRef(touched);
   useEffect(() => {
@@ -41,8 +41,7 @@ export const PublicationFormContent: FC<PublicationFormContentProps> = ({
   }, [touched]);
 
   const setTouchedFields = useCallback(
-    (fieldsToTouch: FormikTouched<FormikPublication>) =>
-      setTouched(mergeTouchedFields([touchedRef.current, fieldsToTouch])),
+    (fieldsToTouch: FormikTouched<Publication>) => setTouched(mergeTouchedFields([touchedRef.current, fieldsToTouch])),
     [setTouched]
   );
 

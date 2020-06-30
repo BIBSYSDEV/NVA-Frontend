@@ -7,7 +7,7 @@ import {
 } from '../types/publicationFieldNames';
 import { Contributor } from '../types/contributor.types';
 import { File } from '../types/file.types';
-import { FormikPublication } from '../types/publication.types';
+import { Publication } from '../types/publication.types';
 import deepmerge, { Options } from 'deepmerge';
 
 interface CustomError {
@@ -96,7 +96,7 @@ export const getAllContributorFields = (contributors: Contributor[]) => {
   return fieldNames;
 };
 
-export const touchedDescriptionTabFields: FormikTouched<FormikPublication> = {
+export const touchedDescriptionTabFields: FormikTouched<Publication> = {
   entityDescription: {
     abstract: true,
     date: {
@@ -112,7 +112,7 @@ export const touchedDescriptionTabFields: FormikTouched<FormikPublication> = {
   },
 };
 
-export const touchedReferenceTabFields: FormikTouched<FormikPublication> = {
+export const touchedReferenceTabFields: FormikTouched<Publication> = {
   entityDescription: {
     reference: {
       publicationContext: {
@@ -134,7 +134,7 @@ export const touchedReferenceTabFields: FormikTouched<FormikPublication> = {
   },
 };
 
-export const touchedContributorTabFields = (contributors: Contributor[]): FormikTouched<FormikPublication> => ({
+export const touchedContributorTabFields = (contributors: Contributor[]): FormikTouched<Publication> => ({
   entityDescription: {
     contributors: contributors.map((contributor) => ({
       affiliations: [],
@@ -145,7 +145,7 @@ export const touchedContributorTabFields = (contributors: Contributor[]): Formik
   },
 });
 
-export const touchedFilesTabFields = (files: File[]): FormikTouched<FormikPublication> => ({
+export const touchedFilesTabFields = (files: File[]): FormikTouched<Publication> => ({
   fileSet: {
     files: files.map((file) => ({
       administrativeAgreement: true,
@@ -158,5 +158,5 @@ export const touchedFilesTabFields = (files: File[]): FormikTouched<FormikPublic
 
 export const overwriteArrayMerge = (destinationArray: any[], sourceArray: any[], options?: Options) => sourceArray;
 
-export const mergeTouchedFields = (touchedArray: FormikTouched<FormikPublication>[]) =>
+export const mergeTouchedFields = (touchedArray: FormikTouched<Publication>[]) =>
   deepmerge.all(touchedArray, { arrayMerge: overwriteArrayMerge });

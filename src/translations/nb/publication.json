@@ -147,6 +147,7 @@
   },
   "submission": {
     "ask_for_doi": "Be om DOI for denne registreringen (anbefales ikke dersom ressursen allerede har en DOI)",
+    "doi_requested": "Du har bedt om DOI for denne registreringen",
     "number_of_affiliations": "{{count}} tilknytning",
     "number_of_affiliations_plural": "{{count}} tilknytninger"
   },

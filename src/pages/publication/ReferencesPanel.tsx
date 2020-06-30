@@ -2,7 +2,7 @@ import { FormikProps, useFormikContext } from 'formik';
 import React, { useEffect, FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { FormikPublication } from '../../types/publication.types';
+import { Publication } from '../../types/publication.types';
 import { PublicationType, ReferenceFieldNames, contextTypeBaseFieldName } from '../../types/publicationFieldNames';
 import BookForm from './references_tab/BookForm';
 import ChapterForm from './references_tab/ChapterForm';
@@ -29,7 +29,7 @@ const StyledSelectContainer = styled.div`
 
 const ReferencesPanel: FC<PanelProps> = ({ setTouchedFields }) => {
   const { t } = useTranslation('publication');
-  const { values, setTouched, setFieldValue, touched }: FormikProps<FormikPublication> = useFormikContext();
+  const { values, setTouched, setFieldValue, touched }: FormikProps<Publication> = useFormikContext();
   const publicationContextType = values.entityDescription.reference.publicationContext.type;
 
   useEffect(

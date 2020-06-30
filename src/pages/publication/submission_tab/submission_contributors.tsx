@@ -2,7 +2,7 @@ import LabelContentRow from '../../../components/LabelContentRow';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormikProps, useFormikContext } from 'formik';
-import { FormikPublication } from '../../../types/publication.types';
+import { Publication } from '../../../types/publication.types';
 import NormalText from '../../../components/NormalText';
 import styled from 'styled-components';
 
@@ -16,7 +16,7 @@ const SubmissionContributors: React.FC = () => {
     values: {
       entityDescription: { contributors },
     },
-  }: FormikProps<FormikPublication> = useFormikContext();
+  }: FormikProps<Publication> = useFormikContext();
 
   return (
     <LabelContentRow label={t('heading.contributors')} multiple>

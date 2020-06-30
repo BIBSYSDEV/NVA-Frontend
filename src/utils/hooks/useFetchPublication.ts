@@ -4,19 +4,19 @@ import Axios from 'axios';
 
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
-import { FormikPublication } from '../../types/publication.types';
+import { Publication } from '../../types/publication.types';
 import { getPublication } from '../../api/publicationApi';
 import { RootStore } from '../../redux/reducers/rootReducer';
 
 const useFetchPublication = (
   identifier: string | undefined
-): [FormikPublication | undefined, boolean, (values: FormikPublication) => void] => {
+): [Publication | undefined, boolean, (values: Publication) => void] => {
   const dispatch = useDispatch();
-  const [publication, setPublication] = useState<FormikPublication>();
+  const [publication, setPublication] = useState<Publication>();
   const [isLoading, setIsLoading] = useState(!!identifier);
   const user = useSelector((store: RootStore) => store.user);
 
-  const handleSetPublication = (values: FormikPublication) => {
+  const handleSetPublication = (values: Publication) => {
     setPublication(values);
   };
 
