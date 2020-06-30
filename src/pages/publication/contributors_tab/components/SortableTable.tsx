@@ -32,7 +32,6 @@ import { useDispatch } from 'react-redux';
 import { setNotification } from '../../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../../types/notification.types';
 import { Authority } from '../../../../types/authority.types';
-import { getUnitUri } from '../../../../utils/unitUrl';
 import { overwriteArrayMerge } from '../../../../utils/formik-helpers';
 import NormalText from '../../../../components/NormalText';
 
@@ -249,9 +248,9 @@ const SortableTable: FC<SortableTableProps> = ({ push, remove, replace }) => {
       const newContributor: Contributor = {
         ...emptyContributor,
         identity,
-        affiliations: authority.orgunitids.map((unitId) => ({
+        affiliations: authority.orgunitids.map((unitUri) => ({
           type: BackendTypeNames.ORGANIZATION,
-          id: getUnitUri(unitId),
+          id: unitUri,
         })),
         sequence: contributors.length + 1,
       };
