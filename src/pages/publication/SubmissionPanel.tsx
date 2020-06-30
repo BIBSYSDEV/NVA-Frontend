@@ -58,7 +58,6 @@ const StyledLine = styled.div`
 `;
 
 enum PublishSettingFieldName {
-  DOI_REQUEST = 'doiRequest',
   DOI_REQUESTED = 'doiRequested',
 }
 
