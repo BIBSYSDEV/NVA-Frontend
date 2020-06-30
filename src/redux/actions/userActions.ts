@@ -7,7 +7,7 @@ export const SET_AUTHORITY_DATA = 'set authority data';
 export const SET_POSSIBLE_AUTHORITIES = 'set possible authorities';
 
 // ACTION CREATORS
-export const setUser = (user: FeideUser): SetUserAction => ({
+export const setUser = (user: FeideUser | any): SetUserAction => ({
   type: SET_USER_SUCCESS,
   user,
 });

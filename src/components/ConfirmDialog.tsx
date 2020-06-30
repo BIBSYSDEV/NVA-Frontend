@@ -1,10 +1,10 @@
 import React, { FC } from 'react';
-import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button } from '@material-ui/core';
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import ButtonWithProgress from './ButtonWithProgress';
 import styled from 'styled-components';
 
-const StyledDialogContentText = styled(DialogContentText)`
+const StyledDialogContentText = styled.div`
   min-width: 35rem;
   @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
     min-width: auto;
@@ -12,22 +12,29 @@ const StyledDialogContentText = styled(DialogContentText)`
 `;
 
 interface ConfirmDialogProps {
+  children: any;
   open: boolean;
   title: string;
-  text: string;
   onAccept: () => void;
   onCancel: () => void;
   disableAccept?: boolean;
 }
 
-const ConfirmDialog: FC<ConfirmDialogProps> = ({ open, title, text, onAccept, onCancel, disableAccept = false }) => {
+const ConfirmDialog: FC<ConfirmDialogProps> = ({
+  children,
+  open,
+  title,
+  onAccept,
+  onCancel,
+  disableAccept = false,
+}) => {
   const { t } = useTranslation('common');
 
   return (
     <Dialog open={open} onClose={onCancel}>
       <DialogTitle>{title}</DialogTitle>
       <DialogContent>
-        <StyledDialogContentText>{text}</StyledDialogContentText>
+        <StyledDialogContentText>{children}</StyledDialogContentText>
       </DialogContent>
       <DialogActions>
         <Button data-testid="cancel-button" variant="contained" onClick={onCancel}>

@@ -12,10 +12,16 @@ import NewAuthorityCard from './NewAuthorityCard';
 import AuthorityList from './AuthorityList';
 import { StyledRightAlignedButtonWrapper } from '../../../components/styled/Wrappers';
 import ButtonWithProgress from '../../../components/ButtonWithProgress';
+import { NotificationVariant } from '../../../types/notification.types';
+import { setNotification } from '../../../redux/actions/notificationActions';
 
 const StyledAuthorityContainer = styled.div`
+  min-width: 20rem;
   > * {
     margin-top: 1rem;
+  }
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+    min-width: auto;
   }
 `;
 
@@ -38,12 +44,18 @@ export const ConnectAuthority: FC = () => {
 
     if (selectedAuthority) {
       setIsUpdatingAuthority(true);
-      const updatedAuthorityWithFeide: Authority = await addQualifierIdForAuthority(
+      const updatedAuthorityWithFeide = await addQualifierIdForAuthority(
         selectedSystemControlNumber,
         AuthorityQualifiers.FEIDE_ID,
         user.id
       );
-      if (updatedAuthorityWithFeide?.orgunitids.includes(user.organizationId)) {
+      if (updatedAuthorityWithFeide.error) {
+        dispatch(setNotification(updatedAuthorityWithFeide.error, NotificationVariant.Error));
+        setIsUpdatingAuthority(false);
+      } else if (
+        updatedAuthorityWithFeide?.orgunitids &&
+        updatedAuthorityWithFeide.orgunitids.includes(user.organizationId)
+      ) {
         dispatch(setAuthorityData(updatedAuthorityWithFeide));
       } else {
         const updatedAuthorityWithOrganizationId = await addQualifierIdForAuthority(
