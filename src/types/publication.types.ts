@@ -77,11 +77,24 @@ export interface NpiDiscipline {
   mainDiscipline: string;
 }
 
+export enum DoiRequestStatus {
+  Approved = 'APPROVED',
+  Rejected = 'REJECTED',
+  Requested = 'REQUESTED',
+}
+
+interface DoiRequest {
+  type: string;
+  date: string;
+  status: DoiRequestStatus;
+}
+
 export interface Publication extends BackendType, PublicationFileSet {
   readonly identifier: string;
   readonly createdDate: string;
   readonly owner: string;
   readonly status: PublicationStatus;
+  readonly doiRequest: DoiRequest | null;
   doiRequested: boolean;
   entityDescription: PublicationEntityDescription;
   project: Project | null;
@@ -208,6 +221,8 @@ export const emptyPublication: Publication = {
   type: BackendTypeNames.PUBLICATION,
   identifier: '',
   createdDate: '',
+  doiRequest: null,
+  doiRequested: false,
   owner: '',
   status: PublicationStatus.NEW,
   entityDescription: emptyPublicationEntityDescription,
@@ -215,6 +230,5 @@ export const emptyPublication: Publication = {
     type: BackendTypeNames.FILE_SET,
     files: [],
   },
-  doiRequested: false,
   project: null,
 };
