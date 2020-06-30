@@ -5,7 +5,7 @@ export enum RoleName {
   APP_ADMIN = 'App-admin',
   CURATOR = 'Curator',
   EDITOR = 'Editor',
-  PUBLISHER = 'Publisher',
+  PUBLISHER = 'publisher',
 }
 
 export enum Affiliation {
