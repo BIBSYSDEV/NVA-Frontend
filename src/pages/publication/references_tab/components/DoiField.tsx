@@ -4,7 +4,7 @@ import { TextField, InputAdornment } from '@material-ui/core';
 import styled from 'styled-components';
 import ClearIcon from '@material-ui/icons/Clear';
 import { useTranslation } from 'react-i18next';
-import { FormikPublication } from '../../../../types/publication.types';
+import { Publication } from '../../../../types/publication.types';
 import { ReferenceFieldNames } from '../../../../types/publicationFieldNames';
 import ConfirmDialog from '../../../../components/ConfirmDialog';
 import NormalText from '../../../../components/NormalText';
@@ -17,7 +17,7 @@ const StyledClearIcon = styled(ClearIcon)`
 const DoiField: FC = () => {
   const { t } = useTranslation('publication');
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
-  const { setFieldValue, values }: FormikProps<FormikPublication> = useFormikContext();
+  const { setFieldValue, values }: FormikProps<Publication> = useFormikContext();
 
   const toggleConfirmDialog = () => {
     setOpenConfirmDialog(!openConfirmDialog);

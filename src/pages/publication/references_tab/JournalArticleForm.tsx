@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { TextField } from '@material-ui/core';
 
-import { FormikPublication } from '../../../types/publication.types';
+import { Publication } from '../../../types/publication.types';
 import { ReferenceFieldNames, JournalArticleType } from '../../../types/publicationFieldNames';
 import { PublicationTableNumber } from '../../../utils/constants';
 import NviValidation from './components/NviValidation';
@@ -36,7 +36,7 @@ const StyledLabel = styled.div`
 
 const JournalArticleForm: FC = () => {
   const { t } = useTranslation('publication');
-  const { values }: FormikProps<FormikPublication> = useFormikContext();
+  const { values }: FormikProps<Publication> = useFormikContext();
   const {
     publicationContext,
     publicationInstance: { peerReviewed },

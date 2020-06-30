@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import { FormControl, FormControlLabel, Radio, RadioGroup } from '@material-ui/core';
 
-import { FormikPublication } from '../../../../types/publication.types';
+import { Publication } from '../../../../types/publication.types';
 import Label from '../../../../components/Label';
 
 interface PeerReviewProps {
@@ -15,7 +15,7 @@ interface PeerReviewProps {
 const PeerReview: FC<PeerReviewProps> = ({ fieldName, label }) => {
   const { t } = useTranslation('publication');
 
-  const { setFieldValue }: FormikProps<FormikPublication> = useFormikContext();
+  const { setFieldValue }: FormikProps<Publication> = useFormikContext();
 
   return (
     <Field name={fieldName}>
@@ -25,7 +25,7 @@ const PeerReview: FC<PeerReviewProps> = ({ fieldName, label }) => {
           <FormControl>
             <RadioGroup
               value={value ? 'true' : 'false'}
-              onChange={event => setFieldValue(name, event.target.value === 'true')}>
+              onChange={(event) => setFieldValue(name, event.target.value === 'true')}>
               <FormControlLabel
                 control={<Radio color="primary" data-testid="peer_review-true" value="true" />}
                 label={t('references.is_peer_reviewed')}

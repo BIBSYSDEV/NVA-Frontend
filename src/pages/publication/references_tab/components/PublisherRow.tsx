@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Button } from '@material-ui/core';
 import { FormikProps, useFormikContext } from 'formik';
 
-import { Publisher, levelMap, FormikPublication } from '../../../../types/publication.types';
+import { Publisher, levelMap, Publication } from '../../../../types/publication.types';
 import Label from '../../../../components/Label';
 import { getPublishers } from '../../../../api/publicationChannelApi';
 import { PublicationTableNumber } from '../../../../utils/constants';
@@ -60,7 +60,7 @@ interface PublisherRowProps {
 const PublisherRow: React.FC<PublisherRowProps> = ({ dataTestId, publisher, label, onClickDelete }) => {
   const { t } = useTranslation('publication');
 
-  const { setFieldValue }: FormikProps<FormikPublication> = useFormikContext();
+  const { setFieldValue }: FormikProps<Publication> = useFormikContext();
 
   const { level, title } = publisher;
   const publisherLevel = typeof level === 'string' ? levelMap[level] : level;
