@@ -176,8 +176,7 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication, 
         </Card>
       </Card>
       <StyledButtonGroupContainer>
-        {/* TODO: need to check if the author also has made a request for doi in the conditional below */}
-        {user.isCurator ? (
+        {user.isCurator && doiRequest?.status === DoiRequestStatus.Requested ? (
           <>
             <StyledButton
               color="primary"
