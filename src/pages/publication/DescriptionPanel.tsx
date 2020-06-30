@@ -7,7 +7,7 @@ import { MenuItem, TextField as MuiTextField, TextField } from '@material-ui/cor
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
-import { FormikPublication } from '../../types/publication.types';
+import { Publication } from '../../types/publication.types';
 import DisciplineSearch from './description_tab/DisciplineSearch';
 import ProjectSearch from './description_tab/ProjectSearch';
 import ProjectRow from './description_tab/ProjectRow';
@@ -49,7 +49,7 @@ const StyledMainCard = styled(Card)`
 
 const DescriptionPanel: FC<PanelProps> = ({ setTouchedFields }) => {
   const { t } = useTranslation('publication');
-  const { setFieldValue }: FormikProps<FormikPublication> = useFormikContext();
+  const { setFieldValue }: FormikProps<Publication> = useFormikContext();
 
   useEffect(
     // Set all fields as touched if user navigates away from this panel (on unmount)

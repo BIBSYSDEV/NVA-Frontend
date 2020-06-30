@@ -82,6 +82,7 @@ export interface Publication extends BackendType, PublicationFileSet {
   readonly createdDate: string;
   readonly owner: string;
   readonly status: PublicationStatus;
+  doiRequested: boolean;
   entityDescription: PublicationEntityDescription;
   project: Project | null;
 }
@@ -131,10 +132,6 @@ interface PublicationEntityDescription extends BackendType {
   specialization: string;
   textBook: boolean;
   reference: PublicationReference;
-}
-
-export interface FormikPublication extends Publication {
-  shouldCreateDoi: boolean;
 }
 
 const emptyDate: PublicationDate = {
@@ -207,7 +204,7 @@ export interface Doi {
   title: string;
 }
 
-export const emptyPublication: FormikPublication = {
+export const emptyPublication: Publication = {
   type: BackendTypeNames.PUBLICATION,
   identifier: '',
   createdDate: '',
@@ -218,6 +215,6 @@ export const emptyPublication: FormikPublication = {
     type: BackendTypeNames.FILE_SET,
     files: [],
   },
-  shouldCreateDoi: false,
+  doiRequested: false,
   project: null,
 };

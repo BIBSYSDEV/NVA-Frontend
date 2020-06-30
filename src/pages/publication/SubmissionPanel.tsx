@@ -1,7 +1,7 @@
 import React, { useEffect, FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormikProps, useFormikContext, Field, FieldProps } from 'formik';
-import { FormikPublication } from '../../types/publication.types';
+import { Publication } from '../../types/publication.types';
 import { Button, FormControlLabel, Checkbox } from '@material-ui/core';
 import styled from 'styled-components';
 import SubmissionBook from './submission_tab/submission_book';
@@ -49,18 +49,18 @@ const StyledButtonWithProgress = styled(ButtonWithProgress)`
 `;
 
 enum PublishSettingFieldName {
-  SHOULD_CREATE_DOI = 'shouldCreateDoi',
+  DOI_REQUESTED = 'doiRequested',
 }
 
 interface SubmissionPanelProps extends PanelProps {
   isSaving: boolean;
-  savePublication: (values: FormikPublication) => void;
+  savePublication: (values: Publication) => void;
 }
 
 const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication, setTouchedFields }) => {
   const user = useSelector((store: RootStore) => store.user);
   const { t } = useTranslation('publication');
-  const { setFieldValue, values, isValid, dirty }: FormikProps<FormikPublication> = useFormikContext();
+  const { setFieldValue, values, isValid, dirty }: FormikProps<Publication> = useFormikContext();
   const [isPublishing, setIsPublishing] = useState(false);
   const history = useHistory();
   const dispatch = useDispatch();
@@ -140,7 +140,7 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication, 
         </Card>
         <Card>
           <SubHeading>{t('heading.publish_settings')}</SubHeading>
-          <Field name={PublishSettingFieldName.SHOULD_CREATE_DOI}>
+          <Field name={PublishSettingFieldName.DOI_REQUESTED}>
             {({ field: { name, value } }: FieldProps) => (
               <FormControlLabel
                 control={

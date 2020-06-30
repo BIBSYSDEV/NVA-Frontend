@@ -4,7 +4,7 @@ import { Button } from '@material-ui/core';
 import SelectInstitution from '../../../../components/institution/SelectInstitution';
 import Modal from '../../../../components/Modal';
 import { useFormikContext, FormikProps } from 'formik';
-import { FormikPublication, BackendTypeNames } from '../../../../types/publication.types';
+import { Publication, BackendTypeNames } from '../../../../types/publication.types';
 import { SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
 import { FormikInstitutionUnit } from '../../../../types/institution.types';
 import { useTranslation } from 'react-i18next';
@@ -37,7 +37,7 @@ interface AffiliationsCellProps {
 const AffiliationsCell: FC<AffiliationsCellProps> = ({ affiliations, baseFieldName }) => {
   const { t } = useTranslation('publication');
   const disptach = useDispatch();
-  const { values, setFieldValue }: FormikProps<FormikPublication> = useFormikContext();
+  const { values, setFieldValue }: FormikProps<Publication> = useFormikContext();
   const [openAffiliationModal, setOpenAffiliationModal] = useState(false);
   const [affiliationToRemove, setAffiliationToRemove] = useState<Institution | null>(null);
 

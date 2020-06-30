@@ -22,7 +22,7 @@ import deepmerge from 'deepmerge';
 
 import { ContributorFieldNames, SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
 import { Contributor, emptyContributor } from '../../../../types/contributor.types';
-import { FormikPublication, BackendTypeNames } from '../../../../types/publication.types';
+import { Publication, BackendTypeNames } from '../../../../types/publication.types';
 import SubHeading from '../../../../components/SubHeading';
 import AddContributor from '../AddContributorModal';
 import styled from 'styled-components';
@@ -199,7 +199,7 @@ interface SortableTableProps extends Pick<FieldArrayRenderProps, 'push' | 'remov
 const SortableTable: FC<SortableTableProps> = ({ push, remove, replace }) => {
   const { t } = useTranslation('publication');
   const dispatch = useDispatch();
-  const { values, setValues }: FormikProps<FormikPublication> = useFormikContext();
+  const { values, setValues }: FormikProps<Publication> = useFormikContext();
   const {
     entityDescription: { contributors },
   } = values;
