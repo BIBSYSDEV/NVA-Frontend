@@ -1,7 +1,6 @@
 import { Auth } from 'aws-amplify';
 import { Dispatch } from 'redux';
 
-import { logoutSuccess } from '../redux/actions/authActions';
 import i18n from '../translations/i18n';
 import { setNotification } from '../redux/actions/notificationActions';
 import { NotificationVariant } from '../types/notification.types';
@@ -12,9 +11,6 @@ export const hubListener = async (data: any, dispatch: Dispatch<any>) => {
     case 'signIn':
       const loggedInUser = (await Auth.currentSession()).getIdToken().payload;
       dispatch(setUser(loggedInUser));
-      break;
-    case 'signOut':
-      dispatch(logoutSuccess());
       break;
     case 'signIn_failure':
       const cognitoUser = await Auth.currentAuthenticatedUser();
