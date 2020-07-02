@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 import { Checkbox, FormControlLabel, TextField } from '@material-ui/core';
 
-import { FormikPublication, emptyPublisher } from '../../../types/publication.types';
+import { Publication, emptyPublisher } from '../../../types/publication.types';
 import { ReferenceFieldNames, BookType } from '../../../types/publicationFieldNames';
 import { PublicationTableNumber } from '../../../utils/constants';
 import NviValidation from './components/NviValidation';
@@ -51,7 +51,7 @@ const StyledTextField = styled(TextField)`
 
 const BookForm: FC = () => {
   const { t } = useTranslation('publication');
-  const { setFieldValue, values }: FormikProps<FormikPublication> = useFormikContext();
+  const { setFieldValue, values }: FormikProps<Publication> = useFormikContext();
   const {
     publicationContext,
     publicationInstance: { peerReviewed },

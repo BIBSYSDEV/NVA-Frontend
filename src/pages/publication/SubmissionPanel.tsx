@@ -1,8 +1,9 @@
 import React, { useEffect, FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormikProps, useFormikContext, Field, FieldProps } from 'formik';
-import { FormikPublication } from '../../types/publication.types';
+import { Publication, DoiRequestStatus } from '../../types/publication.types';
 import { Button, FormControlLabel, Checkbox } from '@material-ui/core';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import styled from 'styled-components';
 import SubmissionBook from './submission_tab/submission_book';
 import SubmissionDegree from './submission_tab/submission_degree';
@@ -34,6 +35,7 @@ import {
 import { PanelProps } from './PublicationFormContent';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { NAVIGATE_TO_PUBLIC_PUBLICATION_DURATION } from '../../utils/constants';
+import NormalText from '../../components/NormalText';
 
 const StyledButtonGroupContainer = styled.div`
   margin-bottom: 1rem;
@@ -48,23 +50,31 @@ const StyledButtonWithProgress = styled(ButtonWithProgress)`
   margin-right: 0.5rem;
 `;
 
+const StyledLine = styled.div`
+  display: grid;
+  grid-template-areas: 'icon text';
+  gap: 0.5rem;
+  justify-content: start;
+`;
+
 enum PublishSettingFieldName {
-  SHOULD_CREATE_DOI = 'shouldCreateDoi',
+  DOI_REQUESTED = 'doiRequested',
 }
 
 interface SubmissionPanelProps extends PanelProps {
   isSaving: boolean;
-  savePublication: (values: FormikPublication) => void;
+  savePublication: (values: Publication) => void;
 }
 
 const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication, setTouchedFields }) => {
   const user = useSelector((store: RootStore) => store.user);
   const { t } = useTranslation('publication');
-  const { setFieldValue, values, isValid, dirty }: FormikProps<FormikPublication> = useFormikContext();
+  const { setFieldValue, values, isValid, dirty }: FormikProps<Publication> = useFormikContext();
   const [isPublishing, setIsPublishing] = useState(false);
   const history = useHistory();
   const dispatch = useDispatch();
   const {
+    doiRequest,
     entityDescription: { contributors, reference },
     fileSet: { files },
   } = values;
@@ -140,26 +150,32 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication, 
         </Card>
         <Card>
           <SubHeading>{t('heading.publish_settings')}</SubHeading>
-          <Field name={PublishSettingFieldName.SHOULD_CREATE_DOI}>
-            {({ field: { name, value } }: FieldProps) => (
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    color="primary"
-                    checked={value}
-                    onChange={() => setFieldValue(name, !value)}
-                    disabled={!isValid}
-                  />
-                }
-                label={t('submission.ask_for_doi')}
-              />
-            )}
-          </Field>
+          {doiRequest?.status === DoiRequestStatus.Requested ? (
+            <StyledLine>
+              <CheckCircleIcon />
+              <NormalText>{t('submission.doi_requested')}</NormalText>
+            </StyledLine>
+          ) : (
+            <Field name={PublishSettingFieldName.DOI_REQUESTED}>
+              {({ field: { name, value } }: FieldProps) => (
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      color="primary"
+                      checked={value}
+                      onChange={() => setFieldValue(name, !value)}
+                      disabled={!isValid}
+                    />
+                  }
+                  label={t('submission.ask_for_doi')}
+                />
+              )}
+            </Field>
+          )}
         </Card>
       </Card>
       <StyledButtonGroupContainer>
-        {/* TODO: need to check if the author also has made a request for doi in the conditional below */}
-        {user.isCurator ? (
+        {user.isCurator && doiRequest?.status === DoiRequestStatus.Requested ? (
           <>
             <StyledButton
               color="primary"

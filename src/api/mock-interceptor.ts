@@ -16,6 +16,7 @@ import mockMyPublications from '../utils/testfiles/my_publications.json';
 import mockNsdPublisers from '../utils/testfiles/publishersFromNsd.json';
 import mockCustomerInstitutions from '../utils/testfiles/mock_customer_institutions.json';
 import mockCustomerInstitution from '../utils/testfiles/mock_customer_institution.json';
+import mockPublishedPublications from '../utils/testfiles/published_publications.json';
 import { AuthorityApiPaths } from './authorityApi';
 import { InstitutionApiPaths } from './institutionApi';
 import { ProjectsApiPaths } from './projectApi';
@@ -68,7 +69,7 @@ const mockSingleAuthorityResponseWithOrcid: Authority = {
   systemControlNumber: '901790000000',
   feideids: ['osteloff@unit.no'],
   orcids: ['0000-0001-2345-6789'],
-  orgunitids: ['194.65.20.10'],
+  orgunitids: ['https://api.cristin.no/v2/units/194.65.20.10'],
   handles: [],
   birthDate: '1941-04-25 00:00:00.000',
 };
@@ -88,6 +89,9 @@ export const interceptRequestsOnMock = () => {
   mock.onPost(new RegExp(FileApiPaths.CREATE)).reply(200, mockCreateUpload);
   mock.onPost(new RegExp(FileApiPaths.PREPARE)).reply(200, mockPrepareUpload);
   mock.onPost(new RegExp(FileApiPaths.COMPLETE)).reply(200, mockCompleteUpload);
+
+  // PUBLICATION LIST
+  mock.onGet(PublicationsApiPaths.PUBLICATION).reply(200, mockPublishedPublications);
 
   //MY PUBLICATIONS
   mock.onGet(new RegExp(`${PublicationsApiPaths.PUBLICATIONS_BY_OWNER}/*`)).reply(200, mockMyPublications);
@@ -118,24 +122,27 @@ export const interceptRequestsOnMock = () => {
   mock
     .onGet(new RegExp(`${API_URL}${AuthorityApiPaths.PERSON}\\?name=tu@unit.no`))
     .reply(200, mockSingleAuthorityResponse);
+  mock
+    .onGet(new RegExp(`${API_URL}${AuthorityApiPaths.PERSON}\\?arpId=901790000000`))
+    .reply(200, mockSingleAuthorityResponse);
 
   // update authority
   mock
-    .onPut(new RegExp(`${API_URL}${AuthorityApiPaths.PERSON}/*`))
+    .onPost(new RegExp(`${API_URL}${AuthorityApiPaths.PERSON}/901790000000/identifiers/*/update`))
     .replyOnce(200, mockSingleAuthorityResponseWithFeide);
   mock
-    .onPost(new RegExp(`${API_URL}${AuthorityApiPaths.PERSON}/901790000000/identifiers/orgunitid/*`))
+    .onPost(new RegExp(`${API_URL}${AuthorityApiPaths.PERSON}/901790000000/identifiers/orgunitid/add`))
     .replyOnce(200, mockSingleAuthorityResponse);
   mock
-    .onPost(new RegExp(`${API_URL}${AuthorityApiPaths.PERSON}/901790000000/identifiers/orcid/*`))
+    .onPost(new RegExp(`${API_URL}${AuthorityApiPaths.PERSON}/901790000000/identifiers/orcid/add`))
     .reply(200, mockSingleAuthorityResponseWithOrcid);
   mock
-    .onPost(new RegExp(`${API_URL}${AuthorityApiPaths.PERSON}/901790000000/identifiers/orgunitid/*`))
+    .onPost(new RegExp(`${API_URL}${AuthorityApiPaths.PERSON}/901790000000/identifiers/orgunitid/add`))
     .reply(200, mockSingleAuthorityResponseWithOrcid);
 
   // Remove orgunitid from Authority
   mock
-    .onDelete(new RegExp(`${API_URL}${AuthorityApiPaths.PERSON}/*`))
+    .onDelete(new RegExp(`${API_URL}${AuthorityApiPaths.PERSON}/901790000000/identifiers/orgunitid/delete`))
     .reply(200, mockSingleAuthorityResponseAfterDeletion);
 
   // create authority

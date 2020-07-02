@@ -99,6 +99,8 @@
     "link_publication_description": "E.g. DOI link, link to article, link to video of lecture etc.",
     "link_to_publication": "Link to publication",
     "load_file": "Load file",
+    "newest_publications": "Newest publications",
+    "no_published_publications_yet": "There are no published publications yet",
     "start_with_link_to_publication": "Start with a link to a publication"
   },
   "references": {
@@ -145,6 +147,7 @@
   },
   "submission": {
     "ask_for_doi": "Ask for DOI for this registration",
+    "doi_requested": "You have asked for DOI for this registration",
     "number_of_affiliations": "{{count}} affiliation",
     "number_of_affiliations_plural": "{{count}} affiliations"
   },

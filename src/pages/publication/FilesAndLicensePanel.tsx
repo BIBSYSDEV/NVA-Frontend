@@ -7,7 +7,7 @@ import { UppyFile } from '@uppy/core';
 
 import FileUploader from './files_and_license_tab/FileUploader';
 import FileCard from './files_and_license_tab/FileCard';
-import { FormikPublication, Publisher } from '../../types/publication.types';
+import { Publication, Publisher } from '../../types/publication.types';
 import Modal from '../../components/Modal';
 import { licenses, Uppy } from '../../types/file.types';
 import Card from '../../components/Card';
@@ -21,7 +21,6 @@ import { PanelProps } from './PublicationFormContent';
 import { NotificationVariant } from '../../types/notification.types';
 import { autoHideNotificationDuration } from '../../utils/constants';
 import { File } from '../../types/file.types';
-import { StyledNormalTextPreWrapped } from '../../components/styled/Wrappers';
 
 const StyledUploadedFiles = styled(Card)`
   display: flex;
@@ -32,8 +31,9 @@ const StyledUploadedFiles = styled(Card)`
   }
 `;
 
-const StyledLicenseDescription = styled(StyledNormalTextPreWrapped)`
+const StyledLicenseDescription = styled.div`
   margin-bottom: 1rem;
+  white-space: pre-wrap;
 `;
 
 interface FilesAndLicensePanelProps extends PanelProps {
@@ -42,7 +42,7 @@ interface FilesAndLicensePanelProps extends PanelProps {
 
 const FilesAndLicensePanel: FC<FilesAndLicensePanelProps> = ({ uppy, setTouchedFields }) => {
   const { t } = useTranslation('publication');
-  const { values }: FormikProps<FormikPublication> = useFormikContext();
+  const { values }: FormikProps<Publication> = useFormikContext();
   const [isLicenseModalOpen, setIsLicenseModalOpen] = useState(false);
   const {
     fileSet: { files = [] },
@@ -126,7 +126,7 @@ const FilesAndLicensePanel: FC<FilesAndLicensePanelProps> = ({ uppy, setTouchedF
         headingText={t('files_and_license.licenses')}
         openModal={isLicenseModalOpen}
         onClose={toggleLicenseModal}
-        maxWidth="md">
+        maxWidth="sm">
         {licenses.map((license) => (
           <StyledLicenseDescription key={license.identifier}>
             <Label>{license.identifier}</Label>

@@ -27,6 +27,10 @@ const StyledLine = styled.div`
   margin-top: 1rem;
 `;
 
+const StyledTextContainer = styled.div`
+  grid-area: text;
+`;
+
 const PublicProfile: FC = () => {
   const { arpId } = useParams();
   const [authority, isLoadingUser] = useFetchAuthority(arpId);
@@ -48,9 +52,11 @@ const PublicProfile: FC = () => {
               {authority.orgunitids.length > 0 && (
                 <StyledLine>
                   <WorkIcon />
-                  {authority.orgunitids.map((unitId) => (
-                    <AffiliationHierarchy key={unitId} unitUri={unitId} commaSeparated />
-                  ))}
+                  <StyledTextContainer>
+                    {authority.orgunitids.map((unitId) => (
+                      <AffiliationHierarchy key={unitId} unitUri={unitId} commaSeparated />
+                    ))}
+                  </StyledTextContainer>
                 </StyledLine>
               )}
               {authority.orcids.map((orcid: string) => {

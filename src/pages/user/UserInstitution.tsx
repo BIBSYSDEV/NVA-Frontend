@@ -61,7 +61,7 @@ const UserInstitution: FC = () => {
     }
 
     const mostSpecificUnit = getMostSpecificUnit(value.unit);
-    const newUnitId = mostSpecificUnit.id.split('/').pop();
+    const newUnitId = mostSpecificUnit.id;
 
     if (!newUnitId) {
       return;
