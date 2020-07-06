@@ -77,7 +77,7 @@ export default createMuiTheme({
         color: Colors.Link,
       },
     },
-    MuiExpansionPanel: {
+    MuiAccordion: {
       root: {
         background: Colors.CollapsedPanel,
         '&$expanded': {
@@ -85,7 +85,7 @@ export default createMuiTheme({
         },
       },
     },
-    MuiExpansionPanelDetails: {
+    MuiAccordionDetails: {
       root: { background: Colors.ExpandedPanel },
     },
     MuiInputBase: {
