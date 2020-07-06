@@ -84,7 +84,7 @@ const Menu: FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
         getContentAnchorEl={null}
         keepMounted
         open={!!anchorEl}
-        onClose={handleClickMenuItem}
+        onClose={() => setAnchorEl(null)}
         anchorOrigin={{
           vertical: 'bottom',
           horizontal: 'left',
