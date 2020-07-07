@@ -80,7 +80,8 @@ const App: FC = () => {
   useEffect(() => {
     // Fetch attributes of authenticated user
     const getUser = async () => {
-      dispatch(getCurrentUserAttributes());
+      const feideUser = await getCurrentUserAttributes();
+      dispatch(setUser(feideUser));
       setIsLoadingUser(false);
     };
 
