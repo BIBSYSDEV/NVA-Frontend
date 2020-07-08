@@ -89,7 +89,7 @@
     "@types/styled-components": "^5.1.1",
     "@types/yup": "^0.29.3",
     "axios-mock-adapter": "^1.18.1",
-    "cypress": "^4.9.0",
+    "cypress": "^4.10.0",
     "faker": "^4.1.0",
     "husky": "^4.2.5",
     "nyc": "^15.1.0",
