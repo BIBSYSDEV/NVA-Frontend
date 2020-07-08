@@ -105,8 +105,7 @@ const App: FC = () => {
   useEffect(() => {
     // Fetch logged in user's roles
     const getRoles = async () => {
-      const userRoles: any = await getMyRoles(user.id);
-
+      const userRoles = await getMyRoles(user.id);
       if (userRoles.error) {
         dispatch(setNotification(userRoles.error, NotificationVariant.Error));
         setIsLoadingUser(false);
