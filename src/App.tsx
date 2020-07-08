@@ -23,8 +23,9 @@ import { mockUser } from './utils/testfiles/mock_feide_user';
 import AppRoutes from './AppRoutes';
 import useFetchAuthorities from './utils/hooks/useFetchAuthorities';
 import { setNotification } from './redux/actions/notificationActions';
-import { getMyRoles, UserRoles } from './api/roleApi';
+import { getMyRoles } from './api/roleApi';
 import { NotificationVariant } from './types/notification.types';
+import { UserRoles } from './types/role.types';
 
 const StyledApp = styled.div`
   min-height: 100vh;

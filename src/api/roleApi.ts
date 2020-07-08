@@ -2,20 +2,9 @@ import Axios, { CancelToken } from 'axios';
 import i18n from '../translations/i18n';
 import { StatusCode } from '../utils/constants';
 import { getIdToken } from './userApi';
-import { RoleName } from '../types/user.types';
 
 export enum RoleApiPaths {
   USERS = '/users',
-}
-
-export interface Role {
-  rolename: RoleName;
-}
-
-export interface UserRoles {
-  institution: string;
-  roles: Role[];
-  username: string;
 }
 
 export const getMyRoles = async (username: string, cancelToken?: CancelToken) => {
