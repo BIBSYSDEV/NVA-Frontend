@@ -90,7 +90,8 @@ const App: FC = () => {
         setIsLoadingUser(false);
       } else if (feideUser) {
         dispatch(setUser(feideUser));
-        // Wait with setting isLoadingUser to false until roles are loaded in separate useEffect
+        // Wait with setting isLoadingUser to false until roles are loaded in separate useEffect,
+        // which will be trigged when user is updated in redux
       }
     };
 
@@ -106,12 +107,13 @@ const App: FC = () => {
     // Fetch logged in user's roles
     const getRoles = async () => {
       const userRoles = await getMyRoles(user.id);
-      if (userRoles.error) {
-        dispatch(setNotification(userRoles.error, NotificationVariant.Error));
-        setIsLoadingUser(false);
-      } else if (userRoles) {
-        const roles = (userRoles as UserRoles).roles.map((role) => role.rolename);
-        dispatch(setRoles(roles));
+      if (userRoles) {
+        if (userRoles.error) {
+          dispatch(setNotification(userRoles.error, NotificationVariant.Error));
+        } else {
+          const roles = (userRoles as UserRoles).roles.map((role) => role.rolename);
+          dispatch(setRoles(roles));
+        }
         setIsLoadingUser(false);
       }
     };

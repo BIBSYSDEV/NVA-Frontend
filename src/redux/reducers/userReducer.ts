@@ -32,7 +32,6 @@ export const userReducer = (state: User | null = null, action: UserActions | Orc
         affiliations,
         givenName: action.user.given_name,
         familyName: action.user.family_name,
-
         possibleAuthorities: [],
       };
       return user;
