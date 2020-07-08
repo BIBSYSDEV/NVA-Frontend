@@ -106,15 +106,7 @@ const App: FC = () => {
     // Fetch logged in user's roles
     const getRoles = async () => {
       const userRoles: any = await getMyRoles(user.id);
-      // {
-      //   roles: [
-      //     {
-      //       rolename: 'test',
-      //     },
-      //   ],
-      //   username: 'kjmo@unit.no',
-      //   institution: 'https://api.cristin.no/v2/institutions/20202',
-      // };
+
       if (userRoles.error) {
         dispatch(setNotification(userRoles.error, NotificationVariant.Error));
         setIsLoadingUser(false);
@@ -126,9 +118,7 @@ const App: FC = () => {
     };
 
     if (user?.id && !user.roles) {
-      setTimeout(() => {
-        getRoles();
-      }, 1000);
+      getRoles();
     }
   }, [dispatch, user]);
 
