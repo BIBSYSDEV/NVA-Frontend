@@ -25,6 +25,7 @@ import { PublicationChannelApiPaths } from './publicationChannelApi';
 import { FileApiPaths } from './fileApi';
 import { CustomerInstitutionApiPaths } from './customerInstitutionsApi';
 import { emptyPublication } from '../types/publication.types';
+import { mockRoles } from '../utils/testfiles/mock_feide_user';
 
 const mockOrcidResponse: OrcidResponse = {
   id: 'https://sandbox.orcid.org/0000-0001-2345-6789',
@@ -172,6 +173,9 @@ export const interceptRequestsOnMock = () => {
       new RegExp(`${API_URL}${InstitutionApiPaths.DEPARTMENTS}\\?uri=https://api.cristin.no/v2/units/194.65.20.10`)
     )
     .replyOnce(200, mockNtnuSubunitResponse);
+
+  // Roles
+  mock.onGet(new RegExp('https://o6gjx84mca.execute-api.eu-west-1.amazonaws.com/Prod/users/*')).reply(200, mockRoles);
 
   mock.onAny().reply(function (config) {
     throw new Error('Could not find mock for ' + config.url);
