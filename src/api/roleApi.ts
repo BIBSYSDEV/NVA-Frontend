@@ -9,7 +9,7 @@ export enum RoleApiPaths {
 
 export const getMyRoles = async (username: string, cancelToken?: CancelToken) => {
   // TODO: Remove tempBaseUrl when endpoint is moved to normal backend path
-  const tempBaseUrl = 'https://o6gjx84mca.execute-api.eu-west-1.amazonaws.com/Prod';
+  const tempBaseUrl = 'https://ddpsk7vp6h.execute-api.eu-west-1.amazonaws.com/Prod';
   const url = `${tempBaseUrl}${RoleApiPaths.USERS}/${username}`;
 
   try {

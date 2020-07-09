@@ -85,13 +85,17 @@ const App: FC = () => {
     // Fetch attributes of authenticated user
     const getUser = async () => {
       const feideUser = await getCurrentUserAttributes();
-      if (feideUser?.error) {
-        dispatch(setNotification(feideUser.error, NotificationVariant.Error));
+      if (feideUser) {
+        if (feideUser.error) {
+          dispatch(setNotification(feideUser.error, NotificationVariant.Error));
+          setIsLoadingUser(false);
+        } else {
+          dispatch(setUser(feideUser));
+          // Wait with setting isLoadingUser to false until roles are loaded in separate useEffect,
+          // which will be trigged when user is updated in redux
+        }
+      } else {
         setIsLoadingUser(false);
-      } else if (feideUser) {
-        dispatch(setUser(feideUser));
-        // Wait with setting isLoadingUser to false until roles are loaded in separate useEffect,
-        // which will be trigged when user is updated in redux
       }
     };
 
