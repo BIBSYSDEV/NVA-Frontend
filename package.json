@@ -95,7 +95,7 @@
     "nyc": "^15.1.0",
     "prettier": "^2.0.5",
     "pretty-quick": "^2.0.1",
-    "start-server-and-test": "^1.11.0",
+    "start-server-and-test": "^1.11.1",
     "ts-node": "^8.10.2",
     "typescript": "^3.9.6"
   }
