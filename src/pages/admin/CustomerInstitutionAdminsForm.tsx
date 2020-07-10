@@ -42,23 +42,26 @@ const CustomerInstitutionAdminsForm: FC = () => {
       <Heading>{t('administrators')}</Heading>
       {/* TODO: List existing admins */}
 
+      {/* Add new admin */}
       <Formik onSubmit={addAdmin} initialValues={adminInitialValues} validationSchema={adminValidationSchema}>
-        <StyledNewAdminRow>
-          <Field name="userId">
-            {({ field, meta: { touched, error } }: FieldProps) => (
-              <StyledTextField
-                {...field}
-                label={t('users.new_institution_admin')}
-                variant="outlined"
-                error={touched && !!error}
-                helperText={<ErrorMessage name={field.name} />}
-              />
-            )}
-          </Field>
-          <Button color="primary" variant="contained" type="submit">
-            {t('common:add')}
-          </Button>
-        </StyledNewAdminRow>
+        {({ isSubmitting, isValid, dirty }) => (
+          <StyledNewAdminRow>
+            <Field name="userId">
+              {({ field, meta: { touched, error } }: FieldProps) => (
+                <StyledTextField
+                  {...field}
+                  label={t('users.new_institution_admin')}
+                  variant="outlined"
+                  error={touched && !!error}
+                  helperText={<ErrorMessage name={field.name} />}
+                />
+              )}
+            </Field>
+            <Button color="primary" variant="contained" type="submit" disabled={!dirty || isSubmitting || !isValid}>
+              {t('common:add')}
+            </Button>
+          </StyledNewAdminRow>
+        )}
       </Formik>
     </Card>
   );
