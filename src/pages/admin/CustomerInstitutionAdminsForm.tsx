@@ -1,10 +1,14 @@
 import React, { FC } from 'react';
-import Card from '../../components/Card';
 import { TextField, Button } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
+import { Formik, Field, FieldProps, ErrorMessage, Form } from 'formik';
 import styled from 'styled-components';
 
-const StyledNewAdminRow = styled.div`
+import Card from '../../components/Card';
+import Heading from '../../components/Heading';
+import { adminValidationSchema } from '../publication/PublicationFormValidationSchema';
+
+const StyledNewAdminRow = styled(Form)`
   display: flex;
 `;
 
@@ -13,18 +17,49 @@ const StyledTextField = styled(TextField)`
   margin-right: 2rem;
 `;
 
-const CustomerInstitutionAdminsForm: FC = () => {
-  const { t } = useTranslation();
-  // TODO: Fetch existing admins
+interface AdminValues {
+  userId: string;
+}
 
+const adminInitialValues: AdminValues = {
+  userId: '',
+};
+
+const CustomerInstitutionAdminsForm: FC = () => {
+  const { t } = useTranslation('admin');
+  // TODO: Fetch existing admins (needs endpoint to retrieve all admins of given institution)
+
+  const addAdmin = (adminValues: AdminValues) => {
+    // Cast values according to validation schema to ensure doiUrl is trimmed
+    const trimmedValues = adminValidationSchema.cast(adminValues);
+    const userId = trimmedValues?.userId as string;
+    console.log(userId);
+
+    // TODO: Needs endpoint to add one role to one user for one institution
+  };
   return (
     <Card>
-      <StyledNewAdminRow>
-        <StyledTextField variant="outlined" label={t('TODO.label')} />
-        <Button color="primary" variant="contained">
-          Legg til
-        </Button>
-      </StyledNewAdminRow>
+      <Heading>{t('administrators')}</Heading>
+      {/* TODO: List existing admins */}
+
+      <Formik onSubmit={addAdmin} initialValues={adminInitialValues} validationSchema={adminValidationSchema}>
+        <StyledNewAdminRow>
+          <Field name="userId">
+            {({ field, meta: { touched, error } }: FieldProps) => (
+              <StyledTextField
+                {...field}
+                label={t('users.new_institution_admin')}
+                variant="outlined"
+                error={touched && !!error}
+                helperText={<ErrorMessage name={field.name} />}
+              />
+            )}
+          </Field>
+          <Button color="primary" variant="contained" type="submit">
+            {t('common:add')}
+          </Button>
+        </StyledNewAdminRow>
+      </Formik>
     </Card>
   );
 };
