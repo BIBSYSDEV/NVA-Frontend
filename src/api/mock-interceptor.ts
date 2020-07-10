@@ -175,7 +175,7 @@ export const interceptRequestsOnMock = () => {
     .replyOnce(200, mockNtnuSubunitResponse);
 
   // Roles
-  mock.onGet(new RegExp('https://o6gjx84mca.execute-api.eu-west-1.amazonaws.com/Prod/users/*')).reply(200, mockRoles);
+  mock.onGet(new RegExp('https://ddpsk7vp6h.execute-api.eu-west-1.amazonaws.com/Prod/users/*')).reply(200, mockRoles);
 
   mock.onAny().reply(function (config) {
     throw new Error('Could not find mock for ' + config.url);
