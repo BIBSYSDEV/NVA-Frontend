@@ -3,7 +3,7 @@ import MockAdapter from 'axios-mock-adapter';
 
 import { Authority } from '../types/authority.types';
 import OrcidResponse from '../types/orcid.types';
-import { API_URL, ORCID_USER_INFO_URL } from '../utils/constants';
+import { API_URL, ORCID_USER_INFO_URL, TEMP_ROLES_API } from '../utils/constants';
 import mockDoiLookupResponse from '../utils/testfiles/doi_lookup_response.json';
 import mockInstitutionResponse from '../utils/testfiles/institutions/institution_query.json';
 import mockNtnuResponse from '../utils/testfiles/institutions/institution_ntnu.json';
@@ -175,7 +175,7 @@ export const interceptRequestsOnMock = () => {
     .replyOnce(200, mockNtnuSubunitResponse);
 
   // Roles
-  mock.onGet(new RegExp('https://ddpsk7vp6h.execute-api.eu-west-1.amazonaws.com/Prod/users/*')).reply(200, mockRoles);
+  mock.onGet(new RegExp(`${TEMP_ROLES_API}/users/*`)).reply(200, mockRoles);
 
   mock.onAny().reply(function (config) {
     throw new Error('Could not find mock for ' + config.url);

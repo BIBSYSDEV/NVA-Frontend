@@ -1,6 +1,6 @@
 import Axios, { CancelToken } from 'axios';
 import i18n from '../translations/i18n';
-import { StatusCode } from '../utils/constants';
+import { StatusCode, TEMP_ROLES_API } from '../utils/constants';
 import { getIdToken } from './userApi';
 
 export enum RoleApiPaths {
@@ -9,8 +9,7 @@ export enum RoleApiPaths {
 
 export const getMyRoles = async (username: string, cancelToken?: CancelToken) => {
   // TODO: Remove tempBaseUrl when endpoint is moved to normal backend path
-  const tempBaseUrl = 'https://ddpsk7vp6h.execute-api.eu-west-1.amazonaws.com/Prod';
-  const url = `${tempBaseUrl}${RoleApiPaths.USERS}/${username}`;
+  const url = `${TEMP_ROLES_API}${RoleApiPaths.USERS}/${username}`;
 
   try {
     const idToken = await getIdToken();
