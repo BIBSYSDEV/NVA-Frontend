@@ -2,7 +2,7 @@ import { Contributor } from './contributor.types';
 import { PublicationFileSet } from './file.types';
 import { LanguageValues } from './language.types';
 import { Project } from './project.types';
-import { PublicationType, JournalArticleType, ReportType, DegreeType, BookType } from './publicationFieldNames';
+import { PublicationType, JournalType, ReportType, DegreeType, BookType } from './publicationFieldNames';
 import { EnumDictionary } from './common.types';
 
 export enum BackendTypeNames {
@@ -112,7 +112,7 @@ interface PublicationPages extends BackendType {
 }
 
 interface PublicationInstance {
-  type: JournalArticleType | ReportType | DegreeType | BookType | '';
+  type: JournalType | ReportType | DegreeType | BookType | '';
   articleNumber: string;
   issue: string;
   pages: PublicationPages;
