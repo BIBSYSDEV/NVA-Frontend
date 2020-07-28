@@ -1,4 +1,4 @@
-import { setUser } from '../../src/redux/actions/userActions';
+import { setRoles } from '../../src/redux/actions/userActions';
 import { setNotification, removeNotification } from '../../src/redux/actions/notificationActions';
 
 Cypress.Commands.add('mocklogin', () => {
@@ -24,10 +24,10 @@ Cypress.Commands.add('startPublicationWithDoi', () => {
   cy.get('[data-testid=publication-link-next-button]').click({ force: true });
 });
 
-Cypress.Commands.add('setUserInRedux', (user) => {
+Cypress.Commands.add('setUserRolesInRedux', (roles) => {
   cy.window()
     .its('store') // Redux store must be exposed via window.store
-    .then((store) => store.dispatch(setUser(user)));
+    .then((store) => store.dispatch(setRoles(roles)));
 });
 
 Cypress.Commands.add('setNotificationInRedux', (message, variant) => {
