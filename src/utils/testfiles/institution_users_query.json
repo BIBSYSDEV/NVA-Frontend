@@ -3,7 +3,7 @@
     "id": "eirik.nilsen@somewhere.org",
     "name": "Eirik Nilsen",
     "createdDate": "2020-01-01",
-    "roles": ["Admin", "Appadmin", "Curator"]
+    "roles": ["Institution-admin", "App-admin", "Curator"]
   },
   {
     "id": "eirik.hansen@somewhere.org",

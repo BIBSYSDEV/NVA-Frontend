@@ -5,6 +5,8 @@ import Label from './../../components/Label';
 import { useTranslation } from 'react-i18next';
 import { UserAdmin, RoleName } from '../../types/user.types';
 import { addUserToInstitution } from '../../api/userAdminApi';
+import { useSelector } from 'react-redux';
+import { RootStore } from '../../redux/reducers/rootReducer';
 
 const StyledTable = styled(Table)`
   width: 100%;
@@ -17,40 +19,24 @@ const StyledTableRow = styled(TableRow)`
   }
 `;
 
-const StyledButtonTableCell = styled(TableCell)`
-  min-width: 10rem;
-  overflow: hidden;
-  text-overflow: ellipsis;
-`;
-
-const StyledTableCell = styled(TableCell)`
-  min-width: 8rem;
-  overflow: hidden;
-  text-overflow: ellipsis;
-`;
-
-const StyledLargeTableCell = styled(TableCell)`
-  min-width: 12rem;
-  overflow: hidden;
-  text-overflow: ellipsis;
-`;
-
-const StyledButton = styled(Button)`
+const StyledNewButton = styled(Button)`
   margin-top: 1rem;
-  margin-right: 0.5rem;
-  min-width: 5rem;
+`;
+
+const StyledButton = styled(StyledNewButton)`
+  margin-left: 0.5rem;
 `;
 
 interface UserListProps {
-  cristinUnitId: string;
   userList: UserAdmin[];
   role: RoleName;
   buttonText: string;
 }
 
-const UserList: FC<UserListProps> = ({ userList, role, buttonText, cristinUnitId }) => {
+const UserList: FC<UserListProps> = ({ userList, role, buttonText }) => {
   const { t } = useTranslation('admin');
   const [newUser, setNewUser] = useState(false);
+  const user = useSelector((store: RootStore) => store.user);
 
   const toggleNewUser = () => {
     setNewUser(!newUser);
@@ -59,7 +45,7 @@ const UserList: FC<UserListProps> = ({ userList, role, buttonText, cristinUnitId
   const handleSubmitUser = () => {
     // add user with role, how?
     const username = '';
-    addUserToInstitution(cristinUnitId, username, role);
+    addUserToInstitution(user.organizationId, username, role);
   };
 
   const handleChangeAuthenticationId = () => {};
@@ -72,36 +58,36 @@ const UserList: FC<UserListProps> = ({ userList, role, buttonText, cristinUnitId
         <StyledTable>
           <TableHead>
             <TableRow>
-              <StyledLargeTableCell>
+              <TableCell>
                 <Label>{t('users.username')}</Label>
-              </StyledLargeTableCell>
-              <StyledLargeTableCell>
+              </TableCell>
+              <TableCell>
                 <Label>{t('common:name')}</Label>
-              </StyledLargeTableCell>
-              <StyledTableCell>
+              </TableCell>
+              <TableCell>
                 <Label>{t('users.created_date')}</Label>
-              </StyledTableCell>
-              <StyledButtonTableCell />
+              </TableCell>
+              <TableCell />
             </TableRow>
           </TableHead>
           <TableBody>
             {userList.map((user) => (
               <StyledTableRow key={user.id}>
-                <StyledLargeTableCell>{user.id}</StyledLargeTableCell>
-                <StyledLargeTableCell>{user.name}</StyledLargeTableCell>
-                <StyledTableCell>{user.createdDate}</StyledTableCell>
-                <StyledButtonTableCell align="right">
-                  <StyledButton color="secondary" variant="contained">
+                <TableCell>{user.id}</TableCell>
+                <TableCell>{user.name}</TableCell>
+                <TableCell>{user.createdDate}</TableCell>
+                <TableCell align="right">
+                  <Button color="secondary" variant="contained">
                     {t('common:delete')}
-                  </StyledButton>
-                </StyledButtonTableCell>
+                  </Button>
+                </TableCell>
               </StyledTableRow>
             ))}
             {newUser && (
               <StyledTableRow>
                 <TableCell>
                   <TextField
-                    label={t('users.authentication_id')}
+                    label={t('users.username')}
                     variant="outlined"
                     size="small"
                     onChange={handleChangeAuthenticationId}
@@ -123,9 +109,9 @@ const UserList: FC<UserListProps> = ({ userList, role, buttonText, cristinUnitId
           </TableBody>
         </StyledTable>
       )}
-      <StyledButton color="primary" variant="outlined" onClick={toggleNewUser} disabled={newUser}>
+      <StyledNewButton color="primary" variant="outlined" onClick={toggleNewUser} disabled={newUser}>
         {buttonText}
-      </StyledButton>
+      </StyledNewButton>
     </>
   );
 };
