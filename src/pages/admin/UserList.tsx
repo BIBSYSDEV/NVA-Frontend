@@ -4,9 +4,11 @@ import { Table, TableHead, TableRow, TableCell, TableBody, Button, TextField } f
 import Label from './../../components/Label';
 import { useTranslation } from 'react-i18next';
 import { UserAdmin, RoleName } from '../../types/user.types';
-import { addUserToInstitution } from '../../api/userAdminApi';
-import { useSelector } from 'react-redux';
+import { assignUserRole } from '../../api/roleApi';
+import { useSelector, useDispatch } from 'react-redux';
 import { RootStore } from '../../redux/reducers/rootReducer';
+import { setNotification } from '../../redux/actions/notificationActions';
+import { NotificationVariant } from '../../types/notification.types';
 
 const StyledTable = styled(Table)`
   width: 100%;
@@ -38,14 +40,21 @@ const UserList: FC<UserListProps> = ({ userList, role, buttonText }) => {
   const [newUser, setNewUser] = useState(false);
   const [username, setUsername] = useState('');
   const user = useSelector((store: RootStore) => store.user);
+  const dispatch = useDispatch();
 
   const toggleNewUser = () => {
     setNewUser(!newUser);
   };
 
-  const handleSubmitUser = () => {
-    console.log('username', username, 'role', role);
-    addUserToInstitution(user.organizationId, username, role);
+  const handleSubmitUser = async () => {
+    const newUserRole = await assignUserRole(user.organizationId, username, role);
+    if (newUserRole) {
+      if (newUserRole.error) {
+        dispatch(setNotification(newUserRole.error, NotificationVariant.Error));
+      } else {
+        dispatch(setNotification(t('feedback:success.added_role')));
+      }
+    }
   };
 
   const handleAddNewUser = (event: ChangeEvent<any>) => {

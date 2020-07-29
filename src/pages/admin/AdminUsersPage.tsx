@@ -8,11 +8,15 @@ import { RootStore } from '../../redux/reducers/rootReducer';
 import { UserAdmin, RoleName } from '../../types/user.types';
 import styled from 'styled-components';
 import Card from '../../components/Card';
-import { FormControlLabel, Checkbox } from '@material-ui/core';
+import { FormControlLabel, Checkbox, Divider } from '@material-ui/core';
 import UserList from './UserList';
 import NormalText from './../../components/NormalText';
 
 const StyledContainer = styled.div`
+  margin-bottom: 2rem;
+`;
+
+const StyledHeading = styled(Heading)`
   margin-bottom: 2rem;
 `;
 
@@ -46,25 +50,31 @@ const AdminUsersPage: FC = () => {
 
   return (
     <Card>
-      <Heading>{t('users.user_administration')}</Heading>
-      <SubHeading>{t('profile:roles.institution_admins')}</SubHeading>
+      <StyledHeading>{t('users.user_administration')}</StyledHeading>
+
       <StyledContainer>
+        <SubHeading>{t('profile:roles.institution_admins')}</SubHeading>
+        <Divider />
         <UserList
           userList={filterUsersByRole(RoleName.INSTITUTION_ADMIN)}
           role={RoleName.INSTITUTION_ADMIN}
           buttonText={t('users.new_institution_admin')}
         />
       </StyledContainer>
-      <SubHeading>{t('profile:roles.curators')}</SubHeading>
+
       <StyledContainer>
+        <SubHeading>{t('profile:roles.curators')}</SubHeading>
+        <Divider />
         <UserList
           userList={filterUsersByRole(RoleName.CURATOR)}
           role={RoleName.CURATOR}
           buttonText={t('users.new_curator')}
         />
       </StyledContainer>
+
       <StyledContainer>
         <SubHeading>{t('profile:roles.creator')}</SubHeading>
+        <Divider />
         <NormalText>{t('users.creator_info')}</NormalText>
         <FormControlLabel
           control={<Checkbox checked={autoAssignCreators} />}

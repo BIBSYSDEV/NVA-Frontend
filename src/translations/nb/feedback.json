@@ -1,6 +1,7 @@
 {
   "error": {
     "404_page": "Beklager, men vi kan ikke finne siden du ser etter. (Http feilkode 404)",
+    "add_role": "Kunne ikke legge til rolle",
     "create_authority": "Kunne ikke opprette autoritet",
     "create_customer": "Kunne ikke opprette institusjon",
     "create_publication": "Kunne ikke opprette publikasjon",
@@ -41,6 +42,7 @@
   },
   "success": {
     "added_affiliation": "Tilknytning er lagt til",
+    "added_role": "Rolle ble lagt til",
     "created_authority": "Forfatteridentitet er opprettet",
     "created_customer": "Institusjon er opprettet",
     "create_publication": "Publikasjonen er opprettet",
