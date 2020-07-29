@@ -63,14 +63,6 @@ const AdminUsersPage: FC = () => {
           buttonText={t('users.new_curator')}
         />
       </StyledContainer>
-      <SubHeading>{t('profile:roles.editors')}</SubHeading>
-      <StyledContainer>
-        <UserList
-          userList={filterUsersByRole(RoleName.EDITOR)}
-          role={RoleName.EDITOR}
-          buttonText={t('users.new_editor')}
-        />
-      </StyledContainer>
       <StyledContainer>
         <SubHeading>{t('profile:roles.creator')}</SubHeading>
         <NormalText>{t('users.creator_info')}</NormalText>

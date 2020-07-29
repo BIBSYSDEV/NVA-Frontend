@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState, ChangeEvent } from 'react';
 import styled from 'styled-components';
 import { Table, TableHead, TableRow, TableCell, TableBody, Button, TextField } from '@material-ui/core';
 import Label from './../../components/Label';
@@ -36,6 +36,7 @@ interface UserListProps {
 const UserList: FC<UserListProps> = ({ userList, role, buttonText }) => {
   const { t } = useTranslation('admin');
   const [newUser, setNewUser] = useState(false);
+  const [username, setUsername] = useState('');
   const user = useSelector((store: RootStore) => store.user);
 
   const toggleNewUser = () => {
@@ -43,14 +44,13 @@ const UserList: FC<UserListProps> = ({ userList, role, buttonText }) => {
   };
 
   const handleSubmitUser = () => {
-    // add user with role, how?
-    const username = '';
+    console.log('username', username, 'role', role);
     addUserToInstitution(user.organizationId, username, role);
   };
 
-  const handleChangeAuthenticationId = () => {};
-
-  const handleChangeName = () => {};
+  const handleAddNewUser = (event: ChangeEvent<any>) => {
+    setUsername(event.target.value);
+  };
 
   return (
     <>
@@ -86,15 +86,7 @@ const UserList: FC<UserListProps> = ({ userList, role, buttonText }) => {
             {newUser && (
               <StyledTableRow>
                 <TableCell>
-                  <TextField
-                    label={t('users.username')}
-                    variant="outlined"
-                    size="small"
-                    onChange={handleChangeAuthenticationId}
-                  />
-                </TableCell>
-                <TableCell>
-                  <TextField label={t('common:name')} variant="outlined" size="small" onChange={handleChangeName} />
+                  <TextField label={t('users.username')} variant="outlined" size="small" onChange={handleAddNewUser} />
                 </TableCell>
                 <TableCell colSpan={4} align="right">
                   <StyledButton color="primary" variant="contained" onClick={handleSubmitUser}>

@@ -4,7 +4,6 @@ export enum RoleName {
   INSTITUTION_ADMIN = 'Institution-admin',
   APP_ADMIN = 'App-admin',
   CURATOR = 'Curator',
-  EDITOR = 'Editor',
   PUBLISHER = 'Publisher',
 }
 
