@@ -21,13 +21,13 @@ export const getInstitutionUsers = (cristinUnitId: string) => {
   //   return null;
   // }
 
-  return mockInstitutionUsersResponse.map(user => ({
+  return mockInstitutionUsersResponse.map((user) => ({
     ...user,
     roles: user.roles as RoleName[],
   }));
 };
 
-export const addUserToInstitution = (cristinUnitId: string, authenticationId: string, role: RoleName) => {
+export const addUserToInstitution = (cristinUnitId: string, username: string, role: RoleName) => {
   // TODO: add new user to institution
   // BACKEND DOES NOT EXIST YET
   // const idToken = await getIdToken();

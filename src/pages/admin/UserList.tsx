@@ -11,9 +11,9 @@ const StyledTable = styled(Table)`
 `;
 
 const StyledTableRow = styled(TableRow)`
-  background-color: ${props => props.theme.palette.box.main};
+  background-color: ${(props) => props.theme.palette.box.main};
   :nth-child(odd) {
-    background-color: ${props => props.theme.palette.background.default};
+    background-color: ${(props) => props.theme.palette.background.default};
   }
 `;
 
@@ -50,16 +50,16 @@ interface UserListProps {
 
 const UserList: FC<UserListProps> = ({ userList, role, buttonText, cristinUnitId }) => {
   const { t } = useTranslation('admin');
-  const [addUser, setAddUser] = useState(false);
+  const [newUser, setNewUser] = useState(false);
 
-  const toggleAddUser = () => {
-    setAddUser(!addUser);
+  const toggleNewUser = () => {
+    setNewUser(!newUser);
   };
 
   const handleSubmitUser = () => {
     // add user with role, how?
-    const authenticationId = '';
-    addUserToInstitution(cristinUnitId, authenticationId, role);
+    const username = '';
+    addUserToInstitution(cristinUnitId, username, role);
   };
 
   const handleChangeAuthenticationId = () => {};
@@ -68,22 +68,16 @@ const UserList: FC<UserListProps> = ({ userList, role, buttonText, cristinUnitId
 
   return (
     <>
-      {(userList?.length > 0 || addUser) && (
+      {(userList?.length > 0 || newUser) && (
         <StyledTable>
           <TableHead>
             <TableRow>
               <StyledLargeTableCell>
-                <Label>{t('users.authentication_id')}</Label>
+                <Label>{t('users.username')}</Label>
               </StyledLargeTableCell>
               <StyledLargeTableCell>
                 <Label>{t('common:name')}</Label>
               </StyledLargeTableCell>
-              <StyledLargeTableCell>
-                <Label>{t('common:orcid')}</Label>
-              </StyledLargeTableCell>
-              <StyledTableCell>
-                <Label>{t('users.last_login_date')}</Label>
-              </StyledTableCell>
               <StyledTableCell>
                 <Label>{t('users.created_date')}</Label>
               </StyledTableCell>
@@ -91,12 +85,10 @@ const UserList: FC<UserListProps> = ({ userList, role, buttonText, cristinUnitId
             </TableRow>
           </TableHead>
           <TableBody>
-            {userList.map(user => (
+            {userList.map((user) => (
               <StyledTableRow key={user.id}>
                 <StyledLargeTableCell>{user.id}</StyledLargeTableCell>
                 <StyledLargeTableCell>{user.name}</StyledLargeTableCell>
-                <StyledLargeTableCell>{user.externalOrcid}</StyledLargeTableCell>
-                <StyledTableCell>{user.lastLoginDate}</StyledTableCell>
                 <StyledTableCell>{user.createdDate}</StyledTableCell>
                 <StyledButtonTableCell align="right">
                   <StyledButton color="secondary" variant="contained">
@@ -105,7 +97,7 @@ const UserList: FC<UserListProps> = ({ userList, role, buttonText, cristinUnitId
                 </StyledButtonTableCell>
               </StyledTableRow>
             ))}
-            {addUser && (
+            {newUser && (
               <StyledTableRow>
                 <TableCell>
                   <TextField
@@ -122,7 +114,7 @@ const UserList: FC<UserListProps> = ({ userList, role, buttonText, cristinUnitId
                   <StyledButton color="primary" variant="contained" onClick={handleSubmitUser}>
                     {t('common:add')}
                   </StyledButton>
-                  <StyledButton color="secondary" variant="contained" onClick={toggleAddUser}>
+                  <StyledButton color="secondary" variant="contained" onClick={toggleNewUser}>
                     {t('common:cancel')}
                   </StyledButton>
                 </TableCell>
@@ -131,7 +123,7 @@ const UserList: FC<UserListProps> = ({ userList, role, buttonText, cristinUnitId
           </TableBody>
         </StyledTable>
       )}
-      <StyledButton color="primary" variant="outlined" onClick={toggleAddUser} disabled={addUser}>
+      <StyledButton color="primary" variant="outlined" onClick={toggleNewUser} disabled={newUser}>
         {buttonText}
       </StyledButton>
     </>
