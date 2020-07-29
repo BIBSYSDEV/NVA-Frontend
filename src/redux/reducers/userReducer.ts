@@ -42,7 +42,7 @@ export const userReducer = (state: User | null = null, action: UserActions | Orc
         roles: action.roles,
         isPublisher: action.roles.some((role) => role === RoleName.PUBLISHER),
         isAppAdmin: action.roles.some((role) => role === RoleName.APP_ADMIN),
-        isInstitutionAdmin: action.roles.some((role) => role === RoleName.ADMIN),
+        isInstitutionAdmin: action.roles.some((role) => role === RoleName.INSTITUTION_ADMIN),
         isCurator: action.roles.some((role) => role === RoleName.CURATOR),
       };
     case SET_EXTERNAL_ORCID:

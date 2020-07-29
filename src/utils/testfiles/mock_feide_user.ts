@@ -6,7 +6,7 @@ export const mockUser: FeideUser = {
   email: 'testuser@unit.no',
   'custom:identifiers': 'tu@unit.no',
   'custom:orgName': 'unit',
-  'custom:applicationRoles': `${RoleName.PUBLISHER},${RoleName.ADMIN},${RoleName.APP_ADMIN}`,
+  'custom:applicationRoles': `${RoleName.PUBLISHER},${RoleName.INSTITUTION_ADMIN},${RoleName.APP_ADMIN}`,
   'custom:application': ApplicationName.NVA,
   'custom:orgNumber': 'NO919477822',
   'custom:commonName': 'Unit',

@@ -41,7 +41,7 @@ const AdminUsersPage: FC = () => {
   };
 
   const filterUsersByRole = (roleFilter: RoleName) => {
-    return userList.filter(user => user.roles.some(role => role === roleFilter));
+    return userList.filter((user) => user.roles.some((role) => role === roleFilter));
   };
 
   return (
@@ -51,8 +51,8 @@ const AdminUsersPage: FC = () => {
       <StyledContainer>
         <UserList
           cristinUnitId={user.institution}
-          userList={filterUsersByRole(RoleName.ADMIN)}
-          role={RoleName.ADMIN}
+          userList={filterUsersByRole(RoleName.INSTITUTION_ADMIN)}
+          role={RoleName.INSTITUTION_ADMIN}
           buttonText={t('users.new_institution_admin')}
         />
       </StyledContainer>
