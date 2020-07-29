@@ -50,9 +50,13 @@ export const assignUserRole = async (
       roles: [{ rolename }],
     };
     const response = await Axios.post(url, data, { headers, cancelToken });
-    return response.data;
+    if (response.status === StatusCode.OK) {
+      return response.data;
+    }
   } catch (error) {
-    if (!Axios.isCancel(error)) {
+    if (error.response.status === StatusCode.CONFLICT) {
+      return { info: i18n.t('feedback:info.user_already_exists') };
+    } else if (!Axios.isCancel(error)) {
       return { error: i18n.t('feedback:error.add_role') };
     }
   }

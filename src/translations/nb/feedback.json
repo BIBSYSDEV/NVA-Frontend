@@ -38,7 +38,8 @@
   },
   "info": {
     "affiliation_already_exists": "Tilknytningen finnes allerede",
-    "publishing_publication": "Publiserer publikasjon..."
+    "publishing_publication": "Publiserer publikasjon...",
+    "user_already_exists": "Brukeren finnes allerede"
   },
   "success": {
     "added_affiliation": "Tilknytning er lagt til",

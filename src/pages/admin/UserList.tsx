@@ -51,6 +51,8 @@ const UserList: FC<UserListProps> = ({ userList, role, buttonText }) => {
     if (newUserRole) {
       if (newUserRole.error) {
         dispatch(setNotification(newUserRole.error, NotificationVariant.Error));
+      } else if (newUserRole.info) {
+        dispatch(setNotification(newUserRole.info, NotificationVariant.Info));
       } else {
         dispatch(setNotification(t('feedback:success.added_role')));
       }
