@@ -57,6 +57,7 @@ const UserList: FC<UserListProps> = ({ userList, role, buttonText }) => {
         dispatch(setNotification(t('feedback:success.added_role')));
       }
     }
+    toggleNewUser();
   };
 
   const handleAddNewUser = (event: ChangeEvent<any>) => {
@@ -88,7 +89,7 @@ const UserList: FC<UserListProps> = ({ userList, role, buttonText }) => {
                 <TableCell>{user.name}</TableCell>
                 <TableCell>{user.createdDate}</TableCell>
                 <TableCell align="right">
-                  <Button color="secondary" variant="contained">
+                  <Button disabled color="secondary" variant="contained">
                     {t('common:delete')}
                   </Button>
                 </TableCell>

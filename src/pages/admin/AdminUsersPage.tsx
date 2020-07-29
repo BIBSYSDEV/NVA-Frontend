@@ -77,7 +77,7 @@ const AdminUsersPage: FC = () => {
         <Divider />
         <NormalText>{t('users.creator_info')}</NormalText>
         <FormControlLabel
-          control={<Checkbox checked={autoAssignCreators} />}
+          control={<Checkbox disabled checked={autoAssignCreators} />}
           onChange={handleCheckAutoAssignCreators}
           label={t('users.auto_assign_creators')}
         />
