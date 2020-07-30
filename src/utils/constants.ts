@@ -13,6 +13,7 @@ export const ORCID_SIGN_IN_URL = `${ORCID_BASE_URL}/signin?oauth&client_id=${pro
 export const FEIDE_IDENTITY_PROVIDER = 'FeideIdentityProvider';
 
 export const API_URL = process.env.REACT_APP_API_URL;
+export const TEMP_ROLES_API = 'https://ddpsk7vp6h.execute-api.eu-west-1.amazonaws.com/Prod';
 
 export enum StatusCode {
   OK = 200,
