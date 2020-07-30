@@ -21,6 +21,7 @@
     "get_project": "Søk på prosjekt feilet",
     "get_publications": "Kunne ikke laste inn publikasjoner",
     "get_publication": "Kunne ikke laste inn publikasjon",
+    "get_roles": "Kunne ikke hente roller",
     "get_session": "Økten er utløpt. Vennligst logg inn på nytt.",
     "get_user": "Kunne ikke hente bruker",
     "login": "Kunne ikke logge inn",

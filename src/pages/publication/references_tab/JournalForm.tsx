@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { TextField } from '@material-ui/core';
 
 import { Publication } from '../../../types/publication.types';
-import { ReferenceFieldNames, JournalArticleType } from '../../../types/publicationFieldNames';
+import { ReferenceFieldNames, JournalType } from '../../../types/publicationFieldNames';
 import { PublicationTableNumber } from '../../../utils/constants';
 import NviValidation from './components/NviValidation';
 import PeerReview from './components/PeerReview';
@@ -34,7 +34,7 @@ const StyledLabel = styled.div`
   justify-self: center;
 `;
 
-const JournalArticleForm: FC = () => {
+const JournalForm: FC = () => {
   const { t } = useTranslation('publication');
   const { values }: FormikProps<Publication> = useFormikContext();
   const {
@@ -44,7 +44,7 @@ const JournalArticleForm: FC = () => {
 
   return (
     <StyledContent>
-      <SelectTypeField fieldName={ReferenceFieldNames.SUB_TYPE} options={Object.values(JournalArticleType)} />
+      <SelectTypeField fieldName={ReferenceFieldNames.SUB_TYPE} options={Object.values(JournalType)} />
 
       <DoiField />
 
@@ -128,4 +128,4 @@ const JournalArticleForm: FC = () => {
   );
 };
 
-export default JournalArticleForm;
+export default JournalForm;

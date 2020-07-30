@@ -21,6 +21,7 @@
     "get_project": "Search for projects failed",
     "get_publications": "Could not retrieve publications",
     "get_publication": "Could not get publication",
+    "get_roles": "Could not get roles",
     "get_session": "Invalid session. Please log in again.",
     "get_user": "Failed to get user",
     "login": "Login failed",
