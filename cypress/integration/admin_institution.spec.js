@@ -1,13 +1,11 @@
-import { mockUser } from '../../src/utils/testfiles/mock_feide_user';
-
-const authorizedUser = { ...mockUser, 'custom:affiliation': '[member, employee, staff]', email: 'ost@unit.no' }; //@unit.no-address resolves to app admin
+import { RoleName } from '../../src/types/user.types';
 
 describe('User administers institutions ', () => {
   beforeEach('Given that the user is logged in as Application administrator:', () => {
     cy.visit('/');
     cy.server();
     cy.mocklogin();
-    cy.setUserInRedux(authorizedUser);
+    cy.setUserRolesInRedux([RoleName.APP_ADMIN]);
     // Open administer institutions page
     cy.get('[data-testid=menu]').click({ force: true });
     cy.get('[data-testid=menu-admin-institution-button]').click({ force: true });

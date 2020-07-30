@@ -1,11 +1,5 @@
 import * as Yup from 'yup';
-import {
-  PublicationType,
-  JournalArticleType,
-  BookType,
-  DegreeType,
-  ReportType,
-} from '../../types/publicationFieldNames';
+import { PublicationType, JournalType, BookType, DegreeType, ReportType } from '../../types/publicationFieldNames';
 import { LanguageValues } from '../../types/language.types';
 import i18n from '../../translations/i18n';
 
@@ -52,7 +46,7 @@ const fileValidationSchema = {
 };
 
 const journalValidationSchema = {
-  type: Yup.string().oneOf(Object.values(JournalArticleType)).required(ErrorMessage.REQUIRED),
+  type: Yup.string().oneOf(Object.values(JournalType)).required(ErrorMessage.REQUIRED),
   peerReviewed: Yup.boolean().required(ErrorMessage.REQUIRED),
   articleNumber: Yup.number().typeError(ErrorMessage.INVALID_FORMAT).min(0, ErrorMessage.MUST_BE_POSITIVE),
   volume: Yup.number().typeError(ErrorMessage.INVALID_FORMAT).min(0, ErrorMessage.MUST_BE_POSITIVE),
