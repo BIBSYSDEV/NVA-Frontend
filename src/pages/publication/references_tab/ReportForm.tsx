@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 import { TextField } from '@material-ui/core';
 
-import { FormikPublication, emptyPublisher } from '../../../types/publication.types';
+import { Publication, emptyPublisher } from '../../../types/publication.types';
 import { ReferenceFieldNames, ReportType } from '../../../types/publicationFieldNames';
 import { PublicationTableNumber } from '../../../utils/constants';
 import PublicationChannelSearch from './components/PublicationChannelSearch';
@@ -42,7 +42,7 @@ const StyledTextField = styled(TextField)`
 const ReportForm: FC = () => {
   const { t } = useTranslation('publication');
 
-  const { setFieldValue }: FormikProps<FormikPublication> = useFormikContext();
+  const { setFieldValue }: FormikProps<Publication> = useFormikContext();
 
   return (
     <StyledContent>

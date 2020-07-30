@@ -21,6 +21,7 @@
     "get_project": "Søk på prosjekt feilet",
     "get_publications": "Kunne ikke laste inn publikasjoner",
     "get_publication": "Kunne ikke laste inn publikasjon",
+    "get_roles": "Kunne ikke hente roller",
     "get_session": "Økten er utløpt. Vennligst logg inn på nytt.",
     "get_user": "Kunne ikke hente bruker",
     "login": "Kunne ikke logge inn",
@@ -29,7 +30,10 @@
     "search": "Søk feilet",
     "update_authority": "Kunne ikke oppdatere {{qualifier}} for autoritet",
     "update_customer": "Kunne ikke oppdatere institusjon",
-    "update_publication": "Kunne ikke oppdatere publikasjon"
+    "update_publication": "Kunne ikke oppdatere publikasjon",
+    "orcid": {
+      "access_denied": "Kunne ikke koble til ORCID fordi tilgang til ORCID-kontoen ble avslått"
+    }
   },
   "info": {
     "affiliation_already_exists": "Tilknytningen finnes allerede",

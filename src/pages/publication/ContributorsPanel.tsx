@@ -5,7 +5,7 @@ import { FormikProps, useFormikContext, FieldArray, ErrorMessage, FieldArrayRend
 import Heading from '../../components/Heading';
 import Card from '../../components/Card';
 import SortableTable from './contributors_tab/components/SortableTable';
-import { FormikPublication } from '../../types/publication.types';
+import { Publication } from '../../types/publication.types';
 import { ContributorFieldNames } from '../../types/publicationFieldNames';
 import { touchedContributorTabFields } from '../../utils/formik-helpers';
 import { PanelProps } from './PublicationFormContent';
@@ -16,7 +16,7 @@ const ContributorsPanel: FC<PanelProps> = ({ setTouchedFields }) => {
     values: {
       entityDescription: { contributors },
     },
-  }: FormikProps<FormikPublication> = useFormikContext();
+  }: FormikProps<Publication> = useFormikContext();
 
   const contributorsRef = useRef(contributors);
   useEffect(() => {

@@ -1,5 +1,6 @@
 {
   "description": {
+    "cc": "This work is posted here for your personal use and only in accordance with the publishers terms and conditions for use of self-archived versions.",
     "cc0": "The person who associated a work with this deed has dedicated the work to the public domain by waiving all of his or her rights to the work worldwide under copyright law, including all related and neighboring rights, to the extent allowed by law.",
     "cc_by": "Share — copy and redistribute the material in any medium or format. \nAdapt — remix, transform, and build upon the material for any purpose, even commercially. \n\nYou must give appropriate credit, provide a link to the license, and indicate if changes were made.",
     "cc_by_nc": "Share — copy and redistribute the material in any medium or format. \nAdapt — remix, transform, and build upon the material. \n\nYou must give appropriate credit, provide a link to the license, and indicate if changes were made. \nYou may not use the material for commercial purposes.",
@@ -9,6 +10,7 @@
     "cc_by_sa": "Share — copy and redistribute the material in any medium or format. \nAdapt — remix, transform, and build upon the material for any purpose, even commercially. \n\nYou must give appropriate credit, provide a link to the license, and indicate if changes were made. \nIf you remix, transform, or build upon the material, you must distribute your contributions under the same license as the original."
   },
   "labels": {
+    "cc": "The publisher",
     "cc0": "CC0 1.0 Universal (CC0 1.0) - Public Domain Dedication",
     "cc_by": "Attribution 4.0 International (CC BY 4.0)",
     "cc_by_nc": "Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)",
@@ -18,6 +20,7 @@
     "cc_by_sa": "Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)"
   },
   "links": {
+    "cc": "",
     "cc0": "https://creativecommons.org/publicdomain/zero/1.0/",
     "cc_by": "https://creativecommons.org/licenses/by/4.0/",
     "cc_by_nc": "https://creativecommons.org/licenses/by-nc/4.0/",

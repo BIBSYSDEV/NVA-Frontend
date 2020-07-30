@@ -8,7 +8,7 @@ import LinkIcon from '@material-ui/icons/Link';
 
 import { getPublicationByDoi } from '../../../api/publicationApi';
 import LinkPublicationForm, { DoiFormValues } from './LinkPublicationForm';
-import PublicationExpansionPanel from './PublicationExpansionPanel';
+import PublicationAccordion from './PublicationAccordion';
 import { Doi } from '../../../types/publication.types';
 import { useDispatch } from 'react-redux';
 import { setNotification } from '../../../redux/actions/notificationActions';
@@ -71,7 +71,7 @@ const LinkPublicationPanel: FC<LinkPublicationPanelProps> = ({ expanded, onChang
   };
 
   return (
-    <PublicationExpansionPanel
+    <PublicationAccordion
       headerLabel={t('publication:publication.start_with_link_to_publication')}
       icon={<LinkIcon className="icon" />}
       expanded={expanded}
@@ -97,7 +97,7 @@ const LinkPublicationPanel: FC<LinkPublicationPanelProps> = ({ expanded, onChang
           </>
         )}
       </StyledBody>
-    </PublicationExpansionPanel>
+    </PublicationAccordion>
   );
 };
 

@@ -21,6 +21,7 @@
     "get_project": "Search for projects failed",
     "get_publications": "Could not retrieve publications",
     "get_publication": "Could not get publication",
+    "get_roles": "Could not get roles",
     "get_session": "Invalid session. Please log in again.",
     "get_user": "Failed to get user",
     "login": "Login failed",
@@ -29,7 +30,10 @@
     "search": "Search failed",
     "update_authority": "Could not update {{qualifier}} for authority",
     "update_customer": "Could not update customer institution",
-    "update_publication": "Could not update publication"
+    "update_publication": "Could not update publication",
+    "orcid": {
+      "access_denied": "Could not connect to ORCID because access to the ORCID account was denied"
+    }
   },
   "info": {
     "affiliation_already_exists": "Affiliation already exists",

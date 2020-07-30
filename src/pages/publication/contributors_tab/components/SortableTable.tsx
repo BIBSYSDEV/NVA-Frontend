@@ -22,7 +22,7 @@ import deepmerge from 'deepmerge';
 
 import { ContributorFieldNames, SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
 import { Contributor, emptyContributor } from '../../../../types/contributor.types';
-import { FormikPublication, BackendTypeNames } from '../../../../types/publication.types';
+import { Publication, BackendTypeNames } from '../../../../types/publication.types';
 import SubHeading from '../../../../components/SubHeading';
 import AddContributor from '../AddContributorModal';
 import styled from 'styled-components';
@@ -32,8 +32,8 @@ import { useDispatch } from 'react-redux';
 import { setNotification } from '../../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../../types/notification.types';
 import { Authority } from '../../../../types/authority.types';
-import { getUnitUri } from '../../../../utils/unitUrl';
 import { overwriteArrayMerge } from '../../../../utils/formik-helpers';
+import NormalText from '../../../../components/NormalText';
 
 const StyledWarningIcon = styled(WarningIcon)`
   color: ${({ theme }) => theme.palette.warning.main};
@@ -177,15 +177,17 @@ const SortableList = SortableContainer(({ contributors, onDelete, setUnverifiedC
         <ConfirmDialog
           open={!!contributorToRemove}
           title={t('contributors.confirm_remove_contributor_title')}
-          text={t('contributors.confirm_remove_contributor_text', {
-            contributorName: contributorToRemove.identity.name,
-          })}
           onAccept={() => {
             onDelete(contributorToRemove.sequence - 1);
             closeConfirmDialog();
           }}
-          onCancel={closeConfirmDialog}
-        />
+          onCancel={closeConfirmDialog}>
+          <NormalText>
+            {t('contributors.confirm_remove_contributor_text', {
+              contributorName: contributorToRemove.identity.name,
+            })}
+          </NormalText>
+        </ConfirmDialog>
       )}
     </TableContainer>
   );
@@ -196,7 +198,7 @@ interface SortableTableProps extends Pick<FieldArrayRenderProps, 'push' | 'remov
 const SortableTable: FC<SortableTableProps> = ({ push, remove, replace }) => {
   const { t } = useTranslation('publication');
   const dispatch = useDispatch();
-  const { values, setValues }: FormikProps<FormikPublication> = useFormikContext();
+  const { values, setValues }: FormikProps<Publication> = useFormikContext();
   const {
     entityDescription: { contributors },
   } = values;
@@ -246,9 +248,9 @@ const SortableTable: FC<SortableTableProps> = ({ push, remove, replace }) => {
       const newContributor: Contributor = {
         ...emptyContributor,
         identity,
-        affiliations: authority.orgunitids.map((unitId) => ({
+        affiliations: authority.orgunitids.map((unitUri) => ({
           type: BackendTypeNames.ORGANIZATION,
-          id: getUnitUri(unitId),
+          id: unitUri,
         })),
         sequence: contributors.length + 1,
       };

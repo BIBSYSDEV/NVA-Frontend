@@ -1,4 +1,5 @@
 import { ApplicationName, FeideUser, RoleName } from '../../types/user.types';
+import { UserRoles } from '../../types/role.types';
 
 export const mockUser: FeideUser = {
   name: 'Test User',
@@ -16,4 +17,17 @@ export const mockUser: FeideUser = {
   identities: "[{'userId':'91829182'}]",
   family_name: 'User',
   given_name: 'Test',
+};
+
+export const mockRoles: UserRoles = {
+  roles: [
+    {
+      rolename: RoleName.APP_ADMIN,
+    },
+    {
+      rolename: RoleName.PUBLISHER,
+    },
+  ],
+  username: 'tu@unit.no',
+  institution: 'https://api.cristin.no/v2/institutions/20202',
 };

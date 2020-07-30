@@ -3,7 +3,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import { FormikPublication, emptyPublisher } from '../../../types/publication.types';
+import { Publication, emptyPublisher } from '../../../types/publication.types';
 import { ReferenceFieldNames, DegreeType } from '../../../types/publicationFieldNames';
 import { PublicationTableNumber } from '../../../utils/constants';
 import PublicationChannelSearch from './components/PublicationChannelSearch';
@@ -26,7 +26,7 @@ const StyledHeading = styled.div`
 const DegreeForm: React.FC = () => {
   const { t } = useTranslation('publication');
 
-  const { setFieldValue }: FormikProps<FormikPublication> = useFormikContext();
+  const { setFieldValue }: FormikProps<Publication> = useFormikContext();
 
   return (
     <>

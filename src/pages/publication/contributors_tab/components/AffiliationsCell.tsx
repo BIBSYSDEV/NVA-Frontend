@@ -4,7 +4,7 @@ import { Button } from '@material-ui/core';
 import SelectInstitution from '../../../../components/institution/SelectInstitution';
 import Modal from '../../../../components/Modal';
 import { useFormikContext, FormikProps } from 'formik';
-import { FormikPublication, BackendTypeNames } from '../../../../types/publication.types';
+import { Publication, BackendTypeNames } from '../../../../types/publication.types';
 import { SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
 import { FormikInstitutionUnit } from '../../../../types/institution.types';
 import { useTranslation } from 'react-i18next';
@@ -19,6 +19,7 @@ import { setNotification } from '../../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../../types/notification.types';
 import AffiliationHierarchy from '../../../../components/institution/AffiliationHierarchy';
 import Card from '../../../../components/Card';
+import NormalText from '../../../../components/NormalText';
 
 const StyledCard = styled(Card)`
   display: flex;
@@ -36,7 +37,7 @@ interface AffiliationsCellProps {
 const AffiliationsCell: FC<AffiliationsCellProps> = ({ affiliations, baseFieldName }) => {
   const { t } = useTranslation('publication');
   const disptach = useDispatch();
-  const { values, setFieldValue }: FormikProps<FormikPublication> = useFormikContext();
+  const { values, setFieldValue }: FormikProps<Publication> = useFormikContext();
   const [openAffiliationModal, setOpenAffiliationModal] = useState(false);
   const [affiliationToRemove, setAffiliationToRemove] = useState<Institution | null>(null);
 
@@ -99,7 +100,6 @@ const AffiliationsCell: FC<AffiliationsCellProps> = ({ affiliations, baseFieldNa
       <ConfirmDialog
         open={!!affiliationToRemove}
         title={t('contributors.confirm_remove_affiliation_title')}
-        text={t('contributors.confirm_remove_affiliation_text')}
         onAccept={() => {
           setFieldValue(
             `${baseFieldName}.${SpecificContributorFieldNames.AFFILIATIONS}`,
@@ -107,8 +107,9 @@ const AffiliationsCell: FC<AffiliationsCellProps> = ({ affiliations, baseFieldNa
           );
           setAffiliationToRemove(null);
         }}
-        onCancel={() => setAffiliationToRemove(null)}
-      />
+        onCancel={() => setAffiliationToRemove(null)}>
+        <NormalText>{t('contributors.confirm_remove_affiliation_text')}</NormalText>
+      </ConfirmDialog>
     </>
   );
 };

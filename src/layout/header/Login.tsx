@@ -7,7 +7,7 @@ import { Button } from '@material-ui/core';
 
 import { RootStore } from '../../redux/reducers/rootReducer';
 import Menu from './Menu';
-import { USE_MOCK_DATA } from '../../utils/constants';
+import { USE_MOCK_DATA, FEIDE_IDENTITY_PROVIDER } from '../../utils/constants';
 import { logoutSuccess } from '../../redux/actions/authActions';
 import { setUser } from '../../redux/actions/userActions';
 import { mockUser } from '../../utils/testfiles/mock_feide_user';
@@ -39,7 +39,7 @@ const Login: FC = () => {
     if (USE_MOCK_DATA) {
       dispatch(setUser(mockUser));
     } else {
-      Auth.federatedSignIn();
+      Auth.federatedSignIn({ customProvider: FEIDE_IDENTITY_PROVIDER });
     }
   };
 

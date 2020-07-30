@@ -1,29 +1,31 @@
 import { Auth } from 'aws-amplify';
 import { CognitoUserSession } from 'amazon-cognito-identity-js';
 import { Dispatch } from 'redux';
-
 import i18n from '../translations/i18n';
 import { USE_MOCK_DATA } from '../utils/constants';
 import { setNotification } from '../redux/actions/notificationActions';
 import { NotificationVariant } from '../types/notification.types';
-import { FeideUser } from '../types/user.types';
 
-export const getCurrentUserAttributes = async (): Promise<FeideUser | any> => {
-  let userAttributes = undefined;
+export const getCurrentUserAttributes = async () => {
+  const loggedIn = localStorage.getItem('amplify-signin-with-hostedUI');
   try {
     const cognitoUser = await Auth.currentAuthenticatedUser();
-    cognitoUser?.getSession(async (error: any, session: CognitoUserSession) => {
+    const loggedInUser = await cognitoUser?.getSession(async (error: any, session: CognitoUserSession) => {
       if (error || !session.isValid()) {
         const currentSession = await Auth.currentSession();
         cognitoUser.refreshSession(currentSession.getRefreshToken());
       } else {
-        userAttributes = cognitoUser.attributes;
+        return (await Auth.currentSession()).getIdToken().payload;
       }
     });
+    if (loggedInUser) {
+      return loggedInUser;
+    }
   } catch {
-    return { error: i18n.t('feedback:error.get_user') };
+    if (loggedIn) {
+      return { error: i18n.t('feedback:error.get_user') };
+    }
   }
-  return userAttributes;
 };
 
 export const getIdToken = async () => {

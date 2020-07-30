@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
-import PublicationExpansionPanel from './PublicationExpansionPanel';
+import PublicationAccordion from './PublicationAccordion';
 import { File, emptyFile } from '../../../types/file.types';
 import FileCard from '../files_and_license_tab/FileCard';
 import { createPublication } from '../../../api/publicationApi';
@@ -53,7 +53,7 @@ const LoadPublication: FC<LoadPublicationProps> = ({ expanded, onChange, openFor
   };
 
   return (
-    <PublicationExpansionPanel
+    <PublicationAccordion
       dataTestId="new-publication-file"
       headerLabel={t('publication:publication.load_file')}
       icon={<CloudDownloadIcon />}
@@ -89,7 +89,7 @@ const LoadPublication: FC<LoadPublicationProps> = ({ expanded, onChange, openFor
           )}
         </>
       ) : null}
-    </PublicationExpansionPanel>
+    </PublicationAccordion>
   );
 };
 

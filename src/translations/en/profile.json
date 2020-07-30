@@ -35,7 +35,7 @@
     "orcid": "ORCID",
     "registration": "Registration",
     "remove_connection": "Remove connection to ORCID",
-    "remove_connection_text": "Are you sure you want to remove the connection to ORCID?",
+    "remove_connection_info": "Are you sure you want to remove the connection to ORCID? \n\nIf you want to revoke Unit's access to read your ORCID, you have to go to your profile.",
     "skip_this_step": "Skip this step (can be configured in 'profile' later)",
     "suggestions": "Suggestions from ORCID",
     "suggestions_description": "Suggestions from ORCID...",

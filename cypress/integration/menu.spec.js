@@ -1,8 +1,7 @@
-import { mockUser } from '../../src/utils/testfiles/mock_feide_user';
+import { RoleName } from '../../src/types/user.types';
 
-// Weird array format for affiliation is due to current format delivered by FEIDE
-const authorizedUser = { ...mockUser, 'custom:affiliation': '[member, employee, staff]', email: 'ost@unit.no' };
-const unauthorizedUser = { ...mockUser, 'custom:applicationRoles': '', email: 'ost@ost.no' };
+const noRoles = [];
+const allRoles = Object.values(RoleName);
 
 describe('Menu', () => {
   beforeEach(() => {
@@ -12,7 +11,7 @@ describe('Menu', () => {
   });
 
   it('Authorized user should see protected menu options', () => {
-    cy.setUserInRedux(authorizedUser);
+    cy.setUserRolesInRedux(allRoles);
     cy.get('[data-testid=menu]').click({ force: true });
     cy.get('[data-testid=menu-user-profile-button]').should('be.visible');
     cy.get('[data-testid=menu-new-publication-button]').should('be.visible');
@@ -22,7 +21,7 @@ describe('Menu', () => {
   });
 
   it('Unauthorized user should not see protected menu options', () => {
-    cy.setUserInRedux(unauthorizedUser);
+    cy.setUserRolesInRedux(noRoles);
     cy.get('[data-testid=menu]').click({ force: true });
     cy.get('[data-testid=menu-user-profile-button]').should('be.visible');
     cy.get('[data-testid=menu-logout-button]').should('be.visible');
@@ -37,15 +36,15 @@ describe('Menu', () => {
     cy.contains('404');
 
     cy.visit('/my-publications');
-    cy.setUserInRedux(unauthorizedUser);
+    cy.setUserRolesInRedux(noRoles);
     cy.contains('404');
 
     cy.visit('/admin-institutions');
-    cy.setUserInRedux(unauthorizedUser);
+    cy.setUserRolesInRedux(noRoles);
     cy.contains('404');
 
     cy.visit('/worklist');
-    cy.setUserInRedux(unauthorizedUser);
+    cy.setUserRolesInRedux(noRoles);
     cy.contains('404');
   });
 });

@@ -5,7 +5,7 @@ import { Publication } from '../../../types/publication.types';
 import ContentPage from '../../../components/ContentPage';
 import { useTranslation } from 'react-i18next';
 import PublicPublicationAuthors from './PublicPublicationAuthors';
-import PublicPublicationFiles from './PublicPublicationFiles';
+import PublicPublicationFile from './PublicPublicationFile';
 import Card from '../../../components/Card';
 import Heading from '../../../components/Heading';
 import LabelContentRow from '../../../components/LabelContentRow';
@@ -33,10 +33,6 @@ const StyledSidebar = styled.div`
 const StyledMainContent = styled.div`
   flex: 1;
   padding: 1rem 2rem;
-`;
-
-const StyledSidebarCard = styled(Card)`
-  padding: 1rem 0.5rem;
 `;
 
 const StyledLicenseCard = styled(Card)`
@@ -109,16 +105,15 @@ const PublicPublicationContent: FC<PublicPublicationContentProps> = ({ publicati
       {contributors && <PublicPublicationAuthors contributors={contributors} />}
       <StyledContentWrapper>
         <StyledSidebar>
-          {publication.fileSet && (
-            <StyledSidebarCard>
-              <PublicPublicationFiles files={publication.fileSet.files} />
-            </StyledSidebarCard>
-          )}
+          {publication.fileSet &&
+            publication.fileSet.files.map((file) => <PublicPublicationFile file={file} key={file.identifier} />)}
         </StyledSidebar>
         <StyledMainContent>
           {doi && (
             <LabelContentRow minimal label={`${t('publication.link_to_publication')}:`}>
-              <Link href={doi}>{doi}</Link>
+              <Link href={doi} target="_blank" rel="noopener noreferrer">
+                {doi}
+              </Link>
             </LabelContentRow>
           )}
           {abstract && (
@@ -173,9 +168,13 @@ const PublicPublicationContent: FC<PublicPublicationContentProps> = ({ publicati
             <StyledLicenseCard>
               <StyledLicenseImage src={selectedLicense.image} alt={selectedLicense.identifier} />
               <StyledLicenseLabel>
-                <Link href={selectedLicense.link} target="_blank" rel="noopener noreferrer">
-                  {selectedLicense.label}
-                </Link>
+                {selectedLicense.link ? (
+                  <Link href={selectedLicense.link} target="_blank" rel="noopener noreferrer">
+                    {selectedLicense.label}
+                  </Link>
+                ) : (
+                  selectedLicense.label
+                )}
               </StyledLicenseLabel>
               <StyledNormalText>{selectedLicense.description}</StyledNormalText>
             </StyledLicenseCard>

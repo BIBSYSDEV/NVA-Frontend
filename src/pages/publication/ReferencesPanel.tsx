@@ -2,12 +2,12 @@ import { FormikProps, useFormikContext } from 'formik';
 import React, { useEffect, FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { FormikPublication } from '../../types/publication.types';
+import { Publication } from '../../types/publication.types';
 import { PublicationType, ReferenceFieldNames, contextTypeBaseFieldName } from '../../types/publicationFieldNames';
 import BookForm from './references_tab/BookForm';
 import ChapterForm from './references_tab/ChapterForm';
 import DegreeForm from './references_tab/DegreeForm';
-import JournalArticleForm from './references_tab/JournalArticleForm';
+import JournalForm from './references_tab/JournalForm';
 import ReportForm from './references_tab/ReportForm';
 import Card from '../../components/Card';
 import Heading from '../../components/Heading';
@@ -29,7 +29,7 @@ const StyledSelectContainer = styled.div`
 
 const ReferencesPanel: FC<PanelProps> = ({ setTouchedFields }) => {
   const { t } = useTranslation('publication');
-  const { values, setTouched, setFieldValue, touched }: FormikProps<FormikPublication> = useFormikContext();
+  const { values, setTouched, setFieldValue, touched }: FormikProps<Publication> = useFormikContext();
   const publicationContextType = values.entityDescription.reference.publicationContext.type;
 
   useEffect(
@@ -77,7 +77,7 @@ const ReferencesPanel: FC<PanelProps> = ({ setTouchedFields }) => {
           {publicationContextType === PublicationType.CHAPTER && <ChapterForm />}
           {publicationContextType === PublicationType.REPORT && <ReportForm />}
           {publicationContextType === PublicationType.DEGREE && <DegreeForm />}
-          {publicationContextType === PublicationType.PUBLICATION_IN_JOURNAL && <JournalArticleForm />}
+          {publicationContextType === PublicationType.PUBLICATION_IN_JOURNAL && <JournalForm />}
         </StyledCard>
       )}
     </>

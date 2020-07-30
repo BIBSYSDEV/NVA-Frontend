@@ -10,11 +10,10 @@ export const NAVIGATE_TO_PUBLIC_PUBLICATION_DURATION = 3000;
 export const ORCID_BASE_URL = process.env.REACT_APP_ORCID_BASE_URL;
 export const ORCID_USER_INFO_URL = `${ORCID_BASE_URL}/oauth/userinfo`;
 export const ORCID_SIGN_IN_URL = `${ORCID_BASE_URL}/signin?oauth&client_id=${process.env.REACT_APP_ORCID_CLIENT_ID}&response_type=token&scope=openid&redirect_uri=${process.env.REACT_APP_ORCID_REDIRECT_URI}`;
+export const FEIDE_IDENTITY_PROVIDER = 'FeideIdentityProvider';
 
 export const API_URL = process.env.REACT_APP_API_URL;
-
-export const CRISTIN_UNITS_BASE_URL = 'https://api.cristin.no/v2/units/';
-export const CRISTIN_INSTITUTIONS_BASE_URL = 'https://api.cristin.no/v2/institutions/';
+export const TEMP_ROLES_API = 'https://ddpsk7vp6h.execute-api.eu-west-1.amazonaws.com/Prod';
 
 export enum StatusCode {
   OK = 200,
@@ -34,7 +33,7 @@ export enum ContactInformation {
 }
 
 export const autoHideNotificationDuration = {
-  [NotificationVariant.Error]: 6000,
+  [NotificationVariant.Error]: 9000,
   [NotificationVariant.Info]: 3000,
   [NotificationVariant.Success]: 3000,
   [NotificationVariant.Warning]: 6000,
