@@ -37,13 +37,13 @@ interface UserListProps {
 
 const UserList: FC<UserListProps> = ({ userList, role, buttonText }) => {
   const { t } = useTranslation('admin');
-  const [newUser, setNewUser] = useState(false);
+  const [showNewUserForm, setShowNewUserForm] = useState(false);
   const [username, setUsername] = useState('');
   const user = useSelector((store: RootStore) => store.user);
   const dispatch = useDispatch();
 
-  const toggleNewUser = () => {
-    setNewUser(!newUser);
+  const toggleShowNewUserForm = () => {
+    setShowNewUserForm(!showNewUserForm);
   };
 
   const handleSubmitUser = async () => {
@@ -57,7 +57,7 @@ const UserList: FC<UserListProps> = ({ userList, role, buttonText }) => {
         dispatch(setNotification(t('feedback:success.added_role')));
       }
     }
-    toggleNewUser();
+    toggleShowNewUserForm();
   };
 
   const handleAddNewUser = (event: ChangeEvent<any>) => {
@@ -66,7 +66,7 @@ const UserList: FC<UserListProps> = ({ userList, role, buttonText }) => {
 
   return (
     <>
-      {(userList?.length > 0 || newUser) && (
+      {(userList?.length > 0 || showNewUserForm) && (
         <StyledTable>
           <TableHead>
             <TableRow>
@@ -95,7 +95,7 @@ const UserList: FC<UserListProps> = ({ userList, role, buttonText }) => {
                 </TableCell>
               </StyledTableRow>
             ))}
-            {newUser && (
+            {showNewUserForm && (
               <StyledTableRow>
                 <TableCell>
                   <TextField label={t('users.username')} variant="outlined" size="small" onChange={handleAddNewUser} />
@@ -104,7 +104,7 @@ const UserList: FC<UserListProps> = ({ userList, role, buttonText }) => {
                   <StyledButton color="primary" variant="contained" onClick={handleSubmitUser}>
                     {t('common:add')}
                   </StyledButton>
-                  <StyledButton color="secondary" variant="contained" onClick={toggleNewUser}>
+                  <StyledButton color="secondary" variant="contained" onClick={toggleShowNewUserForm}>
                     {t('common:cancel')}
                   </StyledButton>
                 </TableCell>
@@ -113,7 +113,7 @@ const UserList: FC<UserListProps> = ({ userList, role, buttonText }) => {
           </TableBody>
         </StyledTable>
       )}
-      <StyledNewButton color="primary" variant="outlined" onClick={toggleNewUser} disabled={newUser}>
+      <StyledNewButton color="primary" variant="outlined" onClick={toggleShowNewUserForm} disabled={showNewUserForm}>
         {buttonText}
       </StyledNewButton>
     </>
