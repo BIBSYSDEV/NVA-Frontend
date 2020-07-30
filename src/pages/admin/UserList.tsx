@@ -1,128 +1,110 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState, ChangeEvent } from 'react';
 import styled from 'styled-components';
 import { Table, TableHead, TableRow, TableCell, TableBody, Button, TextField } from '@material-ui/core';
 import Label from './../../components/Label';
 import { useTranslation } from 'react-i18next';
 import { UserAdmin, RoleName } from '../../types/user.types';
-import { addUserToInstitution } from '../../api/userAdminApi';
+import { assignUserRole } from '../../api/roleApi';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootStore } from '../../redux/reducers/rootReducer';
+import { setNotification } from '../../redux/actions/notificationActions';
+import { NotificationVariant } from '../../types/notification.types';
 
 const StyledTable = styled(Table)`
   width: 100%;
 `;
 
 const StyledTableRow = styled(TableRow)`
-  background-color: ${props => props.theme.palette.box.main};
+  background-color: ${(props) => props.theme.palette.box.main};
   :nth-child(odd) {
-    background-color: ${props => props.theme.palette.background.default};
+    background-color: ${(props) => props.theme.palette.background.default};
   }
 `;
 
-const StyledButtonTableCell = styled(TableCell)`
-  min-width: 10rem;
-  overflow: hidden;
-  text-overflow: ellipsis;
-`;
-
-const StyledTableCell = styled(TableCell)`
-  min-width: 8rem;
-  overflow: hidden;
-  text-overflow: ellipsis;
-`;
-
-const StyledLargeTableCell = styled(TableCell)`
-  min-width: 12rem;
-  overflow: hidden;
-  text-overflow: ellipsis;
-`;
-
-const StyledButton = styled(Button)`
+const StyledNewButton = styled(Button)`
   margin-top: 1rem;
-  margin-right: 0.5rem;
-  min-width: 5rem;
+`;
+
+const StyledButton = styled(StyledNewButton)`
+  margin-left: 0.5rem;
 `;
 
 interface UserListProps {
-  cristinUnitId: string;
   userList: UserAdmin[];
   role: RoleName;
   buttonText: string;
 }
 
-const UserList: FC<UserListProps> = ({ userList, role, buttonText, cristinUnitId }) => {
+const UserList: FC<UserListProps> = ({ userList, role, buttonText }) => {
   const { t } = useTranslation('admin');
-  const [addUser, setAddUser] = useState(false);
+  const [showNewUserForm, setShowNewUserForm] = useState(false);
+  const [username, setUsername] = useState('');
+  const user = useSelector((store: RootStore) => store.user);
+  const dispatch = useDispatch();
 
-  const toggleAddUser = () => {
-    setAddUser(!addUser);
+  const toggleShowNewUserForm = () => {
+    setShowNewUserForm(!showNewUserForm);
   };
 
-  const handleSubmitUser = () => {
-    // add user with role, how?
-    const authenticationId = '';
-    addUserToInstitution(cristinUnitId, authenticationId, role);
+  const handleSubmitUser = async () => {
+    const newUserRole = await assignUserRole(user.organizationId, username, role);
+    if (newUserRole) {
+      if (newUserRole.error) {
+        dispatch(setNotification(newUserRole.error, NotificationVariant.Error));
+      } else if (newUserRole.info) {
+        dispatch(setNotification(newUserRole.info, NotificationVariant.Info));
+      } else {
+        dispatch(setNotification(t('feedback:success.added_role')));
+      }
+    }
+    toggleShowNewUserForm();
   };
 
-  const handleChangeAuthenticationId = () => {};
-
-  const handleChangeName = () => {};
+  const handleAddNewUser = (event: ChangeEvent<any>) => {
+    setUsername(event.target.value);
+  };
 
   return (
     <>
-      {(userList?.length > 0 || addUser) && (
+      {(userList?.length > 0 || showNewUserForm) && (
         <StyledTable>
           <TableHead>
             <TableRow>
-              <StyledLargeTableCell>
-                <Label>{t('users.authentication_id')}</Label>
-              </StyledLargeTableCell>
-              <StyledLargeTableCell>
+              <TableCell>
+                <Label>{t('users.username')}</Label>
+              </TableCell>
+              <TableCell>
                 <Label>{t('common:name')}</Label>
-              </StyledLargeTableCell>
-              <StyledLargeTableCell>
-                <Label>{t('common:orcid')}</Label>
-              </StyledLargeTableCell>
-              <StyledTableCell>
-                <Label>{t('users.last_login_date')}</Label>
-              </StyledTableCell>
-              <StyledTableCell>
+              </TableCell>
+              <TableCell>
                 <Label>{t('users.created_date')}</Label>
-              </StyledTableCell>
-              <StyledButtonTableCell />
+              </TableCell>
+              <TableCell />
             </TableRow>
           </TableHead>
           <TableBody>
-            {userList.map(user => (
+            {userList.map((user) => (
               <StyledTableRow key={user.id}>
-                <StyledLargeTableCell>{user.id}</StyledLargeTableCell>
-                <StyledLargeTableCell>{user.name}</StyledLargeTableCell>
-                <StyledLargeTableCell>{user.externalOrcid}</StyledLargeTableCell>
-                <StyledTableCell>{user.lastLoginDate}</StyledTableCell>
-                <StyledTableCell>{user.createdDate}</StyledTableCell>
-                <StyledButtonTableCell align="right">
-                  <StyledButton color="secondary" variant="contained">
+                <TableCell>{user.id}</TableCell>
+                <TableCell>{user.name}</TableCell>
+                <TableCell>{user.createdDate}</TableCell>
+                <TableCell align="right">
+                  <Button disabled color="secondary" variant="contained">
                     {t('common:delete')}
-                  </StyledButton>
-                </StyledButtonTableCell>
+                  </Button>
+                </TableCell>
               </StyledTableRow>
             ))}
-            {addUser && (
+            {showNewUserForm && (
               <StyledTableRow>
                 <TableCell>
-                  <TextField
-                    label={t('users.authentication_id')}
-                    variant="outlined"
-                    size="small"
-                    onChange={handleChangeAuthenticationId}
-                  />
-                </TableCell>
-                <TableCell>
-                  <TextField label={t('common:name')} variant="outlined" size="small" onChange={handleChangeName} />
+                  <TextField label={t('users.username')} variant="outlined" size="small" onChange={handleAddNewUser} />
                 </TableCell>
                 <TableCell colSpan={4} align="right">
                   <StyledButton color="primary" variant="contained" onClick={handleSubmitUser}>
                     {t('common:add')}
                   </StyledButton>
-                  <StyledButton color="secondary" variant="contained" onClick={toggleAddUser}>
+                  <StyledButton color="secondary" variant="contained" onClick={toggleShowNewUserForm}>
                     {t('common:cancel')}
                   </StyledButton>
                 </TableCell>
@@ -131,9 +113,9 @@ const UserList: FC<UserListProps> = ({ userList, role, buttonText, cristinUnitId
           </TableBody>
         </StyledTable>
       )}
-      <StyledButton color="primary" variant="outlined" onClick={toggleAddUser} disabled={addUser}>
+      <StyledNewButton color="primary" variant="outlined" onClick={toggleShowNewUserForm} disabled={showNewUserForm}>
         {buttonText}
-      </StyledButton>
+      </StyledNewButton>
     </>
   );
 };

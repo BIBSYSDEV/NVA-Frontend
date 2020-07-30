@@ -48,7 +48,6 @@
     "curator": "Curator",
     "curators": "Curators",
     "curator_description": "A Curator is a person whom has access to approve and publish other researcher's work",
-    "editors": "Editors",
     "institution_admins": "Institution administrators",
     "publisher": "Publisher",
     "publisher_description": "A Publisher is a person whom is employed at the organization. A publisher has also access to register their own publications"

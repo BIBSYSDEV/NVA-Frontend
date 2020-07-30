@@ -1,6 +1,7 @@
 {
   "error": {
     "404_page": "The page you requested could not be found. (Http error code 404)",
+    "add_role": "Could not add role",
     "create_authority": "Could not create authority",
     "create_customer": "Could not create customer institution",
     "create_publication": "Could not create publication",
@@ -37,10 +38,12 @@
   },
   "info": {
     "affiliation_already_exists": "Affiliation already exists",
-    "publishing_publication": "Publishing publication..."
+    "publishing_publication": "Publishing publication...",
+    "user_already_exists": "User already exists"
   },
   "success": {
     "added_affiliation": "Affiliation was added",
+    "added_role": "Role was added",
     "created_authority": "Created author ID",
     "created_customer": "Created customer institution",
     "create_publication": "New publication created",

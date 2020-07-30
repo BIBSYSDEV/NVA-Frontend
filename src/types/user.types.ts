@@ -1,10 +1,9 @@
 import { Authority } from './authority.types';
 
 export enum RoleName {
-  ADMIN = 'Admin',
+  INSTITUTION_ADMIN = 'Institution-admin',
   APP_ADMIN = 'App-admin',
   CURATOR = 'Curator',
-  EDITOR = 'Editor',
   PUBLISHER = 'Publisher',
 }
 
@@ -47,10 +46,7 @@ export interface User {
   isInstitutionAdmin: boolean;
 }
 
-export type UserAdmin = Pick<
-  User,
-  'name' | 'id' | 'externalOrcid' | 'createdDate' | 'createdDate' | 'lastLoginDate' | 'roles'
->;
+export type UserAdmin = Pick<User, 'name' | 'id' | 'createdDate' | 'roles'>;
 
 export interface FeideUser {
   name: string;
