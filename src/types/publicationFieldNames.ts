@@ -7,30 +7,34 @@ export enum PublicationType {
   CHAPTER = 'Chapter',
 }
 
-export enum JournalArticleType {
+export enum ChapterType {
+  ARTICLE = 'ChapterArticle',
+}
+
+export enum JournalType {
   ARTICLE = 'JournalArticle',
-  SHORT_COMMUNICATION = 'ShortCommunication',
-  EDITORIAL = 'Editorial',
-  LETTER = 'Letter',
-  REVIEW = 'Review',
+  SHORT_COMMUNICATION = 'JournalShortCommunication',
+  LETTER = 'JournalLetter',
+  REVIEW = 'JournalReview',
+  LEADER = 'JournalLeader',
 }
 
 export enum BookType {
-  MONOGRAPHY = 'Monography',
-  ANTHOLOGY = 'Anthology',
+  MONOGRAPH = 'BookMonograph',
+  ANTHOLOGY = 'BookAnthology',
 }
 
 export enum ReportType {
   REPORT = 'Report',
-  RESEARCH_REPORT = 'ResearchReport',
-  POLICY_REPORT = 'PolicyReport',
-  WORKING_PAPER = 'WorkingPaper',
+  RESEARCH = 'ReportResearch',
+  POLICY = 'ReportPolicy',
+  WORKING_PAPER = 'ReportWorkingPaper',
 }
 
 export enum DegreeType {
-  BACHELOR = 'Bachelor',
-  MASTER = 'Master',
-  DOCTORATE = 'Doctorate',
+  BACHELOR = 'DegreeBachelor',
+  MASTER = 'DegreeMaster',
+  PHD = 'DegreePhd',
 }
 
 // Enums representing name of fields used by Formik

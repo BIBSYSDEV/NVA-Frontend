@@ -5,28 +5,27 @@ import i18n from '../translations/i18n';
 import { USE_MOCK_DATA } from '../utils/constants';
 import { setNotification } from '../redux/actions/notificationActions';
 import { NotificationVariant } from '../types/notification.types';
-import { setUser } from '../redux/actions/userActions';
 
-export const getCurrentUserAttributes = () => {
-  return async (dispatch: Dispatch) => {
-    const loggedIn = localStorage.getItem('amplify-signin-with-hostedUI');
-    try {
-      const cognitoUser = await Auth.currentAuthenticatedUser();
-      cognitoUser?.getSession(async (error: any, session: CognitoUserSession) => {
-        if (error || !session.isValid()) {
-          const currentSession = await Auth.currentSession();
-          cognitoUser.refreshSession(currentSession.getRefreshToken());
-        } else {
-          const loggedInUser = (await Auth.currentSession()).getIdToken().payload;
-          dispatch(setUser(loggedInUser));
-        }
-      });
-    } catch {
-      if (loggedIn) {
-        dispatch(setNotification(i18n.t('feedback:error.get_user'), NotificationVariant.Error));
+export const getCurrentUserAttributes = async () => {
+  const loggedIn = localStorage.getItem('amplify-signin-with-hostedUI');
+  try {
+    const cognitoUser = await Auth.currentAuthenticatedUser();
+    const loggedInUser = await cognitoUser?.getSession(async (error: any, session: CognitoUserSession) => {
+      if (error || !session.isValid()) {
+        const currentSession = await Auth.currentSession();
+        cognitoUser.refreshSession(currentSession.getRefreshToken());
+      } else {
+        return (await Auth.currentSession()).getIdToken().payload;
       }
+    });
+    if (loggedInUser) {
+      return loggedInUser;
     }
-  };
+  } catch {
+    if (loggedIn) {
+      return { error: i18n.t('feedback:error.get_user') };
+    }
+  }
 };
 
 export const getIdToken = async () => {
