@@ -1,19 +1,11 @@
-import { mockUser } from '../../src/utils/testfiles/mock_feide_user';
 import { RoleName } from '../../src/types/user.types';
-
-const curatorUser = {
-  ...mockUser,
-  'custom:affiliation': '[member, employee, staff]',
-  'custom:applicationRoles': `${RoleName.PUBLISHER},${RoleName.CURATOR}`,
-  email: 'ost@unit.no',
-};
 
 describe('Worklist', () => {
   beforeEach(() => {
     cy.server();
     cy.visit('/user');
     cy.mocklogin();
-    cy.setUserInRedux(curatorUser);
+    cy.setUserRolesInRedux([RoleName.CURATOR, RoleName.PUBLISHER]);
     cy.get('[data-testid=menu]').click({ force: true });
     cy.get('[data-testid=menu-my-worklist-button]').click({ force: true });
   });
