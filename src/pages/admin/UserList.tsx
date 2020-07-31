@@ -47,7 +47,7 @@ const UserList: FC<UserListProps> = ({ userList, role, buttonText }) => {
   };
 
   const handleSubmitUser = async () => {
-    const newUserRole = await assignUserRole(user.organizationId, username, role);
+    const newUserRole = await assignUserRole(user.institution, username, role);
     if (newUserRole) {
       if (newUserRole.error) {
         dispatch(setNotification(newUserRole.error, NotificationVariant.Error));
