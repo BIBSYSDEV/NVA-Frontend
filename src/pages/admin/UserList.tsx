@@ -1,4 +1,4 @@
-import React, { FC, useState, ChangeEvent } from 'react';
+import React, { FC, useState, ChangeEvent, useEffect } from 'react';
 import styled from 'styled-components';
 import { Table, TableHead, TableRow, TableCell, TableBody, Button, TextField } from '@material-ui/core';
 import Label from './../../components/Label';
@@ -39,8 +39,13 @@ const UserList: FC<UserListProps> = ({ userList, role, buttonText }) => {
   const { t } = useTranslation('admin');
   const [showNewUserForm, setShowNewUserForm] = useState(false);
   const [username, setUsername] = useState('');
+  const [currentUserList, setCurrentUserList] = useState(userList);
   const user = useSelector((store: RootStore) => store.user);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    setCurrentUserList(userList);
+  }, [userList]);
 
   const toggleShowNewUserForm = () => {
     setShowNewUserForm(!showNewUserForm);
@@ -54,6 +59,7 @@ const UserList: FC<UserListProps> = ({ userList, role, buttonText }) => {
       } else if (newUserRole.info) {
         dispatch(setNotification(newUserRole.info, NotificationVariant.Info));
       } else {
+        setCurrentUserList([...currentUserList, newUserRole]);
         dispatch(setNotification(t('feedback:success.added_role')));
       }
     }
@@ -66,7 +72,7 @@ const UserList: FC<UserListProps> = ({ userList, role, buttonText }) => {
 
   return (
     <>
-      {(userList?.length > 0 || showNewUserForm) && (
+      {(currentUserList?.length > 0 || showNewUserForm) && (
         <StyledTable>
           <TableHead>
             <TableRow>
@@ -80,7 +86,7 @@ const UserList: FC<UserListProps> = ({ userList, role, buttonText }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {userList.map((user) => (
+            {currentUserList.map((user) => (
               <StyledTableRow key={user.username}>
                 <TableCell>{user.username}</TableCell>
                 <TableCell>{user.institution}</TableCell>
