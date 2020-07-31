@@ -5,6 +5,7 @@ import { getIdToken } from './userApi';
 import { RoleName } from '../types/user.types';
 
 export enum RoleApiPaths {
+  INSTITUTIONS = '/institutions',
   USERS = '/users',
 }
 
@@ -30,6 +31,29 @@ export const getMyRoles = async (username: string, cancelToken?: CancelToken) =>
   }
 };
 
+export const getUsersForInstitution = async (institution: string, cancelToken?: CancelToken) => {
+  // TODO: Remove tempBaseUrl when endpoint is moved to normal backend path
+  const url = `${TEMP_ROLES_API}${RoleApiPaths.INSTITUTIONS}/${institution}/users`;
+
+  try {
+    const idToken = await getIdToken();
+    const headers = {
+      Authorization: `Bearer ${idToken}`,
+    };
+
+    const response = await Axios.get(url, { headers, cancelToken });
+    if (response.status === StatusCode.OK) {
+      return response.data;
+    } else {
+      return { error: i18n.t('feedback:error.get_users_for_institution') };
+    }
+  } catch (error) {
+    if (!Axios.isCancel(error)) {
+      return { error: i18n.t('feedback:error.get_users_for_institution') };
+    }
+  }
+};
+
 export const assignUserRole = async (
   institution: string,
   username: string,
@@ -47,7 +71,8 @@ export const assignUserRole = async (
     const data = {
       institution,
       username,
-      roles: [{ rolename }],
+      roles: [{ rolename, type: 'Role' }],
+      type: 'User',
     };
     const response = await Axios.post(url, data, { headers, cancelToken });
     if (response.status === StatusCode.OK) {

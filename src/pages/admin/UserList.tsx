@@ -74,20 +74,16 @@ const UserList: FC<UserListProps> = ({ userList, role, buttonText }) => {
                 <Label>{t('users.username')}</Label>
               </TableCell>
               <TableCell>
-                <Label>{t('common:name')}</Label>
-              </TableCell>
-              <TableCell>
-                <Label>{t('users.created_date')}</Label>
+                <Label>{t('common:institution')}</Label>
               </TableCell>
               <TableCell />
             </TableRow>
           </TableHead>
           <TableBody>
             {userList.map((user) => (
-              <StyledTableRow key={user.id}>
-                <TableCell>{user.id}</TableCell>
-                <TableCell>{user.name}</TableCell>
-                <TableCell>{user.createdDate}</TableCell>
+              <StyledTableRow key={user.username}>
+                <TableCell>{user.username}</TableCell>
+                <TableCell>{user.institution}</TableCell>
                 <TableCell align="right">
                   <Button disabled color="secondary" variant="contained">
                     {t('common:delete')}

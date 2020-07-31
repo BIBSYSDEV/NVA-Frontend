@@ -1,9 +1,8 @@
 import React, { FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { getInstitutionUsers } from '../../api/userAdminApi';
 import Heading from '../../components/Heading';
 import SubHeading from '../../components/SubHeading';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { UserAdmin, RoleName } from '../../types/user.types';
 import styled from 'styled-components';
@@ -11,6 +10,9 @@ import Card from '../../components/Card';
 import { FormControlLabel, Checkbox, Divider } from '@material-ui/core';
 import UserList from './UserList';
 import NormalText from './../../components/NormalText';
+import { getUsersForInstitution } from '../../api/roleApi';
+import { setNotification } from '../../redux/actions/notificationActions';
+import { NotificationVariant } from '../../types/notification.types';
 
 const StyledContainer = styled.div`
   margin-bottom: 2rem;
@@ -25,27 +27,27 @@ const AdminUsersPage: FC = () => {
   const user = useSelector((store: RootStore) => store.user);
   const [userList, setUserList] = useState<UserAdmin[]>([]);
   const [autoAssignCreators, setAutoAssignCreators] = useState(true);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const getUsers = async () => {
-      const users = await getInstitutionUsers(user.institution);
-      // TODO backend
-      // if (users?.error) {
-      //   dispatch(addNotification(t('feedback:error.get_publications'), 'error'));
-      // } else {
-      setUserList(users);
-      // }
+      const users = await getUsersForInstitution(user.institution);
+      if (users.error) {
+        dispatch(setNotification(users.error, NotificationVariant.Error));
+      } else {
+        setUserList(users);
+      }
     };
 
     getUsers();
-  }, [user.institution]);
+  }, [user.institution, dispatch]);
 
   const handleCheckAutoAssignCreators = () => {
     setAutoAssignCreators(!autoAssignCreators);
   };
 
   const filterUsersByRole = (roleFilter: RoleName) => {
-    return userList.filter((user) => user.roles.some((role) => role === roleFilter));
+    return userList.filter((user) => user.roles.some((role) => role.rolename === roleFilter));
   };
 
   return (
