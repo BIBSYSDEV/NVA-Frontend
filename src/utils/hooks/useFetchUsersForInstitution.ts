@@ -4,12 +4,12 @@ import Axios from 'axios';
 
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
-import { UserAdmin } from '../../types/user.types';
+import { InstitutionUser } from '../../types/user.types';
 import { getUsersForInstitution } from '../../api/roleApi';
 
-const useFetchUsersForInstitution = (institution: string): [UserAdmin[] | [], boolean] => {
+const useFetchUsersForInstitution = (institution: string): [InstitutionUser[], boolean] => {
   const dispatch = useDispatch();
-  const [users, setUsers] = useState<UserAdmin[]>([]);
+  const [users, setUsers] = useState<InstitutionUser[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {

@@ -50,7 +50,7 @@ export interface UserRole {
   rolename: RoleName;
 }
 
-export interface UserAdmin {
+export interface InstitutionUser {
   institution: string;
   roles: UserRole[];
   username: string;

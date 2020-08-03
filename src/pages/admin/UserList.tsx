@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Table, TableHead, TableRow, TableCell, TableBody, Button, TextField } from '@material-ui/core';
 import Label from './../../components/Label';
 import { useTranslation } from 'react-i18next';
-import { UserAdmin, RoleName } from '../../types/user.types';
+import { InstitutionUser, RoleName } from '../../types/user.types';
 import { assignUserRole } from '../../api/roleApi';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootStore } from '../../redux/reducers/rootReducer';
@@ -30,7 +30,7 @@ const StyledButton = styled(StyledNewButton)`
 `;
 
 interface UserListProps {
-  userList: UserAdmin[];
+  userList: InstitutionUser[];
   role: RoleName;
   buttonText: string;
 }

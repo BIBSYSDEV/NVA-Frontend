@@ -4,7 +4,7 @@ import Heading from '../../components/Heading';
 import SubHeading from '../../components/SubHeading';
 import { useSelector } from 'react-redux';
 import { RootStore } from '../../redux/reducers/rootReducer';
-import { UserAdmin, RoleName } from '../../types/user.types';
+import { InstitutionUser, RoleName } from '../../types/user.types';
 import styled from 'styled-components';
 import Card from '../../components/Card';
 import { FormControlLabel, Checkbox, Divider, CircularProgress } from '@material-ui/core';
@@ -31,7 +31,7 @@ const AdminUsersPage: FC = () => {
     setAutoAssignCreators(!autoAssignCreators);
   };
 
-  const filterUsersByRole = (users: UserAdmin[], roleFilter: RoleName) => {
+  const filterUsersByRole = (users: InstitutionUser[], roleFilter: RoleName) => {
     return users.filter((user) => user.roles.some((role) => role.rolename === roleFilter));
   };
 
