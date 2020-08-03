@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import Card from '../../components/Card';
 import Heading from '../../components/Heading';
 import { adminValidationSchema } from '../publication/PublicationFormValidationSchema';
+import { InstitutionUser } from '../../types/user.types';
 
 const StyledNewAdminRow = styled(Form)`
   display: flex;
@@ -25,7 +26,11 @@ const adminInitialValues: AdminValues = {
   userId: '',
 };
 
-const CustomerInstitutionAdminsForm: FC = () => {
+interface CustomerInstitutionAdminsFormProps {
+  admins: InstitutionUser[];
+}
+
+const CustomerInstitutionAdminsForm: FC<CustomerInstitutionAdminsFormProps> = ({ admins }) => {
   const { t } = useTranslation('admin');
 
   const addAdmin = (adminValues: AdminValues) => {
@@ -36,10 +41,13 @@ const CustomerInstitutionAdminsForm: FC = () => {
 
     // TODO: Needs endpoint to add one role to one user for one institution
   };
+
   return (
     <Card>
       <Heading>{t('administrators')}</Heading>
-      {/* TODO: List existing admins */}
+      {admins.map((admin) => (
+        <p>{admin.username}</p>
+      ))}
 
       {/* Add new admin */}
       <Formik onSubmit={addAdmin} initialValues={adminInitialValues} validationSchema={adminValidationSchema}>

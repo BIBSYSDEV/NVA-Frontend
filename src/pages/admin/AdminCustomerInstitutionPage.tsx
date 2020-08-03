@@ -7,6 +7,8 @@ import { useParams, useHistory } from 'react-router-dom';
 import { useFetchCustomerInstitution } from '../../utils/hooks/useFetchCustomerInstitution';
 import { CircularProgress } from '@material-ui/core';
 import { emptyCustomerInstitution } from '../../types/customerInstitution.types';
+import useFetchUsersForInstitution from '../../utils/hooks/useFetchUsersForInstitution';
+import { RoleName } from '../../types/user.types';
 
 const StyledCustomerInstitution = styled.section`
   display: flex;
@@ -21,8 +23,10 @@ const AdminCustomerInstitutionPage: FC = () => {
     identifier,
     editMode
   );
-
-  // TODO: Fetch existing admins (needs endpoint to retrieve all admins of given institution)
+  const [institutionUsers, isLoadingUsers] = useFetchUsersForInstitution('UNIT'); // TODO: institution id
+  const admins = institutionUsers.filter((user) =>
+    user.roles.some((role) => role.rolename === RoleName.INSTITUTION_ADMIN)
+  );
 
   useEffect(() => {
     if (customerInstitution) {
@@ -32,7 +36,7 @@ const AdminCustomerInstitutionPage: FC = () => {
 
   return (
     <StyledCustomerInstitution>
-      {isLoadingCustomerInstitution ? (
+      {isLoadingCustomerInstitution || isLoadingUsers ? (
         <CircularProgress />
       ) : (
         <>
@@ -40,7 +44,7 @@ const AdminCustomerInstitutionPage: FC = () => {
             customerInstitution={customerInstitution ?? emptyCustomerInstitution}
             handleSetCustomerInstitution={handleSetCustomerInstitution}
           />
-          {editMode && <CustomerInstitutionAdminsForm />}
+          {editMode && <CustomerInstitutionAdminsForm admins={admins} />}
         </>
       )}
     </StyledCustomerInstitution>
