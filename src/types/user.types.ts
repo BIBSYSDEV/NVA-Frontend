@@ -46,7 +46,15 @@ export interface User {
   isInstitutionAdmin: boolean;
 }
 
-export type UserAdmin = Pick<User, 'name' | 'id' | 'createdDate' | 'roles'>;
+export interface UserRole {
+  rolename: RoleName;
+}
+
+export interface InstitutionUser {
+  institution: string;
+  roles: UserRole[];
+  username: string;
+}
 
 export interface FeideUser {
   name: string;

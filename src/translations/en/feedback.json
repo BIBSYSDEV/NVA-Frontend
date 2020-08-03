@@ -25,6 +25,7 @@
     "get_roles": "Could not get roles",
     "get_session": "Invalid session. Please log in again.",
     "get_user": "Failed to get user",
+    "get_users_for_institution": "Could not get users",
     "login": "Login failed",
     "orcid_login": "ORCID login failed",
     "publish_publication": "Could not publish publication",
