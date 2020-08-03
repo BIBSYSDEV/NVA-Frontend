@@ -7,9 +7,9 @@ import { NotificationVariant } from '../../types/notification.types';
 import { UserAdmin } from '../../types/user.types';
 import { getUsersForInstitution } from '../../api/roleApi';
 
-const useFetchUsersForInstitution = (institution: string): [UserAdmin[] | undefined, boolean] => {
+const useFetchUsersForInstitution = (institution: string): [UserAdmin[] | [], boolean] => {
   const dispatch = useDispatch();
-  const [users, setUsers] = useState<UserAdmin[] | undefined>();
+  const [users, setUsers] = useState<UserAdmin[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {

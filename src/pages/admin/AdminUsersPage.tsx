@@ -46,7 +46,7 @@ const AdminUsersPage: FC = () => {
           <StyledProgressWrapper>
             <CircularProgress />
           </StyledProgressWrapper>
-        ) : users ? (
+        ) : users.length > 0 ? (
           <UserList
             userList={filterUsersByRole(users, RoleName.INSTITUTION_ADMIN)}
             role={RoleName.INSTITUTION_ADMIN}
@@ -66,7 +66,7 @@ const AdminUsersPage: FC = () => {
           <StyledProgressWrapper>
             <CircularProgress />
           </StyledProgressWrapper>
-        ) : users ? (
+        ) : users.length > 0 ? (
           <UserList
             userList={filterUsersByRole(users, RoleName.CURATOR)}
             role={RoleName.CURATOR}
