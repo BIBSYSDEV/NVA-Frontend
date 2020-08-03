@@ -14,20 +14,20 @@ const useFetchUsersForInstitution = (institution: string): [UserAdmin[] | [], bo
 
   useEffect(() => {
     const cancelSource = Axios.CancelToken.source();
-    const fetchAuthorities = async () => {
+    const fetchUsers = async () => {
       setIsLoading(true);
-      const fetchedAuthorities = await getUsersForInstitution(institution, cancelSource.token);
-      if (fetchedAuthorities) {
+      const fetchedUsers = await getUsersForInstitution(institution, cancelSource.token);
+      if (fetchedUsers) {
         setIsLoading(false);
-        if (fetchedAuthorities.error) {
-          dispatch(setNotification(fetchedAuthorities.error, NotificationVariant.Error));
+        if (fetchedUsers.error) {
+          dispatch(setNotification(fetchedUsers.error, NotificationVariant.Error));
         } else {
-          setUsers(fetchedAuthorities);
+          setUsers(fetchedUsers);
         }
       }
     };
     if (institution) {
-      fetchAuthorities();
+      fetchUsers();
     }
 
     return () => {
