@@ -1,11 +1,11 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC } from 'react';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
-import { CircularProgress, TextField } from '@material-ui/core';
+import { TextField } from '@material-ui/core';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { Field, FieldProps, Form, Formik, ErrorMessage } from 'formik';
-import { useParams, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import Card from '../../components/Card';
 import Heading from '../../components/Heading';
@@ -20,30 +20,27 @@ import { createCustomerInstitution, updateCustomerInstitution } from '../../api/
 import useFetchInstitutions from '../../utils/hooks/useFetchInstitutions';
 import InstitutionAutocomplete from '../../components/institution/InstitutionAutocomplete';
 import ButtonWithProgress from '../../components/ButtonWithProgress';
-import { useFetchCustomerInstitution } from '../../utils/hooks/useFetchCustomerInstitution';
 import { StyledRightAlignedButtonWrapper } from '../../components/styled/Wrappers';
 
 const StyledButtonContainer = styled(StyledRightAlignedButtonWrapper)`
   margin-top: 2rem;
 `;
 
-const CustomerInstitutionMetadataForm: FC = () => {
-  const { t } = useTranslation('admin');
-  const { identifier } = useParams();
-  const editMode = identifier !== 'new';
-  const dispatch = useDispatch();
-  const history = useHistory();
-  const [institutions, isLoadingInstitutions] = useFetchInstitutions();
-  const [customerInstitution, isLoadingCustomerInstitution, handleSetCustomerInstitution] = useFetchCustomerInstitution(
-    identifier,
-    editMode
-  );
+interface CustomerInstitutionMetadataFormProps {
+  customerInstitution: CustomerInstitution;
+  handleSetCustomerInstitution: (customerInstitution: CustomerInstitution) => void;
+}
 
-  useEffect(() => {
-    if (customerInstitution) {
-      history.replace(`/admin-institutions/${customerInstitution.identifier}`, { title: customerInstitution.name });
-    }
-  }, [history, customerInstitution]);
+const CustomerInstitutionMetadataForm: FC<CustomerInstitutionMetadataFormProps> = ({
+  customerInstitution,
+  handleSetCustomerInstitution,
+}) => {
+  const { t } = useTranslation('admin');
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const [institutions, isLoadingInstitutions] = useFetchInstitutions();
+
+  const editMode = !!customerInstitution.identifier;
 
   const handleSubmit = async (values: CustomerInstitution) => {
     if (!editMode) {
@@ -67,14 +64,12 @@ const CustomerInstitutionMetadataForm: FC = () => {
     }
   };
 
-  return isLoadingCustomerInstitution ? (
-    <CircularProgress />
-  ) : (
+  return (
     <Card>
       <Heading>{t(editMode ? 'edit_institution' : 'add_institution')}</Heading>
       <Formik
         enableReinitialize
-        initialValues={customerInstitution ?? emptyCustomerInstitution}
+        initialValues={customerInstitution}
         validateOnChange
         validationSchema={Yup.object().shape({
           [CustomerInstitutionFieldNames.NAME]: Yup.string().required(t('feedback.required_field')),

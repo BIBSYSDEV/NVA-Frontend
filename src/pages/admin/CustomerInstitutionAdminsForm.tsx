@@ -27,7 +27,6 @@ const adminInitialValues: AdminValues = {
 
 const CustomerInstitutionAdminsForm: FC = () => {
   const { t } = useTranslation('admin');
-  // TODO: Fetch existing admins (needs endpoint to retrieve all admins of given institution)
 
   const addAdmin = (adminValues: AdminValues) => {
     // Cast values according to validation schema to ensure doiUrl is trimmed
