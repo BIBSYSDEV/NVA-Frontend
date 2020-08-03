@@ -20,6 +20,7 @@
     "last_login_date": "Last login",
     "new_institution_admin": "New institution admin",
     "new_curator": "New curator",
+    "no_users_found": "No users found",
     "user_administration": "User administration",
     "username": "Username"
   }
