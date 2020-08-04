@@ -9,6 +9,7 @@ import { CircularProgress } from '@material-ui/core';
 import { emptyCustomerInstitution } from '../../types/customerInstitution.types';
 import useFetchUsersForInstitution from '../../utils/hooks/useFetchUsersForInstitution';
 import { RoleName } from '../../types/user.types';
+import { filterUsersByRole } from '../../utils/role-helpers';
 
 const StyledCustomerInstitution = styled.section`
   display: flex;
@@ -23,10 +24,7 @@ const AdminCustomerInstitutionPage: FC = () => {
     identifier,
     editMode
   );
-  const [institutionUsers, isLoadingUsers] = useFetchUsersForInstitution('UNIT'); // TODO: institution id
-  const admins = institutionUsers.filter((user) =>
-    user.roles.some((role) => role.rolename === RoleName.INSTITUTION_ADMIN)
-  );
+  const [users, isLoadingUsers] = useFetchUsersForInstitution(editMode ? identifier : '');
 
   useEffect(() => {
     if (customerInstitution) {
@@ -44,7 +42,7 @@ const AdminCustomerInstitutionPage: FC = () => {
             customerInstitution={customerInstitution ?? emptyCustomerInstitution}
             handleSetCustomerInstitution={handleSetCustomerInstitution}
           />
-          {editMode && <CustomerInstitutionAdminsForm admins={admins} />}
+          {editMode && <CustomerInstitutionAdminsForm admins={filterUsersByRole(users, RoleName.INSTITUTION_ADMIN)} />}
         </>
       )}
     </StyledCustomerInstitution>
