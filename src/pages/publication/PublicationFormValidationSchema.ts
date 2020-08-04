@@ -143,7 +143,3 @@ export const newContributorValidationSchema = Yup.object().shape({
   firstName: Yup.string().required(ErrorMessage.REQUIRED),
   lastName: Yup.string().required(ErrorMessage.REQUIRED),
 });
-
-export const adminValidationSchema = Yup.object().shape({
-  userId: Yup.string().trim().required(ErrorMessage.REQUIRED),
-});

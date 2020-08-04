@@ -1,17 +1,17 @@
 import React, { FC } from 'react';
-import { TextField, Button } from '@material-ui/core';
+import { TextField, Button, Table, TableBody, TableCell, TableRow } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import { Formik, Field, FieldProps, ErrorMessage, Form } from 'formik';
+import { Formik, Field, FieldProps, ErrorMessage } from 'formik';
 import styled from 'styled-components';
+import DeleteIcon from '@material-ui/icons/Delete';
+import AddIcon from '@material-ui/icons/Add';
+import * as Yup from 'yup';
 
 import Card from '../../components/Card';
 import Heading from '../../components/Heading';
-import { adminValidationSchema } from '../publication/PublicationFormValidationSchema';
+import { ErrorMessage as ErrorMessageString } from '../publication/PublicationFormValidationSchema';
 import { InstitutionUser } from '../../types/user.types';
-
-const StyledNewAdminRow = styled(Form)`
-  display: flex;
-`;
+import NormalText from '../../components/NormalText';
 
 const StyledTextField = styled(TextField)`
   width: 20rem;
@@ -25,6 +25,10 @@ interface AdminValues {
 const adminInitialValues: AdminValues = {
   userId: '',
 };
+
+const adminValidationSchema = Yup.object().shape({
+  userId: Yup.string().trim().email(ErrorMessageString.INVALID_FORMAT),
+});
 
 interface CustomerInstitutionAdminsFormProps {
   admins: InstitutionUser[];
@@ -45,31 +49,58 @@ const CustomerInstitutionAdminsForm: FC<CustomerInstitutionAdminsFormProps> = ({
   return (
     <Card>
       <Heading>{t('administrators')}</Heading>
-      {admins.map((admin) => (
-        <p>{admin.username}</p>
-      ))}
+      <Table>
+        <TableBody>
+          {admins.map((admin) => (
+            <TableRow key={admin.username}>
+              <TableCell>
+                <NormalText>{admin.username}</NormalText>
+              </TableCell>
+              <TableCell>
+                <Button color="secondary" variant="contained" onClick={() => console.log('CLICK')}>
+                  <DeleteIcon />
+                  {t('common:remove')}
+                </Button>
+              </TableCell>
+            </TableRow>
+          ))}
 
-      {/* Add new admin */}
-      <Formik onSubmit={addAdmin} initialValues={adminInitialValues} validationSchema={adminValidationSchema}>
-        {({ isSubmitting, isValid, dirty }) => (
-          <StyledNewAdminRow>
-            <Field name="userId">
-              {({ field, meta: { touched, error } }: FieldProps) => (
-                <StyledTextField
-                  {...field}
-                  label={t('users.new_institution_admin')}
-                  variant="outlined"
-                  error={touched && !!error}
-                  helperText={<ErrorMessage name={field.name} />}
-                />
-              )}
-            </Field>
-            <Button color="primary" variant="contained" type="submit" disabled={!dirty || isSubmitting || !isValid}>
-              {t('common:add')}
-            </Button>
-          </StyledNewAdminRow>
-        )}
-      </Formik>
+          {/* Add new admin */}
+          <Formik
+            onSubmit={addAdmin}
+            initialValues={adminInitialValues}
+            validationSchema={adminValidationSchema}
+            validateOnChange={false}>
+            {({ isSubmitting, isValid, dirty }) => (
+              <TableRow>
+                <Field name="userId">
+                  {({ field, meta: { touched, error } }: FieldProps) => (
+                    <TableCell>
+                      <StyledTextField
+                        {...field}
+                        label={t('users.new_institution_admin')}
+                        variant="outlined"
+                        error={touched && !!error}
+                        helperText={<ErrorMessage name={field.name} />}
+                      />
+                    </TableCell>
+                  )}
+                </Field>
+                <TableCell>
+                  <Button
+                    color="primary"
+                    variant="contained"
+                    type="submit"
+                    disabled={!dirty || isSubmitting || !isValid}>
+                    <AddIcon />
+                    {t('common:add')}
+                  </Button>
+                </TableCell>
+              </TableRow>
+            )}
+          </Formik>
+        </TableBody>
+      </Table>
     </Card>
   );
 };
