@@ -114,11 +114,18 @@ const Menu: FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
               </MenuItem>
             )}
             {user.isInstitutionAdmin && (
-              <MenuItem
-                data-testid="menu-admin-institution-users-button"
-                onClick={() => handleClickMenuItem('/admin-institution-users')}>
-                {t('common:users')}
-              </MenuItem>
+              <>
+                <MenuItem
+                  data-testid="menu-admin-institution-button"
+                  onClick={() => handleClickMenuItem(`/admin-institutions/${user.customerId}`)}>
+                  {t('common:my_institution')}
+                </MenuItem>
+                <MenuItem
+                  data-testid="menu-admin-institution-users-button"
+                  onClick={() => handleClickMenuItem('/admin-institution-users')}>
+                  {t('common:users')}
+                </MenuItem>
+              </>
             )}
           </StyledAdminMenu>
         )}

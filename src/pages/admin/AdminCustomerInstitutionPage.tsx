@@ -33,9 +33,10 @@ const AdminCustomerInstitutionPage: FC = () => {
   const editMode = identifier !== 'new';
   const dispatch = useDispatch();
   const history = useHistory();
+  const currentLocation = history.location.pathname.split('/').pop();
   const [institutions, isLoadingInstitutions] = useFetchInstitutions();
   const [customerInstitution, isLoadingCustomerInstitution, handleSetCustomerInstitution] = useFetchCustomerInstitution(
-    identifier,
+    identifier ?? currentLocation,
     editMode
   );
 

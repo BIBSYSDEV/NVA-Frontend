@@ -29,6 +29,7 @@ export const userReducer = (state: User | null = null, action: UserActions | Orc
         institution: action.user['custom:orgName'],
         application: action.user['custom:application'] as ApplicationName,
         organizationId: getOrganizationIdByOrganizationNumber(action.user['custom:orgNumber']),
+        customerId: action.user['custom:customerId'].split('/').pop(),
         affiliations,
         givenName: action.user.given_name,
         familyName: action.user.family_name,
