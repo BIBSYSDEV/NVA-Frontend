@@ -45,28 +45,32 @@ const AppRoutes: FC = () => {
         <Route exact path="/search/:searchTerm/:offset" component={Search} />
         <Route exact path="/logout" component={Logout} />
 
-        {/* LoggedInRoute */}
-        <LoggedInRoute exact path="/user" component={User} />
+        {user && (
+          <>
+            {/* LoggedInRoute */}
+            <LoggedInRoute exact path="/user" component={User} />
 
-        {/* PublisherRoutes */}
-        <PublisherRoute exact path="/publication" component={EditPublication} />
-        <PublisherRoute exact path="/publication/:identifier" component={EditPublication} />
-        <PublisherRoute exact path="/my-publications" component={MyPublications} />
+            {/* PublisherRoutes */}
+            <PublisherRoute exact path="/publication" component={EditPublication} />
+            <PublisherRoute exact path="/publication/:identifier" component={EditPublication} />
+            <PublisherRoute exact path="/my-publications" component={MyPublications} />
 
-        {/* CuratorRoutes */}
-        <CuratorRoute exact path="/worklist" component={WorklistPage} />
+            {/* CuratorRoutes */}
+            <CuratorRoute exact path="/worklist" component={WorklistPage} />
 
-        {/* InstitutionAdminRoutes */}
-        <InstitutionAdminRoute exact path="/admin-institution-users" component={AdminUsersPage} />
-        <InstitutionAdminRoute
-          exact
-          path={`/admin-institutions/${user.customerId}`}
-          component={AdminCustomerInstitutionPage}
-        />
+            {/* InstitutionAdminRoutes */}
+            <InstitutionAdminRoute exact path="/admin-institution-users" component={AdminUsersPage} />
+            <InstitutionAdminRoute
+              exact
+              path={`/admin-institutions/${user.customerId}`}
+              component={AdminCustomerInstitutionPage}
+            />
 
-        {/* AppAdminRoutes */}
-        <AppAdminRoute exact path="/admin-institutions" component={AdminCustomerInstitutionsPage} />
-        <AppAdminRoute exact path="/admin-institutions/:identifier" component={AdminCustomerInstitutionPage} />
+            {/* AppAdminRoutes */}
+            <AppAdminRoute exact path="/admin-institutions" component={AdminCustomerInstitutionsPage} />
+            <AppAdminRoute exact path="/admin-institutions/:identifier" component={AdminCustomerInstitutionPage} />
+          </>
+        )}
 
         {/* NotFound must be last, otherwise it will catch all routes */}
         <Route path="*" component={NotFound} />
