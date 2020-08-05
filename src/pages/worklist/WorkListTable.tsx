@@ -10,12 +10,14 @@ import {
   TableContainer,
   TablePagination,
 } from '@material-ui/core';
-import { PublicationPreview } from '../../types/publication.types';
+import { PublicationPreview, PublicationTab } from '../../types/publication.types';
 import { useTranslation } from 'react-i18next';
 import Label from '../../components/Label';
 import { Link as RouterLink } from 'react-router-dom';
 import NormalText from '../../components/NormalText';
 import { getTranslatedLabelForDisplayedRows } from '../../utils/pagination';
+import { useSelector } from 'react-redux';
+import { RootStore } from '../../redux/reducers/rootReducer';
 
 const StyledTableRow = styled(TableRow)`
   background-color: ${(props) => props.theme.palette.box.main};
@@ -38,6 +40,7 @@ const WorklistTable: FC<WorklistTableProps> = ({ publications }) => {
   const { t } = useTranslation('workLists');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const user = useSelector((store: RootStore) => store.user);
 
   const handleChangePage = (_: MouseEvent<HTMLButtonElement> | null, newPage: number) => {
     setPage(newPage);
@@ -82,7 +85,9 @@ const WorklistTable: FC<WorklistTableProps> = ({ publications }) => {
                   <Button
                     color="primary"
                     component={RouterLink}
-                    to={`/publication/${publication.identifier}`}
+                    to={`/publication/${publication.identifier}?tab=${
+                      user.isCurator ? PublicationTab.Submission : PublicationTab.Description
+                    }`}
                     data-testid={`open-publication-${publication.identifier}`}
                     variant="contained">
                     <NormalText>{t('common:open')}</NormalText>

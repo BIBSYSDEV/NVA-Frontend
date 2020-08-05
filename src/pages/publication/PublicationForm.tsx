@@ -42,11 +42,12 @@ interface PublicationFormProps {
 const PublicationForm: FC<PublicationFormProps> = ({ identifier, closeForm }) => {
   const user = useSelector((store: RootStore) => store.user);
   const { t } = useTranslation('publication');
-  const [tabNumber, setTabNumber] = useState(user.isCurator ? PublicationTab.Submission : PublicationTab.Description);
+  const history = useHistory();
+  const initialTabNumber = new URLSearchParams(history.location.search).get('tab');
+  const [tabNumber, setTabNumber] = useState(initialTabNumber ? +initialTabNumber : PublicationTab.Description);
   const [isSaving, setIsSaving] = useState(false);
   const dispatch = useDispatch();
   const uppy = useUppy();
-  const history = useHistory();
   const [publication, isLoadingPublication, handleSetPublication] = useFetchPublication(identifier);
 
   useEffect(() => {
