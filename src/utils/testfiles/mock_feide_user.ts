@@ -13,6 +13,7 @@ export const mockUser: FeideUser = {
   sub: 'jasdfahkf-341-sdfdsf-12321',
   email_verfied: true,
   'custom:affiliation': '[member, employee, staff]',
+  'custom:customerId': 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
   identities: "[{'userId':'91829182'}]",
   family_name: 'User',
   given_name: 'Test',

@@ -4,9 +4,10 @@ import CustomerInstitutionMetadataForm from './CustomerInstitutionMetadataForm';
 import CustomerInstitutionAdminsForm from './CustomerInstitutionAdminsForm';
 import styled from 'styled-components';
 import { useParams, useHistory } from 'react-router-dom';
+
+import { emptyCustomerInstitution } from '../../types/customerInstitution.types';
 import { useFetchCustomerInstitution } from '../../utils/hooks/useFetchCustomerInstitution';
 import { CircularProgress } from '@material-ui/core';
-import { emptyCustomerInstitution } from '../../types/customerInstitution.types';
 import useFetchUsersForInstitution from '../../utils/hooks/useFetchUsersForInstitution';
 import { RoleName } from '../../types/user.types';
 import { filterUsersByRole } from '../../utils/role-helpers';
@@ -19,9 +20,10 @@ const StyledCustomerInstitution = styled.section`
 const AdminCustomerInstitutionPage: FC = () => {
   const history = useHistory();
   const { identifier } = useParams();
-  const editMode = identifier !== 'new';
+  const currentLocation = history.location.pathname.split('/').pop() ?? '';
+  const editMode = currentLocation !== 'new';
   const [customerInstitution, isLoadingCustomerInstitution, handleSetCustomerInstitution] = useFetchCustomerInstitution(
-    identifier,
+    currentLocation,
     editMode
   );
   const [users, isLoadingUsers] = useFetchUsersForInstitution(editMode ? identifier : '');
