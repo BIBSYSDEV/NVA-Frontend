@@ -31,6 +31,8 @@ const Logout = lazy(() => import('./layout/Logout'));
 const AppRoutes: FC = () => {
   const user = useSelector((store: RootStore) => store.user);
 
+  const customerId = user.customerId.split('/').pop();
+
   return (
     <Suspense fallback={<DelayedFallback />}>
       <Switch>
@@ -63,7 +65,7 @@ const AppRoutes: FC = () => {
             {!user.isAppAdmin && (
               <InstitutionAdminRoute
                 exact
-                path={`/admin-institutions/${user.customerId}`}
+                path={`/admin-institutions/${customerId}`}
                 component={AdminCustomerInstitutionPage}
               />
             )}
