@@ -31,7 +31,7 @@ const Logout = lazy(() => import('./layout/Logout'));
 const AppRoutes: FC = () => {
   const user = useSelector((store: RootStore) => store.user);
 
-  const customerId = user.customerId.split('/').pop();
+  const customerId = user?.customerId.split('/').pop();
 
   return (
     <Suspense fallback={<DelayedFallback />}>
