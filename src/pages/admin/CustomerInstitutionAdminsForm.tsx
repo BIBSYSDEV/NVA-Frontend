@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react';
 import { TextField, Button, Table, TableBody, TableCell, TableRow } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import { Formik, Field, FieldProps, ErrorMessage } from 'formik';
+import { Formik, Field, FieldProps, ErrorMessage, Form, FormikHelpers } from 'formik';
 import styled from 'styled-components';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
@@ -42,7 +42,7 @@ const CustomerInstitutionAdminsForm: FC<CustomerInstitutionAdminsFormProps> = ({
   const dispatch = useDispatch();
   const [currentAdmins, setCurrentAdmins] = useState(admins);
 
-  const addAdmin = async (adminValues: AdminValues) => {
+  const addAdmin = async (adminValues: AdminValues, { resetForm }: FormikHelpers<AdminValues>) => {
     // Cast values according to validation schema to ensure doiUrl is trimmed
     const trimmedValues = adminValidationSchema.cast(adminValues);
     const userId = trimmedValues?.userId as string;
@@ -58,10 +58,11 @@ const CustomerInstitutionAdminsForm: FC<CustomerInstitutionAdminsFormProps> = ({
         dispatch(setNotification(createdUserResponse.error, NotificationVariant.Error));
       } else {
         if (currentAdmins.some((admin) => admin.username === createdUserResponse.username)) {
-          dispatch(setNotification('feedback:info.user_already_has_role', NotificationVariant.Info));
+          dispatch(setNotification(t('feedback:info.user_already_has_role'), NotificationVariant.Info));
         } else {
-          dispatch(setNotification('feedback:success.added_role'));
+          dispatch(setNotification(t('feedback:success.added_role')));
           setCurrentAdmins((state) => [...state, createdUserResponse]);
+          resetForm();
         }
       }
     }
@@ -70,60 +71,59 @@ const CustomerInstitutionAdminsForm: FC<CustomerInstitutionAdminsFormProps> = ({
   return (
     <Card>
       <Heading>{t('administrators')}</Heading>
-      <Table>
-        <TableBody>
-          {currentAdmins.map((admin) => (
-            <TableRow key={admin.username}>
-              <TableCell>
-                <NormalText>{admin.username}</NormalText>
-              </TableCell>
-              <TableCell>
-                <Button color="secondary" variant="contained" disabled>
-                  <DeleteIcon />
-                  {t('common:remove')}
-                </Button>
-              </TableCell>
-            </TableRow>
-          ))}
-
-          {/* Add new admin */}
-          <Formik
-            onSubmit={addAdmin}
-            initialValues={adminInitialValues}
-            validationSchema={adminValidationSchema}
-            validateOnChange={false}>
-            {({ isSubmitting, isValid, dirty, values }) => (
-              <TableRow>
-                <Field name="userId">
-                  {({ field, meta: { touched, error } }: FieldProps) => (
+      <Formik
+        onSubmit={addAdmin}
+        initialValues={adminInitialValues}
+        validationSchema={adminValidationSchema}
+        validateOnChange={false}>
+        {({ isSubmitting, isValid, dirty }) => (
+          <Form>
+            <Table>
+              <TableBody>
+                {currentAdmins.map((admin) => (
+                  <TableRow key={admin.username}>
                     <TableCell>
-                      <StyledTextField
-                        {...field}
-                        label={t('users.new_institution_admin')}
-                        variant="outlined"
-                        error={touched && !!error}
-                        helperText={<ErrorMessage name={field.name} />}
-                      />
+                      <NormalText>{admin.username}</NormalText>
                     </TableCell>
-                  )}
-                </Field>
-                <TableCell>
-                  <Button
-                    color="primary"
-                    variant="contained"
-                    type="submit"
-                    disabled={!dirty || isSubmitting || !isValid}
-                    onClick={() => addAdmin(values)} // TODO: <Form>?
-                  >
-                    <AddIcon />
-                    {t('common:add')}
-                  </Button>
-                </TableCell>
-              </TableRow>
-            )}
-          </Formik>
-        </TableBody>
-      </Table>
+                    <TableCell>
+                      <Button color="secondary" variant="contained" disabled>
+                        <DeleteIcon />
+                        {t('common:remove')}
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+
+                <TableRow>
+                  <Field name="userId">
+                    {({ field, meta: { touched, error } }: FieldProps) => (
+                      <TableCell>
+                        <StyledTextField
+                          {...field}
+                          label={t('users.new_institution_admin')}
+                          variant="outlined"
+                          error={touched && !!error}
+                          helperText={<ErrorMessage name={field.name} />}
+                        />
+                      </TableCell>
+                    )}
+                  </Field>
+                  <TableCell>
+                    <Button
+                      color="primary"
+                      variant="contained"
+                      type="submit"
+                      disabled={!dirty || isSubmitting || !isValid}>
+                      <AddIcon />
+                      {t('common:add')}
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </Form>
+        )}
+      </Formik>
     </Card>
   );
 };
