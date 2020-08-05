@@ -60,11 +60,13 @@ const AppRoutes: FC = () => {
 
             {/* InstitutionAdminRoutes */}
             <InstitutionAdminRoute exact path="/admin-institution-users" component={AdminUsersPage} />
-            <InstitutionAdminRoute
-              exact
-              path={`/admin-institutions/${user.customerId}`}
-              component={AdminCustomerInstitutionPage}
-            />
+            {!user.isAppAdmin && (
+              <InstitutionAdminRoute
+                exact
+                path={`/admin-institutions/${user.customerId}`}
+                component={AdminCustomerInstitutionPage}
+              />
+            )}
 
             {/* AppAdminRoutes */}
             <AppAdminRoute exact path="/admin-institutions" component={AdminCustomerInstitutionsPage} />

@@ -8,32 +8,30 @@ export interface LoggedInRouteProps extends RouteProps {
   component: ComponentType<any>;
 }
 
-export const LoggedInRoute: FC<LoggedInRouteProps> = ({ component, ...rest }) => {
-  const user = useSelector((store: RootStore) => store.user);
-
-  return <PrivateRoute {...rest} component={component} isAuthorized={!!user} />;
-};
+export const LoggedInRoute: FC<LoggedInRouteProps> = ({ component, ...rest }) => (
+  <PrivateRoute {...rest} component={component} isAuthorized />
+);
 
 export const PublisherRoute: FC<LoggedInRouteProps> = ({ component, ...rest }) => {
   const user = useSelector((store: RootStore) => store.user);
 
-  return <PrivateRoute {...rest} component={component} isAuthorized={!!user && user.isPublisher} />;
+  return <PrivateRoute {...rest} component={component} isAuthorized={user.isPublisher} />;
 };
 
 export const CuratorRoute: FC<LoggedInRouteProps> = ({ component, ...rest }) => {
   const user = useSelector((store: RootStore) => store.user);
 
-  return <PrivateRoute {...rest} component={component} isAuthorized={!!user && user.isCurator} />;
+  return <PrivateRoute {...rest} component={component} isAuthorized={user.isCurator} />;
 };
 
 export const AppAdminRoute: FC<LoggedInRouteProps> = ({ component, ...rest }) => {
   const user = useSelector((store: RootStore) => store.user);
 
-  return <PrivateRoute {...rest} component={component} isAuthorized={!!user && user.isAppAdmin} />;
+  return <PrivateRoute {...rest} component={component} isAuthorized={user.isAppAdmin} />;
 };
 
 export const InstitutionAdminRoute: FC<LoggedInRouteProps> = ({ component, ...rest }) => {
   const user = useSelector((store: RootStore) => store.user);
 
-  return <PrivateRoute {...rest} component={component} isAuthorized={!!user && user.isInstitutionAdmin} />;
+  return <PrivateRoute {...rest} component={component} isAuthorized={user.isInstitutionAdmin} />;
 };
