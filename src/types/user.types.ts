@@ -44,6 +44,7 @@ export interface User {
   isCurator: boolean;
   isPublisher: boolean;
   isInstitutionAdmin: boolean;
+  customerId: string;
 }
 
 export interface UserRole {
@@ -70,6 +71,7 @@ export interface FeideUser {
   'custom:commonName': string;
   'custom:feideId': string;
   'custom:affiliation': string;
+  'custom:customerId': string;
   given_name: string;
   family_name: string;
 }
