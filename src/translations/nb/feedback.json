@@ -32,6 +32,7 @@
     "search": "Søk feilet",
     "update_authority": "Kunne ikke oppdatere {{qualifier}} for autoritet",
     "update_customer": "Kunne ikke oppdatere institusjon",
+    "update_institution_user": "Kunne ikke oppdatere bruker",
     "update_publication": "Kunne ikke oppdatere publikasjon",
     "orcid": {
       "access_denied": "Kunne ikke koble til ORCID fordi tilgang til ORCID-kontoen ble avslått"
@@ -40,7 +41,8 @@
   "info": {
     "affiliation_already_exists": "Tilknytningen finnes allerede",
     "publishing_publication": "Publiserer publikasjon...",
-    "user_already_exists": "Brukeren finnes allerede"
+    "user_already_exists": "Brukeren finnes allerede",
+    "user_already_has_role": "Brukeren har allerede denne rollen"
   },
   "success": {
     "added_affiliation": "Tilknytning er lagt til",

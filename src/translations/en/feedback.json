@@ -32,6 +32,7 @@
     "search": "Search failed",
     "update_authority": "Could not update {{qualifier}} for authority",
     "update_customer": "Could not update customer institution",
+    "update_institution_user": "Could not update user",
     "update_publication": "Could not update publication",
     "orcid": {
       "access_denied": "Could not connect to ORCID because access to the ORCID account was denied"
@@ -40,7 +41,8 @@
   "info": {
     "affiliation_already_exists": "Affiliation already exists",
     "publishing_publication": "Publishing publication...",
-    "user_already_exists": "User already exists"
+    "user_already_exists": "User already exists",
+    "user_already_has_role": "User already has this role"
   },
   "success": {
     "added_affiliation": "Affiliation was added",

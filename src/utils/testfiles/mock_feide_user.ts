@@ -1,5 +1,4 @@
-import { ApplicationName, FeideUser, RoleName } from '../../types/user.types';
-import { UserRoles } from '../../types/role.types';
+import { ApplicationName, FeideUser, RoleName, InstitutionUser } from '../../types/user.types';
 
 export const mockUser: FeideUser = {
   name: 'Test User',
@@ -19,7 +18,7 @@ export const mockUser: FeideUser = {
   given_name: 'Test',
 };
 
-export const mockRoles: UserRoles = {
+export const mockRoles: InstitutionUser = {
   roles: [
     {
       rolename: RoleName.APP_ADMIN,
