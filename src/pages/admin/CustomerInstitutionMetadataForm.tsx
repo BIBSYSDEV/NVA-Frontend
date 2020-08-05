@@ -69,7 +69,7 @@ const CustomerInstitutionMetadataForm: FC<CustomerInstitutionMetadataFormProps> 
       <Heading>{t(editMode ? 'edit_institution' : 'add_institution')}</Heading>
       <Formik
         enableReinitialize
-        initialValues={customerInstitution}
+        initialValues={{ ...emptyCustomerInstitution, ...customerInstitution }}
         validateOnChange
         validationSchema={Yup.object().shape({
           [CustomerInstitutionFieldNames.NAME]: Yup.string().required(t('feedback.required_field')),
