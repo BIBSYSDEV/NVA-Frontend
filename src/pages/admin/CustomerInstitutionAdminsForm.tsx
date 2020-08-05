@@ -16,6 +16,7 @@ import { assignUserRole } from '../../api/roleApi';
 import { useDispatch } from 'react-redux';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
+import ButtonWithProgress from '../../components/ButtonWithProgress';
 
 const StyledTextField = styled(TextField)`
   width: 20rem;
@@ -109,14 +110,15 @@ const CustomerInstitutionAdminsForm: FC<CustomerInstitutionAdminsFormProps> = ({
                     )}
                   </Field>
                   <TableCell>
-                    <Button
+                    <ButtonWithProgress
                       color="primary"
                       variant="contained"
                       type="submit"
-                      disabled={!dirty || isSubmitting || !isValid}>
+                      isLoading={isSubmitting}
+                      disabled={!dirty || !isValid}>
                       <AddIcon />
                       {t('common:add')}
-                    </Button>
+                    </ButtonWithProgress>
                   </TableCell>
                 </TableRow>
               </TableBody>
