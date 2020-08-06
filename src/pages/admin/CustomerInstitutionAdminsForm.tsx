@@ -36,9 +36,10 @@ const adminValidationSchema = Yup.object().shape({
 
 interface CustomerInstitutionAdminsFormProps {
   admins: InstitutionUser[];
+  customerInstitutionId: string;
 }
 
-const CustomerInstitutionAdminsForm: FC<CustomerInstitutionAdminsFormProps> = ({ admins }) => {
+const CustomerInstitutionAdminsForm: FC<CustomerInstitutionAdminsFormProps> = ({ admins, customerInstitutionId }) => {
   const { t } = useTranslation('admin');
   const dispatch = useDispatch();
   const [currentAdmins, setCurrentAdmins] = useState(admins);
@@ -48,12 +49,7 @@ const CustomerInstitutionAdminsForm: FC<CustomerInstitutionAdminsFormProps> = ({
     const trimmedValues = adminValidationSchema.cast(adminValues);
     const userId = trimmedValues?.userId as string;
 
-    const createdUserResponse = await assignUserRole(
-      'b8c3e125-cadb-43d5-823a-2daa7768c3f9',
-      userId,
-      RoleName.INSTITUTION_ADMIN
-    );
-
+    const createdUserResponse = await assignUserRole(customerInstitutionId, userId, RoleName.INSTITUTION_ADMIN);
     if (createdUserResponse) {
       if (createdUserResponse.error) {
         dispatch(setNotification(createdUserResponse.error, NotificationVariant.Error));

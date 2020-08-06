@@ -11,7 +11,7 @@ export enum RoleApiPaths {
 
 export const getInstitutionUser = async (username: string, cancelToken?: CancelToken) => {
   // TODO: Remove tempBaseUrl when endpoint is moved to normal backend path
-  const url = `${TEMP_ROLES_API}${RoleApiPaths.USERS}/${username}`;
+  const url = `${TEMP_ROLES_API}${RoleApiPaths.USERS}/${encodeURIComponent(username)}`;
 
   try {
     const idToken = await getIdToken();
@@ -85,22 +85,39 @@ export const assignUserRole = async (
   } catch (error) {
     if (error.response.status === StatusCode.CONFLICT) {
       // Update existing user instead of creating a new one
-      return await getUserAndAddRole(username, roleElement, cancelToken);
+      return await getUserAndAddRole(username, institution, roleElement, cancelToken);
     } else if (!Axios.isCancel(error)) {
       return { error: i18n.t('feedback:error.add_role') };
     }
   }
 };
 
-const getUserAndAddRole = async (username: string, newRole: UserRole, cancelToken?: CancelToken) => {
+const getUserAndAddRole = async (
+  username: string,
+  institution: string,
+  newRole: UserRole,
+  cancelToken?: CancelToken
+) => {
   try {
     const existingUser = await getInstitutionUser(username, cancelToken);
-    if (existingUser && !existingUser.error) {
-      const newInstitutionUser: InstitutionUser = {
-        ...existingUser,
-        roles: [...existingUser.roles, newRole],
-      };
-      return await updateUserRoles(newInstitutionUser);
+    if (existingUser) {
+      if (existingUser.error) {
+        // Forward error from fetch user call
+        return existingUser;
+      } else if (existingUser.institution !== institution) {
+        // Any user is only allowed to be institution admin for one institution
+        return { error: i18n.t('This user belongs to another institution') };
+      } else if (existingUser.roles.some((role: UserRole) => role.rolename === newRole.rolename)) {
+        // Skip update if user already has role we want to add
+        return existingUser;
+      } else {
+        // Update user
+        const newInstitutionUser: InstitutionUser = {
+          ...existingUser,
+          roles: [...existingUser.roles, newRole],
+        };
+        return await updateUserRoles(newInstitutionUser);
+      }
     } else {
       return { error: i18n.t('feedback:error.add_role') };
     }
@@ -113,8 +130,7 @@ const getUserAndAddRole = async (username: string, newRole: UserRole, cancelToke
 
 export const updateUserRoles = async (institutionUser: InstitutionUser, cancelToken?: CancelToken) => {
   // TODO: Remove tempBaseUrl when endpoint is moved to normal backend path
-  const url = `${TEMP_ROLES_API}${RoleApiPaths.USERS}/${institutionUser.username}`;
-
+  const url = `${TEMP_ROLES_API}${RoleApiPaths.USERS}/${encodeURIComponent(institutionUser.username)}`;
   try {
     const idToken = await getIdToken();
     const headers = {

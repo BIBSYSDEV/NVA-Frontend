@@ -33,7 +33,7 @@ const AdminCustomerInstitutionPage: FC = () => {
       history.replace(`/admin-institutions/${customerInstitution.identifier}`, { title: customerInstitution.name });
     }
   }, [history, customerInstitution]);
-
+  // TODO: may miss users on first load
   return (
     <StyledCustomerInstitution>
       {isLoadingCustomerInstitution || isLoadingUsers ? (
@@ -44,7 +44,12 @@ const AdminCustomerInstitutionPage: FC = () => {
             customerInstitution={customerInstitution ?? emptyCustomerInstitution}
             handleSetCustomerInstitution={handleSetCustomerInstitution}
           />
-          {editMode && <CustomerInstitutionAdminsForm admins={filterUsersByRole(users, RoleName.INSTITUTION_ADMIN)} />}
+          {editMode && (
+            <CustomerInstitutionAdminsForm
+              customerInstitutionId={identifier}
+              admins={filterUsersByRole(users, RoleName.INSTITUTION_ADMIN)}
+            />
+          )}
         </>
       )}
     </StyledCustomerInstitution>
