@@ -33,7 +33,7 @@ const AdminCustomerInstitutionPage: FC = () => {
       history.replace(`/admin-institutions/${customerInstitution.identifier}`, { title: customerInstitution.name });
     }
   }, [history, customerInstitution]);
-  // TODO: may miss users on first load
+
   return (
     <StyledCustomerInstitution>
       {isLoadingCustomerInstitution || isLoadingUsers ? (
