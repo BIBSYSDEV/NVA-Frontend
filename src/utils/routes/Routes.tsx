@@ -30,9 +30,8 @@ export const AppAdminRoute: FC<LoggedInRouteProps> = ({ component, ...rest }) =>
   return <PrivateRoute {...rest} component={component} isAuthorized={user.isAppAdmin} />;
 };
 
-const isValidInstitutionForInstitutionAdmin = (customerId: string) => {
-  return window.location.pathname.includes(customerId.split('/').pop() ?? '');
-};
+const isValidInstitutionForInstitutionAdmin = (customerId: string) =>
+  window.location.pathname.includes(customerId.split('/').pop() ?? '');
 
 export const InstitutionAdminRoute: FC<LoggedInRouteProps> = ({ component, ...rest }) => {
   const user = useSelector((store: RootStore) => store.user);
