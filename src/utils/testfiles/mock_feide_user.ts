@@ -27,6 +27,12 @@ export const mockRoles: InstitutionUser = {
     {
       rolename: RoleName.PUBLISHER,
     },
+    {
+      rolename: RoleName.CURATOR,
+    },
+    {
+      rolename: RoleName.INSTITUTION_ADMIN,
+    },
   ],
   username: 'tu@unit.no',
   institution: 'https://api.cristin.no/v2/institutions/20202',
