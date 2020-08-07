@@ -48,19 +48,19 @@ const CustomerInstitutionAdminsForm: FC<CustomerInstitutionAdminsFormProps> = ({
     // Cast values according to validation schema to ensure doiUrl is trimmed
     const trimmedValues = adminValidationSchema.cast(adminValues);
     const userId = trimmedValues?.userId as string;
+    if (currentAdmins.some((admin) => admin.username === userId)) {
+      dispatch(setNotification(t('feedback:info.user_already_has_role'), NotificationVariant.Info));
+      return;
+    }
 
     const createdUserResponse = await assignUserRole(customerInstitutionId, userId, RoleName.INSTITUTION_ADMIN);
     if (createdUserResponse) {
       if (createdUserResponse.error) {
         dispatch(setNotification(createdUserResponse.error, NotificationVariant.Error));
       } else {
-        if (currentAdmins.some((admin) => admin.username === createdUserResponse.username)) {
-          dispatch(setNotification(t('feedback:info.user_already_has_role'), NotificationVariant.Info));
-        } else {
-          dispatch(setNotification(t('feedback:success.added_role')));
-          setCurrentAdmins((state) => [...state, createdUserResponse]);
-          resetForm();
-        }
+        dispatch(setNotification(t('feedback:success.added_role')));
+        setCurrentAdmins((state) => [...state, createdUserResponse]);
+        resetForm();
       }
     }
   };
