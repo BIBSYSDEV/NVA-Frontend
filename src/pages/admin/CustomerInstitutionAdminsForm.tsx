@@ -45,7 +45,7 @@ const CustomerInstitutionAdminsForm: FC<CustomerInstitutionAdminsFormProps> = ({
   const [currentAdmins, setCurrentAdmins] = useState(admins);
 
   const addAdmin = async (adminValues: AdminValues, { resetForm }: FormikHelpers<AdminValues>) => {
-    // Cast values according to validation schema to ensure doiUrl is trimmed
+    // Cast values according to validation schema to ensure userId is trimmed
     const trimmedValues = adminValidationSchema.cast(adminValues);
     const userId = trimmedValues?.userId as string;
     if (currentAdmins.some((admin) => admin.username === userId)) {

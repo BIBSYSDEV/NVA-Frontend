@@ -101,7 +101,7 @@ const getUserAndAddRole = async (
     const existingUser = await getInstitutionUser(username, cancelToken);
     if (existingUser) {
       if (existingUser.error) {
-        // Forward error from fetch user call
+        // Forward error message returned from fetching existing user request
         return existingUser;
       } else if (existingUser.institution !== institution) {
         // A user can only have roles in one institution
