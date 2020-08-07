@@ -5,7 +5,7 @@ import { CircularProgress, TextField } from '@material-ui/core';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { Field, FieldProps, Form, Formik, ErrorMessage } from 'formik';
-import { useParams, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import Card from '../../components/Card';
 import Heading from '../../components/Heading';
@@ -29,13 +29,13 @@ const StyledButtonContainer = styled(StyledRightAlignedButtonWrapper)`
 
 const AdminCustomerInstitutionPage: FC = () => {
   const { t } = useTranslation('admin');
-  const { identifier } = useParams();
-  const editMode = identifier !== 'new';
   const dispatch = useDispatch();
   const history = useHistory();
+  const currentLocation = history.location.pathname.split('/').pop() ?? '';
+  const editMode = currentLocation !== 'new';
   const [institutions, isLoadingInstitutions] = useFetchInstitutions();
   const [customerInstitution, isLoadingCustomerInstitution, handleSetCustomerInstitution] = useFetchCustomerInstitution(
-    identifier,
+    currentLocation,
     editMode
   );
 

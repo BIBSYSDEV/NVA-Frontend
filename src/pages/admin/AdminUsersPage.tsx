@@ -1,16 +1,17 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { getInstitutionUsers } from '../../api/userAdminApi';
 import Heading from '../../components/Heading';
 import SubHeading from '../../components/SubHeading';
 import { useSelector } from 'react-redux';
 import { RootStore } from '../../redux/reducers/rootReducer';
-import { UserAdmin, RoleName } from '../../types/user.types';
+import { InstitutionUser, RoleName } from '../../types/user.types';
 import styled from 'styled-components';
 import Card from '../../components/Card';
-import { FormControlLabel, Checkbox, Divider } from '@material-ui/core';
+import { FormControlLabel, Checkbox, Divider, CircularProgress } from '@material-ui/core';
 import UserList from './UserList';
 import NormalText from './../../components/NormalText';
+import useFetchUsersForInstitution from '../../utils/hooks/useFetchUsersForInstitution';
+import { StyledProgressWrapper } from '../../components/styled/Wrappers';
 
 const StyledContainer = styled.div`
   margin-bottom: 2rem;
@@ -23,29 +24,15 @@ const StyledHeading = styled(Heading)`
 const AdminUsersPage: FC = () => {
   const { t } = useTranslation('admin');
   const user = useSelector((store: RootStore) => store.user);
-  const [userList, setUserList] = useState<UserAdmin[]>([]);
+  const [users, isLoading] = useFetchUsersForInstitution(user.institution);
   const [autoAssignCreators, setAutoAssignCreators] = useState(true);
-
-  useEffect(() => {
-    const getUsers = async () => {
-      const users = await getInstitutionUsers(user.institution);
-      // TODO backend
-      // if (users?.error) {
-      //   dispatch(addNotification(t('feedback:error.get_publications'), 'error'));
-      // } else {
-      setUserList(users);
-      // }
-    };
-
-    getUsers();
-  }, [user.institution]);
 
   const handleCheckAutoAssignCreators = () => {
     setAutoAssignCreators(!autoAssignCreators);
   };
 
-  const filterUsersByRole = (roleFilter: RoleName) => {
-    return userList.filter((user) => user.roles.some((role) => role === roleFilter));
+  const filterUsersByRole = (users: InstitutionUser[], roleFilter: RoleName) => {
+    return users.filter((user) => user.roles.some((role) => role.rolename === roleFilter));
   };
 
   return (
@@ -55,21 +42,41 @@ const AdminUsersPage: FC = () => {
       <StyledContainer>
         <SubHeading>{t('profile:roles.institution_admins')}</SubHeading>
         <Divider />
-        <UserList
-          userList={filterUsersByRole(RoleName.INSTITUTION_ADMIN)}
-          role={RoleName.INSTITUTION_ADMIN}
-          buttonText={t('users.new_institution_admin')}
-        />
+        {isLoading ? (
+          <StyledProgressWrapper>
+            <CircularProgress />
+          </StyledProgressWrapper>
+        ) : users.length > 0 ? (
+          <UserList
+            userList={filterUsersByRole(users, RoleName.INSTITUTION_ADMIN)}
+            role={RoleName.INSTITUTION_ADMIN}
+            buttonText={t('users.new_institution_admin')}
+          />
+        ) : (
+          <NormalText>
+            <i>{t('users.no_users_found')}</i>
+          </NormalText>
+        )}
       </StyledContainer>
 
       <StyledContainer>
         <SubHeading>{t('profile:roles.curators')}</SubHeading>
         <Divider />
-        <UserList
-          userList={filterUsersByRole(RoleName.CURATOR)}
-          role={RoleName.CURATOR}
-          buttonText={t('users.new_curator')}
-        />
+        {isLoading ? (
+          <StyledProgressWrapper>
+            <CircularProgress />
+          </StyledProgressWrapper>
+        ) : users.length > 0 ? (
+          <UserList
+            userList={filterUsersByRole(users, RoleName.CURATOR)}
+            role={RoleName.CURATOR}
+            buttonText={t('users.new_curator')}
+          />
+        ) : (
+          <NormalText>
+            <i>{t('users.no_users_found')}</i>
+          </NormalText>
+        )}
       </StyledContainer>
 
       <StyledContainer>

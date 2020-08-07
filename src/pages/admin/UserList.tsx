@@ -1,9 +1,9 @@
-import React, { FC, useState, ChangeEvent } from 'react';
+import React, { FC, useState, ChangeEvent, useEffect } from 'react';
 import styled from 'styled-components';
 import { Table, TableHead, TableRow, TableCell, TableBody, Button, TextField } from '@material-ui/core';
 import Label from './../../components/Label';
 import { useTranslation } from 'react-i18next';
-import { UserAdmin, RoleName } from '../../types/user.types';
+import { InstitutionUser, RoleName } from '../../types/user.types';
 import { assignUserRole } from '../../api/roleApi';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootStore } from '../../redux/reducers/rootReducer';
@@ -30,7 +30,7 @@ const StyledButton = styled(StyledNewButton)`
 `;
 
 interface UserListProps {
-  userList: UserAdmin[];
+  userList: InstitutionUser[];
   role: RoleName;
   buttonText: string;
 }
@@ -39,21 +39,27 @@ const UserList: FC<UserListProps> = ({ userList, role, buttonText }) => {
   const { t } = useTranslation('admin');
   const [showNewUserForm, setShowNewUserForm] = useState(false);
   const [username, setUsername] = useState('');
+  const [currentUserList, setCurrentUserList] = useState(userList);
   const user = useSelector((store: RootStore) => store.user);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    setCurrentUserList(userList);
+  }, [userList]);
 
   const toggleShowNewUserForm = () => {
     setShowNewUserForm(!showNewUserForm);
   };
 
   const handleSubmitUser = async () => {
-    const newUserRole = await assignUserRole(user.organizationId, username, role);
+    const newUserRole = await assignUserRole(user.institution, username, role);
     if (newUserRole) {
       if (newUserRole.error) {
         dispatch(setNotification(newUserRole.error, NotificationVariant.Error));
       } else if (newUserRole.info) {
         dispatch(setNotification(newUserRole.info, NotificationVariant.Info));
       } else {
+        setCurrentUserList([...currentUserList, newUserRole]);
         dispatch(setNotification(t('feedback:success.added_role')));
       }
     }
@@ -66,7 +72,7 @@ const UserList: FC<UserListProps> = ({ userList, role, buttonText }) => {
 
   return (
     <>
-      {(userList?.length > 0 || showNewUserForm) && (
+      {(currentUserList?.length > 0 || showNewUserForm) && (
         <StyledTable>
           <TableHead>
             <TableRow>
@@ -74,20 +80,16 @@ const UserList: FC<UserListProps> = ({ userList, role, buttonText }) => {
                 <Label>{t('users.username')}</Label>
               </TableCell>
               <TableCell>
-                <Label>{t('common:name')}</Label>
-              </TableCell>
-              <TableCell>
-                <Label>{t('users.created_date')}</Label>
+                <Label>{t('common:institution')}</Label>
               </TableCell>
               <TableCell />
             </TableRow>
           </TableHead>
           <TableBody>
-            {userList.map((user) => (
-              <StyledTableRow key={user.id}>
-                <TableCell>{user.id}</TableCell>
-                <TableCell>{user.name}</TableCell>
-                <TableCell>{user.createdDate}</TableCell>
+            {currentUserList.map((user) => (
+              <StyledTableRow key={user.username}>
+                <TableCell>{user.username}</TableCell>
+                <TableCell>{user.institution}</TableCell>
                 <TableCell align="right">
                   <Button disabled color="secondary" variant="contained">
                     {t('common:delete')}
