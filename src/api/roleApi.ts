@@ -40,14 +40,16 @@ export const getUsersForInstitution = async (institution: string, cancelToken?: 
     const headers = {
       Authorization: `Bearer ${idToken}`,
     };
-
+    console.log('GET', url);
     const response = await Axios.get(url, { headers, cancelToken });
+    console.log('RES', response);
     if (response.status === StatusCode.OK) {
       return response.data;
     } else {
       return { error: i18n.t('feedback:error.get_users_for_institution') };
     }
   } catch (error) {
+    console.log('ERR', error);
     if (!Axios.isCancel(error)) {
       return { error: i18n.t('feedback:error.get_users_for_institution') };
     }
