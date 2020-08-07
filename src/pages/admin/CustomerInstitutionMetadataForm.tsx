@@ -29,18 +29,18 @@ const StyledButtonContainer = styled(StyledRightAlignedButtonWrapper)`
 interface CustomerInstitutionMetadataFormProps {
   customerInstitution: CustomerInstitution;
   handleSetCustomerInstitution: (customerInstitution: CustomerInstitution) => void;
+  editMode: boolean;
 }
 
 const CustomerInstitutionMetadataForm: FC<CustomerInstitutionMetadataFormProps> = ({
   customerInstitution,
   handleSetCustomerInstitution,
+  editMode,
 }) => {
   const { t } = useTranslation('admin');
   const history = useHistory();
   const dispatch = useDispatch();
   const [institutions, isLoadingInstitutions] = useFetchInstitutions();
-
-  const editMode = !!customerInstitution.identifier;
 
   const handleSubmit = async (values: CustomerInstitution) => {
     if (!editMode) {
