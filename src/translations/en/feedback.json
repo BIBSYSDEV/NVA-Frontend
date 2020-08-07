@@ -2,6 +2,7 @@
   "error": {
     "404_page": "The page you requested could not be found. (Http error code 404)",
     "add_role": "Could not add role",
+    "an_error_occurred": "An error occurred",
     "create_authority": "Could not create authority",
     "create_customer": "Could not create customer institution",
     "create_publication": "Could not create publication",
