@@ -1,13 +1,14 @@
 import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import styled from 'styled-components';
+import { FormControlLabel, Checkbox, Divider, CircularProgress } from '@material-ui/core';
+
 import Heading from '../../components/Heading';
 import SubHeading from '../../components/SubHeading';
 import { useSelector } from 'react-redux';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { RoleName } from '../../types/user.types';
-import styled from 'styled-components';
 import Card from '../../components/Card';
-import { FormControlLabel, Checkbox, Divider, CircularProgress } from '@material-ui/core';
 import UserList from './UserList';
 import NormalText from './../../components/NormalText';
 import useFetchUsersForInstitution from '../../utils/hooks/useFetchUsersForInstitution';

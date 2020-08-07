@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import * as Yup from 'yup';
+import { useDispatch } from 'react-redux';
 
 import Card from '../../components/Card';
 import Heading from '../../components/Heading';
@@ -13,7 +14,6 @@ import { ErrorMessage as ErrorMessageString } from '../publication/PublicationFo
 import { InstitutionUser, RoleName } from '../../types/user.types';
 import NormalText from '../../components/NormalText';
 import { assignUserRole } from '../../api/roleApi';
-import { useDispatch } from 'react-redux';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import ButtonWithProgress from '../../components/ButtonWithProgress';

@@ -26,6 +26,7 @@
     "get_session": "Økten er utløpt. Vennligst logg inn på nytt.",
     "get_user": "Kunne ikke hente bruker",
     "get_users_for_institution": "Kunne ikke hente brukere",
+    "institution_mismatch": "Denne brukeren tilhører en annen institution",
     "login": "Kunne ikke logge inn",
     "orcid_login": "Kunne ikke logge inn på ORCID",
     "publish_publication": "Kunne ikke publisere publikasjon",

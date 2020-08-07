@@ -40,16 +40,13 @@ export const getUsersForInstitution = async (institution: string, cancelToken?: 
     const headers = {
       Authorization: `Bearer ${idToken}`,
     };
-    console.log('GET', url);
     const response = await Axios.get(url, { headers, cancelToken });
-    console.log('RES', response);
     if (response.status === StatusCode.OK) {
       return response.data;
     } else {
       return { error: i18n.t('feedback:error.get_users_for_institution') };
     }
   } catch (error) {
-    console.log('ERR', error);
     if (!Axios.isCancel(error)) {
       return { error: i18n.t('feedback:error.get_users_for_institution') };
     }
@@ -107,8 +104,8 @@ const getUserAndAddRole = async (
         // Forward error from fetch user call
         return existingUser;
       } else if (existingUser.institution !== institution) {
-        // Any user is only allowed to be institution admin for one institution
-        return { error: i18n.t('This user belongs to another institution') };
+        // A user can only have roles in one institution
+        return { error: i18n.t('feedback:error.institution_mismatch') };
       } else if (existingUser.roles.some((role: UserRole) => role.rolename === newRole.rolename)) {
         // Skip update if user already has role we want to add
         return existingUser;
