@@ -44,9 +44,18 @@ export interface User {
   isCurator: boolean;
   isPublisher: boolean;
   isInstitutionAdmin: boolean;
+  customerId: string;
 }
 
-export type UserAdmin = Pick<User, 'name' | 'id' | 'createdDate' | 'roles'>;
+export interface UserRole {
+  rolename: RoleName;
+}
+
+export interface InstitutionUser {
+  institution: string;
+  roles: UserRole[];
+  username: string;
+}
 
 export interface FeideUser {
   name: string;
@@ -62,6 +71,7 @@ export interface FeideUser {
   'custom:commonName': string;
   'custom:feideId': string;
   'custom:affiliation': string;
+  'custom:customerId': string;
   given_name: string;
   family_name: string;
 }
