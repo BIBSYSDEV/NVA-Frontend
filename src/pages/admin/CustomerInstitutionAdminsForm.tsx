@@ -7,14 +7,14 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import { Autocomplete } from '@material-ui/lab';
 
 import Card from '../../components/Card';
 import Heading from '../../components/Heading';
 import { ErrorMessage as ErrorMessageString } from '../publication/PublicationFormValidationSchema';
 import { InstitutionUser, RoleName } from '../../types/user.types';
 import NormalText from '../../components/NormalText';
-import { assignUserRole } from '../../api/roleApi';
+import { addRoleToUser } from '../../api/roleApi';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import ButtonWithProgress from '../../components/ButtonWithProgress';
@@ -49,19 +49,19 @@ const CustomerInstitutionAdminsForm: FC<CustomerInstitutionAdminsFormProps> = ({
   const nonAdminUsers = users.filter((user) => !currentAdmins.some((admin) => admin.username === user.username));
 
   const addAdmin = async (adminValues: AdminValues, { resetForm }: FormikHelpers<AdminValues>) => {
-    const userId = adminValues.user?.username;
-    if (!userId) {
+    const { user } = adminValues;
+    if (!user) {
       dispatch(setNotification(t('feedback:error.missing.user'), NotificationVariant.Info));
       return;
     }
 
-    const createdUserResponse = await assignUserRole(customerInstitutionId, userId, RoleName.INSTITUTION_ADMIN);
-    if (createdUserResponse) {
-      if (createdUserResponse.error) {
-        dispatch(setNotification(createdUserResponse.error, NotificationVariant.Error));
+    const addRoleResponse = await addRoleToUser(user.username, RoleName.INSTITUTION_ADMIN);
+    if (addRoleResponse) {
+      if (addRoleResponse.error) {
+        dispatch(setNotification(addRoleResponse.error, NotificationVariant.Error));
       } else {
         dispatch(setNotification(t('feedback:success.added_role')));
-        setCurrentAdmins((state) => [...state, createdUserResponse]);
+        setCurrentAdmins((state) => [...state, addRoleResponse]);
         resetForm();
       }
     }
@@ -75,7 +75,7 @@ const CustomerInstitutionAdminsForm: FC<CustomerInstitutionAdminsFormProps> = ({
         initialValues={adminInitialValues}
         validationSchema={adminValidationSchema}
         validateOnChange={false}>
-        {({ isSubmitting, isValid, dirty, setFieldValue, values }) => (
+        {({ isSubmitting, isValid, dirty, setFieldValue }) => (
           <Form>
             <Table>
               <TableBody>
