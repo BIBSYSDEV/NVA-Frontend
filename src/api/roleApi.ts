@@ -121,7 +121,7 @@ export const addRoleToUser = async (username: string, rolename: RoleName, cancel
   }
 };
 
-const updateUserRoles = async (institutionUser: InstitutionUser, cancelToken?: CancelToken) => {
+export const updateUserRoles = async (institutionUser: InstitutionUser, cancelToken?: CancelToken) => {
   // TODO: Remove tempBaseUrl when endpoint is moved to normal backend path
   const url = `${TEMP_ROLES_API}${RoleApiPaths.USERS}/${encodeURIComponent(institutionUser.username)}`;
   try {
