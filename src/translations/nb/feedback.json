@@ -29,6 +29,7 @@
     "get_users_for_institution": "Kunne ikke hente brukere",
     "institution_mismatch": "Denne brukeren tilhører en annen institusjon",
     "login": "Kunne ikke logge inn",
+    "missing_user": "Mangler bruker",
     "orcid_login": "Kunne ikke logge inn på ORCID",
     "publish_publication": "Kunne ikke publisere publikasjon",
     "search": "Søk feilet",

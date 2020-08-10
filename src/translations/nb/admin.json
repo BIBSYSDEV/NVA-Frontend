@@ -12,7 +12,9 @@
   "feide_organization_id": "Organisasjonens id i Feide",
   "institution_dns": "Institusjonens DNS",
   "institution_logo": "Institutionslogo",
+  "loading_users": "Henter brukere...",
   "organization_register_name": "Navn i organisasjonsregister",
+  "search_for_user": "Søk blant eksisterende brukere",
   "short_name": "Forkortet visningsnavn på institusjonen",
   "users": {
     "auto_assign_creators": "Ansatte får automatisk rolle som registrator ved pålogging hvis de er registrert med dette i 'eduPersonAffiliation': Employee, Staff, Member",
