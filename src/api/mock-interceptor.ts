@@ -26,6 +26,7 @@ import { FileApiPaths } from './fileApi';
 import { CustomerInstitutionApiPaths } from './customerInstitutionsApi';
 import { emptyPublication } from '../types/publication.types';
 import { mockRoles } from '../utils/testfiles/mock_feide_user';
+import { RoleApiPaths } from './roleApi';
 
 const mockOrcidResponse: OrcidResponse = {
   id: 'https://sandbox.orcid.org/0000-0001-2345-6789',
@@ -175,7 +176,8 @@ export const interceptRequestsOnMock = () => {
     .replyOnce(200, mockNtnuSubunitResponse);
 
   // Roles
-  mock.onGet(new RegExp(`${TEMP_ROLES_API}/users/*`)).reply(200, mockRoles);
+  mock.onGet(new RegExp(`${TEMP_ROLES_API}${RoleApiPaths.INSTITUTIONS}/.*/users`)).reply(200, []);
+  mock.onGet(new RegExp(`${TEMP_ROLES_API}${RoleApiPaths.USERS}/*`)).reply(200, mockRoles);
 
   mock.onAny().reply(function (config) {
     throw new Error('Could not find mock for ' + config.url);

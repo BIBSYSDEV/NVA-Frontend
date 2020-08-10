@@ -1,17 +1,19 @@
 import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import styled from 'styled-components';
+import { FormControlLabel, Checkbox, Divider, CircularProgress } from '@material-ui/core';
+
 import Heading from '../../components/Heading';
 import SubHeading from '../../components/SubHeading';
 import { useSelector } from 'react-redux';
 import { RootStore } from '../../redux/reducers/rootReducer';
-import { InstitutionUser, RoleName } from '../../types/user.types';
-import styled from 'styled-components';
+import { RoleName } from '../../types/user.types';
 import Card from '../../components/Card';
-import { FormControlLabel, Checkbox, Divider, CircularProgress } from '@material-ui/core';
 import UserList from './UserList';
 import NormalText from './../../components/NormalText';
 import useFetchUsersForInstitution from '../../utils/hooks/useFetchUsersForInstitution';
 import { StyledProgressWrapper } from '../../components/styled/Wrappers';
+import { filterUsersByRole } from '../../utils/role-helpers';
 
 const StyledContainer = styled.div`
   margin-bottom: 2rem;
@@ -29,10 +31,6 @@ const AdminUsersPage: FC = () => {
 
   const handleCheckAutoAssignCreators = () => {
     setAutoAssignCreators(!autoAssignCreators);
-  };
-
-  const filterUsersByRole = (users: InstitutionUser[], roleFilter: RoleName) => {
-    return users.filter((user) => user.roles.some((role) => role.rolename === roleFilter));
   };
 
   return (

@@ -11,6 +11,7 @@ import {
   CuratorRoute,
   AppAdminRoute,
   InstitutionAdminRoute,
+  EditInstitutionRoute,
 } from './utils/routes/Routes';
 import { useSelector } from 'react-redux';
 import { RootStore } from './redux/reducers/rootReducer';
@@ -30,8 +31,6 @@ const Logout = lazy(() => import('./layout/Logout'));
 
 const AppRoutes: FC = () => {
   const user = useSelector((store: RootStore) => store.user);
-
-  const customerId = user?.customerId.split('/').pop();
 
   return (
     <Suspense fallback={<DelayedFallback />}>
@@ -60,19 +59,14 @@ const AppRoutes: FC = () => {
             {/* CuratorRoutes */}
             <CuratorRoute exact path="/worklist" component={WorklistPage} />
 
-            {/* InstitutionAdminRoutes */}
+            {/* AdminRoutes */}
             <InstitutionAdminRoute exact path="/admin-institution-users" component={AdminUsersPage} />
-            {!user.isAppAdmin && (
-              <InstitutionAdminRoute
-                exact
-                path={`/admin-institutions/${customerId}`}
-                component={AdminCustomerInstitutionPage}
-              />
-            )}
-
-            {/* AppAdminRoutes */}
             <AppAdminRoute exact path="/admin-institutions" component={AdminCustomerInstitutionsPage} />
-            <AppAdminRoute exact path="/admin-institutions/:identifier" component={AdminCustomerInstitutionPage} />
+            <EditInstitutionRoute
+              exact
+              path="/admin-institutions/:identifier"
+              component={AdminCustomerInstitutionPage}
+            />
           </>
         )}
 
