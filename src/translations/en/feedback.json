@@ -43,8 +43,7 @@
   "info": {
     "affiliation_already_exists": "Affiliation already exists",
     "publishing_publication": "Publishing publication...",
-    "user_already_exists": "User already exists",
-    "user_already_has_role": "User already has this role"
+    "user_already_exists": "User already exists"
   },
   "success": {
     "added_affiliation": "Affiliation was added",
