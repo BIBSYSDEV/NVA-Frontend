@@ -18,7 +18,7 @@ import { addRoleToUser } from '../../api/roleApi';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import ButtonWithProgress from '../../components/ButtonWithProgress';
-import useFetchUsersForInstitution from '../../utils/hooks/useFetchUsersForInstitution';
+import { filterUsersByRole } from '../../utils/role-helpers';
 
 const StyledTextField = styled(TextField)`
   width: 20rem;
@@ -37,16 +37,14 @@ const adminValidationSchema = Yup.object().shape({
 });
 
 interface CustomerInstitutionAdminsFormProps {
-  admins: InstitutionUser[];
-  customerInstitutionId: string;
+  users: InstitutionUser[];
 }
 
-const CustomerInstitutionAdminsForm: FC<CustomerInstitutionAdminsFormProps> = ({ admins, customerInstitutionId }) => {
+const CustomerInstitutionAdminsForm: FC<CustomerInstitutionAdminsFormProps> = ({ users }) => {
   const { t } = useTranslation('admin');
   const dispatch = useDispatch();
-  const [users, isLoadingUsers] = useFetchUsersForInstitution(customerInstitutionId);
-  const [currentAdmins, setCurrentAdmins] = useState(admins);
-  const nonAdminUsers = users.filter((user) => !currentAdmins.some((admin) => admin.username === user.username));
+  const [currentAdmins, setCurrentAdmins] = useState(filterUsersByRole(users, RoleName.INSTITUTION_ADMIN));
+  const nonInstitutionAdminUsers = users.filter((user) => !currentAdmins.includes(user));
 
   const addAdmin = async (adminValues: AdminValues, { resetForm }: FormikHelpers<AdminValues>) => {
     const { user } = adminValues;
@@ -97,14 +95,12 @@ const CustomerInstitutionAdminsForm: FC<CustomerInstitutionAdminsFormProps> = ({
                     {({ field }: FieldProps) => (
                       <TableCell>
                         <Autocomplete
-                          options={nonAdminUsers}
+                          options={nonInstitutionAdminUsers}
                           getOptionLabel={(option) => option.username}
                           value={field.value}
                           getOptionSelected={(option: InstitutionUser, value: InstitutionUser | null) =>
                             value?.username === option.username
                           }
-                          loading={isLoadingUsers}
-                          loadingText={t('loading_users')}
                           onChange={(_, value: InstitutionUser | null) => setFieldValue(field.name, value)}
                           renderInput={(params) => (
                             <StyledTextField

@@ -8,8 +8,6 @@ import CustomerInstitutionAdminsForm from './CustomerInstitutionAdminsForm';
 import { emptyCustomerInstitution } from '../../types/customerInstitution.types';
 import { useFetchCustomerInstitution } from '../../utils/hooks/useFetchCustomerInstitution';
 import useFetchUsersForInstitution from '../../utils/hooks/useFetchUsersForInstitution';
-import { RoleName } from '../../types/user.types';
-import { filterUsersByRole } from '../../utils/role-helpers';
 
 const StyledCustomerInstitution = styled.section`
   display: flex;
@@ -43,12 +41,7 @@ const AdminCustomerInstitutionPage: FC = () => {
             handleSetCustomerInstitution={handleSetCustomerInstitution}
             editMode={editMode}
           />
-          {editMode && (
-            <CustomerInstitutionAdminsForm
-              customerInstitutionId={identifier}
-              admins={filterUsersByRole(users, RoleName.INSTITUTION_ADMIN)}
-            />
-          )}
+          {editMode && <CustomerInstitutionAdminsForm users={users} />}
         </>
       )}
     </StyledCustomerInstitution>
