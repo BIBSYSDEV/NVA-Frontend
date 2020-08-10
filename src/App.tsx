@@ -23,9 +23,9 @@ import { mockUser } from './utils/testfiles/mock_feide_user';
 import AppRoutes from './AppRoutes';
 import useFetchAuthorities from './utils/hooks/useFetchAuthorities';
 import { setNotification } from './redux/actions/notificationActions';
-import { getMyRoles } from './api/roleApi';
+import { getInstitutionUser } from './api/roleApi';
 import { NotificationVariant } from './types/notification.types';
-import { UserRoles } from './types/role.types';
+import { InstitutionUser } from './types/user.types';
 
 const StyledApp = styled.div`
   min-height: 100vh;
@@ -110,12 +110,12 @@ const App: FC = () => {
   useEffect(() => {
     // Fetch logged in user's roles
     const getRoles = async () => {
-      const userRoles = await getMyRoles(user.id);
-      if (userRoles) {
-        if (userRoles.error) {
-          dispatch(setNotification(userRoles.error, NotificationVariant.Error));
+      const institutionUser = await getInstitutionUser(user.id);
+      if (institutionUser) {
+        if (institutionUser.error) {
+          dispatch(setNotification(institutionUser.error, NotificationVariant.Error));
         } else {
-          const roles = (userRoles as UserRoles).roles.map((role) => role.rolename);
+          const roles = (institutionUser as InstitutionUser).roles.map((role) => role.rolename);
           dispatch(setRoles(roles));
         }
         setIsLoadingUser(false);

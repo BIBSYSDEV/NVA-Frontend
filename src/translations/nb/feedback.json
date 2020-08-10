@@ -27,12 +27,14 @@
     "get_session": "Økten er utløpt. Vennligst logg inn på nytt.",
     "get_user": "Kunne ikke hente bruker",
     "get_users_for_institution": "Kunne ikke hente brukere",
+    "institution_mismatch": "Denne brukeren tilhører en annen institusjon",
     "login": "Kunne ikke logge inn",
     "orcid_login": "Kunne ikke logge inn på ORCID",
     "publish_publication": "Kunne ikke publisere publikasjon",
     "search": "Søk feilet",
     "update_authority": "Kunne ikke oppdatere {{qualifier}} for autoritet",
     "update_customer": "Kunne ikke oppdatere institusjon",
+    "update_institution_user": "Kunne ikke oppdatere bruker",
     "update_publication": "Kunne ikke oppdatere publikasjon",
     "orcid": {
       "access_denied": "Kunne ikke koble til ORCID fordi tilgang til ORCID-kontoen ble avslått"
@@ -41,7 +43,8 @@
   "info": {
     "affiliation_already_exists": "Tilknytningen finnes allerede",
     "publishing_publication": "Publiserer publikasjon...",
-    "user_already_exists": "Brukeren finnes allerede"
+    "user_already_exists": "Brukeren finnes allerede",
+    "user_already_has_role": "Brukeren har allerede denne rollen"
   },
   "success": {
     "added_affiliation": "Tilknytning er lagt til",

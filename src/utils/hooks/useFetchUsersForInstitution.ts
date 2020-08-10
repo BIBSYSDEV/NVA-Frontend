@@ -18,13 +18,13 @@ const useFetchUsersForInstitution = (institution: string): [InstitutionUser[], b
       setIsLoading(true);
       const fetchedUsers = await getUsersForInstitution(institution, cancelSource.token);
       if (fetchedUsers) {
-        setIsLoading(false);
         if (fetchedUsers.error) {
           dispatch(setNotification(fetchedUsers.error, NotificationVariant.Error));
         } else {
           setUsers(fetchedUsers);
         }
       }
+      setIsLoading(false);
     };
     if (institution) {
       fetchUsers();
