@@ -7,7 +7,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
-import { Autocomplete } from '@material-ui/lab';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 
 import Card from '../../components/Card';
 import Heading from '../../components/Heading';
@@ -51,7 +51,7 @@ const CustomerInstitutionAdminsForm: FC<CustomerInstitutionAdminsFormProps> = ({
   const addAdmin = async (adminValues: AdminValues, { resetForm }: FormikHelpers<AdminValues>) => {
     const { user } = adminValues;
     if (!user) {
-      dispatch(setNotification(t('feedback:error.missing.user'), NotificationVariant.Info));
+      dispatch(setNotification(t('feedback:error.missing_user'), NotificationVariant.Error));
       return;
     }
 
