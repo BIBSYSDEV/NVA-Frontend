@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import { TextField, Button, Table, TableBody, TableCell, TableRow } from '@material-ui/core';
+import { Button, Table, TableBody, TableCell, TableRow, TextField } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { Formik, Field, FieldProps, ErrorMessage, Form, FormikHelpers } from 'formik';
 import styled from 'styled-components';
@@ -7,6 +7,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
+import { Autocomplete } from '@material-ui/lab';
 
 import Card from '../../components/Card';
 import Heading from '../../components/Heading';
@@ -17,8 +18,9 @@ import { assignUserRole } from '../../api/roleApi';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import ButtonWithProgress from '../../components/ButtonWithProgress';
+import useFetchUsersForInstitution from '../../utils/hooks/useFetchUsersForInstitution';
 
-const StyledTextField = styled(TextField)`
+const StyledTextField = styled(Autocomplete)`
   width: 20rem;
 `;
 
@@ -42,7 +44,9 @@ interface CustomerInstitutionAdminsFormProps {
 const CustomerInstitutionAdminsForm: FC<CustomerInstitutionAdminsFormProps> = ({ admins, customerInstitutionId }) => {
   const { t } = useTranslation('admin');
   const dispatch = useDispatch();
+  const [users, isLoadingUsers] = useFetchUsersForInstitution(customerInstitutionId);
   const [currentAdmins, setCurrentAdmins] = useState(admins);
+  const nonAdminUsers = users.filter((user) => !currentAdmins.some((admin) => admin.username === user.username));
 
   const addAdmin = async (adminValues: AdminValues, { resetForm }: FormikHelpers<AdminValues>) => {
     // Cast values according to validation schema to ensure userId is trimmed
@@ -73,7 +77,7 @@ const CustomerInstitutionAdminsForm: FC<CustomerInstitutionAdminsFormProps> = ({
         initialValues={adminInitialValues}
         validationSchema={adminValidationSchema}
         validateOnChange={false}>
-        {({ isSubmitting, isValid, dirty }) => (
+        {({ isSubmitting, isValid, dirty, setFieldValue, values }) => (
           <Form>
             <Table>
               <TableBody>
@@ -90,17 +94,35 @@ const CustomerInstitutionAdminsForm: FC<CustomerInstitutionAdminsFormProps> = ({
                     </TableCell>
                   </TableRow>
                 ))}
-
+                {console.log(values)}
                 <TableRow>
                   <Field name="userId">
                     {({ field, meta: { touched, error } }: FieldProps) => (
                       <TableCell>
                         <StyledTextField
-                          {...field}
-                          label={t('users.new_institution_admin')}
-                          variant="outlined"
-                          error={touched && !!error}
-                          helperText={<ErrorMessage name={field.name} />}
+                          options={nonAdminUsers}
+                          getOptionLabel={(option: any) => {
+                            return option.username ?? '';
+                          }}
+                          value={field.value}
+                          getOptionSelected={(option: any, value: any) => {
+                            if (value === '' && option === nonAdminUsers[0]) {
+                              return true;
+                            }
+                            return value.username === option.username;
+                          }}
+                          loading={isLoadingUsers}
+                          loadingText={'Laster brukere...'}
+                          onChange={(_, value: any) => setFieldValue(field.name, value)}
+                          renderInput={(params) => (
+                            <TextField
+                              {...params}
+                              label={t('users.new_institution_admin')}
+                              variant="outlined"
+                              error={touched && !!error}
+                              helperText={'Søk blant eksiterende brukere' /*<ErrorMessage name={field.name} />*/}
+                            />
+                          )}
                         />
                       </TableCell>
                     )}
