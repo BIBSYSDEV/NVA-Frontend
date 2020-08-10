@@ -156,17 +156,17 @@ const PublicPublicationContent: FC<PublicPublicationContentProps> = ({ publicati
                   </Link>
                 )}
               </StyledContainer>
-              {publicationContext?.onlineIssn && `${t('references.issn')} ${publicationContext.onlineIssn}`}
+              {publicationContext.onlineIssn && `${t('references.issn')} ${publicationContext.onlineIssn}`}
             </LabelContentRow>
           )}
           {publicationInstance && (
             <LabelContentRow minimal label={`${t('common:details')}:`}>
-              {publicationInstance?.volume && `${t('references.volume')} ${publicationInstance.volume}`}
-              {publicationInstance?.issue && `, ${t('references.issue')} ${publicationInstance.issue}`}
-              {publicationInstance?.pages?.begin &&
-                publicationInstance?.pages?.end &&
+              {publicationInstance.volume && `${t('references.volume')} ${publicationInstance.volume}`}
+              {publicationInstance.issue && `, ${t('references.issue')} ${publicationInstance.issue}`}
+              {publicationInstance.pages?.begin &&
+                publicationInstance.pages?.end &&
                 `, ${t('references.pages')} ${publicationInstance.pages.begin}-${publicationInstance.pages.end}`}
-              {publicationInstance?.articleNumber &&
+              {publicationInstance.articleNumber &&
                 `, ${t('references.article_number')} ${publicationInstance.articleNumber}`}
             </LabelContentRow>
           )}
