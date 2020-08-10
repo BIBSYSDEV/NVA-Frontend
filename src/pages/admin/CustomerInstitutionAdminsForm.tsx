@@ -7,7 +7,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import { Autocomplete } from '@material-ui/lab';
 
 import Card from '../../components/Card';
 import Heading from '../../components/Heading';
