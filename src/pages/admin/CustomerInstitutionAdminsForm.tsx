@@ -51,7 +51,7 @@ const CustomerInstitutionAdminsForm: FC<CustomerInstitutionAdminsFormProps> = ({
   const addAdmin = async (adminValues: AdminValues, { resetForm }: FormikHelpers<AdminValues>) => {
     const userId = adminValues.user?.username;
     if (!userId) {
-      dispatch(setNotification(t('feedback:error.velg-bruker'), NotificationVariant.Info));
+      dispatch(setNotification(t('feedback:error.missing.user'), NotificationVariant.Info));
       return;
     }
 
@@ -104,14 +104,14 @@ const CustomerInstitutionAdminsForm: FC<CustomerInstitutionAdminsFormProps> = ({
                             value?.username === option.username
                           }
                           loading={isLoadingUsers}
-                          loadingText={'Laster brukere...'}
+                          loadingText={t('loading_users')}
                           onChange={(_, value: InstitutionUser | null) => setFieldValue(field.name, value)}
                           renderInput={(params) => (
                             <StyledTextField
                               {...params}
                               label={t('users.new_institution_admin')}
                               variant="outlined"
-                              helperText={'Søk blant eksiterende brukere'}
+                              helperText={t('search_for_user')}
                             />
                           )}
                         />
