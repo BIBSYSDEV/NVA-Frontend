@@ -30,13 +30,13 @@ export const useFetchCustomerInstitution = (
     const fetchCustomerInstitution = async () => {
       const institution: CustomerInstitution = await getCustomerInstitution(identifier, cancelSource.token);
       if (institution) {
-        setIsLoading(false);
         if (institution.error) {
           dispatch(setNotification(institution.error, NotificationVariant.Error));
         } else {
           setCustomerInstitution(institution);
         }
       }
+      setIsLoading(false);
     };
     if (identifier && editMode) {
       fetchCustomerInstitution();
