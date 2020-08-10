@@ -150,7 +150,7 @@ const PublicPublicationContent: FC<PublicPublicationContentProps> = ({ publicati
             <LabelContentRow minimal multiple label={`${t('references.journal')}:`}>
               <StyledContainer>
                 <NormalText>{publicationContext.title}</NormalText>
-                {publicationContext?.url && (
+                {publicationContext.url && (
                   <Link href={publicationContext.url} target="_blank" rel="noopener noreferrer">
                     <StyledOpenInNewIcon aria-label={publicationContext.url} />
                   </Link>
