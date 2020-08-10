@@ -52,7 +52,6 @@ export interface BackendType {
 export interface Publisher {
   type: string;
   title: string;
-  printIssn: string;
   onlineIssn: string;
   level: string | number | null;
   openAccess: boolean;
@@ -60,7 +59,6 @@ export interface Publisher {
 
 export const emptyPublisher: Publisher = {
   type: '',
-  printIssn: '',
   onlineIssn: '',
   level: null,
   title: '',
@@ -120,8 +118,14 @@ interface PublicationInstance {
   volume: string;
 }
 
-interface PublicationContext extends Partial<Publisher> {
+interface PublicationContext {
   type: PublicationType | '';
+  level: string | number | null;
+  onlineIssn: string;
+  openAccess: boolean;
+  peerReviewed: boolean;
+  title: string;
+  url?: string;
 }
 
 interface PublicationReference extends BackendType {
@@ -171,6 +175,12 @@ const emptyPublicationInstance: PublicationInstance = {
 
 const emptyPublicationContext: PublicationContext = {
   type: '',
+  level: '',
+  onlineIssn: '',
+  openAccess: false,
+  peerReviewed: false,
+  title: '',
+  url: '',
 };
 
 const emptyReference: PublicationReference = {
