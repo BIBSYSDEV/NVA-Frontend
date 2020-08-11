@@ -27,6 +27,7 @@ export const AdminList: FC<AdminListProps> = ({ admins, refetchInstitutionUsers 
     const currentUserResponse = await getInstitutionUser(adminToRemove);
     if (currentUserResponse) {
       if (currentUserResponse.error) {
+        setIsLoadingRemoveRole(false);
         dispatch(setNotification(currentUserResponse.error, NotificationVariant.Error));
       } else {
         const newUser: InstitutionUser = {
@@ -35,17 +36,17 @@ export const AdminList: FC<AdminListProps> = ({ admins, refetchInstitutionUsers 
         };
         const updateUserResponse = await updateUserRoles(newUser);
         if (updateUserResponse) {
+          setIsLoadingRemoveRole(false);
           if (updateUserResponse.error) {
             dispatch(setNotification(updateUserResponse.error, NotificationVariant.Error));
           } else {
             dispatch(setNotification(t('feedback:success.admin_removed')));
+            setAdminToRemove('');
             refetchInstitutionUsers();
           }
         }
       }
     }
-    setAdminToRemove('');
-    setIsLoadingRemoveRole(false);
   };
 
   return (

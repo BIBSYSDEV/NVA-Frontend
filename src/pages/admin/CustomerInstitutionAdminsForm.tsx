@@ -60,8 +60,8 @@ const CustomerInstitutionAdminsForm: FC<CustomerInstitutionAdminsFormProps> = ({
         dispatch(setNotification(addRoleResponse.error, NotificationVariant.Error));
       } else {
         dispatch(setNotification(t('feedback:success.admin_added')));
-        refetchInstitutionUsers();
         resetForm();
+        refetchInstitutionUsers();
       }
     }
   };
