@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { Link, Chip } from '@material-ui/core';
 import styled from 'styled-components';
-import { Publication } from '../../../types/publication.types';
+import { Publication, PublicationPagesRange } from '../../../types/publication.types';
 import ContentPage from '../../../components/ContentPage';
 import { useTranslation } from 'react-i18next';
 import PublicPublicationAuthors from './PublicPublicationAuthors';
@@ -104,6 +104,8 @@ const PublicPublicationContent: FC<PublicPublicationContentProps> = ({ publicati
     tags,
   } = publication.entityDescription;
 
+  const pages = publicationInstance.pages as PublicationPagesRange;
+
   // Show only the license for the first file for now
   const currentLicense = publication.fileSet?.files[0]?.license ?? null;
   const selectedLicense = licenses.find((license) => license.identifier === currentLicense?.identifier);
@@ -163,9 +165,7 @@ const PublicPublicationContent: FC<PublicPublicationContentProps> = ({ publicati
             <LabelContentRow minimal label={`${t('common:details')}:`}>
               {publicationInstance.volume && `${t('references.volume')} ${publicationInstance.volume}`}
               {publicationInstance.issue && `, ${t('references.issue')} ${publicationInstance.issue}`}
-              {publicationInstance.pages?.begin &&
-                publicationInstance.pages?.end &&
-                `, ${t('references.pages')} ${publicationInstance.pages.begin}-${publicationInstance.pages.end}`}
+              {pages?.begin && pages?.end && `, ${t('references.pages')} ${pages.begin}-${pages.end}`}
               {publicationInstance.articleNumber &&
                 `, ${t('references.article_number')} ${publicationInstance.articleNumber}`}
             </LabelContentRow>

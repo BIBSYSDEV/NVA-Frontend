@@ -123,10 +123,10 @@ export const touchedReferenceTabFields: FormikTouched<Publication> = {
         type: true,
         articleNumber: true,
         issue: true,
-        pages: {
-          begin: true,
-          end: true,
-        },
+        // pages: {
+        //   begin: true,
+        //   end: true,
+        // },
         peerReviewed: true,
         volume: true,
       },
