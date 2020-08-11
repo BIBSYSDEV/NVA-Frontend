@@ -55,6 +55,8 @@
     "delete_affiliation": "Tilknytningen ble slettet",
     "delete_identifier": "Identifikatoren ble slettet",
     "login": "Logget inn",
+    "admin_added": "Bruker lagt til som administrator",
+    "admin_removed": "Bruker fjernet som administrator",
     "update_authority": "Forfatter er oppdatert",
     "update_customer": "Institusjon er oppdatert",
     "update_publication": "Publikasjonen er oppdatert"

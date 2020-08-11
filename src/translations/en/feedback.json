@@ -55,6 +55,8 @@
     "delete_affiliation": "Deleted affiliation",
     "delete_identifier": "Deleted identifier",
     "login": "Logged in",
+    "admin_added": "User added as administrator",
+    "admin_removed": "User removed as administrator",
     "update_authority": "Updated authority",
     "update_customer": "Updated customer institution",
     "update_publication": "Updated publication"

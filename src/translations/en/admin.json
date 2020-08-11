@@ -12,8 +12,9 @@
   "feide_organization_id": "Organization id in Feide",
   "institution_dns": "DNS for the institution",
   "institution_logo": "Institution logo",
-  "loading_users": "Loading users...",
   "organization_register_name": "Name in organization registry",
+  "remove_admin_title": "Remove administrator?",
+  "remove_admin_text": "Are you sure you want to remove {{username}} from list of administrators?",
   "search_for_user": "Search among existing users",
   "short_name": "Shortened display name",
   "users": {

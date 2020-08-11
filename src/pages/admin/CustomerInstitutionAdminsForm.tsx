@@ -59,7 +59,7 @@ const CustomerInstitutionAdminsForm: FC<CustomerInstitutionAdminsFormProps> = ({
       if (addRoleResponse.error) {
         dispatch(setNotification(addRoleResponse.error, NotificationVariant.Error));
       } else {
-        dispatch(setNotification(t('feedback:success.added_role')));
+        dispatch(setNotification(t('feedback:success.admin_added')));
         refetchInstitutionUsers();
         resetForm();
       }
@@ -78,7 +78,7 @@ const CustomerInstitutionAdminsForm: FC<CustomerInstitutionAdminsFormProps> = ({
           <Form>
             <Table>
               <TableBody>
-                <AdminList admins={institutionAdmins} />
+                <AdminList admins={institutionAdmins} refetchInstitutionUsers={refetchInstitutionUsers} />
                 <TableRow>
                   <Field name="user">
                     {({ field }: FieldProps) => (

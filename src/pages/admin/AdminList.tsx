@@ -2,26 +2,32 @@ import React, { FC, useState } from 'react';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { TableRow, TableCell, Button } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
 
 import NormalText from '../../components/NormalText';
-import { InstitutionUser, RoleName, UserRole } from '../../types/user.types';
 import ConfirmDialog from '../../components/ConfirmDialog';
+import { InstitutionUser, RoleName, UserRole } from '../../types/user.types';
+import { NotificationVariant } from '../../types/notification.types';
 import { getInstitutionUser, updateUserRoles } from '../../api/roleApi';
+import { setNotification } from '../../redux/actions/notificationActions';
 
 interface AdminListProps {
   admins: InstitutionUser[];
+  refetchInstitutionUsers: () => void;
 }
 
-export const AdminList: FC<AdminListProps> = ({ admins }) => {
+export const AdminList: FC<AdminListProps> = ({ admins, refetchInstitutionUsers }) => {
   const { t } = useTranslation('admin');
+  const dispatch = useDispatch();
   const [adminToRemove, setAdminToRemove] = useState('');
+  const [isLoadingRemoveRole, setIsLoadingRemoveRole] = useState(false);
 
   const removeAdmin = async () => {
-    console.log('RM', adminToRemove);
+    setIsLoadingRemoveRole(true);
     const currentUserResponse = await getInstitutionUser(adminToRemove);
     if (currentUserResponse) {
       if (currentUserResponse.error) {
-        //TODO
+        dispatch(setNotification(currentUserResponse.error, NotificationVariant.Error));
       } else {
         const newUser: InstitutionUser = {
           ...currentUserResponse,
@@ -30,15 +36,16 @@ export const AdminList: FC<AdminListProps> = ({ admins }) => {
         const updateUserResponse = await updateUserRoles(newUser);
         if (updateUserResponse) {
           if (updateUserResponse.error) {
-            //TODO
+            dispatch(setNotification(updateUserResponse.error, NotificationVariant.Error));
           } else {
-            //TODO
+            dispatch(setNotification(t('feedback:success.admin_removed')));
+            refetchInstitutionUsers();
           }
         }
       }
     }
-
     setAdminToRemove('');
+    setIsLoadingRemoveRole(false);
   };
 
   return (
@@ -60,8 +67,9 @@ export const AdminList: FC<AdminListProps> = ({ admins }) => {
         open={!!adminToRemove}
         onAccept={() => removeAdmin()}
         onCancel={() => setAdminToRemove('')}
-        title="Fjern Administrator">
-        Er du sikker på at du vil fjerne {adminToRemove} som administrator?
+        disableAccept={isLoadingRemoveRole}
+        title={t('remove_admin_title')}>
+        <NormalText>{t('remove_admin_text', { username: adminToRemove })}</NormalText>
       </ConfirmDialog>
     </>
   );
