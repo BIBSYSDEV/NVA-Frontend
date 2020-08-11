@@ -1,10 +1,10 @@
 import { Field, FormikProps, useFormikContext, FieldProps, ErrorMessage } from 'formik';
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { TextField } from '@material-ui/core';
 
-import { Publication } from '../../../types/publication.types';
+import { Publication, BackendTypeNames } from '../../../types/publication.types';
 import { ReferenceFieldNames, JournalType } from '../../../types/publicationFieldNames';
 import { PublicationTableNumber } from '../../../utils/constants';
 import NviValidation from './components/NviValidation';
@@ -36,11 +36,16 @@ const StyledLabel = styled.div`
 
 const JournalForm: FC = () => {
   const { t } = useTranslation('publication');
-  const { values }: FormikProps<Publication> = useFormikContext();
+  const { values, setFieldValue }: FormikProps<Publication> = useFormikContext();
   const {
     publicationContext,
     publicationInstance: { peerReviewed },
   } = values.entityDescription.reference;
+
+  useEffect(() => {
+    // set correct Pages type based on publication type being Journal
+    setFieldValue(ReferenceFieldNames.PAGES_TYPE, BackendTypeNames.PAGES_RANGE);
+  }, [setFieldValue]);
 
   return (
     <StyledContent>

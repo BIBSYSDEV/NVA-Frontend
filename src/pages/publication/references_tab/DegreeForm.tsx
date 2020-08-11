@@ -1,5 +1,5 @@
 import { Field, FormikProps, useFormikContext, FieldProps } from 'formik';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
@@ -27,6 +27,11 @@ const DegreeForm: React.FC = () => {
   const { t } = useTranslation('publication');
 
   const { setFieldValue }: FormikProps<Publication> = useFormikContext();
+
+  useEffect(() => {
+    // set correct Pages type based on publication type being Degree
+    setFieldValue(ReferenceFieldNames.PAGES, null);
+  }, [setFieldValue]);
 
   return (
     <>
