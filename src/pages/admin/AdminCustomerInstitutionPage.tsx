@@ -22,7 +22,7 @@ const AdminCustomerInstitutionPage: FC = () => {
     identifier,
     editMode
   );
-  const [users, isLoadingUsers] = useFetchUsersForInstitution(editMode ? identifier : '');
+  const [users, isLoadingUsers, refetchInstitutionUsers] = useFetchUsersForInstitution(editMode ? identifier : '');
 
   useEffect(() => {
     if (customerInstitution) {
@@ -41,7 +41,9 @@ const AdminCustomerInstitutionPage: FC = () => {
             handleSetCustomerInstitution={handleSetCustomerInstitution}
             editMode={editMode}
           />
-          {editMode && <CustomerInstitutionAdminsForm users={users} />}
+          {editMode && (
+            <CustomerInstitutionAdminsForm users={users} refetchInstitutionUsers={refetchInstitutionUsers} />
+          )}
         </>
       )}
     </StyledCustomerInstitution>
