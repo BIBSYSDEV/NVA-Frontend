@@ -29,6 +29,7 @@
     "get_users_for_institution": "Kunne ikke hente brukere",
     "institution_mismatch": "Denne brukeren tilhører en annen institusjon",
     "login": "Kunne ikke logge inn",
+    "missing_user": "Mangler bruker",
     "orcid_login": "Kunne ikke logge inn på ORCID",
     "publish_publication": "Kunne ikke publisere publikasjon",
     "search": "Søk feilet",
@@ -43,8 +44,7 @@
   "info": {
     "affiliation_already_exists": "Tilknytningen finnes allerede",
     "publishing_publication": "Publiserer publikasjon...",
-    "user_already_exists": "Brukeren finnes allerede",
-    "user_already_has_role": "Brukeren har allerede denne rollen"
+    "user_already_exists": "Brukeren finnes allerede"
   },
   "success": {
     "added_affiliation": "Tilknytning er lagt til",
