@@ -15,6 +15,7 @@ import { licenses } from '../../../types/file.types';
 import { getNpiDiscipline } from '../../../utils/npiDisciplines';
 import { StyledNormalTextPreWrapped } from '../../../components/styled/Wrappers';
 import { displayDate } from '../../../utils/date-helpers';
+import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 
 const StyledContentWrapper = styled.div`
   display: flex;
@@ -74,6 +75,14 @@ const StyledTextDescription = styled(NormalText)`
 const StyledTag = styled.div`
   display: inline;
   margin-right: 1rem;
+`;
+
+const StyledContainer = styled.div`
+  display: flex;
+`;
+
+const StyledOpenInNewIcon = styled(OpenInNewIcon)`
+  margin-left: 0.25rem;
 `;
 
 interface PublicPublicationContentProps {
@@ -139,18 +148,25 @@ const PublicPublicationContent: FC<PublicPublicationContentProps> = ({ publicati
           )}
           {publicationContext && (
             <LabelContentRow minimal multiple label={`${t('references.journal')}:`}>
-              <NormalText>{publicationContext.title}</NormalText>
-              {publicationContext?.onlineIssn && `${t('references.issn')} ${publicationContext.onlineIssn}`}
+              <StyledContainer>
+                <NormalText>{publicationContext.title}</NormalText>
+                {publicationContext.url && (
+                  <Link href={publicationContext.url} target="_blank" rel="noopener noreferrer">
+                    <StyledOpenInNewIcon aria-label={publicationContext.url} />
+                  </Link>
+                )}
+              </StyledContainer>
+              {publicationContext.onlineIssn && `${t('references.issn')} ${publicationContext.onlineIssn}`}
             </LabelContentRow>
           )}
           {publicationInstance && (
             <LabelContentRow minimal label={`${t('common:details')}:`}>
-              {publicationInstance?.volume && `${t('references.volume')} ${publicationInstance.volume}`}
-              {publicationInstance?.issue && `, ${t('references.issue')} ${publicationInstance.issue}`}
-              {publicationInstance?.pages?.begin &&
-                publicationInstance?.pages?.end &&
+              {publicationInstance.volume && `${t('references.volume')} ${publicationInstance.volume}`}
+              {publicationInstance.issue && `, ${t('references.issue')} ${publicationInstance.issue}`}
+              {publicationInstance.pages?.begin &&
+                publicationInstance.pages?.end &&
                 `, ${t('references.pages')} ${publicationInstance.pages.begin}-${publicationInstance.pages.end}`}
-              {publicationInstance?.articleNumber &&
+              {publicationInstance.articleNumber &&
                 `, ${t('references.article_number')} ${publicationInstance.articleNumber}`}
             </LabelContentRow>
           )}
