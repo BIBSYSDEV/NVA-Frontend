@@ -121,7 +121,32 @@ export const addRoleToUser = async (username: string, rolename: RoleName, cancel
   }
 };
 
-export const updateUserRoles = async (institutionUser: InstitutionUser, cancelToken?: CancelToken) => {
+export const removeRoleFromUser = async (username: string, rolename: RoleName, cancelToken?: CancelToken) => {
+  try {
+    const existingUser = await getInstitutionUser(username, cancelToken);
+    if (existingUser) {
+      if (existingUser.error) {
+        // Forward error message returned from fetching existing user request
+        return existingUser;
+      } else {
+        // Update user
+        const newInstitutionUser: InstitutionUser = {
+          ...existingUser,
+          roles: existingUser.roles.filter((role: UserRole) => role.rolename !== rolename),
+        };
+        return await updateUserRoles(newInstitutionUser, cancelToken);
+      }
+    } else {
+      return { error: i18n.t('feedback:error.remove_role') };
+    }
+  } catch (error) {
+    if (!Axios.isCancel(error)) {
+      return { error: i18n.t('feedback:error.remove_role') };
+    }
+  }
+};
+
+const updateUserRoles = async (institutionUser: InstitutionUser, cancelToken?: CancelToken) => {
   // TODO: Remove tempBaseUrl when endpoint is moved to normal backend path
   const url = `${TEMP_ROLES_API}${RoleApiPaths.USERS}/${encodeURIComponent(institutionUser.username)}`;
   try {

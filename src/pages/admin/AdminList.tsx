@@ -6,9 +6,9 @@ import { useDispatch } from 'react-redux';
 
 import NormalText from '../../components/NormalText';
 import ConfirmDialog from '../../components/ConfirmDialog';
-import { InstitutionUser, RoleName, UserRole } from '../../types/user.types';
+import { InstitutionUser, RoleName } from '../../types/user.types';
 import { NotificationVariant } from '../../types/notification.types';
-import { getInstitutionUser, updateUserRoles } from '../../api/roleApi';
+import { removeRoleFromUser } from '../../api/roleApi';
 import { setNotification } from '../../redux/actions/notificationActions';
 
 interface AdminListProps {
@@ -24,27 +24,15 @@ export const AdminList: FC<AdminListProps> = ({ admins, refetchInstitutionUsers 
 
   const removeAdmin = async () => {
     setIsLoadingRemoveRole(true);
-    const currentUserResponse = await getInstitutionUser(adminToRemove);
-    if (currentUserResponse) {
-      if (currentUserResponse.error) {
-        setIsLoadingRemoveRole(false);
-        dispatch(setNotification(currentUserResponse.error, NotificationVariant.Error));
+    const removeUserResponse = await removeRoleFromUser(adminToRemove, RoleName.INSTITUTION_ADMIN);
+    if (removeUserResponse) {
+      setIsLoadingRemoveRole(false);
+      if (removeUserResponse.error) {
+        dispatch(setNotification(removeUserResponse.error, NotificationVariant.Error));
       } else {
-        const newUser: InstitutionUser = {
-          ...currentUserResponse,
-          roles: currentUserResponse.roles.filter((role: UserRole) => role.rolename !== RoleName.INSTITUTION_ADMIN),
-        };
-        const updateUserResponse = await updateUserRoles(newUser);
-        if (updateUserResponse) {
-          setIsLoadingRemoveRole(false);
-          if (updateUserResponse.error) {
-            dispatch(setNotification(updateUserResponse.error, NotificationVariant.Error));
-          } else {
-            dispatch(setNotification(t('feedback:success.admin_removed')));
-            setAdminToRemove('');
-            refetchInstitutionUsers();
-          }
-        }
+        dispatch(setNotification(t('feedback:success.admin_removed')));
+        setAdminToRemove('');
+        refetchInstitutionUsers();
       }
     }
   };
