@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 import { Button, Table, TableBody, TableCell, TableRow, TextField } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { Formik, Field, FieldProps, Form, FormikHelpers } from 'formik';
@@ -38,13 +38,15 @@ const adminValidationSchema = Yup.object().shape({
 
 interface CustomerInstitutionAdminsFormProps {
   users: InstitutionUser[];
+  refetchInstitutionUsers: () => void;
 }
 
-const CustomerInstitutionAdminsForm: FC<CustomerInstitutionAdminsFormProps> = ({ users }) => {
+const CustomerInstitutionAdminsForm: FC<CustomerInstitutionAdminsFormProps> = ({ users, refetchInstitutionUsers }) => {
   const { t } = useTranslation('admin');
   const dispatch = useDispatch();
-  const [currentAdmins, setCurrentAdmins] = useState(filterUsersByRole(users, RoleName.INSTITUTION_ADMIN));
-  const nonInstitutionAdminUsers = users.filter((user) => !currentAdmins.includes(user));
+
+  const institutionAdmins = filterUsersByRole(users, RoleName.INSTITUTION_ADMIN);
+  const nonInstitutionAdmins = users.filter((user) => !institutionAdmins.includes(user));
 
   const addAdmin = async (adminValues: AdminValues, { resetForm }: FormikHelpers<AdminValues>) => {
     const { user } = adminValues;
@@ -59,7 +61,7 @@ const CustomerInstitutionAdminsForm: FC<CustomerInstitutionAdminsFormProps> = ({
         dispatch(setNotification(addRoleResponse.error, NotificationVariant.Error));
       } else {
         dispatch(setNotification(t('feedback:success.added_role')));
-        setCurrentAdmins((state) => [...state, addRoleResponse]);
+        refetchInstitutionUsers();
         resetForm();
       }
     }
@@ -77,7 +79,7 @@ const CustomerInstitutionAdminsForm: FC<CustomerInstitutionAdminsFormProps> = ({
           <Form>
             <Table>
               <TableBody>
-                {currentAdmins.map((admin) => (
+                {institutionAdmins.map((admin) => (
                   <TableRow key={admin.username}>
                     <TableCell>
                       <NormalText>{admin.username}</NormalText>
@@ -95,7 +97,7 @@ const CustomerInstitutionAdminsForm: FC<CustomerInstitutionAdminsFormProps> = ({
                     {({ field }: FieldProps) => (
                       <TableCell>
                         <Autocomplete
-                          options={nonInstitutionAdminUsers}
+                          options={nonInstitutionAdmins}
                           getOptionLabel={(option) => option.username}
                           value={field.value}
                           getOptionSelected={(option: InstitutionUser, value: InstitutionUser | null) =>
