@@ -33,11 +33,7 @@ export const apiRequest = async (axiosRequestConfig: AxiosRequestConfig) => {
       return { error: false };
     }
   } catch (error) {
-    if (Axios.isCancel(error)) {
-      return { cancelled: true };
-    } else {
-      return { error: true };
-    }
+    return Axios.isCancel(error) ? { cancelled: true } : { error: true };
   }
 };
 
