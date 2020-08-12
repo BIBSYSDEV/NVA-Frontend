@@ -16,7 +16,7 @@ import { addRoleToUser } from '../../api/roleApi';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import ButtonWithProgress from '../../components/ButtonWithProgress';
-import { AdminList } from './AdminList';
+import { InstitutionAdminList } from './InstitutionAdminList';
 import { filterUsersByRole } from '../../utils/role-helpers';
 
 const StyledTextField = styled(TextField)`
@@ -78,7 +78,7 @@ const CustomerInstitutionAdminsForm: FC<CustomerInstitutionAdminsFormProps> = ({
           <Form>
             <Table>
               <TableBody>
-                <AdminList admins={institutionAdmins} refetchInstitutionUsers={refetchInstitutionUsers} />
+                <InstitutionAdminList admins={institutionAdmins} refetchInstitutionUsers={refetchInstitutionUsers} />
                 <TableRow>
                   <Field name="user">
                     {({ field }: FieldProps) => (

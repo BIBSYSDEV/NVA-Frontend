@@ -16,17 +16,17 @@ interface AdminListProps {
   refetchInstitutionUsers: () => void;
 }
 
-export const AdminList: FC<AdminListProps> = ({ admins, refetchInstitutionUsers }) => {
+export const InstitutionAdminList: FC<AdminListProps> = ({ admins, refetchInstitutionUsers }) => {
   const { t } = useTranslation('admin');
   const dispatch = useDispatch();
   const [adminToRemove, setAdminToRemove] = useState('');
-  const [isLoadingRemoveRole, setIsLoadingRemoveRole] = useState(false);
+  const [isRemovingRole, setIsRemovingRole] = useState(false);
 
   const removeAdmin = async () => {
-    setIsLoadingRemoveRole(true);
+    setIsRemovingRole(true);
     const removeUserResponse = await removeRoleFromUser(adminToRemove, RoleName.INSTITUTION_ADMIN);
     if (removeUserResponse) {
-      setIsLoadingRemoveRole(false);
+      setIsRemovingRole(false);
       if (removeUserResponse.error) {
         dispatch(setNotification(removeUserResponse.error, NotificationVariant.Error));
       } else {
@@ -56,7 +56,7 @@ export const AdminList: FC<AdminListProps> = ({ admins, refetchInstitutionUsers 
         open={!!adminToRemove}
         onAccept={() => removeAdmin()}
         onCancel={() => setAdminToRemove('')}
-        disableAccept={isLoadingRemoveRole}
+        disableAccept={isRemovingRole}
         title={t('remove_admin_title')}>
         <NormalText>{t('remove_admin_text', { username: adminToRemove })}</NormalText>
       </ConfirmDialog>
