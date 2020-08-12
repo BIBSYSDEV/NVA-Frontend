@@ -4,13 +4,17 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
 import { Publication, emptyPublisher } from '../../../types/publication.types';
-import { ReferenceFieldNames, DegreeType } from '../../../types/publicationFieldNames';
+import {
+  ReferenceFieldNames,
+  DegreeType,
+  contextTypeBaseFieldName,
+  PublicationType,
+} from '../../../types/publicationFieldNames';
 import { PublicationTableNumber } from '../../../utils/constants';
 import PublicationChannelSearch from './components/PublicationChannelSearch';
 import PublisherRow from './components/PublisherRow';
 import DoiField from './components/DoiField';
 import SelectTypeField from './components/SelectTypeField';
-import PublisherField from './components/PublisherField';
 
 const StyledLabel = styled.div`
   color: ${({ theme }) => theme.palette.text.primary};
@@ -39,7 +43,30 @@ const DegreeForm: React.FC = () => {
 
       <DoiField />
 
-      <PublisherField label={t('common:publisher')} placeholder={t('references.search_for_publisher')} />
+      <Field name={contextTypeBaseFieldName}>
+        {({ field: { name, value } }: FieldProps) => (
+          <>
+            <PublicationChannelSearch
+              clearSearchField={value === emptyPublisher}
+              dataTestId="autosearch-publisher"
+              label={t('common:publisher')}
+              publicationTable={PublicationTableNumber.PUBLISHERS}
+              setValueFunction={(inputValue) => {
+                setFieldValue(name, { ...inputValue, publisher: inputValue.title, type: PublicationType.DEGREE });
+              }}
+              placeholder={t('references.search_for_publisher')}
+            />
+            {value.publisher && (
+              <PublisherRow
+                dataTestId="autosearch-results-publisher"
+                label={t('common:publisher')}
+                publisher={{ ...value, title: value.publisher }}
+                onClickDelete={() => setFieldValue(name, emptyPublisher)}
+              />
+            )}
+          </>
+        )}
+      </Field>
 
       <StyledHeading>{t('references.series')}</StyledHeading>
       <StyledLabel>{t('references.series_info')}</StyledLabel>
