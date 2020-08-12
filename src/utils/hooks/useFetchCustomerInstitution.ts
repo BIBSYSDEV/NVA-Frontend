@@ -5,12 +5,14 @@ import { CustomerInstitution } from '../../types/customerInstitution.types';
 import { getCustomerInstitution } from '../../api/customerInstitutionsApi';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
+import { useTranslation } from 'react-i18next';
 
 export const useFetchCustomerInstitution = (
   identifier: string,
   editMode: boolean = false
 ): [CustomerInstitution | undefined, boolean, (customerInstitution: CustomerInstitution) => void] => {
   const dispatch = useDispatch();
+  const { t } = useTranslation('feedback');
   const [isLoading, setIsLoading] = useState(true);
   const [customerInstitution, setCustomerInstitution] = useState<CustomerInstitution>();
 
@@ -29,12 +31,10 @@ export const useFetchCustomerInstitution = (
 
     const fetchCustomerInstitution = async () => {
       const institution: CustomerInstitution = await getCustomerInstitution(identifier, cancelSource.token);
-      if (institution) {
-        if (institution.error) {
-          dispatch(setNotification(institution.error, NotificationVariant.Error));
-        } else {
-          setCustomerInstitution(institution);
-        }
+      if (institution.error) {
+        dispatch(setNotification(t('error.get_customer'), NotificationVariant.Error));
+      } else {
+        setCustomerInstitution(institution);
       }
       setIsLoading(false);
     };
@@ -46,7 +46,7 @@ export const useFetchCustomerInstitution = (
         cancelSource.cancel();
       }
     };
-  }, [dispatch, identifier, editMode]);
+  }, [t, dispatch, identifier, editMode]);
 
   return [customerInstitution, isLoading, handleSetCustomerInstitution];
 };
