@@ -32,6 +32,7 @@
     "missing_user": "Mangler bruker",
     "orcid_login": "Kunne ikke logge inn på ORCID",
     "publish_publication": "Kunne ikke publisere publikasjon",
+    "remove_role": "Kunne ikke fjerne rolle",
     "search": "Søk feilet",
     "update_authority": "Kunne ikke oppdatere {{qualifier}} for autoritet",
     "update_customer": "Kunne ikke oppdatere institusjon",
@@ -55,6 +56,8 @@
     "delete_affiliation": "Tilknytningen ble slettet",
     "delete_identifier": "Identifikatoren ble slettet",
     "login": "Logget inn",
+    "admin_added": "Bruker lagt til som administrator",
+    "admin_removed": "Bruker fjernet som administrator",
     "update_authority": "Forfatter er oppdatert",
     "update_customer": "Institusjon er oppdatert",
     "update_publication": "Publikasjonen er oppdatert"

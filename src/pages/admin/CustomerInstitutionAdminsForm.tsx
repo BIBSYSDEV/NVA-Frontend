@@ -1,9 +1,8 @@
 import React, { FC } from 'react';
-import { Button, Table, TableBody, TableCell, TableRow, TextField } from '@material-ui/core';
+import { Table, TableBody, TableCell, TableRow, TextField } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { Formik, Field, FieldProps, Form, FormikHelpers } from 'formik';
 import styled from 'styled-components';
-import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
@@ -13,11 +12,11 @@ import Card from '../../components/Card';
 import Heading from '../../components/Heading';
 import { ErrorMessage as ErrorMessageString } from '../publication/PublicationFormValidationSchema';
 import { InstitutionUser, RoleName } from '../../types/user.types';
-import NormalText from '../../components/NormalText';
 import { addRoleToUser } from '../../api/roleApi';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import ButtonWithProgress from '../../components/ButtonWithProgress';
+import { InstitutionAdminList } from './InstitutionAdminList';
 import { filterUsersByRole } from '../../utils/role-helpers';
 
 const StyledTextField = styled(TextField)`
@@ -51,7 +50,7 @@ const CustomerInstitutionAdminsForm: FC<CustomerInstitutionAdminsFormProps> = ({
   const addAdmin = async (adminValues: AdminValues, { resetForm }: FormikHelpers<AdminValues>) => {
     const { user } = adminValues;
     if (!user) {
-      dispatch(setNotification(t('feedback:error.missing.user'), NotificationVariant.Info));
+      dispatch(setNotification(t('feedback:error.missing_user'), NotificationVariant.Error));
       return;
     }
 
@@ -60,9 +59,9 @@ const CustomerInstitutionAdminsForm: FC<CustomerInstitutionAdminsFormProps> = ({
       if (addRoleResponse.error) {
         dispatch(setNotification(addRoleResponse.error, NotificationVariant.Error));
       } else {
-        dispatch(setNotification(t('feedback:success.added_role')));
-        refetchInstitutionUsers();
+        dispatch(setNotification(t('feedback:success.admin_added')));
         resetForm();
+        refetchInstitutionUsers();
       }
     }
   };
@@ -79,19 +78,7 @@ const CustomerInstitutionAdminsForm: FC<CustomerInstitutionAdminsFormProps> = ({
           <Form>
             <Table>
               <TableBody>
-                {institutionAdmins.map((admin) => (
-                  <TableRow key={admin.username}>
-                    <TableCell>
-                      <NormalText>{admin.username}</NormalText>
-                    </TableCell>
-                    <TableCell>
-                      <Button color="secondary" variant="contained" disabled>
-                        <DeleteIcon />
-                        {t('common:remove')}
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                ))}
+                <InstitutionAdminList admins={institutionAdmins} refetchInstitutionUsers={refetchInstitutionUsers} />
                 <TableRow>
                   <Field name="user">
                     {({ field }: FieldProps) => (
