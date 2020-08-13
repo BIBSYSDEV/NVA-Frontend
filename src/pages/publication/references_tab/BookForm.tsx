@@ -122,11 +122,11 @@ const BookForm: FC = () => {
                 setValueFunction={(inputValue) => setFieldValue(name, inputValue.title ?? '')}
                 placeholder={t('references.search_for_series')}
               />
-              {value.title && (
+              {value && (
                 <PublisherRow
                   dataTestId="autosearch-results-series"
                   label={t('common:title')}
-                  publisher={value}
+                  publisher={{ title: value }}
                   onClickDelete={() => setFieldValue(name, '')}
                 />
               )}
