@@ -83,12 +83,12 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication, 
   useEffect(() => {
     const touchedForm = mergeTouchedFields([
       touchedDescriptionTabFields,
-      touchedReferenceTabFields,
+      touchedReferenceTabFields(publicationContextType),
       touchedContributorTabFields(contributors),
       touchedFilesTabFields(files),
     ]);
     setTouchedFields(touchedForm);
-  }, [setTouchedFields, contributors, files]);
+  }, [setTouchedFields, contributors, files, publicationContextType]);
 
   const onClickPublish = async () => {
     setIsPublishing(true);

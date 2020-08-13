@@ -34,8 +34,8 @@ const ReferencesPanel: FC<PanelProps> = ({ setTouchedFields }) => {
 
   useEffect(
     // Set all fields as touched if user navigates away from this panel (on unmount)
-    () => () => setTouchedFields(touchedReferenceTabFields),
-    [setTouchedFields]
+    () => () => setTouchedFields(touchedReferenceTabFields(publicationContextType)),
+    [setTouchedFields, publicationContextType]
   );
 
   const onChangeType = (newPublicationContextType: string) => {
