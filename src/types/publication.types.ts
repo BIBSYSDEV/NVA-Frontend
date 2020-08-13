@@ -105,12 +105,12 @@ interface PublicationDate extends BackendType {
   day: string;
 }
 
-export interface PublicationPagesRange extends BackendType {
+export interface PagesRange extends BackendType {
   begin: string;
   end: string;
 }
 
-export interface PublicationPagesMonograph extends BackendType {
+export interface PagesMonograph extends BackendType {
   pages: string;
 }
 
@@ -118,7 +118,7 @@ interface PublicationInstance {
   type: JournalType | ReportType | DegreeType | BookType | '';
   articleNumber: string;
   issue: string;
-  pages: PublicationPagesRange | PublicationPagesMonograph | null;
+  pages: PagesRange | PagesMonograph | null;
   peerReviewed: boolean;
   volume: string;
 }

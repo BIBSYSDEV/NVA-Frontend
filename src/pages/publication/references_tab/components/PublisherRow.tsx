@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { Button } from '@material-ui/core';
@@ -75,7 +75,7 @@ interface PublisherRowProps {
   titleOnly?: boolean;
 }
 
-const PublisherRow: React.FC<PublisherRowProps> = ({ dataTestId, label, onClickDelete, publisher, titleOnly }) => {
+const PublisherRow: FC<PublisherRowProps> = ({ dataTestId, label, onClickDelete, publisher, titleOnly }) => {
   const { t } = useTranslation('publication');
 
   const { setFieldValue }: FormikProps<Publication> = useFormikContext();
@@ -86,7 +86,6 @@ const PublisherRow: React.FC<PublisherRowProps> = ({ dataTestId, label, onClickD
   useEffect(() => {
     const setLevel = async (title: string) => {
       const response = await getPublishers(title, PublicationTableNumber.PUBLICATION_CHANNELS);
-      // TODO: set level in doi-fetch ? book = PublicationTableNumber.PUBLISHERS ? needs further discussion
       if (response) {
         const publisherLevel = response?.filter((publisher: Partial<Publisher>) => publisher.title === title)[0]?.level;
         if (publisherLevel) {
@@ -98,33 +97,29 @@ const PublisherRow: React.FC<PublisherRowProps> = ({ dataTestId, label, onClickD
       }
     };
 
-    if (title && !level) {
+    if (title && !level && !titleOnly) {
       setLevel(title);
     }
-  }, [level, setFieldValue, title]);
+  }, [level, setFieldValue, title, titleOnly]);
 
-  return (
-    <>
-      {titleOnly ? (
-        <StyledTitleOnlyCard>
-          <StyledTitle>{label}</StyledTitle>
-          <StyledTitleText>{title}</StyledTitleText>
-          <StyledButton data-testid="remove-publisher" variant="contained" color="secondary" onClick={onClickDelete}>
-            {t('common:remove')}
-          </StyledButton>
-        </StyledTitleOnlyCard>
-      ) : (
-        <StyledPublisherCard data-testid={dataTestId}>
-          <StyledTitle>{label}</StyledTitle>
-          <StyledLevelLabel>{t('references.level')}</StyledLevelLabel>
-          <StyledTitleText>{title}</StyledTitleText>
-          <StyledLevelText>{publisherLevel}</StyledLevelText>
-          <StyledButton data-testid="remove-publisher" variant="contained" color="secondary" onClick={onClickDelete}>
-            {t('common:remove')}
-          </StyledButton>
-        </StyledPublisherCard>
-      )}
-    </>
+  return titleOnly ? (
+    <StyledTitleOnlyCard>
+      <StyledTitle>{label}</StyledTitle>
+      <StyledTitleText>{title}</StyledTitleText>
+      <StyledButton data-testid="remove-publisher" variant="contained" color="secondary" onClick={onClickDelete}>
+        {t('common:remove')}
+      </StyledButton>
+    </StyledTitleOnlyCard>
+  ) : (
+    <StyledPublisherCard data-testid={dataTestId}>
+      <StyledTitle>{label}</StyledTitle>
+      <StyledLevelLabel>{t('references.level')}</StyledLevelLabel>
+      <StyledTitleText>{title}</StyledTitleText>
+      <StyledLevelText>{publisherLevel}</StyledLevelText>
+      <StyledButton data-testid="remove-publisher" variant="contained" color="secondary" onClick={onClickDelete}>
+        {t('common:remove')}
+      </StyledButton>
+    </StyledPublisherCard>
   );
 };
 

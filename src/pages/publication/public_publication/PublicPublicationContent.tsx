@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { Link, Chip } from '@material-ui/core';
 import styled from 'styled-components';
-import { Publication, PublicationPagesRange } from '../../../types/publication.types';
+import { Publication, PagesRange } from '../../../types/publication.types';
 import ContentPage from '../../../components/ContentPage';
 import { useTranslation } from 'react-i18next';
 import PublicPublicationAuthors from './PublicPublicationAuthors';
@@ -104,7 +104,7 @@ const PublicPublicationContent: FC<PublicPublicationContentProps> = ({ publicati
     tags,
   } = publication.entityDescription;
 
-  const pages = publicationInstance.pages as PublicationPagesRange;
+  const pages = publicationInstance.pages as PagesRange;
 
   // Show only the license for the first file for now
   const currentLicense = publication.fileSet?.files[0]?.license ?? null;

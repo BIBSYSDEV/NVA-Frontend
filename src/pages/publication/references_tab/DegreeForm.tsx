@@ -1,5 +1,5 @@
 import { Field, FormikProps, useFormikContext, FieldProps } from 'formik';
-import React, { useEffect } from 'react';
+import React, { useEffect, FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
@@ -27,7 +27,7 @@ const StyledHeading = styled.div`
   padding-top: 1.5rem;
 `;
 
-const DegreeForm: React.FC = () => {
+const DegreeForm: FC = () => {
   const { t } = useTranslation('publication');
 
   const { setFieldValue }: FormikProps<Publication> = useFormikContext();
@@ -61,7 +61,7 @@ const DegreeForm: React.FC = () => {
                 dataTestId="autosearch-results-publisher"
                 label={t('common:publisher')}
                 publisher={{ ...value, title: value.publisher }}
-                onClickDelete={() => setFieldValue(name, emptyPublisher)}
+                onClickDelete={() => setFieldValue(name, { type: PublicationType.DEGREE })}
               />
             )}
           </>
@@ -78,7 +78,7 @@ const DegreeForm: React.FC = () => {
               dataTestId="autosearch-series"
               label={t('common:title')}
               publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
-              setValueFunction={(inputValue) => setFieldValue(name, inputValue.title)}
+              setValueFunction={(inputValue) => setFieldValue(name, inputValue.title ?? '')}
               placeholder={t('references.search_for_series')}
             />
             {value && (

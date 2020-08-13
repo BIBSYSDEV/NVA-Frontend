@@ -2,7 +2,7 @@ import LabelContentRow from '../../../components/LabelContentRow';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormikProps, useFormikContext } from 'formik';
-import { Publication, PublicationPagesRange } from '../../../types/publication.types';
+import { Publication, PagesRange } from '../../../types/publication.types';
 
 const SubmissionJournalPublication: React.FC = () => {
   const { t } = useTranslation('publication');
@@ -15,7 +15,7 @@ const SubmissionJournalPublication: React.FC = () => {
     },
   } = values.entityDescription;
 
-  const pages = values.entityDescription.reference.publicationInstance.pages as PublicationPagesRange;
+  const pages = values.entityDescription.reference.publicationInstance.pages as PagesRange;
 
   return (
     <>
