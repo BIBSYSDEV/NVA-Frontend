@@ -33,7 +33,7 @@ export const getAllCustomerInstitutions = async () => {
 };
 
 export const getCustomerInstitution = async (identifier: string, cancelToken?: CancelToken) => {
-  const response = await authenticatedApiRequest({
+  const response = await authenticatedApiRequest<CustomerInstitution>({
     url: `${CustomerInstitutionApiPaths.CUSTOMER_INSTITUTION}/${identifier}`,
     method: 'GET',
     cancelToken,

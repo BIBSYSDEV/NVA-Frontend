@@ -34,7 +34,7 @@ export const useFetchCustomerInstitution = (
       if (institution) {
         if (institution.error) {
           dispatch(setNotification(t('error.get_customer'), NotificationVariant.Error));
-        } else {
+        } else if (institution.data) {
           setCustomerInstitution(institution.data);
         }
         setIsLoading(false);

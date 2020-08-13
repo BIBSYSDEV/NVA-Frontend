@@ -8,14 +8,14 @@ import { setAxiosDefaults } from '../utils/axios-config';
 setAxiosDefaults();
 
 // A completed request should return error:true|false alongside potential data
-interface CompletedApiResponse {
+interface CompletedApiResponse<T> {
   error: boolean;
-  data?: any;
+  data?: T;
 }
 // A cancelled request should return null
-type ApiResponse = CompletedApiResponse | null;
+type ApiResponse<T> = CompletedApiResponse<T> | null;
 
-export const authenticatedApiRequest = async (axiosRequestConfig: AxiosRequestConfig): Promise<ApiResponse> => {
+export const authenticatedApiRequest = async <T>(axiosRequestConfig: AxiosRequestConfig): Promise<ApiResponse<T>> => {
   try {
     const idToken = await getIdToken();
     axiosRequestConfig.headers = {
@@ -31,7 +31,7 @@ export const authenticatedApiRequest = async (axiosRequestConfig: AxiosRequestCo
   return await apiRequest(axiosRequestConfig);
 };
 
-export const apiRequest = async (axiosRequestConfig: AxiosRequestConfig): Promise<ApiResponse> => {
+export const apiRequest = async <T>(axiosRequestConfig: AxiosRequestConfig): Promise<ApiResponse<T>> => {
   try {
     const response = await Axios(axiosRequestConfig);
 

@@ -25,11 +25,11 @@ const useFetchInstitutions = (): [InstitutionUnitBase[], boolean] => {
       if (response) {
         if (response.error) {
           dispatch(setNotification(t('error.get_institutions'), NotificationVariant.Error));
-        } else {
+        } else if (response.data) {
           dispatch(setInstitutions(response.data));
         }
+        setIsLoading(false);
       }
-      setIsLoading(false);
     };
     // Institutions should not change, so ensure we fetch only once
     if (!institutions || institutions.length === 0) {
