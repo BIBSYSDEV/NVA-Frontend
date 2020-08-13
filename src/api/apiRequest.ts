@@ -7,7 +7,15 @@ import { setAxiosDefaults } from '../utils/axios-config';
 // Set axios defaults only once through the app's lifetime
 setAxiosDefaults();
 
-export const authenticatedApiRequest = async (axiosRequestConfig: AxiosRequestConfig) => {
+// A completed request should return error:true|false alongside potential data
+interface CompletedApiResponse {
+  error: boolean;
+  data?: any;
+}
+// A cancelled request should return null
+type ApiResponse = CompletedApiResponse | null;
+
+export const authenticatedApiRequest = async (axiosRequestConfig: AxiosRequestConfig): Promise<ApiResponse> => {
   try {
     const idToken = await getIdToken();
     axiosRequestConfig.headers = {
@@ -15,25 +23,27 @@ export const authenticatedApiRequest = async (axiosRequestConfig: AxiosRequestCo
       Authorization: `Bearer ${idToken}`,
     };
   } catch {
-    return { error: true };
+    return {
+      error: true,
+    };
   }
 
   return await apiRequest(axiosRequestConfig);
 };
 
-export const apiRequest = async (axiosRequestConfig: AxiosRequestConfig) => {
+export const apiRequest = async (axiosRequestConfig: AxiosRequestConfig): Promise<ApiResponse> => {
   try {
     const response = await Axios(axiosRequestConfig);
 
     if (response.status === StatusCode.OK) {
-      return response.data;
+      return { error: false, data: response.data };
     } else if (response.status >= 400) {
       return { error: true };
     } else {
       return { error: false };
     }
   } catch (error) {
-    return Axios.isCancel(error) ? { cancelled: true } : { error: true };
+    return Axios.isCancel(error) ? null : { error: true };
   }
 };
 

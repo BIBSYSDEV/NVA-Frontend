@@ -14,6 +14,7 @@ export const getInstitutions = async (cancelToken?: CancelToken) => {
     method: 'GET',
     cancelToken,
   });
+
   return response;
 };
 

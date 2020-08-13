@@ -22,10 +22,12 @@ const useFetchInstitutions = (): [InstitutionUnitBase[], boolean] => {
 
     const fetchInstitutions = async () => {
       const response = await getInstitutions(cancelSource.token);
-      if (response.error) {
-        dispatch(setNotification(t('error.get_institutions'), NotificationVariant.Error));
-      } else {
-        dispatch(setInstitutions(response));
+      if (response) {
+        if (response.error) {
+          dispatch(setNotification(t('error.get_institutions'), NotificationVariant.Error));
+        } else {
+          dispatch(setInstitutions(response.data));
+        }
       }
       setIsLoading(false);
     };

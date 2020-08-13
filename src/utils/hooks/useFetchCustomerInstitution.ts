@@ -30,13 +30,15 @@ export const useFetchCustomerInstitution = (
     const cancelSource = Axios.CancelToken.source();
 
     const fetchCustomerInstitution = async () => {
-      const institution: CustomerInstitution = await getCustomerInstitution(identifier, cancelSource.token);
-      if (institution.error) {
-        dispatch(setNotification(t('error.get_customer'), NotificationVariant.Error));
-      } else {
-        setCustomerInstitution(institution);
+      const institution = await getCustomerInstitution(identifier, cancelSource.token);
+      if (institution) {
+        if (institution.error) {
+          dispatch(setNotification(t('error.get_customer'), NotificationVariant.Error));
+        } else {
+          setCustomerInstitution(institution.data);
+        }
+        setIsLoading(false);
       }
-      setIsLoading(false);
     };
     if (identifier && editMode) {
       fetchCustomerInstitution();
