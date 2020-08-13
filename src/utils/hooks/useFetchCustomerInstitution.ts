@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 import Axios from 'axios';
 import { useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+
 import { CustomerInstitution } from '../../types/customerInstitution.types';
 import { getCustomerInstitution } from '../../api/customerInstitutionsApi';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
-import { useTranslation } from 'react-i18next';
 
 export const useFetchCustomerInstitution = (
   identifier: string,
