@@ -13,6 +13,9 @@
   "institution_dns": "Institusjonens DNS",
   "institution_logo": "Institutionslogo",
   "organization_register_name": "Navn i organisasjonsregister",
+  "remove_admin_title": "Fjern administrator?",
+  "remove_admin_text": "Er du sikker på at du vil fjerne {{username}} fra listen over administratorer?",
+  "search_for_user": "Søk blant eksisterende brukere",
   "short_name": "Forkortet visningsnavn på institusjonen",
   "users": {
     "auto_assign_creators": "Ansatte får automatisk rolle som registrator ved pålogging hvis de er registrert med dette i 'eduPersonAffiliation': Employee, Staff, Member",

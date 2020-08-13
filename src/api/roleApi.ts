@@ -75,6 +75,7 @@ export const assignUserRole = async (
       type: 'User',
     };
 
+    // TODO: Frontend should never create users when they are automatically created in backend per login
     const response = await Axios.post(url, data, { headers, cancelToken });
     if (response.status === StatusCode.OK) {
       return response.data;
@@ -84,38 +85,31 @@ export const assignUserRole = async (
   } catch (error) {
     if (error.response.status === StatusCode.CONFLICT) {
       // Update existing user instead of creating a new one
-      return await getUserAndAddRole(username, institution, roleElement, cancelToken);
+      return await addRoleToUser(username, rolename, cancelToken);
     } else if (!Axios.isCancel(error)) {
       return { error: i18n.t('feedback:error.add_role') };
     }
   }
 };
 
-const getUserAndAddRole = async (
-  username: string,
-  institution: string,
-  newRole: UserRole,
-  cancelToken?: CancelToken
-) => {
+export const addRoleToUser = async (username: string, rolename: RoleName, cancelToken?: CancelToken) => {
   try {
     const existingUser = await getInstitutionUser(username, cancelToken);
     if (existingUser) {
       if (existingUser.error) {
         // Forward error message returned from fetching existing user request
         return existingUser;
-      } else if (existingUser.institution !== institution) {
-        // A user can only have roles in one institution
-        return { error: i18n.t('feedback:error.institution_mismatch') };
-      } else if (existingUser.roles.some((role: UserRole) => role.rolename === newRole.rolename)) {
+      } else if (existingUser.roles.some((role: UserRole) => role.rolename === rolename)) {
         // Skip update if user already has role we want to add
         return existingUser;
       } else {
         // Update user
+        const roleElement = { rolename, type: 'Role' };
         const newInstitutionUser: InstitutionUser = {
           ...existingUser,
-          roles: [...existingUser.roles, newRole],
+          roles: [...existingUser.roles, roleElement],
         };
-        return await updateUserRoles(newInstitutionUser);
+        return await updateUserRoles(newInstitutionUser, cancelToken);
       }
     } else {
       return { error: i18n.t('feedback:error.add_role') };
@@ -127,7 +121,32 @@ const getUserAndAddRole = async (
   }
 };
 
-export const updateUserRoles = async (institutionUser: InstitutionUser, cancelToken?: CancelToken) => {
+export const removeRoleFromUser = async (username: string, rolename: RoleName, cancelToken?: CancelToken) => {
+  try {
+    const existingUser = await getInstitutionUser(username, cancelToken);
+    if (existingUser) {
+      if (existingUser.error) {
+        // Forward error message returned from fetching existing user request
+        return existingUser;
+      } else {
+        // Update user
+        const newInstitutionUser: InstitutionUser = {
+          ...existingUser,
+          roles: existingUser.roles.filter((role: UserRole) => role.rolename !== rolename),
+        };
+        return await updateUserRoles(newInstitutionUser, cancelToken);
+      }
+    } else {
+      return { error: i18n.t('feedback:error.remove_role') };
+    }
+  } catch (error) {
+    if (!Axios.isCancel(error)) {
+      return { error: i18n.t('feedback:error.remove_role') };
+    }
+  }
+};
+
+const updateUserRoles = async (institutionUser: InstitutionUser, cancelToken?: CancelToken) => {
   // TODO: Remove tempBaseUrl when endpoint is moved to normal backend path
   const url = `${TEMP_ROLES_API}${RoleApiPaths.USERS}/${encodeURIComponent(institutionUser.username)}`;
   try {

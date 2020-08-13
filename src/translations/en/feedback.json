@@ -29,8 +29,10 @@
     "get_users_for_institution": "Could not get users",
     "institution_mismatch": "This user belongs to another institution",
     "login": "Login failed",
+    "missing_user": "Missing user",
     "orcid_login": "ORCID login failed",
     "publish_publication": "Could not publish publication",
+    "remove_role": "Could not remove role",
     "search": "Search failed",
     "update_authority": "Could not update {{qualifier}} for authority",
     "update_customer": "Could not update customer institution",
@@ -43,8 +45,7 @@
   "info": {
     "affiliation_already_exists": "Affiliation already exists",
     "publishing_publication": "Publishing publication...",
-    "user_already_exists": "User already exists",
-    "user_already_has_role": "User already has this role"
+    "user_already_exists": "User already exists"
   },
   "success": {
     "added_affiliation": "Affiliation was added",
@@ -55,6 +56,8 @@
     "delete_affiliation": "Deleted affiliation",
     "delete_identifier": "Deleted identifier",
     "login": "Logged in",
+    "admin_added": "User added as administrator",
+    "admin_removed": "User removed as administrator",
     "update_authority": "Updated authority",
     "update_customer": "Updated customer institution",
     "update_publication": "Updated publication"

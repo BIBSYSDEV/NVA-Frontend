@@ -8,8 +8,6 @@ import CustomerInstitutionAdminsForm from './CustomerInstitutionAdminsForm';
 import { emptyCustomerInstitution } from '../../types/customerInstitution.types';
 import { useFetchCustomerInstitution } from '../../utils/hooks/useFetchCustomerInstitution';
 import useFetchUsersForInstitution from '../../utils/hooks/useFetchUsersForInstitution';
-import { RoleName } from '../../types/user.types';
-import { filterUsersByRole } from '../../utils/role-helpers';
 
 const StyledCustomerInstitution = styled.section`
   display: flex;
@@ -24,7 +22,7 @@ const AdminCustomerInstitutionPage: FC = () => {
     identifier,
     editMode
   );
-  const [users, isLoadingUsers] = useFetchUsersForInstitution(editMode ? identifier : '');
+  const [users, isLoadingUsers, refetchInstitutionUsers] = useFetchUsersForInstitution(editMode ? identifier : '');
 
   useEffect(() => {
     if (customerInstitution) {
@@ -44,10 +42,7 @@ const AdminCustomerInstitutionPage: FC = () => {
             editMode={editMode}
           />
           {editMode && (
-            <CustomerInstitutionAdminsForm
-              customerInstitutionId={identifier}
-              admins={filterUsersByRole(users, RoleName.INSTITUTION_ADMIN)}
-            />
+            <CustomerInstitutionAdminsForm users={users} refetchInstitutionUsers={refetchInstitutionUsers} />
           )}
         </>
       )}
