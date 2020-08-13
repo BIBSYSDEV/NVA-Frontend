@@ -28,11 +28,10 @@ const StyledNormalText = styled(NormalText)`
 
 interface AuthorityModalProps {
   authority: Authority | null;
-  closeModal: () => void;
   handleNextClick: () => void;
 }
 
-const AuthorityModal: FC<AuthorityModalProps> = ({ closeModal, handleNextClick }) => {
+const AuthorityModal: FC<AuthorityModalProps> = ({ handleNextClick }) => {
   const { t } = useTranslation('profile');
   const { authority } = useSelector((store: RootStore) => store.user);
   const [openCancelConfirmation, setOpenCancelConfirmation] = useState(false);

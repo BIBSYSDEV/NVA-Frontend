@@ -36,7 +36,7 @@ const AuthorityOrcidModal: FC = () => {
   return (
     <>
       {openModal === ModalType.AUTHORITY && (
-        <AuthorityModal authority={user.authority} closeModal={closeModal} handleNextClick={handleNextClick} />
+        <AuthorityModal authority={user.authority} handleNextClick={handleNextClick} />
       )}
       {openModal === ModalType.ORCID && <OrcidModal closeModal={closeModal} />}
     </>
