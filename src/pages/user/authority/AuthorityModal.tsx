@@ -35,12 +35,12 @@ interface AuthorityModalProps {
 const AuthorityModal: FC<AuthorityModalProps> = ({ closeModal, handleNextClick }) => {
   const { t } = useTranslation('profile');
   const { authority } = useSelector((store: RootStore) => store.user);
-  const [cancelAuthoritySelection, setCancelAuthoritySelection] = useState(false);
+  const [openCancelConfirmation, setOpenCancelConfirmation] = useState(false);
 
   const noOrcid = !authority || !authority.orcids || authority.orcids.length === 0;
 
-  const toggleCancelAuthoritySelection = () => {
-    setCancelAuthoritySelection((state) => !state);
+  const toggleCancelConfirmation = () => {
+    setOpenCancelConfirmation((state) => !state);
   };
 
   return (
@@ -49,7 +49,7 @@ const AuthorityModal: FC<AuthorityModalProps> = ({ closeModal, handleNextClick }
         dataTestId="connect-author-modal"
         ariaLabelledBy="connect-author-modal"
         openModal={true}
-        onClose={toggleCancelAuthoritySelection}
+        onClose={toggleCancelConfirmation}
         headingText={t('authority.connect_authority')}
         maxWidth="md">
         <>
@@ -63,7 +63,7 @@ const AuthorityModal: FC<AuthorityModalProps> = ({ closeModal, handleNextClick }
           )}
           {noOrcid && (
             <StyledButtonContainer>
-              <Button variant="text" onClick={toggleCancelAuthoritySelection}>
+              <Button variant="text" onClick={toggleCancelConfirmation}>
                 {t('common:cancel')}
               </Button>
               <Button
@@ -80,10 +80,10 @@ const AuthorityModal: FC<AuthorityModalProps> = ({ closeModal, handleNextClick }
       </Modal>
 
       <ConfirmDialog
-        open={cancelAuthoritySelection}
+        open={openCancelConfirmation}
         title={t('authority.cancel_connect_authority_title')}
         onAccept={() => Auth.signOut()}
-        onCancel={toggleCancelAuthoritySelection}>
+        onCancel={toggleCancelConfirmation}>
         {t('authority.cancel_connect_authority_text')}
       </ConfirmDialog>
     </>
