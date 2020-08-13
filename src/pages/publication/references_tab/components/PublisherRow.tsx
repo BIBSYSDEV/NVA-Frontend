@@ -29,6 +29,23 @@ const StyledPublisherCard = styled(Card)`
   }
 `;
 
+const StyledTitleOnlyCard = styled(Card)`
+  margin: 1rem 0;
+  padding: 1rem;
+  display: grid;
+  grid-column-gap: 0.5rem;
+  grid-template-areas:
+    'titleLabel button'
+    'title button';
+  grid-template-columns: 13fr 2fr;
+  align-items: center;
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+    grid-template-areas: 'titleLabel title' '. button';
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+`;
+
 const StyledTitle = styled(Label)`
   grid-area: titleLabel;
 `;
@@ -52,12 +69,13 @@ const StyledButton = styled(Button)`
 
 interface PublisherRowProps {
   dataTestId: string;
-  publisher: Partial<Publisher>;
   label: string;
   onClickDelete: (event: React.MouseEvent<any>) => void;
+  publisher: Partial<Publisher>;
+  titleOnly?: boolean;
 }
 
-const PublisherRow: React.FC<PublisherRowProps> = ({ dataTestId, publisher, label, onClickDelete }) => {
+const PublisherRow: React.FC<PublisherRowProps> = ({ dataTestId, label, onClickDelete, publisher, titleOnly }) => {
   const { t } = useTranslation('publication');
 
   const { setFieldValue }: FormikProps<Publication> = useFormikContext();
@@ -86,15 +104,27 @@ const PublisherRow: React.FC<PublisherRowProps> = ({ dataTestId, publisher, labe
   }, [level, setFieldValue, title]);
 
   return (
-    <StyledPublisherCard data-testid={dataTestId}>
-      <StyledTitle>{label}</StyledTitle>
-      <StyledLevelLabel>{t('references.level')}</StyledLevelLabel>
-      <StyledTitleText>{title}</StyledTitleText>
-      <StyledLevelText>{publisherLevel}</StyledLevelText>
-      <StyledButton data-testid="remove-publisher" variant="contained" color="secondary" onClick={onClickDelete}>
-        {t('common:remove')}
-      </StyledButton>
-    </StyledPublisherCard>
+    <>
+      {titleOnly ? (
+        <StyledTitleOnlyCard>
+          <StyledTitle>{label}</StyledTitle>
+          <StyledTitleText>{title}</StyledTitleText>
+          <StyledButton data-testid="remove-publisher" variant="contained" color="secondary" onClick={onClickDelete}>
+            {t('common:remove')}
+          </StyledButton>
+        </StyledTitleOnlyCard>
+      ) : (
+        <StyledPublisherCard data-testid={dataTestId}>
+          <StyledTitle>{label}</StyledTitle>
+          <StyledLevelLabel>{t('references.level')}</StyledLevelLabel>
+          <StyledTitleText>{title}</StyledTitleText>
+          <StyledLevelText>{publisherLevel}</StyledLevelText>
+          <StyledButton data-testid="remove-publisher" variant="contained" color="secondary" onClick={onClickDelete}>
+            {t('common:remove')}
+          </StyledButton>
+        </StyledPublisherCard>
+      )}
+    </>
   );
 };
 

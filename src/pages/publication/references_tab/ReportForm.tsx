@@ -72,7 +72,7 @@ const ReportForm: FC = () => {
       <div>
         <SubHeading>{t('references.series')}</SubHeading>
         <Label>{t('references.series_info')}</Label>
-        <Field name={ReferenceFieldNames.SERIES}>
+        <Field name={ReferenceFieldNames.SERIES_TITLE}>
           {({ field: { name, value } }: FieldProps) => (
             <>
               <PublicationChannelSearch
@@ -80,7 +80,7 @@ const ReportForm: FC = () => {
                 dataTestId="autosearch-series"
                 label={t('common:title')}
                 publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
-                setValueFunction={(inputValue) => setFieldValue(name, inputValue ?? emptyPublisher)}
+                setValueFunction={(inputValue) => setFieldValue(name, inputValue.title)}
                 placeholder={t('references.search_for_series')}
               />
               {value.title && (
@@ -88,7 +88,7 @@ const ReportForm: FC = () => {
                   dataTestId="autosearch-results-series"
                   label={t('common:title')}
                   publisher={value}
-                  onClickDelete={() => setFieldValue(name, emptyPublisher)}
+                  onClickDelete={() => setFieldValue(name, "")}
                 />
               )}
             </>

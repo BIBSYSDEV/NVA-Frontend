@@ -131,6 +131,7 @@ interface PublicationContext {
   peerReviewed: boolean;
   title: string;
   url?: string;
+  seriesTitle?: string;
 }
 
 interface PublicationReference extends BackendType {
@@ -180,6 +181,7 @@ const emptyPublicationContext: PublicationContext = {
   peerReviewed: false,
   title: '',
   url: '',
+  seriesTitle: '',
 };
 
 const emptyReference: PublicationReference = {

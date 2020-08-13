@@ -70,23 +70,24 @@ const DegreeForm: React.FC = () => {
 
       <StyledHeading>{t('references.series')}</StyledHeading>
       <StyledLabel>{t('references.series_info')}</StyledLabel>
-      <Field name={ReferenceFieldNames.SERIES}>
+      <Field name={ReferenceFieldNames.SERIES_TITLE}>
         {({ field: { name, value } }: FieldProps) => (
           <>
             <PublicationChannelSearch
-              clearSearchField={value === emptyPublisher}
+              clearSearchField={value === ''}
               dataTestId="autosearch-series"
               label={t('common:title')}
               publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
-              setValueFunction={(inputValue) => setFieldValue(name, inputValue ?? emptyPublisher)}
+              setValueFunction={(inputValue) => setFieldValue(name, inputValue.title)}
               placeholder={t('references.search_for_series')}
             />
-            {value.title && (
+            {value && (
               <PublisherRow
                 dataTestId="autosearch-results-series"
                 label={t('common:title')}
-                publisher={value}
-                onClickDelete={() => setFieldValue(name, emptyPublisher)}
+                publisher={{ title: value }}
+                onClickDelete={() => setFieldValue(name, '')}
+                titleOnly
               />
             )}
           </>
