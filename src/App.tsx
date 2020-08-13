@@ -1,5 +1,4 @@
 import Amplify, { Hub } from 'aws-amplify';
-import Axios from 'axios';
 import React, { useEffect, useState, FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
@@ -17,7 +16,7 @@ import { setAuthorityData, setPossibleAuthorities, setUser, setRoles } from './r
 import { RootStore } from './redux/reducers/rootReducer';
 import { Authority } from './types/authority.types';
 import { awsConfig } from './utils/aws-config';
-import { API_URL, USE_MOCK_DATA } from './utils/constants';
+import { USE_MOCK_DATA } from './utils/constants';
 import { hubListener } from './utils/hub-listener';
 import { mockUser } from './utils/testfiles/mock_feide_user';
 import AppRoutes from './AppRoutes';
@@ -51,19 +50,6 @@ const ProgressContainer = styled.div`
 `;
 
 const App: FC = () => {
-  useEffect(() => {
-    const setAxiosHeaders = async () => {
-      // Set global config of axios requests
-      Axios.defaults.baseURL = API_URL;
-      Axios.defaults.headers.common = {
-        Accept: 'application/json',
-      };
-      Axios.defaults.headers.post['Content-Type'] = 'application/json';
-      Axios.defaults.headers.put['Content-Type'] = 'application/json';
-    };
-    setAxiosHeaders();
-  }, []);
-
   const dispatch = useDispatch();
   const user = useSelector((store: RootStore) => store.user);
   const [isLoadingUser, setIsLoadingUser] = useState(true);
