@@ -1,5 +1,5 @@
 import { FormikProps, useFormikContext } from 'formik';
-import React, { useEffect, FC, useCallback, useRef } from 'react';
+import React, { useEffect, FC, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { Publication } from '../../types/publication.types';
