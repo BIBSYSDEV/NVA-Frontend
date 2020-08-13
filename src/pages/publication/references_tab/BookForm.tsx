@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 import { Checkbox, FormControlLabel, TextField } from '@material-ui/core';
 
-import { Publication, emptyPublisher } from '../../../types/publication.types';
+import { Publication } from '../../../types/publication.types';
 import { ReferenceFieldNames, BookType } from '../../../types/publicationFieldNames';
 import { PublicationTableNumber } from '../../../utils/constants';
 import NviValidation from './components/NviValidation';
@@ -116,7 +116,7 @@ const BookForm: FC = () => {
             <>
               <PublicationChannelSearch
                 dataTestId="autosearch-series"
-                clearSearchField={value === emptyPublisher}
+                clearSearchField={value === ''}
                 label={t('common:title')}
                 publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
                 setValueFunction={(inputValue) => setFieldValue(name, inputValue.title ?? '')}
