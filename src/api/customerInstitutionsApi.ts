@@ -3,6 +3,7 @@ import { getIdToken } from './userApi';
 import Axios, { CancelToken } from 'axios';
 import i18n from '../translations/i18n';
 import { StatusCode } from '../utils/constants';
+import { authenticatedApiRequest } from './apiRequest';
 
 export enum CustomerInstitutionApiPaths {
   CUSTOMER_INSTITUTION = '/customer',
@@ -31,31 +32,12 @@ export const getAllCustomerInstitutions = async () => {
   }
 };
 
-export const getCustomerInstitution = async (identifier: string, cancelToken?: CancelToken) => {
-  try {
-    const idToken = await getIdToken();
-    const headers = {
-      Authorization: `Bearer ${idToken}`,
-    };
-    const response = await Axios.get(`${CustomerInstitutionApiPaths.CUSTOMER_INSTITUTION}/${identifier}`, {
-      headers,
-      cancelToken,
-    });
-    if (response.status === StatusCode.OK) {
-      return response.data;
-    } else {
-      return {
-        error: i18n.t('feedback:error.get_customer'),
-      };
-    }
-  } catch (error) {
-    if (!Axios.isCancel(error)) {
-      return {
-        error: i18n.t('feedback:error.get_customer'),
-      };
-    }
-  }
-};
+export const getCustomerInstitution = async (identifier: string, cancelToken?: CancelToken) =>
+  await authenticatedApiRequest<CustomerInstitution>({
+    url: `${CustomerInstitutionApiPaths.CUSTOMER_INSTITUTION}/${identifier}`,
+    method: 'GET',
+    cancelToken,
+  });
 
 export const createCustomerInstitution = async (customer: CustomerInstitution) => {
   try {
