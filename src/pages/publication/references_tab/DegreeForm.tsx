@@ -1,4 +1,4 @@
-import { Field, FormikProps, useFormikContext, FieldProps } from 'formik';
+import { Field, FormikProps, useFormikContext, FieldProps, ErrorMessage } from 'formik';
 import React, { useEffect, FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
@@ -31,7 +31,7 @@ const StyledHeading = styled.div`
 const DegreeForm: FC = () => {
   const { t } = useTranslation('publication');
 
-  const { setFieldValue }: FormikProps<Publication> = useFormikContext();
+  const { setFieldValue, touched }: FormikProps<Publication> = useFormikContext();
 
   useEffect(() => {
     // set correct Pages type based on publication type being Degree
@@ -45,7 +45,7 @@ const DegreeForm: FC = () => {
       <DoiField />
 
       <Field name={contextTypeBaseFieldName}>
-        {({ field: { name, value } }: FieldProps) => (
+        {({ field: { name, value }, meta: { error } }: FieldProps) => (
           <>
             <PublicationChannelSearch
               clearSearchField={value === emptyPublisher}
@@ -56,6 +56,16 @@ const DegreeForm: FC = () => {
                 setFieldValue(name, { ...inputValue, publisher: inputValue.title, type: PublicationType.DEGREE });
               }}
               placeholder={t('references.search_for_publisher')}
+              errorMessage={
+                error && touched.entityDescription?.reference?.publicationContext?.title ? (
+                  // Must use global touched variable instead of what is in meta, since meta.touched always will
+                  // evaluate to true if it is a object (as in this case). Even though this field will update
+                  // the whole object, we only want to show error message if we are missing the title property.
+                  <ErrorMessage name={ReferenceFieldNames.PUBLICATION_CONTEXT_TITLE} />
+                ) : (
+                  ''
+                )
+              }
             />
             {value.publisher && (
               <PublisherRow
