@@ -15,6 +15,7 @@ import PublicationChannelSearch from './components/PublicationChannelSearch';
 import PublisherRow from './components/PublisherRow';
 import DoiField from './components/DoiField';
 import SelectTypeField from './components/SelectTypeField';
+import SeriesRow from './components/SeriesRow';
 
 const StyledLabel = styled.div`
   color: ${({ theme }) => theme.palette.text.primary};
@@ -82,12 +83,11 @@ const DegreeForm: FC = () => {
               placeholder={t('references.search_for_series')}
             />
             {value && (
-              <PublisherRow
+              <SeriesRow
                 dataTestId="autosearch-results-series"
                 label={t('common:title')}
-                publisher={{ title: value }}
                 onClickDelete={() => setFieldValue(name, '')}
-                titleOnly
+                title={value ?? ''}
               />
             )}
           </>

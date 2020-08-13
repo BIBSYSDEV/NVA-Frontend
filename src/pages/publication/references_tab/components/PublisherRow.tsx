@@ -29,23 +29,6 @@ const StyledPublisherCard = styled(Card)`
   }
 `;
 
-const StyledTitleOnlyCard = styled(Card)`
-  margin: 1rem 0;
-  padding: 1rem;
-  display: grid;
-  grid-column-gap: 0.5rem;
-  grid-template-areas:
-    'titleLabel button'
-    'title button';
-  grid-template-columns: 13fr 2fr;
-  align-items: center;
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-    grid-template-areas: 'titleLabel title' '. button';
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-  }
-`;
-
 const StyledTitle = styled(Label)`
   grid-area: titleLabel;
 `;
@@ -72,10 +55,9 @@ interface PublisherRowProps {
   label: string;
   onClickDelete: (event: React.MouseEvent<any>) => void;
   publisher: Partial<Publisher>;
-  titleOnly?: boolean;
 }
 
-const PublisherRow: FC<PublisherRowProps> = ({ dataTestId, label, onClickDelete, publisher, titleOnly }) => {
+const PublisherRow: FC<PublisherRowProps> = ({ dataTestId, label, onClickDelete, publisher }) => {
   const { t } = useTranslation('publication');
 
   const { setFieldValue }: FormikProps<Publication> = useFormikContext();
@@ -97,20 +79,12 @@ const PublisherRow: FC<PublisherRowProps> = ({ dataTestId, label, onClickDelete,
       }
     };
 
-    if (title && !level && !titleOnly) {
+    if (title && !level) {
       setLevel(title);
     }
-  }, [level, setFieldValue, title, titleOnly]);
+  }, [level, setFieldValue, title]);
 
-  return titleOnly ? (
-    <StyledTitleOnlyCard>
-      <StyledTitle>{label}</StyledTitle>
-      <StyledTitleText>{title}</StyledTitleText>
-      <StyledButton data-testid="remove-publisher" variant="contained" color="secondary" onClick={onClickDelete}>
-        {t('common:remove')}
-      </StyledButton>
-    </StyledTitleOnlyCard>
-  ) : (
+  return (
     <StyledPublisherCard data-testid={dataTestId}>
       <StyledTitle>{label}</StyledTitle>
       <StyledLevelLabel>{t('references.level')}</StyledLevelLabel>

@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 import { TextField } from '@material-ui/core';
 
-import { Publication, emptyPublisher } from '../../../types/publication.types';
+import { Publication } from '../../../types/publication.types';
 import { ReferenceFieldNames, ReportType } from '../../../types/publicationFieldNames';
 import { PublicationTableNumber } from '../../../utils/constants';
 import PublicationChannelSearch from './components/PublicationChannelSearch';
@@ -76,7 +76,7 @@ const ReportForm: FC = () => {
           {({ field: { name, value } }: FieldProps) => (
             <>
               <PublicationChannelSearch
-                clearSearchField={value === emptyPublisher}
+                clearSearchField={value === ''}
                 dataTestId="autosearch-series"
                 label={t('common:title')}
                 publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
