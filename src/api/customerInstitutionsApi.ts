@@ -32,14 +32,12 @@ export const getAllCustomerInstitutions = async () => {
   }
 };
 
-export const getCustomerInstitution = async (identifier: string, cancelToken?: CancelToken) => {
-  const response = await authenticatedApiRequest<CustomerInstitution>({
+export const getCustomerInstitution = async (identifier: string, cancelToken?: CancelToken) =>
+  await authenticatedApiRequest<CustomerInstitution>({
     url: `${CustomerInstitutionApiPaths.CUSTOMER_INSTITUTION}/${identifier}`,
     method: 'GET',
     cancelToken,
   });
-  return response;
-};
 
 export const createCustomerInstitution = async (customer: CustomerInstitution) => {
   try {

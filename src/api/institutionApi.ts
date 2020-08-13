@@ -9,15 +9,12 @@ export enum InstitutionApiPaths {
   DEPARTMENTS = '/institution/departments',
 }
 
-export const getInstitutions = async (cancelToken?: CancelToken) => {
-  const response = await apiRequest<InstitutionUnitBase[]>({
+export const getInstitutions = async (cancelToken?: CancelToken) =>
+  await apiRequest<InstitutionUnitBase[]>({
     url: InstitutionApiPaths.INSTITUTIONS,
     method: 'GET',
     cancelToken,
   });
-
-  return response;
-};
 
 export const getDepartment = async (departmentUri: string, cancelToken?: CancelToken) => {
   const url = `${InstitutionApiPaths.DEPARTMENTS}?uri=${departmentUri}`;
