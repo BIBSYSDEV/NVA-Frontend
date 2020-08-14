@@ -27,7 +27,7 @@ describe('Publication: References: Report', () => {
     cy.get('[data-testid=autosearch-results-publisher]').contains('Novum Testamentum');
 
     // fill out ISBN field
-    cy.get('[data-testid=isbn]').type('978-3-16-148410-0');
+    // TODO cy.get('[data-testid=isbn]').type('978-3-16-148410-0');
 
     // fill out number of pages field
     // TODO cy.get('[data-testid=number_of_pages]').type('483');

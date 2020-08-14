@@ -149,7 +149,7 @@ interface PublicationEntityDescription extends BackendType {
   date: PublicationDate;
   language: LanguageValues;
   contributors: Contributor[];
-  isbn: string;
+  // isbnList: string[]; TODO: isbnList exists on some publication types but not all
   reference: PublicationReference;
 }
 
@@ -197,7 +197,6 @@ const emptyPublicationEntityDescription: PublicationEntityDescription = {
   date: emptyDate,
   language: LanguageValues.NONE,
   contributors: [],
-  isbn: '',
   reference: emptyReference,
 };
 

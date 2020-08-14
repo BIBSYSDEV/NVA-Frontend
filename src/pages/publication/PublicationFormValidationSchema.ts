@@ -62,7 +62,7 @@ const journalValidationSchema = {
 
 const bookValidationSchema = {
   type: Yup.string().oneOf(Object.values(BookType)).required(ErrorMessage.REQUIRED),
-  isbn: Yup.string(),
+  // isbn: Yup.string(), // TODO: called isbnList
   // TODO: numberOfPages: Yup.number().typeError(ErrorMessage.INVALID_FORMAT).min(1, ErrorMessage.MUST_BE_MIN_1),
   // textBook: Yup.boolean(), // TODO: this field does not exist in the datamodel for book.
   peerReviewed: Yup.boolean().required(ErrorMessage.REQUIRED),
@@ -70,7 +70,7 @@ const bookValidationSchema = {
 
 const reportValidationSchema = {
   type: Yup.string().oneOf(Object.values(ReportType)).required(ErrorMessage.REQUIRED),
-  isbn: Yup.string(),
+  // isbn: Yup.string(), // TODO: called isbnList
   // TODO: numberOfPages: Yup.number().typeError(ErrorMessage.INVALID_FORMAT).min(1, ErrorMessage.MUST_BE_MIN_1),
 };
 

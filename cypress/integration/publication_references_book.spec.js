@@ -27,7 +27,7 @@ describe('Publication: References: Book', () => {
     cy.get('[data-testid=autosearch-results-publisher]').contains('Novum Testamentum');
 
     // fill out ISBN field
-    cy.get('[data-testid=isbn]').type('978-3-16-148410-0');
+    // TODO cy.get('[data-testid=isbn]').type('978-3-16-148410-0');
 
     // choose peer review value and show NVI status
     cy.get('[data-testid=peer_review-true]').click({ force: true });

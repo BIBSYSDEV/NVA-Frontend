@@ -34,10 +34,6 @@
       "publisher": {
         "title": "Osteloff book publisher",
         "onlineIssn": "123"
-      },
-      "isbn": "1234",
-      "series": {
-        "title": "The Osteloff series"
       }
     }
   },
