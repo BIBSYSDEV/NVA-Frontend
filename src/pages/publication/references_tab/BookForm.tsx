@@ -1,10 +1,8 @@
 import { Field, FormikProps, useFormikContext, FieldProps } from 'formik';
-import React, { ChangeEvent, FC } from 'react';
+import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-
-import { Checkbox, FormControlLabel, TextField } from '@material-ui/core';
-
+import { TextField } from '@material-ui/core';
 import { Publication } from '../../../types/publication.types';
 import { ReferenceFieldNames, BookType } from '../../../types/publicationFieldNames';
 import { PublicationTableNumber } from '../../../utils/constants';
@@ -88,7 +86,7 @@ const BookForm: FC = () => {
           <PeerReview fieldName={ReferenceFieldNames.PEER_REVIEW} label={t('references.peer_review')} />
         </StyledPeerReview>
         <StyledTextBook>
-          <Field name={ReferenceFieldNames.TEXT_BOOK}>
+          {/* TODO <Field name={ReferenceFieldNames.TEXT_BOOK}>
             {({ field: { name, value } }: FieldProps) => (
               <>
                 <Label>{t('references.is_text_book')}</Label>
@@ -105,7 +103,7 @@ const BookForm: FC = () => {
                 />
               </>
             )}
-          </Field>
+          </Field> */}
         </StyledTextBook>
       </StyledSection>
       <div>

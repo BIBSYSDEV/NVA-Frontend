@@ -8,7 +8,6 @@ const SubmissionBook: React.FC = () => {
   const { t } = useTranslation('publication');
   const { values }: FormikProps<Publication> = useFormikContext();
   const {
-    textBook,
     isbn,
     reference: { publicationContext, publicationInstance },
   } = values.entityDescription;
@@ -22,7 +21,7 @@ const SubmissionBook: React.FC = () => {
       <LabelContentRow label={t('references.peer_reviewed')}>
         {publicationInstance.peerReviewed ? t('common:yes') : t('common:no')}
       </LabelContentRow>
-      <LabelContentRow label={t('references.text_book')}>{textBook ? t('common:yes') : t('common:no')}</LabelContentRow>
+      {/* TODO <LabelContentRow label={t('references.text_book')}>{textBook ? t('common:yes') : t('common:no')}</LabelContentRow> */}
       {/* TODO <LabelContentRow label={t('references.series')}>{series.title}</LabelContentRow> */}
       <LabelContentRow label={t('references.issn')}>{isbn}</LabelContentRow>
       {/* TODO <LabelContentRow label={t('references.number_of_pages')}>{numberOfPages}</LabelContentRow> */}

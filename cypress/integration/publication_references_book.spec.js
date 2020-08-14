@@ -36,8 +36,9 @@ describe('Publication: References: Book', () => {
     cy.get('[data-testid=nvi_book]').contains('This publication can not be incuded in NVI');
 
     // check text book checkbox
-    cy.get('[data-testid=text_book]').click({ force: true });
-    cy.get('[data-testid=text_book]').click({ force: true });
+    // TODO
+    // cy.get('[data-testid=text_book]').click({ force: true });
+    // cy.get('[data-testid=text_book]').click({ force: true });
 
     // fill out number of pages field
     // TODO cy.get('[data-testid=number_of_pages]').type('483');

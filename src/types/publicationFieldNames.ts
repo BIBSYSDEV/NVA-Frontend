@@ -56,7 +56,6 @@ export enum ReferenceFieldNames {
   PUBLICATION_INSTANCE_TYPE = 'entityDescription.reference.publicationInstance.type',
   SERIES_TITLE = 'entityDescription.reference.publicationContext.seriesTitle',
   SUB_TYPE = 'entityDescription.reference.publicationInstance.type',
-  TEXT_BOOK = 'entityDescription.textBook',
   VOLUME = 'entityDescription.reference.publicationInstance.volume',
 }
 

@@ -64,7 +64,7 @@ const bookValidationSchema = {
   type: Yup.string().oneOf(Object.values(BookType)).required(ErrorMessage.REQUIRED),
   isbn: Yup.string(),
   // TODO: numberOfPages: Yup.number().typeError(ErrorMessage.INVALID_FORMAT).min(1, ErrorMessage.MUST_BE_MIN_1),
-  textBook: Yup.boolean(),
+  // textBook: Yup.boolean(), // TODO: this field does not exist in the datamodel for book.
   peerReviewed: Yup.boolean().required(ErrorMessage.REQUIRED),
 };
 
