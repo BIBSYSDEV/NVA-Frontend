@@ -11,22 +11,27 @@ enum ModalType {
   ORCID = 'orcid',
 }
 
+const previouslyLoggedInKey = 'previouslyLoggedIn';
+
 const AuthorityOrcidModal: FC = () => {
-  const [openModal, setOpenModal] = useState(ModalType.AUTHORITY);
   const user = useSelector((store: RootStore) => store.user);
+  const [openModal, setOpenModal] = useState(
+    localStorage.getItem(previouslyLoggedInKey) && user.authority ? ModalType.NONE : ModalType.AUTHORITY
+  );
 
   useEffect(() => {
     if (user.authority) {
       // Set previouslyLoggedIn in localStorage to avoid opening this modal on every login
-      localStorage.setItem('previouslyLoggedIn', 'true');
-      if (user.authority.orcids.length > 0) {
-        setOpenModal(ModalType.NONE);
-      }
+      localStorage.setItem(previouslyLoggedInKey, 'true');
     }
   }, [user.authority]);
 
   const handleNextClick = () => {
-    setOpenModal(ModalType.ORCID);
+    if (user.authority && user.authority.orcids.length === 0) {
+      setOpenModal(ModalType.ORCID);
+    } else {
+      closeModal();
+    }
   };
 
   const closeModal = () => {

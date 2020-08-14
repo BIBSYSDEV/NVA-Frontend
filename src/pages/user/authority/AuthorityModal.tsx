@@ -36,8 +36,6 @@ const AuthorityModal: FC<AuthorityModalProps> = ({ handleNextClick }) => {
   const { authority } = useSelector((store: RootStore) => store.user);
   const [openCancelConfirmation, setOpenCancelConfirmation] = useState(false);
 
-  const noOrcid = !authority || !authority.orcids || authority.orcids.length === 0;
-
   const toggleCancelConfirmation = () => {
     setOpenCancelConfirmation((state) => !state);
   };
@@ -60,21 +58,22 @@ const AuthorityModal: FC<AuthorityModalProps> = ({ handleNextClick }) => {
           ) : (
             <ConnectAuthority />
           )}
-          {noOrcid && (
-            <StyledButtonContainer>
+
+          <StyledButtonContainer>
+            {!authority && (
               <Button variant="text" onClick={toggleCancelConfirmation}>
                 {t('common:cancel')}
               </Button>
-              <Button
-                color="primary"
-                variant="contained"
-                data-testid="modal_next"
-                onClick={handleNextClick}
-                disabled={!authority}>
-                {t('common:next')}
-              </Button>
-            </StyledButtonContainer>
-          )}
+            )}
+            <Button
+              color="primary"
+              variant="contained"
+              data-testid="modal_next"
+              onClick={handleNextClick}
+              disabled={!authority}>
+              {t('common:next')}
+            </Button>
+          </StyledButtonContainer>
         </>
       </Modal>
 
