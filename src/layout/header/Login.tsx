@@ -1,17 +1,13 @@
 import React, { FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { Auth } from 'aws-amplify';
 import { Button } from '@material-ui/core';
 
 import { RootStore } from '../../redux/reducers/rootReducer';
 import Menu from './Menu';
-import { USE_MOCK_DATA, FEIDE_IDENTITY_PROVIDER } from '../../utils/constants';
-import { logoutSuccess } from '../../redux/actions/authActions';
-import { setUser } from '../../redux/actions/userActions';
-import { mockUser } from '../../utils/testfiles/mock_feide_user';
 import ButtonWithProgress from '../../components/ButtonWithProgress';
+import { useAuthentication } from '../../utils/hooks/useAuthentication';
 
 const StyledLoginComponent = styled.div`
   grid-area: auth;
@@ -23,8 +19,8 @@ const amplifyIsRedirectedLocalStorageKey = 'amplify-redirected-from-hosted-ui';
 
 const Login: FC = () => {
   const user = useSelector((state: RootStore) => state.user);
-  const dispatch = useDispatch();
   const { t } = useTranslation('authorization');
+  const { handleLogin, handleLogout } = useAuthentication();
 
   // If amplify has set redirected value in localStorage we know that the user has either just logged in or out,
   // and we should wait for user object to be loaded in the case of login
@@ -35,28 +31,15 @@ const Login: FC = () => {
     localStorage.removeItem(amplifyIsRedirectedLocalStorageKey);
   }, []);
 
-  const handleLogin = () => {
-    if (USE_MOCK_DATA) {
-      dispatch(setUser(mockUser));
-    } else {
-      Auth.federatedSignIn({ customProvider: FEIDE_IDENTITY_PROVIDER });
-    }
-  };
-
-  const handleLogout = () => {
-    if (USE_MOCK_DATA) {
-      dispatch(logoutSuccess());
-      window.location.pathname = '/logout';
-    } else {
-      setIsLoading(true);
-      Auth.signOut();
-    }
+  const handleLogoutWrapper = () => {
+    setIsLoading(true);
+    handleLogout();
   };
 
   return (
     <StyledLoginComponent>
       {user ? (
-        <Menu menuButtonLabel={user.name} handleLogout={handleLogout} />
+        <Menu menuButtonLabel={user.name} handleLogout={handleLogoutWrapper} />
       ) : isLoading ? (
         <ButtonWithProgress isLoading>{t('common:loading')}</ButtonWithProgress>
       ) : (

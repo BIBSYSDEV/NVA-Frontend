@@ -165,7 +165,7 @@ const App: FC = () => {
         </StyledContent>
         <Footer />
       </StyledApp>
-      {!isLoadingAuthorities && authorityDataUpdated && <AuthorityOrcidModal />}
+      {!isLoadingAuthorities && authorityDataUpdated && user && <AuthorityOrcidModal />}
     </BrowserRouter>
   );
 };
