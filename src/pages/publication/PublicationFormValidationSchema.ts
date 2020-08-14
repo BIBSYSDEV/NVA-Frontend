@@ -125,8 +125,6 @@ export const publicationValidationSchema = Yup.object().shape({
       publicationContext: Yup.object().shape({
         type: Yup.string().required(ErrorMessage.REQUIRED),
         title: Yup.string().required(ErrorMessage.REQUIRED),
-        level: Yup.mixed(),
-        openAccess: Yup.boolean(),
       }),
     }),
   }),

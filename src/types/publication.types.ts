@@ -16,7 +16,8 @@ export enum BackendTypeNames {
   IDENTITY = 'Identity',
   LICENSE = 'License',
   ORGANIZATION = 'Organization',
-  PAGES = 'Range', // TODO: set this when backend has decided what it means
+  PAGES_MONOGRAPH = 'MonographPages',
+  PAGES_RANGE = 'Range',
   PUBLICATION = 'Publication',
   PUBLICATION_DATE = 'PublicationDate',
   REFERENCE = 'Reference',
@@ -104,16 +105,20 @@ interface PublicationDate extends BackendType {
   day: string;
 }
 
-interface PublicationPages extends BackendType {
+export interface PagesRange extends BackendType {
   begin: string;
   end: string;
+}
+
+export interface PagesMonograph extends BackendType {
+  pages: string;
 }
 
 interface PublicationInstance {
   type: JournalType | ReportType | DegreeType | BookType | '';
   articleNumber: string;
   issue: string;
-  pages: PublicationPages;
+  pages: PagesRange | PagesMonograph | null;
   peerReviewed: boolean;
   volume: string;
 }
@@ -126,6 +131,7 @@ interface PublicationContext {
   peerReviewed: boolean;
   title: string;
   url?: string;
+  seriesTitle?: string;
 }
 
 interface PublicationReference extends BackendType {
@@ -158,18 +164,12 @@ const emptyDate: PublicationDate = {
   day: '',
 };
 
-const emptyPages: PublicationPages = {
-  type: BackendTypeNames.PAGES,
-  begin: '',
-  end: '',
-};
-
 const emptyPublicationInstance: PublicationInstance = {
   type: '',
   volume: '',
   issue: '',
   articleNumber: '',
-  pages: emptyPages,
+  pages: null,
   peerReviewed: false,
 };
 
@@ -181,6 +181,7 @@ const emptyPublicationContext: PublicationContext = {
   peerReviewed: false,
   title: '',
   url: '',
+  seriesTitle: '',
 };
 
 const emptyReference: PublicationReference = {

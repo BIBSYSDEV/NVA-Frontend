@@ -1,16 +1,21 @@
-import { Field, FormikProps, useFormikContext, FieldProps } from 'formik';
-import React from 'react';
+import { Field, FormikProps, useFormikContext, FieldProps, ErrorMessage } from 'formik';
+import React, { useEffect, FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
 import { Publication, emptyPublisher } from '../../../types/publication.types';
-import { ReferenceFieldNames, DegreeType } from '../../../types/publicationFieldNames';
+import {
+  ReferenceFieldNames,
+  DegreeType,
+  contextTypeBaseFieldName,
+  PublicationType,
+} from '../../../types/publicationFieldNames';
 import { PublicationTableNumber } from '../../../utils/constants';
 import PublicationChannelSearch from './components/PublicationChannelSearch';
 import PublisherRow from './components/PublisherRow';
 import DoiField from './components/DoiField';
 import SelectTypeField from './components/SelectTypeField';
-import PublisherField from './components/PublisherField';
+import SeriesRow from './components/SeriesRow';
 
 const StyledLabel = styled.div`
   color: ${({ theme }) => theme.palette.text.primary};
@@ -23,10 +28,15 @@ const StyledHeading = styled.div`
   padding-top: 1.5rem;
 `;
 
-const DegreeForm: React.FC = () => {
+const DegreeForm: FC = () => {
   const { t } = useTranslation('publication');
 
-  const { setFieldValue }: FormikProps<Publication> = useFormikContext();
+  const { setFieldValue, touched }: FormikProps<Publication> = useFormikContext();
+
+  useEffect(() => {
+    // set correct Pages type based on publication type being Degree
+    setFieldValue(ReferenceFieldNames.PAGES, null);
+  }, [setFieldValue]);
 
   return (
     <>
@@ -34,27 +44,60 @@ const DegreeForm: React.FC = () => {
 
       <DoiField />
 
-      <PublisherField label={t('common:publisher')} placeholder={t('references.search_for_publisher')} />
-
-      <StyledHeading>{t('references.series')}</StyledHeading>
-      <StyledLabel>{t('references.series_info')}</StyledLabel>
-      <Field name={ReferenceFieldNames.SERIES}>
-        {({ field: { name, value } }: FieldProps) => (
+      <Field name={contextTypeBaseFieldName}>
+        {({ field: { name, value }, meta: { error } }: FieldProps) => (
           <>
             <PublicationChannelSearch
               clearSearchField={value === emptyPublisher}
+              dataTestId="autosearch-publisher"
+              label={t('common:publisher')}
+              publicationTable={PublicationTableNumber.PUBLISHERS}
+              setValueFunction={(inputValue) => {
+                setFieldValue(name, { ...inputValue, publisher: inputValue.title, type: PublicationType.DEGREE });
+              }}
+              placeholder={t('references.search_for_publisher')}
+              errorMessage={
+                error && touched.entityDescription?.reference?.publicationContext?.title ? (
+                  // Must use global touched variable instead of what is in meta, since meta.touched always will
+                  // evaluate to true if it is a object (as in this case). Even though this field will update
+                  // the whole object, we only want to show error message if we are missing the title property.
+                  <ErrorMessage name={ReferenceFieldNames.PUBLICATION_CONTEXT_TITLE} />
+                ) : (
+                  ''
+                )
+              }
+            />
+            {value.publisher && (
+              <PublisherRow
+                dataTestId="autosearch-results-publisher"
+                label={t('common:publisher')}
+                publisher={{ ...value, title: value.publisher }}
+                onClickDelete={() => setFieldValue(name, { type: PublicationType.DEGREE })}
+              />
+            )}
+          </>
+        )}
+      </Field>
+
+      <StyledHeading>{t('references.series')}</StyledHeading>
+      <StyledLabel>{t('references.series_info')}</StyledLabel>
+      <Field name={ReferenceFieldNames.SERIES_TITLE}>
+        {({ field: { name, value } }: FieldProps) => (
+          <>
+            <PublicationChannelSearch
+              clearSearchField={value === ''}
               dataTestId="autosearch-series"
               label={t('common:title')}
               publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
-              setValueFunction={(inputValue) => setFieldValue(name, inputValue ?? emptyPublisher)}
+              setValueFunction={(inputValue) => setFieldValue(name, inputValue.title ?? '')}
               placeholder={t('references.search_for_series')}
             />
-            {value.title && (
-              <PublisherRow
+            {value && (
+              <SeriesRow
                 dataTestId="autosearch-results-series"
                 label={t('common:title')}
-                publisher={value}
-                onClickDelete={() => setFieldValue(name, emptyPublisher)}
+                onClickDelete={() => setFieldValue(name, '')}
+                title={value ?? ''}
               />
             )}
           </>

@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 import { Checkbox, FormControlLabel, TextField } from '@material-ui/core';
 
-import { Publication, emptyPublisher } from '../../../types/publication.types';
+import { Publication } from '../../../types/publication.types';
 import { ReferenceFieldNames, BookType } from '../../../types/publicationFieldNames';
 import { PublicationTableNumber } from '../../../utils/constants';
 import NviValidation from './components/NviValidation';
@@ -111,23 +111,23 @@ const BookForm: FC = () => {
       <div>
         <SubHeading>{t('references.series')}</SubHeading>
         <Label>{t('references.series_info')}</Label>
-        <Field name={ReferenceFieldNames.SERIES}>
+        <Field name={ReferenceFieldNames.SERIES_TITLE}>
           {({ field: { name, value } }: FieldProps) => (
             <>
               <PublicationChannelSearch
                 dataTestId="autosearch-series"
-                clearSearchField={value === emptyPublisher}
+                clearSearchField={value === ''}
                 label={t('common:title')}
                 publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
-                setValueFunction={(inputValue) => setFieldValue(name, inputValue ?? emptyPublisher)}
+                setValueFunction={(inputValue) => setFieldValue(name, inputValue.title ?? '')}
                 placeholder={t('references.search_for_series')}
               />
-              {value.title && (
+              {value && (
                 <PublisherRow
                   dataTestId="autosearch-results-series"
                   label={t('common:title')}
-                  publisher={value}
-                  onClickDelete={() => setFieldValue(name, emptyPublisher)}
+                  publisher={{ title: value }}
+                  onClickDelete={() => setFieldValue(name, '')}
                 />
               )}
             </>
