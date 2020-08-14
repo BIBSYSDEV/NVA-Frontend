@@ -33,6 +33,10 @@ const ReferencesPanel: FC<PanelProps> = ({ setTouchedFields }) => {
   const publicationContextType = values.entityDescription.reference.publicationContext.type;
   const contextRef = useRef(publicationContextType);
 
+  useEffect(() => {
+    contextRef.current = publicationContextType;
+  }, [publicationContextType]);
+
   useEffect(
     // Set all fields as touched if user navigates away from this panel (on unmount)
     () => () => setTouchedFields(touchedReferenceTabFields(contextRef.current)),
