@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Button } from '@material-ui/core';
@@ -11,9 +11,15 @@ import { ConnectAuthority } from './ConnectAuthority';
 import Modal from '../../../components/Modal';
 import { StyledRightAlignedButtonWrapper } from '../../../components/styled/Wrappers';
 import NormalText from '../../../components/NormalText';
+import ConfirmDialog from '../../../components/ConfirmDialog';
+import { useAuthentication } from '../../../utils/hooks/useAuthentication';
 
 const StyledButtonContainer = styled(StyledRightAlignedButtonWrapper)`
   margin-top: 2rem;
+
+  button:not(:first-child) {
+    margin-left: 2rem;
+  }
 `;
 
 const StyledNormalText = styled(NormalText)`
@@ -22,47 +28,62 @@ const StyledNormalText = styled(NormalText)`
 
 interface AuthorityModalProps {
   authority: Authority | null;
-  closeModal: () => void;
   handleNextClick: () => void;
 }
 
-const AuthorityModal: FC<AuthorityModalProps> = ({ closeModal, handleNextClick }) => {
-  const { t } = useTranslation('common');
+const AuthorityModal: FC<AuthorityModalProps> = ({ handleNextClick }) => {
+  const { t } = useTranslation('profile');
   const { authority } = useSelector((store: RootStore) => store.user);
-  const noOrcid = !authority || !authority.orcids || authority.orcids.length === 0;
+  const [openCancelConfirmation, setOpenCancelConfirmation] = useState(false);
+  const { handleLogout } = useAuthentication();
+
+  const toggleCancelConfirmation = () => setOpenCancelConfirmation((state) => !state);
 
   return (
-    <Modal
-      dataTestId="connect-author-modal"
-      ariaLabelledBy="connect-author-modal"
-      disableEscape={!authority}
-      openModal={true}
-      onClose={closeModal}
-      headingText={t('profile:authority.connect_authority')}
-      maxWidth="md">
-      <>
-        {authority ? (
-          <>
-            <AuthorityCard authority={authority} isConnected />
-            <StyledNormalText>{t('profile:authority.connected_authority')}</StyledNormalText>
-          </>
-        ) : (
-          <ConnectAuthority />
-        )}
-        {noOrcid && (
+    <>
+      <Modal
+        dataTestId="connect-author-modal"
+        ariaLabelledBy="connect-author-modal"
+        openModal={true}
+        onClose={toggleCancelConfirmation}
+        headingText={t('authority.connect_authority')}
+        maxWidth="md">
+        <>
+          {authority ? (
+            <>
+              <AuthorityCard authority={authority} isConnected />
+              <StyledNormalText>{t('authority.connected_authority')}</StyledNormalText>
+            </>
+          ) : (
+            <ConnectAuthority />
+          )}
+
           <StyledButtonContainer>
+            {!authority && (
+              <Button variant="text" onClick={toggleCancelConfirmation}>
+                {t('common:cancel')}
+              </Button>
+            )}
             <Button
               color="primary"
               variant="contained"
               data-testid="modal_next"
               onClick={handleNextClick}
               disabled={!authority}>
-              {t('next')}
+              {t('common:next')}
             </Button>
           </StyledButtonContainer>
-        )}
-      </>
-    </Modal>
+        </>
+      </Modal>
+
+      <ConfirmDialog
+        open={openCancelConfirmation}
+        title={t('authority.cancel_connect_authority_title')}
+        onAccept={handleLogout}
+        onCancel={toggleCancelConfirmation}>
+        {t('authority.cancel_connect_authority_text')}
+      </ConfirmDialog>
+    </>
   );
 };
 

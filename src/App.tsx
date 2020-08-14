@@ -165,9 +165,7 @@ const App: FC = () => {
         </StyledContent>
         <Footer />
       </StyledApp>
-      {!localStorage.getItem('previouslyLoggedIn') && !isLoadingAuthorities && authorityDataUpdated && (
-        <AuthorityOrcidModal />
-      )}
+      {!isLoadingAuthorities && authorityDataUpdated && user && <AuthorityOrcidModal />}
     </BrowserRouter>
   );
 };
