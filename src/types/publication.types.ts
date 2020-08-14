@@ -150,7 +150,6 @@ interface PublicationEntityDescription extends BackendType {
   language: LanguageValues;
   contributors: Contributor[];
   isbn: string;
-  series: Publisher;
   specialization: string;
   textBook: boolean;
   reference: PublicationReference;
@@ -201,7 +200,6 @@ const emptyPublicationEntityDescription: PublicationEntityDescription = {
   language: LanguageValues.NONE,
   contributors: [],
   isbn: '',
-  series: emptyPublisher,
   specialization: '',
   textBook: false,
   reference: emptyReference,

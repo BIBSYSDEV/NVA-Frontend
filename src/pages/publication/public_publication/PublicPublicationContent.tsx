@@ -100,7 +100,6 @@ const PublicPublicationContent: FC<PublicPublicationContentProps> = ({ publicati
     mainTitle,
     npiSubjectHeading,
     reference: { doi, publicationContext, publicationInstance },
-    series,
     tags,
   } = publication.entityDescription;
 
@@ -200,11 +199,11 @@ const PublicPublicationContent: FC<PublicPublicationContentProps> = ({ publicati
               {publication.project.name}
             </LabelContentRow>
           )}
-          {series && (
+          {/* TODO {series && (
             <LabelContentRow minimal label={`${t('references.series')}:`}>
               {series.title}
             </LabelContentRow>
-          )}
+          )} */}
         </StyledMainContent>
       </StyledContentWrapper>
     </ContentPage>

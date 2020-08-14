@@ -10,7 +10,6 @@ const SubmissionDegree: React.FC = () => {
 
   const {
     specialization,
-    series,
     reference: { publicationContext, publicationInstance },
   } = values.entityDescription;
 
@@ -21,7 +20,7 @@ const SubmissionDegree: React.FC = () => {
       </LabelContentRow>
       <LabelContentRow label={t('common:publisher')}>{publicationContext?.title}</LabelContentRow>
       <LabelContentRow label={t('references.specialization')}>{specialization}</LabelContentRow>
-      <LabelContentRow label={t('references.series')}>{series.title}</LabelContentRow>
+      {/* TODO <LabelContentRow label={t('references.series')}>{series.title}</LabelContentRow> */}
     </>
   );
 };

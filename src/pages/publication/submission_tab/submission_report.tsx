@@ -10,7 +10,6 @@ const SubmissionReport: React.FC = () => {
 
   const {
     isbn,
-    series,
     reference: { publicationContext, publicationInstance },
   } = values.entityDescription;
 
@@ -21,7 +20,7 @@ const SubmissionReport: React.FC = () => {
       </LabelContentRow>
       <LabelContentRow label={t('common:publisher')}>{publicationContext?.title}</LabelContentRow>
       <LabelContentRow label={t('references.isbn')}>{isbn}</LabelContentRow>
-      <LabelContentRow label={t('references.series')}>{series.title}</LabelContentRow>
+      {/* TODO <LabelContentRow label={t('references.series')}>{series.title}</LabelContentRow> */}
       {/* TODO <LabelContentRow label={t('references.number_of_pages')}>{numberOfPages}</LabelContentRow> */}
     </>
   );
