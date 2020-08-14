@@ -1,6 +1,8 @@
 {
   "applications": "Applikasjoner",
   "authority": {
+    "cancel_connect_authority_text": "Hvis du avbryter tilkoblingsprosessen vil du automatisk bli utlogget. Alle innloggede brukere må ha en tilkoblet forfatteridentitet for å kunne bruke applikasjonen. Ønsker du å avbryte likevel?",
+    "cancel_connect_authority_title": "Ønsker du å avbryte?",
     "connect_authority": "Koble til din forfatteridentitet",
     "connected_authority": "Din forfatteridentitet er koblet til",
     "connected_info": "Du har en tilkoblet forfatter ID",
