@@ -45,7 +45,6 @@ export enum ReferenceFieldNames {
   DOI = 'entityDescription.reference.doi',
   ISBN = 'entityDescription.isbn',
   ISSUE = 'entityDescription.reference.publicationInstance.issue',
-  NUMBER_OF_PAGES = 'entityDescription.numberOfPages',
   PAGES = 'entityDescription.reference.publicationInstance.pages',
   PAGES_FROM = 'entityDescription.reference.publicationInstance.pages.begin',
   PAGES_TO = 'entityDescription.reference.publicationInstance.pages.end',

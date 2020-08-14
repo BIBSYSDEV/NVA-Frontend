@@ -30,7 +30,7 @@ describe('Publication: References: Report', () => {
     cy.get('[data-testid=isbn]').type('978-3-16-148410-0');
 
     // fill out number of pages field
-    cy.get('[data-testid=number_of_pages]').type('483');
+    // TODO cy.get('[data-testid=number_of_pages]').type('483');
 
     // search and select a series
     cy.get('[data-testid=autosearch-series]').click({ force: true }).type('Test');

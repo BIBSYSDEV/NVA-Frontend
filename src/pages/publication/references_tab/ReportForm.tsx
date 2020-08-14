@@ -58,7 +58,7 @@ const ReportForm: FC = () => {
           )}
         </Field>
 
-        <Field name={ReferenceFieldNames.NUMBER_OF_PAGES}>
+        {/* TODO <Field name={ReferenceFieldNames.NUMBER_OF_PAGES}>
           {({ field }: FieldProps) => (
             <StyledTextField
               inputProps={{ 'data-testid': 'number_of_pages' }}
@@ -67,7 +67,7 @@ const ReportForm: FC = () => {
               {...field}
             />
           )}
-        </Field>
+        </Field> */}
       </StyledSection>
       <div>
         <SubHeading>{t('references.series')}</SubHeading>

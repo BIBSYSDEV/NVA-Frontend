@@ -71,7 +71,7 @@ const BookForm: FC = () => {
           )}
         </Field>
 
-        <Field name={ReferenceFieldNames.NUMBER_OF_PAGES}>
+        {/* TODO <Field name={ReferenceFieldNames.NUMBER_OF_PAGES}>
           {({ field }: FieldProps) => (
             <StyledTextField
               inputProps={{ 'data-testid': 'number_of_pages' }}
@@ -80,7 +80,7 @@ const BookForm: FC = () => {
               {...field}
             />
           )}
-        </Field>
+        </Field> */}
       </StyledSection>
 
       <StyledSection>
