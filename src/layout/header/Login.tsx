@@ -46,6 +46,7 @@ const Login: FC = () => {
   const handleLogout = () => {
     if (USE_MOCK_DATA) {
       dispatch(logoutSuccess());
+      window.location.pathname = '/logout';
     } else {
       setIsLoading(true);
       Auth.signOut();

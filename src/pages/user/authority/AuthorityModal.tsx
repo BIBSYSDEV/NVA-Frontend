@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Button } from '@material-ui/core';
 import styled from 'styled-components';
 import { Auth } from 'aws-amplify';
@@ -13,6 +13,8 @@ import Modal from '../../../components/Modal';
 import { StyledRightAlignedButtonWrapper } from '../../../components/styled/Wrappers';
 import NormalText from '../../../components/NormalText';
 import ConfirmDialog from '../../../components/ConfirmDialog';
+import { USE_MOCK_DATA } from '../../../utils/constants';
+import { logoutSuccess } from '../../../redux/actions/authActions';
 
 const StyledButtonContainer = styled(StyledRightAlignedButtonWrapper)`
   margin-top: 2rem;
@@ -36,9 +38,17 @@ const AuthorityModal: FC<AuthorityModalProps> = ({ handleNextClick }) => {
   const { authority } = useSelector((store: RootStore) => store.user);
   const [openCancelConfirmation, setOpenCancelConfirmation] = useState(false);
 
-  const toggleCancelConfirmation = () => {
-    setOpenCancelConfirmation((state) => !state);
+  const dispatch = useDispatch();
+  const logOut = () => {
+    if (USE_MOCK_DATA) {
+      dispatch(logoutSuccess());
+      window.location.pathname = '/logout';
+    } else {
+      Auth.signOut();
+    }
   };
+
+  const toggleCancelConfirmation = () => setOpenCancelConfirmation((state) => !state);
 
   return (
     <>
@@ -80,7 +90,7 @@ const AuthorityModal: FC<AuthorityModalProps> = ({ handleNextClick }) => {
       <ConfirmDialog
         open={openCancelConfirmation}
         title={t('authority.cancel_connect_authority_title')}
-        onAccept={() => Auth.signOut()}
+        onAccept={logOut}
         onCancel={toggleCancelConfirmation}>
         {t('authority.cancel_connect_authority_text')}
       </ConfirmDialog>
