@@ -15,6 +15,7 @@ import DoiField from './components/DoiField';
 import SelectTypeField from './components/SelectTypeField';
 import PublisherField from './components/PublisherField';
 import { BookEntityDescription } from '../../../types/publication_types/book.publication.types';
+import { TextField } from '@material-ui/core';
 
 const StyledContent = styled.div`
   display: grid;
@@ -36,16 +37,12 @@ const StyledPeerReview = styled.div`
   grid-area: peer-review;
 `;
 
-const StyledTextBook = styled.div`
-  grid-area: text-book;
+const StyledTextField = styled(TextField)`
+  display: inline;
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+    display: grid;
+  }
 `;
-
-// const StyledTextField = styled(TextField)`
-//   display: inline;
-//   @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-//     display: grid;
-//   }
-// `;
 
 const BookForm: FC = () => {
   const { t } = useTranslation('publication');
@@ -65,48 +62,29 @@ const BookForm: FC = () => {
 
       <PublisherField label={t('common:publisher')} placeholder={t('references.search_for_publisher')} />
       <StyledSection>
-        {/* TODO <Field name={ReferenceFieldNames.ISBN}>
+        {/* TODO - convert to array and use ISBN_LIST 
+        <Field name={ReferenceFieldNames.ISBN}>
           {({ field }: FieldProps) => (
             <StyledTextField data-testid="isbn" variant="outlined" label={t('references.isbn')} {...field} />
           )}
         </Field> */}
 
-        {/* TODO <Field name={ReferenceFieldNames.NUMBER_OF_PAGES}>
+        <Field name={ReferenceFieldNames.PAGES}>
           {({ field }: FieldProps) => (
             <StyledTextField
-              inputProps={{ 'data-testid': 'number_of_pages' }}
+              inputProps={{ 'data-testid': 'pages' }}
               variant="outlined"
               label={t('references.number_of_pages')}
               {...field}
             />
           )}
-        </Field> */}
+        </Field>
       </StyledSection>
 
       <StyledSection>
         <StyledPeerReview>
           <PeerReview fieldName={ReferenceFieldNames.PEER_REVIEW} label={t('references.peer_review')} />
         </StyledPeerReview>
-        <StyledTextBook>
-          {/* TODO <Field name={ReferenceFieldNames.TEXT_BOOK}>
-            {({ field: { name, value } }: FieldProps) => (
-              <>
-                <Label>{t('references.is_text_book')}</Label>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      data-testid="text_book"
-                      color="primary"
-                      onChange={(event: ChangeEvent<HTMLInputElement>) => setFieldValue(name, event.target.checked)}
-                      checked={value}
-                    />
-                  }
-                  label={t('references.text_book_yes')}
-                />
-              </>
-            )}
-          </Field> */}
-        </StyledTextBook>
       </StyledSection>
       <div>
         <SubHeading>{t('references.series')}</SubHeading>
