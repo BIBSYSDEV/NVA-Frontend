@@ -20,7 +20,6 @@ export interface JournalPublicationContext {
   peerReviewed: boolean;
   title: string;
   url?: string;
-  // seriesTitle?: string;
 }
 
 interface JournalReference extends BackendType {
@@ -60,7 +59,6 @@ export const emptyPublicationContext: JournalPublicationContext = {
   peerReviewed: false,
   title: '',
   url: '',
-  // seriesTitle: '',
 };
 
 export const emptyReference: JournalReference = {

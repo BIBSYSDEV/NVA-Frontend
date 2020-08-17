@@ -6,6 +6,7 @@ import {
   JournalPublicationContext,
   emptyPublicationEntityDescription,
 } from './publication_types/journal.publication.types';
+import { DegreeEntityDescription } from './publication_types/degree.publication.types';
 
 export enum BackendTypeNames {
   APPROVAL = 'Approval',
@@ -97,7 +98,7 @@ export interface Publication extends BackendType, PublicationFileSet {
   readonly status: PublicationStatus;
   readonly doiRequest: DoiRequest | null;
   doiRequested: boolean;
-  entityDescription: JournalEntityDescription;
+  entityDescription: JournalEntityDescription | DegreeEntityDescription;
   project: Project | null;
 }
 
