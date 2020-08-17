@@ -9,25 +9,7 @@ import {
 import { DegreeEntityDescription } from './publication_types/degree.publication.types';
 import { BookEntityDescription } from './publication_types/book.publication.types';
 import { ReportEntityDescription } from './publication_types/report.publication.types';
-
-export enum BackendTypeNames {
-  APPROVAL = 'Approval',
-  CONTRIBUTOR = 'Contributor',
-  CUSTOMER = 'Customer',
-  ENTITY_DESCRIPTION = 'EntityDescription',
-  FILE = 'File',
-  FILE_SET = 'FileSet',
-  GRANT = 'Grant',
-  IDENTITY = 'Identity',
-  LICENSE = 'License',
-  ORGANIZATION = 'Organization',
-  PAGES_MONOGRAPH = 'MonographPages',
-  PAGES_RANGE = 'Range',
-  PUBLICATION = 'Publication',
-  PUBLICATION_DATE = 'PublicationDate',
-  REFERENCE = 'Reference',
-  RESEARCH_PROJECT = 'ResearchProject',
-}
+import { BackendTypeNames } from './publication_types/common.publication.types';
 
 export enum PublicationStatus {
   DELETED = 'Deleted',
@@ -166,13 +148,6 @@ export interface PagesRange extends BackendType {
 export interface PagesMonograph extends BackendType {
   pages: string;
 }
-
-export const emptyDate: PublicationDate = {
-  type: BackendTypeNames.PUBLICATION_DATE,
-  year: '',
-  month: '',
-  day: '',
-};
 
 export type PublicationPreview = Pick<
   Publication & JournalEntityDescription,

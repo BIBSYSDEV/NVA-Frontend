@@ -1,7 +1,8 @@
-import { BackendType, BackendTypeNames, emptyDate, PublicationDate, PagesMonograph } from '../publication.types';
+import { BackendType, PublicationDate, PagesMonograph } from '../publication.types';
 import { PublicationType, BookType } from '../publicationFieldNames';
 import { LanguageValues } from '../language.types';
 import { Contributor } from '../contributor.types';
+import { BackendTypeNames, emptyDate } from './common.publication.types';
 
 interface BookPublicationInstance {
   type: BookType | '';

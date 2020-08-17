@@ -22,7 +22,7 @@ import deepmerge from 'deepmerge';
 
 import { ContributorFieldNames, SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
 import { Contributor, emptyContributor } from '../../../../types/contributor.types';
-import { Publication, BackendTypeNames } from '../../../../types/publication.types';
+import { Publication } from '../../../../types/publication.types';
 import SubHeading from '../../../../components/SubHeading';
 import AddContributor from '../AddContributorModal';
 import styled from 'styled-components';
@@ -34,6 +34,7 @@ import { NotificationVariant } from '../../../../types/notification.types';
 import { Authority } from '../../../../types/authority.types';
 import { overwriteArrayMerge } from '../../../../utils/formik-helpers';
 import NormalText from '../../../../components/NormalText';
+import { BackendTypeNames } from '../../../../types/publication_types/common.publication.types';
 
 const StyledWarningIcon = styled(WarningIcon)`
   color: ${({ theme }) => theme.palette.warning.main};

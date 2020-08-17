@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { TextField } from '@material-ui/core';
 
-import { Publication, BackendTypeNames } from '../../../types/publication.types';
+import { Publication } from '../../../types/publication.types';
 import { ReferenceFieldNames, JournalType } from '../../../types/publicationFieldNames';
 import { PublicationTableNumber } from '../../../utils/constants';
 import NviValidation from './components/NviValidation';
@@ -13,6 +13,7 @@ import DoiField from './components/DoiField';
 import SelectTypeField from './components/SelectTypeField';
 import PublisherField from './components/PublisherField';
 import { JournalEntityDescription } from '../../../types/publication_types/journal.publication.types';
+import { BackendTypeNames } from '../../../types/publication_types/common.publication.types';
 
 const StyledContent = styled.div`
   display: grid;
