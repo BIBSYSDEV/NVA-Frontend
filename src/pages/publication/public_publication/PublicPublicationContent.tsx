@@ -16,6 +16,7 @@ import { getNpiDiscipline } from '../../../utils/npiDisciplines';
 import { StyledNormalTextPreWrapped } from '../../../components/styled/Wrappers';
 import { displayDate } from '../../../utils/date-helpers';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
+import { PublicPublicationStatusBar } from './PublicPublicationStatusBar';
 
 const StyledContentWrapper = styled.div`
   display: flex;
@@ -85,7 +86,7 @@ const StyledOpenInNewIcon = styled(OpenInNewIcon)`
   margin-left: 0.25rem;
 `;
 
-interface PublicPublicationContentProps {
+export interface PublicPublicationContentProps {
   publication: Publication;
 }
 
@@ -112,6 +113,7 @@ const PublicPublicationContent: FC<PublicPublicationContentProps> = ({ publicati
 
   return (
     <ContentPage>
+      <PublicPublicationStatusBar publication={publication} />
       <Heading>{mainTitle}</Heading>
       {contributors && <PublicPublicationAuthors contributors={contributors} />}
       <StyledContentWrapper>
