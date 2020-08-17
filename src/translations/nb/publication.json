@@ -94,6 +94,10 @@
     "validation_errors": "Valideringsfeil"
   },
   "new_publication": "Ny publikasjon",
+  "public_page": {
+    "edit_publication": "Endre publikasjon",
+    "request_doi": "Be om DOI"
+  },
   "publication": {
     "info_text": "Velg ressursen du ønsker å registrere eller publisere ved å laste opp ressurs eller lenke til en publikasjon.",
     "link_publication_description": "Feks. DOI lenke, lenke til artikkel, lenke til video av foredrag etc.",
