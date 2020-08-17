@@ -1,7 +1,7 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { Button } from '@material-ui/core';
+import { Button, DialogActions } from '@material-ui/core';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
@@ -10,6 +10,7 @@ import { RootStore } from '../../../redux/reducers/rootReducer';
 import Card from '../../../components/Card';
 import NormalText from '../../../components/NormalText';
 import { PublicPublicationContentProps } from './PublicPublicationContent';
+import Modal from '../../../components/Modal';
 
 const StyledCard = styled(Card)`
   display: flex;
@@ -32,6 +33,10 @@ const StyledDescription = styled.div`
 export const PublicPublicationStatusBar: FC<PublicPublicationContentProps> = ({ publication }) => {
   const { t } = useTranslation('publication');
   const { id, isPublisher } = useSelector((store: RootStore) => store.user);
+
+  const [openRequestDoi, setOpenRequestDoi] = useState(false);
+  const toggleRequestDoi = () => setOpenRequestDoi((state) => !state);
+
   const {
     identifier,
     owner,
@@ -53,7 +58,7 @@ export const PublicPublicationStatusBar: FC<PublicPublicationContentProps> = ({ 
       </StyledDescription>
       <div>
         {!hasDoi && (
-          <Button variant="contained" color="primary">
+          <Button variant="contained" color="primary" onClick={toggleRequestDoi}>
             {t('public_page.request_doi')}
           </Button>
         )}
@@ -63,6 +68,17 @@ export const PublicPublicationStatusBar: FC<PublicPublicationContentProps> = ({ 
           </Button>
         </Link>
       </div>
+      {!hasDoi && (
+        <Modal openModal={openRequestDoi} onClose={toggleRequestDoi} headingText={t('public_page.request_doi')}>
+          <textarea />
+          <DialogActions>
+            <Button>{t('common:cancel')}</Button>
+            <Button variant="contained" color="primary">
+              {t('common:send')}
+            </Button>
+          </DialogActions>
+        </Modal>
+      )}
     </StyledCard>
   ) : null;
 };
