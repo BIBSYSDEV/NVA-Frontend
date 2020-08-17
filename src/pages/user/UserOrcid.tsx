@@ -153,7 +153,7 @@ const UserOrcid: FC = () => {
             headingIcon={{ src: orcidIcon, alt: 'ORCID iD icon' }}
             headingText={t('profile:orcid.create_or_connect')}
             onClose={toggleModal}
-            openModal={openModal}>
+            open={openModal}>
             <OrcidModalContent />
           </Modal>
         </>

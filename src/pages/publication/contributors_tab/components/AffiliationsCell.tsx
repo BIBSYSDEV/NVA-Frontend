@@ -91,7 +91,7 @@ const AffiliationsCell: FC<AffiliationsCellProps> = ({ affiliations, baseFieldNa
 
       {/* Modal for adding affiliation */}
       <Modal
-        openModal={openAffiliationModal}
+        open={openAffiliationModal}
         onClose={toggleAffiliationModal}
         headingText={t('contributors.select_institution')}>
         <SelectInstitution onClose={toggleAffiliationModal} onSubmit={addAffiliation} />

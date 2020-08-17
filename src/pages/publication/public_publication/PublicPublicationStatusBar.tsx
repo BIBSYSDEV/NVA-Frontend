@@ -69,11 +69,11 @@ export const PublicPublicationStatusBar: FC<PublicPublicationContentProps> = ({ 
         </Link>
       </div>
       {!hasDoi && (
-        <Modal openModal={openRequestDoi} onClose={toggleRequestDoi} headingText={t('public_page.request_doi')}>
+        <Modal open={openRequestDoi} onClose={toggleRequestDoi} headingText={t('public_page.request_doi')}>
           <textarea />
           <DialogActions>
-            <Button>{t('common:cancel')}</Button>
-            <Button variant="contained" color="primary">
+            <Button onClick={toggleRequestDoi}>{t('common:cancel')}</Button>
+            <Button variant="contained" color="primary" onClick={toggleRequestDoi}>
               {t('common:send')}
             </Button>
           </DialogActions>
