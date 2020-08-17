@@ -7,6 +7,8 @@ import {
   emptyPublicationEntityDescription,
 } from './publication_types/journal.publication.types';
 import { DegreeEntityDescription } from './publication_types/degree.publication.types';
+import { BookEntityDescription } from './publication_types/book.publication.types';
+import { ReportEntityDescription } from './publication_types/report.publication.types';
 
 export enum BackendTypeNames {
   APPROVAL = 'Approval',
@@ -91,6 +93,50 @@ interface DoiRequest {
   status: DoiRequestStatus;
 }
 
+export interface JournalPublication extends BackendType, PublicationFileSet {
+  readonly identifier: string;
+  readonly createdDate: string;
+  readonly owner: string;
+  readonly status: PublicationStatus;
+  readonly doiRequest: DoiRequest | null;
+  doiRequested: boolean;
+  entityDescription: JournalEntityDescription;
+  project: Project | null;
+}
+
+export interface DegreePublication extends BackendType, PublicationFileSet {
+  readonly identifier: string;
+  readonly createdDate: string;
+  readonly owner: string;
+  readonly status: PublicationStatus;
+  readonly doiRequest: DoiRequest | null;
+  doiRequested: boolean;
+  entityDescription: DegreeEntityDescription;
+  project: Project | null;
+}
+
+export interface BookPublication extends BackendType, PublicationFileSet {
+  readonly identifier: string;
+  readonly createdDate: string;
+  readonly owner: string;
+  readonly status: PublicationStatus;
+  readonly doiRequest: DoiRequest | null;
+  doiRequested: boolean;
+  entityDescription: BookEntityDescription;
+  project: Project | null;
+}
+
+export interface ReportPublication extends BackendType, PublicationFileSet {
+  readonly identifier: string;
+  readonly createdDate: string;
+  readonly owner: string;
+  readonly status: PublicationStatus;
+  readonly doiRequest: DoiRequest | null;
+  doiRequested: boolean;
+  entityDescription: ReportEntityDescription;
+  project: Project | null;
+}
+
 export interface Publication extends BackendType, PublicationFileSet {
   readonly identifier: string;
   readonly createdDate: string;
@@ -98,7 +144,11 @@ export interface Publication extends BackendType, PublicationFileSet {
   readonly status: PublicationStatus;
   readonly doiRequest: DoiRequest | null;
   doiRequested: boolean;
-  entityDescription: JournalEntityDescription | DegreeEntityDescription;
+  entityDescription:
+    | JournalEntityDescription
+    | DegreeEntityDescription
+    | BookEntityDescription
+    | ReportEntityDescription;
   project: Project | null;
 }
 

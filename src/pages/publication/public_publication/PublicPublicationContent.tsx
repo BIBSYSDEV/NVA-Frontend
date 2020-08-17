@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { Link, Chip } from '@material-ui/core';
 import styled from 'styled-components';
-import { Publication, PagesRange } from '../../../types/publication.types';
+import { Publication } from '../../../types/publication.types';
 import ContentPage from '../../../components/ContentPage';
 import { useTranslation } from 'react-i18next';
 import PublicPublicationAuthors from './PublicPublicationAuthors';
@@ -16,6 +16,7 @@ import { getNpiDiscipline } from '../../../utils/npiDisciplines';
 import { StyledNormalTextPreWrapped } from '../../../components/styled/Wrappers';
 import { displayDate } from '../../../utils/date-helpers';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
+import { JournalEntityDescription } from '../../../types/publication_types/journal.publication.types';
 
 const StyledContentWrapper = styled.div`
   display: flex;
@@ -101,9 +102,7 @@ const PublicPublicationContent: FC<PublicPublicationContentProps> = ({ publicati
     npiSubjectHeading,
     reference: { doi, publicationContext, publicationInstance },
     tags,
-  } = publication.entityDescription;
-
-  const pages = publicationInstance.pages as PagesRange;
+  } = publication.entityDescription as JournalEntityDescription;
 
   // Show only the license for the first file for now
   const currentLicense = publication.fileSet?.files[0]?.license ?? null;
@@ -164,7 +163,9 @@ const PublicPublicationContent: FC<PublicPublicationContentProps> = ({ publicati
             <LabelContentRow minimal label={`${t('common:details')}:`}>
               {publicationInstance.volume && `${t('references.volume')} ${publicationInstance.volume}`}
               {publicationInstance.issue && `, ${t('references.issue')} ${publicationInstance.issue}`}
-              {pages?.begin && pages?.end && `, ${t('references.pages')} ${pages.begin}-${pages.end}`}
+              {publicationInstance.pages?.begin &&
+                publicationInstance.pages?.end &&
+                `, ${t('references.pages')} ${publicationInstance.pages.begin}-${publicationInstance.pages.end}`}
               {publicationInstance.articleNumber &&
                 `, ${t('references.article_number')} ${publicationInstance.articleNumber}`}
             </LabelContentRow>

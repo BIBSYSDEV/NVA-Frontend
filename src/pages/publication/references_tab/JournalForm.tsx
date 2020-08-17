@@ -12,6 +12,7 @@ import PeerReview from './components/PeerReview';
 import DoiField from './components/DoiField';
 import SelectTypeField from './components/SelectTypeField';
 import PublisherField from './components/PublisherField';
+import { JournalEntityDescription } from '../../../types/publication_types/journal.publication.types';
 
 const StyledContent = styled.div`
   display: grid;
@@ -38,9 +39,11 @@ const JournalForm: FC = () => {
   const { t } = useTranslation('publication');
   const { values, setFieldValue }: FormikProps<Publication> = useFormikContext();
   const {
-    publicationContext,
-    publicationInstance: { peerReviewed },
-  } = values.entityDescription.reference;
+    reference: {
+      publicationContext,
+      publicationInstance: { peerReviewed },
+    },
+  } = values.entityDescription as JournalEntityDescription;
 
   useEffect(() => {
     // set correct Pages type based on publication type being Journal

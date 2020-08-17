@@ -3,7 +3,7 @@ import { Field, FieldProps, ErrorMessage, FormikProps, useFormikContext } from '
 import PublicationChannelSearch from './PublicationChannelSearch';
 import { PublicationTableNumber } from '../../../../utils/constants';
 import PublisherRow from './PublisherRow';
-import { Publisher, levelMap, Publication } from '../../../../types/publication.types';
+import { Publisher, levelMap, JournalPublication } from '../../../../types/publication.types';
 import {
   PublicationType,
   contextTypeBaseFieldName,
@@ -21,7 +21,7 @@ const PublisherField: FC<PublisherFieldProps> = ({
   label,
   placeholder,
 }) => {
-  const { touched }: FormikProps<Publication> = useFormikContext();
+  const { touched }: FormikProps<JournalPublication> = useFormikContext();
 
   const mapPublisher = (selectedPublisher: Publisher, type: PublicationType) => {
     const levelAsEnum = Object.keys(levelMap).find((key) => levelMap[key] === selectedPublisher.level);

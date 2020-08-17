@@ -14,6 +14,7 @@ import Label from '../../../components/Label';
 import DoiField from './components/DoiField';
 import SelectTypeField from './components/SelectTypeField';
 import PublisherField from './components/PublisherField';
+import { BookEntityDescription } from '../../../types/publication_types/book.publication.types';
 
 const StyledContent = styled.div`
   display: grid;
@@ -50,9 +51,11 @@ const BookForm: FC = () => {
   const { t } = useTranslation('publication');
   const { setFieldValue, values }: FormikProps<Publication> = useFormikContext();
   const {
-    publicationContext,
-    publicationInstance: { peerReviewed },
-  } = values.entityDescription.reference;
+    reference: {
+      publicationContext,
+      publicationInstance: { peerReviewed },
+    },
+  } = values.entityDescription as BookEntityDescription;
 
   return (
     <StyledContent>
