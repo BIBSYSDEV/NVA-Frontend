@@ -75,63 +75,37 @@ interface DoiRequest {
   status: DoiRequestStatus;
 }
 
-export interface JournalPublication extends BackendType, PublicationFileSet {
+interface BasePublication extends BackendType, PublicationFileSet {
   readonly identifier: string;
   readonly createdDate: string;
   readonly owner: string;
   readonly status: PublicationStatus;
   readonly doiRequest: DoiRequest | null;
   doiRequested: boolean;
-  entityDescription: JournalEntityDescription;
   project: Project | null;
 }
-
-export interface DegreePublication extends BackendType, PublicationFileSet {
-  readonly identifier: string;
-  readonly createdDate: string;
-  readonly owner: string;
-  readonly status: PublicationStatus;
-  readonly doiRequest: DoiRequest | null;
-  doiRequested: boolean;
-  entityDescription: DegreeEntityDescription;
-  project: Project | null;
-}
-
-export interface BookPublication extends BackendType, PublicationFileSet {
-  readonly identifier: string;
-  readonly createdDate: string;
-  readonly owner: string;
-  readonly status: PublicationStatus;
-  readonly doiRequest: DoiRequest | null;
-  doiRequested: boolean;
-  entityDescription: BookEntityDescription;
-  project: Project | null;
-}
-
-export interface ReportPublication extends BackendType, PublicationFileSet {
-  readonly identifier: string;
-  readonly createdDate: string;
-  readonly owner: string;
-  readonly status: PublicationStatus;
-  readonly doiRequest: DoiRequest | null;
-  doiRequested: boolean;
-  entityDescription: ReportEntityDescription;
-  project: Project | null;
-}
-
-export interface Publication extends BackendType, PublicationFileSet {
-  readonly identifier: string;
-  readonly createdDate: string;
-  readonly owner: string;
-  readonly status: PublicationStatus;
-  readonly doiRequest: DoiRequest | null;
-  doiRequested: boolean;
+export interface Publication extends BasePublication {
   entityDescription:
     | JournalEntityDescription
     | DegreeEntityDescription
     | BookEntityDescription
     | ReportEntityDescription;
-  project: Project | null;
+}
+
+export interface JournalPublication extends BasePublication {
+  entityDescription: JournalEntityDescription;
+}
+
+export interface DegreePublication extends BasePublication {
+  entityDescription: DegreeEntityDescription;
+}
+
+export interface BookPublication extends BasePublication {
+  entityDescription: BookEntityDescription;
+}
+
+export interface ReportPublication extends BasePublication {
+  entityDescription: ReportEntityDescription;
 }
 
 export interface PublicationDate extends BackendType {
