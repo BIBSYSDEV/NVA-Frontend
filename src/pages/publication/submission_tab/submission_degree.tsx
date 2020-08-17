@@ -19,7 +19,7 @@ const SubmissionDegree: FC = () => {
         {publicationInstance.type && t(`publicationTypes:${publicationInstance.type}`)}
       </LabelContentRow>
       <LabelContentRow label={t('common:publisher')}>{publicationContext?.publisher}</LabelContentRow>
-      {/* TODO <LabelContentRow label={t('references.series')}>{series.title}</LabelContentRow> */}
+      <LabelContentRow label={t('references.series')}>{publicationContext?.seriesTitle}</LabelContentRow>
     </>
   );
 };
