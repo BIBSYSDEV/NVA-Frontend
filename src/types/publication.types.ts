@@ -1,9 +1,11 @@
-import { Contributor } from './contributor.types';
 import { PublicationFileSet } from './file.types';
-import { LanguageValues } from './language.types';
 import { Project } from './project.types';
-import { PublicationType, JournalType, ReportType, DegreeType, BookType } from './publicationFieldNames';
 import { EnumDictionary } from './common.types';
+import {
+  JournalEntityDescription,
+  JournalPublicationContext,
+  emptyPublicationEntityDescription,
+} from './publication_types/journal.publication.types';
 
 export enum BackendTypeNames {
   APPROVAL = 'Approval',
@@ -95,11 +97,11 @@ export interface Publication extends BackendType, PublicationFileSet {
   readonly status: PublicationStatus;
   readonly doiRequest: DoiRequest | null;
   doiRequested: boolean;
-  entityDescription: PublicationEntityDescription;
+  entityDescription: JournalEntityDescription;
   project: Project | null;
 }
 
-interface PublicationDate extends BackendType {
+export interface PublicationDate extends BackendType {
   year: string;
   month: string;
   day: string;
@@ -114,99 +116,20 @@ export interface PagesMonograph extends BackendType {
   pages: string;
 }
 
-interface PublicationInstance {
-  type: JournalType | ReportType | DegreeType | BookType | '';
-  articleNumber: string;
-  issue: string;
-  pages: PagesRange | PagesMonograph | null;
-  peerReviewed: boolean;
-  volume: string;
-}
-
-interface PublicationContext {
-  type: PublicationType | '';
-  level: string | number | null;
-  onlineIssn: string;
-  openAccess: boolean;
-  peerReviewed: boolean;
-  title: string;
-  url?: string;
-  seriesTitle?: string;
-}
-
-interface PublicationReference extends BackendType {
-  doi: string;
-  publicationInstance: PublicationInstance;
-  publicationContext: PublicationContext;
-}
-
-interface PublicationEntityDescription extends BackendType {
-  mainTitle: string;
-  abstract: string;
-  description: string;
-  tags: string[];
-  npiSubjectHeading: string;
-  date: PublicationDate;
-  language: LanguageValues;
-  contributors: Contributor[];
-  // isbnList: string[]; TODO: isbnList exists on some publication types but not all
-  reference: PublicationReference;
-}
-
-const emptyDate: PublicationDate = {
+export const emptyDate: PublicationDate = {
   type: BackendTypeNames.PUBLICATION_DATE,
   year: '',
   month: '',
   day: '',
 };
 
-const emptyPublicationInstance: PublicationInstance = {
-  type: '',
-  volume: '',
-  issue: '',
-  articleNumber: '',
-  pages: null,
-  peerReviewed: false,
-};
-
-const emptyPublicationContext: PublicationContext = {
-  type: '',
-  level: '',
-  onlineIssn: '',
-  openAccess: false,
-  peerReviewed: false,
-  title: '',
-  url: '',
-  seriesTitle: '',
-};
-
-const emptyReference: PublicationReference = {
-  type: BackendTypeNames.REFERENCE,
-  doi: '',
-  publicationInstance: emptyPublicationInstance,
-  publicationContext: emptyPublicationContext,
-};
-
-const emptyPublicationEntityDescription: PublicationEntityDescription = {
-  type: BackendTypeNames.ENTITY_DESCRIPTION,
-  mainTitle: '',
-  abstract: '',
-  description: '',
-  tags: [],
-  npiSubjectHeading: '',
-  date: emptyDate,
-  language: LanguageValues.NONE,
-  contributors: [],
-  reference: emptyReference,
-};
-
 export type PublicationPreview = Pick<
-  Publication & PublicationEntityDescription,
+  Publication & JournalEntityDescription,
   'identifier' | 'mainTitle' | 'createdDate' | 'status' | 'owner'
 >;
 
 export type PublishedPublicationPreview = Pick<
-  Publication & PublicationEntityDescription & PublicationContext,
+  Publication & JournalEntityDescription & JournalPublicationContext,
   'identifier' | 'mainTitle' | 'createdDate' | 'reference' | 'contributors' | 'status' | 'type'
 >;
 
