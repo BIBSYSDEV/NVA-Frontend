@@ -15,7 +15,7 @@ const SubmissionBook: FC = () => {
   return (
     <>
       <LabelContentRow label={t('references.subtype')}>
-        {publicationInstance.type && t(`publicationTypes:subtypes_book.${publicationInstance.type}`)}
+        {publicationInstance.type && t(`publicationTypes:${publicationInstance.type}`)}
       </LabelContentRow>
       <LabelContentRow label={t('common:publisher')}>{publicationContext?.publisher}</LabelContentRow>
       <LabelContentRow label={t('references.peer_reviewed')}>
