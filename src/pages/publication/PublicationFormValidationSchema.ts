@@ -62,16 +62,17 @@ const journalPublicationInstance = {
 
 const bookPublicationInstance = {
   type: Yup.string().oneOf(Object.values(BookType)).required(ErrorMessage.REQUIRED),
-  // isbn: Yup.string(), // TODO: called isbnList
-  // TODO: numberOfPages: Yup.number().typeError(ErrorMessage.INVALID_FORMAT).min(1, ErrorMessage.MUST_BE_MIN_1),
-  // textBook: Yup.boolean(), // TODO: this field does not exist in the datamodel for book.
+  pages: Yup.object().shape({
+    pages: Yup.number().typeError(ErrorMessage.INVALID_FORMAT).min(1, ErrorMessage.MUST_BE_MIN_1),
+  }),
   peerReviewed: Yup.boolean().required(ErrorMessage.REQUIRED),
 };
 
 const reportPublicationInstance = {
   type: Yup.string().oneOf(Object.values(ReportType)).required(ErrorMessage.REQUIRED),
-  // isbn: Yup.string(), // TODO: called isbnList
-  // TODO: numberOfPages: Yup.number().typeError(ErrorMessage.INVALID_FORMAT).min(1, ErrorMessage.MUST_BE_MIN_1),
+  pages: Yup.object().shape({
+    pages: Yup.number().typeError(ErrorMessage.INVALID_FORMAT).min(1, ErrorMessage.MUST_BE_MIN_1),
+  }),
 };
 
 const degreePublicationInstance = {
