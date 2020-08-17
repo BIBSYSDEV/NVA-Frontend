@@ -202,11 +202,6 @@ const PublicPublicationContent: FC<PublicPublicationContentProps> = ({ publicati
               {publication.project.name}
             </LabelContentRow>
           )}
-          {/* TODO {series && (
-            <LabelContentRow minimal label={`${t('references.series')}:`}>
-              {series.title}
-            </LabelContentRow>
-          )} */}
         </StyledMainContent>
       </StyledContentWrapper>
     </ContentPage>
