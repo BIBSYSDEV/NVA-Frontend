@@ -94,6 +94,10 @@
     "validation_errors": "Validation errors"
   },
   "new_publication": "New publication",
+  "public_page": {
+    "edit_publication": "Edit publication",
+    "request_doi": "Request a DOI"
+  },
   "publication": {
     "info_text": "Select the resource you wish to register or publish by uploading a resource or link to a publication.",
     "link_publication_description": "E.g. DOI link, link to article, link to video of lecture etc.",
