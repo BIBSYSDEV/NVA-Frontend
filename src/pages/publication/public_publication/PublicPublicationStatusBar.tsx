@@ -3,12 +3,12 @@ import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Button } from '@material-ui/core';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
+import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 import { RootStore } from '../../../redux/reducers/rootReducer';
 import Card from '../../../components/Card';
 import NormalText from '../../../components/NormalText';
-import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
 import { PublicPublicationContentProps } from './PublicPublicationContent';
 
 const StyledCard = styled(Card)`
