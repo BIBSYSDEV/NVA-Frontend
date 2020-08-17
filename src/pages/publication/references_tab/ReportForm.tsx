@@ -12,6 +12,7 @@ import SelectTypeField from './components/SelectTypeField';
 import PublisherField from './components/PublisherField';
 import SubHeading from '../../../components/SubHeading';
 import Label from '../../../components/Label';
+import { TextField } from '@material-ui/core';
 
 const StyledContent = styled.div`
   display: grid;
@@ -29,12 +30,12 @@ const StyledSection = styled.div`
   }
 `;
 
-// const StyledTextField = styled(TextField)`
-//   display: inline;
-//   @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-//     display: grid;
-//   }
-// `;
+const StyledTextField = styled(TextField)`
+  display: inline;
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+    display: grid;
+  }
+`;
 
 const ReportForm: FC = () => {
   const { t } = useTranslation('publication');
@@ -49,22 +50,23 @@ const ReportForm: FC = () => {
 
       <PublisherField label={t('common:publisher')} placeholder={t('references.search_for_publisher')} />
       <StyledSection>
-        {/* TODO <Field name={ReferenceFieldNames.ISBN}>
+        {/* TODO - convert to ISBN_LIST 
+        <Field name={ReferenceFieldNames.ISBN}>
           {({ field }: FieldProps) => (
             <StyledTextField data-testid="isbn" variant="outlined" label={t('references.isbn')} {...field} />
           )}
         </Field> */}
 
-        {/* TODO <Field name={ReferenceFieldNames.NUMBER_OF_PAGES}>
+        <Field name={ReferenceFieldNames.PAGES}>
           {({ field }: FieldProps) => (
             <StyledTextField
-              inputProps={{ 'data-testid': 'number_of_pages' }}
+              inputProps={{ 'data-testid': 'pages' }}
               variant="outlined"
               label={t('references.number_of_pages')}
               {...field}
             />
           )}
-        </Field> */}
+        </Field>
       </StyledSection>
       <div>
         <SubHeading>{t('references.series')}</SubHeading>
