@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { Button, DialogActions, TextField } from '@material-ui/core';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
@@ -11,6 +11,10 @@ import Card from '../../../components/Card';
 import NormalText from '../../../components/NormalText';
 import { PublicPublicationContentProps } from './PublicPublicationContent';
 import Modal from '../../../components/Modal';
+import { setNotification } from '../../../redux/actions/notificationActions';
+import { updatePublication } from '../../../api/publicationApi';
+import { NotificationVariant } from '../../../types/notification.types';
+import ButtonWithProgress from '../../../components/ButtonWithProgress';
 
 const StyledStatusBar = styled(Card)`
   display: flex;
@@ -31,11 +35,30 @@ const StyledStatusBarDescription = styled.div`
 `;
 
 export const PublicPublicationStatusBar: FC<PublicPublicationContentProps> = ({ publication }) => {
+  const dispatch = useDispatch();
   const { t } = useTranslation('publication');
   const { id, isPublisher } = useSelector((store: RootStore) => store.user);
 
   const [openRequestDoiModal, setOpenRequestDoiModal] = useState(false);
+  const [isLoadingDoiRequest, setIsLoadingDoiRequest] = useState(false);
   const toggleRequestDoiModal = () => setOpenRequestDoiModal((state) => !state);
+
+  const sendDoiRequest = async () => {
+    setIsLoadingDoiRequest(true);
+    const sendDoiRequestResponse = await updatePublication({
+      ...publication,
+      doiRequested: true,
+    });
+    if (sendDoiRequestResponse) {
+      if (sendDoiRequestResponse.error) {
+        dispatch(setNotification(t('feedback:error.an_error_occurred'), NotificationVariant.Error));
+      } else {
+        toggleRequestDoiModal();
+        dispatch(setNotification(t('feedback:success.doi_request_sent')));
+      }
+    }
+    setIsLoadingDoiRequest(false);
+  };
 
   const {
     identifier,
@@ -69,19 +92,18 @@ export const PublicPublicationStatusBar: FC<PublicPublicationContentProps> = ({ 
         </Link>
       </div>
       {!hasDoi && (
-        <Modal
-          open={openRequestDoiModal}
-          maxWidth="sm"
-          fullWidth
-          onClose={toggleRequestDoiModal}
-          headingText={t('public_page.request_doi')}>
+        <Modal open={openRequestDoiModal} onClose={toggleRequestDoiModal} headingText={t('public_page.request_doi')}>
           <NormalText>{t('public_page.request_doi_description')}</NormalText>
           <TextField variant="outlined" multiline rows="4" fullWidth label={t('public_page.message_to_curator')} />
           <DialogActions>
             <Button onClick={toggleRequestDoiModal}>{t('common:cancel')}</Button>
-            <Button variant="contained" color="primary" onClick={toggleRequestDoiModal}>
+            <ButtonWithProgress
+              variant="contained"
+              color="primary"
+              onClick={sendDoiRequest}
+              isLoading={isLoadingDoiRequest}>
               {t('common:send')}
-            </Button>
+            </ButtonWithProgress>
           </DialogActions>
         </Modal>
       )}

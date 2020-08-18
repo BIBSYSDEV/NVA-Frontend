@@ -55,6 +55,7 @@
     "create_publication": "Publikasjonen er opprettet",
     "delete_affiliation": "Tilknytningen ble slettet",
     "delete_identifier": "Identifikatoren ble slettet",
+    "doi_request_sent": "DOI-forespørsel sendt",
     "login": "Logget inn",
     "admin_added": "Bruker lagt til som administrator",
     "admin_removed": "Bruker fjernet som administrator",

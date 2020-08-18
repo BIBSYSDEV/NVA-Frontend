@@ -55,6 +55,7 @@
     "create_publication": "New publication created",
     "delete_affiliation": "Deleted affiliation",
     "delete_identifier": "Deleted identifier",
+    "doi_request_sent": "DOI request sent",
     "login": "Logged in",
     "admin_added": "User added as administrator",
     "admin_removed": "User removed as administrator",
