@@ -96,7 +96,9 @@
   "new_publication": "New publication",
   "public_page": {
     "edit_publication": "Edit publication",
-    "request_doi": "Request a DOI"
+    "message_to_curator": "Message to curator",
+    "request_doi": "Request a DOI",
+    "request_doi_description": "The request will be evaluated by a curator. Add a message in case of any questions or clarifications. You will receive an email when the request has been evaluated."
   },
   "publication": {
     "info_text": "Select the resource you wish to register or publish by uploading a resource or link to a publication.",
