@@ -8,7 +8,6 @@ const SubmissionChapter: React.FC = () => {
   const { t } = useTranslation('publication');
   const { values }: FormikProps<Publication> = useFormikContext();
   const {
-    isbn,
     reference: { publicationInstance },
   } = values.entityDescription;
 
@@ -16,7 +15,7 @@ const SubmissionChapter: React.FC = () => {
 
   return (
     <>
-      <LabelContentRow label={t('chapter.anthology')}>{isbn}</LabelContentRow>
+      {/* TODO <LabelContentRow label={t('chapter.anthology')}>{isbn}</LabelContentRow> */}
       <LabelContentRow label={t('references.pages_from')}>{pages?.begin}</LabelContentRow>
       <LabelContentRow label={t('references.pages_to')}>{pages?.end}</LabelContentRow>
     </>

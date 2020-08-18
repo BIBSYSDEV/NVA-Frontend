@@ -12,9 +12,9 @@ import { createPublication } from '../../../api/publicationApi';
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../types/notification.types';
 import ButtonWithProgress from '../../../components/ButtonWithProgress';
-import { BackendTypeNames } from '../../../types/publication.types';
 import useUppy from '../../../utils/hooks/useUppy';
 import FileUploader from '../files_and_license_tab/FileUploader';
+import { BackendTypeNames } from '../../../types/publication_types/commonPublication.types';
 
 const StyledFileCard = styled.div`
   margin-top: 1rem;

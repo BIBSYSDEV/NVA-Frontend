@@ -1,4 +1,5 @@
-import { BackendType, BackendTypeNames } from './publication.types';
+import { BackendType } from './publication.types';
+import { BackendTypeNames } from './publication_types/commonPublication.types';
 
 export interface CustomerInstitution extends BackendType {
   identifier: string;

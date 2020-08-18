@@ -1,28 +1,15 @@
-import { Contributor } from './contributor.types';
 import { PublicationFileSet } from './file.types';
-import { LanguageValues } from './language.types';
 import { Project } from './project.types';
-import { PublicationType, JournalType, ReportType, DegreeType, BookType } from './publicationFieldNames';
 import { EnumDictionary } from './common.types';
-
-export enum BackendTypeNames {
-  APPROVAL = 'Approval',
-  CONTRIBUTOR = 'Contributor',
-  CUSTOMER = 'Customer',
-  ENTITY_DESCRIPTION = 'EntityDescription',
-  FILE = 'File',
-  FILE_SET = 'FileSet',
-  GRANT = 'Grant',
-  IDENTITY = 'Identity',
-  LICENSE = 'License',
-  ORGANIZATION = 'Organization',
-  PAGES_MONOGRAPH = 'MonographPages',
-  PAGES_RANGE = 'Range',
-  PUBLICATION = 'Publication',
-  PUBLICATION_DATE = 'PublicationDate',
-  REFERENCE = 'Reference',
-  RESEARCH_PROJECT = 'ResearchProject',
-}
+import {
+  JournalEntityDescription,
+  JournalPublicationContext,
+  emptyPublicationEntityDescription,
+} from './publication_types/journalPublication.types';
+import { DegreeEntityDescription } from './publication_types/degreePublication.types';
+import { BookEntityDescription } from './publication_types/bookPublication.types';
+import { ReportEntityDescription } from './publication_types/reportPublication.types';
+import { BackendTypeNames } from './publication_types/commonPublication.types';
 
 export enum PublicationStatus {
   DELETED = 'Deleted',
@@ -88,18 +75,40 @@ interface DoiRequest {
   status: DoiRequestStatus;
 }
 
-export interface Publication extends BackendType, PublicationFileSet {
+interface BasePublication extends BackendType, PublicationFileSet {
   readonly identifier: string;
   readonly createdDate: string;
   readonly owner: string;
   readonly status: PublicationStatus;
   readonly doiRequest: DoiRequest | null;
   doiRequested: boolean;
-  entityDescription: PublicationEntityDescription;
   project: Project | null;
 }
+export interface Publication extends BasePublication {
+  entityDescription:
+    | JournalEntityDescription
+    | DegreeEntityDescription
+    | BookEntityDescription
+    | ReportEntityDescription;
+}
 
-interface PublicationDate extends BackendType {
+export interface JournalPublication extends BasePublication {
+  entityDescription: JournalEntityDescription;
+}
+
+export interface DegreePublication extends BasePublication {
+  entityDescription: DegreeEntityDescription;
+}
+
+export interface BookPublication extends BasePublication {
+  entityDescription: BookEntityDescription;
+}
+
+export interface ReportPublication extends BasePublication {
+  entityDescription: ReportEntityDescription;
+}
+
+export interface PublicationDate extends BackendType {
   year: string;
   month: string;
   day: string;
@@ -114,108 +123,13 @@ export interface PagesMonograph extends BackendType {
   pages: string;
 }
 
-interface PublicationInstance {
-  type: JournalType | ReportType | DegreeType | BookType | '';
-  articleNumber: string;
-  issue: string;
-  pages: PagesRange | PagesMonograph | null;
-  peerReviewed: boolean;
-  volume: string;
-}
-
-interface PublicationContext {
-  type: PublicationType | '';
-  level: string | number | null;
-  onlineIssn: string;
-  openAccess: boolean;
-  peerReviewed: boolean;
-  title: string;
-  url?: string;
-  seriesTitle?: string;
-}
-
-interface PublicationReference extends BackendType {
-  doi: string;
-  publicationInstance: PublicationInstance;
-  publicationContext: PublicationContext;
-}
-
-interface PublicationEntityDescription extends BackendType {
-  mainTitle: string;
-  abstract: string;
-  description: string;
-  tags: string[];
-  npiSubjectHeading: string;
-  date: PublicationDate;
-  language: LanguageValues;
-  contributors: Contributor[];
-  isbn: string;
-  numberOfPages: string;
-  series: Publisher;
-  specialization: string;
-  textBook: boolean;
-  reference: PublicationReference;
-}
-
-const emptyDate: PublicationDate = {
-  type: BackendTypeNames.PUBLICATION_DATE,
-  year: '',
-  month: '',
-  day: '',
-};
-
-const emptyPublicationInstance: PublicationInstance = {
-  type: '',
-  volume: '',
-  issue: '',
-  articleNumber: '',
-  pages: null,
-  peerReviewed: false,
-};
-
-const emptyPublicationContext: PublicationContext = {
-  type: '',
-  level: '',
-  onlineIssn: '',
-  openAccess: false,
-  peerReviewed: false,
-  title: '',
-  url: '',
-  seriesTitle: '',
-};
-
-const emptyReference: PublicationReference = {
-  type: BackendTypeNames.REFERENCE,
-  doi: '',
-  publicationInstance: emptyPublicationInstance,
-  publicationContext: emptyPublicationContext,
-};
-
-const emptyPublicationEntityDescription: PublicationEntityDescription = {
-  type: BackendTypeNames.ENTITY_DESCRIPTION,
-  mainTitle: '',
-  abstract: '',
-  description: '',
-  tags: [],
-  npiSubjectHeading: '',
-  date: emptyDate,
-  language: LanguageValues.NONE,
-  contributors: [],
-  isbn: '',
-  numberOfPages: '',
-  series: emptyPublisher,
-  specialization: '',
-  textBook: false,
-  reference: emptyReference,
-};
-
 export type PublicationPreview = Pick<
-  Publication & PublicationEntityDescription,
+  Publication & JournalEntityDescription,
   'identifier' | 'mainTitle' | 'createdDate' | 'status' | 'owner'
 >;
 
 export type PublishedPublicationPreview = Pick<
-  Publication & PublicationEntityDescription & PublicationContext,
+  Publication & JournalEntityDescription & JournalPublicationContext,
   'identifier' | 'mainTitle' | 'createdDate' | 'reference' | 'contributors' | 'status' | 'type'
 >;
 

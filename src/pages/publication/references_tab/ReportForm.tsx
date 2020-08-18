@@ -2,9 +2,6 @@ import { Field, FormikProps, useFormikContext, FieldProps } from 'formik';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-
-import { TextField } from '@material-ui/core';
-
 import { Publication } from '../../../types/publication.types';
 import { ReferenceFieldNames, ReportType } from '../../../types/publicationFieldNames';
 import { PublicationTableNumber } from '../../../utils/constants';
@@ -15,6 +12,7 @@ import SelectTypeField from './components/SelectTypeField';
 import PublisherField from './components/PublisherField';
 import SubHeading from '../../../components/SubHeading';
 import Label from '../../../components/Label';
+import { TextField } from '@material-ui/core';
 
 const StyledContent = styled.div`
   display: grid;
@@ -52,16 +50,17 @@ const ReportForm: FC = () => {
 
       <PublisherField label={t('common:publisher')} placeholder={t('references.search_for_publisher')} />
       <StyledSection>
+        {/* TODO - convert to ISBN_LIST 
         <Field name={ReferenceFieldNames.ISBN}>
           {({ field }: FieldProps) => (
             <StyledTextField data-testid="isbn" variant="outlined" label={t('references.isbn')} {...field} />
           )}
-        </Field>
+        </Field> */}
 
-        <Field name={ReferenceFieldNames.NUMBER_OF_PAGES}>
+        <Field name={ReferenceFieldNames.PAGES}>
           {({ field }: FieldProps) => (
             <StyledTextField
-              inputProps={{ 'data-testid': 'number_of_pages' }}
+              inputProps={{ 'data-testid': 'pages' }}
               variant="outlined"
               label={t('references.number_of_pages')}
               {...field}
