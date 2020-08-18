@@ -20,7 +20,7 @@ import { NotificationVariant } from '../../../../types/notification.types';
 import AffiliationHierarchy from '../../../../components/institution/AffiliationHierarchy';
 import Card from '../../../../components/Card';
 import NormalText from '../../../../components/NormalText';
-import { BackendTypeNames } from '../../../../types/publication_types/common.publication.types';
+import { BackendTypeNames } from '../../../../types/publication_types/commonPublication.types';
 
 const StyledCard = styled(Card)`
   display: flex;

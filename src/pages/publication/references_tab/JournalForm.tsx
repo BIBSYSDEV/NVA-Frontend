@@ -12,8 +12,8 @@ import PeerReview from './components/PeerReview';
 import DoiField from './components/DoiField';
 import SelectTypeField from './components/SelectTypeField';
 import PublisherField from './components/PublisherField';
-import { JournalEntityDescription } from '../../../types/publication_types/journal.publication.types';
-import { BackendTypeNames } from '../../../types/publication_types/common.publication.types';
+import { JournalEntityDescription } from '../../../types/publication_types/journalPublication.types';
+import { BackendTypeNames } from '../../../types/publication_types/commonPublication.types';
 
 const StyledContent = styled.div`
   display: grid;

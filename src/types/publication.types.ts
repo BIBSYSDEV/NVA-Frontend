@@ -5,11 +5,11 @@ import {
   JournalEntityDescription,
   JournalPublicationContext,
   emptyPublicationEntityDescription,
-} from './publication_types/journal.publication.types';
-import { DegreeEntityDescription } from './publication_types/degree.publication.types';
-import { BookEntityDescription } from './publication_types/book.publication.types';
-import { ReportEntityDescription } from './publication_types/report.publication.types';
-import { BackendTypeNames } from './publication_types/common.publication.types';
+} from './publication_types/journalPublication.types';
+import { DegreeEntityDescription } from './publication_types/degreePublication.types';
+import { BookEntityDescription } from './publication_types/bookPublication.types';
+import { ReportEntityDescription } from './publication_types/reportPublication.types';
+import { BackendTypeNames } from './publication_types/commonPublication.types';
 
 export enum PublicationStatus {
   DELETED = 'Deleted',

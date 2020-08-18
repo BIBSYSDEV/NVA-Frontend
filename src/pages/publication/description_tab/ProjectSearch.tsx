@@ -4,7 +4,7 @@ import AutoSearch from '../../../components/AutoSearch';
 import { Project, CristinProject, CristinProjectFunding } from '../../../types/project.types';
 import { debounce } from '../../../utils/debounce';
 import useFetchProjects from '../../../utils/hooks/useFetchProjects';
-import { BackendTypeNames } from '../../../types/publication_types/common.publication.types';
+import { BackendTypeNames } from '../../../types/publication_types/commonPublication.types';
 
 interface ProjectSearchProps {
   dataTestId: string;

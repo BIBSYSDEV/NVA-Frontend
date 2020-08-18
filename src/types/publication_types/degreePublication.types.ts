@@ -2,35 +2,32 @@ import { BackendType, PublicationDate, PagesMonograph } from '../publication.typ
 import { PublicationType, DegreeType } from '../publicationFieldNames';
 import { LanguageValues } from '../language.types';
 import { Contributor } from '../contributor.types';
-import { BackendTypeNames, emptyDate } from './common.publication.types';
+import { BackendTypeNames, emptyDate } from './commonPublication.types';
 
-interface ReportPublicationInstance {
+interface DegreePublicationInstance {
   type: DegreeType | '';
   pages: PagesMonograph | null;
   peerReviewed: boolean;
 }
 
-export interface ReportPublicationContext {
+export interface DegreePublicationContext {
   type: PublicationType | '';
   isbnList: string[];
-  level: string | number | null;
-  onlineIssn: string;
   openAccess: boolean;
   peerReviewed: boolean;
-  printIssn: string;
   publisher: string;
   seriesNumber: string;
   seriesTitle: string;
   url: string;
 }
 
-interface ReportReference extends BackendType {
+interface DegreeReference extends BackendType {
   doi: string;
-  publicationContext: ReportPublicationContext;
-  publicationInstance: ReportPublicationInstance;
+  publicationContext: DegreePublicationContext;
+  publicationInstance: DegreePublicationInstance;
 }
 
-export interface ReportEntityDescription extends BackendType {
+export interface DegreeEntityDescription extends BackendType {
   abstract: string;
   contributors: Contributor[];
   date: PublicationDate;
@@ -38,38 +35,35 @@ export interface ReportEntityDescription extends BackendType {
   language: LanguageValues;
   mainTitle: string;
   npiSubjectHeading: string;
-  reference: ReportReference;
+  reference: DegreeReference;
   tags: string[];
 }
 
-export const emptyPublicationInstance: ReportPublicationInstance = {
+export const emptyPublicationInstance: DegreePublicationInstance = {
   type: '',
   pages: null,
   peerReviewed: false,
 };
 
-export const emptyPublicationContext: ReportPublicationContext = {
+export const emptyPublicationContext: DegreePublicationContext = {
   type: '',
   isbnList: [],
-  level: '',
-  onlineIssn: '',
   openAccess: false,
   peerReviewed: false,
-  printIssn: '',
   publisher: '',
   seriesNumber: '',
   seriesTitle: '',
   url: '',
 };
 
-export const emptyReference: ReportReference = {
+export const emptyReference: DegreeReference = {
   type: BackendTypeNames.REFERENCE,
   doi: '',
   publicationContext: emptyPublicationContext,
   publicationInstance: emptyPublicationInstance,
 };
 
-export const emptyPublicationEntityDescription: ReportEntityDescription = {
+export const emptyPublicationEntityDescription: DegreeEntityDescription = {
   type: BackendTypeNames.ENTITY_DESCRIPTION,
   abstract: '',
   contributors: [],

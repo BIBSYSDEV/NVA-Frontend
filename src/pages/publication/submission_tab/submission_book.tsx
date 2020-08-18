@@ -3,7 +3,7 @@ import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormikProps, useFormikContext } from 'formik';
 import { Publication } from '../../../types/publication.types';
-import { BookEntityDescription } from '../../../types/publication_types/book.publication.types';
+import { BookEntityDescription } from '../../../types/publication_types/bookPublication.types';
 
 const SubmissionBook: FC = () => {
   const { t } = useTranslation('publication');

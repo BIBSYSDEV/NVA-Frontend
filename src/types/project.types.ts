@@ -1,5 +1,5 @@
 import { BackendType } from './publication.types';
-import { BackendTypeNames } from './publication_types/common.publication.types';
+import { BackendTypeNames } from './publication_types/commonPublication.types';
 
 export interface Project extends BackendType {
   id: string;

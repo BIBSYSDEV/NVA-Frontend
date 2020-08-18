@@ -14,7 +14,7 @@ import { NotificationVariant } from '../../../types/notification.types';
 import ButtonWithProgress from '../../../components/ButtonWithProgress';
 import useUppy from '../../../utils/hooks/useUppy';
 import FileUploader from '../files_and_license_tab/FileUploader';
-import { BackendTypeNames } from '../../../types/publication_types/common.publication.types';
+import { BackendTypeNames } from '../../../types/publication_types/commonPublication.types';
 
 const StyledFileCard = styled.div`
   margin-top: 1rem;

@@ -2,7 +2,7 @@ import * as LicenseImages from '../resources/images/licenses';
 import { Uppy as UppyType, StrictTypes } from '@uppy/core';
 import { BackendType } from './publication.types';
 import i18n from '../translations/i18n';
-import { BackendTypeNames } from './publication_types/common.publication.types';
+import { BackendTypeNames } from './publication_types/commonPublication.types';
 
 export enum LicenseNames {
   CC = 'CC',

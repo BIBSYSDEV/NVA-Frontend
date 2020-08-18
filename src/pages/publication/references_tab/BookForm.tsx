@@ -14,7 +14,7 @@ import Label from '../../../components/Label';
 import DoiField from './components/DoiField';
 import SelectTypeField from './components/SelectTypeField';
 import PublisherField from './components/PublisherField';
-import { BookEntityDescription } from '../../../types/publication_types/book.publication.types';
+import { BookEntityDescription } from '../../../types/publication_types/bookPublication.types';
 import { TextField } from '@material-ui/core';
 
 const StyledContent = styled.div`

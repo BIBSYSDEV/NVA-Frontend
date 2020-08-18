@@ -34,7 +34,7 @@ import { NotificationVariant } from '../../../../types/notification.types';
 import { Authority } from '../../../../types/authority.types';
 import { overwriteArrayMerge } from '../../../../utils/formik-helpers';
 import NormalText from '../../../../components/NormalText';
-import { BackendTypeNames } from '../../../../types/publication_types/common.publication.types';
+import { BackendTypeNames } from '../../../../types/publication_types/commonPublication.types';
 
 const StyledWarningIcon = styled(WarningIcon)`
   color: ${({ theme }) => theme.palette.warning.main};

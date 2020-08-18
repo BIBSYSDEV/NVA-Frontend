@@ -3,7 +3,7 @@ import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormikProps, useFormikContext } from 'formik';
 import { Publication } from '../../../types/publication.types';
-import { DegreeEntityDescription } from '../../../types/publication_types/degree.publication.types';
+import { DegreeEntityDescription } from '../../../types/publication_types/degreePublication.types';
 
 const SubmissionDegree: FC = () => {
   const { t } = useTranslation('publication');

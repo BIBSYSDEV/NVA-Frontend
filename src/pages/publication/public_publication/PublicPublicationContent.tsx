@@ -16,7 +16,7 @@ import { getNpiDiscipline } from '../../../utils/npiDisciplines';
 import { StyledNormalTextPreWrapped } from '../../../components/styled/Wrappers';
 import { displayDate } from '../../../utils/date-helpers';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
-import { JournalEntityDescription } from '../../../types/publication_types/journal.publication.types';
+import { JournalEntityDescription } from '../../../types/publication_types/journalPublication.types';
 import { PublicPublicationStatusBar } from './PublicPublicationStatusBar';
 
 const StyledContentWrapper = styled.div`
