@@ -30,12 +30,10 @@ interface BookReference extends BackendType {
 
 export interface BookEntityDescription extends BackendType {
   abstract: string;
-  alternativeTitles?: string;
   contributors: Contributor[];
   date: PublicationDate;
   description: string;
   language: LanguageValues;
-  metadataSource?: string;
   mainTitle: string;
   npiSubjectHeading: string;
   reference: BookReference;

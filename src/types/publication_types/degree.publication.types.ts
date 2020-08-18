@@ -29,12 +29,10 @@ interface DegreeReference extends BackendType {
 
 export interface DegreeEntityDescription extends BackendType {
   abstract: string;
-  alternativeTitles?: string;
   contributors: Contributor[];
   date: PublicationDate;
   description: string;
   language: LanguageValues;
-  metadataSource?: string;
   mainTitle: string;
   npiSubjectHeading: string;
   reference: DegreeReference;

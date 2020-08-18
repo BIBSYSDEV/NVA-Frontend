@@ -31,12 +31,10 @@ interface JournalReference extends BackendType {
 
 export interface JournalEntityDescription extends BackendType {
   abstract: string;
-  alternativeTitles?: string;
   contributors: Contributor[];
   date: PublicationDate;
   description: string;
   language: LanguageValues;
-  metadataSource?: string;
   mainTitle: string;
   npiSubjectHeading: string;
   reference: JournalReference;
