@@ -34,8 +34,8 @@ export const PublicPublicationStatusBar: FC<PublicPublicationContentProps> = ({ 
   const { t } = useTranslation('publication');
   const { id, isPublisher } = useSelector((store: RootStore) => store.user);
 
-  const [openRequestDoi, setOpenRequestDoi] = useState(false);
-  const toggleRequestDoi = () => setOpenRequestDoi((state) => !state);
+  const [openRequestDoiModal, setOpenRequestDoiModal] = useState(false);
+  const toggleRequestDoiModal = () => setOpenRequestDoiModal((state) => !state);
 
   const {
     identifier,
@@ -58,7 +58,7 @@ export const PublicPublicationStatusBar: FC<PublicPublicationContentProps> = ({ 
       </StyledStatusBarDescription>
       <div>
         {!hasDoi && (
-          <Button variant="contained" color="primary" onClick={toggleRequestDoi}>
+          <Button variant="contained" color="primary" onClick={toggleRequestDoiModal}>
             {t('public_page.request_doi')}
           </Button>
         )}
@@ -70,16 +70,16 @@ export const PublicPublicationStatusBar: FC<PublicPublicationContentProps> = ({ 
       </div>
       {!hasDoi && (
         <Modal
-          open={openRequestDoi}
+          open={openRequestDoiModal}
           maxWidth="sm"
           fullWidth
-          onClose={toggleRequestDoi}
+          onClose={toggleRequestDoiModal}
           headingText={t('public_page.request_doi')}>
           <NormalText>{t('public_page.request_doi_description')}</NormalText>
           <TextField variant="outlined" multiline rows="4" fullWidth label={t('public_page.message_to_curator')} />
           <DialogActions>
-            <Button onClick={toggleRequestDoi}>{t('common:cancel')}</Button>
-            <Button variant="contained" color="primary" onClick={toggleRequestDoi}>
+            <Button onClick={toggleRequestDoiModal}>{t('common:cancel')}</Button>
+            <Button variant="contained" color="primary" onClick={toggleRequestDoiModal}>
               {t('common:send')}
             </Button>
           </DialogActions>
