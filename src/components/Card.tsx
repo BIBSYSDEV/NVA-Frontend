@@ -1,6 +1,6 @@
-import React, { ReactNode } from 'react';
+import React, { FC } from 'react';
 import styled from 'styled-components';
-import { Card as MaterialCard } from '@material-ui/core';
+import { Card as MaterialCard, CardProps } from '@material-ui/core';
 
 const StyledCard = styled(MaterialCard)`
   width: 100%;
@@ -11,11 +11,7 @@ const StyledCard = styled(MaterialCard)`
   margin-bottom: 1rem;
 `;
 
-interface CardProps {
-  children: ReactNode;
-}
-
-const Card: React.FC<CardProps> = ({ children, ...props }) => (
+const Card: FC<CardProps> = ({ children, ...props }) => (
   <StyledCard variant="outlined" {...props}>
     {children}
   </StyledCard>

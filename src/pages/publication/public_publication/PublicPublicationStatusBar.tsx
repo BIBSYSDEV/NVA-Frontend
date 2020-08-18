@@ -1,7 +1,7 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { Button } from '@material-ui/core';
+import { Button, DialogActions, TextField } from '@material-ui/core';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
@@ -10,8 +10,9 @@ import { RootStore } from '../../../redux/reducers/rootReducer';
 import Card from '../../../components/Card';
 import NormalText from '../../../components/NormalText';
 import { PublicPublicationContentProps } from './PublicPublicationContent';
+import Modal from '../../../components/Modal';
 
-const StyledCard = styled(Card)`
+const StyledStatusBar = styled(Card)`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -20,7 +21,7 @@ const StyledCard = styled(Card)`
   }
 `;
 
-const StyledDescription = styled.div`
+const StyledStatusBarDescription = styled.div`
   display: flex;
   align-items: center;
   svg {
@@ -32,6 +33,10 @@ const StyledDescription = styled.div`
 export const PublicPublicationStatusBar: FC<PublicPublicationContentProps> = ({ publication }) => {
   const { t } = useTranslation('publication');
   const { id, isPublisher } = useSelector((store: RootStore) => store.user);
+
+  const [openRequestDoiModal, setOpenRequestDoiModal] = useState(false);
+  const toggleRequestDoiModal = () => setOpenRequestDoiModal((state) => !state);
+
   const {
     identifier,
     owner,
@@ -44,16 +49,16 @@ export const PublicPublicationStatusBar: FC<PublicPublicationContentProps> = ({ 
   const hasDoi = !!doi;
 
   return isPublisher && isOwner ? (
-    <StyledCard>
-      <StyledDescription>
+    <StyledStatusBar>
+      <StyledStatusBarDescription>
         <CheckCircleOutlineIcon fontSize="large" />
         <NormalText>
           {t('common:status')}: {t(`status:${status}`)}
         </NormalText>
-      </StyledDescription>
+      </StyledStatusBarDescription>
       <div>
         {!hasDoi && (
-          <Button variant="contained" color="primary">
+          <Button variant="contained" color="primary" onClick={toggleRequestDoiModal}>
             {t('public_page.request_doi')}
           </Button>
         )}
@@ -63,6 +68,23 @@ export const PublicPublicationStatusBar: FC<PublicPublicationContentProps> = ({ 
           </Button>
         </Link>
       </div>
-    </StyledCard>
+      {!hasDoi && (
+        <Modal
+          open={openRequestDoiModal}
+          maxWidth="sm"
+          fullWidth
+          onClose={toggleRequestDoiModal}
+          headingText={t('public_page.request_doi')}>
+          <NormalText>{t('public_page.request_doi_description')}</NormalText>
+          <TextField variant="outlined" multiline rows="4" fullWidth label={t('public_page.message_to_curator')} />
+          <DialogActions>
+            <Button onClick={toggleRequestDoiModal}>{t('common:cancel')}</Button>
+            <Button variant="contained" color="primary" onClick={toggleRequestDoiModal}>
+              {t('common:send')}
+            </Button>
+          </DialogActions>
+        </Modal>
+      )}
+    </StyledStatusBar>
   ) : null;
 };

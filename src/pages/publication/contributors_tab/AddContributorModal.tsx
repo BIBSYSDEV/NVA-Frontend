@@ -35,8 +35,8 @@ const AddContributorModal: FC<AddContributorModalProps> = ({
 
   return (
     <Modal
-      ariaDescribedBy="add-contributor-modal"
-      ariaLabelledBy="add-contributor-modal"
+      aria-describedby="add-contributor-modal"
+      aria-labelledby="add-contributor-modal"
       headingText={
         createNewAuthor
           ? t('contributors.create_new_author')
@@ -45,7 +45,7 @@ const AddContributorModal: FC<AddContributorModalProps> = ({
           : t('contributors.add_author')
       }
       onClose={handleCloseModal}
-      openModal={open}
+      open={open}
       fullWidth
       maxWidth="md">
       {createNewAuthor ? (

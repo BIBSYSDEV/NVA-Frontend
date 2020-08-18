@@ -124,7 +124,7 @@ const FilesAndLicensePanel: FC<FilesAndLicensePanelProps> = ({ uppy, setTouchedF
       </FieldArray>
       <Modal
         headingText={t('files_and_license.licenses')}
-        openModal={isLicenseModalOpen}
+        open={isLicenseModalOpen}
         onClose={toggleLicenseModal}
         maxWidth="sm">
         {licenses.map((license) => (

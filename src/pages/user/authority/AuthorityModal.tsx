@@ -43,8 +43,8 @@ const AuthorityModal: FC<AuthorityModalProps> = ({ handleNextClick }) => {
     <>
       <Modal
         dataTestId="connect-author-modal"
-        ariaLabelledBy="connect-author-modal"
-        openModal={true}
+        aria-labelledby="connect-author-modal"
+        open={true}
         onClose={toggleCancelConfirmation}
         headingText={t('authority.connect_authority')}
         maxWidth="md">
