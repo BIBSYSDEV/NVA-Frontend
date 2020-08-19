@@ -4,7 +4,6 @@ import { CircularProgress } from '@material-ui/core';
 
 import SubHeading from '../../components/SubHeading';
 import useFetchDoiRequests from '../../utils/hooks/useFetchDoiRequests';
-
 import { RoleName } from '../../types/user.types';
 
 const DoiRequests: FC = () => {
