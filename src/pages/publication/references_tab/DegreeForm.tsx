@@ -3,7 +3,7 @@ import React, { useEffect, FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import { emptyPublisher, DegreePublication } from '../../../types/publication.types';
+import { DegreePublication } from '../../../types/publication.types';
 import {
   ReferenceFieldNames,
   DegreeType,
@@ -48,12 +48,18 @@ const DegreeForm: FC = () => {
         {({ field: { name, value }, meta: { error } }: FieldProps) => (
           <>
             <PublicationChannelSearch
-              clearSearchField={value === emptyPublisher}
+              clearSearchField={value.publisher === ''}
               dataTestId="autosearch-publisher"
               label={t('common:publisher')}
               publicationTable={PublicationTableNumber.PUBLISHERS}
               setValueFunction={(inputValue) => {
-                setFieldValue(name, { ...inputValue, publisher: inputValue.title, type: PublicationType.DEGREE });
+                setFieldValue(name, {
+                  ...value,
+                  publisher: inputValue.title,
+                  level: inputValue.level,
+                  url: inputValue.url,
+                  type: PublicationType.DEGREE,
+                });
               }}
               placeholder={t('references.search_for_publisher')}
               errorMessage={
@@ -72,7 +78,9 @@ const DegreeForm: FC = () => {
                 dataTestId="autosearch-results-publisher"
                 label={t('common:publisher')}
                 publisher={{ ...value, title: value.publisher }}
-                onClickDelete={() => setFieldValue(name, { type: PublicationType.DEGREE })}
+                onClickDelete={() => {
+                  setFieldValue(name, { ...value, publisher: '', level: '', url: '', type: PublicationType.DEGREE });
+                }}
               />
             )}
           </>
