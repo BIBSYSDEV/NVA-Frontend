@@ -19,7 +19,7 @@
     "deepmerge": "^4.2.2",
     "formik": "^2.1.5",
     "i18next": "^19.6.3",
-    "i18next-browser-languagedetector": "^6.0.0",
+    "i18next-browser-languagedetector": "^6.0.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-i18next": "^11.7.0",
