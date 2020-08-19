@@ -53,6 +53,7 @@ export enum ReferenceFieldNames {
   PEER_REVIEW = 'entityDescription.reference.publicationInstance.peerReviewed',
   PUBLICATION_CONTEXT_LEVEL = 'entityDescription.reference.publicationContext.level',
   PUBLICATION_CONTEXT_TITLE = 'entityDescription.reference.publicationContext.title',
+  PUBLICATION_CONTEXT_PUBLISHER = 'entityDescription.reference.publicationContext.publisher',
   PUBLICATION_CONTEXT_TYPE = 'entityDescription.reference.publicationContext.type',
   PUBLICATION_INSTANCE_TYPE = 'entityDescription.reference.publicationInstance.type',
   SERIES_TITLE = 'entityDescription.reference.publicationContext.seriesTitle',

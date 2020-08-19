@@ -83,6 +83,16 @@ const chapterPublicationInstance = {
   type: Yup.string().length(0),
 };
 
+const journalPublicationContext = {
+  type: Yup.string().required(ErrorMessage.REQUIRED),
+  title: Yup.string().required(ErrorMessage.REQUIRED),
+};
+
+const degreeAndReportPublicationContext = {
+  type: Yup.string().required(ErrorMessage.REQUIRED),
+  publisher: Yup.string().required(ErrorMessage.REQUIRED),
+};
+
 export const publicationValidationSchema = Yup.object().shape({
   entityDescription: Yup.object().shape({
     mainTitle: Yup.string().required(ErrorMessage.REQUIRED),
@@ -123,10 +133,19 @@ export const publicationValidationSchema = Yup.object().shape({
           is: PublicationType.CHAPTER,
           then: Yup.object().shape(chapterPublicationInstance),
         }),
-      publicationContext: Yup.object().shape({
-        type: Yup.string().required(ErrorMessage.REQUIRED),
-        title: Yup.string().required(ErrorMessage.REQUIRED),
-      }),
+      publicationContext: Yup.object()
+        .when('$publicationContextType', {
+          is: PublicationType.PUBLICATION_IN_JOURNAL,
+          then: Yup.object().shape(journalPublicationContext),
+        })
+        .when('$publicationContextType', {
+          is: PublicationType.DEGREE,
+          then: Yup.object().shape(degreeAndReportPublicationContext),
+        })
+        .when('$publicationContextType', {
+          is: PublicationType.REPORT,
+          then: Yup.object().shape(degreeAndReportPublicationContext),
+        }),
     }),
   }),
   fileSet: Yup.object().shape({

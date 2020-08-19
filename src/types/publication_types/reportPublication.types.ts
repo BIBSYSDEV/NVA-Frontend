@@ -1,11 +1,11 @@
 import { BackendType, PublicationDate, PagesMonograph } from '../publication.types';
-import { PublicationType, DegreeType } from '../publicationFieldNames';
+import { PublicationType, ReportType } from '../publicationFieldNames';
 import { LanguageValues } from '../language.types';
 import { Contributor } from '../contributor.types';
 import { BackendTypeNames, emptyDate } from './commonPublication.types';
 
 interface ReportPublicationInstance {
-  type: DegreeType | '';
+  type: ReportType | '';
   pages: PagesMonograph | null;
   peerReviewed: boolean;
 }
