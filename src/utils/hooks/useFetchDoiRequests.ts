@@ -1,24 +1,24 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import Axios from 'axios';
 
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import { getDoiRequests } from '../../api/publicationApi';
 import { RoleName } from '../../types/user.types';
 import { DoiRequest } from '../../types/doiRequest.types';
+import useCancelToken from './useCancelToken';
 
 const useFetchDoiRequests = (role: RoleName): [DoiRequest[], boolean, () => void] => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const [doiRequests, setDoiRequests] = useState<DoiRequest[]>([]);
+  const cancelToken = useCancelToken();
   const [isLoading, setIsLoading] = useState(true);
-  const cancelSourceRef = useRef(Axios.CancelToken.source());
+  const [doiRequests, setDoiRequests] = useState<DoiRequest[]>([]);
 
   const fetchDoiRequests = useCallback(async () => {
     setIsLoading(true);
-    const response = await getDoiRequests(role, cancelSourceRef.current.token);
+    const response = await getDoiRequests(role, cancelToken);
     if (response) {
       if (response.error) {
         dispatch(setNotification(t('feedback:error.get_doi_requests'), NotificationVariant.Error));
@@ -27,14 +27,11 @@ const useFetchDoiRequests = (role: RoleName): [DoiRequest[], boolean, () => void
       }
       setIsLoading(false);
     }
-  }, [t, dispatch, role]);
+  }, [t, dispatch, cancelToken, role]);
 
   useEffect(() => {
     fetchDoiRequests();
-    // Cancel request on unmount
-    const cancelSource = cancelSourceRef.current;
-    return () => cancelSource.cancel();
-  }, [fetchDoiRequests, role]);
+  }, [fetchDoiRequests]);
 
   return [doiRequests, isLoading, fetchDoiRequests];
 };
