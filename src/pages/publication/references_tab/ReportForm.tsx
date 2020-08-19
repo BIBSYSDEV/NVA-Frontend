@@ -1,5 +1,5 @@
 import { Field, FormikProps, useFormikContext, FieldProps, ErrorMessage } from 'formik';
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { ReportPublication } from '../../../types/publication.types';
@@ -19,6 +19,7 @@ import Label from '../../../components/Label';
 import { TextField } from '@material-ui/core';
 import { BackendTypeNames } from '../../../types/publication_types/commonPublication.types';
 import SeriesRow from './components/SeriesRow';
+import { Autocomplete } from '@material-ui/lab';
 
 const StyledContent = styled.div`
   display: grid;
@@ -103,12 +104,27 @@ const ReportForm: FC = () => {
       </Field>
 
       <StyledSection>
-        {/* TODO - convert to ISBN_LIST 
-        <Field name={ReferenceFieldNames.ISBN}>
+        <Field name={ReferenceFieldNames.ISBN_LIST}>
           {({ field }: FieldProps) => (
-            <StyledTextField data-testid="isbn" variant="outlined" label={t('references.isbn')} {...field} />
+            <Autocomplete
+              {...field}
+              freeSolo
+              multiple
+              options={[]}
+              onChange={(_: ChangeEvent<{}>, value: string[] | string) => setFieldValue(field.name, value)}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  data-testid="isbn"
+                  label={t('references.isbn')}
+                  helperText={t('references.isbn_helper')}
+                  variant="outlined"
+                  fullWidth
+                />
+              )}
+            />
           )}
-        </Field> */}
+        </Field>
 
         <Field name={ReferenceFieldNames.PAGES_PAGES}>
           {({ field }: FieldProps) => (

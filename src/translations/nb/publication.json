@@ -117,6 +117,7 @@
     "is_not_peer_reviewed": "Nei, den er ikke fagfellevurdert",
     "is_text_book": "Er boken en lærebok?",
     "isbn": "ISBN",
+    "isbn_helper": "Trykk Enter for å legge til ISBN",
     "issn": "ISSN",
     "issue": "Hefte",
     "journal": "Tidsskrift",
