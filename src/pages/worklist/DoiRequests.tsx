@@ -18,10 +18,11 @@ import useFetchDoiRequests from '../../utils/hooks/useFetchDoiRequests';
 import Label from '../../components/Label';
 import NormalText from '../../components/NormalText';
 import { getTranslatedLabelForDisplayedRows } from '../../utils/pagination';
+import { RoleName } from '../../types/user.types';
 
 const DoiRequests: FC = () => {
   const { t } = useTranslation('workLists');
-  const [doiRequests, isLoadingDoiRequests] = useFetchDoiRequests();
+  const [doiRequests, isLoadingDoiRequests] = useFetchDoiRequests(RoleName.CURATOR);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 

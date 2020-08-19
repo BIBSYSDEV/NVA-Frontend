@@ -1,45 +1,42 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import Axios from 'axios';
 
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import { getDoiRequests } from '../../api/publicationApi';
+import { RoleName } from '../../types/user.types';
+import { DoiRequest } from '../../types/doiRequest.types';
 
-export interface DoiRequest {
-  doiRequestStatus: string;
-  doiRequestDate: string;
-  publicationIdentifier: string;
-  publicationTitle: string;
-  publicationCreator: string;
-}
-
-const useFetchDoiRequests = (): [DoiRequest[], boolean] => {
+const useFetchDoiRequests = (role: RoleName): [DoiRequest[], boolean, () => void] => {
   const dispatch = useDispatch();
-  const [doiRequests, setDoiRequests] = useState([]);
+  const { t } = useTranslation();
+  const [doiRequests, setDoiRequests] = useState<DoiRequest[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const cancelSourceRef = useRef(Axios.CancelToken.source());
+
+  const fetchDoiRequests = useCallback(async () => {
+    setIsLoading(true);
+    const response = await getDoiRequests(role, cancelSourceRef.current.token);
+    if (response) {
+      if (response.error) {
+        dispatch(setNotification(t('feedback:error.get_doi_requests'), NotificationVariant.Error));
+      } else if (response.data) {
+        dispatch(setDoiRequests(response.data));
+      }
+      setIsLoading(false);
+    }
+  }, [t, dispatch, role]);
 
   useEffect(() => {
-    const cancelSource = Axios.CancelToken.source();
-
-    const fetchDoiRequests = async () => {
-      const response = await getDoiRequests(cancelSource.token);
-      if (response) {
-        if (response.error) {
-          dispatch(setNotification(response.error, NotificationVariant.Error));
-        } else {
-          dispatch(setDoiRequests(response));
-        }
-        setIsLoading(false);
-      }
-    };
-
     fetchDoiRequests();
-
+    // Cancel request on unmount
+    const cancelSource = cancelSourceRef.current;
     return () => cancelSource.cancel();
-  }, [dispatch]);
+  }, [fetchDoiRequests, role]);
 
-  return [doiRequests, isLoading];
+  return [doiRequests, isLoading, fetchDoiRequests];
 };
 
 export default useFetchDoiRequests;
