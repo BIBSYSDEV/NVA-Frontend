@@ -17,6 +17,7 @@ import mockNsdPublisers from '../utils/testfiles/publishersFromNsd.json';
 import mockCustomerInstitutions from '../utils/testfiles/mock_customer_institutions.json';
 import mockCustomerInstitution from '../utils/testfiles/mock_customer_institution.json';
 import mockPublishedPublications from '../utils/testfiles/published_publications.json';
+import mockDoiRequests from '../utils/testfiles/doiRequests.json';
 import { AuthorityApiPaths } from './authorityApi';
 import { InstitutionApiPaths } from './institutionApi';
 import { ProjectsApiPaths } from './projectApi';
@@ -99,7 +100,7 @@ export const interceptRequestsOnMock = () => {
   mock.onGet(new RegExp(`${PublicationsApiPaths.PUBLICATIONS_BY_OWNER}/*`)).reply(200, mockMyPublications);
 
   // WORKLIST
-  mock.onGet(new RegExp(`${PublicationsApiPaths.DOI_REQUESTS}/*`)).reply(200, mockMyPublications.publications);
+  mock.onGet(new RegExp(`${PublicationsApiPaths.DOI_REQUESTS}/*`)).reply(200, mockDoiRequests);
   mock.onGet(new RegExp(`${PublicationsApiPaths.FOR_APPROVAL}/*`)).reply(200, mockMyPublications.publications);
 
   //PUBLICATION
