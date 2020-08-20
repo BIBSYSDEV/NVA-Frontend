@@ -29,13 +29,12 @@ const AuthorityModal: FC<AuthorityModalProps> = ({ closeModal, handleNextClick }
   const [openCancelConfirmation, setOpenCancelConfirmation] = useState(false);
   const { handleLogout } = useAuthentication();
 
-  const toggleCancelConfirmation = () => setOpenCancelConfirmation((state) => !state);
-
   const handleCloseModal = () => {
+    // Allow user to close modal without warning only if user already has an authority
     if (authority) {
       closeModal();
     } else {
-      toggleCancelConfirmation();
+      setOpenCancelConfirmation(true);
     }
   };
 
@@ -80,7 +79,7 @@ const AuthorityModal: FC<AuthorityModalProps> = ({ closeModal, handleNextClick }
         open={openCancelConfirmation}
         title={t('authority.cancel_connect_authority_title')}
         onAccept={handleLogout}
-        onCancel={toggleCancelConfirmation}>
+        onCancel={() => setOpenCancelConfirmation(false)}>
         {t('authority.cancel_connect_authority_text')}
       </ConfirmDialog>
     </>
