@@ -166,7 +166,18 @@ export const touchedReferenceTabFields = (publicationType: PublicationType | '')
         },
       };
     default:
-      return {};
+      return {
+        entityDescription: {
+          reference: {
+            publicationContext: {
+              type: true,
+            },
+            publicationInstance: {
+              type: true,
+            },
+          },
+        },
+      };
   }
 };
 

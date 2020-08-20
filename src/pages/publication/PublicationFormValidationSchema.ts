@@ -84,12 +84,10 @@ const chapterPublicationInstance = {
 };
 
 const journalPublicationContext = {
-  type: Yup.string().required(ErrorMessage.REQUIRED),
   title: Yup.string().required(ErrorMessage.REQUIRED),
 };
 
 const degreeAndReportPublicationContext = {
-  type: Yup.string().required(ErrorMessage.REQUIRED),
   publisher: Yup.string().required(ErrorMessage.REQUIRED),
 };
 
@@ -134,6 +132,7 @@ export const publicationValidationSchema = Yup.object().shape({
           then: Yup.object().shape(chapterPublicationInstance),
         }),
       publicationContext: Yup.object()
+        .shape({ type: Yup.string().required(ErrorMessage.REQUIRED) })
         .when('$publicationContextType', {
           is: PublicationType.PUBLICATION_IN_JOURNAL,
           then: Yup.object().shape(journalPublicationContext),

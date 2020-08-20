@@ -24,7 +24,6 @@ describe('User opens publication form and can see validation errors', () => {
       .within(() => {
         cy.contains(`Publication type: ${ErrorMessage.REQUIRED}`);
         cy.contains(`Authors: ${ErrorMessage.MISSING_CONTRIBUTOR}`);
-        cy.contains(`Publisher: ${ErrorMessage.REQUIRED}`);
         cy.contains(`Files: ${ErrorMessage.MISSING_FILE}`);
       });
 
