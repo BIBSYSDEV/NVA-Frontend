@@ -2,7 +2,6 @@ import { BackendType, PublicationDate, PagesMonograph } from '../publication.typ
 import { PublicationType, ReportType } from '../publicationFieldNames';
 import { LanguageValues } from '../language.types';
 import { Contributor } from '../contributor.types';
-import { BackendTypeNames, emptyDate } from './commonPublication.types';
 
 interface ReportPublicationInstance {
   type: ReportType | '';
@@ -10,7 +9,7 @@ interface ReportPublicationInstance {
   peerReviewed: boolean;
 }
 
-export interface ReportPublicationContext {
+interface ReportPublicationContext {
   type: PublicationType | '';
   isbnList: string[];
   level: string | number | null;
@@ -41,43 +40,3 @@ export interface ReportEntityDescription extends BackendType {
   reference: ReportReference;
   tags: string[];
 }
-
-export const emptyPublicationInstance: ReportPublicationInstance = {
-  type: '',
-  pages: null,
-  peerReviewed: false,
-};
-
-export const emptyPublicationContext: ReportPublicationContext = {
-  type: '',
-  isbnList: [],
-  level: '',
-  onlineIssn: '',
-  openAccess: false,
-  peerReviewed: false,
-  printIssn: '',
-  publisher: '',
-  seriesNumber: '',
-  seriesTitle: '',
-  url: '',
-};
-
-export const emptyReference: ReportReference = {
-  type: BackendTypeNames.REFERENCE,
-  doi: '',
-  publicationContext: emptyPublicationContext,
-  publicationInstance: emptyPublicationInstance,
-};
-
-export const emptyPublicationEntityDescription: ReportEntityDescription = {
-  type: BackendTypeNames.ENTITY_DESCRIPTION,
-  abstract: '',
-  contributors: [],
-  date: emptyDate,
-  description: '',
-  language: LanguageValues.NONE,
-  mainTitle: '',
-  npiSubjectHeading: '',
-  reference: emptyReference,
-  tags: [],
-};

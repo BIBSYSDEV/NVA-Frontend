@@ -45,14 +45,6 @@ export interface Publisher {
   openAccess: boolean;
 }
 
-export const emptyPublisher: Publisher = {
-  type: '',
-  onlineIssn: '',
-  level: null,
-  title: '',
-  openAccess: false,
-};
-
 export interface AlmaPublication {
   title: string;
 }
