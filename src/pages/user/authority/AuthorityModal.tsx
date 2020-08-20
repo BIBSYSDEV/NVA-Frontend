@@ -29,9 +29,10 @@ const StyledNormalText = styled(NormalText)`
 interface AuthorityModalProps {
   authority: Authority | null;
   handleNextClick: () => void;
+  closeModal: () => void;
 }
 
-const AuthorityModal: FC<AuthorityModalProps> = ({ handleNextClick }) => {
+const AuthorityModal: FC<AuthorityModalProps> = ({ closeModal, handleNextClick }) => {
   const { t } = useTranslation('profile');
   const { authority } = useSelector((store: RootStore) => store.user);
   const [openCancelConfirmation, setOpenCancelConfirmation] = useState(false);
@@ -39,13 +40,21 @@ const AuthorityModal: FC<AuthorityModalProps> = ({ handleNextClick }) => {
 
   const toggleCancelConfirmation = () => setOpenCancelConfirmation((state) => !state);
 
+  const handleCloseModal = () => {
+    if (authority) {
+      closeModal();
+    } else {
+      toggleCancelConfirmation();
+    }
+  };
+
   return (
     <>
       <Modal
         dataTestId="connect-author-modal"
         aria-labelledby="connect-author-modal"
         open={true}
-        onClose={toggleCancelConfirmation}
+        onClose={handleCloseModal}
         headingText={t('authority.connect_authority')}
         maxWidth="md">
         <>
@@ -60,7 +69,7 @@ const AuthorityModal: FC<AuthorityModalProps> = ({ handleNextClick }) => {
 
           <StyledButtonContainer>
             {!authority && (
-              <Button variant="text" onClick={toggleCancelConfirmation}>
+              <Button variant="text" onClick={handleCloseModal}>
                 {t('common:cancel')}
               </Button>
             )}
