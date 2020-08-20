@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Button } from '@material-ui/core';
+import { Button, DialogActions } from '@material-ui/core';
 import styled from 'styled-components';
 
 import { Authority } from '../../../types/authority.types';
@@ -9,18 +9,9 @@ import { RootStore } from '../../../redux/reducers/rootReducer';
 import AuthorityCard from './AuthorityCard';
 import { ConnectAuthority } from './ConnectAuthority';
 import Modal from '../../../components/Modal';
-import { StyledRightAlignedButtonWrapper } from '../../../components/styled/Wrappers';
 import NormalText from '../../../components/NormalText';
 import ConfirmDialog from '../../../components/ConfirmDialog';
 import { useAuthentication } from '../../../utils/hooks/useAuthentication';
-
-const StyledButtonContainer = styled(StyledRightAlignedButtonWrapper)`
-  margin-top: 2rem;
-
-  button:not(:first-child) {
-    margin-left: 2rem;
-  }
-`;
 
 const StyledNormalText = styled(NormalText)`
   margin-top: 1rem;
@@ -67,7 +58,7 @@ const AuthorityModal: FC<AuthorityModalProps> = ({ closeModal, handleNextClick }
             <ConnectAuthority />
           )}
 
-          <StyledButtonContainer>
+          <DialogActions>
             {!authority && (
               <Button variant="text" onClick={handleCloseModal}>
                 {t('common:cancel')}
@@ -81,7 +72,7 @@ const AuthorityModal: FC<AuthorityModalProps> = ({ closeModal, handleNextClick }
               disabled={!authority}>
               {t('common:next')}
             </Button>
-          </StyledButtonContainer>
+          </DialogActions>
         </>
       </Modal>
 
