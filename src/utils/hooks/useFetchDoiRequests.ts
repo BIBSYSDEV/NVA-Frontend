@@ -23,7 +23,7 @@ const useFetchDoiRequests = (role: RoleName): [DoiRequest[], boolean, () => void
       if (response.error) {
         dispatch(setNotification(t('feedback:error.get_doi_requests'), NotificationVariant.Error));
       } else if (response.data) {
-        dispatch(setDoiRequests(response.data));
+        setDoiRequests(response.data);
       }
       setIsLoading(false);
     }
