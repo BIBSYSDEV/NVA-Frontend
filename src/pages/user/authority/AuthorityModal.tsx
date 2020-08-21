@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Button } from '@material-ui/core';
+import { Button, DialogActions } from '@material-ui/core';
 import styled from 'styled-components';
 
 import { Authority } from '../../../types/authority.types';
@@ -9,18 +9,9 @@ import { RootStore } from '../../../redux/reducers/rootReducer';
 import AuthorityCard from './AuthorityCard';
 import { ConnectAuthority } from './ConnectAuthority';
 import Modal from '../../../components/Modal';
-import { StyledRightAlignedButtonWrapper } from '../../../components/styled/Wrappers';
 import NormalText from '../../../components/NormalText';
 import ConfirmDialog from '../../../components/ConfirmDialog';
 import { useAuthentication } from '../../../utils/hooks/useAuthentication';
-
-const StyledButtonContainer = styled(StyledRightAlignedButtonWrapper)`
-  margin-top: 2rem;
-
-  button:not(:first-child) {
-    margin-left: 2rem;
-  }
-`;
 
 const StyledNormalText = styled(NormalText)`
   margin-top: 1rem;
@@ -29,15 +20,23 @@ const StyledNormalText = styled(NormalText)`
 interface AuthorityModalProps {
   authority: Authority | null;
   handleNextClick: () => void;
+  closeModal: () => void;
 }
 
-const AuthorityModal: FC<AuthorityModalProps> = ({ handleNextClick }) => {
+const AuthorityModal: FC<AuthorityModalProps> = ({ closeModal, handleNextClick }) => {
   const { t } = useTranslation('profile');
   const { authority } = useSelector((store: RootStore) => store.user);
   const [openCancelConfirmation, setOpenCancelConfirmation] = useState(false);
   const { handleLogout } = useAuthentication();
 
-  const toggleCancelConfirmation = () => setOpenCancelConfirmation((state) => !state);
+  const handleCloseModal = () => {
+    // Allow user to close modal without warning only if user already has an authority
+    if (authority) {
+      closeModal();
+    } else {
+      setOpenCancelConfirmation(true);
+    }
+  };
 
   return (
     <>
@@ -45,7 +44,7 @@ const AuthorityModal: FC<AuthorityModalProps> = ({ handleNextClick }) => {
         dataTestId="connect-author-modal"
         aria-labelledby="connect-author-modal"
         open={true}
-        onClose={toggleCancelConfirmation}
+        onClose={handleCloseModal}
         headingText={t('authority.connect_authority')}
         maxWidth="md">
         <>
@@ -53,26 +52,20 @@ const AuthorityModal: FC<AuthorityModalProps> = ({ handleNextClick }) => {
             <>
               <AuthorityCard authority={authority} isConnected />
               <StyledNormalText>{t('authority.connected_authority')}</StyledNormalText>
+              <DialogActions>
+                <Button
+                  color="primary"
+                  variant="contained"
+                  data-testid="modal_next"
+                  onClick={handleNextClick}
+                  disabled={!authority}>
+                  {t('common:next')}
+                </Button>
+              </DialogActions>
             </>
           ) : (
-            <ConnectAuthority />
+            <ConnectAuthority handleCloseModal={handleCloseModal} />
           )}
-
-          <StyledButtonContainer>
-            {!authority && (
-              <Button variant="text" onClick={toggleCancelConfirmation}>
-                {t('common:cancel')}
-              </Button>
-            )}
-            <Button
-              color="primary"
-              variant="contained"
-              data-testid="modal_next"
-              onClick={handleNextClick}
-              disabled={!authority}>
-              {t('common:next')}
-            </Button>
-          </StyledButtonContainer>
         </>
       </Modal>
 
@@ -80,7 +73,7 @@ const AuthorityModal: FC<AuthorityModalProps> = ({ handleNextClick }) => {
         open={openCancelConfirmation}
         title={t('authority.cancel_connect_authority_title')}
         onAccept={handleLogout}
-        onCancel={toggleCancelConfirmation}>
+        onCancel={() => setOpenCancelConfirmation(false)}>
         {t('authority.cancel_connect_authority_text')}
       </ConfirmDialog>
     </>
