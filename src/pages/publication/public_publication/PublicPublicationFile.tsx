@@ -48,7 +48,7 @@ interface PublicPublicationFileProps {
 }
 
 const PublicPublicationFile: FC<PublicPublicationFileProps> = ({ file }) => {
-  const { identifier } = useParams();
+  const { identifier } = useParams<{ identifier: string }>();
   const { t } = useTranslation('common');
   const dispatch = useDispatch();
   const [isLoadingFile, setIsLoadingFile] = useState(false);

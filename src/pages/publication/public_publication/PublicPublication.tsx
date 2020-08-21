@@ -9,7 +9,7 @@ import NotPublished from '../../errorpages/NotPublished';
 import NotFound from '../../errorpages/NotFound';
 
 const PublicPublication: FC = () => {
-  const { identifier } = useParams();
+  const { identifier } = useParams<{ identifier: string }>();
   const [publication, isLoadingPublication] = useFetchPublication(identifier);
   const history = useHistory();
 

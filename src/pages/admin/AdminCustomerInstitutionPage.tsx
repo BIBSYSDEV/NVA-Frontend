@@ -16,7 +16,7 @@ const StyledCustomerInstitution = styled.section`
 
 const AdminCustomerInstitutionPage: FC = () => {
   const history = useHistory();
-  const { identifier } = useParams();
+  const { identifier } = useParams<{ identifier: string }>();
   const editMode = identifier !== 'new';
   const [customerInstitution, isLoadingCustomerInstitution, handleSetCustomerInstitution] = useFetchCustomerInstitution(
     identifier,

@@ -44,7 +44,7 @@ const StyledCard = styled(Card)`
 `;
 
 const EditPublication: FC = () => {
-  const { identifier } = useParams();
+  const { identifier } = useParams<{ identifier: string }>();
   const [expanded, setExpanded] = useState<string | false>(false);
   const [showForm, setShowForm] = useState(!!identifier);
   const { t } = useTranslation();

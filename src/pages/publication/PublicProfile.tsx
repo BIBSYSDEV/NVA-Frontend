@@ -32,7 +32,7 @@ const StyledTextContainer = styled.div`
 `;
 
 const PublicProfile: FC = () => {
-  const { arpId } = useParams();
+  const { arpId } = useParams<{ arpId: string }>();
   const [authority, isLoadingUser] = useFetchAuthority(arpId);
   const history = useHistory();
 
