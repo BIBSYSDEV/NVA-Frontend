@@ -87,7 +87,7 @@
     "@types/react-router-dom": "^5.1.5",
     "@types/react-truncate": "^2.3.3",
     "@types/styled-components": "^5.1.2",
-    "@types/yup": "^0.29.5",
+    "@types/yup": "^0.29.6",
     "axios-mock-adapter": "^1.18.2",
     "cypress": "^4.12.1",
     "faker": "^4.1.0",
