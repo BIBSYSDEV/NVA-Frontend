@@ -11,8 +11,6 @@ export interface CustomerInstitution extends BackendType {
   institutionDns: string;
   feideOrganizationId: string;
   createdDate: string;
-  logoFile?: File;
-  error?: string;
 }
 
 export const emptyCustomerInstitution: CustomerInstitution = {
