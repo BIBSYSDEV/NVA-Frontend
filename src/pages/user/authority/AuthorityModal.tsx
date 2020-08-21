@@ -52,26 +52,20 @@ const AuthorityModal: FC<AuthorityModalProps> = ({ closeModal, handleNextClick }
             <>
               <AuthorityCard authority={authority} isConnected />
               <StyledNormalText>{t('authority.connected_authority')}</StyledNormalText>
+              <DialogActions>
+                <Button
+                  color="primary"
+                  variant="contained"
+                  data-testid="modal_next"
+                  onClick={handleNextClick}
+                  disabled={!authority}>
+                  {t('common:next')}
+                </Button>
+              </DialogActions>
             </>
           ) : (
-            <ConnectAuthority />
+            <ConnectAuthority handleCloseModal={handleCloseModal} />
           )}
-
-          <DialogActions>
-            {!authority && (
-              <Button variant="text" onClick={handleCloseModal}>
-                {t('common:cancel')}
-              </Button>
-            )}
-            <Button
-              color="primary"
-              variant="contained"
-              data-testid="modal_next"
-              onClick={handleNextClick}
-              disabled={!authority}>
-              {t('common:next')}
-            </Button>
-          </DialogActions>
         </>
       </Modal>
 
