@@ -21,20 +21,21 @@ export const PublicPublicationContextJournal: FC<{ publicationContext: JournalPu
   publicationContext,
 }) => {
   const { t } = useTranslation('publication');
+  const { onlineIssn, title, url } = publicationContext;
 
-  return (
+  return title ? (
     <LabelContentRow minimal multiple label={`${t('references.journal')}:`}>
       <StyledContainer>
-        <NormalText>{publicationContext.title}</NormalText>
-        {publicationContext.url && (
-          <Link href={publicationContext.url} target="_blank" rel="noopener noreferrer">
-            <StyledOpenInNewIcon aria-label={publicationContext.url} />
+        <NormalText>{title}</NormalText>
+        {url && (
+          <Link href={url} target="_blank" rel="noopener noreferrer">
+            <StyledOpenInNewIcon aria-label={url} />
           </Link>
         )}
       </StyledContainer>
-      {publicationContext.onlineIssn && `${t('references.issn')} ${publicationContext.onlineIssn}`}
+      {onlineIssn && `${t('references.issn')} ${onlineIssn}`}
     </LabelContentRow>
-  );
+  ) : null;
 };
 
 export const PublicPublicationContextDegree: FC<{ publicationContext: DegreePublicationContext }> = ({
@@ -45,16 +46,18 @@ export const PublicPublicationContextDegree: FC<{ publicationContext: DegreePubl
 
   return (
     <>
-      <LabelContentRow minimal multiple label={`${t('common:publisher')}:`}>
-        <StyledContainer>
-          <NormalText>{publisher}</NormalText>
-          {url && (
-            <Link href={url} target="_blank" rel="noopener noreferrer">
-              <StyledOpenInNewIcon aria-label={url} />
-            </Link>
-          )}
-        </StyledContainer>
-      </LabelContentRow>
+      {publisher && (
+        <LabelContentRow minimal multiple label={`${t('common:publisher')}:`}>
+          <StyledContainer>
+            <NormalText>{publisher}</NormalText>
+            {url && (
+              <Link href={url} target="_blank" rel="noopener noreferrer">
+                <StyledOpenInNewIcon aria-label={url} />
+              </Link>
+            )}
+          </StyledContainer>
+        </LabelContentRow>
+      )}
       {seriesTitle && (
         <LabelContentRow minimal label={`${t('references.series')}:`}>
           {seriesTitle}
@@ -73,17 +76,19 @@ export const PublicPublicationContextReport: FC<{ publicationContext: ReportPubl
 
   return (
     <>
-      <LabelContentRow minimal multiple label={`${t('common:publisher')}:`}>
-        <StyledContainer>
-          <NormalText>{publisher}</NormalText>
-          {url && (
-            <Link href={url} target="_blank" rel="noopener noreferrer">
-              <StyledOpenInNewIcon aria-label={url} />
-            </Link>
-          )}
-        </StyledContainer>
-        {onlineIssn && `${t('references.issn')} ${onlineIssn}`}
-      </LabelContentRow>
+      {publisher && (
+        <LabelContentRow minimal multiple label={`${t('common:publisher')}:`}>
+          <StyledContainer>
+            <NormalText>{publisher}</NormalText>
+            {url && (
+              <Link href={url} target="_blank" rel="noopener noreferrer">
+                <StyledOpenInNewIcon aria-label={url} />
+              </Link>
+            )}
+          </StyledContainer>
+          {onlineIssn && `${t('references.issn')} ${onlineIssn}`}
+        </LabelContentRow>
+      )}
       {seriesTitle && (
         <LabelContentRow minimal label={`${t('references.series')}:`}>
           {seriesTitle}
