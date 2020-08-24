@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC, useState, useEffect, ChangeEvent } from 'react';
 import { SortableContainer, SortableElement, SortEnd } from 'react-sortable-hoc';
 import {
   Checkbox,
@@ -22,7 +22,7 @@ import deepmerge from 'deepmerge';
 
 import { ContributorFieldNames, SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
 import { Contributor, emptyContributor } from '../../../../types/contributor.types';
-import { Publication } from '../../../../types/publication.types';
+import { Publication, JournalPublication } from '../../../../types/publication.types';
 import SubHeading from '../../../../components/SubHeading';
 import AddContributor from '../AddContributorModal';
 import styled from 'styled-components';
@@ -68,6 +68,8 @@ const SortableItem = SortableElement(
     const { t } = useTranslation('publication');
     const index = contributor.sequence - 1;
     const baseFieldName = `${ContributorFieldNames.CONTRIBUTORS}[${index}]`;
+    const { values, setFieldValue }: FormikProps<JournalPublication> = useFormikContext();
+    const [emailValue, setEmailValue] = useState(values.entityDescription.contributors[index].email ?? '');
 
     return (
       <TableRow tabIndex={0} key={contributor.identity.id}>
@@ -104,7 +106,14 @@ const SortableItem = SortableElement(
                     variant="outlined"
                     label={t('common:email')}
                     {...field}
-                    value={field.value || ''}
+                    onChange={(event: ChangeEvent<any>) => {
+                      setEmailValue(event.target.value);
+                    }}
+                    onBlur={(event: ChangeEvent<any>) => {
+                      setFieldValue(`${baseFieldName}.${SpecificContributorFieldNames.EMAIL}`, emailValue);
+                      field.onBlur(event);
+                    }}
+                    value={emailValue}
                     error={touched && !!error}
                     helperText={touched && error}
                   />
