@@ -1,17 +1,11 @@
-import { Field, FormikProps, useFormikContext, FieldProps, ErrorMessage } from 'formik';
+import { Field, FormikProps, useFormikContext, FieldProps } from 'formik';
 import React, { FC, useEffect, ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { ReportPublication } from '../../../types/publication.types';
-import {
-  ReferenceFieldNames,
-  ReportType,
-  PublicationType,
-  contextTypeBaseFieldName,
-} from '../../../types/publicationFieldNames';
+import { ReferenceFieldNames, ReportType } from '../../../types/publicationFieldNames';
 import { PublicationTableNumber } from '../../../utils/constants';
 import PublicationChannelSearch from './components/PublicationChannelSearch';
-import PublisherRow from './components/PublisherRow';
 import DoiField from './components/DoiField';
 import SelectTypeField from './components/SelectTypeField';
 import SubHeading from '../../../components/SubHeading';
@@ -20,6 +14,7 @@ import { TextField } from '@material-ui/core';
 import { BackendTypeNames } from '../../../types/publication_types/commonPublication.types';
 import SeriesRow from './components/SeriesRow';
 import { Autocomplete } from '@material-ui/lab';
+import PublisherField from './components/PublisherField';
 
 const StyledContent = styled.div`
   display: grid;
@@ -60,48 +55,12 @@ const ReportForm: FC = () => {
 
       <DoiField />
 
-      <Field name={contextTypeBaseFieldName}>
-        {({ field: { name, value }, meta: { error } }: FieldProps) => (
-          <>
-            <PublicationChannelSearch
-              clearSearchField={value.publisher === ''}
-              dataTestId="autosearch-publisher"
-              label={t('common:publisher')}
-              publicationTable={PublicationTableNumber.PUBLISHERS}
-              setValueFunction={(inputValue) => {
-                setFieldValue(name, {
-                  ...value,
-                  publisher: inputValue.title,
-                  level: inputValue.level,
-                  url: inputValue.url,
-                  type: PublicationType.REPORT,
-                });
-              }}
-              placeholder={t('references.search_for_publisher')}
-              errorMessage={
-                error && touched.entityDescription?.reference?.publicationContext?.publisher ? (
-                  // Must use global touched variable instead of what is in meta, since meta.touched always will
-                  // evaluate to true if it is a object (as in this case). Even though this field will update
-                  // the whole object, we only want to show error message if we are missing the title property.
-                  <ErrorMessage name={ReferenceFieldNames.PUBLICATION_CONTEXT_PUBLISHER} />
-                ) : (
-                  ''
-                )
-              }
-            />
-            {value.publisher && (
-              <PublisherRow
-                dataTestId="autosearch-results-publisher"
-                label={t('common:publisher')}
-                publisher={{ ...value, title: value.publisher }}
-                onClickDelete={() =>
-                  setFieldValue(name, { ...value, publisher: '', level: '', url: '', type: PublicationType.REPORT })
-                }
-              />
-            )}
-          </>
-        )}
-      </Field>
+      <PublisherField
+        label={t('common:publisher')}
+        placeholder={t('references.search_for_publisher')}
+        touched={touched.entityDescription?.reference?.publicationContext?.publisher}
+        errorName={ReferenceFieldNames.PUBLICATION_CONTEXT_PUBLISHER}
+      />
 
       <StyledSection>
         <Field name={ReferenceFieldNames.ISBN_LIST}>
