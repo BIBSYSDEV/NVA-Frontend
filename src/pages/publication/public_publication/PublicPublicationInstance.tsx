@@ -10,6 +10,7 @@ export const PublicPublicationInstanceJournal: FC<{ publicationInstance: Journal
 }) => {
   const { t } = useTranslation('publication');
   const { articleNumber, issue, pages, volume } = publicationInstance;
+
   return (
     <LabelContentRow minimal label={`${t('common:details')}:`}>
       {volume && `${t('references.volume')} ${volume}`}

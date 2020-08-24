@@ -71,7 +71,6 @@ export const PublicPublicationContextReport: FC<{ publicationContext: ReportPubl
   publicationContext,
 }) => {
   const { t } = useTranslation('publication');
-
   const { onlineIssn, publisher, seriesTitle, url } = publicationContext;
 
   return (
