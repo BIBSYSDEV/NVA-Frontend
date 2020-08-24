@@ -51,28 +51,36 @@ const journalPublicationInstance = {
   articleNumber: Yup.number().typeError(ErrorMessage.INVALID_FORMAT).min(0, ErrorMessage.MUST_BE_POSITIVE),
   volume: Yup.number().typeError(ErrorMessage.INVALID_FORMAT).min(0, ErrorMessage.MUST_BE_POSITIVE),
   issue: Yup.number().typeError(ErrorMessage.INVALID_FORMAT).min(0, ErrorMessage.MUST_BE_POSITIVE),
-  pages: Yup.object().shape({
-    begin: Yup.number()
-      .typeError(ErrorMessage.INVALID_FORMAT)
-      .min(0, ErrorMessage.MUST_BE_POSITIVE)
-      .max(Yup.ref('end'), ErrorMessage.INVALID_PAGE_INTERVAL),
-    end: Yup.number().typeError(ErrorMessage.INVALID_FORMAT).min(Yup.ref('begin'), ErrorMessage.INVALID_PAGE_INTERVAL),
-  }),
+  pages: Yup.object()
+    .nullable()
+    .shape({
+      begin: Yup.number()
+        .typeError(ErrorMessage.INVALID_FORMAT)
+        .min(0, ErrorMessage.MUST_BE_POSITIVE)
+        .max(Yup.ref('end'), ErrorMessage.INVALID_PAGE_INTERVAL),
+      end: Yup.number()
+        .typeError(ErrorMessage.INVALID_FORMAT)
+        .min(Yup.ref('begin'), ErrorMessage.INVALID_PAGE_INTERVAL),
+    }),
 };
 
 const bookPublicationInstance = {
   type: Yup.string().oneOf(Object.values(BookType)).required(ErrorMessage.REQUIRED),
-  pages: Yup.object().shape({
-    pages: Yup.number().typeError(ErrorMessage.INVALID_FORMAT).min(1, ErrorMessage.MUST_BE_MIN_1),
-  }),
+  pages: Yup.object()
+    .nullable()
+    .shape({
+      pages: Yup.number().typeError(ErrorMessage.INVALID_FORMAT).min(1, ErrorMessage.MUST_BE_MIN_1),
+    }),
   peerReviewed: Yup.boolean().required(ErrorMessage.REQUIRED),
 };
 
 const reportPublicationInstance = {
   type: Yup.string().oneOf(Object.values(ReportType)).required(ErrorMessage.REQUIRED),
-  pages: Yup.object().shape({
-    pages: Yup.number().typeError(ErrorMessage.INVALID_FORMAT).min(1, ErrorMessage.MUST_BE_MIN_1),
-  }),
+  pages: Yup.object()
+    .nullable()
+    .shape({
+      pages: Yup.number().typeError(ErrorMessage.INVALID_FORMAT).min(1, ErrorMessage.MUST_BE_MIN_1),
+    }),
 };
 
 const degreePublicationInstance = {

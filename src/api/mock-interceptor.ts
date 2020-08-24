@@ -10,7 +10,7 @@ import mockNtnuResponse from '../utils/testfiles/institutions/institution_ntnu.j
 import mockNtnuSubunitResponse from '../utils/testfiles/institutions/institution_subunit_ntnu.json';
 import mockAuthoritiesResponse from '../utils/testfiles/mock_authorities_response.json';
 import mockProjects from '../utils/testfiles/projects_real.json';
-import mockPublication from '../utils/testfiles/publication_generated.json';
+import { mockPublication } from '../utils/testfiles/mockPublication';
 import mockPublications from '../utils/testfiles/publications_45_random_results_generated.json';
 import mockMyPublications from '../utils/testfiles/my_publications.json';
 import mockNsdPublisers from '../utils/testfiles/publishersFromNsd.json';
