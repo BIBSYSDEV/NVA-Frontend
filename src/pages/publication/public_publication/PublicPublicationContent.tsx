@@ -21,14 +21,24 @@ import {
 } from '../../../types/publication_types/journalPublication.types';
 import { PublicPublicationStatusBar } from './PublicPublicationStatusBar';
 import { isJournal, isDegree, isReport } from '../../../utils/publication-helpers';
-import { PublicPublicationInstanceJournal } from './PublicPublicationInstance';
+import {
+  PublicPublicationInstanceJournal,
+  PublicPublicationInstanceDegree,
+  PublicPublicationInstanceReport,
+} from './PublicPublicationInstance';
 import {
   PublicPublicationContextJournal,
   PublicPublicationContextDegree,
   PublicPublicationContextReport,
 } from './PublicPublicationContext';
-import { DegreePublicationContext } from '../../../types/publication_types/degreePublication.types';
-import { ReportPublicationContext } from '../../../types/publication_types/reportPublication.types';
+import {
+  DegreePublicationContext,
+  DegreePublicationInstance,
+} from '../../../types/publication_types/degreePublication.types';
+import {
+  ReportPublicationContext,
+  ReportPublicationInstance,
+} from '../../../types/publication_types/reportPublication.types';
 
 const StyledContentWrapper = styled.div`
   display: flex;
@@ -151,6 +161,7 @@ const PublicPublicationContent: FC<PublicPublicationContentProps> = ({ publicati
               ))}
             </LabelContentRow>
           )}
+
           {publicationContext && isJournal(publication) ? (
             <PublicPublicationContextJournal publicationContext={publicationContext as JournalPublicationContext} />
           ) : isDegree(publication) ? (
@@ -158,9 +169,15 @@ const PublicPublicationContent: FC<PublicPublicationContentProps> = ({ publicati
           ) : isReport(publication) ? (
             <PublicPublicationContextReport publicationContext={publicationContext as ReportPublicationContext} />
           ) : null}
-          {publicationInstance && isJournal(publication) && (
+
+          {publicationInstance && isJournal(publication) ? (
             <PublicPublicationInstanceJournal publicationInstance={publicationInstance as JournalPublicationInstance} />
-          )}
+          ) : isDegree(publication) ? (
+            <PublicPublicationInstanceDegree publicationInstance={publicationInstance as DegreePublicationInstance} />
+          ) : isReport(publication) ? (
+            <PublicPublicationInstanceReport publicationInstance={publicationInstance as ReportPublicationInstance} />
+          ) : null}
+
           {date?.year && (
             <LabelContentRow minimal label={`${t('description.date_published')}:`}>
               {displayDate(date)}
