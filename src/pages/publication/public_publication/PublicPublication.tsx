@@ -7,24 +7,32 @@ import useFetchPublication from '../../../utils/hooks/useFetchPublication';
 import PublicPublicationContent from './PublicPublicationContent';
 import NotPublished from '../../errorpages/NotPublished';
 import NotFound from '../../errorpages/NotFound';
+import { useSelector } from 'react-redux';
+import { RootStore } from '../../../redux/reducers/rootReducer';
 
 const PublicPublication: FC = () => {
   const { identifier } = useParams();
   const [publication, isLoadingPublication] = useFetchPublication(identifier);
   const history = useHistory();
+  const user = useSelector((store: RootStore) => store.user);
 
   useEffect(() => {
-    history.replace(`/publication/${identifier}/public`, {
-      title: publication?.entityDescription?.mainTitle,
-    });
+    if (publication) {
+      history.replace(`/publication/${identifier}/public`, {
+        title: publication.entityDescription.mainTitle,
+      });
+    }
   }, [publication, history, identifier]);
+
+  const isAllowed =
+    publication?.status === PublicationStatus.PUBLISHED || user.isCurator || publication?.owner === user.id;
 
   return (
     <>
       {isLoadingPublication ? (
         <CircularProgress color="inherit" size={20} />
       ) : publication ? (
-        publication.status === PublicationStatus.PUBLISHED ? (
+        isAllowed ? (
           <PublicPublicationContent publication={publication} />
         ) : (
           <NotPublished />
