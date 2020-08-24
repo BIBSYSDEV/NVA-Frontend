@@ -7,7 +7,6 @@ export const mockPublication: JournalPublication = {
   type: BackendTypeNames.PUBLICATION,
   identifier: '12345679',
   createdDate: '2020',
-  doiRequest: null,
   owner: 'aaa@bb.com',
   status: PublicationStatus.DRAFT,
   doiRequested: false,
