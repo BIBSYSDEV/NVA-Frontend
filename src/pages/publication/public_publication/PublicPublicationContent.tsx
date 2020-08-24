@@ -162,7 +162,7 @@ const PublicPublicationContent: FC<PublicPublicationContentProps> = ({ publicati
             </LabelContentRow>
           )}
 
-          {publicationContext && isJournal(publication) ? (
+          {isJournal(publication) ? (
             <PublicPublicationContextJournal publicationContext={publicationContext as JournalPublicationContext} />
           ) : isDegree(publication) ? (
             <PublicPublicationContextDegree publicationContext={publicationContext as DegreePublicationContext} />
@@ -170,7 +170,7 @@ const PublicPublicationContent: FC<PublicPublicationContentProps> = ({ publicati
             <PublicPublicationContextReport publicationContext={publicationContext as ReportPublicationContext} />
           ) : null}
 
-          {publicationInstance && isJournal(publication) ? (
+          {isJournal(publication) ? (
             <PublicPublicationInstanceJournal publicationInstance={publicationInstance as JournalPublicationInstance} />
           ) : isDegree(publication) ? (
             <PublicPublicationInstanceDegree publicationInstance={publicationInstance as DegreePublicationInstance} />
