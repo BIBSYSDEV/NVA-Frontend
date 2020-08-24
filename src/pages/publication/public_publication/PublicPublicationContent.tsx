@@ -163,19 +163,22 @@ const PublicPublicationContent: FC<PublicPublicationContentProps> = ({ publicati
           )}
 
           {isJournal(publication) ? (
-            <PublicPublicationContextJournal publicationContext={publicationContext as JournalPublicationContext} />
+            <>
+              <PublicPublicationContextJournal publicationContext={publicationContext as JournalPublicationContext} />
+              <PublicPublicationInstanceJournal
+                publicationInstance={publicationInstance as JournalPublicationInstance}
+              />
+            </>
           ) : isDegree(publication) ? (
-            <PublicPublicationContextDegree publicationContext={publicationContext as DegreePublicationContext} />
+            <>
+              <PublicPublicationContextDegree publicationContext={publicationContext as DegreePublicationContext} />
+              <PublicPublicationInstanceDegree publicationInstance={publicationInstance as DegreePublicationInstance} />
+            </>
           ) : isReport(publication) ? (
-            <PublicPublicationContextReport publicationContext={publicationContext as ReportPublicationContext} />
-          ) : null}
-
-          {isJournal(publication) ? (
-            <PublicPublicationInstanceJournal publicationInstance={publicationInstance as JournalPublicationInstance} />
-          ) : isDegree(publication) ? (
-            <PublicPublicationInstanceDegree publicationInstance={publicationInstance as DegreePublicationInstance} />
-          ) : isReport(publication) ? (
-            <PublicPublicationInstanceReport publicationInstance={publicationInstance as ReportPublicationInstance} />
+            <>
+              <PublicPublicationContextReport publicationContext={publicationContext as ReportPublicationContext} />
+              <PublicPublicationInstanceReport publicationInstance={publicationInstance as ReportPublicationInstance} />
+            </>
           ) : null}
 
           {date?.year && (
