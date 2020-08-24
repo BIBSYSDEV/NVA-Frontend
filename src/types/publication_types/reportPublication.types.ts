@@ -3,13 +3,13 @@ import { PublicationType, ReportType } from '../publicationFieldNames';
 import { LanguageValues } from '../language.types';
 import { Contributor } from '../contributor.types';
 
-interface ReportPublicationInstance {
+export interface ReportPublicationInstance {
   type: ReportType | '';
   pages: PagesMonograph | null;
   peerReviewed: boolean;
 }
 
-interface ReportPublicationContext {
+export interface ReportPublicationContext {
   type: PublicationType | '';
   isbnList: string[];
   level: string | number | null;

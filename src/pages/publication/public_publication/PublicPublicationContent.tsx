@@ -15,9 +15,20 @@ import { licenses } from '../../../types/file.types';
 import { getNpiDiscipline } from '../../../utils/npiDisciplines';
 import { StyledNormalTextPreWrapped } from '../../../components/styled/Wrappers';
 import { displayDate } from '../../../utils/date-helpers';
-import OpenInNewIcon from '@material-ui/icons/OpenInNew';
-import { JournalEntityDescription } from '../../../types/publication_types/journalPublication.types';
+import {
+  JournalPublicationContext,
+  JournalPublicationInstance,
+} from '../../../types/publication_types/journalPublication.types';
 import { PublicPublicationStatusBar } from './PublicPublicationStatusBar';
+import { isJournal, isDegree, isReport } from '../../../utils/publication-helpers';
+import { PublicPublicationInstanceJournal } from './PublicPublicationInstance';
+import {
+  PublicPublicationContextJournal,
+  PublicPublicationContextDegree,
+  PublicPublicationContextReport,
+} from './PublicPublicationContext';
+import { DegreePublicationContext } from '../../../types/publication_types/degreePublication.types';
+import { ReportPublicationContext } from '../../../types/publication_types/reportPublication.types';
 
 const StyledContentWrapper = styled.div`
   display: flex;
@@ -79,14 +90,6 @@ const StyledTag = styled.div`
   margin-right: 1rem;
 `;
 
-const StyledContainer = styled.div`
-  display: flex;
-`;
-
-const StyledOpenInNewIcon = styled(OpenInNewIcon)`
-  margin-left: 0.25rem;
-`;
-
 export interface PublicPublicationContentProps {
   publication: Publication;
 }
@@ -103,7 +106,7 @@ const PublicPublicationContent: FC<PublicPublicationContentProps> = ({ publicati
     npiSubjectHeading,
     reference: { doi, publicationContext, publicationInstance },
     tags,
-  } = publication.entityDescription as JournalEntityDescription;
+  } = publication.entityDescription;
 
   // Show only the license for the first file for now
   const currentLicense = publication.fileSet?.files[0]?.license ?? null;
@@ -148,29 +151,15 @@ const PublicPublicationContent: FC<PublicPublicationContentProps> = ({ publicati
               ))}
             </LabelContentRow>
           )}
-          {publicationContext && (
-            <LabelContentRow minimal multiple label={`${t('references.journal')}:`}>
-              <StyledContainer>
-                <NormalText>{publicationContext.title}</NormalText>
-                {publicationContext.url && (
-                  <Link href={publicationContext.url} target="_blank" rel="noopener noreferrer">
-                    <StyledOpenInNewIcon aria-label={publicationContext.url} />
-                  </Link>
-                )}
-              </StyledContainer>
-              {publicationContext.onlineIssn && `${t('references.issn')} ${publicationContext.onlineIssn}`}
-            </LabelContentRow>
-          )}
-          {publicationInstance && (
-            <LabelContentRow minimal label={`${t('common:details')}:`}>
-              {publicationInstance.volume && `${t('references.volume')} ${publicationInstance.volume}`}
-              {publicationInstance.issue && `, ${t('references.issue')} ${publicationInstance.issue}`}
-              {publicationInstance.pages?.begin &&
-                publicationInstance.pages?.end &&
-                `, ${t('references.pages')} ${publicationInstance.pages.begin}-${publicationInstance.pages.end}`}
-              {publicationInstance.articleNumber &&
-                `, ${t('references.article_number')} ${publicationInstance.articleNumber}`}
-            </LabelContentRow>
+          {publicationContext && isJournal(publication) ? (
+            <PublicPublicationContextJournal publicationContext={publicationContext as JournalPublicationContext} />
+          ) : isDegree(publication) ? (
+            <PublicPublicationContextDegree publicationContext={publicationContext as DegreePublicationContext} />
+          ) : isReport(publication) ? (
+            <PublicPublicationContextReport publicationContext={publicationContext as ReportPublicationContext} />
+          ) : null}
+          {publicationInstance && isJournal(publication) && (
+            <PublicPublicationInstanceJournal publicationInstance={publicationInstance as JournalPublicationInstance} />
           )}
           {date?.year && (
             <LabelContentRow minimal label={`${t('description.date_published')}:`}>
