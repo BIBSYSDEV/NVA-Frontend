@@ -24,7 +24,7 @@ const PublicPublication: FC = () => {
     }
   }, [publication, history, identifier]);
 
-  const isAllowed =
+  const isAllowedToSeePublicPublication =
     publication?.status === PublicationStatus.PUBLISHED || user.isCurator || publication?.owner === user.id;
 
   return (
@@ -32,7 +32,7 @@ const PublicPublication: FC = () => {
       {isLoadingPublication ? (
         <CircularProgress color="inherit" size={20} />
       ) : publication ? (
-        isAllowed ? (
+        isAllowedToSeePublicPublication ? (
           <PublicPublicationContent publication={publication} />
         ) : (
           <NotPublished />
