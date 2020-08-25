@@ -124,8 +124,10 @@ describe('User opens publication form and can see validation errors', () => {
     cy.contains(ErrorMessage.REQUIRED).should('be.visible');
 
     cy.get('[data-testid=author-email-input]').click({ force: true }).type('test');
+    cy.get('[data-testid=nav-tabpanel-contributors]').click({ force: true });
     cy.contains(ErrorMessage.INVALID_FORMAT).should('be.visible');
     cy.get('[data-testid=author-email-input]').click({ force: true }).type('@email.com');
+    cy.get('[data-testid=nav-tabpanel-contributors]').click({ force: true });
     cy.contains(ErrorMessage.INVALID_FORMAT).should('not.be.visible');
     cy.contains(ErrorMessage.REQUIRED).should('not.be.visible');
 
@@ -141,6 +143,7 @@ describe('User opens publication form and can see validation errors', () => {
     cy.contains(ErrorMessage.REQUIRED).should('be.visible');
     cy.get('[data-testid=nav-tabpanel-contributors]').should('have.class', 'error-tab');
     cy.get('[data-testid=author-email-input]').eq(1).click({ force: true }).type('test@email.com');
+    cy.get('[data-testid=nav-tabpanel-contributors]').click({ force: true });
     cy.contains(ErrorMessage.REQUIRED).should('not.be.visible');
     cy.get('[data-testid=nav-tabpanel-contributors]').should('not.have.class', 'error-tab');
   });
