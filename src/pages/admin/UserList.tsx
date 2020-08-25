@@ -4,7 +4,7 @@ import { Table, TableHead, TableRow, TableCell, TableBody, Button } from '@mater
 import { useTranslation } from 'react-i18next';
 
 import Label from './../../components/Label';
-import { InstitutionUser } from '../../types/user.types';
+import { InstitutionUser, RoleName } from '../../types/user.types';
 import NormalText from '../../components/NormalText';
 
 const StyledTable = styled(Table)`
@@ -20,9 +20,11 @@ const StyledTableRow = styled(TableRow)`
 
 interface UserListProps {
   userList: InstitutionUser[];
+  allowRemoveRole?: RoleName;
+  allowAddRole?: RoleName;
 }
 
-const UserList: FC<UserListProps> = ({ userList }) => {
+const UserList: FC<UserListProps> = ({ userList, allowRemoveRole = false, allowAddRole = false }) => {
   const { t } = useTranslation('admin');
 
   return (
@@ -34,9 +36,6 @@ const UserList: FC<UserListProps> = ({ userList }) => {
               <TableCell>
                 <Label>{t('users.username')}</Label>
               </TableCell>
-              <TableCell>
-                <Label>{t('common:institution')}</Label>
-              </TableCell>
               <TableCell />
             </TableRow>
           </TableHead>
@@ -44,11 +43,20 @@ const UserList: FC<UserListProps> = ({ userList }) => {
             {userList.map((user) => (
               <StyledTableRow key={user.username}>
                 <TableCell>{user.username}</TableCell>
-                <TableCell>{user.institution}</TableCell>
                 <TableCell align="right">
-                  <Button disabled color="secondary" variant="contained">
-                    {t('common:delete')}
-                  </Button>
+                  {allowRemoveRole && (
+                    <Button color="secondary" variant="contained">
+                      {t('common:delete')}
+                    </Button>
+                  )}
+                  {allowAddRole && (
+                    <Button
+                      disabled={user.roles.some((role) => role.rolename === allowAddRole)}
+                      color="primary"
+                      variant="contained">
+                      {t('common:add')}
+                    </Button>
+                  )}
                 </TableCell>
               </StyledTableRow>
             ))}
