@@ -58,11 +58,7 @@ export const PublicPublicationContextDegree: FC<{ publicationContext: DegreePubl
           </StyledContainer>
         </LabelContentRow>
       )}
-      {seriesTitle && (
-        <LabelContentRow minimal label={`${t('references.series')}:`}>
-          {seriesTitle}
-        </LabelContentRow>
-      )}
+      <DisplaySeriesTitle seriesTitle={seriesTitle} />
     </>
   );
 };
@@ -88,11 +84,17 @@ export const PublicPublicationContextReport: FC<{ publicationContext: ReportPubl
           {onlineIssn && `${t('references.issn')} ${onlineIssn}`}
         </LabelContentRow>
       )}
-      {seriesTitle && (
-        <LabelContentRow minimal label={`${t('references.series')}:`}>
-          {seriesTitle}
-        </LabelContentRow>
-      )}
+      <DisplaySeriesTitle seriesTitle={seriesTitle} />
     </>
   );
+};
+
+export const DisplaySeriesTitle: FC<{ seriesTitle: string }> = ({ seriesTitle }) => {
+  const { t } = useTranslation('publication');
+
+  return seriesTitle ? (
+    <LabelContentRow minimal label={`${t('references.series')}:`}>
+      {seriesTitle}
+    </LabelContentRow>
+  ) : null;
 };
