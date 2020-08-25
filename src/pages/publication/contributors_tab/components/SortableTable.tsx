@@ -22,7 +22,7 @@ import deepmerge from 'deepmerge';
 
 import { ContributorFieldNames, SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
 import { Contributor, emptyContributor } from '../../../../types/contributor.types';
-import { Publication, JournalPublication } from '../../../../types/publication.types';
+import { Publication } from '../../../../types/publication.types';
 import SubHeading from '../../../../components/SubHeading';
 import AddContributor from '../AddContributorModal';
 import styled from 'styled-components';
@@ -68,7 +68,7 @@ const SortableItem = SortableElement(
     const { t } = useTranslation('publication');
     const index = contributor.sequence - 1;
     const baseFieldName = `${ContributorFieldNames.CONTRIBUTORS}[${index}]`;
-    const { values, setFieldValue }: FormikProps<JournalPublication> = useFormikContext();
+    const { values, setFieldValue }: FormikProps<Publication> = useFormikContext();
     const [emailValue, setEmailValue] = useState(values.entityDescription.contributors[index].email ?? '');
 
     return (
