@@ -1,14 +1,10 @@
-import React, { FC, useState, ChangeEvent, useEffect } from 'react';
+import React, { FC } from 'react';
 import styled from 'styled-components';
-import { Table, TableHead, TableRow, TableCell, TableBody, Button, TextField } from '@material-ui/core';
+import { Table, TableHead, TableRow, TableCell, TableBody, Button } from '@material-ui/core';
 import Label from './../../components/Label';
 import { useTranslation } from 'react-i18next';
-import { InstitutionUser, RoleName } from '../../types/user.types';
-import { assignUserRole } from '../../api/roleApi';
-import { useSelector, useDispatch } from 'react-redux';
-import { RootStore } from '../../redux/reducers/rootReducer';
-import { setNotification } from '../../redux/actions/notificationActions';
-import { NotificationVariant } from '../../types/notification.types';
+import { InstitutionUser } from '../../types/user.types';
+import NormalText from '../../components/NormalText';
 
 const StyledTable = styled(Table)`
   width: 100%;
@@ -21,58 +17,16 @@ const StyledTableRow = styled(TableRow)`
   }
 `;
 
-const StyledNewButton = styled(Button)`
-  margin-top: 1rem;
-`;
-
-const StyledButton = styled(StyledNewButton)`
-  margin-left: 0.5rem;
-`;
-
 interface UserListProps {
   userList: InstitutionUser[];
-  role: RoleName;
-  buttonText: string;
 }
 
-const UserList: FC<UserListProps> = ({ userList, role, buttonText }) => {
+const UserList: FC<UserListProps> = ({ userList }) => {
   const { t } = useTranslation('admin');
-  const [showNewUserForm, setShowNewUserForm] = useState(false);
-  const [username, setUsername] = useState('');
-  const [currentUserList, setCurrentUserList] = useState(userList);
-  const user = useSelector((store: RootStore) => store.user);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    setCurrentUserList(userList);
-  }, [userList]);
-
-  const toggleShowNewUserForm = () => {
-    setShowNewUserForm(!showNewUserForm);
-  };
-
-  const handleSubmitUser = async () => {
-    const newUserRole = await assignUserRole(user.institution, username, role);
-    if (newUserRole) {
-      if (newUserRole.error) {
-        dispatch(setNotification(newUserRole.error, NotificationVariant.Error));
-      } else if (newUserRole.info) {
-        dispatch(setNotification(newUserRole.info, NotificationVariant.Info));
-      } else {
-        setCurrentUserList([...currentUserList, newUserRole]);
-        dispatch(setNotification(t('feedback:success.added_role')));
-      }
-    }
-    toggleShowNewUserForm();
-  };
-
-  const handleAddNewUser = (event: ChangeEvent<any>) => {
-    setUsername(event.target.value);
-  };
 
   return (
     <>
-      {(currentUserList?.length > 0 || showNewUserForm) && (
+      {userList.length > 0 ? (
         <StyledTable>
           <TableHead>
             <TableRow>
@@ -86,7 +40,7 @@ const UserList: FC<UserListProps> = ({ userList, role, buttonText }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {currentUserList.map((user) => (
+            {userList.map((user) => (
               <StyledTableRow key={user.username}>
                 <TableCell>{user.username}</TableCell>
                 <TableCell>{user.institution}</TableCell>
@@ -97,27 +51,13 @@ const UserList: FC<UserListProps> = ({ userList, role, buttonText }) => {
                 </TableCell>
               </StyledTableRow>
             ))}
-            {showNewUserForm && (
-              <StyledTableRow>
-                <TableCell>
-                  <TextField label={t('users.username')} variant="outlined" size="small" onChange={handleAddNewUser} />
-                </TableCell>
-                <TableCell colSpan={4} align="right">
-                  <StyledButton color="primary" variant="contained" onClick={handleSubmitUser}>
-                    {t('common:add')}
-                  </StyledButton>
-                  <StyledButton color="secondary" variant="contained" onClick={toggleShowNewUserForm}>
-                    {t('common:cancel')}
-                  </StyledButton>
-                </TableCell>
-              </StyledTableRow>
-            )}
           </TableBody>
         </StyledTable>
+      ) : (
+        <NormalText>
+          <i>{t('users.no_users_found')}</i>
+        </NormalText>
       )}
-      <StyledNewButton color="primary" variant="outlined" onClick={toggleShowNewUserForm} disabled={showNewUserForm}>
-        {buttonText}
-      </StyledNewButton>
     </>
   );
 };
