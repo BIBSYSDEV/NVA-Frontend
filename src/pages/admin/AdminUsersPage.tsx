@@ -114,7 +114,7 @@ const AdminUsersPage: FC = () => {
               ? t('users.add_curator')
               : t('users.add_editor')
           }>
-          <AddRoleModalContent role={roleToAdd} />
+          <AddRoleModalContent role={roleToAdd} closeModal={() => setRoleToAdd(undefined)} />
         </Modal>
       )}
     </Card>

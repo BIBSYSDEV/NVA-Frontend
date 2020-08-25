@@ -18,6 +18,7 @@
   "search_for_user": "Søk blant eksisterende brukere",
   "short_name": "Forkortet visningsnavn på institusjonen",
   "users": {
+    "add_role_info": "Om du ikke finner brukeren, så må du sjekke at vedkommende er tilknyttet din institusjon og har logget på tjenesten tidligere.",
     "auto_assign_creators": "Ansatte får automatisk rolle som registrator ved pålogging hvis de er registrert med dette i 'eduPersonAffiliation': Employee, Staff, Member",
     "created_date": "Opprettet",
     "creator_info": "Hvem skal få tilgang til å registrere?",
