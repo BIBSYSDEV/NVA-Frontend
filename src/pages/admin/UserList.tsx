@@ -1,8 +1,9 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 import { Table, TableHead, TableRow, TableCell, TableBody, Button } from '@material-ui/core';
-import Label from './../../components/Label';
 import { useTranslation } from 'react-i18next';
+
+import Label from './../../components/Label';
 import { InstitutionUser } from '../../types/user.types';
 import NormalText from '../../components/NormalText';
 
