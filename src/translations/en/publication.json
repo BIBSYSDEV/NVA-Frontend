@@ -117,6 +117,7 @@
     "is_not_peer_reviewed": "The publication is not peer reviewed",
     "is_text_book": "Is this a textbook?",
     "isbn": "ISBN",
+    "isbn_helper": "Press Enter to add ISBN",
     "issn": "ISSN",
     "issue": "Issue",
     "journal": "Journal",
