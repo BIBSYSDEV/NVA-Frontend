@@ -93,21 +93,35 @@ export const PublicPublicationStatusBar: FC<PublicPublicationContentProps> = ({ 
         </NormalText>
       </StyledStatusBarDescription>
       <div>
-        {!hasDoi && (
+        {!hasDoi && publication.status === PublicationStatus.PUBLISHED && (
           <Button variant="contained" color="primary" onClick={toggleRequestDoiModal}>
             {t('public_page.request_doi')}
           </Button>
         )}
+        {!hasDoi && publication.status === PublicationStatus.DRAFT && (
+          <Button variant="contained" color="primary" disabled>
+            {t('public_page.reserve_doi')}
+          </Button>
+        )}
+
         <Link to={`/publication/${identifier}`}>
           <Button variant="contained" color="primary">
             {t('public_page.edit_publication')}
           </Button>
         </Link>
       </div>
+
       {!hasDoi && (
         <Modal open={openRequestDoiModal} onClose={toggleRequestDoiModal} headingText={t('public_page.request_doi')}>
           <NormalText>{t('public_page.request_doi_description')}</NormalText>
-          <TextField variant="outlined" multiline rows="4" fullWidth label={t('public_page.message_to_curator')} />
+          <TextField
+            variant="outlined"
+            multiline
+            rows="4"
+            fullWidth
+            label={t('public_page.message_to_curator')}
+            disabled
+          />
           <DialogActions>
             <Button onClick={toggleRequestDoiModal}>{t('common:cancel')}</Button>
             <ButtonWithProgress

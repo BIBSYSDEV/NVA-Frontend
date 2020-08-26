@@ -97,6 +97,7 @@
   "public_page": {
     "edit_publication": "Endre publikasjon",
     "message_to_curator": "Melding til kurator",
+    "reserve_doi": "Reserver DOI",
     "request_doi": "Be om DOI",
     "request_doi_description": "Forespørselen vil bli behandlet av en kurator. Legg til en melding ved eventuelle spørsmål eller oppklaringer. Du vil få en epost når forespørselen er behandlet."
   },
