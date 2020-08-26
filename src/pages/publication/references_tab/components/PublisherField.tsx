@@ -1,66 +1,56 @@
 import React, { FC } from 'react';
-import { Field, FieldProps, ErrorMessage, FormikProps, useFormikContext } from 'formik';
+import { Field, FieldProps, ErrorMessage } from 'formik';
 import PublicationChannelSearch from './PublicationChannelSearch';
 import { PublicationTableNumber } from '../../../../utils/constants';
 import PublisherRow from './PublisherRow';
-import { Publisher, levelMap, JournalPublication } from '../../../../types/publication.types';
-import {
-  PublicationType,
-  contextTypeBaseFieldName,
-  ReferenceFieldNames,
-} from '../../../../types/publicationFieldNames';
+import { contextTypeBaseFieldName } from '../../../../types/publicationFieldNames';
+import { levelMap } from '../../../../types/publication.types';
 
 interface PublisherFieldProps {
   publicationTable?: PublicationTableNumber;
   label: string;
   placeholder: string;
+  touched: boolean | undefined;
+  errorName: string;
 }
 
 const PublisherField: FC<PublisherFieldProps> = ({
   publicationTable = PublicationTableNumber.PUBLISHERS,
   label,
   placeholder,
+  touched,
+  errorName,
 }) => {
-  const { touched }: FormikProps<JournalPublication> = useFormikContext();
-
-  const mapPublisher = (selectedPublisher: Publisher, type: PublicationType) => {
-    const levelAsEnum = Object.keys(levelMap).find((key) => levelMap[key] === selectedPublisher.level);
-    return { ...selectedPublisher, level: levelAsEnum, type }; //TODO: remove type when this is implemented as part of channel register (NP-774)
-  };
-
   return (
     <Field name={contextTypeBaseFieldName}>
       {({ field: { name, value }, form: { setFieldValue }, meta: { error } }: FieldProps) => (
         <>
           <PublicationChannelSearch
-            clearSearchField={value === null}
+            clearSearchField
             dataTestId="autosearch-publisher"
             label={label}
             publicationTable={publicationTable}
-            setValueFunction={(selectedPublisher) => setFieldValue(name, mapPublisher(selectedPublisher, value.type))}
+            setValueFunction={(inputValue) => {
+              setFieldValue(name, {
+                ...value,
+                title: inputValue.title,
+                publisher: inputValue.title,
+                level: Object.keys(levelMap).find((key) => levelMap[key] === inputValue.level),
+                url: inputValue.url,
+              });
+            }}
             placeholder={placeholder}
-            errorMessage={
-              error && touched.entityDescription?.reference?.publicationContext?.title ? (
-                // Must use global touched variable instead of what is in meta, since meta.touched always will
-                // evaluate to true if it is a object (as in this case). Even though this field will update
-                // the whole object, we only want to show error message if we are missing the title property.
-                <ErrorMessage name={ReferenceFieldNames.PUBLICATION_CONTEXT_TITLE} />
-              ) : (
-                ''
-              )
-            }
+            errorMessage={error && touched ? <ErrorMessage name={errorName} /> : ''}
           />
 
-          {value.title && (
+          {(value.title || value.publisher) && (
             <PublisherRow
               dataTestId="autosearch-results-publisher"
-              publisher={value}
+              publisher={value.title ? value : { ...value, title: value.publisher }}
               label={label}
-              onClickDelete={() =>
-                setFieldValue(name, {
-                  type: value.type, // Remove everything except the type
-                })
-              }
+              onClickDelete={() => {
+                setFieldValue(name, { ...value, publisher: '', title: '', level: '', url: '' });
+              }}
             />
           )}
         </>

@@ -137,14 +137,30 @@ export const touchedReferenceTabFields = (publicationType: PublicationType | '')
           },
         },
       };
-
     case PublicationType.DEGREE:
       return {
         entityDescription: {
           reference: {
             publicationContext: {
               type: true,
-              title: true,
+              publisher: true,
+            },
+            publicationInstance: {
+              type: true,
+            },
+          },
+        },
+      };
+    case PublicationType.REPORT:
+      return {
+        entityDescription: {
+          reference: {
+            publicationContext: {
+              type: true,
+              publisher: true,
+            },
+            publicationInstance: {
+              type: true,
             },
           },
         },
@@ -155,18 +171,9 @@ export const touchedReferenceTabFields = (publicationType: PublicationType | '')
           reference: {
             publicationContext: {
               type: true,
-              title: true,
             },
             publicationInstance: {
               type: true,
-              articleNumber: true,
-              issue: true,
-              pages: {
-                begin: true,
-                end: true,
-              },
-              peerReviewed: true,
-              volume: true,
             },
           },
         },

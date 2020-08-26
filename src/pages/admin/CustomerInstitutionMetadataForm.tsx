@@ -75,7 +75,6 @@ const CustomerInstitutionMetadataForm: FC<CustomerInstitutionMetadataFormProps> 
           [CustomerInstitutionFieldNames.NAME]: Yup.string().required(t('feedback.required_field')),
           [CustomerInstitutionFieldNames.DISPLAY_NAME]: Yup.string().required(t('feedback.required_field')),
           [CustomerInstitutionFieldNames.SHORT_NAME]: Yup.string().required(t('feedback.required_field')),
-          [CustomerInstitutionFieldNames.ADMINISTRATION_ID]: Yup.string().required(t('feedback.required_field')),
           [CustomerInstitutionFieldNames.FEIDE_ORGANIZATION_ID]: Yup.string().required(t('feedback.required_field')),
         })}
         onSubmit={handleSubmit}>
@@ -163,20 +162,6 @@ const CustomerInstitutionMetadataForm: FC<CustomerInstitutionMetadataFormProps> 
                   fullWidth
                   variant="outlined"
                   inputProps={{ 'data-testid': 'customer-institution-institution-dns-input' }}
-                />
-              )}
-            </Field>
-
-            <Field name={CustomerInstitutionFieldNames.ADMINISTRATION_ID}>
-              {({ field, meta: { touched, error } }: FieldProps) => (
-                <TextField
-                  {...field}
-                  label={t('administration_id')}
-                  fullWidth
-                  variant="outlined"
-                  inputProps={{ 'data-testid': 'customer-institution-administrator-id-input' }}
-                  error={touched && !!error}
-                  helperText={<ErrorMessage name={field.name} />}
                 />
               )}
             </Field>

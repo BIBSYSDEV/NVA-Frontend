@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Button, DialogActions, TextField } from '@material-ui/core';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
+import WorkOutlineIcon from '@material-ui/icons/WorkOutline';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
@@ -11,6 +12,7 @@ import Card from '../../../components/Card';
 import NormalText from '../../../components/NormalText';
 import { PublicPublicationContentProps } from './PublicPublicationContent';
 import Modal from '../../../components/Modal';
+import { PublicationStatus } from '../../../types/publication.types';
 
 const StyledStatusBar = styled(Card)`
   display: flex;
@@ -26,8 +28,15 @@ const StyledStatusBarDescription = styled.div`
   align-items: center;
   svg {
     margin-right: 0.5rem;
-    color: green;
   }
+`;
+
+const StyledPublishedStatusIcon = styled(CheckCircleOutlineIcon)`
+  color: green;
+`;
+
+const StyledUnpublishedStatusIcon = styled(WorkOutlineIcon)`
+  color: orange;
 `;
 
 export const PublicPublicationStatusBar: FC<PublicPublicationContentProps> = ({ publication }) => {
@@ -51,9 +60,13 @@ export const PublicPublicationStatusBar: FC<PublicPublicationContentProps> = ({ 
   return isPublisher && isOwner ? (
     <StyledStatusBar>
       <StyledStatusBarDescription>
-        <CheckCircleOutlineIcon fontSize="large" />
+        {status === PublicationStatus.PUBLISHED ? (
+          <StyledPublishedStatusIcon fontSize="large" />
+        ) : (
+          <StyledUnpublishedStatusIcon fontSize="large" />
+        )}
         <NormalText>
-          {t('common:status')}: {t(`status:${status}`)}
+          {t('common:status')}: {t(`status.${status}`)}
         </NormalText>
       </StyledStatusBarDescription>
       <div>

@@ -1,17 +1,16 @@
 import Axios, { CancelToken } from 'axios';
 import i18n from '../translations/i18n';
-import { StatusCode, TEMP_ROLES_API } from '../utils/constants';
+import { StatusCode } from '../utils/constants';
 import { getIdToken } from './userApi';
 import { RoleName, InstitutionUser, UserRole } from '../types/user.types';
 
 export enum RoleApiPaths {
-  INSTITUTIONS = '/institutions',
-  USERS = '/users',
+  INSTITUTIONS = '/users-roles/institutions',
+  USERS = '/users-roles/users',
 }
 
 export const getInstitutionUser = async (username: string, cancelToken?: CancelToken) => {
-  // TODO: Remove tempBaseUrl when endpoint is moved to normal backend path
-  const url = `${TEMP_ROLES_API}${RoleApiPaths.USERS}/${encodeURIComponent(username)}`;
+  const url = `${RoleApiPaths.USERS}/${encodeURIComponent(username)}`;
 
   try {
     const idToken = await getIdToken();
@@ -32,8 +31,7 @@ export const getInstitutionUser = async (username: string, cancelToken?: CancelT
 };
 
 export const getUsersForInstitution = async (institution: string, cancelToken?: CancelToken) => {
-  // TODO: Remove tempBaseUrl when endpoint is moved to normal backend path
-  const url = `${TEMP_ROLES_API}${RoleApiPaths.INSTITUTIONS}/${institution}/users`;
+  const url = `${RoleApiPaths.INSTITUTIONS}/${institution}/users`;
 
   try {
     const idToken = await getIdToken();
@@ -59,8 +57,7 @@ export const assignUserRole = async (
   rolename: RoleName,
   cancelToken?: CancelToken
 ) => {
-  // TODO: Remove tempBaseUrl when endpoint is moved to normal backend path
-  const url = `${TEMP_ROLES_API}${RoleApiPaths.USERS}`;
+  const url = RoleApiPaths.USERS;
   const roleElement = { rolename, type: 'Role' };
 
   try {
@@ -147,8 +144,7 @@ export const removeRoleFromUser = async (username: string, rolename: RoleName, c
 };
 
 const updateUserRoles = async (institutionUser: InstitutionUser, cancelToken?: CancelToken) => {
-  // TODO: Remove tempBaseUrl when endpoint is moved to normal backend path
-  const url = `${TEMP_ROLES_API}${RoleApiPaths.USERS}/${encodeURIComponent(institutionUser.username)}`;
+  const url = `${RoleApiPaths.USERS}/${encodeURIComponent(institutionUser.username)}`;
   try {
     const idToken = await getIdToken();
     const headers = {
