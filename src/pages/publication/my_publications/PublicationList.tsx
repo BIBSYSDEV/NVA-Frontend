@@ -127,7 +127,7 @@ const PublicationList: FC<PublicationListProps> = ({ publications }) => {
         rowsPerPageOptions={[10, 25, { value: -1, label: t('common:all') }]}
         component="div"
         count={publications.length}
-        labelRowsPerPage={t('common:rows_per_page')}
+        labelRowsPerPage={t('common:table_pagination.rows_per_page')}
         labelDisplayedRows={({ from, to, count }) => getTranslatedLabelForDisplayedRows(from, to, count)}
         rowsPerPage={rowsPerPage}
         page={page}
