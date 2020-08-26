@@ -71,20 +71,18 @@ const UserList: FC<UserListProps> = ({ userList, allowRemoveRole = false, allowA
               ))}
             </TableBody>
           </StyledTable>
-          {userList.length > 5 && (
-            <TablePagination
-              rowsPerPageOptions={[5, 10, 25]}
-              component="div"
-              count={userList.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onChangePage={(_, newPage) => setPage(newPage)}
-              onChangeRowsPerPage={(event) => {
-                setRowsPerPage(parseInt(event.target.value));
-                setPage(0);
-              }}
-            />
-          )}
+          <TablePagination
+            rowsPerPageOptions={[5, 10, 25]}
+            component="div"
+            count={userList.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onChangePage={(_, newPage) => setPage(newPage)}
+            onChangeRowsPerPage={(event) => {
+              setRowsPerPage(parseInt(event.target.value));
+              setPage(0);
+            }}
+          />
         </>
       ) : (
         <NormalText>

@@ -4,7 +4,7 @@ import { LanguageValues } from '../language.types';
 import { Contributor } from '../contributor.types';
 import { BackendTypeNames, emptyDate } from './commonPublication.types';
 
-interface JournalPublicationInstance {
+export interface JournalPublicationInstance {
   type: JournalType | '';
   articleNumber: string;
   issue: string;
