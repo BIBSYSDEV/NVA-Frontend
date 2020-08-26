@@ -15,7 +15,6 @@ import { useTranslation } from 'react-i18next';
 import Label from '../../components/Label';
 import { Link as RouterLink } from 'react-router-dom';
 import NormalText from '../../components/NormalText';
-import { getTranslatedLabelForDisplayedRows } from '../../utils/pagination';
 
 const StyledTableRow = styled(TableRow)`
   background-color: ${(props) => props.theme.palette.box.main};
@@ -97,8 +96,6 @@ const WorklistTable: FC<WorklistTableProps> = ({ publications }) => {
         rowsPerPageOptions={[10, 25, { value: -1, label: t('common:all') }]}
         component="div"
         count={publications.length}
-        labelRowsPerPage={t('common:table_pagination.rows_per_page')}
-        labelDisplayedRows={({ from, to, count }) => getTranslatedLabelForDisplayedRows(from, to, count)}
         rowsPerPage={rowsPerPage}
         page={page}
         onChangePage={handleChangePage}
