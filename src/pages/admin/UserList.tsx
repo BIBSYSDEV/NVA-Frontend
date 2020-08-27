@@ -20,19 +20,14 @@ const StyledTableRow = styled(TableRow)`
 
 interface UserListProps {
   userList: InstitutionUser[];
-  allowRemoveRole?: RoleName;
-  allowAddRole?: RoleName;
+  roleToRemove?: RoleName;
+  roleToAdd?: RoleName;
   alwaysShowPagination?: boolean; // If false, show pagination only if more elements than minimum rows per page
 }
 
 const rowsPerPageOptions = [5, 10, 25];
 
-const UserList: FC<UserListProps> = ({
-  userList,
-  allowRemoveRole = false,
-  allowAddRole = false,
-  alwaysShowPagination = false,
-}) => {
+const UserList: FC<UserListProps> = ({ userList, roleToRemove, roleToAdd, alwaysShowPagination = false }) => {
   const { t } = useTranslation('admin');
   const [rowsPerPage, setRowsPerPage] = useState(rowsPerPageOptions[0]);
   const [page, setPage] = useState(0);
@@ -60,15 +55,15 @@ const UserList: FC<UserListProps> = ({
                 <StyledTableRow key={user.username}>
                   <TableCell>{user.username}</TableCell>
                   <TableCell align="right">
-                    {allowRemoveRole && (
+                    {roleToRemove && (
                       <Button color="secondary" variant="contained">
                         {t('common:delete')}
                       </Button>
                     )}
-                    {allowAddRole && (
+                    {roleToAdd && (
                       <Button
                         size="small"
-                        disabled={user.roles.some((role) => role.rolename === allowAddRole)}
+                        disabled={user.roles.some((role) => role.rolename === roleToAdd)}
                         color="primary"
                         variant="contained">
                         {t('common:add')}
