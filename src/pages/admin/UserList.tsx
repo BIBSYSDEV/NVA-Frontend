@@ -1,6 +1,6 @@
 import React, { FC, useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { Table, TableHead, TableRow, TableCell, TableBody, Button, TablePagination } from '@material-ui/core';
+import { Table, TableHead, TableRow, TableCell, TableBody, TablePagination } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
@@ -12,6 +12,7 @@ import { addRoleToUser, removeRoleFromUser } from '../../api/roleApi';
 import { useDispatch } from 'react-redux';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
+import ButtonWithProgress from '../../components/ButtonWithProgress';
 
 const StyledTable = styled(Table)`
   width: 100%;
@@ -45,6 +46,7 @@ const UserList: FC<UserListProps> = ({
   const dispatch = useDispatch();
   const [rowsPerPage, setRowsPerPage] = useState(rowsPerPageOptions[0]);
   const [page, setPage] = useState(0);
+  const [isUpdatingRoleForUsers, setIsUpdatingRoleForUsers] = useState<string[]>([]);
 
   useEffect(() => {
     // Move to first page if userList change due to e.g. filtering
@@ -53,6 +55,7 @@ const UserList: FC<UserListProps> = ({
 
   const handleAddRoleToUser = async (username: string) => {
     if (roleToAdd) {
+      setIsUpdatingRoleForUsers((state) => [...state, username]);
       const response = await addRoleToUser(username, roleToAdd);
       if (response) {
         if (response.error) {
@@ -62,11 +65,13 @@ const UserList: FC<UserListProps> = ({
           refetchUsers && refetchUsers();
         }
       }
+      setIsUpdatingRoleForUsers((state) => state.filter((user) => user !== username));
     }
   };
 
   const handleRemoveRoleFromUser = async (username: string) => {
     if (roleToRemove) {
+      setIsUpdatingRoleForUsers((state) => [...state, username]);
       const response = await removeRoleFromUser(username, roleToRemove);
       if (response) {
         if (response.error) {
@@ -76,6 +81,7 @@ const UserList: FC<UserListProps> = ({
           refetchUsers && refetchUsers();
         }
       }
+      setIsUpdatingRoleForUsers((state) => state.filter((user) => user !== username));
     }
   };
 
@@ -98,24 +104,26 @@ const UserList: FC<UserListProps> = ({
                   <TableCell>{user.username}</TableCell>
                   <TableCell align="right">
                     {roleToRemove && (
-                      <Button
+                      <ButtonWithProgress
                         color="secondary"
                         variant="outlined"
-                        onClick={() => handleRemoveRoleFromUser(user.username)}
-                        startIcon={<DeleteIcon />}>
+                        startIcon={<DeleteIcon />}
+                        isLoading={isUpdatingRoleForUsers.includes(user.username)}
+                        onClick={() => handleRemoveRoleFromUser(user.username)}>
                         {t('common:remove')}
-                      </Button>
+                      </ButtonWithProgress>
                     )}
                     {roleToAdd && (
-                      <Button
-                        size="small"
-                        disabled={user.roles.some((role) => role.rolename === roleToAdd)}
-                        onClick={() => handleAddRoleToUser(user.username)}
+                      <ButtonWithProgress
                         color="primary"
                         variant="contained"
-                        startIcon={<AddIcon />}>
+                        size="small"
+                        startIcon={<AddIcon />}
+                        disabled={user.roles.some((role) => role.rolename === roleToAdd)}
+                        isLoading={isUpdatingRoleForUsers.includes(user.username)}
+                        onClick={() => handleAddRoleToUser(user.username)}>
                         {t('common:add')}
-                      </Button>
+                      </ButtonWithProgress>
                     )}
                   </TableCell>
                 </StyledTableRow>
