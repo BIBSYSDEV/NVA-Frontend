@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC, useState } from 'react';
 import styled from 'styled-components';
 import { Table, TableHead, TableRow, TableCell, TableBody, TablePagination } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
@@ -48,14 +48,6 @@ const UserList: FC<UserListProps> = ({
   const [page, setPage] = useState(0);
   const [updatedRoleForUsers, setUpdatedRoleForUsers] = useState<string[]>([]);
 
-  useEffect(() => {
-    // Move to first page if current page is no longer valid
-    if (userList.length <= page * rowsPerPage) {
-      // Console warning will be displayed before the component is rendered again with new page value
-      setPage(0);
-    }
-  }, [userList, page, rowsPerPage]);
-
   const handleAddRoleToUser = async (username: string) => {
     if (roleToAdd) {
       setUpdatedRoleForUsers((state) => [...state, username]);
@@ -86,6 +78,9 @@ const UserList: FC<UserListProps> = ({
     }
   };
 
+  // Ensure selected page is not out of bounds due to manipulated userList
+  const validPage = userList.length <= page * rowsPerPage ? 0 : page;
+
   return (
     <>
       {userList.length > 0 ? (
@@ -100,7 +95,7 @@ const UserList: FC<UserListProps> = ({
               </TableRow>
             </TableHead>
             <TableBody>
-              {userList.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((user) => (
+              {userList.slice(validPage * rowsPerPage, validPage * rowsPerPage + rowsPerPage).map((user) => (
                 <StyledTableRow key={user.username}>
                   <TableCell>{user.username}</TableCell>
                   <TableCell align="right">
@@ -140,7 +135,7 @@ const UserList: FC<UserListProps> = ({
               component="div"
               count={userList.length}
               rowsPerPage={rowsPerPage}
-              page={page}
+              page={validPage}
               onChangePage={(_, newPage) => setPage(newPage)}
               onChangeRowsPerPage={(event) => {
                 setRowsPerPage(parseInt(event.target.value));
