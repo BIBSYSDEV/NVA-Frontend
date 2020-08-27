@@ -9,9 +9,10 @@ interface AddRoleModalContentProps {
   role: RoleName;
   users: InstitutionUser[];
   closeModal: () => void;
+  refetchUsers?: () => void;
 }
 
-export const AddRoleModalContent: FC<AddRoleModalContentProps> = ({ role, users, closeModal }) => {
+export const AddRoleModalContent: FC<AddRoleModalContentProps> = ({ role, users, closeModal, refetchUsers }) => {
   const { t } = useTranslation('admin');
   const [searchTerm, setSearchTerm] = useState('');
   const filteredUsers = users.filter((user) => user.username.toLocaleLowerCase().includes(searchTerm.toLowerCase()));
@@ -27,7 +28,7 @@ export const AddRoleModalContent: FC<AddRoleModalContentProps> = ({ role, users,
         helperText={t('search_for_user')}
       />
 
-      <UserList userList={filteredUsers} allowAddRole={role} alwaysShowPagination />
+      <UserList userList={filteredUsers} allowAddRole={role} alwaysShowPagination refetchUsers={refetchUsers} />
 
       <DialogActions>
         <Button variant="outlined" onClick={closeModal}>

@@ -6,6 +6,10 @@ import { useTranslation } from 'react-i18next';
 import Label from './../../components/Label';
 import { InstitutionUser, RoleName } from '../../types/user.types';
 import NormalText from '../../components/NormalText';
+import { addRoleToUser } from '../../api/roleApi';
+import { useDispatch } from 'react-redux';
+import { setNotification } from '../../redux/actions/notificationActions';
+import { NotificationVariant } from '../../types/notification.types';
 
 const StyledTable = styled(Table)`
   width: 100%;
@@ -22,6 +26,7 @@ interface UserListProps {
   userList: InstitutionUser[];
   allowRemoveRole?: RoleName;
   allowAddRole?: RoleName;
+  refetchUsers?: () => void;
   alwaysShowPagination?: boolean; // If false, show pagination only if more elements than minimum rows per page
 }
 
@@ -29,11 +34,13 @@ const rowsPerPageOptions = [5, 10, 25];
 
 const UserList: FC<UserListProps> = ({
   userList,
-  allowRemoveRole = false,
-  allowAddRole = false,
+  allowRemoveRole,
+  allowAddRole,
+  refetchUsers,
   alwaysShowPagination = false,
 }) => {
   const { t } = useTranslation('admin');
+  const dispatch = useDispatch();
   const [rowsPerPage, setRowsPerPage] = useState(rowsPerPageOptions[0]);
   const [page, setPage] = useState(0);
 
@@ -41,6 +48,20 @@ const UserList: FC<UserListProps> = ({
     // Move to first page if userList change due to e.g. filtering
     setPage(0);
   }, [userList]);
+
+  const handleAddRoleToUser = async (username: string) => {
+    if (allowAddRole) {
+      const response = await addRoleToUser(username, allowAddRole);
+      if (response) {
+        if (response.error) {
+          dispatch(setNotification(t('feedback:error.add_role'), NotificationVariant.Error));
+        } else {
+          refetchUsers && refetchUsers();
+          dispatch(setNotification(t('feedback:success.added_role')));
+        }
+      }
+    }
+  };
 
   return (
     <>
@@ -69,6 +90,7 @@ const UserList: FC<UserListProps> = ({
                       <Button
                         size="small"
                         disabled={user.roles.some((role) => role.rolename === allowAddRole)}
+                        onClick={() => handleAddRoleToUser(user.username)}
                         color="primary"
                         variant="contained">
                         {t('common:add')}

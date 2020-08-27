@@ -32,7 +32,7 @@ const StyledNewButton = styled(Button)`
 const AdminUsersPage: FC = () => {
   const { t } = useTranslation('admin');
   const user = useSelector((store: RootStore) => store.user);
-  const [users, isLoading] = useFetchUsersForInstitution(user.customerId.split('/').pop() ?? '');
+  const [users, isLoading, fetchInstitutionUsers] = useFetchUsersForInstitution(user.customerId.split('/').pop() ?? '');
   const [autoAssignCreators, setAutoAssignCreators] = useState(true);
   const [roleToAdd, setRoleToAdd] = useState<RoleName>();
 
@@ -114,7 +114,12 @@ const AdminUsersPage: FC = () => {
               ? t('users.add_curator')
               : t('users.add_editor')
           }>
-          <AddRoleModalContent role={roleToAdd} users={users} closeModal={() => setRoleToAdd(undefined)} />
+          <AddRoleModalContent
+            role={roleToAdd}
+            users={users}
+            closeModal={() => setRoleToAdd(undefined)}
+            refetchUsers={fetchInstitutionUsers}
+          />
         </Modal>
       )}
     </Card>
