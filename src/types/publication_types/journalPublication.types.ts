@@ -4,7 +4,7 @@ import { LanguageValues } from '../language.types';
 import { Contributor } from '../contributor.types';
 import { BackendTypeNames, emptyDate } from './commonPublication.types';
 
-interface JournalPublicationInstance {
+export interface JournalPublicationInstance {
   type: JournalType | '';
   articleNumber: string;
   issue: string;
@@ -41,7 +41,7 @@ export interface JournalEntityDescription extends BackendType {
   tags: string[];
 }
 
-export const emptyPublicationInstance: JournalPublicationInstance = {
+const emptyPublicationInstance: JournalPublicationInstance = {
   type: '',
   articleNumber: '',
   issue: '',
@@ -50,7 +50,7 @@ export const emptyPublicationInstance: JournalPublicationInstance = {
   volume: '',
 };
 
-export const emptyPublicationContext: JournalPublicationContext = {
+const emptyPublicationContext: JournalPublicationContext = {
   type: '',
   level: '',
   onlineIssn: '',
@@ -60,7 +60,7 @@ export const emptyPublicationContext: JournalPublicationContext = {
   url: '',
 };
 
-export const emptyReference: JournalReference = {
+const emptyReference: JournalReference = {
   type: BackendTypeNames.REFERENCE,
   doi: '',
   publicationContext: emptyPublicationContext,

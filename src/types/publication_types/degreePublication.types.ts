@@ -2,9 +2,8 @@ import { BackendType, PublicationDate, PagesMonograph } from '../publication.typ
 import { PublicationType, DegreeType } from '../publicationFieldNames';
 import { LanguageValues } from '../language.types';
 import { Contributor } from '../contributor.types';
-import { BackendTypeNames, emptyDate } from './commonPublication.types';
 
-interface DegreePublicationInstance {
+export interface DegreePublicationInstance {
   type: DegreeType | '';
   pages: PagesMonograph | null;
   peerReviewed: boolean;
@@ -38,40 +37,3 @@ export interface DegreeEntityDescription extends BackendType {
   reference: DegreeReference;
   tags: string[];
 }
-
-export const emptyPublicationInstance: DegreePublicationInstance = {
-  type: '',
-  pages: null,
-  peerReviewed: false,
-};
-
-export const emptyPublicationContext: DegreePublicationContext = {
-  type: '',
-  isbnList: [],
-  openAccess: false,
-  peerReviewed: false,
-  publisher: '',
-  seriesNumber: '',
-  seriesTitle: '',
-  url: '',
-};
-
-export const emptyReference: DegreeReference = {
-  type: BackendTypeNames.REFERENCE,
-  doi: '',
-  publicationContext: emptyPublicationContext,
-  publicationInstance: emptyPublicationInstance,
-};
-
-export const emptyPublicationEntityDescription: DegreeEntityDescription = {
-  type: BackendTypeNames.ENTITY_DESCRIPTION,
-  abstract: '',
-  contributors: [],
-  date: emptyDate,
-  description: '',
-  language: LanguageValues.NONE,
-  mainTitle: '',
-  npiSubjectHeading: '',
-  reference: emptyReference,
-  tags: [],
-};

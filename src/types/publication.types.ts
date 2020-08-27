@@ -45,14 +45,6 @@ export interface Publisher {
   openAccess: boolean;
 }
 
-export const emptyPublisher: Publisher = {
-  type: '',
-  onlineIssn: '',
-  level: null,
-  title: '',
-  openAccess: false,
-};
-
 export interface AlmaPublication {
   title: string;
 }
@@ -80,7 +72,7 @@ interface BasePublication extends BackendType, PublicationFileSet {
   readonly createdDate: string;
   readonly owner: string;
   readonly status: PublicationStatus;
-  readonly doiRequest: DoiRequest | null;
+  readonly doiRequest?: DoiRequest;
   doiRequested: boolean;
   project: Project | null;
 }
@@ -146,7 +138,6 @@ export const emptyPublication: Publication = {
   type: BackendTypeNames.PUBLICATION,
   identifier: '',
   createdDate: '',
-  doiRequest: null,
   doiRequested: false,
   owner: '',
   status: PublicationStatus.NEW,

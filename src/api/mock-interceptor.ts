@@ -3,14 +3,14 @@ import MockAdapter from 'axios-mock-adapter';
 
 import { Authority } from '../types/authority.types';
 import OrcidResponse from '../types/orcid.types';
-import { API_URL, ORCID_USER_INFO_URL, TEMP_ROLES_API } from '../utils/constants';
+import { API_URL, ORCID_USER_INFO_URL } from '../utils/constants';
 import mockDoiLookupResponse from '../utils/testfiles/doi_lookup_response.json';
 import mockInstitutionResponse from '../utils/testfiles/institutions/institution_query.json';
 import mockNtnuResponse from '../utils/testfiles/institutions/institution_ntnu.json';
 import mockNtnuSubunitResponse from '../utils/testfiles/institutions/institution_subunit_ntnu.json';
 import mockAuthoritiesResponse from '../utils/testfiles/mock_authorities_response.json';
 import mockProjects from '../utils/testfiles/projects_real.json';
-import mockPublication from '../utils/testfiles/publication_generated.json';
+import { mockPublication } from '../utils/testfiles/mockPublication';
 import mockPublications from '../utils/testfiles/publications_45_random_results_generated.json';
 import mockMyPublications from '../utils/testfiles/my_publications.json';
 import mockNsdPublisers from '../utils/testfiles/publishersFromNsd.json';
@@ -28,6 +28,7 @@ import { CustomerInstitutionApiPaths } from './customerInstitutionsApi';
 import { emptyPublication } from '../types/publication.types';
 import { mockRoles } from '../utils/testfiles/mock_feide_user';
 import { RoleApiPaths } from './roleApi';
+import { mockDoiRequests } from '../utils/testfiles/mockDoiRequest';
 
 const mockOrcidResponse: OrcidResponse = {
   id: 'https://sandbox.orcid.org/0000-0001-2345-6789',
@@ -177,8 +178,8 @@ export const interceptRequestsOnMock = () => {
     .replyOnce(200, mockNtnuSubunitResponse);
 
   // Roles
-  mock.onGet(new RegExp(`${TEMP_ROLES_API}${RoleApiPaths.INSTITUTIONS}/.*/users`)).reply(200, []);
-  mock.onGet(new RegExp(`${TEMP_ROLES_API}${RoleApiPaths.USERS}/*`)).reply(200, mockRoles);
+  mock.onGet(new RegExp(`${API_URL}${RoleApiPaths.INSTITUTIONS}/.*/users`)).reply(200, []);
+  mock.onGet(new RegExp(`${API_URL}${RoleApiPaths.USERS}/*`)).reply(200, mockRoles);
 
   mock.onAny().reply(function (config) {
     throw new Error('Could not find mock for ' + config.url);

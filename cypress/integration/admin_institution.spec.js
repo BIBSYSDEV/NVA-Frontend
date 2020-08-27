@@ -14,7 +14,6 @@ describe('User administers institutions ', () => {
   it('The User should be able to open admin page for institutions from the menu', () => {
     cy.get('[data-testid=customer-institutions-list]');
     cy.contains('Norges teknisk-naturvitenskapelige universitet');
-    cy.contains('tiril@ntnu.no');
   });
 
   it('The User should be able to add an institution', () => {
@@ -26,7 +25,6 @@ describe('User administers institutions ', () => {
     cy.get('[data-testid=customer-institution-archive-name-input]').type('NTNU Open');
     cy.get('[data-testid=customer-institution-cname-input]').type('ntnu.unit.nva.no');
     cy.get('[data-testid=customer-institution-institution-dns-input]').type('1.1.1.1');
-    cy.get('[data-testid=customer-institution-administrator-id-input]').type('tiril@ntnu.no');
     cy.get('[data-testid=customer-institution-feide-organization-id-input]').type('NO919477822');
 
     cy.get('[data-testid=customer-institution-save-button]').click({ force: true });
