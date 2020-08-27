@@ -53,7 +53,11 @@ const AdminUsersPage: FC = () => {
             <CircularProgress />
           </StyledProgressWrapper>
         ) : (
-          <UserList userList={filterUsersByRole(users, RoleName.INSTITUTION_ADMIN)} />
+          <UserList
+            userList={filterUsersByRole(users, RoleName.INSTITUTION_ADMIN)}
+            roleToRemove={RoleName.INSTITUTION_ADMIN}
+            refetchUsers={fetchInstitutionUsers}
+          />
         )}
         <StyledNewButton color="primary" variant="outlined" onClick={() => setRoleToAdd(RoleName.INSTITUTION_ADMIN)}>
           {t('users.add_institution_admin')}
@@ -69,7 +73,11 @@ const AdminUsersPage: FC = () => {
             <CircularProgress />
           </StyledProgressWrapper>
         ) : (
-          <UserList userList={filterUsersByRole(users, RoleName.CURATOR)} />
+          <UserList
+            userList={filterUsersByRole(users, RoleName.CURATOR)}
+            roleToRemove={RoleName.CURATOR}
+            refetchUsers={fetchInstitutionUsers}
+          />
         )}
         <StyledNewButton color="primary" variant="outlined" onClick={() => setRoleToAdd(RoleName.CURATOR)}>
           {t('users.add_curator')}
@@ -85,7 +93,11 @@ const AdminUsersPage: FC = () => {
             <CircularProgress />
           </StyledProgressWrapper>
         ) : (
-          <UserList userList={filterUsersByRole(users, RoleName.EDITOR)} />
+          <UserList
+            userList={filterUsersByRole(users, RoleName.EDITOR)}
+            roleToRemove={RoleName.EDITOR}
+            refetchUsers={fetchInstitutionUsers}
+          />
         )}
         <StyledNewButton color="primary" variant="outlined" onClick={() => setRoleToAdd(RoleName.EDITOR)}>
           {t('users.add_editor')}

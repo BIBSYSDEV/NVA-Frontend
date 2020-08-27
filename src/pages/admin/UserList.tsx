@@ -2,11 +2,13 @@ import React, { FC, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Table, TableHead, TableRow, TableCell, TableBody, Button, TablePagination } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
+import DeleteIcon from '@material-ui/icons/Delete';
+import AddIcon from '@material-ui/icons/Add';
 
 import Label from './../../components/Label';
 import { InstitutionUser, RoleName } from '../../types/user.types';
 import NormalText from '../../components/NormalText';
-import { addRoleToUser } from '../../api/roleApi';
+import { addRoleToUser, removeRoleFromUser } from '../../api/roleApi';
 import { useDispatch } from 'react-redux';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
@@ -56,8 +58,22 @@ const UserList: FC<UserListProps> = ({
         if (response.error) {
           dispatch(setNotification(t('feedback:error.add_role'), NotificationVariant.Error));
         } else {
-          refetchUsers && refetchUsers();
           dispatch(setNotification(t('feedback:success.added_role')));
+          refetchUsers && refetchUsers();
+        }
+      }
+    }
+  };
+
+  const handleRemoveRoleFromUser = async (username: string) => {
+    if (roleToRemove) {
+      const response = await removeRoleFromUser(username, roleToRemove);
+      if (response) {
+        if (response.error) {
+          dispatch(setNotification(t('feedback:error.remove_role'), NotificationVariant.Error));
+        } else {
+          dispatch(setNotification(t('feedback:success.removed_role')));
+          refetchUsers && refetchUsers();
         }
       }
     }
@@ -82,8 +98,12 @@ const UserList: FC<UserListProps> = ({
                   <TableCell>{user.username}</TableCell>
                   <TableCell align="right">
                     {roleToRemove && (
-                      <Button color="secondary" variant="contained">
-                        {t('common:delete')}
+                      <Button
+                        color="secondary"
+                        variant="outlined"
+                        onClick={() => handleRemoveRoleFromUser(user.username)}
+                        startIcon={<DeleteIcon />}>
+                        {t('common:remove')}
                       </Button>
                     )}
                     {roleToAdd && (
@@ -92,7 +112,8 @@ const UserList: FC<UserListProps> = ({
                         disabled={user.roles.some((role) => role.rolename === roleToAdd)}
                         onClick={() => handleAddRoleToUser(user.username)}
                         color="primary"
-                        variant="contained">
+                        variant="contained"
+                        startIcon={<AddIcon />}>
                         {t('common:add')}
                       </Button>
                     )}

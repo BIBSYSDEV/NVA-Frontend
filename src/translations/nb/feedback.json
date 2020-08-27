@@ -50,14 +50,15 @@
   "success": {
     "added_affiliation": "Tilknytning er lagt til",
     "added_role": "Rolle ble lagt til",
+    "admin_added": "Bruker lagt til som administrator",
+    "admin_removed": "Bruker fjernet som administrator",
     "created_authority": "Forfatteridentitet er opprettet",
     "created_customer": "Institusjon er opprettet",
     "create_publication": "Publikasjonen er opprettet",
     "delete_affiliation": "Tilknytningen ble slettet",
     "delete_identifier": "Identifikatoren ble slettet",
     "login": "Logget inn",
-    "admin_added": "Bruker lagt til som administrator",
-    "admin_removed": "Bruker fjernet som administrator",
+    "removed_role": "Rollen ble fjernet",
     "update_authority": "Forfatter er oppdatert",
     "update_customer": "Institusjon er oppdatert",
     "update_publication": "Publikasjonen er oppdatert"
