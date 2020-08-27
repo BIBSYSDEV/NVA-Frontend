@@ -24,8 +24,8 @@ const StyledTableRow = styled(TableRow)`
 
 interface UserListProps {
   userList: InstitutionUser[];
-  allowRemoveRole?: RoleName;
-  allowAddRole?: RoleName;
+  roleToRemove?: RoleName;
+  roleToAdd?: RoleName;
   refetchUsers?: () => void;
   alwaysShowPagination?: boolean; // If false, show pagination only if more elements than minimum rows per page
 }
@@ -34,8 +34,8 @@ const rowsPerPageOptions = [5, 10, 25];
 
 const UserList: FC<UserListProps> = ({
   userList,
-  allowRemoveRole,
-  allowAddRole,
+  roleToRemove,
+  roleToAdd,
   refetchUsers,
   alwaysShowPagination = false,
 }) => {
@@ -50,8 +50,8 @@ const UserList: FC<UserListProps> = ({
   }, [userList]);
 
   const handleAddRoleToUser = async (username: string) => {
-    if (allowAddRole) {
-      const response = await addRoleToUser(username, allowAddRole);
+    if (roleToAdd) {
+      const response = await addRoleToUser(username, roleToAdd);
       if (response) {
         if (response.error) {
           dispatch(setNotification(t('feedback:error.add_role'), NotificationVariant.Error));
@@ -81,15 +81,15 @@ const UserList: FC<UserListProps> = ({
                 <StyledTableRow key={user.username}>
                   <TableCell>{user.username}</TableCell>
                   <TableCell align="right">
-                    {allowRemoveRole && (
+                    {roleToRemove && (
                       <Button color="secondary" variant="contained">
                         {t('common:delete')}
                       </Button>
                     )}
-                    {allowAddRole && (
+                    {roleToAdd && (
                       <Button
                         size="small"
-                        disabled={user.roles.some((role) => role.rolename === allowAddRole)}
+                        disabled={user.roles.some((role) => role.rolename === roleToAdd)}
                         onClick={() => handleAddRoleToUser(user.username)}
                         color="primary"
                         variant="contained">

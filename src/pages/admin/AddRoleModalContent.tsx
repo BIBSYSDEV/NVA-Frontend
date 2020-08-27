@@ -28,7 +28,7 @@ export const AddRoleModalContent: FC<AddRoleModalContentProps> = ({ role, users,
         helperText={t('search_for_user')}
       />
 
-      <UserList userList={filteredUsers} allowAddRole={role} alwaysShowPagination refetchUsers={refetchUsers} />
+      <UserList userList={filteredUsers} roleToAdd={role} alwaysShowPagination refetchUsers={refetchUsers} />
 
       <DialogActions>
         <Button variant="outlined" onClick={closeModal}>
