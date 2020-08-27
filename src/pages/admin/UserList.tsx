@@ -83,7 +83,11 @@ const UserList: FC<UserListProps> = ({
 
   return (
     <>
-      {userList.length > 0 ? (
+      {userList.length === 0 ? (
+        <NormalText>
+          <i>{t('users.no_users_found')}</i>
+        </NormalText>
+      ) : (
         <>
           <StyledTable size="small">
             <TableHead>
@@ -144,10 +148,6 @@ const UserList: FC<UserListProps> = ({
             />
           )}
         </>
-      ) : (
-        <NormalText>
-          <i>{t('users.no_users_found')}</i>
-        </NormalText>
       )}
     </>
   );
