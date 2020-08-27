@@ -46,16 +46,19 @@ const UserList: FC<UserListProps> = ({
   const dispatch = useDispatch();
   const [rowsPerPage, setRowsPerPage] = useState(rowsPerPageOptions[0]);
   const [page, setPage] = useState(0);
-  const [isUpdatingRoleForUsers, setIsUpdatingRoleForUsers] = useState<string[]>([]);
+  const [updatedRoleForUsers, setUpdatedRoleForUsers] = useState<string[]>([]);
 
   useEffect(() => {
-    // Move to first page if userList change due to e.g. filtering
-    setPage(0);
-  }, [userList]);
+    // Move to first page if current page is no longer valid
+    if (userList.length <= page * rowsPerPage) {
+      // Console warning will be displayed before the component is rendered again with new page value
+      setPage(0);
+    }
+  }, [userList, page, rowsPerPage]);
 
   const handleAddRoleToUser = async (username: string) => {
     if (roleToAdd) {
-      setIsUpdatingRoleForUsers((state) => [...state, username]);
+      setUpdatedRoleForUsers((state) => [...state, username]);
       const response = await addRoleToUser(username, roleToAdd);
       if (response) {
         if (response.error) {
@@ -65,13 +68,12 @@ const UserList: FC<UserListProps> = ({
           refetchUsers && refetchUsers();
         }
       }
-      setIsUpdatingRoleForUsers((state) => state.filter((user) => user !== username));
     }
   };
 
   const handleRemoveRoleFromUser = async (username: string) => {
     if (roleToRemove) {
-      setIsUpdatingRoleForUsers((state) => [...state, username]);
+      setUpdatedRoleForUsers((state) => [...state, username]);
       const response = await removeRoleFromUser(username, roleToRemove);
       if (response) {
         if (response.error) {
@@ -81,7 +83,6 @@ const UserList: FC<UserListProps> = ({
           refetchUsers && refetchUsers();
         }
       }
-      setIsUpdatingRoleForUsers((state) => state.filter((user) => user !== username));
     }
   };
 
@@ -108,7 +109,7 @@ const UserList: FC<UserListProps> = ({
                         color="secondary"
                         variant="outlined"
                         startIcon={<DeleteIcon />}
-                        isLoading={isUpdatingRoleForUsers.includes(user.username)}
+                        isLoading={updatedRoleForUsers.includes(user.username)}
                         onClick={() => handleRemoveRoleFromUser(user.username)}>
                         {t('common:remove')}
                       </ButtonWithProgress>
@@ -120,7 +121,10 @@ const UserList: FC<UserListProps> = ({
                         size="small"
                         startIcon={<AddIcon />}
                         disabled={user.roles.some((role) => role.rolename === roleToAdd)}
-                        isLoading={isUpdatingRoleForUsers.includes(user.username)}
+                        isLoading={
+                          !user.roles.some((role) => role.rolename === roleToAdd) &&
+                          updatedRoleForUsers.includes(user.username)
+                        }
                         onClick={() => handleAddRoleToUser(user.username)}>
                         {t('common:add')}
                       </ButtonWithProgress>
