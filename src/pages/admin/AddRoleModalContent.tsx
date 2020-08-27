@@ -1,7 +1,9 @@
 import React, { FC, useState } from 'react';
-import { RoleName, InstitutionUser } from '../../types/user.types';
-import { Button, TextField, DialogActions } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
+import { Button, TextField, DialogActions, InputAdornment } from '@material-ui/core';
+import SearchIcon from '@material-ui/icons/Search';
+
+import { RoleName, InstitutionUser } from '../../types/user.types';
 import NormalText from '../../components/NormalText';
 import UserList from './UserList';
 
@@ -22,6 +24,13 @@ export const AddRoleModalContent: FC<AddRoleModalContentProps> = ({ role, users,
       <NormalText>{t('users.add_role_info')}</NormalText>
       <TextField
         fullWidth
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <SearchIcon />
+            </InputAdornment>
+          ),
+        }}
         onChange={(event) => setSearchTerm(event.target.value)}
         label={t('users.username')}
         variant="outlined"
