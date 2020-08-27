@@ -3,13 +3,13 @@ import { PublicationType, DegreeType } from '../publicationFieldNames';
 import { LanguageValues } from '../language.types';
 import { Contributor } from '../contributor.types';
 
-interface DegreePublicationInstance {
+export interface DegreePublicationInstance {
   type: DegreeType | '';
   pages: PagesMonograph | null;
   peerReviewed: boolean;
 }
 
-interface DegreePublicationContext {
+export interface DegreePublicationContext {
   type: PublicationType | '';
   isbnList: string[];
   openAccess: boolean;

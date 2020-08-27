@@ -60,6 +60,7 @@ const ChapterForm: React.FC = () => {
               data-testid="chapter-pages-from"
               label={t('references.pages_from')}
               {...field}
+              value={field.value ?? ''}
             />
           )}
         </Field>
@@ -73,6 +74,7 @@ const ChapterForm: React.FC = () => {
               variant="outlined"
               label={t('references.pages_to')}
               {...field}
+              value={field.value ?? ''}
             />
           )}
         </Field>

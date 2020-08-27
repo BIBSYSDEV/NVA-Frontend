@@ -2,7 +2,7 @@ import { Field, FormikProps, useFormikContext, FieldProps } from 'formik';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { Publication } from '../../../types/publication.types';
+import { BookPublication } from '../../../types/publication.types';
 import { ReferenceFieldNames, BookType } from '../../../types/publicationFieldNames';
 import { PublicationTableNumber } from '../../../utils/constants';
 import NviValidation from './components/NviValidation';
@@ -46,7 +46,7 @@ const StyledTextField = styled(TextField)`
 
 const BookForm: FC = () => {
   const { t } = useTranslation('publication');
-  const { setFieldValue, values }: FormikProps<Publication> = useFormikContext();
+  const { setFieldValue, touched, values }: FormikProps<BookPublication> = useFormikContext();
   const {
     reference: {
       publicationContext,
@@ -60,7 +60,12 @@ const BookForm: FC = () => {
 
       <DoiField />
 
-      <PublisherField label={t('common:publisher')} placeholder={t('references.search_for_publisher')} />
+      <PublisherField
+        label={t('common:publisher')}
+        placeholder={t('references.search_for_publisher')}
+        touched={touched.entityDescription?.reference?.publicationContext?.publisher}
+        errorName={ReferenceFieldNames.PUBLICATION_CONTEXT_PUBLISHER}
+      />
       <StyledSection>
         {/* TODO - convert to array and use ISBN_LIST 
         <Field name={ReferenceFieldNames.ISBN}>

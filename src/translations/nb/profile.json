@@ -50,6 +50,7 @@
     "curator": "Kurator",
     "curators": "Kuratorer",
     "curator_description": "Kurator er tilgangen alle som kan godkjenne og publisere for andre har",
+    "editors": "Redaktører",
     "institution_admins": "Institusjonsadministratorer",
     "publisher": "Utgiver",
     "publisher_description": "Utgiver er den tilgangen ansatte på institusjonen har. Gir tilgang til å registrere egne publikasjoner"
