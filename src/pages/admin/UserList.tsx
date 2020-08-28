@@ -99,38 +99,39 @@ const UserList: FC<UserListProps> = ({
               </TableRow>
             </TableHead>
             <TableBody>
-              {userList.slice(validPage * rowsPerPage, validPage * rowsPerPage + rowsPerPage).map((user) => (
-                <StyledTableRow key={user.username}>
-                  <TableCell>{user.username}</TableCell>
-                  <TableCell align="right">
-                    {roleToRemove && (
-                      <ButtonWithProgress
-                        color="secondary"
-                        variant="outlined"
-                        startIcon={<DeleteIcon />}
-                        isLoading={updatedRoleForUsers.includes(user.username)}
-                        onClick={() => handleRemoveRoleFromUser(user.username)}>
-                        {t('common:remove')}
-                      </ButtonWithProgress>
-                    )}
-                    {roleToAdd && (
-                      <ButtonWithProgress
-                        color="primary"
-                        variant="contained"
-                        size="small"
-                        startIcon={<AddIcon />}
-                        disabled={user.roles.some((role) => role.rolename === roleToAdd)}
-                        isLoading={
-                          !user.roles.some((role) => role.rolename === roleToAdd) &&
-                          updatedRoleForUsers.includes(user.username)
-                        }
-                        onClick={() => handleAddRoleToUser(user.username)}>
-                        {t('common:add')}
-                      </ButtonWithProgress>
-                    )}
-                  </TableCell>
-                </StyledTableRow>
-              ))}
+              {userList.slice(validPage * rowsPerPage, validPage * rowsPerPage + rowsPerPage).map((user) => {
+                const isLoading = updatedRoleForUsers.includes(user.username);
+                const disableAddButton = user.roles.some((role) => role.rolename === roleToAdd);
+                return (
+                  <StyledTableRow key={user.username}>
+                    <TableCell>{user.username}</TableCell>
+                    <TableCell align="right">
+                      {roleToRemove && (
+                        <ButtonWithProgress
+                          color="secondary"
+                          variant="outlined"
+                          startIcon={<DeleteIcon />}
+                          isLoading={isLoading}
+                          onClick={() => handleRemoveRoleFromUser(user.username)}>
+                          {t('common:remove')}
+                        </ButtonWithProgress>
+                      )}
+                      {roleToAdd && (
+                        <ButtonWithProgress
+                          color="primary"
+                          variant="contained"
+                          size="small"
+                          startIcon={<AddIcon />}
+                          disabled={disableAddButton}
+                          isLoading={!disableAddButton && isLoading}
+                          onClick={() => handleAddRoleToUser(user.username)}>
+                          {t('common:add')}
+                        </ButtonWithProgress>
+                      )}
+                    </TableCell>
+                  </StyledTableRow>
+                );
+              })}
             </TableBody>
           </StyledTable>
           {(alwaysShowPagination || userList.length > rowsPerPageOptions[0]) && (
