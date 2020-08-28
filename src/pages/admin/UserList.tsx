@@ -13,6 +13,7 @@ import { useDispatch } from 'react-redux';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import ButtonWithProgress from '../../components/ButtonWithProgress';
+import ConfirmDialog from '../../components/ConfirmDialog';
 
 const StyledTable = styled(Table)`
   width: 100%;
@@ -47,6 +48,7 @@ const UserList: FC<UserListProps> = ({
   const [rowsPerPage, setRowsPerPage] = useState(rowsPerPageOptions[0]);
   const [page, setPage] = useState(0);
   const [updatedRoleForUsers, setUpdatedRoleForUsers] = useState<string[]>([]);
+  const [removeRoleForUser, setRemoveRoleForUser] = useState('');
 
   const handleAddRoleToUser = async (username: string) => {
     if (roleToAdd) {
@@ -63,10 +65,10 @@ const UserList: FC<UserListProps> = ({
     }
   };
 
-  const handleRemoveRoleFromUser = async (username: string) => {
-    if (roleToRemove) {
-      setUpdatedRoleForUsers((state) => [...state, username]);
-      const response = await removeRoleFromUser(username, roleToRemove);
+  const handleRemoveRoleFromUser = async () => {
+    if (roleToRemove && removeRoleForUser) {
+      setUpdatedRoleForUsers((state) => [...state, removeRoleForUser]);
+      const response = await removeRoleFromUser(removeRoleForUser, roleToRemove);
       if (response) {
         if (response.error) {
           dispatch(setNotification(t('feedback:error.remove_role'), NotificationVariant.Error));
@@ -76,6 +78,7 @@ const UserList: FC<UserListProps> = ({
         }
       }
     }
+    setRemoveRoleForUser('');
   };
 
   // Ensure selected page is not out of bounds due to manipulated userList
@@ -112,7 +115,7 @@ const UserList: FC<UserListProps> = ({
                           variant="outlined"
                           startIcon={<DeleteIcon />}
                           isLoading={isLoading}
-                          onClick={() => handleRemoveRoleFromUser(user.username)}>
+                          onClick={() => setRemoveRoleForUser(user.username)}>
                           {t('common:remove')}
                         </ButtonWithProgress>
                       )}
@@ -147,6 +150,15 @@ const UserList: FC<UserListProps> = ({
                 setPage(0);
               }}
             />
+          )}
+          {roleToRemove && (
+            <ConfirmDialog
+              open={!!removeRoleForUser}
+              title={t('users.remove_role_title')}
+              onCancel={() => setRemoveRoleForUser('')}
+              onAccept={handleRemoveRoleFromUser}>
+              {t('users.remove_role_text')}
+            </ConfirmDialog>
           )}
         </>
       )}
