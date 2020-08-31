@@ -17,7 +17,9 @@ interface AddRoleModalContentProps {
 export const AddRoleModalContent: FC<AddRoleModalContentProps> = ({ role, users, closeModal, refetchUsers }) => {
   const { t } = useTranslation('admin');
   const [searchTerm, setSearchTerm] = useState('');
-  const filteredUsers = users.filter((user) => user.username.toLocaleLowerCase().includes(searchTerm.toLowerCase()));
+  const filteredUsers = users.filter((user) =>
+    user.username.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase())
+  );
 
   return (
     <>

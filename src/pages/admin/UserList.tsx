@@ -4,16 +4,17 @@ import { Table, TableHead, TableRow, TableCell, TableBody, TablePagination } fro
 import { useTranslation } from 'react-i18next';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
+import { useDispatch } from 'react-redux';
 
 import Label from './../../components/Label';
 import { InstitutionUser, RoleName } from '../../types/user.types';
 import NormalText from '../../components/NormalText';
 import { addRoleToUser, removeRoleFromUser } from '../../api/roleApi';
-import { useDispatch } from 'react-redux';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import ButtonWithProgress from '../../components/ButtonWithProgress';
 import ConfirmDialog from '../../components/ConfirmDialog';
+import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 
 const StyledTable = styled(Table)`
   width: 100%;
@@ -34,8 +35,6 @@ interface UserListProps {
   alwaysShowPagination?: boolean; // If false, show pagination only if more elements than minimum rows per page
 }
 
-const rowsPerPageOptions = [5, 10, 25];
-
 const UserList: FC<UserListProps> = ({
   userList,
   roleToRemove,
@@ -45,7 +44,7 @@ const UserList: FC<UserListProps> = ({
 }) => {
   const { t } = useTranslation('admin');
   const dispatch = useDispatch();
-  const [rowsPerPage, setRowsPerPage] = useState(rowsPerPageOptions[0]);
+  const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
   const [page, setPage] = useState(0);
   const [updatedRoleForUsers, setUpdatedRoleForUsers] = useState<string[]>([]);
   const [removeRoleForUser, setRemoveRoleForUser] = useState('');
@@ -137,9 +136,9 @@ const UserList: FC<UserListProps> = ({
               })}
             </TableBody>
           </StyledTable>
-          {(alwaysShowPagination || userList.length > rowsPerPageOptions[0]) && (
+          {(alwaysShowPagination || userList.length > ROWS_PER_PAGE_OPTIONS[0]) && (
             <TablePagination
-              rowsPerPageOptions={rowsPerPageOptions}
+              rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
               component="div"
               count={userList.length}
               rowsPerPage={rowsPerPage}
