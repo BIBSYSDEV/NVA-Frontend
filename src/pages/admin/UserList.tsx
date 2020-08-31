@@ -155,7 +155,7 @@ const UserList: FC<UserListProps> = ({
             <ConfirmDialog
               open={!!removeRoleForUser}
               title={t('users.remove_role_title')}
-              disableAccept={updatedRoleForUsers.length > 0}
+              isLoading={updatedRoleForUsers.length > 0}
               onCancel={() => setRemoveRoleForUser('')}
               onAccept={handleRemoveRoleFromUser}>
               {t('users.remove_role_text')}
