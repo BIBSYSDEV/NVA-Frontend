@@ -1,38 +1,21 @@
-import React, { FC, useState, useEffect } from 'react';
-import { getDoiRequests } from '../../api/publicationApi';
-import WorklistTable from './WorkListTable';
+import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
-import SubHeading from '../../components/SubHeading';
-import { useDispatch } from 'react-redux';
-import { setNotification } from '../../redux/actions/notificationActions';
-import { NotificationVariant } from '../../types/notification.types';
 import { CircularProgress } from '@material-ui/core';
+
+import SubHeading from '../../components/SubHeading';
+import useFetchDoiRequests from '../../utils/hooks/useFetchDoiRequests';
+import { RoleName } from '../../types/user.types';
 
 const DoiRequests: FC = () => {
   const { t } = useTranslation('workLists');
-  const [doiRequests, setDoiRequests] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const dispatch = useDispatch();
+  const [doiRequests, isLoadingDoiRequests] = useFetchDoiRequests(RoleName.CURATOR);
 
-  useEffect(() => {
-    const fetchDoiRequests = async () => {
-      const doiRequestsResponse = await getDoiRequests();
-      if (doiRequestsResponse.error) {
-        dispatch(setNotification(doiRequestsResponse.error, NotificationVariant.Error));
-      } else {
-        setDoiRequests(doiRequestsResponse);
-      }
-      setIsLoading(false);
-    };
-    fetchDoiRequests();
-  }, [dispatch]);
-
-  return isLoading ? (
+  return isLoadingDoiRequests ? (
     <CircularProgress />
-  ) : doiRequests.length > 0 ? (
-    <WorklistTable publications={doiRequests} />
-  ) : (
+  ) : doiRequests.length === 0 ? (
     <SubHeading>{t('no_pending_doi_requests')}</SubHeading>
+  ) : (
+    <>TODO</>
   );
 };
 

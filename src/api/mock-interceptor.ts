@@ -27,6 +27,7 @@ import { CustomerInstitutionApiPaths } from './customerInstitutionsApi';
 import { emptyPublication } from '../types/publication.types';
 import { mockRoles } from '../utils/testfiles/mock_feide_user';
 import { RoleApiPaths } from './roleApi';
+import { mockDoiRequests } from '../utils/testfiles/mockDoiRequest';
 
 const mockOrcidResponse: OrcidResponse = {
   id: 'https://sandbox.orcid.org/0000-0001-2345-6789',
@@ -99,7 +100,7 @@ export const interceptRequestsOnMock = () => {
   mock.onGet(new RegExp(`${PublicationsApiPaths.PUBLICATIONS_BY_OWNER}/*`)).reply(200, mockMyPublications);
 
   // WORKLIST
-  mock.onGet(new RegExp(`${PublicationsApiPaths.DOI_REQUESTS}/*`)).reply(200, mockMyPublications.publications);
+  mock.onGet(new RegExp(`${PublicationsApiPaths.DOI_REQUESTS}/*`)).reply(200, mockDoiRequests);
   mock.onGet(new RegExp(`${PublicationsApiPaths.FOR_APPROVAL}/*`)).reply(200, mockMyPublications.publications);
 
   //PUBLICATION

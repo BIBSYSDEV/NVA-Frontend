@@ -9,13 +9,16 @@ import { SEARCH_RESULTS_PER_PAGE, StatusCode } from '../utils/constants';
 import { searchForPublications } from '../redux/actions/searchActions';
 import { getIdToken } from './userApi';
 import { NotificationVariant } from '../types/notification.types';
+import { authenticatedApiRequest } from './apiRequest';
+import { RoleName } from '../types/user.types';
+import { DoiRequest } from '../types/doiRequest.types';
 
 export enum PublicationsApiPaths {
   SEARCH = '/search/publications',
   PUBLICATION = '/publication',
   PUBLICATIONS_BY_OWNER = '/publication/by-owner',
   DOI_LOOKUP = '/doi-fetch',
-  DOI_REQUESTS = '/publications/doi-requests',
+  DOI_REQUESTS = '/doi-request',
   FOR_APPROVAL = '/publications/approval',
 }
 
@@ -186,25 +189,11 @@ export const search = async (searchTerm: string, dispatch: Dispatch, offset?: nu
   }
 };
 
-// Fetch publications where creator also wanted a DOI to be created
-export const getDoiRequests = async () => {
-  try {
-    const idToken = await getIdToken();
-    const response = await Axios.get(PublicationsApiPaths.DOI_REQUESTS, {
-      headers: {
-        Authorization: `Bearer ${idToken}`,
-      },
-    });
-
-    if (response.status === StatusCode.OK) {
-      return response.data;
-    } else {
-      return [];
-    }
-  } catch {
-    return { error: i18n.t('feedback:error.get_doi_requests') };
-  }
-};
+export const getDoiRequests = async (role: RoleName, cancelToken?: CancelToken) =>
+  await authenticatedApiRequest<DoiRequest[]>({
+    url: `${PublicationsApiPaths.DOI_REQUESTS}?role=${role}`,
+    cancelToken,
+  });
 
 // Fetch publications ready for approval
 export const getPublicationsForApproval = async () => {

@@ -17,7 +17,7 @@ describe('Worklist', () => {
     cy.get('[data-testid=doi-requests-button]').click({ force: true });
   });
 
-  it('The Curator should be able to open an item in the DOI request list and see the summary of the publication', () => {
+  it.skip('The Curator should be able to open an item in the DOI request list and see the summary of the publication', () => {
     cy.get('[data-testid=doi-requests-button]').click({ force: true });
     cy.get('[data-testid=open-publication-12345678]').click({ force: true });
     cy.get('[data-testid=nav-tabpanel-submission]').should('be.visible');
