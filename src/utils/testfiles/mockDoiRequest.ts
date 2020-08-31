@@ -9,4 +9,8 @@ const mockDoiRequest: DoiRequest = {
   publicationCreator: mockPublication.owner,
 };
 
-export const mockDoiRequests: DoiRequest[] = new Array(3).fill(mockDoiRequest);
+export const mockDoiRequests: DoiRequest[] = [
+  mockDoiRequest,
+  { ...mockDoiRequest, publicationIdentifier: '123' },
+  { ...mockDoiRequest, publicationIdentifier: '456' },
+];
