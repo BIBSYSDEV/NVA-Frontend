@@ -34,7 +34,7 @@ interface DoiRequestAccordionProps {
 
 export const DoiRequestAccordion: FC<DoiRequestAccordionProps> = ({ doiRequest }) => {
   return (
-    <Accordion>
+    <Accordion data-testid={`doi-request-${doiRequest.publicationIdentifier}`}>
       <StyledAccordionSummary expandIcon={<ExpandMoreIcon fontSize="large" />}>
         <StyledStatus>{doiRequest.doiRequestStatus}</StyledStatus>
         <StyledTitle>{doiRequest.publicationTitle}</StyledTitle>
