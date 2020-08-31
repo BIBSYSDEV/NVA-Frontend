@@ -94,6 +94,12 @@
     "validation_errors": "Valideringsfeil"
   },
   "new_publication": "Ny publikasjon",
+  "public_page": {
+    "edit_publication": "Endre publikasjon",
+    "message_to_curator": "Melding til kurator",
+    "request_doi": "Be om DOI",
+    "request_doi_description": "Forespørselen vil bli behandlet av en kurator. Legg til en melding ved eventuelle spørsmål eller oppklaringer. Du vil få en epost når forespørselen er behandlet."
+  },
   "publication": {
     "info_text": "Velg ressursen du ønsker å registrere eller publisere ved å laste opp ressurs eller lenke til en publikasjon.",
     "link_publication_description": "Feks. DOI lenke, lenke til artikkel, lenke til video av foredrag etc.",
@@ -111,6 +117,7 @@
     "is_not_peer_reviewed": "Nei, den er ikke fagfellevurdert",
     "is_text_book": "Er boken en lærebok?",
     "isbn": "ISBN",
+    "isbn_helper": "Trykk Enter for å legge til ISBN",
     "issn": "ISSN",
     "issue": "Hefte",
     "journal": "Tidsskrift",
@@ -133,7 +140,6 @@
     "search_for_series": "Søk etter serie",
     "series": "Serie",
     "series_info": "Hvis boken inngår i en serie",
-    "specialization": "Studieretning",
     "subtype": "Undertype",
     "text_book": "Lærebok",
     "text_book_yes": "Ja, boken er en lærebok",

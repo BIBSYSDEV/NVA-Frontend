@@ -26,8 +26,8 @@ describe('Publication: References: Book', () => {
     cy.contains('Novum Testamentum').click({ force: true });
     cy.get('[data-testid=autosearch-results-publisher]').contains('Novum Testamentum');
 
-    // fill out ISBN field
-    cy.get('[data-testid=isbn]').type('978-3-16-148410-0');
+    // TODO: fill out ISBN_LIST field
+    // cy.get('[data-testid=isbn]').type('978-3-16-148410-0');
 
     // choose peer review value and show NVI status
     cy.get('[data-testid=peer_review-true]').click({ force: true });
@@ -35,12 +35,8 @@ describe('Publication: References: Book', () => {
     cy.get('[data-testid=peer_review-false]').click({ force: true });
     cy.get('[data-testid=nvi_book]').contains('This publication can not be incuded in NVI');
 
-    // check text book checkbox
-    cy.get('[data-testid=text_book]').click({ force: true });
-    cy.get('[data-testid=text_book]').click({ force: true });
-
     // fill out number of pages field
-    cy.get('[data-testid=number_of_pages]').type('483');
+    cy.get('[data-testid=pages]').type('483');
 
     // search and select a series
     cy.get('[data-testid=autosearch-series]').click({ force: true }).type('Test');

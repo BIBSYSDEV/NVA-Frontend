@@ -1,5 +1,4 @@
 import Amplify, { Hub } from 'aws-amplify';
-import Axios from 'axios';
 import React, { useEffect, useState, FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
@@ -17,15 +16,15 @@ import { setAuthorityData, setPossibleAuthorities, setUser, setRoles } from './r
 import { RootStore } from './redux/reducers/rootReducer';
 import { Authority } from './types/authority.types';
 import { awsConfig } from './utils/aws-config';
-import { API_URL, USE_MOCK_DATA } from './utils/constants';
+import { USE_MOCK_DATA } from './utils/constants';
 import { hubListener } from './utils/hub-listener';
 import { mockUser } from './utils/testfiles/mock_feide_user';
 import AppRoutes from './AppRoutes';
 import useFetchAuthorities from './utils/hooks/useFetchAuthorities';
 import { setNotification } from './redux/actions/notificationActions';
-import { getMyRoles } from './api/roleApi';
+import { getInstitutionUser } from './api/roleApi';
 import { NotificationVariant } from './types/notification.types';
-import { UserRoles } from './types/role.types';
+import { InstitutionUser } from './types/user.types';
 
 const StyledApp = styled.div`
   min-height: 100vh;
@@ -51,19 +50,6 @@ const ProgressContainer = styled.div`
 `;
 
 const App: FC = () => {
-  useEffect(() => {
-    const setAxiosHeaders = async () => {
-      // Set global config of axios requests
-      Axios.defaults.baseURL = API_URL;
-      Axios.defaults.headers.common = {
-        Accept: 'application/json',
-      };
-      Axios.defaults.headers.post['Content-Type'] = 'application/json';
-      Axios.defaults.headers.put['Content-Type'] = 'application/json';
-    };
-    setAxiosHeaders();
-  }, []);
-
   const dispatch = useDispatch();
   const user = useSelector((store: RootStore) => store.user);
   const [isLoadingUser, setIsLoadingUser] = useState(true);
@@ -110,12 +96,12 @@ const App: FC = () => {
   useEffect(() => {
     // Fetch logged in user's roles
     const getRoles = async () => {
-      const userRoles = await getMyRoles(user.id);
-      if (userRoles) {
-        if (userRoles.error) {
-          dispatch(setNotification(userRoles.error, NotificationVariant.Error));
+      const institutionUser = await getInstitutionUser(user.id);
+      if (institutionUser) {
+        if (institutionUser.error) {
+          dispatch(setNotification(institutionUser.error, NotificationVariant.Error));
         } else {
-          const roles = (userRoles as UserRoles).roles.map((role) => role.rolename);
+          const roles = (institutionUser as InstitutionUser).roles.map((role) => role.rolename);
           dispatch(setRoles(roles));
         }
         setIsLoadingUser(false);
@@ -179,9 +165,7 @@ const App: FC = () => {
         </StyledContent>
         <Footer />
       </StyledApp>
-      {!localStorage.getItem('previouslyLoggedIn') && !isLoadingAuthorities && authorityDataUpdated && (
-        <AuthorityOrcidModal />
-      )}
+      {!isLoadingAuthorities && authorityDataUpdated && user && <AuthorityOrcidModal />}
     </BrowserRouter>
   );
 };

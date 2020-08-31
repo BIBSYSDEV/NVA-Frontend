@@ -1,88 +1,139 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { getInstitutionUsers } from '../../api/userAdminApi';
+import styled from 'styled-components';
+import { FormControlLabel, Checkbox, Divider, CircularProgress, Button } from '@material-ui/core';
+
 import Heading from '../../components/Heading';
 import SubHeading from '../../components/SubHeading';
 import { useSelector } from 'react-redux';
 import { RootStore } from '../../redux/reducers/rootReducer';
-import { UserAdmin, RoleName } from '../../types/user.types';
-import styled from 'styled-components';
+import { RoleName } from '../../types/user.types';
 import Card from '../../components/Card';
-import { FormControlLabel, Checkbox } from '@material-ui/core';
 import UserList from './UserList';
 import NormalText from './../../components/NormalText';
+import useFetchUsersForInstitution from '../../utils/hooks/useFetchUsersForInstitution';
+import { StyledProgressWrapper } from '../../components/styled/Wrappers';
+import { filterUsersByRole } from '../../utils/role-helpers';
+import Modal from '../../components/Modal';
+import { AddRoleModalContent } from './AddRoleModalContent';
 
 const StyledContainer = styled.div`
   margin-bottom: 2rem;
 `;
 
+const StyledHeading = styled(Heading)`
+  margin-bottom: 2rem;
+`;
+
+const StyledNewButton = styled(Button)`
+  margin-top: 1rem;
+`;
+
 const AdminUsersPage: FC = () => {
   const { t } = useTranslation('admin');
   const user = useSelector((store: RootStore) => store.user);
-  const [userList, setUserList] = useState<UserAdmin[]>([]);
+  const [users, isLoading, fetchInstitutionUsers] = useFetchUsersForInstitution(user.customerId.split('/').pop() ?? '');
   const [autoAssignCreators, setAutoAssignCreators] = useState(true);
-
-  useEffect(() => {
-    const getUsers = async () => {
-      const users = await getInstitutionUsers(user.institution);
-      // TODO backend
-      // if (users?.error) {
-      //   dispatch(addNotification(t('feedback:error.get_publications'), 'error'));
-      // } else {
-      setUserList(users);
-      // }
-    };
-
-    getUsers();
-  }, [user.institution]);
+  const [roleToAdd, setRoleToAdd] = useState<RoleName>();
 
   const handleCheckAutoAssignCreators = () => {
     setAutoAssignCreators(!autoAssignCreators);
   };
 
-  const filterUsersByRole = (roleFilter: RoleName) => {
-    return userList.filter(user => user.roles.some(role => role === roleFilter));
-  };
-
   return (
     <Card>
-      <Heading>{t('users.user_administration')}</Heading>
-      <SubHeading>{t('profile:roles.institution_admins')}</SubHeading>
+      <StyledHeading>{t('users.user_administration')}</StyledHeading>
+
+      {/* Admins */}
       <StyledContainer>
-        <UserList
-          cristinUnitId={user.institution}
-          userList={filterUsersByRole(RoleName.ADMIN)}
-          role={RoleName.ADMIN}
-          buttonText={t('users.new_institution_admin')}
-        />
+        <SubHeading>{t('profile:roles.institution_admins')}</SubHeading>
+        <Divider />
+        {isLoading ? (
+          <StyledProgressWrapper>
+            <CircularProgress />
+          </StyledProgressWrapper>
+        ) : (
+          <UserList
+            userList={filterUsersByRole(users, RoleName.INSTITUTION_ADMIN)}
+            roleToRemove={RoleName.INSTITUTION_ADMIN}
+            refetchUsers={fetchInstitutionUsers}
+          />
+        )}
+        <StyledNewButton color="primary" variant="outlined" onClick={() => setRoleToAdd(RoleName.INSTITUTION_ADMIN)}>
+          {t('users.add_institution_admin')}
+        </StyledNewButton>
       </StyledContainer>
-      <SubHeading>{t('profile:roles.curators')}</SubHeading>
+
+      {/* Curators */}
       <StyledContainer>
-        <UserList
-          cristinUnitId={user.institution}
-          userList={filterUsersByRole(RoleName.CURATOR)}
-          role={RoleName.CURATOR}
-          buttonText={t('users.new_curator')}
-        />
+        <SubHeading>{t('profile:roles.curators')}</SubHeading>
+        <Divider />
+        {isLoading ? (
+          <StyledProgressWrapper>
+            <CircularProgress />
+          </StyledProgressWrapper>
+        ) : (
+          <UserList
+            userList={filterUsersByRole(users, RoleName.CURATOR)}
+            roleToRemove={RoleName.CURATOR}
+            refetchUsers={fetchInstitutionUsers}
+          />
+        )}
+        <StyledNewButton color="primary" variant="outlined" onClick={() => setRoleToAdd(RoleName.CURATOR)}>
+          {t('users.add_curator')}
+        </StyledNewButton>
       </StyledContainer>
-      <SubHeading>{t('profile:roles.editors')}</SubHeading>
+
+      {/* Editors */}
       <StyledContainer>
-        <UserList
-          cristinUnitId={user.institution}
-          userList={filterUsersByRole(RoleName.EDITOR)}
-          role={RoleName.EDITOR}
-          buttonText={t('users.new_editor')}
-        />
+        <SubHeading>{t('profile:roles.editors')}</SubHeading>
+        <Divider />
+        {isLoading ? (
+          <StyledProgressWrapper>
+            <CircularProgress />
+          </StyledProgressWrapper>
+        ) : (
+          <UserList
+            userList={filterUsersByRole(users, RoleName.EDITOR)}
+            roleToRemove={RoleName.EDITOR}
+            refetchUsers={fetchInstitutionUsers}
+          />
+        )}
+        <StyledNewButton color="primary" variant="outlined" onClick={() => setRoleToAdd(RoleName.EDITOR)}>
+          {t('users.add_editor')}
+        </StyledNewButton>
       </StyledContainer>
+
       <StyledContainer>
         <SubHeading>{t('profile:roles.creator')}</SubHeading>
+        <Divider />
         <NormalText>{t('users.creator_info')}</NormalText>
         <FormControlLabel
-          control={<Checkbox checked={autoAssignCreators} />}
+          control={<Checkbox disabled checked={autoAssignCreators} />}
           onChange={handleCheckAutoAssignCreators}
           label={t('users.auto_assign_creators')}
         />
       </StyledContainer>
+
+      {roleToAdd && (
+        <Modal
+          open={true}
+          onClose={() => setRoleToAdd(undefined)}
+          headingText={
+            roleToAdd === RoleName.INSTITUTION_ADMIN
+              ? t('users.add_institution_admin')
+              : roleToAdd === RoleName.CURATOR
+              ? t('users.add_curator')
+              : t('users.add_editor')
+          }>
+          <AddRoleModalContent
+            role={roleToAdd}
+            users={users}
+            closeModal={() => setRoleToAdd(undefined)}
+            refetchUsers={fetchInstitutionUsers}
+          />
+        </Modal>
+      )}
     </Card>
   );
 };

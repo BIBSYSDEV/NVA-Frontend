@@ -57,6 +57,7 @@ const Menu: FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const { t } = useTranslation();
   const history = useHistory();
+  const customerId = user.customerId.split('/').pop();
 
   const handleClickMenuAnchor = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -64,7 +65,9 @@ const Menu: FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
 
   const handleClickMenuItem = (newPath: string) => {
     setAnchorEl(null);
-    history.push(newPath);
+    if (newPath !== history.location.pathname) {
+      history.push(newPath);
+    }
   };
 
   return (
@@ -103,23 +106,31 @@ const Menu: FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
           </StyledMenuItem>
         )}
 
-        {user.isAppAdmin && (
+        {(user.isAppAdmin || user.isInstitutionAdmin) && (
           <StyledAdminMenu>
             <StyledNormalText>{t('common:admin')}</StyledNormalText>
-            <MenuItem
-              data-testid="menu-admin-institution-button"
-              onClick={() => handleClickMenuItem('/admin-institutions')}>
-              {t('common:institutions')}
-            </MenuItem>
+            {user.isAppAdmin && (
+              <MenuItem
+                data-testid="menu-admin-institution-button"
+                onClick={() => handleClickMenuItem('/admin-institutions')}>
+                {t('common:institutions')}
+              </MenuItem>
+            )}
+            {user.isInstitutionAdmin && (
+              <>
+                <MenuItem
+                  data-testid="menu-admin-institution-button"
+                  onClick={() => handleClickMenuItem(`/admin-institutions/${customerId}`)}>
+                  {t('common:my_institution')}
+                </MenuItem>
+                <MenuItem
+                  data-testid="menu-admin-institution-users-button"
+                  onClick={() => handleClickMenuItem('/admin-institution-users')}>
+                  {t('common:users')}
+                </MenuItem>
+              </>
+            )}
           </StyledAdminMenu>
-        )}
-
-        {user.isInstitutionAdmin && (
-          <StyledMenuItem
-            data-testid="menu-admin-institution-users-button"
-            onClick={() => handleClickMenuItem('/admin-institution-users')}>
-            {t('common:users')}
-          </StyledMenuItem>
         )}
 
         {user.isCurator && (

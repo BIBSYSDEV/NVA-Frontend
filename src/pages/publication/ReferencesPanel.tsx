@@ -1,5 +1,5 @@
 import { FormikProps, useFormikContext } from 'formik';
-import React, { useEffect, FC } from 'react';
+import React, { useEffect, FC, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { Publication } from '../../types/publication.types';
@@ -31,10 +31,15 @@ const ReferencesPanel: FC<PanelProps> = ({ setTouchedFields }) => {
   const { t } = useTranslation('publication');
   const { values, setTouched, setFieldValue, touched }: FormikProps<Publication> = useFormikContext();
   const publicationContextType = values.entityDescription.reference.publicationContext.type;
+  const contextRef = useRef(publicationContextType);
+
+  useEffect(() => {
+    contextRef.current = publicationContextType;
+  }, [publicationContextType]);
 
   useEffect(
     // Set all fields as touched if user navigates away from this panel (on unmount)
-    () => () => setTouchedFields(touchedReferenceTabFields),
+    () => () => setTouchedFields(touchedReferenceTabFields(contextRef.current)),
     [setTouchedFields]
   );
 

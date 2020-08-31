@@ -42,9 +42,6 @@ const InstitutionList: FC<InstitutionListProps> = ({ institutions }) => {
             <TableCell>
               <Label>{t('date')}</Label>
             </TableCell>
-            <TableCell>
-              <Label>{t('contact_person')}</Label>
-            </TableCell>
             <TableCell />
           </TableRow>
         </TableHead>
@@ -56,9 +53,6 @@ const InstitutionList: FC<InstitutionListProps> = ({ institutions }) => {
               </TableCell>
               <StyledSmallCell>
                 <NormalText>{new Date(institution.createdDate).toLocaleDateString()}</NormalText>
-              </StyledSmallCell>
-              <StyledSmallCell>
-                <NormalText>{institution.administrationId}</NormalText>
               </StyledSmallCell>
               <TableCell>
                 <Button

@@ -4,6 +4,7 @@ import {
   SpecificFileFieldNames,
   SpecificContributorFieldNames,
   ContributorFieldNames,
+  PublicationType,
 } from '../types/publicationFieldNames';
 import { Contributor } from '../types/contributor.types';
 import { File } from '../types/file.types';
@@ -112,26 +113,72 @@ export const touchedDescriptionTabFields: FormikTouched<Publication> = {
   },
 };
 
-export const touchedReferenceTabFields: FormikTouched<Publication> = {
-  entityDescription: {
-    reference: {
-      publicationContext: {
-        type: true,
-        title: true,
-      },
-      publicationInstance: {
-        type: true,
-        articleNumber: true,
-        issue: true,
-        pages: {
-          begin: true,
-          end: true,
+export const touchedReferenceTabFields = (publicationType: PublicationType | ''): FormikTouched<any> => {
+  switch (publicationType) {
+    case PublicationType.PUBLICATION_IN_JOURNAL:
+      return {
+        entityDescription: {
+          reference: {
+            publicationContext: {
+              type: true,
+              title: true,
+            },
+            publicationInstance: {
+              type: true,
+              articleNumber: true,
+              issue: true,
+              pages: {
+                begin: true,
+                end: true,
+              },
+              peerReviewed: true,
+              volume: true,
+            },
+          },
         },
-        peerReviewed: true,
-        volume: true,
-      },
-    },
-  },
+      };
+    case PublicationType.DEGREE:
+      return {
+        entityDescription: {
+          reference: {
+            publicationContext: {
+              type: true,
+              publisher: true,
+            },
+            publicationInstance: {
+              type: true,
+            },
+          },
+        },
+      };
+    case PublicationType.REPORT:
+      return {
+        entityDescription: {
+          reference: {
+            publicationContext: {
+              type: true,
+              publisher: true,
+            },
+            publicationInstance: {
+              type: true,
+            },
+          },
+        },
+      };
+    default:
+      return {
+        entityDescription: {
+          reference: {
+            publicationContext: {
+              type: true,
+            },
+            publicationInstance: {
+              type: true,
+            },
+          },
+        },
+      };
+  }
 };
 
 export const touchedContributorTabFields = (contributors: Contributor[]): FormikTouched<Publication> => ({

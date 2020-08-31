@@ -1,33 +1,29 @@
 import LabelContentRow from '../../../components/LabelContentRow';
-import React from 'react';
+import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormikProps, useFormikContext } from 'formik';
 import { Publication } from '../../../types/publication.types';
+import { BookEntityDescription } from '../../../types/publication_types/bookPublication.types';
 
-const SubmissionBook: React.FC = () => {
+const SubmissionBook: FC = () => {
   const { t } = useTranslation('publication');
   const { values }: FormikProps<Publication> = useFormikContext();
   const {
-    series,
-    textBook,
-    numberOfPages,
-    isbn,
     reference: { publicationContext, publicationInstance },
-  } = values.entityDescription;
+  } = values.entityDescription as BookEntityDescription;
 
   return (
     <>
       <LabelContentRow label={t('references.subtype')}>
-        {publicationInstance.type && t(`publicationTypes:subtypes_book.${publicationInstance.type}`)}
+        {publicationInstance.type && t(`publicationTypes:${publicationInstance.type}`)}
       </LabelContentRow>
-      <LabelContentRow label={t('common:publisher')}>{publicationContext?.title}</LabelContentRow>
+      <LabelContentRow label={t('common:publisher')}>{publicationContext?.publisher}</LabelContentRow>
       <LabelContentRow label={t('references.peer_reviewed')}>
         {publicationInstance.peerReviewed ? t('common:yes') : t('common:no')}
       </LabelContentRow>
-      <LabelContentRow label={t('references.text_book')}>{textBook ? t('common:yes') : t('common:no')}</LabelContentRow>
-      <LabelContentRow label={t('references.series')}>{series.title}</LabelContentRow>
-      <LabelContentRow label={t('references.issn')}>{isbn}</LabelContentRow>
-      <LabelContentRow label={t('references.number_of_pages')}>{numberOfPages}</LabelContentRow>
+      <LabelContentRow label={t('references.series')}>{publicationContext?.seriesTitle}</LabelContentRow>
+      {/* TODO <LabelContentRow label={t('references.issn')}>{isbn}</LabelContentRow> */}
+      <LabelContentRow label={t('references.number_of_pages')}>{publicationInstance?.pages?.pages}</LabelContentRow>
     </>
   );
 };

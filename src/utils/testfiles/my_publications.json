@@ -14,7 +14,7 @@
           "level": 2,
           "onlineIssn": "1469-8145",
           "title": "New Testament Studies",
-          "printIssn": "0028-6885"
+          "url": "http://epa.sagepub.com/"
         }
       }
     },
@@ -30,7 +30,7 @@
       "reference": {
         "publicationContext": {
           "title": "Novum Testamentum",
-          "printIssn": "0048-1009",
+          "url": "http://epa.sagepub.com/",
           "onlineIssn": "1568-5365",
           "level": 2
         }
@@ -48,7 +48,7 @@
       "reference": {
         "publicationContext": {
           "title": "Scandinavian Journal of the Old Testament",
-          "printIssn": "0901-8328",
+          "url": "http://epa.sagepub.com/",
           "onlineIssn": "1502-7244",
           "level": 2
         }
@@ -66,7 +66,7 @@
       "reference": {
         "publicationContext": {
           "title": "Journal for the Study of the New Testament",
-          "printIssn": "0142-064X",
+          "url": "http://epa.sagepub.com/",
           "onlineIssn": "1745-5294",
           "level": 2
         }
@@ -89,7 +89,7 @@
       "reference": {
         "publicationContext": {
           "title": "American Journal of Physiology - Gastrointestinal and Liver Physiology",
-          "printIssn": null,
+          "url": null,
           "onlineIssn": "1522-1547",
           "level": null
         }
@@ -112,7 +112,7 @@
       "reference": {
         "publicationContext": {
           "title": "Arbeiten zum Neuen Testament und Judentum",
-          "printIssn": "0170-8856",
+          "url": "",
           "onlineIssn": null,
           "level": null
         }
