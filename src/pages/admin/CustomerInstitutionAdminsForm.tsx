@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import { Button } from '@material-ui/core';
+import { Button, CircularProgress } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
@@ -18,9 +18,14 @@ const StyledNewButton = styled(Button)`
 interface CustomerInstitutionAdminsFormProps {
   users: InstitutionUser[];
   refetchInstitutionUsers: () => void;
+  isLoadingUsers: boolean;
 }
 
-const CustomerInstitutionAdminsForm: FC<CustomerInstitutionAdminsFormProps> = ({ users, refetchInstitutionUsers }) => {
+const CustomerInstitutionAdminsForm: FC<CustomerInstitutionAdminsFormProps> = ({
+  users,
+  refetchInstitutionUsers,
+  isLoadingUsers,
+}) => {
   const { t } = useTranslation('admin');
   const [openAddAdminModal, setOpenAddAdminModal] = useState(false);
   const toggleOpenAddAdminModal = () => {
@@ -30,14 +35,20 @@ const CustomerInstitutionAdminsForm: FC<CustomerInstitutionAdminsFormProps> = ({
   return (
     <Card>
       <Heading>{t('administrators')}</Heading>
-      <UserList
-        userList={filterUsersByRole(users, RoleName.INSTITUTION_ADMIN)}
-        roleToRemove={RoleName.INSTITUTION_ADMIN}
-        refetchUsers={refetchInstitutionUsers}
-      />
-      <StyledNewButton color="primary" variant="outlined" onClick={toggleOpenAddAdminModal}>
-        {t('users.add_institution_admin')}
-      </StyledNewButton>
+      {isLoadingUsers ? (
+        <CircularProgress />
+      ) : (
+        <>
+          <UserList
+            userList={filterUsersByRole(users, RoleName.INSTITUTION_ADMIN)}
+            roleToRemove={RoleName.INSTITUTION_ADMIN}
+            refetchUsers={refetchInstitutionUsers}
+          />
+          <StyledNewButton color="primary" variant="outlined" onClick={toggleOpenAddAdminModal}>
+            {t('users.add_institution_admin')}
+          </StyledNewButton>
+        </>
+      )}
 
       <Modal open={openAddAdminModal} onClose={toggleOpenAddAdminModal} headingText={t('users.add_institution_admin')}>
         <AddRoleModalContent

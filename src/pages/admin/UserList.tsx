@@ -55,6 +55,7 @@ const UserList: FC<UserListProps> = ({
       const response = await addRoleToUser(username, roleToAdd);
       if (response) {
         if (response.error) {
+          setUpdatedRoleForUsers((state) => state.filter((user) => user !== username));
           dispatch(setNotification(t('feedback:error.add_role'), NotificationVariant.Error));
         } else {
           dispatch(setNotification(t('feedback:success.added_role')));
@@ -70,6 +71,7 @@ const UserList: FC<UserListProps> = ({
       const response = await removeRoleFromUser(removeRoleForUser, roleToRemove);
       if (response) {
         if (response.error) {
+          setUpdatedRoleForUsers((state) => state.filter((user) => user !== removeRoleForUser));
           dispatch(setNotification(t('feedback:error.remove_role'), NotificationVariant.Error));
         } else {
           dispatch(setNotification(t('feedback:success.removed_role')));
