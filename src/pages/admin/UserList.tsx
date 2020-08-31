@@ -59,7 +59,7 @@ const UserList: FC<UserListProps> = ({
           dispatch(setNotification(t('feedback:error.add_role'), NotificationVariant.Error));
         } else {
           dispatch(setNotification(t('feedback:success.added_role')));
-          refetchUsers && refetchUsers();
+          refetchUsers?.();
         }
       }
     }
@@ -74,7 +74,7 @@ const UserList: FC<UserListProps> = ({
           dispatch(setNotification(t('feedback:error.remove_role'), NotificationVariant.Error));
         } else {
           dispatch(setNotification(t('feedback:success.removed_role')));
-          refetchUsers && refetchUsers();
+          refetchUsers?.();
         }
       }
     }
