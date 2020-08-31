@@ -1,4 +1,6 @@
 import { createMuiTheme } from '@material-ui/core';
+import i18n from '../translations/i18n';
+import { getTranslatedLabelForDisplayedRows } from '../utils/pagination';
 
 // Extend Palette type to allow custom colors
 declare module '@material-ui/core/styles/createPalette' {
@@ -113,6 +115,14 @@ export default createMuiTheme({
       root: {
         marginTop: '1rem',
       },
+    },
+  },
+  props: {
+    MuiTablePagination: {
+      labelRowsPerPage: i18n.t('common:table_pagination.rows_per_page'),
+      labelDisplayedRows: ({ from, to, count }) => getTranslatedLabelForDisplayedRows(from, to, count),
+      backIconButtonText: i18n.t('common:table_pagination.previous_page'),
+      nextIconButtonText: i18n.t('common:table_pagination.next_page'),
     },
   },
 });
