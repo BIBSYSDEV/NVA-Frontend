@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import Label from './../../components/Label';
 import { InstitutionUser, RoleName } from '../../types/user.types';
 import NormalText from '../../components/NormalText';
+import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 
 const StyledTable = styled(Table)`
   width: 100%;
@@ -25,11 +26,9 @@ interface UserListProps {
   alwaysShowPagination?: boolean; // If false, show pagination only if more elements than minimum rows per page
 }
 
-const rowsPerPageOptions = [5, 10, 25];
-
 const UserList: FC<UserListProps> = ({ userList, roleToRemove, roleToAdd, alwaysShowPagination = false }) => {
   const { t } = useTranslation('admin');
-  const [rowsPerPage, setRowsPerPage] = useState(rowsPerPageOptions[0]);
+  const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
   const [page, setPage] = useState(0);
 
   useEffect(() => {
@@ -74,9 +73,9 @@ const UserList: FC<UserListProps> = ({ userList, roleToRemove, roleToAdd, always
               ))}
             </TableBody>
           </StyledTable>
-          {(alwaysShowPagination || userList.length > rowsPerPageOptions[0]) && (
+          {(alwaysShowPagination || userList.length > ROWS_PER_PAGE_OPTIONS[0]) && (
             <TablePagination
-              rowsPerPageOptions={rowsPerPageOptions}
+              rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
               component="div"
               count={userList.length}
               rowsPerPage={rowsPerPage}
