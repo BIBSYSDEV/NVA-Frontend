@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react';
 import styled from 'styled-components';
-import { Table, TableHead, TableRow, TableCell, TableBody, TablePagination } from '@material-ui/core';
+import { Table, TableHead, TableRow, TableCell, TableBody, TablePagination, Button } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
@@ -111,14 +111,13 @@ const UserList: FC<UserListProps> = ({
                     <TableCell>{user.username}</TableCell>
                     <TableCell align="right">
                       {roleToRemove && (
-                        <ButtonWithProgress
+                        <Button
                           color="secondary"
                           variant="outlined"
                           startIcon={<DeleteIcon />}
-                          isLoading={isLoading}
                           onClick={() => setRemoveRoleForUser(user.username)}>
                           {t('common:remove')}
-                        </ButtonWithProgress>
+                        </Button>
                       )}
                       {roleToAdd && (
                         <ButtonWithProgress
@@ -156,6 +155,7 @@ const UserList: FC<UserListProps> = ({
             <ConfirmDialog
               open={!!removeRoleForUser}
               title={t('users.remove_role_title')}
+              disableAccept={updatedRoleForUsers.length > 0}
               onCancel={() => setRemoveRoleForUser('')}
               onAccept={handleRemoveRoleFromUser}>
               {t('users.remove_role_text')}
