@@ -71,8 +71,7 @@
     ]
   },
   "nyc": {
-    "extends": "@istanbuljs/nyc-config-typescript",
-    "all": true
+    "extends": "@istanbuljs/nyc-config-typescript"
   },
   "devDependencies": {
     "@cypress/code-coverage": "^3.8.1",
