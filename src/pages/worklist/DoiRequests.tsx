@@ -1,38 +1,32 @@
-import React, { FC, useState, useEffect } from 'react';
-import { getDoiRequests } from '../../api/publicationApi';
-import WorklistTable from './WorkListTable';
+import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
-import SubHeading from '../../components/SubHeading';
-import { useDispatch } from 'react-redux';
-import { setNotification } from '../../redux/actions/notificationActions';
-import { NotificationVariant } from '../../types/notification.types';
 import { CircularProgress } from '@material-ui/core';
+
+import SubHeading from '../../components/SubHeading';
+import useFetchDoiRequests from '../../utils/hooks/useFetchDoiRequests';
+import { RoleName } from '../../types/user.types';
+import { DoiRequestAccordion } from './DoiRequestAccordion';
+import Card from '../../components/Card';
+import { StyledProgressWrapper } from '../../components/styled/Wrappers';
 
 const DoiRequests: FC = () => {
   const { t } = useTranslation('workLists');
-  const [doiRequests, setDoiRequests] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const dispatch = useDispatch();
+  const [doiRequests, isLoadingDoiRequests] = useFetchDoiRequests(RoleName.CURATOR);
 
-  useEffect(() => {
-    const fetchDoiRequests = async () => {
-      const doiRequestsResponse = await getDoiRequests();
-      if (doiRequestsResponse.error) {
-        dispatch(setNotification(doiRequestsResponse.error, NotificationVariant.Error));
-      } else {
-        setDoiRequests(doiRequestsResponse);
-      }
-      setIsLoading(false);
-    };
-    fetchDoiRequests();
-  }, [dispatch]);
-
-  return isLoading ? (
-    <CircularProgress />
-  ) : doiRequests.length > 0 ? (
-    <WorklistTable publications={doiRequests} />
+  return isLoadingDoiRequests ? (
+    <StyledProgressWrapper>
+      <CircularProgress />
+    </StyledProgressWrapper>
+  ) : doiRequests.length === 0 ? (
+    <Card>
+      <SubHeading>{t('no_pending_doi_requests')}</SubHeading>
+    </Card>
   ) : (
-    <SubHeading>{t('no_pending_doi_requests')}</SubHeading>
+    <>
+      {doiRequests.map((doiRequest) => (
+        <DoiRequestAccordion key={doiRequest.publicationIdentifier} doiRequest={doiRequest} />
+      ))}
+    </>
   );
 };
 

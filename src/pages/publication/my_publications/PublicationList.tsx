@@ -20,7 +20,6 @@ import { PublicationPreview } from '../../../types/publication.types';
 import Label from '../../../components/Label';
 import NormalText from '../../../components/NormalText';
 import DeletePublicationModal from '../DeletePublicationModal';
-import { getTranslatedLabelForDisplayedRows } from '../../../utils/pagination';
 import Card from '../../../components/Card';
 
 const StyledTableRow = styled(TableRow)`
@@ -140,8 +139,6 @@ const PublicationList: FC<PublicationListProps> = ({ publications }) => {
         rowsPerPageOptions={[10, 25, { value: -1, label: t('common:all') }]}
         component="div"
         count={publications.length}
-        labelRowsPerPage={t('common:rows_per_page')}
-        labelDisplayedRows={({ from, to, count }) => getTranslatedLabelForDisplayedRows(from, to, count)}
         rowsPerPage={rowsPerPage}
         page={page}
         onChangePage={handleChangePage}

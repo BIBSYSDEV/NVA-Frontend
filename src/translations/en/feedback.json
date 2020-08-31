@@ -50,14 +50,15 @@
   "success": {
     "added_affiliation": "Affiliation was added",
     "added_role": "Role was added",
+    "admin_added": "User added as administrator",
+    "admin_removed": "User removed as administrator",
     "created_authority": "Created author ID",
     "created_customer": "Created customer institution",
     "create_publication": "New publication created",
     "delete_affiliation": "Deleted affiliation",
     "delete_identifier": "Deleted identifier",
     "login": "Logged in",
-    "admin_added": "User added as administrator",
-    "admin_removed": "User removed as administrator",
+    "removed_role": "Role removed",
     "update_authority": "Updated authority",
     "update_customer": "Updated customer institution",
     "update_publication": "Updated publication"
