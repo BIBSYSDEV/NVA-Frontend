@@ -1,11 +1,8 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
-
 import { List, Typography, Divider, CircularProgress } from '@material-ui/core';
-import ImageIcon from '@material-ui/icons/Image';
 import { Link } from 'react-router-dom';
 import { Link as MuiLink } from '@material-ui/core';
-
 import { PublicationListItem } from '../../types/publication.types';
 import Heading from '../../components/Heading';
 import { useTranslation } from 'react-i18next';
@@ -39,7 +36,7 @@ const LatestPublications: FC = () => {
           <List>
             {publications.map((publication: PublicationListItem) => (
               <PublicationListItemComponent
-                publication={publication}
+                key={publication.identifier}
                 primaryComponent={
                   <MuiLink component={Link} to={`/publication/${publication.identifier}/public`}>
                     {publication.mainTitle}
