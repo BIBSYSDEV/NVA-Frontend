@@ -2,9 +2,9 @@ import React, { FC } from 'react';
 import { Accordion, AccordionSummary, AccordionDetails, Button, TextField } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Link as RouterLink } from 'react-router-dom';
+import styled from 'styled-components';
 
 import { DoiRequest } from '../../types/doiRequest.types';
-import styled from 'styled-components';
 import Label from '../../components/Label';
 import { useTranslation } from 'react-i18next';
 import { PublicationTab } from '../../types/publication.types';
@@ -22,11 +22,11 @@ const StyledAccordion = styled(Accordion)`
   }
 `;
 
-const StyledStatus = styled.div`
+const StyledStatus = styled(Label)`
   grid-area: status;
 `;
 
-const StyledTitle = styled.div`
+const StyledTitle = styled(Label)`
   grid-area: title;
 `;
 
@@ -71,12 +71,8 @@ export const DoiRequestAccordion: FC<DoiRequestAccordionProps> = ({ doiRequest }
   return (
     <StyledAccordion data-testid={`doi-request-${doiRequest.publicationIdentifier}`}>
       <AccordionSummary expandIcon={<ExpandMoreIcon fontSize="large" />}>
-        <StyledStatus>
-          <Label>{doiRequest.doiRequestStatus}</Label>
-        </StyledStatus>
-        <StyledTitle>
-          <Label>{doiRequest.publicationTitle}</Label>
-        </StyledTitle>
+        <StyledStatus>{doiRequest.doiRequestStatus}</StyledStatus>
+        <StyledTitle>{doiRequest.publicationTitle}</StyledTitle>
         <StyledOwner>
           <Label>{doiRequest.publicationCreator}</Label>
           {doiRequest.doiRequestDate}
