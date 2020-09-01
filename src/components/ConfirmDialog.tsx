@@ -17,17 +17,10 @@ interface ConfirmDialogProps {
   title: string;
   onAccept: () => void;
   onCancel: () => void;
-  disableAccept?: boolean;
+  isLoading?: boolean;
 }
 
-const ConfirmDialog: FC<ConfirmDialogProps> = ({
-  children,
-  open,
-  title,
-  onAccept,
-  onCancel,
-  disableAccept = false,
-}) => {
+const ConfirmDialog: FC<ConfirmDialogProps> = ({ children, open, title, onAccept, onCancel, isLoading = false }) => {
   const { t } = useTranslation('common');
 
   return (
@@ -40,7 +33,7 @@ const ConfirmDialog: FC<ConfirmDialogProps> = ({
         <Button data-testid="cancel-button" variant="contained" onClick={onCancel}>
           {t('common:no')}
         </Button>
-        <ButtonWithProgress data-testid="accept-button" isLoading={disableAccept} onClick={onAccept}>
+        <ButtonWithProgress data-testid="accept-button" isLoading={isLoading} onClick={onAccept}>
           {t('common:yes')}
         </ButtonWithProgress>
       </DialogActions>
