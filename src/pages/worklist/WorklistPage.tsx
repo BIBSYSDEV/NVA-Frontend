@@ -52,7 +52,7 @@ const WorklistPage: FC = () => {
           onClick={() => setSelectedTab(Tab.Doi)}
           isSelected={selectedTab === Tab.Doi}>
           <StyledLinkIcon fontSize="large" />
-          {t('doi_requests')}
+          {t('doi_requests.doi_requests')}
         </TabButton>
       </StyledTabsContainer>
 

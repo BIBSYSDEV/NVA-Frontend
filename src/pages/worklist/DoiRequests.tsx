@@ -19,7 +19,7 @@ const DoiRequests: FC = () => {
     </StyledProgressWrapper>
   ) : doiRequests.length === 0 ? (
     <Card>
-      <SubHeading>{t('no_pending_doi_requests')}</SubHeading>
+      <SubHeading>{t('doi_requests.no_pending_doi_requests')}</SubHeading>
     </Card>
   ) : (
     <>
