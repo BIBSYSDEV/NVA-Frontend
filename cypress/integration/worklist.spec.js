@@ -18,7 +18,10 @@ describe('Worklist', () => {
   });
 
   it('The Curator should be able to open an item in the DOI request list and see the summary of the publication', () => {
-    cy.get('[data-testid=doi-requests-button]').click({ force: true });
-    cy.get(`[data-testid=doi-request-${mockDoiRequests[0].publicationIdentifier}]`).click({ force: true });
+    const { publicationIdentifier } = mockDoiRequests[0];
+    cy.get('[data-testid=doi-requests-button]').click();
+    cy.get(`[data-testid=doi-request-${publicationIdentifier}]`).click();
+    cy.get(`[data-testid=go-to-publication-${publicationIdentifier}]`).click();
+    cy.url().should('include', `/publication/${publicationIdentifier}`);
   });
 });

@@ -94,6 +94,7 @@ export const DoiRequestAccordion: FC<DoiRequestAccordionProps> = ({ doiRequest }
         </StyledMessages>
         <StyledAccordionActionButtons>
           <Button
+            data-testid={`go-to-publication-${doiRequest.publicationIdentifier}`}
             variant="outlined"
             component={RouterLink}
             to={`/publication/${doiRequest.publicationIdentifier}?tab=${PublicationTab.Submission}`}>
