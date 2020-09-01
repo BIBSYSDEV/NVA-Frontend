@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react';
 import styled from 'styled-components';
-import { Table, TableHead, TableRow, TableCell, TableBody, TablePagination } from '@material-ui/core';
+import { Table, TableHead, TableRow, TableCell, TableBody, TablePagination, Button } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
@@ -55,6 +55,7 @@ const UserList: FC<UserListProps> = ({
       const response = await addRoleToUser(username, roleToAdd);
       if (response) {
         if (response.error) {
+          setUpdatedRoleForUsers((state) => state.filter((user) => user !== username));
           dispatch(setNotification(t('feedback:error.add_role'), NotificationVariant.Error));
         } else {
           dispatch(setNotification(t('feedback:success.added_role')));
@@ -70,6 +71,7 @@ const UserList: FC<UserListProps> = ({
       const response = await removeRoleFromUser(removeRoleForUser, roleToRemove);
       if (response) {
         if (response.error) {
+          setUpdatedRoleForUsers((state) => state.filter((user) => user !== removeRoleForUser));
           dispatch(setNotification(t('feedback:error.remove_role'), NotificationVariant.Error));
         } else {
           dispatch(setNotification(t('feedback:success.removed_role')));
@@ -109,14 +111,13 @@ const UserList: FC<UserListProps> = ({
                     <TableCell>{user.username}</TableCell>
                     <TableCell align="right">
                       {roleToRemove && (
-                        <ButtonWithProgress
+                        <Button
                           color="secondary"
                           variant="outlined"
                           startIcon={<DeleteIcon />}
-                          isLoading={isLoading}
                           onClick={() => setRemoveRoleForUser(user.username)}>
                           {t('common:remove')}
-                        </ButtonWithProgress>
+                        </Button>
                       )}
                       {roleToAdd && (
                         <ButtonWithProgress
@@ -154,6 +155,7 @@ const UserList: FC<UserListProps> = ({
             <ConfirmDialog
               open={!!removeRoleForUser}
               title={t('users.remove_role_title')}
+              isLoading={updatedRoleForUsers.length > 0}
               onCancel={() => setRemoveRoleForUser('')}
               onAccept={handleRemoveRoleFromUser}>
               {t('users.remove_role_text')}
