@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
@@ -36,7 +36,13 @@ const SearchResults: FC<SearchResultsProps> = ({ publications, searchTerm }) => 
                 <Typography component="span">
                   {new Date(publication.modifiedDate).toLocaleDateString()}
                   <br />
-                  {publication.contributors.map((contributor) => contributor.name)}
+                  {publication.contributors.map((contributor) => (
+                    <Fragment key={contributor.identifier}>
+                      <MuiLink component={Link} to={`/user/${contributor.identifier}`}>
+                        {contributor.name}
+                      </MuiLink>{' '}
+                    </Fragment>
+                  ))}
                 </Typography>
               }
             />
