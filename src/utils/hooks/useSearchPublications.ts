@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { search } from '../../api/publicationApi';
@@ -8,7 +8,7 @@ import { SearchResult } from '../../types/search.types';
 import useCancelToken from './useCancelToken';
 
 const useSearchPublications = (
-  searchTerm: string,
+  searchTerm: string | null,
   numberOfResults?: number,
   searchAfter?: string
 ): [SearchResult[] | [], boolean] => {
@@ -20,7 +20,7 @@ const useSearchPublications = (
 
   useEffect(() => {
     const searchPublications = async () => {
-      const response = await search(searchTerm, numberOfResults, searchAfter, cancelToken);
+      const response = await search(searchTerm!, numberOfResults, searchAfter, cancelToken);
       if (response) {
         setIsLoading(false);
         if (response.error) {
@@ -30,8 +30,13 @@ const useSearchPublications = (
         }
       }
     };
-    searchPublications();
-  }, [searchTerm, numberOfResults, searchAfter]);
+    if (searchTerm) {
+      searchPublications();
+    } else {
+      setIsLoading(false);
+      setSearchResults([]);
+    }
+  }, [searchTerm, numberOfResults, searchAfter, cancelToken, t, dispatch]);
 
   return [searchResults, isLoading];
 };

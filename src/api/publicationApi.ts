@@ -1,14 +1,9 @@
 import Axios, { CancelToken } from 'axios';
-import { Dispatch } from 'redux';
-
-import { setNotification } from '../redux/actions/notificationActions';
 import i18n from '../translations/i18n';
 import { Publication } from '../types/publication.types';
 import { PublicationFileSet } from '../types/file.types';
-import { SEARCH_RESULTS_PER_PAGE, StatusCode } from '../utils/constants';
-import { searchForPublications } from '../redux/actions/searchActions';
+import { StatusCode } from '../utils/constants';
 import { getIdToken } from './userApi';
-import { NotificationVariant } from '../types/notification.types';
 import { authenticatedApiRequest } from './apiRequest';
 import { RoleName } from '../types/user.types';
 import { DoiRequest } from '../types/doiRequest.types';

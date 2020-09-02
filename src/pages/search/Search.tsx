@@ -1,40 +1,32 @@
+import { CircularProgress } from '@material-ui/core';
 import React, { FC, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-
-import { search } from '../../api/publicationApi';
 import SearchBar from '../../components/SearchBar';
-import { clearSearch } from '../../redux/actions/searchActions';
-import { RootStore } from '../../redux/reducers/rootReducer';
+import { StyledProgressWrapper } from '../../components/styled/Wrappers';
 import useSearchPublications from '../../utils/hooks/useSearchPublications';
 import SearchResults from './SearchResults';
 
 const StyledSearch = styled.div`
-  display: grid;
-  grid-template-columns: 10rem auto;
-  width: 100%;
+  padding-top: 2rem;
+  width: 80%;
   justify-items: center;
 `;
 
 const Search: FC = () => {
-  // const searchResults = useSelector((state: RootStore) => state.search);
-  // const { publications } = searchResults;
-  // const dispatch = useDispatch();
   const history = useHistory();
   const [resetSearchInput, setResetSearchInput] = useState(false);
-  const searchTerm = history.location.pathname.replace('/search/', '');
+  const searchTerm = new URLSearchParams(history.location.search).get('search');
   const [publications, isLoading] = useSearchPublications(searchTerm);
 
   const handleSearch = async (searchTerm: string) => {
     if (searchTerm.length) {
-      history.push(`/search/${searchTerm}`);
+      history.push(`/search?search=${searchTerm}`);
     }
   };
 
   useEffect(() => {
     if (history.location.pathname === '/search') {
-      // dispatch(clearSearch());
       setResetSearchInput(true);
     } else {
       setResetSearchInput(false);
@@ -43,11 +35,14 @@ const Search: FC = () => {
 
   return (
     <StyledSearch>
-      <div>filter</div>
-      <div>
-        <SearchBar resetSearchInput={resetSearchInput} handleSearch={handleSearch} />
-        {publications?.length > 0 && <SearchResults publications={publications} searchTerm={searchTerm} />}
-      </div>
+      <SearchBar resetSearchInput={resetSearchInput} handleSearch={handleSearch} />
+      {isLoading ? (
+        <StyledProgressWrapper>
+          <CircularProgress />
+        </StyledProgressWrapper>
+      ) : (
+        publications?.length > 0 && <SearchResults publications={publications} searchTerm={searchTerm} />
+      )}
     </StyledSearch>
   );
 };
