@@ -10,7 +10,7 @@ import { DoiRequest } from '../types/doiRequest.types';
 import { SearchResult } from '../types/search.types';
 
 export enum PublicationsApiPaths {
-  SEARCH = '/search/publications',
+  SEARCH = '/search',
   PUBLICATION = '/publication',
   PUBLICATIONS_BY_OWNER = '/publication/by-owner',
   DOI_LOOKUP = '/doi-fetch',
