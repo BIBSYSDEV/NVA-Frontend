@@ -1,10 +1,10 @@
 import React, { FC, Fragment } from 'react';
-import { CircularProgress } from '@material-ui/core';
 
 import Label from '../Label';
 import NormalText from '../NormalText';
 import useFetchUnitHierarchy from '../../utils/hooks/useFetchUnitHierarchy';
 import { getUnitHierarchyNames } from '../../utils/institutions-helpers';
+import { AffiliationSkeleton } from './AffiliationSkeleton';
 
 interface AffiliationHierarchyProps {
   unitUri: string;
@@ -21,10 +21,12 @@ export const AffiliationHierarchy: FC<AffiliationHierarchyProps> = ({
   const unitNames = unit ? getUnitHierarchyNames(unit) : [];
 
   return isLoadingUnit ? (
-    <CircularProgress size={20} />
+    <AffiliationSkeleton commaSeparated={commaSeparated} />
   ) : unit ? (
     commaSeparated ? (
-      <NormalText>{unitNames.join(', ')}</NormalText>
+      <i>
+        <NormalText>{unitNames.join(', ')}</NormalText>
+      </i>
     ) : (
       <div>
         {unitNames.map((unitName, index) => (
