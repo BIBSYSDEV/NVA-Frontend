@@ -32,7 +32,7 @@ const AdminCustomerInstitutionPage: FC = () => {
 
   return (
     <StyledCustomerInstitution>
-      {isLoadingCustomerInstitution || isLoadingUsers ? (
+      {isLoadingCustomerInstitution ? (
         <CircularProgress />
       ) : (
         <>
@@ -42,7 +42,11 @@ const AdminCustomerInstitutionPage: FC = () => {
             editMode={editMode}
           />
           {editMode && (
-            <CustomerInstitutionAdminsForm users={users} refetchInstitutionUsers={refetchInstitutionUsers} />
+            <CustomerInstitutionAdminsForm
+              users={users}
+              refetchInstitutionUsers={refetchInstitutionUsers}
+              isLoadingUsers={isLoadingUsers}
+            />
           )}
         </>
       )}
