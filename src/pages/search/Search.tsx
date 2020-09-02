@@ -7,6 +7,7 @@ import { search } from '../../api/publicationApi';
 import SearchBar from '../../components/SearchBar';
 import { clearSearch } from '../../redux/actions/searchActions';
 import { RootStore } from '../../redux/reducers/rootReducer';
+import useSearchPublications from '../../utils/hooks/useSearchPublications';
 import SearchResults from './SearchResults';
 
 const StyledSearch = styled.div`
@@ -17,28 +18,28 @@ const StyledSearch = styled.div`
 `;
 
 const Search: FC = () => {
-  const searchResults = useSelector((state: RootStore) => state.search);
-  const { publications } = searchResults;
-  const dispatch = useDispatch();
+  // const searchResults = useSelector((state: RootStore) => state.search);
+  // const { publications } = searchResults;
+  // const dispatch = useDispatch();
   const history = useHistory();
   const [resetSearchInput, setResetSearchInput] = useState(false);
   const searchTerm = history.location.pathname.replace('/search/', '');
+  const [publications, isLoading] = useSearchPublications(searchTerm);
 
   const handleSearch = async (searchTerm: string) => {
     if (searchTerm.length) {
-      await search(searchTerm, dispatch);
       history.push(`/search/${searchTerm}`);
     }
   };
 
   useEffect(() => {
     if (history.location.pathname === '/search') {
-      dispatch(clearSearch());
+      // dispatch(clearSearch());
       setResetSearchInput(true);
     } else {
       setResetSearchInput(false);
     }
-  }, [dispatch, history.location.pathname]);
+  }, [history.location.pathname]);
 
   return (
     <StyledSearch>

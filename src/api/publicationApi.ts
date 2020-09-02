@@ -12,6 +12,7 @@ import { NotificationVariant } from '../types/notification.types';
 import { authenticatedApiRequest } from './apiRequest';
 import { RoleName } from '../types/user.types';
 import { DoiRequest } from '../types/doiRequest.types';
+import { SearchResult } from '../types/search.types';
 
 export enum PublicationsApiPaths {
   SEARCH = '/search/publications',
@@ -167,27 +168,16 @@ export const getPublicationByDoi = async (doiUrl: string) => {
   }
 };
 
-export const search = async (searchTerm: string, dispatch: Dispatch, offset?: number) => {
-  try {
-    const idToken = await getIdToken();
-    const response = await Axios.get(`${PublicationsApiPaths.SEARCH}/${searchTerm}`, {
-      headers: {
-        Authorization: `Bearer ${idToken}`,
-      },
-    });
-
-    if (response.status === StatusCode.OK) {
-      const currentOffset = offset || 0;
-      const result = response.data.slice(currentOffset, currentOffset + SEARCH_RESULTS_PER_PAGE);
-
-      dispatch(searchForPublications(result, searchTerm, response.data.length, offset));
-    } else {
-      dispatch(setNotification(i18n.t('feedback:error.search', NotificationVariant.Error)));
-    }
-  } catch {
-    dispatch(setNotification(i18n.t('feedback:error.search', NotificationVariant.Error)));
-  }
-};
+export const search = async (
+  searchTerm: string,
+  numberOfResults?: number,
+  searchAfter?: string,
+  cancelToken?: CancelToken
+) =>
+  await authenticatedApiRequest<SearchResult[]>({
+    url: `${PublicationsApiPaths.SEARCH}/${searchTerm}`,
+    cancelToken,
+  });
 
 export const getDoiRequests = async (role: RoleName, cancelToken?: CancelToken) =>
   await authenticatedApiRequest<DoiRequest[]>({

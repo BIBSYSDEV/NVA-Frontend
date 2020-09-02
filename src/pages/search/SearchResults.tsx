@@ -11,6 +11,7 @@ import { search } from '../../api/publicationApi';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import PublicationListItemComponent from '../dashboard/PublicationListItemComponent';
 import { SearchResult } from '../../types/search.types';
+import useSearchPublications from '../../utils/hooks/useSearchPublications';
 
 const StyledSearchResults = styled.div`
   padding-bottom: 1rem;
@@ -27,19 +28,11 @@ const SearchResults: FC<SearchResultsProps> = ({ publications, searchTerm }) => 
   const history = useHistory();
   const results = useSelector((state: RootStore) => state.search);
   const [offset, setOffset] = useState(0);
-
-  const updateSearch = async (offset: number) => {
-    setOffset(offset);
-    if (searchTerm.length) {
-      await search(searchTerm, dispatch, offset);
-      history.push(`/search/${searchTerm}/${offset}`);
-    }
-  };
+  const [searchResults, isLoading] = useSearchPublications(searchTerm);
 
   return (
     <StyledSearchResults data-testid="search-results">
-      {t('results', { count: results.totalNumberOfHits, term: searchTerm })} ({offset + 1} -{' '}
-      {offset + publications.length})
+      {t('results', { count: publications.length, term: searchTerm })} ({offset + 1} - {offset + publications.length})
       <List>
         {publications &&
           publications.map((publication) => (
@@ -61,7 +54,7 @@ const SearchResults: FC<SearchResultsProps> = ({ publications, searchTerm }) => 
           ))}
       </List>
       {/* TODO: Pagination has no function atm */}
-      <Pagination data-testid="pagination" count={5} onClick={() => updateSearch(offset)} />
+      {/* <Pagination data-testid="pagination" count={5} onClick={() => updateSearch(offset)} /> */}
     </StyledSearchResults>
   );
 };

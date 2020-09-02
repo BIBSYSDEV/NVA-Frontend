@@ -12,6 +12,7 @@ import mockAuthoritiesResponse from '../utils/testfiles/mock_authorities_respons
 import mockProjects from '../utils/testfiles/projects_real.json';
 import { mockPublication } from '../utils/testfiles/mockPublication';
 import mockSearchResults from '../utils/testfiles/search_results.json';
+import threeMockSearchResults from '../utils/testfiles/three_search_results.json';
 import mockMyPublications from '../utils/testfiles/my_publications.json';
 import mockNsdPublisers from '../utils/testfiles/publishersFromNsd.json';
 import mockCustomerInstitutions from '../utils/testfiles/mock_customer_institutions.json';
@@ -86,7 +87,8 @@ export const interceptRequestsOnMock = () => {
   const mock = new MockAdapter(Axios);
 
   // SEARCH
-  mock.onGet(new RegExp(`${PublicationsApiPaths.SEARCH}/*`)).reply(200, mockSearchResults);
+  mock.onGet(new RegExp(`${PublicationsApiPaths.SEARCH}/*`)).replyOnce(200, mockSearchResults);
+  mock.onGet(new RegExp(`${PublicationsApiPaths.SEARCH}/*`)).reply(200, threeMockSearchResults);
 
   // File Upload
   mock.onPost(new RegExp(FileApiPaths.CREATE)).reply(200, mockCreateUpload);
