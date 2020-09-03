@@ -43,8 +43,7 @@ const LatestPublications: FC = () => {
                 }
                 secondaryComponent={
                   <Typography component="span">
-                    {publication.modifiedDate && new Date(publication.modifiedDate).toLocaleDateString()} -
-                    {publication.owner}
+                    {new Date(publication.modifiedDate).toLocaleDateString()} - {publication.owner}
                   </Typography>
                 }
               />

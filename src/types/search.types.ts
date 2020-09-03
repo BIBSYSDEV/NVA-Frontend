@@ -11,3 +11,8 @@ export interface SearchResult {
   owner: string;
   contributors: SearchResultContributor[];
 }
+
+export type LatestPublication = Pick<
+  SearchResult,
+  'identifier' | 'createdDate' | 'modifiedDate' | 'mainTitle' | 'owner'
+>;
