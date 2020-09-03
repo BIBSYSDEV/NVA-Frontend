@@ -26,7 +26,11 @@ const Search: FC = () => {
 
   return (
     <StyledSearch>
-      <SearchBar resetSearchInput={history.location.pathname === '/search'} handleSearch={handleSearch} />
+      <SearchBar
+        resetSearchInput={history.location.pathname === '/search'}
+        handleSearch={handleSearch}
+        initialSearchTerm={searchTerm ?? ''}
+      />
       {isLoading ? (
         <StyledProgressWrapper>
           <CircularProgress />
