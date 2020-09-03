@@ -22,6 +22,7 @@ const StyledUserInfo = styled.div`
 const StyledLine = styled.div`
   display: grid;
   grid-template-areas: 'icon text';
+  grid-template-columns: auto 90%;
   gap: 1rem;
   justify-content: start;
   margin-top: 1rem;
