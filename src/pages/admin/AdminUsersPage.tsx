@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { FormControlLabel, Checkbox, Divider, CircularProgress, Button } from '@material-ui/core';
+import { FormControlLabel, Checkbox, Divider, Button } from '@material-ui/core';
 
 import Heading from '../../components/Heading';
 import SubHeading from '../../components/SubHeading';
@@ -12,10 +12,10 @@ import Card from '../../components/Card';
 import UserList from './UserList';
 import NormalText from './../../components/NormalText';
 import useFetchUsersForInstitution from '../../utils/hooks/useFetchUsersForInstitution';
-import { StyledProgressWrapper } from '../../components/styled/Wrappers';
 import { filterUsersByRole } from '../../utils/role-helpers';
 import Modal from '../../components/Modal';
 import { AddRoleModalContent } from './AddRoleModalContent';
+import { UserListSkeleton } from './UserListSkeleton';
 
 const StyledContainer = styled.div`
   margin-bottom: 2rem;
@@ -49,9 +49,7 @@ const AdminUsersPage: FC = () => {
         <SubHeading>{t('profile:roles.institution_admins')}</SubHeading>
         <Divider />
         {isLoading ? (
-          <StyledProgressWrapper>
-            <CircularProgress />
-          </StyledProgressWrapper>
+          <UserListSkeleton />
         ) : (
           <UserList
             userList={filterUsersByRole(users, RoleName.INSTITUTION_ADMIN)}
@@ -69,9 +67,7 @@ const AdminUsersPage: FC = () => {
         <SubHeading>{t('profile:roles.curators')}</SubHeading>
         <Divider />
         {isLoading ? (
-          <StyledProgressWrapper>
-            <CircularProgress />
-          </StyledProgressWrapper>
+          <UserListSkeleton />
         ) : (
           <UserList
             userList={filterUsersByRole(users, RoleName.CURATOR)}
@@ -89,9 +85,7 @@ const AdminUsersPage: FC = () => {
         <SubHeading>{t('profile:roles.editors')}</SubHeading>
         <Divider />
         {isLoading ? (
-          <StyledProgressWrapper>
-            <CircularProgress />
-          </StyledProgressWrapper>
+          <UserListSkeleton />
         ) : (
           <UserList
             userList={filterUsersByRole(users, RoleName.EDITOR)}
