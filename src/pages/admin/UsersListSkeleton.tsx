@@ -7,8 +7,8 @@ export const UserListSkeleton: FC = () => {
 
   return (
     <>
-      {widthsRef.current.map((width) => (
-        <Skeleton width={width} height={40} />
+      {widthsRef.current.map((width, index) => (
+        <Skeleton key={index} width={width} height={40} />
       ))}
     </>
   );
