@@ -15,7 +15,7 @@ import useFetchUsersForInstitution from '../../utils/hooks/useFetchUsersForInsti
 import { filterUsersByRole } from '../../utils/role-helpers';
 import Modal from '../../components/Modal';
 import { AddRoleModalContent } from './AddRoleModalContent';
-import { UserListSkeleton } from './UsersListSkeleton';
+import { UserListSkeleton } from './UserListSkeleton';
 
 const StyledContainer = styled.div`
   margin-bottom: 2rem;

@@ -10,7 +10,7 @@ import { filterUsersByRole } from '../../utils/role-helpers';
 import UserList from './UserList';
 import Modal from '../../components/Modal';
 import { AddRoleModalContent } from './AddRoleModalContent';
-import { UserListSkeleton } from './UsersListSkeleton';
+import { UserListSkeleton } from './UserListSkeleton';
 
 const StyledNewButton = styled(Button)`
   margin-top: 1rem;
