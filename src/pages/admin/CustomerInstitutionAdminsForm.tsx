@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import { Button, CircularProgress } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
@@ -10,6 +10,7 @@ import { filterUsersByRole } from '../../utils/role-helpers';
 import UserList from './UserList';
 import Modal from '../../components/Modal';
 import { AddRoleModalContent } from './AddRoleModalContent';
+import { UserListSkeleton } from './UsersListSkeleton';
 
 const StyledNewButton = styled(Button)`
   margin-top: 1rem;
@@ -36,7 +37,7 @@ const CustomerInstitutionAdminsForm: FC<CustomerInstitutionAdminsFormProps> = ({
     <Card>
       <Heading>{t('administrators')}</Heading>
       {isLoadingUsers ? (
-        <CircularProgress />
+        <UserListSkeleton />
       ) : (
         <>
           <UserList
