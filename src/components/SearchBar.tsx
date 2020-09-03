@@ -1,4 +1,4 @@
-import React, { useEffect, useState, FormEvent, ChangeEvent } from 'react';
+import React, { useEffect, useState, FormEvent, ChangeEvent, FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
@@ -21,11 +21,11 @@ const StyledInputBase = styled(InputBase)`
 
 interface SearchBarProps {
   handleSearch: (searchTerm: string) => void;
-  resetSearchInput: boolean;
+  resetSearchInput?: boolean;
   initialSearchTerm?: string;
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({ resetSearchInput, handleSearch, initialSearchTerm = '' }) => {
+const SearchBar: FC<SearchBarProps> = ({ resetSearchInput = true, handleSearch, initialSearchTerm = '' }) => {
   const { t } = useTranslation();
   const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
 
