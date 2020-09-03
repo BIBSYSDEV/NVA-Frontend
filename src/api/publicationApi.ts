@@ -4,7 +4,7 @@ import { Publication } from '../types/publication.types';
 import { PublicationFileSet } from '../types/file.types';
 import { StatusCode } from '../utils/constants';
 import { getIdToken } from './userApi';
-import { authenticatedApiRequest } from './apiRequest';
+import apiRequest, { authenticatedApiRequest } from './apiRequest';
 import { RoleName } from '../types/user.types';
 import { DoiRequest } from '../types/doiRequest.types';
 import { SearchResult } from '../types/search.types';
@@ -169,7 +169,7 @@ export const search = async (
   searchAfter?: string,
   cancelToken?: CancelToken
 ) =>
-  await authenticatedApiRequest<SearchResult[]>({
+  await apiRequest<SearchResult[]>({
     url: `${PublicationsApiPaths.SEARCH}/${searchTerm}`,
     cancelToken,
   });

@@ -1,5 +1,5 @@
 import { CircularProgress } from '@material-ui/core';
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import SearchBar from '../../components/SearchBar';
@@ -15,27 +15,18 @@ const StyledSearch = styled.div`
 
 const Search: FC = () => {
   const history = useHistory();
-  const [resetSearchInput, setResetSearchInput] = useState(false);
-  const searchTerm = new URLSearchParams(history.location.search).get('search');
+  const searchTerm = new URLSearchParams(history.location.search).get('query');
   const [publications, isLoading] = useSearchPublications(searchTerm);
 
   const handleSearch = async (searchTerm: string) => {
     if (searchTerm.length) {
-      history.push(`/search?search=${searchTerm}`);
+      history.push(`/search?query=${searchTerm}`);
     }
   };
 
-  useEffect(() => {
-    if (history.location.pathname === '/search') {
-      setResetSearchInput(true);
-    } else {
-      setResetSearchInput(false);
-    }
-  }, [history.location.pathname]);
-
   return (
     <StyledSearch>
-      <SearchBar resetSearchInput={resetSearchInput} handleSearch={handleSearch} />
+      <SearchBar resetSearchInput={history.location.pathname === '/search'} handleSearch={handleSearch} />
       {isLoading ? (
         <StyledProgressWrapper>
           <CircularProgress />
