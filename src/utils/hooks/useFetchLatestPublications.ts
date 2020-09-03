@@ -4,10 +4,10 @@ import Axios from 'axios';
 
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
-import { PublicationListItem } from '../../types/publication.types';
 import { getPublications } from '../../api/publicationApi';
+import { SearchResult } from '../../types/search.types';
 
-const useFetchLatestPublications = (): [PublicationListItem[], boolean] => {
+const useFetchLatestPublications = (): [Partial<SearchResult>[], boolean] => {
   const dispatch = useDispatch();
   const [publications, setPublications] = useState([]);
   const [isLoading, setIsLoading] = useState(true);

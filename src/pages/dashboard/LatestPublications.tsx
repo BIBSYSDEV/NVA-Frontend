@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { List, Typography, Divider, CircularProgress } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { Link as MuiLink } from '@material-ui/core';
-import { PublicationListItem } from '../../types/publication.types';
 import Heading from '../../components/Heading';
 import { useTranslation } from 'react-i18next';
 import useFetchLatestPublications from '../../utils/hooks/useFetchLatestPublications';
@@ -34,7 +33,7 @@ const LatestPublications: FC = () => {
       ) : publications.length > 0 ? (
         <>
           <List>
-            {publications.map((publication: PublicationListItem) => (
+            {publications.map((publication) => (
               <PublicationListItemComponent
                 key={publication.identifier}
                 primaryComponent={
@@ -44,7 +43,8 @@ const LatestPublications: FC = () => {
                 }
                 secondaryComponent={
                   <Typography component="span">
-                    {new Date(publication.modifiedDate).toLocaleDateString()} - {publication.owner}
+                    {publication.modifiedDate && new Date(publication.modifiedDate).toLocaleDateString()} -
+                    {publication.owner}
                   </Typography>
                 }
               />
