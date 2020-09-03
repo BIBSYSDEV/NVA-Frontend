@@ -1,11 +1,10 @@
-import { CircularProgress } from '@material-ui/core';
 import React, { FC } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import SearchBar from '../../components/SearchBar';
-import { StyledProgressWrapper } from '../../components/styled/Wrappers';
 import useSearchPublications from '../../utils/hooks/useSearchPublications';
 import SearchResults from './SearchResults';
+import ListSkeleton from '../../components/ListSkeleton';
 
 const StyledSearch = styled.div`
   padding-top: 2rem;
@@ -32,9 +31,7 @@ const Search: FC = () => {
         initialSearchTerm={searchTerm ?? ''}
       />
       {isLoading ? (
-        <StyledProgressWrapper>
-          <CircularProgress />
-        </StyledProgressWrapper>
+        <ListSkeleton arrayLength={5} minWidth={40} height={100} />
       ) : (
         publications?.length > 0 && <SearchResults publications={publications} searchTerm={searchTerm} />
       )}

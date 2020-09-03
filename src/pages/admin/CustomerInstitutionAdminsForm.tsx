@@ -10,7 +10,7 @@ import { filterUsersByRole } from '../../utils/role-helpers';
 import UserList from './UserList';
 import Modal from '../../components/Modal';
 import { AddRoleModalContent } from './AddRoleModalContent';
-import { UserListSkeleton } from './UserListSkeleton';
+import ListSkeleton from '../../components/ListSkeleton';
 
 const StyledNewButton = styled(Button)`
   margin-top: 1rem;
@@ -37,7 +37,7 @@ const CustomerInstitutionAdminsForm: FC<CustomerInstitutionAdminsFormProps> = ({
     <Card>
       <Heading>{t('administrators')}</Heading>
       {isLoadingUsers ? (
-        <UserListSkeleton />
+        <ListSkeleton maxWidth={25} />
       ) : (
         <>
           <UserList
