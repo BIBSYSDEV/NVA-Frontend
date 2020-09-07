@@ -15,7 +15,7 @@ import useFetchUsersForInstitution from '../../utils/hooks/useFetchUsersForInsti
 import { filterUsersByRole } from '../../utils/role-helpers';
 import Modal from '../../components/Modal';
 import { AddRoleModalContent } from './AddRoleModalContent';
-import { UserListSkeleton } from './UserListSkeleton';
+import ListSkeleton from '../../components/ListSkeleton';
 
 const StyledContainer = styled.div`
   margin-bottom: 2rem;
@@ -49,7 +49,7 @@ const AdminUsersPage: FC = () => {
         <SubHeading>{t('profile:roles.institution_admins')}</SubHeading>
         <Divider />
         {isLoading ? (
-          <UserListSkeleton />
+          <ListSkeleton maxWidth={25} />
         ) : (
           <UserList
             userList={filterUsersByRole(users, RoleName.INSTITUTION_ADMIN)}
@@ -67,7 +67,7 @@ const AdminUsersPage: FC = () => {
         <SubHeading>{t('profile:roles.curators')}</SubHeading>
         <Divider />
         {isLoading ? (
-          <UserListSkeleton />
+          <ListSkeleton maxWidth={25} />
         ) : (
           <UserList
             userList={filterUsersByRole(users, RoleName.CURATOR)}
@@ -85,7 +85,7 @@ const AdminUsersPage: FC = () => {
         <SubHeading>{t('profile:roles.editors')}</SubHeading>
         <Divider />
         {isLoading ? (
-          <UserListSkeleton />
+          <ListSkeleton maxWidth={25} />
         ) : (
           <UserList
             userList={filterUsersByRole(users, RoleName.EDITOR)}
