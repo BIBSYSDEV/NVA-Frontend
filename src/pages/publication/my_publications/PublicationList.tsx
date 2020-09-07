@@ -20,7 +20,6 @@ import { PublicationPreview } from '../../../types/publication.types';
 import Label from '../../../components/Label';
 import NormalText from '../../../components/NormalText';
 import DeletePublicationModal from '../DeletePublicationModal';
-import Card from '../../../components/Card';
 
 const StyledTableRow = styled(TableRow)`
   background-color: ${(props) => props.theme.palette.box.main};
@@ -65,7 +64,7 @@ const PublicationList: FC<PublicationListProps> = ({ publications }) => {
   };
 
   return (
-    <Card>
+    <>
       <TableContainer>
         <Table>
           <TableHead>
@@ -147,7 +146,7 @@ const PublicationList: FC<PublicationListProps> = ({ publications }) => {
       {openModal && (
         <DeletePublicationModal id={deletePublicationId} title={deletePublicationTitle} setOpenModal={setOpenModal} />
       )}
-    </Card>
+    </>
   );
 };
 
