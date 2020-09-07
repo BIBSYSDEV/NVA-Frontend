@@ -5,9 +5,9 @@ import { Publication, DoiRequestStatus } from '../../types/publication.types';
 import { Button, FormControlLabel, Checkbox } from '@material-ui/core';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import styled from 'styled-components';
-import SubmissionBook from './submission_tab/submission_book';
+// import SubmissionBook from './submission_tab/submission_book';
+// import SubmissionChapter from './submission_tab/submission_chapter';
 import SubmissionDegree from './submission_tab/submission_degree';
-import SubmissionChapter from './submission_tab/submission_chapter';
 import SubmissionReport from './submission_tab/submission_report';
 import SubmissionJournalPublication from './submission_tab/submission_journal';
 import SubmissionDescription from './submission_tab/submission_description';
@@ -134,9 +134,9 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication, 
           {reference.doi && (
             <LabelContentRow label={t('publication.link_to_publication')}>{reference.doi}</LabelContentRow>
           )}
-          {publicationContextType === PublicationType.BOOK && <SubmissionBook />}
           {publicationContextType === PublicationType.DEGREE && <SubmissionDegree />}
-          {publicationContextType === PublicationType.CHAPTER && <SubmissionChapter />}
+          {/* {publicationContextType === PublicationType.BOOK && <SubmissionBook />} */}
+          {/* {publicationContextType === PublicationType.CHAPTER && <SubmissionChapter />} */}
           {publicationContextType === PublicationType.REPORT && <SubmissionReport />}
           {publicationContextType === PublicationType.PUBLICATION_IN_JOURNAL && <SubmissionJournalPublication />}
         </Card>
