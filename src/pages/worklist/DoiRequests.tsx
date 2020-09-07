@@ -6,14 +6,14 @@ import useFetchDoiRequests from '../../utils/hooks/useFetchDoiRequests';
 import { RoleName } from '../../types/user.types';
 import { DoiRequestAccordion } from './DoiRequestAccordion';
 import Card from '../../components/Card';
-import { PublicationListSkeleton } from '../publication/my_publications/PublicationListSkeleton';
+import ListSkeleton from '../../components/ListSkeleton';
 
 const DoiRequests: FC = () => {
   const { t } = useTranslation('workLists');
   const [doiRequests, isLoadingDoiRequests] = useFetchDoiRequests(RoleName.CURATOR);
 
   return isLoadingDoiRequests ? (
-    <PublicationListSkeleton />
+    <ListSkeleton minWidth={100} maxWidth={100} height={100} />
   ) : doiRequests.length === 0 ? (
     <Card>
       <SubHeading>{t('doi_requests.no_pending_doi_requests')}</SubHeading>

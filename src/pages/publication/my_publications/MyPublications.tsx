@@ -13,7 +13,7 @@ import {
   StyledRightAlignedButtonWrapper,
   StyledCenterAlignedContentWrapper,
 } from '../../../components/styled/Wrappers';
-import { PublicationListSkeleton } from './PublicationListSkeleton';
+import ListSkeleton from '../../../components/ListSkeleton';
 import Card from '../../../components/Card';
 
 const StyledContainer = styled.div`
@@ -75,7 +75,7 @@ const MyPublications: FC = () => {
       </StyledTabsContainer>
       <Card>
         {isLoading ? (
-          <PublicationListSkeleton />
+          <ListSkeleton minWidth={100} maxWidth={100} height={100} />
         ) : (
           <PublicationList
             publications={selectedTab === Tab.Unpublished ? unpublishedPublications : publishedPublications}
