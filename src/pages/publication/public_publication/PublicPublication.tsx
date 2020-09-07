@@ -25,7 +25,7 @@ const PublicPublication: FC = () => {
   }, [publication, history, identifier]);
 
   const isAllowedToSeePublicPublication =
-    publication?.status === PublicationStatus.PUBLISHED || user.isCurator || publication?.owner === user.id;
+    publication?.status === PublicationStatus.PUBLISHED || user?.isCurator || publication?.owner === user?.id;
 
   return (
     <>

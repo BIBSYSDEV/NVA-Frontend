@@ -41,7 +41,7 @@ const StyledUnpublishedStatusIcon = styled(WorkOutlineIcon)`
 
 export const PublicPublicationStatusBar: FC<PublicPublicationContentProps> = ({ publication }) => {
   const { t } = useTranslation('publication');
-  const { id, isPublisher } = useSelector((store: RootStore) => store.user);
+  const user = useSelector((store: RootStore) => store.user);
 
   const [openRequestDoiModal, setOpenRequestDoiModal] = useState(false);
   const toggleRequestDoiModal = () => setOpenRequestDoiModal((state) => !state);
@@ -54,10 +54,10 @@ export const PublicPublicationStatusBar: FC<PublicPublicationContentProps> = ({ 
       reference: { doi },
     },
   } = publication;
-  const isOwner = owner === id;
+  const isOwner = owner === user?.id;
   const hasDoi = !!doi;
 
-  return isPublisher && isOwner ? (
+  return user?.isPublisher && isOwner ? (
     <StyledStatusBar>
       <StyledStatusBarDescription>
         {status === PublicationStatus.PUBLISHED ? (
