@@ -1,5 +1,11 @@
 import * as Yup from 'yup';
-import { PublicationType, JournalType, BookType, DegreeType, ReportType } from '../../types/publicationFieldNames';
+import { 
+  PublicationType, 
+  JournalType, 
+  // BookType, 
+  DegreeType, 
+  ReportType 
+} from '../../types/publicationFieldNames';
 import { LanguageValues } from '../../types/language.types';
 import i18n from '../../translations/i18n';
 
@@ -64,15 +70,15 @@ const journalPublicationInstance = {
     }),
 };
 
-const bookPublicationInstance = {
-  type: Yup.string().oneOf(Object.values(BookType)).required(ErrorMessage.REQUIRED),
-  pages: Yup.object()
-    .nullable()
-    .shape({
-      pages: Yup.number().typeError(ErrorMessage.INVALID_FORMAT).min(1, ErrorMessage.MUST_BE_MIN_1),
-    }),
-  peerReviewed: Yup.boolean().required(ErrorMessage.REQUIRED),
-};
+// const bookPublicationInstance = {
+//   type: Yup.string().oneOf(Object.values(BookType)).required(ErrorMessage.REQUIRED),
+//   pages: Yup.object()
+//     .nullable()
+//     .shape({
+//       pages: Yup.number().typeError(ErrorMessage.INVALID_FORMAT).min(1, ErrorMessage.MUST_BE_MIN_1),
+//     }),
+//   peerReviewed: Yup.boolean().required(ErrorMessage.REQUIRED),
+// };
 
 const reportPublicationInstance = {
   type: Yup.string().oneOf(Object.values(ReportType)).required(ErrorMessage.REQUIRED),
@@ -87,9 +93,9 @@ const degreePublicationInstance = {
   type: Yup.string().oneOf(Object.values(DegreeType)).required(ErrorMessage.REQUIRED),
 };
 
-const chapterPublicationInstance = {
-  type: Yup.string().length(0),
-};
+// const chapterPublicationInstance = {
+//   type: Yup.string().length(0),
+// };
 
 const journalPublicationContext = {
   title: Yup.string().required(ErrorMessage.REQUIRED),
@@ -123,10 +129,10 @@ export const publicationValidationSchema = Yup.object().shape({
           is: PublicationType.PUBLICATION_IN_JOURNAL,
           then: Yup.object().shape(journalPublicationInstance),
         })
-        .when('$publicationContextType', {
-          is: PublicationType.BOOK,
-          then: Yup.object().shape(bookPublicationInstance),
-        })
+        // .when('$publicationContextType', {
+        //   is: PublicationType.BOOK,
+        //   then: Yup.object().shape(bookPublicationInstance),
+        // })
         .when('$publicationContextType', {
           is: PublicationType.REPORT,
           then: Yup.object().shape(reportPublicationInstance),
@@ -134,11 +140,11 @@ export const publicationValidationSchema = Yup.object().shape({
         .when('$publicationContextType', {
           is: PublicationType.DEGREE,
           then: Yup.object().shape(degreePublicationInstance),
-        })
-        .when('$publicationContextType', {
-          is: PublicationType.CHAPTER,
-          then: Yup.object().shape(chapterPublicationInstance),
         }),
+        // .when('$publicationContextType', {
+        //   is: PublicationType.CHAPTER,
+        //   then: Yup.object().shape(chapterPublicationInstance),
+        // }),
       publicationContext: Yup.object()
         .shape({ type: Yup.string().required(ErrorMessage.REQUIRED) })
         .when('$publicationContextType', {
