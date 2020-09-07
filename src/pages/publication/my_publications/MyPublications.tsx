@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Button, CircularProgress } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import styled from 'styled-components';
 import { RootStore } from '../../../redux/reducers/rootReducer';
 import { Link as RouterLink } from 'react-router-dom';
@@ -10,10 +10,11 @@ import PublicationList from './PublicationList';
 import TabButton from '../../../components/TabButton';
 import useFetchMyPublications from '../../../utils/hooks/useFetchMyPublications';
 import {
-  StyledProgressWrapper,
   StyledRightAlignedButtonWrapper,
   StyledCenterAlignedContentWrapper,
 } from '../../../components/styled/Wrappers';
+import ListSkeleton from '../../../components/ListSkeleton';
+import Card from '../../../components/Card';
 
 const StyledContainer = styled.div`
   display: block;
@@ -23,6 +24,7 @@ const StyledContainer = styled.div`
 
 const StyledTabsContainer = styled(StyledCenterAlignedContentWrapper)`
   padding-top: 2rem;
+  margin-bottom: 1rem;
 `;
 
 enum Tab {
@@ -71,15 +73,15 @@ const MyPublications: FC = () => {
           {t('published_publications')} ({publishedPublications.length})
         </TabButton>
       </StyledTabsContainer>
-      {isLoading ? (
-        <StyledProgressWrapper>
-          <CircularProgress color="primary" size={50} />
-        </StyledProgressWrapper>
-      ) : (
-        <PublicationList
-          publications={selectedTab === Tab.Unpublished ? unpublishedPublications : publishedPublications}
-        />
-      )}
+      <Card>
+        {isLoading ? (
+          <ListSkeleton minWidth={100} maxWidth={100} height={100} />
+        ) : (
+          <PublicationList
+            publications={selectedTab === Tab.Unpublished ? unpublishedPublications : publishedPublications}
+          />
+        )}
+      </Card>
     </StyledContainer>
   );
 };
