@@ -13,10 +13,10 @@ import NormalText from '../../../components/NormalText';
 import { PublicPublicationContentProps } from './PublicPublicationContent';
 import Modal from '../../../components/Modal';
 import { setNotification } from '../../../redux/actions/notificationActions';
-import { updatePublication } from '../../../api/publicationApi';
 import { NotificationVariant } from '../../../types/notification.types';
 import ButtonWithProgress from '../../../components/ButtonWithProgress';
 import { PublicationStatus } from '../../../types/publication.types';
+import { createDoiRequest } from '../../../api/doiRequestApi';
 
 const StyledStatusBar = styled(Card)`
   display: flex;
@@ -54,12 +54,9 @@ export const PublicPublicationStatusBar: FC<PublicPublicationContentProps> = ({ 
 
   const sendDoiRequest = async () => {
     setIsLoadingDoiRequest(true);
-    const sendDoiRequestResponse = await updatePublication({
-      ...publication,
-      doiRequested: true,
-    });
-    if (sendDoiRequestResponse) {
-      if (sendDoiRequestResponse.error) {
+    const createDoiRequestResponse = await createDoiRequest(publication.identifier);
+    if (createDoiRequestResponse) {
+      if (createDoiRequestResponse.error) {
         dispatch(setNotification(t('feedback:error.an_error_occurred'), NotificationVariant.Error));
       } else {
         toggleRequestDoiModal();
