@@ -1,10 +1,10 @@
 import * as Yup from 'yup';
-import {
-  PublicationType,
-  JournalArticleType,
-  BookType,
-  DegreeType,
-  ReportType,
+import { 
+  PublicationType, 
+  JournalType, 
+  // BookType, 
+  DegreeType, 
+  ReportType 
 } from '../../types/publicationFieldNames';
 import { LanguageValues } from '../../types/language.types';
 import i18n from '../../translations/i18n';
@@ -51,41 +51,58 @@ const fileValidationSchema = {
     }),
 };
 
-const journalValidationSchema = {
-  type: Yup.string().oneOf(Object.values(JournalArticleType)).required(ErrorMessage.REQUIRED),
+const journalPublicationInstance = {
+  type: Yup.string().oneOf(Object.values(JournalType)).required(ErrorMessage.REQUIRED),
   peerReviewed: Yup.boolean().required(ErrorMessage.REQUIRED),
   articleNumber: Yup.number().typeError(ErrorMessage.INVALID_FORMAT).min(0, ErrorMessage.MUST_BE_POSITIVE),
   volume: Yup.number().typeError(ErrorMessage.INVALID_FORMAT).min(0, ErrorMessage.MUST_BE_POSITIVE),
   issue: Yup.number().typeError(ErrorMessage.INVALID_FORMAT).min(0, ErrorMessage.MUST_BE_POSITIVE),
-  pages: Yup.object().shape({
-    begin: Yup.number()
-      .typeError(ErrorMessage.INVALID_FORMAT)
-      .min(0, ErrorMessage.MUST_BE_POSITIVE)
-      .max(Yup.ref('end'), ErrorMessage.INVALID_PAGE_INTERVAL),
-    end: Yup.number().typeError(ErrorMessage.INVALID_FORMAT).min(Yup.ref('begin'), ErrorMessage.INVALID_PAGE_INTERVAL),
-  }),
+  pages: Yup.object()
+    .nullable()
+    .shape({
+      begin: Yup.number()
+        .typeError(ErrorMessage.INVALID_FORMAT)
+        .min(0, ErrorMessage.MUST_BE_POSITIVE)
+        .max(Yup.ref('end'), ErrorMessage.INVALID_PAGE_INTERVAL),
+      end: Yup.number()
+        .typeError(ErrorMessage.INVALID_FORMAT)
+        .min(Yup.ref('begin'), ErrorMessage.INVALID_PAGE_INTERVAL),
+    }),
 };
 
-const bookValidationSchema = {
-  type: Yup.string().oneOf(Object.values(BookType)).required(ErrorMessage.REQUIRED),
-  isbn: Yup.string(),
-  numberOfPages: Yup.number().typeError(ErrorMessage.INVALID_FORMAT).min(1, ErrorMessage.MUST_BE_MIN_1),
-  textBook: Yup.boolean(),
-  peerReviewed: Yup.boolean().required(ErrorMessage.REQUIRED),
-};
+// const bookPublicationInstance = {
+//   type: Yup.string().oneOf(Object.values(BookType)).required(ErrorMessage.REQUIRED),
+//   pages: Yup.object()
+//     .nullable()
+//     .shape({
+//       pages: Yup.number().typeError(ErrorMessage.INVALID_FORMAT).min(1, ErrorMessage.MUST_BE_MIN_1),
+//     }),
+//   peerReviewed: Yup.boolean().required(ErrorMessage.REQUIRED),
+// };
 
-const reportValidationSchema = {
+const reportPublicationInstance = {
   type: Yup.string().oneOf(Object.values(ReportType)).required(ErrorMessage.REQUIRED),
-  isbn: Yup.string(),
-  numberOfPages: Yup.number().typeError(ErrorMessage.INVALID_FORMAT).min(1, ErrorMessage.MUST_BE_MIN_1),
+  pages: Yup.object()
+    .nullable()
+    .shape({
+      pages: Yup.number().typeError(ErrorMessage.INVALID_FORMAT).min(1, ErrorMessage.MUST_BE_MIN_1),
+    }),
 };
 
-const degreeValidationSchema = {
+const degreePublicationInstance = {
   type: Yup.string().oneOf(Object.values(DegreeType)).required(ErrorMessage.REQUIRED),
 };
 
-const chapterValidationSchema = {
-  type: Yup.string().length(0),
+// const chapterPublicationInstance = {
+//   type: Yup.string().length(0),
+// };
+
+const journalPublicationContext = {
+  title: Yup.string().required(ErrorMessage.REQUIRED),
+};
+
+const degreeAndReportPublicationContext = {
+  publisher: Yup.string().required(ErrorMessage.REQUIRED),
 };
 
 export const publicationValidationSchema = Yup.object().shape({
@@ -110,30 +127,38 @@ export const publicationValidationSchema = Yup.object().shape({
       publicationInstance: Yup.object()
         .when('$publicationContextType', {
           is: PublicationType.PUBLICATION_IN_JOURNAL,
-          then: Yup.object().shape(journalValidationSchema),
+          then: Yup.object().shape(journalPublicationInstance),
         })
-        .when('$publicationContextType', {
-          is: PublicationType.BOOK,
-          then: Yup.object().shape(bookValidationSchema),
-        })
+        // .when('$publicationContextType', {
+        //   is: PublicationType.BOOK,
+        //   then: Yup.object().shape(bookPublicationInstance),
+        // })
         .when('$publicationContextType', {
           is: PublicationType.REPORT,
-          then: Yup.object().shape(reportValidationSchema),
+          then: Yup.object().shape(reportPublicationInstance),
         })
         .when('$publicationContextType', {
           is: PublicationType.DEGREE,
-          then: Yup.object().shape(degreeValidationSchema),
+          then: Yup.object().shape(degreePublicationInstance),
+        }),
+        // .when('$publicationContextType', {
+        //   is: PublicationType.CHAPTER,
+        //   then: Yup.object().shape(chapterPublicationInstance),
+        // }),
+      publicationContext: Yup.object()
+        .shape({ type: Yup.string().required(ErrorMessage.REQUIRED) })
+        .when('$publicationContextType', {
+          is: PublicationType.PUBLICATION_IN_JOURNAL,
+          then: Yup.object().shape(journalPublicationContext),
         })
         .when('$publicationContextType', {
-          is: PublicationType.CHAPTER,
-          then: Yup.object().shape(chapterValidationSchema),
+          is: PublicationType.DEGREE,
+          then: Yup.object().shape(degreeAndReportPublicationContext),
+        })
+        .when('$publicationContextType', {
+          is: PublicationType.REPORT,
+          then: Yup.object().shape(degreeAndReportPublicationContext),
         }),
-      publicationContext: Yup.object().shape({
-        type: Yup.string().required(ErrorMessage.REQUIRED),
-        title: Yup.string().required(ErrorMessage.REQUIRED),
-        level: Yup.mixed(),
-        openAccess: Yup.boolean(),
-      }),
     }),
   }),
   fileSet: Yup.object().shape({

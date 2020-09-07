@@ -1,28 +1,20 @@
 import Axios, { CancelToken } from 'axios';
 import { StatusCode } from '../utils/constants';
 import i18n from '../translations/i18n';
+import apiRequest from './apiRequest';
+import { InstitutionUnitBase } from '../types/institution.types';
 
 export enum InstitutionApiPaths {
   INSTITUTIONS = '/institution/institutions',
   DEPARTMENTS = '/institution/departments',
 }
 
-export const getInstitutions = async (cancelToken?: CancelToken) => {
-  const url = InstitutionApiPaths.INSTITUTIONS;
-  try {
-    const response = await Axios.get(url, { cancelToken });
-
-    if (response.status === StatusCode.OK) {
-      return response.data;
-    } else {
-      return { error: i18n.t('feedback:error.get_institutions') };
-    }
-  } catch (error) {
-    if (!Axios.isCancel(error)) {
-      return { error: i18n.t('feedback:error.get_institutions') };
-    }
-  }
-};
+export const getInstitutions = async (cancelToken?: CancelToken) =>
+  await apiRequest<InstitutionUnitBase[]>({
+    url: InstitutionApiPaths.INSTITUTIONS,
+    method: 'GET',
+    cancelToken,
+  });
 
 export const getDepartment = async (departmentUri: string, cancelToken?: CancelToken) => {
   const url = `${InstitutionApiPaths.DEPARTMENTS}?uri=${departmentUri}`;

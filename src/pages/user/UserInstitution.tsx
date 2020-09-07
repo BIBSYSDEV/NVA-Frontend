@@ -119,7 +119,7 @@ const UserInstitution: FC = () => {
         title={t('organization.confirm_remove_affiliation_title')}
         onAccept={removeAffiliation}
         onCancel={() => setAffiliationIdToRemove('')}
-        disableAccept={isRemovingAffiliation}>
+        isLoading={isRemovingAffiliation}>
         <NormalText>{t('organization.confirm_remove_affiliation_text')}</NormalText>
       </ConfirmDialog>
     </>

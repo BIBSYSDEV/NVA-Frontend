@@ -10,8 +10,9 @@ import mockNtnuResponse from '../utils/testfiles/institutions/institution_ntnu.j
 import mockNtnuSubunitResponse from '../utils/testfiles/institutions/institution_subunit_ntnu.json';
 import mockAuthoritiesResponse from '../utils/testfiles/mock_authorities_response.json';
 import mockProjects from '../utils/testfiles/projects_real.json';
-import mockPublication from '../utils/testfiles/publication_generated.json';
-import mockPublications from '../utils/testfiles/publications_45_random_results_generated.json';
+import { mockPublication } from '../utils/testfiles/mockPublication';
+import mockSearchResults from '../utils/testfiles/search_results.json';
+import threeMockSearchResults from '../utils/testfiles/three_search_results.json';
 import mockMyPublications from '../utils/testfiles/my_publications.json';
 import mockNsdPublisers from '../utils/testfiles/publishersFromNsd.json';
 import mockCustomerInstitutions from '../utils/testfiles/mock_customer_institutions.json';
@@ -25,6 +26,9 @@ import { PublicationChannelApiPaths } from './publicationChannelApi';
 import { FileApiPaths } from './fileApi';
 import { CustomerInstitutionApiPaths } from './customerInstitutionsApi';
 import { emptyPublication } from '../types/publication.types';
+import { mockRoles } from '../utils/testfiles/mock_feide_user';
+import { RoleApiPaths } from './roleApi';
+import { mockDoiRequests } from '../utils/testfiles/mockDoiRequest';
 
 const mockOrcidResponse: OrcidResponse = {
   id: 'https://sandbox.orcid.org/0000-0001-2345-6789',
@@ -83,7 +87,8 @@ export const interceptRequestsOnMock = () => {
   const mock = new MockAdapter(Axios);
 
   // SEARCH
-  mock.onGet(new RegExp(`${PublicationsApiPaths.SEARCH}/*`)).reply(200, mockPublications);
+  mock.onGet(new RegExp(`${PublicationsApiPaths.SEARCH}/*`)).replyOnce(200, mockSearchResults);
+  mock.onGet(new RegExp(`${PublicationsApiPaths.SEARCH}/*`)).reply(200, threeMockSearchResults);
 
   // File Upload
   mock.onPost(new RegExp(FileApiPaths.CREATE)).reply(200, mockCreateUpload);
@@ -97,7 +102,7 @@ export const interceptRequestsOnMock = () => {
   mock.onGet(new RegExp(`${PublicationsApiPaths.PUBLICATIONS_BY_OWNER}/*`)).reply(200, mockMyPublications);
 
   // WORKLIST
-  mock.onGet(new RegExp(`${PublicationsApiPaths.DOI_REQUESTS}/*`)).reply(200, mockMyPublications.publications);
+  mock.onGet(new RegExp(`${PublicationsApiPaths.DOI_REQUESTS}/*`)).reply(200, mockDoiRequests);
   mock.onGet(new RegExp(`${PublicationsApiPaths.FOR_APPROVAL}/*`)).reply(200, mockMyPublications.publications);
 
   //PUBLICATION
@@ -172,6 +177,10 @@ export const interceptRequestsOnMock = () => {
       new RegExp(`${API_URL}${InstitutionApiPaths.DEPARTMENTS}\\?uri=https://api.cristin.no/v2/units/194.65.20.10`)
     )
     .replyOnce(200, mockNtnuSubunitResponse);
+
+  // Roles
+  mock.onGet(new RegExp(`${API_URL}${RoleApiPaths.INSTITUTIONS}/.*/users`)).reply(200, []);
+  mock.onGet(new RegExp(`${API_URL}${RoleApiPaths.USERS}/*`)).reply(200, mockRoles);
 
   mock.onAny().reply(function (config) {
     throw new Error('Could not find mock for ' + config.url);

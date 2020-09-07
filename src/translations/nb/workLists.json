@@ -1,12 +1,17 @@
 {
+  "doi_requests": {
+    "archive": "Avslutt sak",
+    "doi_requests": "DOI-forespørsler",
+    "go_to_publication": "Gå til publikasjon",
+    "message_to_user": "Melding til bruker",
+    "no_pending_doi_requests": "Du har ingen ventende DOI-forespørsler"
+  },
   "delete_publication_heading": "Slett publikasjon",
   "delete_publication_message": "Bekreft sletting av ",
-  "doi_requests": "DOI-forespørsler",
   "for_approval": "Til godkjenning",
   "go_to_public_profile": "Gå til din offentlige profil",
   "my_publications": "Mine publikasjoner",
   "my_worklist": "Min arbeidsliste",
-  "no_pending_doi_requests": "Du har ingen ventende DOI-forespørsler",
   "no_pending_publications": "Du har ingen publiseringer som venter på godkjenning",
   "publication_name": "Navn på publisering",
   "published_publications": "Publiserte ressurser",

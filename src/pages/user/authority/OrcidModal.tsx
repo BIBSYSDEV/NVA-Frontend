@@ -22,8 +22,8 @@ const OrcidModal: FC<OrcidModalProps> = ({ closeModal }) => {
   return (
     <Modal
       dataTestId="open-orcid-modal"
-      ariaLabelledBy="orcid-modal"
-      openModal={true}
+      aria-labelledby="orcid-modal"
+      open={true}
       onClose={closeModal}
       maxWidth="sm"
       headingIcon={{ src: orcidLogo, alt: 'ORCID iD icon' }}

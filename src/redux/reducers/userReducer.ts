@@ -2,14 +2,18 @@ import { ApplicationName, RoleName, User, Affiliation } from '../../types/user.t
 import { getOrganizationIdByOrganizationNumber } from '../../utils/customers';
 import { AuthActions, LOGOUT_SUCCESS } from '../actions/authActions';
 import { OrcidActions, SET_EXTERNAL_ORCID } from '../actions/orcidActions';
-import { SET_AUTHORITY_DATA, SET_POSSIBLE_AUTHORITIES, SET_USER_SUCCESS, UserActions } from '../actions/userActions';
+import {
+  SET_AUTHORITY_DATA,
+  SET_POSSIBLE_AUTHORITIES,
+  SET_USER_SUCCESS,
+  SET_ROLES,
+  UserActions,
+} from '../actions/userActions';
 
 export const userReducer = (state: User | null = null, action: UserActions | OrcidActions | AuthActions) => {
   switch (action.type) {
     case SET_USER_SUCCESS:
       const feideAffiliations = action.user['custom:affiliation'];
-      const feideRoles = action.user['custom:applicationRoles'];
-      const roles = feideRoles ? (feideRoles.split(',') as RoleName[]) : [];
       const affiliations = feideAffiliations
         ? (feideAffiliations
             .replace(/[[\]]/g, '')
@@ -23,19 +27,25 @@ export const userReducer = (state: User | null = null, action: UserActions | Orc
         email: action.user.email,
         id: action.user['custom:feideId'],
         institution: action.user['custom:orgName'],
-        roles,
         application: action.user['custom:application'] as ApplicationName,
         organizationId: getOrganizationIdByOrganizationNumber(action.user['custom:orgNumber']),
+        customerId: action.user['custom:customerId'],
         affiliations,
         givenName: action.user.given_name,
         familyName: action.user.family_name,
-        isPublisher: roles.some((role) => role === RoleName.PUBLISHER),
-        isAppAdmin: roles.some((role) => role === RoleName.APP_ADMIN) || action.user.email.endsWith('@unit.no'), // TODO: temporarily set app admin role based on email
-        isInstitutionAdmin: roles.some((role) => role === RoleName.ADMIN),
-        isCurator: roles.some((role) => role === RoleName.CURATOR),
         possibleAuthorities: [],
       };
       return user;
+
+    case SET_ROLES:
+      return {
+        ...state,
+        roles: action.roles,
+        isPublisher: action.roles.some((role) => role === RoleName.PUBLISHER),
+        isAppAdmin: action.roles.some((role) => role === RoleName.APP_ADMIN),
+        isInstitutionAdmin: action.roles.some((role) => role === RoleName.INSTITUTION_ADMIN),
+        isCurator: action.roles.some((role) => role === RoleName.CURATOR),
+      };
     case SET_EXTERNAL_ORCID:
       return {
         ...state,

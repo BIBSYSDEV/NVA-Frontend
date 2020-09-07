@@ -1,9 +1,9 @@
 import Amplify, { Hub } from 'aws-amplify';
-import Axios from 'axios';
 import React, { useEffect, useState, FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import styled from 'styled-components';
+import { CircularProgress } from '@material-ui/core';
 
 import { AuthorityQualifiers, addQualifierIdForAuthority } from './api/authorityApi';
 import { getCurrentUserAttributes } from './api/userApi';
@@ -12,16 +12,19 @@ import Footer from './layout/Footer';
 import Header from './layout/header/Header';
 import Notifier from './layout/Notifier';
 import AuthorityOrcidModal from './pages/user/authority/AuthorityOrcidModal';
-import { setAuthorityData, setPossibleAuthorities, setUser } from './redux/actions/userActions';
+import { setAuthorityData, setPossibleAuthorities, setUser, setRoles } from './redux/actions/userActions';
 import { RootStore } from './redux/reducers/rootReducer';
 import { Authority } from './types/authority.types';
 import { awsConfig } from './utils/aws-config';
-import { API_URL, USE_MOCK_DATA } from './utils/constants';
+import { USE_MOCK_DATA } from './utils/constants';
 import { hubListener } from './utils/hub-listener';
 import { mockUser } from './utils/testfiles/mock_feide_user';
 import AppRoutes from './AppRoutes';
-import { CircularProgress } from '@material-ui/core';
 import useFetchAuthorities from './utils/hooks/useFetchAuthorities';
+import { setNotification } from './redux/actions/notificationActions';
+import { getInstitutionUser } from './api/roleApi';
+import { NotificationVariant } from './types/notification.types';
+import { InstitutionUser } from './types/user.types';
 
 const StyledApp = styled.div`
   min-height: 100vh;
@@ -47,19 +50,6 @@ const ProgressContainer = styled.div`
 `;
 
 const App: FC = () => {
-  useEffect(() => {
-    const setAxiosHeaders = async () => {
-      // Set global config of axios requests
-      Axios.defaults.baseURL = API_URL;
-      Axios.defaults.headers.common = {
-        Accept: 'application/json',
-      };
-      Axios.defaults.headers.post['Content-Type'] = 'application/json';
-      Axios.defaults.headers.put['Content-Type'] = 'application/json';
-    };
-    setAxiosHeaders();
-  }, []);
-
   const dispatch = useDispatch();
   const user = useSelector((store: RootStore) => store.user);
   const [isLoadingUser, setIsLoadingUser] = useState(true);
@@ -80,8 +70,19 @@ const App: FC = () => {
   useEffect(() => {
     // Fetch attributes of authenticated user
     const getUser = async () => {
-      dispatch(getCurrentUserAttributes());
-      setIsLoadingUser(false);
+      const feideUser = await getCurrentUserAttributes();
+      if (feideUser) {
+        if (feideUser.error) {
+          dispatch(setNotification(feideUser.error, NotificationVariant.Error));
+          setIsLoadingUser(false);
+        } else {
+          dispatch(setUser(feideUser));
+          // Wait with setting isLoadingUser to false until roles are loaded in separate useEffect,
+          // which will be trigged when user is updated in redux
+        }
+      } else {
+        setIsLoadingUser(false);
+      }
     };
 
     if (USE_MOCK_DATA) {
@@ -91,6 +92,26 @@ const App: FC = () => {
       getUser();
     }
   }, [dispatch]);
+
+  useEffect(() => {
+    // Fetch logged in user's roles
+    const getRoles = async () => {
+      const institutionUser = await getInstitutionUser(user.id);
+      if (institutionUser) {
+        if (institutionUser.error) {
+          dispatch(setNotification(institutionUser.error, NotificationVariant.Error));
+        } else {
+          const roles = (institutionUser as InstitutionUser).roles.map((role) => role.rolename);
+          dispatch(setRoles(roles));
+        }
+        setIsLoadingUser(false);
+      }
+    };
+
+    if (user?.id && !user.roles) {
+      getRoles();
+    }
+  }, [dispatch, user]);
 
   useEffect(() => {
     // Update search term for fetching possible authorities
@@ -144,9 +165,7 @@ const App: FC = () => {
         </StyledContent>
         <Footer />
       </StyledApp>
-      {!localStorage.getItem('previouslyLoggedIn') && !isLoadingAuthorities && authorityDataUpdated && (
-        <AuthorityOrcidModal />
-      )}
+      {!isLoadingAuthorities && authorityDataUpdated && user && <AuthorityOrcidModal />}
     </BrowserRouter>
   );
 };

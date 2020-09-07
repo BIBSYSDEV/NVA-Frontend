@@ -1,5 +1,6 @@
 {
   "add_institution": "Opprett institusjon",
+  "administrators": "Administratorer",
   "administration_id": "Autentiserings-id for institusjonsadministrator",
   "archive_name": "Arkivnavn",
   "cname": "CNAME",
@@ -12,16 +13,23 @@
   "institution_dns": "Institusjonens DNS",
   "institution_logo": "Institutionslogo",
   "organization_register_name": "Navn i organisasjonsregister",
+  "remove_admin_title": "Fjern administrator?",
+  "remove_admin_text": "Er du sikker på at du vil fjerne {{username}} fra listen over administratorer?",
+  "search_for_user": "Søk blant eksisterende brukere",
   "short_name": "Forkortet visningsnavn på institusjonen",
   "users": {
+    "add_curator": "Legg til kurator",
+    "add_editor": "Legg til editor",
+    "add_institution_admin": "Legg til institusjonsadmin",
+    "add_role_info": "Om du ikke finner brukeren, så må du sjekke at vedkommende er tilknyttet din institusjon og har logget på tjenesten tidligere.",
     "auto_assign_creators": "Ansatte får automatisk rolle som registrator ved pålogging hvis de er registrert med dette i 'eduPersonAffiliation': Employee, Staff, Member",
-    "authentication_id": "Autentiserings-id",
     "created_date": "Opprettet",
     "creator_info": "Hvem skal få tilgang til å registrere?",
     "last_login_date": "Sist innlogget",
-    "new_curator": "Ny kurator",
-    "new_editor": "Ny redaktør",
-    "new_institution_admin": "Ny institusjonsadmin",
-    "user_administration": "Brukeradministrasjon"
+    "no_users_found": "Ingen brukere funnet",
+    "remove_role_text": "Er du sikker på at du vil fjerne denne rollen?",
+    "remove_role_title": "Fjern rolle?",
+    "user_administration": "Brukeradministrasjon",
+    "username": "Brukernavn"
   }
 }

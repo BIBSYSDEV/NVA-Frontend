@@ -1,5 +1,6 @@
 {
   "add_institution": "Add institution",
+  "administrators": "Administrators",
   "administration_id": "Authenticating id for institution administrator",
   "archive_name": "Archive name",
   "cname": "CNAME",
@@ -12,16 +13,23 @@
   "institution_dns": "DNS for the institution",
   "institution_logo": "Institution logo",
   "organization_register_name": "Name in organization registry",
+  "remove_admin_title": "Remove administrator?",
+  "remove_admin_text": "Are you sure you want to remove {{username}} from list of administrators?",
+  "search_for_user": "Search among existing users",
   "short_name": "Shortened display name",
   "users": {
+    "add_curator": "Add curator",
+    "add_editor": "Add editor",
+    "add_institution_admin": "Add institution admin",
+    "add_role_info": "If you don't find the user, you must check that they are affiliated with your institution and have previously logged in.",
     "auto_assign_creators": "Employees are automaticaly assigned role as creator at login if the are registred as this in 'eduPersonAffiliation': Employee, Staff, Member",
-    "authentication_id": "Authentication ID",
     "created_date": "Created",
     "creator_info": "Who is able to publish?",
     "last_login_date": "Last login",
-    "new_institution_admin": "New institution admin",
-    "new_curator": "New curator",
-    "new_editor": "New editor",
-    "user_administration": "User administration"
+    "no_users_found": "No users found",
+    "remove_role_text": "Are you sure you want to remove this role?",
+    "remove_role_title": "Remove role?",
+    "user_administration": "User administration",
+    "username": "Username"
   }
 }

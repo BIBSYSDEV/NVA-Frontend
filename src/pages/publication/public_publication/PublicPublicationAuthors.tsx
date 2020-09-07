@@ -70,9 +70,7 @@ const PublicPublicationAuthors: FC<PublicPublicationProps> = ({ contributors }) 
         {distinctUnits.map((unitUri, index) => (
           <StyedAffiliationWithIndex key={unitUri}>
             <sup>{index + 1}</sup>
-            <i>
-              <AffiliationHierarchy key={unitUri} unitUri={unitUri} commaSeparated />
-            </i>
+            <AffiliationHierarchy key={unitUri} unitUri={unitUri} commaSeparated />
           </StyedAffiliationWithIndex>
         ))}
       </StyledAffiliationsContainer>

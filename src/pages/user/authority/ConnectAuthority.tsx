@@ -2,7 +2,7 @@ import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { Button } from '@material-ui/core';
+import { Button, DialogActions } from '@material-ui/core';
 
 import { addQualifierIdForAuthority, AuthorityQualifiers } from '../../../api/authorityApi';
 import { setAuthorityData } from '../../../redux/actions/userActions';
@@ -25,7 +25,11 @@ const StyledAuthorityContainer = styled.div`
   }
 `;
 
-export const ConnectAuthority: FC = () => {
+interface ConnectAuthorityProps {
+  handleCloseModal: () => void;
+}
+
+export const ConnectAuthority: FC<ConnectAuthorityProps> = ({ handleCloseModal }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation('profile');
   const user = useSelector((store: RootStore) => store.user);
@@ -86,16 +90,22 @@ export const ConnectAuthority: FC = () => {
                 {t('authority.create_own_authority')}
               </Button>
             </StyledRightAlignedButtonWrapper>
-            <ButtonWithProgress
-              data-testid="connect-author-button"
-              color="primary"
-              variant="contained"
-              size="large"
-              onClick={updateAuthorityForUser}
-              disabled={!selectedSystemControlNumber || isUpdatingAuthority}
-              isLoading={isUpdatingAuthority}>
-              {t('authority.connect_authority')}
-            </ButtonWithProgress>
+
+            <DialogActions>
+              <Button variant="text" onClick={handleCloseModal}>
+                {t('common:cancel')}
+              </Button>
+              <ButtonWithProgress
+                data-testid="connect-author-button"
+                color="primary"
+                variant="contained"
+                size="large"
+                onClick={updateAuthorityForUser}
+                disabled={!selectedSystemControlNumber || isUpdatingAuthority}
+                isLoading={isUpdatingAuthority}>
+                {t('authority.connect_authority')}
+              </ButtonWithProgress>
+            </DialogActions>
           </>
         ) : (
           <NewAuthorityCard onClickCancel={toggleOpenNewAuthorityCard} />

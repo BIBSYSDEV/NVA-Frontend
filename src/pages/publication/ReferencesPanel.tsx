@@ -1,13 +1,13 @@
 import { FormikProps, useFormikContext } from 'formik';
-import React, { useEffect, FC } from 'react';
+import React, { useEffect, FC, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { Publication } from '../../types/publication.types';
 import { PublicationType, ReferenceFieldNames, contextTypeBaseFieldName } from '../../types/publicationFieldNames';
-import BookForm from './references_tab/BookForm';
-import ChapterForm from './references_tab/ChapterForm';
+// import BookForm from './references_tab/BookForm';
+// import ChapterForm from './references_tab/ChapterForm';
 import DegreeForm from './references_tab/DegreeForm';
-import JournalArticleForm from './references_tab/JournalArticleForm';
+import JournalForm from './references_tab/JournalForm';
 import ReportForm from './references_tab/ReportForm';
 import Card from '../../components/Card';
 import Heading from '../../components/Heading';
@@ -31,10 +31,15 @@ const ReferencesPanel: FC<PanelProps> = ({ setTouchedFields }) => {
   const { t } = useTranslation('publication');
   const { values, setTouched, setFieldValue, touched }: FormikProps<Publication> = useFormikContext();
   const publicationContextType = values.entityDescription.reference.publicationContext.type;
+  const contextRef = useRef(publicationContextType);
+
+  useEffect(() => {
+    contextRef.current = publicationContextType;
+  }, [publicationContextType]);
 
   useEffect(
     // Set all fields as touched if user navigates away from this panel (on unmount)
-    () => () => setTouchedFields(touchedReferenceTabFields),
+    () => () => setTouchedFields(touchedReferenceTabFields(contextRef.current)),
     [setTouchedFields]
   );
 
@@ -73,11 +78,11 @@ const ReferencesPanel: FC<PanelProps> = ({ setTouchedFields }) => {
           <Heading data-testid="publication-instance-type-heading">
             {t(`publicationTypes:${publicationContextType}`)}
           </Heading>
-          {publicationContextType === PublicationType.BOOK && <BookForm />}
-          {publicationContextType === PublicationType.CHAPTER && <ChapterForm />}
+          {/* {publicationContextType === PublicationType.BOOK && <BookForm />} */}
+          {/* {publicationContextType === PublicationType.CHAPTER && <ChapterForm />} */}
           {publicationContextType === PublicationType.REPORT && <ReportForm />}
           {publicationContextType === PublicationType.DEGREE && <DegreeForm />}
-          {publicationContextType === PublicationType.PUBLICATION_IN_JOURNAL && <JournalArticleForm />}
+          {publicationContextType === PublicationType.PUBLICATION_IN_JOURNAL && <JournalForm />}
         </StyledCard>
       )}
     </>
