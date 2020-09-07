@@ -1,5 +1,5 @@
 import i18n from '../../src/translations/i18n';
-i18n.changeLanguage('eng'); // Must set language before ErrorMessage is imported
+import { LanguageCodes } from '../../src/types/language.types';
 import { ErrorMessage } from '../../src/pages/publication/PublicationFormValidationSchema';
 
 describe('User opens publication form and can see validation errors', () => {
@@ -13,6 +13,7 @@ describe('User opens publication form and can see validation errors', () => {
 
   beforeEach(() => {
     cy.server();
+    i18n.changeLanguage(LanguageCodes.ENGLISH);
   });
 
   it('The User should be able to see validation summary on submission tab', () => {
@@ -28,7 +29,7 @@ describe('User opens publication form and can see validation errors', () => {
       });
 
     // Error tabs
-    cy.get('.error-tab').should('have.length', 4);
+    cy.get('[data-testid=error-tab]').should('have.length', 4);
   });
 
   it('The User should be able to see validation errors on description tab', () => {
@@ -49,7 +50,7 @@ describe('User opens publication form and can see validation errors', () => {
       .within(() => cy.get("input[type='text']").clear().click({ force: true }).type('01.01.2000'));
     cy.get('[data-testid=date-published-field]').contains('Invalid Date Format').should('not.be.visible');
 
-    cy.get('[data-testid=nav-tabpanel-description]').should('not.have.class', 'error-tab');
+    cy.get('[data-testid=nav-tabpanel-description]').children('[data-testid=error-tab]').should('not.exist');
   });
 
   it('The User should be able to see validation errors on reference tab', () => {
@@ -99,7 +100,7 @@ describe('User opens publication form and can see validation errors', () => {
     cy.get('[data-testid=pages-to-field]').click({ force: true }).type('0');
     cy.get('[data-testid=article-number-field]').click({ force: true }).type('{backspace}{backspace}1');
 
-    cy.get('[data-testid=nav-tabpanel-references]').should('not.have.class', 'error-tab');
+    cy.get('[data-testid=nav-tabpanel-references]').children('[data-testid=error-tab]').should('not.exist');
 
     // TODO: Book type, Report type, etc
   });
@@ -141,11 +142,11 @@ describe('User opens publication form and can see validation errors', () => {
     cy.get('[data-testid=nav-tabpanel-submission]').click({ force: true });
     cy.get('[data-testid=nav-tabpanel-contributors]').click({ force: true });
     cy.contains(ErrorMessage.REQUIRED).should('be.visible');
-    cy.get('[data-testid=nav-tabpanel-contributors]').should('have.class', 'error-tab');
+    cy.get('[data-testid=nav-tabpanel-contributors]').get('[data-testid=error-tab]');
     cy.get('[data-testid=author-email-input]').eq(1).click({ force: true }).type('test@email.com');
     cy.get('[data-testid=nav-tabpanel-contributors]').click({ force: true });
     cy.contains(ErrorMessage.REQUIRED).should('not.be.visible');
-    cy.get('[data-testid=nav-tabpanel-contributors]').should('not.have.class', 'error-tab');
+    cy.get('[data-testid=nav-tabpanel-contributors]').children('[data-testid=error-tab]').should('not.exist');
   });
 
   it('The User should be able to see validation errors on files tab', () => {
@@ -187,12 +188,12 @@ describe('User opens publication form and can see validation errors', () => {
         cy.contains(ErrorMessage.MUST_BE_FUTURE).should('not.be.visible');
       });
 
-    cy.get('[data-testid=nav-tabpanel-files-and-license]').should('not.have.class', 'error-tab');
+    cy.get('[data-testid=nav-tabpanel-files-and-license]').children('[data-testid=error-tab]').should('not.exist');
   });
 
   it('The user navigates to submission tab and see no errors', () => {
     cy.get('[data-testid=nav-tabpanel-submission]').click({ force: true });
     cy.get('[data-testid=error-summary-card]').should('not.be.visible');
-    cy.get('.error-tab').should('have.length', 0);
+    cy.get('[data-testid=error-tab]').should('not.be.visible');
   });
 });

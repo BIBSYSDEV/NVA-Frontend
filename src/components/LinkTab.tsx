@@ -17,12 +17,7 @@ interface LinkTabProps extends TabProps {
 }
 
 const LinkTab: FC<LinkTabProps> = ({ error, ...rest }) => (
-  <StyledTab
-    disableRipple
-    icon={error ? <StyledErrorIcon /> : undefined}
-    className={error ? 'error-tab' : undefined}
-    {...rest}
-  />
+  <StyledTab disableRipple icon={error ? <StyledErrorIcon data-testid="error-tab" /> : undefined} {...rest} />
 );
 
 export default LinkTab;
