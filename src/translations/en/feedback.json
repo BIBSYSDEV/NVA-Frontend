@@ -5,6 +5,7 @@
     "an_error_occurred": "An error occurred",
     "create_authority": "Could not create authority",
     "create_customer": "Could not create customer institution",
+    "create_doi_request": "Could not create DOI request",
     "create_publication": "Could not create publication",
     "delete_identifier": "Could not delete {{qualifier}}",
     "download_file": "Could not download file",

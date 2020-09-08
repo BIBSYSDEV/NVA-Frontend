@@ -67,7 +67,7 @@ export const PublicPublicationStatusBar: FC<PublicPublicationContentProps> = ({ 
     const createDoiRequestResponse = await createDoiRequest(identifier);
     if (createDoiRequestResponse) {
       if (createDoiRequestResponse.error) {
-        dispatch(setNotification(t('feedback:error.an_error_occurred'), NotificationVariant.Error));
+        dispatch(setNotification(t('feedback:error.create_doi_request'), NotificationVariant.Error));
       } else {
         toggleRequestDoiModal();
         setHasPendingDoiRequest(true);

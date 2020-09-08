@@ -5,6 +5,7 @@
     "an_error_occurred": "En feil oppstod",
     "create_authority": "Kunne ikke opprette autoritet",
     "create_customer": "Kunne ikke opprette institusjon",
+    "create_doi_request": "Kunne ikke opprette DOI-forespørsel",
     "create_publication": "Kunne ikke opprette publikasjon",
     "delete_identifier": "Kunne ikke slette {{qualifier}}",
     "download_file": "Kunne ikke laste ned fil",
