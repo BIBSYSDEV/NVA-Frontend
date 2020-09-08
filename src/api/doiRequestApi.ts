@@ -3,7 +3,7 @@ import { authenticatedApiRequest } from './apiRequest';
 import { RoleName } from '../types/user.types';
 import { DoiRequest } from '../types/doiRequest.types';
 
-enum DoiRequestApiPaths {
+export enum DoiRequestApiPaths {
   DOI_REQUEST = '/doi-request',
 }
 
