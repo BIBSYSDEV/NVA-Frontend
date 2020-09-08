@@ -15,7 +15,7 @@ import Modal from '../../../components/Modal';
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../types/notification.types';
 import ButtonWithProgress from '../../../components/ButtonWithProgress';
-import { PublicationStatus } from '../../../types/publication.types';
+import { PublicationStatus, DoiRequestStatus } from '../../../types/publication.types';
 import { createDoiRequest } from '../../../api/doiRequestApi';
 
 const StyledStatusBar = styled(Card)`
@@ -73,6 +73,7 @@ export const PublicPublicationStatusBar: FC<PublicPublicationContentProps> = ({ 
     entityDescription: {
       reference: { doi },
     },
+    doiRequest,
   } = publication;
   const isOwner = owner === user?.id;
   const hasDoi = !!doi;
@@ -90,16 +91,26 @@ export const PublicPublicationStatusBar: FC<PublicPublicationContentProps> = ({ 
         </NormalText>
       </StyledStatusBarDescription>
       <div>
-        {!hasDoi && publication.status === PublicationStatus.PUBLISHED && (
-          <Button variant="contained" color="primary" onClick={toggleRequestDoiModal}>
-            {t('public_page.request_doi')}
-          </Button>
-        )}
-        {!hasDoi && publication.status === PublicationStatus.DRAFT && (
-          <Button variant="contained" color="primary" disabled>
-            {t('public_page.reserve_doi')}
-          </Button>
-        )}
+        {!hasDoi ? (
+          doiRequest?.status === DoiRequestStatus.Requested ? (
+            <Button variant="contained" color="primary" disabled>
+              {t('public_page.requested_doi')}
+            </Button>
+          ) : (
+            <>
+              {publication.status === PublicationStatus.PUBLISHED && (
+                <Button variant="contained" color="primary" onClick={toggleRequestDoiModal}>
+                  {t('public_page.request_doi')}
+                </Button>
+              )}
+              {publication.status === PublicationStatus.DRAFT && (
+                <Button variant="contained" color="primary" disabled>
+                  {t('public_page.reserve_doi')}
+                </Button>
+              )}
+            </>
+          )
+        ) : null}
 
         <Link to={`/publication/${identifier}`}>
           <Button variant="contained" color="primary">
