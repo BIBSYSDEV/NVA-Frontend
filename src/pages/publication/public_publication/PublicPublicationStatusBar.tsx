@@ -57,6 +57,7 @@ export const PublicPublicationStatusBar: FC<PublicPublicationContentProps> = ({ 
     doiRequest,
   } = publication;
 
+  const [messageToCurator, setMessageToCurator] = useState('');
   const [hasPendingDoiRequest, setHasPendingDoiRequest] = useState(doiRequest?.status === DoiRequestStatus.Requested);
   const [openRequestDoiModal, setOpenRequestDoiModal] = useState(false);
   const [isLoadingDoiRequest, setIsLoadingDoiRequest] = useState(false);
@@ -64,7 +65,7 @@ export const PublicPublicationStatusBar: FC<PublicPublicationContentProps> = ({ 
 
   const sendDoiRequest = async () => {
     setIsLoadingDoiRequest(true);
-    const createDoiRequestResponse = await createDoiRequest(identifier);
+    const createDoiRequestResponse = await createDoiRequest(identifier, messageToCurator);
     if (createDoiRequestResponse) {
       if (createDoiRequestResponse.error) {
         dispatch(setNotification(t('feedback:error.create_doi_request'), NotificationVariant.Error));
@@ -129,7 +130,7 @@ export const PublicPublicationStatusBar: FC<PublicPublicationContentProps> = ({ 
             rows="4"
             fullWidth
             label={t('public_page.message_to_curator')}
-            disabled
+            onChange={(event) => setMessageToCurator(event.target.value)}
           />
           <DialogActions>
             <Button onClick={toggleRequestDoiModal}>{t('common:cancel')}</Button>
