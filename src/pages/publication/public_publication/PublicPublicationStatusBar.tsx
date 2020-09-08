@@ -91,8 +91,8 @@ export const PublicPublicationStatusBar: FC<PublicPublicationContentProps> = ({ 
         </NormalText>
       </StyledStatusBarDescription>
       <div>
-        {!hasDoi ? (
-          doiRequest?.status === DoiRequestStatus.Requested ? (
+        {!hasDoi &&
+          (doiRequest?.status === DoiRequestStatus.Requested ? (
             <Button variant="contained" color="primary" disabled>
               {t('public_page.requested_doi')}
             </Button>
@@ -109,8 +109,7 @@ export const PublicPublicationStatusBar: FC<PublicPublicationContentProps> = ({ 
                 </Button>
               )}
             </>
-          )
-        ) : null}
+          ))}
 
         <Link to={`/publication/${identifier}`}>
           <Button variant="contained" color="primary">
