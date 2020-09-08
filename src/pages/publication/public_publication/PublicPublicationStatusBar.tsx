@@ -48,6 +48,7 @@ export const PublicPublicationStatusBar: FC<PublicPublicationContentProps> = ({ 
   const { t } = useTranslation('publication');
   const user = useSelector((store: RootStore) => store.user);
 
+  const [hasRequestedDoi, setHasRequestedDoi] = useState(publication.doiRequest?.status === DoiRequestStatus.Requested);
   const [openRequestDoiModal, setOpenRequestDoiModal] = useState(false);
   const [isLoadingDoiRequest, setIsLoadingDoiRequest] = useState(false);
   const toggleRequestDoiModal = () => setOpenRequestDoiModal((state) => !state);
@@ -60,6 +61,7 @@ export const PublicPublicationStatusBar: FC<PublicPublicationContentProps> = ({ 
         dispatch(setNotification(t('feedback:error.an_error_occurred'), NotificationVariant.Error));
       } else {
         toggleRequestDoiModal();
+        setHasRequestedDoi(true);
         dispatch(setNotification(t('feedback:success.doi_request_sent')));
       }
     }
@@ -73,7 +75,6 @@ export const PublicPublicationStatusBar: FC<PublicPublicationContentProps> = ({ 
     entityDescription: {
       reference: { doi },
     },
-    doiRequest,
   } = publication;
   const isOwner = owner === user?.id;
   const hasDoi = !!doi;
@@ -92,7 +93,7 @@ export const PublicPublicationStatusBar: FC<PublicPublicationContentProps> = ({ 
       </StyledStatusBarDescription>
       <div>
         {!hasDoi &&
-          (doiRequest?.status === DoiRequestStatus.Requested ? (
+          (hasRequestedDoi ? (
             <Button variant="contained" color="primary" disabled>
               {t('public_page.requested_doi')}
             </Button>
