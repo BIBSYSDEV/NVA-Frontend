@@ -1,5 +1,5 @@
 import { Field, FormikProps, useFormikContext, FieldProps } from 'formik';
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { BookPublication } from '../../../types/publication.types';
@@ -16,6 +16,7 @@ import SelectTypeField from './components/SelectTypeField';
 import PublisherField from './components/PublisherField';
 import { BookEntityDescription } from '../../../types/publication_types/bookPublication.types';
 import { TextField } from '@material-ui/core';
+import { BackendTypeNames } from '../../../types/publication_types/commonPublication.types';
 
 const StyledContent = styled.div`
   display: grid;
@@ -54,6 +55,11 @@ const BookForm: FC = () => {
     },
   } = values.entityDescription as BookEntityDescription;
 
+  useEffect(() => {
+    // set correct Pages type based on publication type being Book
+    setFieldValue(ReferenceFieldNames.PAGES_TYPE, BackendTypeNames.PAGES_MONOGRAPH);
+  }, [setFieldValue]);
+
   return (
     <StyledContent>
       <SelectTypeField fieldName={ReferenceFieldNames.SUB_TYPE} options={Object.values(BookType)} />
@@ -74,13 +80,14 @@ const BookForm: FC = () => {
           )}
         </Field> */}
 
-        <Field name={ReferenceFieldNames.PAGES}>
+        <Field name={ReferenceFieldNames.PAGES_PAGES}>
           {({ field }: FieldProps) => (
             <StyledTextField
               inputProps={{ 'data-testid': 'pages' }}
               variant="outlined"
               label={t('references.number_of_pages')}
               {...field}
+              value={field.value ?? ''}
             />
           )}
         </Field>

@@ -153,8 +153,6 @@
     "Rejected": "Rejected"
   },
   "submission": {
-    "ask_for_doi": "Ask for DOI for this registration",
-    "doi_requested": "You have asked for DOI for this registration",
     "number_of_affiliations": "{{count}} affiliation",
     "number_of_affiliations_plural": "{{count}} affiliations"
   },

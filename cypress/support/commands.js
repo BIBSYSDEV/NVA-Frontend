@@ -50,6 +50,6 @@ Cypress.Commands.add('uploadFile', { prevSubject: true }, (subject, fileName) =>
     const dataTransfer = new DataTransfer();
     dataTransfer.items.add(testFile);
     el.files = dataTransfer.files;
-    cy.wrap(subject).trigger('change', { force: true });
+    cy.wrap(subject).first().trigger('change', { force: true });
   });
 });

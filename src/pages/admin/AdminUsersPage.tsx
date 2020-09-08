@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { FormControlLabel, Checkbox, Divider, CircularProgress, Button } from '@material-ui/core';
+import { FormControlLabel, Checkbox, Divider, Button } from '@material-ui/core';
 
 import Heading from '../../components/Heading';
 import SubHeading from '../../components/SubHeading';
@@ -12,10 +12,10 @@ import Card from '../../components/Card';
 import UserList from './UserList';
 import NormalText from './../../components/NormalText';
 import useFetchUsersForInstitution from '../../utils/hooks/useFetchUsersForInstitution';
-import { StyledProgressWrapper } from '../../components/styled/Wrappers';
 import { filterUsersByRole } from '../../utils/role-helpers';
 import Modal from '../../components/Modal';
 import { AddRoleModalContent } from './AddRoleModalContent';
+import ListSkeleton from '../../components/ListSkeleton';
 
 const StyledContainer = styled.div`
   margin-bottom: 2rem;
@@ -32,7 +32,7 @@ const StyledNewButton = styled(Button)`
 const AdminUsersPage: FC = () => {
   const { t } = useTranslation('admin');
   const user = useSelector((store: RootStore) => store.user);
-  const [users, isLoading] = useFetchUsersForInstitution(user.institution);
+  const [users, isLoading, fetchInstitutionUsers] = useFetchUsersForInstitution(user.customerId.split('/').pop() ?? '');
   const [autoAssignCreators, setAutoAssignCreators] = useState(true);
   const [roleToAdd, setRoleToAdd] = useState<RoleName>();
 
@@ -49,11 +49,13 @@ const AdminUsersPage: FC = () => {
         <SubHeading>{t('profile:roles.institution_admins')}</SubHeading>
         <Divider />
         {isLoading ? (
-          <StyledProgressWrapper>
-            <CircularProgress />
-          </StyledProgressWrapper>
+          <ListSkeleton maxWidth={25} />
         ) : (
-          <UserList userList={filterUsersByRole(users, RoleName.INSTITUTION_ADMIN)} />
+          <UserList
+            userList={filterUsersByRole(users, RoleName.INSTITUTION_ADMIN)}
+            roleToRemove={RoleName.INSTITUTION_ADMIN}
+            refetchUsers={fetchInstitutionUsers}
+          />
         )}
         <StyledNewButton color="primary" variant="outlined" onClick={() => setRoleToAdd(RoleName.INSTITUTION_ADMIN)}>
           {t('users.add_institution_admin')}
@@ -65,11 +67,13 @@ const AdminUsersPage: FC = () => {
         <SubHeading>{t('profile:roles.curators')}</SubHeading>
         <Divider />
         {isLoading ? (
-          <StyledProgressWrapper>
-            <CircularProgress />
-          </StyledProgressWrapper>
+          <ListSkeleton maxWidth={25} />
         ) : (
-          <UserList userList={filterUsersByRole(users, RoleName.CURATOR)} />
+          <UserList
+            userList={filterUsersByRole(users, RoleName.CURATOR)}
+            roleToRemove={RoleName.CURATOR}
+            refetchUsers={fetchInstitutionUsers}
+          />
         )}
         <StyledNewButton color="primary" variant="outlined" onClick={() => setRoleToAdd(RoleName.CURATOR)}>
           {t('users.add_curator')}
@@ -81,11 +85,13 @@ const AdminUsersPage: FC = () => {
         <SubHeading>{t('profile:roles.editors')}</SubHeading>
         <Divider />
         {isLoading ? (
-          <StyledProgressWrapper>
-            <CircularProgress />
-          </StyledProgressWrapper>
+          <ListSkeleton maxWidth={25} />
         ) : (
-          <UserList userList={filterUsersByRole(users, RoleName.EDITOR)} />
+          <UserList
+            userList={filterUsersByRole(users, RoleName.EDITOR)}
+            roleToRemove={RoleName.EDITOR}
+            refetchUsers={fetchInstitutionUsers}
+          />
         )}
         <StyledNewButton color="primary" variant="outlined" onClick={() => setRoleToAdd(RoleName.EDITOR)}>
           {t('users.add_editor')}
@@ -114,7 +120,12 @@ const AdminUsersPage: FC = () => {
               ? t('users.add_curator')
               : t('users.add_editor')
           }>
-          <AddRoleModalContent role={roleToAdd} closeModal={() => setRoleToAdd(undefined)} />
+          <AddRoleModalContent
+            role={roleToAdd}
+            users={users}
+            closeModal={() => setRoleToAdd(undefined)}
+            refetchUsers={fetchInstitutionUsers}
+          />
         </Modal>
       )}
     </Card>

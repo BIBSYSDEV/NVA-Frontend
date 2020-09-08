@@ -125,10 +125,6 @@ export type PublishedPublicationPreview = Pick<
   'identifier' | 'mainTitle' | 'createdDate' | 'reference' | 'contributors' | 'status' | 'type'
 >;
 
-export interface PublicationListItem extends PublicationPreview {
-  modifiedDate: string;
-}
-
 export interface Doi {
   identifier: string; // NVA identifier
   title: string;

@@ -11,7 +11,8 @@ import mockNtnuSubunitResponse from '../utils/testfiles/institutions/institution
 import mockAuthoritiesResponse from '../utils/testfiles/mock_authorities_response.json';
 import mockProjects from '../utils/testfiles/projects_real.json';
 import { mockPublication } from '../utils/testfiles/mockPublication';
-import mockPublications from '../utils/testfiles/publications_45_random_results_generated.json';
+import mockSearchResults from '../utils/testfiles/search_results.json';
+import threeMockSearchResults from '../utils/testfiles/three_search_results.json';
 import mockMyPublications from '../utils/testfiles/my_publications.json';
 import mockNsdPublisers from '../utils/testfiles/publishersFromNsd.json';
 import mockCustomerInstitutions from '../utils/testfiles/mock_customer_institutions.json';
@@ -27,6 +28,7 @@ import { CustomerInstitutionApiPaths } from './customerInstitutionsApi';
 import { emptyPublication } from '../types/publication.types';
 import { mockRoles } from '../utils/testfiles/mock_feide_user';
 import { RoleApiPaths } from './roleApi';
+import { mockDoiRequests } from '../utils/testfiles/mockDoiRequest';
 
 const mockOrcidResponse: OrcidResponse = {
   id: 'https://sandbox.orcid.org/0000-0001-2345-6789',
@@ -85,7 +87,8 @@ export const interceptRequestsOnMock = () => {
   const mock = new MockAdapter(Axios);
 
   // SEARCH
-  mock.onGet(new RegExp(`${PublicationsApiPaths.SEARCH}/*`)).reply(200, mockPublications);
+  mock.onGet(new RegExp(`${PublicationsApiPaths.SEARCH}/*`)).replyOnce(200, mockSearchResults);
+  mock.onGet(new RegExp(`${PublicationsApiPaths.SEARCH}/*`)).reply(200, threeMockSearchResults);
 
   // File Upload
   mock.onPost(new RegExp(FileApiPaths.CREATE)).reply(200, mockCreateUpload);
@@ -99,7 +102,7 @@ export const interceptRequestsOnMock = () => {
   mock.onGet(new RegExp(`${PublicationsApiPaths.PUBLICATIONS_BY_OWNER}/*`)).reply(200, mockMyPublications);
 
   // WORKLIST
-  mock.onGet(new RegExp(`${PublicationsApiPaths.DOI_REQUESTS}/*`)).reply(200, mockMyPublications.publications);
+  mock.onGet(new RegExp(`${PublicationsApiPaths.DOI_REQUESTS}/*`)).reply(200, mockDoiRequests);
   mock.onGet(new RegExp(`${PublicationsApiPaths.FOR_APPROVAL}/*`)).reply(200, mockMyPublications.publications);
 
   //PUBLICATION

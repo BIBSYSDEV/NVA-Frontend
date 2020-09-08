@@ -51,44 +51,6 @@ export const getUsersForInstitution = async (institution: string, cancelToken?: 
   }
 };
 
-export const assignUserRole = async (
-  institution: string,
-  username: string,
-  rolename: RoleName,
-  cancelToken?: CancelToken
-) => {
-  const url = RoleApiPaths.USERS;
-  const roleElement = { rolename, type: 'Role' };
-
-  try {
-    const idToken = await getIdToken();
-    const headers = {
-      Authorization: `Bearer ${idToken}`,
-    };
-    const data = {
-      institution,
-      username,
-      roles: [roleElement],
-      type: 'User',
-    };
-
-    // TODO: Frontend should never create users when they are automatically created in backend per login
-    const response = await Axios.post(url, data, { headers, cancelToken });
-    if (response.status === StatusCode.OK) {
-      return response.data;
-    } else {
-      return { error: i18n.t('feedback:error.add_role') };
-    }
-  } catch (error) {
-    if (error.response.status === StatusCode.CONFLICT) {
-      // Update existing user instead of creating a new one
-      return await addRoleToUser(username, rolename, cancelToken);
-    } else if (!Axios.isCancel(error)) {
-      return { error: i18n.t('feedback:error.add_role') };
-    }
-  }
-};
-
 export const addRoleToUser = async (username: string, rolename: RoleName, cancelToken?: CancelToken) => {
   try {
     const existingUser = await getInstitutionUser(username, cancelToken);
