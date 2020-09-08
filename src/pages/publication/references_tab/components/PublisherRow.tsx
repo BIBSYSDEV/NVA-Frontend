@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { Button } from '@material-ui/core';
 import { FormikProps, useFormikContext } from 'formik';
 
-import { Publisher, levelMap, FormikPublication } from '../../../../types/publication.types';
+import { Publisher, levelMap, Publication } from '../../../../types/publication.types';
 import Label from '../../../../components/Label';
 import { getPublishers } from '../../../../api/publicationChannelApi';
 import { PublicationTableNumber } from '../../../../utils/constants';
@@ -52,15 +52,15 @@ const StyledButton = styled(Button)`
 
 interface PublisherRowProps {
   dataTestId: string;
-  publisher: Partial<Publisher>;
   label: string;
   onClickDelete: (event: React.MouseEvent<any>) => void;
+  publisher: Partial<Publisher>;
 }
 
-const PublisherRow: React.FC<PublisherRowProps> = ({ dataTestId, publisher, label, onClickDelete }) => {
+const PublisherRow: FC<PublisherRowProps> = ({ dataTestId, label, onClickDelete, publisher }) => {
   const { t } = useTranslation('publication');
 
-  const { setFieldValue }: FormikProps<FormikPublication> = useFormikContext();
+  const { setFieldValue }: FormikProps<Publication> = useFormikContext();
 
   const { level, title } = publisher;
   const publisherLevel = typeof level === 'string' ? levelMap[level] : level;
@@ -68,7 +68,6 @@ const PublisherRow: React.FC<PublisherRowProps> = ({ dataTestId, publisher, labe
   useEffect(() => {
     const setLevel = async (title: string) => {
       const response = await getPublishers(title, PublicationTableNumber.PUBLICATION_CHANNELS);
-      // TODO: set level in doi-fetch ? book = PublicationTableNumber.PUBLISHERS ? needs further discussion
       if (response) {
         const publisherLevel = response?.filter((publisher: Partial<Publisher>) => publisher.title === title)[0]?.level;
         if (publisherLevel) {

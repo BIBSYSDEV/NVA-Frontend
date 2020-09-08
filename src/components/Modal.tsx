@@ -61,29 +61,13 @@ const StyledDialogTitle = styled(DialogTitle)`
 `;
 
 interface ModalProps extends Partial<DialogProps> {
-  ariaDescribedBy?: string;
-  ariaLabelledBy?: string;
-  children: any;
   dataTestId?: string;
-  disableEscape?: boolean;
   headingIcon?: any;
   headingText?: string;
   onClose?: () => void;
-  openModal: boolean;
 }
 
-const Modal: FC<ModalProps> = ({
-  ariaDescribedBy,
-  ariaLabelledBy,
-  children,
-  dataTestId,
-  disableEscape,
-  headingIcon,
-  headingText,
-  onClose,
-  openModal,
-  ...props
-}) => {
+const Modal: FC<ModalProps> = ({ children, dataTestId, headingIcon, headingText, onClose, open, ...props }) => {
   const handleClose = () => {
     onClose && onClose();
   };
@@ -91,15 +75,11 @@ const Modal: FC<ModalProps> = ({
   return (
     <Dialog
       {...props}
-      aria-labelledby={ariaDescribedBy}
-      aria-describedby={ariaLabelledBy}
       data-testid={dataTestId}
-      disableBackdropClick={disableEscape}
-      disableEscapeKeyDown={disableEscape}
-      open={openModal}
-      onClose={handleClose}
+      open={!!open}
       closeAfterTransition
       BackdropComponent={Backdrop}
+      onClose={handleClose}
       BackdropProps={{
         timeout: 500,
       }}>
@@ -114,10 +94,10 @@ const Modal: FC<ModalProps> = ({
             <StyledHeading>{headingText}</StyledHeading>
           )}
         </StyledDialogTitle>
-        {!disableEscape && <StyledCloseIcon onClick={handleClose} />}
+        <StyledCloseIcon onClick={handleClose} />
       </StyledHeaderContainer>
 
-      <Fade in={openModal}>
+      <Fade in={open}>
         <StyledPaper>{children}</StyledPaper>
       </Fade>
     </Dialog>

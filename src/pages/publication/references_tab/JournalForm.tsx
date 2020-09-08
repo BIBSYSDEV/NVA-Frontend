@@ -1,16 +1,17 @@
 import { Field, FormikProps, useFormikContext, FieldProps, ErrorMessage } from 'formik';
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { TextField } from '@material-ui/core';
-
-import { FormikPublication } from '../../../types/publication.types';
-import { ReferenceFieldNames, JournalArticleType } from '../../../types/publicationFieldNames';
+import { JournalPublication } from '../../../types/publication.types';
+import { ReferenceFieldNames, JournalType } from '../../../types/publicationFieldNames';
 import { PublicationTableNumber } from '../../../utils/constants';
 import NviValidation from './components/NviValidation';
 import PeerReview from './components/PeerReview';
 import DoiField from './components/DoiField';
 import SelectTypeField from './components/SelectTypeField';
+import { JournalEntityDescription } from '../../../types/publication_types/journalPublication.types';
+import { BackendTypeNames } from '../../../types/publication_types/commonPublication.types';
 import PublisherField from './components/PublisherField';
 
 const StyledContent = styled.div`
@@ -34,17 +35,24 @@ const StyledLabel = styled.div`
   justify-self: center;
 `;
 
-const JournalArticleForm: FC = () => {
+const JournalForm: FC = () => {
   const { t } = useTranslation('publication');
-  const { values }: FormikProps<FormikPublication> = useFormikContext();
+  const { values, setFieldValue, touched }: FormikProps<JournalPublication> = useFormikContext();
   const {
-    publicationContext,
-    publicationInstance: { peerReviewed },
-  } = values.entityDescription.reference;
+    reference: {
+      publicationContext,
+      publicationInstance: { peerReviewed },
+    },
+  } = values.entityDescription as JournalEntityDescription;
+
+  useEffect(() => {
+    // set correct Pages type based on publication type being Journal
+    setFieldValue(ReferenceFieldNames.PAGES_TYPE, BackendTypeNames.PAGES_RANGE);
+  }, [setFieldValue]);
 
   return (
     <StyledContent>
-      <SelectTypeField fieldName={ReferenceFieldNames.SUB_TYPE} options={Object.values(JournalArticleType)} />
+      <SelectTypeField fieldName={ReferenceFieldNames.SUB_TYPE} options={Object.values(JournalType)} />
 
       <DoiField />
 
@@ -52,6 +60,8 @@ const JournalArticleForm: FC = () => {
         publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
         label={t('references.journal')}
         placeholder={t('references.search_for_journal')}
+        touched={touched.entityDescription?.reference?.publicationContext?.title}
+        errorName={ReferenceFieldNames.PUBLICATION_CONTEXT_TITLE}
       />
 
       <StyledArticleDetail>
@@ -88,6 +98,7 @@ const JournalArticleForm: FC = () => {
               variant="outlined"
               label={t('references.pages_from')}
               {...field}
+              value={field.value ?? ''}
               error={touched && !!error}
               helperText={<ErrorMessage name={field.name} />}
             />
@@ -101,6 +112,7 @@ const JournalArticleForm: FC = () => {
               variant="outlined"
               label={t('references.pages_to')}
               {...field}
+              value={field.value ?? ''}
               error={touched && !!error}
               helperText={<ErrorMessage name={field.name} />}
             />
@@ -128,4 +140,4 @@ const JournalArticleForm: FC = () => {
   );
 };
 
-export default JournalArticleForm;
+export default JournalForm;

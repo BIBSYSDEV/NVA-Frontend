@@ -6,7 +6,7 @@ import deepmerge from 'deepmerge';
 import { CircularProgress, Button } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 
-import { emptyPublication, FormikPublication, PublicationTab, PublicationStatus } from '../../types/publication.types';
+import { emptyPublication, Publication, PublicationTab, PublicationStatus } from '../../types/publication.types';
 import { PublicationFormTabs } from './PublicationFormTabs';
 import { updatePublication } from '../../api/publicationApi';
 import { useDispatch, useSelector } from 'react-redux';
@@ -42,11 +42,12 @@ interface PublicationFormProps {
 const PublicationForm: FC<PublicationFormProps> = ({ identifier, closeForm }) => {
   const user = useSelector((store: RootStore) => store.user);
   const { t } = useTranslation('publication');
-  const [tabNumber, setTabNumber] = useState(user.isCurator ? PublicationTab.Submission : PublicationTab.Description);
+  const history = useHistory();
+  const initialTabNumber = new URLSearchParams(history.location.search).get('tab');
+  const [tabNumber, setTabNumber] = useState(initialTabNumber ? +initialTabNumber : PublicationTab.Description);
   const [isSaving, setIsSaving] = useState(false);
   const dispatch = useDispatch();
   const uppy = useUppy();
-  const history = useHistory();
   const [publication, isLoadingPublication, handleSetPublication] = useFetchPublication(identifier);
 
   useEffect(() => {
@@ -74,10 +75,9 @@ const PublicationForm: FC<PublicationFormProps> = ({ identifier, closeForm }) =>
     setTabNumber(tabNumber + 1);
   };
 
-  const savePublication = async (values: FormikPublication) => {
-    const { shouldCreateDoi, ...newPublication } = values;
+  const savePublication = async (values: Publication) => {
     setIsSaving(true);
-    const updatedPublication = await updatePublication(newPublication);
+    const updatedPublication = await updatePublication(values);
     if (updatedPublication?.error) {
       dispatch(setNotification(updatedPublication.error, NotificationVariant.Error));
     } else {
@@ -87,12 +87,12 @@ const PublicationForm: FC<PublicationFormProps> = ({ identifier, closeForm }) =>
     setIsSaving(false);
   };
 
-  const validateForm = (values: FormikPublication) => {
+  const validateForm = (values: Publication) => {
     const {
       reference: { publicationInstance, publicationContext },
     } = values.entityDescription;
     try {
-      validateYupSchema<FormikPublication>(values, publicationValidationSchema, true, {
+      validateYupSchema<Publication>(values, publicationValidationSchema, true, {
         publicationInstanceType: publicationInstance.type,
         publicationContextType: publicationContext.type,
       });
@@ -110,8 +110,8 @@ const PublicationForm: FC<PublicationFormProps> = ({ identifier, closeForm }) =>
         enableReinitialize
         initialValues={publication ? deepmerge(emptyPublication, publication) : emptyPublication}
         validate={validateForm}
-        onSubmit={(values: FormikPublication) => savePublication(values)}>
-        {({ dirty, values, isValid }: FormikProps<FormikPublication>) => (
+        onSubmit={(values: Publication) => savePublication(values)}>
+        {({ dirty, values, isValid }: FormikProps<Publication>) => (
           <>
             <RouteLeavingGuard
               modalDescription={t('modal_unsaved_changes_description')}

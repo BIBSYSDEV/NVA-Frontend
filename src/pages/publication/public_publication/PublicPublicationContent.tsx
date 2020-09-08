@@ -15,6 +15,30 @@ import { licenses } from '../../../types/file.types';
 import { getNpiDiscipline } from '../../../utils/npiDisciplines';
 import { StyledNormalTextPreWrapped } from '../../../components/styled/Wrappers';
 import { displayDate } from '../../../utils/date-helpers';
+import {
+  JournalPublicationContext,
+  JournalPublicationInstance,
+} from '../../../types/publication_types/journalPublication.types';
+import { PublicPublicationStatusBar } from './PublicPublicationStatusBar';
+import { isJournal, isDegree, isReport } from '../../../utils/publication-helpers';
+import {
+  PublicPublicationInstanceJournal,
+  PublicPublicationInstanceDegree,
+  PublicPublicationInstanceReport,
+} from './PublicPublicationInstance';
+import {
+  PublicPublicationContextJournal,
+  PublicPublicationContextDegree,
+  PublicPublicationContextReport,
+} from './PublicPublicationContext';
+import {
+  DegreePublicationContext,
+  DegreePublicationInstance,
+} from '../../../types/publication_types/degreePublication.types';
+import {
+  ReportPublicationContext,
+  ReportPublicationInstance,
+} from '../../../types/publication_types/reportPublication.types';
 
 const StyledContentWrapper = styled.div`
   display: flex;
@@ -76,7 +100,7 @@ const StyledTag = styled.div`
   margin-right: 1rem;
 `;
 
-interface PublicPublicationContentProps {
+export interface PublicPublicationContentProps {
   publication: Publication;
 }
 
@@ -91,7 +115,6 @@ const PublicPublicationContent: FC<PublicPublicationContentProps> = ({ publicati
     mainTitle,
     npiSubjectHeading,
     reference: { doi, publicationContext, publicationInstance },
-    series,
     tags,
   } = publication.entityDescription;
 
@@ -101,6 +124,7 @@ const PublicPublicationContent: FC<PublicPublicationContentProps> = ({ publicati
 
   return (
     <ContentPage>
+      <PublicPublicationStatusBar publication={publication} />
       <Heading>{mainTitle}</Heading>
       {contributors && <PublicPublicationAuthors contributors={contributors} />}
       <StyledContentWrapper>
@@ -137,23 +161,26 @@ const PublicPublicationContent: FC<PublicPublicationContentProps> = ({ publicati
               ))}
             </LabelContentRow>
           )}
-          {publicationContext && (
-            <LabelContentRow minimal multiple label={`${t('references.journal')}:`}>
-              <NormalText>{publicationContext.title}</NormalText>
-              {publicationContext?.onlineIssn && `${t('references.issn')} ${publicationContext.onlineIssn}`}
-            </LabelContentRow>
-          )}
-          {publicationInstance && (
-            <LabelContentRow minimal label={`${t('common:details')}:`}>
-              {publicationInstance?.volume && `${t('references.volume')} ${publicationInstance.volume}`}
-              {publicationInstance?.issue && `, ${t('references.issue')} ${publicationInstance.issue}`}
-              {publicationInstance?.pages?.begin &&
-                publicationInstance?.pages?.end &&
-                `, ${t('references.pages')} ${publicationInstance.pages.begin}-${publicationInstance.pages.end}`}
-              {publicationInstance?.articleNumber &&
-                `, ${t('references.article_number')} ${publicationInstance.articleNumber}`}
-            </LabelContentRow>
-          )}
+
+          {isJournal(publication) ? (
+            <>
+              <PublicPublicationContextJournal publicationContext={publicationContext as JournalPublicationContext} />
+              <PublicPublicationInstanceJournal
+                publicationInstance={publicationInstance as JournalPublicationInstance}
+              />
+            </>
+          ) : isDegree(publication) ? (
+            <>
+              <PublicPublicationContextDegree publicationContext={publicationContext as DegreePublicationContext} />
+              <PublicPublicationInstanceDegree publicationInstance={publicationInstance as DegreePublicationInstance} />
+            </>
+          ) : isReport(publication) ? (
+            <>
+              <PublicPublicationContextReport publicationContext={publicationContext as ReportPublicationContext} />
+              <PublicPublicationInstanceReport publicationInstance={publicationInstance as ReportPublicationInstance} />
+            </>
+          ) : null}
+
           {date?.year && (
             <LabelContentRow minimal label={`${t('description.date_published')}:`}>
               {displayDate(date)}
@@ -182,11 +209,6 @@ const PublicPublicationContent: FC<PublicPublicationContentProps> = ({ publicati
           {publication.project && (
             <LabelContentRow minimal label={`${t('description.project_association')}:`}>
               {publication.project.name}
-            </LabelContentRow>
-          )}
-          {series && (
-            <LabelContentRow minimal label={`${t('references.series')}:`}>
-              {series.title}
             </LabelContentRow>
           )}
         </StyledMainContent>

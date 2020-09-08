@@ -1,15 +1,14 @@
 import { Field, FormikProps, useFormikContext, FieldProps } from 'formik';
-import React from 'react';
+import React, { useEffect, FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-
-import { FormikPublication, emptyPublisher } from '../../../types/publication.types';
+import { DegreePublication } from '../../../types/publication.types';
 import { ReferenceFieldNames, DegreeType } from '../../../types/publicationFieldNames';
 import { PublicationTableNumber } from '../../../utils/constants';
 import PublicationChannelSearch from './components/PublicationChannelSearch';
-import PublisherRow from './components/PublisherRow';
 import DoiField from './components/DoiField';
 import SelectTypeField from './components/SelectTypeField';
+import SeriesRow from './components/SeriesRow';
 import PublisherField from './components/PublisherField';
 
 const StyledLabel = styled.div`
@@ -23,10 +22,15 @@ const StyledHeading = styled.div`
   padding-top: 1.5rem;
 `;
 
-const DegreeForm: React.FC = () => {
+const DegreeForm: FC = () => {
   const { t } = useTranslation('publication');
 
-  const { setFieldValue }: FormikProps<FormikPublication> = useFormikContext();
+  const { setFieldValue, touched }: FormikProps<DegreePublication> = useFormikContext();
+
+  useEffect(() => {
+    // set correct Pages type based on publication type being Degree
+    setFieldValue(ReferenceFieldNames.PAGES, null);
+  }, [setFieldValue]);
 
   return (
     <>
@@ -34,27 +38,32 @@ const DegreeForm: React.FC = () => {
 
       <DoiField />
 
-      <PublisherField label={t('common:publisher')} placeholder={t('references.search_for_publisher')} />
+      <PublisherField
+        label={t('common:publisher')}
+        placeholder={t('references.search_for_publisher')}
+        touched={touched.entityDescription?.reference?.publicationContext?.publisher}
+        errorName={ReferenceFieldNames.PUBLICATION_CONTEXT_PUBLISHER}
+      />
 
       <StyledHeading>{t('references.series')}</StyledHeading>
       <StyledLabel>{t('references.series_info')}</StyledLabel>
-      <Field name={ReferenceFieldNames.SERIES}>
+      <Field name={ReferenceFieldNames.SERIES_TITLE}>
         {({ field: { name, value } }: FieldProps) => (
           <>
             <PublicationChannelSearch
-              clearSearchField={value === emptyPublisher}
+              clearSearchField={value === ''}
               dataTestId="autosearch-series"
               label={t('common:title')}
               publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
-              setValueFunction={(inputValue) => setFieldValue(name, inputValue ?? emptyPublisher)}
+              setValueFunction={(inputValue) => setFieldValue(name, inputValue.title ?? '')}
               placeholder={t('references.search_for_series')}
             />
-            {value.title && (
-              <PublisherRow
+            {value && (
+              <SeriesRow
                 dataTestId="autosearch-results-series"
                 label={t('common:title')}
-                publisher={value}
-                onClickDelete={() => setFieldValue(name, emptyPublisher)}
+                onClickDelete={() => setFieldValue(name, '')}
+                title={value ?? ''}
               />
             )}
           </>

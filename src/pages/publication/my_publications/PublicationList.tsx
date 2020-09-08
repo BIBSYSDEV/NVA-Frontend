@@ -1,5 +1,4 @@
 import React, { FC, useState, ChangeEvent, MouseEvent } from 'react';
-
 import styled from 'styled-components';
 import {
   Button,
@@ -12,16 +11,15 @@ import {
   TablePagination,
 } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import { PublicationPreview } from '../../../types/publication.types';
-// import { PublicationPreview, PublicationStatus } from '../../../types/publication.types';
+import { Link as RouterLink } from 'react-router-dom';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
+import MenuBookIcon from '@material-ui/icons/MenuBook';
+
+import { PublicationPreview } from '../../../types/publication.types';
 import Label from '../../../components/Label';
 import NormalText from '../../../components/NormalText';
-import { Link as RouterLink } from 'react-router-dom';
 import DeletePublicationModal from '../DeletePublicationModal';
-import { getTranslatedLabelForDisplayedRows } from '../../../utils/pagination';
-import Card from '../../../components/Card';
 
 const StyledTableRow = styled(TableRow)`
   background-color: ${(props) => props.theme.palette.box.main};
@@ -66,7 +64,7 @@ const PublicationList: FC<PublicationListProps> = ({ publications }) => {
   };
 
   return (
-    <Card>
+    <>
       <TableContainer>
         <Table>
           <TableHead>
@@ -80,6 +78,7 @@ const PublicationList: FC<PublicationListProps> = ({ publications }) => {
               <TableCell>
                 <Label>{t('common:date')}</Label>
               </TableCell>
+              <TableCell />
               <TableCell />
               <TableCell />
             </TableRow>
@@ -99,6 +98,18 @@ const PublicationList: FC<PublicationListProps> = ({ publications }) => {
                 <TableCell>
                   <Button
                     color="primary"
+                    variant="outlined"
+                    component={RouterLink}
+                    to={`/publication/${publication.identifier}/public`}
+                    data-testid={`open-publication-${publication.identifier}`}>
+                    <MenuBookIcon />
+                    <StyledNormalTextWithIcon>{t('common:show')}</StyledNormalTextWithIcon>
+                  </Button>
+                </TableCell>
+                <TableCell>
+                  <Button
+                    color="primary"
+                    variant="outlined"
                     component={RouterLink}
                     to={`/publication/${publication.identifier}`}
                     data-testid={`edit-publication-${publication.identifier}`}>
@@ -127,8 +138,6 @@ const PublicationList: FC<PublicationListProps> = ({ publications }) => {
         rowsPerPageOptions={[10, 25, { value: -1, label: t('common:all') }]}
         component="div"
         count={publications.length}
-        labelRowsPerPage={t('common:rows_per_page')}
-        labelDisplayedRows={({ from, to, count }) => getTranslatedLabelForDisplayedRows(from, to, count)}
         rowsPerPage={rowsPerPage}
         page={page}
         onChangePage={handleChangePage}
@@ -137,7 +146,7 @@ const PublicationList: FC<PublicationListProps> = ({ publications }) => {
       {openModal && (
         <DeletePublicationModal id={deletePublicationId} title={deletePublicationTitle} setOpenModal={setOpenModal} />
       )}
-    </Card>
+    </>
   );
 };
 

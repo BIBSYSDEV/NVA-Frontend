@@ -132,7 +132,7 @@ const UserOrcid: FC = () => {
                 title={t('orcid.remove_connection')}
                 onAccept={() => removeOrcid(orcid)}
                 onCancel={toggleConfirmDialog}
-                disableAccept={isRemovingOrcid}>
+                isLoading={isRemovingOrcid}>
                 <StyledNormalTextPreWrapped>
                   {t('orcid.remove_connection_info')}{' '}
                   <MuiLink href={ORCID_BASE_URL} target="_blank" rel="noopener noreferrer">
@@ -153,7 +153,7 @@ const UserOrcid: FC = () => {
             headingIcon={{ src: orcidIcon, alt: 'ORCID iD icon' }}
             headingText={t('profile:orcid.create_or_connect')}
             onClose={toggleModal}
-            openModal={openModal}>
+            open={openModal}>
             <OrcidModalContent />
           </Modal>
         </>

@@ -1,6 +1,8 @@
 {
   "applications": "Applications",
   "authority": {
+    "cancel_connect_authority_text": "You will be logged out if you don't add an author identity to your user. All authenticated users must have a connected author identity to use the application. Do you still want to cancel?",
+    "cancel_connect_authority_title": "Do you want to cancel?",
     "connect_authority": "Connect your author ID",
     "connected_authority": "Your author identity is connected",
     "connected_info": "You have a connected author ID",

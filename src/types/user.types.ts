@@ -1,11 +1,11 @@
 import { Authority } from './authority.types';
 
 export enum RoleName {
-  ADMIN = 'Admin',
+  INSTITUTION_ADMIN = 'Institution-admin',
   APP_ADMIN = 'App-admin',
   CURATOR = 'Curator',
-  EDITOR = 'Editor',
   PUBLISHER = 'Publisher',
+  EDITOR = 'Editor',
 }
 
 export enum Affiliation {
@@ -45,12 +45,20 @@ export interface User {
   isCurator: boolean;
   isPublisher: boolean;
   isInstitutionAdmin: boolean;
+  customerId: string;
 }
 
-export type UserAdmin = Pick<
-  User,
-  'name' | 'id' | 'externalOrcid' | 'createdDate' | 'createdDate' | 'lastLoginDate' | 'roles'
->;
+export interface UserRole {
+  rolename: RoleName;
+}
+
+export interface InstitutionUser {
+  familyName?: string;
+  givenName?: string;
+  institution: string;
+  roles: UserRole[];
+  username: string;
+}
 
 export interface FeideUser {
   name: string;
@@ -66,6 +74,7 @@ export interface FeideUser {
   'custom:commonName': string;
   'custom:feideId': string;
   'custom:affiliation': string;
+  'custom:customerId': string;
   given_name: string;
   family_name: string;
 }

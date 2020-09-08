@@ -1,27 +1,15 @@
-import { Contributor } from './contributor.types';
 import { PublicationFileSet } from './file.types';
-import { LanguageValues } from './language.types';
 import { Project } from './project.types';
-import { PublicationType, JournalArticleType, ReportType, DegreeType, BookType } from './publicationFieldNames';
 import { EnumDictionary } from './common.types';
-
-export enum BackendTypeNames {
-  APPROVAL = 'Approval',
-  CONTRIBUTOR = 'Contributor',
-  CUSTOMER = 'Customer',
-  ENTITY_DESCRIPTION = 'EntityDescription',
-  FILE = 'File',
-  FILE_SET = 'FileSet',
-  GRANT = 'Grant',
-  IDENTITY = 'Identity',
-  LICENSE = 'License',
-  ORGANIZATION = 'Organization',
-  PAGES = 'Range', // TODO: set this when backend has decided what it means
-  PUBLICATION = 'Publication',
-  PUBLICATION_DATE = 'PublicationDate',
-  REFERENCE = 'Reference',
-  RESEARCH_PROJECT = 'ResearchProject',
-}
+import {
+  JournalEntityDescription,
+  JournalPublicationContext,
+  emptyPublicationEntityDescription,
+} from './publication_types/journalPublication.types';
+import { DegreeEntityDescription } from './publication_types/degreePublication.types';
+import { BookEntityDescription } from './publication_types/bookPublication.types';
+import { ReportEntityDescription } from './publication_types/reportPublication.types';
+import { BackendTypeNames } from './publication_types/commonPublication.types';
 
 export enum PublicationStatus {
   DELETED = 'Deleted',
@@ -52,20 +40,10 @@ export interface BackendType {
 export interface Publisher {
   type: string;
   title: string;
-  printIssn: string;
   onlineIssn: string;
   level: string | number | null;
   openAccess: boolean;
 }
-
-export const emptyPublisher: Publisher = {
-  type: '',
-  printIssn: '',
-  onlineIssn: '',
-  level: null,
-  title: '',
-  openAccess: false,
-};
 
 export interface AlmaPublication {
   title: string;
@@ -77,137 +55,81 @@ export interface NpiDiscipline {
   mainDiscipline: string;
 }
 
-export interface Publication extends BackendType, PublicationFileSet {
+export enum DoiRequestStatus {
+  Approved = 'APPROVED',
+  Rejected = 'REJECTED',
+  Requested = 'REQUESTED',
+}
+
+interface DoiRequest {
+  type: string;
+  date: string;
+  status: DoiRequestStatus;
+}
+
+interface BasePublication extends BackendType, PublicationFileSet {
   readonly identifier: string;
   readonly createdDate: string;
   readonly owner: string;
   readonly status: PublicationStatus;
-  entityDescription: PublicationEntityDescription;
+  readonly doiRequest?: DoiRequest;
   project: Project | null;
 }
+export interface Publication extends BasePublication {
+  entityDescription:
+    | JournalEntityDescription
+    | DegreeEntityDescription
+    | BookEntityDescription
+    | ReportEntityDescription;
+}
 
-interface PublicationDate extends BackendType {
+export interface JournalPublication extends BasePublication {
+  entityDescription: JournalEntityDescription;
+}
+
+export interface DegreePublication extends BasePublication {
+  entityDescription: DegreeEntityDescription;
+}
+
+export interface BookPublication extends BasePublication {
+  entityDescription: BookEntityDescription;
+}
+
+export interface ReportPublication extends BasePublication {
+  entityDescription: ReportEntityDescription;
+}
+
+export interface PublicationDate extends BackendType {
   year: string;
   month: string;
   day: string;
 }
 
-interface PublicationPages extends BackendType {
+export interface PagesRange extends BackendType {
   begin: string;
   end: string;
 }
 
-interface PublicationInstance {
-  type: JournalArticleType | ReportType | DegreeType | BookType | '';
-  articleNumber: string;
-  issue: string;
-  pages: PublicationPages;
-  peerReviewed: boolean;
-  volume: string;
+export interface PagesMonograph extends BackendType {
+  pages: string;
 }
-
-interface PublicationContext extends Partial<Publisher> {
-  type: PublicationType | '';
-}
-
-interface PublicationReference extends BackendType {
-  doi: string;
-  publicationInstance: PublicationInstance;
-  publicationContext: PublicationContext;
-}
-
-interface PublicationEntityDescription extends BackendType {
-  mainTitle: string;
-  abstract: string;
-  description: string;
-  tags: string[];
-  npiSubjectHeading: string;
-  date: PublicationDate;
-  language: LanguageValues;
-  contributors: Contributor[];
-  isbn: string;
-  numberOfPages: string;
-  series: Publisher;
-  specialization: string;
-  textBook: boolean;
-  reference: PublicationReference;
-}
-
-export interface FormikPublication extends Publication {
-  shouldCreateDoi: boolean;
-}
-
-const emptyDate: PublicationDate = {
-  type: BackendTypeNames.PUBLICATION_DATE,
-  year: '',
-  month: '',
-  day: '',
-};
-
-const emptyPages: PublicationPages = {
-  type: BackendTypeNames.PAGES,
-  begin: '',
-  end: '',
-};
-
-const emptyPublicationInstance: PublicationInstance = {
-  type: '',
-  volume: '',
-  issue: '',
-  articleNumber: '',
-  pages: emptyPages,
-  peerReviewed: false,
-};
-
-const emptyPublicationContext: PublicationContext = {
-  type: '',
-};
-
-const emptyReference: PublicationReference = {
-  type: BackendTypeNames.REFERENCE,
-  doi: '',
-  publicationInstance: emptyPublicationInstance,
-  publicationContext: emptyPublicationContext,
-};
-
-const emptyPublicationEntityDescription: PublicationEntityDescription = {
-  type: BackendTypeNames.ENTITY_DESCRIPTION,
-  mainTitle: '',
-  abstract: '',
-  description: '',
-  tags: [],
-  npiSubjectHeading: '',
-  date: emptyDate,
-  language: LanguageValues.NONE,
-  contributors: [],
-  isbn: '',
-  numberOfPages: '',
-  series: emptyPublisher,
-  specialization: '',
-  textBook: false,
-  reference: emptyReference,
-};
 
 export type PublicationPreview = Pick<
-  Publication & PublicationEntityDescription,
+  Publication & JournalEntityDescription,
   'identifier' | 'mainTitle' | 'createdDate' | 'status' | 'owner'
 >;
 
 export type PublishedPublicationPreview = Pick<
-  Publication & PublicationEntityDescription & PublicationContext,
+  Publication & JournalEntityDescription & JournalPublicationContext,
   'identifier' | 'mainTitle' | 'createdDate' | 'reference' | 'contributors' | 'status' | 'type'
 >;
-
-export interface PublicationListItem extends PublicationPreview {
-  modifiedDate: string;
-}
 
 export interface Doi {
   identifier: string; // NVA identifier
   title: string;
 }
 
-export const emptyPublication: FormikPublication = {
+export const emptyPublication: Publication = {
   type: BackendTypeNames.PUBLICATION,
   identifier: '',
   createdDate: '',
@@ -218,6 +140,5 @@ export const emptyPublication: FormikPublication = {
     type: BackendTypeNames.FILE_SET,
     files: [],
   },
-  shouldCreateDoi: false,
   project: null,
 };

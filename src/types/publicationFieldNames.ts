@@ -1,36 +1,40 @@
 // For valid values, see https://github.com/BIBSYSDEV/nva-datamodel-java/blob/develop/src/main/java/no/unit/nva/model/PublicationType.java
 export enum PublicationType {
   PUBLICATION_IN_JOURNAL = 'Journal',
-  BOOK = 'Book',
+  // BOOK = 'Book',
   REPORT = 'Report',
   DEGREE = 'Degree',
-  CHAPTER = 'Chapter',
+  // CHAPTER = 'Chapter',
 }
 
-export enum JournalArticleType {
+export enum ChapterType {
+  ARTICLE = 'ChapterArticle',
+}
+
+export enum JournalType {
   ARTICLE = 'JournalArticle',
-  SHORT_COMMUNICATION = 'ShortCommunication',
-  EDITORIAL = 'Editorial',
-  LETTER = 'Letter',
-  REVIEW = 'Review',
+  SHORT_COMMUNICATION = 'JournalShortCommunication',
+  LETTER = 'JournalLetter',
+  REVIEW = 'JournalReview',
+  LEADER = 'JournalLeader',
 }
 
 export enum BookType {
-  MONOGRAPHY = 'Monography',
-  ANTHOLOGY = 'Anthology',
+  MONOGRAPH = 'BookMonograph',
+  ANTHOLOGY = 'BookAnthology',
 }
 
 export enum ReportType {
   REPORT = 'Report',
-  RESEARCH_REPORT = 'ResearchReport',
-  POLICY_REPORT = 'PolicyReport',
-  WORKING_PAPER = 'WorkingPaper',
+  RESEARCH = 'ReportResearch',
+  POLICY = 'ReportPolicy',
+  WORKING_PAPER = 'ReportWorkingPaper',
 }
 
 export enum DegreeType {
-  BACHELOR = 'Bachelor',
-  MASTER = 'Master',
-  DOCTORATE = 'Doctorate',
+  BACHELOR = 'DegreeBachelor',
+  MASTER = 'DegreeMaster',
+  PHD = 'DegreePhd',
 }
 
 // Enums representing name of fields used by Formik
@@ -39,19 +43,21 @@ export const contextTypeBaseFieldName = 'entityDescription.reference.publication
 export enum ReferenceFieldNames {
   ARTICLE_NUMBER = 'entityDescription.reference.publicationInstance.articleNumber',
   DOI = 'entityDescription.reference.doi',
-  ISBN = 'entityDescription.isbn',
+  ISBN_LIST = 'entityDescription.reference.publicationContext.isbnList',
   ISSUE = 'entityDescription.reference.publicationInstance.issue',
-  NUMBER_OF_PAGES = 'entityDescription.numberOfPages',
+  PAGES = 'entityDescription.reference.publicationInstance.pages',
   PAGES_FROM = 'entityDescription.reference.publicationInstance.pages.begin',
   PAGES_TO = 'entityDescription.reference.publicationInstance.pages.end',
+  PAGES_TYPE = 'entityDescription.reference.publicationInstance.pages.type',
+  PAGES_PAGES = 'entityDescription.reference.publicationInstance.pages.pages',
   PEER_REVIEW = 'entityDescription.reference.publicationInstance.peerReviewed',
   PUBLICATION_CONTEXT_LEVEL = 'entityDescription.reference.publicationContext.level',
   PUBLICATION_CONTEXT_TITLE = 'entityDescription.reference.publicationContext.title',
+  PUBLICATION_CONTEXT_PUBLISHER = 'entityDescription.reference.publicationContext.publisher',
   PUBLICATION_CONTEXT_TYPE = 'entityDescription.reference.publicationContext.type',
   PUBLICATION_INSTANCE_TYPE = 'entityDescription.reference.publicationInstance.type',
-  SERIES = 'entityDescription.series',
+  SERIES_TITLE = 'entityDescription.reference.publicationContext.seriesTitle',
   SUB_TYPE = 'entityDescription.reference.publicationInstance.type',
-  TEXT_BOOK = 'entityDescription.textBook',
   VOLUME = 'entityDescription.reference.publicationInstance.volume',
 }
 

@@ -1,8 +1,11 @@
 {
   "error": {
     "404_page": "The page you requested could not be found. (Http error code 404)",
+    "add_role": "Could not add role",
+    "an_error_occurred": "An error occurred",
     "create_authority": "Could not create authority",
     "create_customer": "Could not create customer institution",
+    "create_doi_request": "Could not create DOI request",
     "create_publication": "Could not create publication",
     "delete_identifier": "Could not delete {{qualifier}}",
     "download_file": "Could not download file",
@@ -21,14 +24,20 @@
     "get_project": "Search for projects failed",
     "get_publications": "Could not retrieve publications",
     "get_publication": "Could not get publication",
+    "get_roles": "Could not get roles",
     "get_session": "Invalid session. Please log in again.",
     "get_user": "Failed to get user",
+    "get_users_for_institution": "Could not get users",
+    "institution_mismatch": "This user belongs to another institution",
     "login": "Login failed",
+    "missing_user": "Missing user",
     "orcid_login": "ORCID login failed",
     "publish_publication": "Could not publish publication",
+    "remove_role": "Could not remove role",
     "search": "Search failed",
     "update_authority": "Could not update {{qualifier}} for authority",
     "update_customer": "Could not update customer institution",
+    "update_institution_user": "Could not update user",
     "update_publication": "Could not update publication",
     "orcid": {
       "access_denied": "Could not connect to ORCID because access to the ORCID account was denied"
@@ -36,16 +45,22 @@
   },
   "info": {
     "affiliation_already_exists": "Affiliation already exists",
-    "publishing_publication": "Publishing publication..."
+    "publishing_publication": "Publishing publication...",
+    "user_already_exists": "User already exists"
   },
   "success": {
     "added_affiliation": "Affiliation was added",
+    "added_role": "Role was added",
+    "admin_added": "User added as administrator",
+    "admin_removed": "User removed as administrator",
     "created_authority": "Created author ID",
     "created_customer": "Created customer institution",
     "create_publication": "New publication created",
     "delete_affiliation": "Deleted affiliation",
     "delete_identifier": "Deleted identifier",
+    "doi_request_sent": "DOI request sent",
     "login": "Logged in",
+    "removed_role": "Role removed",
     "update_authority": "Updated authority",
     "update_customer": "Updated customer institution",
     "update_publication": "Updated publication"

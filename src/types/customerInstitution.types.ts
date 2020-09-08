@@ -1,4 +1,5 @@
-import { BackendType, BackendTypeNames } from './publication.types';
+import { BackendType } from './publication.types';
+import { BackendTypeNames } from './publication_types/commonPublication.types';
 
 export interface CustomerInstitution extends BackendType {
   identifier: string;
@@ -8,11 +9,8 @@ export interface CustomerInstitution extends BackendType {
   archiveName: string;
   cname: string;
   institutionDns: string;
-  administrationId: string;
   feideOrganizationId: string;
   createdDate: string;
-  logoFile?: File;
-  error?: string;
 }
 
 export const emptyCustomerInstitution: CustomerInstitution = {
@@ -24,7 +22,6 @@ export const emptyCustomerInstitution: CustomerInstitution = {
   archiveName: '',
   cname: '',
   institutionDns: '',
-  administrationId: '',
   feideOrganizationId: '',
   createdDate: '',
 };
@@ -37,7 +34,6 @@ export enum CustomerInstitutionFieldNames {
   ARCHIVE_NAME = 'archiveName',
   CNAME = 'cname',
   INSTITUTION_DNS = 'institutionDns',
-  ADMINISTRATION_ID = 'administrationId',
   FEIDE_ORGANIZATION_ID = 'feideOrganizationId',
   LOGO_FILE = 'logoFile',
 }

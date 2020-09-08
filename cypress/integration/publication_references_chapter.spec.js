@@ -1,4 +1,4 @@
-describe('Publication: References: Chapter', () => {
+describe.skip('Publication: References: Chapter', () => {
   beforeEach(() => {
     cy.visit('/');
     cy.server();

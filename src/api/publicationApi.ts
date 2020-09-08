@@ -1,17 +1,16 @@
 import Axios, { CancelToken } from 'axios';
-import { Dispatch } from 'redux';
-
-import { setNotification } from '../redux/actions/notificationActions';
 import i18n from '../translations/i18n';
 import { Publication } from '../types/publication.types';
 import { PublicationFileSet } from '../types/file.types';
-import { SEARCH_RESULTS_PER_PAGE, StatusCode } from '../utils/constants';
-import { searchForPublications } from '../redux/actions/searchActions';
+import { StatusCode } from '../utils/constants';
 import { getIdToken } from './userApi';
-import { NotificationVariant } from '../types/notification.types';
+import apiRequest, { authenticatedApiRequest } from './apiRequest';
+import { RoleName } from '../types/user.types';
+import { DoiRequest } from '../types/doiRequest.types';
+import { SearchResult } from '../types/search.types';
 
 export enum PublicationsApiPaths {
-  SEARCH = '/search/publications',
+  SEARCH = '/search',
   PUBLICATION = '/publication',
   PUBLICATIONS_BY_OWNER = '/publication/by-owner',
   DOI_LOOKUP = '/doi-fetch',
@@ -164,51 +163,22 @@ export const getPublicationByDoi = async (doiUrl: string) => {
   }
 };
 
-export const search = async (searchTerm: string, dispatch: Dispatch, offset?: number) => {
-  try {
-    const idToken = await getIdToken();
-    const response = await Axios.get(`${PublicationsApiPaths.SEARCH}/${searchTerm}`, {
-      headers: {
-        Authorization: `Bearer ${idToken}`,
-      },
-    });
+export const search = async (
+  searchTerm: string,
+  numberOfResults?: number,
+  searchAfter?: string,
+  cancelToken?: CancelToken
+) =>
+  await apiRequest<SearchResult[]>({
+    url: `${PublicationsApiPaths.SEARCH}/${searchTerm}`,
+    cancelToken,
+  });
 
-    if (response.status === StatusCode.OK) {
-      const currentOffset = offset || 0;
-      const result = response.data.slice(currentOffset, currentOffset + SEARCH_RESULTS_PER_PAGE);
-
-      dispatch(searchForPublications(result, searchTerm, response.data.length, offset));
-    } else {
-      dispatch(setNotification(i18n.t('feedback:error.search', NotificationVariant.Error)));
-    }
-  } catch {
-    dispatch(setNotification(i18n.t('feedback:error.search', NotificationVariant.Error)));
-  }
-};
-
-// Fetch publications where creator also wanted a DOI to be created
-export const getDoiRequests = async (cancelToken?: CancelToken) => {
-  const url = `${PublicationsApiPaths.DOI_REQUESTS}?role=curator`;
-  try {
-    const idToken = await getIdToken();
-    const response = await Axios.get(url, {
-      headers: {
-        Authorization: `Bearer ${idToken}`,
-      },
-      cancelToken,
-    });
-
-    if (response.status === StatusCode.OK) {
-      return response.data;
-    } else {
-      return { error: i18n.t('feedback:error.get_doi_requests') };
-    }
-  } catch (error) {
-    if (!Axios.isCancel(error)) {
-      return { error: i18n.t('feedback:error.get_doi_requests') };
-    }
-  }
-};
+export const getDoiRequests = async (role: RoleName, cancelToken?: CancelToken) =>
+  await authenticatedApiRequest<DoiRequest[]>({
+    url: `${PublicationsApiPaths.DOI_REQUESTS}?role=${role}`,
+    cancelToken,
+  });
 
 // Fetch publications ready for approval
 export const getPublicationsForApproval = async () => {

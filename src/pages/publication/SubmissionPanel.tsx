@@ -1,12 +1,12 @@
 import React, { useEffect, FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FormikProps, useFormikContext, Field, FieldProps } from 'formik';
-import { FormikPublication } from '../../types/publication.types';
-import { Button, FormControlLabel, Checkbox } from '@material-ui/core';
+import { FormikProps, useFormikContext } from 'formik';
+import { Publication, DoiRequestStatus } from '../../types/publication.types';
+import { Button } from '@material-ui/core';
 import styled from 'styled-components';
-import SubmissionBook from './submission_tab/submission_book';
+// import SubmissionBook from './submission_tab/submission_book';
+// import SubmissionChapter from './submission_tab/submission_chapter';
 import SubmissionDegree from './submission_tab/submission_degree';
-import SubmissionChapter from './submission_tab/submission_chapter';
 import SubmissionReport from './submission_tab/submission_report';
 import SubmissionJournalPublication from './submission_tab/submission_journal';
 import SubmissionDescription from './submission_tab/submission_description';
@@ -48,23 +48,20 @@ const StyledButtonWithProgress = styled(ButtonWithProgress)`
   margin-right: 0.5rem;
 `;
 
-enum PublishSettingFieldName {
-  SHOULD_CREATE_DOI = 'shouldCreateDoi',
-}
-
 interface SubmissionPanelProps extends PanelProps {
   isSaving: boolean;
-  savePublication: (values: FormikPublication) => void;
+  savePublication: (values: Publication) => void;
 }
 
 const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication, setTouchedFields }) => {
   const user = useSelector((store: RootStore) => store.user);
   const { t } = useTranslation('publication');
-  const { setFieldValue, values, isValid, dirty }: FormikProps<FormikPublication> = useFormikContext();
+  const { values, isValid, dirty }: FormikProps<Publication> = useFormikContext();
   const [isPublishing, setIsPublishing] = useState(false);
   const history = useHistory();
   const dispatch = useDispatch();
   const {
+    doiRequest,
     entityDescription: { contributors, reference },
     fileSet: { files },
   } = values;
@@ -73,12 +70,12 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication, 
   useEffect(() => {
     const touchedForm = mergeTouchedFields([
       touchedDescriptionTabFields,
-      touchedReferenceTabFields,
+      touchedReferenceTabFields(publicationContextType),
       touchedContributorTabFields(contributors),
       touchedFilesTabFields(files),
     ]);
     setTouchedFields(touchedForm);
-  }, [setTouchedFields, contributors, files]);
+  }, [setTouchedFields, contributors, files, publicationContextType]);
 
   const onClickPublish = async () => {
     setIsPublishing(true);
@@ -124,9 +121,9 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication, 
           {reference.doi && (
             <LabelContentRow label={t('publication.link_to_publication')}>{reference.doi}</LabelContentRow>
           )}
-          {publicationContextType === PublicationType.BOOK && <SubmissionBook />}
           {publicationContextType === PublicationType.DEGREE && <SubmissionDegree />}
-          {publicationContextType === PublicationType.CHAPTER && <SubmissionChapter />}
+          {/* {publicationContextType === PublicationType.BOOK && <SubmissionBook />} */}
+          {/* {publicationContextType === PublicationType.CHAPTER && <SubmissionChapter />} */}
           {publicationContextType === PublicationType.REPORT && <SubmissionReport />}
           {publicationContextType === PublicationType.PUBLICATION_IN_JOURNAL && <SubmissionJournalPublication />}
         </Card>
@@ -138,28 +135,9 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication, 
           <SubHeading>{t('heading.files_and_license')}</SubHeading>
           <SubmissionFilesAndLicenses />
         </Card>
-        <Card>
-          <SubHeading>{t('heading.publish_settings')}</SubHeading>
-          <Field name={PublishSettingFieldName.SHOULD_CREATE_DOI}>
-            {({ field: { name, value } }: FieldProps) => (
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    color="primary"
-                    checked={value}
-                    onChange={() => setFieldValue(name, !value)}
-                    disabled={!isValid}
-                  />
-                }
-                label={t('submission.ask_for_doi')}
-              />
-            )}
-          </Field>
-        </Card>
       </Card>
       <StyledButtonGroupContainer>
-        {/* TODO: need to check if the author also has made a request for doi in the conditional below */}
-        {user.isCurator ? (
+        {user.isCurator && doiRequest?.status === DoiRequestStatus.Requested ? (
           <>
             <StyledButton
               color="primary"

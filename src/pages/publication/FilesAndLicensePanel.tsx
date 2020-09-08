@@ -7,7 +7,7 @@ import { UppyFile } from '@uppy/core';
 
 import FileUploader from './files_and_license_tab/FileUploader';
 import FileCard from './files_and_license_tab/FileCard';
-import { FormikPublication, Publisher } from '../../types/publication.types';
+import { Publication, Publisher } from '../../types/publication.types';
 import Modal from '../../components/Modal';
 import { licenses, Uppy } from '../../types/file.types';
 import Card from '../../components/Card';
@@ -42,7 +42,7 @@ interface FilesAndLicensePanelProps extends PanelProps {
 
 const FilesAndLicensePanel: FC<FilesAndLicensePanelProps> = ({ uppy, setTouchedFields }) => {
   const { t } = useTranslation('publication');
-  const { values }: FormikProps<FormikPublication> = useFormikContext();
+  const { values }: FormikProps<Publication> = useFormikContext();
   const [isLicenseModalOpen, setIsLicenseModalOpen] = useState(false);
   const {
     fileSet: { files = [] },
@@ -124,7 +124,7 @@ const FilesAndLicensePanel: FC<FilesAndLicensePanelProps> = ({ uppy, setTouchedF
       </FieldArray>
       <Modal
         headingText={t('files_and_license.licenses')}
-        openModal={isLicenseModalOpen}
+        open={isLicenseModalOpen}
         onClose={toggleLicenseModal}
         maxWidth="sm">
         {licenses.map((license) => (
