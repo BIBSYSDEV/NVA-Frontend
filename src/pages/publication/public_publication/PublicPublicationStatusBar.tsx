@@ -47,27 +47,6 @@ export const PublicPublicationStatusBar: FC<PublicPublicationContentProps> = ({ 
   const dispatch = useDispatch();
   const { t } = useTranslation('publication');
   const user = useSelector((store: RootStore) => store.user);
-
-  const [hasRequestedDoi, setHasRequestedDoi] = useState(publication.doiRequest?.status === DoiRequestStatus.Requested);
-  const [openRequestDoiModal, setOpenRequestDoiModal] = useState(false);
-  const [isLoadingDoiRequest, setIsLoadingDoiRequest] = useState(false);
-  const toggleRequestDoiModal = () => setOpenRequestDoiModal((state) => !state);
-
-  const sendDoiRequest = async () => {
-    setIsLoadingDoiRequest(true);
-    const createDoiRequestResponse = await createDoiRequest(publication.identifier);
-    if (createDoiRequestResponse) {
-      if (createDoiRequestResponse.error) {
-        dispatch(setNotification(t('feedback:error.an_error_occurred'), NotificationVariant.Error));
-      } else {
-        toggleRequestDoiModal();
-        setHasRequestedDoi(true);
-        dispatch(setNotification(t('feedback:success.doi_request_sent')));
-      }
-    }
-    setIsLoadingDoiRequest(false);
-  };
-
   const {
     identifier,
     owner,
@@ -75,7 +54,29 @@ export const PublicPublicationStatusBar: FC<PublicPublicationContentProps> = ({ 
     entityDescription: {
       reference: { doi },
     },
+    doiRequest,
   } = publication;
+
+  const [hasPendingDoiRequest, setHasPendingDoiRequest] = useState(doiRequest?.status === DoiRequestStatus.Requested);
+  const [openRequestDoiModal, setOpenRequestDoiModal] = useState(false);
+  const [isLoadingDoiRequest, setIsLoadingDoiRequest] = useState(false);
+  const toggleRequestDoiModal = () => setOpenRequestDoiModal((state) => !state);
+
+  const sendDoiRequest = async () => {
+    setIsLoadingDoiRequest(true);
+    const createDoiRequestResponse = await createDoiRequest(identifier);
+    if (createDoiRequestResponse) {
+      if (createDoiRequestResponse.error) {
+        dispatch(setNotification(t('feedback:error.an_error_occurred'), NotificationVariant.Error));
+      } else {
+        toggleRequestDoiModal();
+        setHasPendingDoiRequest(true);
+        dispatch(setNotification(t('feedback:success.doi_request_sent')));
+      }
+    }
+    setIsLoadingDoiRequest(false);
+  };
+
   const isOwner = owner === user?.id;
   const hasDoi = !!doi;
 
@@ -93,18 +94,18 @@ export const PublicPublicationStatusBar: FC<PublicPublicationContentProps> = ({ 
       </StyledStatusBarDescription>
       <div>
         {!hasDoi &&
-          (hasRequestedDoi ? (
+          (hasPendingDoiRequest ? (
             <Button variant="contained" color="primary" disabled>
               {t('public_page.requested_doi')}
             </Button>
           ) : (
             <>
-              {publication.status === PublicationStatus.PUBLISHED && (
+              {status === PublicationStatus.PUBLISHED && (
                 <Button variant="contained" color="primary" onClick={toggleRequestDoiModal}>
                   {t('public_page.request_doi')}
                 </Button>
               )}
-              {publication.status === PublicationStatus.DRAFT && (
+              {status === PublicationStatus.DRAFT && (
                 <Button variant="contained" color="primary" disabled>
                   {t('public_page.reserve_doi')}
                 </Button>
