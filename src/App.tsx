@@ -25,6 +25,7 @@ import { setNotification } from './redux/actions/notificationActions';
 import { getInstitutionUser } from './api/roleApi';
 import { NotificationVariant } from './types/notification.types';
 import { InstitutionUser } from './types/user.types';
+import { getCustomerInstitution } from './api/customerInstitutionsApi';
 
 const StyledApp = styled.div`
   min-height: 100vh;
@@ -76,7 +77,10 @@ const App: FC = () => {
           dispatch(setNotification(feideUser.error, NotificationVariant.Error));
           setIsLoadingUser(false);
         } else {
-          dispatch(setUser(feideUser));
+          const cristinId = await getCustomerInstitution(feideUser['custom:customerId']).then(
+            (customer) => customer?.data?.cristinId
+          );
+          dispatch(setUser({ ...feideUser, cristinId }));
           // Wait with setting isLoadingUser to false until roles are loaded in separate useEffect,
           // which will be trigged when user is updated in redux
         }
@@ -127,11 +131,11 @@ const App: FC = () => {
         const filteredAuthorities: Authority[] = authorities.filter((auth: Authority) =>
           auth.feideids.some((id) => id === user.id)
         );
-        if (filteredAuthorities.length === 1) {
+        if (filteredAuthorities.length === 1 && user?.cristinId) {
           const updatedAuthority = await addQualifierIdForAuthority(
             filteredAuthorities[0].systemControlNumber,
             AuthorityQualifiers.ORGUNIT_ID,
-            user.organizationId
+            user.cristinId
           );
           if (!updatedAuthority || updatedAuthority?.error) {
             dispatch(setAuthorityData(filteredAuthorities[0]));

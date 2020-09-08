@@ -26,26 +26,27 @@ export enum ApplicationName {
 }
 
 export interface User {
+  affiliations: Affiliation[];
+  application: ApplicationName;
+  authority: Authority | null;
+  createdDate?: string;
+  cristinId?: string;
   email: string;
+  externalOrcid: string;
   name: string;
+  customerId: string;
   familyName: string;
   givenName: string;
   id: string;
   institution: string;
-  roles: RoleName[];
-  application: ApplicationName;
-  authority: Authority | null;
-  possibleAuthorities: Authority[];
-  organizationId: string;
-  externalOrcid: string;
-  affiliations: Affiliation[];
-  createdDate?: string;
-  lastLoginDate?: string;
   isAppAdmin: boolean;
   isCurator: boolean;
-  isPublisher: boolean;
   isInstitutionAdmin: boolean;
-  customerId: string;
+  isPublisher: boolean;
+  lastLoginDate?: string;
+  organizationNumber: string;
+  possibleAuthorities: Authority[];
+  roles: RoleName[];
 }
 
 export interface UserRole {
@@ -63,6 +64,7 @@ export interface InstitutionUser {
 export interface FeideUser {
   name: string;
   email: string;
+  cristinId: string;
   'custom:identifiers': string;
   sub: string;
   email_verfied: boolean;
