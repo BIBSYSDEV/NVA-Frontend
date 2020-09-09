@@ -25,7 +25,6 @@ import { setNotification } from './redux/actions/notificationActions';
 import { getInstitutionUser } from './api/roleApi';
 import { NotificationVariant } from './types/notification.types';
 import { InstitutionUser } from './types/user.types';
-import { getCustomerInstitution } from './api/customerInstitutionsApi';
 
 const StyledApp = styled.div`
   min-height: 100vh;
