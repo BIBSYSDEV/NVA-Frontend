@@ -44,7 +44,6 @@ export interface User {
   isInstitutionAdmin: boolean;
   isPublisher: boolean;
   lastLoginDate?: string;
-  organizationNumber: string;
   possibleAuthorities: Authority[];
   roles: RoleName[];
 }
@@ -68,7 +67,6 @@ export interface FeideUser {
   sub: string;
   email_verfied: boolean;
   'custom:orgName': string;
-  'custom:orgNumber': string;
   'custom:application': string;
   'custom:applicationRoles': string;
   identities: string;
