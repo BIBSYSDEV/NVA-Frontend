@@ -6,7 +6,7 @@ export const mockUser: FeideUser = {
   'custom:cristinId': 'https://api.cristin.no/v2/institutions/20202',
   'custom:identifiers': 'tu@unit.no',
   'custom:orgName': 'unit',
-  'custom:applicationRoles': `${RoleName.PUBLISHER},${RoleName.INSTITUTION_ADMIN},${RoleName.APP_ADMIN}`,
+  'custom:applicationRoles': `${RoleName.CREATOR},${RoleName.INSTITUTION_ADMIN},${RoleName.APP_ADMIN}`,
   'custom:application': ApplicationName.NVA,
   'custom:commonName': 'Unit',
   'custom:feideId': 'tu@unit.no',
@@ -25,7 +25,7 @@ export const mockRoles: InstitutionUser = {
       rolename: RoleName.APP_ADMIN,
     },
     {
-      rolename: RoleName.PUBLISHER,
+      rolename: RoleName.CREATOR,
     },
     {
       rolename: RoleName.CURATOR,

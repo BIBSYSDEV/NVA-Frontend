@@ -92,13 +92,13 @@ const Menu: FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
           vertical: 'bottom',
           horizontal: 'left',
         }}>
-        {user.isPublisher && (
+        {user.isCreator && (
           <StyledMenuItem data-testid="menu-new-publication-button" onClick={() => handleClickMenuItem('/publication')}>
             {t('publication:new_publication')}
           </StyledMenuItem>
         )}
 
-        {user.isPublisher && (
+        {user.isCreator && (
           <StyledMenuItem
             data-testid="menu-my-publications-button"
             onClick={() => handleClickMenuItem('/my-publications')}>

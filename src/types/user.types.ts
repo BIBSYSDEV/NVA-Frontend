@@ -4,7 +4,7 @@ export enum RoleName {
   INSTITUTION_ADMIN = 'Institution-admin',
   APP_ADMIN = 'App-admin',
   CURATOR = 'Curator',
-  PUBLISHER = 'Publisher',
+  CREATOR = 'Creator',
   EDITOR = 'Editor',
 }
 
@@ -42,7 +42,7 @@ export interface User {
   isAppAdmin: boolean;
   isCurator: boolean;
   isInstitutionAdmin: boolean;
-  isPublisher: boolean;
+  isCreator: boolean;
   lastLoginDate?: string;
   possibleAuthorities: Authority[];
   roles: RoleName[];
