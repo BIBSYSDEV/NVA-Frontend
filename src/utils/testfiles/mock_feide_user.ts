@@ -3,7 +3,7 @@ import { ApplicationName, FeideUser, RoleName, InstitutionUser } from '../../typ
 export const mockUser: FeideUser = {
   name: 'Test User',
   email: 'testuser@unit.no',
-  cristinId: 'https://api.cristin.no/v2/institutions/20202',
+  'custom:cristinId': 'https://api.cristin.no/v2/institutions/20202',
   'custom:identifiers': 'tu@unit.no',
   'custom:orgName': 'unit',
   'custom:applicationRoles': `${RoleName.PUBLISHER},${RoleName.INSTITUTION_ADMIN},${RoleName.APP_ADMIN}`,

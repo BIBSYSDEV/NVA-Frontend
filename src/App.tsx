@@ -77,10 +77,7 @@ const App: FC = () => {
           dispatch(setNotification(feideUser.error, NotificationVariant.Error));
           setIsLoadingUser(false);
         } else {
-          const cristinId = await getCustomerInstitution(feideUser['custom:customerId']).then(
-            (customer) => customer?.data?.cristinId
-          );
-          dispatch(setUser({ ...feideUser, cristinId }));
+          dispatch(setUser(feideUser));
           // Wait with setting isLoadingUser to false until roles are loaded in separate useEffect,
           // which will be trigged when user is updated in redux
         }

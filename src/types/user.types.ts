@@ -64,7 +64,6 @@ export interface InstitutionUser {
 export interface FeideUser {
   name: string;
   email: string;
-  cristinId: string;
   'custom:identifiers': string;
   sub: string;
   email_verfied: boolean;
@@ -77,6 +76,7 @@ export interface FeideUser {
   'custom:feideId': string;
   'custom:affiliation': string;
   'custom:customerId': string;
+  'custom:cristinId': string;
   given_name: string;
   family_name: string;
 }
