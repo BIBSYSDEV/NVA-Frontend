@@ -40,7 +40,7 @@ export const userReducer = (state: User | null = null, action: UserActions | Orc
       return {
         ...state,
         roles: action.roles,
-        isPublisher: action.roles.some((role) => role === RoleName.PUBLISHER),
+        isCreator: action.roles.some((role) => role === RoleName.CREATOR),
         isAppAdmin: action.roles.some((role) => role === RoleName.APP_ADMIN),
         isInstitutionAdmin: action.roles.some((role) => role === RoleName.INSTITUTION_ADMIN),
         isCurator: action.roles.some((role) => role === RoleName.CURATOR),
