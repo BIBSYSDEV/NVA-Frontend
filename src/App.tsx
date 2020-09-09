@@ -127,11 +127,11 @@ const App: FC = () => {
         const filteredAuthorities: Authority[] = authorities.filter((auth: Authority) =>
           auth.feideids.some((id) => id === user.id)
         );
-        if (filteredAuthorities.length === 1) {
+        if (filteredAuthorities.length === 1 && user?.cristinId) {
           const updatedAuthority = await addQualifierIdForAuthority(
             filteredAuthorities[0].systemControlNumber,
             AuthorityQualifiers.ORGUNIT_ID,
-            user.organizationId
+            user.cristinId
           );
           if (!updatedAuthority || updatedAuthority?.error) {
             dispatch(setAuthorityData(filteredAuthorities[0]));
