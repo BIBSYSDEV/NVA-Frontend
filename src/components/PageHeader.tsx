@@ -5,6 +5,7 @@ import { Typography } from '@material-ui/core';
 const StyledHeader = styled(Typography)`
   width: 90vw;
   border-bottom: 2px solid;
+  padding-bottom: 1rem;
   margin-bottom: 1rem;
 `;
 
