@@ -1,11 +1,11 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
+import { Typography } from '@material-ui/core';
 
-const StyledHeader = styled.h1`
-  width: 100%;
+const StyledHeader = styled(Typography)`
+  width: 90vw;
   border-bottom: 2px solid;
+  margin-bottom: 1rem;
 `;
 
-export const PageHeader: FC = ({ children }) => {
-  return <StyledHeader>{children}</StyledHeader>;
-};
+export const PageHeader: FC = ({ children }) => <StyledHeader variant="h3">{children}</StyledHeader>;

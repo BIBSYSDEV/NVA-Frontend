@@ -60,7 +60,7 @@ const EditPublication: FC = () => {
 
   return (
     <>
-      <PageHeader>Ny Publikasjon</PageHeader>
+      <PageHeader>{t('publication:new_publication')}</PageHeader>
       {!showForm || !identifier ? (
         <>
           <StyledEditPublication>
