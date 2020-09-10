@@ -81,7 +81,7 @@ export const PublicPublicationStatusBar: FC<PublicPublicationContentProps> = ({ 
   const isOwner = owner === user?.id;
   const hasDoi = !!doi;
 
-  return user?.isPublisher && isOwner ? (
+  return user?.isCreator && isOwner ? (
     <StyledStatusBar>
       <StyledStatusBarDescription>
         {status === PublicationStatus.PUBLISHED ? (

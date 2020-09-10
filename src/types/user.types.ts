@@ -4,7 +4,7 @@ export enum RoleName {
   INSTITUTION_ADMIN = 'Institution-admin',
   APP_ADMIN = 'App-admin',
   CURATOR = 'Curator',
-  PUBLISHER = 'Publisher',
+  CREATOR = 'Creator',
   EDITOR = 'Editor',
 }
 
@@ -26,26 +26,26 @@ export enum ApplicationName {
 }
 
 export interface User {
+  affiliations: Affiliation[];
+  application: ApplicationName;
+  authority: Authority | null;
+  createdDate?: string;
+  cristinId?: string;
   email: string;
+  externalOrcid: string;
   name: string;
+  customerId: string;
   familyName: string;
   givenName: string;
   id: string;
   institution: string;
-  roles: RoleName[];
-  application: ApplicationName;
-  authority: Authority | null;
-  possibleAuthorities: Authority[];
-  organizationId: string;
-  externalOrcid: string;
-  affiliations: Affiliation[];
-  createdDate?: string;
-  lastLoginDate?: string;
   isAppAdmin: boolean;
   isCurator: boolean;
-  isPublisher: boolean;
   isInstitutionAdmin: boolean;
-  customerId: string;
+  isCreator: boolean;
+  lastLoginDate?: string;
+  possibleAuthorities: Authority[];
+  roles: RoleName[];
 }
 
 export interface UserRole {
@@ -63,11 +63,11 @@ export interface InstitutionUser {
 export interface FeideUser {
   name: string;
   email: string;
+  cristinId?: string;
   'custom:identifiers': string;
   sub: string;
   email_verfied: boolean;
   'custom:orgName': string;
-  'custom:orgNumber': string;
   'custom:application': string;
   'custom:applicationRoles': string;
   identities: string;
@@ -75,6 +75,7 @@ export interface FeideUser {
   'custom:feideId': string;
   'custom:affiliation': string;
   'custom:customerId': string;
+  'custom:cristinId': string;
   given_name: string;
   family_name: string;
 }
