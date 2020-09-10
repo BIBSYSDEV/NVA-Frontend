@@ -7,7 +7,7 @@ import Description from './pages/infopages/Description';
 import PrivacyPolicy from './pages/infopages/PrivacyPolicy';
 import {
   LoggedInRoute,
-  PublisherRoute,
+  CreatorRoute,
   CuratorRoute,
   AppAdminRoute,
   InstitutionAdminRoute,
@@ -51,10 +51,10 @@ const AppRoutes: FC = () => {
             {/* LoggedInRoute */}
             <LoggedInRoute exact path="/user" component={User} />
 
-            {/* PublisherRoutes */}
-            <PublisherRoute exact path="/publication" component={EditPublication} />
-            <PublisherRoute exact path="/publication/:identifier" component={EditPublication} />
-            <PublisherRoute exact path="/my-publications" component={MyPublications} />
+            {/* CreatorRoutes */}
+            <CreatorRoute exact path="/publication" component={EditPublication} />
+            <CreatorRoute exact path="/publication/:identifier" component={EditPublication} />
+            <CreatorRoute exact path="/my-publications" component={MyPublications} />
 
             {/* CuratorRoutes */}
             <CuratorRoute exact path="/worklist" component={WorklistPage} />

@@ -73,7 +73,6 @@ interface BasePublication extends BackendType, PublicationFileSet {
   readonly owner: string;
   readonly status: PublicationStatus;
   readonly doiRequest?: DoiRequest;
-  doiRequested: boolean;
   project: Project | null;
 }
 export interface Publication extends BasePublication {
@@ -134,7 +133,6 @@ export const emptyPublication: Publication = {
   type: BackendTypeNames.PUBLICATION,
   identifier: '',
   createdDate: '',
-  doiRequested: false,
   owner: '',
   status: PublicationStatus.NEW,
   entityDescription: emptyPublicationEntityDescription,
