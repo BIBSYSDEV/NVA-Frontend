@@ -99,6 +99,9 @@ const UserList: FC<UserListProps> = ({
                 <TableCell>
                   <Label>{t('users.username')}</Label>
                 </TableCell>
+                <TableCell>
+                  <Label>{t('common:name')}</Label>
+                </TableCell>
                 <TableCell />
               </TableRow>
             </TableHead>
@@ -109,6 +112,9 @@ const UserList: FC<UserListProps> = ({
                 return (
                   <StyledTableRow key={user.username}>
                     <TableCell>{user.username}</TableCell>
+                    <TableCell>
+                      {user.givenName} {user.familyName}
+                    </TableCell>
                     <TableCell align="right">
                       {roleToRemove && (
                         <Button

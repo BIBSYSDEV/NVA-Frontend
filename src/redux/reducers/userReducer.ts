@@ -1,5 +1,4 @@
 import { ApplicationName, RoleName, User, Affiliation } from '../../types/user.types';
-import { getOrganizationIdByOrganizationNumber } from '../../utils/customers';
 import { AuthActions, LOGOUT_SUCCESS } from '../actions/authActions';
 import { OrcidActions, SET_EXTERNAL_ORCID } from '../actions/orcidActions';
 import {
@@ -28,7 +27,7 @@ export const userReducer = (state: User | null = null, action: UserActions | Orc
         id: action.user['custom:feideId'],
         institution: action.user['custom:orgName'],
         application: action.user['custom:application'] as ApplicationName,
-        organizationId: getOrganizationIdByOrganizationNumber(action.user['custom:orgNumber']),
+        cristinId: action.user['custom:cristinId'] ?? action.user.cristinId,
         customerId: action.user['custom:customerId'],
         affiliations,
         givenName: action.user.given_name,
@@ -41,7 +40,7 @@ export const userReducer = (state: User | null = null, action: UserActions | Orc
       return {
         ...state,
         roles: action.roles,
-        isPublisher: action.roles.some((role) => role === RoleName.PUBLISHER),
+        isCreator: action.roles.some((role) => role === RoleName.CREATOR),
         isAppAdmin: action.roles.some((role) => role === RoleName.APP_ADMIN),
         isInstitutionAdmin: action.roles.some((role) => role === RoleName.INSTITUTION_ADMIN),
         isCurator: action.roles.some((role) => role === RoleName.CURATOR),

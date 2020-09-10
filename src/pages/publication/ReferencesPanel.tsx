@@ -4,8 +4,8 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { Publication } from '../../types/publication.types';
 import { PublicationType, ReferenceFieldNames, contextTypeBaseFieldName } from '../../types/publicationFieldNames';
-import BookForm from './references_tab/BookForm';
-import ChapterForm from './references_tab/ChapterForm';
+// import BookForm from './references_tab/BookForm';
+// import ChapterForm from './references_tab/ChapterForm';
 import DegreeForm from './references_tab/DegreeForm';
 import JournalForm from './references_tab/JournalForm';
 import ReportForm from './references_tab/ReportForm';
@@ -78,8 +78,8 @@ const ReferencesPanel: FC<PanelProps> = ({ setTouchedFields }) => {
           <Heading data-testid="publication-instance-type-heading">
             {t(`publicationTypes:${publicationContextType}`)}
           </Heading>
-          {publicationContextType === PublicationType.BOOK && <BookForm />}
-          {publicationContextType === PublicationType.CHAPTER && <ChapterForm />}
+          {/* {publicationContextType === PublicationType.BOOK && <BookForm />} */}
+          {/* {publicationContextType === PublicationType.CHAPTER && <ChapterForm />} */}
           {publicationContextType === PublicationType.REPORT && <ReportForm />}
           {publicationContextType === PublicationType.DEGREE && <DegreeForm />}
           {publicationContextType === PublicationType.PUBLICATION_IN_JOURNAL && <JournalForm />}

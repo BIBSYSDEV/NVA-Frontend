@@ -97,8 +97,10 @@
   "public_page": {
     "edit_publication": "Endre publikasjon",
     "message_to_curator": "Melding til kurator",
+    "reserve_doi": "Reserver DOI",
     "request_doi": "Be om DOI",
-    "request_doi_description": "Forespørselen vil bli behandlet av en kurator. Legg til en melding ved eventuelle spørsmål eller oppklaringer. Du vil få en epost når forespørselen er behandlet."
+    "request_doi_description": "Forespørselen vil bli behandlet av en kurator. Legg til en melding ved eventuelle spørsmål eller oppklaringer. Du vil få en epost når forespørselen er behandlet.",
+    "requested_doi": "Venter på DOI..."
   },
   "publication": {
     "info_text": "Velg ressursen du ønsker å registrere eller publisere ved å laste opp ressurs eller lenke til en publikasjon.",
@@ -152,8 +154,6 @@
     "Rejected": "Avvist"
   },
   "submission": {
-    "ask_for_doi": "Be om DOI for denne registreringen (anbefales ikke dersom ressursen allerede har en DOI)",
-    "doi_requested": "Du har bedt om DOI for denne registreringen",
     "number_of_affiliations": "{{count}} tilknytning",
     "number_of_affiliations_plural": "{{count}} tilknytninger"
   },

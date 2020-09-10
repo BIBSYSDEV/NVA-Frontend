@@ -58,16 +58,16 @@ export const ConnectAuthority: FC<ConnectAuthorityProps> = ({ handleCloseModal }
         setIsUpdatingAuthority(false);
       } else if (
         updatedAuthorityWithFeide?.orgunitids &&
-        updatedAuthorityWithFeide.orgunitids.includes(user.organizationId)
+        updatedAuthorityWithFeide.orgunitids.includes(user.cristinId)
       ) {
         dispatch(setAuthorityData(updatedAuthorityWithFeide));
-      } else {
-        const updatedAuthorityWithOrganizationId = await addQualifierIdForAuthority(
+      } else if (user.cristinId) {
+        const updatedAuthorityWithCristinId = await addQualifierIdForAuthority(
           selectedSystemControlNumber,
           AuthorityQualifiers.ORGUNIT_ID,
-          user.organizationId
+          user.cristinId
         );
-        dispatch(setAuthorityData(updatedAuthorityWithOrganizationId));
+        dispatch(setAuthorityData(updatedAuthorityWithCristinId));
       }
     }
   };

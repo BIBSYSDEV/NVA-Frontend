@@ -16,7 +16,7 @@ const UserRoles: React.FC<UserRolesProps> = ({ user }) => {
   return (
     <Card>
       <Heading>{t('heading.roles')}</Heading>
-      {user.isPublisher && (
+      {user.isCreator && (
         <IconLabelTextLine
           dataTestId="user-role"
           icon="create"
