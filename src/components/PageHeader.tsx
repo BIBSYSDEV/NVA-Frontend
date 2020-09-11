@@ -5,8 +5,9 @@ import { Typography } from '@material-ui/core';
 const StyledHeader = styled(Typography)`
   width: 90vw;
   border-bottom: 2px solid;
-  padding-bottom: 1rem;
+  margin-top: 1rem;
   margin-bottom: 1rem;
+  padding-bottom: 1rem;
 `;
 
 export const PageHeader: FC = ({ children }) => <StyledHeader variant="h3">{children}</StyledHeader>;
