@@ -93,7 +93,7 @@
     "husky": "^4.3.0",
     "nyc": "^15.1.0",
     "prettier": "^2.1.1",
-    "pretty-quick": "^3.0.0",
+    "pretty-quick": "^3.0.1",
     "start-server-and-test": "^1.11.3",
     "ts-node": "^9.0.0",
     "typescript": "^3.9.7"
