@@ -12,6 +12,10 @@ const StyledSearchResults = styled.div`
   padding-bottom: 1rem;
 `;
 
+const StyledContributor = styled.span`
+  padding-right: 1rem;
+`;
+
 interface SearchResultsProps {
   publications: SearchResult[];
   searchTerm: string | null;
@@ -30,29 +34,37 @@ const SearchResults: FC<SearchResultsProps> = ({ publications, searchTerm }) => 
       {searchTerm && t('results', { count: publications.length, term: searchTerm })}
       <List>
         {publications &&
-          publications.slice(validPage * rowsPerPage, validPage * rowsPerPage + rowsPerPage).map((publication) => (
-            <PublicationListItemComponent
-              key={publication.identifier}
-              primaryComponent={
-                <MuiLink component={Link} to={`/publication/${publication.identifier}/public`}>
-                  {publication.mainTitle}
-                </MuiLink>
-              }
-              secondaryComponent={
-                <Typography component="span">
-                  {new Date(publication.modifiedDate).toLocaleDateString()}
-                  <br />
-                  {publication.contributors.map((contributor) => (
-                    <Fragment key={contributor.identifier}>
-                      <MuiLink component={Link} to={`/user/${contributor.identifier}`}>
-                        {contributor.name}
-                      </MuiLink>{' '}
-                    </Fragment>
-                  ))}
-                </Typography>
-              }
-            />
-          ))}
+          publications.slice(validPage * rowsPerPage, validPage * rowsPerPage + rowsPerPage).map((publication) => {
+            const publicationId = publication.id.split('/').pop();
+            const displayDate = publication.modifiedDate && new Date(publication.modifiedDate).toLocaleDateString();
+            return (
+              <PublicationListItemComponent
+                key={publication.id}
+                primaryComponent={
+                  <MuiLink component={Link} to={`/publication/${publicationId}/public`}>
+                    {publication.title ?? publication.title}
+                  </MuiLink>
+                }
+                secondaryComponent={
+                  <Typography component="span">
+                    {displayDate && <div>{displayDate}</div>}
+                    {publication.contributor &&
+                      publication.contributor.map((contributor) => (
+                        <Fragment key={contributor.name}>
+                          {contributor.identifier ? (
+                            <MuiLink component={Link} to={`/user/${contributor.identifier}`}>
+                              {contributor.name}
+                            </MuiLink>
+                          ) : (
+                            <StyledContributor>{contributor.name} </StyledContributor>
+                          )}
+                        </Fragment>
+                      ))}
+                  </Typography>
+                }
+              />
+            );
+          })}
       </List>
       {publications.length > ROWS_PER_PAGE_OPTIONS[0] && (
         <TablePagination

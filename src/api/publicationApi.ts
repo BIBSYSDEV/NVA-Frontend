@@ -10,7 +10,7 @@ import { DoiRequest } from '../types/doiRequest.types';
 import { SearchResult } from '../types/search.types';
 
 export enum PublicationsApiPaths {
-  SEARCH = '/search',
+  SEARCH = '/search/resources',
   PUBLICATION = '/publication',
   PUBLICATIONS_BY_OWNER = '/publication/by-owner',
   DOI_LOOKUP = '/doi-fetch',
@@ -170,7 +170,7 @@ export const search = async (
   cancelToken?: CancelToken
 ) =>
   await apiRequest<SearchResult[]>({
-    url: `${PublicationsApiPaths.SEARCH}/${searchTerm}`,
+    url: `${PublicationsApiPaths.SEARCH}?query=${searchTerm}`,
     cancelToken,
   });
 

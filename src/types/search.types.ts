@@ -4,15 +4,17 @@ interface SearchResultContributor {
 }
 
 export interface SearchResult {
+  id: string;
+  contributor: SearchResultContributor[];
+  date: string;
+  owner: string;
+  title: string;
+}
+
+export interface LatestPublication {
   identifier: string;
   createdDate: string;
   modifiedDate: string;
   mainTitle: string;
   owner: string;
-  contributors: SearchResultContributor[];
 }
-
-export type LatestPublication = Pick<
-  SearchResult,
-  'identifier' | 'createdDate' | 'modifiedDate' | 'mainTitle' | 'owner'
->;
