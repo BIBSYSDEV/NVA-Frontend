@@ -1,32 +1,23 @@
 import React, { FC } from 'react';
-import { Tab } from '@material-ui/core';
-import { useTheme } from '@material-ui/core/styles';
 import styled from 'styled-components';
+import { Tab, TabProps } from '@material-ui/core';
+import ErrorIcon from '@material-ui/icons/Error';
 
 const StyledTab = styled(Tab)`
   margin: auto;
 `;
-interface LinkTabProps {
+
+const StyledErrorIcon = styled(ErrorIcon)`
+  margin-left: 0.3rem;
+  color: ${({ theme }) => theme.palette.danger.main};
+`;
+
+interface LinkTabProps extends TabProps {
   error?: boolean;
-  href?: string;
-  label?: string;
 }
 
-const LinkTab: FC<LinkTabProps> = ({ error, ...rest }) => {
-  const theme = useTheme();
-
-  const styledTab = error ? { color: theme.palette.error.main } : undefined;
-
-  return (
-    <StyledTab
-      className={error ? 'error-tab' : undefined}
-      onClick={(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-        event.preventDefault();
-      }}
-      style={styledTab}
-      {...rest}
-    />
-  );
-};
+const LinkTab: FC<LinkTabProps> = ({ error, ...rest }) => (
+  <StyledTab disableRipple icon={error ? <StyledErrorIcon data-testid="error-tab" /> : undefined} {...rest} />
+);
 
 export default LinkTab;

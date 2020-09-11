@@ -96,8 +96,12 @@ export default createMuiTheme({
       },
     },
     MuiTab: {
-      root: {
-        background: Colors.TabBackground,
+      wrapper: {
+        flexDirection: 'row-reverse',
+      },
+      labelIcon: {
+        minHeight: undefined,
+        paddingTop: undefined,
       },
       textColorPrimary: {
         '&$selected': {
