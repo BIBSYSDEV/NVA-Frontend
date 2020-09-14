@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next';
 
 const StyledSearch = styled.div`
   padding-top: 2rem;
-  width: 80%;
+  width: 85%;
   justify-items: center;
 `;
 

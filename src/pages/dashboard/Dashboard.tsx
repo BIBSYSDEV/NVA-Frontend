@@ -13,6 +13,7 @@ const StyledDashboard = styled.div`
   row-gap: 1rem;
   justify-items: center;
   padding-top: 4rem;
+  width: 100%;
 `;
 
 const StyledOtherContent = styled.div`
@@ -28,7 +29,7 @@ const StyledLinks = styled.div`
 
 const StyledSearchBarContainer = styled.div`
   grid-area: search-bar;
-  width: 80%;
+  width: 100%;
   @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
     width: 15rem;
   }
