@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { List, Typography, Divider, CircularProgress } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { Link as MuiLink } from '@material-ui/core';
-import Heading from '../../components/Heading';
 import { useTranslation } from 'react-i18next';
 import useFetchLatestPublications from '../../utils/hooks/useFetchLatestPublications';
 import { StyledProgressWrapper } from '../../components/styled/Wrappers';
@@ -24,8 +23,6 @@ const LatestPublications: FC = () => {
 
   return (
     <StyledListContainer data-testid="newest-publications">
-      <Heading>{t('publication.newest_publications')}</Heading>
-      <Divider />
       {isLoadingPublications ? (
         <StyledProgressWrapper>
           <CircularProgress />

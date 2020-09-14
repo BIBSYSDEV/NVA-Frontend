@@ -20,6 +20,7 @@ import UserInstitution from './UserInstitution';
 import { StyledRightAlignedButtonWrapper } from '../../components/styled/Wrappers';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
+import { PageHeader } from '../../components/PageHeader';
 
 const StyledUserPage = styled.div`
   display: grid;
@@ -85,35 +86,38 @@ const User: FC = () => {
   }, [user.authority, dispatch, user.externalOrcid]);
 
   return (
-    <StyledUserPage>
-      {user.authority && (
-        <StyledButtonWrapper>
-          <Button
-            color="primary"
-            component={RouterLink}
-            to={`/user/${user.authority.systemControlNumber}`}
-            data-testid="public-profile-button">
-            {t('workLists:go_to_public_profile')}
-          </Button>
-        </StyledButtonWrapper>
-      )}
-      <StyledSecondaryUserInfo>
-        <UserLanguage />
-        <UserRoles user={user} />
-      </StyledSecondaryUserInfo>
+    <>
+      <PageHeader>{t('my_profile')}</PageHeader>
+      <StyledUserPage>
+        {user.authority && (
+          <StyledButtonWrapper>
+            <Button
+              color="primary"
+              component={RouterLink}
+              to={`/user/${user.authority.systemControlNumber}`}
+              data-testid="public-profile-button">
+              {t('workLists:go_to_public_profile')}
+            </Button>
+          </StyledButtonWrapper>
+        )}
+        <StyledSecondaryUserInfo>
+          <UserLanguage />
+          <UserRoles user={user} />
+        </StyledSecondaryUserInfo>
 
-      <StyledPrimaryUserInfo>
-        <UserInfo user={user} />
-        <Card>
-          <Heading>{t('heading.author_info')}</Heading>
-          {user.authority && user.authority.feideids?.length > 0 && (
-            <p data-testid="author-connected-info">{t('authority.connected_info')}</p>
-          )}
-        </Card>
-        <UserOrcid />
-        <UserInstitution />
-      </StyledPrimaryUserInfo>
-    </StyledUserPage>
+        <StyledPrimaryUserInfo>
+          <UserInfo user={user} />
+          <Card>
+            <Heading>{t('heading.author_info')}</Heading>
+            {user.authority && user.authority.feideids?.length > 0 && (
+              <p data-testid="author-connected-info">{t('authority.connected_info')}</p>
+            )}
+          </Card>
+          <UserOrcid />
+          <UserInstitution />
+        </StyledPrimaryUserInfo>
+      </StyledUserPage>
+    </>
   );
 };
 

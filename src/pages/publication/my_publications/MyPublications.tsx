@@ -15,15 +15,13 @@ import {
 } from '../../../components/styled/Wrappers';
 import ListSkeleton from '../../../components/ListSkeleton';
 import Card from '../../../components/Card';
+import { PageHeader } from '../../../components/PageHeader';
 
 const StyledContainer = styled.div`
-  display: block;
   width: 100%;
-  margin: 0 2rem 2rem 2rem;
 `;
 
 const StyledTabsContainer = styled(StyledCenterAlignedContentWrapper)`
-  padding-top: 2rem;
   margin-bottom: 1rem;
 `;
 
@@ -47,42 +45,45 @@ const MyPublications: FC = () => {
     .sort((a, b) => new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime());
 
   return (
-    <StyledContainer>
-      <StyledRightAlignedButtonWrapper>
-        {user.authority && (
-          <Button
-            color="primary"
-            component={RouterLink}
-            to={`/user/${user.authority.systemControlNumber}`}
-            data-testid="public-profile-button">
-            {t('go_to_public_profile')}
-          </Button>
-        )}
-      </StyledRightAlignedButtonWrapper>
-      <StyledTabsContainer>
-        <TabButton
-          data-testid="unpublished-button"
-          onClick={() => setSelectedTab(Tab.Unpublished)}
-          isSelected={selectedTab === Tab.Unpublished}>
-          {t('unpublished_publications')} ({unpublishedPublications.length})
-        </TabButton>
-        <TabButton
-          data-testid="published-button"
-          onClick={() => setSelectedTab(Tab.Published)}
-          isSelected={selectedTab === Tab.Published}>
-          {t('published_publications')} ({publishedPublications.length})
-        </TabButton>
-      </StyledTabsContainer>
-      <Card>
-        {isLoading ? (
-          <ListSkeleton minWidth={100} maxWidth={100} height={100} />
-        ) : (
-          <PublicationList
-            publications={selectedTab === Tab.Unpublished ? unpublishedPublications : publishedPublications}
-          />
-        )}
-      </Card>
-    </StyledContainer>
+    <>
+      <PageHeader>{t('my_publications')}</PageHeader>
+      <StyledContainer>
+        <StyledRightAlignedButtonWrapper>
+          {user.authority && (
+            <Button
+              color="primary"
+              component={RouterLink}
+              to={`/user/${user.authority.systemControlNumber}`}
+              data-testid="public-profile-button">
+              {t('go_to_public_profile')}
+            </Button>
+          )}
+        </StyledRightAlignedButtonWrapper>
+        <StyledTabsContainer>
+          <TabButton
+            data-testid="unpublished-button"
+            onClick={() => setSelectedTab(Tab.Unpublished)}
+            isSelected={selectedTab === Tab.Unpublished}>
+            {t('unpublished_publications')} ({unpublishedPublications.length})
+          </TabButton>
+          <TabButton
+            data-testid="published-button"
+            onClick={() => setSelectedTab(Tab.Published)}
+            isSelected={selectedTab === Tab.Published}>
+            {t('published_publications')} ({publishedPublications.length})
+          </TabButton>
+        </StyledTabsContainer>
+        <Card>
+          {isLoading ? (
+            <ListSkeleton minWidth={100} maxWidth={100} height={100} />
+          ) : (
+            <PublicationList
+              publications={selectedTab === Tab.Unpublished ? unpublishedPublications : publishedPublications}
+            />
+          )}
+        </Card>
+      </StyledContainer>
+    </>
   );
 };
 
