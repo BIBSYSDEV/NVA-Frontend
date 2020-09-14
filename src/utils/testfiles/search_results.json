@@ -1,11 +1,10 @@
 [
   {
-    "identifier": "32290378-373e-4cca-8f24-d02b92d845ce",
-    "createdDate": "8/26/2019",
-    "modifiedDate": "1/11/2020",
-    "mainTitle": "Dove, The",
+    "id": "https://frontend.dev.nva.aws.unit.no/publication/32290378-373e-4cca-8f24-d02b92d845ce",
+    "date": "8/26/2019",
+    "title": "Dove, The",
     "owner": "mfalvey0@pen.io",
-    "contributors": [
+    "contributor": [
       {
         "identifier": "04bfdced-e65a-483f-bcaa-a83ad7218b60",
         "name": "Alasdair Dyter"
@@ -13,12 +12,11 @@
     ]
   },
   {
-    "identifier": "d90f87c9-fb5b-41ef-8575-584b50102476",
-    "createdDate": "1/19/2018",
-    "modifiedDate": "7/11/2020",
-    "mainTitle": "Bad Santa",
+    "id": "https://frontend.dev.nva.aws.unit.no/publication/d90f87c9-fb5b-41ef-8575-584b50102476",
+    "date": "1/19/2018",
+    "title": "Bad Santa",
     "owner": "fhanwell1@businessweek.com",
-    "contributors": [
+    "contributor": [
       {
         "identifier": "9022e8b1-e908-4b22-b051-c62ff4dc7854",
         "name": "Ailene Strippling"
@@ -30,12 +28,11 @@
     ]
   },
   {
-    "identifier": "c01b4fe3-bd3c-4b89-8d3a-4cced90a53e6",
-    "createdDate": "9/20/2019",
-    "modifiedDate": "12/3/2019",
-    "mainTitle": "Carey Treatment, The",
+    "id": "https://frontend.dev.nva.aws.unit.no/publication/c01b4fe3-bd3c-4b89-8d3a-4cced90a53e6",
+    "date": "9/20/2019",
+    "title": "Carey Treatment, The",
     "owner": "okobsch2@a8.net",
-    "contributors": [
+    "contributor": [
       {
         "identifier": "eb918407-16fb-44e1-a1ac-32a7837d1f59",
         "name": "Alberto Kuzma"
@@ -43,12 +40,11 @@
     ]
   },
   {
-    "identifier": "989047e8-643e-4b31-b16a-915d5124cc25",
-    "createdDate": "3/10/2020",
-    "modifiedDate": "5/31/2020",
-    "mainTitle": "Gloria",
+    "id": "https://frontend.dev.nva.aws.unit.no/publication/989047e8-643e-4b31-b16a-915d5124cc25",
+    "date": "3/10/2020",
+    "title": "Gloria",
     "owner": "jjanusik3@timesonline.co.uk",
-    "contributors": [
+    "contributor": [
       {
         "identifier": "09a2d886-f7ee-4572-99f1-09e13de9a230",
         "name": "Llewellyn Munn"
@@ -64,12 +60,11 @@
     ]
   },
   {
-    "identifier": "79333552-6646-4497-ac28-845126fd96ed",
-    "createdDate": "5/7/2020",
-    "modifiedDate": "11/6/2019",
-    "mainTitle": "Before and After",
+    "id": "https://frontend.dev.nva.aws.unit.no/publication/79333552-6646-4497-ac28-845126fd96ed",
+    "date": "5/7/2020",
+    "title": "Before and After",
     "owner": "zmilam4@smh.com.au",
-    "contributors": [
+    "contributor": [
       {
         "identifier": "eb918407-16fb-44e1-a1ac-32a7837d1f59",
         "name": "Alberto Kuzma"
@@ -77,12 +72,11 @@
     ]
   },
   {
-    "identifier": "73772750-68a0-40f7-9adc-19d38e067f1a",
-    "createdDate": "9/3/2019",
-    "modifiedDate": "6/12/2020",
-    "mainTitle": "Highlander",
+    "id": "https://frontend.dev.nva.aws.unit.no/publication/73772750-68a0-40f7-9adc-19d38e067f1a",
+    "date": "9/3/2019",
+    "title": "Highlander",
     "owner": "bmangan5@soundcloud.com",
-    "contributors": [
+    "contributor": [
       {
         "identifier": "eb918407-16fb-44e1-a1ac-32a7837d1f59",
         "name": "Alberto Kuzma"
@@ -90,12 +84,11 @@
     ]
   },
   {
-    "identifier": "181f6090-c20d-4f6e-ada4-184c22bb9a5d",
-    "createdDate": "12/27/2018",
-    "modifiedDate": "7/10/2020",
-    "mainTitle": "Nim's Island",
+    "id": "https://frontend.dev.nva.aws.unit.no/publication/181f6090-c20d-4f6e-ada4-184c22bb9a5d",
+    "date": "12/27/2018",
+    "title": "Nim's Island",
     "owner": "vspafford6@google.ru",
-    "contributors": [
+    "contributor": [
       {
         "identifier": "ea5b86dc-a6f2-4bb9-9dfe-7d0666421d69",
         "name": "Ianthe Becaris"
@@ -127,12 +120,11 @@
     ]
   },
   {
-    "identifier": "87e92ce7-c401-4952-92fb-5028907a9c0e",
-    "createdDate": "5/27/2018",
-    "modifiedDate": "7/10/2020",
-    "mainTitle": "First Nudie Musical, The",
+    "id": "https://frontend.dev.nva.aws.unit.no/publication/87e92ce7-c401-4952-92fb-5028907a9c0e",
+    "date": "5/27/2018",
+    "title": "First Nudie Musical, The",
     "owner": "dspatoni7@t.co",
-    "contributors": [
+    "contributor": [
       {
         "identifier": "a2a087a6-8de0-4a21-b026-faa629fb816d",
         "name": "Benji Rodrigo"
@@ -140,12 +132,11 @@
     ]
   },
   {
-    "identifier": "52e144b4-e896-48c7-bf68-b3c051db5c58",
-    "createdDate": "10/30/2019",
-    "modifiedDate": "11/10/2019",
-    "mainTitle": "Stavisky...",
+    "id": "https://frontend.dev.nva.aws.unit.no/publication/52e144b4-e896-48c7-bf68-b3c051db5c58",
+    "date": "10/30/2019",
+    "title": "Stavisky...",
     "owner": "mspreadbury8@ocn.ne.jp",
-    "contributors": [
+    "contributor": [
       {
         "identifier": "86ddca94-6c40-4eaa-b59e-33c4b340b9be",
         "name": "Quintina Whiston"
@@ -153,12 +144,11 @@
     ]
   },
   {
-    "identifier": "36e16624-b92f-416e-830f-bda598e047ab",
-    "createdDate": "7/12/2018",
-    "modifiedDate": "9/13/2019",
-    "mainTitle": "Powerpuff Girls, The",
+    "id": "https://frontend.dev.nva.aws.unit.no/publication/36e16624-b92f-416e-830f-bda598e047ab",
+    "date": "7/12/2018",
+    "title": "Powerpuff Girls, The",
     "owner": "jfarryan9@ucla.edu",
-    "contributors": [
+    "contributor": [
       {
         "identifier": "86ddca94-6c40-4eaa-b59e-33c4b340b9be",
         "name": "Wuintinas Whir"
@@ -166,12 +156,11 @@
     ]
   },
   {
-    "identifier": "ed863357-3203-48e7-92bc-c8998843d366",
-    "createdDate": "7/14/2019",
-    "modifiedDate": "1/14/2020",
-    "mainTitle": "Invisible Ray, The",
+    "id": "https://frontend.dev.nva.aws.unit.no/publication/ed863357-3203-48e7-92bc-c8998843d366",
+    "date": "7/14/2019",
+    "title": "Invisible Ray, The",
     "owner": "bskilletta@guardian.co.uk",
-    "contributors": [
+    "contributor": [
       {
         "identifier": "4d5f1550-e8c2-43a2-a62e-7f908626f0b4",
         "name": "Zsazsa Mizzi"
@@ -183,12 +172,11 @@
     ]
   },
   {
-    "identifier": "fc506676-0def-49f9-8d5d-de409956ad06",
-    "createdDate": "3/4/2020",
-    "modifiedDate": "8/14/2020",
-    "mainTitle": "Cinderella Man",
+    "id": "https://frontend.dev.nva.aws.unit.no/publication/fc506676-0def-49f9-8d5d-de409956ad06",
+    "date": "3/4/2020",
+    "title": "Cinderella Man",
     "owner": "sphizackleab@slate.com",
-    "contributors": [
+    "contributor": [
       {
         "identifier": "0911b70e-e9dd-44a5-acd9-2277f6f338b2",
         "name": "Nolie Aggett"
@@ -196,12 +184,11 @@
     ]
   },
   {
-    "identifier": "a6d5a4ba-685c-43fd-b2e2-7b2eba8f6288",
-    "createdDate": "9/26/2018",
-    "modifiedDate": "3/9/2020",
-    "mainTitle": "I Killed My Mother (J'ai tué ma mère)",
+    "id": "https://frontend.dev.nva.aws.unit.no/publication/a6d5a4ba-685c-43fd-b2e2-7b2eba8f6288",
+    "date": "9/26/2018",
+    "title": "I Killed My Mother (J'ai tué ma mère)",
     "owner": "mlowdhamc@ucsd.edu",
-    "contributors": [
+    "contributor": [
       {
         "identifier": "e3e2409e-ca34-45c9-9631-e8926bcaf6f0",
         "name": "Burgess Bradnam"
@@ -209,12 +196,11 @@
     ]
   },
   {
-    "identifier": "8987043b-67b9-4e46-9717-013c6134654d",
-    "createdDate": "8/1/2018",
-    "modifiedDate": "9/25/2019",
-    "mainTitle": "Traveler, The",
+    "id": "https://frontend.dev.nva.aws.unit.no/publication/8987043b-67b9-4e46-9717-013c6134654d",
+    "date": "8/1/2018",
+    "title": "Traveler, The",
     "owner": "opevied@ning.com",
-    "contributors": [
+    "contributor": [
       {
         "identifier": "a62f53c9-42f2-446c-b2da-5afbd80bd672",
         "name": "Bernardo Hurdwell"
@@ -222,12 +208,11 @@
     ]
   },
   {
-    "identifier": "0dd27154-42a2-4147-aef1-aaa70c065d28",
-    "createdDate": "12/27/2019",
-    "modifiedDate": "11/8/2019",
-    "mainTitle": "Frankenweenie",
+    "id": "https://frontend.dev.nva.aws.unit.no/publication/0dd27154-42a2-4147-aef1-aaa70c065d28",
+    "date": "12/27/2019",
+    "title": "Frankenweenie",
     "owner": "rmacoune@nsw.gov.au",
-    "contributors": [
+    "contributor": [
       {
         "identifier": "8fae654c-89b8-4d64-9681-641e63b39e48",
         "name": "Anny Mandrier"
@@ -235,12 +220,11 @@
     ]
   },
   {
-    "identifier": "5c0e1784-1530-41c3-8b5f-8bf8f4572f3a",
-    "createdDate": "4/1/2018",
-    "modifiedDate": "11/24/2019",
-    "mainTitle": "And Life Goes On (a.k.a. Life and Nothing More) (Zendegi va digar hich)",
+    "id": "https://frontend.dev.nva.aws.unit.no/publication/5c0e1784-1530-41c3-8b5f-8bf8f4572f3a",
+    "date": "4/1/2018",
+    "title": "And Life Goes On (a.k.a. Life and Nothing More) (Zendegi va digar hich)",
     "owner": "hjurekf@apple.com",
-    "contributors": [
+    "contributor": [
       {
         "identifier": "11da2df8-f48b-4169-8dbd-25a971ce891c",
         "name": "Bruno Deabill"
@@ -256,12 +240,11 @@
     ]
   },
   {
-    "identifier": "c5f3f0e9-e48e-4215-b826-03f61790aea0",
-    "createdDate": "12/9/2019",
-    "modifiedDate": "10/20/2019",
-    "mainTitle": "Generation Iron",
+    "id": "https://frontend.dev.nva.aws.unit.no/publication/c5f3f0e9-e48e-4215-b826-03f61790aea0",
+    "date": "12/9/2019",
+    "title": "Generation Iron",
     "owner": "mandreuzzig@imgur.com",
-    "contributors": [
+    "contributor": [
       {
         "identifier": "88b832c4-5d45-4e3f-81de-82530ad8f389",
         "name": "Brent Regus"
@@ -269,12 +252,11 @@
     ]
   },
   {
-    "identifier": "6f82edac-6bce-4e2b-adbe-46707482ac04",
-    "createdDate": "3/29/2020",
-    "modifiedDate": "2/15/2020",
-    "mainTitle": "Sunshine State",
+    "id": "https://frontend.dev.nva.aws.unit.no/publication/6f82edac-6bce-4e2b-adbe-46707482ac04",
+    "date": "3/29/2020",
+    "title": "Sunshine State",
     "owner": "achurmsh@networksolutions.com",
-    "contributors": [
+    "contributor": [
       {
         "identifier": "a9a34fb7-efc8-44a0-9727-e7ebb458931f",
         "name": "Abran Buzin"
@@ -286,12 +268,11 @@
     ]
   },
   {
-    "identifier": "a20c371f-3569-4bc1-bd3f-35a598bdcdfc",
-    "createdDate": "8/2/2018",
-    "modifiedDate": "9/14/2019",
-    "mainTitle": "Kapò",
+    "id": "https://frontend.dev.nva.aws.unit.no/publication/a20c371f-3569-4bc1-bd3f-35a598bdcdfc",
+    "date": "8/2/2018",
+    "title": "Kapò",
     "owner": "kmasseoi@yahoo.co.jp",
-    "contributors": [
+    "contributor": [
       {
         "identifier": "d1578023-4e8e-4e2c-9d4e-7011e936ab4b",
         "name": "Francesca Blaxill"
@@ -299,12 +280,11 @@
     ]
   },
   {
-    "identifier": "e8c16926-eb52-418d-8b54-887943347dbb",
-    "createdDate": "3/27/2019",
-    "modifiedDate": "6/11/2020",
-    "mainTitle": "Message to Love: The Isle of Wight Festival",
+    "id": "https://frontend.dev.nva.aws.unit.no/publication/e8c16926-eb52-418d-8b54-887943347dbb",
+    "date": "3/27/2019",
+    "title": "Message to Love: The Isle of Wight Festival",
     "owner": "ashropshirej@slate.com",
-    "contributors": [
+    "contributor": [
       {
         "identifier": "43394bb6-a9a6-4c44-8106-a77866bc8fd4",
         "name": "Rudolph Trivett"
@@ -312,12 +292,11 @@
     ]
   },
   {
-    "identifier": "ea8bc8c1-04dd-4449-b5cb-78c071bcfa9c",
-    "createdDate": "12/1/2018",
-    "modifiedDate": "3/8/2020",
-    "mainTitle": "News from Home",
+    "id": "https://frontend.dev.nva.aws.unit.no/publication/ea8bc8c1-04dd-4449-b5cb-78c071bcfa9c",
+    "date": "12/1/2018",
+    "title": "News from Home",
     "owner": "agooderedk@cbsnews.com",
-    "contributors": [
+    "contributor": [
       {
         "identifier": "b4db55ea-eb2d-4421-9327-43b73a08e3a3",
         "name": "Maxi Morsom"
@@ -325,12 +304,11 @@
     ]
   },
   {
-    "identifier": "e3bdb056-289b-4430-b21e-ff944e57ebcb",
-    "createdDate": "9/26/2019",
-    "modifiedDate": "9/30/2019",
-    "mainTitle": "Journey from the Fall",
+    "id": "https://frontend.dev.nva.aws.unit.no/publication/e3bdb056-289b-4430-b21e-ff944e57ebcb",
+    "date": "9/26/2019",
+    "title": "Journey from the Fall",
     "owner": "emateul@joomla.org",
-    "contributors": [
+    "contributor": [
       {
         "identifier": "1e089b09-40c9-4e40-9a45-37de290911a2",
         "name": "Sal Aspenlon"
@@ -346,12 +324,11 @@
     ]
   },
   {
-    "identifier": "a5fd5ac7-cbda-4a17-b885-db9e159e3acb",
-    "createdDate": "5/20/2019",
-    "modifiedDate": "8/30/2020",
-    "mainTitle": "Daughters of Darkness (Les lèvres rouges)",
+    "id": "https://frontend.dev.nva.aws.unit.no/publication/a5fd5ac7-cbda-4a17-b885-db9e159e3acb",
+    "date": "5/20/2019",
+    "title": "Daughters of Darkness (Les lèvres rouges)",
     "owner": "cacomm@wufoo.com",
-    "contributors": [
+    "contributor": [
       {
         "identifier": "28586c67-19f9-4cee-bfea-5a057384b6e6",
         "name": "Cristi Wadwell"
@@ -359,12 +336,11 @@
     ]
   },
   {
-    "identifier": "bb3ed33b-082e-461a-9001-9d2276d1bf79",
-    "createdDate": "11/23/2018",
-    "modifiedDate": "6/24/2020",
-    "mainTitle": "Stella",
+    "id": "https://frontend.dev.nva.aws.unit.no/publication/bb3ed33b-082e-461a-9001-9d2276d1bf79",
+    "date": "11/23/2018",
+    "title": "Stella",
     "owner": "wfouracren@shareasale.com",
-    "contributors": [
+    "contributor": [
       {
         "identifier": "ec6fd020-9550-4815-9811-c6a9c2c80a12",
         "name": "Curtis Fitch"
@@ -372,12 +348,11 @@
     ]
   },
   {
-    "identifier": "7595f84d-2f4e-40a5-84a1-59a5ff8d9bcf",
-    "createdDate": "3/28/2018",
-    "modifiedDate": "4/29/2020",
-    "mainTitle": "Virus",
+    "id": "https://frontend.dev.nva.aws.unit.no/publication/7595f84d-2f4e-40a5-84a1-59a5ff8d9bcf",
+    "date": "3/28/2018",
+    "title": "Virus",
     "owner": "jpimbleyo@cornell.edu",
-    "contributors": [
+    "contributor": [
       {
         "identifier": "eb918407-16fb-44e1-a1ac-32a7837d1f59",
         "name": "Alberto Kuzma"
@@ -389,12 +364,11 @@
     ]
   },
   {
-    "identifier": "95c6b281-6dd8-4525-80bf-b6d7127ab92d",
-    "createdDate": "11/25/2019",
-    "modifiedDate": "9/25/2019",
-    "mainTitle": "Hum Tumhare Hain Sanam",
+    "id": "https://frontend.dev.nva.aws.unit.no/publication/95c6b281-6dd8-4525-80bf-b6d7127ab92d",
+    "date": "11/25/2019",
+    "title": "Hum Tumhare Hain Sanam",
     "owner": "sdarycottp@123-reg.co.uk",
-    "contributors": [
+    "contributor": [
       {
         "identifier": "7f8dbf13-5588-4d99-8b0b-7ecbd1d5064b",
         "name": "Sharyl Nickoles"
@@ -402,12 +376,11 @@
     ]
   },
   {
-    "identifier": "b72315bf-92ed-4626-81ea-8fd2aabd48ef",
-    "createdDate": "2/12/2019",
-    "modifiedDate": "4/4/2020",
-    "mainTitle": "Closing the Ring",
+    "id": "https://frontend.dev.nva.aws.unit.no/publication/b72315bf-92ed-4626-81ea-8fd2aabd48ef",
+    "date": "2/12/2019",
+    "title": "Closing the Ring",
     "owner": "scohrsq@chronoengine.com",
-    "contributors": [
+    "contributor": [
       {
         "identifier": "43849abf-d9e7-4532-a35d-cdd3bc704edd",
         "name": "Brittni Sebire"
@@ -415,12 +388,11 @@
     ]
   },
   {
-    "identifier": "70d340e5-448c-40a7-a80d-3630e4a7872c",
-    "createdDate": "12/12/2017",
-    "modifiedDate": "1/24/2020",
-    "mainTitle": "Road to Hong Kong, The",
+    "id": "https://frontend.dev.nva.aws.unit.no/publication/70d340e5-448c-40a7-a80d-3630e4a7872c",
+    "date": "12/12/2017",
+    "title": "Road to Hong Kong, The",
     "owner": "mschiellr@typepad.com",
-    "contributors": [
+    "contributor": [
       {
         "identifier": "4e8fe5ba-fa4d-44c5-b6f0-1adf6ff46c8e",
         "name": "Amery Roskams"
@@ -432,12 +404,11 @@
     ]
   },
   {
-    "identifier": "d66d4683-6bdc-4732-bee2-189fbe7404d3",
-    "createdDate": "7/2/2020",
-    "modifiedDate": "3/19/2020",
-    "mainTitle": "City in the Sea",
+    "id": "https://frontend.dev.nva.aws.unit.no/publication/d66d4683-6bdc-4732-bee2-189fbe7404d3",
+    "date": "7/2/2020",
+    "title": "City in the Sea",
     "owner": "wmanuelys@rakuten.co.jp",
-    "contributors": [
+    "contributor": [
       {
         "identifier": "a14b3554-6cd4-4581-a6da-925d58008a4c",
         "name": "Tami Askam"
@@ -449,12 +420,11 @@
     ]
   },
   {
-    "identifier": "661fd539-3c20-4764-bfc2-009e9cfb043c",
-    "createdDate": "4/22/2020",
-    "modifiedDate": "2/3/2020",
-    "mainTitle": "Black Mirror",
+    "id": "https://frontend.dev.nva.aws.unit.no/publication/661fd539-3c20-4764-bfc2-009e9cfb043c",
+    "date": "4/22/2020",
+    "title": "Black Mirror",
     "owner": "bisacssont@princeton.edu",
-    "contributors": [
+    "contributor": [
       {
         "identifier": "1aa709b5-27a8-4ee0-ad51-4400007f977f",
         "name": "Huberto McParland"
@@ -462,12 +432,11 @@
     ]
   },
   {
-    "identifier": "8559da5f-9d24-4004-ae30-f43f9ef35b1d",
-    "createdDate": "4/17/2019",
-    "modifiedDate": "11/12/2019",
-    "mainTitle": "Ambush Trail",
+    "id": "https://frontend.dev.nva.aws.unit.no/publication/8559da5f-9d24-4004-ae30-f43f9ef35b1d",
+    "date": "4/17/2019",
+    "title": "Ambush Trail",
     "owner": "ddjorevicu@psu.edu",
-    "contributors": [
+    "contributor": [
       {
         "identifier": "d7c2ee83-39f0-4f6d-8ffb-02cfadae688f",
         "name": "Hendrick Shawe"
@@ -487,12 +456,11 @@
     ]
   },
   {
-    "identifier": "40a06c82-063d-4c14-945c-17424cc09a77",
-    "createdDate": "6/5/2020",
-    "modifiedDate": "4/1/2020",
-    "mainTitle": "Another You",
+    "id": "https://frontend.dev.nva.aws.unit.no/publication/40a06c82-063d-4c14-945c-17424cc09a77",
+    "date": "6/5/2020",
+    "title": "Another You",
     "owner": "klovejoyv@csmonitor.com",
-    "contributors": [
+    "contributor": [
       {
         "identifier": "b2279393-0c1a-4943-a76c-bcc9b2982745",
         "name": "Jenica Pallant"
@@ -504,12 +472,11 @@
     ]
   },
   {
-    "identifier": "fa37540a-ef9f-4e07-91a7-dfd2a3fca2db",
-    "createdDate": "10/28/2019",
-    "modifiedDate": "6/18/2020",
-    "mainTitle": "Moonlight Serenade",
+    "id": "https://frontend.dev.nva.aws.unit.no/publication/fa37540a-ef9f-4e07-91a7-dfd2a3fca2db",
+    "date": "10/28/2019",
+    "title": "Moonlight Serenade",
     "owner": "tshentonw@house.gov",
-    "contributors": [
+    "contributor": [
       {
         "identifier": "135621ef-8c86-4d20-b1f3-43574c919695",
         "name": "Avrit Knowlson"
@@ -517,12 +484,11 @@
     ]
   },
   {
-    "identifier": "9c35a95d-42c7-44e8-81f9-b99ecb5a4d44",
-    "createdDate": "9/15/2017",
-    "modifiedDate": "6/18/2020",
-    "mainTitle": "Sammy and Rosie Get Laid",
+    "id": "https://frontend.dev.nva.aws.unit.no/publication/9c35a95d-42c7-44e8-81f9-b99ecb5a4d44",
+    "date": "9/15/2017",
+    "title": "Sammy and Rosie Get Laid",
     "owner": "msharplyx@smugmug.com",
-    "contributors": [
+    "contributor": [
       {
         "identifier": "135621ef-8c86-4d20-b1f3-43574c919695",
         "name": "Avrit Knowlson"
@@ -530,12 +496,11 @@
     ]
   },
   {
-    "identifier": "75cbe42d-e72e-4931-96fd-9dc5ee45bfe9",
-    "createdDate": "3/20/2020",
-    "modifiedDate": "9/22/2019",
-    "mainTitle": "Why Are the Bells Ringing, Mitica? (a.k.a. Carnival Scenes) (De ce trag clopotele, Mitica?)",
+    "id": "https://frontend.dev.nva.aws.unit.no/publication/75cbe42d-e72e-4931-96fd-9dc5ee45bfe9",
+    "date": "3/20/2020",
+    "title": "Why Are the Bells Ringing, Mitica? (a.k.a. Carnival Scenes) (De ce trag clopotele, Mitica?)",
     "owner": "jodesony@squidoo.com",
-    "contributors": [
+    "contributor": [
       {
         "identifier": "135621ef-8c86-4d20-b1f3-43574c919695",
         "name": "Avrit Knowlson"
@@ -543,12 +508,11 @@
     ]
   },
   {
-    "identifier": "f8ff4270-d888-4b0b-8f26-c770e6534f4b",
-    "createdDate": "3/21/2020",
-    "modifiedDate": "11/20/2019",
-    "mainTitle": "Trust Us, This Is All Made Up",
+    "id": "https://frontend.dev.nva.aws.unit.no/publication/f8ff4270-d888-4b0b-8f26-c770e6534f4b",
+    "date": "3/21/2020",
+    "title": "Trust Us, This Is All Made Up",
     "owner": "asaggsz@cmu.edu",
-    "contributors": [
+    "contributor": [
       {
         "identifier": "135621ef-8c86-4d20-b1f3-43574c919695",
         "name": "Avrit Knowlson"
@@ -556,12 +520,11 @@
     ]
   },
   {
-    "identifier": "f454a939-53e9-4a72-a9e2-bc6165f4fbb4",
-    "createdDate": "4/28/2018",
-    "modifiedDate": "2/9/2020",
-    "mainTitle": "Post Grad",
+    "id": "https://frontend.dev.nva.aws.unit.no/publication/f454a939-53e9-4a72-a9e2-bc6165f4fbb4",
+    "date": "4/28/2018",
+    "title": "Post Grad",
     "owner": "cwieprecht10@blog.com",
-    "contributors": [
+    "contributor": [
       {
         "identifier": "d7c2ee83-39f0-4f6d-8ffb-02cfadae688f",
         "name": "Hendrick Shawe"
@@ -573,12 +536,11 @@
     ]
   },
   {
-    "identifier": "509c09f6-9bb2-4bdc-b1af-c891f32d722f",
-    "createdDate": "10/16/2019",
-    "modifiedDate": "6/20/2020",
-    "mainTitle": "Raiders of Atlantis, The",
+    "id": "https://frontend.dev.nva.aws.unit.no/publication/509c09f6-9bb2-4bdc-b1af-c891f32d722f",
+    "date": "10/16/2019",
+    "title": "Raiders of Atlantis, The",
     "owner": "edavy11@i2i.jp",
-    "contributors": [
+    "contributor": [
       {
         "identifier": "d7c2ee83-39f0-4f6d-8ffb-02cfadae688f",
         "name": "Hendrick Shawe"
@@ -590,12 +552,11 @@
     ]
   },
   {
-    "identifier": "da0a70b5-2a84-4edc-8fc4-2899bda7b7b0",
-    "createdDate": "3/25/2018",
-    "modifiedDate": "4/9/2020",
-    "mainTitle": "Descendants, The",
+    "id": "https://frontend.dev.nva.aws.unit.no/publication/da0a70b5-2a84-4edc-8fc4-2899bda7b7b0",
+    "date": "3/25/2018",
+    "title": "Descendants, The",
     "owner": "dcathcart12@bizjournals.com",
-    "contributors": [
+    "contributor": [
       {
         "identifier": "d7c2ee83-39f0-4f6d-8ffb-02cfadae688f",
         "name": "Hendrick Shawe"
@@ -603,12 +564,11 @@
     ]
   },
   {
-    "identifier": "2954cbf7-e012-479e-938a-cc01b9b8c366",
-    "createdDate": "11/26/2019",
-    "modifiedDate": "4/12/2020",
-    "mainTitle": "Royal Scandal, A",
+    "id": "https://frontend.dev.nva.aws.unit.no/publication/2954cbf7-e012-479e-938a-cc01b9b8c366",
+    "date": "11/26/2019",
+    "title": "Royal Scandal, A",
     "owner": "kbrimacombe13@prnewswire.com",
-    "contributors": [
+    "contributor": [
       {
         "identifier": "d7c2ee83-39f0-4f6d-8ffb-02cfadae688f",
         "name": "Hendrick Shawe"
@@ -616,12 +576,11 @@
     ]
   },
   {
-    "identifier": "7e1c7b58-4033-455c-b7e4-92c212f0145c",
-    "createdDate": "3/9/2020",
-    "modifiedDate": "11/30/2019",
-    "mainTitle": "Major Dundee",
+    "id": "https://frontend.dev.nva.aws.unit.no/publication/7e1c7b58-4033-455c-b7e4-92c212f0145c",
+    "date": "3/9/2020",
+    "title": "Major Dundee",
     "owner": "tgrimsdell14@flavors.me",
-    "contributors": [
+    "contributor": [
       {
         "identifier": "8a57bd4c-630f-415c-bd8a-d2ebd8d089d2",
         "name": "Dorene Ellens"
@@ -629,12 +588,11 @@
     ]
   },
   {
-    "identifier": "6fe76bdb-0277-433d-b174-daa3d61bf704",
-    "createdDate": "8/19/2020",
-    "modifiedDate": "2/27/2020",
-    "mainTitle": "Renoir",
+    "id": "https://frontend.dev.nva.aws.unit.no/publication/6fe76bdb-0277-433d-b174-daa3d61bf704",
+    "date": "8/19/2020",
+    "title": "Renoir",
     "owner": "mwonfor15@dell.com",
-    "contributors": [
+    "contributor": [
       {
         "identifier": "8a57bd4c-630f-415c-bd8a-d2ebd8d089d2",
         "name": "Dorene Ellens"
@@ -642,12 +600,11 @@
     ]
   },
   {
-    "identifier": "f79a5f01-fc81-45e8-907b-95cf1fd309a5",
-    "createdDate": "5/24/2020",
-    "modifiedDate": "1/16/2020",
-    "mainTitle": "Sexual Life of the Belgians, The (Vie sexuelle des Belges 1950-1978, La)",
+    "id": "https://frontend.dev.nva.aws.unit.no/publication/f79a5f01-fc81-45e8-907b-95cf1fd309a5",
+    "date": "5/24/2020",
+    "title": "Sexual Life of the Belgians, The (Vie sexuelle des Belges 1950-1978, La)",
     "owner": "ceveritt16@google.es",
-    "contributors": [
+    "contributor": [
       {
         "identifier": "7f8dbf13-5588-4d99-8b0b-7ecbd1d5064b",
         "name": "Sharyl Nickoles"
@@ -663,12 +620,11 @@
     ]
   },
   {
-    "identifier": "5d1b0915-46c6-432a-9cf5-0fd14cfea3bc",
-    "createdDate": "6/12/2018",
-    "modifiedDate": "12/29/2019",
-    "mainTitle": "Lineup, The",
+    "id": "https://frontend.dev.nva.aws.unit.no/publication/5d1b0915-46c6-432a-9cf5-0fd14cfea3bc",
+    "date": "6/12/2018",
+    "title": "Lineup, The",
     "owner": "lbarniss17@slate.com",
-    "contributors": [
+    "contributor": [
       {
         "identifier": "7f8dbf13-5588-4d99-8b0b-7ecbd1d5064b",
         "name": "Sharyl Nickoles"
@@ -684,12 +640,11 @@
     ]
   },
   {
-    "identifier": "2bd86ec1-2b83-4da4-9ae8-86dfb59e514d",
-    "createdDate": "2/26/2020",
-    "modifiedDate": "3/9/2020",
-    "mainTitle": "Julie & Julia",
+    "id": "https://frontend.dev.nva.aws.unit.no/publication/2bd86ec1-2b83-4da4-9ae8-86dfb59e514d",
+    "date": "2/26/2020",
+    "title": "Julie & Julia",
     "owner": "dgawthrop18@bloglovin.com",
-    "contributors": [
+    "contributor": [
       {
         "identifier": "7f8dbf13-5588-4d99-8b0b-7ecbd1d5064b",
         "name": "Sharyl Nickoles"
@@ -701,12 +656,11 @@
     ]
   },
   {
-    "identifier": "e441ebea-5268-48a0-b749-663fa35912af",
-    "createdDate": "1/1/2019",
-    "modifiedDate": "3/18/2020",
-    "mainTitle": "Stray Dog (Nora inu)",
+    "id": "https://frontend.dev.nva.aws.unit.no/publication/e441ebea-5268-48a0-b749-663fa35912af",
+    "date": "1/1/2019",
+    "title": "Stray Dog (Nora inu)",
     "owner": "pfiggs19@photobucket.com",
-    "contributors": [
+    "contributor": [
       {
         "identifier": "7f8dbf13-5588-4d99-8b0b-7ecbd1d5064b",
         "name": "Sharyl Nickoles"
@@ -718,12 +672,11 @@
     ]
   },
   {
-    "identifier": "088e4e74-ab76-4eb3-b7ad-abaee07b0d67",
-    "createdDate": "6/26/2020",
-    "modifiedDate": "10/25/2019",
-    "mainTitle": "Adventures of Ford Fairlane, The",
+    "id": "https://frontend.dev.nva.aws.unit.no/publication/088e4e74-ab76-4eb3-b7ad-abaee07b0d67",
+    "date": "6/26/2020",
+    "title": "Adventures of Ford Fairlane, The",
     "owner": "sumpleby1a@webnode.com",
-    "contributors": [
+    "contributor": [
       {
         "identifier": "43849abf-d9e7-4532-a35d-cdd3bc704edd",
         "name": "Brittni Sebire"
@@ -731,12 +684,11 @@
     ]
   },
   {
-    "identifier": "bbf1ddd5-a529-424b-bf6d-6a75434e6fc5",
-    "createdDate": "3/20/2020",
-    "modifiedDate": "3/27/2020",
-    "mainTitle": "Point Blank (À bout portant)",
+    "id": "https://frontend.dev.nva.aws.unit.no/publication/bbf1ddd5-a529-424b-bf6d-6a75434e6fc5",
+    "date": "3/20/2020",
+    "title": "Point Blank (À bout portant)",
     "owner": "jpantlin1b@abc.net.au",
-    "contributors": [
+    "contributor": [
       {
         "identifier": "ec6fd020-9550-4815-9811-c6a9c2c80a12",
         "name": "Curtis Fitch"
@@ -748,12 +700,11 @@
     ]
   },
   {
-    "identifier": "22ba6c5b-dea8-48d9-95f2-3eec4a987522",
-    "createdDate": "3/19/2020",
-    "modifiedDate": "4/9/2020",
-    "mainTitle": "Warrior",
+    "id": "https://frontend.dev.nva.aws.unit.no/publication/22ba6c5b-dea8-48d9-95f2-3eec4a987522",
+    "date": "3/19/2020",
+    "title": "Warrior",
     "owner": "bkeel1c@whitehouse.gov",
-    "contributors": [
+    "contributor": [
       {
         "identifier": "ec6fd020-9550-4815-9811-c6a9c2c80a12",
         "name": "Curtis Fitch"
@@ -765,12 +716,11 @@
     ]
   },
   {
-    "identifier": "1fc1084b-ea80-4ace-9faa-7f719a184cdd",
-    "createdDate": "9/23/2018",
-    "modifiedDate": "2/14/2020",
-    "mainTitle": "Clubbed",
+    "id": "https://frontend.dev.nva.aws.unit.no/publication/1fc1084b-ea80-4ace-9faa-7f719a184cdd",
+    "date": "9/23/2018",
+    "title": "Clubbed",
     "owner": "hbowmaker1d@independent.co.uk",
-    "contributors": [
+    "contributor": [
       {
         "identifier": "eb918407-16fb-44e1-a1ac-32a7837d1f59",
         "name": "Alberto Kuzma"
