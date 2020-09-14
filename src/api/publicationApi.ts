@@ -4,9 +4,7 @@ import { Publication } from '../types/publication.types';
 import { PublicationFileSet } from '../types/file.types';
 import { StatusCode } from '../utils/constants';
 import { getIdToken } from './userApi';
-import apiRequest, { authenticatedApiRequest } from './apiRequest';
-import { RoleName } from '../types/user.types';
-import { DoiRequest } from '../types/doiRequest.types';
+import apiRequest from './apiRequest';
 import { SearchResult } from '../types/search.types';
 
 export enum PublicationsApiPaths {
@@ -14,7 +12,6 @@ export enum PublicationsApiPaths {
   PUBLICATION = '/publication',
   PUBLICATIONS_BY_OWNER = '/publication/by-owner',
   DOI_LOOKUP = '/doi-fetch',
-  DOI_REQUESTS = '/doi-request',
   FOR_APPROVAL = '/publications/approval',
 }
 
@@ -171,12 +168,6 @@ export const search = async (
 ) =>
   await apiRequest<SearchResult[]>({
     url: `${PublicationsApiPaths.SEARCH}?query=${searchTerm}`,
-    cancelToken,
-  });
-
-export const getDoiRequests = async (role: RoleName, cancelToken?: CancelToken) =>
-  await authenticatedApiRequest<DoiRequest[]>({
-    url: `${PublicationsApiPaths.DOI_REQUESTS}?role=${role}`,
     cancelToken,
   });
 

@@ -9,6 +9,7 @@ import Heading from '../../components/Heading';
 import Card from '../../components/Card';
 import NormalText from '../../components/NormalText';
 import { StyledCenterAlignedContentWrapper } from '../../components/styled/Wrappers';
+import { PageHeader } from '../../components/PageHeader';
 
 const StyledEditPublication = styled(StyledCenterAlignedContentWrapper)`
   width: 100%;
@@ -59,6 +60,7 @@ const EditPublication: FC = () => {
 
   return (
     <>
+      <PageHeader>{t('publication:new_publication')}</PageHeader>
       {!showForm || !identifier ? (
         <>
           <StyledEditPublication>

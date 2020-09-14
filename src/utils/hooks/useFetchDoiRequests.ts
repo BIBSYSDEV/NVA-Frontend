@@ -4,10 +4,10 @@ import { useTranslation } from 'react-i18next';
 
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
-import { getDoiRequests } from '../../api/publicationApi';
 import { RoleName } from '../../types/user.types';
 import { DoiRequest } from '../../types/doiRequest.types';
 import useCancelToken from './useCancelToken';
+import { getDoiRequests } from '../../api/doiRequestApi';
 
 const useFetchDoiRequests = (role: RoleName): [DoiRequest[], boolean, () => void] => {
   const dispatch = useDispatch();
