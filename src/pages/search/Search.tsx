@@ -5,6 +5,8 @@ import SearchBar from '../../components/SearchBar';
 import useSearchPublications from '../../utils/hooks/useSearchPublications';
 import SearchResults from './SearchResults';
 import ListSkeleton from '../../components/ListSkeleton';
+import NormalText from '../../components/NormalText';
+import { useTranslation } from 'react-i18next';
 
 const StyledSearch = styled.div`
   padding-top: 2rem;
@@ -16,6 +18,7 @@ const Search: FC = () => {
   const history = useHistory();
   const searchTerm = new URLSearchParams(history.location.search).get('query');
   const [publications, isLoading] = useSearchPublications(searchTerm);
+  const { t } = useTranslation('common');
 
   const handleSearch = async (searchTerm: string) => {
     if (searchTerm.length) {
@@ -32,8 +35,10 @@ const Search: FC = () => {
       />
       {isLoading ? (
         <ListSkeleton arrayLength={5} minWidth={40} height={100} />
+      ) : publications?.length > 0 ? (
+        <SearchResults publications={publications} searchTerm={searchTerm} />
       ) : (
-        publications?.length > 0 && <SearchResults publications={publications} searchTerm={searchTerm} />
+        <NormalText>{t('no_hits')}</NormalText>
       )}
     </StyledSearch>
   );
