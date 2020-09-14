@@ -23,7 +23,7 @@ interface SearchResultsProps {
 
 const SearchResults: FC<SearchResultsProps> = ({ publications, searchTerm }) => {
   const { t } = useTranslation();
-  const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
+  const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[1]);
   const [page, setPage] = useState(0);
 
   // Ensure selected page is not out of bounds due to manipulated userList
@@ -53,7 +53,7 @@ const SearchResults: FC<SearchResultsProps> = ({ publications, searchTerm }) => 
                         <Fragment key={contributor.name}>
                           {contributor.identifier ? (
                             <MuiLink component={Link} to={`/user/${contributor.identifier}`}>
-                              {contributor.name}
+                              <StyledContributor>{contributor.name} </StyledContributor>
                             </MuiLink>
                           ) : (
                             <StyledContributor>{contributor.name} </StyledContributor>
