@@ -35,7 +35,7 @@ const SearchResults: FC<SearchResultsProps> = ({ publications, searchTerm }) => 
       <List>
         {publications &&
           publications.slice(validPage * rowsPerPage, validPage * rowsPerPage + rowsPerPage).map((publication) => {
-            const publicationId = publication.id.split('/').pop();
+            const publicationId = publication.id?.split('/').pop();
             const displayDate = publication.date && new Date(publication.date).toLocaleDateString();
             return (
               <PublicationListItemComponent
