@@ -1,6 +1,7 @@
 import { createMuiTheme } from '@material-ui/core';
 import i18n from '../translations/i18n';
 import { getTranslatedLabelForDisplayedRows } from '../utils/pagination';
+import { merriweatherRegular, barlowRegular } from './fonts';
 
 // Extend Palette type to allow custom colors
 declare module '@material-ui/core/styles/createPalette' {
@@ -65,18 +66,38 @@ export default createMuiTheme({
     },
   },
   typography: {
-    fontFamily: 'sans-serif',
+    fontFamily: 'Barlow,  sans-serif',
     h1: {
+      fontFamily: 'Merriweather, serif',
       fontSize: '3rem',
-      fontFamily: 'serif',
     },
-    h2: { fontSize: '2.5rem' },
-    h3: { fontSize: '2.1rem' },
-    h4: { fontSize: '1.8rem' },
-    h5: { fontSize: '1.5rem' },
-    h6: { fontSize: '1.2rem' },
+    h2: {
+      fontFamily: 'Merriweather, serif',
+      fontSize: '2.5rem',
+    },
+    h3: {
+      fontFamily: 'Merriweather, serif',
+      fontSize: '2.1rem',
+    },
+    h4: {
+      fontFamily: 'Merriweather, serif',
+      fontSize: '1.8rem',
+    },
+    h5: {
+      fontFamily: 'Merriweather, serif',
+      fontSize: '1.5rem',
+    },
+    h6: {
+      fontFamily: 'Merriweather, serif',
+      fontSize: '1.2rem',
+    },
   },
   overrides: {
+    MuiCssBaseline: {
+      '@global': {
+        '@font-face': [merriweatherRegular, barlowRegular],
+      },
+    },
     MuiButton: {
       root: {
         textTransform: 'none',
