@@ -115,7 +115,7 @@ const PublicPublicationContent: FC<PublicPublicationContentProps> = ({ publicati
     mainTitle,
     npiSubjectHeading,
     reference: { doi, publicationContext, publicationInstance },
-    tags,
+    tags = [],
   } = publication.entityDescription;
 
   // Show only the license for the first file for now
