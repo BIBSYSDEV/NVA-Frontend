@@ -37,7 +37,6 @@ const StyledSearchBarContainer = styled.div`
 const Dashboard: FC = () => {
   const { t } = useTranslation();
   const history = useHistory();
-  const searchTerm = new URLSearchParams(history.location.search).get('query');
 
   const handleSearch = async (searchTerm: string) => {
     if (searchTerm.length) {
@@ -51,7 +50,7 @@ const Dashboard: FC = () => {
         <SearchBar
           resetSearchInput={history.location.pathname === '/search'}
           handleSearch={handleSearch}
-          initialSearchTerm={searchTerm ?? ''}
+          initialSearchTerm=""
         />
         <LatestPublications />
       </StyledSearchBarContainer>

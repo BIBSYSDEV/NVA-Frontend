@@ -7,6 +7,7 @@ import { List, Typography } from '@material-ui/core';
 import PublicationListItemComponent from '../dashboard/PublicationListItemComponent';
 import { SearchResult } from '../../types/search.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
+import NormalText from '../../components/NormalText';
 
 const StyledSearchResults = styled.div`
   padding-bottom: 1rem;
@@ -33,7 +34,7 @@ const SearchResults: FC<SearchResultsProps> = ({ publications, searchTerm }) => 
     <StyledSearchResults data-testid="search-results">
       {searchTerm && t('results', { count: publications.length, term: searchTerm })}
       <List>
-        {publications &&
+        {publications ? (
           publications.slice(validPage * rowsPerPage, validPage * rowsPerPage + rowsPerPage).map((publication) => {
             const publicationId = publication.id?.split('/').pop();
             const displayDate = publication.date && new Date(publication.date).toLocaleDateString();
@@ -42,7 +43,7 @@ const SearchResults: FC<SearchResultsProps> = ({ publications, searchTerm }) => 
                 key={publication.id}
                 primaryComponent={
                   <MuiLink component={Link} to={`/publication/${publicationId}/public`}>
-                    {publication.title ?? publication.title}
+                    {publication.title}
                   </MuiLink>
                 }
                 secondaryComponent={
@@ -64,7 +65,10 @@ const SearchResults: FC<SearchResultsProps> = ({ publications, searchTerm }) => 
                 }
               />
             );
-          })}
+          })
+        ) : (
+          <NormalText>{t('common:no_hits')}</NormalText>
+        )}
       </List>
       {publications.length > ROWS_PER_PAGE_OPTIONS[0] && (
         <TablePagination
