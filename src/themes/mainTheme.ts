@@ -65,8 +65,16 @@ export default createMuiTheme({
     },
   },
   typography: {
-    fontFamily:
-      "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif",
+    fontFamily: 'sans-serif',
+    h1: {
+      fontSize: '3rem',
+      fontFamily: 'serif',
+    },
+    h2: { fontSize: '2.5rem' },
+    h3: { fontSize: '2.1rem' },
+    h4: { fontSize: '1.8rem' },
+    h5: { fontSize: '1.5rem' },
+    h6: { fontSize: '1.2rem' },
   },
   overrides: {
     MuiButton: {

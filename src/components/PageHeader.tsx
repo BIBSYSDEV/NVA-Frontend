@@ -10,4 +10,4 @@ const StyledHeader = styled(Typography)`
   padding-bottom: 1rem;
 `;
 
-export const PageHeader: FC = ({ children }) => <StyledHeader variant="h3">{children}</StyledHeader>;
+export const PageHeader: FC = ({ children }) => <StyledHeader variant="h1">{children}</StyledHeader>;
