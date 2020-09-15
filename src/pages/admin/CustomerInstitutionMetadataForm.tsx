@@ -8,6 +8,7 @@ import { Field, FieldProps, Form, Formik, ErrorMessage } from 'formik';
 import { useHistory } from 'react-router-dom';
 
 import Card from '../../components/Card';
+import Heading from '../../components/Heading';
 import {
   CustomerInstitutionFieldNames,
   CustomerInstitution,
@@ -65,6 +66,7 @@ const CustomerInstitutionMetadataForm: FC<CustomerInstitutionMetadataFormProps> 
 
   return (
     <Card>
+      <Heading>{t('common:institution')}</Heading>
       <Formik
         enableReinitialize
         initialValues={{ ...emptyCustomerInstitution, ...customerInstitution }}
