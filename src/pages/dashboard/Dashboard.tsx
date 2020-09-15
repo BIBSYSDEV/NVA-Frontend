@@ -1,10 +1,9 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { Link as MuiLink, Divider } from '@material-ui/core';
+import { Link as MuiLink } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import LatestPublications from './LatestPublications';
-import { PageHeader } from '../../components/PageHeader';
 
 const StyledDashboard = styled.div`
   display: grid;
@@ -37,35 +36,31 @@ const Dashboard: FC = () => {
   const { t } = useTranslation();
 
   return (
-    <>
-      <PageHeader>{t('publication:publication.newest_publications')}</PageHeader>
-      <StyledDashboard>
-        <StyledSearchBarContainer>
-          <LatestPublications />
-          <Divider />
-        </StyledSearchBarContainer>
-        <StyledOtherContent>
-          <StyledLinks>
-            <MuiLink
-              aria-label={t('infopages:description.heading')}
-              color="primary"
-              component={Link}
-              to="/description"
-              data-testid="description_link">
-              {t('infopages:description.heading')}
-            </MuiLink>
-            <MuiLink
-              aria-label={t('infopages:order_information.heading')}
-              color="primary"
-              component={Link}
-              to="/order-information"
-              data-testid="order_information_link">
-              {t('infopages:order_information.heading')}
-            </MuiLink>
-          </StyledLinks>
-        </StyledOtherContent>
-      </StyledDashboard>
-    </>
+    <StyledDashboard>
+      <StyledSearchBarContainer>
+        <LatestPublications />
+      </StyledSearchBarContainer>
+      <StyledOtherContent>
+        <StyledLinks>
+          <MuiLink
+            aria-label={t('infopages:description.heading')}
+            color="primary"
+            component={Link}
+            to="/description"
+            data-testid="description_link">
+            {t('infopages:description.heading')}
+          </MuiLink>
+          <MuiLink
+            aria-label={t('infopages:order_information.heading')}
+            color="primary"
+            component={Link}
+            to="/order-information"
+            data-testid="order_information_link">
+            {t('infopages:order_information.heading')}
+          </MuiLink>
+        </StyledLinks>
+      </StyledOtherContent>
+    </StyledDashboard>
   );
 };
 
