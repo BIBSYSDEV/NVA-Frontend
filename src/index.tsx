@@ -22,7 +22,7 @@ if (USE_MOCK_DATA) {
 if ((window as any).Cypress) {
   (window as any).store = store;
 }
-console.log(mainTheme);
+
 ReactDOM.render(
   <I18nextProvider i18n={i18n}>
     <Provider store={store}>
