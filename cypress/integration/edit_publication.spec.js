@@ -6,8 +6,7 @@ describe('User opens an item in the My Publication list', () => {
 
   it('The User should be able to edit an item in the My Publications list', () => {
     // Open My Publications
-    cy.get('[data-testid=menu]').click({ force: true });
-    cy.get('[data-testid=menu-my-publications-button]').click({ force: true });
+    cy.get('[data-testid=my-publications]').click({ force: true });
 
     // Edit publication
     // Description tab
