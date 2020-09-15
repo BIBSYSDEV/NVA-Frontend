@@ -69,27 +69,19 @@ export default createMuiTheme({
     fontFamily: 'Barlow,  sans-serif',
     h1: {
       fontFamily: 'Merriweather, serif',
-      fontSize: '3rem',
+      fontSize: '2.1rem',
     },
     h2: {
       fontFamily: 'Merriweather, serif',
-      fontSize: '2.5rem',
+      fontSize: '1.8rem',
     },
     h3: {
       fontFamily: 'Merriweather, serif',
-      fontSize: '2.1rem',
+      fontSize: '1.6rem',
     },
     h4: {
       fontFamily: 'Merriweather, serif',
-      fontSize: '1.8rem',
-    },
-    h5: {
-      fontFamily: 'Merriweather, serif',
-      fontSize: '1.5rem',
-    },
-    h6: {
-      fontFamily: 'Merriweather, serif',
-      fontSize: '1.2rem',
+      fontSize: '1.4rem',
     },
   },
   overrides: {
