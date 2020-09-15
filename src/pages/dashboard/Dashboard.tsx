@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { Link as MuiLink } from '@material-ui/core';
+import { Link as MuiLink, Divider } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import LatestPublications from './LatestPublications';
 import { PageHeader } from '../../components/PageHeader';
@@ -42,6 +42,7 @@ const Dashboard: FC = () => {
       <StyledDashboard>
         <StyledSearchBarContainer>
           <LatestPublications />
+          <Divider />
         </StyledSearchBarContainer>
         <StyledOtherContent>
           <StyledLinks>

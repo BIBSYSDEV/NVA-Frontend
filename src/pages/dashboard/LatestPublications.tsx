@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
-import { List, Typography, Divider, CircularProgress } from '@material-ui/core';
+import { List, Typography, CircularProgress } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { Link as MuiLink } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
@@ -28,26 +28,23 @@ const LatestPublications: FC = () => {
           <CircularProgress />
         </StyledProgressWrapper>
       ) : publications.length > 0 ? (
-        <>
-          <List>
-            {publications.map((publication) => (
-              <PublicationListItemComponent
-                key={publication.identifier}
-                primaryComponent={
-                  <MuiLink component={Link} to={`/publication/${publication.identifier}/public`}>
-                    {publication.mainTitle}
-                  </MuiLink>
-                }
-                secondaryComponent={
-                  <Typography component="span">
-                    {new Date(publication.modifiedDate).toLocaleDateString()} - {publication.owner}
-                  </Typography>
-                }
-              />
-            ))}
-          </List>
-          <Divider />
-        </>
+        <List>
+          {publications.map((publication) => (
+            <PublicationListItemComponent
+              key={publication.identifier}
+              primaryComponent={
+                <MuiLink component={Link} to={`/publication/${publication.identifier}/public`}>
+                  {publication.mainTitle}
+                </MuiLink>
+              }
+              secondaryComponent={
+                <Typography component="span">
+                  {new Date(publication.modifiedDate).toLocaleDateString()} - {publication.owner}
+                </Typography>
+              }
+            />
+          ))}
+        </List>
       ) : (
         <StyledNormalText>{t('publication.no_published_publications_yet')}</StyledNormalText>
       )}
