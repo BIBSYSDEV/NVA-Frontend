@@ -66,7 +66,7 @@ const CustomerInstitutionMetadataForm: FC<CustomerInstitutionMetadataFormProps> 
 
   return (
     <Card>
-      <Heading>{t(editMode ? 'edit_institution' : 'add_institution')}</Heading>
+      <Heading>{t('common:institution')}</Heading>
       <Formik
         enableReinitialize
         initialValues={{ ...emptyCustomerInstitution, ...customerInstitution }}
@@ -95,6 +95,7 @@ const CustomerInstitutionMetadataForm: FC<CustomerInstitutionMetadataFormProps> 
                       name: selectedInstitution?.name ?? '',
                       [CustomerInstitutionFieldNames.DISPLAY_NAME]: selectedInstitution?.name ?? '',
                       [CustomerInstitutionFieldNames.SHORT_NAME]: selectedInstitution?.acronym ?? '',
+                      [CustomerInstitutionFieldNames.CRISTIN_ID]: selectedInstitution?.id ?? '',
                     });
                   }}
                   value={institutions.find((i) => i.name === value) ?? null}

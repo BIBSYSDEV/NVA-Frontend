@@ -6,16 +6,14 @@ import styled from 'styled-components';
 import DoiRequests from './DoiRequests';
 import TabButton from '../../components/TabButton';
 import { StyledCenterAlignedContentWrapper } from '../../components/styled/Wrappers';
+import { PageHeader } from '../../components/PageHeader';
 
 const StyledContainer = styled.div`
-  display: block;
   width: 100%;
-  margin: 0 2rem 2rem 2rem;
 `;
 
 const StyledTabsContainer = styled(StyledCenterAlignedContentWrapper)`
-  padding-top: 2rem;
-  margin: 0 1.5rem 1rem;
+  margin-bottom: 1rem;
 `;
 
 // const StyledPlaylistAddCheckIcon = styled(PlaylistAddCheckIcon)`
@@ -38,27 +36,30 @@ const WorklistPage: FC = () => {
   const [selectedTab, setSelectedTab] = useState(Tab.Doi);
 
   return (
-    <StyledContainer>
-      <StyledTabsContainer>
-        {/* <TabButton
-          data-testid="for-approval-button"
-          onClick={() => setSelectedTab(Tab.Approval)}
-          isSelected={selectedTab === Tab.Approval}>
-          <StyledPlaylistAddCheckIcon fontSize="large" />
-          {t('for_approval')}
-        </TabButton> */}
-        <TabButton
-          data-testid="doi-requests-button"
-          onClick={() => setSelectedTab(Tab.Doi)}
-          isSelected={selectedTab === Tab.Doi}>
-          <StyledLinkIcon fontSize="large" />
-          {t('doi_requests.doi_requests')}
-        </TabButton>
-      </StyledTabsContainer>
+    <>
+      <PageHeader>{t('my_worklist')}</PageHeader>
+      <StyledContainer>
+        <StyledTabsContainer>
+          {/* <TabButton
+            data-testid="for-approval-button"
+            onClick={() => setSelectedTab(Tab.Approval)}
+            isSelected={selectedTab === Tab.Approval}>
+            <StyledPlaylistAddCheckIcon fontSize="large" />
+            {t('for_approval')}
+          </TabButton> */}
+          <TabButton
+            data-testid="doi-requests-button"
+            onClick={() => setSelectedTab(Tab.Doi)}
+            isSelected={selectedTab === Tab.Doi}>
+            <StyledLinkIcon fontSize="large" />
+            {t('doi_requests.doi_requests')}
+          </TabButton>
+        </StyledTabsContainer>
 
-      {/* {selectedTab === Tab.Approval && <PublicationsForApproval />} */}
-      {selectedTab === Tab.Doi && <DoiRequests />}
-    </StyledContainer>
+        {/* {selectedTab === Tab.Approval && <PublicationsForApproval />} */}
+        {selectedTab === Tab.Doi && <DoiRequests />}
+      </StyledContainer>
+    </>
   );
 };
 

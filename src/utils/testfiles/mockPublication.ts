@@ -9,7 +9,6 @@ export const mockPublication: JournalPublication = {
   createdDate: '2020',
   owner: 'aaa@bb.com',
   status: PublicationStatus.DRAFT,
-  doiRequested: false,
   project: null,
   fileSet: {
     type: BackendTypeNames.FILE_SET,

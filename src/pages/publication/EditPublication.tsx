@@ -9,6 +9,7 @@ import Heading from '../../components/Heading';
 import Card from '../../components/Card';
 import NormalText from '../../components/NormalText';
 import { StyledCenterAlignedContentWrapper } from '../../components/styled/Wrappers';
+import { PageHeader } from '../../components/PageHeader';
 
 const StyledEditPublication = styled(StyledCenterAlignedContentWrapper)`
   width: 100%;
@@ -47,7 +48,7 @@ const EditPublication: FC = () => {
   const { identifier } = useParams();
   const [expanded, setExpanded] = useState<string | false>(false);
   const [showForm, setShowForm] = useState(!!identifier);
-  const { t } = useTranslation();
+  const { t } = useTranslation('publication');
 
   const handleChange = (panel: string) => (_: React.ChangeEvent<any>, isExpanded: boolean) => {
     setExpanded(isExpanded ? panel : false);
@@ -59,6 +60,7 @@ const EditPublication: FC = () => {
 
   return (
     <>
+      <PageHeader>{t(identifier ? 'edit_publication' : 'new_publication')}</PageHeader>
       {!showForm || !identifier ? (
         <>
           <StyledEditPublication>
@@ -76,7 +78,7 @@ const EditPublication: FC = () => {
             </StyledSelectorWrapper>
             <StyledCard>
               <Heading>{t('common:information')}</Heading>
-              <NormalText>{t('publication:publication.info_text')}</NormalText>
+              <NormalText>{t('publication.info_text')}</NormalText>
             </StyledCard>
           </StyledEditPublication>
         </>

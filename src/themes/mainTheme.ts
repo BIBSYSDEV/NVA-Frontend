@@ -1,6 +1,7 @@
 import { createMuiTheme } from '@material-ui/core';
 import i18n from '../translations/i18n';
 import { getTranslatedLabelForDisplayedRows } from '../utils/pagination';
+import { merriweatherRegular, barlowRegular } from './fonts';
 
 // Extend Palette type to allow custom colors
 declare module '@material-ui/core/styles/createPalette' {
@@ -65,10 +66,30 @@ export default createMuiTheme({
     },
   },
   typography: {
-    fontFamily:
-      "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif",
+    fontFamily: 'Barlow,  sans-serif',
+    h1: {
+      fontFamily: 'Merriweather, serif',
+      fontSize: '2.1rem',
+    },
+    h2: {
+      fontFamily: 'Merriweather, serif',
+      fontSize: '1.8rem',
+    },
+    h3: {
+      fontFamily: 'Merriweather, serif',
+      fontSize: '1.6rem',
+    },
+    h4: {
+      fontFamily: 'Merriweather, serif',
+      fontSize: '1.4rem',
+    },
   },
   overrides: {
+    MuiCssBaseline: {
+      '@global': {
+        '@font-face': [merriweatherRegular, barlowRegular],
+      },
+    },
     MuiButton: {
       root: {
         textTransform: 'none',
@@ -96,8 +117,12 @@ export default createMuiTheme({
       },
     },
     MuiTab: {
-      root: {
-        background: Colors.TabBackground,
+      wrapper: {
+        flexDirection: 'row-reverse',
+      },
+      labelIcon: {
+        minHeight: undefined,
+        paddingTop: undefined,
       },
       textColorPrimary: {
         '&$selected': {

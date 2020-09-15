@@ -1,10 +1,10 @@
 import * as Yup from 'yup';
-import { 
-  PublicationType, 
-  JournalType, 
-  // BookType, 
-  DegreeType, 
-  ReportType 
+import {
+  PublicationType,
+  JournalType,
+  // BookType,
+  DegreeType,
+  ReportType,
 } from '../../types/publicationFieldNames';
 import { LanguageValues } from '../../types/language.types';
 import i18n from '../../translations/i18n';
@@ -141,10 +141,10 @@ export const publicationValidationSchema = Yup.object().shape({
           is: PublicationType.DEGREE,
           then: Yup.object().shape(degreePublicationInstance),
         }),
-        // .when('$publicationContextType', {
-        //   is: PublicationType.CHAPTER,
-        //   then: Yup.object().shape(chapterPublicationInstance),
-        // }),
+      // .when('$publicationContextType', {
+      //   is: PublicationType.CHAPTER,
+      //   then: Yup.object().shape(chapterPublicationInstance),
+      // }),
       publicationContext: Yup.object()
         .shape({ type: Yup.string().required(ErrorMessage.REQUIRED) })
         .when('$publicationContextType', {
