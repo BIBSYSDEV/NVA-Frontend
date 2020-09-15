@@ -1,5 +1,5 @@
-import MerriweatherRegularTtf from '../fonts/Merriweather-Regular.ttf';
-import BarlowRegularTtf from '../fonts/Barlow-Regular.ttf';
+import MerriweatherRegularTtf from './Merriweather-Regular.ttf';
+import BarlowRegularTtf from './Barlow-Regular.ttf';
 
 export const merriweatherRegular = {
   fontFamily: 'Merriweather',
