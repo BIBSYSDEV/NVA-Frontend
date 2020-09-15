@@ -41,6 +41,7 @@
     "tags_helper": "Press Enter to add keyword",
     "year_only": "Year only"
   },
+  "edit_publication": "Edit publication",
   "feedback": {
     "invalid_format": "Invalid format",
     "invalid_page_interval": "Invalid page interval",
@@ -95,7 +96,6 @@
   },
   "new_publication": "New publication",
   "public_page": {
-    "edit_publication": "Edit publication",
     "message_to_curator": "Message to curator",
     "reserve_doi": "Reserve DOI",
     "request_doi": "Request a DOI",

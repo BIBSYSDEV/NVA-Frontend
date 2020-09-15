@@ -11,7 +11,6 @@ const StyledDashboard = styled.div`
   grid-template-rows: auto auto;
   row-gap: 1rem;
   justify-items: center;
-  padding-top: 4rem;
 `;
 
 const StyledOtherContent = styled.div`

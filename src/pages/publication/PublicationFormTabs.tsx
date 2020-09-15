@@ -1,14 +1,13 @@
 import { FormikProps, useFormikContext } from 'formik';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
-
+import styled from 'styled-components';
 import { Tabs } from '@material-ui/core';
 
 import LinkTab from '../../components/LinkTab';
 import { Publication } from '../../types/publication.types';
 import { ReferenceFieldNames, DescriptionFieldNames } from '../../types/publicationFieldNames';
 import { hasTouchedError, getAllFileFields, getAllContributorFields } from '../../utils/formik-helpers';
-import styled from 'styled-components';
 
 const StyledTabs = styled(Tabs)`
   @media (min-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {

@@ -1,5 +1,4 @@
 import React, { FC, useEffect, useState } from 'react';
-import Heading from '../../components/Heading';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { getAllCustomerInstitutions } from '../../api/customerInstitutionsApi';
@@ -11,6 +10,7 @@ import { CustomerInstitution } from '../../types/customerInstitution.types';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import { StyledProgressWrapper, StyledRightAlignedButtonWrapper } from '../../components/styled/Wrappers';
+import { PageHeader } from '../../components/PageHeader';
 
 const AdminCustomerInstitutionsPage: FC = () => {
   const { t } = useTranslation('admin');
@@ -33,25 +33,27 @@ const AdminCustomerInstitutionsPage: FC = () => {
   }, [dispatch]);
 
   return (
-    <Card>
-      <Heading>{t('common:institutions')}</Heading>
-      <StyledRightAlignedButtonWrapper>
-        <Button
-          color="primary"
-          component={RouterLink}
-          to="/admin-institutions/new"
-          data-testid="add-institution-button">
-          {t('add_institution')}
-        </Button>
-      </StyledRightAlignedButtonWrapper>
-      {isLoading ? (
-        <StyledProgressWrapper>
-          <CircularProgress />
-        </StyledProgressWrapper>
-      ) : (
-        <InstitutionList institutions={institutions} />
-      )}
-    </Card>
+    <>
+      <PageHeader>{t('admin_institutions')}</PageHeader>
+      <Card>
+        <StyledRightAlignedButtonWrapper>
+          <Button
+            color="primary"
+            component={RouterLink}
+            to="/admin-institutions/new"
+            data-testid="add-institution-button">
+            {t('add_institution')}
+          </Button>
+        </StyledRightAlignedButtonWrapper>
+        {isLoading ? (
+          <StyledProgressWrapper>
+            <CircularProgress />
+          </StyledProgressWrapper>
+        ) : (
+          <InstitutionList institutions={institutions} />
+        )}
+      </Card>
+    </>
   );
 };
 
