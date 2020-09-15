@@ -7,6 +7,7 @@ import { List, Typography } from '@material-ui/core';
 import PublicationListItemComponent from '../dashboard/PublicationListItemComponent';
 import { SearchResult } from '../../types/search.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
+import { displayDate } from '../../utils/date-helpers';
 
 const StyledSearchResults = styled.div`
   padding-bottom: 1rem;
@@ -36,7 +37,6 @@ const SearchResults: FC<SearchResultsProps> = ({ publications, searchTerm }) => 
         {publications &&
           publications.slice(validPage * rowsPerPage, validPage * rowsPerPage + rowsPerPage).map((publication) => {
             const publicationId = publication.id?.split('/').pop();
-            const displayDate = publication.date && new Date(publication.date).toLocaleDateString();
             return (
               <PublicationListItemComponent
                 key={publication.id}
@@ -47,7 +47,7 @@ const SearchResults: FC<SearchResultsProps> = ({ publications, searchTerm }) => 
                 }
                 secondaryComponent={
                   <Typography component="span">
-                    {displayDate && <div>{displayDate}</div>}
+                    {publication.date && <div>{displayDate(publication.date)}</div>}
                     {publication.contributors &&
                       publication.contributors.map((contributor) => (
                         <Fragment key={contributor.name}>

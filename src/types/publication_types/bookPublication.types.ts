@@ -1,4 +1,4 @@
-import { BackendType, PublicationDate, PagesMonograph } from '../publication.types';
+import { BackendType, PublicationDateWithType, PagesMonograph } from '../publication.types';
 import { PublicationType, BookType } from '../publicationFieldNames';
 import { LanguageValues } from '../language.types';
 import { Contributor } from '../contributor.types';
@@ -30,7 +30,7 @@ interface BookReference extends BackendType {
 export interface BookEntityDescription extends BackendType {
   abstract: string;
   contributors: Contributor[];
-  date: PublicationDate;
+  date: PublicationDateWithType;
   description: string;
   language: LanguageValues;
   mainTitle: string;

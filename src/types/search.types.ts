@@ -1,3 +1,5 @@
+import { PublicationDate } from './publication.types';
+
 interface SearchResultContributor {
   identifier: string;
   name: string;
@@ -6,7 +8,7 @@ interface SearchResultContributor {
 export interface SearchResult {
   id: string;
   contributors: SearchResultContributor[];
-  date: string;
+  date: PublicationDate;
   owner: string;
   title: string;
 }

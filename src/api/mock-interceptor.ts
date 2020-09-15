@@ -11,8 +11,6 @@ import mockNtnuSubunitResponse from '../utils/testfiles/institutions/institution
 import mockAuthoritiesResponse from '../utils/testfiles/mock_authorities_response.json';
 import mockProjects from '../utils/testfiles/projects_real.json';
 import { mockPublication } from '../utils/testfiles/mockPublication';
-import mockSearchResults from '../utils/testfiles/search_results.json';
-import threeMockSearchResults from '../utils/testfiles/three_search_results.json';
 import mockMyPublications from '../utils/testfiles/my_publications.json';
 import mockNsdPublisers from '../utils/testfiles/publishersFromNsd.json';
 import mockCustomerInstitutions from '../utils/testfiles/mock_customer_institutions.json';
@@ -30,6 +28,8 @@ import { mockRoles } from '../utils/testfiles/mock_feide_user';
 import { RoleApiPaths } from './roleApi';
 import { mockDoiRequests } from '../utils/testfiles/mockDoiRequest';
 import { DoiRequestApiPaths } from './doiRequestApi';
+import { mockSearchResults } from '../utils/testfiles/search_results';
+import { threeMockSearchResults } from '../utils/testfiles/three_search_results';
 
 const mockOrcidResponse: OrcidResponse = {
   id: 'https://sandbox.orcid.org/0000-0001-2345-6789',
