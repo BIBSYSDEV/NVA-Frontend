@@ -48,11 +48,7 @@ const Dashboard: FC = () => {
   return (
     <StyledDashboard>
       <StyledSearchBarContainer>
-        <SearchBar
-          resetSearchInput={history.location.pathname === '/search'}
-          handleSearch={handleSearch}
-          initialSearchTerm=""
-        />
+        <SearchBar handleSearch={handleSearch} initialSearchTerm="" />
         <LatestPublications />
       </StyledSearchBarContainer>
       <StyledOtherContent>
