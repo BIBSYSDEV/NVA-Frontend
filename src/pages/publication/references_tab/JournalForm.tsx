@@ -39,16 +39,18 @@ const JournalForm: FC = () => {
   const { t } = useTranslation('publication');
   const { values, setFieldValue, touched }: FormikProps<JournalPublication> = useFormikContext();
   const {
-    reference: {
-      publicationContext,
-      publicationInstance: { peerReviewed },
-    },
+    reference: { publicationContext, publicationInstance },
   } = values.entityDescription as JournalEntityDescription;
 
   useEffect(() => {
-    // set correct Pages type based on publication type being Journal
+    // Set correct Pages type based on publication type being Journal
     setFieldValue(ReferenceFieldNames.PAGES_TYPE, BackendTypeNames.PAGES_RANGE);
   }, [setFieldValue]);
+
+  useEffect(() => {
+    // Only Article can be peer reviewed, so ensure it is set to false when type is changed
+    setFieldValue(ReferenceFieldNames.PEER_REVIEW, false);
+  }, [setFieldValue, publicationInstance.type]);
 
   return (
     <StyledContent>
@@ -134,8 +136,14 @@ const JournalForm: FC = () => {
           )}
         </Field>
       </StyledArticleDetail>
-      <PeerReview fieldName={ReferenceFieldNames.PEER_REVIEW} label={t('references.peer_review')} />
-      <NviValidation isPeerReviewed={peerReviewed} isRated={!!publicationContext?.level} dataTestId="nvi_journal" />
+      {publicationInstance.type === JournalType.ARTICLE && (
+        <PeerReview fieldName={ReferenceFieldNames.PEER_REVIEW} label={t('references.peer_review')} />
+      )}
+      <NviValidation
+        isPeerReviewed={publicationInstance.peerReviewed}
+        isRated={!!publicationContext?.level}
+        dataTestId="nvi_journal"
+      />
     </StyledContent>
   );
 };
