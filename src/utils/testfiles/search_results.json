@@ -4,7 +4,7 @@
     "date": "8/26/2019",
     "title": "Dove, The",
     "owner": "mfalvey0@pen.io",
-    "contributor": [
+    "contributors": [
       {
         "identifier": "04bfdced-e65a-483f-bcaa-a83ad7218b60",
         "name": "Alasdair Dyter"
@@ -16,7 +16,7 @@
     "date": "1/19/2018",
     "title": "Bad Santa",
     "owner": "fhanwell1@businessweek.com",
-    "contributor": [
+    "contributors": [
       {
         "identifier": "9022e8b1-e908-4b22-b051-c62ff4dc7854",
         "name": "Ailene Strippling"
@@ -32,7 +32,7 @@
     "date": "9/20/2019",
     "title": "Carey Treatment, The",
     "owner": "okobsch2@a8.net",
-    "contributor": [
+    "contributors": [
       {
         "identifier": "eb918407-16fb-44e1-a1ac-32a7837d1f59",
         "name": "Alberto Kuzma"
@@ -44,7 +44,7 @@
     "date": "3/10/2020",
     "title": "Gloria",
     "owner": "jjanusik3@timesonline.co.uk",
-    "contributor": [
+    "contributors": [
       {
         "identifier": "09a2d886-f7ee-4572-99f1-09e13de9a230",
         "name": "Llewellyn Munn"
@@ -64,7 +64,7 @@
     "date": "5/7/2020",
     "title": "Before and After",
     "owner": "zmilam4@smh.com.au",
-    "contributor": [
+    "contributors": [
       {
         "identifier": "eb918407-16fb-44e1-a1ac-32a7837d1f59",
         "name": "Alberto Kuzma"
@@ -76,7 +76,7 @@
     "date": "9/3/2019",
     "title": "Highlander",
     "owner": "bmangan5@soundcloud.com",
-    "contributor": [
+    "contributors": [
       {
         "identifier": "eb918407-16fb-44e1-a1ac-32a7837d1f59",
         "name": "Alberto Kuzma"
@@ -88,7 +88,7 @@
     "date": "12/27/2018",
     "title": "Nim's Island",
     "owner": "vspafford6@google.ru",
-    "contributor": [
+    "contributors": [
       {
         "identifier": "ea5b86dc-a6f2-4bb9-9dfe-7d0666421d69",
         "name": "Ianthe Becaris"
@@ -124,7 +124,7 @@
     "date": "5/27/2018",
     "title": "First Nudie Musical, The",
     "owner": "dspatoni7@t.co",
-    "contributor": [
+    "contributors": [
       {
         "identifier": "a2a087a6-8de0-4a21-b026-faa629fb816d",
         "name": "Benji Rodrigo"
@@ -136,7 +136,7 @@
     "date": "10/30/2019",
     "title": "Stavisky...",
     "owner": "mspreadbury8@ocn.ne.jp",
-    "contributor": [
+    "contributors": [
       {
         "identifier": "86ddca94-6c40-4eaa-b59e-33c4b340b9be",
         "name": "Quintina Whiston"
@@ -148,7 +148,7 @@
     "date": "7/12/2018",
     "title": "Powerpuff Girls, The",
     "owner": "jfarryan9@ucla.edu",
-    "contributor": [
+    "contributors": [
       {
         "identifier": "86ddca94-6c40-4eaa-b59e-33c4b340b9be",
         "name": "Wuintinas Whir"
@@ -160,7 +160,7 @@
     "date": "7/14/2019",
     "title": "Invisible Ray, The",
     "owner": "bskilletta@guardian.co.uk",
-    "contributor": [
+    "contributors": [
       {
         "identifier": "4d5f1550-e8c2-43a2-a62e-7f908626f0b4",
         "name": "Zsazsa Mizzi"
@@ -176,7 +176,7 @@
     "date": "3/4/2020",
     "title": "Cinderella Man",
     "owner": "sphizackleab@slate.com",
-    "contributor": [
+    "contributors": [
       {
         "identifier": "0911b70e-e9dd-44a5-acd9-2277f6f338b2",
         "name": "Nolie Aggett"
@@ -188,7 +188,7 @@
     "date": "9/26/2018",
     "title": "I Killed My Mother (J'ai tué ma mère)",
     "owner": "mlowdhamc@ucsd.edu",
-    "contributor": [
+    "contributors": [
       {
         "identifier": "e3e2409e-ca34-45c9-9631-e8926bcaf6f0",
         "name": "Burgess Bradnam"
@@ -200,7 +200,7 @@
     "date": "8/1/2018",
     "title": "Traveler, The",
     "owner": "opevied@ning.com",
-    "contributor": [
+    "contributors": [
       {
         "identifier": "a62f53c9-42f2-446c-b2da-5afbd80bd672",
         "name": "Bernardo Hurdwell"
@@ -212,7 +212,7 @@
     "date": "12/27/2019",
     "title": "Frankenweenie",
     "owner": "rmacoune@nsw.gov.au",
-    "contributor": [
+    "contributors": [
       {
         "identifier": "8fae654c-89b8-4d64-9681-641e63b39e48",
         "name": "Anny Mandrier"
@@ -224,7 +224,7 @@
     "date": "4/1/2018",
     "title": "And Life Goes On (a.k.a. Life and Nothing More) (Zendegi va digar hich)",
     "owner": "hjurekf@apple.com",
-    "contributor": [
+    "contributors": [
       {
         "identifier": "11da2df8-f48b-4169-8dbd-25a971ce891c",
         "name": "Bruno Deabill"
@@ -244,7 +244,7 @@
     "date": "12/9/2019",
     "title": "Generation Iron",
     "owner": "mandreuzzig@imgur.com",
-    "contributor": [
+    "contributors": [
       {
         "identifier": "88b832c4-5d45-4e3f-81de-82530ad8f389",
         "name": "Brent Regus"
@@ -256,7 +256,7 @@
     "date": "3/29/2020",
     "title": "Sunshine State",
     "owner": "achurmsh@networksolutions.com",
-    "contributor": [
+    "contributors": [
       {
         "identifier": "a9a34fb7-efc8-44a0-9727-e7ebb458931f",
         "name": "Abran Buzin"
@@ -272,7 +272,7 @@
     "date": "8/2/2018",
     "title": "Kapò",
     "owner": "kmasseoi@yahoo.co.jp",
-    "contributor": [
+    "contributors": [
       {
         "identifier": "d1578023-4e8e-4e2c-9d4e-7011e936ab4b",
         "name": "Francesca Blaxill"
@@ -284,7 +284,7 @@
     "date": "3/27/2019",
     "title": "Message to Love: The Isle of Wight Festival",
     "owner": "ashropshirej@slate.com",
-    "contributor": [
+    "contributors": [
       {
         "identifier": "43394bb6-a9a6-4c44-8106-a77866bc8fd4",
         "name": "Rudolph Trivett"
@@ -296,7 +296,7 @@
     "date": "12/1/2018",
     "title": "News from Home",
     "owner": "agooderedk@cbsnews.com",
-    "contributor": [
+    "contributors": [
       {
         "identifier": "b4db55ea-eb2d-4421-9327-43b73a08e3a3",
         "name": "Maxi Morsom"
@@ -308,7 +308,7 @@
     "date": "9/26/2019",
     "title": "Journey from the Fall",
     "owner": "emateul@joomla.org",
-    "contributor": [
+    "contributors": [
       {
         "identifier": "1e089b09-40c9-4e40-9a45-37de290911a2",
         "name": "Sal Aspenlon"
@@ -328,7 +328,7 @@
     "date": "5/20/2019",
     "title": "Daughters of Darkness (Les lèvres rouges)",
     "owner": "cacomm@wufoo.com",
-    "contributor": [
+    "contributors": [
       {
         "identifier": "28586c67-19f9-4cee-bfea-5a057384b6e6",
         "name": "Cristi Wadwell"
@@ -340,7 +340,7 @@
     "date": "11/23/2018",
     "title": "Stella",
     "owner": "wfouracren@shareasale.com",
-    "contributor": [
+    "contributors": [
       {
         "identifier": "ec6fd020-9550-4815-9811-c6a9c2c80a12",
         "name": "Curtis Fitch"
@@ -352,7 +352,7 @@
     "date": "3/28/2018",
     "title": "Virus",
     "owner": "jpimbleyo@cornell.edu",
-    "contributor": [
+    "contributors": [
       {
         "identifier": "eb918407-16fb-44e1-a1ac-32a7837d1f59",
         "name": "Alberto Kuzma"
@@ -368,7 +368,7 @@
     "date": "11/25/2019",
     "title": "Hum Tumhare Hain Sanam",
     "owner": "sdarycottp@123-reg.co.uk",
-    "contributor": [
+    "contributors": [
       {
         "identifier": "7f8dbf13-5588-4d99-8b0b-7ecbd1d5064b",
         "name": "Sharyl Nickoles"
@@ -380,7 +380,7 @@
     "date": "2/12/2019",
     "title": "Closing the Ring",
     "owner": "scohrsq@chronoengine.com",
-    "contributor": [
+    "contributors": [
       {
         "identifier": "43849abf-d9e7-4532-a35d-cdd3bc704edd",
         "name": "Brittni Sebire"
@@ -392,7 +392,7 @@
     "date": "12/12/2017",
     "title": "Road to Hong Kong, The",
     "owner": "mschiellr@typepad.com",
-    "contributor": [
+    "contributors": [
       {
         "identifier": "4e8fe5ba-fa4d-44c5-b6f0-1adf6ff46c8e",
         "name": "Amery Roskams"
@@ -408,7 +408,7 @@
     "date": "7/2/2020",
     "title": "City in the Sea",
     "owner": "wmanuelys@rakuten.co.jp",
-    "contributor": [
+    "contributors": [
       {
         "identifier": "a14b3554-6cd4-4581-a6da-925d58008a4c",
         "name": "Tami Askam"
@@ -424,7 +424,7 @@
     "date": "4/22/2020",
     "title": "Black Mirror",
     "owner": "bisacssont@princeton.edu",
-    "contributor": [
+    "contributors": [
       {
         "identifier": "1aa709b5-27a8-4ee0-ad51-4400007f977f",
         "name": "Huberto McParland"
@@ -436,7 +436,7 @@
     "date": "4/17/2019",
     "title": "Ambush Trail",
     "owner": "ddjorevicu@psu.edu",
-    "contributor": [
+    "contributors": [
       {
         "identifier": "d7c2ee83-39f0-4f6d-8ffb-02cfadae688f",
         "name": "Hendrick Shawe"
@@ -460,7 +460,7 @@
     "date": "6/5/2020",
     "title": "Another You",
     "owner": "klovejoyv@csmonitor.com",
-    "contributor": [
+    "contributors": [
       {
         "identifier": "b2279393-0c1a-4943-a76c-bcc9b2982745",
         "name": "Jenica Pallant"
@@ -476,7 +476,7 @@
     "date": "10/28/2019",
     "title": "Moonlight Serenade",
     "owner": "tshentonw@house.gov",
-    "contributor": [
+    "contributors": [
       {
         "identifier": "135621ef-8c86-4d20-b1f3-43574c919695",
         "name": "Avrit Knowlson"
@@ -488,7 +488,7 @@
     "date": "9/15/2017",
     "title": "Sammy and Rosie Get Laid",
     "owner": "msharplyx@smugmug.com",
-    "contributor": [
+    "contributors": [
       {
         "identifier": "135621ef-8c86-4d20-b1f3-43574c919695",
         "name": "Avrit Knowlson"
@@ -500,7 +500,7 @@
     "date": "3/20/2020",
     "title": "Why Are the Bells Ringing, Mitica? (a.k.a. Carnival Scenes) (De ce trag clopotele, Mitica?)",
     "owner": "jodesony@squidoo.com",
-    "contributor": [
+    "contributors": [
       {
         "identifier": "135621ef-8c86-4d20-b1f3-43574c919695",
         "name": "Avrit Knowlson"
@@ -512,7 +512,7 @@
     "date": "3/21/2020",
     "title": "Trust Us, This Is All Made Up",
     "owner": "asaggsz@cmu.edu",
-    "contributor": [
+    "contributors": [
       {
         "identifier": "135621ef-8c86-4d20-b1f3-43574c919695",
         "name": "Avrit Knowlson"
@@ -524,7 +524,7 @@
     "date": "4/28/2018",
     "title": "Post Grad",
     "owner": "cwieprecht10@blog.com",
-    "contributor": [
+    "contributors": [
       {
         "identifier": "d7c2ee83-39f0-4f6d-8ffb-02cfadae688f",
         "name": "Hendrick Shawe"
@@ -540,7 +540,7 @@
     "date": "10/16/2019",
     "title": "Raiders of Atlantis, The",
     "owner": "edavy11@i2i.jp",
-    "contributor": [
+    "contributors": [
       {
         "identifier": "d7c2ee83-39f0-4f6d-8ffb-02cfadae688f",
         "name": "Hendrick Shawe"
@@ -556,7 +556,7 @@
     "date": "3/25/2018",
     "title": "Descendants, The",
     "owner": "dcathcart12@bizjournals.com",
-    "contributor": [
+    "contributors": [
       {
         "identifier": "d7c2ee83-39f0-4f6d-8ffb-02cfadae688f",
         "name": "Hendrick Shawe"
@@ -568,7 +568,7 @@
     "date": "11/26/2019",
     "title": "Royal Scandal, A",
     "owner": "kbrimacombe13@prnewswire.com",
-    "contributor": [
+    "contributors": [
       {
         "identifier": "d7c2ee83-39f0-4f6d-8ffb-02cfadae688f",
         "name": "Hendrick Shawe"
@@ -580,7 +580,7 @@
     "date": "3/9/2020",
     "title": "Major Dundee",
     "owner": "tgrimsdell14@flavors.me",
-    "contributor": [
+    "contributors": [
       {
         "identifier": "8a57bd4c-630f-415c-bd8a-d2ebd8d089d2",
         "name": "Dorene Ellens"
@@ -592,7 +592,7 @@
     "date": "8/19/2020",
     "title": "Renoir",
     "owner": "mwonfor15@dell.com",
-    "contributor": [
+    "contributors": [
       {
         "identifier": "8a57bd4c-630f-415c-bd8a-d2ebd8d089d2",
         "name": "Dorene Ellens"
@@ -604,7 +604,7 @@
     "date": "5/24/2020",
     "title": "Sexual Life of the Belgians, The (Vie sexuelle des Belges 1950-1978, La)",
     "owner": "ceveritt16@google.es",
-    "contributor": [
+    "contributors": [
       {
         "identifier": "7f8dbf13-5588-4d99-8b0b-7ecbd1d5064b",
         "name": "Sharyl Nickoles"
@@ -624,7 +624,7 @@
     "date": "6/12/2018",
     "title": "Lineup, The",
     "owner": "lbarniss17@slate.com",
-    "contributor": [
+    "contributors": [
       {
         "identifier": "7f8dbf13-5588-4d99-8b0b-7ecbd1d5064b",
         "name": "Sharyl Nickoles"
@@ -644,7 +644,7 @@
     "date": "2/26/2020",
     "title": "Julie & Julia",
     "owner": "dgawthrop18@bloglovin.com",
-    "contributor": [
+    "contributors": [
       {
         "identifier": "7f8dbf13-5588-4d99-8b0b-7ecbd1d5064b",
         "name": "Sharyl Nickoles"
@@ -660,7 +660,7 @@
     "date": "1/1/2019",
     "title": "Stray Dog (Nora inu)",
     "owner": "pfiggs19@photobucket.com",
-    "contributor": [
+    "contributors": [
       {
         "identifier": "7f8dbf13-5588-4d99-8b0b-7ecbd1d5064b",
         "name": "Sharyl Nickoles"
@@ -676,7 +676,7 @@
     "date": "6/26/2020",
     "title": "Adventures of Ford Fairlane, The",
     "owner": "sumpleby1a@webnode.com",
-    "contributor": [
+    "contributors": [
       {
         "identifier": "43849abf-d9e7-4532-a35d-cdd3bc704edd",
         "name": "Brittni Sebire"
@@ -688,7 +688,7 @@
     "date": "3/20/2020",
     "title": "Point Blank (À bout portant)",
     "owner": "jpantlin1b@abc.net.au",
-    "contributor": [
+    "contributors": [
       {
         "identifier": "ec6fd020-9550-4815-9811-c6a9c2c80a12",
         "name": "Curtis Fitch"
@@ -704,7 +704,7 @@
     "date": "3/19/2020",
     "title": "Warrior",
     "owner": "bkeel1c@whitehouse.gov",
-    "contributor": [
+    "contributors": [
       {
         "identifier": "ec6fd020-9550-4815-9811-c6a9c2c80a12",
         "name": "Curtis Fitch"
@@ -720,7 +720,7 @@
     "date": "9/23/2018",
     "title": "Clubbed",
     "owner": "hbowmaker1d@independent.co.uk",
-    "contributor": [
+    "contributors": [
       {
         "identifier": "eb918407-16fb-44e1-a1ac-32a7837d1f59",
         "name": "Alberto Kuzma"

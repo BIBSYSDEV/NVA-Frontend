@@ -4,7 +4,7 @@
     "date": "8/26/2019",
     "title": "Dove, The",
     "owner": "mfalvey0@pen.io",
-    "contributor": [
+    "contributors": [
       {
         "identifier": "04bfdced-e65a-483f-bcaa-a83ad7218b60",
         "name": "Alasdair Dyter"
@@ -16,7 +16,7 @@
     "date": "1/19/2018",
     "title": "Bad Santa",
     "owner": "fhanwell1@businessweek.com",
-    "contributor": [
+    "contributors": [
       {
         "identifier": "9022e8b1-e908-4b22-b051-c62ff4dc7854",
         "name": "Ailene Strippling"
@@ -32,7 +32,7 @@
     "date": "9/20/2019",
     "title": "Carey Treatment, The",
     "owner": "okobsch2@a8.net",
-    "contributor": [
+    "contributors": [
       {
         "identifier": "eb918407-16fb-44e1-a1ac-32a7837d1f59",
         "name": "Alberto Kuzma"

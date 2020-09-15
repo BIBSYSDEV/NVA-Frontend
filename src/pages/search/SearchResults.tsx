@@ -48,8 +48,8 @@ const SearchResults: FC<SearchResultsProps> = ({ publications, searchTerm }) => 
                 secondaryComponent={
                   <Typography component="span">
                     {displayDate && <div>{displayDate}</div>}
-                    {publication.contributor &&
-                      publication.contributor.map((contributor) => (
+                    {publication.contributors &&
+                      publication.contributors.map((contributor) => (
                         <Fragment key={contributor.name}>
                           {contributor.identifier ? (
                             <MuiLink component={Link} to={`/user/${contributor.identifier}`}>

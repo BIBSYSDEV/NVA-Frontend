@@ -5,7 +5,7 @@ interface SearchResultContributor {
 
 export interface SearchResult {
   id: string;
-  contributor: SearchResultContributor[];
+  contributors: SearchResultContributor[];
   date: string;
   owner: string;
   title: string;
