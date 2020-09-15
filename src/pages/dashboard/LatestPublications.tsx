@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
-import { List, Typography, Divider, CircularProgress } from '@material-ui/core';
+import { List, Typography, CircularProgress, Divider } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { Link as MuiLink } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
@@ -8,14 +8,14 @@ import useFetchLatestPublications from '../../utils/hooks/useFetchLatestPublicat
 import { StyledProgressWrapper } from '../../components/styled/Wrappers';
 import NormalText from '../../components/NormalText';
 import PublicationListItemComponent from './PublicationListItemComponent';
-import SubHeading from '../../components/SubHeading';
+import Heading from '../../components/Heading';
 
 const StyledListContainer = styled.div`
-  padding-bottom: 1rem;
+  margin-top: 2rem;
 `;
 
 const StyledNormalText = styled(NormalText)`
-  padding-top: 1rem;
+  margin-top: 1rem;
 `;
 
 const LatestPublications: FC = () => {
@@ -24,7 +24,7 @@ const LatestPublications: FC = () => {
 
   return (
     <StyledListContainer data-testid="latest-publications">
-      <SubHeading>{t('publication.latest_publications')}</SubHeading>
+      <Heading>{t('publication.latest_publications')}</Heading>
       <Divider />
       {isLoadingPublications ? (
         <StyledProgressWrapper>

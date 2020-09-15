@@ -66,7 +66,7 @@ const CustomerInstitutionMetadataForm: FC<CustomerInstitutionMetadataFormProps> 
 
   return (
     <Card>
-      <Heading>{t(editMode ? 'edit_institution' : 'add_institution')}</Heading>
+      <Heading>{t('common:institution')}</Heading>
       <Formik
         enableReinitialize
         initialValues={{ ...emptyCustomerInstitution, ...customerInstitution }}
