@@ -43,7 +43,7 @@ const JournalForm: FC = () => {
 
   useEffect(() => {
     // Set correct Pages type based on publication type being Journal
-    setFieldValue(ReferenceFieldNames.PAGES, emptyPagesRange);
+    setFieldValue(ReferenceFieldNames.PAGES, emptyPagesRange, false);
   }, [setFieldValue]);
 
   useEffect(() => {

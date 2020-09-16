@@ -56,7 +56,7 @@ const BookForm: FC = () => {
 
   useEffect(() => {
     // set correct Pages type based on publication type being Book
-    setFieldValue(ReferenceFieldNames.PAGES, emptyPagesMonograph);
+    setFieldValue(ReferenceFieldNames.PAGES, emptyPagesMonograph, false);
   }, [setFieldValue]);
 
   return (

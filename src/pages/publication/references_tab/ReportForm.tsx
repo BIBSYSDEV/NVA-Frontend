@@ -1,5 +1,5 @@
 import { Field, FormikProps, useFormikContext, FieldProps } from 'formik';
-import React, { FC, useEffect, ChangeEvent } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { ReportPublication, emptyPagesMonograph } from '../../../types/publication.types';
@@ -13,7 +13,7 @@ import Label from '../../../components/Label';
 import { TextField } from '@material-ui/core';
 import SeriesRow from './components/SeriesRow';
 import PublisherField from './components/PublisherField';
-import { Autocomplete } from '@material-ui/lab';
+import IsbnListField from './components/IsbnListField';
 
 const StyledContent = styled.div`
   display: grid;
@@ -45,7 +45,7 @@ const ReportForm: FC = () => {
 
   useEffect(() => {
     // set correct Pages type based on publication type being Report
-    setFieldValue(ReferenceFieldNames.PAGES, emptyPagesMonograph);
+    setFieldValue(ReferenceFieldNames.PAGES, emptyPagesMonograph, false);
   }, [setFieldValue]);
 
   return (
@@ -62,28 +62,7 @@ const ReportForm: FC = () => {
       />
 
       <StyledSection>
-        <Field name={ReferenceFieldNames.ISBN_LIST}>
-          {({ field }: FieldProps) => (
-            <Autocomplete
-              {...field}
-              freeSolo
-              multiple
-              options={[]}
-              onChange={(_: ChangeEvent<{}>, value: string[] | string) => setFieldValue(field.name, value)}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  data-testid="isbn"
-                  label={t('references.isbn')}
-                  helperText={t('references.isbn_helper')}
-                  variant="outlined"
-                  fullWidth
-                />
-              )}
-            />
-          )}
-        </Field>
-
+        <IsbnListField />
         <Field name={ReferenceFieldNames.PAGES_PAGES}>
           {({ field }: FieldProps) => (
             <StyledTextField

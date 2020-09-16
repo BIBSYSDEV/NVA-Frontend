@@ -29,7 +29,7 @@ const DegreeForm: FC = () => {
 
   useEffect(() => {
     // set correct Pages type based on publication type being Degree
-    setFieldValue(ReferenceFieldNames.PAGES, null);
+    setFieldValue(ReferenceFieldNames.PAGES, null, false);
   }, [setFieldValue]);
 
   return (
