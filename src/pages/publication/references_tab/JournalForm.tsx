@@ -47,7 +47,7 @@ const JournalForm: FC = () => {
         fieldName={ReferenceFieldNames.SUB_TYPE}
         options={Object.values(JournalType)}
         onChangeType={(newType) => {
-          setFieldValue(ReferenceFieldNames.SUB_TYPE, newType);
+          setFieldValue(ReferenceFieldNames.SUB_TYPE, newType, false);
           // Only JournalArticle can be peer reviewed, so ensure it is set to false when type is changed
           setFieldValue(ReferenceFieldNames.PEER_REVIEW, false);
         }}
