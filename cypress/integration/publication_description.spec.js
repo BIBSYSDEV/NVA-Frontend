@@ -7,8 +7,7 @@ describe('Publication: Description', () => {
   it('The user should be able to add and remove projects', () => {
     cy.mocklogin();
 
-    cy.get('[data-testid=menu]').click({ force: true });
-    cy.get('[data-testid=menu-new-publication-button]').click({ force: true });
+    cy.get('[data-testid=new-publication]').click({ force: true });
 
     cy.startPublicationWithDoi();
 

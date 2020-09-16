@@ -19,34 +19,13 @@ const StyledMenu = styled.div`
   grid-area: menu;
 `;
 
-const StyledMuiMenu = styled(MuiMenu)`
-  .MuiMenu-list {
-    width: 15rem;
-    border: 3px solid ${({ theme }) => theme.palette.box.main};
-
-    @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-      width: 10rem;
-    }
-  }
-`;
-
-const StyledMenuButton = styled(Button)`
-  width: 15rem;
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-    width: 10rem;
-  }
-`;
-
-const StyledMenuItem = styled(MenuItem)`
-  border-bottom: 1px solid ${({ theme }) => theme.palette.box.main};
-`;
-
 const StyledAdminMenu = styled.div`
-  padding-left: 1rem;
   border-bottom: 1px solid ${({ theme }) => theme.palette.box.main};
 `;
 
 const StyledNormalText = styled(NormalText)`
+  border-top: 1px solid ${({ theme }) => theme.palette.box.main};
+  padding-left: 1rem;
   font-weight: bold;
   padding-top: 0.5rem;
   text-transform: uppercase;
@@ -72,17 +51,16 @@ const Menu: FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
 
   return (
     <StyledMenu>
-      <StyledMenuButton
+      <Button
         color="primary"
-        variant="contained"
         aria-controls="menu"
         aria-haspopup="true"
         onClick={handleClickMenuAnchor}
-        data-testid="menu">
+        data-testid="menu"
+        endIcon={anchorEl ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}>
         <Typography noWrap>{menuButtonLabel}</Typography>
-        {anchorEl ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-      </StyledMenuButton>
-      <StyledMuiMenu
+      </Button>
+      <MuiMenu
         anchorEl={anchorEl}
         getContentAnchorEl={null}
         keepMounted
@@ -92,20 +70,14 @@ const Menu: FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
           vertical: 'bottom',
           horizontal: 'left',
         }}>
-        {user.isCreator && (
-          <StyledMenuItem data-testid="menu-new-publication-button" onClick={() => handleClickMenuItem('/publication')}>
-            {t('publication:new_publication')}
-          </StyledMenuItem>
+        {user.isCurator && (
+          <MenuItem data-testid="menu-my-worklist-button" onClick={() => handleClickMenuItem('/worklist')}>
+            {t('workLists:my_worklist')}
+          </MenuItem>
         )}
-
-        {user.isCreator && (
-          <StyledMenuItem
-            data-testid="menu-my-publications-button"
-            onClick={() => handleClickMenuItem('/my-publications')}>
-            {t('workLists:my_publications')}
-          </StyledMenuItem>
-        )}
-
+        <MenuItem data-testid="menu-user-profile-button" onClick={() => handleClickMenuItem('/user')}>
+          {t('profile:my_profile')}
+        </MenuItem>
         {(user.isAppAdmin || user.isInstitutionAdmin) && (
           <StyledAdminMenu>
             <StyledNormalText>{t('common:admin')}</StyledNormalText>
@@ -132,19 +104,10 @@ const Menu: FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
             )}
           </StyledAdminMenu>
         )}
-
-        {user.isCurator && (
-          <StyledMenuItem data-testid="menu-my-worklist-button" onClick={() => handleClickMenuItem('/worklist')}>
-            {t('workLists:my_worklist')}
-          </StyledMenuItem>
-        )}
-        <StyledMenuItem data-testid="menu-user-profile-button" onClick={() => handleClickMenuItem('/user')}>
-          {t('profile:my_profile')}
-        </StyledMenuItem>
-        <StyledMenuItem onClick={handleLogout} data-testid="menu-logout-button">
+        <MenuItem onClick={handleLogout} data-testid="menu-logout-button">
           {t('authorization:logout')}
-        </StyledMenuItem>
-      </StyledMuiMenu>
+        </MenuItem>
+      </MuiMenu>
     </StyledMenu>
   );
 };

@@ -6,8 +6,7 @@ describe('User opens publication form and can see validation errors', () => {
   before('Given that the user is logged in as Creator:', () => {
     cy.visit('/');
     cy.mocklogin();
-    cy.get('[data-testid=menu]').click({ force: true });
-    cy.get('[data-testid=menu-my-publications-button]').click({ force: true });
+    cy.get('[data-testid=my-publications]').click({ force: true });
     cy.get('[data-testid=edit-publication-4327439]').click({ force: true });
   });
 

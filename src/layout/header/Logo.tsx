@@ -1,19 +1,27 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-
-import { Link as MuiLink } from '@material-ui/core';
+import { Link as MuiLink, Typography, Divider } from '@material-ui/core';
 
 const StyledLogo = styled.div`
-  color: ${({ theme }) => theme.palette.text.secondary};
-  font-size: 2rem;
+  display: flex;
+  flex-wrap: wrap;
   grid-area: logo;
 `;
 
-const Logo: React.FC = () => (
-  <MuiLink component={Link} to="/">
-    <StyledLogo data-testid="logo">NVA</StyledLogo>
-  </MuiLink>
+const StyledDivider = styled(Divider)`
+  margin-left: 2rem;
+`;
+
+const Logo: FC = () => (
+  <StyledLogo data-testid="logo">
+    <MuiLink component={Link} to="/">
+      <Typography color="textPrimary" variant="h5">
+        NVA
+      </Typography>
+    </MuiLink>
+    <StyledDivider orientation="vertical" flexItem />
+  </StyledLogo>
 );
 
 export default Logo;
