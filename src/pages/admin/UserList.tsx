@@ -84,6 +84,7 @@ const UserList: FC<UserListProps> = ({
 
   // Ensure selected page is not out of bounds due to manipulated userList
   const validPage = userList.length <= page * rowsPerPage ? 0 : page;
+  const isLastInstitutionAdmin = roleToRemove === RoleName.INSTITUTION_ADMIN && userList.length === 1;
 
   return (
     <>
@@ -121,6 +122,7 @@ const UserList: FC<UserListProps> = ({
                           color="secondary"
                           variant="outlined"
                           startIcon={<DeleteIcon />}
+                          disabled={isLastInstitutionAdmin}
                           onClick={() => setRemoveRoleForUser(user.username)}>
                           {t('common:remove')}
                         </Button>
