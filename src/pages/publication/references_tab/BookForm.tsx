@@ -1,8 +1,8 @@
 import { Field, FormikProps, useFormikContext, FieldProps } from 'formik';
-import React, { FC, useEffect } from 'react';
+import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { BookPublication, emptyPagesMonograph } from '../../../types/publication.types';
+import { BookPublication } from '../../../types/publication.types';
 import { ReferenceFieldNames, BookType } from '../../../types/publicationFieldNames';
 import { PublicationTableNumber } from '../../../utils/constants';
 import NviValidation from './components/NviValidation';
@@ -47,11 +47,6 @@ const BookForm: FC = () => {
       publicationInstance: { peerReviewed },
     },
   } = values.entityDescription as BookEntityDescription;
-
-  useEffect(() => {
-    // set correct Pages type based on publication type being Book
-    setFieldValue(ReferenceFieldNames.PAGES, emptyPagesMonograph, false);
-  }, [setFieldValue]);
 
   return (
     <StyledContent>

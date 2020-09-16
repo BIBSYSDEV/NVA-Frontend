@@ -2,7 +2,7 @@ import { FormikProps, useFormikContext } from 'formik';
 import React, { useEffect, FC, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { Publication } from '../../types/publication.types';
+import { Publication, emptyPagesRange, emptyPagesMonograph } from '../../types/publication.types';
 import { PublicationType, ReferenceFieldNames, contextTypeBaseFieldName } from '../../types/publicationFieldNames';
 import BookForm from './references_tab/BookForm';
 // import ChapterForm from './references_tab/ChapterForm';
@@ -47,6 +47,20 @@ const ReferencesPanel: FC<PanelProps> = ({ setTouchedFields }) => {
     // Ensure some values are reset when publication type changes
     setFieldValue(ReferenceFieldNames.SUB_TYPE, '', false);
     setFieldValue(contextTypeBaseFieldName, { type: newPublicationContextType }, false);
+
+    // Set correct format for pages given new publication type
+    switch (newPublicationContextType) {
+      case PublicationType.PUBLICATION_IN_JOURNAL:
+        setFieldValue(ReferenceFieldNames.PAGES, emptyPagesRange, false);
+        break;
+      case PublicationType.BOOK:
+      case PublicationType.REPORT:
+        setFieldValue(ReferenceFieldNames.PAGES, emptyPagesMonograph, false);
+        break;
+      case PublicationType.DEGREE:
+        setFieldValue(ReferenceFieldNames.PAGES, null, false);
+        break;
+    }
 
     // Avoid showing potential errors instantly
     setTouched({

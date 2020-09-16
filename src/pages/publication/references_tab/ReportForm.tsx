@@ -1,8 +1,8 @@
 import { Field, FormikProps, useFormikContext, FieldProps } from 'formik';
-import React, { FC, useEffect } from 'react';
+import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { ReportPublication, emptyPagesMonograph } from '../../../types/publication.types';
+import { ReportPublication } from '../../../types/publication.types';
 import { ReferenceFieldNames, ReportType } from '../../../types/publicationFieldNames';
 import { PublicationTableNumber } from '../../../utils/constants';
 import PublicationChannelSearch from './components/PublicationChannelSearch';
@@ -35,11 +35,6 @@ const ReportForm: FC = () => {
   const { t } = useTranslation('publication');
 
   const { setFieldValue, touched }: FormikProps<ReportPublication> = useFormikContext();
-
-  useEffect(() => {
-    // set correct Pages type based on publication type being Report
-    setFieldValue(ReferenceFieldNames.PAGES, emptyPagesMonograph, false);
-  }, [setFieldValue]);
 
   return (
     <StyledContent>

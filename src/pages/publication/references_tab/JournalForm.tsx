@@ -3,7 +3,7 @@ import React, { FC, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { TextField } from '@material-ui/core';
-import { JournalPublication, emptyPagesRange } from '../../../types/publication.types';
+import { JournalPublication } from '../../../types/publication.types';
 import { ReferenceFieldNames, JournalType } from '../../../types/publicationFieldNames';
 import { PublicationTableNumber } from '../../../utils/constants';
 import NviValidation from './components/NviValidation';
@@ -40,11 +40,6 @@ const JournalForm: FC = () => {
   const {
     reference: { publicationContext, publicationInstance },
   } = values.entityDescription as JournalEntityDescription;
-
-  useEffect(() => {
-    // Set correct Pages type based on publication type being Journal
-    setFieldValue(ReferenceFieldNames.PAGES, emptyPagesRange, false);
-  }, [setFieldValue]);
 
   useEffect(() => {
     // Only Article can be peer reviewed, so ensure it is set to false when type is changed
