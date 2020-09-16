@@ -1,11 +1,9 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { MenuItem, Select } from '@material-ui/core';
-
+import { MenuItem, Select, Typography } from '@material-ui/core';
 import { pageLanguages, LanguageCodes } from '../../types/language.types';
 import Card from '../../components/Card';
-import Heading from '../../components/Heading';
 import { fallbackLanguage } from '../../translations/i18n';
 
 const StyledSelect = styled(Select)`
@@ -28,7 +26,7 @@ const UserLanguage: React.FC = () => {
 
   return (
     <Card>
-      <Heading>{t('heading.language')}</Heading>
+      <Typography variant="h5">{t('heading.language')}</Typography>
       <StyledSelect
         variant="outlined"
         value={selectedLanguage}

@@ -1,10 +1,8 @@
 import React, { FC, Fragment } from 'react';
-
-import Label from '../Label';
-import NormalText from '../NormalText';
 import useFetchUnitHierarchy from '../../utils/hooks/useFetchUnitHierarchy';
 import { getUnitHierarchyNames } from '../../utils/institutions-helpers';
 import { AffiliationSkeleton } from './AffiliationSkeleton';
+import { Typography } from '@material-ui/core';
 
 interface AffiliationHierarchyProps {
   unitUri: string;
@@ -25,13 +23,17 @@ export const AffiliationHierarchy: FC<AffiliationHierarchyProps> = ({
   ) : unit ? (
     commaSeparated ? (
       <i>
-        <NormalText>{unitNames.join(', ')}</NormalText>
+        <Typography>{unitNames.join(', ')}</Typography>
       </i>
     ) : (
       <div>
         {unitNames.map((unitName, index) => (
           <Fragment key={unitName}>
-            {index === 0 && boldTopLevel ? <Label>{unitName}</Label> : <NormalText>{unitName}</NormalText>}
+            {index === 0 && boldTopLevel ? (
+              <Typography variant="h6">{unitName}</Typography>
+            ) : (
+              <Typography>{unitName}</Typography>
+            )}
           </Fragment>
         ))}
       </div>

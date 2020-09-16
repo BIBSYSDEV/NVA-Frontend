@@ -1,21 +1,20 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
-
 import IconLabelTextLine from '../../components/IconLabelTextLine';
 import { User } from '../../types/user.types';
 import Card from '../../components/Card';
-import Heading from '../../components/Heading';
+import { Typography } from '@material-ui/core';
 
 interface UserRolesProps {
   user: User;
 }
 
-const UserRoles: React.FC<UserRolesProps> = ({ user }) => {
+const UserRoles: FC<UserRolesProps> = ({ user }) => {
   const { t } = useTranslation('profile');
 
   return (
     <Card>
-      <Heading>{t('heading.roles')}</Heading>
+      <Typography variant="h5">{t('heading.roles')}</Typography>
       {user.isCreator && (
         <IconLabelTextLine
           dataTestId="user-role"

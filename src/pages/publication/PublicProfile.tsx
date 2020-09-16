@@ -1,11 +1,10 @@
 import React, { FC, useEffect } from 'react';
-import { CircularProgress, IconButton, Link as MuiLink } from '@material-ui/core';
+import { CircularProgress, IconButton, Link as MuiLink, Typography } from '@material-ui/core';
 import styled from 'styled-components';
 import { useParams, useHistory } from 'react-router-dom';
 import WorkIcon from '@material-ui/icons/Work';
 import orcidIcon from '../../resources/images/orcid_logo.svg';
 import Card from '../../components/Card';
-import Heading from '../../components/Heading';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
 import useFetchAuthority from '../../utils/hooks/useFetchAuthority';
 import { ORCID_BASE_URL } from '../../utils/constants';
@@ -37,7 +36,7 @@ const PublicProfile: FC = () => {
       ) : (
         authority && (
           <Card>
-            <Heading>{authority.name}</Heading>
+            <Typography variant="h2">{authority.name}</Typography>
             {authority.orgunitids.length > 0 && (
               <StyledLine>
                 <WorkIcon />

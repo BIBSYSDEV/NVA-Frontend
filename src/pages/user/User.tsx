@@ -3,8 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-
-import { Button } from '@material-ui/core';
+import { Button, Typography } from '@material-ui/core';
 import { Link as RouterLink } from 'react-router-dom';
 import { addQualifierIdForAuthority, AuthorityQualifiers } from '../../api/authorityApi';
 import { getOrcidInfo } from '../../api/external/orcidApi';
@@ -15,7 +14,6 @@ import UserLanguage from './UserLanguage';
 import UserOrcid from './UserOrcid';
 import UserRoles from './UserRoles';
 import Card from '../../components/Card';
-import Heading from '../../components/Heading';
 import UserInstitution from './UserInstitution';
 import { StyledRightAlignedButtonWrapper } from '../../components/styled/Wrappers';
 import { setNotification } from '../../redux/actions/notificationActions';
@@ -108,7 +106,7 @@ const User: FC = () => {
         <StyledPrimaryUserInfo>
           <UserInfo user={user} />
           <Card>
-            <Heading>{t('heading.author_info')}</Heading>
+            <Typography variant="h5">{t('heading.author_info')}</Typography>
             {user.authority && user.authority.feideids?.length > 0 && (
               <p data-testid="author-connected-info">{t('authority.connected_info')}</p>
             )}
