@@ -10,10 +10,10 @@ import DoiField from './components/DoiField';
 import SelectTypeField from './components/SelectTypeField';
 import SubHeading from '../../../components/SubHeading';
 import Label from '../../../components/Label';
-import { TextField } from '@material-ui/core';
 import SeriesRow from './components/SeriesRow';
 import PublisherField from './components/PublisherField';
 import IsbnListField from './components/IsbnListField';
+import TotalPagesField from './components/TotalPagesField';
 
 const StyledContent = styled.div`
   display: grid;
@@ -28,13 +28,6 @@ const StyledSection = styled.div`
   @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
     grid-template-areas: 'isbn' 'number-of-pages';
     grid-template-columns: 1fr;
-  }
-`;
-
-const StyledTextField = styled(TextField)`
-  display: inline;
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-    display: grid;
   }
 `;
 
@@ -63,17 +56,7 @@ const ReportForm: FC = () => {
 
       <StyledSection>
         <IsbnListField />
-        <Field name={ReferenceFieldNames.PAGES_PAGES}>
-          {({ field }: FieldProps) => (
-            <StyledTextField
-              inputProps={{ 'data-testid': 'pages' }}
-              variant="outlined"
-              label={t('references.number_of_pages')}
-              {...field}
-              value={field.value ?? ''}
-            />
-          )}
-        </Field>
+        <TotalPagesField />
       </StyledSection>
       <div>
         <SubHeading>{t('references.series')}</SubHeading>

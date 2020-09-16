@@ -15,7 +15,8 @@ import DoiField from './components/DoiField';
 import SelectTypeField from './components/SelectTypeField';
 import PublisherField from './components/PublisherField';
 import { BookEntityDescription } from '../../../types/publication_types/bookPublication.types';
-import { TextField } from '@material-ui/core';
+import IsbnListField from './components/IsbnListField';
+import TotalPagesField from './components/TotalPagesField';
 
 const StyledContent = styled.div`
   display: grid;
@@ -35,13 +36,6 @@ const StyledSection = styled.div`
 
 const StyledPeerReview = styled.div`
   grid-area: peer-review;
-`;
-
-const StyledTextField = styled(TextField)`
-  display: inline;
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-    display: grid;
-  }
 `;
 
 const BookForm: FC = () => {
@@ -72,24 +66,8 @@ const BookForm: FC = () => {
         errorName={ReferenceFieldNames.PUBLICATION_CONTEXT_PUBLISHER}
       />
       <StyledSection>
-        {/* TODO - convert to array and use ISBN_LIST 
-        <Field name={ReferenceFieldNames.ISBN}>
-          {({ field }: FieldProps) => (
-            <StyledTextField data-testid="isbn" variant="outlined" label={t('references.isbn')} {...field} />
-          )}
-        </Field> */}
-
-        <Field name={ReferenceFieldNames.PAGES_PAGES}>
-          {({ field }: FieldProps) => (
-            <StyledTextField
-              inputProps={{ 'data-testid': 'pages' }}
-              variant="outlined"
-              label={t('references.number_of_pages')}
-              {...field}
-              value={field.value ?? ''}
-            />
-          )}
-        </Field>
+        <IsbnListField />
+        <TotalPagesField />
       </StyledSection>
 
       <StyledSection>
