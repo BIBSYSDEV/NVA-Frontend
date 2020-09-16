@@ -3,7 +3,7 @@ import React, { FC, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { TextField } from '@material-ui/core';
-import { JournalPublication } from '../../../types/publication.types';
+import { JournalPublication, emptyPagesRange } from '../../../types/publication.types';
 import { ReferenceFieldNames, JournalType } from '../../../types/publicationFieldNames';
 import { PublicationTableNumber } from '../../../utils/constants';
 import NviValidation from './components/NviValidation';
@@ -11,7 +11,6 @@ import PeerReview from './components/PeerReview';
 import DoiField from './components/DoiField';
 import SelectTypeField from './components/SelectTypeField';
 import { JournalEntityDescription } from '../../../types/publication_types/journalPublication.types';
-import { BackendTypeNames } from '../../../types/publication_types/commonPublication.types';
 import PublisherField from './components/PublisherField';
 
 const StyledContent = styled.div`
@@ -44,7 +43,7 @@ const JournalForm: FC = () => {
 
   useEffect(() => {
     // Set correct Pages type based on publication type being Journal
-    setFieldValue(ReferenceFieldNames.PAGES_TYPE, BackendTypeNames.PAGES_RANGE);
+    setFieldValue(ReferenceFieldNames.PAGES, emptyPagesRange);
   }, [setFieldValue]);
 
   useEffect(() => {

@@ -2,7 +2,7 @@ import { Field, FormikProps, useFormikContext, FieldProps } from 'formik';
 import React, { FC, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { BookPublication } from '../../../types/publication.types';
+import { BookPublication, emptyPagesMonograph } from '../../../types/publication.types';
 import { ReferenceFieldNames, BookType } from '../../../types/publicationFieldNames';
 import { PublicationTableNumber } from '../../../utils/constants';
 import NviValidation from './components/NviValidation';
@@ -16,7 +16,6 @@ import SelectTypeField from './components/SelectTypeField';
 import PublisherField from './components/PublisherField';
 import { BookEntityDescription } from '../../../types/publication_types/bookPublication.types';
 import { TextField } from '@material-ui/core';
-import { BackendTypeNames } from '../../../types/publication_types/commonPublication.types';
 
 const StyledContent = styled.div`
   display: grid;
@@ -57,7 +56,7 @@ const BookForm: FC = () => {
 
   useEffect(() => {
     // set correct Pages type based on publication type being Book
-    setFieldValue(ReferenceFieldNames.PAGES_TYPE, BackendTypeNames.PAGES_MONOGRAPH);
+    setFieldValue(ReferenceFieldNames.PAGES, emptyPagesMonograph);
   }, [setFieldValue]);
 
   return (

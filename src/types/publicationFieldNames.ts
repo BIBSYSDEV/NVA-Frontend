@@ -1,7 +1,7 @@
 // For valid values, see https://github.com/BIBSYSDEV/nva-datamodel-java/blob/develop/src/main/java/no/unit/nva/model/PublicationType.java
 export enum PublicationType {
   PUBLICATION_IN_JOURNAL = 'Journal',
-  // BOOK = 'Book',
+  BOOK = 'Book',
   REPORT = 'Report',
   DEGREE = 'Degree',
   // CHAPTER = 'Chapter',

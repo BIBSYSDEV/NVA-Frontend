@@ -2,7 +2,7 @@ import { Field, FormikProps, useFormikContext, FieldProps } from 'formik';
 import React, { FC, useEffect, ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { ReportPublication } from '../../../types/publication.types';
+import { ReportPublication, emptyPagesMonograph } from '../../../types/publication.types';
 import { ReferenceFieldNames, ReportType } from '../../../types/publicationFieldNames';
 import { PublicationTableNumber } from '../../../utils/constants';
 import PublicationChannelSearch from './components/PublicationChannelSearch';
@@ -11,10 +11,9 @@ import SelectTypeField from './components/SelectTypeField';
 import SubHeading from '../../../components/SubHeading';
 import Label from '../../../components/Label';
 import { TextField } from '@material-ui/core';
-import { BackendTypeNames } from '../../../types/publication_types/commonPublication.types';
 import SeriesRow from './components/SeriesRow';
-import { Autocomplete } from '@material-ui/lab';
 import PublisherField from './components/PublisherField';
+import { Autocomplete } from '@material-ui/lab';
 
 const StyledContent = styled.div`
   display: grid;
@@ -46,7 +45,7 @@ const ReportForm: FC = () => {
 
   useEffect(() => {
     // set correct Pages type based on publication type being Report
-    setFieldValue(ReferenceFieldNames.PAGES_TYPE, BackendTypeNames.PAGES_MONOGRAPH);
+    setFieldValue(ReferenceFieldNames.PAGES, emptyPagesMonograph);
   }, [setFieldValue]);
 
   return (
