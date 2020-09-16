@@ -1,8 +1,7 @@
 import React, { FC, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FormHelperText } from '@material-ui/core';
+import { FormHelperText, Typography } from '@material-ui/core';
 import { FormikProps, useFormikContext, FieldArray, ErrorMessage, FieldArrayRenderProps } from 'formik';
-import Heading from '../../components/Heading';
 import Card from '../../components/Card';
 import SortableTable from './contributors_tab/components/SortableTable';
 import { Publication } from '../../types/publication.types';
@@ -32,7 +31,7 @@ const ContributorsPanel: FC<PanelProps> = ({ setTouchedFields }) => {
 
   return (
     <Card>
-      <Heading>{t('contributors.authors')}</Heading>
+      <Typography variant="h2">{t('contributors.authors')}</Typography>
       <FieldArray name={ContributorFieldNames.CONTRIBUTORS}>
         {({ push, remove, replace, name }: FieldArrayRenderProps) => (
           <>

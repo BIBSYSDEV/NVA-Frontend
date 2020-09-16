@@ -9,13 +9,11 @@ import NviValidation from './components/NviValidation';
 import PeerReview from './components/PeerReview';
 import PublicationChannelSearch from './components/PublicationChannelSearch';
 import PublisherRow from './components/PublisherRow';
-import SubHeading from '../../../components/SubHeading';
-import Label from '../../../components/Label';
 import DoiField from './components/DoiField';
 import SelectTypeField from './components/SelectTypeField';
 import PublisherField from './components/PublisherField';
 import { BookEntityDescription } from '../../../types/publication_types/bookPublication.types';
-import { TextField } from '@material-ui/core';
+import { TextField, Typography } from '@material-ui/core';
 import { BackendTypeNames } from '../../../types/publication_types/commonPublication.types';
 
 const StyledContent = styled.div`
@@ -43,6 +41,10 @@ const StyledTextField = styled(TextField)`
   @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
     display: grid;
   }
+`;
+
+const StyledTypography = styled(Typography)`
+  padding-top: 1.5rem;
 `;
 
 const BookForm: FC = () => {
@@ -99,8 +101,8 @@ const BookForm: FC = () => {
         </StyledPeerReview>
       </StyledSection>
       <div>
-        <SubHeading>{t('references.series')}</SubHeading>
-        <Label>{t('references.series_info')}</Label>
+        <StyledTypography variant="h5">{t('references.series')}</StyledTypography>
+        <Typography>{t('references.series_info')}</Typography>
         <Field name={ReferenceFieldNames.SERIES_TITLE}>
           {({ field: { name, value } }: FieldProps) => (
             <>
