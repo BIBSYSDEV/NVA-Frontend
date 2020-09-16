@@ -14,8 +14,8 @@ describe('Menu', () => {
     cy.setUserRolesInRedux(allRoles);
     cy.get('[data-testid=menu]').click({ force: true });
     cy.get('[data-testid=menu-user-profile-button]').should('be.visible');
-    cy.get('[data-testid=menu-new-publication-button]').should('be.visible');
-    cy.get('[data-testid=menu-my-publications-button]').should('be.visible');
+    cy.get('[data-testid=new-publication]').should('be.visible');
+    cy.get('[data-testid=my-publications]').should('be.visible');
     cy.get('[data-testid=menu-admin-institution-button]').should('be.visible');
     cy.get('[data-testid=menu-logout-button]').should('be.visible');
   });
@@ -24,10 +24,10 @@ describe('Menu', () => {
     cy.setUserRolesInRedux(noRoles);
     cy.get('[data-testid=menu]').click({ force: true });
     cy.get('[data-testid=menu-user-profile-button]').should('be.visible');
-    cy.get('[data-testid=menu-logout-button]').should('be.visible');
-    cy.get('[data-testid=menu-new-publication-button]').should('not.be.visible');
+    cy.get('[data-testid=new-publication]').should('not.be.visible');
+    cy.get('[data-testid=my-publications]').should('not.be.visible');
     cy.get('[data-testid=menu-admin-institution-button]').should('not.be.visible');
-    cy.get('[data-testid=menu-my-publications-button]').should('not.be.visible');
+    cy.get('[data-testid=menu-logout-button]').should('be.visible');
   });
 
   it.skip('Unauthorized user should see 404-message when visiting protected URLs', () => {
