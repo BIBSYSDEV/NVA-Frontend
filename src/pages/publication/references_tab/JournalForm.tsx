@@ -1,5 +1,5 @@
 import { Field, FormikProps, useFormikContext, FieldProps, ErrorMessage } from 'formik';
-import React, { FC, useEffect } from 'react';
+import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { TextField } from '@material-ui/core';
@@ -41,14 +41,17 @@ const JournalForm: FC = () => {
     reference: { publicationContext, publicationInstance },
   } = values.entityDescription as JournalEntityDescription;
 
-  useEffect(() => {
-    // Only Article can be peer reviewed, so ensure it is set to false when type is changed
-    setFieldValue(ReferenceFieldNames.PEER_REVIEW, false);
-  }, [setFieldValue, publicationInstance.type]);
-
   return (
     <StyledContent>
-      <SelectTypeField fieldName={ReferenceFieldNames.SUB_TYPE} options={Object.values(JournalType)} />
+      <SelectTypeField
+        fieldName={ReferenceFieldNames.SUB_TYPE}
+        options={Object.values(JournalType)}
+        onChangeType={(newType) => {
+          setFieldValue(ReferenceFieldNames.SUB_TYPE, newType);
+          // Only JournalArticle can be peer reviewed, so ensure it is set to false when type is changed
+          setFieldValue(ReferenceFieldNames.PEER_REVIEW, false);
+        }}
+      />
 
       <DoiField />
 
