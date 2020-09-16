@@ -1,8 +1,7 @@
 import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-
-import { Link as MuiLink, Typography } from '@material-ui/core';
+import { Link as MuiLink, Typography, Divider } from '@material-ui/core';
 
 const StyledLogo = styled.div`
   display: flex;
@@ -10,8 +9,8 @@ const StyledLogo = styled.div`
   grid-area: logo;
 `;
 
-const StyledSpan = styled(Typography)`
-  padding-left: 2rem;
+const StyledDivider = styled(Divider)`
+  margin-left: 2rem;
 `;
 
 const Logo: FC = () => (
@@ -21,7 +20,7 @@ const Logo: FC = () => (
         NVA
       </Typography>
     </MuiLink>
-    <StyledSpan variant="h5">|</StyledSpan>
+    <StyledDivider orientation="vertical" flexItem />
   </StyledLogo>
 );
 

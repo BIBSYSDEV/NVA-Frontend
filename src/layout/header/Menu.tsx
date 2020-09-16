@@ -56,9 +56,9 @@ const Menu: FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
         aria-controls="menu"
         aria-haspopup="true"
         onClick={handleClickMenuAnchor}
-        data-testid="menu">
+        data-testid="menu"
+        endIcon={anchorEl ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}>
         <Typography noWrap>{menuButtonLabel}</Typography>
-        {anchorEl ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
       </Button>
       <MuiMenu
         anchorEl={anchorEl}
