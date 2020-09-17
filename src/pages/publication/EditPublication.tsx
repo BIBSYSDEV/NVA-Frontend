@@ -5,11 +5,10 @@ import styled from 'styled-components';
 import LinkPublication from './new_publication/LinkPublication';
 import LoadPublication from './new_publication/LoadPublication';
 import PublicationForm from './PublicationForm';
-import Heading from '../../components/Heading';
 import Card from '../../components/Card';
-import NormalText from '../../components/NormalText';
 import { StyledCenterAlignedContentWrapper } from '../../components/styled/Wrappers';
 import { PageHeader } from '../../components/PageHeader';
+import { Typography } from '@material-ui/core';
 
 const StyledEditPublication = styled(StyledCenterAlignedContentWrapper)`
   width: 100%;
@@ -77,8 +76,8 @@ const EditPublication: FC = () => {
               />
             </StyledSelectorWrapper>
             <StyledCard>
-              <Heading>{t('common:information')}</Heading>
-              <NormalText>{t('publication.info_text')}</NormalText>
+              <Typography variant="h5">{t('common:information')}</Typography>
+              <Typography>{t('publication.info_text')}</Typography>
             </StyledCard>
           </StyledEditPublication>
         </>

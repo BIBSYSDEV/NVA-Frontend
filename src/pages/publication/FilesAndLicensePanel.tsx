@@ -2,19 +2,15 @@ import React, { useState, useEffect, useRef, FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { FieldArray, FormikProps, useFormikContext, ErrorMessage, FieldArrayRenderProps } from 'formik';
-import { FormHelperText } from '@material-ui/core';
+import { FormHelperText, Typography } from '@material-ui/core';
 import { UppyFile } from '@uppy/core';
-
 import FileUploader from './files_and_license_tab/FileUploader';
 import FileCard from './files_and_license_tab/FileCard';
 import { Publication, Publisher } from '../../types/publication.types';
 import Modal from '../../components/Modal';
 import { licenses, Uppy } from '../../types/file.types';
 import Card from '../../components/Card';
-import Heading from '../../components/Heading';
 import PublicationChannelInfoCard from './files_and_license_tab/PublicationChannelInfoCard';
-import NormalText from '../../components/NormalText';
-import Label from '../../components/Label';
 import { FileFieldNames } from '../../types/publicationFieldNames';
 import { touchedFilesTabFields } from '../../utils/formik-helpers';
 import { PanelProps } from './PublicationFormContent';
@@ -93,7 +89,6 @@ const FilesAndLicensePanel: FC<FilesAndLicensePanelProps> = ({ uppy, setTouchedF
         {({ insert, remove, name }: FieldArrayRenderProps) => (
           <>
             <Card>
-              <Heading>{t('files_and_license.upload_files')}</Heading>
               <FileUploader uppy={uppy} addFile={(file) => insert(0, file)} />
               {files.length === 0 && (
                 <FormHelperText error>
@@ -104,7 +99,7 @@ const FilesAndLicensePanel: FC<FilesAndLicensePanelProps> = ({ uppy, setTouchedF
 
             {files.length > 0 && (
               <StyledUploadedFiles>
-                <Heading>{t('files_and_license.files')}</Heading>
+                <Typography variant="h2">{t('files_and_license.files')}</Typography>
                 {files.map((file, index) => (
                   <FileCard
                     key={index}
@@ -129,9 +124,9 @@ const FilesAndLicensePanel: FC<FilesAndLicensePanelProps> = ({ uppy, setTouchedF
         maxWidth="sm">
         {licenses.map((license) => (
           <StyledLicenseDescription key={license.identifier}>
-            <Label>{license.identifier}</Label>
+            <Typography variant="h6">{license.identifier}</Typography>
             <img src={license.buttonImage} alt={license.identifier} />
-            <NormalText>{license.description}</NormalText>
+            <Typography>{license.description}</Typography>
           </StyledLicenseDescription>
         ))}
       </Modal>

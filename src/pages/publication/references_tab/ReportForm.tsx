@@ -8,9 +8,7 @@ import { PublicationTableNumber } from '../../../utils/constants';
 import PublicationChannelSearch from './components/PublicationChannelSearch';
 import DoiField from './components/DoiField';
 import SelectTypeField from './components/SelectTypeField';
-import SubHeading from '../../../components/SubHeading';
-import Label from '../../../components/Label';
-import { TextField } from '@material-ui/core';
+import { TextField, Typography } from '@material-ui/core';
 import { BackendTypeNames } from '../../../types/publication_types/commonPublication.types';
 import SeriesRow from './components/SeriesRow';
 import { Autocomplete } from '@material-ui/lab';
@@ -37,6 +35,10 @@ const StyledTextField = styled(TextField)`
   @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
     display: grid;
   }
+`;
+
+const StyledTypography = styled(Typography)`
+  padding-top: 1.5rem;
 `;
 
 const ReportForm: FC = () => {
@@ -98,8 +100,8 @@ const ReportForm: FC = () => {
         </Field>
       </StyledSection>
       <div>
-        <SubHeading>{t('references.series')}</SubHeading>
-        <Label>{t('references.series_info')}</Label>
+        <StyledTypography variant="h5">{t('references.series')}</StyledTypography>
+        <Typography>{t('references.series_info')}</Typography>
         <Field name={ReferenceFieldNames.SERIES_TITLE}>
           {({ field: { name, value } }: FieldProps) => (
             <>

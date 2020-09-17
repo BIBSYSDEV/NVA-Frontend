@@ -2,7 +2,7 @@ import React, { useEffect, FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormikProps, useFormikContext } from 'formik';
 import { Publication, DoiRequestStatus } from '../../types/publication.types';
-import { Button } from '@material-ui/core';
+import { Button, Typography } from '@material-ui/core';
 import styled from 'styled-components';
 // import SubmissionBook from './submission_tab/submission_book';
 // import SubmissionChapter from './submission_tab/submission_chapter';
@@ -13,8 +13,6 @@ import SubmissionDescription from './submission_tab/submission_description';
 import SubmissionFilesAndLicenses from './submission_tab/submission_files_licenses';
 import SubmissionContributors from './submission_tab/submission_contributors';
 import { PublicationType } from '../../types/publicationFieldNames';
-import Heading from '../../components/Heading';
-import SubHeading from '../../components/SubHeading';
 import Card from '../../components/Card';
 import { useHistory } from 'react-router-dom';
 import LabelContentRow from '../../components/LabelContentRow';
@@ -108,13 +106,13 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication, 
     <>
       <ErrorSummary />
       <Card>
-        <Heading>{t('heading.summary')}</Heading>
+        <Typography variant="h2">{t('heading.summary')}</Typography>
         <Card>
-          <SubHeading>{t('heading.description')}</SubHeading>
+          <Typography variant="h5">{t('heading.description')}</Typography>
           <SubmissionDescription />
         </Card>
         <Card>
-          <SubHeading>{t('heading.references')}</SubHeading>
+          <Typography variant="h5">{t('heading.references')}</Typography>
           <LabelContentRow label={t('common:type')}>
             {publicationContextType && t(`publicationTypes:${publicationContextType}`)}
           </LabelContentRow>
@@ -128,11 +126,11 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication, 
           {publicationContextType === PublicationType.PUBLICATION_IN_JOURNAL && <SubmissionJournalPublication />}
         </Card>
         <Card>
-          <SubHeading>{t('heading.contributors')}</SubHeading>
+          <Typography variant="h5">{t('heading.contributors')}</Typography>
           <SubmissionContributors />
         </Card>
         <Card>
-          <SubHeading>{t('heading.files_and_license')}</SubHeading>
+          <Typography variant="h5">{t('heading.files_and_license')}</Typography>
           <SubmissionFilesAndLicenses />
         </Card>
       </Card>
