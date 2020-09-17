@@ -18,6 +18,9 @@ interface PublicationAccordionProps {
 
 const StyledPublicationAccordion = styled(Accordion)`
   margin-bottom: 2rem;
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
+    max-width: 90vw;
+  }
 `;
 
 const StyledAccordionSummary = styled(AccordionSummary)`
