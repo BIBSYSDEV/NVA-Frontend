@@ -11,6 +11,7 @@ import {
   Button,
   Tooltip,
   TableContainer,
+  Typography,
 } from '@material-ui/core';
 import { Field, FieldProps, FormikProps, useFormikContext, FieldArrayRenderProps, move } from 'formik';
 import { useTranslation } from 'react-i18next';
@@ -19,11 +20,9 @@ import WarningIcon from '@material-ui/icons/Warning';
 import CheckIcon from '@material-ui/icons/Check';
 import AddIcon from '@material-ui/icons/Add';
 import deepmerge from 'deepmerge';
-
 import { ContributorFieldNames, SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
 import { Contributor, emptyContributor } from '../../../../types/contributor.types';
 import { Publication } from '../../../../types/publication.types';
-import SubHeading from '../../../../components/SubHeading';
 import AddContributor from '../AddContributorModal';
 import styled from 'styled-components';
 import AffiliationsCell from './AffiliationsCell';
@@ -33,7 +32,6 @@ import { setNotification } from '../../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../../types/notification.types';
 import { Authority } from '../../../../types/authority.types';
 import { overwriteArrayMerge } from '../../../../utils/formik-helpers';
-import NormalText from '../../../../components/NormalText';
 import { BackendTypeNames } from '../../../../types/publication_types/commonPublication.types';
 
 const StyledWarningIcon = styled(WarningIcon)`
@@ -74,8 +72,8 @@ const SortableItem = SortableElement(
     return (
       <TableRow tabIndex={0} key={contributor.identity.id}>
         <TableCell align="left">
-          <SubHeading>#{contributor.sequence}</SubHeading>
-          <SubHeading>
+          <Typography variant="h5">#{contributor.sequence}</Typography>
+          <Typography variant="h5">
             {contributor.identity.name}{' '}
             {contributor.identity.arpId ? (
               <Tooltip title={t('contributors.known_author_identity') as string}>
@@ -86,7 +84,7 @@ const SortableItem = SortableElement(
                 <StyledWarningIcon />
               </Tooltip>
             )}
-          </SubHeading>
+          </Typography>
 
           <Field name={`${baseFieldName}.${SpecificContributorFieldNames.CORRESPONDING}`}>
             {({ field }: FieldProps) => (
@@ -192,11 +190,11 @@ const SortableList = SortableContainer(({ contributors, onDelete, setUnverifiedC
             closeConfirmDialog();
           }}
           onCancel={closeConfirmDialog}>
-          <NormalText>
+          <Typography>
             {t('contributors.confirm_remove_contributor_text', {
               contributorName: contributorToRemove.identity.name,
             })}
-          </NormalText>
+          </Typography>
         </ConfirmDialog>
       )}
     </TableContainer>

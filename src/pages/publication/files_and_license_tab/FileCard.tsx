@@ -12,6 +12,7 @@ import {
   Radio,
   RadioGroup,
   TextField,
+  Typography,
 } from '@material-ui/core';
 import { File, licenses, LicenseNames } from '../../../types/file.types';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
@@ -20,13 +21,11 @@ import { useTranslation } from 'react-i18next';
 import Card from '../../../components/Card';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import HelpIcon from '@material-ui/icons/Help';
-import SubHeading from '../../../components/SubHeading';
 import DeleteIcon from '@material-ui/icons/Delete';
-import Label from '../../../components/Label';
 import { Field, FieldProps, ErrorMessage } from 'formik';
 import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 
-const StyledDescription = styled.div`
+const StyledDescription = styled(Typography)`
   font-style: italic;
 `;
 
@@ -63,11 +62,11 @@ const StyledLicenseOptionImage = styled.img`
   width: 70%;
 `;
 
-const StyledLicenseName = styled(Label)`
+const StyledLicenseName = styled(Typography)`
   margin-left: 0.5rem;
 `;
 
-const StyledLicenseOptionName = styled(Label)`
+const StyledLicenseOptionName = styled(Typography)`
   margin-left: -1.5rem;
 `;
 
@@ -93,7 +92,7 @@ const FileCard: FC<FileCardProps> = ({ file, removeFile, baseFieldName, toggleLi
 
   return (
     <Card data-testid="uploaded-file-card">
-      <SubHeading>{file.name}</SubHeading>
+      <Typography variant="h5">{file.name}</Typography>
       <StyledDescription>
         {t('files_and_license.uploaded_size', { size: Math.round(file.size / 1000) })}
       </StyledDescription>

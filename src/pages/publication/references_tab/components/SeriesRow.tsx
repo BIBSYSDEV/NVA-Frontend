@@ -1,10 +1,8 @@
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { Button } from '@material-ui/core';
-import Label from '../../../../components/Label';
+import { Button, Typography } from '@material-ui/core';
 import Card from '../../../../components/Card';
-import NormalText from '../../../../components/NormalText';
 
 const StyledSeriesRow = styled(Card)`
   margin: 1rem 0;
@@ -23,11 +21,11 @@ const StyledSeriesRow = styled(Card)`
   }
 `;
 
-const StyledTitle = styled(Label)`
+const StyledTitle = styled(Typography)`
   grid-area: titleLabel;
 `;
 
-const StyledTitleText = styled(NormalText)`
+const StyledTitleText = styled(Typography)`
   grid-area: title;
 `;
 
@@ -48,7 +46,7 @@ const SeriesRow: FC<PublisherRowProps> = ({ dataTestId, label, onClickDelete, ti
 
   return (
     <StyledSeriesRow data-testid={dataTestId}>
-      <StyledTitle>{label}</StyledTitle>
+      <StyledTitle variant="h6">{label}</StyledTitle>
       <StyledTitleText>{title}</StyledTitleText>
       <StyledButton data-testid="remove-publisher" variant="contained" color="secondary" onClick={onClickDelete}>
         {t('common:remove')}

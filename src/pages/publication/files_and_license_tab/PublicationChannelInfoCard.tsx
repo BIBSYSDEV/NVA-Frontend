@@ -1,13 +1,10 @@
 import React from 'react';
 import { Publisher } from '../../../types/publication.types';
 import Card from '../../../components/Card';
-import Heading from '../../../components/Heading';
-import Label from '../../../components/Label';
-import { Avatar } from '@material-ui/core';
+import { Avatar, Typography } from '@material-ui/core';
 import { openAccessLogo } from '../../../resources/images/licenses';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
-import NormalText from '../../../components/NormalText';
 
 const StyledInfoEntries = styled.div`
   display: flex;
@@ -28,15 +25,15 @@ const PublicationChannelInfoCard: React.FC<PublicationChannelInfoCardProps> = ({
 
   return (
     <Card>
-      <Heading>{t('files_and_license.info_from_publication_channel_register.title')}</Heading>
+      <Typography variant="h5">{t('files_and_license.info_from_publication_channel_register.title')}</Typography>
       <StyledInfoEntries>
         <div>
-          <Label>{publisher.title}</Label>
-          <NormalText>
+          <Typography variant="h6">{publisher.title}</Typography>
+          <Typography>
             {publisher.openAccess
               ? t('files_and_license.info_from_publication_channel_register.open_publishment')
               : t('files_and_license.info_from_publication_channel_register.no_open_publishment')}
-          </NormalText>
+          </Typography>
         </div>
         {publisher.openAccess && (
           <StyledAvatar

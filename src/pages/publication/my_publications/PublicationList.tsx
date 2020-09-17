@@ -9,16 +9,14 @@ import {
   TableRow,
   TableContainer,
   TablePagination,
+  Typography,
 } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
-
 import { PublicationPreview } from '../../../types/publication.types';
-import Label from '../../../components/Label';
-import NormalText from '../../../components/NormalText';
 import DeletePublicationModal from '../DeletePublicationModal';
 
 const StyledTableRow = styled(TableRow)`
@@ -28,11 +26,11 @@ const StyledTableRow = styled(TableRow)`
   }
 `;
 
-const StyledNormalTextWithIcon = styled(NormalText)`
+const StyledNormalTextWithIcon = styled(Typography)`
   margin-left: 0.5rem;
 `;
 
-const StyledLabel = styled(Label)`
+const StyledLabel = styled(Typography)`
   min-width: 12rem;
 `;
 
@@ -70,13 +68,13 @@ const PublicationList: FC<PublicationListProps> = ({ publications }) => {
           <TableHead>
             <TableRow>
               <TableCell>
-                <StyledLabel>{t('workLists:publication_name')}</StyledLabel>
+                <StyledLabel variant="h6">{t('workLists:publication_name')}</StyledLabel>
               </TableCell>
               <TableCell>
-                <Label>{t('common:status')}</Label>
+                <Typography variant="h6">{t('common:status')}</Typography>
               </TableCell>
               <TableCell>
-                <Label>{t('common:date')}</Label>
+                <Typography variant="h6">{t('common:date')}</Typography>
               </TableCell>
               <TableCell />
               <TableCell />
@@ -87,13 +85,13 @@ const PublicationList: FC<PublicationListProps> = ({ publications }) => {
             {publications.map((publication) => (
               <StyledTableRow key={publication.identifier}>
                 <TableCell component="th" scope="row">
-                  <NormalText>{publication.mainTitle}</NormalText>
+                  <Typography>{publication.mainTitle}</Typography>
                 </TableCell>
                 <TableCell>
-                  <NormalText>{t(`publication:status.${publication.status}`)}</NormalText>
+                  <Typography>{t(`publication:status.${publication.status}`)}</Typography>
                 </TableCell>
                 <TableCell>
-                  <NormalText>{new Date(publication.createdDate).toLocaleString()}</NormalText>
+                  <Typography>{new Date(publication.createdDate).toLocaleString()}</Typography>
                 </TableCell>
                 <TableCell>
                   <Button
