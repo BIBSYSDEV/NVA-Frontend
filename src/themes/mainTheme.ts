@@ -18,20 +18,19 @@ declare module '@material-ui/core/styles/createPalette' {
 }
 
 enum Colors {
-  Primary = '#6558f5',
+  Primary = '#284B63',
   Secondary = '#ff5555',
   Background = '#fff',
-  Box = '#eeeeff',
-  Link = '#6558f5',
+  Box = '#f5f5f5',
+  Link = '#06f',
   Separator = '#3d4349',
   PrimaryText = 'rgba(0, 0, 0, 0.87)',
   SecondaryText = '#44515d',
-  CollapsedPanel = '#96c3ec',
-  ExpandedPanel = '#b2acfa',
-  TabBackground = '#f3c19d',
+  Panel = '#A9D8B8',
   Disabled = '#bbb',
   Danger = '#ff5555',
   DangerLight = '#ffbbbb',
+  Indicator = '#FFB546',
 }
 
 export default createMuiTheme({
@@ -85,35 +84,37 @@ export default createMuiTheme({
     },
   },
   overrides: {
-    MuiCssBaseline: {
-      '@global': {
-        '@font-face': [merriweatherRegular, barlowRegular],
+    MuiAccordion: {
+      root: {
+        background: Colors.Panel,
       },
+    },
+    MuiAccordionDetails: {
+      root: { background: Colors.Panel },
     },
     MuiButton: {
       root: {
         textTransform: 'none',
       },
     },
-    MuiLink: {
+    MuiCard: {
       root: {
-        color: Colors.Link,
+        backgroundColor: Colors.Box,
       },
     },
-    MuiAccordion: {
-      root: {
-        background: Colors.CollapsedPanel,
-        '&$expanded': {
-          background: Colors.ExpandedPanel,
-        },
+    MuiCssBaseline: {
+      '@global': {
+        '@font-face': [merriweatherRegular, barlowRegular],
       },
-    },
-    MuiAccordionDetails: {
-      root: { background: Colors.ExpandedPanel },
     },
     MuiInputBase: {
       root: {
         background: Colors.Background,
+      },
+    },
+    MuiLink: {
+      root: {
+        color: Colors.Link,
       },
     },
     MuiTab: {
@@ -131,9 +132,9 @@ export default createMuiTheme({
         },
       },
     },
-    MuiCard: {
-      root: {
-        backgroundColor: Colors.Box,
+    MuiTabs: {
+      indicator: {
+        backgroundColor: Colors.Indicator,
       },
     },
     MuiTextField: {
