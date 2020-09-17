@@ -115,6 +115,8 @@
     "article_number": "Article number",
     "delete_doi_title": "Change type?",
     "delete_doi_text": "Removing the link to the publication will change it from a registration to a new publication. Do you want to continue?",
+    "is_book_a_textbook": "Is the book a textbook?",
+    "is_book_a_textbook_confirm": "Yes, the book is a textbook",
     "is_peer_reviewed": "The publication is peer reviewed",
     "is_not_peer_reviewed": "The publication is not peer reviewed",
     "is_text_book": "Is this a textbook?",

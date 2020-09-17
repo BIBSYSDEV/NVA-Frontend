@@ -1,5 +1,5 @@
 import { Field, FormikProps, useFormikContext, FieldProps, ErrorMessage } from 'formik';
-import React, { FC, useEffect } from 'react';
+import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { TextField, Typography } from '@material-ui/core';
@@ -11,7 +11,6 @@ import PeerReview from './components/PeerReview';
 import DoiField from './components/DoiField';
 import SelectTypeField from './components/SelectTypeField';
 import { JournalEntityDescription } from '../../../types/publication_types/journalPublication.types';
-import { BackendTypeNames } from '../../../types/publication_types/commonPublication.types';
 import PublisherField from './components/PublisherField';
 
 const StyledContent = styled.div`
@@ -42,19 +41,17 @@ const JournalForm: FC = () => {
     reference: { publicationContext, publicationInstance },
   } = values.entityDescription as JournalEntityDescription;
 
-  useEffect(() => {
-    // Set correct Pages type based on publication type being Journal
-    setFieldValue(ReferenceFieldNames.PAGES_TYPE, BackendTypeNames.PAGES_RANGE);
-  }, [setFieldValue]);
-
-  useEffect(() => {
-    // Only Article can be peer reviewed, so ensure it is set to false when type is changed
-    setFieldValue(ReferenceFieldNames.PEER_REVIEW, false);
-  }, [setFieldValue, publicationInstance.type]);
-
   return (
     <StyledContent>
-      <SelectTypeField fieldName={ReferenceFieldNames.SUB_TYPE} options={Object.values(JournalType)} />
+      <SelectTypeField
+        fieldName={ReferenceFieldNames.SUB_TYPE}
+        options={Object.values(JournalType)}
+        onChangeType={(newType) => {
+          setFieldValue(ReferenceFieldNames.SUB_TYPE, newType, false);
+          // Only JournalArticle can be peer reviewed, so ensure it is set to false when type is changed
+          setFieldValue(ReferenceFieldNames.PEER_REVIEW, false);
+        }}
+      />
 
       <DoiField />
 
