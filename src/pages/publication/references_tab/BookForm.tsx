@@ -9,8 +9,6 @@ import NviValidation from './components/NviValidation';
 import PeerReview from './components/PeerReview';
 import PublicationChannelSearch from './components/PublicationChannelSearch';
 import PublisherRow from './components/PublisherRow';
-import SubHeading from '../../../components/SubHeading';
-import Label from '../../../components/Label';
 import DoiField from './components/DoiField';
 import SelectTypeField from './components/SelectTypeField';
 import PublisherField from './components/PublisherField';
@@ -18,6 +16,7 @@ import { BookEntityDescription } from '../../../types/publication_types/bookPubl
 import IsbnListField from './components/IsbnListField';
 import TotalPagesField from './components/TotalPagesField';
 import { FormControlLabel, Checkbox } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 
 const StyledContent = styled.div`
   display: grid;
@@ -41,6 +40,10 @@ const StyledPeerReview = styled.div`
 
 const StyledTextBook = styled.div`
   grid-area: text-book;
+`;
+
+const StyledTypography = styled(Typography)`
+  padding-top: 1.5rem;
 `;
 
 const BookForm: FC = () => {
@@ -75,7 +78,7 @@ const BookForm: FC = () => {
           <PeerReview fieldName={ReferenceFieldNames.PEER_REVIEW} label={t('references.peer_review')} />
         </StyledPeerReview>
         <StyledTextBook>
-          <Label>{t('references.is_book_a_textbook')}</Label>
+          <Typography variant="h5">{t('references.is_book_a_textbook')}</Typography>
           <Field name={ReferenceFieldNames.IS_TEXTBOOK}>
             {({ field }: FieldProps) => (
               <FormControlLabel
@@ -87,8 +90,8 @@ const BookForm: FC = () => {
         </StyledTextBook>
       </StyledSection>
       <div>
-        <SubHeading>{t('references.series')}</SubHeading>
-        <Label>{t('references.series_info')}</Label>
+        <StyledTypography variant="h5">{t('references.series')}</StyledTypography>
+        <Typography>{t('references.series_info')}</Typography>
         <Field name={ReferenceFieldNames.SERIES_TITLE}>
           {({ field: { name, value } }: FieldProps) => (
             <>

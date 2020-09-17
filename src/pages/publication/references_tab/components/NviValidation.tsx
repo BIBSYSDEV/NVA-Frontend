@@ -1,12 +1,11 @@
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-
 import CancelIcon from '@material-ui/icons/Cancel';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import Card from '../../../../components/Card';
-import SubHeading from '../../../../components/SubHeading';
 import { StyledNormalTextPreWrapped } from '../../../../components/styled/Wrappers';
+import { Typography } from '@material-ui/core';
 
 const StyledNviValidation = styled(Card)`
   margin-top: 1rem;
@@ -51,7 +50,7 @@ const NviValidation: FC<NviValidationProps> = ({ dataTestId, isPeerReviewed, isR
 
   return (
     <StyledNviValidation data-testid={dataTestId}>
-      <SubHeading>{t('references.nvi_header')}</SubHeading>
+      <Typography variant="h5">{t('references.nvi_header')}</Typography>
       {isPeerReviewed ? (
         isRated ? (
           <>

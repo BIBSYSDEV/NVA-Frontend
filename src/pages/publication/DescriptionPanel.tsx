@@ -3,7 +3,7 @@ import React, { FC, useEffect, ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import DateFnsUtils from '@date-io/date-fns';
-import { MenuItem, TextField as MuiTextField, TextField } from '@material-ui/core';
+import { MenuItem, TextField as MuiTextField, TextField, Typography } from '@material-ui/core';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
@@ -13,12 +13,10 @@ import ProjectSearch from './description_tab/ProjectSearch';
 import ProjectRow from './description_tab/ProjectRow';
 import DatePickerField from './description_tab/DatePickerField';
 import { publicationLanguages } from '../../types/language.types';
-import Heading from '../../components/Heading';
 import Card from '../../components/Card';
 import { DescriptionFieldNames } from '../../types/publicationFieldNames';
 import { touchedDescriptionTabFields } from '../../utils/formik-helpers';
 import { PanelProps } from './PublicationFormContent';
-import SubHeading from '../../components/SubHeading';
 
 const NpiAndTagsWrapper = styled.div`
   display: grid;
@@ -60,7 +58,7 @@ const DescriptionPanel: FC<PanelProps> = ({ setTouchedFields }) => {
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <StyledMainCard>
-        <Heading>{t('heading.description')}</Heading>
+        <Typography variant="h2">{t('heading.description')}</Typography>
         <Field name={DescriptionFieldNames.TITLE}>
           {({ field, meta: { touched, error } }: FieldProps) => (
             <TextField
@@ -153,7 +151,7 @@ const DescriptionPanel: FC<PanelProps> = ({ setTouchedFields }) => {
         </DateAndLanguageWrapper>
       </StyledMainCard>
       <Card>
-        <SubHeading>{t('description.project_association')}</SubHeading>
+        <Typography variant="h5">{t('description.project_association')}</Typography>
 
         <Field name={DescriptionFieldNames.PROJECT}>
           {({ field: { name, value } }: FieldProps) => (

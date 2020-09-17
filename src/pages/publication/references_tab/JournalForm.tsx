@@ -2,7 +2,7 @@ import { Field, FormikProps, useFormikContext, FieldProps, ErrorMessage } from '
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { TextField } from '@material-ui/core';
+import { TextField, Typography } from '@material-ui/core';
 import { JournalPublication } from '../../../types/publication.types';
 import { ReferenceFieldNames, JournalType } from '../../../types/publicationFieldNames';
 import { PublicationTableNumber } from '../../../utils/constants';
@@ -28,7 +28,7 @@ const StyledArticleDetail = styled.div`
   }
 `;
 
-const StyledLabel = styled.div`
+const StyledLabel = styled(Typography)`
   margin-top: 1rem;
   align-self: center;
   justify-self: center;

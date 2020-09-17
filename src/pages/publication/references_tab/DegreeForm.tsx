@@ -10,15 +10,9 @@ import DoiField from './components/DoiField';
 import SelectTypeField from './components/SelectTypeField';
 import SeriesRow from './components/SeriesRow';
 import PublisherField from './components/PublisherField';
+import { Typography } from '@material-ui/core';
 
-const StyledLabel = styled.div`
-  color: ${({ theme }) => theme.palette.text.primary};
-  font-size: 1rem;
-  font-weight: bold;
-`;
-
-const StyledHeading = styled.div`
-  font-size: 1.5rem;
+const StyledTypography = styled(Typography)`
   padding-top: 1.5rem;
 `;
 
@@ -40,8 +34,8 @@ const DegreeForm: FC = () => {
         errorName={ReferenceFieldNames.PUBLICATION_CONTEXT_PUBLISHER}
       />
 
-      <StyledHeading>{t('references.series')}</StyledHeading>
-      <StyledLabel>{t('references.series_info')}</StyledLabel>
+      <StyledTypography variant="h5">{t('references.series')}</StyledTypography>
+      <Typography>{t('references.series_info')}</Typography>
       <Field name={ReferenceFieldNames.SERIES_TITLE}>
         {({ field: { name, value } }: FieldProps) => (
           <>

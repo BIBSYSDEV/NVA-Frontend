@@ -7,9 +7,8 @@ import { RootStore } from '../../redux/reducers/rootReducer';
 import orcidIcon from '../../resources/images/orcid_logo.svg';
 import { ORCID_BASE_URL } from '../../utils/constants';
 import OrcidModalContent from './OrcidModalContent';
-import Heading from '../../components/Heading';
 import Card from '../../components/Card';
-import { Button, IconButton } from '@material-ui/core';
+import { Button, IconButton, Typography } from '@material-ui/core';
 import ConfirmDialog from '../../components/ConfirmDialog';
 import { removeQualifierIdFromAuthority, AuthorityQualifiers } from '../../api/authorityApi';
 import { setNotification } from '../../redux/actions/notificationActions';
@@ -20,7 +19,6 @@ import Modal from '../../components/Modal';
 import { Link as MuiLink } from '@material-ui/core';
 import { StyledNormalTextPreWrapped } from '../../components/styled/Wrappers';
 import { useLocation } from 'react-router-dom';
-import NormalText from '../../components/NormalText';
 
 const StyledInformation = styled.div`
   margin-bottom: 1rem;
@@ -52,7 +50,7 @@ const StyledContent = styled.div`
   flex: 1;
 `;
 
-const StyledLabel = styled(NormalText)`
+const StyledLabel = styled(Typography)`
   width: 6rem;
   min-width: 6rem;
 `;
@@ -104,7 +102,7 @@ const UserOrcid: FC = () => {
 
   return (
     <Card>
-      <Heading>{t('common:orcid')}</Heading>
+      <Typography variant="h5">{t('common:orcid')}</Typography>
       {listOfOrcids?.length > 0 ? (
         listOfOrcids.map((orcid: string) => {
           const orcidLink = `${ORCID_BASE_URL}/${orcid}`;
@@ -117,7 +115,7 @@ const UserOrcid: FC = () => {
                 </IconButton>
                 <MuiLink href={orcidLink} target="_blank" rel="noopener noreferrer">
                   <StyledContent data-testid="orcid-info">
-                    <NormalText>{orcidLink}</NormalText>
+                    <Typography>{orcidLink}</Typography>
                   </StyledContent>
                 </MuiLink>
               </StyledLine>

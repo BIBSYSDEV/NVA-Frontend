@@ -2,11 +2,10 @@ import React, { FC } from 'react';
 import { FormikProps, useFormikContext } from 'formik';
 import styled from 'styled-components';
 import { Publication } from '../../../types/publication.types';
-import Heading from '../../../components/Heading';
-import NormalText from '../../../components/NormalText';
 import { useTranslation } from 'react-i18next';
 import Card from '../../../components/Card';
 import { flattenFormikErrors } from '../../../utils/formik-helpers';
+import { Typography } from '@material-ui/core';
 
 const StyledCard = styled(Card)`
   border: 3px solid ${({ theme }) => theme.palette.danger.main};
@@ -20,12 +19,12 @@ const ErrorSummary: FC = () => {
 
   return flattenedErrors.length > 0 ? (
     <StyledCard data-testid="error-summary-card">
-      <Heading>{t('heading.validation_errors')}</Heading>
+      <Typography variant="h5">{t('heading.validation_errors')}</Typography>
       {flattenedErrors.map(({ fieldName, errorMessage }) => (
-        <NormalText key={fieldName}>
+        <Typography key={fieldName}>
           <b>{t(`formikValues:${fieldName}`)}: </b>
           {errorMessage}
-        </NormalText>
+        </Typography>
       ))}
     </StyledCard>
   ) : null;

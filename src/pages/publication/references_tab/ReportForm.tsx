@@ -8,8 +8,7 @@ import { PublicationTableNumber } from '../../../utils/constants';
 import PublicationChannelSearch from './components/PublicationChannelSearch';
 import DoiField from './components/DoiField';
 import SelectTypeField from './components/SelectTypeField';
-import SubHeading from '../../../components/SubHeading';
-import Label from '../../../components/Label';
+import { Typography } from '@material-ui/core';
 import SeriesRow from './components/SeriesRow';
 import PublisherField from './components/PublisherField';
 import IsbnListField from './components/IsbnListField';
@@ -29,6 +28,10 @@ const StyledSection = styled.div`
     grid-template-areas: 'isbn' 'number-of-pages';
     grid-template-columns: 1fr;
   }
+`;
+
+const StyledTypography = styled(Typography)`
+  padding-top: 1.5rem;
 `;
 
 const ReportForm: FC = () => {
@@ -54,8 +57,8 @@ const ReportForm: FC = () => {
         <TotalPagesField />
       </StyledSection>
       <div>
-        <SubHeading>{t('references.series')}</SubHeading>
-        <Label>{t('references.series_info')}</Label>
+        <StyledTypography variant="h5">{t('references.series')}</StyledTypography>
+        <Typography>{t('references.series_info')}</Typography>
         <Field name={ReferenceFieldNames.SERIES_TITLE}>
           {({ field: { name, value } }: FieldProps) => (
             <>
