@@ -64,5 +64,8 @@
     "update_authority": "Updated authority",
     "update_customer": "Updated customer institution",
     "update_publication": "Updated publication"
+  },
+  "warning": {
+    "invalid_isbn": "Invalid ISBN"
   }
 }

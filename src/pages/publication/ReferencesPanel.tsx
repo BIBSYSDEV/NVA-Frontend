@@ -38,10 +38,10 @@ const StyledSelectContainer = styled.div`
 
 const ReferencesPanel: FC<PanelProps> = ({ setTouchedFields }) => {
   const { t } = useTranslation('publication');
-  const { values, setTouched, setFieldValue, touched }: FormikProps<Publication> = useFormikContext();
+  const { values, setTouched, setFieldValue, touched, errors }: FormikProps<Publication> = useFormikContext();
   const publicationContextType = values.entityDescription.reference.publicationContext.type;
   const contextRef = useRef(publicationContextType);
-
+  console.log(errors.entityDescription?.reference?.publicationContext);
   useEffect(() => {
     contextRef.current = publicationContextType;
   }, [publicationContextType]);
