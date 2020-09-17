@@ -2,7 +2,7 @@ import { FormikProps, useFormikContext } from 'formik';
 import React, { useEffect, FC, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { Publication, emptyPagesRange, emptyPagesMonograph } from '../../types/publication.types';
+import { Publication } from '../../types/publication.types';
 import {
   PublicationType,
   ReferenceFieldNames,
@@ -20,6 +20,9 @@ import SelectTypeField from './references_tab/components/SelectTypeField';
 import { touchedReferenceTabFields } from '../../utils/formik-helpers';
 import { PanelProps } from './PublicationFormContent';
 import { emptyBookPublicationInstance } from '../../types/publication_types/bookPublication.types';
+import { emptyJournalPublicationInstance } from '../../types/publication_types/journalPublication.types';
+import { emptyReportPublicationInstance } from '../../types/publication_types/reportPublication.types';
+import { emptyDegreePublicationInstance } from '../../types/publication_types/degreePublication.types';
 
 const StyledCard = styled(Card)`
   margin-top: 1rem;
@@ -51,22 +54,20 @@ const ReferencesPanel: FC<PanelProps> = ({ setTouchedFields }) => {
 
   const onChangeType = (newPublicationContextType: string) => {
     // Ensure some values are reset when publication type changes
-    setFieldValue(ReferenceFieldNames.SUB_TYPE, '', false);
     setFieldValue(contextTypeBaseFieldName, { type: newPublicationContextType }, false);
 
-    // Set correct format for pages given new publication type
     switch (newPublicationContextType) {
       case PublicationType.PUBLICATION_IN_JOURNAL:
-        setFieldValue(ReferenceFieldNames.PAGES, emptyPagesRange, false);
+        setFieldValue(instanceTypeBaseFieldName, emptyJournalPublicationInstance, false);
         break;
       case PublicationType.BOOK:
         setFieldValue(instanceTypeBaseFieldName, emptyBookPublicationInstance, false);
         break;
       case PublicationType.REPORT:
-        setFieldValue(ReferenceFieldNames.PAGES, emptyPagesMonograph, false);
+        setFieldValue(instanceTypeBaseFieldName, emptyReportPublicationInstance, false);
         break;
       case PublicationType.DEGREE:
-        setFieldValue(ReferenceFieldNames.PAGES, null, false);
+        setFieldValue(instanceTypeBaseFieldName, emptyDegreePublicationInstance, false);
         break;
     }
 

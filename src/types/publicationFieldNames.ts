@@ -47,7 +47,6 @@ export enum ReferenceFieldNames {
   IS_TEXTBOOK = 'entityDescription.reference.publicationInstance.isTextbook',
   ISBN_LIST = 'entityDescription.reference.publicationContext.isbnList',
   ISSUE = 'entityDescription.reference.publicationInstance.issue',
-  PAGES = 'entityDescription.reference.publicationInstance.pages',
   PAGES_FROM = 'entityDescription.reference.publicationInstance.pages.begin',
   PAGES_TO = 'entityDescription.reference.publicationInstance.pages.end',
   PAGES_TYPE = 'entityDescription.reference.publicationInstance.pages.type',
