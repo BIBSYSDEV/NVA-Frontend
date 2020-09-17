@@ -10,6 +10,9 @@ import { ReferenceFieldNames, DescriptionFieldNames } from '../../types/publicat
 import { hasTouchedError, getAllFileFields, getAllContributorFields } from '../../utils/formik-helpers';
 
 const StyledTabs = styled(Tabs)`
+  .MuiTabs-indicator {
+    background-color: #ffb546;
+  }
   @media (min-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
     .MuiTabs-flexContainer {
       justify-content: center;
