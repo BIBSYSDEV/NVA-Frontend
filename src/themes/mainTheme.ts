@@ -84,21 +84,6 @@ export default createMuiTheme({
     },
   },
   overrides: {
-    MuiCssBaseline: {
-      '@global': {
-        '@font-face': [merriweatherRegular, barlowRegular],
-      },
-    },
-    MuiButton: {
-      root: {
-        textTransform: 'none',
-      },
-    },
-    MuiLink: {
-      root: {
-        color: Colors.Link,
-      },
-    },
     MuiAccordion: {
       root: {
         background: Colors.Panel,
@@ -107,9 +92,29 @@ export default createMuiTheme({
     MuiAccordionDetails: {
       root: { background: Colors.Panel },
     },
+    MuiButton: {
+      root: {
+        textTransform: 'none',
+      },
+    },
+    MuiCard: {
+      root: {
+        backgroundColor: Colors.Box,
+      },
+    },
+    MuiCssBaseline: {
+      '@global': {
+        '@font-face': [merriweatherRegular, barlowRegular],
+      },
+    },
     MuiInputBase: {
       root: {
         background: Colors.Background,
+      },
+    },
+    MuiLink: {
+      root: {
+        color: Colors.Link,
       },
     },
     MuiTab: {
@@ -127,9 +132,9 @@ export default createMuiTheme({
         },
       },
     },
-    MuiCard: {
-      root: {
-        backgroundColor: Colors.Box,
+    MuiTabs: {
+      indicator: {
+        backgroundColor: Colors.Indicator,
       },
     },
     MuiTextField: {
