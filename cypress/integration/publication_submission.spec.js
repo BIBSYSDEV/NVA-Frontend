@@ -7,8 +7,7 @@ describe('Publication: Submission', () => {
   it('The user should be able to navigate to submission tab', () => {
     cy.mocklogin();
 
-    cy.get('[data-testid=menu]').click({ force: true });
-    cy.get('[data-testid=menu-new-publication-button]').click({ force: true });
+    cy.get('[data-testid=new-publication]').click({ force: true });
 
     cy.startPublicationWithDoi();
 
