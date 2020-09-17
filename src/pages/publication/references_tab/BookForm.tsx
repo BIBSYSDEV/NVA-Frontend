@@ -17,6 +17,7 @@ import PublisherField from './components/PublisherField';
 import { BookEntityDescription } from '../../../types/publication_types/bookPublication.types';
 import IsbnListField from './components/IsbnListField';
 import TotalPagesField from './components/TotalPagesField';
+import { FormControlLabel, Checkbox } from '@material-ui/core';
 
 const StyledContent = styled.div`
   display: grid;
@@ -36,6 +37,10 @@ const StyledSection = styled.div`
 
 const StyledPeerReview = styled.div`
   grid-area: peer-review;
+`;
+
+const StyledTextBook = styled.div`
+  grid-area: text-book;
 `;
 
 const BookForm: FC = () => {
@@ -69,6 +74,17 @@ const BookForm: FC = () => {
         <StyledPeerReview>
           <PeerReview fieldName={ReferenceFieldNames.PEER_REVIEW} label={t('references.peer_review')} />
         </StyledPeerReview>
+        <StyledTextBook>
+          <Label>{t('references.is_book_a_textbook')}</Label>
+          <Field name={ReferenceFieldNames.IS_TEXTBOOK}>
+            {({ field }: FieldProps) => (
+              <FormControlLabel
+                control={<Checkbox color="primary" checked={field.value ?? false} {...field} />}
+                label={t('references.is_book_a_textbook_confirm')}
+              />
+            )}
+          </Field>
+        </StyledTextBook>
       </StyledSection>
       <div>
         <SubHeading>{t('references.series')}</SubHeading>

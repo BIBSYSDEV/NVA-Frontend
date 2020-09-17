@@ -3,7 +3,12 @@ import React, { useEffect, FC, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { Publication, emptyPagesRange, emptyPagesMonograph } from '../../types/publication.types';
-import { PublicationType, ReferenceFieldNames, contextTypeBaseFieldName } from '../../types/publicationFieldNames';
+import {
+  PublicationType,
+  ReferenceFieldNames,
+  contextTypeBaseFieldName,
+  instanceTypeBaseFieldName,
+} from '../../types/publicationFieldNames';
 import BookForm from './references_tab/BookForm';
 // import ChapterForm from './references_tab/ChapterForm';
 import DegreeForm from './references_tab/DegreeForm';
@@ -14,6 +19,7 @@ import Heading from '../../components/Heading';
 import SelectTypeField from './references_tab/components/SelectTypeField';
 import { touchedReferenceTabFields } from '../../utils/formik-helpers';
 import { PanelProps } from './PublicationFormContent';
+import { emptyBookPublicationInstance } from '../../types/publication_types/bookPublication.types';
 
 const StyledCard = styled(Card)`
   margin-top: 1rem;
@@ -54,6 +60,8 @@ const ReferencesPanel: FC<PanelProps> = ({ setTouchedFields }) => {
         setFieldValue(ReferenceFieldNames.PAGES, emptyPagesRange, false);
         break;
       case PublicationType.BOOK:
+        setFieldValue(instanceTypeBaseFieldName, emptyBookPublicationInstance, false);
+        break;
       case PublicationType.REPORT:
         setFieldValue(ReferenceFieldNames.PAGES, emptyPagesMonograph, false);
         break;
