@@ -1,21 +1,20 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
-
 import LabelTextLine from '../../components/LabelTextLine';
 import { User } from '../../types/user.types';
-import Heading from '../../components/Heading';
 import Card from '../../components/Card';
+import { Typography } from '@material-ui/core';
 
 interface UserInfoProps {
   user: User;
 }
 
-const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
+const UserInfo: FC<UserInfoProps> = ({ user }) => {
   const { t } = useTranslation();
 
   return (
     <Card>
-      <Heading>{t('profile:heading.user_info')}</Heading>
+      <Typography variant="h5">{t('profile:heading.user_info')}</Typography>
       <LabelTextLine dataTestId="user-name" label={t('common:name')}>
         {user.name}
       </LabelTextLine>

@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react';
 import { Institution } from '../../../../types/contributor.types';
-import { Button } from '@material-ui/core';
+import { Button, Typography } from '@material-ui/core';
 import SelectInstitution from '../../../../components/institution/SelectInstitution';
 import Modal from '../../../../components/Modal';
 import { useFormikContext, FormikProps } from 'formik';
@@ -19,7 +19,6 @@ import { setNotification } from '../../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../../types/notification.types';
 import AffiliationHierarchy from '../../../../components/institution/AffiliationHierarchy';
 import Card from '../../../../components/Card';
-import NormalText from '../../../../components/NormalText';
 import { BackendTypeNames } from '../../../../types/publication_types/commonPublication.types';
 
 const StyledCard = styled(Card)`
@@ -109,7 +108,7 @@ const AffiliationsCell: FC<AffiliationsCellProps> = ({ affiliations, baseFieldNa
           setAffiliationToRemove(null);
         }}
         onCancel={() => setAffiliationToRemove(null)}>
-        <NormalText>{t('contributors.confirm_remove_affiliation_text')}</NormalText>
+        <Typography>{t('contributors.confirm_remove_affiliation_text')}</Typography>
       </ConfirmDialog>
     </>
   );

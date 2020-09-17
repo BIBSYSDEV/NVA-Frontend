@@ -10,10 +10,10 @@ import DegreeForm from './references_tab/DegreeForm';
 import JournalForm from './references_tab/JournalForm';
 import ReportForm from './references_tab/ReportForm';
 import Card from '../../components/Card';
-import Heading from '../../components/Heading';
 import SelectTypeField from './references_tab/components/SelectTypeField';
 import { touchedReferenceTabFields } from '../../utils/formik-helpers';
 import { PanelProps } from './PublicationFormContent';
+import { Typography } from '@material-ui/core';
 
 const StyledCard = styled(Card)`
   margin-top: 1rem;
@@ -75,9 +75,9 @@ const ReferencesPanel: FC<PanelProps> = ({ setTouchedFields }) => {
 
       {publicationContextType && (
         <StyledCard>
-          <Heading data-testid="publication-instance-type-heading">
+          <Typography variant="h2" data-testid="publication-instance-type-heading">
             {t(`publicationTypes:${publicationContextType}`)}
-          </Heading>
+          </Typography>
           {/* {publicationContextType === PublicationType.BOOK && <BookForm />} */}
           {/* {publicationContextType === PublicationType.CHAPTER && <ChapterForm />} */}
           {publicationContextType === PublicationType.REPORT && <ReportForm />}

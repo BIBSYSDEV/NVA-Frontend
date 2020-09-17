@@ -1,11 +1,9 @@
 import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { Button, CircularProgress } from '@material-ui/core';
+import { Button, CircularProgress, Typography } from '@material-ui/core';
 import SearchBar from '../../../../components/SearchBar';
 import { Authority } from '../../../../types/authority.types';
-import NormalText from '../../../../components/NormalText';
-import SubHeading from '../../../../components/SubHeading';
 import AuthorityList from '../../../user/authority/AuthorityList';
 import useFetchAuthorities from '../../../../utils/hooks/useFetchAuthorities';
 import { StyledProgressWrapper, StyledRightAlignedButtonWrapper } from '../../../../components/styled/Wrappers';
@@ -14,7 +12,7 @@ const StyledButtonContainer = styled(StyledRightAlignedButtonWrapper)`
   margin: 1rem 0;
 `;
 
-const StyledSubHeading = styled(SubHeading)`
+const StyledSubHeading = styled(Typography)`
   margin-bottom: 1rem;
 `;
 
@@ -31,7 +29,7 @@ const AddContributorModalContent: FC<AddContributorModalContentProps> = ({ addAu
   return (
     <>
       {initialSearchTerm && (
-        <StyledSubHeading>
+        <StyledSubHeading variant="h6">
           {t('publication:contributors.prefilled_name')}: {initialSearchTerm}
         </StyledSubHeading>
       )}
@@ -63,7 +61,7 @@ const AddContributorModalContent: FC<AddContributorModalContentProps> = ({ addAu
           </StyledButtonContainer>
         </>
       ) : (
-        searchTerm && <NormalText>{t('common:no_hits')}</NormalText>
+        searchTerm && <Typography>{t('common:no_hits')}</Typography>
       )}
     </>
   );
