@@ -7,10 +7,14 @@ const StyledLogo = styled.div`
   display: flex;
   flex-wrap: wrap;
   grid-area: logo;
+  justify-content: center;
 `;
 
 const StyledDivider = styled(Divider)`
   margin-left: 2rem;
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+    display: none;
+  }
 `;
 
 const Logo: FC = () => (
