@@ -22,6 +22,7 @@ const IsbnListField: FC = () => {
           options={[]}
           value={field.value ?? ''}
           onChange={(_: ChangeEvent<{}>, value: string[], reason) => {
+            setFieldTouched(field.name);
             if (reason === 'create-option') {
               const newIsbn = value.pop()?.trim().replaceAll('-', '');
               if (newIsbn?.match(isbnRegex)) {
@@ -30,7 +31,6 @@ const IsbnListField: FC = () => {
                 dispatch(setNotification(t('feedback:warning.invalid_isbn'), NotificationVariant.Warning));
               }
             } else {
-              setFieldTouched(field.name);
               setFieldValue(field.name, value);
             }
           }}
