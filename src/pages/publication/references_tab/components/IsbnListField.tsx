@@ -1,7 +1,7 @@
 import React, { FC, ChangeEvent } from 'react';
 import { Field, FieldProps } from 'formik';
 import { Autocomplete } from '@material-ui/lab';
-import { TextField } from '@material-ui/core';
+import { TextField, Chip } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { ReferenceFieldNames } from '../../../../types/publicationFieldNames';
@@ -15,9 +15,8 @@ const IsbnListField: FC = () => {
 
   return (
     <Field name={ReferenceFieldNames.ISBN_LIST}>
-      {({ field, form: { setFieldValue }, meta: { error, touched } }: FieldProps) => (
+      {({ field, form: { setFieldValue, setFieldTouched }, meta: { error } }: FieldProps) => (
         <Autocomplete
-          {...field}
           freeSolo
           multiple
           options={[]}
@@ -31,9 +30,19 @@ const IsbnListField: FC = () => {
                 dispatch(setNotification(t('feedback:warning.invalid_isbn'), NotificationVariant.Warning));
               }
             } else {
+              setFieldTouched(field.name);
               setFieldValue(field.name, value);
             }
           }}
+          renderTags={(value: string[], getTagProps) =>
+            value.map((option: string, index: number) => (
+              <Chip
+                label={option}
+                {...getTagProps({ index })}
+                color={error && error[index] ? 'secondary' : 'default'}
+              />
+            ))
+          }
           renderInput={(params) => (
             <TextField
               {...params}
@@ -42,7 +51,7 @@ const IsbnListField: FC = () => {
               helperText={t('references.isbn_helper')}
               variant="outlined"
               fullWidth
-              error={!!error && touched}
+              error={!!error}
             />
           )}
         />

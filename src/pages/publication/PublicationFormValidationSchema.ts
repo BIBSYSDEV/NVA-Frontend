@@ -77,7 +77,8 @@ const bookPublicationInstance = {
 };
 
 const bookPublicationContext = {
-  isbnList: Yup.array().of(Yup.string().matches(isbnRegex)),
+  publisher: Yup.string().required(ErrorMessage.REQUIRED),
+  isbnList: Yup.array().of(Yup.string().matches(isbnRegex, ErrorMessage.INVALID_FORMAT)),
 };
 
 const reportPublicationInstance = {
@@ -107,7 +108,7 @@ const degreePublicationContext = {
 
 const reportPublicationContext = {
   publisher: Yup.string().required(ErrorMessage.REQUIRED),
-  isbnList: Yup.array().of(Yup.string().matches(isbnRegex)),
+  isbnList: Yup.array().of(Yup.string().matches(isbnRegex, ErrorMessage.INVALID_FORMAT)),
 };
 
 export const publicationValidationSchema = Yup.object().shape({
