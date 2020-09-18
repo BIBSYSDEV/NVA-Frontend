@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
@@ -45,7 +45,7 @@ interface MenuProps {
 
 const Menu: FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
   const user = useSelector((store: RootStore) => store.user);
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const { t } = useTranslation();
   const history = useHistory();
   const customerId = user.customerId.split('/').pop();

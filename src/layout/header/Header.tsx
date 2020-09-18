@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import Login from './Login';
 import Logo from './Logo';
 import styled from 'styled-components';
@@ -49,7 +49,7 @@ const StyledBurgerMenu = styled.div`
 const Header: FC = () => {
   const { t } = useTranslation('publication');
   const user = useSelector((store: RootStore) => store.user);
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
