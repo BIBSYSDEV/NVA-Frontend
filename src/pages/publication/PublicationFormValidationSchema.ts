@@ -154,6 +154,11 @@ export const publicationValidationSchema = Yup.object().shape({
     projects: Yup.array().of(Yup.object()), // TODO
     contributors: Yup.array().of(contributorValidationSchema).min(1, ErrorMessage.MISSING_CONTRIBUTOR),
     reference: Yup.object()
+      .shape({
+        publicationContext: Yup.object().shape({
+          type: Yup.string().oneOf(Object.values(PublicationType)).required(ErrorMessage.REQUIRED),
+        }),
+      })
       .when('$publicationContextType', {
         is: PublicationType.PUBLICATION_IN_JOURNAL,
         then: journalReference,
