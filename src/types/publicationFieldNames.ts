@@ -1,7 +1,7 @@
 // For valid values, see https://github.com/BIBSYSDEV/nva-datamodel-java/blob/develop/src/main/java/no/unit/nva/model/PublicationType.java
 export enum PublicationType {
   PUBLICATION_IN_JOURNAL = 'Journal',
-  // BOOK = 'Book',
+  BOOK = 'Book',
   REPORT = 'Report',
   DEGREE = 'Degree',
   // CHAPTER = 'Chapter',
@@ -39,13 +39,14 @@ export enum DegreeType {
 
 // Enums representing name of fields used by Formik
 export const contextTypeBaseFieldName = 'entityDescription.reference.publicationContext';
+export const instanceTypeBaseFieldName = 'entityDescription.reference.publicationInstance';
 
 export enum ReferenceFieldNames {
   ARTICLE_NUMBER = 'entityDescription.reference.publicationInstance.articleNumber',
   DOI = 'entityDescription.reference.doi',
+  IS_TEXTBOOK = 'entityDescription.reference.publicationInstance.isTextbook',
   ISBN_LIST = 'entityDescription.reference.publicationContext.isbnList',
   ISSUE = 'entityDescription.reference.publicationInstance.issue',
-  PAGES = 'entityDescription.reference.publicationInstance.pages',
   PAGES_FROM = 'entityDescription.reference.publicationInstance.pages.begin',
   PAGES_TO = 'entityDescription.reference.publicationInstance.pages.end',
   PAGES_TYPE = 'entityDescription.reference.publicationInstance.pages.type',
