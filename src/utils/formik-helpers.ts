@@ -175,6 +175,24 @@ export const touchedReferenceTabFields = (publicationType: PublicationType | '')
           },
         },
       };
+    case PublicationType.BOOK:
+      return {
+        entityDescription: {
+          reference: {
+            publicationContext: {
+              type: true,
+              publisher: true,
+              isbnList: true,
+            },
+            publicationInstance: {
+              type: true,
+              pages: {
+                pages: true,
+              },
+            },
+          },
+        },
+      };
     default:
       return {
         entityDescription: {
