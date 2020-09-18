@@ -16,16 +16,16 @@ export const ErrorMessage = {
 
 export const isbnRegex = /^(97(8|9))?\d{9}(\d|X)$/g; // ISBN without hyphens
 
-const contributorValidationSchema = {
+const contributorValidationSchema = Yup.object().shape({
   correspondingAuthor: Yup.boolean(),
   email: Yup.string().when('correspondingAuthor', {
     is: true,
     then: Yup.string().email(ErrorMessage.INVALID_FORMAT).required(ErrorMessage.REQUIRED),
   }),
   sequence: Yup.number().min(0),
-};
+});
 
-const fileValidationSchema = {
+const fileValidationSchema = Yup.object().shape({
   administrativeAgreement: Yup.boolean(),
   embargoDate: Yup.date()
     .nullable()
@@ -45,7 +45,7 @@ const fileValidationSchema = {
       is: false,
       then: Yup.object().required(ErrorMessage.REQUIRED),
     }),
-};
+});
 
 // Journal
 const journalPublicationInstance = Yup.object().shape({
@@ -154,9 +154,7 @@ export const publicationValidationSchema = Yup.object().shape({
     }),
     language: Yup.string().url().oneOf(Object.values(LanguageValues)),
     projects: Yup.array().of(Yup.object()), // TODO
-    contributors: Yup.array()
-      .of(Yup.object().shape(contributorValidationSchema))
-      .min(1, ErrorMessage.MISSING_CONTRIBUTOR),
+    contributors: Yup.array().of(contributorValidationSchema).min(1, ErrorMessage.MISSING_CONTRIBUTOR),
     reference: Yup.object()
       .when('$publicationContextType', {
         is: PublicationType.PUBLICATION_IN_JOURNAL,
@@ -176,7 +174,7 @@ export const publicationValidationSchema = Yup.object().shape({
       }),
   }),
   fileSet: Yup.object().shape({
-    files: Yup.array().of(Yup.object().shape(fileValidationSchema)).min(1, ErrorMessage.MISSING_FILE),
+    files: Yup.array().of(fileValidationSchema).min(1, ErrorMessage.MISSING_FILE),
   }),
 });
 
