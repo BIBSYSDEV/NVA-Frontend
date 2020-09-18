@@ -21,8 +21,11 @@ const SubmissionBook: FC = () => {
       <LabelContentRow label={t('references.peer_reviewed')}>
         {publicationInstance.peerReviewed ? t('common:yes') : t('common:no')}
       </LabelContentRow>
+      <LabelContentRow label={t('references.is_book_a_textbook')}>
+        {publicationInstance.isTextbook ? t('common:yes') : t('common:no')}
+      </LabelContentRow>
       <LabelContentRow label={t('references.series')}>{publicationContext?.seriesTitle}</LabelContentRow>
-      {/* TODO <LabelContentRow label={t('references.issn')}>{isbn}</LabelContentRow> */}
+      <LabelContentRow label={t('references.isbn')}>{publicationContext?.isbnList?.join(', ')}</LabelContentRow>
       <LabelContentRow label={t('references.number_of_pages')}>{publicationInstance?.pages?.pages}</LabelContentRow>
     </>
   );
