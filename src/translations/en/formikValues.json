@@ -4,7 +4,6 @@
   "entityDescription-mainTitle": "$t(common:title)",
   "entityDescription-reference-publicationContext-isbnList": "$t(publication:references.isbn)",
   "entityDescription-reference-publicationContext-publisher": "$t(common:publisher)",
-  "entityDescription-reference-publicationContext-title": "$t(common:publisher)",
   "entityDescription-reference-publicationContext-type": "Publication type",
   "entityDescription-reference-publicationInstance-articleNumber": "$t(publication:references.article_number)",
   "entityDescription-reference-publicationInstance-issue": "$t(publication:references.issue)",
