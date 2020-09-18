@@ -28,7 +28,7 @@ const StyledSearchBarContainer = styled.div`
   grid-area: search-bar;
   width: 35rem;
   @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-    width: 15rem;
+    width: 90%;
   }
 `;
 

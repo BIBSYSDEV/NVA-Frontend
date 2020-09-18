@@ -1,19 +1,14 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-
-import { Button, Menu as MuiMenu, MenuItem, Typography } from '@material-ui/core';
+import { Button, Menu as MuiMenu, MenuItem, Typography, IconButton } from '@material-ui/core';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+import AccountCircle from '@material-ui/icons/AccountCircle';
 import { useSelector } from 'react-redux';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import NormalText from '../../components/NormalText';
-
-interface MenuProps {
-  handleLogout: () => void;
-  menuButtonLabel: string;
-}
 
 const StyledMenu = styled.div`
   grid-area: menu;
@@ -31,9 +26,26 @@ const StyledNormalText = styled(NormalText)`
   text-transform: uppercase;
 `;
 
+const StyledMenuButton = styled(Button)`
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+    display: none;
+  }
+`;
+
+const StyledMobileMenuButton = styled(IconButton)`
+  @media (min-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+    display: none;
+  }
+`;
+
+interface MenuProps {
+  handleLogout: () => void;
+  menuButtonLabel: string;
+}
+
 const Menu: FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
   const user = useSelector((store: RootStore) => store.user);
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const { t } = useTranslation();
   const history = useHistory();
   const customerId = user.customerId.split('/').pop();
@@ -51,7 +63,7 @@ const Menu: FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
 
   return (
     <StyledMenu>
-      <Button
+      <StyledMenuButton
         color="primary"
         aria-controls="menu"
         aria-haspopup="true"
@@ -59,7 +71,10 @@ const Menu: FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
         data-testid="menu"
         endIcon={anchorEl ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}>
         <Typography noWrap>{menuButtonLabel}</Typography>
-      </Button>
+      </StyledMenuButton>
+      <StyledMobileMenuButton onClick={handleClickMenuAnchor}>
+        <AccountCircle />
+      </StyledMobileMenuButton>
       <MuiMenu
         anchorEl={anchorEl}
         getContentAnchorEl={null}

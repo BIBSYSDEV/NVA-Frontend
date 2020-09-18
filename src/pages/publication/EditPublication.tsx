@@ -6,40 +6,31 @@ import LinkPublication from './new_publication/LinkPublication';
 import LoadPublication from './new_publication/LoadPublication';
 import PublicationForm from './PublicationForm';
 import Card from '../../components/Card';
-import { StyledCenterAlignedContentWrapper } from '../../components/styled/Wrappers';
 import { PageHeader } from '../../components/PageHeader';
 import { Typography } from '@material-ui/core';
 
-const StyledEditPublication = styled(StyledCenterAlignedContentWrapper)`
-  width: 100%;
+const StyledEditPublication = styled.div`
+  display: grid;
+  grid-template-areas: 'accordion information' 'accordion .';
+  grid-gap: 1rem;
   padding-top: 2rem;
+  margin: 0 1rem;
   @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
-    display: block;
-    margin-right: 0;
-    flex-wrap: wrap;
+    grid-template-areas: 'information' 'accordion';
+    width: 90%;
   }
 `;
 
 const StyledSelectorWrapper = styled.div`
-  flex: 1;
+  grid-area: accordion;
   max-width: 50rem;
-  margin-right: 2rem;
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
-    margin-right: 0;
-  }
 `;
 
 const StyledCard = styled(Card)`
+  grid-area: information;
   padding: 1rem;
-  max-width: 25rem;
-  max-height: 9rem;
-  flex: 1;
   @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
-    max-width: inherit;
-    margin-right: 0;
-  }
-  > section {
-    margin-bottom: 2rem;
+    max-width: 90vw;
   }
 `;
 
@@ -64,15 +55,15 @@ const EditPublication: FC = () => {
         <>
           <StyledEditPublication>
             <StyledSelectorWrapper>
-              <LoadPublication
-                expanded={expanded === 'load-panel'}
-                onChange={handleChange('load-panel')}
-                openForm={() => setShowForm(true)}
-              />
               <LinkPublication
                 expanded={expanded === 'link-panel'}
                 onChange={handleChange('link-panel')}
                 openForm={handleClick}
+              />
+              <LoadPublication
+                expanded={expanded === 'load-panel'}
+                onChange={handleChange('load-panel')}
+                openForm={() => setShowForm(true)}
               />
             </StyledSelectorWrapper>
             <StyledCard>
