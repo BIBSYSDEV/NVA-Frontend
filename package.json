@@ -12,7 +12,7 @@
     "@uppy/aws-s3-multipart": "^1.8.6",
     "@uppy/core": "^1.13.2",
     "@uppy/dashboard": "^1.12.6",
-    "@uppy/react": "^1.10.6",
+    "@uppy/react": "^1.10.7",
     "aws-amplify": "^3.3.1",
     "axios": "^0.19.2",
     "date-fns": "^2.16.1",
