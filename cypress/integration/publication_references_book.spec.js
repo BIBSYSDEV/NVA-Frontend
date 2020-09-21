@@ -1,4 +1,4 @@
-describe.skip('Publication: References: Book', () => {
+describe('Publication: References: Book', () => {
   beforeEach(() => {
     cy.visit('/');
     cy.server();
@@ -25,14 +25,15 @@ describe.skip('Publication: References: Book', () => {
     cy.contains('Novum Testamentum').click({ force: true });
     cy.get('[data-testid=autosearch-results-publisher]').contains('Novum Testamentum');
 
-    // TODO: fill out ISBN_LIST field
-    // cy.get('[data-testid=isbn]').type('978-3-16-148410-0');
+    // fill out ISBN_LIST field
+    cy.get('[data-testid=isbn]').type('978-3-16-148410-0').type('{enter}');
 
     // choose peer review value and show NVI status
     cy.get('[data-testid=peer_review-true]').click({ force: true });
     cy.get('[data-testid=nvi_book]').contains('This publication can be included in NVI');
     cy.get('[data-testid=peer_review-false]').click({ force: true });
     cy.get('[data-testid=nvi_book]').contains('This publication can not be incuded in NVI');
+    cy.get('[data-testid=is-textbook-checkbox]').click({ force: true });
 
     // fill out number of pages field
     cy.get('[data-testid=pages]').type('483');
