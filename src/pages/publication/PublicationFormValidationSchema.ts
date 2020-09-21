@@ -34,6 +34,7 @@ const pagesRangeField = Yup.object()
       .max(Yup.ref('end'), ErrorMessage.INVALID_PAGE_INTERVAL),
     end: Yup.number().typeError(ErrorMessage.INVALID_FORMAT).min(Yup.ref('begin'), ErrorMessage.INVALID_PAGE_INTERVAL),
   });
+const publisherField = Yup.string().required(ErrorMessage.REQUIRED);
 
 // Contributor
 const contributorValidationSchema = Yup.object().shape({
@@ -73,10 +74,6 @@ const baseReference = Yup.object().shape({
   doi: doiField,
 });
 
-const basePublicationContext = Yup.object().shape({
-  publisher: Yup.string().required(ErrorMessage.REQUIRED),
-});
-
 // Journal
 const journalPublicationInstance = Yup.object().shape({
   type: Yup.string().oneOf(Object.values(JournalType)).required(ErrorMessage.REQUIRED),
@@ -87,9 +84,13 @@ const journalPublicationInstance = Yup.object().shape({
   pages: pagesRangeField,
 });
 
+const journalPublicationContext = Yup.object().shape({
+  title: Yup.string().required(ErrorMessage.REQUIRED),
+});
+
 const journalReference = baseReference.shape({
   publicationInstance: journalPublicationInstance,
-  publicationContext: basePublicationContext,
+  publicationContext: journalPublicationContext,
 });
 
 // Book
@@ -99,7 +100,8 @@ const bookPublicationInstance = Yup.object().shape({
   peerReviewed: peerReviewedField,
 });
 
-const bookPublicationContext = basePublicationContext.shape({
+const bookPublicationContext = Yup.object().shape({
+  publisher: publisherField,
   isbnList: isbnListField,
 });
 
@@ -114,7 +116,8 @@ const reportPublicationInstance = Yup.object().shape({
   pages: pagesMonographField,
 });
 
-const reportPublicationContext = basePublicationContext.shape({
+const reportPublicationContext = Yup.object().shape({
+  publisher: publisherField,
   isbnList: isbnListField,
 });
 
@@ -128,9 +131,13 @@ const degreePublicationInstance = Yup.object().shape({
   type: Yup.string().oneOf(Object.values(DegreeType)).required(ErrorMessage.REQUIRED),
 });
 
+const degreePublicationContext = Yup.object().shape({
+  publisher: publisherField,
+});
+
 const degreeReference = baseReference.shape({
   publicationInstance: degreePublicationInstance,
-  publicationContext: basePublicationContext,
+  publicationContext: degreePublicationContext,
 });
 
 // Chapter
