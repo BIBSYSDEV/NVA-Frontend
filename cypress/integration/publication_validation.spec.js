@@ -1,6 +1,6 @@
 import i18n from '../../src/translations/i18n';
 import { LanguageCodes } from '../../src/types/language.types';
-import { ErrorMessage } from '../../src/pages/publication/PublicationFormValidationSchema';
+import { ErrorMessage } from '../../src/utils/validation/errorMessage';
 
 describe('User opens publication form and can see validation errors', () => {
   before('Given that the user is logged in as Creator:', () => {

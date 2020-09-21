@@ -15,7 +15,7 @@ import {
   StyledRightAlignedButtonWrapper,
   StyledNormalTextPreWrapped,
 } from '../../../../components/styled/Wrappers';
-import { newContributorValidationSchema } from '../../PublicationFormValidationSchema';
+import { newContributorValidationSchema } from '../../../../utils/validation/newContributorValidation';
 
 const StyledButtonContainer = styled(StyledRightAlignedButtonWrapper)`
   margin-top: 1rem;

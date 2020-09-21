@@ -12,13 +12,13 @@ import { updatePublication } from '../../api/publicationApi';
 import { useDispatch, useSelector } from 'react-redux';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
-import { publicationValidationSchema } from './PublicationFormValidationSchema';
 import RouteLeavingGuard from '../../components/RouteLeavingGuard';
 import ButtonWithProgress from '../../components/ButtonWithProgress';
 import { PublicationFormContent } from './PublicationFormContent';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import useFetchPublication from '../../utils/hooks/useFetchPublication';
 import useUppy from '../../utils/hooks/useUppy';
+import { publicationValidationSchema } from '../../utils/validation/publication/publicationValidation';
 
 const StyledPublication = styled.div`
   width: 100%;
