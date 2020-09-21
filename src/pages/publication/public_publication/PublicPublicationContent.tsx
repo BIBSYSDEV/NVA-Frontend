@@ -123,7 +123,7 @@ const PublicPublicationContent: FC<PublicPublicationContentProps> = ({ publicati
       <Heading>{mainTitle}</Heading>
       {contributors && <PublicPublicationAuthors contributors={contributors} />}
       <StyledContentWrapper>
-        {publication.fileSet &&
+        {
           publication.fileSet?.files.map(
             (file) => !file.administrativeAgreement && <PublicPublicationFile file={file} key={file.identifier} />
           )}
