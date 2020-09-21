@@ -123,10 +123,9 @@ const PublicPublicationContent: FC<PublicPublicationContentProps> = ({ publicati
       <Heading>{mainTitle}</Heading>
       {contributors && <PublicPublicationAuthors contributors={contributors} />}
       <StyledContentWrapper>
-        {
-          publication.fileSet?.files.map(
-            (file) => !file.administrativeAgreement && <PublicPublicationFile file={file} key={file.identifier} />
-          )}
+        {publication.fileSet?.files.map(
+          (file) => !file.administrativeAgreement && <PublicPublicationFile file={file} key={file.identifier} />
+        )}
         <StyledMainContent>
           {doi && (
             <LabelContentRow minimal label={`${t('publication.link_to_publication')}:`}>
