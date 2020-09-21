@@ -11,7 +11,7 @@ import { Doi } from '../../../types/publication.types';
 import { useDispatch } from 'react-redux';
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../types/notification.types';
-import { doiValidationSchema } from '../PublicationFormValidationSchema';
+import { doiValidationSchema } from '../../../utils/validation/doiSearchValidation';
 
 const StyledBody = styled.div`
   width: 100%;
