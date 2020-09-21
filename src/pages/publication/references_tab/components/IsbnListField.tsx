@@ -18,12 +18,13 @@ const IsbnListField: FC = () => {
       {({ field, form: { setFieldValue, setFieldTouched }, meta: { error } }: FieldProps) => (
         <Autocomplete
           freeSolo
+          autoSelect
           multiple
           options={[]}
           value={field.value ?? ''}
           onChange={(_: ChangeEvent<{}>, value: string[], reason) => {
             setFieldTouched(field.name);
-            if (reason === 'create-option') {
+            if (['create-option', 'blur'].includes(reason)) {
               const newIsbn = value.pop()?.trim().replaceAll('-', '');
               if (newIsbn?.match(isbnRegex)) {
                 setFieldValue(field.name, [...value, newIsbn]);
@@ -37,6 +38,7 @@ const IsbnListField: FC = () => {
           renderTags={(value: string[], getTagProps) =>
             value.map((option: string, index: number) => (
               <Chip
+                data-testid="isbn-chip"
                 label={option}
                 {...getTagProps({ index })}
                 color={error && error[index] ? 'secondary' : 'default'}
