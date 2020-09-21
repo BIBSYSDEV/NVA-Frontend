@@ -5,9 +5,9 @@ import { TextField, Chip } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { ReferenceFieldNames } from '../../../../types/publicationFieldNames';
-import { isbnRegex } from '../../PublicationFormValidationSchema';
 import { setNotification } from '../../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../../types/notification.types';
+import { isbnRegex } from '../../../../utils/validation/publication/referenceValidation';
 
 const IsbnListField: FC = () => {
   const { t } = useTranslation('publication');
