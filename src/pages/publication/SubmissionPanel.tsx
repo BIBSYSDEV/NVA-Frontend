@@ -4,7 +4,7 @@ import { FormikProps, useFormikContext } from 'formik';
 import { Publication, DoiRequestStatus } from '../../types/publication.types';
 import { Button, Typography } from '@material-ui/core';
 import styled from 'styled-components';
-// import SubmissionBook from './submission_tab/submission_book';
+import SubmissionBook from './submission_tab/submission_book';
 // import SubmissionChapter from './submission_tab/submission_chapter';
 import SubmissionDegree from './submission_tab/submission_degree';
 import SubmissionReport from './submission_tab/submission_report';
@@ -120,7 +120,7 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication, 
             <LabelContentRow label={t('publication.link_to_publication')}>{reference.doi}</LabelContentRow>
           )}
           {publicationContextType === PublicationType.DEGREE && <SubmissionDegree />}
-          {/* {publicationContextType === PublicationType.BOOK && <SubmissionBook />} */}
+          {publicationContextType === PublicationType.BOOK && <SubmissionBook />}
           {/* {publicationContextType === PublicationType.CHAPTER && <SubmissionChapter />} */}
           {publicationContextType === PublicationType.REPORT && <SubmissionReport />}
           {publicationContextType === PublicationType.PUBLICATION_IN_JOURNAL && <SubmissionJournalPublication />}

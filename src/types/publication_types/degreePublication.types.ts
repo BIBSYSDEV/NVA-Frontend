@@ -1,4 +1,4 @@
-import { BackendType, PublicationDateWithType, PagesMonograph } from '../publication.types';
+import { BackendType, PublicationDateWithType, PagesMonograph, emptyPagesMonograph } from '../publication.types';
 import { PublicationType, DegreeType } from '../publicationFieldNames';
 import { LanguageValues } from '../language.types';
 import { Contributor } from '../contributor.types';
@@ -6,8 +6,12 @@ import { Contributor } from '../contributor.types';
 export interface DegreePublicationInstance {
   type: DegreeType | '';
   pages: PagesMonograph | null;
-  peerReviewed: boolean;
 }
+
+export const emptyDegreePublicationInstance: DegreePublicationInstance = {
+  type: '',
+  pages: emptyPagesMonograph,
+};
 
 export interface DegreePublicationContext {
   type: PublicationType | '';

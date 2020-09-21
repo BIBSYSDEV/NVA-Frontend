@@ -1,5 +1,5 @@
 import { Field, FormikProps, useFormikContext, FieldProps } from 'formik';
-import React, { FC, useEffect, ChangeEvent } from 'react';
+import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { ReportPublication } from '../../../types/publication.types';
@@ -8,11 +8,11 @@ import { PublicationTableNumber } from '../../../utils/constants';
 import PublicationChannelSearch from './components/PublicationChannelSearch';
 import DoiField from './components/DoiField';
 import SelectTypeField from './components/SelectTypeField';
-import { TextField, Typography } from '@material-ui/core';
-import { BackendTypeNames } from '../../../types/publication_types/commonPublication.types';
+import { Typography } from '@material-ui/core';
 import SeriesRow from './components/SeriesRow';
-import { Autocomplete } from '@material-ui/lab';
 import PublisherField from './components/PublisherField';
+import IsbnListField from './components/IsbnListField';
+import TotalPagesField from './components/TotalPagesField';
 
 const StyledContent = styled.div`
   display: grid;
@@ -30,13 +30,6 @@ const StyledSection = styled.div`
   }
 `;
 
-const StyledTextField = styled(TextField)`
-  display: inline;
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-    display: grid;
-  }
-`;
-
 const StyledTypography = styled(Typography)`
   padding-top: 1.5rem;
 `;
@@ -45,11 +38,6 @@ const ReportForm: FC = () => {
   const { t } = useTranslation('publication');
 
   const { setFieldValue, touched }: FormikProps<ReportPublication> = useFormikContext();
-
-  useEffect(() => {
-    // set correct Pages type based on publication type being Report
-    setFieldValue(ReferenceFieldNames.PAGES_TYPE, BackendTypeNames.PAGES_MONOGRAPH);
-  }, [setFieldValue]);
 
   return (
     <StyledContent>
@@ -65,39 +53,8 @@ const ReportForm: FC = () => {
       />
 
       <StyledSection>
-        <Field name={ReferenceFieldNames.ISBN_LIST}>
-          {({ field }: FieldProps) => (
-            <Autocomplete
-              {...field}
-              freeSolo
-              multiple
-              options={[]}
-              onChange={(_: ChangeEvent<{}>, value: string[] | string) => setFieldValue(field.name, value)}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  data-testid="isbn"
-                  label={t('references.isbn')}
-                  helperText={t('references.isbn_helper')}
-                  variant="outlined"
-                  fullWidth
-                />
-              )}
-            />
-          )}
-        </Field>
-
-        <Field name={ReferenceFieldNames.PAGES_PAGES}>
-          {({ field }: FieldProps) => (
-            <StyledTextField
-              inputProps={{ 'data-testid': 'pages' }}
-              variant="outlined"
-              label={t('references.number_of_pages')}
-              {...field}
-              value={field.value ?? ''}
-            />
-          )}
-        </Field>
+        <IsbnListField />
+        <TotalPagesField />
       </StyledSection>
       <div>
         <StyledTypography variant="h5">{t('references.series')}</StyledTypography>

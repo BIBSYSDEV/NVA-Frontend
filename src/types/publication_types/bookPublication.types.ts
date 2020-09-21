@@ -1,4 +1,4 @@
-import { BackendType, PublicationDateWithType, PagesMonograph } from '../publication.types';
+import { BackendType, PublicationDateWithType, PagesMonograph, emptyPagesMonograph } from '../publication.types';
 import { PublicationType, BookType } from '../publicationFieldNames';
 import { LanguageValues } from '../language.types';
 import { Contributor } from '../contributor.types';
@@ -7,7 +7,15 @@ interface BookPublicationInstance {
   type: BookType | '';
   pages: PagesMonograph | null;
   peerReviewed: boolean;
+  isTextbook?: boolean; // TODO: Align with future backend implementation
 }
+
+export const emptyBookPublicationInstance: BookPublicationInstance = {
+  type: '',
+  pages: emptyPagesMonograph,
+  peerReviewed: false,
+  isTextbook: false,
+};
 
 interface BookPublicationContext {
   type: PublicationType | '';

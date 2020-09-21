@@ -112,9 +112,20 @@ export interface PagesRange extends BackendType {
   end: string;
 }
 
+export const emptyPagesRange: PagesRange = {
+  type: BackendTypeNames.PAGES_RANGE,
+  begin: '',
+  end: '',
+};
+
 export interface PagesMonograph extends BackendType {
   pages: string;
 }
+
+export const emptyPagesMonograph: PagesMonograph = {
+  type: BackendTypeNames.PAGES_MONOGRAPH,
+  pages: '',
+};
 
 export type PublicationPreview = Pick<
   Publication & JournalEntityDescription,

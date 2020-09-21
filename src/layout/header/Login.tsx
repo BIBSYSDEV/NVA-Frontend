@@ -12,7 +12,6 @@ import { useAuthentication } from '../../utils/hooks/useAuthentication';
 const StyledLoginComponent = styled.div`
   grid-area: auth;
   justify-self: right;
-  align-items: center;
 `;
 
 const amplifyIsRedirectedLocalStorageKey = 'amplify-redirected-from-hosted-ui';

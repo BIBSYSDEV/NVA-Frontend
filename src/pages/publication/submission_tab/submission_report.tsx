@@ -19,7 +19,7 @@ const SubmissionReport: FC = () => {
         {publicationInstance.type && t(`publicationTypes:${publicationInstance.type}`)}
       </LabelContentRow>
       <LabelContentRow label={t('common:publisher')}>{publicationContext?.publisher}</LabelContentRow>
-      {/* TODO <LabelContentRow label={t('references.isbn')}>{isbn}</LabelContentRow> */}
+      <LabelContentRow label={t('references.isbn')}>{publicationContext?.isbnList?.join(', ')}</LabelContentRow>
       <LabelContentRow label={t('references.series')}>{publicationContext?.seriesTitle}</LabelContentRow>
       <LabelContentRow label={t('references.number_of_pages')}>{publicationInstance?.pages?.pages}</LabelContentRow>
     </>

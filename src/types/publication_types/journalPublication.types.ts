@@ -41,7 +41,7 @@ export interface JournalEntityDescription extends BackendType {
   tags: string[];
 }
 
-const emptyPublicationInstance: JournalPublicationInstance = {
+export const emptyJournalPublicationInstance: JournalPublicationInstance = {
   type: '',
   articleNumber: '',
   issue: '',
@@ -64,7 +64,7 @@ const emptyReference: JournalReference = {
   type: BackendTypeNames.REFERENCE,
   doi: '',
   publicationContext: emptyPublicationContext,
-  publicationInstance: emptyPublicationInstance,
+  publicationInstance: emptyJournalPublicationInstance,
 };
 
 export const emptyPublicationEntityDescription: JournalEntityDescription = {

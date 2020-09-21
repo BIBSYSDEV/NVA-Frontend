@@ -37,7 +37,7 @@ const StyledContent = styled.div`
   display: flex;
   flex-direction: column;
   align-self: center;
-  min-width: 75vw;
+  width: 100%;
   max-width: ${({ theme }) => theme.breakpoints.values.lg + 'px'};
   align-items: center;
   flex-grow: 1;
