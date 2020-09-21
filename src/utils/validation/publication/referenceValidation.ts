@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 import { ErrorMessage } from '../errorMessage';
-import { JournalType, BookType, ReportType, DegreeType } from '../../../types/publicationFieldNames';
+import { JournalType, BookType, ReportType, DegreeType, PublicationType } from '../../../types/publicationFieldNames';
 
 export const isbnRegex = /^(97(8|9))?\d{9}(\d|X)$/g; // ISBN without hyphens
 
@@ -23,8 +23,11 @@ const pagesRangeField = Yup.object()
   });
 const publisherField = Yup.string().required(ErrorMessage.REQUIRED);
 
-const baseReference = Yup.object().shape({
+export const baseReference = Yup.object().shape({
   doi: Yup.string().trim().url(ErrorMessage.INVALID_FORMAT),
+  publicationContext: Yup.object().shape({
+    type: Yup.string().oneOf(Object.values(PublicationType)).required(ErrorMessage.REQUIRED),
+  }),
 });
 
 // Journal

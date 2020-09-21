@@ -3,7 +3,13 @@ import { PublicationType } from '../../../types/publicationFieldNames';
 import { LanguageValues } from '../../../types/language.types';
 import { ErrorMessage } from '../errorMessage';
 import { contributorValidationSchema } from './contributorValidation';
-import { journalReference, bookReference, reportReference, degreeReference } from './referenceValidation';
+import {
+  journalReference,
+  bookReference,
+  reportReference,
+  degreeReference,
+  baseReference,
+} from './referenceValidation';
 import { fileValidationSchema } from './fileValidation';
 
 export const publicationValidationSchema = Yup.object().shape({
@@ -21,12 +27,7 @@ export const publicationValidationSchema = Yup.object().shape({
     language: Yup.string().url().oneOf(Object.values(LanguageValues)),
     projects: Yup.array().of(Yup.object()), // TODO
     contributors: Yup.array().of(contributorValidationSchema).min(1, ErrorMessage.MISSING_CONTRIBUTOR),
-    reference: Yup.object()
-      .shape({
-        publicationContext: Yup.object().shape({
-          type: Yup.string().oneOf(Object.values(PublicationType)).required(ErrorMessage.REQUIRED),
-        }),
-      })
+    reference: baseReference
       .when('$publicationContextType', {
         is: PublicationType.PUBLICATION_IN_JOURNAL,
         then: journalReference,
