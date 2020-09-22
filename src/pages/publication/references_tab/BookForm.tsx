@@ -82,7 +82,14 @@ const BookForm: FC = () => {
           <Field name={ReferenceFieldNames.IS_TEXTBOOK}>
             {({ field }: FieldProps) => (
               <FormControlLabel
-                control={<Checkbox color="primary" checked={field.value ?? false} {...field} />}
+                control={
+                  <Checkbox
+                    data-testid="is-textbook-checkbox"
+                    color="primary"
+                    checked={field.value ?? false}
+                    {...field}
+                  />
+                }
                 label={t('references.is_book_a_textbook_confirm')}
               />
             )}

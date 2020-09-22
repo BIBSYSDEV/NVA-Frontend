@@ -5,7 +5,7 @@ import { JournalType, BookType, ReportType, DegreeType, PublicationType } from '
 export const isbnRegex = /^(97(8|9))?\d{9}(\d|X)$/g; // ISBN without hyphens
 
 // Common Fields
-const isbnListField = Yup.array().of(Yup.string().matches(isbnRegex, ErrorMessage.INVALID_FORMAT));
+const isbnListField = Yup.array().of(Yup.string().matches(isbnRegex, ErrorMessage.INVALID_ISBN));
 const peerReviewedField = Yup.boolean().required(ErrorMessage.REQUIRED);
 const pagesMonographField = Yup.object()
   .nullable()
