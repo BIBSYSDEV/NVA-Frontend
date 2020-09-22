@@ -1,4 +1,4 @@
-import { ApplicationName, FeideUser, RoleName, InstitutionUser } from '../../types/user.types';
+import { FeideUser, RoleName, InstitutionUser } from '../../types/user.types';
 
 export const mockUser: FeideUser = {
   name: 'Test User',
@@ -7,7 +7,6 @@ export const mockUser: FeideUser = {
   'custom:identifiers': 'tu@unit.no',
   'custom:orgName': 'unit',
   'custom:applicationRoles': `${RoleName.CREATOR},${RoleName.INSTITUTION_ADMIN},${RoleName.APP_ADMIN}`,
-  'custom:application': ApplicationName.NVA,
   'custom:commonName': 'Unit',
   'custom:feideId': 'tu@unit.no',
   sub: 'jasdfahkf-341-sdfdsf-12321',

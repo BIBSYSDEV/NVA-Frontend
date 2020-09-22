@@ -18,16 +18,8 @@ export enum Affiliation {
   STUDENT = 'student',
 }
 
-export enum ApplicationName {
-  NVA = 'NVA',
-  DLR = 'DLR',
-  BIRD = 'BIRD',
-  NONE = '',
-}
-
 export interface User {
   affiliations: Affiliation[];
-  application: ApplicationName;
   authority: Authority | null;
   createdDate?: string;
   cristinId?: string;
@@ -68,7 +60,6 @@ export interface FeideUser {
   sub: string;
   email_verfied: boolean;
   'custom:orgName': string;
-  'custom:application': string;
   'custom:applicationRoles': string;
   identities: string;
   'custom:commonName': string;
