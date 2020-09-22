@@ -16,7 +16,7 @@ const StyledCustomerInstitution = styled.section`
   flex-direction: column;
 `;
 
-const AdminCustomerInstitutionPage: FC = () => {
+const AdminCustomerInstitution: FC = () => {
   const { t } = useTranslation('admin');
   const history = useHistory();
   const { identifier } = useParams();
@@ -60,4 +60,4 @@ const AdminCustomerInstitutionPage: FC = () => {
   );
 };
 
-export default AdminCustomerInstitutionPage;
+export default AdminCustomerInstitution;

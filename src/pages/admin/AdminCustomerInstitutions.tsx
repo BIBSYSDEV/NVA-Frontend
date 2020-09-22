@@ -12,7 +12,7 @@ import { NotificationVariant } from '../../types/notification.types';
 import { StyledProgressWrapper, StyledRightAlignedButtonWrapper } from '../../components/styled/Wrappers';
 import { PageHeader } from '../../components/PageHeader';
 
-const AdminCustomerInstitutionsPage: FC = () => {
+const AdminCustomerInstitutions: FC = () => {
   const { t } = useTranslation('admin');
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
@@ -57,4 +57,4 @@ const AdminCustomerInstitutionsPage: FC = () => {
   );
 };
 
-export default AdminCustomerInstitutionsPage;
+export default AdminCustomerInstitutions;

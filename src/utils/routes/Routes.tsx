@@ -36,9 +36,9 @@ export const InstitutionAdminRoute: FC<LoggedInRouteProps> = ({ component, ...re
   return <PrivateRoute {...rest} component={component} isAuthorized={user.isInstitutionAdmin} />;
 };
 
-const isValidInstitutionForInstitutionAdmin = (customerUri: string) => {
-  const customerId = customerUri.split('/').pop();
-  return !!customerId && window.location.pathname.includes(customerId);
+const isValidInstitutionForInstitutionAdmin = (customerId: string) => {
+  const encodedCustomerId = encodeURIComponent(customerId);
+  return customerId && encodedCustomerId && window.location.pathname.includes(encodedCustomerId);
 };
 
 export const EditInstitutionRoute: FC<LoggedInRouteProps> = ({ component, ...rest }) => {
