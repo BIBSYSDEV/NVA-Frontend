@@ -25,7 +25,7 @@ const IsbnListField: FC = () => {
           value={field.value ?? ''}
           onChange={(_: ChangeEvent<{}>, value: string[], reason) => {
             setFieldTouched(field.name);
-            if (['create-option', 'blur'].includes(reason)) {
+            if (reason === 'create-option' || reason === 'blur') {
               const newIsbn = value.pop()?.trim().replace(/-/g, '');
               if (newIsbn?.match(isbnRegex)) {
                 setFieldValue(field.name, [...value, newIsbn]);
