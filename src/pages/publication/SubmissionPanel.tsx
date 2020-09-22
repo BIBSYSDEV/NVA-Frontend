@@ -135,6 +135,9 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication, 
         </Card>
       </Card>
       <StyledButtonGroupContainer>
+        <StyledButtonWithProgress disabled={isSaving || !isValid} onClick={onClickPublish} isLoading={isPublishing}>
+          {t('common:publish')}
+        </StyledButtonWithProgress>
         {user.isCurator ? (
           <>
             {doiRequest?.status === DoiRequestStatus.Requested && (
@@ -166,14 +169,9 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication, 
             </ButtonWithProgress>
           </>
         ) : (
-          <>
-            <StyledButtonWithProgress disabled={isSaving || !isValid} onClick={onClickPublish} isLoading={isPublishing}>
-              {t('common:publish')}
-            </StyledButtonWithProgress>
-            <ButtonWithProgress disabled={isPublishing} isLoading={isSaving} onClick={() => savePublication(values)}>
-              {t('common:save')}
-            </ButtonWithProgress>
-          </>
+          <ButtonWithProgress disabled={isPublishing} isLoading={isSaving} onClick={() => savePublication(values)}>
+            {t('common:save')}
+          </ButtonWithProgress>
         )}
       </StyledButtonGroupContainer>
     </>
