@@ -127,7 +127,7 @@ describe('User opens publication form and can see validation errors', () => {
     cy.get('[data-testid=pages-input]').type('-1');
     cy.get('[data-testid=snackbar]').contains(ErrorMessage.INVALID_ISBN);
     cy.get('[data-testid=isbn-chip]').should('have.length', 0);
-    cy.contains(ErrorMessage.MUST_BE_POSITIVE);
+    cy.contains(ErrorMessage.MUST_BE_MIN_1);
     cy.get('[data-testid=pages-input]').clear().type('1a');
     cy.contains(ErrorMessage.INVALID_FORMAT);
     cy.get('[data-testid=pages-input]').clear().type('20');

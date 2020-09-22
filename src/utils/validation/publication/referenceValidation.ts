@@ -10,7 +10,7 @@ const peerReviewedField = Yup.boolean().required(ErrorMessage.REQUIRED);
 const pagesMonographField = Yup.object()
   .nullable()
   .shape({
-    pages: Yup.number().typeError(ErrorMessage.INVALID_FORMAT).min(0, ErrorMessage.MUST_BE_POSITIVE),
+    pages: Yup.number().typeError(ErrorMessage.INVALID_FORMAT).min(1, ErrorMessage.MUST_BE_MIN_1),
   });
 const pagesRangeField = Yup.object()
   .nullable()

@@ -49,7 +49,7 @@
     "invalid_url": "Invalid URL",
     "minimum_one_contributor": "You need to have at least one author registered for this publication",
     "minimum_one_file": "You need to have at least one file uploaded for this publication",
-    "must_be_min_1": "Value must be bigger than 1",
+    "must_be_min_1": "Value must be bigger than 0",
     "must_be_positive": "Value must be positive",
     "date_must_be_in_future": "Date must be in future",
     "required_field": "Required field"
