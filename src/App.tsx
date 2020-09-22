@@ -142,12 +142,12 @@ const App: FC = () => {
             dispatch(setAuthorityData(existingAuthority));
           } else {
             const updatedAuthority = await addQualifierIdForAuthority(
-              filteredAuthorities[0].systemControlNumber,
+              existingScn,
               AuthorityQualifiers.ORGUNIT_ID,
               user.cristinId
             );
-            if (!updatedAuthority || updatedAuthority?.error) {
-              dispatch(setAuthorityData(filteredAuthorities[0]));
+            if (updatedAuthority?.error) {
+              dispatch(setNotification(updatedAuthority.error, NotificationVariant.Error));
             } else {
               dispatch(setAuthorityData(updatedAuthority));
             }
