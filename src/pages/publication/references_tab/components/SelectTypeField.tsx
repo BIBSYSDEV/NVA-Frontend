@@ -35,7 +35,7 @@ const SelectTypeField: FC<SelectTypeFieldProps> = ({
             onChangeType ? onChangeType(event.target.value) : field.onChange(event)
           }>
           {options.map((typeValue) => (
-            <MenuItem value={typeValue} key={typeValue} data-testid={`publication-instance-type-${typeValue}`}>
+            <MenuItem value={typeValue} key={typeValue} data-testid={`${dataTestId}-${typeValue}`}>
               {t(`publicationTypes:${typeValue}`)}
             </MenuItem>
           ))}

@@ -58,7 +58,7 @@ describe('User opens publication form and can see validation errors', () => {
 
     // Journal type
     cy.get('[data-testid=publication-context-type]').click({ force: true }).type(' ');
-    cy.get('[data-testid=publication-instance-type-Journal]').click({ force: true });
+    cy.get('[data-testid=publication-context-type-Journal]').click({ force: true });
     // No errors should be displayed when user has just selected new context type
     cy.contains(ErrorMessage.REQUIRED).should('not.be.visible');
 
@@ -101,7 +101,37 @@ describe('User opens publication form and can see validation errors', () => {
 
     cy.get('[data-testid=nav-tabpanel-references]').children('[data-testid=error-tab]').should('not.exist');
 
-    // TODO: Book type, Report type, etc
+    // Book type
+    cy.get('[data-testid=publication-context-type]').click({ force: true }).type(' ');
+    cy.get(`[data-testid=publication-context-type-Book]`).click({ force: true });
+    cy.contains(ErrorMessage.REQUIRED).should('not.be.visible');
+    cy.get('[data-testid=nav-tabpanel-description]').click({ force: true });
+    cy.get('[data-testid=nav-tabpanel-references]').click({ force: true });
+    cy.get(`p:contains(${ErrorMessage.REQUIRED})`).should('have.length', 2);
+
+    // publicationInstance type
+    cy.get('[data-testid=publication-instance-type]').click({ force: true }).type(' ');
+    cy.get('[data-testid=publication-instance-type-BookMonograph]').click({ force: true });
+
+    // publicationContext
+    cy.get('[data-testid=autosearch-publisher]').click({ force: true }).type('natur');
+    cy.contains('testament').click({ force: true });
+    cy.contains(ErrorMessage.REQUIRED).should('not.be.visible');
+    // ISBN
+    cy.get('[data-testid=isbn-input]').type('9781787632714x').type('{enter}');
+    cy.get('[data-testid=snackbar]').contains(ErrorMessage.INVALID_ISBN);
+    cy.get('[data-testid=isbn-input]').type('invalid-isbn');
+    cy.get('[data-testid=snackbar]').contains(ErrorMessage.INVALID_ISBN);
+    cy.get('[data-testid=isbn-chip]').should('have.length', 0);
+
+    cy.get('[data-testid=pages-input]').type('-1');
+    cy.contains(ErrorMessage.MUST_BE_POSITIVE);
+    cy.get('[data-testid=pages-input]').clear().type('1a');
+    cy.contains(ErrorMessage.INVALID_FORMAT);
+    cy.get('[data-testid=pages-input]').clear().type('20');
+    cy.get('[data-testid=nav-tabpanel-references]').children('[data-testid=error-tab]').should('not.exist');
+
+    // TODO: Report type, Degree etc
   });
 
   it('The User should be able to see validation errors on contributors tab', () => {

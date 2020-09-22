@@ -5,12 +5,12 @@ import { JournalType, BookType, ReportType, DegreeType, PublicationType } from '
 export const isbnRegex = /^(97(8|9))?\d{9}(\d|X)$/g; // ISBN without hyphens
 
 // Common Fields
-const isbnListField = Yup.array().of(Yup.string().matches(isbnRegex, ErrorMessage.INVALID_FORMAT));
+const isbnListField = Yup.array().of(Yup.string().matches(isbnRegex, ErrorMessage.INVALID_ISBN));
 const peerReviewedField = Yup.boolean().required(ErrorMessage.REQUIRED);
 const pagesMonographField = Yup.object()
   .nullable()
   .shape({
-    pages: Yup.number().typeError(ErrorMessage.INVALID_FORMAT).min(1, ErrorMessage.MUST_BE_MIN_1),
+    pages: Yup.number().typeError(ErrorMessage.INVALID_FORMAT).min(0, ErrorMessage.MUST_BE_POSITIVE),
   });
 const pagesRangeField = Yup.object()
   .nullable()

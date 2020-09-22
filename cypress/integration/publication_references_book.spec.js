@@ -15,10 +15,10 @@ describe('Publication: References: Book', () => {
 
     // choose Book type
     cy.get('[data-testid=publication-context-type]').click({ force: true }).type(' '); //makes the select options open
-    cy.get('[data-testid=publication-instance-type-Book]').should('be.visible');
-    cy.get('[data-testid=publication-instance-type-Book]').click({ force: true });
+    cy.get('[data-testid=publication-context-type-Book]').should('be.visible');
+    cy.get('[data-testid=publication-context-type-Book]').click({ force: true });
 
-    cy.get('[data-testid=publication-instance-type-heading]').contains('Book');
+    cy.get('[data-testid=publication-context-type-heading]').contains('Book');
 
     // search for and select a publisher
     cy.get('[data-testid=autosearch-publisher]').click({ force: true }).type('Test');
@@ -26,8 +26,8 @@ describe('Publication: References: Book', () => {
     cy.get('[data-testid=autosearch-results-publisher]').contains('Novum Testamentum');
 
     // fill out ISBN_LIST field
-    cy.get('[data-testid=isbn]').type('9788202509460').type('{enter}');
-    cy.get('[data-testid=isbn]').type('9781787632714');
+    cy.get('[data-testid=isbn-input]').type('9788202509460').type('{enter}');
+    cy.get('[data-testid=isbn-input]').type('978-1-78-763271-4');
     cy.get('[data-testid=is-textbook-checkbox]').click({ force: true });
     cy.get('[data-testid=isbn-chip]').should('have.length', 2);
 
@@ -38,7 +38,7 @@ describe('Publication: References: Book', () => {
     cy.get('[data-testid=nvi_book]').contains('This publication can not be incuded in NVI');
 
     // fill out number of pages field
-    cy.get('[data-testid=pages]').type('483');
+    cy.get('[data-testid=pages-input]').type('483');
 
     // search and select a series
     cy.get('[data-testid=autosearch-series]').click({ force: true }).type('Test');

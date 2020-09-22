@@ -19,7 +19,7 @@ const TotalPagesField: FC = () => {
     <Field name={ReferenceFieldNames.PAGES_PAGES}>
       {({ field, meta: { touched, error } }: FieldProps) => (
         <StyledTextField
-          inputProps={{ 'data-testid': 'pages' }}
+          inputProps={{ 'data-testid': 'pages-input' }}
           variant="outlined"
           label={t('references.number_of_pages')}
           {...field}

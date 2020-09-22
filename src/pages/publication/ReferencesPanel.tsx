@@ -98,7 +98,7 @@ const ReferencesPanel: FC<PanelProps> = ({ setTouchedFields }) => {
 
       {publicationContextType && (
         <StyledCard>
-          <Typography variant="h2" data-testid="publication-instance-type-heading">
+          <Typography variant="h2" data-testid="publication-context-type-heading">
             {t(`publicationTypes:${publicationContextType}`)}
           </Typography>
           {publicationContextType === PublicationType.BOOK && <BookForm />}

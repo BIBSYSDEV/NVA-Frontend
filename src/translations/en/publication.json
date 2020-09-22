@@ -44,6 +44,7 @@
   "edit_publication": "Edit publication",
   "feedback": {
     "invalid_format": "Invalid format",
+    "invalid_isbn": "Invalid ISBN",
     "invalid_page_interval": "Invalid page interval",
     "invalid_url": "Invalid URL",
     "minimum_one_contributor": "You need to have at least one author registered for this publication",

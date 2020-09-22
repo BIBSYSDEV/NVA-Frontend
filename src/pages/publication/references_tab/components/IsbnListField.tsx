@@ -8,6 +8,7 @@ import { ReferenceFieldNames } from '../../../../types/publicationFieldNames';
 import { setNotification } from '../../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../../types/notification.types';
 import { isbnRegex } from '../../../../utils/validation/publication/referenceValidation';
+import { ErrorMessage } from '../../../../utils/validation/errorMessage';
 
 const IsbnListField: FC = () => {
   const { t } = useTranslation('publication');
@@ -29,7 +30,7 @@ const IsbnListField: FC = () => {
               if (newIsbn?.match(isbnRegex)) {
                 setFieldValue(field.name, [...value, newIsbn]);
               } else {
-                dispatch(setNotification(t('feedback:warning.invalid_isbn'), NotificationVariant.Warning));
+                dispatch(setNotification(ErrorMessage.INVALID_ISBN, NotificationVariant.Warning));
               }
             } else {
               setFieldValue(field.name, value);
@@ -48,7 +49,7 @@ const IsbnListField: FC = () => {
           renderInput={(params) => (
             <TextField
               {...params}
-              data-testid="isbn"
+              data-testid="isbn-input"
               label={t('references.isbn')}
               helperText={t('references.isbn_helper')}
               variant="outlined"
