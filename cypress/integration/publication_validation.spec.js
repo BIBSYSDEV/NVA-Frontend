@@ -11,8 +11,8 @@ describe('User opens publication form and can see validation errors', () => {
   });
 
   beforeEach(() => {
-    cy.server();
     i18n.changeLanguage(LanguageCodes.ENGLISH);
+    cy.server();
   });
 
   it('The User should be able to see validation summary on submission tab', () => {
@@ -52,11 +52,10 @@ describe('User opens publication form and can see validation errors', () => {
     cy.get('[data-testid=nav-tabpanel-description]').children('[data-testid=error-tab]').should('not.exist');
   });
 
-  it('The User should be able to see validation errors on reference tab', () => {
+  it('The User should be able to see validation errors on reference tab (Journal)', () => {
     cy.get('[data-testid=nav-tabpanel-references]').click({ force: true });
     cy.get('[data-testid=publication-context-type]').contains(ErrorMessage.REQUIRED).should('be.visible');
 
-    // Journal type
     cy.get('[data-testid=publication-context-type]').click({ force: true }).type(' ');
     cy.get('[data-testid=publication-context-type-Journal]').click({ force: true });
     // No errors should be displayed when user has just selected new context type
@@ -100,8 +99,9 @@ describe('User opens publication form and can see validation errors', () => {
     cy.get('[data-testid=article-number-field]').click({ force: true }).type('{backspace}{backspace}1');
 
     cy.get('[data-testid=nav-tabpanel-references]').children('[data-testid=error-tab]').should('not.exist');
+  });
 
-    // Book type
+  it('The User should be able to see validation errors on reference tab (Book)', () => {
     cy.get('[data-testid=publication-context-type]').click({ force: true }).type(' ');
     cy.get(`[data-testid=publication-context-type-Book]`).click({ force: true });
     cy.contains(ErrorMessage.REQUIRED).should('not.be.visible');
@@ -130,9 +130,11 @@ describe('User opens publication form and can see validation errors', () => {
     cy.contains(ErrorMessage.INVALID_FORMAT);
     cy.get('[data-testid=pages-input]').clear().type('20');
     cy.get('[data-testid=nav-tabpanel-references]').children('[data-testid=error-tab]').should('not.exist');
-
-    // TODO: Report type, Degree etc
   });
+
+  it('The User should be able to see validation errors on reference tab (Report)', () => {});
+
+  it('The User should be able to see validation errors on reference tab (Degree)', () => {});
 
   it('The User should be able to see validation errors on contributors tab', () => {
     cy.get('[data-testid=nav-tabpanel-contributors]').click({ force: true });
