@@ -117,14 +117,16 @@ describe('User opens publication form and can see validation errors', () => {
     cy.get('[data-testid=autosearch-publisher]').click({ force: true }).type('natur');
     cy.contains('testament').click({ force: true });
     cy.contains(ErrorMessage.REQUIRED).should('not.be.visible');
-    // ISBN
+
+    // ISBN and pages
     cy.get('[data-testid=isbn-input]').type('9781787632714x').type('{enter}');
     cy.get('[data-testid=snackbar]').contains(ErrorMessage.INVALID_ISBN);
+    cy.get('[data-testid=snackbar]').get('button[title=Close]').click({ force: true });
+    cy.get('[data-testid=snackbar]').should('not.exist');
     cy.get('[data-testid=isbn-input]').type('invalid-isbn');
+    cy.get('[data-testid=pages-input]').type('-1');
     cy.get('[data-testid=snackbar]').contains(ErrorMessage.INVALID_ISBN);
     cy.get('[data-testid=isbn-chip]').should('have.length', 0);
-
-    cy.get('[data-testid=pages-input]').type('-1');
     cy.contains(ErrorMessage.MUST_BE_POSITIVE);
     cy.get('[data-testid=pages-input]').clear().type('1a');
     cy.contains(ErrorMessage.INVALID_FORMAT);
