@@ -56,7 +56,6 @@ export interface FeideUser {
   name: string;
   email: string;
   cristinId?: string;
-  'custom:identifiers': string;
   sub: string;
   email_verfied: boolean;
   'custom:orgName': string;
