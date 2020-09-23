@@ -20,7 +20,7 @@ export const getAllCustomerInstitutions = async () => {
       headers,
     });
     if (response.status === StatusCode.OK) {
-      return response.data;
+      return response.data.customers;
     } else {
       return {
         error: i18n.t('feedback:error.get_customers'),

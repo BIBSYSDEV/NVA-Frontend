@@ -1,6 +1,6 @@
 import React, { FC, useEffect } from 'react';
 import styled from 'styled-components';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { CircularProgress } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 
@@ -16,20 +16,22 @@ const StyledCustomerInstitution = styled.section`
   flex-direction: column;
 `;
 
-const AdminCustomerInstitution: FC = () => {
+interface AdminCustomerInstitutionProps {
+  customerId: string;
+}
+
+const AdminCustomerInstitution: FC<AdminCustomerInstitutionProps> = ({ customerId }) => {
   const { t } = useTranslation('admin');
   const history = useHistory();
-  const { identifier } = useParams();
-  const editMode = identifier !== 'new';
+  const editMode = customerId !== 'new';
   const [customerInstitution, isLoadingCustomerInstitution, handleSetCustomerInstitution] = useFetchCustomerInstitution(
-    identifier,
-    editMode
+    editMode ? customerId : ''
   );
-  const [users, isLoadingUsers, refetchInstitutionUsers] = useFetchUsersForInstitution(editMode ? identifier : '');
+  const [users, isLoadingUsers, refetchInstitutionUsers] = useFetchUsersForInstitution(editMode ? customerId : '');
 
   useEffect(() => {
     if (customerInstitution) {
-      history.replace(`/admin-institutions/${customerInstitution.identifier}`, { title: customerInstitution.name });
+      // history.replace(`/admin-institutions?id=${customerInstitution.identifier}`, { title: customerInstitution.name });
     }
   }, [history, customerInstitution]);
 

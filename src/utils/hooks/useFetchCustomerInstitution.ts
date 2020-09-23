@@ -9,12 +9,11 @@ import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 
 export const useFetchCustomerInstitution = (
-  identifier: string,
-  editMode: boolean = false
+  customerId: string
 ): [CustomerInstitution | undefined, boolean, (customerInstitution: CustomerInstitution) => void] => {
   const dispatch = useDispatch();
   const { t } = useTranslation('feedback');
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(!!customerId);
   const [customerInstitution, setCustomerInstitution] = useState<CustomerInstitution>();
 
   const handleSetCustomerInstitution = (customerInstitution: CustomerInstitution) => {
@@ -22,16 +21,10 @@ export const useFetchCustomerInstitution = (
   };
 
   useEffect(() => {
-    if (!editMode) {
-      setIsLoading(false);
-    }
-  }, [editMode]);
-
-  useEffect(() => {
     const cancelSource = Axios.CancelToken.source();
 
     const fetchCustomerInstitution = async () => {
-      const institution = await getCustomerInstitution(identifier, cancelSource.token);
+      const institution = await getCustomerInstitution(customerId, cancelSource.token);
       if (institution) {
         if (institution.error) {
           dispatch(setNotification(t('error.get_customer'), NotificationVariant.Error));
@@ -41,15 +34,15 @@ export const useFetchCustomerInstitution = (
         setIsLoading(false);
       }
     };
-    if (identifier && editMode) {
+    if (customerId) {
       fetchCustomerInstitution();
     }
     return () => {
-      if (identifier && editMode) {
+      if (customerId) {
         cancelSource.cancel();
       }
     };
-  }, [t, dispatch, identifier, editMode]);
+  }, [t, dispatch, customerId]);
 
   return [customerInstitution, isLoading, handleSetCustomerInstitution];
 };

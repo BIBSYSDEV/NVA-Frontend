@@ -40,7 +40,7 @@ const AdminCustomerInstitutions: FC = () => {
           <Button
             color="primary"
             component={RouterLink}
-            to="/admin-institutions/new"
+            to="/admin-institutions?id=new"
             data-testid="add-institution-button">
             {t('add_institution')}
           </Button>

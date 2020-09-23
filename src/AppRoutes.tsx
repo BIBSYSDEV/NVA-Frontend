@@ -9,7 +9,6 @@ import {
   LoggedInRoute,
   CreatorRoute,
   CuratorRoute,
-  AppAdminRoute,
   InstitutionAdminRoute,
   EditInstitutionRoute,
 } from './utils/routes/Routes';
@@ -24,8 +23,7 @@ const PublicPublication = lazy(() => import('./pages/publication/public_publicat
 const User = lazy(() => import('./pages/user/User'));
 const NotFound = lazy(() => import('./pages/errorpages/NotFound'));
 const PublicProfile = lazy(() => import('./pages/publication/PublicProfile'));
-const AdminCustomerInstitution = lazy(() => import('./pages/admin/AdminCustomerInstitution'));
-const AdminCustomerInstitutions = lazy(() => import('./pages/admin/AdminCustomerInstitutions'));
+const AdminCustomerInstitutionsPage = lazy(() => import('./pages/admin/AdminCustomerInstitutionsPage'));
 const WorklistPage = lazy(() => import('./pages/worklist/WorklistPage'));
 const Logout = lazy(() => import('./layout/Logout'));
 
@@ -61,8 +59,7 @@ const AppRoutes: FC = () => {
 
             {/* AdminRoutes */}
             <InstitutionAdminRoute exact path="/admin-institution-users" component={AdminUsersPage} />
-            <AppAdminRoute exact path="/admin-institutions" component={AdminCustomerInstitutions} />
-            <EditInstitutionRoute exact path="/admin-institutions/:identifier" component={AdminCustomerInstitution} />
+            <EditInstitutionRoute exact path="/admin-institutions" component={AdminCustomerInstitutionsPage} />
           </>
         )}
 
