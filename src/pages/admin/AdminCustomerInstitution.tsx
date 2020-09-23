@@ -31,7 +31,8 @@ const AdminCustomerInstitution: FC<AdminCustomerInstitutionProps> = ({ customerI
 
   useEffect(() => {
     if (customerInstitution) {
-      // history.replace(`/admin-institutions?id=${customerInstitution.identifier}`, { title: customerInstitution.name });
+      // TODO: Fix breadcrumbs when using query params
+      history.replace({ ...history.location, state: { title: customerInstitution.name } });
     }
   }, [history, customerInstitution]);
 
