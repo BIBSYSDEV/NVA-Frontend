@@ -180,7 +180,7 @@ export const interceptRequestsOnMock = () => {
     .replyOnce(200, mockNtnuSubunitResponse);
 
   // Roles
-  mock.onGet(new RegExp(`${API_URL}${RoleApiPaths.INSTITUTIONS}/.*/users`)).reply(200, []);
+  mock.onGet(new RegExp(`${API_URL}${RoleApiPaths.INSTITUTION_USERS}/.*/users`)).reply(200, []);
   mock.onGet(new RegExp(`${API_URL}${RoleApiPaths.USERS}/*`)).reply(200, mockRoles);
 
   mock.onAny().reply(function (config) {

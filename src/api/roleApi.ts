@@ -5,7 +5,7 @@ import { getIdToken } from './userApi';
 import { RoleName, InstitutionUser, UserRole } from '../types/user.types';
 
 export enum RoleApiPaths {
-  INSTITUTIONS = '/users-roles/institutions',
+  INSTITUTION_USERS = '/users-roles/institutions/users',
   USERS = '/users-roles/users',
 }
 
@@ -30,8 +30,8 @@ export const getInstitutionUser = async (username: string, cancelToken?: CancelT
   }
 };
 
-export const getUsersForInstitution = async (institution: string, cancelToken?: CancelToken) => {
-  const url = `${RoleApiPaths.INSTITUTIONS}/${institution}/users`;
+export const getUsersForInstitution = async (customerId: string, cancelToken?: CancelToken) => {
+  const url = `${RoleApiPaths.INSTITUTION_USERS}?institution=${encodeURIComponent(customerId)}`;
 
   try {
     const idToken = await getIdToken();
