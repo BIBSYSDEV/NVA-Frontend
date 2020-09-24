@@ -26,7 +26,7 @@ export interface User {
   email: string;
   externalOrcid: string;
   name: string;
-  customerId: string;
+  customerId?: string;
   familyName: string;
   givenName: string;
   id: string;
@@ -64,8 +64,8 @@ export interface FeideUser {
   'custom:commonName': string;
   'custom:feideId': string;
   'custom:affiliation': string;
-  'custom:customerId': string;
-  'custom:cristinId': string;
+  'custom:customerId'?: string;
+  'custom:cristinId'?: string;
   given_name: string;
   family_name: string;
 }

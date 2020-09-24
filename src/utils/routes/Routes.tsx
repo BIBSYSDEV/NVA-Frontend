@@ -49,7 +49,8 @@ export const EditInstitutionRoute: FC<LoggedInRouteProps> = ({ component, ...res
       {...rest}
       component={component}
       isAuthorized={
-        (user.isInstitutionAdmin && isValidInstitutionForInstitutionAdmin(user.customerId)) || user.isAppAdmin
+        (user.isInstitutionAdmin && user.customerId && isValidInstitutionForInstitutionAdmin(user.customerId)) ||
+        user.isAppAdmin
       }
     />
   );

@@ -179,7 +179,7 @@ const App: FC = () => {
         </StyledContent>
         <Footer />
       </StyledApp>
-      {!isLoadingAuthorities && authorityDataUpdated && user && <AuthorityOrcidModal />}
+      {!isLoadingAuthorities && authorityDataUpdated && user?.customerId && <AuthorityOrcidModal />}
     </BrowserRouter>
   );
 };
