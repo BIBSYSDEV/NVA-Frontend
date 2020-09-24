@@ -3,11 +3,10 @@ import { Accordion, AccordionSummary, AccordionDetails, Button, TextField } from
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Link as RouterLink } from 'react-router-dom';
 import styled from 'styled-components';
-
-import { DoiRequest } from '../../types/doiRequest.types';
-import Label from '../../components/Label';
 import { useTranslation } from 'react-i18next';
-import { PublicationTab } from '../../types/publication.types';
+
+import Label from '../../components/Label';
+import { PublicationTab, Publication } from '../../types/publication.types';
 
 const StyledAccordion = styled(Accordion)`
   .MuiAccordionSummary-content {
@@ -62,20 +61,20 @@ const StyledAccordionActionButtons = styled.div`
 `;
 
 interface DoiRequestAccordionProps {
-  doiRequest: DoiRequest;
+  publication: Publication;
 }
 
-export const DoiRequestAccordion: FC<DoiRequestAccordionProps> = ({ doiRequest }) => {
+export const DoiRequestAccordion: FC<DoiRequestAccordionProps> = ({ publication }) => {
   const { t } = useTranslation('workLists');
 
   return (
-    <StyledAccordion data-testid={`doi-request-${doiRequest.publicationIdentifier}`}>
+    <StyledAccordion data-testid={`doi-request-${publication.identifier}`}>
       <AccordionSummary expandIcon={<ExpandMoreIcon fontSize="large" />}>
-        <StyledStatus>{doiRequest.doiRequestStatus}</StyledStatus>
-        <StyledTitle>{doiRequest.publicationTitle}</StyledTitle>
+        <StyledStatus>{publication.doiRequest?.status}</StyledStatus>
+        <StyledTitle>{publication.entityDescription.mainTitle}</StyledTitle>
         <StyledOwner>
-          <Label>{doiRequest.publicationCreator}</Label>
-          {doiRequest.doiRequestDate}
+          <Label>{publication.owner}</Label>
+          {publication.doiRequest?.date}
         </StyledOwner>
       </AccordionSummary>
       <AccordionDetails>
@@ -94,10 +93,10 @@ export const DoiRequestAccordion: FC<DoiRequestAccordionProps> = ({ doiRequest }
         </StyledMessages>
         <StyledAccordionActionButtons>
           <Button
-            data-testid={`go-to-publication-${doiRequest.publicationIdentifier}`}
+            data-testid={`go-to-publication-${publication.identifier}`}
             variant="outlined"
             component={RouterLink}
-            to={`/publication/${doiRequest.publicationIdentifier}?tab=${PublicationTab.Submission}`}>
+            to={`/publication/${publication.identifier}?tab=${PublicationTab.Submission}`}>
             {t('doi_requests.go_to_publication')}
           </Button>
           <Button variant="contained" color="primary" disabled>

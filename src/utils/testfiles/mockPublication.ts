@@ -1,5 +1,5 @@
 import { LanguageValues } from '../../types/language.types';
-import { JournalPublication, PublicationStatus } from '../../types/publication.types';
+import { JournalPublication, PublicationStatus, DoiRequestStatus, Publication } from '../../types/publication.types';
 import { JournalType, PublicationType } from '../../types/publicationFieldNames';
 import { BackendTypeNames } from '../../types/publication_types/commonPublication.types';
 
@@ -93,3 +93,31 @@ export const mockPublication: JournalPublication = {
     },
   },
 };
+
+const mockPublicationWithPendingDoiRequest: JournalPublication = {
+  ...mockPublication,
+  doiRequest: {
+    type: 'DoiRequest',
+    date: new Date().toISOString(),
+    status: DoiRequestStatus.Requested,
+    messages: [
+      {
+        text: 'Hello Mr. Curator! A have a question about this publication, okay?',
+        author: 'creator@unit.no',
+        timestamp: new Date().toISOString(),
+      },
+      {
+        text: 'Yes, how may I assist you my dear friend?',
+        author: 'curator@unit.no',
+        timestamp: new Date().toISOString(),
+      },
+      {
+        text: "I don't know...",
+        author: 'creator@unit.no',
+        timestamp: new Date().toISOString(),
+      },
+    ],
+  },
+};
+
+export const publicationsWithPendingDoiRequest: Publication[] = [mockPublicationWithPendingDoiRequest];
