@@ -48,7 +48,7 @@ const Menu: FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const { t } = useTranslation();
   const history = useHistory();
-  const customerId = user.customerId.split('/').pop();
+  const customerId = user.customerId?.split('/').pop();
 
   const handleClickMenuAnchor = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -103,7 +103,7 @@ const Menu: FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
                 {t('common:institutions')}
               </MenuItem>
             )}
-            {user.isInstitutionAdmin && (
+            {user.isInstitutionAdmin && customerId && (
               <>
                 <MenuItem
                   data-testid="menu-admin-institution-button"
