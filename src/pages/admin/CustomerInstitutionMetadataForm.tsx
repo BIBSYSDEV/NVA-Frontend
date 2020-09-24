@@ -1,5 +1,4 @@
 import React, { FC } from 'react';
-import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
 import { TextField } from '@material-ui/core';
 import styled from 'styled-components';
@@ -21,6 +20,7 @@ import useFetchInstitutions from '../../utils/hooks/useFetchInstitutions';
 import InstitutionAutocomplete from '../../components/institution/InstitutionAutocomplete';
 import ButtonWithProgress from '../../components/ButtonWithProgress';
 import { StyledRightAlignedButtonWrapper } from '../../components/styled/Wrappers';
+import { customerInstitutionValidationSchema } from '../../utils/validation/customerInstitutionValidation';
 
 const StyledButtonContainer = styled(StyledRightAlignedButtonWrapper)`
   margin-top: 2rem;
@@ -49,7 +49,7 @@ const CustomerInstitutionMetadataForm: FC<CustomerInstitutionMetadataFormProps> 
       if (!createdCustomer || createdCustomer?.error) {
         dispatch(setNotification(createdCustomer.error, NotificationVariant.Error));
       } else {
-        history.push(`/admin-institutions/${createdCustomer.identifier}`);
+        history.push(`/admin-institutions?id=${encodeURIComponent(createdCustomer.id)}`);
         handleSetCustomerInstitution(createdCustomer);
         dispatch(setNotification(t('feedback:success.created_customer')));
       }
@@ -71,12 +71,7 @@ const CustomerInstitutionMetadataForm: FC<CustomerInstitutionMetadataFormProps> 
         enableReinitialize
         initialValues={{ ...emptyCustomerInstitution, ...customerInstitution }}
         validateOnChange
-        validationSchema={Yup.object().shape({
-          [CustomerInstitutionFieldNames.NAME]: Yup.string().required(t('feedback.required_field')),
-          [CustomerInstitutionFieldNames.DISPLAY_NAME]: Yup.string().required(t('feedback.required_field')),
-          [CustomerInstitutionFieldNames.SHORT_NAME]: Yup.string().required(t('feedback.required_field')),
-          [CustomerInstitutionFieldNames.FEIDE_ORGANIZATION_ID]: Yup.string().required(t('feedback.required_field')),
-        })}
+        validationSchema={customerInstitutionValidationSchema}
         onSubmit={handleSubmit}>
         {({ isSubmitting }) => (
           <Form>

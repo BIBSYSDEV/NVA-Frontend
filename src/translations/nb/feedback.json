@@ -64,8 +64,5 @@
     "update_authority": "Forfatter er oppdatert",
     "update_customer": "Institusjon er oppdatert",
     "update_publication": "Publikasjonen er oppdatert"
-  },
-  "warning": {
-    "invalid_isbn": "Ugyldig ISBN"
   }
 }

@@ -44,6 +44,7 @@
   "edit_publication": "Endre publikasjon",
   "feedback": {
     "invalid_format": "Ugyldig format",
+    "invalid_isbn": "Ugyldig ISBN",
     "invalid_page_interval": "Ugyldig sideintervall",
     "invalid_url": "Ugyldig lenke",
     "minimum_one_contributor": "Du må ha minst en forfatter på denne publikasjonen",

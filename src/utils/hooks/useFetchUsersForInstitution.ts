@@ -7,7 +7,7 @@ import { NotificationVariant } from '../../types/notification.types';
 import { InstitutionUser } from '../../types/user.types';
 import { getUsersForInstitution } from '../../api/roleApi';
 
-const useFetchUsersForInstitution = (institution: string): [InstitutionUser[], boolean, () => void] => {
+const useFetchUsersForInstitution = (customerId: string): [InstitutionUser[], boolean, () => void] => {
   const dispatch = useDispatch();
   const [users, setUsers] = useState<InstitutionUser[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -15,7 +15,7 @@ const useFetchUsersForInstitution = (institution: string): [InstitutionUser[], b
 
   const fetchInstitutionUsers = useCallback(async () => {
     setIsLoading(true);
-    const fetchedUsers = await getUsersForInstitution(institution, cancelSourceRef.current.token);
+    const fetchedUsers = await getUsersForInstitution(customerId, cancelSourceRef.current.token);
     if (fetchedUsers) {
       if (fetchedUsers.error) {
         dispatch(setNotification(fetchedUsers.error, NotificationVariant.Error));
@@ -24,14 +24,14 @@ const useFetchUsersForInstitution = (institution: string): [InstitutionUser[], b
       }
     }
     setIsLoading(false);
-  }, [dispatch, institution]);
+  }, [dispatch, customerId]);
 
   useEffect(() => {
     // Fetch data on mount
-    if (institution) {
+    if (customerId) {
       fetchInstitutionUsers();
     }
-  }, [institution, fetchInstitutionUsers]);
+  }, [customerId, fetchInstitutionUsers]);
 
   useEffect(() => {
     // Cancel request on unmount

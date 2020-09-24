@@ -59,7 +59,7 @@ const InstitutionList: FC<InstitutionListProps> = ({ institutions }) => {
                   color="primary"
                   component={RouterLink}
                   data-testid={`edit-institution-${institution.shortName}`}
-                  to={`/admin-institutions/${institution.identifier}`}>
+                  to={`/admin-institutions?id=${encodeURIComponent(institution.id)}`}>
                   <NormalText>{t('edit')}</NormalText>
                 </Button>
               </TableCell>

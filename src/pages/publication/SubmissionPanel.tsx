@@ -135,32 +135,44 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication, 
         </Card>
       </Card>
       <StyledButtonGroupContainer>
-        {user.isCurator && doiRequest?.status === DoiRequestStatus.Requested ? (
+        <StyledButtonWithProgress disabled={isSaving || !isValid} onClick={onClickPublish} isLoading={isPublishing}>
+          {t('common:publish')}
+        </StyledButtonWithProgress>
+        {user.isCurator ? (
           <>
-            <StyledButton
-              color="primary"
-              variant="contained"
-              onClick={onClickCreateDoi}
-              disabled={isSaving || !isValid}>
-              {t('common:create_doi')}
-            </StyledButton>
-            <StyledButton
-              color="secondary"
-              variant="outlined"
-              onClick={onClickRejectDoi}
-              disabled={isSaving || !isValid}>
-              {t('common:reject_doi')}
-            </StyledButton>
+            {doiRequest?.status === DoiRequestStatus.Requested && (
+              <>
+                <StyledButton
+                  color="primary"
+                  variant="contained"
+                  onClick={onClickCreateDoi}
+                  disabled={isSaving || !isValid}>
+                  {t('common:create_doi')}
+                </StyledButton>
+                <StyledButton
+                  color="secondary"
+                  variant="outlined"
+                  onClick={onClickRejectDoi}
+                  disabled={isSaving || !isValid}>
+                  {t('common:reject_doi')}
+                </StyledButton>
+              </>
+            )}
+            <ButtonWithProgress
+              disabled={isPublishing}
+              isLoading={isSaving}
+              onClick={async () => {
+                await savePublication(values);
+                history.push(`/publication/${values.identifier}/public`);
+              }}>
+              {t('common:save_and_present')}
+            </ButtonWithProgress>
           </>
         ) : (
-          <StyledButtonWithProgress disabled={isSaving || !isValid} onClick={onClickPublish} isLoading={isPublishing}>
-            {t('common:publish')}
-          </StyledButtonWithProgress>
+          <ButtonWithProgress disabled={isPublishing} isLoading={isSaving} onClick={() => savePublication(values)}>
+            {t('common:save')}
+          </ButtonWithProgress>
         )}
-
-        <ButtonWithProgress disabled={isPublishing} isLoading={isSaving} onClick={() => savePublication(values)}>
-          {t('common:save')}
-        </ButtonWithProgress>
       </StyledButtonGroupContainer>
     </>
   );

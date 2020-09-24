@@ -5,9 +5,10 @@ import { TextField, Chip } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { ReferenceFieldNames } from '../../../../types/publicationFieldNames';
-import { isbnRegex } from '../../PublicationFormValidationSchema';
 import { setNotification } from '../../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../../types/notification.types';
+import { isbnRegex } from '../../../../utils/validation/publication/referenceValidation';
+import { ErrorMessage } from '../../../../utils/validation/errorMessage';
 
 const IsbnListField: FC = () => {
   const { t } = useTranslation('publication');
@@ -18,17 +19,18 @@ const IsbnListField: FC = () => {
       {({ field, form: { setFieldValue, setFieldTouched }, meta: { error } }: FieldProps) => (
         <Autocomplete
           freeSolo
+          autoSelect
           multiple
           options={[]}
           value={field.value ?? ''}
           onChange={(_: ChangeEvent<{}>, value: string[], reason) => {
             setFieldTouched(field.name);
-            if (reason === 'create-option') {
-              const newIsbn = value.pop()?.trim().replaceAll('-', '');
+            if (reason === 'create-option' || reason === 'blur') {
+              const newIsbn = value.pop()?.trim().replace(/-/g, '');
               if (newIsbn?.match(isbnRegex)) {
                 setFieldValue(field.name, [...value, newIsbn]);
               } else {
-                dispatch(setNotification(t('feedback:warning.invalid_isbn'), NotificationVariant.Warning));
+                dispatch(setNotification(ErrorMessage.INVALID_ISBN, NotificationVariant.Warning));
               }
             } else {
               setFieldValue(field.name, value);
@@ -37,6 +39,7 @@ const IsbnListField: FC = () => {
           renderTags={(value: string[], getTagProps) =>
             value.map((option: string, index: number) => (
               <Chip
+                data-testid="isbn-chip"
                 label={option}
                 {...getTagProps({ index })}
                 color={error && error[index] ? 'secondary' : 'default'}
@@ -46,7 +49,7 @@ const IsbnListField: FC = () => {
           renderInput={(params) => (
             <TextField
               {...params}
-              data-testid="isbn"
+              data-testid="isbn-input"
               label={t('references.isbn')}
               helperText={t('references.isbn_helper')}
               variant="outlined"

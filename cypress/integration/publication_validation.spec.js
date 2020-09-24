@@ -1,6 +1,6 @@
 import i18n from '../../src/translations/i18n';
 import { LanguageCodes } from '../../src/types/language.types';
-import { ErrorMessage } from '../../src/pages/publication/PublicationFormValidationSchema';
+import { ErrorMessage } from '../../src/utils/validation/errorMessage';
 
 describe('User opens publication form and can see validation errors', () => {
   before('Given that the user is logged in as Creator:', () => {
@@ -11,8 +11,8 @@ describe('User opens publication form and can see validation errors', () => {
   });
 
   beforeEach(() => {
-    cy.server();
     i18n.changeLanguage(LanguageCodes.ENGLISH);
+    cy.server();
   });
 
   it('The User should be able to see validation summary on submission tab', () => {
@@ -52,13 +52,12 @@ describe('User opens publication form and can see validation errors', () => {
     cy.get('[data-testid=nav-tabpanel-description]').children('[data-testid=error-tab]').should('not.exist');
   });
 
-  it('The User should be able to see validation errors on reference tab', () => {
+  it('The User should be able to see validation errors on reference tab (Journal)', () => {
     cy.get('[data-testid=nav-tabpanel-references]').click({ force: true });
     cy.get('[data-testid=publication-context-type]').contains(ErrorMessage.REQUIRED).should('be.visible');
 
-    // Journal type
     cy.get('[data-testid=publication-context-type]').click({ force: true }).type(' ');
-    cy.get('[data-testid=publication-instance-type-Journal]').click({ force: true });
+    cy.get('[data-testid=publication-context-type-Journal]').click({ force: true });
     // No errors should be displayed when user has just selected new context type
     cy.contains(ErrorMessage.REQUIRED).should('not.be.visible');
 
@@ -100,8 +99,79 @@ describe('User opens publication form and can see validation errors', () => {
     cy.get('[data-testid=article-number-field]').click({ force: true }).type('{backspace}{backspace}1');
 
     cy.get('[data-testid=nav-tabpanel-references]').children('[data-testid=error-tab]').should('not.exist');
+  });
 
-    // TODO: Book type, Report type, etc
+  it('The User should be able to see validation errors on reference tab (Book)', () => {
+    cy.get('[data-testid=publication-context-type]').click({ force: true }).type(' ');
+    cy.get(`[data-testid=publication-context-type-Book]`).click({ force: true });
+    cy.contains(ErrorMessage.REQUIRED).should('not.be.visible');
+    cy.get('[data-testid=nav-tabpanel-description]').click({ force: true });
+    cy.get('[data-testid=nav-tabpanel-references]').click({ force: true });
+    cy.get(`p:contains(${ErrorMessage.REQUIRED})`).should('have.length', 2);
+
+    // publicationInstance type
+    cy.get('[data-testid=publication-instance-type]').click({ force: true }).type(' ');
+    cy.get('[data-testid=publication-instance-type-BookMonograph]').click({ force: true });
+
+    // publicationContext
+    cy.get('[data-testid=autosearch-publisher]').click({ force: true }).type('natur');
+    cy.contains('testament').click({ force: true });
+    cy.contains(ErrorMessage.REQUIRED).should('not.be.visible');
+
+    // ISBN and pages
+    cy.get('[data-testid=isbn-input]').type('9781787632714x').type('{enter}');
+    cy.get('[data-testid=snackbar]').contains(ErrorMessage.INVALID_ISBN);
+    cy.get('[data-testid=snackbar]').get('button[title=Close]').click({ force: true });
+    cy.get('[data-testid=snackbar]').should('not.exist');
+    cy.get('[data-testid=isbn-input]').type('invalid-isbn');
+    cy.get('[data-testid=pages-input]').type('-1');
+    cy.get('[data-testid=snackbar]').contains(ErrorMessage.INVALID_ISBN);
+    cy.get('[data-testid=isbn-chip]').should('have.length', 0);
+    cy.contains(ErrorMessage.MUST_BE_MIN_1);
+    cy.get('[data-testid=pages-input]').clear().type('1a');
+    cy.contains(ErrorMessage.INVALID_FORMAT);
+    cy.get('[data-testid=pages-input]').clear().type('20');
+    cy.get('[data-testid=nav-tabpanel-references]').children('[data-testid=error-tab]').should('not.exist');
+  });
+
+  it('The User should be able to see validation errors on reference tab (Report)', () => {
+    cy.get('[data-testid=publication-context-type]').click({ force: true }).type(' ');
+    cy.get(`[data-testid=publication-context-type-Report]`).click({ force: true });
+    cy.contains(ErrorMessage.REQUIRED).should('not.be.visible');
+    cy.get('[data-testid=nav-tabpanel-description]').click({ force: true });
+    cy.get('[data-testid=nav-tabpanel-references]').click({ force: true });
+    cy.get(`p:contains(${ErrorMessage.REQUIRED})`).should('have.length', 2);
+
+    // publicationInstance type
+    cy.get('[data-testid=publication-instance-type]').click({ force: true }).type(' ');
+    cy.get('[data-testid=publication-instance-type-ReportResearch]').click({ force: true });
+
+    // publicationContext
+    cy.get('[data-testid=autosearch-publisher]').click({ force: true }).type('natur');
+    cy.contains('testament').click({ force: true });
+    cy.contains(ErrorMessage.REQUIRED).should('not.be.visible');
+
+    cy.get('[data-testid=nav-tabpanel-references]').children('[data-testid=error-tab]').should('not.exist');
+  });
+
+  it('The User should be able to see validation errors on reference tab (Degree)', () => {
+    cy.get('[data-testid=publication-context-type]').click({ force: true }).type(' ');
+    cy.get(`[data-testid=publication-context-type-Degree]`).click({ force: true });
+    cy.contains(ErrorMessage.REQUIRED).should('not.be.visible');
+    cy.get('[data-testid=nav-tabpanel-description]').click({ force: true });
+    cy.get('[data-testid=nav-tabpanel-references]').click({ force: true });
+    cy.get(`p:contains(${ErrorMessage.REQUIRED})`).should('have.length', 2);
+
+    // publicationInstance type
+    cy.get('[data-testid=publication-instance-type]').click({ force: true }).type(' ');
+    cy.get('[data-testid=publication-instance-type-DegreeBachelor]').click({ force: true });
+
+    // publicationContext
+    cy.get('[data-testid=autosearch-publisher]').click({ force: true }).type('natur');
+    cy.contains('testament').click({ force: true });
+    cy.contains(ErrorMessage.REQUIRED).should('not.be.visible');
+
+    cy.get('[data-testid=nav-tabpanel-references]').children('[data-testid=error-tab]').should('not.exist');
   });
 
   it('The User should be able to see validation errors on contributors tab', () => {
