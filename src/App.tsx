@@ -155,7 +155,7 @@ const App: FC = () => {
       }
     };
     // Avoid infinite loop by breaking when new data is identical to existing data
-    if (user && !user.authority && user.possibleAuthorities !== authorities) {
+    if (user?.customerId && !user.authority && user.possibleAuthorities !== authorities) {
       fetchAuthority();
     }
   }, [dispatch, authorities, user]);
