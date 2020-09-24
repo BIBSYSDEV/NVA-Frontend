@@ -8,7 +8,7 @@ const AdminCustomerInstitutionsPage: FC = () => {
   const history = useHistory();
   const customerId = new URLSearchParams(history.location.search).get('id'); // Will be "new" if creating new Customer
 
-  return <>{customerId ? <AdminCustomerInstitution customerId={customerId} /> : <AdminCustomerInstitutions />}</>;
+  return customerId ? <AdminCustomerInstitution customerId={customerId} /> : <AdminCustomerInstitutions />;
 };
 
 export default AdminCustomerInstitutionsPage;
