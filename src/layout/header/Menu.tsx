@@ -106,7 +106,7 @@ const Menu: FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
               <>
                 <MenuItem
                   data-testid="menu-admin-institution-button"
-                  onClick={() => handleClickMenuItem(`/admin-institutions?id=${encodeURIComponent(user.customerId)}`)}>
+                  onClick={() => handleClickMenuItem(`/admin-institutions?id=${encodeURIComponent(user.customerId!)}`)}>
                   {t('common:my_institution')}
                 </MenuItem>
                 <MenuItem

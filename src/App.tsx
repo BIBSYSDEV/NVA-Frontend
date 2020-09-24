@@ -1,10 +1,9 @@
-import Amplify, { Hub } from 'aws-amplify';
+import Amplify from 'aws-amplify';
 import React, { useEffect, useState, FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import { CircularProgress } from '@material-ui/core';
-
 import { AuthorityQualifiers, addQualifierIdForAuthority, getAuthority } from './api/authorityApi';
 import { getCurrentUserAttributes } from './api/userApi';
 import Breadcrumbs from './layout/Breadcrumbs';
@@ -17,7 +16,6 @@ import { RootStore } from './redux/reducers/rootReducer';
 import { Authority } from './types/authority.types';
 import { awsConfig } from './utils/aws-config';
 import { USE_MOCK_DATA } from './utils/constants';
-import { hubListener } from './utils/hub-listener';
 import { mockUser } from './utils/testfiles/mock_feide_user';
 import AppRoutes from './AppRoutes';
 import useFetchAuthorities from './utils/hooks/useFetchAuthorities';
@@ -61,12 +59,8 @@ const App: FC = () => {
     // Setup aws-amplify
     if (!USE_MOCK_DATA) {
       Amplify.configure(awsConfig);
-      Hub.listen('auth', (data) => {
-        hubListener(data, dispatch);
-      });
-      return () => Hub.remove('auth', (data) => hubListener(data, dispatch));
     }
-  }, [dispatch]);
+  }, []);
 
   useEffect(() => {
     // Fetch attributes of authenticated user
@@ -77,13 +71,15 @@ const App: FC = () => {
           dispatch(setNotification(feideUser.error, NotificationVariant.Error));
           setIsLoadingUser(false);
         } else {
-          if (feideUser.cristinId) {
+          if (feideUser['custom:cristinId']) {
             dispatch(setUser(feideUser));
-          } else {
+          } else if (feideUser['custom:customerId']) {
             const cristinId = await getCustomerInstitution(feideUser['custom:customerId']).then(
               (customer) => customer?.data?.cristinId
             );
             dispatch(setUser({ ...feideUser, cristinId }));
+          } else {
+            dispatch(setUser(feideUser));
           }
           // Wait with setting isLoadingUser to false until roles are loaded in separate useEffect,
           // which will be trigged when user is updated in redux
@@ -123,7 +119,7 @@ const App: FC = () => {
 
   useEffect(() => {
     // Update search term for fetching possible authorities
-    if (user?.name && !authorities && !isLoadingAuthorities) {
+    if (user?.name && user.customerId && !authorities && !isLoadingAuthorities) {
       handleNewAuthoritiesSearchTerm(user.name);
     }
   }, [handleNewAuthoritiesSearchTerm, authorities, isLoadingAuthorities, user]);
@@ -159,7 +155,7 @@ const App: FC = () => {
       }
     };
     // Avoid infinite loop by breaking when new data is identical to existing data
-    if (user && !user.authority && user.possibleAuthorities !== authorities) {
+    if (user?.customerId && !user.authority && user.possibleAuthorities !== authorities) {
       fetchAuthority();
     }
   }, [dispatch, authorities, user]);
@@ -179,7 +175,7 @@ const App: FC = () => {
         </StyledContent>
         <Footer />
       </StyledApp>
-      {!isLoadingAuthorities && authorityDataUpdated && user && <AuthorityOrcidModal />}
+      {!isLoadingAuthorities && authorityDataUpdated && user?.customerId && <AuthorityOrcidModal />}
     </BrowserRouter>
   );
 };

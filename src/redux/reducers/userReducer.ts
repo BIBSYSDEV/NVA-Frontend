@@ -1,4 +1,4 @@
-import { ApplicationName, RoleName, User, Affiliation } from '../../types/user.types';
+import { RoleName, User, Affiliation } from '../../types/user.types';
 import { AuthActions, LOGOUT_SUCCESS } from '../actions/authActions';
 import { OrcidActions, SET_EXTERNAL_ORCID } from '../actions/orcidActions';
 import {
@@ -26,7 +26,6 @@ export const userReducer = (state: User | null = null, action: UserActions | Orc
         email: action.user.email,
         id: action.user['custom:feideId'],
         institution: action.user['custom:orgName'],
-        application: action.user['custom:application'] as ApplicationName,
         cristinId: action.user['custom:cristinId'] ?? action.user.cristinId,
         customerId: action.user['custom:customerId'],
         affiliations,
@@ -40,10 +39,10 @@ export const userReducer = (state: User | null = null, action: UserActions | Orc
       return {
         ...state,
         roles: action.roles,
-        isCreator: action.roles.some((role) => role === RoleName.CREATOR),
-        isAppAdmin: action.roles.some((role) => role === RoleName.APP_ADMIN),
-        isInstitutionAdmin: action.roles.some((role) => role === RoleName.INSTITUTION_ADMIN),
-        isCurator: action.roles.some((role) => role === RoleName.CURATOR),
+        isCreator: state?.customerId && action.roles.some((role) => role === RoleName.CREATOR),
+        isAppAdmin: state?.customerId && action.roles.some((role) => role === RoleName.APP_ADMIN),
+        isInstitutionAdmin: state?.customerId && action.roles.some((role) => role === RoleName.INSTITUTION_ADMIN),
+        isCurator: state?.customerId && action.roles.some((role) => role === RoleName.CURATOR),
       };
     case SET_EXTERNAL_ORCID:
       return {

@@ -35,13 +35,11 @@ const StyledSecondaryUserInfo = styled.div`
   display: grid;
   grid-area: secondary-info;
   grid-template-areas: 'language' 'roles';
-  grid-row-gap: 3rem;
 `;
 
 const StyledPrimaryUserInfo = styled.div`
   display: grid;
   grid-area: primary-info;
-  grid-row-gap: 3rem;
 `;
 
 const StyledButtonWrapper = styled(StyledRightAlignedButtonWrapper)`
@@ -100,19 +98,23 @@ const User: FC = () => {
         )}
         <StyledSecondaryUserInfo>
           <UserLanguage />
-          <UserRoles user={user} />
+          {user.roles.length > 1 && <UserRoles user={user} />}
         </StyledSecondaryUserInfo>
 
         <StyledPrimaryUserInfo>
           <UserInfo user={user} />
-          <Card>
-            <Typography variant="h5">{t('heading.author_info')}</Typography>
-            {user.authority && user.authority.feideids?.length > 0 && (
-              <p data-testid="author-connected-info">{t('authority.connected_info')}</p>
-            )}
-          </Card>
-          <UserOrcid />
-          <UserInstitution />
+          {user.customerId && (
+            <>
+              <Card>
+                <Typography variant="h5">{t('heading.author_info')}</Typography>
+                {user.authority && user.authority.feideids?.length > 0 && (
+                  <p data-testid="author-connected-info">{t('authority.connected_info')}</p>
+                )}
+              </Card>
+              <UserOrcid />
+              <UserInstitution />
+            </>
+          )}
         </StyledPrimaryUserInfo>
       </StyledUserPage>
     </>
