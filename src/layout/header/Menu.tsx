@@ -102,7 +102,7 @@ const Menu: FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
                 {t('common:institutions')}
               </MenuItem>
             )}
-            {user.isInstitutionAdmin && user.customerId && (
+            {user.isInstitutionAdmin && (
               <>
                 <MenuItem
                   data-testid="menu-admin-institution-button"
