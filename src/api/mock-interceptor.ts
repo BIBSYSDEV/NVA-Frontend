@@ -15,8 +15,7 @@ import mockSearchResults from '../utils/testfiles/search_results.json';
 import threeMockSearchResults from '../utils/testfiles/three_search_results.json';
 import mockMyPublications from '../utils/testfiles/my_publications.json';
 import mockNsdPublisers from '../utils/testfiles/publishersFromNsd.json';
-import mockCustomerInstitutions from '../utils/testfiles/mock_customer_institutions.json';
-import mockCustomerInstitution from '../utils/testfiles/mock_customer_institution.json';
+import { mockCustomerInstitutions, mockCustomerInstitution } from '../utils/testfiles/mockCustomerInstitutions';
 import mockPublishedPublications from '../utils/testfiles/published_publications.json';
 import { AuthorityApiPaths } from './authorityApi';
 import { InstitutionApiPaths } from './institutionApi';
@@ -180,7 +179,7 @@ export const interceptRequestsOnMock = () => {
     .replyOnce(200, mockNtnuSubunitResponse);
 
   // Roles
-  mock.onGet(new RegExp(`${API_URL}${RoleApiPaths.INSTITUTION_USERS}/.*/users`)).reply(200, []);
+  mock.onGet(new RegExp(`${API_URL}${RoleApiPaths.INSTITUTION_USERS}/*`)).reply(200, []);
   mock.onGet(new RegExp(`${API_URL}${RoleApiPaths.USERS}/*`)).reply(200, mockRoles);
 
   mock.onAny().reply(function (config) {
