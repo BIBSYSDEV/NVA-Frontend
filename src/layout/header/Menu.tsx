@@ -55,7 +55,7 @@ const Menu: FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
 
   const handleClickMenuItem = (newPath: string) => {
     setAnchorEl(null);
-    if (newPath !== history.location.pathname) {
+    if (newPath !== `${history.location.pathname}${history.location.search}`) {
       history.push(newPath);
     }
   };
