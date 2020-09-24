@@ -119,7 +119,7 @@ const App: FC = () => {
 
   useEffect(() => {
     // Update search term for fetching possible authorities
-    if (user?.name && !authorities && !isLoadingAuthorities) {
+    if (user?.name && user.customerId && !authorities && !isLoadingAuthorities) {
       handleNewAuthoritiesSearchTerm(user.name);
     }
   }, [handleNewAuthoritiesSearchTerm, authorities, isLoadingAuthorities, user]);
