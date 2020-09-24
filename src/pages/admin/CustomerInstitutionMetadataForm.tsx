@@ -49,7 +49,7 @@ const CustomerInstitutionMetadataForm: FC<CustomerInstitutionMetadataFormProps> 
       if (!createdCustomer || createdCustomer?.error) {
         dispatch(setNotification(createdCustomer.error, NotificationVariant.Error));
       } else {
-        history.push(`/admin-institutions/${createdCustomer.identifier}`);
+        history.push(`/admin-institutions?id=${encodeURIComponent(createdCustomer.id)}`);
         handleSetCustomerInstitution(createdCustomer);
         dispatch(setNotification(t('feedback:success.created_customer')));
       }

@@ -48,7 +48,6 @@ const Menu: FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const { t } = useTranslation();
   const history = useHistory();
-  const customerId = user.customerId?.split('/').pop();
 
   const handleClickMenuAnchor = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -56,7 +55,7 @@ const Menu: FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
 
   const handleClickMenuItem = (newPath: string) => {
     setAnchorEl(null);
-    if (newPath !== history.location.pathname) {
+    if (newPath !== `${history.location.pathname}${history.location.search}`) {
       history.push(newPath);
     }
   };
@@ -103,11 +102,11 @@ const Menu: FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
                 {t('common:institutions')}
               </MenuItem>
             )}
-            {user.isInstitutionAdmin && customerId && (
+            {user.isInstitutionAdmin && user.customerId && (
               <>
                 <MenuItem
                   data-testid="menu-admin-institution-button"
-                  onClick={() => handleClickMenuItem(`/admin-institutions/${customerId}`)}>
+                  onClick={() => handleClickMenuItem(`/admin-institutions?id=${encodeURIComponent(user.customerId!)}`)}>
                   {t('common:my_institution')}
                 </MenuItem>
                 <MenuItem

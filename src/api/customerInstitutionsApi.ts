@@ -4,7 +4,6 @@ import Axios, { CancelToken } from 'axios';
 import i18n from '../translations/i18n';
 import { StatusCode } from '../utils/constants';
 import { authenticatedApiRequest } from './apiRequest';
-import { isValidUrl } from '../utils/isValidUrl';
 
 export enum CustomerInstitutionApiPaths {
   CUSTOMER_INSTITUTION = '/customer',
@@ -20,7 +19,7 @@ export const getAllCustomerInstitutions = async () => {
       headers,
     });
     if (response.status === StatusCode.OK) {
-      return response.data;
+      return response.data.customers;
     } else {
       return {
         error: i18n.t('feedback:error.get_customers'),
@@ -33,21 +32,12 @@ export const getAllCustomerInstitutions = async () => {
   }
 };
 
-export const getCustomerInstitution = async (identifier: string, cancelToken?: CancelToken) => {
-  let id = '';
-
-  if (isValidUrl(identifier)) {
-    id = identifier.split('/').pop() ?? '';
-  } else {
-    id = identifier;
-  }
-
-  return await authenticatedApiRequest<CustomerInstitution>({
-    url: `${CustomerInstitutionApiPaths.CUSTOMER_INSTITUTION}/${id}`,
+export const getCustomerInstitution = async (customerId: string, cancelToken?: CancelToken) =>
+  await authenticatedApiRequest<CustomerInstitution>({
+    url: customerId,
     method: 'GET',
     cancelToken,
   });
-};
 
 export const createCustomerInstitution = async (customer: CustomerInstitution) => {
   try {

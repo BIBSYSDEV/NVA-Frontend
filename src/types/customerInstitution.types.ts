@@ -1,7 +1,8 @@
 import { BackendType } from './publication.types';
 import { BackendTypeNames } from './publication_types/commonPublication.types';
 
-export interface CustomerInstitution extends BackendType {
+export interface CustomerInstitution extends Partial<BackendType> {
+  id: string;
   archiveName: string;
   cname: string;
   createdDate: string;
@@ -17,6 +18,7 @@ export interface CustomerInstitution extends BackendType {
 
 export const emptyCustomerInstitution: CustomerInstitution = {
   type: BackendTypeNames.CUSTOMER,
+  id: '',
   archiveName: '',
   cname: '',
   createdDate: '',
@@ -39,4 +41,8 @@ export enum CustomerInstitutionFieldNames {
   INSTITUTION_DNS = 'institutionDns',
   NAME = 'name',
   SHORT_NAME = 'shortName',
+}
+
+export interface CustomerList {
+  customers: CustomerInstitution[];
 }

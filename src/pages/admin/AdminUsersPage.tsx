@@ -28,9 +28,7 @@ const StyledNewButton = styled(Button)`
 const AdminUsersPage: FC = () => {
   const { t } = useTranslation('admin');
   const user = useSelector((store: RootStore) => store.user);
-  const [users, isLoading, fetchInstitutionUsers] = useFetchUsersForInstitution(
-    user.customerId?.split('/').pop() ?? ''
-  );
+  const [users, isLoading, fetchInstitutionUsers] = useFetchUsersForInstitution(user?.customerId ?? '');
   const [autoAssignCreators, setAutoAssignCreators] = useState(true);
   const [roleToAdd, setRoleToAdd] = useState<RoleName>();
 
