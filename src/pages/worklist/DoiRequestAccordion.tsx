@@ -12,14 +12,18 @@ import MessageList from './MessageList';
 const StyledAccordion = styled(Accordion)`
   .MuiAccordionSummary-content {
     display: grid;
-    grid-template-areas: 'title creator';
-    grid-template-columns: 13fr 3fr;
+    grid-template-areas: 'status title creator';
+    grid-template-columns: 1fr 5fr 1fr;
     grid-column-gap: 1rem;
   }
 
   .MuiAccordionDetails-root {
     justify-content: space-between;
   }
+`;
+
+const StyledStatus = styled(Label)`
+  grid-area: status;
 `;
 
 const StyledTitle = styled(Label)`
@@ -73,6 +77,7 @@ export const DoiRequestAccordion: FC<DoiRequestAccordionProps> = ({ publication 
   return (
     <StyledAccordion data-testid={`doi-request-${identifier}`}>
       <AccordionSummary expandIcon={<ExpandMoreIcon fontSize="large" />}>
+        <StyledStatus>{t(`doi_requests.status.${doiRequest.status}`)}</StyledStatus>
         <StyledTitle>{mainTitle}</StyledTitle>
         <StyledOwner>
           <Label>{owner}</Label>

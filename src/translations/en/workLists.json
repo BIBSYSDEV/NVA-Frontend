@@ -4,7 +4,12 @@
     "doi_requests": "DOI requests",
     "go_to_publication": "Go to publication",
     "message_to_user": "Message to user",
-    "no_pending_doi_requests": "You don't have any awaiting DOI requests"
+    "no_pending_doi_requests": "You don't have any awaiting DOI requests",
+    "status": {
+      "APPROVED": "Approved",
+      "REJECTED": "Rejected",
+      "REQUESTED": "Requested"
+    }
   },
   "delete_publication_heading": "Delete publication",
   "delete_publication_message": "Confirm deletion of ",
