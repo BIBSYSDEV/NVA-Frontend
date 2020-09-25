@@ -17,6 +17,7 @@ import IsbnListField from './components/IsbnListField';
 import TotalPagesField from './components/TotalPagesField';
 import { FormControlLabel, Checkbox } from '@material-ui/core';
 import { Typography } from '@material-ui/core';
+import ChapterForm from './ChapterForm';
 
 const StyledContent = styled.div`
   display: grid;
@@ -52,7 +53,7 @@ const BookForm: FC = () => {
   const {
     reference: {
       publicationContext,
-      publicationInstance: { peerReviewed },
+      publicationInstance: { peerReviewed, type },
     },
   } = values.entityDescription as BookEntityDescription;
 
@@ -60,69 +61,75 @@ const BookForm: FC = () => {
     <StyledContent>
       <SelectTypeField fieldName={ReferenceFieldNames.SUB_TYPE} options={Object.values(BookType)} />
 
-      <DoiField />
+      {type === BookType.CHAPTER ? (
+        <ChapterForm />
+      ) : (
+        <>
+          <DoiField />
 
-      <PublisherField
-        label={t('common:publisher')}
-        placeholder={t('references.search_for_publisher')}
-        touched={touched.entityDescription?.reference?.publicationContext?.publisher}
-        errorName={ReferenceFieldNames.PUBLICATION_CONTEXT_PUBLISHER}
-      />
-      <StyledSection>
-        <IsbnListField />
-        <TotalPagesField />
-      </StyledSection>
+          <PublisherField
+            label={t('common:publisher')}
+            placeholder={t('references.search_for_publisher')}
+            touched={touched.entityDescription?.reference?.publicationContext?.publisher}
+            errorName={ReferenceFieldNames.PUBLICATION_CONTEXT_PUBLISHER}
+          />
+          <StyledSection>
+            <IsbnListField />
+            <TotalPagesField />
+          </StyledSection>
 
-      <StyledSection>
-        <StyledPeerReview>
-          <PeerReview fieldName={ReferenceFieldNames.PEER_REVIEW} label={t('references.peer_review')} />
-        </StyledPeerReview>
-        <StyledTextBook>
-          <Typography variant="h5">{t('references.is_book_a_textbook')}</Typography>
-          <Field name={ReferenceFieldNames.TEXTBOOK_CONTENT}>
-            {({ field }: FieldProps) => (
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    data-testid="is-textbook-checkbox"
-                    color="primary"
-                    checked={field.value ?? false}
-                    {...field}
+          <StyledSection>
+            <StyledPeerReview>
+              <PeerReview fieldName={ReferenceFieldNames.PEER_REVIEW} label={t('references.peer_review')} />
+            </StyledPeerReview>
+            <StyledTextBook>
+              <Typography variant="h5">{t('references.is_book_a_textbook')}</Typography>
+              <Field name={ReferenceFieldNames.TEXTBOOK_CONTENT}>
+                {({ field }: FieldProps) => (
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        data-testid="is-textbook-checkbox"
+                        color="primary"
+                        checked={field.value ?? false}
+                        {...field}
+                      />
+                    }
+                    label={t('references.is_book_a_textbook_confirm')}
                   />
-                }
-                label={t('references.is_book_a_textbook_confirm')}
-              />
-            )}
-          </Field>
-        </StyledTextBook>
-      </StyledSection>
-      <div>
-        <StyledTypography variant="h5">{t('references.series')}</StyledTypography>
-        <Typography>{t('references.series_info')}</Typography>
-        <Field name={ReferenceFieldNames.SERIES_TITLE}>
-          {({ field: { name, value } }: FieldProps) => (
-            <>
-              <PublicationChannelSearch
-                dataTestId="autosearch-series"
-                clearSearchField={value === ''}
-                label={t('common:title')}
-                publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
-                setValueFunction={(inputValue) => setFieldValue(name, inputValue.title ?? '')}
-                placeholder={t('references.search_for_series')}
-              />
-              {value && (
-                <PublisherRow
-                  dataTestId="autosearch-results-series"
-                  label={t('common:title')}
-                  publisher={{ title: value }}
-                  onClickDelete={() => setFieldValue(name, '')}
-                />
+                )}
+              </Field>
+            </StyledTextBook>
+          </StyledSection>
+          <div>
+            <StyledTypography variant="h5">{t('references.series')}</StyledTypography>
+            <Typography>{t('references.series_info')}</Typography>
+            <Field name={ReferenceFieldNames.SERIES_TITLE}>
+              {({ field: { name, value } }: FieldProps) => (
+                <>
+                  <PublicationChannelSearch
+                    dataTestId="autosearch-series"
+                    clearSearchField={value === ''}
+                    label={t('common:title')}
+                    publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
+                    setValueFunction={(inputValue) => setFieldValue(name, inputValue.title ?? '')}
+                    placeholder={t('references.search_for_series')}
+                  />
+                  {value && (
+                    <PublisherRow
+                      dataTestId="autosearch-results-series"
+                      label={t('common:title')}
+                      publisher={{ title: value }}
+                      onClickDelete={() => setFieldValue(name, '')}
+                    />
+                  )}
+                </>
               )}
-            </>
-          )}
-        </Field>
-      </div>
-      <NviValidation isPeerReviewed={peerReviewed} isRated={!!publicationContext?.level} dataTestId="nvi_book" />
+            </Field>
+          </div>
+          <NviValidation isPeerReviewed={peerReviewed} isRated={!!publicationContext?.level} dataTestId="nvi_book" />
+        </>
+      )}
     </StyledContent>
   );
 };

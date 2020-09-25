@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Field, FieldProps } from 'formik';
+import { Field, FieldProps, FormikProps, useFormikContext } from 'formik';
 import { TextField } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
 import styled from 'styled-components';
@@ -8,6 +8,9 @@ import RemoveIcon from '@material-ui/icons/Remove';
 import { ReferenceFieldNames } from '../../../types/publicationFieldNames';
 import NviValidation from './components/NviValidation';
 import DoiField from './components/DoiField';
+import { ChapterPublication } from '../../../types/publication.types';
+import PeerReview from './components/PeerReview';
+import { ChapterEntityDescription } from '../../../types/publication_types/bookPublication.types';
 
 const StyledInfoBox = styled.div`
   margin-top: 1rem;
@@ -40,8 +43,15 @@ const StyledPageNumberField = styled(TextField)`
   width: 10rem;
 `;
 
-const ChapterForm: React.FC = () => {
+const ChapterForm: FC = () => {
   const { t } = useTranslation('publication');
+  const { setFieldValue, touched, values }: FormikProps<ChapterPublication> = useFormikContext();
+  const {
+    reference: {
+      publicationContext: { linkedContext },
+      publicationInstance: { peerReviewed, textbookContent, type },
+    },
+  } = values.entityDescription as ChapterEntityDescription;
 
   return (
     <>
@@ -51,6 +61,10 @@ const ChapterForm: React.FC = () => {
       </StyledInfoBox>
 
       <DoiField />
+
+      {/* TODO <BookSearch /> */}
+
+      <PeerReview fieldName={ReferenceFieldNames.PEER_REVIEW} label={t('references.peer_review')} />
 
       <StyledPageNumberWrapper>
         <Field name={ReferenceFieldNames.PAGES_FROM}>
@@ -80,7 +94,7 @@ const ChapterForm: React.FC = () => {
         </Field>
       </StyledPageNumberWrapper>
 
-      <NviValidation isPeerReviewed={true} isRated={true} dataTestId="nvi-chapter" />
+      <NviValidation isPeerReviewed={peerReviewed} isRated={!!textbookContent} dataTestId="nvi-chapter" />
     </>
   );
 };

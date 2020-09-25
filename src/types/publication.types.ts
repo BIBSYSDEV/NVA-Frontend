@@ -7,7 +7,7 @@ import {
   emptyPublicationEntityDescription,
 } from './publication_types/journalPublication.types';
 import { DegreeEntityDescription } from './publication_types/degreePublication.types';
-import { BookEntityDescription } from './publication_types/bookPublication.types';
+import { BookEntityDescription, ChapterEntityDescription } from './publication_types/bookPublication.types';
 import { ReportEntityDescription } from './publication_types/reportPublication.types';
 import { BackendTypeNames } from './publication_types/commonPublication.types';
 
@@ -93,6 +93,10 @@ export interface DegreePublication extends BasePublication {
 
 export interface BookPublication extends BasePublication {
   entityDescription: BookEntityDescription;
+}
+
+export interface ChapterPublication extends BasePublication {
+  entityDescription: ChapterEntityDescription;
 }
 
 export interface ReportPublication extends BasePublication {

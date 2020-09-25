@@ -4,11 +4,7 @@ export enum PublicationType {
   BOOK = 'Book',
   REPORT = 'Report',
   DEGREE = 'Degree',
-  // CHAPTER = 'Chapter',
-}
-
-export enum ChapterType {
-  ARTICLE = 'ChapterArticle',
+  CHAPTER = 'Chapter',
 }
 
 export enum JournalType {
@@ -20,8 +16,9 @@ export enum JournalType {
 }
 
 export enum BookType {
-  MONOGRAPH = 'BookMonograph',
   ANTHOLOGY = 'BookAnthology',
+  CHAPTER = 'ChapterArticle',
+  MONOGRAPH = 'BookMonograph',
 }
 
 export enum ReportType {

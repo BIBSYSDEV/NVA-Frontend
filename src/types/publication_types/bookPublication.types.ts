@@ -1,4 +1,11 @@
-import { BackendType, PublicationDate, PagesMonograph, emptyPagesMonograph } from '../publication.types';
+import {
+  BackendType,
+  PublicationDate,
+  PagesMonograph,
+  emptyPagesMonograph,
+  PagesRange,
+  emptyPagesRange,
+} from '../publication.types';
 import { PublicationType, BookType } from '../publicationFieldNames';
 import { LanguageValues } from '../language.types';
 import { Contributor } from '../contributor.types';
@@ -44,5 +51,42 @@ export interface BookEntityDescription extends BackendType {
   mainTitle: string;
   npiSubjectHeading: string;
   reference: BookReference;
+  tags: string[];
+}
+
+interface ChapterPublicationInstance {
+  type: BookType.CHAPTER;
+  pages: PagesRange | null;
+  peerReviewed: boolean;
+  textbookContent?: boolean;
+}
+
+export const emptyChapterPublicationInstance: ChapterPublicationInstance = {
+  type: BookType.CHAPTER,
+  pages: emptyPagesRange,
+  peerReviewed: false,
+  textbookContent: false,
+};
+
+interface ChapterPublicationContext {
+  type: PublicationType.CHAPTER;
+  linkedContext: string;
+}
+
+interface ChapterReference extends BackendType {
+  doi: string;
+  publicationContext: ChapterPublicationContext;
+  publicationInstance: ChapterPublicationInstance;
+}
+
+export interface ChapterEntityDescription extends BackendType {
+  abstract: string;
+  contributors: Contributor[];
+  date: PublicationDate;
+  description: string;
+  language: LanguageValues;
+  mainTitle: string;
+  npiSubjectHeading: string;
+  reference: ChapterReference;
   tags: string[];
 }
