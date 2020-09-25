@@ -44,7 +44,7 @@ export const instanceTypeBaseFieldName = 'entityDescription.reference.publicatio
 export enum ReferenceFieldNames {
   ARTICLE_NUMBER = 'entityDescription.reference.publicationInstance.articleNumber',
   DOI = 'entityDescription.reference.doi',
-  IS_TEXTBOOK = 'entityDescription.reference.publicationInstance.isTextbook',
+  IS_TEXTBOOK = 'entityDescription.reference.publicationInstance.textbookContent',
   ISBN_LIST = 'entityDescription.reference.publicationContext.isbnList',
   ISSUE = 'entityDescription.reference.publicationInstance.issue',
   PAGES_FROM = 'entityDescription.reference.publicationInstance.pages.begin',
