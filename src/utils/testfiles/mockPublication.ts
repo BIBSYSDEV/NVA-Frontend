@@ -104,17 +104,17 @@ const mockPublicationWithPendingDoiRequest: JournalPublication = {
       {
         text: 'Hello Mr. Curator! A have a question about this publication, okay?',
         author: 'creator@unit.no',
-        timestamp: new Date().toISOString(),
+        timestamp: new Date(2020, 1).toISOString(),
       },
       {
         text: 'Yes, how may I assist you my dear friend?',
         author: 'curator@unit.no',
-        timestamp: new Date().toISOString(),
+        timestamp: new Date(2020, 2).toISOString(),
       },
       {
         text: "I don't know...",
         author: 'creator@unit.no',
-        timestamp: new Date().toISOString(),
+        timestamp: new Date(2020, 3).toISOString(),
       },
     ],
   },
