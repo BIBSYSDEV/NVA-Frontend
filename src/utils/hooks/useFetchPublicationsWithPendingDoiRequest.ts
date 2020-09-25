@@ -6,10 +6,10 @@ import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import { RoleName } from '../../types/user.types';
 import useCancelToken from './useCancelToken';
-import { getDoiRequests } from '../../api/doiRequestApi';
+import { getPublicationsWithPendingDoiRequest } from '../../api/doiRequestApi';
 import { Publication } from '../../types/publication.types';
 
-const useFetchDoiRequests = (role: RoleName): [Publication[], boolean, () => void] => {
+const useFetchPublicationsWithPendingDoiRequest = (role: RoleName): [Publication[], boolean, () => void] => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const cancelToken = useCancelToken();
@@ -18,7 +18,7 @@ const useFetchDoiRequests = (role: RoleName): [Publication[], boolean, () => voi
 
   const fetchDoiRequests = useCallback(async () => {
     setIsLoading(true);
-    const response = await getDoiRequests(role, cancelToken);
+    const response = await getPublicationsWithPendingDoiRequest(role, cancelToken);
     if (response) {
       if (response.error) {
         dispatch(setNotification(t('feedback:error.get_doi_requests'), NotificationVariant.Error));
@@ -36,4 +36,4 @@ const useFetchDoiRequests = (role: RoleName): [Publication[], boolean, () => voi
   return [publicationsWithPendingDoiRequest, isLoading, fetchDoiRequests];
 };
 
-export default useFetchDoiRequests;
+export default useFetchPublicationsWithPendingDoiRequest;

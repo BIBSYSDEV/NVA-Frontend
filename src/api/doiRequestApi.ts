@@ -7,7 +7,7 @@ export enum DoiRequestApiPaths {
   DOI_REQUEST = '/doi-request',
 }
 
-export const getDoiRequests = async (role: RoleName, cancelToken?: CancelToken) =>
+export const getPublicationsWithPendingDoiRequest = async (role: RoleName, cancelToken?: CancelToken) =>
   await authenticatedApiRequest<Publication[]>({
     url: `${DoiRequestApiPaths.DOI_REQUEST}?role=${role}`,
     cancelToken,
