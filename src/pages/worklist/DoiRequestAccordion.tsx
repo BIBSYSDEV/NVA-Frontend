@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 
 import Label from '../../components/Label';
 import { PublicationTab, Publication } from '../../types/publication.types';
+import MessageList from './MessageList';
 
 const StyledAccordion = styled(Accordion)`
   .MuiAccordionSummary-content {
@@ -66,19 +67,26 @@ interface DoiRequestAccordionProps {
 
 export const DoiRequestAccordion: FC<DoiRequestAccordionProps> = ({ publication }) => {
   const { t } = useTranslation('workLists');
+  const {
+    identifier,
+    owner,
+    entityDescription: { mainTitle },
+  } = publication;
+  const doiRequest = publication.doiRequest!;
 
   return (
-    <StyledAccordion data-testid={`doi-request-${publication.identifier}`}>
+    <StyledAccordion data-testid={`doi-request-${identifier}`}>
       <AccordionSummary expandIcon={<ExpandMoreIcon fontSize="large" />}>
-        <StyledStatus>{publication.doiRequest?.status}</StyledStatus>
-        <StyledTitle>{publication.entityDescription.mainTitle}</StyledTitle>
+        <StyledStatus>{doiRequest.status}</StyledStatus>
+        <StyledTitle>{mainTitle}</StyledTitle>
         <StyledOwner>
-          <Label>{publication.owner}</Label>
-          {publication.doiRequest?.date}
+          <Label>{owner}</Label>
+          {new Date(doiRequest.date).toLocaleDateString()}
         </StyledOwner>
       </AccordionSummary>
       <AccordionDetails>
         <StyledMessages>
+          <MessageList messages={doiRequest.messages} />
           <TextField
             variant="outlined"
             fullWidth
@@ -93,10 +101,10 @@ export const DoiRequestAccordion: FC<DoiRequestAccordionProps> = ({ publication 
         </StyledMessages>
         <StyledAccordionActionButtons>
           <Button
-            data-testid={`go-to-publication-${publication.identifier}`}
+            data-testid={`go-to-publication-${identifier}`}
             variant="outlined"
             component={RouterLink}
-            to={`/publication/${publication.identifier}?tab=${PublicationTab.Submission}`}>
+            to={`/publication/${identifier}?tab=${PublicationTab.Submission}`}>
             {t('doi_requests.go_to_publication')}
           </Button>
           <Button variant="contained" color="primary" disabled>

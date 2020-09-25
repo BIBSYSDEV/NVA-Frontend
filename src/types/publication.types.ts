@@ -61,7 +61,7 @@ export enum DoiRequestStatus {
   Requested = 'REQUESTED',
 }
 
-interface DoiRequestMessage {
+export interface DoiRequestMessage {
   text: string;
   author: string;
   timestamp: string;
