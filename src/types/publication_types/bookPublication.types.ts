@@ -7,14 +7,14 @@ interface BookPublicationInstance {
   type: BookType | '';
   pages: PagesMonograph | null;
   peerReviewed: boolean;
-  isTextbook?: boolean; // TODO: Align with future backend implementation
+  textbookContent?: boolean;
 }
 
 export const emptyBookPublicationInstance: BookPublicationInstance = {
   type: '',
   pages: emptyPagesMonograph,
   peerReviewed: false,
-  isTextbook: false,
+  textbookContent: false,
 };
 
 interface BookPublicationContext {

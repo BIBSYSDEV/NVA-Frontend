@@ -79,7 +79,7 @@ const BookForm: FC = () => {
         </StyledPeerReview>
         <StyledTextBook>
           <Typography variant="h5">{t('references.is_book_a_textbook')}</Typography>
-          <Field name={ReferenceFieldNames.IS_TEXTBOOK}>
+          <Field name={ReferenceFieldNames.TEXTBOOK_CONTENT}>
             {({ field }: FieldProps) => (
               <FormControlLabel
                 control={
