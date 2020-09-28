@@ -106,9 +106,7 @@ export interface ReportPublication extends BasePublication {
   entityDescription: ReportEntityDescription;
 }
 
-export interface PublicationDateWithType extends BackendType, PublicationDate {}
-
-export interface PublicationDate {
+export interface PublicationDate extends BackendType {
   year: string;
   month: string;
   day: string;

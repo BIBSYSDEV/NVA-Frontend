@@ -1,4 +1,4 @@
-import { BackendType, PublicationDateWithType, PagesMonograph, emptyPagesMonograph } from '../publication.types';
+import { BackendType, PublicationDate, PagesMonograph, emptyPagesMonograph } from '../publication.types';
 import { PublicationType, ReportType } from '../publicationFieldNames';
 import { LanguageValues } from '../language.types';
 import { Contributor } from '../contributor.types';
@@ -36,7 +36,7 @@ interface ReportReference extends BackendType {
 export interface ReportEntityDescription extends BackendType {
   abstract: string;
   contributors: Contributor[];
-  date: PublicationDateWithType;
+  date: PublicationDate;
   description: string;
   language: LanguageValues;
   mainTitle: string;
