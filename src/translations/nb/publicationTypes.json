@@ -19,5 +19,6 @@
   "Report": "Rapport",
   "ReportPolicy": "Policyrapport",
   "ReportResearch": "Forskningsrapport",
-  "ReportWorkingPaper": "Arbeidsnotat"
+  "ReportWorkingPaper": "Arbeidsnotat",
+  "ReportOther": "Annen rapport"
 }

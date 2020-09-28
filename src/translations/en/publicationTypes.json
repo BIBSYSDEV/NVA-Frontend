@@ -19,5 +19,6 @@
   "Report": "Report",
   "ReportPolicy": "Policy report",
   "ReportResearch": "Research report",
-  "ReportWorkingPaper": "Working paper"
+  "ReportWorkingPaper": "Working paper",
+  "ReportOther": "Other type of report"
 }
