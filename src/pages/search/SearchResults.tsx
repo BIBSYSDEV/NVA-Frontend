@@ -39,7 +39,8 @@ const SearchResults: FC<SearchResultsProps> = ({ publications, searchTerm }) => 
             const publicationId = publication.id?.split('/').pop();
             return (
               <PublicationListItemComponent
-                key={publication.id}
+                data-testid={`search-result-${publicationId}`}
+                key={publicationId}
                 primaryComponent={
                   <MuiLink component={Link} to={`/publication/${publicationId}/public`}>
                     {publication.title}
@@ -50,7 +51,7 @@ const SearchResults: FC<SearchResultsProps> = ({ publications, searchTerm }) => 
                     {publication.date && <div>{displayDate(publication.date)}</div>}
                     {publication.contributors &&
                       publication.contributors.map((contributor) => (
-                        <Fragment key={contributor.name}>
+                        <Fragment data-testid={`search-result-contributor-${contributor.name}`} key={contributor.name}>
                           {contributor.id ? (
                             <MuiLink component={Link} to={`/user/${contributor.id}`}>
                               <StyledContributor>{contributor.name} </StyledContributor>
@@ -68,6 +69,7 @@ const SearchResults: FC<SearchResultsProps> = ({ publications, searchTerm }) => 
       </List>
       {publications.length > ROWS_PER_PAGE_OPTIONS[0] && (
         <TablePagination
+          data-testid="search-pagination"
           rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
           component="div"
           count={publications.length}
