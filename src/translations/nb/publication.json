@@ -104,7 +104,6 @@
     "requested_doi": "Venter på DOI..."
   },
   "publication": {
-    "info_text": "Velg ressursen du ønsker å registrere eller publisere ved å laste opp ressurs eller lenke til en publikasjon.",
     "link_to_resource": "Lenke til ressurs",
     "link_to_resource_description": "F.eks. DOI, lenke til artikkel, lenke til video av presentasjon etc.",
     "newest_publications": "Nyeste publikasjoner",

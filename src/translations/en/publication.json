@@ -104,7 +104,6 @@
     "requested_doi": "Waiting for DOI..."
   },
   "publication": {
-    "info_text": "Select the resource you wish to register or publish by uploading a resource or link to a publication.",
     "link_to_resource": "Link to resource",
     "link_to_resource_description": "E.g. DOI, link to article, link to video of presentation etc.",
     "newest_publications": "Newest publications",
