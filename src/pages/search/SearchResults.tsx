@@ -51,8 +51,8 @@ const SearchResults: FC<SearchResultsProps> = ({ publications, searchTerm }) => 
                     {publication.contributors &&
                       publication.contributors.map((contributor) => (
                         <Fragment key={contributor.name}>
-                          {contributor.identifier ? (
-                            <MuiLink component={Link} to={`/user/${contributor.identifier}`}>
+                          {contributor.id ? (
+                            <MuiLink component={Link} to={`/user/${contributor.id}`}>
                               <StyledContributor>{contributor.name} </StyledContributor>
                             </MuiLink>
                           ) : (

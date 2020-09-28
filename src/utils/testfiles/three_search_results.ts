@@ -8,7 +8,7 @@ export const threeMockSearchResults: SearchResult[] = [
     owner: 'mfalvey0@pen.io',
     contributors: [
       {
-        identifier: '04bfdced-e65a-483f-bcaa-a83ad7218b60',
+        id: '04bfdced-e65a-483f-bcaa-a83ad7218b60',
         name: 'Alasdair Dyter',
       },
     ],
@@ -20,11 +20,11 @@ export const threeMockSearchResults: SearchResult[] = [
     owner: 'fhanwell1@businessweek.com',
     contributors: [
       {
-        identifier: '9022e8b1-e908-4b22-b051-c62ff4dc7854',
+        id: '9022e8b1-e908-4b22-b051-c62ff4dc7854',
         name: 'Ailene Strippling',
       },
       {
-        identifier: '8c9a8043-b110-4597-bf40-a6183d9a0c01',
+        id: '8c9a8043-b110-4597-bf40-a6183d9a0c01',
         name: 'Kirstyn Jenik',
       },
     ],
@@ -36,7 +36,7 @@ export const threeMockSearchResults: SearchResult[] = [
     owner: 'okobsch2@a8.net',
     contributors: [
       {
-        identifier: 'eb918407-16fb-44e1-a1ac-32a7837d1f59',
+        id: 'eb918407-16fb-44e1-a1ac-32a7837d1f59',
         name: 'Alberto Kuzma',
       },
     ],

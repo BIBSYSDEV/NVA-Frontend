@@ -8,7 +8,7 @@ export const mockSearchResults: SearchResult[] = [
     owner: 'mfalvey0@pen.io',
     contributors: [
       {
-        identifier: '04bfdced-e65a-483f-bcaa-a83ad7218b60',
+        id: '04bfdced-e65a-483f-bcaa-a83ad7218b60',
         name: 'Alasdair Dyter',
       },
     ],
@@ -20,11 +20,11 @@ export const mockSearchResults: SearchResult[] = [
     owner: 'fhanwell1@businessweek.com',
     contributors: [
       {
-        identifier: '9022e8b1-e908-4b22-b051-c62ff4dc7854',
+        id: '9022e8b1-e908-4b22-b051-c62ff4dc7854',
         name: 'Ailene Strippling',
       },
       {
-        identifier: '8c9a8043-b110-4597-bf40-a6183d9a0c01',
+        id: '8c9a8043-b110-4597-bf40-a6183d9a0c01',
         name: 'Kirstyn Jenik',
       },
     ],
@@ -36,7 +36,7 @@ export const mockSearchResults: SearchResult[] = [
     owner: 'okobsch2@a8.net',
     contributors: [
       {
-        identifier: 'eb918407-16fb-44e1-a1ac-32a7837d1f59',
+        id: 'eb918407-16fb-44e1-a1ac-32a7837d1f59',
         name: 'Alberto Kuzma',
       },
     ],
@@ -48,15 +48,15 @@ export const mockSearchResults: SearchResult[] = [
     owner: 'jjanusik3@timesonline.co.uk',
     contributors: [
       {
-        identifier: '09a2d886-f7ee-4572-99f1-09e13de9a230',
+        id: '09a2d886-f7ee-4572-99f1-09e13de9a230',
         name: 'Llewellyn Munn',
       },
       {
-        identifier: 'd2c86a47-39f2-451a-b4a9-57c2d187e1e7',
+        id: 'd2c86a47-39f2-451a-b4a9-57c2d187e1e7',
         name: 'Elisabetta Dulany',
       },
       {
-        identifier: '99eb9c7a-021f-410b-8b4e-ac877dc29962',
+        id: '99eb9c7a-021f-410b-8b4e-ac877dc29962',
         name: 'Derby Budd',
       },
     ],
@@ -68,7 +68,7 @@ export const mockSearchResults: SearchResult[] = [
     owner: 'zmilam4@smh.com.au',
     contributors: [
       {
-        identifier: 'eb918407-16fb-44e1-a1ac-32a7837d1f59',
+        id: 'eb918407-16fb-44e1-a1ac-32a7837d1f59',
         name: 'Alberto Kuzma',
       },
     ],
@@ -80,7 +80,7 @@ export const mockSearchResults: SearchResult[] = [
     owner: 'bmangan5@soundcloud.com',
     contributors: [
       {
-        identifier: 'eb918407-16fb-44e1-a1ac-32a7837d1f59',
+        id: 'eb918407-16fb-44e1-a1ac-32a7837d1f59',
         name: 'Alberto Kuzma',
       },
     ],
@@ -92,31 +92,31 @@ export const mockSearchResults: SearchResult[] = [
     owner: 'vspafford6@google.ru',
     contributors: [
       {
-        identifier: 'ea5b86dc-a6f2-4bb9-9dfe-7d0666421d69',
+        id: 'ea5b86dc-a6f2-4bb9-9dfe-7d0666421d69',
         name: 'Ianthe Becaris',
       },
       {
-        identifier: 'e88e4a36-28e9-4ee4-bc7a-bf730d4dc2d6',
+        id: 'e88e4a36-28e9-4ee4-bc7a-bf730d4dc2d6',
         name: 'Lou Wheal',
       },
       {
-        identifier: '6f482d15-a9dd-4aa9-8255-e0c7222cc1ec',
+        id: '6f482d15-a9dd-4aa9-8255-e0c7222cc1ec',
         name: 'Tabbie Wagerfield',
       },
       {
-        identifier: '262087ea-b96a-4232-8383-c97334013cec',
+        id: '262087ea-b96a-4232-8383-c97334013cec',
         name: 'Kylie Kausche',
       },
       {
-        identifier: '23600318-eac9-46cb-af29-7156df9aebc8',
+        id: '23600318-eac9-46cb-af29-7156df9aebc8',
         name: 'Harrietta Fisby',
       },
       {
-        identifier: 'ef690909-d71e-43a9-9fd4-eb99e8066f45',
+        id: 'ef690909-d71e-43a9-9fd4-eb99e8066f45',
         name: 'Jaquith Bescoby',
       },
       {
-        identifier: '88305edf-e55e-4c0d-86c1-a81f83eec22d',
+        id: '88305edf-e55e-4c0d-86c1-a81f83eec22d',
         name: 'Isac Robson',
       },
     ],
@@ -128,7 +128,7 @@ export const mockSearchResults: SearchResult[] = [
     owner: 'dspatoni7@t.co',
     contributors: [
       {
-        identifier: 'a2a087a6-8de0-4a21-b026-faa629fb816d',
+        id: 'a2a087a6-8de0-4a21-b026-faa629fb816d',
         name: 'Benji Rodrigo',
       },
     ],
@@ -140,7 +140,7 @@ export const mockSearchResults: SearchResult[] = [
     owner: 'mspreadbury8@ocn.ne.jp',
     contributors: [
       {
-        identifier: '86ddca94-6c40-4eaa-b59e-33c4b340b9be',
+        id: '86ddca94-6c40-4eaa-b59e-33c4b340b9be',
         name: 'Quintina Whiston',
       },
     ],
@@ -152,7 +152,7 @@ export const mockSearchResults: SearchResult[] = [
     owner: 'jfarryan9@ucla.edu',
     contributors: [
       {
-        identifier: '86ddca94-6c40-4eaa-b59e-33c4b340b9be',
+        id: '86ddca94-6c40-4eaa-b59e-33c4b340b9be',
         name: 'Wuintinas Whir',
       },
     ],
@@ -164,11 +164,11 @@ export const mockSearchResults: SearchResult[] = [
     owner: 'bskilletta@guardian.co.uk',
     contributors: [
       {
-        identifier: '4d5f1550-e8c2-43a2-a62e-7f908626f0b4',
+        id: '4d5f1550-e8c2-43a2-a62e-7f908626f0b4',
         name: 'Zsazsa Mizzi',
       },
       {
-        identifier: '4bb7f444-2698-4085-9560-eefbafb4604e',
+        id: '4bb7f444-2698-4085-9560-eefbafb4604e',
         name: 'Joey Larway',
       },
     ],
@@ -180,7 +180,7 @@ export const mockSearchResults: SearchResult[] = [
     owner: 'sphizackleab@slate.com',
     contributors: [
       {
-        identifier: '0911b70e-e9dd-44a5-acd9-2277f6f338b2',
+        id: '0911b70e-e9dd-44a5-acd9-2277f6f338b2',
         name: 'Nolie Aggett',
       },
     ],
@@ -192,7 +192,7 @@ export const mockSearchResults: SearchResult[] = [
     owner: 'mlowdhamc@ucsd.edu',
     contributors: [
       {
-        identifier: 'e3e2409e-ca34-45c9-9631-e8926bcaf6f0',
+        id: 'e3e2409e-ca34-45c9-9631-e8926bcaf6f0',
         name: 'Burgess Bradnam',
       },
     ],
@@ -204,7 +204,7 @@ export const mockSearchResults: SearchResult[] = [
     owner: 'opevied@ning.com',
     contributors: [
       {
-        identifier: 'a62f53c9-42f2-446c-b2da-5afbd80bd672',
+        id: 'a62f53c9-42f2-446c-b2da-5afbd80bd672',
         name: 'Bernardo Hurdwell',
       },
     ],
@@ -216,7 +216,7 @@ export const mockSearchResults: SearchResult[] = [
     owner: 'rmacoune@nsw.gov.au',
     contributors: [
       {
-        identifier: '8fae654c-89b8-4d64-9681-641e63b39e48',
+        id: '8fae654c-89b8-4d64-9681-641e63b39e48',
         name: 'Anny Mandrier',
       },
     ],
@@ -228,15 +228,15 @@ export const mockSearchResults: SearchResult[] = [
     owner: 'hjurekf@apple.com',
     contributors: [
       {
-        identifier: '11da2df8-f48b-4169-8dbd-25a971ce891c',
+        id: '11da2df8-f48b-4169-8dbd-25a971ce891c',
         name: 'Bruno Deabill',
       },
       {
-        identifier: '379ac4ee-f74c-417d-927c-4355b34c8ec9',
+        id: '379ac4ee-f74c-417d-927c-4355b34c8ec9',
         name: 'Andy Edgehill',
       },
       {
-        identifier: 'b3ae69f4-c77b-4678-87fb-51e1da37c070',
+        id: 'b3ae69f4-c77b-4678-87fb-51e1da37c070',
         name: 'Cecile Surmon',
       },
     ],
@@ -248,7 +248,7 @@ export const mockSearchResults: SearchResult[] = [
     owner: 'mandreuzzig@imgur.com',
     contributors: [
       {
-        identifier: '88b832c4-5d45-4e3f-81de-82530ad8f389',
+        id: '88b832c4-5d45-4e3f-81de-82530ad8f389',
         name: 'Brent Regus',
       },
     ],
@@ -260,11 +260,11 @@ export const mockSearchResults: SearchResult[] = [
     owner: 'achurmsh@networksolutions.com',
     contributors: [
       {
-        identifier: 'a9a34fb7-efc8-44a0-9727-e7ebb458931f',
+        id: 'a9a34fb7-efc8-44a0-9727-e7ebb458931f',
         name: 'Abran Buzin',
       },
       {
-        identifier: '29575acf-6d85-49fc-8f6c-8de1bbe24aa9',
+        id: '29575acf-6d85-49fc-8f6c-8de1bbe24aa9',
         name: 'Ennis Knapman',
       },
     ],
@@ -276,7 +276,7 @@ export const mockSearchResults: SearchResult[] = [
     owner: 'kmasseoi@yahoo.co.jp',
     contributors: [
       {
-        identifier: 'd1578023-4e8e-4e2c-9d4e-7011e936ab4b',
+        id: 'd1578023-4e8e-4e2c-9d4e-7011e936ab4b',
         name: 'Francesca Blaxill',
       },
     ],
@@ -288,7 +288,7 @@ export const mockSearchResults: SearchResult[] = [
     owner: 'ashropshirej@slate.com',
     contributors: [
       {
-        identifier: '43394bb6-a9a6-4c44-8106-a77866bc8fd4',
+        id: '43394bb6-a9a6-4c44-8106-a77866bc8fd4',
         name: 'Rudolph Trivett',
       },
     ],
@@ -300,7 +300,7 @@ export const mockSearchResults: SearchResult[] = [
     owner: 'agooderedk@cbsnews.com',
     contributors: [
       {
-        identifier: 'b4db55ea-eb2d-4421-9327-43b73a08e3a3',
+        id: 'b4db55ea-eb2d-4421-9327-43b73a08e3a3',
         name: 'Maxi Morsom',
       },
     ],
@@ -312,15 +312,15 @@ export const mockSearchResults: SearchResult[] = [
     owner: 'emateul@joomla.org',
     contributors: [
       {
-        identifier: '1e089b09-40c9-4e40-9a45-37de290911a2',
+        id: '1e089b09-40c9-4e40-9a45-37de290911a2',
         name: 'Sal Aspenlon',
       },
       {
-        identifier: '324b1262-5139-4278-abae-869d5fa24561',
+        id: '324b1262-5139-4278-abae-869d5fa24561',
         name: 'Joannes Shambroke',
       },
       {
-        identifier: '4fffb939-7506-4ba2-82e5-981b0b7ed428',
+        id: '4fffb939-7506-4ba2-82e5-981b0b7ed428',
         name: 'Benjamin Bowering',
       },
     ],
@@ -332,7 +332,7 @@ export const mockSearchResults: SearchResult[] = [
     owner: 'cacomm@wufoo.com',
     contributors: [
       {
-        identifier: '28586c67-19f9-4cee-bfea-5a057384b6e6',
+        id: '28586c67-19f9-4cee-bfea-5a057384b6e6',
         name: 'Cristi Wadwell',
       },
     ],
@@ -344,7 +344,7 @@ export const mockSearchResults: SearchResult[] = [
     owner: 'wfouracren@shareasale.com',
     contributors: [
       {
-        identifier: 'ec6fd020-9550-4815-9811-c6a9c2c80a12',
+        id: 'ec6fd020-9550-4815-9811-c6a9c2c80a12',
         name: 'Curtis Fitch',
       },
     ],
@@ -356,11 +356,11 @@ export const mockSearchResults: SearchResult[] = [
     owner: 'jpimbleyo@cornell.edu',
     contributors: [
       {
-        identifier: 'eb918407-16fb-44e1-a1ac-32a7837d1f59',
+        id: 'eb918407-16fb-44e1-a1ac-32a7837d1f59',
         name: 'Alberto Kuzma',
       },
       {
-        identifier: 'fa7bd88d-ef62-4380-8fd2-3fec7cf06aff',
+        id: 'fa7bd88d-ef62-4380-8fd2-3fec7cf06aff',
         name: 'Christoffer Blakden',
       },
     ],
@@ -372,7 +372,7 @@ export const mockSearchResults: SearchResult[] = [
     owner: 'sdarycottp@123-reg.co.uk',
     contributors: [
       {
-        identifier: '7f8dbf13-5588-4d99-8b0b-7ecbd1d5064b',
+        id: '7f8dbf13-5588-4d99-8b0b-7ecbd1d5064b',
         name: 'Sharyl Nickoles',
       },
     ],
@@ -384,7 +384,7 @@ export const mockSearchResults: SearchResult[] = [
     owner: 'scohrsq@chronoengine.com',
     contributors: [
       {
-        identifier: '43849abf-d9e7-4532-a35d-cdd3bc704edd',
+        id: '43849abf-d9e7-4532-a35d-cdd3bc704edd',
         name: 'Brittni Sebire',
       },
     ],
@@ -396,11 +396,11 @@ export const mockSearchResults: SearchResult[] = [
     owner: 'mschiellr@typepad.com',
     contributors: [
       {
-        identifier: '4e8fe5ba-fa4d-44c5-b6f0-1adf6ff46c8e',
+        id: '4e8fe5ba-fa4d-44c5-b6f0-1adf6ff46c8e',
         name: 'Amery Roskams',
       },
       {
-        identifier: '698357d8-c588-4e77-b9be-630fcae74d45',
+        id: '698357d8-c588-4e77-b9be-630fcae74d45',
         name: 'Giacomo Bleacher',
       },
     ],
@@ -412,11 +412,11 @@ export const mockSearchResults: SearchResult[] = [
     owner: 'wmanuelys@rakuten.co.jp',
     contributors: [
       {
-        identifier: 'a14b3554-6cd4-4581-a6da-925d58008a4c',
+        id: 'a14b3554-6cd4-4581-a6da-925d58008a4c',
         name: 'Tami Askam',
       },
       {
-        identifier: '0e6ed2e2-5384-4880-8063-d3982de53033',
+        id: '0e6ed2e2-5384-4880-8063-d3982de53033',
         name: 'Heath Greensitt',
       },
     ],
@@ -428,7 +428,7 @@ export const mockSearchResults: SearchResult[] = [
     owner: 'bisacssont@princeton.edu',
     contributors: [
       {
-        identifier: '1aa709b5-27a8-4ee0-ad51-4400007f977f',
+        id: '1aa709b5-27a8-4ee0-ad51-4400007f977f',
         name: 'Huberto McParland',
       },
     ],
@@ -440,19 +440,19 @@ export const mockSearchResults: SearchResult[] = [
     owner: 'ddjorevicu@psu.edu',
     contributors: [
       {
-        identifier: 'd7c2ee83-39f0-4f6d-8ffb-02cfadae688f',
+        id: 'd7c2ee83-39f0-4f6d-8ffb-02cfadae688f',
         name: 'Hendrick Shawe',
       },
       {
-        identifier: '8a57bd4c-630f-415c-bd8a-d2ebd8d089d2',
+        id: '8a57bd4c-630f-415c-bd8a-d2ebd8d089d2',
         name: 'Dorene Ellens',
       },
       {
-        identifier: 'd0186ef1-6f99-4cd7-a5c6-d52e1f9f9ea7',
+        id: 'd0186ef1-6f99-4cd7-a5c6-d52e1f9f9ea7',
         name: 'Butch Izak',
       },
       {
-        identifier: '241383c0-94e6-41cd-a9ab-32172bcbc231',
+        id: '241383c0-94e6-41cd-a9ab-32172bcbc231',
         name: 'Darby Mengo',
       },
     ],
@@ -464,11 +464,11 @@ export const mockSearchResults: SearchResult[] = [
     owner: 'klovejoyv@csmonitor.com',
     contributors: [
       {
-        identifier: 'b2279393-0c1a-4943-a76c-bcc9b2982745',
+        id: 'b2279393-0c1a-4943-a76c-bcc9b2982745',
         name: 'Jenica Pallant',
       },
       {
-        identifier: '135621ef-8c86-4d20-b1f3-43574c919695',
+        id: '135621ef-8c86-4d20-b1f3-43574c919695',
         name: 'Avrit Knowlson',
       },
     ],
@@ -480,7 +480,7 @@ export const mockSearchResults: SearchResult[] = [
     owner: 'tshentonw@house.gov',
     contributors: [
       {
-        identifier: '135621ef-8c86-4d20-b1f3-43574c919695',
+        id: '135621ef-8c86-4d20-b1f3-43574c919695',
         name: 'Avrit Knowlson',
       },
     ],
@@ -492,7 +492,7 @@ export const mockSearchResults: SearchResult[] = [
     owner: 'msharplyx@smugmug.com',
     contributors: [
       {
-        identifier: '135621ef-8c86-4d20-b1f3-43574c919695',
+        id: '135621ef-8c86-4d20-b1f3-43574c919695',
         name: 'Avrit Knowlson',
       },
     ],
@@ -504,7 +504,7 @@ export const mockSearchResults: SearchResult[] = [
     owner: 'jodesony@squidoo.com',
     contributors: [
       {
-        identifier: '135621ef-8c86-4d20-b1f3-43574c919695',
+        id: '135621ef-8c86-4d20-b1f3-43574c919695',
         name: 'Avrit Knowlson',
       },
     ],
@@ -516,7 +516,7 @@ export const mockSearchResults: SearchResult[] = [
     owner: 'asaggsz@cmu.edu',
     contributors: [
       {
-        identifier: '135621ef-8c86-4d20-b1f3-43574c919695',
+        id: '135621ef-8c86-4d20-b1f3-43574c919695',
         name: 'Avrit Knowlson',
       },
     ],
@@ -528,11 +528,11 @@ export const mockSearchResults: SearchResult[] = [
     owner: 'cwieprecht10@blog.com',
     contributors: [
       {
-        identifier: 'd7c2ee83-39f0-4f6d-8ffb-02cfadae688f',
+        id: 'd7c2ee83-39f0-4f6d-8ffb-02cfadae688f',
         name: 'Hendrick Shawe',
       },
       {
-        identifier: '8a57bd4c-630f-415c-bd8a-d2ebd8d089d2',
+        id: '8a57bd4c-630f-415c-bd8a-d2ebd8d089d2',
         name: 'Dorene Ellens',
       },
     ],
@@ -544,11 +544,11 @@ export const mockSearchResults: SearchResult[] = [
     owner: 'edavy11@i2i.jp',
     contributors: [
       {
-        identifier: 'd7c2ee83-39f0-4f6d-8ffb-02cfadae688f',
+        id: 'd7c2ee83-39f0-4f6d-8ffb-02cfadae688f',
         name: 'Hendrick Shawe',
       },
       {
-        identifier: '8a57bd4c-630f-415c-bd8a-d2ebd8d089d2',
+        id: '8a57bd4c-630f-415c-bd8a-d2ebd8d089d2',
         name: 'Dorene Ellens',
       },
     ],
@@ -560,7 +560,7 @@ export const mockSearchResults: SearchResult[] = [
     owner: 'dcathcart12@bizjournals.com',
     contributors: [
       {
-        identifier: 'd7c2ee83-39f0-4f6d-8ffb-02cfadae688f',
+        id: 'd7c2ee83-39f0-4f6d-8ffb-02cfadae688f',
         name: 'Hendrick Shawe',
       },
     ],
@@ -572,7 +572,7 @@ export const mockSearchResults: SearchResult[] = [
     owner: 'kbrimacombe13@prnewswire.com',
     contributors: [
       {
-        identifier: 'd7c2ee83-39f0-4f6d-8ffb-02cfadae688f',
+        id: 'd7c2ee83-39f0-4f6d-8ffb-02cfadae688f',
         name: 'Hendrick Shawe',
       },
     ],
@@ -584,7 +584,7 @@ export const mockSearchResults: SearchResult[] = [
     owner: 'tgrimsdell14@flavors.me',
     contributors: [
       {
-        identifier: '8a57bd4c-630f-415c-bd8a-d2ebd8d089d2',
+        id: '8a57bd4c-630f-415c-bd8a-d2ebd8d089d2',
         name: 'Dorene Ellens',
       },
     ],
@@ -596,7 +596,7 @@ export const mockSearchResults: SearchResult[] = [
     owner: 'mwonfor15@dell.com',
     contributors: [
       {
-        identifier: '8a57bd4c-630f-415c-bd8a-d2ebd8d089d2',
+        id: '8a57bd4c-630f-415c-bd8a-d2ebd8d089d2',
         name: 'Dorene Ellens',
       },
     ],
@@ -608,15 +608,15 @@ export const mockSearchResults: SearchResult[] = [
     owner: 'ceveritt16@google.es',
     contributors: [
       {
-        identifier: '7f8dbf13-5588-4d99-8b0b-7ecbd1d5064b',
+        id: '7f8dbf13-5588-4d99-8b0b-7ecbd1d5064b',
         name: 'Sharyl Nickoles',
       },
       {
-        identifier: '43849abf-d9e7-4532-a35d-cdd3bc704edd',
+        id: '43849abf-d9e7-4532-a35d-cdd3bc704edd',
         name: 'Brittni Sebire',
       },
       {
-        identifier: '4e8fe5ba-fa4d-44c5-b6f0-1adf6ff46c8e',
+        id: '4e8fe5ba-fa4d-44c5-b6f0-1adf6ff46c8e',
         name: 'Amery Roskams',
       },
     ],
@@ -628,15 +628,15 @@ export const mockSearchResults: SearchResult[] = [
     owner: 'lbarniss17@slate.com',
     contributors: [
       {
-        identifier: '7f8dbf13-5588-4d99-8b0b-7ecbd1d5064b',
+        id: '7f8dbf13-5588-4d99-8b0b-7ecbd1d5064b',
         name: 'Sharyl Nickoles',
       },
       {
-        identifier: '43849abf-d9e7-4532-a35d-cdd3bc704edd',
+        id: '43849abf-d9e7-4532-a35d-cdd3bc704edd',
         name: 'Brittni Sebire',
       },
       {
-        identifier: '4e8fe5ba-fa4d-44c5-b6f0-1adf6ff46c8e',
+        id: '4e8fe5ba-fa4d-44c5-b6f0-1adf6ff46c8e',
         name: 'Amery Roskams',
       },
     ],
@@ -648,11 +648,11 @@ export const mockSearchResults: SearchResult[] = [
     owner: 'dgawthrop18@bloglovin.com',
     contributors: [
       {
-        identifier: '7f8dbf13-5588-4d99-8b0b-7ecbd1d5064b',
+        id: '7f8dbf13-5588-4d99-8b0b-7ecbd1d5064b',
         name: 'Sharyl Nickoles',
       },
       {
-        identifier: '43849abf-d9e7-4532-a35d-cdd3bc704edd',
+        id: '43849abf-d9e7-4532-a35d-cdd3bc704edd',
         name: 'Brittni Sebire',
       },
     ],
@@ -664,11 +664,11 @@ export const mockSearchResults: SearchResult[] = [
     owner: 'pfiggs19@photobucket.com',
     contributors: [
       {
-        identifier: '7f8dbf13-5588-4d99-8b0b-7ecbd1d5064b',
+        id: '7f8dbf13-5588-4d99-8b0b-7ecbd1d5064b',
         name: 'Sharyl Nickoles',
       },
       {
-        identifier: '43849abf-d9e7-4532-a35d-cdd3bc704edd',
+        id: '43849abf-d9e7-4532-a35d-cdd3bc704edd',
         name: 'Brittni Sebire',
       },
     ],
@@ -680,7 +680,7 @@ export const mockSearchResults: SearchResult[] = [
     owner: 'sumpleby1a@webnode.com',
     contributors: [
       {
-        identifier: '43849abf-d9e7-4532-a35d-cdd3bc704edd',
+        id: '43849abf-d9e7-4532-a35d-cdd3bc704edd',
         name: 'Brittni Sebire',
       },
     ],
@@ -692,11 +692,11 @@ export const mockSearchResults: SearchResult[] = [
     owner: 'jpantlin1b@abc.net.au',
     contributors: [
       {
-        identifier: 'ec6fd020-9550-4815-9811-c6a9c2c80a12',
+        id: 'ec6fd020-9550-4815-9811-c6a9c2c80a12',
         name: 'Curtis Fitch',
       },
       {
-        identifier: 'eb918407-16fb-44e1-a1ac-32a7837d1f59',
+        id: 'eb918407-16fb-44e1-a1ac-32a7837d1f59',
         name: 'Alberto Kuzma',
       },
     ],
@@ -708,11 +708,11 @@ export const mockSearchResults: SearchResult[] = [
     owner: 'bkeel1c@whitehouse.gov',
     contributors: [
       {
-        identifier: 'ec6fd020-9550-4815-9811-c6a9c2c80a12',
+        id: 'ec6fd020-9550-4815-9811-c6a9c2c80a12',
         name: 'Curtis Fitch',
       },
       {
-        identifier: 'eb918407-16fb-44e1-a1ac-32a7837d1f59',
+        id: 'eb918407-16fb-44e1-a1ac-32a7837d1f59',
         name: 'Alberto Kuzma',
       },
     ],
@@ -724,7 +724,7 @@ export const mockSearchResults: SearchResult[] = [
     owner: 'hbowmaker1d@independent.co.uk',
     contributors: [
       {
-        identifier: 'eb918407-16fb-44e1-a1ac-32a7837d1f59',
+        id: 'eb918407-16fb-44e1-a1ac-32a7837d1f59',
         name: 'Alberto Kuzma',
       },
     ],

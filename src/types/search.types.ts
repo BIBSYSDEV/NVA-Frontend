@@ -1,7 +1,7 @@
 import { PublicationDate } from './publication.types';
 
 interface SearchResultContributor {
-  identifier: string;
+  id?: string;
   name: string;
 }
 
