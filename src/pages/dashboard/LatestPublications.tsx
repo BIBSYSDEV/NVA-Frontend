@@ -23,8 +23,8 @@ const LatestPublications: FC = () => {
   const [publications, isLoadingPublications] = useFetchLatestPublications();
 
   return (
-    <StyledListContainer data-testid="newest-publications">
-      <Heading>{t('publication.newest_publications')}</Heading>
+    <StyledListContainer data-testid="latest-publications">
+      <Heading>{t('publication.latest_publications')}</Heading>
       <Divider />
       {isLoadingPublications ? (
         <StyledProgressWrapper>
