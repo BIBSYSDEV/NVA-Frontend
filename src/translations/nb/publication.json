@@ -68,7 +68,7 @@
       "no_open_publishment": "Unit har ingen avtale om åpen publisering med utgiver av valgt tidsskrift",
       "open_access": "Open Access",
       "open_publishment": "Unit har inngått avtale om åpen publisering av valgt tidsskrift",
-      "title": "Informasjon fra register over vitenskapelige publiseringskanaler"
+      "title": "Informasjon fra Register over vitenskapelige publiseringskanaler"
     },
     "license": "Lisens",
     "licenses": "Lisenser",
@@ -131,7 +131,7 @@
     "number_of_pages": "Totalt antall sider",
     "nvi_header": "Norsk vitenskapsindeks - NVI",
     "nvi_success": "Denne publikasjonen kan inngå i NVI",
-    "nvi_fail_not_rated": "Denne publikajsonen kan ikke inngå i NVI, da valgt tidsskrift er ikke på nivå 1 eller 2. \n\n(Tidsskriftets nivå i Kanalregisteret kan bli endret, slik at publikasjonen likevel kan inngå i NVI)",
+    "nvi_fail_not_rated": "Denne publikajsonen kan ikke inngå i NVI, da valgt tidsskrift er ikke på nivå 1 eller 2. \n\n(Tidsskriftets nivå kan bli endret, slik at publikasjonen likevel kan inngå i NVI)",
     "nvi_fail_no_peer_review": "Denne publikasjonen kan ikke inngå i NVI, da den ikke er fagfellevurdert.",
     "or": "Eller",
     "pages": "Sidetall",

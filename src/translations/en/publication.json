@@ -131,7 +131,7 @@
     "number_of_pages": "Total number of pages",
     "nvi_header": "Norwegian Scientific Index - NVI",
     "nvi_success": "This publication can be included in NVI",
-    "nvi_fail_not_rated": "This publication can not be included in NVI, since selected journal is not at level 1 or 2. \n\n(The journal's level may be changed in the Publication Channel Registry, so the publication can ble included in NVI)",
+    "nvi_fail_not_rated": "This publication can not be included in NVI, since selected journal is not at level 1 or 2. \n\n(The journal's level may be changed, so the publication can ble included in NVI)",
     "nvi_fail_no_peer_review": "This publication can not be incuded in NVI, since it's not peer reviewed.",
     "or": "Or",
     "pages": "Pages",
