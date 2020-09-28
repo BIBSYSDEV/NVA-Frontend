@@ -3,17 +3,17 @@ import { Accordion, AccordionSummary, AccordionDetails, Button, TextField } from
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Link as RouterLink } from 'react-router-dom';
 import styled from 'styled-components';
-
-import { DoiRequest } from '../../types/doiRequest.types';
-import Label from '../../components/Label';
 import { useTranslation } from 'react-i18next';
-import { PublicationTab } from '../../types/publication.types';
+
+import Label from '../../components/Label';
+import { PublicationTab, Publication } from '../../types/publication.types';
+import MessageList from './MessageList';
 
 const StyledAccordion = styled(Accordion)`
   .MuiAccordionSummary-content {
     display: grid;
     grid-template-areas: 'status title creator';
-    grid-template-columns: 1fr 13fr 3fr;
+    grid-template-columns: 1fr 5fr 1fr;
     grid-column-gap: 1rem;
   }
 
@@ -62,24 +62,31 @@ const StyledAccordionActionButtons = styled.div`
 `;
 
 interface DoiRequestAccordionProps {
-  doiRequest: DoiRequest;
+  publication: Publication;
 }
 
-export const DoiRequestAccordion: FC<DoiRequestAccordionProps> = ({ doiRequest }) => {
+export const DoiRequestAccordion: FC<DoiRequestAccordionProps> = ({ publication }) => {
   const { t } = useTranslation('workLists');
+  const {
+    identifier,
+    owner,
+    entityDescription: { mainTitle },
+  } = publication;
+  const doiRequest = publication.doiRequest!;
 
   return (
-    <StyledAccordion data-testid={`doi-request-${doiRequest.publicationIdentifier}`}>
+    <StyledAccordion data-testid={`doi-request-${identifier}`}>
       <AccordionSummary expandIcon={<ExpandMoreIcon fontSize="large" />}>
-        <StyledStatus>{doiRequest.doiRequestStatus}</StyledStatus>
-        <StyledTitle>{doiRequest.publicationTitle}</StyledTitle>
+        <StyledStatus>{t(`doi_requests.status.${doiRequest.status}`)}</StyledStatus>
+        <StyledTitle>{mainTitle}</StyledTitle>
         <StyledOwner>
-          <Label>{doiRequest.publicationCreator}</Label>
-          {doiRequest.doiRequestDate}
+          <Label>{owner}</Label>
+          {new Date(doiRequest.date).toLocaleDateString()}
         </StyledOwner>
       </AccordionSummary>
       <AccordionDetails>
         <StyledMessages>
+          <MessageList messages={doiRequest.messages} />
           <TextField
             variant="outlined"
             fullWidth
@@ -94,10 +101,10 @@ export const DoiRequestAccordion: FC<DoiRequestAccordionProps> = ({ doiRequest }
         </StyledMessages>
         <StyledAccordionActionButtons>
           <Button
-            data-testid={`go-to-publication-${doiRequest.publicationIdentifier}`}
+            data-testid={`go-to-publication-${identifier}`}
             variant="outlined"
             component={RouterLink}
-            to={`/publication/${doiRequest.publicationIdentifier}?tab=${PublicationTab.Submission}`}>
+            to={`/publication/${identifier}?tab=${PublicationTab.Submission}`}>
             {t('doi_requests.go_to_publication')}
           </Button>
           <Button variant="contained" color="primary" disabled>

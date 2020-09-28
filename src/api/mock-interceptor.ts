@@ -10,9 +10,7 @@ import mockNtnuResponse from '../utils/testfiles/institutions/institution_ntnu.j
 import mockNtnuSubunitResponse from '../utils/testfiles/institutions/institution_subunit_ntnu.json';
 import mockAuthoritiesResponse from '../utils/testfiles/mock_authorities_response.json';
 import mockProjects from '../utils/testfiles/projects_real.json';
-import { mockPublication } from '../utils/testfiles/mockPublication';
-import mockSearchResults from '../utils/testfiles/search_results.json';
-import threeMockSearchResults from '../utils/testfiles/three_search_results.json';
+import { mockPublication, publicationsWithPendingDoiRequest } from '../utils/testfiles/mockPublication';
 import mockMyPublications from '../utils/testfiles/my_publications.json';
 import mockNsdPublisers from '../utils/testfiles/publishersFromNsd.json';
 import { mockCustomerInstitutions, mockCustomerInstitution } from '../utils/testfiles/mockCustomerInstitutions';
@@ -27,8 +25,9 @@ import { CustomerInstitutionApiPaths } from './customerInstitutionsApi';
 import { emptyPublication } from '../types/publication.types';
 import { mockRoles } from '../utils/testfiles/mock_feide_user';
 import { RoleApiPaths } from './roleApi';
-import { mockDoiRequests } from '../utils/testfiles/mockDoiRequest';
 import { DoiRequestApiPaths } from './doiRequestApi';
+import { mockSearchResults } from '../utils/testfiles/search_results';
+import { threeMockSearchResults } from '../utils/testfiles/three_search_results';
 
 const mockOrcidResponse: OrcidResponse = {
   id: 'https://sandbox.orcid.org/0000-0001-2345-6789',
@@ -102,7 +101,7 @@ export const interceptRequestsOnMock = () => {
   mock.onGet(new RegExp(`${PublicationsApiPaths.PUBLICATIONS_BY_OWNER}/*`)).reply(200, mockMyPublications);
 
   // WORKLIST
-  mock.onGet(new RegExp(`${DoiRequestApiPaths.DOI_REQUEST}/*`)).reply(200, mockDoiRequests);
+  mock.onGet(new RegExp(`${DoiRequestApiPaths.DOI_REQUEST}/*`)).reply(200, publicationsWithPendingDoiRequest);
   mock.onGet(new RegExp(`${PublicationsApiPaths.FOR_APPROVAL}/*`)).reply(200, mockMyPublications.publications);
 
   //PUBLICATION

@@ -4,7 +4,12 @@
     "doi_requests": "DOI-forespørsler",
     "go_to_publication": "Gå til publikasjon",
     "message_to_user": "Melding til bruker",
-    "no_pending_doi_requests": "Du har ingen ventende DOI-forespørsler"
+    "no_pending_doi_requests": "Du har ingen ventende DOI-forespørsler",
+    "status": {
+      "APPROVED": "Godkjent",
+      "REJECTED": "Avvist",
+      "REQUESTED": "Under behandling"
+    }
   },
   "delete_publication_heading": "Slett publikasjon",
   "delete_publication_message": "Bekreft sletting av ",
