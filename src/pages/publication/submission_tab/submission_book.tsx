@@ -22,7 +22,7 @@ const SubmissionBook: FC = () => {
         {publicationInstance.peerReviewed ? t('common:yes') : t('common:no')}
       </LabelContentRow>
       <LabelContentRow label={t('references.is_book_a_textbook')}>
-        {publicationInstance.isTextbook ? t('common:yes') : t('common:no')}
+        {publicationInstance.textbookContent ? t('common:yes') : t('common:no')}
       </LabelContentRow>
       <LabelContentRow label={t('references.series')}>{publicationContext?.seriesTitle}</LabelContentRow>
       <LabelContentRow label={t('references.isbn')}>{publicationContext?.isbnList?.join(', ')}</LabelContentRow>

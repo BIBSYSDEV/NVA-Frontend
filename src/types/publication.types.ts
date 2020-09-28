@@ -61,10 +61,17 @@ export enum DoiRequestStatus {
   Requested = 'REQUESTED',
 }
 
+export interface DoiRequestMessage {
+  text: string;
+  author: string;
+  timestamp: string;
+}
+
 interface DoiRequest {
   type: string;
   date: string;
   status: DoiRequestStatus;
+  messages: DoiRequestMessage[];
 }
 
 interface BasePublication extends BackendType, PublicationFileSet {
