@@ -1,9 +1,10 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { Link as MuiLink } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import LatestPublications from './LatestPublications';
+import SearchBar from '../../components/SearchBar';
 
 const StyledDashboard = styled.div`
   display: grid;
@@ -11,6 +12,8 @@ const StyledDashboard = styled.div`
   grid-template-rows: auto auto;
   row-gap: 1rem;
   justify-items: center;
+  padding-top: 4rem;
+  width: 100%;
 `;
 
 const StyledOtherContent = styled.div`
@@ -26,7 +29,7 @@ const StyledLinks = styled.div`
 
 const StyledSearchBarContainer = styled.div`
   grid-area: search-bar;
-  width: 35rem;
+  width: 100%;
   @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
     width: 90%;
   }
@@ -34,10 +37,18 @@ const StyledSearchBarContainer = styled.div`
 
 const Dashboard: FC = () => {
   const { t } = useTranslation();
+  const history = useHistory();
+
+  const handleSearch = async (searchTerm: string) => {
+    if (searchTerm.length) {
+      history.push(`/search?query=${searchTerm}`);
+    }
+  };
 
   return (
     <StyledDashboard>
       <StyledSearchBarContainer>
+        <SearchBar handleSearch={handleSearch} initialSearchTerm="" />
         <LatestPublications />
       </StyledSearchBarContainer>
       <StyledOtherContent>
