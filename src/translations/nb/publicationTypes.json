@@ -1,8 +1,8 @@
 {
   "Book": "Bokpublikasjon",
   "BookAnthology": "Antologi",
-  "BookMonograph": "Monograf",
-  "Chapter": "Kapittel",
+  "BookMonograph": "Monografi",
+  "BookChapter": "Kapittel i antologi",
   "Degree": "Grad",
   "DegreeBachelor": "Bachelorgrad",
   "DegreeMaster": "Mastergrad",

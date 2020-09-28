@@ -2,7 +2,7 @@
   "Book": "Book",
   "BookAnthology": "Anthology",
   "BookMonograph": "Monograph",
-  "Chapter": "Chapter",
+  "BookChapter": "Chapter in anthology",
   "Degree": "Degree",
   "DegreeBachelor": "Bachelor",
   "DegreeMaster": "Master",
