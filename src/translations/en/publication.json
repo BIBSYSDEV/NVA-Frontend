@@ -104,9 +104,9 @@
     "requested_doi": "Waiting for DOI..."
   },
   "publication": {
+    "latest_publications": "Latest publications",
     "link_to_resource": "Link to resource",
     "link_to_resource_description": "E.g. DOI, link to article, link to video of presentation etc.",
-    "newest_publications": "Newest publications",
     "no_published_publications_yet": "There are no published publications yet",
     "start_with_link_to_resource": "Link to original version if the resource already have been published on the Internet",
     "start_with_uploading_file": "Upload file if the resource is to be published om the Internet for the first time"
