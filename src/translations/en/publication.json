@@ -104,13 +104,12 @@
     "requested_doi": "Waiting for DOI..."
   },
   "publication": {
-    "info_text": "Select the resource you wish to register or publish by uploading a resource or link to a publication.",
-    "link_publication_description": "E.g. DOI link, link to article, link to video of lecture etc.",
-    "link_to_publication": "Link to publication",
-    "load_file": "Load file",
     "latest_publications": "Latest publications",
+    "link_to_resource": "Link to resource",
+    "link_to_resource_description": "E.g. DOI, link to article, link to video of presentation etc.",
     "no_published_publications_yet": "There are no published publications yet",
-    "start_with_link_to_publication": "Start with a link to a publication"
+    "start_with_link_to_resource": "Link to original version if the resource already has been published on the Internet",
+    "start_with_uploading_file": "Upload file if the resource is to be published on the Internet for the first time"
   },
   "references": {
     "article_number": "Article number",
