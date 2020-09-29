@@ -90,7 +90,7 @@
     "publication": "Publikasjon",
     "publish_settings": "Publiseringsvalg",
     "publishing": "Publiser",
-    "references": "Referanser",
+    "reference": "Referanse",
     "registration": "Registrer",
     "summary": "Oppsummering",
     "validation_errors": "Valideringsfeil"
@@ -127,7 +127,7 @@
     "issue": "Hefte",
     "journal": "Tidsskrift",
     "journal_not_found": "Finner du ikke tidsskriftet?",
-    "level": "Nivå i NPI",
+    "level": "Nivå i Norsk publiseringsindikator",
     "number_of_pages": "Totalt antall sider",
     "nvi_header": "Norsk vitenskapsindeks - NVI",
     "nvi_success": "Denne publikasjonen kan inngå i NVI",
