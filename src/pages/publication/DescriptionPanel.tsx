@@ -113,8 +113,8 @@ const DescriptionPanel: FC<PanelProps> = ({ setTouchedFields }) => {
                 renderInput={(params) => (
                   <MuiTextField
                     {...params}
-                    label={t('description.tags')}
-                    helperText={t('description.tags_helper')}
+                    label={t('description.keywords')}
+                    helperText={t('description.keywords_helper')}
                     variant="outlined"
                     fullWidth
                   />

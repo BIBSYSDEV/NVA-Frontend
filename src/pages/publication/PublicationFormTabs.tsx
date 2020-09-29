@@ -56,8 +56,8 @@ export const PublicationFormTabs: FC<PublicationFormTabsProps> = ({ handleTabCha
         error={hasTouchedError(errors, touched, descriptionFieldNames)}
       />
       <LinkTab
-        label={t('heading.references')}
-        {...a11yProps('references')}
+        label={t('heading.reference')}
+        {...a11yProps('reference')}
         error={hasTouchedError(errors, touched, referenceFieldNames)}
       />
       <LinkTab
