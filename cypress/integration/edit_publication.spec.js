@@ -17,7 +17,7 @@ describe('User opens an item in the My Publication list', () => {
     );
 
     // Reference tab
-    cy.get('[data-testid=nav-tabpanel-references]').click({ force: true });
+    cy.get('[data-testid=nav-tabpanel-reference]').click({ force: true });
     cy.contains('Contribution to Journal');
 
     // Contributors tab
