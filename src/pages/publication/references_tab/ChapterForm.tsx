@@ -1,7 +1,7 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Field, FieldProps, FormikProps, useFormikContext } from 'formik';
-import { TextField } from '@material-ui/core';
+import { TextField, Typography, Button } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
 import styled from 'styled-components';
 import RemoveIcon from '@material-ui/icons/Remove';
@@ -11,6 +11,9 @@ import DoiField from './components/DoiField';
 import { ChapterPublication } from '../../../types/publication.types';
 import PeerReview from './components/PeerReview';
 import { ChapterEntityDescription } from '../../../types/publication_types/bookPublication.types';
+import AutoSearch from '../../../components/AutoSearch';
+import useSearchPublications from '../../../utils/hooks/useSearchPublications';
+import Card from '../../../components/Card';
 
 const StyledInfoBox = styled.div`
   margin-top: 1rem;
@@ -43,13 +46,45 @@ const StyledPageNumberField = styled(TextField)`
   width: 10rem;
 `;
 
+const StyledCard = styled(Card)`
+  display: grid;
+  grid-template-areas: 'title textbook .' 'publisher level button';
+  grid-template-columns: 2fr 2fr 1fr;
+  gap: 1rem;
+`;
+
+const StyledTitle = styled.div`
+  grid-area: title;
+`;
+
+const StyledTextBook = styled.div`
+  grid-area: textbook;
+  align-self: end;
+`;
+
+const StyledPublisher = styled.div`
+  grid-area: publisher;
+`;
+
+const StyledLevel = styled.div`
+  grid-area: level;
+`;
+
+const StyledButtonWrapper = styled.div`
+  grid-area: button;
+  justify-self: end;
+  align-self: end;
+`;
+
 const ChapterForm: FC = () => {
   const { t } = useTranslation('publication');
-  const { setFieldValue, touched, values }: FormikProps<ChapterPublication> = useFormikContext();
+  const [searchTerm, setSearchTerm] = useState('');
+  const [publications] = useSearchPublications(searchTerm); // TODO: filter by Book
+  const { values }: FormikProps<ChapterPublication> = useFormikContext();
   const {
     reference: {
-      publicationContext: { linkedContext },
-      publicationInstance: { peerReviewed, textbookContent, type },
+      // publicationContext: { linkedContext }, TODO: show linkedContext
+      publicationInstance: { peerReviewed },
     },
   } = values.entityDescription as ChapterEntityDescription;
 
@@ -61,6 +96,59 @@ const ChapterForm: FC = () => {
       </StyledInfoBox>
 
       <DoiField />
+
+      <Field name={ReferenceFieldNames.LINKED_CONTEXT}>
+        {({ field: { name, value }, form: { setFieldValue }, meta: { error } }: FieldProps) => (
+          <>
+            <AutoSearch
+              clearSearchField
+              dataTestId="search-for-book"
+              onInputChange={(value) => setSearchTerm(value)}
+              searchResults={publications}
+              setValueFunction={(value) => {
+                console.log('value', value);
+                setFieldValue(name, value);
+                // todo: lookup this publication to find textBookContent, publisher, level, ISBN
+              }}
+              label="search for book"
+              placeholder="search for book"
+              errorMessage={error}
+            />
+
+            {value && (
+              <StyledCard data-testid="autosearch-results-book">
+                <StyledTitle>
+                  <Typography>{t('common:title')}</Typography>
+                  <Typography variant="h4">{value.title}</Typography>
+                </StyledTitle>
+                <StyledTextBook>
+                  <Typography>Lærebok</Typography>
+                  <Typography variant="h6">Ja, boken er en lærebok</Typography>
+                </StyledTextBook>
+                <StyledPublisher>
+                  <Typography>Publisher</Typography>
+                  <Typography variant="h6">Cappelen</Typography>
+                </StyledPublisher>
+                <StyledLevel>
+                  <Typography>Level</Typography>
+                  <Typography variant="h6">1</Typography>
+                </StyledLevel>
+                <StyledButtonWrapper>
+                  <Button
+                    data-testid="remove-book"
+                    variant="contained"
+                    color="secondary"
+                    onClick={() => {
+                      setFieldValue(name, '');
+                    }}>
+                    {t('common:remove')}
+                  </Button>
+                </StyledButtonWrapper>
+              </StyledCard>
+            )}
+          </>
+        )}
+      </Field>
 
       {/* TODO <BookSearch /> */}
 
@@ -94,7 +182,7 @@ const ChapterForm: FC = () => {
         </Field>
       </StyledPageNumberWrapper>
 
-      <NviValidation isPeerReviewed={peerReviewed} isRated={!!textbookContent} dataTestId="nvi-chapter" />
+      <NviValidation isPeerReviewed={peerReviewed} isRated={false} dataTestId="nvi-chapter" />
     </>
   );
 };
