@@ -2,12 +2,12 @@ import { Auth } from 'aws-amplify';
 import { CognitoUserSession } from 'amazon-cognito-identity-js';
 import { Dispatch } from 'redux';
 import i18n from '../translations/i18n';
-import { USE_MOCK_DATA } from '../utils/constants';
+import { USE_MOCK_DATA, AMPLIFY_REDIRECTED_KEY } from '../utils/constants';
 import { setNotification } from '../redux/actions/notificationActions';
 import { NotificationVariant } from '../types/notification.types';
 
 export const getCurrentUserAttributes = async () => {
-  const loggedIn = localStorage.getItem('amplify-signin-with-hostedUI');
+  const loggedIn = localStorage.getItem(AMPLIFY_REDIRECTED_KEY);
   try {
     const cognitoUser = await Auth.currentAuthenticatedUser();
     const loggedInUser = await cognitoUser?.getSession(async (error: any, session: CognitoUserSession) => {
