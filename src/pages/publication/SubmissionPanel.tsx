@@ -112,7 +112,7 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication, 
           <SubmissionDescription />
         </Card>
         <Card>
-          <Typography variant="h5">{t('heading.references')}</Typography>
+          <Typography variant="h5">{t('heading.reference')}</Typography>
           <LabelContentRow label={t('common:type')}>
             {publicationContextType && t(`publicationTypes:${publicationContextType}`)}
           </LabelContentRow>

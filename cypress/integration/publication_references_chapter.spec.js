@@ -11,7 +11,7 @@ describe.skip('Publication: References: Chapter', () => {
 
     cy.startPublicationWithDoi();
 
-    cy.get('[data-testid=nav-tabpanel-references]').click({ force: true });
+    cy.get('[data-testid=nav-tabpanel-reference]').click({ force: true });
 
     // choose Report type
     cy.get('[data-testid=publication-context-type]').click({ force: true }).type(' '); //makes the select options open
