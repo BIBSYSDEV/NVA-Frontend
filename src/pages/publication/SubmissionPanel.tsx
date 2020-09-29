@@ -117,7 +117,7 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication, 
             {publicationContextType && t(`publicationTypes:${publicationContextType}`)}
           </LabelContentRow>
           {reference.doi && (
-            <LabelContentRow label={t('publication.link_to_publication')}>{reference.doi}</LabelContentRow>
+            <LabelContentRow label={t('publication.link_to_resource')}>{reference.doi}</LabelContentRow>
           )}
           {publicationContextType === PublicationType.DEGREE && <SubmissionDegree />}
           {publicationContextType === PublicationType.BOOK && <SubmissionBook />}
