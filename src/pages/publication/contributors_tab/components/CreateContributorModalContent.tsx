@@ -93,7 +93,12 @@ const CreateContributorModalContent: FC<CreateContributorModalContentProps> = ({
                 )}
               </Field>
               <StyledButtonContainer>
-                <Button type="submit" color="primary" variant="contained" disabled={!isValid || !dirty || isSubmitting}>
+                <Button
+                  data-testid="button-create-authority"
+                  type="submit"
+                  color="primary"
+                  variant="contained"
+                  disabled={!isValid || !dirty || isSubmitting}>
                   {t('create_authority')}
                 </Button>
               </StyledButtonContainer>
