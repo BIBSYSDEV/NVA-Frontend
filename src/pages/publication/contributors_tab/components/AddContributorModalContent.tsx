@@ -53,7 +53,6 @@ const AddContributorModalContent: FC<AddContributorModalContentProps> = ({ addAu
               color="primary"
               data-testid="connect-author-button"
               disabled={!selectedAuthor}
-              data-testid={`button-add-author-${selectedAuthor}`}
               onClick={() => selectedAuthor && addAuthor(selectedAuthor)}
               size="large"
               variant="contained">
