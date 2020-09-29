@@ -114,6 +114,8 @@
   },
   "references": {
     "article_number": "Artikkelnummer",
+    "book_is_textbook": "Boken er registrert som lærebok",
+    "chapter_is_published_in": "Kapittelet er publisert i boken:",
     "delete_doi_title": "Endre type?",
     "delete_doi_text": "Om du fjerner lenke til publikasjonen vil du endre fra registrering til publisering. Ønsker du å fortsette?",
     "is_book_a_textbook": "Er boken en lærebok?",
@@ -140,6 +142,7 @@
     "peer_review": "Er publikasjonen fagfellevurdert?",
     "peer_reviewed": "Fagfellevurdert",
     "remove": "Fjern",
+    "search_for_book": "Søk etter bok",
     "search_for_journal": "Søk etter tidsskrift",
     "search_for_publisher": "Søk etter utgiver",
     "search_for_series": "Søk etter serie",

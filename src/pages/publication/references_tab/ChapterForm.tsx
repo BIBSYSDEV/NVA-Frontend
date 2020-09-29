@@ -8,12 +8,13 @@ import RemoveIcon from '@material-ui/icons/Remove';
 import { ReferenceFieldNames } from '../../../types/publicationFieldNames';
 import NviValidation from './components/NviValidation';
 import DoiField from './components/DoiField';
-import { ChapterPublication } from '../../../types/publication.types';
+import { ChapterPublication, BookPublication, levelMap } from '../../../types/publication.types';
 import PeerReview from './components/PeerReview';
 import { ChapterEntityDescription } from '../../../types/publication_types/bookPublication.types';
 import AutoSearch from '../../../components/AutoSearch';
 import useSearchPublications from '../../../utils/hooks/useSearchPublications';
 import Card from '../../../components/Card';
+import useFetchPublication from '../../../utils/hooks/useFetchPublication';
 
 const StyledInfoBox = styled.div`
   margin-top: 1rem;
@@ -83,10 +84,14 @@ const ChapterForm: FC = () => {
   const { values }: FormikProps<ChapterPublication> = useFormikContext();
   const {
     reference: {
-      // publicationContext: { linkedContext }, TODO: show linkedContext
+      publicationContext: { linkedContext },
       publicationInstance: { peerReviewed },
     },
   } = values.entityDescription as ChapterEntityDescription;
+  const [publication] = useFetchPublication(linkedContext ?? '');
+  const book = publication as BookPublication;
+  const level = book?.entityDescription.reference.publicationContext.level;
+  const publisherLevel = typeof level === 'string' ? levelMap[level] : level;
 
   return (
     <>
@@ -98,7 +103,7 @@ const ChapterForm: FC = () => {
       <DoiField />
 
       <Field name={ReferenceFieldNames.LINKED_CONTEXT}>
-        {({ field: { name, value }, form: { setFieldValue }, meta: { error } }: FieldProps) => (
+        {({ field: { name }, form: { setFieldValue }, meta: { error } }: FieldProps) => (
           <>
             <AutoSearch
               clearSearchField
@@ -106,32 +111,31 @@ const ChapterForm: FC = () => {
               onInputChange={(value) => setSearchTerm(value)}
               searchResults={publications}
               setValueFunction={(value) => {
-                console.log('value', value);
-                setFieldValue(name, value);
-                // todo: lookup this publication to find textBookContent, publisher, level, ISBN
+                setFieldValue(name, value.id);
               }}
-              label="search for book"
-              placeholder="search for book"
+              label={t('references.chapter_is_published_in')}
+              placeholder={t('references.search_for_book')}
               errorMessage={error}
             />
 
-            {value && (
+            {book && (
               <StyledCard data-testid="autosearch-results-book">
                 <StyledTitle>
                   <Typography>{t('common:title')}</Typography>
-                  <Typography variant="h4">{value.title}</Typography>
+                  <Typography variant="h4">{book.entityDescription.mainTitle}</Typography>
                 </StyledTitle>
                 <StyledTextBook>
-                  <Typography>Lærebok</Typography>
-                  <Typography variant="h6">Ja, boken er en lærebok</Typography>
+                  {book.entityDescription.reference.publicationInstance.textbookContent && (
+                    <Typography variant="h6">{t('references.book_is_textbook')}</Typography>
+                  )}
                 </StyledTextBook>
                 <StyledPublisher>
-                  <Typography>Publisher</Typography>
-                  <Typography variant="h6">Cappelen</Typography>
+                  <Typography>{t('common:publisher')}</Typography>
+                  <Typography variant="h6">{book.entityDescription.reference.publicationContext.publisher}</Typography>
                 </StyledPublisher>
                 <StyledLevel>
-                  <Typography>Level</Typography>
-                  <Typography variant="h6">1</Typography>
+                  <Typography>{t('references.level')}</Typography>
+                  <Typography variant="h6">{publisherLevel}</Typography>
                 </StyledLevel>
                 <StyledButtonWrapper>
                   <Button
@@ -149,8 +153,6 @@ const ChapterForm: FC = () => {
           </>
         )}
       </Field>
-
-      {/* TODO <BookSearch /> */}
 
       <PeerReview fieldName={ReferenceFieldNames.PEER_REVIEW} label={t('references.peer_review')} />
 

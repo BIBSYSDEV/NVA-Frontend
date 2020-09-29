@@ -114,6 +114,8 @@
   },
   "references": {
     "article_number": "Article number",
+    "book_is_textbook": "The book is registered as a textbook",
+    "chapter_is_published_in": "The Chapter is published in book:",
     "delete_doi_title": "Change type?",
     "delete_doi_text": "Removing the link to the publication will change it from a registration to a new publication. Do you want to continue?",
     "is_book_a_textbook": "Is the book a textbook?",
@@ -140,6 +142,7 @@
     "peer_review": "Is the publication peer reviewed?",
     "peer_reviewed": "Peer reviewed",
     "remove": "Remove",
+    "search_for_book": "Search for book",
     "search_for_journal": "Search for journals",
     "search_for_publisher": "Search for publisher",
     "search_for_series": "Search for series",
