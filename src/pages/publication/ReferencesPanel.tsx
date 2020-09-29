@@ -11,7 +11,6 @@ import {
   instanceTypeBaseFieldName,
 } from '../../types/publicationFieldNames';
 import BookForm from './references_tab/BookForm';
-// import ChapterForm from './references_tab/ChapterForm';
 import DegreeForm from './references_tab/DegreeForm';
 import JournalForm from './references_tab/JournalForm';
 import ReportForm from './references_tab/ReportForm';
@@ -102,7 +101,6 @@ const ReferencesPanel: FC<PanelProps> = ({ setTouchedFields }) => {
             {t(`publicationTypes:${publicationContextType}`)}
           </Typography>
           {publicationContextType === PublicationType.BOOK && <BookForm />}
-          {/* {publicationContextType === PublicationType.CHAPTER && <ChapterForm />} */}
           {publicationContextType === PublicationType.REPORT && <ReportForm />}
           {publicationContextType === PublicationType.DEGREE && <DegreeForm />}
           {publicationContextType === PublicationType.PUBLICATION_IN_JOURNAL && <JournalForm />}

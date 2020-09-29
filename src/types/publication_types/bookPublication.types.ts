@@ -69,7 +69,7 @@ export const emptyChapterPublicationInstance: ChapterPublicationInstance = {
 };
 
 interface ChapterPublicationContext {
-  type: PublicationType.CHAPTER;
+  type: 'Chapter';
   linkedContext: string;
 }
 
