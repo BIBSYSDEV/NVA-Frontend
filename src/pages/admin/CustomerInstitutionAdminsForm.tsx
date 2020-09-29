@@ -45,7 +45,11 @@ const CustomerInstitutionAdminsForm: FC<CustomerInstitutionAdminsFormProps> = ({
             roleToRemove={RoleName.INSTITUTION_ADMIN}
             refetchUsers={refetchInstitutionUsers}
           />
-          <StyledNewButton color="primary" variant="outlined" onClick={toggleOpenAddAdminModal}>
+          <StyledNewButton
+            color="primary"
+            variant="outlined"
+            data-testid="button-open-add-admin"
+            onClick={toggleOpenAddAdminModal}>
             {t('users.add_institution_admin')}
           </StyledNewButton>
         </>

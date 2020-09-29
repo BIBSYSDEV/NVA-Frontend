@@ -207,7 +207,7 @@ const FileCard: FC<FileCardProps> = ({ file, removeFile, baseFieldName, toggleLi
                       </StyledSelect>
                     )}
                   </Field>
-                  <IconButton size="small" onClick={toggleLicenseModal}>
+                  <IconButton size="small" data-testid="button-toggle-license-modal" onClick={toggleLicenseModal}>
                     <HelpIcon />
                   </IconButton>
                 </StyledVerticalAlign>
@@ -218,7 +218,7 @@ const FileCard: FC<FileCardProps> = ({ file, removeFile, baseFieldName, toggleLi
       )}
 
       <StyledActions>
-        <Button variant="contained" color="secondary" onClick={removeFile}>
+        <Button variant="contained" color="secondary" data-testid="button-remove-file" onClick={removeFile}>
           <DeleteIcon />
           {t('common:remove')}
         </Button>

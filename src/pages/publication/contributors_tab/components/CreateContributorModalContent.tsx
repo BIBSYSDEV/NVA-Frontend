@@ -62,7 +62,7 @@ const CreateContributorModalContent: FC<CreateContributorModalContentProps> = ({
                 <StyledNormalTextPreWrapped>{t('description_create_authority')}</StyledNormalTextPreWrapped>
               </Collapse>
               <StyledRightAlignedButtonWrapper>
-                <Button color="primary" onClick={toggleReadMore}>
+                <Button color="primary" data-testid="button-read-more" onClick={toggleReadMore}>
                   {t(readMore ? 'read_less' : 'read_more')}
                 </Button>
               </StyledRightAlignedButtonWrapper>

@@ -125,6 +125,7 @@ const SortableItem = SortableElement(
               variant="contained"
               color="primary"
               size="small"
+              data-testid={`button-set-unverified-contributor-${contributor.identity.name}`}
               onClick={() =>
                 setUnverifiedContributor({
                   name: contributor.identity.name,
@@ -141,7 +142,12 @@ const SortableItem = SortableElement(
           )}
         </TableCell>
         <TableCell align="right">
-          <Button color="secondary" variant="contained" size="small" onClick={onRemoveContributorClick}>
+          <Button
+            color="secondary"
+            variant="contained"
+            size="small"
+            data-testid={`button-remove-contributor-${contributor.identity.name}`}
+            onClick={onRemoveContributorClick}>
             <DeleteIcon />
             {t('contributors.remove_contributor')}
           </Button>

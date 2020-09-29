@@ -78,6 +78,7 @@ const PublicPublicationFile: FC<PublicPublicationFileProps> = ({ file }) => {
         <StyledButtonWithProgress
           isLoading={isLoadingFile}
           endIcon={!isLoadingFile && <CloudDownloadIcon />}
+          data-testid="button-download-file"
           onClick={() => handleDownload(file.identifier)}>
           {t('download')}
         </StyledButtonWithProgress>
@@ -86,6 +87,7 @@ const PublicPublicationFile: FC<PublicPublicationFileProps> = ({ file }) => {
           variant="contained"
           color="primary"
           endIcon={<OpenInNewIcon />}
+          data-testid="button-open-file"
           onClick={() => window.open(currentFileUrl)}>
           {t('open')}
         </StyledButton>
