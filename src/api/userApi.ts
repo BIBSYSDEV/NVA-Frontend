@@ -7,15 +7,15 @@ import { USE_MOCK_DATA, AMPLIFY_REDIRECTED_KEY } from '../utils/constants';
 import { setNotification } from '../redux/actions/notificationActions';
 import { NotificationVariant } from '../types/notification.types';
 
-export const getCurrentUserAttributes = async (): Promise<any> => {
+export const getCurrentUserAttributes = async (retryNumber: number = 0): Promise<any> => {
   try {
     const currentSession: CognitoUserSession = await Auth.currentSession();
     const currentSessionData = currentSession.getIdToken().payload;
     console.log('currentSessionData', currentSessionData);
     if (
       !currentSession.isValid() ||
-      !currentSessionData['custom:cristinId'] ||
-      !currentSessionData['custom:customerId']
+      currentSessionData['custom:cristinId'] === undefined ||
+      currentSessionData['custom:customerId'] === undefined
     ) {
       console.log('invalid session');
       const cognitoUser: CognitoUser = await Auth.currentAuthenticatedUser();
@@ -36,9 +36,14 @@ export const getCurrentUserAttributes = async (): Promise<any> => {
     }
   } catch {
     console.log('CATCH');
-    const loggedIn = localStorage.getItem(AMPLIFY_REDIRECTED_KEY);
-    if (loggedIn) {
-      return { error: i18n.t('feedback:error.get_user') };
+    // Don't do anything if user is not supposed to be logged in
+    if (localStorage.getItem(AMPLIFY_REDIRECTED_KEY)) {
+      if (retryNumber < 3) {
+        return await getCurrentUserAttributes(retryNumber + 1);
+      } else {
+        window.location.search = ''; // Avoid infinite error loop if code parameter gets stuck in URL
+        return { error: i18n.t('feedback:error.get_user') };
+      }
     }
   }
 };

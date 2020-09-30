@@ -23,7 +23,6 @@ import { setNotification } from './redux/actions/notificationActions';
 import { getInstitutionUser } from './api/roleApi';
 import { NotificationVariant } from './types/notification.types';
 import { InstitutionUser } from './types/user.types';
-import { getCustomerInstitution } from './api/customerInstitutionsApi';
 
 const StyledApp = styled.div`
   min-height: 100vh;
@@ -66,22 +65,12 @@ const App: FC = () => {
     // Fetch attributes of authenticated user
     const getUser = async () => {
       const feideUser = await getCurrentUserAttributes();
-      console.log('feideUser', feideUser);
       if (feideUser) {
         if (feideUser.error) {
           dispatch(setNotification(feideUser.error, NotificationVariant.Error));
           setIsLoadingUser(false);
-        } else {
-          if (feideUser['custom:cristinId']) {
-            dispatch(setUser(feideUser));
-          } else if (feideUser['custom:customerId']) {
-            const cristinId = await getCustomerInstitution(feideUser['custom:customerId']).then(
-              (customer) => customer?.data?.cristinId
-            );
-            dispatch(setUser({ ...feideUser, cristinId }));
-          } else {
-            dispatch(setUser(feideUser));
-          }
+        } else if (feideUser) {
+          dispatch(setUser(feideUser));
           // Wait with setting isLoadingUser to false until roles are loaded in separate useEffect,
           // which will be trigged when user is updated in redux
         }
