@@ -11,13 +11,12 @@ export const getCurrentUserAttributes = async (retryNumber: number = 0): Promise
   try {
     const currentSession: CognitoUserSession = await Auth.currentSession();
     const currentSessionData = currentSession.getIdToken().payload;
-    console.log('currentSessionData', currentSessionData);
+
     if (
       !currentSession.isValid() ||
       currentSessionData['custom:cristinId'] === undefined ||
       currentSessionData['custom:customerId'] === undefined
     ) {
-      console.log('invalid session');
       const cognitoUser: CognitoUser = await Auth.currentAuthenticatedUser();
 
       // Refresh session
@@ -27,15 +26,11 @@ export const getCurrentUserAttributes = async (retryNumber: number = 0): Promise
         });
       });
       const refreshedSessionData = refreshedSession.getIdToken().payload;
-
-      console.log('refreshedSession', refreshedSessionData);
       return refreshedSessionData;
     } else {
-      console.log('valid session', currentSession.getIdToken().payload);
       return currentSessionData;
     }
   } catch {
-    console.log('CATCH');
     // Don't do anything if user is not supposed to be logged in
     if (localStorage.getItem(AMPLIFY_REDIRECTED_KEY)) {
       if (retryNumber < 3) {
