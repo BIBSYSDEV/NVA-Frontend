@@ -112,12 +112,12 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication, 
           <SubmissionDescription />
         </Card>
         <Card>
-          <Typography variant="h5">{t('heading.references')}</Typography>
+          <Typography variant="h5">{t('heading.reference')}</Typography>
           <LabelContentRow label={t('common:type')}>
             {publicationContextType && t(`publicationTypes:${publicationContextType}`)}
           </LabelContentRow>
           {reference.doi && (
-            <LabelContentRow label={t('publication.link_to_publication')}>{reference.doi}</LabelContentRow>
+            <LabelContentRow label={t('publication.link_to_resource')}>{reference.doi}</LabelContentRow>
           )}
           {publicationContextType === PublicationType.DEGREE && <SubmissionDegree />}
           {publicationContextType === PublicationType.BOOK && <SubmissionBook />}

@@ -11,7 +11,7 @@ describe('Publication: References: Book', () => {
 
     cy.startPublicationWithDoi();
 
-    cy.get('[data-testid=nav-tabpanel-references]').click({ force: true });
+    cy.get('[data-testid=nav-tabpanel-reference]').click({ force: true });
 
     // choose Book type
     cy.get('[data-testid=publication-context-type]').click({ force: true }).type(' '); //makes the select options open
@@ -33,9 +33,9 @@ describe('Publication: References: Book', () => {
 
     // choose peer review value and show NVI status
     cy.get('[data-testid=peer_review-true]').click({ force: true });
-    cy.get('[data-testid=nvi_book]').contains('This publication can be included in NVI');
+    cy.get('[data-testid=nvi_book]').contains('This publication can be included in NSI');
     cy.get('[data-testid=peer_review-false]').click({ force: true });
-    cy.get('[data-testid=nvi_book]').contains('This publication can not be incuded in NVI');
+    cy.get('[data-testid=nvi_book]').contains('This publication can not be incuded in NSI');
 
     // fill out number of pages field
     cy.get('[data-testid=pages-input]').type('483');

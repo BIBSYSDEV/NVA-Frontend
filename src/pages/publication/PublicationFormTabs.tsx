@@ -37,10 +37,7 @@ export const PublicationFormTabs: FC<PublicationFormTabsProps> = ({ handleTabCha
   const { t } = useTranslation('publication');
   const { errors, touched, values }: FormikProps<Publication> = useFormikContext();
   const {
-    entityDescription: {
-      contributors,
-      reference: { doi },
-    },
+    entityDescription: { contributors },
     fileSet: { files = [] },
   } = values;
 
@@ -59,8 +56,8 @@ export const PublicationFormTabs: FC<PublicationFormTabsProps> = ({ handleTabCha
         error={hasTouchedError(errors, touched, descriptionFieldNames)}
       />
       <LinkTab
-        label={t('heading.references')}
-        {...a11yProps('references')}
+        label={t('heading.reference')}
+        {...a11yProps('reference')}
         error={hasTouchedError(errors, touched, referenceFieldNames)}
       />
       <LinkTab
@@ -73,7 +70,7 @@ export const PublicationFormTabs: FC<PublicationFormTabsProps> = ({ handleTabCha
         {...a11yProps('files-and-license')}
         error={hasTouchedError(errors, touched, getAllFileFields(files))}
       />
-      <LinkTab label={doi ? t('heading.registration') : t('heading.publishing')} {...a11yProps('submission')} />
+      <LinkTab label={t('heading.summary')} {...a11yProps('submission')} />
     </StyledTabs>
   );
 };
