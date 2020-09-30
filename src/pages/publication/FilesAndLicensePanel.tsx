@@ -105,7 +105,9 @@ const FilesAndLicensePanel: FC<FilesAndLicensePanelProps> = ({ uppy, setTouchedF
                     key={index}
                     file={file}
                     removeFile={() => {
-                      uppy.removeFile(file.identifier);
+                      uppy.setState({
+                        files: uppy.getFiles().filter((uppyFile) => uppyFile.response?.uploadURL !== file.identifier),
+                      });
                       remove(index);
                     }}
                     toggleLicenseModal={toggleLicenseModal}
