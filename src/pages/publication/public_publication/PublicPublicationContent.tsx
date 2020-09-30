@@ -147,7 +147,7 @@ const PublicPublicationContent: FC<PublicPublicationContentProps> = ({ publicati
             </StyledTextContainer>
           )}
           {tags.length > 0 && (
-            <LabelContentRow minimal multiple label={`${t('description.tags')}:`}>
+            <LabelContentRow minimal multiple label={`${t('description.keywords')}:`}>
               {tags.map((tag) => (
                 <StyledTag key={tag}>
                   <Chip label={tag} />
