@@ -1,13 +1,12 @@
 import React, { FC, useState } from 'react';
 import { FormikProps, useFormikContext, getIn } from 'formik';
-import { TextField, InputAdornment } from '@material-ui/core';
+import { TextField, InputAdornment, Typography } from '@material-ui/core';
 import styled from 'styled-components';
 import ClearIcon from '@material-ui/icons/Clear';
 import { useTranslation } from 'react-i18next';
 import { Publication } from '../../../../types/publication.types';
 import { ReferenceFieldNames } from '../../../../types/publicationFieldNames';
 import ConfirmDialog from '../../../../components/ConfirmDialog';
-import NormalText from '../../../../components/NormalText';
 
 const StyledClearIcon = styled(ClearIcon)`
   color: ${({ theme }) => theme.palette.danger.main};
@@ -35,7 +34,7 @@ const DoiField: FC = () => {
       <TextField
         variant="outlined"
         fullWidth
-        label={t('publication.link_to_publication')}
+        label={t('publication.link_to_resource')}
         disabled
         InputProps={{
           endAdornment: (
@@ -52,7 +51,7 @@ const DoiField: FC = () => {
         title={t('references.delete_doi_title')}
         onAccept={changeType}
         onCancel={toggleConfirmDialog}>
-        <NormalText>{t('references.delete_doi_text')}</NormalText>
+        <Typography>{t('references.delete_doi_text')}</Typography>
       </ConfirmDialog>
     </>
   ) : null;

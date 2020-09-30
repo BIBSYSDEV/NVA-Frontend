@@ -116,7 +116,7 @@ export const PublicPublicationStatusBar: FC<PublicPublicationContentProps> = ({ 
 
         <Link to={`/publication/${identifier}`}>
           <Button variant="contained" color="primary">
-            {t('public_page.edit_publication')}
+            {t('edit_publication')}
           </Button>
         </Link>
       </div>

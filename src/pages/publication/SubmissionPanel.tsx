@@ -2,9 +2,9 @@ import React, { useEffect, FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormikProps, useFormikContext } from 'formik';
 import { Publication, DoiRequestStatus } from '../../types/publication.types';
-import { Button } from '@material-ui/core';
+import { Button, Typography } from '@material-ui/core';
 import styled from 'styled-components';
-// import SubmissionBook from './submission_tab/submission_book';
+import SubmissionBook from './submission_tab/submission_book';
 // import SubmissionChapter from './submission_tab/submission_chapter';
 import SubmissionDegree from './submission_tab/submission_degree';
 import SubmissionReport from './submission_tab/submission_report';
@@ -13,8 +13,6 @@ import SubmissionDescription from './submission_tab/submission_description';
 import SubmissionFilesAndLicenses from './submission_tab/submission_files_licenses';
 import SubmissionContributors from './submission_tab/submission_contributors';
 import { PublicationType } from '../../types/publicationFieldNames';
-import Heading from '../../components/Heading';
-import SubHeading from '../../components/SubHeading';
 import Card from '../../components/Card';
 import { useHistory } from 'react-router-dom';
 import LabelContentRow from '../../components/LabelContentRow';
@@ -108,61 +106,73 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication, 
     <>
       <ErrorSummary />
       <Card>
-        <Heading>{t('heading.summary')}</Heading>
+        <Typography variant="h2">{t('heading.summary')}</Typography>
         <Card>
-          <SubHeading>{t('heading.description')}</SubHeading>
+          <Typography variant="h5">{t('heading.description')}</Typography>
           <SubmissionDescription />
         </Card>
         <Card>
-          <SubHeading>{t('heading.references')}</SubHeading>
+          <Typography variant="h5">{t('heading.reference')}</Typography>
           <LabelContentRow label={t('common:type')}>
             {publicationContextType && t(`publicationTypes:${publicationContextType}`)}
           </LabelContentRow>
           {reference.doi && (
-            <LabelContentRow label={t('publication.link_to_publication')}>{reference.doi}</LabelContentRow>
+            <LabelContentRow label={t('publication.link_to_resource')}>{reference.doi}</LabelContentRow>
           )}
           {publicationContextType === PublicationType.DEGREE && <SubmissionDegree />}
-          {/* {publicationContextType === PublicationType.BOOK && <SubmissionBook />} */}
+          {publicationContextType === PublicationType.BOOK && <SubmissionBook />}
           {/* {publicationContextType === PublicationType.CHAPTER && <SubmissionChapter />} */}
           {publicationContextType === PublicationType.REPORT && <SubmissionReport />}
           {publicationContextType === PublicationType.PUBLICATION_IN_JOURNAL && <SubmissionJournalPublication />}
         </Card>
         <Card>
-          <SubHeading>{t('heading.contributors')}</SubHeading>
+          <Typography variant="h5">{t('heading.contributors')}</Typography>
           <SubmissionContributors />
         </Card>
         <Card>
-          <SubHeading>{t('heading.files_and_license')}</SubHeading>
+          <Typography variant="h5">{t('heading.files_and_license')}</Typography>
           <SubmissionFilesAndLicenses />
         </Card>
       </Card>
       <StyledButtonGroupContainer>
-        {user.isCurator && doiRequest?.status === DoiRequestStatus.Requested ? (
+        <StyledButtonWithProgress disabled={isSaving || !isValid} onClick={onClickPublish} isLoading={isPublishing}>
+          {t('common:publish')}
+        </StyledButtonWithProgress>
+        {user.isCurator ? (
           <>
-            <StyledButton
-              color="primary"
-              variant="contained"
-              onClick={onClickCreateDoi}
-              disabled={isSaving || !isValid}>
-              {t('common:create_doi')}
-            </StyledButton>
-            <StyledButton
-              color="secondary"
-              variant="outlined"
-              onClick={onClickRejectDoi}
-              disabled={isSaving || !isValid}>
-              {t('common:reject_doi')}
-            </StyledButton>
+            {doiRequest?.status === DoiRequestStatus.Requested && (
+              <>
+                <StyledButton
+                  color="primary"
+                  variant="contained"
+                  onClick={onClickCreateDoi}
+                  disabled={isSaving || !isValid}>
+                  {t('common:create_doi')}
+                </StyledButton>
+                <StyledButton
+                  color="secondary"
+                  variant="outlined"
+                  onClick={onClickRejectDoi}
+                  disabled={isSaving || !isValid}>
+                  {t('common:reject_doi')}
+                </StyledButton>
+              </>
+            )}
+            <ButtonWithProgress
+              disabled={isPublishing}
+              isLoading={isSaving}
+              onClick={async () => {
+                await savePublication(values);
+                history.push(`/publication/${values.identifier}/public`);
+              }}>
+              {t('common:save_and_present')}
+            </ButtonWithProgress>
           </>
         ) : (
-          <StyledButtonWithProgress disabled={isSaving || !isValid} onClick={onClickPublish} isLoading={isPublishing}>
-            {t('common:publish')}
-          </StyledButtonWithProgress>
+          <ButtonWithProgress disabled={isPublishing} isLoading={isSaving} onClick={() => savePublication(values)}>
+            {t('common:save')}
+          </ButtonWithProgress>
         )}
-
-        <ButtonWithProgress disabled={isPublishing} isLoading={isSaving} onClick={() => savePublication(values)}>
-          {t('common:save')}
-        </ButtonWithProgress>
       </StyledButtonGroupContainer>
     </>
   );

@@ -6,8 +6,7 @@ describe('User opens an item in the My Publication list', () => {
 
   it('The User should be able to edit an item in the My Publications list', () => {
     // Open My Publications
-    cy.get('[data-testid=menu]').click({ force: true });
-    cy.get('[data-testid=menu-my-publications-button]').click({ force: true });
+    cy.get('[data-testid=my-publications]').click({ force: true });
 
     // Edit publication
     // Description tab
@@ -18,7 +17,7 @@ describe('User opens an item in the My Publication list', () => {
     );
 
     // Reference tab
-    cy.get('[data-testid=nav-tabpanel-references]').click({ force: true });
+    cy.get('[data-testid=nav-tabpanel-reference]').click({ force: true });
     cy.contains('Publication in Journal');
 
     // Contributors tab

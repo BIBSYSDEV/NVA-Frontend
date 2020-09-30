@@ -36,21 +36,13 @@ export const InstitutionAdminRoute: FC<LoggedInRouteProps> = ({ component, ...re
   return <PrivateRoute {...rest} component={component} isAuthorized={user.isInstitutionAdmin} />;
 };
 
-const isValidInstitutionForInstitutionAdmin = (customerUri: string) => {
-  const customerId = customerUri.split('/').pop();
-  return !!customerId && window.location.pathname.includes(customerId);
-};
-
 export const EditInstitutionRoute: FC<LoggedInRouteProps> = ({ component, ...rest }) => {
   const user = useSelector((store: RootStore) => store.user);
+  const encodedCustomerId = user.customerId ? encodeURIComponent(user.customerId) : '';
+  const institutionAdminCanEditCustomer =
+    user.isInstitutionAdmin && encodedCustomerId && window.location.search.includes(encodedCustomerId);
 
   return (
-    <PrivateRoute
-      {...rest}
-      component={component}
-      isAuthorized={
-        (user.isInstitutionAdmin && isValidInstitutionForInstitutionAdmin(user.customerId)) || user.isAppAdmin
-      }
-    />
+    <PrivateRoute {...rest} component={component} isAuthorized={institutionAdminCanEditCustomer || user.isAppAdmin} />
   );
 };

@@ -1,5 +1,5 @@
 import { Field, FormikProps, useFormikContext, FieldProps } from 'formik';
-import React, { useEffect, FC } from 'react';
+import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { DegreePublication } from '../../../types/publication.types';
@@ -10,15 +10,9 @@ import DoiField from './components/DoiField';
 import SelectTypeField from './components/SelectTypeField';
 import SeriesRow from './components/SeriesRow';
 import PublisherField from './components/PublisherField';
+import { Typography } from '@material-ui/core';
 
-const StyledLabel = styled.div`
-  color: ${({ theme }) => theme.palette.text.primary};
-  font-size: 1rem;
-  font-weight: bold;
-`;
-
-const StyledHeading = styled.div`
-  font-size: 1.5rem;
+const StyledTypography = styled(Typography)`
   padding-top: 1.5rem;
 `;
 
@@ -26,11 +20,6 @@ const DegreeForm: FC = () => {
   const { t } = useTranslation('publication');
 
   const { setFieldValue, touched }: FormikProps<DegreePublication> = useFormikContext();
-
-  useEffect(() => {
-    // set correct Pages type based on publication type being Degree
-    setFieldValue(ReferenceFieldNames.PAGES, null);
-  }, [setFieldValue]);
 
   return (
     <>
@@ -45,8 +34,8 @@ const DegreeForm: FC = () => {
         errorName={ReferenceFieldNames.PUBLICATION_CONTEXT_PUBLISHER}
       />
 
-      <StyledHeading>{t('references.series')}</StyledHeading>
-      <StyledLabel>{t('references.series_info')}</StyledLabel>
+      <StyledTypography variant="h5">{t('references.series')}</StyledTypography>
+      <Typography>{t('references.series_info')}</Typography>
       <Field name={ReferenceFieldNames.SERIES_TITLE}>
         {({ field: { name, value } }: FieldProps) => (
           <>

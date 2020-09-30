@@ -1,8 +1,8 @@
 import { Field, FormikProps, useFormikContext, FieldProps, ErrorMessage } from 'formik';
-import React, { FC, useEffect } from 'react';
+import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { TextField } from '@material-ui/core';
+import { TextField, Typography } from '@material-ui/core';
 import { JournalPublication } from '../../../types/publication.types';
 import { ReferenceFieldNames, JournalType } from '../../../types/publicationFieldNames';
 import { PublicationTableNumber } from '../../../utils/constants';
@@ -11,7 +11,6 @@ import PeerReview from './components/PeerReview';
 import DoiField from './components/DoiField';
 import SelectTypeField from './components/SelectTypeField';
 import { JournalEntityDescription } from '../../../types/publication_types/journalPublication.types';
-import { BackendTypeNames } from '../../../types/publication_types/commonPublication.types';
 import PublisherField from './components/PublisherField';
 
 const StyledContent = styled.div`
@@ -29,7 +28,7 @@ const StyledArticleDetail = styled.div`
   }
 `;
 
-const StyledLabel = styled.div`
+const StyledLabel = styled(Typography)`
   margin-top: 1rem;
   align-self: center;
   justify-self: center;
@@ -39,20 +38,20 @@ const JournalForm: FC = () => {
   const { t } = useTranslation('publication');
   const { values, setFieldValue, touched }: FormikProps<JournalPublication> = useFormikContext();
   const {
-    reference: {
-      publicationContext,
-      publicationInstance: { peerReviewed },
-    },
+    reference: { publicationContext, publicationInstance },
   } = values.entityDescription as JournalEntityDescription;
-
-  useEffect(() => {
-    // set correct Pages type based on publication type being Journal
-    setFieldValue(ReferenceFieldNames.PAGES_TYPE, BackendTypeNames.PAGES_RANGE);
-  }, [setFieldValue]);
 
   return (
     <StyledContent>
-      <SelectTypeField fieldName={ReferenceFieldNames.SUB_TYPE} options={Object.values(JournalType)} />
+      <SelectTypeField
+        fieldName={ReferenceFieldNames.SUB_TYPE}
+        options={Object.values(JournalType)}
+        onChangeType={(newType) => {
+          setFieldValue(ReferenceFieldNames.SUB_TYPE, newType, false);
+          // Only JournalArticle can be peer reviewed, so ensure it is set to false when type is changed
+          setFieldValue(ReferenceFieldNames.PEER_REVIEW, false);
+        }}
+      />
 
       <DoiField />
 
@@ -134,8 +133,14 @@ const JournalForm: FC = () => {
           )}
         </Field>
       </StyledArticleDetail>
-      <PeerReview fieldName={ReferenceFieldNames.PEER_REVIEW} label={t('references.peer_review')} />
-      <NviValidation isPeerReviewed={peerReviewed} isRated={!!publicationContext?.level} dataTestId="nvi_journal" />
+      {publicationInstance.type === JournalType.ARTICLE && (
+        <PeerReview fieldName={ReferenceFieldNames.PEER_REVIEW} label={t('references.peer_review')} />
+      )}
+      <NviValidation
+        isPeerReviewed={publicationInstance.peerReviewed}
+        isRated={!!publicationContext?.level}
+        dataTestId="nvi_journal"
+      />
     </StyledContent>
   );
 };

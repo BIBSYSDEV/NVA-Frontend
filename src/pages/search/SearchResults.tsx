@@ -7,9 +7,14 @@ import { List, Typography } from '@material-ui/core';
 import PublicationListItemComponent from '../dashboard/PublicationListItemComponent';
 import { SearchResult } from '../../types/search.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
+import { displayDate } from '../../utils/date-helpers';
 
 const StyledSearchResults = styled.div`
   padding-bottom: 1rem;
+`;
+
+const StyledContributor = styled.span`
+  padding-right: 1rem;
 `;
 
 interface SearchResultsProps {
@@ -19,7 +24,7 @@ interface SearchResultsProps {
 
 const SearchResults: FC<SearchResultsProps> = ({ publications, searchTerm }) => {
   const { t } = useTranslation();
-  const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
+  const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[1]);
   const [page, setPage] = useState(0);
 
   // Ensure selected page is not out of bounds due to manipulated userList
@@ -30,32 +35,41 @@ const SearchResults: FC<SearchResultsProps> = ({ publications, searchTerm }) => 
       {searchTerm && t('results', { count: publications.length, term: searchTerm })}
       <List>
         {publications &&
-          publications.slice(validPage * rowsPerPage, validPage * rowsPerPage + rowsPerPage).map((publication) => (
-            <PublicationListItemComponent
-              key={publication.identifier}
-              primaryComponent={
-                <MuiLink component={Link} to={`/publication/${publication.identifier}/public`}>
-                  {publication.mainTitle}
-                </MuiLink>
-              }
-              secondaryComponent={
-                <Typography component="span">
-                  {new Date(publication.modifiedDate).toLocaleDateString()}
-                  <br />
-                  {publication.contributors.map((contributor) => (
-                    <Fragment key={contributor.identifier}>
-                      <MuiLink component={Link} to={`/user/${contributor.identifier}`}>
-                        {contributor.name}
-                      </MuiLink>{' '}
-                    </Fragment>
-                  ))}
-                </Typography>
-              }
-            />
-          ))}
+          publications.slice(validPage * rowsPerPage, validPage * rowsPerPage + rowsPerPage).map((publication) => {
+            const publicationId = publication.id?.split('/').pop();
+            return (
+              <PublicationListItemComponent
+                data-testid={`search-result-${publicationId}`}
+                key={publicationId}
+                primaryComponent={
+                  <MuiLink component={Link} to={`/publication/${publicationId}/public`}>
+                    {publication.title}
+                  </MuiLink>
+                }
+                secondaryComponent={
+                  <Typography component="span">
+                    {publication.date && <div>{displayDate(publication.date)}</div>}
+                    {publication.contributors &&
+                      publication.contributors.map((contributor) => (
+                        <Fragment data-testid={`search-result-contributor-${contributor.name}`} key={contributor.name}>
+                          {contributor.id ? (
+                            <MuiLink component={Link} to={`/user/${contributor.id}`}>
+                              <StyledContributor>{contributor.name} </StyledContributor>
+                            </MuiLink>
+                          ) : (
+                            <StyledContributor>{contributor.name} </StyledContributor>
+                          )}
+                        </Fragment>
+                      ))}
+                  </Typography>
+                }
+              />
+            );
+          })}
       </List>
       {publications.length > ROWS_PER_PAGE_OPTIONS[0] && (
         <TablePagination
+          data-testid="search-pagination"
           rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
           component="div"
           count={publications.length}

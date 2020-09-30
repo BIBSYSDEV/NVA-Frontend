@@ -44,6 +44,7 @@
   "reject_doi": "Avvis DOI",
   "remove": "Fjern",
   "save": "Lagre",
+  "save_and_present": "Lagre og presenter",
   "search": "Søk",
   "send": "Send",
   "show": "Vis",
@@ -52,7 +53,7 @@
   "table_pagination": {
     "more_than": "mer enn",
     "next_page": "Neste side",
-    "previous_page": "Forrige page",
+    "previous_page": "Forrige side",
     "rows_per_page": "Rader per side:"
   },
   "title": "Tittel",

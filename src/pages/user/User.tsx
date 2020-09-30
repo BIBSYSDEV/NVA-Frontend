@@ -3,8 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-
-import { Button } from '@material-ui/core';
+import { Button, Typography } from '@material-ui/core';
 import { Link as RouterLink } from 'react-router-dom';
 import { addQualifierIdForAuthority, AuthorityQualifiers } from '../../api/authorityApi';
 import { getOrcidInfo } from '../../api/external/orcidApi';
@@ -15,11 +14,11 @@ import UserLanguage from './UserLanguage';
 import UserOrcid from './UserOrcid';
 import UserRoles from './UserRoles';
 import Card from '../../components/Card';
-import Heading from '../../components/Heading';
 import UserInstitution from './UserInstitution';
 import { StyledRightAlignedButtonWrapper } from '../../components/styled/Wrappers';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
+import { PageHeader } from '../../components/PageHeader';
 
 const StyledUserPage = styled.div`
   display: grid;
@@ -36,13 +35,11 @@ const StyledSecondaryUserInfo = styled.div`
   display: grid;
   grid-area: secondary-info;
   grid-template-areas: 'language' 'roles';
-  grid-row-gap: 3rem;
 `;
 
 const StyledPrimaryUserInfo = styled.div`
   display: grid;
   grid-area: primary-info;
-  grid-row-gap: 3rem;
 `;
 
 const StyledButtonWrapper = styled(StyledRightAlignedButtonWrapper)`
@@ -85,35 +82,42 @@ const User: FC = () => {
   }, [user.authority, dispatch, user.externalOrcid]);
 
   return (
-    <StyledUserPage>
-      {user.authority && (
-        <StyledButtonWrapper>
-          <Button
-            color="primary"
-            component={RouterLink}
-            to={`/user/${user.authority.systemControlNumber}`}
-            data-testid="public-profile-button">
-            {t('workLists:go_to_public_profile')}
-          </Button>
-        </StyledButtonWrapper>
-      )}
-      <StyledSecondaryUserInfo>
-        <UserLanguage />
-        <UserRoles user={user} />
-      </StyledSecondaryUserInfo>
+    <>
+      <PageHeader>{t('my_profile')}</PageHeader>
+      <StyledUserPage>
+        {user.authority && (
+          <StyledButtonWrapper>
+            <Button
+              color="primary"
+              component={RouterLink}
+              to={`/user/${user.authority.systemControlNumber}`}
+              data-testid="public-profile-button">
+              {t('workLists:go_to_public_profile')}
+            </Button>
+          </StyledButtonWrapper>
+        )}
+        <StyledSecondaryUserInfo>
+          <UserLanguage />
+          {user.roles.length > 1 && <UserRoles user={user} />}
+        </StyledSecondaryUserInfo>
 
-      <StyledPrimaryUserInfo>
-        <UserInfo user={user} />
-        <Card>
-          <Heading>{t('heading.author_info')}</Heading>
-          {user.authority && user.authority.feideids?.length > 0 && (
-            <p data-testid="author-connected-info">{t('authority.connected_info')}</p>
+        <StyledPrimaryUserInfo>
+          <UserInfo user={user} />
+          {user.customerId && (
+            <>
+              <Card>
+                <Typography variant="h5">{t('heading.author_info')}</Typography>
+                {user.authority && user.authority.feideids?.length > 0 && (
+                  <p data-testid="author-connected-info">{t('authority.connected_info')}</p>
+                )}
+              </Card>
+              <UserOrcid />
+              <UserInstitution />
+            </>
           )}
-        </Card>
-        <UserOrcid />
-        <UserInstitution />
-      </StyledPrimaryUserInfo>
-    </StyledUserPage>
+        </StyledPrimaryUserInfo>
+      </StyledUserPage>
+    </>
   );
 };
 

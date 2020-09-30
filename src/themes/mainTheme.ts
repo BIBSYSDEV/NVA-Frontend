@@ -1,6 +1,7 @@
 import { createMuiTheme } from '@material-ui/core';
 import i18n from '../translations/i18n';
 import { getTranslatedLabelForDisplayedRows } from '../utils/pagination';
+import { merriweatherRegular, barlowRegular } from './fonts';
 
 // Extend Palette type to allow custom colors
 declare module '@material-ui/core/styles/createPalette' {
@@ -17,20 +18,19 @@ declare module '@material-ui/core/styles/createPalette' {
 }
 
 enum Colors {
-  Primary = '#6558f5',
+  Primary = '#284B63',
   Secondary = '#ff5555',
   Background = '#fff',
-  Box = '#eeeeff',
-  Link = '#6558f5',
+  Box = '#f5f5f5',
+  Link = '#06f',
   Separator = '#3d4349',
   PrimaryText = 'rgba(0, 0, 0, 0.87)',
   SecondaryText = '#44515d',
-  CollapsedPanel = '#96c3ec',
-  ExpandedPanel = '#b2acfa',
-  TabBackground = '#f3c19d',
+  Panel = '#A9D8B8',
   Disabled = '#bbb',
   Danger = '#ff5555',
   DangerLight = '#ffbbbb',
+  Indicator = '#FFB546',
 }
 
 export default createMuiTheme({
@@ -65,13 +65,51 @@ export default createMuiTheme({
     },
   },
   typography: {
-    fontFamily:
-      "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif",
+    fontFamily: 'Barlow,  sans-serif',
+    h1: {
+      fontFamily: 'Merriweather, serif',
+      fontSize: '2.1rem',
+    },
+    h2: {
+      fontFamily: 'Merriweather, serif',
+      fontSize: '1.8rem',
+    },
+    h3: {
+      fontFamily: 'Merriweather, serif',
+      fontSize: '1.6rem',
+    },
+    h4: {
+      fontFamily: 'Merriweather, serif',
+      fontSize: '1.4rem',
+    },
   },
   overrides: {
+    MuiAccordion: {
+      root: {
+        background: Colors.Panel,
+      },
+    },
+    MuiAccordionDetails: {
+      root: { background: Colors.Panel },
+    },
     MuiButton: {
       root: {
         textTransform: 'none',
+      },
+    },
+    MuiCard: {
+      root: {
+        backgroundColor: Colors.Box,
+      },
+    },
+    MuiCssBaseline: {
+      '@global': {
+        '@font-face': [merriweatherRegular, barlowRegular],
+      },
+    },
+    MuiInputBase: {
+      root: {
+        background: Colors.Background,
       },
     },
     MuiLink: {
@@ -79,25 +117,13 @@ export default createMuiTheme({
         color: Colors.Link,
       },
     },
-    MuiAccordion: {
-      root: {
-        background: Colors.CollapsedPanel,
-        '&$expanded': {
-          background: Colors.ExpandedPanel,
-        },
-      },
-    },
-    MuiAccordionDetails: {
-      root: { background: Colors.ExpandedPanel },
-    },
-    MuiInputBase: {
-      root: {
-        background: Colors.Background,
-      },
-    },
     MuiTab: {
-      root: {
-        background: Colors.TabBackground,
+      wrapper: {
+        flexDirection: 'row-reverse',
+      },
+      labelIcon: {
+        minHeight: undefined,
+        paddingTop: undefined,
       },
       textColorPrimary: {
         '&$selected': {
@@ -106,9 +132,9 @@ export default createMuiTheme({
         },
       },
     },
-    MuiCard: {
-      root: {
-        backgroundColor: Colors.Box,
+    MuiTabs: {
+      indicator: {
+        backgroundColor: Colors.Indicator,
       },
     },
     MuiTextField: {

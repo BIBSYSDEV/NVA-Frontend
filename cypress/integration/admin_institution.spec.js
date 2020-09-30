@@ -13,7 +13,7 @@ describe('User administers institutions ', () => {
 
   it('The User should be able to open admin page for institutions from the menu', () => {
     cy.get('[data-testid=customer-institutions-list]');
-    cy.contains('Norges teknisk-naturvitenskapelige universitet');
+    cy.contains('Norwegian University of Science and Technology');
   });
 
   it('The User should be able to add an institution', () => {

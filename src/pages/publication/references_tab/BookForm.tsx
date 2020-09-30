@@ -1,5 +1,5 @@
 import { Field, FormikProps, useFormikContext, FieldProps } from 'formik';
-import React, { FC, useEffect } from 'react';
+import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { BookPublication } from '../../../types/publication.types';
@@ -9,14 +9,14 @@ import NviValidation from './components/NviValidation';
 import PeerReview from './components/PeerReview';
 import PublicationChannelSearch from './components/PublicationChannelSearch';
 import PublisherRow from './components/PublisherRow';
-import SubHeading from '../../../components/SubHeading';
-import Label from '../../../components/Label';
 import DoiField from './components/DoiField';
 import SelectTypeField from './components/SelectTypeField';
 import PublisherField from './components/PublisherField';
 import { BookEntityDescription } from '../../../types/publication_types/bookPublication.types';
-import { TextField } from '@material-ui/core';
-import { BackendTypeNames } from '../../../types/publication_types/commonPublication.types';
+import IsbnListField from './components/IsbnListField';
+import TotalPagesField from './components/TotalPagesField';
+import { FormControlLabel, Checkbox } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 
 const StyledContent = styled.div`
   display: grid;
@@ -38,11 +38,12 @@ const StyledPeerReview = styled.div`
   grid-area: peer-review;
 `;
 
-const StyledTextField = styled(TextField)`
-  display: inline;
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-    display: grid;
-  }
+const StyledTextBook = styled.div`
+  grid-area: text-book;
+`;
+
+const StyledTypography = styled(Typography)`
+  padding-top: 1.5rem;
 `;
 
 const BookForm: FC = () => {
@@ -54,11 +55,6 @@ const BookForm: FC = () => {
       publicationInstance: { peerReviewed },
     },
   } = values.entityDescription as BookEntityDescription;
-
-  useEffect(() => {
-    // set correct Pages type based on publication type being Book
-    setFieldValue(ReferenceFieldNames.PAGES_TYPE, BackendTypeNames.PAGES_MONOGRAPH);
-  }, [setFieldValue]);
 
   return (
     <StyledContent>
@@ -73,34 +69,36 @@ const BookForm: FC = () => {
         errorName={ReferenceFieldNames.PUBLICATION_CONTEXT_PUBLISHER}
       />
       <StyledSection>
-        {/* TODO - convert to array and use ISBN_LIST 
-        <Field name={ReferenceFieldNames.ISBN}>
-          {({ field }: FieldProps) => (
-            <StyledTextField data-testid="isbn" variant="outlined" label={t('references.isbn')} {...field} />
-          )}
-        </Field> */}
-
-        <Field name={ReferenceFieldNames.PAGES_PAGES}>
-          {({ field }: FieldProps) => (
-            <StyledTextField
-              inputProps={{ 'data-testid': 'pages' }}
-              variant="outlined"
-              label={t('references.number_of_pages')}
-              {...field}
-              value={field.value ?? ''}
-            />
-          )}
-        </Field>
+        <IsbnListField />
+        <TotalPagesField />
       </StyledSection>
 
       <StyledSection>
         <StyledPeerReview>
           <PeerReview fieldName={ReferenceFieldNames.PEER_REVIEW} label={t('references.peer_review')} />
         </StyledPeerReview>
+        <StyledTextBook>
+          <Typography variant="h5">{t('references.is_book_a_textbook')}</Typography>
+          <Field name={ReferenceFieldNames.TEXTBOOK_CONTENT}>
+            {({ field }: FieldProps) => (
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    data-testid="is-textbook-checkbox"
+                    color="primary"
+                    checked={field.value ?? false}
+                    {...field}
+                  />
+                }
+                label={t('references.is_book_a_textbook_confirm')}
+              />
+            )}
+          </Field>
+        </StyledTextBook>
       </StyledSection>
       <div>
-        <SubHeading>{t('references.series')}</SubHeading>
-        <Label>{t('references.series_info')}</Label>
+        <StyledTypography variant="h5">{t('references.series')}</StyledTypography>
+        <Typography>{t('references.series_info')}</Typography>
         <Field name={ReferenceFieldNames.SERIES_TITLE}>
           {({ field: { name, value } }: FieldProps) => (
             <>

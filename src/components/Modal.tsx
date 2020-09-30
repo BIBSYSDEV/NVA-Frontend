@@ -1,10 +1,7 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
-
-import { Avatar, Backdrop, Dialog, Fade, DialogTitle, DialogProps } from '@material-ui/core';
+import { Avatar, Backdrop, Dialog, Fade, DialogTitle, DialogProps, Typography } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
-
-import Heading from './Heading';
 
 const StyledPaper = styled.div`
   background-color: ${({ theme }) => theme.palette.background};
@@ -23,7 +20,7 @@ const StyledHeaderContainer = styled.div`
   margin-bottom: 1rem;
 `;
 
-const StyledHeading = styled(Heading)`
+const StyledHeading = styled(Typography)`
   grid-area: text;
   margin-left: 1rem;
 `;
@@ -88,10 +85,10 @@ const Modal: FC<ModalProps> = ({ children, dataTestId, headingIcon, headingText,
           {headingIcon ? (
             <StyledInfoContainer>
               {headingIcon && <StyledAvatar src={headingIcon.src} alt={headingIcon.alt} />}
-              <StyledHeading>{headingText}</StyledHeading>
+              <StyledHeading variant="h3">{headingText}</StyledHeading>
             </StyledInfoContainer>
           ) : (
-            <StyledHeading>{headingText}</StyledHeading>
+            <StyledHeading variant="h3">{headingText}</StyledHeading>
           )}
         </StyledDialogTitle>
         <StyledCloseIcon onClick={handleClose} />

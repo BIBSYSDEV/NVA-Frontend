@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { TextField } from '@material-ui/core';
 import ButtonWithProgress from '../../../components/ButtonWithProgress';
-import { doiValidationSchema } from '../PublicationFormValidationSchema';
+import { doiValidationSchema } from '../../../utils/validation/doiSearchValidation';
 
 const StyledInputBox = styled.div`
   display: flex;
@@ -40,7 +40,7 @@ const LinkPublicationForm: FC<LinkPublicationFormProps> = ({ handleSearch }) => 
               {({ field, meta: { error, touched } }: FieldProps) => (
                 <StyledTextField
                   variant="outlined"
-                  label={t('publication.link_to_publication')}
+                  label={t('publication.link_to_resource')}
                   fullWidth
                   aria-label="DOI-link"
                   inputProps={{ 'data-testid': 'new-publication-link-input' }}

@@ -21,27 +21,37 @@ export const flattenFormikErrors = (
   validationErrors: FormikErrors<any>,
   fieldNamePrefix: string = ''
 ): CustomError[] => {
-  return Object.entries(validationErrors)
-    .map(([fieldName, errorMessage]) => {
-      const fieldPath = fieldNamePrefix ? `${fieldNamePrefix}-${fieldName}` : fieldName;
-      if (typeof errorMessage === 'object' && errorMessage !== null) {
-        if (Array.isArray(errorMessage)) {
-          // Merge errors in array, and ignore their indexes
-          const groupErrors = (errorMessage as FormikErrors<any>[]).reduce(
-            (result, current) => ({ ...result, ...current }),
-            {}
-          );
-          return flattenFormikErrors(groupErrors, fieldPath);
-        } else {
-          return flattenFormikErrors(errorMessage as FormikErrors<any>, fieldPath);
+  if (typeof validationErrors === 'object') {
+    return Object.entries(validationErrors)
+      .map(([fieldName, errorMessage]) => {
+        const fieldPath = fieldNamePrefix ? `${fieldNamePrefix}-${fieldName}` : fieldName;
+        if (typeof errorMessage === 'object' && errorMessage !== null) {
+          if (Array.isArray(errorMessage)) {
+            const errorArray = errorMessage as FormikErrors<any>[];
+            const isStringErrors = errorArray.some((error) => typeof error === 'string');
+            // Merge errors in array, and ignore their indexes
+            const groupErrors = isStringErrors
+              ? [...new Set(errorArray)].filter((error) => error)[0]
+              : errorArray.reduce((result, current) => ({ ...result, ...current }), {});
+            return flattenFormikErrors(groupErrors, fieldPath);
+          } else {
+            return flattenFormikErrors(errorMessage as FormikErrors<any>, fieldPath);
+          }
         }
-      }
-      return {
-        fieldName: fieldPath,
-        errorMessage: errorMessage as string,
-      };
-    })
-    .flat();
+        return {
+          fieldName: fieldPath,
+          errorMessage: errorMessage as string,
+        };
+      })
+      .flat();
+  } else {
+    return [
+      {
+        fieldName: fieldNamePrefix,
+        errorMessage: validationErrors,
+      },
+    ];
+  }
 };
 
 export const hasTouchedError = (
@@ -161,6 +171,24 @@ export const touchedReferenceTabFields = (publicationType: PublicationType | '')
             },
             publicationInstance: {
               type: true,
+            },
+          },
+        },
+      };
+    case PublicationType.BOOK:
+      return {
+        entityDescription: {
+          reference: {
+            publicationContext: {
+              type: true,
+              publisher: true,
+              isbnList: true,
+            },
+            publicationInstance: {
+              type: true,
+              pages: {
+                pages: true,
+              },
             },
           },
         },

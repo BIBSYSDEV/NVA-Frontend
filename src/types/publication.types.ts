@@ -61,10 +61,17 @@ export enum DoiRequestStatus {
   Requested = 'REQUESTED',
 }
 
+export interface DoiRequestMessage {
+  text: string;
+  author: string;
+  timestamp: string;
+}
+
 interface DoiRequest {
   type: string;
   date: string;
   status: DoiRequestStatus;
+  messages: DoiRequestMessage[];
 }
 
 interface BasePublication extends BackendType, PublicationFileSet {
@@ -110,9 +117,20 @@ export interface PagesRange extends BackendType {
   end: string;
 }
 
+export const emptyPagesRange: PagesRange = {
+  type: BackendTypeNames.PAGES_RANGE,
+  begin: '',
+  end: '',
+};
+
 export interface PagesMonograph extends BackendType {
   pages: string;
 }
+
+export const emptyPagesMonograph: PagesMonograph = {
+  type: BackendTypeNames.PAGES_MONOGRAPH,
+  pages: '',
+};
 
 export type PublicationPreview = Pick<
   Publication & JournalEntityDescription,

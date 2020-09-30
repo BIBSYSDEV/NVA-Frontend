@@ -49,11 +49,6 @@ const StyledContentWrapper = styled.div`
   }
 `;
 
-const StyledSidebar = styled.div`
-  min-width: 15rem;
-  padding: 1rem 0;
-`;
-
 const StyledMainContent = styled.div`
   flex: 1;
   padding: 1rem 2rem;
@@ -115,7 +110,7 @@ const PublicPublicationContent: FC<PublicPublicationContentProps> = ({ publicati
     mainTitle,
     npiSubjectHeading,
     reference: { doi, publicationContext, publicationInstance },
-    tags,
+    tags = [],
   } = publication.entityDescription;
 
   // Show only the license for the first file for now
@@ -128,13 +123,12 @@ const PublicPublicationContent: FC<PublicPublicationContentProps> = ({ publicati
       <Heading>{mainTitle}</Heading>
       {contributors && <PublicPublicationAuthors contributors={contributors} />}
       <StyledContentWrapper>
-        <StyledSidebar>
-          {publication.fileSet &&
-            publication.fileSet.files.map((file) => <PublicPublicationFile file={file} key={file.identifier} />)}
-        </StyledSidebar>
+        {publication.fileSet?.files.map(
+          (file) => !file.administrativeAgreement && <PublicPublicationFile file={file} key={file.identifier} />
+        )}
         <StyledMainContent>
           {doi && (
-            <LabelContentRow minimal label={`${t('publication.link_to_publication')}:`}>
+            <LabelContentRow minimal label={`${t('publication.link_to_resource')}:`}>
               <Link href={doi} target="_blank" rel="noopener noreferrer">
                 {doi}
               </Link>

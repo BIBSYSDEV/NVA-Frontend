@@ -1,11 +1,9 @@
 import React, { useState, FC } from 'react';
 import Card from '../../components/Card';
-import { Button } from '@material-ui/core';
+import { Button, Typography } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootStore } from './../../redux/reducers/rootReducer';
 import { useTranslation } from 'react-i18next';
-import Heading from '../../components/Heading';
-
 import { FormikInstitutionUnit } from '../../types/institution.types';
 import SelectInstitution from '../../components/institution/SelectInstitution';
 import { getMostSpecificUnit } from '../../utils/institutions-helpers';
@@ -20,7 +18,6 @@ import { NotificationVariant } from '../../types/notification.types';
 import InstitutionCard from './institution/InstitutionCard';
 import ConfirmDialog from '../../components/ConfirmDialog';
 import { StyledRightAlignedButtonWrapper } from '../../components/styled/Wrappers';
-import NormalText from '../../components/NormalText';
 
 const UserInstitution: FC = () => {
   const authority = useSelector((state: RootStore) => state.user.authority);
@@ -89,7 +86,7 @@ const UserInstitution: FC = () => {
   return (
     <>
       <Card>
-        <Heading>{t('heading.organizations')}</Heading>
+        <Typography variant="h5">{t('heading.organizations')}</Typography>
         {authority?.orgunitids &&
           authority.orgunitids.map((orgunitId) => (
             <InstitutionCard
@@ -120,7 +117,7 @@ const UserInstitution: FC = () => {
         onAccept={removeAffiliation}
         onCancel={() => setAffiliationIdToRemove('')}
         isLoading={isRemovingAffiliation}>
-        <NormalText>{t('organization.confirm_remove_affiliation_text')}</NormalText>
+        <Typography>{t('organization.confirm_remove_affiliation_text')}</Typography>
       </ConfirmDialog>
     </>
   );

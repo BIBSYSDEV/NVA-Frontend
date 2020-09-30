@@ -7,6 +7,7 @@ export enum BackendTypeNames {
   FILE_SET = 'FileSet',
   GRANT = 'Grant',
   IDENTITY = 'Identity',
+  INDEX_DATE = 'IndexDate',
   LICENSE = 'License',
   ORGANIZATION = 'Organization',
   PAGES_MONOGRAPH = 'MonographPages',

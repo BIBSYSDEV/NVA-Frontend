@@ -7,19 +7,18 @@ describe('Publication: References: Report', () => {
   it('The user should be able to fill out the form for report type', () => {
     cy.mocklogin();
     // navigate to References (update this when functionality for starting a registration is done)
-    cy.get('[data-testid=menu]').click({ force: true });
-    cy.get('[data-testid=menu-new-publication-button]').click({ force: true });
+    cy.get('[data-testid=new-publication]').click({ force: true });
 
     cy.startPublicationWithDoi();
 
-    cy.get('[data-testid=nav-tabpanel-references]').click({ force: true });
+    cy.get('[data-testid=nav-tabpanel-reference]').click({ force: true });
 
     // choose Report type
     cy.get('[data-testid=publication-context-type]').click({ force: true }).type(' '); //makes the select options open
-    cy.get('[data-testid=publication-instance-type-Report]').should('be.visible');
-    cy.get('[data-testid=publication-instance-type-Report]').click({ force: true });
+    cy.get('[data-testid=publication-context-type-Report]').should('be.visible');
+    cy.get('[data-testid=publication-context-type-Report]').click({ force: true });
 
-    cy.get('[data-testid=publication-instance-type-heading]').contains('Report');
+    cy.get('[data-testid=publication-context-type-heading]').contains('Report');
 
     // search for and select a publisher
     cy.get('[data-testid=autosearch-publisher]').click({ force: true }).type('Test');
@@ -27,10 +26,10 @@ describe('Publication: References: Report', () => {
     cy.get('[data-testid=autosearch-results-publisher]').contains('Novum Testamentum');
 
     // fill out ISBN_LIST field
-    // TODO cy.get('[data-testid=isbn]').type('978-3-16-148410-0');
+    cy.get('[data-testid=isbn-input]').type('978-1-78-763271-4');
 
     // fill out number of pages field
-    cy.get('[data-testid=pages]').type('483');
+    cy.get('[data-testid=pages-input]').type('483');
 
     // search and select a series
     cy.get('[data-testid=autosearch-series]').click({ force: true }).type('Test');

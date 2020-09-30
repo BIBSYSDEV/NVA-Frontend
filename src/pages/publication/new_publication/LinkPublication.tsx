@@ -2,10 +2,8 @@ import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
-
-import { Button } from '@material-ui/core';
+import { Button, Typography } from '@material-ui/core';
 import LinkIcon from '@material-ui/icons/Link';
-
 import { getPublicationByDoi } from '../../../api/publicationApi';
 import LinkPublicationForm, { DoiFormValues } from './LinkPublicationForm';
 import PublicationAccordion from './PublicationAccordion';
@@ -13,20 +11,14 @@ import { Doi } from '../../../types/publication.types';
 import { useDispatch } from 'react-redux';
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../types/notification.types';
-import { doiValidationSchema } from '../PublicationFormValidationSchema';
+import { doiValidationSchema } from '../../../utils/validation/doiSearchValidation';
 
 const StyledBody = styled.div`
   width: 100%;
 `;
 
-const StyledHeading = styled.span`
-  font-size: 1.2rem;
-  margin: 1rem 0;
-`;
-
-const StyledTitle = styled.div`
-  font-weight: bold;
-  margin-bottom: 1rem;
+const StyledTypography = styled(Typography)`
+  margin: 1.5rem 0;
 `;
 
 interface LinkPublicationPanelProps {
@@ -72,20 +64,21 @@ const LinkPublicationPanel: FC<LinkPublicationPanelProps> = ({ expanded, onChang
 
   return (
     <PublicationAccordion
-      headerLabel={t('publication:publication.start_with_link_to_publication')}
+      headerLabel={t('publication:publication.start_with_link_to_resource')}
       icon={<LinkIcon className="icon" />}
       expanded={expanded}
       onChange={onChange}
       ariaControls="publication-method-link"
       dataTestId="new-publication-link">
       <StyledBody>
-        {t('publication:publication.link_publication_description')}
+        <Typography>{t('publication:publication.link_to_resource_description')}</Typography>
         <LinkPublicationForm handleSearch={handleSearch} />
-        {noHit && <p>{t('common:no_hits')}</p>}
+        {noHit && <Typography>{t('common:no_hits')}</Typography>}
         {doi && (
           <>
-            <StyledHeading> {t('publication:heading.publication')}:</StyledHeading>
-            <StyledTitle>{doi.title}</StyledTitle>
+            <StyledTypography variant="h6">
+              {t('publication:heading.publication')}: <b>{doi.title}</b>
+            </StyledTypography>
             <Button
               fullWidth
               color="primary"

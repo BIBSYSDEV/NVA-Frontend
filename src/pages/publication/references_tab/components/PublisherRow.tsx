@@ -1,16 +1,13 @@
 import React, { useEffect, FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { Button } from '@material-ui/core';
+import { Button, Typography } from '@material-ui/core';
 import { FormikProps, useFormikContext } from 'formik';
-
 import { Publisher, levelMap, Publication } from '../../../../types/publication.types';
-import Label from '../../../../components/Label';
 import { getPublishers } from '../../../../api/publicationChannelApi';
 import { PublicationTableNumber } from '../../../../utils/constants';
 import { ReferenceFieldNames } from '../../../../types/publicationFieldNames';
 import Card from '../../../../components/Card';
-import NormalText from '../../../../components/NormalText';
 
 const StyledPublisherCard = styled(Card)`
   margin: 1rem 0;
@@ -29,19 +26,19 @@ const StyledPublisherCard = styled(Card)`
   }
 `;
 
-const StyledTitle = styled(Label)`
+const StyledTitle = styled(Typography)`
   grid-area: titleLabel;
 `;
 
-const StyledLevelLabel = styled(Label)`
+const StyledLevelLabel = styled(Typography)`
   grid-area: levelLabel;
 `;
 
-const StyledTitleText = styled(NormalText)`
+const StyledTitleText = styled(Typography)`
   grid-area: title;
 `;
 
-const StyledLevelText = styled(NormalText)`
+const StyledLevelText = styled(Typography)`
   grid-area: level;
 `;
 
@@ -86,8 +83,8 @@ const PublisherRow: FC<PublisherRowProps> = ({ dataTestId, label, onClickDelete,
 
   return (
     <StyledPublisherCard data-testid={dataTestId}>
-      <StyledTitle>{label}</StyledTitle>
-      <StyledLevelLabel>{t('references.level')}</StyledLevelLabel>
+      <StyledTitle variant="h6">{label}</StyledTitle>
+      <StyledLevelLabel variant="h6">{t('references.level')}</StyledLevelLabel>
       <StyledTitleText>{title}</StyledTitleText>
       <StyledLevelText>{publisherLevel}</StyledLevelText>
       <StyledButton data-testid="remove-publisher" variant="contained" color="secondary" onClick={onClickDelete}>

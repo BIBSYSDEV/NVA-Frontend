@@ -8,8 +8,7 @@ describe('Publication: Contributors', () => {
     cy.mocklogin();
 
     // navigate to Contributors
-    cy.get('[data-testid=menu]').click({ force: true });
-    cy.get('[data-testid=menu-new-publication-button]').click({ force: true });
+    cy.get('[data-testid=new-publication]').click({ force: true });
 
     cy.startPublicationWithDoi();
 

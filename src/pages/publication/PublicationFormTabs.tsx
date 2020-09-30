@@ -1,17 +1,15 @@
 import { FormikProps, useFormikContext } from 'formik';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
-
+import styled from 'styled-components';
 import { Tabs } from '@material-ui/core';
 
 import LinkTab from '../../components/LinkTab';
 import { Publication } from '../../types/publication.types';
 import { ReferenceFieldNames, DescriptionFieldNames } from '../../types/publicationFieldNames';
 import { hasTouchedError, getAllFileFields, getAllContributorFields } from '../../utils/formik-helpers';
-import styled from 'styled-components';
 
 const StyledTabs = styled(Tabs)`
-  background-color: ${({ theme }) => theme.overrides.MuiTab.root.background};
   @media (min-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
     .MuiTabs-flexContainer {
       justify-content: center;
@@ -39,10 +37,7 @@ export const PublicationFormTabs: FC<PublicationFormTabsProps> = ({ handleTabCha
   const { t } = useTranslation('publication');
   const { errors, touched, values }: FormikProps<Publication> = useFormikContext();
   const {
-    entityDescription: {
-      contributors,
-      reference: { doi },
-    },
+    entityDescription: { contributors },
     fileSet: { files = [] },
   } = values;
 
@@ -52,29 +47,30 @@ export const PublicationFormTabs: FC<PublicationFormTabsProps> = ({ handleTabCha
       onChange={handleTabChange}
       scrollButtons="auto"
       textColor="primary"
+      indicatorColor="primary"
       value={tabNumber}
       variant="scrollable">
       <LinkTab
-        label={`1. ${t('heading.description')}`}
+        label={t('heading.description')}
         {...a11yProps('description')}
         error={hasTouchedError(errors, touched, descriptionFieldNames)}
       />
       <LinkTab
-        label={`2. ${t('heading.references')}`}
-        {...a11yProps('references')}
+        label={t('heading.reference')}
+        {...a11yProps('reference')}
         error={hasTouchedError(errors, touched, referenceFieldNames)}
       />
       <LinkTab
-        label={`3. ${t('heading.contributors')}`}
+        label={t('heading.contributors')}
         {...a11yProps('contributors')}
         error={hasTouchedError(errors, touched, getAllContributorFields(contributors))}
       />
       <LinkTab
-        label={`4. ${t('heading.files_and_license')}`}
+        label={t('heading.files_and_license')}
         {...a11yProps('files-and-license')}
         error={hasTouchedError(errors, touched, getAllFileFields(files))}
       />
-      <LinkTab label={`5. ${doi ? t('heading.registration') : t('heading.publishing')}`} {...a11yProps('submission')} />
+      <LinkTab label={t('heading.summary')} {...a11yProps('submission')} />
     </StyledTabs>
   );
 };
