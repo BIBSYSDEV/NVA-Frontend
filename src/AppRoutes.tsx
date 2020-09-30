@@ -14,6 +14,7 @@ import {
 } from './utils/routes/Routes';
 import { useSelector } from 'react-redux';
 import { RootStore } from './redux/reducers/rootReducer';
+import Forbidden from './pages/errorpages/Forbidden';
 
 const Dashboard = lazy(() => import('./pages/dashboard/Dashboard'));
 const EditPublication = lazy(() => import('./pages/publication/EditPublication'));
@@ -43,6 +44,7 @@ const AppRoutes: FC = () => {
         <Route exact path="/search/:searchTerm" component={Search} />
         <Route exact path="/search/:searchTerm/:offset" component={Search} />
         <Route exact path="/logout" component={Logout} />
+        <Route exact path="/forbidden" component={Forbidden} />
 
         {user && (
           <>

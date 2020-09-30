@@ -49,6 +49,7 @@ const PublicationForm: FC<PublicationFormProps> = ({ identifier, closeForm }) =>
   const dispatch = useDispatch();
   const uppy = useUppy();
   const [publication, isLoadingPublication, handleSetPublication] = useFetchPublication(identifier);
+  const isOwner = publication?.owner === user.id;
 
   useEffect(() => {
     if (!publication && !isLoadingPublication) {
@@ -62,10 +63,14 @@ const PublicationForm: FC<PublicationFormProps> = ({ identifier, closeForm }) =>
 
   useEffect(() => {
     // Redirect to public page if non-curator is opening a published publication
-    if (publication?.status === PublicationStatus.PUBLISHED && !user.isCurator) {
-      history.push(`/publication/${identifier}/public`);
+    if (!user.isCurator) {
+      if (publication?.status === PublicationStatus.PUBLISHED) {
+        history.push(`/publication/${identifier}/public`);
+      } else if (publication?.status === PublicationStatus.DRAFT && !isOwner) {
+        history.push('/forbidden');
+      }
     }
-  }, [history, identifier, publication, user.isCurator]);
+  }, [history, identifier, publication, user, isOwner]);
 
   const handleTabChange = (_: React.ChangeEvent<{}>, newTabNumber: number) => {
     setTabNumber(newTabNumber);
