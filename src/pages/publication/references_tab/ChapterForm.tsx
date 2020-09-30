@@ -103,7 +103,7 @@ const ChapterForm: FC = () => {
       <DoiField />
 
       <Field name={ReferenceFieldNames.LINKED_CONTEXT}>
-        {({ field: { name }, form: { setFieldValue }, meta: { error } }: FieldProps) => (
+        {({ field: { name, value }, form: { setFieldValue }, meta: { error } }: FieldProps) => (
           <>
             <AutoSearch
               clearSearchField
@@ -118,7 +118,7 @@ const ChapterForm: FC = () => {
               errorMessage={error}
             />
 
-            {book && (
+            {value && book && (
               <StyledCard data-testid="autosearch-results-book">
                 <StyledTitle>
                   <Typography>{t('common:title')}</Typography>
