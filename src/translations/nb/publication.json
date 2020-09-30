@@ -68,7 +68,7 @@
       "no_open_publishment": "Unit har ingen avtale om åpen publisering med utgiver av valgt tidsskrift",
       "open_access": "Open Access",
       "open_publishment": "Unit har inngått avtale om åpen publisering av valgt tidsskrift",
-      "title": "Informasjon fra Kanalregister"
+      "title": "Informasjon fra Register over vitenskapelige publiseringskanaler"
     },
     "license": "Lisens",
     "licenses": "Lisenser",
@@ -89,9 +89,7 @@
     "files_and_license": "Filer og lisens",
     "publication": "Publikasjon",
     "publish_settings": "Publiseringsvalg",
-    "publishing": "Publiser",
     "reference": "Referanse",
-    "registration": "Registrer",
     "summary": "Oppsummering",
     "validation_errors": "Valideringsfeil"
   },
@@ -104,13 +102,12 @@
     "requested_doi": "Venter på DOI..."
   },
   "publication": {
-    "info_text": "Velg ressursen du ønsker å registrere eller publisere ved å laste opp ressurs eller lenke til en publikasjon.",
-    "link_publication_description": "Feks. DOI lenke, lenke til artikkel, lenke til video av foredrag etc.",
-    "link_to_publication": "Lenke til publikasjon",
-    "load_file": "Last opp fil",
     "latest_publications": "Siste publikasjoner",
+    "link_to_resource": "Lenke til ressurs",
+    "link_to_resource_description": "F.eks. DOI, lenke til artikkel, lenke til video av presentasjon etc.",
     "no_published_publications_yet": "Det finnes ingen publiserte publikasjoner enda",
-    "start_with_link_to_publication": "Start med en lenke til en publikasjon"
+    "start_with_link_to_resource": "Lenke til original versjon hvis ressursen allerede er publisert på Internett",
+    "start_with_uploading_file": "Last opp fil hvis ressursen skal publiseres på Internett for første gang"
   },
   "references": {
     "article_number": "Artikkelnummer",
@@ -131,7 +128,7 @@
     "number_of_pages": "Totalt antall sider",
     "nvi_header": "Norsk vitenskapsindeks - NVI",
     "nvi_success": "Denne publikasjonen kan inngå i NVI",
-    "nvi_fail_not_rated": "Denne publikajsonen kan ikke inngå i NVI, da valgt tidsskrift er ikke på nivå 1 eller 2. \n\n(Tidsskriftets nivå i Kanalregisteret kan bli endret, slik at publikasjonen likevel kan inngå i NVI)",
+    "nvi_fail_not_rated": "Denne publikasjonen kan ikke inngå i NVI, da valgt tidsskrift ikke er på nivå 1 eller 2. \n\n(Tidsskriftets nivå kan bli endret, slik at publikasjonen likevel kan inngå i NVI)",
     "nvi_fail_no_peer_review": "Denne publikasjonen kan ikke inngå i NVI, da den ikke er fagfellevurdert.",
     "or": "Eller",
     "pages": "Sidetall",
