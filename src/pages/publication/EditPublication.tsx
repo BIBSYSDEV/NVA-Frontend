@@ -26,28 +26,24 @@ const EditPublication: FC = () => {
     setShowForm(true);
   };
 
-  return (
+  return !showForm || !identifier ? (
     <>
-      {!showForm || !identifier ? (
-        <>
-          <PageHeader>{t('new_publication')}</PageHeader>
-          <StyledEditPublication>
-            <LinkPublication
-              expanded={expanded === 'link-panel'}
-              onChange={handleChange('link-panel')}
-              openForm={handleClick}
-            />
-            <LoadPublication
-              expanded={expanded === 'load-panel'}
-              onChange={handleChange('load-panel')}
-              openForm={() => setShowForm(true)}
-            />
-          </StyledEditPublication>
-        </>
-      ) : (
-        <PublicationForm identifier={identifier} closeForm={() => setShowForm(false)} />
-      )}
+      <PageHeader>{t('new_publication')}</PageHeader>
+      <StyledEditPublication>
+        <LinkPublication
+          expanded={expanded === 'link-panel'}
+          onChange={handleChange('link-panel')}
+          openForm={handleClick}
+        />
+        <LoadPublication
+          expanded={expanded === 'load-panel'}
+          onChange={handleChange('load-panel')}
+          openForm={() => setShowForm(true)}
+        />
+      </StyledEditPublication>
     </>
+  ) : (
+    <PublicationForm identifier={identifier} closeForm={() => setShowForm(false)} />
   );
 };
 
