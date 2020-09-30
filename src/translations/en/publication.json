@@ -68,7 +68,7 @@
       "no_open_publishment": "Unit doesn't have any agreement for open publishing with publisher of selected journal",
       "open_access": "Open Access",
       "open_publishment": "Unit has an agreement for open publishing with publisher of selected journal",
-      "title": "Information from publication channel register"
+      "title": "Information from Norwegian Register for Scientific Journals, Series and Publishers"
     },
     "license": "License",
     "licenses": "Licenses",
@@ -128,7 +128,7 @@
     "number_of_pages": "Total number of pages",
     "nvi_header": "Norwegian Science Index - NSI",
     "nvi_success": "This publication can be included in NSI",
-    "nvi_fail_not_rated": "This publication can not be included in NSI, since selected journal is not at level 1 or 2. \n\n(The journal's level may be changed in the Publication Channel Registry, so the publication can ble included in NSI)",
+    "nvi_fail_not_rated": "This publication can not be included in NSI, since selected journal is not at level 1 or 2. \n\n(The journal's level may be changed, so the publication can be included in NSI)",
     "nvi_fail_no_peer_review": "This publication can not be incuded in NSI, since it's not peer reviewed.",
     "or": "Or",
     "pages": "Pages",
