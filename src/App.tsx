@@ -11,7 +11,7 @@ import Footer from './layout/Footer';
 import Header from './layout/header/Header';
 import Notifier from './layout/Notifier';
 import AuthorityOrcidModal from './pages/user/authority/AuthorityOrcidModal';
-import { setAuthorityData, setPossibleAuthorities, setUser, setRoles } from './redux/actions/userActions';
+import { setAuthorityData, setPossibleAuthorities, setUser } from './redux/actions/userActions';
 import { RootStore } from './redux/reducers/rootReducer';
 import { Authority } from './types/authority.types';
 import { awsConfig } from './utils/aws-config';
@@ -20,9 +20,7 @@ import { mockUser } from './utils/testfiles/mock_feide_user';
 import AppRoutes from './AppRoutes';
 import useFetchAuthorities from './utils/hooks/useFetchAuthorities';
 import { setNotification } from './redux/actions/notificationActions';
-import { getInstitutionUser } from './api/roleApi';
 import { NotificationVariant } from './types/notification.types';
-import { InstitutionUser } from './types/user.types';
 
 const StyledApp = styled.div`
   min-height: 100vh;
@@ -68,15 +66,11 @@ const App: FC = () => {
       if (feideUser) {
         if (feideUser.error) {
           dispatch(setNotification(feideUser.error, NotificationVariant.Error));
-          setIsLoadingUser(false);
         } else if (feideUser) {
           dispatch(setUser(feideUser));
-          // Wait with setting isLoadingUser to false until roles are loaded in separate useEffect,
-          // which will be trigged when user is updated in redux
         }
-      } else {
-        setIsLoadingUser(false);
       }
+      setIsLoadingUser(false);
     };
 
     if (USE_MOCK_DATA) {
@@ -86,26 +80,6 @@ const App: FC = () => {
       getUser();
     }
   }, [dispatch]);
-
-  useEffect(() => {
-    // Fetch logged in user's roles
-    const getRoles = async () => {
-      const institutionUser = await getInstitutionUser(user.id);
-      if (institutionUser) {
-        if (institutionUser.error) {
-          dispatch(setNotification(institutionUser.error, NotificationVariant.Error));
-        } else {
-          const roles = (institutionUser as InstitutionUser).roles.map((role) => role.rolename);
-          dispatch(setRoles(roles));
-        }
-        setIsLoadingUser(false);
-      }
-    };
-
-    if (user?.id && !user.roles) {
-      getRoles();
-    }
-  }, [dispatch, user]);
 
   useEffect(() => {
     // Update search term for fetching possible authorities

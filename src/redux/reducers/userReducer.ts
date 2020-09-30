@@ -1,13 +1,7 @@
 import { RoleName, User, Affiliation } from '../../types/user.types';
 import { AuthActions, LOGOUT_SUCCESS } from '../actions/authActions';
 import { OrcidActions, SET_EXTERNAL_ORCID } from '../actions/orcidActions';
-import {
-  SET_AUTHORITY_DATA,
-  SET_POSSIBLE_AUTHORITIES,
-  SET_USER_SUCCESS,
-  SET_ROLES,
-  UserActions,
-} from '../actions/userActions';
+import { SET_AUTHORITY_DATA, SET_POSSIBLE_AUTHORITIES, SET_USER_SUCCESS, UserActions } from '../actions/userActions';
 
 export const userReducer = (state: User | null = null, action: UserActions | OrcidActions | AuthActions) => {
   switch (action.type) {
@@ -21,6 +15,9 @@ export const userReducer = (state: User | null = null, action: UserActions | Orc
             .filter((affiliation) => affiliation) as Affiliation[])
         : [];
 
+      const customerId = action.user['custom:customerId'];
+      const roles = action.user['custom:applicationRoles'].split(',') as RoleName[];
+
       const user: Partial<User> = {
         name: action.user.name,
         email: action.user.email,
@@ -28,22 +25,17 @@ export const userReducer = (state: User | null = null, action: UserActions | Orc
         institution: action.user['custom:orgName'],
         cristinId: action.user['custom:cristinId'] ?? action.user.cristinId,
         customerId: action.user['custom:customerId'],
+        roles: roles,
+        isCreator: !!customerId && roles.some((role) => role === RoleName.CREATOR),
+        isAppAdmin: !!customerId && roles.some((role) => role === RoleName.APP_ADMIN),
+        isInstitutionAdmin: !!customerId && roles.some((role) => role === RoleName.INSTITUTION_ADMIN),
+        isCurator: !!customerId && roles.some((role) => role === RoleName.CURATOR),
         affiliations,
         givenName: action.user.given_name,
         familyName: action.user.family_name,
         possibleAuthorities: [],
       };
       return user;
-
-    case SET_ROLES:
-      return {
-        ...state,
-        roles: action.roles,
-        isCreator: state?.customerId && action.roles.some((role) => role === RoleName.CREATOR),
-        isAppAdmin: state?.customerId && action.roles.some((role) => role === RoleName.APP_ADMIN),
-        isInstitutionAdmin: state?.customerId && action.roles.some((role) => role === RoleName.INSTITUTION_ADMIN),
-        isCurator: state?.customerId && action.roles.some((role) => role === RoleName.CURATOR),
-      };
     case SET_EXTERNAL_ORCID:
       return {
         ...state,
