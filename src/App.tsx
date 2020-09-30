@@ -66,6 +66,7 @@ const App: FC = () => {
     // Fetch attributes of authenticated user
     const getUser = async () => {
       const feideUser = await getCurrentUserAttributes();
+      console.log('feideUser', feideUser);
       if (feideUser) {
         if (feideUser.error) {
           dispatch(setNotification(feideUser.error, NotificationVariant.Error));
