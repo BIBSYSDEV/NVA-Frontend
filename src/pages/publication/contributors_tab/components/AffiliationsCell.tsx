@@ -87,11 +87,7 @@ const AffiliationsCell: FC<AffiliationsCellProps> = ({ affiliations, baseFieldNa
           </Button>
         </StyledCard>
       ))}
-      <Button
-        variant="outlined"
-        size="small"
-        data-testid={`button-add-affiliation-${affiliation.id}`}
-        onClick={toggleAffiliationModal}>
+      <Button variant="outlined" size="small" data-testid="button-add-affiliation" onClick={toggleAffiliationModal}>
         <AddIcon />
         {t('contributors.add_affiliation')}
       </Button>
