@@ -28,7 +28,7 @@ const EditPublication: FC = () => {
 
   return !showForm || !identifier ? (
     <>
-      <PageHeader>{t('new_publication')}</PageHeader>
+      <PageHeader>{t('new_registration')}</PageHeader>
       <StyledEditPublication>
         <LinkPublication
           expanded={expanded === 'link-panel'}
