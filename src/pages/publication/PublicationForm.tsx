@@ -19,6 +19,8 @@ import { RootStore } from '../../redux/reducers/rootReducer';
 import useFetchPublication from '../../utils/hooks/useFetchPublication';
 import useUppy from '../../utils/hooks/useUppy';
 import { publicationValidationSchema } from '../../utils/validation/publication/publicationValidation';
+import { PageHeader } from '../../components/PageHeader';
+import Forbidden from '../errorpages/Forbidden';
 
 const StyledPublication = styled.div`
   width: 100%;
@@ -49,6 +51,7 @@ const PublicationForm: FC<PublicationFormProps> = ({ identifier, closeForm }) =>
   const dispatch = useDispatch();
   const uppy = useUppy();
   const [publication, isLoadingPublication, handleSetPublication] = useFetchPublication(identifier);
+  const isOwner = publication?.owner === user.id;
 
   useEffect(() => {
     if (!publication && !isLoadingPublication) {
@@ -62,7 +65,7 @@ const PublicationForm: FC<PublicationFormProps> = ({ identifier, closeForm }) =>
 
   useEffect(() => {
     // Redirect to public page if non-curator is opening a published publication
-    if (publication?.status === PublicationStatus.PUBLISHED && !user.isCurator) {
+    if (!user.isCurator && publication?.status === PublicationStatus.PUBLISHED) {
       history.push(`/publication/${identifier}/public`);
     }
   }, [history, identifier, publication, user.isCurator]);
@@ -104,51 +107,56 @@ const PublicationForm: FC<PublicationFormProps> = ({ identifier, closeForm }) =>
 
   return isLoadingPublication ? (
     <CircularProgress />
+  ) : !isOwner && !user.isCurator ? (
+    <Forbidden />
   ) : (
-    <StyledPublication>
-      <Formik
-        enableReinitialize
-        initialValues={publication ? deepmerge(emptyPublication, publication) : emptyPublication}
-        validate={validateForm}
-        onSubmit={(values: Publication) => savePublication(values)}>
-        {({ dirty, values, isValid }: FormikProps<Publication>) => (
-          <>
-            <RouteLeavingGuard
-              modalDescription={t('modal_unsaved_changes_description')}
-              modalHeading={t('modal_unsaved_changes_heading')}
-              shouldBlockNavigation={dirty || !isValid}
-            />
-            <Form>
-              <PublicationFormTabs tabNumber={tabNumber} handleTabChange={handleTabChange} />
-              <PublicationFormContent
-                tabNumber={tabNumber}
-                uppy={uppy}
-                isSaving={isSaving}
-                savePublication={savePublication}
+    <>
+      <PageHeader>{t('edit_publication')}</PageHeader>
+      <StyledPublication>
+        <Formik
+          enableReinitialize
+          initialValues={publication ? deepmerge(emptyPublication, publication) : emptyPublication}
+          validate={validateForm}
+          onSubmit={(values: Publication) => savePublication(values)}>
+          {({ dirty, values, isValid }: FormikProps<Publication>) => (
+            <>
+              <RouteLeavingGuard
+                modalDescription={t('modal_unsaved_changes_description')}
+                modalHeading={t('modal_unsaved_changes_heading')}
+                shouldBlockNavigation={dirty || !isValid}
               />
-            </Form>
-            {tabNumber !== PublicationTab.Submission && (
-              <StyledButtonGroupContainer>
-                <StyledButtonContainer>
-                  <Button color="primary" variant="contained" data-testid="button-next-tab" onClick={goToNextTab}>
-                    {t('common:next')}
-                  </Button>
-                </StyledButtonContainer>
+              <Form>
+                <PublicationFormTabs tabNumber={tabNumber} handleTabChange={handleTabChange} />
+                <PublicationFormContent
+                  tabNumber={tabNumber}
+                  uppy={uppy}
+                  isSaving={isSaving}
+                  savePublication={savePublication}
+                />
+              </Form>
+              {tabNumber !== PublicationTab.Submission && (
+                <StyledButtonGroupContainer>
+                  <StyledButtonContainer>
+                    <Button color="primary" variant="contained" data-testid="button-next-tab" onClick={goToNextTab}>
+                      {t('common:next')}
+                    </Button>
+                  </StyledButtonContainer>
 
-                <StyledButtonContainer>
-                  <ButtonWithProgress
-                    isLoading={isSaving}
-                    data-testid="button-save-publication"
-                    onClick={() => savePublication(values)}>
-                    {t('common:save')}
-                  </ButtonWithProgress>
-                </StyledButtonContainer>
-              </StyledButtonGroupContainer>
-            )}
-          </>
-        )}
-      </Formik>
-    </StyledPublication>
+                  <StyledButtonContainer>
+                    <ButtonWithProgress 
+                      isLoading={isSaving} 
+                      data-testid="button-save-publication"
+                      onClick={() => savePublication(values)}>
+                      {t('common:save')}
+                    </ButtonWithProgress>
+                  </StyledButtonContainer>
+                </StyledButtonGroupContainer>
+              )}
+            </>
+          )}
+        </Formik>
+      </StyledPublication>
+    </>
   );
 };
 
