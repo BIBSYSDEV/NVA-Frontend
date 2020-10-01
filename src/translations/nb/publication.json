@@ -96,9 +96,9 @@
   "new_publication": "Ny publikasjon",
   "public_page": {
     "message_to_curator": "Melding til kurator",
-    "reserve_doi": "Reserver DOI",
-    "request_doi": "Be om DOI",
-    "request_doi_description": "Forespørselen vil bli behandlet av en kurator. Legg til en melding ved eventuelle spørsmål eller oppklaringer. Du vil få en epost når forespørselen er behandlet.",
+    "reserve_doi": "Reserver en DOI",
+    "request_doi": "Be om en DOI",
+    "request_doi_description": "Når du ber om en DOI (Digital Object Identifier) vil bestillingen gå via en kurator ved din institusjon for kvalitetskontroll. Legg til en melding ved eventuelle spørsmål eller oppklaringer. Du vil få en epost når forespørselen er behandlet.",
     "requested_doi": "Venter på DOI..."
   },
   "publication": {
