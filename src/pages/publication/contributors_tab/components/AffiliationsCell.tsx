@@ -77,13 +77,17 @@ const AffiliationsCell: FC<AffiliationsCellProps> = ({ affiliations, baseFieldNa
       {affiliations?.map((affiliation) => (
         <StyledCard key={affiliation.id}>
           <AffiliationHierarchy unitUri={affiliation.id} />
-          <Button variant="outlined" size="small" onClick={() => setAffiliationToRemove(affiliation)}>
+          <Button
+            variant="outlined"
+            size="small"
+            data-testid={`button-remove-affiliation-${affiliation.id}`}
+            onClick={() => setAffiliationToRemove(affiliation)}>
             <DeleteIcon />
             {t('common:remove')}
           </Button>
         </StyledCard>
       ))}
-      <Button variant="outlined" size="small" onClick={toggleAffiliationModal}>
+      <Button variant="outlined" size="small" data-testid="button-add-affiliation" onClick={toggleAffiliationModal}>
         <AddIcon />
         {t('contributors.add_affiliation')}
       </Button>

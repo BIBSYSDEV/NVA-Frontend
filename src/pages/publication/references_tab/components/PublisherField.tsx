@@ -48,6 +48,7 @@ const PublisherField: FC<PublisherFieldProps> = ({
               dataTestId="autosearch-results-publisher"
               publisher={value.title ? value : { ...value, title: value.publisher }}
               label={label}
+              data-testid="delete-publisher"
               onClickDelete={() => {
                 setFieldValue(name, { ...value, publisher: '', title: '', level: '', url: '' });
               }}

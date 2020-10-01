@@ -135,7 +135,11 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication, 
         </Card>
       </Card>
       <StyledButtonGroupContainer>
-        <StyledButtonWithProgress disabled={isSaving || !isValid} onClick={onClickPublish} isLoading={isPublishing}>
+        <StyledButtonWithProgress
+          disabled={isSaving || !isValid}
+          data-testid="button-publish-publication"
+          onClick={onClickPublish}
+          isLoading={isPublishing}>
           {t('common:publish')}
         </StyledButtonWithProgress>
         {user.isCurator ? (
@@ -145,6 +149,7 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication, 
                 <StyledButton
                   color="primary"
                   variant="contained"
+                  data-testid="button-create-doi"
                   onClick={onClickCreateDoi}
                   disabled={isSaving || !isValid}>
                   {t('common:create_doi')}
@@ -152,6 +157,7 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication, 
                 <StyledButton
                   color="secondary"
                   variant="outlined"
+                  data-testid="button-reject-doi"
                   onClick={onClickRejectDoi}
                   disabled={isSaving || !isValid}>
                   {t('common:reject_doi')}
@@ -161,6 +167,7 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication, 
             <ButtonWithProgress
               disabled={isPublishing}
               isLoading={isSaving}
+              data-testid="button-save-publication"
               onClick={async () => {
                 await savePublication(values);
                 history.push(`/publication/${values.identifier}/public`);
@@ -169,7 +176,11 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication, 
             </ButtonWithProgress>
           </>
         ) : (
-          <ButtonWithProgress disabled={isPublishing} isLoading={isSaving} onClick={() => savePublication(values)}>
+          <ButtonWithProgress
+            disabled={isPublishing}
+            isLoading={isSaving}
+            data-testid="button-save-publication"
+            onClick={() => savePublication(values)}>
             {t('common:save')}
           </ButtonWithProgress>
         )}
