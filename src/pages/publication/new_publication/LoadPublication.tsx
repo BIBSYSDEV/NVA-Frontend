@@ -45,7 +45,7 @@ const LoadPublication: FC<LoadPublicationProps> = ({ expanded, onChange, openFor
     const publication = await createPublication(publicationPayload);
     if (publication?.identifier) {
       openForm();
-      history.push(`/publication/${publication.identifier}`);
+      history.push(`/registration/${publication.identifier}`);
     } else {
       setIsLoading(false);
       dispatch(setNotification(t('feedback:error.create_publication'), NotificationVariant.Error));

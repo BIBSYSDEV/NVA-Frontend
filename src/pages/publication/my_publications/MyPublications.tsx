@@ -46,7 +46,7 @@ const MyPublications: FC = () => {
 
   return (
     <>
-      <PageHeader>{t('my_publications')}</PageHeader>
+      <PageHeader>{t('my_registrations')}</PageHeader>
       <StyledContainer>
         <StyledRightAlignedButtonWrapper>
           {user.authority && (

@@ -60,7 +60,7 @@ const PublicationForm: FC<PublicationFormProps> = ({ identifier, closeForm }) =>
   }, [closeForm, publication, isLoadingPublication]);
 
   useEffect(() => {
-    history.replace(`/publication/${identifier}`, { title: publication?.entityDescription?.mainTitle });
+    history.replace(`/registration/${identifier}`, { title: publication?.entityDescription?.mainTitle });
   }, [history, identifier, publication]);
 
   useEffect(() => {
@@ -69,7 +69,7 @@ const PublicationForm: FC<PublicationFormProps> = ({ identifier, closeForm }) =>
       const isValidOwner = user.isCreator && user.id === publication.owner;
       const isValidCurator = user.isCurator && user.customerId === publication.publisher.id;
       if (!isValidOwner && !isValidCurator) {
-        history.push(`/publication/${publication.identifier}/public`);
+        history.push(`/registration/${publication.identifier}/public`);
       }
     }
   }, [history, publication, user]);
@@ -122,12 +122,12 @@ const PublicationForm: FC<PublicationFormProps> = ({ identifier, closeForm }) =>
           initialValues={publication ? deepmerge(emptyPublication, publication) : emptyPublication}
           validate={validateForm}
           onSubmit={(values: Publication) => savePublication(values)}>
-          {({ dirty, values, isValid }: FormikProps<Publication>) => (
+          {({ dirty, values }: FormikProps<Publication>) => (
             <>
               <RouteLeavingGuard
                 modalDescription={t('modal_unsaved_changes_description')}
                 modalHeading={t('modal_unsaved_changes_heading')}
-                shouldBlockNavigation={dirty || !isValid}
+                shouldBlockNavigation={dirty}
               />
               <Form>
                 <PublicationFormTabs tabNumber={tabNumber} handleTabChange={handleTabChange} />

@@ -98,7 +98,7 @@ const PublicationList: FC<PublicationListProps> = ({ publications }) => {
                     color="primary"
                     variant="outlined"
                     component={RouterLink}
-                    to={`/publication/${publication.identifier}/public`}
+                    to={`/registration/${publication.identifier}/public`}
                     data-testid={`open-publication-${publication.identifier}`}>
                     <MenuBookIcon />
                     <StyledNormalTextWithIcon>{t('common:show')}</StyledNormalTextWithIcon>
@@ -109,7 +109,7 @@ const PublicationList: FC<PublicationListProps> = ({ publications }) => {
                     color="primary"
                     variant="outlined"
                     component={RouterLink}
-                    to={`/publication/${publication.identifier}`}
+                    to={`/registration/${publication.identifier}`}
                     data-testid={`edit-publication-${publication.identifier}`}>
                     <EditIcon />
                     <StyledNormalTextWithIcon>{t('common:edit')}</StyledNormalTextWithIcon>

@@ -81,7 +81,7 @@ const WorklistTable: FC<WorklistTableProps> = ({ publications }) => {
                   <Button
                     color="primary"
                     component={RouterLink}
-                    to={`/publication/${publication.identifier}?tab=${PublicationTab.Submission}`}
+                    to={`/registration/${publication.identifier}?tab=${PublicationTab.Submission}`}
                     data-testid={`open-publication-${publication.identifier}`}
                     variant="contained">
                     <NormalText>{t('common:open')}</NormalText>
