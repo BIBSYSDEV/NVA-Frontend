@@ -18,8 +18,7 @@
   "my_registrations": "My registrations",
   "my_worklist": "My worklist",
   "no_pending_publications": "You don't have any publications awaiting approval",
-  "publication_name": "Publication name",
-  "published_publications": "Published publications",
+  "published_registrations": "Published registrations",
   "submitter": "Submitter",
-  "unpublished_publications": "Unpublished publications"
+  "unpublished_registrations": "Unpublished registrations"
 }

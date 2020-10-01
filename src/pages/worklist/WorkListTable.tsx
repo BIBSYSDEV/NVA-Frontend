@@ -54,7 +54,7 @@ const WorklistTable: FC<WorklistTableProps> = ({ publications }) => {
           <TableHead>
             <TableRow>
               <StyledCell>
-                <Label>{t('publication_name')}</Label>
+                <Label>{t('common:title')}</Label>
               </StyledCell>
               <StyledCell>
                 <Label>{t('submitter')}</Label>

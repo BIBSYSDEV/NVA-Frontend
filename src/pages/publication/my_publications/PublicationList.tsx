@@ -39,7 +39,7 @@ interface PublicationListProps {
 }
 
 const PublicationList: FC<PublicationListProps> = ({ publications }) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('common');
   const [openModal, setOpenModal] = useState(false);
   const [deletePublicationId, setDeletePublicationId] = useState('');
   const [deletePublicationTitle, setDeletePublicationTitle] = useState('');
@@ -68,13 +68,13 @@ const PublicationList: FC<PublicationListProps> = ({ publications }) => {
           <TableHead>
             <TableRow>
               <TableCell>
-                <StyledLabel variant="h6">{t('workLists:publication_name')}</StyledLabel>
+                <StyledLabel variant="h6">{t('title')}</StyledLabel>
               </TableCell>
               <TableCell>
-                <Typography variant="h6">{t('common:status')}</Typography>
+                <Typography variant="h6">{t('status')}</Typography>
               </TableCell>
               <TableCell>
-                <Typography variant="h6">{t('common:date')}</Typography>
+                <Typography variant="h6">{t('created_date')}</Typography>
               </TableCell>
               <TableCell />
               <TableCell />
@@ -101,7 +101,7 @@ const PublicationList: FC<PublicationListProps> = ({ publications }) => {
                     to={`/registration/${publication.identifier}/public`}
                     data-testid={`open-publication-${publication.identifier}`}>
                     <MenuBookIcon />
-                    <StyledNormalTextWithIcon>{t('common:show')}</StyledNormalTextWithIcon>
+                    <StyledNormalTextWithIcon>{t('show')}</StyledNormalTextWithIcon>
                   </Button>
                 </TableCell>
                 <TableCell>
@@ -112,7 +112,7 @@ const PublicationList: FC<PublicationListProps> = ({ publications }) => {
                     to={`/registration/${publication.identifier}`}
                     data-testid={`edit-publication-${publication.identifier}`}>
                     <EditIcon />
-                    <StyledNormalTextWithIcon>{t('common:edit')}</StyledNormalTextWithIcon>
+                    <StyledNormalTextWithIcon>{t('edit')}</StyledNormalTextWithIcon>
                   </Button>
                 </TableCell>
                 <TableCell>
@@ -124,7 +124,7 @@ const PublicationList: FC<PublicationListProps> = ({ publications }) => {
                     data-testid={`delete-publication-${publication.identifier}`}
                     onClick={() => handleOnClick(publication)}>
                     <DeleteIcon />
-                    <StyledNormalTextWithIcon>{t('common:delete')}</StyledNormalTextWithIcon>
+                    <StyledNormalTextWithIcon>{t('delete')}</StyledNormalTextWithIcon>
                   </Button>
                 </TableCell>
               </StyledTableRow>
@@ -133,7 +133,7 @@ const PublicationList: FC<PublicationListProps> = ({ publications }) => {
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[10, 25, { value: -1, label: t('common:all') }]}
+        rowsPerPageOptions={[10, 25, { value: -1, label: t('all') }]}
         component="div"
         count={publications.length}
         rowsPerPage={rowsPerPage}
