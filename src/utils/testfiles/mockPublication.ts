@@ -8,7 +8,7 @@ export const mockPublication: JournalPublication = {
   type: BackendTypeNames.PUBLICATION,
   identifier: '12345679',
   createdDate: '2020',
-  owner: 'aaa@bb.com',
+  owner: 'tu@unit.no',
   status: PublicationStatus.DRAFT,
   project: null,
   publisher: { id: mockCustomerInstitution.id },
