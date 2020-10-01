@@ -3,7 +3,7 @@ import { BackendTypeNames } from '../../types/publication_types/commonPublicatio
 
 export const mockSearchResults: SearchResult[] = [
   {
-    id: 'https://frontend.dev.nva.aws.unit.no/registration/32290378-373e-4cca-8f24-d02b92d845ce',
+    id: 'https://frontend.dev.nva.aws.unit.no/publication/32290378-373e-4cca-8f24-d02b92d845ce',
     date: { type: BackendTypeNames.INDEX_DATE, year: '2017', month: '8', day: '26' },
     title: 'Dove, The',
     owner: 'mfalvey0@pen.io',
@@ -15,7 +15,7 @@ export const mockSearchResults: SearchResult[] = [
     ],
   },
   {
-    id: 'https://frontend.dev.nva.aws.unit.no/registration/d90f87c9-fb5b-41ef-8575-584b50102476',
+    id: 'https://frontend.dev.nva.aws.unit.no/publication/d90f87c9-fb5b-41ef-8575-584b50102476',
     date: { type: BackendTypeNames.INDEX_DATE, year: '2019', month: '8', day: '21' },
     title: 'Bad Santa',
     owner: 'fhanwell1@businessweek.com',
@@ -31,7 +31,7 @@ export const mockSearchResults: SearchResult[] = [
     ],
   },
   {
-    id: 'https://frontend.dev.nva.aws.unit.no/registration/c01b4fe3-bd3c-4b89-8d3a-4cced90a53e6',
+    id: 'https://frontend.dev.nva.aws.unit.no/publication/c01b4fe3-bd3c-4b89-8d3a-4cced90a53e6',
     date: { type: BackendTypeNames.INDEX_DATE, year: '2009', month: '8', day: '26' },
     title: 'Carey Treatment, The',
     owner: 'okobsch2@a8.net',
@@ -43,7 +43,7 @@ export const mockSearchResults: SearchResult[] = [
     ],
   },
   {
-    id: 'https://frontend.dev.nva.aws.unit.no/registration/989047e8-643e-4b31-b16a-915d5124cc25',
+    id: 'https://frontend.dev.nva.aws.unit.no/publication/989047e8-643e-4b31-b16a-915d5124cc25',
     date: { type: BackendTypeNames.INDEX_DATE, year: '2019', month: '10', day: '26' },
     title: 'Gloria',
     owner: 'jjanusik3@timesonline.co.uk',
@@ -63,7 +63,7 @@ export const mockSearchResults: SearchResult[] = [
     ],
   },
   {
-    id: 'https://frontend.dev.nva.aws.unit.no/registration/79333552-6646-4497-ac28-845126fd96ed',
+    id: 'https://frontend.dev.nva.aws.unit.no/publication/79333552-6646-4497-ac28-845126fd96ed',
     date: { type: BackendTypeNames.INDEX_DATE, year: '2019', month: '9', day: '16' },
     title: 'Before and After',
     owner: 'zmilam4@smh.com.au',
@@ -75,7 +75,7 @@ export const mockSearchResults: SearchResult[] = [
     ],
   },
   {
-    id: 'https://frontend.dev.nva.aws.unit.no/registration/73772750-68a0-40f7-9adc-19d38e067f1a',
+    id: 'https://frontend.dev.nva.aws.unit.no/publication/73772750-68a0-40f7-9adc-19d38e067f1a',
     date: { type: BackendTypeNames.INDEX_DATE, year: '2018', month: '9', day: '16' },
     title: 'Highlander',
     owner: 'bmangan5@soundcloud.com',
@@ -87,7 +87,7 @@ export const mockSearchResults: SearchResult[] = [
     ],
   },
   {
-    id: 'https://frontend.dev.nva.aws.unit.no/registration/181f6090-c20d-4f6e-ada4-184c22bb9a5d',
+    id: 'https://frontend.dev.nva.aws.unit.no/publication/181f6090-c20d-4f6e-ada4-184c22bb9a5d',
     date: { type: BackendTypeNames.INDEX_DATE, year: '2019', month: '10', day: '16' },
     title: "Nim's Island",
     owner: 'vspafford6@google.ru',
@@ -123,7 +123,7 @@ export const mockSearchResults: SearchResult[] = [
     ],
   },
   {
-    id: 'https://frontend.dev.nva.aws.unit.no/registration/87e92ce7-c401-4952-92fb-5028907a9c0e',
+    id: 'https://frontend.dev.nva.aws.unit.no/publication/87e92ce7-c401-4952-92fb-5028907a9c0e',
     date: { type: BackendTypeNames.INDEX_DATE, year: '2009', month: '9', day: '16' },
     title: 'First Nudie Musical, The',
     owner: 'dspatoni7@t.co',
@@ -135,7 +135,7 @@ export const mockSearchResults: SearchResult[] = [
     ],
   },
   {
-    id: 'https://frontend.dev.nva.aws.unit.no/registration/52e144b4-e896-48c7-bf68-b3c051db5c58',
+    id: 'https://frontend.dev.nva.aws.unit.no/publication/52e144b4-e896-48c7-bf68-b3c051db5c58',
     date: { type: BackendTypeNames.INDEX_DATE, year: '2019', month: '3', day: '16' },
     title: 'Stavisky...',
     owner: 'mspreadbury8@ocn.ne.jp',
@@ -147,7 +147,7 @@ export const mockSearchResults: SearchResult[] = [
     ],
   },
   {
-    id: 'https://frontend.dev.nva.aws.unit.no/registration/36e16624-b92f-416e-830f-bda598e047ab',
+    id: 'https://frontend.dev.nva.aws.unit.no/publication/36e16624-b92f-416e-830f-bda598e047ab',
     date: { type: BackendTypeNames.INDEX_DATE, year: '2019', month: '9', day: '12' },
     title: 'Powerpuff Girls, The',
     owner: 'jfarryan9@ucla.edu',
@@ -159,7 +159,7 @@ export const mockSearchResults: SearchResult[] = [
     ],
   },
   {
-    id: 'https://frontend.dev.nva.aws.unit.no/registration/ed863357-3203-48e7-92bc-c8998843d366',
+    id: 'https://frontend.dev.nva.aws.unit.no/publication/ed863357-3203-48e7-92bc-c8998843d366',
     date: { type: BackendTypeNames.INDEX_DATE, year: '2019', month: '2', day: '16' },
     title: 'Invisible Ray, The',
     owner: 'bskilletta@guardian.co.uk',
@@ -175,7 +175,7 @@ export const mockSearchResults: SearchResult[] = [
     ],
   },
   {
-    id: 'https://frontend.dev.nva.aws.unit.no/registration/fc506676-0def-49f9-8d5d-de409956ad06',
+    id: 'https://frontend.dev.nva.aws.unit.no/publication/fc506676-0def-49f9-8d5d-de409956ad06',
     date: { type: BackendTypeNames.INDEX_DATE, year: '2020', month: '9', day: '16' },
     title: 'Cinderella Man',
     owner: 'sphizackleab@slate.com',
@@ -187,7 +187,7 @@ export const mockSearchResults: SearchResult[] = [
     ],
   },
   {
-    id: 'https://frontend.dev.nva.aws.unit.no/registration/a6d5a4ba-685c-43fd-b2e2-7b2eba8f6288',
+    id: 'https://frontend.dev.nva.aws.unit.no/publication/a6d5a4ba-685c-43fd-b2e2-7b2eba8f6288',
     date: { type: BackendTypeNames.INDEX_DATE, year: '2020', month: '1', day: '16' },
     title: "I Killed My Mother (J'ai tué ma mère)",
     owner: 'mlowdhamc@ucsd.edu',
@@ -199,7 +199,7 @@ export const mockSearchResults: SearchResult[] = [
     ],
   },
   {
-    id: 'https://frontend.dev.nva.aws.unit.no/registration/8987043b-67b9-4e46-9717-013c6134654d',
+    id: 'https://frontend.dev.nva.aws.unit.no/publication/8987043b-67b9-4e46-9717-013c6134654d',
     date: { type: BackendTypeNames.INDEX_DATE, year: '2020', month: '1', day: '1' },
     title: 'Traveler, The',
     owner: 'opevied@ning.com',
@@ -211,7 +211,7 @@ export const mockSearchResults: SearchResult[] = [
     ],
   },
   {
-    id: 'https://frontend.dev.nva.aws.unit.no/registration/0dd27154-42a2-4147-aef1-aaa70c065d28',
+    id: 'https://frontend.dev.nva.aws.unit.no/publication/0dd27154-42a2-4147-aef1-aaa70c065d28',
     date: { type: BackendTypeNames.INDEX_DATE, year: '2020', month: '1', day: '10' },
     title: 'Frankenweenie',
     owner: 'rmacoune@nsw.gov.au',
@@ -223,7 +223,7 @@ export const mockSearchResults: SearchResult[] = [
     ],
   },
   {
-    id: 'https://frontend.dev.nva.aws.unit.no/registration/5c0e1784-1530-41c3-8b5f-8bf8f4572f3a',
+    id: 'https://frontend.dev.nva.aws.unit.no/publication/5c0e1784-1530-41c3-8b5f-8bf8f4572f3a',
     date: { type: BackendTypeNames.INDEX_DATE, year: '2018', month: '1', day: '1' },
     title: 'And Life Goes On (a.k.a. Life and Nothing More) (Zendegi va digar hich)',
     owner: 'hjurekf@apple.com',
@@ -243,7 +243,7 @@ export const mockSearchResults: SearchResult[] = [
     ],
   },
   {
-    id: 'https://frontend.dev.nva.aws.unit.no/registration/c5f3f0e9-e48e-4215-b826-03f61790aea0',
+    id: 'https://frontend.dev.nva.aws.unit.no/publication/c5f3f0e9-e48e-4215-b826-03f61790aea0',
     date: { type: BackendTypeNames.INDEX_DATE, year: '2020', month: '12', day: '1' },
     title: 'Generation Iron',
     owner: 'mandreuzzig@imgur.com',
@@ -255,7 +255,7 @@ export const mockSearchResults: SearchResult[] = [
     ],
   },
   {
-    id: 'https://frontend.dev.nva.aws.unit.no/registration/6f82edac-6bce-4e2b-adbe-46707482ac04',
+    id: 'https://frontend.dev.nva.aws.unit.no/publication/6f82edac-6bce-4e2b-adbe-46707482ac04',
     date: { type: BackendTypeNames.INDEX_DATE, year: '2020', month: '1', day: '12' },
     title: 'Sunshine State',
     owner: 'achurmsh@networksolutions.com',
@@ -271,7 +271,7 @@ export const mockSearchResults: SearchResult[] = [
     ],
   },
   {
-    id: 'https://frontend.dev.nva.aws.unit.no/registration/a20c371f-3569-4bc1-bd3f-35a598bdcdfc',
+    id: 'https://frontend.dev.nva.aws.unit.no/publication/a20c371f-3569-4bc1-bd3f-35a598bdcdfc',
     date: { type: BackendTypeNames.INDEX_DATE, year: '2018', month: '10', day: '1' },
     title: 'Kapò',
     owner: 'kmasseoi@yahoo.co.jp',
@@ -283,7 +283,7 @@ export const mockSearchResults: SearchResult[] = [
     ],
   },
   {
-    id: 'https://frontend.dev.nva.aws.unit.no/registration/e8c16926-eb52-418d-8b54-887943347dbb',
+    id: 'https://frontend.dev.nva.aws.unit.no/publication/e8c16926-eb52-418d-8b54-887943347dbb',
     date: { type: BackendTypeNames.INDEX_DATE, year: '2018', month: '3', day: '1' },
     title: 'Message to Love: The Isle of Wight Festival',
     owner: 'ashropshirej@slate.com',
@@ -295,7 +295,7 @@ export const mockSearchResults: SearchResult[] = [
     ],
   },
   {
-    id: 'https://frontend.dev.nva.aws.unit.no/registration/ea8bc8c1-04dd-4449-b5cb-78c071bcfa9c',
+    id: 'https://frontend.dev.nva.aws.unit.no/publication/ea8bc8c1-04dd-4449-b5cb-78c071bcfa9c',
     date: { type: BackendTypeNames.INDEX_DATE, year: '2018', month: '10', day: '12' },
     title: 'News from Home',
     owner: 'agooderedk@cbsnews.com',
@@ -307,7 +307,7 @@ export const mockSearchResults: SearchResult[] = [
     ],
   },
   {
-    id: 'https://frontend.dev.nva.aws.unit.no/registration/e3bdb056-289b-4430-b21e-ff944e57ebcb',
+    id: 'https://frontend.dev.nva.aws.unit.no/publication/e3bdb056-289b-4430-b21e-ff944e57ebcb',
     date: { type: BackendTypeNames.INDEX_DATE, year: '2018', month: '9', day: '10' },
     title: 'Journey from the Fall',
     owner: 'emateul@joomla.org',
@@ -327,7 +327,7 @@ export const mockSearchResults: SearchResult[] = [
     ],
   },
   {
-    id: 'https://frontend.dev.nva.aws.unit.no/registration/a5fd5ac7-cbda-4a17-b885-db9e159e3acb',
+    id: 'https://frontend.dev.nva.aws.unit.no/publication/a5fd5ac7-cbda-4a17-b885-db9e159e3acb',
     date: { type: BackendTypeNames.INDEX_DATE, year: '2019', month: '9', day: '10' },
     title: 'Daughters of Darkness (Les lèvres rouges)',
     owner: 'cacomm@wufoo.com',
@@ -339,7 +339,7 @@ export const mockSearchResults: SearchResult[] = [
     ],
   },
   {
-    id: 'https://frontend.dev.nva.aws.unit.no/registration/bb3ed33b-082e-461a-9001-9d2276d1bf79',
+    id: 'https://frontend.dev.nva.aws.unit.no/publication/bb3ed33b-082e-461a-9001-9d2276d1bf79',
     date: { type: BackendTypeNames.INDEX_DATE, year: '2018', month: '11', day: '10' },
     title: 'Stella',
     owner: 'wfouracren@shareasale.com',
@@ -351,7 +351,7 @@ export const mockSearchResults: SearchResult[] = [
     ],
   },
   {
-    id: 'https://frontend.dev.nva.aws.unit.no/registration/7595f84d-2f4e-40a5-84a1-59a5ff8d9bcf',
+    id: 'https://frontend.dev.nva.aws.unit.no/publication/7595f84d-2f4e-40a5-84a1-59a5ff8d9bcf',
     date: { type: BackendTypeNames.INDEX_DATE, year: '2019', month: '9', day: '10' },
     title: 'Virus',
     owner: 'jpimbleyo@cornell.edu',
@@ -367,7 +367,7 @@ export const mockSearchResults: SearchResult[] = [
     ],
   },
   {
-    id: 'https://frontend.dev.nva.aws.unit.no/registration/95c6b281-6dd8-4525-80bf-b6d7127ab92d',
+    id: 'https://frontend.dev.nva.aws.unit.no/publication/95c6b281-6dd8-4525-80bf-b6d7127ab92d',
     date: { type: BackendTypeNames.INDEX_DATE, year: '2018', month: '9', day: '25' },
     title: 'Hum Tumhare Hain Sanam',
     owner: 'sdarycottp@123-reg.co.uk',
@@ -379,7 +379,7 @@ export const mockSearchResults: SearchResult[] = [
     ],
   },
   {
-    id: 'https://frontend.dev.nva.aws.unit.no/registration/b72315bf-92ed-4626-81ea-8fd2aabd48ef',
+    id: 'https://frontend.dev.nva.aws.unit.no/publication/b72315bf-92ed-4626-81ea-8fd2aabd48ef',
     date: { type: BackendTypeNames.INDEX_DATE, year: '2018', month: '12', day: '10' },
     title: 'Closing the Ring',
     owner: 'scohrsq@chronoengine.com',
@@ -391,7 +391,7 @@ export const mockSearchResults: SearchResult[] = [
     ],
   },
   {
-    id: 'https://frontend.dev.nva.aws.unit.no/registration/70d340e5-448c-40a7-a80d-3630e4a7872c',
+    id: 'https://frontend.dev.nva.aws.unit.no/publication/70d340e5-448c-40a7-a80d-3630e4a7872c',
     date: { type: BackendTypeNames.INDEX_DATE, year: '2017', month: '9', day: '10' },
     title: 'Road to Hong Kong, The',
     owner: 'mschiellr@typepad.com',
@@ -407,7 +407,7 @@ export const mockSearchResults: SearchResult[] = [
     ],
   },
   {
-    id: 'https://frontend.dev.nva.aws.unit.no/registration/d66d4683-6bdc-4732-bee2-189fbe7404d3',
+    id: 'https://frontend.dev.nva.aws.unit.no/publication/d66d4683-6bdc-4732-bee2-189fbe7404d3',
     date: { type: BackendTypeNames.INDEX_DATE, year: '2018', month: '9', day: '10' },
     title: 'City in the Sea',
     owner: 'wmanuelys@rakuten.co.jp',
@@ -423,7 +423,7 @@ export const mockSearchResults: SearchResult[] = [
     ],
   },
   {
-    id: 'https://frontend.dev.nva.aws.unit.no/registration/661fd539-3c20-4764-bfc2-009e9cfb043c',
+    id: 'https://frontend.dev.nva.aws.unit.no/publication/661fd539-3c20-4764-bfc2-009e9cfb043c',
     date: { type: BackendTypeNames.INDEX_DATE, year: '2020', month: '9', day: '10' },
     title: 'Black Mirror',
     owner: 'bisacssont@princeton.edu',
@@ -435,7 +435,7 @@ export const mockSearchResults: SearchResult[] = [
     ],
   },
   {
-    id: 'https://frontend.dev.nva.aws.unit.no/registration/8559da5f-9d24-4004-ae30-f43f9ef35b1d',
+    id: 'https://frontend.dev.nva.aws.unit.no/publication/8559da5f-9d24-4004-ae30-f43f9ef35b1d',
     date: { type: BackendTypeNames.INDEX_DATE, year: '2018', month: '5', day: '10' },
     title: 'Ambush Trail',
     owner: 'ddjorevicu@psu.edu',
@@ -459,7 +459,7 @@ export const mockSearchResults: SearchResult[] = [
     ],
   },
   {
-    id: 'https://frontend.dev.nva.aws.unit.no/registration/40a06c82-063d-4c14-945c-17424cc09a77',
+    id: 'https://frontend.dev.nva.aws.unit.no/publication/40a06c82-063d-4c14-945c-17424cc09a77',
     date: { type: BackendTypeNames.INDEX_DATE, year: '2018', month: '5', day: '6' },
     title: 'Another You',
     owner: 'klovejoyv@csmonitor.com',
@@ -475,7 +475,7 @@ export const mockSearchResults: SearchResult[] = [
     ],
   },
   {
-    id: 'https://frontend.dev.nva.aws.unit.no/registration/fa37540a-ef9f-4e07-91a7-dfd2a3fca2db',
+    id: 'https://frontend.dev.nva.aws.unit.no/publication/fa37540a-ef9f-4e07-91a7-dfd2a3fca2db',
     date: { type: BackendTypeNames.INDEX_DATE, year: '2019', month: '5', day: '6' },
     title: 'Moonlight Serenade',
     owner: 'tshentonw@house.gov',
@@ -487,7 +487,7 @@ export const mockSearchResults: SearchResult[] = [
     ],
   },
   {
-    id: 'https://frontend.dev.nva.aws.unit.no/registration/9c35a95d-42c7-44e8-81f9-b99ecb5a4d44',
+    id: 'https://frontend.dev.nva.aws.unit.no/publication/9c35a95d-42c7-44e8-81f9-b99ecb5a4d44',
     date: { type: BackendTypeNames.INDEX_DATE, year: '2017', month: '5', day: '6' },
     title: 'Sammy and Rosie Get Laid',
     owner: 'msharplyx@smugmug.com',
@@ -499,7 +499,7 @@ export const mockSearchResults: SearchResult[] = [
     ],
   },
   {
-    id: 'https://frontend.dev.nva.aws.unit.no/registration/75cbe42d-e72e-4931-96fd-9dc5ee45bfe9',
+    id: 'https://frontend.dev.nva.aws.unit.no/publication/75cbe42d-e72e-4931-96fd-9dc5ee45bfe9',
     date: { type: BackendTypeNames.INDEX_DATE, year: '2020', month: '5', day: '6' },
     title: 'Why Are the Bells Ringing, Mitica? (a.k.a. Carnival Scenes) (De ce trag clopotele, Mitica?)',
     owner: 'jodesony@squidoo.com',
@@ -511,7 +511,7 @@ export const mockSearchResults: SearchResult[] = [
     ],
   },
   {
-    id: 'https://frontend.dev.nva.aws.unit.no/registration/f8ff4270-d888-4b0b-8f26-c770e6534f4b',
+    id: 'https://frontend.dev.nva.aws.unit.no/publication/f8ff4270-d888-4b0b-8f26-c770e6534f4b',
     date: { type: BackendTypeNames.INDEX_DATE, year: '2020', month: '2', day: '6' },
     title: 'Trust Us, This Is All Made Up',
     owner: 'asaggsz@cmu.edu',
@@ -523,7 +523,7 @@ export const mockSearchResults: SearchResult[] = [
     ],
   },
   {
-    id: 'https://frontend.dev.nva.aws.unit.no/registration/f454a939-53e9-4a72-a9e2-bc6165f4fbb4',
+    id: 'https://frontend.dev.nva.aws.unit.no/publication/f454a939-53e9-4a72-a9e2-bc6165f4fbb4',
     date: { type: BackendTypeNames.INDEX_DATE, year: '2020', month: '4', day: '6' },
     title: 'Post Grad',
     owner: 'cwieprecht10@blog.com',
@@ -539,7 +539,7 @@ export const mockSearchResults: SearchResult[] = [
     ],
   },
   {
-    id: 'https://frontend.dev.nva.aws.unit.no/registration/509c09f6-9bb2-4bdc-b1af-c891f32d722f',
+    id: 'https://frontend.dev.nva.aws.unit.no/publication/509c09f6-9bb2-4bdc-b1af-c891f32d722f',
     date: { type: BackendTypeNames.INDEX_DATE, year: '2020', month: '5', day: '23' },
     title: 'Raiders of Atlantis, The',
     owner: 'edavy11@i2i.jp',
@@ -555,7 +555,7 @@ export const mockSearchResults: SearchResult[] = [
     ],
   },
   {
-    id: 'https://frontend.dev.nva.aws.unit.no/registration/da0a70b5-2a84-4edc-8fc4-2899bda7b7b0',
+    id: 'https://frontend.dev.nva.aws.unit.no/publication/da0a70b5-2a84-4edc-8fc4-2899bda7b7b0',
     date: { type: BackendTypeNames.INDEX_DATE, year: '2020', month: '5', day: '25' },
     title: 'Descendants, The',
     owner: 'dcathcart12@bizjournals.com',
@@ -567,7 +567,7 @@ export const mockSearchResults: SearchResult[] = [
     ],
   },
   {
-    id: 'https://frontend.dev.nva.aws.unit.no/registration/2954cbf7-e012-479e-938a-cc01b9b8c366',
+    id: 'https://frontend.dev.nva.aws.unit.no/publication/2954cbf7-e012-479e-938a-cc01b9b8c366',
     date: { type: BackendTypeNames.INDEX_DATE, year: '2020', month: '7', day: '6' },
     title: 'Royal Scandal, A',
     owner: 'kbrimacombe13@prnewswire.com',
@@ -579,7 +579,7 @@ export const mockSearchResults: SearchResult[] = [
     ],
   },
   {
-    id: 'https://frontend.dev.nva.aws.unit.no/registration/7e1c7b58-4033-455c-b7e4-92c212f0145c',
+    id: 'https://frontend.dev.nva.aws.unit.no/publication/7e1c7b58-4033-455c-b7e4-92c212f0145c',
     date: { type: BackendTypeNames.INDEX_DATE, year: '2020', month: '8', day: '6' },
     title: 'Major Dundee',
     owner: 'tgrimsdell14@flavors.me',
@@ -591,7 +591,7 @@ export const mockSearchResults: SearchResult[] = [
     ],
   },
   {
-    id: 'https://frontend.dev.nva.aws.unit.no/registration/6fe76bdb-0277-433d-b174-daa3d61bf704',
+    id: 'https://frontend.dev.nva.aws.unit.no/publication/6fe76bdb-0277-433d-b174-daa3d61bf704',
     date: { type: BackendTypeNames.INDEX_DATE, year: '2020', month: '5', day: '26' },
     title: 'Renoir',
     owner: 'mwonfor15@dell.com',
@@ -603,7 +603,7 @@ export const mockSearchResults: SearchResult[] = [
     ],
   },
   {
-    id: 'https://frontend.dev.nva.aws.unit.no/registration/f79a5f01-fc81-45e8-907b-95cf1fd309a5',
+    id: 'https://frontend.dev.nva.aws.unit.no/publication/f79a5f01-fc81-45e8-907b-95cf1fd309a5',
     date: { type: BackendTypeNames.INDEX_DATE, year: '2019', month: '5', day: '26' },
     title: 'Sexual Life of the Belgians, The (Vie sexuelle des Belges 1950-1978, La)',
     owner: 'ceveritt16@google.es',
@@ -623,7 +623,7 @@ export const mockSearchResults: SearchResult[] = [
     ],
   },
   {
-    id: 'https://frontend.dev.nva.aws.unit.no/registration/5d1b0915-46c6-432a-9cf5-0fd14cfea3bc',
+    id: 'https://frontend.dev.nva.aws.unit.no/publication/5d1b0915-46c6-432a-9cf5-0fd14cfea3bc',
     date: { type: BackendTypeNames.INDEX_DATE, year: '2018', month: '5', day: '26' },
     title: 'Lineup, The',
     owner: 'lbarniss17@slate.com',
@@ -643,7 +643,7 @@ export const mockSearchResults: SearchResult[] = [
     ],
   },
   {
-    id: 'https://frontend.dev.nva.aws.unit.no/registration/2bd86ec1-2b83-4da4-9ae8-86dfb59e514d',
+    id: 'https://frontend.dev.nva.aws.unit.no/publication/2bd86ec1-2b83-4da4-9ae8-86dfb59e514d',
     date: { type: BackendTypeNames.INDEX_DATE, year: '2017', month: '5', day: '26' },
     title: 'Julie & Julia',
     owner: 'dgawthrop18@bloglovin.com',
@@ -659,7 +659,7 @@ export const mockSearchResults: SearchResult[] = [
     ],
   },
   {
-    id: 'https://frontend.dev.nva.aws.unit.no/registration/e441ebea-5268-48a0-b749-663fa35912af',
+    id: 'https://frontend.dev.nva.aws.unit.no/publication/e441ebea-5268-48a0-b749-663fa35912af',
     date: { type: BackendTypeNames.INDEX_DATE, year: '2019', month: '10', day: '26' },
     title: 'Stray Dog (Nora inu)',
     owner: 'pfiggs19@photobucket.com',
@@ -675,7 +675,7 @@ export const mockSearchResults: SearchResult[] = [
     ],
   },
   {
-    id: 'https://frontend.dev.nva.aws.unit.no/registration/088e4e74-ab76-4eb3-b7ad-abaee07b0d67',
+    id: 'https://frontend.dev.nva.aws.unit.no/publication/088e4e74-ab76-4eb3-b7ad-abaee07b0d67',
     date: { type: BackendTypeNames.INDEX_DATE, year: '2019', month: '10', day: '20' },
     title: 'Adventures of Ford Fairlane, The',
     owner: 'sumpleby1a@webnode.com',
@@ -687,7 +687,7 @@ export const mockSearchResults: SearchResult[] = [
     ],
   },
   {
-    id: 'https://frontend.dev.nva.aws.unit.no/registration/bbf1ddd5-a529-424b-bf6d-6a75434e6fc5',
+    id: 'https://frontend.dev.nva.aws.unit.no/publication/bbf1ddd5-a529-424b-bf6d-6a75434e6fc5',
     date: { type: BackendTypeNames.INDEX_DATE, year: '2019', month: '10', day: '2' },
     title: 'Point Blank (À bout portant)',
     owner: 'jpantlin1b@abc.net.au',
@@ -703,7 +703,7 @@ export const mockSearchResults: SearchResult[] = [
     ],
   },
   {
-    id: 'https://frontend.dev.nva.aws.unit.no/registration/22ba6c5b-dea8-48d9-95f2-3eec4a987522',
+    id: 'https://frontend.dev.nva.aws.unit.no/publication/22ba6c5b-dea8-48d9-95f2-3eec4a987522',
     date: { type: BackendTypeNames.INDEX_DATE, year: '2019', month: '10', day: '12' },
     title: 'Warrior',
     owner: 'bkeel1c@whitehouse.gov',
@@ -719,7 +719,7 @@ export const mockSearchResults: SearchResult[] = [
     ],
   },
   {
-    id: 'https://frontend.dev.nva.aws.unit.no/registration/1fc1084b-ea80-4ace-9faa-7f719a184cdd',
+    id: 'https://frontend.dev.nva.aws.unit.no/publication/1fc1084b-ea80-4ace-9faa-7f719a184cdd',
     date: { type: BackendTypeNames.INDEX_DATE, year: '2019', month: '10', day: '22' },
     title: 'Clubbed',
     owner: 'hbowmaker1d@independent.co.uk',
