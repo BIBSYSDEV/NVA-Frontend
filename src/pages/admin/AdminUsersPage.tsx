@@ -53,7 +53,11 @@ const AdminUsersPage: FC = () => {
               refetchUsers={fetchInstitutionUsers}
             />
           )}
-          <StyledNewButton color="primary" variant="outlined" onClick={() => setRoleToAdd(RoleName.INSTITUTION_ADMIN)}>
+          <StyledNewButton
+            color="primary"
+            variant="outlined"
+            data-testid="button-add-institution-admin"
+            onClick={() => setRoleToAdd(RoleName.INSTITUTION_ADMIN)}>
             {t('users.add_institution_admin')}
           </StyledNewButton>
         </StyledContainer>
@@ -71,7 +75,11 @@ const AdminUsersPage: FC = () => {
               refetchUsers={fetchInstitutionUsers}
             />
           )}
-          <StyledNewButton color="primary" variant="outlined" onClick={() => setRoleToAdd(RoleName.CURATOR)}>
+          <StyledNewButton
+            color="primary"
+            variant="outlined"
+            data-testid="button-add-curator"
+            onClick={() => setRoleToAdd(RoleName.CURATOR)}>
             {t('users.add_curator')}
           </StyledNewButton>
         </StyledContainer>
@@ -89,7 +97,11 @@ const AdminUsersPage: FC = () => {
               refetchUsers={fetchInstitutionUsers}
             />
           )}
-          <StyledNewButton color="primary" variant="outlined" onClick={() => setRoleToAdd(RoleName.EDITOR)}>
+          <StyledNewButton
+            color="primary"
+            variant="outlined"
+            data-testid="button-add-editor"
+            onClick={() => setRoleToAdd(RoleName.EDITOR)}>
             {t('users.add_editor')}
           </StyledNewButton>
         </StyledContainer>
@@ -99,7 +111,7 @@ const AdminUsersPage: FC = () => {
           <Divider />
           <NormalText>{t('users.creator_info')}</NormalText>
           <FormControlLabel
-            control={<Checkbox disabled checked={autoAssignCreators} />}
+            control={<Checkbox disabled checked={autoAssignCreators} data-testid="checkbox-assign-creators" />}
             onChange={handleCheckAutoAssignCreators}
             label={t('users.auto_assign_creators')}
           />
