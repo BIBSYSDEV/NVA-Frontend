@@ -118,12 +118,12 @@ const PublicationForm: FC<PublicationFormProps> = ({ identifier, closeForm }) =>
           initialValues={publication ? deepmerge(emptyPublication, publication) : emptyPublication}
           validate={validateForm}
           onSubmit={(values: Publication) => savePublication(values)}>
-          {({ dirty, values, isValid }: FormikProps<Publication>) => (
+          {({ dirty, values }: FormikProps<Publication>) => (
             <>
               <RouteLeavingGuard
                 modalDescription={t('modal_unsaved_changes_description')}
                 modalHeading={t('modal_unsaved_changes_heading')}
-                shouldBlockNavigation={dirty || !isValid}
+                shouldBlockNavigation={dirty}
               />
               <Form>
                 <PublicationFormTabs tabNumber={tabNumber} handleTabChange={handleTabChange} />
