@@ -15,9 +15,10 @@ const StyledInstitutionSelector = styled.div`
 interface InstitutionSelectorProps {
   units: RecursiveInstitutionUnit[];
   fieldNamePrefix?: string;
+  label?: string;
 }
 
-const InstitutionSelector: FC<InstitutionSelectorProps> = ({ units, fieldNamePrefix = '' }) => {
+const InstitutionSelector: FC<InstitutionSelectorProps> = ({ units, fieldNamePrefix = '', label }) => {
   return (
     <StyledInstitutionSelector>
       <Field name={`${fieldNamePrefix}.subunit`}>
@@ -27,8 +28,9 @@ const InstitutionSelector: FC<InstitutionSelectorProps> = ({ units, fieldNamePre
               institutions={units}
               onChange={(value) => setFieldValue(name, value)}
               value={value}
+              label={label}
             />
-            {value?.subunits && <InstitutionSelector units={value.subunits} fieldNamePrefix={name} />}
+            {value?.subunits && <InstitutionSelector units={value.subunits} fieldNamePrefix={name} label={label} />}
           </>
         )}
       </Field>

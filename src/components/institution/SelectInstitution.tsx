@@ -102,7 +102,11 @@ const SelectInstitution: FC<SelectInstitutionProps> = ({ onSubmit, onClose }) =>
               )}
 
               {selectedInstitutionSubunits && (
-                <InstitutionSelector units={selectedInstitutionSubunits} fieldNamePrefix={name} />
+                <InstitutionSelector
+                  units={selectedInstitutionSubunits}
+                  fieldNamePrefix={name}
+                  label={t('institution:department')}
+                />
               )}
 
               <StyledButton

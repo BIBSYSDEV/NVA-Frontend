@@ -8,6 +8,7 @@ import { InstitutionUnitBase } from '../../types/institution.types';
 
 interface InstitutionAutocompleteProps extends Pick<TextFieldProps, 'disabled' | 'error' | 'helperText'> {
   institutions: InstitutionUnitBase[];
+  label?: string;
   onChange: (value: InstitutionUnitBase | null) => void;
   value: InstitutionUnitBase | null;
   isLoading?: boolean;
@@ -18,6 +19,7 @@ const InstitutionAutocomplete: FC<InstitutionAutocompleteProps> = ({
   error,
   helperText,
   institutions,
+  label,
   onChange,
   value = null,
   isLoading = false,
@@ -43,8 +45,8 @@ const InstitutionAutocomplete: FC<InstitutionAutocompleteProps> = ({
       renderInput={(params) => (
         <TextField
           {...params}
-          label={t('institution')}
-          placeholder={t('institution:search_institution')}
+          label={label ?? t('institution')}
+          placeholder={label ? t('institution:search_department') : t('institution:search_institution')}
           variant="outlined"
           inputProps={{
             ...params.inputProps,
