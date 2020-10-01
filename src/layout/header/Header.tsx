@@ -80,7 +80,7 @@ const Header: FC = () => {
             data-testid="my-publications"
             to="/my-publications"
             startIcon={<LibraryBooks />}>
-            <Typography variant="button">{t('workLists:my_publications')}</Typography>
+            <Typography variant="button">{t('workLists:my_registrations')}</Typography>
           </Button>
         </StyledShortcuts>
       )}

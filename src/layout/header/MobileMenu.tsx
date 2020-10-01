@@ -33,7 +33,7 @@ const MobileMenu: FC<MobileMenuProps> = ({ anchorEl, onClose }) => {
         {t('new_registration')}
       </MenuItem>
       <MenuItem data-testid="mobile-my-publications" onClick={() => handleClickMenuItem('/my-publications')}>
-        {t('workLists:my_publications')}
+        {t('workLists:my_registrations')}
       </MenuItem>
     </Menu>
   );
