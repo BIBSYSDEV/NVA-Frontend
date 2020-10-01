@@ -4,15 +4,15 @@
     "info": "Den antologien kapittelet er publisert i må være registrert først"
   },
   "contributors": {
-    "add_affiliation": "Legg til tilknytning",
+    "add_affiliation": "Legg til tilhørighet",
     "add_author": "Legg til forfatter",
     "add_authors": "Legg til flere forfattere",
-    "add_duplicate_affiliation": "Tilknytningen er allerede lagt til",
+    "add_duplicate_affiliation": "Tilhørigheten er allerede lagt til",
     "add_other_contributor": "Legg til flere",
     "author_already_added": "Valgt forfatter er allerede lagt til",
     "authors": "Forfattere",
-    "confirm_remove_affiliation_text": "Er du sikker på at du ønsker å fjerne denne tilknytningen?",
-    "confirm_remove_affiliation_title": "Fjerne tilknytning?",
+    "confirm_remove_affiliation_text": "Er du sikker på at du ønsker å fjerne denne tilhørigheten?",
+    "confirm_remove_affiliation_title": "Fjerne tilhørighet?",
     "confirm_remove_contributor_text": "Er du sikker på at du ønsker å fjerne {{contributorName}} fra listen over bidragsytere?",
     "confirm_remove_contributor_title": "Fjerne bidragsyter?",
     "connect_author_identity": "Tilknytt forfatteridentitet",
@@ -154,8 +154,8 @@
     "Rejected": "Avvist"
   },
   "submission": {
-    "number_of_affiliations": "{{count}} tilknytning",
-    "number_of_affiliations_plural": "{{count}} tilknytninger"
+    "number_of_affiliations": "{{count}} tilhørighet",
+    "number_of_affiliations_plural": "{{count}} tilhørigheter"
   },
   "modal_unsaved_changes_description": "Du har gjort endringer som ikke er lagret. Er du sikker på at du vil forlate denne siden?",
   "modal_unsaved_changes_heading": "Forlate siden uten å ha lagret?"

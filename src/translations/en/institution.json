@@ -1,6 +1,6 @@
 {
-  "loading_department": "Loading subunits...",
+  "department": "Department",
+  "loading_department": "Loading departments...",
   "search_institution": "Search for institution",
-  "search_subunit": "Search for subunit",
-  "subunit": "Subunit"
+  "search_department": "Search for department"
 }

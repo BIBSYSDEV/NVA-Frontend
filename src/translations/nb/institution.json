@@ -1,6 +1,6 @@
 {
-  "loading_department": "Laster underinstitusjoner...",
+  "department": "Enhet",
+  "loading_department": "Laster enheter...",
   "search_institution": "Søk etter institusjon",
-  "search_subunit": "Søk etter underinstitusjon",
-  "subunit": "Underinstitusjon"
+  "search_department": "Søk etter enheter"
 }
