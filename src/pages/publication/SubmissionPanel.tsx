@@ -87,10 +87,10 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication, 
     } else if (publishedPublication?.info) {
       dispatch(setNotification(publishedPublication.info, NotificationVariant.Info));
       setTimeout(() => {
-        history.push(`/publication/${values.identifier}/public`);
+        history.push(`/registration/${values.identifier}/public`);
       }, NAVIGATE_TO_PUBLIC_PUBLICATION_DURATION);
     } else {
-      history.push(`/publication/${values.identifier}/public`);
+      history.push(`/registration/${values.identifier}/public`);
     }
   };
 
@@ -170,7 +170,7 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication, 
               data-testid="button-save-publication"
               onClick={async () => {
                 await savePublication(values);
-                history.push(`/publication/${values.identifier}/public`);
+                history.push(`/registration/${values.identifier}/public`);
               }}>
               {t('common:save_and_present')}
             </ButtonWithProgress>

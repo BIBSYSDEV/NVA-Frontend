@@ -18,7 +18,7 @@ const PublicPublication: FC = () => {
 
   useEffect(() => {
     if (publication) {
-      history.replace(`/publication/${identifier}/public`, {
+      history.replace(`/registration/${identifier}/public`, {
         title: publication.entityDescription.mainTitle,
       });
     }

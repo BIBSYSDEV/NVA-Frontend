@@ -7,7 +7,7 @@ describe('Publication', () => {
   it('The user should be able to start registration with a DOI link', () => {
     cy.mocklogin();
     cy.get('[data-testid=new-publication]').click({ force: true });
-    cy.url().should('include', '/publication');
+    cy.url().should('include', '/registration');
 
     cy.get('[data-testid=new-publication-link]').click({ force: true });
     cy.get('[data-testid=new-publication-link-input]').type('https://doi.org/10.1098/rspb.2018.0085');
@@ -26,7 +26,7 @@ describe('Publication', () => {
   it('The user should be able to start registration by uploading a file', () => {
     cy.mocklogin();
     cy.get('[data-testid=new-publication]').click({ force: true });
-    cy.url().should('include', '/publication');
+    cy.url().should('include', '/registration');
 
     cy.get('[data-testid=new-publication-file]').click({ force: true });
 
