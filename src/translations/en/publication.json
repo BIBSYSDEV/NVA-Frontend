@@ -102,7 +102,7 @@
     "requested_doi": "Waiting for DOI..."
   },
   "publication": {
-    "latest_publications": "Latest publications",
+    "latest_publications": "Recently added",
     "link_to_resource": "Link to resource",
     "link_to_resource_description": "E.g. DOI, link to article, link to video of presentation etc.",
     "no_published_publications_yet": "There are no published publications yet",
