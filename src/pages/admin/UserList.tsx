@@ -123,6 +123,7 @@ const UserList: FC<UserListProps> = ({
                           variant="outlined"
                           startIcon={<DeleteIcon />}
                           disabled={isLastInstitutionAdmin}
+                          data-testid={`button-remove-role-${roleToRemove}-${user.username}`}
                           onClick={() => setRemoveRoleForUser(user.username)}>
                           {t('common:remove')}
                         </Button>
@@ -135,6 +136,7 @@ const UserList: FC<UserListProps> = ({
                           startIcon={<AddIcon />}
                           disabled={disableAddButton}
                           isLoading={!disableAddButton && isLoading}
+                          data-testid={`button-add-role-${roleToAdd}-${user.username}`}
                           onClick={() => handleAddRoleToUser(user.username)}>
                           {t('common:add')}
                         </ButtonWithProgress>

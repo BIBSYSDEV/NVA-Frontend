@@ -137,13 +137,16 @@ const PublicationForm: FC<PublicationFormProps> = ({ identifier, closeForm }) =>
               {tabNumber !== PublicationTab.Submission && (
                 <StyledButtonGroupContainer>
                   <StyledButtonContainer>
-                    <Button color="primary" variant="contained" onClick={goToNextTab}>
+                    <Button color="primary" variant="contained" data-testid="button-next-tab" onClick={goToNextTab}>
                       {t('common:next')}
                     </Button>
                   </StyledButtonContainer>
 
                   <StyledButtonContainer>
-                    <ButtonWithProgress isLoading={isSaving} onClick={() => savePublication(values)}>
+                    <ButtonWithProgress 
+                      isLoading={isSaving} 
+                      data-testid="button-save-publication"
+                      onClick={() => savePublication(values)}>
                       {t('common:save')}
                     </ButtonWithProgress>
                   </StyledButtonContainer>

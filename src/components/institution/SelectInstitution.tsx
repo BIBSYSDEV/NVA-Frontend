@@ -119,6 +119,7 @@ const SelectInstitution: FC<SelectInstitutionProps> = ({ onSubmit, onClose }) =>
                   onClick={() => {
                     onClose();
                   }}
+                  data-testid="institution-cancel-button"
                   variant="contained">
                   {t('cancel')}
                 </StyledButton>
