@@ -44,19 +44,19 @@
     }
   },
   "info": {
-    "affiliation_already_exists": "Tilknytningen finnes allerede",
+    "affiliation_already_exists": "Tilhørigheten finnes allerede",
     "publishing_publication": "Publiserer publikasjon...",
     "user_already_exists": "Brukeren finnes allerede"
   },
   "success": {
-    "added_affiliation": "Tilknytning er lagt til",
+    "added_affiliation": "Tilhørigheten er lagt til",
     "added_role": "Rolle ble lagt til",
     "admin_added": "Bruker lagt til som administrator",
     "admin_removed": "Bruker fjernet som administrator",
     "created_authority": "Forfatteridentitet er opprettet",
     "created_customer": "Institusjon er opprettet",
     "create_publication": "Publikasjonen er opprettet",
-    "delete_affiliation": "Tilknytningen ble slettet",
+    "delete_affiliation": "Tilhørigheten ble slettet",
     "delete_identifier": "Identifikatoren ble slettet",
     "doi_request_sent": "DOI-forespørsel sendt",
     "login": "Logget inn",
