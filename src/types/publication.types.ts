@@ -74,12 +74,17 @@ interface DoiRequest {
   messages: DoiRequestMessage[];
 }
 
+interface PublicationPublisher {
+  id: string;
+}
+
 interface BasePublication extends BackendType, PublicationFileSet {
   readonly identifier: string;
   readonly createdDate: string;
   readonly owner: string;
   readonly status: PublicationStatus;
   readonly doiRequest?: DoiRequest;
+  readonly publisher: PublicationPublisher;
   project: Project | null;
 }
 export interface Publication extends BasePublication {
@@ -159,4 +164,5 @@ export const emptyPublication: Publication = {
     files: [],
   },
   project: null,
+  publisher: { id: '' },
 };

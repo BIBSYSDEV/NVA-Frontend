@@ -2,14 +2,16 @@ import { LanguageValues } from '../../types/language.types';
 import { JournalPublication, PublicationStatus, DoiRequestStatus, Publication } from '../../types/publication.types';
 import { JournalType, PublicationType } from '../../types/publicationFieldNames';
 import { BackendTypeNames } from '../../types/publication_types/commonPublication.types';
+import { mockCustomerInstitution } from './mockCustomerInstitutions';
 
 export const mockPublication: JournalPublication = {
   type: BackendTypeNames.PUBLICATION,
   identifier: '12345679',
   createdDate: '2020',
-  owner: 'aaa@bb.com',
+  owner: 'tu@unit.no',
   status: PublicationStatus.DRAFT,
   project: null,
+  publisher: { id: mockCustomerInstitution.id },
   fileSet: {
     type: BackendTypeNames.FILE_SET,
     files: [
