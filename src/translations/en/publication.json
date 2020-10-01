@@ -93,7 +93,7 @@
     "summary": "Summary",
     "validation_errors": "Validation errors"
   },
-  "new_publication": "New publication",
+  "new_registration": "New registration",
   "public_page": {
     "message_to_curator": "Message to curator",
     "reserve_doi": "Reserve a DOI",

@@ -38,7 +38,7 @@ const LinkPublicationPanel: FC<LinkPublicationPanelProps> = ({ expanded, onChang
     if (!doi) {
       return;
     }
-    history.push(`/publication/${doi.identifier}`);
+    history.push(`/registration/${doi.identifier}`);
     openForm();
   };
 

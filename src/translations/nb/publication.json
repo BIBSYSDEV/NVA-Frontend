@@ -93,7 +93,7 @@
     "summary": "Oppsummering",
     "validation_errors": "Valideringsfeil"
   },
-  "new_publication": "Ny publikasjon",
+  "new_registration": "Ny registrering",
   "public_page": {
     "message_to_curator": "Melding til kurator",
     "reserve_doi": "Reserver en DOI",
