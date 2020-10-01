@@ -3,7 +3,7 @@ import { BackendTypeNames } from '../../types/publication_types/commonPublicatio
 
 export const threeMockSearchResults: SearchResult[] = [
   {
-    id: 'https://frontend.dev.nva.aws.unit.no/publication/32290378-373e-4cca-8f24-d02b92d845ce',
+    id: 'https://frontend.dev.nva.aws.unit.no/registration/32290378-373e-4cca-8f24-d02b92d845ce',
     date: { type: BackendTypeNames.INDEX_DATE, year: '2019', month: '8', day: '26' },
     title: 'Dove, The',
     owner: 'mfalvey0@pen.io',
@@ -15,7 +15,7 @@ export const threeMockSearchResults: SearchResult[] = [
     ],
   },
   {
-    id: 'https://frontend.dev.nva.aws.unit.no/publication/d90f87c9-fb5b-41ef-8575-584b50102476',
+    id: 'https://frontend.dev.nva.aws.unit.no/registration/d90f87c9-fb5b-41ef-8575-584b50102476',
     date: { type: BackendTypeNames.INDEX_DATE, year: '2018', month: '8', day: '26' },
     title: 'Bad Santa',
     owner: 'fhanwell1@businessweek.com',
@@ -31,7 +31,7 @@ export const threeMockSearchResults: SearchResult[] = [
     ],
   },
   {
-    id: 'https://frontend.dev.nva.aws.unit.no/publication/c01b4fe3-bd3c-4b89-8d3a-4cced90a53e6',
+    id: 'https://frontend.dev.nva.aws.unit.no/registration/c01b4fe3-bd3c-4b89-8d3a-4cced90a53e6',
     date: { type: BackendTypeNames.INDEX_DATE, year: '2019', month: '12', day: '26' },
     title: 'Carey Treatment, The',
     owner: 'okobsch2@a8.net',

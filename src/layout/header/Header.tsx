@@ -70,7 +70,7 @@ const Header: FC = () => {
             color="primary"
             component={RouterLink}
             data-testid="new-publication"
-            to="/publication"
+            to="/registration"
             startIcon={<AddIcon />}>
             <Typography variant="button">{t('new_registration')}</Typography>
           </Button>
@@ -78,7 +78,7 @@ const Header: FC = () => {
             color="primary"
             component={RouterLink}
             data-testid="my-publications"
-            to="/my-publications"
+            to="/my-registrations"
             startIcon={<LibraryBooks />}>
             <Typography variant="button">{t('workLists:my_registrations')}</Typography>
           </Button>

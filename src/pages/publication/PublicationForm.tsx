@@ -60,13 +60,13 @@ const PublicationForm: FC<PublicationFormProps> = ({ identifier, closeForm }) =>
   }, [closeForm, publication, isLoadingPublication]);
 
   useEffect(() => {
-    history.replace(`/publication/${identifier}`, { title: publication?.entityDescription?.mainTitle });
+    history.replace(`/registration/${identifier}`, { title: publication?.entityDescription?.mainTitle });
   }, [history, identifier, publication]);
 
   useEffect(() => {
     // Redirect to public page if non-curator is opening a published publication
     if (!user.isCurator && publication?.status === PublicationStatus.PUBLISHED) {
-      history.push(`/publication/${identifier}/public`);
+      history.push(`/registration/${identifier}/public`);
     }
   }, [history, identifier, publication, user.isCurator]);
 
@@ -143,8 +143,8 @@ const PublicationForm: FC<PublicationFormProps> = ({ identifier, closeForm }) =>
                   </StyledButtonContainer>
 
                   <StyledButtonContainer>
-                    <ButtonWithProgress 
-                      isLoading={isSaving} 
+                    <ButtonWithProgress
+                      isLoading={isSaving}
                       data-testid="button-save-publication"
                       onClick={() => savePublication(values)}>
                       {t('common:save')}

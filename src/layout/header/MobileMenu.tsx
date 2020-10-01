@@ -29,10 +29,10 @@ const MobileMenu: FC<MobileMenuProps> = ({ anchorEl, onClose }) => {
         vertical: 'bottom',
         horizontal: 'left',
       }}>
-      <MenuItem data-testid="mobile-new-publication" onClick={() => handleClickMenuItem('/publication')}>
+      <MenuItem data-testid="mobile-new-publication" onClick={() => handleClickMenuItem('/registration')}>
         {t('new_registration')}
       </MenuItem>
-      <MenuItem data-testid="mobile-my-publications" onClick={() => handleClickMenuItem('/my-publications')}>
+      <MenuItem data-testid="mobile-my-publications" onClick={() => handleClickMenuItem('/my-registrations')}>
         {t('workLists:my_registrations')}
       </MenuItem>
     </Menu>

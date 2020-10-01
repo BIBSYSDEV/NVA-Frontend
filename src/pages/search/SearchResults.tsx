@@ -42,7 +42,7 @@ const SearchResults: FC<SearchResultsProps> = ({ publications, searchTerm }) => 
                 data-testid={`search-result-${publicationId}`}
                 key={publicationId}
                 primaryComponent={
-                  <MuiLink component={Link} to={`/publication/${publicationId}/public`}>
+                  <MuiLink component={Link} to={`/registration/${publicationId}/public`}>
                     {publication.title}
                   </MuiLink>
                 }
