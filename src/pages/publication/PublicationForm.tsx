@@ -6,7 +6,7 @@ import deepmerge from 'deepmerge';
 import { CircularProgress, Button } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 
-import { emptyPublication, Publication, PublicationTab, PublicationStatus } from '../../types/publication.types';
+import { emptyPublication, Publication, PublicationTab } from '../../types/publication.types';
 import { PublicationFormTabs } from './PublicationFormTabs';
 import { updatePublication } from '../../api/publicationApi';
 import { useDispatch, useSelector } from 'react-redux';
@@ -64,11 +64,15 @@ const PublicationForm: FC<PublicationFormProps> = ({ identifier, closeForm }) =>
   }, [history, identifier, publication]);
 
   useEffect(() => {
-    // Redirect to public page if non-curator is opening a published publication
-    if (!user.isCurator && publication?.status === PublicationStatus.PUBLISHED) {
-      history.push(`/publication/${identifier}/public`);
+    if (publication) {
+      // Redirect to public page if user should not be able to edit this publication
+      const isValidOwner = user.isCreator && user.id === publication.owner;
+      const isValidCurator = user.isCurator && user.customerId === publication.publisher.id;
+      if (!isValidOwner && !isValidCurator) {
+        history.push(`/publication/${publication.identifier}/public`);
+      }
     }
-  }, [history, identifier, publication, user.isCurator]);
+  }, [history, publication, user]);
 
   const handleTabChange = (_: React.ChangeEvent<{}>, newTabNumber: number) => {
     setTabNumber(newTabNumber);
@@ -143,8 +147,8 @@ const PublicationForm: FC<PublicationFormProps> = ({ identifier, closeForm }) =>
                   </StyledButtonContainer>
 
                   <StyledButtonContainer>
-                    <ButtonWithProgress 
-                      isLoading={isSaving} 
+                    <ButtonWithProgress
+                      isLoading={isSaving}
                       data-testid="button-save-publication"
                       onClick={() => savePublication(values)}>
                       {t('common:save')}
