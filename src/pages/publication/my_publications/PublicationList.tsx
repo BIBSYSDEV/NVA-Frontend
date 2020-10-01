@@ -74,7 +74,7 @@ const PublicationList: FC<PublicationListProps> = ({ publications }) => {
                 <Typography variant="h6">{t('status')}</Typography>
               </TableCell>
               <TableCell>
-                <Typography variant="h6">{t('date')}</Typography>
+                <Typography variant="h6">{t('created_date')}</Typography>
               </TableCell>
               <TableCell />
               <TableCell />
