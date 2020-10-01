@@ -120,7 +120,11 @@ const UserOrcid: FC = () => {
                 </MuiLink>
               </StyledLine>
 
-              <StyledButton onClick={toggleConfirmDialog} variant="outlined" color="secondary">
+              <StyledButton
+                data-testid="button-confirm-delete-orcid"
+                onClick={toggleConfirmDialog}
+                variant="outlined"
+                color="secondary">
                 <DeleteIcon />
                 {t('common:remove')}
               </StyledButton>
@@ -144,7 +148,12 @@ const UserOrcid: FC = () => {
       ) : (
         <>
           <StyledInformation>{t('profile:orcid.description_why_use_orcid')}</StyledInformation>
-          <Button color="primary" onClick={toggleModal} variant="contained" size="small">
+          <Button
+            color="primary"
+            data-testid="button-create-connect-orcid"
+            onClick={toggleModal}
+            variant="contained"
+            size="small">
             {t('profile:orcid.create_or_connect')}
           </Button>
           <Modal

@@ -37,7 +37,7 @@ const LatestPublications: FC = () => {
               <PublicationListItemComponent
                 key={publication.identifier}
                 primaryComponent={
-                  <MuiLink component={Link} to={`/publication/${publication.identifier}/public`}>
+                  <MuiLink component={Link} to={`/registration/${publication.identifier}/public`}>
                     {publication.mainTitle}
                   </MuiLink>
                 }

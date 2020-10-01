@@ -45,7 +45,7 @@ const LoadPublication: FC<LoadPublicationProps> = ({ expanded, onChange, openFor
     const publication = await createPublication(publicationPayload);
     if (publication?.identifier) {
       openForm();
-      history.push(`/publication/${publication.identifier}`);
+      history.push(`/registration/${publication.identifier}`);
     } else {
       setIsLoading(false);
       dispatch(setNotification(t('feedback:error.create_publication'), NotificationVariant.Error));
@@ -55,7 +55,7 @@ const LoadPublication: FC<LoadPublicationProps> = ({ expanded, onChange, openFor
   return (
     <PublicationAccordion
       dataTestId="new-publication-file"
-      headerLabel={t('publication:publication.load_file')}
+      headerLabel={t('publication:publication.start_with_uploading_file')}
       icon={<CloudDownloadIcon />}
       expanded={expanded}
       onChange={onChange}

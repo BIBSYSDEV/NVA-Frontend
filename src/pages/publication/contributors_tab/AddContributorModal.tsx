@@ -54,7 +54,7 @@ const AddContributorModal: FC<AddContributorModalProps> = ({
         <>
           <AddContributorModalContent addAuthor={addAuthor} initialSearchTerm={initialSearchTerm} />
           <StyledRightAlignedButtonWrapper>
-            <Button color="primary" onClick={() => setCreateNewAuthor(true)}>
+            <Button color="primary" data-testid="button-create-new-author" onClick={() => setCreateNewAuthor(true)}>
               {t('contributors.create_new_author')}
             </Button>
           </StyledRightAlignedButtonWrapper>

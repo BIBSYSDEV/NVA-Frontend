@@ -102,7 +102,11 @@ export const PublicPublicationStatusBar: FC<PublicPublicationContentProps> = ({ 
           ) : (
             <>
               {status === PublicationStatus.PUBLISHED && (
-                <Button variant="contained" color="primary" onClick={toggleRequestDoiModal}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  data-testid="button-toggle-request-doi"
+                  onClick={toggleRequestDoiModal}>
                   {t('public_page.request_doi')}
                 </Button>
               )}
@@ -114,8 +118,8 @@ export const PublicPublicationStatusBar: FC<PublicPublicationContentProps> = ({ 
             </>
           ))}
 
-        <Link to={`/publication/${identifier}`}>
-          <Button variant="contained" color="primary">
+        <Link to={`/registration/${identifier}`}>
+          <Button variant="contained" color="primary" data-testid="button-edit-publication">
             {t('edit_publication')}
           </Button>
         </Link>
@@ -137,6 +141,7 @@ export const PublicPublicationStatusBar: FC<PublicPublicationContentProps> = ({ 
             <ButtonWithProgress
               variant="contained"
               color="primary"
+              data-testid="button-send-doi-request"
               onClick={sendDoiRequest}
               isLoading={isLoadingDoiRequest}>
               {t('common:send')}

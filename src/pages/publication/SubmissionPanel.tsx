@@ -87,10 +87,10 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication, 
     } else if (publishedPublication?.info) {
       dispatch(setNotification(publishedPublication.info, NotificationVariant.Info));
       setTimeout(() => {
-        history.push(`/publication/${values.identifier}/public`);
+        history.push(`/registration/${values.identifier}/public`);
       }, NAVIGATE_TO_PUBLIC_PUBLICATION_DURATION);
     } else {
-      history.push(`/publication/${values.identifier}/public`);
+      history.push(`/registration/${values.identifier}/public`);
     }
   };
 
@@ -117,7 +117,7 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication, 
             {publicationContextType && t(`publicationTypes:${publicationContextType}`)}
           </LabelContentRow>
           {reference.doi && (
-            <LabelContentRow label={t('publication.link_to_publication')}>{reference.doi}</LabelContentRow>
+            <LabelContentRow label={t('publication.link_to_resource')}>{reference.doi}</LabelContentRow>
           )}
           {publicationContextType === PublicationType.DEGREE && <SubmissionDegree />}
           {publicationContextType === PublicationType.BOOK && <SubmissionBook />}
@@ -135,7 +135,11 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication, 
         </Card>
       </Card>
       <StyledButtonGroupContainer>
-        <StyledButtonWithProgress disabled={isSaving || !isValid} onClick={onClickPublish} isLoading={isPublishing}>
+        <StyledButtonWithProgress
+          disabled={isSaving || !isValid}
+          data-testid="button-publish-publication"
+          onClick={onClickPublish}
+          isLoading={isPublishing}>
           {t('common:publish')}
         </StyledButtonWithProgress>
         {user.isCurator ? (
@@ -145,6 +149,7 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication, 
                 <StyledButton
                   color="primary"
                   variant="contained"
+                  data-testid="button-create-doi"
                   onClick={onClickCreateDoi}
                   disabled={isSaving || !isValid}>
                   {t('common:create_doi')}
@@ -152,6 +157,7 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication, 
                 <StyledButton
                   color="secondary"
                   variant="outlined"
+                  data-testid="button-reject-doi"
                   onClick={onClickRejectDoi}
                   disabled={isSaving || !isValid}>
                   {t('common:reject_doi')}
@@ -161,15 +167,20 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication, 
             <ButtonWithProgress
               disabled={isPublishing}
               isLoading={isSaving}
+              data-testid="button-save-publication"
               onClick={async () => {
                 await savePublication(values);
-                history.push(`/publication/${values.identifier}/public`);
+                history.push(`/registration/${values.identifier}/public`);
               }}>
               {t('common:save_and_present')}
             </ButtonWithProgress>
           </>
         ) : (
-          <ButtonWithProgress disabled={isPublishing} isLoading={isSaving} onClick={() => savePublication(values)}>
+          <ButtonWithProgress
+            disabled={isPublishing}
+            isLoading={isSaving}
+            data-testid="button-save-publication"
+            onClick={() => savePublication(values)}>
             {t('common:save')}
           </ButtonWithProgress>
         )}

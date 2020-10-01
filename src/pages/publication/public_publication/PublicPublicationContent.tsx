@@ -128,7 +128,7 @@ const PublicPublicationContent: FC<PublicPublicationContentProps> = ({ publicati
         )}
         <StyledMainContent>
           {doi && (
-            <LabelContentRow minimal label={`${t('publication.link_to_publication')}:`}>
+            <LabelContentRow minimal label={`${t('publication.link_to_resource')}:`}>
               <Link href={doi} target="_blank" rel="noopener noreferrer">
                 {doi}
               </Link>
@@ -147,7 +147,7 @@ const PublicPublicationContent: FC<PublicPublicationContentProps> = ({ publicati
             </StyledTextContainer>
           )}
           {tags.length > 0 && (
-            <LabelContentRow minimal multiple label={`${t('description.tags')}:`}>
+            <LabelContentRow minimal multiple label={`${t('description.keywords')}:`}>
               {tags.map((tag) => (
                 <StyledTag key={tag}>
                   <Chip label={tag} />

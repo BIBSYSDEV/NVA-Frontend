@@ -104,7 +104,7 @@ export const DoiRequestAccordion: FC<DoiRequestAccordionProps> = ({ publication 
             data-testid={`go-to-publication-${identifier}`}
             variant="outlined"
             component={RouterLink}
-            to={`/publication/${identifier}?tab=${PublicationTab.Submission}`}>
+            to={`/registration/${identifier}?tab=${PublicationTab.Submission}`}>
             {t('doi_requests.go_to_publication')}
           </Button>
           <Button variant="contained" color="primary" disabled>
