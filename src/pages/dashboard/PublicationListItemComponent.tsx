@@ -11,7 +11,7 @@ const StyledListItem = styled.li`
 
 interface PublicationListItemComponentProps {
   primaryComponent: ReactNode;
-  secondaryComponent: ReactNode;
+  secondaryComponent?: ReactNode;
 }
 
 const PublicationListItemComponent: FC<PublicationListItemComponentProps> = ({
