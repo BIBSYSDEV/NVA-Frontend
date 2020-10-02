@@ -8,7 +8,10 @@ describe('User', () => {
     cy.get('[data-testid=user-name]').contains('Test User');
     cy.get('[data-testid=user-id]').contains('tu@unit.no');
     cy.get('[data-testid=user-email]').contains('testuser@unit.no');
-    cy.get('[data-testid=user-role]').contains('Publisher');
+    cy.get('[data-testid=user-role-app-admin]').should('be.visible');
+    cy.get('[data-testid=user-role-institution-admin]').should('be.visible');
+    cy.get('[data-testid=user-role-curator]').should('be.visible');
+    cy.get('[data-testid=user-role-creator]').should('be.visible');
   });
 });
 

@@ -42,9 +42,9 @@ interface IconLabelTextLineProps {
 
 const IconLabelTextLine: React.FC<IconLabelTextLineProps> = ({ dataTestId, icon, label, text }) => {
   return (
-    <StyledLine>
+    <StyledLine data-testid={dataTestId}>
       <StyledIcon>{icon}</StyledIcon>
-      <StyledLabel data-testid={dataTestId}>{label}</StyledLabel>
+      <StyledLabel>{label}</StyledLabel>
       <StyledText>{text}</StyledText>
     </StyledLine>
   );
