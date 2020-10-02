@@ -1,5 +1,6 @@
 import i18n from '../../src/translations/i18n';
 import { LanguageCodes } from '../../src/types/language.types';
+i18n.changeLanguage(LanguageCodes.ENGLISH);
 import { ErrorMessage } from '../../src/utils/validation/errorMessage';
 
 describe('User opens publication form and can see validation errors', () => {
@@ -11,7 +12,6 @@ describe('User opens publication form and can see validation errors', () => {
   });
 
   beforeEach(() => {
-    i18n.changeLanguage(LanguageCodes.ENGLISH);
     cy.server();
   });
 
