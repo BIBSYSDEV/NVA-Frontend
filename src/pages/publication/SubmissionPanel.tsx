@@ -1,7 +1,7 @@
 import React, { useEffect, FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormikProps, useFormikContext } from 'formik';
-import { Publication, DoiRequestStatus } from '../../types/publication.types';
+import { Publication, DoiRequestStatus, PublicationStatus } from '../../types/publication.types';
 import { Button, Typography } from '@material-ui/core';
 import styled from 'styled-components';
 import SubmissionBook from './submission_tab/submission_book';
@@ -59,6 +59,7 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication, 
   const history = useHistory();
   const dispatch = useDispatch();
   const {
+    status,
     doiRequest,
     entityDescription: { contributors, reference },
     fileSet: { files },
@@ -135,13 +136,15 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication, 
         </Card>
       </Card>
       <StyledButtonGroupContainer>
-        <StyledButtonWithProgress
-          disabled={isSaving || !isValid}
-          data-testid="button-publish-publication"
-          onClick={onClickPublish}
-          isLoading={isPublishing}>
-          {t('common:publish')}
-        </StyledButtonWithProgress>
+        {status === PublicationStatus.DRAFT && (
+          <StyledButtonWithProgress
+            disabled={isSaving || !isValid}
+            data-testid="button-publish-publication"
+            onClick={onClickPublish}
+            isLoading={isPublishing}>
+            {t('common:publish')}
+          </StyledButtonWithProgress>
+        )}
         {user.isCurator ? (
           <>
             {doiRequest?.status === DoiRequestStatus.Requested && (
