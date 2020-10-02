@@ -46,14 +46,19 @@
     "your_orcid": "Your ORCID"
   },
   "roles": {
-    "creator": "Creator",
+    "app_admin": "Application administrator",
+    "app_admin_description": "Access to create new customer institutions",
+    "creator": "Registrator",
+    "creator_description": "Access to register publications and other resources",
     "curator": "Curator",
+    "curator_description": "Access to approve and publish others content",
     "curators": "Curators",
-    "curator_description": "A Curator is a person whom has access to approve and publish other researcher's work",
+    "editor": "Editor",
+    "editor_description": "Access to something",
     "editors": "Editors",
-    "institution_admins": "Institution administrators",
-    "publisher": "Publisher",
-    "publisher_description": "A Publisher is a person whom is employed at the organization. A publisher has also access to register their own publications"
+    "institution_admin": "Administrator",
+    "institution_admin_description": "Access to adminster your own institution",
+    "institution_admins": "Administrators"
   },
   "organization": {
     "add_institution": "Add institution",

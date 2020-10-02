@@ -46,14 +46,19 @@
     "your_orcid": "Din ORCID"
   },
   "roles": {
+    "app_admin": "Applikasjonsadministrator",
+    "app_admin_description": "Tilgang til å opprette nye kundeinstitusjoner",
     "creator": "Registrator",
+    "creator_description": "Tilgang til å registrere publikasjoner og andre ressurser",
     "curator": "Kurator",
+    "curator_description": "Tilgang til å godkjenne og publisere andres innhold",
     "curators": "Kuratorer",
-    "curator_description": "Kurator er tilgangen alle som kan godkjenne og publisere for andre har",
+    "editor": "Redaktør",
+    "editor_description": "Tilgang til noe",
     "editors": "Redaktører",
-    "institution_admins": "Institusjonsadministratorer",
-    "publisher": "Utgiver",
-    "publisher_description": "Utgiver er den tilgangen ansatte på institusjonen har. Gir tilgang til å registrere egne publikasjoner"
+    "institution_admin": "Administrator",
+    "institution_admin_description": "Tilgang til å administrere din egen institusjon",
+    "institution_admins": "Administratorer"
   },
   "organization": {
     "add_institution": "Legg til institusjon",
