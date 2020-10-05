@@ -1,6 +1,6 @@
 import React, { useEffect, FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FormikProps, useFormikContext } from 'formik';
+import { FormikProps, useFormikContext, setNestedObjectValues } from 'formik';
 import { Publication, DoiRequestStatus, PublicationStatus } from '../../types/publication.types';
 import { Button, Typography } from '@material-ui/core';
 import styled from 'styled-components';
@@ -22,14 +22,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import ButtonWithProgress from '../../components/ButtonWithProgress';
-import {
-  touchedFilesTabFields,
-  touchedContributorTabFields,
-  touchedDescriptionTabFields,
-  touchedReferenceTabFields,
-  mergeTouchedFields,
-} from '../../utils/formik-helpers';
-import { PanelProps } from './PublicationFormContent';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { NAVIGATE_TO_PUBLIC_PUBLICATION_DURATION } from '../../utils/constants';
 
@@ -46,35 +38,29 @@ const StyledButtonWithProgress = styled(ButtonWithProgress)`
   margin-right: 0.5rem;
 `;
 
-interface SubmissionPanelProps extends PanelProps {
+interface SubmissionPanelProps {
   isSaving: boolean;
   savePublication: (values: Publication) => void;
 }
 
-const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication, setTouchedFields }) => {
+const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication }) => {
   const user = useSelector((store: RootStore) => store.user);
   const { t } = useTranslation('publication');
-  const { values, isValid, dirty }: FormikProps<Publication> = useFormikContext();
+  const { values, isValid, dirty, errors, setTouched }: FormikProps<Publication> = useFormikContext();
   const [isPublishing, setIsPublishing] = useState(false);
   const history = useHistory();
   const dispatch = useDispatch();
   const {
     status,
     doiRequest,
-    entityDescription: { contributors, reference },
-    fileSet: { files },
+    entityDescription: { reference },
   } = values;
   const publicationContextType = reference.publicationContext.type;
 
   useEffect(() => {
-    const touchedForm = mergeTouchedFields([
-      touchedDescriptionTabFields,
-      touchedReferenceTabFields(publicationContextType),
-      touchedContributorTabFields(contributors),
-      touchedFilesTabFields(files),
-    ]);
-    setTouchedFields(touchedForm);
-  }, [setTouchedFields, contributors, files, publicationContextType]);
+    // Set all fields with error to touched to ensure tabs with error are showing error state
+    setTouched(setNestedObjectValues(errors, true));
+  }, [setTouched, errors]);
 
   const onClickPublish = async () => {
     setIsPublishing(true);
