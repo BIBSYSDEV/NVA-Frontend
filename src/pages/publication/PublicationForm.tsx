@@ -96,12 +96,12 @@ const PublicationForm: FC<PublicationFormProps> = ({ identifier, closeForm }) =>
 
   const validateForm = (values: Publication) => {
     const {
-      reference: { publicationInstance, publicationContext },
+      reference: { publicationContext },
     } = values.entityDescription;
     try {
       validateYupSchema<Publication>(values, publicationValidationSchema, true, {
-        publicationInstanceType: publicationInstance.type,
         publicationContextType: publicationContext.type,
+        publicationStatus: publication?.status,
       });
     } catch (err) {
       return yupToFormErrors(err);

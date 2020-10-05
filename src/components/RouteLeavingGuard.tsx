@@ -1,5 +1,6 @@
 import React, { useEffect, useState, FC } from 'react';
 import { Prompt, useHistory } from 'react-router-dom';
+import { Location } from 'history';
 import ConfirmDialog from './ConfirmDialog';
 import NormalText from './NormalText';
 
@@ -10,16 +11,17 @@ interface RouteLeavingGuardProps {
 }
 const RouteLeavingGuard: FC<RouteLeavingGuardProps> = ({ modalDescription, modalHeading, shouldBlockNavigation }) => {
   const [showModal, setShowModal] = useState(false);
-  const [nextLocation, setNextLocation] = useState<string | null>(null);
+  const [nextLocation, setNextLocation] = useState<Location>();
   const [confirmedNavigation, setConfirmedNavigation] = useState(false);
   const history = useHistory();
 
-  const handleBlockedNavigation = (nextLocation: any): boolean => {
-    const currentLocation = history.location.pathname;
-    const newLocation = nextLocation.pathname;
-    if (!confirmedNavigation && shouldBlockNavigation && currentLocation !== newLocation) {
+  const handleBlockedNavigation = (nextLocation: Location): boolean => {
+    const currentPath = `${history.location.pathname}${history.location.search}`;
+    const newPath = `${nextLocation.pathname}${nextLocation.search}`;
+
+    if (!confirmedNavigation && shouldBlockNavigation && currentPath !== newPath) {
       setShowModal(true);
-      setNextLocation(newLocation);
+      setNextLocation(nextLocation);
       return false;
     }
     return true;
