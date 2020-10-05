@@ -11,7 +11,7 @@
     "@material-ui/styles": "^4.10.0",
     "@uppy/aws-s3-multipart": "^1.8.6",
     "@uppy/core": "^1.13.2",
-    "@uppy/dashboard": "^1.12.7",
+    "@uppy/dashboard": "^1.12.8",
     "@uppy/react": "^1.10.8",
     "aws-amplify": "^3.3.3",
     "axios": "^0.19.2",
