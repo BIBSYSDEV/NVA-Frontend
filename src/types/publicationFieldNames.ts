@@ -25,10 +25,10 @@ export enum BookType {
 }
 
 export enum ReportType {
-  REPORT = 'Report',
   RESEARCH = 'ReportResearch',
   POLICY = 'ReportPolicy',
   WORKING_PAPER = 'ReportWorkingPaper',
+  REPORT = 'ReportBasic',
 }
 
 export enum DegreeType {
