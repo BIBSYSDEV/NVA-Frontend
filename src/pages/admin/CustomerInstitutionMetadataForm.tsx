@@ -1,29 +1,31 @@
 import React, { FC } from 'react';
 import { useDispatch } from 'react-redux';
-import { TextField } from '@material-ui/core';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
-import { Field, FieldProps, Form, Formik, ErrorMessage } from 'formik';
+import { Form, Formik } from 'formik';
 import { useHistory } from 'react-router-dom';
 
 import Card from '../../components/Card';
 import Heading from '../../components/Heading';
-import {
-  CustomerInstitutionFieldNames,
-  CustomerInstitution,
-  emptyCustomerInstitution,
-} from '../../types/customerInstitution.types';
+import { CustomerInstitution, emptyCustomerInstitution } from '../../types/customerInstitution.types';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import { createCustomerInstitution, updateCustomerInstitution } from '../../api/customerInstitutionsApi';
-import useFetchInstitutions from '../../utils/hooks/useFetchInstitutions';
-import InstitutionAutocomplete from '../../components/institution/InstitutionAutocomplete';
 import ButtonWithProgress from '../../components/ButtonWithProgress';
 import { StyledRightAlignedButtonWrapper } from '../../components/styled/Wrappers';
 import { customerInstitutionValidationSchema } from '../../utils/validation/customerInstitutionValidation';
+import SelectInstitutionField from './customerInstitutionFields/SelectInstitutionField';
+import DisplayNameField from './customerInstitutionFields/DisplayNameField';
+import ShortNameField from './customerInstitutionFields/ShortNameField';
+import ArchiveNameField from './customerInstitutionFields/ArchiveName';
+import FeideOrganizationIdField from './customerInstitutionFields/FeideOrganizationIdField';
 
 const StyledButtonContainer = styled(StyledRightAlignedButtonWrapper)`
   margin-top: 2rem;
+`;
+
+const StyledCard = styled(Card)`
+  min-width: 60vw;
 `;
 
 interface CustomerInstitutionMetadataFormProps {
@@ -40,12 +42,10 @@ const CustomerInstitutionMetadataForm: FC<CustomerInstitutionMetadataFormProps> 
   const { t } = useTranslation('admin');
   const history = useHistory();
   const dispatch = useDispatch();
-  const [institutions, isLoadingInstitutions] = useFetchInstitutions();
 
   const handleSubmit = async (values: CustomerInstitution) => {
     if (!editMode) {
-      const customerValues = { ...values, createdDate: new Date().toISOString() }; // TODO: remove setting createdDate when fixed in backend
-      const createdCustomer = await createCustomerInstitution(customerValues);
+      const createdCustomer = await createCustomerInstitution(values);
       if (!createdCustomer || createdCustomer?.error) {
         dispatch(setNotification(createdCustomer.error, NotificationVariant.Error));
       } else {
@@ -65,7 +65,7 @@ const CustomerInstitutionMetadataForm: FC<CustomerInstitutionMetadataFormProps> 
   };
 
   return (
-    <Card>
+    <StyledCard>
       <Heading>{t('common:institution')}</Heading>
       <Formik
         enableReinitialize
@@ -75,107 +75,11 @@ const CustomerInstitutionMetadataForm: FC<CustomerInstitutionMetadataFormProps> 
         onSubmit={handleSubmit}>
         {({ isSubmitting }) => (
           <Form>
-            <Field name={CustomerInstitutionFieldNames.NAME}>
-              {({ field: { name, value }, form: { setValues }, meta: { touched, error } }: FieldProps) => (
-                <InstitutionAutocomplete
-                  disabled={editMode}
-                  error={touched && !!error}
-                  helperText={<ErrorMessage name={name} />}
-                  institutions={institutions}
-                  isLoading={!editMode && isLoadingInstitutions}
-                  onChange={(selectedInstitution) => {
-                    setValues({
-                      ...emptyCustomerInstitution,
-                      ...customerInstitution,
-                      name: selectedInstitution?.name ?? '',
-                      [CustomerInstitutionFieldNames.DISPLAY_NAME]: selectedInstitution?.name ?? '',
-                      [CustomerInstitutionFieldNames.SHORT_NAME]: selectedInstitution?.acronym ?? '',
-                      [CustomerInstitutionFieldNames.CRISTIN_ID]: selectedInstitution?.id ?? '',
-                    });
-                  }}
-                  value={institutions.find((i) => i.name === value) ?? null}
-                />
-              )}
-            </Field>
-
-            <Field name={CustomerInstitutionFieldNames.DISPLAY_NAME}>
-              {({ field, meta: { touched, error } }: FieldProps) => (
-                <TextField
-                  {...field}
-                  label={t('display_name')}
-                  fullWidth
-                  variant="outlined"
-                  inputProps={{ 'data-testid': 'customer-institution-display-name-input' }}
-                  error={touched && !!error}
-                  helperText={<ErrorMessage name={field.name} />}
-                />
-              )}
-            </Field>
-
-            <Field name={CustomerInstitutionFieldNames.SHORT_NAME}>
-              {({ field, meta: { touched, error } }: FieldProps) => (
-                <TextField
-                  {...field}
-                  label={t('short_name')}
-                  fullWidth
-                  variant="outlined"
-                  inputProps={{ 'data-testid': 'customer-institution-short-name-input' }}
-                  error={touched && !!error}
-                  helperText={<ErrorMessage name={field.name} />}
-                />
-              )}
-            </Field>
-
-            <Field name={CustomerInstitutionFieldNames.ARCHIVE_NAME}>
-              {({ field }: FieldProps) => (
-                <TextField
-                  {...field}
-                  label={t('archive_name')}
-                  fullWidth
-                  variant="outlined"
-                  inputProps={{ 'data-testid': 'customer-institution-archive-name-input' }}
-                />
-              )}
-            </Field>
-
-            <Field name={CustomerInstitutionFieldNames.CNAME}>
-              {({ field }: FieldProps) => (
-                <TextField
-                  {...field}
-                  label={t('cname')}
-                  fullWidth
-                  variant="outlined"
-                  inputProps={{ 'data-testid': 'customer-institution-cname-input' }}
-                />
-              )}
-            </Field>
-
-            <Field name={CustomerInstitutionFieldNames.INSTITUTION_DNS}>
-              {({ field }: FieldProps) => (
-                <TextField
-                  {...field}
-                  label={t('institution_dns')}
-                  fullWidth
-                  variant="outlined"
-                  inputProps={{ 'data-testid': 'customer-institution-institution-dns-input' }}
-                />
-              )}
-            </Field>
-
-            <Field name={CustomerInstitutionFieldNames.FEIDE_ORGANIZATION_ID}>
-              {({ field, meta: { touched, error } }: FieldProps) => (
-                <TextField
-                  {...field}
-                  label={t('feide_organization_id')}
-                  fullWidth
-                  variant="outlined"
-                  inputProps={{ 'data-testid': 'customer-institution-feide-organization-id-input' }}
-                  error={touched && !!error}
-                  helperText={<ErrorMessage name={field.name} />}
-                />
-              )}
-            </Field>
-
+            <SelectInstitutionField editMode={editMode} />
+            <DisplayNameField />
+            <ShortNameField />
+            <ArchiveNameField />
+            <FeideOrganizationIdField />
             <StyledButtonContainer>
               <ButtonWithProgress data-testid="customer-institution-save-button" isLoading={isSubmitting} type="submit">
                 {editMode ? t('common:save') : t('common:create')}
@@ -184,7 +88,7 @@ const CustomerInstitutionMetadataForm: FC<CustomerInstitutionMetadataFormProps> 
           </Form>
         )}
       </Formik>
-    </Card>
+    </StyledCard>
   );
 };
 
