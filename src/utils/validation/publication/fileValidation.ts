@@ -1,5 +1,6 @@
 import * as Yup from 'yup';
 import { ErrorMessage } from '../errorMessage';
+import { PublicationStatus } from '../../../types/publication.types';
 
 export const fileValidationSchema = Yup.object().shape({
   administrativeAgreement: Yup.boolean(),
@@ -7,7 +8,16 @@ export const fileValidationSchema = Yup.object().shape({
     .nullable()
     .when('administrativeAgreement', {
       is: false,
-      then: Yup.date().nullable().min(new Date(), ErrorMessage.MUST_BE_FUTURE).typeError(ErrorMessage.INVALID_FORMAT),
+      then: Yup.date()
+        .nullable()
+        .when('$publicationStatus', {
+          is: PublicationStatus.PUBLISHED,
+          then: Yup.date().nullable().typeError(ErrorMessage.INVALID_FORMAT),
+          otherwise: Yup.date()
+            .nullable()
+            .min(new Date(), ErrorMessage.MUST_BE_FUTURE)
+            .typeError(ErrorMessage.INVALID_FORMAT),
+        }),
     }),
   publisherAuthority: Yup.boolean()
     .nullable()

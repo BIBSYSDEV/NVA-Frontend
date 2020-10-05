@@ -69,7 +69,7 @@ export const PublicationFormContent: FC<PublicationFormContentProps> = ({
       )}
       {tabNumber === PublicationTab.Submission && (
         <StyledPanel>
-          <SubmissionPanel isSaving={isSaving} savePublication={savePublication} setTouchedFields={setTouchedFields} />
+          <SubmissionPanel isSaving={isSaving} savePublication={savePublication} />
         </StyledPanel>
       )}
     </>
