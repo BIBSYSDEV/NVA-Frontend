@@ -21,10 +21,10 @@ import { updateCustomerInstitution } from '../../api/customerInstitutionsApi';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import ListSkeleton from '../../components/ListSkeleton';
+import { StyledRightAlignedButtonWrapper } from '../../components/styled/Wrappers';
 
-const StyledSaveButton = styled(ButtonWithProgress)`
-  margin-top: 1rem;
-  min-width: 5rem;
+const StyledButtonContainer = styled(StyledRightAlignedButtonWrapper)`
+  margin-top: 2rem;
 `;
 
 const MyCustomerInstitutionPage: FC = () => {
@@ -64,9 +64,14 @@ const MyCustomerInstitutionPage: FC = () => {
                 <DisplayNameField />
                 <ShortNameField />
                 <ArchiveNameField />
-                <StyledSaveButton data-testid="customer-institution-save-button" isLoading={isSubmitting} type="submit">
-                  {t('save')}
-                </StyledSaveButton>
+                <StyledButtonContainer>
+                  <ButtonWithProgress
+                    data-testid="customer-institution-save-button"
+                    isLoading={isSubmitting}
+                    type="submit">
+                    {t('save')}
+                  </ButtonWithProgress>
+                </StyledButtonContainer>
               </Form>
             )}
           </Formik>
