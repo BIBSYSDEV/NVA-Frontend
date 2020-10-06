@@ -30,7 +30,7 @@ describe('Menu', () => {
     cy.get('[data-testid=menu-logout-button]').should('be.visible');
   });
 
-  it.skip('Unauthorized user should see Forbidden page when visiting protected URLs', () => {
+  it('Unauthorized user should see Forbidden page when visiting protected URLs', () => {
     cy.visit('/registration');
     cy.setUserRolesInRedux(noRoles);
     cy.get('[data-testid=forbidden]').should('be.visible');

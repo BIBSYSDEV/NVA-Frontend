@@ -23,8 +23,6 @@ describe('User administers institutions ', () => {
     cy.get('.MuiAutocomplete-option').contains('Norwegian University of Science and Technology').click({ force: true });
     cy.get('[data-testid=customer-institution-short-name-input]').type('NTNU');
     cy.get('[data-testid=customer-institution-archive-name-input]').type('NTNU Open');
-    cy.get('[data-testid=customer-institution-cname-input]').type('ntnu.unit.nva.no');
-    cy.get('[data-testid=customer-institution-institution-dns-input]').type('1.1.1.1');
     cy.get('[data-testid=customer-institution-feide-organization-id-input]').type('NO919477822');
 
     cy.get('[data-testid=customer-institution-save-button]').click({ force: true });
