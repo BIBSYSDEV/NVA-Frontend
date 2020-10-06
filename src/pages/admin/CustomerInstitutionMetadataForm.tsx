@@ -14,11 +14,13 @@ import { createCustomerInstitution, updateCustomerInstitution } from '../../api/
 import ButtonWithProgress from '../../components/ButtonWithProgress';
 import { StyledRightAlignedButtonWrapper } from '../../components/styled/Wrappers';
 import { customerInstitutionValidationSchema } from '../../utils/validation/customerInstitutionValidation';
-import SelectInstitutionField from './customerInstitutionFields/SelectInstitutionField';
-import DisplayNameField from './customerInstitutionFields/DisplayNameField';
-import ShortNameField from './customerInstitutionFields/ShortNameField';
-import ArchiveNameField from './customerInstitutionFields/ArchiveName';
-import FeideOrganizationIdField from './customerInstitutionFields/FeideOrganizationIdField';
+import {
+  SelectInstitutionField,
+  DisplayNameField,
+  ShortNameField,
+  ArchiveNameField,
+  FeideOrganizationIdField,
+} from './customerInstitutionFields';
 
 const StyledButtonContainer = styled(StyledRightAlignedButtonWrapper)`
   margin-top: 2rem;
@@ -75,7 +77,7 @@ const CustomerInstitutionMetadataForm: FC<CustomerInstitutionMetadataFormProps> 
         onSubmit={handleSubmit}>
         {({ isSubmitting }) => (
           <Form>
-            <SelectInstitutionField editMode={editMode} />
+            <SelectInstitutionField disabled={editMode} />
             <DisplayNameField />
             <ShortNameField />
             <ArchiveNameField />

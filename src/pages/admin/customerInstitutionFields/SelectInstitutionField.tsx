@@ -5,21 +5,21 @@ import { CustomerInstitutionFieldNames } from '../../../types/customerInstitutio
 import InstitutionAutocomplete from '../../../components/institution/InstitutionAutocomplete';
 
 interface SelectInstitutionFieldProps {
-  editMode: boolean;
+  disabled?: boolean;
 }
 
-const SelectInstitutionField: FC<SelectInstitutionFieldProps> = ({ editMode }) => {
+const SelectInstitutionField: FC<SelectInstitutionFieldProps> = ({ disabled = false }) => {
   const [institutions, isLoadingInstitutions] = useFetchInstitutions();
 
   return (
     <Field name={CustomerInstitutionFieldNames.NAME}>
       {({ field: { name, value }, form: { values, setValues }, meta: { touched, error } }: FieldProps) => (
         <InstitutionAutocomplete
-          disabled={editMode}
+          disabled={disabled}
           error={touched && !!error}
           helperText={<ErrorMessage name={name} />}
           institutions={institutions}
-          isLoading={!editMode && isLoadingInstitutions}
+          isLoading={!disabled && isLoadingInstitutions}
           onChange={(selectedInstitution) => {
             setValues({
               ...values,

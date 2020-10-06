@@ -18,6 +18,7 @@ const User = lazy(() => import('./pages/user/User'));
 const NotFound = lazy(() => import('./pages/errorpages/NotFound'));
 const PublicProfile = lazy(() => import('./pages/publication/PublicProfile'));
 const AdminCustomerInstitutionsPage = lazy(() => import('./pages/admin/AdminCustomerInstitutionsPage'));
+const MyInstitutionPage = lazy(() => import('./pages/admin/MyInstitutionPage'));
 const WorklistPage = lazy(() => import('./pages/worklist/WorklistPage'));
 const Logout = lazy(() => import('./layout/Logout'));
 
@@ -52,7 +53,7 @@ const AppRoutes: FC = () => {
             <CuratorRoute exact path="/worklist" component={WorklistPage} />
 
             {/* InstitutionAdminRoutes */}
-            <InstitutionAdminRoute exact path="/my-institution" component={AdminCustomerInstitutionsPage} />
+            <InstitutionAdminRoute exact path="/my-institution" component={MyInstitutionPage} />
             <InstitutionAdminRoute exact path="/my-institution-users" component={AdminUsersPage} />
 
             {/* AppAdminRoutes */}
