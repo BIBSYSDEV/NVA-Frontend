@@ -1,6 +1,5 @@
 import React, { FC, Suspense, lazy } from 'react';
 import { Switch, Route } from 'react-router-dom';
-import AdminUsersPage from './pages/admin/AdminUsersPage';
 import DelayedFallback from './components/DelayedFallback';
 import OrderInformation from './pages/infopages/OrderInformation';
 import Description from './pages/infopages/Description';
@@ -19,6 +18,7 @@ const NotFound = lazy(() => import('./pages/errorpages/NotFound'));
 const PublicProfile = lazy(() => import('./pages/publication/PublicProfile'));
 const AdminCustomerInstitutionsPage = lazy(() => import('./pages/admin/AdminCustomerInstitutionsPage'));
 const MyInstitutionPage = lazy(() => import('./pages/admin/MyInstitutionPage'));
+const MyInstitutionUsersPage = lazy(() => import('./pages/admin/MyInstitutionUsersPage'));
 const WorklistPage = lazy(() => import('./pages/worklist/WorklistPage'));
 const Logout = lazy(() => import('./layout/Logout'));
 
@@ -54,7 +54,7 @@ const AppRoutes: FC = () => {
 
             {/* InstitutionAdminRoutes */}
             <InstitutionAdminRoute exact path="/my-institution" component={MyInstitutionPage} />
-            <InstitutionAdminRoute exact path="/my-institution-users" component={AdminUsersPage} />
+            <InstitutionAdminRoute exact path="/my-institution-users" component={MyInstitutionUsersPage} />
 
             {/* AppAdminRoutes */}
             <AppAdminRoute exact path="/admin-institutions" component={AdminCustomerInstitutionsPage} />
