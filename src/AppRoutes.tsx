@@ -5,13 +5,7 @@ import DelayedFallback from './components/DelayedFallback';
 import OrderInformation from './pages/infopages/OrderInformation';
 import Description from './pages/infopages/Description';
 import PrivacyPolicy from './pages/infopages/PrivacyPolicy';
-import {
-  LoggedInRoute,
-  CreatorRoute,
-  CuratorRoute,
-  InstitutionAdminRoute,
-  EditInstitutionRoute,
-} from './utils/routes/Routes';
+import { LoggedInRoute, CreatorRoute, CuratorRoute, InstitutionAdminRoute, AppAdminRoute } from './utils/routes/Routes';
 import { useSelector } from 'react-redux';
 import { RootStore } from './redux/reducers/rootReducer';
 
@@ -57,9 +51,12 @@ const AppRoutes: FC = () => {
             {/* CuratorRoutes */}
             <CuratorRoute exact path="/worklist" component={WorklistPage} />
 
-            {/* AdminRoutes */}
-            <InstitutionAdminRoute exact path="/admin-institution-users" component={AdminUsersPage} />
-            <EditInstitutionRoute exact path="/admin-institutions" component={AdminCustomerInstitutionsPage} />
+            {/* InstitutionAdminRoutes */}
+            <InstitutionAdminRoute exact path="/my-institution" component={AdminCustomerInstitutionsPage} />
+            <InstitutionAdminRoute exact path="/my-institution-users" component={AdminUsersPage} />
+
+            {/* AppAdminRoutes */}
+            <AppAdminRoute exact path="/admin-institutions" component={AdminCustomerInstitutionsPage} />
           </>
         )}
 
