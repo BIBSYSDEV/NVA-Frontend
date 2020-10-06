@@ -51,13 +51,13 @@
     "creator": "Registrator",
     "creator_description": "Access to register publications and other resources",
     "curator": "Curator",
-    "curator_description": "Access to approve and publish others content",
+    "curator_description": "Access to approve and publish other's content",
     "curators": "Curators",
     "editor": "Editor",
     "editor_description": "Access to something",
     "editors": "Editors",
     "institution_admin": "Administrator",
-    "institution_admin_description": "Access to adminster your own institution",
+    "institution_admin_description": "Access to administer your own institution",
     "institution_admins": "Administrators"
   },
   "organization": {
