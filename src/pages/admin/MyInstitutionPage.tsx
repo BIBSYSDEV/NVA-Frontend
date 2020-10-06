@@ -8,7 +8,7 @@ import { emptyCustomerInstitution, CustomerInstitution } from '../../types/custo
 import { PageHeader } from '../../components/PageHeader';
 import { useFetchCustomerInstitution } from '../../utils/hooks/useFetchCustomerInstitution';
 import { RootStore } from '../../redux/reducers/rootReducer';
-import { customerInstitutionValidationSchema } from '../../utils/validation/customerInstitutionValidation';
+import { myInstitutionValidationSchema } from '../../utils/validation/customerInstitutionValidation';
 import {
   SelectInstitutionField,
   DisplayNameField,
@@ -56,7 +56,7 @@ const MyCustomerInstitutionPage: FC = () => {
             enableReinitialize
             initialValues={{ ...emptyCustomerInstitution, ...customerInstitution }}
             validateOnChange
-            validationSchema={customerInstitutionValidationSchema}
+            validationSchema={myInstitutionValidationSchema}
             onSubmit={handleSubmit}>
             {({ isSubmitting }) => (
               <Form>
