@@ -10,12 +10,11 @@
   "DegreeOther": "Other student thesis",
   "Journal": "Contribution to journal",
   "JournalArticle": "Journal article",
-  "JournalBookReview": "Book review",
   "JournalCorrigendum": "Corrigendum",
   "JournalEditorial": "Editorial",
   "JournalLeader": "Editorial",
   "JournalLetter": "Letter to the Editor",
-  "JournalReview": "Review",
+  "JournalReview": "Book review",
   "JournalShortCommunication": "Short communication",
   "Other": "Other publication",
   "OtherFeatureArticle": "Feature article",
@@ -26,5 +25,5 @@
   "ReportPolicy": "Policy report",
   "ReportResearch": "Research report",
   "ReportWorkingPaper": "Working paper",
-  "ReportOther": "Other type of report"
+  "ReportBasic": "Other type of report"
 }

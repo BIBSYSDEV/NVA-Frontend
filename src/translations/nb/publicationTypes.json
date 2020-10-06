@@ -10,12 +10,11 @@
   "DegreeOther": "Annen studentoppgave",
   "Journal": "Publikasjon i tidsskrift",
   "JournalArticle": "Artikkel i tidsskrift",
-  "JournalBookReview": "Bokanmeldelse",
   "JournalCorrigendum": "Korrigendum",
   "JournalEditorial": "Lederartikkel",
   "JournalLeader": "Leder",
   "JournalLetter": "Brev til redaktør",
-  "JournalReview": "Anmeldelse",
+  "JournalReview": "Bokanmeldelse",
   "JournalShortCommunication": "Short communication",
   "Other": "Annen publikasjon",
   "OtherFeatureArticle": "Kronikk",
@@ -26,5 +25,5 @@
   "ReportPolicy": "Policyrapport",
   "ReportResearch": "Forskningsrapport",
   "ReportWorkingPaper": "Arbeidsnotat",
-  "ReportOther": "Annen rapport"
+  "ReportBasic": "Annen rapport"
 }
