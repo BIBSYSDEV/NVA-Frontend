@@ -30,25 +30,25 @@ describe('Menu', () => {
     cy.get('[data-testid=menu-logout-button]').should('be.visible');
   });
 
-  it('Unauthorized user should see Forbidden message when visiting protected URLs', () => {
+  it('Unauthorized user should see Forbidden page when visiting protected URLs', () => {
     cy.visit('/registration');
     cy.setUserRolesInRedux(noRoles);
-    cy.contains('Forbidden');
+    cy.get('[data-testid=forbidden]').should('be.visible');
 
     cy.visit('/my-registrations');
     cy.setUserRolesInRedux(noRoles);
-    cy.contains('Forbidden');
+    cy.get('[data-testid=forbidden]').should('be.visible');
 
     cy.visit('/admin-institutions');
     cy.setUserRolesInRedux(noRoles);
-    cy.contains('Forbidden');
+    cy.get('[data-testid=forbidden]').should('be.visible');
 
     cy.visit('/worklist');
     cy.setUserRolesInRedux(noRoles);
-    cy.contains('Forbidden');
+    cy.get('[data-testid=forbidden]').should('be.visible');
 
     cy.visit('/admin-institution-users');
     cy.setUserRolesInRedux(noRoles);
-    cy.contains('Forbidden');
+    cy.get('[data-testid=forbidden]').should('be.visible');
   });
 });

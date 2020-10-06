@@ -39,7 +39,7 @@ export const InstitutionAdminRoute: FC<LoggedInRouteProps> = ({ component, ...re
 export const EditInstitutionRoute: FC<LoggedInRouteProps> = ({ component, ...rest }) => {
   const user = useSelector((store: RootStore) => store.user);
 
-  // NB! Institution-admin should only be allowed to update it's own institution,
+  // NB! Institution admin should only be allowed to update its own institution,
   // so ensure this is enforced in the actual component(s)
   return <PrivateRoute {...rest} component={component} isAuthorized={user.isInstitutionAdmin || user.isAppAdmin} />;
 };
