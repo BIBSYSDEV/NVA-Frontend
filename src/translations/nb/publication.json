@@ -4,15 +4,15 @@
     "info": "Den antologien kapittelet er publisert i må være registrert først"
   },
   "contributors": {
-    "add_affiliation": "Legg til tilknytning",
+    "add_affiliation": "Legg til tilhørighet",
     "add_author": "Legg til forfatter",
     "add_authors": "Legg til flere forfattere",
-    "add_duplicate_affiliation": "Tilknytningen er allerede lagt til",
+    "add_duplicate_affiliation": "Tilhørigheten er allerede lagt til",
     "add_other_contributor": "Legg til flere",
     "author_already_added": "Valgt forfatter er allerede lagt til",
     "authors": "Forfattere",
-    "confirm_remove_affiliation_text": "Er du sikker på at du ønsker å fjerne denne tilknytningen?",
-    "confirm_remove_affiliation_title": "Fjerne tilknytning?",
+    "confirm_remove_affiliation_text": "Er du sikker på at du ønsker å fjerne denne tilhørigheten?",
+    "confirm_remove_affiliation_title": "Fjerne tilhørighet?",
     "confirm_remove_contributor_text": "Er du sikker på at du ønsker å fjerne {{contributorName}} fra listen over bidragsytere?",
     "confirm_remove_contributor_title": "Fjerne bidragsyter?",
     "connect_author_identity": "Tilknytt forfatteridentitet",
@@ -93,16 +93,16 @@
     "summary": "Oppsummering",
     "validation_errors": "Valideringsfeil"
   },
-  "new_publication": "Ny publikasjon",
+  "new_registration": "Ny registrering",
   "public_page": {
     "message_to_curator": "Melding til kurator",
-    "reserve_doi": "Reserver DOI",
-    "request_doi": "Be om DOI",
-    "request_doi_description": "Forespørselen vil bli behandlet av en kurator. Legg til en melding ved eventuelle spørsmål eller oppklaringer. Du vil få en epost når forespørselen er behandlet.",
+    "reserve_doi": "Reserver en DOI",
+    "request_doi": "Be om en DOI",
+    "request_doi_description": "Når du ber om en DOI (Digital Object Identifier) vil bestillingen gå via en kurator ved din institusjon for kvalitetskontroll. Legg til en melding ved eventuelle spørsmål eller oppklaringer. Du vil få en epost når forespørselen er behandlet.",
     "requested_doi": "Venter på DOI..."
   },
   "publication": {
-    "latest_publications": "Siste publikasjoner",
+    "latest_publications": "Nye registreringer",
     "link_to_resource": "Lenke til ressurs",
     "link_to_resource_description": "F.eks. DOI, lenke til artikkel, lenke til video av presentasjon etc.",
     "no_published_publications_yet": "Det finnes ingen publiserte publikasjoner enda",
@@ -154,8 +154,8 @@
     "Rejected": "Avvist"
   },
   "submission": {
-    "number_of_affiliations": "{{count}} tilknytning",
-    "number_of_affiliations_plural": "{{count}} tilknytninger"
+    "number_of_affiliations": "{{count}} tilhørighet",
+    "number_of_affiliations_plural": "{{count}} tilhørigheter"
   },
   "modal_unsaved_changes_description": "Du har gjort endringer som ikke er lagret. Er du sikker på at du vil forlate denne siden?",
   "modal_unsaved_changes_heading": "Forlate siden uten å ha lagret?"

@@ -6,7 +6,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 
 import { InstitutionUnitBase } from '../../types/institution.types';
 
-interface InstitutionAutocompleteProps extends Pick<TextFieldProps, 'disabled' | 'error' | 'helperText'> {
+interface InstitutionAutocompleteProps extends Pick<TextFieldProps, 'disabled' | 'error' | 'helperText' | 'label'> {
   institutions: InstitutionUnitBase[];
   onChange: (value: InstitutionUnitBase | null) => void;
   value: InstitutionUnitBase | null;
@@ -18,6 +18,7 @@ const InstitutionAutocomplete: FC<InstitutionAutocompleteProps> = ({
   error,
   helperText,
   institutions,
+  label,
   onChange,
   value = null,
   isLoading = false,
@@ -43,8 +44,8 @@ const InstitutionAutocomplete: FC<InstitutionAutocompleteProps> = ({
       renderInput={(params) => (
         <TextField
           {...params}
-          label={t('institution')}
-          placeholder={t('institution:search_institution')}
+          label={label ?? t('institution')}
+          placeholder={label ? t('institution:search_department') : t('institution:search_institution')}
           variant="outlined"
           inputProps={{
             ...params.inputProps,

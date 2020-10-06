@@ -1,7 +1,7 @@
 import React, { useEffect, FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FormikProps, useFormikContext } from 'formik';
-import { Publication, DoiRequestStatus } from '../../types/publication.types';
+import { FormikProps, useFormikContext, setNestedObjectValues } from 'formik';
+import { Publication, DoiRequestStatus, PublicationStatus } from '../../types/publication.types';
 import { Button, Typography } from '@material-ui/core';
 import styled from 'styled-components';
 import SubmissionBook from './submission_tab/submission_book';
@@ -22,14 +22,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import ButtonWithProgress from '../../components/ButtonWithProgress';
-import {
-  touchedFilesTabFields,
-  touchedContributorTabFields,
-  touchedDescriptionTabFields,
-  touchedReferenceTabFields,
-  mergeTouchedFields,
-} from '../../utils/formik-helpers';
-import { PanelProps } from './PublicationFormContent';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { NAVIGATE_TO_PUBLIC_PUBLICATION_DURATION } from '../../utils/constants';
 
@@ -46,34 +38,29 @@ const StyledButtonWithProgress = styled(ButtonWithProgress)`
   margin-right: 0.5rem;
 `;
 
-interface SubmissionPanelProps extends PanelProps {
+interface SubmissionPanelProps {
   isSaving: boolean;
   savePublication: (values: Publication) => void;
 }
 
-const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication, setTouchedFields }) => {
+const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication }) => {
   const user = useSelector((store: RootStore) => store.user);
   const { t } = useTranslation('publication');
-  const { values, isValid, dirty }: FormikProps<Publication> = useFormikContext();
+  const { values, isValid, dirty, errors, setTouched }: FormikProps<Publication> = useFormikContext();
   const [isPublishing, setIsPublishing] = useState(false);
   const history = useHistory();
   const dispatch = useDispatch();
   const {
+    status,
     doiRequest,
-    entityDescription: { contributors, reference },
-    fileSet: { files },
+    entityDescription: { reference },
   } = values;
   const publicationContextType = reference.publicationContext.type;
 
   useEffect(() => {
-    const touchedForm = mergeTouchedFields([
-      touchedDescriptionTabFields,
-      touchedReferenceTabFields(publicationContextType),
-      touchedContributorTabFields(contributors),
-      touchedFilesTabFields(files),
-    ]);
-    setTouchedFields(touchedForm);
-  }, [setTouchedFields, contributors, files, publicationContextType]);
+    // Set all fields with error to touched to ensure tabs with error are showing error state
+    setTouched(setNestedObjectValues(errors, true));
+  }, [setTouched, errors]);
 
   const onClickPublish = async () => {
     setIsPublishing(true);
@@ -87,10 +74,10 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication, 
     } else if (publishedPublication?.info) {
       dispatch(setNotification(publishedPublication.info, NotificationVariant.Info));
       setTimeout(() => {
-        history.push(`/publication/${values.identifier}/public`);
+        history.push(`/registration/${values.identifier}/public`);
       }, NAVIGATE_TO_PUBLIC_PUBLICATION_DURATION);
     } else {
-      history.push(`/publication/${values.identifier}/public`);
+      history.push(`/registration/${values.identifier}/public`);
     }
   };
 
@@ -135,9 +122,15 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication, 
         </Card>
       </Card>
       <StyledButtonGroupContainer>
-        <StyledButtonWithProgress disabled={isSaving || !isValid} onClick={onClickPublish} isLoading={isPublishing}>
-          {t('common:publish')}
-        </StyledButtonWithProgress>
+        {status === PublicationStatus.DRAFT && (
+          <StyledButtonWithProgress
+            disabled={isSaving || !isValid}
+            data-testid="button-publish-publication"
+            onClick={onClickPublish}
+            isLoading={isPublishing}>
+            {t('common:publish')}
+          </StyledButtonWithProgress>
+        )}
         {user.isCurator ? (
           <>
             {doiRequest?.status === DoiRequestStatus.Requested && (
@@ -145,6 +138,7 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication, 
                 <StyledButton
                   color="primary"
                   variant="contained"
+                  data-testid="button-create-doi"
                   onClick={onClickCreateDoi}
                   disabled={isSaving || !isValid}>
                   {t('common:create_doi')}
@@ -152,6 +146,7 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication, 
                 <StyledButton
                   color="secondary"
                   variant="outlined"
+                  data-testid="button-reject-doi"
                   onClick={onClickRejectDoi}
                   disabled={isSaving || !isValid}>
                   {t('common:reject_doi')}
@@ -161,15 +156,20 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication, 
             <ButtonWithProgress
               disabled={isPublishing}
               isLoading={isSaving}
+              data-testid="button-save-publication"
               onClick={async () => {
                 await savePublication(values);
-                history.push(`/publication/${values.identifier}/public`);
+                history.push(`/registration/${values.identifier}/public`);
               }}>
               {t('common:save_and_present')}
             </ButtonWithProgress>
           </>
         ) : (
-          <ButtonWithProgress disabled={isPublishing} isLoading={isSaving} onClick={() => savePublication(values)}>
+          <ButtonWithProgress
+            disabled={isPublishing}
+            isLoading={isSaving}
+            data-testid="button-save-publication"
+            onClick={() => savePublication(values)}>
             {t('common:save')}
           </ButtonWithProgress>
         )}

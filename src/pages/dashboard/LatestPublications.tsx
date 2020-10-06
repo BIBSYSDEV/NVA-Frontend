@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
-import { List, Typography, CircularProgress, Divider } from '@material-ui/core';
+import { List, CircularProgress, Divider } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { Link as MuiLink } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
@@ -37,14 +37,9 @@ const LatestPublications: FC = () => {
               <PublicationListItemComponent
                 key={publication.identifier}
                 primaryComponent={
-                  <MuiLink component={Link} to={`/publication/${publication.identifier}/public`}>
+                  <MuiLink component={Link} to={`/registration/${publication.identifier}/public`}>
                     {publication.mainTitle}
                   </MuiLink>
-                }
-                secondaryComponent={
-                  <Typography component="span">
-                    {new Date(publication.modifiedDate).toLocaleDateString()} - {publication.owner}
-                  </Typography>
                 }
               />
             ))}

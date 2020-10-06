@@ -46,7 +46,7 @@ const MyPublications: FC = () => {
 
   return (
     <>
-      <PageHeader>{t('my_publications')}</PageHeader>
+      <PageHeader>{t('my_registrations')}</PageHeader>
       <StyledContainer>
         <StyledRightAlignedButtonWrapper>
           {user.authority && (
@@ -64,13 +64,13 @@ const MyPublications: FC = () => {
             data-testid="unpublished-button"
             onClick={() => setSelectedTab(Tab.Unpublished)}
             isSelected={selectedTab === Tab.Unpublished}>
-            {t('unpublished_publications')} ({unpublishedPublications.length})
+            {t('unpublished_registrations')} ({unpublishedPublications.length})
           </TabButton>
           <TabButton
             data-testid="published-button"
             onClick={() => setSelectedTab(Tab.Published)}
             isSelected={selectedTab === Tab.Published}>
-            {t('published_publications')} ({publishedPublications.length})
+            {t('published_registrations')} ({publishedPublications.length})
           </TabButton>
         </StyledTabsContainer>
         <Card>

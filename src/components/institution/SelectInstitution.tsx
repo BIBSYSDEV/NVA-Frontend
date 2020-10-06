@@ -102,7 +102,11 @@ const SelectInstitution: FC<SelectInstitutionProps> = ({ onSubmit, onClose }) =>
               )}
 
               {selectedInstitutionSubunits && (
-                <InstitutionSelector units={selectedInstitutionSubunits} fieldNamePrefix={name} />
+                <InstitutionSelector
+                  units={selectedInstitutionSubunits}
+                  fieldNamePrefix={name}
+                  label={t('institution:department')}
+                />
               )}
 
               <StyledButton
@@ -119,6 +123,7 @@ const SelectInstitution: FC<SelectInstitutionProps> = ({ onSubmit, onClose }) =>
                   onClick={() => {
                     onClose();
                   }}
+                  data-testid="institution-cancel-button"
                   variant="contained">
                   {t('cancel')}
                 </StyledButton>

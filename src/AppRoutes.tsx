@@ -38,7 +38,7 @@ const AppRoutes: FC = () => {
         <Route exact path="/order-information" component={OrderInformation} />
         <Route exact path="/privacy-policy" component={PrivacyPolicy} />
         <Route exact path="/user/:arpId" component={PublicProfile} />
-        <Route exact path="/publication/:identifier/public" component={PublicPublication} />
+        <Route exact path="/registration/:identifier/public" component={PublicPublication} />
         <Route exact path="/search" component={Search} />
         <Route exact path="/search/:searchTerm" component={Search} />
         <Route exact path="/search/:searchTerm/:offset" component={Search} />
@@ -50,9 +50,9 @@ const AppRoutes: FC = () => {
             <LoggedInRoute exact path="/user" component={User} />
 
             {/* CreatorRoutes */}
-            <CreatorRoute exact path="/publication" component={EditPublication} />
-            <CreatorRoute exact path="/publication/:identifier" component={EditPublication} />
-            <CreatorRoute exact path="/my-publications" component={MyPublications} />
+            <CreatorRoute exact path="/registration" component={EditPublication} />
+            <CreatorRoute exact path="/registration/:identifier" component={EditPublication} />
+            <CreatorRoute exact path="/my-registrations" component={MyPublications} />
 
             {/* CuratorRoutes */}
             <CuratorRoute exact path="/worklist" component={WorklistPage} />

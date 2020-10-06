@@ -7,6 +7,7 @@
   "create": "Create",
   "create_authority": "Create author ID",
   "create_doi": "Create DOI",
+  "created_date": "Created",
   "date": "Date",
   "description_create_authority": "Personregisteret inneholder personer med opphavsrett til publiserte vitenskapelige arbeid som er tilgjengelig i institusjonens bibliotek, vitenarkiv eller er del av Norsk Vitenskapsindeks. Også omtalte personer kan bli registrert.\n\nOm personen du søker har publisert noe vitenskapelig tidligere, eller har nylig fullført en vitenskapelig grad ved en norsk utdanningsinstitusjon, så er det sannsynlig at personen alt er registrert.\n\nEn kurator vil prøve å finne ut om dette er en ny person eller om det er en ny skrivemåte på en tidligere registrert person.",
   "delete": "Delete",
