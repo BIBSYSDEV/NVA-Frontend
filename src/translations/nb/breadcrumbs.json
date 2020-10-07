@@ -5,6 +5,7 @@
   "description": "Beskrivelse",
   "home": "Hjem",
   "logout": "Logget ut",
+  "my-institution": "$t(common:my_institution)",
   "my-registrations": "Mine registreringer",
   "new": "Ny",
   "new-registration": "Ny registrering",
