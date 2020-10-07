@@ -7,20 +7,18 @@ import { useHistory } from 'react-router-dom';
 
 import Card from '../../components/Card';
 import Heading from '../../components/Heading';
-import { CustomerInstitution, emptyCustomerInstitution } from '../../types/customerInstitution.types';
+import {
+  CustomerInstitution,
+  emptyCustomerInstitution,
+  CustomerInstitutionFieldNames,
+} from '../../types/customerInstitution.types';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import { createCustomerInstitution, updateCustomerInstitution } from '../../api/customerInstitutionsApi';
 import ButtonWithProgress from '../../components/ButtonWithProgress';
 import { StyledRightAlignedButtonWrapper } from '../../components/styled/Wrappers';
 import { customerInstitutionValidationSchema } from '../../utils/validation/customerInstitutionValidation';
-import {
-  SelectInstitutionField,
-  DisplayNameField,
-  ShortNameField,
-  ArchiveNameField,
-  FeideOrganizationIdField,
-} from './customerInstitutionFields';
+import { SelectInstitutionField, CustomerInstitutionTextField } from './customerInstitutionFields';
 
 const StyledButtonContainer = styled(StyledRightAlignedButtonWrapper)`
   margin-top: 2rem;
@@ -78,10 +76,26 @@ const CustomerInstitutionMetadataForm: FC<CustomerInstitutionMetadataFormProps> 
         {({ isSubmitting }) => (
           <Form>
             <SelectInstitutionField disabled={editMode} />
-            <DisplayNameField />
-            <ShortNameField />
-            <ArchiveNameField />
-            <FeideOrganizationIdField />
+            <CustomerInstitutionTextField
+              name={CustomerInstitutionFieldNames.DISPLAY_NAME}
+              label={t('display_name')}
+              dataTestId="customer-institution-display-name-input"
+            />
+            <CustomerInstitutionTextField
+              name={CustomerInstitutionFieldNames.SHORT_NAME}
+              label={t('short_name')}
+              dataTestId="customer-institution-short-name-input"
+            />
+            <CustomerInstitutionTextField
+              name={CustomerInstitutionFieldNames.ARCHIVE_NAME}
+              label={t('archive_name')}
+              dataTestId="customer-institution-archive-name-input"
+            />
+            <CustomerInstitutionTextField
+              name={CustomerInstitutionFieldNames.FEIDE_ORGANIZATION_ID}
+              label={t('feide_organization_id')}
+              dataTestId="customer-institution-feide-organization-id-input"
+            />
             <StyledButtonContainer>
               <ButtonWithProgress data-testid="customer-institution-save-button" isLoading={isSubmitting} type="submit">
                 {editMode ? t('common:save') : t('common:create')}
