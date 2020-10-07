@@ -1,8 +1,10 @@
 import React, { FC } from 'react';
-import { Field, FieldProps, ErrorMessage } from 'formik';
+import { Field, FieldProps, ErrorMessage, FieldInputProps } from 'formik';
 import { TextField, TextFieldProps } from '@material-ui/core';
 
-interface CustomerInstitutionTextFieldProps extends Pick<FieldProps & TextFieldProps, 'name' | 'label'> {
+interface CustomerInstitutionTextFieldProps
+  extends Pick<FieldInputProps<string>, 'name'>,
+    Pick<TextFieldProps, 'label'> {
   dataTestId?: string;
 }
 
