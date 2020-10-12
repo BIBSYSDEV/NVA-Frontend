@@ -8,11 +8,11 @@ import { useTranslation } from 'react-i18next';
 const StyledHeader = styled.div`
   width: 85vw;
   margin-top: 1rem;
+  margin-bottom: 1rem;
 `;
 
 const StyledHeaderTite = styled(Typography)`
   border-bottom: 3px solid;
-  margin-bottom: 1rem;
   padding-bottom: 0.5rem;
 `;
 
