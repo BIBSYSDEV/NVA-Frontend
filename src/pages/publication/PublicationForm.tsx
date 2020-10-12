@@ -60,10 +60,6 @@ const PublicationForm: FC<PublicationFormProps> = ({ identifier, closeForm }) =>
   }, [closeForm, publication, isLoadingPublication]);
 
   useEffect(() => {
-    history.replace(`/registration/${identifier}`, { title: publication?.entityDescription?.mainTitle });
-  }, [history, identifier, publication]);
-
-  useEffect(() => {
     if (publication) {
       // Redirect to public page if user should not be able to edit this publication
       const isValidOwner = user.isCreator && user.id === publication.owner;
