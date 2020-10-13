@@ -19,6 +19,7 @@ const PublicProfile = lazy(() => import('./pages/publication/PublicProfile'));
 const AdminCustomerInstitutionsPage = lazy(() => import('./pages/admin/AdminCustomerInstitutionsPage'));
 const MyInstitutionPage = lazy(() => import('./pages/admin/MyInstitutionPage'));
 const MyInstitutionUsersPage = lazy(() => import('./pages/admin/MyInstitutionUsersPage'));
+const MyMessages = lazy(() => import('./pages/messages/MyMessages'));
 const WorklistPage = lazy(() => import('./pages/worklist/WorklistPage'));
 const Logout = lazy(() => import('./layout/Logout'));
 
@@ -48,6 +49,7 @@ const AppRoutes: FC = () => {
             <CreatorRoute exact path="/registration" component={EditPublication} />
             <CreatorRoute exact path="/registration/:identifier" component={EditPublication} />
             <CreatorRoute exact path="/my-registrations" component={MyPublications} />
+            <CreatorRoute exact path="/my-messages" component={MyMessages} />
 
             {/* CuratorRoutes */}
             <CuratorRoute exact path="/worklist" component={WorklistPage} />
