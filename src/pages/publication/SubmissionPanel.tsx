@@ -154,6 +154,7 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication }
               </>
             )}
             <ButtonWithProgress
+              type="submit"
               disabled={isPublishing}
               isLoading={isSaving}
               data-testid="button-save-publication"
@@ -168,6 +169,7 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication }
           </>
         ) : (
           <ButtonWithProgress
+            type="submit"
             disabled={isPublishing}
             isLoading={isSaving}
             data-testid="button-save-publication"

@@ -147,6 +147,7 @@ const PublicationForm: FC<PublicationFormProps> = ({ identifier, closeForm }) =>
 
                   <StyledButtonContainer>
                     <ButtonWithProgress
+                      type="submit"
                       isLoading={isSaving}
                       data-testid="button-save-publication"
                       onClick={async () => {
