@@ -11,7 +11,7 @@ const StyledHeader = styled.div`
   margin-bottom: 1rem;
 `;
 
-const StyledHeaderTite = styled(Typography)`
+const StyledHeaderTitle = styled(Typography)`
   border-bottom: 3px solid;
   padding-bottom: 0.5rem;
 `;
@@ -29,7 +29,7 @@ export const PageHeader: FC = ({ children }) => {
       <Button startIcon={<ArrowBackIcon />} variant="text" onClick={onBackClick}>
         {t('back')}
       </Button>
-      <StyledHeaderTite variant="h1">{children}</StyledHeaderTite>
+      <StyledHeaderTitle variant="h1">{children}</StyledHeaderTitle>
     </StyledHeader>
   );
 };
