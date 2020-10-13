@@ -11,10 +11,9 @@ import {
   instanceTypeBaseFieldName,
 } from '../../types/publicationFieldNames';
 import BookTypeForm from './references_tab/BookTypeForm';
-// import ChapterForm from './references_tab/ChapterForm';
 import DegreeTypeForm from './references_tab/DegreeTypeForm';
 import JournalTypeForm from './references_tab/JournalTypeForm';
-import ReportForm from './references_tab/ReportForm';
+import ReportTypeForm from './references_tab/ReportTypeForm';
 import Card from '../../components/Card';
 import SelectTypeField from './references_tab/components/SelectTypeField';
 import { touchedReferenceTabFields } from '../../utils/formik-helpers';
@@ -102,8 +101,7 @@ const ReferencesPanel: FC<PanelProps> = ({ setTouchedFields }) => {
             {t(`publicationTypes:${publicationContextType}`)}
           </Typography>
           {publicationContextType === PublicationType.BOOK && <BookTypeForm />}
-          {/* {publicationContextType === PublicationType.CHAPTER && <ChapterForm />} */}
-          {publicationContextType === PublicationType.REPORT && <ReportForm />}
+          {publicationContextType === PublicationType.REPORT && <ReportTypeForm />}
           {publicationContextType === PublicationType.DEGREE && <DegreeTypeForm />}
           {publicationContextType === PublicationType.PUBLICATION_IN_JOURNAL && <JournalTypeForm />}
         </StyledCard>
