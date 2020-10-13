@@ -1,6 +1,5 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC } from 'react';
 import styled from 'styled-components';
-import { useHistory } from 'react-router-dom';
 import { CircularProgress } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 
@@ -22,19 +21,11 @@ interface AdminCustomerInstitutionProps {
 
 const AdminCustomerInstitution: FC<AdminCustomerInstitutionProps> = ({ customerId }) => {
   const { t } = useTranslation('admin');
-  const history = useHistory();
   const editMode = customerId !== 'new';
   const [customerInstitution, isLoadingCustomerInstitution, handleSetCustomerInstitution] = useFetchCustomerInstitution(
     editMode ? customerId : ''
   );
   const [users, isLoadingUsers, refetchInstitutionUsers] = useFetchUsersForInstitution(editMode ? customerId : '');
-
-  useEffect(() => {
-    if (customerInstitution) {
-      // TODO: Fix breadcrumbs when using query params
-      history.replace({ ...history.location, state: { title: customerInstitution.name } });
-    }
-  }, [history, customerInstitution]);
 
   return (
     <>

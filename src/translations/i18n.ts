@@ -4,7 +4,6 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 import { LanguageCodes } from '../types/language.types';
 import adminEn from './en/admin.json';
 import authorizationEn from './en/authorization.json';
-import breadcrumbsEn from './en/breadcrumbs.json';
 import commonEn from './en/common.json';
 import disciplinesEn from './en/disciplines.json';
 import feedbackEn from './en/feedback.json';
@@ -21,7 +20,6 @@ import workListsEn from './en/workLists.json';
 
 import adminNb from './nb/admin.json';
 import authorizationNb from './nb/authorization.json';
-import breadcrumbsNb from './nb/breadcrumbs.json';
 import commonNb from './nb/common.json';
 import disciplinesNb from './nb/disciplines.json';
 import feedbackNb from './nb/feedback.json';
@@ -43,7 +41,6 @@ i18n.use(LanguageDetector).init({
     eng: {
       admin: adminEn,
       authorization: authorizationEn,
-      breadcrumbs: breadcrumbsEn,
       common: commonEn,
       disciplines: disciplinesEn,
       feedback: feedbackEn,
@@ -61,7 +58,6 @@ i18n.use(LanguageDetector).init({
     nob: {
       admin: adminNb,
       authorization: authorizationNb,
-      breadcrumbs: breadcrumbsNb,
       common: commonNb,
       disciplines: disciplinesNb,
       feedback: feedbackNb,
@@ -79,7 +75,7 @@ i18n.use(LanguageDetector).init({
   },
   fallbackLng: fallbackLanguage,
   debug: false,
-  ns: ['breadcrumbs', 'common', 'feedback', 'infopages', 'languages', 'profile', 'translations'],
+  ns: ['common', 'feedback', 'infopages', 'languages', 'profile', 'translations'],
   defaultNS: 'translations',
   interpolation: {
     formatSeparator: ',',

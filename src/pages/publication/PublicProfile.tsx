@@ -1,7 +1,7 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC } from 'react';
 import { CircularProgress, IconButton, Link as MuiLink, Typography } from '@material-ui/core';
 import styled from 'styled-components';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import WorkIcon from '@material-ui/icons/Work';
 import orcidIcon from '../../resources/images/orcid_logo.svg';
 import Card from '../../components/Card';
@@ -23,11 +23,6 @@ const StyledTextContainer = styled.div`
 const PublicProfile: FC = () => {
   const { arpId } = useParams();
   const [authority, isLoadingUser] = useFetchAuthority(arpId);
-  const history = useHistory();
-
-  useEffect(() => {
-    history.replace(`/user/${arpId}`, { title: authority?.name });
-  }, [history, arpId, authority]);
 
   return (
     <>

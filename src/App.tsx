@@ -6,7 +6,6 @@ import styled from 'styled-components';
 import { CircularProgress } from '@material-ui/core';
 import { AuthorityQualifiers, addQualifierIdForAuthority, getAuthority } from './api/authorityApi';
 import { getCurrentUserAttributes } from './api/userApi';
-import Breadcrumbs from './layout/Breadcrumbs';
 import Footer from './layout/Footer';
 import Header from './layout/header/Header';
 import Notifier from './layout/Notifier';
@@ -159,7 +158,6 @@ const App: FC = () => {
       <StyledApp>
         <Notifier />
         <Header />
-        <Breadcrumbs />
         <StyledContent>
           <AppRoutes />
         </StyledContent>
