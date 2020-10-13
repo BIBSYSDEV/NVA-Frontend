@@ -40,7 +40,7 @@ const StyledButtonWithProgress = styled(ButtonWithProgress)`
 
 interface SubmissionPanelProps {
   isSaving: boolean;
-  savePublication: () => Promise<void>;
+  savePublication: () => Promise<boolean>;
 }
 
 const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication }) => {
@@ -64,20 +64,20 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication }
 
   const onClickPublish = async () => {
     setIsPublishing(true);
-    if (dirty) {
-      await savePublication();
-    }
-    const publishedPublication = await publishPublication(values.identifier);
-    if (publishedPublication?.error) {
-      setIsPublishing(false);
-      dispatch(setNotification(publishedPublication.error, NotificationVariant.Error));
-    } else if (publishedPublication?.info) {
-      dispatch(setNotification(publishedPublication.info, NotificationVariant.Info));
-      setTimeout(() => {
+    const publicationIsUpdated = dirty ? await savePublication() : true;
+    if (publicationIsUpdated) {
+      const publishedPublication = await publishPublication(values.identifier);
+      if (publishedPublication?.error) {
+        setIsPublishing(false);
+        dispatch(setNotification(publishedPublication.error, NotificationVariant.Error));
+      } else if (publishedPublication?.info) {
+        dispatch(setNotification(publishedPublication.info, NotificationVariant.Info));
+        setTimeout(() => {
+          history.push(`/registration/${values.identifier}/public`);
+        }, NAVIGATE_TO_PUBLIC_PUBLICATION_DURATION);
+      } else {
         history.push(`/registration/${values.identifier}/public`);
-      }, NAVIGATE_TO_PUBLIC_PUBLICATION_DURATION);
-    } else {
-      history.push(`/registration/${values.identifier}/public`);
+      }
     }
   };
 
@@ -158,8 +158,10 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication }
               isLoading={isSaving}
               data-testid="button-save-publication"
               onClick={async () => {
-                await savePublication();
-                history.push(`/registration/${values.identifier}/public`);
+                const publicationIsUpdated = await savePublication();
+                if (publicationIsUpdated) {
+                  history.push(`/registration/${values.identifier}/public`);
+                }
               }}>
               {t('common:save_and_present')}
             </ButtonWithProgress>

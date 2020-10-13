@@ -22,7 +22,7 @@ export interface PanelProps {
 
 interface PublicationFormContentProps {
   isSaving: boolean;
-  savePublication: () => Promise<void>;
+  savePublication: () => Promise<boolean>;
   tabNumber: number;
   uppy: Uppy;
 }

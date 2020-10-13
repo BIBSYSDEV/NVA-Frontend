@@ -88,6 +88,7 @@ const PublicationForm: FC<PublicationFormProps> = ({ identifier, closeForm }) =>
       dispatch(setNotification(t('feedback:success.update_publication')));
     }
     setIsSaving(false);
+    return !updatedPublication.error;
   };
 
   const validateForm = (values: Publication) => {
@@ -133,7 +134,7 @@ const PublicationForm: FC<PublicationFormProps> = ({ identifier, closeForm }) =>
                 uppy={uppy}
                 isSaving={isSaving}
                 savePublication={async () => {
-                  await savePublication(values);
+                  return await savePublication(values);
                 }}
               />
               {tabNumber !== PublicationTab.Submission && (
