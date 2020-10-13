@@ -17,11 +17,13 @@ const StyledSelectContainer = styled.div`
 const BookTypeForm: FC = () => {
   const { values }: FormikProps<BookPublication> = useFormikContext();
   const subType = values.entityDescription.reference.publicationInstance.type;
+
   return (
     <>
       <StyledSelectContainer>
         <SelectTypeField fieldName={ReferenceFieldNames.SUB_TYPE} options={Object.values(BookType)} />
       </StyledSelectContainer>
+
       {subType && <BookForm />}
     </>
   );

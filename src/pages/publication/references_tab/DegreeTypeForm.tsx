@@ -4,6 +4,15 @@ import { DegreePublication } from '../../../types/publication.types';
 import { ReferenceFieldNames, DegreeType } from '../../../types/publicationFieldNames';
 import SelectTypeField from './components/SelectTypeField';
 import DegreeForm from './sub_type_forms/DegreeForm';
+import styled from 'styled-components';
+
+const StyledSelectContainer = styled.div`
+  width: 50%;
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+    padding: 0 1rem;
+    width: 100%;
+  }
+`;
 
 const DegreeTypeForm: FC = () => {
   const { values }: FormikProps<DegreePublication> = useFormikContext();
@@ -11,7 +20,10 @@ const DegreeTypeForm: FC = () => {
 
   return (
     <>
-      <SelectTypeField fieldName={ReferenceFieldNames.SUB_TYPE} options={Object.values(DegreeType)} />
+      <StyledSelectContainer>
+        <SelectTypeField fieldName={ReferenceFieldNames.SUB_TYPE} options={Object.values(DegreeType)} />
+      </StyledSelectContainer>
+
       {subType && <DegreeForm />}
     </>
   );

@@ -5,23 +5,25 @@ import { ReferenceFieldNames, JournalType } from '../../../types/publicationFiel
 import SelectTypeField from './components/SelectTypeField';
 import JournalArticleForm from './sub_type_forms/JournalArticleForm';
 import JournalForm from './sub_type_forms/JournalForm';
+import styled from 'styled-components';
+
+const StyledSelectContainer = styled.div`
+  width: 50%;
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+    padding: 0 1rem;
+    width: 100%;
+  }
+`;
 
 const JournalTypeForm: FC = () => {
-  const { values, setFieldValue }: FormikProps<JournalPublication> = useFormikContext();
-
+  const { values }: FormikProps<JournalPublication> = useFormikContext();
   const subType = values.entityDescription.reference.publicationInstance.type;
 
   return (
     <>
-      <SelectTypeField
-        fieldName={ReferenceFieldNames.SUB_TYPE}
-        options={Object.values(JournalType)}
-        onChangeType={(newType) => {
-          setFieldValue(ReferenceFieldNames.SUB_TYPE, newType, false);
-          // Only JournalArticle can be peer reviewed, so ensure it is set to false when type is changed
-          setFieldValue(ReferenceFieldNames.PEER_REVIEW, false);
-        }}
-      />
+      <StyledSelectContainer>
+        <SelectTypeField fieldName={ReferenceFieldNames.SUB_TYPE} options={Object.values(JournalType)} />
+      </StyledSelectContainer>
 
       {subType && (subType === JournalType.ARTICLE ? <JournalArticleForm /> : <JournalForm />)}
     </>
