@@ -12,7 +12,7 @@ import {
 } from '../../types/publicationFieldNames';
 import BookTypeForm from './references_tab/BookTypeForm';
 // import ChapterForm from './references_tab/ChapterForm';
-import DegreeForm from './references_tab/DegreeForm';
+import DegreeTypeForm from './references_tab/DegreeTypeForm';
 import JournalForm from './references_tab/JournalForm';
 import ReportForm from './references_tab/ReportForm';
 import Card from '../../components/Card';
@@ -104,7 +104,7 @@ const ReferencesPanel: FC<PanelProps> = ({ setTouchedFields }) => {
           {publicationContextType === PublicationType.BOOK && <BookTypeForm />}
           {/* {publicationContextType === PublicationType.CHAPTER && <ChapterForm />} */}
           {publicationContextType === PublicationType.REPORT && <ReportForm />}
-          {publicationContextType === PublicationType.DEGREE && <DegreeForm />}
+          {publicationContextType === PublicationType.DEGREE && <DegreeTypeForm />}
           {publicationContextType === PublicationType.PUBLICATION_IN_JOURNAL && <JournalForm />}
         </StyledCard>
       )}
