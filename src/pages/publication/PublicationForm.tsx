@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
-import { Form, Formik, FormikProps, yupToFormErrors, validateYupSchema } from 'formik';
+import { Form, Formik, FormikProps, yupToFormErrors, validateYupSchema, setNestedObjectValues } from 'formik';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import deepmerge from 'deepmerge';
@@ -117,23 +117,23 @@ const PublicationForm: FC<PublicationFormProps> = ({ identifier, closeForm }) =>
           enableReinitialize
           initialValues={publication ? deepmerge(emptyPublication, publication) : emptyPublication}
           validate={validateForm}
-          onSubmit={(values: Publication) => savePublication(values)}>
-          {({ dirty, values }: FormikProps<Publication>) => (
-            <>
+          onSubmit={() => {
+            /* Use custom save handler instead, since onSubmit will prevent saving if there are any errors */
+          }}>
+          {({ setTouched, dirty, errors, values }: FormikProps<Publication>) => (
+            <Form>
               <RouteLeavingGuard
                 modalDescription={t('modal_unsaved_changes_description')}
                 modalHeading={t('modal_unsaved_changes_heading')}
                 shouldBlockNavigation={dirty}
               />
-              <Form>
-                <PublicationFormTabs tabNumber={tabNumber} handleTabChange={handleTabChange} />
-                <PublicationFormContent
-                  tabNumber={tabNumber}
-                  uppy={uppy}
-                  isSaving={isSaving}
-                  savePublication={savePublication}
-                />
-              </Form>
+              <PublicationFormTabs tabNumber={tabNumber} handleTabChange={handleTabChange} />
+              <PublicationFormContent
+                tabNumber={tabNumber}
+                uppy={uppy}
+                isSaving={isSaving}
+                savePublication={savePublication}
+              />
               {tabNumber !== PublicationTab.Submission && (
                 <StyledButtonGroupContainer>
                   <StyledButtonContainer>
@@ -146,13 +146,17 @@ const PublicationForm: FC<PublicationFormProps> = ({ identifier, closeForm }) =>
                     <ButtonWithProgress
                       isLoading={isSaving}
                       data-testid="button-save-publication"
-                      onClick={() => savePublication(values)}>
+                      onClick={async () => {
+                        await savePublication(values);
+                        // Set all fields with error to touched to ensure error messages are shown
+                        setTouched(setNestedObjectValues(errors, true));
+                      }}>
                       {t('common:save')}
                     </ButtonWithProgress>
                   </StyledButtonContainer>
                 </StyledButtonGroupContainer>
               )}
-            </>
+            </Form>
           )}
         </Formik>
       </StyledPublication>

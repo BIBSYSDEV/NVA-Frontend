@@ -40,7 +40,7 @@ const StyledButtonWithProgress = styled(ButtonWithProgress)`
 
 interface SubmissionPanelProps {
   isSaving: boolean;
-  savePublication: (values: Publication) => void;
+  savePublication: (values: Publication) => Promise<void>;
 }
 
 const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication }) => {
