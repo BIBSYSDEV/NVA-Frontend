@@ -89,6 +89,9 @@ const Menu: FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
             {t('workLists:my_worklist')}
           </MenuItem>
         )}
+        <MenuItem data-testid="menu-my-messages-button" onClick={() => handleClickMenuItem('/my-messages')}>
+          {t('workLists:my_messages')}
+        </MenuItem>
         <MenuItem data-testid="menu-user-profile-button" onClick={() => handleClickMenuItem('/user')}>
           {t('profile:my_profile')}
         </MenuItem>

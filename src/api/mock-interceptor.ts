@@ -104,6 +104,11 @@ export const interceptRequestsOnMock = () => {
   mock.onGet(new RegExp(`${DoiRequestApiPaths.DOI_REQUEST}/*`)).reply(200, publicationsWithPendingDoiRequest);
   mock.onGet(new RegExp(`${PublicationsApiPaths.FOR_APPROVAL}/*`)).reply(200, mockMyPublications.publications);
 
+  //MY MESSAGES
+  mock
+    .onGet(new RegExp(`${DoiRequestApiPaths.DOI_REQUEST}?role=Creator`))
+    .reply(200, publicationsWithPendingDoiRequest);
+
   //PUBLICATION
   mock.onGet(new RegExp(`${PublicationsApiPaths.PUBLICATION}/new`)).reply(200, emptyPublication);
   mock
