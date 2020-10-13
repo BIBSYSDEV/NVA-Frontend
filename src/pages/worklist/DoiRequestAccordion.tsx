@@ -10,6 +10,7 @@ import { PublicationTab, Publication } from '../../types/publication.types';
 import MessageList from './MessageList';
 
 const StyledAccordion = styled(Accordion)`
+  width: 100%;
   margin: 0 1rem;
   .MuiAccordionSummary-content {
     display: grid;
