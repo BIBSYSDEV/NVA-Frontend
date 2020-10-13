@@ -40,7 +40,7 @@ const StyledButtonWithProgress = styled(ButtonWithProgress)`
 
 interface SubmissionPanelProps {
   isSaving: boolean;
-  savePublication: (values: Publication) => Promise<void>;
+  savePublication: () => Promise<void>;
 }
 
 const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication }) => {
@@ -65,7 +65,7 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication }
   const onClickPublish = async () => {
     setIsPublishing(true);
     if (dirty) {
-      await savePublication(values);
+      await savePublication();
     }
     const publishedPublication = await publishPublication(values.identifier);
     if (publishedPublication?.error) {
@@ -158,7 +158,7 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication }
               isLoading={isSaving}
               data-testid="button-save-publication"
               onClick={async () => {
-                await savePublication(values);
+                await savePublication();
                 history.push(`/registration/${values.identifier}/public`);
               }}>
               {t('common:save_and_present')}
@@ -169,7 +169,7 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication }
             disabled={isPublishing}
             isLoading={isSaving}
             data-testid="button-save-publication"
-            onClick={() => savePublication(values)}>
+            onClick={async () => await savePublication()}>
             {t('common:save')}
           </ButtonWithProgress>
         )}

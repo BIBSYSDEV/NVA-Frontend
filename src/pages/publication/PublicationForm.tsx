@@ -132,7 +132,9 @@ const PublicationForm: FC<PublicationFormProps> = ({ identifier, closeForm }) =>
                 tabNumber={tabNumber}
                 uppy={uppy}
                 isSaving={isSaving}
-                savePublication={savePublication}
+                savePublication={async () => {
+                  await savePublication(values);
+                }}
               />
               {tabNumber !== PublicationTab.Submission && (
                 <StyledButtonGroupContainer>
