@@ -20,7 +20,7 @@ describe('Publication: References: Book', () => {
     cy.get('[data-testid=publication-context-type-heading]').contains('Book');
 
     cy.get('[data-testid=publication-instance-type]').click({ force: true }).type(' ');
-    cy.get('[data-testid=publication-instance-type-BookMonograph]').click({ force: true }).type(' ');
+    cy.get('[data-testid=publication-instance-type-BookMonograph]').click({ force: true });
 
     // search for and select a publisher
     cy.get('[data-testid=autosearch-publisher]').click({ force: true }).type('Test');
