@@ -7,14 +7,22 @@ import JournalArticleForm from './sub_type_forms/JournalArticleForm';
 import JournalForm from './sub_type_forms/JournalForm';
 import { StyledSelectWrapper } from '../../../components/styled/Wrappers';
 
-const JournalTypeForm: FC = () => {
+interface JournalTypeFormProps {
+  onChangeSubType: (type: string) => void;
+}
+
+const JournalTypeForm: FC<JournalTypeFormProps> = ({ onChangeSubType }) => {
   const { values }: FormikProps<JournalPublication> = useFormikContext();
   const subType = values.entityDescription.reference.publicationInstance.type;
 
   return (
     <>
       <StyledSelectWrapper>
-        <SelectTypeField fieldName={ReferenceFieldNames.SUB_TYPE} options={Object.values(JournalType)} />
+        <SelectTypeField
+          fieldName={ReferenceFieldNames.SUB_TYPE}
+          onChangeType={onChangeSubType}
+          options={Object.values(JournalType)}
+        />
       </StyledSelectWrapper>
 
       {subType && (subType === JournalType.ARTICLE ? <JournalArticleForm /> : <JournalForm />)}

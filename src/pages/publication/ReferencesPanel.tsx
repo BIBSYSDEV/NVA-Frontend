@@ -62,6 +62,10 @@ const ReferencesPanel: FC<PanelProps> = ({ setTouchedFields }) => {
         setFieldValue(instanceTypeBaseFieldName, emptyDegreePublicationInstance, false);
         break;
     }
+  };
+
+  const onChangeSubType = (newInstanceType: string) => {
+    setFieldValue(instanceTypeBaseFieldName, { type: newInstanceType }, false);
 
     // Avoid showing potential errors instantly
     setTouched({
@@ -93,10 +97,12 @@ const ReferencesPanel: FC<PanelProps> = ({ setTouchedFields }) => {
           <Typography variant="h2" data-testid="publication-context-type-heading">
             {t(`publicationTypes:${publicationContextType}`)}
           </Typography>
-          {publicationContextType === PublicationType.BOOK && <BookTypeForm />}
-          {publicationContextType === PublicationType.REPORT && <ReportTypeForm />}
-          {publicationContextType === PublicationType.DEGREE && <DegreeTypeForm />}
-          {publicationContextType === PublicationType.PUBLICATION_IN_JOURNAL && <JournalTypeForm />}
+          {publicationContextType === PublicationType.BOOK && <BookTypeForm onChangeSubType={onChangeSubType} />}
+          {publicationContextType === PublicationType.REPORT && <ReportTypeForm onChangeSubType={onChangeSubType} />}
+          {publicationContextType === PublicationType.DEGREE && <DegreeTypeForm onChangeSubType={onChangeSubType} />}
+          {publicationContextType === PublicationType.PUBLICATION_IN_JOURNAL && (
+            <JournalTypeForm onChangeSubType={onChangeSubType} />
+          )}
         </StyledCard>
       )}
     </>
