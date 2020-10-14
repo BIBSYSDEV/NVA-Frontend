@@ -8,6 +8,8 @@ import { ReferenceFieldNames } from '../../../../types/publicationFieldNames';
 import DoiField from '../components/DoiField';
 import PublisherField from '../components/PublisherField';
 import { PublicationTableNumber } from '../../../../utils/constants';
+import NviValidation from '../components/NviValidation';
+import { JournalEntityDescription } from '../../../../types/publication_types/journalPublication.types';
 
 const StyledArticleDetail = styled.div`
   display: grid;
@@ -27,7 +29,10 @@ const StyledLabel = styled(Typography)`
 
 const JournalForm: FC = () => {
   const { t } = useTranslation('publication');
-  const { touched }: FormikProps<JournalPublication> = useFormikContext();
+  const { touched, values }: FormikProps<JournalPublication> = useFormikContext();
+  const {
+    reference: { publicationContext, publicationInstance },
+  } = values.entityDescription as JournalEntityDescription;
 
   return (
     <>
@@ -111,6 +116,12 @@ const JournalForm: FC = () => {
           )}
         </Field>
       </StyledArticleDetail>
+
+      <NviValidation
+        isPeerReviewed={publicationInstance.peerReviewed}
+        isRated={!!publicationContext?.level}
+        dataTestId="nvi_journal"
+      />
     </>
   );
 };
