@@ -22,17 +22,10 @@ import { emptyBookPublicationInstance } from '../../types/publication_types/book
 import { emptyJournalPublicationInstance } from '../../types/publication_types/journalPublication.types';
 import { emptyReportPublicationInstance } from '../../types/publication_types/reportPublication.types';
 import { emptyDegreePublicationInstance } from '../../types/publication_types/degreePublication.types';
+import { StyledSelectWrapper } from '../../components/styled/Wrappers';
 
 const StyledCard = styled(Card)`
   margin-top: 1rem;
-`;
-
-const StyledSelectContainer = styled.div`
-  width: 50%;
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-    padding: 0 1rem;
-    width: 100%;
-  }
 `;
 
 const ReferencesPanel: FC<PanelProps> = ({ setTouchedFields }) => {
@@ -86,14 +79,14 @@ const ReferencesPanel: FC<PanelProps> = ({ setTouchedFields }) => {
 
   return (
     <>
-      <StyledSelectContainer>
+      <StyledSelectWrapper>
         <SelectTypeField
           dataTestId="publication-context-type"
           fieldName={ReferenceFieldNames.PUBLICATION_CONTEXT_TYPE}
           options={Object.values(PublicationType)}
           onChangeType={onChangeType}
         />
-      </StyledSelectContainer>
+      </StyledSelectWrapper>
 
       {publicationContextType && (
         <StyledCard>

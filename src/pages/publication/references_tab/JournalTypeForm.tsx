@@ -5,15 +5,7 @@ import { ReferenceFieldNames, JournalType } from '../../../types/publicationFiel
 import SelectTypeField from './components/SelectTypeField';
 import JournalArticleForm from './sub_type_forms/JournalArticleForm';
 import JournalForm from './sub_type_forms/JournalForm';
-import styled from 'styled-components';
-
-const StyledSelectContainer = styled.div`
-  width: 50%;
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-    padding: 0 1rem;
-    width: 100%;
-  }
-`;
+import { StyledSelectWrapper } from '../../../components/styled/Wrappers';
 
 const JournalTypeForm: FC = () => {
   const { values }: FormikProps<JournalPublication> = useFormikContext();
@@ -21,9 +13,9 @@ const JournalTypeForm: FC = () => {
 
   return (
     <>
-      <StyledSelectContainer>
+      <StyledSelectWrapper>
         <SelectTypeField fieldName={ReferenceFieldNames.SUB_TYPE} options={Object.values(JournalType)} />
-      </StyledSelectContainer>
+      </StyledSelectWrapper>
 
       {subType && (subType === JournalType.ARTICLE ? <JournalArticleForm /> : <JournalForm />)}
     </>

@@ -4,15 +4,7 @@ import { ReportPublication } from '../../../types/publication.types';
 import { ReferenceFieldNames, ReportType } from '../../../types/publicationFieldNames';
 import SelectTypeField from './components/SelectTypeField';
 import ReportForm from './sub_type_forms/ReportForm';
-import styled from 'styled-components';
-
-const StyledSelectContainer = styled.div`
-  width: 50%;
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-    padding: 0 1rem;
-    width: 100%;
-  }
-`;
+import { StyledSelectWrapper } from '../../../components/styled/Wrappers';
 
 const ReportTypeForm: FC = () => {
   const { values }: FormikProps<ReportPublication> = useFormikContext();
@@ -20,9 +12,9 @@ const ReportTypeForm: FC = () => {
 
   return (
     <>
-      <StyledSelectContainer>
+      <StyledSelectWrapper>
         <SelectTypeField fieldName={ReferenceFieldNames.SUB_TYPE} options={Object.values(ReportType)} />
-      </StyledSelectContainer>
+      </StyledSelectWrapper>
 
       {subType && <ReportForm />}
     </>
