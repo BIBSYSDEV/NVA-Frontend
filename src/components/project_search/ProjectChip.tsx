@@ -1,10 +1,11 @@
 import React, { FC } from 'react';
-import { ChipProps, Chip, Typography } from '@material-ui/core';
+import { ChipProps, Chip } from '@material-ui/core';
 import { CristinProject } from '../../types/project.types';
 import styled from 'styled-components';
 import { StyledFlexColumn } from '../styled/Wrappers';
 import { getProjectTitle } from './helpers';
 import ProjectInstitutions from './ProjectInstitutions';
+import ProjectTitle from './ProjectTitle';
 
 interface ProjectChipProps extends ChipProps {
   project: CristinProject;
@@ -19,7 +20,7 @@ const ProjectChip: FC<ProjectChipProps> = ({ project, ...rest }) => (
     {...rest}
     label={
       <StyledFlexColumn>
-        <Typography variant="subtitle1">{getProjectTitle(project)}</Typography>
+        <ProjectTitle>{getProjectTitle(project)}</ProjectTitle>
         <ProjectInstitutions project={project} />
       </StyledFlexColumn>
     }

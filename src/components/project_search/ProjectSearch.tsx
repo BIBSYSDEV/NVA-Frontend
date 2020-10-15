@@ -1,6 +1,6 @@
 import React, { FC, useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { TextField, Typography, CircularProgress } from '@material-ui/core';
+import { TextField, CircularProgress } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import styled from 'styled-components';
@@ -11,6 +11,7 @@ import { getProjectTitle, getProjectTitleParts } from './helpers';
 import ProjectChip from './ProjectChip';
 import ProjectInstitutions from './ProjectInstitutions';
 import useFetchProjects from '../../utils/hooks/useFetchProjects';
+import ProjectTitle from './ProjectTitle';
 
 const StyledSearchIcon = styled(SearchIcon)`
   margin-left: 0.5rem;
@@ -52,7 +53,7 @@ export const ProjectSearch: FC = () => {
         const parts = getProjectTitleParts(option, searchTerm);
         return (
           <StyledFlexColumn>
-            <Typography variant="subtitle1">
+            <ProjectTitle>
               {parts.map((part, index) => (
                 <span
                   key={index}
@@ -62,7 +63,7 @@ export const ProjectSearch: FC = () => {
                   {part}
                 </span>
               ))}
-            </Typography>
+            </ProjectTitle>
             <ProjectInstitutions project={option} />
           </StyledFlexColumn>
         );
