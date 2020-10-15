@@ -10,11 +10,10 @@ import {
   contextTypeBaseFieldName,
   instanceTypeBaseFieldName,
 } from '../../types/publicationFieldNames';
-import BookForm from './references_tab/BookForm';
-// import ChapterForm from './references_tab/ChapterForm';
-import DegreeForm from './references_tab/DegreeForm';
-import JournalForm from './references_tab/JournalForm';
-import ReportForm from './references_tab/ReportForm';
+import BookTypeForm from './references_tab/BookTypeForm';
+import DegreeTypeForm from './references_tab/DegreeTypeForm';
+import JournalTypeForm from './references_tab/JournalTypeForm';
+import ReportTypeForm from './references_tab/ReportTypeForm';
 import Card from '../../components/Card';
 import SelectTypeField from './references_tab/components/SelectTypeField';
 import { touchedReferenceTabFields } from '../../utils/formik-helpers';
@@ -23,17 +22,10 @@ import { emptyBookPublicationInstance } from '../../types/publication_types/book
 import { emptyJournalPublicationInstance } from '../../types/publication_types/journalPublication.types';
 import { emptyReportPublicationInstance } from '../../types/publication_types/reportPublication.types';
 import { emptyDegreePublicationInstance } from '../../types/publication_types/degreePublication.types';
+import { StyledSelectWrapper } from '../../components/styled/Wrappers';
 
 const StyledCard = styled(Card)`
   margin-top: 1rem;
-`;
-
-const StyledSelectContainer = styled.div`
-  width: 50%;
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-    padding: 0 1rem;
-    width: 100%;
-  }
 `;
 
 const ReferencesPanel: FC<PanelProps> = ({ setTouchedFields }) => {
@@ -70,6 +62,10 @@ const ReferencesPanel: FC<PanelProps> = ({ setTouchedFields }) => {
         setFieldValue(instanceTypeBaseFieldName, emptyDegreePublicationInstance, false);
         break;
     }
+  };
+
+  const onChangeSubType = (newInstanceType: string) => {
+    setFieldValue(instanceTypeBaseFieldName, { type: newInstanceType }, false);
 
     // Avoid showing potential errors instantly
     setTouched({
@@ -87,25 +83,26 @@ const ReferencesPanel: FC<PanelProps> = ({ setTouchedFields }) => {
 
   return (
     <>
-      <StyledSelectContainer>
+      <StyledSelectWrapper>
         <SelectTypeField
           dataTestId="publication-context-type"
           fieldName={ReferenceFieldNames.PUBLICATION_CONTEXT_TYPE}
           options={Object.values(PublicationType)}
           onChangeType={onChangeType}
         />
-      </StyledSelectContainer>
+      </StyledSelectWrapper>
 
       {publicationContextType && (
         <StyledCard>
           <Typography variant="h2" data-testid="publication-context-type-heading">
             {t(`publicationTypes:${publicationContextType}`)}
           </Typography>
-          {publicationContextType === PublicationType.BOOK && <BookForm />}
-          {/* {publicationContextType === PublicationType.CHAPTER && <ChapterForm />} */}
-          {publicationContextType === PublicationType.REPORT && <ReportForm />}
-          {publicationContextType === PublicationType.DEGREE && <DegreeForm />}
-          {publicationContextType === PublicationType.PUBLICATION_IN_JOURNAL && <JournalForm />}
+          {publicationContextType === PublicationType.BOOK && <BookTypeForm onChangeSubType={onChangeSubType} />}
+          {publicationContextType === PublicationType.REPORT && <ReportTypeForm onChangeSubType={onChangeSubType} />}
+          {publicationContextType === PublicationType.DEGREE && <DegreeTypeForm onChangeSubType={onChangeSubType} />}
+          {publicationContextType === PublicationType.PUBLICATION_IN_JOURNAL && (
+            <JournalTypeForm onChangeSubType={onChangeSubType} />
+          )}
         </StyledCard>
       )}
     </>
