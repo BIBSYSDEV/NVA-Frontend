@@ -67,7 +67,7 @@ const SortableItem = SortableElement(
     const index = contributor.sequence - 1;
     const baseFieldName = `${ContributorFieldNames.CONTRIBUTORS}[${index}]`;
     const { values, setFieldValue }: FormikProps<Publication> = useFormikContext();
-    const [emailValue, setEmailValue] = useState(values.entityDescription.contributors[index].email ?? '');
+    const [emailValue, setEmailValue] = useState(values.entityDescription.contributors[index]?.email ?? '');
 
     return (
       <TableRow tabIndex={0} key={contributor.identity.id}>
