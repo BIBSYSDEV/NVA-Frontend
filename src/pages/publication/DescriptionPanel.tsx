@@ -9,14 +9,13 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 
 import { Publication } from '../../types/publication.types';
 import DisciplineSearch from './description_tab/DisciplineSearch';
-import ProjectSearch from './description_tab/ProjectSearch';
-import ProjectRow from './description_tab/ProjectRow';
 import DatePickerField from './description_tab/DatePickerField';
 import { publicationLanguages } from '../../types/language.types';
 import Card from '../../components/Card';
 import { DescriptionFieldNames } from '../../types/publicationFieldNames';
 import { touchedDescriptionTabFields } from '../../utils/formik-helpers';
 import { PanelProps } from './PublicationFormContent';
+import ProjectSearch from '../../components/project_search/ProjectSearch';
 
 const NpiAndTagsWrapper = styled.div`
   display: grid;
@@ -153,7 +152,8 @@ const DescriptionPanel: FC<PanelProps> = ({ setTouchedFields }) => {
       <Card>
         <Typography variant="h5">{t('description.project_association')}</Typography>
 
-        <Field name={DescriptionFieldNames.PROJECT}>
+        <ProjectSearch />
+        {/* <Field name={DescriptionFieldNames.PROJECT}>
           {({ field: { name, value } }: FieldProps) => (
             <>
               <ProjectSearch
@@ -171,7 +171,7 @@ const DescriptionPanel: FC<PanelProps> = ({ setTouchedFields }) => {
               )}
             </>
           )}
-        </Field>
+        </Field> */}
       </Card>
     </MuiPickersUtilsProvider>
   );
