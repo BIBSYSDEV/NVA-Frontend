@@ -3,7 +3,6 @@ import { Project } from './project.types';
 import { EnumDictionary } from './common.types';
 import {
   JournalEntityDescription,
-  JournalPublicationContext,
   emptyPublicationEntityDescription,
 } from './publication_types/journalPublication.types';
 import { DegreeEntityDescription } from './publication_types/degreePublication.types';
@@ -122,12 +121,6 @@ export interface PagesRange extends BackendType {
   end: string;
 }
 
-export const emptyPagesRange: PagesRange = {
-  type: BackendTypeNames.PAGES_RANGE,
-  begin: '',
-  end: '',
-};
-
 export interface PagesMonograph extends BackendType {
   pages: string;
 }
@@ -140,11 +133,6 @@ export const emptyPagesMonograph: PagesMonograph = {
 export type PublicationPreview = Pick<
   Publication & JournalEntityDescription,
   'identifier' | 'mainTitle' | 'createdDate' | 'status' | 'owner'
->;
-
-export type PublishedPublicationPreview = Pick<
-  Publication & JournalEntityDescription & JournalPublicationContext,
-  'identifier' | 'mainTitle' | 'createdDate' | 'reference' | 'contributors' | 'status' | 'type'
 >;
 
 export interface Doi {

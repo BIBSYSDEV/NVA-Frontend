@@ -89,7 +89,7 @@ export const PublicPublicationContextReport: FC<{ publicationContext: ReportPubl
   );
 };
 
-export const DisplaySeriesTitle: FC<{ seriesTitle: string }> = ({ seriesTitle }) => {
+const DisplaySeriesTitle: FC<{ seriesTitle: string }> = ({ seriesTitle }) => {
   const { t } = useTranslation('publication');
 
   return seriesTitle ? (
