@@ -2,22 +2,16 @@ import { Field, FormikProps, useFormikContext, FieldProps } from 'formik';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { ReportPublication } from '../../../types/publication.types';
-import { ReferenceFieldNames, ReportType } from '../../../types/publicationFieldNames';
-import { PublicationTableNumber } from '../../../utils/constants';
-import PublicationChannelSearch from './components/PublicationChannelSearch';
-import DoiField from './components/DoiField';
-import SelectTypeField from './components/SelectTypeField';
+import { ReportPublication } from '../../../../types/publication.types';
+import { ReferenceFieldNames } from '../../../../types/publicationFieldNames';
+import { PublicationTableNumber } from '../../../../utils/constants';
+import PublicationChannelSearch from '../components/PublicationChannelSearch';
+import DoiField from '../components/DoiField';
 import { Typography } from '@material-ui/core';
-import SeriesRow from './components/SeriesRow';
-import PublisherField from './components/PublisherField';
-import IsbnListField from './components/IsbnListField';
-import TotalPagesField from './components/TotalPagesField';
-
-const StyledContent = styled.div`
-  display: grid;
-  gap: 1rem;
-`;
+import SeriesRow from '../components/SeriesRow';
+import PublisherField from '../components/PublisherField';
+import IsbnListField from '../components/IsbnListField';
+import TotalPagesField from '../components/TotalPagesField';
 
 const StyledSection = styled.div`
   display: grid;
@@ -40,9 +34,7 @@ const ReportForm: FC = () => {
   const { setFieldValue, touched }: FormikProps<ReportPublication> = useFormikContext();
 
   return (
-    <StyledContent>
-      <SelectTypeField fieldName={ReferenceFieldNames.SUB_TYPE} options={Object.values(ReportType)} />
-
+    <>
       <DoiField />
 
       <PublisherField
@@ -82,7 +74,7 @@ const ReportForm: FC = () => {
           )}
         </Field>
       </div>
-    </StyledContent>
+    </>
   );
 };
 

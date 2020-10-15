@@ -54,20 +54,21 @@ describe('User opens publication form and can see validation errors', () => {
 
   it('The User should be able to see validation errors on reference tab (Journal)', () => {
     cy.get('[data-testid=nav-tabpanel-reference]').click({ force: true });
+    cy.get('[data-testid=nav-tabpanel-description]').click({ force: true });
+    cy.get('[data-testid=nav-tabpanel-reference]').click({ force: true });
     cy.get('[data-testid=publication-context-type]').contains(ErrorMessage.REQUIRED).should('be.visible');
 
     cy.get('[data-testid=publication-context-type]').click({ force: true }).type(' ');
     cy.get('[data-testid=publication-context-type-Journal]').click({ force: true });
+    
     // No errors should be displayed when user has just selected new context type
+    cy.get('[data-testid=publication-instance-type]').click({ force: true }).type(' ');
+    cy.get('[data-testid=publication-instance-type-JournalArticle]').click({ force: true });
     cy.contains(ErrorMessage.REQUIRED).should('not.be.visible');
 
     cy.get('[data-testid=nav-tabpanel-description]').click({ force: true });
     cy.get('[data-testid=nav-tabpanel-reference]').click({ force: true });
-    cy.get(`p:contains(${ErrorMessage.REQUIRED})`).should('have.length', 2);
-
-    // publicationInstance type
-    cy.get('[data-testid=publication-instance-type]').click({ force: true }).type(' ');
-    cy.get('[data-testid=publication-instance-type-JournalArticle]').click({ force: true });
+    cy.get(`p:contains(${ErrorMessage.REQUIRED})`).should('have.length', 1);
 
     // Publisher (publicationContext) field
     cy.get('[data-testid=autosearch-publisher]').click({ force: true }).type('natur');
@@ -104,14 +105,15 @@ describe('User opens publication form and can see validation errors', () => {
   it('The User should be able to see validation errors on reference tab (Book)', () => {
     cy.get('[data-testid=publication-context-type]').click({ force: true }).type(' ');
     cy.get(`[data-testid=publication-context-type-Book]`).click({ force: true });
-    cy.contains(ErrorMessage.REQUIRED).should('not.be.visible');
-    cy.get('[data-testid=nav-tabpanel-description]').click({ force: true });
-    cy.get('[data-testid=nav-tabpanel-reference]').click({ force: true });
-    cy.get(`p:contains(${ErrorMessage.REQUIRED})`).should('have.length', 2);
-
+    
     // publicationInstance type
     cy.get('[data-testid=publication-instance-type]').click({ force: true }).type(' ');
     cy.get('[data-testid=publication-instance-type-BookMonograph]').click({ force: true });
+    cy.contains(ErrorMessage.REQUIRED).should('not.be.visible');
+   
+    cy.get('[data-testid=nav-tabpanel-description]').click({ force: true });
+    cy.get('[data-testid=nav-tabpanel-reference]').click({ force: true });
+    cy.get(`p:contains(${ErrorMessage.REQUIRED})`).should('have.length', 1);
 
     // publicationContext
     cy.get('[data-testid=autosearch-publisher]').click({ force: true }).type('natur');
@@ -137,14 +139,15 @@ describe('User opens publication form and can see validation errors', () => {
   it('The User should be able to see validation errors on reference tab (Report)', () => {
     cy.get('[data-testid=publication-context-type]').click({ force: true }).type(' ');
     cy.get(`[data-testid=publication-context-type-Report]`).click({ force: true });
-    cy.contains(ErrorMessage.REQUIRED).should('not.be.visible');
-    cy.get('[data-testid=nav-tabpanel-description]').click({ force: true });
-    cy.get('[data-testid=nav-tabpanel-reference]').click({ force: true });
-    cy.get(`p:contains(${ErrorMessage.REQUIRED})`).should('have.length', 2);
 
     // publicationInstance type
     cy.get('[data-testid=publication-instance-type]').click({ force: true }).type(' ');
     cy.get('[data-testid=publication-instance-type-ReportResearch]').click({ force: true });
+    cy.contains(ErrorMessage.REQUIRED).should('not.be.visible');
+
+    cy.get('[data-testid=nav-tabpanel-description]').click({ force: true });
+    cy.get('[data-testid=nav-tabpanel-reference]').click({ force: true });
+    cy.get(`p:contains(${ErrorMessage.REQUIRED})`).should('have.length', 1);
 
     // publicationContext
     cy.get('[data-testid=autosearch-publisher]').click({ force: true }).type('natur');
@@ -157,14 +160,15 @@ describe('User opens publication form and can see validation errors', () => {
   it('The User should be able to see validation errors on reference tab (Degree)', () => {
     cy.get('[data-testid=publication-context-type]').click({ force: true }).type(' ');
     cy.get(`[data-testid=publication-context-type-Degree]`).click({ force: true });
-    cy.contains(ErrorMessage.REQUIRED).should('not.be.visible');
-    cy.get('[data-testid=nav-tabpanel-description]').click({ force: true });
-    cy.get('[data-testid=nav-tabpanel-reference]').click({ force: true });
-    cy.get(`p:contains(${ErrorMessage.REQUIRED})`).should('have.length', 2);
 
     // publicationInstance type
     cy.get('[data-testid=publication-instance-type]').click({ force: true }).type(' ');
     cy.get('[data-testid=publication-instance-type-DegreeBachelor]').click({ force: true });
+    cy.contains(ErrorMessage.REQUIRED).should('not.be.visible');
+
+    cy.get('[data-testid=nav-tabpanel-description]').click({ force: true });
+    cy.get('[data-testid=nav-tabpanel-reference]').click({ force: true });
+    cy.get(`p:contains(${ErrorMessage.REQUIRED})`).should('have.length', 1);
 
     // publicationContext
     cy.get('[data-testid=autosearch-publisher]').click({ force: true }).type('natur');
