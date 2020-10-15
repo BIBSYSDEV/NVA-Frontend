@@ -6,12 +6,10 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import styled from 'styled-components';
 import { CristinProject } from '../../types/project.types';
 import { debounce } from '../../utils/debounce';
-import { StyledFlexColumn } from '../styled/Wrappers';
-import { getProjectTitle, getProjectTitleParts } from './helpers';
+import { getProjectTitle } from './helpers';
 import ProjectChip from './ProjectChip';
-import ProjectInstitutions from './ProjectInstitutions';
 import useFetchProjects from '../../utils/hooks/useFetchProjects';
-import ProjectTitle from './ProjectTitle';
+import ProjectOption from './ProjectOption';
 
 const StyledSearchIcon = styled(SearchIcon)`
   margin-left: 0.5rem;
@@ -48,26 +46,7 @@ export const ProjectSearch: FC = () => {
       }
       getOptionDisabled={(option) => value.some((val) => val.cristinProjectId === option.cristinProjectId)}
       loading={isLoadingProjects}
-      renderOption={(option, state) => {
-        const searchTerm = state.inputValue.toLocaleLowerCase();
-        const parts = getProjectTitleParts(option, searchTerm);
-        return (
-          <StyledFlexColumn>
-            <ProjectTitle>
-              {parts.map((part, index) => (
-                <span
-                  key={index}
-                  style={{
-                    fontWeight: part.toLocaleLowerCase() === searchTerm ? 700 : 400,
-                  }}>
-                  {part}
-                </span>
-              ))}
-            </ProjectTitle>
-            <ProjectInstitutions project={option} />
-          </StyledFlexColumn>
-        );
-      }}
+      renderOption={(option, state) => <ProjectOption project={option} state={state} />}
       renderInput={(params) => (
         <TextField
           {...params}

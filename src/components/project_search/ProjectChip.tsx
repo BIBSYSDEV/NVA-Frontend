@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { ChipProps, Chip } from '@material-ui/core';
-import { CristinProject } from '../../types/project.types';
 import styled from 'styled-components';
+import { CristinProject } from '../../types/project.types';
 import { StyledFlexColumn } from '../styled/Wrappers';
 import { getProjectTitle } from './helpers';
 import ProjectInstitutions from './ProjectInstitutions';
