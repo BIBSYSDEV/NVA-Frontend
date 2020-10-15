@@ -9,9 +9,9 @@ import { searchProjectsByTitle } from '../../api/projectApi';
 
 const useFetchProjects = (
   initialSearchTerm: string
-): [CristinProject[] | undefined, boolean, (searchTerm: string) => void, string | undefined] => {
+): [CristinProject[], boolean, (searchTerm: string) => void, string | undefined] => {
   const dispatch = useDispatch();
-  const [projects, setProjects] = useState<CristinProject[] | undefined>();
+  const [projects, setProjects] = useState<CristinProject[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
 
@@ -21,7 +21,7 @@ const useFetchProjects = (
 
   useEffect(() => {
     const cancelSource = Axios.CancelToken.source();
-    const fetchAuthorities = async () => {
+    const fetchProjects = async () => {
       setIsLoading(true);
       const fetchedProjects = await searchProjectsByTitle(searchTerm, cancelSource.token);
       if (fetchedProjects) {
@@ -34,7 +34,9 @@ const useFetchProjects = (
       }
     };
     if (searchTerm) {
-      fetchAuthorities();
+      fetchProjects();
+    } else {
+      setProjects([]);
     }
 
     return () => {
