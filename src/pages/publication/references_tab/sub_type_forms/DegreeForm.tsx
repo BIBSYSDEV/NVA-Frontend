@@ -2,15 +2,14 @@ import { Field, FormikProps, useFormikContext, FieldProps } from 'formik';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { DegreePublication } from '../../../types/publication.types';
-import { ReferenceFieldNames, DegreeType } from '../../../types/publicationFieldNames';
-import { PublicationTableNumber } from '../../../utils/constants';
-import PublicationChannelSearch from './components/PublicationChannelSearch';
-import DoiField from './components/DoiField';
-import SelectTypeField from './components/SelectTypeField';
-import SeriesRow from './components/SeriesRow';
-import PublisherField from './components/PublisherField';
+import { DegreePublication } from '../../../../types/publication.types';
+import { ReferenceFieldNames } from '../../../../types/publicationFieldNames';
+import { PublicationTableNumber } from '../../../../utils/constants';
 import { Typography } from '@material-ui/core';
+import DoiField from '../components/DoiField';
+import PublisherField from '../components/PublisherField';
+import PublicationChannelSearch from '../components/PublicationChannelSearch';
+import SeriesRow from '../components/SeriesRow';
 
 const StyledTypography = styled(Typography)`
   padding-top: 1.5rem;
@@ -23,8 +22,6 @@ const DegreeForm: FC = () => {
 
   return (
     <>
-      <SelectTypeField fieldName={ReferenceFieldNames.SUB_TYPE} options={Object.values(DegreeType)} />
-
       <DoiField />
 
       <PublisherField

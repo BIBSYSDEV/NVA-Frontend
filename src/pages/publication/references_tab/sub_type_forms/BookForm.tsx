@@ -2,26 +2,19 @@ import { Field, FormikProps, useFormikContext, FieldProps } from 'formik';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { BookPublication } from '../../../types/publication.types';
-import { ReferenceFieldNames, BookType } from '../../../types/publicationFieldNames';
-import { PublicationTableNumber } from '../../../utils/constants';
-import NviValidation from './components/NviValidation';
-import PeerReview from './components/PeerReview';
-import PublicationChannelSearch from './components/PublicationChannelSearch';
-import PublisherRow from './components/PublisherRow';
-import DoiField from './components/DoiField';
-import SelectTypeField from './components/SelectTypeField';
-import PublisherField from './components/PublisherField';
-import { BookEntityDescription } from '../../../types/publication_types/bookPublication.types';
-import IsbnListField from './components/IsbnListField';
-import TotalPagesField from './components/TotalPagesField';
-import { FormControlLabel, Checkbox } from '@material-ui/core';
-import { Typography } from '@material-ui/core';
-
-const StyledContent = styled.div`
-  display: grid;
-  gap: 1rem;
-`;
+import DoiField from '../components/DoiField';
+import PublisherField from '../components/PublisherField';
+import { ReferenceFieldNames } from '../../../../types/publicationFieldNames';
+import IsbnListField from '../components/IsbnListField';
+import TotalPagesField from '../components/TotalPagesField';
+import { BookPublication } from '../../../../types/publication.types';
+import { BookEntityDescription } from '../../../../types/publication_types/bookPublication.types';
+import PeerReview from '../components/PeerReview';
+import { Typography, FormControlLabel, Checkbox } from '@material-ui/core';
+import PublicationChannelSearch from '../components/PublicationChannelSearch';
+import { PublicationTableNumber } from '../../../../utils/constants';
+import PublisherRow from '../components/PublisherRow';
+import NviValidation from '../components/NviValidation';
 
 const StyledSection = styled.div`
   display: grid;
@@ -57,9 +50,7 @@ const BookForm: FC = () => {
   } = values.entityDescription as BookEntityDescription;
 
   return (
-    <StyledContent>
-      <SelectTypeField fieldName={ReferenceFieldNames.SUB_TYPE} options={Object.values(BookType)} />
-
+    <>
       <DoiField />
 
       <PublisherField
@@ -123,7 +114,7 @@ const BookForm: FC = () => {
         </Field>
       </div>
       <NviValidation isPeerReviewed={peerReviewed} isRated={!!publicationContext?.level} dataTestId="nvi_book" />
-    </StyledContent>
+    </>
   );
 };
 

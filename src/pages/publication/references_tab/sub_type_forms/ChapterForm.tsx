@@ -5,9 +5,9 @@ import { TextField } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
 import styled from 'styled-components';
 import RemoveIcon from '@material-ui/icons/Remove';
-import { ReferenceFieldNames } from '../../../types/publicationFieldNames';
-import NviValidation from './components/NviValidation';
-import DoiField from './components/DoiField';
+import { ReferenceFieldNames } from '../../../../types/publicationFieldNames';
+import NviValidation from '../components/NviValidation';
+import DoiField from '../components/DoiField';
 
 const StyledInfoBox = styled.div`
   margin-top: 1rem;
