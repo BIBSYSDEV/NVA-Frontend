@@ -20,6 +20,9 @@ describe('Publication: References: Report', () => {
 
     cy.get('[data-testid=publication-context-type-heading]').contains('Report');
 
+    cy.get('[data-testid=publication-instance-type]').click({ force: true }).type(' ');
+    cy.get('[data-testid=publication-instance-type-ReportResearch]').click({ force: true }).type(' ');
+
     // search for and select a publisher
     cy.get('[data-testid=autosearch-publisher]').click({ force: true }).type('Test');
     cy.contains('Novum Testamentum').click({ force: true });

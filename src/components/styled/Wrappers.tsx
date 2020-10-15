@@ -30,3 +30,11 @@ export const StyledCenterAlignedContentWrapper = styled.div`
 export const StyledNormalTextPreWrapped = styled(NormalText)`
   white-space: pre-wrap;
 `;
+
+export const StyledSelectWrapper = styled.div`
+  width: 50%;
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+    padding: 0 1rem;
+    width: 100%;
+  }
+`;
