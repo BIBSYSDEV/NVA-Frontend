@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useState } from 'react';
+import React, { FC, useCallback, useState, KeyboardEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TextField, CircularProgress } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
@@ -37,7 +37,9 @@ export const ProjectSearch: FC = () => {
       onInputChange={(_, newInputValue) => {
         debouncedSearch(newInputValue);
       }}
-      onChange={(_, value) => setValue(value)}
+      onChange={(_, value) => {
+        setValue(value);
+      }}
       multiple
       renderTags={(value: CristinProject[], getTagProps) =>
         value.map((option: CristinProject, index: number) => (
@@ -53,6 +55,12 @@ export const ProjectSearch: FC = () => {
           variant="outlined"
           fullWidth
           placeholder={t('description.search_for_project')}
+          onKeyDown={(event: KeyboardEvent) => {
+            if (event.key === 'Backspace') {
+              // Disable removing chips with backspace
+              event.stopPropagation();
+            }
+          }}
           InputProps={{
             ...params.InputProps,
             startAdornment: (
