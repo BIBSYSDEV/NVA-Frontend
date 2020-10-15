@@ -4,7 +4,7 @@ import { Publication } from '../types/publication.types';
 import { PublicationFileSet } from '../types/file.types';
 import { StatusCode } from '../utils/constants';
 import { getIdToken } from './userApi';
-import apiRequest from './apiRequest';
+import { apiRequest } from './apiRequest';
 import { SearchResult } from '../types/search.types';
 
 export enum PublicationsApiPaths {

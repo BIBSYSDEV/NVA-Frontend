@@ -1,11 +1,8 @@
 import { Auth } from 'aws-amplify';
 import { CognitoUser } from '@aws-amplify/auth';
 import { CognitoUserSession } from 'amazon-cognito-identity-js';
-import { Dispatch } from 'redux';
 import i18n from '../translations/i18n';
 import { USE_MOCK_DATA, AMPLIFY_REDIRECTED_KEY } from '../utils/constants';
-import { setNotification } from '../redux/actions/notificationActions';
-import { NotificationVariant } from '../types/notification.types';
 
 export const getCurrentUserAttributes = async (retryNumber: number = 0): Promise<any> => {
   try {
@@ -49,22 +46,4 @@ export const getIdToken = async () => {
   }
   const cognitoUser = await Auth.currentAuthenticatedUser();
   return cognitoUser?.signInUserSession?.idToken?.jwtToken || null;
-};
-
-export const refreshToken = () => {
-  return async (dispatch: Dispatch) => {
-    try {
-      const currentSession = await Auth.currentSession();
-      const cognitoUser = await Auth.currentAuthenticatedUser();
-      if (!currentSession.isValid()) {
-        cognitoUser.refreshSession(currentSession.getRefreshToken(), (error: any) => {
-          if (error) {
-            dispatch(setNotification(error, NotificationVariant.Error));
-          }
-        });
-      }
-    } catch (e) {
-      dispatch(setNotification(e, NotificationVariant.Error));
-    }
-  };
 };

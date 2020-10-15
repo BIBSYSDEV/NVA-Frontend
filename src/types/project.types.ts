@@ -8,14 +8,6 @@ export interface Project extends BackendType {
   approvals?: Approval[];
 }
 
-export const emptyProject: Project = {
-  id: '',
-  name: '',
-  grants: [],
-  approvals: [],
-  type: BackendTypeNames.RESEARCH_PROJECT,
-};
-
 interface Grant extends BackendType {
   id: string;
   source: string;

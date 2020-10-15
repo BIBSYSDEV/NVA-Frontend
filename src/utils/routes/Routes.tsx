@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import PrivateRoute from './PrivateRoute';
 
-export interface LoggedInRouteProps extends RouteProps {
+interface LoggedInRouteProps extends RouteProps {
   component: ComponentType<any>;
 }
 

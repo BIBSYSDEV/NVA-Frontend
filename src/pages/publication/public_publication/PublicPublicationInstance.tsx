@@ -38,7 +38,7 @@ export const PublicPublicationInstanceReport: FC<{ publicationInstance: ReportPu
   return <DisplayPages pages={pages} />;
 };
 
-export const DisplayPages: FC<{ pages: PagesMonograph | null }> = ({ pages }) => {
+const DisplayPages: FC<{ pages: PagesMonograph | null }> = ({ pages }) => {
   const { t } = useTranslation('publication');
 
   return pages?.pages ? (
