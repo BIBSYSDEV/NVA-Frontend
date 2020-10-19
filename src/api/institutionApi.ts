@@ -1,7 +1,7 @@
 import Axios, { CancelToken } from 'axios';
 import { StatusCode } from '../utils/constants';
 import i18n from '../translations/i18n';
-import apiRequest from './apiRequest';
+import { apiRequest } from './apiRequest';
 import { InstitutionUnitBase } from '../types/institution.types';
 
 export enum InstitutionApiPaths {
