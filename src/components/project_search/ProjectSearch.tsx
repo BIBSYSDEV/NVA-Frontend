@@ -1,15 +1,19 @@
-import React, { FC, useCallback, useState, KeyboardEvent } from 'react';
+import React, { FC, useCallback, KeyboardEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TextField, CircularProgress } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import styled from 'styled-components';
-import { CristinProject } from '../../types/project.types';
+import { CristinProject, Project } from '../../types/project.types';
 import { debounce } from '../../utils/debounce';
 import { getProjectTitle } from './helpers';
 import ProjectChip from './ProjectChip';
 import useFetchProjects from '../../utils/hooks/useFetchProjects';
 import ProjectOption from './ProjectOption';
+import { useFormikContext } from 'formik';
+import { DescriptionFieldNames } from '../../types/publicationFieldNames';
+import { BackendTypeNames } from '../../types/publication_types/commonPublication.types';
+import { Publication } from '../../types/publication.types';
 
 const StyledSearchIcon = styled(SearchIcon)`
   margin-left: 0.5rem;
@@ -18,8 +22,8 @@ const StyledSearchIcon = styled(SearchIcon)`
 
 export const ProjectSearch: FC = () => {
   const { t } = useTranslation('publication');
-  const [value, setValue] = useState<CristinProject[]>([]);
   const [projects, isLoadingProjects, handleNewSearchTerm] = useFetchProjects('');
+  const { setFieldValue, values } = useFormikContext<Publication>();
 
   const debouncedSearch = useCallback(
     debounce((searchTerm: string) => {
@@ -38,15 +42,15 @@ export const ProjectSearch: FC = () => {
         debouncedSearch(newInputValue);
       }}
       onChange={(_, value) => {
-        setValue(value);
+        const projectToPersist = value[0] ? convertToProject(value[0]) : undefined;
+        setFieldValue(DescriptionFieldNames.PROJECT, projectToPersist);
       }}
       multiple
-      renderTags={(value: CristinProject[], getTagProps) =>
-        value.map((option: CristinProject, index: number) => (
-          <ProjectChip project={option} {...getTagProps({ index })} />
-        ))
+      defaultValue={values.project ? [values.project].map((project) => convertToCristinProject(project)) : []}
+      renderTags={(value, getTagProps) =>
+        value.map((option, index) => <ProjectChip project={option} {...getTagProps({ index })} />)
       }
-      getOptionDisabled={(option) => value.some((val) => val.cristinProjectId === option.cristinProjectId)}
+      getOptionDisabled={(option) => values.project?.id === option.cristinProjectId}
       loading={isLoadingProjects}
       renderOption={(option, state) => <ProjectOption project={option} state={state} />}
       renderInput={(params) => (
@@ -83,3 +87,20 @@ export const ProjectSearch: FC = () => {
 };
 
 export default ProjectSearch;
+
+const convertToProject = (project: CristinProject): Project => ({
+  type: BackendTypeNames.RESEARCH_PROJECT,
+  id: project.cristinProjectId,
+  name: project.titles[0].title,
+  grants: [],
+  approvals: [],
+});
+
+const convertToCristinProject = (project: Project): CristinProject => ({
+  cristinProjectId: project.id,
+  mainLanguage: 'no',
+  titles: [{ language: 'no', title: project.name }],
+  participants: [],
+  institutions: [],
+  fundings: [],
+});

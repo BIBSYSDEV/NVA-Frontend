@@ -151,27 +151,7 @@ const DescriptionPanel: FC<PanelProps> = ({ setTouchedFields }) => {
       </StyledMainCard>
       <Card>
         <Typography variant="h5">{t('description.project_association')}</Typography>
-
         <ProjectSearch />
-        {/* <Field name={DescriptionFieldNames.PROJECT}>
-          {({ field: { name, value } }: FieldProps) => (
-            <>
-              <ProjectSearch
-                setValueFunction={(newValue) => setFieldValue(name, newValue)}
-                dataTestId="search_project"
-                placeholder={t('description.search_for_project')}
-              />
-              {value && (
-                <ProjectRow
-                  key={value.id}
-                  project={value}
-                  onClickRemove={() => setFieldValue(name, null)}
-                  dataTestId="selected_project"
-                />
-              )}
-            </>
-          )}
-        </Field> */}
       </Card>
     </MuiPickersUtilsProvider>
   );
