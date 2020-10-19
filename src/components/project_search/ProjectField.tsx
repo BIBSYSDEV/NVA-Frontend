@@ -65,6 +65,10 @@ export const ProjectSearch: FC = () => {
                   event.stopPropagation();
                 }
               }}
+              inputProps={{
+                ...params.inputProps,
+                'data-testid': 'project-search-input',
+              }}
               InputProps={{
                 ...params.InputProps,
                 startAdornment: (

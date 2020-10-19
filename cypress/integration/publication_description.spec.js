@@ -11,13 +11,14 @@ describe('Publication: Description', () => {
 
     cy.startPublicationWithDoi();
 
-    cy.get('[data-testid=search_project]').click({ force: true }).type('phd');
-    cy.contains('PhD prosjekt: Selvbestemmelse uten ord').click({ force: true });
+    cy.get('[data-testid=project-search-input]').click({ force: true }).type('phd');
 
-    cy.get('[data-testid=selected_project]').contains('PhD prosjekt: Selvbestemmelse uten ord');
+    const projectName = 'PhD prosjekt: Selvbestemmelse uten ord';
+    cy.contains(projectName).click({ force: true });
+    cy.get('[data-testid=project-chip]').contains(projectName);
 
-    cy.get('[data-testid=selected_project_remove_button]').click({ force: true });
+    cy.get('[data-testid=project-chip]').children().eq(1).click({ force: true });
 
-    cy.get('[data-testid=selected_project]').should('not.exist');
+    cy.get('[data-testid=project-chip]').should('not.exist');
   });
 });

@@ -17,6 +17,7 @@ const StyledProjectChip = styled(Chip)`
 
 const ProjectChip: FC<ProjectChipProps> = ({ project, ...rest }) => (
   <StyledProjectChip
+    data-testid="project-chip"
     {...rest}
     label={
       <StyledFlexColumn>
