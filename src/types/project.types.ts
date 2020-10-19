@@ -1,14 +1,14 @@
 import { BackendType } from './publication.types';
 import { BackendTypeNames } from './publication_types/commonPublication.types';
 
-export interface Project extends BackendType {
+export interface ResearchProject extends BackendType {
   id: string;
   name: string;
   grants?: Grant[];
   approvals?: Approval[];
 }
 
-export const emptyProject: Project = {
+export const emptyProject: ResearchProject = {
   id: '',
   name: '',
   grants: [],

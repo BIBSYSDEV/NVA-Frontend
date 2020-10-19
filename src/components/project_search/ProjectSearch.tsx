@@ -4,7 +4,7 @@ import { TextField, CircularProgress } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import styled from 'styled-components';
-import { CristinProject, Project } from '../../types/project.types';
+import { CristinProject, ResearchProject } from '../../types/project.types';
 import { debounce } from '../../utils/debounce';
 import { getProjectTitle } from './helpers';
 import ProjectChip from './ProjectChip';
@@ -88,7 +88,7 @@ export const ProjectSearch: FC = () => {
 
 export default ProjectSearch;
 
-const convertToProject = (project: CristinProject): Project => ({
+const convertToProject = (project: CristinProject): ResearchProject => ({
   type: BackendTypeNames.RESEARCH_PROJECT,
   id: project.cristinProjectId,
   name: project.titles[0].title,
@@ -96,7 +96,7 @@ const convertToProject = (project: CristinProject): Project => ({
   approvals: [],
 });
 
-const convertToCristinProject = (project: Project): CristinProject => ({
+const convertToCristinProject = (project: ResearchProject): CristinProject => ({
   cristinProjectId: project.id,
   mainLanguage: 'no',
   titles: [{ language: 'no', title: project.name }],
