@@ -21,12 +21,16 @@ export const getProjectTitle = (option: CristinProject) => {
 
 export const getProjectTitleParts = (project: CristinProject, searchTerm: string) => {
   const title = getProjectTitle(project);
-  const matchIndex = title.toLocaleLowerCase().indexOf(searchTerm);
-  const parts = [
-    title.substr(0, matchIndex),
-    title.substr(matchIndex, searchTerm.length),
-    title.substr(matchIndex + searchTerm.length),
-  ];
+  const indexOfMatch = title.toLocaleLowerCase().indexOf(searchTerm);
+
+  const parts =
+    indexOfMatch === -1
+      ? [title]
+      : [
+          title.substr(0, indexOfMatch),
+          title.substr(indexOfMatch, searchTerm.length),
+          title.substr(indexOfMatch + searchTerm.length),
+        ];
   return parts;
 };
 
