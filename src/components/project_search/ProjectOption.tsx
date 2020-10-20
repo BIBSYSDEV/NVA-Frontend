@@ -3,8 +3,8 @@ import { AutocompleteRenderOptionState } from '@material-ui/lab';
 import { CristinProject } from '../../types/project.types';
 import { getProjectTitleParts } from './helpers';
 import { StyledFlexColumn } from '../styled/Wrappers';
-import ProjectTitle from './ProjectTitle';
 import ProjectInstitutions from './ProjectInstitutions';
+import ProjectTitle from './ProjectTitle';
 
 interface ProjectOptionProps {
   project: CristinProject;

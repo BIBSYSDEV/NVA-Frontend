@@ -1,5 +1,6 @@
-import { CristinProject } from '../../types/project.types';
+import { CristinProject, ResearchProject } from '../../types/project.types';
 import { LanguageCodes } from '../../types/language.types';
+import { BackendTypeNames } from '../../types/publication_types/commonPublication.types';
 
 export const getProjectTitle = (option: CristinProject) => {
   const selectedLanguage = localStorage.getItem('i18nextLng');
@@ -28,3 +29,24 @@ export const getProjectTitleParts = (project: CristinProject, searchTerm: string
   ];
   return parts;
 };
+
+export const convertToResearchProject = (project: CristinProject): ResearchProject => ({
+  type: BackendTypeNames.RESEARCH_PROJECT,
+  id: project.cristinProjectId,
+  name: project.titles[0].title,
+  grants: project.fundings.map((funding) => ({
+    id: funding.projectCode,
+    source: funding.fundingSourceCode,
+    type: BackendTypeNames.GRANT,
+  })),
+  approvals: [],
+});
+
+export const convertToCristinProject = (project: ResearchProject): CristinProject => ({
+  cristinProjectId: project.id,
+  mainLanguage: 'no',
+  titles: [{ language: 'no', title: project.name }],
+  participants: [],
+  institutions: [],
+  fundings: [],
+});

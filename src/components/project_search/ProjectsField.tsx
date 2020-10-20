@@ -5,21 +5,20 @@ import SearchIcon from '@material-ui/icons/Search';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import styled from 'styled-components';
 import { Field, FieldProps } from 'formik';
-import { CristinProject, ResearchProject } from '../../types/project.types';
+import { ResearchProject } from '../../types/project.types';
 import { debounce } from '../../utils/debounce';
-import { getProjectTitle } from './helpers';
+import { getProjectTitle, convertToResearchProject, convertToCristinProject } from './helpers';
 import ProjectChip from './ProjectChip';
 import useFetchProjects from '../../utils/hooks/useFetchProjects';
 import ProjectOption from './ProjectOption';
 import { DescriptionFieldNames } from '../../types/publicationFieldNames';
-import { BackendTypeNames } from '../../types/publication_types/commonPublication.types';
 
 const StyledSearchIcon = styled(SearchIcon)`
   margin-left: 0.5rem;
   color: ${({ theme }) => theme.palette.text.disabled};
 `;
 
-export const ProjectSearch: FC = () => {
+export const ProjectsField: FC = () => {
   const { t } = useTranslation('publication');
   const [projects, isLoadingProjects, handleNewSearchTerm] = useFetchProjects('');
 
@@ -42,7 +41,7 @@ export const ProjectSearch: FC = () => {
             debouncedSearch(newInputValue);
           }}
           onChange={(_, value) => {
-            const projectToPersist = value[0] ? convertToProject(value[0]) : undefined;
+            const projectToPersist = value[0] ? convertToResearchProject(value[0]) : undefined;
             setFieldValue(field.name, projectToPersist);
           }}
           multiple
@@ -92,25 +91,4 @@ export const ProjectSearch: FC = () => {
   );
 };
 
-export default ProjectSearch;
-
-const convertToProject = (project: CristinProject): ResearchProject => ({
-  type: BackendTypeNames.RESEARCH_PROJECT,
-  id: project.cristinProjectId,
-  name: project.titles[0].title,
-  grants: project.fundings.map((funding) => ({
-    id: funding.projectCode,
-    source: funding.fundingSourceCode,
-    type: BackendTypeNames.GRANT,
-  })),
-  approvals: [],
-});
-
-const convertToCristinProject = (project: ResearchProject): CristinProject => ({
-  cristinProjectId: project.id,
-  mainLanguage: 'no',
-  titles: [{ language: 'no', title: project.name }],
-  participants: [],
-  institutions: [],
-  fundings: [],
-});
+export default ProjectsField;

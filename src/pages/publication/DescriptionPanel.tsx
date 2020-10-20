@@ -15,7 +15,7 @@ import Card from '../../components/Card';
 import { DescriptionFieldNames } from '../../types/publicationFieldNames';
 import { touchedDescriptionTabFields } from '../../utils/formik-helpers';
 import { PanelProps } from './PublicationFormContent';
-import ProjectField from '../../components/project_search/ProjectField';
+import ProjectsField from '../../components/project_search/ProjectsField';
 
 const NpiAndTagsWrapper = styled.div`
   display: grid;
@@ -151,7 +151,7 @@ const DescriptionPanel: FC<PanelProps> = ({ setTouchedFields }) => {
       </StyledMainCard>
       <Card>
         <Typography variant="h5">{t('description.project_association')}</Typography>
-        <ProjectField />
+        <ProjectsField />
       </Card>
     </MuiPickersUtilsProvider>
   );
