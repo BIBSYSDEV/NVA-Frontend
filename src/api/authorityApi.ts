@@ -59,7 +59,7 @@ export const getAuthorities = async (name: string, cancelToken?: CancelToken) =>
   }
 };
 
-export const createAuthority = async (firstName: string, lastName: string, feideId?: string) => {
+export const createAuthority = async (firstName: string, lastName: string, feideId?: string, cristinId?: string) => {
   const url = AuthorityApiPaths.PERSON;
 
   const error = i18n.t('feedback:error.create_authority');
@@ -81,7 +81,18 @@ export const createAuthority = async (firstName: string, lastName: string, feide
           feideId
         );
         if (updatedAuthority) {
-          return updatedAuthority;
+          if (cristinId) {
+            const updatedAuthorityWithCristinId = await addQualifierIdForAuthority(
+              systemControlNumber,
+              AuthorityQualifiers.ORGUNIT_ID,
+              cristinId
+            );
+            if (updatedAuthorityWithCristinId) {
+              return updatedAuthorityWithCristinId;
+            }
+          } else {
+            return updatedAuthority;
+          }
         }
       } else {
         return response.data;

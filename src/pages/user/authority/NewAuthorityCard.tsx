@@ -72,7 +72,7 @@ const NewAuthorityCard: FC<NewAuthorityCardProps> = ({ onClickCancel }) => {
 
   const handleCreateAuthority = async () => {
     setLoading(true);
-    const authority = await createAuthority(givenName, familyName, id);
+    const authority = await createAuthority(givenName, familyName, id, user.cristinId);
     if (authority?.error) {
       dispatch(setNotification(authority.error, NotificationVariant.Error));
       onClickCancel();
