@@ -1,9 +1,6 @@
-import React, { FC, useCallback, KeyboardEvent } from 'react';
+import React, { FC, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { TextField, CircularProgress } from '@material-ui/core';
-import SearchIcon from '@material-ui/icons/Search';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import styled from 'styled-components';
 import { Field, FieldProps } from 'formik';
 import { getProjectTitle, convertToResearchProject, convertToCristinProject } from './helpers';
 import ProjectChip from './ProjectChip';
@@ -12,11 +9,7 @@ import { debounce } from '../../../../utils/debounce';
 import useFetchProjects from '../../../../utils/hooks/useFetchProjects';
 import { DescriptionFieldNames } from '../../../../types/publicationFieldNames';
 import { ResearchProject } from '../../../../types/project.types';
-
-const StyledSearchIcon = styled(SearchIcon)`
-  margin-left: 0.5rem;
-  color: ${({ theme }) => theme.palette.text.disabled};
-`;
+import { AutocompleteTextField } from './AutocompleteTextField';
 
 export const ProjectsField: FC = () => {
   const { t } = useTranslation('publication');
@@ -53,36 +46,10 @@ export const ProjectsField: FC = () => {
           loading={isLoadingProjects}
           renderOption={(option, state) => <ProjectOption project={option} state={state} />}
           renderInput={(params) => (
-            <TextField
+            <AutocompleteTextField
               {...params}
-              variant="outlined"
-              fullWidth
+              isLoading={isLoadingProjects}
               placeholder={t('description.search_for_project')}
-              onKeyDown={(event: KeyboardEvent) => {
-                if (event.key === 'Backspace') {
-                  // Disable removing chips with backspace
-                  event.stopPropagation();
-                }
-              }}
-              inputProps={{
-                ...params.inputProps,
-                'data-testid': 'project-search-input',
-              }}
-              InputProps={{
-                ...params.InputProps,
-                startAdornment: (
-                  <>
-                    {params.InputProps.startAdornment}
-                    <StyledSearchIcon />
-                  </>
-                ),
-                endAdornment: (
-                  <>
-                    {isLoadingProjects && <CircularProgress color="inherit" size={20} />}
-                    {params.InputProps.endAdornment}
-                  </>
-                ),
-              }}
             />
           )}
         />
