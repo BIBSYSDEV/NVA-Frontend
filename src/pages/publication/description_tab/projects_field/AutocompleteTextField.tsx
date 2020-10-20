@@ -11,9 +11,10 @@ const StyledSearchIcon = styled(SearchIcon)`
 
 interface AutocompleteTextField extends AutocompleteRenderInputParams, Pick<TextFieldProps, 'placeholder'> {
   isLoading: boolean;
+  dataTestId?: string;
 }
 
-export const AutocompleteTextField: FC<AutocompleteTextField> = ({ isLoading, ...params }) => (
+export const AutocompleteTextField: FC<AutocompleteTextField> = ({ isLoading, dataTestId, ...params }) => (
   <TextField
     {...params}
     variant="outlined"
@@ -26,7 +27,7 @@ export const AutocompleteTextField: FC<AutocompleteTextField> = ({ isLoading, ..
     }}
     inputProps={{
       ...params.inputProps,
-      'data-testid': 'project-search-input',
+      'data-testid': dataTestId,
     }}
     InputProps={{
       ...params.InputProps,

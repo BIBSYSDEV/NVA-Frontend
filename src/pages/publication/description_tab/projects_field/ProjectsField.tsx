@@ -50,6 +50,7 @@ export const ProjectsField: FC = () => {
               {...params}
               isLoading={isLoadingProjects}
               placeholder={t('description.search_for_project')}
+              dataTestId={'project-search-input'}
             />
           )}
         />
