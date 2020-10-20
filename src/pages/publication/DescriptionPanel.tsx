@@ -6,7 +6,6 @@ import DateFnsUtils from '@date-io/date-fns';
 import { MenuItem, TextField as MuiTextField, TextField, Typography } from '@material-ui/core';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-
 import { Publication } from '../../types/publication.types';
 import DisciplineSearch from './description_tab/DisciplineSearch';
 import DatePickerField from './description_tab/DatePickerField';
@@ -15,7 +14,7 @@ import Card from '../../components/Card';
 import { DescriptionFieldNames } from '../../types/publicationFieldNames';
 import { touchedDescriptionTabFields } from '../../utils/formik-helpers';
 import { PanelProps } from './PublicationFormContent';
-import ProjectsField from '../../components/project_search/ProjectsField';
+import { ProjectsField } from './description_tab/projects_field';
 
 const NpiAndTagsWrapper = styled.div`
   display: grid;

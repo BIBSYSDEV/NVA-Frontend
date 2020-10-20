@@ -5,13 +5,13 @@ import SearchIcon from '@material-ui/icons/Search';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import styled from 'styled-components';
 import { Field, FieldProps } from 'formik';
-import { ResearchProject } from '../../types/project.types';
-import { debounce } from '../../utils/debounce';
 import { getProjectTitle, convertToResearchProject, convertToCristinProject } from './helpers';
 import ProjectChip from './ProjectChip';
-import useFetchProjects from '../../utils/hooks/useFetchProjects';
 import ProjectOption from './ProjectOption';
-import { DescriptionFieldNames } from '../../types/publicationFieldNames';
+import { debounce } from '../../../../utils/debounce';
+import useFetchProjects from '../../../../utils/hooks/useFetchProjects';
+import { DescriptionFieldNames } from '../../../../types/publicationFieldNames';
+import { ResearchProject } from '../../../../types/project.types';
 
 const StyledSearchIcon = styled(SearchIcon)`
   margin-left: 0.5rem;

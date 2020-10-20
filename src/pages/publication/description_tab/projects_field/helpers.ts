@@ -1,6 +1,6 @@
-import { CristinProject, ResearchProject } from '../../types/project.types';
-import { LanguageCodes } from '../../types/language.types';
-import { BackendTypeNames } from '../../types/publication_types/commonPublication.types';
+import { CristinProject, ResearchProject } from '../../../../types/project.types';
+import { LanguageCodes } from '../../../../types/language.types';
+import { BackendTypeNames } from '../../../../types/publication_types/commonPublication.types';
 
 export const getProjectTitle = (option: CristinProject) => {
   const selectedLanguage = localStorage.getItem('i18nextLng');

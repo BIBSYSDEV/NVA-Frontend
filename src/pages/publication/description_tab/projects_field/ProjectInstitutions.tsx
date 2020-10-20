@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { Typography } from '@material-ui/core';
-import { CristinProject } from '../../types/project.types';
+import { CristinProject } from '../../../../types/project.types';
 
 interface ProjectInstitutionsProps {
   project: CristinProject;

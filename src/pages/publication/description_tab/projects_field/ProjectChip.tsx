@@ -1,11 +1,11 @@
 import React, { FC } from 'react';
 import { ChipProps, Chip } from '@material-ui/core';
 import styled from 'styled-components';
-import { CristinProject } from '../../types/project.types';
-import { StyledFlexColumn } from '../styled/Wrappers';
 import { getProjectTitle } from './helpers';
 import ProjectInstitutions from './ProjectInstitutions';
 import ProjectTitle from './ProjectTitle';
+import { CristinProject } from '../../../../types/project.types';
+import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
 
 interface ProjectChipProps extends ChipProps {
   project: CristinProject;
