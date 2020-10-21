@@ -34,7 +34,7 @@ const DoiField: FC = () => {
       <TextField
         variant="outlined"
         fullWidth
-        label={t('publication.link_to_resource')}
+        label={t('registration.link_to_resource')}
         disabled
         InputProps={{
           endAdornment: (

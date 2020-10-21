@@ -101,11 +101,11 @@
     "request_doi_description": "When you request a DOI (Digital Object Identifier), the order will go through a curator at your institution for quality control. Add a message in case of any questions or clarifications. You will receive an email when the request has been evaluated.",
     "requested_doi": "Waiting for DOI..."
   },
-  "publication": {
-    "latest_publications": "Recently added",
+  "registration": {
+    "latest_registrations": "Recently added",
     "link_to_resource": "Link to resource",
     "link_to_resource_description": "E.g. DOI, link to article, link to video of presentation etc.",
-    "no_published_publications_yet": "There are no published publications yet",
+    "no_published_registrations_yet": "There are no published registrations yet",
     "start_with_link_to_resource": "Link to original version if the resource already has been published on the Internet",
     "start_with_uploading_file": "Upload file if the resource is to be published on the Internet for the first time"
   },

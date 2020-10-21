@@ -55,7 +55,7 @@ const LoadPublication: FC<LoadPublicationProps> = ({ expanded, onChange, openFor
   return (
     <PublicationAccordion
       dataTestId="new-publication-file"
-      headerLabel={t('publication:publication.start_with_uploading_file')}
+      headerLabel={t('publication:registration.start_with_uploading_file')}
       icon={<CloudDownloadIcon />}
       expanded={expanded}
       onChange={onChange}

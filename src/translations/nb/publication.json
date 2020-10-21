@@ -101,11 +101,11 @@
     "request_doi_description": "Når du ber om en DOI (Digital Object Identifier) vil bestillingen gå via en kurator ved din institusjon for kvalitetskontroll. Legg til en melding ved eventuelle spørsmål eller oppklaringer. Du vil få en epost når forespørselen er behandlet.",
     "requested_doi": "Venter på DOI..."
   },
-  "publication": {
-    "latest_publications": "Nye registreringer",
+  "registration": {
+    "latest_registrations": "Nye registreringer",
     "link_to_resource": "Lenke til ressurs",
     "link_to_resource_description": "F.eks. DOI, lenke til artikkel, lenke til video av presentasjon etc.",
-    "no_published_publications_yet": "Det finnes ingen publiserte publikasjoner enda",
+    "no_published_registrations_yet": "Det finnes ingen publiserte registreringer enda",
     "start_with_link_to_resource": "Lenke til original versjon hvis ressursen allerede er publisert på Internett",
     "start_with_uploading_file": "Last opp fil hvis ressursen skal publiseres på Internett for første gang"
   },

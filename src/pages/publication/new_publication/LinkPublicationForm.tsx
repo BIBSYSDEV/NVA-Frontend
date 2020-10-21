@@ -40,7 +40,7 @@ const LinkPublicationForm: FC<LinkPublicationFormProps> = ({ handleSearch }) => 
               {({ field, meta: { error, touched } }: FieldProps) => (
                 <StyledTextField
                   variant="outlined"
-                  label={t('publication.link_to_resource')}
+                  label={t('registration.link_to_resource')}
                   fullWidth
                   aria-label="DOI-link"
                   inputProps={{ 'data-testid': 'new-publication-link-input' }}
