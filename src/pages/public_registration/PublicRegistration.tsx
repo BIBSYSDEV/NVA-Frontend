@@ -12,19 +12,21 @@ import { RootStore } from '../../redux/reducers/rootReducer';
 
 const PublicRegistration: FC = () => {
   const { identifier } = useParams();
-  const [publication, isLoadingPublication] = useFetchRegistration(identifier);
+  const [registration, isLoadingRegistration] = useFetchRegistration(identifier);
   const user = useSelector((store: RootStore) => store.user);
 
   const isAllowedToSeePublicPublication =
-    publication?.status === RegistrationStatus.PUBLISHED || (user?.isCurator && publication.publisher.id === user?.id) || publication?.owner === user?.id;
+    registration?.status === RegistrationStatus.PUBLISHED ||
+    (user?.isCurator && registration?.publisher.id === user?.id) ||
+    registration?.owner === user?.id;
 
   return (
     <>
-      {isLoadingPublication ? (
+      {isLoadingRegistration ? (
         <CircularProgress color="inherit" size={20} />
-      ) : publication ? (
+      ) : registration ? (
         isAllowedToSeePublicPublication ? (
-          <PublicRegistrationContent publication={publication} />
+          <PublicRegistrationContent publication={registration} />
         ) : (
           <NotPublished />
         )
