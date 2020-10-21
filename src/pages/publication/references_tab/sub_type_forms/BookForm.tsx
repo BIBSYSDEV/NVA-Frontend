@@ -41,7 +41,7 @@ const StyledTypography = styled(Typography)`
 
 const BookForm: FC = () => {
   const { t } = useTranslation('publication');
-  const { setFieldValue, touched, values }: FormikProps<BookPublication> = useFormikContext();
+  const { setFieldValue, values }: FormikProps<BookPublication> = useFormikContext();
   const {
     reference: {
       publicationContext,
@@ -56,8 +56,7 @@ const BookForm: FC = () => {
       <PublisherField
         label={t('common:publisher')}
         placeholder={t('references.search_for_publisher')}
-        touched={touched.entityDescription?.reference?.publicationContext?.publisher}
-        errorName={ReferenceFieldNames.PUBLICATION_CONTEXT_PUBLISHER}
+        errorFieldName={ReferenceFieldNames.PUBLICATION_CONTEXT_PUBLISHER}
       />
       <StyledSection>
         <IsbnListField />

@@ -1,4 +1,4 @@
-import React, { FC, ReactNode } from 'react';
+import React, { FC } from 'react';
 import { TextField, CircularProgress, TextFieldProps } from '@material-ui/core';
 import { AutocompleteRenderInputParams } from '@material-ui/lab';
 import styled from 'styled-components';
@@ -13,7 +13,7 @@ interface AutocompleteTextField extends AutocompleteRenderInputParams, Pick<Text
   isLoading: boolean;
   showSearchIcon: boolean;
   dataTestId?: string;
-  errorMessage?: ReactNode;
+  errorMessage?: string;
 }
 
 export const AutocompleteTextField: FC<AutocompleteTextField> = ({

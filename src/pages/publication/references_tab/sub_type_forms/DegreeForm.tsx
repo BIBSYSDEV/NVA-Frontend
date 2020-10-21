@@ -18,7 +18,7 @@ const StyledTypography = styled(Typography)`
 const DegreeForm: FC = () => {
   const { t } = useTranslation('publication');
 
-  const { setFieldValue, touched }: FormikProps<DegreePublication> = useFormikContext();
+  const { setFieldValue }: FormikProps<DegreePublication> = useFormikContext();
 
   return (
     <>
@@ -27,8 +27,7 @@ const DegreeForm: FC = () => {
       <PublisherField
         label={t('common:publisher')}
         placeholder={t('references.search_for_publisher')}
-        touched={touched.entityDescription?.reference?.publicationContext?.publisher}
-        errorName={ReferenceFieldNames.PUBLICATION_CONTEXT_PUBLISHER}
+        errorFieldName={ReferenceFieldNames.PUBLICATION_CONTEXT_PUBLISHER}
       />
 
       <StyledTypography variant="h5">{t('references.series')}</StyledTypography>

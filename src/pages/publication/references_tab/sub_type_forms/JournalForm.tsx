@@ -29,7 +29,7 @@ const StyledLabel = styled(Typography)`
 
 const JournalForm: FC = () => {
   const { t } = useTranslation('publication');
-  const { touched, values }: FormikProps<JournalPublication> = useFormikContext();
+  const { values }: FormikProps<JournalPublication> = useFormikContext();
   const {
     reference: { publicationContext, publicationInstance },
   } = values.entityDescription as JournalEntityDescription;
@@ -42,8 +42,7 @@ const JournalForm: FC = () => {
         publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
         label={t('references.journal')}
         placeholder={t('references.search_for_journal')}
-        touched={touched.entityDescription?.reference?.publicationContext?.title}
-        errorName={ReferenceFieldNames.PUBLICATION_CONTEXT_TITLE}
+        errorFieldName={ReferenceFieldNames.PUBLICATION_CONTEXT_TITLE}
       />
 
       <StyledArticleDetail>

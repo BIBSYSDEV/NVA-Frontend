@@ -1,5 +1,5 @@
 import React, { FC, useCallback, useState } from 'react';
-import { Field, FieldProps, ErrorMessage, getIn, useFormikContext } from 'formik';
+import { Field, FieldProps, getIn, useFormikContext } from 'formik';
 import { PublicationTableNumber } from '../../../../utils/constants';
 import { contextTypeBaseFieldName } from '../../../../types/publicationFieldNames';
 import { levelMap, Publisher, Publication } from '../../../../types/publication.types';
@@ -16,14 +16,13 @@ interface PublisherFieldProps {
   publicationTable?: PublicationTableNumber;
   label: string;
   placeholder: string;
-  touched: boolean | undefined;
-  errorName: string;
+  errorFieldName: string;
 }
 
 const PublisherField: FC<PublisherFieldProps> = ({
   publicationTable = PublicationTableNumber.PUBLISHERS,
   placeholder,
-  errorName,
+  errorFieldName,
   label,
 }) => {
   const dispatch = useDispatch();
@@ -56,7 +55,7 @@ const PublisherField: FC<PublisherFieldProps> = ({
       {({ field: { name, value } }: FieldProps) => (
         <Autocomplete
           options={options}
-          onBlur={() => setFieldTouched(errorName)}
+          onBlur={() => setFieldTouched(errorFieldName)}
           onInputChange={(_, newInputValue) => {
             search(newInputValue);
           }}
@@ -83,9 +82,7 @@ const PublisherField: FC<PublisherFieldProps> = ({
               placeholder={placeholder}
               dataTestId={'publisher-search-input'}
               showSearchIcon
-              errorMessage={
-                !!getIn(errors, errorName) && getIn(touched, errorName) ? <ErrorMessage name={errorName} /> : null
-              }
+              errorMessage={getIn(touched, errorFieldName) && getIn(errors, errorFieldName)}
             />
           )}
         />

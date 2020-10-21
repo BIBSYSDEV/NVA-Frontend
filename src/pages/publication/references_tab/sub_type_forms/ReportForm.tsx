@@ -31,7 +31,7 @@ const StyledTypography = styled(Typography)`
 const ReportForm: FC = () => {
   const { t } = useTranslation('publication');
 
-  const { setFieldValue, touched }: FormikProps<ReportPublication> = useFormikContext();
+  const { setFieldValue }: FormikProps<ReportPublication> = useFormikContext();
 
   return (
     <>
@@ -40,8 +40,7 @@ const ReportForm: FC = () => {
       <PublisherField
         label={t('common:publisher')}
         placeholder={t('references.search_for_publisher')}
-        touched={touched.entityDescription?.reference?.publicationContext?.publisher}
-        errorName={ReferenceFieldNames.PUBLICATION_CONTEXT_PUBLISHER}
+        errorFieldName={ReferenceFieldNames.PUBLICATION_CONTEXT_PUBLISHER}
       />
 
       <StyledSection>
