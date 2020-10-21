@@ -1,4 +1,4 @@
-import React, { FC, KeyboardEvent } from 'react';
+import React, { FC } from 'react';
 import { TextField, CircularProgress, TextFieldProps } from '@material-ui/core';
 import { AutocompleteRenderInputParams } from '@material-ui/lab';
 import styled from 'styled-components';
@@ -11,20 +11,20 @@ const StyledSearchIcon = styled(SearchIcon)`
 
 interface AutocompleteTextField extends AutocompleteRenderInputParams, Pick<TextFieldProps, 'placeholder'> {
   isLoading: boolean;
+  showSearchIcon: boolean;
   dataTestId?: string;
 }
 
-export const AutocompleteTextField: FC<AutocompleteTextField> = ({ isLoading, dataTestId, ...params }) => (
+export const AutocompleteTextField: FC<AutocompleteTextField> = ({
+  isLoading,
+  dataTestId,
+  showSearchIcon,
+  ...params
+}) => (
   <TextField
     {...params}
     variant="outlined"
     fullWidth
-    onKeyDown={(event: KeyboardEvent) => {
-      if (event.key === 'Backspace') {
-        // Disable removing chips with backspace
-        event.stopPropagation();
-      }
-    }}
     inputProps={{
       ...params.inputProps,
       'data-testid': dataTestId,
@@ -34,7 +34,7 @@ export const AutocompleteTextField: FC<AutocompleteTextField> = ({ isLoading, da
       startAdornment: (
         <>
           {params.InputProps.startAdornment}
-          <StyledSearchIcon />
+          {showSearchIcon && <StyledSearchIcon />}
         </>
       ),
       endAdornment: (

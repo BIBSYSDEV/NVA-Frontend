@@ -1,8 +1,8 @@
 import React, { FC } from 'react';
 import { AutocompleteRenderOptionState } from '@material-ui/lab';
+import { Typography } from '@material-ui/core';
 import { getProjectTitleParts } from './helpers';
 import ProjectInstitutions from './ProjectInstitutions';
-import ProjectTitle from './ProjectTitle';
 import { CristinProject } from '../../../../types/project.types';
 import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
 
@@ -17,7 +17,7 @@ const ProjectOption: FC<ProjectOptionProps> = ({ project, state }) => {
 
   return (
     <StyledFlexColumn>
-      <ProjectTitle>
+      <Typography variant="subtitle1">
         {parts.map((part, index) => (
           <span
             key={index}
@@ -27,7 +27,7 @@ const ProjectOption: FC<ProjectOptionProps> = ({ project, state }) => {
             {part}
           </span>
         ))}
-      </ProjectTitle>
+      </Typography>
       <ProjectInstitutions project={project} />
     </StyledFlexColumn>
   );
