@@ -1,5 +1,5 @@
 import { PublicationFileSet } from './file.types';
-import { Project } from './project.types';
+import { ResearchProject } from './project.types';
 import { EnumDictionary } from './common.types';
 import {
   JournalEntityDescription,
@@ -84,8 +84,9 @@ interface BasePublication extends BackendType, PublicationFileSet {
   readonly status: PublicationStatus;
   readonly doiRequest?: DoiRequest;
   readonly publisher: PublicationPublisher;
-  project: Project | null;
+  project: ResearchProject | null;
 }
+
 export interface Publication extends BasePublication {
   entityDescription:
     | JournalEntityDescription
