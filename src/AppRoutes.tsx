@@ -9,10 +9,10 @@ import { useSelector } from 'react-redux';
 import { RootStore } from './redux/reducers/rootReducer';
 
 const Dashboard = lazy(() => import('./pages/dashboard/Dashboard'));
-const EditPublication = lazy(() => import('./pages/registration/EditRegistration'));
-const MyPublications = lazy(() => import('./pages/my_registrations/MyRegistrations'));
+const EditRegistration = lazy(() => import('./pages/registration/EditRegistration'));
+const MyRegistrations = lazy(() => import('./pages/my_registrations/MyRegistrations'));
 const Search = lazy(() => import('./pages/search/Search'));
-const PublicPublication = lazy(() => import('./pages/public_registration/PublicRegistration'));
+const PublicRegistration = lazy(() => import('./pages/public_registration/PublicRegistration'));
 const User = lazy(() => import('./pages/user/User'));
 const NotFound = lazy(() => import('./pages/errorpages/NotFound'));
 const PublicProfile = lazy(() => import('./pages/public_profile/PublicProfile'));
@@ -34,7 +34,7 @@ const AppRoutes: FC = () => {
         <Route exact path="/order-information" component={OrderInformation} />
         <Route exact path="/privacy-policy" component={PrivacyPolicy} />
         <Route exact path="/user/:arpId" component={PublicProfile} />
-        <Route exact path="/registration/:identifier/public" component={PublicPublication} />
+        <Route exact path="/registration/:identifier/public" component={PublicRegistration} />
         <Route exact path="/search" component={Search} />
         <Route exact path="/search/:searchTerm" component={Search} />
         <Route exact path="/search/:searchTerm/:offset" component={Search} />
@@ -46,9 +46,9 @@ const AppRoutes: FC = () => {
             <LoggedInRoute exact path="/user" component={User} />
 
             {/* CreatorRoutes */}
-            <CreatorRoute exact path="/registration" component={EditPublication} />
-            <CreatorRoute exact path="/registration/:identifier" component={EditPublication} />
-            <CreatorRoute exact path="/my-registrations" component={MyPublications} />
+            <CreatorRoute exact path="/registration" component={EditRegistration} />
+            <CreatorRoute exact path="/registration/:identifier" component={EditRegistration} />
+            <CreatorRoute exact path="/my-registrations" component={MyRegistrations} />
             <CreatorRoute exact path="/my-messages" component={MyMessages} />
 
             {/* CuratorRoutes */}
