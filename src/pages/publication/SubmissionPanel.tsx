@@ -45,7 +45,7 @@ interface SubmissionPanelProps {
 
 const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication }) => {
   const user = useSelector((store: RootStore) => store.user);
-  const { t } = useTranslation('publication');
+  const { t } = useTranslation('registration');
   const { values, isValid, dirty, errors, setTouched }: FormikProps<Publication> = useFormikContext();
   const [isPublishing, setIsPublishing] = useState(false);
   const history = useHistory();
@@ -104,7 +104,7 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication }
             {publicationContextType && t(`publicationTypes:${publicationContextType}`)}
           </LabelContentRow>
           {reference.doi && (
-            <LabelContentRow label={t('publication.link_to_resource')}>{reference.doi}</LabelContentRow>
+            <LabelContentRow label={t('registration.link_to_resource')}>{reference.doi}</LabelContentRow>
           )}
           {publicationContextType === PublicationType.DEGREE && <SubmissionDegree />}
           {publicationContextType === PublicationType.BOOK && <SubmissionBook />}

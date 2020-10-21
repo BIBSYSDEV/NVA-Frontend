@@ -88,7 +88,7 @@ interface FileCardProps {
 }
 
 const FileCard: FC<FileCardProps> = ({ file, removeFile, baseFieldName, toggleLicenseModal }) => {
-  const { t } = useTranslation('publication');
+  const { t } = useTranslation('registration');
 
   return (
     <Card data-testid="uploaded-file-card">

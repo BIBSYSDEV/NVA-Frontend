@@ -29,7 +29,7 @@ const StyledTypography = styled(Typography)`
 `;
 
 const ReportForm: FC = () => {
-  const { t } = useTranslation('publication');
+  const { t } = useTranslation('registration');
 
   const { setFieldValue, touched }: FormikProps<ReportPublication> = useFormikContext();
 

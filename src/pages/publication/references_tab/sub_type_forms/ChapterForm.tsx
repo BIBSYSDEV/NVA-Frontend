@@ -41,7 +41,7 @@ const StyledPageNumberField = styled(TextField)`
 `;
 
 const ChapterForm: React.FC = () => {
-  const { t } = useTranslation('publication');
+  const { t } = useTranslation('registration');
 
   return (
     <>

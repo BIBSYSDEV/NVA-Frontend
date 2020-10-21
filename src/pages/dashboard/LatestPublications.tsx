@@ -19,12 +19,12 @@ const StyledNormalText = styled(NormalText)`
 `;
 
 const LatestPublications: FC = () => {
-  const { t } = useTranslation('publication');
+  const { t } = useTranslation('registration');
   const [publications, isLoadingPublications] = useFetchLatestPublications();
 
   return (
     <StyledListContainer data-testid="latest-publications">
-      <Heading>{t('publication.latest_publications')}</Heading>
+      <Heading>{t('registration.latest_registrations')}</Heading>
       <Divider />
       {isLoadingPublications ? (
         <StyledProgressWrapper>
@@ -47,7 +47,7 @@ const LatestPublications: FC = () => {
           <Divider />
         </>
       ) : (
-        <StyledNormalText>{t('publication.no_published_publications_yet')}</StyledNormalText>
+        <StyledNormalText>{t('registration.no_published_registrations_yet')}</StyledNormalText>
       )}
     </StyledListContainer>
   );

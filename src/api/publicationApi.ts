@@ -24,17 +24,17 @@ export const createPublication = async (partialPublication?: PublicationFileSet)
     if (response.status === StatusCode.CREATED) {
       return response.data;
     } else {
-      return { error: i18n.t('feedback:error.create_publication') };
+      return { error: i18n.t('feedback:error.create_registration') };
     }
   } catch {
-    return { error: i18n.t('feedback:error.create_publication') };
+    return { error: i18n.t('feedback:error.create_registration') };
   }
 };
 
 export const updatePublication = async (publication: Publication) => {
   const { identifier } = publication;
   if (!identifier) {
-    return { error: i18n.t('feedback:error.update_publication') };
+    return { error: i18n.t('feedback:error.update_registration') };
   }
   const idToken = await getIdToken();
   try {
@@ -46,10 +46,10 @@ export const updatePublication = async (publication: Publication) => {
     if (response.status === StatusCode.OK) {
       return response.data;
     } else {
-      return { error: i18n.t('feedback:error.update_publication') };
+      return { error: i18n.t('feedback:error.update_registration') };
     }
   } catch {
-    return { error: i18n.t('feedback:error.update_publication') };
+    return { error: i18n.t('feedback:error.update_registration') };
   }
 };
 
@@ -61,11 +61,11 @@ export const getPublications = async (cancelToken?: CancelToken) => {
     if (response.status === StatusCode.OK) {
       return response.data;
     } else {
-      return { error: i18n.t('feedback:error.get_publications') };
+      return { error: i18n.t('feedback:error.get_registrations') };
     }
   } catch (error) {
     if (!Axios.isCancel(error)) {
-      return { error: i18n.t('feedback:error.get_publications') };
+      return { error: i18n.t('feedback:error.get_registrations') };
     }
   }
 };
@@ -78,18 +78,18 @@ export const getPublication = async (id: string, cancelToken?: CancelToken) => {
     if (response.status === StatusCode.OK) {
       return response.data;
     } else {
-      return { error: i18n.t('feedback:error.get_publication') };
+      return { error: i18n.t('feedback:error.get_registration') };
     }
   } catch (error) {
     if (!Axios.isCancel(error)) {
-      return { error: i18n.t('feedback:error.get_publication') };
+      return { error: i18n.t('feedback:error.get_registration') };
     }
   }
 };
 
 export const publishPublication = async (identifier: string) => {
   if (!identifier) {
-    return { error: i18n.t('feedback:error.publish_publication') };
+    return { error: i18n.t('feedback:error.publish_registration') };
   }
   try {
     const idToken = await getIdToken();
@@ -105,12 +105,12 @@ export const publishPublication = async (identifier: string) => {
     if (response.status === StatusCode.OK) {
       return response.data;
     } else if (response.status === StatusCode.ACCEPTED) {
-      return { info: i18n.t('feedback:info.publishing_publication') };
+      return { info: i18n.t('feedback:info.publishing_registration') };
     } else {
-      return { error: i18n.t('feedback:error.publish_publication') };
+      return { error: i18n.t('feedback:error.publish_registration') };
     }
   } catch {
-    return { error: i18n.t('feedback:error.publish_publication') };
+    return { error: i18n.t('feedback:error.publish_registration') };
   }
 };
 
@@ -127,11 +127,11 @@ export const getMyPublications = async (cancelToken?: CancelToken) => {
     if (response.status === StatusCode.OK) {
       return response.data.publications;
     } else {
-      return { error: i18n.t('feedback:error.get_publications') };
+      return { error: i18n.t('feedback:error.get_registrations') };
     }
   } catch (error) {
     if (!Axios.isCancel(error)) {
-      return { error: i18n.t('feedback:error.get_publications') };
+      return { error: i18n.t('feedback:error.get_registrations') };
     }
   }
 };
@@ -187,6 +187,6 @@ export const getPublicationsForApproval = async () => {
       return [];
     }
   } catch {
-    return { error: i18n.t('feedback:error.get_approvable_publications') };
+    return { error: i18n.t('feedback:error.get_approvable_registrations') };
   }
 };

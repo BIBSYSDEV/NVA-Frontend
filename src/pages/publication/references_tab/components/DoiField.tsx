@@ -14,7 +14,7 @@ const StyledClearIcon = styled(ClearIcon)`
 `;
 
 const DoiField: FC = () => {
-  const { t } = useTranslation('publication');
+  const { t } = useTranslation('registration');
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
   const { setFieldValue, values }: FormikProps<Publication> = useFormikContext();
 
@@ -34,7 +34,7 @@ const DoiField: FC = () => {
       <TextField
         variant="outlined"
         fullWidth
-        label={t('publication.link_to_resource')}
+        label={t('registration.link_to_resource')}
         disabled
         InputProps={{
           endAdornment: (

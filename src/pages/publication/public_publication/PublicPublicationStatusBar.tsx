@@ -45,7 +45,7 @@ const StyledUnpublishedStatusIcon = styled(WorkOutlineIcon)`
 
 export const PublicPublicationStatusBar: FC<PublicPublicationContentProps> = ({ publication }) => {
   const dispatch = useDispatch();
-  const { t } = useTranslation('publication');
+  const { t } = useTranslation('registration');
   const user = useSelector((store: RootStore) => store.user);
   const {
     identifier,
@@ -120,7 +120,7 @@ export const PublicPublicationStatusBar: FC<PublicPublicationContentProps> = ({ 
 
         <Link to={`/registration/${identifier}`}>
           <Button variant="contained" color="primary" data-testid="button-edit-publication">
-            {t('edit_publication')}
+            {t('edit_registration')}
           </Button>
         </Link>
       </div>

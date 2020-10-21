@@ -37,7 +37,7 @@ interface FilesAndLicensePanelProps extends PanelProps {
 }
 
 const FilesAndLicensePanel: FC<FilesAndLicensePanelProps> = ({ uppy, setTouchedFields }) => {
-  const { t } = useTranslation('publication');
+  const { t } = useTranslation('registration');
   const { values }: FormikProps<Publication> = useFormikContext();
   const [isLicenseModalOpen, setIsLicenseModalOpen] = useState(false);
   const {

@@ -10,7 +10,7 @@ interface PeerReviewProps {
 }
 
 const PeerReview: FC<PeerReviewProps> = ({ fieldName, label }) => {
-  const { t } = useTranslation('publication');
+  const { t } = useTranslation('registration');
 
   const { setFieldValue }: FormikProps<Publication> = useFormikContext();
 

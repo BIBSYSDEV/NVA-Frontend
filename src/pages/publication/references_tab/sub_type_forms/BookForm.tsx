@@ -40,7 +40,7 @@ const StyledTypography = styled(Typography)`
 `;
 
 const BookForm: FC = () => {
-  const { t } = useTranslation('publication');
+  const { t } = useTranslation('registration');
   const { setFieldValue, touched, values }: FormikProps<BookPublication> = useFormikContext();
   const {
     reference: {

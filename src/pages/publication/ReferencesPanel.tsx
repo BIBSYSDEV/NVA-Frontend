@@ -29,7 +29,7 @@ const StyledCard = styled(Card)`
 `;
 
 const ReferencesPanel: FC<PanelProps> = ({ setTouchedFields }) => {
-  const { t } = useTranslation('publication');
+  const { t } = useTranslation('registration');
   const { values, setTouched, setFieldValue, touched }: FormikProps<Publication> = useFormikContext();
   const publicationContextType = values.entityDescription.reference.publicationContext.type;
   const contextRef = useRef(publicationContextType);

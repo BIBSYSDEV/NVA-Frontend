@@ -11,7 +11,7 @@ import { isbnRegex } from '../../../../utils/validation/publication/referenceVal
 import { ErrorMessage } from '../../../../utils/validation/errorMessage';
 
 const IsbnListField: FC = () => {
-  const { t } = useTranslation('publication');
+  const { t } = useTranslation('registration');
   const dispatch = useDispatch();
 
   return (

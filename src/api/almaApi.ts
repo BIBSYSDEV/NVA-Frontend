@@ -18,11 +18,11 @@ export const getAlmaPublication = async (
     if (response.status === StatusCode.OK) {
       return response.data;
     } else {
-      return { error: i18n.t('feedback:error.get_last_publication') };
+      return { error: i18n.t('feedback:error.get_last_registration') };
     }
   } catch (error) {
     if (!Axios.isCancel(error)) {
-      return { error: i18n.t('feedback:error.get_last_publication') };
+      return { error: i18n.t('feedback:error.get_last_registration') };
     }
   }
 };

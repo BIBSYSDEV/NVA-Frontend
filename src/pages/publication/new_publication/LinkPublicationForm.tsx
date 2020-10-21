@@ -29,7 +29,7 @@ interface LinkPublicationFormProps {
 }
 
 const LinkPublicationForm: FC<LinkPublicationFormProps> = ({ handleSearch }) => {
-  const { t } = useTranslation('publication');
+  const { t } = useTranslation('registration');
 
   return (
     <Formik onSubmit={handleSearch} initialValues={emptyDoiFormValues} validationSchema={doiValidationSchema}>
@@ -40,7 +40,7 @@ const LinkPublicationForm: FC<LinkPublicationFormProps> = ({ handleSearch }) => 
               {({ field, meta: { error, touched } }: FieldProps) => (
                 <StyledTextField
                   variant="outlined"
-                  label={t('publication.link_to_resource')}
+                  label={t('registration.link_to_resource')}
                   fullWidth
                   aria-label="DOI-link"
                   inputProps={{ 'data-testid': 'new-publication-link-input' }}

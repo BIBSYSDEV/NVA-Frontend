@@ -44,7 +44,7 @@ const StyledMainCard = styled(Card)`
 `;
 
 const DescriptionPanel: FC<PanelProps> = ({ setTouchedFields }) => {
-  const { t } = useTranslation('publication');
+  const { t } = useTranslation('registration');
   const { setFieldValue }: FormikProps<Publication> = useFormikContext();
 
   useEffect(

@@ -27,7 +27,7 @@ interface LoadPublicationProps {
 }
 
 const LoadPublication: FC<LoadPublicationProps> = ({ expanded, onChange, openForm }) => {
-  const { t } = useTranslation('publication');
+  const { t } = useTranslation('registration');
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
@@ -48,14 +48,14 @@ const LoadPublication: FC<LoadPublicationProps> = ({ expanded, onChange, openFor
       history.push(`/registration/${publication.identifier}`);
     } else {
       setIsLoading(false);
-      dispatch(setNotification(t('feedback:error.create_publication'), NotificationVariant.Error));
+      dispatch(setNotification(t('feedback:error.create_registration'), NotificationVariant.Error));
     }
   };
 
   return (
     <PublicationAccordion
       dataTestId="new-publication-file"
-      headerLabel={t('publication:publication.start_with_uploading_file')}
+      headerLabel={t('registration:registration.start_with_uploading_file')}
       icon={<CloudDownloadIcon />}
       expanded={expanded}
       onChange={onChange}

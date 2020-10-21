@@ -11,7 +11,7 @@ const StyledAffiliationCount = styled.span`
 `;
 
 const SubmissionContributors: React.FC = () => {
-  const { t } = useTranslation('publication');
+  const { t } = useTranslation('registration');
   const {
     values: {
       entityDescription: { contributors },

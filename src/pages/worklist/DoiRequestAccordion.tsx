@@ -107,7 +107,7 @@ export const DoiRequestAccordion: FC<DoiRequestAccordionProps> = ({ publication 
             variant="outlined"
             component={RouterLink}
             to={`/registration/${identifier}?tab=${PublicationTab.Submission}`}>
-            {t('doi_requests.go_to_publication')}
+            {t('doi_requests.go_to_registration')}
           </Button>
           <Button variant="contained" color="primary" disabled>
             {t('doi_requests.archive')}

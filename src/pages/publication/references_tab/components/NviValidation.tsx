@@ -46,7 +46,7 @@ interface NviValidationProps {
 }
 
 const NviValidation: FC<NviValidationProps> = ({ dataTestId, isPeerReviewed, isRated }) => {
-  const { t } = useTranslation('publication');
+  const { t } = useTranslation('registration');
 
   return (
     <StyledNviValidation data-testid={dataTestId}>
@@ -55,18 +55,22 @@ const NviValidation: FC<NviValidationProps> = ({ dataTestId, isPeerReviewed, isR
         isRated ? (
           <>
             <StyledCheckCircleIcon />
-            <StyledNviInformation>{t('references.nvi_success')}</StyledNviInformation>
+            <StyledNviInformation data-testid="nvi_success">{t('references.nvi_success')}</StyledNviInformation>
           </>
         ) : (
           <>
             <StyledCancelIcon />
-            <StyledNviInformation>{t('references.nvi_fail_not_rated')}</StyledNviInformation>
+            <StyledNviInformation data-testid="nvi_fail_not_rated">
+              {t('references.nvi_fail_not_rated')}
+            </StyledNviInformation>
           </>
         )
       ) : (
         <>
           <StyledCancelIcon />
-          <StyledNviInformation>{t('references.nvi_fail_no_peer_review')}</StyledNviInformation>
+          <StyledNviInformation data-testid="nvi_fail_no_peer_review">
+            {t('references.nvi_fail_no_peer_review')}
+          </StyledNviInformation>
         </>
       )}
     </StyledNviValidation>

@@ -64,20 +64,20 @@ const LinkPublicationPanel: FC<LinkPublicationPanelProps> = ({ expanded, onChang
 
   return (
     <PublicationAccordion
-      headerLabel={t('publication:publication.start_with_link_to_resource')}
+      headerLabel={t('registration:registration.start_with_link_to_resource')}
       icon={<LinkIcon className="icon" />}
       expanded={expanded}
       onChange={onChange}
       ariaControls="publication-method-link"
       dataTestId="new-publication-link">
       <StyledBody>
-        <Typography>{t('publication:publication.link_to_resource_description')}</Typography>
+        <Typography>{t('registration:registration.link_to_resource_description')}</Typography>
         <LinkPublicationForm handleSearch={handleSearch} />
         {noHit && <Typography>{t('common:no_hits')}</Typography>}
         {doi && (
           <>
             <StyledTypography variant="h6">
-              {t('publication:heading.publication')}: <b>{doi.title}</b>
+              {t('registration:heading.registration')}: <b>{doi.title}</b>
             </StyledTypography>
             <Button
               fullWidth

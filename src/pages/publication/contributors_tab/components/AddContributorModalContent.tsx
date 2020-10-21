@@ -22,7 +22,7 @@ interface AddContributorModalContentProps {
 }
 
 const AddContributorModalContent: FC<AddContributorModalContentProps> = ({ addAuthor, initialSearchTerm = '' }) => {
-  const { t } = useTranslation('publication');
+  const { t } = useTranslation('registration');
   const [selectedAuthor, setSelectedAuthor] = useState<Authority | null>(null);
   const [authorities, isLoadingAuthorities, handleNewSearchTerm, searchTerm] = useFetchAuthorities(initialSearchTerm);
 
@@ -30,7 +30,7 @@ const AddContributorModalContent: FC<AddContributorModalContentProps> = ({ addAu
     <>
       {initialSearchTerm && (
         <StyledSubHeading variant="h6">
-          {t('publication:contributors.prefilled_name')}: {initialSearchTerm}
+          {t('registration:contributors.prefilled_name')}: {initialSearchTerm}
         </StyledSubHeading>
       )}
       <SearchBar handleSearch={handleNewSearchTerm} resetSearchInput={false} initialSearchTerm={initialSearchTerm} />

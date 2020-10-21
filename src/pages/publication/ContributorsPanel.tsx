@@ -10,7 +10,7 @@ import { touchedContributorTabFields } from '../../utils/formik-helpers';
 import { PanelProps } from './PublicationFormContent';
 
 const ContributorsPanel: FC<PanelProps> = ({ setTouchedFields }) => {
-  const { t } = useTranslation('publication');
+  const { t } = useTranslation('registration');
   const {
     values: {
       entityDescription: { contributors },

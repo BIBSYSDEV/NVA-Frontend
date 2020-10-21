@@ -43,7 +43,7 @@ interface PublicationFormProps {
 
 const PublicationForm: FC<PublicationFormProps> = ({ identifier, closeForm }) => {
   const user = useSelector((store: RootStore) => store.user);
-  const { t } = useTranslation('publication');
+  const { t } = useTranslation('registration');
   const history = useHistory();
   const initialTabNumber = new URLSearchParams(history.location.search).get('tab');
   const [tabNumber, setTabNumber] = useState(initialTabNumber ? +initialTabNumber : PublicationTab.Description);
@@ -85,7 +85,7 @@ const PublicationForm: FC<PublicationFormProps> = ({ identifier, closeForm }) =>
       dispatch(setNotification(updatedPublication.error, NotificationVariant.Error));
     } else {
       handleSetPublication(deepmerge(emptyPublication, updatedPublication));
-      dispatch(setNotification(t('feedback:success.update_publication')));
+      dispatch(setNotification(t('feedback:success.update_registration')));
     }
     setIsSaving(false);
     return !updatedPublication.error;
@@ -112,7 +112,7 @@ const PublicationForm: FC<PublicationFormProps> = ({ identifier, closeForm }) =>
     <Forbidden />
   ) : (
     <>
-      <PageHeader>{t('edit_publication')}</PageHeader>
+      <PageHeader>{t('edit_registration')}</PageHeader>
       <StyledPublication>
         <Formik
           enableReinitialize

@@ -100,7 +100,7 @@ export interface PublicPublicationContentProps {
 }
 
 const PublicPublicationContent: FC<PublicPublicationContentProps> = ({ publication }) => {
-  const { t } = useTranslation('publication');
+  const { t } = useTranslation('registration');
 
   const {
     abstract,
@@ -128,7 +128,7 @@ const PublicPublicationContent: FC<PublicPublicationContentProps> = ({ publicati
         )}
         <StyledMainContent>
           {doi && (
-            <LabelContentRow minimal label={`${t('publication.link_to_resource')}:`}>
+            <LabelContentRow minimal label={`${t('registration.link_to_resource')}:`}>
               <Link href={doi} target="_blank" rel="noopener noreferrer">
                 {doi}
               </Link>

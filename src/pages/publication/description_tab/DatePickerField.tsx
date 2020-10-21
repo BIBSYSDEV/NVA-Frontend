@@ -19,7 +19,7 @@ interface DatePickerFieldProps {
 }
 
 const DatePickerField = ({ yearFieldName, monthFieldName, dayFieldName }: DatePickerFieldProps) => {
-  const { t } = useTranslation('publication');
+  const { t } = useTranslation('registration');
   const { setFieldValue, values }: FormikProps<Publication> = useFormikContext();
 
   const initialYear = getIn(values, yearFieldName);

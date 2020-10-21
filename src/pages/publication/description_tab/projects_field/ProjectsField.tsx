@@ -12,7 +12,7 @@ import { ResearchProject } from '../../../../types/project.types';
 import { AutocompleteTextField } from './AutocompleteTextField';
 
 export const ProjectsField: FC = () => {
-  const { t } = useTranslation('publication');
+  const { t } = useTranslation('registration');
   const [projects, isLoadingProjects, handleNewSearchTerm] = useFetchProjects('');
 
   const debouncedSearch = useCallback(

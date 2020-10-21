@@ -32,7 +32,7 @@ const PublicationsForApproval: FC = () => {
   ) : publicationsForApproval.length > 0 ? (
     <WorklistTable publications={publicationsForApproval} />
   ) : (
-    <SubHeading>{t('no_pending_publications')}</SubHeading>
+    <SubHeading>{t('no_pending_registrations')}</SubHeading>
   );
 };
 

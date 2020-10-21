@@ -6,7 +6,7 @@ import { Publication } from '../../../types/publication.types';
 import { DegreeEntityDescription } from '../../../types/publication_types/degreePublication.types';
 
 const SubmissionDegree: FC = () => {
-  const { t } = useTranslation('publication');
+  const { t } = useTranslation('registration');
   const { values }: FormikProps<Publication> = useFormikContext();
 
   const {
