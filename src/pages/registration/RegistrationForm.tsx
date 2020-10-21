@@ -16,7 +16,7 @@ import RouteLeavingGuard from '../../components/RouteLeavingGuard';
 import ButtonWithProgress from '../../components/ButtonWithProgress';
 import { RegistrationFormContent } from './RegistrationFormContent';
 import { RootStore } from '../../redux/reducers/rootReducer';
-import useFetchPublication from '../../utils/hooks/useFetchPublication';
+import useFetchRegistration from '../../utils/hooks/useFetchRegistration';
 import useUppy from '../../utils/hooks/useUppy';
 import { publicationValidationSchema } from '../../utils/validation/publication/publicationValidation';
 import { PageHeader } from '../../components/PageHeader';
@@ -50,7 +50,7 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier, closeForm }) 
   const [isSaving, setIsSaving] = useState(false);
   const dispatch = useDispatch();
   const uppy = useUppy();
-  const [publication, isLoadingPublication, handleSetPublication] = useFetchPublication(identifier);
+  const [publication, isLoadingPublication, handleSetPublication] = useFetchRegistration(identifier);
   const isOwner = publication?.owner === user.id;
 
   useEffect(() => {

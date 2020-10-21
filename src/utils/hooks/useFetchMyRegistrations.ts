@@ -6,9 +6,9 @@ import { RegistrationPreview } from '../../types/registration.types';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 
-const useFetchMyPublications = (): [RegistrationPreview[], boolean] => {
+const useFetchMyRegistrations = (): [RegistrationPreview[], boolean] => {
   const dispatch = useDispatch();
-  const [publications, setPublications] = useState<RegistrationPreview[]>([]);
+  const [registrations, setRegistrations] = useState<RegistrationPreview[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -21,7 +21,7 @@ const useFetchMyPublications = (): [RegistrationPreview[], boolean] => {
         if (myPublications.error) {
           dispatch(setNotification(myPublications.error, NotificationVariant.Error));
         } else {
-          setPublications(myPublications);
+          setRegistrations(myPublications);
         }
       }
     };
@@ -30,7 +30,7 @@ const useFetchMyPublications = (): [RegistrationPreview[], boolean] => {
     return () => cancelSource.cancel();
   }, [dispatch]);
 
-  return [publications, isLoading];
+  return [registrations, isLoading];
 };
 
-export default useFetchMyPublications;
+export default useFetchMyRegistrations;

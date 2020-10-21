@@ -6,9 +6,12 @@ import { NotificationVariant } from '../../types/notification.types';
 import { useDispatch } from 'react-redux';
 import Axios from 'axios';
 
-const useFetchLastPublication = (systemControlNumber: string, name: string): [AlmaRegistration | null, boolean] => {
+const useFetchLastRegistrationFromAlma = (
+  systemControlNumber: string,
+  name: string
+): [AlmaRegistration | null, boolean] => {
   const dispatch = useDispatch();
-  const [publication, setPublication] = useState<AlmaRegistration | null>(null);
+  const [almaRegistration, setAlmaRegistration] = useState<AlmaRegistration | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -21,7 +24,7 @@ const useFetchLastPublication = (systemControlNumber: string, name: string): [Al
         if (retrievedPublication.error) {
           dispatch(setNotification(retrievedPublication.error, NotificationVariant.Error));
         } else {
-          setPublication(retrievedPublication);
+          setAlmaRegistration(retrievedPublication);
         }
       }
     };
@@ -35,7 +38,7 @@ const useFetchLastPublication = (systemControlNumber: string, name: string): [Al
     };
   }, [dispatch, name, systemControlNumber]);
 
-  return [publication, isLoading];
+  return [almaRegistration, isLoading];
 };
 
-export default useFetchLastPublication;
+export default useFetchLastRegistrationFromAlma;

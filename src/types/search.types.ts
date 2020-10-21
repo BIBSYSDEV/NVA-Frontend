@@ -13,7 +13,7 @@ export interface SearchResult {
   title: string;
 }
 
-export interface LatestPublication {
+export interface LatestRegistration {
   identifier: string;
   createdDate: string;
   modifiedDate: string;

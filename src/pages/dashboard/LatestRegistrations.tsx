@@ -4,7 +4,7 @@ import { List, CircularProgress, Divider } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { Link as MuiLink } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import useFetchLatestPublications from '../../utils/hooks/useFetchLatestPublications';
+import useFetchLatestRegistrations from '../../utils/hooks/useFetchLatestRegistrations';
 import { StyledProgressWrapper } from '../../components/styled/Wrappers';
 import NormalText from '../../components/NormalText';
 import RegistrationListItem from './RegistrationListItem';
@@ -20,7 +20,7 @@ const StyledNormalText = styled(NormalText)`
 
 const LatestRegistrations: FC = () => {
   const { t } = useTranslation('registration');
-  const [publications, isLoadingPublications] = useFetchLatestPublications();
+  const [publications, isLoadingPublications] = useFetchLatestRegistrations();
 
   return (
     <StyledListContainer data-testid="latest-publications">

@@ -8,16 +8,16 @@ import { Registration } from '../../types/registration.types';
 import { getRegistration } from '../../api/registrationApi';
 import { RootStore } from '../../redux/reducers/rootReducer';
 
-const useFetchPublication = (
+const useFetchRegistration = (
   identifier: string | undefined
 ): [Registration | undefined, boolean, (values: Registration) => void] => {
   const dispatch = useDispatch();
-  const [publication, setPublication] = useState<Registration>();
+  const [registration, setRegistration] = useState<Registration>();
   const [isLoading, setIsLoading] = useState(!!identifier);
   const user = useSelector((store: RootStore) => store.user);
 
-  const handleSetPublication = (values: Registration) => {
-    setPublication(values);
+  const handleSetRegistration = (values: Registration) => {
+    setRegistration(values);
   };
 
   useEffect(() => {
@@ -29,7 +29,7 @@ const useFetchPublication = (
         if (publication.error) {
           dispatch(setNotification(publication.error, NotificationVariant.Error));
         } else {
-          setPublication(publication);
+          setRegistration(publication);
         }
         setIsLoading(false);
       }
@@ -45,7 +45,7 @@ const useFetchPublication = (
     };
   }, [dispatch, identifier, user]);
 
-  return [publication, isLoading, handleSetPublication];
+  return [registration, isLoading, handleSetRegistration];
 };
 
-export default useFetchPublication;
+export default useFetchRegistration;

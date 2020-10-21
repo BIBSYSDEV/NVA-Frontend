@@ -7,7 +7,7 @@ import { NotificationVariant } from '../../types/notification.types';
 import { SearchResult } from '../../types/search.types';
 import useCancelToken from './useCancelToken';
 
-const useSearchPublications = (
+const useSearchRegistrations = (
   searchTerm: string | null,
   numberOfResults?: number,
   searchAfter?: string
@@ -41,4 +41,4 @@ const useSearchPublications = (
   return [searchResults, isLoading];
 };
 
-export default useSearchPublications;
+export default useSearchRegistrations;

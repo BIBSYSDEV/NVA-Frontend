@@ -5,11 +5,11 @@ import Axios from 'axios';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import { getRegistrations } from '../../api/registrationApi';
-import { LatestPublication } from '../../types/search.types';
+import { LatestRegistration } from '../../types/search.types';
 
-const useFetchLatestPublications = (): [LatestPublication[], boolean] => {
+const useFetchLatestRegistrations = (): [LatestRegistration[], boolean] => {
   const dispatch = useDispatch();
-  const [publications, setPublications] = useState([]);
+  const [registrations, setRegistrations] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -21,7 +21,7 @@ const useFetchLatestPublications = (): [LatestPublication[], boolean] => {
         if (publications.error) {
           dispatch(setNotification(publications.error, NotificationVariant.Error));
         } else {
-          setPublications(publications);
+          setRegistrations(publications);
         }
         setIsLoading(false);
       }
@@ -33,7 +33,7 @@ const useFetchLatestPublications = (): [LatestPublication[], boolean] => {
     };
   }, [dispatch]);
 
-  return [publications, isLoading];
+  return [registrations, isLoading];
 };
 
-export default useFetchLatestPublications;
+export default useFetchLatestRegistrations;

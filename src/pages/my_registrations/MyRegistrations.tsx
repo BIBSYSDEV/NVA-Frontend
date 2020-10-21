@@ -8,7 +8,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { RegistrationStatus } from '../../types/registration.types';
 import RegistrationList from './RegistrationList';
 import TabButton from '../../components/TabButton';
-import useFetchMyPublications from '../../utils/hooks/useFetchMyPublications';
+import useFetchMyRegistrations from '../../utils/hooks/useFetchMyRegistrations';
 import { StyledRightAlignedButtonWrapper, StyledCenterAlignedContentWrapper } from '../../components/styled/Wrappers';
 import ListSkeleton from '../../components/ListSkeleton';
 import Card from '../../components/Card';
@@ -31,7 +31,7 @@ const MyRegistrations: FC = () => {
   const { t } = useTranslation('workLists');
   const user = useSelector((store: RootStore) => store.user);
   const [selectedTab, setSelectedTab] = useState(Tab.Unpublished);
-  const [publications, isLoading] = useFetchMyPublications();
+  const [publications, isLoading] = useFetchMyRegistrations();
 
   const unpublishedPublications = publications
     .filter((publication) => publication.status !== RegistrationStatus.PUBLISHED)
