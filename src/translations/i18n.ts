@@ -15,7 +15,6 @@ import licensesEn from './en/licenses.json';
 import profileEn from './en/profile.json';
 import publicationTypesEn from './en/publicationTypes.json';
 import registrationEn from './en/registration.json';
-import translationsEn from './en/translations.json';
 import workListsEn from './en/workLists.json';
 
 import adminNb from './nb/admin.json';
@@ -31,7 +30,6 @@ import licensesNb from './nb/licenses.json';
 import profileNb from './nb/profile.json';
 import publicationTypesNb from './nb/publicationTypes.json';
 import registrationNb from './nb/registration.json';
-import translationsNb from './nb/translations.json';
 import workListsNb from './nb/workLists.json';
 
 export const fallbackLanguage = LanguageCodes.NORWEGIAN_BOKMAL;
@@ -52,7 +50,6 @@ i18n.use(LanguageDetector).init({
       profile: profileEn,
       publicationTypes: publicationTypesEn,
       registration: registrationEn,
-      translations: translationsEn,
       workLists: workListsEn,
     },
     nob: {
@@ -69,14 +66,28 @@ i18n.use(LanguageDetector).init({
       profile: profileNb,
       publicationTypes: publicationTypesNb,
       registration: registrationNb,
-      translations: translationsNb,
       workLists: workListsNb,
     },
   },
   fallbackLng: fallbackLanguage,
   debug: false,
-  ns: ['common', 'feedback', 'infopages', 'languages', 'profile', 'translations'],
-  defaultNS: 'translations',
+  ns: [
+    'admin',
+    'authorization',
+    'common',
+    'disciplines',
+    'feedback',
+    'formikValues',
+    'infopages',
+    'institution',
+    'languages',
+    'licenses',
+    'profile',
+    'publicationTypes',
+    'registration',
+    'workLists',
+  ],
+  defaultNS: 'common',
   interpolation: {
     formatSeparator: ',',
   },
