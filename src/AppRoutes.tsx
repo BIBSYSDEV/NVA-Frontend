@@ -9,13 +9,13 @@ import { useSelector } from 'react-redux';
 import { RootStore } from './redux/reducers/rootReducer';
 
 const Dashboard = lazy(() => import('./pages/dashboard/Dashboard'));
-const EditPublication = lazy(() => import('./pages/publication/EditPublication'));
-const MyPublications = lazy(() => import('./pages/publication/my_publications/MyPublications'));
+const EditPublication = lazy(() => import('./pages/registration/EditRegistration'));
+const MyPublications = lazy(() => import('./pages/registration/my_registrations/MyRegistrations'));
 const Search = lazy(() => import('./pages/search/Search'));
-const PublicPublication = lazy(() => import('./pages/publication/public_publication/PublicPublication'));
+const PublicPublication = lazy(() => import('./pages/registration/public_registration/PublicRegistration'));
 const User = lazy(() => import('./pages/user/User'));
 const NotFound = lazy(() => import('./pages/errorpages/NotFound'));
-const PublicProfile = lazy(() => import('./pages/publication/PublicProfile'));
+const PublicProfile = lazy(() => import('./pages/public_profile/PublicProfile'));
 const AdminCustomerInstitutionsPage = lazy(() => import('./pages/admin/AdminCustomerInstitutionsPage'));
 const MyInstitutionPage = lazy(() => import('./pages/admin/MyInstitutionPage'));
 const MyInstitutionUsersPage = lazy(() => import('./pages/admin/MyInstitutionUsersPage'));

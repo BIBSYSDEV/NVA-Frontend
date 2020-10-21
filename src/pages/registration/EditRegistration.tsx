@@ -2,9 +2,9 @@ import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import LinkPublication from './new_publication/LinkPublication';
-import LoadPublication from './new_publication/LoadPublication';
-import PublicationForm from './PublicationForm';
+import LinkPublication from './new_registration/LinkRegistration';
+import UploadRegistration from './new_registration/UploadRegistration';
+import RegistrationForm from './RegistrationForm';
 import { PageHeader } from '../../components/PageHeader';
 
 const StyledEditPublication = styled.div`
@@ -12,7 +12,7 @@ const StyledEditPublication = styled.div`
   max-width: 55rem;
 `;
 
-const EditPublication: FC = () => {
+const EditRegistration: FC = () => {
   const { identifier } = useParams();
   const [expanded, setExpanded] = useState<string | false>(false);
   const [showForm, setShowForm] = useState(!!identifier);
@@ -35,7 +35,7 @@ const EditPublication: FC = () => {
           onChange={handleChange('link-panel')}
           openForm={handleClick}
         />
-        <LoadPublication
+        <UploadRegistration
           expanded={expanded === 'load-panel'}
           onChange={handleChange('load-panel')}
           openForm={() => setShowForm(true)}
@@ -43,8 +43,8 @@ const EditPublication: FC = () => {
       </StyledEditPublication>
     </>
   ) : (
-    <PublicationForm identifier={identifier} closeForm={() => setShowForm(false)} />
+    <RegistrationForm identifier={identifier} closeForm={() => setShowForm(false)} />
   );
 };
 
-export default EditPublication;
+export default EditRegistration;

@@ -3,13 +3,13 @@ import { useTranslation } from 'react-i18next';
 import ConfirmDialog from '../../components/ConfirmDialog';
 import NormalText from '../../components/NormalText';
 
-interface DeletePublicationModalProps {
+interface DeleteRegistrationModalProps {
   id: string;
   title: string;
   setOpenModal: (open: boolean) => void;
 }
 
-const DeletePublicationModal: FC<DeletePublicationModalProps> = ({ id, title, setOpenModal }) => {
+const DeleteRegistrationModal: FC<DeleteRegistrationModalProps> = ({ id, title, setOpenModal }) => {
   const { t } = useTranslation();
 
   const deletePublication = () => {
@@ -28,4 +28,4 @@ const DeletePublicationModal: FC<DeletePublicationModalProps> = ({ id, title, se
   );
 };
 
-export default DeletePublicationModal;
+export default DeleteRegistrationModal;

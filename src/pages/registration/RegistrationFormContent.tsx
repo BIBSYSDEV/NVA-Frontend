@@ -20,14 +20,14 @@ export interface PanelProps {
   setTouchedFields: (fieldsToTouch: FormikTouched<Publication>) => void;
 }
 
-interface PublicationFormContentProps {
+interface RegistrationFormContentProps {
   isSaving: boolean;
   savePublication: () => Promise<boolean>;
   tabNumber: number;
   uppy: Uppy;
 }
 
-export const PublicationFormContent: FC<PublicationFormContentProps> = ({
+export const RegistrationFormContent: FC<RegistrationFormContentProps> = ({
   isSaving,
   savePublication,
   tabNumber,

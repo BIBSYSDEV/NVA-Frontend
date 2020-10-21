@@ -20,13 +20,13 @@ const StyledFileCard = styled.div`
   margin-top: 1rem;
 `;
 
-interface LoadPublicationProps {
+interface UploadRegistrationProps {
   expanded: boolean;
   onChange: (event: React.ChangeEvent<any>, isExpanded: boolean) => void;
   openForm: () => void;
 }
 
-const LoadPublication: FC<LoadPublicationProps> = ({ expanded, onChange, openForm }) => {
+const UploadRegistration: FC<UploadRegistrationProps> = ({ expanded, onChange, openForm }) => {
   const { t } = useTranslation('registration');
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -93,4 +93,4 @@ const LoadPublication: FC<LoadPublicationProps> = ({ expanded, onChange, openFor
   );
 };
 
-export default LoadPublication;
+export default UploadRegistration;

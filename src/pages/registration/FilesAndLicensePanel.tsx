@@ -13,7 +13,7 @@ import Card from '../../components/Card';
 import PublicationChannelInfoCard from './files_and_license_tab/PublicationChannelInfoCard';
 import { FileFieldNames } from '../../types/publicationFieldNames';
 import { touchedFilesTabFields } from '../../utils/formik-helpers';
-import { PanelProps } from './PublicationFormContent';
+import { PanelProps } from './RegistrationFormContent';
 import { NotificationVariant } from '../../types/notification.types';
 import { autoHideNotificationDuration } from '../../utils/constants';
 import { File } from '../../types/file.types';

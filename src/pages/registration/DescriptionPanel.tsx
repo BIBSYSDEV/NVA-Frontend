@@ -13,7 +13,7 @@ import { publicationLanguages } from '../../types/language.types';
 import Card from '../../components/Card';
 import { DescriptionFieldNames } from '../../types/publicationFieldNames';
 import { touchedDescriptionTabFields } from '../../utils/formik-helpers';
-import { PanelProps } from './PublicationFormContent';
+import { PanelProps } from './RegistrationFormContent';
 import { ProjectsField } from './description_tab/projects_field';
 
 const NpiAndTagsWrapper = styled.div`

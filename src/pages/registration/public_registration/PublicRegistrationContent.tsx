@@ -4,8 +4,8 @@ import styled from 'styled-components';
 import { Publication } from '../../../types/publication.types';
 import ContentPage from '../../../components/ContentPage';
 import { useTranslation } from 'react-i18next';
-import PublicPublicationAuthors from './PublicPublicationAuthors';
-import PublicPublicationFile from './PublicPublicationFile';
+import PublicRegistrationAuthors from './PublicRegistrationAuthors';
+import PublicRegistrationFile from './PublicRegistrationFile';
 import Card from '../../../components/Card';
 import Heading from '../../../components/Heading';
 import LabelContentRow from '../../../components/LabelContentRow';
@@ -19,7 +19,7 @@ import {
   JournalPublicationContext,
   JournalPublicationInstance,
 } from '../../../types/publication_types/journalPublication.types';
-import { PublicPublicationStatusBar } from './PublicPublicationStatusBar';
+import { PublicRegistrationStatusBar } from './PublicRegistrationStatusBar';
 import { isJournal, isDegree, isReport } from '../../../utils/publication-helpers';
 import {
   PublicPublicationInstanceJournal,
@@ -95,11 +95,11 @@ const StyledTag = styled.div`
   margin-right: 1rem;
 `;
 
-export interface PublicPublicationContentProps {
+export interface PublicRegistrationContentProps {
   publication: Publication;
 }
 
-const PublicPublicationContent: FC<PublicPublicationContentProps> = ({ publication }) => {
+const PublicRegistrationContent: FC<PublicRegistrationContentProps> = ({ publication }) => {
   const { t } = useTranslation('registration');
 
   const {
@@ -119,12 +119,12 @@ const PublicPublicationContent: FC<PublicPublicationContentProps> = ({ publicati
 
   return (
     <ContentPage>
-      <PublicPublicationStatusBar publication={publication} />
+      <PublicRegistrationStatusBar publication={publication} />
       <Heading>{mainTitle}</Heading>
-      {contributors && <PublicPublicationAuthors contributors={contributors} />}
+      {contributors && <PublicRegistrationAuthors contributors={contributors} />}
       <StyledContentWrapper>
         {publication.fileSet?.files.map(
-          (file) => !file.administrativeAgreement && <PublicPublicationFile file={file} key={file.identifier} />
+          (file) => !file.administrativeAgreement && <PublicRegistrationFile file={file} key={file.identifier} />
         )}
         <StyledMainContent>
           {doi && (
@@ -211,4 +211,4 @@ const PublicPublicationContent: FC<PublicPublicationContentProps> = ({ publicati
   );
 };
 
-export default PublicPublicationContent;
+export default PublicRegistrationContent;

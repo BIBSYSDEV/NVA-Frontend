@@ -17,7 +17,7 @@ import ReportTypeForm from './references_tab/ReportTypeForm';
 import Card from '../../components/Card';
 import SelectTypeField from './references_tab/components/SelectTypeField';
 import { touchedReferenceTabFields } from '../../utils/formik-helpers';
-import { PanelProps } from './PublicationFormContent';
+import { PanelProps } from './RegistrationFormContent';
 import { emptyBookPublicationInstance } from '../../types/publication_types/bookPublication.types';
 import { emptyJournalPublicationInstance } from '../../types/publication_types/journalPublication.types';
 import { emptyReportPublicationInstance } from '../../types/publication_types/reportPublication.types';

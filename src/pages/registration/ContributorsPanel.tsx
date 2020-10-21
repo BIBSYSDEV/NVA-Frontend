@@ -7,7 +7,7 @@ import SortableTable from './contributors_tab/components/SortableTable';
 import { Publication } from '../../types/publication.types';
 import { ContributorFieldNames } from '../../types/publicationFieldNames';
 import { touchedContributorTabFields } from '../../utils/formik-helpers';
-import { PanelProps } from './PublicationFormContent';
+import { PanelProps } from './RegistrationFormContent';
 
 const ContributorsPanel: FC<PanelProps> = ({ setTouchedFields }) => {
   const { t } = useTranslation('registration');

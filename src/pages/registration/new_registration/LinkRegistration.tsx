@@ -21,13 +21,13 @@ const StyledTypography = styled(Typography)`
   margin: 1.5rem 0;
 `;
 
-interface LinkPublicationPanelProps {
+interface LinkRegistrationProps {
   expanded: boolean;
   onChange: (event: React.ChangeEvent<any>, isExpanded: boolean) => void;
   openForm: () => void;
 }
 
-const LinkPublicationPanel: FC<LinkPublicationPanelProps> = ({ expanded, onChange, openForm }) => {
+const LinkRegistration: FC<LinkRegistrationProps> = ({ expanded, onChange, openForm }) => {
   const { t } = useTranslation();
   const [doi, setDoi] = useState<Doi | null>(null);
   const [noHit, setNoHit] = useState(false);
@@ -94,4 +94,4 @@ const LinkPublicationPanel: FC<LinkPublicationPanelProps> = ({ expanded, onChang
   );
 };
 
-export default LinkPublicationPanel;
+export default LinkRegistration;

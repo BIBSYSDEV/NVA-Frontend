@@ -7,14 +7,14 @@ import { CircularProgress, Button } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 
 import { emptyPublication, Publication, PublicationTab } from '../../types/publication.types';
-import { PublicationFormTabs } from './PublicationFormTabs';
+import { RegistrationFormTabs } from './RegistrationFormTabs';
 import { updatePublication } from '../../api/publicationApi';
 import { useDispatch, useSelector } from 'react-redux';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import RouteLeavingGuard from '../../components/RouteLeavingGuard';
 import ButtonWithProgress from '../../components/ButtonWithProgress';
-import { PublicationFormContent } from './PublicationFormContent';
+import { RegistrationFormContent } from './RegistrationFormContent';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import useFetchPublication from '../../utils/hooks/useFetchPublication';
 import useUppy from '../../utils/hooks/useUppy';
@@ -36,12 +36,12 @@ const StyledButtonContainer = styled.div`
   margin-right: 0.5rem;
 `;
 
-interface PublicationFormProps {
+interface RegistrationFormProps {
   closeForm: () => void;
   identifier?: string;
 }
 
-const PublicationForm: FC<PublicationFormProps> = ({ identifier, closeForm }) => {
+const RegistrationForm: FC<RegistrationFormProps> = ({ identifier, closeForm }) => {
   const user = useSelector((store: RootStore) => store.user);
   const { t } = useTranslation('registration');
   const history = useHistory();
@@ -128,8 +128,8 @@ const PublicationForm: FC<PublicationFormProps> = ({ identifier, closeForm }) =>
                 modalHeading={t('modal_unsaved_changes_heading')}
                 shouldBlockNavigation={dirty}
               />
-              <PublicationFormTabs tabNumber={tabNumber} handleTabChange={handleTabChange} />
-              <PublicationFormContent
+              <RegistrationFormTabs tabNumber={tabNumber} handleTabChange={handleTabChange} />
+              <RegistrationFormContent
                 tabNumber={tabNumber}
                 uppy={uppy}
                 isSaving={isSaving}
@@ -168,4 +168,4 @@ const PublicationForm: FC<PublicationFormProps> = ({ identifier, closeForm }) =>
   );
 };
 
-export default PublicationForm;
+export default RegistrationForm;

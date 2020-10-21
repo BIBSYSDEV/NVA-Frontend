@@ -43,11 +43,11 @@ const StyledSidebarCard = styled(Card)`
   text-align: center;
 `;
 
-interface PublicPublicationFileProps {
+interface PublicRegistrationFileProps {
   file: File;
 }
 
-const PublicPublicationFile: FC<PublicPublicationFileProps> = ({ file }) => {
+const PublicRegistrationFile: FC<PublicRegistrationFileProps> = ({ file }) => {
   const { identifier } = useParams();
   const { t } = useTranslation('common');
   const dispatch = useDispatch();
@@ -96,4 +96,4 @@ const PublicPublicationFile: FC<PublicPublicationFileProps> = ({ file }) => {
   );
 };
 
-export default PublicPublicationFile;
+export default PublicRegistrationFile;

@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { RootStore } from '../../../redux/reducers/rootReducer';
 import { Link as RouterLink } from 'react-router-dom';
 import { PublicationStatus } from '../../../types/publication.types';
-import PublicationList from './PublicationList';
+import RegistrationList from './RegistrationList';
 import TabButton from '../../../components/TabButton';
 import useFetchMyPublications from '../../../utils/hooks/useFetchMyPublications';
 import {
@@ -30,7 +30,7 @@ enum Tab {
   Unpublished,
 }
 
-const MyPublications: FC = () => {
+const MyRegistrations: FC = () => {
   const { t } = useTranslation('workLists');
   const user = useSelector((store: RootStore) => store.user);
   const [selectedTab, setSelectedTab] = useState(Tab.Unpublished);
@@ -77,7 +77,7 @@ const MyPublications: FC = () => {
           {isLoading ? (
             <ListSkeleton minWidth={100} maxWidth={100} height={100} />
           ) : (
-            <PublicationList
+            <RegistrationList
               publications={selectedTab === Tab.Unpublished ? unpublishedPublications : publishedPublications}
             />
           )}
@@ -87,4 +87,4 @@ const MyPublications: FC = () => {
   );
 };
 
-export default MyPublications;
+export default MyRegistrations;

@@ -28,12 +28,12 @@ const a11yProps = (tabDescription: string) => {
 const descriptionFieldNames = Object.values(DescriptionFieldNames);
 const referenceFieldNames = Object.values(ReferenceFieldNames);
 
-interface PublicationFormTabsProps {
+interface RegistrationFormTabsProps {
   handleTabChange: (_: React.ChangeEvent<{}>, newValue: number) => void;
   tabNumber: number;
 }
 
-export const PublicationFormTabs: FC<PublicationFormTabsProps> = ({ handleTabChange, tabNumber }) => {
+export const RegistrationFormTabs: FC<RegistrationFormTabsProps> = ({ handleTabChange, tabNumber }) => {
   const { t } = useTranslation('registration');
   const { errors, touched, values }: FormikProps<Publication> = useFormikContext();
   const {

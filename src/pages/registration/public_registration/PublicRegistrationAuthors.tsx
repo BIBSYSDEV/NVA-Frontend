@@ -27,11 +27,11 @@ const StyedAffiliationWithIndex = styled.div`
   display: flex;
 `;
 
-interface PublicPublicationProps {
+interface PublicRegistrationAuthorsProps {
   contributors: Contributor[];
 }
 
-const PublicPublicationAuthors: FC<PublicPublicationProps> = ({ contributors }) => {
+const PublicRegistrationAuthors: FC<PublicRegistrationAuthorsProps> = ({ contributors }) => {
   const distinctUnits = getDistinctContributorUnits(contributors);
 
   return (
@@ -78,4 +78,4 @@ const PublicPublicationAuthors: FC<PublicPublicationProps> = ({ contributors }) 
   );
 };
 
-export default PublicPublicationAuthors;
+export default PublicRegistrationAuthors;

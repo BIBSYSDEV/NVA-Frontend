@@ -17,7 +17,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
 import { PublicationPreview } from '../../../types/publication.types';
-import DeletePublicationModal from '../DeletePublicationModal';
+import DeleteRegistrationModal from '../DeleteRegistrationModal';
 
 const StyledTableRow = styled(TableRow)`
   background-color: ${(props) => props.theme.palette.box.main};
@@ -34,11 +34,11 @@ const StyledLabel = styled(Typography)`
   min-width: 12rem;
 `;
 
-interface PublicationListProps {
+interface RegistrationListProps {
   publications: PublicationPreview[];
 }
 
-const PublicationList: FC<PublicationListProps> = ({ publications }) => {
+const RegistrationList: FC<RegistrationListProps> = ({ publications }) => {
   const { t } = useTranslation('common');
   const [openModal, setOpenModal] = useState(false);
   const [deletePublicationId, setDeletePublicationId] = useState('');
@@ -142,10 +142,10 @@ const PublicationList: FC<PublicationListProps> = ({ publications }) => {
         onChangeRowsPerPage={handleChangeRowsPerPage}
       />
       {openModal && (
-        <DeletePublicationModal id={deletePublicationId} title={deletePublicationTitle} setOpenModal={setOpenModal} />
+        <DeleteRegistrationModal id={deletePublicationId} title={deletePublicationTitle} setOpenModal={setOpenModal} />
       )}
     </>
   );
 };
 
-export default PublicationList;
+export default RegistrationList;

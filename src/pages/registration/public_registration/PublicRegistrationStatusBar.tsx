@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 import { RootStore } from '../../../redux/reducers/rootReducer';
 import Card from '../../../components/Card';
 import NormalText from '../../../components/NormalText';
-import { PublicPublicationContentProps } from './PublicPublicationContent';
+import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 import Modal from '../../../components/Modal';
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../types/notification.types';
@@ -43,7 +43,7 @@ const StyledUnpublishedStatusIcon = styled(WorkOutlineIcon)`
   color: orange;
 `;
 
-export const PublicPublicationStatusBar: FC<PublicPublicationContentProps> = ({ publication }) => {
+export const PublicRegistrationStatusBar: FC<PublicRegistrationContentProps> = ({ publication }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation('registration');
   const user = useSelector((store: RootStore) => store.user);

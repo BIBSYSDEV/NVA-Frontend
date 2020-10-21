@@ -4,13 +4,13 @@ import { CircularProgress } from '@material-ui/core';
 import { PublicationStatus } from '../../../types/publication.types';
 import { useParams } from 'react-router-dom';
 import useFetchPublication from '../../../utils/hooks/useFetchPublication';
-import PublicPublicationContent from './PublicPublicationContent';
+import PublicRegistrationContent from './PublicRegistrationContent';
 import NotPublished from '../../errorpages/NotPublished';
 import NotFound from '../../errorpages/NotFound';
 import { useSelector } from 'react-redux';
 import { RootStore } from '../../../redux/reducers/rootReducer';
 
-const PublicPublication: FC = () => {
+const PublicRegistration: FC = () => {
   const { identifier } = useParams();
   const [publication, isLoadingPublication] = useFetchPublication(identifier);
   const user = useSelector((store: RootStore) => store.user);
@@ -24,7 +24,7 @@ const PublicPublication: FC = () => {
         <CircularProgress color="inherit" size={20} />
       ) : publication ? (
         isAllowedToSeePublicPublication ? (
-          <PublicPublicationContent publication={publication} />
+          <PublicRegistrationContent publication={publication} />
         ) : (
           <NotPublished />
         )
@@ -35,4 +35,4 @@ const PublicPublication: FC = () => {
   );
 };
 
-export default PublicPublication;
+export default PublicRegistration;
