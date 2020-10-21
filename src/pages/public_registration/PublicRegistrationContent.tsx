@@ -20,7 +20,7 @@ import {
   JournalPublicationInstance,
 } from '../../types/publication_types/journalPublication.types';
 import { PublicRegistrationStatusBar } from './PublicRegistrationStatusBar';
-import { isJournal, isDegree, isReport } from '../../utils/publication-helpers';
+import { isJournal, isDegree, isReport } from '../../utils/registration-helpers';
 import {
   PublicPublicationInstanceJournal,
   PublicPublicationInstanceDegree,

@@ -23,7 +23,7 @@ import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import ButtonWithProgress from '../../components/ButtonWithProgress';
 import { RootStore } from '../../redux/reducers/rootReducer';
-import { NAVIGATE_TO_PUBLIC_PUBLICATION_DURATION } from '../../utils/constants';
+import { NAVIGATE_TO_PUBLIC_REGISTRATION_DURATION } from '../../utils/constants';
 
 const StyledButtonGroupContainer = styled.div`
   margin-bottom: 1rem;
@@ -74,7 +74,7 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication }
         dispatch(setNotification(publishedPublication.info, NotificationVariant.Info));
         setTimeout(() => {
           history.push(`/registration/${values.identifier}/public`);
-        }, NAVIGATE_TO_PUBLIC_PUBLICATION_DURATION);
+        }, NAVIGATE_TO_PUBLIC_REGISTRATION_DURATION);
       } else {
         history.push(`/registration/${values.identifier}/public`);
       }
