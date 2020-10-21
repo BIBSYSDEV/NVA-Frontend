@@ -9,7 +9,7 @@
     "create_registration": "Kunne ikke opprette registrering",
     "delete_identifier": "Kunne ikke slette {{qualifier}}",
     "download_file": "Kunne ikke laste ned fil",
-    "get_approvable_publications": "Kunne ikke hente publikasjoner som venter godkjenning",
+    "get_approvable_registrations": "Kunne ikke hente registreringer som venter godkjenning",
     "get_authority": "Kunne ikke hente autoritet",
     "get_authorities": "Kunne ikke hente autoriteter",
     "get_customer": "Kunne ikke hente institusjon",

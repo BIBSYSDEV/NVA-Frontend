@@ -187,6 +187,6 @@ export const getPublicationsForApproval = async () => {
       return [];
     }
   } catch {
-    return { error: i18n.t('feedback:error.get_approvable_publications') };
+    return { error: i18n.t('feedback:error.get_approvable_registrations') };
   }
 };
