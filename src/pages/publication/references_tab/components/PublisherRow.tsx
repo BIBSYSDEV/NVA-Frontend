@@ -65,8 +65,10 @@ const PublisherRow: FC<PublisherRowProps> = ({ dataTestId, label, onClickDelete,
   useEffect(() => {
     const setLevel = async (title: string) => {
       const response = await getPublishers(title, PublicationTableNumber.PUBLICATION_CHANNELS);
-      if (response) {
-        const publisherLevel = response?.filter((publisher: Partial<Publisher>) => publisher.title === title)[0]?.level;
+      if (response?.data) {
+        const publisherLevel = response.data.results.filter(
+          (publisher: Partial<Publisher>) => publisher.title === title
+        )[0]?.level;
         if (publisherLevel) {
           const levelAsEnum = Object.keys(levelMap).find((key) => levelMap[key] === publisherLevel);
           setFieldValue(ReferenceFieldNames.PUBLICATION_CONTEXT_LEVEL, levelAsEnum);

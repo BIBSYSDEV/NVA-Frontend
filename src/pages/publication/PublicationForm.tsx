@@ -46,7 +46,7 @@ const PublicationForm: FC<PublicationFormProps> = ({ identifier, closeForm }) =>
   const { t } = useTranslation('publication');
   const history = useHistory();
   const initialTabNumber = new URLSearchParams(history.location.search).get('tab');
-  const [tabNumber, setTabNumber] = useState(initialTabNumber ? +initialTabNumber : PublicationTab.Description);
+  const [tabNumber, setTabNumber] = useState(initialTabNumber ? +initialTabNumber : PublicationTab.Reference);
   const [isSaving, setIsSaving] = useState(false);
   const dispatch = useDispatch();
   const uppy = useUppy();

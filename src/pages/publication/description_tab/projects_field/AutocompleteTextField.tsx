@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, ReactNode } from 'react';
 import { TextField, CircularProgress, TextFieldProps } from '@material-ui/core';
 import { AutocompleteRenderInputParams } from '@material-ui/lab';
 import styled from 'styled-components';
@@ -9,16 +9,18 @@ const StyledSearchIcon = styled(SearchIcon)`
   color: ${({ theme }) => theme.palette.text.disabled};
 `;
 
-interface AutocompleteTextField extends AutocompleteRenderInputParams, Pick<TextFieldProps, 'placeholder'> {
+interface AutocompleteTextField extends AutocompleteRenderInputParams, Pick<TextFieldProps, 'placeholder' | 'label'> {
   isLoading: boolean;
   showSearchIcon: boolean;
   dataTestId?: string;
+  errorMessage?: ReactNode;
 }
 
 export const AutocompleteTextField: FC<AutocompleteTextField> = ({
   isLoading,
   dataTestId,
   showSearchIcon,
+  errorMessage,
   ...params
 }) => (
   <TextField
@@ -44,5 +46,7 @@ export const AutocompleteTextField: FC<AutocompleteTextField> = ({
         </>
       ),
     }}
+    error={!!errorMessage}
+    helperText={errorMessage}
   />
 );

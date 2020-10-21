@@ -40,8 +40,11 @@ export interface Publisher {
   type: string;
   title: string;
   onlineIssn: string;
+  printIssn: string;
   level: string | number | null;
   openAccess: boolean;
+  peerReviewed: boolean;
+  url: string;
 }
 
 export interface AlmaPublication {

@@ -36,8 +36,8 @@ const PublicationChannelSearch: FC<PublicationChannelSearchProps> = ({
   const search = useCallback(
     debounce(async (searchTerm: string) => {
       const response = await getPublishers(searchTerm, publicationTable);
-      if (response) {
-        setSearchResults(response.filter((publisher: Publisher) => publisher.title));
+      if (response?.data) {
+        setSearchResults(response.data.results.filter((publisher: Publisher) => publisher.title));
       } else {
         dispatch(setNotification(t('error.search', NotificationVariant.Error)));
       }
