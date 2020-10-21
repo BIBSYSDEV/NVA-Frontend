@@ -45,7 +45,7 @@
   },
   "info": {
     "affiliation_already_exists": "Tilhørigheten finnes allerede",
-    "publishing_publication": "Publiserer publikasjon...",
+    "publishing_registration": "Publiserer registrering...",
     "user_already_exists": "Brukeren finnes allerede"
   },
   "success": {
