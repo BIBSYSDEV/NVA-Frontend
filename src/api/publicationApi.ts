@@ -34,7 +34,7 @@ export const createPublication = async (partialPublication?: PublicationFileSet)
 export const updatePublication = async (publication: Publication) => {
   const { identifier } = publication;
   if (!identifier) {
-    return { error: i18n.t('feedback:error.update_publication') };
+    return { error: i18n.t('feedback:error.update_registration') };
   }
   const idToken = await getIdToken();
   try {
@@ -46,10 +46,10 @@ export const updatePublication = async (publication: Publication) => {
     if (response.status === StatusCode.OK) {
       return response.data;
     } else {
-      return { error: i18n.t('feedback:error.update_publication') };
+      return { error: i18n.t('feedback:error.update_registration') };
     }
   } catch {
-    return { error: i18n.t('feedback:error.update_publication') };
+    return { error: i18n.t('feedback:error.update_registration') };
   }
 };
 

@@ -85,7 +85,7 @@ const PublicationForm: FC<PublicationFormProps> = ({ identifier, closeForm }) =>
       dispatch(setNotification(updatedPublication.error, NotificationVariant.Error));
     } else {
       handleSetPublication(deepmerge(emptyPublication, updatedPublication));
-      dispatch(setNotification(t('feedback:success.update_publication')));
+      dispatch(setNotification(t('feedback:success.update_registration')));
     }
     setIsSaving(false);
     return !updatedPublication.error;

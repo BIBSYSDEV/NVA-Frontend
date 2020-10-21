@@ -38,7 +38,7 @@
     "update_authority": "Could not update {{qualifier}} for authority",
     "update_customer": "Could not update customer institution",
     "update_institution_user": "Could not update user",
-    "update_publication": "Could not update publication",
+    "update_registration": "Could not update registration",
     "orcid": {
       "access_denied": "Could not connect to ORCID because access to the ORCID account was denied"
     }
@@ -63,6 +63,6 @@
     "removed_role": "Role removed",
     "update_authority": "Updated authority",
     "update_customer": "Updated customer institution",
-    "update_publication": "Updated publication"
+    "update_registration": "Updated registration"
   }
 }

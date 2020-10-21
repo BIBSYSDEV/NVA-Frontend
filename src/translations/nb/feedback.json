@@ -38,7 +38,7 @@
     "update_authority": "Kunne ikke oppdatere {{qualifier}} for autoritet",
     "update_customer": "Kunne ikke oppdatere institusjon",
     "update_institution_user": "Kunne ikke oppdatere bruker",
-    "update_publication": "Kunne ikke oppdatere publikasjon",
+    "update_registration": "Kunne ikke oppdatere registrering",
     "orcid": {
       "access_denied": "Kunne ikke koble til ORCID fordi tilgang til ORCID-kontoen ble avslått"
     }
@@ -63,6 +63,6 @@
     "removed_role": "Rollen ble fjernet",
     "update_authority": "Forfatter er oppdatert",
     "update_customer": "Institusjon er oppdatert",
-    "update_publication": "Publikasjonen er oppdatert"
+    "update_registration": "Registreringen er oppdatert"
   }
 }
