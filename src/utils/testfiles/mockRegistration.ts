@@ -4,7 +4,7 @@ import { JournalType, PublicationType } from '../../types/publicationFieldNames'
 import { BackendTypeNames } from '../../types/publication_types/commonPublication.types';
 import { mockCustomerInstitution } from './mockCustomerInstitutions';
 
-export const mockPublication: JournalPublication = {
+export const mockRegistration: JournalPublication = {
   type: BackendTypeNames.PUBLICATION,
   identifier: '12345679',
   createdDate: '2020',
@@ -96,8 +96,8 @@ export const mockPublication: JournalPublication = {
   },
 };
 
-const mockPublicationWithPendingDoiRequest: JournalPublication = {
-  ...mockPublication,
+const mockRegistrationWithPendingDoiRequest: JournalPublication = {
+  ...mockRegistration,
   doiRequest: {
     type: 'DoiRequest',
     date: new Date().toISOString(),
@@ -122,4 +122,4 @@ const mockPublicationWithPendingDoiRequest: JournalPublication = {
   },
 };
 
-export const publicationsWithPendingDoiRequest: Registration[] = [mockPublicationWithPendingDoiRequest];
+export const mockRegistrationsWithPendingDoiRequest: Registration[] = [mockRegistrationWithPendingDoiRequest];
