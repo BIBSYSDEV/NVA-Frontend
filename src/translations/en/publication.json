@@ -41,7 +41,7 @@
     "keywords_helper": "Press Enter to add keyword",
     "year_only": "Year only"
   },
-  "edit_publication": "Edit publication",
+  "edit_registration": "Edit registration",
   "feedback": {
     "invalid_format": "Invalid format",
     "invalid_isbn": "Invalid ISBN",

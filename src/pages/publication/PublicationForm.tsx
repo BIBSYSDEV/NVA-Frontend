@@ -112,7 +112,7 @@ const PublicationForm: FC<PublicationFormProps> = ({ identifier, closeForm }) =>
     <Forbidden />
   ) : (
     <>
-      <PageHeader>{t('edit_publication')}</PageHeader>
+      <PageHeader>{t('edit_registration')}</PageHeader>
       <StyledPublication>
         <Formik
           enableReinitialize
