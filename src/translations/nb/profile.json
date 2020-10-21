@@ -7,10 +7,10 @@
     "connected_authority": "Din forfatteridentitet er koblet til",
     "connected_info": "Ditt navn er lagt til i forfatterregisteret",
     "create_own_authority": "Opprett meg som forfatter",
-    "description_create_own_authority": "Du har valgt å ikke ta i bruk en eksisterende forfatteridentitet, som har publisert tidligere og oppretter nå en ny forfatteridentitet. \n\nDet er ikke ønskelig å opprette nye forfatteridentiteter. Sjekk publikasjonene til de forfatteridentitetene som har likt navn som deg, og vær sikker på at du ikke oppretter en duplikatidentitet. \n\nOm du ser noe feil i publikasjonene som er koblet til det som er din forfatteridentitet, så koble deg på denne identiteten og ta kontakt med kurator på din institusjon for å få rettet feilen. \n\nOm navnet over ikke stemmer med deg, så må du ta kontakt med din kurator ved din institusjon for å få korrigert din forfatteridentitet. [Lenke til kontaktskjema her]",
+    "description_create_own_authority": "Du har valgt å ikke ta i bruk en eksisterende forfatteridentitet, som har publisert tidligere og oppretter nå en ny forfatteridentitet. \n\nDet er ikke ønskelig å opprette nye forfatteridentiteter. Sjekk registreringene til de forfatteridentitetene som har likt navn som deg, og vær sikker på at du ikke oppretter en duplikatidentitet. \n\nOm du ser noe feil i registreringene som er koblet til det som er din forfatteridentitet, så koble deg på denne identiteten og ta kontakt med kurator på din institusjon for å få rettet feilen. \n\nOm navnet over ikke stemmer med deg, så må du ta kontakt med din kurator ved din institusjon for å få korrigert din forfatteridentitet. [Lenke til kontaktskjema her]",
     "description_no_authority_found": "Vi finner ikke en forfatteridentitet som passer med ditt navn (hentet fra din pålogging til denne tjenesten). Det vil derfor opprettes en ny forfatteridentitet, slik at du kan ta i bruk denne tjenesten. Om navnet over ikke stemmer med deg, så må du ta kontakt med kurator ved din institusjon for å få korrigert din forfatteridentitet.",
     "no_affiliations_found": "Ingen tilhørigheter funnet",
-    "no_publications_found": "Ingen utgivelser funnet",
+    "no_registrations_found": "Ingen registreringer funnet",
     "other_affiliations": "+ {{count}} annen tilhørighet",
     "other_affiliations_plural": "+ {{count}} andre tilhørigheter",
     "search_summary": "{{results}} treff for \"{{searchTerm}}\"",
@@ -53,7 +53,7 @@
     "editors": "Redaktører",
     "institution_admins": "Institusjonsadministratorer",
     "publisher": "Utgiver",
-    "publisher_description": "Utgiver er den tilgangen ansatte på institusjonen har. Gir tilgang til å registrere egne publikasjoner"
+    "publisher_description": "Utgiver er den tilgangen ansatte på institusjonen har. Gir tilgang til å registrere egne registreringer"
   },
   "organization": {
     "add_institution": "Legg til institusjon",

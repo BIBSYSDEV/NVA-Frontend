@@ -60,7 +60,7 @@ const AuthorityCard: FC<AuthorityCardProps> = ({ authority, isConnected = false,
           </NormalText>
         ) : (
           <NormalText>
-            <i>{t('authority.no_publications_found')}</i>
+            <i>{t('authority.no_registrations_found')}</i>
           </NormalText>
         )}
       </StyledCenteredContent>
