@@ -29,7 +29,7 @@ const StyledLabel = styled(Typography)`
 `;
 
 const JournalArticleForm: FC = () => {
-  const { t } = useTranslation('publication');
+  const { t } = useTranslation('registration');
   const { touched, values }: FormikProps<JournalPublication> = useFormikContext();
   const {
     reference: { publicationContext, publicationInstance },

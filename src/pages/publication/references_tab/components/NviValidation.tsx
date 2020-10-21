@@ -46,7 +46,7 @@ interface NviValidationProps {
 }
 
 const NviValidation: FC<NviValidationProps> = ({ dataTestId, isPeerReviewed, isRated }) => {
-  const { t } = useTranslation('publication');
+  const { t } = useTranslation('registration');
 
   return (
     <StyledNviValidation data-testid={dataTestId}>

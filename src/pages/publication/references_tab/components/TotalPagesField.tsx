@@ -13,7 +13,7 @@ const StyledTextField = styled(TextField)`
 `;
 
 const TotalPagesField: FC = () => {
-  const { t } = useTranslation('publication');
+  const { t } = useTranslation('registration');
 
   return (
     <Field name={ReferenceFieldNames.PAGES_PAGES}>

@@ -27,7 +27,7 @@ interface LoadPublicationProps {
 }
 
 const LoadPublication: FC<LoadPublicationProps> = ({ expanded, onChange, openForm }) => {
-  const { t } = useTranslation('publication');
+  const { t } = useTranslation('registration');
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();

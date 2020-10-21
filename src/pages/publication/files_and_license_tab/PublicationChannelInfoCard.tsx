@@ -21,7 +21,7 @@ interface PublicationChannelInfoCardProps {
 }
 
 const PublicationChannelInfoCard: React.FC<PublicationChannelInfoCardProps> = ({ publisher }) => {
-  const { t } = useTranslation('publication');
+  const { t } = useTranslation('registration');
 
   return (
     <Card>

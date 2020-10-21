@@ -22,7 +22,7 @@ interface AddContributorModalContentProps {
 }
 
 const AddContributorModalContent: FC<AddContributorModalContentProps> = ({ addAuthor, initialSearchTerm = '' }) => {
-  const { t } = useTranslation('publication');
+  const { t } = useTranslation('registration');
   const [selectedAuthor, setSelectedAuthor] = useState<Authority | null>(null);
   const [authorities, isLoadingAuthorities, handleNewSearchTerm, searchTerm] = useFetchAuthorities(initialSearchTerm);
 

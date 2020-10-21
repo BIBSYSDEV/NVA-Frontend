@@ -9,7 +9,7 @@ import { PagesMonograph } from '../../../types/publication.types';
 export const PublicPublicationInstanceJournal: FC<{ publicationInstance: JournalPublicationInstance }> = ({
   publicationInstance,
 }) => {
-  const { t } = useTranslation('publication');
+  const { t } = useTranslation('registration');
   const { articleNumber, issue, pages, volume } = publicationInstance;
 
   return (
@@ -39,7 +39,7 @@ export const PublicPublicationInstanceReport: FC<{ publicationInstance: ReportPu
 };
 
 const DisplayPages: FC<{ pages: PagesMonograph | null }> = ({ pages }) => {
-  const { t } = useTranslation('publication');
+  const { t } = useTranslation('registration');
 
   return pages?.pages ? (
     <LabelContentRow minimal label={`${t('common:details')}:`}>

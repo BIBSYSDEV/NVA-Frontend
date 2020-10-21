@@ -29,7 +29,7 @@ interface LinkPublicationFormProps {
 }
 
 const LinkPublicationForm: FC<LinkPublicationFormProps> = ({ handleSearch }) => {
-  const { t } = useTranslation('publication');
+  const { t } = useTranslation('registration');
 
   return (
     <Formik onSubmit={handleSearch} initialValues={emptyDoiFormValues} validationSchema={doiValidationSchema}>

@@ -35,7 +35,7 @@ interface AffiliationsCellProps {
 }
 
 const AffiliationsCell: FC<AffiliationsCellProps> = ({ affiliations, baseFieldName }) => {
-  const { t } = useTranslation('publication');
+  const { t } = useTranslation('registration');
   const disptach = useDispatch();
   const { values, setFieldValue }: FormikProps<Publication> = useFormikContext();
   const [openAffiliationModal, setOpenAffiliationModal] = useState(false);

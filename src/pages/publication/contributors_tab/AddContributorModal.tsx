@@ -20,7 +20,7 @@ const AddContributorModal: FC<AddContributorModalProps> = ({
   open,
   initialSearchTerm,
 }) => {
-  const { t } = useTranslation('publication');
+  const { t } = useTranslation('registration');
   const [createNewAuthor, setCreateNewAuthor] = useState(false);
 
   const addAuthor = (author: Authority) => {

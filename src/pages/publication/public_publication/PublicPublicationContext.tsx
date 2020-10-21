@@ -20,7 +20,7 @@ const StyledOpenInNewIcon = styled(OpenInNewIcon)`
 export const PublicPublicationContextJournal: FC<{ publicationContext: JournalPublicationContext }> = ({
   publicationContext,
 }) => {
-  const { t } = useTranslation('publication');
+  const { t } = useTranslation('registration');
   const { onlineIssn, title, url } = publicationContext;
 
   return title ? (
@@ -41,7 +41,7 @@ export const PublicPublicationContextJournal: FC<{ publicationContext: JournalPu
 export const PublicPublicationContextDegree: FC<{ publicationContext: DegreePublicationContext }> = ({
   publicationContext,
 }) => {
-  const { t } = useTranslation('publication');
+  const { t } = useTranslation('registration');
   const { publisher, seriesTitle, url } = publicationContext;
 
   return (
@@ -66,7 +66,7 @@ export const PublicPublicationContextDegree: FC<{ publicationContext: DegreePubl
 export const PublicPublicationContextReport: FC<{ publicationContext: ReportPublicationContext }> = ({
   publicationContext,
 }) => {
-  const { t } = useTranslation('publication');
+  const { t } = useTranslation('registration');
   const { onlineIssn, publisher, seriesTitle, url } = publicationContext;
 
   return (
@@ -90,7 +90,7 @@ export const PublicPublicationContextReport: FC<{ publicationContext: ReportPubl
 };
 
 const DisplaySeriesTitle: FC<{ seriesTitle: string }> = ({ seriesTitle }) => {
-  const { t } = useTranslation('publication');
+  const { t } = useTranslation('registration');
 
   return seriesTitle ? (
     <LabelContentRow minimal label={`${t('references.series')}:`}>

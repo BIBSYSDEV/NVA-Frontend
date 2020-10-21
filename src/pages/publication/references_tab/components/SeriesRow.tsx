@@ -42,7 +42,7 @@ interface PublisherRowProps {
 }
 
 const SeriesRow: FC<PublisherRowProps> = ({ dataTestId, label, onClickDelete, title }) => {
-  const { t } = useTranslation('publication');
+  const { t } = useTranslation('registration');
 
   return (
     <StyledSeriesRow data-testid={dataTestId}>

@@ -34,7 +34,7 @@ interface PublicationFormTabsProps {
 }
 
 export const PublicationFormTabs: FC<PublicationFormTabsProps> = ({ handleTabChange, tabNumber }) => {
-  const { t } = useTranslation('publication');
+  const { t } = useTranslation('registration');
   const { errors, touched, values }: FormikProps<Publication> = useFormikContext();
   const {
     entityDescription: { contributors },

@@ -43,7 +43,7 @@ interface PublicationFormProps {
 
 const PublicationForm: FC<PublicationFormProps> = ({ identifier, closeForm }) => {
   const user = useSelector((store: RootStore) => store.user);
-  const { t } = useTranslation('publication');
+  const { t } = useTranslation('registration');
   const history = useHistory();
   const initialTabNumber = new URLSearchParams(history.location.search).get('tab');
   const [tabNumber, setTabNumber] = useState(initialTabNumber ? +initialTabNumber : PublicationTab.Description);

@@ -55,7 +55,7 @@ interface PublisherRowProps {
 }
 
 const PublisherRow: FC<PublisherRowProps> = ({ dataTestId, label, onClickDelete, publisher }) => {
-  const { t } = useTranslation('publication');
+  const { t } = useTranslation('registration');
 
   const { setFieldValue }: FormikProps<Publication> = useFormikContext();
 

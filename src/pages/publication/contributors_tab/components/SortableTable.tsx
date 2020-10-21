@@ -63,7 +63,7 @@ interface SortableItemProps {
 
 const SortableItem = SortableElement(
   ({ contributor, onRemoveContributorClick, setUnverifiedContributor }: SortableItemProps) => {
-    const { t } = useTranslation('publication');
+    const { t } = useTranslation('registration');
     const index = contributor.sequence - 1;
     const baseFieldName = `${ContributorFieldNames.CONTRIBUTORS}[${index}]`;
     const { values, setFieldValue }: FormikProps<Publication> = useFormikContext();
@@ -165,7 +165,7 @@ interface SortableListProps {
 }
 
 const SortableList = SortableContainer(({ contributors, onDelete, setUnverifiedContributor }: SortableListProps) => {
-  const { t } = useTranslation('publication');
+  const { t } = useTranslation('registration');
   const [contributorToRemove, setContributorToRemove] = useState<Contributor | null>(null);
 
   const closeConfirmDialog = () => {
@@ -210,7 +210,7 @@ const SortableList = SortableContainer(({ contributors, onDelete, setUnverifiedC
 interface SortableTableProps extends Pick<FieldArrayRenderProps, 'push' | 'remove' | 'replace'> {}
 
 const SortableTable: FC<SortableTableProps> = ({ push, remove, replace }) => {
-  const { t } = useTranslation('publication');
+  const { t } = useTranslation('registration');
   const dispatch = useDispatch();
   const { values, setValues }: FormikProps<Publication> = useFormikContext();
   const {

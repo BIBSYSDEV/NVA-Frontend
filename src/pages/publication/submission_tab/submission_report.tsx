@@ -6,7 +6,7 @@ import { Publication } from '../../../types/publication.types';
 import { ReportEntityDescription } from '../../../types/publication_types/reportPublication.types';
 
 const SubmissionReport: FC = () => {
-  const { t } = useTranslation('publication');
+  const { t } = useTranslation('registration');
   const { values }: FormikProps<Publication> = useFormikContext();
 
   const {

@@ -6,7 +6,7 @@ import { Publication } from '../../../types/publication.types';
 import { BookEntityDescription } from '../../../types/publication_types/bookPublication.types';
 
 const SubmissionBook: FC = () => {
-  const { t } = useTranslation('publication');
+  const { t } = useTranslation('registration');
   const { values }: FormikProps<Publication> = useFormikContext();
   const {
     reference: { publicationContext, publicationInstance },

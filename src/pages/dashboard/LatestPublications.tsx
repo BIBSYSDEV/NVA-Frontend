@@ -19,7 +19,7 @@ const StyledNormalText = styled(NormalText)`
 `;
 
 const LatestPublications: FC = () => {
-  const { t } = useTranslation('publication');
+  const { t } = useTranslation('registration');
   const [publications, isLoadingPublications] = useFetchLatestPublications();
 
   return (

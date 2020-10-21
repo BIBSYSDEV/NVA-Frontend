@@ -13,7 +13,7 @@ const StyledCard = styled(Card)`
 `;
 
 const ErrorSummary: FC = () => {
-  const { t } = useTranslation('publication');
+  const { t } = useTranslation('registration');
   const { errors }: FormikProps<Publication> = useFormikContext();
   const flattenedErrors = flattenFormikErrors(errors);
 

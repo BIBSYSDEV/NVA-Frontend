@@ -8,7 +8,7 @@ import { publicationLanguages } from '../../../types/language.types';
 import { displayDate } from '../../../utils/date-helpers';
 
 const SubmissionDescription: React.FC = () => {
-  const { t } = useTranslation('publication');
+  const { t } = useTranslation('registration');
   const { values }: FormikProps<Publication> = useFormikContext();
 
   const {

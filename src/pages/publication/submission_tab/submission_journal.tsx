@@ -6,7 +6,7 @@ import { Publication, PagesRange } from '../../../types/publication.types';
 import { JournalEntityDescription } from '../../../types/publication_types/journalPublication.types';
 
 const SubmissionJournalPublication: FC = () => {
-  const { t } = useTranslation('publication');
+  const { t } = useTranslation('registration');
   const { values }: FormikProps<Publication> = useFormikContext();
 
   const {

@@ -45,7 +45,7 @@ const StyledUnpublishedStatusIcon = styled(WorkOutlineIcon)`
 
 export const PublicPublicationStatusBar: FC<PublicPublicationContentProps> = ({ publication }) => {
   const dispatch = useDispatch();
-  const { t } = useTranslation('publication');
+  const { t } = useTranslation('registration');
   const user = useSelector((store: RootStore) => store.user);
   const {
     identifier,

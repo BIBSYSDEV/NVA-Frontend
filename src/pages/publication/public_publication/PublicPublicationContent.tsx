@@ -100,7 +100,7 @@ export interface PublicPublicationContentProps {
 }
 
 const PublicPublicationContent: FC<PublicPublicationContentProps> = ({ publication }) => {
-  const { t } = useTranslation('publication');
+  const { t } = useTranslation('registration');
 
   const {
     abstract,

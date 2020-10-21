@@ -14,7 +14,7 @@ const StyledClearIcon = styled(ClearIcon)`
 `;
 
 const DoiField: FC = () => {
-  const { t } = useTranslation('publication');
+  const { t } = useTranslation('registration');
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
   const { setFieldValue, values }: FormikProps<Publication> = useFormikContext();
 

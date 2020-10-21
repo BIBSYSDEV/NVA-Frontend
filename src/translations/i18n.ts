@@ -13,8 +13,8 @@ import institutionEn from './en/institution.json';
 import languagesEn from './en/languages.json';
 import licensesEn from './en/licenses.json';
 import profileEn from './en/profile.json';
-import publicationEn from './en/publication.json';
 import publicationTypesEn from './en/publicationTypes.json';
+import registrationEn from './en/registration.json';
 import translationsEn from './en/translations.json';
 import workListsEn from './en/workLists.json';
 
@@ -29,8 +29,8 @@ import institutionNb from './nb/institution.json';
 import languagesNb from './nb/languages.json';
 import licensesNb from './nb/licenses.json';
 import profileNb from './nb/profile.json';
-import publicationNb from './nb/publication.json';
 import publicationTypesNb from './nb/publicationTypes.json';
+import registrationNb from './nb/registration.json';
 import translationsNb from './nb/translations.json';
 import workListsNb from './nb/workLists.json';
 
@@ -50,8 +50,8 @@ i18n.use(LanguageDetector).init({
       languages: languagesEn,
       licenses: licensesEn,
       profile: profileEn,
-      publication: publicationEn,
       publicationTypes: publicationTypesEn,
+      registration: registrationEn,
       translations: translationsEn,
       workLists: workListsEn,
     },
@@ -67,8 +67,8 @@ i18n.use(LanguageDetector).init({
       languages: languagesNb,
       licenses: licensesNb,
       profile: profileNb,
-      publication: publicationNb,
       publicationTypes: publicationTypesNb,
+      registration: registrationNb,
       translations: translationsNb,
       workLists: workListsNb,
     },

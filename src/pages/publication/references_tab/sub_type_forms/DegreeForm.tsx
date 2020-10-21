@@ -16,7 +16,7 @@ const StyledTypography = styled(Typography)`
 `;
 
 const DegreeForm: FC = () => {
-  const { t } = useTranslation('publication');
+  const { t } = useTranslation('registration');
 
   const { setFieldValue, touched }: FormikProps<DegreePublication> = useFormikContext();
 
