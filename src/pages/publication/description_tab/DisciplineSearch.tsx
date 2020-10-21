@@ -34,7 +34,7 @@ const DisciplineSearch: FC<DisciplineSearchProps> = ({ dataTestId, setValueFunct
         <TextField
           {...params}
           data-testid={dataTestId}
-          label={t('publication:description.npi_disciplines')}
+          label={t('registration:description.npi_disciplines')}
           fullWidth
           variant="outlined"
           autoComplete="false"

@@ -30,7 +30,7 @@ const AddContributorModalContent: FC<AddContributorModalContentProps> = ({ addAu
     <>
       {initialSearchTerm && (
         <StyledSubHeading variant="h6">
-          {t('publication:contributors.prefilled_name')}: {initialSearchTerm}
+          {t('registration:contributors.prefilled_name')}: {initialSearchTerm}
         </StyledSubHeading>
       )}
       <SearchBar handleSearch={handleNewSearchTerm} resetSearchInput={false} initialSearchTerm={initialSearchTerm} />
