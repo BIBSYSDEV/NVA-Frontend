@@ -8,7 +8,7 @@ import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import { CircularProgress } from '@material-ui/core';
 
-const PublicationsForApproval: FC = () => {
+const RegistrationsForApproval: FC = () => {
   const { t } = useTranslation('workLists');
   const [publicationsForApproval, setPublicationsForApproval] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -36,4 +36,4 @@ const PublicationsForApproval: FC = () => {
   );
 };
 
-export default PublicationsForApproval;
+export default RegistrationsForApproval;

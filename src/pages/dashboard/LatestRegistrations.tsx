@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import useFetchLatestPublications from '../../utils/hooks/useFetchLatestPublications';
 import { StyledProgressWrapper } from '../../components/styled/Wrappers';
 import NormalText from '../../components/NormalText';
-import PublicationListItemComponent from './PublicationListItemComponent';
+import RegistrationListItem from './RegistrationListItem';
 import Heading from '../../components/Heading';
 
 const StyledListContainer = styled.div`
@@ -18,7 +18,7 @@ const StyledNormalText = styled(NormalText)`
   margin-top: 1rem;
 `;
 
-const LatestPublications: FC = () => {
+const LatestRegistrations: FC = () => {
   const { t } = useTranslation('registration');
   const [publications, isLoadingPublications] = useFetchLatestPublications();
 
@@ -34,7 +34,7 @@ const LatestPublications: FC = () => {
         <>
           <List>
             {publications.map((publication) => (
-              <PublicationListItemComponent
+              <RegistrationListItem
                 key={publication.identifier}
                 primaryComponent={
                   <MuiLink component={Link} to={`/registration/${publication.identifier}/public`}>
@@ -53,4 +53,4 @@ const LatestPublications: FC = () => {
   );
 };
 
-export default LatestPublications;
+export default LatestRegistrations;

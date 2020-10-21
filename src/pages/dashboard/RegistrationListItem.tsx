@@ -9,15 +9,12 @@ const StyledListItem = styled.li`
   padding-top: 0.5rem;
 `;
 
-interface PublicationListItemComponentProps {
+interface RegistrationListItemProps {
   primaryComponent: ReactNode;
   secondaryComponent?: ReactNode;
 }
 
-const PublicationListItemComponent: FC<PublicationListItemComponentProps> = ({
-  primaryComponent,
-  secondaryComponent,
-}) => (
+const RegistrationListItem: FC<RegistrationListItemProps> = ({ primaryComponent, secondaryComponent }) => (
   <StyledListItem>
     <ListItemAvatar>
       <Avatar>
@@ -28,4 +25,4 @@ const PublicationListItemComponent: FC<PublicationListItemComponentProps> = ({
   </StyledListItem>
 );
 
-export default PublicationListItemComponent;
+export default RegistrationListItem;
