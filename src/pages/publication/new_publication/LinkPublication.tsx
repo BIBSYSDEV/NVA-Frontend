@@ -77,7 +77,7 @@ const LinkPublicationPanel: FC<LinkPublicationPanelProps> = ({ expanded, onChang
         {doi && (
           <>
             <StyledTypography variant="h6">
-              {t('publication:heading.publication')}: <b>{doi.title}</b>
+              {t('publication:heading.registration')}: <b>{doi.title}</b>
             </StyledTypography>
             <Button
               fullWidth
