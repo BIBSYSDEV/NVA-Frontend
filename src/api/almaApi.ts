@@ -6,7 +6,7 @@ enum AlmaApiPaths {
   ALMA = '/alma',
 }
 
-export const getAlmaPublication = async (
+export const getAlmaRegistration = async (
   systemControlNumber: string,
   invertedCreatorName: string,
   cancelToken?: CancelToken

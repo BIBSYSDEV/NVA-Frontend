@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { Link as MuiLink, TablePagination } from '@material-ui/core';
 import { List, Typography } from '@material-ui/core';
-import PublicationListItemComponent from '../dashboard/PublicationListItemComponent';
+import RegistrationListItem from '../dashboard/RegistrationListItem';
 import { SearchResult } from '../../types/search.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { displayDate } from '../../utils/date-helpers';
@@ -38,7 +38,7 @@ const SearchResults: FC<SearchResultsProps> = ({ publications, searchTerm }) => 
           publications.slice(validPage * rowsPerPage, validPage * rowsPerPage + rowsPerPage).map((publication) => {
             const publicationId = publication.id?.split('/').pop();
             return (
-              <PublicationListItemComponent
+              <RegistrationListItem
                 data-testid={`search-result-${publicationId}`}
                 key={publicationId}
                 primaryComponent={

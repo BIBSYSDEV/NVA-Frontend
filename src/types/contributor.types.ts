@@ -1,4 +1,4 @@
-import { BackendType } from './publication.types';
+import { BackendType } from './registration.types';
 import { BackendTypeNames } from './publication_types/commonPublication.types';
 
 // For available roles, see https://github.com/BIBSYSDEV/nva-datamodel-java/blob/develop/src/main/java/no/unit/nva/model/Role.java

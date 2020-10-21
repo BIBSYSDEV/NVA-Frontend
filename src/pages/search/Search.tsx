@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import SearchBar from '../../components/SearchBar';
-import useSearchPublications from '../../utils/hooks/useSearchPublications';
+import useSearchRegistrations from '../../utils/hooks/useSearchRegistrations';
 import SearchResults from './SearchResults';
 import ListSkeleton from '../../components/ListSkeleton';
 import NormalText from '../../components/NormalText';
@@ -17,7 +17,7 @@ const StyledSearch = styled.div`
 const Search: FC = () => {
   const history = useHistory();
   const searchTerm = new URLSearchParams(history.location.search).get('query');
-  const [publications, isLoading] = useSearchPublications(searchTerm);
+  const [publications, isLoading] = useSearchRegistrations(searchTerm);
   const { t } = useTranslation('common');
 
   const handleSearch = async (searchTerm: string) => {
