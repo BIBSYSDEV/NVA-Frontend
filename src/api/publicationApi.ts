@@ -78,11 +78,11 @@ export const getPublication = async (id: string, cancelToken?: CancelToken) => {
     if (response.status === StatusCode.OK) {
       return response.data;
     } else {
-      return { error: i18n.t('feedback:error.get_publication') };
+      return { error: i18n.t('feedback:error.get_registration') };
     }
   } catch (error) {
     if (!Axios.isCancel(error)) {
-      return { error: i18n.t('feedback:error.get_publication') };
+      return { error: i18n.t('feedback:error.get_registration') };
     }
   }
 };
