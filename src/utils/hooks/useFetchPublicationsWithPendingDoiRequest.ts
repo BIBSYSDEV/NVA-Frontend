@@ -7,14 +7,14 @@ import { NotificationVariant } from '../../types/notification.types';
 import { RoleName } from '../../types/user.types';
 import useCancelToken from './useCancelToken';
 import { getRegistrationsWithPendingDoiRequest } from '../../api/doiRequestApi';
-import { Publication } from '../../types/publication.types';
+import { Registration } from '../../types/registration.types';
 
-const useFetchPublicationsWithPendingDoiRequest = (role: RoleName): [Publication[], boolean, () => void] => {
+const useFetchPublicationsWithPendingDoiRequest = (role: RoleName): [Registration[], boolean, () => void] => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const cancelToken = useCancelToken();
   const [isLoading, setIsLoading] = useState(true);
-  const [publicationsWithPendingDoiRequest, setPublicationsWithPendingDoiRequest] = useState<Publication[]>([]);
+  const [publicationsWithPendingDoiRequest, setPublicationsWithPendingDoiRequest] = useState<Registration[]>([]);
 
   const fetchDoiRequests = useCallback(async () => {
     setIsLoading(true);

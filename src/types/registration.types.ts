@@ -1,23 +1,23 @@
-import { PublicationFileSet } from './file.types';
+import { RegistrationFileSet } from './file.types';
 import { ResearchProject } from './project.types';
 import { EnumDictionary } from './common.types';
 import {
   JournalEntityDescription,
-  emptyPublicationEntityDescription,
+  emptyRegistrationEntityDescription,
 } from './publication_types/journalPublication.types';
 import { DegreeEntityDescription } from './publication_types/degreePublication.types';
 import { BookEntityDescription } from './publication_types/bookPublication.types';
 import { ReportEntityDescription } from './publication_types/reportPublication.types';
 import { BackendTypeNames } from './publication_types/commonPublication.types';
 
-export enum PublicationStatus {
+export enum RegistrationStatus {
   DELETED = 'Deleted',
   DRAFT = 'Draft',
   NEW = 'New',
   PUBLISHED = 'Published',
 }
 
-export enum PublicationTab {
+export enum RegistrationTab {
   Description = 0,
   Reference = 1,
   Contributors = 2,
@@ -44,7 +44,7 @@ export interface Publisher {
   openAccess: boolean;
 }
 
-export interface AlmaPublication {
+export interface AlmaRegistration {
   title: string;
 }
 
@@ -73,21 +73,21 @@ interface DoiRequest {
   messages: DoiRequestMessage[];
 }
 
-interface PublicationPublisher {
+interface RegistrationPublisher {
   id: string;
 }
 
-interface BasePublication extends BackendType, PublicationFileSet {
+interface BaseRegistration extends BackendType, RegistrationFileSet {
   readonly identifier: string;
   readonly createdDate: string;
   readonly owner: string;
-  readonly status: PublicationStatus;
+  readonly status: RegistrationStatus;
   readonly doiRequest?: DoiRequest;
-  readonly publisher: PublicationPublisher;
+  readonly publisher: RegistrationPublisher;
   project: ResearchProject | null;
 }
 
-export interface Publication extends BasePublication {
+export interface Registration extends BaseRegistration {
   entityDescription:
     | JournalEntityDescription
     | DegreeEntityDescription
@@ -95,23 +95,23 @@ export interface Publication extends BasePublication {
     | ReportEntityDescription;
 }
 
-export interface JournalPublication extends BasePublication {
+export interface JournalPublication extends BaseRegistration {
   entityDescription: JournalEntityDescription;
 }
 
-export interface DegreePublication extends BasePublication {
+export interface DegreePublication extends BaseRegistration {
   entityDescription: DegreeEntityDescription;
 }
 
-export interface BookPublication extends BasePublication {
+export interface BookPublication extends BaseRegistration {
   entityDescription: BookEntityDescription;
 }
 
-export interface ReportPublication extends BasePublication {
+export interface ReportPublication extends BaseRegistration {
   entityDescription: ReportEntityDescription;
 }
 
-export interface PublicationDate extends BackendType {
+export interface RegistrationDate extends BackendType {
   year: string;
   month: string;
   day: string;
@@ -131,8 +131,8 @@ export const emptyPagesMonograph: PagesMonograph = {
   pages: '',
 };
 
-export type PublicationPreview = Pick<
-  Publication & JournalEntityDescription,
+export type RegistrationPreview = Pick<
+  Registration & JournalEntityDescription,
   'identifier' | 'mainTitle' | 'createdDate' | 'status' | 'owner'
 >;
 
@@ -141,13 +141,13 @@ export interface Doi {
   title: string;
 }
 
-export const emptyPublication: Publication = {
+export const emptyRegistration: Registration = {
   type: BackendTypeNames.PUBLICATION,
   identifier: '',
   createdDate: '',
   owner: '',
-  status: PublicationStatus.NEW,
-  entityDescription: emptyPublicationEntityDescription,
+  status: RegistrationStatus.NEW,
+  entityDescription: emptyRegistrationEntityDescription,
   fileSet: {
     type: BackendTypeNames.FILE_SET,
     files: [],

@@ -6,7 +6,7 @@ import { FormHelperText, Typography } from '@material-ui/core';
 import { UppyFile } from '@uppy/core';
 import FileUploader from './files_and_license_tab/FileUploader';
 import FileCard from './files_and_license_tab/FileCard';
-import { Publication, Publisher } from '../../types/publication.types';
+import { Registration, Publisher } from '../../types/registration.types';
 import Modal from '../../components/Modal';
 import { licenses, Uppy } from '../../types/file.types';
 import Card from '../../components/Card';
@@ -38,7 +38,7 @@ interface FilesAndLicensePanelProps extends PanelProps {
 
 const FilesAndLicensePanel: FC<FilesAndLicensePanelProps> = ({ uppy, setTouchedFields }) => {
   const { t } = useTranslation('registration');
-  const { values }: FormikProps<Publication> = useFormikContext();
+  const { values }: FormikProps<Registration> = useFormikContext();
   const [isLicenseModalOpen, setIsLicenseModalOpen] = useState(false);
   const {
     fileSet: { files = [] },

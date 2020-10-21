@@ -6,7 +6,7 @@ import deepmerge from 'deepmerge';
 import { CircularProgress, Button } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 
-import { emptyPublication, Publication, PublicationTab } from '../../types/publication.types';
+import { emptyRegistration, Registration, RegistrationTab } from '../../types/registration.types';
 import { RegistrationFormTabs } from './RegistrationFormTabs';
 import { updateRegistration } from '../../api/registrationApi';
 import { useDispatch, useSelector } from 'react-redux';
@@ -46,7 +46,7 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier, closeForm }) 
   const { t } = useTranslation('registration');
   const history = useHistory();
   const initialTabNumber = new URLSearchParams(history.location.search).get('tab');
-  const [tabNumber, setTabNumber] = useState(initialTabNumber ? +initialTabNumber : PublicationTab.Description);
+  const [tabNumber, setTabNumber] = useState(initialTabNumber ? +initialTabNumber : RegistrationTab.Description);
   const [isSaving, setIsSaving] = useState(false);
   const dispatch = useDispatch();
   const uppy = useUppy();
@@ -78,25 +78,25 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier, closeForm }) 
     setTabNumber(tabNumber + 1);
   };
 
-  const savePublication = async (values: Publication) => {
+  const savePublication = async (values: Registration) => {
     setIsSaving(true);
     const updatedPublication = await updateRegistration(values);
     if (updatedPublication?.error) {
       dispatch(setNotification(updatedPublication.error, NotificationVariant.Error));
     } else {
-      handleSetPublication(deepmerge(emptyPublication, updatedPublication));
+      handleSetPublication(deepmerge(emptyRegistration, updatedPublication));
       dispatch(setNotification(t('feedback:success.update_registration')));
     }
     setIsSaving(false);
     return !updatedPublication.error;
   };
 
-  const validateForm = (values: Publication) => {
+  const validateForm = (values: Registration) => {
     const {
       reference: { publicationContext },
     } = values.entityDescription;
     try {
-      validateYupSchema<Publication>(values, publicationValidationSchema, true, {
+      validateYupSchema<Registration>(values, publicationValidationSchema, true, {
         publicationContextType: publicationContext.type,
         publicationStatus: publication?.status,
       });
@@ -116,12 +116,12 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier, closeForm }) 
       <StyledPublication>
         <Formik
           enableReinitialize
-          initialValues={publication ? deepmerge(emptyPublication, publication) : emptyPublication}
+          initialValues={publication ? deepmerge(emptyRegistration, publication) : emptyRegistration}
           validate={validateForm}
           onSubmit={() => {
             /* Use custom save handler instead, since onSubmit will prevent saving if there are any errors */
           }}>
-          {({ setTouched, dirty, errors, values }: FormikProps<Publication>) => (
+          {({ setTouched, dirty, errors, values }: FormikProps<Registration>) => (
             <Form>
               <RouteLeavingGuard
                 modalDescription={t('modal_unsaved_changes_description')}
@@ -137,7 +137,7 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier, closeForm }) 
                   return await savePublication(values);
                 }}
               />
-              {tabNumber !== PublicationTab.Submission && (
+              {tabNumber !== RegistrationTab.Submission && (
                 <StyledButtonGroupContainer>
                   <StyledButtonContainer>
                     <Button color="primary" variant="contained" data-testid="button-next-tab" onClick={goToNextTab}>

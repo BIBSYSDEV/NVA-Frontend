@@ -2,7 +2,7 @@ import { FormikProps, useFormikContext, FormikTouched } from 'formik';
 import React, { FC, useCallback, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 
-import { Publication, PublicationTab } from '../../types/publication.types';
+import { Registration, RegistrationTab } from '../../types/registration.types';
 import DescriptionPanel from './DescriptionPanel';
 import ReferencesPanel from './ReferencesPanel';
 import ContributorsPanel from './ContributorsPanel';
@@ -17,7 +17,7 @@ const StyledPanel = styled.div`
 `;
 
 export interface PanelProps {
-  setTouchedFields: (fieldsToTouch: FormikTouched<Publication>) => void;
+  setTouchedFields: (fieldsToTouch: FormikTouched<Registration>) => void;
 }
 
 interface RegistrationFormContentProps {
@@ -33,7 +33,7 @@ export const RegistrationFormContent: FC<RegistrationFormContentProps> = ({
   tabNumber,
   uppy,
 }) => {
-  const { touched, setTouched }: FormikProps<Publication> = useFormikContext();
+  const { touched, setTouched }: FormikProps<Registration> = useFormikContext();
 
   const touchedRef = useRef(touched);
   useEffect(() => {
@@ -41,33 +41,33 @@ export const RegistrationFormContent: FC<RegistrationFormContentProps> = ({
   }, [touched]);
 
   const setTouchedFields = useCallback(
-    (fieldsToTouch: FormikTouched<Publication>) => setTouched(mergeTouchedFields([touchedRef.current, fieldsToTouch])),
+    (fieldsToTouch: FormikTouched<Registration>) => setTouched(mergeTouchedFields([touchedRef.current, fieldsToTouch])),
     [setTouched]
   );
 
   return (
     <>
-      {tabNumber === PublicationTab.Description && (
+      {tabNumber === RegistrationTab.Description && (
         <StyledPanel>
           <DescriptionPanel setTouchedFields={setTouchedFields} />
         </StyledPanel>
       )}
-      {tabNumber === PublicationTab.Reference && (
+      {tabNumber === RegistrationTab.Reference && (
         <StyledPanel>
           <ReferencesPanel setTouchedFields={setTouchedFields} />
         </StyledPanel>
       )}
-      {tabNumber === PublicationTab.Contributors && (
+      {tabNumber === RegistrationTab.Contributors && (
         <StyledPanel>
           <ContributorsPanel setTouchedFields={setTouchedFields} />
         </StyledPanel>
       )}
-      {tabNumber === PublicationTab.FilesAndLicenses && (
+      {tabNumber === RegistrationTab.FilesAndLicenses && (
         <StyledPanel>
           <FilesAndLicensePanel setTouchedFields={setTouchedFields} uppy={uppy} />
         </StyledPanel>
       )}
-      {tabNumber === PublicationTab.Submission && (
+      {tabNumber === RegistrationTab.Submission && (
         <StyledPanel>
           <SubmissionPanel isSaving={isSaving} savePublication={savePublication} />
         </StyledPanel>

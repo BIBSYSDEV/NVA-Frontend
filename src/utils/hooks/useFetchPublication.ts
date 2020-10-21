@@ -4,19 +4,19 @@ import Axios from 'axios';
 
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
-import { Publication } from '../../types/publication.types';
+import { Registration } from '../../types/registration.types';
 import { getRegistration } from '../../api/registrationApi';
 import { RootStore } from '../../redux/reducers/rootReducer';
 
 const useFetchPublication = (
   identifier: string | undefined
-): [Publication | undefined, boolean, (values: Publication) => void] => {
+): [Registration | undefined, boolean, (values: Registration) => void] => {
   const dispatch = useDispatch();
-  const [publication, setPublication] = useState<Publication>();
+  const [publication, setPublication] = useState<Registration>();
   const [isLoading, setIsLoading] = useState(!!identifier);
   const user = useSelector((store: RootStore) => store.user);
 
-  const handleSetPublication = (values: Publication) => {
+  const handleSetPublication = (values: Registration) => {
     setPublication(values);
   };
 

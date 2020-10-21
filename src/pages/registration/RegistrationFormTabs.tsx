@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { Tabs } from '@material-ui/core';
 
 import LinkTab from '../../components/LinkTab';
-import { Publication } from '../../types/publication.types';
+import { Registration } from '../../types/registration.types';
 import { ReferenceFieldNames, DescriptionFieldNames } from '../../types/publicationFieldNames';
 import { hasTouchedError, getAllFileFields, getAllContributorFields } from '../../utils/formik-helpers';
 
@@ -35,7 +35,7 @@ interface RegistrationFormTabsProps {
 
 export const RegistrationFormTabs: FC<RegistrationFormTabsProps> = ({ handleTabChange, tabNumber }) => {
   const { t } = useTranslation('registration');
-  const { errors, touched, values }: FormikProps<Publication> = useFormikContext();
+  const { errors, touched, values }: FormikProps<Registration> = useFormikContext();
   const {
     entityDescription: { contributors },
     fileSet: { files = [] },

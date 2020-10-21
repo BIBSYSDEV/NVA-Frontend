@@ -1,7 +1,7 @@
 import React, { useEffect, FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormikProps, useFormikContext, setNestedObjectValues } from 'formik';
-import { Publication, DoiRequestStatus, PublicationStatus } from '../../types/publication.types';
+import { Registration, DoiRequestStatus, RegistrationStatus } from '../../types/registration.types';
 import { Button, Typography } from '@material-ui/core';
 import styled from 'styled-components';
 import SubmissionBook from './submission_tab/submission_book';
@@ -46,7 +46,7 @@ interface SubmissionPanelProps {
 const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication }) => {
   const user = useSelector((store: RootStore) => store.user);
   const { t } = useTranslation('registration');
-  const { values, isValid, dirty, errors, setTouched }: FormikProps<Publication> = useFormikContext();
+  const { values, isValid, dirty, errors, setTouched }: FormikProps<Registration> = useFormikContext();
   const [isPublishing, setIsPublishing] = useState(false);
   const history = useHistory();
   const dispatch = useDispatch();
@@ -122,7 +122,7 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication }
         </Card>
       </Card>
       <StyledButtonGroupContainer>
-        {status === PublicationStatus.DRAFT && (
+        {status === RegistrationStatus.DRAFT && (
           <StyledButtonWithProgress
             disabled={isSaving || !isValid}
             data-testid="button-publish-publication"

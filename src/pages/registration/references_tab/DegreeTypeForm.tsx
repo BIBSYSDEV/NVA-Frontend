@@ -1,6 +1,6 @@
 import { FormikProps, useFormikContext } from 'formik';
 import React, { FC } from 'react';
-import { DegreePublication } from '../../../types/publication.types';
+import { DegreePublication } from '../../../types/registration.types';
 import { ReferenceFieldNames, DegreeType } from '../../../types/publicationFieldNames';
 import SelectTypeField from './components/SelectTypeField';
 import DegreeForm from './sub_type_forms/DegreeForm';

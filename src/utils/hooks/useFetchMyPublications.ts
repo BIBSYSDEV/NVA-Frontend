@@ -2,13 +2,13 @@ import { useEffect, useState } from 'react';
 import Axios from 'axios';
 import { getMyRegistrations } from '../../api/registrationApi';
 import { useDispatch } from 'react-redux';
-import { PublicationPreview } from '../../types/publication.types';
+import { RegistrationPreview } from '../../types/registration.types';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 
-const useFetchMyPublications = (): [PublicationPreview[], boolean] => {
+const useFetchMyPublications = (): [RegistrationPreview[], boolean] => {
   const dispatch = useDispatch();
-  const [publications, setPublications] = useState<PublicationPreview[]>([]);
+  const [publications, setPublications] = useState<RegistrationPreview[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {

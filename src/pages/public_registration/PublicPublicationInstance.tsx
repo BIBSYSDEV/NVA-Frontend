@@ -4,7 +4,7 @@ import { JournalPublicationInstance } from '../../types/publication_types/journa
 import { useTranslation } from 'react-i18next';
 import { DegreePublicationInstance } from '../../types/publication_types/degreePublication.types';
 import { ReportPublicationInstance } from '../../types/publication_types/reportPublication.types';
-import { PagesMonograph } from '../../types/publication.types';
+import { PagesMonograph } from '../../types/registration.types';
 
 export const PublicPublicationInstanceJournal: FC<{ publicationInstance: JournalPublicationInstance }> = ({
   publicationInstance,

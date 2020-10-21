@@ -7,7 +7,7 @@ import PublisherField from '../components/PublisherField';
 import { ReferenceFieldNames } from '../../../../types/publicationFieldNames';
 import IsbnListField from '../components/IsbnListField';
 import TotalPagesField from '../components/TotalPagesField';
-import { BookPublication } from '../../../../types/publication.types';
+import { BookPublication } from '../../../../types/registration.types';
 import { BookEntityDescription } from '../../../../types/publication_types/bookPublication.types';
 import PeerReview from '../components/PeerReview';
 import { Typography, FormControlLabel, Checkbox } from '@material-ui/core';

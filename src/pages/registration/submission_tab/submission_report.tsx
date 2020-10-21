@@ -2,12 +2,12 @@ import LabelContentRow from '../../../components/LabelContentRow';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormikProps, useFormikContext } from 'formik';
-import { Publication } from '../../../types/publication.types';
+import { Registration } from '../../../types/registration.types';
 import { ReportEntityDescription } from '../../../types/publication_types/reportPublication.types';
 
 const SubmissionReport: FC = () => {
   const { t } = useTranslation('registration');
-  const { values }: FormikProps<Publication> = useFormikContext();
+  const { values }: FormikProps<Registration> = useFormikContext();
 
   const {
     reference: { publicationContext, publicationInstance },

@@ -1,4 +1,4 @@
-import { BackendType, PagesRange, PublicationDate } from '../publication.types';
+import { BackendType, PagesRange, RegistrationDate } from '../registration.types';
 import { PublicationType, JournalType } from '../publicationFieldNames';
 import { LanguageValues } from '../language.types';
 import { Contributor } from '../contributor.types';
@@ -32,7 +32,7 @@ interface JournalReference extends BackendType {
 export interface JournalEntityDescription extends BackendType {
   abstract: string;
   contributors: Contributor[];
-  date: PublicationDate;
+  date: RegistrationDate;
   description: string;
   language: LanguageValues;
   mainTitle: string;
@@ -67,7 +67,7 @@ const emptyReference: JournalReference = {
   publicationInstance: emptyJournalPublicationInstance,
 };
 
-export const emptyPublicationEntityDescription: JournalEntityDescription = {
+export const emptyRegistrationEntityDescription: JournalEntityDescription = {
   type: BackendTypeNames.ENTITY_DESCRIPTION,
   abstract: '',
   contributors: [],

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { KeyboardDatePicker, DatePickerView } from '@material-ui/pickers';
 import { useFormikContext, FormikProps, getIn } from 'formik';
-import { Publication } from '../../../types/publication.types';
+import { Registration } from '../../../types/registration.types';
 import { FormControlLabel, Checkbox } from '@material-ui/core';
 import styled from 'styled-components';
 
@@ -20,7 +20,7 @@ interface DatePickerFieldProps {
 
 const DatePickerField = ({ yearFieldName, monthFieldName, dayFieldName }: DatePickerFieldProps) => {
   const { t } = useTranslation('registration');
-  const { setFieldValue, values }: FormikProps<Publication> = useFormikContext();
+  const { setFieldValue, values }: FormikProps<Registration> = useFormikContext();
 
   const initialYear = getIn(values, yearFieldName);
   const initialMonth = getIn(values, monthFieldName);

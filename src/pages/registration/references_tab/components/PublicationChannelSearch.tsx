@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 
 import { getPublishers } from '../../../../api/publicationChannelApi';
 import { AutoSearch } from '../../../../components/AutoSearch';
-import { Publisher } from '../../../../types/publication.types';
+import { Publisher } from '../../../../types/registration.types';
 import { PublicationTableNumber } from '../../../../utils/constants';
 import { debounce } from '../../../../utils/debounce';
 import { NotificationVariant } from '../../../../types/notification.types';

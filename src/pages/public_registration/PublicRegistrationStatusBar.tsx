@@ -15,7 +15,7 @@ import Modal from '../../components/Modal';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import ButtonWithProgress from '../../components/ButtonWithProgress';
-import { PublicationStatus, DoiRequestStatus } from '../../types/publication.types';
+import { RegistrationStatus, DoiRequestStatus } from '../../types/registration.types';
 import { createDoiRequest } from '../../api/doiRequestApi';
 
 const StyledStatusBar = styled(Card)`
@@ -84,7 +84,7 @@ export const PublicRegistrationStatusBar: FC<PublicRegistrationContentProps> = (
   return user?.isCreator && isOwner ? (
     <StyledStatusBar>
       <StyledStatusBarDescription>
-        {status === PublicationStatus.PUBLISHED ? (
+        {status === RegistrationStatus.PUBLISHED ? (
           <StyledPublishedStatusIcon fontSize="large" />
         ) : (
           <StyledUnpublishedStatusIcon fontSize="large" />
@@ -101,7 +101,7 @@ export const PublicRegistrationStatusBar: FC<PublicRegistrationContentProps> = (
             </Button>
           ) : (
             <>
-              {status === PublicationStatus.PUBLISHED && (
+              {status === RegistrationStatus.PUBLISHED && (
                 <Button
                   variant="contained"
                   color="primary"
@@ -110,7 +110,7 @@ export const PublicRegistrationStatusBar: FC<PublicRegistrationContentProps> = (
                   {t('public_page.request_doi')}
                 </Button>
               )}
-              {status === PublicationStatus.DRAFT && (
+              {status === RegistrationStatus.DRAFT && (
                 <Button variant="contained" color="primary" disabled>
                   {t('public_page.reserve_doi')}
                 </Button>

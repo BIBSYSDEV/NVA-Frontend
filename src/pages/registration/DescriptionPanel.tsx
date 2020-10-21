@@ -6,7 +6,7 @@ import DateFnsUtils from '@date-io/date-fns';
 import { MenuItem, TextField as MuiTextField, TextField, Typography } from '@material-ui/core';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import { Publication } from '../../types/publication.types';
+import { Registration } from '../../types/registration.types';
 import DisciplineSearch from './description_tab/DisciplineSearch';
 import DatePickerField from './description_tab/DatePickerField';
 import { publicationLanguages } from '../../types/language.types';
@@ -45,7 +45,7 @@ const StyledMainCard = styled(Card)`
 
 const DescriptionPanel: FC<PanelProps> = ({ setTouchedFields }) => {
   const { t } = useTranslation('registration');
-  const { setFieldValue }: FormikProps<Publication> = useFormikContext();
+  const { setFieldValue }: FormikProps<Registration> = useFormikContext();
 
   useEffect(
     // Set all fields as touched if user navigates away from this panel (on unmount)

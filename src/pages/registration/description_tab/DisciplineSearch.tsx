@@ -5,7 +5,7 @@ import { TextField } from '@material-ui/core';
 import styled from 'styled-components';
 import SearchIcon from '@material-ui/icons/Search';
 
-import { NpiDiscipline } from '../../../types/publication.types';
+import { NpiDiscipline } from '../../../types/registration.types';
 import { disciplineOptions, getNpiDiscipline } from '../../../utils/npiDisciplines';
 
 const StyledSearchIcon = styled(SearchIcon)`

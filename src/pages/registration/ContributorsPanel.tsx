@@ -4,7 +4,7 @@ import { FormHelperText, Typography } from '@material-ui/core';
 import { FormikProps, useFormikContext, FieldArray, ErrorMessage, FieldArrayRenderProps } from 'formik';
 import Card from '../../components/Card';
 import SortableTable from './contributors_tab/components/SortableTable';
-import { Publication } from '../../types/publication.types';
+import { Registration } from '../../types/registration.types';
 import { ContributorFieldNames } from '../../types/publicationFieldNames';
 import { touchedContributorTabFields } from '../../utils/formik-helpers';
 import { PanelProps } from './RegistrationFormContent';
@@ -15,7 +15,7 @@ const ContributorsPanel: FC<PanelProps> = ({ setTouchedFields }) => {
     values: {
       entityDescription: { contributors },
     },
-  }: FormikProps<Publication> = useFormikContext();
+  }: FormikProps<Registration> = useFormikContext();
 
   const contributorsRef = useRef(contributors);
   useEffect(() => {

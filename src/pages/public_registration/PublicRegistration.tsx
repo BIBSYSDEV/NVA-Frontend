@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { CircularProgress } from '@material-ui/core';
 
-import { PublicationStatus } from '../../types/publication.types';
+import { RegistrationStatus } from '../../types/registration.types';
 import { useParams } from 'react-router-dom';
 import useFetchPublication from '../../utils/hooks/useFetchPublication';
 import PublicRegistrationContent from './PublicRegistrationContent';
@@ -16,7 +16,7 @@ const PublicRegistration: FC = () => {
   const user = useSelector((store: RootStore) => store.user);
 
   const isAllowedToSeePublicPublication =
-    publication?.status === PublicationStatus.PUBLISHED || user?.isCurator || publication?.owner === user?.id;
+    publication?.status === RegistrationStatus.PUBLISHED || user?.isCurator || publication?.owner === user?.id;
 
   return (
     <>

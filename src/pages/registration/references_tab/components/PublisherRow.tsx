@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { Button, Typography } from '@material-ui/core';
 import { FormikProps, useFormikContext } from 'formik';
-import { Publisher, levelMap, Publication } from '../../../../types/publication.types';
+import { Publisher, levelMap, Registration } from '../../../../types/registration.types';
 import { getPublishers } from '../../../../api/publicationChannelApi';
 import { PublicationTableNumber } from '../../../../utils/constants';
 import { ReferenceFieldNames } from '../../../../types/publicationFieldNames';
@@ -57,7 +57,7 @@ interface PublisherRowProps {
 const PublisherRow: FC<PublisherRowProps> = ({ dataTestId, label, onClickDelete, publisher }) => {
   const { t } = useTranslation('registration');
 
-  const { setFieldValue }: FormikProps<Publication> = useFormikContext();
+  const { setFieldValue }: FormikProps<Registration> = useFormikContext();
 
   const { level, title } = publisher;
   const publisherLevel = typeof level === 'string' ? levelMap[level] : level;

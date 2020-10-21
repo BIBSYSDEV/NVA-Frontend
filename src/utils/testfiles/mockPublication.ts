@@ -1,5 +1,5 @@
 import { LanguageValues } from '../../types/language.types';
-import { JournalPublication, PublicationStatus, DoiRequestStatus, Publication } from '../../types/publication.types';
+import { JournalPublication, RegistrationStatus, DoiRequestStatus, Registration } from '../../types/registration.types';
 import { JournalType, PublicationType } from '../../types/publicationFieldNames';
 import { BackendTypeNames } from '../../types/publication_types/commonPublication.types';
 import { mockCustomerInstitution } from './mockCustomerInstitutions';
@@ -9,7 +9,7 @@ export const mockPublication: JournalPublication = {
   identifier: '12345679',
   createdDate: '2020',
   owner: 'tu@unit.no',
-  status: PublicationStatus.DRAFT,
+  status: RegistrationStatus.DRAFT,
   project: null,
   publisher: { id: mockCustomerInstitution.id },
   fileSet: {
@@ -122,4 +122,4 @@ const mockPublicationWithPendingDoiRequest: JournalPublication = {
   },
 };
 
-export const publicationsWithPendingDoiRequest: Publication[] = [mockPublicationWithPendingDoiRequest];
+export const publicationsWithPendingDoiRequest: Registration[] = [mockPublicationWithPendingDoiRequest];

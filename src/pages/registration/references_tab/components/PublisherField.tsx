@@ -4,7 +4,7 @@ import PublicationChannelSearch from './PublicationChannelSearch';
 import { PublicationTableNumber } from '../../../../utils/constants';
 import PublisherRow from './PublisherRow';
 import { contextTypeBaseFieldName } from '../../../../types/publicationFieldNames';
-import { levelMap } from '../../../../types/publication.types';
+import { levelMap } from '../../../../types/registration.types';
 
 interface PublisherFieldProps {
   publicationTable?: PublicationTableNumber;

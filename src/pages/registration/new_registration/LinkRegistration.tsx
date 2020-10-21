@@ -7,7 +7,7 @@ import LinkIcon from '@material-ui/icons/Link';
 import { getRegistrationByDoi } from '../../../api/registrationApi';
 import LinkRegistrationForm, { DoiFormValues } from './LinkRegistrationForm';
 import RegistrationAccordion from './RegistrationAccordion';
-import { Doi } from '../../../types/publication.types';
+import { Doi } from '../../../types/registration.types';
 import { useDispatch } from 'react-redux';
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../types/notification.types';

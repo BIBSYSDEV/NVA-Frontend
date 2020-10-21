@@ -1,5 +1,5 @@
 import React from 'react';
-import { Publisher } from '../../../types/publication.types';
+import { Publisher } from '../../../types/registration.types';
 import Card from '../../../components/Card';
 import { Avatar, Typography } from '@material-ui/core';
 import { openAccessLogo } from '../../../resources/images/licenses';

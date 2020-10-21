@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { Link, Chip } from '@material-ui/core';
 import styled from 'styled-components';
-import { Publication } from '../../types/publication.types';
+import { Registration } from '../../types/registration.types';
 import ContentPage from '../../components/ContentPage';
 import { useTranslation } from 'react-i18next';
 import PublicRegistrationAuthors from './PublicRegistrationAuthors';
@@ -96,7 +96,7 @@ const StyledTag = styled.div`
 `;
 
 export interface PublicRegistrationContentProps {
-  publication: Publication;
+  publication: Registration;
 }
 
 const PublicRegistrationContent: FC<PublicRegistrationContentProps> = ({ publication }) => {

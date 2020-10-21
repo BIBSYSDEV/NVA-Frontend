@@ -1,7 +1,7 @@
 import { FormikProps, useFormikContext, Field, FieldProps, ErrorMessage } from 'formik';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
-import { JournalPublication } from '../../../../types/publication.types';
+import { JournalPublication } from '../../../../types/registration.types';
 import { JournalEntityDescription } from '../../../../types/publication_types/journalPublication.types';
 import { ReferenceFieldNames } from '../../../../types/publicationFieldNames';
 import PeerReview from '../components/PeerReview';

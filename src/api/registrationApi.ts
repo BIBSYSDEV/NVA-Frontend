@@ -1,7 +1,7 @@
 import Axios, { CancelToken } from 'axios';
 import i18n from '../translations/i18n';
-import { Publication } from '../types/publication.types';
-import { PublicationFileSet } from '../types/file.types';
+import { Registration } from '../types/registration.types';
+import { RegistrationFileSet } from '../types/file.types';
 import { StatusCode } from '../utils/constants';
 import { getIdToken } from './userApi';
 import { apiRequest } from './apiRequest';
@@ -15,7 +15,7 @@ export enum PublicationsApiPaths {
   FOR_APPROVAL = '/publications/approval',
 }
 
-export const createRegistration = async (partialPublication?: PublicationFileSet) => {
+export const createRegistration = async (partialPublication?: RegistrationFileSet) => {
   try {
     const idToken = await getIdToken();
     const response = await Axios.post(PublicationsApiPaths.PUBLICATION, partialPublication, {
@@ -31,7 +31,7 @@ export const createRegistration = async (partialPublication?: PublicationFileSet
   }
 };
 
-export const updateRegistration = async (publication: Publication) => {
+export const updateRegistration = async (publication: Registration) => {
   const { identifier } = publication;
   if (!identifier) {
     return { error: i18n.t('feedback:error.update_registration') };

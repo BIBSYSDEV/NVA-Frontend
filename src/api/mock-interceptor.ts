@@ -22,7 +22,7 @@ import { PublicationsApiPaths } from './registrationApi';
 import { PublicationChannelApiPaths } from './publicationChannelApi';
 import { FileApiPaths } from './fileApi';
 import { CustomerInstitutionApiPaths } from './customerInstitutionsApi';
-import { emptyPublication } from '../types/publication.types';
+import { emptyRegistration } from '../types/registration.types';
 import { mockRoles } from '../utils/testfiles/mock_feide_user';
 import { RoleApiPaths } from './roleApi';
 import { DoiRequestApiPaths } from './doiRequestApi';
@@ -110,10 +110,10 @@ export const interceptRequestsOnMock = () => {
     .reply(200, publicationsWithPendingDoiRequest);
 
   //PUBLICATION
-  mock.onGet(new RegExp(`${PublicationsApiPaths.PUBLICATION}/new`)).reply(200, emptyPublication);
+  mock.onGet(new RegExp(`${PublicationsApiPaths.PUBLICATION}/new`)).reply(200, emptyRegistration);
   mock
     .onGet(new RegExp(`${PublicationsApiPaths.PUBLICATION}/4327439`))
-    .reply(200, { ...emptyPublication, owner: 'tu@unit.no' });
+    .reply(200, { ...emptyRegistration, owner: 'tu@unit.no' });
   mock.onGet(new RegExp(`${PublicationsApiPaths.PUBLICATION}/*`)).reply(200, mockPublication);
 
   // lookup DOI

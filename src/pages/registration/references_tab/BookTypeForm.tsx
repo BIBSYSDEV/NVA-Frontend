@@ -3,7 +3,7 @@ import { ReferenceFieldNames, BookType } from '../../../types/publicationFieldNa
 import SelectTypeField from './components/SelectTypeField';
 import BookForm from './sub_type_forms/BookForm';
 import { FormikProps, useFormikContext } from 'formik';
-import { BookPublication } from '../../../types/publication.types';
+import { BookPublication } from '../../../types/registration.types';
 import { StyledSelectWrapper } from '../../../components/styled/Wrappers';
 
 interface BookTypeFormProps {

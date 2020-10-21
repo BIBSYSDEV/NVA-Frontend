@@ -1,6 +1,6 @@
 import { FormikProps, useFormikContext } from 'formik';
 import React, { FC } from 'react';
-import { ReportPublication } from '../../../types/publication.types';
+import { ReportPublication } from '../../../types/registration.types';
 import { ReferenceFieldNames, ReportType } from '../../../types/publicationFieldNames';
 import SelectTypeField from './components/SelectTypeField';
 import ReportForm from './sub_type_forms/ReportForm';

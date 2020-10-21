@@ -22,7 +22,7 @@ import AddIcon from '@material-ui/icons/Add';
 import deepmerge from 'deepmerge';
 import { ContributorFieldNames, SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
 import { Contributor, emptyContributor } from '../../../../types/contributor.types';
-import { Publication } from '../../../../types/publication.types';
+import { Registration } from '../../../../types/registration.types';
 import AddContributor from '../AddContributorModal';
 import styled from 'styled-components';
 import AffiliationsCell from './AffiliationsCell';
@@ -66,7 +66,7 @@ const SortableItem = SortableElement(
     const { t } = useTranslation('registration');
     const index = contributor.sequence - 1;
     const baseFieldName = `${ContributorFieldNames.CONTRIBUTORS}[${index}]`;
-    const { values, setFieldValue }: FormikProps<Publication> = useFormikContext();
+    const { values, setFieldValue }: FormikProps<Registration> = useFormikContext();
     const [emailValue, setEmailValue] = useState(values.entityDescription.contributors[index]?.email ?? '');
 
     return (
@@ -212,7 +212,7 @@ interface SortableTableProps extends Pick<FieldArrayRenderProps, 'push' | 'remov
 const SortableTable: FC<SortableTableProps> = ({ push, remove, replace }) => {
   const { t } = useTranslation('registration');
   const dispatch = useDispatch();
-  const { values, setValues }: FormikProps<Publication> = useFormikContext();
+  const { values, setValues }: FormikProps<Registration> = useFormikContext();
   const {
     entityDescription: { contributors },
   } = values;

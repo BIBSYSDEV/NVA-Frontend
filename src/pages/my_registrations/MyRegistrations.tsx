@@ -5,7 +5,7 @@ import { Button } from '@material-ui/core';
 import styled from 'styled-components';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { Link as RouterLink } from 'react-router-dom';
-import { PublicationStatus } from '../../types/publication.types';
+import { RegistrationStatus } from '../../types/registration.types';
 import RegistrationList from './RegistrationList';
 import TabButton from '../../components/TabButton';
 import useFetchMyPublications from '../../utils/hooks/useFetchMyPublications';
@@ -34,11 +34,11 @@ const MyRegistrations: FC = () => {
   const [publications, isLoading] = useFetchMyPublications();
 
   const unpublishedPublications = publications
-    .filter((publication) => publication.status !== PublicationStatus.PUBLISHED)
+    .filter((publication) => publication.status !== RegistrationStatus.PUBLISHED)
     .sort((a, b) => new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime());
 
   const publishedPublications = publications
-    .filter((publication) => publication.status === PublicationStatus.PUBLISHED)
+    .filter((publication) => publication.status === RegistrationStatus.PUBLISHED)
     .sort((a, b) => new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime());
 
   return (

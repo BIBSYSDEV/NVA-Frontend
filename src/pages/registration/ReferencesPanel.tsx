@@ -3,7 +3,7 @@ import React, { useEffect, FC, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { Typography } from '@material-ui/core';
-import { Publication } from '../../types/publication.types';
+import { Registration } from '../../types/registration.types';
 import {
   PublicationType,
   ReferenceFieldNames,
@@ -30,7 +30,7 @@ const StyledCard = styled(Card)`
 
 const ReferencesPanel: FC<PanelProps> = ({ setTouchedFields }) => {
   const { t } = useTranslation('registration');
-  const { values, setTouched, setFieldValue, touched }: FormikProps<Publication> = useFormikContext();
+  const { values, setTouched, setFieldValue, touched }: FormikProps<Registration> = useFormikContext();
   const publicationContextType = values.entityDescription.reference.publicationContext.type;
   const contextRef = useRef(publicationContextType);
 

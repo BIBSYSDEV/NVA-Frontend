@@ -3,7 +3,7 @@ import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { TextField, Typography } from '@material-ui/core';
-import { JournalPublication } from '../../../../types/publication.types';
+import { JournalPublication } from '../../../../types/registration.types';
 import { ReferenceFieldNames } from '../../../../types/publicationFieldNames';
 import DoiField from '../components/DoiField';
 import PublisherField from '../components/PublisherField';

@@ -1,4 +1,4 @@
-import { AlmaPublication } from '../../types/publication.types';
+import { AlmaRegistration } from '../../types/registration.types';
 import { useEffect, useState } from 'react';
 import { getAlmaRegistration } from '../../api/almaApi';
 import { setNotification } from '../../redux/actions/notificationActions';
@@ -6,9 +6,9 @@ import { NotificationVariant } from '../../types/notification.types';
 import { useDispatch } from 'react-redux';
 import Axios from 'axios';
 
-const useFetchLastPublication = (systemControlNumber: string, name: string): [AlmaPublication | null, boolean] => {
+const useFetchLastPublication = (systemControlNumber: string, name: string): [AlmaRegistration | null, boolean] => {
   const dispatch = useDispatch();
-  const [publication, setPublication] = useState<AlmaPublication | null>(null);
+  const [publication, setPublication] = useState<AlmaRegistration | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
