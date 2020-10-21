@@ -22,7 +22,7 @@
     "get_orcid": "Kunne ikke hente data fra ORCID",
     "get_parent_units": "Kunne ikke hente institusjoner",
     "get_project": "Søk på prosjekt feilet",
-    "get_publications": "Kunne ikke laste inn publikasjoner",
+    "get_registrations": "Kunne ikke laste inn registreringer",
     "get_publication": "Kunne ikke laste inn publikasjon",
     "get_roles": "Kunne ikke hente roller",
     "get_session": "Økten er utløpt. Vennligst logg inn på nytt.",
