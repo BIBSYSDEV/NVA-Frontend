@@ -18,7 +18,7 @@
     "get_doi_requests": "Kunne ikke hente DOI-forespørsler",
     "get_institutions": "Kunne ikke laste inn institusjoner",
     "get_institution": "Kunne ikke laste inn institusjon",
-    "get_last_publication": "Kunne ikke hente tidligere publikasjon",
+    "get_last_registration": "Kunne ikke hente tidligere registrering",
     "get_orcid": "Kunne ikke hente data fra ORCID",
     "get_parent_units": "Kunne ikke hente institusjoner",
     "get_project": "Søk på prosjekt feilet",

@@ -18,7 +18,7 @@
     "get_doi_requests": "Could not retrieve DOI requests",
     "get_institutions": "Could not retrieve institutions",
     "get_institution": "Could not retrieve institution",
-    "get_last_publication": "Could not retrieve last publication",
+    "get_last_registration": "Could not retrieve last registration",
     "get_orcid": "Could not get data from ORCID",
     "get_parent_units": "Could not retrieve institutions",
     "get_project": "Search for projects failed",
