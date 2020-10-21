@@ -18,7 +18,7 @@ import { RegistrationFormContent } from './RegistrationFormContent';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import useFetchRegistration from '../../utils/hooks/useFetchRegistration';
 import useUppy from '../../utils/hooks/useUppy';
-import { publicationValidationSchema } from '../../utils/validation/publication/publicationValidation';
+import { registrationValidationSchema } from '../../utils/validation/registration/registrationValidation';
 import { PageHeader } from '../../components/PageHeader';
 import Forbidden from '../errorpages/Forbidden';
 
@@ -96,7 +96,7 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier, closeForm }) 
       reference: { publicationContext },
     } = values.entityDescription;
     try {
-      validateYupSchema<Registration>(values, publicationValidationSchema, true, {
+      validateYupSchema<Registration>(values, registrationValidationSchema, true, {
         publicationContextType: publicationContext.type,
         publicationStatus: publication?.status,
       });

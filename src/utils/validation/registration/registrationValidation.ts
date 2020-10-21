@@ -12,7 +12,7 @@ import {
 } from './referenceValidation';
 import { fileValidationSchema } from './fileValidation';
 
-export const publicationValidationSchema = Yup.object().shape({
+export const registrationValidationSchema = Yup.object().shape({
   entityDescription: Yup.object().shape({
     mainTitle: Yup.string().required(ErrorMessage.REQUIRED),
     abstract: Yup.string(),

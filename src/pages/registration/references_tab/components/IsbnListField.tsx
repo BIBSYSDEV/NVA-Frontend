@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import { ReferenceFieldNames } from '../../../../types/publicationFieldNames';
 import { setNotification } from '../../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../../types/notification.types';
-import { isbnRegex } from '../../../../utils/validation/publication/referenceValidation';
+import { isbnRegex } from '../../../../utils/validation/registration/referenceValidation';
 import { ErrorMessage } from '../../../../utils/validation/errorMessage';
 
 const IsbnListField: FC = () => {
