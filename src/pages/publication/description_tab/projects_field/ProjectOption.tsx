@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { AutocompleteRenderOptionState } from '@material-ui/lab';
 import { Typography } from '@material-ui/core';
-import { getProjectTitleParts } from './helpers';
+import { getTextParts, getProjectTitle } from './helpers';
 import ProjectInstitutions from './ProjectInstitutions';
 import { CristinProject } from '../../../../types/project.types';
 import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
@@ -13,7 +13,7 @@ interface ProjectOptionProps {
 
 const ProjectOption: FC<ProjectOptionProps> = ({ project, state }) => {
   const searchTerm = state.inputValue.toLocaleLowerCase();
-  const parts = getProjectTitleParts(project, searchTerm);
+  const parts = getTextParts(getProjectTitle(project), searchTerm);
 
   return (
     <StyledFlexColumn>

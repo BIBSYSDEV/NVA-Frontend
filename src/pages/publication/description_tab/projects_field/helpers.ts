@@ -19,17 +19,15 @@ export const getProjectTitle = (option: CristinProject) => {
   return option.titles[0].title;
 };
 
-export const getProjectTitleParts = (project: CristinProject, searchTerm: string) => {
-  const title = getProjectTitle(project);
-  const indexOfMatch = title.toLocaleLowerCase().indexOf(searchTerm);
-
+export const getTextParts = (text: string, searchTerm: string) => {
+  const indexOfMatch = text.toLocaleLowerCase().indexOf(searchTerm);
   const parts =
     indexOfMatch === -1
-      ? [title]
+      ? [text]
       : [
-          title.substr(0, indexOfMatch),
-          title.substr(indexOfMatch, searchTerm.length),
-          title.substr(indexOfMatch + searchTerm.length),
+          text.substr(0, indexOfMatch),
+          text.substr(indexOfMatch, searchTerm.length),
+          text.substr(indexOfMatch + searchTerm.length),
         ];
   return parts;
 };
