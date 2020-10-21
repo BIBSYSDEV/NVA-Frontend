@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 
 import Label from '../../components/Label';
-import { PublicationTab, Publication } from '../../types/publication.types';
+import { RegistrationTab, Registration } from '../../types/registration.types';
 import MessageList from './MessageList';
 
 const StyledAccordion = styled(Accordion)`
@@ -64,7 +64,7 @@ const StyledAccordionActionButtons = styled.div`
 `;
 
 interface DoiRequestAccordionProps {
-  publication: Publication;
+  publication: Registration;
 }
 
 export const DoiRequestAccordion: FC<DoiRequestAccordionProps> = ({ publication }) => {
@@ -106,8 +106,8 @@ export const DoiRequestAccordion: FC<DoiRequestAccordionProps> = ({ publication 
             data-testid={`go-to-publication-${identifier}`}
             variant="outlined"
             component={RouterLink}
-            to={`/registration/${identifier}?tab=${PublicationTab.Submission}`}>
-            {t('doi_requests.go_to_publication')}
+            to={`/registration/${identifier}?tab=${RegistrationTab.Submission}`}>
+            {t('doi_requests.go_to_registration')}
           </Button>
           <Button variant="contained" color="primary" disabled>
             {t('doi_requests.archive')}

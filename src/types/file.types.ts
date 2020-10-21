@@ -1,6 +1,6 @@
 import * as LicenseImages from '../resources/images/licenses';
 import { Uppy as UppyType, StrictTypes } from '@uppy/core';
-import { BackendType } from './publication.types';
+import { BackendType } from './registration.types';
 import i18n from '../translations/i18n';
 import { BackendTypeNames } from './publication_types/commonPublication.types';
 
@@ -103,7 +103,7 @@ interface FileSet extends BackendType {
   files: File[];
 }
 
-export interface PublicationFileSet {
+export interface RegistrationFileSet {
   fileSet: FileSet;
 }
 

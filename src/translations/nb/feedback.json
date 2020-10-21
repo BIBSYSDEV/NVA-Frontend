@@ -6,10 +6,10 @@
     "create_authority": "Kunne ikke opprette autoritet",
     "create_customer": "Kunne ikke opprette institusjon",
     "create_doi_request": "Kunne ikke opprette DOI-forespørsel",
-    "create_publication": "Kunne ikke opprette publikasjon",
+    "create_registration": "Kunne ikke opprette registrering",
     "delete_identifier": "Kunne ikke slette {{qualifier}}",
     "download_file": "Kunne ikke laste ned fil",
-    "get_approvable_publications": "Kunne ikke hente publikasjoner som venter godkjenning",
+    "get_approvable_registrations": "Kunne ikke hente registreringer som venter godkjenning",
     "get_authority": "Kunne ikke hente autoritet",
     "get_authorities": "Kunne ikke hente autoriteter",
     "get_customer": "Kunne ikke hente institusjon",
@@ -18,12 +18,12 @@
     "get_doi_requests": "Kunne ikke hente DOI-forespørsler",
     "get_institutions": "Kunne ikke laste inn institusjoner",
     "get_institution": "Kunne ikke laste inn institusjon",
-    "get_last_publication": "Kunne ikke hente tidligere publikasjon",
+    "get_last_registration": "Kunne ikke hente tidligere registrering",
     "get_orcid": "Kunne ikke hente data fra ORCID",
     "get_parent_units": "Kunne ikke hente institusjoner",
     "get_project": "Søk på prosjekt feilet",
-    "get_publications": "Kunne ikke laste inn publikasjoner",
-    "get_publication": "Kunne ikke laste inn publikasjon",
+    "get_registrations": "Kunne ikke laste inn registreringer",
+    "get_registration": "Kunne ikke laste inn registrering",
     "get_roles": "Kunne ikke hente roller",
     "get_session": "Økten er utløpt. Vennligst logg inn på nytt.",
     "get_user": "Kunne ikke hente bruker",
@@ -32,20 +32,20 @@
     "login": "Kunne ikke logge inn",
     "missing_user": "Mangler bruker",
     "orcid_login": "Kunne ikke logge inn på ORCID",
-    "publish_publication": "Kunne ikke publisere publikasjon",
+    "publish_registration": "Kunne ikke publisere registrering",
     "remove_role": "Kunne ikke fjerne rolle",
     "search": "Søk feilet",
     "update_authority": "Kunne ikke oppdatere {{qualifier}} for autoritet",
     "update_customer": "Kunne ikke oppdatere institusjon",
     "update_institution_user": "Kunne ikke oppdatere bruker",
-    "update_publication": "Kunne ikke oppdatere publikasjon",
+    "update_registration": "Kunne ikke oppdatere registrering",
     "orcid": {
       "access_denied": "Kunne ikke koble til ORCID fordi tilgang til ORCID-kontoen ble avslått"
     }
   },
   "info": {
     "affiliation_already_exists": "Tilhørigheten finnes allerede",
-    "publishing_publication": "Publiserer publikasjon...",
+    "publishing_registration": "Publiserer registrering...",
     "user_already_exists": "Brukeren finnes allerede"
   },
   "success": {
@@ -55,7 +55,7 @@
     "admin_removed": "Bruker fjernet som administrator",
     "created_authority": "Forfatteridentitet er opprettet",
     "created_customer": "Institusjon er opprettet",
-    "create_publication": "Publikasjonen er opprettet",
+    "create_registration": "Registreringen er opprettet",
     "delete_affiliation": "Tilhørigheten ble slettet",
     "delete_identifier": "Identifikatoren ble slettet",
     "doi_request_sent": "DOI-forespørsel sendt",
@@ -63,6 +63,6 @@
     "removed_role": "Rollen ble fjernet",
     "update_authority": "Forfatter er oppdatert",
     "update_customer": "Institusjon er oppdatert",
-    "update_publication": "Publikasjonen er oppdatert"
+    "update_registration": "Registreringen er oppdatert"
   }
 }

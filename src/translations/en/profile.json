@@ -10,7 +10,7 @@
     "description_create_own_authority": "There exists author identities which matches your name. You can still create a new one.",
     "description_no_authority_found": "We cannot find an author identity which matches with your name (retrieved from your login account). A new author identity will be created in order for you to use this service. If the name does not match your name, you need to contact your curator at your institution in order to correct it.",
     "no_affiliations_found": "No affiliations found",
-    "no_publications_found": "No publications found",
+    "no_registrations_found": "No registrations found",
     "other_affiliations": "+ {{count}} other affiliation",
     "other_affiliations_plural": "+ {{count}} other affiliations",
     "search_summary": "{{results}} results for \"{{searchTerm}}\"",
@@ -53,7 +53,7 @@
     "editors": "Editors",
     "institution_admins": "Institution administrators",
     "publisher": "Publisher",
-    "publisher_description": "A Publisher is a person whom is employed at the organization. A publisher has also access to register their own publications"
+    "publisher_description": "A Publisher is a person whom is employed at the organization. A publisher has also access to register their own registrations"
   },
   "organization": {
     "add_institution": "Add institution",

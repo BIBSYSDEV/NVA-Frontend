@@ -47,7 +47,7 @@ const StyledBurgerMenu = styled.div`
 `;
 
 const Header: FC = () => {
-  const { t } = useTranslation('publication');
+  const { t } = useTranslation('registration');
   const user = useSelector((store: RootStore) => store.user);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 

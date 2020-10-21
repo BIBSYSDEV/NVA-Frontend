@@ -10,7 +10,7 @@ import {
   TableContainer,
   TablePagination,
 } from '@material-ui/core';
-import { PublicationPreview, PublicationTab } from '../../types/publication.types';
+import { RegistrationPreview, RegistrationTab } from '../../types/registration.types';
 import { useTranslation } from 'react-i18next';
 import Label from '../../components/Label';
 import { Link as RouterLink } from 'react-router-dom';
@@ -30,7 +30,7 @@ const StyledCell = styled(TableCell)`
 `;
 
 interface WorklistTableProps {
-  publications: PublicationPreview[];
+  publications: RegistrationPreview[];
 }
 
 const WorklistTable: FC<WorklistTableProps> = ({ publications }) => {
@@ -81,7 +81,7 @@ const WorklistTable: FC<WorklistTableProps> = ({ publications }) => {
                   <Button
                     color="primary"
                     component={RouterLink}
-                    to={`/registration/${publication.identifier}?tab=${PublicationTab.Submission}`}
+                    to={`/registration/${publication.identifier}?tab=${RegistrationTab.Submission}`}
                     data-testid={`open-publication-${publication.identifier}`}
                     variant="contained">
                     <NormalText>{t('common:open')}</NormalText>

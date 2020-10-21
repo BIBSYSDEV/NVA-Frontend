@@ -1,4 +1,4 @@
-import { BackendType } from './publication.types';
+import { BackendType } from './registration.types';
 import { BackendTypeNames } from './publication_types/commonPublication.types';
 
 export interface CustomerInstitution extends Partial<BackendType> {
