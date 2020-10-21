@@ -32,7 +32,7 @@
     "login": "Kunne ikke logge inn",
     "missing_user": "Mangler bruker",
     "orcid_login": "Kunne ikke logge inn på ORCID",
-    "publish_publication": "Kunne ikke publisere publikasjon",
+    "publish_registration": "Kunne ikke publisere registrering",
     "remove_role": "Kunne ikke fjerne rolle",
     "search": "Søk feilet",
     "update_authority": "Kunne ikke oppdatere {{qualifier}} for autoritet",

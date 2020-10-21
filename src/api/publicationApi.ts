@@ -89,7 +89,7 @@ export const getPublication = async (id: string, cancelToken?: CancelToken) => {
 
 export const publishPublication = async (identifier: string) => {
   if (!identifier) {
-    return { error: i18n.t('feedback:error.publish_publication') };
+    return { error: i18n.t('feedback:error.publish_registration') };
   }
   try {
     const idToken = await getIdToken();
@@ -107,10 +107,10 @@ export const publishPublication = async (identifier: string) => {
     } else if (response.status === StatusCode.ACCEPTED) {
       return { info: i18n.t('feedback:info.publishing_publication') };
     } else {
-      return { error: i18n.t('feedback:error.publish_publication') };
+      return { error: i18n.t('feedback:error.publish_registration') };
     }
   } catch {
-    return { error: i18n.t('feedback:error.publish_publication') };
+    return { error: i18n.t('feedback:error.publish_registration') };
   }
 };
 

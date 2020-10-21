@@ -32,7 +32,7 @@
     "login": "Login failed",
     "missing_user": "Missing user",
     "orcid_login": "ORCID login failed",
-    "publish_publication": "Could not publish publication",
+    "publish_registration": "Could not publish registration",
     "remove_role": "Could not remove role",
     "search": "Search failed",
     "update_authority": "Could not update {{qualifier}} for authority",
