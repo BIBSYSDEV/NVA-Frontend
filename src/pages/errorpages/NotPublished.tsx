@@ -21,7 +21,7 @@ const NotPublished: FC = () => {
 
   return (
     <StyledNotFoundWrapper data-testid="not_published">
-      <Heading>{t('publication_not_published')}</Heading>
+      <Heading>{t('registration_not_published')}</Heading>
       <MuiLink component={Link} to={'/'}>
         <StyledText>{t('back_to_home')}</StyledText>
       </MuiLink>
