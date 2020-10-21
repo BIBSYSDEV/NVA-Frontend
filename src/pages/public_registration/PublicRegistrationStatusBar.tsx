@@ -7,16 +7,16 @@ import WorkOutlineIcon from '@material-ui/icons/WorkOutline';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
-import { RootStore } from '../../../redux/reducers/rootReducer';
-import Card from '../../../components/Card';
-import NormalText from '../../../components/NormalText';
+import { RootStore } from '../../redux/reducers/rootReducer';
+import Card from '../../components/Card';
+import NormalText from '../../components/NormalText';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
-import Modal from '../../../components/Modal';
-import { setNotification } from '../../../redux/actions/notificationActions';
-import { NotificationVariant } from '../../../types/notification.types';
-import ButtonWithProgress from '../../../components/ButtonWithProgress';
-import { PublicationStatus, DoiRequestStatus } from '../../../types/publication.types';
-import { createDoiRequest } from '../../../api/doiRequestApi';
+import Modal from '../../components/Modal';
+import { setNotification } from '../../redux/actions/notificationActions';
+import { NotificationVariant } from '../../types/notification.types';
+import ButtonWithProgress from '../../components/ButtonWithProgress';
+import { PublicationStatus, DoiRequestStatus } from '../../types/publication.types';
+import { createDoiRequest } from '../../api/doiRequestApi';
 
 const StyledStatusBar = styled(Card)`
   display: flex;

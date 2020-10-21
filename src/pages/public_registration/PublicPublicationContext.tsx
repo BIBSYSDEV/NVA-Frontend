@@ -1,13 +1,13 @@
 import React, { FC } from 'react';
-import LabelContentRow from '../../../components/LabelContentRow';
-import NormalText from '../../../components/NormalText';
-import { JournalPublicationContext } from '../../../types/publication_types/journalPublication.types';
+import LabelContentRow from '../../components/LabelContentRow';
+import NormalText from '../../components/NormalText';
+import { JournalPublicationContext } from '../../types/publication_types/journalPublication.types';
 import { Link } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
-import { DegreePublicationContext } from '../../../types/publication_types/degreePublication.types';
-import { ReportPublicationContext } from '../../../types/publication_types/reportPublication.types';
+import { DegreePublicationContext } from '../../types/publication_types/degreePublication.types';
+import { ReportPublicationContext } from '../../types/publication_types/reportPublication.types';
 
 const StyledContainer = styled.div`
   display: flex;

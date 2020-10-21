@@ -1,14 +1,14 @@
 import React, { FC } from 'react';
 import { CircularProgress } from '@material-ui/core';
 
-import { PublicationStatus } from '../../../types/publication.types';
+import { PublicationStatus } from '../../types/publication.types';
 import { useParams } from 'react-router-dom';
-import useFetchPublication from '../../../utils/hooks/useFetchPublication';
+import useFetchPublication from '../../utils/hooks/useFetchPublication';
 import PublicRegistrationContent from './PublicRegistrationContent';
-import NotPublished from '../../errorpages/NotPublished';
-import NotFound from '../../errorpages/NotFound';
+import NotPublished from '../errorpages/NotPublished';
+import NotFound from '../errorpages/NotFound';
 import { useSelector } from 'react-redux';
-import { RootStore } from '../../../redux/reducers/rootReducer';
+import { RootStore } from '../../redux/reducers/rootReducer';
 
 const PublicRegistration: FC = () => {
   const { identifier } = useParams();

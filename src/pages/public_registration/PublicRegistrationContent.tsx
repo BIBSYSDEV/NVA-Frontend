@@ -1,26 +1,26 @@
 import React, { FC } from 'react';
 import { Link, Chip } from '@material-ui/core';
 import styled from 'styled-components';
-import { Publication } from '../../../types/publication.types';
-import ContentPage from '../../../components/ContentPage';
+import { Publication } from '../../types/publication.types';
+import ContentPage from '../../components/ContentPage';
 import { useTranslation } from 'react-i18next';
 import PublicRegistrationAuthors from './PublicRegistrationAuthors';
 import PublicRegistrationFile from './PublicRegistrationFile';
-import Card from '../../../components/Card';
-import Heading from '../../../components/Heading';
-import LabelContentRow from '../../../components/LabelContentRow';
-import Label from '../../../components/Label';
-import NormalText from '../../../components/NormalText';
-import { licenses } from '../../../types/file.types';
-import { getNpiDiscipline } from '../../../utils/npiDisciplines';
-import { StyledNormalTextPreWrapped } from '../../../components/styled/Wrappers';
-import { displayDate } from '../../../utils/date-helpers';
+import Card from '../../components/Card';
+import Heading from '../../components/Heading';
+import LabelContentRow from '../../components/LabelContentRow';
+import Label from '../../components/Label';
+import NormalText from '../../components/NormalText';
+import { licenses } from '../../types/file.types';
+import { getNpiDiscipline } from '../../utils/npiDisciplines';
+import { StyledNormalTextPreWrapped } from '../../components/styled/Wrappers';
+import { displayDate } from '../../utils/date-helpers';
 import {
   JournalPublicationContext,
   JournalPublicationInstance,
-} from '../../../types/publication_types/journalPublication.types';
+} from '../../types/publication_types/journalPublication.types';
 import { PublicRegistrationStatusBar } from './PublicRegistrationStatusBar';
-import { isJournal, isDegree, isReport } from '../../../utils/publication-helpers';
+import { isJournal, isDegree, isReport } from '../../utils/publication-helpers';
 import {
   PublicPublicationInstanceJournal,
   PublicPublicationInstanceDegree,
@@ -34,11 +34,11 @@ import {
 import {
   DegreePublicationContext,
   DegreePublicationInstance,
-} from '../../../types/publication_types/degreePublication.types';
+} from '../../types/publication_types/degreePublication.types';
 import {
   ReportPublicationContext,
   ReportPublicationInstance,
-} from '../../../types/publication_types/reportPublication.types';
+} from '../../types/publication_types/reportPublication.types';
 
 const StyledContentWrapper = styled.div`
   display: flex;

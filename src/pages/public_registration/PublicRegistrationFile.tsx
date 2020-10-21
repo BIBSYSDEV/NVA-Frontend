@@ -4,15 +4,15 @@ import DescriptionIcon from '@material-ui/icons/DescriptionOutlined';
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import LockIcon from '@material-ui/icons/Lock';
-import { File } from '../../../types/file.types';
-import NormalText from '../../../components/NormalText';
-import { downloadFile } from '../../../api/fileApi';
+import { File } from '../../types/file.types';
+import NormalText from '../../components/NormalText';
+import { downloadFile } from '../../api/fileApi';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { setNotification } from '../../../redux/actions/notificationActions';
-import { NotificationVariant } from '../../../types/notification.types';
-import ButtonWithProgress from '../../../components/ButtonWithProgress';
+import { setNotification } from '../../redux/actions/notificationActions';
+import { NotificationVariant } from '../../types/notification.types';
+import ButtonWithProgress from '../../components/ButtonWithProgress';
 import { Button, Card } from '@material-ui/core';
 
 const StyledFileIcon = styled(DescriptionIcon)`

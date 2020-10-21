@@ -16,8 +16,8 @@ import { Link as RouterLink } from 'react-router-dom';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
-import { PublicationPreview } from '../../../types/publication.types';
-import DeleteRegistrationModal from '../DeleteRegistrationModal';
+import { PublicationPreview } from '../../types/publication.types';
+import DeleteRegistrationModal from './DeleteRegistrationModal';
 
 const StyledTableRow = styled(TableRow)`
   background-color: ${(props) => props.theme.palette.box.main};

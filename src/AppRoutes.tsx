@@ -10,9 +10,9 @@ import { RootStore } from './redux/reducers/rootReducer';
 
 const Dashboard = lazy(() => import('./pages/dashboard/Dashboard'));
 const EditPublication = lazy(() => import('./pages/registration/EditRegistration'));
-const MyPublications = lazy(() => import('./pages/registration/my_registrations/MyRegistrations'));
+const MyPublications = lazy(() => import('./pages/my_registrations/MyRegistrations'));
 const Search = lazy(() => import('./pages/search/Search'));
-const PublicPublication = lazy(() => import('./pages/registration/public_registration/PublicRegistration'));
+const PublicPublication = lazy(() => import('./pages/public_registration/PublicRegistration'));
 const User = lazy(() => import('./pages/user/User'));
 const NotFound = lazy(() => import('./pages/errorpages/NotFound'));
 const PublicProfile = lazy(() => import('./pages/public_profile/PublicProfile'));

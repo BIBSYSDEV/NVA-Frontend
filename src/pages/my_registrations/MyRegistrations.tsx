@@ -3,19 +3,16 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Button } from '@material-ui/core';
 import styled from 'styled-components';
-import { RootStore } from '../../../redux/reducers/rootReducer';
+import { RootStore } from '../../redux/reducers/rootReducer';
 import { Link as RouterLink } from 'react-router-dom';
-import { PublicationStatus } from '../../../types/publication.types';
+import { PublicationStatus } from '../../types/publication.types';
 import RegistrationList from './RegistrationList';
-import TabButton from '../../../components/TabButton';
-import useFetchMyPublications from '../../../utils/hooks/useFetchMyPublications';
-import {
-  StyledRightAlignedButtonWrapper,
-  StyledCenterAlignedContentWrapper,
-} from '../../../components/styled/Wrappers';
-import ListSkeleton from '../../../components/ListSkeleton';
-import Card from '../../../components/Card';
-import { PageHeader } from '../../../components/PageHeader';
+import TabButton from '../../components/TabButton';
+import useFetchMyPublications from '../../utils/hooks/useFetchMyPublications';
+import { StyledRightAlignedButtonWrapper, StyledCenterAlignedContentWrapper } from '../../components/styled/Wrappers';
+import ListSkeleton from '../../components/ListSkeleton';
+import Card from '../../components/Card';
+import { PageHeader } from '../../components/PageHeader';
 
 const StyledContainer = styled.div`
   width: 100%;
