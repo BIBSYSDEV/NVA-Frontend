@@ -22,8 +22,8 @@ const DeletePublicationModal: FC<DeletePublicationModalProps> = ({ id, title, se
       open
       onAccept={deletePublication}
       onCancel={() => setOpenModal(false)}
-      title={t('workLists:delete_publication_heading')}>
-      <NormalText>{`${t('workLists:delete_publication_message')} "${title ?? t('common:no_title')}"`}</NormalText>
+      title={t('workLists:delete_registration')}>
+      <NormalText>{`${t('workLists:delete_registration_message')} "${title ?? t('common:no_title')}"`}</NormalText>
     </ConfirmDialog>
   );
 };

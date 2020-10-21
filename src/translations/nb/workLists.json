@@ -2,7 +2,7 @@
   "doi_requests": {
     "archive": "Avslutt sak",
     "doi_requests": "DOI-forespørsler",
-    "go_to_publication": "Gå til publikasjon",
+    "go_to_registration": "Gå til registrering",
     "message_to_user": "Melding til bruker",
     "no_pending_doi_requests": "Du har ingen ventende DOI-forespørsler",
     "status": {
@@ -11,14 +11,14 @@
       "REQUESTED": "Under behandling"
     }
   },
-  "delete_publication_heading": "Slett publikasjon",
-  "delete_publication_message": "Bekreft sletting av ",
+  "delete_registration": "Slett registrering",
+  "delete_registration_message": "Bekreft sletting av ",
   "for_approval": "Til godkjenning",
   "go_to_public_profile": "Gå til din åpne profil",
   "my_messages": "Mine meldinger",
   "my_registrations": "Mine registreringer",
   "my_worklist": "Min arbeidsliste",
-  "no_pending_publications": "Du har ingen publiseringer som venter på godkjenning",
+  "no_pending_registrations": "Du har ingen registreringer som venter på godkjenning",
   "published_registrations": "Publiserte registreringer",
   "submitter": "Innsender",
   "unpublished_registrations": "Upubliserte registreringer"
