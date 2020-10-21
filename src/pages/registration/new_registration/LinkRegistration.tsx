@@ -5,8 +5,8 @@ import { useHistory } from 'react-router-dom';
 import { Button, Typography } from '@material-ui/core';
 import LinkIcon from '@material-ui/icons/Link';
 import { getPublicationByDoi } from '../../../api/publicationApi';
-import LinkPublicationForm, { DoiFormValues } from './LinkPublicationForm';
-import PublicationAccordion from './PublicationAccordion';
+import LinkRegistrationForm, { DoiFormValues } from './LinkRegistrationForm';
+import RegistrationAccordion from './RegistrationAccordion';
 import { Doi } from '../../../types/publication.types';
 import { useDispatch } from 'react-redux';
 import { setNotification } from '../../../redux/actions/notificationActions';
@@ -63,7 +63,7 @@ const LinkRegistration: FC<LinkRegistrationProps> = ({ expanded, onChange, openF
   };
 
   return (
-    <PublicationAccordion
+    <RegistrationAccordion
       headerLabel={t('registration:registration.start_with_link_to_resource')}
       icon={<LinkIcon className="icon" />}
       expanded={expanded}
@@ -72,7 +72,7 @@ const LinkRegistration: FC<LinkRegistrationProps> = ({ expanded, onChange, openF
       dataTestId="new-publication-link">
       <StyledBody>
         <Typography>{t('registration:registration.link_to_resource_description')}</Typography>
-        <LinkPublicationForm handleSearch={handleSearch} />
+        <LinkRegistrationForm handleSearch={handleSearch} />
         {noHit && <Typography>{t('common:no_hits')}</Typography>}
         {doi && (
           <>
@@ -90,7 +90,7 @@ const LinkRegistration: FC<LinkRegistrationProps> = ({ expanded, onChange, openF
           </>
         )}
       </StyledBody>
-    </PublicationAccordion>
+    </RegistrationAccordion>
   );
 };
 

@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, FC } from 'react';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
@@ -6,7 +6,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import styled from 'styled-components';
 import { Typography } from '@material-ui/core';
 
-interface PublicationAccordionProps {
+interface RegistrationAccordionProps {
   headerLabel: string;
   icon: ReactNode;
   expanded: boolean;
@@ -16,7 +16,7 @@ interface PublicationAccordionProps {
   dataTestId?: string;
 }
 
-const StyledPublicationAccordion = styled(Accordion)`
+const StyledRegistrationAccordion = styled(Accordion)`
   margin-bottom: 2rem;
   @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
     max-width: 90vw;
@@ -38,7 +38,7 @@ const StyledAccordionDetails = styled(AccordionDetails)`
   flex-direction: column;
 `;
 
-const PublicationAccordion: React.FC<PublicationAccordionProps> = ({
+const RegistrationAccordion: FC<RegistrationAccordionProps> = ({
   headerLabel,
   icon,
   expanded,
@@ -48,14 +48,14 @@ const PublicationAccordion: React.FC<PublicationAccordionProps> = ({
   dataTestId,
 }) => {
   return (
-    <StyledPublicationAccordion expanded={expanded} onChange={onChange}>
+    <StyledRegistrationAccordion expanded={expanded} onChange={onChange}>
       <StyledAccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls={ariaControls} data-testid={dataTestId}>
         <StyledIcon>{icon}</StyledIcon>
         <Typography variant="h6">{headerLabel}</Typography>
       </StyledAccordionSummary>
       <StyledAccordionDetails>{children}</StyledAccordionDetails>
-    </StyledPublicationAccordion>
+    </StyledRegistrationAccordion>
   );
 };
 
-export default PublicationAccordion;
+export default RegistrationAccordion;

@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
-import PublicationAccordion from './PublicationAccordion';
+import RegistrationAccordion from './RegistrationAccordion';
 import { File, emptyFile } from '../../../types/file.types';
 import FileCard from '../files_and_license_tab/FileCard';
 import { createPublication } from '../../../api/publicationApi';
@@ -53,7 +53,7 @@ const UploadRegistration: FC<UploadRegistrationProps> = ({ expanded, onChange, o
   };
 
   return (
-    <PublicationAccordion
+    <RegistrationAccordion
       dataTestId="new-publication-file"
       headerLabel={t('registration:registration.start_with_uploading_file')}
       icon={<CloudDownloadIcon />}
@@ -89,7 +89,7 @@ const UploadRegistration: FC<UploadRegistrationProps> = ({ expanded, onChange, o
           )}
         </>
       ) : null}
-    </PublicationAccordion>
+    </RegistrationAccordion>
   );
 };
 

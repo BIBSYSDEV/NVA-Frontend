@@ -24,11 +24,11 @@ const emptyDoiFormValues: DoiFormValues = {
   doiUrl: '',
 };
 
-interface LinkPublicationFormProps {
+interface LinkRegistrationFormProps {
   handleSearch: (values: { doiUrl: string }) => void;
 }
 
-const LinkPublicationForm: FC<LinkPublicationFormProps> = ({ handleSearch }) => {
+const LinkRegistrationForm: FC<LinkRegistrationFormProps> = ({ handleSearch }) => {
   const { t } = useTranslation('registration');
 
   return (
@@ -64,4 +64,4 @@ const LinkPublicationForm: FC<LinkPublicationFormProps> = ({ handleSearch }) => 
   );
 };
 
-export default LinkPublicationForm;
+export default LinkRegistrationForm;

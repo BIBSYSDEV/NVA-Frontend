@@ -6,7 +6,7 @@ import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import { Contributor } from '../../types/contributor.types';
 import NormalText from '../../components/NormalText';
 import { getDistinctContributorUnits } from '../../utils/institutions-helpers';
-import OrcidLogo from '../../../resources/images/orcid_logo.svg';
+import OrcidLogo from '../../resources/images/orcid_logo.svg';
 import { ORCID_BASE_URL } from '../../utils/constants';
 import AffiliationHierarchy from '../../components/institution/AffiliationHierarchy';
 
