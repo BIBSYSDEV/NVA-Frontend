@@ -1,5 +1,5 @@
 import React, { FC, useState, useEffect } from 'react';
-import { getPublicationsForApproval } from '../../api/publicationApi';
+import { getRegistrationsForApproval } from '../../api/registrationApi';
 import WorklistTable from './WorkListTable';
 import { useTranslation } from 'react-i18next';
 import SubHeading from '../../components/SubHeading';
@@ -16,7 +16,7 @@ const RegistrationsForApproval: FC = () => {
 
   useEffect(() => {
     const fetchPublicationsForApproval = async () => {
-      const publicationsForApprovalResponse = await getPublicationsForApproval();
+      const publicationsForApprovalResponse = await getRegistrationsForApproval();
       if (publicationsForApprovalResponse.error) {
         dispatch(setNotification(publicationsForApprovalResponse.error, NotificationVariant.Error));
       } else {

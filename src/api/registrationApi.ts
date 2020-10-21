@@ -15,7 +15,7 @@ export enum PublicationsApiPaths {
   FOR_APPROVAL = '/publications/approval',
 }
 
-export const createPublication = async (partialPublication?: PublicationFileSet) => {
+export const createRegistration = async (partialPublication?: PublicationFileSet) => {
   try {
     const idToken = await getIdToken();
     const response = await Axios.post(PublicationsApiPaths.PUBLICATION, partialPublication, {
@@ -31,7 +31,7 @@ export const createPublication = async (partialPublication?: PublicationFileSet)
   }
 };
 
-export const updatePublication = async (publication: Publication) => {
+export const updateRegistration = async (publication: Publication) => {
   const { identifier } = publication;
   if (!identifier) {
     return { error: i18n.t('feedback:error.update_registration') };
@@ -53,7 +53,7 @@ export const updatePublication = async (publication: Publication) => {
   }
 };
 
-export const getPublications = async (cancelToken?: CancelToken) => {
+export const getRegistrations = async (cancelToken?: CancelToken) => {
   const url = PublicationsApiPaths.PUBLICATION;
 
   try {
@@ -70,7 +70,7 @@ export const getPublications = async (cancelToken?: CancelToken) => {
   }
 };
 
-export const getPublication = async (id: string, cancelToken?: CancelToken) => {
+export const getRegistration = async (id: string, cancelToken?: CancelToken) => {
   const url = `${PublicationsApiPaths.PUBLICATION}/${id}`;
 
   try {
@@ -87,7 +87,7 @@ export const getPublication = async (id: string, cancelToken?: CancelToken) => {
   }
 };
 
-export const publishPublication = async (identifier: string) => {
+export const publishRegistration = async (identifier: string) => {
   if (!identifier) {
     return { error: i18n.t('feedback:error.publish_registration') };
   }
@@ -114,7 +114,7 @@ export const publishPublication = async (identifier: string) => {
   }
 };
 
-export const getMyPublications = async (cancelToken?: CancelToken) => {
+export const getMyRegistrations = async (cancelToken?: CancelToken) => {
   const url = PublicationsApiPaths.PUBLICATIONS_BY_OWNER;
   try {
     const idToken = await getIdToken();
@@ -136,7 +136,7 @@ export const getMyPublications = async (cancelToken?: CancelToken) => {
   }
 };
 
-export const getPublicationByDoi = async (doiUrl: string) => {
+export const getRegistrationByDoi = async (doiUrl: string) => {
   try {
     const idToken = await getIdToken();
     const response = await Axios.post(
@@ -172,7 +172,7 @@ export const search = async (
   });
 
 // Fetch publications ready for approval
-export const getPublicationsForApproval = async () => {
+export const getRegistrationsForApproval = async () => {
   try {
     const idToken = await getIdToken();
     const response = await Axios.get(PublicationsApiPaths.FOR_APPROVAL, {

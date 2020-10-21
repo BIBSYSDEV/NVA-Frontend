@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { Button, Typography } from '@material-ui/core';
 import LinkIcon from '@material-ui/icons/Link';
-import { getPublicationByDoi } from '../../../api/publicationApi';
+import { getRegistrationByDoi } from '../../../api/registrationApi';
 import LinkRegistrationForm, { DoiFormValues } from './LinkRegistrationForm';
 import RegistrationAccordion from './RegistrationAccordion';
 import { Doi } from '../../../types/publication.types';
@@ -51,7 +51,7 @@ const LinkRegistration: FC<LinkRegistrationProps> = ({ expanded, onChange, openF
     setNoHit(false);
     setDoi(null);
 
-    const doiPublication = await getPublicationByDoi(decodedDoiUrl);
+    const doiPublication = await getRegistrationByDoi(decodedDoiUrl);
     if (doiPublication?.error) {
       setNoHit(true);
       dispatch(setNotification(t('feedback:error.get_doi'), NotificationVariant.Error));

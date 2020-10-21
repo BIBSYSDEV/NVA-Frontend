@@ -1,6 +1,6 @@
 import { AlmaPublication } from '../../types/publication.types';
 import { useEffect, useState } from 'react';
-import { getAlmaPublication } from '../../api/almaApi';
+import { getAlmaRegistration } from '../../api/almaApi';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import { useDispatch } from 'react-redux';
@@ -15,7 +15,7 @@ const useFetchLastPublication = (systemControlNumber: string, name: string): [Al
     const cancelSource = Axios.CancelToken.source();
 
     const fetchLastPublication = async () => {
-      const retrievedPublication = await getAlmaPublication(systemControlNumber, name, cancelSource.token);
+      const retrievedPublication = await getAlmaRegistration(systemControlNumber, name, cancelSource.token);
       if (retrievedPublication) {
         setIsLoading(false);
         if (retrievedPublication.error) {

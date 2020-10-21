@@ -4,7 +4,7 @@ import Axios from 'axios';
 
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
-import { getPublications } from '../../api/publicationApi';
+import { getRegistrations } from '../../api/registrationApi';
 import { LatestPublication } from '../../types/search.types';
 
 const useFetchLatestPublications = (): [LatestPublication[], boolean] => {
@@ -16,7 +16,7 @@ const useFetchLatestPublications = (): [LatestPublication[], boolean] => {
     const cancelSource = Axios.CancelToken.source();
 
     const fetchPublications = async () => {
-      const publications = await getPublications(cancelSource.token);
+      const publications = await getRegistrations(cancelSource.token);
       if (publications) {
         if (publications.error) {
           dispatch(setNotification(publications.error, NotificationVariant.Error));

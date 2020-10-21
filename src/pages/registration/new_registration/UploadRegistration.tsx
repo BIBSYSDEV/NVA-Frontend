@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 import RegistrationAccordion from './RegistrationAccordion';
 import { File, emptyFile } from '../../../types/file.types';
 import FileCard from '../files_and_license_tab/FileCard';
-import { createPublication } from '../../../api/publicationApi';
+import { createRegistration } from '../../../api/registrationApi';
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../types/notification.types';
 import ButtonWithProgress from '../../../components/ButtonWithProgress';
@@ -42,7 +42,7 @@ const UploadRegistration: FC<UploadRegistrationProps> = ({ expanded, onChange, o
         files: uploadedFiles,
       },
     };
-    const publication = await createPublication(publicationPayload);
+    const publication = await createRegistration(publicationPayload);
     if (publication?.identifier) {
       openForm();
       history.push(`/registration/${publication.identifier}`);

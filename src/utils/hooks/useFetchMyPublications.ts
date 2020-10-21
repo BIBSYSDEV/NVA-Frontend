@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import Axios from 'axios';
-import { getMyPublications } from '../../api/publicationApi';
+import { getMyRegistrations } from '../../api/registrationApi';
 import { useDispatch } from 'react-redux';
 import { PublicationPreview } from '../../types/publication.types';
 import { setNotification } from '../../redux/actions/notificationActions';
@@ -15,7 +15,7 @@ const useFetchMyPublications = (): [PublicationPreview[], boolean] => {
     const cancelSource = Axios.CancelToken.source();
 
     const fetchMyPublications = async () => {
-      const myPublications = await getMyPublications(cancelSource.token);
+      const myPublications = await getMyRegistrations(cancelSource.token);
       if (myPublications) {
         setIsLoading(false);
         if (myPublications.error) {

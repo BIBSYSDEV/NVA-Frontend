@@ -18,7 +18,7 @@ import mockPublishedPublications from '../utils/testfiles/published_publications
 import { AuthorityApiPaths } from './authorityApi';
 import { InstitutionApiPaths } from './institutionApi';
 import { ProjectsApiPaths } from './projectApi';
-import { PublicationsApiPaths } from './publicationApi';
+import { PublicationsApiPaths } from './registrationApi';
 import { PublicationChannelApiPaths } from './publicationChannelApi';
 import { FileApiPaths } from './fileApi';
 import { CustomerInstitutionApiPaths } from './customerInstitutionsApi';

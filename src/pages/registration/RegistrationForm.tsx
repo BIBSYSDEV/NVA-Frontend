@@ -8,7 +8,7 @@ import { useHistory } from 'react-router-dom';
 
 import { emptyPublication, Publication, PublicationTab } from '../../types/publication.types';
 import { RegistrationFormTabs } from './RegistrationFormTabs';
-import { updatePublication } from '../../api/publicationApi';
+import { updateRegistration } from '../../api/registrationApi';
 import { useDispatch, useSelector } from 'react-redux';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
@@ -80,7 +80,7 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier, closeForm }) 
 
   const savePublication = async (values: Publication) => {
     setIsSaving(true);
-    const updatedPublication = await updatePublication(values);
+    const updatedPublication = await updateRegistration(values);
     if (updatedPublication?.error) {
       dispatch(setNotification(updatedPublication.error, NotificationVariant.Error));
     } else {

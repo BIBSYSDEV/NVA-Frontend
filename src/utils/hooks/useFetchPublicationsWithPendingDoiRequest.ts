@@ -6,7 +6,7 @@ import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import { RoleName } from '../../types/user.types';
 import useCancelToken from './useCancelToken';
-import { getPublicationsWithPendingDoiRequest } from '../../api/doiRequestApi';
+import { getRegistrationsWithPendingDoiRequest } from '../../api/doiRequestApi';
 import { Publication } from '../../types/publication.types';
 
 const useFetchPublicationsWithPendingDoiRequest = (role: RoleName): [Publication[], boolean, () => void] => {
@@ -18,7 +18,7 @@ const useFetchPublicationsWithPendingDoiRequest = (role: RoleName): [Publication
 
   const fetchDoiRequests = useCallback(async () => {
     setIsLoading(true);
-    const response = await getPublicationsWithPendingDoiRequest(role, cancelToken);
+    const response = await getRegistrationsWithPendingDoiRequest(role, cancelToken);
     if (response) {
       if (response.error) {
         dispatch(setNotification(t('feedback:error.get_doi_requests'), NotificationVariant.Error));

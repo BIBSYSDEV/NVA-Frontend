@@ -17,7 +17,7 @@ import Card from '../../components/Card';
 import { useHistory } from 'react-router-dom';
 import LabelContentRow from '../../components/LabelContentRow';
 import ErrorSummary from './submission_tab/ErrorSummary';
-import { publishPublication } from '../../api/publicationApi';
+import { publishRegistration } from '../../api/registrationApi';
 import { useDispatch, useSelector } from 'react-redux';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
@@ -66,7 +66,7 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication }
     setIsPublishing(true);
     const publicationIsUpdated = dirty ? await savePublication() : true;
     if (publicationIsUpdated) {
-      const publishedPublication = await publishPublication(values.identifier);
+      const publishedPublication = await publishRegistration(values.identifier);
       if (publishedPublication?.error) {
         setIsPublishing(false);
         dispatch(setNotification(publishedPublication.error, NotificationVariant.Error));
