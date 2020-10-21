@@ -73,13 +73,22 @@ const DescriptionPanel: FC<PanelProps> = ({ setTouchedFields }) => {
         </Field>
         <Field name={DescriptionFieldNames.ABSTRACT}>
           {({ field }: FieldProps) => (
-            <TextField {...field} variant="outlined" fullWidth multiline rows="4" label={t('description.abstract')} />
+            <TextField
+              {...field}
+              data-testid="publication-abstract-field"
+              variant="outlined"
+              fullWidth
+              multiline
+              rows="4"
+              label={t('description.abstract')}
+            />
           )}
         </Field>
         <Field name={DescriptionFieldNames.DESCRIPTION}>
           {({ field }: FieldProps) => (
             <TextField
               {...field}
+              data-testid="publication-description-field"
               label={t('description.description')}
               multiline
               rows="4"
@@ -111,6 +120,7 @@ const DescriptionPanel: FC<PanelProps> = ({ setTouchedFields }) => {
                 renderInput={(params) => (
                   <MuiTextField
                     {...params}
+                    data-testid="publication-tag-field"
                     label={t('description.keywords')}
                     helperText={t('description.keywords_helper')}
                     variant="outlined"
@@ -124,6 +134,7 @@ const DescriptionPanel: FC<PanelProps> = ({ setTouchedFields }) => {
 
         <DateAndLanguageWrapper>
           <DatePickerField
+            data-testid="publication-date-field"
             yearFieldName={DescriptionFieldNames.PUBLICATION_YEAR}
             monthFieldName={DescriptionFieldNames.PUBLICATION_MONTH}
             dayFieldName={DescriptionFieldNames.PUBLICATION_DAY}
@@ -133,6 +144,7 @@ const DescriptionPanel: FC<PanelProps> = ({ setTouchedFields }) => {
             {({ field }: FieldProps) => (
               <TextField
                 {...field}
+                data-testid="publication-language-field"
                 fullWidth
                 label={t('description.primary_language')}
                 placeholder={t('description.primary_language')}
