@@ -16,7 +16,7 @@ const PublicRegistration: FC = () => {
   const user = useSelector((store: RootStore) => store.user);
 
   const isAllowedToSeePublicPublication =
-    publication?.status === RegistrationStatus.PUBLISHED || user?.isCurator || publication?.owner === user?.id;
+    publication?.status === RegistrationStatus.PUBLISHED || (user?.isCurator && publication.publisher.id === user?.id) || publication?.owner === user?.id;
 
   return (
     <>
