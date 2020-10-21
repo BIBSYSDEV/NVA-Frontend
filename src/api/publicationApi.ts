@@ -24,10 +24,10 @@ export const createPublication = async (partialPublication?: PublicationFileSet)
     if (response.status === StatusCode.CREATED) {
       return response.data;
     } else {
-      return { error: i18n.t('feedback:error.create_publication') };
+      return { error: i18n.t('feedback:error.create_registration') };
     }
   } catch {
-    return { error: i18n.t('feedback:error.create_publication') };
+    return { error: i18n.t('feedback:error.create_registration') };
   }
 };
 

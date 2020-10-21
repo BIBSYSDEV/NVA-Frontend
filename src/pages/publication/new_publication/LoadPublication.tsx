@@ -48,7 +48,7 @@ const LoadPublication: FC<LoadPublicationProps> = ({ expanded, onChange, openFor
       history.push(`/registration/${publication.identifier}`);
     } else {
       setIsLoading(false);
-      dispatch(setNotification(t('feedback:error.create_publication'), NotificationVariant.Error));
+      dispatch(setNotification(t('feedback:error.create_registration'), NotificationVariant.Error));
     }
   };
 
