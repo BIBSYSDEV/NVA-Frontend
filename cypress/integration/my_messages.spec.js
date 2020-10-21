@@ -1,5 +1,5 @@
 import { RoleName } from '../../src/types/user.types';
-import { publicationsWithPendingDoiRequest } from '../../src/utils/testfiles/mockPublication';
+import { mockRegistrationsWithPendingDoiRequest } from '../../src/utils/testfiles/mockRegistration';
 
 describe('My messages', () => {
   beforeEach(() => {
@@ -16,7 +16,7 @@ describe('My messages', () => {
   });
 
   it('The Creator should be able to open an item in the DOI request list and see the summary of the publication', () => {
-    const { identifier } = publicationsWithPendingDoiRequest[0];
+    const { identifier } = mockRegistrationsWithPendingDoiRequest[0];
     cy.get(`[data-testid=doi-request-${identifier}]`).click();
     cy.get(`[data-testid=go-to-publication-${identifier}]`).click();
     cy.url().should('include', `/registration/${identifier}`);
