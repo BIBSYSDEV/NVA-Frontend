@@ -1,4 +1,4 @@
-describe.skip('Publication: References: Chapter', () => {
+describe.skip('Registration: References: Chapter', () => {
   beforeEach(() => {
     cy.visit('/');
     cy.server();
@@ -9,7 +9,7 @@ describe.skip('Publication: References: Chapter', () => {
     // navigate to References (update this when functionality for starting a registration is done)
     cy.get('[data-testid=new-publication]').click({ force: true });
 
-    cy.startPublicationWithDoi();
+    cy.startRegistrationWithDoi();
 
     cy.get('[data-testid=nav-tabpanel-reference]').click({ force: true });
 

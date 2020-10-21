@@ -1,14 +1,14 @@
-describe('User opens an item in the My Publication list', () => {
+describe('User opens an item in the My Registrations list', () => {
   beforeEach('Given that the user is logged in as Creator:', () => {
     cy.visit('/');
     cy.mocklogin();
   });
 
-  it('The User should be able to edit an item in the My Publications list', () => {
-    // Open My Publications
+  it('The User should be able to edit an item in the My Registrations list', () => {
+    // Open My Registrations
     cy.get('[data-testid=my-publications]').click({ force: true });
 
-    // Edit publication
+    // Edit registration
     // Description tab
     cy.get('[data-testid=edit-publication-12345678]').click({ force: true });
     cy.get('[data-testid=publication-title-input]').should(

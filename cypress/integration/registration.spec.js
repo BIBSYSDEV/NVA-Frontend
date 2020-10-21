@@ -1,7 +1,7 @@
-describe('Publication', () => {
+describe('Registration', () => {
   beforeEach(() => {
     cy.server();
-    cy.visit('/publications');
+    cy.visit('/registration');
   });
 
   it('The user should be able to start registration with a DOI link', () => {
@@ -44,7 +44,7 @@ describe('Publication', () => {
     cy.get('[data-testid=publication-file-start-button]').click({ force: true });
   });
 
-  it('The user should not be able to go to the registration page for publication if not logged in', () => {
+  it('The user should not be able to go to the registration page for registration if not logged in', () => {
     cy.get('[data-testid=404]').should('be.visible');
   });
 });

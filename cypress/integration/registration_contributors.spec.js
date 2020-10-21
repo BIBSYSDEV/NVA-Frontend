@@ -1,4 +1,4 @@
-describe('Publication: Contributors', () => {
+describe('Registration: Contributors', () => {
   beforeEach(() => {
     cy.visit('/');
     cy.server();
@@ -10,7 +10,7 @@ describe('Publication: Contributors', () => {
     // navigate to Contributors
     cy.get('[data-testid=new-publication]').click({ force: true });
 
-    cy.startPublicationWithDoi();
+    cy.startRegistrationWithDoi();
 
     cy.get('[data-testid=nav-tabpanel-contributors]').click({ force: true });
 
