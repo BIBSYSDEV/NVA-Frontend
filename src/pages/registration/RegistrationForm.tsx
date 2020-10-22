@@ -149,7 +149,7 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier, closeForm }) 
                     <ButtonWithProgress
                       type="submit"
                       isLoading={isSaving}
-                      data-testid="button-save-publication"
+                      data-testid="button-save-registration"
                       onClick={async () => {
                         await saveRegistration(values);
                         // Set all fields with error to touched to ensure error messages are shown

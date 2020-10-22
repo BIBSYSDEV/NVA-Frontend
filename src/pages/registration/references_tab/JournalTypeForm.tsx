@@ -1,6 +1,6 @@
 import { FormikProps, useFormikContext } from 'formik';
 import React, { FC } from 'react';
-import { JournalPublication } from '../../../types/registration.types';
+import { JournalRegistration } from '../../../types/registration.types';
 import { ReferenceFieldNames, JournalType } from '../../../types/publicationFieldNames';
 import SelectTypeField from './components/SelectTypeField';
 import JournalArticleForm from './sub_type_forms/JournalArticleForm';
@@ -12,7 +12,7 @@ interface JournalTypeFormProps {
 }
 
 const JournalTypeForm: FC<JournalTypeFormProps> = ({ onChangeSubType }) => {
-  const { values }: FormikProps<JournalPublication> = useFormikContext();
+  const { values }: FormikProps<JournalRegistration> = useFormikContext();
   const subType = values.entityDescription.reference.publicationInstance.type;
 
   return (

@@ -119,7 +119,7 @@ export const PublicRegistrationStatusBar: FC<PublicRegistrationContentProps> = (
           ))}
 
         <Link to={`/registration/${identifier}`}>
-          <Button variant="contained" color="primary" data-testid="button-edit-publication">
+          <Button variant="contained" color="primary" data-testid="button-edit-registration">
             {t('edit_registration')}
           </Button>
         </Link>

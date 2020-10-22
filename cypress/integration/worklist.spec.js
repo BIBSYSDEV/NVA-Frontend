@@ -21,7 +21,7 @@ describe('Worklist', () => {
     const { identifier } = mockRegistrationsWithPendingDoiRequest[0];
     cy.get('[data-testid=doi-requests-button]').click();
     cy.get(`[data-testid=doi-request-${identifier}]`).click();
-    cy.get(`[data-testid=go-to-publication-${identifier}]`).click();
+    cy.get(`[data-testid=go-to-registration-${identifier}]`).click();
     cy.url().should('include', `/registration/${identifier}`);
   });
 });

@@ -32,7 +32,7 @@ import { setNotification } from '../../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../../types/notification.types';
 import { Authority } from '../../../../types/authority.types';
 import { overwriteArrayMerge } from '../../../../utils/formik-helpers';
-import { BackendTypeNames } from '../../../../types/publication_types/commonPublication.types';
+import { BackendTypeNames } from '../../../../types/publication_types/commonRegistration.types';
 
 const StyledWarningIcon = styled(WarningIcon)`
   color: ${({ theme }) => theme.palette.warning.main};

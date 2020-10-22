@@ -3,13 +3,13 @@ import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { TextField, Typography } from '@material-ui/core';
-import { JournalPublication } from '../../../../types/registration.types';
+import { JournalRegistration } from '../../../../types/registration.types';
 import { ReferenceFieldNames } from '../../../../types/publicationFieldNames';
 import DoiField from '../components/DoiField';
 import PublisherField from '../components/PublisherField';
 import { PublicationTableNumber } from '../../../../utils/constants';
 import NviValidation from '../components/NviValidation';
-import { JournalEntityDescription } from '../../../../types/publication_types/journalPublication.types';
+import { JournalEntityDescription } from '../../../../types/publication_types/journalRegistration.types';
 
 const StyledArticleDetail = styled.div`
   display: grid;
@@ -29,7 +29,7 @@ const StyledLabel = styled(Typography)`
 
 const JournalForm: FC = () => {
   const { t } = useTranslation('registration');
-  const { touched, values }: FormikProps<JournalPublication> = useFormikContext();
+  const { touched, values }: FormikProps<JournalRegistration> = useFormikContext();
   const {
     reference: { publicationContext, publicationInstance },
   } = values.entityDescription as JournalEntityDescription;

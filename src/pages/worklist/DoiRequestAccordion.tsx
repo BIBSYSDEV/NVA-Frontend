@@ -103,7 +103,7 @@ export const DoiRequestAccordion: FC<DoiRequestAccordionProps> = ({ registration
         </StyledMessages>
         <StyledAccordionActionButtons>
           <Button
-            data-testid={`go-to-publication-${identifier}`}
+            data-testid={`go-to-registration-${identifier}`}
             variant="outlined"
             component={RouterLink}
             to={`/registration/${identifier}?tab=${RegistrationTab.Submission}`}>

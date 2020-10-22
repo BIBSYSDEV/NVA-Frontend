@@ -6,7 +6,7 @@ describe('User opens their Public Profile from My Registrations Page', () => {
 
   it('The User should be able to open their public profile from the page My Registrations', () => {
     // Open My Registrations
-    cy.get('[data-testid=my-publications]').click({ force: true });
+    cy.get('[data-testid=my-registrations]').click({ force: true });
 
     // Open Public Profile
     cy.get('[data-testid=public-profile-button]').click({ force: true });

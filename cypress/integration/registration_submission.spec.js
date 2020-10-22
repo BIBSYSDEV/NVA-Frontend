@@ -7,7 +7,7 @@ describe('Registration: Submission', () => {
   it('The user should be able to navigate to submission tab', () => {
     cy.mocklogin();
 
-    cy.get('[data-testid=new-publication]').click({ force: true });
+    cy.get('[data-testid=new-registration]').click({ force: true });
 
     cy.startRegistrationWithDoi();
 

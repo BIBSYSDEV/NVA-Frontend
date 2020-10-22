@@ -1,9 +1,9 @@
 import React, { FC } from 'react';
 import LabelContentRow from '../../components/LabelContentRow';
-import { JournalPublicationInstance } from '../../types/publication_types/journalPublication.types';
+import { JournalPublicationInstance } from '../../types/publication_types/journalRegistration.types';
 import { useTranslation } from 'react-i18next';
-import { DegreePublicationInstance } from '../../types/publication_types/degreePublication.types';
-import { ReportPublicationInstance } from '../../types/publication_types/reportPublication.types';
+import { DegreePublicationInstance } from '../../types/publication_types/degreeRegistration.types';
+import { ReportPublicationInstance } from '../../types/publication_types/reportRegistration.types';
 import { PagesMonograph } from '../../types/registration.types';
 
 export const PublicPublicationInstanceJournal: FC<{ publicationInstance: JournalPublicationInstance }> = ({

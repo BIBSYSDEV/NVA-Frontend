@@ -2,7 +2,7 @@ import { Field, FormikProps, useFormikContext, FieldProps } from 'formik';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { ReportPublication } from '../../../../types/registration.types';
+import { ReportRegistration } from '../../../../types/registration.types';
 import { ReferenceFieldNames } from '../../../../types/publicationFieldNames';
 import { PublicationTableNumber } from '../../../../utils/constants';
 import PublicationChannelSearch from '../components/PublicationChannelSearch';
@@ -31,7 +31,7 @@ const StyledTypography = styled(Typography)`
 const ReportForm: FC = () => {
   const { t } = useTranslation('registration');
 
-  const { setFieldValue, touched }: FormikProps<ReportPublication> = useFormikContext();
+  const { setFieldValue, touched }: FormikProps<ReportRegistration> = useFormikContext();
 
   return (
     <>

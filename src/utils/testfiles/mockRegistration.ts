@@ -1,10 +1,15 @@
 import { LanguageValues } from '../../types/language.types';
-import { JournalPublication, RegistrationStatus, DoiRequestStatus, Registration } from '../../types/registration.types';
+import {
+  JournalRegistration,
+  RegistrationStatus,
+  DoiRequestStatus,
+  Registration,
+} from '../../types/registration.types';
 import { JournalType, PublicationType } from '../../types/publicationFieldNames';
-import { BackendTypeNames } from '../../types/publication_types/commonPublication.types';
+import { BackendTypeNames } from '../../types/publication_types/commonRegistration.types';
 import { mockCustomerInstitution } from './mockCustomerInstitutions';
 
-export const mockRegistration: JournalPublication = {
+export const mockRegistration: JournalRegistration = {
   type: BackendTypeNames.PUBLICATION,
   identifier: '12345679',
   createdDate: '2020',
@@ -96,7 +101,7 @@ export const mockRegistration: JournalPublication = {
   },
 };
 
-const mockRegistrationWithPendingDoiRequest: JournalPublication = {
+const mockRegistrationWithPendingDoiRequest: JournalRegistration = {
   ...mockRegistration,
   doiRequest: {
     type: 'DoiRequest',

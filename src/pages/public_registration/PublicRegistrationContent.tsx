@@ -18,7 +18,7 @@ import { displayDate } from '../../utils/date-helpers';
 import {
   JournalPublicationContext,
   JournalPublicationInstance,
-} from '../../types/publication_types/journalPublication.types';
+} from '../../types/publication_types/journalRegistration.types';
 import { PublicRegistrationStatusBar } from './PublicRegistrationStatusBar';
 import { isJournal, isDegree, isReport } from '../../utils/registration-helpers';
 import {
@@ -34,11 +34,11 @@ import {
 import {
   DegreePublicationContext,
   DegreePublicationInstance,
-} from '../../types/publication_types/degreePublication.types';
+} from '../../types/publication_types/degreeRegistration.types';
 import {
   ReportPublicationContext,
   ReportPublicationInstance,
-} from '../../types/publication_types/reportPublication.types';
+} from '../../types/publication_types/reportRegistration.types';
 
 const StyledContentWrapper = styled.div`
   display: flex;

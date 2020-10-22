@@ -125,7 +125,7 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, saveRegistration 
         {status === RegistrationStatus.DRAFT && (
           <StyledButtonWithProgress
             disabled={isSaving || !isValid}
-            data-testid="button-publish-publication"
+            data-testid="button-publish-registration"
             onClick={onClickPublish}
             isLoading={isPublishing}>
             {t('common:publish')}
@@ -157,7 +157,7 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, saveRegistration 
               type="submit"
               disabled={isPublishing}
               isLoading={isSaving}
-              data-testid="button-save-publication"
+              data-testid="button-save-registration"
               onClick={async () => {
                 const registrationIsUpdated = await saveRegistration();
                 if (registrationIsUpdated) {
@@ -172,7 +172,7 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, saveRegistration 
             type="submit"
             disabled={isPublishing}
             isLoading={isSaving}
-            data-testid="button-save-publication"
+            data-testid="button-save-registration"
             onClick={async () => await saveRegistration()}>
             {t('common:save')}
           </ButtonWithProgress>
