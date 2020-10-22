@@ -10,7 +10,7 @@ import DoiField from '../components/DoiField';
 import PublisherField from '../components/PublisherField';
 import { PublicationTableNumber } from '../../../../utils/constants';
 import { JournalRegistration } from '../../../../types/registration.types';
-import { formatPublicationContextWithTitle } from '../reference-helpers';
+import { formatPublicationContextWithTitle, publicationContextToPublisher } from '../reference-helpers';
 import {
   JournalEntityDescription,
   JournalPublicationContext,
@@ -54,7 +54,7 @@ const JournalArticleForm: FC = () => {
               const journalValues = formatPublicationContextWithTitle(value.type, newValue);
               setFieldValue(name, journalValues);
             }}
-            value={value}
+            value={publicationContextToPublisher(value)}
           />
         )}
       </Field>

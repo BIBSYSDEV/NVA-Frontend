@@ -4,17 +4,21 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import DoiField from '../components/DoiField';
 import PublisherField from '../components/PublisherField';
-import { ReferenceFieldNames } from '../../../../types/publicationFieldNames';
+import { ReferenceFieldNames, contextTypeBaseFieldName } from '../../../../types/publicationFieldNames';
 import IsbnListField from '../components/IsbnListField';
 import TotalPagesField from '../components/TotalPagesField';
 import { BookRegistration } from '../../../../types/registration.types';
-import { BookEntityDescription } from '../../../../types/publication_types/bookRegistration.types';
+import {
+  BookEntityDescription,
+  BookPublicationContext,
+} from '../../../../types/publication_types/bookRegistration.types';
 import PeerReview from '../components/PeerReview';
 import { Typography, FormControlLabel, Checkbox } from '@material-ui/core';
 import PublicationChannelSearch from '../components/PublicationChannelSearch';
 import { PublicationTableNumber } from '../../../../utils/constants';
 import PublisherRow from '../components/PublisherRow';
 import NviValidation from '../components/NviValidation';
+import { formatPublicationContextWithPublisher, publicationContextToPublisher } from '../reference-helpers';
 
 const StyledSection = styled.div`
   display: grid;
@@ -53,11 +57,22 @@ const BookForm: FC = () => {
     <>
       <DoiField />
 
-      <PublisherField
-        label={t('common:publisher')}
-        placeholder={t('references.search_for_publisher')}
-        errorFieldName={ReferenceFieldNames.PUBLICATION_CONTEXT_PUBLISHER}
-      />
+      <Field name={contextTypeBaseFieldName}>
+        {({ field: { name, value } }: FieldProps<BookPublicationContext>) => (
+          <PublisherField
+            publicationTable={PublicationTableNumber.PUBLISHERS}
+            label={t('common:publisher')}
+            placeholder={t('references.search_for_publisher')}
+            errorFieldName={ReferenceFieldNames.PUBLICATION_CONTEXT_PUBLISHER}
+            setValue={(newValue) => {
+              const bookValues = formatPublicationContextWithPublisher(value.type, newValue);
+              setFieldValue(name, bookValues);
+            }}
+            value={publicationContextToPublisher(value)}
+          />
+        )}
+      </Field>
+
       <StyledSection>
         <IsbnListField />
         <TotalPagesField />

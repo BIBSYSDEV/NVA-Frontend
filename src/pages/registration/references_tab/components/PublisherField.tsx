@@ -19,7 +19,7 @@ interface PublisherFieldProps {
   placeholder: string;
   errorFieldName: string;
   setValue?: (value?: Publisher) => void;
-  value?: any;
+  value?: Publisher;
 }
 
 const PublisherField: FC<PublisherFieldProps> = ({
@@ -64,7 +64,7 @@ const PublisherField: FC<PublisherFieldProps> = ({
       }}
       value={value}
       onChange={(_, inputValue) => {
-        setValue?.(inputValue);
+        setValue?.(inputValue as Publisher);
       }}
       loading={isLoading}
       getOptionLabel={(option) => option.title ?? ''}
