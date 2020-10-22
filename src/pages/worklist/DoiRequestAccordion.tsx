@@ -64,17 +64,17 @@ const StyledAccordionActionButtons = styled.div`
 `;
 
 interface DoiRequestAccordionProps {
-  publication: Registration;
+  registration: Registration;
 }
 
-export const DoiRequestAccordion: FC<DoiRequestAccordionProps> = ({ publication }) => {
+export const DoiRequestAccordion: FC<DoiRequestAccordionProps> = ({ registration }) => {
   const { t } = useTranslation('workLists');
   const {
     identifier,
     owner,
     entityDescription: { mainTitle },
-  } = publication;
-  const doiRequest = publication.doiRequest!;
+  } = registration;
+  const doiRequest = registration.doiRequest!;
 
   return (
     <StyledAccordion data-testid={`doi-request-${identifier}`}>

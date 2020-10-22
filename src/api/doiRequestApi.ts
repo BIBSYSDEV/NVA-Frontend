@@ -13,12 +13,12 @@ export const getRegistrationsWithPendingDoiRequest = async (role: RoleName, canc
     cancelToken,
   });
 
-export const createDoiRequest = async (publicationId: string, message?: string, cancelToken?: CancelToken) =>
+export const createDoiRequest = async (registrationId: string, message?: string, cancelToken?: CancelToken) =>
   await authenticatedApiRequest({
     url: DoiRequestApiPaths.DOI_REQUEST,
     method: 'POST',
     data: {
-      publicationId,
+      publicationId: registrationId,
       message,
     },
     cancelToken,

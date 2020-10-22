@@ -31,14 +31,14 @@ export const createRegistration = async (partialPublication?: RegistrationFileSe
   }
 };
 
-export const updateRegistration = async (publication: Registration) => {
-  const { identifier } = publication;
+export const updateRegistration = async (registration: Registration) => {
+  const { identifier } = registration;
   if (!identifier) {
     return { error: i18n.t('feedback:error.update_registration') };
   }
   const idToken = await getIdToken();
   try {
-    const response = await Axios.put(`${PublicationsApiPaths.PUBLICATION}/${identifier}`, publication, {
+    const response = await Axios.put(`${PublicationsApiPaths.PUBLICATION}/${identifier}`, registration, {
       headers: {
         Authorization: `Bearer ${idToken}`,
       },

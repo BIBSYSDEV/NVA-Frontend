@@ -23,19 +23,19 @@ const useFetchRegistration = (
   useEffect(() => {
     const cancelSource = Axios.CancelToken.source();
 
-    const fetchPublication = async () => {
-      const publication = await getRegistration(identifier!, cancelSource.token);
-      if (publication) {
-        if (publication.error) {
-          dispatch(setNotification(publication.error, NotificationVariant.Error));
+    const fetchRegistration = async () => {
+      const registration = await getRegistration(identifier!, cancelSource.token);
+      if (registration) {
+        if (registration.error) {
+          dispatch(setNotification(registration.error, NotificationVariant.Error));
         } else {
-          setRegistration(publication);
+          setRegistration(registration);
         }
         setIsLoading(false);
       }
     };
     if (identifier) {
-      fetchPublication();
+      fetchRegistration();
     }
 
     return () => {

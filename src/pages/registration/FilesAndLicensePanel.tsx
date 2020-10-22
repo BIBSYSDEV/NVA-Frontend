@@ -60,7 +60,7 @@ const FilesAndLicensePanel: FC<FilesAndLicensePanelProps> = ({ uppy, setTouchedF
   );
 
   useEffect(() => {
-    // Avoid adding duplicated file names to an existing publication,
+    // Avoid adding duplicated file names to an existing registration,
     // since files could have been uploaded in another session without being in uppy's current state
     uppy.setOptions({
       onBeforeFileAdded: (currentFile: UppyFile) => {

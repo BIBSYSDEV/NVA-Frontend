@@ -26,7 +26,7 @@ const PublicRegistration: FC = () => {
         <CircularProgress color="inherit" size={20} />
       ) : registration ? (
         isAllowedToSeePublicPublication ? (
-          <PublicRegistrationContent publication={registration} />
+          <PublicRegistrationContent registration={registration} />
         ) : (
           <NotPublished />
         )

@@ -50,25 +50,25 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier, closeForm }) 
   const [isSaving, setIsSaving] = useState(false);
   const dispatch = useDispatch();
   const uppy = useUppy();
-  const [publication, isLoadingPublication, handleSetPublication] = useFetchRegistration(identifier);
-  const isOwner = publication?.owner === user.id;
+  const [registration, isLoadingRegistration, handleSetRegistration] = useFetchRegistration(identifier);
+  const isOwner = registration?.owner === user.id;
 
   useEffect(() => {
-    if (!publication && !isLoadingPublication) {
+    if (!registration && !isLoadingRegistration) {
       closeForm();
     }
-  }, [closeForm, publication, isLoadingPublication]);
+  }, [closeForm, registration, isLoadingRegistration]);
 
   useEffect(() => {
-    if (publication) {
-      // Redirect to public page if user should not be able to edit this publication
-      const isValidOwner = user.isCreator && user.id === publication.owner;
-      const isValidCurator = user.isCurator && user.customerId === publication.publisher.id;
+    if (registration) {
+      // Redirect to public page if user should not be able to edit this registration
+      const isValidOwner = user.isCreator && user.id === registration.owner;
+      const isValidCurator = user.isCurator && user.customerId === registration.publisher.id;
       if (!isValidOwner && !isValidCurator) {
-        history.push(`/registration/${publication.identifier}/public`);
+        history.push(`/registration/${registration.identifier}/public`);
       }
     }
-  }, [history, publication, user]);
+  }, [history, registration, user]);
 
   const handleTabChange = (_: React.ChangeEvent<{}>, newTabNumber: number) => {
     setTabNumber(newTabNumber);
@@ -84,7 +84,7 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier, closeForm }) 
     if (updatedPublication?.error) {
       dispatch(setNotification(updatedPublication.error, NotificationVariant.Error));
     } else {
-      handleSetPublication(deepmerge(emptyRegistration, updatedPublication));
+      handleSetRegistration(deepmerge(emptyRegistration, updatedPublication));
       dispatch(setNotification(t('feedback:success.update_registration')));
     }
     setIsSaving(false);
@@ -98,7 +98,7 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier, closeForm }) 
     try {
       validateYupSchema<Registration>(values, registrationValidationSchema, true, {
         publicationContextType: publicationContext.type,
-        publicationStatus: publication?.status,
+        publicationStatus: registration?.status,
       });
     } catch (err) {
       return yupToFormErrors(err);
@@ -106,7 +106,7 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier, closeForm }) 
     return {};
   };
 
-  return isLoadingPublication ? (
+  return isLoadingRegistration ? (
     <CircularProgress />
   ) : !isOwner && !user.isCurator ? (
     <Forbidden />
@@ -116,7 +116,7 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier, closeForm }) 
       <StyledPublication>
         <Formik
           enableReinitialize
-          initialValues={publication ? deepmerge(emptyRegistration, publication) : emptyRegistration}
+          initialValues={registration ? deepmerge(emptyRegistration, registration) : emptyRegistration}
           validate={validateForm}
           onSubmit={() => {
             /* Use custom save handler instead, since onSubmit will prevent saving if there are any errors */

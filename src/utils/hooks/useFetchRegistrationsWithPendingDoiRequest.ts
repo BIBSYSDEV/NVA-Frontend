@@ -9,12 +9,12 @@ import useCancelToken from './useCancelToken';
 import { getRegistrationsWithPendingDoiRequest } from '../../api/doiRequestApi';
 import { Registration } from '../../types/registration.types';
 
-const useFetchPublicationsWithPendingDoiRequest = (role: RoleName): [Registration[], boolean, () => void] => {
+const useFetchRegistrationsWithPendingDoiRequest = (role: RoleName): [Registration[], boolean, () => void] => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const cancelToken = useCancelToken();
   const [isLoading, setIsLoading] = useState(true);
-  const [publicationsWithPendingDoiRequest, setPublicationsWithPendingDoiRequest] = useState<Registration[]>([]);
+  const [registrationsWithPendingDoiRequest, setRegistrationsWithPendingDoiRequest] = useState<Registration[]>([]);
 
   const fetchDoiRequests = useCallback(async () => {
     setIsLoading(true);
@@ -23,7 +23,7 @@ const useFetchPublicationsWithPendingDoiRequest = (role: RoleName): [Registratio
       if (response.error) {
         dispatch(setNotification(t('feedback:error.get_doi_requests'), NotificationVariant.Error));
       } else if (response.data) {
-        setPublicationsWithPendingDoiRequest(response.data);
+        setRegistrationsWithPendingDoiRequest(response.data);
       }
       setIsLoading(false);
     }
@@ -33,7 +33,7 @@ const useFetchPublicationsWithPendingDoiRequest = (role: RoleName): [Registratio
     fetchDoiRequests();
   }, [fetchDoiRequests]);
 
-  return [publicationsWithPendingDoiRequest, isLoading, fetchDoiRequests];
+  return [registrationsWithPendingDoiRequest, isLoading, fetchDoiRequests];
 };
 
-export default useFetchPublicationsWithPendingDoiRequest;
+export default useFetchRegistrationsWithPendingDoiRequest;

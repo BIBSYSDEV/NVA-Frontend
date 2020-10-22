@@ -42,10 +42,10 @@ const UploadRegistration: FC<UploadRegistrationProps> = ({ expanded, onChange, o
         files: uploadedFiles,
       },
     };
-    const publication = await createRegistration(publicationPayload);
-    if (publication?.identifier) {
+    const registration = await createRegistration(publicationPayload);
+    if (registration?.identifier) {
       openForm();
-      history.push(`/registration/${publication.identifier}`);
+      history.push(`/registration/${registration.identifier}`);
     } else {
       setIsLoading(false);
       dispatch(setNotification(t('feedback:error.create_registration'), NotificationVariant.Error));

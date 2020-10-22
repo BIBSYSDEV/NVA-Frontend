@@ -20,25 +20,25 @@ const StyledNormalText = styled(NormalText)`
 
 const LatestRegistrations: FC = () => {
   const { t } = useTranslation('registration');
-  const [publications, isLoadingPublications] = useFetchLatestRegistrations();
+  const [registrations, isLoadingRegistrations] = useFetchLatestRegistrations();
 
   return (
     <StyledListContainer data-testid="latest-publications">
       <Heading>{t('registration.latest_registrations')}</Heading>
       <Divider />
-      {isLoadingPublications ? (
+      {isLoadingRegistrations ? (
         <StyledProgressWrapper>
           <CircularProgress />
         </StyledProgressWrapper>
-      ) : publications.length > 0 ? (
+      ) : registrations.length > 0 ? (
         <>
           <List>
-            {publications.map((publication) => (
+            {registrations.map((registration) => (
               <RegistrationListItem
-                key={publication.identifier}
+                key={registration.identifier}
                 primaryComponent={
-                  <MuiLink component={Link} to={`/registration/${publication.identifier}/public`}>
-                    {publication.mainTitle}
+                  <MuiLink component={Link} to={`/registration/${registration.identifier}/public`}>
+                    {registration.mainTitle}
                   </MuiLink>
                 }
               />

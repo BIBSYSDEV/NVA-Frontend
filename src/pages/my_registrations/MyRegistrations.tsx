@@ -31,14 +31,14 @@ const MyRegistrations: FC = () => {
   const { t } = useTranslation('workLists');
   const user = useSelector((store: RootStore) => store.user);
   const [selectedTab, setSelectedTab] = useState(Tab.Unpublished);
-  const [publications, isLoading] = useFetchMyRegistrations();
+  const [registrations, isLoading] = useFetchMyRegistrations();
 
-  const unpublishedPublications = publications
-    .filter((publication) => publication.status !== RegistrationStatus.PUBLISHED)
+  const unpublishedPublications = registrations
+    .filter((registration) => registration.status !== RegistrationStatus.PUBLISHED)
     .sort((a, b) => new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime());
 
-  const publishedPublications = publications
-    .filter((publication) => publication.status === RegistrationStatus.PUBLISHED)
+  const publishedPublications = registrations
+    .filter((registration) => registration.status === RegistrationStatus.PUBLISHED)
     .sort((a, b) => new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime());
 
   return (
@@ -75,7 +75,7 @@ const MyRegistrations: FC = () => {
             <ListSkeleton minWidth={100} maxWidth={100} height={100} />
           ) : (
             <RegistrationList
-              publications={selectedTab === Tab.Unpublished ? unpublishedPublications : publishedPublications}
+              registrations={selectedTab === Tab.Unpublished ? unpublishedPublications : publishedPublications}
             />
           )}
         </Card>

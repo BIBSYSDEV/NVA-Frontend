@@ -36,7 +36,7 @@ const Search: FC = () => {
       {isLoading ? (
         <ListSkeleton arrayLength={5} minWidth={40} height={100} />
       ) : publications?.length > 0 ? (
-        <SearchResults publications={publications} searchTerm={searchTerm} />
+        <SearchResults registrations={publications} searchTerm={searchTerm} />
       ) : (
         <NormalText>{t('no_hits')}</NormalText>
       )}
