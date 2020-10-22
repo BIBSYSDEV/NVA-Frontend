@@ -1,16 +1,20 @@
 import { FormikProps, useFormikContext, Field, FieldProps, ErrorMessage } from 'formik';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
-import { JournalEntityDescription } from '../../../../types/publication_types/journalRegistration.types';
-import { ReferenceFieldNames } from '../../../../types/publicationFieldNames';
+import { TextField, Typography } from '@material-ui/core';
+import styled from 'styled-components';
+import { ReferenceFieldNames, contextTypeBaseFieldName } from '../../../../types/publicationFieldNames';
 import PeerReview from '../components/PeerReview';
 import NviValidation from '../components/NviValidation';
 import DoiField from '../components/DoiField';
 import PublisherField from '../components/PublisherField';
 import { PublicationTableNumber } from '../../../../utils/constants';
-import { TextField, Typography } from '@material-ui/core';
-import styled from 'styled-components';
 import { JournalRegistration } from '../../../../types/registration.types';
+import { formatPublicationContextWithTitle } from '../reference-helpers';
+import {
+  JournalEntityDescription,
+  JournalPublicationContext,
+} from '../../../../types/publication_types/journalRegistration.types';
 
 const StyledArticleDetail = styled.div`
   display: grid;
@@ -30,7 +34,7 @@ const StyledLabel = styled(Typography)`
 
 const JournalArticleForm: FC = () => {
   const { t } = useTranslation('registration');
-  const { values }: FormikProps<JournalRegistration> = useFormikContext();
+  const { values, setFieldValue }: FormikProps<JournalRegistration> = useFormikContext();
   const {
     reference: { publicationContext, publicationInstance },
   } = values.entityDescription as JournalEntityDescription;
@@ -39,12 +43,21 @@ const JournalArticleForm: FC = () => {
     <>
       <DoiField />
 
-      <PublisherField
-        publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
-        label={t('references.journal')}
-        placeholder={t('references.search_for_journal')}
-        errorFieldName={ReferenceFieldNames.PUBLICATION_CONTEXT_TITLE}
-      />
+      <Field name={contextTypeBaseFieldName}>
+        {({ field: { name, value } }: FieldProps<JournalPublicationContext>) => (
+          <PublisherField
+            publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
+            label={t('references.journal')}
+            placeholder={t('references.search_for_journal')}
+            errorFieldName={ReferenceFieldNames.PUBLICATION_CONTEXT_TITLE}
+            setValue={(newValue) => {
+              const journalValues = formatPublicationContextWithTitle(value.type, newValue);
+              setFieldValue(name, journalValues);
+            }}
+            value={value}
+          />
+        )}
+      </Field>
 
       <StyledArticleDetail>
         <Field name={ReferenceFieldNames.VOLUME}>

@@ -1,7 +1,11 @@
-import { levelMap } from '../../../types/registration.types';
+import { levelMap, Publisher } from '../../../types/registration.types';
 import { JournalPublicationContext } from '../../../types/publication_types/journalRegistration.types';
+import { PublicationType } from '../../../types/publicationFieldNames';
 
-export const formatPublicationContextWithTitle = (publisher: any, type: string): JournalPublicationContext => {
+export const formatPublicationContextWithTitle = (
+  type: '' | PublicationType,
+  publisher?: Publisher
+): Partial<JournalPublicationContext> => {
   const formatted = publisher
     ? {
         ...publisher,
@@ -14,7 +18,7 @@ export const formatPublicationContextWithTitle = (publisher: any, type: string):
   return formatted;
 };
 
-export const formatPublicationContextWithPublisher = (publisher: any, type: string) => {
+export const formatPublicationContextWithPublisher = (publisher: Publisher, type: string) => {
   const { title, ...rest } = publisher;
 
   const formatted = publisher
