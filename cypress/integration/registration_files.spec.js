@@ -1,4 +1,4 @@
-describe('Publication: File upload', () => {
+describe('Registration: File upload', () => {
   beforeEach(() => {
     cy.visit('/');
     cy.server();
@@ -9,7 +9,7 @@ describe('Publication: File upload', () => {
 
     cy.get('[data-testid=new-publication]').click({ force: true });
 
-    cy.startPublicationWithDoi();
+    cy.startRegistrationWithDoi();
 
     cy.get('[data-testid=nav-tabpanel-files-and-license]').click({ force: true });
 

@@ -17,7 +17,7 @@ describe('Worklist', () => {
     cy.get('[data-testid=doi-requests-button]').click({ force: true });
   });
 
-  it('The Curator should be able to open an item in the DOI request list and see the summary of the publication', () => {
+  it('The Curator should be able to open an item in the DOI request list and see the summary of the registration', () => {
     const { identifier } = mockRegistrationsWithPendingDoiRequest[0];
     cy.get('[data-testid=doi-requests-button]').click();
     cy.get(`[data-testid=doi-request-${identifier}]`).click();

@@ -15,7 +15,7 @@ describe('My messages', () => {
     cy.url().should('include', '/my-messages');
   });
 
-  it('The Creator should be able to open an item in the DOI request list and see the summary of the publication', () => {
+  it('The Creator should be able to open an item in the DOI request list and see the summary of the registration', () => {
     const { identifier } = mockRegistrationsWithPendingDoiRequest[0];
     cy.get(`[data-testid=doi-request-${identifier}]`).click();
     cy.get(`[data-testid=go-to-publication-${identifier}]`).click();
