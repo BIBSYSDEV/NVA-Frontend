@@ -52,7 +52,7 @@ const JournalArticleForm: FC = () => {
             errorFieldName={ReferenceFieldNames.PUBLICATION_CONTEXT_TITLE}
             setValue={(newValue) => {
               const journalValues = formatPublicationContextWithTitle(value.type, newValue);
-              setFieldValue(name, journalValues);
+              setFieldValue(name, { ...value, ...journalValues });
             }}
             value={publicationContextToPublisher(value)}
           />

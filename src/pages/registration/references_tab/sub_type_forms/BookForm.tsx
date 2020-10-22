@@ -64,7 +64,7 @@ const BookForm: FC = () => {
             errorFieldName={ReferenceFieldNames.PUBLICATION_CONTEXT_PUBLISHER}
             setValue={(newValue) => {
               const bookValues = formatPublicationContextWithPublisher(value.type, newValue);
-              setFieldValue(name, bookValues);
+              setFieldValue(name, { ...value, ...bookValues });
             }}
             value={publicationContextToPublisher(value)}
           />
