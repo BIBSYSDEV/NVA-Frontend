@@ -4,11 +4,11 @@ import { EnumDictionary } from './common.types';
 import {
   JournalEntityDescription,
   emptyRegistrationEntityDescription,
-} from './publication_types/journalPublication.types';
-import { DegreeEntityDescription } from './publication_types/degreePublication.types';
-import { BookEntityDescription } from './publication_types/bookPublication.types';
-import { ReportEntityDescription } from './publication_types/reportPublication.types';
-import { BackendTypeNames } from './publication_types/commonPublication.types';
+} from './publication_types/journalRegistration.types';
+import { DegreeEntityDescription } from './publication_types/degreeRegistration.types';
+import { BookEntityDescription } from './publication_types/bookRegistration.types';
+import { ReportEntityDescription } from './publication_types/reportRegistration.types';
+import { BackendTypeNames } from './publication_types/commonRegistration.types';
 
 export enum RegistrationStatus {
   DELETED = 'Deleted',
@@ -98,19 +98,19 @@ export interface Registration extends BaseRegistration {
     | ReportEntityDescription;
 }
 
-export interface JournalPublication extends BaseRegistration {
+export interface JournalRegistration extends BaseRegistration {
   entityDescription: JournalEntityDescription;
 }
 
-export interface DegreePublication extends BaseRegistration {
+export interface DegreeRegistration extends BaseRegistration {
   entityDescription: DegreeEntityDescription;
 }
 
-export interface BookPublication extends BaseRegistration {
+export interface BookRegistration extends BaseRegistration {
   entityDescription: BookEntityDescription;
 }
 
-export interface ReportPublication extends BaseRegistration {
+export interface ReportRegistration extends BaseRegistration {
   entityDescription: ReportEntityDescription;
 }
 

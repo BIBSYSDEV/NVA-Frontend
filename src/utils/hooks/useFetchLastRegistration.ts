@@ -17,19 +17,19 @@ const useFetchLastRegistrationFromAlma = (
   useEffect(() => {
     const cancelSource = Axios.CancelToken.source();
 
-    const fetchLastPublication = async () => {
-      const retrievedPublication = await getAlmaRegistration(systemControlNumber, name, cancelSource.token);
-      if (retrievedPublication) {
+    const fetchLastRegistration = async () => {
+      const retrievedRegistration = await getAlmaRegistration(systemControlNumber, name, cancelSource.token);
+      if (retrievedRegistration) {
         setIsLoading(false);
-        if (retrievedPublication.error) {
-          dispatch(setNotification(retrievedPublication.error, NotificationVariant.Error));
+        if (retrievedRegistration.error) {
+          dispatch(setNotification(retrievedRegistration.error, NotificationVariant.Error));
         } else {
-          setAlmaRegistration(retrievedPublication);
+          setAlmaRegistration(retrievedRegistration);
         }
       }
     };
     if (systemControlNumber && name) {
-      fetchLastPublication();
+      fetchLastRegistration();
     }
     return () => {
       if (systemControlNumber && name) {

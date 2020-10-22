@@ -2,7 +2,7 @@ import { Field, FormikProps, useFormikContext, FieldProps } from 'formik';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { DegreePublication } from '../../../../types/registration.types';
+import { DegreeRegistration } from '../../../../types/registration.types';
 import { ReferenceFieldNames } from '../../../../types/publicationFieldNames';
 import { PublicationTableNumber } from '../../../../utils/constants';
 import { Typography } from '@material-ui/core';
@@ -18,7 +18,7 @@ const StyledTypography = styled(Typography)`
 const DegreeForm: FC = () => {
   const { t } = useTranslation('registration');
 
-  const { setFieldValue }: FormikProps<DegreePublication> = useFormikContext();
+  const { setFieldValue }: FormikProps<DegreeRegistration> = useFormikContext();
 
   return (
     <>

@@ -35,14 +35,14 @@ const StyledLabel = styled(Typography)`
 `;
 
 interface RegistrationListProps {
-  publications: RegistrationPreview[];
+  registrations: RegistrationPreview[];
 }
 
-const RegistrationList: FC<RegistrationListProps> = ({ publications }) => {
+const RegistrationList: FC<RegistrationListProps> = ({ registrations }) => {
   const { t } = useTranslation('common');
   const [openModal, setOpenModal] = useState(false);
-  const [deletePublicationId, setDeletePublicationId] = useState('');
-  const [deletePublicationTitle, setDeletePublicationTitle] = useState('');
+  const [deleteRegistrationId, setDeleteRegistrationId] = useState('');
+  const [deleteRegistrationTitle, setDeleteRegistrationTitle] = useState('');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
@@ -55,10 +55,10 @@ const RegistrationList: FC<RegistrationListProps> = ({ publications }) => {
     setPage(0);
   };
 
-  const handleOnClick = (publication: RegistrationPreview) => {
+  const handleOnClick = (registration: RegistrationPreview) => {
     setOpenModal(true);
-    setDeletePublicationId(publication.identifier);
-    setDeletePublicationTitle(publication.mainTitle);
+    setDeleteRegistrationId(registration.identifier);
+    setDeleteRegistrationTitle(registration.mainTitle);
   };
 
   return (
@@ -82,24 +82,24 @@ const RegistrationList: FC<RegistrationListProps> = ({ publications }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {publications.map((publication) => (
-              <StyledTableRow key={publication.identifier}>
+            {registrations.map((registration) => (
+              <StyledTableRow key={registration.identifier}>
                 <TableCell component="th" scope="row">
-                  <Typography>{publication.mainTitle}</Typography>
+                  <Typography>{registration.mainTitle}</Typography>
                 </TableCell>
                 <TableCell>
-                  <Typography>{t(`publication:status.${publication.status}`)}</Typography>
+                  <Typography>{t(`registration:status.${registration.status}`)}</Typography>
                 </TableCell>
                 <TableCell>
-                  <Typography>{new Date(publication.createdDate).toLocaleString()}</Typography>
+                  <Typography>{new Date(registration.createdDate).toLocaleString()}</Typography>
                 </TableCell>
                 <TableCell>
                   <Button
                     color="primary"
                     variant="outlined"
                     component={RouterLink}
-                    to={`/registration/${publication.identifier}/public`}
-                    data-testid={`open-publication-${publication.identifier}`}>
+                    to={`/registration/${registration.identifier}/public`}
+                    data-testid={`open-registration-${registration.identifier}`}>
                     <MenuBookIcon />
                     <StyledNormalTextWithIcon>{t('show')}</StyledNormalTextWithIcon>
                   </Button>
@@ -109,8 +109,8 @@ const RegistrationList: FC<RegistrationListProps> = ({ publications }) => {
                     color="primary"
                     variant="outlined"
                     component={RouterLink}
-                    to={`/registration/${publication.identifier}`}
-                    data-testid={`edit-publication-${publication.identifier}`}>
+                    to={`/registration/${registration.identifier}`}
+                    data-testid={`edit-registration-${registration.identifier}`}>
                     <EditIcon />
                     <StyledNormalTextWithIcon>{t('edit')}</StyledNormalTextWithIcon>
                   </Button>
@@ -121,8 +121,8 @@ const RegistrationList: FC<RegistrationListProps> = ({ publications }) => {
                     disabled
                     // disabled={publication.status === PublicationStatus.DELETED}
                     variant="outlined"
-                    data-testid={`delete-publication-${publication.identifier}`}
-                    onClick={() => handleOnClick(publication)}>
+                    data-testid={`delete-registration-${registration.identifier}`}
+                    onClick={() => handleOnClick(registration)}>
                     <DeleteIcon />
                     <StyledNormalTextWithIcon>{t('delete')}</StyledNormalTextWithIcon>
                   </Button>
@@ -135,14 +135,18 @@ const RegistrationList: FC<RegistrationListProps> = ({ publications }) => {
       <TablePagination
         rowsPerPageOptions={[10, 25, { value: -1, label: t('all') }]}
         component="div"
-        count={publications.length}
+        count={registrations.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onChangePage={handleChangePage}
         onChangeRowsPerPage={handleChangeRowsPerPage}
       />
       {openModal && (
-        <DeleteRegistrationModal id={deletePublicationId} title={deletePublicationTitle} setOpenModal={setOpenModal} />
+        <DeleteRegistrationModal
+          id={deleteRegistrationId}
+          title={deleteRegistrationTitle}
+          setOpenModal={setOpenModal}
+        />
       )}
     </>
   );

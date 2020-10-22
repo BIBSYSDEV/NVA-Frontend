@@ -18,10 +18,10 @@ Cypress.Commands.add('mocklogin', () => {
 });
 
 Cypress.Commands.add('startRegistrationWithDoi', () => {
-  cy.get('[data-testid=new-publication-link]').click({ force: true });
-  cy.get('[data-testid=new-publication-link-input]').type('https://doi.org/10.1098/rspb.2018.0085');
+  cy.get('[data-testid=new-registration-link]').click({ force: true });
+  cy.get('[data-testid=new-registration-link-input]').type('https://doi.org/10.1098/rspb.2018.0085');
   cy.get('[data-testid=doi-search-button]').click({ force: true });
-  cy.get('[data-testid=publication-link-next-button]').click({ force: true });
+  cy.get('[data-testid=registration-link-next-button]').click({ force: true });
 });
 
 Cypress.Commands.add('setUserRolesInRedux', (roles) => {

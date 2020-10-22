@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { FormikProps, useFormikContext } from 'formik';
 import { Registration } from '../../../types/registration.types';
 import { getNpiDiscipline } from '../../../utils/npiDisciplines';
-import { publicationLanguages } from '../../../types/language.types';
+import { registrationLanguages } from '../../../types/language.types';
 import { displayDate } from '../../../utils/date-helpers';
 
 const SubmissionDescription: React.FC = () => {
@@ -17,7 +17,7 @@ const SubmissionDescription: React.FC = () => {
   } = values;
   const npiDiscipline = getNpiDiscipline(npiSubjectHeading);
   const languageId =
-    publicationLanguages.find((publicationLanguage) => publicationLanguage.value === language)?.id ?? '';
+    registrationLanguages.find((publicationLanguage) => publicationLanguage.value === language)?.id ?? '';
 
   return (
     <>

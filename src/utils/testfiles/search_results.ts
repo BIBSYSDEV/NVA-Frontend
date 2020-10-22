@@ -1,5 +1,5 @@
 import { SearchResult } from '../../types/search.types';
-import { BackendTypeNames } from '../../types/publication_types/commonPublication.types';
+import { BackendTypeNames } from '../../types/publication_types/commonRegistration.types';
 
 export const mockSearchResults: SearchResult[] = [
   {

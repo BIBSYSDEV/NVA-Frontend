@@ -7,8 +7,8 @@ import PublisherField from '../components/PublisherField';
 import { ReferenceFieldNames } from '../../../../types/publicationFieldNames';
 import IsbnListField from '../components/IsbnListField';
 import TotalPagesField from '../components/TotalPagesField';
-import { BookPublication } from '../../../../types/registration.types';
-import { BookEntityDescription } from '../../../../types/publication_types/bookPublication.types';
+import { BookRegistration } from '../../../../types/registration.types';
+import { BookEntityDescription } from '../../../../types/publication_types/bookRegistration.types';
 import PeerReview from '../components/PeerReview';
 import { Typography, FormControlLabel, Checkbox } from '@material-ui/core';
 import PublicationChannelSearch from '../components/PublicationChannelSearch';
@@ -41,7 +41,7 @@ const StyledTypography = styled(Typography)`
 
 const BookForm: FC = () => {
   const { t } = useTranslation('registration');
-  const { setFieldValue, values }: FormikProps<BookPublication> = useFormikContext();
+  const { setFieldValue, values }: FormikProps<BookRegistration> = useFormikContext();
   const {
     reference: {
       publicationContext,

@@ -18,10 +18,10 @@ import Card from '../../components/Card';
 import SelectTypeField from './references_tab/components/SelectTypeField';
 import { touchedReferenceTabFields } from '../../utils/formik-helpers';
 import { PanelProps } from './RegistrationFormContent';
-import { emptyBookPublicationInstance } from '../../types/publication_types/bookPublication.types';
-import { emptyJournalPublicationInstance } from '../../types/publication_types/journalPublication.types';
-import { emptyReportPublicationInstance } from '../../types/publication_types/reportPublication.types';
-import { emptyDegreePublicationInstance } from '../../types/publication_types/degreePublication.types';
+import { emptyBookPublicationInstance } from '../../types/publication_types/bookRegistration.types';
+import { emptyJournalPublicationInstance } from '../../types/publication_types/journalRegistration.types';
+import { emptyReportPublicationInstance } from '../../types/publication_types/reportRegistration.types';
+import { emptyDegreePublicationInstance } from '../../types/publication_types/degreeRegistration.types';
 import { StyledSelectWrapper } from '../../components/styled/Wrappers';
 
 const StyledCard = styled(Card)`

@@ -18,39 +18,39 @@ const StyledContributor = styled.span`
 `;
 
 interface SearchResultsProps {
-  publications: SearchResult[];
+  registrations: SearchResult[];
   searchTerm: string | null;
 }
 
-const SearchResults: FC<SearchResultsProps> = ({ publications, searchTerm }) => {
+const SearchResults: FC<SearchResultsProps> = ({ registrations, searchTerm }) => {
   const { t } = useTranslation();
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[1]);
   const [page, setPage] = useState(0);
 
   // Ensure selected page is not out of bounds due to manipulated userList
-  const validPage = publications.length <= page * rowsPerPage ? 0 : page;
+  const validPage = registrations.length <= page * rowsPerPage ? 0 : page;
 
   return (
     <StyledSearchResults data-testid="search-results">
-      {searchTerm && t('results', { count: publications.length, term: searchTerm })}
+      {searchTerm && t('results', { count: registrations.length, term: searchTerm })}
       <List>
-        {publications &&
-          publications.slice(validPage * rowsPerPage, validPage * rowsPerPage + rowsPerPage).map((publication) => {
-            const publicationId = publication.id?.split('/').pop();
+        {registrations &&
+          registrations.slice(validPage * rowsPerPage, validPage * rowsPerPage + rowsPerPage).map((registration) => {
+            const registrationId = registration.id?.split('/').pop();
             return (
               <RegistrationListItem
-                data-testid={`search-result-${publicationId}`}
-                key={publicationId}
+                data-testid={`search-result-${registrationId}`}
+                key={registrationId}
                 primaryComponent={
-                  <MuiLink component={Link} to={`/registration/${publicationId}/public`}>
-                    {publication.title}
+                  <MuiLink component={Link} to={`/registration/${registrationId}/public`}>
+                    {registration.title}
                   </MuiLink>
                 }
                 secondaryComponent={
                   <Typography component="span">
-                    {publication.date && <div>{displayDate(publication.date)}</div>}
-                    {publication.contributors &&
-                      publication.contributors.map((contributor) => (
+                    {registration.date && <div>{displayDate(registration.date)}</div>}
+                    {registration.contributors &&
+                      registration.contributors.map((contributor) => (
                         <Fragment data-testid={`search-result-contributor-${contributor.name}`} key={contributor.name}>
                           {contributor.id ? (
                             <MuiLink component={Link} to={`/user/${contributor.id}`}>
@@ -67,12 +67,12 @@ const SearchResults: FC<SearchResultsProps> = ({ publications, searchTerm }) => 
             );
           })}
       </List>
-      {publications.length > ROWS_PER_PAGE_OPTIONS[0] && (
+      {registrations.length > ROWS_PER_PAGE_OPTIONS[0] && (
         <TablePagination
           data-testid="search-pagination"
           rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
           component="div"
-          count={publications.length}
+          count={registrations.length}
           rowsPerPage={rowsPerPage}
           page={validPage}
           onChangePage={(_, newPage) => setPage(newPage)}

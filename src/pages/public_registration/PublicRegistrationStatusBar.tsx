@@ -43,7 +43,7 @@ const StyledUnpublishedStatusIcon = styled(WorkOutlineIcon)`
   color: orange;
 `;
 
-export const PublicRegistrationStatusBar: FC<PublicRegistrationContentProps> = ({ publication }) => {
+export const PublicRegistrationStatusBar: FC<PublicRegistrationContentProps> = ({ registration }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation('registration');
   const user = useSelector((store: RootStore) => store.user);
@@ -55,7 +55,7 @@ export const PublicRegistrationStatusBar: FC<PublicRegistrationContentProps> = (
       reference: { doi },
     },
     doiRequest,
-  } = publication;
+  } = registration;
 
   const [messageToCurator, setMessageToCurator] = useState('');
   const [hasPendingDoiRequest, setHasPendingDoiRequest] = useState(doiRequest?.status === DoiRequestStatus.Requested);
@@ -119,7 +119,7 @@ export const PublicRegistrationStatusBar: FC<PublicRegistrationContentProps> = (
           ))}
 
         <Link to={`/registration/${identifier}`}>
-          <Button variant="contained" color="primary" data-testid="button-edit-publication">
+          <Button variant="contained" color="primary" data-testid="button-edit-registration">
             {t('edit_registration')}
           </Button>
         </Link>

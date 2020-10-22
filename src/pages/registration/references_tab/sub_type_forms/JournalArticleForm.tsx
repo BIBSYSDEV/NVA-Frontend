@@ -1,8 +1,7 @@
 import { FormikProps, useFormikContext, Field, FieldProps, ErrorMessage } from 'formik';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
-import { JournalPublication } from '../../../../types/registration.types';
-import { JournalEntityDescription } from '../../../../types/publication_types/journalPublication.types';
+import { JournalEntityDescription } from '../../../../types/publication_types/journalRegistration.types';
 import { ReferenceFieldNames } from '../../../../types/publicationFieldNames';
 import PeerReview from '../components/PeerReview';
 import NviValidation from '../components/NviValidation';
@@ -11,6 +10,7 @@ import PublisherField from '../components/PublisherField';
 import { PublicationTableNumber } from '../../../../utils/constants';
 import { TextField, Typography } from '@material-ui/core';
 import styled from 'styled-components';
+import { JournalRegistration } from '../../../../types/registration.types';
 
 const StyledArticleDetail = styled.div`
   display: grid;
@@ -30,7 +30,7 @@ const StyledLabel = styled(Typography)`
 
 const JournalArticleForm: FC = () => {
   const { t } = useTranslation('registration');
-  const { values }: FormikProps<JournalPublication> = useFormikContext();
+  const { values }: FormikProps<JournalRegistration> = useFormikContext();
   const {
     reference: { publicationContext, publicationInstance },
   } = values.entityDescription as JournalEntityDescription;

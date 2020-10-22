@@ -14,7 +14,7 @@ import { NotificationVariant } from '../../../types/notification.types';
 import ButtonWithProgress from '../../../components/ButtonWithProgress';
 import useUppy from '../../../utils/hooks/useUppy';
 import FileUploader from '../files_and_license_tab/FileUploader';
-import { BackendTypeNames } from '../../../types/publication_types/commonPublication.types';
+import { BackendTypeNames } from '../../../types/publication_types/commonRegistration.types';
 
 const StyledFileCard = styled.div`
   margin-top: 1rem;
@@ -34,18 +34,18 @@ const UploadRegistration: FC<UploadRegistrationProps> = ({ expanded, onChange, o
   const dispatch = useDispatch();
   const uppy = useUppy();
 
-  const createPublicationWithFiles = async () => {
+  const createRegistrationWithFiles = async () => {
     setIsLoading(true);
-    const publicationPayload = {
+    const registrationPayload = {
       fileSet: {
         type: BackendTypeNames.FILE_SET,
         files: uploadedFiles,
       },
     };
-    const publication = await createRegistration(publicationPayload);
-    if (publication?.identifier) {
+    const registration = await createRegistration(registrationPayload);
+    if (registration?.identifier) {
       openForm();
-      history.push(`/registration/${publication.identifier}`);
+      history.push(`/registration/${registration.identifier}`);
     } else {
       setIsLoading(false);
       dispatch(setNotification(t('feedback:error.create_registration'), NotificationVariant.Error));
@@ -54,12 +54,12 @@ const UploadRegistration: FC<UploadRegistrationProps> = ({ expanded, onChange, o
 
   return (
     <RegistrationAccordion
-      dataTestId="new-publication-file"
+      dataTestId="new-registration-file"
       headerLabel={t('registration:registration.start_with_uploading_file')}
       icon={<CloudDownloadIcon />}
       expanded={expanded}
       onChange={onChange}
-      ariaControls="publication-method-file">
+      ariaControls="registration-method-file">
       {uppy ? (
         <>
           <FileUploader uppy={uppy} addFile={(newFile: File) => setUploadedFiles((files) => [newFile, ...files])} />
@@ -81,9 +81,9 @@ const UploadRegistration: FC<UploadRegistrationProps> = ({ expanded, onChange, o
           ))}
           {uploadedFiles.length > 0 && (
             <ButtonWithProgress
-              data-testid="publication-file-start-button"
+              data-testid="registration-file-start-button"
               isLoading={isLoading}
-              onClick={createPublicationWithFiles}>
+              onClick={createRegistrationWithFiles}>
               {t('common:start')}
             </ButtonWithProgress>
           )}
