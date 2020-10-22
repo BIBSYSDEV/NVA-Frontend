@@ -43,7 +43,7 @@ const LinkRegistrationForm: FC<LinkRegistrationFormProps> = ({ handleSearch }) =
                   label={t('registration.link_to_resource')}
                   fullWidth
                   aria-label="DOI-link"
-                  inputProps={{ 'data-testid': 'new-publication-link-input' }}
+                  inputProps={{ 'data-testid': 'new-registration-link-input' }}
                   {...field}
                   error={!!error && touched}
                   helperText={<ErrorMessage name={field.name} />}

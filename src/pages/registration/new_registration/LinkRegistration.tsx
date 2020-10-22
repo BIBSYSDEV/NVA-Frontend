@@ -68,8 +68,8 @@ const LinkRegistration: FC<LinkRegistrationProps> = ({ expanded, onChange, openF
       icon={<LinkIcon className="icon" />}
       expanded={expanded}
       onChange={onChange}
-      ariaControls="publication-method-link"
-      dataTestId="new-publication-link">
+      ariaControls="registration-method-link"
+      dataTestId="new-registration-link">
       <StyledBody>
         <Typography>{t('registration:registration.link_to_resource_description')}</Typography>
         <LinkRegistrationForm handleSearch={handleSearch} />
@@ -84,7 +84,7 @@ const LinkRegistration: FC<LinkRegistrationProps> = ({ expanded, onChange, openF
               color="primary"
               variant="contained"
               onClick={createRegistration}
-              data-testid="publication-link-next-button">
+              data-testid="registration-link-next-button">
               {t('common:next')}
             </Button>
           </>

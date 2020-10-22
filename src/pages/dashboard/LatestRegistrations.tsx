@@ -23,7 +23,7 @@ const LatestRegistrations: FC = () => {
   const [registrations, isLoadingRegistrations] = useFetchLatestRegistrations();
 
   return (
-    <StyledListContainer data-testid="latest-publications">
+    <StyledListContainer data-testid="latest-registrations">
       <Heading>{t('registration.latest_registrations')}</Heading>
       <Divider />
       {isLoadingRegistrations ? (

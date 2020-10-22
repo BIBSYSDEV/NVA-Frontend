@@ -99,7 +99,7 @@ const RegistrationList: FC<RegistrationListProps> = ({ registrations }) => {
                     variant="outlined"
                     component={RouterLink}
                     to={`/registration/${registration.identifier}/public`}
-                    data-testid={`open-publication-${registration.identifier}`}>
+                    data-testid={`open-registration-${registration.identifier}`}>
                     <MenuBookIcon />
                     <StyledNormalTextWithIcon>{t('show')}</StyledNormalTextWithIcon>
                   </Button>
@@ -110,7 +110,7 @@ const RegistrationList: FC<RegistrationListProps> = ({ registrations }) => {
                     variant="outlined"
                     component={RouterLink}
                     to={`/registration/${registration.identifier}`}
-                    data-testid={`edit-publication-${registration.identifier}`}>
+                    data-testid={`edit-registration-${registration.identifier}`}>
                     <EditIcon />
                     <StyledNormalTextWithIcon>{t('edit')}</StyledNormalTextWithIcon>
                   </Button>
@@ -121,7 +121,7 @@ const RegistrationList: FC<RegistrationListProps> = ({ registrations }) => {
                     disabled
                     // disabled={publication.status === PublicationStatus.DELETED}
                     variant="outlined"
-                    data-testid={`delete-publication-${registration.identifier}`}
+                    data-testid={`delete-registration-${registration.identifier}`}
                     onClick={() => handleOnClick(registration)}>
                     <DeleteIcon />
                     <StyledNormalTextWithIcon>{t('delete')}</StyledNormalTextWithIcon>
@@ -142,7 +142,11 @@ const RegistrationList: FC<RegistrationListProps> = ({ registrations }) => {
         onChangeRowsPerPage={handleChangeRowsPerPage}
       />
       {openModal && (
-        <DeleteRegistrationModal id={deleteRegistrationId} title={deleteRegistrationTitle} setOpenModal={setOpenModal} />
+        <DeleteRegistrationModal
+          id={deleteRegistrationId}
+          title={deleteRegistrationTitle}
+          setOpenModal={setOpenModal}
+        />
       )}
     </>
   );

@@ -7,7 +7,7 @@ describe('Registration: Description', () => {
   it('The user should be able to add and remove projects', () => {
     cy.mocklogin();
 
-    cy.get('[data-testid=new-publication]').click({ force: true });
+    cy.get('[data-testid=new-registration]').click({ force: true });
 
     cy.startRegistrationWithDoi();
 
