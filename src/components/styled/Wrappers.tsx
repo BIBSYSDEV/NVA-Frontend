@@ -38,3 +38,8 @@ export const StyledSelectWrapper = styled.div`
     width: 100%;
   }
 `;
+
+export const StyledFlexColumn = styled.div`
+  display: flex;
+  flex-direction: column;
+`;

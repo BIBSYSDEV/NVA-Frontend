@@ -2,7 +2,7 @@
   "doi_requests": {
     "archive": "Archive case",
     "doi_requests": "DOI requests",
-    "go_to_publication": "Go to publication",
+    "go_to_registration": "Go to registration",
     "message_to_user": "Message to user",
     "no_pending_doi_requests": "You don't have any awaiting DOI requests",
     "status": {
@@ -11,14 +11,14 @@
       "REQUESTED": "Requested"
     }
   },
-  "delete_publication_heading": "Delete publication",
-  "delete_publication_message": "Confirm deletion of ",
+  "delete_registration": "Delete registration",
+  "delete_registration_message": "Confirm deletion of ",
   "for_approval": "For approval",
   "go_to_public_profile": "Go to your public profile",
   "my_messages": "My messages",
   "my_registrations": "My registrations",
   "my_worklist": "My worklist",
-  "no_pending_publications": "You don't have any publications awaiting approval",
+  "no_pending_registrations": "You don't have any registrations awaiting approval",
   "published_registrations": "Published registrations",
   "submitter": "Submitter",
   "unpublished_registrations": "Unpublished registrations"

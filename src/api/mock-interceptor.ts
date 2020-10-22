@@ -10,19 +10,19 @@ import mockNtnuResponse from '../utils/testfiles/institutions/institution_ntnu.j
 import mockNtnuSubunitResponse from '../utils/testfiles/institutions/institution_subunit_ntnu.json';
 import mockAuthoritiesResponse from '../utils/testfiles/mock_authorities_response.json';
 import mockProjects from '../utils/testfiles/projects_real.json';
-import { mockPublication, publicationsWithPendingDoiRequest } from '../utils/testfiles/mockPublication';
-import mockMyPublications from '../utils/testfiles/my_publications.json';
+import { mockRegistration, mockRegistrationsWithPendingDoiRequest } from '../utils/testfiles/mockRegistration';
+import mockMyRegistrations from '../utils/testfiles/my_registrations.json';
 import mockNsdPublisers from '../utils/testfiles/publishersFromNsd.json';
 import { mockCustomerInstitutions, mockCustomerInstitution } from '../utils/testfiles/mockCustomerInstitutions';
-import mockPublishedPublications from '../utils/testfiles/published_publications.json';
+import mockPublishedRegistrations from '../utils/testfiles/published_registrations.json';
 import { AuthorityApiPaths } from './authorityApi';
 import { InstitutionApiPaths } from './institutionApi';
 import { ProjectsApiPaths } from './projectApi';
-import { PublicationsApiPaths } from './publicationApi';
+import { PublicationsApiPaths } from './registrationApi';
 import { PublicationChannelApiPaths } from './publicationChannelApi';
 import { FileApiPaths } from './fileApi';
 import { CustomerInstitutionApiPaths } from './customerInstitutionsApi';
-import { emptyPublication } from '../types/publication.types';
+import { emptyRegistration } from '../types/registration.types';
 import { mockRoles } from '../utils/testfiles/mock_feide_user';
 import { RoleApiPaths } from './roleApi';
 import { DoiRequestApiPaths } from './doiRequestApi';
@@ -95,26 +95,26 @@ export const interceptRequestsOnMock = () => {
   mock.onPost(new RegExp(FileApiPaths.COMPLETE)).reply(200, mockCompleteUpload);
 
   // PUBLICATION LIST
-  mock.onGet(PublicationsApiPaths.PUBLICATION).reply(200, mockPublishedPublications);
+  mock.onGet(PublicationsApiPaths.PUBLICATION).reply(200, mockPublishedRegistrations);
 
   //MY PUBLICATIONS
-  mock.onGet(new RegExp(`${PublicationsApiPaths.PUBLICATIONS_BY_OWNER}/*`)).reply(200, mockMyPublications);
+  mock.onGet(new RegExp(`${PublicationsApiPaths.PUBLICATIONS_BY_OWNER}/*`)).reply(200, mockMyRegistrations);
 
   // WORKLIST
-  mock.onGet(new RegExp(`${DoiRequestApiPaths.DOI_REQUEST}/*`)).reply(200, publicationsWithPendingDoiRequest);
-  mock.onGet(new RegExp(`${PublicationsApiPaths.FOR_APPROVAL}/*`)).reply(200, mockMyPublications.publications);
+  mock.onGet(new RegExp(`${DoiRequestApiPaths.DOI_REQUEST}/*`)).reply(200, mockRegistrationsWithPendingDoiRequest);
+  mock.onGet(new RegExp(`${PublicationsApiPaths.FOR_APPROVAL}/*`)).reply(200, mockMyRegistrations.publications);
 
   //MY MESSAGES
   mock
     .onGet(new RegExp(`${DoiRequestApiPaths.DOI_REQUEST}?role=Creator`))
-    .reply(200, publicationsWithPendingDoiRequest);
+    .reply(200, mockRegistrationsWithPendingDoiRequest);
 
   //PUBLICATION
-  mock.onGet(new RegExp(`${PublicationsApiPaths.PUBLICATION}/new`)).reply(200, emptyPublication);
+  mock.onGet(new RegExp(`${PublicationsApiPaths.PUBLICATION}/new`)).reply(200, emptyRegistration);
   mock
     .onGet(new RegExp(`${PublicationsApiPaths.PUBLICATION}/4327439`))
-    .reply(200, { ...emptyPublication, owner: 'tu@unit.no' });
-  mock.onGet(new RegExp(`${PublicationsApiPaths.PUBLICATION}/*`)).reply(200, mockPublication);
+    .reply(200, { ...emptyRegistration, owner: 'tu@unit.no' });
+  mock.onGet(new RegExp(`${PublicationsApiPaths.PUBLICATION}/*`)).reply(200, mockRegistration);
 
   // lookup DOI
   mock.onPost(new RegExp(`${PublicationsApiPaths.DOI_LOOKUP}/*`)).reply(200, mockDoiLookupResponse);

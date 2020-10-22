@@ -47,7 +47,7 @@ const StyledBurgerMenu = styled.div`
 `;
 
 const Header: FC = () => {
-  const { t } = useTranslation('publication');
+  const { t } = useTranslation('registration');
   const user = useSelector((store: RootStore) => store.user);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -69,7 +69,7 @@ const Header: FC = () => {
           <Button
             color="primary"
             component={RouterLink}
-            data-testid="new-publication"
+            data-testid="new-registration"
             to="/registration"
             startIcon={<AddIcon />}>
             <Typography variant="button">{t('new_registration')}</Typography>
@@ -77,7 +77,7 @@ const Header: FC = () => {
           <Button
             color="primary"
             component={RouterLink}
-            data-testid="my-publications"
+            data-testid="my-registrations"
             to="/my-registrations"
             startIcon={<LibraryBooks />}>
             <Typography variant="button">{t('workLists:my_registrations')}</Typography>
