@@ -2,6 +2,7 @@ import { Field, FormikProps, useFormikContext, FieldProps } from 'formik';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
+import { Typography, FormControlLabel, Checkbox } from '@material-ui/core';
 import DoiField from '../components/DoiField';
 import PublisherField from '../components/PublisherField';
 import { ReferenceFieldNames, contextTypeBaseFieldName } from '../../../../types/publicationFieldNames';
@@ -13,10 +14,7 @@ import {
   BookPublicationContext,
 } from '../../../../types/publication_types/bookRegistration.types';
 import PeerReview from '../components/PeerReview';
-import { Typography, FormControlLabel, Checkbox } from '@material-ui/core';
-import PublicationChannelSearch from '../components/PublicationChannelSearch';
 import { PublicationTableNumber } from '../../../../utils/constants';
-import PublisherRow from '../components/PublisherRow';
 import NviValidation from '../components/NviValidation';
 import { formatPublicationContextWithPublisher, publicationContextToPublisher } from '../reference-helpers';
 
@@ -104,26 +102,19 @@ const BookForm: FC = () => {
       <div>
         <StyledTypography variant="h5">{t('references.series')}</StyledTypography>
         <Typography>{t('references.series_info')}</Typography>
+
         <Field name={ReferenceFieldNames.SERIES_TITLE}>
           {({ field: { name, value } }: FieldProps) => (
-            <>
-              <PublicationChannelSearch
-                dataTestId="autosearch-series"
-                clearSearchField={value === ''}
-                label={t('common:title')}
-                publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
-                setValueFunction={(inputValue) => setFieldValue(name, inputValue.title ?? '')}
-                placeholder={t('references.search_for_series')}
-              />
-              {value && (
-                <PublisherRow
-                  dataTestId="autosearch-results-series"
-                  label={t('common:title')}
-                  publisher={{ title: value }}
-                  onClickDelete={() => setFieldValue(name, '')}
-                />
-              )}
-            </>
+            <PublisherField
+              publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
+              label={t('common:title')}
+              placeholder={t('references.search_for_series')}
+              errorFieldName={name}
+              setValue={(newValue) => {
+                setFieldValue(name, newValue?.title ?? '');
+              }}
+              value={publicationContextToPublisher({ title: value })}
+            />
           )}
         </Field>
       </div>

@@ -1,17 +1,16 @@
 import React, { FC, useCallback, useState } from 'react';
 import { getIn, useFormikContext } from 'formik';
-import { PublicationTableNumber } from '../../../../utils/constants';
-import { debounce, Typography } from '@material-ui/core';
-import { getPublishers } from '../../../../api/publicationChannelApi';
-import { setNotification } from '../../../../redux/actions/notificationActions';
-import { NotificationVariant } from '../../../../types/notification.types';
+import { Typography } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Autocomplete } from '@material-ui/lab';
+import { PublicationTableNumber } from '../../../../utils/constants';
+import { getPublishers } from '../../../../api/publicationChannelApi';
 import { AutocompleteTextField } from '../../description_tab/projects_field/AutocompleteTextField';
 import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
 import { getTextParts } from '../../description_tab/projects_field';
 import { Registration, Publisher } from '../../../../types/registration.types';
+import { debounce } from '../../../../utils/debounce';
 
 interface PublisherFieldProps {
   publicationTable?: PublicationTableNumber;
@@ -43,7 +42,6 @@ const PublisherField: FC<PublisherFieldProps> = ({
         const response = await getPublishers(searchTerm, publicationTable);
         if (response?.error) {
           setOptions([]);
-          dispatch(setNotification(t('error.search', NotificationVariant.Error)));
         } else if (response?.data) {
           setOptions(response.data.results);
         }
