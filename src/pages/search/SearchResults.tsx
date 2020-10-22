@@ -36,13 +36,13 @@ const SearchResults: FC<SearchResultsProps> = ({ registrations, searchTerm }) =>
       <List>
         {registrations &&
           registrations.slice(validPage * rowsPerPage, validPage * rowsPerPage + rowsPerPage).map((registration) => {
-            const publicationId = registration.id?.split('/').pop();
+            const registrationId = registration.id?.split('/').pop();
             return (
               <RegistrationListItem
-                data-testid={`search-result-${publicationId}`}
-                key={publicationId}
+                data-testid={`search-result-${registrationId}`}
+                key={registrationId}
                 primaryComponent={
-                  <MuiLink component={Link} to={`/registration/${publicationId}/public`}>
+                  <MuiLink component={Link} to={`/registration/${registrationId}/public`}>
                     {registration.title}
                   </MuiLink>
                 }

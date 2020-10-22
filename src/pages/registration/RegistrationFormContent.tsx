@@ -22,14 +22,14 @@ export interface PanelProps {
 
 interface RegistrationFormContentProps {
   isSaving: boolean;
-  savePublication: () => Promise<boolean>;
+  saveRegistration: () => Promise<boolean>;
   tabNumber: number;
   uppy: Uppy;
 }
 
 export const RegistrationFormContent: FC<RegistrationFormContentProps> = ({
   isSaving,
-  savePublication,
+  saveRegistration,
   tabNumber,
   uppy,
 }) => {
@@ -69,7 +69,7 @@ export const RegistrationFormContent: FC<RegistrationFormContentProps> = ({
       )}
       {tabNumber === RegistrationTab.Submission && (
         <StyledPanel>
-          <SubmissionPanel isSaving={isSaving} savePublication={savePublication} />
+          <SubmissionPanel isSaving={isSaving} saveRegistration={saveRegistration} />
         </StyledPanel>
       )}
     </>

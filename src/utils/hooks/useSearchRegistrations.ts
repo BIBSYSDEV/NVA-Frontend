@@ -19,7 +19,7 @@ const useSearchRegistrations = (
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
 
   useEffect(() => {
-    const searchPublications = async () => {
+    const searchRegistrations = async () => {
       const response = await search(searchTerm!, numberOfResults, searchAfter, cancelToken);
       if (response) {
         setIsLoading(false);
@@ -31,7 +31,7 @@ const useSearchRegistrations = (
       }
     };
     if (searchTerm) {
-      searchPublications();
+      searchRegistrations();
     } else {
       setIsLoading(false);
       setSearchResults([]);

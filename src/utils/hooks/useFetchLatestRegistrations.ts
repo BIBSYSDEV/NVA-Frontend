@@ -15,18 +15,18 @@ const useFetchLatestRegistrations = (): [LatestRegistration[], boolean] => {
   useEffect(() => {
     const cancelSource = Axios.CancelToken.source();
 
-    const fetchPublications = async () => {
-      const publications = await getRegistrations(cancelSource.token);
-      if (publications) {
-        if (publications.error) {
-          dispatch(setNotification(publications.error, NotificationVariant.Error));
+    const fetchRegistrations = async () => {
+      const registrations = await getRegistrations(cancelSource.token);
+      if (registrations) {
+        if (registrations.error) {
+          dispatch(setNotification(registrations.error, NotificationVariant.Error));
         } else {
-          setRegistrations(publications);
+          setRegistrations(registrations);
         }
         setIsLoading(false);
       }
     };
-    fetchPublications();
+    fetchRegistrations();
 
     return () => {
       cancelSource.cancel();

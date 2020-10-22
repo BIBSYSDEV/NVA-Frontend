@@ -34,15 +34,15 @@ const UploadRegistration: FC<UploadRegistrationProps> = ({ expanded, onChange, o
   const dispatch = useDispatch();
   const uppy = useUppy();
 
-  const createPublicationWithFiles = async () => {
+  const createRegistrationWithFiles = async () => {
     setIsLoading(true);
-    const publicationPayload = {
+    const registrationPayload = {
       fileSet: {
         type: BackendTypeNames.FILE_SET,
         files: uploadedFiles,
       },
     };
-    const registration = await createRegistration(publicationPayload);
+    const registration = await createRegistration(registrationPayload);
     if (registration?.identifier) {
       openForm();
       history.push(`/registration/${registration.identifier}`);
@@ -83,7 +83,7 @@ const UploadRegistration: FC<UploadRegistrationProps> = ({ expanded, onChange, o
             <ButtonWithProgress
               data-testid="publication-file-start-button"
               isLoading={isLoading}
-              onClick={createPublicationWithFiles}>
+              onClick={createRegistrationWithFiles}>
               {t('common:start')}
             </ButtonWithProgress>
           )}

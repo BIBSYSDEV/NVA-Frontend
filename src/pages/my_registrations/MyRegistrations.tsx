@@ -33,11 +33,11 @@ const MyRegistrations: FC = () => {
   const [selectedTab, setSelectedTab] = useState(Tab.Unpublished);
   const [registrations, isLoading] = useFetchMyRegistrations();
 
-  const unpublishedPublications = registrations
+  const unpublishedRegistrations = registrations
     .filter((registration) => registration.status !== RegistrationStatus.PUBLISHED)
     .sort((a, b) => new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime());
 
-  const publishedPublications = registrations
+  const publishedRegistrations = registrations
     .filter((registration) => registration.status === RegistrationStatus.PUBLISHED)
     .sort((a, b) => new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime());
 
@@ -61,13 +61,13 @@ const MyRegistrations: FC = () => {
             data-testid="unpublished-button"
             onClick={() => setSelectedTab(Tab.Unpublished)}
             isSelected={selectedTab === Tab.Unpublished}>
-            {t('unpublished_registrations')} ({unpublishedPublications.length})
+            {t('unpublished_registrations')} ({unpublishedRegistrations.length})
           </TabButton>
           <TabButton
             data-testid="published-button"
             onClick={() => setSelectedTab(Tab.Published)}
             isSelected={selectedTab === Tab.Published}>
-            {t('published_registrations')} ({publishedPublications.length})
+            {t('published_registrations')} ({publishedRegistrations.length})
           </TabButton>
         </StyledTabsContainer>
         <Card>
@@ -75,7 +75,7 @@ const MyRegistrations: FC = () => {
             <ListSkeleton minWidth={100} maxWidth={100} height={100} />
           ) : (
             <RegistrationList
-              registrations={selectedTab === Tab.Unpublished ? unpublishedPublications : publishedPublications}
+              registrations={selectedTab === Tab.Unpublished ? unpublishedRegistrations : publishedRegistrations}
             />
           )}
         </Card>

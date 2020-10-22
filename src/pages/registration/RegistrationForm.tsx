@@ -22,7 +22,7 @@ import { registrationValidationSchema } from '../../utils/validation/registratio
 import { PageHeader } from '../../components/PageHeader';
 import Forbidden from '../errorpages/Forbidden';
 
-const StyledPublication = styled.div`
+const StyledRegistration = styled.div`
   width: 100%;
 `;
 
@@ -78,17 +78,17 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier, closeForm }) 
     setTabNumber(tabNumber + 1);
   };
 
-  const savePublication = async (values: Registration) => {
+  const saveRegistration = async (values: Registration) => {
     setIsSaving(true);
-    const updatedPublication = await updateRegistration(values);
-    if (updatedPublication?.error) {
-      dispatch(setNotification(updatedPublication.error, NotificationVariant.Error));
+    const updatedRegistration = await updateRegistration(values);
+    if (updatedRegistration?.error) {
+      dispatch(setNotification(updatedRegistration.error, NotificationVariant.Error));
     } else {
-      handleSetRegistration(deepmerge(emptyRegistration, updatedPublication));
+      handleSetRegistration(deepmerge(emptyRegistration, updatedRegistration));
       dispatch(setNotification(t('feedback:success.update_registration')));
     }
     setIsSaving(false);
-    return !updatedPublication.error;
+    return !updatedRegistration.error;
   };
 
   const validateForm = (values: Registration) => {
@@ -113,7 +113,7 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier, closeForm }) 
   ) : (
     <>
       <PageHeader>{t('edit_registration')}</PageHeader>
-      <StyledPublication>
+      <StyledRegistration>
         <Formik
           enableReinitialize
           initialValues={registration ? deepmerge(emptyRegistration, registration) : emptyRegistration}
@@ -133,8 +133,8 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier, closeForm }) 
                 tabNumber={tabNumber}
                 uppy={uppy}
                 isSaving={isSaving}
-                savePublication={async () => {
-                  return await savePublication(values);
+                saveRegistration={async () => {
+                  return await saveRegistration(values);
                 }}
               />
               {tabNumber !== RegistrationTab.Submission && (
@@ -151,7 +151,7 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier, closeForm }) 
                       isLoading={isSaving}
                       data-testid="button-save-publication"
                       onClick={async () => {
-                        await savePublication(values);
+                        await saveRegistration(values);
                         // Set all fields with error to touched to ensure error messages are shown
                         setTouched(setNestedObjectValues(errors, true));
                       }}>
@@ -163,7 +163,7 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier, closeForm }) 
             </Form>
           )}
         </Formik>
-      </StyledPublication>
+      </StyledRegistration>
     </>
   );
 };
