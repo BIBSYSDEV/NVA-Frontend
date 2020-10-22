@@ -88,7 +88,7 @@ const RegistrationList: FC<RegistrationListProps> = ({ publications }) => {
                   <Typography>{publication.mainTitle}</Typography>
                 </TableCell>
                 <TableCell>
-                  <Typography>{t(`publication:status.${publication.status}`)}</Typography>
+                  <Typography>{t(`registration:status.${publication.status}`)}</Typography>
                 </TableCell>
                 <TableCell>
                   <Typography>{new Date(publication.createdDate).toLocaleString()}</Typography>
