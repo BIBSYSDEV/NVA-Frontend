@@ -7,8 +7,7 @@ describe('My messages', () => {
     cy.visit('/user');
     cy.mocklogin();
     cy.setUserRolesInRedux([RoleName.CREATOR]);
-    cy.get('[data-testid=menu]').click({ force: true });
-    cy.get('[data-testid=menu-my-messages-button]').click({ force: true });
+    cy.get('[data-testid=my-messages]').click({ force: true });
   });
 
   it('The Creator should be able to view my messages', () => {
