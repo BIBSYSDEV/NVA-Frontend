@@ -9,7 +9,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import { Registration } from '../../types/registration.types';
 import DisciplineSearch from './description_tab/DisciplineSearch';
 import DatePickerField from './description_tab/DatePickerField';
-import { publicationLanguages } from '../../types/language.types';
+import { registrationLanguages } from '../../types/language.types';
 import Card from '../../components/Card';
 import { DescriptionFieldNames } from '../../types/publicationFieldNames';
 import { touchedDescriptionTabFields } from '../../utils/formik-helpers';
@@ -61,8 +61,8 @@ const DescriptionPanel: FC<PanelProps> = ({ setTouchedFields }) => {
           {({ field, meta: { touched, error } }: FieldProps) => (
             <TextField
               {...field}
-              data-testid="publication-title-field"
-              inputProps={{ 'data-testid': 'publication-title-input' }}
+              data-testid="registration-title-field"
+              inputProps={{ 'data-testid': 'registration-title-input' }}
               variant="outlined"
               fullWidth
               label={t('common:title')}
@@ -138,8 +138,8 @@ const DescriptionPanel: FC<PanelProps> = ({ setTouchedFields }) => {
                 placeholder={t('description.primary_language')}
                 select
                 variant="outlined">
-                {publicationLanguages.map(({ id, value }) => (
-                  <MenuItem value={value} key={id} data-testid={`publication-language-${id}`}>
+                {registrationLanguages.map(({ id, value }) => (
+                  <MenuItem value={value} key={id} data-testid={`registration-language-${id}`}>
                     {t(`languages:${id}`)}
                   </MenuItem>
                 ))}

@@ -12,14 +12,14 @@ import styled from 'styled-components';
 import ConfirmDialog from '../../../../components/ConfirmDialog';
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { publicationLanguages, LanguageCodes } from '../../../../types/language.types';
+import { registrationLanguages, LanguageCodes } from '../../../../types/language.types';
 import { getMostSpecificUnit } from '../../../../utils/institutions-helpers';
 import { useDispatch } from 'react-redux';
 import { setNotification } from '../../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../../types/notification.types';
 import AffiliationHierarchy from '../../../../components/institution/AffiliationHierarchy';
 import Card from '../../../../components/Card';
-import { BackendTypeNames } from '../../../../types/publication_types/commonPublication.types';
+import { BackendTypeNames } from '../../../../types/publication_types/commonRegistration.types';
 
 const StyledCard = styled(Card)`
   display: flex;
@@ -57,7 +57,7 @@ const AffiliationsCell: FC<AffiliationsCellProps> = ({ affiliations, baseFieldNa
     }
 
     const labelKey =
-      publicationLanguages.find((language) => language.value === values.entityDescription.language)?.id ??
+      registrationLanguages.find((language) => language.value === values.entityDescription.language)?.id ??
       LanguageCodes.ENGLISH;
 
     const addedAffiliation: Institution = {

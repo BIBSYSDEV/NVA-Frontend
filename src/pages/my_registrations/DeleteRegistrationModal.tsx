@@ -12,15 +12,15 @@ interface DeleteRegistrationModalProps {
 const DeleteRegistrationModal: FC<DeleteRegistrationModalProps> = ({ id, title, setOpenModal }) => {
   const { t } = useTranslation();
 
-  const deletePublication = () => {
-    // delete publication here
+  const deleteRegistration = () => {
+    // delete registration here
     setOpenModal(false);
   };
 
   return (
     <ConfirmDialog
       open
-      onAccept={deletePublication}
+      onAccept={deleteRegistration}
       onCancel={() => setOpenModal(false)}
       title={t('workLists:delete_registration')}>
       <NormalText>{`${t('workLists:delete_registration_message')} "${title ?? t('common:no_title')}"`}</NormalText>

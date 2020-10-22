@@ -30,7 +30,7 @@ const RegistrationsForApproval: FC = () => {
   return isLoading ? (
     <CircularProgress />
   ) : publicationsForApproval.length > 0 ? (
-    <WorklistTable publications={publicationsForApproval} />
+    <WorklistTable registrations={publicationsForApproval} />
   ) : (
     <SubHeading>{t('no_pending_registrations')}</SubHeading>
   );

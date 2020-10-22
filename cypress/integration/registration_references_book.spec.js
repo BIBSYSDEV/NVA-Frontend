@@ -7,7 +7,7 @@ describe('Registration: References: Book', () => {
   it('The user should be able to fill out the form for book type', () => {
     cy.mocklogin();
     // navigate to References (update this when functionality for starting a registration is done)
-    cy.get('[data-testid=new-publication]').click({ force: true });
+    cy.get('[data-testid=new-registration]').click({ force: true });
 
     cy.startRegistrationWithDoi();
 

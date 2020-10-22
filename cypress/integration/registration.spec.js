@@ -6,18 +6,18 @@ describe('Registration', () => {
 
   it('The user should be able to start registration with a DOI link', () => {
     cy.mocklogin();
-    cy.get('[data-testid=new-publication]').click({ force: true });
+    cy.get('[data-testid=new-registration]').click({ force: true });
     cy.url().should('include', '/registration');
 
-    cy.get('[data-testid=new-publication-link]').click({ force: true });
-    cy.get('[data-testid=new-publication-link-input]').type('https://doi.org/10.1098/rspb.2018.0085');
+    cy.get('[data-testid=new-registration-link]').click({ force: true });
+    cy.get('[data-testid=new-registration-link-input]').type('https://doi.org/10.1098/rspb.2018.0085');
     cy.get('[data-testid=doi-search-button]').click({ force: true });
     cy.contains(
       'Computer simulations show that Neanderthal facial morphology represents adaptation to cold and high energy demands, but not heavy biting'
     );
 
-    cy.get('[data-testid=publication-link-next-button]').click({ force: true });
-    cy.get('[data-testid=publication-title-input]').should(
+    cy.get('[data-testid=registration-link-next-button]').click({ force: true });
+    cy.get('[data-testid=registration-title-input]').should(
       'have.value',
       'Computer simulations show that Neanderthal facial morphology represents adaptation to cold and high energy demands, but not heavy biting'
     );
@@ -25,10 +25,10 @@ describe('Registration', () => {
 
   it('The user should be able to start registration by uploading a file', () => {
     cy.mocklogin();
-    cy.get('[data-testid=new-publication]').click({ force: true });
+    cy.get('[data-testid=new-registration]').click({ force: true });
     cy.url().should('include', '/registration');
 
-    cy.get('[data-testid=new-publication-file]').click({ force: true });
+    cy.get('[data-testid=new-registration-file]').click({ force: true });
 
     // Mock Uppys upload requests to S3 Bucket
     cy.route({
@@ -41,7 +41,7 @@ describe('Registration', () => {
     cy.get('input[type=file]').uploadFile('img.jpg');
     cy.get('[data-testid=uploaded-file-card]').should('be.visible');
 
-    cy.get('[data-testid=publication-file-start-button]').click({ force: true });
+    cy.get('[data-testid=registration-file-start-button]').click({ force: true });
   });
 
   it('The user should not be able to go to the registration page for registration if not logged in', () => {

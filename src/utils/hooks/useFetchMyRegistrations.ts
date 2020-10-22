@@ -14,18 +14,18 @@ const useFetchMyRegistrations = (): [RegistrationPreview[], boolean] => {
   useEffect(() => {
     const cancelSource = Axios.CancelToken.source();
 
-    const fetchMyPublications = async () => {
-      const myPublications = await getMyRegistrations(cancelSource.token);
-      if (myPublications) {
+    const fetchMyRegistrations = async () => {
+      const myRegistrations = await getMyRegistrations(cancelSource.token);
+      if (myRegistrations) {
         setIsLoading(false);
-        if (myPublications.error) {
-          dispatch(setNotification(myPublications.error, NotificationVariant.Error));
+        if (myRegistrations.error) {
+          dispatch(setNotification(myRegistrations.error, NotificationVariant.Error));
         } else {
-          setRegistrations(myPublications);
+          setRegistrations(myRegistrations);
         }
       }
     };
-    fetchMyPublications();
+    fetchMyRegistrations();
 
     return () => cancelSource.cancel();
   }, [dispatch]);

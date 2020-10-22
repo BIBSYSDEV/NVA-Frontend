@@ -7,8 +7,8 @@ describe('User opens registration form and can see validation errors', () => {
   before('Given that the user is logged in as Creator:', () => {
     cy.visit('/');
     cy.mocklogin();
-    cy.get('[data-testid=my-publications]').click({ force: true });
-    cy.get('[data-testid=edit-publication-4327439]').click({ force: true });
+    cy.get('[data-testid=my-registrations]').click({ force: true });
+    cy.get('[data-testid=edit-registration-4327439]').click({ force: true });
   });
 
   beforeEach(() => {
@@ -35,9 +35,9 @@ describe('User opens registration form and can see validation errors', () => {
     cy.get('[data-testid=nav-tabpanel-description]').click({ force: true });
 
     // Title field
-    cy.get('[data-testid=publication-title-field]').contains(ErrorMessage.REQUIRED).should('be.visible');
-    cy.get('[data-testid=publication-title-input]').click({ force: true }).type('TITLE INPUT');
-    cy.get('[data-testid=publication-title-field]').contains(ErrorMessage.REQUIRED).should('not.be.visible');
+    cy.get('[data-testid=registration-title-field]').contains(ErrorMessage.REQUIRED).should('be.visible');
+    cy.get('[data-testid=registration-title-input]').click({ force: true }).type('TITLE INPUT');
+    cy.get('[data-testid=registration-title-field]').contains(ErrorMessage.REQUIRED).should('not.be.visible');
 
     // Date published field
     cy.get('[data-testid=date-published-field]')

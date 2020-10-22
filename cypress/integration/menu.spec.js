@@ -14,8 +14,8 @@ describe('Menu', () => {
     cy.setUserRolesInRedux(allRoles);
     cy.get('[data-testid=menu]').click({ force: true });
     cy.get('[data-testid=menu-user-profile-button]').should('be.visible');
-    cy.get('[data-testid=new-publication]').should('be.visible');
-    cy.get('[data-testid=my-publications]').should('be.visible');
+    cy.get('[data-testid=new-registration]').should('be.visible');
+    cy.get('[data-testid=my-registrations]').should('be.visible');
     cy.get('[data-testid=menu-admin-institution-button]').should('be.visible');
     cy.get('[data-testid=menu-logout-button]').should('be.visible');
   });
@@ -24,8 +24,8 @@ describe('Menu', () => {
     cy.setUserRolesInRedux(noRoles);
     cy.get('[data-testid=menu]').click({ force: true });
     cy.get('[data-testid=menu-user-profile-button]').should('be.visible');
-    cy.get('[data-testid=new-publication]').should('not.be.visible');
-    cy.get('[data-testid=my-publications]').should('not.be.visible');
+    cy.get('[data-testid=new-registration]').should('not.be.visible');
+    cy.get('[data-testid=my-registrations]').should('not.be.visible');
     cy.get('[data-testid=menu-admin-institution-button]').should('not.be.visible');
     cy.get('[data-testid=menu-logout-button]').should('be.visible');
   });

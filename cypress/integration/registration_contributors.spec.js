@@ -8,7 +8,7 @@ describe('Registration: Contributors', () => {
     cy.mocklogin();
 
     // navigate to Contributors
-    cy.get('[data-testid=new-publication]').click({ force: true });
+    cy.get('[data-testid=new-registration]').click({ force: true });
 
     cy.startRegistrationWithDoi();
 

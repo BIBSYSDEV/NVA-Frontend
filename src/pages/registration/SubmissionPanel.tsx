@@ -40,10 +40,10 @@ const StyledButtonWithProgress = styled(ButtonWithProgress)`
 
 interface SubmissionPanelProps {
   isSaving: boolean;
-  savePublication: () => Promise<boolean>;
+  saveRegistration: () => Promise<boolean>;
 }
 
-const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication }) => {
+const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, saveRegistration }) => {
   const user = useSelector((store: RootStore) => store.user);
   const { t } = useTranslation('registration');
   const { values, isValid, dirty, errors, setTouched }: FormikProps<Registration> = useFormikContext();
@@ -64,14 +64,14 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication }
 
   const onClickPublish = async () => {
     setIsPublishing(true);
-    const publicationIsUpdated = dirty ? await savePublication() : true;
-    if (publicationIsUpdated) {
-      const publishedPublication = await publishRegistration(values.identifier);
-      if (publishedPublication?.error) {
+    const RegistrationIsUpdated = dirty ? await saveRegistration() : true;
+    if (RegistrationIsUpdated) {
+      const publishedRegistration = await publishRegistration(values.identifier);
+      if (publishedRegistration?.error) {
         setIsPublishing(false);
-        dispatch(setNotification(publishedPublication.error, NotificationVariant.Error));
-      } else if (publishedPublication?.info) {
-        dispatch(setNotification(publishedPublication.info, NotificationVariant.Info));
+        dispatch(setNotification(publishedRegistration.error, NotificationVariant.Error));
+      } else if (publishedRegistration?.info) {
+        dispatch(setNotification(publishedRegistration.info, NotificationVariant.Info));
         setTimeout(() => {
           history.push(`/registration/${values.identifier}/public`);
         }, NAVIGATE_TO_PUBLIC_REGISTRATION_DURATION);
@@ -125,7 +125,7 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication }
         {status === RegistrationStatus.DRAFT && (
           <StyledButtonWithProgress
             disabled={isSaving || !isValid}
-            data-testid="button-publish-publication"
+            data-testid="button-publish-registration"
             onClick={onClickPublish}
             isLoading={isPublishing}>
             {t('common:publish')}
@@ -157,10 +157,10 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication }
               type="submit"
               disabled={isPublishing}
               isLoading={isSaving}
-              data-testid="button-save-publication"
+              data-testid="button-save-registration"
               onClick={async () => {
-                const publicationIsUpdated = await savePublication();
-                if (publicationIsUpdated) {
+                const registrationIsUpdated = await saveRegistration();
+                if (registrationIsUpdated) {
                   history.push(`/registration/${values.identifier}/public`);
                 }
               }}>
@@ -172,8 +172,8 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, savePublication }
             type="submit"
             disabled={isPublishing}
             isLoading={isSaving}
-            data-testid="button-save-publication"
-            onClick={async () => await savePublication()}>
+            data-testid="button-save-registration"
+            onClick={async () => await saveRegistration()}>
             {t('common:save')}
           </ButtonWithProgress>
         )}
