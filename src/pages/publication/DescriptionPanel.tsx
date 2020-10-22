@@ -61,8 +61,8 @@ const DescriptionPanel: FC<PanelProps> = ({ setTouchedFields }) => {
           {({ field, meta: { touched, error } }: FieldProps) => (
             <TextField
               {...field}
-              data-testid="publication-title-field"
-              inputProps={{ 'data-testid': 'publication-title-input' }}
+              data-testid="registration-title-field"
+              inputProps={{ 'data-testid': 'registration-title-input' }}
               variant="outlined"
               fullWidth
               label={t('common:title')}
@@ -75,7 +75,8 @@ const DescriptionPanel: FC<PanelProps> = ({ setTouchedFields }) => {
           {({ field }: FieldProps) => (
             <TextField
               {...field}
-              data-testid="publication-abstract-field"
+              data-testid="registration-abstract-field"
+              inputProps={{ 'data-testid': 'registration-abstract-input' }}
               variant="outlined"
               fullWidth
               multiline
@@ -88,7 +89,8 @@ const DescriptionPanel: FC<PanelProps> = ({ setTouchedFields }) => {
           {({ field }: FieldProps) => (
             <TextField
               {...field}
-              data-testid="publication-description-field"
+              data-testid="registration-description-field"
+              inputProps={{ 'data-testid': 'registration-description-input' }}
               label={t('description.description')}
               multiline
               rows="4"
@@ -120,7 +122,7 @@ const DescriptionPanel: FC<PanelProps> = ({ setTouchedFields }) => {
                 renderInput={(params) => (
                   <MuiTextField
                     {...params}
-                    data-testid="publication-tag-field"
+                    data-testid="registration-tag-field"
                     label={t('description.keywords')}
                     helperText={t('description.keywords_helper')}
                     variant="outlined"
@@ -134,7 +136,7 @@ const DescriptionPanel: FC<PanelProps> = ({ setTouchedFields }) => {
 
         <DateAndLanguageWrapper>
           <DatePickerField
-            data-testid="publication-date-field"
+            data-testid="registration-date-field"
             yearFieldName={DescriptionFieldNames.PUBLICATION_YEAR}
             monthFieldName={DescriptionFieldNames.PUBLICATION_MONTH}
             dayFieldName={DescriptionFieldNames.PUBLICATION_DAY}
@@ -144,7 +146,7 @@ const DescriptionPanel: FC<PanelProps> = ({ setTouchedFields }) => {
             {({ field }: FieldProps) => (
               <TextField
                 {...field}
-                data-testid="publication-language-field"
+                data-testid="registration-language-field"
                 fullWidth
                 label={t('description.primary_language')}
                 placeholder={t('description.primary_language')}
