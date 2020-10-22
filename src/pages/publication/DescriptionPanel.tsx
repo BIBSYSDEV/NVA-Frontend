@@ -153,7 +153,7 @@ const DescriptionPanel: FC<PanelProps> = ({ setTouchedFields }) => {
                 select
                 variant="outlined">
                 {publicationLanguages.map(({ id, value }) => (
-                  <MenuItem value={value} key={id} data-testid={`publication-language-${id}`}>
+                  <MenuItem value={value} key={id} data-testid={`registration-language-${id}`}>
                     {t(`languages:${id}`)}
                   </MenuItem>
                 ))}
