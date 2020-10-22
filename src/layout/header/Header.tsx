@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import AddIcon from '@material-ui/icons/Add';
 import LibraryBooks from '@material-ui/icons/LibraryBooks';
+import Mail from '@material-ui/icons/Mail';
 import MenuIcon from '@material-ui/icons/Menu';
 import MobileMenu from './MobileMenu';
 
@@ -21,10 +22,10 @@ const StyledPageHeader = styled.div`
   padding-right: 1rem;
   border-bottom: 2px solid ${({ theme }) => theme.palette.separator.main};
   min-height: 4rem;
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
     grid-template-areas: 'menu logo auth';
     grid-template-columns: 1fr 1fr 1fr;
-    padding: 0;
+    padding-right: 1rem;
   }
 `;
 
@@ -33,7 +34,7 @@ const StyledShortcuts = styled.div`
   > * {
     margin-left: 2rem;
   }
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
     display: none;
   }
 `;
@@ -41,7 +42,7 @@ const StyledShortcuts = styled.div`
 const StyledBurgerMenu = styled.div`
   grid-area: menu;
   justify-self: left;
-  @media (min-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+  @media (min-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
     display: none;
   }
 `;
@@ -81,6 +82,14 @@ const Header: FC = () => {
             to="/my-registrations"
             startIcon={<LibraryBooks />}>
             <Typography variant="button">{t('workLists:my_registrations')}</Typography>
+          </Button>
+          <Button
+            color="primary"
+            component={RouterLink}
+            data-testid="my-messages"
+            to="/my-messages"
+            startIcon={<Mail />}>
+            <Typography variant="button">{t('workLists:my_messages')}</Typography>
           </Button>
         </StyledShortcuts>
       )}

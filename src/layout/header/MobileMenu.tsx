@@ -35,6 +35,9 @@ const MobileMenu: FC<MobileMenuProps> = ({ anchorEl, onClose }) => {
       <MenuItem data-testid="mobile-my-registrations" onClick={() => handleClickMenuItem('/my-registrations')}>
         {t('workLists:my_registrations')}
       </MenuItem>
+      <MenuItem data-testid="mobile-my-messages" onClick={() => handleClickMenuItem('/my-messages')}>
+        {t('workLists:my_messages')}
+      </MenuItem>
     </Menu>
   );
 };
