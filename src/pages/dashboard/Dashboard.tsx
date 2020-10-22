@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Link, useHistory } from 'react-router-dom';
 import { Link as MuiLink } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import LatestPublications from './LatestPublications';
+import LatestRegistrations from './LatestRegistrations';
 import SearchBar from '../../components/SearchBar';
 
 const StyledDashboard = styled.div`
@@ -52,7 +52,7 @@ const Dashboard: FC = () => {
     <StyledDashboard>
       <StyledSearchBarContainer>
         <SearchBar handleSearch={handleSearch} initialSearchTerm="" />
-        <LatestPublications />
+        <LatestRegistrations />
       </StyledSearchBarContainer>
       <StyledOtherContent>
         <StyledLinks>

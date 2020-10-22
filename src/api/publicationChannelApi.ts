@@ -1,6 +1,6 @@
 import { PublicationTableNumber } from '../utils/constants';
 import { apiRequest } from './apiRequest';
-import { Publisher } from '../types/publication.types';
+import { Publisher } from '../types/registration.types';
 
 export enum PublicationChannelApiPaths {
   SEARCH = '/channel/search',

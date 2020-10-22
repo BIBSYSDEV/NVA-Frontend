@@ -35,9 +35,9 @@ describe('Publication: References: Book', () => {
 
     // choose peer review value and show NVI status
     cy.get('[data-testid=peer_review-true]').click({ force: true });
-    cy.get('[data-testid=nvi_book]').contains('This publication can be included in NSI');
+    cy.get('[data-testid=nvi_book]').get('[data-testid=nvi_success]');
     cy.get('[data-testid=peer_review-false]').click({ force: true });
-    cy.get('[data-testid=nvi_book]').contains('This publication can not be incuded in NSI');
+    cy.get('[data-testid=nvi_book]').get('[data-testid=nvi_fail_no_peer_review]');
 
     // fill out number of pages field
     cy.get('[data-testid=pages-input]').type('483');

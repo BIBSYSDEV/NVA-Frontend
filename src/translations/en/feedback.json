@@ -6,10 +6,10 @@
     "create_authority": "Could not create authority",
     "create_customer": "Could not create customer institution",
     "create_doi_request": "Could not create DOI request",
-    "create_publication": "Could not create publication",
+    "create_registration": "Could not create registration",
     "delete_identifier": "Could not delete {{qualifier}}",
     "download_file": "Could not download file",
-    "get_approvable_publications": "Could not fetch publications awaiting approval",
+    "get_approvable_registrations": "Could not fetch registrations awaiting approval",
     "get_authority": "Could not retrieve authority",
     "get_authorities": "Could not retrieve authorities",
     "get_customer": "Could not retrieve customer institution",
@@ -18,12 +18,12 @@
     "get_doi_requests": "Could not retrieve DOI requests",
     "get_institutions": "Could not retrieve institutions",
     "get_institution": "Could not retrieve institution",
-    "get_last_publication": "Could not retrieve last publication",
+    "get_last_registration": "Could not retrieve last registration",
     "get_orcid": "Could not get data from ORCID",
     "get_parent_units": "Could not retrieve institutions",
     "get_project": "Search for projects failed",
-    "get_publications": "Could not retrieve publications",
-    "get_publication": "Could not get publication",
+    "get_registrations": "Could not retrieve registrations",
+    "get_registration": "Could not get registration",
     "get_roles": "Could not get roles",
     "get_session": "Invalid session. Please log in again.",
     "get_user": "Failed to get user",
@@ -32,20 +32,20 @@
     "login": "Login failed",
     "missing_user": "Missing user",
     "orcid_login": "ORCID login failed",
-    "publish_publication": "Could not publish publication",
+    "publish_registration": "Could not publish registration",
     "remove_role": "Could not remove role",
     "search": "Search failed",
     "update_authority": "Could not update {{qualifier}} for authority",
     "update_customer": "Could not update customer institution",
     "update_institution_user": "Could not update user",
-    "update_publication": "Could not update publication",
+    "update_registration": "Could not update registration",
     "orcid": {
       "access_denied": "Could not connect to ORCID because access to the ORCID account was denied"
     }
   },
   "info": {
     "affiliation_already_exists": "Affiliation already exists",
-    "publishing_publication": "Publishing publication...",
+    "publishing_registration": "Publishing registration...",
     "user_already_exists": "User already exists"
   },
   "success": {
@@ -55,7 +55,7 @@
     "admin_removed": "User removed as administrator",
     "created_authority": "Created author ID",
     "created_customer": "Created customer institution",
-    "create_publication": "New publication created",
+    "create_registration": "New registration created",
     "delete_affiliation": "Deleted affiliation",
     "delete_identifier": "Deleted identifier",
     "doi_request_sent": "DOI request sent",
@@ -63,6 +63,6 @@
     "removed_role": "Role removed",
     "update_authority": "Updated authority",
     "update_customer": "Updated customer institution",
-    "update_publication": "Updated publication"
+    "update_registration": "Updated registration"
   }
 }

@@ -1,4 +1,4 @@
-import { PublicationDate } from './publication.types';
+import { RegistrationDate } from './registration.types';
 
 interface SearchResultContributor {
   id?: string;
@@ -8,12 +8,12 @@ interface SearchResultContributor {
 export interface SearchResult {
   id: string;
   contributors: SearchResultContributor[];
-  date: PublicationDate;
+  date: RegistrationDate;
   owner: string;
   title: string;
 }
 
-export interface LatestPublication {
+export interface LatestRegistration {
   identifier: string;
   createdDate: string;
   modifiedDate: string;

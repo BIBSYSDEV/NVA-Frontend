@@ -1,14 +1,14 @@
 import { CancelToken } from 'axios';
 import { authenticatedApiRequest } from './apiRequest';
 import { RoleName } from '../types/user.types';
-import { Publication } from '../types/publication.types';
+import { Registration } from '../types/registration.types';
 
 export enum DoiRequestApiPaths {
   DOI_REQUEST = '/doi-request',
 }
 
-export const getPublicationsWithPendingDoiRequest = async (role: RoleName, cancelToken?: CancelToken) =>
-  await authenticatedApiRequest<Publication[]>({
+export const getRegistrationsWithPendingDoiRequest = async (role: RoleName, cancelToken?: CancelToken) =>
+  await authenticatedApiRequest<Registration[]>({
     url: `${DoiRequestApiPaths.DOI_REQUEST}?role=${role}`,
     cancelToken,
   });

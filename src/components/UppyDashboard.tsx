@@ -19,7 +19,7 @@ const uploaderMaxWidthPx = 10000;
 const uploaderMaxHeightPx = 200;
 
 const UppyDashboard: React.FC<UppyDashboardProps> = ({ uppy }) => {
-  const { t } = useTranslation('publication');
+  const { t } = useTranslation('registration');
   const multipleFilesAllowed = (uppy as any).opts.restrictions.maxNumberOfFiles !== 1;
 
   return uppy ? (

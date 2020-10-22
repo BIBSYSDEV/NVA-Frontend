@@ -1,4 +1,4 @@
-import { BackendType, PublicationDate, PagesMonograph, emptyPagesMonograph } from '../publication.types';
+import { BackendType, RegistrationDate, PagesMonograph, emptyPagesMonograph } from '../registration.types';
 import { PublicationType, DegreeType } from '../publicationFieldNames';
 import { LanguageValues } from '../language.types';
 import { Contributor } from '../contributor.types';
@@ -33,7 +33,7 @@ interface DegreeReference extends BackendType {
 export interface DegreeEntityDescription extends BackendType {
   abstract: string;
   contributors: Contributor[];
-  date: PublicationDate;
+  date: RegistrationDate;
   description: string;
   language: LanguageValues;
   mainTitle: string;

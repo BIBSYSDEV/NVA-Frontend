@@ -9,7 +9,7 @@ interface MobileMenuProps {
 }
 
 const MobileMenu: FC<MobileMenuProps> = ({ anchorEl, onClose }) => {
-  const { t } = useTranslation('publication');
+  const { t } = useTranslation('registration');
   const history = useHistory();
 
   const handleClickMenuItem = (newPath: string) => {
