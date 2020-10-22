@@ -1,4 +1,4 @@
-describe('Publication: References: Report', () => {
+describe('Registration: References: Report', () => {
   beforeEach(() => {
     cy.visit('/');
     cy.server();
@@ -9,7 +9,7 @@ describe('Publication: References: Report', () => {
     // navigate to References (update this when functionality for starting a registration is done)
     cy.get('[data-testid=new-publication]').click({ force: true });
 
-    cy.startPublicationWithDoi();
+    cy.startRegistrationWithDoi();
 
     cy.get('[data-testid=nav-tabpanel-reference]').click({ force: true });
 

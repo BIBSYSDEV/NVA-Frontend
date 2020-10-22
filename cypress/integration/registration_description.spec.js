@@ -1,4 +1,4 @@
-describe('Publication: Description', () => {
+describe('Registration: Description', () => {
   beforeEach(() => {
     cy.visit('/');
     cy.server();
@@ -9,7 +9,7 @@ describe('Publication: Description', () => {
 
     cy.get('[data-testid=new-publication]').click({ force: true });
 
-    cy.startPublicationWithDoi();
+    cy.startRegistrationWithDoi();
 
     cy.get('[data-testid=project-search-input]').click({ force: true }).type('phd');
 
