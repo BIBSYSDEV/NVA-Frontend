@@ -2,7 +2,7 @@ import { BackendType, PagesRange, RegistrationDate } from '../registration.types
 import { PublicationType, JournalType } from '../publicationFieldNames';
 import { LanguageValues } from '../language.types';
 import { Contributor } from '../contributor.types';
-import { BackendTypeNames, emptyDate } from './commonPublication.types';
+import { BackendTypeNames, emptyDate } from './commonRegistration.types';
 
 export interface JournalPublicationInstance {
   type: JournalType | '';

@@ -1,6 +1,6 @@
 import { FormikProps, useFormikContext } from 'formik';
 import React, { FC } from 'react';
-import { DegreePublication } from '../../../types/registration.types';
+import { DegreeRegistration } from '../../../types/registration.types';
 import { ReferenceFieldNames, DegreeType } from '../../../types/publicationFieldNames';
 import SelectTypeField from './components/SelectTypeField';
 import DegreeForm from './sub_type_forms/DegreeForm';
@@ -11,7 +11,7 @@ interface DegreeTypeFormProps {
 }
 
 const DegreeTypeForm: FC<DegreeTypeFormProps> = ({ onChangeSubType }) => {
-  const { values }: FormikProps<DegreePublication> = useFormikContext();
+  const { values }: FormikProps<DegreeRegistration> = useFormikContext();
   const subType = values.entityDescription.reference.publicationInstance.type;
 
   return (

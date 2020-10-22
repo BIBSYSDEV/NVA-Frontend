@@ -1,8 +1,8 @@
 import { FormikProps, useFormikContext, Field, FieldProps, ErrorMessage } from 'formik';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
-import { JournalPublication } from '../../../../types/registration.types';
-import { JournalEntityDescription } from '../../../../types/publication_types/journalPublication.types';
+import { JournalRegistration } from '../../../../types/registration.types';
+import { JournalEntityDescription } from '../../../../types/publication_types/journalRegistration.types';
 import { ReferenceFieldNames } from '../../../../types/publicationFieldNames';
 import PeerReview from '../components/PeerReview';
 import NviValidation from '../components/NviValidation';
@@ -30,7 +30,7 @@ const StyledLabel = styled(Typography)`
 
 const JournalArticleForm: FC = () => {
   const { t } = useTranslation('registration');
-  const { touched, values }: FormikProps<JournalPublication> = useFormikContext();
+  const { touched, values }: FormikProps<JournalRegistration> = useFormikContext();
   const {
     reference: { publicationContext, publicationInstance },
   } = values.entityDescription as JournalEntityDescription;
