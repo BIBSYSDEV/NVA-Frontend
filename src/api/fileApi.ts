@@ -14,8 +14,8 @@ export enum FileApiPaths {
   PREPARE = '/upload/prepare',
 }
 
-export const downloadFile = async (publicationId: string, fileId: string) => {
-  const url = `${FileApiPaths.DOWNLOAD}/${publicationId}/files/${fileId}`;
+export const downloadFile = async (registrationId: string, fileId: string) => {
+  const url = `${FileApiPaths.DOWNLOAD}/${registrationId}/files/${fileId}`;
   try {
     const idToken = await getIdToken();
     const response = await Axios.get(url, { headers: { Authorization: `Bearer ${idToken}` } });

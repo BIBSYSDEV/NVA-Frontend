@@ -15,7 +15,7 @@ const PublicRegistration: FC = () => {
   const [registration, isLoadingRegistration] = useFetchRegistration(identifier);
   const user = useSelector((store: RootStore) => store.user);
 
-  const isAllowedToSeePublicPublication =
+  const isAllowedToSeePublicRegistration =
     registration?.status === RegistrationStatus.PUBLISHED ||
     (user?.isCurator && registration?.publisher.id === user?.id) ||
     registration?.owner === user?.id;
@@ -25,8 +25,8 @@ const PublicRegistration: FC = () => {
       {isLoadingRegistration ? (
         <CircularProgress color="inherit" size={20} />
       ) : registration ? (
-        isAllowedToSeePublicPublication ? (
-          <PublicRegistrationContent publication={registration} />
+        isAllowedToSeePublicRegistration ? (
+          <PublicRegistrationContent registration={registration} />
         ) : (
           <NotPublished />
         )

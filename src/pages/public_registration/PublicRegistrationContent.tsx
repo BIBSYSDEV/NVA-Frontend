@@ -96,10 +96,10 @@ const StyledTag = styled.div`
 `;
 
 export interface PublicRegistrationContentProps {
-  publication: Registration;
+  registration: Registration;
 }
 
-const PublicRegistrationContent: FC<PublicRegistrationContentProps> = ({ publication }) => {
+const PublicRegistrationContent: FC<PublicRegistrationContentProps> = ({ registration }) => {
   const { t } = useTranslation('registration');
 
   const {
@@ -111,19 +111,19 @@ const PublicRegistrationContent: FC<PublicRegistrationContentProps> = ({ publica
     npiSubjectHeading,
     reference: { doi, publicationContext, publicationInstance },
     tags = [],
-  } = publication.entityDescription;
+  } = registration.entityDescription;
 
   // Show only the license for the first file for now
-  const currentLicense = publication.fileSet?.files[0]?.license ?? null;
+  const currentLicense = registration.fileSet?.files[0]?.license ?? null;
   const selectedLicense = licenses.find((license) => license.identifier === currentLicense?.identifier);
 
   return (
     <ContentPage>
-      <PublicRegistrationStatusBar publication={publication} />
+      <PublicRegistrationStatusBar registration={registration} />
       <Heading>{mainTitle}</Heading>
       {contributors && <PublicRegistrationAuthors contributors={contributors} />}
       <StyledContentWrapper>
-        {publication.fileSet?.files.map(
+        {registration.fileSet?.files.map(
           (file) => !file.administrativeAgreement && <PublicRegistrationFile file={file} key={file.identifier} />
         )}
         <StyledMainContent>
@@ -156,19 +156,19 @@ const PublicRegistrationContent: FC<PublicRegistrationContentProps> = ({ publica
             </LabelContentRow>
           )}
 
-          {isJournal(publication) ? (
+          {isJournal(registration) ? (
             <>
               <PublicPublicationContextJournal publicationContext={publicationContext as JournalPublicationContext} />
               <PublicPublicationInstanceJournal
                 publicationInstance={publicationInstance as JournalPublicationInstance}
               />
             </>
-          ) : isDegree(publication) ? (
+          ) : isDegree(registration) ? (
             <>
               <PublicPublicationContextDegree publicationContext={publicationContext as DegreePublicationContext} />
               <PublicPublicationInstanceDegree publicationInstance={publicationInstance as DegreePublicationInstance} />
             </>
-          ) : isReport(publication) ? (
+          ) : isReport(registration) ? (
             <>
               <PublicPublicationContextReport publicationContext={publicationContext as ReportPublicationContext} />
               <PublicPublicationInstanceReport publicationInstance={publicationInstance as ReportPublicationInstance} />
@@ -200,9 +200,9 @@ const PublicRegistrationContent: FC<PublicRegistrationContentProps> = ({ publica
               <StyledNormalText>{selectedLicense.description}</StyledNormalText>
             </StyledLicenseCard>
           )}
-          {publication.project && (
+          {registration.project && (
             <LabelContentRow minimal label={`${t('description.project_association')}:`}>
-              {publication.project.name}
+              {registration.project.name}
             </LabelContentRow>
           )}
         </StyledMainContent>

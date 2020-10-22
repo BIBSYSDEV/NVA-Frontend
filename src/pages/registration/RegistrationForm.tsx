@@ -22,7 +22,7 @@ import { registrationValidationSchema } from '../../utils/validation/registratio
 import { PageHeader } from '../../components/PageHeader';
 import Forbidden from '../errorpages/Forbidden';
 
-const StyledPublication = styled.div`
+const StyledRegistration = styled.div`
   width: 100%;
 `;
 
@@ -50,25 +50,25 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier, closeForm }) 
   const [isSaving, setIsSaving] = useState(false);
   const dispatch = useDispatch();
   const uppy = useUppy();
-  const [publication, isLoadingPublication, handleSetPublication] = useFetchRegistration(identifier);
-  const isOwner = publication?.owner === user.id;
+  const [registration, isLoadingRegistration, handleSetRegistration] = useFetchRegistration(identifier);
+  const isOwner = registration?.owner === user.id;
 
   useEffect(() => {
-    if (!publication && !isLoadingPublication) {
+    if (!registration && !isLoadingRegistration) {
       closeForm();
     }
-  }, [closeForm, publication, isLoadingPublication]);
+  }, [closeForm, registration, isLoadingRegistration]);
 
   useEffect(() => {
-    if (publication) {
-      // Redirect to public page if user should not be able to edit this publication
-      const isValidOwner = user.isCreator && user.id === publication.owner;
-      const isValidCurator = user.isCurator && user.customerId === publication.publisher.id;
+    if (registration) {
+      // Redirect to public page if user should not be able to edit this registration
+      const isValidOwner = user.isCreator && user.id === registration.owner;
+      const isValidCurator = user.isCurator && user.customerId === registration.publisher.id;
       if (!isValidOwner && !isValidCurator) {
-        history.push(`/registration/${publication.identifier}/public`);
+        history.push(`/registration/${registration.identifier}/public`);
       }
     }
-  }, [history, publication, user]);
+  }, [history, registration, user]);
 
   const handleTabChange = (_: React.ChangeEvent<{}>, newTabNumber: number) => {
     setTabNumber(newTabNumber);
@@ -78,17 +78,17 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier, closeForm }) 
     setTabNumber(tabNumber + 1);
   };
 
-  const savePublication = async (values: Registration) => {
+  const saveRegistration = async (values: Registration) => {
     setIsSaving(true);
-    const updatedPublication = await updateRegistration(values);
-    if (updatedPublication?.error) {
-      dispatch(setNotification(updatedPublication.error, NotificationVariant.Error));
+    const updatedRegistration = await updateRegistration(values);
+    if (updatedRegistration?.error) {
+      dispatch(setNotification(updatedRegistration.error, NotificationVariant.Error));
     } else {
-      handleSetPublication(deepmerge(emptyRegistration, updatedPublication));
+      handleSetRegistration(deepmerge(emptyRegistration, updatedRegistration));
       dispatch(setNotification(t('feedback:success.update_registration')));
     }
     setIsSaving(false);
-    return !updatedPublication.error;
+    return !updatedRegistration.error;
   };
 
   const validateForm = (values: Registration) => {
@@ -98,7 +98,7 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier, closeForm }) 
     try {
       validateYupSchema<Registration>(values, registrationValidationSchema, true, {
         publicationContextType: publicationContext.type,
-        publicationStatus: publication?.status,
+        publicationStatus: registration?.status,
       });
     } catch (err) {
       return yupToFormErrors(err);
@@ -106,17 +106,17 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier, closeForm }) 
     return {};
   };
 
-  return isLoadingPublication ? (
+  return isLoadingRegistration ? (
     <CircularProgress />
   ) : !isOwner && !user.isCurator ? (
     <Forbidden />
   ) : (
     <>
       <PageHeader>{t('edit_registration')}</PageHeader>
-      <StyledPublication>
+      <StyledRegistration>
         <Formik
           enableReinitialize
-          initialValues={publication ? deepmerge(emptyRegistration, publication) : emptyRegistration}
+          initialValues={registration ? deepmerge(emptyRegistration, registration) : emptyRegistration}
           validate={validateForm}
           onSubmit={() => {
             /* Use custom save handler instead, since onSubmit will prevent saving if there are any errors */
@@ -133,8 +133,8 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier, closeForm }) 
                 tabNumber={tabNumber}
                 uppy={uppy}
                 isSaving={isSaving}
-                savePublication={async () => {
-                  return await savePublication(values);
+                saveRegistration={async () => {
+                  return await saveRegistration(values);
                 }}
               />
               {tabNumber !== RegistrationTab.Submission && (
@@ -151,7 +151,7 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier, closeForm }) 
                       isLoading={isSaving}
                       data-testid="button-save-publication"
                       onClick={async () => {
-                        await savePublication(values);
+                        await saveRegistration(values);
                         // Set all fields with error to touched to ensure error messages are shown
                         setTouched(setNestedObjectValues(errors, true));
                       }}>
@@ -163,7 +163,7 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier, closeForm }) 
             </Form>
           )}
         </Formik>
-      </StyledPublication>
+      </StyledRegistration>
     </>
   );
 };
