@@ -43,7 +43,7 @@ const DisplayPages: FC<{ pages: PagesMonograph | null }> = ({ pages }) => {
 
   return pages?.pages ? (
     <LabelContentRow minimal label={`${t('common:details')}:`}>
-      `${t('references.pages')} ${pages.pages}`
+      {t('references.pages')} {pages.pages}
     </LabelContentRow>
   ) : null;
 };
