@@ -4,19 +4,15 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { Typography, FormControlLabel, Checkbox } from '@material-ui/core';
 import DoiField from '../components/DoiField';
-import PublisherField from '../components/PublisherField';
-import { ReferenceFieldNames, contextTypeBaseFieldName } from '../../../../types/publicationFieldNames';
+import { ReferenceFieldNames } from '../../../../types/publicationFieldNames';
 import IsbnListField from '../components/IsbnListField';
 import TotalPagesField from '../components/TotalPagesField';
 import { BookRegistration } from '../../../../types/registration.types';
-import {
-  BookEntityDescription,
-  BookPublicationContext,
-} from '../../../../types/publication_types/bookRegistration.types';
+import { BookEntityDescription } from '../../../../types/publication_types/bookRegistration.types';
 import PeerReview from '../components/PeerReview';
-import { PublicationTableNumber } from '../../../../utils/constants';
 import NviValidation from '../components/NviValidation';
-import { formatPublicationContextWithPublisher, publicationContextToPublisher } from '../reference-helpers';
+import SeriesField from '../components/SeriesField';
+import PublisherField from '../components/PublisherField';
 
 const StyledSection = styled.div`
   display: grid;
@@ -43,7 +39,7 @@ const StyledTypography = styled(Typography)`
 
 const BookForm: FC = () => {
   const { t } = useTranslation('registration');
-  const { setFieldValue, values }: FormikProps<BookRegistration> = useFormikContext();
+  const { values }: FormikProps<BookRegistration> = useFormikContext();
   const {
     reference: {
       publicationContext,
@@ -55,21 +51,7 @@ const BookForm: FC = () => {
     <>
       <DoiField />
 
-      <Field name={contextTypeBaseFieldName}>
-        {({ field: { name, value } }: FieldProps<BookPublicationContext>) => (
-          <PublisherField
-            publicationTable={PublicationTableNumber.PUBLISHERS}
-            label={t('common:publisher')}
-            placeholder={t('references.search_for_publisher')}
-            errorFieldName={ReferenceFieldNames.PUBLICATION_CONTEXT_PUBLISHER}
-            setValue={(newValue) => {
-              const bookValues = formatPublicationContextWithPublisher(value.type, newValue);
-              setFieldValue(name, { ...value, ...bookValues });
-            }}
-            value={publicationContextToPublisher(value)}
-          />
-        )}
-      </Field>
+      <PublisherField />
 
       <StyledSection>
         <IsbnListField />
@@ -102,21 +84,7 @@ const BookForm: FC = () => {
       <div>
         <StyledTypography variant="h5">{t('references.series')}</StyledTypography>
         <Typography>{t('references.series_info')}</Typography>
-
-        <Field name={ReferenceFieldNames.SERIES_TITLE}>
-          {({ field: { name, value } }: FieldProps) => (
-            <PublisherField
-              publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
-              label={t('common:title')}
-              placeholder={t('references.search_for_series')}
-              errorFieldName={name}
-              setValue={(newValue) => {
-                setFieldValue(name, newValue?.title ?? '');
-              }}
-              value={publicationContextToPublisher({ title: value })}
-            />
-          )}
-        </Field>
+        <SeriesField />
       </div>
       <NviValidation isPeerReviewed={peerReviewed} isRated={!!publicationContext?.level} dataTestId="nvi_book" />
     </>

@@ -6,10 +6,9 @@ import { TextField, Typography } from '@material-ui/core';
 import { JournalRegistration } from '../../../../types/registration.types';
 import { ReferenceFieldNames } from '../../../../types/publicationFieldNames';
 import DoiField from '../components/DoiField';
-import PublisherField from '../components/PublisherField';
-import { PublicationTableNumber } from '../../../../utils/constants';
 import NviValidation from '../components/NviValidation';
 import { JournalEntityDescription } from '../../../../types/publication_types/journalRegistration.types';
+import JournalField from '../components/JournalField';
 
 const StyledArticleDetail = styled.div`
   display: grid;
@@ -38,12 +37,7 @@ const JournalForm: FC = () => {
     <>
       <DoiField />
 
-      <PublisherField
-        publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
-        label={t('references.journal')}
-        placeholder={t('references.search_for_journal')}
-        errorFieldName={ReferenceFieldNames.PUBLICATION_CONTEXT_TITLE}
-      />
+      <JournalField />
 
       <StyledArticleDetail>
         <Field name={ReferenceFieldNames.VOLUME}>

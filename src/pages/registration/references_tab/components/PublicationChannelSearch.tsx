@@ -1,60 +1,71 @@
-import React, { FC, useCallback, useState, ReactNode } from 'react';
+import React, { FC } from 'react';
+import { getIn, useFormikContext } from 'formik';
+import { Typography } from '@material-ui/core';
+import { Autocomplete } from '@material-ui/lab';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
-
-import { getPublishers } from '../../../../api/publicationChannelApi';
-import { AutoSearch } from '../../../../components/AutoSearch';
-import { Publisher } from '../../../../types/registration.types';
 import { PublicationTableNumber } from '../../../../utils/constants';
-import { debounce } from '../../../../utils/debounce';
-import { NotificationVariant } from '../../../../types/notification.types';
-import { setNotification } from '../../../../redux/actions/notificationActions';
+import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
+import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
+import { Registration, Publisher } from '../../../../types/registration.types';
+import useFetchPublishers from '../../../../utils/hooks/useFetchPublishers';
+import EmphasizeSubstring from '../../../../components/EmphasizeSubstring';
+import { autocompleteTranslationProps } from '../../../../themes/mainTheme';
 
 interface PublicationChannelSearchProps {
-  clearSearchField: boolean;
-  dataTestId: string;
-  label: string;
   publicationTable: PublicationTableNumber;
-  setValueFunction: (value: any) => void;
-  placeholder?: string;
-  errorMessage?: ReactNode;
+  label: string;
+  placeholder: string;
+  errorFieldName: string;
+  setValue: (value?: Publisher) => void;
+  value: Publisher;
 }
 
 const PublicationChannelSearch: FC<PublicationChannelSearchProps> = ({
-  clearSearchField,
-  dataTestId,
-  label,
   publicationTable,
-  setValueFunction,
   placeholder,
-  errorMessage,
+  errorFieldName,
+  label,
+  setValue,
+  value,
 }) => {
-  const [searchResults, setSearchResults] = useState<Publisher[]>([]);
-  const dispatch = useDispatch();
-  const { t } = useTranslation('feedback');
-
-  const search = useCallback(
-    debounce(async (searchTerm: string) => {
-      const response = await getPublishers(searchTerm, publicationTable);
-      if (response?.data) {
-        setSearchResults(response.data.results.filter((publisher: Publisher) => publisher.title));
-      } else {
-        dispatch(setNotification(t('error.search', NotificationVariant.Error)));
-      }
-    }),
-    [dispatch, t, publicationTable]
-  );
+  const { t } = useTranslation('registration');
+  const { setFieldTouched, errors, touched } = useFormikContext<Registration>();
+  const [publishers, isLoadingPublishers, handleNewSearchTerm] = useFetchPublishers(publicationTable);
 
   return (
-    <AutoSearch
-      clearSearchField={clearSearchField}
-      dataTestId={dataTestId}
-      onInputChange={(value) => search(value)}
-      searchResults={searchResults}
-      setValueFunction={setValueFunction}
-      label={label}
-      placeholder={placeholder}
-      errorMessage={errorMessage}
+    <Autocomplete
+      {...autocompleteTranslationProps}
+      openOnFocus={false}
+      options={publishers}
+      onBlur={() => setFieldTouched(errorFieldName)}
+      onInputChange={(_, newInputValue) => handleNewSearchTerm(newInputValue)}
+      value={value}
+      onChange={(_, inputValue) => {
+        setValue?.(inputValue as Publisher);
+      }}
+      loading={isLoadingPublishers}
+      getOptionLabel={(option) => option.title ?? ''}
+      renderOption={(option, state) => (
+        <StyledFlexColumn>
+          <Typography variant="subtitle1">
+            <EmphasizeSubstring text={option.title} emphasized={state.inputValue} />
+          </Typography>
+          <Typography variant="body2" color="textSecondary">
+            {t('references.level')}: {option.level}
+          </Typography>
+        </StyledFlexColumn>
+      )}
+      renderInput={(params) => (
+        <AutocompleteTextField
+          {...params}
+          label={label}
+          isLoading={isLoadingPublishers}
+          placeholder={placeholder}
+          dataTestId="publisher-search-input"
+          showSearchIcon
+          errorMessage={getIn(touched, errorFieldName) && getIn(errors, errorFieldName)}
+        />
+      )}
     />
   );
 };
