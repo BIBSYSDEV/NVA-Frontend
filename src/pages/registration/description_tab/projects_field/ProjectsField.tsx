@@ -2,16 +2,19 @@ import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { Field, FieldProps } from 'formik';
-import { Typography } from '@material-ui/core';
+import { Typography, Chip } from '@material-ui/core';
+import styled from 'styled-components';
 import { getProjectTitle, convertToResearchProject, convertToCristinProject } from './helpers';
-import ProjectChip from './ProjectChip';
 import useFetchProjects from '../../../../utils/hooks/useFetchProjects';
 import { DescriptionFieldNames } from '../../../../types/publicationFieldNames';
 import { ResearchProject } from '../../../../types/project.types';
 import { AutocompleteTextField } from './AutocompleteTextField';
 import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
 import EmphasizeSubstring from '../../../../components/EmphasizeSubstring';
-import ProjectInstitutions from './ProjectInstitutions';
+
+const StyledProjectChip = styled(Chip)`
+  height: auto;
+`;
 
 export const ProjectsField: FC = () => {
   const { t } = useTranslation('registration');
@@ -35,7 +38,20 @@ export const ProjectsField: FC = () => {
           multiple
           defaultValue={field.value ? [field.value].map((project) => convertToCristinProject(project)) : []}
           renderTags={(value, getTagProps) =>
-            value.map((option, index) => <ProjectChip project={option} {...getTagProps({ index })} />)
+            value.map((option, index) => (
+              <StyledProjectChip
+                {...getTagProps({ index })}
+                data-testid="project-chip"
+                label={
+                  <StyledFlexColumn>
+                    <Typography variant="subtitle1">{getProjectTitle(option)}</Typography>
+                    <Typography variant="body2" color="textSecondary">
+                      {option.institutions.map((institution) => institution.name).join(', ')}
+                    </Typography>
+                  </StyledFlexColumn>
+                }
+              />
+            ))
           }
           getOptionDisabled={(option) => field.value?.id === option.cristinProjectId}
           loading={isLoadingProjects}
@@ -44,7 +60,9 @@ export const ProjectsField: FC = () => {
               <Typography variant="subtitle1">
                 <EmphasizeSubstring text={getProjectTitle(option)} emphasized={state.inputValue} />
               </Typography>
-              <ProjectInstitutions project={option} />
+              <Typography variant="body2" color="textSecondary">
+                {option.institutions.map((institution) => institution.name).join(', ')}
+              </Typography>
             </StyledFlexColumn>
           )}
           renderInput={(params) => (

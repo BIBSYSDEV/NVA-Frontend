@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 import { getIn, useFormikContext } from 'formik';
 import { Typography } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
+import { useTranslation } from 'react-i18next';
 import { PublicationTableNumber } from '../../../../utils/constants';
 import { AutocompleteTextField } from '../../description_tab/projects_field/AutocompleteTextField';
 import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
@@ -26,6 +27,7 @@ const PublisherField: FC<PublisherFieldProps> = ({
   setValue,
   value,
 }) => {
+  const { t } = useTranslation('registration');
   const { setFieldTouched, errors, touched } = useFormikContext<Registration>();
   const [publishers, isLoadingPublishers, handleNewSearchTerm] = useFetchPublishers(publicationTable);
 
@@ -45,8 +47,8 @@ const PublisherField: FC<PublisherFieldProps> = ({
           <Typography variant="subtitle1">
             <EmphasizeSubstring text={option.title} emphasized={state.inputValue} />
           </Typography>
-          <Typography variant="body2">
-            Nivå: {option.level} - issn: {option.onlineIssn}
+          <Typography variant="body2" color="textSecondary">
+            {t('references.level')}: {option.level}
           </Typography>
         </StyledFlexColumn>
       )}
