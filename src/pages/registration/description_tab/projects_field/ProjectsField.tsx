@@ -8,9 +8,10 @@ import { getProjectTitle, convertToResearchProject, convertToCristinProject } fr
 import useFetchProjects from '../../../../utils/hooks/useFetchProjects';
 import { DescriptionFieldNames } from '../../../../types/publicationFieldNames';
 import { ResearchProject } from '../../../../types/project.types';
-import { AutocompleteTextField } from './AutocompleteTextField';
+import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
 import EmphasizeSubstring from '../../../../components/EmphasizeSubstring';
+import { autocompleteTranslationProps } from '../../../../themes/mainTheme';
 
 const StyledProjectChip = styled(Chip)`
   height: auto;
@@ -24,9 +25,8 @@ export const ProjectsField: FC = () => {
     <Field name={DescriptionFieldNames.PROJECT}>
       {({ field, form: { setFieldValue } }: FieldProps<ResearchProject>) => (
         <Autocomplete
+          {...autocompleteTranslationProps}
           options={projects}
-          noOptionsText={t('common:no_hits')}
-          loadingText={`${t('common:loading')}...`}
           getOptionLabel={(option) => getProjectTitle(option)}
           onInputChange={(_, newInputValue) => {
             handleNewSearchTerm(newInputValue);
@@ -70,7 +70,7 @@ export const ProjectsField: FC = () => {
               {...params}
               isLoading={isLoadingProjects}
               placeholder={t('description.search_for_project')}
-              dataTestId={'project-search-input'}
+              dataTestId="project-search-input"
               showSearchIcon={!field.value}
             />
           )}

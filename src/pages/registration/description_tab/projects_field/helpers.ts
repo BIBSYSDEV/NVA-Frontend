@@ -19,19 +19,6 @@ export const getProjectTitle = (option: CristinProject) => {
   return option.titles[0].title;
 };
 
-export const getTextParts = (text: string, searchTerm: string) => {
-  const indexOfMatch = text.toLocaleLowerCase().indexOf(searchTerm.toLocaleLowerCase());
-  const parts =
-    indexOfMatch === -1
-      ? [text]
-      : [
-          text.substr(0, indexOfMatch),
-          text.substr(indexOfMatch, searchTerm.length),
-          text.substr(indexOfMatch + searchTerm.length),
-        ];
-  return parts;
-};
-
 export const convertToResearchProject = (project: CristinProject): ResearchProject => ({
   type: BackendTypeNames.RESEARCH_PROJECT,
   id: project.cristinProjectId,

@@ -1,5 +1,4 @@
 import React, { FC } from 'react';
-import { getTextParts } from '../pages/registration/description_tab/projects_field';
 
 interface EmphasizeSubstringProps {
   text: string;
@@ -7,7 +6,15 @@ interface EmphasizeSubstringProps {
 }
 
 const EmphasizeSubstring: FC<EmphasizeSubstringProps> = ({ text, emphasized }) => {
-  const textParts = getTextParts(text, emphasized);
+  const indexOfMatch = text.toLocaleLowerCase().indexOf(emphasized.toLocaleLowerCase());
+  const textParts =
+    indexOfMatch === -1
+      ? [text]
+      : [
+          text.substr(0, indexOfMatch),
+          text.substr(indexOfMatch, emphasized.length),
+          text.substr(indexOfMatch + emphasized.length),
+        ];
 
   return (
     <>

@@ -4,11 +4,12 @@ import { Typography } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
 import { useTranslation } from 'react-i18next';
 import { PublicationTableNumber } from '../../../../utils/constants';
-import { AutocompleteTextField } from '../../description_tab/projects_field/AutocompleteTextField';
+import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
 import { Registration, Publisher } from '../../../../types/registration.types';
 import useFetchPublishers from '../../../../utils/hooks/useFetchPublishers';
 import EmphasizeSubstring from '../../../../components/EmphasizeSubstring';
+import { autocompleteTranslationProps } from '../../../../themes/mainTheme';
 
 interface PublisherFieldProps {
   publicationTable?: PublicationTableNumber;
@@ -33,6 +34,7 @@ const PublisherField: FC<PublisherFieldProps> = ({
 
   return (
     <Autocomplete
+      {...autocompleteTranslationProps}
       options={publishers}
       onBlur={() => setFieldTouched(errorFieldName)}
       onInputChange={(_, newInputValue) => handleNewSearchTerm(newInputValue)}
@@ -58,7 +60,7 @@ const PublisherField: FC<PublisherFieldProps> = ({
           label={label}
           isLoading={isLoadingPublishers}
           placeholder={placeholder}
-          dataTestId={'publisher-search-input'}
+          dataTestId="publisher-search-input"
           showSearchIcon
           errorMessage={getIn(touched, errorFieldName) && getIn(errors, errorFieldName)}
         />
