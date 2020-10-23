@@ -1,16 +1,14 @@
-import React, { FC, useCallback, useState } from 'react';
+import React, { FC, useCallback } from 'react';
 import { getIn, useFormikContext } from 'formik';
 import { Typography } from '@material-ui/core';
-import { useDispatch } from 'react-redux';
-import { useTranslation } from 'react-i18next';
 import { Autocomplete } from '@material-ui/lab';
 import { PublicationTableNumber } from '../../../../utils/constants';
-import { getPublishers } from '../../../../api/publicationChannelApi';
 import { AutocompleteTextField } from '../../description_tab/projects_field/AutocompleteTextField';
 import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
 import { getTextParts } from '../../description_tab/projects_field';
 import { Registration, Publisher } from '../../../../types/registration.types';
 import { debounce } from '../../../../utils/debounce';
+import useFetchPublishers from '../../../../utils/hooks/useFetchPublishers';
 
 interface PublisherFieldProps {
   publicationTable?: PublicationTableNumber;
@@ -29,33 +27,19 @@ const PublisherField: FC<PublisherFieldProps> = ({
   setValue,
   value,
 }) => {
-  const dispatch = useDispatch();
-  const { t } = useTranslation('feedback');
   const { setFieldTouched, errors, touched } = useFormikContext<Registration>();
-  const [options, setOptions] = useState<Publisher[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [publishers, isLoadingPublishers, handleNewSearchTerm] = useFetchPublishers(publicationTable);
 
   const search = useCallback(
     debounce(async (searchTerm: string) => {
-      if (searchTerm) {
-        setIsLoading(true);
-        const response = await getPublishers(searchTerm, publicationTable);
-        if (response?.error) {
-          setOptions([]);
-        } else if (response?.data) {
-          setOptions(response.data.results);
-        }
-      } else {
-        setOptions([]);
-      }
-      setIsLoading(false);
+      handleNewSearchTerm(searchTerm);
     }),
-    [dispatch, t, publicationTable]
+    []
   );
 
   return (
     <Autocomplete
-      options={options}
+      options={publishers}
       onBlur={() => setFieldTouched(errorFieldName)}
       onInputChange={(_, newInputValue) => {
         search(newInputValue);
@@ -64,7 +48,7 @@ const PublisherField: FC<PublisherFieldProps> = ({
       onChange={(_, inputValue) => {
         setValue?.(inputValue as Publisher);
       }}
-      loading={isLoading}
+      loading={isLoadingPublishers}
       getOptionLabel={(option) => option.title ?? ''}
       renderOption={(option, state) => {
         const searchTerm = state.inputValue.toLocaleLowerCase();
@@ -92,7 +76,7 @@ const PublisherField: FC<PublisherFieldProps> = ({
         <AutocompleteTextField
           {...params}
           label={label}
-          isLoading={isLoading}
+          isLoading={isLoadingPublishers}
           placeholder={placeholder}
           dataTestId={'publisher-search-input'}
           showSearchIcon
