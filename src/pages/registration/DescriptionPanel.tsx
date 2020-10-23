@@ -115,6 +115,21 @@ const DescriptionPanel: FC<PanelProps> = ({ setTouchedFields }) => {
                     helperText={t('description.keywords_helper')}
                     variant="outlined"
                     fullWidth
+                    onBlur={(event: any) => {
+                      const value = event.target.value;
+                      if (value.includes(',')) {
+                        const tags = value.split(', ');
+                        setFieldValue(field.name, [...field.value, ...tags]);
+                      } else if (value.includes(';')) {
+                        const tags = value.split('; ');
+                        setFieldValue(field.name, [...field.value, ...tags]);
+                      } else if (value.includes('|')) {
+                        const tags = value.split(' | ');
+                        setFieldValue(field.name, [...field.value, ...tags]);
+                      } else if (value) {
+                        setFieldValue(field.name, [...field.value, value]);
+                      }
+                    }}
                   />
                 )}
               />
