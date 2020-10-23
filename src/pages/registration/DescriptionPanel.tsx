@@ -117,18 +117,8 @@ const DescriptionPanel: FC<PanelProps> = ({ setTouchedFields }) => {
                     fullWidth
                     onBlur={(event: any) => {
                       const value = event.target.value;
-                      if (value.includes(',')) {
-                        const tags = value.split(', ');
-                        setFieldValue(field.name, [...field.value, ...tags]);
-                      } else if (value.includes(';')) {
-                        const tags = value.split('; ');
-                        setFieldValue(field.name, [...field.value, ...tags]);
-                      } else if (value.includes('|')) {
-                        const tags = value.split(' | ');
-                        setFieldValue(field.name, [...field.value, ...tags]);
-                      } else if (value) {
-                        setFieldValue(field.name, [...field.value, value]);
-                      }
+                      const tags = value.split(/(,;|)+/).map((value: string) => value.trim());
+                      setFieldValue(field.name, [...field.value, ...tags]);
                     }}
                   />
                 )}
