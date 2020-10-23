@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Axios from 'axios';
 import { PublicationTableNumber } from '../constants';
 import { Publisher } from '../../types/registration.types';
 import { getPublishers } from '../../api/publicationChannelApi';
+import { debounce } from '../debounce';
 
 const useFetchPublishers = (
   publicationTable: PublicationTableNumber,
@@ -12,9 +13,12 @@ const useFetchPublishers = (
   const [isLoading, setIsLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
 
-  const handleNewSearchTerm = (searchTerm: string) => {
-    setSearchTerm(searchTerm);
-  };
+  const handleNewSearchTerm = useCallback(
+    debounce(async (searchTerm: string) => {
+      setSearchTerm(searchTerm);
+    }),
+    []
+  );
 
   useEffect(() => {
     const cancelSource = Axios.CancelToken.source();

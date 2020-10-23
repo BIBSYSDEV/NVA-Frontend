@@ -1,4 +1,4 @@
-import React, { FC, useCallback } from 'react';
+import React, { FC } from 'react';
 import { getIn, useFormikContext } from 'formik';
 import { Typography } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
@@ -7,7 +7,6 @@ import { AutocompleteTextField } from '../../description_tab/projects_field/Auto
 import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
 import { getTextParts } from '../../description_tab/projects_field';
 import { Registration, Publisher } from '../../../../types/registration.types';
-import { debounce } from '../../../../utils/debounce';
 import useFetchPublishers from '../../../../utils/hooks/useFetchPublishers';
 
 interface PublisherFieldProps {
@@ -30,20 +29,11 @@ const PublisherField: FC<PublisherFieldProps> = ({
   const { setFieldTouched, errors, touched } = useFormikContext<Registration>();
   const [publishers, isLoadingPublishers, handleNewSearchTerm] = useFetchPublishers(publicationTable);
 
-  const search = useCallback(
-    debounce(async (searchTerm: string) => {
-      handleNewSearchTerm(searchTerm);
-    }),
-    []
-  );
-
   return (
     <Autocomplete
       options={publishers}
       onBlur={() => setFieldTouched(errorFieldName)}
-      onInputChange={(_, newInputValue) => {
-        search(newInputValue);
-      }}
+      onInputChange={(_, newInputValue) => handleNewSearchTerm(newInputValue)}
       value={value}
       onChange={(_, inputValue) => {
         setValue?.(inputValue as Publisher);
