@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import Axios from 'axios';
 
@@ -6,18 +6,22 @@ import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import { CristinProject } from '../../types/project.types';
 import { searchProjectsByTitle } from '../../api/projectApi';
+import { debounce } from '../debounce';
 
 const useFetchProjects = (
-  initialSearchTerm: string
+  initialSearchTerm: string = ''
 ): [CristinProject[], boolean, (searchTerm: string) => void, string | undefined] => {
   const dispatch = useDispatch();
   const [projects, setProjects] = useState<CristinProject[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
 
-  const handleNewSearchTerm = (searchTerm: string) => {
-    setSearchTerm(searchTerm);
-  };
+  const handleNewSearchTerm = useCallback(
+    debounce((searchTerm: string) => {
+      setSearchTerm(searchTerm);
+    }),
+    []
+  );
 
   useEffect(() => {
     const cancelSource = Axios.CancelToken.source();

@@ -20,7 +20,7 @@ export const getProjectTitle = (option: CristinProject) => {
 };
 
 export const getTextParts = (text: string, searchTerm: string) => {
-  const indexOfMatch = text.toLocaleLowerCase().indexOf(searchTerm);
+  const indexOfMatch = text.toLocaleLowerCase().indexOf(searchTerm.toLocaleLowerCase());
   const parts =
     indexOfMatch === -1
       ? [text]

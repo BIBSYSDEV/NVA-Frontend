@@ -1,26 +1,21 @@
-import React, { FC, useCallback } from 'react';
+import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { Field, FieldProps } from 'formik';
+import { Typography } from '@material-ui/core';
 import { getProjectTitle, convertToResearchProject, convertToCristinProject } from './helpers';
 import ProjectChip from './ProjectChip';
-import ProjectOption from './ProjectOption';
-import { debounce } from '../../../../utils/debounce';
 import useFetchProjects from '../../../../utils/hooks/useFetchProjects';
 import { DescriptionFieldNames } from '../../../../types/publicationFieldNames';
 import { ResearchProject } from '../../../../types/project.types';
 import { AutocompleteTextField } from './AutocompleteTextField';
+import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
+import EmphasizeSubstring from '../../../../components/EmphasizeSubstring';
+import ProjectInstitutions from './ProjectInstitutions';
 
 export const ProjectsField: FC = () => {
   const { t } = useTranslation('registration');
-  const [projects, isLoadingProjects, handleNewSearchTerm] = useFetchProjects('');
-
-  const debouncedSearch = useCallback(
-    debounce((searchTerm: string) => {
-      handleNewSearchTerm(searchTerm);
-    }),
-    []
-  );
+  const [projects, isLoadingProjects, handleNewSearchTerm] = useFetchProjects();
 
   return (
     <Field name={DescriptionFieldNames.PROJECT}>
@@ -31,7 +26,7 @@ export const ProjectsField: FC = () => {
           loadingText={`${t('common:loading')}...`}
           getOptionLabel={(option) => getProjectTitle(option)}
           onInputChange={(_, newInputValue) => {
-            debouncedSearch(newInputValue);
+            handleNewSearchTerm(newInputValue);
           }}
           onChange={(_, value) => {
             const projectToPersist = value[0] ? convertToResearchProject(value[0]) : undefined;
@@ -44,7 +39,14 @@ export const ProjectsField: FC = () => {
           }
           getOptionDisabled={(option) => field.value?.id === option.cristinProjectId}
           loading={isLoadingProjects}
-          renderOption={(option, state) => <ProjectOption project={option} state={state} />}
+          renderOption={(option, state) => (
+            <StyledFlexColumn>
+              <Typography variant="subtitle1">
+                <EmphasizeSubstring text={getProjectTitle(option)} emphasized={state.inputValue} />
+              </Typography>
+              <ProjectInstitutions project={option} />
+            </StyledFlexColumn>
+          )}
           renderInput={(params) => (
             <AutocompleteTextField
               {...params}

@@ -5,9 +5,9 @@ import { Autocomplete } from '@material-ui/lab';
 import { PublicationTableNumber } from '../../../../utils/constants';
 import { AutocompleteTextField } from '../../description_tab/projects_field/AutocompleteTextField';
 import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
-import { getTextParts } from '../../description_tab/projects_field';
 import { Registration, Publisher } from '../../../../types/registration.types';
 import useFetchPublishers from '../../../../utils/hooks/useFetchPublishers';
+import EmphasizeSubstring from '../../../../components/EmphasizeSubstring';
 
 interface PublisherFieldProps {
   publicationTable?: PublicationTableNumber;
@@ -40,28 +40,16 @@ const PublisherField: FC<PublisherFieldProps> = ({
       }}
       loading={isLoadingPublishers}
       getOptionLabel={(option) => option.title ?? ''}
-      renderOption={(option, state) => {
-        const searchTerm = state.inputValue.toLocaleLowerCase();
-        const parts = getTextParts(option.title, searchTerm);
-        return (
-          <StyledFlexColumn>
-            <Typography variant="subtitle1">
-              {parts.map((part, index) => (
-                <span
-                  key={index}
-                  style={{
-                    fontWeight: part.toLocaleLowerCase() === searchTerm ? 700 : 400,
-                  }}>
-                  {part}
-                </span>
-              ))}
-            </Typography>
-            <Typography variant="body2">
-              Nivå: {option.level} - issn: {option.onlineIssn}
-            </Typography>
-          </StyledFlexColumn>
-        );
-      }}
+      renderOption={(option, state) => (
+        <StyledFlexColumn>
+          <Typography variant="subtitle1">
+            <EmphasizeSubstring text={option.title} emphasized={state.inputValue} />
+          </Typography>
+          <Typography variant="body2">
+            Nivå: {option.level} - issn: {option.onlineIssn}
+          </Typography>
+        </StyledFlexColumn>
+      )}
       renderInput={(params) => (
         <AutocompleteTextField
           {...params}
