@@ -6,12 +6,12 @@ import { RoleName } from '../../types/user.types';
 import ListSkeleton from '../../components/ListSkeleton';
 import Card from '../../components/Card';
 import SubHeading from '../../components/SubHeading';
-import useFetchPublicationsWithPendingDoiRequest from '../../utils/hooks/useFetchPublicationsWithPendingDoiRequest';
+import useFetchRegistrationsWithPendingDoiRequest from '../../utils/hooks/useFetchRegistrationsWithPendingDoiRequest';
 import { DoiRequestAccordion } from '../worklist/DoiRequestAccordion';
 
 const MyMessages: FC = () => {
   const { t } = useTranslation('workLists');
-  const [publicationsWithPendingDoiRequest, isLoadingPendingDoiRequests] = useFetchPublicationsWithPendingDoiRequest(
+  const [registrationsWithPendingDoiRequest, isLoadingPendingDoiRequests] = useFetchRegistrationsWithPendingDoiRequest(
     RoleName.CREATOR
   );
 
@@ -20,14 +20,14 @@ const MyMessages: FC = () => {
       <PageHeader>{t('my_messages')}</PageHeader>
       {isLoadingPendingDoiRequests ? (
         <ListSkeleton minWidth={100} maxWidth={100} height={100} />
-      ) : publicationsWithPendingDoiRequest.length === 0 ? (
+      ) : registrationsWithPendingDoiRequest.length === 0 ? (
         <Card>
           <SubHeading>{t('doi_requests.no_pending_doi_requests')}</SubHeading>
         </Card>
       ) : (
         <>
-          {publicationsWithPendingDoiRequest.map((publication) => (
-            <DoiRequestAccordion key={publication.identifier} publication={publication} />
+          {registrationsWithPendingDoiRequest.map((registration) => (
+            <DoiRequestAccordion key={registration.identifier} registration={registration} />
           ))}
         </>
       )}

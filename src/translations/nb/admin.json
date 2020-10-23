@@ -2,7 +2,6 @@
   "add_institution": "Opprett institusjon",
   "admin_institutions": "Administrer institusjoner",
   "administrators": "Administratorer",
-  "administration_id": "Autentiserings-id for institusjonsadministrator",
   "archive_name": "Arkivnavn",
   "cname": "CNAME",
   "display_name": "Visningsnavn på institusjonen",
@@ -21,7 +20,7 @@
   "users": {
     "add_curator": "Legg til kurator",
     "add_editor": "Legg til editor",
-    "add_institution_admin": "Legg til institusjonsadmin",
+    "add_institution_admin": "Legg til administrator",
     "add_role_info": "Om du ikke finner brukeren, så må du sjekke at vedkommende er tilknyttet din institusjon og har logget på tjenesten tidligere.",
     "auto_assign_creators": "Ansatte får automatisk rolle som registrator ved pålogging hvis de er registrert med dette i 'eduPersonAffiliation': Employee, Staff, Member",
     "creator_info": "Hvem skal få tilgang til å registrere?",

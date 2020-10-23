@@ -7,7 +7,7 @@ import { Authority } from '../../../types/authority.types';
 import NormalText from '../../../components/NormalText';
 import AffiliationHierarchy from '../../../components/institution/AffiliationHierarchy';
 import Card from '../../../components/Card';
-import useFetchLastPublication from '../../../utils/hooks/useFetchLastPublication';
+import useFetchLastRegistrationFromAlma from '../../../utils/hooks/useFetchLastRegistration';
 
 const StyledBoxContent = styled(({ isConnected, ...rest }) => <Card {...rest} />)`
   display: grid;
@@ -38,7 +38,7 @@ interface AuthorityCardProps {
 
 const AuthorityCard: FC<AuthorityCardProps> = ({ authority, isConnected = false, isSelected }) => {
   const { t } = useTranslation('profile');
-  const [almaPublication, isLoadingAlmaPublication] = useFetchLastPublication(
+  const [almaPublication, isLoadingAlmaPublication] = useFetchLastRegistrationFromAlma(
     authority.systemControlNumber,
     authority.name
   );

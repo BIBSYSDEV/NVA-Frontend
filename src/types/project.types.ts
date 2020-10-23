@@ -1,4 +1,4 @@
-import { BackendType } from './publication.types';
+import { BackendType } from './registration.types';
 
 export interface ResearchProject extends BackendType {
   id: string;

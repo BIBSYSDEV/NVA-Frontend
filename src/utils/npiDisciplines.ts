@@ -1,6 +1,6 @@
 import disciplines from '../resources/disciplines.json';
 import i18n from '../translations/i18n';
-import { NpiDiscipline } from '../types/publication.types';
+import { NpiDiscipline } from '../types/registration.types';
 
 export const disciplineOptions: NpiDiscipline[] = disciplines
   .map((mainDiscipline) =>

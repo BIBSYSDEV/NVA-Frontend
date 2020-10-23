@@ -10,7 +10,7 @@ import {
   TableContainer,
   TablePagination,
 } from '@material-ui/core';
-import { PublicationPreview, PublicationTab } from '../../types/publication.types';
+import { RegistrationPreview, RegistrationTab } from '../../types/registration.types';
 import { useTranslation } from 'react-i18next';
 import Label from '../../components/Label';
 import { Link as RouterLink } from 'react-router-dom';
@@ -30,10 +30,10 @@ const StyledCell = styled(TableCell)`
 `;
 
 interface WorklistTableProps {
-  publications: PublicationPreview[];
+  registrations: RegistrationPreview[];
 }
 
-const WorklistTable: FC<WorklistTableProps> = ({ publications }) => {
+const WorklistTable: FC<WorklistTableProps> = ({ registrations }) => {
   const { t } = useTranslation('workLists');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -66,23 +66,23 @@ const WorklistTable: FC<WorklistTableProps> = ({ publications }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {publications.map((publication) => (
-              <StyledTableRow key={publication.identifier}>
+            {registrations.map((registration) => (
+              <StyledTableRow key={registration.identifier}>
                 <StyledCell component="th" scope="row">
-                  <NormalText>{publication.mainTitle}</NormalText>
+                  <NormalText>{registration.mainTitle}</NormalText>
                 </StyledCell>
                 <StyledCell>
-                  <NormalText>{publication.owner}</NormalText>
+                  <NormalText>{registration.owner}</NormalText>
                 </StyledCell>
                 <StyledCell>
-                  <NormalText>{publication.createdDate}</NormalText>
+                  <NormalText>{registration.createdDate}</NormalText>
                 </StyledCell>
                 <TableCell>
                   <Button
                     color="primary"
                     component={RouterLink}
-                    to={`/registration/${publication.identifier}?tab=${PublicationTab.Submission}`}
-                    data-testid={`open-publication-${publication.identifier}`}
+                    to={`/registration/${registration.identifier}?tab=${RegistrationTab.Submission}`}
+                    data-testid={`open-registration-${registration.identifier}`}
                     variant="contained">
                     <NormalText>{t('common:open')}</NormalText>
                   </Button>
@@ -95,7 +95,7 @@ const WorklistTable: FC<WorklistTableProps> = ({ publications }) => {
       <TablePagination
         rowsPerPageOptions={[10, 25, { value: -1, label: t('common:all') }]}
         component="div"
-        count={publications.length}
+        count={registrations.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onChangePage={handleChangePage}
