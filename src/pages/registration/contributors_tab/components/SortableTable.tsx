@@ -218,7 +218,7 @@ const SortableTable: FC<SortableTableProps> = ({ push, remove, replace }) => {
   } = values;
   const [openContributorModal, setOpenContributorModal] = useState(false);
   const [unverifiedContributor, setUnverifiedContributor] = useState<UnverifiedContributor | null>(null);
-  const orderedContributors = contributors.map((contributor, index) => ({ ...contributor, sequence: index + 1 }));
+  const orderedContributors = [...contributors].map((contributor, index) => ({ ...contributor, sequence: index + 1 }));
 
   const toggleContributorModal = () => {
     if (unverifiedContributor) {
@@ -243,6 +243,19 @@ const SortableTable: FC<SortableTableProps> = ({ push, remove, replace }) => {
     }));
     setValues(
       deepmerge(values, { entityDescription: { contributors: newContributors } }, { arrayMerge: overwriteArrayMerge })
+    );
+  };
+
+  const handleOnRemove = (indexToRemove: number) => {
+    const remainingContributors = [...contributors]
+      .filter((cont, index) => index !== indexToRemove)
+      .map((contributor, index) => ({ ...contributor, sequence: index + 1 }));
+    setValues(
+      deepmerge(
+        values,
+        { entityDescription: { contributors: remainingContributors } },
+        { arrayMerge: overwriteArrayMerge }
+      )
     );
   };
 
@@ -284,7 +297,7 @@ const SortableTable: FC<SortableTableProps> = ({ push, remove, replace }) => {
       <SortableList
         contributors={orderedContributors}
         onSortEnd={handleOnSortEnd}
-        onDelete={(index) => remove(index)}
+        onDelete={handleOnRemove}
         distance={10}
         setUnverifiedContributor={setUnverifiedContributor}
       />
