@@ -23,9 +23,9 @@ describe('Registration: References: Book', () => {
     cy.get('[data-testid=publication-instance-type-BookMonograph]').click({ force: true });
 
     // search for and select a publisher
-    cy.get('[data-testid=autosearch-publisher]').click({ force: true }).type('Test');
+    cy.get('[data-testid=publisher-search-input]').click({ force: true }).type('Test');
     cy.contains('Novum Testamentum').click({ force: true });
-    cy.get('[data-testid=autosearch-results-publisher]').contains('Novum Testamentum');
+    cy.get('[data-testid=publisher-search-input]').should('have.value', 'Novum Testamentum');
 
     // fill out ISBN_LIST field
     cy.get('[data-testid=isbn-input]').type('9788202509460').type('{enter}');
@@ -43,8 +43,8 @@ describe('Registration: References: Book', () => {
     cy.get('[data-testid=pages-input]').type('483');
 
     // search and select a series
-    cy.get('[data-testid=autosearch-series]').click({ force: true }).type('Test');
+    cy.get('[data-testid=series-search-input]').click({ force: true }).type('Test');
     cy.contains('New Testament Studies').click({ force: true });
-    cy.get('[data-testid=autosearch-results-series]').contains('New Testament Studies');
+    cy.get('[data-testid=series-search-input]').should('have.value', 'New Testament Studies');
   });
 });
