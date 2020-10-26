@@ -81,11 +81,11 @@ const BookForm: FC = () => {
           </Field>
         </StyledTextBook>
       </StyledSection>
-      <div>
-        <StyledTypography variant="h5">{t('references.series')}</StyledTypography>
-        <Typography>{t('references.series_info')}</Typography>
-        <SeriesField />
-      </div>
+
+      <StyledTypography variant="h5">{t('references.series')}</StyledTypography>
+      <Typography>{t('references.series_info')}</Typography>
+      <SeriesField />
+
       <NviValidation isPeerReviewed={peerReviewed} isRated={!!publicationContext?.level} dataTestId="nvi_book" />
     </>
   );

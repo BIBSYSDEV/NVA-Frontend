@@ -36,11 +36,10 @@ const ReportForm: FC = () => {
         <IsbnListField />
         <TotalPagesField />
       </StyledSection>
-      <div>
-        <StyledTypography variant="h5">{t('references.series')}</StyledTypography>
-        <Typography>{t('references.series_info')}</Typography>
-        <SeriesField />
-      </div>
+
+      <StyledTypography variant="h5">{t('references.series')}</StyledTypography>
+      <Typography>{t('references.series_info')}</Typography>
+      <SeriesField />
     </>
   );
 };
