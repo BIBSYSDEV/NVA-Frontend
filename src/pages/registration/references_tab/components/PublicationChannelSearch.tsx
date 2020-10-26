@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { getIn, useFormikContext } from 'formik';
-import { Typography } from '@material-ui/core';
+import { Typography, TextFieldProps } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
 import { useTranslation } from 'react-i18next';
 import { PublicationTableNumber } from '../../../../utils/constants';
@@ -11,10 +11,8 @@ import useFetchPublishers from '../../../../utils/hooks/useFetchPublishers';
 import EmphasizeSubstring from '../../../../components/EmphasizeSubstring';
 import { autocompleteTranslationProps } from '../../../../themes/mainTheme';
 
-interface PublicationChannelSearchProps {
+interface PublicationChannelSearchProps extends Pick<TextFieldProps, 'label' | 'placeholder'> {
   publicationTable: PublicationTableNumber;
-  label: string;
-  placeholder: string;
   errorFieldName: string;
   setValue: (value?: Publisher) => void;
   value: Publisher;
@@ -37,7 +35,6 @@ const PublicationChannelSearch: FC<PublicationChannelSearchProps> = ({
   return (
     <Autocomplete
       {...autocompleteTranslationProps}
-      openOnFocus={false}
       options={publishers}
       onBlur={() => setFieldTouched(errorFieldName)}
       onInputChange={(_, newInputValue) => handleNewSearchTerm(newInputValue)}
