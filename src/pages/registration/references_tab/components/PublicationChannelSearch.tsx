@@ -18,6 +18,7 @@ interface PublicationChannelSearchProps {
   errorFieldName: string;
   setValue: (value?: Publisher) => void;
   value: Publisher;
+  dataTestId: string;
 }
 
 const PublicationChannelSearch: FC<PublicationChannelSearchProps> = ({
@@ -27,6 +28,7 @@ const PublicationChannelSearch: FC<PublicationChannelSearchProps> = ({
   label,
   setValue,
   value,
+  dataTestId,
 }) => {
   const { t } = useTranslation('registration');
   const { setFieldTouched, errors, touched } = useFormikContext<Registration>();
@@ -61,7 +63,7 @@ const PublicationChannelSearch: FC<PublicationChannelSearchProps> = ({
           label={label}
           isLoading={isLoadingPublishers}
           placeholder={placeholder}
-          dataTestId="publisher-search-input"
+          dataTestId={dataTestId}
           showSearchIcon
           errorMessage={getIn(touched, errorFieldName) && getIn(errors, errorFieldName)}
         />

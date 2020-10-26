@@ -15,6 +15,7 @@ const SeriesField: FC = () => {
     <Field name={ReferenceFieldNames.SERIES_TITLE}>
       {({ field: { name, value } }: FieldProps) => (
         <PublicationChannelSearch
+          dataTestId="series-search-input"
           publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
           label={t('common:title')}
           placeholder={t('references.search_for_series')}

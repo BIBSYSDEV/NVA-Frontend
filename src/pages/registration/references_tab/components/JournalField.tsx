@@ -15,6 +15,7 @@ const JournalField: FC = () => {
     <Field name={contextTypeBaseFieldName}>
       {({ field: { name, value } }: FieldProps) => (
         <PublicationChannelSearch
+          dataTestId="journal-search-input"
           publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
           label={t('references.journal')}
           placeholder={t('references.search_for_journal')}

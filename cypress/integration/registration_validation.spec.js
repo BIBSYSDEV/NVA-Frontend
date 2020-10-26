@@ -71,12 +71,12 @@ describe('User opens registration form and can see validation errors', () => {
     cy.get(`p:contains(${ErrorMessage.REQUIRED})`).should('have.length', 1);
 
     // Publisher (publicationContext) field
-    cy.get('[data-testid=autosearch-publisher]').click({ force: true }).type('natur');
+    cy.get('[data-testid=journal-search-input]').click({ force: true }).type('test');
     cy.contains('testament').click({ force: true });
     cy.contains(ErrorMessage.REQUIRED).should('not.be.visible');
-    cy.get('[data-testid=remove-publisher]').click({ force: true });
+    cy.get('.MuiAutocomplete-clearIndicator').click({ force: true });
     cy.contains(ErrorMessage.REQUIRED).should('be.visible');
-    cy.get('[data-testid=autosearch-publisher]').click({ force: true }).type('natur');
+    cy.get('[data-testid=journal-search-input]').click({ force: true }).type('test');
     cy.contains('testament').click({ force: true });
     cy.contains(ErrorMessage.REQUIRED).should('not.be.visible');
 
@@ -116,7 +116,7 @@ describe('User opens registration form and can see validation errors', () => {
     cy.get(`p:contains(${ErrorMessage.REQUIRED})`).should('have.length', 1);
 
     // publicationContext
-    cy.get('[data-testid=autosearch-publisher]').click({ force: true }).type('natur');
+    cy.get('[data-testid=publisher-search-input]').click({ force: true }).type('test');
     cy.contains('testament').click({ force: true });
     cy.contains(ErrorMessage.REQUIRED).should('not.be.visible');
 
@@ -150,7 +150,7 @@ describe('User opens registration form and can see validation errors', () => {
     cy.get(`p:contains(${ErrorMessage.REQUIRED})`).should('have.length', 1);
 
     // publicationContext
-    cy.get('[data-testid=autosearch-publisher]').click({ force: true }).type('natur');
+    cy.get('[data-testid=publisher-search-input]').click({ force: true }).type('test');
     cy.contains('testament').click({ force: true });
     cy.contains(ErrorMessage.REQUIRED).should('not.be.visible');
 
@@ -171,7 +171,7 @@ describe('User opens registration form and can see validation errors', () => {
     cy.get(`p:contains(${ErrorMessage.REQUIRED})`).should('have.length', 1);
 
     // publicationContext
-    cy.get('[data-testid=autosearch-publisher]').click({ force: true }).type('natur');
+    cy.get('[data-testid=publisher-search-input]').click({ force: true }).type('test');
     cy.contains('testament').click({ force: true });
     cy.contains(ErrorMessage.REQUIRED).should('not.be.visible');
 

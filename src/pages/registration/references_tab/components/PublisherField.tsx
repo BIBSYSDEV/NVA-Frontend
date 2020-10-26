@@ -15,6 +15,7 @@ const PublisherField: FC = () => {
     <Field name={contextTypeBaseFieldName}>
       {({ field: { name, value } }: FieldProps) => (
         <PublicationChannelSearch
+          dataTestId="publisher-search-input"
           publicationTable={PublicationTableNumber.PUBLISHERS}
           label={t('common:publisher')}
           placeholder={t('references.search_for_publisher')}
