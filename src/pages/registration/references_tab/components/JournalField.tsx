@@ -3,7 +3,7 @@ import { Field, FieldProps, useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { ReferenceFieldNames, contextTypeBaseFieldName } from '../../../../types/publicationFieldNames';
 import { PublicationTableNumber } from '../../../../utils/constants';
-import { publicationContextToPublisher, formatPublicationContextWithTitle } from '../reference-helpers';
+import { publicationContextToPublisher, formatPublicationContextWithTitle } from './reference-helpers';
 import { Registration } from '../../../../types/registration.types';
 import PublicationChannelSearch from './PublicationChannelSearch';
 

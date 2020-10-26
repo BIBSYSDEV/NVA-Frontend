@@ -1,5 +1,5 @@
-import { levelMap, Publisher } from '../../../types/registration.types';
-import { PublicationType } from '../../../types/publicationFieldNames';
+import { PublicationType } from '../../../../types/publicationFieldNames';
+import { Publisher, levelMap } from '../../../../types/registration.types';
 
 export const formatPublicationContextWithTitle = (type: '' | PublicationType, publisher?: Publisher) => {
   const formattedPublicationContext = publisher
