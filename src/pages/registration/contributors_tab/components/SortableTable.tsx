@@ -218,6 +218,7 @@ const SortableTable: FC<SortableTableProps> = ({ push, remove, replace }) => {
   } = values;
   const [openContributorModal, setOpenContributorModal] = useState(false);
   const [unverifiedContributor, setUnverifiedContributor] = useState<UnverifiedContributor | null>(null);
+  const orderedContributors = contributors.map((contributor, index) => ({ ...contributor, sequence: index + 1 }));
 
   const toggleContributorModal = () => {
     if (unverifiedContributor) {
@@ -234,7 +235,7 @@ const SortableTable: FC<SortableTableProps> = ({ push, remove, replace }) => {
   }, [unverifiedContributor]);
 
   const handleOnSortEnd = ({ oldIndex, newIndex }: SortEnd) => {
-    const reorderedContributors = move(contributors, oldIndex, newIndex) as Contributor[];
+    const reorderedContributors = move(orderedContributors, oldIndex, newIndex) as Contributor[];
     // Ensure incrementing sequence values
     const newContributors = reorderedContributors.map((contributor, index) => ({
       ...contributor,
@@ -246,7 +247,7 @@ const SortableTable: FC<SortableTableProps> = ({ push, remove, replace }) => {
   };
 
   const onAuthorSelected = (authority: Authority) => {
-    if (contributors.some((contributor) => contributor.identity.arpId === authority.systemControlNumber)) {
+    if (orderedContributors.some((contributor) => contributor.identity.arpId === authority.systemControlNumber)) {
       dispatch(setNotification(t('contributors.author_already_added'), NotificationVariant.Info));
       return;
     }
@@ -266,12 +267,12 @@ const SortableTable: FC<SortableTableProps> = ({ push, remove, replace }) => {
           type: BackendTypeNames.ORGANIZATION,
           id: unitUri,
         })),
-        sequence: contributors.length + 1,
+        sequence: orderedContributors.length + 1,
       };
       push(newContributor);
     } else {
       const verifiedContributor: Contributor = {
-        ...contributors[unverifiedContributor.index],
+        ...orderedContributors[unverifiedContributor.index],
         identity,
       };
       replace(unverifiedContributor.index, verifiedContributor);
@@ -281,7 +282,7 @@ const SortableTable: FC<SortableTableProps> = ({ push, remove, replace }) => {
   return (
     <>
       <SortableList
-        contributors={contributors}
+        contributors={orderedContributors}
         onSortEnd={handleOnSortEnd}
         onDelete={(index) => remove(index)}
         distance={10}
