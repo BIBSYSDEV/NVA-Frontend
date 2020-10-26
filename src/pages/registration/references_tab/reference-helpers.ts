@@ -1,13 +1,8 @@
 import { levelMap, Publisher } from '../../../types/registration.types';
-import { JournalPublicationContext } from '../../../types/publication_types/journalRegistration.types';
 import { PublicationType } from '../../../types/publicationFieldNames';
-import { BookPublicationContext } from '../../../types/publication_types/bookRegistration.types';
 
-export const formatPublicationContextWithTitle = (
-  type: '' | PublicationType,
-  publisher?: Publisher
-): Partial<JournalPublicationContext> => {
-  const formatted = publisher
+export const formatPublicationContextWithTitle = (type: '' | PublicationType, publisher?: Publisher) => {
+  const formattedPublicationContext = publisher
     ? {
         ...publisher,
         level: mapLevel(publisher.level),
@@ -16,24 +11,22 @@ export const formatPublicationContextWithTitle = (
     : {
         type,
       };
-  return formatted;
+  return formattedPublicationContext;
 };
 
-export const formatPublicationContextWithPublisher = (
-  type: '' | PublicationType,
-  publisher?: Publisher
-): Partial<BookPublicationContext> => {
-  const formatted = publisher
+export const formatPublicationContextWithPublisher = (type: '' | PublicationType, publisher?: Publisher) => {
+  const { title, ...restPublisher } = publisher || {};
+  const formattedPublicationContext = publisher
     ? {
-        ...publisher,
-        publisher: publisher.title,
+        ...restPublisher,
+        publisher: title,
         level: mapLevel(publisher.level),
         type,
       }
     : {
         type,
       };
-  return formatted;
+  return formattedPublicationContext;
 };
 
 export const publicationContextToPublisher = (context: any) => {
