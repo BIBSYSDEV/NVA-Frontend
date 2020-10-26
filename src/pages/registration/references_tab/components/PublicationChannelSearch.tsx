@@ -42,9 +42,7 @@ const PublicationChannelSearch: FC<PublicationChannelSearchProps> = ({
       onBlur={() => setFieldTouched(errorFieldName)}
       onInputChange={(_, newInputValue) => handleNewSearchTerm(newInputValue)}
       value={value}
-      onChange={(_, inputValue) => {
-        setValue?.(inputValue as Publisher);
-      }}
+      onChange={(_, inputValue) => setValue(inputValue as Publisher)}
       loading={isLoadingPublishers}
       getOptionLabel={(option) => option.title ?? ''}
       renderOption={(option, state) => (

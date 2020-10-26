@@ -28,9 +28,7 @@ export const ProjectsField: FC = () => {
           {...autocompleteTranslationProps}
           options={projects}
           getOptionLabel={(option) => getProjectTitle(option)}
-          onInputChange={(_, newInputValue) => {
-            handleNewSearchTerm(newInputValue);
-          }}
+          onInputChange={(_, newInputValue) => handleNewSearchTerm(newInputValue)}
           onChange={(_, value) => {
             const projectToPersist = value[0] ? convertToResearchProject(value[0]) : undefined;
             setFieldValue(field.name, projectToPersist);

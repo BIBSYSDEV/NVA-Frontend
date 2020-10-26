@@ -20,9 +20,7 @@ const SeriesField: FC = () => {
           label={t('common:title')}
           placeholder={t('references.search_for_series')}
           errorFieldName={name}
-          setValue={(newValue) => {
-            setFieldValue(name, newValue?.title ?? '');
-          }}
+          setValue={(newValue) => setFieldValue(name, newValue?.title ?? '')}
           value={publicationContextToPublisher({ title: value })}
         />
       )}
