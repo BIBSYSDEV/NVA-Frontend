@@ -42,7 +42,7 @@ const Authors: FC<AuthorsProps> = ({ push, replace }) => {
 
   useEffect(() => {
     if (unverifiedAuthor) {
-      // Open modal if user has selected a unverified contributor
+      // Open modal if user has selected an unverified author
       setOpenContributorModal(true);
     }
   }, [unverifiedAuthor]);
