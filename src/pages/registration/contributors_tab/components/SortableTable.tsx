@@ -57,12 +57,13 @@ interface UnverifiedContributor {
 
 interface SortableItemProps {
   contributor: Contributor;
+  onMoveCard: (event: React.ChangeEvent<any>) => void;
   onRemoveContributorClick: () => void;
   setUnverifiedContributor: (unverifiedContributor: UnverifiedContributor) => void;
 }
 
 const SortableItem = SortableElement(
-  ({ contributor, onRemoveContributorClick, setUnverifiedContributor }: SortableItemProps) => {
+  ({ contributor, onMoveCard, onRemoveContributorClick, setUnverifiedContributor }: SortableItemProps) => {
     const { t } = useTranslation('registration');
     const index = contributor.sequence - 1;
     const baseFieldName = `${ContributorFieldNames.CONTRIBUTORS}[${index}]`;
@@ -72,7 +73,18 @@ const SortableItem = SortableElement(
     return (
       <TableRow tabIndex={0} key={contributor.identity.id}>
         <TableCell align="left">
-          <Typography variant="h5">#{contributor.sequence}</Typography>
+          <Field name={`${baseFieldName}.${SpecificContributorFieldNames.SEQUENCE}`}>
+            {({ field }: FieldProps) => (
+              <TextField
+                {...field}
+                type="number"
+                onBlur={(event: React.ChangeEvent<any>) => {
+                  onMoveCard(event);
+                  field.onBlur(event);
+                }}
+              />
+            )}
+          </Field>
           <Typography variant="h5">
             {contributor.identity.name}{' '}
             {contributor.identity.arpId ? (
@@ -160,52 +172,57 @@ const SortableItem = SortableElement(
 interface SortableListProps {
   contributors: Contributor[];
   onDelete: (index: number) => void;
-  onSortEnd: ({ oldIndex, newIndex }: SortEnd) => void;
+  onMoveCard: (newIndex: number, oldIndex: number) => void;
   setUnverifiedContributor: (unverifiedContributor: UnverifiedContributor) => void;
 }
 
-const SortableList = SortableContainer(({ contributors, onDelete, setUnverifiedContributor }: SortableListProps) => {
-  const { t } = useTranslation('registration');
-  const [contributorToRemove, setContributorToRemove] = useState<Contributor | null>(null);
+const SortableList = SortableContainer(
+  ({ contributors, onDelete, onMoveCard, setUnverifiedContributor }: SortableListProps) => {
+    const { t } = useTranslation('registration');
+    const [contributorToRemove, setContributorToRemove] = useState<Contributor | null>(null);
 
-  const closeConfirmDialog = () => {
-    setContributorToRemove(null);
-  };
+    const closeConfirmDialog = () => {
+      setContributorToRemove(null);
+    };
 
-  return (
-    <TableContainer>
-      <Table>
-        <TableBody>
-          {contributors.map((contributor: Contributor, index: number) => (
-            <SortableItem
-              index={index}
-              contributor={contributor}
-              key={contributor.identity.id || contributor.identity.name}
-              onRemoveContributorClick={() => setContributorToRemove(contributor)}
-              setUnverifiedContributor={setUnverifiedContributor}
-            />
-          ))}
-        </TableBody>
-      </Table>
-      {contributorToRemove && (
-        <ConfirmDialog
-          open={!!contributorToRemove}
-          title={t('contributors.confirm_remove_contributor_title')}
-          onAccept={() => {
-            onDelete(contributorToRemove.sequence - 1);
-            closeConfirmDialog();
-          }}
-          onCancel={closeConfirmDialog}>
-          <Typography>
-            {t('contributors.confirm_remove_contributor_text', {
-              contributorName: contributorToRemove.identity.name,
-            })}
-          </Typography>
-        </ConfirmDialog>
-      )}
-    </TableContainer>
-  );
-});
+    return (
+      <TableContainer>
+        <Table>
+          <TableBody>
+            {contributors.map((contributor: Contributor, index: number) => (
+              <SortableItem
+                index={index}
+                contributor={contributor}
+                key={contributor.identity.id || contributor.identity.name}
+                onMoveCard={(event: React.ChangeEvent<any>) =>
+                  onMoveCard(event.target.value - 1, contributor.sequence - 1)
+                }
+                onRemoveContributorClick={() => setContributorToRemove(contributor)}
+                setUnverifiedContributor={setUnverifiedContributor}
+              />
+            ))}
+          </TableBody>
+        </Table>
+        {contributorToRemove && (
+          <ConfirmDialog
+            open={!!contributorToRemove}
+            title={t('contributors.confirm_remove_contributor_title')}
+            onAccept={() => {
+              onDelete(contributorToRemove.sequence - 1);
+              closeConfirmDialog();
+            }}
+            onCancel={closeConfirmDialog}>
+            <Typography>
+              {t('contributors.confirm_remove_contributor_text', {
+                contributorName: contributorToRemove.identity.name,
+              })}
+            </Typography>
+          </ConfirmDialog>
+        )}
+      </TableContainer>
+    );
+  }
+);
 
 interface SortableTableProps extends Pick<FieldArrayRenderProps, 'push' | 'replace'> {}
 
@@ -235,15 +252,7 @@ const SortableTable: FC<SortableTableProps> = ({ push, replace }) => {
   }, [unverifiedContributor]);
 
   const handleOnSortEnd = ({ oldIndex, newIndex }: SortEnd) => {
-    const reorderedContributors = move(orderedContributors, oldIndex, newIndex) as Contributor[];
-    // Ensure incrementing sequence values
-    const newContributors = reorderedContributors.map((contributor, index) => ({
-      ...contributor,
-      sequence: index + 1,
-    }));
-    setValues(
-      deepmerge(values, { entityDescription: { contributors: newContributors } }, { arrayMerge: overwriteArrayMerge })
-    );
+    handleMoveCard(newIndex, oldIndex);
   };
 
   const handleOnRemove = (indexToRemove: number) => {
@@ -256,6 +265,18 @@ const SortableTable: FC<SortableTableProps> = ({ push, replace }) => {
         { entityDescription: { contributors: remainingContributors } },
         { arrayMerge: overwriteArrayMerge }
       )
+    );
+  };
+
+  const handleMoveCard = (newIndex: number, oldIndex: number) => {
+    const reorderedContributors = move(orderedContributors, oldIndex, newIndex) as Contributor[];
+    // Ensure incrementing sequence values
+    const newContributors = reorderedContributors.map((contributor, index) => ({
+      ...contributor,
+      sequence: index + 1,
+    }));
+    setValues(
+      deepmerge(values, { entityDescription: { contributors: newContributors } }, { arrayMerge: overwriteArrayMerge })
     );
   };
 
@@ -296,8 +317,9 @@ const SortableTable: FC<SortableTableProps> = ({ push, replace }) => {
     <>
       <SortableList
         contributors={orderedContributors}
-        onSortEnd={handleOnSortEnd}
         onDelete={handleOnRemove}
+        onMoveCard={handleMoveCard}
+        onSortEnd={handleOnSortEnd}
         distance={10}
         setUnverifiedContributor={setUnverifiedContributor}
       />
