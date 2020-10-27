@@ -80,17 +80,8 @@ const FilesAndLicensePanel: FC<FilesAndLicensePanelProps> = ({ uppy, setTouchedF
   return (
     <>
       <FieldArray name={FileFieldNames.FILES}>
-        {({ insert, remove, name }: FieldArrayRenderProps) => (
+        {({ name, remove, push }: FieldArrayRenderProps) => (
           <>
-            <Card>
-              <FileUploader uppy={uppy} addFile={(file) => insert(0, file)} />
-              {files.length === 0 && (
-                <FormHelperText error>
-                  <ErrorMessage name={name} />
-                </FormHelperText>
-              )}
-            </Card>
-
             {files.length > 0 && (
               <StyledUploadedFiles>
                 <Typography variant="h2">{t('files_and_license.files')}</Typography>
@@ -110,6 +101,15 @@ const FilesAndLicensePanel: FC<FilesAndLicensePanelProps> = ({ uppy, setTouchedF
                 ))}
               </StyledUploadedFiles>
             )}
+
+            <Card>
+              <FileUploader uppy={uppy} addFile={(file) => push(file)} />
+              {files.length === 0 && (
+                <FormHelperText error>
+                  <ErrorMessage name={name} />
+                </FormHelperText>
+              )}
+            </Card>
           </>
         )}
       </FieldArray>
