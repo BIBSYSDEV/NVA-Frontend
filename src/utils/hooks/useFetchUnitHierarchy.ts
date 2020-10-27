@@ -11,7 +11,7 @@ import { NotificationVariant } from '../../types/notification.types';
 const useFetchUnitHierarchy = (unitUri: string): [RecursiveInstitutionUnit | undefined, boolean] => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
-  const [unit, setUnit] = useState<RecursiveInstitutionUnit | undefined>();
+  const [unit, setUnit] = useState<RecursiveInstitutionUnit>();
 
   useEffect(() => {
     const cancelSource = Axios.CancelToken.source();
