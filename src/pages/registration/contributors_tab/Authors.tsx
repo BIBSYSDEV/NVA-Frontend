@@ -1,4 +1,3 @@
-import deepmerge from 'deepmerge';
 import { FieldArrayRenderProps, useFormikContext, move } from 'formik';
 import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -9,12 +8,12 @@ import { Contributor, emptyContributor, UnverifiedContributor } from '../../../t
 import { NotificationVariant } from '../../../types/notification.types';
 import { BackendTypeNames } from '../../../types/publication_types/commonRegistration.types';
 import { Registration } from '../../../types/registration.types';
-import { overwriteArrayMerge } from '../../../utils/formik-helpers';
 import AuthorTable from './components/AuthorTable';
 import AddIcon from '@material-ui/icons/Add';
 import styled from 'styled-components';
 import { Button } from '@material-ui/core';
 import AddContributorModal from './AddContributorModal';
+import { ContributorFieldNames } from '../../../types/publicationFieldNames';
 
 const StyledAddAuthorButton = styled(Button)`
   margin-top: 1rem;
@@ -25,7 +24,7 @@ interface AuthorsProps extends Pick<FieldArrayRenderProps, 'push' | 'replace'> {
 const Authors: FC<AuthorsProps> = ({ push, replace }) => {
   const { t } = useTranslation('registration');
   const dispatch = useDispatch();
-  const { values, setValues } = useFormikContext<Registration>();
+  const { values, setFieldValue } = useFormikContext<Registration>();
   const {
     entityDescription: { contributors },
   } = values;
@@ -37,9 +36,7 @@ const Authors: FC<AuthorsProps> = ({ push, replace }) => {
     const remainingAuthors = contributors
       .filter((_, index) => index !== indexToRemove)
       .map((contributor, index) => ({ ...contributor, sequence: index + 1 }));
-    setValues(
-      deepmerge(values, { entityDescription: { contributors: remainingAuthors } }, { arrayMerge: overwriteArrayMerge })
-    );
+    setFieldValue(ContributorFieldNames.CONTRIBUTORS, remainingAuthors);
   };
 
   const handleMoveAuthor = (newIndex: number, oldIndex: number) => {
@@ -49,9 +46,7 @@ const Authors: FC<AuthorsProps> = ({ push, replace }) => {
       ...contributor,
       sequence: index + 1,
     }));
-    setValues(
-      deepmerge(values, { entityDescription: { contributors: newAuthors } }, { arrayMerge: overwriteArrayMerge })
-    );
+    setFieldValue(ContributorFieldNames.CONTRIBUTORS, newAuthors);
   };
 
   const handleOpenContributorModal = (unverifiedAuthor: UnverifiedContributor) => {
