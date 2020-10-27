@@ -8,8 +8,8 @@ import {
   Checkbox,
   Button,
 } from '@material-ui/core';
-import { FormikProps, useFormikContext, FieldProps, Field } from 'formik';
-import React, { FC, useState, ChangeEvent } from 'react';
+import { useFormikContext, FieldProps, Field } from 'formik';
+import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Contributor, UnverifiedContributor } from '../../../../types/contributor.types';
 import { ContributorFieldNames, SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
@@ -48,7 +48,7 @@ const AuthorCard: FC<AuthorCardProps> = ({
   const { t } = useTranslation('registration');
   const index = author.sequence - 1;
   const baseFieldName = `${ContributorFieldNames.CONTRIBUTORS}[${index}]`;
-  const { values, setFieldValue }: FormikProps<Registration> = useFormikContext();
+  const { values, setFieldValue } = useFormikContext<Registration>();
   const [emailValue, setEmailValue] = useState(values.entityDescription.contributors[index]?.email ?? '');
 
   return (
@@ -59,13 +59,13 @@ const AuthorCard: FC<AuthorCardProps> = ({
             <TextField
               {...field}
               type="number"
-              onKeyDown={(event: React.KeyboardEvent<HTMLInputElement>) => {
+              onKeyDown={(event) => {
                 if (event.key === 'Enter' && field.value) {
                   event.preventDefault();
                   onMoveCard(event);
                 }
               }}
-              onBlur={(event: React.ChangeEvent<any>) => {
+              onBlur={(event) => {
                 onMoveCard(event);
                 field.onBlur(event);
               }}
@@ -103,10 +103,10 @@ const AuthorCard: FC<AuthorCardProps> = ({
                   variant="outlined"
                   label={t('common:email')}
                   {...field}
-                  onChange={(event: ChangeEvent<any>) => {
+                  onChange={(event) => {
                     setEmailValue(event.target.value);
                   }}
-                  onBlur={(event: ChangeEvent<any>) => {
+                  onBlur={(event) => {
                     setFieldValue(`${baseFieldName}.${SpecificContributorFieldNames.EMAIL}`, emailValue);
                     field.onBlur(event);
                   }}

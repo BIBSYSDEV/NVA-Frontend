@@ -28,9 +28,7 @@ const AuthorTable: FC<AuthorTableProps> = ({ authors, onDelete, onMoveAuthor, se
             <AuthorCard
               author={author}
               key={author.identity.id || author.identity.name}
-              onMoveAuthor={(event: React.ChangeEvent<any>) =>
-                onMoveAuthor(event.target.value - 1, author.sequence - 1)
-              }
+              onMoveAuthor={(event) => onMoveAuthor(event.target.value - 1, author.sequence - 1)}
               onRemoveAuthorClick={() => setAuthorToRemove(author)}
               setUnverifiedAuthor={setUnverifiedAuthor}
             />

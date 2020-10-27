@@ -1,5 +1,5 @@
 import deepmerge from 'deepmerge';
-import { FieldArrayRenderProps, FormikProps, useFormikContext, move } from 'formik';
+import { FieldArrayRenderProps, useFormikContext, move } from 'formik';
 import React, { FC, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
@@ -25,13 +25,13 @@ interface AuthorsProps extends Pick<FieldArrayRenderProps, 'push' | 'replace'> {
 const Authors: FC<AuthorsProps> = ({ push, replace }) => {
   const { t } = useTranslation('registration');
   const dispatch = useDispatch();
-  const { values, setValues }: FormikProps<Registration> = useFormikContext();
+  const { values, setValues } = useFormikContext<Registration>();
   const {
     entityDescription: { contributors },
   } = values;
   const [openContributorModal, setOpenContributorModal] = useState(false);
   const [unverifiedAuthor, setUnverifiedAuthor] = useState<UnverifiedContributor | null>(null);
-  const orderedAuthors = [...contributors].map((contributor, index) => ({ ...contributor, sequence: index + 1 }));
+  const orderedAuthors = contributors.map((contributor, index) => ({ ...contributor, sequence: index + 1 }));
 
   const toggleContributorModal = () => {
     if (unverifiedAuthor) {
@@ -48,7 +48,7 @@ const Authors: FC<AuthorsProps> = ({ push, replace }) => {
   }, [unverifiedAuthor]);
 
   const handleOnRemove = (indexToRemove: number) => {
-    const remainingAuthors = [...contributors]
+    const remainingAuthors = contributors
       .filter((_, index) => index !== indexToRemove)
       .map((contributor, index) => ({ ...contributor, sequence: index + 1 }));
     setValues(
