@@ -9,10 +9,10 @@ interface AuthorTableProps {
   authors: Contributor[];
   onDelete: (index: number) => void;
   onMoveAuthor: (newIndex: number, oldIndex: number) => void;
-  setUnverifiedAuthor: (unverifiedAuthor: UnverifiedContributor) => void;
+  openContributorModal: (unverifiedAuthor: UnverifiedContributor) => void;
 }
 
-const AuthorTable: FC<AuthorTableProps> = ({ authors, onDelete, onMoveAuthor, setUnverifiedAuthor }) => {
+const AuthorTable: FC<AuthorTableProps> = ({ authors, onDelete, onMoveAuthor, openContributorModal }) => {
   const { t } = useTranslation('registration');
   const [authorToRemove, setAuthorToRemove] = useState<Contributor | null>(null);
 
@@ -30,7 +30,7 @@ const AuthorTable: FC<AuthorTableProps> = ({ authors, onDelete, onMoveAuthor, se
               key={author.identity.id || author.identity.name}
               onMoveAuthor={(event) => onMoveAuthor(event.target.value - 1, author.sequence - 1)}
               onRemoveAuthorClick={() => setAuthorToRemove(author)}
-              setUnverifiedAuthor={setUnverifiedAuthor}
+              openContributorModal={openContributorModal}
             />
           ))}
         </TableBody>

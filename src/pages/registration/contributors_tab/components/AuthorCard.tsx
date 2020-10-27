@@ -36,14 +36,14 @@ interface AuthorCardProps {
   author: Contributor;
   onMoveAuthor: (event: React.ChangeEvent<any>) => void;
   onRemoveAuthorClick: () => void;
-  setUnverifiedAuthor: (unverifiedAuthor: UnverifiedContributor) => void;
+  openContributorModal: (unverifiedAuthor: UnverifiedContributor) => void;
 }
 
 const AuthorCard: FC<AuthorCardProps> = ({
   author,
   onMoveAuthor: onMoveCard,
   onRemoveAuthorClick,
-  setUnverifiedAuthor,
+  openContributorModal,
 }) => {
   const { t } = useTranslation('registration');
   const index = author.sequence - 1;
@@ -125,12 +125,7 @@ const AuthorCard: FC<AuthorCardProps> = ({
             color="primary"
             size="small"
             data-testid={`button-set-unverified-contributor-${author.identity.name}`}
-            onClick={() =>
-              setUnverifiedAuthor({
-                name: author.identity.name,
-                index,
-              })
-            }>
+            onClick={() => openContributorModal({ name: author.identity.name, index })}>
             {t('contributors.connect_author_identity')}
           </Button>
         )}

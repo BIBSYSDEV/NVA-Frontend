@@ -1,6 +1,6 @@
 import deepmerge from 'deepmerge';
 import { FieldArrayRenderProps, useFormikContext, move } from 'formik';
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { setNotification } from '../../../redux/actions/notificationActions';
@@ -33,20 +33,6 @@ const Authors: FC<AuthorsProps> = ({ push, replace }) => {
   const [unverifiedAuthor, setUnverifiedAuthor] = useState<UnverifiedContributor | null>(null);
   const orderedAuthors = contributors.map((contributor, index) => ({ ...contributor, sequence: index + 1 }));
 
-  const toggleContributorModal = () => {
-    if (unverifiedAuthor) {
-      setUnverifiedAuthor(null);
-    }
-    setOpenContributorModal(!openContributorModal);
-  };
-
-  useEffect(() => {
-    if (unverifiedAuthor) {
-      // Open modal if user has selected an unverified author
-      setOpenContributorModal(true);
-    }
-  }, [unverifiedAuthor]);
-
   const handleOnRemove = (indexToRemove: number) => {
     const remainingAuthors = contributors
       .filter((_, index) => index !== indexToRemove)
@@ -66,6 +52,11 @@ const Authors: FC<AuthorsProps> = ({ push, replace }) => {
     setValues(
       deepmerge(values, { entityDescription: { contributors: newAuthors } }, { arrayMerge: overwriteArrayMerge })
     );
+  };
+
+  const handleOpenContributorModal = (unverifiedAuthor: UnverifiedContributor) => {
+    setUnverifiedAuthor(unverifiedAuthor);
+    setOpenContributorModal(true);
   };
 
   const onAuthorSelected = (authority: Authority) => {
@@ -107,10 +98,13 @@ const Authors: FC<AuthorsProps> = ({ push, replace }) => {
         authors={orderedAuthors}
         onDelete={handleOnRemove}
         onMoveAuthor={handleMoveAuthor}
-        setUnverifiedAuthor={setUnverifiedAuthor}
+        openContributorModal={handleOpenContributorModal}
       />
       <StyledAddAuthorButton
-        onClick={toggleContributorModal}
+        onClick={() => {
+          setOpenContributorModal(true);
+          setUnverifiedAuthor(null);
+        }}
         variant="contained"
         color="primary"
         data-testid="add-contributor">
@@ -120,7 +114,7 @@ const Authors: FC<AuthorsProps> = ({ push, replace }) => {
       <AddContributorModal
         initialSearchTerm={unverifiedAuthor?.name}
         open={openContributorModal}
-        toggleModal={toggleContributorModal}
+        toggleModal={() => setOpenContributorModal(!openContributorModal)}
         onAuthorSelected={onAuthorSelected}
       />
     </>
