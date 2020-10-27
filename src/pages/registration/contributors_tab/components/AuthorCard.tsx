@@ -59,6 +59,12 @@ const AuthorCard: FC<AuthorCardProps> = ({
             <TextField
               {...field}
               type="number"
+              onKeyDown={(event: React.KeyboardEvent<HTMLInputElement>) => {
+                if (event.key === 'Enter' && field.value) {
+                  event.preventDefault();
+                  onMoveCard(event);
+                }
+              }}
               onBlur={(event: React.ChangeEvent<any>) => {
                 onMoveCard(event);
                 field.onBlur(event);
