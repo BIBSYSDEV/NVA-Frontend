@@ -112,12 +112,14 @@ const DescriptionPanel: FC<PanelProps> = ({ setTouchedFields }) => {
                   <MuiTextField
                     {...params}
                     label={t('description.keywords')}
-                    helperText={t('description.keywords_helper')}
                     variant="outlined"
                     fullWidth
                     onBlur={(event) => {
                       const value = event.target.value;
-                      const tags = value.split(/(,;|)+/).map((value: string) => value.trim());
+                      const tags = value
+                        .split(/[|,;]+/)
+                        .map((value: string) => value.trim())
+                        .filter((tag) => tag !== '');
                       setFieldValue(field.name, [...field.value, ...tags]);
                     }}
                   />
