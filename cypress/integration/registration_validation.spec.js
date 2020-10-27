@@ -60,7 +60,7 @@ describe('User opens registration form and can see validation errors', () => {
 
     cy.get('[data-testid=publication-context-type]').click({ force: true }).type(' ');
     cy.get('[data-testid=publication-context-type-Journal]').click({ force: true });
-    
+
     // No errors should be displayed when user has just selected new context type
     cy.get('[data-testid=publication-instance-type]').click({ force: true }).type(' ');
     cy.get('[data-testid=publication-instance-type-JournalArticle]').click({ force: true });
@@ -71,12 +71,12 @@ describe('User opens registration form and can see validation errors', () => {
     cy.get(`p:contains(${ErrorMessage.REQUIRED})`).should('have.length', 1);
 
     // Publisher (publicationContext) field
-    cy.get('[data-testid=autosearch-publisher]').click({ force: true }).type('natur');
+    cy.get('[data-testid=journal-search-input]').click({ force: true }).type('test');
     cy.contains('testament').click({ force: true });
     cy.contains(ErrorMessage.REQUIRED).should('not.be.visible');
-    cy.get('[data-testid=remove-publisher]').click({ force: true });
+    cy.get('.MuiAutocomplete-clearIndicator').click({ force: true });
     cy.contains(ErrorMessage.REQUIRED).should('be.visible');
-    cy.get('[data-testid=autosearch-publisher]').click({ force: true }).type('natur');
+    cy.get('[data-testid=journal-search-input]').click({ force: true }).type('test');
     cy.contains('testament').click({ force: true });
     cy.contains(ErrorMessage.REQUIRED).should('not.be.visible');
 
@@ -105,18 +105,18 @@ describe('User opens registration form and can see validation errors', () => {
   it('The User should be able to see validation errors on reference tab (Book)', () => {
     cy.get('[data-testid=publication-context-type]').click({ force: true }).type(' ');
     cy.get(`[data-testid=publication-context-type-Book]`).click({ force: true });
-    
+
     // publicationInstance type
     cy.get('[data-testid=publication-instance-type]').click({ force: true }).type(' ');
     cy.get('[data-testid=publication-instance-type-BookMonograph]').click({ force: true });
     cy.contains(ErrorMessage.REQUIRED).should('not.be.visible');
-   
+
     cy.get('[data-testid=nav-tabpanel-description]').click({ force: true });
     cy.get('[data-testid=nav-tabpanel-reference]').click({ force: true });
     cy.get(`p:contains(${ErrorMessage.REQUIRED})`).should('have.length', 1);
 
     // publicationContext
-    cy.get('[data-testid=autosearch-publisher]').click({ force: true }).type('natur');
+    cy.get('[data-testid=publisher-search-input]').click({ force: true }).type('test');
     cy.contains('testament').click({ force: true });
     cy.contains(ErrorMessage.REQUIRED).should('not.be.visible');
 
@@ -150,7 +150,7 @@ describe('User opens registration form and can see validation errors', () => {
     cy.get(`p:contains(${ErrorMessage.REQUIRED})`).should('have.length', 1);
 
     // publicationContext
-    cy.get('[data-testid=autosearch-publisher]').click({ force: true }).type('natur');
+    cy.get('[data-testid=publisher-search-input]').click({ force: true }).type('test');
     cy.contains('testament').click({ force: true });
     cy.contains(ErrorMessage.REQUIRED).should('not.be.visible');
 
@@ -171,7 +171,7 @@ describe('User opens registration form and can see validation errors', () => {
     cy.get(`p:contains(${ErrorMessage.REQUIRED})`).should('have.length', 1);
 
     // publicationContext
-    cy.get('[data-testid=autosearch-publisher]').click({ force: true }).type('natur');
+    cy.get('[data-testid=publisher-search-input]').click({ force: true }).type('test');
     cy.contains('testament').click({ force: true });
     cy.contains(ErrorMessage.REQUIRED).should('not.be.visible');
 

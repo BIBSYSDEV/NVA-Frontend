@@ -6,11 +6,10 @@ import { FormHelperText, Typography } from '@material-ui/core';
 import { UppyFile } from '@uppy/core';
 import FileUploader from './files_and_license_tab/FileUploader';
 import FileCard from './files_and_license_tab/FileCard';
-import { Registration, Publisher } from '../../types/registration.types';
+import { Registration } from '../../types/registration.types';
 import Modal from '../../components/Modal';
 import { licenses, Uppy } from '../../types/file.types';
 import Card from '../../components/Card';
-import PublicationChannelInfoCard from './files_and_license_tab/PublicationChannelInfoCard';
 import { FileFieldNames } from '../../types/publicationFieldNames';
 import { touchedFilesTabFields } from '../../utils/formik-helpers';
 import { PanelProps } from './RegistrationFormContent';
@@ -42,9 +41,6 @@ const FilesAndLicensePanel: FC<FilesAndLicensePanelProps> = ({ uppy, setTouchedF
   const [isLicenseModalOpen, setIsLicenseModalOpen] = useState(false);
   const {
     fileSet: { files = [] },
-    entityDescription: {
-      reference: { publicationContext },
-    },
   } = values;
 
   const filesRef = useRef(files);
@@ -83,20 +79,9 @@ const FilesAndLicensePanel: FC<FilesAndLicensePanelProps> = ({ uppy, setTouchedF
 
   return (
     <>
-      {publicationContext && <PublicationChannelInfoCard publisher={publicationContext as Publisher} />}
-
       <FieldArray name={FileFieldNames.FILES}>
-        {({ insert, remove, name }: FieldArrayRenderProps) => (
+        {({ name, remove, push }: FieldArrayRenderProps) => (
           <>
-            <Card>
-              <FileUploader uppy={uppy} addFile={(file) => insert(0, file)} />
-              {files.length === 0 && (
-                <FormHelperText error>
-                  <ErrorMessage name={name} />
-                </FormHelperText>
-              )}
-            </Card>
-
             {files.length > 0 && (
               <StyledUploadedFiles>
                 <Typography variant="h2">{t('files_and_license.files')}</Typography>
@@ -116,6 +101,15 @@ const FilesAndLicensePanel: FC<FilesAndLicensePanelProps> = ({ uppy, setTouchedF
                 ))}
               </StyledUploadedFiles>
             )}
+
+            <Card>
+              <FileUploader uppy={uppy} addFile={(file) => push(file)} />
+              {files.length === 0 && (
+                <FormHelperText error>
+                  <ErrorMessage name={name} />
+                </FormHelperText>
+              )}
+            </Card>
           </>
         )}
       </FieldArray>
