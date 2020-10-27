@@ -207,9 +207,9 @@ const SortableList = SortableContainer(({ contributors, onDelete, setUnverifiedC
   );
 });
 
-interface SortableTableProps extends Pick<FieldArrayRenderProps, 'push' | 'remove' | 'replace'> {}
+interface SortableTableProps extends Pick<FieldArrayRenderProps, 'push' | 'replace'> {}
 
-const SortableTable: FC<SortableTableProps> = ({ push, remove, replace }) => {
+const SortableTable: FC<SortableTableProps> = ({ push, replace }) => {
   const { t } = useTranslation('registration');
   const dispatch = useDispatch();
   const { values, setValues }: FormikProps<Registration> = useFormikContext();
