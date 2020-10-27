@@ -49,7 +49,7 @@ const Authors: FC<AuthorsProps> = ({ push, replace }) => {
 
   const handleOnRemove = (indexToRemove: number) => {
     const remainingContributors = [...contributors]
-      .filter((cont, index) => index !== indexToRemove)
+      .filter((_, index) => index !== indexToRemove)
       .map((contributor, index) => ({ ...contributor, sequence: index + 1 }));
     setValues(
       deepmerge(
@@ -108,10 +108,10 @@ const Authors: FC<AuthorsProps> = ({ push, replace }) => {
   return (
     <>
       <AuthorTable
-        contributors={orderedContributors}
+        authors={orderedContributors}
         onDelete={handleOnRemove}
-        onMoveCard={handleMoveCard}
-        setUnverifiedContributor={setUnverifiedContributor}
+        onMoveAuthor={handleMoveCard}
+        setUnverifiedAuthor={setUnverifiedContributor}
       />
       <StyledAddAuthorButton
         onClick={toggleContributorModal}

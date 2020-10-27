@@ -33,26 +33,26 @@ const StyledEmailTextField = styled(TextField)`
 `;
 
 interface AuthorCardProps {
-  contributor: Contributor;
-  onMoveCard: (event: React.ChangeEvent<any>) => void;
-  onRemoveContributorClick: () => void;
-  setUnverifiedContributor: (unverifiedContributor: UnverifiedContributor) => void;
+  author: Contributor;
+  onMoveAuthor: (event: React.ChangeEvent<any>) => void;
+  onRemoveAuthorClick: () => void;
+  setUnverifiedAuthor: (unverifiedAuthor: UnverifiedContributor) => void;
 }
 
 const AuthorCard: FC<AuthorCardProps> = ({
-  contributor,
-  onMoveCard,
-  onRemoveContributorClick,
-  setUnverifiedContributor,
+  author,
+  onMoveAuthor: onMoveCard,
+  onRemoveAuthorClick,
+  setUnverifiedAuthor,
 }) => {
   const { t } = useTranslation('registration');
-  const index = contributor.sequence - 1;
+  const index = author.sequence - 1;
   const baseFieldName = `${ContributorFieldNames.CONTRIBUTORS}[${index}]`;
   const { values, setFieldValue }: FormikProps<Registration> = useFormikContext();
   const [emailValue, setEmailValue] = useState(values.entityDescription.contributors[index]?.email ?? '');
 
   return (
-    <TableRow tabIndex={0} key={contributor.identity.id}>
+    <TableRow tabIndex={0} key={author.identity.id}>
       <TableCell align="left">
         <Field name={`${baseFieldName}.${SpecificContributorFieldNames.SEQUENCE}`}>
           {({ field }: FieldProps) => (
@@ -73,8 +73,8 @@ const AuthorCard: FC<AuthorCardProps> = ({
           )}
         </Field>
         <Typography variant="h5">
-          {contributor.identity.name}{' '}
-          {contributor.identity.arpId ? (
+          {author.identity.name}{' '}
+          {author.identity.arpId ? (
             <Tooltip title={t('contributors.known_author_identity') as string}>
               <StyledCheckIcon />
             </Tooltip>
@@ -95,7 +95,7 @@ const AuthorCard: FC<AuthorCardProps> = ({
           )}
         </Field>
         <div>
-          {contributor.correspondingAuthor && (
+          {author.correspondingAuthor && (
             <Field name={`${baseFieldName}.${SpecificContributorFieldNames.EMAIL}`}>
               {({ field, meta: { error, touched } }: FieldProps) => (
                 <StyledEmailTextField
@@ -119,15 +119,15 @@ const AuthorCard: FC<AuthorCardProps> = ({
           )}
         </div>
 
-        {!contributor.identity.arpId && (
+        {!author.identity.arpId && (
           <Button
             variant="contained"
             color="primary"
             size="small"
-            data-testid={`button-set-unverified-contributor-${contributor.identity.name}`}
+            data-testid={`button-set-unverified-contributor-${author.identity.name}`}
             onClick={() =>
-              setUnverifiedContributor({
-                name: contributor.identity.name,
+              setUnverifiedAuthor({
+                name: author.identity.name,
                 index,
               })
             }>
@@ -136,17 +136,15 @@ const AuthorCard: FC<AuthorCardProps> = ({
         )}
       </TableCell>
       <TableCell align="left">
-        {contributor.identity && (
-          <AffiliationsCell affiliations={contributor.affiliations} baseFieldName={baseFieldName} />
-        )}
+        {author.identity && <AffiliationsCell affiliations={author.affiliations} baseFieldName={baseFieldName} />}
       </TableCell>
       <TableCell align="right">
         <Button
           color="secondary"
           variant="contained"
           size="small"
-          data-testid={`button-remove-contributor-${contributor.identity.name}`}
-          onClick={onRemoveContributorClick}>
+          data-testid={`button-remove-contributor-${author.identity.name}`}
+          onClick={onRemoveAuthorClick}>
           <DeleteIcon />
           {t('contributors.remove_contributor')}
         </Button>

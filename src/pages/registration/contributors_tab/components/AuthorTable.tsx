@@ -6,49 +6,49 @@ import { Contributor, UnverifiedContributor } from '../../../../types/contributo
 import AuthorCard from './AuthorCard';
 
 interface AuthorTableProps {
-  contributors: Contributor[];
+  authors: Contributor[];
   onDelete: (index: number) => void;
-  onMoveCard: (newIndex: number, oldIndex: number) => void;
-  setUnverifiedContributor: (unverifiedContributor: UnverifiedContributor) => void;
+  onMoveAuthor: (newIndex: number, oldIndex: number) => void;
+  setUnverifiedAuthor: (unverifiedAuthor: UnverifiedContributor) => void;
 }
 
-const AuthorTable: FC<AuthorTableProps> = ({ contributors, onDelete, onMoveCard, setUnverifiedContributor }) => {
+const AuthorTable: FC<AuthorTableProps> = ({ authors, onDelete, onMoveAuthor, setUnverifiedAuthor }) => {
   const { t } = useTranslation('registration');
-  const [contributorToRemove, setContributorToRemove] = useState<Contributor | null>(null);
+  const [authorToRemove, setAuthorToRemove] = useState<Contributor | null>(null);
 
   const closeConfirmDialog = () => {
-    setContributorToRemove(null);
+    setAuthorToRemove(null);
   };
 
   return (
     <TableContainer>
       <Table>
         <TableBody>
-          {contributors.map((contributor: Contributor, index: number) => (
+          {authors.map((author: Contributor) => (
             <AuthorCard
-              contributor={contributor}
-              key={contributor.identity.id || contributor.identity.name}
-              onMoveCard={(event: React.ChangeEvent<any>) =>
-                onMoveCard(event.target.value - 1, contributor.sequence - 1)
+              author={author}
+              key={author.identity.id || author.identity.name}
+              onMoveAuthor={(event: React.ChangeEvent<any>) =>
+                onMoveAuthor(event.target.value - 1, author.sequence - 1)
               }
-              onRemoveContributorClick={() => setContributorToRemove(contributor)}
-              setUnverifiedContributor={setUnverifiedContributor}
+              onRemoveAuthorClick={() => setAuthorToRemove(author)}
+              setUnverifiedAuthor={setUnverifiedAuthor}
             />
           ))}
         </TableBody>
       </Table>
-      {contributorToRemove && (
+      {authorToRemove && (
         <ConfirmDialog
-          open={!!contributorToRemove}
+          open={!!authorToRemove}
           title={t('contributors.confirm_remove_contributor_title')}
           onAccept={() => {
-            onDelete(contributorToRemove.sequence - 1);
+            onDelete(authorToRemove.sequence - 1);
             closeConfirmDialog();
           }}
           onCancel={closeConfirmDialog}>
           <Typography>
             {t('contributors.confirm_remove_contributor_text', {
-              contributorName: contributorToRemove.identity.name,
+              contributorName: authorToRemove.identity.name,
             })}
           </Typography>
         </ConfirmDialog>
