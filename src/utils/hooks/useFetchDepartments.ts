@@ -25,8 +25,8 @@ const useFetchDepartments = (
         if (response) {
           if (response.error) {
             dispatch(setNotification(t('error.get_institutions'), NotificationVariant.Error));
-          } else {
-            setDepartments(response.subunits ?? []);
+          } else if (response.data) {
+            setDepartments(response.data.subunits ?? []);
           }
           setIsLoading(false);
         }

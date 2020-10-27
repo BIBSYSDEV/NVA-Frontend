@@ -1,8 +1,6 @@
-import Axios, { CancelToken } from 'axios';
-import { StatusCode } from '../utils/constants';
-import i18n from '../translations/i18n';
+import { CancelToken } from 'axios';
 import { apiRequest } from './apiRequest';
-import { InstitutionUnitBase } from '../types/institution.types';
+import { InstitutionUnitBase, RecursiveInstitutionUnit } from '../types/institution.types';
 import { LanguageCodes } from '../types/language.types';
 
 export enum InstitutionApiPaths {
@@ -26,18 +24,9 @@ export const getInstitutions = async (cancelToken?: CancelToken) =>
     cancelToken,
   });
 
-export const getDepartment = async (departmentUri: string, cancelToken?: CancelToken) => {
-  const url = `${InstitutionApiPaths.DEPARTMENTS}?uri=${departmentUri}&language=${getLanguageCode()}`;
-  try {
-    const response = await Axios.get(url, { cancelToken });
-    if (response.status === StatusCode.OK) {
-      return response.data;
-    } else {
-      return { error: i18n.t('feedback:error.get_institution') };
-    }
-  } catch (error) {
-    if (!Axios.isCancel(error)) {
-      return { error: i18n.t('feedback:error.get_institution') };
-    }
-  }
-};
+export const getDepartment = async (departmentUri: string, cancelToken?: CancelToken) =>
+  await apiRequest<RecursiveInstitutionUnit>({
+    url: `${InstitutionApiPaths.DEPARTMENTS}?uri=${encodeURIComponent(departmentUri)}&language=${getLanguageCode()}`,
+    method: 'GET',
+    cancelToken,
+  });
