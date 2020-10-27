@@ -30,50 +30,46 @@ const Authors: FC<AuthorsProps> = ({ push, replace }) => {
     entityDescription: { contributors },
   } = values;
   const [openContributorModal, setOpenContributorModal] = useState(false);
-  const [unverifiedContributor, setUnverifiedContributor] = useState<UnverifiedContributor | null>(null);
-  const orderedContributors = [...contributors].map((contributor, index) => ({ ...contributor, sequence: index + 1 }));
+  const [unverifiedAuthor, setUnverifiedAuthor] = useState<UnverifiedContributor | null>(null);
+  const orderedAuthors = [...contributors].map((contributor, index) => ({ ...contributor, sequence: index + 1 }));
 
   const toggleContributorModal = () => {
-    if (unverifiedContributor) {
-      setUnverifiedContributor(null);
+    if (unverifiedAuthor) {
+      setUnverifiedAuthor(null);
     }
     setOpenContributorModal(!openContributorModal);
   };
 
   useEffect(() => {
-    if (unverifiedContributor) {
+    if (unverifiedAuthor) {
       // Open modal if user has selected a unverified contributor
       setOpenContributorModal(true);
     }
-  }, [unverifiedContributor]);
+  }, [unverifiedAuthor]);
 
   const handleOnRemove = (indexToRemove: number) => {
-    const remainingContributors = [...contributors]
+    const remainingAuthors = [...contributors]
       .filter((_, index) => index !== indexToRemove)
       .map((contributor, index) => ({ ...contributor, sequence: index + 1 }));
     setValues(
-      deepmerge(
-        values,
-        { entityDescription: { contributors: remainingContributors } },
-        { arrayMerge: overwriteArrayMerge }
-      )
+      deepmerge(values, { entityDescription: { contributors: remainingAuthors } }, { arrayMerge: overwriteArrayMerge })
     );
   };
 
-  const handleMoveCard = (newIndex: number, oldIndex: number) => {
-    const reorderedContributors = move(orderedContributors, oldIndex, newIndex) as Contributor[];
+  const handleMoveAuthor = (newIndex: number, oldIndex: number) => {
+    const reorderedAuthors = move(orderedAuthors, oldIndex, newIndex) as Contributor[];
     // Ensure incrementing sequence values
-    const newContributors = reorderedContributors.map((contributor, index) => ({
+    const newAuthors = reorderedAuthors.map((contributor, index) => ({
       ...contributor,
       sequence: index + 1,
     }));
     setValues(
-      deepmerge(values, { entityDescription: { contributors: newContributors } }, { arrayMerge: overwriteArrayMerge })
+      deepmerge(values, { entityDescription: { contributors: newAuthors } }, { arrayMerge: overwriteArrayMerge })
     );
   };
 
   const onAuthorSelected = (authority: Authority) => {
-    if (orderedContributors.some((contributor) => contributor.identity.arpId === authority.systemControlNumber)) {
+    if (orderedAuthors.some((author) => author.identity.arpId === authority.systemControlNumber)) {
       dispatch(setNotification(t('contributors.author_already_added'), NotificationVariant.Info));
       return;
     }
@@ -85,33 +81,33 @@ const Authors: FC<AuthorsProps> = ({ push, replace }) => {
       name: authority.name,
     };
 
-    if (!unverifiedContributor) {
-      const newContributor: Contributor = {
+    if (!unverifiedAuthor) {
+      const newAuthor: Contributor = {
         ...emptyContributor,
         identity,
         affiliations: authority.orgunitids.map((unitUri) => ({
           type: BackendTypeNames.ORGANIZATION,
           id: unitUri,
         })),
-        sequence: orderedContributors.length + 1,
+        sequence: orderedAuthors.length + 1,
       };
-      push(newContributor);
+      push(newAuthor);
     } else {
-      const verifiedContributor: Contributor = {
-        ...orderedContributors[unverifiedContributor.index],
+      const verifiedAuthor: Contributor = {
+        ...orderedAuthors[unverifiedAuthor.index],
         identity,
       };
-      replace(unverifiedContributor.index, verifiedContributor);
+      replace(unverifiedAuthor.index, verifiedAuthor);
     }
   };
 
   return (
     <>
       <AuthorTable
-        authors={orderedContributors}
+        authors={orderedAuthors}
         onDelete={handleOnRemove}
-        onMoveAuthor={handleMoveCard}
-        setUnverifiedAuthor={setUnverifiedContributor}
+        onMoveAuthor={handleMoveAuthor}
+        setUnverifiedAuthor={setUnverifiedAuthor}
       />
       <StyledAddAuthorButton
         onClick={toggleContributorModal}
@@ -122,7 +118,7 @@ const Authors: FC<AuthorsProps> = ({ push, replace }) => {
         {t('contributors.add_author')}
       </StyledAddAuthorButton>
       <AddContributorModal
-        initialSearchTerm={unverifiedContributor?.name}
+        initialSearchTerm={unverifiedAuthor?.name}
         open={openContributorModal}
         toggleModal={toggleContributorModal}
         onAuthorSelected={onAuthorSelected}
