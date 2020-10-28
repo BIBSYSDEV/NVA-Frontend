@@ -48,7 +48,7 @@ interface PublicRegistrationFileProps {
 }
 
 const PublicRegistrationFile: FC<PublicRegistrationFileProps> = ({ file }) => {
-  const { identifier } = useParams();
+  const { identifier } = useParams<{ identifier: string }>();
   const { t } = useTranslation('common');
   const dispatch = useDispatch();
   const [isLoadingFile, setIsLoadingFile] = useState(false);
