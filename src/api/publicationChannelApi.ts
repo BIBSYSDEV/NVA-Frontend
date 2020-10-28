@@ -1,19 +1,24 @@
-import Axios from 'axios';
 import { PublicationTableNumber } from '../utils/constants';
+import { apiRequest } from './apiRequest';
+import { Publisher } from '../types/registration.types';
+import { CancelToken } from 'axios';
 
 export enum PublicationChannelApiPaths {
   SEARCH = '/channel/search',
 }
 
-export const getPublishers = async (searchTerm: string, publicationTable: PublicationTableNumber) => {
-  try {
-    const response = await Axios({
-      method: 'POST',
-      url: PublicationChannelApiPaths.SEARCH,
-      data: { searchTerm: `%${searchTerm}%`, tableId: publicationTable },
-    });
-    return response.data.results;
-  } catch {
-    return [];
-  }
-};
+interface PublisherSearchResponse {
+  results: Publisher[];
+}
+
+export const getPublishers = async (
+  searchTerm: string,
+  publicationTable: PublicationTableNumber,
+  cancelToken?: CancelToken
+) =>
+  await apiRequest<PublisherSearchResponse>({
+    url: PublicationChannelApiPaths.SEARCH,
+    method: 'POST',
+    data: { searchTerm: `%${searchTerm}%`, tableId: publicationTable },
+    cancelToken,
+  });
