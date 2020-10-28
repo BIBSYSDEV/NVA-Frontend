@@ -17,9 +17,10 @@ const useFetchProjects = (
   const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
 
   const handleNewSearchTerm = useCallback(
-    debounce((searchTerm: string) => {
-      setSearchTerm(searchTerm);
-    }),
+    () =>
+      debounce((searchTerm: string) => {
+        setSearchTerm(searchTerm);
+      }),
     []
   );
 

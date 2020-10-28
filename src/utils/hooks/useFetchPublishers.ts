@@ -14,9 +14,10 @@ const useFetchPublishers = (
   const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
 
   const handleNewSearchTerm = useCallback(
-    debounce(async (searchTerm: string) => {
-      setSearchTerm(searchTerm);
-    }),
+    () =>
+      debounce(async (searchTerm: string) => {
+        setSearchTerm(searchTerm);
+      }),
     []
   );
 
