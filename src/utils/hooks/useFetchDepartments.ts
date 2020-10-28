@@ -26,8 +26,8 @@ const useFetchDepartments = (departmentId: string = ''): [RecursiveInstitutionUn
           } else if (response.data) {
             setDepartments(response.data.subunits ?? []);
           }
+          setIsLoading(false);
         }
-        setIsLoading(false);
       }
     },
     [dispatch, t, cancelToken]
