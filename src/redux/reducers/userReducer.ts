@@ -9,7 +9,10 @@ import {
   UserActions,
 } from '../actions/userActions';
 
-export const userReducer = (state: User | null = null, action: UserActions | OrcidActions | AuthActions) => {
+export const userReducer = (
+  state: User | null = null,
+  action: UserActions | OrcidActions | AuthActions
+): User | Partial<User> | null => {
   switch (action.type) {
     case SET_USER_SUCCESS: {
       const feideAffiliations = action.user['custom:affiliation'];
@@ -39,10 +42,10 @@ export const userReducer = (state: User | null = null, action: UserActions | Orc
       return {
         ...state,
         roles: action.roles,
-        isCreator: state?.customerId && action.roles.some((role) => role === RoleName.CREATOR),
-        isAppAdmin: state?.customerId && action.roles.some((role) => role === RoleName.APP_ADMIN),
-        isInstitutionAdmin: state?.customerId && action.roles.some((role) => role === RoleName.INSTITUTION_ADMIN),
-        isCurator: state?.customerId && action.roles.some((role) => role === RoleName.CURATOR),
+        isCreator: !!(state?.customerId && action.roles.some((role) => role === RoleName.CREATOR)),
+        isAppAdmin: !!state?.customerId && action.roles.some((role) => role === RoleName.APP_ADMIN),
+        isInstitutionAdmin: !!state?.customerId && action.roles.some((role) => role === RoleName.INSTITUTION_ADMIN),
+        isCurator: !!state?.customerId && action.roles.some((role) => role === RoleName.CURATOR),
       };
     case SET_EXTERNAL_ORCID:
       return {

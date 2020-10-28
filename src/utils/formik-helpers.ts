@@ -17,14 +17,14 @@ interface CustomError {
 }
 
 // Convert all errors from nested object to flat array
-export const flattenFormikErrors = (validationErrors: FormikErrors<any>, fieldNamePrefix = ''): CustomError[] => {
+export const flattenFormikErrors = (validationErrors: FormikErrors<unknown>, fieldNamePrefix = ''): CustomError[] => {
   if (typeof validationErrors === 'object') {
     return Object.entries(validationErrors)
       .map(([fieldName, errorMessage]) => {
         const fieldPath = fieldNamePrefix ? `${fieldNamePrefix}-${fieldName}` : fieldName;
         if (typeof errorMessage === 'object' && errorMessage !== null) {
           if (Array.isArray(errorMessage)) {
-            const errorArray = errorMessage as FormikErrors<any>[];
+            const errorArray = errorMessage as FormikErrors<unknown>[];
             const isStringErrors = errorArray.some((error) => typeof error === 'string');
             // Merge errors in array, and ignore their indexes
             const groupErrors = isStringErrors
@@ -32,7 +32,7 @@ export const flattenFormikErrors = (validationErrors: FormikErrors<any>, fieldNa
               : errorArray.reduce((result, current) => ({ ...result, ...current }), {});
             return flattenFormikErrors(groupErrors, fieldPath);
           } else {
-            return flattenFormikErrors(errorMessage as FormikErrors<any>, fieldPath);
+            return flattenFormikErrors(errorMessage as FormikErrors<unknown>, fieldPath);
           }
         }
         return {
@@ -52,8 +52,8 @@ export const flattenFormikErrors = (validationErrors: FormikErrors<any>, fieldNa
 };
 
 export const hasTouchedError = (
-  errors: FormikErrors<any>,
-  touched: FormikTouched<any>,
+  errors: FormikErrors<unknown>,
+  touched: FormikTouched<unknown>,
   fieldNames: string[]
 ): boolean => {
   if (!Object.keys(errors).length || !Object.keys(touched).length || !fieldNames.length) {
@@ -69,7 +69,7 @@ export const hasTouchedError = (
   });
 };
 
-export const getAllFileFields = (files: File[]) => {
+export const getAllFileFields = (files: File[]): string[] => {
   const fieldNames: string[] = [];
   if (files.length === 0) {
     fieldNames.push(FileFieldNames.FILES);
@@ -87,7 +87,7 @@ export const getAllFileFields = (files: File[]) => {
   return fieldNames;
 };
 
-export const getAllContributorFields = (contributors: Contributor[]) => {
+export const getAllContributorFields = (contributors: Contributor[]): string[] => {
   const fieldNames: string[] = [];
   if (contributors.length === 0) {
     fieldNames.push(ContributorFieldNames.CONTRIBUTORS);
@@ -120,7 +120,7 @@ export const touchedDescriptionTabFields: FormikTouched<Registration> = {
   },
 };
 
-export const touchedReferenceTabFields = (publicationType: PublicationType | ''): FormikTouched<any> => {
+export const touchedReferenceTabFields = (publicationType: PublicationType | ''): FormikTouched<unknown> => {
   switch (publicationType) {
     case PublicationType.PUBLICATION_IN_JOURNAL:
       return {

@@ -41,7 +41,7 @@ interface RegistrationFormProps {
   identifier?: string;
 }
 
-const RegistrationForm: FC<RegistrationFormProps> = ({ identifier, closeForm }) => {
+const RegistrationForm: FC<RegistrationFormProps> = ({ identifier = '', closeForm }) => {
   const user = useSelector((store: RootStore) => store.user);
   const { t } = useTranslation('registration');
   const history = useHistory();

@@ -23,7 +23,7 @@ const StyledTypography = styled(Typography)`
 
 interface LinkRegistrationProps {
   expanded: boolean;
-  onChange: (event: React.ChangeEvent<any>, isExpanded: boolean) => void;
+  onChange: (event: React.ChangeEvent<unknown>, isExpanded: boolean) => void;
   openForm: () => void;
 }
 

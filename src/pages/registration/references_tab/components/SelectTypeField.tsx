@@ -31,9 +31,7 @@ const SelectTypeField: FC<SelectTypeFieldProps> = ({
           error={!!error && touched}
           SelectProps={{ MenuProps: { autoFocus: false } }}
           helperText={<ErrorMessage name={field.name} />}
-          onChange={(event: React.ChangeEvent<any>) =>
-            onChangeType ? onChangeType(event.target.value) : field.onChange(event)
-          }>
+          onChange={(event) => (onChangeType ? onChangeType(event.target.value) : field.onChange(event))}>
           {options.map((typeValue) => (
             <MenuItem value={typeValue} key={typeValue} data-testid={`${dataTestId}-${typeValue}`}>
               {t(`publicationTypes:${typeValue}`)}

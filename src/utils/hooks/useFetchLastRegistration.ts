@@ -38,7 +38,7 @@ const useFetchLastRegistrationFromAlma = (
         cancelSource.cancel();
       }
     };
-  }, [dispatch, name, systemControlNumber]);
+  }, [dispatch, name, systemControlNumber, t]);
 
   return [almaRegistration, isLoading];
 };
