@@ -3,7 +3,7 @@ import { getIdToken } from './userApi';
 import Axios, { CancelToken } from 'axios';
 import i18n from '../translations/i18n';
 import { StatusCode } from '../utils/constants';
-import { authenticatedApiRequest } from './apiRequest';
+import { ApiResponse, authenticatedApiRequest } from './apiRequest';
 
 export enum CustomerInstitutionApiPaths {
   CUSTOMER_INSTITUTION = '/customer',
@@ -32,7 +32,10 @@ export const getAllCustomerInstitutions = async () => {
   }
 };
 
-export const getCustomerInstitution = async (customerId: string, cancelToken?: CancelToken) =>
+export const getCustomerInstitution = async (
+  customerId: string,
+  cancelToken?: CancelToken
+): Promise<ApiResponse<CustomerInstitution>> =>
   await authenticatedApiRequest<CustomerInstitution>({
     url: customerId,
     method: 'GET',

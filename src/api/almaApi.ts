@@ -1,6 +1,6 @@
-import Axios, { CancelToken } from 'axios';
-import { StatusCode } from '../utils/constants';
-import i18n from '../translations/i18n';
+import { CancelToken } from 'axios';
+import { apiRequest, ApiResponse } from './apiRequest';
+import { AlmaRegistration } from '../types/registration.types';
 
 enum AlmaApiPaths {
   ALMA = '/alma',
@@ -10,19 +10,11 @@ export const getAlmaRegistration = async (
   systemControlNumber: string,
   invertedCreatorName: string,
   cancelToken?: CancelToken
-) => {
+): Promise<ApiResponse<AlmaRegistration>> => {
   const url = encodeURI(`${AlmaApiPaths.ALMA}/?scn=${systemControlNumber}&creatorname=${invertedCreatorName}`);
-  try {
-    const response = await Axios.get(url, { cancelToken });
-
-    if (response.status === StatusCode.OK) {
-      return response.data;
-    } else {
-      return { error: i18n.t('feedback:error.get_last_registration') };
-    }
-  } catch (error) {
-    if (!Axios.isCancel(error)) {
-      return { error: i18n.t('feedback:error.get_last_registration') };
-    }
-  }
+  return await apiRequest<AlmaRegistration>({
+    url,
+    method: 'GET',
+    cancelToken,
+  });
 };
