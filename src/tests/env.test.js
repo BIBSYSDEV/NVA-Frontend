@@ -13,7 +13,7 @@ describe('Env-variables', () => {
       'REACT_APP_ORCID_BASE_URL',
       'REACT_APP_API_URL',
     ];
-    const unsetEnv = requiredEnv.filter(env => !(typeof process.env[env] !== 'undefined'));
+    const unsetEnv = requiredEnv.filter((env) => !(typeof process.env[env] !== 'undefined'));
     if (unsetEnv.length > 0) {
       throw new Error('Required ENV variables are not set: [' + unsetEnv.join(', ') + ']');
     }
