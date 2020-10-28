@@ -39,12 +39,7 @@ interface AuthorCardProps {
   openContributorModal: (unverifiedAuthor: UnverifiedContributor) => void;
 }
 
-const AuthorCard: FC<AuthorCardProps> = ({
-  author,
-  onMoveAuthor: onMoveCard,
-  onRemoveAuthorClick,
-  openContributorModal,
-}) => {
+const AuthorCard: FC<AuthorCardProps> = ({ author, onMoveAuthor, onRemoveAuthorClick, openContributorModal }) => {
   const { t } = useTranslation('registration');
   const index = author.sequence - 1;
   const baseFieldName = `${ContributorFieldNames.CONTRIBUTORS}[${index}]`;
@@ -62,11 +57,11 @@ const AuthorCard: FC<AuthorCardProps> = ({
               onKeyDown={(event) => {
                 if (event.key === 'Enter' && field.value) {
                   event.preventDefault();
-                  onMoveCard(event);
+                  onMoveAuthor(event);
                 }
               }}
               onBlur={(event) => {
-                onMoveCard(event);
+                onMoveAuthor(event);
                 field.onBlur(event);
               }}
             />

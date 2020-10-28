@@ -2,7 +2,7 @@ import { CristinProject, ResearchProject } from '../../../../types/project.types
 import { LanguageCodes } from '../../../../types/language.types';
 import { BackendTypeNames } from '../../../../types/publication_types/commonRegistration.types';
 
-export const getProjectTitle = (option: CristinProject) => {
+export const getProjectTitle = (option: CristinProject): string => {
   const selectedLanguage = localStorage.getItem('i18nextLng');
   if (selectedLanguage === LanguageCodes.NORWEGIAN_BOKMAL || selectedLanguage === LanguageCodes.NORWEGIAN_NYNORSK) {
     const norwegianTitle = option.titles.find((title) => title.language === 'no')?.title;

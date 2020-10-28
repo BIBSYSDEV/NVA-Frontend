@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { KeyboardDatePicker, DatePickerView } from '@material-ui/pickers';
@@ -18,7 +18,7 @@ interface DatePickerFieldProps {
   dayFieldName: string;
 }
 
-const DatePickerField = ({ yearFieldName, monthFieldName, dayFieldName }: DatePickerFieldProps) => {
+const DatePickerField: FC<DatePickerFieldProps> = ({ yearFieldName, monthFieldName, dayFieldName }) => {
   const { t } = useTranslation('registration');
   const { setFieldValue, values }: FormikProps<Registration> = useFormikContext();
 

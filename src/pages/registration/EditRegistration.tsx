@@ -18,7 +18,7 @@ const EditRegistration: FC = () => {
   const [showForm, setShowForm] = useState(!!identifier);
   const { t } = useTranslation('registration');
 
-  const handleChange = (panel: string) => (_: React.ChangeEvent<any>, isExpanded: boolean) => {
+  const handleChange = (panel: string) => (_: React.ChangeEvent<unknown>, isExpanded: boolean) => {
     setExpanded(isExpanded ? panel : false);
   };
 
