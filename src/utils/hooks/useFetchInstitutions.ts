@@ -13,7 +13,7 @@ import useCancelToken from './useCancelToken';
 // This hook is used to fetch all top-level institutions
 const useFetchInstitutions = (): [InstitutionUnitBase[], boolean] => {
   const dispatch = useDispatch();
-  const { t, i18n } = useTranslation('feedback');
+  const { t } = useTranslation('feedback');
   const institutions = useSelector((store: RootStore) => store.institutions);
   const [isLoading, setIsLoading] = useState(true);
   const cancelToken = useCancelToken();
@@ -31,16 +31,8 @@ const useFetchInstitutions = (): [InstitutionUnitBase[], boolean] => {
   }, [dispatch, t, cancelToken]);
 
   useEffect(() => {
-    // Institutions should not change, so ensure we fetch only once
-    if (!institutions || institutions.length === 0) {
-      fetchInstitutions();
-    }
-  }, [fetchInstitutions, institutions]);
-
-  useEffect(() => {
-    // Update institutions if user updates language
     fetchInstitutions();
-  }, [fetchInstitutions, i18n.language]);
+  }, [fetchInstitutions]);
 
   return [institutions, isLoading];
 };
