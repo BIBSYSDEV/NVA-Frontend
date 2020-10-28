@@ -11,7 +11,7 @@ import {
 
 export const userReducer = (state: User | null = null, action: UserActions | OrcidActions | AuthActions) => {
   switch (action.type) {
-    case SET_USER_SUCCESS:
+    case SET_USER_SUCCESS: {
       const feideAffiliations = action.user['custom:affiliation'];
       const affiliations = feideAffiliations
         ? (feideAffiliations
@@ -34,7 +34,7 @@ export const userReducer = (state: User | null = null, action: UserActions | Orc
         possibleAuthorities: [],
       };
       return user;
-
+    }
     case SET_ROLES:
       return {
         ...state,

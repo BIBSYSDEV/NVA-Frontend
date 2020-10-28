@@ -19,7 +19,7 @@ const StyledAddAuthorButton = styled(Button)`
   margin-top: 1rem;
 `;
 
-interface AuthorsProps extends Pick<FieldArrayRenderProps, 'push' | 'replace'> {}
+type AuthorsProps = Pick<FieldArrayRenderProps, 'push' | 'replace'>;
 
 const Authors: FC<AuthorsProps> = ({ push, replace }) => {
   const { t } = useTranslation('registration');

@@ -29,7 +29,7 @@ const descriptionFieldNames = Object.values(DescriptionFieldNames);
 const referenceFieldNames = Object.values(ReferenceFieldNames);
 
 interface RegistrationFormTabsProps {
-  handleTabChange: (_: React.ChangeEvent<{}>, newValue: number) => void;
+  handleTabChange: (_: React.ChangeEvent<unknown>, newValue: number) => void;
   tabNumber: number;
 }
 

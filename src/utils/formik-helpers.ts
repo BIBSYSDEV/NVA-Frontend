@@ -17,10 +17,7 @@ interface CustomError {
 }
 
 // Convert all errors from nested object to flat array
-export const flattenFormikErrors = (
-  validationErrors: FormikErrors<any>,
-  fieldNamePrefix: string = ''
-): CustomError[] => {
+export const flattenFormikErrors = (validationErrors: FormikErrors<any>, fieldNamePrefix = ''): CustomError[] => {
   if (typeof validationErrors === 'object') {
     return Object.entries(validationErrors)
       .map(([fieldName, errorMessage]) => {
@@ -73,7 +70,7 @@ export const hasTouchedError = (
 };
 
 export const getAllFileFields = (files: File[]) => {
-  let fieldNames: string[] = [];
+  const fieldNames: string[] = [];
   if (files.length === 0) {
     fieldNames.push(FileFieldNames.FILES);
   } else {
@@ -91,7 +88,7 @@ export const getAllFileFields = (files: File[]) => {
 };
 
 export const getAllContributorFields = (contributors: Contributor[]) => {
-  let fieldNames: string[] = [];
+  const fieldNames: string[] = [];
   if (contributors.length === 0) {
     fieldNames.push(ContributorFieldNames.CONTRIBUTORS);
   } else {

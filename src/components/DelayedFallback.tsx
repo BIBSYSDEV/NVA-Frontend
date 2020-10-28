@@ -6,8 +6,9 @@ const DelayedFallback = () => {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-    let timeout = setTimeout(() => setShow(true), 300);
+    const timeout = setTimeout(() => setShow(true), 300);
     return () => {
+      console.log('test');
       clearTimeout(timeout);
     };
   }, []);

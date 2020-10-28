@@ -70,7 +70,7 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier, closeForm }) 
     }
   }, [history, registration, user]);
 
-  const handleTabChange = (_: React.ChangeEvent<{}>, newTabNumber: number) => {
+  const handleTabChange = (_: React.ChangeEvent<unknown>, newTabNumber: number) => {
     setTabNumber(newTabNumber);
   };
 

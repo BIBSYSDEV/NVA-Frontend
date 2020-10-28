@@ -4,7 +4,7 @@ import { CognitoUserSession } from 'amazon-cognito-identity-js';
 import i18n from '../translations/i18n';
 import { USE_MOCK_DATA, AMPLIFY_REDIRECTED_KEY } from '../utils/constants';
 
-export const getCurrentUserAttributes = async (retryNumber: number = 0): Promise<any> => {
+export const getCurrentUserAttributes = async (retryNumber = 0): Promise<any> => {
   try {
     const currentSession: CognitoUserSession = await Auth.currentSession();
     const currentSessionData = currentSession.getIdToken().payload;

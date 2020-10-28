@@ -40,7 +40,7 @@ const InstitutionAutocomplete: FC<InstitutionAutocompleteProps> = ({
         );
       }}
       noOptionsText={t('no_hits')}
-      onChange={(_: ChangeEvent<{}>, value: InstitutionUnitBase | null) => onChange(value)}
+      onChange={(_: ChangeEvent<unknown>, value: InstitutionUnitBase | null) => onChange(value)}
       renderInput={(params) => (
         <TextField
           {...params}
