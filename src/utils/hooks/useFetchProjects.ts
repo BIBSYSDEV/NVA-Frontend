@@ -1,12 +1,11 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import Axios from 'axios';
-
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import { CristinProject } from '../../types/project.types';
 import { searchProjectsByTitle } from '../../api/projectApi';
-import { debounce } from '../debounce';
+import useDebounce from './useDebounce';
 
 const useFetchProjects = (
   initialSearchTerm: string = ''
@@ -15,20 +14,15 @@ const useFetchProjects = (
   const [projects, setProjects] = useState<CristinProject[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
+  const debouncedSearchTerm = useDebounce(searchTerm);
 
-  const handleNewSearchTerm = useCallback(
-    () =>
-      debounce((searchTerm: string) => {
-        setSearchTerm(searchTerm);
-      }),
-    []
-  );
+  const handleNewSearchTerm = (searchTerm: string) => setSearchTerm(searchTerm);
 
   useEffect(() => {
     const cancelSource = Axios.CancelToken.source();
     const fetchProjects = async () => {
       setIsLoading(true);
-      const fetchedProjects = await searchProjectsByTitle(searchTerm, cancelSource.token);
+      const fetchedProjects = await searchProjectsByTitle(debouncedSearchTerm, cancelSource.token);
       if (fetchedProjects) {
         setIsLoading(false);
         if (fetchedProjects.error) {
@@ -38,18 +32,18 @@ const useFetchProjects = (
         }
       }
     };
-    if (searchTerm) {
+    if (debouncedSearchTerm) {
       fetchProjects();
     } else {
       setProjects([]);
     }
 
     return () => {
-      if (searchTerm) {
+      if (debouncedSearchTerm) {
         cancelSource.cancel();
       }
     };
-  }, [dispatch, searchTerm]);
+  }, [dispatch, debouncedSearchTerm]);
 
   return [projects, isLoading, handleNewSearchTerm, searchTerm];
 };
