@@ -7,7 +7,7 @@ import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import useCancelToken from './useCancelToken';
 
-const useFetchDepartments = (departmentId: string = ''): [RecursiveInstitutionUnit[], boolean] => {
+const useFetchDepartments = (departmentId = ''): [RecursiveInstitutionUnit[], boolean] => {
   const dispatch = useDispatch();
   const { t } = useTranslation('feedback');
   const [departments, setDepartments] = useState<RecursiveInstitutionUnit[]>([]);
