@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, ReactNode } from 'react';
 import styled from 'styled-components';
 import NormalText from './NormalText';
 
@@ -28,7 +28,7 @@ const StyledMultipleRowContainer = styled.div`
 
 interface LabelContentRowProps {
   label: string;
-  children: any;
+  children: ReactNode;
   dataTestId?: string;
   minimal?: boolean;
   multiple?: boolean;

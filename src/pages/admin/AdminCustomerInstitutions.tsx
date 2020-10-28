@@ -21,7 +21,7 @@ const AdminCustomerInstitutions: FC = () => {
   useEffect(() => {
     const loadData = async () => {
       setIsLoading(true);
-      const institutions: any = await getAllCustomerInstitutions();
+      const institutions = await getAllCustomerInstitutions();
       if (institutions?.error) {
         dispatch(setNotification(institutions.error, NotificationVariant.Error));
       } else {

@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, ReactNode } from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import ButtonWithProgress from './ButtonWithProgress';
@@ -12,7 +12,7 @@ const StyledDialogContentText = styled.div`
 `;
 
 interface ConfirmDialogProps {
-  children: any;
+  children: ReactNode;
   open: boolean;
   title: string;
   onAccept: () => void;
