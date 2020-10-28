@@ -7,9 +7,7 @@ import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import useCancelToken from './useCancelToken';
 
-const useFetchDepartments = (
-  departmentId: string = ''
-): [RecursiveInstitutionUnit[], boolean, (departmentId?: string) => void] => {
+const useFetchDepartments = (departmentId: string = ''): [RecursiveInstitutionUnit[], boolean] => {
   const dispatch = useDispatch();
   const { t } = useTranslation('feedback');
   const [departments, setDepartments] = useState<RecursiveInstitutionUnit[]>([]);
@@ -28,8 +26,8 @@ const useFetchDepartments = (
           } else if (response.data) {
             setDepartments(response.data.subunits ?? []);
           }
-          setIsLoading(false);
         }
+        setIsLoading(false);
       }
     },
     [dispatch, t, cancelToken]
@@ -39,7 +37,7 @@ const useFetchDepartments = (
     fetchDepartments(departmentId);
   }, [fetchDepartments, departmentId]);
 
-  return [departments, isLoading, fetchDepartments];
+  return [departments, isLoading];
 };
 
 export default useFetchDepartments;

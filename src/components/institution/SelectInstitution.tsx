@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { Button, CircularProgress, Typography } from '@material-ui/core';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
@@ -33,7 +33,8 @@ interface SelectInstitutionProps {
 const SelectInstitution: FC<SelectInstitutionProps> = ({ onSubmit, onClose }) => {
   const { t } = useTranslation('common');
   const [institutions, isLoadingInstitutions] = useFetchInstitutions();
-  const [subunits, isLoadingSubunits, fetchSubunits] = useFetchDepartments();
+  const [selectedInstitutionId, setSelectedInstitutionId] = useState('');
+  const [subunits, isLoadingSubunits] = useFetchDepartments(selectedInstitutionId);
 
   return (
     <Formik initialValues={{}} onSubmit={onSubmit}>
@@ -46,7 +47,7 @@ const SelectInstitution: FC<SelectInstitutionProps> = ({ onSubmit, onClose }) =>
                 isLoading={isLoadingInstitutions}
                 value={value}
                 onChange={(value) => {
-                  fetchSubunits(value?.id);
+                  setSelectedInstitutionId(value?.id ?? '');
                   setFieldValue(name, value);
                 }}
               />
