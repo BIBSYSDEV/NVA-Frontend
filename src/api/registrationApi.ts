@@ -4,7 +4,7 @@ import { Registration } from '../types/registration.types';
 import { RegistrationFileSet } from '../types/file.types';
 import { StatusCode } from '../utils/constants';
 import { getIdToken } from './userApi';
-import { apiRequest } from './apiRequest';
+import { apiRequest, ApiResponse } from './apiRequest';
 import { SearchResult } from '../types/search.types';
 
 export enum PublicationsApiPaths {
@@ -165,7 +165,7 @@ export const search = async (
   numberOfResults?: number,
   searchAfter?: string,
   cancelToken?: CancelToken
-) =>
+): Promise<ApiResponse<SearchResult[]>> =>
   await apiRequest<SearchResult[]>({
     url: `${PublicationsApiPaths.SEARCH}?query=${searchTerm}`,
     cancelToken,

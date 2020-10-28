@@ -1,7 +1,7 @@
 import Axios, { CancelToken } from 'axios';
 import { StatusCode } from '../utils/constants';
 import i18n from '../translations/i18n';
-import { apiRequest } from './apiRequest';
+import { apiRequest, ApiResponse } from './apiRequest';
 import { InstitutionUnitBase } from '../types/institution.types';
 
 export enum InstitutionApiPaths {
@@ -9,7 +9,7 @@ export enum InstitutionApiPaths {
   DEPARTMENTS = '/institution/departments',
 }
 
-export const getInstitutions = async (cancelToken?: CancelToken) =>
+export const getInstitutions = async (cancelToken?: CancelToken): Promise<ApiResponse<InstitutionUnitBase[]>> =>
   await apiRequest<InstitutionUnitBase[]>({
     url: InstitutionApiPaths.INSTITUTIONS,
     method: 'GET',
