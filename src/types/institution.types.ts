@@ -17,3 +17,8 @@ export enum FormikInstitutionUnitFieldNames {
   SUB_UNIT = 'subunit',
   UNIT = 'unit',
 }
+
+export interface InstitutionState {
+  items: InstitutionUnitBase[];
+  language?: string;
+}

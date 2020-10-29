@@ -1,10 +1,10 @@
-import React, { FC, ChangeEvent } from 'react';
+import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TextField, CircularProgress, TextFieldProps } from '@material-ui/core';
-import { FilterOptionsState } from '@material-ui/lab/useAutocomplete';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
 import { InstitutionUnitBase } from '../../types/institution.types';
+import { autocompleteTranslationProps } from '../../themes/mainTheme';
 
 interface InstitutionAutocompleteProps extends Pick<TextFieldProps, 'disabled' | 'error' | 'helperText' | 'label'> {
   institutions: InstitutionUnitBase[];
@@ -27,20 +27,21 @@ const InstitutionAutocomplete: FC<InstitutionAutocompleteProps> = ({
 
   return (
     <Autocomplete
+      {...autocompleteTranslationProps}
       disabled={disabled}
       options={institutions}
-      getOptionLabel={(option: InstitutionUnitBase) => option.name}
-      getOptionSelected={(option: InstitutionUnitBase, value: InstitutionUnitBase) => option.id === value.id}
+      getOptionLabel={(option) => option.name}
+      getOptionSelected={(option, value) => option.id === value.id}
       value={value}
-      filterOptions={(options: InstitutionUnitBase[], state: FilterOptionsState<InstitutionUnitBase>) => {
+      filterOptions={(options, state) => {
         const inputValue = state.inputValue.toLowerCase();
         return options.filter(
           (option) =>
             option.name.toLowerCase().includes(inputValue) || option.acronym?.toLowerCase().includes(inputValue)
         );
       }}
-      noOptionsText={t('no_hits')}
-      onChange={(_: ChangeEvent<{}>, value: InstitutionUnitBase | null) => onChange(value)}
+      loading={isLoading}
+      onChange={(_, value) => onChange(value)}
       renderInput={(params) => (
         <TextField
           {...params}
