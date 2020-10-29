@@ -176,12 +176,10 @@ export const interceptRequestsOnMock = () => {
   // Institution Registry
   mock.onGet(new RegExp(`${API_URL}${InstitutionApiPaths.INSTITUTIONS}`)).reply(200, mockInstitutionResponse);
   mock
-    .onGet(new RegExp(`${API_URL}${InstitutionApiPaths.DEPARTMENTS}\\?uri=https://api.cristin.no/v2/institutions/194`))
+    .onGet(new RegExp(`${API_URL}${InstitutionApiPaths.DEPARTMENTS}\\?uri=.*194&language=en`))
     .replyOnce(200, mockNtnuResponse);
   mock
-    .onGet(
-      new RegExp(`${API_URL}${InstitutionApiPaths.DEPARTMENTS}\\?uri=https://api.cristin.no/v2/units/194.65.20.10`)
-    )
+    .onGet(new RegExp(`${API_URL}${InstitutionApiPaths.DEPARTMENTS}\\?uri=.*194.65.20.10&language=en`))
     .replyOnce(200, mockNtnuSubunitResponse);
 
   // Roles
