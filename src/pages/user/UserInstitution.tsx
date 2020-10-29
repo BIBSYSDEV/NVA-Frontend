@@ -17,7 +17,7 @@ import { setAuthorityData } from '../../redux/actions/userActions';
 import { NotificationVariant } from '../../types/notification.types';
 import InstitutionCard from './institution/InstitutionCard';
 import ConfirmDialog from '../../components/ConfirmDialog';
-import { StyledRightAlignedButtonWrapper } from '../../components/styled/Wrappers';
+import { StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
 
 const UserInstitution: FC = () => {
   const authority = useSelector((state: RootStore) => state.user.authority);
@@ -99,7 +99,7 @@ const UserInstitution: FC = () => {
         {openUnitForm ? (
           <SelectInstitution onSubmit={handleSubmit} onClose={toggleUnitForm} />
         ) : (
-          <StyledRightAlignedButtonWrapper>
+          <StyledRightAlignedWrapper>
             <Button
               variant="contained"
               color="primary"
@@ -108,7 +108,7 @@ const UserInstitution: FC = () => {
               data-testid="add-new-institution-button">
               {t('organization.add_institution')}
             </Button>
-          </StyledRightAlignedButtonWrapper>
+          </StyledRightAlignedWrapper>
         )}
       </Card>
       <ConfirmDialog

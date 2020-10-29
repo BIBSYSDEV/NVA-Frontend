@@ -15,7 +15,7 @@ import UserOrcid from './UserOrcid';
 import UserRoles from './UserRoles';
 import Card from '../../components/Card';
 import UserInstitution from './UserInstitution';
-import { StyledRightAlignedButtonWrapper } from '../../components/styled/Wrappers';
+import { StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import { PageHeader } from '../../components/PageHeader';
@@ -42,7 +42,7 @@ const StyledPrimaryUserInfo = styled.div`
   grid-area: primary-info;
 `;
 
-const StyledButtonWrapper = styled(StyledRightAlignedButtonWrapper)`
+const StyledButtonWrapper = styled(StyledRightAlignedWrapper)`
   grid-area: top;
 `;
 

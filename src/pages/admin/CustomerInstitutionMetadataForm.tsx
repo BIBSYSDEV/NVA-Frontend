@@ -16,11 +16,11 @@ import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import { createCustomerInstitution, updateCustomerInstitution } from '../../api/customerInstitutionsApi';
 import ButtonWithProgress from '../../components/ButtonWithProgress';
-import { StyledRightAlignedButtonWrapper } from '../../components/styled/Wrappers';
+import { StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
 import { customerInstitutionValidationSchema } from '../../utils/validation/customerInstitutionValidation';
 import { SelectInstitutionField, CustomerInstitutionTextField } from './customerInstitutionFields';
 
-const StyledButtonContainer = styled(StyledRightAlignedButtonWrapper)`
+const StyledButtonContainer = styled(StyledRightAlignedWrapper)`
   margin-top: 2rem;
 `;
 

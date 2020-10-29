@@ -10,6 +10,7 @@ import WarningIcon from '@material-ui/icons/Warning';
 import CheckIcon from '@material-ui/icons/Check';
 import DeleteIcon from '@material-ui/icons/Delete';
 import styled from 'styled-components';
+import { StyledRightAlignedWrapper } from '../../../../components/styled/Wrappers';
 
 const StyledWarningIcon = styled(WarningIcon)`
   color: ${({ theme }) => theme.palette.warning.main};
@@ -23,12 +24,16 @@ const StyledAuthorCard = styled.div`
   display: grid;
   grid-template-areas: 'author' 'institution' 'remove-author';
   grid-row-gap: 1rem;
+  margin: 1rem;
+  background-color: #fff;
+  padding: 1rem;
 `;
 
 const StyledAuthorSection = styled.div`
   grid-area: author;
   display: grid;
   grid-template-areas: 'name verified sequence' 'corresponding email .';
+  grid-template-columns: auto auto 1fr;
 `;
 
 const StyledSequenceField = styled(Field)`
@@ -85,24 +90,26 @@ const AuthorCard: FC<AuthorCardProps> = ({
   return (
     <StyledAuthorCard>
       <StyledAuthorSection key={author.identity.id}>
-        <StyledSequenceField name={`${baseFieldName}.${SpecificContributorFieldNames.SEQUENCE}`}>
-          {({ field }: FieldProps) => (
-            <TextField
-              {...field}
-              type="number"
-              onKeyDown={(event) => {
-                if (event.key === 'Enter' && field.value) {
-                  event.preventDefault();
+        <StyledRightAlignedWrapper>
+          <StyledSequenceField name={`${baseFieldName}.${SpecificContributorFieldNames.SEQUENCE}`}>
+            {({ field }: FieldProps) => (
+              <TextField
+                {...field}
+                type="number"
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter' && field.value) {
+                    event.preventDefault();
+                    onMoveCard(event);
+                  }
+                }}
+                onBlur={(event) => {
                   onMoveCard(event);
-                }
-              }}
-              onBlur={(event) => {
-                onMoveCard(event);
-                field.onBlur(event);
-              }}
-            />
-          )}
-        </StyledSequenceField>
+                  field.onBlur(event);
+                }}
+              />
+            )}
+          </StyledSequenceField>
+        </StyledRightAlignedWrapper>
         <StyledNameField variant="h5">{author.identity.name}</StyledNameField>
         <StyledVerifiedSection>
           {author.identity.arpId ? (
