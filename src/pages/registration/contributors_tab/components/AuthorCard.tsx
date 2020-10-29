@@ -34,6 +34,8 @@ const StyledAuthorSection = styled.div`
   display: grid;
   grid-template-areas: 'name verified sequence' 'corresponding email .';
   grid-template-columns: auto auto 1fr;
+  grid-column-gap: 1rem;
+  align-items: start;
 `;
 
 const StyledSequenceField = styled(Field)`
@@ -46,6 +48,13 @@ const StyledNameField = styled(Typography)`
 
 const StyledVerifiedSection = styled.div`
   grid-area: verified;
+  align-self: center;
+`;
+
+const StyledVerifiedButton = styled(Button)`
+  padding: 0;
+  margin-bottom: 1rem;
+  margin-left: 0.5rem;
 `;
 
 const StyledCorrespondingField = styled(Field)`
@@ -122,14 +131,12 @@ const AuthorCard: FC<AuthorCardProps> = ({
             </Tooltip>
           )}
           {!author.identity.arpId && (
-            <Button
-              variant="contained"
+            <StyledVerifiedButton
               color="primary"
-              size="small"
               data-testid={`button-set-unverified-contributor-${author.identity.name}`}
               onClick={() => openContributorModal({ name: author.identity.name, index })}>
               {t('contributors.connect_author_identity')}
-            </Button>
+            </StyledVerifiedButton>
           )}
         </StyledVerifiedSection>
         <StyledCorrespondingField name={`${baseFieldName}.${SpecificContributorFieldNames.CORRESPONDING}`}>
