@@ -1,13 +1,4 @@
-import {
-  TableRow,
-  TableCell,
-  TextField,
-  Typography,
-  Tooltip,
-  FormControlLabel,
-  Checkbox,
-  Button,
-} from '@material-ui/core';
+import { TextField, Typography, Tooltip, FormControlLabel, Checkbox, Button } from '@material-ui/core';
 import { useFormikContext, FieldProps, Field } from 'formik';
 import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -28,8 +19,48 @@ const StyledCheckIcon = styled(CheckIcon)`
   color: ${({ theme }) => theme.palette.success.main};
 `;
 
+const StyledAuthorCard = styled.div`
+  display: grid;
+  grid-template-areas: 'author' 'institution' 'remove-author';
+  grid-row-gap: 1rem;
+`;
+
+const StyledAuthorSection = styled.div`
+  grid-area: author;
+  display: grid;
+  grid-template-areas: 'name verified sequence' 'corresponding email .';
+`;
+
+const StyledSequenceField = styled(Field)`
+  grid-area: sequence;
+`;
+
+const StyledNameField = styled(Typography)`
+  grid-area: name;
+`;
+
+const StyledVerifiedSection = styled.div`
+  grid-area: verified;
+`;
+
+const StyledCorrespondingField = styled(Field)`
+  grid-area: corresponding;
+`;
+
+const StyledEmailField = styled(Field)`
+  grid-area: email;
+`;
+
 const StyledEmailTextField = styled(TextField)`
   margin-bottom: 0.5rem;
+`;
+
+const StyledInstitutionSection = styled.div`
+  grid-area: institution;
+`;
+
+const StyledRemoveButton = styled(Button)`
+  grid-area: remove-author;
 `;
 
 interface AuthorCardProps {
@@ -52,9 +83,9 @@ const AuthorCard: FC<AuthorCardProps> = ({
   const [emailValue, setEmailValue] = useState(values.entityDescription.contributors[index]?.email ?? '');
 
   return (
-    <TableRow tabIndex={0} key={author.identity.id}>
-      <TableCell align="left">
-        <Field name={`${baseFieldName}.${SpecificContributorFieldNames.SEQUENCE}`}>
+    <StyledAuthorCard>
+      <StyledAuthorSection key={author.identity.id}>
+        <StyledSequenceField name={`${baseFieldName}.${SpecificContributorFieldNames.SEQUENCE}`}>
           {({ field }: FieldProps) => (
             <TextField
               {...field}
@@ -71,9 +102,9 @@ const AuthorCard: FC<AuthorCardProps> = ({
               }}
             />
           )}
-        </Field>
-        <Typography variant="h5">
-          {author.identity.name}{' '}
+        </StyledSequenceField>
+        <StyledNameField variant="h5">{author.identity.name}</StyledNameField>
+        <StyledVerifiedSection>
           {author.identity.arpId ? (
             <Tooltip title={t('contributors.known_author_identity') as string}>
               <StyledCheckIcon />
@@ -83,9 +114,18 @@ const AuthorCard: FC<AuthorCardProps> = ({
               <StyledWarningIcon />
             </Tooltip>
           )}
-        </Typography>
-
-        <Field name={`${baseFieldName}.${SpecificContributorFieldNames.CORRESPONDING}`}>
+          {!author.identity.arpId && (
+            <Button
+              variant="contained"
+              color="primary"
+              size="small"
+              data-testid={`button-set-unverified-contributor-${author.identity.name}`}
+              onClick={() => openContributorModal({ name: author.identity.name, index })}>
+              {t('contributors.connect_author_identity')}
+            </Button>
+          )}
+        </StyledVerifiedSection>
+        <StyledCorrespondingField name={`${baseFieldName}.${SpecificContributorFieldNames.CORRESPONDING}`}>
           {({ field }: FieldProps) => (
             <FormControlLabel
               data-testid="author-corresponding-checkbox"
@@ -93,58 +133,43 @@ const AuthorCard: FC<AuthorCardProps> = ({
               label={t('contributors.corresponding')}
             />
           )}
-        </Field>
-        <div>
-          {author.correspondingAuthor && (
-            <Field name={`${baseFieldName}.${SpecificContributorFieldNames.EMAIL}`}>
-              {({ field, meta: { error, touched } }: FieldProps) => (
-                <StyledEmailTextField
-                  data-testid="author-email-input"
-                  variant="outlined"
-                  label={t('common:email')}
-                  {...field}
-                  onChange={(event) => {
-                    setEmailValue(event.target.value);
-                  }}
-                  onBlur={(event) => {
-                    setFieldValue(`${baseFieldName}.${SpecificContributorFieldNames.EMAIL}`, emailValue);
-                    field.onBlur(event);
-                  }}
-                  value={emailValue}
-                  error={touched && !!error}
-                  helperText={touched && error}
-                />
-              )}
-            </Field>
-          )}
-        </div>
-
-        {!author.identity.arpId && (
-          <Button
-            variant="contained"
-            color="primary"
-            size="small"
-            data-testid={`button-set-unverified-contributor-${author.identity.name}`}
-            onClick={() => openContributorModal({ name: author.identity.name, index })}>
-            {t('contributors.connect_author_identity')}
-          </Button>
+        </StyledCorrespondingField>
+        {author.correspondingAuthor && (
+          <StyledEmailField name={`${baseFieldName}.${SpecificContributorFieldNames.EMAIL}`}>
+            {({ field, meta: { error, touched } }: FieldProps) => (
+              <StyledEmailTextField
+                data-testid="author-email-input"
+                variant="outlined"
+                label={t('common:email')}
+                {...field}
+                onChange={(event) => {
+                  setEmailValue(event.target.value);
+                }}
+                onBlur={(event) => {
+                  setFieldValue(`${baseFieldName}.${SpecificContributorFieldNames.EMAIL}`, emailValue);
+                  field.onBlur(event);
+                }}
+                value={emailValue}
+                error={touched && !!error}
+                helperText={touched && error}
+              />
+            )}
+          </StyledEmailField>
         )}
-      </TableCell>
-      <TableCell align="left">
+      </StyledAuthorSection>
+      <StyledInstitutionSection>
         {author.identity && <AffiliationsCell affiliations={author.affiliations} baseFieldName={baseFieldName} />}
-      </TableCell>
-      <TableCell align="right">
-        <Button
-          color="secondary"
-          variant="contained"
-          size="small"
-          data-testid={`button-remove-contributor-${author.identity.name}`}
-          onClick={onRemoveAuthorClick}>
-          <DeleteIcon />
-          {t('contributors.remove_contributor')}
-        </Button>
-      </TableCell>
-    </TableRow>
+      </StyledInstitutionSection>
+      <StyledRemoveButton
+        color="secondary"
+        variant="contained"
+        size="small"
+        data-testid={`button-remove-contributor-${author.identity.name}`}
+        onClick={onRemoveAuthorClick}>
+        <DeleteIcon />
+        {t('contributors.remove_contributor')}
+      </StyledRemoveButton>
+    </StyledAuthorCard>
   );
 };
 

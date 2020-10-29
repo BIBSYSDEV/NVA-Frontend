@@ -1,18 +1,18 @@
-import { TableContainer, Table, TableBody, Typography } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import ConfirmDialog from '../../../../components/ConfirmDialog';
 import { Contributor, UnverifiedContributor } from '../../../../types/contributor.types';
 import AuthorCard from './AuthorCard';
 
-interface AuthorTableProps {
+interface AuthorsListProps {
   authors: Contributor[];
   onDelete: (index: number) => void;
   onMoveAuthor: (newIndex: number, oldIndex: number) => void;
   openContributorModal: (unverifiedAuthor: UnverifiedContributor) => void;
 }
 
-const AuthorTable: FC<AuthorTableProps> = ({ authors, onDelete, onMoveAuthor, openContributorModal }) => {
+const AuthorsList: FC<AuthorsListProps> = ({ authors, onDelete, onMoveAuthor, openContributorModal }) => {
   const { t } = useTranslation('registration');
   const [authorToRemove, setAuthorToRemove] = useState<Contributor | null>(null);
 
@@ -21,20 +21,16 @@ const AuthorTable: FC<AuthorTableProps> = ({ authors, onDelete, onMoveAuthor, op
   };
 
   return (
-    <TableContainer>
-      <Table>
-        <TableBody>
-          {authors.map((author: Contributor) => (
-            <AuthorCard
-              author={author}
-              key={author.identity.id || author.identity.name}
-              onMoveAuthor={(event) => onMoveAuthor(event.target.value - 1, author.sequence - 1)}
-              onRemoveAuthorClick={() => setAuthorToRemove(author)}
-              openContributorModal={openContributorModal}
-            />
-          ))}
-        </TableBody>
-      </Table>
+    <>
+      {authors.map((author: Contributor) => (
+        <AuthorCard
+          author={author}
+          key={author.identity.id || author.identity.name}
+          onMoveAuthor={(event) => onMoveAuthor(event.target.value - 1, author.sequence - 1)}
+          onRemoveAuthorClick={() => setAuthorToRemove(author)}
+          openContributorModal={openContributorModal}
+        />
+      ))}
       {authorToRemove && (
         <ConfirmDialog
           open={!!authorToRemove}
@@ -51,8 +47,8 @@ const AuthorTable: FC<AuthorTableProps> = ({ authors, onDelete, onMoveAuthor, op
           </Typography>
         </ConfirmDialog>
       )}
-    </TableContainer>
+    </>
   );
 };
 
-export default AuthorTable;
+export default AuthorsList;

@@ -8,7 +8,7 @@ import { Contributor, emptyContributor, UnverifiedContributor } from '../../../t
 import { NotificationVariant } from '../../../types/notification.types';
 import { BackendTypeNames } from '../../../types/publication_types/commonRegistration.types';
 import { Registration } from '../../../types/registration.types';
-import AuthorTable from './components/AuthorTable';
+import AuthorsList from './components/AuthorTable';
 import AddIcon from '@material-ui/icons/Add';
 import styled from 'styled-components';
 import { Button } from '@material-ui/core';
@@ -89,7 +89,7 @@ const Authors: FC<AuthorsProps> = ({ push, replace }) => {
 
   return (
     <>
-      <AuthorTable
+      <AuthorsList
         authors={orderedAuthors}
         onDelete={handleOnRemove}
         onMoveAuthor={handleMoveAuthor}
