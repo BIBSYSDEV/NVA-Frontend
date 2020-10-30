@@ -5,14 +5,14 @@ import ConfirmDialog from '../../../../components/ConfirmDialog';
 import { Contributor, UnverifiedContributor } from '../../../../types/contributor.types';
 import AuthorCard from './AuthorCard';
 
-interface AuthorsListProps {
+interface AuthorListProps {
   authors: Contributor[];
   onDelete: (index: number) => void;
   onMoveAuthor: (newIndex: number, oldIndex: number) => void;
   openContributorModal: (unverifiedAuthor: UnverifiedContributor) => void;
 }
 
-const AuthorsList: FC<AuthorsListProps> = ({ authors, onDelete, onMoveAuthor, openContributorModal }) => {
+const AuthorList: FC<AuthorListProps> = ({ authors, onDelete, onMoveAuthor, openContributorModal }) => {
   const { t } = useTranslation('registration');
   const [authorToRemove, setAuthorToRemove] = useState<Contributor | null>(null);
 
@@ -51,4 +51,4 @@ const AuthorsList: FC<AuthorsListProps> = ({ authors, onDelete, onMoveAuthor, op
   );
 };
 
-export default AuthorsList;
+export default AuthorList;

@@ -8,7 +8,7 @@ import { Contributor, emptyContributor, UnverifiedContributor } from '../../../t
 import { NotificationVariant } from '../../../types/notification.types';
 import { BackendTypeNames } from '../../../types/publication_types/commonRegistration.types';
 import { Registration } from '../../../types/registration.types';
-import AuthorsList from './components/AuthorsList';
+import AuthorList from './components/AuthorList';
 import AddIcon from '@material-ui/icons/AddCircleOutlineSharp';
 import styled from 'styled-components';
 import { Button } from '@material-ui/core';
@@ -100,7 +100,7 @@ const Authors: FC<AuthorsProps> = ({ push, replace }) => {
 
   return (
     <StyledAuthors>
-      <AuthorsList
+      <AuthorList
         authors={orderedAuthors}
         onDelete={handleOnRemove}
         onMoveAuthor={handleMoveAuthor}
