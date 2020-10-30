@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux';
 import { RootStore } from '../../redux/reducers/rootReducer';
 
 const PublicRegistration: FC = () => {
-  const { identifier } = useParams();
+  const { identifier } = useParams<{ identifier: string }>();
   const [registration, isLoadingRegistration] = useFetchRegistration(identifier);
   const user = useSelector((store: RootStore) => store.user);
 
