@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react';
 import { Institution } from '../../../../types/contributor.types';
-import { Button, Divider, Typography } from '@material-ui/core';
+import { Button, Typography } from '@material-ui/core';
 import SelectInstitution from '../../../../components/institution/SelectInstitution';
 import Modal from '../../../../components/Modal';
 import { useFormikContext, FormikProps } from 'formik';
@@ -26,6 +26,10 @@ const StyledCard = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 1rem;
+  border-bottom: 1px solid ${({ theme }) => theme.palette.separator.main};
+  &:first-of-type {
+    border-top: 1px solid ${({ theme }) => theme.palette.separator.main};
+  }
 `;
 
 const StyledDeleteIcon = styled(DeleteIcon)`
@@ -87,23 +91,23 @@ const AffiliationsCell: FC<AffiliationsCellProps> = ({ affiliations, baseFieldNa
   return (
     <>
       {affiliations?.map((affiliation) => (
-        <>
-          <Divider />
-          <StyledCard key={affiliation.id}>
-            <AffiliationHierarchy unitUri={affiliation.id} />
-            <Button
-              size="small"
-              color="secondary"
-              data-testid={`button-remove-affiliation-${affiliation.id}`}
-              onClick={() => setAffiliationToRemove(affiliation)}>
-              <StyledDeleteIcon />
-              {t('common:remove').toUpperCase()}
-            </Button>
-          </StyledCard>
-          <Divider />
-        </>
+        <StyledCard key={affiliation.id}>
+          <AffiliationHierarchy unitUri={affiliation.id} />
+          <Button
+            size="small"
+            color="secondary"
+            data-testid={`button-remove-affiliation-${affiliation.id}`}
+            onClick={() => setAffiliationToRemove(affiliation)}>
+            <StyledDeleteIcon />
+            {t('common:remove').toUpperCase()}
+          </Button>
+        </StyledCard>
       ))}
-      <StyledAddButton size="small" data-testid="button-add-affiliation" onClick={toggleAffiliationModal}>
+      <StyledAddButton
+        size="small"
+        color="primary"
+        data-testid="button-add-affiliation"
+        onClick={toggleAffiliationModal}>
         <StyledAddIcon />
         {t('contributors.add_affiliation').toUpperCase()}
       </StyledAddButton>

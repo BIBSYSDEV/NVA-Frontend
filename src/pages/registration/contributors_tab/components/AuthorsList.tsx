@@ -34,14 +34,14 @@ const AuthorsList: FC<AuthorsListProps> = ({ authors, onDelete, onMoveAuthor, op
       {authorToRemove && (
         <ConfirmDialog
           open={!!authorToRemove}
-          title={t('contributors.confirm_remove_contributor_title')}
+          title={t('contributors.confirm_remove_author_title')}
           onAccept={() => {
             onDelete(authorToRemove.sequence - 1);
             closeConfirmDialog();
           }}
           onCancel={closeConfirmDialog}>
           <Typography>
-            {t('contributors.confirm_remove_contributor_text', {
+            {t('contributors.confirm_remove_author_text', {
               contributorName: authorToRemove.identity.name,
             })}
           </Typography>

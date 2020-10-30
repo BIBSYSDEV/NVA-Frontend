@@ -9,14 +9,25 @@ import { NotificationVariant } from '../../../types/notification.types';
 import { BackendTypeNames } from '../../../types/publication_types/commonRegistration.types';
 import { Registration } from '../../../types/registration.types';
 import AuthorsList from './components/AuthorsList';
-import AddIcon from '@material-ui/icons/Add';
+import AddIcon from '@material-ui/icons/AddCircleOutlineSharp';
 import styled from 'styled-components';
 import { Button } from '@material-ui/core';
 import AddContributorModal from './AddContributorModal';
 import { ContributorFieldNames } from '../../../types/publicationFieldNames';
 
+const StyledAuthors = styled.div`
+  display: grid;
+  grid-template-areas: 'authors' 'add-author';
+`;
+
 const StyledAddAuthorButton = styled(Button)`
-  margin-top: 1rem;
+  margin: 1rem;
+  border-radius: 0;
+  padding: 1rem 0;
+`;
+
+const StyledAddIcon = styled(AddIcon)`
+  margin-right: 0.5rem;
 `;
 
 interface AuthorsProps extends Pick<FieldArrayRenderProps, 'push' | 'replace'> {}
@@ -88,7 +99,7 @@ const Authors: FC<AuthorsProps> = ({ push, replace }) => {
   };
 
   return (
-    <>
+    <StyledAuthors>
       <AuthorsList
         authors={orderedAuthors}
         onDelete={handleOnRemove}
@@ -101,10 +112,10 @@ const Authors: FC<AuthorsProps> = ({ push, replace }) => {
           setUnverifiedAuthor(null);
         }}
         variant="contained"
-        color="primary"
+        color="default"
         data-testid="add-contributor">
-        <AddIcon />
-        {t('contributors.add_author')}
+        <StyledAddIcon />
+        {t('contributors.add_author').toUpperCase()}
       </StyledAddAuthorButton>
       <AddContributorModal
         initialSearchTerm={unverifiedAuthor?.name}
@@ -112,7 +123,7 @@ const Authors: FC<AuthorsProps> = ({ push, replace }) => {
         toggleModal={() => setOpenContributorModal(!openContributorModal)}
         onAuthorSelected={onAuthorSelected}
       />
-    </>
+    </StyledAuthors>
   );
 };
 

@@ -21,10 +21,13 @@ const StyledCheckIcon = styled(CheckIcon)`
 
 const StyledAuthorCard = styled.div`
   display: grid;
-  grid-template-areas: 'author' 'institution' 'remove-author';
+  grid-template-areas: 'author' 'remove-author';
   grid-row-gap: 1rem;
   margin: 1rem;
   background-color: #fff;
+`;
+
+const StyledContent = styled.div`
   padding: 1rem;
 `;
 
@@ -85,10 +88,12 @@ const StyledEmailTextField = styled(TextField)`
 
 const StyledInstitutionSection = styled.div`
   grid-area: institution;
+  margin-top: 1rem;
 `;
 
 const StyledRemoveButton = styled(Button)`
   grid-area: remove-author;
+  border-radius: 0;
 `;
 
 const StyledTypography = styled(Typography)`
@@ -116,92 +121,96 @@ const AuthorCard: FC<AuthorCardProps> = ({
 
   return (
     <StyledAuthorCard>
-      <StyledAuthorSection key={author.identity.id}>
-        <StyledNameField variant="h5">{author.identity.name}</StyledNameField>
-        <StyledVerifiedSection>
-          {author.identity.arpId ? (
-            <>
-              <Tooltip title={t('contributors.known_author_identity') as string}>
-                <StyledCheckIcon />
-              </Tooltip>
-              <StyledTypography variant="body2">{t('contributors.verified_author')}</StyledTypography>
-            </>
-          ) : (
-            <>
-              <Tooltip title={t('contributors.unknown_author_identity') as string}>
-                <StyledWarningIcon />
-              </Tooltip>
-              <StyledVerifiedButton
-                color="primary"
-                data-testid={`button-set-unverified-contributor-${author.identity.name}`}
-                onClick={() => openContributorModal({ name: author.identity.name, index })}>
-                {t('contributors.verify_author')}
-              </StyledVerifiedButton>
-            </>
-          )}
-        </StyledVerifiedSection>
-        <StyledRightAlignedWrapper>
-          <StyledSequenceField name={`${baseFieldName}.${SpecificContributorFieldNames.SEQUENCE}`}>
-            {({ field }: FieldProps) => (
-              <StyledSequenceTextField
-                {...field}
-                type="number"
-                onKeyDown={(event) => {
-                  if (event.key === 'Enter' && field.value) {
-                    event.preventDefault();
-                    onMoveCard(event);
-                  }
-                }}
-                onBlur={(event) => {
-                  onMoveCard(event);
-                  field.onBlur(event);
-                }}
-              />
+      <StyledContent>
+        <StyledAuthorSection key={author.identity.id}>
+          <StyledNameField variant="h5">
+            <b>{author.identity.name}</b>
+          </StyledNameField>
+          <StyledVerifiedSection>
+            {author.identity.arpId ? (
+              <>
+                <Tooltip title={t('contributors.known_author_identity') as string}>
+                  <StyledCheckIcon />
+                </Tooltip>
+                <StyledTypography variant="body2">{t('contributors.verified_author')}</StyledTypography>
+              </>
+            ) : (
+              <>
+                <Tooltip title={t('contributors.unknown_author_identity') as string}>
+                  <StyledWarningIcon />
+                </Tooltip>
+                <StyledVerifiedButton
+                  color="primary"
+                  data-testid={`button-set-unverified-contributor-${author.identity.name}`}
+                  onClick={() => openContributorModal({ name: author.identity.name, index })}>
+                  {t('contributors.verify_author')}
+                </StyledVerifiedButton>
+              </>
             )}
-          </StyledSequenceField>
-        </StyledRightAlignedWrapper>
-        <StyledCorrespondingWrapper>
-          <StyledCorrespondingField name={`${baseFieldName}.${SpecificContributorFieldNames.CORRESPONDING}`}>
-            {({ field }: FieldProps) => (
-              <FormControlLabel
-                data-testid="author-corresponding-checkbox"
-                control={<Checkbox checked={!!field.value} color="default" {...field} />}
-                label={t('contributors.corresponding')}
-              />
-            )}
-          </StyledCorrespondingField>
-          {author.correspondingAuthor && (
-            <StyledEmailField name={`${baseFieldName}.${SpecificContributorFieldNames.EMAIL}`}>
-              {({ field, meta: { error, touched } }: FieldProps) => (
-                <StyledEmailTextField
-                  data-testid="author-email-input"
-                  label={t('common:email')}
+          </StyledVerifiedSection>
+          <StyledRightAlignedWrapper>
+            <StyledSequenceField name={`${baseFieldName}.${SpecificContributorFieldNames.SEQUENCE}`}>
+              {({ field }: FieldProps) => (
+                <StyledSequenceTextField
                   {...field}
-                  onChange={(event) => {
-                    setEmailValue(event.target.value);
+                  type="number"
+                  onKeyDown={(event) => {
+                    if (event.key === 'Enter' && field.value) {
+                      event.preventDefault();
+                      onMoveCard(event);
+                    }
                   }}
                   onBlur={(event) => {
-                    setFieldValue(`${baseFieldName}.${SpecificContributorFieldNames.EMAIL}`, emailValue);
+                    onMoveCard(event);
                     field.onBlur(event);
                   }}
-                  value={emailValue}
-                  error={touched && !!error}
-                  helperText={touched && error}
                 />
               )}
-            </StyledEmailField>
-          )}
-        </StyledCorrespondingWrapper>
-      </StyledAuthorSection>
-      <StyledInstitutionSection>
-        {author.identity && <AffiliationsCell affiliations={author.affiliations} baseFieldName={baseFieldName} />}
-      </StyledInstitutionSection>
+            </StyledSequenceField>
+          </StyledRightAlignedWrapper>
+          <StyledCorrespondingWrapper>
+            <StyledCorrespondingField name={`${baseFieldName}.${SpecificContributorFieldNames.CORRESPONDING}`}>
+              {({ field }: FieldProps) => (
+                <FormControlLabel
+                  data-testid="author-corresponding-checkbox"
+                  control={<Checkbox checked={!!field.value} color="default" {...field} />}
+                  label={t('contributors.corresponding')}
+                />
+              )}
+            </StyledCorrespondingField>
+            {author.correspondingAuthor && (
+              <StyledEmailField name={`${baseFieldName}.${SpecificContributorFieldNames.EMAIL}`}>
+                {({ field, meta: { error, touched } }: FieldProps) => (
+                  <StyledEmailTextField
+                    data-testid="author-email-input"
+                    label={t('common:email')}
+                    {...field}
+                    onChange={(event) => {
+                      setEmailValue(event.target.value);
+                    }}
+                    onBlur={(event) => {
+                      setFieldValue(`${baseFieldName}.${SpecificContributorFieldNames.EMAIL}`, emailValue);
+                      field.onBlur(event);
+                    }}
+                    value={emailValue}
+                    error={touched && !!error}
+                    helperText={touched && error}
+                  />
+                )}
+              </StyledEmailField>
+            )}
+          </StyledCorrespondingWrapper>
+        </StyledAuthorSection>
+        <StyledInstitutionSection>
+          {author.identity && <AffiliationsCell affiliations={author.affiliations} baseFieldName={baseFieldName} />}
+        </StyledInstitutionSection>
+      </StyledContent>
       <StyledRemoveButton
         color="primary"
         variant="contained"
         data-testid={`button-remove-contributor-${author.identity.name}`}
         onClick={onRemoveAuthorClick}>
-        {t('contributors.remove_contributor').toUpperCase()}
+        {t('contributors.remove_author').toUpperCase()}
       </StyledRemoveButton>
     </StyledAuthorCard>
   );
