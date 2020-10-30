@@ -32,7 +32,7 @@ const StyledAuthorCard = styled.div`
 const StyledAuthorSection = styled.div`
   grid-area: author;
   display: grid;
-  grid-template-areas: 'name verified sequence' 'corresponding email .';
+  grid-template-areas: 'name verified sequence' 'corresponding . .';
   grid-template-columns: auto auto 1fr;
   grid-column-gap: 1rem;
   align-items: start;
@@ -42,23 +42,37 @@ const StyledSequenceField = styled(Field)`
   grid-area: sequence;
 `;
 
+const StyledSequenceTextField = styled(TextField)`
+  width: 2rem;
+  margin: 0;
+  margin-right: 1rem;
+`;
+
 const StyledNameField = styled(Typography)`
   grid-area: name;
 `;
 
 const StyledVerifiedSection = styled.div`
   grid-area: verified;
-  align-self: center;
+  display: flex;
+  align-items: center;
 `;
 
 const StyledVerifiedButton = styled(Button)`
-  padding: 0;
-  margin-bottom: 1rem;
-  margin-left: 0.5rem;
+  text-decoration: underline;
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
+const StyledCorrespondingWrapper = styled.div`
+  grid-area: corresponding;
+  display: grid;
+  grid-template-areas: 'checkbox' 'email';
 `;
 
 const StyledCorrespondingField = styled(Field)`
-  grid-area: corresponding;
+  grid-area: checkbox;
 `;
 
 const StyledEmailField = styled(Field)`
@@ -66,7 +80,8 @@ const StyledEmailField = styled(Field)`
 `;
 
 const StyledEmailTextField = styled(TextField)`
-  margin-bottom: 0.5rem;
+  margin: 0;
+  margin-left: 2rem;
 `;
 
 const StyledInstitutionSection = styled.div`
@@ -99,26 +114,6 @@ const AuthorCard: FC<AuthorCardProps> = ({
   return (
     <StyledAuthorCard>
       <StyledAuthorSection key={author.identity.id}>
-        <StyledRightAlignedWrapper>
-          <StyledSequenceField name={`${baseFieldName}.${SpecificContributorFieldNames.SEQUENCE}`}>
-            {({ field }: FieldProps) => (
-              <TextField
-                {...field}
-                type="number"
-                onKeyDown={(event) => {
-                  if (event.key === 'Enter' && field.value) {
-                    event.preventDefault();
-                    onMoveCard(event);
-                  }
-                }}
-                onBlur={(event) => {
-                  onMoveCard(event);
-                  field.onBlur(event);
-                }}
-              />
-            )}
-          </StyledSequenceField>
-        </StyledRightAlignedWrapper>
         <StyledNameField variant="h5">{author.identity.name}</StyledNameField>
         <StyledVerifiedSection>
           {author.identity.arpId ? (
@@ -139,37 +134,58 @@ const AuthorCard: FC<AuthorCardProps> = ({
             </StyledVerifiedButton>
           )}
         </StyledVerifiedSection>
-        <StyledCorrespondingField name={`${baseFieldName}.${SpecificContributorFieldNames.CORRESPONDING}`}>
-          {({ field }: FieldProps) => (
-            <FormControlLabel
-              data-testid="author-corresponding-checkbox"
-              control={<Checkbox checked={!!field.value} {...field} />}
-              label={t('contributors.corresponding')}
-            />
-          )}
-        </StyledCorrespondingField>
-        {author.correspondingAuthor && (
-          <StyledEmailField name={`${baseFieldName}.${SpecificContributorFieldNames.EMAIL}`}>
-            {({ field, meta: { error, touched } }: FieldProps) => (
-              <StyledEmailTextField
-                data-testid="author-email-input"
-                variant="outlined"
-                label={t('common:email')}
+        <StyledRightAlignedWrapper>
+          <StyledSequenceField name={`${baseFieldName}.${SpecificContributorFieldNames.SEQUENCE}`}>
+            {({ field }: FieldProps) => (
+              <StyledSequenceTextField
                 {...field}
-                onChange={(event) => {
-                  setEmailValue(event.target.value);
+                type="number"
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter' && field.value) {
+                    event.preventDefault();
+                    onMoveCard(event);
+                  }
                 }}
                 onBlur={(event) => {
-                  setFieldValue(`${baseFieldName}.${SpecificContributorFieldNames.EMAIL}`, emailValue);
+                  onMoveCard(event);
                   field.onBlur(event);
                 }}
-                value={emailValue}
-                error={touched && !!error}
-                helperText={touched && error}
               />
             )}
-          </StyledEmailField>
-        )}
+          </StyledSequenceField>
+        </StyledRightAlignedWrapper>
+        <StyledCorrespondingWrapper>
+          <StyledCorrespondingField name={`${baseFieldName}.${SpecificContributorFieldNames.CORRESPONDING}`}>
+            {({ field }: FieldProps) => (
+              <FormControlLabel
+                data-testid="author-corresponding-checkbox"
+                control={<Checkbox checked={!!field.value} {...field} />}
+                label={t('contributors.corresponding')}
+              />
+            )}
+          </StyledCorrespondingField>
+          {author.correspondingAuthor && (
+            <StyledEmailField name={`${baseFieldName}.${SpecificContributorFieldNames.EMAIL}`}>
+              {({ field, meta: { error, touched } }: FieldProps) => (
+                <StyledEmailTextField
+                  data-testid="author-email-input"
+                  label={t('common:email')}
+                  {...field}
+                  onChange={(event) => {
+                    setEmailValue(event.target.value);
+                  }}
+                  onBlur={(event) => {
+                    setFieldValue(`${baseFieldName}.${SpecificContributorFieldNames.EMAIL}`, emailValue);
+                    field.onBlur(event);
+                  }}
+                  value={emailValue}
+                  error={touched && !!error}
+                  helperText={touched && error}
+                />
+              )}
+            </StyledEmailField>
+          )}
+        </StyledCorrespondingWrapper>
       </StyledAuthorSection>
       <StyledInstitutionSection>
         {author.identity && <AffiliationsCell affiliations={author.affiliations} baseFieldName={baseFieldName} />}
