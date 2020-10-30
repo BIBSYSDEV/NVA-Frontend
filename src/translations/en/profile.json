@@ -54,11 +54,12 @@
     "curator_description": "Access to approve and publish other's content",
     "curators": "Curators",
     "editor": "Editor",
-    "editor_description": " ",
+    "editor_description": "",
     "editors": "Editors",
     "institution_admin": "Administrator",
     "institution_admin_description": "Access to administer your own institution",
-    "institution_admins": "Administrators"
+    "institution_admins": "Administrators",
+    "no_roles": "You don't have any roles. Contact administrator for your institution if this is incorrect."
   },
   "organization": {
     "add_institution": "Add institution",

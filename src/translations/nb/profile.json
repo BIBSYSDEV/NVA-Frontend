@@ -54,11 +54,12 @@
     "curator_description": "Tilgang til å godkjenne og publisere andres innhold",
     "curators": "Kuratorer",
     "editor": "Redaktør",
-    "editor_description": " ",
+    "editor_description": "",
     "editors": "Redaktører",
     "institution_admin": "Administrator",
     "institution_admin_description": "Tilgang til å administrere din egen institusjon",
-    "institution_admins": "Administratorer"
+    "institution_admins": "Administratorer",
+    "no_roles": "Du har for ingen roller. Kontakt adminstrator for din institusjon om dette ikke er riktig."
   },
   "organization": {
     "add_institution": "Legg til institusjon",

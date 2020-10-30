@@ -11,11 +11,15 @@ interface UserRolesProps {
 
 const UserRoles: FC<UserRolesProps> = ({ user }) => {
   const { t } = useTranslation('profile');
+  const { isAppAdmin, isInstitutionAdmin, isEditor, isCurator, isCreator } = user;
 
   return (
     <Card>
       <Typography variant="h5">{t('heading.roles')}</Typography>
-      {user.isAppAdmin && (
+      {!isAppAdmin && !isInstitutionAdmin && !isEditor && !isCurator && !isCreator && (
+        <Typography>{t('roles.no_roles')}</Typography>
+      )}
+      {isAppAdmin && (
         <IconLabelTextLine
           dataTestId="user-role-app-admin"
           icon="settings_applications"
@@ -23,7 +27,7 @@ const UserRoles: FC<UserRolesProps> = ({ user }) => {
           text={t('roles.app_admin_description')}
         />
       )}
-      {user.isInstitutionAdmin && (
+      {isInstitutionAdmin && (
         <IconLabelTextLine
           dataTestId="user-role-institution-admin"
           icon="people"
@@ -31,7 +35,7 @@ const UserRoles: FC<UserRolesProps> = ({ user }) => {
           text={t('roles.institution_admin_description')}
         />
       )}
-      {user.isEditor && (
+      {isEditor && (
         <IconLabelTextLine
           dataTestId="user-role-editor"
           icon="find_in_page"
@@ -39,7 +43,7 @@ const UserRoles: FC<UserRolesProps> = ({ user }) => {
           text={t('roles.editor_description')}
         />
       )}
-      {user.isCurator && (
+      {isCurator && (
         <IconLabelTextLine
           dataTestId="user-role-curator"
           icon="all_inbox"
@@ -47,7 +51,7 @@ const UserRoles: FC<UserRolesProps> = ({ user }) => {
           text={t('roles.curator_description')}
         />
       )}
-      {user.isCreator && (
+      {isCreator && (
         <IconLabelTextLine
           dataTestId="user-role-creator"
           icon="create"
