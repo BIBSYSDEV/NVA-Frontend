@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react';
 import { Institution } from '../../../../types/contributor.types';
-import { Button, Typography } from '@material-ui/core';
+import { Button, Divider, Typography } from '@material-ui/core';
 import SelectInstitution from '../../../../components/institution/SelectInstitution';
 import Modal from '../../../../components/Modal';
 import { useFormikContext, FormikProps } from 'formik';
@@ -10,23 +10,35 @@ import { FormikInstitutionUnit } from '../../../../types/institution.types';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import ConfirmDialog from '../../../../components/ConfirmDialog';
-import AddIcon from '@material-ui/icons/Add';
-import DeleteIcon from '@material-ui/icons/Delete';
+import AddIcon from '@material-ui/icons/AddCircleOutlineSharp';
+import DeleteIcon from '@material-ui/icons/RemoveCircleSharp';
 import { registrationLanguages, LanguageCodes } from '../../../../types/language.types';
 import { getMostSpecificUnit } from '../../../../utils/institutions-helpers';
 import { useDispatch } from 'react-redux';
 import { setNotification } from '../../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../../types/notification.types';
 import AffiliationHierarchy from '../../../../components/institution/AffiliationHierarchy';
-import Card from '../../../../components/Card';
 import { BackendTypeNames } from '../../../../types/publication_types/commonRegistration.types';
 
-const StyledCard = styled(Card)`
+const StyledCard = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   padding: 1rem;
+`;
+
+const StyledDeleteIcon = styled(DeleteIcon)`
+  margin-right: 0.5rem;
+`;
+
+const StyledAddIcon = styled(AddIcon)`
+  margin-right: 0.5rem;
+`;
+
+const StyledAddButton = styled(Button)`
+  margin-top: 0.5rem;
+  margin-left: 0.5rem;
 `;
 
 interface AffiliationsCellProps {
@@ -75,22 +87,26 @@ const AffiliationsCell: FC<AffiliationsCellProps> = ({ affiliations, baseFieldNa
   return (
     <>
       {affiliations?.map((affiliation) => (
-        <StyledCard key={affiliation.id}>
-          <AffiliationHierarchy unitUri={affiliation.id} />
-          <Button
-            variant="outlined"
-            size="small"
-            data-testid={`button-remove-affiliation-${affiliation.id}`}
-            onClick={() => setAffiliationToRemove(affiliation)}>
-            <DeleteIcon />
-            {t('common:remove')}
-          </Button>
-        </StyledCard>
+        <>
+          <Divider />
+          <StyledCard key={affiliation.id}>
+            <AffiliationHierarchy unitUri={affiliation.id} />
+            <Button
+              size="small"
+              color="secondary"
+              data-testid={`button-remove-affiliation-${affiliation.id}`}
+              onClick={() => setAffiliationToRemove(affiliation)}>
+              <StyledDeleteIcon />
+              {t('common:remove').toUpperCase()}
+            </Button>
+          </StyledCard>
+          <Divider />
+        </>
       ))}
-      <Button variant="outlined" size="small" data-testid="button-add-affiliation" onClick={toggleAffiliationModal}>
-        <AddIcon />
-        {t('contributors.add_affiliation')}
-      </Button>
+      <StyledAddButton size="small" data-testid="button-add-affiliation" onClick={toggleAffiliationModal}>
+        <StyledAddIcon />
+        {t('contributors.add_affiliation').toUpperCase()}
+      </StyledAddButton>
 
       {/* Modal for adding affiliation */}
       <Modal

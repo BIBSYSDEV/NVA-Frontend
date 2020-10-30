@@ -15,7 +15,7 @@
     "confirm_remove_affiliation_title": "Fjerne tilhørighet?",
     "confirm_remove_contributor_text": "Er du sikker på at du ønsker å fjerne {{contributorName}} fra listen over bidragsytere?",
     "confirm_remove_contributor_title": "Fjerne bidragsyter?",
-    "connect_author_identity": "Verifiser forfatter",
+    "connect_author_identity": "Tilknytt forfatteridentitet",
     "corresponding": "Korresponderende",
     "create_new_author": "Opprett ny forfatter",
     "known_author_identity": "Har tilknyttet forfatteridentitet",
@@ -24,7 +24,8 @@
     "select_institution": "Velg institusjon",
     "type": "Bidragstype",
     "unknown_author_identity": "Mangler forfatteridentitet",
-    "verify_person": "Verifiser"
+    "verify_author": "Verifiser forfatter",
+    "verified_author": "Verifisert forfatter"
   },
   "description": {
     "abstract": "Sammendrag",

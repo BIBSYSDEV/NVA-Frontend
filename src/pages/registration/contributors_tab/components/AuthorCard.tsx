@@ -7,8 +7,7 @@ import { ContributorFieldNames, SpecificContributorFieldNames } from '../../../.
 import { Registration } from '../../../../types/registration.types';
 import AffiliationsCell from './AffiliationsCell';
 import WarningIcon from '@material-ui/icons/Warning';
-import CheckIcon from '@material-ui/icons/Check';
-import DeleteIcon from '@material-ui/icons/Delete';
+import CheckIcon from '@material-ui/icons/CheckCircleSharp';
 import styled from 'styled-components';
 import { StyledRightAlignedWrapper } from '../../../../components/styled/Wrappers';
 
@@ -92,6 +91,10 @@ const StyledRemoveButton = styled(Button)`
   grid-area: remove-author;
 `;
 
+const StyledTypography = styled(Typography)`
+  padding: 0.5rem;
+`;
+
 interface AuthorCardProps {
   author: Contributor;
   onMoveAuthor: (event: React.ChangeEvent<any>) => void;
@@ -117,21 +120,24 @@ const AuthorCard: FC<AuthorCardProps> = ({
         <StyledNameField variant="h5">{author.identity.name}</StyledNameField>
         <StyledVerifiedSection>
           {author.identity.arpId ? (
-            <Tooltip title={t('contributors.known_author_identity') as string}>
-              <StyledCheckIcon />
-            </Tooltip>
+            <>
+              <Tooltip title={t('contributors.known_author_identity') as string}>
+                <StyledCheckIcon />
+              </Tooltip>
+              <StyledTypography variant="body2">{t('contributors.verified_author')}</StyledTypography>
+            </>
           ) : (
-            <Tooltip title={t('contributors.unknown_author_identity') as string}>
-              <StyledWarningIcon />
-            </Tooltip>
-          )}
-          {!author.identity.arpId && (
-            <StyledVerifiedButton
-              color="primary"
-              data-testid={`button-set-unverified-contributor-${author.identity.name}`}
-              onClick={() => openContributorModal({ name: author.identity.name, index })}>
-              {t('contributors.connect_author_identity')}
-            </StyledVerifiedButton>
+            <>
+              <Tooltip title={t('contributors.unknown_author_identity') as string}>
+                <StyledWarningIcon />
+              </Tooltip>
+              <StyledVerifiedButton
+                color="primary"
+                data-testid={`button-set-unverified-contributor-${author.identity.name}`}
+                onClick={() => openContributorModal({ name: author.identity.name, index })}>
+                {t('contributors.verify_author')}
+              </StyledVerifiedButton>
+            </>
           )}
         </StyledVerifiedSection>
         <StyledRightAlignedWrapper>
@@ -159,7 +165,7 @@ const AuthorCard: FC<AuthorCardProps> = ({
             {({ field }: FieldProps) => (
               <FormControlLabel
                 data-testid="author-corresponding-checkbox"
-                control={<Checkbox checked={!!field.value} {...field} />}
+                control={<Checkbox checked={!!field.value} color="default" {...field} />}
                 label={t('contributors.corresponding')}
               />
             )}
@@ -191,13 +197,11 @@ const AuthorCard: FC<AuthorCardProps> = ({
         {author.identity && <AffiliationsCell affiliations={author.affiliations} baseFieldName={baseFieldName} />}
       </StyledInstitutionSection>
       <StyledRemoveButton
-        color="secondary"
+        color="primary"
         variant="contained"
-        size="small"
         data-testid={`button-remove-contributor-${author.identity.name}`}
         onClick={onRemoveAuthorClick}>
-        <DeleteIcon />
-        {t('contributors.remove_contributor')}
+        {t('contributors.remove_contributor').toUpperCase()}
       </StyledRemoveButton>
     </StyledAuthorCard>
   );
