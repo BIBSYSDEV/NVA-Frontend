@@ -1,7 +1,7 @@
 import React, { FC, Fragment } from 'react';
 import styled from 'styled-components';
 import { Typography } from '@material-ui/core';
-import { DoiRequestMessage } from '../../types/publication.types';
+import { DoiRequestMessage } from '../../types/registration.types';
 
 const StyledMessagesContainer = styled.div`
   display: grid;

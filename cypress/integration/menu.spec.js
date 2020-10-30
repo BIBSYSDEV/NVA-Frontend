@@ -14,8 +14,8 @@ describe('Menu', () => {
     cy.setUserRolesInRedux(allRoles);
     cy.get('[data-testid=menu]').click({ force: true });
     cy.get('[data-testid=menu-user-profile-button]').should('be.visible');
-    cy.get('[data-testid=new-publication]').should('be.visible');
-    cy.get('[data-testid=my-publications]').should('be.visible');
+    cy.get('[data-testid=new-registration]').should('be.visible');
+    cy.get('[data-testid=my-registrations]').should('be.visible');
     cy.get('[data-testid=menu-admin-institution-button]').should('be.visible');
     cy.get('[data-testid=menu-logout-button]').should('be.visible');
   });
@@ -24,27 +24,35 @@ describe('Menu', () => {
     cy.setUserRolesInRedux(noRoles);
     cy.get('[data-testid=menu]').click({ force: true });
     cy.get('[data-testid=menu-user-profile-button]').should('be.visible');
-    cy.get('[data-testid=new-publication]').should('not.be.visible');
-    cy.get('[data-testid=my-publications]').should('not.be.visible');
+    cy.get('[data-testid=new-registration]').should('not.be.visible');
+    cy.get('[data-testid=my-registrations]').should('not.be.visible');
     cy.get('[data-testid=menu-admin-institution-button]').should('not.be.visible');
     cy.get('[data-testid=menu-logout-button]').should('be.visible');
   });
 
-  it.skip('Unauthorized user should see 404-message when visiting protected URLs', () => {
-    // TODO: find out how to preserve authentication when navigating
+  it('Unauthorized user should see Forbidden page when visiting protected URLs', () => {
     cy.visit('/registration');
-    cy.contains('404');
+    cy.setUserRolesInRedux(noRoles);
+    cy.get('[data-testid=forbidden]').should('be.visible');
 
     cy.visit('/my-registrations');
     cy.setUserRolesInRedux(noRoles);
-    cy.contains('404');
-
-    cy.visit('/admin-institutions');
-    cy.setUserRolesInRedux(noRoles);
-    cy.contains('404');
+    cy.get('[data-testid=forbidden]').should('be.visible');
 
     cy.visit('/worklist');
     cy.setUserRolesInRedux(noRoles);
-    cy.contains('404');
+    cy.get('[data-testid=forbidden]').should('be.visible');
+
+    cy.visit('/my-institution');
+    cy.setUserRolesInRedux(noRoles);
+    cy.get('[data-testid=forbidden]').should('be.visible');
+
+    cy.visit('/my-institution-users');
+    cy.setUserRolesInRedux(noRoles);
+    cy.get('[data-testid=forbidden]').should('be.visible');
+
+    cy.visit('/admin-institutions');
+    cy.setUserRolesInRedux(noRoles);
+    cy.get('[data-testid=forbidden]').should('be.visible');
   });
 });

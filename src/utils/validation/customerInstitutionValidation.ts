@@ -6,5 +6,13 @@ export const customerInstitutionValidationSchema = Yup.object().shape({
   [CustomerInstitutionFieldNames.NAME]: Yup.string().required(ErrorMessage.REQUIRED),
   [CustomerInstitutionFieldNames.DISPLAY_NAME]: Yup.string().required(ErrorMessage.REQUIRED),
   [CustomerInstitutionFieldNames.SHORT_NAME]: Yup.string().required(ErrorMessage.REQUIRED),
+  [CustomerInstitutionFieldNames.ARCHIVE_NAME]: Yup.string(),
   [CustomerInstitutionFieldNames.FEIDE_ORGANIZATION_ID]: Yup.string().required(ErrorMessage.REQUIRED),
+});
+
+export const myInstitutionValidationSchema = Yup.object().shape({
+  [CustomerInstitutionFieldNames.NAME]: Yup.string().required(ErrorMessage.REQUIRED),
+  [CustomerInstitutionFieldNames.DISPLAY_NAME]: Yup.string().required(ErrorMessage.REQUIRED),
+  [CustomerInstitutionFieldNames.SHORT_NAME]: Yup.string().required(ErrorMessage.REQUIRED),
+  [CustomerInstitutionFieldNames.ARCHIVE_NAME]: Yup.string(),
 });

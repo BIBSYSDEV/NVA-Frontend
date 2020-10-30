@@ -12,7 +12,7 @@ const StyledLogo = styled.div`
 
 const StyledDivider = styled(Divider)`
   margin-left: 2rem;
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
     display: none;
   }
 `;
