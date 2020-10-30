@@ -1,4 +1,4 @@
-import React, { useState, FC } from 'react';
+import React, { useState, FC, useEffect } from 'react';
 import Card from '../../components/Card';
 import { Button, Typography } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
@@ -25,8 +25,13 @@ const UserInstitution: FC = () => {
   const [affiliationIdToRemove, setAffiliationIdToRemove] = useState('');
   const [isRemovingAffiliation, setIsRemovingAffiliation] = useState(false);
 
-  const { t } = useTranslation('profile');
+  const { t, i18n } = useTranslation('profile');
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    // Close institution form if user changes language, since selected values will be invalid
+    setOpenUnitForm(false);
+  }, [i18n.language]);
 
   const toggleUnitForm = () => {
     setOpenUnitForm(!openUnitForm);
