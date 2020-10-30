@@ -14,7 +14,7 @@ const Forbidden: FC = () => {
   const { t } = useTranslation('authorization');
 
   return (
-    <section>
+    <section data-testid="forbidden">
       <Heading>{t('forbidden')}</Heading>
       <NormalText>{t('forbidden_description')}</NormalText>
       <MuiLink component={Link} to="/">

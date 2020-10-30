@@ -7,10 +7,6 @@ export enum PublicationType {
   // CHAPTER = 'Chapter',
 }
 
-export enum ChapterType {
-  ARTICLE = 'ChapterArticle',
-}
-
 export enum JournalType {
   ARTICLE = 'JournalArticle',
   SHORT_COMMUNICATION = 'JournalShortCommunication',

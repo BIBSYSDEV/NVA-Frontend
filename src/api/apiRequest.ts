@@ -46,5 +46,3 @@ export const apiRequest = async <T>(axiosRequestConfig: AxiosRequestConfig): Pro
     return Axios.isCancel(error) ? null : { error: true };
   }
 };
-
-export default apiRequest;

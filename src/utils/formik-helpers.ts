@@ -8,7 +8,7 @@ import {
 } from '../types/publicationFieldNames';
 import { Contributor } from '../types/contributor.types';
 import { File } from '../types/file.types';
-import { Publication } from '../types/publication.types';
+import { Registration } from '../types/registration.types';
 import deepmerge, { Options } from 'deepmerge';
 
 interface CustomError {
@@ -107,7 +107,7 @@ export const getAllContributorFields = (contributors: Contributor[]) => {
   return fieldNames;
 };
 
-export const touchedDescriptionTabFields: FormikTouched<Publication> = {
+export const touchedDescriptionTabFields: FormikTouched<Registration> = {
   entityDescription: {
     abstract: true,
     date: {
@@ -209,7 +209,7 @@ export const touchedReferenceTabFields = (publicationType: PublicationType | '')
   }
 };
 
-export const touchedContributorTabFields = (contributors: Contributor[]): FormikTouched<Publication> => ({
+export const touchedContributorTabFields = (contributors: Contributor[]): FormikTouched<Registration> => ({
   entityDescription: {
     contributors: contributors.map((contributor) => ({
       affiliations: [],
@@ -220,7 +220,7 @@ export const touchedContributorTabFields = (contributors: Contributor[]): Formik
   },
 });
 
-export const touchedFilesTabFields = (files: File[]): FormikTouched<Publication> => ({
+export const touchedFilesTabFields = (files: File[]): FormikTouched<Registration> => ({
   fileSet: {
     files: files.map((file) => ({
       administrativeAgreement: true,
@@ -233,5 +233,5 @@ export const touchedFilesTabFields = (files: File[]): FormikTouched<Publication>
 
 export const overwriteArrayMerge = (destinationArray: any[], sourceArray: any[], options?: Options) => sourceArray;
 
-export const mergeTouchedFields = (touchedArray: FormikTouched<Publication>[]) =>
+export const mergeTouchedFields = (touchedArray: FormikTouched<Registration>[]) =>
   deepmerge.all(touchedArray, { arrayMerge: overwriteArrayMerge });
