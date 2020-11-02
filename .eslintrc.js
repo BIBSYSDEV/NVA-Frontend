@@ -10,5 +10,6 @@ module.exports = {
   rules: {
     'no-console': 1,
     'prettier/prettier': 2,
+    '@typescript-eslint/explicit-module-boundary-types': 0,
   },
 };

@@ -43,15 +43,6 @@
     "eject": "react-scripts eject",
     "generateTestFiles": "sh generateTestFiles.sh"
   },
-  "eslintConfig": {
-    "extends": "react-app",
-    "plugins": [
-      "prettier"
-    ],
-    "rules": {
-      "prettier/prettier": "error"
-    }
-  },
   "husky": {
     "hooks": {
       "pre-commit": "pretty-quick --staged"
