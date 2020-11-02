@@ -2,5 +2,6 @@ module.exports = {
     singleQuote: true,
     trailingComma: 'es5',
     printWidth: 120,
-    jsxBracketSameLine: true
+    jsxBracketSameLine: true,
+    endOfLine: 'auto'
 };
