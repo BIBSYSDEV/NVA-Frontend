@@ -8,7 +8,7 @@ import { SearchResult } from '../../types/search.types';
 import useCancelToken from './useCancelToken';
 
 const useSearchRegistrations = (
-  searchTerm: string | null,
+  searchTerm: string,
   numberOfResults?: number,
   searchAfter?: string
 ): [SearchResult[] | [], boolean] => {
@@ -20,7 +20,7 @@ const useSearchRegistrations = (
 
   useEffect(() => {
     const searchRegistrations = async () => {
-      const response = await search(searchTerm!, numberOfResults, searchAfter, cancelToken);
+      const response = await search(searchTerm, numberOfResults, searchAfter, cancelToken);
       if (response) {
         setIsLoading(false);
         if (response.error) {

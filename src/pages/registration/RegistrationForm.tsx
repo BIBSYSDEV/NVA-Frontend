@@ -41,7 +41,7 @@ interface RegistrationFormProps {
   identifier?: string;
 }
 
-const RegistrationForm: FC<RegistrationFormProps> = ({ identifier, closeForm }) => {
+const RegistrationForm: FC<RegistrationFormProps> = ({ identifier = '', closeForm }) => {
   const user = useSelector((store: RootStore) => store.user);
   const { t } = useTranslation('registration');
   const history = useHistory();
@@ -70,7 +70,7 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier, closeForm }) 
     }
   }, [history, registration, user]);
 
-  const handleTabChange = (_: React.ChangeEvent<{}>, newTabNumber: number) => {
+  const handleTabChange = (_: React.ChangeEvent<unknown>, newTabNumber: number) => {
     setTabNumber(newTabNumber);
   };
 

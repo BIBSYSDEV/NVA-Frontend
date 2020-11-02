@@ -16,7 +16,7 @@ const StyledSearch = styled.div`
 
 const Search: FC = () => {
   const history = useHistory();
-  const searchTerm = new URLSearchParams(history.location.search).get('query');
+  const searchTerm = new URLSearchParams(history.location.search).get('query') ?? '';
   const [registrations, isLoading] = useSearchRegistrations(searchTerm);
   const { t } = useTranslation('common');
 

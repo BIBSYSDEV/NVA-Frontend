@@ -15,11 +15,6 @@ const StyledSelect = styled(Select)`
 const UserLanguage: React.FC = () => {
   const { t, i18n } = useTranslation('profile');
 
-  const handleLanguageChange = (event: React.ChangeEvent<any>) => {
-    const language = event.target.value;
-    i18n.changeLanguage(language);
-  };
-
   const selectedLanguage = Object.values(LanguageCodes).some((language) => language === i18n.language)
     ? i18n.language
     : fallbackLanguage;
@@ -30,7 +25,10 @@ const UserLanguage: React.FC = () => {
       <StyledSelect
         variant="outlined"
         value={selectedLanguage}
-        onChange={handleLanguageChange}
+        onChange={(event) => {
+          const language = event.target.value as string;
+          i18n.changeLanguage(language);
+        }}
         data-testid="language-selector">
         {pageLanguages.map((language) => (
           <MenuItem value={language} key={language} data-testid={`user-language-${language}`}>

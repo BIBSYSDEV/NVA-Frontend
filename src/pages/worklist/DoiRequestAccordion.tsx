@@ -73,8 +73,12 @@ export const DoiRequestAccordion: FC<DoiRequestAccordionProps> = ({ registration
     identifier,
     owner,
     entityDescription: { mainTitle },
+    doiRequest,
   } = registration;
-  const doiRequest = registration.doiRequest!;
+
+  if (!doiRequest) {
+    return null;
+  }
 
   return (
     <StyledAccordion data-testid={`doi-request-${identifier}`}>

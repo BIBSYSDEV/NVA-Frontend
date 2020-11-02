@@ -1,9 +1,9 @@
-import React, { FC, ComponentType } from 'react';
+import React, { FC, ComponentType, ReactNode } from 'react';
 import { Route, RouteProps } from 'react-router-dom';
 import Forbidden from '../../pages/errorpages/Forbidden';
 
 interface PrivateRouteProps extends RouteProps {
-  component: ComponentType<any>;
+  component: ComponentType<ReactNode>;
   isAuthorized: boolean;
 }
 

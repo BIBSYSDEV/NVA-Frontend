@@ -8,7 +8,7 @@ import { searchProjectsByTitle } from '../../api/projectApi';
 import useDebounce from './useDebounce';
 
 const useFetchProjects = (
-  initialSearchTerm: string = ''
+  initialSearchTerm = ''
 ): [CristinProject[], boolean, (searchTerm: string) => void, string | undefined] => {
   const dispatch = useDispatch();
   const [projects, setProjects] = useState<CristinProject[]>([]);

@@ -23,7 +23,7 @@ const IsbnListField: FC = () => {
           multiple
           options={[]}
           value={field.value ?? ''}
-          onChange={(_: ChangeEvent<{}>, value: string[], reason) => {
+          onChange={(_: ChangeEvent<unknown>, value: string[], reason) => {
             setFieldTouched(field.name);
             if (reason === 'create-option' || reason === 'blur') {
               const newIsbn = value.pop()?.trim().replace(/-/g, '');

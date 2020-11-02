@@ -1,7 +1,7 @@
 import Axios from 'axios';
 import { API_URL } from './constants';
 
-export const setAxiosDefaults = () => {
+export const setAxiosDefaults = (): void => {
   Axios.defaults.baseURL = API_URL;
   Axios.defaults.headers.common = {
     Accept: 'application/json',

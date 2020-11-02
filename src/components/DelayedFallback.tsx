@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, FC } from 'react';
 import { CircularProgress } from '@material-ui/core';
 import { StyledProgressWrapper } from './styled/Wrappers';
 
-const DelayedFallback = () => {
+const DelayedFallback: FC = () => {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-    let timeout = setTimeout(() => setShow(true), 300);
+    const timeout = setTimeout(() => setShow(true), 300);
     return () => {
       clearTimeout(timeout);
     };

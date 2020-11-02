@@ -43,15 +43,6 @@
     "eject": "react-scripts eject",
     "generateTestFiles": "sh generateTestFiles.sh"
   },
-  "eslintConfig": {
-    "extends": "react-app",
-    "plugins": [
-      "prettier"
-    ],
-    "rules": {
-      "prettier/prettier": "error"
-    }
-  },
   "husky": {
     "hooks": {
       "pre-commit": "pretty-quick --staged"
@@ -87,6 +78,7 @@
     "@types/yup": "^0.29.9",
     "axios-mock-adapter": "^1.19.0",
     "cypress": "^5.5.0",
+    "eslint-config-prettier": "^6.15.0",
     "eslint-plugin-prettier": "^3.1.4",
     "faker": "^5.1.0",
     "husky": "^4.3.0",

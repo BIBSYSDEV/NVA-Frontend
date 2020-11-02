@@ -8,7 +8,7 @@ export const SET_POSSIBLE_AUTHORITIES = 'set possible authorities';
 export const SET_ROLES = 'set roles';
 
 // ACTION CREATORS
-export const setUser = (user: FeideUser | any): SetUserAction => ({
+export const setUser = (user: FeideUser): SetUserAction => ({
   type: SET_USER_SUCCESS,
   user,
 });

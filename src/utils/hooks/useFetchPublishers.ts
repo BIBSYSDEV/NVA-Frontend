@@ -7,7 +7,7 @@ import useDebounce from './useDebounce';
 
 const useFetchPublishers = (
   publicationTable: PublicationTableNumber,
-  initialSearchTerm: string = ''
+  initialSearchTerm = ''
 ): [Publisher[], boolean, (searchTerm: string) => void] => {
   const [publishers, setPublishers] = useState<Publisher[]>([]);
   const [isLoading, setIsLoading] = useState(false);
