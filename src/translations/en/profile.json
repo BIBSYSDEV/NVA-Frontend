@@ -59,7 +59,8 @@
     "institution_admin": "Administrator",
     "institution_admin_description": "Access to administer your own institution",
     "institution_admins": "Administrators",
-    "no_roles": "You don't have any roles. Contact administrator for your institution if this is incorrect."
+    "no_roles": "You don't have any roles because your administrator has not assigned any roles to you",
+    "not_customer": "You don't have any roles because your institution is unknown to this application"
   },
   "organization": {
     "add_institution": "Add institution",

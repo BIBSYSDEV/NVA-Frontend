@@ -1,10 +1,11 @@
-import { FeideUser, RoleName, InstitutionUser } from '../../types/user.types';
+import { FeideUser, InstitutionUser, RoleName } from '../../types/user.types';
 
 export const mockUser: FeideUser = {
   name: 'Test User',
   email: 'testuser@unit.no',
   'custom:cristinId': 'https://api.cristin.no/v2/institutions/20202',
   'custom:orgName': 'unit',
+  'custom:orgNumber': 'NO123456789',
   'custom:applicationRoles': `${RoleName.CREATOR},${RoleName.INSTITUTION_ADMIN},${RoleName.APP_ADMIN}`,
   'custom:commonName': 'Unit',
   'custom:feideId': 'tu@unit.no',
