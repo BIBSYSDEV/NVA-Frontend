@@ -1,7 +1,6 @@
 import React, { useEffect, FC } from 'react';
 import { File, emptyFile, Uppy } from '../../../types/file.types';
 import UppyDashboard from '../../../components/UppyDashboard';
-import { UppyFile } from '@uppy/core';
 
 interface FileUploaderProps {
   addFile: (file: File) => void;
@@ -11,7 +10,7 @@ interface FileUploaderProps {
 const FileUploader: FC<FileUploaderProps> = ({ addFile, uppy }) => {
   useEffect(() => {
     if (uppy && !uppy.hasUploadSuccessEventListener) {
-      uppy.on('upload-success', (file: UppyFile, response: any) => {
+      uppy.on('upload-success', (file, response) => {
         const newFile = {
           ...emptyFile,
           identifier: response.uploadURL, // In reality an ID from completeMultipartUpload endpoint
