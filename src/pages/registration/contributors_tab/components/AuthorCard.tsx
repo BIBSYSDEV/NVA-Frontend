@@ -2,11 +2,9 @@ import { Field, FieldProps, useFormikContext } from 'formik';
 import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-
 import { Button, Checkbox, FormControlLabel, TextField, Tooltip, Typography } from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/CheckCircleSharp';
 import WarningIcon from '@material-ui/icons/Warning';
-
 import { StyledRightAlignedWrapper } from '../../../../components/styled/Wrappers';
 import { Contributor, UnverifiedContributor } from '../../../../types/contributor.types';
 import { ContributorFieldNames, SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
@@ -40,6 +38,10 @@ const StyledAuthorSection = styled.div`
   grid-template-columns: auto auto 1fr;
   grid-column-gap: 1rem;
   align-items: start;
+
+  .MuiFilledInput-root {
+    border-radius: 0;
+  }
 `;
 
 const StyledSequenceField = styled(Field)`
@@ -47,9 +49,8 @@ const StyledSequenceField = styled(Field)`
 `;
 
 const StyledSequenceTextField = styled(TextField)`
-  width: 2rem;
-  margin: 0;
-  margin-right: 1rem;
+  width: 3rem;
+  margin: -1rem 1rem 0 0;
 `;
 
 const StyledNameField = styled(Typography)`
@@ -110,12 +111,7 @@ interface AuthorCardProps {
   openContributorModal: (unverifiedAuthor: UnverifiedContributor) => void;
 }
 
-const AuthorCard: FC<AuthorCardProps> = ({
-  author,
-  onMoveAuthor: onMoveCard,
-  onRemoveAuthorClick,
-  openContributorModal,
-}) => {
+const AuthorCard: FC<AuthorCardProps> = ({ author, onMoveAuthor, onRemoveAuthorClick, openContributorModal }) => {
   const { t } = useTranslation('registration');
   const index = author.sequence - 1;
   const baseFieldName = `${ContributorFieldNames.CONTRIBUTORS}[${index}]`;
@@ -151,20 +147,23 @@ const AuthorCard: FC<AuthorCardProps> = ({
           </StyledVerifiedSection>
           <StyledRightAlignedWrapper>
             <StyledSequenceField name={`${baseFieldName}.${SpecificContributorFieldNames.SEQUENCE}`}>
-              {({ field }: FieldProps) => (
+              {({ field, meta: { error, touched } }: FieldProps) => (
                 <StyledSequenceTextField
                   {...field}
-                  type="number"
+                  variant="filled"
+                  label={t('common:number_short')}
                   onKeyDown={(event) => {
                     if (event.key === 'Enter' && field.value) {
                       event.preventDefault();
-                      onMoveCard(event);
+                      onMoveAuthor(event);
                     }
                   }}
                   onBlur={(event) => {
-                    onMoveCard(event);
+                    onMoveAuthor(event);
                     field.onBlur(event);
                   }}
+                  error={touched && !!error}
+                  helperText={touched && error}
                 />
               )}
             </StyledSequenceField>
@@ -184,8 +183,9 @@ const AuthorCard: FC<AuthorCardProps> = ({
                 {({ field, meta: { error, touched } }: FieldProps) => (
                   <StyledEmailTextField
                     data-testid="author-email-input"
-                    label={t('common:email')}
                     {...field}
+                    label={t('common:email')}
+                    variant="filled"
                     onChange={(event) => {
                       setEmailValue(event.target.value);
                     }}
