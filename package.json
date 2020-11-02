@@ -13,7 +13,7 @@
     "@uppy/core": "^1.13.2",
     "@uppy/dashboard": "^1.12.8",
     "@uppy/react": "^1.10.8",
-    "aws-amplify": "^3.3.4",
+    "aws-amplify": "^3.3.6",
     "axios": "^0.21.0",
     "date-fns": "^2.16.1",
     "deepmerge": "^4.2.2",
@@ -73,7 +73,7 @@
     "extends": "@istanbuljs/nyc-config-typescript"
   },
   "devDependencies": {
-    "@cypress/code-coverage": "^3.8.2",
+    "@cypress/code-coverage": "^3.8.3",
     "@cypress/instrument-cra": "^1.4.0",
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
     "@types/history": "^4.7.8",
