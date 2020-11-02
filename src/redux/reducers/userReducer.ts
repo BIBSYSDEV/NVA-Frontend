@@ -1,11 +1,11 @@
-import { RoleName, User, Affiliation } from '../../types/user.types';
+import { Affiliation, RoleName, User } from '../../types/user.types';
 import { AuthActions, LOGOUT_SUCCESS } from '../actions/authActions';
 import { OrcidActions, SET_EXTERNAL_ORCID } from '../actions/orcidActions';
 import {
   SET_AUTHORITY_DATA,
   SET_POSSIBLE_AUTHORITIES,
-  SET_USER_SUCCESS,
   SET_ROLES,
+  SET_USER_SUCCESS,
   UserActions,
 } from '../actions/userActions';
 
@@ -35,6 +35,7 @@ export const userReducer = (
         givenName: action.user.given_name,
         familyName: action.user.family_name,
         possibleAuthorities: [],
+        orgNumber: action.user['custom:orgNumber'],
       };
       return user;
     }

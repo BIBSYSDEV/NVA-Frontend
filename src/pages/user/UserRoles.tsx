@@ -1,9 +1,16 @@
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
+import styled from 'styled-components';
+
+import { Typography } from '@material-ui/core';
+
+import Card from '../../components/Card';
 import IconLabelTextLine from '../../components/IconLabelTextLine';
 import { User } from '../../types/user.types';
-import Card from '../../components/Card';
-import { Typography } from '@material-ui/core';
+
+const StyledTypography = styled(Typography)`
+  color: ${({ theme }) => theme.palette.danger.main};
+`;
 
 interface UserRolesProps {
   user: User;
@@ -16,9 +23,24 @@ const UserRoles: FC<UserRolesProps> = ({ user }) => {
   return (
     <Card>
       <Typography variant="h5">{t('heading.roles')}</Typography>
-      {!isAppAdmin && !isInstitutionAdmin && !isEditor && !isCurator && !isCreator && (
-        <Typography>{t('roles.no_roles')}</Typography>
+      {user.customerId ? (
+        !isAppAdmin &&
+        !isInstitutionAdmin &&
+        !isEditor &&
+        !isCurator &&
+        !isCreator && <StyledTypography>{t('roles.no_roles')}</StyledTypography>
+      ) : (
+        <>
+          <StyledTypography>{t('roles.not_customer')}</StyledTypography>
+          <Typography>
+            {t('common:name')}: {user.institution}
+          </Typography>
+          <Typography>
+            {t('common:organization_number')}: {user.orgNumber}
+          </Typography>
+        </>
       )}
+
       {isAppAdmin && (
         <IconLabelTextLine
           dataTestId="user-role-app-admin"

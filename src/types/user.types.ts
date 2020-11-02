@@ -39,6 +39,7 @@ export interface User {
   lastLoginDate?: string;
   possibleAuthorities: Authority[];
   roles: RoleName[];
+  orgNumber: string;
 }
 
 export interface UserRole {
@@ -60,6 +61,7 @@ export interface FeideUser {
   sub: string;
   email_verfied: boolean;
   'custom:orgName': string;
+  'custom:orgNumber': string;
   'custom:applicationRoles': string;
   identities: string;
   'custom:commonName': string;

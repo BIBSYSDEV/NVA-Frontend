@@ -59,7 +59,8 @@
     "institution_admin": "Administrator",
     "institution_admin_description": "Tilgang til å administrere din egen institusjon",
     "institution_admins": "Administratorer",
-    "no_roles": "Du har for ingen roller. Kontakt adminstrator for din institusjon om dette ikke er riktig."
+    "no_roles": "Du har ingen roller fordi du ikke har fått tildelt roller av din administrator",
+    "not_customer": "Du har ingen roller fordi din institusjon er ukjent for applikasjonen"
   },
   "organization": {
     "add_institution": "Legg til institusjon",
