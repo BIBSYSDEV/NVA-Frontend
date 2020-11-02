@@ -13,7 +13,7 @@
     "@uppy/core": "^1.13.2",
     "@uppy/dashboard": "^1.12.8",
     "@uppy/react": "^1.10.8",
-    "aws-amplify": "^3.3.4",
+    "aws-amplify": "^3.3.6",
     "axios": "^0.21.0",
     "date-fns": "^2.16.1",
     "deepmerge": "^4.2.2",
@@ -30,7 +30,7 @@
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0",
-    "styled-components": "^5.2.0",
+    "styled-components": "^5.2.1",
     "yup": "^0.29.3"
   },
   "scripts": {
@@ -73,12 +73,12 @@
     "extends": "@istanbuljs/nyc-config-typescript"
   },
   "devDependencies": {
-    "@cypress/code-coverage": "^3.8.2",
+    "@cypress/code-coverage": "^3.8.3",
     "@cypress/instrument-cra": "^1.4.0",
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
     "@types/history": "^4.7.8",
     "@types/node": "^14.14.6",
-    "@types/react": "^16.9.53",
+    "@types/react": "^16.9.55",
     "@types/react-dom": "^16.9.9",
     "@types/react-redux": "^7.1.9",
     "@types/react-router-dom": "^5.1.6",

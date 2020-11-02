@@ -35,6 +35,7 @@ export interface User {
   isCurator: boolean;
   isInstitutionAdmin: boolean;
   isCreator: boolean;
+  isEditor: boolean;
   lastLoginDate?: string;
   possibleAuthorities: Authority[];
   roles: RoleName[];

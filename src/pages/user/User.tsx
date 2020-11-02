@@ -98,7 +98,7 @@ const User: FC = () => {
         )}
         <StyledSecondaryUserInfo>
           <UserLanguage />
-          {user.roles.length > 1 && <UserRoles user={user} />}
+          <UserRoles user={user} />
         </StyledSecondaryUserInfo>
 
         <StyledPrimaryUserInfo>
