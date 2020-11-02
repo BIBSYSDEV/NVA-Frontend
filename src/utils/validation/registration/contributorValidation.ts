@@ -7,5 +7,4 @@ export const contributorValidationSchema = Yup.object().shape({
     is: true,
     then: Yup.string().email(ErrorMessage.INVALID_FORMAT).required(ErrorMessage.REQUIRED),
   }),
-  sequence: Yup.number().min(0),
 });

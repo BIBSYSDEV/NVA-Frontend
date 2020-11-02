@@ -6,9 +6,9 @@ import SearchBar from '../../../../components/SearchBar';
 import { Authority } from '../../../../types/authority.types';
 import AuthorityList from '../../../user/authority/AuthorityList';
 import useFetchAuthorities from '../../../../utils/hooks/useFetchAuthorities';
-import { StyledProgressWrapper, StyledRightAlignedButtonWrapper } from '../../../../components/styled/Wrappers';
+import { StyledProgressWrapper, StyledRightAlignedWrapper } from '../../../../components/styled/Wrappers';
 
-const StyledButtonContainer = styled(StyledRightAlignedButtonWrapper)`
+const StyledButtonContainer = styled(StyledRightAlignedWrapper)`
   margin: 1rem 0;
 `;
 

@@ -1,22 +1,35 @@
-import { FieldArrayRenderProps, useFormikContext, move } from 'formik';
+import { FieldArrayRenderProps, move, useFormikContext } from 'formik';
 import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
+import styled from 'styled-components';
+
+import { Button, Typography } from '@material-ui/core';
+import AddIcon from '@material-ui/icons/AddCircleOutlineSharp';
+
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { Authority } from '../../../types/authority.types';
 import { Contributor, emptyContributor, UnverifiedContributor } from '../../../types/contributor.types';
 import { NotificationVariant } from '../../../types/notification.types';
 import { BackendTypeNames } from '../../../types/publication_types/commonRegistration.types';
-import { Registration } from '../../../types/registration.types';
-import AuthorTable from './components/AuthorTable';
-import AddIcon from '@material-ui/icons/Add';
-import styled from 'styled-components';
-import { Button } from '@material-ui/core';
-import AddContributorModal from './AddContributorModal';
 import { ContributorFieldNames } from '../../../types/publicationFieldNames';
+import { Registration } from '../../../types/registration.types';
+import AddContributorModal from './AddContributorModal';
+import AuthorList from './components/AuthorList';
+
+const StyledAuthors = styled.div`
+  display: grid;
+  grid-template-areas: 'authors' 'add-author';
+`;
 
 const StyledAddAuthorButton = styled(Button)`
-  margin-top: 1rem;
+  margin: 1rem;
+  border-radius: 0;
+  padding: 1rem 0;
+`;
+
+const StyledAddIcon = styled(AddIcon)`
+  margin-right: 0.5rem;
 `;
 
 interface AuthorsProps extends Pick<FieldArrayRenderProps, 'push' | 'replace'> {}
@@ -88,8 +101,8 @@ const Authors: FC<AuthorsProps> = ({ push, replace }) => {
   };
 
   return (
-    <>
-      <AuthorTable
+    <StyledAuthors>
+      <AuthorList
         authors={orderedAuthors}
         onDelete={handleOnRemove}
         onMoveAuthor={handleMoveAuthor}
@@ -101,10 +114,10 @@ const Authors: FC<AuthorsProps> = ({ push, replace }) => {
           setUnverifiedAuthor(null);
         }}
         variant="contained"
-        color="primary"
+        color="default"
         data-testid="add-contributor">
-        <AddIcon />
-        {t('contributors.add_author')}
+        <StyledAddIcon />
+        <Typography variant="button">{t('contributors.add_author')}</Typography>
       </StyledAddAuthorButton>
       <AddContributorModal
         initialSearchTerm={unverifiedAuthor?.name}
@@ -112,7 +125,7 @@ const Authors: FC<AuthorsProps> = ({ push, replace }) => {
         toggleModal={() => setOpenContributorModal(!openContributorModal)}
         onAuthorSelected={onAuthorSelected}
       />
-    </>
+    </StyledAuthors>
   );
 };
 
