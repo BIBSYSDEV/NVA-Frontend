@@ -26,7 +26,7 @@ const UserLanguage: React.FC = () => {
         variant="outlined"
         value={selectedLanguage}
         onChange={(event) => {
-          const language = event.currentTarget.value as string;
+          const language = event.target.value as string;
           i18n.changeLanguage(language);
         }}
         data-testid="language-selector">
