@@ -13,7 +13,7 @@ interface CompletedApiResponse<T> {
   data?: T;
 }
 // A cancelled request should return null
-export type ApiResponse<T> = CompletedApiResponse<T> | null;
+type ApiResponse<T> = CompletedApiResponse<T> | null;
 
 export const authenticatedApiRequest = async <T>(axiosRequestConfig: AxiosRequestConfig): Promise<ApiResponse<T>> => {
   try {

@@ -1,5 +1,5 @@
 import { PublicationTableNumber } from '../utils/constants';
-import { apiRequest, ApiResponse } from './apiRequest';
+import { apiRequest } from './apiRequest';
 import { Publisher } from '../types/registration.types';
 import { CancelToken } from 'axios';
 
@@ -15,7 +15,7 @@ export const getPublishers = async (
   searchTerm: string,
   publicationTable: PublicationTableNumber,
   cancelToken?: CancelToken
-): Promise<ApiResponse<PublisherSearchResponse>> =>
+) =>
   await apiRequest<PublisherSearchResponse>({
     url: PublicationChannelApiPaths.SEARCH,
     method: 'POST',
