@@ -147,7 +147,7 @@ const AuthorCard: FC<AuthorCardProps> = ({ author, onMoveAuthor, onRemoveAuthorC
           </StyledVerifiedSection>
           <StyledRightAlignedWrapper>
             <StyledSequenceField name={`${baseFieldName}.${SpecificContributorFieldNames.SEQUENCE}`}>
-              {({ field, meta: { error, touched } }: FieldProps) => (
+              {({ field }: FieldProps) => (
                 <StyledSequenceTextField
                   {...field}
                   variant="filled"
@@ -162,8 +162,6 @@ const AuthorCard: FC<AuthorCardProps> = ({ author, onMoveAuthor, onRemoveAuthorC
                     onMoveAuthor(event);
                     field.onBlur(event);
                   }}
-                  error={touched && !!error}
-                  helperText={touched && error}
                 />
               )}
             </StyledSequenceField>
