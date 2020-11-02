@@ -1,9 +1,7 @@
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-
 import { Typography } from '@material-ui/core';
-
 import Card from '../../components/Card';
 import IconLabelTextLine from '../../components/IconLabelTextLine';
 import { User } from '../../types/user.types';

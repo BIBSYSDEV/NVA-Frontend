@@ -13,18 +13,19 @@
     "authors": "Authors",
     "confirm_remove_affiliation_text": "Are you sure you want to remove this affiliation?",
     "confirm_remove_affiliation_title": "Remove affiliation?",
-    "confirm_remove_contributor_text": "Are you sure you want to remove {{contributorName}} from list of contributors?",
-    "confirm_remove_contributor_title": "Remove contributor?",
+    "confirm_remove_author_text": "Are you sure you want to remove {{contributorName}} from list of authors?",
+    "confirm_remove_author_title": "Remove author?",
     "connect_author_identity": "Connect author identity",
     "corresponding": "Corresponding",
     "create_new_author": "Create new author",
     "known_author_identity": "Connected author identity",
     "prefilled_name": "Prefilled name",
-    "remove_contributor": "Remove contributor",
+    "remove_author": "Remove author",
     "select_institution": "Select institution",
     "type": "Contributor type",
     "unknown_author_identity": "Unknown author identity",
-    "verify_person": "Verify"
+    "verify_author": "Verify author",
+    "verified_author": "Verified author"
   },
   "description": {
     "abstract": "Abstract",

@@ -10,7 +10,7 @@ import { RootStore } from '../../../redux/reducers/rootReducer';
 import { Authority } from '../../../types/authority.types';
 import NewAuthorityCard from './NewAuthorityCard';
 import AuthorityList from './AuthorityList';
-import { StyledRightAlignedButtonWrapper } from '../../../components/styled/Wrappers';
+import { StyledRightAlignedWrapper } from '../../../components/styled/Wrappers';
 import ButtonWithProgress from '../../../components/ButtonWithProgress';
 import { NotificationVariant } from '../../../types/notification.types';
 import { setNotification } from '../../../redux/actions/notificationActions';
@@ -85,7 +85,7 @@ export const ConnectAuthority: FC<ConnectAuthorityProps> = ({ handleCloseModal }
               }
               searchTerm={user.name}
             />
-            <StyledRightAlignedButtonWrapper>
+            <StyledRightAlignedWrapper>
               <Button
                 color="primary"
                 variant="text"
@@ -93,7 +93,7 @@ export const ConnectAuthority: FC<ConnectAuthorityProps> = ({ handleCloseModal }
                 onClick={toggleOpenNewAuthorityCard}>
                 {t('authority.create_own_authority')}
               </Button>
-            </StyledRightAlignedButtonWrapper>
+            </StyledRightAlignedWrapper>
 
             <DialogActions>
               <Button variant="text" onClick={handleCloseModal}>
