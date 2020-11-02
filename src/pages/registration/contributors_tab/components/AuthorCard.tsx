@@ -1,15 +1,17 @@
-import { TextField, Typography, Tooltip, FormControlLabel, Checkbox, Button } from '@material-ui/core';
-import { useFormikContext, FieldProps, Field } from 'formik';
+import { Field, FieldProps, useFormikContext } from 'formik';
 import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import styled from 'styled-components';
+
+import { Button, Checkbox, FormControlLabel, TextField, Tooltip, Typography } from '@material-ui/core';
+import CheckIcon from '@material-ui/icons/CheckCircleSharp';
+import WarningIcon from '@material-ui/icons/Warning';
+
+import { StyledRightAlignedWrapper } from '../../../../components/styled/Wrappers';
 import { Contributor, UnverifiedContributor } from '../../../../types/contributor.types';
 import { ContributorFieldNames, SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
 import { Registration } from '../../../../types/registration.types';
 import AffiliationsCell from './AffiliationsCell';
-import WarningIcon from '@material-ui/icons/Warning';
-import CheckIcon from '@material-ui/icons/CheckCircleSharp';
-import styled from 'styled-components';
-import { StyledRightAlignedWrapper } from '../../../../components/styled/Wrappers';
 
 const StyledWarningIcon = styled(WarningIcon)`
   color: ${({ theme }) => theme.palette.warning.main};
@@ -52,6 +54,7 @@ const StyledSequenceTextField = styled(TextField)`
 
 const StyledNameField = styled(Typography)`
   grid-area: name;
+  font-weight: bold;
 `;
 
 const StyledVerifiedSection = styled.div`
@@ -123,20 +126,18 @@ const AuthorCard: FC<AuthorCardProps> = ({
     <StyledAuthorCard>
       <StyledContent>
         <StyledAuthorSection key={author.identity.id}>
-          <StyledNameField variant="h5">
-            <b>{author.identity.name}</b>
-          </StyledNameField>
+          <StyledNameField variant="h5">{author.identity.name}</StyledNameField>
           <StyledVerifiedSection>
             {author.identity.arpId ? (
               <>
-                <Tooltip title={t('contributors.known_author_identity') as string}>
+                <Tooltip title={t<string>('contributors.known_author_identity')}>
                   <StyledCheckIcon />
                 </Tooltip>
                 <StyledTypography variant="body2">{t('contributors.verified_author')}</StyledTypography>
               </>
             ) : (
               <>
-                <Tooltip title={t('contributors.unknown_author_identity') as string}>
+                <Tooltip title={t<string>('contributors.unknown_author_identity')}>
                   <StyledWarningIcon />
                 </Tooltip>
                 <StyledVerifiedButton
@@ -210,7 +211,7 @@ const AuthorCard: FC<AuthorCardProps> = ({
         variant="contained"
         data-testid={`button-remove-contributor-${author.identity.name}`}
         onClick={onRemoveAuthorClick}>
-        {t('contributors.remove_author').toUpperCase()}
+        <Typography variant="button">{t('contributors.remove_author')}</Typography>
       </StyledRemoveButton>
     </StyledAuthorCard>
   );

@@ -1,24 +1,26 @@
+import { FormikProps, useFormikContext } from 'formik';
 import React, { FC, useState } from 'react';
-import { Institution } from '../../../../types/contributor.types';
-import { Button, Typography } from '@material-ui/core';
-import SelectInstitution from '../../../../components/institution/SelectInstitution';
-import Modal from '../../../../components/Modal';
-import { useFormikContext, FormikProps } from 'formik';
-import { Registration } from '../../../../types/registration.types';
-import { SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
-import { FormikInstitutionUnit } from '../../../../types/institution.types';
 import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import ConfirmDialog from '../../../../components/ConfirmDialog';
+
+import { Button, Typography } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/AddCircleOutlineSharp';
 import DeleteIcon from '@material-ui/icons/RemoveCircleSharp';
-import { registrationLanguages, LanguageCodes } from '../../../../types/language.types';
-import { getMostSpecificUnit } from '../../../../utils/institutions-helpers';
-import { useDispatch } from 'react-redux';
-import { setNotification } from '../../../../redux/actions/notificationActions';
-import { NotificationVariant } from '../../../../types/notification.types';
+
+import ConfirmDialog from '../../../../components/ConfirmDialog';
 import AffiliationHierarchy from '../../../../components/institution/AffiliationHierarchy';
+import SelectInstitution from '../../../../components/institution/SelectInstitution';
+import Modal from '../../../../components/Modal';
+import { setNotification } from '../../../../redux/actions/notificationActions';
+import { Institution } from '../../../../types/contributor.types';
+import { FormikInstitutionUnit } from '../../../../types/institution.types';
+import { LanguageCodes, registrationLanguages } from '../../../../types/language.types';
+import { NotificationVariant } from '../../../../types/notification.types';
 import { BackendTypeNames } from '../../../../types/publication_types/commonRegistration.types';
+import { SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
+import { Registration } from '../../../../types/registration.types';
+import { getMostSpecificUnit } from '../../../../utils/institutions-helpers';
 
 const StyledCard = styled.div`
   display: flex;
@@ -99,7 +101,7 @@ const AffiliationsCell: FC<AffiliationsCellProps> = ({ affiliations, baseFieldNa
             data-testid={`button-remove-affiliation-${affiliation.id}`}
             onClick={() => setAffiliationToRemove(affiliation)}>
             <StyledDeleteIcon />
-            {t('common:remove').toUpperCase()}
+            <Typography variant="button">{t('common:remove')}</Typography>
           </Button>
         </StyledCard>
       ))}
@@ -109,7 +111,7 @@ const AffiliationsCell: FC<AffiliationsCellProps> = ({ affiliations, baseFieldNa
         data-testid="button-add-affiliation"
         onClick={toggleAffiliationModal}>
         <StyledAddIcon />
-        {t('contributors.add_affiliation').toUpperCase()}
+        <Typography variant="button">{t('contributors.add_affiliation')}</Typography>
       </StyledAddButton>
 
       {/* Modal for adding affiliation */}

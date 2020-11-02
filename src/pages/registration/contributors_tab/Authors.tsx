@@ -1,19 +1,21 @@
-import { FieldArrayRenderProps, useFormikContext, move } from 'formik';
+import { FieldArrayRenderProps, move, useFormikContext } from 'formik';
 import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
+import styled from 'styled-components';
+
+import { Button, Typography } from '@material-ui/core';
+import AddIcon from '@material-ui/icons/AddCircleOutlineSharp';
+
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { Authority } from '../../../types/authority.types';
 import { Contributor, emptyContributor, UnverifiedContributor } from '../../../types/contributor.types';
 import { NotificationVariant } from '../../../types/notification.types';
 import { BackendTypeNames } from '../../../types/publication_types/commonRegistration.types';
-import { Registration } from '../../../types/registration.types';
-import AuthorList from './components/AuthorList';
-import AddIcon from '@material-ui/icons/AddCircleOutlineSharp';
-import styled from 'styled-components';
-import { Button } from '@material-ui/core';
-import AddContributorModal from './AddContributorModal';
 import { ContributorFieldNames } from '../../../types/publicationFieldNames';
+import { Registration } from '../../../types/registration.types';
+import AddContributorModal from './AddContributorModal';
+import AuthorList from './components/AuthorList';
 
 const StyledAuthors = styled.div`
   display: grid;
@@ -115,7 +117,7 @@ const Authors: FC<AuthorsProps> = ({ push, replace }) => {
         color="default"
         data-testid="add-contributor">
         <StyledAddIcon />
-        {t('contributors.add_author').toUpperCase()}
+        <Typography variant="button">{t('contributors.add_author')}</Typography>
       </StyledAddAuthorButton>
       <AddContributorModal
         initialSearchTerm={unverifiedAuthor?.name}
