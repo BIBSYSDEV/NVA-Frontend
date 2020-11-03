@@ -1,4 +1,4 @@
-import { Field, FormikProps, useFormikContext, FieldProps } from 'formik';
+import { Field, useFormikContext, FieldProps } from 'formik';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
@@ -39,7 +39,7 @@ const StyledTypography = styled(Typography)`
 
 const BookForm: FC = () => {
   const { t } = useTranslation('registration');
-  const { values }: FormikProps<BookRegistration> = useFormikContext();
+  const { values } = useFormikContext<BookRegistration>();
   const {
     reference: {
       publicationContext,

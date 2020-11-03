@@ -1,12 +1,12 @@
 import LabelContentRow from '../../../components/LabelContentRow';
 import React, { FC, Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FormikProps, useFormikContext } from 'formik';
+import { useFormikContext } from 'formik';
 import { Registration } from '../../../types/registration.types';
 
 const SubmissionFilesAndLicenses: FC = () => {
   const { t } = useTranslation('registration');
-  const { values }: FormikProps<Registration> = useFormikContext();
+  const { values } = useFormikContext<Registration>();
 
   return (
     <>

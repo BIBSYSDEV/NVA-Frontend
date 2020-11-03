@@ -1,4 +1,4 @@
-import { Field, FormikProps, useFormikContext, FieldProps, ErrorMessage } from 'formik';
+import { Field, useFormikContext, FieldProps, ErrorMessage } from 'formik';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
@@ -28,7 +28,7 @@ const StyledLabel = styled(Typography)`
 
 const JournalForm: FC = () => {
   const { t } = useTranslation('registration');
-  const { values }: FormikProps<JournalRegistration> = useFormikContext();
+  const { values } = useFormikContext<JournalRegistration>();
   const {
     reference: { publicationContext, publicationInstance },
   } = values.entityDescription as JournalEntityDescription;

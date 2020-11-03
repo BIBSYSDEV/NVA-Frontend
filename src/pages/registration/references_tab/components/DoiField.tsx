@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import { FormikProps, useFormikContext, getIn } from 'formik';
+import { useFormikContext, getIn } from 'formik';
 import { TextField, InputAdornment, Typography } from '@material-ui/core';
 import styled from 'styled-components';
 import ClearIcon from '@material-ui/icons/Clear';
@@ -16,7 +16,7 @@ const StyledClearIcon = styled(ClearIcon)`
 const DoiField: FC = () => {
   const { t } = useTranslation('registration');
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
-  const { setFieldValue, values }: FormikProps<Registration> = useFormikContext();
+  const { setFieldValue, values } = useFormikContext<Registration>();
 
   const toggleConfirmDialog = () => {
     setOpenConfirmDialog(!openConfirmDialog);
