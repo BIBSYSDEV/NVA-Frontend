@@ -1,14 +1,14 @@
+import { Field, FieldProps, Form, Formik } from 'formik';
 import React, { FC, useState } from 'react';
-import { Button, CircularProgress, Typography } from '@material-ui/core';
-import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
-import { Formik, Field, FieldProps, Form } from 'formik';
-
-import { FormikInstitutionUnit, FormikInstitutionUnitFieldNames } from '../../types/institution.types';
+import styled from 'styled-components';
+import { Button, CircularProgress, Typography } from '@material-ui/core';
 import InstitutionSelector from '../../pages/user/institution/InstitutionSelector';
-import useFetchInstitutions from '../../utils/hooks/useFetchInstitutions';
-import InstitutionAutocomplete from './InstitutionAutocomplete';
+import { FormikInstitutionUnit, FormikInstitutionUnitFieldNames } from '../../types/institution.types';
 import useFetchDepartments from '../../utils/hooks/useFetchDepartments';
+import useFetchInstitutions from '../../utils/hooks/useFetchInstitutions';
+import EditInstitution from './EditInstitution';
+import InstitutionAutocomplete from './InstitutionAutocomplete';
 
 const StyledButton = styled(Button)`
   margin: 0.5rem;
@@ -27,10 +27,11 @@ const StyledLoadingInfo = styled.div`
 
 interface SelectInstitutionProps {
   onSubmit: (values: FormikInstitutionUnit) => void;
+  initialInstitutionId?: string;
   onClose?: () => void;
 }
 
-const SelectInstitution: FC<SelectInstitutionProps> = ({ onSubmit, onClose }) => {
+const SelectInstitution: FC<SelectInstitutionProps> = ({ onSubmit, initialInstitutionId, onClose }) => {
   const { t } = useTranslation('common');
   const [institutions, isLoadingInstitutions] = useFetchInstitutions();
   const [selectedInstitutionId, setSelectedInstitutionId] = useState('');
@@ -42,25 +43,30 @@ const SelectInstitution: FC<SelectInstitutionProps> = ({ onSubmit, onClose }) =>
         <Field name={FormikInstitutionUnitFieldNames.UNIT}>
           {({ field: { name, value }, form: { setFieldValue, isSubmitting } }: FieldProps) => (
             <StyledInstitutionSearchContainer>
-              <InstitutionAutocomplete
-                institutions={institutions}
-                isLoading={isLoadingInstitutions}
-                value={value}
-                onChange={(value) => {
-                  setSelectedInstitutionId(value?.id ?? '');
-                  setFieldValue(name, value);
-                }}
-              />
+              {initialInstitutionId ? (
+                <EditInstitution initialInstitutionId={initialInstitutionId} />
+              ) : (
+                <>
+                  <InstitutionAutocomplete
+                    institutions={institutions}
+                    isLoading={isLoadingInstitutions}
+                    value={value}
+                    onChange={(value) => {
+                      setSelectedInstitutionId(value?.id ?? '');
+                      setFieldValue(name, value);
+                    }}
+                  />
+                  {isLoadingSubunits && (
+                    <StyledLoadingInfo>
+                      <Typography>{t('institution:loading_department')}</Typography>
+                      <CircularProgress />
+                    </StyledLoadingInfo>
+                  )}
 
-              {isLoadingSubunits && (
-                <StyledLoadingInfo>
-                  <Typography>{t('institution:loading_department')}</Typography>
-                  <CircularProgress />
-                </StyledLoadingInfo>
-              )}
-
-              {subunits.length > 0 && (
-                <InstitutionSelector units={subunits} fieldNamePrefix={name} label={t('institution:department')} />
+                  {subunits.length > 0 && (
+                    <InstitutionSelector units={subunits} fieldNamePrefix={name} label={t('institution:department')} />
+                  )}
+                </>
               )}
 
               <StyledButton

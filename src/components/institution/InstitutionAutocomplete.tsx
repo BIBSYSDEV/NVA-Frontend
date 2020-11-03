@@ -1,16 +1,15 @@
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
-import { TextField, CircularProgress, TextFieldProps } from '@material-ui/core';
+import { CircularProgress, TextField, TextFieldProps } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-
-import { InstitutionUnitBase } from '../../types/institution.types';
 import { autocompleteTranslationProps } from '../../themes/mainTheme';
+import { InstitutionUnitBase } from '../../types/institution.types';
 
 interface InstitutionAutocompleteProps extends Pick<TextFieldProps, 'disabled' | 'error' | 'helperText' | 'label'> {
   institutions: InstitutionUnitBase[];
-  onChange: (value: InstitutionUnitBase | null) => void;
   value: InstitutionUnitBase | null;
   isLoading?: boolean;
+  onChange?: (value: InstitutionUnitBase | null) => void;
 }
 
 const InstitutionAutocomplete: FC<InstitutionAutocompleteProps> = ({
@@ -41,7 +40,7 @@ const InstitutionAutocomplete: FC<InstitutionAutocompleteProps> = ({
         );
       }}
       loading={isLoading}
-      onChange={(_, value) => onChange(value)}
+      onChange={(_, value) => onChange?.(value)}
       renderInput={(params) => (
         <TextField
           {...params}

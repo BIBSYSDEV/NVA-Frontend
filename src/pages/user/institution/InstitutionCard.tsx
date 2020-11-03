@@ -1,9 +1,9 @@
-import React, { FC } from 'react';
-import styled from 'styled-components';
+import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import styled from 'styled-components';
 import { Button } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
-
+import EditIcon from '@material-ui/icons/Edit';
 import Card from '../../../components/Card';
 import AffiliationHierarchy from '../../../components/institution/AffiliationHierarchy';
 import { StyledRightAlignedWrapper } from '../../../components/styled/Wrappers';
@@ -30,22 +30,37 @@ const StyledTextContainer = styled.div`
 const StyledButtonContainer = styled(StyledRightAlignedWrapper)`
   grid-area: button;
   align-items: center;
+  display: grid;
+  gap: 1rem;
 `;
 
 interface InstitutionCardProps {
+  openEditUnitForm: (oldOrgunitId: string) => void;
   orgunitId: string;
   setAffiliationIdToRemove: (orgunitId: string) => void;
 }
 
-const InstitutionCard: FC<InstitutionCardProps> = ({ orgunitId, setAffiliationIdToRemove }) => {
+const InstitutionCard: FC<InstitutionCardProps> = ({ openEditUnitForm, orgunitId, setAffiliationIdToRemove }) => {
   const { t } = useTranslation('common');
+  const [hideCard, setHideCard] = useState(false);
 
-  return (
+  return !hideCard ? (
     <StyledCard data-testid="institution-presentation">
       <StyledTextContainer>
         <AffiliationHierarchy unitUri={orgunitId} />
       </StyledTextContainer>
       <StyledButtonContainer>
+        <Button
+          variant="outlined"
+          color="primary"
+          data-testid={`button-edit-institution-${orgunitId}`}
+          onClick={() => {
+            openEditUnitForm(orgunitId);
+            setHideCard(true);
+          }}>
+          <EditIcon />
+          {t('edit')}
+        </Button>
         <Button
           variant="outlined"
           color="secondary"
@@ -56,7 +71,7 @@ const InstitutionCard: FC<InstitutionCardProps> = ({ orgunitId, setAffiliationId
         </Button>
       </StyledButtonContainer>
     </StyledCard>
-  );
+  ) : null;
 };
 
 export default InstitutionCard;

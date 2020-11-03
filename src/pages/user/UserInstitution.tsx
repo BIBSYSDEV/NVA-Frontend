@@ -1,29 +1,32 @@
-import React, { useState, FC, useEffect } from 'react';
-import Card from '../../components/Card';
-import { Button, Typography } from '@material-ui/core';
-import { useSelector, useDispatch } from 'react-redux';
-import { RootStore } from './../../redux/reducers/rootReducer';
+import React, { FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FormikInstitutionUnit } from '../../types/institution.types';
-import SelectInstitution from '../../components/institution/SelectInstitution';
-import { getMostSpecificUnit } from '../../utils/institutions-helpers';
+import { useDispatch, useSelector } from 'react-redux';
+import { Button, Typography } from '@material-ui/core';
 import {
   addQualifierIdForAuthority,
   AuthorityQualifiers,
   removeQualifierIdFromAuthority,
+  updateQualifierIdForAuthority,
 } from '../../api/authorityApi';
+import Card from '../../components/Card';
+import ConfirmDialog from '../../components/ConfirmDialog';
+import SelectInstitution from '../../components/institution/SelectInstitution';
+import { StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { setAuthorityData } from '../../redux/actions/userActions';
+import { RootStore } from '../../redux/reducers/rootReducer';
+import { FormikInstitutionUnit } from '../../types/institution.types';
 import { NotificationVariant } from '../../types/notification.types';
+import { getMostSpecificUnit } from '../../utils/institutions-helpers';
 import InstitutionCard from './institution/InstitutionCard';
-import ConfirmDialog from '../../components/ConfirmDialog';
-import { StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
 
 const UserInstitution: FC = () => {
   const authority = useSelector((state: RootStore) => state.user.authority);
   const [openUnitForm, setOpenUnitForm] = useState(false);
   const [affiliationIdToRemove, setAffiliationIdToRemove] = useState('');
   const [isRemovingAffiliation, setIsRemovingAffiliation] = useState(false);
+  const [newOrgunitId, setNewOrgunitId] = useState('');
+  const [initialInstitutionId, setInitialInstitutionId] = useState('');
 
   const { t, i18n } = useTranslation('profile');
   const dispatch = useDispatch();
@@ -35,6 +38,34 @@ const UserInstitution: FC = () => {
 
   const toggleUnitForm = () => {
     setOpenUnitForm(!openUnitForm);
+  };
+
+  // TODO1: close editAffiliation when pressing "cancel"
+  // TODO2: actually make call to backend to edit affiliation
+  // TODO3: cleanup
+
+  const openEditUnitForm = (initialOrgunitId: string) => {
+    setOpenUnitForm(true);
+    console.log('initialOrgunitId', initialOrgunitId);
+    setInitialInstitutionId(initialOrgunitId);
+  };
+
+  const editAffiliation = async (oldIdentifier: string) => {
+    if (!authority) {
+      return;
+    }
+    const updatedAuthority = await updateQualifierIdForAuthority(
+      authority.systemControlNumber,
+      AuthorityQualifiers.ORGUNIT_ID,
+      oldIdentifier,
+      newOrgunitId
+    );
+    if (updatedAuthority.error) {
+      dispatch(setNotification(updatedAuthority.error, NotificationVariant.Error));
+    } else if (updatedAuthority) {
+      dispatch(setAuthorityData(updatedAuthority));
+      dispatch(setNotification(t('feedback:success.update_authority')));
+    }
   };
 
   const removeAffiliation = async () => {
@@ -96,13 +127,18 @@ const UserInstitution: FC = () => {
           authority.orgunitids.map((orgunitId) => (
             <InstitutionCard
               key={orgunitId}
+              openEditUnitForm={openEditUnitForm}
               orgunitId={orgunitId}
               setAffiliationIdToRemove={setAffiliationIdToRemove}
             />
           ))}
 
         {openUnitForm ? (
-          <SelectInstitution onSubmit={handleSubmit} onClose={toggleUnitForm} />
+          <SelectInstitution
+            initialInstitutionId={initialInstitutionId}
+            onSubmit={handleSubmit}
+            onClose={toggleUnitForm}
+          />
         ) : (
           <StyledRightAlignedWrapper>
             <Button
