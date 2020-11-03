@@ -1,4 +1,4 @@
-import { Field, FormikProps, useFormikContext, FieldProps, ErrorMessage } from 'formik';
+import { Field, useFormikContext, FieldProps, ErrorMessage } from 'formik';
 import React, { FC, useEffect, ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
@@ -45,7 +45,7 @@ const StyledMainCard = styled(Card)`
 
 const DescriptionPanel: FC<PanelProps> = ({ setTouchedFields }) => {
   const { t } = useTranslation('registration');
-  const { setFieldValue }: FormikProps<Registration> = useFormikContext();
+  const { setFieldValue } = useFormikContext<Registration>();
 
   useEffect(
     // Set all fields as touched if user navigates away from this panel (on unmount)
