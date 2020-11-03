@@ -24,14 +24,14 @@ import { NotificationVariant } from '../../types/notification.types';
 import ButtonWithProgress from '../../components/ButtonWithProgress';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { NAVIGATE_TO_PUBLIC_REGISTRATION_DURATION } from '../../utils/constants';
+import { StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
 
 const StyledButton = styled(Button)`
-  display: inline-block;
-  margin-right: 0.5rem;
+  margin-left: 0.5rem;
 `;
 
 const StyledButtonWithProgress = styled(ButtonWithProgress)`
-  margin-right: 0.5rem;
+  margin-left: 0.5rem;
 `;
 
 interface SubmissionPanelProps {
@@ -125,45 +125,47 @@ const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, saveRegistration 
         </Card>
       </Card>
 
-      {user.isCurator && doiRequest?.status === DoiRequestStatus.Requested && (
-        <>
-          <StyledButton
-            color="primary"
-            variant="contained"
-            data-testid="button-create-doi"
-            onClick={onClickCreateDoi}
-            disabled={isSaving || !isValid}>
-            {t('common:create_doi')}
-          </StyledButton>
-          <StyledButton
-            color="secondary"
-            variant="outlined"
-            data-testid="button-reject-doi"
-            onClick={onClickRejectDoi}
-            disabled={isSaving || !isValid}>
-            {t('common:reject_doi')}
-          </StyledButton>
-        </>
-      )}
+      <StyledRightAlignedWrapper>
+        {user.isCurator && doiRequest?.status === DoiRequestStatus.Requested && (
+          <>
+            <StyledButton
+              color="primary"
+              variant="contained"
+              data-testid="button-create-doi"
+              onClick={onClickCreateDoi}
+              disabled={isSaving || !isValid}>
+              {t('common:create_doi')}
+            </StyledButton>
+            <StyledButton
+              color="secondary"
+              variant="outlined"
+              data-testid="button-reject-doi"
+              onClick={onClickRejectDoi}
+              disabled={isSaving || !isValid}>
+              {t('common:reject_doi')}
+            </StyledButton>
+          </>
+        )}
 
-      <StyledButtonWithProgress
-        type="submit"
-        disabled={isPublishing}
-        isLoading={isSaving}
-        data-testid="button-save-registration"
-        onClick={onClickSaveAndPresent}>
-        {t('common:save_and_present')}
-      </StyledButtonWithProgress>
-
-      {status === RegistrationStatus.DRAFT && (
         <StyledButtonWithProgress
-          disabled={isSaving || !isValid}
-          data-testid="button-publish-registration"
-          onClick={onClickPublish}
-          isLoading={isPublishing}>
-          {t('common:publish')}
+          type="submit"
+          disabled={isPublishing}
+          isLoading={isSaving}
+          data-testid="button-save-registration"
+          onClick={onClickSaveAndPresent}>
+          {t('common:save_and_present')}
         </StyledButtonWithProgress>
-      )}
+
+        {status === RegistrationStatus.DRAFT && (
+          <StyledButtonWithProgress
+            disabled={isSaving || !isValid}
+            data-testid="button-publish-registration"
+            onClick={onClickPublish}
+            isLoading={isPublishing}>
+            {t('common:publish')}
+          </StyledButtonWithProgress>
+        )}
+      </StyledRightAlignedWrapper>
     </>
   );
 };

@@ -21,19 +21,19 @@ import useUppy from '../../utils/hooks/useUppy';
 import { registrationValidationSchema } from '../../utils/validation/registration/registrationValidation';
 import { PageHeader } from '../../components/PageHeader';
 import Forbidden from '../errorpages/Forbidden';
+import { StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
 
 const StyledRegistration = styled.div`
   width: 100%;
 `;
 
-const StyledButtonGroupContainer = styled.div`
+const StyledButtonGroupContainer = styled(StyledRightAlignedWrapper)`
   margin-bottom: 1rem;
 `;
 
 const StyledButtonContainer = styled.div`
   display: inline-block;
-  margin-top: 1rem;
-  margin-right: 0.5rem;
+  margin-left: 0.5rem;
 `;
 
 interface RegistrationFormProps {
@@ -140,14 +140,9 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier = '', closeFor
               {tabNumber !== RegistrationTab.Submission && (
                 <StyledButtonGroupContainer>
                   <StyledButtonContainer>
-                    <Button color="primary" variant="contained" data-testid="button-next-tab" onClick={goToNextTab}>
-                      {t('common:next')}
-                    </Button>
-                  </StyledButtonContainer>
-
-                  <StyledButtonContainer>
                     <ButtonWithProgress
                       type="submit"
+                      variant="outlined"
                       isLoading={isSaving}
                       data-testid="button-save-registration"
                       onClick={async () => {
@@ -157,6 +152,11 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier = '', closeFor
                       }}>
                       {t('common:save')}
                     </ButtonWithProgress>
+                  </StyledButtonContainer>
+                  <StyledButtonContainer>
+                    <Button color="primary" variant="contained" data-testid="button-next-tab" onClick={goToNextTab}>
+                      {t('common:next')}
+                    </Button>
                   </StyledButtonContainer>
                 </StyledButtonGroupContainer>
               )}
