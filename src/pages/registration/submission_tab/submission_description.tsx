@@ -1,7 +1,7 @@
 import LabelContentRow from '../../../components/LabelContentRow';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { FormikProps, useFormikContext } from 'formik';
+import { useFormikContext } from 'formik';
 import { Registration } from '../../../types/registration.types';
 import { getNpiDiscipline } from '../../../utils/npiDisciplines';
 import { registrationLanguages } from '../../../types/language.types';
@@ -9,7 +9,7 @@ import { displayDate } from '../../../utils/date-helpers';
 
 const SubmissionDescription: React.FC = () => {
   const { t } = useTranslation('registration');
-  const { values }: FormikProps<Registration> = useFormikContext();
+  const { values } = useFormikContext<Registration>();
 
   const {
     entityDescription: { mainTitle, abstract, description, npiSubjectHeading, tags, date, language },
@@ -27,7 +27,7 @@ const SubmissionDescription: React.FC = () => {
       <LabelContentRow label={t('description.npi_disciplines')}>
         {npiDiscipline ? `${npiDiscipline.mainDiscipline} - ${npiDiscipline.name}` : null}
       </LabelContentRow>
-      <LabelContentRow label={t('description.tags')}>{tags.join(', ')}</LabelContentRow>
+      <LabelContentRow label={t('description.keywords')}>{tags.join(', ')}</LabelContentRow>
       <LabelContentRow label={t('common:language')}>{t(`languages:${languageId}`)}</LabelContentRow>
       <LabelContentRow label={t('description.date_published')}>{displayDate(date)}</LabelContentRow>
       <LabelContentRow label={t('description.project_association')}>{project?.name}</LabelContentRow>

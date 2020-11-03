@@ -1,13 +1,13 @@
 import LabelContentRow from '../../../components/LabelContentRow';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FormikProps, useFormikContext } from 'formik';
+import { useFormikContext } from 'formik';
 import { Registration, PagesRange } from '../../../types/registration.types';
 import { JournalEntityDescription } from '../../../types/publication_types/journalRegistration.types';
 
 const SubmissionJournalPublication: FC = () => {
   const { t } = useTranslation('registration');
-  const { values }: FormikProps<Registration> = useFormikContext();
+  const { values } = useFormikContext<Registration>();
 
   const {
     reference: {

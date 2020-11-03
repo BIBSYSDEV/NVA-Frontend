@@ -1,6 +1,6 @@
 import React, { useEffect, FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FormikProps, useFormikContext, setNestedObjectValues } from 'formik';
+import { useFormikContext, setNestedObjectValues } from 'formik';
 import { Registration, DoiRequestStatus, RegistrationStatus } from '../../types/registration.types';
 import { Button, Typography } from '@material-ui/core';
 import styled from 'styled-components';
@@ -42,7 +42,7 @@ interface SubmissionPanelProps {
 const SubmissionPanel: FC<SubmissionPanelProps> = ({ isSaving, saveRegistration }) => {
   const user = useSelector((store: RootStore) => store.user);
   const { t } = useTranslation('registration');
-  const { values, isValid, dirty, errors, setTouched }: FormikProps<Registration> = useFormikContext();
+  const { values, isValid, dirty, errors, setTouched } = useFormikContext<Registration>();
   const [isPublishing, setIsPublishing] = useState(false);
   const history = useHistory();
   const dispatch = useDispatch();

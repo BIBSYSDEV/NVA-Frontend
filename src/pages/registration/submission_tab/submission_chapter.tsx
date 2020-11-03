@@ -1,12 +1,12 @@
 import LabelContentRow from '../../../components/LabelContentRow';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { FormikProps, useFormikContext } from 'formik';
+import { useFormikContext } from 'formik';
 import { Registration, PagesRange } from '../../../types/registration.types';
 
 const SubmissionChapter: React.FC = () => {
   const { t } = useTranslation('registration');
-  const { values }: FormikProps<Registration> = useFormikContext();
+  const { values } = useFormikContext<Registration>();
   const {
     reference: { publicationInstance },
   } = values.entityDescription;
