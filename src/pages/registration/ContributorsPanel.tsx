@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormHelperText, Typography } from '@material-ui/core';
-import { FormikProps, useFormikContext, FieldArray, ErrorMessage, FieldArrayRenderProps } from 'formik';
+import { useFormikContext, FieldArray, ErrorMessage, FieldArrayRenderProps } from 'formik';
 import Card from '../../components/Card';
 import { Registration } from '../../types/registration.types';
 import { ContributorFieldNames } from '../../types/publicationFieldNames';
@@ -15,7 +15,9 @@ const ContributorsPanel: FC<PanelProps> = ({ setTouchedFields }) => {
     values: {
       entityDescription: { contributors },
     },
-  }: FormikProps<Registration> = useFormikContext();
+    errors,
+  } = useFormikContext<Registration>();
+  const contributorsError = errors.entityDescription?.contributors;
 
   const contributorsRef = useRef(contributors);
   useEffect(() => {
@@ -36,7 +38,7 @@ const ContributorsPanel: FC<PanelProps> = ({ setTouchedFields }) => {
         {({ push, replace, name }: FieldArrayRenderProps) => (
           <>
             <Authors push={push} replace={replace} />
-            {contributors.length === 0 && (
+            {contributors.length === 0 && typeof contributorsError === 'string' && (
               <FormHelperText error>
                 <ErrorMessage name={name} />
               </FormHelperText>
