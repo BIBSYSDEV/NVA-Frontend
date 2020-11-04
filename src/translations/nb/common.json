@@ -27,6 +27,7 @@
   "language": "Språk",
   "last_name": "Etternavn",
   "loading": "Laster",
+  "message": "Melding",
   "my_institution": "Min institusjon",
   "name": "Navn",
   "next": "Neste",
@@ -54,6 +55,7 @@
   "show": "Vis",
   "start": "Start",
   "status": "Status",
+  "support": "Kundestøtte",
   "table_pagination": {
     "more_than": "mer enn",
     "next_page": "Neste side",

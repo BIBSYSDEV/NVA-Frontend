@@ -22,6 +22,8 @@ import { registrationValidationSchema } from '../../utils/validation/registratio
 import { PageHeader } from '../../components/PageHeader';
 import Forbidden from '../errorpages/Forbidden';
 import { StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
+import Modal from '../../components/Modal';
+import { SupportModalContent } from './SupportModalContent';
 
 const StyledRegistration = styled.div`
   width: 100%;
@@ -48,6 +50,7 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier = '', closeFor
   const initialTabNumber = new URLSearchParams(history.location.search).get('tab');
   const [tabNumber, setTabNumber] = useState(initialTabNumber ? +initialTabNumber : RegistrationTab.Description);
   const [isSaving, setIsSaving] = useState(false);
+  const [openSupport, setOpenSupport] = useState(false);
   const dispatch = useDispatch();
   const uppy = useUppy();
   const [registration, isLoadingRegistration, handleSetRegistration] = useFetchRegistration(identifier);
@@ -137,8 +140,12 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier = '', closeFor
                   return await saveRegistration(values);
                 }}
               />
+
               {tabNumber !== RegistrationTab.Submission && (
                 <StyledButtonGroupContainer>
+                  <Button variant="text" color="primary" onClick={() => setOpenSupport(true)}>
+                    {t('common:support')}
+                  </Button>
                   <StyledButtonContainer>
                     <ButtonWithProgress
                       type="submit"
@@ -164,6 +171,9 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier = '', closeFor
           )}
         </Formik>
       </StyledRegistration>
+      <Modal open={openSupport} onClose={() => setOpenSupport(false)} headingText={t('common:support')}>
+        <SupportModalContent closeModal={() => setOpenSupport(false)} />
+      </Modal>
     </>
   );
 };
