@@ -20,6 +20,10 @@ const useFetchAuthorities = (
   };
 
   useEffect(() => {
+    setSearchTerm(initialSearchTerm);
+  }, [initialSearchTerm]);
+
+  useEffect(() => {
     const cancelSource = Axios.CancelToken.source();
     const fetchAuthorities = async () => {
       setIsLoading(true);

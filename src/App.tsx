@@ -50,7 +50,7 @@ const App: FC = () => {
   const dispatch = useDispatch();
   const user = useSelector((store: RootStore) => store.user);
   const [isLoadingUser, setIsLoadingUser] = useState(true);
-  const [authorities, isLoadingAuthorities, handleNewAuthoritiesSearchTerm] = useFetchAuthorities(user?.name ?? '');
+  const [authorities, isLoadingAuthorities] = useFetchAuthorities(user?.name ?? '');
   const [authorityDataUpdated, setAuthorityDataUpdated] = useState(false);
 
   useEffect(() => {
@@ -107,13 +107,6 @@ const App: FC = () => {
   }, [dispatch, user]);
 
   useEffect(() => {
-    // Update search term for fetching possible authorities
-    if (user?.name && user.customerId && !authorities && !isLoadingAuthorities) {
-      handleNewAuthoritiesSearchTerm(user.name);
-    }
-  }, [handleNewAuthoritiesSearchTerm, authorities, isLoadingAuthorities, user]);
-
-  useEffect(() => {
     // Handle possible authorities
     const fetchAuthority = async () => {
       if (authorities) {
@@ -144,7 +137,7 @@ const App: FC = () => {
       }
     };
     // Avoid infinite loop by breaking when new data is identical to existing data
-    if (user?.customerId && !user.authority && user.possibleAuthorities !== authorities) {
+    if (user && !user.authority && user.possibleAuthorities !== authorities) {
       fetchAuthority();
     }
   }, [dispatch, authorities, user]);
@@ -163,7 +156,7 @@ const App: FC = () => {
         </StyledContent>
         <Footer />
       </StyledApp>
-      {!isLoadingAuthorities && authorityDataUpdated && user?.customerId && <AuthorityOrcidModal />}
+      {!isLoadingAuthorities && authorityDataUpdated && <AuthorityOrcidModal />}
     </BrowserRouter>
   );
 };
