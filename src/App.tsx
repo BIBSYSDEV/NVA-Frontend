@@ -109,32 +109,28 @@ const App: FC = () => {
   useEffect(() => {
     // Handle possible authorities
     const fetchAuthority = async () => {
-      if (authorities) {
-        const filteredAuthorities: Authority[] = authorities.filter((auth: Authority) =>
-          auth.feideids.some((id) => id === user.id)
-        );
-        if (filteredAuthorities.length === 1 && user?.cristinId) {
-          const existingScn = filteredAuthorities[0].systemControlNumber;
-          const existingAuthority: Authority = await getAuthority(existingScn);
-          if (existingAuthority.orgunitids.includes(user.cristinId)) {
-            dispatch(setAuthorityData(existingAuthority));
-          } else {
-            const updatedAuthority = await addQualifierIdForAuthority(
-              existingScn,
-              AuthorityQualifiers.ORGUNIT_ID,
-              user.cristinId
-            );
-            if (updatedAuthority?.error) {
-              dispatch(setNotification(updatedAuthority.error, NotificationVariant.Error));
-            } else {
-              dispatch(setAuthorityData(updatedAuthority));
-            }
-          }
+      const filteredAuthorities = authorities.filter((auth) => auth.feideids.some((id) => id === user.id));
+      if (filteredAuthorities.length === 1 && user?.cristinId) {
+        const existingScn = filteredAuthorities[0].systemControlNumber;
+        const existingAuthority: Authority = await getAuthority(existingScn);
+        if (existingAuthority.orgunitids.includes(user.cristinId)) {
+          dispatch(setAuthorityData(existingAuthority));
         } else {
-          dispatch(setPossibleAuthorities(authorities));
+          const updatedAuthority = await addQualifierIdForAuthority(
+            existingScn,
+            AuthorityQualifiers.ORGUNIT_ID,
+            user.cristinId
+          );
+          if (updatedAuthority?.error) {
+            dispatch(setNotification(updatedAuthority.error, NotificationVariant.Error));
+          } else {
+            dispatch(setAuthorityData(updatedAuthority));
+          }
         }
-        setAuthorityDataUpdated(true);
+      } else {
+        dispatch(setPossibleAuthorities(authorities));
       }
+      setAuthorityDataUpdated(true);
     };
     // Avoid infinite loop by breaking when new data is identical to existing data
     if (user && !user.authority && user.possibleAuthorities !== authorities) {
