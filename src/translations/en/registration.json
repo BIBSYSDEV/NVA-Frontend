@@ -147,6 +147,7 @@
     "Rejected": "Rejected"
   },
   "submission": {
+    "corresponding_author": "Corresponding author",
     "number_of_affiliations": "{{count}} affiliation",
     "number_of_affiliations_plural": "{{count}} affiliations"
   },

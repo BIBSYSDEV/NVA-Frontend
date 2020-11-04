@@ -147,6 +147,7 @@
     "Rejected": "Avvist"
   },
   "submission": {
+    "corresponding_author": "Korresponderende forfatter",
     "number_of_affiliations": "{{count}} tilhørighet",
     "number_of_affiliations_plural": "{{count}} tilhørigheter"
   },

@@ -1,4 +1,4 @@
-import { FormikProps, useFormikContext } from 'formik';
+import { useFormikContext } from 'formik';
 import React, { useEffect, FC, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
@@ -30,7 +30,7 @@ const StyledCard = styled(Card)`
 
 const ReferencesPanel: FC<PanelProps> = ({ setTouchedFields }) => {
   const { t } = useTranslation('registration');
-  const { values, setTouched, setFieldValue, touched }: FormikProps<Registration> = useFormikContext();
+  const { values, setTouched, setFieldValue, touched } = useFormikContext<Registration>();
   const publicationContextType = values.entityDescription.reference.publicationContext.type;
   const contextRef = useRef(publicationContextType);
 
