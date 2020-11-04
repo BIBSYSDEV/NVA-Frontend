@@ -25,8 +25,6 @@ const UserInstitution: FC = () => {
   const [openUnitForm, setOpenUnitForm] = useState(false);
   const [affiliationIdToRemove, setAffiliationIdToRemove] = useState('');
   const [isRemovingAffiliation, setIsRemovingAffiliation] = useState(false);
-  const [newOrgunitId, setNewOrgunitId] = useState('');
-  const [initialInstitutionId, setInitialInstitutionId] = useState('');
 
   const { t, i18n } = useTranslation('profile');
   const dispatch = useDispatch();
@@ -40,17 +38,10 @@ const UserInstitution: FC = () => {
     setOpenUnitForm(!openUnitForm);
   };
 
-  // TODO1: close editAffiliation when pressing "cancel"
   // TODO2: actually make call to backend to edit affiliation
   // TODO3: cleanup
 
-  const openEditUnitForm = (initialOrgunitId: string) => {
-    setOpenUnitForm(true);
-    console.log('initialOrgunitId', initialOrgunitId);
-    setInitialInstitutionId(initialOrgunitId);
-  };
-
-  const editAffiliation = async (oldIdentifier: string) => {
+  const editAffiliation = async (oldIdentifier: string, newIdentifier: string) => {
     if (!authority) {
       return;
     }
@@ -58,7 +49,7 @@ const UserInstitution: FC = () => {
       authority.systemControlNumber,
       AuthorityQualifiers.ORGUNIT_ID,
       oldIdentifier,
-      newOrgunitId
+      newIdentifier
     );
     if (updatedAuthority.error) {
       dispatch(setNotification(updatedAuthority.error, NotificationVariant.Error));
@@ -86,6 +77,11 @@ const UserInstitution: FC = () => {
     }
     setAffiliationIdToRemove('');
     setIsRemovingAffiliation(false);
+  };
+
+  const handleEdit = async (value: FormikInstitutionUnit, initialInstitution: string) => {
+    console.log('handle edit', value);
+    console.log('handle edit initial', initialInstitution);
   };
 
   const handleSubmit = async (value: FormikInstitutionUnit) => {
@@ -127,18 +123,14 @@ const UserInstitution: FC = () => {
           authority.orgunitids.map((orgunitId) => (
             <InstitutionCard
               key={orgunitId}
-              openEditUnitForm={openEditUnitForm}
               orgunitId={orgunitId}
               setAffiliationIdToRemove={setAffiliationIdToRemove}
+              onSubmit={handleEdit}
             />
           ))}
 
         {openUnitForm ? (
-          <SelectInstitution
-            initialInstitutionId={initialInstitutionId}
-            onSubmit={handleSubmit}
-            onClose={toggleUnitForm}
-          />
+          <SelectInstitution onSubmit={handleSubmit} onClose={toggleUnitForm} />
         ) : (
           <StyledRightAlignedWrapper>
             <Button

@@ -6,7 +6,9 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import Card from '../../../components/Card';
 import AffiliationHierarchy from '../../../components/institution/AffiliationHierarchy';
+import EditInstitution from '../../../components/institution/EditInstitution';
 import { StyledRightAlignedWrapper } from '../../../components/styled/Wrappers';
+import { FormikInstitutionUnit } from '../../../types/institution.types';
 
 const StyledCard = styled(Card)`
   display: grid;
@@ -35,14 +37,19 @@ const StyledButtonContainer = styled(StyledRightAlignedWrapper)`
 `;
 
 interface InstitutionCardProps {
-  openEditUnitForm: (oldOrgunitId: string) => void;
   orgunitId: string;
   setAffiliationIdToRemove: (orgunitId: string) => void;
+  onSubmit: (values: FormikInstitutionUnit, initialInstitution: string) => void;
 }
 
-const InstitutionCard: FC<InstitutionCardProps> = ({ openEditUnitForm, orgunitId, setAffiliationIdToRemove }) => {
+const InstitutionCard: FC<InstitutionCardProps> = ({ orgunitId, setAffiliationIdToRemove, onSubmit }) => {
   const { t } = useTranslation('common');
   const [hideCard, setHideCard] = useState(false);
+  const [openEditForm, setOpenEditForm] = useState(false);
+
+  const handleSubmit = (values: FormikInstitutionUnit) => {
+    onSubmit(values, orgunitId);
+  };
 
   return !hideCard ? (
     <StyledCard data-testid="institution-presentation">
@@ -55,7 +62,7 @@ const InstitutionCard: FC<InstitutionCardProps> = ({ openEditUnitForm, orgunitId
           color="primary"
           data-testid={`button-edit-institution-${orgunitId}`}
           onClick={() => {
-            openEditUnitForm(orgunitId);
+            setOpenEditForm(true);
             setHideCard(true);
           }}>
           <EditIcon />
@@ -71,6 +78,15 @@ const InstitutionCard: FC<InstitutionCardProps> = ({ openEditUnitForm, orgunitId
         </Button>
       </StyledButtonContainer>
     </StyledCard>
+  ) : openEditForm ? (
+    <EditInstitution
+      initialInstitutionId={orgunitId}
+      onSubmit={handleSubmit}
+      onCancel={() => {
+        setHideCard(false);
+        setOpenEditForm(false);
+      }}
+    />
   ) : null;
 };
 
