@@ -1,12 +1,22 @@
 import { CancelToken } from 'axios';
-import { getLanguageCodeForInstitution } from '../pages/registration/description_tab/projects_field/helpers';
+import i18n from '../translations/i18n';
 import { InstitutionUnitBase, RecursiveInstitutionUnit } from '../types/institution.types';
+import { LanguageCodes } from '../types/language.types';
 import { apiRequest } from './apiRequest';
 
 export enum InstitutionApiPaths {
   INSTITUTIONS = '/institution/institutions',
   DEPARTMENTS = '/institution/departments',
 }
+
+const getLanguageCodeForInstitution = () => {
+  const currentLanguage = i18n.language;
+  if (currentLanguage === LanguageCodes.NORWEGIAN_BOKMAL || currentLanguage === LanguageCodes.NORWEGIAN_NYNORSK) {
+    return 'nb';
+  } else {
+    return 'en';
+  }
+};
 
 export const getInstitutions = async (cancelToken?: CancelToken) =>
   await apiRequest<InstitutionUnitBase[]>({

@@ -3,15 +3,6 @@ import { LanguageCodes } from '../../../../types/language.types';
 import { CristinProject, ResearchProject } from '../../../../types/project.types';
 import { BackendTypeNames } from '../../../../types/publication_types/commonRegistration.types';
 
-export const getLanguageCodeForInstitution = () => {
-  const currentLanguage = i18n.language;
-  if (currentLanguage === LanguageCodes.NORWEGIAN_BOKMAL || currentLanguage === LanguageCodes.NORWEGIAN_NYNORSK) {
-    return 'nb';
-  } else {
-    return 'en';
-  }
-};
-
 export const getProjectTitle = (option: CristinProject): string => {
   const selectedLanguage = i18n.language;
   if (selectedLanguage === LanguageCodes.NORWEGIAN_BOKMAL) {
