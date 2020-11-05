@@ -24,12 +24,12 @@ const StyledLoadingInfo = styled.div`
   margin: 1rem;
 `;
 
-interface SelectInstitutionProps {
+interface AddInstitutionProps {
   onSubmit: (values: FormikInstitutionUnit) => void;
   onClose?: () => void;
 }
 
-const SelectInstitution: FC<SelectInstitutionProps> = ({ onSubmit, onClose }) => {
+const AddInstitution: FC<AddInstitutionProps> = ({ onSubmit, onClose }) => {
   const { t } = useTranslation('common');
   const [institutions, isLoadingInstitutions] = useFetchInstitutions();
   const [selectedInstitutionId, setSelectedInstitutionId] = useState('');
@@ -88,4 +88,4 @@ const SelectInstitution: FC<SelectInstitutionProps> = ({ onSubmit, onClose }) =>
   );
 };
 
-export default SelectInstitution;
+export default AddInstitution;

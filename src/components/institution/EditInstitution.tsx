@@ -37,7 +37,7 @@ const EditInstitution: FC<EditInstitutionProps> = ({ initialInstitutionId, onCan
   const initialInstitution = institutions.filter(
     (institution: InstitutionUnitBase) => institution.id === convertToInstitution(initialInstitutionId)
   );
-  const { t } = useTranslation('institution');
+  const { t } = useTranslation('common');
   const initialValue = initialInstitution.pop();
 
   return (
@@ -59,7 +59,7 @@ const EditInstitution: FC<EditInstitutionProps> = ({ initialInstitutionId, onCan
                 color="primary"
                 disabled={isLoadingSubunits || isSubmitting}
                 data-testid="institution-add-button">
-                {t('add')}
+                {t('edit')}
               </StyledButton>
 
               <StyledButton

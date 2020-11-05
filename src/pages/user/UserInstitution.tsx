@@ -10,7 +10,7 @@ import {
 } from '../../api/authorityApi';
 import Card from '../../components/Card';
 import ConfirmDialog from '../../components/ConfirmDialog';
-import SelectInstitution from '../../components/institution/SelectInstitution';
+import AddInstitution from '../../components/institution/AddInstitution';
 import { StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { setAuthorityData } from '../../redux/actions/userActions';
@@ -22,7 +22,7 @@ import InstitutionCard from './institution/InstitutionCard';
 
 const UserInstitution: FC = () => {
   const authority = useSelector((state: RootStore) => state.user.authority);
-  const [openUnitForm, setOpenUnitForm] = useState(false);
+  const [openAddInstitutionForm, setOpenAddInstitutionForm] = useState(false);
   const [affiliationIdToRemove, setAffiliationIdToRemove] = useState('');
   const [isRemovingAffiliation, setIsRemovingAffiliation] = useState(false);
 
@@ -31,11 +31,11 @@ const UserInstitution: FC = () => {
 
   useEffect(() => {
     // Close institution form if user changes language, since selected values will be invalid
-    setOpenUnitForm(false);
+    setOpenAddInstitutionForm(false);
   }, [i18n.language]);
 
   const toggleUnitForm = () => {
-    setOpenUnitForm(!openUnitForm);
+    setOpenAddInstitutionForm(!openAddInstitutionForm);
   };
 
   // TODO2: actually make call to backend to edit affiliation
@@ -112,7 +112,7 @@ const UserInstitution: FC = () => {
         dispatch(setNotification(t('feedback:success.added_affiliation'), NotificationVariant.Success));
       }
     }
-    setOpenUnitForm(false);
+    setOpenAddInstitutionForm(false);
   };
 
   return (
@@ -129,8 +129,8 @@ const UserInstitution: FC = () => {
             />
           ))}
 
-        {openUnitForm ? (
-          <SelectInstitution onSubmit={handleSubmit} onClose={toggleUnitForm} />
+        {openAddInstitutionForm ? (
+          <AddInstitution onSubmit={handleSubmit} onClose={toggleUnitForm} />
         ) : (
           <StyledRightAlignedWrapper>
             <Button

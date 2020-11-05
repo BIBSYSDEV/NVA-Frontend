@@ -44,14 +44,19 @@ interface InstitutionCardProps {
 
 const InstitutionCard: FC<InstitutionCardProps> = ({ orgunitId, setAffiliationIdToRemove, onSubmit }) => {
   const { t } = useTranslation('common');
-  const [hideCard, setHideCard] = useState(false);
-  const [openEditForm, setOpenEditForm] = useState(false);
+  const [openEditInstitutionForm, setOpenEditInstitutionForm] = useState(false);
 
   const handleSubmit = (values: FormikInstitutionUnit) => {
     onSubmit(values, orgunitId);
   };
 
-  return !hideCard ? (
+  return openEditInstitutionForm ? (
+    <EditInstitution
+      initialInstitutionId={orgunitId}
+      onSubmit={handleSubmit}
+      onCancel={() => setOpenEditInstitutionForm(false)}
+    />
+  ) : (
     <StyledCard data-testid="institution-presentation">
       <StyledTextContainer>
         <AffiliationHierarchy unitUri={orgunitId} />
@@ -61,10 +66,7 @@ const InstitutionCard: FC<InstitutionCardProps> = ({ orgunitId, setAffiliationId
           variant="outlined"
           color="primary"
           data-testid={`button-edit-institution-${orgunitId}`}
-          onClick={() => {
-            setOpenEditForm(true);
-            setHideCard(true);
-          }}>
+          onClick={() => setOpenEditInstitutionForm(true)}>
           <EditIcon />
           {t('edit')}
         </Button>
@@ -78,16 +80,7 @@ const InstitutionCard: FC<InstitutionCardProps> = ({ orgunitId, setAffiliationId
         </Button>
       </StyledButtonContainer>
     </StyledCard>
-  ) : openEditForm ? (
-    <EditInstitution
-      initialInstitutionId={orgunitId}
-      onSubmit={handleSubmit}
-      onCancel={() => {
-        setHideCard(false);
-        setOpenEditForm(false);
-      }}
-    />
-  ) : null;
+  );
 };
 
 export default InstitutionCard;
