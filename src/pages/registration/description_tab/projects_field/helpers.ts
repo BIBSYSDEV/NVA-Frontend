@@ -12,17 +12,8 @@ export const getLanguageCodeForInstitution = () => {
   }
 };
 
-export const getLanguageCode = () => {
-  const currentLanguage = i18n.language;
-  if (currentLanguage === LanguageCodes.NORWEGIAN_BOKMAL || currentLanguage === LanguageCodes.NORWEGIAN_NYNORSK) {
-    return 'nob';
-  } else {
-    return 'eng';
-  }
-};
-
 export const getProjectTitle = (option: CristinProject): string => {
-  const selectedLanguage = getLanguageCode();
+  const selectedLanguage = i18n.language;
   if (selectedLanguage === LanguageCodes.NORWEGIAN_BOKMAL) {
     const norwegianTitle = option.titles.find((title) => title.language === 'no')?.title;
     if (norwegianTitle) {
