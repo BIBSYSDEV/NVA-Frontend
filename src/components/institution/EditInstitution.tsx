@@ -22,7 +22,7 @@ const StyledInstitutionSearchContainer = styled.div`
 `;
 
 const StyledButton = styled(Button)`
-  margin: 0.5rem;
+  margin: 0.5rem 0.5rem 0 0;
 `;
 
 interface EditInstitutionProps {
@@ -32,26 +32,22 @@ interface EditInstitutionProps {
 }
 
 const EditInstitution: FC<EditInstitutionProps> = ({ initialInstitutionId, onCancel, onSubmit }) => {
+  const { t } = useTranslation('common');
   const [institutions] = useFetchInstitutions();
   const [subunits, isLoadingSubunits] = useFetchDepartments(convertToInstitution(initialInstitutionId));
   const initialInstitution = institutions.filter(
     (institution: InstitutionUnitBase) => institution.id === convertToInstitution(initialInstitutionId)
   );
-  const { t } = useTranslation('common');
   const initialValue = initialInstitution.pop();
 
   return (
     <Formik initialValues={{}} onSubmit={onSubmit}>
       <Form>
         <Field name={FormikInstitutionUnitFieldNames.UNIT}>
-          {({ field: { name, value }, form: { setFieldValue, isSubmitting } }: FieldProps) => (
+          {({ field: { name }, form: { isSubmitting } }: FieldProps) => (
             <StyledInstitutionSearchContainer>
               <InstitutionAutocomplete institutions={initialInstitution} disabled value={initialValue ?? null} />
-              <InstitutionSelector
-                units={subunits}
-                fieldNamePrefix={FormikInstitutionUnitFieldNames.UNIT}
-                label={t('institution:department')}
-              />
+              <InstitutionSelector units={subunits} fieldNamePrefix={name} label={t('institution:department')} />
 
               <StyledButton
                 variant="contained"
@@ -62,12 +58,7 @@ const EditInstitution: FC<EditInstitutionProps> = ({ initialInstitutionId, onCan
                 {t('edit')}
               </StyledButton>
 
-              <StyledButton
-                onClick={() => {
-                  onCancel();
-                }}
-                data-testid="institution-cancel-button"
-                variant="contained">
+              <StyledButton onClick={onCancel} data-testid="institution-cancel-button" variant="contained">
                 {t('cancel')}
               </StyledButton>
             </StyledInstitutionSearchContainer>

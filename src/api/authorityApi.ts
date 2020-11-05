@@ -1,5 +1,4 @@
 import Axios, { CancelToken } from 'axios';
-
 import i18n from '../translations/i18n';
 import { StatusCode } from '../utils/constants';
 import { getIdToken } from './userApi';

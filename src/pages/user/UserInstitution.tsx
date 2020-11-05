@@ -6,7 +6,6 @@ import {
   addQualifierIdForAuthority,
   AuthorityQualifiers,
   removeQualifierIdFromAuthority,
-  updateQualifierIdForAuthority,
 } from '../../api/authorityApi';
 import Card from '../../components/Card';
 import ConfirmDialog from '../../components/ConfirmDialog';
@@ -38,27 +37,6 @@ const UserInstitution: FC = () => {
     setOpenAddInstitutionForm(!openAddInstitutionForm);
   };
 
-  // TODO2: actually make call to backend to edit affiliation
-  // TODO3: cleanup
-
-  const editAffiliation = async (oldIdentifier: string, newIdentifier: string) => {
-    if (!authority) {
-      return;
-    }
-    const updatedAuthority = await updateQualifierIdForAuthority(
-      authority.systemControlNumber,
-      AuthorityQualifiers.ORGUNIT_ID,
-      oldIdentifier,
-      newIdentifier
-    );
-    if (updatedAuthority.error) {
-      dispatch(setNotification(updatedAuthority.error, NotificationVariant.Error));
-    } else if (updatedAuthority) {
-      dispatch(setAuthorityData(updatedAuthority));
-      dispatch(setNotification(t('feedback:success.update_authority')));
-    }
-  };
-
   const removeAffiliation = async () => {
     if (!authority || !affiliationIdToRemove) {
       return;
@@ -79,12 +57,7 @@ const UserInstitution: FC = () => {
     setIsRemovingAffiliation(false);
   };
 
-  const handleEdit = async (value: FormikInstitutionUnit, initialInstitution: string) => {
-    console.log('handle edit', value);
-    console.log('handle edit initial', initialInstitution);
-  };
-
-  const handleSubmit = async (value: FormikInstitutionUnit) => {
+  const handleAddInstitution = async (value: FormikInstitutionUnit) => {
     if (!value.unit) {
       return;
     }
@@ -125,12 +98,11 @@ const UserInstitution: FC = () => {
               key={orgunitId}
               orgunitId={orgunitId}
               setAffiliationIdToRemove={setAffiliationIdToRemove}
-              onSubmit={handleEdit}
             />
           ))}
 
         {openAddInstitutionForm ? (
-          <AddInstitution onSubmit={handleSubmit} onClose={toggleUnitForm} />
+          <AddInstitution onSubmit={handleAddInstitution} onClose={toggleUnitForm} />
         ) : (
           <StyledRightAlignedWrapper>
             <Button

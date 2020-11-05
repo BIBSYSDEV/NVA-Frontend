@@ -10,7 +10,7 @@ import useFetchInstitutions from '../../utils/hooks/useFetchInstitutions';
 import InstitutionAutocomplete from './InstitutionAutocomplete';
 
 const StyledButton = styled(Button)`
-  margin: 0.5rem;
+  margin: 0.5rem 0.5rem 0 0;
 `;
 
 const StyledInstitutionSearchContainer = styled.div`
