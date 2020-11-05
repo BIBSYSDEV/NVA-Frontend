@@ -16,7 +16,6 @@ import { setNotification } from './redux/actions/notificationActions';
 import { setAuthorityData, setPossibleAuthorities, setRoles, setUser } from './redux/actions/userActions';
 import { RootStore } from './redux/reducers/rootReducer';
 import { Authority } from './types/authority.types';
-import { LanguageCodes } from './types/language.types';
 import { NotificationVariant } from './types/notification.types';
 import { InstitutionUser } from './types/user.types';
 import { awsConfig } from './utils/aws-config';
@@ -58,18 +57,6 @@ const App: FC = () => {
     // Setup aws-amplify
     if (!USE_MOCK_DATA) {
       Amplify.configure(awsConfig);
-    }
-  }, []);
-
-  useEffect(() => {
-    const currentLanguage = localStorage.getItem('i18nextLng');
-    if (
-      currentLanguage === LanguageCodes.NORWEGIAN_BOKMAL_NORWAY ||
-      currentLanguage === LanguageCodes.NORWEGIAN_NYNORSK_NORWAY
-    ) {
-      localStorage.setItem('i18nextLng', LanguageCodes.NORWEGIAN_BOKMAL);
-    } else if (currentLanguage === LanguageCodes.ENGLISH_BRITAIN || currentLanguage === LanguageCodes.ENGLISH_US) {
-      localStorage.setItem('i18nextLng', LanguageCodes.ENGLISH);
     }
   }, []);
 

@@ -1,5 +1,6 @@
+import i18n from '../../translations/i18n';
 import { InstitutionState } from '../../types/institution.types';
-import { SET_INSTITUTIONS, InstitutionActions } from '../actions/institutionActions';
+import { InstitutionActions, SET_INSTITUTIONS } from '../actions/institutionActions';
 
 const defaultState: InstitutionState = {
   items: [],
@@ -8,7 +9,7 @@ const defaultState: InstitutionState = {
 export const institutionReducer = (state = defaultState, action: InstitutionActions) => {
   switch (action.type) {
     case SET_INSTITUTIONS:
-      return { items: action.institutions, language: localStorage.getItem('i18nextLng') };
+      return { items: action.institutions, language: i18n.language };
     default:
       return state;
   }

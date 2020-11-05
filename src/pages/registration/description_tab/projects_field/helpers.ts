@@ -1,10 +1,29 @@
-import { CristinProject, ResearchProject } from '../../../../types/project.types';
+import i18n from '../../../../translations/i18n';
 import { LanguageCodes } from '../../../../types/language.types';
+import { CristinProject, ResearchProject } from '../../../../types/project.types';
 import { BackendTypeNames } from '../../../../types/publication_types/commonRegistration.types';
 
+export const getLanguageCodeForInstitution = () => {
+  const currentLanguage = i18n.language;
+  if (currentLanguage === LanguageCodes.NORWEGIAN_BOKMAL || currentLanguage === LanguageCodes.NORWEGIAN_NYNORSK) {
+    return 'nb';
+  } else {
+    return 'en';
+  }
+};
+
+export const getLanguageCode = () => {
+  const currentLanguage = i18n.language;
+  if (currentLanguage === LanguageCodes.NORWEGIAN_BOKMAL || currentLanguage === LanguageCodes.NORWEGIAN_NYNORSK) {
+    return 'nob';
+  } else {
+    return 'eng';
+  }
+};
+
 export const getProjectTitle = (option: CristinProject): string => {
-  const selectedLanguage = localStorage.getItem('i18nextLng');
-  if (selectedLanguage === LanguageCodes.NORWEGIAN_BOKMAL || selectedLanguage === LanguageCodes.NORWEGIAN_NYNORSK) {
+  const selectedLanguage = getLanguageCode();
+  if (selectedLanguage === LanguageCodes.NORWEGIAN_BOKMAL) {
     const norwegianTitle = option.titles.find((title) => title.language === 'no')?.title;
     if (norwegianTitle) {
       return norwegianTitle;
