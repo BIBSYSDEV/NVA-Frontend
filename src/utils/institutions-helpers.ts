@@ -46,7 +46,11 @@ export const getUnitHierarchyNames = (unit: RecursiveInstitutionUnit, unitNames:
 // converts from https://api.cristin.no/v2/units/7482.3.3.0
 //            to https://api.cristin.no/v2/institutions/7482
 export const convertToInstitution = (unitId: string) => {
-  const id = unitId.split('https://api.cristin.no/v2/units/').pop();
-  const institutionId = id?.split('.').reverse().pop();
-  return `https://api.cristin.no/v2/institutions/${institutionId}`;
+  if (unitId.includes('institutions')) {
+    return unitId;
+  } else {
+    const id = unitId.split('https://api.cristin.no/v2/units/').pop();
+    const institutionId = id?.split('.').reverse().pop();
+    return `https://api.cristin.no/v2/institutions/${institutionId}`;
+  }
 };
