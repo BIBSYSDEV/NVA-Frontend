@@ -7,9 +7,9 @@ import { NotificationVariant } from '../../types/notification.types';
 import { getAuthorities } from '../../api/authorityApi';
 import { Authority } from '../../types/authority.types';
 
-const useFetchAuthorities = (searchTerm: string): [Authority[], boolean] => {
+const useFetchAuthorities = (searchTerm: string): [Authority[] | undefined, boolean] => {
   const dispatch = useDispatch();
-  const [authorities, setAuthorities] = useState<Authority[]>([]);
+  const [authorities, setAuthorities] = useState<Authority[]>();
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -18,12 +18,12 @@ const useFetchAuthorities = (searchTerm: string): [Authority[], boolean] => {
       setIsLoading(true);
       const fetchedAuthorities = await getAuthorities(searchTerm, cancelSource.token);
       if (fetchedAuthorities) {
-        setIsLoading(false);
         if (fetchedAuthorities.error) {
           dispatch(setNotification(fetchedAuthorities.error, NotificationVariant.Error));
         } else {
           setAuthorities(fetchedAuthorities);
         }
+        setIsLoading(false);
       }
     };
     if (searchTerm) {

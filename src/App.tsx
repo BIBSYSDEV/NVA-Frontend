@@ -12,7 +12,6 @@ import Notifier from './layout/Notifier';
 import AuthorityOrcidModal from './pages/user/authority/AuthorityOrcidModal';
 import { setAuthorityData, setPossibleAuthorities, setUser, setRoles } from './redux/actions/userActions';
 import { RootStore } from './redux/reducers/rootReducer';
-import { Authority } from './types/authority.types';
 import { awsConfig } from './utils/aws-config';
 import { USE_MOCK_DATA } from './utils/constants';
 import { mockUser } from './utils/testfiles/mock_feide_user';
@@ -22,6 +21,7 @@ import { setNotification } from './redux/actions/notificationActions';
 import { getInstitutionUser } from './api/roleApi';
 import { NotificationVariant } from './types/notification.types';
 import { InstitutionUser } from './types/user.types';
+import { useTranslation } from 'react-i18next';
 
 const StyledApp = styled.div`
   min-height: 100vh;
@@ -48,10 +48,10 @@ const ProgressContainer = styled.div`
 
 const App: FC = () => {
   const dispatch = useDispatch();
+  const { t } = useTranslation('feedback');
   const user = useSelector((store: RootStore) => store.user);
   const [isLoadingUser, setIsLoadingUser] = useState(true);
-  const [authorities, isLoadingAuthorities] = useFetchAuthorities(user?.name ?? '');
-  const [authorityDataUpdated, setAuthorityDataUpdated] = useState(false);
+  const [authorities] = useFetchAuthorities(user?.name ?? '');
 
   useEffect(() => {
     // Setup aws-amplify
@@ -109,34 +109,45 @@ const App: FC = () => {
   useEffect(() => {
     // Handle possible authorities
     const fetchAuthority = async () => {
-      const filteredAuthorities = authorities.filter((auth) => auth.feideids.some((id) => id === user.id));
-      if (filteredAuthorities.length === 1 && user?.cristinId) {
+      const filteredAuthorities = authorities?.filter((auth) => auth.feideids.some((id) => id === user.id));
+      if (filteredAuthorities?.length === 1) {
+        // Use exsisting authority
         const existingScn = filteredAuthorities[0].systemControlNumber;
-        const existingAuthority: Authority = await getAuthority(existingScn);
-        if (existingAuthority.orgunitids.includes(user.cristinId)) {
-          dispatch(setAuthorityData(existingAuthority));
-        } else {
-          const updatedAuthority = await addQualifierIdForAuthority(
-            existingScn,
-            AuthorityQualifiers.ORGUNIT_ID,
-            user.cristinId
-          );
-          if (updatedAuthority?.error) {
-            dispatch(setNotification(updatedAuthority.error, NotificationVariant.Error));
+        const existingAuthority = await getAuthority(existingScn);
+        if (existingAuthority?.error) {
+          dispatch(setNotification(t('error.get_authority'), NotificationVariant.Error));
+        } else if (existingAuthority?.data) {
+          if (user.cristinId) {
+            // Ensure authority has cristinId in orgunitid
+            if (existingAuthority.data.orgunitids.includes(user.cristinId)) {
+              dispatch(setAuthorityData(existingAuthority.data));
+            } else {
+              const updatedAuthority = await addQualifierIdForAuthority(
+                existingScn,
+                AuthorityQualifiers.ORGUNIT_ID,
+                user.cristinId
+              );
+              if (updatedAuthority?.error) {
+                dispatch(setNotification(updatedAuthority.error, NotificationVariant.Error));
+              } else {
+                dispatch(setAuthorityData(updatedAuthority));
+              }
+            }
           } else {
-            dispatch(setAuthorityData(updatedAuthority));
+            // Use authority without cristinId
+            dispatch(setAuthorityData(existingAuthority.data));
           }
         }
-      } else {
+      } else if (authorities) {
+        // Multiple potential authorities
         dispatch(setPossibleAuthorities(authorities));
       }
-      setAuthorityDataUpdated(true);
     };
     // Avoid infinite loop by breaking when new data is identical to existing data
-    if (user && !user.authority && user.possibleAuthorities !== authorities) {
+    if (user && !user.authority && authorities && user.possibleAuthorities !== authorities) {
       fetchAuthority();
     }
-  }, [dispatch, authorities, user]);
+  }, [dispatch, t, authorities, user]);
 
   return isLoadingUser ? (
     <ProgressContainer>
@@ -152,7 +163,7 @@ const App: FC = () => {
         </StyledContent>
         <Footer />
       </StyledApp>
-      {user && !isLoadingAuthorities && authorityDataUpdated && <AuthorityOrcidModal />}
+      {user && (user.authority || user.possibleAuthorities) && <AuthorityOrcidModal />}
     </BrowserRouter>
   );
 };

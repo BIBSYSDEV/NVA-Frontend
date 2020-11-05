@@ -43,7 +43,7 @@ const AddContributorModalContent: FC<AddContributorModalContentProps> = ({ addAu
         <StyledProgressWrapper>
           <CircularProgress size={100} />
         </StyledProgressWrapper>
-      ) : authorities.length > 0 ? (
+      ) : authorities && authorities.length > 0 ? (
         <>
           {searchTerm && (
             <AuthorityList
