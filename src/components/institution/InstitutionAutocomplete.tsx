@@ -18,9 +18,9 @@ const InstitutionAutocomplete: FC<InstitutionAutocompleteProps> = ({
   helperText,
   institutions,
   label,
-  onChange,
   value = null,
   isLoading = false,
+  onChange,
 }) => {
   const { t } = useTranslation('common');
 

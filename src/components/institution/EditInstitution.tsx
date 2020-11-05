@@ -27,8 +27,8 @@ const StyledButton = styled(Button)`
 
 interface EditInstitutionProps {
   initialInstitutionId: string;
-  onSubmit: (values: FormikInstitutionUnit) => void;
   onCancel: () => void;
+  onSubmit: (values: FormikInstitutionUnit) => void;
 }
 
 const EditInstitution: FC<EditInstitutionProps> = ({ initialInstitutionId, onCancel, onSubmit }) => {
@@ -54,7 +54,7 @@ const EditInstitution: FC<EditInstitutionProps> = ({ initialInstitutionId, onCan
                 type="submit"
                 color="primary"
                 disabled={isLoadingSubunits || isSubmitting}
-                data-testid="institution-add-button">
+                data-testid="institution-edit-button">
                 {t('edit')}
               </StyledButton>
 

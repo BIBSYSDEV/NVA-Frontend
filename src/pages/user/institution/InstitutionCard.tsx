@@ -45,10 +45,10 @@ const StyledButtonContainer = styled(StyledRightAlignedWrapper)`
 
 interface InstitutionCardProps {
   orgunitId: string;
-  setAffiliationIdToRemove: (orgunitId: string) => void;
+  setInstitutionIdToRemove: (orgunitId: string) => void;
 }
 
-const InstitutionCard: FC<InstitutionCardProps> = ({ orgunitId, setAffiliationIdToRemove }) => {
+const InstitutionCard: FC<InstitutionCardProps> = ({ orgunitId, setInstitutionIdToRemove }) => {
   const { t } = useTranslation('common');
   const [openEditForm, setOpenEditForm] = useState(false);
   const dispatch = useDispatch();
@@ -111,7 +111,7 @@ const InstitutionCard: FC<InstitutionCardProps> = ({ orgunitId, setAffiliationId
           variant="outlined"
           color="secondary"
           data-testid={`button-delete-institution-${orgunitId}`}
-          onClick={() => setAffiliationIdToRemove(orgunitId)}>
+          onClick={() => setInstitutionIdToRemove(orgunitId)}>
           <DeleteIcon />
           {t('remove')}
         </Button>

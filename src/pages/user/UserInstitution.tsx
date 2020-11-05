@@ -22,8 +22,8 @@ import InstitutionCard from './institution/InstitutionCard';
 const UserInstitution: FC = () => {
   const authority = useSelector((state: RootStore) => state.user.authority);
   const [openAddInstitutionForm, setOpenAddInstitutionForm] = useState(false);
-  const [affiliationIdToRemove, setAffiliationIdToRemove] = useState('');
-  const [isRemovingAffiliation, setIsRemovingAffiliation] = useState(false);
+  const [institutionIdToRemove, setInstitutionIdToRemove] = useState('');
+  const [isRemovingInstitution, setIsRemovingInstitution] = useState(false);
 
   const { t, i18n } = useTranslation('profile');
   const dispatch = useDispatch();
@@ -37,15 +37,15 @@ const UserInstitution: FC = () => {
     setOpenAddInstitutionForm(!openAddInstitutionForm);
   };
 
-  const removeAffiliation = async () => {
-    if (!authority || !affiliationIdToRemove) {
+  const removeInstitution = async () => {
+    if (!authority || !institutionIdToRemove) {
       return;
     }
-    setIsRemovingAffiliation(true);
+    setIsRemovingInstitution(true);
     const updatedAuthority = await removeQualifierIdFromAuthority(
       authority.systemControlNumber,
       AuthorityQualifiers.ORGUNIT_ID,
-      affiliationIdToRemove
+      institutionIdToRemove
     );
     if (updatedAuthority.error) {
       dispatch(setNotification(updatedAuthority.error, NotificationVariant.Error));
@@ -53,8 +53,8 @@ const UserInstitution: FC = () => {
       dispatch(setAuthorityData(updatedAuthority));
       dispatch(setNotification(t('feedback:success.delete_affiliation')));
     }
-    setAffiliationIdToRemove('');
-    setIsRemovingAffiliation(false);
+    setInstitutionIdToRemove('');
+    setIsRemovingInstitution(false);
   };
 
   const handleAddInstitution = async (value: FormikInstitutionUnit) => {
@@ -97,7 +97,7 @@ const UserInstitution: FC = () => {
             <InstitutionCard
               key={orgunitId}
               orgunitId={orgunitId}
-              setAffiliationIdToRemove={setAffiliationIdToRemove}
+              setInstitutionIdToRemove={setInstitutionIdToRemove}
             />
           ))}
 
@@ -117,11 +117,11 @@ const UserInstitution: FC = () => {
         )}
       </Card>
       <ConfirmDialog
-        open={!!affiliationIdToRemove}
+        open={!!institutionIdToRemove}
         title={t('organization.confirm_remove_affiliation_title')}
-        onAccept={removeAffiliation}
-        onCancel={() => setAffiliationIdToRemove('')}
-        isLoading={isRemovingAffiliation}>
+        onAccept={removeInstitution}
+        onCancel={() => setInstitutionIdToRemove('')}
+        isLoading={isRemovingInstitution}>
         <Typography>{t('organization.confirm_remove_affiliation_text')}</Typography>
       </ConfirmDialog>
     </>
