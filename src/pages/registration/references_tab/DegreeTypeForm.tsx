@@ -1,4 +1,4 @@
-import { FormikProps, useFormikContext } from 'formik';
+import { useFormikContext } from 'formik';
 import React, { FC } from 'react';
 import { DegreeRegistration } from '../../../types/registration.types';
 import { ReferenceFieldNames, DegreeType } from '../../../types/publicationFieldNames';
@@ -11,7 +11,7 @@ interface DegreeTypeFormProps {
 }
 
 const DegreeTypeForm: FC<DegreeTypeFormProps> = ({ onChangeSubType }) => {
-  const { values }: FormikProps<DegreeRegistration> = useFormikContext();
+  const { values } = useFormikContext<DegreeRegistration>();
   const subType = values.entityDescription.reference.publicationInstance.type;
 
   return (

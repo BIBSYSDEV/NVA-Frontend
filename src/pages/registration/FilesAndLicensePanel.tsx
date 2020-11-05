@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { FieldArray, FormikProps, useFormikContext, ErrorMessage, FieldArrayRenderProps } from 'formik';
+import { FieldArray, useFormikContext, ErrorMessage, FieldArrayRenderProps } from 'formik';
 import { FormHelperText, Typography } from '@material-ui/core';
 import { UppyFile } from '@uppy/core';
 import FileUploader from './files_and_license_tab/FileUploader';
@@ -37,7 +37,7 @@ interface FilesAndLicensePanelProps extends PanelProps {
 
 const FilesAndLicensePanel: FC<FilesAndLicensePanelProps> = ({ uppy, setTouchedFields }) => {
   const { t } = useTranslation('registration');
-  const { values }: FormikProps<Registration> = useFormikContext();
+  const { values } = useFormikContext<Registration>();
   const [isLicenseModalOpen, setIsLicenseModalOpen] = useState(false);
   const {
     fileSet: { files = [] },

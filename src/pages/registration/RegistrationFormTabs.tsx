@@ -1,4 +1,4 @@
-import { FormikProps, useFormikContext } from 'formik';
+import { useFormikContext } from 'formik';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
@@ -35,7 +35,7 @@ interface RegistrationFormTabsProps {
 
 export const RegistrationFormTabs: FC<RegistrationFormTabsProps> = ({ handleTabChange, tabNumber }) => {
   const { t } = useTranslation('registration');
-  const { errors, touched, values }: FormikProps<Registration> = useFormikContext();
+  const { errors, touched, values } = useFormikContext<Registration>();
   const {
     entityDescription: { contributors },
     fileSet: { files = [] },

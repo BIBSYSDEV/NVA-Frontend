@@ -1,4 +1,4 @@
-import { FormikProps, useFormikContext, FormikTouched } from 'formik';
+import { useFormikContext, FormikTouched } from 'formik';
 import React, { FC, useCallback, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 
@@ -33,7 +33,7 @@ export const RegistrationFormContent: FC<RegistrationFormContentProps> = ({
   tabNumber,
   uppy,
 }) => {
-  const { touched, setTouched }: FormikProps<Registration> = useFormikContext();
+  const { touched, setTouched } = useFormikContext<Registration>();
 
   const touchedRef = useRef(touched);
   useEffect(() => {

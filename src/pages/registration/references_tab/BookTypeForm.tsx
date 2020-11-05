@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { ReferenceFieldNames, BookType } from '../../../types/publicationFieldNames';
 import SelectTypeField from './components/SelectTypeField';
 import BookForm from './sub_type_forms/BookForm';
-import { FormikProps, useFormikContext } from 'formik';
+import { useFormikContext } from 'formik';
 import { BookRegistration } from '../../../types/registration.types';
 import { StyledSelectWrapper } from '../../../components/styled/Wrappers';
 
@@ -11,7 +11,7 @@ interface BookTypeFormProps {
 }
 
 const BookTypeForm: FC<BookTypeFormProps> = ({ onChangeSubType }) => {
-  const { values }: FormikProps<BookRegistration> = useFormikContext();
+  const { values } = useFormikContext<BookRegistration>();
   const subType = values.entityDescription.reference.publicationInstance.type;
 
   return (

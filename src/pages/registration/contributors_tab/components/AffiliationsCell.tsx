@@ -1,4 +1,4 @@
-import { FormikProps, useFormikContext } from 'formik';
+import { useFormikContext } from 'formik';
 import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
@@ -53,7 +53,7 @@ interface AffiliationsCellProps {
 const AffiliationsCell: FC<AffiliationsCellProps> = ({ affiliations, baseFieldName }) => {
   const { t } = useTranslation('registration');
   const disptach = useDispatch();
-  const { values, setFieldValue }: FormikProps<Registration> = useFormikContext();
+  const { values, setFieldValue } = useFormikContext<Registration>();
   const [openAffiliationModal, setOpenAffiliationModal] = useState(false);
   const [affiliationToRemove, setAffiliationToRemove] = useState<Institution | null>(null);
 
