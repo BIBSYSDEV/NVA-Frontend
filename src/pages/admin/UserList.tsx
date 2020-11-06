@@ -1,6 +1,15 @@
 import React, { FC, useState } from 'react';
 import styled from 'styled-components';
-import { Table, TableHead, TableRow, TableCell, TableBody, TablePagination, Button } from '@material-ui/core';
+import {
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
+  TablePagination,
+  Button,
+  Typography,
+} from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
@@ -8,7 +17,6 @@ import { useDispatch } from 'react-redux';
 
 import Label from './../../components/Label';
 import { InstitutionUser, RoleName } from '../../types/user.types';
-import NormalText from '../../components/NormalText';
 import { addRoleToUser, removeRoleFromUser } from '../../api/roleApi';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
@@ -89,9 +97,9 @@ const UserList: FC<UserListProps> = ({
   return (
     <>
       {userList.length === 0 ? (
-        <NormalText>
+        <Typography>
           <i>{t('users.no_users_found')}</i>
-        </NormalText>
+        </Typography>
       ) : (
         <>
           <StyledTable size="small">
