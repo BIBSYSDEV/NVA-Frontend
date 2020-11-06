@@ -107,11 +107,11 @@ const UserList: FC<UserListProps> = ({
               </TableRow>
             </TableHead>
             <TableBody>
-              {userList.slice(validPage * rowsPerPage, validPage * rowsPerPage + rowsPerPage).map((user) => {
+              {userList.slice(validPage * rowsPerPage, validPage * rowsPerPage + rowsPerPage).map((user, index) => {
                 const isLoading = updatedRoleForUsers.includes(user.username);
                 const disableAddButton = user.roles.some((role) => role.rolename === roleToAdd);
                 return (
-                  <StyledTableRow key={user.username}>
+                  <StyledTableRow key={index}>
                     <TableCell>{user.username}</TableCell>
                     <TableCell>
                       {user.givenName} {user.familyName}
