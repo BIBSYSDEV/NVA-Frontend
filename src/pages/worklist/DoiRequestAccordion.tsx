@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { Accordion, AccordionSummary, AccordionDetails, Button, TextField } from '@material-ui/core';
+import { Accordion, AccordionSummary, AccordionDetails, Button } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Link as RouterLink } from 'react-router-dom';
 import styled from 'styled-components';
@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 import Label from '../../components/Label';
 import { RegistrationTab, Registration } from '../../types/registration.types';
 import MessageList from './MessageList';
+import { MessageForm } from '../../components/MessageForm';
 
 const StyledAccordion = styled(Accordion)`
   width: 100%;
@@ -40,12 +41,6 @@ const StyledOwner = styled.div`
 const StyledMessages = styled.div`
   width: 75%;
   flex-direction: column;
-`;
-
-const StyledMessageButton = styled(Button)`
-  margin-top: 1rem;
-  float: right;
-  min-width: 10rem;
 `;
 
 const StyledAccordionActionButtons = styled.div`
@@ -93,17 +88,11 @@ export const DoiRequestAccordion: FC<DoiRequestAccordionProps> = ({ registration
       <AccordionDetails>
         <StyledMessages>
           <MessageList messages={doiRequest.messages} />
-          <TextField
-            variant="outlined"
-            fullWidth
-            multiline
-            rows={4}
-            label={t('doi_requests.message_to_user')}
-            disabled
+          <MessageForm
+            confirmAction={(message) => {
+              console.log('Doi Message:', message);
+            }}
           />
-          <StyledMessageButton variant="contained" color="primary" disabled>
-            {t('common:send')}
-          </StyledMessageButton>
         </StyledMessages>
         <StyledAccordionActionButtons>
           <Button

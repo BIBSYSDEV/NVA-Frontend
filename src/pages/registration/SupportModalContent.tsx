@@ -15,7 +15,7 @@ export const SupportModalContent: FC<SupportModalContentProps> = ({ closeModal }
       <Typography>{t('support_description')}</Typography>
       <MessageForm
         confirmAction={(message) => {
-          console.log('message', message);
+          console.log('Support Message:', message);
           closeModal();
         }}
       />
