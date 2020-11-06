@@ -108,9 +108,8 @@ const App: FC = () => {
   }, [dispatch, user]);
 
   useEffect(() => {
-    // Handle possible authorities
-    const fetchAuthority = async () => {
-      if (matchingAuthorities) {
+    if (matchingAuthorities && user && !user.authority && !user.possibleAuthorities) {
+      const fetchAuthority = async () => {
         const filteredAuthorities = matchingAuthorities.filter((auth) => auth.feideids.some((id) => id === user.id));
         if (filteredAuthorities.length === 1) {
           // Use exsisting authority
@@ -138,10 +137,7 @@ const App: FC = () => {
         } else {
           dispatch(setPossibleAuthorities(matchingAuthorities));
         }
-      }
-    };
-    // Avoid infinite loop by breaking when matchingAuthorities is identical to current possibleAuthorities
-    if (user && !user.authority && !user.possibleAuthorities) {
+      };
       fetchAuthority();
     }
   }, [dispatch, t, matchingAuthorities, user]);
