@@ -60,7 +60,7 @@
     "delete_identifier": "Deleted identifier",
     "doi_request_sent": "DOI request sent",
     "login": "Logged in",
-    "support_message_sent": "Message sent, see responses in $t(workLists:my_messages)",
+    "support_message_sent": "Message sent",
     "removed_role": "Role removed",
     "update_authority": "Updated authority",
     "update_customer": "Updated customer institution",

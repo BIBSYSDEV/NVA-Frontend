@@ -60,7 +60,7 @@
     "delete_identifier": "Identifikatoren ble slettet",
     "doi_request_sent": "DOI-forespørsel sendt",
     "login": "Logget inn",
-    "support_message_sent": "Melding sendt, se svar i $t(workLists:my_messages)",
+    "support_message_sent": "Melding sendt",
     "removed_role": "Rollen ble fjernet",
     "update_authority": "Forfatter er oppdatert",
     "update_customer": "Institusjon er oppdatert",
