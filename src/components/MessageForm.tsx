@@ -36,7 +36,7 @@ export const MessageForm: FC<MessageFormProps> = ({ confirmAction, cancelAction 
       {({ isSubmitting }) => (
         <Form>
           <Field name="message">
-            {({ field, meta: { touched, error } }: FieldProps) => (
+            {({ field, meta: { touched, error } }: FieldProps<string>) => (
               <TextField
                 {...field}
                 variant="outlined"

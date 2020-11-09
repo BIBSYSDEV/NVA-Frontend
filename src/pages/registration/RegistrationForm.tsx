@@ -50,11 +50,13 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier = '', closeFor
   const initialTabNumber = new URLSearchParams(history.location.search).get('tab');
   const [tabNumber, setTabNumber] = useState(initialTabNumber ? +initialTabNumber : RegistrationTab.Description);
   const [isSaving, setIsSaving] = useState(false);
-  const [openSupport, setOpenSupport] = useState(false);
+  const [openSupportModal, setOpenSupportModal] = useState(false);
   const dispatch = useDispatch();
   const uppy = useUppy();
   const [registration, isLoadingRegistration, handleSetRegistration] = useFetchRegistration(identifier);
   const isOwner = registration?.owner === user.id;
+
+  const toggleSupportModal = () => setOpenSupportModal((state) => !state);
 
   useEffect(() => {
     if (!registration && !isLoadingRegistration) {
@@ -143,7 +145,7 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier = '', closeFor
 
               {tabNumber !== RegistrationTab.Submission && (
                 <StyledButtonGroupContainer>
-                  <Button variant="text" color="primary" onClick={() => setOpenSupport(true)}>
+                  <Button variant="text" color="primary" onClick={toggleSupportModal}>
                     {t('common:support')}
                   </Button>
                   <StyledButtonContainer>
@@ -171,8 +173,8 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier = '', closeFor
           )}
         </Formik>
       </StyledRegistration>
-      <Modal open={openSupport} onClose={() => setOpenSupport(false)} headingText={t('common:support')}>
-        <SupportModalContent closeModal={() => setOpenSupport(false)} />
+      <Modal open={openSupportModal} onClose={toggleSupportModal} headingText={t('common:support')}>
+        <SupportModalContent closeModal={toggleSupportModal} />
       </Modal>
     </>
   );
