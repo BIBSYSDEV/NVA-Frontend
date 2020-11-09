@@ -6,7 +6,7 @@ import { Field, FieldProps, Form, Formik } from 'formik';
 import ButtonWithProgress from './ButtonWithProgress';
 
 interface MessageFormProps {
-  confirmAction: (message: string) => void;
+  confirmAction: (message: string) => Promise<unknown> | void;
   cancelAction?: () => void;
 }
 
@@ -29,8 +29,8 @@ export const MessageForm: FC<MessageFormProps> = ({ confirmAction, cancelAction 
     <Formik
       initialValues={initValues}
       validationSchema={validationSchema}
-      onSubmit={(values, { resetForm }) => {
-        confirmAction(values.message); // TODO: Should return Promise so resetForm can wait?
+      onSubmit={async (values, { resetForm }) => {
+        await confirmAction(values.message);
         resetForm();
       }}>
       {({ isSubmitting }) => (

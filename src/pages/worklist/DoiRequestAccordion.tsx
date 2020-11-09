@@ -89,8 +89,15 @@ export const DoiRequestAccordion: FC<DoiRequestAccordionProps> = ({ registration
         <StyledMessages>
           <MessageList messages={doiRequest.messages} />
           <MessageForm
-            confirmAction={(message) => {
-              console.log('Doi Message:', message);
+            confirmAction={async (message) => {
+              return new Promise((resolve) => {
+                setTimeout(() => {
+                  // TODO: Send message to backend
+                  // eslint-disable-next-line no-console
+                  console.log('Doi Message:', message);
+                  resolve();
+                }, 1000);
+              });
             }}
           />
         </StyledMessages>
