@@ -17,7 +17,7 @@ const StyledSearch = styled.div`
 const Search: FC = () => {
   const history = useHistory();
   const searchTerm = new URLSearchParams(history.location.search).get('query') ?? '';
-  const [registrations, isLoading] = useSearchRegistrations(searchTerm);
+  const [registrationsSearch, isLoadingSearch] = useSearchRegistrations(searchTerm);
   const { t } = useTranslation('common');
 
   const handleSearch = async (searchTerm: string) => {
@@ -33,10 +33,10 @@ const Search: FC = () => {
         handleSearch={handleSearch}
         initialSearchTerm={searchTerm ?? ''}
       />
-      {isLoading ? (
+      {isLoadingSearch || !registrationsSearch ? (
         <ListSkeleton arrayLength={5} minWidth={40} height={100} />
-      ) : registrations?.length > 0 ? (
-        <SearchResults registrations={registrations} searchTerm={searchTerm} />
+      ) : registrationsSearch.hits.length > 0 ? (
+        <SearchResults searchResult={registrationsSearch} searchTerm={searchTerm} />
       ) : (
         <NormalText>{t('no_hits')}</NormalText>
       )}

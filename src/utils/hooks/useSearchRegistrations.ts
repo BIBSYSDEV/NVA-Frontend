@@ -11,12 +11,12 @@ const useSearchRegistrations = (
   searchTerm: string,
   numberOfResults?: number,
   searchAfter?: string
-): [SearchResult[] | [], boolean] => {
+): [SearchResult | undefined, boolean] => {
   const dispatch = useDispatch();
   const { t } = useTranslation('feedback');
   const cancelToken = useCancelToken();
   const [isLoading, setIsLoading] = useState(true);
-  const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
+  const [searchResults, setSearchResults] = useState<SearchResult>();
 
   useEffect(() => {
     const searchRegistrations = async () => {
@@ -34,7 +34,7 @@ const useSearchRegistrations = (
       searchRegistrations();
     } else {
       setIsLoading(false);
-      setSearchResults([]);
+      setSearchResults(undefined);
     }
   }, [searchTerm, numberOfResults, searchAfter, cancelToken, t, dispatch]);
 

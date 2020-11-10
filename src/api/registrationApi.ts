@@ -166,7 +166,7 @@ export const search = async (
   searchAfter?: string,
   cancelToken?: CancelToken
 ) =>
-  await apiRequest<SearchResult[]>({
+  await apiRequest<SearchResult>({
     url: `${PublicationsApiPaths.SEARCH}?query=${searchTerm}`,
     cancelToken,
   });
