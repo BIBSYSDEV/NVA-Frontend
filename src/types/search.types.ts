@@ -27,4 +27,5 @@ interface SearchRegistration {
   publicationType?: string;
   publisher?: RegistrationPublisher;
   publishedDate?: RegistrationDate;
+  abstract?: string;
 }

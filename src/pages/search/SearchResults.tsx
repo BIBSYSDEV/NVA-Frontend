@@ -2,8 +2,8 @@ import React, { FC, Fragment, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { Link as MuiLink, TablePagination } from '@material-ui/core';
-import { List, Typography } from '@material-ui/core';
+import { Link as MuiLink, TablePagination, List } from '@material-ui/core';
+
 import RegistrationListItem from '../dashboard/RegistrationListItem';
 import { SearchResult } from '../../types/search.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
@@ -15,6 +15,13 @@ const StyledSearchResults = styled.div`
 
 const StyledContributor = styled.span`
   padding-right: 1rem;
+`;
+
+const StyledMetadata = styled.div`
+  display: flex;
+  > span:not(:last-child) {
+    margin-right: 0.5rem;
+  }
 `;
 
 interface SearchResultsProps {
@@ -48,8 +55,7 @@ const SearchResults: FC<SearchResultsProps> = ({ searchResult, searchTerm }) => 
                   </MuiLink>
                 }
                 secondaryComponent={
-                  <Typography component="span">
-                    {registration.publishedDate && <div>{displayDate(registration.publishedDate)}</div>}
+                  <>
                     {registration.contributors &&
                       registration.contributors.map((contributor) => (
                         <Fragment key={contributor.id ?? contributor.name}>
@@ -62,7 +68,12 @@ const SearchResults: FC<SearchResultsProps> = ({ searchResult, searchTerm }) => 
                           )}
                         </Fragment>
                       ))}
-                  </Typography>
+                    <div>{registration.abstract}</div>
+                    <StyledMetadata>
+                      {registration.publishedDate && <span>{displayDate(registration.publishedDate)}</span>}
+                      <span>{t(`publicationTypes:${registration.publicationType}`)}</span>
+                    </StyledMetadata>
+                  </>
                 }
               />
             );
