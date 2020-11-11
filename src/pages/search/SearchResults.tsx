@@ -2,7 +2,9 @@ import React, { FC, Fragment, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { Link as MuiLink, TablePagination, List } from '@material-ui/core';
+import { Link as MuiLink, TablePagination, List, Divider, Typography } from '@material-ui/core';
+import CalendarIcon from '@material-ui/icons/Today';
+import TagIcon from '@material-ui/icons/LocalOffer';
 
 import RegistrationListItem from '../dashboard/RegistrationListItem';
 import { SearchResult } from '../../types/search.types';
@@ -19,8 +21,12 @@ const StyledContributor = styled.span`
 
 const StyledMetadata = styled.div`
   display: flex;
+  align-items: center;
   > span:not(:last-child) {
-    margin-right: 0.5rem;
+    margin-right: 1rem;
+  }
+  > svg {
+    margin-right: 0.2rem;
   }
 `;
 
@@ -70,8 +76,17 @@ const SearchResults: FC<SearchResultsProps> = ({ searchResult, searchTerm }) => 
                       ))}
                     <div>{registration.abstract}</div>
                     <StyledMetadata>
-                      {registration.publishedDate && <span>{displayDate(registration.publishedDate)}</span>}
-                      <span>{t(`publicationTypes:${registration.publicationType}`)}</span>
+                      {registration.publishedDate && (
+                        <>
+                          <CalendarIcon />
+                          <span>{displayDate(registration.publishedDate)}</span>
+                          <Divider orientation="vertical" />
+                        </>
+                      )}
+                      <>
+                        <TagIcon />
+                        <span>{t(`publicationTypes:${registration.publicationType}`)}</span>
+                      </>
                     </StyledMetadata>
                   </>
                 }
