@@ -29,6 +29,7 @@ export const AddRoleModalContent: FC<AddRoleModalContentProps> = ({ role, users,
     <>
       <NormalText>{t('users.add_role_info')}</NormalText>
       <TextField
+        autoFocus
         fullWidth
         InputProps={{
           startAdornment: (
