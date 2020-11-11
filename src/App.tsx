@@ -1,29 +1,28 @@
 import Amplify from 'aws-amplify';
-import React, { useEffect, useState, FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import { CircularProgress } from '@material-ui/core';
-import { AuthorityQualifiers, addQualifierIdForAuthority, getAuthority } from './api/authorityApi';
+import { addQualifierIdForAuthority, AuthorityQualifiers, getAuthority } from './api/authorityApi';
+import { getInstitutionUser } from './api/roleApi';
 import { getCurrentUserAttributes } from './api/userApi';
+import AppRoutes from './AppRoutes';
 import Footer from './layout/Footer';
 import Header from './layout/header/Header';
 import Notifier from './layout/Notifier';
 import AuthorityOrcidModal from './pages/user/authority/AuthorityOrcidModal';
-import { setAuthorityData, setPossibleAuthorities, setUser, setRoles } from './redux/actions/userActions';
+import { setNotification } from './redux/actions/notificationActions';
+import { setAuthorityData, setPossibleAuthorities, setRoles, setUser } from './redux/actions/userActions';
 import { RootStore } from './redux/reducers/rootReducer';
 import { awsConfig } from './utils/aws-config';
 import { USE_MOCK_DATA } from './utils/constants';
 import { mockUser } from './utils/testfiles/mock_feide_user';
-import AppRoutes from './AppRoutes';
-import useFetchAuthorities from './utils/hooks/useFetchAuthorities';
-import { setNotification } from './redux/actions/notificationActions';
-import { getInstitutionUser } from './api/roleApi';
-import { NotificationVariant } from './types/notification.types';
-import { InstitutionUser } from './types/user.types';
 import { useTranslation } from 'react-i18next';
 import { Authority } from './types/authority.types';
-
+import { NotificationVariant } from './types/notification.types';
+import { InstitutionUser } from './types/user.types';
+    
 const StyledApp = styled.div`
   min-height: 100vh;
   display: flex;
