@@ -31,7 +31,9 @@ const PublicProfile: FC = () => {
   const { t } = useTranslation('common');
   const { arpId } = useParams<{ arpId: string }>();
   const [authority, isLoadingUser] = useFetchAuthority(arpId);
-  const [registrations, isLoadingRegistrations] = useSearchRegistrations(arpId);
+  const [registrations, isLoadingRegistrations] = useSearchRegistrations(
+    `entityDescription.contributors.arpId=${arpId}`
+  );
 
   return (
     <>
