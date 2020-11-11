@@ -39,6 +39,7 @@ export const MessageForm: FC<MessageFormProps> = ({ confirmAction, cancelAction 
             {({ field, meta: { touched, error } }: FieldProps<string>) => (
               <TextField
                 {...field}
+                inputProps={{ 'data-testid': 'message-input' }}
                 variant="outlined"
                 multiline
                 rows="4"
@@ -51,15 +52,15 @@ export const MessageForm: FC<MessageFormProps> = ({ confirmAction, cancelAction 
 
           <DialogActions>
             {cancelAction && (
-              <Button variant="outlined" onClick={cancelAction}>
+              <Button data-testid="cancel-button" variant="outlined" onClick={cancelAction}>
                 {t('common:cancel')}
               </Button>
             )}
             <ButtonWithProgress
+              data-testid="send-button"
               type="submit"
               variant="contained"
               color="primary"
-              data-testid="button-send-message"
               isLoading={isSubmitting}>
               {t('common:send')}
             </ButtonWithProgress>

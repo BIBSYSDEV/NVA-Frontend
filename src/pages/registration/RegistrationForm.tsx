@@ -145,7 +145,7 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier = '', closeFor
 
               {tabNumber !== RegistrationTab.Submission && (
                 <StyledButtonGroupContainer>
-                  <Button variant="text" color="primary" onClick={toggleSupportModal}>
+                  <Button data-testid="open-support-button" variant="text" color="primary" onClick={toggleSupportModal}>
                     {t('common:support')}
                   </Button>
                   <StyledButtonContainer>
