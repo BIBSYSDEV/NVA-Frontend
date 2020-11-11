@@ -22,7 +22,8 @@ import { useTranslation } from 'react-i18next';
 import { Authority } from './types/authority.types';
 import { NotificationVariant } from './types/notification.types';
 import { InstitutionUser } from './types/user.types';
-    
+import useFetchAuthorities from './utils/hooks/useFetchAuthorities';
+
 const StyledApp = styled.div`
   min-height: 100vh;
   display: flex;
