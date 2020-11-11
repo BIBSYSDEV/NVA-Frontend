@@ -33,7 +33,7 @@ const AddContributorModalContent: FC<AddContributorModalContentProps> = ({ addAu
           {t('registration:contributors.prefilled_name')}: {initialSearchTerm}
         </StyledSubHeading>
       )}
-      <SearchBar handleSearch={handleNewSearchTerm} resetSearchInput={false} initialSearchTerm={initialSearchTerm} />
+      <SearchBar handleSearch={handleNewSearchTerm} initialSearchTerm={initialSearchTerm} />
       {isLoadingAuthorities ? (
         <StyledProgressWrapper>
           <CircularProgress size={100} />

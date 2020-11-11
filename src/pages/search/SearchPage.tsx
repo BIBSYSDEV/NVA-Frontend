@@ -21,11 +21,7 @@ const SearchPage: FC = () => {
 
   return (
     <StyledSearch>
-      <SearchBar
-        resetSearchInput={history.location.pathname === '/search'}
-        handleSearch={handleSearch}
-        initialSearchTerm={searchTerm}
-      />
+      <SearchBar handleSearch={handleSearch} initialSearchTerm={searchTerm} />
       <RegistrationSearch searchTerm={searchTerm} />
     </StyledSearch>
   );
