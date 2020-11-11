@@ -1,7 +1,7 @@
 import React, { FC, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { Link as MuiLink, Divider, Typography, ListItem, ListItemText } from '@material-ui/core';
+import { Link as MuiLink, Typography, ListItem, ListItemText } from '@material-ui/core';
 import CalendarIcon from '@material-ui/icons/Today';
 import TagIcon from '@material-ui/icons/LocalOffer';
 import { SearchRegistration } from '../../types/search.types';
@@ -29,7 +29,7 @@ interface RegistrationListItemProps {
 
 const RegistrationListItem: FC<RegistrationListItemProps> = ({ registration }) => {
   const { t } = useTranslation('publicationTypes');
-  const registrationId = registration.id?.split('/').pop();
+  const registrationId = registration.id.split('/').pop();
 
   return (
     <ListItem divider>
@@ -63,7 +63,6 @@ const RegistrationListItem: FC<RegistrationListItemProps> = ({ registration }) =
                 <>
                   <CalendarIcon />
                   <span>{displayDate(registration.publishedDate)}</span>
-                  <Divider orientation="vertical" />
                 </>
               )}
               <>

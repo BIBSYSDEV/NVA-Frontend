@@ -11,6 +11,7 @@ import { ORCID_BASE_URL } from '../../utils/constants';
 import NormalText from '../../components/NormalText';
 import useSearchRegistrations from '../../utils/hooks/useSearchRegistrations';
 import SearchResults from '../search/SearchResults';
+import { useTranslation } from 'react-i18next';
 
 const StyledLine = styled.div`
   display: flex;
@@ -22,7 +23,12 @@ const StyledTextContainer = styled.div`
   margin-left: 1rem;
 `;
 
+const StyledRegistrations = styled.div`
+  margin-top: 1rem;
+`;
+
 const PublicProfile: FC = () => {
+  const { t } = useTranslation('common');
   const { arpId } = useParams<{ arpId: string }>();
   const [authority, isLoadingUser] = useFetchAuthority(arpId);
   const [registrations, isLoadingRegistrations] = useSearchRegistrations(arpId);
@@ -62,7 +68,12 @@ const PublicProfile: FC = () => {
                 );
               })}
             </Card>
-            {registrations && <SearchResults searchResult={registrations} />}
+            {registrations && (
+              <StyledRegistrations>
+                <Typography variant="h2">{t('registrations')}</Typography>
+                <SearchResults searchResult={registrations} />
+              </StyledRegistrations>
+            )}
           </>
         )
       )}

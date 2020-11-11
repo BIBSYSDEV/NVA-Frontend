@@ -13,7 +13,7 @@ const SearchPage: FC = () => {
   const history = useHistory();
   const searchTerm = new URLSearchParams(history.location.search).get('query') ?? '';
 
-  const handleSearch = async (searchTerm: string) => {
+  const handleSearch = (searchTerm: string) => {
     if (searchTerm.length) {
       history.push(`/search?query=${searchTerm}`);
     }

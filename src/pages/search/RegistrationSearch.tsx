@@ -16,9 +16,9 @@ const RegistrationSearch: FC<RegistrationSearchProps> = ({ searchTerm, noHitsTex
 
   return (
     <>
-      {isLoadingSearch || !registrationsSearch ? (
+      {isLoadingSearch ? (
         <ListSkeleton arrayLength={3} minWidth={40} height={100} />
-      ) : registrationsSearch.hits.length > 0 ? (
+      ) : registrationsSearch && registrationsSearch.hits.length > 0 ? (
         <SearchResults searchResult={registrationsSearch} searchTerm={searchTerm} />
       ) : (
         <Typography>{noHitsText ? noHitsText : t('no_hits')}</Typography>
