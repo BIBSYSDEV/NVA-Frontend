@@ -24,8 +24,8 @@ export interface SearchRegistration {
   contributors: SearchResultContributor[];
   owner: string;
   title: string;
-  publicationType?: string;
-  publisher?: RegistrationPublisher;
+  publicationType: string;
+  publisher: RegistrationPublisher;
   publishedDate?: RegistrationDate;
   abstract?: string;
 }

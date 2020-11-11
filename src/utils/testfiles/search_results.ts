@@ -3,11 +3,16 @@ import { BackendTypeNames } from '../../types/publication_types/commonRegistrati
 
 export const mockSearchResults: SearchResult = {
   took: 10,
-  total: 100,
+  total: 50,
   hits: [
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/32290378-373e-4cca-8f24-d02b92d845ce',
-      publishedDate: { type: BackendTypeNames.INDEX_DATE, year: '2017', month: '8', day: '26' },
+      publishedDate: {
+        type: BackendTypeNames.INDEX_DATE,
+        year: '2017',
+        month: '8',
+        day: '26',
+      },
       title: 'Dove, The',
       owner: 'mfalvey0@pen.io',
       contributors: [
@@ -16,10 +21,19 @@ export const mockSearchResults: SearchResult = {
           name: 'Alasdair Dyter',
         },
       ],
+      publicationType: 'JournalArticle',
+      publisher: {
+        id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
+      },
     },
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/d90f87c9-fb5b-41ef-8575-584b50102476',
-      publishedDate: { type: BackendTypeNames.INDEX_DATE, year: '2019', month: '8', day: '21' },
+      publishedDate: {
+        type: BackendTypeNames.INDEX_DATE,
+        year: '2019',
+        month: '8',
+        day: '21',
+      },
       title: 'Bad Santa',
       owner: 'fhanwell1@businessweek.com',
       contributors: [
@@ -32,10 +46,19 @@ export const mockSearchResults: SearchResult = {
           name: 'Kirstyn Jenik',
         },
       ],
+      publicationType: 'JournalArticle',
+      publisher: {
+        id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
+      },
     },
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/c01b4fe3-bd3c-4b89-8d3a-4cced90a53e6',
-      publishedDate: { type: BackendTypeNames.INDEX_DATE, year: '2009', month: '8', day: '26' },
+      publishedDate: {
+        type: BackendTypeNames.INDEX_DATE,
+        year: '2009',
+        month: '8',
+        day: '26',
+      },
       title: 'Carey Treatment, The',
       owner: 'okobsch2@a8.net',
       contributors: [
@@ -44,10 +67,19 @@ export const mockSearchResults: SearchResult = {
           name: 'Alberto Kuzma',
         },
       ],
+      publicationType: 'JournalArticle',
+      publisher: {
+        id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
+      },
     },
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/989047e8-643e-4b31-b16a-915d5124cc25',
-      publishedDate: { type: BackendTypeNames.INDEX_DATE, year: '2019', month: '10', day: '26' },
+      publishedDate: {
+        type: BackendTypeNames.INDEX_DATE,
+        year: '2019',
+        month: '10',
+        day: '26',
+      },
       title: 'Gloria',
       owner: 'jjanusik3@timesonline.co.uk',
       contributors: [
@@ -64,10 +96,19 @@ export const mockSearchResults: SearchResult = {
           name: 'Derby Budd',
         },
       ],
+      publicationType: 'JournalArticle',
+      publisher: {
+        id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
+      },
     },
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/79333552-6646-4497-ac28-845126fd96ed',
-      publishedDate: { type: BackendTypeNames.INDEX_DATE, year: '2019', month: '9', day: '16' },
+      publishedDate: {
+        type: BackendTypeNames.INDEX_DATE,
+        year: '2019',
+        month: '9',
+        day: '16',
+      },
       title: 'Before and After',
       owner: 'zmilam4@smh.com.au',
       contributors: [
@@ -76,10 +117,19 @@ export const mockSearchResults: SearchResult = {
           name: 'Alberto Kuzma',
         },
       ],
+      publicationType: 'JournalArticle',
+      publisher: {
+        id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
+      },
     },
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/73772750-68a0-40f7-9adc-19d38e067f1a',
-      publishedDate: { type: BackendTypeNames.INDEX_DATE, year: '2018', month: '9', day: '16' },
+      publishedDate: {
+        type: BackendTypeNames.INDEX_DATE,
+        year: '2018',
+        month: '9',
+        day: '16',
+      },
       title: 'Highlander',
       owner: 'bmangan5@soundcloud.com',
       contributors: [
@@ -88,10 +138,19 @@ export const mockSearchResults: SearchResult = {
           name: 'Alberto Kuzma',
         },
       ],
+      publicationType: 'JournalArticle',
+      publisher: {
+        id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
+      },
     },
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/181f6090-c20d-4f6e-ada4-184c22bb9a5d',
-      publishedDate: { type: BackendTypeNames.INDEX_DATE, year: '2019', month: '10', day: '16' },
+      publishedDate: {
+        type: BackendTypeNames.INDEX_DATE,
+        year: '2019',
+        month: '10',
+        day: '16',
+      },
       title: "Nim's Island",
       owner: 'vspafford6@google.ru',
       contributors: [
@@ -124,10 +183,19 @@ export const mockSearchResults: SearchResult = {
           name: 'Isac Robson',
         },
       ],
+      publicationType: 'JournalArticle',
+      publisher: {
+        id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
+      },
     },
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/87e92ce7-c401-4952-92fb-5028907a9c0e',
-      publishedDate: { type: BackendTypeNames.INDEX_DATE, year: '2009', month: '9', day: '16' },
+      publishedDate: {
+        type: BackendTypeNames.INDEX_DATE,
+        year: '2009',
+        month: '9',
+        day: '16',
+      },
       title: 'First Nudie Musical, The',
       owner: 'dspatoni7@t.co',
       contributors: [
@@ -136,10 +204,19 @@ export const mockSearchResults: SearchResult = {
           name: 'Benji Rodrigo',
         },
       ],
+      publicationType: 'JournalArticle',
+      publisher: {
+        id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
+      },
     },
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/52e144b4-e896-48c7-bf68-b3c051db5c58',
-      publishedDate: { type: BackendTypeNames.INDEX_DATE, year: '2019', month: '3', day: '16' },
+      publishedDate: {
+        type: BackendTypeNames.INDEX_DATE,
+        year: '2019',
+        month: '3',
+        day: '16',
+      },
       title: 'Stavisky...',
       owner: 'mspreadbury8@ocn.ne.jp',
       contributors: [
@@ -148,10 +225,19 @@ export const mockSearchResults: SearchResult = {
           name: 'Quintina Whiston',
         },
       ],
+      publicationType: 'JournalArticle',
+      publisher: {
+        id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
+      },
     },
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/36e16624-b92f-416e-830f-bda598e047ab',
-      publishedDate: { type: BackendTypeNames.INDEX_DATE, year: '2019', month: '9', day: '12' },
+      publishedDate: {
+        type: BackendTypeNames.INDEX_DATE,
+        year: '2019',
+        month: '9',
+        day: '12',
+      },
       title: 'Powerpuff Girls, The',
       owner: 'jfarryan9@ucla.edu',
       contributors: [
@@ -160,10 +246,19 @@ export const mockSearchResults: SearchResult = {
           name: 'Wuintinas Whir',
         },
       ],
+      publicationType: 'JournalArticle',
+      publisher: {
+        id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
+      },
     },
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/ed863357-3203-48e7-92bc-c8998843d366',
-      publishedDate: { type: BackendTypeNames.INDEX_DATE, year: '2019', month: '2', day: '16' },
+      publishedDate: {
+        type: BackendTypeNames.INDEX_DATE,
+        year: '2019',
+        month: '2',
+        day: '16',
+      },
       title: 'Invisible Ray, The',
       owner: 'bskilletta@guardian.co.uk',
       contributors: [
@@ -176,10 +271,19 @@ export const mockSearchResults: SearchResult = {
           name: 'Joey Larway',
         },
       ],
+      publicationType: 'JournalArticle',
+      publisher: {
+        id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
+      },
     },
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/fc506676-0def-49f9-8d5d-de409956ad06',
-      publishedDate: { type: BackendTypeNames.INDEX_DATE, year: '2020', month: '9', day: '16' },
+      publishedDate: {
+        type: BackendTypeNames.INDEX_DATE,
+        year: '2020',
+        month: '9',
+        day: '16',
+      },
       title: 'Cinderella Man',
       owner: 'sphizackleab@slate.com',
       contributors: [
@@ -188,10 +292,19 @@ export const mockSearchResults: SearchResult = {
           name: 'Nolie Aggett',
         },
       ],
+      publicationType: 'JournalArticle',
+      publisher: {
+        id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
+      },
     },
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/a6d5a4ba-685c-43fd-b2e2-7b2eba8f6288',
-      publishedDate: { type: BackendTypeNames.INDEX_DATE, year: '2020', month: '1', day: '16' },
+      publishedDate: {
+        type: BackendTypeNames.INDEX_DATE,
+        year: '2020',
+        month: '1',
+        day: '16',
+      },
       title: "I Killed My Mother (J'ai tué ma mère)",
       owner: 'mlowdhamc@ucsd.edu',
       contributors: [
@@ -200,10 +313,19 @@ export const mockSearchResults: SearchResult = {
           name: 'Burgess Bradnam',
         },
       ],
+      publicationType: 'JournalArticle',
+      publisher: {
+        id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
+      },
     },
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/8987043b-67b9-4e46-9717-013c6134654d',
-      publishedDate: { type: BackendTypeNames.INDEX_DATE, year: '2020', month: '1', day: '1' },
+      publishedDate: {
+        type: BackendTypeNames.INDEX_DATE,
+        year: '2020',
+        month: '1',
+        day: '1',
+      },
       title: 'Traveler, The',
       owner: 'opevied@ning.com',
       contributors: [
@@ -212,10 +334,19 @@ export const mockSearchResults: SearchResult = {
           name: 'Bernardo Hurdwell',
         },
       ],
+      publicationType: 'JournalArticle',
+      publisher: {
+        id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
+      },
     },
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/0dd27154-42a2-4147-aef1-aaa70c065d28',
-      publishedDate: { type: BackendTypeNames.INDEX_DATE, year: '2020', month: '1', day: '10' },
+      publishedDate: {
+        type: BackendTypeNames.INDEX_DATE,
+        year: '2020',
+        month: '1',
+        day: '10',
+      },
       title: 'Frankenweenie',
       owner: 'rmacoune@nsw.gov.au',
       contributors: [
@@ -224,10 +355,19 @@ export const mockSearchResults: SearchResult = {
           name: 'Anny Mandrier',
         },
       ],
+      publicationType: 'JournalArticle',
+      publisher: {
+        id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
+      },
     },
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/5c0e1784-1530-41c3-8b5f-8bf8f4572f3a',
-      publishedDate: { type: BackendTypeNames.INDEX_DATE, year: '2018', month: '1', day: '1' },
+      publishedDate: {
+        type: BackendTypeNames.INDEX_DATE,
+        year: '2018',
+        month: '1',
+        day: '1',
+      },
       title: 'And Life Goes On (a.k.a. Life and Nothing More) (Zendegi va digar hich)',
       owner: 'hjurekf@apple.com',
       contributors: [
@@ -244,10 +384,19 @@ export const mockSearchResults: SearchResult = {
           name: 'Cecile Surmon',
         },
       ],
+      publicationType: 'JournalArticle',
+      publisher: {
+        id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
+      },
     },
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/c5f3f0e9-e48e-4215-b826-03f61790aea0',
-      publishedDate: { type: BackendTypeNames.INDEX_DATE, year: '2020', month: '12', day: '1' },
+      publishedDate: {
+        type: BackendTypeNames.INDEX_DATE,
+        year: '2020',
+        month: '12',
+        day: '1',
+      },
       title: 'Generation Iron',
       owner: 'mandreuzzig@imgur.com',
       contributors: [
@@ -256,10 +405,19 @@ export const mockSearchResults: SearchResult = {
           name: 'Brent Regus',
         },
       ],
+      publicationType: 'JournalArticle',
+      publisher: {
+        id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
+      },
     },
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/6f82edac-6bce-4e2b-adbe-46707482ac04',
-      publishedDate: { type: BackendTypeNames.INDEX_DATE, year: '2020', month: '1', day: '12' },
+      publishedDate: {
+        type: BackendTypeNames.INDEX_DATE,
+        year: '2020',
+        month: '1',
+        day: '12',
+      },
       title: 'Sunshine State',
       owner: 'achurmsh@networksolutions.com',
       contributors: [
@@ -272,10 +430,19 @@ export const mockSearchResults: SearchResult = {
           name: 'Ennis Knapman',
         },
       ],
+      publicationType: 'JournalArticle',
+      publisher: {
+        id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
+      },
     },
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/a20c371f-3569-4bc1-bd3f-35a598bdcdfc',
-      publishedDate: { type: BackendTypeNames.INDEX_DATE, year: '2018', month: '10', day: '1' },
+      publishedDate: {
+        type: BackendTypeNames.INDEX_DATE,
+        year: '2018',
+        month: '10',
+        day: '1',
+      },
       title: 'Kapò',
       owner: 'kmasseoi@yahoo.co.jp',
       contributors: [
@@ -284,10 +451,19 @@ export const mockSearchResults: SearchResult = {
           name: 'Francesca Blaxill',
         },
       ],
+      publicationType: 'JournalArticle',
+      publisher: {
+        id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
+      },
     },
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/e8c16926-eb52-418d-8b54-887943347dbb',
-      publishedDate: { type: BackendTypeNames.INDEX_DATE, year: '2018', month: '3', day: '1' },
+      publishedDate: {
+        type: BackendTypeNames.INDEX_DATE,
+        year: '2018',
+        month: '3',
+        day: '1',
+      },
       title: 'Message to Love: The Isle of Wight Festival',
       owner: 'ashropshirej@slate.com',
       contributors: [
@@ -296,10 +472,19 @@ export const mockSearchResults: SearchResult = {
           name: 'Rudolph Trivett',
         },
       ],
+      publicationType: 'JournalArticle',
+      publisher: {
+        id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
+      },
     },
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/ea8bc8c1-04dd-4449-b5cb-78c071bcfa9c',
-      publishedDate: { type: BackendTypeNames.INDEX_DATE, year: '2018', month: '10', day: '12' },
+      publishedDate: {
+        type: BackendTypeNames.INDEX_DATE,
+        year: '2018',
+        month: '10',
+        day: '12',
+      },
       title: 'News from Home',
       owner: 'agooderedk@cbsnews.com',
       contributors: [
@@ -308,10 +493,19 @@ export const mockSearchResults: SearchResult = {
           name: 'Maxi Morsom',
         },
       ],
+      publicationType: 'JournalArticle',
+      publisher: {
+        id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
+      },
     },
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/e3bdb056-289b-4430-b21e-ff944e57ebcb',
-      publishedDate: { type: BackendTypeNames.INDEX_DATE, year: '2018', month: '9', day: '10' },
+      publishedDate: {
+        type: BackendTypeNames.INDEX_DATE,
+        year: '2018',
+        month: '9',
+        day: '10',
+      },
       title: 'Journey from the Fall',
       owner: 'emateul@joomla.org',
       contributors: [
@@ -328,10 +522,19 @@ export const mockSearchResults: SearchResult = {
           name: 'Benjamin Bowering',
         },
       ],
+      publicationType: 'JournalArticle',
+      publisher: {
+        id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
+      },
     },
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/a5fd5ac7-cbda-4a17-b885-db9e159e3acb',
-      publishedDate: { type: BackendTypeNames.INDEX_DATE, year: '2019', month: '9', day: '10' },
+      publishedDate: {
+        type: BackendTypeNames.INDEX_DATE,
+        year: '2019',
+        month: '9',
+        day: '10',
+      },
       title: 'Daughters of Darkness (Les lèvres rouges)',
       owner: 'cacomm@wufoo.com',
       contributors: [
@@ -340,10 +543,19 @@ export const mockSearchResults: SearchResult = {
           name: 'Cristi Wadwell',
         },
       ],
+      publicationType: 'JournalArticle',
+      publisher: {
+        id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
+      },
     },
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/bb3ed33b-082e-461a-9001-9d2276d1bf79',
-      publishedDate: { type: BackendTypeNames.INDEX_DATE, year: '2018', month: '11', day: '10' },
+      publishedDate: {
+        type: BackendTypeNames.INDEX_DATE,
+        year: '2018',
+        month: '11',
+        day: '10',
+      },
       title: 'Stella',
       owner: 'wfouracren@shareasale.com',
       contributors: [
@@ -352,10 +564,19 @@ export const mockSearchResults: SearchResult = {
           name: 'Curtis Fitch',
         },
       ],
+      publicationType: 'JournalArticle',
+      publisher: {
+        id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
+      },
     },
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/7595f84d-2f4e-40a5-84a1-59a5ff8d9bcf',
-      publishedDate: { type: BackendTypeNames.INDEX_DATE, year: '2019', month: '9', day: '10' },
+      publishedDate: {
+        type: BackendTypeNames.INDEX_DATE,
+        year: '2019',
+        month: '9',
+        day: '10',
+      },
       title: 'Virus',
       owner: 'jpimbleyo@cornell.edu',
       contributors: [
@@ -368,10 +589,19 @@ export const mockSearchResults: SearchResult = {
           name: 'Christoffer Blakden',
         },
       ],
+      publicationType: 'JournalArticle',
+      publisher: {
+        id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
+      },
     },
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/95c6b281-6dd8-4525-80bf-b6d7127ab92d',
-      publishedDate: { type: BackendTypeNames.INDEX_DATE, year: '2018', month: '9', day: '25' },
+      publishedDate: {
+        type: BackendTypeNames.INDEX_DATE,
+        year: '2018',
+        month: '9',
+        day: '25',
+      },
       title: 'Hum Tumhare Hain Sanam',
       owner: 'sdarycottp@123-reg.co.uk',
       contributors: [
@@ -380,10 +610,19 @@ export const mockSearchResults: SearchResult = {
           name: 'Sharyl Nickoles',
         },
       ],
+      publicationType: 'JournalArticle',
+      publisher: {
+        id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
+      },
     },
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/b72315bf-92ed-4626-81ea-8fd2aabd48ef',
-      publishedDate: { type: BackendTypeNames.INDEX_DATE, year: '2018', month: '12', day: '10' },
+      publishedDate: {
+        type: BackendTypeNames.INDEX_DATE,
+        year: '2018',
+        month: '12',
+        day: '10',
+      },
       title: 'Closing the Ring',
       owner: 'scohrsq@chronoengine.com',
       contributors: [
@@ -392,10 +631,19 @@ export const mockSearchResults: SearchResult = {
           name: 'Brittni Sebire',
         },
       ],
+      publicationType: 'JournalArticle',
+      publisher: {
+        id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
+      },
     },
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/70d340e5-448c-40a7-a80d-3630e4a7872c',
-      publishedDate: { type: BackendTypeNames.INDEX_DATE, year: '2017', month: '9', day: '10' },
+      publishedDate: {
+        type: BackendTypeNames.INDEX_DATE,
+        year: '2017',
+        month: '9',
+        day: '10',
+      },
       title: 'Road to Hong Kong, The',
       owner: 'mschiellr@typepad.com',
       contributors: [
@@ -408,10 +656,19 @@ export const mockSearchResults: SearchResult = {
           name: 'Giacomo Bleacher',
         },
       ],
+      publicationType: 'JournalArticle',
+      publisher: {
+        id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
+      },
     },
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/d66d4683-6bdc-4732-bee2-189fbe7404d3',
-      publishedDate: { type: BackendTypeNames.INDEX_DATE, year: '2018', month: '9', day: '10' },
+      publishedDate: {
+        type: BackendTypeNames.INDEX_DATE,
+        year: '2018',
+        month: '9',
+        day: '10',
+      },
       title: 'City in the Sea',
       owner: 'wmanuelys@rakuten.co.jp',
       contributors: [
@@ -424,10 +681,19 @@ export const mockSearchResults: SearchResult = {
           name: 'Heath Greensitt',
         },
       ],
+      publicationType: 'JournalArticle',
+      publisher: {
+        id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
+      },
     },
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/661fd539-3c20-4764-bfc2-009e9cfb043c',
-      publishedDate: { type: BackendTypeNames.INDEX_DATE, year: '2020', month: '9', day: '10' },
+      publishedDate: {
+        type: BackendTypeNames.INDEX_DATE,
+        year: '2020',
+        month: '9',
+        day: '10',
+      },
       title: 'Black Mirror',
       owner: 'bisacssont@princeton.edu',
       contributors: [
@@ -436,10 +702,19 @@ export const mockSearchResults: SearchResult = {
           name: 'Huberto McParland',
         },
       ],
+      publicationType: 'JournalArticle',
+      publisher: {
+        id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
+      },
     },
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/8559da5f-9d24-4004-ae30-f43f9ef35b1d',
-      publishedDate: { type: BackendTypeNames.INDEX_DATE, year: '2018', month: '5', day: '10' },
+      publishedDate: {
+        type: BackendTypeNames.INDEX_DATE,
+        year: '2018',
+        month: '5',
+        day: '10',
+      },
       title: 'Ambush Trail',
       owner: 'ddjorevicu@psu.edu',
       contributors: [
@@ -460,10 +735,19 @@ export const mockSearchResults: SearchResult = {
           name: 'Darby Mengo',
         },
       ],
+      publicationType: 'JournalArticle',
+      publisher: {
+        id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
+      },
     },
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/40a06c82-063d-4c14-945c-17424cc09a77',
-      publishedDate: { type: BackendTypeNames.INDEX_DATE, year: '2018', month: '5', day: '6' },
+      publishedDate: {
+        type: BackendTypeNames.INDEX_DATE,
+        year: '2018',
+        month: '5',
+        day: '6',
+      },
       title: 'Another You',
       owner: 'klovejoyv@csmonitor.com',
       contributors: [
@@ -476,10 +760,19 @@ export const mockSearchResults: SearchResult = {
           name: 'Avrit Knowlson',
         },
       ],
+      publicationType: 'JournalArticle',
+      publisher: {
+        id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
+      },
     },
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/fa37540a-ef9f-4e07-91a7-dfd2a3fca2db',
-      publishedDate: { type: BackendTypeNames.INDEX_DATE, year: '2019', month: '5', day: '6' },
+      publishedDate: {
+        type: BackendTypeNames.INDEX_DATE,
+        year: '2019',
+        month: '5',
+        day: '6',
+      },
       title: 'Moonlight Serenade',
       owner: 'tshentonw@house.gov',
       contributors: [
@@ -488,10 +781,19 @@ export const mockSearchResults: SearchResult = {
           name: 'Avrit Knowlson',
         },
       ],
+      publicationType: 'JournalArticle',
+      publisher: {
+        id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
+      },
     },
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/9c35a95d-42c7-44e8-81f9-b99ecb5a4d44',
-      publishedDate: { type: BackendTypeNames.INDEX_DATE, year: '2017', month: '5', day: '6' },
+      publishedDate: {
+        type: BackendTypeNames.INDEX_DATE,
+        year: '2017',
+        month: '5',
+        day: '6',
+      },
       title: 'Sammy and Rosie Get Laid',
       owner: 'msharplyx@smugmug.com',
       contributors: [
@@ -500,10 +802,19 @@ export const mockSearchResults: SearchResult = {
           name: 'Avrit Knowlson',
         },
       ],
+      publicationType: 'JournalArticle',
+      publisher: {
+        id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
+      },
     },
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/75cbe42d-e72e-4931-96fd-9dc5ee45bfe9',
-      publishedDate: { type: BackendTypeNames.INDEX_DATE, year: '2020', month: '5', day: '6' },
+      publishedDate: {
+        type: BackendTypeNames.INDEX_DATE,
+        year: '2020',
+        month: '5',
+        day: '6',
+      },
       title: 'Why Are the Bells Ringing, Mitica? (a.k.a. Carnival Scenes) (De ce trag clopotele, Mitica?)',
       owner: 'jodesony@squidoo.com',
       contributors: [
@@ -512,10 +823,19 @@ export const mockSearchResults: SearchResult = {
           name: 'Avrit Knowlson',
         },
       ],
+      publicationType: 'JournalArticle',
+      publisher: {
+        id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
+      },
     },
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/f8ff4270-d888-4b0b-8f26-c770e6534f4b',
-      publishedDate: { type: BackendTypeNames.INDEX_DATE, year: '2020', month: '2', day: '6' },
+      publishedDate: {
+        type: BackendTypeNames.INDEX_DATE,
+        year: '2020',
+        month: '2',
+        day: '6',
+      },
       title: 'Trust Us, This Is All Made Up',
       owner: 'asaggsz@cmu.edu',
       contributors: [
@@ -524,10 +844,19 @@ export const mockSearchResults: SearchResult = {
           name: 'Avrit Knowlson',
         },
       ],
+      publicationType: 'JournalArticle',
+      publisher: {
+        id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
+      },
     },
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/f454a939-53e9-4a72-a9e2-bc6165f4fbb4',
-      publishedDate: { type: BackendTypeNames.INDEX_DATE, year: '2020', month: '4', day: '6' },
+      publishedDate: {
+        type: BackendTypeNames.INDEX_DATE,
+        year: '2020',
+        month: '4',
+        day: '6',
+      },
       title: 'Post Grad',
       owner: 'cwieprecht10@blog.com',
       contributors: [
@@ -540,10 +869,19 @@ export const mockSearchResults: SearchResult = {
           name: 'Dorene Ellens',
         },
       ],
+      publicationType: 'JournalArticle',
+      publisher: {
+        id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
+      },
     },
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/509c09f6-9bb2-4bdc-b1af-c891f32d722f',
-      publishedDate: { type: BackendTypeNames.INDEX_DATE, year: '2020', month: '5', day: '23' },
+      publishedDate: {
+        type: BackendTypeNames.INDEX_DATE,
+        year: '2020',
+        month: '5',
+        day: '23',
+      },
       title: 'Raiders of Atlantis, The',
       owner: 'edavy11@i2i.jp',
       contributors: [
@@ -556,10 +894,19 @@ export const mockSearchResults: SearchResult = {
           name: 'Dorene Ellens',
         },
       ],
+      publicationType: 'JournalArticle',
+      publisher: {
+        id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
+      },
     },
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/da0a70b5-2a84-4edc-8fc4-2899bda7b7b0',
-      publishedDate: { type: BackendTypeNames.INDEX_DATE, year: '2020', month: '5', day: '25' },
+      publishedDate: {
+        type: BackendTypeNames.INDEX_DATE,
+        year: '2020',
+        month: '5',
+        day: '25',
+      },
       title: 'Descendants, The',
       owner: 'dcathcart12@bizjournals.com',
       contributors: [
@@ -568,10 +915,19 @@ export const mockSearchResults: SearchResult = {
           name: 'Hendrick Shawe',
         },
       ],
+      publicationType: 'JournalArticle',
+      publisher: {
+        id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
+      },
     },
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/2954cbf7-e012-479e-938a-cc01b9b8c366',
-      publishedDate: { type: BackendTypeNames.INDEX_DATE, year: '2020', month: '7', day: '6' },
+      publishedDate: {
+        type: BackendTypeNames.INDEX_DATE,
+        year: '2020',
+        month: '7',
+        day: '6',
+      },
       title: 'Royal Scandal, A',
       owner: 'kbrimacombe13@prnewswire.com',
       contributors: [
@@ -580,10 +936,19 @@ export const mockSearchResults: SearchResult = {
           name: 'Hendrick Shawe',
         },
       ],
+      publicationType: 'JournalArticle',
+      publisher: {
+        id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
+      },
     },
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/7e1c7b58-4033-455c-b7e4-92c212f0145c',
-      publishedDate: { type: BackendTypeNames.INDEX_DATE, year: '2020', month: '8', day: '6' },
+      publishedDate: {
+        type: BackendTypeNames.INDEX_DATE,
+        year: '2020',
+        month: '8',
+        day: '6',
+      },
       title: 'Major Dundee',
       owner: 'tgrimsdell14@flavors.me',
       contributors: [
@@ -592,10 +957,19 @@ export const mockSearchResults: SearchResult = {
           name: 'Dorene Ellens',
         },
       ],
+      publicationType: 'JournalArticle',
+      publisher: {
+        id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
+      },
     },
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/6fe76bdb-0277-433d-b174-daa3d61bf704',
-      publishedDate: { type: BackendTypeNames.INDEX_DATE, year: '2020', month: '5', day: '26' },
+      publishedDate: {
+        type: BackendTypeNames.INDEX_DATE,
+        year: '2020',
+        month: '5',
+        day: '26',
+      },
       title: 'Renoir',
       owner: 'mwonfor15@dell.com',
       contributors: [
@@ -604,10 +978,19 @@ export const mockSearchResults: SearchResult = {
           name: 'Dorene Ellens',
         },
       ],
+      publicationType: 'JournalArticle',
+      publisher: {
+        id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
+      },
     },
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/f79a5f01-fc81-45e8-907b-95cf1fd309a5',
-      publishedDate: { type: BackendTypeNames.INDEX_DATE, year: '2019', month: '5', day: '26' },
+      publishedDate: {
+        type: BackendTypeNames.INDEX_DATE,
+        year: '2019',
+        month: '5',
+        day: '26',
+      },
       title: 'Sexual Life of the Belgians, The (Vie sexuelle des Belges 1950-1978, La)',
       owner: 'ceveritt16@google.es',
       contributors: [
@@ -624,10 +1007,19 @@ export const mockSearchResults: SearchResult = {
           name: 'Amery Roskams',
         },
       ],
+      publicationType: 'JournalArticle',
+      publisher: {
+        id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
+      },
     },
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/5d1b0915-46c6-432a-9cf5-0fd14cfea3bc',
-      publishedDate: { type: BackendTypeNames.INDEX_DATE, year: '2018', month: '5', day: '26' },
+      publishedDate: {
+        type: BackendTypeNames.INDEX_DATE,
+        year: '2018',
+        month: '5',
+        day: '26',
+      },
       title: 'Lineup, The',
       owner: 'lbarniss17@slate.com',
       contributors: [
@@ -644,10 +1036,19 @@ export const mockSearchResults: SearchResult = {
           name: 'Amery Roskams',
         },
       ],
+      publicationType: 'JournalArticle',
+      publisher: {
+        id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
+      },
     },
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/2bd86ec1-2b83-4da4-9ae8-86dfb59e514d',
-      publishedDate: { type: BackendTypeNames.INDEX_DATE, year: '2017', month: '5', day: '26' },
+      publishedDate: {
+        type: BackendTypeNames.INDEX_DATE,
+        year: '2017',
+        month: '5',
+        day: '26',
+      },
       title: 'Julie & Julia',
       owner: 'dgawthrop18@bloglovin.com',
       contributors: [
@@ -660,10 +1061,19 @@ export const mockSearchResults: SearchResult = {
           name: 'Brittni Sebire',
         },
       ],
+      publicationType: 'JournalArticle',
+      publisher: {
+        id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
+      },
     },
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/e441ebea-5268-48a0-b749-663fa35912af',
-      publishedDate: { type: BackendTypeNames.INDEX_DATE, year: '2019', month: '10', day: '26' },
+      publishedDate: {
+        type: BackendTypeNames.INDEX_DATE,
+        year: '2019',
+        month: '10',
+        day: '26',
+      },
       title: 'Stray Dog (Nora inu)',
       owner: 'pfiggs19@photobucket.com',
       contributors: [
@@ -676,10 +1086,19 @@ export const mockSearchResults: SearchResult = {
           name: 'Brittni Sebire',
         },
       ],
+      publicationType: 'JournalArticle',
+      publisher: {
+        id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
+      },
     },
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/088e4e74-ab76-4eb3-b7ad-abaee07b0d67',
-      publishedDate: { type: BackendTypeNames.INDEX_DATE, year: '2019', month: '10', day: '20' },
+      publishedDate: {
+        type: BackendTypeNames.INDEX_DATE,
+        year: '2019',
+        month: '10',
+        day: '20',
+      },
       title: 'Adventures of Ford Fairlane, The',
       owner: 'sumpleby1a@webnode.com',
       contributors: [
@@ -688,10 +1107,19 @@ export const mockSearchResults: SearchResult = {
           name: 'Brittni Sebire',
         },
       ],
+      publicationType: 'JournalArticle',
+      publisher: {
+        id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
+      },
     },
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/bbf1ddd5-a529-424b-bf6d-6a75434e6fc5',
-      publishedDate: { type: BackendTypeNames.INDEX_DATE, year: '2019', month: '10', day: '2' },
+      publishedDate: {
+        type: BackendTypeNames.INDEX_DATE,
+        year: '2019',
+        month: '10',
+        day: '2',
+      },
       title: 'Point Blank (À bout portant)',
       owner: 'jpantlin1b@abc.net.au',
       contributors: [
@@ -704,10 +1132,19 @@ export const mockSearchResults: SearchResult = {
           name: 'Alberto Kuzma',
         },
       ],
+      publicationType: 'JournalArticle',
+      publisher: {
+        id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
+      },
     },
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/22ba6c5b-dea8-48d9-95f2-3eec4a987522',
-      publishedDate: { type: BackendTypeNames.INDEX_DATE, year: '2019', month: '10', day: '12' },
+      publishedDate: {
+        type: BackendTypeNames.INDEX_DATE,
+        year: '2019',
+        month: '10',
+        day: '12',
+      },
       title: 'Warrior',
       owner: 'bkeel1c@whitehouse.gov',
       contributors: [
@@ -720,10 +1157,19 @@ export const mockSearchResults: SearchResult = {
           name: 'Alberto Kuzma',
         },
       ],
+      publicationType: 'JournalArticle',
+      publisher: {
+        id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
+      },
     },
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/1fc1084b-ea80-4ace-9faa-7f719a184cdd',
-      publishedDate: { type: BackendTypeNames.INDEX_DATE, year: '2019', month: '10', day: '22' },
+      publishedDate: {
+        type: BackendTypeNames.INDEX_DATE,
+        year: '2019',
+        month: '10',
+        day: '22',
+      },
       title: 'Clubbed',
       owner: 'hbowmaker1d@independent.co.uk',
       contributors: [
@@ -732,6 +1178,10 @@ export const mockSearchResults: SearchResult = {
           name: 'Alberto Kuzma',
         },
       ],
+      publicationType: 'JournalArticle',
+      publisher: {
+        id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
+      },
     },
   ],
 };

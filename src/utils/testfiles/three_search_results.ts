@@ -3,7 +3,7 @@ import { BackendTypeNames } from '../../types/publication_types/commonRegistrati
 
 export const threeMockSearchResults: SearchResult = {
   took: 10,
-  total: 100,
+  total: 3,
   hits: [
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/32290378-373e-4cca-8f24-d02b92d845ce',
@@ -16,6 +16,10 @@ export const threeMockSearchResults: SearchResult = {
           name: 'Alasdair Dyter',
         },
       ],
+      publicationType: 'JournalArticle',
+      publisher: {
+        id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
+      },
     },
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/d90f87c9-fb5b-41ef-8575-584b50102476',
@@ -32,6 +36,10 @@ export const threeMockSearchResults: SearchResult = {
           name: 'Kirstyn Jenik',
         },
       ],
+      publicationType: 'JournalArticle',
+      publisher: {
+        id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
+      },
     },
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/c01b4fe3-bd3c-4b89-8d3a-4cced90a53e6',
@@ -44,6 +52,10 @@ export const threeMockSearchResults: SearchResult = {
           name: 'Alberto Kuzma',
         },
       ],
+      publicationType: 'JournalArticle',
+      publisher: {
+        id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
+      },
     },
   ],
 };

@@ -67,7 +67,7 @@ const RegistrationListItem: FC<RegistrationListItemProps> = ({ registration }) =
               )}
               <>
                 <TagIcon />
-                <span>{t(`${registration.publicationType}`)}</span>
+                <span>{t(registration.publicationType)}</span>
               </>
             </StyledMetadata>
           </>
