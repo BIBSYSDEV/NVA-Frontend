@@ -20,22 +20,19 @@ const useSearchRegistrations = (
 
   useEffect(() => {
     const searchRegistrations = async () => {
+      setIsLoading(true);
       const response = await search(searchTerm, numberOfResults, searchAfter, cancelToken);
       if (response) {
-        setIsLoading(false);
         if (response.error) {
           dispatch(setNotification(t('error.search'), NotificationVariant.Error));
         } else if (response.data) {
           setSearchResults(response.data);
         }
       }
+      setIsLoading(false);
     };
-    // if (searchTerm) {
+
     searchRegistrations();
-    // } else {
-    //   setIsLoading(false);
-    //   setSearchResults(undefined);
-    // }
   }, [searchTerm, numberOfResults, searchAfter, cancelToken, t, dispatch]);
 
   return [searchResults, isLoading];

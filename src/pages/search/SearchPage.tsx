@@ -2,7 +2,6 @@ import React, { FC } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import SearchBar from '../../components/SearchBar';
-
 import Search from './Search';
 
 const StyledSearch = styled.div`
@@ -26,7 +25,7 @@ const SearchPage: FC = () => {
       <SearchBar
         resetSearchInput={history.location.pathname === '/search'}
         handleSearch={handleSearch}
-        initialSearchTerm={searchTerm ?? ''}
+        initialSearchTerm={searchTerm}
       />
       <Search searchTerm={searchTerm} />
     </StyledSearch>

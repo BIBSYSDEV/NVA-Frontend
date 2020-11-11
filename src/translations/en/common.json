@@ -50,6 +50,8 @@
   "save": "Save",
   "save_and_present": "Save and present",
   "search": "Search",
+  "search_summary": "{{count}} result for \"{{searchTerm}}\"",
+  "search_summary_plural": "{{count}} results for \"{{searchTerm}}\"",
   "send": "Send",
   "show": "Show",
   "start": "Start",

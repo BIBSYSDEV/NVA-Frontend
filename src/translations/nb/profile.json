@@ -13,7 +13,6 @@
     "no_registrations_found": "Ingen registreringer funnet",
     "other_affiliations": "+ {{count}} annen tilhørighet",
     "other_affiliations_plural": "+ {{count}} andre tilhørigheter",
-    "search_summary": "{{results}} treff for \"{{searchTerm}}\"",
     "see_profile": "Se forfatterprofil"
   },
   "heading": {

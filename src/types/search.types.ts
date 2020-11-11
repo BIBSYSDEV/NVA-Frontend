@@ -19,7 +19,7 @@ export interface LatestRegistration {
   owner: string;
 }
 
-interface SearchRegistration {
+export interface SearchRegistration {
   id: string;
   contributors: SearchResultContributor[];
   owner: string;

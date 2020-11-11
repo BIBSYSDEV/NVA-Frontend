@@ -29,11 +29,11 @@ const AuthorityList: FC<AuthorityListProps> = ({
   onSelectAuthority,
   selectedSystemControlNumber,
 }) => {
-  const { t } = useTranslation('profile');
+  const { t } = useTranslation('common');
 
   return (
     <StyledAuthorityContainer>
-      <Label>{t('authority.search_summary', { results: authorities?.length ?? 0, searchTerm })}</Label>
+      <Label>{t('search_summary', { count: authorities?.length ?? 0, searchTerm })}</Label>
       {authorities.map((authority) => (
         <StyledClickableDiv
           data-testid="author-radio-button"

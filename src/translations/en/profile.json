@@ -13,7 +13,6 @@
     "no_registrations_found": "No registrations found",
     "other_affiliations": "+ {{count}} other affiliation",
     "other_affiliations_plural": "+ {{count}} other affiliations",
-    "search_summary": "{{results}} results for \"{{searchTerm}}\"",
     "see_profile": "See author profile"
   },
   "heading": {
