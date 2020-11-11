@@ -1,46 +1,32 @@
 import React, { FC } from 'react';
-import { useHistory } from 'react-router-dom';
-import styled from 'styled-components';
-import SearchBar from '../../components/SearchBar';
+
 import useSearchRegistrations from '../../utils/hooks/useSearchRegistrations';
 import SearchResults from './SearchResults';
 import ListSkeleton from '../../components/ListSkeleton';
-import NormalText from '../../components/NormalText';
 import { useTranslation } from 'react-i18next';
+import { Typography } from '@material-ui/core';
 
-const StyledSearch = styled.div`
-  padding-top: 2rem;
-  width: 85%;
-  justify-items: center;
-`;
+interface SearchProps {
+  searchTerm?: string;
+  noHitsText?: string;
+}
 
-const Search: FC = () => {
-  const history = useHistory();
-  const searchTerm = new URLSearchParams(history.location.search).get('query') ?? '';
+const Search: FC<SearchProps> = ({ searchTerm, noHitsText }) => {
   const [registrationsSearch, isLoadingSearch] = useSearchRegistrations(searchTerm);
   const { t } = useTranslation('common');
 
-  const handleSearch = async (searchTerm: string) => {
-    if (searchTerm.length) {
-      history.push(`/search?query=${searchTerm}`);
-    }
-  };
-
   return (
-    <StyledSearch>
-      <SearchBar
-        resetSearchInput={history.location.pathname === '/search'}
-        handleSearch={handleSearch}
-        initialSearchTerm={searchTerm ?? ''}
-      />
+    <>
       {isLoadingSearch || !registrationsSearch ? (
         <ListSkeleton arrayLength={5} minWidth={40} height={100} />
       ) : registrationsSearch.hits.length > 0 ? (
         <SearchResults searchResult={registrationsSearch} searchTerm={searchTerm} />
+      ) : noHitsText ? (
+        noHitsText
       ) : (
-        <NormalText>{t('no_hits')}</NormalText>
+        <Typography>{noHitsText ? noHitsText : t('no_hits')}</Typography>
       )}
-    </StyledSearch>
+    </>
   );
 };
 

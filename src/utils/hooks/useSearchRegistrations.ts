@@ -8,7 +8,7 @@ import { SearchResult } from '../../types/search.types';
 import useCancelToken from './useCancelToken';
 
 const useSearchRegistrations = (
-  searchTerm: string,
+  searchTerm?: string,
   numberOfResults?: number,
   searchAfter?: string
 ): [SearchResult | undefined, boolean] => {
@@ -30,12 +30,12 @@ const useSearchRegistrations = (
         }
       }
     };
-    if (searchTerm) {
-      searchRegistrations();
-    } else {
-      setIsLoading(false);
-      setSearchResults(undefined);
-    }
+    // if (searchTerm) {
+    searchRegistrations();
+    // } else {
+    //   setIsLoading(false);
+    //   setSearchResults(undefined);
+    // }
   }, [searchTerm, numberOfResults, searchAfter, cancelToken, t, dispatch]);
 
   return [searchResults, isLoading];

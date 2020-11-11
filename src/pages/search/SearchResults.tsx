@@ -56,9 +56,11 @@ const SearchResults: FC<SearchResultsProps> = ({ searchResult, searchTerm }) => 
                 data-testid={`search-result-${registrationId}`}
                 key={registrationId}
                 primaryComponent={
-                  <MuiLink component={Link} to={`/registration/${registrationId}/public`}>
-                    {registration.title}
-                  </MuiLink>
+                  <Typography variant="h4">
+                    <MuiLink component={Link} to={`/registration/${registrationId}/public`}>
+                      {registration.title}
+                    </MuiLink>
+                  </Typography>
                 }
                 secondaryComponent={
                   <>

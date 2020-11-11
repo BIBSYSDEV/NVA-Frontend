@@ -161,15 +161,17 @@ export const getRegistrationByDoi = async (doiUrl: string) => {
 };
 
 export const search = async (
-  searchTerm: string,
+  searchTerm?: string,
   numberOfResults?: number,
   searchAfter?: string,
   cancelToken?: CancelToken
-) =>
-  await apiRequest<SearchResult>({
-    url: `${PublicationsApiPaths.SEARCH}?query=${searchTerm}`,
+) => {
+  const url = searchTerm ? `${PublicationsApiPaths.SEARCH}?query=${searchTerm}` : PublicationsApiPaths.SEARCH;
+  return await apiRequest<SearchResult>({
+    url,
     cancelToken,
   });
+};
 
 // Fetch publications ready for approval
 export const getRegistrationsForApproval = async () => {
