@@ -5,12 +5,12 @@ import useSearchRegistrations from '../../utils/hooks/useSearchRegistrations';
 import SearchResults from './SearchResults';
 import ListSkeleton from '../../components/ListSkeleton';
 
-interface SearchProps {
+interface RegistrationSearchProps {
   searchTerm?: string;
   noHitsText?: string;
 }
 
-const Search: FC<SearchProps> = ({ searchTerm, noHitsText }) => {
+const RegistrationSearch: FC<RegistrationSearchProps> = ({ searchTerm, noHitsText }) => {
   const [registrationsSearch, isLoadingSearch] = useSearchRegistrations(searchTerm);
   const { t } = useTranslation('common');
 
@@ -27,4 +27,4 @@ const Search: FC<SearchProps> = ({ searchTerm, noHitsText }) => {
   );
 };
 
-export default Search;
+export default RegistrationSearch;

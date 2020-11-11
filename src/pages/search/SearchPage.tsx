@@ -2,10 +2,9 @@ import React, { FC } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import SearchBar from '../../components/SearchBar';
-import Search from './Search';
+import RegistrationSearch from './RegistrationSearch';
 
 const StyledSearch = styled.div`
-  padding-top: 2rem;
   width: 85%;
   justify-items: center;
 `;
@@ -27,7 +26,7 @@ const SearchPage: FC = () => {
         handleSearch={handleSearch}
         initialSearchTerm={searchTerm}
       />
-      <Search searchTerm={searchTerm} />
+      <RegistrationSearch searchTerm={searchTerm} />
     </StyledSearch>
   );
 };
