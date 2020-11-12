@@ -2,18 +2,18 @@ version: 0.2
 
 env:
   variables:
-    - REACT_APP_USE_MOCK: 'true'
-    - REACT_APP_AWS_COGNITO_IDENTITY_POOL_ID: 'XXX'
-    - REACT_APP_AWS_USER_POOLS_ID: 'XXX'
-    - REACT_APP_AWS_USER_POOLS_WEB_CLIENT_ID: 'XXX'
-    - REACT_APP_DOMAIN: 'XXX'
-    - REACT_APP_REDIRECT_SIGN_IN: 'XXX'
-    - REACT_APP_REDIRECT_SIGN_OUT: 'XXX'
-    - REACT_APP_ORCID_CLIENT_ID: 'XXX'
-    - REACT_APP_ORCID_CLIENT_SECRET: XX"X
-    - REACT_APP_ORCID_REDIRECT_URI: 'https://dev.nva.aws.unit.no'
-    - REACT_APP_ORCID_BASE_URL: 'https://sandbox.orcid.org'
-    - REACT_APP_API_URL: 'https://api.dev.nva.aws.unit.no'
+    REACT_APP_USE_MOCK: 'true'
+    REACT_APP_AWS_COGNITO_IDENTITY_POOL_ID: 'XXX'
+    REACT_APP_AWS_USER_POOLS_ID: 'XXX'
+    REACT_APP_AWS_USER_POOLS_WEB_CLIENT_ID: 'XXX'
+    REACT_APP_DOMAIN: 'XXX'
+    REACT_APP_REDIRECT_SIGN_IN: 'XXX'
+    REACT_APP_REDIRECT_SIGN_OUT: 'XXX'
+    REACT_APP_ORCID_CLIENT_ID: 'XXX'
+    REACT_APP_ORCID_CLIENT_SECRET: XX"X
+    REACT_APP_ORCID_REDIRECT_URI: 'https://dev.nva.aws.unit.no'
+    REACT_APP_ORCID_BASE_URL: 'https://sandbox.orcid.org'
+    REACT_APP_API_URL: 'https://api.dev.nva.aws.unit.no'
 
 phases:
   install:
