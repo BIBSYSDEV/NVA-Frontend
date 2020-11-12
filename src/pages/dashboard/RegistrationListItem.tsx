@@ -46,8 +46,8 @@ const RegistrationListItem: FC<RegistrationListItemProps> = ({ registration }) =
         secondary={
           <>
             {registration.contributors &&
-              registration.contributors.map((contributor) => (
-                <Fragment key={contributor.id ?? contributor.name}>
+              registration.contributors.map((contributor, index) => (
+                <Fragment key={index}>
                   {contributor.id ? (
                     <MuiLink component={Link} to={`/user/${contributor.id}`}>
                       <StyledContributor>{contributor.name}</StyledContributor>
