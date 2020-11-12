@@ -64,8 +64,9 @@ const RegistrationListItem: FC<RegistrationListItemProps> = ({ registration }) =
                   )}
                 </Fragment>
               ))}
-              {/* TODO: i18n */}
-              {countRestContributors > 0 && <Typography>(+ {countRestContributors} andre)</Typography>}
+              {countRestContributors > 0 && (
+                <Typography>({t('common:x_others', { count: countRestContributors })})</Typography>
+              )}
             </StyledContributors>
 
             <Typography>

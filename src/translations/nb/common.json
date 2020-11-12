@@ -70,6 +70,8 @@
   "type": "Type",
   "users": "Brukere",
   "will_be_available": "Blir tilgjengelig",
+  "x_others": "+ {{count}} annen",
+  "x_others_plural": "+ {{count}} andre",
   "year": "År",
   "yes": "Ja"
 }
