@@ -34,7 +34,6 @@ export const userReducer = (
         affiliations,
         givenName: action.user.given_name,
         familyName: action.user.family_name,
-        possibleAuthorities: [],
         orgNumber: action.user['custom:orgNumber'],
       };
       return user;
@@ -58,10 +57,12 @@ export const userReducer = (
       return {
         ...state,
         authority: action.authority,
+        possibleAuthorities: undefined,
       };
     case SET_POSSIBLE_AUTHORITIES:
       return {
         ...state,
+        authority: undefined,
         possibleAuthorities: action.possibleAuthorities,
       };
     case LOGOUT_SUCCESS:

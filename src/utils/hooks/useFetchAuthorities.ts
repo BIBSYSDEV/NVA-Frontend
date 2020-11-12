@@ -7,17 +7,10 @@ import { NotificationVariant } from '../../types/notification.types';
 import { getAuthorities } from '../../api/authorityApi';
 import { Authority } from '../../types/authority.types';
 
-const useFetchAuthorities = (
-  initialSearchTerm: string
-): [Authority[] | undefined, boolean, (searchTerm: string) => void, string | undefined] => {
+const useFetchAuthorities = (searchTerm: string): [Authority[] | undefined, boolean] => {
   const dispatch = useDispatch();
-  const [authorities, setAuthorities] = useState<Authority[] | undefined>();
+  const [authorities, setAuthorities] = useState<Authority[]>();
   const [isLoading, setIsLoading] = useState(false);
-  const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
-
-  const handleNewSearchTerm = (searchTerm: string) => {
-    setSearchTerm(searchTerm);
-  };
 
   useEffect(() => {
     const cancelSource = Axios.CancelToken.source();
@@ -25,12 +18,12 @@ const useFetchAuthorities = (
       setIsLoading(true);
       const fetchedAuthorities = await getAuthorities(searchTerm, cancelSource.token);
       if (fetchedAuthorities) {
-        setIsLoading(false);
         if (fetchedAuthorities.error) {
           dispatch(setNotification(fetchedAuthorities.error, NotificationVariant.Error));
         } else {
           setAuthorities(fetchedAuthorities);
         }
+        setIsLoading(false);
       }
     };
     if (searchTerm) {
@@ -44,7 +37,7 @@ const useFetchAuthorities = (
     };
   }, [dispatch, searchTerm]);
 
-  return [authorities, isLoading, handleNewSearchTerm, searchTerm];
+  return [authorities, isLoading];
 };
 
 export default useFetchAuthorities;
