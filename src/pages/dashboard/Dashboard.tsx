@@ -12,7 +12,6 @@ const StyledDashboard = styled.div`
   grid-template-rows: auto auto;
   row-gap: 1rem;
   justify-items: center;
-  padding: 4rem;
   width: 100%;
   @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
     padding: 1rem;
