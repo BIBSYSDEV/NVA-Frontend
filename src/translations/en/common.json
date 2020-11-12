@@ -27,6 +27,7 @@
   "language": "Language",
   "last_name": "Last name",
   "loading": "Loading",
+  "message": "Message",
   "my_institution": "My institution",
   "name": "Name",
   "next": "Next",
@@ -58,6 +59,7 @@
   "show": "Show",
   "start": "Start",
   "status": "Status",
+  "support": "Support",
   "table_pagination": {
     "more_than": "more than",
     "next_page": "Next page",
