@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { search } from '../../api/registrationApi';
+import { searchRegistrations } from '../../api/searchApi';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import { SearchResult } from '../../types/search.types';
@@ -19,9 +19,9 @@ const useSearchRegistrations = (
   const [searchResults, setSearchResults] = useState<SearchResult>();
 
   useEffect(() => {
-    const searchRegistrations = async () => {
+    const handleSearchRegistrations = async () => {
       setIsLoading(true);
-      const response = await search(searchTerm, numberOfResults, searchAfter, cancelToken);
+      const response = await searchRegistrations(searchTerm, numberOfResults, searchAfter, cancelToken);
       if (response) {
         if (response.error) {
           dispatch(setNotification(t('error.search'), NotificationVariant.Error));
@@ -32,7 +32,7 @@ const useSearchRegistrations = (
       setIsLoading(false);
     };
 
-    searchRegistrations();
+    handleSearchRegistrations();
   }, [searchTerm, numberOfResults, searchAfter, cancelToken, t, dispatch]);
 
   return [searchResults, isLoading];
