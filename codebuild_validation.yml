@@ -25,10 +25,11 @@ phases:
       - apt-get install -y libgtk2.0-0 libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 xvfb jq
       - npm ci
   build:
-    - npm run build
-    - npm run test:react
-    - npm run test:cypress --coverage
-    - npx nyc report
+    commands:
+      - npm run build
+      - npm run test:react
+      - npm run test:cypress --coverage
+      - npx nyc report
 
 cache:
   directories:
