@@ -4,11 +4,8 @@ import { Registration } from '../types/registration.types';
 import { RegistrationFileSet } from '../types/file.types';
 import { StatusCode } from '../utils/constants';
 import { getIdToken } from './userApi';
-import { apiRequest } from './apiRequest';
-import { SearchResult } from '../types/search.types';
 
 export enum PublicationsApiPaths {
-  SEARCH = '/search/resources',
   PUBLICATION = '/publication',
   PUBLICATIONS_BY_OWNER = '/publication/by-owner',
   DOI_LOOKUP = '/doi-fetch',
@@ -158,19 +155,6 @@ export const getRegistrationByDoi = async (doiUrl: string) => {
   } catch (error) {
     return { error };
   }
-};
-
-export const search = async (
-  searchTerm?: string,
-  numberOfResults?: number,
-  searchAfter?: string,
-  cancelToken?: CancelToken
-) => {
-  const url = searchTerm ? `${PublicationsApiPaths.SEARCH}?query=${searchTerm}` : PublicationsApiPaths.SEARCH;
-  return await apiRequest<SearchResult>({
-    url,
-    cancelToken,
-  });
 };
 
 // Fetch publications ready for approval
