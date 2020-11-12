@@ -24,7 +24,7 @@ const SearchPage: FC = () => {
 
   return (
     <>
-      <PageHeader>{t('registrations')}</PageHeader>
+      <PageHeader backPath="/">{t('registrations')}</PageHeader>
       <StyledSearch>
         <SearchBar handleSearch={handleSearch} initialSearchTerm={searchTerm} />
         <RegistrationSearch searchTerm={searchTerm} />
