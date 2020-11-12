@@ -75,10 +75,12 @@ const RegistrationListItem: FC<RegistrationListItemProps> = ({ registration }) =
               <Typography variant="body2">{displayDate(registration.publishedDate)}</Typography>
             </>
           )}
-          <>
-            <TagIcon />
-            <Typography variant="body2">{t(registration.publicationType)}</Typography>
-          </>
+          {registration.publicationType && (
+            <>
+              <TagIcon />
+              <Typography variant="body2">{t(registration.publicationType)}</Typography>
+            </>
+          )}
         </StyledMetadata>
       </ListItemText>
     </ListItem>
