@@ -4,10 +4,10 @@ import styled from 'styled-components';
 import { Link as MuiLink, Typography, ListItem, ListItemText } from '@material-ui/core';
 import CalendarIcon from '@material-ui/icons/Today';
 import TagIcon from '@material-ui/icons/LocalOffer';
-import { SearchRegistration } from '../../types/search.types';
-import { displayDate } from '../../utils/date-helpers';
 import { useTranslation } from 'react-i18next';
 import Truncate from 'react-truncate';
+import { SearchRegistration } from '../../types/search.types';
+import { displayDate } from '../../utils/date-helpers';
 
 const StyledContributors = styled.div`
   display: flex;
