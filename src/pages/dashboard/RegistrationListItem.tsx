@@ -7,6 +7,7 @@ import TagIcon from '@material-ui/icons/LocalOffer';
 import { SearchRegistration } from '../../types/search.types';
 import { displayDate } from '../../utils/date-helpers';
 import { useTranslation } from 'react-i18next';
+import Truncate from 'react-truncate';
 
 const StyledContributor = styled.span`
   padding-right: 1rem;
@@ -57,7 +58,12 @@ const RegistrationListItem: FC<RegistrationListItemProps> = ({ registration }) =
                   )}
                 </Fragment>
               ))}
-            <Typography>{registration.abstract}</Typography>
+
+            <Typography>
+              <Truncate lines={3} ellipsis="[...]">
+                {registration.abstract}
+              </Truncate>
+            </Typography>
             <StyledMetadata>
               {registration.publishedDate && (
                 <>
