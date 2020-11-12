@@ -20,7 +20,7 @@ export const PageHeader: FC = ({ children }) => {
   const history = useHistory();
 
   const onBackClick = () => {
-    // TODO: handle back agter multiple searches
+    // TODO: handle back after multiple searches
     history.goBack();
   };
 
