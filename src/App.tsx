@@ -15,13 +15,14 @@ import AuthorityOrcidModal from './pages/user/authority/AuthorityOrcidModal';
 import { setNotification } from './redux/actions/notificationActions';
 import { setAuthorityData, setPossibleAuthorities, setRoles, setUser } from './redux/actions/userActions';
 import { RootStore } from './redux/reducers/rootReducer';
+import { awsConfig } from './utils/aws-config';
+import { USE_MOCK_DATA } from './utils/constants';
+import { mockUser } from './utils/testfiles/mock_feide_user';
+import { useTranslation } from 'react-i18next';
 import { Authority } from './types/authority.types';
 import { NotificationVariant } from './types/notification.types';
 import { InstitutionUser } from './types/user.types';
-import { awsConfig } from './utils/aws-config';
-import { USE_MOCK_DATA } from './utils/constants';
 import useFetchAuthorities from './utils/hooks/useFetchAuthorities';
-import { mockUser } from './utils/testfiles/mock_feide_user';
 
 const StyledApp = styled.div`
   min-height: 100vh;
@@ -49,10 +50,10 @@ const ProgressContainer = styled.div`
 
 const App: FC = () => {
   const dispatch = useDispatch();
+  const { t } = useTranslation('feedback');
   const user = useSelector((store: RootStore) => store.user);
   const [isLoadingUser, setIsLoadingUser] = useState(true);
-  const [authorities, isLoadingAuthorities, handleNewAuthoritiesSearchTerm] = useFetchAuthorities(user?.name ?? '');
-  const [authorityDataUpdated, setAuthorityDataUpdated] = useState(false);
+  const [matchingAuthorities, isLoadingMatchingAuthorities] = useFetchAuthorities(user?.name ?? '');
 
   useEffect(() => {
     // Setup aws-amplify
@@ -108,47 +109,39 @@ const App: FC = () => {
   }, [dispatch, user]);
 
   useEffect(() => {
-    // Update search term for fetching possible authorities
-    if (user?.name && user.customerId && !authorities && !isLoadingAuthorities) {
-      handleNewAuthoritiesSearchTerm(user.name);
-    }
-  }, [handleNewAuthoritiesSearchTerm, authorities, isLoadingAuthorities, user]);
-
-  useEffect(() => {
-    // Handle possible authorities
-    const fetchAuthority = async () => {
-      if (authorities) {
-        const filteredAuthorities: Authority[] = authorities.filter((auth: Authority) =>
-          auth.feideids.some((id) => id === user.id)
-        );
-        if (filteredAuthorities.length === 1 && user?.cristinId) {
+    if (matchingAuthorities && user && !user.authority && !user.possibleAuthorities) {
+      const fetchAuthority = async () => {
+        const filteredAuthorities = matchingAuthorities.filter((auth) => auth.feideids.some((id) => id === user.id));
+        if (filteredAuthorities.length === 1) {
+          // Use exsisting authority
           const existingScn = filteredAuthorities[0].systemControlNumber;
-          const existingAuthority: Authority = await getAuthority(existingScn);
-          if (existingAuthority.orgunitids.includes(user.cristinId)) {
-            dispatch(setAuthorityData(existingAuthority));
-          } else {
-            const updatedAuthority = await addQualifierIdForAuthority(
-              existingScn,
-              AuthorityQualifiers.ORGUNIT_ID,
-              user.cristinId
-            );
-            if (updatedAuthority?.error) {
-              dispatch(setNotification(updatedAuthority.error, NotificationVariant.Error));
-            } else {
-              dispatch(setAuthorityData(updatedAuthority));
+          const existingAuthority = await getAuthority(existingScn);
+          if (existingAuthority?.error) {
+            dispatch(setNotification(t('error.get_authority'), NotificationVariant.Error));
+          } else if (existingAuthority?.data) {
+            let currentAuthority = existingAuthority.data;
+            if (user.cristinId && !existingAuthority.data.orgunitids.includes(user.cristinId)) {
+              // Add cristinId to Authority's orgunitids
+              const authorityWithOrgId = await addQualifierIdForAuthority(
+                existingScn,
+                AuthorityQualifiers.ORGUNIT_ID,
+                user.cristinId
+              );
+              if (authorityWithOrgId?.error) {
+                dispatch(setNotification(authorityWithOrgId.error, NotificationVariant.Error));
+              } else {
+                currentAuthority = authorityWithOrgId as Authority;
+              }
             }
+            dispatch(setAuthorityData(currentAuthority));
           }
         } else {
-          dispatch(setPossibleAuthorities(authorities));
+          dispatch(setPossibleAuthorities(matchingAuthorities));
         }
-        setAuthorityDataUpdated(true);
-      }
-    };
-    // Avoid infinite loop by breaking when new data is identical to existing data
-    if (user?.customerId && !user.authority && user.possibleAuthorities !== authorities) {
+      };
       fetchAuthority();
     }
-  }, [dispatch, authorities, user]);
+  }, [dispatch, t, matchingAuthorities, user]);
 
   return isLoadingUser ? (
     <ProgressContainer>
@@ -164,7 +157,7 @@ const App: FC = () => {
         </StyledContent>
         <Footer />
       </StyledApp>
-      {!isLoadingAuthorities && authorityDataUpdated && user?.customerId && <AuthorityOrcidModal />}
+      {user && !isLoadingMatchingAuthorities && (user.authority || user.possibleAuthorities) && <AuthorityOrcidModal />}
     </BrowserRouter>
   );
 };

@@ -103,18 +103,14 @@ const User: FC = () => {
 
         <StyledPrimaryUserInfo>
           <UserInfo user={user} />
-          {user.customerId && (
-            <>
-              <Card>
-                <Typography variant="h5">{t('heading.author_info')}</Typography>
-                {user.authority && user.authority.feideids?.length > 0 && (
-                  <p data-testid="author-connected-info">{t('authority.connected_info')}</p>
-                )}
-              </Card>
-              <UserOrcid />
-              <UserInstitution />
-            </>
-          )}
+          <Card>
+            <Typography variant="h5">{t('heading.author_info')}</Typography>
+            {user.authority && user.authority.feideids?.length > 0 && (
+              <p data-testid="author-connected-info">{t('authority.connected_info')}</p>
+            )}
+          </Card>
+          <UserOrcid />
+          <UserInstitution />
         </StyledPrimaryUserInfo>
       </StyledUserPage>
     </>

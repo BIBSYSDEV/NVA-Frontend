@@ -24,7 +24,8 @@ interface AddContributorModalContentProps {
 const AddContributorModalContent: FC<AddContributorModalContentProps> = ({ addAuthor, initialSearchTerm = '' }) => {
   const { t } = useTranslation('registration');
   const [selectedAuthor, setSelectedAuthor] = useState<Authority | null>(null);
-  const [authorities, isLoadingAuthorities, handleNewSearchTerm, searchTerm] = useFetchAuthorities(initialSearchTerm);
+  const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
+  const [authorities, isLoadingAuthorities] = useFetchAuthorities(searchTerm);
 
   return (
     <>
@@ -33,7 +34,7 @@ const AddContributorModalContent: FC<AddContributorModalContentProps> = ({ addAu
           {t('registration:contributors.prefilled_name')}: {initialSearchTerm}
         </StyledSubHeading>
       )}
-      <SearchBar handleSearch={handleNewSearchTerm} initialSearchTerm={initialSearchTerm} />
+      <SearchBar handleSearch={(newSearchTerm) => setSearchTerm(newSearchTerm)} initialSearchTerm={initialSearchTerm} />
       {isLoadingAuthorities ? (
         <StyledProgressWrapper>
           <CircularProgress size={100} />

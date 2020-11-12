@@ -150,6 +150,7 @@
     "number_of_affiliations": "{{count}} tilhørighet",
     "number_of_affiliations_plural": "{{count}} tilhørigheter"
   },
+  "support_description": "Når du ber om brukerstøtte vil meldingen gå til en kurator ved din institusjon. Du kan se besvarelser i <0>Mine Meldinger</0>.",
   "modal_unsaved_changes_description": "Du har gjort endringer som ikke er lagret. Er du sikker på at du vil forlate denne siden?",
   "modal_unsaved_changes_heading": "Forlate siden uten å ha lagret?"
 }

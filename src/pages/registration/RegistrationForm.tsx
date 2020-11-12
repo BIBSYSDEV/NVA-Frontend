@@ -22,6 +22,8 @@ import { registrationValidationSchema } from '../../utils/validation/registratio
 import { PageHeader } from '../../components/PageHeader';
 import Forbidden from '../errorpages/Forbidden';
 import { StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
+import Modal from '../../components/Modal';
+import { SupportModalContent } from './SupportModalContent';
 
 const StyledRegistration = styled.div`
   width: 100%;
@@ -48,10 +50,13 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier = '', closeFor
   const initialTabNumber = new URLSearchParams(history.location.search).get('tab');
   const [tabNumber, setTabNumber] = useState(initialTabNumber ? +initialTabNumber : RegistrationTab.Description);
   const [isSaving, setIsSaving] = useState(false);
+  const [openSupportModal, setOpenSupportModal] = useState(false);
   const dispatch = useDispatch();
   const uppy = useUppy();
   const [registration, isLoadingRegistration, handleSetRegistration] = useFetchRegistration(identifier);
   const isOwner = registration?.owner === user.id;
+
+  const toggleSupportModal = () => setOpenSupportModal((state) => !state);
 
   useEffect(() => {
     if (!registration && !isLoadingRegistration) {
@@ -137,8 +142,12 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier = '', closeFor
                   return await saveRegistration(values);
                 }}
               />
+
               {tabNumber !== RegistrationTab.Submission && (
                 <StyledButtonGroupContainer>
+                  <Button data-testid="open-support-button" variant="text" color="primary" onClick={toggleSupportModal}>
+                    {t('common:support')}
+                  </Button>
                   <StyledButtonContainer>
                     <ButtonWithProgress
                       type="submit"
@@ -164,6 +173,9 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier = '', closeFor
           )}
         </Formik>
       </StyledRegistration>
+      <Modal open={openSupportModal} onClose={toggleSupportModal} headingText={t('common:support')}>
+        <SupportModalContent closeModal={toggleSupportModal} />
+      </Modal>
     </>
   );
 };
