@@ -40,55 +40,47 @@ const RegistrationListItem: FC<RegistrationListItemProps> = ({ registration }) =
 
   return (
     <ListItem divider>
-      <ListItemText
-        disableTypography
-        data-testid="result-list-item"
-        primary={
-          <Typography variant="h4">
-            <MuiLink component={Link} to={`/registration/${registrationId}/public`}>
-              {registration.title}
-            </MuiLink>
-          </Typography>
-        }
-        secondary={
-          <>
-            <StyledContributors>
-              {focusedContributors.map((contributor, index) => (
-                <Fragment key={index}>
-                  {contributor.id ? (
-                    <MuiLink component={Link} to={`/user/${contributor.id}`}>
-                      <Typography>{contributor.name}</Typography>
-                    </MuiLink>
-                  ) : (
-                    <Typography>{contributor.name}</Typography>
-                  )}
-                </Fragment>
-              ))}
-              {countRestContributors > 0 && (
-                <Typography>({t('common:x_others', { count: countRestContributors })})</Typography>
+      <ListItemText disableTypography data-testid="result-list-item">
+        <Typography variant="h4">
+          <MuiLink component={Link} to={`/registration/${registrationId}/public`}>
+            {registration.title}
+          </MuiLink>
+        </Typography>
+        <StyledContributors>
+          {focusedContributors.map((contributor, index) => (
+            <Fragment key={index}>
+              {contributor.id ? (
+                <MuiLink component={Link} to={`/user/${contributor.id}`}>
+                  <Typography>{contributor.name}</Typography>
+                </MuiLink>
+              ) : (
+                <Typography>{contributor.name}</Typography>
               )}
-            </StyledContributors>
+            </Fragment>
+          ))}
+          {countRestContributors > 0 && (
+            <Typography>({t('common:x_others', { count: countRestContributors })})</Typography>
+          )}
+        </StyledContributors>
 
-            <Typography>
-              <Truncate lines={3} ellipsis="[...]">
-                {registration.abstract}
-              </Truncate>
-            </Typography>
-            <StyledMetadata>
-              {registration.publishedDate && (
-                <>
-                  <CalendarIcon />
-                  <Typography variant="body2">{displayDate(registration.publishedDate)}</Typography>
-                </>
-              )}
-              <>
-                <TagIcon />
-                <Typography variant="body2">{t(registration.publicationType)}</Typography>
-              </>
-            </StyledMetadata>
+        <Typography>
+          <Truncate lines={3} ellipsis="[...]">
+            {registration.abstract}
+          </Truncate>
+        </Typography>
+        <StyledMetadata>
+          {registration.publishedDate && (
+            <>
+              <CalendarIcon />
+              <Typography variant="body2">{displayDate(registration.publishedDate)}</Typography>
+            </>
+          )}
+          <>
+            <TagIcon />
+            <Typography variant="body2">{t(registration.publicationType)}</Typography>
           </>
-        }
-      />
+        </StyledMetadata>
+      </ListItemText>
     </ListItem>
   );
 };
