@@ -16,10 +16,10 @@ export enum LicenseNames {
 }
 
 interface LicenseInfo {
-  buttonImage: any;
+  buttonImage: string;
   description: string;
   identifier: LicenseNames;
-  image: any;
+  image: string;
   label: string;
   link: string;
 }

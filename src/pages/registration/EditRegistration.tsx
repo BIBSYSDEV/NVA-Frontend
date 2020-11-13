@@ -13,12 +13,12 @@ const StyledEditRegistration = styled.div`
 `;
 
 const EditRegistration: FC = () => {
-  const { identifier } = useParams();
+  const { identifier } = useParams<{ identifier: string }>();
   const [expanded, setExpanded] = useState<string | false>(false);
   const [showForm, setShowForm] = useState(!!identifier);
   const { t } = useTranslation('registration');
 
-  const handleChange = (panel: string) => (_: React.ChangeEvent<any>, isExpanded: boolean) => {
+  const handleChange = (panel: string) => (_: React.ChangeEvent<unknown>, isExpanded: boolean) => {
     setExpanded(isExpanded ? panel : false);
   };
 

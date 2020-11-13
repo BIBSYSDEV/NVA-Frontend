@@ -12,12 +12,12 @@ import { setNotification } from '../../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../../types/notification.types';
 import {
   StyledProgressWrapper,
-  StyledRightAlignedButtonWrapper,
+  StyledRightAlignedWrapper,
   StyledNormalTextPreWrapped,
 } from '../../../../components/styled/Wrappers';
 import { newContributorValidationSchema } from '../../../../utils/validation/newContributorValidation';
 
-const StyledButtonContainer = styled(StyledRightAlignedButtonWrapper)`
+const StyledButtonContainer = styled(StyledRightAlignedWrapper)`
   margin-top: 1rem;
 `;
 
@@ -61,11 +61,11 @@ const CreateContributorModalContent: FC<CreateContributorModalContentProps> = ({
               <Collapse in={readMore} collapsedHeight="4.5rem">
                 <StyledNormalTextPreWrapped>{t('description_create_authority')}</StyledNormalTextPreWrapped>
               </Collapse>
-              <StyledRightAlignedButtonWrapper>
+              <StyledRightAlignedWrapper>
                 <Button color="primary" data-testid="button-read-more" onClick={toggleReadMore}>
                   {t(readMore ? 'read_less' : 'read_more')}
                 </Button>
-              </StyledRightAlignedButtonWrapper>
+              </StyledRightAlignedWrapper>
               <Field name="firstName">
                 {({ field, meta: { error, touched } }: FieldProps) => (
                   <TextField

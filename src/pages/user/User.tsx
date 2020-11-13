@@ -15,7 +15,7 @@ import UserOrcid from './UserOrcid';
 import UserRoles from './UserRoles';
 import Card from '../../components/Card';
 import UserInstitution from './UserInstitution';
-import { StyledRightAlignedButtonWrapper } from '../../components/styled/Wrappers';
+import { StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import { PageHeader } from '../../components/PageHeader';
@@ -42,7 +42,7 @@ const StyledPrimaryUserInfo = styled.div`
   grid-area: primary-info;
 `;
 
-const StyledButtonWrapper = styled(StyledRightAlignedButtonWrapper)`
+const StyledButtonWrapper = styled(StyledRightAlignedWrapper)`
   grid-area: top;
 `;
 
@@ -98,23 +98,19 @@ const User: FC = () => {
         )}
         <StyledSecondaryUserInfo>
           <UserLanguage />
-          {user.roles.length > 1 && <UserRoles user={user} />}
+          <UserRoles user={user} />
         </StyledSecondaryUserInfo>
 
         <StyledPrimaryUserInfo>
           <UserInfo user={user} />
-          {user.customerId && (
-            <>
-              <Card>
-                <Typography variant="h5">{t('heading.author_info')}</Typography>
-                {user.authority && user.authority.feideids?.length > 0 && (
-                  <p data-testid="author-connected-info">{t('authority.connected_info')}</p>
-                )}
-              </Card>
-              <UserOrcid />
-              <UserInstitution />
-            </>
-          )}
+          <Card>
+            <Typography variant="h5">{t('heading.author_info')}</Typography>
+            {user.authority && user.authority.feideids?.length > 0 && (
+              <p data-testid="author-connected-info">{t('authority.connected_info')}</p>
+            )}
+          </Card>
+          <UserOrcid />
+          <UserInstitution />
         </StyledPrimaryUserInfo>
       </StyledUserPage>
     </>

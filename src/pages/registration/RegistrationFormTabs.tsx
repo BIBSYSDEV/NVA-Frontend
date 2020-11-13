@@ -1,4 +1,4 @@
-import { FormikProps, useFormikContext } from 'formik';
+import { useFormikContext } from 'formik';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
@@ -29,13 +29,13 @@ const descriptionFieldNames = Object.values(DescriptionFieldNames);
 const referenceFieldNames = Object.values(ReferenceFieldNames);
 
 interface RegistrationFormTabsProps {
-  handleTabChange: (_: React.ChangeEvent<{}>, newValue: number) => void;
+  handleTabChange: (_: React.ChangeEvent<unknown>, newValue: number) => void;
   tabNumber: number;
 }
 
 export const RegistrationFormTabs: FC<RegistrationFormTabsProps> = ({ handleTabChange, tabNumber }) => {
   const { t } = useTranslation('registration');
-  const { errors, touched, values }: FormikProps<Registration> = useFormikContext();
+  const { errors, touched, values } = useFormikContext<Registration>();
   const {
     entityDescription: { contributors },
     fileSet: { files = [] },

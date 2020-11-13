@@ -1,10 +1,11 @@
-import { CristinProject, ResearchProject } from '../../../../types/project.types';
+import i18n from '../../../../translations/i18n';
 import { LanguageCodes } from '../../../../types/language.types';
+import { CristinProject, ResearchProject } from '../../../../types/project.types';
 import { BackendTypeNames } from '../../../../types/publication_types/commonRegistration.types';
 
-export const getProjectTitle = (option: CristinProject) => {
-  const selectedLanguage = localStorage.getItem('i18nextLng');
-  if (selectedLanguage === LanguageCodes.NORWEGIAN_BOKMAL || selectedLanguage === LanguageCodes.NORWEGIAN_NYNORSK) {
+export const getProjectTitle = (option: CristinProject): string => {
+  const selectedLanguage = i18n.language;
+  if (selectedLanguage === LanguageCodes.NORWEGIAN_BOKMAL) {
     const norwegianTitle = option.titles.find((title) => title.language === 'no')?.title;
     if (norwegianTitle) {
       return norwegianTitle;
@@ -17,21 +18,6 @@ export const getProjectTitle = (option: CristinProject) => {
     }
   }
   return option.titles[0].title;
-};
-
-export const getProjectTitleParts = (project: CristinProject, searchTerm: string) => {
-  const title = getProjectTitle(project);
-  const indexOfMatch = title.toLocaleLowerCase().indexOf(searchTerm);
-
-  const parts =
-    indexOfMatch === -1
-      ? [title]
-      : [
-          title.substr(0, indexOfMatch),
-          title.substr(indexOfMatch, searchTerm.length),
-          title.substr(indexOfMatch + searchTerm.length),
-        ];
-  return parts;
 };
 
 export const convertToResearchProject = (project: CristinProject): ResearchProject => ({

@@ -23,7 +23,7 @@ export const getMostSpecificUnit = (values: FormikInstitutionUnit): InstitutionU
 };
 
 // Find distinct unit URIs for a set of contributors' affiliations
-export const getDistinctContributorUnits = (contributors: Contributor[]) => [
+export const getDistinctContributorUnits = (contributors: Contributor[]): string[] => [
   ...new Set(
     contributors
       .map((contributor) => contributor.affiliations)

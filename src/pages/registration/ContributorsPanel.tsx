@@ -1,13 +1,13 @@
 import React, { FC, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormHelperText, Typography } from '@material-ui/core';
-import { FormikProps, useFormikContext, FieldArray, ErrorMessage, FieldArrayRenderProps } from 'formik';
+import { useFormikContext, FieldArray, ErrorMessage, FieldArrayRenderProps } from 'formik';
 import Card from '../../components/Card';
-import SortableTable from './contributors_tab/components/SortableTable';
 import { Registration } from '../../types/registration.types';
 import { ContributorFieldNames } from '../../types/publicationFieldNames';
 import { touchedContributorTabFields } from '../../utils/formik-helpers';
 import { PanelProps } from './RegistrationFormContent';
+import Authors from './contributors_tab/Authors';
 
 const ContributorsPanel: FC<PanelProps> = ({ setTouchedFields }) => {
   const { t } = useTranslation('registration');
@@ -15,7 +15,9 @@ const ContributorsPanel: FC<PanelProps> = ({ setTouchedFields }) => {
     values: {
       entityDescription: { contributors },
     },
-  }: FormikProps<Registration> = useFormikContext();
+    errors,
+  } = useFormikContext<Registration>();
+  const contributorsError = errors.entityDescription?.contributors;
 
   const contributorsRef = useRef(contributors);
   useEffect(() => {
@@ -33,10 +35,10 @@ const ContributorsPanel: FC<PanelProps> = ({ setTouchedFields }) => {
     <Card>
       <Typography variant="h2">{t('contributors.authors')}</Typography>
       <FieldArray name={ContributorFieldNames.CONTRIBUTORS}>
-        {({ push, remove, replace, name }: FieldArrayRenderProps) => (
+        {({ push, replace, name }: FieldArrayRenderProps) => (
           <>
-            <SortableTable push={push} remove={remove} replace={replace} />
-            {contributors.length === 0 && (
+            <Authors push={push} replace={replace} />
+            {contributors.length === 0 && typeof contributorsError === 'string' && (
               <FormHelperText error>
                 <ErrorMessage name={name} />
               </FormHelperText>

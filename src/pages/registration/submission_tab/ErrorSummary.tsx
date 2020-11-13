@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { FormikProps, useFormikContext } from 'formik';
+import { useFormikContext } from 'formik';
 import styled from 'styled-components';
 import { Registration } from '../../../types/registration.types';
 import { useTranslation } from 'react-i18next';
@@ -14,7 +14,7 @@ const StyledCard = styled(Card)`
 
 const ErrorSummary: FC = () => {
   const { t } = useTranslation('registration');
-  const { errors }: FormikProps<Registration> = useFormikContext();
+  const { errors } = useFormikContext<Registration>();
   const flattenedErrors = flattenFormikErrors(errors);
 
   return flattenedErrors.length > 0 ? (

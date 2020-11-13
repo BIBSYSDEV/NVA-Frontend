@@ -40,8 +40,11 @@ export interface Publisher {
   type: string;
   title: string;
   onlineIssn: string;
+  printIssn: string;
   level: string | number | null;
   openAccess: boolean;
+  peerReviewed: boolean;
+  url: string;
 }
 
 export interface AlmaRegistration {
@@ -73,7 +76,7 @@ interface DoiRequest {
   messages: DoiRequestMessage[];
 }
 
-interface RegistrationPublisher {
+export interface RegistrationPublisher {
   id: string;
 }
 

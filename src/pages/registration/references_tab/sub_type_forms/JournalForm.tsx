@@ -1,4 +1,4 @@
-import { Field, FormikProps, useFormikContext, FieldProps, ErrorMessage } from 'formik';
+import { Field, useFormikContext, FieldProps, ErrorMessage } from 'formik';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
@@ -6,10 +6,9 @@ import { TextField, Typography } from '@material-ui/core';
 import { JournalRegistration } from '../../../../types/registration.types';
 import { ReferenceFieldNames } from '../../../../types/publicationFieldNames';
 import DoiField from '../components/DoiField';
-import PublisherField from '../components/PublisherField';
-import { PublicationTableNumber } from '../../../../utils/constants';
 import NviValidation from '../components/NviValidation';
 import { JournalEntityDescription } from '../../../../types/publication_types/journalRegistration.types';
+import JournalField from '../components/JournalField';
 
 const StyledArticleDetail = styled.div`
   display: grid;
@@ -29,7 +28,7 @@ const StyledLabel = styled(Typography)`
 
 const JournalForm: FC = () => {
   const { t } = useTranslation('registration');
-  const { touched, values }: FormikProps<JournalRegistration> = useFormikContext();
+  const { values } = useFormikContext<JournalRegistration>();
   const {
     reference: { publicationContext, publicationInstance },
   } = values.entityDescription as JournalEntityDescription;
@@ -38,13 +37,7 @@ const JournalForm: FC = () => {
     <>
       <DoiField />
 
-      <PublisherField
-        publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
-        label={t('references.journal')}
-        placeholder={t('references.search_for_journal')}
-        touched={touched.entityDescription?.reference?.publicationContext?.title}
-        errorName={ReferenceFieldNames.PUBLICATION_CONTEXT_TITLE}
-      />
+      <JournalField />
 
       <StyledArticleDetail>
         <Field name={ReferenceFieldNames.VOLUME}>

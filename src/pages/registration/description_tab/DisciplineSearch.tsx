@@ -15,8 +15,8 @@ const StyledSearchIcon = styled(SearchIcon)`
 
 interface DisciplineSearchProps {
   dataTestId: string;
-  setValueFunction: (value: any) => void;
-  value: any;
+  setValueFunction: (value: NpiDiscipline | null) => void;
+  value: string;
   placeholder?: string;
 }
 
@@ -27,7 +27,7 @@ const DisciplineSearch: FC<DisciplineSearchProps> = ({ dataTestId, setValueFunct
     <Autocomplete
       options={disciplineOptions}
       groupBy={(discipline) => discipline.mainDiscipline}
-      onChange={(_: object, value: NpiDiscipline | null) => setValueFunction(value)}
+      onChange={(_: unknown, value: NpiDiscipline | null) => setValueFunction(value)}
       value={getNpiDiscipline(value)}
       getOptionLabel={(option) => option.name}
       renderInput={(params) => (

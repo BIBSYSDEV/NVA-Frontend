@@ -1,60 +1,31 @@
 import React, { FC } from 'react';
-import { Field, FieldProps, ErrorMessage } from 'formik';
-import PublicationChannelSearch from './PublicationChannelSearch';
+import { Field, FieldProps, useFormikContext } from 'formik';
+import { useTranslation } from 'react-i18next';
+import { ReferenceFieldNames, contextTypeBaseFieldName } from '../../../../types/publicationFieldNames';
 import { PublicationTableNumber } from '../../../../utils/constants';
-import PublisherRow from './PublisherRow';
-import { contextTypeBaseFieldName } from '../../../../types/publicationFieldNames';
-import { levelMap } from '../../../../types/registration.types';
+import { publicationContextToPublisher, formatPublicationContextWithPublisher } from './reference-helpers';
+import { Registration } from '../../../../types/registration.types';
+import PublicationChannelSearch from './PublicationChannelSearch';
 
-interface PublisherFieldProps {
-  publicationTable?: PublicationTableNumber;
-  label: string;
-  placeholder: string;
-  touched: boolean | undefined;
-  errorName: string;
-}
+const PublisherField: FC = () => {
+  const { t } = useTranslation('registration');
+  const { setFieldValue } = useFormikContext<Registration>();
 
-const PublisherField: FC<PublisherFieldProps> = ({
-  publicationTable = PublicationTableNumber.PUBLISHERS,
-  label,
-  placeholder,
-  touched,
-  errorName,
-}) => {
   return (
     <Field name={contextTypeBaseFieldName}>
-      {({ field: { name, value }, form: { setFieldValue }, meta: { error } }: FieldProps) => (
-        <>
-          <PublicationChannelSearch
-            clearSearchField
-            dataTestId="autosearch-publisher"
-            label={label}
-            publicationTable={publicationTable}
-            setValueFunction={(inputValue) => {
-              setFieldValue(name, {
-                ...value,
-                title: inputValue.title,
-                publisher: inputValue.title,
-                level: Object.keys(levelMap).find((key) => levelMap[key] === inputValue.level),
-                url: inputValue.url,
-              });
-            }}
-            placeholder={placeholder}
-            errorMessage={error && touched ? <ErrorMessage name={errorName} /> : ''}
-          />
-
-          {(value.title || value.publisher) && (
-            <PublisherRow
-              dataTestId="autosearch-results-publisher"
-              publisher={value.title ? value : { ...value, title: value.publisher }}
-              label={label}
-              data-testid="delete-publisher"
-              onClickDelete={() => {
-                setFieldValue(name, { ...value, publisher: '', title: '', level: '', url: '' });
-              }}
-            />
-          )}
-        </>
+      {({ field: { name, value } }: FieldProps) => (
+        <PublicationChannelSearch
+          dataTestId="publisher-search-input"
+          publicationTable={PublicationTableNumber.PUBLISHERS}
+          label={t('common:publisher')}
+          placeholder={t('references.search_for_publisher')}
+          errorFieldName={ReferenceFieldNames.PUBLICATION_CONTEXT_PUBLISHER}
+          setValue={(newValue) => {
+            const contextValues = formatPublicationContextWithPublisher(value.type, newValue);
+            setFieldValue(name, contextValues);
+          }}
+          value={publicationContextToPublisher(value)}
+        />
       )}
     </Field>
   );
