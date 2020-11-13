@@ -1,4 +1,4 @@
-import { Field, FormikProps, useFormikContext, FieldProps } from 'formik';
+import { Field, useFormikContext, FieldProps } from 'formik';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormControl, FormControlLabel, Radio, RadioGroup, Typography } from '@material-ui/core';
@@ -12,7 +12,7 @@ interface PeerReviewProps {
 const PeerReview: FC<PeerReviewProps> = ({ fieldName, label }) => {
   const { t } = useTranslation('registration');
 
-  const { setFieldValue }: FormikProps<Registration> = useFormikContext();
+  const { setFieldValue } = useFormikContext<Registration>();
 
   return (
     <Field name={fieldName}>

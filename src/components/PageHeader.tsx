@@ -7,7 +7,6 @@ import { useTranslation } from 'react-i18next';
 
 const StyledHeader = styled.div`
   width: 85vw;
-  margin-top: 1rem;
   margin-bottom: 1rem;
 `;
 

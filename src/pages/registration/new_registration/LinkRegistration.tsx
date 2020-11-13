@@ -23,12 +23,12 @@ const StyledTypography = styled(Typography)`
 
 interface LinkRegistrationProps {
   expanded: boolean;
-  onChange: (event: React.ChangeEvent<any>, isExpanded: boolean) => void;
+  onChange: (event: React.ChangeEvent<unknown>, isExpanded: boolean) => void;
   openForm: () => void;
 }
 
 const LinkRegistration: FC<LinkRegistrationProps> = ({ expanded, onChange, openForm }) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('common');
   const [doi, setDoi] = useState<Doi | null>(null);
   const [noHit, setNoHit] = useState(false);
   const history = useHistory();
@@ -73,11 +73,11 @@ const LinkRegistration: FC<LinkRegistrationProps> = ({ expanded, onChange, openF
       <StyledBody>
         <Typography>{t('registration:registration.link_to_resource_description')}</Typography>
         <LinkRegistrationForm handleSearch={handleSearch} />
-        {noHit && <Typography>{t('common:no_hits')}</Typography>}
+        {noHit && <Typography>{t('no_hits')}</Typography>}
         {doi && (
           <>
             <StyledTypography variant="h6">
-              {t('registration:heading.registration')}: <b>{doi.title}</b>
+              {t('registration')}: <b>{doi.title}</b>
             </StyledTypography>
             <Button
               fullWidth
@@ -85,7 +85,7 @@ const LinkRegistration: FC<LinkRegistrationProps> = ({ expanded, onChange, openF
               variant="contained"
               onClick={createRegistration}
               data-testid="registration-link-next-button">
-              {t('common:next')}
+              {t('next')}
             </Button>
           </>
         )}

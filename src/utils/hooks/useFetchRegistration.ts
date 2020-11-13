@@ -9,7 +9,7 @@ import { getRegistration } from '../../api/registrationApi';
 import { RootStore } from '../../redux/reducers/rootReducer';
 
 const useFetchRegistration = (
-  identifier: string | undefined
+  identifier: string
 ): [Registration | undefined, boolean, (values: Registration) => void] => {
   const dispatch = useDispatch();
   const [registration, setRegistration] = useState<Registration>();
@@ -24,7 +24,7 @@ const useFetchRegistration = (
     const cancelSource = Axios.CancelToken.source();
 
     const fetchRegistration = async () => {
-      const registration = await getRegistration(identifier!, cancelSource.token);
+      const registration = await getRegistration(identifier, cancelSource.token);
       if (registration) {
         if (registration.error) {
           dispatch(setNotification(registration.error, NotificationVariant.Error));

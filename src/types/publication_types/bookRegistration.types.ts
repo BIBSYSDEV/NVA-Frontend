@@ -17,7 +17,7 @@ export const emptyBookPublicationInstance: BookPublicationInstance = {
   textbookContent: false,
 };
 
-interface BookPublicationContext {
+export interface BookPublicationContext {
   type: PublicationType | '';
   isbnList: string[];
   level: string | number | null;

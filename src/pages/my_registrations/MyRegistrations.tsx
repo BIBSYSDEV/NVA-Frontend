@@ -9,7 +9,7 @@ import { RegistrationStatus } from '../../types/registration.types';
 import RegistrationList from './RegistrationList';
 import TabButton from '../../components/TabButton';
 import useFetchMyRegistrations from '../../utils/hooks/useFetchMyRegistrations';
-import { StyledRightAlignedButtonWrapper, StyledCenterAlignedContentWrapper } from '../../components/styled/Wrappers';
+import { StyledRightAlignedWrapper, StyledCenterAlignedContentWrapper } from '../../components/styled/Wrappers';
 import ListSkeleton from '../../components/ListSkeleton';
 import Card from '../../components/Card';
 import { PageHeader } from '../../components/PageHeader';
@@ -45,7 +45,7 @@ const MyRegistrations: FC = () => {
     <>
       <PageHeader>{t('my_registrations')}</PageHeader>
       <StyledContainer>
-        <StyledRightAlignedButtonWrapper>
+        <StyledRightAlignedWrapper>
           {user.authority && (
             <Button
               color="primary"
@@ -55,7 +55,7 @@ const MyRegistrations: FC = () => {
               {t('go_to_public_profile')}
             </Button>
           )}
-        </StyledRightAlignedButtonWrapper>
+        </StyledRightAlignedWrapper>
         <StyledTabsContainer>
           <TabButton
             data-testid="unpublished-button"

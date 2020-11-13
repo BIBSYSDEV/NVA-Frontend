@@ -13,18 +13,19 @@
     "authors": "Authors",
     "confirm_remove_affiliation_text": "Are you sure you want to remove this affiliation?",
     "confirm_remove_affiliation_title": "Remove affiliation?",
-    "confirm_remove_contributor_text": "Are you sure you want to remove {{contributorName}} from list of contributors?",
-    "confirm_remove_contributor_title": "Remove contributor?",
+    "confirm_remove_author_text": "Are you sure you want to remove {{contributorName}} from list of authors?",
+    "confirm_remove_author_title": "Remove author?",
     "connect_author_identity": "Connect author identity",
     "corresponding": "Corresponding",
     "create_new_author": "Create new author",
     "known_author_identity": "Connected author identity",
     "prefilled_name": "Prefilled name",
-    "remove_contributor": "Remove contributor",
+    "remove_author": "Remove author",
     "select_institution": "Select institution",
     "type": "Contributor type",
     "unknown_author_identity": "Unknown author identity",
-    "verify_person": "Verify"
+    "verify_author": "Verify author",
+    "verified_author": "Verified author"
   },
   "description": {
     "abstract": "Abstract",
@@ -38,7 +39,6 @@
     "search_for_npi_discipline": "Search for scientific field",
     "search_for_project": "Search for project",
     "keywords": "Keywords",
-    "keywords_helper": "Press Enter to add keyword",
     "year_only": "Year only"
   },
   "edit_registration": "Edit registration",
@@ -64,12 +64,6 @@
     "drop_here": "Drop your files here",
     "embargo_date": "Date for delayed publishing",
     "files": "Files",
-    "info_from_publication_channel_register": {
-      "no_open_publishment": "Unit doesn't have any agreement for open publishing with publisher of selected journal",
-      "open_access": "Open Access",
-      "open_publishment": "Unit has an agreement for open publishing with publisher of selected journal",
-      "title": "Information from Norwegian Register for Scientific Journals, Series and Publishers"
-    },
     "license": "License",
     "licenses": "Licenses",
     "no_duplicates": "Cannot add \"{{fileName}}\", because a file with the same name already exists",
@@ -87,7 +81,6 @@
     "contributors": "Contributors",
     "description": "Description",
     "files_and_license": "Files and License",
-    "registration": "Registration",
     "publish_settings": "Publish settings",
     "reference": "Reference",
     "summary": "Summary",
@@ -153,9 +146,11 @@
     "Rejected": "Rejected"
   },
   "submission": {
+    "corresponding_author": "Corresponding author",
     "number_of_affiliations": "{{count}} affiliation",
     "number_of_affiliations_plural": "{{count}} affiliations"
   },
+  "support_description": "When you request support your message will be sent to a curator at your institution. You can see responses at <0>My Messages</0>.",
   "modal_unsaved_changes_description": "You have unsaved changes. Are you sure you want to leave this page?",
   "modal_unsaved_changes_heading": "Leave without saving?"
 }

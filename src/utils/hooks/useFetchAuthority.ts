@@ -6,10 +6,12 @@ import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import { getAuthority } from '../../api/authorityApi';
 import { Authority } from '../../types/authority.types';
+import { useTranslation } from 'react-i18next';
 
 const useFetchAuthority = (arpId: string): [Authority | undefined, boolean] => {
   const dispatch = useDispatch();
-  const [authority, setAuthority] = useState<Authority | undefined>();
+  const { t } = useTranslation('feedback');
+  const [authority, setAuthority] = useState<Authority>();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -20,16 +22,16 @@ const useFetchAuthority = (arpId: string): [Authority | undefined, boolean] => {
       if (fetchedAuthority) {
         setIsLoading(false);
         if (fetchedAuthority.error) {
-          dispatch(setNotification(fetchedAuthority.error, NotificationVariant.Error));
-        } else {
-          setAuthority(fetchedAuthority);
+          dispatch(setNotification(t('error.get_authority'), NotificationVariant.Error));
+        } else if (fetchedAuthority.data) {
+          setAuthority(fetchedAuthority.data);
         }
       }
     };
     fetchAuthority();
 
     return () => cancelSource.cancel();
-  }, [dispatch, arpId]);
+  }, [dispatch, t, arpId]);
 
   return [authority, isLoading];
 };

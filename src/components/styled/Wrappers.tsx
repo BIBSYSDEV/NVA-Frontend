@@ -17,7 +17,7 @@ export const StyledProgressWrapper = styled.div`
   padding: 2rem;
 `;
 
-export const StyledRightAlignedButtonWrapper = styled.div`
+export const StyledRightAlignedWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
 `;

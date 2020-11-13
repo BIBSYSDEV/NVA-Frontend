@@ -16,7 +16,7 @@ export const PublicPublicationInstanceJournal: FC<{ publicationInstance: Journal
     <LabelContentRow minimal label={`${t('common:details')}:`}>
       {volume && `${t('references.volume')} ${volume}`}
       {issue && `, ${t('references.issue')} ${issue}`}
-      {pages?.begin && pages?.end && `, ${t('references.pages')} ${pages!.begin}-${pages!.end}`}
+      {pages?.begin && pages?.end && `, ${t('references.pages')} ${pages.begin}-${pages.end}`}
       {articleNumber && `, ${t('references.article_number')} ${articleNumber}`}
     </LabelContentRow>
   );
@@ -43,7 +43,7 @@ const DisplayPages: FC<{ pages: PagesMonograph | null }> = ({ pages }) => {
 
   return pages?.pages ? (
     <LabelContentRow minimal label={`${t('common:details')}:`}>
-      `${t('references.pages')} ${pages.pages}`
+      {t('references.number_of_pages')}: {pages.pages}
     </LabelContentRow>
   ) : null;
 };

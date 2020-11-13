@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { DEBOUNCE_INTERVAL_INPUT } from '../constants';
 
-const useDebounce = (value: string, delay: number = DEBOUNCE_INTERVAL_INPUT) => {
+const useDebounce = (value: string, delay: number = DEBOUNCE_INTERVAL_INPUT): string => {
   const [debouncedValue, setDebouncedValue] = useState(value);
 
   useEffect(() => {

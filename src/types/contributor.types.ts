@@ -51,3 +51,8 @@ export const emptyNewContributor: NewContributor = {
   firstName: '',
   lastName: '',
 };
+
+export interface UnverifiedContributor {
+  name: string;
+  index: number;
+}

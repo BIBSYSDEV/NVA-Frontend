@@ -9,7 +9,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { CustomerInstitution } from '../../types/customerInstitution.types';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
-import { StyledProgressWrapper, StyledRightAlignedButtonWrapper } from '../../components/styled/Wrappers';
+import { StyledProgressWrapper, StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
 import { PageHeader } from '../../components/PageHeader';
 
 const AdminCustomerInstitutions: FC = () => {
@@ -21,7 +21,7 @@ const AdminCustomerInstitutions: FC = () => {
   useEffect(() => {
     const loadData = async () => {
       setIsLoading(true);
-      const institutions: any = await getAllCustomerInstitutions();
+      const institutions = await getAllCustomerInstitutions();
       if (institutions?.error) {
         dispatch(setNotification(institutions.error, NotificationVariant.Error));
       } else {
@@ -36,7 +36,7 @@ const AdminCustomerInstitutions: FC = () => {
     <>
       <PageHeader>{t('admin_institutions')}</PageHeader>
       <Card>
-        <StyledRightAlignedButtonWrapper>
+        <StyledRightAlignedWrapper>
           <Button
             color="primary"
             component={RouterLink}
@@ -44,7 +44,7 @@ const AdminCustomerInstitutions: FC = () => {
             data-testid="add-institution-button">
             {t('add_institution')}
           </Button>
-        </StyledRightAlignedButtonWrapper>
+        </StyledRightAlignedWrapper>
         {isLoading ? (
           <StyledProgressWrapper>
             <CircularProgress />

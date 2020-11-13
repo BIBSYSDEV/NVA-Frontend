@@ -1,4 +1,4 @@
-import React, { useState, FC } from 'react';
+import React, { useState, FC, useEffect } from 'react';
 import Card from '../../components/Card';
 import { Button, Typography } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
@@ -17,7 +17,7 @@ import { setAuthorityData } from '../../redux/actions/userActions';
 import { NotificationVariant } from '../../types/notification.types';
 import InstitutionCard from './institution/InstitutionCard';
 import ConfirmDialog from '../../components/ConfirmDialog';
-import { StyledRightAlignedButtonWrapper } from '../../components/styled/Wrappers';
+import { StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
 
 const UserInstitution: FC = () => {
   const authority = useSelector((state: RootStore) => state.user.authority);
@@ -25,8 +25,13 @@ const UserInstitution: FC = () => {
   const [affiliationIdToRemove, setAffiliationIdToRemove] = useState('');
   const [isRemovingAffiliation, setIsRemovingAffiliation] = useState(false);
 
-  const { t } = useTranslation('profile');
+  const { t, i18n } = useTranslation('profile');
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    // Close institution form if user changes language, since selected values will be invalid
+    setOpenUnitForm(false);
+  }, [i18n.language]);
 
   const toggleUnitForm = () => {
     setOpenUnitForm(!openUnitForm);
@@ -99,7 +104,7 @@ const UserInstitution: FC = () => {
         {openUnitForm ? (
           <SelectInstitution onSubmit={handleSubmit} onClose={toggleUnitForm} />
         ) : (
-          <StyledRightAlignedButtonWrapper>
+          <StyledRightAlignedWrapper>
             <Button
               variant="contained"
               color="primary"
@@ -108,7 +113,7 @@ const UserInstitution: FC = () => {
               data-testid="add-new-institution-button">
               {t('organization.add_institution')}
             </Button>
-          </StyledRightAlignedButtonWrapper>
+          </StyledRightAlignedWrapper>
         )}
       </Card>
       <ConfirmDialog

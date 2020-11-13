@@ -21,19 +21,21 @@ import useUppy from '../../utils/hooks/useUppy';
 import { registrationValidationSchema } from '../../utils/validation/registration/registrationValidation';
 import { PageHeader } from '../../components/PageHeader';
 import Forbidden from '../errorpages/Forbidden';
+import { StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
+import Modal from '../../components/Modal';
+import { SupportModalContent } from './SupportModalContent';
 
 const StyledRegistration = styled.div`
   width: 100%;
 `;
 
-const StyledButtonGroupContainer = styled.div`
+const StyledButtonGroupContainer = styled(StyledRightAlignedWrapper)`
   margin-bottom: 1rem;
 `;
 
 const StyledButtonContainer = styled.div`
   display: inline-block;
-  margin-top: 1rem;
-  margin-right: 0.5rem;
+  margin-left: 0.5rem;
 `;
 
 interface RegistrationFormProps {
@@ -41,17 +43,20 @@ interface RegistrationFormProps {
   identifier?: string;
 }
 
-const RegistrationForm: FC<RegistrationFormProps> = ({ identifier, closeForm }) => {
+const RegistrationForm: FC<RegistrationFormProps> = ({ identifier = '', closeForm }) => {
   const user = useSelector((store: RootStore) => store.user);
   const { t } = useTranslation('registration');
   const history = useHistory();
   const initialTabNumber = new URLSearchParams(history.location.search).get('tab');
   const [tabNumber, setTabNumber] = useState(initialTabNumber ? +initialTabNumber : RegistrationTab.Description);
   const [isSaving, setIsSaving] = useState(false);
+  const [openSupportModal, setOpenSupportModal] = useState(false);
   const dispatch = useDispatch();
   const uppy = useUppy();
   const [registration, isLoadingRegistration, handleSetRegistration] = useFetchRegistration(identifier);
   const isOwner = registration?.owner === user.id;
+
+  const toggleSupportModal = () => setOpenSupportModal((state) => !state);
 
   useEffect(() => {
     if (!registration && !isLoadingRegistration) {
@@ -70,7 +75,7 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier, closeForm }) 
     }
   }, [history, registration, user]);
 
-  const handleTabChange = (_: React.ChangeEvent<{}>, newTabNumber: number) => {
+  const handleTabChange = (_: React.ChangeEvent<unknown>, newTabNumber: number) => {
     setTabNumber(newTabNumber);
   };
 
@@ -137,17 +142,16 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier, closeForm }) 
                   return await saveRegistration(values);
                 }}
               />
+
               {tabNumber !== RegistrationTab.Submission && (
                 <StyledButtonGroupContainer>
-                  <StyledButtonContainer>
-                    <Button color="primary" variant="contained" data-testid="button-next-tab" onClick={goToNextTab}>
-                      {t('common:next')}
-                    </Button>
-                  </StyledButtonContainer>
-
+                  <Button data-testid="open-support-button" variant="text" color="primary" onClick={toggleSupportModal}>
+                    {t('common:support')}
+                  </Button>
                   <StyledButtonContainer>
                     <ButtonWithProgress
                       type="submit"
+                      variant="outlined"
                       isLoading={isSaving}
                       data-testid="button-save-registration"
                       onClick={async () => {
@@ -158,12 +162,20 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier, closeForm }) 
                       {t('common:save')}
                     </ButtonWithProgress>
                   </StyledButtonContainer>
+                  <StyledButtonContainer>
+                    <Button color="primary" variant="contained" data-testid="button-next-tab" onClick={goToNextTab}>
+                      {t('common:next')}
+                    </Button>
+                  </StyledButtonContainer>
                 </StyledButtonGroupContainer>
               )}
             </Form>
           )}
         </Formik>
       </StyledRegistration>
+      <Modal open={openSupportModal} onClose={toggleSupportModal} headingText={t('common:support')}>
+        <SupportModalContent closeModal={toggleSupportModal} />
+      </Modal>
     </>
   );
 };

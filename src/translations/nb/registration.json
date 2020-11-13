@@ -13,18 +13,19 @@
     "authors": "Forfattere",
     "confirm_remove_affiliation_text": "Er du sikker på at du ønsker å fjerne denne tilhørigheten?",
     "confirm_remove_affiliation_title": "Fjerne tilhørighet?",
-    "confirm_remove_contributor_text": "Er du sikker på at du ønsker å fjerne {{contributorName}} fra listen over bidragsytere?",
-    "confirm_remove_contributor_title": "Fjerne bidragsyter?",
+    "confirm_remove_author_text": "Er du sikker på at du ønsker å fjerne {{contributorName}} fra listen over forfattere?",
+    "confirm_remove_author_title": "Fjerne forfatter?",
     "connect_author_identity": "Tilknytt forfatteridentitet",
     "corresponding": "Korresponderende",
     "create_new_author": "Opprett ny forfatter",
     "known_author_identity": "Har tilknyttet forfatteridentitet",
     "prefilled_name": "Forhåndsutfylt navn",
-    "remove_contributor": "Fjern bidragsyter",
+    "remove_author": "Fjern forfatter",
     "select_institution": "Velg institusjon",
     "type": "Bidragstype",
     "unknown_author_identity": "Mangler forfatteridentitet",
-    "verify_person": "Verifiser"
+    "verify_author": "Verifiser forfatter",
+    "verified_author": "Verifisert forfatter"
   },
   "description": {
     "abstract": "Sammendrag",
@@ -38,7 +39,6 @@
     "search_for_npi_discipline": "Søk etter fagfelt",
     "search_for_project": "Søk etter prosjekt",
     "keywords": "Nøkkelord",
-    "keywords_helper": "Trykk Enter for å legge til nøkkelord",
     "year_only": "Kun årstall"
   },
   "edit_registration": "Endre registrering",
@@ -64,12 +64,6 @@
     "drop_here": "Slipp filene dine her",
     "embargo_date": "Dato for utsatt publisering",
     "files": "Filer",
-    "info_from_publication_channel_register": {
-      "no_open_publishment": "Unit har ingen avtale om åpen publisering med utgiver av valgt tidsskrift",
-      "open_access": "Open Access",
-      "open_publishment": "Unit har inngått avtale om åpen publisering av valgt tidsskrift",
-      "title": "Informasjon fra Register over vitenskapelige publiseringskanaler"
-    },
     "license": "Lisens",
     "licenses": "Lisenser",
     "no_duplicates": "Kunne ikke legge til \"{{fileName}}\", siden en fil med samme navn allerede finnes",
@@ -87,7 +81,6 @@
     "contributors": "Bidragsytere",
     "description": "Beskrivelse",
     "files_and_license": "Filer og lisens",
-    "registration": "Registrering",
     "publish_settings": "Publiseringsvalg",
     "reference": "Referanse",
     "summary": "Oppsummering",
@@ -153,9 +146,11 @@
     "Rejected": "Avvist"
   },
   "submission": {
+    "corresponding_author": "Korresponderende forfatter",
     "number_of_affiliations": "{{count}} tilhørighet",
     "number_of_affiliations_plural": "{{count}} tilhørigheter"
   },
+  "support_description": "Når du ber om brukerstøtte vil meldingen gå til en kurator ved din institusjon. Du kan se besvarelser i <0>Mine Meldinger</0>.",
   "modal_unsaved_changes_description": "Du har gjort endringer som ikke er lagret. Er du sikker på at du vil forlate denne siden?",
   "modal_unsaved_changes_heading": "Forlate siden uten å ha lagret?"
 }
