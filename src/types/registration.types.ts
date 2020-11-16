@@ -76,7 +76,7 @@ interface DoiRequest {
   messages: DoiRequestMessage[];
 }
 
-interface RegistrationPublisher {
+export interface RegistrationPublisher {
   id: string;
 }
 

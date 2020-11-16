@@ -13,7 +13,6 @@
     "no_registrations_found": "No registrations found",
     "other_affiliations": "+ {{count}} other affiliation",
     "other_affiliations_plural": "+ {{count}} other affiliations",
-    "search_summary": "{{results}} results for \"{{searchTerm}}\"",
     "see_profile": "See author profile"
   },
   "heading": {
@@ -35,7 +34,6 @@
     "description_why_use_orcid": "By connecting your ORCID iD it will be easier to identify you as an author. When you click the “Create or connect to ORCID iD” button, we will ask you to share your iD using an authenticated process: either by registering for an ORCID iD or, if you already have one, by signing into your ORCID account, then granting us permission to get your ORCID iD. We do this to ensure that you are correctly identified and securely connecting your ORCID iD.",
     "login": "Log in to your ORCID account or create new ORCID account",
     "orcid": "ORCID",
-    "registration": "Registration",
     "remove_connection": "Remove connection to ORCID",
     "remove_connection_info": "Are you sure you want to remove the connection to ORCID? \n\nIf you want to revoke Unit's access to read your ORCID, you have to go to your profile.",
     "skip_this_step": "Skip this step (can be configured in 'profile' later)",

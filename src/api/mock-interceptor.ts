@@ -28,6 +28,7 @@ import { RoleApiPaths } from './roleApi';
 import { DoiRequestApiPaths } from './doiRequestApi';
 import { mockSearchResults } from '../utils/testfiles/search_results';
 import { threeMockSearchResults } from '../utils/testfiles/three_search_results';
+import { SearchApiPaths } from './searchApi';
 
 const mockOrcidResponse: OrcidResponse = {
   id: 'https://sandbox.orcid.org/0000-0001-2345-6789',
@@ -86,8 +87,8 @@ export const interceptRequestsOnMock = () => {
   const mock = new MockAdapter(Axios);
 
   // SEARCH
-  mock.onGet(new RegExp(`${PublicationsApiPaths.SEARCH}/*`)).replyOnce(200, mockSearchResults);
-  mock.onGet(new RegExp(`${PublicationsApiPaths.SEARCH}/*`)).reply(200, threeMockSearchResults);
+  mock.onGet(new RegExp(`${SearchApiPaths.REGISTRATIONS}/*`)).replyOnce(200, mockSearchResults);
+  mock.onGet(new RegExp(`${SearchApiPaths.REGISTRATIONS}/*`)).reply(200, threeMockSearchResults);
 
   // File Upload
   mock.onPost(new RegExp(FileApiPaths.CREATE)).reply(200, mockCreateUpload);

@@ -1,6 +1,5 @@
 import i18n from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
-
 import { LanguageCodes } from '../types/language.types';
 import adminEn from './en/admin.json';
 import authorizationEn from './en/authorization.json';
@@ -16,7 +15,6 @@ import profileEn from './en/profile.json';
 import publicationTypesEn from './en/publicationTypes.json';
 import registrationEn from './en/registration.json';
 import workListsEn from './en/workLists.json';
-
 import adminNb from './nb/admin.json';
 import authorizationNb from './nb/authorization.json';
 import commonNb from './nb/common.json';
@@ -88,6 +86,7 @@ i18n.use(LanguageDetector).init({
     'workLists',
   ],
   defaultNS: 'common',
+  supportedLngs: ['nob', 'eng'],
   interpolation: {
     formatSeparator: ',',
   },

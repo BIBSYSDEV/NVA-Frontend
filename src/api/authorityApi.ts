@@ -1,6 +1,8 @@
 import Axios, { CancelToken } from 'axios';
 import i18n from '../translations/i18n';
+import { Authority } from '../types/authority.types';
 import { StatusCode } from '../utils/constants';
+import { apiRequest } from './apiRequest';
 import { getIdToken } from './userApi';
 
 export enum AuthorityApiPaths {
@@ -13,24 +15,11 @@ export enum AuthorityQualifiers {
   ORGUNIT_ID = 'orgunitid',
 }
 
-export const getAuthority = async (arpId: string, cancelToken?: CancelToken) => {
-  const url = encodeURI(`${AuthorityApiPaths.PERSON}?arpId=${arpId}`);
-
-  const error = i18n.t('feedback:error.get_authority');
-
-  try {
-    const response = await Axios.get(url, { cancelToken });
-    if (response.status === StatusCode.OK) {
-      return response.data;
-    } else {
-      return { error };
-    }
-  } catch (error) {
-    if (!Axios.isCancel(error)) {
-      return { error };
-    }
-  }
-};
+export const getAuthority = async (arpId: string, cancelToken?: CancelToken) =>
+  await apiRequest<Authority>({
+    url: encodeURI(`${AuthorityApiPaths.PERSON}?arpId=${arpId}`),
+    cancelToken,
+  });
 
 export const getAuthorities = async (name: string, cancelToken?: CancelToken) => {
   const url = encodeURI(`${AuthorityApiPaths.PERSON}?name=${name}`);

@@ -7,7 +7,6 @@ import { useTranslation } from 'react-i18next';
 
 const StyledHeader = styled.div`
   width: 85vw;
-  margin-top: 1rem;
   margin-bottom: 1rem;
 `;
 
@@ -16,12 +15,20 @@ const StyledHeaderTitle = styled(Typography)`
   padding-bottom: 0.5rem;
 `;
 
-export const PageHeader: FC = ({ children }) => {
+interface PageHeaderProps {
+  backPath?: string;
+}
+
+export const PageHeader: FC<PageHeaderProps> = ({ backPath, children }) => {
   const { t } = useTranslation('common');
   const history = useHistory();
 
   const onBackClick = () => {
-    history.goBack();
+    if (backPath) {
+      history.push(backPath);
+    } else {
+      history.goBack();
+    }
   };
 
   return (
