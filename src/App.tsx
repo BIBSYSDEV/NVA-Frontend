@@ -31,7 +31,7 @@ const StyledApp = styled.div`
 `;
 
 const StyledContent = styled.div`
-  margin: 2rem;
+  margin: 1rem;
   display: flex;
   flex-direction: column;
   align-self: center;
