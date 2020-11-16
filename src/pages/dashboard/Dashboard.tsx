@@ -13,9 +13,6 @@ const StyledDashboard = styled.div`
   row-gap: 1rem;
   justify-items: center;
   width: 100%;
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-    padding: 1rem;
-  }
 `;
 
 const StyledOtherContent = styled.div`
@@ -32,9 +29,6 @@ const StyledLinks = styled.div`
 const StyledSearchBarContainer = styled.div`
   grid-area: search-bar;
   width: 100%;
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-    width: 90%;
-  }
 `;
 
 const Dashboard: FC = () => {
