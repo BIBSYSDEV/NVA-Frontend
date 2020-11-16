@@ -11,6 +11,7 @@ import { displayDate } from '../../utils/date-helpers';
 
 const StyledContributors = styled.div`
   display: flex;
+  flex-wrap: wrap;
   > p {
     white-space: nowrap;
     :not(:last-child) {
