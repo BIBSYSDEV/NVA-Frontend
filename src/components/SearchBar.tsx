@@ -6,7 +6,6 @@ import { IconButton, TextField } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 
 const StyledTextField = styled(TextField)`
-  width: 100%;
   margin-bottom: 1rem;
 `;
 
@@ -28,6 +27,7 @@ const SearchBar: FC<SearchBarProps> = ({ handleSearch, initialSearchTerm = '' })
       }}>
       <StyledTextField
         autoFocus
+        fullWidth
         variant="outlined"
         label={t('search')}
         onChange={(event) => setSearchTerm(event.target.value)}

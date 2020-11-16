@@ -11,8 +11,11 @@ import { displayDate } from '../../utils/date-helpers';
 
 const StyledContributors = styled.div`
   display: flex;
-  > :not(:last-child) {
-    margin-right: 1rem;
+  > p {
+    white-space: nowrap;
+    :not(:last-child) {
+      margin-right: 1rem;
+    }
   }
 `;
 
@@ -48,15 +51,15 @@ const RegistrationListItem: FC<RegistrationListItemProps> = ({ registration }) =
         </Typography>
         <StyledContributors>
           {focusedContributors.map((contributor, index) => (
-            <Fragment key={index}>
+            <Typography key={index}>
               {contributor.id ? (
                 <MuiLink component={Link} to={`/user/${contributor.id}`}>
-                  <Typography>{contributor.name}</Typography>
+                  {contributor.name}
                 </MuiLink>
               ) : (
-                <Typography>{contributor.name}</Typography>
+                contributor.name
               )}
-            </Fragment>
+            </Typography>
           ))}
           {countRestContributors > 0 && (
             <Typography>({t('common:x_others', { count: countRestContributors })})</Typography>
