@@ -81,7 +81,6 @@ const InstitutionCard: FC<InstitutionCardProps> = ({ orgunitId, setInstitutionId
       dispatch(setAuthorityData(updatedAuthority));
       dispatch(setNotification(t('feedback:success.added_affiliation')));
     }
-    setOpenEditForm(false);
   };
 
   return openEditForm ? (
