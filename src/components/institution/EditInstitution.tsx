@@ -9,16 +9,14 @@ import useFetchDepartments from '../../utils/hooks/useFetchDepartments';
 import useFetchInstitutions from '../../utils/hooks/useFetchInstitutions';
 import { convertToInstitution } from '../../utils/institutions-helpers';
 import InstitutionAutocomplete from './InstitutionAutocomplete';
+import { StyledButtonContainer } from './AddInstitution';
+import ButtonWithProgress from '../ButtonWithProgress';
 
 const StyledInstitutionSearchContainer = styled.div`
   width: 30rem;
   @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
     width: 100%;
   }
-`;
-
-const StyledButton = styled(Button)`
-  margin: 0.5rem 0.5rem 0 0;
 `;
 
 interface EditInstitutionProps {
@@ -35,11 +33,12 @@ const EditInstitution: FC<EditInstitutionProps> = ({ initialInstitutionId, onCan
     (institution) => institution.id === convertToInstitution(initialInstitutionId)
   );
   const initialValue = initialInstitution.pop();
+
   return (
     <Formik initialValues={{}} onSubmit={onSubmit}>
       <Form>
         <Field name={FormikInstitutionUnitFieldNames.UNIT}>
-          {({ field: { name }, form: { isSubmitting } }: FieldProps) => (
+          {({ field: { name, value }, form: { isSubmitting } }: FieldProps) => (
             <StyledInstitutionSearchContainer>
               <InstitutionAutocomplete
                 institutions={initialInstitution}
@@ -59,18 +58,21 @@ const EditInstitution: FC<EditInstitutionProps> = ({ initialInstitutionId, onCan
                 <InstitutionSelector units={subunits} fieldNamePrefix={name} label={t('institution:department')} />
               )}
 
-              <StyledButton
-                variant="contained"
-                type="submit"
-                color="primary"
-                disabled={isLoadingSubunits || isSubmitting || subunits.length === 0}
-                data-testid="institution-edit-button">
-                {t('save')}
-              </StyledButton>
+              <StyledButtonContainer>
+                <ButtonWithProgress
+                  variant="contained"
+                  type="submit"
+                  color="primary"
+                  isLoading={isSubmitting}
+                  disabled={!value || isLoadingSubunits}
+                  data-testid="institution-edit-button">
+                  {t('save')}
+                </ButtonWithProgress>
 
-              <StyledButton onClick={onCancel} data-testid="institution-cancel-button" variant="contained">
-                {t('cancel')}
-              </StyledButton>
+                <Button onClick={onCancel} data-testid="institution-cancel-button" variant="contained">
+                  {t('cancel')}
+                </Button>
+              </StyledButtonContainer>
             </StyledInstitutionSearchContainer>
           )}
         </Field>

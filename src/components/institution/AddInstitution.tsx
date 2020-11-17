@@ -8,9 +8,14 @@ import { FormikInstitutionUnit, FormikInstitutionUnitFieldNames } from '../../ty
 import useFetchDepartments from '../../utils/hooks/useFetchDepartments';
 import useFetchInstitutions from '../../utils/hooks/useFetchInstitutions';
 import InstitutionAutocomplete from './InstitutionAutocomplete';
+import ButtonWithProgress from '../ButtonWithProgress';
 
-const StyledButton = styled(Button)`
-  margin: 0.5rem 0.5rem 0 0;
+export const StyledButtonContainer = styled.div`
+  display: flex;
+  margin-top: 1rem;
+  > :not(:last-child) {
+    margin-right: 1rem;
+  }
 `;
 
 const StyledInstitutionSearchContainer = styled.div`
@@ -57,25 +62,28 @@ const AddInstitution: FC<AddInstitutionProps> = ({ onSubmit, onClose }) => {
                 <InstitutionSelector units={subunits} fieldNamePrefix={name} label={t('institution:department')} />
               )}
 
-              <StyledButton
-                variant="contained"
-                type="submit"
-                color="primary"
-                disabled={!value || isLoadingSubunits || isSubmitting}
-                data-testid="institution-add-button">
-                {t('add')}
-              </StyledButton>
+              <StyledButtonContainer>
+                <ButtonWithProgress
+                  variant="contained"
+                  type="submit"
+                  color="primary"
+                  isLoading={isSubmitting}
+                  disabled={!value || isLoadingSubunits}
+                  data-testid="institution-add-button">
+                  {t('add')}
+                </ButtonWithProgress>
 
-              {onClose && (
-                <StyledButton
-                  onClick={() => {
-                    onClose();
-                  }}
-                  data-testid="institution-cancel-button"
-                  variant="contained">
-                  {t('cancel')}
-                </StyledButton>
-              )}
+                {onClose && (
+                  <Button
+                    onClick={() => {
+                      onClose();
+                    }}
+                    data-testid="institution-cancel-button"
+                    variant="contained">
+                    {t('cancel')}
+                  </Button>
+                )}
+              </StyledButtonContainer>
             </StyledInstitutionSearchContainer>
           )}
         </Field>
