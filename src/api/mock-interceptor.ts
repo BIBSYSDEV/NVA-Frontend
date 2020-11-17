@@ -43,7 +43,7 @@ const mockSingleAuthorityResponseWithFeide: Authority = {
   systemControlNumber: '901790000000',
   feideids: ['tu@unit.no'],
   orcids: [],
-  orgunitids: [],
+  orgunitids: ['https://api.cristin.no/v2/units/194.65.20.10'],
   handles: [],
   birthDate: '1941-04-25 00:00:00.000',
 };
@@ -53,7 +53,7 @@ const mockSingleAuthorityResponse: Authority = {
   systemControlNumber: '901790000000',
   feideids: ['tu@unit.no'],
   orcids: [],
-  orgunitids: [],
+  orgunitids: ['https://api.cristin.no/v2/units/194.65.20.10'],
   handles: [],
   birthDate: '1941-04-25 00:00:00.000',
 };
@@ -63,7 +63,7 @@ const mockSingleAuthorityResponseAfterDeletion: Authority = {
   systemControlNumber: '901790000000',
   feideids: ['tu@unit.no'],
   orcids: [],
-  orgunitids: [],
+  orgunitids: ['https://api.cristin.no/v2/units/194.65.20.10'],
   handles: [],
   birthDate: '1941-04-25 00:00:00.000',
 };
@@ -177,11 +177,11 @@ export const interceptRequestsOnMock = () => {
   // Institution Registry
   mock.onGet(new RegExp(`${API_URL}${InstitutionApiPaths.INSTITUTIONS}`)).reply(200, mockInstitutionResponse);
   mock
-    .onGet(new RegExp(`${API_URL}${InstitutionApiPaths.DEPARTMENTS}\\?uri=.*194&language=en`))
-    .replyOnce(200, mockNtnuResponse);
+    .onGet(new RegExp(`${API_URL}${InstitutionApiPaths.DEPARTMENTS}\\?uri=.*194&language=.*`))
+    .reply(200, mockNtnuResponse);
   mock
-    .onGet(new RegExp(`${API_URL}${InstitutionApiPaths.DEPARTMENTS}\\?uri=.*194.65.20.10&language=en`))
-    .replyOnce(200, mockNtnuSubunitResponse);
+    .onGet(new RegExp(`${API_URL}${InstitutionApiPaths.DEPARTMENTS}\\?uri=.*194.65.20.10&language=.*`))
+    .reply(200, mockNtnuSubunitResponse);
 
   // Roles
   mock.onGet(new RegExp(`${API_URL}${RoleApiPaths.INSTITUTION_USERS}/*`)).reply(200, []);
