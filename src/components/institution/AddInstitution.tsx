@@ -20,10 +20,6 @@ const StyledInstitutionSearchContainer = styled.div`
   }
 `;
 
-const StyledLoadingInfo = styled.div`
-  margin: 1rem;
-`;
-
 interface AddInstitutionProps {
   onSubmit: (values: FormikInstitutionUnit) => void;
   onClose?: () => void;
@@ -51,10 +47,10 @@ const AddInstitution: FC<AddInstitutionProps> = ({ onSubmit, onClose }) => {
                 }}
               />
               {isLoadingSubunits && (
-                <StyledLoadingInfo>
+                <div>
                   <Typography>{t('institution:loading_department')}</Typography>
                   <CircularProgress />
-                </StyledLoadingInfo>
+                </div>
               )}
 
               {subunits.length > 0 && (

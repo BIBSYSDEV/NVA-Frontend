@@ -55,7 +55,7 @@ const InstitutionCard: FC<InstitutionCardProps> = ({ orgunitId, setInstitutionId
   const authority = useSelector((state: RootStore) => state.user.authority);
 
   const handleEditInstitution = async (values: FormikInstitutionUnit, initialInstitution: string) => {
-    if (!values.unit) {
+    if (!values.unit || !authority) {
       return;
     }
 
@@ -64,14 +64,11 @@ const InstitutionCard: FC<InstitutionCardProps> = ({ orgunitId, setInstitutionId
 
     if (!newUnitId) {
       return;
-    } else if (authority?.orgunitids.includes(newUnitId)) {
+    } else if (authority.orgunitids.includes(newUnitId)) {
       dispatch(setNotification(t('feedback:info.affiliation_already_exists'), NotificationVariant.Info));
       return;
     }
 
-    if (!authority) {
-      return;
-    }
     const updatedAuthority = await updateQualifierIdForAuthority(
       authority.systemControlNumber,
       AuthorityQualifiers.ORGUNIT_ID,
@@ -82,7 +79,7 @@ const InstitutionCard: FC<InstitutionCardProps> = ({ orgunitId, setInstitutionId
       dispatch(setNotification(updatedAuthority.error, NotificationVariant.Error));
     } else if (updatedAuthority) {
       dispatch(setAuthorityData(updatedAuthority));
-      dispatch(setNotification(t('feedback:success.update_authority')));
+      dispatch(setNotification(t('feedback:success.added_affiliation')));
     }
     setOpenEditForm(false);
   };

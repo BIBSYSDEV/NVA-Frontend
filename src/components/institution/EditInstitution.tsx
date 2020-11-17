@@ -2,13 +2,9 @@ import { Field, FieldProps, Form, Formik } from 'formik';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { Button } from '@material-ui/core';
+import { Button, CircularProgress, Typography } from '@material-ui/core';
 import InstitutionSelector from '../../pages/user/institution/InstitutionSelector';
-import {
-  FormikInstitutionUnit,
-  FormikInstitutionUnitFieldNames,
-  InstitutionUnitBase,
-} from '../../types/institution.types';
+import { FormikInstitutionUnit, FormikInstitutionUnitFieldNames } from '../../types/institution.types';
 import useFetchDepartments from '../../utils/hooks/useFetchDepartments';
 import useFetchInstitutions from '../../utils/hooks/useFetchInstitutions';
 import { convertToInstitution } from '../../utils/institutions-helpers';
@@ -33,29 +29,43 @@ interface EditInstitutionProps {
 
 const EditInstitution: FC<EditInstitutionProps> = ({ initialInstitutionId, onCancel, onSubmit }) => {
   const { t } = useTranslation('common');
-  const [institutions] = useFetchInstitutions();
+  const [institutions, isLoadingInstitutions] = useFetchInstitutions();
   const [subunits, isLoadingSubunits] = useFetchDepartments(convertToInstitution(initialInstitutionId));
   const initialInstitution = institutions.filter(
-    (institution: InstitutionUnitBase) => institution.id === convertToInstitution(initialInstitutionId)
+    (institution) => institution.id === convertToInstitution(initialInstitutionId)
   );
   const initialValue = initialInstitution.pop();
-
   return (
     <Formik initialValues={{}} onSubmit={onSubmit}>
       <Form>
         <Field name={FormikInstitutionUnitFieldNames.UNIT}>
           {({ field: { name }, form: { isSubmitting } }: FieldProps) => (
             <StyledInstitutionSearchContainer>
-              <InstitutionAutocomplete institutions={initialInstitution} disabled value={initialValue ?? null} />
-              <InstitutionSelector units={subunits} fieldNamePrefix={name} label={t('institution:department')} />
+              <InstitutionAutocomplete
+                institutions={initialInstitution}
+                isLoading={isLoadingInstitutions}
+                disabled
+                value={initialValue ?? null}
+              />
+
+              {institutions.length > 0 && isLoadingSubunits && (
+                <div>
+                  <Typography>{t('institution:loading_department')}</Typography>
+                  <CircularProgress />
+                </div>
+              )}
+
+              {institutions.length > 0 && subunits.length > 0 && (
+                <InstitutionSelector units={subunits} fieldNamePrefix={name} label={t('institution:department')} />
+              )}
 
               <StyledButton
                 variant="contained"
                 type="submit"
                 color="primary"
-                disabled={isLoadingSubunits || isSubmitting}
+                disabled={isLoadingSubunits || isSubmitting || subunits.length === 0}
                 data-testid="institution-edit-button">
-                {t('edit')}
+                {t('save')}
               </StyledButton>
 
               <StyledButton onClick={onCancel} data-testid="institution-cancel-button" variant="contained">
