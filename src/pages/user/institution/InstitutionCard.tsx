@@ -85,11 +85,13 @@ const InstitutionCard: FC<InstitutionCardProps> = ({ orgunitId, setInstitutionId
   };
 
   return openEditForm ? (
-    <EditInstitution
-      initialInstitutionId={orgunitId}
-      onSubmit={(values) => handleEditInstitution(values, orgunitId)}
-      onCancel={() => setOpenEditForm(false)}
-    />
+    <Card>
+      <EditInstitution
+        initialInstitutionId={orgunitId}
+        onSubmit={(values) => handleEditInstitution(values, orgunitId)}
+        onCancel={() => setOpenEditForm(false)}
+      />
+    </Card>
   ) : (
     <StyledCard data-testid="institution-presentation">
       <StyledTextContainer>
