@@ -1,17 +1,21 @@
+import { Field, FieldProps, Form, Formik } from 'formik';
 import React, { FC, useState } from 'react';
-import { Button, CircularProgress, Typography } from '@material-ui/core';
-import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
-import { Formik, Field, FieldProps, Form } from 'formik';
-
-import { FormikInstitutionUnit, FormikInstitutionUnitFieldNames } from '../../types/institution.types';
+import styled from 'styled-components';
+import { Button, CircularProgress, Typography } from '@material-ui/core';
 import InstitutionSelector from '../../pages/user/institution/InstitutionSelector';
+import { FormikInstitutionUnit, FormikInstitutionUnitFieldNames } from '../../types/institution.types';
+import useFetchDepartments from '../../utils/hooks/useFetchDepartments';
 import useFetchInstitutions from '../../utils/hooks/useFetchInstitutions';
 import InstitutionAutocomplete from './InstitutionAutocomplete';
-import useFetchDepartments from '../../utils/hooks/useFetchDepartments';
+import ButtonWithProgress from '../ButtonWithProgress';
 
-const StyledButton = styled(Button)`
-  margin: 0.5rem;
+export const StyledButtonContainer = styled.div`
+  display: flex;
+  margin-top: 1rem;
+  > :not(:last-child) {
+    margin-right: 1rem;
+  }
 `;
 
 const StyledInstitutionSearchContainer = styled.div`
@@ -21,16 +25,12 @@ const StyledInstitutionSearchContainer = styled.div`
   }
 `;
 
-const StyledLoadingInfo = styled.div`
-  margin: 1rem;
-`;
-
-interface SelectInstitutionProps {
+interface AddInstitutionProps {
   onSubmit: (values: FormikInstitutionUnit) => void;
   onClose?: () => void;
 }
 
-const SelectInstitution: FC<SelectInstitutionProps> = ({ onSubmit, onClose }) => {
+const AddInstitution: FC<AddInstitutionProps> = ({ onSubmit, onClose }) => {
   const { t } = useTranslation('common');
   const [institutions, isLoadingInstitutions] = useFetchInstitutions();
   const [selectedInstitutionId, setSelectedInstitutionId] = useState('');
@@ -51,37 +51,39 @@ const SelectInstitution: FC<SelectInstitutionProps> = ({ onSubmit, onClose }) =>
                   setFieldValue(name, value);
                 }}
               />
-
               {isLoadingSubunits && (
-                <StyledLoadingInfo>
+                <div>
                   <Typography>{t('institution:loading_department')}</Typography>
                   <CircularProgress />
-                </StyledLoadingInfo>
+                </div>
               )}
 
               {subunits.length > 0 && (
                 <InstitutionSelector units={subunits} fieldNamePrefix={name} label={t('institution:department')} />
               )}
 
-              <StyledButton
-                variant="contained"
-                type="submit"
-                color="primary"
-                disabled={!value || isLoadingSubunits || isSubmitting}
-                data-testid="institution-add-button">
-                {t('add')}
-              </StyledButton>
+              <StyledButtonContainer>
+                <ButtonWithProgress
+                  variant="contained"
+                  type="submit"
+                  color="primary"
+                  isLoading={isSubmitting}
+                  disabled={!value || isLoadingSubunits}
+                  data-testid="institution-add-button">
+                  {t('add')}
+                </ButtonWithProgress>
 
-              {onClose && (
-                <StyledButton
-                  onClick={() => {
-                    onClose();
-                  }}
-                  data-testid="institution-cancel-button"
-                  variant="contained">
-                  {t('cancel')}
-                </StyledButton>
-              )}
+                {onClose && (
+                  <Button
+                    onClick={() => {
+                      onClose();
+                    }}
+                    data-testid="institution-cancel-button"
+                    variant="contained">
+                    {t('cancel')}
+                  </Button>
+                )}
+              </StyledButtonContainer>
             </StyledInstitutionSearchContainer>
           )}
         </Field>
@@ -90,4 +92,4 @@ const SelectInstitution: FC<SelectInstitutionProps> = ({ onSubmit, onClose }) =>
   );
 };
 
-export default SelectInstitution;
+export default AddInstitution;

@@ -29,6 +29,7 @@ import { DoiRequestApiPaths } from './doiRequestApi';
 import { mockSearchResults } from '../utils/testfiles/search_results';
 import { threeMockSearchResults } from '../utils/testfiles/three_search_results';
 import { SearchApiPaths } from './searchApi';
+import { mockSchoolOfSportDepartment } from '../utils/testfiles/institutions/school_of_sport_department';
 
 const mockOrcidResponse: OrcidResponse = {
   id: 'https://sandbox.orcid.org/0000-0001-2345-6789',
@@ -38,44 +39,20 @@ const mockOrcidResponse: OrcidResponse = {
   given_name: 'Sofia',
 };
 
-const mockSingleAuthorityResponseWithFeide: Authority = {
-  name: 'Test User',
-  systemControlNumber: '901790000000',
-  feideids: ['tu@unit.no'],
-  orcids: [],
-  orgunitids: [],
-  handles: [],
-  birthDate: '1941-04-25 00:00:00.000',
-};
-
 const mockSingleAuthorityResponse: Authority = {
   name: 'Test User',
   systemControlNumber: '901790000000',
   feideids: ['tu@unit.no'],
   orcids: [],
-  orgunitids: [],
-  handles: [],
-  birthDate: '1941-04-25 00:00:00.000',
-};
-
-const mockSingleAuthorityResponseAfterDeletion: Authority = {
-  name: 'Test User',
-  systemControlNumber: '901790000000',
-  feideids: ['tu@unit.no'],
-  orcids: [],
-  orgunitids: [],
+  orgunitids: ['https://api.cristin.no/v2/units/150.4.1.0'],
   handles: [],
   birthDate: '1941-04-25 00:00:00.000',
 };
 
 const mockSingleAuthorityResponseWithOrcid: Authority = {
-  name: 'Test User',
-  systemControlNumber: '901790000000',
-  feideids: ['osteloff@unit.no'],
+  ...mockSingleAuthorityResponse,
   orcids: ['0000-0001-2345-6789'],
-  orgunitids: ['https://api.cristin.no/v2/units/194.65.20.10'],
-  handles: [],
-  birthDate: '1941-04-25 00:00:00.000',
+  orgunitids: [...mockSingleAuthorityResponse.orgunitids, 'https://api.cristin.no/v2/units/194.65.20.10'],
 };
 
 const mockCreateUpload = { uploadId: 'asd', key: 'sfd' };
@@ -141,7 +118,7 @@ export const interceptRequestsOnMock = () => {
   // update authority
   mock
     .onPost(new RegExp(`${API_URL}${AuthorityApiPaths.PERSON}/901790000000/identifiers/*/update`))
-    .replyOnce(200, mockSingleAuthorityResponseWithFeide);
+    .replyOnce(200, mockSingleAuthorityResponse);
   mock
     .onPost(new RegExp(`${API_URL}${AuthorityApiPaths.PERSON}/901790000000/identifiers/orgunitid/add`))
     .replyOnce(200, mockSingleAuthorityResponse);
@@ -155,7 +132,7 @@ export const interceptRequestsOnMock = () => {
   // Remove orgunitid from Authority
   mock
     .onDelete(new RegExp(`${API_URL}${AuthorityApiPaths.PERSON}/901790000000/identifiers/orgunitid/delete`))
-    .reply(200, mockSingleAuthorityResponseAfterDeletion);
+    .reply(200, mockSingleAuthorityResponse);
 
   // create authority
   mock.onPost(new RegExp(`${API_URL}${AuthorityApiPaths.PERSON}/*`)).reply(200, mockSingleAuthorityResponse);
@@ -177,11 +154,14 @@ export const interceptRequestsOnMock = () => {
   // Institution Registry
   mock.onGet(new RegExp(`${API_URL}${InstitutionApiPaths.INSTITUTIONS}`)).reply(200, mockInstitutionResponse);
   mock
-    .onGet(new RegExp(`${API_URL}${InstitutionApiPaths.DEPARTMENTS}\\?uri=.*194&language=en`))
-    .replyOnce(200, mockNtnuResponse);
+    .onGet(new RegExp(`${API_URL}${InstitutionApiPaths.DEPARTMENTS}\\?uri=.*194&language=.*`))
+    .reply(200, mockNtnuResponse);
   mock
-    .onGet(new RegExp(`${API_URL}${InstitutionApiPaths.DEPARTMENTS}\\?uri=.*194.65.20.10&language=en`))
-    .replyOnce(200, mockNtnuSubunitResponse);
+    .onGet(new RegExp(`${API_URL}${InstitutionApiPaths.DEPARTMENTS}\\?uri=.*194.65.20.10&language=.*`))
+    .reply(200, mockNtnuSubunitResponse);
+  mock
+    .onGet(new RegExp(`${API_URL}${InstitutionApiPaths.DEPARTMENTS}\\?uri=.*150.4.1.0&language=.*`))
+    .reply(200, mockSchoolOfSportDepartment);
 
   // Roles
   mock.onGet(new RegExp(`${API_URL}${RoleApiPaths.INSTITUTION_USERS}/*`)).reply(200, []);
