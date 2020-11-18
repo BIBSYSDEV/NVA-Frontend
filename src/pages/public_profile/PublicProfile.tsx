@@ -25,6 +25,7 @@ const StyledTextContainer = styled.div`
 
 const StyledRegistrations = styled.div`
   margin-top: 1rem;
+  width: 100%;
 `;
 
 const PublicProfile: FC = () => {
