@@ -68,14 +68,14 @@ const Authors: FC<AuthorsProps> = ({ push, replace }) => {
   };
 
   const onAuthorSelected = (authority: Authority) => {
-    if (orderedAuthors.some((author) => author.identity.arpId === authority.systemControlNumber)) {
+    if (orderedAuthors.some((author) => author.identity.arpId === authority.id)) {
       dispatch(setNotification(t('contributors.author_already_added'), NotificationVariant.Info));
       return;
     }
 
     const identity = {
       ...emptyContributor.identity,
-      arpId: authority.systemControlNumber,
+      arpId: authority.id,
       orcId: authority.orcids.length > 0 ? authority.orcids[0] : '',
       name: authority.name,
     };

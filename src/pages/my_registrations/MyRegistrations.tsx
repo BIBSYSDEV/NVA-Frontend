@@ -50,7 +50,7 @@ const MyRegistrations: FC = () => {
             <Button
               color="primary"
               component={RouterLink}
-              to={`/user/${user.authority.systemControlNumber}`}
+              to={`/user/${user.authority.id}`}
               data-testid="public-profile-button">
               {t('go_to_public_profile')}
             </Button>

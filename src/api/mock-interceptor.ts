@@ -41,7 +41,7 @@ const mockOrcidResponse: OrcidResponse = {
 
 const mockSingleAuthorityResponse: Authority = {
   name: 'Test User',
-  systemControlNumber: '901790000000',
+  id: 'https://api.dev.nva.aws.unit.no/person/901790000000',
   feideids: ['tu@unit.no'],
   orcids: [],
   orgunitids: ['https://api.cristin.no/v2/units/150.4.1.0'],

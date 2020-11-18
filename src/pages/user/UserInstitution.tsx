@@ -43,7 +43,7 @@ const UserInstitution: FC = () => {
     }
     setIsRemovingInstitution(true);
     const updatedAuthority = await removeQualifierIdFromAuthority(
-      authority.systemControlNumber,
+      authority.id,
       AuthorityQualifiers.ORGUNIT_ID,
       institutionIdToRemove
     );
@@ -74,7 +74,7 @@ const UserInstitution: FC = () => {
 
     if (authority) {
       const updatedAuthority = await addQualifierIdForAuthority(
-        authority.systemControlNumber,
+        authority.id,
         AuthorityQualifiers.ORGUNIT_ID,
         newUnitId
       );

@@ -37,12 +37,9 @@ const AuthorityList: FC<AuthorityListProps> = ({
       {authorities.map((authority) => (
         <StyledClickableDiv
           data-testid="author-radio-button"
-          key={authority.systemControlNumber}
+          key={authority.id}
           onClick={() => onSelectAuthority(authority)}>
-          <AuthorityCard
-            authority={authority}
-            isSelected={selectedSystemControlNumber === authority.systemControlNumber}
-          />
+          <AuthorityCard authority={authority} isSelected={selectedSystemControlNumber === authority.id} />
         </StyledClickableDiv>
       ))}
     </StyledAuthorityContainer>

@@ -6,7 +6,7 @@ import { apiRequest } from './apiRequest';
 import { getIdToken } from './userApi';
 
 export enum AuthorityApiPaths {
-  PERSON = '/person',
+  PERSON = '/person-np1827',
 }
 
 export enum AuthorityQualifiers {
@@ -17,12 +17,12 @@ export enum AuthorityQualifiers {
 
 export const getAuthority = async (arpId: string, cancelToken?: CancelToken) =>
   await apiRequest<Authority>({
-    url: encodeURI(`${AuthorityApiPaths.PERSON}?arpId=${arpId}`),
+    url: arpId,
     cancelToken,
   });
 
 export const getAuthorities = async (name: string, cancelToken?: CancelToken) => {
-  const url = encodeURI(`${AuthorityApiPaths.PERSON}?name=${name}`);
+  const url = `${AuthorityApiPaths.PERSON}?name=${encodeURIComponent(name)}`;
 
   const error = i18n.t('feedback:error.get_authorities');
 
@@ -98,7 +98,7 @@ export const addQualifierIdForAuthority = async (
   qualifier: AuthorityQualifiers,
   identifier: string
 ) => {
-  const url = `${AuthorityApiPaths.PERSON}/${systemControlNumber}/identifiers/${qualifier}/add`;
+  const url = `${AuthorityApiPaths.PERSON}/${encodeURIComponent(systemControlNumber)}/identifiers/${qualifier}/add`;
 
   const error = i18n.t('feedback:error.update_authority', { qualifier: i18n.t(`common:${qualifier}`) });
 

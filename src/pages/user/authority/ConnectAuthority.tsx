@@ -7,7 +7,6 @@ import { Button, DialogActions } from '@material-ui/core';
 import { addQualifierIdForAuthority, AuthorityQualifiers } from '../../../api/authorityApi';
 import { setAuthorityData } from '../../../redux/actions/userActions';
 import { RootStore } from '../../../redux/reducers/rootReducer';
-import { Authority } from '../../../types/authority.types';
 import NewAuthorityCard from './NewAuthorityCard';
 import AuthorityList from './AuthorityList';
 import { StyledRightAlignedWrapper } from '../../../components/styled/Wrappers';
@@ -43,7 +42,7 @@ export const ConnectAuthority: FC<ConnectAuthorityProps> = ({ handleCloseModal }
 
   const updateAuthorityForUser = async () => {
     const selectedAuthority = user.possibleAuthorities.find(
-      (authority) => authority.systemControlNumber === selectedSystemControlNumber
+      (authority) => authority.id === selectedSystemControlNumber
     );
 
     if (selectedAuthority) {
@@ -77,9 +76,7 @@ export const ConnectAuthority: FC<ConnectAuthorityProps> = ({ handleCloseModal }
             <AuthorityList
               authorities={user.possibleAuthorities}
               selectedSystemControlNumber={selectedSystemControlNumber}
-              onSelectAuthority={(authority: Authority) =>
-                setSelectedSystemControlNumber(authority.systemControlNumber)
-              }
+              onSelectAuthority={(authority) => setSelectedSystemControlNumber(authority.id)}
               searchTerm={user.name}
             />
             <StyledRightAlignedWrapper>

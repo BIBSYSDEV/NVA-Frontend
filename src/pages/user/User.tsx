@@ -65,7 +65,7 @@ const User: FC = () => {
     const updateOrcid = async () => {
       if (user.authority?.orcids && !user.authority.orcids.includes(user.externalOrcid)) {
         const updatedAuthority = await addQualifierIdForAuthority(
-          user.authority.systemControlNumber,
+          user.authority.id,
           AuthorityQualifiers.ORCID,
           user.externalOrcid
         );
@@ -90,7 +90,7 @@ const User: FC = () => {
             <Button
               color="primary"
               component={RouterLink}
-              to={`/user/${user.authority.systemControlNumber}`}
+              to={`/user/${user.authority.id}`}
               data-testid="public-profile-button">
               {t('workLists:go_to_public_profile')}
             </Button>
