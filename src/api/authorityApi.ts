@@ -62,16 +62,12 @@ export const createAuthority = async (firstName: string, lastName: string, feide
     const response = await Axios.post(url, { invertedname: `${lastName}, ${firstName}` }, { headers });
     if (response.status === StatusCode.OK) {
       if (feideId) {
-        const systemControlNumber = response.data.systemControlNumber;
-        const updatedAuthority = await addQualifierIdForAuthority(
-          systemControlNumber,
-          AuthorityQualifiers.FEIDE_ID,
-          feideId
-        );
+        const arpId = response.data.id;
+        const updatedAuthority = await addQualifierIdForAuthority(arpId, AuthorityQualifiers.FEIDE_ID, feideId);
         if (updatedAuthority) {
           if (cristinId) {
             const updatedAuthorityWithCristinId = await addQualifierIdForAuthority(
-              systemControlNumber,
+              arpId,
               AuthorityQualifiers.ORGUNIT_ID,
               cristinId
             );
@@ -93,12 +89,8 @@ export const createAuthority = async (firstName: string, lastName: string, feide
   }
 };
 
-export const addQualifierIdForAuthority = async (
-  systemControlNumber: string,
-  qualifier: AuthorityQualifiers,
-  identifier: string
-) => {
-  const url = `${AuthorityApiPaths.PERSON}/${encodeURIComponent(systemControlNumber)}/identifiers/${qualifier}/add`;
+export const addQualifierIdForAuthority = async (arpId: string, qualifier: AuthorityQualifiers, identifier: string) => {
+  const url = `${arpId}/identifiers/${qualifier}/add`;
 
   const error = i18n.t('feedback:error.update_authority', { qualifier: i18n.t(`common:${qualifier}`) });
 
@@ -119,12 +111,12 @@ export const addQualifierIdForAuthority = async (
 };
 
 export const updateQualifierIdForAuthority = async (
-  systemControlNumber: string,
+  arpId: string,
   qualifier: AuthorityQualifiers,
   identifier: string,
   updatedIdentifier: string
 ) => {
-  const url = `${AuthorityApiPaths.PERSON}/${systemControlNumber}/identifiers/${qualifier}/update`;
+  const url = `${arpId}/identifiers/${qualifier}/update`;
 
   const error = i18n.t('feedback:error.update_authority', { qualifier: i18n.t(`common:${qualifier}`) });
 
@@ -146,11 +138,11 @@ export const updateQualifierIdForAuthority = async (
 };
 
 export const removeQualifierIdFromAuthority = async (
-  systemControlNumber: string,
+  arpId: string,
   qualifier: AuthorityQualifiers,
   identifier: string
 ) => {
-  const url = `${AuthorityApiPaths.PERSON}/${systemControlNumber}/identifiers/${qualifier}/delete`;
+  const url = `${arpId}/identifiers/${qualifier}/delete`;
 
   const error = i18n.t('feedback:error.delete_identifier', { qualifier: i18n.t(`common:${qualifier}`) });
 
