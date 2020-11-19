@@ -20,15 +20,10 @@ interface AuthorityListProps {
   authorities: Authority[];
   searchTerm: string;
   onSelectAuthority: (authority: Authority) => void;
-  selectedSystemControlNumber?: string;
+  selectedArpId?: string;
 }
 
-const AuthorityList: FC<AuthorityListProps> = ({
-  authorities,
-  searchTerm,
-  onSelectAuthority,
-  selectedSystemControlNumber,
-}) => {
+const AuthorityList: FC<AuthorityListProps> = ({ authorities, searchTerm, onSelectAuthority, selectedArpId }) => {
   const { t } = useTranslation('common');
 
   return (
@@ -39,7 +34,7 @@ const AuthorityList: FC<AuthorityListProps> = ({
           data-testid="author-radio-button"
           key={authority.id}
           onClick={() => onSelectAuthority(authority)}>
-          <AuthorityCard authority={authority} isSelected={selectedSystemControlNumber === authority.id} />
+          <AuthorityCard authority={authority} isSelected={selectedArpId === authority.id} />
         </StyledClickableDiv>
       ))}
     </StyledAuthorityContainer>

@@ -44,7 +44,7 @@ const AddContributorModalContent: FC<AddContributorModalContentProps> = ({ addAu
           {searchTerm && (
             <AuthorityList
               authorities={authorities}
-              selectedSystemControlNumber={selectedAuthor?.id}
+              selectedArpId={selectedAuthor?.id}
               onSelectAuthority={setSelectedAuthor}
               searchTerm={searchTerm}
             />
