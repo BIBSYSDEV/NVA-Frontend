@@ -33,7 +33,7 @@ export const PageHeader: FC<PageHeaderProps> = ({ backPath, children }) => {
 
   return (
     <StyledHeader>
-      <Button startIcon={<ArrowBackIcon />} variant="text" onClick={onBackClick}>
+      <Button data-testid="navigate-back-button" startIcon={<ArrowBackIcon />} variant="text" onClick={onBackClick}>
         {t('back')}
       </Button>
       <StyledHeaderTitle variant="h1">{children}</StyledHeaderTitle>
