@@ -16,7 +16,7 @@
     "correspondingAuthor": true,
     "email": "en@unit.no",
     "type": "Author",
-    "systemControlNumber": "1234321"
+    "id": "https://api.dev.nva.aws.unit.no/person/1"
   },
   {
     "name": "Per Christian Bjelke",
@@ -27,7 +27,7 @@
     "correspondingAuthor": false,
     "type": "Author",
     "email": "pcb@unit.no",
-    "systemControlNumber": "2432432"
+    "id": "https://api.dev.nva.aws.unit.no/person/2"
   },
   {
     "name": "Sarah Serussi",
@@ -35,7 +35,7 @@
     "correspondingAuthor": false,
     "type": "Author",
     "email": "sase@unit.no",
-    "systemControlNumber": ""
+    "id": "https://api.dev.nva.aws.unit.no/person/3"
   },
   {
     "name": "Kjetil Møkkelgjerd",
@@ -43,7 +43,7 @@
     "correspondingAuthor": false,
     "type": "Author",
     "email": "",
-    "systemControlNumber": "9845784"
+    "id": "https://api.dev.nva.aws.unit.no/person/4"
   },
   {
     "name": "Svenn Gjetø",
@@ -51,14 +51,13 @@
     "correspondingAuthor": false,
     "type": "Editor",
     "email": "",
-    "systemControlNumber": "83743746"
+    "id": "https://api.dev.nva.aws.unit.no/person/5"
   },
   {
     "name": "Nikolai Fikse Raanes",
     "institutions": [],
     "correspondingAuthor": false,
     "type": "Photographer",
-    "email": "",
-    "systemControlNumber": ""
+    "email": ""
   }
 ]

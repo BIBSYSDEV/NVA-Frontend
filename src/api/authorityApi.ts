@@ -6,7 +6,7 @@ import { apiRequest } from './apiRequest';
 import { getIdToken } from './userApi';
 
 export enum AuthorityApiPaths {
-  PERSON = '/person-np1827',
+  PERSON = '/person-np1827', // TODO
 }
 
 export enum AuthorityQualifiers {
