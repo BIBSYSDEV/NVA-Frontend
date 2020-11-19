@@ -39,7 +39,7 @@ const PublicRegistrationAuthors: FC<PublicRegistrationAuthorsProps> = ({ contrib
       <NormalText>
         {contributors.map((contributor, index) => {
           const {
-            identity: { arpId, name, orcId },
+            identity: { id, name, orcId },
             email,
           } = contributor;
           const affiliationIndexes = contributor.affiliations
@@ -48,7 +48,7 @@ const PublicRegistrationAuthors: FC<PublicRegistrationAuthorsProps> = ({ contrib
 
           return (
             <StyledAuthor key={index}>
-              {arpId ? <Link href={`/user/${arpId}`}>{name}</Link> : name}
+              {id ? <Link href={`/user/${id}`}>{name}</Link> : name}
               <sup>
                 {affiliationIndexes?.length > 0 && affiliationIndexes.join(',')}
                 {email && (
