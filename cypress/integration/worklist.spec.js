@@ -4,7 +4,7 @@ import { mockRegistrationsWithPendingDoiRequest } from '../../src/utils/testfile
 describe('Worklist', () => {
   beforeEach(() => {
     cy.server();
-    cy.visit('/user');
+    cy.visit('/my-profile');
     cy.mocklogin();
     cy.setUserRolesInRedux([RoleName.CURATOR, RoleName.PUBLISHER]);
     cy.get('[data-testid=menu]').click({ force: true });

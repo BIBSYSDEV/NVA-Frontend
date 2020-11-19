@@ -57,7 +57,7 @@ const User: FC = () => {
     const orcidAccessToken = new URLSearchParams(location.hash.replace('#', '?')).get('access_token') || '';
     if (orcidAccessToken) {
       dispatch(getOrcidInfo(orcidAccessToken));
-      history.push('/user');
+      history.push('/my-profile');
     }
   }, [dispatch, location.hash, history]);
 

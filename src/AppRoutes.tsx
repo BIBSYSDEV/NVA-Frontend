@@ -43,7 +43,7 @@ const AppRoutes: FC = () => {
         {user && (
           <>
             {/* LoggedInRoute */}
-            <LoggedInRoute exact path="/user" component={User} />
+            <LoggedInRoute exact path="/my-profile" component={User} />
 
             {/* CreatorRoutes */}
             <CreatorRoute exact path="/registration" component={EditRegistration} />
