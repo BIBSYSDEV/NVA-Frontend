@@ -26,10 +26,10 @@ const UserRoles: FC<UserRolesProps> = ({ user }) => {
         !isInstitutionAdmin &&
         !isEditor &&
         !isCurator &&
-        !isCreator && <StyledTypography>{t('roles.no_roles')}</StyledTypography>
+        !isCreator && <StyledTypography data-testid="no-roles-text">{t('roles.no_roles')}</StyledTypography>
       ) : (
         <>
-          <StyledTypography>{t('roles.not_customer')}</StyledTypography>
+          <StyledTypography data-testid="not-customer-text">{t('roles.not_customer')}</StyledTypography>
           <Typography>
             {t('common:name')}: {user.institution}
           </Typography>
