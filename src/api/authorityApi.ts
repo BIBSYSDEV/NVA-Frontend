@@ -126,7 +126,7 @@ export const updateQualifierIdForAuthority = async (
       Authorization: `Bearer ${idToken}`,
     };
 
-    const response = await Axios.post(url, { identifier, updatedIdentifier }, { headers });
+    const response = await Axios.put(url, { identifier, updatedIdentifier }, { headers });
     if (response.status === StatusCode.OK) {
       return response.data;
     } else {
