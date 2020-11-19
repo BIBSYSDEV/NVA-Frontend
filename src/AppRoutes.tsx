@@ -33,7 +33,7 @@ const AppRoutes: FC = () => {
         <Route exact path="/description" component={Description} />
         <Route exact path="/order-information" component={OrderInformation} />
         <Route exact path="/privacy-policy" component={PrivacyPolicy} />
-        <Route exact path="/user/:arpId" component={PublicProfile} />
+        <Route exact path="/user" component={PublicProfile} />
         <Route exact path="/registration/:identifier/public" component={PublicRegistration} />
         <Route exact path="/search" component={SearchPage} />
         <Route exact path="/search/:searchTerm" component={SearchPage} />

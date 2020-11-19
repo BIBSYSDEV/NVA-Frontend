@@ -90,7 +90,7 @@ const User: FC = () => {
             <Button
               color="primary"
               component={RouterLink}
-              to={`/user/${user.authority.id}`}
+              to={`/user?id=${encodeURIComponent(user.authority.id)}`}
               data-testid="public-profile-button">
               {t('workLists:go_to_public_profile')}
             </Button>

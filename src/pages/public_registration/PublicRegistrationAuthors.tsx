@@ -48,7 +48,7 @@ const PublicRegistrationAuthors: FC<PublicRegistrationAuthorsProps> = ({ contrib
 
           return (
             <StyledAuthor key={index}>
-              {id ? <Link href={`/user/${id}`}>{name}</Link> : name}
+              {id ? <Link href={`/user?id=${encodeURIComponent(id)}`}>{name}</Link> : name}
               <sup>
                 {affiliationIndexes?.length > 0 && affiliationIndexes.join(',')}
                 {email && (

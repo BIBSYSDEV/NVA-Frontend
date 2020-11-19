@@ -54,7 +54,7 @@ const RegistrationListItem: FC<RegistrationListItemProps> = ({ registration }) =
           {focusedContributors.map((contributor, index) => (
             <Typography key={index}>
               {contributor.id ? (
-                <MuiLink component={Link} to={`/user/${contributor.id}`}>
+                <MuiLink component={Link} to={`/user?id=${encodeURIComponent(contributor.id)}`}>
                   {contributor.name}
                 </MuiLink>
               ) : (
