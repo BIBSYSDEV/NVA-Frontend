@@ -54,3 +54,12 @@ export const convertToInstitution = (unitId: string) => {
     return `https://api.cristin.no/v2/institutions/${institutionId}`;
   }
 };
+
+export const sortInstitutionsAlphabetically = (institutions: InstitutionUnitBase[]) =>
+  institutions.sort((institution1, institution2) => {
+    if (institution1.name.toLocaleLowerCase() < institution2.name.toLocaleLowerCase()) {
+      return -1;
+    } else {
+      return 1;
+    }
+  });
