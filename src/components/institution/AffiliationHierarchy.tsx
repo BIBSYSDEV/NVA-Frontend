@@ -1,4 +1,4 @@
-import React, { FC, Fragment } from 'react';
+import React, { FC } from 'react';
 import { convertToInstitution, getUnitHierarchyNames } from '../../utils/institutions-helpers';
 import { AffiliationSkeleton } from './AffiliationSkeleton';
 import { Typography } from '@material-ui/core';
@@ -37,13 +37,9 @@ export const AffiliationHierarchy: FC<AffiliationHierarchyProps> = ({
     ) : (
       <div>
         {unitNames.map((unitName, index) => (
-          <Fragment key={unitName}>
-            {index === 0 && boldTopLevel ? (
-              <Typography variant="h6">{unitName}</Typography>
-            ) : (
-              <Typography>{unitName}</Typography>
-            )}
-          </Fragment>
+          <Typography key={unitName} variant={index === 0 && boldTopLevel ? 'h6' : 'body1'}>
+            {unitName}
+          </Typography>
         ))}
       </div>
     )
