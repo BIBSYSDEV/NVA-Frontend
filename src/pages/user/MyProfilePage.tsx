@@ -46,7 +46,7 @@ const StyledButtonWrapper = styled(StyledRightAlignedWrapper)`
   grid-area: top;
 `;
 
-const User: FC = () => {
+const MyProfilePage: FC = () => {
   const { t } = useTranslation('profile');
   const user = useSelector((state: RootStore) => state.user);
   const location = useLocation();
@@ -117,4 +117,4 @@ const User: FC = () => {
   );
 };
 
-export default User;
+export default MyProfilePage;
