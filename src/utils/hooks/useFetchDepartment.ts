@@ -31,7 +31,9 @@ const useFetchDepartment = (departmentId: string): [RecursiveInstitutionUnit | u
   );
 
   useEffect(() => {
-    fetchDepartment(departmentId);
+    if (departmentId) {
+      fetchDepartment(departmentId);
+    }
   }, [fetchDepartment, departmentId]);
 
   return [department, isLoading];
