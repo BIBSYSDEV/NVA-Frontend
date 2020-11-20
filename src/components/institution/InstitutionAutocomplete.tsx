@@ -24,11 +24,19 @@ const InstitutionAutocomplete: FC<InstitutionAutocompleteProps> = ({
 }) => {
   const { t } = useTranslation('common');
 
+  const sortedInstitutions = institutions.sort((institution1, institution2) => {
+    if (institution1.name.toLocaleLowerCase() < institution2.name.toLocaleLowerCase()) {
+      return -1;
+    } else {
+      return 1;
+    }
+  });
+
   return (
     <Autocomplete
       {...autocompleteTranslationProps}
       disabled={disabled}
-      options={institutions}
+      options={sortedInstitutions}
       getOptionLabel={(option) => option.name}
       getOptionSelected={(option, value) => option.id === value.id}
       value={value}
