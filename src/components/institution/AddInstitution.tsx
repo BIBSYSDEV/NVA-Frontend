@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { Button, CircularProgress, Typography } from '@material-ui/core';
 import InstitutionSelector from '../../pages/user/institution/InstitutionSelector';
 import { FormikInstitutionUnit, FormikInstitutionUnitFieldNames } from '../../types/institution.types';
-import useFetchDepartments from '../../utils/hooks/useFetchDepartments';
+import useFetchDepartment from '../../utils/hooks/useFetchDepartment';
 import useFetchInstitutions from '../../utils/hooks/useFetchInstitutions';
 import InstitutionAutocomplete from './InstitutionAutocomplete';
 import ButtonWithProgress from '../ButtonWithProgress';
@@ -34,7 +34,7 @@ const AddInstitution: FC<AddInstitutionProps> = ({ onSubmit, onClose }) => {
   const { t } = useTranslation('common');
   const [institutions, isLoadingInstitutions] = useFetchInstitutions();
   const [selectedInstitutionId, setSelectedInstitutionId] = useState('');
-  const [subunits, isLoadingSubunits] = useFetchDepartments(selectedInstitutionId);
+  const [department, isLoadingDepartment] = useFetchDepartment(selectedInstitutionId);
 
   return (
     <Formik initialValues={{}} onSubmit={onSubmit}>
@@ -51,15 +51,19 @@ const AddInstitution: FC<AddInstitutionProps> = ({ onSubmit, onClose }) => {
                   setFieldValue(name, value);
                 }}
               />
-              {isLoadingSubunits && (
+              {isLoadingDepartment && (
                 <div>
                   <Typography>{t('institution:loading_department')}</Typography>
                   <CircularProgress />
                 </div>
               )}
 
-              {subunits.length > 0 && (
-                <InstitutionSelector units={subunits} fieldNamePrefix={name} label={t('institution:department')} />
+              {department?.subunits && department.subunits.length > 0 && (
+                <InstitutionSelector
+                  units={department.subunits}
+                  fieldNamePrefix={name}
+                  label={t('institution:department')}
+                />
               )}
 
               <StyledButtonContainer>
@@ -68,7 +72,7 @@ const AddInstitution: FC<AddInstitutionProps> = ({ onSubmit, onClose }) => {
                   type="submit"
                   color="primary"
                   isLoading={isSubmitting}
-                  disabled={!value || isLoadingSubunits}
+                  disabled={!value || isLoadingDepartment}
                   data-testid="institution-add-button">
                   {t('add')}
                 </ButtonWithProgress>

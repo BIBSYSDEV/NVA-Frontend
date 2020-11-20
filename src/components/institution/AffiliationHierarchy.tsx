@@ -1,8 +1,8 @@
 import React, { FC, Fragment } from 'react';
-import useFetchUnitHierarchy from '../../utils/hooks/useFetchUnitHierarchy';
-import { getUnitHierarchyNames } from '../../utils/institutions-helpers';
+import { convertToInstitution, getUnitHierarchyNames } from '../../utils/institutions-helpers';
 import { AffiliationSkeleton } from './AffiliationSkeleton';
 import { Typography } from '@material-ui/core';
+import useFetchDepartment from '../../utils/hooks/useFetchDepartment';
 
 interface AffiliationHierarchyProps {
   unitUri: string;
@@ -15,12 +15,21 @@ export const AffiliationHierarchy: FC<AffiliationHierarchyProps> = ({
   commaSeparated = false,
   boldTopLevel = true,
 }) => {
-  const [unit, isLoadingUnit] = useFetchUnitHierarchy(unitUri);
-  const unitNames = unit ? getUnitHierarchyNames(unit) : [];
+  const [department, isLoadingDepartment] = useFetchDepartment(unitUri);
 
-  return isLoadingUnit ? (
+  if (department) {
+    if (unitUri === convertToInstitution(department.id)) {
+      delete department.subunits;
+    } else if (department.subunits && department.subunits.length > 1) {
+      delete department.subunits;
+    }
+  }
+
+  const unitNames = department ? getUnitHierarchyNames(department) : [];
+
+  return isLoadingDepartment ? (
     <AffiliationSkeleton commaSeparated={commaSeparated} />
-  ) : unit ? (
+  ) : department ? (
     commaSeparated ? (
       <i>
         <Typography>{unitNames.join(', ')}</Typography>
