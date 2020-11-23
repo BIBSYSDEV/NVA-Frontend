@@ -85,11 +85,7 @@ const UserOrcid: FC = () => {
       return;
     }
     setIsRemovingOrcid(true);
-    const updatedAuthority = await removeQualifierIdFromAuthority(
-      authority.systemControlNumber,
-      AuthorityQualifiers.ORCID,
-      id
-    );
+    const updatedAuthority = await removeQualifierIdFromAuthority(authority.id, AuthorityQualifiers.ORCID, id);
     if (updatedAuthority.error) {
       dispatch(setNotification(updatedAuthority.error, NotificationVariant.Error));
     } else if (updatedAuthority) {

@@ -1,6 +1,6 @@
 export interface Authority {
   name: string;
-  systemControlNumber: string;
+  id: string;
   feideids: string[];
   orcids: string[];
   orgunitids: string[];

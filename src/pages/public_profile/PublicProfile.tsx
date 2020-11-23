@@ -1,8 +1,9 @@
 import React, { FC } from 'react';
 import { CircularProgress, IconButton, Link as MuiLink, Typography } from '@material-ui/core';
 import styled from 'styled-components';
-import { useParams } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import WorkIcon from '@material-ui/icons/Work';
+import { useTranslation } from 'react-i18next';
 import orcidIcon from '../../resources/images/orcid_logo.svg';
 import Card from '../../components/Card';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
@@ -11,7 +12,6 @@ import { ORCID_BASE_URL } from '../../utils/constants';
 import NormalText from '../../components/NormalText';
 import useSearchRegistrations from '../../utils/hooks/useSearchRegistrations';
 import SearchResults from '../search/SearchResults';
-import { useTranslation } from 'react-i18next';
 
 const StyledLine = styled.div`
   display: flex;
@@ -30,11 +30,11 @@ const StyledRegistrations = styled.div`
 
 const PublicProfile: FC = () => {
   const { t } = useTranslation('common');
-  const { arpId } = useParams<{ arpId: string }>();
+  const history = useHistory();
+  const arpId = new URLSearchParams(history.location.search).get('id') ?? '';
+
   const [authority, isLoadingUser] = useFetchAuthority(arpId);
-  const [registrations, isLoadingRegistrations] = useSearchRegistrations(
-    `entityDescription.contributors.arpId=${arpId}`
-  );
+  const [registrations, isLoadingRegistrations] = useSearchRegistrations(`entityDescription.contributors.id=${arpId}`);
 
   return (
     <>
