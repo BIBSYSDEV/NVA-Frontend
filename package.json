@@ -13,7 +13,7 @@
     "@uppy/core": "^1.14.0",
     "@uppy/dashboard": "^1.12.10",
     "@uppy/react": "^1.10.10",
-    "aws-amplify": "^3.3.8",
+    "aws-amplify": "^3.3.9",
     "axios": "^0.21.0",
     "date-fns": "^2.16.1",
     "deepmerge": "^4.2.2",
@@ -86,7 +86,7 @@
     "nyc": "^15.1.0",
     "prettier": "^2.2.0",
     "pretty-quick": "^3.1.0",
-    "start-server-and-test": "^1.11.5",
+    "start-server-and-test": "^1.11.6",
     "ts-node": "^9.0.0",
     "typescript": "^4.0.5"
   }

@@ -34,12 +34,20 @@ export const getDistinctContributorUnits = (contributors: Contributor[]): string
 ];
 
 // Returns top-down unit names: ["Level1", "Level2", (etc.)]
-export const getUnitHierarchyNames = (unit: RecursiveInstitutionUnit, unitNames: string[] = []): string[] => {
-  unitNames.push(unit.name);
-  if (unit.subunits) {
-    return getUnitHierarchyNames(unit.subunits[0], unitNames);
-  } else {
+export const getUnitHierarchyNames = (
+  queryId: string,
+  unit?: RecursiveInstitutionUnit,
+  unitNames: string[] = []
+): string[] => {
+  if (!unit) {
     return unitNames;
+  }
+  unitNames.push(unit.name);
+
+  if (queryId === unit.id || queryId === convertToInstitution(unit.id) || !unit.subunits) {
+    return unitNames;
+  } else {
+    return getUnitHierarchyNames(queryId, unit.subunits[0], unitNames);
   }
 };
 
@@ -54,3 +62,12 @@ export const convertToInstitution = (unitId: string) => {
     return `https://api.cristin.no/v2/institutions/${institutionId}`;
   }
 };
+
+export const sortInstitutionsAlphabetically = (institutions: InstitutionUnitBase[]) =>
+  institutions.sort((institution1, institution2) => {
+    if (institution1.name.toLocaleLowerCase() < institution2.name.toLocaleLowerCase()) {
+      return -1;
+    } else {
+      return 1;
+    }
+  });
