@@ -4,6 +4,7 @@ import { CircularProgress, TextField, TextFieldProps } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { autocompleteTranslationProps } from '../../themes/mainTheme';
 import { InstitutionUnitBase } from '../../types/institution.types';
+import { sortInstitutionsAlphabetically } from '../../utils/institutions-helpers';
 
 interface InstitutionAutocompleteProps extends Pick<TextFieldProps, 'disabled' | 'error' | 'helperText' | 'label'> {
   institutions: InstitutionUnitBase[];
@@ -28,7 +29,7 @@ const InstitutionAutocomplete: FC<InstitutionAutocompleteProps> = ({
     <Autocomplete
       {...autocompleteTranslationProps}
       disabled={disabled}
-      options={institutions}
+      options={sortInstitutionsAlphabetically(institutions)}
       getOptionLabel={(option) => option.name}
       getOptionSelected={(option, value) => option.id === value.id}
       value={value}
