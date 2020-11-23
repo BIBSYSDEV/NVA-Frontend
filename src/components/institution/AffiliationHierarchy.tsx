@@ -1,8 +1,8 @@
-import React, { FC, Fragment } from 'react';
-import useFetchUnitHierarchy from '../../utils/hooks/useFetchUnitHierarchy';
+import React, { FC } from 'react';
+import { Typography } from '@material-ui/core';
 import { getUnitHierarchyNames } from '../../utils/institutions-helpers';
 import { AffiliationSkeleton } from './AffiliationSkeleton';
-import { Typography } from '@material-ui/core';
+import useFetchDepartment from '../../utils/hooks/useFetchDepartment';
 
 interface AffiliationHierarchyProps {
   unitUri: string;
@@ -15,30 +15,24 @@ export const AffiliationHierarchy: FC<AffiliationHierarchyProps> = ({
   commaSeparated = false,
   boldTopLevel = true,
 }) => {
-  const [unit, isLoadingUnit] = useFetchUnitHierarchy(unitUri);
-  const unitNames = unit ? getUnitHierarchyNames(unit) : [];
+  const [department, isLoadingDepartment] = useFetchDepartment(unitUri);
+  const unitHierarchyNames = getUnitHierarchyNames(unitUri, department);
 
-  return isLoadingUnit ? (
+  return isLoadingDepartment ? (
     <AffiliationSkeleton commaSeparated={commaSeparated} />
-  ) : unit ? (
-    commaSeparated ? (
-      <i>
-        <Typography>{unitNames.join(', ')}</Typography>
-      </i>
-    ) : (
-      <div>
-        {unitNames.map((unitName, index) => (
-          <Fragment key={unitName}>
-            {index === 0 && boldTopLevel ? (
-              <Typography variant="h6">{unitName}</Typography>
-            ) : (
-              <Typography>{unitName}</Typography>
-            )}
-          </Fragment>
-        ))}
-      </div>
-    )
-  ) : null;
+  ) : commaSeparated ? (
+    <i>
+      <Typography>{unitHierarchyNames.join(', ')}</Typography>
+    </i>
+  ) : (
+    <div>
+      {unitHierarchyNames.map((unitName, index) => (
+        <Typography key={unitName} variant={index === 0 && boldTopLevel ? 'h6' : 'body1'}>
+          {unitName}
+        </Typography>
+      ))}
+    </div>
+  );
 };
 
 export default AffiliationHierarchy;
