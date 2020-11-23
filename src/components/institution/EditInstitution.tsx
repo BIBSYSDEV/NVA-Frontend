@@ -35,7 +35,7 @@ const EditInstitution: FC<EditInstitutionProps> = ({ initialInstitutionId, onCan
   const initialValue = initialInstitution.pop();
 
   return (
-    <Formik initialValues={{}} onSubmit={onSubmit}>
+    <Formik enableReinitialize initialValues={{ unit: initialValue }} onSubmit={onSubmit}>
       <Form>
         <Field name={FormikInstitutionUnitFieldNames.UNIT}>
           {({ field: { name, value }, form: { isSubmitting } }: FieldProps) => (
@@ -44,7 +44,7 @@ const EditInstitution: FC<EditInstitutionProps> = ({ initialInstitutionId, onCan
                 institutions={initialInstitution}
                 isLoading={isLoadingInstitutions}
                 disabled
-                value={initialValue ?? null}
+                value={value}
               />
 
               {institutions.length > 0 && isLoadingDepartment && (
@@ -68,7 +68,7 @@ const EditInstitution: FC<EditInstitutionProps> = ({ initialInstitutionId, onCan
                   type="submit"
                   color="primary"
                   isLoading={isSubmitting}
-                  disabled={!value || isLoadingDepartment}
+                  disabled={isLoadingDepartment}
                   data-testid="institution-edit-button">
                   {t('save')}
                 </ButtonWithProgress>
