@@ -33,6 +33,7 @@ export const ProjectsField: FC = () => {
             const projectToPersist = value[0] ? convertToResearchProject(value[0]) : undefined;
             setFieldValue(field.name, projectToPersist);
           }}
+          popupIcon={null}
           multiple
           defaultValue={field.value ? [field.value].map((project) => convertToCristinProject(project)) : []}
           renderTags={(value, getTagProps) =>
