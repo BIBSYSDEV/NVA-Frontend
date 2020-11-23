@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { Button, CircularProgress, Typography } from '@material-ui/core';
 import InstitutionSelector from '../../pages/user/institution/InstitutionSelector';
 import { FormikInstitutionUnit, FormikInstitutionUnitFieldNames } from '../../types/institution.types';
-import useFetchDepartments from '../../utils/hooks/useFetchDepartments';
+import useFetchDepartment from '../../utils/hooks/useFetchDepartment';
 import useFetchInstitutions from '../../utils/hooks/useFetchInstitutions';
 import { convertToInstitution } from '../../utils/institutions-helpers';
 import InstitutionAutocomplete from './InstitutionAutocomplete';
@@ -28,7 +28,7 @@ interface EditInstitutionProps {
 const EditInstitution: FC<EditInstitutionProps> = ({ initialInstitutionId, onCancel, onSubmit }) => {
   const { t } = useTranslation('common');
   const [institutions, isLoadingInstitutions] = useFetchInstitutions();
-  const [subunits, isLoadingSubunits] = useFetchDepartments(convertToInstitution(initialInstitutionId));
+  const [department, isLoadingDepartment] = useFetchDepartment(convertToInstitution(initialInstitutionId));
   const initialInstitution = institutions.filter(
     (institution) => institution.id === convertToInstitution(initialInstitutionId)
   );
@@ -47,15 +47,19 @@ const EditInstitution: FC<EditInstitutionProps> = ({ initialInstitutionId, onCan
                 value={initialValue ?? null}
               />
 
-              {institutions.length > 0 && isLoadingSubunits && (
+              {institutions.length > 0 && isLoadingDepartment && (
                 <div>
                   <Typography>{t('institution:loading_department')}</Typography>
                   <CircularProgress />
                 </div>
               )}
 
-              {institutions.length > 0 && subunits.length > 0 && (
-                <InstitutionSelector units={subunits} fieldNamePrefix={name} label={t('institution:department')} />
+              {institutions.length > 0 && department?.subunits && department.subunits.length > 0 && (
+                <InstitutionSelector
+                  units={department.subunits}
+                  fieldNamePrefix={name}
+                  label={t('institution:department')}
+                />
               )}
 
               <StyledButtonContainer>
@@ -64,7 +68,7 @@ const EditInstitution: FC<EditInstitutionProps> = ({ initialInstitutionId, onCan
                   type="submit"
                   color="primary"
                   isLoading={isSubmitting}
-                  disabled={!value || isLoadingSubunits}
+                  disabled={!value || isLoadingDepartment}
                   data-testid="institution-edit-button">
                   {t('save')}
                 </ButtonWithProgress>

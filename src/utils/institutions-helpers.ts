@@ -34,12 +34,20 @@ export const getDistinctContributorUnits = (contributors: Contributor[]): string
 ];
 
 // Returns top-down unit names: ["Level1", "Level2", (etc.)]
-export const getUnitHierarchyNames = (unit: RecursiveInstitutionUnit, unitNames: string[] = []): string[] => {
-  unitNames.push(unit.name);
-  if (unit.subunits) {
-    return getUnitHierarchyNames(unit.subunits[0], unitNames);
-  } else {
+export const getUnitHierarchyNames = (
+  queryId: string,
+  unit?: RecursiveInstitutionUnit,
+  unitNames: string[] = []
+): string[] => {
+  if (!unit) {
     return unitNames;
+  }
+  unitNames.push(unit.name);
+
+  if (queryId === unit.id || queryId === convertToInstitution(unit.id) || !unit.subunits) {
+    return unitNames;
+  } else {
+    return getUnitHierarchyNames(queryId, unit.subunits[0], unitNames);
   }
 };
 
