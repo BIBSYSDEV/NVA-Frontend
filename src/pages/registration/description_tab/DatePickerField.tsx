@@ -2,7 +2,7 @@ import React, { useState, useEffect, FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { KeyboardDatePicker, DatePickerView } from '@material-ui/pickers';
-import { useFormikContext, getIn } from 'formik';
+import { useFormikContext, getIn, ErrorMessage } from 'formik';
 import { Registration } from '../../../types/registration.types';
 import { FormControlLabel, Checkbox } from '@material-ui/core';
 import styled from 'styled-components';
@@ -20,8 +20,7 @@ interface DatePickerFieldProps {
 
 const DatePickerField: FC<DatePickerFieldProps> = ({ yearFieldName, monthFieldName, dayFieldName }) => {
   const { t } = useTranslation('registration');
-  const { setFieldValue, values } = useFormikContext<Registration>();
-
+  const { setFieldValue, values, errors, touched, setFieldTouched } = useFormikContext<Registration>();
   const initialYear = getIn(values, yearFieldName);
   const initialMonth = getIn(values, monthFieldName);
   const initialDay = getIn(values, dayFieldName);
@@ -62,6 +61,9 @@ const DatePickerField: FC<DatePickerFieldProps> = ({ yearFieldName, monthFieldNa
         value={date}
         autoOk
         format={yearOnly ? 'yyyy' : 'dd.MM.yyyy'}
+        onBlur={() => setFieldTouched(yearFieldName)}
+        error={!!getIn(errors, yearFieldName) && getIn(touched, yearFieldName)}
+        helperText={<ErrorMessage name={yearFieldName}></ErrorMessage>}
       />
       <StyledFormControlLabel
         control={<Checkbox checked={yearOnly} onChange={toggleYearOnly} color="primary" />}

@@ -51,8 +51,7 @@
     "minimum_one_file": "Du må laste opp minst en fil for denne registreringen",
     "must_be_min_1": "Verdien må være større enn 0",
     "must_be_positive": "Verdien må være positiv",
-    "date_must_be_in_future": "Dato må være i fremtiden",
-    "required_field": "Påkrevd felt"
+    "date_must_be_in_future": "Dato må være i fremtiden"
   },
   "files_and_license": {
     "accepted_version": "Akseptert versjon",
