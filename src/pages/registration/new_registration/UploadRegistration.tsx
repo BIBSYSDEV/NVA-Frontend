@@ -84,7 +84,7 @@ const UploadRegistration: FC<UploadRegistrationProps> = ({ expanded, onChange, o
               data-testid="registration-file-start-button"
               isLoading={isLoading}
               onClick={createRegistrationWithFiles}>
-              {t('common:start')}
+              {t('registration.start_registration')}
             </ButtonWithProgress>
           )}
         </>
