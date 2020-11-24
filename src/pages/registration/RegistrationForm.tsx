@@ -159,7 +159,7 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier = '', closeFor
                         // Set all fields with error to touched to ensure error messages are shown
                         setTouched(setNestedObjectValues(errors, true));
                       }}>
-                      {t('common:save')}
+                      {t('save_draft')}
                     </ButtonWithProgress>
                   </StyledButtonContainer>
                   <StyledButtonContainer>

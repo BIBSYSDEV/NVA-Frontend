@@ -140,6 +140,7 @@
     "text_book_yes": "Ja, boken er en lærebok",
     "volume": "Volum"
   },
+  "save_draft": "Lagre kladd",
   "status": {
     "Draft": "Kladd",
     "New": "Ny",
