@@ -1,12 +1,12 @@
 import React, { useState, useEffect, FC } from 'react';
 import { useTranslation } from 'react-i18next';
-
-import { KeyboardDatePicker, DatePickerView } from '@material-ui/pickers';
-import { useFormikContext, getIn, ErrorMessage } from 'formik';
-import { Registration } from '../../../types/registration.types';
 import { FormControlLabel, Checkbox } from '@material-ui/core';
 import styled from 'styled-components';
+import { KeyboardDatePicker, DatePickerView } from '@material-ui/pickers';
+import { useFormikContext, getIn } from 'formik';
+import { Registration } from '../../../types/registration.types';
 import { DescriptionFieldNames } from '../../../types/publicationFieldNames';
+import { ErrorMessage } from '../../../utils/validation/errorMessage';
 
 const StyledFormControlLabel = styled(FormControlLabel)`
   margin-left: 0.5rem;
@@ -49,7 +49,12 @@ const DatePickerField: FC = () => {
     setYearOnly(!yearOnly);
   };
 
+  const setYearFieldTouched = () => setFieldTouched(DescriptionFieldNames.PUBLICATION_YEAR);
+
   const views: DatePickerView[] = yearOnly ? ['year'] : ['year', 'month', 'date'];
+
+  const hasError =
+    !!getIn(errors, DescriptionFieldNames.PUBLICATION_YEAR) && getIn(touched, DescriptionFieldNames.PUBLICATION_YEAR);
 
   return (
     <>
@@ -62,12 +67,10 @@ const DatePickerField: FC = () => {
         value={date}
         autoOk
         format={yearOnly ? 'yyyy' : 'dd.MM.yyyy'}
-        onBlur={() => setFieldTouched(DescriptionFieldNames.PUBLICATION_YEAR)}
-        error={
-          !!getIn(errors, DescriptionFieldNames.PUBLICATION_YEAR) &&
-          getIn(touched, DescriptionFieldNames.PUBLICATION_YEAR)
-        }
-        helperText={<ErrorMessage name={DescriptionFieldNames.PUBLICATION_YEAR}></ErrorMessage>}
+        onBlur={setYearFieldTouched}
+        onClose={setYearFieldTouched}
+        error={hasError}
+        helperText={hasError && (!date ? ErrorMessage.REQUIRED : ErrorMessage.INVALID_FORMAT)}
       />
       <StyledFormControlLabel
         control={<Checkbox checked={yearOnly} onChange={toggleYearOnly} color="primary" />}
