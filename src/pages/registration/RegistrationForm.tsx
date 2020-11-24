@@ -1,12 +1,10 @@
 import React, { FC, useEffect, useState } from 'react';
-import { Form, Formik, FormikProps, yupToFormErrors, validateYupSchema, setNestedObjectValues } from 'formik';
+import { Form, Formik, FormikProps, yupToFormErrors, validateYupSchema } from 'formik';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import deepmerge from 'deepmerge';
-import { CircularProgress, Button } from '@material-ui/core';
+import { CircularProgress } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 
 import { emptyRegistration, Registration, RegistrationTab } from '../../types/registration.types';
 import { RegistrationFormTabs } from './RegistrationFormTabs';
@@ -15,7 +13,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import RouteLeavingGuard from '../../components/RouteLeavingGuard';
-import ButtonWithProgress from '../../components/ButtonWithProgress';
 import { RegistrationFormContent } from './RegistrationFormContent';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import useFetchRegistration from '../../utils/hooks/useFetchRegistration';
@@ -23,21 +20,10 @@ import useUppy from '../../utils/hooks/useUppy';
 import { registrationValidationSchema } from '../../utils/validation/registration/registrationValidation';
 import { PageHeader } from '../../components/PageHeader';
 import Forbidden from '../errorpages/Forbidden';
-import { StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
-import Modal from '../../components/Modal';
-import { SupportModalContent } from './SupportModalContent';
+import { RegistrationFormActions } from './RegistrationFormActions';
 
 const StyledRegistration = styled.div`
   width: 100%;
-`;
-
-const StyledButtonGroupContainer = styled(StyledRightAlignedWrapper)`
-  margin-bottom: 1rem;
-`;
-
-const StyledButtonContainer = styled.div`
-  display: inline-block;
-  margin-left: 0.5rem;
 `;
 
 interface RegistrationFormProps {
@@ -52,13 +38,10 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier = '', closeFor
   const initialTabNumber = new URLSearchParams(history.location.search).get('tab');
   const [tabNumber, setTabNumber] = useState(initialTabNumber ? +initialTabNumber : RegistrationTab.Description);
   const [isSaving, setIsSaving] = useState(false);
-  const [openSupportModal, setOpenSupportModal] = useState(false);
   const dispatch = useDispatch();
   const uppy = useUppy();
   const [registration, isLoadingRegistration, handleSetRegistration] = useFetchRegistration(identifier);
   const isOwner = registration?.owner === user.id;
-
-  const toggleSupportModal = () => setOpenSupportModal((state) => !state);
 
   useEffect(() => {
     if (!registration && !isLoadingRegistration) {
@@ -79,10 +62,6 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier = '', closeFor
 
   const handleTabChange = (_: React.ChangeEvent<unknown>, newTabNumber: number) => {
     setTabNumber(newTabNumber);
-  };
-
-  const goToNextTab = () => {
-    setTabNumber(tabNumber + 1);
   };
 
   const saveRegistration = async (values: Registration) => {
@@ -128,7 +107,7 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier = '', closeFor
           onSubmit={() => {
             /* Use custom save handler instead, since onSubmit will prevent saving if there are any errors */
           }}>
-          {({ setTouched, dirty, errors, values }: FormikProps<Registration>) => (
+          {({ dirty, values }: FormikProps<Registration>) => (
             <Form>
               <RouteLeavingGuard
                 modalDescription={t('modal_unsaved_changes_description')}
@@ -144,55 +123,16 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier = '', closeFor
                   return await saveRegistration(values);
                 }}
               />
-
-              {tabNumber !== RegistrationTab.Submission && (
-                <StyledButtonGroupContainer>
-                  {tabNumber !== RegistrationTab.Description && (
-                    <Button
-                      color="primary"
-                      variant="contained"
-                      data-testid="button-previous-tab"
-                      startIcon={<ArrowBackIcon />}
-                      onClick={() => setTabNumber((currentTab) => currentTab - 1)}>
-                      {t('common:previous')}
-                    </Button>
-                  )}
-                  <Button data-testid="open-support-button" variant="text" color="primary" onClick={toggleSupportModal}>
-                    {t('common:support')}
-                  </Button>
-                  <StyledButtonContainer>
-                    <ButtonWithProgress
-                      type="submit"
-                      variant="outlined"
-                      isLoading={isSaving}
-                      data-testid="button-save-registration"
-                      onClick={async () => {
-                        await saveRegistration(values);
-                        // Set all fields with error to touched to ensure error messages are shown
-                        setTouched(setNestedObjectValues(errors, true));
-                      }}>
-                      {t('save_draft')}
-                    </ButtonWithProgress>
-                  </StyledButtonContainer>
-                  <StyledButtonContainer>
-                    <Button
-                      color="primary"
-                      variant="contained"
-                      data-testid="button-next-tab"
-                      endIcon={<ArrowForwardIcon />}
-                      onClick={goToNextTab}>
-                      {t('common:next')}
-                    </Button>
-                  </StyledButtonContainer>
-                </StyledButtonGroupContainer>
-              )}
+              <RegistrationFormActions
+                tabNumber={tabNumber}
+                setTabNumber={setTabNumber}
+                isSaving={isSaving}
+                saveRegistration={async () => await saveRegistration(values)}
+              />
             </Form>
           )}
         </Formik>
       </StyledRegistration>
-      <Modal open={openSupportModal} onClose={toggleSupportModal} headingText={t('common:support')}>
-        <SupportModalContent closeModal={toggleSupportModal} />
-      </Modal>
     </>
   );
 };
