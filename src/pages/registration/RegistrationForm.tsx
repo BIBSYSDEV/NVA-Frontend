@@ -5,6 +5,8 @@ import styled from 'styled-components';
 import deepmerge from 'deepmerge';
 import { CircularProgress, Button } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 
 import { emptyRegistration, Registration, RegistrationTab } from '../../types/registration.types';
 import { RegistrationFormTabs } from './RegistrationFormTabs';
@@ -145,6 +147,16 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier = '', closeFor
 
               {tabNumber !== RegistrationTab.Submission && (
                 <StyledButtonGroupContainer>
+                  {tabNumber !== RegistrationTab.Description && (
+                    <Button
+                      color="primary"
+                      variant="contained"
+                      data-testid="button-previous-tab"
+                      startIcon={<ArrowBackIcon />}
+                      onClick={() => setTabNumber((currentTab) => currentTab - 1)}>
+                      {t('common:previous')}
+                    </Button>
+                  )}
                   <Button data-testid="open-support-button" variant="text" color="primary" onClick={toggleSupportModal}>
                     {t('common:support')}
                   </Button>
@@ -163,7 +175,12 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier = '', closeFor
                     </ButtonWithProgress>
                   </StyledButtonContainer>
                   <StyledButtonContainer>
-                    <Button color="primary" variant="contained" data-testid="button-next-tab" onClick={goToNextTab}>
+                    <Button
+                      color="primary"
+                      variant="contained"
+                      data-testid="button-next-tab"
+                      endIcon={<ArrowForwardIcon />}
+                      onClick={goToNextTab}>
                       {t('common:next')}
                     </Button>
                   </StyledButtonContainer>
