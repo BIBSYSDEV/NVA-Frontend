@@ -142,12 +142,7 @@ const DescriptionPanel: FC<PanelProps> = ({ setTouchedFields }) => {
         </NpiAndTagsWrapper>
 
         <DateAndLanguageWrapper>
-          <DatePickerField
-            data-testid="registration-date-field"
-            yearFieldName={DescriptionFieldNames.PUBLICATION_YEAR}
-            monthFieldName={DescriptionFieldNames.PUBLICATION_MONTH}
-            dayFieldName={DescriptionFieldNames.PUBLICATION_DAY}
-          />
+          <DatePickerField />
 
           <Field name={DescriptionFieldNames.LANGUAGE}>
             {({ field }: FieldProps) => (

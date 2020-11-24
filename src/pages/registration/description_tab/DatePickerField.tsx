@@ -6,19 +6,14 @@ import { useFormikContext, getIn, ErrorMessage } from 'formik';
 import { Registration } from '../../../types/registration.types';
 import { FormControlLabel, Checkbox } from '@material-ui/core';
 import styled from 'styled-components';
+import { DescriptionFieldNames } from '../../../types/publicationFieldNames';
 
 const StyledFormControlLabel = styled(FormControlLabel)`
   margin-left: 0.5rem;
   height: 100%; /* Ensure this element is as high as the DatePicker for centering */
 `;
 
-interface DatePickerFieldProps {
-  yearFieldName: string;
-  monthFieldName: string;
-  dayFieldName: string;
-}
-
-const DatePickerField: FC<DatePickerFieldProps> = ({ yearFieldName, monthFieldName, dayFieldName }) => {
+const DatePickerField: FC = () => {
   const { t } = useTranslation('registration');
   const { setFieldValue, values, errors, touched, setFieldTouched } = useFormikContext<Registration>();
   const { year, month, day } = values.entityDescription.date;
@@ -45,10 +40,10 @@ const DatePickerField: FC<DatePickerFieldProps> = ({ yearFieldName, monthFieldNa
     const updatedMonthValue = !isNaN(updatedMonth) ? updatedMonth : '';
     const updatedDayValue = !isNaN(updatedDay) ? updatedDay : '';
 
-    setFieldValue(yearFieldName, updatedYearValue);
-    setFieldValue(monthFieldName, updatedMonthValue);
-    setFieldValue(dayFieldName, updatedDayValue);
-  }, [yearFieldName, monthFieldName, dayFieldName, setFieldValue, date, yearOnly]);
+    setFieldValue(DescriptionFieldNames.PUBLICATION_YEAR, updatedYearValue);
+    setFieldValue(DescriptionFieldNames.PUBLICATION_MONTH, updatedMonthValue);
+    setFieldValue(DescriptionFieldNames.PUBLICATION_DAY, updatedDayValue);
+  }, [setFieldValue, date, yearOnly]);
 
   const toggleYearOnly = () => {
     setYearOnly(!yearOnly);
@@ -59,7 +54,7 @@ const DatePickerField: FC<DatePickerFieldProps> = ({ yearFieldName, monthFieldNa
   return (
     <>
       <KeyboardDatePicker
-        data-testid="date-published-field"
+        data-testid="registration-date-field"
         inputVariant="outlined"
         label={t('description.date_published')}
         onChange={setDate}
@@ -67,9 +62,12 @@ const DatePickerField: FC<DatePickerFieldProps> = ({ yearFieldName, monthFieldNa
         value={date}
         autoOk
         format={yearOnly ? 'yyyy' : 'dd.MM.yyyy'}
-        onBlur={() => setFieldTouched(yearFieldName)}
-        error={!!getIn(errors, yearFieldName) && getIn(touched, yearFieldName)}
-        helperText={<ErrorMessage name={yearFieldName}></ErrorMessage>}
+        onBlur={() => setFieldTouched(DescriptionFieldNames.PUBLICATION_YEAR)}
+        error={
+          !!getIn(errors, DescriptionFieldNames.PUBLICATION_YEAR) &&
+          getIn(touched, DescriptionFieldNames.PUBLICATION_YEAR)
+        }
+        helperText={<ErrorMessage name={DescriptionFieldNames.PUBLICATION_YEAR}></ErrorMessage>}
       />
       <StyledFormControlLabel
         control={<Checkbox checked={yearOnly} onChange={toggleYearOnly} color="primary" />}
