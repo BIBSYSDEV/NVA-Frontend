@@ -59,7 +59,7 @@ const DatePickerField: FC = () => {
   return (
     <>
       <KeyboardDatePicker
-        data-testid="registration-date-field"
+        data-testid="date-published-field"
         inputVariant="outlined"
         label={t('description.date_published')}
         onChange={setDate}
