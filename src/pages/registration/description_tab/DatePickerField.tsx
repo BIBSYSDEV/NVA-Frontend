@@ -21,27 +21,33 @@ interface DatePickerFieldProps {
 const DatePickerField: FC<DatePickerFieldProps> = ({ yearFieldName, monthFieldName, dayFieldName }) => {
   const { t } = useTranslation('registration');
   const { setFieldValue, values, errors, touched, setFieldTouched } = useFormikContext<Registration>();
-  const initialYear = getIn(values, yearFieldName);
-  const initialMonth = getIn(values, monthFieldName);
-  const initialDay = getIn(values, dayFieldName);
+  const { year, month, day } = values.entityDescription.date;
+  const yearInt = parseInt(year);
+  const monthInt = parseInt(month);
+  const dayInt = parseInt(day);
+
   const [date, setDate] = useState<Date | null>(
-    initialYear
-      ? initialMonth
-        ? new Date(initialYear, initialMonth - 1, initialDay || 1, 12, 0, 0)
-        : new Date(initialYear, 0, 1, 12, 0, 0)
+    !isNaN(yearInt)
+      ? !isNaN(monthInt)
+        ? new Date(yearInt, monthInt - 1, !isNaN(dayInt) ? dayInt : 1, 12, 0, 0)
+        : new Date(yearInt, 0, 1, 12, 0, 0)
       : null
   );
-  const [yearOnly, setYearOnly] = useState(!!initialYear && !initialMonth);
+  const [yearOnly, setYearOnly] = useState(!!year && !month);
 
   useEffect(() => {
     // Extract data from date object
-    const updatedYear = date ? date.getFullYear() : '';
-    const updatedMonth = !yearOnly && date ? date.getMonth() + 1 : '';
-    const updatedDay = !yearOnly && date ? date.getDate() : '';
+    const updatedYear = date ? date.getFullYear() : NaN;
+    const updatedMonth = !yearOnly && date ? date.getMonth() + 1 : NaN;
+    const updatedDay = !yearOnly && date ? date.getDate() : NaN;
 
-    setFieldValue(yearFieldName, updatedYear);
-    setFieldValue(monthFieldName, updatedMonth);
-    setFieldValue(dayFieldName, updatedDay);
+    const updatedYearValue = !isNaN(updatedYear) ? updatedYear : '';
+    const updatedMonthValue = !isNaN(updatedMonth) ? updatedMonth : '';
+    const updatedDayValue = !isNaN(updatedDay) ? updatedDay : '';
+
+    setFieldValue(yearFieldName, updatedYearValue);
+    setFieldValue(monthFieldName, updatedMonthValue);
+    setFieldValue(dayFieldName, updatedDayValue);
   }, [yearFieldName, monthFieldName, dayFieldName, setFieldValue, date, yearOnly]);
 
   const toggleYearOnly = () => {
