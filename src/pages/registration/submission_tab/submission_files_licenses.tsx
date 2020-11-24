@@ -24,7 +24,9 @@ const SubmissionFilesAndLicenses: FC = () => {
               <LabelContentRow label={t('files_and_license.embargo_date')}>
                 {file.embargoDate && new Date(file.embargoDate).toLocaleDateString()}
               </LabelContentRow>
-              <LabelContentRow label={t('files_and_license.license')}>{file.license?.identifier}</LabelContentRow>
+              <LabelContentRow label={t('files_and_license.conditions_for_using_file')}>
+                {file.license?.identifier}
+              </LabelContentRow>
             </>
           )}
         </Fragment>
