@@ -99,10 +99,11 @@
   },
   "registration": {
     "latest_registrations": "Recently added",
-    "link_to_resource": "Link to resource",
-    "link_to_resource_description": "E.g. DOI, link to article, link to video of presentation etc.",
+    "link_to_resource": "DOI to resource",
+    "link_to_resource_description": "DOI-link to article etc.",
     "no_published_registrations_yet": "There are no published registrations yet",
-    "start_with_link_to_resource": "Link to original version if the resource already has been published on the Internet",
+    "start_registration": "Start registration",
+    "start_with_link_to_resource": "Link to original version if the resource already has been published on the Internet with a DOI",
     "start_with_uploading_file": "Upload file if the resource is to be published on the Internet for the first time"
   },
   "references": {
