@@ -96,10 +96,11 @@
   },
   "registration": {
     "latest_registrations": "Nye registreringer",
-    "link_to_resource": "Lenke til ressurs",
-    "link_to_resource_description": "F.eks. DOI, lenke til artikkel, lenke til video av presentasjon etc.",
+    "link_to_resource": "DOI til ressurs",
+    "link_to_resource_description": "DOI-lenke til artikkel etc.",
     "no_published_registrations_yet": "Det finnes ingen publiserte registreringer enda",
-    "start_with_link_to_resource": "Lenke til original versjon hvis ressursen allerede er publisert på Internett",
+    "start_registration": "Start registrering",
+    "start_with_link_to_resource": " Lenke til original versjon hvis ressursen allerede er publisert på Internett med en DOI",
     "start_with_uploading_file": "Last opp fil hvis ressursen skal publiseres på Internett for første gang"
   },
   "references": {
