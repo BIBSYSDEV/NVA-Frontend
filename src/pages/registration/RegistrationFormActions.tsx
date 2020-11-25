@@ -5,11 +5,19 @@ import styled from 'styled-components';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import SaveIcon from '@material-ui/icons/Save';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import { useTranslation } from 'react-i18next';
 import ButtonWithProgress from '../../components/ButtonWithProgress';
-import { Registration, RegistrationTab } from '../../types/registration.types';
+import { DoiRequestStatus, Registration, RegistrationStatus, RegistrationTab } from '../../types/registration.types';
 import Modal from '../../components/Modal';
 import { SupportModalContent } from './SupportModalContent';
+import { publishRegistration } from '../../api/registrationApi';
+import { NotificationVariant } from '../../types/notification.types';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { setNotification } from '../../redux/actions/notificationActions';
+import { RootStore } from '../../redux/reducers/rootReducer';
+import { NAVIGATE_TO_PUBLIC_REGISTRATION_DURATION } from '../../utils/constants';
 
 const StyledActionsContainer = styled.div`
   margin-bottom: 1rem;
@@ -35,9 +43,49 @@ export const RegistrationFormActions: FC<RegistrationFormActionsProps> = ({
   saveRegistration,
 }) => {
   const { t } = useTranslation('registration');
-  const { errors, setTouched } = useFormikContext<Registration>();
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const user = useSelector((store: RootStore) => store.user);
+  const { values, errors, setTouched, dirty, isValid } = useFormikContext<Registration>();
+  const { status, doiRequest } = values;
+
   const [openSupportModal, setOpenSupportModal] = useState(false);
   const toggleSupportModal = () => setOpenSupportModal((state) => !state);
+  const [isPublishing, setIsPublishing] = useState(false);
+
+  const onClickPublish = async () => {
+    setIsPublishing(true);
+    const RegistrationIsUpdated = dirty ? await saveRegistration() : true;
+    if (RegistrationIsUpdated) {
+      const publishedRegistration = await publishRegistration(values.identifier);
+      if (publishedRegistration?.error) {
+        setIsPublishing(false);
+        dispatch(setNotification(publishedRegistration.error, NotificationVariant.Error));
+      } else if (publishedRegistration?.info) {
+        dispatch(setNotification(publishedRegistration.info, NotificationVariant.Info));
+        setTimeout(() => {
+          history.push(`/registration/${values.identifier}/public`);
+        }, NAVIGATE_TO_PUBLIC_REGISTRATION_DURATION);
+      } else {
+        history.push(`/registration/${values.identifier}/public`);
+      }
+    }
+  };
+
+  const onClickSaveAndPresent = async () => {
+    const registrationIsUpdated = await saveRegistration();
+    if (registrationIsUpdated) {
+      history.push(`/registration/${values.identifier}/public`);
+    }
+  };
+
+  const onClickCreateDoi = () => {
+    // TODO: create doi here
+  };
+
+  const onClickRejectDoi = () => {
+    // TODO: reject doi here
+  };
 
   return (
     <>
@@ -63,7 +111,6 @@ export const RegistrationFormActions: FC<RegistrationFormActionsProps> = ({
           {tabNumber !== RegistrationTab.Submission ? (
             <>
               <ButtonWithProgress
-                type="submit"
                 variant="outlined"
                 isLoading={isSaving}
                 data-testid="button-save-registration"
@@ -84,7 +131,51 @@ export const RegistrationFormActions: FC<RegistrationFormActionsProps> = ({
                 {t('common:next')}
               </Button>
             </>
-          ) : null}
+          ) : (
+            <>
+              {user.isCurator && doiRequest?.status === DoiRequestStatus.Requested && (
+                <>
+                  <Button
+                    color="primary"
+                    variant="contained"
+                    data-testid="button-create-doi"
+                    onClick={onClickCreateDoi}
+                    disabled={isSaving || !isValid}>
+                    {t('common:create_doi')}
+                  </Button>
+                  <Button
+                    color="secondary"
+                    variant="outlined"
+                    data-testid="button-reject-doi"
+                    onClick={onClickRejectDoi}
+                    disabled={isSaving || !isValid}>
+                    {t('common:reject_doi')}
+                  </Button>
+                </>
+              )}
+
+              <ButtonWithProgress
+                variant="outlined"
+                disabled={isPublishing}
+                isLoading={isSaving}
+                data-testid="button-save-registration"
+                endIcon={<SaveIcon />}
+                onClick={onClickSaveAndPresent}>
+                {t('common:save_and_present')}
+              </ButtonWithProgress>
+
+              {status === RegistrationStatus.DRAFT && (
+                <ButtonWithProgress
+                  disabled={isSaving || !isValid}
+                  data-testid="button-publish-registration"
+                  endIcon={<CloudUploadIcon />}
+                  onClick={onClickPublish}
+                  isLoading={isPublishing}>
+                  {t('common:publish')}
+                </ButtonWithProgress>
+              )}
+            </>
+          )}
         </div>
       </StyledActionsContainer>
 

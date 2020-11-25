@@ -115,14 +115,7 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier = '', closeFor
                 shouldBlockNavigation={dirty}
               />
               <RegistrationFormTabs tabNumber={tabNumber} handleTabChange={handleTabChange} />
-              <RegistrationFormContent
-                tabNumber={tabNumber}
-                uppy={uppy}
-                isSaving={isSaving}
-                saveRegistration={async () => {
-                  return await saveRegistration(values);
-                }}
-              />
+              <RegistrationFormContent tabNumber={tabNumber} uppy={uppy} />
               <RegistrationFormActions
                 tabNumber={tabNumber}
                 setTabNumber={setTabNumber}
