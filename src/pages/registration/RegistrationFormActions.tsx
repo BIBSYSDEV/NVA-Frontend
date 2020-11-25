@@ -99,7 +99,10 @@ export const RegistrationFormActions: FC<RegistrationFormActionsProps> = ({
               data-testid="button-previous-tab"
               startIcon={<ArrowBackIcon />}
               onClick={() => setTabNumber(tabNumber - 1)}>
-              {t('common:previous')}
+              {tabNumber === RegistrationTab.Reference && t('heading.description')}
+              {tabNumber === RegistrationTab.Contributors && t('heading.reference')}
+              {tabNumber === RegistrationTab.FilesAndLicenses && t('heading.contributors')}
+              {tabNumber === RegistrationTab.Submission && t('heading.files_and_license')}
             </Button>
           )}
         </div>
@@ -128,7 +131,10 @@ export const RegistrationFormActions: FC<RegistrationFormActionsProps> = ({
                 data-testid="button-next-tab"
                 endIcon={<ArrowForwardIcon />}
                 onClick={() => setTabNumber(tabNumber + 1)}>
-                {t('common:next')}
+                {tabNumber === RegistrationTab.Description && t('heading.reference')}
+                {tabNumber === RegistrationTab.Reference && t('heading.contributors')}
+                {tabNumber === RegistrationTab.Contributors && t('heading.files_and_license')}
+                {tabNumber === RegistrationTab.FilesAndLicenses && t('heading.summary')}
               </Button>
             </>
           ) : (
