@@ -7,14 +7,14 @@ import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import SaveIcon from '@material-ui/icons/Save';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import ButtonWithProgress from '../../components/ButtonWithProgress';
 import { DoiRequestStatus, Registration, RegistrationStatus, RegistrationTab } from '../../types/registration.types';
 import Modal from '../../components/Modal';
 import { SupportModalContent } from './SupportModalContent';
 import { publishRegistration } from '../../api/registrationApi';
 import { NotificationVariant } from '../../types/notification.types';
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { NAVIGATE_TO_PUBLIC_REGISTRATION_DURATION } from '../../utils/constants';
@@ -33,7 +33,7 @@ interface RegistrationFormActionsProps {
   tabNumber: number;
   setTabNumber: (newTab: number) => void;
   isSaving: boolean;
-  saveRegistration: () => Promise<boolean>;
+  saveRegistration: (values: Registration) => Promise<boolean>;
 }
 
 export const RegistrationFormActions: FC<RegistrationFormActionsProps> = ({
@@ -55,7 +55,7 @@ export const RegistrationFormActions: FC<RegistrationFormActionsProps> = ({
 
   const onClickPublish = async () => {
     setIsPublishing(true);
-    const RegistrationIsUpdated = dirty ? await saveRegistration() : true;
+    const RegistrationIsUpdated = dirty ? await saveRegistration(values) : true;
     if (RegistrationIsUpdated) {
       const publishedRegistration = await publishRegistration(values.identifier);
       if (publishedRegistration?.error) {
@@ -73,7 +73,7 @@ export const RegistrationFormActions: FC<RegistrationFormActionsProps> = ({
   };
 
   const onClickSaveAndPresent = async () => {
-    const registrationIsUpdated = await saveRegistration();
+    const registrationIsUpdated = await saveRegistration(values);
     if (registrationIsUpdated) {
       history.push(`/registration/${values.identifier}/public`);
     }
@@ -116,7 +116,7 @@ export const RegistrationFormActions: FC<RegistrationFormActionsProps> = ({
                 data-testid="button-save-registration"
                 endIcon={<SaveIcon />}
                 onClick={async () => {
-                  await saveRegistration();
+                  await saveRegistration(values);
                   // Set all fields with error to touched to ensure error messages are shown
                   setTouched(setNestedObjectValues(errors, true));
                 }}>

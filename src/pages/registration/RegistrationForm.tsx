@@ -120,7 +120,7 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier = '', closeFor
                 tabNumber={tabNumber}
                 setTabNumber={setTabNumber}
                 isSaving={isSaving}
-                saveRegistration={async () => await saveRegistration(values)}
+                saveRegistration={saveRegistration}
               />
             </Form>
           )}
