@@ -17,7 +17,6 @@ import { publishRegistration } from '../../api/registrationApi';
 import { NotificationVariant } from '../../types/notification.types';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { RootStore } from '../../redux/reducers/rootReducer';
-import { NAVIGATE_TO_PUBLIC_REGISTRATION_DURATION } from '../../utils/constants';
 
 const StyledActionsContainer = styled.div`
   margin-bottom: 1rem;
@@ -61,11 +60,6 @@ export const RegistrationFormActions: FC<RegistrationFormActionsProps> = ({
       if (publishedRegistration?.error) {
         setIsPublishing(false);
         dispatch(setNotification(publishedRegistration.error, NotificationVariant.Error));
-      } else if (publishedRegistration?.info) {
-        dispatch(setNotification(publishedRegistration.info, NotificationVariant.Info));
-        setTimeout(() => {
-          history.push(`/registration/${values.identifier}/public`);
-        }, NAVIGATE_TO_PUBLIC_REGISTRATION_DURATION);
       } else {
         history.push(`/registration/${values.identifier}/public`);
       }
@@ -161,7 +155,7 @@ export const RegistrationFormActions: FC<RegistrationFormActionsProps> = ({
               )}
 
               <ButtonWithProgress
-                variant="outlined"
+                variant={status === RegistrationStatus.PUBLISHED ? 'contained' : 'outlined'}
                 disabled={isPublishing}
                 isLoading={isSaving}
                 data-testid="button-save-registration"

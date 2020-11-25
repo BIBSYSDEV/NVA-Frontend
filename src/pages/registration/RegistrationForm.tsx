@@ -101,6 +101,7 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier = '', closeFor
       <PageHeader>{t('edit_registration')}</PageHeader>
       <StyledRegistration>
         <Formik
+          enableReinitialize
           initialValues={registration ? deepmerge(emptyRegistration, registration) : emptyRegistration}
           validate={validateForm}
           onSubmit={() => {
