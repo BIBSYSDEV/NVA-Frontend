@@ -124,7 +124,7 @@ const DescriptionPanel: FC<PanelProps> = ({ setTouchedFields }) => {
                     {...params}
                     data-testid="registration-tag-field"
                     label={t('description.keywords')}
-                    helperText={t('keywords_helper')}
+                    helperText={t('description.keywords_helper')}
                     variant="outlined"
                     fullWidth
                     onBlur={(event) => {
