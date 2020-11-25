@@ -124,7 +124,7 @@ const DescriptionPanel: FC<PanelProps> = ({ setTouchedFields }) => {
                     {...params}
                     data-testid="registration-tag-field"
                     label={t('description.keywords')}
-                    helperText={t('keywords_helper')}
+                    helperText={t('description.keywords_helper')}
                     variant="outlined"
                     fullWidth
                     onBlur={(event) => {
@@ -143,12 +143,7 @@ const DescriptionPanel: FC<PanelProps> = ({ setTouchedFields }) => {
         </NpiAndTagsWrapper>
 
         <DateAndLanguageWrapper>
-          <DatePickerField
-            data-testid="registration-date-field"
-            yearFieldName={DescriptionFieldNames.PUBLICATION_YEAR}
-            monthFieldName={DescriptionFieldNames.PUBLICATION_MONTH}
-            dayFieldName={DescriptionFieldNames.PUBLICATION_DAY}
-          />
+          <DatePickerField />
 
           <Field name={DescriptionFieldNames.LANGUAGE}>
             {({ field }: FieldProps) => (

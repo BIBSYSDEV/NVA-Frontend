@@ -1,6 +1,5 @@
 import i18n from '../../src/translations/i18n';
 import { LanguageCodes } from '../../src/types/language.types';
-i18n.changeLanguage(LanguageCodes.ENGLISH);
 import { ErrorMessage } from '../../src/utils/validation/errorMessage';
 
 describe('User opens registration form and can see validation errors', () => {
@@ -13,6 +12,7 @@ describe('User opens registration form and can see validation errors', () => {
 
   beforeEach(() => {
     cy.server();
+    i18n.changeLanguage(LanguageCodes.ENGLISH);
   });
 
   it('The User should be able to see validation summary on submission tab', () => {
@@ -43,11 +43,11 @@ describe('User opens registration form and can see validation errors', () => {
     cy.get('[data-testid=date-published-field]')
       .parent()
       .within(() => cy.get("input[type='text']").click({ force: true }).type('999'));
-    cy.get('[data-testid=date-published-field]').contains('Invalid Date Format').should('be.visible');
+    cy.get('[data-testid=date-published-field]').contains(ErrorMessage.INVALID_FORMAT).should('be.visible');
     cy.get('[data-testid=date-published-field]')
       .parent()
       .within(() => cy.get("input[type='text']").clear().click({ force: true }).type('01.01.2000'));
-    cy.get('[data-testid=date-published-field]').contains('Invalid Date Format').should('not.be.visible');
+    cy.get('[data-testid=date-published-field]').contains(ErrorMessage.INVALID_FORMAT).should('not.be.visible');
 
     cy.get('[data-testid=nav-tabpanel-description]').children('[data-testid=error-tab]').should('not.exist');
   });
