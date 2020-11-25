@@ -10,7 +10,6 @@ import Card from '../../components/Card';
 import Heading from '../../components/Heading';
 import LabelContentRow from '../../components/LabelContentRow';
 import Label from '../../components/Label';
-import NormalText from '../../components/NormalText';
 import { licenses } from '../../types/file.types';
 import { getNpiDiscipline } from '../../utils/npiDisciplines';
 import { StyledNormalTextPreWrapped } from '../../components/styled/Wrappers';
@@ -76,20 +75,6 @@ const StyledNormalText = styled(StyledNormalTextPreWrapped)`
   grid-area: description;
 `;
 
-const StyledTextContainer = styled.div`
-  display: inline-block;
-  margin: 1rem 0;
-`;
-
-const StyledLabel = styled(Label)`
-  display: inline-block;
-`;
-
-const StyledTextDescription = styled(NormalText)`
-  display: inline;
-  margin-left: 1rem;
-`;
-
 const StyledTag = styled.div`
   display: inline;
   margin-right: 1rem;
@@ -135,16 +120,14 @@ const PublicRegistrationContent: FC<PublicRegistrationContentProps> = ({ registr
             </LabelContentRow>
           )}
           {abstract && (
-            <StyledTextContainer>
-              <StyledLabel>{`${t('description.abstract')}:`}</StyledLabel>
-              <StyledTextDescription>{abstract}</StyledTextDescription>
-            </StyledTextContainer>
+            <LabelContentRow minimal label={`${t('description.abstract')}:`}>
+              {abstract}
+            </LabelContentRow>
           )}
           {description && (
-            <StyledTextContainer>
-              <StyledLabel>{`${t('description.description')}:`}</StyledLabel>
-              <StyledTextDescription>{description}</StyledTextDescription>
-            </StyledTextContainer>
+            <LabelContentRow minimal label={`${t('description.description')}:`}>
+              {description}
+            </LabelContentRow>
           )}
           {tags.length > 0 && (
             <LabelContentRow minimal multiple label={`${t('description.keywords')}:`}>
