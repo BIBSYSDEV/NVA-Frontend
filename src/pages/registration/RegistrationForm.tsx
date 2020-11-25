@@ -101,13 +101,12 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier = '', closeFor
       <PageHeader>{t('edit_registration')}</PageHeader>
       <StyledRegistration>
         <Formik
-          enableReinitialize
           initialValues={registration ? deepmerge(emptyRegistration, registration) : emptyRegistration}
           validate={validateForm}
           onSubmit={() => {
             /* Use custom save handler instead, since onSubmit will prevent saving if there are any errors */
           }}>
-          {({ dirty, values }: FormikProps<Registration>) => (
+          {({ dirty }: FormikProps<Registration>) => (
             <Form>
               <RouteLeavingGuard
                 modalDescription={t('modal_unsaved_changes_description')}
