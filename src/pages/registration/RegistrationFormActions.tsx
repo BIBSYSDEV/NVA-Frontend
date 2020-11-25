@@ -2,13 +2,15 @@ import React, { FC, useState } from 'react';
 import { Button } from '@material-ui/core';
 import { setNestedObjectValues, useFormikContext } from 'formik';
 import styled from 'styled-components';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import SaveIcon from '@material-ui/icons/Save';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import CloseIcon from '@material-ui/icons/Close';
+import CheckIcon from '@material-ui/icons/Check';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 import ButtonWithProgress from '../../components/ButtonWithProgress';
 import { DoiRequestStatus, Registration, RegistrationStatus, RegistrationTab } from '../../types/registration.types';
 import Modal from '../../components/Modal';
@@ -133,29 +135,8 @@ export const RegistrationFormActions: FC<RegistrationFormActionsProps> = ({
             </>
           ) : (
             <>
-              {user.isCurator && doiRequest?.status === DoiRequestStatus.Requested && (
-                <>
-                  <Button
-                    color="primary"
-                    variant="contained"
-                    data-testid="button-create-doi"
-                    onClick={onClickCreateDoi}
-                    disabled={isSaving || !isValid}>
-                    {t('common:create_doi')}
-                  </Button>
-                  <Button
-                    color="secondary"
-                    variant="outlined"
-                    data-testid="button-reject-doi"
-                    onClick={onClickRejectDoi}
-                    disabled={isSaving || !isValid}>
-                    {t('common:reject_doi')}
-                  </Button>
-                </>
-              )}
-
               <ButtonWithProgress
-                variant={status === RegistrationStatus.PUBLISHED ? 'contained' : 'outlined'}
+                variant={'outlined'}
                 disabled={isPublishing}
                 isLoading={isSaving}
                 data-testid="button-save-registration"
@@ -173,6 +154,29 @@ export const RegistrationFormActions: FC<RegistrationFormActionsProps> = ({
                   isLoading={isPublishing}>
                   {t('common:publish')}
                 </ButtonWithProgress>
+              )}
+
+              {user.isCurator && doiRequest?.status === DoiRequestStatus.Requested && (
+                <>
+                  <Button
+                    color="primary"
+                    variant="contained"
+                    data-testid="button-reject-doi"
+                    endIcon={<CloseIcon />}
+                    onClick={onClickRejectDoi}
+                    disabled={isSaving || !isValid}>
+                    {t('common:reject_doi')}
+                  </Button>
+                  <Button
+                    color="primary"
+                    variant="contained"
+                    data-testid="button-create-doi"
+                    endIcon={<CheckIcon />}
+                    onClick={onClickCreateDoi}
+                    disabled={isSaving || !isValid}>
+                    {t('common:create_doi')}
+                  </Button>
+                </>
               )}
             </>
           )}
