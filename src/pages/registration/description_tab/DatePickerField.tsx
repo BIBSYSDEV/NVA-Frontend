@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { FormControlLabel, Checkbox } from '@material-ui/core';
 import styled from 'styled-components';
 import { KeyboardDatePicker, DatePickerView } from '@material-ui/pickers';
-import { useFormikContext, getIn } from 'formik';
+import { useFormikContext } from 'formik';
 import { Registration } from '../../../types/registration.types';
 import { DescriptionFieldNames } from '../../../types/publicationFieldNames';
 import { ErrorMessage } from '../../../utils/validation/errorMessage';
@@ -53,8 +53,7 @@ const DatePickerField: FC = () => {
 
   const views: DatePickerView[] = yearOnly ? ['year'] : ['year', 'month', 'date'];
 
-  const hasError =
-    !!getIn(errors, DescriptionFieldNames.PUBLICATION_YEAR) && getIn(touched, DescriptionFieldNames.PUBLICATION_YEAR);
+  const hasError = !!errors.entityDescription?.date?.year && touched.entityDescription?.date?.year;
 
   return (
     <>
