@@ -1,21 +1,28 @@
 import React, { FC, useState } from 'react';
-import { Button } from '@material-ui/core';
 import { setNestedObjectValues, useFormikContext } from 'formik';
-import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
+import styled from 'styled-components';
+import { Button } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import SaveIcon from '@material-ui/icons/Save';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import CloseIcon from '@material-ui/icons/Close';
 import CheckIcon from '@material-ui/icons/Check';
-import { useTranslation } from 'react-i18next';
+import deepmerge from 'deepmerge';
 import ButtonWithProgress from '../../components/ButtonWithProgress';
-import { DoiRequestStatus, Registration, RegistrationStatus, RegistrationTab } from '../../types/registration.types';
+import {
+  DoiRequestStatus,
+  emptyRegistration,
+  Registration,
+  RegistrationStatus,
+  RegistrationTab,
+} from '../../types/registration.types';
 import Modal from '../../components/Modal';
 import { SupportModalContent } from './SupportModalContent';
-import { publishRegistration } from '../../api/registrationApi';
+import { publishRegistration, updateRegistration } from '../../api/registrationApi';
 import { NotificationVariant } from '../../types/notification.types';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { RootStore } from '../../redux/reducers/rootReducer';
@@ -33,15 +40,13 @@ const StyledActionsContainer = styled.div`
 interface RegistrationFormActionsProps {
   tabNumber: number;
   setTabNumber: (newTab: number) => void;
-  isSaving: boolean;
-  saveRegistration: (values: Registration) => Promise<boolean>;
+  handleSetRegistration: (values: Registration) => void;
 }
 
 export const RegistrationFormActions: FC<RegistrationFormActionsProps> = ({
   tabNumber,
   setTabNumber,
-  isSaving,
-  saveRegistration,
+  handleSetRegistration,
 }) => {
   const { t } = useTranslation('registration');
   const history = useHistory();
@@ -52,7 +57,21 @@ export const RegistrationFormActions: FC<RegistrationFormActionsProps> = ({
 
   const [openSupportModal, setOpenSupportModal] = useState(false);
   const toggleSupportModal = () => setOpenSupportModal((state) => !state);
+  const [isSaving, setIsSaving] = useState(false);
   const [isPublishing, setIsPublishing] = useState(false);
+
+  const saveRegistration = async (values: Registration) => {
+    setIsSaving(true);
+    const updatedRegistration = await updateRegistration(values);
+    if (updatedRegistration?.error) {
+      dispatch(setNotification(updatedRegistration.error, NotificationVariant.Error));
+    } else {
+      handleSetRegistration(deepmerge(emptyRegistration, updatedRegistration));
+      dispatch(setNotification(t('feedback:success.update_registration')));
+    }
+    setIsSaving(false);
+    return !updatedRegistration.error;
+  };
 
   const onClickPublish = async () => {
     setIsPublishing(true);

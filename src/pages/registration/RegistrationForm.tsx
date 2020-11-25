@@ -5,13 +5,10 @@ import styled from 'styled-components';
 import deepmerge from 'deepmerge';
 import { CircularProgress } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import { emptyRegistration, Registration, RegistrationTab } from '../../types/registration.types';
 import { RegistrationFormTabs } from './RegistrationFormTabs';
-import { updateRegistration } from '../../api/registrationApi';
-import { useDispatch, useSelector } from 'react-redux';
-import { setNotification } from '../../redux/actions/notificationActions';
-import { NotificationVariant } from '../../types/notification.types';
 import RouteLeavingGuard from '../../components/RouteLeavingGuard';
 import { RegistrationFormContent } from './RegistrationFormContent';
 import { RootStore } from '../../redux/reducers/rootReducer';
@@ -35,12 +32,11 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier = '', closeFor
   const user = useSelector((store: RootStore) => store.user);
   const { t } = useTranslation('registration');
   const history = useHistory();
-  const initialTabNumber = new URLSearchParams(history.location.search).get('tab');
-  const [tabNumber, setTabNumber] = useState(initialTabNumber ? +initialTabNumber : RegistrationTab.Description);
-  const [isSaving, setIsSaving] = useState(false);
-  const dispatch = useDispatch();
   const uppy = useUppy();
   const [registration, isLoadingRegistration, handleSetRegistration] = useFetchRegistration(identifier);
+
+  const initialTabNumber = new URLSearchParams(history.location.search).get('tab');
+  const [tabNumber, setTabNumber] = useState(initialTabNumber ? +initialTabNumber : RegistrationTab.Description);
   const isOwner = registration?.owner === user.id;
 
   useEffect(() => {
@@ -59,19 +55,6 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier = '', closeFor
       }
     }
   }, [history, registration, user]);
-
-  const saveRegistration = async (values: Registration) => {
-    setIsSaving(true);
-    const updatedRegistration = await updateRegistration(values);
-    if (updatedRegistration?.error) {
-      dispatch(setNotification(updatedRegistration.error, NotificationVariant.Error));
-    } else {
-      handleSetRegistration(deepmerge(emptyRegistration, updatedRegistration));
-      dispatch(setNotification(t('feedback:success.update_registration')));
-    }
-    setIsSaving(false);
-    return !updatedRegistration.error;
-  };
 
   const validateForm = (values: Registration) => {
     const {
@@ -115,8 +98,7 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier = '', closeFor
               <RegistrationFormActions
                 tabNumber={tabNumber}
                 setTabNumber={setTabNumber}
-                isSaving={isSaving}
-                saveRegistration={saveRegistration}
+                handleSetRegistration={handleSetRegistration}
               />
             </Form>
           )}
