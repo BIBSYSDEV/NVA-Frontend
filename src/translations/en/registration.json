@@ -30,15 +30,18 @@
   "description": {
     "abstract": "Abstract",
     "date_published": "Date published",
+    "connect_project": "Connect to project",
     "description": "Description",
+    "description_of_content": "Description of content, if relevant",
     "financed_by": "Financed by",
     "npi_disciplines": "Scientific field in Norwegian publication indicator",
     "primary_language": "Primary language for content",
     "project_association": "Project association",
     "project_id": "Project ID",
     "search_for_npi_discipline": "Search for scientific field",
-    "search_for_project": "Search for project",
+    "search_for_project": "Search in Norwegian project catalogs",
     "keywords": "Keywords",
+    "keywords_helper": "Separate keywords with commas or enter",
     "year_only": "Year only"
   },
   "edit_registration": "Edit registration",
@@ -51,8 +54,7 @@
     "minimum_one_file": "You need to have at least one file uploaded for this registration",
     "must_be_min_1": "Value must be bigger than 0",
     "must_be_positive": "Value must be positive",
-    "date_must_be_in_future": "Date must be in future",
-    "required_field": "Required field"
+    "date_must_be_in_future": "Date must be in future"
   },
   "files_and_license": {
     "accepted_version": "Accepted version",

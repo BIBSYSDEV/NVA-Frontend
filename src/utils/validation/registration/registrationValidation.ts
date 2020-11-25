@@ -20,9 +20,9 @@ export const registrationValidationSchema = Yup.object().shape({
     tags: Yup.array().of(Yup.string()),
     npiSubjectHeading: Yup.string(),
     date: Yup.object().shape({
-      year: Yup.string(),
-      month: Yup.string(),
-      day: Yup.string(),
+      year: Yup.number().required(ErrorMessage.REQUIRED),
+      month: Yup.number(),
+      day: Yup.number(),
     }),
     language: Yup.string().url().oneOf(Object.values(LanguageValues)),
     projects: Yup.array().of(Yup.object()), // TODO

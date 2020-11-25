@@ -91,7 +91,7 @@ const DescriptionPanel: FC<PanelProps> = ({ setTouchedFields }) => {
               {...field}
               data-testid="registration-description-field"
               inputProps={{ 'data-testid': 'registration-description-input' }}
-              label={t('description.description')}
+              label={t('description.description_of_content')}
               multiline
               rows="4"
               fullWidth
@@ -124,6 +124,7 @@ const DescriptionPanel: FC<PanelProps> = ({ setTouchedFields }) => {
                     {...params}
                     data-testid="registration-tag-field"
                     label={t('description.keywords')}
+                    helperText={t('keywords_helper')}
                     variant="outlined"
                     fullWidth
                     onBlur={(event) => {
@@ -142,12 +143,7 @@ const DescriptionPanel: FC<PanelProps> = ({ setTouchedFields }) => {
         </NpiAndTagsWrapper>
 
         <DateAndLanguageWrapper>
-          <DatePickerField
-            data-testid="registration-date-field"
-            yearFieldName={DescriptionFieldNames.PUBLICATION_YEAR}
-            monthFieldName={DescriptionFieldNames.PUBLICATION_MONTH}
-            dayFieldName={DescriptionFieldNames.PUBLICATION_DAY}
-          />
+          <DatePickerField />
 
           <Field name={DescriptionFieldNames.LANGUAGE}>
             {({ field }: FieldProps) => (
@@ -170,7 +166,7 @@ const DescriptionPanel: FC<PanelProps> = ({ setTouchedFields }) => {
         </DateAndLanguageWrapper>
       </StyledMainCard>
       <Card>
-        <Typography variant="h5">{t('description.project_association')}</Typography>
+        <Typography variant="h5">{t('description.connect_project')}</Typography>
         <ProjectsField />
       </Card>
     </MuiPickersUtilsProvider>

@@ -6,9 +6,6 @@
   "cname": "CNAME",
   "display_name": "Display name for the institution",
   "edit_institution": "Edit institution",
-  "feedback": {
-    "required_field": "Required field"
-  },
   "feide_organization_id": "Organization id in Feide",
   "institution_dns": "DNS for the institution",
   "institution_logo": "Institution logo",
