@@ -60,10 +60,6 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier = '', closeFor
     }
   }, [history, registration, user]);
 
-  const handleTabChange = (_: React.ChangeEvent<unknown>, newTabNumber: number) => {
-    setTabNumber(newTabNumber);
-  };
-
   const saveRegistration = async (values: Registration) => {
     setIsSaving(true);
     const updatedRegistration = await updateRegistration(values);
@@ -114,7 +110,7 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier = '', closeFor
                 modalHeading={t('modal_unsaved_changes_heading')}
                 shouldBlockNavigation={dirty}
               />
-              <RegistrationFormTabs tabNumber={tabNumber} handleTabChange={handleTabChange} />
+              <RegistrationFormTabs tabNumber={tabNumber} setTabNumber={setTabNumber} />
               <RegistrationFormContent tabNumber={tabNumber} uppy={uppy} />
               <RegistrationFormActions
                 tabNumber={tabNumber}
