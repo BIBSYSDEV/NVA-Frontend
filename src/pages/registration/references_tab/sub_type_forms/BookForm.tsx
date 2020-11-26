@@ -88,7 +88,9 @@ const BookForm: FC = () => {
           <Typography>{t('references.series_info')}</Typography>
           <SeriesField />
 
-          <NviValidation isPeerReviewed={peerReviewed} isRated={!!publicationContext?.level} dataTestId="nvi_book" />
+          {type === BookType.MONOGRAPH && (
+            <NviValidation isPeerReviewed={peerReviewed} isRated={!!publicationContext?.level} dataTestId="nvi_book" />
+          )}
         </>
       )}
     </>

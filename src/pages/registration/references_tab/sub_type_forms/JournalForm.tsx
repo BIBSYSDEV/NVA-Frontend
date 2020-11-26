@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { TextField, Typography } from '@material-ui/core';
 import { JournalRegistration } from '../../../../types/registration.types';
-import { ReferenceFieldNames } from '../../../../types/publicationFieldNames';
+import { JournalType, ReferenceFieldNames } from '../../../../types/publicationFieldNames';
 import DoiField from '../components/DoiField';
 import NviValidation from '../components/NviValidation';
 import { JournalEntityDescription } from '../../../../types/publication_types/journalRegistration.types';
@@ -110,11 +110,14 @@ const JournalForm: FC = () => {
         </Field>
       </StyledArticleDetail>
 
-      <NviValidation
-        isPeerReviewed={publicationInstance.peerReviewed}
-        isRated={!!publicationContext?.level}
-        dataTestId="nvi_journal"
-      />
+      {(publicationInstance.type === JournalType.ARTICLE ||
+        publicationInstance.type === JournalType.SHORT_COMMUNICATION) && (
+        <NviValidation
+          isPeerReviewed={publicationInstance.peerReviewed}
+          isRated={!!publicationContext?.level}
+          dataTestId="nvi_journal"
+        />
+      )}
     </>
   );
 };
