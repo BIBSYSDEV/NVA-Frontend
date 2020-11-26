@@ -14,26 +14,23 @@ const PublisherField: FC = () => {
   return (
     <Field name={contextTypeBaseFieldName}>
       {({ field: { name, value } }: FieldProps) => (
-        <>
-          {JSON.stringify(value)}
-          <PublicationChannelSearch
-            dataTestId="publisher-search-input"
-            publicationTable={PublicationTableNumber.PUBLISHERS}
-            label={t('common:publisher')}
-            placeholder={t('references.search_for_publisher')}
-            errorFieldName={ReferenceFieldNames.PUBLICATION_CONTEXT_PUBLISHER}
-            setValue={(newValue) => {
-              const contextValues: any = formatPublicationContextWithPublisher(value.type, newValue);
-              if (newValue && value.seriesTitle) {
-                // Keep data from selected series, since this has precedence
-                contextValues.seriesTitle = value.seriesTitle;
-                contextValues.level = value.level;
-              }
-              setFieldValue(name, contextValues);
-            }}
-            value={publicationContextToPublisher(value)}
-          />
-        </>
+        <PublicationChannelSearch
+          dataTestId="publisher-search-input"
+          publicationTable={PublicationTableNumber.PUBLISHERS}
+          label={t('common:publisher')}
+          placeholder={t('references.search_for_publisher')}
+          errorFieldName={ReferenceFieldNames.PUBLICATION_CONTEXT_PUBLISHER}
+          setValue={(newValue) => {
+            const contextValues: any = formatPublicationContextWithPublisher(value.type, newValue);
+            if (newValue && value.seriesTitle) {
+              // Keep data from selected series, since this has precedence
+              contextValues.seriesTitle = value.seriesTitle;
+              contextValues.level = value.level;
+            }
+            setFieldValue(name, contextValues);
+          }}
+          value={publicationContextToPublisher(value)}
+        />
       )}
     </Field>
   );
