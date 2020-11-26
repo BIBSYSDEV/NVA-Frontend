@@ -140,9 +140,11 @@ export default createMuiTheme({
     MuiTextField: {
       root: {
         marginTop: '1rem',
-        '& .MuiFormLabel-asterisk.MuiInputLabel-asterisk': {
-          color: Colors.Danger,
-        },
+      },
+    },
+    MuiFormLabel: {
+      asterisk: {
+        color: Colors.Danger,
       },
     },
   },
