@@ -18,6 +18,7 @@ const JournalField: FC = () => {
           dataTestId="journal-search-input"
           publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
           label={t('references.journal')}
+          required
           placeholder={t('references.search_for_journal')}
           errorFieldName={ReferenceFieldNames.PUBLICATION_CONTEXT_TITLE}
           setValue={(newValue) => {

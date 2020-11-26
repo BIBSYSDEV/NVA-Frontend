@@ -183,6 +183,7 @@ const AuthorCard: FC<AuthorCardProps> = ({ author, onMoveAuthor, onRemoveAuthorC
                     data-testid="author-email-input"
                     {...field}
                     label={t('common:email')}
+                    required
                     variant="filled"
                     onChange={(event) => {
                       setEmailValue(event.target.value);

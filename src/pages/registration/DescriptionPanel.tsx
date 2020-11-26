@@ -61,11 +61,12 @@ const DescriptionPanel: FC<PanelProps> = ({ setTouchedFields }) => {
           {({ field, meta: { touched, error } }: FieldProps) => (
             <TextField
               {...field}
+              required
               data-testid="registration-title-field"
               inputProps={{ 'data-testid': 'registration-title-input' }}
               variant="outlined"
               fullWidth
-              label={t('common:title')}
+              label={<span>{t('common:title')}</span>}
               error={touched && !!error}
               helperText={<ErrorMessage name={field.name} />}
             />

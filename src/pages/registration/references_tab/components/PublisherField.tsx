@@ -18,6 +18,7 @@ const PublisherField: FC = () => {
           dataTestId="publisher-search-input"
           publicationTable={PublicationTableNumber.PUBLISHERS}
           label={t('common:publisher')}
+          required
           placeholder={t('references.search_for_publisher')}
           errorFieldName={ReferenceFieldNames.PUBLICATION_CONTEXT_PUBLISHER}
           setValue={(newValue) => {
