@@ -69,6 +69,7 @@
     "files": "Filer",
     "licenses": "Lisenser",
     "no_duplicates": "Kunne ikke legge til \"{{fileName}}\", siden en fil med samme navn allerede finnes",
+    "publicly_available": "Offentlig tilgjengelig",
     "published_version": "Publisert versjon",
     "select_version": "Velg versjon",
     "title": "Filnavn",
