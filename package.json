@@ -77,7 +77,7 @@
     "@types/styled-components": "^5.1.4",
     "@types/yup": "^0.29.9",
     "axios-mock-adapter": "^1.19.0",
-    "cypress": "^5.6.0",
+    "cypress": "^6.0.0",
     "eslint-config-prettier": "^6.15.0",
     "eslint-plugin-cypress": "^2.11.2",
     "eslint-plugin-prettier": "^3.1.4",
