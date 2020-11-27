@@ -2,8 +2,10 @@ import React, { FC } from 'react';
 import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
 import { Button, TextField, DialogActions } from '@material-ui/core';
-import { Field, FieldProps, Form, Formik } from 'formik';
+import { ErrorMessage, Field, FieldProps, Form, Formik } from 'formik';
+
 import ButtonWithProgress from './ButtonWithProgress';
+import { ErrorMessage as ErrorMessageString } from '../utils/validation/errorMessage';
 
 interface MessageFormProps {
   confirmAction: (message: string) => Promise<unknown> | void;
@@ -19,7 +21,7 @@ const initValues: MessageFormData = {
 };
 
 const validationSchema = Yup.object().shape({
-  message: Yup.string().required(),
+  message: Yup.string().required(ErrorMessageString.REQUIRED),
 });
 
 export const MessageForm: FC<MessageFormProps> = ({ confirmAction, cancelAction }) => {
@@ -34,7 +36,7 @@ export const MessageForm: FC<MessageFormProps> = ({ confirmAction, cancelAction 
         resetForm();
       }}>
       {({ isSubmitting }) => (
-        <Form>
+        <Form noValidate>
           <Field name="message">
             {({ field, meta: { touched, error } }: FieldProps<string>) => (
               <TextField
@@ -47,6 +49,7 @@ export const MessageForm: FC<MessageFormProps> = ({ confirmAction, cancelAction 
                 label={t('common:message')}
                 required
                 error={touched && !!error}
+                helperText={<ErrorMessage name={field.name} />}
               />
             )}
           </Field>
