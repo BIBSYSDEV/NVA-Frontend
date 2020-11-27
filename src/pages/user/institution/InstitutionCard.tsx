@@ -70,7 +70,7 @@ const InstitutionCard: FC<InstitutionCardProps> = ({ orgunitId, setInstitutionId
     }
 
     const updatedAuthority = await updateQualifierIdForAuthority(
-      authority.systemControlNumber,
+      authority.id,
       AuthorityQualifiers.ORGUNIT_ID,
       initialInstitution,
       newUnitId

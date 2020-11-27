@@ -6,9 +6,6 @@
   "cname": "CNAME",
   "display_name": "Visningsnavn på institusjonen",
   "edit_institution": "Endre institusjon",
-  "feedback": {
-    "required_field": "Påkrevd felt"
-  },
   "feide_organization_id": "Organisasjonens id i Feide",
   "institution_dns": "Institusjonens DNS",
   "institution_logo": "Institutionslogo",

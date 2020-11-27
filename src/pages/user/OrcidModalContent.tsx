@@ -24,7 +24,7 @@ const OrcidModalContent: FC = () => {
 
   const openORCID = () => {
     if (USE_MOCK_DATA) {
-      history.push('/user/#access_token=12343123');
+      history.push('/my-profile/#access_token=12343123');
     } else {
       window.location.assign(ORCID_SIGN_IN_URL);
     }

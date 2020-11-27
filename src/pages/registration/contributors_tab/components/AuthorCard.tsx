@@ -124,7 +124,7 @@ const AuthorCard: FC<AuthorCardProps> = ({ author, onMoveAuthor, onRemoveAuthorC
         <StyledAuthorSection key={author.identity.id}>
           <StyledNameField variant="h5">{author.identity.name}</StyledNameField>
           <StyledVerifiedSection>
-            {author.identity.arpId ? (
+            {author.identity.id ? (
               <>
                 <Tooltip title={t<string>('contributors.known_author_identity')}>
                   <StyledCheckIcon />
