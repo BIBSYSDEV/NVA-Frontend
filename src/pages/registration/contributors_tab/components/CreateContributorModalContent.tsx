@@ -56,8 +56,8 @@ const CreateContributorModalContent: FC<CreateContributorModalContentProps> = ({
           initialValues={emptyNewContributor}
           validationSchema={newContributorValidationSchema}
           onSubmit={handleSubmit}>
-          {({ isValid, isSubmitting, dirty }) => (
-            <Form>
+          {({ isSubmitting }) => (
+            <Form noValidate>
               <Collapse in={readMore} collapsedHeight="4.5rem">
                 <StyledNormalTextPreWrapped>{t('description_create_authority')}</StyledNormalTextPreWrapped>
               </Collapse>
@@ -73,6 +73,7 @@ const CreateContributorModalContent: FC<CreateContributorModalContentProps> = ({
                     aria-label="first name"
                     fullWidth
                     label={t('first_name')}
+                    required
                     variant="outlined"
                     error={!!error && touched}
                     helperText={<ErrorMessage name={field.name} />}
@@ -86,6 +87,7 @@ const CreateContributorModalContent: FC<CreateContributorModalContentProps> = ({
                     aria-label="last name"
                     fullWidth
                     label={t('last_name')}
+                    required
                     variant="outlined"
                     error={!!error && touched}
                     helperText={<ErrorMessage name={field.name} />}
@@ -98,7 +100,7 @@ const CreateContributorModalContent: FC<CreateContributorModalContentProps> = ({
                   type="submit"
                   color="primary"
                   variant="contained"
-                  disabled={!isValid || !dirty || isSubmitting}>
+                  disabled={isSubmitting}>
                   {t('create_authority')}
                 </Button>
               </StyledButtonContainer>
