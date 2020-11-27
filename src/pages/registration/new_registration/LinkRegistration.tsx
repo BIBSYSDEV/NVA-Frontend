@@ -85,7 +85,7 @@ const LinkRegistration: FC<LinkRegistrationProps> = ({ expanded, onChange, openF
               variant="contained"
               onClick={createRegistration}
               data-testid="registration-link-next-button">
-              {t('next')}
+              {t('registration:registration.start_registration')}
             </Button>
           </>
         )}

@@ -6,11 +6,10 @@ enum ContributorRole {
   CREATOR = 'Creator',
 }
 
-interface Identity extends BackendType {
+export interface Identity extends BackendType {
   id?: string;
   name: string;
   orcId?: string;
-  arpId?: string;
 }
 
 export interface Contributor extends BackendType {

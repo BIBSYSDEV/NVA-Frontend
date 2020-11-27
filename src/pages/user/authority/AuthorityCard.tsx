@@ -38,10 +38,7 @@ interface AuthorityCardProps {
 
 const AuthorityCard: FC<AuthorityCardProps> = ({ authority, isConnected = false, isSelected }) => {
   const { t } = useTranslation('profile');
-  const [almaPublication, isLoadingAlmaPublication] = useFetchLastRegistrationFromAlma(
-    authority.systemControlNumber,
-    authority.name
-  );
+  const [almaPublication, isLoadingAlmaPublication] = useFetchLastRegistrationFromAlma(authority.id, authority.name);
 
   return (
     <StyledBoxContent isConnected={isConnected}>

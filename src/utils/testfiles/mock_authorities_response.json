@@ -1,7 +1,7 @@
 [
   {
     "name": "Osteloff, Oddny",
-    "systemControlNumber": "901790000001",
+    "id": "https://api.dev.nva.aws.unit.no/person/901790000001",
     "feideids": [],
     "orcids": [],
     "orgunitids": [],
@@ -9,7 +9,7 @@
   },
   {
     "name": "Test User",
-    "systemControlNumber": "901790000000",
+    "id": "https://api.dev.nva.aws.unit.no/person/901790000000",
     "feideids": ["osteloff@unit.no"],
     "orcids": ["0000-0001-2345-6789"],
     "orgunitids": ["https://api.cristin.no/v2/units/150.4.1.0"],

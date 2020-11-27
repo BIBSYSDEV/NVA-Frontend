@@ -46,7 +46,7 @@ const StyledButtonWrapper = styled(StyledRightAlignedWrapper)`
   grid-area: top;
 `;
 
-const User: FC = () => {
+const MyProfilePage: FC = () => {
   const { t } = useTranslation('profile');
   const user = useSelector((state: RootStore) => state.user);
   const location = useLocation();
@@ -57,7 +57,7 @@ const User: FC = () => {
     const orcidAccessToken = new URLSearchParams(location.hash.replace('#', '?')).get('access_token') || '';
     if (orcidAccessToken) {
       dispatch(getOrcidInfo(orcidAccessToken));
-      history.push('/user');
+      history.push('/my-profile');
     }
   }, [dispatch, location.hash, history]);
 
@@ -65,7 +65,7 @@ const User: FC = () => {
     const updateOrcid = async () => {
       if (user.authority?.orcids && !user.authority.orcids.includes(user.externalOrcid)) {
         const updatedAuthority = await addQualifierIdForAuthority(
-          user.authority.systemControlNumber,
+          user.authority.id,
           AuthorityQualifiers.ORCID,
           user.externalOrcid
         );
@@ -90,7 +90,7 @@ const User: FC = () => {
             <Button
               color="primary"
               component={RouterLink}
-              to={`/user/${user.authority.systemControlNumber}`}
+              to={`/user?id=${encodeURIComponent(user.authority.id)}`}
               data-testid="public-profile-button">
               {t('workLists:go_to_public_profile')}
             </Button>
@@ -117,4 +117,4 @@ const User: FC = () => {
   );
 };
 
-export default User;
+export default MyProfilePage;

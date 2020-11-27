@@ -9,7 +9,7 @@ import AddIcon from '@material-ui/icons/AddCircleOutlineSharp';
 
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { Authority } from '../../../types/authority.types';
-import { Contributor, emptyContributor, UnverifiedContributor } from '../../../types/contributor.types';
+import { Contributor, emptyContributor, Identity, UnverifiedContributor } from '../../../types/contributor.types';
 import { NotificationVariant } from '../../../types/notification.types';
 import { BackendTypeNames } from '../../../types/publication_types/commonRegistration.types';
 import { ContributorFieldNames } from '../../../types/publicationFieldNames';
@@ -68,14 +68,14 @@ const Authors: FC<AuthorsProps> = ({ push, replace }) => {
   };
 
   const onAuthorSelected = (authority: Authority) => {
-    if (orderedAuthors.some((author) => author.identity.arpId === authority.systemControlNumber)) {
+    if (orderedAuthors.some((author) => author.identity.id === authority.id)) {
       dispatch(setNotification(t('contributors.author_already_added'), NotificationVariant.Info));
       return;
     }
 
-    const identity = {
-      ...emptyContributor.identity,
-      arpId: authority.systemControlNumber,
+    const identity: Identity = {
+      type: BackendTypeNames.IDENTITY,
+      id: authority.id,
       orcId: authority.orcids.length > 0 ? authority.orcids[0] : '',
       name: authority.name,
     };

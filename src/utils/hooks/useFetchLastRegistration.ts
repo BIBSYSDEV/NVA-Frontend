@@ -7,10 +7,7 @@ import { useDispatch } from 'react-redux';
 import Axios from 'axios';
 import { useTranslation } from 'react-i18next';
 
-const useFetchLastRegistrationFromAlma = (
-  systemControlNumber: string,
-  name: string
-): [AlmaRegistration | null, boolean] => {
+const useFetchLastRegistrationFromAlma = (arpId: string, name: string): [AlmaRegistration | null, boolean] => {
   const dispatch = useDispatch();
   const [almaRegistration, setAlmaRegistration] = useState<AlmaRegistration | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -20,7 +17,7 @@ const useFetchLastRegistrationFromAlma = (
     const cancelSource = Axios.CancelToken.source();
 
     const fetchLastRegistration = async () => {
-      const retrievedRegistration = await getAlmaRegistration(systemControlNumber, name, cancelSource.token);
+      const retrievedRegistration = await getAlmaRegistration(arpId, name, cancelSource.token);
       if (retrievedRegistration) {
         setIsLoading(false);
         if (retrievedRegistration.error) {
@@ -30,15 +27,15 @@ const useFetchLastRegistrationFromAlma = (
         }
       }
     };
-    if (systemControlNumber && name) {
+    if (arpId && name) {
       fetchLastRegistration();
     }
     return () => {
-      if (systemControlNumber && name) {
+      if (arpId && name) {
         cancelSource.cancel();
       }
     };
-  }, [dispatch, name, systemControlNumber, t]);
+  }, [dispatch, name, arpId, t]);
 
   return [almaRegistration, isLoading];
 };
