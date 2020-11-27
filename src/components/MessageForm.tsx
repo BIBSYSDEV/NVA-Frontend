@@ -45,6 +45,7 @@ export const MessageForm: FC<MessageFormProps> = ({ confirmAction, cancelAction 
                 rows="4"
                 fullWidth
                 label={t('common:message')}
+                required
                 error={touched && !!error}
               />
             )}
