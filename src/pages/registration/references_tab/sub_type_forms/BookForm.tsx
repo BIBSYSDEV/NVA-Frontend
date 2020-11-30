@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { Typography, FormControlLabel, Checkbox } from '@material-ui/core';
 import DoiField from '../components/DoiField';
-import { ReferenceFieldNames } from '../../../../types/publicationFieldNames';
+import { BookType, ReferenceFieldNames } from '../../../../types/publicationFieldNames';
 import IsbnListField from '../components/IsbnListField';
 import TotalPagesField from '../components/TotalPagesField';
 import { BookRegistration } from '../../../../types/registration.types';
@@ -43,7 +43,7 @@ const BookForm: FC = () => {
   const {
     reference: {
       publicationContext,
-      publicationInstance: { peerReviewed },
+      publicationInstance: { peerReviewed, type },
     },
   } = values.entityDescription as BookEntityDescription;
 
@@ -82,11 +82,15 @@ const BookForm: FC = () => {
         </StyledTextBook>
       </StyledSection>
 
-      <StyledTypography variant="h5">{t('references.series')}</StyledTypography>
-      <Typography>{t('references.series_info')}</Typography>
-      <SeriesField />
+      {(type === BookType.ANTHOLOGY || type === BookType.MONOGRAPH) && (
+        <>
+          <StyledTypography variant="h5">{t('references.series')}</StyledTypography>
+          <Typography>{t('references.series_info')}</Typography>
+          <SeriesField />
 
-      <NviValidation isPeerReviewed={peerReviewed} isRated={!!publicationContext?.level} dataTestId="nvi_book" />
+          <NviValidation isPeerReviewed={peerReviewed} isRated={!!publicationContext?.level} dataTestId="nvi_book" />
+        </>
+      )}
     </>
   );
 };
