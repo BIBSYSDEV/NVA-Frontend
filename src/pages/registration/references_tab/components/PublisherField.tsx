@@ -22,7 +22,12 @@ const PublisherField: FC = () => {
           placeholder={t('references.search_for_publisher')}
           errorFieldName={ReferenceFieldNames.PUBLICATION_CONTEXT_PUBLISHER}
           setValue={(newValue) => {
-            const contextValues = formatPublicationContextWithPublisher(value.type, newValue);
+            const contextValues: any = formatPublicationContextWithPublisher(value.type, newValue);
+            if (newValue && value.seriesTitle) {
+              // Keep data from selected series, since this has precedence
+              contextValues.seriesTitle = value.seriesTitle;
+              contextValues.level = value.level;
+            }
             setFieldValue(name, contextValues);
           }}
           value={publicationContextToPublisher(value)}
