@@ -47,36 +47,31 @@ const ReferencesPanel: FC<PanelProps> = ({ setTouchedFields }) => {
   const onChangeType = (newPublicationContextType: string) => {
     // Ensure some values are reset when publication type changes
     setFieldValue(contextTypeBaseFieldName, { type: newPublicationContextType }, false);
-
-    switch (newPublicationContextType) {
-      case PublicationType.PUBLICATION_IN_JOURNAL:
-        setFieldValue(instanceTypeBaseFieldName, emptyJournalPublicationInstance, false);
-        break;
-      case PublicationType.BOOK:
-        setFieldValue(instanceTypeBaseFieldName, emptyBookPublicationInstance, false);
-        break;
-      case PublicationType.REPORT:
-        setFieldValue(instanceTypeBaseFieldName, emptyReportPublicationInstance, false);
-        break;
-      case PublicationType.DEGREE:
-        setFieldValue(instanceTypeBaseFieldName, emptyDegreePublicationInstance, false);
-        break;
-    }
+    setFieldValue(instanceTypeBaseFieldName, emptyJournalPublicationInstance, false);
   };
 
   const onChangeSubType = (newInstanceType: string) => {
-    setFieldValue(instanceTypeBaseFieldName, { type: newInstanceType }, false);
+    switch (values.entityDescription.reference.publicationContext.type) {
+      case PublicationType.PUBLICATION_IN_JOURNAL:
+        setFieldValue(instanceTypeBaseFieldName, { ...emptyJournalPublicationInstance, type: newInstanceType }, false);
+        break;
+      case PublicationType.BOOK:
+        setFieldValue(instanceTypeBaseFieldName, { ...emptyBookPublicationInstance, type: newInstanceType }, false);
+        break;
+      case PublicationType.REPORT:
+        setFieldValue(instanceTypeBaseFieldName, { ...emptyReportPublicationInstance, type: newInstanceType }, false);
+        break;
+      case PublicationType.DEGREE:
+        setFieldValue(instanceTypeBaseFieldName, { ...emptyDegreePublicationInstance, type: newInstanceType }, false);
+        break;
+    }
 
     // Avoid showing potential errors instantly
     setTouched({
       ...touched,
       entityDescription: {
         ...touched.entityDescription,
-        reference: {
-          ...touched.entityDescription?.reference,
-          publicationContext: {},
-          publicationInstance: {},
-        },
+        reference: {},
       },
     });
   };
