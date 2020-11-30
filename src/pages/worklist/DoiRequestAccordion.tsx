@@ -82,7 +82,7 @@ export const DoiRequestAccordion: FC<DoiRequestAccordionProps> = ({ registration
         <StyledTitle>{mainTitle}</StyledTitle>
         <StyledOwner>
           <Label>{owner}</Label>
-          {new Date(doiRequest.date).toLocaleDateString()}
+          {new Date(doiRequest.createdDate).toLocaleDateString()}
         </StyledOwner>
       </AccordionSummary>
       <AccordionDetails>

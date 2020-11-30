@@ -71,7 +71,8 @@ export interface DoiRequestMessage {
 
 interface DoiRequest {
   type: string;
-  date: string;
+  createdDate: string;
+  modifiedDate: string;
   status: DoiRequestStatus;
   messages: DoiRequestMessage[];
 }
