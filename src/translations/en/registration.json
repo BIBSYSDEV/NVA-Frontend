@@ -143,6 +143,7 @@
     "text_book_yes": "Yes, this is a textbook",
     "volume": "Volume"
   },
+  "save_draft": "Save draft",
   "status": {
     "Draft": "Draft",
     "New": "New",
