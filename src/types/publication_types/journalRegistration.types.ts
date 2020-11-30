@@ -60,7 +60,7 @@ const emptyPublicationContext: JournalPublicationContext = {
   url: '',
 };
 
-const emptyReference = {
+const emptyReference: JournalReference = {
   type: BackendTypeNames.REFERENCE,
   doi: '',
   publicationContext: emptyPublicationContext,
