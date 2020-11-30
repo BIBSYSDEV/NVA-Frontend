@@ -35,6 +35,7 @@ const PublicationChannelSearch: FC<PublicationChannelSearchProps> = ({
   return (
     <Autocomplete
       {...autocompleteTranslationProps}
+      popupIcon={null}
       options={publishers}
       onBlur={() => setFieldTouched(errorFieldName)}
       onInputChange={(_, newInputValue) => handleNewSearchTerm(newInputValue)}
