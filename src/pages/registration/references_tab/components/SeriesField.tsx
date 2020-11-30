@@ -3,7 +3,7 @@ import { Field, FieldProps, useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { ReferenceFieldNames } from '../../../../types/publicationFieldNames';
 import { PublicationTableNumber } from '../../../../utils/constants';
-import { publicationContextToPublisher } from './reference-helpers';
+import { mapLevel, publicationContextToPublisher } from './reference-helpers';
 import { Registration } from '../../../../types/registration.types';
 import PublicationChannelSearch from './PublicationChannelSearch';
 
@@ -13,14 +13,17 @@ const SeriesField: FC = () => {
 
   return (
     <Field name={ReferenceFieldNames.SERIES_TITLE}>
-      {({ field: { name, value } }: FieldProps) => (
+      {({ field: { name, value } }: FieldProps<string>) => (
         <PublicationChannelSearch
           dataTestId="series-search-input"
           publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
           label={t('common:title')}
           placeholder={t('references.search_for_series')}
           errorFieldName={name}
-          setValue={(newValue) => setFieldValue(name, newValue?.title ?? '')}
+          setValue={(newValue) => {
+            setFieldValue(name, newValue?.title ?? '');
+            setFieldValue(ReferenceFieldNames.PUBLICATION_CONTEXT_LEVEL, newValue ? mapLevel(newValue.level) : '');
+          }}
           value={publicationContextToPublisher({ title: value })}
         />
       )}
