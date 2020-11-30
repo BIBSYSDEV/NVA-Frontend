@@ -29,11 +29,11 @@ const descriptionFieldNames = Object.values(DescriptionFieldNames);
 const referenceFieldNames = Object.values(ReferenceFieldNames);
 
 interface RegistrationFormTabsProps {
-  handleTabChange: (_: React.ChangeEvent<unknown>, newValue: number) => void;
+  setTabNumber: (newTab: number) => void;
   tabNumber: number;
 }
 
-export const RegistrationFormTabs: FC<RegistrationFormTabsProps> = ({ handleTabChange, tabNumber }) => {
+export const RegistrationFormTabs: FC<RegistrationFormTabsProps> = ({ setTabNumber, tabNumber }) => {
   const { t } = useTranslation('registration');
   const { errors, touched, values } = useFormikContext<Registration>();
   const {
@@ -44,7 +44,7 @@ export const RegistrationFormTabs: FC<RegistrationFormTabsProps> = ({ handleTabC
   return (
     <StyledTabs
       aria-label="navigation"
-      onChange={handleTabChange}
+      onChange={(_, value) => setTabNumber(value)}
       scrollButtons="auto"
       textColor="primary"
       indicatorColor="primary"

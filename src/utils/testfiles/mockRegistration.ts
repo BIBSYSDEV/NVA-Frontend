@@ -105,7 +105,8 @@ const mockRegistrationWithPendingDoiRequest: JournalRegistration = {
   ...mockRegistration,
   doiRequest: {
     type: 'DoiRequest',
-    date: new Date().toISOString(),
+    createdDate: new Date(2020, 1).toISOString(),
+    modifiedDate: new Date(2020, 3).toISOString(),
     status: DoiRequestStatus.Requested,
     messages: [
       {
