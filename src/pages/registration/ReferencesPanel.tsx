@@ -47,33 +47,37 @@ const ReferencesPanel: FC<PanelProps> = ({ setTouchedFields }) => {
   const onChangeType = (newPublicationContextType: string) => {
     // Ensure some values are reset when publication type changes
     setFieldValue(contextTypeBaseFieldName, { type: newPublicationContextType }, false);
-    setFieldValue(instanceTypeBaseFieldName, emptyJournalPublicationInstance, false);
-  };
 
-  const onChangeSubType = (newInstanceType: string) => {
-    switch (values.entityDescription.reference.publicationContext.type) {
+    switch (newPublicationContextType) {
       case PublicationType.PUBLICATION_IN_JOURNAL:
-        setFieldValue(instanceTypeBaseFieldName, { ...emptyJournalPublicationInstance, type: newInstanceType }, false);
+        setFieldValue(instanceTypeBaseFieldName, emptyJournalPublicationInstance, false);
         break;
       case PublicationType.BOOK:
-        setFieldValue(instanceTypeBaseFieldName, { ...emptyBookPublicationInstance, type: newInstanceType }, false);
+        setFieldValue(instanceTypeBaseFieldName, emptyBookPublicationInstance, false);
         break;
       case PublicationType.REPORT:
-        setFieldValue(instanceTypeBaseFieldName, { ...emptyReportPublicationInstance, type: newInstanceType }, false);
+        setFieldValue(instanceTypeBaseFieldName, emptyReportPublicationInstance, false);
         break;
       case PublicationType.DEGREE:
-        setFieldValue(instanceTypeBaseFieldName, { ...emptyDegreePublicationInstance, type: newInstanceType }, false);
+        setFieldValue(instanceTypeBaseFieldName, emptyDegreePublicationInstance, false);
         break;
     }
-
     // Avoid showing potential errors instantly
     setTouched({
       ...touched,
       entityDescription: {
         ...touched.entityDescription,
-        reference: {},
+        reference: { publicationContext: { type: true } },
       },
     });
+  };
+
+  const onChangeSubType = (newInstanceType: string) => {
+    setFieldValue(
+      instanceTypeBaseFieldName,
+      { ...values.entityDescription.reference.publicationInstance, type: newInstanceType },
+      false
+    );
   };
 
   return (
