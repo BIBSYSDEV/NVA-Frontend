@@ -9,6 +9,7 @@ import DoiField from '../components/DoiField';
 import NviValidation from '../components/NviValidation';
 import { JournalEntityDescription } from '../../../../types/publication_types/journalRegistration.types';
 import JournalField from '../components/JournalField';
+import PeerReview from '../components/PeerReview';
 
 const StyledArticleDetail = styled.div`
   display: grid;
@@ -112,11 +113,14 @@ const JournalForm: FC = () => {
 
       {(publicationInstance.type === JournalType.ARTICLE ||
         publicationInstance.type === JournalType.SHORT_COMMUNICATION) && (
-        <NviValidation
-          isPeerReviewed={publicationInstance.peerReviewed}
-          isRated={!!publicationContext?.level}
-          dataTestId="nvi_journal"
-        />
+        <>
+          <PeerReview fieldName={ReferenceFieldNames.PEER_REVIEW} label={t('references.peer_review')} />
+          <NviValidation
+            isPeerReviewed={publicationInstance.peerReviewed}
+            isRated={!!publicationContext?.level}
+            dataTestId="nvi_journal"
+          />
+        </>
       )}
     </>
   );
