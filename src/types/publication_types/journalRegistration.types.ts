@@ -8,7 +8,7 @@ export interface JournalPublicationInstance {
   type: JournalType | '';
   articleNumber: string;
   issue: string;
-  pages: PagesRange | null;
+  pages: PagesRange;
   peerReviewed: boolean;
   volume: string;
 }
@@ -45,7 +45,7 @@ export const emptyJournalPublicationInstance: JournalPublicationInstance = {
   type: '',
   articleNumber: '',
   issue: '',
-  pages: null,
+  pages: { type: BackendTypeNames.PAGES_RANGE, begin: '', end: '' },
   peerReviewed: false,
   volume: '',
 };

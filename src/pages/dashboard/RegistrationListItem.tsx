@@ -73,10 +73,10 @@ const RegistrationListItem: FC<RegistrationListItemProps> = ({ registration }) =
           </Truncate>
         </Typography>
         <StyledMetadata>
-          {registration.publishedDate && (
+          {registration.publicationDate && (
             <>
               <CalendarIcon />
-              <Typography variant="body2">{displayDate(registration.publishedDate)}</Typography>
+              <Typography variant="body2">{displayDate(registration.publicationDate)}</Typography>
             </>
           )}
           {registration.publicationType && (

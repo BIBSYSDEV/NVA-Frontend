@@ -83,7 +83,11 @@ export const mockRegistration: JournalRegistration = {
       doi: '',
       publicationInstance: {
         type: JournalType.ARTICLE,
-        pages: null,
+        pages: {
+          type: BackendTypeNames.PAGES_RANGE,
+          begin: '',
+          end: '',
+        },
         peerReviewed: false,
         articleNumber: '',
         issue: '',
