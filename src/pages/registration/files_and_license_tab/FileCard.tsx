@@ -182,6 +182,7 @@ const FileCard: FC<FileCardProps> = ({ file, removeFile, baseFieldName, toggleLi
                         error={!!error && touched}
                         helperText={<ErrorMessage name={field.name} />}
                         label={t('files_and_license.conditions_for_using_file')}
+                        required
                         onChange={({ target: { value } }) =>
                           form.setFieldValue(field.name, {
                             type: 'License',

@@ -61,6 +61,7 @@ const DescriptionPanel: FC<PanelProps> = ({ setTouchedFields }) => {
           {({ field, meta: { touched, error } }: FieldProps) => (
             <TextField
               {...field}
+              required
               data-testid="registration-title-field"
               inputProps={{ 'data-testid': 'registration-title-input' }}
               variant="outlined"

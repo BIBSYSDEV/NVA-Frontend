@@ -61,6 +61,7 @@ const DatePickerField: FC = () => {
         data-testid="date-published-field"
         inputVariant="outlined"
         label={t('description.date_published')}
+        required
         onChange={setDate}
         views={views}
         value={date}

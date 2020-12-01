@@ -33,14 +33,15 @@ const LinkRegistrationForm: FC<LinkRegistrationFormProps> = ({ handleSearch }) =
 
   return (
     <Formik onSubmit={handleSearch} initialValues={emptyDoiFormValues} validationSchema={doiValidationSchema}>
-      {({ isSubmitting, isValid, dirty }) => (
-        <Form>
+      {({ isSubmitting }) => (
+        <Form noValidate>
           <StyledInputBox>
             <Field name="doiUrl">
               {({ field, meta: { error, touched } }: FieldProps) => (
                 <StyledTextField
                   variant="outlined"
                   label={t('registration.link_to_resource')}
+                  required
                   fullWidth
                   aria-label="DOI-link"
                   inputProps={{ 'data-testid': 'new-registration-link-input' }}
@@ -50,11 +51,7 @@ const LinkRegistrationForm: FC<LinkRegistrationFormProps> = ({ handleSearch }) =
                 />
               )}
             </Field>
-            <ButtonWithProgress
-              data-testid="doi-search-button"
-              isLoading={isSubmitting}
-              disabled={!isValid || !dirty}
-              type="submit">
+            <ButtonWithProgress data-testid="doi-search-button" isLoading={isSubmitting} type="submit">
               {t('common:search')}
             </ButtonWithProgress>
           </StyledInputBox>

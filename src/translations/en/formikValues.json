@@ -17,6 +17,6 @@
   "entityDescription-reference-publicationInstance-volume": "$t(registration:references.volume)",
   "fileSet-files": "$t(registration:files_and_license.files)",
   "fileSet-files-embargoDate": "$t(registration:files_and_license.embargo_date)",
-  "fileSet-files-license": "$t(registration:files_and_license.license)",
+  "fileSet-files-license": "$t(registration:files_and_license.conditions_for_using_file)",
   "fileSet-files-publisherAuthority": "$t(registration:files_and_license.published_version)"
 }

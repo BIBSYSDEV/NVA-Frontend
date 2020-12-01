@@ -83,7 +83,11 @@ export const mockRegistration: JournalRegistration = {
       doi: '',
       publicationInstance: {
         type: JournalType.ARTICLE,
-        pages: null,
+        pages: {
+          type: BackendTypeNames.PAGES_RANGE,
+          begin: '',
+          end: '',
+        },
         peerReviewed: false,
         articleNumber: '',
         issue: '',
@@ -105,7 +109,8 @@ const mockRegistrationWithPendingDoiRequest: JournalRegistration = {
   ...mockRegistration,
   doiRequest: {
     type: 'DoiRequest',
-    date: new Date().toISOString(),
+    createdDate: new Date(2020, 1).toISOString(),
+    modifiedDate: new Date(2020, 3).toISOString(),
     status: DoiRequestStatus.Requested,
     messages: [
       {

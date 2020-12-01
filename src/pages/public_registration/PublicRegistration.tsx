@@ -17,7 +17,7 @@ const PublicRegistration: FC = () => {
 
   const isAllowedToSeePublicRegistration =
     registration?.status === RegistrationStatus.PUBLISHED ||
-    (user?.isCurator && registration?.publisher.id === user?.id) ||
+    (user?.isCurator && registration?.publisher.id === user?.customerId) ||
     registration?.owner === user?.id;
 
   return (

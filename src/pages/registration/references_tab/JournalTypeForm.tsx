@@ -3,7 +3,6 @@ import React, { FC } from 'react';
 import { JournalRegistration } from '../../../types/registration.types';
 import { ReferenceFieldNames, JournalType } from '../../../types/publicationFieldNames';
 import SelectTypeField from './components/SelectTypeField';
-import JournalArticleForm from './sub_type_forms/JournalArticleForm';
 import JournalForm from './sub_type_forms/JournalForm';
 import { StyledSelectWrapper } from '../../../components/styled/Wrappers';
 
@@ -25,7 +24,7 @@ const JournalTypeForm: FC<JournalTypeFormProps> = ({ onChangeSubType }) => {
         />
       </StyledSelectWrapper>
 
-      {subType && (subType === JournalType.ARTICLE ? <JournalArticleForm /> : <JournalForm />)}
+      {subType && <JournalForm />}
     </>
   );
 };

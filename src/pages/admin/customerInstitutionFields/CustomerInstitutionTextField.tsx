@@ -4,17 +4,18 @@ import { TextField, TextFieldProps } from '@material-ui/core';
 
 interface CustomerInstitutionTextFieldProps
   extends Pick<FieldInputProps<string>, 'name'>,
-    Pick<TextFieldProps, 'label'> {
+    Pick<TextFieldProps, 'label' | 'required'> {
   dataTestId?: string;
 }
 
-const CustomerInstitutionTextField: FC<CustomerInstitutionTextFieldProps> = ({ name, label, dataTestId }) => {
+const CustomerInstitutionTextField: FC<CustomerInstitutionTextFieldProps> = ({ name, label, dataTestId, required }) => {
   return (
     <Field name={name}>
       {({ field, meta: { touched, error } }: FieldProps) => (
         <TextField
           {...field}
           label={label}
+          required={required}
           fullWidth
           variant="outlined"
           inputProps={{ 'data-testid': dataTestId }}
