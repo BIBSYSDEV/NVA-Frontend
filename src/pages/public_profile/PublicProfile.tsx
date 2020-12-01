@@ -34,7 +34,9 @@ const PublicProfile: FC = () => {
   const arpId = new URLSearchParams(history.location.search).get('id') ?? '';
 
   const [authority, isLoadingUser] = useFetchAuthority(arpId);
-  const [registrations, isLoadingRegistrations] = useSearchRegistrations(`entityDescription.contributors.id=${arpId}`);
+  const [registrations, isLoadingRegistrations] = useSearchRegistrations(
+    `entityDescription.contributors.id="${arpId}"`
+  );
 
   return (
     <>
