@@ -18,7 +18,10 @@ const pagesRangeField = Yup.object()
     begin: Yup.number()
       .typeError(ErrorMessage.INVALID_FORMAT)
       .min(0, ErrorMessage.MUST_BE_POSITIVE)
-      .max(Yup.ref('end'), ErrorMessage.INVALID_PAGE_INTERVAL),
+      .when('end', {
+        is: (value) => value && !isNaN(value),
+        then: Yup.number().max(Yup.ref('end'), ErrorMessage.INVALID_PAGE_INTERVAL),
+      }),
     end: Yup.number().typeError(ErrorMessage.INVALID_FORMAT).min(Yup.ref('begin'), ErrorMessage.INVALID_PAGE_INTERVAL),
   });
 const publisherField = Yup.string().required(ErrorMessage.REQUIRED);
