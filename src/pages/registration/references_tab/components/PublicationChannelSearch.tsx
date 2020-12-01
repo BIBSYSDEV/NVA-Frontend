@@ -11,7 +11,7 @@ import useFetchPublishers from '../../../../utils/hooks/useFetchPublishers';
 import EmphasizeSubstring from '../../../../components/EmphasizeSubstring';
 import { autocompleteTranslationProps } from '../../../../themes/mainTheme';
 
-interface PublicationChannelSearchProps extends Pick<TextFieldProps, 'label' | 'placeholder'> {
+interface PublicationChannelSearchProps extends Pick<TextFieldProps, 'label' | 'placeholder' | 'required'> {
   publicationTable: PublicationTableNumber;
   errorFieldName: string;
   setValue: (value?: Publisher) => void;
@@ -27,6 +27,7 @@ const PublicationChannelSearch: FC<PublicationChannelSearchProps> = ({
   setValue,
   value,
   dataTestId,
+  required,
 }) => {
   const { t } = useTranslation('registration');
   const { setFieldTouched, errors, touched } = useFormikContext<Registration>();
@@ -57,6 +58,7 @@ const PublicationChannelSearch: FC<PublicationChannelSearchProps> = ({
         <AutocompleteTextField
           {...params}
           label={label}
+          required={required}
           isLoading={isLoadingPublishers}
           placeholder={placeholder}
           dataTestId={dataTestId}

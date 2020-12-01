@@ -6,7 +6,8 @@ import { autocompleteTranslationProps } from '../../themes/mainTheme';
 import { InstitutionUnitBase } from '../../types/institution.types';
 import { sortInstitutionsAlphabetically } from '../../utils/institutions-helpers';
 
-interface InstitutionAutocompleteProps extends Pick<TextFieldProps, 'disabled' | 'error' | 'helperText' | 'label'> {
+interface InstitutionAutocompleteProps
+  extends Pick<TextFieldProps, 'disabled' | 'error' | 'helperText' | 'label' | 'required'> {
   institutions: InstitutionUnitBase[];
   value: InstitutionUnitBase | null;
   isLoading?: boolean;
@@ -19,6 +20,7 @@ const InstitutionAutocomplete: FC<InstitutionAutocompleteProps> = ({
   helperText,
   institutions,
   label,
+  required,
   value = null,
   isLoading = false,
   onChange,
@@ -46,6 +48,7 @@ const InstitutionAutocomplete: FC<InstitutionAutocompleteProps> = ({
         <TextField
           {...params}
           label={label ?? t('institution')}
+          required={required}
           placeholder={label ? t('institution:search_department') : t('institution:search_institution')}
           variant="outlined"
           inputProps={{
