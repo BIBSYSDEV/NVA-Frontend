@@ -26,6 +26,6 @@ export interface SearchRegistration {
   title: string;
   publicationType: string;
   publisher: RegistrationPublisher;
-  publishedDate: RegistrationDate;
+  publicationDate: RegistrationDate;
   abstract?: string;
 }
