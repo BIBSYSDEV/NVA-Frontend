@@ -87,7 +87,7 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier = '', closeFor
             /* Use custom save handler instead, since onSubmit will prevent saving if there are any errors */
           }}>
           {({ dirty }: FormikProps<Registration>) => (
-            <Form>
+            <Form noValidate>
               <RouteLeavingGuard
                 modalDescription={t('modal_unsaved_changes_description')}
                 modalHeading={t('modal_unsaved_changes_heading')}

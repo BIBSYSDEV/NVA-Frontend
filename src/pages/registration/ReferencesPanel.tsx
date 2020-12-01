@@ -62,23 +62,22 @@ const ReferencesPanel: FC<PanelProps> = ({ setTouchedFields }) => {
         setFieldValue(instanceTypeBaseFieldName, emptyDegreePublicationInstance, false);
         break;
     }
-  };
-
-  const onChangeSubType = (newInstanceType: string) => {
-    setFieldValue(instanceTypeBaseFieldName, { type: newInstanceType }, false);
-
     // Avoid showing potential errors instantly
     setTouched({
       ...touched,
       entityDescription: {
         ...touched.entityDescription,
-        reference: {
-          ...touched.entityDescription?.reference,
-          publicationContext: {},
-          publicationInstance: {},
-        },
+        reference: { publicationContext: { type: true } },
       },
     });
+  };
+
+  const onChangeSubType = (newInstanceType: string) => {
+    setFieldValue(
+      instanceTypeBaseFieldName,
+      { ...values.entityDescription.reference.publicationInstance, type: newInstanceType },
+      false
+    );
   };
 
   return (

@@ -38,13 +38,14 @@ const AddInstitution: FC<AddInstitutionProps> = ({ onSubmit, onClose }) => {
 
   return (
     <Formik initialValues={{}} onSubmit={onSubmit}>
-      <Form>
+      <Form noValidate>
         <Field name={FormikInstitutionUnitFieldNames.UNIT}>
           {({ field: { name, value }, form: { setFieldValue, isSubmitting } }: FieldProps) => (
             <StyledInstitutionSearchContainer>
               <InstitutionAutocomplete
                 institutions={institutions}
                 isLoading={isLoadingInstitutions}
+                required
                 value={value}
                 onChange={(value) => {
                   setSelectedInstitutionId(value?.id ?? '');

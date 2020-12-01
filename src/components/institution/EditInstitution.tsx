@@ -36,7 +36,7 @@ const EditInstitution: FC<EditInstitutionProps> = ({ initialInstitutionId, onCan
 
   return (
     <Formik enableReinitialize initialValues={{ unit: initialValue }} onSubmit={onSubmit}>
-      <Form>
+      <Form noValidate>
         <Field name={FormikInstitutionUnitFieldNames.UNIT}>
           {({ field: { name, value }, form: { isSubmitting } }: FieldProps) => (
             <StyledInstitutionSearchContainer>
@@ -45,6 +45,7 @@ const EditInstitution: FC<EditInstitutionProps> = ({ initialInstitutionId, onCan
                 isLoading={isLoadingInstitutions}
                 disabled
                 value={value}
+                required
               />
 
               {institutions.length > 0 && isLoadingDepartment && (
