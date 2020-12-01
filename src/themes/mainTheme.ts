@@ -142,6 +142,11 @@ export default createMuiTheme({
         marginTop: '1rem',
       },
     },
+    MuiFormLabel: {
+      asterisk: {
+        color: Colors.Danger,
+      },
+    },
   },
   props: {
     MuiTablePagination: {
@@ -152,3 +157,12 @@ export default createMuiTheme({
     },
   },
 });
+
+// Default props in theme are not supported for components still in /lab
+export const autocompleteTranslationProps = {
+  noOptionsText: i18n.t('common:no_hits'),
+  loadingText: `${i18n.t('common:loading')}...`,
+  clearText: i18n.t('common:clear'),
+  closeText: i18n.t('common:close'),
+  openText: i18n.t('common:open'),
+};

@@ -1,11 +1,11 @@
-import React, { FC, ComponentType } from 'react';
+import React, { FC, ComponentType, ReactNode } from 'react';
 import { RouteProps } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import PrivateRoute from './PrivateRoute';
 
-export interface LoggedInRouteProps extends RouteProps {
-  component: ComponentType<any>;
+interface LoggedInRouteProps extends RouteProps {
+  component: ComponentType<ReactNode>;
 }
 
 export const LoggedInRoute: FC<LoggedInRouteProps> = ({ component, ...rest }) => (

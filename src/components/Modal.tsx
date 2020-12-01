@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
-import { Avatar, Backdrop, Dialog, Fade, DialogTitle, DialogProps, Typography } from '@material-ui/core';
+import { Avatar, Backdrop, Dialog, Fade, DialogTitle, DialogProps, Typography, AvatarProps } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 
 const StyledPaper = styled.div`
@@ -59,7 +59,7 @@ const StyledDialogTitle = styled(DialogTitle)`
 
 interface ModalProps extends Partial<DialogProps> {
   dataTestId?: string;
-  headingIcon?: any;
+  headingIcon?: AvatarProps;
   headingText?: string;
   onClose?: () => void;
 }

@@ -1,28 +1,28 @@
 import Amplify from 'aws-amplify';
-import React, { useEffect, useState, FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import { CircularProgress } from '@material-ui/core';
-import { AuthorityQualifiers, addQualifierIdForAuthority, getAuthority } from './api/authorityApi';
+import { addQualifierIdForAuthority, AuthorityQualifiers, getAuthority } from './api/authorityApi';
+import { getInstitutionUser } from './api/roleApi';
 import { getCurrentUserAttributes } from './api/userApi';
-import Breadcrumbs from './layout/Breadcrumbs';
+import AppRoutes from './AppRoutes';
 import Footer from './layout/Footer';
 import Header from './layout/header/Header';
 import Notifier from './layout/Notifier';
 import AuthorityOrcidModal from './pages/user/authority/AuthorityOrcidModal';
-import { setAuthorityData, setPossibleAuthorities, setUser, setRoles } from './redux/actions/userActions';
+import { setNotification } from './redux/actions/notificationActions';
+import { setAuthorityData, setPossibleAuthorities, setRoles, setUser } from './redux/actions/userActions';
 import { RootStore } from './redux/reducers/rootReducer';
-import { Authority } from './types/authority.types';
 import { awsConfig } from './utils/aws-config';
 import { USE_MOCK_DATA } from './utils/constants';
 import { mockUser } from './utils/testfiles/mock_feide_user';
-import AppRoutes from './AppRoutes';
-import useFetchAuthorities from './utils/hooks/useFetchAuthorities';
-import { setNotification } from './redux/actions/notificationActions';
-import { getInstitutionUser } from './api/roleApi';
+import { useTranslation } from 'react-i18next';
+import { Authority } from './types/authority.types';
 import { NotificationVariant } from './types/notification.types';
 import { InstitutionUser } from './types/user.types';
+import useFetchAuthorities from './utils/hooks/useFetchAuthorities';
 
 const StyledApp = styled.div`
   min-height: 100vh;
@@ -31,6 +31,7 @@ const StyledApp = styled.div`
 `;
 
 const StyledContent = styled.div`
+  padding: 1rem;
   display: flex;
   flex-direction: column;
   align-self: center;
@@ -49,10 +50,10 @@ const ProgressContainer = styled.div`
 
 const App: FC = () => {
   const dispatch = useDispatch();
+  const { t } = useTranslation('feedback');
   const user = useSelector((store: RootStore) => store.user);
   const [isLoadingUser, setIsLoadingUser] = useState(true);
-  const [authorities, isLoadingAuthorities, handleNewAuthoritiesSearchTerm] = useFetchAuthorities(user?.name ?? '');
-  const [authorityDataUpdated, setAuthorityDataUpdated] = useState(false);
+  const [matchingAuthorities, isLoadingMatchingAuthorities] = useFetchAuthorities(user?.name ?? '');
 
   useEffect(() => {
     // Setup aws-amplify
@@ -108,47 +109,39 @@ const App: FC = () => {
   }, [dispatch, user]);
 
   useEffect(() => {
-    // Update search term for fetching possible authorities
-    if (user?.name && user.customerId && !authorities && !isLoadingAuthorities) {
-      handleNewAuthoritiesSearchTerm(user.name);
-    }
-  }, [handleNewAuthoritiesSearchTerm, authorities, isLoadingAuthorities, user]);
-
-  useEffect(() => {
-    // Handle possible authorities
-    const fetchAuthority = async () => {
-      if (authorities) {
-        const filteredAuthorities: Authority[] = authorities.filter((auth: Authority) =>
-          auth.feideids.some((id) => id === user.id)
-        );
-        if (filteredAuthorities.length === 1 && user?.cristinId) {
-          const existingScn = filteredAuthorities[0].systemControlNumber;
-          const existingAuthority: Authority = await getAuthority(existingScn);
-          if (existingAuthority.orgunitids.includes(user.cristinId)) {
-            dispatch(setAuthorityData(existingAuthority));
-          } else {
-            const updatedAuthority = await addQualifierIdForAuthority(
-              existingScn,
-              AuthorityQualifiers.ORGUNIT_ID,
-              user.cristinId
-            );
-            if (updatedAuthority?.error) {
-              dispatch(setNotification(updatedAuthority.error, NotificationVariant.Error));
-            } else {
-              dispatch(setAuthorityData(updatedAuthority));
+    if (matchingAuthorities && user && !user.authority && !user.possibleAuthorities) {
+      const fetchAuthority = async () => {
+        const filteredAuthorities = matchingAuthorities.filter((auth) => auth.feideids.some((id) => id === user.id));
+        if (filteredAuthorities.length === 1) {
+          // Use exsisting authority
+          const existingArpId = filteredAuthorities[0].id;
+          const existingAuthority = await getAuthority(existingArpId);
+          if (existingAuthority?.error) {
+            dispatch(setNotification(t('error.get_authority'), NotificationVariant.Error));
+          } else if (existingAuthority?.data) {
+            let currentAuthority = existingAuthority.data;
+            if (user.cristinId && !existingAuthority.data.orgunitids.includes(user.cristinId)) {
+              // Add cristinId to Authority's orgunitids
+              const authorityWithOrgId = await addQualifierIdForAuthority(
+                existingArpId,
+                AuthorityQualifiers.ORGUNIT_ID,
+                user.cristinId
+              );
+              if (authorityWithOrgId?.error) {
+                dispatch(setNotification(authorityWithOrgId.error, NotificationVariant.Error));
+              } else {
+                currentAuthority = authorityWithOrgId as Authority;
+              }
             }
+            dispatch(setAuthorityData(currentAuthority));
           }
         } else {
-          dispatch(setPossibleAuthorities(authorities));
+          dispatch(setPossibleAuthorities(matchingAuthorities));
         }
-        setAuthorityDataUpdated(true);
-      }
-    };
-    // Avoid infinite loop by breaking when new data is identical to existing data
-    if (user?.customerId && !user.authority && user.possibleAuthorities !== authorities) {
+      };
       fetchAuthority();
     }
-  }, [dispatch, authorities, user]);
+  }, [dispatch, t, matchingAuthorities, user]);
 
   return isLoadingUser ? (
     <ProgressContainer>
@@ -159,13 +152,12 @@ const App: FC = () => {
       <StyledApp>
         <Notifier />
         <Header />
-        <Breadcrumbs />
         <StyledContent>
           <AppRoutes />
         </StyledContent>
         <Footer />
       </StyledApp>
-      {!isLoadingAuthorities && authorityDataUpdated && user?.customerId && <AuthorityOrcidModal />}
+      {user && !isLoadingMatchingAuthorities && (user.authority || user.possibleAuthorities) && <AuthorityOrcidModal />}
     </BrowserRouter>
   );
 };

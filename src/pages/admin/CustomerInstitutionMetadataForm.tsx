@@ -16,11 +16,11 @@ import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import { createCustomerInstitution, updateCustomerInstitution } from '../../api/customerInstitutionsApi';
 import ButtonWithProgress from '../../components/ButtonWithProgress';
-import { StyledRightAlignedButtonWrapper } from '../../components/styled/Wrappers';
+import { StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
 import { customerInstitutionValidationSchema } from '../../utils/validation/customerInstitutionValidation';
 import { SelectInstitutionField, CustomerInstitutionTextField } from './customerInstitutionFields';
 
-const StyledButtonContainer = styled(StyledRightAlignedButtonWrapper)`
+const StyledButtonContainer = styled(StyledRightAlignedWrapper)`
   margin-top: 2rem;
 `;
 
@@ -74,16 +74,18 @@ const CustomerInstitutionMetadataForm: FC<CustomerInstitutionMetadataFormProps> 
         validationSchema={customerInstitutionValidationSchema}
         onSubmit={handleSubmit}>
         {({ isSubmitting }) => (
-          <Form>
+          <Form noValidate>
             <SelectInstitutionField disabled={editMode} />
             <CustomerInstitutionTextField
               name={CustomerInstitutionFieldNames.DISPLAY_NAME}
               label={t('display_name')}
+              required
               dataTestId="customer-institution-display-name-input"
             />
             <CustomerInstitutionTextField
               name={CustomerInstitutionFieldNames.SHORT_NAME}
               label={t('short_name')}
+              required
               dataTestId="customer-institution-short-name-input"
             />
             <CustomerInstitutionTextField
@@ -94,6 +96,7 @@ const CustomerInstitutionMetadataForm: FC<CustomerInstitutionMetadataFormProps> 
             <CustomerInstitutionTextField
               name={CustomerInstitutionFieldNames.FEIDE_ORGANIZATION_ID}
               label={t('feide_organization_id')}
+              required
               dataTestId="customer-institution-feide-organization-id-input"
             />
             <StyledButtonContainer>

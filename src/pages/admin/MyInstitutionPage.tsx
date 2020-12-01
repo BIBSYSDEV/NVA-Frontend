@@ -20,9 +20,9 @@ import { updateCustomerInstitution } from '../../api/customerInstitutionsApi';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import ListSkeleton from '../../components/ListSkeleton';
-import { StyledRightAlignedButtonWrapper } from '../../components/styled/Wrappers';
+import { StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
 
-const StyledButtonContainer = styled(StyledRightAlignedButtonWrapper)`
+const StyledButtonContainer = styled(StyledRightAlignedWrapper)`
   margin-top: 2rem;
 `;
 
@@ -58,16 +58,18 @@ const MyCustomerInstitutionPage: FC = () => {
             validationSchema={myInstitutionValidationSchema}
             onSubmit={handleSubmit}>
             {({ isSubmitting }) => (
-              <Form>
+              <Form noValidate>
                 <SelectInstitutionField disabled />
                 <CustomerInstitutionTextField
                   name={CustomerInstitutionFieldNames.DISPLAY_NAME}
                   label={t('display_name')}
+                  required
                   dataTestId="customer-institution-display-name-input"
                 />
                 <CustomerInstitutionTextField
                   name={CustomerInstitutionFieldNames.SHORT_NAME}
                   label={t('short_name')}
+                  required
                   dataTestId="customer-institution-short-name-input"
                 />
                 <CustomerInstitutionTextField

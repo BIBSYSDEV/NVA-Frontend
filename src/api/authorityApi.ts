@@ -1,7 +1,8 @@
 import Axios, { CancelToken } from 'axios';
-
 import i18n from '../translations/i18n';
+import { Authority } from '../types/authority.types';
 import { StatusCode } from '../utils/constants';
+import { apiRequest } from './apiRequest';
 import { getIdToken } from './userApi';
 
 export enum AuthorityApiPaths {
@@ -14,27 +15,14 @@ export enum AuthorityQualifiers {
   ORGUNIT_ID = 'orgunitid',
 }
 
-export const getAuthority = async (arpId: string, cancelToken?: CancelToken) => {
-  const url = encodeURI(`${AuthorityApiPaths.PERSON}?arpId=${arpId}`);
-
-  const error = i18n.t('feedback:error.get_authority');
-
-  try {
-    const response = await Axios.get(url, { cancelToken });
-    if (response.status === StatusCode.OK) {
-      return response.data;
-    } else {
-      return { error };
-    }
-  } catch (error) {
-    if (!Axios.isCancel(error)) {
-      return { error };
-    }
-  }
-};
+export const getAuthority = async (arpId: string, cancelToken?: CancelToken) =>
+  await apiRequest<Authority>({
+    url: arpId,
+    cancelToken,
+  });
 
 export const getAuthorities = async (name: string, cancelToken?: CancelToken) => {
-  const url = encodeURI(`${AuthorityApiPaths.PERSON}?name=${name}`);
+  const url = `${AuthorityApiPaths.PERSON}?name=${encodeURIComponent(name)}`;
 
   const error = i18n.t('feedback:error.get_authorities');
 
@@ -59,7 +47,7 @@ export const getAuthorities = async (name: string, cancelToken?: CancelToken) =>
   }
 };
 
-export const createAuthority = async (firstName: string, lastName: string, feideId?: string) => {
+export const createAuthority = async (firstName: string, lastName: string, feideId?: string, cristinId?: string) => {
   const url = AuthorityApiPaths.PERSON;
 
   const error = i18n.t('feedback:error.create_authority');
@@ -74,14 +62,21 @@ export const createAuthority = async (firstName: string, lastName: string, feide
     const response = await Axios.post(url, { invertedname: `${lastName}, ${firstName}` }, { headers });
     if (response.status === StatusCode.OK) {
       if (feideId) {
-        const systemControlNumber = response.data.systemControlNumber;
-        const updatedAuthority = await addQualifierIdForAuthority(
-          systemControlNumber,
-          AuthorityQualifiers.FEIDE_ID,
-          feideId
-        );
+        const arpId = response.data.id;
+        const updatedAuthority = await addQualifierIdForAuthority(arpId, AuthorityQualifiers.FEIDE_ID, feideId);
         if (updatedAuthority) {
-          return updatedAuthority;
+          if (cristinId) {
+            const updatedAuthorityWithCristinId = await addQualifierIdForAuthority(
+              arpId,
+              AuthorityQualifiers.ORGUNIT_ID,
+              cristinId
+            );
+            if (updatedAuthorityWithCristinId) {
+              return updatedAuthorityWithCristinId;
+            }
+          } else {
+            return updatedAuthority;
+          }
         }
       } else {
         return response.data;
@@ -94,12 +89,8 @@ export const createAuthority = async (firstName: string, lastName: string, feide
   }
 };
 
-export const addQualifierIdForAuthority = async (
-  systemControlNumber: string,
-  qualifier: AuthorityQualifiers,
-  identifier: string
-) => {
-  const url = `${AuthorityApiPaths.PERSON}/${systemControlNumber}/identifiers/${qualifier}/add`;
+export const addQualifierIdForAuthority = async (arpId: string, qualifier: AuthorityQualifiers, identifier: string) => {
+  const url = `${arpId}/identifiers/${qualifier}/add`;
 
   const error = i18n.t('feedback:error.update_authority', { qualifier: i18n.t(`common:${qualifier}`) });
 
@@ -120,12 +111,12 @@ export const addQualifierIdForAuthority = async (
 };
 
 export const updateQualifierIdForAuthority = async (
-  systemControlNumber: string,
+  arpId: string,
   qualifier: AuthorityQualifiers,
   identifier: string,
   updatedIdentifier: string
 ) => {
-  const url = `${AuthorityApiPaths.PERSON}/${systemControlNumber}/identifiers/${qualifier}/update`;
+  const url = `${arpId}/identifiers/${qualifier}/update`;
 
   const error = i18n.t('feedback:error.update_authority', { qualifier: i18n.t(`common:${qualifier}`) });
 
@@ -135,7 +126,7 @@ export const updateQualifierIdForAuthority = async (
       Authorization: `Bearer ${idToken}`,
     };
 
-    const response = await Axios.post(url, { identifier, updatedIdentifier }, { headers });
+    const response = await Axios.put(url, { identifier, updatedIdentifier }, { headers });
     if (response.status === StatusCode.OK) {
       return response.data;
     } else {
@@ -147,11 +138,11 @@ export const updateQualifierIdForAuthority = async (
 };
 
 export const removeQualifierIdFromAuthority = async (
-  systemControlNumber: string,
+  arpId: string,
   qualifier: AuthorityQualifiers,
   identifier: string
 ) => {
-  const url = `${AuthorityApiPaths.PERSON}/${systemControlNumber}/identifiers/${qualifier}/delete`;
+  const url = `${arpId}/identifiers/${qualifier}/delete`;
 
   const error = i18n.t('feedback:error.delete_identifier', { qualifier: i18n.t(`common:${qualifier}`) });
 

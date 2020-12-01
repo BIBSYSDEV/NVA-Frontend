@@ -8,7 +8,7 @@ import {
 } from '../types/publicationFieldNames';
 import { Contributor } from '../types/contributor.types';
 import { File } from '../types/file.types';
-import { Publication } from '../types/publication.types';
+import { Registration } from '../types/registration.types';
 import deepmerge, { Options } from 'deepmerge';
 
 interface CustomError {
@@ -17,17 +17,14 @@ interface CustomError {
 }
 
 // Convert all errors from nested object to flat array
-export const flattenFormikErrors = (
-  validationErrors: FormikErrors<any>,
-  fieldNamePrefix: string = ''
-): CustomError[] => {
+export const flattenFormikErrors = (validationErrors: FormikErrors<unknown>, fieldNamePrefix = ''): CustomError[] => {
   if (typeof validationErrors === 'object') {
     return Object.entries(validationErrors)
       .map(([fieldName, errorMessage]) => {
         const fieldPath = fieldNamePrefix ? `${fieldNamePrefix}-${fieldName}` : fieldName;
         if (typeof errorMessage === 'object' && errorMessage !== null) {
           if (Array.isArray(errorMessage)) {
-            const errorArray = errorMessage as FormikErrors<any>[];
+            const errorArray = errorMessage as FormikErrors<unknown>[];
             const isStringErrors = errorArray.some((error) => typeof error === 'string');
             // Merge errors in array, and ignore their indexes
             const groupErrors = isStringErrors
@@ -35,7 +32,7 @@ export const flattenFormikErrors = (
               : errorArray.reduce((result, current) => ({ ...result, ...current }), {});
             return flattenFormikErrors(groupErrors, fieldPath);
           } else {
-            return flattenFormikErrors(errorMessage as FormikErrors<any>, fieldPath);
+            return flattenFormikErrors(errorMessage as FormikErrors<unknown>, fieldPath);
           }
         }
         return {
@@ -55,8 +52,8 @@ export const flattenFormikErrors = (
 };
 
 export const hasTouchedError = (
-  errors: FormikErrors<any>,
-  touched: FormikTouched<any>,
+  errors: FormikErrors<unknown>,
+  touched: FormikTouched<unknown>,
   fieldNames: string[]
 ): boolean => {
   if (!Object.keys(errors).length || !Object.keys(touched).length || !fieldNames.length) {
@@ -72,8 +69,8 @@ export const hasTouchedError = (
   });
 };
 
-export const getAllFileFields = (files: File[]) => {
-  let fieldNames: string[] = [];
+export const getAllFileFields = (files: File[]): string[] => {
+  const fieldNames: string[] = [];
   if (files.length === 0) {
     fieldNames.push(FileFieldNames.FILES);
   } else {
@@ -90,8 +87,8 @@ export const getAllFileFields = (files: File[]) => {
   return fieldNames;
 };
 
-export const getAllContributorFields = (contributors: Contributor[]) => {
-  let fieldNames: string[] = [];
+export const getAllContributorFields = (contributors: Contributor[]): string[] => {
+  const fieldNames: string[] = [];
   if (contributors.length === 0) {
     fieldNames.push(ContributorFieldNames.CONTRIBUTORS);
   } else {
@@ -107,7 +104,7 @@ export const getAllContributorFields = (contributors: Contributor[]) => {
   return fieldNames;
 };
 
-export const touchedDescriptionTabFields: FormikTouched<Publication> = {
+export const touchedDescriptionTabFields: FormikTouched<Registration> = {
   entityDescription: {
     abstract: true,
     date: {
@@ -123,7 +120,7 @@ export const touchedDescriptionTabFields: FormikTouched<Publication> = {
   },
 };
 
-export const touchedReferenceTabFields = (publicationType: PublicationType | ''): FormikTouched<any> => {
+export const touchedReferenceTabFields = (publicationType: PublicationType | ''): FormikTouched<unknown> => {
   switch (publicationType) {
     case PublicationType.PUBLICATION_IN_JOURNAL:
       return {
@@ -209,7 +206,7 @@ export const touchedReferenceTabFields = (publicationType: PublicationType | '')
   }
 };
 
-export const touchedContributorTabFields = (contributors: Contributor[]): FormikTouched<Publication> => ({
+export const touchedContributorTabFields = (contributors: Contributor[]): FormikTouched<Registration> => ({
   entityDescription: {
     contributors: contributors.map((contributor) => ({
       affiliations: [],
@@ -220,7 +217,7 @@ export const touchedContributorTabFields = (contributors: Contributor[]): Formik
   },
 });
 
-export const touchedFilesTabFields = (files: File[]): FormikTouched<Publication> => ({
+export const touchedFilesTabFields = (files: File[]): FormikTouched<Registration> => ({
   fileSet: {
     files: files.map((file) => ({
       administrativeAgreement: true,
@@ -231,7 +228,8 @@ export const touchedFilesTabFields = (files: File[]): FormikTouched<Publication>
   },
 });
 
-export const overwriteArrayMerge = (destinationArray: any[], sourceArray: any[], options?: Options) => sourceArray;
+export const overwriteArrayMerge = (destinationArray: unknown[], sourceArray: unknown[], options?: Options) =>
+  sourceArray;
 
-export const mergeTouchedFields = (touchedArray: FormikTouched<Publication>[]) =>
+export const mergeTouchedFields = (touchedArray: FormikTouched<Registration>[]) =>
   deepmerge.all(touchedArray, { arrayMerge: overwriteArrayMerge });

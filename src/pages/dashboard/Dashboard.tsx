@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Link, useHistory } from 'react-router-dom';
 import { Link as MuiLink } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import LatestPublications from './LatestPublications';
+import LatestRegistrations from './LatestRegistrations';
 import SearchBar from '../../components/SearchBar';
 
 const StyledDashboard = styled.div`
@@ -12,11 +12,7 @@ const StyledDashboard = styled.div`
   grid-template-rows: auto auto;
   row-gap: 1rem;
   justify-items: center;
-  padding: 4rem;
   width: 100%;
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-    padding: 1rem;
-  }
 `;
 
 const StyledOtherContent = styled.div`
@@ -33,9 +29,6 @@ const StyledLinks = styled.div`
 const StyledSearchBarContainer = styled.div`
   grid-area: search-bar;
   width: 100%;
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-    width: 90%;
-  }
 `;
 
 const Dashboard: FC = () => {
@@ -52,7 +45,7 @@ const Dashboard: FC = () => {
     <StyledDashboard>
       <StyledSearchBarContainer>
         <SearchBar handleSearch={handleSearch} initialSearchTerm="" />
-        <LatestPublications />
+        <LatestRegistrations />
       </StyledSearchBarContainer>
       <StyledOtherContent>
         <StyledLinks>

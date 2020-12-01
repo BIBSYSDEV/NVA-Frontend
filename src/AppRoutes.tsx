@@ -9,16 +9,17 @@ import { useSelector } from 'react-redux';
 import { RootStore } from './redux/reducers/rootReducer';
 
 const Dashboard = lazy(() => import('./pages/dashboard/Dashboard'));
-const EditPublication = lazy(() => import('./pages/publication/EditPublication'));
-const MyPublications = lazy(() => import('./pages/publication/my_publications/MyPublications'));
-const Search = lazy(() => import('./pages/search/Search'));
-const PublicPublication = lazy(() => import('./pages/publication/public_publication/PublicPublication'));
-const User = lazy(() => import('./pages/user/User'));
+const EditRegistration = lazy(() => import('./pages/registration/EditRegistration'));
+const MyRegistrations = lazy(() => import('./pages/my_registrations/MyRegistrations'));
+const SearchPage = lazy(() => import('./pages/search/SearchPage'));
+const PublicRegistration = lazy(() => import('./pages/public_registration/PublicRegistration'));
+const MyProfilePage = lazy(() => import('./pages/user/MyProfilePage'));
 const NotFound = lazy(() => import('./pages/errorpages/NotFound'));
-const PublicProfile = lazy(() => import('./pages/publication/PublicProfile'));
+const PublicProfile = lazy(() => import('./pages/public_profile/PublicProfile'));
 const AdminCustomerInstitutionsPage = lazy(() => import('./pages/admin/AdminCustomerInstitutionsPage'));
 const MyInstitutionPage = lazy(() => import('./pages/admin/MyInstitutionPage'));
 const MyInstitutionUsersPage = lazy(() => import('./pages/admin/MyInstitutionUsersPage'));
+const MyMessages = lazy(() => import('./pages/messages/MyMessages'));
 const WorklistPage = lazy(() => import('./pages/worklist/WorklistPage'));
 const Logout = lazy(() => import('./layout/Logout'));
 
@@ -32,22 +33,23 @@ const AppRoutes: FC = () => {
         <Route exact path="/description" component={Description} />
         <Route exact path="/order-information" component={OrderInformation} />
         <Route exact path="/privacy-policy" component={PrivacyPolicy} />
-        <Route exact path="/user/:arpId" component={PublicProfile} />
-        <Route exact path="/registration/:identifier/public" component={PublicPublication} />
-        <Route exact path="/search" component={Search} />
-        <Route exact path="/search/:searchTerm" component={Search} />
-        <Route exact path="/search/:searchTerm/:offset" component={Search} />
+        <Route exact path="/user" component={PublicProfile} />
+        <Route exact path="/registration/:identifier/public" component={PublicRegistration} />
+        <Route exact path="/search" component={SearchPage} />
+        <Route exact path="/search/:searchTerm" component={SearchPage} />
+        <Route exact path="/search/:searchTerm/:offset" component={SearchPage} />
         <Route exact path="/logout" component={Logout} />
 
         {user && (
           <>
             {/* LoggedInRoute */}
-            <LoggedInRoute exact path="/user" component={User} />
+            <LoggedInRoute exact path="/my-profile" component={MyProfilePage} />
 
             {/* CreatorRoutes */}
-            <CreatorRoute exact path="/registration" component={EditPublication} />
-            <CreatorRoute exact path="/registration/:identifier" component={EditPublication} />
-            <CreatorRoute exact path="/my-registrations" component={MyPublications} />
+            <CreatorRoute exact path="/registration" component={EditRegistration} />
+            <CreatorRoute exact path="/registration/:identifier" component={EditRegistration} />
+            <CreatorRoute exact path="/my-registrations" component={MyRegistrations} />
+            <CreatorRoute exact path="/my-messages" component={MyMessages} />
 
             {/* CuratorRoutes */}
             <CuratorRoute exact path="/worklist" component={WorklistPage} />

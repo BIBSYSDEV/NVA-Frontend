@@ -1,5 +1,5 @@
-import { RecursiveInstitutionUnit, FormikInstitutionUnit, InstitutionUnitBase } from '../types/institution.types';
 import { Contributor } from '../types/contributor.types';
+import { FormikInstitutionUnit, InstitutionUnitBase, RecursiveInstitutionUnit } from '../types/institution.types';
 
 // Exclude institutions on any level (root, subunit, subunit of subunit, etc) that has a matching id in excludeIds
 export const filterInstitutions = (
@@ -23,7 +23,7 @@ export const getMostSpecificUnit = (values: FormikInstitutionUnit): InstitutionU
 };
 
 // Find distinct unit URIs for a set of contributors' affiliations
-export const getDistinctContributorUnits = (contributors: Contributor[]) => [
+export const getDistinctContributorUnits = (contributors: Contributor[]): string[] => [
   ...new Set(
     contributors
       .map((contributor) => contributor.affiliations)
@@ -34,11 +34,40 @@ export const getDistinctContributorUnits = (contributors: Contributor[]) => [
 ];
 
 // Returns top-down unit names: ["Level1", "Level2", (etc.)]
-export const getUnitHierarchyNames = (unit: RecursiveInstitutionUnit, unitNames: string[] = []): string[] => {
-  unitNames.push(unit.name);
-  if (unit.subunits) {
-    return getUnitHierarchyNames(unit.subunits[0], unitNames);
-  } else {
+export const getUnitHierarchyNames = (
+  queryId: string,
+  unit?: RecursiveInstitutionUnit,
+  unitNames: string[] = []
+): string[] => {
+  if (!unit) {
     return unitNames;
   }
+  unitNames.push(unit.name);
+
+  if (queryId === unit.id || queryId === convertToInstitution(unit.id) || !unit.subunits) {
+    return unitNames;
+  } else {
+    return getUnitHierarchyNames(queryId, unit.subunits[0], unitNames);
+  }
 };
+
+// converts from https://api.cristin.no/v2/units/7482.3.3.0
+//            to https://api.cristin.no/v2/institutions/7482
+export const convertToInstitution = (unitId: string) => {
+  if (unitId.includes('/institutions/')) {
+    return unitId;
+  } else {
+    const id = unitId.split('https://api.cristin.no/v2/units/').pop();
+    const institutionId = id?.split('.').reverse().pop();
+    return `https://api.cristin.no/v2/institutions/${institutionId}`;
+  }
+};
+
+export const sortInstitutionsAlphabetically = (institutions: InstitutionUnitBase[]) =>
+  institutions.sort((institution1, institution2) => {
+    if (institution1.name.toLocaleLowerCase() < institution2.name.toLocaleLowerCase()) {
+      return -1;
+    } else {
+      return 1;
+    }
+  });

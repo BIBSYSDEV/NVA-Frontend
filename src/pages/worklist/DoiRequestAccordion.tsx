@@ -1,15 +1,18 @@
 import React, { FC } from 'react';
-import { Accordion, AccordionSummary, AccordionDetails, Button, TextField } from '@material-ui/core';
+import { Accordion, AccordionSummary, AccordionDetails, Button } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Link as RouterLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 
 import Label from '../../components/Label';
-import { PublicationTab, Publication } from '../../types/publication.types';
+import { RegistrationTab, Registration } from '../../types/registration.types';
 import MessageList from './MessageList';
+import { MessageForm } from '../../components/MessageForm';
 
 const StyledAccordion = styled(Accordion)`
+  width: 100%;
+  margin: 0 1rem;
   .MuiAccordionSummary-content {
     display: grid;
     grid-template-areas: 'status title creator';
@@ -40,12 +43,6 @@ const StyledMessages = styled.div`
   flex-direction: column;
 `;
 
-const StyledMessageButton = styled(Button)`
-  margin-top: 1rem;
-  float: right;
-  min-width: 10rem;
-`;
-
 const StyledAccordionActionButtons = styled.div`
   width: 20%;
   display: flex;
@@ -62,17 +59,21 @@ const StyledAccordionActionButtons = styled.div`
 `;
 
 interface DoiRequestAccordionProps {
-  publication: Publication;
+  registration: Registration;
 }
 
-export const DoiRequestAccordion: FC<DoiRequestAccordionProps> = ({ publication }) => {
+export const DoiRequestAccordion: FC<DoiRequestAccordionProps> = ({ registration }) => {
   const { t } = useTranslation('workLists');
   const {
     identifier,
     owner,
     entityDescription: { mainTitle },
-  } = publication;
-  const doiRequest = publication.doiRequest!;
+    doiRequest,
+  } = registration;
+
+  if (!doiRequest) {
+    return null;
+  }
 
   return (
     <StyledAccordion data-testid={`doi-request-${identifier}`}>
@@ -81,31 +82,32 @@ export const DoiRequestAccordion: FC<DoiRequestAccordionProps> = ({ publication 
         <StyledTitle>{mainTitle}</StyledTitle>
         <StyledOwner>
           <Label>{owner}</Label>
-          {new Date(doiRequest.date).toLocaleDateString()}
+          {new Date(doiRequest.createdDate).toLocaleDateString()}
         </StyledOwner>
       </AccordionSummary>
       <AccordionDetails>
         <StyledMessages>
           <MessageList messages={doiRequest.messages} />
-          <TextField
-            variant="outlined"
-            fullWidth
-            multiline
-            rows={4}
-            label={t('doi_requests.message_to_user')}
-            disabled
+          <MessageForm
+            confirmAction={async (message) => {
+              return new Promise((resolve) => {
+                setTimeout(() => {
+                  // TODO: Send message to backend
+                  // eslint-disable-next-line no-console
+                  console.log('Doi Message:', message);
+                  resolve();
+                }, 1000);
+              });
+            }}
           />
-          <StyledMessageButton variant="contained" color="primary" disabled>
-            {t('common:send')}
-          </StyledMessageButton>
         </StyledMessages>
         <StyledAccordionActionButtons>
           <Button
-            data-testid={`go-to-publication-${identifier}`}
+            data-testid={`go-to-registration-${identifier}`}
             variant="outlined"
             component={RouterLink}
-            to={`/registration/${identifier}?tab=${PublicationTab.Submission}`}>
-            {t('doi_requests.go_to_publication')}
+            to={`/registration/${identifier}?tab=${RegistrationTab.Submission}`}>
+            {t('doi_requests.go_to_registration')}
           </Button>
           <Button variant="contained" color="primary" disabled>
             {t('doi_requests.archive')}

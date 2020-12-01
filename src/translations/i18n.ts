@@ -1,10 +1,8 @@
 import i18n from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
-
 import { LanguageCodes } from '../types/language.types';
 import adminEn from './en/admin.json';
 import authorizationEn from './en/authorization.json';
-import breadcrumbsEn from './en/breadcrumbs.json';
 import commonEn from './en/common.json';
 import disciplinesEn from './en/disciplines.json';
 import feedbackEn from './en/feedback.json';
@@ -14,14 +12,11 @@ import institutionEn from './en/institution.json';
 import languagesEn from './en/languages.json';
 import licensesEn from './en/licenses.json';
 import profileEn from './en/profile.json';
-import publicationEn from './en/publication.json';
 import publicationTypesEn from './en/publicationTypes.json';
-import translationsEn from './en/translations.json';
+import registrationEn from './en/registration.json';
 import workListsEn from './en/workLists.json';
-
 import adminNb from './nb/admin.json';
 import authorizationNb from './nb/authorization.json';
-import breadcrumbsNb from './nb/breadcrumbs.json';
 import commonNb from './nb/common.json';
 import disciplinesNb from './nb/disciplines.json';
 import feedbackNb from './nb/feedback.json';
@@ -31,9 +26,8 @@ import institutionNb from './nb/institution.json';
 import languagesNb from './nb/languages.json';
 import licensesNb from './nb/licenses.json';
 import profileNb from './nb/profile.json';
-import publicationNb from './nb/publication.json';
 import publicationTypesNb from './nb/publicationTypes.json';
-import translationsNb from './nb/translations.json';
+import registrationNb from './nb/registration.json';
 import workListsNb from './nb/workLists.json';
 
 export const fallbackLanguage = LanguageCodes.NORWEGIAN_BOKMAL;
@@ -43,7 +37,6 @@ i18n.use(LanguageDetector).init({
     eng: {
       admin: adminEn,
       authorization: authorizationEn,
-      breadcrumbs: breadcrumbsEn,
       common: commonEn,
       disciplines: disciplinesEn,
       feedback: feedbackEn,
@@ -53,15 +46,13 @@ i18n.use(LanguageDetector).init({
       languages: languagesEn,
       licenses: licensesEn,
       profile: profileEn,
-      publication: publicationEn,
       publicationTypes: publicationTypesEn,
-      translations: translationsEn,
+      registration: registrationEn,
       workLists: workListsEn,
     },
     nob: {
       admin: adminNb,
       authorization: authorizationNb,
-      breadcrumbs: breadcrumbsNb,
       common: commonNb,
       disciplines: disciplinesNb,
       feedback: feedbackNb,
@@ -71,16 +62,31 @@ i18n.use(LanguageDetector).init({
       languages: languagesNb,
       licenses: licensesNb,
       profile: profileNb,
-      publication: publicationNb,
       publicationTypes: publicationTypesNb,
-      translations: translationsNb,
+      registration: registrationNb,
       workLists: workListsNb,
     },
   },
   fallbackLng: fallbackLanguage,
   debug: false,
-  ns: ['breadcrumbs', 'common', 'feedback', 'infopages', 'languages', 'profile', 'translations'],
-  defaultNS: 'translations',
+  ns: [
+    'admin',
+    'authorization',
+    'common',
+    'disciplines',
+    'feedback',
+    'formikValues',
+    'infopages',
+    'institution',
+    'languages',
+    'licenses',
+    'profile',
+    'publicationTypes',
+    'registration',
+    'workLists',
+  ],
+  defaultNS: 'common',
+  supportedLngs: ['nob', 'eng'],
   interpolation: {
     formatSeparator: ',',
   },

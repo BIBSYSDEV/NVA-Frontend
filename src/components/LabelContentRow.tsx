@@ -1,6 +1,6 @@
-import React, { FC } from 'react';
+import React, { FC, ReactNode } from 'react';
 import styled from 'styled-components';
-import NormalText from './NormalText';
+import { Typography } from '@material-ui/core';
 
 const StyledRow = styled.div`
   padding-bottom: 0.5rem;
@@ -10,13 +10,13 @@ const StyledRow = styled.div`
   align-items: center;
 `;
 
-const StyledLabel = styled(({ minimal: boolean, ...props }) => <NormalText {...props} />)`
+const StyledLabel = styled(({ minimal: boolean, ...props }) => <Typography {...props} />)`
   display: inline-block;
   font-weight: bold;
   ${({ minimal }) => (minimal ? `width: 10rem;` : `min-width: 17rem;`)}
 `;
 
-const StyledSingleRowContainer = styled(NormalText)`
+const StyledSingleRowContainer = styled(Typography)`
   display: inline-block;
   flex: 1;
 `;
@@ -28,7 +28,7 @@ const StyledMultipleRowContainer = styled.div`
 
 interface LabelContentRowProps {
   label: string;
-  children: any;
+  children: ReactNode;
   dataTestId?: string;
   minimal?: boolean;
   multiple?: boolean;

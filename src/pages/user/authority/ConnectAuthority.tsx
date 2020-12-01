@@ -7,10 +7,9 @@ import { Button, DialogActions } from '@material-ui/core';
 import { addQualifierIdForAuthority, AuthorityQualifiers } from '../../../api/authorityApi';
 import { setAuthorityData } from '../../../redux/actions/userActions';
 import { RootStore } from '../../../redux/reducers/rootReducer';
-import { Authority } from '../../../types/authority.types';
 import NewAuthorityCard from './NewAuthorityCard';
 import AuthorityList from './AuthorityList';
-import { StyledRightAlignedButtonWrapper } from '../../../components/styled/Wrappers';
+import { StyledRightAlignedWrapper } from '../../../components/styled/Wrappers';
 import ButtonWithProgress from '../../../components/ButtonWithProgress';
 import { NotificationVariant } from '../../../types/notification.types';
 import { setNotification } from '../../../redux/actions/notificationActions';
@@ -33,7 +32,7 @@ export const ConnectAuthority: FC<ConnectAuthorityProps> = ({ handleCloseModal }
   const dispatch = useDispatch();
   const { t } = useTranslation('profile');
   const user = useSelector((store: RootStore) => store.user);
-  const [selectedSystemControlNumber, setSelectedSystemControlNumber] = useState('');
+  const [selectedArpId, setSelectedArpId] = useState('');
   const [openNewAuthorityCard, setOpenNewAuthorityCard] = useState(false);
   const [isUpdatingAuthority, setIsUpdatingAuthority] = useState(false);
 
@@ -42,32 +41,27 @@ export const ConnectAuthority: FC<ConnectAuthorityProps> = ({ handleCloseModal }
   };
 
   const updateAuthorityForUser = async () => {
-    const selectedAuthority = user.possibleAuthorities.find(
-      (authority) => authority.systemControlNumber === selectedSystemControlNumber
-    );
+    const selectedAuthority = user.possibleAuthorities.find((authority) => authority.id === selectedArpId);
 
     if (selectedAuthority) {
       setIsUpdatingAuthority(true);
       const updatedAuthorityWithFeide = await addQualifierIdForAuthority(
-        selectedSystemControlNumber,
+        selectedArpId,
         AuthorityQualifiers.FEIDE_ID,
         user.id
       );
       if (updatedAuthorityWithFeide.error) {
         dispatch(setNotification(updatedAuthorityWithFeide.error, NotificationVariant.Error));
         setIsUpdatingAuthority(false);
-      } else if (
-        updatedAuthorityWithFeide?.orgunitids &&
-        updatedAuthorityWithFeide.orgunitids.includes(user.cristinId)
-      ) {
-        dispatch(setAuthorityData(updatedAuthorityWithFeide));
-      } else if (user.cristinId) {
+      } else if (user.cristinId && !updatedAuthorityWithFeide.orgunitids.includes(user.cristinId)) {
         const updatedAuthorityWithCristinId = await addQualifierIdForAuthority(
-          selectedSystemControlNumber,
+          selectedArpId,
           AuthorityQualifiers.ORGUNIT_ID,
           user.cristinId
         );
         dispatch(setAuthorityData(updatedAuthorityWithCristinId));
+      } else {
+        dispatch(setAuthorityData(updatedAuthorityWithFeide));
       }
     }
   };
@@ -79,13 +73,11 @@ export const ConnectAuthority: FC<ConnectAuthorityProps> = ({ handleCloseModal }
           <>
             <AuthorityList
               authorities={user.possibleAuthorities}
-              selectedSystemControlNumber={selectedSystemControlNumber}
-              onSelectAuthority={(authority: Authority) =>
-                setSelectedSystemControlNumber(authority.systemControlNumber)
-              }
+              selectedArpId={selectedArpId}
+              onSelectAuthority={(authority) => setSelectedArpId(authority.id)}
               searchTerm={user.name}
             />
-            <StyledRightAlignedButtonWrapper>
+            <StyledRightAlignedWrapper>
               <Button
                 color="primary"
                 variant="text"
@@ -93,7 +85,7 @@ export const ConnectAuthority: FC<ConnectAuthorityProps> = ({ handleCloseModal }
                 onClick={toggleOpenNewAuthorityCard}>
                 {t('authority.create_own_authority')}
               </Button>
-            </StyledRightAlignedButtonWrapper>
+            </StyledRightAlignedWrapper>
 
             <DialogActions>
               <Button variant="text" onClick={handleCloseModal}>
@@ -105,7 +97,7 @@ export const ConnectAuthority: FC<ConnectAuthorityProps> = ({ handleCloseModal }
                 variant="contained"
                 size="large"
                 onClick={updateAuthorityForUser}
-                disabled={!selectedSystemControlNumber || isUpdatingAuthority}
+                disabled={!selectedArpId || isUpdatingAuthority}
                 isLoading={isUpdatingAuthority}>
                 {t('authority.connect_authority')}
               </ButtonWithProgress>

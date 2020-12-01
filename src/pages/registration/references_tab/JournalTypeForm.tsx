@@ -1,0 +1,32 @@
+import { useFormikContext } from 'formik';
+import React, { FC } from 'react';
+import { JournalRegistration } from '../../../types/registration.types';
+import { ReferenceFieldNames, JournalType } from '../../../types/publicationFieldNames';
+import SelectTypeField from './components/SelectTypeField';
+import JournalForm from './sub_type_forms/JournalForm';
+import { StyledSelectWrapper } from '../../../components/styled/Wrappers';
+
+interface JournalTypeFormProps {
+  onChangeSubType: (type: string) => void;
+}
+
+const JournalTypeForm: FC<JournalTypeFormProps> = ({ onChangeSubType }) => {
+  const { values } = useFormikContext<JournalRegistration>();
+  const subType = values.entityDescription.reference.publicationInstance.type;
+
+  return (
+    <>
+      <StyledSelectWrapper>
+        <SelectTypeField
+          fieldName={ReferenceFieldNames.SUB_TYPE}
+          onChangeType={onChangeSubType}
+          options={Object.values(JournalType)}
+        />
+      </StyledSelectWrapper>
+
+      {subType && <JournalForm />}
+    </>
+  );
+};
+
+export default JournalTypeForm;
