@@ -39,6 +39,6 @@ describe('Snackbar', () => {
 
     // Test clearing snackbar
     cy.removeNotificationInRedux();
-    cy.get('[data-testid=snackbar]').should('not.be.visible');
+    cy.get('[data-testid=snackbar]').should('not.exist');
   });
 });
