@@ -1,55 +1,59 @@
 import React, { useState, useEffect, FC } from 'react';
 import { useTranslation } from 'react-i18next';
-
-import { KeyboardDatePicker, DatePickerView } from '@material-ui/pickers';
-import { useFormikContext, getIn } from 'formik';
-import { Registration } from '../../../types/registration.types';
 import { FormControlLabel, Checkbox } from '@material-ui/core';
 import styled from 'styled-components';
+import { KeyboardDatePicker, DatePickerView } from '@material-ui/pickers';
+import { useFormikContext } from 'formik';
+import { Registration } from '../../../types/registration.types';
+import { DescriptionFieldNames } from '../../../types/publicationFieldNames';
+import { ErrorMessage } from '../../../utils/validation/errorMessage';
 
 const StyledFormControlLabel = styled(FormControlLabel)`
   margin-left: 0.5rem;
   height: 100%; /* Ensure this element is as high as the DatePicker for centering */
 `;
 
-interface DatePickerFieldProps {
-  yearFieldName: string;
-  monthFieldName: string;
-  dayFieldName: string;
-}
-
-const DatePickerField: FC<DatePickerFieldProps> = ({ yearFieldName, monthFieldName, dayFieldName }) => {
+const DatePickerField: FC = () => {
   const { t } = useTranslation('registration');
-  const { setFieldValue, values } = useFormikContext<Registration>();
+  const { setFieldValue, values, errors, touched, setFieldTouched } = useFormikContext<Registration>();
+  const { year, month, day } = values.entityDescription.date;
+  const yearInt = parseInt(year);
+  const monthInt = parseInt(month);
+  const dayInt = parseInt(day);
 
-  const initialYear = getIn(values, yearFieldName);
-  const initialMonth = getIn(values, monthFieldName);
-  const initialDay = getIn(values, dayFieldName);
   const [date, setDate] = useState<Date | null>(
-    initialYear
-      ? initialMonth
-        ? new Date(initialYear, initialMonth - 1, initialDay || 1, 12, 0, 0)
-        : new Date(initialYear, 0, 1, 12, 0, 0)
+    !isNaN(yearInt)
+      ? !isNaN(monthInt)
+        ? new Date(yearInt, monthInt - 1, !isNaN(dayInt) ? dayInt : 1, 12, 0, 0)
+        : new Date(yearInt, 0, 1, 12, 0, 0)
       : null
   );
-  const [yearOnly, setYearOnly] = useState(!!initialYear && !initialMonth);
+  const [yearOnly, setYearOnly] = useState(!!year && !month);
 
   useEffect(() => {
     // Extract data from date object
-    const updatedYear = date ? date.getFullYear() : '';
-    const updatedMonth = !yearOnly && date ? date.getMonth() + 1 : '';
-    const updatedDay = !yearOnly && date ? date.getDate() : '';
+    const updatedYear = date ? date.getFullYear() : NaN;
+    const updatedMonth = !yearOnly && date ? date.getMonth() + 1 : NaN;
+    const updatedDay = !yearOnly && date ? date.getDate() : NaN;
 
-    setFieldValue(yearFieldName, updatedYear);
-    setFieldValue(monthFieldName, updatedMonth);
-    setFieldValue(dayFieldName, updatedDay);
-  }, [yearFieldName, monthFieldName, dayFieldName, setFieldValue, date, yearOnly]);
+    const updatedYearValue = !isNaN(updatedYear) ? updatedYear : '';
+    const updatedMonthValue = !isNaN(updatedMonth) ? updatedMonth : '';
+    const updatedDayValue = !isNaN(updatedDay) ? updatedDay : '';
+
+    setFieldValue(DescriptionFieldNames.PUBLICATION_YEAR, updatedYearValue);
+    setFieldValue(DescriptionFieldNames.PUBLICATION_MONTH, updatedMonthValue);
+    setFieldValue(DescriptionFieldNames.PUBLICATION_DAY, updatedDayValue);
+  }, [setFieldValue, date, yearOnly]);
 
   const toggleYearOnly = () => {
     setYearOnly(!yearOnly);
   };
 
+  const setYearFieldTouched = () => setFieldTouched(DescriptionFieldNames.PUBLICATION_YEAR);
+
   const views: DatePickerView[] = yearOnly ? ['year'] : ['year', 'month', 'date'];
+
+  const hasError = !!errors.entityDescription?.date?.year && touched.entityDescription?.date?.year;
 
   return (
     <>
@@ -57,11 +61,16 @@ const DatePickerField: FC<DatePickerFieldProps> = ({ yearFieldName, monthFieldNa
         data-testid="date-published-field"
         inputVariant="outlined"
         label={t('description.date_published')}
+        required
         onChange={setDate}
         views={views}
         value={date}
         autoOk
         format={yearOnly ? 'yyyy' : 'dd.MM.yyyy'}
+        onBlur={setYearFieldTouched}
+        onClose={setYearFieldTouched}
+        error={hasError}
+        helperText={hasError && (!date ? ErrorMessage.REQUIRED : ErrorMessage.INVALID_FORMAT)}
       />
       <StyledFormControlLabel
         control={<Checkbox checked={yearOnly} onChange={toggleYearOnly} color="primary" />}

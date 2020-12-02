@@ -21,8 +21,8 @@ const useFetchCurrentAuthority = () => {
         const filteredAuthorities = matchingAuthorities.filter((auth) => auth.feideids.some((id) => id === user.id));
         if (filteredAuthorities.length === 1) {
           // Use exsisting authority
-          const existingScn = filteredAuthorities[0].systemControlNumber;
-          const existingAuthority = await getAuthority(existingScn);
+          const existingArpId = filteredAuthorities[0].id;
+          const existingAuthority = await getAuthority(existingArpId);
           if (existingAuthority?.error) {
             dispatch(setNotification(t('error.get_authority'), NotificationVariant.Error));
           } else if (existingAuthority?.data) {
@@ -30,7 +30,7 @@ const useFetchCurrentAuthority = () => {
             if (user.cristinId && !existingAuthority.data.orgunitids.includes(user.cristinId)) {
               // Add cristinId to Authority's orgunitids
               const authorityWithOrgId = await addQualifierIdForAuthority(
-                existingScn,
+                existingArpId,
                 AuthorityQualifiers.ORGUNIT_ID,
                 user.cristinId
               );

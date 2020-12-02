@@ -11,7 +11,7 @@ const StyledSearchIcon = styled(SearchIcon)`
 
 interface AutocompleteTextFieldProps
   extends AutocompleteRenderInputParams,
-    Pick<TextFieldProps, 'placeholder' | 'label'> {
+    Pick<TextFieldProps, 'placeholder' | 'label' | 'required'> {
   isLoading: boolean;
   showSearchIcon: boolean;
   dataTestId?: string;

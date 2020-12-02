@@ -3,14 +3,12 @@ import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-
 import { Button, Typography } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/AddCircleOutlineSharp';
 import DeleteIcon from '@material-ui/icons/RemoveCircleSharp';
-
 import ConfirmDialog from '../../../../components/ConfirmDialog';
+import AddInstitution from '../../../../components/institution/AddInstitution';
 import AffiliationHierarchy from '../../../../components/institution/AffiliationHierarchy';
-import SelectInstitution from '../../../../components/institution/SelectInstitution';
 import Modal from '../../../../components/Modal';
 import { setNotification } from '../../../../redux/actions/notificationActions';
 import { Institution } from '../../../../types/contributor.types';
@@ -119,7 +117,7 @@ const AffiliationsCell: FC<AffiliationsCellProps> = ({ affiliations, baseFieldNa
         open={openAffiliationModal}
         onClose={toggleAffiliationModal}
         headingText={t('contributors.select_institution')}>
-        <SelectInstitution onClose={toggleAffiliationModal} onSubmit={addAffiliation} />
+        <AddInstitution onClose={toggleAffiliationModal} onSubmit={addAffiliation} />
       </Modal>
 
       {/* Confirm dialog for removing affiliation */}

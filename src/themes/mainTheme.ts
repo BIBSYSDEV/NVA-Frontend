@@ -142,6 +142,11 @@ export default createMuiTheme({
         marginTop: '1rem',
       },
     },
+    MuiFormLabel: {
+      asterisk: {
+        color: Colors.Danger,
+      },
+    },
   },
   props: {
     MuiTablePagination: {

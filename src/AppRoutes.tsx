@@ -11,9 +11,9 @@ import { RootStore } from './redux/reducers/rootReducer';
 const Dashboard = lazy(() => import('./pages/dashboard/Dashboard'));
 const EditRegistration = lazy(() => import('./pages/registration/EditRegistration'));
 const MyRegistrations = lazy(() => import('./pages/my_registrations/MyRegistrations'));
-const Search = lazy(() => import('./pages/search/Search'));
+const SearchPage = lazy(() => import('./pages/search/SearchPage'));
 const PublicRegistration = lazy(() => import('./pages/public_registration/PublicRegistration'));
-const User = lazy(() => import('./pages/user/User'));
+const MyProfilePage = lazy(() => import('./pages/user/MyProfilePage'));
 const NotFound = lazy(() => import('./pages/errorpages/NotFound'));
 const PublicProfile = lazy(() => import('./pages/public_profile/PublicProfile'));
 const AdminCustomerInstitutionsPage = lazy(() => import('./pages/admin/AdminCustomerInstitutionsPage'));
@@ -33,17 +33,17 @@ const AppRoutes: FC = () => {
         <Route exact path="/description" component={Description} />
         <Route exact path="/order-information" component={OrderInformation} />
         <Route exact path="/privacy-policy" component={PrivacyPolicy} />
-        <Route exact path="/user/:arpId" component={PublicProfile} />
+        <Route exact path="/user" component={PublicProfile} />
         <Route exact path="/registration/:identifier/public" component={PublicRegistration} />
-        <Route exact path="/search" component={Search} />
-        <Route exact path="/search/:searchTerm" component={Search} />
-        <Route exact path="/search/:searchTerm/:offset" component={Search} />
+        <Route exact path="/search" component={SearchPage} />
+        <Route exact path="/search/:searchTerm" component={SearchPage} />
+        <Route exact path="/search/:searchTerm/:offset" component={SearchPage} />
         <Route exact path="/logout" component={Logout} />
 
         {user && (
           <>
             {/* LoggedInRoute */}
-            <LoggedInRoute exact path="/user" component={User} />
+            <LoggedInRoute exact path="/my-profile" component={MyProfilePage} />
 
             {/* CreatorRoutes */}
             <CreatorRoute exact path="/registration" component={EditRegistration} />

@@ -21,18 +21,11 @@ export interface PanelProps {
 }
 
 interface RegistrationFormContentProps {
-  isSaving: boolean;
-  saveRegistration: () => Promise<boolean>;
   tabNumber: number;
   uppy: Uppy;
 }
 
-export const RegistrationFormContent: FC<RegistrationFormContentProps> = ({
-  isSaving,
-  saveRegistration,
-  tabNumber,
-  uppy,
-}) => {
+export const RegistrationFormContent: FC<RegistrationFormContentProps> = ({ tabNumber, uppy }) => {
   const { touched, setTouched } = useFormikContext<Registration>();
 
   const touchedRef = useRef(touched);
@@ -69,7 +62,7 @@ export const RegistrationFormContent: FC<RegistrationFormContentProps> = ({
       )}
       {tabNumber === RegistrationTab.Submission && (
         <StyledPanel>
-          <SubmissionPanel isSaving={isSaving} saveRegistration={saveRegistration} />
+          <SubmissionPanel />
         </StyledPanel>
       )}
     </>

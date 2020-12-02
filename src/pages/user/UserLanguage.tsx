@@ -2,9 +2,8 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { MenuItem, Select, Typography } from '@material-ui/core';
-import { pageLanguages, LanguageCodes } from '../../types/language.types';
 import Card from '../../components/Card';
-import { fallbackLanguage } from '../../translations/i18n';
+import { pageLanguages } from '../../types/language.types';
 
 const StyledSelect = styled(Select)`
   margin-top: 1rem;
@@ -15,9 +14,7 @@ const StyledSelect = styled(Select)`
 const UserLanguage: React.FC = () => {
   const { t, i18n } = useTranslation('profile');
 
-  const selectedLanguage = Object.values(LanguageCodes).some((language) => language === i18n.language)
-    ? i18n.language
-    : fallbackLanguage;
+  const selectedLanguage = i18n.language;
 
   return (
     <Card>

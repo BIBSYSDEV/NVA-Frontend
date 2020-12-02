@@ -1,10 +1,11 @@
 import Amplify from 'aws-amplify';
-import React, { useEffect, useState, FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import { CircularProgress } from '@material-ui/core';
 import { getCurrentUserAttributes } from './api/userApi';
+import AppRoutes from './AppRoutes';
 import Footer from './layout/Footer';
 import Header from './layout/header/Header';
 import Notifier from './layout/Notifier';
@@ -14,7 +15,6 @@ import { RootStore } from './redux/reducers/rootReducer';
 import { awsConfig } from './utils/aws-config';
 import { USE_MOCK_DATA } from './utils/constants';
 import { mockUser } from './utils/testfiles/mock_feide_user';
-import AppRoutes from './AppRoutes';
 import { setNotification } from './redux/actions/notificationActions';
 import { getInstitutionUser } from './api/roleApi';
 import { NotificationVariant } from './types/notification.types';
@@ -28,6 +28,7 @@ const StyledApp = styled.div`
 `;
 
 const StyledContent = styled.div`
+  padding: 1rem;
   display: flex;
   flex-direction: column;
   align-self: center;

@@ -2,12 +2,12 @@ import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import Truncate from 'react-truncate';
 import styled from 'styled-components';
-import { Radio, CircularProgress } from '@material-ui/core';
+import { Radio, Typography } from '@material-ui/core';
 import { Authority } from '../../../types/authority.types';
-import NormalText from '../../../components/NormalText';
 import AffiliationHierarchy from '../../../components/institution/AffiliationHierarchy';
 import Card from '../../../components/Card';
 import useFetchLastRegistrationFromAlma from '../../../utils/hooks/useFetchLastRegistration';
+import { Skeleton } from '@material-ui/lab';
 
 const StyledBoxContent = styled(({ isConnected, ...rest }) => <Card {...rest} />)`
   display: grid;
@@ -38,30 +38,27 @@ interface AuthorityCardProps {
 
 const AuthorityCard: FC<AuthorityCardProps> = ({ authority, isConnected = false, isSelected }) => {
   const { t } = useTranslation('profile');
-  const [almaPublication, isLoadingAlmaPublication] = useFetchLastRegistrationFromAlma(
-    authority.systemControlNumber,
-    authority.name
-  );
+  const [almaPublication, isLoadingAlmaPublication] = useFetchLastRegistrationFromAlma(authority.id, authority.name);
 
   return (
     <StyledBoxContent isConnected={isConnected}>
       <StyledNameCell>
         {!isConnected && <Radio color="primary" checked={isSelected} />}
         <StyledCenteredContent>
-          <NormalText>{authority?.name}</NormalText>
+          <Typography>{authority?.name}</Typography>
         </StyledCenteredContent>
       </StyledNameCell>
       <StyledCenteredContent>
         {isLoadingAlmaPublication ? (
-          <CircularProgress size={20} />
+          <Skeleton width="70%" />
         ) : almaPublication?.title ? (
-          <NormalText>
+          <Typography>
             <Truncate lines={3}>{almaPublication.title}</Truncate>
-          </NormalText>
+          </Typography>
         ) : (
-          <NormalText>
+          <Typography>
             <i>{t('authority.no_registrations_found')}</i>
-          </NormalText>
+          </Typography>
         )}
       </StyledCenteredContent>
       <StyledCenteredContent>
@@ -73,9 +70,9 @@ const AuthorityCard: FC<AuthorityCardProps> = ({ authority, isConnected = false,
             )}
           </>
         ) : (
-          <NormalText>
+          <Typography>
             <i>{t('authority.no_affiliations_found')}</i>
-          </NormalText>
+          </Typography>
         )}
       </StyledCenteredContent>
     </StyledBoxContent>

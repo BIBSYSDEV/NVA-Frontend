@@ -16,6 +16,7 @@ const SelectInstitutionField: FC<SelectInstitutionFieldProps> = ({ disabled = fa
       {({ field: { name, value }, form: { values, setValues }, meta: { touched, error } }: FieldProps) => (
         <InstitutionAutocomplete
           disabled={disabled}
+          required
           error={touched && !!error}
           helperText={<ErrorMessage name={name} />}
           institutions={institutions}

@@ -121,7 +121,7 @@ const Menu: FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
             )}
           </StyledAdminMenu>
         )}
-        <MenuItem data-testid="menu-user-profile-button" onClick={() => handleClickMenuItem('/user')}>
+        <MenuItem data-testid="menu-user-profile-button" onClick={() => handleClickMenuItem('/my-profile')}>
           {t('profile:my_profile')}
         </MenuItem>
         <MenuItem onClick={handleLogout} data-testid="menu-logout-button">

@@ -20,29 +20,21 @@ interface AuthorityListProps {
   authorities: Authority[];
   searchTerm: string;
   onSelectAuthority: (authority: Authority) => void;
-  selectedSystemControlNumber?: string;
+  selectedArpId?: string;
 }
 
-const AuthorityList: FC<AuthorityListProps> = ({
-  authorities,
-  searchTerm,
-  onSelectAuthority,
-  selectedSystemControlNumber,
-}) => {
-  const { t } = useTranslation('profile');
+const AuthorityList: FC<AuthorityListProps> = ({ authorities, searchTerm, onSelectAuthority, selectedArpId }) => {
+  const { t } = useTranslation('common');
 
   return (
     <StyledAuthorityContainer>
-      <Label>{t('authority.search_summary', { results: authorities?.length ?? 0, searchTerm })}</Label>
+      <Label>{t('search_summary', { count: authorities?.length ?? 0, searchTerm })}</Label>
       {authorities.map((authority) => (
         <StyledClickableDiv
           data-testid="author-radio-button"
-          key={authority.systemControlNumber}
+          key={authority.id}
           onClick={() => onSelectAuthority(authority)}>
-          <AuthorityCard
-            authority={authority}
-            isSelected={selectedSystemControlNumber === authority.systemControlNumber}
-          />
+          <AuthorityCard authority={authority} isSelected={selectedArpId === authority.id} />
         </StyledClickableDiv>
       ))}
     </StyledAuthorityContainer>

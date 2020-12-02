@@ -28,6 +28,7 @@ const SelectTypeField: FC<SelectTypeFieldProps> = ({
           fullWidth
           {...field}
           label={t('common:type')}
+          required
           error={!!error && touched}
           SelectProps={{ MenuProps: { autoFocus: false } }}
           helperText={<ErrorMessage name={field.name} />}

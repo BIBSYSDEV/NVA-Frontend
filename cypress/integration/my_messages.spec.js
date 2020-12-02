@@ -4,7 +4,7 @@ import { mockRegistrationsWithPendingDoiRequest } from '../../src/utils/testfile
 describe('My messages', () => {
   beforeEach(() => {
     cy.server();
-    cy.visit('/user');
+    cy.visit('/my-profile');
     cy.mocklogin();
     cy.setUserRolesInRedux([RoleName.CREATOR]);
     cy.get('[data-testid=my-messages]').click({ force: true });

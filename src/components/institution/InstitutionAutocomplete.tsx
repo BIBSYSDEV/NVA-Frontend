@@ -1,16 +1,17 @@
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
-import { TextField, CircularProgress, TextFieldProps } from '@material-ui/core';
+import { CircularProgress, TextField, TextFieldProps } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-
-import { InstitutionUnitBase } from '../../types/institution.types';
 import { autocompleteTranslationProps } from '../../themes/mainTheme';
+import { InstitutionUnitBase } from '../../types/institution.types';
+import { sortInstitutionsAlphabetically } from '../../utils/institutions-helpers';
 
-interface InstitutionAutocompleteProps extends Pick<TextFieldProps, 'disabled' | 'error' | 'helperText' | 'label'> {
+interface InstitutionAutocompleteProps
+  extends Pick<TextFieldProps, 'disabled' | 'error' | 'helperText' | 'label' | 'required'> {
   institutions: InstitutionUnitBase[];
-  onChange: (value: InstitutionUnitBase | null) => void;
   value: InstitutionUnitBase | null;
   isLoading?: boolean;
+  onChange?: (value: InstitutionUnitBase | null) => void;
 }
 
 const InstitutionAutocomplete: FC<InstitutionAutocompleteProps> = ({
@@ -19,9 +20,10 @@ const InstitutionAutocomplete: FC<InstitutionAutocompleteProps> = ({
   helperText,
   institutions,
   label,
-  onChange,
+  required,
   value = null,
   isLoading = false,
+  onChange,
 }) => {
   const { t } = useTranslation('common');
 
@@ -29,7 +31,7 @@ const InstitutionAutocomplete: FC<InstitutionAutocompleteProps> = ({
     <Autocomplete
       {...autocompleteTranslationProps}
       disabled={disabled}
-      options={institutions}
+      options={sortInstitutionsAlphabetically(institutions)}
       getOptionLabel={(option) => option.name}
       getOptionSelected={(option, value) => option.id === value.id}
       value={value}
@@ -41,11 +43,12 @@ const InstitutionAutocomplete: FC<InstitutionAutocompleteProps> = ({
         );
       }}
       loading={isLoading}
-      onChange={(_, value) => onChange(value)}
+      onChange={(_, value) => onChange?.(value)}
       renderInput={(params) => (
         <TextField
           {...params}
           label={label ?? t('institution')}
+          required={required}
           placeholder={label ? t('institution:search_department') : t('institution:search_institution')}
           variant="outlined"
           inputProps={{

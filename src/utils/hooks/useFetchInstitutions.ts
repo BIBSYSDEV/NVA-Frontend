@@ -15,10 +15,11 @@ const useFetchInstitutions = (): [InstitutionUnitBase[], boolean] => {
   const dispatch = useDispatch();
   const { t, i18n } = useTranslation('feedback');
   const institutions = useSelector((store: RootStore) => store.institutions);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const cancelToken = useCancelToken();
 
   const fetchInstitutions = useCallback(async () => {
+    setIsLoading(true);
     const response = await getInstitutions(cancelToken);
     if (response) {
       if (response.error) {

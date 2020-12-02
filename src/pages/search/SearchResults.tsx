@@ -1,71 +1,39 @@
-import React, { FC, Fragment, useState } from 'react';
+import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-import { Link as MuiLink, TablePagination } from '@material-ui/core';
-import { List, Typography } from '@material-ui/core';
+import { TablePagination, List, Typography } from '@material-ui/core';
 import RegistrationListItem from '../dashboard/RegistrationListItem';
 import { SearchResult } from '../../types/search.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
-import { displayDate } from '../../utils/date-helpers';
 
 const StyledSearchResults = styled.div`
   padding-bottom: 1rem;
 `;
 
-const StyledContributor = styled.span`
-  padding-right: 1rem;
-`;
-
 interface SearchResultsProps {
-  registrations: SearchResult[];
-  searchTerm: string | null;
+  searchResult: SearchResult;
+  searchTerm?: string;
 }
 
-const SearchResults: FC<SearchResultsProps> = ({ registrations, searchTerm }) => {
-  const { t } = useTranslation();
+const SearchResults: FC<SearchResultsProps> = ({ searchResult, searchTerm }) => {
+  const { t } = useTranslation('common');
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[1]);
   const [page, setPage] = useState(0);
+  const registrations = searchResult.hits;
 
-  // Ensure selected page is not out of bounds due to manipulated userList
+  // Ensure selected page is not out of bounds
   const validPage = registrations.length <= page * rowsPerPage ? 0 : page;
 
   return (
     <StyledSearchResults data-testid="search-results">
-      {searchTerm && t('results', { count: registrations.length, term: searchTerm })}
+      {searchTerm && (
+        <Typography variant="subtitle1">{t('search_summary', { count: searchResult.total, searchTerm })}</Typography>
+      )}
       <List>
         {registrations &&
-          registrations.slice(validPage * rowsPerPage, validPage * rowsPerPage + rowsPerPage).map((registration) => {
-            const registrationId = registration.id?.split('/').pop();
-            return (
-              <RegistrationListItem
-                data-testid={`search-result-${registrationId}`}
-                key={registrationId}
-                primaryComponent={
-                  <MuiLink component={Link} to={`/registration/${registrationId}/public`}>
-                    {registration.title}
-                  </MuiLink>
-                }
-                secondaryComponent={
-                  <Typography component="span">
-                    {registration.date && <div>{displayDate(registration.date)}</div>}
-                    {registration.contributors &&
-                      registration.contributors.map((contributor) => (
-                        <Fragment data-testid={`search-result-contributor-${contributor.name}`} key={contributor.name}>
-                          {contributor.id ? (
-                            <MuiLink component={Link} to={`/user/${contributor.id}`}>
-                              <StyledContributor>{contributor.name} </StyledContributor>
-                            </MuiLink>
-                          ) : (
-                            <StyledContributor>{contributor.name} </StyledContributor>
-                          )}
-                        </Fragment>
-                      ))}
-                  </Typography>
-                }
-              />
-            );
-          })}
+          registrations
+            .slice(validPage * rowsPerPage, validPage * rowsPerPage + rowsPerPage)
+            .map((registration) => <RegistrationListItem key={registration.id} registration={registration} />)}
       </List>
       {registrations.length > ROWS_PER_PAGE_OPTIONS[0] && (
         <TablePagination
