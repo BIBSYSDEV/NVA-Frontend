@@ -31,6 +31,7 @@ export enum DegreeType {
   BACHELOR = 'DegreeBachelor',
   MASTER = 'DegreeMaster',
   PHD = 'DegreePhd',
+  OTHER = 'OtherStudentWork',
 }
 
 // Enums representing name of fields used by Formik
