@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { getIn, useFormikContext } from 'formik';
 import { Typography, TextFieldProps } from '@material-ui/core';
-import { Autocomplete } from '@material-ui/lab';
+import { Autocomplete, AutocompleteProps } from '@material-ui/lab';
 import { useTranslation } from 'react-i18next';
 import { PublicationTableNumber } from '../../../../utils/constants';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
@@ -11,13 +11,13 @@ import useFetchPublishers from '../../../../utils/hooks/useFetchPublishers';
 import EmphasizeSubstring from '../../../../components/EmphasizeSubstring';
 import { autocompleteTranslationProps } from '../../../../themes/mainTheme';
 
-interface PublicationChannelSearchProps extends Pick<TextFieldProps, 'label' | 'placeholder' | 'required'> {
+interface PublicationChannelSearchProps
+  extends Pick<TextFieldProps, 'label' | 'placeholder' | 'required'>,
+    Pick<AutocompleteProps<Publisher, false, false, false>, 'value' | 'disabled'> {
   publicationTable: PublicationTableNumber;
   errorFieldName: string;
   setValue: (value?: Publisher) => void;
-  value: Publisher;
   dataTestId: string;
-  disabled?: boolean;
 }
 
 const PublicationChannelSearch: FC<PublicationChannelSearchProps> = ({
