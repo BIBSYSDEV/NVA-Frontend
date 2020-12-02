@@ -11,6 +11,7 @@ export enum JournalType {
   LETTER = 'JournalLetter',
   REVIEW = 'JournalReview',
   LEADER = 'JournalLeader',
+  CORRIGENDUM = 'JournalCorrigendum',
 }
 
 export enum BookType {

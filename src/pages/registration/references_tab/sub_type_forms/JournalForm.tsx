@@ -38,7 +38,9 @@ const JournalForm: FC = () => {
     <>
       <DoiField />
 
-      <JournalField />
+      {publicationInstance.type === JournalType.CORRIGENDUM && <>{/* TODO: Search for JournalArticle */}</>}
+
+      <JournalField disabled={publicationInstance.type === JournalType.CORRIGENDUM} />
 
       <StyledArticleDetail>
         <Field name={ReferenceFieldNames.VOLUME}>
