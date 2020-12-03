@@ -94,7 +94,7 @@ const PublicRegistrationContent: FC<PublicRegistrationContentProps> = ({ registr
     description,
     mainTitle,
     npiSubjectHeading,
-    reference: { doi, publicationContext, publicationInstance },
+    reference,
     tags = [],
   } = registration.entityDescription;
 
@@ -112,10 +112,10 @@ const PublicRegistrationContent: FC<PublicRegistrationContentProps> = ({ registr
           (file) => !file.administrativeAgreement && <PublicRegistrationFile file={file} key={file.identifier} />
         )}
         <StyledMainContent>
-          {doi && (
+          {(registration.doi || reference.doi) && (
             <LabelContentRow minimal label={`${t('registration.link_to_resource')}:`}>
-              <Link href={doi} target="_blank" rel="noopener noreferrer">
-                {doi}
+              <Link href={registration.doi ?? reference.doi} target="_blank" rel="noopener noreferrer">
+                {registration.doi ?? reference.doi}
               </Link>
             </LabelContentRow>
           )}
@@ -141,20 +141,30 @@ const PublicRegistrationContent: FC<PublicRegistrationContentProps> = ({ registr
 
           {isJournal(registration) ? (
             <>
-              <PublicPublicationContextJournal publicationContext={publicationContext as JournalPublicationContext} />
+              <PublicPublicationContextJournal
+                publicationContext={reference.publicationContext as JournalPublicationContext}
+              />
               <PublicPublicationInstanceJournal
-                publicationInstance={publicationInstance as JournalPublicationInstance}
+                publicationInstance={reference.publicationInstance as JournalPublicationInstance}
               />
             </>
           ) : isDegree(registration) ? (
             <>
-              <PublicPublicationContextDegree publicationContext={publicationContext as DegreePublicationContext} />
-              <PublicPublicationInstanceDegree publicationInstance={publicationInstance as DegreePublicationInstance} />
+              <PublicPublicationContextDegree
+                publicationContext={reference.publicationContext as DegreePublicationContext}
+              />
+              <PublicPublicationInstanceDegree
+                publicationInstance={reference.publicationInstance as DegreePublicationInstance}
+              />
             </>
           ) : isReport(registration) ? (
             <>
-              <PublicPublicationContextReport publicationContext={publicationContext as ReportPublicationContext} />
-              <PublicPublicationInstanceReport publicationInstance={publicationInstance as ReportPublicationInstance} />
+              <PublicPublicationContextReport
+                publicationContext={reference.publicationContext as ReportPublicationContext}
+              />
+              <PublicPublicationInstanceReport
+                publicationInstance={reference.publicationInstance as ReportPublicationInstance}
+              />
             </>
           ) : null}
 

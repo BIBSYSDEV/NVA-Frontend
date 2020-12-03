@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import { useFormikContext, getIn } from 'formik';
+import { useFormikContext } from 'formik';
 import { TextField, InputAdornment, Typography } from '@material-ui/core';
 import styled from 'styled-components';
 import ClearIcon from '@material-ui/icons/Clear';
@@ -27,7 +27,7 @@ const DoiField: FC = () => {
     toggleConfirmDialog();
   };
 
-  const doiUrl = getIn(values, ReferenceFieldNames.DOI);
+  const doiUrl = values.doi ?? values.entityDescription.reference.doi;
 
   return doiUrl ? (
     <>
@@ -37,7 +37,7 @@ const DoiField: FC = () => {
         label={t('registration.link_to_resource')}
         disabled
         InputProps={{
-          endAdornment: (
+          endAdornment: !values.doi && (
             <InputAdornment position="end">
               <StyledClearIcon onClick={toggleConfirmDialog} />
             </InputAdornment>

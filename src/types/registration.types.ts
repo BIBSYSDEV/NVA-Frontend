@@ -86,6 +86,7 @@ interface BaseRegistration extends BackendType, RegistrationFileSet {
   readonly createdDate: string;
   readonly owner: string;
   readonly status: RegistrationStatus;
+  readonly doi?: string;
   readonly doiRequest?: DoiRequest;
   readonly publisher: RegistrationPublisher;
   project: ResearchProject | null;
