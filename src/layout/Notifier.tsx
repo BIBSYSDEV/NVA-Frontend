@@ -1,27 +1,24 @@
-import React from 'react';
+import React, { FC, SyntheticEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Snackbar from '@material-ui/core/Snackbar';
+import { Fade, Snackbar, SnackbarCloseReason } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
-import { Fade } from '@material-ui/core';
-
 import { removeNotification } from '../redux/actions/notificationActions';
 import { RootStore } from '../redux/reducers/rootReducer';
 import { autoHideNotificationDuration } from '../utils/constants';
 
-const Notifier: React.FC = () => {
+const Notifier: FC = () => {
   const notification = useSelector((store: RootStore) => store.notification);
   const dispatch = useDispatch();
 
-  const handleClose = (_?: React.SyntheticEvent, reason?: string) => {
-    if (reason === 'clickaway') {
-      return;
+  const handleClose = (_: SyntheticEvent, reason?: SnackbarCloseReason) => {
+    if (reason !== 'clickaway') {
+      dispatch(removeNotification());
     }
-    dispatch(removeNotification());
   };
 
   return notification ? (
     <Snackbar
-      data-testid="snackbar"
+      data-testid={`snackbar-${notification.variant}`}
       anchorOrigin={{
         vertical: 'bottom',
         horizontal: 'left',

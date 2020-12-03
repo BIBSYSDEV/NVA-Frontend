@@ -26,7 +26,7 @@ describe('User administers institutions ', () => {
     cy.get('[data-testid=customer-institution-feide-organization-id-input]').type('NO919477822');
 
     cy.get('[data-testid=customer-institution-save-button]').click({ force: true });
-    cy.get('[data-testid=snackbar]').contains('Created customer institution');
+    cy.get('[data-testid=snackbar-success]').contains('Created customer institution');
   });
 
   it('The User should be able to edit an institution', () => {
@@ -35,6 +35,6 @@ describe('User administers institutions ', () => {
     cy.get('[data-testid=customer-institution-archive-name-input]').type(' Archive');
 
     cy.get('[data-testid=customer-institution-save-button]').click({ force: true });
-    cy.get('[data-testid=snackbar]').contains('Updated customer institution');
+    cy.get('[data-testid=snackbar-success]').contains('Updated customer institution');
   });
 });

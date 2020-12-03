@@ -21,7 +21,7 @@ describe('Registration: References: Report', () => {
     cy.get('[data-testid=publication-context-type-heading]').contains('Report');
 
     cy.get('[data-testid=publication-instance-type]').click({ force: true }).type(' ');
-    cy.get('[data-testid=publication-instance-type-ReportResearch]').click({ force: true }).type(' ');
+    cy.get('[data-testid=publication-instance-type-ReportResearch]').click({ force: true });
 
     // search for and select a publisher
     cy.get('[data-testid=publisher-search-input]').click({ force: true }).type('Test');
