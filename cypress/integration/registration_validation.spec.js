@@ -122,12 +122,12 @@ describe('User opens registration form and can see validation errors', () => {
 
     // ISBN and pages
     cy.get('[data-testid=isbn-input]').type('9781787632714x').type('{enter}');
-    cy.get('[data-testid=snackbar]').contains(ErrorMessage.INVALID_ISBN);
-    cy.get('[data-testid=snackbar]').get('button[title=Close]').click({ force: true });
-    cy.get('[data-testid=snackbar]').should('not.exist');
+    cy.get('[data-testid=snackbar-warning]').contains(ErrorMessage.INVALID_ISBN);
+    cy.get('[data-testid=snackbar-warning]').get('button[title=Close]').click({ force: true });
+    cy.get('[data-testid=snackbar-warning]').should('not.exist');
     cy.get('[data-testid=isbn-input]').type('invalid-isbn');
     cy.get('[data-testid=pages-input]').type('-1');
-    cy.get('[data-testid=snackbar]').contains(ErrorMessage.INVALID_ISBN);
+    cy.get('[data-testid=snackbar-warning]').contains(ErrorMessage.INVALID_ISBN);
     cy.get('[data-testid=isbn-chip]').should('have.length', 0);
     cy.contains(ErrorMessage.MUST_BE_MIN_1);
     cy.get('[data-testid=pages-input]').clear().type('1a');
