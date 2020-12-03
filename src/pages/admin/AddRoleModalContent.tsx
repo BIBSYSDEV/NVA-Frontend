@@ -27,7 +27,7 @@ export const AddRoleModalContent: FC<AddRoleModalContentProps> = ({ role, users,
 
   return (
     <>
-      <NormalText>{t('users.add_role_info')}</NormalText>
+      <NormalText data-testid="add-role-info">{t('users.add_role_info')}</NormalText>
       <TextField
         autoFocus
         fullWidth
@@ -42,12 +42,13 @@ export const AddRoleModalContent: FC<AddRoleModalContentProps> = ({ role, users,
         label={t('users.username')}
         variant="outlined"
         helperText={t('search_for_user')}
+        data-testid="add-role-search-box"
       />
 
       <UserList userList={filteredUsers} roleToAdd={role} alwaysShowPagination refetchUsers={refetchUsers} />
 
       <DialogActions>
-        <Button variant="outlined" onClick={closeModal}>
+        <Button variant="outlined" onClick={closeModal} data-testid="add-role-close-button">
           {t('common:close')}
         </Button>
       </DialogActions>
