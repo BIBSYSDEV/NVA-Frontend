@@ -37,7 +37,7 @@ describe('User opens registration form and can see validation errors', () => {
     // Title field
     cy.get('[data-testid=registration-title-field]').contains(ErrorMessage.REQUIRED).should('be.visible');
     cy.get('[data-testid=registration-title-input]').click({ force: true }).type('TITLE INPUT');
-    cy.get('[data-testid=registration-title-field]').contains(ErrorMessage.REQUIRED).should('not.be.visible');
+    cy.get('[data-testid=registration-title-field]').contains(ErrorMessage.REQUIRED).should('not.exist');
 
     // Date published field
     cy.get('[data-testid=date-published-field]')
@@ -47,7 +47,7 @@ describe('User opens registration form and can see validation errors', () => {
     cy.get('[data-testid=date-published-field]')
       .parent()
       .within(() => cy.get("input[type='text']").clear().click({ force: true }).type('01.01.2000'));
-    cy.get('[data-testid=date-published-field]').contains(ErrorMessage.INVALID_FORMAT).should('not.be.visible');
+    cy.get('[data-testid=date-published-field]').contains(ErrorMessage.INVALID_FORMAT).should('not.exist');
 
     cy.get('[data-testid=nav-tabpanel-description]').children('[data-testid=error-tab]').should('not.exist');
   });
@@ -64,7 +64,7 @@ describe('User opens registration form and can see validation errors', () => {
     // No errors should be displayed when user has just selected new context type
     cy.get('[data-testid=publication-instance-type]').click({ force: true }).type(' ');
     cy.get('[data-testid=publication-instance-type-JournalArticle]').click({ force: true });
-    cy.contains(ErrorMessage.REQUIRED).should('not.be.visible');
+    cy.contains(ErrorMessage.REQUIRED).should('not.exist');
 
     cy.get('[data-testid=nav-tabpanel-description]').click({ force: true });
     cy.get('[data-testid=nav-tabpanel-reference]').click({ force: true });
@@ -73,12 +73,12 @@ describe('User opens registration form and can see validation errors', () => {
     // Publisher (publicationContext) field
     cy.get('[data-testid=journal-search-input]').click({ force: true }).type('test');
     cy.contains('testament').click({ force: true });
-    cy.contains(ErrorMessage.REQUIRED).should('not.be.visible');
+    cy.contains(ErrorMessage.REQUIRED).should('not.exist');
     cy.get('.MuiAutocomplete-clearIndicator').click({ force: true });
     cy.contains(ErrorMessage.REQUIRED).should('be.visible');
     cy.get('[data-testid=journal-search-input]').click({ force: true }).type('test');
     cy.contains('testament').click({ force: true });
-    cy.contains(ErrorMessage.REQUIRED).should('not.be.visible');
+    cy.contains(ErrorMessage.REQUIRED).should('not.exist');
 
     cy.get('[data-testid=volume-field]').click({ force: true }).type('-1');
     cy.get('[data-testid=issue-field]').click({ force: true }).type('-1');
@@ -109,7 +109,7 @@ describe('User opens registration form and can see validation errors', () => {
     // publicationInstance type
     cy.get('[data-testid=publication-instance-type]').click({ force: true }).type(' ');
     cy.get('[data-testid=publication-instance-type-BookMonograph]').click({ force: true });
-    cy.contains(ErrorMessage.REQUIRED).should('not.be.visible');
+    cy.contains(ErrorMessage.REQUIRED).should('not.exist');
 
     cy.get('[data-testid=nav-tabpanel-description]').click({ force: true });
     cy.get('[data-testid=nav-tabpanel-reference]').click({ force: true });
@@ -118,16 +118,16 @@ describe('User opens registration form and can see validation errors', () => {
     // publicationContext
     cy.get('[data-testid=publisher-search-input]').click({ force: true }).type('test');
     cy.contains('testament').click({ force: true });
-    cy.contains(ErrorMessage.REQUIRED).should('not.be.visible');
+    cy.contains(ErrorMessage.REQUIRED).should('not.exist');
 
     // ISBN and pages
     cy.get('[data-testid=isbn-input]').type('9781787632714x').type('{enter}');
-    cy.get('[data-testid=snackbar]').contains(ErrorMessage.INVALID_ISBN);
-    cy.get('[data-testid=snackbar]').get('button[title=Close]').click({ force: true });
-    cy.get('[data-testid=snackbar]').should('not.exist');
+    cy.get('[data-testid=snackbar-warning]').contains(ErrorMessage.INVALID_ISBN);
+    cy.get('[data-testid=snackbar-warning]').get('button[title=Close]').click({ force: true });
+    cy.get('[data-testid=snackbar-warning]').should('not.exist');
     cy.get('[data-testid=isbn-input]').type('invalid-isbn');
     cy.get('[data-testid=pages-input]').type('-1');
-    cy.get('[data-testid=snackbar]').contains(ErrorMessage.INVALID_ISBN);
+    cy.get('[data-testid=snackbar-warning]').contains(ErrorMessage.INVALID_ISBN);
     cy.get('[data-testid=isbn-chip]').should('have.length', 0);
     cy.contains(ErrorMessage.MUST_BE_MIN_1);
     cy.get('[data-testid=pages-input]').clear().type('1a');
@@ -143,7 +143,7 @@ describe('User opens registration form and can see validation errors', () => {
     // publicationInstance type
     cy.get('[data-testid=publication-instance-type]').click({ force: true }).type(' ');
     cy.get('[data-testid=publication-instance-type-ReportResearch]').click({ force: true });
-    cy.contains(ErrorMessage.REQUIRED).should('not.be.visible');
+    cy.contains(ErrorMessage.REQUIRED).should('not.exist');
 
     cy.get('[data-testid=nav-tabpanel-description]').click({ force: true });
     cy.get('[data-testid=nav-tabpanel-reference]').click({ force: true });
@@ -152,7 +152,7 @@ describe('User opens registration form and can see validation errors', () => {
     // publicationContext
     cy.get('[data-testid=publisher-search-input]').click({ force: true }).type('test');
     cy.contains('testament').click({ force: true });
-    cy.contains(ErrorMessage.REQUIRED).should('not.be.visible');
+    cy.contains(ErrorMessage.REQUIRED).should('not.exist');
 
     cy.get('[data-testid=nav-tabpanel-reference]').children('[data-testid=error-tab]').should('not.exist');
   });
@@ -164,7 +164,7 @@ describe('User opens registration form and can see validation errors', () => {
     // publicationInstance type
     cy.get('[data-testid=publication-instance-type]').click({ force: true }).type(' ');
     cy.get('[data-testid=publication-instance-type-DegreeBachelor]').click({ force: true });
-    cy.contains(ErrorMessage.REQUIRED).should('not.be.visible');
+    cy.contains(ErrorMessage.REQUIRED).should('not.exist');
 
     cy.get('[data-testid=nav-tabpanel-description]').click({ force: true });
     cy.get('[data-testid=nav-tabpanel-reference]').click({ force: true });
@@ -173,7 +173,7 @@ describe('User opens registration form and can see validation errors', () => {
     // publicationContext
     cy.get('[data-testid=publisher-search-input]').click({ force: true }).type('test');
     cy.contains('testament').click({ force: true });
-    cy.contains(ErrorMessage.REQUIRED).should('not.be.visible');
+    cy.contains(ErrorMessage.REQUIRED).should('not.exist');
 
     cy.get('[data-testid=nav-tabpanel-reference]').children('[data-testid=error-tab]').should('not.exist');
   });
@@ -188,11 +188,11 @@ describe('User opens registration form and can see validation errors', () => {
     cy.get('[data-testid=search-button]').click({ force: true });
     cy.get('[data-testid=author-radio-button]').eq(0).click({ force: true });
     cy.get('[data-testid=connect-author-button]').click({ force: true });
-    cy.contains(ErrorMessage.MISSING_CONTRIBUTOR).should('not.be.visible');
+    cy.contains(ErrorMessage.MISSING_CONTRIBUTOR).should('not.exist');
 
     // Set corresponding (and email)
     cy.get('[data-testid=author-corresponding-checkbox]').click({ force: true });
-    cy.contains(ErrorMessage.REQUIRED).should('not.be.visible');
+    cy.contains(ErrorMessage.REQUIRED).should('not.exist');
     cy.get('[data-testid=nav-tabpanel-reference]').click({ force: true });
     cy.get('[data-testid=nav-tabpanel-contributors]').click({ force: true });
     cy.contains(ErrorMessage.REQUIRED).should('be.visible');
@@ -202,8 +202,8 @@ describe('User opens registration form and can see validation errors', () => {
     cy.contains(ErrorMessage.INVALID_FORMAT).should('be.visible');
     cy.get('[data-testid=author-email-input]').click({ force: true }).type('@email.com');
     cy.get('[data-testid=nav-tabpanel-contributors]').click({ force: true });
-    cy.contains(ErrorMessage.INVALID_FORMAT).should('not.be.visible');
-    cy.contains(ErrorMessage.REQUIRED).should('not.be.visible');
+    cy.contains(ErrorMessage.INVALID_FORMAT).should('not.exist');
+    cy.contains(ErrorMessage.REQUIRED).should('not.exist');
 
     // Add author and set corresponding without setting email
     cy.get('[data-testid=add-contributor]').click({ force: true });
@@ -218,7 +218,7 @@ describe('User opens registration form and can see validation errors', () => {
     cy.get('[data-testid=nav-tabpanel-contributors]').get('[data-testid=error-tab]');
     cy.get('[data-testid=author-email-input]').eq(1).click({ force: true }).type('test@email.com');
     cy.get('[data-testid=nav-tabpanel-contributors]').click({ force: true });
-    cy.contains(ErrorMessage.REQUIRED).should('not.be.visible');
+    cy.contains(ErrorMessage.REQUIRED).should('not.exist');
     cy.get('[data-testid=nav-tabpanel-contributors]').children('[data-testid=error-tab]').should('not.exist');
   });
 
@@ -235,8 +235,8 @@ describe('User opens registration form and can see validation errors', () => {
     });
     cy.get('input[type=file]').uploadFile('img.jpg');
     cy.get('[data-testid=uploaded-file-card]').should('be.visible');
-    cy.contains(ErrorMessage.MISSING_FILE).should('not.be.visible');
-    cy.contains(ErrorMessage.REQUIRED).should('not.be.visible');
+    cy.contains(ErrorMessage.MISSING_FILE).should('not.exist');
+    cy.contains(ErrorMessage.REQUIRED).should('not.exist');
 
     // Lincense field
     cy.get('[data-testid=nav-tabpanel-contributors]').click({ force: true });
@@ -246,7 +246,7 @@ describe('User opens registration form and can see validation errors', () => {
       .parent()
       .within(() => cy.get('.MuiSelect-root').click({ force: true }));
     cy.get('[data-testid=license-item]').eq(0).click({ force: true });
-    cy.contains(ErrorMessage.REQUIRED).should('not.be.visible');
+    cy.contains(ErrorMessage.REQUIRED).should('not.exist');
 
     // Embargo field
     cy.get('[data-testid=uploaded-file-embargo-date]')
@@ -255,10 +255,10 @@ describe('User opens registration form and can see validation errors', () => {
         cy.get("input[type='text']").click({ force: true }).type('0101', { force: true }).blur();
         cy.contains(ErrorMessage.INVALID_FORMAT).should('be.visible');
         cy.get("input[type='text']").click({ force: true }).type('2000', { force: true });
-        cy.contains(ErrorMessage.INVALID_FORMAT).should('not.be.visible');
+        cy.contains(ErrorMessage.INVALID_FORMAT).should('not.exist');
         cy.contains(ErrorMessage.MUST_BE_FUTURE).should('be.visible');
         cy.get("input[type='text']").clear().click({ force: true }).type('01013000', { force: true });
-        cy.contains(ErrorMessage.MUST_BE_FUTURE).should('not.be.visible');
+        cy.contains(ErrorMessage.MUST_BE_FUTURE).should('not.exist');
       });
 
     cy.get('[data-testid=nav-tabpanel-files-and-license]').children('[data-testid=error-tab]').should('not.exist');
@@ -266,7 +266,7 @@ describe('User opens registration form and can see validation errors', () => {
 
   it('The user navigates to submission tab and see no errors', () => {
     cy.get('[data-testid=nav-tabpanel-submission]').click({ force: true });
-    cy.get('[data-testid=error-summary-card]').should('not.be.visible');
-    cy.get('[data-testid=error-tab]').should('not.be.visible');
+    cy.get('[data-testid=error-summary-card]').should('not.exist');
+    cy.get('[data-testid=error-tab]').should('not.exist');
   });
 });
