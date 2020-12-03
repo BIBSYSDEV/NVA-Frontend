@@ -37,6 +37,7 @@
     "search": "Søk feilet",
     "update_authority": "Kunne ikke oppdatere {{qualifier}} for autoritet",
     "update_customer": "Kunne ikke oppdatere institusjon",
+    "update_doi_request": "Kunne ikke oppdatere DOI-forespørsel",
     "update_institution_user": "Kunne ikke oppdatere bruker",
     "update_registration": "Kunne ikke oppdatere registrering",
     "orcid": {
@@ -59,6 +60,7 @@
     "delete_affiliation": "Tilhørigheten ble slettet",
     "delete_identifier": "Identifikatoren ble slettet",
     "doi_request_sent": "DOI-forespørsel sendt",
+    "doi_request_updated": "DOI-forespørselen ble oppdatert",
     "login": "Logget inn",
     "support_message_sent": "Melding sendt",
     "removed_role": "Rollen ble fjernet",

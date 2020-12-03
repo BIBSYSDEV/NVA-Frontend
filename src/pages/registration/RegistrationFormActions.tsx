@@ -22,10 +22,11 @@ import {
 } from '../../types/registration.types';
 import Modal from '../../components/Modal';
 import { SupportModalContent } from './SupportModalContent';
-import { publishRegistration, updateRegistration } from '../../api/registrationApi';
+import { getRegistration, publishRegistration, updateRegistration } from '../../api/registrationApi';
 import { NotificationVariant } from '../../types/notification.types';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { RootStore } from '../../redux/reducers/rootReducer';
+import { updateDoiRequest } from '../../api/doiRequestApi';
 
 const StyledActionsContainer = styled.div`
   margin-bottom: 1rem;
@@ -58,6 +59,7 @@ export const RegistrationFormActions: FC<RegistrationFormActionsProps> = ({
   const [openSupportModal, setOpenSupportModal] = useState(false);
   const toggleSupportModal = () => setOpenSupportModal((state) => !state);
   const [isSaving, setIsSaving] = useState(false);
+  const [isUpdatingDoi, setIsUpdatingDoi] = useState<DoiRequestStatus | ''>('');
   const [isPublishing, setIsPublishing] = useState(false);
 
   const saveRegistration = async (values: Registration) => {
@@ -94,12 +96,19 @@ export const RegistrationFormActions: FC<RegistrationFormActionsProps> = ({
     }
   };
 
-  const onClickCreateDoi = () => {
-    // TODO: create doi here
-  };
-
-  const onClickRejectDoi = () => {
-    // TODO: reject doi here
+  const onClickUpdateDoiRequest = async (status: DoiRequestStatus) => {
+    setIsUpdatingDoi(status);
+    const updateDoiResponse = await updateDoiRequest(values.identifier, status);
+    if (updateDoiResponse) {
+      if (updateDoiResponse.error) {
+        dispatch(setNotification(t('feedback:error.update_doi_request'), NotificationVariant.Error));
+      } else {
+        const updatedRegistration = await getRegistration(values.identifier);
+        handleSetRegistration(updatedRegistration);
+        dispatch(setNotification(t('feedback:success.doi_request_updated'), NotificationVariant.Success));
+      }
+    }
+    setIsUpdatingDoi('');
   };
 
   return (
@@ -177,24 +186,26 @@ export const RegistrationFormActions: FC<RegistrationFormActionsProps> = ({
 
               {user.isCurator && doiRequest?.status === DoiRequestStatus.Requested && (
                 <>
-                  <Button
+                  <ButtonWithProgress
                     color="primary"
                     variant="contained"
                     data-testid="button-reject-doi"
                     endIcon={<CloseIcon />}
-                    onClick={onClickRejectDoi}
-                    disabled={isSaving || !isValid}>
+                    onClick={() => onClickUpdateDoiRequest(DoiRequestStatus.Rejected)}
+                    isLoading={isUpdatingDoi === DoiRequestStatus.Rejected}
+                    disabled={!!isUpdatingDoi || isSaving || !isValid}>
                     {t('common:reject_doi')}
-                  </Button>
-                  <Button
+                  </ButtonWithProgress>
+                  <ButtonWithProgress
                     color="primary"
                     variant="contained"
                     data-testid="button-create-doi"
                     endIcon={<CheckIcon />}
-                    onClick={onClickCreateDoi}
-                    disabled={isSaving || !isValid}>
+                    onClick={() => onClickUpdateDoiRequest(DoiRequestStatus.Approved)}
+                    isLoading={isUpdatingDoi === DoiRequestStatus.Approved}
+                    disabled={!!isUpdatingDoi || isSaving || !isValid}>
                     {t('common:create_doi')}
-                  </Button>
+                  </ButtonWithProgress>
                 </>
               )}
             </>
