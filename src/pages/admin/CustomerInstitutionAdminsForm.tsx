@@ -55,7 +55,11 @@ const CustomerInstitutionAdminsForm: FC<CustomerInstitutionAdminsFormProps> = ({
         </>
       )}
 
-      <Modal open={openAddAdminModal} onClose={toggleOpenAddAdminModal} headingText={t('users.add_institution_admin')}>
+      <Modal
+        open={openAddAdminModal}
+        onClose={toggleOpenAddAdminModal}
+        headingText={t('users.add_institution_admin')}
+        data-testid="add-role-modal">
         <AddRoleModalContent
           role={RoleName.INSTITUTION_ADMIN}
           users={users}
