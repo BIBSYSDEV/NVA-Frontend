@@ -58,7 +58,7 @@ const DescriptionPanel: FC<PanelProps> = ({ setTouchedFields }) => {
       <StyledMainCard>
         <Typography variant="h2">{t('heading.description')}</Typography>
         <Field name={DescriptionFieldNames.TITLE}>
-          {({ field, meta: { touched, error } }: FieldProps) => (
+          {({ field, meta: { touched, error } }: FieldProps<string>) => (
             <TextField
               {...field}
               required
@@ -73,7 +73,7 @@ const DescriptionPanel: FC<PanelProps> = ({ setTouchedFields }) => {
           )}
         </Field>
         <Field name={DescriptionFieldNames.ABSTRACT}>
-          {({ field }: FieldProps) => (
+          {({ field }: FieldProps<string>) => (
             <TextField
               {...field}
               data-testid="registration-abstract-field"
@@ -87,7 +87,7 @@ const DescriptionPanel: FC<PanelProps> = ({ setTouchedFields }) => {
           )}
         </Field>
         <Field name={DescriptionFieldNames.DESCRIPTION}>
-          {({ field }: FieldProps) => (
+          {({ field }: FieldProps<string>) => (
             <TextField
               {...field}
               data-testid="registration-description-field"
@@ -102,7 +102,7 @@ const DescriptionPanel: FC<PanelProps> = ({ setTouchedFields }) => {
         </Field>
         <NpiAndTagsWrapper>
           <Field name={DescriptionFieldNames.NPI_SUBJECT_HEADING}>
-            {({ field: { name, value } }: FieldProps) => (
+            {({ field: { name, value } }: FieldProps<string>) => (
               // TODO: when we have a service for getting npiDisciplines by id this must be updated (only id is stored in backend for now)
               <DisciplineSearch
                 setValueFunction={(npiDiscipline) => setFieldValue(name, npiDiscipline?.id ?? '')}
@@ -147,7 +147,7 @@ const DescriptionPanel: FC<PanelProps> = ({ setTouchedFields }) => {
           <DatePickerField />
 
           <Field name={DescriptionFieldNames.LANGUAGE}>
-            {({ field }: FieldProps) => (
+            {({ field }: FieldProps<string>) => (
               <TextField
                 {...field}
                 data-testid="registration-language-field"
