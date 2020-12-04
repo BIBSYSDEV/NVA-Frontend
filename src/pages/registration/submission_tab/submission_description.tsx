@@ -13,7 +13,7 @@ const SubmissionDescription: React.FC = () => {
 
   const {
     entityDescription: { mainTitle, abstract, description, npiSubjectHeading, tags, date, language },
-    project,
+    projects,
   } = values;
   const npiDiscipline = getNpiDiscipline(npiSubjectHeading);
   const languageId =
@@ -30,7 +30,9 @@ const SubmissionDescription: React.FC = () => {
       <LabelContentRow label={t('description.keywords')}>{tags.join(', ')}</LabelContentRow>
       <LabelContentRow label={t('common:language')}>{t(`languages:${languageId}`)}</LabelContentRow>
       <LabelContentRow label={t('description.date_published')}>{displayDate(date)}</LabelContentRow>
-      <LabelContentRow label={t('description.project_association')}>{project?.name}</LabelContentRow>
+      <LabelContentRow label={`${t('description.project_association')}:`}>
+        {projects && projects.map((project) => project.name).join(', ')}
+      </LabelContentRow>
     </>
   );
 };

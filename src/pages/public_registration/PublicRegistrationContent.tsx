@@ -193,9 +193,9 @@ const PublicRegistrationContent: FC<PublicRegistrationContentProps> = ({ registr
               <StyledNormalText>{selectedLicense.description}</StyledNormalText>
             </StyledLicenseCard>
           )}
-          {registration.project && (
+          {registration.projects && (
             <LabelContentRow minimal label={`${t('description.project_association')}:`}>
-              {registration.project.name}
+              {registration.projects.map((project) => project.name).join(', ')}
             </LabelContentRow>
           )}
         </StyledMainContent>
