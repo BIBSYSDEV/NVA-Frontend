@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { Link, Chip } from '@material-ui/core';
+import { Link, Chip, Typography } from '@material-ui/core';
 import styled from 'styled-components';
 import { Registration } from '../../types/registration.types';
 import ContentPage from '../../components/ContentPage';
@@ -195,7 +195,9 @@ const PublicRegistrationContent: FC<PublicRegistrationContentProps> = ({ registr
           )}
           {registration.projects && (
             <LabelContentRow minimal label={`${t('description.project_association')}:`}>
-              {registration.projects.map((project) => project.name).join(', ')}
+              {registration.projects.map((project) => (
+                <Typography key={project.id}>{project.name}</Typography>
+              ))}
             </LabelContentRow>
           )}
         </StyledMainContent>

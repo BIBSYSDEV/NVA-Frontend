@@ -2,6 +2,7 @@ import LabelContentRow from '../../../components/LabelContentRow';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useFormikContext } from 'formik';
+import { Typography } from '@material-ui/core';
 import { Registration } from '../../../types/registration.types';
 import { getNpiDiscipline } from '../../../utils/npiDisciplines';
 import { registrationLanguages } from '../../../types/language.types';
@@ -31,7 +32,7 @@ const SubmissionDescription: React.FC = () => {
       <LabelContentRow label={t('common:language')}>{t(`languages:${languageId}`)}</LabelContentRow>
       <LabelContentRow label={t('description.date_published')}>{displayDate(date)}</LabelContentRow>
       <LabelContentRow label={`${t('description.project_association')}:`}>
-        {projects && projects.map((project) => project.name).join(', ')}
+        {projects && projects.map((project) => <Typography key={project.id}>{project.name}</Typography>)}
       </LabelContentRow>
     </>
   );
