@@ -8,7 +8,7 @@ import { Registration } from '../../../../types/registration.types';
 import PublicationChannelSearch from './PublicationChannelSearch';
 
 interface JournalFieldProps {
-  disabled: boolean;
+  disabled?: boolean;
 }
 
 const JournalField: FC<JournalFieldProps> = ({ disabled }) => {
