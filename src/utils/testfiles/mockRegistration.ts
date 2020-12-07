@@ -15,7 +15,7 @@ export const mockRegistration: JournalRegistration = {
   createdDate: '2020',
   owner: 'tu@unit.no',
   status: RegistrationStatus.DRAFT,
-  project: null,
+  projects: [],
   publisher: { id: mockCustomerInstitution.id },
   fileSet: {
     type: BackendTypeNames.FILE_SET,

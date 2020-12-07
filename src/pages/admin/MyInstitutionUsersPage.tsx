@@ -127,7 +127,8 @@ const MyInstitutionUsersPage: FC = () => {
                 : roleToAdd === RoleName.CURATOR
                 ? t('users.add_curator')
                 : t('users.add_editor')
-            }>
+            }
+            data-testid="add-role-modal">
             <AddRoleModalContent
               role={roleToAdd}
               users={users}

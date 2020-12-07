@@ -22,20 +22,20 @@ export const ProjectsField: FC = () => {
   const [projects, isLoadingProjects, handleNewSearchTerm] = useFetchProjects();
 
   return (
-    <Field name={DescriptionFieldNames.PROJECT}>
-      {({ field, form: { setFieldValue } }: FieldProps<ResearchProject>) => (
+    <Field name={DescriptionFieldNames.PROJECTS}>
+      {({ field, form: { setFieldValue } }: FieldProps<ResearchProject[]>) => (
         <Autocomplete
           {...autocompleteTranslationProps}
           options={projects}
           getOptionLabel={(option) => getProjectTitle(option)}
           onInputChange={(_, newInputValue) => handleNewSearchTerm(newInputValue)}
           onChange={(_, value) => {
-            const projectToPersist = value[0] ? convertToResearchProject(value[0]) : undefined;
-            setFieldValue(field.name, projectToPersist);
+            const projectsToPersist = value.map((projectValue) => convertToResearchProject(projectValue));
+            setFieldValue(field.name, projectsToPersist);
           }}
           popupIcon={null}
           multiple
-          defaultValue={field.value ? [field.value].map((project) => convertToCristinProject(project)) : []}
+          defaultValue={field.value.map((project) => convertToCristinProject(project)) ?? []}
           renderTags={(value, getTagProps) =>
             value.map((option, index) => (
               <StyledProjectChip
@@ -52,7 +52,7 @@ export const ProjectsField: FC = () => {
               />
             ))
           }
-          getOptionDisabled={(option) => field.value?.id === option.cristinProjectId}
+          getOptionDisabled={(option) => field.value.some((project) => project.id === option.cristinProjectId)}
           loading={isLoadingProjects}
           renderOption={(option, state) => (
             <StyledFlexColumn>

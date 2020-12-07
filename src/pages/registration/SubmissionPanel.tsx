@@ -44,8 +44,8 @@ const SubmissionPanel: FC = () => {
           <LabelContentRow label={t('common:type')}>
             {publicationContextType && t(`publicationTypes:${publicationContextType}`)}
           </LabelContentRow>
-          {reference.doi && (
-            <LabelContentRow label={t('registration.link_to_resource')}>{reference.doi}</LabelContentRow>
+          {(reference.doi || values.doi) && (
+            <LabelContentRow label={t('registration.link_to_resource')}>{values.doi ?? reference.doi}</LabelContentRow>
           )}
           {publicationContextType === PublicationType.DEGREE && <SubmissionDegree />}
           {publicationContextType === PublicationType.BOOK && <SubmissionBook />}

@@ -95,7 +95,7 @@ export const DoiRequestAccordion: FC<DoiRequestAccordionProps> = ({ registration
                   // TODO: Send message to backend
                   // eslint-disable-next-line no-console
                   console.log('Doi Message:', message);
-                  resolve();
+                  resolve(true);
                 }, 1000);
               });
             }}

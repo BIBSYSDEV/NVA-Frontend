@@ -2,6 +2,7 @@ import LabelContentRow from '../../../components/LabelContentRow';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useFormikContext } from 'formik';
+import { Typography } from '@material-ui/core';
 import { Registration } from '../../../types/registration.types';
 import { getNpiDiscipline } from '../../../utils/npiDisciplines';
 import { registrationLanguages } from '../../../types/language.types';
@@ -13,7 +14,7 @@ const SubmissionDescription: React.FC = () => {
 
   const {
     entityDescription: { mainTitle, abstract, description, npiSubjectHeading, tags, date, language },
-    project,
+    projects,
   } = values;
   const npiDiscipline = getNpiDiscipline(npiSubjectHeading);
   const languageId =
@@ -30,7 +31,9 @@ const SubmissionDescription: React.FC = () => {
       <LabelContentRow label={t('description.keywords')}>{tags.join(', ')}</LabelContentRow>
       <LabelContentRow label={t('common:language')}>{t(`languages:${languageId}`)}</LabelContentRow>
       <LabelContentRow label={t('description.date_published')}>{displayDate(date)}</LabelContentRow>
-      <LabelContentRow label={t('description.project_association')}>{project?.name}</LabelContentRow>
+      <LabelContentRow label={`${t('description.project_association')}:`}>
+        {projects && projects.map((project) => <Typography key={project.id}>{project.name}</Typography>)}
+      </LabelContentRow>
     </>
   );
 };

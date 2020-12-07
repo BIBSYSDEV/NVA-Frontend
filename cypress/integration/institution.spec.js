@@ -33,6 +33,6 @@ describe('My profile: Institutions', () => {
       force: true,
     });
     cy.get('[data-testid=accept-button]').click({ force: true });
-    cy.contains('Allmennmedisinsk forskningsenhet i Trondheim').should('not.be.visible');
+    cy.contains('Allmennmedisinsk forskningsenhet i Trondheim').should('not.exist');
   });
 });

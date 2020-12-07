@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { Link, Chip } from '@material-ui/core';
+import { Link, Chip, Typography } from '@material-ui/core';
 import styled from 'styled-components';
 import { Registration } from '../../types/registration.types';
 import ContentPage from '../../components/ContentPage';
@@ -94,7 +94,7 @@ const PublicRegistrationContent: FC<PublicRegistrationContentProps> = ({ registr
     description,
     mainTitle,
     npiSubjectHeading,
-    reference: { doi, publicationContext, publicationInstance },
+    reference,
     tags = [],
   } = registration.entityDescription;
 
@@ -112,10 +112,10 @@ const PublicRegistrationContent: FC<PublicRegistrationContentProps> = ({ registr
           (file) => !file.administrativeAgreement && <PublicRegistrationFile file={file} key={file.identifier} />
         )}
         <StyledMainContent>
-          {doi && (
+          {(registration.doi || reference.doi) && (
             <LabelContentRow minimal label={`${t('registration.link_to_resource')}:`}>
-              <Link href={doi} target="_blank" rel="noopener noreferrer">
-                {doi}
+              <Link href={registration.doi ?? reference.doi} target="_blank" rel="noopener noreferrer">
+                {registration.doi ?? reference.doi}
               </Link>
             </LabelContentRow>
           )}
@@ -141,20 +141,30 @@ const PublicRegistrationContent: FC<PublicRegistrationContentProps> = ({ registr
 
           {isJournal(registration) ? (
             <>
-              <PublicPublicationContextJournal publicationContext={publicationContext as JournalPublicationContext} />
+              <PublicPublicationContextJournal
+                publicationContext={reference.publicationContext as JournalPublicationContext}
+              />
               <PublicPublicationInstanceJournal
-                publicationInstance={publicationInstance as JournalPublicationInstance}
+                publicationInstance={reference.publicationInstance as JournalPublicationInstance}
               />
             </>
           ) : isDegree(registration) ? (
             <>
-              <PublicPublicationContextDegree publicationContext={publicationContext as DegreePublicationContext} />
-              <PublicPublicationInstanceDegree publicationInstance={publicationInstance as DegreePublicationInstance} />
+              <PublicPublicationContextDegree
+                publicationContext={reference.publicationContext as DegreePublicationContext}
+              />
+              <PublicPublicationInstanceDegree
+                publicationInstance={reference.publicationInstance as DegreePublicationInstance}
+              />
             </>
           ) : isReport(registration) ? (
             <>
-              <PublicPublicationContextReport publicationContext={publicationContext as ReportPublicationContext} />
-              <PublicPublicationInstanceReport publicationInstance={publicationInstance as ReportPublicationInstance} />
+              <PublicPublicationContextReport
+                publicationContext={reference.publicationContext as ReportPublicationContext}
+              />
+              <PublicPublicationInstanceReport
+                publicationInstance={reference.publicationInstance as ReportPublicationInstance}
+              />
             </>
           ) : null}
 
@@ -183,9 +193,11 @@ const PublicRegistrationContent: FC<PublicRegistrationContentProps> = ({ registr
               <StyledNormalText>{selectedLicense.description}</StyledNormalText>
             </StyledLicenseCard>
           )}
-          {registration.project && (
+          {registration.projects && (
             <LabelContentRow minimal label={`${t('description.project_association')}:`}>
-              {registration.project.name}
+              {registration.projects.map((project) => (
+                <Typography key={project.id}>{project.name}</Typography>
+              ))}
             </LabelContentRow>
           )}
         </StyledMainContent>

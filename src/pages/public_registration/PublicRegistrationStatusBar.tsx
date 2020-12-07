@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import { Button, DialogActions, TextField } from '@material-ui/core';
+import { Button, DialogActions, TextField, Typography } from '@material-ui/core';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import WorkOutlineIcon from '@material-ui/icons/WorkOutline';
 import { useTranslation } from 'react-i18next';
@@ -9,7 +9,6 @@ import { Link } from 'react-router-dom';
 
 import { RootStore } from '../../redux/reducers/rootReducer';
 import Card from '../../components/Card';
-import NormalText from '../../components/NormalText';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 import Modal from '../../components/Modal';
 import { setNotification } from '../../redux/actions/notificationActions';
@@ -51,9 +50,8 @@ export const PublicRegistrationStatusBar: FC<PublicRegistrationContentProps> = (
     identifier,
     owner,
     status,
-    entityDescription: {
-      reference: { doi },
-    },
+    entityDescription: { reference },
+    doi,
     doiRequest,
   } = registration;
 
@@ -79,7 +77,7 @@ export const PublicRegistrationStatusBar: FC<PublicRegistrationContentProps> = (
   };
 
   const isOwner = owner === user?.id;
-  const hasDoi = !!doi;
+  const hasNvaDoi = !!doi;
 
   return user?.isCreator && isOwner ? (
     <StyledStatusBar>
@@ -89,12 +87,12 @@ export const PublicRegistrationStatusBar: FC<PublicRegistrationContentProps> = (
         ) : (
           <StyledUnpublishedStatusIcon fontSize="large" />
         )}
-        <NormalText>
+        <Typography>
           {t('common:status')}: {t(`status.${status}`)}
-        </NormalText>
+        </Typography>
       </StyledStatusBarDescription>
       <div>
-        {!hasDoi &&
+        {!hasNvaDoi &&
           (hasPendingDoiRequest ? (
             <Button variant="contained" color="primary" disabled>
               {t('public_page.requested_doi')}
@@ -103,7 +101,7 @@ export const PublicRegistrationStatusBar: FC<PublicRegistrationContentProps> = (
             <>
               {status === RegistrationStatus.PUBLISHED && (
                 <Button
-                  variant="contained"
+                  variant={reference.doi ? 'outlined' : 'contained'}
                   color="primary"
                   data-testid="button-toggle-request-doi"
                   onClick={toggleRequestDoiModal}>
@@ -125,9 +123,9 @@ export const PublicRegistrationStatusBar: FC<PublicRegistrationContentProps> = (
         </Link>
       </div>
 
-      {!hasDoi && (
+      {!hasNvaDoi && (
         <Modal open={openRequestDoiModal} onClose={toggleRequestDoiModal} headingText={t('public_page.request_doi')}>
-          <NormalText>{t('public_page.request_doi_description')}</NormalText>
+          <Typography>{t('public_page.request_doi_description')}</Typography>
           <TextField
             variant="outlined"
             multiline

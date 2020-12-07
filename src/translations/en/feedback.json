@@ -37,6 +37,7 @@
     "search": "Search failed",
     "update_authority": "Could not update {{qualifier}} for authority",
     "update_customer": "Could not update customer institution",
+    "update_doi_request": "Could not update DOI request",
     "update_institution_user": "Could not update user",
     "update_registration": "Could not update registration",
     "orcid": {
@@ -59,6 +60,7 @@
     "delete_affiliation": "Deleted affiliation",
     "delete_identifier": "Deleted identifier",
     "doi_request_sent": "DOI request sent",
+    "doi_request_updated": "DOI request is updated",
     "login": "Logged in",
     "support_message_sent": "Message sent",
     "removed_role": "Role removed",
