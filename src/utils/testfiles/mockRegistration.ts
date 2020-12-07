@@ -92,6 +92,7 @@ export const mockRegistration: JournalRegistration = {
         articleNumber: '',
         issue: '',
         volume: '',
+        corrigendumFor: '',
       },
       publicationContext: {
         type: PublicationType.PUBLICATION_IN_JOURNAL,
