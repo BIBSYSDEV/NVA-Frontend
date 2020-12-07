@@ -89,7 +89,7 @@ interface BaseRegistration extends BackendType, RegistrationFileSet {
   readonly doi?: string;
   readonly doiRequest?: DoiRequest;
   readonly publisher: RegistrationPublisher;
-  project: ResearchProject | null;
+  projects: ResearchProject[];
 }
 
 export interface Registration extends BaseRegistration {
@@ -157,6 +157,6 @@ export const emptyRegistration: Registration = {
     type: BackendTypeNames.FILE_SET,
     files: [],
   },
-  project: null,
+  projects: [],
   publisher: { id: '' },
 };
