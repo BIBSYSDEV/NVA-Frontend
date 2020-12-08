@@ -23,7 +23,6 @@ const useSearchRegistrations = (
       setIsLoading(true);
       const response = await searchRegistrations(searchTerm, numberOfResults, searchAfter, cancelToken);
       if (response) {
-        console.log('henter på ny');
         if (response.error) {
           dispatch(setNotification(t('error.search'), NotificationVariant.Error));
         } else if (response.data) {
