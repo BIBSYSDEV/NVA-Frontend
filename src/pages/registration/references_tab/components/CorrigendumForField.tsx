@@ -3,7 +3,7 @@ import { Field, FieldProps, useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { Typography } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
-import JournalField from './JournalField';
+import Truncate from 'react-truncate';
 
 import { Registration } from '../../../../types/registration.types';
 import { autocompleteTranslationProps } from '../../../../themes/mainTheme';
@@ -46,7 +46,7 @@ const CorrigendumForField: FC = () => {
               {...autocompleteTranslationProps}
               popupIcon={null}
               debug={false}
-              options={journalRegistrations ? journalRegistrations.hits : []}
+              options={journalRegistrations?.hits ?? []}
               onBlur={() => setFieldTouched(field.name)}
               onInputChange={(_, newInputValue) => setSearchTerm(newInputValue)}
               defaultValue={initialOriginalArticle?.hits[0] ?? null}
@@ -64,9 +64,11 @@ const CorrigendumForField: FC = () => {
                   <Typography variant="subtitle1">
                     <EmphasizeSubstring text={option.title} emphasized={state.inputValue} />
                   </Typography>
-                  {/* <Typography variant="body2" color="textSecondary">
-                  {t('references.level')}: {option.level}
-                </Typography> */}
+                  <Truncate lines={1}>
+                    <Typography variant="body2" color="textSecondary">
+                      {option.contributors.map((contributor) => contributor.name).join('; ')}
+                    </Typography>
+                  </Truncate>
                 </StyledFlexColumn>
               )}
               renderInput={(params) => (
@@ -85,7 +87,6 @@ const CorrigendumForField: FC = () => {
           )}
         </Field>
       )}
-      {/* <JournalField disabled /> */}
     </>
   );
 };
