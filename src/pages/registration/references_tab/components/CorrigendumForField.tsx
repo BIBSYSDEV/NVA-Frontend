@@ -50,13 +50,9 @@ const CorrigendumForField: FC = () => {
               onBlur={() => setFieldTouched(field.name)}
               onInputChange={(_, newInputValue) => setSearchTerm(newInputValue)}
               defaultValue={initialOriginalArticle?.hits[0] ?? null}
-              onChange={(_, inputValue) => {
-                if (inputValue) {
-                  setFieldValue(field.name, `${registrationIriBase}/publication/${inputValue?.id}`);
-                } else {
-                  setFieldValue(field.name, '');
-                }
-              }}
+              onChange={(_, inputValue) =>
+                setFieldValue(field.name, inputValue ? `${registrationIriBase}/publication/${inputValue.id}` : '')
+              }
               loading={corrigendumForRef.current ? isLoadingInitialOriginalArticle : isLoadingRegistrations}
               getOptionLabel={(option) => option.title}
               renderOption={(option, state) => (
