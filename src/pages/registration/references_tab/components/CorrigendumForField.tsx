@@ -19,13 +19,13 @@ const searchQueryTypes = `(
   entityDescription.reference.publicationInstance="JournalShortCommunication"
 )`;
 
+const registrationIriBase = process.env.REACT_APP_API_URL;
+
 const CorrigendumForField: FC = () => {
   const { t } = useTranslation('registration');
-  const { values } = useFormikContext<Registration>();
+  const { setFieldValue } = useFormikContext<Registration>();
   const [searchTerm, setSearchTerm] = useState('');
-
   const searchQuery = searchTerm ? `${searchQueryTypes} AND *${searchTerm}*` : searchQueryTypes;
-
   const [journalRegistrations, isLoadingRegistrations] = useSearchRegistrations(searchQuery);
 
   return (
@@ -39,7 +39,13 @@ const CorrigendumForField: FC = () => {
             // onBlur={() => setFieldTouched(errorFieldName)}
             onInputChange={(_, newInputValue) => setSearchTerm(newInputValue)}
             // value={value}
-            // onChange={(_, inputValue) => setValue(inputValue as Publisher)}
+            onChange={(_, inputValue) => {
+              if (inputValue) {
+                setFieldValue(field.name, `${registrationIriBase}/publication/${inputValue?.id}`);
+              } else {
+                setFieldValue(field.name, '');
+              }
+            }}
             loading={isLoadingRegistrations}
             getOptionLabel={(option) => option.title}
             renderOption={(option, state) => (
