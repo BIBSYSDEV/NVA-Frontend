@@ -41,7 +41,7 @@ const CorrigendumForField: FC = () => {
     <>
       {initialOriginalArticle && (
         <Field name={ReferenceFieldNames.CORRIGENDUM_FOR}>
-          {({ field }: FieldProps) => (
+          {({ field, meta }: FieldProps) => (
             <Autocomplete
               {...autocompleteTranslationProps}
               popupIcon={null}
@@ -78,7 +78,7 @@ const CorrigendumForField: FC = () => {
                   placeholder={t('references.search_for_original_article')}
                   // dataTestId={dataTestId}
                   showSearchIcon
-                  // errorMessage={getIn(touched, errorFieldName) && getIn(errors, errorFieldName)}
+                  errorMessage={meta.touched && !!meta.error ? meta.error : undefined}
                 />
               )}
             />

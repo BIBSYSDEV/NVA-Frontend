@@ -8,6 +8,7 @@
   "entityDescription-reference-publicationContext-title": "$t(common:publisher)",
   "entityDescription-reference-publicationContext-type": "Publikasjonstype",
   "entityDescription-reference-publicationInstance-articleNumber": "$t(registration:references.article_number)",
+  "entityDescription-reference-publicationInstance-corrigendumFor": "$t(registration:references.original_article)",
   "entityDescription-reference-publicationInstance-issue": "$t(registration:references.issue)",
   "entityDescription-reference-publicationInstance-pages-begin": "$t(registration:references.pages_from)",
   "entityDescription-reference-publicationInstance-pages-end": "$t(registration:references.pages_to)",
