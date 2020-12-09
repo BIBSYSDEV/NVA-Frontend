@@ -41,7 +41,12 @@ const journalPublicationInstance = Yup.object().shape({
   volume: Yup.number().typeError(ErrorMessage.INVALID_FORMAT).min(0, ErrorMessage.MUST_BE_POSITIVE),
   issue: Yup.number().typeError(ErrorMessage.INVALID_FORMAT).min(0, ErrorMessage.MUST_BE_POSITIVE),
   pages: pagesRangeField,
-  corrigendumFor: Yup.string().url(ErrorMessage.INVALID_FORMAT).required(ErrorMessage.REQUIRED),
+  corrigendumFor: Yup.string()
+    .optional()
+    .when('type', {
+      is: JournalType.CORRIGENDUM,
+      then: Yup.string().url(ErrorMessage.INVALID_FORMAT).required(ErrorMessage.REQUIRED),
+    }),
 });
 
 const journalPublicationContext = Yup.object().shape({
