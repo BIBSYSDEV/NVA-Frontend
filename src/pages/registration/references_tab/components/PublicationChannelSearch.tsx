@@ -13,7 +13,7 @@ import { autocompleteTranslationProps } from '../../../../themes/mainTheme';
 
 interface PublicationChannelSearchProps
   extends Pick<TextFieldProps, 'label' | 'placeholder' | 'required'>,
-    Pick<AutocompleteProps<Publisher, false, false, false>, 'value' | 'disabled'> {
+    Pick<AutocompleteProps<Publisher, false, false, false>, 'value'> {
   publicationTable: PublicationTableNumber;
   errorFieldName: string;
   setValue: (value?: Publisher) => void;
@@ -29,7 +29,6 @@ const PublicationChannelSearch: FC<PublicationChannelSearchProps> = ({
   value,
   dataTestId,
   required,
-  disabled,
 }) => {
   const { t } = useTranslation('registration');
   const { setFieldTouched, errors, touched } = useFormikContext<Registration>();
@@ -38,7 +37,6 @@ const PublicationChannelSearch: FC<PublicationChannelSearchProps> = ({
   return (
     <Autocomplete
       {...autocompleteTranslationProps}
-      disabled={disabled}
       popupIcon={null}
       options={publishers}
       onBlur={() => setFieldTouched(errorFieldName)}

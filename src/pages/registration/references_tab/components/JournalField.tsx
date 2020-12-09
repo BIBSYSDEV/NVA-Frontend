@@ -7,11 +7,7 @@ import { publicationContextToPublisher, formatPublicationContextWithTitle } from
 import { Registration } from '../../../../types/registration.types';
 import PublicationChannelSearch from './PublicationChannelSearch';
 
-interface JournalFieldProps {
-  disabled?: boolean;
-}
-
-const JournalField: FC<JournalFieldProps> = ({ disabled }) => {
+const JournalField: FC = () => {
   const { t } = useTranslation('registration');
   const { setFieldValue } = useFormikContext<Registration>();
 
@@ -23,7 +19,6 @@ const JournalField: FC<JournalFieldProps> = ({ disabled }) => {
           publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
           label={t('references.journal')}
           required
-          disabled={disabled}
           placeholder={t('references.search_for_journal')}
           errorFieldName={ReferenceFieldNames.PUBLICATION_CONTEXT_TITLE}
           setValue={(newValue) => {
