@@ -14,6 +14,7 @@ import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
 import { JournalPublicationInstance } from '../../../../types/publication_types/journalRegistration.types';
 import { displayDate } from '../../../../utils/date-helpers';
 import useDebounce from '../../../../utils/hooks/useDebounce';
+import { API_URL } from '../../../../utils/constants';
 
 const typeFilter = `(
 entityDescription.reference.publicationInstance="JournalArticle" 
@@ -58,7 +59,7 @@ const CorrigendumForField: FC = () => {
           onChange={(_, inputValue) => {
             if (inputValue) {
               // Construct IRI manually, until it is part of the object itself
-              setFieldValue(field.name, `${process.env.REACT_APP_API_URL}/publication/${inputValue.id}`);
+              setFieldValue(field.name, `${API_URL}/publication/${inputValue.id}`);
             } else {
               setSearchTerm('');
               setFieldValue(field.name, '');
