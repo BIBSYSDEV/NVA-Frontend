@@ -85,7 +85,7 @@ const CorrigendumForField: FC = () => {
               required
               isLoading={isLoadingRegistrationsSearch}
               placeholder={t('references.search_for_original_article')}
-              // dataTestId={dataTestId}
+              dataTestId="original-article-input"
               showSearchIcon
               errorMessage={meta.touched && !!meta.error ? meta.error : undefined}
             />
