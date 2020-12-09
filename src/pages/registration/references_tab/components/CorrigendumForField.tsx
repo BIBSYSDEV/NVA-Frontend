@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { Typography } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
 import Truncate from 'react-truncate';
-
 import { Registration } from '../../../../types/registration.types';
 import { autocompleteTranslationProps } from '../../../../themes/mainTheme';
 import useSearchRegistrations from '../../../../utils/hooks/useSearchRegistrations';
@@ -13,6 +12,7 @@ import { AutocompleteTextField } from '../../../../components/AutocompleteTextFi
 import EmphasizeSubstring from '../../../../components/EmphasizeSubstring';
 import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
 import { JournalPublicationInstance } from '../../../../types/publication_types/journalRegistration.types';
+import { displayDate } from '../../../../utils/date-helpers';
 
 const searchQueryTypes = `(
 entityDescription.reference.publicationInstance="JournalArticle" 
@@ -64,7 +64,12 @@ const CorrigendumForField: FC = () => {
                 <EmphasizeSubstring text={option.title} emphasized={state.inputValue} />
               </Typography>
               <Typography variant="body2" color="textSecondary">
-                <Truncate lines={1}>{option.contributors.map((contributor) => contributor.name).join('; ')}</Truncate>
+                <Truncate lines={1}>
+                  {option.publicationDate.year && displayDate(option.publicationDate)}
+                  {option.publicationDate.year && option.contributors.length > 0 && ' - '}
+
+                  {option.contributors.map((contributor) => contributor.name).join('; ')}
+                </Truncate>
               </Typography>
             </StyledFlexColumn>
           )}
