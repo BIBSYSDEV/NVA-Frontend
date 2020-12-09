@@ -39,54 +39,50 @@ const CorrigendumForField: FC = () => {
     (corrigendumFor && originalArticleSearch ? originalArticleSearch.hits : journalRegistrationsSearch?.hits) ?? [];
 
   return (
-    <>
-      {originalArticleSearch && (
-        <Field name={ReferenceFieldNames.CORRIGENDUM_FOR}>
-          {({ field, meta }: FieldProps<string>) => (
-            <Autocomplete
-              {...autocompleteTranslationProps}
-              popupIcon={null}
-              options={options}
-              onBlur={() => setFieldTouched(field.name)}
-              onInputChange={(_, newInputValue) => setSearchTerm(newInputValue)}
-              defaultValue={originalArticleSearch.hits[0] ?? null}
-              onChange={(_, inputValue) => {
-                if (!inputValue) {
-                  setSearchTerm('');
-                }
-                setFieldValue(field.name, inputValue ? `${registrationIriBase}/publication/${inputValue.id}` : '');
-              }}
-              loading={corrigendumFor ? isLoadingOriginalArticleSearch : isLoadingRegistrationsSearch}
-              getOptionLabel={(option) => option.title}
-              renderOption={(option, state) => (
-                <StyledFlexColumn>
-                  <Typography variant="subtitle1">
-                    <EmphasizeSubstring text={option.title} emphasized={state.inputValue} />
-                  </Typography>
-                  <Typography variant="body2" color="textSecondary">
-                    <Truncate lines={1}>
-                      {option.contributors.map((contributor) => contributor.name).join('; ')}
-                    </Truncate>
-                  </Typography>
-                </StyledFlexColumn>
-              )}
-              renderInput={(params) => (
-                <AutocompleteTextField
-                  {...params}
-                  label={t('references.original_article')}
-                  required
-                  isLoading={isLoadingRegistrationsSearch}
-                  placeholder={t('references.search_for_original_article')}
-                  // dataTestId={dataTestId}
-                  showSearchIcon
-                  errorMessage={meta.touched && !!meta.error ? meta.error : undefined}
-                />
-              )}
+    <Field name={ReferenceFieldNames.CORRIGENDUM_FOR}>
+      {({ field, meta }: FieldProps<string>) => (
+        <Autocomplete
+          {...autocompleteTranslationProps}
+          popupIcon={null}
+          options={options}
+          onBlur={() => setFieldTouched(field.name)}
+          onInputChange={(_, newInputValue) => setSearchTerm(newInputValue)}
+          value={originalArticleSearch?.hits[0] ?? null}
+          onChange={(_, inputValue) => {
+            if (inputValue) {
+              setFieldValue(field.name, `${registrationIriBase}/publication/${inputValue.id}`);
+            } else {
+              setSearchTerm('');
+              setFieldValue(field.name, '');
+            }
+          }}
+          loading={corrigendumFor ? isLoadingOriginalArticleSearch : isLoadingRegistrationsSearch}
+          getOptionLabel={(option) => option.title}
+          renderOption={(option, state) => (
+            <StyledFlexColumn>
+              <Typography variant="subtitle1">
+                <EmphasizeSubstring text={option.title} emphasized={state.inputValue} />
+              </Typography>
+              <Typography variant="body2" color="textSecondary">
+                <Truncate lines={1}>{option.contributors.map((contributor) => contributor.name).join('; ')}</Truncate>
+              </Typography>
+            </StyledFlexColumn>
+          )}
+          renderInput={(params) => (
+            <AutocompleteTextField
+              {...params}
+              label={t('references.original_article')}
+              required
+              isLoading={isLoadingRegistrationsSearch}
+              placeholder={t('references.search_for_original_article')}
+              // dataTestId={dataTestId}
+              showSearchIcon
+              errorMessage={meta.touched && !!meta.error ? meta.error : undefined}
             />
           )}
-        </Field>
+        />
       )}
-    </>
+    </Field>
   );
 };
 
