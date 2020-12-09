@@ -40,6 +40,7 @@ export const StyledSelectWrapper = styled.div`
 `;
 
 export const StyledFlexColumn = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
 `;
