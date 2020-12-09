@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import { Skeleton } from '@material-ui/lab';
 import { useTranslation } from 'react-i18next';
+import { Link } from '@material-ui/core';
 import { JournalPublicationInstance } from '../../types/publication_types/journalRegistration.types';
 import LabelContentRow from '../../components/LabelContentRow';
 import { DegreePublicationInstance } from '../../types/publication_types/degreeRegistration.types';
@@ -33,12 +34,17 @@ export const OriginalArticleInfo: FC<{ originalArticleId: string }> = ({ origina
   const [originalArticleSearch, isLoadingOriginalArticleSearch] = useSearchRegistrations(
     `identifier="${originalArticleId.split('/').pop()}"`
   );
-  const originalArticleTitle =
-    originalArticleSearch && originalArticleSearch.hits.length === 1 ? originalArticleSearch.hits[0].title : '';
+
+  const originalArticle =
+    originalArticleSearch && originalArticleSearch.hits.length === 1 ? originalArticleSearch.hits[0] : null;
 
   return (
     <LabelContentRow minimal label={`${t('references.original_article')}:`}>
-      {isLoadingOriginalArticleSearch ? <Skeleton width={200} /> : originalArticleTitle}
+      {isLoadingOriginalArticleSearch ? (
+        <Skeleton width={400} />
+      ) : (
+        originalArticle && <Link href={`/registration/${originalArticle.id}/public`}>{originalArticle.title}</Link>
+      )}
     </LabelContentRow>
   );
 };
