@@ -33,38 +33,50 @@ const CorrigendumForField: FC = () => {
   const corrigendumForRef = useRef(
     (values.entityDescription.reference.publicationInstance as JournalPublicationInstance).corrigendumFor
   );
-  const [initialOriginalArticle, isLoadingInitialOriginalArticle] = useSearchRegistrations(
-    `identifier="${corrigendumForRef.current.split('/').pop()}"`
-  );
+  const identifier = corrigendumForRef.current.split('/').pop();
+  const [originalArticleSearch, isLoadingOriginalArticleSearch] = useSearchRegistrations(`identifier="${identifier}"`);
+
+  const options =
+    originalArticleSearch &&
+    originalArticleSearch.hits.length === 1 &&
+    (values.entityDescription.reference.publicationInstance as JournalPublicationInstance).corrigendumFor
+      .split('/')
+      .pop() === originalArticleSearch.hits[0].id
+      ? [originalArticleSearch.hits[0]]
+      : journalRegistrations
+      ? journalRegistrations.hits
+      : [];
 
   return (
     <>
-      {initialOriginalArticle && (
+      {originalArticleSearch && (
         <Field name={ReferenceFieldNames.CORRIGENDUM_FOR}>
-          {({ field, meta }: FieldProps) => (
+          {({ field, meta }: FieldProps<string>) => (
             <Autocomplete
               {...autocompleteTranslationProps}
               popupIcon={null}
-              debug={false}
-              options={journalRegistrations?.hits ?? []}
+              options={options}
               onBlur={() => setFieldTouched(field.name)}
               onInputChange={(_, newInputValue) => setSearchTerm(newInputValue)}
-              defaultValue={initialOriginalArticle?.hits[0] ?? null}
-              onChange={(_, inputValue) =>
-                setFieldValue(field.name, inputValue ? `${registrationIriBase}/publication/${inputValue.id}` : '')
-              }
-              loading={corrigendumForRef.current ? isLoadingInitialOriginalArticle : isLoadingRegistrations}
+              defaultValue={originalArticleSearch.hits[0] ?? null}
+              onChange={(_, inputValue) => {
+                if (!inputValue) {
+                  setSearchTerm('');
+                }
+                setFieldValue(field.name, inputValue ? `${registrationIriBase}/publication/${inputValue.id}` : '');
+              }}
+              loading={corrigendumForRef.current ? isLoadingOriginalArticleSearch : isLoadingRegistrations}
               getOptionLabel={(option) => option.title}
               renderOption={(option, state) => (
                 <StyledFlexColumn>
                   <Typography variant="subtitle1">
                     <EmphasizeSubstring text={option.title} emphasized={state.inputValue} />
                   </Typography>
-                  <Truncate lines={1}>
-                    <Typography variant="body2" color="textSecondary">
+                  <Typography variant="body2" color="textSecondary">
+                    <Truncate lines={1}>
                       {option.contributors.map((contributor) => contributor.name).join('; ')}
-                    </Typography>
-                  </Truncate>
+                    </Truncate>
+                  </Typography>
                 </StyledFlexColumn>
               )}
               renderInput={(params) => (
