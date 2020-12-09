@@ -14,20 +14,19 @@ import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
 import { JournalPublicationInstance } from '../../../../types/publication_types/journalRegistration.types';
 import { displayDate } from '../../../../utils/date-helpers';
 
-const searchQueryTypes = `(
+const typeFilter = `(
 entityDescription.reference.publicationInstance="JournalArticle" 
 OR 
 entityDescription.reference.publicationInstance="JournalShortCommunication"
 )`;
 
-const registrationIriBase = process.env.REACT_APP_API_URL;
-
 const CorrigendumForField: FC = () => {
   const { t } = useTranslation('registration');
   const { values, setFieldValue, setFieldTouched } = useFormikContext<Registration>();
   const [searchTerm, setSearchTerm] = useState('');
-  const searchQuery = searchTerm ? `${searchQueryTypes} AND *${searchTerm}*` : searchQueryTypes;
-  const [journalRegistrationsSearch, isLoadingRegistrationsSearch] = useSearchRegistrations(searchQuery);
+  const [journalRegistrationsSearch, isLoadingRegistrationsSearch] = useSearchRegistrations(
+    `${typeFilter} AND *${searchTerm}*`
+  );
 
   // Fetch selected article, if already selected
   const { corrigendumFor } = values.entityDescription.reference.publicationInstance as JournalPublicationInstance;
@@ -36,7 +35,9 @@ const CorrigendumForField: FC = () => {
   );
 
   const options =
-    (corrigendumFor && originalArticleSearch ? originalArticleSearch.hits : journalRegistrationsSearch?.hits) ?? [];
+    (corrigendumFor && originalArticleSearch && searchTerm === originalArticleSearch.hits[0].title
+      ? originalArticleSearch.hits
+      : journalRegistrationsSearch?.hits) ?? [];
 
   return (
     <Field name={ReferenceFieldNames.CORRIGENDUM_FOR}>
@@ -50,7 +51,8 @@ const CorrigendumForField: FC = () => {
           value={originalArticleSearch?.hits[0] ?? null}
           onChange={(_, inputValue) => {
             if (inputValue) {
-              setFieldValue(field.name, `${registrationIriBase}/publication/${inputValue.id}`);
+              // Construct IRI manually, until it is part of the object itself
+              setFieldValue(field.name, `${process.env.REACT_APP_API_URL}/publication/${inputValue.id}`);
             } else {
               setSearchTerm('');
               setFieldValue(field.name, '');
@@ -67,7 +69,6 @@ const CorrigendumForField: FC = () => {
                 <Truncate lines={1}>
                   {option.publicationDate.year && displayDate(option.publicationDate)}
                   {option.publicationDate.year && option.contributors.length > 0 && ' - '}
-
                   {option.contributors.map((contributor) => contributor.name).join('; ')}
                 </Truncate>
               </Typography>
