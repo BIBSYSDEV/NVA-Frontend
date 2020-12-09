@@ -55,6 +55,7 @@ const CorrigendumForField: FC = () => {
           options={options}
           onBlur={() => setFieldTouched(field.name)}
           onInputChange={(_, newInputValue) => setSearchTerm(newInputValue)}
+          getOptionSelected={(option, value) => option.id === value.id}
           value={originalArticleSearch?.hits[0] ?? null}
           onChange={(_, inputValue) => {
             if (inputValue) {
