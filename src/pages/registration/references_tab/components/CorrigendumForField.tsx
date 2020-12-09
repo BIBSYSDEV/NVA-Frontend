@@ -13,6 +13,7 @@ import EmphasizeSubstring from '../../../../components/EmphasizeSubstring';
 import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
 import { JournalPublicationInstance } from '../../../../types/publication_types/journalRegistration.types';
 import { displayDate } from '../../../../utils/date-helpers';
+import useDebounce from '../../../../utils/hooks/useDebounce';
 
 const typeFilter = `(
 entityDescription.reference.publicationInstance="JournalArticle" 
@@ -24,8 +25,9 @@ const CorrigendumForField: FC = () => {
   const { t } = useTranslation('registration');
   const { values, setFieldValue, setFieldTouched } = useFormikContext<Registration>();
   const [searchTerm, setSearchTerm] = useState('');
+  const debouncedSearchTerm = useDebounce(searchTerm);
   const [journalRegistrationsSearch, isLoadingRegistrationsSearch] = useSearchRegistrations(
-    `${typeFilter} AND *${searchTerm}*`
+    `${typeFilter} AND *${debouncedSearchTerm}*`
   );
 
   // Fetch selected article, if already selected
@@ -62,7 +64,7 @@ const CorrigendumForField: FC = () => {
               setFieldValue(field.name, '');
             }
           }}
-          loading={corrigendumFor ? isLoadingOriginalArticleSearch : isLoadingRegistrationsSearch}
+          loading={isLoadingOriginalArticleSearch || isLoadingRegistrationsSearch}
           getOptionLabel={(option) => option.title}
           renderOption={(option, state) => (
             <StyledFlexColumn>
@@ -83,7 +85,7 @@ const CorrigendumForField: FC = () => {
               {...params}
               label={t('references.original_article')}
               required
-              isLoading={isLoadingRegistrationsSearch}
+              isLoading={isLoadingOriginalArticleSearch || isLoadingRegistrationsSearch}
               placeholder={t('references.search_for_original_article')}
               dataTestId="original-article-input"
               showSearchIcon
