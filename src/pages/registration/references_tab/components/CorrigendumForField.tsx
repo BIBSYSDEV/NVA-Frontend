@@ -34,8 +34,12 @@ const CorrigendumForField: FC = () => {
     `identifier="${corrigendumFor.split('/').pop()}"`
   );
 
+  // Show only selected value as option unless user are performing a new search
   const options =
-    (corrigendumFor && originalArticleSearch && searchTerm === originalArticleSearch.hits[0].title
+    (corrigendumFor &&
+    originalArticleSearch &&
+    originalArticleSearch.hits.length > 0 &&
+    originalArticleSearch.hits[0].title === searchTerm
       ? originalArticleSearch.hits
       : journalRegistrationsSearch?.hits) ?? [];
 
