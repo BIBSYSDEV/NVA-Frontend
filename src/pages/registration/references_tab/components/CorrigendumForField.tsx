@@ -1,4 +1,4 @@
-import React, { FC, useRef, useState } from 'react';
+import React, { FC, useState } from 'react';
 import { Field, FieldProps, useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { Typography } from '@material-ui/core';
@@ -27,25 +27,16 @@ const CorrigendumForField: FC = () => {
   const { values, setFieldValue, setFieldTouched } = useFormikContext<Registration>();
   const [searchTerm, setSearchTerm] = useState('');
   const searchQuery = searchTerm ? `${searchQueryTypes} AND *${searchTerm}*` : searchQueryTypes;
-  const [journalRegistrations, isLoadingRegistrations] = useSearchRegistrations(searchQuery);
+  const [journalRegistrationsSearch, isLoadingRegistrationsSearch] = useSearchRegistrations(searchQuery);
 
-  // Put corrigendumFor in useRef, to avoid fetching again everytime it changes. Only use this as defaultValue.
-  const corrigendumForRef = useRef(
-    (values.entityDescription.reference.publicationInstance as JournalPublicationInstance).corrigendumFor
+  // Fetch selected article, if already selected
+  const { corrigendumFor } = values.entityDescription.reference.publicationInstance as JournalPublicationInstance;
+  const [originalArticleSearch, isLoadingOriginalArticleSearch] = useSearchRegistrations(
+    `identifier="${corrigendumFor.split('/').pop()}"`
   );
-  const identifier = corrigendumForRef.current.split('/').pop();
-  const [originalArticleSearch, isLoadingOriginalArticleSearch] = useSearchRegistrations(`identifier="${identifier}"`);
 
   const options =
-    originalArticleSearch &&
-    originalArticleSearch.hits.length === 1 &&
-    (values.entityDescription.reference.publicationInstance as JournalPublicationInstance).corrigendumFor
-      .split('/')
-      .pop() === originalArticleSearch.hits[0].id
-      ? [originalArticleSearch.hits[0]]
-      : journalRegistrations
-      ? journalRegistrations.hits
-      : [];
+    (corrigendumFor && originalArticleSearch ? originalArticleSearch.hits : journalRegistrationsSearch?.hits) ?? [];
 
   return (
     <>
@@ -65,7 +56,7 @@ const CorrigendumForField: FC = () => {
                 }
                 setFieldValue(field.name, inputValue ? `${registrationIriBase}/publication/${inputValue.id}` : '');
               }}
-              loading={corrigendumForRef.current ? isLoadingOriginalArticleSearch : isLoadingRegistrations}
+              loading={corrigendumFor ? isLoadingOriginalArticleSearch : isLoadingRegistrationsSearch}
               getOptionLabel={(option) => option.title}
               renderOption={(option, state) => (
                 <StyledFlexColumn>
@@ -84,7 +75,7 @@ const CorrigendumForField: FC = () => {
                   {...params}
                   label={t('references.original_article')}
                   required
-                  isLoading={isLoadingRegistrations}
+                  isLoading={isLoadingRegistrationsSearch}
                   placeholder={t('references.search_for_original_article')}
                   // dataTestId={dataTestId}
                   showSearchIcon
