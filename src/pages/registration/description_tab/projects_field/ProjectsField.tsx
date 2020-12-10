@@ -50,7 +50,7 @@ export const ProjectsField: FC = () => {
             value.map((option, index) => (
               <StyledProjectChip
                 {...getTagProps({ index })}
-                data-testid="project-chip"
+                data-testid={`project-chip-${option.cristinProjectId}`}
                 label={
                   <StyledFlexColumn>
                     <Typography variant="subtitle1">{getProjectTitle(option)}</Typography>
@@ -65,7 +65,7 @@ export const ProjectsField: FC = () => {
           getOptionDisabled={(option) => field.value.some((project) => project.id === option.cristinProjectId)}
           loading={isLoadingProjects}
           renderOption={(option, state) => (
-            <StyledFlexColumn>
+            <StyledFlexColumn data-testid={`project-option-${option.cristinProjectId}`}>
               <Typography variant="subtitle1">
                 <EmphasizeSubstring text={getProjectTitle(option)} emphasized={state.inputValue} />
               </Typography>
