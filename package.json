@@ -31,7 +31,7 @@
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0",
     "styled-components": "^5.2.1",
-    "yup": "^0.31.1"
+    "yup": "^0.32.6"
   },
   "scripts": {
     "start": "react-scripts -r @cypress/instrument-cra start",
