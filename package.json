@@ -22,7 +22,7 @@
     "i18next-browser-languagedetector": "^6.0.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "react-i18next": "^11.7.4",
+    "react-i18next": "^11.8.3",
     "react-redux": "^7.2.2",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^4.0.1",
@@ -64,11 +64,11 @@
     "extends": "@istanbuljs/nyc-config-typescript"
   },
   "devDependencies": {
-    "@cypress/code-coverage": "^3.8.5",
+    "@cypress/code-coverage": "^3.8.6",
     "@cypress/instrument-cra": "^1.4.0",
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
     "@types/history": "^4.7.8",
-    "@types/node": "^14.14.11",
+    "@types/node": "^14.14.12",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "@types/react-redux": "^7.1.11",
