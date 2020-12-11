@@ -126,7 +126,6 @@ export const RegistrationFormActions: FC<RegistrationFormActionsProps> = ({
               {tabNumber === RegistrationTab.Reference && t('heading.description')}
               {tabNumber === RegistrationTab.Contributors && t('heading.reference')}
               {tabNumber === RegistrationTab.FilesAndLicenses && t('heading.contributors')}
-              {tabNumber === RegistrationTab.Submission && t('heading.files_and_license')}
             </Button>
           )}
         </div>
@@ -135,7 +134,7 @@ export const RegistrationFormActions: FC<RegistrationFormActionsProps> = ({
           <Button data-testid="open-support-button" variant="text" color="primary" onClick={toggleSupportModal}>
             {t('common:support')}
           </Button>
-          {tabNumber !== RegistrationTab.Submission ? (
+          {tabNumber !== RegistrationTab.FilesAndLicenses ? (
             <>
               <ButtonWithProgress
                 variant="outlined"
@@ -158,7 +157,6 @@ export const RegistrationFormActions: FC<RegistrationFormActionsProps> = ({
                 {tabNumber === RegistrationTab.Description && t('heading.reference')}
                 {tabNumber === RegistrationTab.Reference && t('heading.contributors')}
                 {tabNumber === RegistrationTab.Contributors && t('heading.files_and_license')}
-                {tabNumber === RegistrationTab.FilesAndLicenses && t('heading.summary')}
               </Button>
             </>
           ) : (

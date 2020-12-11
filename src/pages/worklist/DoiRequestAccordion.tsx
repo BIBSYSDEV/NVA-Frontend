@@ -106,7 +106,7 @@ export const DoiRequestAccordion: FC<DoiRequestAccordionProps> = ({ registration
             data-testid={`go-to-registration-${identifier}`}
             variant="outlined"
             component={RouterLink}
-            to={`/registration/${identifier}?tab=${RegistrationTab.Submission}`}>
+            to={`/registration/${identifier}?tab=${RegistrationTab.FilesAndLicenses}`}>
             {t('doi_requests.go_to_registration')}
           </Button>
           <Button variant="contained" color="primary" disabled>
