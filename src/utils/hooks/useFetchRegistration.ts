@@ -1,51 +1,38 @@
-import { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import Axios from 'axios';
+import { useState, useEffect, useCallback } from 'react';
+import { useDispatch } from 'react-redux';
 
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import { Registration } from '../../types/registration.types';
 import { getRegistration } from '../../api/registrationApi';
-import { RootStore } from '../../redux/reducers/rootReducer';
+import useCancelToken from './useCancelToken';
 
-const useFetchRegistration = (
-  identifier: string
-): [Registration | undefined, boolean, (values: Registration) => void] => {
+const useFetchRegistration = (identifier: string): [Registration | undefined, boolean, () => void] => {
   const dispatch = useDispatch();
   const [registration, setRegistration] = useState<Registration>();
   const [isLoading, setIsLoading] = useState(!!identifier);
-  const user = useSelector((store: RootStore) => store.user);
+  const cancelToken = useCancelToken();
 
-  const handleSetRegistration = (values: Registration) => {
-    setRegistration(values);
-  };
+  const fetchRegistration = useCallback(async () => {
+    setIsLoading(true);
+    const registration = await getRegistration(identifier, cancelToken);
+    if (registration) {
+      if (registration.error) {
+        dispatch(setNotification(registration.error, NotificationVariant.Error));
+      } else {
+        setRegistration(registration);
+      }
+      setIsLoading(false);
+    }
+  }, [dispatch, cancelToken, identifier]);
 
   useEffect(() => {
-    const cancelSource = Axios.CancelToken.source();
-
-    const fetchRegistration = async () => {
-      const registration = await getRegistration(identifier, cancelSource.token);
-      if (registration) {
-        if (registration.error) {
-          dispatch(setNotification(registration.error, NotificationVariant.Error));
-        } else {
-          setRegistration(registration);
-        }
-        setIsLoading(false);
-      }
-    };
     if (identifier) {
       fetchRegistration();
     }
+  }, [fetchRegistration, identifier]);
 
-    return () => {
-      if (identifier) {
-        cancelSource.cancel();
-      }
-    };
-  }, [dispatch, identifier, user]);
-
-  return [registration, isLoading, handleSetRegistration];
+  return [registration, isLoading, fetchRegistration];
 };
 
 export default useFetchRegistration;

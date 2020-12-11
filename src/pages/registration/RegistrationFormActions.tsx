@@ -8,21 +8,13 @@ import { Button } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import SaveIcon from '@material-ui/icons/Save';
-import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import CloseIcon from '@material-ui/icons/Close';
 import CheckIcon from '@material-ui/icons/Check';
-import deepmerge from 'deepmerge';
 import ButtonWithProgress from '../../components/ButtonWithProgress';
-import {
-  DoiRequestStatus,
-  emptyRegistration,
-  Registration,
-  RegistrationStatus,
-  RegistrationTab,
-} from '../../types/registration.types';
+import { DoiRequestStatus, Registration, RegistrationStatus, RegistrationTab } from '../../types/registration.types';
 import Modal from '../../components/Modal';
 import { SupportModalContent } from './SupportModalContent';
-import { getRegistration, publishRegistration, updateRegistration } from '../../api/registrationApi';
+import { updateRegistration } from '../../api/registrationApi';
 import { NotificationVariant } from '../../types/notification.types';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { RootStore } from '../../redux/reducers/rootReducer';
@@ -41,26 +33,25 @@ const StyledActionsContainer = styled.div`
 interface RegistrationFormActionsProps {
   tabNumber: number;
   setTabNumber: (newTab: number) => void;
-  handleSetRegistration: (values: Registration) => void;
+  refetchRegistration: () => void;
 }
 
 export const RegistrationFormActions: FC<RegistrationFormActionsProps> = ({
   tabNumber,
   setTabNumber,
-  handleSetRegistration,
+  refetchRegistration,
 }) => {
   const { t } = useTranslation('registration');
   const history = useHistory();
   const dispatch = useDispatch();
   const user = useSelector((store: RootStore) => store.user);
-  const { values, errors, setTouched, dirty, isValid } = useFormikContext<Registration>();
+  const { values, errors, setTouched, isValid } = useFormikContext<Registration>();
   const { status, doiRequest } = values;
 
   const [openSupportModal, setOpenSupportModal] = useState(false);
   const toggleSupportModal = () => setOpenSupportModal((state) => !state);
   const [isSaving, setIsSaving] = useState(false);
   const [isUpdatingDoi, setIsUpdatingDoi] = useState<DoiRequestStatus | ''>('');
-  const [isPublishing, setIsPublishing] = useState(false);
 
   const saveRegistration = async (values: Registration) => {
     setIsSaving(true);
@@ -68,25 +59,11 @@ export const RegistrationFormActions: FC<RegistrationFormActionsProps> = ({
     if (updatedRegistration?.error) {
       dispatch(setNotification(updatedRegistration.error, NotificationVariant.Error));
     } else {
-      handleSetRegistration(deepmerge(emptyRegistration, updatedRegistration));
+      refetchRegistration();
       dispatch(setNotification(t('feedback:success.update_registration')));
     }
     setIsSaving(false);
     return !updatedRegistration.error;
-  };
-
-  const onClickPublish = async () => {
-    setIsPublishing(true);
-    const RegistrationIsUpdated = dirty ? await saveRegistration(values) : true;
-    if (RegistrationIsUpdated) {
-      const publishedRegistration = await publishRegistration(values.identifier);
-      if (publishedRegistration?.error) {
-        setIsPublishing(false);
-        dispatch(setNotification(publishedRegistration.error, NotificationVariant.Error));
-      } else {
-        history.push(`/registration/${values.identifier}/public`);
-      }
-    }
   };
 
   const onClickSaveAndPresent = async () => {
@@ -103,8 +80,7 @@ export const RegistrationFormActions: FC<RegistrationFormActionsProps> = ({
       if (updateDoiResponse.error) {
         dispatch(setNotification(t('feedback:error.update_doi_request'), NotificationVariant.Error));
       } else {
-        const updatedRegistration = await getRegistration(values.identifier);
-        handleSetRegistration(updatedRegistration);
+        refetchRegistration();
         dispatch(setNotification(t('feedback:success.doi_request_updated'), NotificationVariant.Success));
       }
     }
@@ -165,24 +141,12 @@ export const RegistrationFormActions: FC<RegistrationFormActionsProps> = ({
             <>
               <ButtonWithProgress
                 variant={'outlined'}
-                disabled={isPublishing}
                 isLoading={isSaving}
                 data-testid="button-save-registration"
                 endIcon={<SaveIcon />}
                 onClick={onClickSaveAndPresent}>
                 {t('common:save_and_present')}
               </ButtonWithProgress>
-
-              {status === RegistrationStatus.DRAFT && (
-                <ButtonWithProgress
-                  disabled={isSaving || !isValid}
-                  data-testid="button-publish-registration"
-                  endIcon={<CloudUploadIcon />}
-                  onClick={onClickPublish}
-                  isLoading={isPublishing}>
-                  {t('common:publish')}
-                </ButtonWithProgress>
-              )}
 
               {user.isCurator && doiRequest?.status === DoiRequestStatus.Requested && (
                 <>

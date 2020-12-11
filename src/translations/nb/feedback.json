@@ -46,7 +46,6 @@
   },
   "info": {
     "affiliation_already_exists": "Tilhørigheten finnes allerede",
-    "publishing_registration": "Publiserer registrering...",
     "user_already_exists": "Brukeren finnes allerede"
   },
   "success": {
@@ -63,6 +62,7 @@
     "doi_request_updated": "DOI-forespørselen ble oppdatert",
     "login": "Logget inn",
     "support_message_sent": "Melding sendt",
+    "published_registration": "Registreringen ble publisert",
     "removed_role": "Rollen ble fjernet",
     "update_authority": "Forfatter er oppdatert",
     "update_customer": "Institusjon er oppdatert",

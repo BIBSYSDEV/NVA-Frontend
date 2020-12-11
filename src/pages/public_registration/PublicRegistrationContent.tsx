@@ -82,9 +82,10 @@ const StyledTag = styled.div`
 
 export interface PublicRegistrationContentProps {
   registration: Registration;
+  refetchRegistration: () => void;
 }
 
-const PublicRegistrationContent: FC<PublicRegistrationContentProps> = ({ registration }) => {
+const PublicRegistrationContent: FC<PublicRegistrationContentProps> = ({ registration, refetchRegistration }) => {
   const { t } = useTranslation('registration');
 
   const {
@@ -104,7 +105,7 @@ const PublicRegistrationContent: FC<PublicRegistrationContentProps> = ({ registr
 
   return (
     <ContentPage>
-      <PublicRegistrationStatusBar registration={registration} />
+      <PublicRegistrationStatusBar registration={registration} refetchRegistration={refetchRegistration} />
       <Heading>{mainTitle}</Heading>
       {contributors && <PublicRegistrationAuthors contributors={contributors} />}
       <StyledContentWrapper>
