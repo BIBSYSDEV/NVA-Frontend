@@ -134,9 +134,12 @@ export const PublicRegistrationStatusBar: FC<PublicRegistrationContentProps> = (
         ) : (
           <StyledUnpublishedStatusIcon fontSize="large" />
         )}
-        <Typography>
-          {t('common:status')}: {t(`status.${status}`)}
-        </Typography>
+        <div>
+          <Typography>
+            {t('common:status')}: {t(`status.${status}`)}
+          </Typography>
+          {!registrationIsValid && <Typography>{t('public_page.current_validation_errors')}</Typography>}
+        </div>
       </StyledStatusBarDescription>
       <div>
         <Link to={`/registration/${identifier}`}>
@@ -198,18 +201,14 @@ export const PublicRegistrationStatusBar: FC<PublicRegistrationContentProps> = (
           ))}
 
         {status === RegistrationStatus.DRAFT && (
-          // <Tooltip arrow title={<Typography>{t('public_page.fix_validation_errors_before_publishing')}</Typography>}>
-          <span>
-            <ButtonWithProgress
-              disabled={!!isLoading || !registrationIsValid}
-              data-testid="button-publish-registration"
-              endIcon={<CloudUploadIcon />}
-              onClick={onClickPublish}
-              isLoading={isLoading === LoadingName.Publish}>
-              {t('common:publish')}
-            </ButtonWithProgress>
-          </span>
-          // </Tooltip>
+          <ButtonWithProgress
+            disabled={!!isLoading || !registrationIsValid}
+            data-testid="button-publish-registration"
+            endIcon={<CloudUploadIcon />}
+            onClick={onClickPublish}
+            isLoading={isLoading === LoadingName.Publish}>
+            {t('common:publish')}
+          </ButtonWithProgress>
         )}
       </div>
 

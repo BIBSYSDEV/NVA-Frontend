@@ -91,7 +91,7 @@
   },
   "new_registration": "New registration",
   "public_page": {
-    "fix_validation_errors_before_publishing": "Fix validation errors before you publish",
+    "current_validation_errors": "NB! The registration has validation errors that must be fixed before it can be published",
     "message_to_curator": "Message to curator",
     "reserve_doi": "Reserve a DOI",
     "request_doi": "Request a DOI",
