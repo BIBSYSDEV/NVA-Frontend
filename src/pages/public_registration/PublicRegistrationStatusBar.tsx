@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import { Button, DialogActions, TextField, Typography } from '@material-ui/core';
+import { Button, DialogActions, TextField, Tooltip, Typography } from '@material-ui/core';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import WorkOutlineIcon from '@material-ui/icons/WorkOutline';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
@@ -18,6 +18,7 @@ import ButtonWithProgress from '../../components/ButtonWithProgress';
 import { RegistrationStatus, DoiRequestStatus } from '../../types/registration.types';
 import { createDoiRequest } from '../../api/doiRequestApi';
 import { publishRegistration } from '../../api/registrationApi';
+import { registrationValidationSchema } from '../../utils/validation/registration/registrationValidation';
 
 const StyledStatusBar = styled(Card)`
   display: flex;
@@ -66,6 +67,7 @@ export const PublicRegistrationStatusBar: FC<PublicRegistrationContentProps> = (
     doiRequest,
     publisher,
   } = registration;
+  const registrationIsValid = registrationValidationSchema.isValidSync(registration);
 
   const [messageToCurator, setMessageToCurator] = useState('');
   const [openRequestDoiModal, setOpenRequestDoiModal] = useState(false);
@@ -88,7 +90,6 @@ export const PublicRegistrationStatusBar: FC<PublicRegistrationContentProps> = (
   };
 
   const onClickPublish = async () => {
-    // TODO: check validation before allowing publish
     setIsLoading(LoadingName.Publish);
     const publishedRegistration = await publishRegistration(identifier);
     if (publishedRegistration) {
@@ -120,10 +121,14 @@ export const PublicRegistrationStatusBar: FC<PublicRegistrationContentProps> = (
       </StyledStatusBarDescription>
       <div>
         <Link to={`/registration/${identifier}`}>
-          <Button variant="outlined" color="primary" data-testid="button-edit-registration">
+          <Button
+            variant={registrationIsValid ? 'outlined' : 'contained'}
+            color="primary"
+            data-testid="button-edit-registration">
             {t('edit_registration')}
           </Button>
         </Link>
+
         {!hasNvaDoi &&
           (doiRequest?.status === DoiRequestStatus.Requested ? (
             <Button variant="contained" color="primary" disabled>
@@ -149,14 +154,18 @@ export const PublicRegistrationStatusBar: FC<PublicRegistrationContentProps> = (
           ))}
 
         {status === RegistrationStatus.DRAFT && (
-          <ButtonWithProgress
-            disabled={!!isLoading}
-            data-testid="button-publish-registration"
-            endIcon={<CloudUploadIcon />}
-            onClick={onClickPublish}
-            isLoading={isLoading === LoadingName.Publish}>
-            {t('common:publish')}
-          </ButtonWithProgress>
+          <Tooltip arrow title={<Typography>{t('public_page.fix_validation_errors_before_publishing')}</Typography>}>
+            <span>
+              <ButtonWithProgress
+                disabled={!!isLoading || !registrationIsValid}
+                data-testid="button-publish-registration"
+                endIcon={<CloudUploadIcon />}
+                onClick={onClickPublish}
+                isLoading={isLoading === LoadingName.Publish}>
+                {t('common:publish')}
+              </ButtonWithProgress>
+            </span>
+          </Tooltip>
         )}
       </div>
 

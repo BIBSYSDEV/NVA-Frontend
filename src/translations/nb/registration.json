@@ -91,6 +91,7 @@
   },
   "new_registration": "Ny registrering",
   "public_page": {
+    "fix_validation_errors_before_publishing": "Fiks valideringsfeil før du publiserer",
     "message_to_curator": "Melding til kurator",
     "reserve_doi": "Reserver en DOI",
     "request_doi": "Be om en DOI",
