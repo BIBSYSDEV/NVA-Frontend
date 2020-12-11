@@ -13,7 +13,7 @@ const SelectInstitutionField: FC<SelectInstitutionFieldProps> = ({ disabled = fa
 
   return (
     <Field name={CustomerInstitutionFieldNames.NAME}>
-      {({ field: { name, value }, form: { values, setValues }, meta: { touched, error } }: FieldProps) => (
+      {({ field: { name }, form: { values, setValues }, meta: { touched, error } }: FieldProps<string>) => (
         <InstitutionAutocomplete
           disabled={disabled}
           required
@@ -30,7 +30,7 @@ const SelectInstitutionField: FC<SelectInstitutionFieldProps> = ({ disabled = fa
               [CustomerInstitutionFieldNames.CRISTIN_ID]: selectedInstitution?.id ?? '',
             });
           }}
-          value={institutions.find((i) => i.name === value) ?? null}
+          value={institutions.find((i) => i.id === values.cristinId) ?? null}
         />
       )}
     </Field>

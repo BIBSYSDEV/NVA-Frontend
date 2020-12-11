@@ -15,10 +15,10 @@ describe('Registration: Description', () => {
 
     const projectName = 'PhD prosjekt: Selvbestemmelse uten ord';
     cy.contains(projectName).click({ force: true });
-    cy.get('[data-testid=project-chip]').contains(projectName);
+    cy.get('[data-testid^=project-chip]').contains(projectName);
 
-    cy.get('[data-testid=project-chip]').children().eq(1).click({ force: true });
+    cy.get('[data-testid^=project-chip]').children().eq(1).click({ force: true });
 
-    cy.get('[data-testid=project-chip]').should('not.exist');
+    cy.get('[data-testid^=project-chip]').should('not.exist');
   });
 });
