@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react';
 import { setNestedObjectValues, useFormikContext } from 'formik';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
@@ -8,17 +8,13 @@ import { Button } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import SaveIcon from '@material-ui/icons/Save';
-import CloseIcon from '@material-ui/icons/Close';
-import CheckIcon from '@material-ui/icons/Check';
 import ButtonWithProgress from '../../components/ButtonWithProgress';
-import { DoiRequestStatus, Registration, RegistrationStatus, RegistrationTab } from '../../types/registration.types';
+import { Registration, RegistrationStatus, RegistrationTab } from '../../types/registration.types';
 import Modal from '../../components/Modal';
 import { SupportModalContent } from './SupportModalContent';
 import { updateRegistration } from '../../api/registrationApi';
 import { NotificationVariant } from '../../types/notification.types';
 import { setNotification } from '../../redux/actions/notificationActions';
-import { RootStore } from '../../redux/reducers/rootReducer';
-import { updateDoiRequest } from '../../api/doiRequestApi';
 
 const StyledActionsContainer = styled.div`
   margin-bottom: 1rem;
@@ -44,14 +40,11 @@ export const RegistrationFormActions: FC<RegistrationFormActionsProps> = ({
   const { t } = useTranslation('registration');
   const history = useHistory();
   const dispatch = useDispatch();
-  const user = useSelector((store: RootStore) => store.user);
-  const { values, errors, setTouched, isValid } = useFormikContext<Registration>();
-  const { status, doiRequest } = values;
+  const { values, errors, setTouched } = useFormikContext<Registration>();
 
   const [openSupportModal, setOpenSupportModal] = useState(false);
   const toggleSupportModal = () => setOpenSupportModal((state) => !state);
   const [isSaving, setIsSaving] = useState(false);
-  const [isUpdatingDoi, setIsUpdatingDoi] = useState<DoiRequestStatus | ''>('');
 
   const saveRegistration = async (values: Registration) => {
     setIsSaving(true);
@@ -71,20 +64,6 @@ export const RegistrationFormActions: FC<RegistrationFormActionsProps> = ({
     if (registrationIsUpdated) {
       history.push(`/registration/${values.identifier}/public`);
     }
-  };
-
-  const onClickUpdateDoiRequest = async (status: DoiRequestStatus) => {
-    setIsUpdatingDoi(status);
-    const updateDoiResponse = await updateDoiRequest(values.identifier, status);
-    if (updateDoiResponse) {
-      if (updateDoiResponse.error) {
-        dispatch(setNotification(t('feedback:error.update_doi_request'), NotificationVariant.Error));
-      } else {
-        refetchRegistration();
-        dispatch(setNotification(t('feedback:success.doi_request_updated'), NotificationVariant.Success));
-      }
-    }
-    setIsUpdatingDoi('');
   };
 
   return (
@@ -123,7 +102,7 @@ export const RegistrationFormActions: FC<RegistrationFormActionsProps> = ({
                   // Set all fields with error to touched to ensure error messages are shown
                   setTouched(setNestedObjectValues(errors, true));
                 }}>
-                {status === RegistrationStatus.DRAFT ? t('save_draft') : t('common:save')}
+                {values.status === RegistrationStatus.DRAFT ? t('save_draft') : t('common:save')}
               </ButtonWithProgress>
               <Button
                 color="primary"
@@ -138,41 +117,14 @@ export const RegistrationFormActions: FC<RegistrationFormActionsProps> = ({
               </Button>
             </>
           ) : (
-            <>
-              <ButtonWithProgress
-                variant={'outlined'}
-                isLoading={isSaving}
-                data-testid="button-save-registration"
-                endIcon={<SaveIcon />}
-                onClick={onClickSaveAndPresent}>
-                {t('common:save_and_present')}
-              </ButtonWithProgress>
-
-              {user.isCurator && doiRequest?.status === DoiRequestStatus.Requested && (
-                <>
-                  <ButtonWithProgress
-                    color="primary"
-                    variant="contained"
-                    data-testid="button-reject-doi"
-                    endIcon={<CloseIcon />}
-                    onClick={() => onClickUpdateDoiRequest(DoiRequestStatus.Rejected)}
-                    isLoading={isUpdatingDoi === DoiRequestStatus.Rejected}
-                    disabled={!!isUpdatingDoi || isSaving || !isValid}>
-                    {t('common:reject_doi')}
-                  </ButtonWithProgress>
-                  <ButtonWithProgress
-                    color="primary"
-                    variant="contained"
-                    data-testid="button-create-doi"
-                    endIcon={<CheckIcon />}
-                    onClick={() => onClickUpdateDoiRequest(DoiRequestStatus.Approved)}
-                    isLoading={isUpdatingDoi === DoiRequestStatus.Approved}
-                    disabled={!!isUpdatingDoi || isSaving || !isValid}>
-                    {t('common:create_doi')}
-                  </ButtonWithProgress>
-                </>
-              )}
-            </>
+            <ButtonWithProgress
+              variant={'outlined'}
+              isLoading={isSaving}
+              data-testid="button-save-registration"
+              endIcon={<SaveIcon />}
+              onClick={onClickSaveAndPresent}>
+              {t('common:save_and_present')}
+            </ButtonWithProgress>
           )}
         </div>
       </StyledActionsContainer>
