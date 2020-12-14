@@ -1,10 +1,8 @@
-// For valid values, see https://github.com/BIBSYSDEV/nva-datamodel-java/blob/develop/src/main/java/no/unit/nva/model/PublicationType.java
 export enum PublicationType {
   PUBLICATION_IN_JOURNAL = 'Journal',
   BOOK = 'Book',
   REPORT = 'Report',
   DEGREE = 'Degree',
-  // CHAPTER = 'Chapter',
 }
 
 export enum JournalType {
@@ -13,6 +11,7 @@ export enum JournalType {
   LETTER = 'JournalLetter',
   REVIEW = 'JournalReview',
   LEADER = 'JournalLeader',
+  CORRIGENDUM = 'JournalCorrigendum',
 }
 
 export enum BookType {
@@ -41,6 +40,7 @@ export const instanceTypeBaseFieldName = 'entityDescription.reference.publicatio
 export enum ReferenceFieldNames {
   ARTICLE_NUMBER = 'entityDescription.reference.publicationInstance.articleNumber',
   DOI = 'entityDescription.reference.doi',
+  CORRIGENDUM_FOR = 'entityDescription.reference.publicationInstance.corrigendumFor',
   TEXTBOOK_CONTENT = 'entityDescription.reference.publicationInstance.textbookContent',
   ISBN_LIST = 'entityDescription.reference.publicationContext.isbnList',
   ISSUE = 'entityDescription.reference.publicationInstance.issue',
