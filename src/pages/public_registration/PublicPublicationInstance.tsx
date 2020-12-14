@@ -29,7 +29,7 @@ export const PublicPublicationInstanceJournal: FC<{ publicationInstance: Journal
   );
 };
 
-export const OriginalArticleInfo: FC<{ originalArticleId: string }> = ({ originalArticleId }) => {
+const OriginalArticleInfo: FC<{ originalArticleId: string }> = ({ originalArticleId }) => {
   const { t } = useTranslation('registration');
   const [originalArticleSearch, isLoadingOriginalArticleSearch] = useSearchRegistrations(
     `identifier="${originalArticleId.split('/').pop()}"`
