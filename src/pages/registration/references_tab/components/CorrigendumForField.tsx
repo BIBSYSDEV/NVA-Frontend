@@ -15,6 +15,7 @@ import { JournalPublicationInstance } from '../../../../types/publication_types/
 import { displayDate } from '../../../../utils/date-helpers';
 import useDebounce from '../../../../utils/hooks/useDebounce';
 import { API_URL } from '../../../../utils/constants';
+import JournalField from './JournalField';
 
 const typeFilter = `(
 entityDescription.reference.publicationInstance="JournalArticle" 
@@ -47,56 +48,61 @@ const CorrigendumForField: FC = () => {
       : journalRegistrationsSearch?.hits) ?? [];
 
   return (
-    <Field name={ReferenceFieldNames.CORRIGENDUM_FOR}>
-      {({ field, meta }: FieldProps<string>) => (
-        <Autocomplete
-          {...autocompleteTranslationProps}
-          popupIcon={null}
-          options={options}
-          onBlur={() => setFieldTouched(field.name)}
-          onInputChange={(_, newInputValue) => setSearchTerm(newInputValue)}
-          getOptionSelected={(option, value) => option.id === value.id}
-          value={originalArticleSearch?.hits[0] ?? null}
-          onChange={(_, inputValue) => {
-            if (inputValue) {
-              // Construct IRI manually, until it is part of the object itself
-              setFieldValue(field.name, `${API_URL}/publication/${inputValue.id}`);
-            } else {
-              setSearchTerm('');
-              setFieldValue(field.name, '');
-            }
-          }}
-          loading={isLoadingOriginalArticleSearch || isLoadingRegistrationsSearch}
-          getOptionLabel={(option) => option.title}
-          renderOption={(option, state) => (
-            <StyledFlexColumn>
-              <Typography variant="subtitle1">
-                <EmphasizeSubstring text={option.title} emphasized={state.inputValue} />
-              </Typography>
-              <Typography variant="body2" color="textSecondary">
-                <Truncate lines={1}>
-                  {option.publicationDate.year && displayDate(option.publicationDate)}
-                  {option.publicationDate.year && option.contributors.length > 0 && ' - '}
-                  {option.contributors.map((contributor) => contributor.name).join('; ')}
-                </Truncate>
-              </Typography>
-            </StyledFlexColumn>
-          )}
-          renderInput={(params) => (
-            <AutocompleteTextField
-              {...params}
-              label={t('references.original_article')}
-              required
-              isLoading={isLoadingOriginalArticleSearch || isLoadingRegistrationsSearch}
-              placeholder={t('references.search_for_original_article')}
-              dataTestId="original-article-input"
-              showSearchIcon
-              errorMessage={meta.touched && !!meta.error ? meta.error : undefined}
-            />
-          )}
-        />
-      )}
-    </Field>
+    <>
+      <Field name={ReferenceFieldNames.CORRIGENDUM_FOR}>
+        {({ field, meta }: FieldProps<string>) => (
+          <Autocomplete
+            {...autocompleteTranslationProps}
+            popupIcon={null}
+            options={options}
+            onBlur={() => setFieldTouched(field.name)}
+            onInputChange={(_, newInputValue) => setSearchTerm(newInputValue)}
+            getOptionSelected={(option, value) => option.id === value.id}
+            value={originalArticleSearch?.hits[0] ?? null}
+            onChange={(_, inputValue) => {
+              if (inputValue) {
+                // Construct IRI manually, until it is part of the object itself
+                setFieldValue(field.name, `${API_URL}/publication/${inputValue.id}`);
+              } else {
+                setSearchTerm('');
+                setFieldValue(field.name, '');
+              }
+            }}
+            loading={isLoadingOriginalArticleSearch || isLoadingRegistrationsSearch}
+            getOptionLabel={(option) => option.title}
+            renderOption={(option, state) => (
+              <StyledFlexColumn>
+                <Typography variant="subtitle1">
+                  <EmphasizeSubstring text={option.title} emphasized={state.inputValue} />
+                </Typography>
+                <Typography variant="body2" color="textSecondary">
+                  <Truncate lines={1}>
+                    {option.publicationDate.year && displayDate(option.publicationDate)}
+                    {option.publicationDate.year && option.contributors.length > 0 && ' - '}
+                    {option.contributors.map((contributor) => contributor.name).join('; ')}
+                  </Truncate>
+                </Typography>
+              </StyledFlexColumn>
+            )}
+            renderInput={(params) => (
+              <AutocompleteTextField
+                {...params}
+                label={t('references.original_article')}
+                required
+                isLoading={isLoadingOriginalArticleSearch || isLoadingRegistrationsSearch}
+                placeholder={t('references.search_for_original_article')}
+                dataTestId="original-article-input"
+                showSearchIcon
+                errorMessage={meta.touched && !!meta.error ? meta.error : undefined}
+              />
+            )}
+          />
+        )}
+      </Field>
+
+      {/* TODO: JournalField should be disabled and reflect value for original article (NP-1991) */}
+      <JournalField />
+    </>
   );
 };
 
