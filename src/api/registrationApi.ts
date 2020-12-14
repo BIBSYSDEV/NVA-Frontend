@@ -85,12 +85,11 @@ export const getRegistration = async (id: string, cancelToken?: CancelToken) => 
   }
 };
 
-export const publishRegistration = async (identifier: string) => {
-  return await authenticatedApiRequest({
+export const publishRegistration = async (identifier: string) =>
+  await authenticatedApiRequest({
     url: `${PublicationsApiPaths.PUBLICATION}/${identifier}/publish`,
     method: 'PUT',
   });
-};
 
 export const getMyRegistrations = async (cancelToken?: CancelToken) => {
   const url = PublicationsApiPaths.PUBLICATIONS_BY_OWNER;

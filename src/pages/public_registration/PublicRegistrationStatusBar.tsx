@@ -49,8 +49,8 @@ const StyledUnpublishedStatusIcon = styled(WorkOutlineIcon)`
 
 enum LoadingName {
   None = '',
-  Doi = 'DOI',
   Publish = 'PUBLISH',
+  RequestDoi = 'REQUEST_DOI',
   RejectDoi = 'REJECT_DOI',
   ApproveDoi = 'APPROVE_DOI',
 }
@@ -79,7 +79,7 @@ export const PublicRegistrationStatusBar: FC<PublicRegistrationContentProps> = (
   const toggleRequestDoiModal = () => setOpenRequestDoiModal((state) => !state);
 
   const sendDoiRequest = async () => {
-    setIsLoading(LoadingName.Doi);
+    setIsLoading(LoadingName.RequestDoi);
     const createDoiRequestResponse = await createDoiRequest(identifier, messageToCurator);
     if (createDoiRequestResponse) {
       if (createDoiRequestResponse.error) {
@@ -230,7 +230,7 @@ export const PublicRegistrationStatusBar: FC<PublicRegistrationContentProps> = (
               color="primary"
               data-testid="button-send-doi-request"
               onClick={sendDoiRequest}
-              isLoading={isLoading === LoadingName.Doi}>
+              isLoading={isLoading === LoadingName.RequestDoi}>
               {t('common:send')}
             </ButtonWithProgress>
           </DialogActions>
