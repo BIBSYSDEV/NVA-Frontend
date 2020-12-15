@@ -86,8 +86,8 @@ export const PublicRegistrationStatusBar: FC<PublicRegistrationContentProps> = (
         dispatch(setNotification(t('feedback:error.create_doi_request'), NotificationVariant.Error));
       } else {
         toggleRequestDoiModal();
-        refetchRegistration();
         dispatch(setNotification(t('feedback:success.doi_request_sent')));
+        refetchRegistration();
       }
     }
   };
@@ -103,8 +103,8 @@ export const PublicRegistrationStatusBar: FC<PublicRegistrationContentProps> = (
       if (updateDoiResponse.error) {
         dispatch(setNotification(t('feedback:error.update_doi_request'), NotificationVariant.Error));
       } else {
-        refetchRegistration();
         dispatch(setNotification(t('feedback:success.doi_request_updated'), NotificationVariant.Success));
+        refetchRegistration();
       }
     }
   };
@@ -116,8 +116,8 @@ export const PublicRegistrationStatusBar: FC<PublicRegistrationContentProps> = (
       if (publishedRegistration.error) {
         dispatch(setNotification(t('feedback:error.publish_registration'), NotificationVariant.Error));
       } else {
-        refetchRegistration();
         dispatch(setNotification(t('feedback:success.published_registration'), NotificationVariant.Success));
+        refetchRegistration();
       }
     }
   };
@@ -176,11 +176,7 @@ export const PublicRegistrationStatusBar: FC<PublicRegistrationContentProps> = (
                   {t('common:create_doi')}
                 </ButtonWithProgress>
               </>
-            ) : (
-              <Button variant="contained" color="primary" disabled>
-                {t('public_page.requested_doi')}
-              </Button>
-            )
+            ) : null
           ) : (
             <Button
               variant={reference.doi ? 'outlined' : 'contained'}
