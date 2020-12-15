@@ -153,7 +153,7 @@ export const PublicRegistrationStatusBar: FC<PublicRegistrationContentProps> = (
 
         {!hasNvaDoi &&
           (doiRequest?.status === DoiRequestStatus.Requested ? (
-            user.isCurator ? (
+            user.isCurator && status === RegistrationStatus.PUBLISHED ? (
               <>
                 <ButtonWithProgress
                   color="primary"
@@ -182,22 +182,13 @@ export const PublicRegistrationStatusBar: FC<PublicRegistrationContentProps> = (
               </Button>
             )
           ) : (
-            <>
-              {status === RegistrationStatus.PUBLISHED && (
-                <Button
-                  variant={reference.doi ? 'outlined' : 'contained'}
-                  color="primary"
-                  data-testid="button-toggle-request-doi"
-                  onClick={toggleRequestDoiModal}>
-                  {t('public_page.request_doi')}
-                </Button>
-              )}
-              {status === RegistrationStatus.DRAFT && (
-                <Button variant="contained" color="primary" disabled>
-                  {t('public_page.reserve_doi')}
-                </Button>
-              )}
-            </>
+            <Button
+              variant={reference.doi ? 'outlined' : 'contained'}
+              color="primary"
+              data-testid="button-toggle-request-doi"
+              onClick={toggleRequestDoiModal}>
+              {status === RegistrationStatus.PUBLISHED ? t('public_page.request_doi') : t('public_page.reserve_doi')}
+            </Button>
           ))}
 
         {status === RegistrationStatus.DRAFT && (
