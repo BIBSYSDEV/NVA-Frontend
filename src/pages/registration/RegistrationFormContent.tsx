@@ -7,7 +7,6 @@ import DescriptionPanel from './DescriptionPanel';
 import ReferencesPanel from './ReferencesPanel';
 import ContributorsPanel from './ContributorsPanel';
 import FilesAndLicensePanel from './FilesAndLicensePanel';
-import SubmissionPanel from './SubmissionPanel';
 import { Uppy } from '../../types/file.types';
 import { mergeTouchedFields } from '../../utils/formik-helpers';
 
@@ -58,11 +57,6 @@ export const RegistrationFormContent: FC<RegistrationFormContentProps> = ({ tabN
       {tabNumber === RegistrationTab.FilesAndLicenses && (
         <StyledPanel>
           <FilesAndLicensePanel setTouchedFields={setTouchedFields} uppy={uppy} />
-        </StyledPanel>
-      )}
-      {tabNumber === RegistrationTab.Submission && (
-        <StyledPanel>
-          <SubmissionPanel />
         </StyledPanel>
       )}
     </>

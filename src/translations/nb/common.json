@@ -56,6 +56,7 @@
   "search": "Søk",
   "search_summary": "{{count}} treff for \"{{searchTerm}}\"",
   "search_summary_plural": "{{count}} treff for \"{{searchTerm}}\"",
+  "select": "Velg",
   "send": "Send",
   "show": "Vis",
   "start": "Start",

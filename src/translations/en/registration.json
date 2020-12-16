@@ -86,7 +86,6 @@
     "files_and_license": "Files and License",
     "publish_settings": "Publish settings",
     "reference": "Reference",
-    "summary": "Summary",
     "validation_errors": "Validation errors"
   },
   "new_registration": "New registration",
@@ -152,11 +151,6 @@
     "New": "New",
     "Published": "Published",
     "Rejected": "Rejected"
-  },
-  "submission": {
-    "corresponding_author": "Corresponding author",
-    "number_of_affiliations": "{{count}} affiliation",
-    "number_of_affiliations_plural": "{{count}} affiliations"
   },
   "support_description": "When you request support your message will be sent to a curator at your institution. You can see responses at <0>My Messages</0>.",
   "modal_unsaved_changes_description": "You have unsaved changes. Are you sure you want to leave this page?",
