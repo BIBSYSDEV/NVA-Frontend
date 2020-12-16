@@ -4,9 +4,13 @@ import { FormControlLabel, Checkbox } from '@material-ui/core';
 import styled from 'styled-components';
 import { KeyboardDatePicker, DatePickerView } from '@material-ui/pickers';
 import { useFormikContext } from 'formik';
+import DateFnsUtils from '@date-io/date-fns';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { Registration } from '../../../types/registration.types';
 import { DescriptionFieldNames } from '../../../types/publicationFieldNames';
 import { ErrorMessage } from '../../../utils/validation/errorMessage';
+import { getDateFnsLocale } from '../../../utils/date-helpers';
+import { datePickerTranslationProps } from '../../../themes/mainTheme';
 
 const StyledFormControlLabel = styled(FormControlLabel)`
   margin-left: 0.5rem;
@@ -14,7 +18,7 @@ const StyledFormControlLabel = styled(FormControlLabel)`
 `;
 
 const DatePickerField: FC = () => {
-  const { t } = useTranslation('registration');
+  const { t, i18n } = useTranslation('registration');
   const { setFieldValue, values, errors, touched, setFieldTouched } = useFormikContext<Registration>();
   const { year, month, day } = values.entityDescription.date;
   const yearInt = parseInt(year);
@@ -56,8 +60,9 @@ const DatePickerField: FC = () => {
   const hasError = !!errors.entityDescription?.date?.year && touched.entityDescription?.date?.year;
 
   return (
-    <>
+    <MuiPickersUtilsProvider utils={DateFnsUtils} locale={getDateFnsLocale(i18n.language)}>
       <KeyboardDatePicker
+        {...datePickerTranslationProps}
         data-testid="date-published-field"
         inputVariant="outlined"
         label={t('description.date_published')}
@@ -66,6 +71,7 @@ const DatePickerField: FC = () => {
         views={views}
         value={date}
         autoOk
+        maxDate={`${new Date().getFullYear() + 5}-12-31`}
         format={yearOnly ? 'yyyy' : 'dd.MM.yyyy'}
         onBlur={setYearFieldTouched}
         onClose={setYearFieldTouched}
@@ -76,7 +82,7 @@ const DatePickerField: FC = () => {
         control={<Checkbox checked={yearOnly} onChange={toggleYearOnly} color="primary" />}
         label={t('description.year_only')}
       />
-    </>
+    </MuiPickersUtilsProvider>
   );
 };
 
