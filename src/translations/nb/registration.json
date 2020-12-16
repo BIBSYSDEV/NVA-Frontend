@@ -147,10 +147,10 @@
   },
   "save_draft": "Lagre kladd",
   "status": {
-    "Draft": "Kladd",
-    "New": "Ny",
-    "Published": "Publisert",
-    "Rejected": "Avvist"
+    "DRAFT": "Kladd",
+    "NEW": "Ny",
+    "PUBLISHED": "Publisert",
+    "REJECTED": "Avvist"
   },
   "support_description": "Når du ber om brukerstøtte vil meldingen gå til en kurator ved din institusjon. Du kan se besvarelser i <0>Mine Meldinger</0>.",
   "modal_unsaved_changes_description": "Du har gjort endringer som ikke er lagret. Er du sikker på at du vil forlate denne siden?",
