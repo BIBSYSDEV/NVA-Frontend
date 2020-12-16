@@ -84,6 +84,7 @@ export const PublicRegistrationStatusBar: FC<PublicRegistrationContentProps> = (
     if (createDoiRequestResponse) {
       if (createDoiRequestResponse.error) {
         dispatch(setNotification(t('feedback:error.create_doi_request'), NotificationVariant.Error));
+        setIsLoading(LoadingName.None);
       } else {
         toggleRequestDoiModal();
         dispatch(setNotification(t('feedback:success.doi_request_sent')));
@@ -102,6 +103,7 @@ export const PublicRegistrationStatusBar: FC<PublicRegistrationContentProps> = (
     if (updateDoiResponse) {
       if (updateDoiResponse.error) {
         dispatch(setNotification(t('feedback:error.update_doi_request'), NotificationVariant.Error));
+        setIsLoading(LoadingName.None);
       } else {
         dispatch(setNotification(t('feedback:success.doi_request_updated'), NotificationVariant.Success));
         refetchRegistration();
@@ -115,6 +117,7 @@ export const PublicRegistrationStatusBar: FC<PublicRegistrationContentProps> = (
     if (publishedRegistration) {
       if (publishedRegistration.error) {
         dispatch(setNotification(t('feedback:error.publish_registration'), NotificationVariant.Error));
+        setIsLoading(LoadingName.None);
       } else {
         dispatch(setNotification(t('feedback:success.published_registration'), NotificationVariant.Success));
         refetchRegistration();
