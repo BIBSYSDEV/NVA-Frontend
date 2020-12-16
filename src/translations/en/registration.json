@@ -59,12 +59,7 @@
   "files_and_license": {
     "accepted_version": "Accepted version",
     "administrative_contract": "Author agreement or other file to be saved but not published",
-    "browse": "browse",
     "conditions_for_using_file": "Conditions for using the file",
-    "drag_file": "Drag file here or",
-    "drag_files": "Drag files here or",
-    "drop_file_here": "Drop your file here",
-    "drop_here": "Drop your files here",
     "embargo_date": "Not openly available before",
     "files": "Files",
     "licenses": "Licenses",
@@ -73,11 +68,6 @@
     "published_version": "Published version",
     "select_version": "Select version",
     "title": "File name",
-    "upload_files": "Upload Files",
-    "upload_one_file": "Upload %{smart_count} file",
-    "upload_one_more_file": "Upload %{smart_count} more file",
-    "upload_x_files": "Upload %{smart_count} files",
-    "upload_x_more_files": "Upload %{smart_count} files",
     "uploaded_size": "Uploaded {{size}} kB"
   },
   "heading": {
