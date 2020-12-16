@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import Axios from 'axios';
+import { useTranslation } from 'react-i18next';
+import useCancelToken from './useCancelToken';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import { CristinProject } from '../../types/project.types';
@@ -8,20 +9,21 @@ import { searchProjectsByTitle } from '../../api/projectApi';
 
 const useFetchProjects = (searchTerm = ''): [CristinProject[], boolean] => {
   const dispatch = useDispatch();
+  const { t } = useTranslation('feedback');
   const [projects, setProjects] = useState<CristinProject[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const cancelToken = useCancelToken();
 
   useEffect(() => {
-    const cancelSource = Axios.CancelToken.source();
     const fetchProjects = async () => {
       setIsLoading(true);
-      const fetchedProjects = await searchProjectsByTitle(searchTerm, cancelSource.token);
+      const fetchedProjects = await searchProjectsByTitle(searchTerm, cancelToken);
       if (fetchedProjects) {
         setIsLoading(false);
         if (fetchedProjects.error) {
-          dispatch(setNotification(fetchedProjects.error, NotificationVariant.Error));
-        } else {
-          setProjects(fetchedProjects);
+          dispatch(setNotification(t('error.get_project'), NotificationVariant.Error));
+        } else if (fetchedProjects.data) {
+          setProjects(fetchedProjects.data);
         }
       }
     };
@@ -30,13 +32,7 @@ const useFetchProjects = (searchTerm = ''): [CristinProject[], boolean] => {
     } else {
       setProjects([]);
     }
-
-    return () => {
-      if (searchTerm) {
-        cancelSource.cancel();
-      }
-    };
-  }, [dispatch, searchTerm]);
+  }, [dispatch, t, cancelToken, searchTerm]);
 
   return [projects, isLoading];
 };
