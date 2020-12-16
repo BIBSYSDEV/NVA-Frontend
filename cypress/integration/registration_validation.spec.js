@@ -15,7 +15,7 @@ describe('User opens registration form and can see validation errors', () => {
     i18n.changeLanguage(LanguageCodes.ENGLISH);
   });
 
-  it('The User should be able to see validation summary on submission tab', () => {
+  it.skip('The User should be able to see validation summary on submission tab', () => {
     cy.get('[data-testid=nav-tabpanel-submission]').click({ force: true });
 
     // Error messages
@@ -212,7 +212,7 @@ describe('User opens registration form and can see validation errors', () => {
     cy.get('[data-testid=author-radio-button]').eq(1).click({ force: true });
     cy.get('[data-testid=connect-author-button]').click({ force: true });
     cy.get('[data-testid=author-corresponding-checkbox]').eq(1).click({ force: true });
-    cy.get('[data-testid=nav-tabpanel-submission]').click({ force: true });
+    cy.get('[data-testid=nav-tabpanel-description]').click({ force: true });
     cy.get('[data-testid=nav-tabpanel-contributors]').click({ force: true });
     cy.contains(ErrorMessage.REQUIRED).should('be.visible');
     cy.get('[data-testid=nav-tabpanel-contributors]').get('[data-testid=error-tab]');
@@ -264,7 +264,7 @@ describe('User opens registration form and can see validation errors', () => {
     cy.get('[data-testid=nav-tabpanel-files-and-license]').children('[data-testid=error-tab]').should('not.exist');
   });
 
-  it('The user navigates to submission tab and see no errors', () => {
+  it.skip('The user navigates to submission tab and see no errors', () => {
     cy.get('[data-testid=nav-tabpanel-submission]').click({ force: true });
     cy.get('[data-testid=error-summary-card]').should('not.exist');
     cy.get('[data-testid=error-tab]').should('not.exist');
