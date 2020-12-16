@@ -71,6 +71,7 @@ const DatePickerField: FC = () => {
         views={views}
         value={date}
         autoOk
+        maxDate={`${new Date().getFullYear() + 5}-12-31`}
         format={yearOnly ? 'yyyy' : 'dd.MM.yyyy'}
         onBlur={setYearFieldTouched}
         onClose={setYearFieldTouched}
