@@ -70,7 +70,6 @@ export const RegistrationFormTabs: FC<RegistrationFormTabsProps> = ({ setTabNumb
         {...a11yProps('files-and-license')}
         error={hasTouchedError(errors, touched, getAllFileFields(files))}
       />
-      <LinkTab label={t('heading.summary')} {...a11yProps('submission')} />
     </StyledTabs>
   );
 };
