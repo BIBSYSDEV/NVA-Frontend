@@ -24,6 +24,7 @@ import HelpIcon from '@material-ui/icons/Help';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { Field, FieldProps, ErrorMessage } from 'formik';
 import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
+import { getDateFnsLocale } from '../../../utils/date-helpers';
 
 const StyledDescription = styled(Typography)`
   font-style: italic;
@@ -88,7 +89,7 @@ interface FileCardProps {
 }
 
 const FileCard: FC<FileCardProps> = ({ file, removeFile, baseFieldName, toggleLicenseModal }) => {
-  const { t } = useTranslation('registration');
+  const { t, i18n } = useTranslation('registration');
 
   return (
     <Card data-testid="uploaded-file-card">
@@ -134,7 +135,7 @@ const FileCard: FC<FileCardProps> = ({ file, removeFile, baseFieldName, toggleLi
               </Field>
 
               <StyledFormControl>
-                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <MuiPickersUtilsProvider utils={DateFnsUtils} locale={getDateFnsLocale(i18n.language)}>
                   <Field name={`${baseFieldName}.${SpecificFileFieldNames.EMBARGO_DATE}`}>
                     {({ field, form, meta: { error, touched } }: FieldProps) => (
                       <KeyboardDatePicker

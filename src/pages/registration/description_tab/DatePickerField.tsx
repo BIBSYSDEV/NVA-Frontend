@@ -9,6 +9,7 @@ import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { Registration } from '../../../types/registration.types';
 import { DescriptionFieldNames } from '../../../types/publicationFieldNames';
 import { ErrorMessage } from '../../../utils/validation/errorMessage';
+import { getDateFnsLocale } from '../../../utils/date-helpers';
 
 const StyledFormControlLabel = styled(FormControlLabel)`
   margin-left: 0.5rem;
@@ -16,7 +17,7 @@ const StyledFormControlLabel = styled(FormControlLabel)`
 `;
 
 const DatePickerField: FC = () => {
-  const { t } = useTranslation('registration');
+  const { t, i18n } = useTranslation('registration');
   const { setFieldValue, values, errors, touched, setFieldTouched } = useFormikContext<Registration>();
   const { year, month, day } = values.entityDescription.date;
   const yearInt = parseInt(year);
@@ -58,7 +59,7 @@ const DatePickerField: FC = () => {
   const hasError = !!errors.entityDescription?.date?.year && touched.entityDescription?.date?.year;
 
   return (
-    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+    <MuiPickersUtilsProvider utils={DateFnsUtils} locale={getDateFnsLocale(i18n.language)}>
       <KeyboardDatePicker
         data-testid="date-published-field"
         inputVariant="outlined"
