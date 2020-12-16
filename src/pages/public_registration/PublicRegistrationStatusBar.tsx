@@ -124,7 +124,7 @@ export const PublicRegistrationStatusBar: FC<PublicRegistrationContentProps> = (
 
   const isOwner = user && user.isCreator && owner === user.id;
   const isCurator = user && user.isCurator && user.customerId === publisher.id;
-  const hasNvaDoi = !!doi;
+  const hasNvaDoi = !!doi || doiRequest;
 
   return isOwner || isCurator ? (
     <StyledStatusBar>
