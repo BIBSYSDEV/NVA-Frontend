@@ -86,11 +86,11 @@
     "files_and_license": "Filer og lisens",
     "publish_settings": "Publiseringsvalg",
     "reference": "Referanse",
-    "summary": "Oppsummering",
     "validation_errors": "Valideringsfeil"
   },
   "new_registration": "Ny registrering",
   "public_page": {
+    "current_validation_errors": "NB! Registreringen har valideringsfeil som må fikses før den kan publiseres",
     "message_to_curator": "Melding til kurator",
     "reserve_doi": "Reserver en DOI",
     "request_doi": "Be om en DOI",
@@ -151,11 +151,6 @@
     "New": "Ny",
     "Published": "Publisert",
     "Rejected": "Avvist"
-  },
-  "submission": {
-    "corresponding_author": "Korresponderende forfatter",
-    "number_of_affiliations": "{{count}} tilhørighet",
-    "number_of_affiliations_plural": "{{count}} tilhørigheter"
   },
   "support_description": "Når du ber om brukerstøtte vil meldingen gå til en kurator ved din institusjon. Du kan se besvarelser i <0>Mine Meldinger</0>.",
   "modal_unsaved_changes_description": "Du har gjort endringer som ikke er lagret. Er du sikker på at du vil forlate denne siden?",

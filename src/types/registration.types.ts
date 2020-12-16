@@ -22,7 +22,6 @@ export enum RegistrationTab {
   Reference = 1,
   Contributors = 2,
   FilesAndLicenses = 3,
-  Submission = 4,
 }
 
 export const levelMap: EnumDictionary<string, number | null> = {

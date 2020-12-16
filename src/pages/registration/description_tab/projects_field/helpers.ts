@@ -23,7 +23,7 @@ export const getProjectTitle = (option: CristinProject): string => {
 export const convertToResearchProject = (project: CristinProject): ResearchProject => ({
   type: BackendTypeNames.RESEARCH_PROJECT,
   id: project.cristinProjectId,
-  name: project.titles[0].title,
+  name: getProjectTitle(project),
   grants: project.fundings.map((funding) => ({
     id: funding.projectCode,
     source: funding.fundingSourceCode,
