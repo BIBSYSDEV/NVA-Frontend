@@ -10,6 +10,7 @@ import { Registration } from '../../../types/registration.types';
 import { DescriptionFieldNames } from '../../../types/publicationFieldNames';
 import { ErrorMessage } from '../../../utils/validation/errorMessage';
 import { getDateFnsLocale } from '../../../utils/date-helpers';
+import { datePickerTranslationProps } from '../../../themes/mainTheme';
 
 const StyledFormControlLabel = styled(FormControlLabel)`
   margin-left: 0.5rem;
@@ -61,6 +62,7 @@ const DatePickerField: FC = () => {
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils} locale={getDateFnsLocale(i18n.language)}>
       <KeyboardDatePicker
+        {...datePickerTranslationProps}
         data-testid="date-published-field"
         inputVariant="outlined"
         label={t('description.date_published')}

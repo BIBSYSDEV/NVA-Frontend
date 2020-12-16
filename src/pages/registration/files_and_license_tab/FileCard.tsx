@@ -25,6 +25,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { Field, FieldProps, ErrorMessage } from 'formik';
 import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 import { getDateFnsLocale } from '../../../utils/date-helpers';
+import { datePickerTranslationProps } from '../../../themes/mainTheme';
 
 const StyledDescription = styled(Typography)`
   font-style: italic;
@@ -139,6 +140,7 @@ const FileCard: FC<FileCardProps> = ({ file, removeFile, baseFieldName, toggleLi
                   <Field name={`${baseFieldName}.${SpecificFileFieldNames.EMBARGO_DATE}`}>
                     {({ field, form, meta: { error, touched } }: FieldProps) => (
                       <KeyboardDatePicker
+                        {...datePickerTranslationProps}
                         data-testid="uploaded-file-embargo-date"
                         inputVariant="outlined"
                         label={t('files_and_license.embargo_date')}
