@@ -91,6 +91,7 @@
   },
   "new_registration": "Ny registrering",
   "public_page": {
+    "current_validation_errors": "NB! Registreringen har valideringsfeil som må fikses før den kan publiseres",
     "message_to_curator": "Melding til kurator",
     "reserve_doi": "Reserver en DOI",
     "request_doi": "Be om en DOI",

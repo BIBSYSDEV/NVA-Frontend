@@ -46,7 +46,6 @@
   },
   "info": {
     "affiliation_already_exists": "Affiliation already exists",
-    "publishing_registration": "Publishing registration...",
     "user_already_exists": "User already exists"
   },
   "success": {
@@ -63,6 +62,7 @@
     "doi_request_updated": "DOI request is updated",
     "login": "Logged in",
     "support_message_sent": "Message sent",
+    "published_registration": "Registration was published",
     "removed_role": "Role removed",
     "update_authority": "Updated authority",
     "update_customer": "Updated customer institution",

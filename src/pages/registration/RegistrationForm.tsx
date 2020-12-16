@@ -33,7 +33,7 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier = '', closeFor
   const { t } = useTranslation('registration');
   const history = useHistory();
   const uppy = useUppy();
-  const [registration, isLoadingRegistration, handleSetRegistration] = useFetchRegistration(identifier);
+  const [registration, isLoadingRegistration, refetchRegistration] = useFetchRegistration(identifier);
 
   const initialTabNumber = new URLSearchParams(history.location.search).get('tab');
   const [tabNumber, setTabNumber] = useState(initialTabNumber ? +initialTabNumber : RegistrationTab.Description);
@@ -98,7 +98,7 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier = '', closeFor
               <RegistrationFormActions
                 tabNumber={tabNumber}
                 setTabNumber={setTabNumber}
-                handleSetRegistration={handleSetRegistration}
+                refetchRegistration={refetchRegistration}
               />
             </Form>
           )}
