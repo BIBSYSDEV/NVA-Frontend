@@ -81,11 +81,11 @@
   "new_registration": "New registration",
   "public_page": {
     "current_validation_errors": "NB! The registration has validation errors that must be fixed before it can be published",
+    "in_progess": "In progress",
     "message_to_curator": "Message to curator",
     "reserve_doi": "Reserve a DOI",
     "request_doi": "Request a DOI",
-    "request_doi_description": "When you request a DOI (Digital Object Identifier), the order will go through a curator at your institution for quality control. Add a message in case of any questions or clarifications. You will receive an email when the request has been evaluated.",
-    "requested_doi": "Waiting for DOI..."
+    "request_doi_description": "When you request a DOI (Digital Object Identifier), the order will go through a curator at your institution for quality control. Add a message in case of any questions or clarifications. You will receive an email when the request has been evaluated."
   },
   "registration": {
     "latest_registrations": "Recently added",
@@ -137,10 +137,10 @@
   },
   "save_draft": "Save draft",
   "status": {
-    "Draft": "Draft",
-    "New": "New",
-    "Published": "Published",
-    "Rejected": "Rejected"
+    "DRAFT": "Draft",
+    "NEW": "New",
+    "PUBLISHED": "Published",
+    "REJECTED": "Rejected"
   },
   "support_description": "When you request support your message will be sent to a curator at your institution. You can see responses at <0>My Messages</0>.",
   "modal_unsaved_changes_description": "You have unsaved changes. Are you sure you want to leave this page?",

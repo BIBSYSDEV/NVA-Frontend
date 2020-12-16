@@ -84,10 +84,11 @@ export const PublicRegistrationStatusBar: FC<PublicRegistrationContentProps> = (
     if (createDoiRequestResponse) {
       if (createDoiRequestResponse.error) {
         dispatch(setNotification(t('feedback:error.create_doi_request'), NotificationVariant.Error));
+        setIsLoading(LoadingName.None);
       } else {
         toggleRequestDoiModal();
-        refetchRegistration();
         dispatch(setNotification(t('feedback:success.doi_request_sent')));
+        refetchRegistration();
       }
     }
   };
@@ -102,9 +103,10 @@ export const PublicRegistrationStatusBar: FC<PublicRegistrationContentProps> = (
     if (updateDoiResponse) {
       if (updateDoiResponse.error) {
         dispatch(setNotification(t('feedback:error.update_doi_request'), NotificationVariant.Error));
+        setIsLoading(LoadingName.None);
       } else {
-        refetchRegistration();
         dispatch(setNotification(t('feedback:success.doi_request_updated'), NotificationVariant.Success));
+        refetchRegistration();
       }
     }
   };
@@ -115,16 +117,17 @@ export const PublicRegistrationStatusBar: FC<PublicRegistrationContentProps> = (
     if (publishedRegistration) {
       if (publishedRegistration.error) {
         dispatch(setNotification(t('feedback:error.publish_registration'), NotificationVariant.Error));
+        setIsLoading(LoadingName.None);
       } else {
-        refetchRegistration();
         dispatch(setNotification(t('feedback:success.published_registration'), NotificationVariant.Success));
+        refetchRegistration();
       }
     }
   };
 
   const isOwner = user && user.isCreator && owner === user.id;
   const isCurator = user && user.isCurator && user.customerId === publisher.id;
-  const hasNvaDoi = !!doi;
+  const hasNvaDoi = !!doi || doiRequest;
 
   return isOwner || isCurator ? (
     <StyledStatusBar>
@@ -151,54 +154,42 @@ export const PublicRegistrationStatusBar: FC<PublicRegistrationContentProps> = (
           </Button>
         </Link>
 
-        {!hasNvaDoi &&
-          (doiRequest?.status === DoiRequestStatus.Requested ? (
-            user.isCurator ? (
-              <>
-                <ButtonWithProgress
-                  color="primary"
-                  variant="contained"
-                  data-testid="button-reject-doi"
-                  endIcon={<CloseIcon />}
-                  onClick={() => onClickUpdateDoiRequest(DoiRequestStatus.Rejected)}
-                  isLoading={isLoading === LoadingName.RejectDoi}
-                  disabled={!!isLoading}>
-                  {t('common:reject_doi')}
-                </ButtonWithProgress>
-                <ButtonWithProgress
-                  color="primary"
-                  variant="contained"
-                  data-testid="button-create-doi"
-                  endIcon={<CheckIcon />}
-                  onClick={() => onClickUpdateDoiRequest(DoiRequestStatus.Approved)}
-                  isLoading={isLoading === LoadingName.ApproveDoi}
-                  disabled={!!isLoading || !registrationIsValid}>
-                  {t('common:create_doi')}
-                </ButtonWithProgress>
-              </>
-            ) : (
-              <Button variant="contained" color="primary" disabled>
-                {t('public_page.requested_doi')}
-              </Button>
-            )
-          ) : (
+        {user.isCurator &&
+          status === RegistrationStatus.PUBLISHED &&
+          doiRequest?.status === DoiRequestStatus.Requested && (
             <>
-              {status === RegistrationStatus.PUBLISHED && (
-                <Button
-                  variant={reference.doi ? 'outlined' : 'contained'}
-                  color="primary"
-                  data-testid="button-toggle-request-doi"
-                  onClick={toggleRequestDoiModal}>
-                  {t('public_page.request_doi')}
-                </Button>
-              )}
-              {status === RegistrationStatus.DRAFT && (
-                <Button variant="contained" color="primary" disabled>
-                  {t('public_page.reserve_doi')}
-                </Button>
-              )}
+              <ButtonWithProgress
+                color="primary"
+                variant="contained"
+                data-testid="button-reject-doi"
+                endIcon={<CloseIcon />}
+                onClick={() => onClickUpdateDoiRequest(DoiRequestStatus.Rejected)}
+                isLoading={isLoading === LoadingName.RejectDoi}
+                disabled={!!isLoading}>
+                {t('common:reject_doi')}
+              </ButtonWithProgress>
+              <ButtonWithProgress
+                color="primary"
+                variant="contained"
+                data-testid="button-create-doi"
+                endIcon={<CheckIcon />}
+                onClick={() => onClickUpdateDoiRequest(DoiRequestStatus.Approved)}
+                isLoading={isLoading === LoadingName.ApproveDoi}
+                disabled={!!isLoading || !registrationIsValid}>
+                {t('common:create_doi')}
+              </ButtonWithProgress>
             </>
-          ))}
+          )}
+
+        {!hasNvaDoi && (
+          <Button
+            variant={reference.doi ? 'outlined' : 'contained'}
+            color="primary"
+            data-testid="button-toggle-request-doi"
+            onClick={toggleRequestDoiModal}>
+            {status === RegistrationStatus.PUBLISHED ? t('public_page.request_doi') : t('public_page.reserve_doi')}
+          </Button>
+        )}
 
         {status === RegistrationStatus.DRAFT && (
           <ButtonWithProgress
