@@ -15,17 +15,12 @@ describe('User opens registration form and can see validation errors', () => {
     i18n.changeLanguage(LanguageCodes.ENGLISH);
   });
 
-  it.skip('The User should be able to see validation summary on submission tab', () => {
-    cy.get('[data-testid=nav-tabpanel-submission]').click({ force: true });
-
-    // Error messages
-    cy.get('[data-testid=error-summary-card]')
-      .parent()
-      .within(() => {
-        cy.contains(`Publication type: ${ErrorMessage.REQUIRED}`);
-        cy.contains(`Authors: ${ErrorMessage.MISSING_CONTRIBUTOR}`);
-        cy.contains(`Files: ${ErrorMessage.MISSING_FILE}`);
-      });
+  it('The User should be able to see validation errors after visiting every tab', () => {
+    cy.get('[data-testid=nav-tabpanel-description]').click({ force: true });
+    cy.get('[data-testid=nav-tabpanel-reference]').click({ force: true });
+    cy.get('[data-testid=nav-tabpanel-contributors]').click({ force: true });
+    cy.get('[data-testid=nav-tabpanel-files-and-license]').click({ force: true });
+    cy.get('[data-testid=nav-tabpanel-description]').click({ force: true });
 
     // Error tabs
     cy.get('[data-testid=error-tab]').should('have.length', 4);
