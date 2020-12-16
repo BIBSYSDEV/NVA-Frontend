@@ -6,11 +6,11 @@ export enum ProjectsApiPaths {
   PROJECT = '/project',
 }
 
-export const searchProjectsByTitle = async (query: string, cancelToken?: CancelToken) => {
-  const url = `${ProjectsApiPaths.PROJECT}?title=${encodeURIComponent(query)}`;
-
-  return authenticatedApiRequest<CristinProject[]>({
-    url,
+export const searchProjectsByTitle = async (query: string, cancelToken?: CancelToken) =>
+  authenticatedApiRequest<CristinProject[]>({
+    url: ProjectsApiPaths.PROJECT,
+    params: {
+      title: query,
+    },
     cancelToken,
   });
-};
