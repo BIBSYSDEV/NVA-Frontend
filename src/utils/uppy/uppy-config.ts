@@ -1,17 +1,17 @@
 import Uppy, { UppyFile } from '@uppy/core';
 import AwsS3Multipart, { AwsS3Part } from '@uppy/aws-s3-multipart';
+import norwegianLocale from '@uppy/locales/lib/nb_NO';
+import englishLocale from '@uppy/locales/lib/en_US';
 import {
   createMultipartUpload,
   listParts,
   prepareUploadPart,
   abortMultipartUpload,
   completeMultipartUpload,
-} from '../api/fileApi';
-import { Uppy as UppyType } from '../types/file.types';
-import norwegianLocale from '@uppy/locales/lib/nb_NO';
-import englishLocale from '@uppy/locales/lib/en_US';
-import i18n from '../translations/i18n';
-import { LanguageCodes } from '../types/language.types';
+} from '../../api/fileApi';
+import { Uppy as UppyType } from '../../types/file.types';
+import i18n from '../../translations/i18n';
+import { LanguageCodes } from '../../types/language.types';
 
 interface UppyArgs {
   uploadId: string;
