@@ -4,6 +4,8 @@ import { FormControlLabel, Checkbox } from '@material-ui/core';
 import styled from 'styled-components';
 import { KeyboardDatePicker, DatePickerView } from '@material-ui/pickers';
 import { useFormikContext } from 'formik';
+import DateFnsUtils from '@date-io/date-fns';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { Registration } from '../../../types/registration.types';
 import { DescriptionFieldNames } from '../../../types/publicationFieldNames';
 import { ErrorMessage } from '../../../utils/validation/errorMessage';
@@ -56,7 +58,7 @@ const DatePickerField: FC = () => {
   const hasError = !!errors.entityDescription?.date?.year && touched.entityDescription?.date?.year;
 
   return (
-    <>
+    <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <KeyboardDatePicker
         data-testid="date-published-field"
         inputVariant="outlined"
@@ -76,7 +78,7 @@ const DatePickerField: FC = () => {
         control={<Checkbox checked={yearOnly} onChange={toggleYearOnly} color="primary" />}
         label={t('description.year_only')}
       />
-    </>
+    </MuiPickersUtilsProvider>
   );
 };
 

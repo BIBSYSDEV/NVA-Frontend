@@ -54,7 +54,7 @@ const DescriptionPanel: FC<PanelProps> = ({ setTouchedFields }) => {
   );
 
   return (
-    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+    <>
       <StyledMainCard>
         <Typography variant="h2">{t('heading.description')}</Typography>
         <Field name={DescriptionFieldNames.TITLE}>
@@ -170,7 +170,7 @@ const DescriptionPanel: FC<PanelProps> = ({ setTouchedFields }) => {
         <Typography variant="h5">{t('description.connect_project')}</Typography>
         <ProjectsField />
       </Card>
-    </MuiPickersUtilsProvider>
+    </>
   );
 };
 
