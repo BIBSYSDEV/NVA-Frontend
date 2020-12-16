@@ -10,7 +10,7 @@ import {
   TableContainer,
   TablePagination,
 } from '@material-ui/core';
-import { RegistrationPreview, RegistrationTab } from '../../types/registration.types';
+import { RegistrationPreview } from '../../types/registration.types';
 import { useTranslation } from 'react-i18next';
 import Label from '../../components/Label';
 import { Link as RouterLink } from 'react-router-dom';
