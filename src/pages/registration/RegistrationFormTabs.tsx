@@ -1,5 +1,5 @@
-import { FormikTouched, setNestedObjectValues, useFormikContext } from 'formik';
-import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
+import { setNestedObjectValues, useFormikContext } from 'formik';
+import React, { FC, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { Tabs } from '@material-ui/core';
@@ -57,14 +57,15 @@ export const RegistrationFormTabs: FC<RegistrationFormTabsProps> = ({ setTabNumb
     touchedRef.current = touched;
   }, [touched]);
 
-  const highestPreviouslyTouchedTabRef = useRef<RegistrationTab | -1>(-1);
+  const highestPreviouslyTouchedTabRef = useRef<RegistrationTab | -1>(-1); // -1 is only used to indicate first render
   useEffect(() => {
-    console.log('useEffect', tabNumber);
     if (tabNumber > highestPreviouslyTouchedTabRef.current) {
+      // Avoid setting to touch if user moves to previous tab
       if (tabNumber > highestPreviouslyTouchedTabRef.current) {
         highestPreviouslyTouchedTabRef.current = tabNumber;
       }
 
+      // All fields for each tab
       const tabFields = {
         [RegistrationTab.Description]: touchedDescriptionTabFields,
         [RegistrationTab.Reference]: touchedReferenceTabFields(
@@ -74,7 +75,6 @@ export const RegistrationFormTabs: FC<RegistrationFormTabsProps> = ({ setTabNumb
         [RegistrationTab.FilesAndLicenses]: touchedFilesTabFields(valuesRef.current.fileSet.files),
       };
 
-      console.log('<<<<<<<<<<<< DOINT MOUNT >>>>>>>>>>>>>>>>');
       // Set all fields on previous tabs to touched
       const fieldsToTouchOnMount = [touchedRef.current];
       for (let thisTab = RegistrationTab.Description; thisTab < tabNumber; thisTab++) {
@@ -84,15 +84,13 @@ export const RegistrationFormTabs: FC<RegistrationFormTabsProps> = ({ setTabNumb
       setTouched(mergedOnMountFields);
 
       return () => {
-        // Set fields on current tab to touched if user moves to a previous tab
-        console.log('<<<<<<<<<<<< DOINT UNMOUNT >>>>>>>>>>>>>>>>');
+        // Set fields on current tab to touched (needed if user moves to a previous tab)
         const mergedOnUnmounFields = mergeTouchedFields([touchedRef.current, tabFields[tabNumber]]);
         setTouched(mergedOnUnmounFields);
       };
     }
   }, [setTouched, tabNumber]);
 
-  isNewRegistration = true;
   useEffect(() => {
     // TODO: avoid error changes to trigger this forever
     console.log('useeffect newReg');
