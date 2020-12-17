@@ -1,15 +1,13 @@
-import React, { FC, useEffect, useRef } from 'react';
+import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormHelperText, Typography } from '@material-ui/core';
 import { useFormikContext, FieldArray, ErrorMessage, FieldArrayRenderProps } from 'formik';
 import Card from '../../components/Card';
 import { Registration } from '../../types/registration.types';
 import { ContributorFieldNames } from '../../types/publicationFieldNames';
-import { touchedContributorTabFields } from '../../utils/formik-helpers';
-import { PanelProps } from './RegistrationFormContent';
 import Authors from './contributors_tab/Authors';
 
-const ContributorsPanel: FC<PanelProps> = ({ setTouchedFields }) => {
+const ContributorsPanel: FC = () => {
   const { t } = useTranslation('registration');
   const {
     values: {
@@ -18,18 +16,6 @@ const ContributorsPanel: FC<PanelProps> = ({ setTouchedFields }) => {
     errors,
   } = useFormikContext<Registration>();
   const contributorsError = errors.entityDescription?.contributors;
-
-  // const contributorsRef = useRef(contributors);
-  // useEffect(() => {
-  //   contributorsRef.current = contributors;
-  // }, [contributors]);
-
-  // useEffect(
-  //   // Set all fields to touched on unmount
-  //   // Use refs to avoid trigging this useEffect on every values update
-  //   () => () => setTouchedFields(touchedContributorTabFields(contributorsRef.current)),
-  //   [setTouchedFields]
-  // );
 
   return (
     <Card>

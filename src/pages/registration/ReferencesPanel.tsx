@@ -16,8 +16,6 @@ import JournalTypeForm from './references_tab/JournalTypeForm';
 import ReportTypeForm from './references_tab/ReportTypeForm';
 import Card from '../../components/Card';
 import SelectTypeField from './references_tab/components/SelectTypeField';
-import { touchedReferenceTabFields } from '../../utils/formik-helpers';
-import { PanelProps } from './RegistrationFormContent';
 import { emptyBookPublicationInstance } from '../../types/publication_types/bookRegistration.types';
 import { emptyJournalPublicationInstance } from '../../types/publication_types/journalRegistration.types';
 import { emptyReportPublicationInstance } from '../../types/publication_types/reportRegistration.types';
@@ -28,21 +26,10 @@ const StyledCard = styled(Card)`
   margin-top: 1rem;
 `;
 
-const ReferencesPanel: FC<PanelProps> = ({ setTouchedFields }) => {
+const ReferencesPanel: FC = () => {
   const { t } = useTranslation('registration');
   const { values, setTouched, setFieldValue, touched } = useFormikContext<Registration>();
   const publicationContextType = values.entityDescription.reference.publicationContext.type;
-  const contextRef = useRef(publicationContextType);
-
-  useEffect(() => {
-    contextRef.current = publicationContextType;
-  }, [publicationContextType]);
-
-  // useEffect(
-  //   // Set all fields as touched if user navigates away from this panel (on unmount)
-  //   () => () => setTouchedFields(touchedReferenceTabFields(contextRef.current)),
-  //   [setTouchedFields]
-  // );
 
   const onChangeType = (newPublicationContextType: string) => {
     // Ensure some values are reset when publication type changes

@@ -11,8 +11,6 @@ import Modal from '../../components/Modal';
 import { licenses, Uppy } from '../../types/file.types';
 import Card from '../../components/Card';
 import { FileFieldNames } from '../../types/publicationFieldNames';
-import { touchedFilesTabFields } from '../../utils/formik-helpers';
-import { PanelProps } from './RegistrationFormContent';
 import { NotificationVariant } from '../../types/notification.types';
 import { autoHideNotificationDuration } from '../../utils/constants';
 import { File } from '../../types/file.types';
@@ -31,11 +29,11 @@ const StyledLicenseDescription = styled.div`
   white-space: pre-wrap;
 `;
 
-interface FilesAndLicensePanelProps extends PanelProps {
+interface FilesAndLicensePanelProps {
   uppy: Uppy;
 }
 
-const FilesAndLicensePanel: FC<FilesAndLicensePanelProps> = ({ uppy, setTouchedFields }) => {
+const FilesAndLicensePanel: FC<FilesAndLicensePanelProps> = ({ uppy }) => {
   const { t } = useTranslation('registration');
   const { values } = useFormikContext<Registration>();
   const [isLicenseModalOpen, setIsLicenseModalOpen] = useState(false);
@@ -47,13 +45,6 @@ const FilesAndLicensePanel: FC<FilesAndLicensePanelProps> = ({ uppy, setTouchedF
   useEffect(() => {
     filesRef.current = files;
   }, [files]);
-
-  // useEffect(
-  //   // Set all fields to touched on unmount
-  //   // Use filesRef to avoid trigging this useEffect on every values update
-  //   () => () => setTouchedFields(touchedFilesTabFields(filesRef.current)),
-  //   [setTouchedFields]
-  // );
 
   useEffect(() => {
     // Avoid adding duplicated file names to an existing registration,
