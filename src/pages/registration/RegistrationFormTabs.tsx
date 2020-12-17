@@ -66,41 +66,27 @@ export const RegistrationFormTabs: FC<RegistrationFormTabsProps> = ({ setTabNumb
       }
 
       const tabFields = {
-        description: touchedDescriptionTabFields,
-        reference: touchedReferenceTabFields(valuesRef.current.entityDescription.reference.publicationContext.type),
-        contributors: touchedContributorTabFields(valuesRef.current.entityDescription.contributors),
-        files: touchedFilesTabFields(valuesRef.current.fileSet.files),
+        [RegistrationTab.Description]: touchedDescriptionTabFields,
+        [RegistrationTab.Reference]: touchedReferenceTabFields(
+          valuesRef.current.entityDescription.reference.publicationContext.type
+        ),
+        [RegistrationTab.Contributors]: touchedContributorTabFields(valuesRef.current.entityDescription.contributors),
+        [RegistrationTab.FilesAndLicenses]: touchedFilesTabFields(valuesRef.current.fileSet.files),
       };
 
       console.log('<<<<<<<<<<<< DOINT MOUNT >>>>>>>>>>>>>>>>');
       // Set all fields on previous tabs to touched
       const fieldsToTouchOnMount = [touchedRef.current];
-      if (tabNumber > RegistrationTab.Description) {
-        fieldsToTouchOnMount.push(tabFields.description);
+      for (let thisTab = RegistrationTab.Description; thisTab < tabNumber; thisTab++) {
+        fieldsToTouchOnMount.push(tabFields[thisTab]);
       }
-      if (tabNumber > RegistrationTab.Reference) {
-        fieldsToTouchOnMount.push(tabFields.reference);
-      }
-      if (tabNumber > RegistrationTab.Contributors) {
-        fieldsToTouchOnMount.push(tabFields.contributors);
-      }
-
       const mergedOnMountFields = mergeTouchedFields(fieldsToTouchOnMount);
       setTouched(mergedOnMountFields);
 
       return () => {
         // Set fields on current tab to touched if user moves to a previous tab
         console.log('<<<<<<<<<<<< DOINT UNMOUNT >>>>>>>>>>>>>>>>');
-        const fieldsToTouchOnUnmount = [touchedRef.current];
-        if (tabNumber === RegistrationTab.Reference) {
-          fieldsToTouchOnUnmount.push(tabFields.reference);
-        } else if (tabNumber === RegistrationTab.Contributors) {
-          fieldsToTouchOnUnmount.push(tabFields.contributors);
-        } else if (tabNumber === RegistrationTab.FilesAndLicenses) {
-          fieldsToTouchOnUnmount.push(tabFields.files);
-        }
-
-        const mergedOnUnmounFields = mergeTouchedFields(fieldsToTouchOnUnmount);
+        const mergedOnUnmounFields = mergeTouchedFields([touchedRef.current, tabFields[tabNumber]]);
         setTouched(mergedOnUnmounFields);
       };
     }
