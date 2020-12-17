@@ -86,16 +86,16 @@
     "files_and_license": "Filer og lisens",
     "publish_settings": "Publiseringsvalg",
     "reference": "Referanse",
-    "summary": "Oppsummering",
     "validation_errors": "Valideringsfeil"
   },
   "new_registration": "Ny registrering",
   "public_page": {
+    "current_validation_errors": "NB! Registreringen har valideringsfeil som må fikses før den kan publiseres",
+    "in_progess": "Under behandling",
     "message_to_curator": "Melding til kurator",
     "reserve_doi": "Reserver en DOI",
     "request_doi": "Be om en DOI",
-    "request_doi_description": "Når du ber om en DOI (Digital Object Identifier) vil bestillingen gå via en kurator ved din institusjon for kvalitetskontroll. Legg til en melding ved eventuelle spørsmål eller oppklaringer. Du vil få en epost når forespørselen er behandlet.",
-    "requested_doi": "Venter på DOI..."
+    "request_doi_description": "Når du ber om en DOI (Digital Object Identifier) vil bestillingen gå via en kurator ved din institusjon for kvalitetskontroll. Legg til en melding ved eventuelle spørsmål eller oppklaringer. Du vil få en epost når forespørselen er behandlet."
   },
   "registration": {
     "latest_registrations": "Nye registreringer",
@@ -127,6 +127,7 @@
     "nvi_fail_not_rated": "Denne registreringen kan ikke inngå i Norsk vitenskapsindeks (NVI), da valgt tidsskrift ikke er på nivå 1 eller 2. \n\n(Tidsskriftets nivå kan bli endret, slik at registreringen likevel kan inngå i NVI)",
     "nvi_fail_no_peer_review": "Denne registreringen kan ikke inngå i Norsk vitenskapsindeks, da den ikke er fagfellevurdert.",
     "or": "Eller",
+    "original_article": "Original artikkel",
     "pages": "Sidetall",
     "pages_from": "Sidetall fra",
     "pages_to": "til",
@@ -134,6 +135,7 @@
     "peer_reviewed": "Fagfellevurdert",
     "remove": "Fjern",
     "search_for_journal": "Søk etter tidsskrift",
+    "search_for_original_article": "Søk etter original artikkel",
     "search_for_publisher": "Søk etter utgiver",
     "search_for_series": "Søk etter serie",
     "series": "Serie",
@@ -145,15 +147,10 @@
   },
   "save_draft": "Lagre kladd",
   "status": {
-    "Draft": "Kladd",
-    "New": "Ny",
-    "Published": "Publisert",
-    "Rejected": "Avvist"
-  },
-  "submission": {
-    "corresponding_author": "Korresponderende forfatter",
-    "number_of_affiliations": "{{count}} tilhørighet",
-    "number_of_affiliations_plural": "{{count}} tilhørigheter"
+    "DRAFT": "Kladd",
+    "NEW": "Ny",
+    "PUBLISHED": "Publisert",
+    "REJECTED": "Avvist"
   },
   "support_description": "Når du ber om brukerstøtte vil meldingen gå til en kurator ved din institusjon. Du kan se besvarelser i <0>Mine Meldinger</0>.",
   "modal_unsaved_changes_description": "Du har gjort endringer som ikke er lagret. Er du sikker på at du vil forlate denne siden?",

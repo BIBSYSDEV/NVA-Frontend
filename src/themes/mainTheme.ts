@@ -166,3 +166,8 @@ export const autocompleteTranslationProps = {
   closeText: i18n.t('common:close'),
   openText: i18n.t('common:open'),
 };
+
+export const datePickerTranslationProps = {
+  cancelLabel: i18n.t('common:cancel'),
+  okLabel: i18n.t('common:select'),
+};

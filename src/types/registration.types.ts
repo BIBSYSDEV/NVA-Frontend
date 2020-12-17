@@ -11,10 +11,10 @@ import { ReportEntityDescription } from './publication_types/reportRegistration.
 import { BackendTypeNames } from './publication_types/commonRegistration.types';
 
 export enum RegistrationStatus {
-  DELETED = 'Deleted',
-  DRAFT = 'Draft',
-  NEW = 'New',
-  PUBLISHED = 'Published',
+  DELETED = 'DELETED',
+  DRAFT = 'DRAFT',
+  NEW = 'NEW',
+  PUBLISHED = 'PUBLISHED',
 }
 
 export enum RegistrationTab {
@@ -22,7 +22,6 @@ export enum RegistrationTab {
   Reference = 1,
   Contributors = 2,
   FilesAndLicenses = 3,
-  Submission = 4,
 }
 
 export const levelMap: EnumDictionary<string, number | null> = {

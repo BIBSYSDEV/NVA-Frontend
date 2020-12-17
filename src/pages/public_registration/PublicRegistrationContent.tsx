@@ -38,6 +38,7 @@ import {
   ReportPublicationContext,
   ReportPublicationInstance,
 } from '../../types/publication_types/reportRegistration.types';
+import PublicDoi from './PublicDoi';
 
 const StyledContentWrapper = styled.div`
   display: flex;
@@ -82,9 +83,10 @@ const StyledTag = styled.div`
 
 export interface PublicRegistrationContentProps {
   registration: Registration;
+  refetchRegistration: () => void;
 }
 
-const PublicRegistrationContent: FC<PublicRegistrationContentProps> = ({ registration }) => {
+const PublicRegistrationContent: FC<PublicRegistrationContentProps> = ({ registration, refetchRegistration }) => {
   const { t } = useTranslation('registration');
 
   const {
@@ -104,7 +106,7 @@ const PublicRegistrationContent: FC<PublicRegistrationContentProps> = ({ registr
 
   return (
     <ContentPage>
-      <PublicRegistrationStatusBar registration={registration} />
+      <PublicRegistrationStatusBar registration={registration} refetchRegistration={refetchRegistration} />
       <Heading>{mainTitle}</Heading>
       {contributors && <PublicRegistrationAuthors contributors={contributors} />}
       <StyledContentWrapper>
@@ -112,13 +114,8 @@ const PublicRegistrationContent: FC<PublicRegistrationContentProps> = ({ registr
           (file) => !file.administrativeAgreement && <PublicRegistrationFile file={file} key={file.identifier} />
         )}
         <StyledMainContent>
-          {(registration.doi || reference.doi) && (
-            <LabelContentRow minimal label={`${t('registration.link_to_resource')}:`}>
-              <Link href={registration.doi ?? reference.doi} target="_blank" rel="noopener noreferrer">
-                {registration.doi ?? reference.doi}
-              </Link>
-            </LabelContentRow>
-          )}
+          <PublicDoi registration={registration} />
+
           {abstract && (
             <LabelContentRow minimal label={`${t('description.abstract')}:`}>
               {abstract}

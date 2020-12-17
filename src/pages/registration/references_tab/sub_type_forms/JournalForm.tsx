@@ -10,6 +10,7 @@ import NviValidation from '../components/NviValidation';
 import { JournalEntityDescription } from '../../../../types/publication_types/journalRegistration.types';
 import JournalField from '../components/JournalField';
 import PeerReview from '../components/PeerReview';
+import CorrigendumForField from '../components/CorrigendumForField';
 
 const StyledArticleDetail = styled.div`
   display: grid;
@@ -38,7 +39,7 @@ const JournalForm: FC = () => {
     <>
       <DoiField />
 
-      <JournalField />
+      {publicationInstance.type === JournalType.CORRIGENDUM ? <CorrigendumForField /> : <JournalField />}
 
       <StyledArticleDetail>
         <Field name={ReferenceFieldNames.VOLUME}>

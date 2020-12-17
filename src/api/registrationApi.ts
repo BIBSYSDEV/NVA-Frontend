@@ -4,6 +4,7 @@ import { Registration } from '../types/registration.types';
 import { RegistrationFileSet } from '../types/file.types';
 import { StatusCode } from '../utils/constants';
 import { getIdToken } from './userApi';
+import { authenticatedApiRequest } from './apiRequest';
 
 export enum PublicationsApiPaths {
   PUBLICATION = '/publication',
@@ -84,32 +85,11 @@ export const getRegistration = async (id: string, cancelToken?: CancelToken) => 
   }
 };
 
-export const publishRegistration = async (identifier: string) => {
-  if (!identifier) {
-    return { error: i18n.t('feedback:error.publish_registration') };
-  }
-  try {
-    const idToken = await getIdToken();
-    const response = await Axios.put(
-      `${PublicationsApiPaths.PUBLICATION}/${identifier}/publish`,
-      {},
-      {
-        headers: {
-          Authorization: `Bearer ${idToken}`,
-        },
-      }
-    );
-    if (response.status === StatusCode.OK) {
-      return response.data;
-    } else if (response.status === StatusCode.ACCEPTED) {
-      return { info: i18n.t('feedback:info.publishing_registration') };
-    } else {
-      return { error: i18n.t('feedback:error.publish_registration') };
-    }
-  } catch {
-    return { error: i18n.t('feedback:error.publish_registration') };
-  }
-};
+export const publishRegistration = async (identifier: string) =>
+  await authenticatedApiRequest({
+    url: `${PublicationsApiPaths.PUBLICATION}/${identifier}/publish`,
+    method: 'PUT',
+  });
 
 export const getMyRegistrations = async (cancelToken?: CancelToken) => {
   const url = PublicationsApiPaths.PUBLICATIONS_BY_OWNER;
