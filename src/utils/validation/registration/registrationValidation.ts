@@ -46,6 +46,6 @@ export const registrationValidationSchema = Yup.object().shape({
       }),
   }),
   fileSet: Yup.object().shape({
-    files: Yup.array().of(fileValidationSchema).min(1, ErrorMessage.MISSING_FILE),
+    files: Yup.array().of(fileValidationSchema).min(1, ErrorMessage.MISSING_FILE).required(ErrorMessage.REQUIRED),
   }),
 });
