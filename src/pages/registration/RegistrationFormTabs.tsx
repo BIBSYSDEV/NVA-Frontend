@@ -61,37 +61,51 @@ export const RegistrationFormTabs: FC<RegistrationFormTabsProps> = ({ setTabNumb
   useEffect(() => {
     console.log('useEffect', tabNumber);
     if (tabNumber > highestPreviouslyTouchedTabRef.current) {
-      const fieldsToTouch = [touchedRef.current];
-      if (tabNumber > RegistrationTab.Description) {
-        console.log('touch desc');
-        fieldsToTouch.push(touchedDescriptionTabFields);
-      }
-      if (tabNumber > RegistrationTab.Reference) {
-        console.log('touch ref');
-        fieldsToTouch.push(
-          touchedReferenceTabFields(valuesRef.current.entityDescription.reference.publicationContext.type)
-        );
-      }
-      if (tabNumber > RegistrationTab.Contributors) {
-        console.log('touch cont');
-        fieldsToTouch.push(touchedContributorTabFields(valuesRef.current.entityDescription.contributors));
-      }
-
       if (tabNumber > highestPreviouslyTouchedTabRef.current) {
         highestPreviouslyTouchedTabRef.current = tabNumber;
       }
-      setTouched(mergeTouchedFields(fieldsToTouch));
+
+      const tabFields = {
+        description: touchedDescriptionTabFields,
+        reference: touchedReferenceTabFields(valuesRef.current.entityDescription.reference.publicationContext.type),
+        contributors: touchedContributorTabFields(valuesRef.current.entityDescription.contributors),
+        files: touchedFilesTabFields(valuesRef.current.fileSet.files),
+      };
+
+      console.log('<<<<<<<<<<<< DOINT MOUNT >>>>>>>>>>>>>>>>');
+      // Set all fields on previous tabs to touched
+      const fieldsToTouchOnMount = [touchedRef.current];
+      if (tabNumber > RegistrationTab.Description) {
+        fieldsToTouchOnMount.push(tabFields.description);
+      }
+      if (tabNumber > RegistrationTab.Reference) {
+        fieldsToTouchOnMount.push(tabFields.reference);
+      }
+      if (tabNumber > RegistrationTab.Contributors) {
+        fieldsToTouchOnMount.push(tabFields.contributors);
+      }
+
+      const mergedOnMountFields = mergeTouchedFields(fieldsToTouchOnMount);
+      setTouched(mergedOnMountFields);
 
       return () => {
-        if (tabNumber === RegistrationTab.FilesAndLicenses) {
-          console.log('touch file');
-          setTouched(mergeTouchedFields([touchedRef.current, touchedFilesTabFields(valuesRef.current.fileSet.files)]));
+        // Set fields on current tab to touched if user moves to a previous tab
+        console.log('<<<<<<<<<<<< DOINT UNMOUNT >>>>>>>>>>>>>>>>');
+        const fieldsToTouchOnUnmount = [touchedRef.current];
+        if (tabNumber === RegistrationTab.Reference) {
+          fieldsToTouchOnUnmount.push(tabFields.reference);
+        } else if (tabNumber === RegistrationTab.Contributors) {
+          fieldsToTouchOnUnmount.push(tabFields.contributors);
+        } else if (tabNumber === RegistrationTab.FilesAndLicenses) {
+          fieldsToTouchOnUnmount.push(tabFields.files);
         }
+
+        const mergedOnUnmounFields = mergeTouchedFields(fieldsToTouchOnUnmount);
+        setTouched(mergedOnUnmounFields);
       };
     }
   }, [setTouched, tabNumber]);
 
-  console.log('highest tab', highestPreviouslyTouchedTabRef.current);
   isNewRegistration = true;
   useEffect(() => {
     // TODO: avoid error changes to trigger this forever
