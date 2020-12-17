@@ -25,10 +25,11 @@ const StyledRegistration = styled.div`
 
 interface RegistrationFormProps {
   closeForm: () => void;
-  identifier?: string;
+  identifier: string;
+  isNewRegistration: boolean;
 }
 
-const RegistrationForm: FC<RegistrationFormProps> = ({ identifier = '', closeForm }) => {
+const RegistrationForm: FC<RegistrationFormProps> = ({ identifier, closeForm, isNewRegistration }) => {
   const user = useSelector((store: RootStore) => store.user);
   const { t } = useTranslation('registration');
   const history = useHistory();
@@ -93,7 +94,11 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier = '', closeFor
                 modalHeading={t('modal_unsaved_changes_heading')}
                 shouldBlockNavigation={dirty}
               />
-              <RegistrationFormTabs tabNumber={tabNumber} setTabNumber={setTabNumber} />
+              <RegistrationFormTabs
+                tabNumber={tabNumber}
+                setTabNumber={setTabNumber}
+                isNewRegistration={isNewRegistration}
+              />
               <RegistrationFormContent tabNumber={tabNumber} uppy={uppy} />
               <RegistrationFormActions
                 tabNumber={tabNumber}

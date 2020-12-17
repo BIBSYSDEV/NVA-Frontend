@@ -45,11 +45,11 @@ const DescriptionPanel: FC<PanelProps> = ({ setTouchedFields }) => {
   const { t } = useTranslation('registration');
   const { setFieldValue } = useFormikContext<Registration>();
 
-  useEffect(
-    // Set all fields as touched if user navigates away from this panel (on unmount)
-    () => () => setTouchedFields(touchedDescriptionTabFields),
-    [setTouchedFields]
-  );
+  // useEffect(
+  //   // Set all fields as touched if user navigates away from this panel (on unmount)
+  //   () => () => setTouchedFields(touchedDescriptionTabFields),
+  //   [setTouchedFields]
+  // );
 
   return (
     <>

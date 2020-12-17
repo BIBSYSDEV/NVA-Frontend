@@ -21,6 +21,7 @@ const EditRegistration: FC = () => {
   const { identifier } = useParams<{ identifier: string }>();
   const [expanded, setExpanded] = useState<PanelName | false>(false);
   const [showForm, setShowForm] = useState(!!identifier);
+  const [isNewRegistration, setIsNewRegistration] = useState(false);
   const { t } = useTranslation('registration');
 
   const handleChange = (panel: PanelName) => (_: ChangeEvent<unknown>, isExpanded: boolean) => {
@@ -28,6 +29,7 @@ const EditRegistration: FC = () => {
   };
 
   const handleOpenForm = () => {
+    setIsNewRegistration(true);
     setShowForm(true);
   };
 
@@ -48,7 +50,11 @@ const EditRegistration: FC = () => {
       </StyledEditRegistration>
     </>
   ) : (
-    <RegistrationForm identifier={identifier} closeForm={() => setShowForm(false)} />
+    <RegistrationForm
+      identifier={identifier}
+      isNewRegistration={isNewRegistration}
+      closeForm={() => setShowForm(false)}
+    />
   );
 };
 

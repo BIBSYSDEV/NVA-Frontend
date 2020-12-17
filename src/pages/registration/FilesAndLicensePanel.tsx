@@ -48,12 +48,12 @@ const FilesAndLicensePanel: FC<FilesAndLicensePanelProps> = ({ uppy, setTouchedF
     filesRef.current = files;
   }, [files]);
 
-  useEffect(
-    // Set all fields to touched on unmount
-    // Use filesRef to avoid trigging this useEffect on every values update
-    () => () => setTouchedFields(touchedFilesTabFields(filesRef.current)),
-    [setTouchedFields]
-  );
+  // useEffect(
+  //   // Set all fields to touched on unmount
+  //   // Use filesRef to avoid trigging this useEffect on every values update
+  //   () => () => setTouchedFields(touchedFilesTabFields(filesRef.current)),
+  //   [setTouchedFields]
+  // );
 
   useEffect(() => {
     // Avoid adding duplicated file names to an existing registration,

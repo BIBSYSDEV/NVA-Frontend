@@ -19,17 +19,17 @@ const ContributorsPanel: FC<PanelProps> = ({ setTouchedFields }) => {
   } = useFormikContext<Registration>();
   const contributorsError = errors.entityDescription?.contributors;
 
-  const contributorsRef = useRef(contributors);
-  useEffect(() => {
-    contributorsRef.current = contributors;
-  }, [contributors]);
+  // const contributorsRef = useRef(contributors);
+  // useEffect(() => {
+  //   contributorsRef.current = contributors;
+  // }, [contributors]);
 
-  useEffect(
-    // Set all fields to touched on unmount
-    // Use refs to avoid trigging this useEffect on every values update
-    () => () => setTouchedFields(touchedContributorTabFields(contributorsRef.current)),
-    [setTouchedFields]
-  );
+  // useEffect(
+  //   // Set all fields to touched on unmount
+  //   // Use refs to avoid trigging this useEffect on every values update
+  //   () => () => setTouchedFields(touchedContributorTabFields(contributorsRef.current)),
+  //   [setTouchedFields]
+  // );
 
   return (
     <Card>

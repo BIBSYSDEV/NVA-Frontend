@@ -38,11 +38,11 @@ const ReferencesPanel: FC<PanelProps> = ({ setTouchedFields }) => {
     contextRef.current = publicationContextType;
   }, [publicationContextType]);
 
-  useEffect(
-    // Set all fields as touched if user navigates away from this panel (on unmount)
-    () => () => setTouchedFields(touchedReferenceTabFields(contextRef.current)),
-    [setTouchedFields]
-  );
+  // useEffect(
+  //   // Set all fields as touched if user navigates away from this panel (on unmount)
+  //   () => () => setTouchedFields(touchedReferenceTabFields(contextRef.current)),
+  //   [setTouchedFields]
+  // );
 
   const onChangeType = (newPublicationContextType: string) => {
     // Ensure some values are reset when publication type changes
