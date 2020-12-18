@@ -36,13 +36,15 @@ const StyledLabel = styled(Typography)`
 
 interface RegistrationListProps {
   registrations: RegistrationPreview[];
+  refetchRegistrations: () => void;
 }
 
-const RegistrationList: FC<RegistrationListProps> = ({ registrations }) => {
+const RegistrationList: FC<RegistrationListProps> = ({ registrations, refetchRegistrations }) => {
   const { t } = useTranslation('common');
   const dispatch = useDispatch();
   // TODO: avoid bug where name flashes when user exit modal
   const [registrationToDelete, setRegistrationToDelete] = useState<RegistrationPreview>();
+  const [isDeleting, setIsDeleting] = useState(false);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
@@ -59,14 +61,16 @@ const RegistrationList: FC<RegistrationListProps> = ({ registrations }) => {
     if (!registrationToDelete) {
       return;
     }
+    setIsDeleting(true);
     const deleteRegistrationResponse = await deleteRegistration(registrationToDelete.identifier);
     if (deleteRegistrationResponse) {
       if (deleteRegistrationResponse.error) {
         dispatch(setNotification(t('feedback:error.delete_registration'), NotificationVariant.Error));
       } else {
         dispatch(setNotification(t('feedback:success.delete_registration'), NotificationVariant.Success));
-        // TODO: update list
+        refetchRegistrations();
       }
+      setIsDeleting(false);
     }
     setRegistrationToDelete(undefined);
   };
@@ -155,7 +159,8 @@ const RegistrationList: FC<RegistrationListProps> = ({ registrations }) => {
         open={!!registrationToDelete}
         title={t('workLists:delete_registration')}
         onAccept={deleteDraftRegistration}
-        onCancel={() => setRegistrationToDelete(undefined)}>
+        onCancel={() => setRegistrationToDelete(undefined)}
+        isLoading={isDeleting}>
         <Typography>
           {t('workLists:delete_registration_message', {
             title: registrationToDelete?.mainTitle ?? registrationToDelete?.identifier,

@@ -31,7 +31,7 @@ const MyRegistrations: FC = () => {
   const { t } = useTranslation('workLists');
   const user = useSelector((store: RootStore) => store.user);
   const [selectedTab, setSelectedTab] = useState(Tab.Unpublished);
-  const [registrations, isLoading] = useFetchMyRegistrations();
+  const [registrations, isLoading, refetchRegistrations] = useFetchMyRegistrations();
 
   const unpublishedRegistrations = registrations
     .filter((registration) => registration.status === RegistrationStatus.DRAFT)
@@ -76,6 +76,7 @@ const MyRegistrations: FC = () => {
           ) : (
             <RegistrationList
               registrations={selectedTab === Tab.Unpublished ? unpublishedRegistrations : publishedRegistrations}
+              refetchRegistrations={refetchRegistrations}
             />
           )}
         </Card>
