@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { Link, Chip, Typography } from '@material-ui/core';
 import styled from 'styled-components';
-import { Registration } from '../../types/registration.types';
+import { emptyRegistration, Registration } from '../../types/registration.types';
 import ContentPage from '../../components/ContentPage';
 import { useTranslation } from 'react-i18next';
 import PublicRegistrationAuthors from './PublicRegistrationAuthors';
@@ -39,6 +39,7 @@ import {
   ReportPublicationInstance,
 } from '../../types/publication_types/reportRegistration.types';
 import PublicDoi from './PublicDoi';
+import deepmerge from 'deepmerge';
 
 const StyledContentWrapper = styled.div`
   display: flex;
@@ -88,6 +89,9 @@ export interface PublicRegistrationContentProps {
 
 const PublicRegistrationContent: FC<PublicRegistrationContentProps> = ({ registration, refetchRegistration }) => {
   const { t } = useTranslation('registration');
+
+  // Registration can lack some fields if it's newly created
+  registration = deepmerge(emptyRegistration, registration);
 
   const {
     abstract,
@@ -190,7 +194,7 @@ const PublicRegistrationContent: FC<PublicRegistrationContentProps> = ({ registr
               <StyledNormalText>{selectedLicense.description}</StyledNormalText>
             </StyledLicenseCard>
           )}
-          {registration.projects && (
+          {registration.projects.length > 0 && (
             <LabelContentRow minimal label={`${t('description.project_association')}:`}>
               {registration.projects.map((project) => (
                 <Typography key={project.id}>{project.name}</Typography>
