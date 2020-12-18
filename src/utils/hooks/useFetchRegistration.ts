@@ -22,8 +22,8 @@ const useFetchRegistration = (identifier: string): [Registration | undefined, bo
       } else {
         setRegistration(registration);
       }
+      setIsLoading(false);
     }
-    setIsLoading(false);
   }, [dispatch, cancelToken, identifier]);
 
   useEffect(() => {
