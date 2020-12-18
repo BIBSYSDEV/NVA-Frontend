@@ -34,7 +34,7 @@ const MyRegistrations: FC = () => {
   const [registrations, isLoading] = useFetchMyRegistrations();
 
   const unpublishedRegistrations = registrations
-    .filter((registration) => registration.status !== RegistrationStatus.PUBLISHED)
+    .filter((registration) => registration.status === RegistrationStatus.DRAFT)
     .sort((a, b) => new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime());
 
   const publishedRegistrations = registrations

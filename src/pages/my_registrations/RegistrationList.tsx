@@ -18,6 +18,10 @@ import EditIcon from '@material-ui/icons/Edit';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
 import { RegistrationPreview, RegistrationStatus } from '../../types/registration.types';
 import ConfirmDialog from '../../components/ConfirmDialog';
+import { deleteRegistration } from '../../api/registrationApi';
+import { useDispatch } from 'react-redux';
+import { NotificationVariant } from '../../types/notification.types';
+import { setNotification } from '../../redux/actions/notificationActions';
 
 const StyledTableRow = styled(TableRow)`
   background-color: ${(props) => props.theme.palette.box.main};
@@ -36,6 +40,8 @@ interface RegistrationListProps {
 
 const RegistrationList: FC<RegistrationListProps> = ({ registrations }) => {
   const { t } = useTranslation('common');
+  const dispatch = useDispatch();
+  // TODO: avoid bug where name flashes when user exit modal
   const [registrationToDelete, setRegistrationToDelete] = useState<RegistrationPreview>();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -47,6 +53,22 @@ const RegistrationList: FC<RegistrationListProps> = ({ registrations }) => {
   const handleChangeRowsPerPage = (event: ChangeEvent<HTMLInputElement>) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
+  };
+
+  const deleteDraftRegistration = async () => {
+    if (!registrationToDelete) {
+      return;
+    }
+    const deleteRegistrationResponse = await deleteRegistration(registrationToDelete.identifier);
+    if (deleteRegistrationResponse) {
+      if (deleteRegistrationResponse.error) {
+        dispatch(setNotification(t('feedback:error.delete_registration'), NotificationVariant.Error));
+      } else {
+        dispatch(setNotification(t('feedback:success.delete_registration'), NotificationVariant.Success));
+        // TODO: update list
+      }
+    }
+    setRegistrationToDelete(undefined);
   };
 
   return (
@@ -132,7 +154,7 @@ const RegistrationList: FC<RegistrationListProps> = ({ registrations }) => {
       <ConfirmDialog
         open={!!registrationToDelete}
         title={t('workLists:delete_registration')}
-        onAccept={() => setRegistrationToDelete(undefined)}
+        onAccept={deleteDraftRegistration}
         onCancel={() => setRegistrationToDelete(undefined)}>
         <Typography>
           {t('workLists:delete_registration_message', {

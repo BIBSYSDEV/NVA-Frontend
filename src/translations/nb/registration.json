@@ -148,6 +148,7 @@
   "save_draft": "Lagre kladd",
   "status": {
     "DRAFT": "Kladd",
+    "DRAFT_FOR_DELETION": "Slettet",
     "NEW": "Ny",
     "PUBLISHED": "Publisert",
     "REJECTED": "Avvist"
