@@ -56,37 +56,38 @@ export const RegistrationFormTabs: FC<RegistrationFormTabsProps> = ({ setTabNumb
     touchedRef.current = touched;
   }, [touched]);
 
-  const highestPreviouslyTouchedTabRef = useRef<RegistrationTab | -1>(-1); // -1 is only used to indicate first render
+  const highestPreviouslyTouchedTabRef = useRef<RegistrationTab | -1>(-1); // -1 is used to indicate that no tabs are touched yet
   useEffect(() => {
+    // All fields for each tab
+    const tabFields = {
+      [RegistrationTab.Description]: () => touchedDescriptionTabFields,
+      [RegistrationTab.Reference]: () =>
+        touchedReferenceTabFields(valuesRef.current.entityDescription.reference.publicationContext.type),
+      [RegistrationTab.Contributors]: () =>
+        touchedContributorTabFields(valuesRef.current.entityDescription.contributors),
+      [RegistrationTab.FilesAndLicenses]: () => touchedFilesTabFields(valuesRef.current.fileSet.files),
+    };
+
     if (tabNumber > highestPreviouslyTouchedTabRef.current) {
-      // Avoid setting to touch if user moves to previous tab
+      // Avoid setting tabs to touched all the time
       if (tabNumber > highestPreviouslyTouchedTabRef.current) {
         highestPreviouslyTouchedTabRef.current = tabNumber;
       }
 
-      // All fields for each tab
-      const tabFields = {
-        [RegistrationTab.Description]: touchedDescriptionTabFields,
-        [RegistrationTab.Reference]: touchedReferenceTabFields(
-          valuesRef.current.entityDescription.reference.publicationContext.type
-        ),
-        [RegistrationTab.Contributors]: touchedContributorTabFields(valuesRef.current.entityDescription.contributors),
-        [RegistrationTab.FilesAndLicenses]: touchedFilesTabFields(valuesRef.current.fileSet.files),
-      };
-
       // Set all fields on previous tabs to touched
       const fieldsToTouchOnMount = [touchedRef.current];
       for (let thisTab = RegistrationTab.Description; thisTab < tabNumber; thisTab++) {
-        fieldsToTouchOnMount.push(tabFields[thisTab]);
+        fieldsToTouchOnMount.push(tabFields[thisTab]());
       }
       const mergedOnMountFields = mergeTouchedFields(fieldsToTouchOnMount);
       setTouched(mergedOnMountFields);
-      return () => {
-        // Set fields on current tab to touched (needed if user moves to a previous tab)
-        const mergedOnUnmounFields = mergeTouchedFields([touchedRef.current, tabFields[tabNumber]]);
-        setTouched(mergedOnUnmounFields);
-      };
     }
+
+    // Set fields on current tab to touched
+    return () => {
+      const mergedOnUnmounFields = mergeTouchedFields([touchedRef.current, tabFields[tabNumber]()]);
+      setTouched(mergedOnUnmounFields);
+    };
   }, [setTouched, tabNumber]);
 
   return (
