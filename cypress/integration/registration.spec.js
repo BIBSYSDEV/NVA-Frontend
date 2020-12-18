@@ -17,6 +17,7 @@ describe('Registration', () => {
     );
 
     cy.get('[data-testid=registration-link-next-button]').click({ force: true });
+    cy.get('[data-testid=error-tab]').should('have.length', 0);
     cy.get('[data-testid=registration-title-input]').should(
       'have.value',
       'Computer simulations show that Neanderthal facial morphology represents adaptation to cold and high energy demands, but not heavy biting'
@@ -42,6 +43,7 @@ describe('Registration', () => {
     cy.get('[data-testid=uploaded-file-card]').should('be.visible');
 
     cy.get('[data-testid=registration-file-start-button]').click({ force: true });
+    cy.get('[data-testid=error-tab]').should('have.length', 0);
   });
 
   it('The user should not be able to go to the registration page for registration if not logged in', () => {
