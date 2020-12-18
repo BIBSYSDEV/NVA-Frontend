@@ -45,7 +45,9 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier, closeForm, is
   const uppy = useUppy();
   const [registration, isLoadingRegistration, refetchRegistration] = useFetchRegistration(identifier);
   const initialTabNumber = new URLSearchParams(history.location.search).get('tab');
-  const [tabNumber, setTabNumber] = useState(initialTabNumber ? +initialTabNumber : RegistrationTab.Description);
+  const [tabNumber, setTabNumber] = useState<RegistrationTab>(
+    initialTabNumber ? +initialTabNumber : RegistrationTab.Description
+  );
   const isOwner = registration?.owner === user.id;
 
   useEffect(() => {

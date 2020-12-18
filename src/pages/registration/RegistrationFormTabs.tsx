@@ -38,7 +38,7 @@ const descriptionFieldNames = Object.values(DescriptionFieldNames);
 const referenceFieldNames = Object.values(ReferenceFieldNames);
 
 interface RegistrationFormTabsProps {
-  setTabNumber: (newTab: number) => void;
+  setTabNumber: (newTab: RegistrationTab) => void;
   tabNumber: RegistrationTab;
 }
 

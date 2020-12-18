@@ -14,7 +14,7 @@ const StyledPanel = styled.div`
 `;
 
 interface RegistrationFormContentProps {
-  tabNumber: number;
+  tabNumber: RegistrationTab;
   uppy: Uppy;
 }
 
