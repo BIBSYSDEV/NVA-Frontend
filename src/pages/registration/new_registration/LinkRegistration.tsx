@@ -38,7 +38,7 @@ const LinkRegistration: FC<LinkRegistrationProps> = ({ expanded, onChange, openF
     if (!doi) {
       return;
     }
-    history.push(`/registration/${doi.identifier}`);
+    history.push(`/registration/${doi.identifier}`, { isNewRegistration: true });
     openForm();
   };
 

@@ -45,7 +45,7 @@ const UploadRegistration: FC<UploadRegistrationProps> = ({ expanded, onChange, o
     const registration = await createRegistration(registrationPayload);
     if (registration?.identifier) {
       openForm();
-      history.push(`/registration/${registration.identifier}`);
+      history.push(`/registration/${registration.identifier}`, { isNewRegistration: true });
     } else {
       setIsLoading(false);
       dispatch(setNotification(t('feedback:error.create_registration'), NotificationVariant.Error));
