@@ -1,5 +1,5 @@
 import { Field, useFormikContext, FieldProps, ErrorMessage } from 'formik';
-import React, { FC, useEffect, ChangeEvent } from 'react';
+import React, { FC, ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { MenuItem, TextField as MuiTextField, TextField, Typography } from '@material-ui/core';

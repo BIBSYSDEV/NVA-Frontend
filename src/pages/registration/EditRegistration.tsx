@@ -18,20 +18,15 @@ enum PanelName {
 }
 
 const EditRegistration: FC = () => {
+  const { t } = useTranslation('registration');
   const { identifier } = useParams<{ identifier: string }>();
   const [expanded, setExpanded] = useState<PanelName | false>(false);
   const [showForm, setShowForm] = useState(!!identifier);
-  const [isNewRegistration, setIsNewRegistration] = useState(false);
-  const { t } = useTranslation('registration');
 
-  const handleChange = (panel: PanelName) => (_: ChangeEvent<unknown>, isExpanded: boolean) => {
+  const handleChange = (panel: PanelName) => (_: ChangeEvent<unknown>, isExpanded: boolean) =>
     setExpanded(isExpanded ? panel : false);
-  };
 
-  const handleOpenForm = () => {
-    setIsNewRegistration(true);
-    setShowForm(true);
-  };
+  const handleOpenForm = () => setShowForm(true);
 
   return !showForm ? (
     <>
@@ -50,11 +45,7 @@ const EditRegistration: FC = () => {
       </StyledEditRegistration>
     </>
   ) : (
-    <RegistrationForm
-      identifier={identifier}
-      isNewRegistration={isNewRegistration}
-      closeForm={() => setShowForm(false)}
-    />
+    <RegistrationForm identifier={identifier} closeForm={() => setShowForm(false)} />
   );
 };
 

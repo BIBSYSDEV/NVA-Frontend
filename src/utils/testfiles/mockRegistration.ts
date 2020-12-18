@@ -13,6 +13,7 @@ export const mockRegistration: JournalRegistration = {
   type: BackendTypeNames.PUBLICATION,
   identifier: '12345679',
   createdDate: '2020',
+  modifiedDate: '2020',
   owner: 'tu@unit.no',
   status: RegistrationStatus.DRAFT,
   projects: [],
@@ -111,7 +112,7 @@ const mockRegistrationWithPendingDoiRequest: JournalRegistration = {
   doiRequest: {
     type: 'DoiRequest',
     createdDate: new Date(2020, 1).toISOString(),
-    modifiedDate: new Date(2020, 3).toISOString(),
+    modifiedDate: new Date(2020, 1).toISOString(),
     status: DoiRequestStatus.Requested,
     messages: [
       {

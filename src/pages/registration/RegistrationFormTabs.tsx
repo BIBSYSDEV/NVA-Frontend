@@ -1,4 +1,4 @@
-import { setNestedObjectValues, useFormikContext } from 'formik';
+import { useFormikContext } from 'formik';
 import React, { FC, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
@@ -40,10 +40,9 @@ const referenceFieldNames = Object.values(ReferenceFieldNames);
 interface RegistrationFormTabsProps {
   setTabNumber: (newTab: number) => void;
   tabNumber: RegistrationTab;
-  isNewRegistration: boolean;
 }
 
-export const RegistrationFormTabs: FC<RegistrationFormTabsProps> = ({ setTabNumber, tabNumber, isNewRegistration }) => {
+export const RegistrationFormTabs: FC<RegistrationFormTabsProps> = ({ setTabNumber, tabNumber }) => {
   const { t } = useTranslation('registration');
   const { errors, touched, values, setTouched } = useFormikContext<Registration>();
 
@@ -82,7 +81,6 @@ export const RegistrationFormTabs: FC<RegistrationFormTabsProps> = ({ setTabNumb
       }
       const mergedOnMountFields = mergeTouchedFields(fieldsToTouchOnMount);
       setTouched(mergedOnMountFields);
-
       return () => {
         // Set fields on current tab to touched (needed if user moves to a previous tab)
         const mergedOnUnmounFields = mergeTouchedFields([touchedRef.current, tabFields[tabNumber]]);
@@ -90,14 +88,6 @@ export const RegistrationFormTabs: FC<RegistrationFormTabsProps> = ({ setTabNumb
       };
     }
   }, [setTouched, tabNumber]);
-
-  useEffect(() => {
-    // TODO: avoid error changes to trigger this forever
-    console.log('useeffect newReg');
-    if (!isNewRegistration) {
-      setTouched(setNestedObjectValues(errors, true));
-    }
-  }, [setTouched, isNewRegistration, errors]);
 
   return (
     <StyledTabs

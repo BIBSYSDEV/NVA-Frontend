@@ -1,5 +1,5 @@
 import { useFormikContext } from 'formik';
-import React, { useEffect, FC, useRef } from 'react';
+import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { Typography } from '@material-ui/core';

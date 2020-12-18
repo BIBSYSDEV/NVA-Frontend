@@ -83,6 +83,7 @@ export interface RegistrationPublisher {
 interface BaseRegistration extends BackendType, RegistrationFileSet {
   readonly identifier: string;
   readonly createdDate: string;
+  readonly modifiedDate: string;
   readonly owner: string;
   readonly status: RegistrationStatus;
   readonly doi?: string;
@@ -149,6 +150,7 @@ export const emptyRegistration: Registration = {
   type: BackendTypeNames.PUBLICATION,
   identifier: '',
   createdDate: '',
+  modifiedDate: '',
   owner: '',
   status: RegistrationStatus.NEW,
   entityDescription: emptyRegistrationEntityDescription,

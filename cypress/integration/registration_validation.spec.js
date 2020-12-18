@@ -16,9 +16,7 @@ describe('User opens registration form and can see validation errors', () => {
   });
 
   it('The User should be able to see validation errors after visiting every tab', () => {
-    cy.get('[data-testid=nav-tabpanel-description]').click({ force: true });
-    cy.get('[data-testid=nav-tabpanel-reference]').click({ force: true });
-    cy.get('[data-testid=nav-tabpanel-contributors]').click({ force: true });
+    cy.get('[data-testid=error-tab]').should('have.length', 0);
     cy.get('[data-testid=nav-tabpanel-files-and-license]').click({ force: true });
     cy.get('[data-testid=nav-tabpanel-description]').click({ force: true });
 
