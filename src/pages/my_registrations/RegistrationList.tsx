@@ -16,18 +16,14 @@ import { Link as RouterLink } from 'react-router-dom';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
-import { RegistrationPreview } from '../../types/registration.types';
-import DeleteRegistrationModal from './DeleteRegistrationModal';
+import { RegistrationPreview, RegistrationStatus } from '../../types/registration.types';
+import ConfirmDialog from '../../components/ConfirmDialog';
 
 const StyledTableRow = styled(TableRow)`
   background-color: ${(props) => props.theme.palette.box.main};
   :nth-child(odd) {
     background-color: ${(props) => props.theme.palette.background.default};
   }
-`;
-
-const StyledNormalTextWithIcon = styled(Typography)`
-  margin-left: 0.5rem;
 `;
 
 const StyledLabel = styled(Typography)`
@@ -40,9 +36,7 @@ interface RegistrationListProps {
 
 const RegistrationList: FC<RegistrationListProps> = ({ registrations }) => {
   const { t } = useTranslation('common');
-  const [openModal, setOpenModal] = useState(false);
-  const [deleteRegistrationId, setDeleteRegistrationId] = useState('');
-  const [deleteRegistrationTitle, setDeleteRegistrationTitle] = useState('');
+  const [registrationToDelete, setRegistrationToDelete] = useState<RegistrationPreview>();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
@@ -53,12 +47,6 @@ const RegistrationList: FC<RegistrationListProps> = ({ registrations }) => {
   const handleChangeRowsPerPage = (event: ChangeEvent<HTMLInputElement>) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
-  };
-
-  const handleOnClick = (registration: RegistrationPreview) => {
-    setOpenModal(true);
-    setDeleteRegistrationId(registration.identifier);
-    setDeleteRegistrationTitle(registration.mainTitle);
   };
 
   return (
@@ -99,9 +87,9 @@ const RegistrationList: FC<RegistrationListProps> = ({ registrations }) => {
                     variant="outlined"
                     component={RouterLink}
                     to={`/registration/${registration.identifier}/public`}
+                    startIcon={<MenuBookIcon />}
                     data-testid={`open-registration-${registration.identifier}`}>
-                    <MenuBookIcon />
-                    <StyledNormalTextWithIcon>{t('show')}</StyledNormalTextWithIcon>
+                    {t('show')}
                   </Button>
                 </TableCell>
                 <TableCell>
@@ -110,22 +98,22 @@ const RegistrationList: FC<RegistrationListProps> = ({ registrations }) => {
                     variant="outlined"
                     component={RouterLink}
                     to={`/registration/${registration.identifier}`}
+                    startIcon={<EditIcon />}
                     data-testid={`edit-registration-${registration.identifier}`}>
-                    <EditIcon />
-                    <StyledNormalTextWithIcon>{t('edit')}</StyledNormalTextWithIcon>
+                    {t('edit')}
                   </Button>
                 </TableCell>
                 <TableCell>
-                  <Button
-                    color="secondary"
-                    disabled
-                    // disabled={publication.status === PublicationStatus.DELETED}
-                    variant="outlined"
-                    data-testid={`delete-registration-${registration.identifier}`}
-                    onClick={() => handleOnClick(registration)}>
-                    <DeleteIcon />
-                    <StyledNormalTextWithIcon>{t('delete')}</StyledNormalTextWithIcon>
-                  </Button>
+                  {registration.status === RegistrationStatus.DRAFT && (
+                    <Button
+                      color="secondary"
+                      variant="outlined"
+                      data-testid={`delete-registration-${registration.identifier}`}
+                      startIcon={<DeleteIcon />}
+                      onClick={() => setRegistrationToDelete(registration)}>
+                      {t('delete')}
+                    </Button>
+                  )}
                 </TableCell>
               </StyledTableRow>
             ))}
@@ -141,13 +129,17 @@ const RegistrationList: FC<RegistrationListProps> = ({ registrations }) => {
         onChangePage={handleChangePage}
         onChangeRowsPerPage={handleChangeRowsPerPage}
       />
-      {openModal && (
-        <DeleteRegistrationModal
-          id={deleteRegistrationId}
-          title={deleteRegistrationTitle}
-          setOpenModal={setOpenModal}
-        />
-      )}
+      <ConfirmDialog
+        open={!!registrationToDelete}
+        title={t('workLists:delete_registration')}
+        onAccept={() => setRegistrationToDelete(undefined)}
+        onCancel={() => setRegistrationToDelete(undefined)}>
+        <Typography>
+          {t('workLists:delete_registration_message', {
+            title: registrationToDelete?.mainTitle ?? registrationToDelete?.identifier,
+          })}
+        </Typography>
+      </ConfirmDialog>
     </>
   );
 };
