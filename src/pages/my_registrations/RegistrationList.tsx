@@ -42,7 +42,7 @@ interface RegistrationListProps {
 const RegistrationList: FC<RegistrationListProps> = ({ registrations, refetchRegistrations }) => {
   const { t } = useTranslation('common');
   const dispatch = useDispatch();
-  // TODO: avoid bug where name flashes when user exit modal
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [registrationToDelete, setRegistrationToDelete] = useState<RegistrationPreview>();
   const [isDeleting, setIsDeleting] = useState(false);
   const [page, setPage] = useState(0);
@@ -72,7 +72,6 @@ const RegistrationList: FC<RegistrationListProps> = ({ registrations, refetchReg
       }
       setIsDeleting(false);
     }
-    setRegistrationToDelete(undefined);
   };
 
   return (
@@ -136,7 +135,10 @@ const RegistrationList: FC<RegistrationListProps> = ({ registrations, refetchReg
                       variant="outlined"
                       data-testid={`delete-registration-${registration.identifier}`}
                       startIcon={<DeleteIcon />}
-                      onClick={() => setRegistrationToDelete(registration)}>
+                      onClick={() => {
+                        setRegistrationToDelete(registration);
+                        setShowDeleteModal(true);
+                      }}>
                       {t('delete')}
                     </Button>
                   )}
@@ -156,10 +158,12 @@ const RegistrationList: FC<RegistrationListProps> = ({ registrations, refetchReg
         onChangeRowsPerPage={handleChangeRowsPerPage}
       />
       <ConfirmDialog
-        open={!!registrationToDelete}
+        open={!!showDeleteModal}
         title={t('workLists:delete_registration')}
         onAccept={deleteDraftRegistration}
-        onCancel={() => setRegistrationToDelete(undefined)}
+        onCancel={() => {
+          setShowDeleteModal(false);
+        }}
         isLoading={isDeleting}>
         <Typography>
           {t('workLists:delete_registration_message', {
