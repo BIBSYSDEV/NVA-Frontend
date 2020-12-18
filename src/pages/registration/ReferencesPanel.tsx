@@ -54,7 +54,7 @@ const ReferencesPanel: FC = () => {
       ...touched,
       entityDescription: {
         ...touched.entityDescription,
-        reference: { publicationContext: { type: true } },
+        reference: {},
       },
     });
   };
