@@ -9,6 +9,7 @@ import NotPublished from '../errorpages/NotPublished';
 import NotFound from '../errorpages/NotFound';
 import { useSelector } from 'react-redux';
 import { RootStore } from '../../redux/reducers/rootReducer';
+import { userIsRegistrationOwner, userIsRegistrationCurator } from '../../utils/registration-helpers';
 
 const PublicRegistration: FC = () => {
   const { identifier } = useParams<{ identifier: string }>();
@@ -16,11 +17,9 @@ const PublicRegistration: FC = () => {
   const user = useSelector((store: RootStore) => store.user);
 
   const isAllowedToSeePublicRegistration =
-    registration &&
-    (registration.status === RegistrationStatus.PUBLISHED ||
-      (user &&
-        ((user.isCreator && user.id === registration.owner) ||
-          (user.isCurator && user.customerId === registration.publisher.id))));
+    registration?.status === RegistrationStatus.PUBLISHED ||
+    userIsRegistrationOwner(user, registration) ||
+    userIsRegistrationCurator(user, registration);
 
   return (
     <>

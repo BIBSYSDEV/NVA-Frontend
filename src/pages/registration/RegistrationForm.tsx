@@ -18,6 +18,7 @@ import { registrationValidationSchema } from '../../utils/validation/registratio
 import { PageHeader } from '../../components/PageHeader';
 import Forbidden from '../errorpages/Forbidden';
 import { RegistrationFormActions } from './RegistrationFormActions';
+import { userIsRegistrationOwner, userIsRegistrationCurator } from '../../utils/registration-helpers';
 
 const StyledRegistration = styled.div`
   width: 100%;
@@ -37,8 +38,8 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier = '', closeFor
 
   const initialTabNumber = new URLSearchParams(history.location.search).get('tab');
   const [tabNumber, setTabNumber] = useState(initialTabNumber ? +initialTabNumber : RegistrationTab.Description);
-  const isValidOwner = user.isCreator && user.id === registration?.owner;
-  const isValidCurator = user.isCurator && user.customerId === registration?.publisher.id;
+  const isValidOwner = userIsRegistrationOwner(user, registration);
+  const isValidCurator = userIsRegistrationCurator(user, registration);
 
   useEffect(() => {
     if (!registration && !isLoadingRegistration) {
