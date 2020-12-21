@@ -16,7 +16,6 @@
 // Import commands.js using ES2015 syntax:
 import './commands';
 import '@cypress/code-coverage/support';
-localStorage.setItem('previouslyLoggedIn', 'true');
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
