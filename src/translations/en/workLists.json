@@ -10,8 +10,8 @@
       "REQUESTED": "Requested"
     }
   },
-  "delete_registration": "Delete registration",
-  "delete_registration_message": "Confirm deletion of ",
+  "delete_registration": "Delete unpublished registration",
+  "delete_registration_message": "Do you want to delete \"{{title}}\"?",
   "for_approval": "For approval",
   "go_to_public_profile": "My public profile",
   "my_messages": "My messages",
