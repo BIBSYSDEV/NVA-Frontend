@@ -31,10 +31,10 @@ const MyRegistrations: FC = () => {
   const { t } = useTranslation('workLists');
   const user = useSelector((store: RootStore) => store.user);
   const [selectedTab, setSelectedTab] = useState(Tab.Unpublished);
-  const [registrations, isLoading] = useFetchMyRegistrations();
+  const [registrations, isLoading, refetchRegistrations] = useFetchMyRegistrations();
 
   const unpublishedRegistrations = registrations
-    .filter((registration) => registration.status !== RegistrationStatus.PUBLISHED)
+    .filter((registration) => registration.status === RegistrationStatus.DRAFT)
     .sort((a, b) => new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime());
 
   const publishedRegistrations = registrations
@@ -76,6 +76,7 @@ const MyRegistrations: FC = () => {
           ) : (
             <RegistrationList
               registrations={selectedTab === Tab.Unpublished ? unpublishedRegistrations : publishedRegistrations}
+              refetchRegistrations={refetchRegistrations}
             />
           )}
         </Card>
