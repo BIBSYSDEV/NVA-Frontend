@@ -59,12 +59,7 @@
   "files_and_license": {
     "accepted_version": "Akseptert versjon",
     "administrative_contract": "Forfatteravtale eller annen fil som skal lagres men ikke publiseres",
-    "browse": "velg",
     "conditions_for_using_file": "Betingelser for bruk av fil",
-    "drag_file": "Dra fil hit eller",
-    "drag_files": "Dra filer hit eller",
-    "drop_file_here": "Slipp filen din her",
-    "drop_here": "Slipp filene dine her",
     "embargo_date": "Ikke åpent tilgjengelig før",
     "files": "Filer",
     "licenses": "Lisenser",
@@ -73,11 +68,6 @@
     "published_version": "Publisert versjon",
     "select_version": "Velg versjon",
     "title": "Filnavn",
-    "upload_files": "Last opp filer",
-    "upload_one_file": "Last opp %{smart_count} fil",
-    "upload_one_more_file": "Last opp %{smart_count} fil til",
-    "upload_x_files": "Last opp %{smart_count} filer",
-    "upload_x_more_files": "Last opp %{smart_count} filer til",
     "uploaded_size": "Lastet opp {{size}} kB"
   },
   "heading": {

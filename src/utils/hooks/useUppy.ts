@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Uppy } from '../../types/file.types';
-import { createUppy } from '../uppy-config';
+import { createUppy } from '../uppy/uppy-config';
 
 const useUppy = (shouldAllowMultipleFiles = true): Uppy => {
   const [uppy] = useState(createUppy(shouldAllowMultipleFiles));
