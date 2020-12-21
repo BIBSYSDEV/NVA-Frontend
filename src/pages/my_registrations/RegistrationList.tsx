@@ -98,7 +98,7 @@ const RegistrationList: FC<RegistrationListProps> = ({ registrations, refetchReg
             {registrations.map((registration) => (
               <StyledTableRow key={registration.identifier}>
                 <TableCell component="th" scope="row">
-                  <Typography>{registration.mainTitle}</Typography>
+                  <Typography>{registration.mainTitle ?? <i>[{t('common:missing_title')}]</i>}</Typography>
                 </TableCell>
                 <TableCell>
                   <Typography>{t(`registration:status.${registration.status}`)}</Typography>
