@@ -71,7 +71,6 @@ export const PublicRegistrationStatusBar: FC<PublicRegistrationContentProps> = (
     doiRequest,
     publisher,
   } = registration;
-  const registrationIsValid = registrationValidationSchema.isValidSync(registration);
 
   const [messageToCurator, setMessageToCurator] = useState('');
   const [openRequestDoiModal, setOpenRequestDoiModal] = useState(false);
@@ -130,6 +129,7 @@ export const PublicRegistrationStatusBar: FC<PublicRegistrationContentProps> = (
     }
   };
 
+  const registrationIsValid = registrationValidationSchema.isValidSync(registration);
   const isOwner = user && user.isCreator && owner === user.id;
   const isCurator = user && user.isCurator && user.customerId === publisher.id;
   const hasNvaDoi = !!doi || doiRequest;
