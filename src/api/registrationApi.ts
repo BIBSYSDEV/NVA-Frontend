@@ -156,3 +156,9 @@ export const getRegistrationsForApproval = async () => {
     return { error: i18n.t('feedback:error.get_approvable_registrations') };
   }
 };
+
+export const deleteRegistration = async (identifier: string) =>
+  authenticatedApiRequest({
+    url: `${PublicationsApiPaths.PUBLICATION}/${identifier}`,
+    method: 'DELETE',
+  });

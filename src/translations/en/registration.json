@@ -148,6 +148,7 @@
   "save_draft": "Save draft",
   "status": {
     "DRAFT": "Draft",
+    "DRAFT_FOR_DELETION": "Deleted",
     "NEW": "New",
     "PUBLISHED": "Published",
     "REJECTED": "Rejected"
