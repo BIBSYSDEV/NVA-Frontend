@@ -1,13 +1,17 @@
 import Uppy, { UppyFile } from '@uppy/core';
 import AwsS3Multipart, { AwsS3Part } from '@uppy/aws-s3-multipart';
+import norwegianLocale from '@uppy/locales/lib/nb_NO';
+import englishLocale from '@uppy/locales/lib/en_US';
 import {
   createMultipartUpload,
   listParts,
   prepareUploadPart,
   abortMultipartUpload,
   completeMultipartUpload,
-} from '../api/fileApi';
-import { Uppy as UppyType } from '../types/file.types';
+} from '../../api/fileApi';
+import { Uppy as UppyType } from '../../types/file.types';
+import i18n from '../../translations/i18n';
+import { LanguageCodes } from '../../types/language.types';
 
 interface UppyArgs {
   uploadId: string;
@@ -23,8 +27,14 @@ interface UppyCompleteArgs extends UppyArgs {
   parts: AwsS3Part[];
 }
 
+const uppyLocale =
+  i18n.language === LanguageCodes.NORWEGIAN_BOKMAL || i18n.language === LanguageCodes.NORWEGIAN_NYNORSK
+    ? norwegianLocale
+    : englishLocale;
+
 export const createUppy = (shouldAllowMultipleFiles: boolean): UppyType =>
   Uppy<Uppy.StrictTypes>({
+    locale: uppyLocale,
     autoProceed: true,
     restrictions: { maxNumberOfFiles: shouldAllowMultipleFiles ? null : 1 },
   }).use(AwsS3Multipart, {
