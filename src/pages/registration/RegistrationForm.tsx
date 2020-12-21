@@ -37,7 +37,8 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier = '', closeFor
 
   const initialTabNumber = new URLSearchParams(history.location.search).get('tab');
   const [tabNumber, setTabNumber] = useState(initialTabNumber ? +initialTabNumber : RegistrationTab.Description);
-  const isOwner = registration?.owner === user.id;
+  const isValidOwner = user.isCreator && user.id === registration?.owner;
+  const isValidCurator = user.isCurator && user.customerId === registration?.publisher.id;
 
   useEffect(() => {
     if (!registration && !isLoadingRegistration) {
@@ -46,15 +47,11 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier = '', closeFor
   }, [closeForm, registration, isLoadingRegistration]);
 
   useEffect(() => {
-    if (registration) {
-      // Redirect to public page if user should not be able to edit this registration
-      const isValidOwner = user.isCreator && user.id === registration.owner;
-      const isValidCurator = user.isCurator && user.customerId === registration.publisher.id;
-      if (!isValidOwner && !isValidCurator) {
-        history.push(`/registration/${registration.identifier}/public`);
-      }
+    // Redirect to public page if user should not be able to edit this registration
+    if (registration && !isValidOwner && !isValidCurator) {
+      history.push(`/registration/${registration.identifier}/public`);
     }
-  }, [history, registration, user]);
+  }, [history, registration, isValidOwner, isValidCurator]);
 
   const validateForm = (values: Registration) => {
     const {
@@ -73,7 +70,7 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier = '', closeFor
 
   return isLoadingRegistration ? (
     <CircularProgress />
-  ) : !isOwner && !user.isCurator ? (
+  ) : !isValidOwner && !isValidCurator ? (
     <Forbidden />
   ) : (
     <>
