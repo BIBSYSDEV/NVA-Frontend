@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import AuthorityModal from './AuthorityModal';
@@ -11,20 +11,9 @@ enum ModalType {
   ORCID = 'orcid',
 }
 
-const previouslyLoggedInKey = 'previouslyLoggedIn';
-
 const AuthorityOrcidModal: FC = () => {
   const { authority } = useSelector((store: RootStore) => store.user);
-  const [openModal, setOpenModal] = useState(
-    localStorage.getItem(previouslyLoggedInKey) && authority ? ModalType.NONE : ModalType.AUTHORITY
-  );
-
-  useEffect(() => {
-    if (authority) {
-      // Set previouslyLoggedIn in localStorage to avoid opening this modal on every login
-      localStorage.setItem(previouslyLoggedInKey, 'true');
-    }
-  }, [authority]);
+  const [openModal, setOpenModal] = useState(authority ? ModalType.NONE : ModalType.AUTHORITY);
 
   const handleNextClick = () => {
     if (authority && authority.orcids.length === 0) {
