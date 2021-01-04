@@ -37,10 +37,8 @@ const a11yProps = (tabDescription: string) => {
 const descriptionFieldNames = Object.values(DescriptionFieldNames);
 const referenceFieldNames = Object.values(ReferenceFieldNames);
 
-enum ToucedTab {
-  None = -1,
-}
-type HighestTouchedTab = RegistrationTab | NoTouchedTab;
+const noTouchedTab = -1;
+type HighestTouchedTab = RegistrationTab | typeof noTouchedTab;
 
 interface RegistrationFormTabsProps {
   setTabNumber: (newTab: RegistrationTab) => void;
@@ -61,7 +59,7 @@ export const RegistrationFormTabs: FC<RegistrationFormTabsProps> = ({ setTabNumb
     touchedRef.current = touched;
   }, [touched]);
 
-  const highestPreviouslyTouchedTabRef = useRef<HighestTouchedTab>(-1);
+  const highestPreviouslyTouchedTabRef = useRef<HighestTouchedTab>(noTouchedTab);
 
   useEffect(() => {
     // All fields for each tab
