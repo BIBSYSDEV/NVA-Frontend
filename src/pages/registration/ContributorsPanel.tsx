@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormHelperText, Typography } from '@material-ui/core';
 import { useFormikContext, FieldArray, ErrorMessage, FieldArrayRenderProps } from 'formik';
