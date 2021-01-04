@@ -15,7 +15,7 @@
     "@uppy/locales": "^1.17.0",
     "@uppy/react": "^1.11.0",
     "aws-amplify": "^3.3.13",
-    "axios": "^0.21.0",
+    "axios": "^0.21.1",
     "date-fns": "^2.16.1",
     "deepmerge": "^4.2.2",
     "formik": "^2.2.6",
