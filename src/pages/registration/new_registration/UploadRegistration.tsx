@@ -33,7 +33,7 @@ const UploadRegistration: FC<UploadRegistrationProps> = ({ expanded, onChange, o
   const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
   const dispatch = useDispatch();
-  const uppy = useUppy(createUppy(true));
+  const uppy = useUppy(createUppy());
 
   const createRegistrationWithFiles = async () => {
     setIsLoading(true);

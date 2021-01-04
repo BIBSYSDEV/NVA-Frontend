@@ -44,7 +44,7 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier, closeForm, is
   const user = useSelector((store: RootStore) => store.user);
   const { t } = useTranslation('registration');
   const history = useHistory();
-  const uppy = useUppy(createUppy(true));
+  const uppy = useUppy(createUppy());
   const [registration, isLoadingRegistration, refetchRegistration] = useFetchRegistration(identifier);
   const initialTabNumber = new URLSearchParams(history.location.search).get('tab');
   const [tabNumber, setTabNumber] = useState(initialTabNumber ? +initialTabNumber : RegistrationTab.Description);

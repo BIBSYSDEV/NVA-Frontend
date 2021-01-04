@@ -31,7 +31,7 @@ const uppyLocale =
     ? norwegianLocale
     : englishLocale;
 
-export const createUppy = (shouldAllowMultipleFiles: boolean) => () =>
+export const createUppy = (shouldAllowMultipleFiles = true) => () =>
   Uppy<Uppy.StrictTypes>({
     locale: uppyLocale,
     autoProceed: true,
