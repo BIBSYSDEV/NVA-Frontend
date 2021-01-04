@@ -1,5 +1,5 @@
 import { Field, useFormikContext, FieldProps, ErrorMessage } from 'formik';
-import React, { FC, ChangeEvent } from 'react';
+import React, { ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { MenuItem, TextField as MuiTextField, TextField, Typography } from '@material-ui/core';
@@ -39,7 +39,7 @@ const StyledMainCard = styled(Card)`
   gap: 1rem;
 `;
 
-const DescriptionPanel: FC = () => {
+const DescriptionPanel = () => {
   const { t } = useTranslation('registration');
   const { setFieldValue } = useFormikContext<Registration>();
 

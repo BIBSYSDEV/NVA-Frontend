@@ -37,6 +37,9 @@ const a11yProps = (tabDescription: string) => {
 const descriptionFieldNames = Object.values(DescriptionFieldNames);
 const referenceFieldNames = Object.values(ReferenceFieldNames);
 
+const noTouchedTab = -1;
+type HighestTouchedTab = RegistrationTab | typeof noTouchedTab;
+
 interface RegistrationFormTabsProps {
   setTabNumber: (newTab: RegistrationTab) => void;
   tabNumber: RegistrationTab;
@@ -56,7 +59,8 @@ export const RegistrationFormTabs: FC<RegistrationFormTabsProps> = ({ setTabNumb
     touchedRef.current = touched;
   }, [touched]);
 
-  const highestPreviouslyTouchedTabRef = useRef<RegistrationTab | -1>(-1); // -1 is used to indicate that no tabs are touched yet
+  const highestPreviouslyTouchedTabRef = useRef<HighestTouchedTab>(noTouchedTab);
+
   useEffect(() => {
     // All fields for each tab
     const tabFields = {
@@ -79,14 +83,14 @@ export const RegistrationFormTabs: FC<RegistrationFormTabsProps> = ({ setTabNumb
       for (let thisTab = RegistrationTab.Description; thisTab < tabNumber; thisTab++) {
         fieldsToTouchOnMount.push(tabFields[thisTab]());
       }
-      const mergedOnMountFields = mergeTouchedFields(fieldsToTouchOnMount);
-      setTouched(mergedOnMountFields);
+      const mergedFieldsOnMount = mergeTouchedFields(fieldsToTouchOnMount);
+      setTouched(mergedFieldsOnMount);
     }
 
     // Set fields on current tab to touched
     return () => {
-      const mergedOnUnmounFields = mergeTouchedFields([touchedRef.current, tabFields[tabNumber]()]);
-      setTouched(mergedOnUnmounFields);
+      const mergedFieldsOnUnmount = mergeTouchedFields([touchedRef.current, tabFields[tabNumber]()]);
+      setTouched(mergedFieldsOnUnmount);
     };
   }, [setTouched, tabNumber]);
 
