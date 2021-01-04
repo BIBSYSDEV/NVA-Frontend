@@ -11,7 +11,7 @@ import { ReportEntityDescription } from './publication_types/reportRegistration.
 import { BackendTypeNames } from './publication_types/commonRegistration.types';
 
 export enum RegistrationStatus {
-  DELETED = 'DELETED',
+  DELETED = 'DRAFT_FOR_DELETION',
   DRAFT = 'DRAFT',
   NEW = 'NEW',
   PUBLISHED = 'PUBLISHED',

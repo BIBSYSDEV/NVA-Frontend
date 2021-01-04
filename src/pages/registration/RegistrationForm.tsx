@@ -27,6 +27,7 @@ import { registrationValidationSchema } from '../../utils/validation/registratio
 import { PageHeader } from '../../components/PageHeader';
 import Forbidden from '../errorpages/Forbidden';
 import { RegistrationFormActions } from './RegistrationFormActions';
+import { userIsRegistrationOwner, userIsRegistrationCurator } from '../../utils/registration-helpers';
 
 const StyledRegistration = styled.div`
   width: 100%;
@@ -45,10 +46,9 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier, closeForm, is
   const uppy = useUppy();
   const [registration, isLoadingRegistration, refetchRegistration] = useFetchRegistration(identifier);
   const initialTabNumber = new URLSearchParams(history.location.search).get('tab');
-  const [tabNumber, setTabNumber] = useState<RegistrationTab>(
-    initialTabNumber ? +initialTabNumber : RegistrationTab.Description
-  );
-  const isOwner = registration?.owner === user.id;
+  const [tabNumber, setTabNumber] = useState(initialTabNumber ? +initialTabNumber : RegistrationTab.Description);
+  const isValidOwner = userIsRegistrationOwner(user, registration);
+  const isValidCurator = userIsRegistrationCurator(user, registration);
 
   useEffect(() => {
     if (!registration && !isLoadingRegistration) {
@@ -57,15 +57,11 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier, closeForm, is
   }, [closeForm, registration, isLoadingRegistration]);
 
   useEffect(() => {
-    if (registration) {
-      // Redirect to public page if user should not be able to edit this registration
-      const isValidOwner = user.isCreator && user.id === registration.owner;
-      const isValidCurator = user.isCurator && user.customerId === registration.publisher.id;
-      if (!isValidOwner && !isValidCurator) {
-        history.push(`/registration/${registration.identifier}/public`);
-      }
+    // Redirect to public page if user should not be able to edit this registration
+    if (registration && !isValidOwner && !isValidCurator) {
+      history.push(`/registration/${registration.identifier}/public`);
     }
-  }, [history, registration, user]);
+  }, [history, registration, isValidOwner, isValidCurator]);
 
   const validateForm = (values: Registration) => {
     const {
@@ -88,7 +84,7 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier, closeForm, is
 
   return isLoadingRegistration ? (
     <CircularProgress />
-  ) : !isOwner && !user.isCurator ? (
+  ) : !isValidOwner && !isValidCurator ? (
     <Forbidden />
   ) : (
     <>
