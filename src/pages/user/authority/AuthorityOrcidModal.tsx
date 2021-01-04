@@ -18,7 +18,7 @@ const AuthorityOrcidModal = ({ user }: AuthorityOrcidModalProps) => {
   const [openModal, setOpenModal] = useState(user.authority ? ModalType.NONE : ModalType.AUTHORITY);
 
   const handleNextClick = () => {
-    if (user.authority && user.authority.orcids.length === 0) {
+    if (user.authority?.orcids.length === 0) {
       setOpenModal(ModalType.ORCID);
     } else {
       closeModal();
