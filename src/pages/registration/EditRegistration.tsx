@@ -1,6 +1,6 @@
-import React, { FC, useState } from 'react';
+import React, { ChangeEvent, FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import LinkRegistration from './new_registration/LinkRegistration';
 import UploadRegistration from './new_registration/UploadRegistration';
@@ -12,38 +12,52 @@ const StyledEditRegistration = styled.div`
   max-width: 55rem;
 `;
 
+enum PanelName {
+  Link = 'link-panel',
+  File = 'file-panel',
+}
+
+interface UrlParams {
+  identifier: string;
+}
+interface LocationState {
+  isNewRegistration?: boolean;
+}
+
 const EditRegistration: FC = () => {
-  const { identifier } = useParams<{ identifier: string }>();
-  const [expanded, setExpanded] = useState<string | false>(false);
-  const [showForm, setShowForm] = useState(!!identifier);
   const { t } = useTranslation('registration');
+  const { identifier } = useParams<UrlParams>();
+  const location = useLocation<LocationState>();
+  const [expanded, setExpanded] = useState<PanelName | false>(false);
+  const [showForm, setShowForm] = useState(!!identifier);
 
-  const handleChange = (panel: string) => (_: React.ChangeEvent<unknown>, isExpanded: boolean) => {
+  const handleChange = (panel: PanelName) => (_: ChangeEvent<unknown>, isExpanded: boolean) =>
     setExpanded(isExpanded ? panel : false);
-  };
 
-  const handleClick = () => {
-    setShowForm(true);
-  };
+  const handleOpenForm = () => setShowForm(true);
 
-  return !showForm || !identifier ? (
+  return !showForm ? (
     <>
       <PageHeader>{t('new_registration')}</PageHeader>
       <StyledEditRegistration>
         <LinkRegistration
-          expanded={expanded === 'link-panel'}
-          onChange={handleChange('link-panel')}
-          openForm={handleClick}
+          expanded={expanded === PanelName.Link}
+          onChange={handleChange(PanelName.Link)}
+          openForm={handleOpenForm}
         />
         <UploadRegistration
-          expanded={expanded === 'load-panel'}
-          onChange={handleChange('load-panel')}
-          openForm={() => setShowForm(true)}
+          expanded={expanded === PanelName.File}
+          onChange={handleChange(PanelName.File)}
+          openForm={handleOpenForm}
         />
       </StyledEditRegistration>
     </>
   ) : (
-    <RegistrationForm identifier={identifier} closeForm={() => setShowForm(false)} />
+    <RegistrationForm
+      identifier={identifier}
+      isNewRegistration={!!location.state?.isNewRegistration}
+      closeForm={() => setShowForm(false)}
+    />
   );
 };
 

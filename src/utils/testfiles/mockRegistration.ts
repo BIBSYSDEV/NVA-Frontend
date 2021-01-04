@@ -12,7 +12,8 @@ import { mockCustomerInstitution } from './mockCustomerInstitutions';
 export const mockRegistration: JournalRegistration = {
   type: BackendTypeNames.PUBLICATION,
   identifier: '12345679',
-  createdDate: '2020',
+  createdDate: new Date(2020, 1).toISOString(),
+  modifiedDate: new Date(2020, 2).toISOString(),
   owner: 'tu@unit.no',
   status: RegistrationStatus.DRAFT,
   projects: [],

@@ -1,5 +1,14 @@
 import React, { FC, useEffect, useState } from 'react';
-import { Form, Formik, FormikProps, yupToFormErrors, validateYupSchema } from 'formik';
+import {
+  Form,
+  Formik,
+  FormikProps,
+  yupToFormErrors,
+  validateYupSchema,
+  setNestedObjectValues,
+  FormikTouched,
+  FormikErrors,
+} from 'formik';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import deepmerge from 'deepmerge';
@@ -26,16 +35,16 @@ const StyledRegistration = styled.div`
 
 interface RegistrationFormProps {
   closeForm: () => void;
-  identifier?: string;
+  identifier: string;
+  isNewRegistration: boolean;
 }
 
-const RegistrationForm: FC<RegistrationFormProps> = ({ identifier = '', closeForm }) => {
+const RegistrationForm: FC<RegistrationFormProps> = ({ identifier, closeForm, isNewRegistration }) => {
   const user = useSelector((store: RootStore) => store.user);
   const { t } = useTranslation('registration');
   const history = useHistory();
   const uppy = useUppy();
   const [registration, isLoadingRegistration, refetchRegistration] = useFetchRegistration(identifier);
-
   const initialTabNumber = new URLSearchParams(history.location.search).get('tab');
   const [tabNumber, setTabNumber] = useState(initialTabNumber ? +initialTabNumber : RegistrationTab.Description);
   const isValidOwner = userIsRegistrationOwner(user, registration);
@@ -69,6 +78,10 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier = '', closeFor
     return {};
   };
 
+  const initialValues = registration ? deepmerge(emptyRegistration, registration) : emptyRegistration;
+  const intialErrors: FormikErrors<Registration> = isNewRegistration ? {} : validateForm(initialValues);
+  const intialTouched: FormikTouched<Registration> = isNewRegistration ? {} : setNestedObjectValues(intialErrors, true);
+
   return isLoadingRegistration ? (
     <CircularProgress />
   ) : !isValidOwner && !isValidCurator ? (
@@ -79,8 +92,10 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier = '', closeFor
       <StyledRegistration>
         <Formik
           enableReinitialize
-          initialValues={registration ? deepmerge(emptyRegistration, registration) : emptyRegistration}
+          initialValues={initialValues}
           validate={validateForm}
+          initialErrors={intialErrors}
+          initialTouched={intialTouched}
           onSubmit={() => {
             /* Use custom save handler instead, since onSubmit will prevent saving if there are any errors */
           }}>

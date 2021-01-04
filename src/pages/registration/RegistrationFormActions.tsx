@@ -27,8 +27,8 @@ const StyledActionsContainer = styled.div`
 `;
 
 interface RegistrationFormActionsProps {
-  tabNumber: number;
-  setTabNumber: (newTab: number) => void;
+  tabNumber: RegistrationTab;
+  setTabNumber: (newTab: RegistrationTab) => void;
   refetchRegistration: () => void;
 }
 
@@ -71,7 +71,7 @@ export const RegistrationFormActions: FC<RegistrationFormActionsProps> = ({
       <StyledActionsContainer>
         <div>
           {/* Left aligned buttons */}
-          {tabNumber !== RegistrationTab.Description && (
+          {tabNumber > RegistrationTab.Description && (
             <Button
               color="primary"
               variant="outlined"
@@ -89,7 +89,7 @@ export const RegistrationFormActions: FC<RegistrationFormActionsProps> = ({
           <Button data-testid="open-support-button" variant="text" color="primary" onClick={toggleSupportModal}>
             {t('common:support')}
           </Button>
-          {tabNumber !== RegistrationTab.FilesAndLicenses ? (
+          {tabNumber < RegistrationTab.FilesAndLicenses ? (
             <>
               <ButtonWithProgress
                 variant="outlined"
