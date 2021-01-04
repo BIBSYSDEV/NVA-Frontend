@@ -9,7 +9,6 @@ import {
   abortMultipartUpload,
   completeMultipartUpload,
 } from '../../api/fileApi';
-import { Uppy as UppyType } from '../../types/file.types';
 import i18n from '../../translations/i18n';
 import { LanguageCodes } from '../../types/language.types';
 
@@ -32,7 +31,7 @@ const uppyLocale =
     ? norwegianLocale
     : englishLocale;
 
-export const createUppy = (shouldAllowMultipleFiles: boolean): UppyType =>
+export const createUppy = (shouldAllowMultipleFiles: boolean) => () =>
   Uppy<Uppy.StrictTypes>({
     locale: uppyLocale,
     autoProceed: true,
