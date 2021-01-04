@@ -1,10 +1,8 @@
 import { Field, useFormikContext, FieldProps, ErrorMessage } from 'formik';
-import React, { FC, useEffect, ChangeEvent } from 'react';
+import React, { ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import DateFnsUtils from '@date-io/date-fns';
 import { MenuItem, TextField as MuiTextField, TextField, Typography } from '@material-ui/core';
-import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { Registration } from '../../types/registration.types';
 import DisciplineSearch from './description_tab/DisciplineSearch';
@@ -12,8 +10,6 @@ import DatePickerField from './description_tab/DatePickerField';
 import { registrationLanguages } from '../../types/language.types';
 import Card from '../../components/Card';
 import { DescriptionFieldNames } from '../../types/publicationFieldNames';
-import { touchedDescriptionTabFields } from '../../utils/formik-helpers';
-import { PanelProps } from './RegistrationFormContent';
 import { ProjectsField } from './description_tab/projects_field';
 
 const NpiAndTagsWrapper = styled.div`
@@ -43,18 +39,12 @@ const StyledMainCard = styled(Card)`
   gap: 1rem;
 `;
 
-const DescriptionPanel: FC<PanelProps> = ({ setTouchedFields }) => {
+const DescriptionPanel = () => {
   const { t } = useTranslation('registration');
   const { setFieldValue } = useFormikContext<Registration>();
 
-  useEffect(
-    // Set all fields as touched if user navigates away from this panel (on unmount)
-    () => () => setTouchedFields(touchedDescriptionTabFields),
-    [setTouchedFields]
-  );
-
   return (
-    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+    <>
       <StyledMainCard>
         <Typography variant="h2">{t('heading.description')}</Typography>
         <Field name={DescriptionFieldNames.TITLE}>
@@ -170,7 +160,7 @@ const DescriptionPanel: FC<PanelProps> = ({ setTouchedFields }) => {
         <Typography variant="h5">{t('description.connect_project')}</Typography>
         <ProjectsField />
       </Card>
-    </MuiPickersUtilsProvider>
+    </>
   );
 };
 

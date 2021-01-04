@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { Link, Chip, Typography } from '@material-ui/core';
 import styled from 'styled-components';
-import { Registration } from '../../types/registration.types';
+import { emptyRegistration, Registration } from '../../types/registration.types';
 import ContentPage from '../../components/ContentPage';
 import { useTranslation } from 'react-i18next';
 import PublicRegistrationAuthors from './PublicRegistrationAuthors';
@@ -38,6 +38,8 @@ import {
   ReportPublicationContext,
   ReportPublicationInstance,
 } from '../../types/publication_types/reportRegistration.types';
+import PublicDoi from './PublicDoi';
+import deepmerge from 'deepmerge';
 
 const StyledContentWrapper = styled.div`
   display: flex;
@@ -82,10 +84,14 @@ const StyledTag = styled.div`
 
 export interface PublicRegistrationContentProps {
   registration: Registration;
+  refetchRegistration: () => void;
 }
 
-const PublicRegistrationContent: FC<PublicRegistrationContentProps> = ({ registration }) => {
+const PublicRegistrationContent: FC<PublicRegistrationContentProps> = ({ registration, refetchRegistration }) => {
   const { t } = useTranslation('registration');
+
+  // Registration can lack some fields if it's newly created
+  registration = deepmerge(emptyRegistration, registration);
 
   const {
     abstract,
@@ -104,7 +110,7 @@ const PublicRegistrationContent: FC<PublicRegistrationContentProps> = ({ registr
 
   return (
     <ContentPage>
-      <PublicRegistrationStatusBar registration={registration} />
+      <PublicRegistrationStatusBar registration={registration} refetchRegistration={refetchRegistration} />
       <Heading>{mainTitle}</Heading>
       {contributors && <PublicRegistrationAuthors contributors={contributors} />}
       <StyledContentWrapper>
@@ -112,13 +118,8 @@ const PublicRegistrationContent: FC<PublicRegistrationContentProps> = ({ registr
           (file) => !file.administrativeAgreement && <PublicRegistrationFile file={file} key={file.identifier} />
         )}
         <StyledMainContent>
-          {(registration.doi || reference.doi) && (
-            <LabelContentRow minimal label={`${t('registration.link_to_resource')}:`}>
-              <Link href={registration.doi ?? reference.doi} target="_blank" rel="noopener noreferrer">
-                {registration.doi ?? reference.doi}
-              </Link>
-            </LabelContentRow>
-          )}
+          <PublicDoi registration={registration} />
+
           {abstract && (
             <LabelContentRow minimal label={`${t('description.abstract')}:`}>
               {abstract}
@@ -193,7 +194,7 @@ const PublicRegistrationContent: FC<PublicRegistrationContentProps> = ({ registr
               <StyledNormalText>{selectedLicense.description}</StyledNormalText>
             </StyledLicenseCard>
           )}
-          {registration.projects && (
+          {registration.projects.length > 0 && (
             <LabelContentRow minimal label={`${t('description.project_association')}:`}>
               {registration.projects.map((project) => (
                 <Typography key={project.id}>{project.name}</Typography>

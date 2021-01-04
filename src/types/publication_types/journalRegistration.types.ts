@@ -11,6 +11,7 @@ export interface JournalPublicationInstance {
   pages: PagesRange;
   peerReviewed: boolean;
   volume: string;
+  corrigendumFor: string;
 }
 
 export interface JournalPublicationContext {
@@ -48,6 +49,7 @@ export const emptyJournalPublicationInstance: JournalPublicationInstance = {
   pages: { type: BackendTypeNames.PAGES_RANGE, begin: '', end: '' },
   peerReviewed: false,
   volume: '',
+  corrigendumFor: '',
 };
 
 const emptyPublicationContext: JournalPublicationContext = {

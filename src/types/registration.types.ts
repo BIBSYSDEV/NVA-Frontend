@@ -11,10 +11,10 @@ import { ReportEntityDescription } from './publication_types/reportRegistration.
 import { BackendTypeNames } from './publication_types/commonRegistration.types';
 
 export enum RegistrationStatus {
-  DELETED = 'Deleted',
-  DRAFT = 'Draft',
-  NEW = 'New',
-  PUBLISHED = 'Published',
+  DELETED = 'DRAFT_FOR_DELETION',
+  DRAFT = 'DRAFT',
+  NEW = 'NEW',
+  PUBLISHED = 'PUBLISHED',
 }
 
 export enum RegistrationTab {
@@ -22,7 +22,6 @@ export enum RegistrationTab {
   Reference = 1,
   Contributors = 2,
   FilesAndLicenses = 3,
-  Submission = 4,
 }
 
 export const levelMap: EnumDictionary<string, number | null> = {
@@ -84,6 +83,7 @@ export interface RegistrationPublisher {
 interface BaseRegistration extends BackendType, RegistrationFileSet {
   readonly identifier: string;
   readonly createdDate: string;
+  readonly modifiedDate: string;
   readonly owner: string;
   readonly status: RegistrationStatus;
   readonly doi?: string;
@@ -150,6 +150,7 @@ export const emptyRegistration: Registration = {
   type: BackendTypeNames.PUBLICATION,
   identifier: '',
   createdDate: '',
+  modifiedDate: '',
   owner: '',
   status: RegistrationStatus.NEW,
   entityDescription: emptyRegistrationEntityDescription,

@@ -1,5 +1,14 @@
 import React, { FC, useEffect, useState } from 'react';
-import { Form, Formik, FormikProps, yupToFormErrors, validateYupSchema } from 'formik';
+import {
+  Form,
+  Formik,
+  FormikProps,
+  yupToFormErrors,
+  validateYupSchema,
+  setNestedObjectValues,
+  FormikTouched,
+  FormikErrors,
+} from 'formik';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import deepmerge from 'deepmerge';
@@ -18,6 +27,7 @@ import { registrationValidationSchema } from '../../utils/validation/registratio
 import { PageHeader } from '../../components/PageHeader';
 import Forbidden from '../errorpages/Forbidden';
 import { RegistrationFormActions } from './RegistrationFormActions';
+import { userIsRegistrationOwner, userIsRegistrationCurator } from '../../utils/registration-helpers';
 
 const StyledRegistration = styled.div`
   width: 100%;
@@ -25,19 +35,20 @@ const StyledRegistration = styled.div`
 
 interface RegistrationFormProps {
   closeForm: () => void;
-  identifier?: string;
+  identifier: string;
+  isNewRegistration: boolean;
 }
 
-const RegistrationForm: FC<RegistrationFormProps> = ({ identifier = '', closeForm }) => {
+const RegistrationForm: FC<RegistrationFormProps> = ({ identifier, closeForm, isNewRegistration }) => {
   const user = useSelector((store: RootStore) => store.user);
   const { t } = useTranslation('registration');
   const history = useHistory();
   const uppy = useUppy();
-  const [registration, isLoadingRegistration, handleSetRegistration] = useFetchRegistration(identifier);
-
+  const [registration, isLoadingRegistration, refetchRegistration] = useFetchRegistration(identifier);
   const initialTabNumber = new URLSearchParams(history.location.search).get('tab');
   const [tabNumber, setTabNumber] = useState(initialTabNumber ? +initialTabNumber : RegistrationTab.Description);
-  const isOwner = registration?.owner === user.id;
+  const isValidOwner = userIsRegistrationOwner(user, registration);
+  const isValidCurator = userIsRegistrationCurator(user, registration);
 
   useEffect(() => {
     if (!registration && !isLoadingRegistration) {
@@ -46,15 +57,11 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier = '', closeFor
   }, [closeForm, registration, isLoadingRegistration]);
 
   useEffect(() => {
-    if (registration) {
-      // Redirect to public page if user should not be able to edit this registration
-      const isValidOwner = user.isCreator && user.id === registration.owner;
-      const isValidCurator = user.isCurator && user.customerId === registration.publisher.id;
-      if (!isValidOwner && !isValidCurator) {
-        history.push(`/registration/${registration.identifier}/public`);
-      }
+    // Redirect to public page if user should not be able to edit this registration
+    if (registration && !isValidOwner && !isValidCurator) {
+      history.push(`/registration/${registration.identifier}/public`);
     }
-  }, [history, registration, user]);
+  }, [history, registration, isValidOwner, isValidCurator]);
 
   const validateForm = (values: Registration) => {
     const {
@@ -71,9 +78,13 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier = '', closeFor
     return {};
   };
 
+  const initialValues = registration ? deepmerge(emptyRegistration, registration) : emptyRegistration;
+  const intialErrors: FormikErrors<Registration> = isNewRegistration ? {} : validateForm(initialValues);
+  const intialTouched: FormikTouched<Registration> = isNewRegistration ? {} : setNestedObjectValues(intialErrors, true);
+
   return isLoadingRegistration ? (
     <CircularProgress />
-  ) : !isOwner && !user.isCurator ? (
+  ) : !isValidOwner && !isValidCurator ? (
     <Forbidden />
   ) : (
     <>
@@ -81,8 +92,10 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier = '', closeFor
       <StyledRegistration>
         <Formik
           enableReinitialize
-          initialValues={registration ? deepmerge(emptyRegistration, registration) : emptyRegistration}
+          initialValues={initialValues}
           validate={validateForm}
+          initialErrors={intialErrors}
+          initialTouched={intialTouched}
           onSubmit={() => {
             /* Use custom save handler instead, since onSubmit will prevent saving if there are any errors */
           }}>
@@ -98,7 +111,7 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier = '', closeFor
               <RegistrationFormActions
                 tabNumber={tabNumber}
                 setTabNumber={setTabNumber}
-                handleSetRegistration={handleSetRegistration}
+                refetchRegistration={refetchRegistration}
               />
             </Form>
           )}

@@ -10,7 +10,7 @@ import {
   TableContainer,
   TablePagination,
 } from '@material-ui/core';
-import { RegistrationPreview, RegistrationTab } from '../../types/registration.types';
+import { RegistrationPreview } from '../../types/registration.types';
 import { useTranslation } from 'react-i18next';
 import Label from '../../components/Label';
 import { Link as RouterLink } from 'react-router-dom';
@@ -81,7 +81,7 @@ const WorklistTable: FC<WorklistTableProps> = ({ registrations }) => {
                   <Button
                     color="primary"
                     component={RouterLink}
-                    to={`/registration/${registration.identifier}?tab=${RegistrationTab.Submission}`}
+                    to={`/registration/${registration.identifier}/public`}
                     data-testid={`open-registration-${registration.identifier}`}
                     variant="contained">
                     <NormalText>{t('common:open')}</NormalText>

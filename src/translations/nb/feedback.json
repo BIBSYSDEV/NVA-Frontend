@@ -8,6 +8,7 @@
     "create_doi_request": "Kunne ikke opprette DOI-forespørsel",
     "create_registration": "Kunne ikke opprette registrering",
     "delete_identifier": "Kunne ikke slette {{qualifier}}",
+    "delete_registration": "Kunne ikke slette registrering",
     "download_file": "Kunne ikke laste ned fil",
     "get_approvable_registrations": "Kunne ikke hente registreringer som venter godkjenning",
     "get_authority": "Kunne ikke hente autoritet",
@@ -46,7 +47,6 @@
   },
   "info": {
     "affiliation_already_exists": "Tilhørigheten finnes allerede",
-    "publishing_registration": "Publiserer registrering...",
     "user_already_exists": "Brukeren finnes allerede"
   },
   "success": {
@@ -59,10 +59,12 @@
     "create_registration": "Registreringen er opprettet",
     "delete_affiliation": "Tilhørigheten ble slettet",
     "delete_identifier": "Identifikatoren ble slettet",
+    "delete_registration": "Registrering ble slettet",
     "doi_request_sent": "DOI-forespørsel sendt",
     "doi_request_updated": "DOI-forespørselen ble oppdatert",
     "login": "Logget inn",
     "support_message_sent": "Melding sendt",
+    "published_registration": "Registreringen ble publisert",
     "removed_role": "Rollen ble fjernet",
     "update_authority": "Forfatter er oppdatert",
     "update_customer": "Institusjon er oppdatert",

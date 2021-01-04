@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { Field, FieldProps } from 'formik';
@@ -12,6 +12,7 @@ import { AutocompleteTextField } from '../../../../components/AutocompleteTextFi
 import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
 import EmphasizeSubstring from '../../../../components/EmphasizeSubstring';
 import { autocompleteTranslationProps } from '../../../../themes/mainTheme';
+import useDebounce from '../../../../utils/hooks/useDebounce';
 
 const StyledProjectChip = styled(Chip)`
   height: auto;
@@ -19,7 +20,9 @@ const StyledProjectChip = styled(Chip)`
 
 export const ProjectsField: FC = () => {
   const { t } = useTranslation('registration');
-  const [projects, isLoadingProjects, handleNewSearchTerm] = useFetchProjects();
+  const [searchTerm, setSearchTerm] = useState('');
+  const debouncedSearchTerm = useDebounce(searchTerm);
+  const [projects, isLoadingProjects] = useFetchProjects(debouncedSearchTerm);
 
   return (
     <Field name={DescriptionFieldNames.PROJECTS}>
@@ -28,19 +31,26 @@ export const ProjectsField: FC = () => {
           {...autocompleteTranslationProps}
           options={projects}
           getOptionLabel={(option) => getProjectTitle(option)}
-          onInputChange={(_, newInputValue) => handleNewSearchTerm(newInputValue)}
+          onInputChange={(_, newInputValue, reason) => {
+            if (reason !== 'reset') {
+              // Autocomplete triggers "reset" events after input change when it's controlled. Ignore these.
+              setSearchTerm(newInputValue);
+            }
+          }}
+          inputValue={searchTerm}
           onChange={(_, value) => {
+            setSearchTerm('');
             const projectsToPersist = value.map((projectValue) => convertToResearchProject(projectValue));
             setFieldValue(field.name, projectsToPersist);
           }}
           popupIcon={null}
           multiple
-          defaultValue={field.value.map((project) => convertToCristinProject(project)) ?? []}
+          value={field.value.map((project) => convertToCristinProject(project)) ?? []}
           renderTags={(value, getTagProps) =>
             value.map((option, index) => (
               <StyledProjectChip
                 {...getTagProps({ index })}
-                data-testid="project-chip"
+                data-testid={`project-chip-${option.cristinProjectId}`}
                 label={
                   <StyledFlexColumn>
                     <Typography variant="subtitle1">{getProjectTitle(option)}</Typography>
@@ -55,7 +65,7 @@ export const ProjectsField: FC = () => {
           getOptionDisabled={(option) => field.value.some((project) => project.id === option.cristinProjectId)}
           loading={isLoadingProjects}
           renderOption={(option, state) => (
-            <StyledFlexColumn>
+            <StyledFlexColumn data-testid={`project-option-${option.cristinProjectId}`}>
               <Typography variant="subtitle1">
                 <EmphasizeSubstring text={getProjectTitle(option)} emphasized={state.inputValue} />
               </Typography>
@@ -70,7 +80,7 @@ export const ProjectsField: FC = () => {
               isLoading={isLoadingProjects}
               placeholder={t('description.search_for_project')}
               dataTestId="project-search-input"
-              showSearchIcon={!field.value}
+              showSearchIcon={field.value.length === 0}
             />
           )}
         />
