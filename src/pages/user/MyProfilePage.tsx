@@ -48,7 +48,8 @@ const StyledButtonWrapper = styled(StyledRightAlignedWrapper)`
 
 const MyProfilePage: FC = () => {
   const { t } = useTranslation('profile');
-  const user = useSelector((state: RootStore) => state.user);
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const user = useSelector((store: RootStore) => store.user)!; // If user has been empty this route would already be blocked
   const location = useLocation();
   const dispatch = useDispatch();
   const history = useHistory();
@@ -109,8 +110,8 @@ const MyProfilePage: FC = () => {
               <p data-testid="author-connected-info">{t('authority.connected_info')}</p>
             )}
           </Card>
-          <UserOrcid />
-          <UserInstitution />
+          <UserOrcid user={user} />
+          <UserInstitution user={user} />
         </StyledPrimaryUserInfo>
       </StyledUserPage>
     </>
