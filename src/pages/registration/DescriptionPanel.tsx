@@ -39,7 +39,7 @@ const StyledMainCard = styled(Card)`
   gap: 1rem;
 `;
 
-const DescriptionPanel: FC = () => {
+const DescriptionPanel = () => {
   const { t } = useTranslation('registration');
   const { setFieldValue } = useFormikContext<Registration>();
 

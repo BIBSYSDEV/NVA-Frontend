@@ -7,7 +7,7 @@ import { Registration } from '../../types/registration.types';
 import { ContributorFieldNames } from '../../types/publicationFieldNames';
 import Authors from './contributors_tab/Authors';
 
-const ContributorsPanel: FC = () => {
+const ContributorsPanel = () => {
   const { t } = useTranslation('registration');
   const {
     values: {
