@@ -1,18 +1,18 @@
 import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { Button, DialogActions } from '@material-ui/core';
 
 import { addQualifierIdForAuthority, AuthorityQualifiers } from '../../../api/authorityApi';
 import { setAuthorityData } from '../../../redux/actions/userActions';
-import { RootStore } from '../../../redux/reducers/rootReducer';
 import NewAuthorityCard from './NewAuthorityCard';
 import AuthorityList from './AuthorityList';
 import { StyledRightAlignedWrapper } from '../../../components/styled/Wrappers';
 import ButtonWithProgress from '../../../components/ButtonWithProgress';
 import { NotificationVariant } from '../../../types/notification.types';
 import { setNotification } from '../../../redux/actions/notificationActions';
+import { User } from '../../../types/user.types';
 
 const StyledAuthorityContainer = styled.div`
   min-width: 20rem;
@@ -25,13 +25,13 @@ const StyledAuthorityContainer = styled.div`
 `;
 
 interface ConnectAuthorityProps {
+  user: User;
   handleCloseModal: () => void;
 }
 
-export const ConnectAuthority: FC<ConnectAuthorityProps> = ({ handleCloseModal }) => {
+export const ConnectAuthority: FC<ConnectAuthorityProps> = ({ user, handleCloseModal }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation('profile');
-  const user = useSelector((store: RootStore) => store.user);
   const [selectedArpId, setSelectedArpId] = useState('');
   const [openNewAuthorityCard, setOpenNewAuthorityCard] = useState(false);
   const [isUpdatingAuthority, setIsUpdatingAuthority] = useState(false);
@@ -104,7 +104,7 @@ export const ConnectAuthority: FC<ConnectAuthorityProps> = ({ handleCloseModal }
             </DialogActions>
           </>
         ) : (
-          <NewAuthorityCard onClickCancel={toggleOpenNewAuthorityCard} />
+          <NewAuthorityCard user={user} onClickCancel={toggleOpenNewAuthorityCard} />
         )}
       </StyledAuthorityContainer>
     </>

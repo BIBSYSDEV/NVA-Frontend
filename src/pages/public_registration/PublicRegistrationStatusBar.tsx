@@ -160,7 +160,7 @@ export const PublicRegistrationStatusBar: FC<PublicRegistrationContentProps> = (
           </Button>
         </Link>
 
-        {user.isCurator && isPublishedRegistration && doiRequest?.status === DoiRequestStatus.Requested && (
+        {isCurator && isPublishedRegistration && doiRequest?.status === DoiRequestStatus.Requested && (
           <>
             <ButtonWithProgress
               color="primary"
