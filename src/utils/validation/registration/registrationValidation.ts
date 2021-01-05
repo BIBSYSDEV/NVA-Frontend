@@ -21,6 +21,12 @@ export const registrationValidationSchema = Yup.object().shape({
     npiSubjectHeading: Yup.string(),
     date: Yup.object().shape({
       year: Yup.number().required(ErrorMessage.REQUIRED),
+      month: Yup.number()
+        .nullable()
+        .transform((value: string, originalValue: string) => (originalValue.trim() === '' ? null : value)),
+      day: Yup.number()
+        .nullable()
+        .transform((value: string, originalValue: string) => (originalValue.trim() === '' ? null : value)),
     }),
     language: Yup.string().url().oneOf(Object.values(LanguageValues)),
     projects: Yup.array().of(Yup.object()), // TODO
