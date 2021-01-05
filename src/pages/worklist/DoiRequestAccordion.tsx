@@ -9,6 +9,7 @@ import Label from '../../components/Label';
 import { Registration } from '../../types/registration.types';
 import MessageList from './MessageList';
 import { MessageForm } from '../../components/MessageForm';
+import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 
 const StyledAccordion = styled(Accordion)`
   width: 100%;
@@ -106,7 +107,7 @@ export const DoiRequestAccordion: FC<DoiRequestAccordionProps> = ({ registration
             data-testid={`go-to-registration-${identifier}`}
             variant="outlined"
             component={RouterLink}
-            to={`/registration/${identifier}/public`}>
+            to={getRegistrationLandingPagePath(identifier)}>
             {t('doi_requests.go_to_registration')}
           </Button>
           <Button variant="contained" color="primary" disabled>

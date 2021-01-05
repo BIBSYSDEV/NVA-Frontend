@@ -5,6 +5,7 @@ import { Link as MuiLink } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import LatestRegistrations from './LatestRegistrations';
 import SearchBar from '../../components/SearchBar';
+import { UrlPathTemplate } from '../../utils/urlPaths';
 
 const StyledDashboard = styled.div`
   display: grid;
@@ -53,7 +54,7 @@ const Dashboard: FC = () => {
             aria-label={t('infopages:description.heading')}
             color="primary"
             component={Link}
-            to="/description"
+            to={UrlPathTemplate.Description}
             data-testid="description_link">
             {t('infopages:description.heading')}
           </MuiLink>
@@ -61,7 +62,7 @@ const Dashboard: FC = () => {
             aria-label={t('infopages:order_information.heading')}
             color="primary"
             component={Link}
-            to="/order-information"
+            to={UrlPathTemplate.OrderInformation}
             data-testid="order_information_link">
             {t('infopages:order_information.heading')}
           </MuiLink>

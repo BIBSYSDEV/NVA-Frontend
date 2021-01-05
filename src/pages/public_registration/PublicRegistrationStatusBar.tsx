@@ -21,6 +21,7 @@ import { RegistrationStatus, DoiRequestStatus } from '../../types/registration.t
 import { createDoiRequest, updateDoiRequest } from '../../api/doiRequestApi';
 import { publishRegistration } from '../../api/registrationApi';
 import { registrationValidationSchema } from '../../utils/validation/registration/registrationValidation';
+import { getRegistrationPath } from '../../utils/urlPaths';
 
 const StyledStatusBar = styled(Card)`
   display: flex;
@@ -151,7 +152,7 @@ export const PublicRegistrationStatusBar: FC<PublicRegistrationContentProps> = (
         </div>
       </StyledStatusBarDescription>
       <div>
-        <Link to={`/registration/${identifier}`}>
+        <Link to={getRegistrationPath(identifier)}>
           <Button
             variant={registrationIsValid ? 'outlined' : 'contained'}
             color="primary"

@@ -19,6 +19,7 @@ import { StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import { PageHeader } from '../../components/PageHeader';
+import { getUserPath } from '../../utils/urlPaths';
 
 const StyledUserPage = styled.div`
   display: grid;
@@ -90,7 +91,7 @@ const MyProfilePage: FC = () => {
             <Button
               color="primary"
               component={RouterLink}
-              to={`/user?id=${encodeURIComponent(user.authority.id)}`}
+              to={getUserPath(user.authority.id)}
               data-testid="public-profile-button">
               {t('workLists:go_to_public_profile')}
             </Button>

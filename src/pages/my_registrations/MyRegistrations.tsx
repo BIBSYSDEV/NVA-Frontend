@@ -13,6 +13,7 @@ import { StyledRightAlignedWrapper, StyledCenterAlignedContentWrapper } from '..
 import ListSkeleton from '../../components/ListSkeleton';
 import Card from '../../components/Card';
 import { PageHeader } from '../../components/PageHeader';
+import { getUserPath } from '../../utils/urlPaths';
 
 const StyledContainer = styled.div`
   width: 100%;
@@ -50,7 +51,7 @@ const MyRegistrations: FC = () => {
             <Button
               color="primary"
               component={RouterLink}
-              to={`/user?id=${encodeURIComponent(user.authority.id)}`}
+              to={getUserPath(user.authority.id)}
               data-testid="public-profile-button">
               {t('go_to_public_profile')}
             </Button>
