@@ -9,6 +9,7 @@ import { ORCID_SIGN_IN_URL, USE_MOCK_DATA } from '../../utils/constants';
 import NormalText from '../../components/NormalText';
 import Label from '../../components/Label';
 import { StyledCenterAlignedContentWrapper } from '../../components/styled/Wrappers';
+import { UrlPathTemplate } from '../../utils/urlPaths';
 
 const StyledButtonContainer = styled(StyledCenterAlignedContentWrapper)`
   margin-top: 1rem;
@@ -24,7 +25,7 @@ const OrcidModalContent: FC = () => {
 
   const openORCID = () => {
     if (USE_MOCK_DATA) {
-      history.push('/my-profile/#access_token=12343123');
+      history.push(`${UrlPathTemplate.MyProfile}/#access_token=12343123`);
     } else {
       window.location.assign(ORCID_SIGN_IN_URL);
     }

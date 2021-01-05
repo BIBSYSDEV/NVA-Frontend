@@ -5,7 +5,7 @@ import { Link as MuiLink } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import LatestRegistrations from './LatestRegistrations';
 import SearchBar from '../../components/SearchBar';
-import { UrlPathTemplate } from '../../utils/urlPaths';
+import { getSearchPath, UrlPathTemplate } from '../../utils/urlPaths';
 
 const StyledDashboard = styled.div`
   display: grid;
@@ -38,7 +38,7 @@ const Dashboard: FC = () => {
 
   const handleSearch = async (searchTerm: string) => {
     if (searchTerm.length) {
-      history.push(`/search?query=${searchTerm}`);
+      history.push(getSearchPath(searchTerm));
     }
   };
 

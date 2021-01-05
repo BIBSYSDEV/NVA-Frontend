@@ -15,6 +15,7 @@ import { SupportModalContent } from './SupportModalContent';
 import { updateRegistration } from '../../api/registrationApi';
 import { NotificationVariant } from '../../types/notification.types';
 import { setNotification } from '../../redux/actions/notificationActions';
+import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 
 const StyledActionsContainer = styled.div`
   margin-bottom: 1rem;
@@ -62,7 +63,7 @@ export const RegistrationFormActions: FC<RegistrationFormActionsProps> = ({
   const onClickSaveAndPresent = async () => {
     const registrationIsUpdated = await saveRegistration(values);
     if (registrationIsUpdated) {
-      history.push(`/registration/${values.identifier}/public`);
+      history.push(getRegistrationLandingPagePath(values.identifier));
     }
   };
 

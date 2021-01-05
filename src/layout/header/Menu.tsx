@@ -9,6 +9,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import { useSelector } from 'react-redux';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import NormalText from '../../components/NormalText';
+import { UrlPathTemplate } from '../../utils/urlPaths';
 
 const StyledMenu = styled.div`
   grid-area: menu;
@@ -90,7 +91,9 @@ const Menu: FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
         {user.isCurator && (
           <StyledAdminMenu>
             <StyledNormalText>{t('profile:roles.curator')}</StyledNormalText>
-            <MenuItem data-testid="menu-my-worklist-button" onClick={() => handleClickMenuItem('/worklist')}>
+            <MenuItem
+              data-testid="menu-my-worklist-button"
+              onClick={() => handleClickMenuItem(UrlPathTemplate.Worklist)}>
               <StyledMenuItemText>{t('workLists:my_worklist')}</StyledMenuItemText>
             </MenuItem>
           </StyledAdminMenu>
@@ -101,7 +104,7 @@ const Menu: FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
             {user.isAppAdmin && (
               <MenuItem
                 data-testid="menu-admin-institution-button"
-                onClick={() => handleClickMenuItem('/admin-institutions')}>
+                onClick={() => handleClickMenuItem(UrlPathTemplate.AdminInstitutions)}>
                 <StyledMenuItemText>{t('common:institutions')}</StyledMenuItemText>
               </MenuItem>
             )}
@@ -109,12 +112,12 @@ const Menu: FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
               <>
                 <MenuItem
                   data-testid="menu-admin-institution-button"
-                  onClick={() => handleClickMenuItem('/my-institution')}>
+                  onClick={() => handleClickMenuItem(UrlPathTemplate.MyInstitution)}>
                   <StyledMenuItemText>{t('common:my_institution')}</StyledMenuItemText>
                 </MenuItem>
                 <MenuItem
                   data-testid="menu-admin-institution-users-button"
-                  onClick={() => handleClickMenuItem('/my-institution-users')}>
+                  onClick={() => handleClickMenuItem(UrlPathTemplate.MyInstitutionUsers)}>
                   <StyledMenuItemText>{t('common:users')}</StyledMenuItemText>
                 </MenuItem>
               </>

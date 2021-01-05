@@ -15,6 +15,7 @@ import ButtonWithProgress from '../../../components/ButtonWithProgress';
 import useUppy from '../../../utils/hooks/useUppy';
 import FileUploader from '../files_and_license_tab/FileUploader';
 import { BackendTypeNames } from '../../../types/publication_types/commonRegistration.types';
+import { getRegistrationPath } from '../../../utils/urlPaths';
 
 const StyledFileCard = styled.div`
   margin-top: 1rem;
@@ -45,7 +46,7 @@ const UploadRegistration: FC<UploadRegistrationProps> = ({ expanded, onChange, o
     const registration = await createRegistration(registrationPayload);
     if (registration?.identifier) {
       openForm();
-      history.push(`/registration/${registration.identifier}`, { isNewRegistration: true });
+      history.push(getRegistrationPath(registration.identifier), { isNewRegistration: true });
     } else {
       setIsLoading(false);
       dispatch(setNotification(t('feedback:error.create_registration'), NotificationVariant.Error));

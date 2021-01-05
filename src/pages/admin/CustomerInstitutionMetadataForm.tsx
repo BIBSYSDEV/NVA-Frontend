@@ -19,6 +19,7 @@ import ButtonWithProgress from '../../components/ButtonWithProgress';
 import { StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
 import { customerInstitutionValidationSchema } from '../../utils/validation/customerInstitutionValidation';
 import { SelectInstitutionField, CustomerInstitutionTextField } from './customerInstitutionFields';
+import { getAdminInstitutionPath } from '../../utils/urlPaths';
 
 const StyledButtonContainer = styled(StyledRightAlignedWrapper)`
   margin-top: 2rem;
@@ -49,7 +50,7 @@ const CustomerInstitutionMetadataForm: FC<CustomerInstitutionMetadataFormProps> 
       if (!createdCustomer || createdCustomer?.error) {
         dispatch(setNotification(createdCustomer.error, NotificationVariant.Error));
       } else {
-        history.push(`/admin-institutions?id=${encodeURIComponent(createdCustomer.id)}`);
+        history.push(getAdminInstitutionPath(createdCustomer.id));
         handleSetCustomerInstitution(createdCustomer);
         dispatch(setNotification(t('feedback:success.created_customer')));
       }

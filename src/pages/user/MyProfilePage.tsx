@@ -19,7 +19,7 @@ import { StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import { PageHeader } from '../../components/PageHeader';
-import { getUserPath } from '../../utils/urlPaths';
+import { getUserPath, UrlPathTemplate } from '../../utils/urlPaths';
 
 const StyledUserPage = styled.div`
   display: grid;
@@ -58,7 +58,7 @@ const MyProfilePage: FC = () => {
     const orcidAccessToken = new URLSearchParams(location.hash.replace('#', '?')).get('access_token') || '';
     if (orcidAccessToken) {
       dispatch(getOrcidInfo(orcidAccessToken));
-      history.push('/my-profile');
+      history.push(UrlPathTemplate.MyProfile);
     }
   }, [dispatch, location.hash, history]);
 
