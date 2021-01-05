@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { ReactNode } from 'react';
 import styled from 'styled-components';
 import { Typography, Button } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
@@ -17,15 +17,18 @@ const StyledHeaderTitle = styled(Typography)`
 
 interface PageHeaderProps {
   backPath?: string;
+  children: ReactNode;
 }
 
-export const PageHeader: FC<PageHeaderProps> = ({ backPath, children }) => {
+export const PageHeader = ({ backPath, children }: PageHeaderProps) => {
   const { t } = useTranslation('common');
   const history = useHistory();
 
   const onBackClick = () => {
     if (backPath) {
       history.push(backPath);
+    } else if (history.length === 1) {
+      history.push('/');
     } else {
       history.goBack();
     }
