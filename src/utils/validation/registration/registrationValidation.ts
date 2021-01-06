@@ -23,10 +23,10 @@ export const registrationValidationSchema = Yup.object().shape({
       year: Yup.number().required(ErrorMessage.REQUIRED),
       month: Yup.number()
         .nullable()
-        .transform((value: string, originalValue: string) => (originalValue.trim() === '' ? null : value)),
+        .transform((value: string, originalValue: string) => (originalValue === '' ? null : value)),
       day: Yup.number()
         .nullable()
-        .transform((value: string, originalValue: string) => (originalValue.trim() === '' ? null : value)),
+        .transform((value: string, originalValue: string) => (originalValue === '' ? null : value)),
     }),
     language: Yup.string().url().oneOf(Object.values(LanguageValues)),
     projects: Yup.array().of(Yup.object()), // TODO
