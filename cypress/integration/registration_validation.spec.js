@@ -13,7 +13,6 @@ describe('User opens registration form and can see validation errors', () => {
   beforeEach(() => {
     cy.server();
     i18n.changeLanguage(LanguageCodes.ENGLISH);
-    cy.setLocalStorage('i18nextLng', 'eng');
   });
 
   it('The User should be see validation errors for every tab', () => {
