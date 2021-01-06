@@ -3,6 +3,7 @@ export enum PublicationType {
   BOOK = 'Book',
   REPORT = 'Report',
   DEGREE = 'Degree',
+  CHAPTER = 'Chapter',
 }
 
 export enum JournalType {
@@ -31,6 +32,11 @@ export enum DegreeType {
   MASTER = 'DegreeMaster',
   PHD = 'DegreePhd',
   OTHER = 'OtherStudentWork',
+}
+
+export enum ChapterType {
+  BOOK = 'ChapterBook',
+  REPORT = 'ChapterReport',
 }
 
 // Enums representing name of fields used by Formik

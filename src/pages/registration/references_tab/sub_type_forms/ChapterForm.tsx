@@ -1,26 +1,23 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Field, FieldProps } from 'formik';
-import { TextField } from '@material-ui/core';
+import { TextField, Typography } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
 import styled from 'styled-components';
 import RemoveIcon from '@material-ui/icons/Remove';
-import { ReferenceFieldNames } from '../../../../types/publicationFieldNames';
+import { ChapterType, ReferenceFieldNames } from '../../../../types/publicationFieldNames';
 import NviValidation from '../components/NviValidation';
 import DoiField from '../components/DoiField';
+import Card from '../../../../components/Card';
+import PeerReview from '../components/PeerReview';
 
-const StyledInfoBox = styled.div`
+const StyledInfoCard = styled(Card)`
   margin-top: 1rem;
-  background-color: ${({ theme }) => theme.palette.background.default};
-  padding: 1rem 0;
   display: flex;
   align-items: center;
-`;
-
-const StyledIcon = styled(InfoIcon)`
-  color: ${({ theme }) => theme.palette.text.secondary};
-  margin: 1rem;
-  font-size: 2rem;
+  > :first-child {
+    margin-right: 1rem;
+  }
 `;
 
 const StyledPageNumberWrapper = styled.div`
@@ -39,22 +36,28 @@ const StyledPageNumberField = styled(TextField)`
   margin-right: 1rem;
   width: 10rem;
 `;
+interface ChapterFormProps {
+  subtype: string;
+}
 
-const ChapterForm: React.FC = () => {
+const ChapterForm = (props: ChapterFormProps) => {
   const { t } = useTranslation('registration');
 
   return (
     <>
-      <StyledInfoBox>
-        <StyledIcon />
-        {t('chapter.info')}
-      </StyledInfoBox>
+      <StyledInfoCard>
+        <InfoIcon color="primary" fontSize="large" />
+        <Typography>{t('chapter.info')}</Typography>
+      </StyledInfoCard>
 
       <DoiField />
 
+      {props.subtype === ChapterType.BOOK && <>{/* TODO */}</>}
+      {props.subtype === ChapterType.REPORT && <>{/* TODO */}</>}
+
       <StyledPageNumberWrapper>
         <Field name={ReferenceFieldNames.PAGES_FROM}>
-          {({ field }: FieldProps) => (
+          {({ field }: FieldProps<string>) => (
             <StyledPageNumberField
               variant="outlined"
               data-testid="chapter-pages-from"
@@ -64,11 +67,13 @@ const ChapterForm: React.FC = () => {
             />
           )}
         </Field>
+
         <StyledDashIconWrapper>
           <RemoveIcon />
         </StyledDashIconWrapper>
+
         <Field name={ReferenceFieldNames.PAGES_TO}>
-          {({ field }: FieldProps) => (
+          {({ field }: FieldProps<string>) => (
             <StyledPageNumberField
               data-testid="chapter-pages-to"
               variant="outlined"
@@ -80,6 +85,8 @@ const ChapterForm: React.FC = () => {
         </Field>
       </StyledPageNumberWrapper>
 
+      <PeerReview fieldName={ReferenceFieldNames.PEER_REVIEW} label={t('references.peer_review')} />
+      {/* TODO: Fix NVI validation */}
       <NviValidation isPeerReviewed={true} isRated={true} dataTestId="nvi-chapter" />
     </>
   );
