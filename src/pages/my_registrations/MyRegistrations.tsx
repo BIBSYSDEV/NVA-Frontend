@@ -46,7 +46,7 @@ const MyRegistrations: FC = () => {
       <PageHeader>{t('my_registrations')}</PageHeader>
       <StyledContainer>
         <StyledRightAlignedWrapper>
-          {user.authority && (
+          {user?.authority && (
             <Button
               color="primary"
               component={RouterLink}

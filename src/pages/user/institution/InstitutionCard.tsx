@@ -52,10 +52,10 @@ const InstitutionCard: FC<InstitutionCardProps> = ({ orgunitId, setInstitutionId
   const { t } = useTranslation('common');
   const [openEditForm, setOpenEditForm] = useState(false);
   const dispatch = useDispatch();
-  const authority = useSelector((state: RootStore) => state.user.authority);
+  const { user } = useSelector((store: RootStore) => store);
 
   const handleEditInstitution = async (values: FormikInstitutionUnit, initialInstitution: string) => {
-    if (!values.unit || !authority) {
+    if (!values.unit || !user?.authority) {
       return;
     }
 
@@ -64,13 +64,13 @@ const InstitutionCard: FC<InstitutionCardProps> = ({ orgunitId, setInstitutionId
 
     if (!newUnitId) {
       return;
-    } else if (authority.orgunitids.includes(newUnitId)) {
+    } else if (user.authority.orgunitids.includes(newUnitId)) {
       dispatch(setNotification(t('feedback:info.affiliation_already_exists'), NotificationVariant.Info));
       return;
     }
 
     const updatedAuthority = await updateQualifierIdForAuthority(
-      authority.id,
+      user.authority.id,
       AuthorityQualifiers.ORGUNIT_ID,
       initialInstitution,
       newUnitId

@@ -90,8 +90,8 @@ const App: FC = () => {
 
   useEffect(() => {
     // Fetch logged in user's roles
-    const getRoles = async () => {
-      const institutionUser = await getInstitutionUser(user.id);
+    const getRoles = async (userId: string) => {
+      const institutionUser = await getInstitutionUser(userId);
       if (institutionUser) {
         if (institutionUser.error) {
           dispatch(setNotification(institutionUser.error, NotificationVariant.Error));
@@ -104,7 +104,7 @@ const App: FC = () => {
     };
 
     if (user?.id && !user.roles) {
-      getRoles();
+      getRoles(user.id);
     }
   }, [dispatch, user]);
 
@@ -157,7 +157,9 @@ const App: FC = () => {
         </StyledContent>
         <Footer />
       </StyledApp>
-      {user && !isLoadingMatchingAuthorities && (user.authority || user.possibleAuthorities) && <AuthorityOrcidModal />}
+      {user && !isLoadingMatchingAuthorities && (user.authority || user.possibleAuthorities) && (
+        <AuthorityOrcidModal user={user} />
+      )}
     </BrowserRouter>
   );
 };

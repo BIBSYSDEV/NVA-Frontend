@@ -1,6 +1,6 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Button, Typography } from '@material-ui/core';
 import {
   addQualifierIdForAuthority,
@@ -13,14 +13,17 @@ import AddInstitution from '../../components/institution/AddInstitution';
 import { StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { setAuthorityData } from '../../redux/actions/userActions';
-import { RootStore } from '../../redux/reducers/rootReducer';
 import { FormikInstitutionUnit } from '../../types/institution.types';
 import { NotificationVariant } from '../../types/notification.types';
 import { getMostSpecificUnit } from '../../utils/institutions-helpers';
 import InstitutionCard from './institution/InstitutionCard';
+import { User } from '../../types/user.types';
 
-const UserInstitution: FC = () => {
-  const authority = useSelector((state: RootStore) => state.user.authority);
+interface UserInstituionProps {
+  user: User;
+}
+
+const UserInstitution = ({ user }: UserInstituionProps) => {
   const [openAddInstitutionForm, setOpenAddInstitutionForm] = useState(false);
   const [institutionIdToRemove, setInstitutionIdToRemove] = useState('');
   const [isRemovingInstitution, setIsRemovingInstitution] = useState(false);
@@ -38,12 +41,12 @@ const UserInstitution: FC = () => {
   };
 
   const removeInstitution = async () => {
-    if (!authority || !institutionIdToRemove) {
+    if (!user.authority || !institutionIdToRemove) {
       return;
     }
     setIsRemovingInstitution(true);
     const updatedAuthority = await removeQualifierIdFromAuthority(
-      authority.id,
+      user.authority.id,
       AuthorityQualifiers.ORGUNIT_ID,
       institutionIdToRemove
     );
@@ -67,14 +70,14 @@ const UserInstitution: FC = () => {
 
     if (!newUnitId) {
       return;
-    } else if (authority?.orgunitids.includes(newUnitId)) {
+    } else if (user.authority?.orgunitids.includes(newUnitId)) {
       dispatch(setNotification(t('feedback:info.affiliation_already_exists'), NotificationVariant.Info));
       return;
     }
 
-    if (authority) {
+    if (user.authority) {
       const updatedAuthority = await addQualifierIdForAuthority(
-        authority.id,
+        user.authority.id,
         AuthorityQualifiers.ORGUNIT_ID,
         newUnitId
       );
@@ -92,8 +95,8 @@ const UserInstitution: FC = () => {
     <>
       <Card>
         <Typography variant="h5">{t('heading.organizations')}</Typography>
-        {authority?.orgunitids &&
-          authority.orgunitids.map((orgunitId) => (
+        {user.authority?.orgunitids &&
+          user.authority.orgunitids.map((orgunitId) => (
             <InstitutionCard
               key={orgunitId}
               orgunitId={orgunitId}
@@ -109,7 +112,7 @@ const UserInstitution: FC = () => {
               variant="contained"
               color="primary"
               onClick={toggleUnitForm}
-              disabled={!authority}
+              disabled={!user.authority}
               data-testid="add-new-institution-button">
               {t('organization.add_institution')}
             </Button>

@@ -29,9 +29,9 @@ const StyledButtonContainer = styled(StyledRightAlignedWrapper)`
 const MyCustomerInstitutionPage: FC = () => {
   const { t } = useTranslation('admin');
   const dispatch = useDispatch();
-  const { customerId } = useSelector((store: RootStore) => store.user);
+  const { user } = useSelector((store: RootStore) => store);
   const [customerInstitution, isLoadingCustomerInstitution, handleSetCustomerInstitution] = useFetchCustomerInstitution(
-    customerId ?? ''
+    user?.customerId ?? ''
   );
 
   const handleSubmit = async (values: CustomerInstitution) => {
