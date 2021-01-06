@@ -15,6 +15,7 @@ import { useTranslation } from 'react-i18next';
 import Label from '../../components/Label';
 import { Link as RouterLink } from 'react-router-dom';
 import NormalText from '../../components/NormalText';
+import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 
 const StyledTableRow = styled(TableRow)`
   background-color: ${(props) => props.theme.palette.box.main};
@@ -81,7 +82,7 @@ const WorklistTable: FC<WorklistTableProps> = ({ registrations }) => {
                   <Button
                     color="primary"
                     component={RouterLink}
-                    to={`/registration/${registration.identifier}/public`}
+                    to={getRegistrationLandingPagePath(registration.identifier)}
                     data-testid={`open-registration-${registration.identifier}`}
                     variant="contained">
                     <NormalText>{t('common:open')}</NormalText>

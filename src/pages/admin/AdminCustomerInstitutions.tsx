@@ -11,6 +11,7 @@ import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import { StyledProgressWrapper, StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
 import { PageHeader } from '../../components/PageHeader';
+import { getAdminInstitutionPath } from '../../utils/urlPaths';
 
 const AdminCustomerInstitutions: FC = () => {
   const { t } = useTranslation('admin');
@@ -40,7 +41,7 @@ const AdminCustomerInstitutions: FC = () => {
           <Button
             color="primary"
             component={RouterLink}
-            to="/admin-institutions?id=new"
+            to={getAdminInstitutionPath('new')}
             data-testid="add-institution-button">
             {t('add_institution')}
           </Button>

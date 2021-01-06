@@ -4,6 +4,7 @@ import { Typography, Button } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { UrlPathTemplate } from '../utils/urlPaths';
 
 const StyledHeader = styled.div`
   width: 85vw;
@@ -28,7 +29,7 @@ export const PageHeader = ({ backPath, children }: PageHeaderProps) => {
     if (backPath) {
       history.push(backPath);
     } else if (history.length === 1) {
-      history.push('/');
+      history.push(UrlPathTemplate.Home);
     } else {
       history.goBack();
     }

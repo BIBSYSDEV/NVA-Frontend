@@ -12,6 +12,7 @@ import LibraryBooks from '@material-ui/icons/LibraryBooks';
 import Mail from '@material-ui/icons/Mail';
 import MenuIcon from '@material-ui/icons/Menu';
 import MobileMenu from './MobileMenu';
+import { getRegistrationPath, UrlPathTemplate } from '../../utils/urlPaths';
 
 const StyledPageHeader = styled.div`
   display: grid;
@@ -71,7 +72,7 @@ const Header: FC = () => {
             color="primary"
             component={RouterLink}
             data-testid="new-registration"
-            to="/registration"
+            to={getRegistrationPath()}
             startIcon={<AddIcon />}>
             <Typography variant="button">{t('new_registration')}</Typography>
           </Button>
@@ -79,7 +80,7 @@ const Header: FC = () => {
             color="primary"
             component={RouterLink}
             data-testid="my-registrations"
-            to="/my-registrations"
+            to={UrlPathTemplate.MyRegistrations}
             startIcon={<LibraryBooks />}>
             <Typography variant="button">{t('workLists:my_registrations')}</Typography>
           </Button>
@@ -87,7 +88,7 @@ const Header: FC = () => {
             color="primary"
             component={RouterLink}
             data-testid="my-messages"
-            to="/my-messages"
+            to={UrlPathTemplate.MyMessages}
             startIcon={<Mail />}>
             <Typography variant="button">{t('workLists:my_messages')}</Typography>
           </Button>

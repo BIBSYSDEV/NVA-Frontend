@@ -6,6 +6,7 @@ import styled from 'styled-components';
 
 import Heading from '../components/Heading';
 import NormalText from '../components/NormalText';
+import { UrlPathTemplate } from '../utils/urlPaths';
 
 const StyledLoginComponent = styled.div`
   text-align: center;
@@ -21,7 +22,7 @@ const Logout: FC = () => {
   return (
     <StyledLoginComponent>
       <Heading>{t('logged_out')}</Heading>
-      <MuiLink component={Link} to="/">
+      <MuiLink component={Link} to={UrlPathTemplate.Home}>
         <StyledText>{t('back_to_home')}</StyledText>
       </MuiLink>
     </StyledLoginComponent>

@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { PageHeader } from '../../components/PageHeader';
 import SearchBar from '../../components/SearchBar';
+import { getSearchPath } from '../../utils/urlPaths';
 import RegistrationSearch from './RegistrationSearch';
 
 const StyledSearch = styled.div`
@@ -18,7 +19,7 @@ const SearchPage: FC = () => {
 
   const handleSearch = (searchTerm: string) => {
     if (searchTerm.length) {
-      history.push(`/search?query=${searchTerm}`);
+      history.push(getSearchPath(searchTerm));
     }
   };
 

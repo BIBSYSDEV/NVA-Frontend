@@ -5,6 +5,7 @@ import Heading from '../../components/Heading';
 import NormalText from '../../components/NormalText';
 import { Link } from 'react-router-dom';
 import { Link as MuiLink } from '@material-ui/core';
+import { UrlPathTemplate } from '../../utils/urlPaths';
 
 const StyledNotFoundWrapper = styled.div`
   width: 100%;
@@ -22,7 +23,7 @@ const NotPublished: FC = () => {
   return (
     <StyledNotFoundWrapper data-testid="not_published">
       <Heading>{t('registration_not_published')}</Heading>
-      <MuiLink component={Link} to={'/'}>
+      <MuiLink component={Link} to={UrlPathTemplate.Home}>
         <StyledText>{t('back_to_home')}</StyledText>
       </MuiLink>
     </StyledNotFoundWrapper>
