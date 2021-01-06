@@ -1,12 +1,11 @@
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
-
-import SubHeading from '../../components/SubHeading';
-import useFetchRegistrationsWithPendingDoiRequest from '../../utils/hooks/useFetchRegistrationsWithPendingDoiRequest';
-import { RoleName } from '../../types/user.types';
-import { DoiRequestAccordion } from './DoiRequestAccordion';
 import Card from '../../components/Card';
 import ListSkeleton from '../../components/ListSkeleton';
+import SubHeading from '../../components/SubHeading';
+import { RoleName } from '../../types/user.types';
+import useFetchRegistrationsWithPendingDoiRequest from '../../utils/hooks/useFetchRegistrationsWithPendingDoiRequest';
+import { DoiRequestAccordion } from './DoiRequestAccordion';
 
 const DoiRequests: FC = () => {
   const { t } = useTranslation('workLists');
@@ -23,7 +22,7 @@ const DoiRequests: FC = () => {
   ) : (
     <>
       {registrationsWithPendingDoiRequest.map((registration) => (
-        <DoiRequestAccordion key={registration.identifier} registration={registration} />
+        <DoiRequestAccordion key={registration.identifier} identifier={registration.identifier} />
       ))}
     </>
   );

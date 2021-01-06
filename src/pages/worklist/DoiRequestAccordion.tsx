@@ -1,14 +1,18 @@
-import React, { FC } from 'react';
-import { Accordion, AccordionSummary, AccordionDetails, Button } from '@material-ui/core';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import React, { FC, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import styled from 'styled-components';
-import { useTranslation } from 'react-i18next';
-
+import { Accordion, AccordionDetails, AccordionSummary, Button } from '@material-ui/core';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { updateDoiRequestWithMessage } from '../../api/doiRequestApi';
 import Label from '../../components/Label';
-import { Registration } from '../../types/registration.types';
-import MessageList from './MessageList';
+import ListSkeleton from '../../components/ListSkeleton';
 import { MessageForm } from '../../components/MessageForm';
+import { setNotification } from '../../redux/actions/notificationActions';
+import { NotificationVariant } from '../../types/notification.types';
+import useFetchRegistration from '../../utils/hooks/useFetchRegistration';
+import MessageList from './MessageList';
 
 const StyledAccordion = styled(Accordion)`
   width: 100%;
@@ -59,45 +63,49 @@ const StyledAccordionActionButtons = styled.div`
 `;
 
 interface DoiRequestAccordionProps {
-  registration: Registration;
+  identifier: string;
 }
 
-export const DoiRequestAccordion: FC<DoiRequestAccordionProps> = ({ registration }) => {
+export const DoiRequestAccordion: FC<DoiRequestAccordionProps> = ({ identifier }) => {
   const { t } = useTranslation('workLists');
-  const {
-    identifier,
-    owner,
-    entityDescription: { mainTitle },
-    doiRequest,
-  } = registration;
+  const dispatch = useDispatch();
+  const [isSendingMessage, setIsSendingMessage] = useState(false);
+  const [registration, isLoadingRegistration, refetchRegistration] = useFetchRegistration(identifier);
 
-  if (!doiRequest) {
+  if (!registration?.doiRequest) {
     return null;
   }
+
+  const onClickSendMessage = async (message: string) => {
+    setIsSendingMessage(true);
+    const updatedDoiRequestWithMessage = await updateDoiRequestWithMessage(identifier, message);
+    if (updatedDoiRequestWithMessage) {
+      if (updatedDoiRequestWithMessage.error) {
+        dispatch(setNotification(t('feedback:error.update_doi_request'), NotificationVariant.Error));
+      } else {
+        dispatch(setNotification(t('feedback:success.doi_request_updated'), NotificationVariant.Success));
+      }
+      setIsSendingMessage(false);
+    }
+    refetchRegistration();
+  };
 
   return (
     <StyledAccordion data-testid={`doi-request-${identifier}`}>
       <AccordionSummary expandIcon={<ExpandMoreIcon fontSize="large" />}>
-        <StyledStatus>{t(`doi_requests.status.${doiRequest.status}`)}</StyledStatus>
-        <StyledTitle>{mainTitle}</StyledTitle>
+        <StyledStatus>{t(`doi_requests.status.${registration?.doiRequest.status}`)}</StyledStatus>
+        <StyledTitle>{registration?.entityDescription?.mainTitle}</StyledTitle>
         <StyledOwner>
-          <Label>{owner}</Label>
-          {new Date(doiRequest.createdDate).toLocaleDateString()}
+          <Label>{registration?.owner}</Label>
+          {new Date(registration?.doiRequest.createdDate).toLocaleDateString()}
         </StyledOwner>
       </AccordionSummary>
       <AccordionDetails>
         <StyledMessages>
-          <MessageList messages={doiRequest.messages} />
+          <MessageList messages={registration?.doiRequest.messages} />
           <MessageForm
             confirmAction={async (message) => {
-              return new Promise((resolve) => {
-                setTimeout(() => {
-                  // TODO: Send message to backend
-                  // eslint-disable-next-line no-console
-                  console.log('Doi Message:', message);
-                  resolve(true);
-                }, 1000);
-              });
+              onClickSendMessage(message);
             }}
           />
         </StyledMessages>
