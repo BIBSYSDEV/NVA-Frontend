@@ -88,7 +88,7 @@ const Menu: FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
           vertical: 'bottom',
           horizontal: 'left',
         }}>
-        {user.isCurator && (
+        {user?.isCurator && (
           <StyledAdminMenu>
             <StyledNormalText>{t('profile:roles.curator')}</StyledNormalText>
             <MenuItem
@@ -98,7 +98,7 @@ const Menu: FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
             </MenuItem>
           </StyledAdminMenu>
         )}
-        {(user.isAppAdmin || user.isInstitutionAdmin) && (
+        {(user?.isAppAdmin || user?.isInstitutionAdmin) && (
           <StyledAdminMenu>
             <StyledNormalText>{t('common:admin')}</StyledNormalText>
             {user.isAppAdmin && (

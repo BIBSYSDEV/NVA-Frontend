@@ -4,6 +4,7 @@ import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { useUppy } from '@uppy/react';
 
 import RegistrationAccordion from './RegistrationAccordion';
 import { File, emptyFile } from '../../../types/file.types';
@@ -12,10 +13,10 @@ import { createRegistration } from '../../../api/registrationApi';
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../types/notification.types';
 import ButtonWithProgress from '../../../components/ButtonWithProgress';
-import useUppy from '../../../utils/hooks/useUppy';
 import FileUploader from '../files_and_license_tab/FileUploader';
 import { BackendTypeNames } from '../../../types/publication_types/commonRegistration.types';
 import { getRegistrationPath } from '../../../utils/urlPaths';
+import { createUppy } from '../../../utils/uppy/uppy-config';
 
 const StyledFileCard = styled.div`
   margin-top: 1rem;
@@ -33,7 +34,7 @@ const UploadRegistration: FC<UploadRegistrationProps> = ({ expanded, onChange, o
   const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
   const dispatch = useDispatch();
-  const uppy = useUppy();
+  const uppy = useUppy(createUppy());
 
   const createRegistrationWithFiles = async () => {
     setIsLoading(true);
