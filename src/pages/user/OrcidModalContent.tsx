@@ -39,13 +39,7 @@ const OrcidModalContent: FC = () => {
       <StyledSubHeading>{t('orcid.what')}</StyledSubHeading>
       <NormalText>{t('orcid.description_what_is_orcid')}</NormalText>
       <StyledButtonContainer>
-        <Button
-          data-testid="connect-to-orcid"
-          onClick={() => {
-            openORCID();
-          }}
-          color="primary"
-          variant="contained">
+        <Button data-testid="connect-to-orcid" onClick={openORCID} color="primary" variant="contained">
           {t('orcid.create_or_connect')}
         </Button>
       </StyledButtonContainer>
