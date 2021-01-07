@@ -51,7 +51,7 @@ const ChapterForm = () => {
     <>
       <StyledInfoCard>
         <InfoIcon color="primary" fontSize="large" />
-        <Typography>{t('chapter.info')}</Typography>
+        <Typography>{t('references.chapter.info_anthology')}</Typography>
       </StyledInfoCard>
 
       <DoiField />
@@ -60,6 +60,8 @@ const ChapterForm = () => {
         <SearchContainerField
           fieldName={ReferenceFieldNames.PUBLICATION_CONTEXT_LINKED_CONTEXT}
           searchSubtypes={[BookType.ANTHOLOGY]}
+          label={t('references.chapter.published_in')}
+          placeholder={t('references.chapter.search_for_anthology')}
         />
       )}
 

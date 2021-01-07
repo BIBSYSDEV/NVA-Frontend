@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Field, FieldProps, getIn, useFormikContext } from 'formik';
-import { useTranslation } from 'react-i18next';
 import { Typography } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
 import Truncate from 'react-truncate';
@@ -20,10 +19,11 @@ import { RegistrationSubtype } from '../../../../types/publicationFieldNames';
 interface SearchContainerFieldProps {
   fieldName: string;
   searchSubtypes: RegistrationSubtype[];
+  label: string;
+  placeholder: string;
 }
 
 const SearchContainerField = (props: SearchContainerFieldProps) => {
-  const { t } = useTranslation('registration');
   const { values, setFieldValue, setFieldTouched } = useFormikContext<Registration>();
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearchTerm = useDebounce(searchTerm);
@@ -84,11 +84,11 @@ const SearchContainerField = (props: SearchContainerFieldProps) => {
           renderInput={(params) => (
             <AutocompleteTextField
               {...params}
-              label={t('references.original_article')}
+              label={props.label}
               required
               isLoading={isLoadingContainerSearch || isLoadingSelectedContainer}
-              placeholder={t('references.search_for_original_article')}
-              dataTestId="original-article-input"
+              placeholder={props.placeholder}
+              dataTestId="container-search-field"
               showSearchIcon
               errorMessage={meta.touched && !!meta.error ? meta.error : undefined}
             />
