@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import Card from '../../components/Card';
 import ListSkeleton from '../../components/ListSkeleton';
@@ -8,7 +8,7 @@ import { RoleName } from '../../types/user.types';
 import useFetchRegistrationsWithPendingDoiRequest from '../../utils/hooks/useFetchRegistrationsWithPendingDoiRequest';
 import { DoiRequestAccordion } from '../worklist/DoiRequestAccordion';
 
-const MyMessages: FC = () => {
+const MyMessages = () => {
   const { t } = useTranslation('workLists');
   const [registrationsWithPendingDoiRequest, isLoadingPendingDoiRequests] = useFetchRegistrationsWithPendingDoiRequest(
     RoleName.CREATOR

@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
@@ -7,7 +7,6 @@ import { Accordion, AccordionDetails, AccordionSummary, Button } from '@material
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { updateDoiRequestWithMessage } from '../../api/doiRequestApi';
 import Label from '../../components/Label';
-import ListSkeleton from '../../components/ListSkeleton';
 import { MessageForm } from '../../components/MessageForm';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
@@ -66,11 +65,11 @@ interface DoiRequestAccordionProps {
   identifier: string;
 }
 
-export const DoiRequestAccordion: FC<DoiRequestAccordionProps> = ({ identifier }) => {
+export const DoiRequestAccordion = ({ identifier }: DoiRequestAccordionProps) => {
   const { t } = useTranslation('workLists');
   const dispatch = useDispatch();
   const [isSendingMessage, setIsSendingMessage] = useState(false);
-  const [registration, isLoadingRegistration, refetchRegistration] = useFetchRegistration(identifier);
+  const [registration, , refetchRegistration] = useFetchRegistration(identifier);
 
   if (!registration?.doiRequest) {
     return null;
@@ -107,6 +106,7 @@ export const DoiRequestAccordion: FC<DoiRequestAccordionProps> = ({ identifier }
             confirmAction={async (message) => {
               onClickSendMessage(message);
             }}
+            disabled={isSendingMessage}
           />
         </StyledMessages>
         <StyledAccordionActionButtons>
