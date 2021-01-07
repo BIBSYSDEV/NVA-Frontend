@@ -1,15 +1,16 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Field, FieldProps } from 'formik';
+import styled from 'styled-components';
 import { TextField, Typography } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
-import styled from 'styled-components';
 import RemoveIcon from '@material-ui/icons/Remove';
-import { ChapterType, ReferenceFieldNames } from '../../../../types/publicationFieldNames';
+import { BookType, ChapterType, ReferenceFieldNames } from '../../../../types/publicationFieldNames';
 import NviValidation from '../components/NviValidation';
 import DoiField from '../components/DoiField';
 import Card from '../../../../components/Card';
 import PeerReview from '../components/PeerReview';
+import SearchForContainerField from '../components/SearchForContainerField';
 
 const StyledInfoCard = styled(Card)`
   margin-top: 1rem;
@@ -36,6 +37,7 @@ const StyledPageNumberField = styled(TextField)`
   margin-right: 1rem;
   width: 10rem;
 `;
+
 interface ChapterFormProps {
   subtype: string;
 }
@@ -52,8 +54,13 @@ const ChapterForm = (props: ChapterFormProps) => {
 
       <DoiField />
 
-      {props.subtype === ChapterType.BOOK && <>{/* TODO */}</>}
-      {props.subtype === ChapterType.REPORT && <>{/* TODO */}</>}
+      {props.subtype === ChapterType.BOOK && (
+        <SearchForContainerField
+          targetedSubtypes={[BookType.ANTHOLOGY]}
+          fieldName={ReferenceFieldNames.PUBLICATION_CONTEXT_LINKED_CONTEXT}
+        />
+      )}
+      {/* {props.subtype === ChapterType.REPORT && <></>} */}
 
       <StyledPageNumberWrapper>
         <Field name={ReferenceFieldNames.PAGES_FROM}>
@@ -85,9 +92,13 @@ const ChapterForm = (props: ChapterFormProps) => {
         </Field>
       </StyledPageNumberWrapper>
 
-      <PeerReview fieldName={ReferenceFieldNames.PEER_REVIEW} label={t('references.peer_review')} />
-      {/* TODO: Fix NVI validation */}
-      <NviValidation isPeerReviewed={true} isRated={true} dataTestId="nvi-chapter" />
+      {props.subtype === ChapterType.BOOK && (
+        <>
+          <PeerReview fieldName={ReferenceFieldNames.PEER_REVIEW} label={t('references.peer_review')} />
+          {/* TODO: Fix NVI validation */}
+          <NviValidation isPeerReviewed={true} isRated={true} dataTestId="nvi-chapter" />
+        </>
+      )}
     </>
   );
 };

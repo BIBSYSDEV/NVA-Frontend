@@ -36,8 +36,10 @@ export enum DegreeType {
 
 export enum ChapterType {
   BOOK = 'ChapterBook',
-  REPORT = 'ChapterReport',
+  // REPORT = 'ChapterReport',
 }
+
+export type RegistrationSubtype = JournalType | ReportType | BookType | DegreeType | ChapterType;
 
 // Enums representing name of fields used by Formik
 export const contextTypeBaseFieldName = 'entityDescription.reference.publicationContext';
@@ -55,6 +57,7 @@ export enum ReferenceFieldNames {
   PAGES_TYPE = 'entityDescription.reference.publicationInstance.pages.type',
   PAGES_PAGES = 'entityDescription.reference.publicationInstance.pages.pages',
   PEER_REVIEW = 'entityDescription.reference.publicationInstance.peerReviewed',
+  PUBLICATION_CONTEXT_LINKED_CONTEXT = 'entityDescription.reference.publicationContext.linkedContext',
   PUBLICATION_CONTEXT_LEVEL = 'entityDescription.reference.publicationContext.level',
   PUBLICATION_CONTEXT_TITLE = 'entityDescription.reference.publicationContext.title',
   PUBLICATION_CONTEXT_PUBLISHER = 'entityDescription.reference.publicationContext.publisher',

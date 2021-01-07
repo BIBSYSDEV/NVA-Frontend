@@ -3,7 +3,7 @@
   "BookAnthology": "Anthology",
   "BookMonograph": "Monograph",
   "Chapter": "Part of book/report",
-  "ChapterBook": "Chapter in book",
+  "ChapterBook": "Chapter in anthology",
   "ChapterReport": "Chapter in report",
   "Degree": "Student thesis",
   "DegreeBachelor": "Bachelor thesis",
