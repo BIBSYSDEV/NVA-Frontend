@@ -13,7 +13,6 @@ import mockAuthoritiesResponse from '../utils/testfiles/mock_authorities_respons
 import { mockRoles } from '../utils/testfiles/mock_feide_user';
 import { mockCustomerInstitution, mockCustomerInstitutions } from '../utils/testfiles/mockCustomerInstitutions';
 import {
-  mockRegistration,
   mockRegistrationsWithPendingDoiRequest,
   mockRegistrationWithPendingDoiRequest,
 } from '../utils/testfiles/mockRegistration';
@@ -95,7 +94,6 @@ export const interceptRequestsOnMock = () => {
   mock
     .onGet(new RegExp(`${PublicationsApiPaths.PUBLICATION}/4327439`))
     .reply(200, { ...emptyRegistration, owner: 'tu@unit.no' });
-  mock.onGet(new RegExp(`${PublicationsApiPaths.PUBLICATION}/*`)).reply(200, mockRegistration);
   mock.onGet(new RegExp(`${PublicationsApiPaths.PUBLICATION}/*`)).reply(200, mockRegistrationWithPendingDoiRequest);
 
   // lookup DOI
