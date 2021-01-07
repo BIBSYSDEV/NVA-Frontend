@@ -1,12 +1,12 @@
 import { LanguageValues } from '../../types/language.types';
-import {
-  JournalRegistration,
-  RegistrationStatus,
-  DoiRequestStatus,
-  Registration,
-} from '../../types/registration.types';
-import { JournalType, PublicationType } from '../../types/publicationFieldNames';
 import { BackendTypeNames } from '../../types/publication_types/commonRegistration.types';
+import { JournalType, PublicationType } from '../../types/publicationFieldNames';
+import {
+  DoiRequestStatus,
+  JournalRegistration,
+  Registration,
+  RegistrationStatus,
+} from '../../types/registration.types';
 import { mockCustomerInstitution } from './mockCustomerInstitutions';
 
 export const mockRegistration: JournalRegistration = {
@@ -107,7 +107,7 @@ export const mockRegistration: JournalRegistration = {
   },
 };
 
-const mockRegistrationWithPendingDoiRequest: JournalRegistration = {
+export const mockRegistrationWithPendingDoiRequest: JournalRegistration = {
   ...mockRegistration,
   doiRequest: {
     type: 'DoiRequest',

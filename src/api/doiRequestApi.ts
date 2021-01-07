@@ -1,7 +1,7 @@
 import { CancelToken } from 'axios';
-import { authenticatedApiRequest } from './apiRequest';
-import { RoleName } from '../types/user.types';
 import { DoiRequestStatus, Registration } from '../types/registration.types';
+import { RoleName } from '../types/user.types';
+import { authenticatedApiRequest } from './apiRequest';
 
 export enum DoiRequestApiPaths {
   DOI_REQUEST = '/doi-request',
@@ -31,5 +31,14 @@ export const updateDoiRequest = async (registrationId: string, status: DoiReques
     method: 'POST',
     data: {
       doiRequestStatus: status,
+    },
+  });
+
+export const updateDoiRequestWithMessage = async (registrationId: string, message: string) =>
+  await authenticatedApiRequest({
+    url: `${DoiRequestApiPaths.UPDATE_DOI_REQUEST}/${registrationId}/message`,
+    method: 'POST',
+    data: {
+      message,
     },
   });
