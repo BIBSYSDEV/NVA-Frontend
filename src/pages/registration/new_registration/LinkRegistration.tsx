@@ -12,6 +12,7 @@ import { useDispatch } from 'react-redux';
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../types/notification.types';
 import { doiValidationSchema } from '../../../utils/validation/doiSearchValidation';
+import { getRegistrationPath } from '../../../utils/urlPaths';
 
 const StyledBody = styled.div`
   width: 100%;
@@ -38,7 +39,7 @@ const LinkRegistration: FC<LinkRegistrationProps> = ({ expanded, onChange, openF
     if (!doi) {
       return;
     }
-    history.push(`/registration/${doi.identifier}`, { isNewRegistration: true });
+    history.push(getRegistrationPath(doi.identifier), { isNewRegistration: true });
     openForm();
   };
 

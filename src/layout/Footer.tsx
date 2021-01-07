@@ -5,6 +5,7 @@ import logo from '../resources/images/unit_logo.png';
 import { Link } from 'react-router-dom';
 import { Link as MuiLink } from '@material-ui/core';
 import NormalText from '../components/NormalText';
+import { UrlPathTemplate } from '../utils/urlPaths';
 
 const StyledFooter = styled.div`
   display: grid;
@@ -40,7 +41,7 @@ const Footer: FC = () => {
           aria-label={t('privacy_policy.heading')}
           color="primary"
           component={Link}
-          to="/privacy-policy"
+          to={UrlPathTemplate.PrivacyPolicy}
           data-testid="privacy_policy_link">
           {t('privacy_policy.heading')}
         </MuiLink>

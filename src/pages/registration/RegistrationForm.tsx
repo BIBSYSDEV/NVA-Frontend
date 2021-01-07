@@ -28,6 +28,7 @@ import { PageHeader } from '../../components/PageHeader';
 import Forbidden from '../errorpages/Forbidden';
 import { RegistrationFormActions } from './RegistrationFormActions';
 import { userIsRegistrationOwner, userIsRegistrationCurator } from '../../utils/registration-helpers';
+import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import { createUppy } from '../../utils/uppy/uppy-config';
 
 const StyledRegistration = styled.div`
@@ -60,7 +61,7 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier, closeForm, is
   useEffect(() => {
     // Redirect to public page if user should not be able to edit this registration
     if (registration && !isValidOwner && !isValidCurator) {
-      history.push(`/registration/${registration.identifier}/public`);
+      history.push(getRegistrationLandingPagePath(registration.identifier));
     }
   }, [history, registration, isValidOwner, isValidCurator]);
 

@@ -15,6 +15,7 @@ import { NotificationVariant } from '../../../types/notification.types';
 import ButtonWithProgress from '../../../components/ButtonWithProgress';
 import FileUploader from '../files_and_license_tab/FileUploader';
 import { BackendTypeNames } from '../../../types/publication_types/commonRegistration.types';
+import { getRegistrationPath } from '../../../utils/urlPaths';
 import { createUppy } from '../../../utils/uppy/uppy-config';
 
 const StyledFileCard = styled.div`
@@ -46,7 +47,7 @@ const UploadRegistration: FC<UploadRegistrationProps> = ({ expanded, onChange, o
     const registration = await createRegistration(registrationPayload);
     if (registration?.identifier) {
       openForm();
-      history.push(`/registration/${registration.identifier}`, { isNewRegistration: true });
+      history.push(getRegistrationPath(registration.identifier), { isNewRegistration: true });
     } else {
       setIsLoading(false);
       dispatch(setNotification(t('feedback:error.create_registration'), NotificationVariant.Error));

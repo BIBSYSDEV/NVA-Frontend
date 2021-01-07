@@ -22,6 +22,7 @@ import { deleteRegistration } from '../../api/registrationApi';
 import { useDispatch } from 'react-redux';
 import { NotificationVariant } from '../../types/notification.types';
 import { setNotification } from '../../redux/actions/notificationActions';
+import { getRegistrationLandingPagePath, getRegistrationPath } from '../../utils/urlPaths';
 
 const StyledTableRow = styled(TableRow)`
   background-color: ${(props) => props.theme.palette.box.main};
@@ -111,7 +112,7 @@ const RegistrationList: FC<RegistrationListProps> = ({ registrations, refetchReg
                     color="primary"
                     variant="outlined"
                     component={RouterLink}
-                    to={`/registration/${registration.identifier}/public`}
+                    to={getRegistrationLandingPagePath(registration.identifier)}
                     startIcon={<MenuBookIcon />}
                     data-testid={`open-registration-${registration.identifier}`}>
                     {t('show')}
@@ -122,7 +123,7 @@ const RegistrationList: FC<RegistrationListProps> = ({ registrations, refetchReg
                     color="primary"
                     variant="outlined"
                     component={RouterLink}
-                    to={`/registration/${registration.identifier}`}
+                    to={getRegistrationPath(registration.identifier)}
                     startIcon={<EditIcon />}
                     data-testid={`edit-registration-${registration.identifier}`}>
                     {t('edit')}

@@ -11,6 +11,7 @@ import { MessageForm } from '../../components/MessageForm';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import useFetchRegistration from '../../utils/hooks/useFetchRegistration';
+import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import MessageList from './MessageList';
 
 const StyledAccordion = styled(Accordion)`
@@ -114,7 +115,7 @@ export const DoiRequestAccordion = ({ identifier }: DoiRequestAccordionProps) =>
             data-testid={`go-to-registration-${identifier}`}
             variant="outlined"
             component={RouterLink}
-            to={`/registration/${identifier}/public`}>
+            to={getRegistrationLandingPagePath(identifier)}>
             {t('doi_requests.go_to_registration')}
           </Button>
           <Button variant="contained" color="primary" disabled>
