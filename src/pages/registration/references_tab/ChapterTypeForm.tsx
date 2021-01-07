@@ -1,10 +1,10 @@
-import { useFormikContext } from 'formik';
 import React from 'react';
-import { StyledSelectWrapper } from '../../../components/styled/Wrappers';
-import { ReferenceFieldNames, ChapterType } from '../../../types/publicationFieldNames';
-import { ChapterRegistration } from '../../../types/registration.types';
+import { useFormikContext } from 'formik';
 import SelectTypeField from './components/SelectTypeField';
 import ChapterForm from './sub_type_forms/ChapterForm';
+import { StyledSelectWrapper } from '../../../components/styled/Wrappers';
+import { ChapterRegistration } from '../../../types/registration.types';
+import { ReferenceFieldNames, ChapterType } from '../../../types/publicationFieldNames';
 
 interface ChapterTypeFormProps {
   onChangeSubType: (type: string) => void;
@@ -24,7 +24,7 @@ const JournalTypeForm = (props: ChapterTypeFormProps) => {
         />
       </StyledSelectWrapper>
 
-      {subtype && <ChapterForm subtype={subtype} />}
+      {subtype && <ChapterForm />}
     </>
   );
 };

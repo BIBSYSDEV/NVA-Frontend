@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Field, FieldProps } from 'formik';
+import { Field, FieldProps, useFormikContext } from 'formik';
 import styled from 'styled-components';
 import { TextField, Typography } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
@@ -11,6 +11,7 @@ import DoiField from '../components/DoiField';
 import Card from '../../../../components/Card';
 import PeerReview from '../components/PeerReview';
 import SearchContainerField from '../components/SearchContainerField';
+import { ChapterRegistration } from '../../../../types/registration.types';
 
 const StyledInfoCard = styled(Card)`
   margin-top: 1rem;
@@ -38,12 +39,13 @@ const StyledPageNumberField = styled(TextField)`
   width: 10rem;
 `;
 
-interface ChapterFormProps {
-  subtype: ChapterType;
-}
-
-const ChapterForm = (props: ChapterFormProps) => {
+const ChapterForm = () => {
   const { t } = useTranslation('registration');
+
+  const { values } = useFormikContext<ChapterRegistration>();
+  const {
+    reference: { publicationContext, publicationInstance },
+  } = values.entityDescription;
 
   return (
     <>
@@ -54,13 +56,12 @@ const ChapterForm = (props: ChapterFormProps) => {
 
       <DoiField />
 
-      {props.subtype === ChapterType.BOOK && (
+      {publicationInstance.type === ChapterType.BOOK && (
         <SearchContainerField
           fieldName={ReferenceFieldNames.PUBLICATION_CONTEXT_LINKED_CONTEXT}
           searchSubtypes={[BookType.ANTHOLOGY]}
         />
       )}
-      {/* {props.subtype === ChapterType.REPORT && <></>} */}
 
       <StyledPageNumberWrapper>
         <Field name={ReferenceFieldNames.PAGES_FROM}>
@@ -92,11 +93,14 @@ const ChapterForm = (props: ChapterFormProps) => {
         </Field>
       </StyledPageNumberWrapper>
 
-      {props.subtype === ChapterType.BOOK && (
+      {publicationInstance.type === ChapterType.BOOK && (
         <>
           <PeerReview fieldName={ReferenceFieldNames.PEER_REVIEW} label={t('references.peer_review')} />
-          {/* TODO: Fix NVI validation */}
-          <NviValidation isPeerReviewed={true} isRated={true} dataTestId="nvi-chapter" />
+          <NviValidation
+            isPeerReviewed={!!publicationInstance.peerReviewed}
+            isRated={!!publicationContext?.level}
+            dataTestId="nvi-chapter"
+          />
         </>
       )}
     </>
