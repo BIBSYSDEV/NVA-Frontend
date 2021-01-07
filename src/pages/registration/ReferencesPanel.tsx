@@ -22,6 +22,7 @@ import { emptyJournalPublicationInstance } from '../../types/publication_types/j
 import { emptyReportPublicationInstance } from '../../types/publication_types/reportRegistration.types';
 import { emptyDegreePublicationInstance } from '../../types/publication_types/degreeRegistration.types';
 import { StyledSelectWrapper } from '../../components/styled/Wrappers';
+import { emptyChapterPublicationInstance } from '../../types/publication_types/chapterRegistration.types';
 
 const StyledCard = styled(Card)`
   margin-top: 1rem;
@@ -50,7 +51,7 @@ const ReferencesPanel: FC = () => {
         setFieldValue(instanceTypeBaseFieldName, emptyDegreePublicationInstance, false);
         break;
       case PublicationType.CHAPTER:
-        setFieldValue(instanceTypeBaseFieldName, {}, false); //TODO CHAPTER
+        setFieldValue(instanceTypeBaseFieldName, emptyChapterPublicationInstance, false);
         break;
     }
     // Avoid showing potential errors instantly

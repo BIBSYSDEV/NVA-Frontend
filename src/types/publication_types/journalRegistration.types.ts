@@ -1,4 +1,4 @@
-import { BackendType, PagesRange, RegistrationDate } from '../registration.types';
+import { BackendType, emptyPagesRange, PagesRange, RegistrationDate } from '../registration.types';
 import { PublicationType, JournalType } from '../publicationFieldNames';
 import { LanguageValues } from '../language.types';
 import { Contributor } from '../contributor.types';
@@ -46,7 +46,7 @@ export const emptyJournalPublicationInstance: JournalPublicationInstance = {
   type: '',
   articleNumber: '',
   issue: '',
-  pages: { type: BackendTypeNames.PAGES_RANGE, begin: '', end: '' },
+  pages: { type: BackendTypeNames.PAGES_RANGE, begin: '', end: '' }, // TODO: use emptyPagesRange
   peerReviewed: false,
   volume: '',
   corrigendumFor: '',

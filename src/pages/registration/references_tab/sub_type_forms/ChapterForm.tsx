@@ -10,7 +10,7 @@ import NviValidation from '../components/NviValidation';
 import DoiField from '../components/DoiField';
 import Card from '../../../../components/Card';
 import PeerReview from '../components/PeerReview';
-import SearchForContainerField from '../components/SearchForContainerField';
+import SearchContainerField from '../components/SearchContainerField';
 
 const StyledInfoCard = styled(Card)`
   margin-top: 1rem;
@@ -39,7 +39,7 @@ const StyledPageNumberField = styled(TextField)`
 `;
 
 interface ChapterFormProps {
-  subtype: string;
+  subtype: ChapterType;
 }
 
 const ChapterForm = (props: ChapterFormProps) => {
@@ -55,9 +55,9 @@ const ChapterForm = (props: ChapterFormProps) => {
       <DoiField />
 
       {props.subtype === ChapterType.BOOK && (
-        <SearchForContainerField
-          targetedSubtypes={[BookType.ANTHOLOGY]}
+        <SearchContainerField
           fieldName={ReferenceFieldNames.PUBLICATION_CONTEXT_LINKED_CONTEXT}
+          searchSubtypes={[BookType.ANTHOLOGY]}
         />
       )}
       {/* {props.subtype === ChapterType.REPORT && <></>} */}

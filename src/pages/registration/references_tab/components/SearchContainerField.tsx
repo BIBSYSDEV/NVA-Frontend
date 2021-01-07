@@ -17,22 +17,23 @@ import { getRegistrationPath } from '../../../../utils/urlPaths';
 import { createSearchQuery } from '../../../../utils/searchHelpers';
 import { RegistrationSubtype } from '../../../../types/publicationFieldNames';
 
-interface SearchForContainerFieldProps {
+interface SearchContainerFieldProps {
   fieldName: string;
-  targetedSubtypes: RegistrationSubtype[];
+  searchSubtypes: RegistrationSubtype[];
 }
 
-const SearchForContainerField = (props: SearchForContainerFieldProps) => {
+const SearchContainerField = (props: SearchContainerFieldProps) => {
   const { t } = useTranslation('registration');
   const { values, setFieldValue, setFieldTouched } = useFormikContext<Registration>();
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearchTerm = useDebounce(searchTerm);
 
   const [containerSearch, isLoadingContainerSearch] = useSearchRegistrations(
-    createSearchQuery(debouncedSearchTerm, props.targetedSubtypes)
+    createSearchQuery(debouncedSearchTerm, props.searchSubtypes)
   );
 
-  const currentIdentifier = getIn(values, props.fieldName) ?? '';
+  const currentIriValue = getIn(values, props.fieldName);
+  const currentIdentifier = currentIriValue ? (currentIriValue.split('/').pop() as string) : '';
   const [selectedContainer, isLoadingSelectedContainer] = useSearchRegistrations(`identifier="${currentIdentifier}"`);
 
   // Show only selected value as option unless user are performing a new search
@@ -98,4 +99,4 @@ const SearchForContainerField = (props: SearchForContainerFieldProps) => {
   );
 };
 
-export default SearchForContainerField;
+export default SearchContainerField;
