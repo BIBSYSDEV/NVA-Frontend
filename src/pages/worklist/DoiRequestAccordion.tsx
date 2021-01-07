@@ -81,13 +81,13 @@ export const DoiRequestAccordion = ({ identifier }: DoiRequestAccordionProps) =>
     const updatedDoiRequestWithMessage = await updateDoiRequestWithMessage(identifier, message);
     if (updatedDoiRequestWithMessage) {
       if (updatedDoiRequestWithMessage.error) {
-        dispatch(setNotification(t('feedback:error.update_doi_request'), NotificationVariant.Error));
+        dispatch(setNotification(t('feedback:error.message_failed'), NotificationVariant.Error));
       } else {
-        dispatch(setNotification(t('feedback:success.doi_request_updated'), NotificationVariant.Success));
+        dispatch(setNotification(t('feedback:success.message_sent'), NotificationVariant.Success));
+        refetchRegistration();
       }
       setIsSendingMessage(false);
     }
-    refetchRegistration();
   };
 
   return (
