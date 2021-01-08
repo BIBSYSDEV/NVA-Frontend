@@ -1,5 +1,5 @@
 import { Field, useFormikContext, FieldProps, ErrorMessage } from 'formik';
-import React, { FC } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { TextField, Typography } from '@material-ui/core';
@@ -7,7 +7,6 @@ import { JournalRegistration } from '../../../../types/registration.types';
 import { JournalType, ReferenceFieldNames } from '../../../../types/publicationFieldNames';
 import DoiField from '../components/DoiField';
 import NviValidation from '../components/NviValidation';
-import { JournalEntityDescription } from '../../../../types/publication_types/journalRegistration.types';
 import JournalField from '../components/JournalField';
 import PeerReview from '../components/PeerReview';
 import CorrigendumForField from '../components/CorrigendumForField';
@@ -28,12 +27,12 @@ const StyledLabel = styled(Typography)`
   justify-self: center;
 `;
 
-const JournalForm: FC = () => {
+const JournalForm = () => {
   const { t } = useTranslation('registration');
   const { values } = useFormikContext<JournalRegistration>();
   const {
     reference: { publicationContext, publicationInstance },
-  } = values.entityDescription as JournalEntityDescription;
+  } = values.entityDescription;
 
   return (
     <>
