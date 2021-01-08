@@ -14,7 +14,7 @@ import useDebounce from '../../../../utils/hooks/useDebounce';
 import { API_URL } from '../../../../utils/constants';
 import { getRegistrationPath } from '../../../../utils/urlPaths';
 import { createSearchQuery } from '../../../../utils/searchHelpers';
-import { RegistrationSubtype } from '../../../../types/publicationFieldNames';
+import { ReferenceFieldNames, RegistrationSubtype } from '../../../../types/publicationFieldNames';
 
 interface SearchContainerFieldProps {
   fieldName: string;
@@ -30,7 +30,7 @@ const SearchContainerField = (props: SearchContainerFieldProps) => {
 
   const optionsSearchQuery = createSearchQuery({
     searchTerm: debouncedSearchTerm,
-    subtypes: props.searchSubtypes,
+    properties: [{ key: ReferenceFieldNames.SUB_TYPE, value: props.searchSubtypes }],
   });
   const [containerOptions, isLoadingContainerOptions] = useSearchRegistrations(optionsSearchQuery);
 
