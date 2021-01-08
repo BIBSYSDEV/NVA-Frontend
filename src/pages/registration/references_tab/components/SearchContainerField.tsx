@@ -13,7 +13,6 @@ import { displayDate } from '../../../../utils/date-helpers';
 import useDebounce from '../../../../utils/hooks/useDebounce';
 import { API_URL } from '../../../../utils/constants';
 import { getRegistrationPath } from '../../../../utils/urlPaths';
-import { createSearchQuery } from '../../../../utils/searchHelpers';
 import { ReferenceFieldNames, RegistrationSubtype } from '../../../../types/publicationFieldNames';
 
 interface SearchContainerFieldProps {
@@ -28,18 +27,15 @@ const SearchContainerField = (props: SearchContainerFieldProps) => {
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearchTerm = useDebounce(searchTerm);
 
-  const optionsSearchQuery = createSearchQuery({
+  const [containerOptions, isLoadingContainerOptions] = useSearchRegistrations({
     searchTerm: debouncedSearchTerm,
     properties: [{ key: ReferenceFieldNames.SUB_TYPE, value: props.searchSubtypes }],
   });
-  const [containerOptions, isLoadingContainerOptions] = useSearchRegistrations(optionsSearchQuery);
 
-  const currentIriValue = getIn(values, props.fieldName);
-  const currentIdentifier = currentIriValue ? (currentIriValue.split('/').pop() as string) : '';
-  const selectedContainerSearchQuery = createSearchQuery({
+  const currentIdentifier = getIn(values, props.fieldName).split('/').pop() ?? '';
+  const [selectedContainer, isLoadingSelectedContainer] = useSearchRegistrations({
     properties: [{ key: 'identifier', value: currentIdentifier }],
   });
-  const [selectedContainer, isLoadingSelectedContainer] = useSearchRegistrations(selectedContainerSearchQuery);
 
   // Show only selected value as option unless user are performing a new search
   const options =

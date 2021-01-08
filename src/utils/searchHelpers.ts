@@ -2,7 +2,7 @@ interface PropertySearch {
   key: string;
   value: string | string[]; // Can check for one of multiple values
 }
-interface SearchConfig {
+export interface SearchConfig {
   searchTerm?: string;
   properties?: PropertySearch[];
   canMatchAnyProperty?: boolean; // Whether to use "OR" or "AND" operator for each property check

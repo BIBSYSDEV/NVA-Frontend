@@ -11,7 +11,7 @@ interface RegistrationSearchProps {
 }
 
 const RegistrationSearch: FC<RegistrationSearchProps> = ({ searchTerm, noHitsText }) => {
-  const [registrationsSearch, isLoadingSearch] = useSearchRegistrations(searchTerm);
+  const [registrationsSearch, isLoadingSearch] = useSearchRegistrations({ searchTerm });
   const { t } = useTranslation('common');
 
   return (
