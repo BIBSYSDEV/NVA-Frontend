@@ -13,7 +13,6 @@ import { UrlPathTemplate } from '../../utils/urlPaths';
 
 const StyledMenu = styled.div`
   grid-area: menu;
-  min-width: 10rem;
 `;
 
 const StyledAdminMenu = styled.div`
