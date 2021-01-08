@@ -1,17 +1,32 @@
 import { RegistrationSubtype } from '../types/publicationFieldNames';
 
-const createSubtypeFilter = (subtypes: RegistrationSubtype[]) =>
-  `(${subtypes.map((subtype) => `entityDescription.reference.publicationInstance="${subtype}"`).join(' OR ')})`;
+interface PropertySearch {
+  key: string;
+  value: string;
+}
+interface SearchConfig {
+  searchTerm?: string;
+  subtypes?: RegistrationSubtype[];
+  properties?: PropertySearch[];
+}
 
-export const createSearchQuery = (searchTerm: string, subtypes?: RegistrationSubtype[]) => {
-  const textSearch = searchTerm ? `*${searchTerm}*` : '';
-  const typeSearch = subtypes && subtypes.length > 0 ? createSubtypeFilter(subtypes) : '';
+const createSearchTermFilter = (searchTerm?: string) => (searchTerm ? `*${searchTerm}*` : '');
 
-  if (!typeSearch) {
-    return textSearch;
-  } else if (!textSearch) {
-    return typeSearch;
-  } else {
-    return `${typeSearch} AND *${searchTerm}*`;
-  }
+const createSubtypeFilter = (subtypes?: RegistrationSubtype[]) =>
+  subtypes && subtypes.length > 0
+    ? `(${subtypes.map((subtype) => `entityDescription.reference.publicationInstance="${subtype}"`).join(' OR ')})`
+    : '';
+
+const createPropertyFilter = (properties?: PropertySearch[]) =>
+  properties && properties.length > 0
+    ? `(${properties.map(({ key, value }) => `${key}="${value}"`).join(' OR ')})`
+    : '';
+
+export const createSearchQuery = (searchConfig: SearchConfig) => {
+  const textSearch = createSearchTermFilter(searchConfig.searchTerm);
+  const typeSearch = createSubtypeFilter(searchConfig.subtypes);
+  const propertySearch = createPropertyFilter(searchConfig.properties);
+
+  const searchQuery = [textSearch, typeSearch, propertySearch].filter((search) => !!search).join(' AND ');
+  return searchQuery;
 };
