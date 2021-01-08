@@ -53,6 +53,7 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier, closeForm, is
   const isValidCurator = userIsRegistrationCurator(user, registration);
 
   useEffect(() => {
+    // TODO: Go back if not loading or registration
     if (!registration && !isLoadingRegistration) {
       closeForm();
     }

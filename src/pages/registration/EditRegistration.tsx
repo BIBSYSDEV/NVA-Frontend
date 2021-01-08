@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, useState } from 'react';
+import React, { ChangeEvent, FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useParams } from 'react-router-dom';
 import styled from 'styled-components';
@@ -31,25 +31,18 @@ const EditRegistration: FC = () => {
   const [expanded, setExpanded] = useState<PanelName | false>(false);
   const [showForm, setShowForm] = useState(!!identifier);
 
+  // Open form only when we have an identifier in the URL
+  useEffect(() => setShowForm(!!identifier), [identifier]);
+
   const handleChange = (panel: PanelName) => (_: ChangeEvent<unknown>, isExpanded: boolean) =>
     setExpanded(isExpanded ? panel : false);
-
-  const handleOpenForm = () => setShowForm(true);
 
   return !showForm ? (
     <>
       <PageHeader>{t('new_registration')}</PageHeader>
       <StyledEditRegistration>
-        <LinkRegistration
-          expanded={expanded === PanelName.Link}
-          onChange={handleChange(PanelName.Link)}
-          openForm={handleOpenForm}
-        />
-        <UploadRegistration
-          expanded={expanded === PanelName.File}
-          onChange={handleChange(PanelName.File)}
-          openForm={handleOpenForm}
-        />
+        <LinkRegistration expanded={expanded === PanelName.Link} onChange={handleChange(PanelName.Link)} />
+        <UploadRegistration expanded={expanded === PanelName.File} onChange={handleChange(PanelName.File)} />
       </StyledEditRegistration>
     </>
   ) : (
