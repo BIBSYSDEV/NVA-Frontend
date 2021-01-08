@@ -1,15 +1,15 @@
-import React, { FC } from 'react';
-import * as Yup from 'yup';
-import { useTranslation } from 'react-i18next';
-import { Button, TextField, DialogActions } from '@material-ui/core';
 import { ErrorMessage, Field, FieldProps, Form, Formik } from 'formik';
-
-import ButtonWithProgress from './ButtonWithProgress';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import * as Yup from 'yup';
+import { Button, DialogActions, TextField } from '@material-ui/core';
 import { ErrorMessage as ErrorMessageString } from '../utils/validation/errorMessage';
+import ButtonWithProgress from './ButtonWithProgress';
 
 interface MessageFormProps {
   confirmAction: (message: string) => Promise<unknown> | void;
   cancelAction?: () => void;
+  disabled?: boolean;
 }
 
 interface MessageFormData {
@@ -24,7 +24,7 @@ const validationSchema = Yup.object().shape({
   message: Yup.string().required(ErrorMessageString.REQUIRED),
 });
 
-export const MessageForm: FC<MessageFormProps> = ({ confirmAction, cancelAction }) => {
+export const MessageForm = ({ confirmAction, cancelAction, disabled }: MessageFormProps) => {
   const { t } = useTranslation('registration');
 
   return (
@@ -41,6 +41,7 @@ export const MessageForm: FC<MessageFormProps> = ({ confirmAction, cancelAction 
             {({ field, meta: { touched, error } }: FieldProps<string>) => (
               <TextField
                 {...field}
+                disabled={disabled}
                 inputProps={{ 'data-testid': 'message-input' }}
                 variant="outlined"
                 multiline
@@ -62,6 +63,7 @@ export const MessageForm: FC<MessageFormProps> = ({ confirmAction, cancelAction 
             )}
             <ButtonWithProgress
               data-testid="send-button"
+              disabled={disabled}
               type="submit"
               variant="contained"
               color="primary"
