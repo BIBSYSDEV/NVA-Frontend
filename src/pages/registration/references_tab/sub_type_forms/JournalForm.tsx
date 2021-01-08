@@ -1,5 +1,5 @@
 import { Field, useFormikContext, FieldProps, ErrorMessage } from 'formik';
-import React, { FC } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { TextField, Typography } from '@material-ui/core';
@@ -7,10 +7,9 @@ import { JournalRegistration } from '../../../../types/registration.types';
 import { JournalType, ReferenceFieldNames } from '../../../../types/publicationFieldNames';
 import DoiField from '../components/DoiField';
 import NviValidation from '../components/NviValidation';
-import { JournalEntityDescription } from '../../../../types/publication_types/journalRegistration.types';
 import JournalField from '../components/JournalField';
 import PeerReview from '../components/PeerReview';
-import CorrigendumForField from '../components/CorrigendumForField';
+import SearchContainerField from '../components/SearchContainerField';
 
 const StyledArticleDetail = styled.div`
   display: grid;
@@ -28,18 +27,27 @@ const StyledLabel = styled(Typography)`
   justify-self: center;
 `;
 
-const JournalForm: FC = () => {
+const JournalForm = () => {
   const { t } = useTranslation('registration');
   const { values } = useFormikContext<JournalRegistration>();
   const {
     reference: { publicationContext, publicationInstance },
-  } = values.entityDescription as JournalEntityDescription;
+  } = values.entityDescription;
 
   return (
     <>
       <DoiField />
 
-      {publicationInstance.type === JournalType.CORRIGENDUM ? <CorrigendumForField /> : <JournalField />}
+      {publicationInstance.type === JournalType.CORRIGENDUM && (
+        <SearchContainerField
+          fieldName={ReferenceFieldNames.CORRIGENDUM_FOR}
+          searchSubtypes={[JournalType.ARTICLE, JournalType.SHORT_COMMUNICATION]}
+          label={t('references.original_article')}
+          placeholder={t('references.search_for_original_article')}
+        />
+      )}
+      {/* TODO: JournalField should be disabled for corrigendum and reflect value for original article (NP-1991) */}
+      <JournalField />
 
       <StyledArticleDetail>
         <Field name={ReferenceFieldNames.VOLUME}>

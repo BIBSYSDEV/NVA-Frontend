@@ -33,6 +33,8 @@ export enum DegreeType {
   OTHER = 'OtherStudentWork',
 }
 
+export type RegistrationSubtype = JournalType | ReportType | BookType | DegreeType;
+
 // Enums representing name of fields used by Formik
 export const contextTypeBaseFieldName = 'entityDescription.reference.publicationContext';
 export const instanceTypeBaseFieldName = 'entityDescription.reference.publicationInstance';
