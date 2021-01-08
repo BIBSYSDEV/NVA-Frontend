@@ -1,6 +1,6 @@
-import React, { FC, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Button, Menu as MuiMenu, MenuItem, Typography, IconButton } from '@material-ui/core';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
@@ -13,6 +13,7 @@ import { UrlPathTemplate } from '../../utils/urlPaths';
 
 const StyledMenu = styled.div`
   grid-area: menu;
+  min-width: 10rem;
 `;
 
 const StyledAdminMenu = styled.div`
@@ -47,22 +48,16 @@ interface MenuProps {
   menuButtonLabel: string;
 }
 
-const Menu: FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
+const Menu = ({ menuButtonLabel, handleLogout }: MenuProps) => {
+  const { t } = useTranslation();
   const user = useSelector((store: RootStore) => store.user);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const { t } = useTranslation();
-  const history = useHistory();
 
   const handleClickMenuAnchor = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClickMenuItem = (newPath: string) => {
-    setAnchorEl(null);
-    if (newPath !== `${history.location.pathname}${history.location.search}`) {
-      history.push(newPath);
-    }
-  };
+  const closeMenu = () => setAnchorEl(null);
 
   return (
     <StyledMenu>
@@ -92,8 +87,10 @@ const Menu: FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
           <StyledAdminMenu>
             <StyledNormalText>{t('profile:roles.curator')}</StyledNormalText>
             <MenuItem
+              component={Link}
+              to={UrlPathTemplate.Worklist}
               data-testid="menu-my-worklist-button"
-              onClick={() => handleClickMenuItem(UrlPathTemplate.Worklist)}>
+              onClick={closeMenu}>
               <StyledMenuItemText>{t('workLists:my_worklist')}</StyledMenuItemText>
             </MenuItem>
           </StyledAdminMenu>
@@ -103,28 +100,38 @@ const Menu: FC<MenuProps> = ({ menuButtonLabel, handleLogout }) => {
             <StyledNormalText>{t('common:admin')}</StyledNormalText>
             {user.isAppAdmin && (
               <MenuItem
+                component={Link}
+                to={UrlPathTemplate.AdminInstitutions}
                 data-testid="menu-admin-institution-button"
-                onClick={() => handleClickMenuItem(UrlPathTemplate.AdminInstitutions)}>
+                onClick={closeMenu}>
                 <StyledMenuItemText>{t('common:institutions')}</StyledMenuItemText>
               </MenuItem>
             )}
             {user.isInstitutionAdmin && (
               <>
                 <MenuItem
+                  component={Link}
+                  to={UrlPathTemplate.MyInstitution}
                   data-testid="menu-admin-institution-button"
-                  onClick={() => handleClickMenuItem(UrlPathTemplate.MyInstitution)}>
+                  onClick={closeMenu}>
                   <StyledMenuItemText>{t('common:my_institution')}</StyledMenuItemText>
                 </MenuItem>
                 <MenuItem
+                  component={Link}
+                  to={UrlPathTemplate.MyInstitutionUsers}
                   data-testid="menu-admin-institution-users-button"
-                  onClick={() => handleClickMenuItem(UrlPathTemplate.MyInstitutionUsers)}>
+                  onClick={closeMenu}>
                   <StyledMenuItemText>{t('common:users')}</StyledMenuItemText>
                 </MenuItem>
               </>
             )}
           </StyledAdminMenu>
         )}
-        <MenuItem data-testid="menu-user-profile-button" onClick={() => handleClickMenuItem('/my-profile')}>
+        <MenuItem
+          component={Link}
+          to={UrlPathTemplate.MyProfile}
+          data-testid="menu-user-profile-button"
+          onClick={closeMenu}>
           {t('profile:my_profile')}
         </MenuItem>
         <MenuItem onClick={handleLogout} data-testid="menu-logout-button">
