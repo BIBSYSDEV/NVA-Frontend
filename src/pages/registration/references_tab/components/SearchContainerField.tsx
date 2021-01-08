@@ -13,7 +13,11 @@ import { displayDate } from '../../../../utils/date-helpers';
 import useDebounce from '../../../../utils/hooks/useDebounce';
 import { API_URL } from '../../../../utils/constants';
 import { getRegistrationPath } from '../../../../utils/urlPaths';
-import { ReferenceFieldNames, RegistrationSubtype } from '../../../../types/publicationFieldNames';
+import {
+  ReferenceFieldNames,
+  RegistrationFieldName,
+  RegistrationSubtype,
+} from '../../../../types/publicationFieldNames';
 
 interface SearchContainerFieldProps {
   fieldName: string;
@@ -34,7 +38,7 @@ const SearchContainerField = (props: SearchContainerFieldProps) => {
 
   const currentIdentifier = getIn(values, props.fieldName).split('/').pop() ?? '';
   const [selectedContainer, isLoadingSelectedContainer] = useSearchRegistrations({
-    properties: [{ key: 'identifier', value: currentIdentifier }],
+    properties: [{ key: RegistrationFieldName.Identifier, value: currentIdentifier }],
   });
 
   // Show only selected value as option unless user are performing a new search

@@ -7,7 +7,7 @@ import LabelContentRow from '../../components/LabelContentRow';
 import { DegreePublicationInstance } from '../../types/publication_types/degreeRegistration.types';
 import { ReportPublicationInstance } from '../../types/publication_types/reportRegistration.types';
 import { PagesMonograph } from '../../types/registration.types';
-import { JournalType } from '../../types/publicationFieldNames';
+import { JournalType, RegistrationFieldName } from '../../types/publicationFieldNames';
 import useSearchRegistrations from '../../utils/hooks/useSearchRegistrations';
 
 export const PublicPublicationInstanceJournal: FC<{ publicationInstance: JournalPublicationInstance }> = ({
@@ -32,7 +32,7 @@ export const PublicPublicationInstanceJournal: FC<{ publicationInstance: Journal
 const OriginalArticleInfo: FC<{ originalArticleId: string }> = ({ originalArticleId }) => {
   const { t } = useTranslation('registration');
   const [originalArticleSearch, isLoadingOriginalArticleSearch] = useSearchRegistrations({
-    properties: [{ key: 'identifier', value: originalArticleId.split('/').pop() ?? '' }],
+    properties: [{ key: RegistrationFieldName.Identifier, value: originalArticleId.split('/').pop() ?? '' }],
   });
 
   const originalArticle =
