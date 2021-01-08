@@ -46,11 +46,7 @@ const EditRegistration: FC = () => {
       </StyledEditRegistration>
     </>
   ) : (
-    <RegistrationForm
-      identifier={identifier}
-      isNewRegistration={!!location.state?.isNewRegistration}
-      closeForm={() => setShowForm(false)}
-    />
+    <RegistrationForm identifier={identifier} isNewRegistration={!!location.state?.isNewRegistration} />
   );
 };
 

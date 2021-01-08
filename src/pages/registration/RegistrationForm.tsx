@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Form,
   Formik,
@@ -28,7 +28,7 @@ import { PageHeader } from '../../components/PageHeader';
 import Forbidden from '../errorpages/Forbidden';
 import { RegistrationFormActions } from './RegistrationFormActions';
 import { userIsRegistrationOwner, userIsRegistrationCurator } from '../../utils/registration-helpers';
-import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
+import { getRegistrationLandingPagePath, getRegistrationPath } from '../../utils/urlPaths';
 import { createUppy } from '../../utils/uppy/uppy-config';
 
 const StyledRegistration = styled.div`
@@ -36,12 +36,11 @@ const StyledRegistration = styled.div`
 `;
 
 interface RegistrationFormProps {
-  closeForm: () => void;
   identifier: string;
   isNewRegistration: boolean;
 }
 
-const RegistrationForm: FC<RegistrationFormProps> = ({ identifier, closeForm, isNewRegistration }) => {
+const RegistrationForm = ({ identifier, isNewRegistration }: RegistrationFormProps) => {
   const user = useSelector((store: RootStore) => store.user);
   const { t } = useTranslation('registration');
   const history = useHistory();
@@ -53,11 +52,10 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier, closeForm, is
   const isValidCurator = userIsRegistrationCurator(user, registration);
 
   useEffect(() => {
-    // TODO: Go back if not loading or registration
     if (!registration && !isLoadingRegistration) {
-      closeForm();
+      history.replace(getRegistrationPath());
     }
-  }, [closeForm, registration, isLoadingRegistration]);
+  }, [history, registration, isLoadingRegistration]);
 
   useEffect(() => {
     // Redirect to public page if user should not be able to edit this registration
