@@ -9,13 +9,19 @@ export interface SearchConfig {
   canMatchAnySubquery?: boolean; // Whether to use "OR" or "AND" operator for each subquery
 }
 
+// Since these Operators will be used in joins they must be enclosed by whitespace
+enum Operator {
+  AND = ' AND ',
+  OR = ' OR ',
+}
+
 const createSearchTermFilter = (searchTerm?: string) => (searchTerm ? `*${searchTerm}*` : '');
 
 const createPropertyFilter = (properties?: PropertySearch[], canMatchAnyProperty?: boolean) =>
   properties && properties.length > 0
     ? `(${properties
-        .map(({ key, value }) => `${key}="${Array.isArray(value) ? value.join('" OR "') : value}"`)
-        .join(canMatchAnyProperty ? ' OR ' : ' AND ')})`
+        .map(({ key, value }) => `${key}="${Array.isArray(value) ? value.join(`"${Operator.OR}"`) : value}"`)
+        .join(canMatchAnyProperty ? Operator.OR : Operator.AND)})`
     : '';
 
 export const createSearchQuery = (searchConfig: SearchConfig) => {
@@ -24,6 +30,6 @@ export const createSearchQuery = (searchConfig: SearchConfig) => {
 
   const searchQuery = [textSearch, propertySearch]
     .filter((search) => !!search)
-    .join(searchConfig.canMatchAnySubquery ? ' OR ' : ' AND ');
+    .join(searchConfig.canMatchAnySubquery ? Operator.OR : Operator.AND);
   return searchQuery;
 };
