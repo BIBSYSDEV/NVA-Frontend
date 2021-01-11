@@ -11,7 +11,7 @@ import useCancelToken from './useCancelToken';
 const useSearchRegistrations = (
   searchConfig: SearchConfig,
   numberOfResults?: number,
-  searchAfter?: string
+  searchAfter?: number
 ): [SearchResult | undefined, boolean] => {
   const dispatch = useDispatch();
   const { t } = useTranslation('feedback');
