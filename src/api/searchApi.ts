@@ -1,5 +1,6 @@
 import { CancelToken } from 'axios';
 import { SearchResult } from '../types/search.types';
+import { ROWS_PER_PAGE_OPTIONS } from '../utils/constants';
 import { apiRequest } from './apiRequest';
 
 export enum SearchApiPaths {
@@ -8,7 +9,7 @@ export enum SearchApiPaths {
 
 export const searchRegistrations = async (
   searchTerm?: string,
-  numberOfResults = 10,
+  numberOfResults = ROWS_PER_PAGE_OPTIONS[1],
   searchAfter = 0,
   cancelToken?: CancelToken
 ) => {
