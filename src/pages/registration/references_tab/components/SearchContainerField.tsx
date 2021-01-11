@@ -36,7 +36,7 @@ const SearchContainerField = (props: SearchContainerFieldProps) => {
     properties: [{ fieldName: ReferenceFieldNames.SUB_TYPE, value: props.searchSubtypes }],
   });
 
-  const currentIdentifier = getIn(values, props.fieldName).split('/').pop() ?? '';
+  const currentIdentifier = getIn(values, props.fieldName)?.split('/').pop() ?? '';
   const [selectedContainer, isLoadingSelectedContainer] = useSearchRegistrations({
     properties: [{ fieldName: RegistrationFieldName.IDENTIFIER, value: currentIdentifier }],
   });
