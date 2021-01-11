@@ -7,8 +7,9 @@ import LabelContentRow from '../../components/LabelContentRow';
 import { DegreePublicationInstance } from '../../types/publication_types/degreeRegistration.types';
 import { ReportPublicationInstance } from '../../types/publication_types/reportRegistration.types';
 import { PagesMonograph } from '../../types/registration.types';
-import { JournalType } from '../../types/publicationFieldNames';
+import { JournalType, RegistrationFieldName } from '../../types/publicationFieldNames';
 import useSearchRegistrations from '../../utils/hooks/useSearchRegistrations';
+import { BookPublicationInstance } from '../../types/publication_types/bookRegistration.types';
 
 export const PublicPublicationInstanceJournal: FC<{ publicationInstance: JournalPublicationInstance }> = ({
   publicationInstance,
@@ -16,13 +17,24 @@ export const PublicPublicationInstanceJournal: FC<{ publicationInstance: Journal
   const { t } = useTranslation('registration');
   const { type, articleNumber, issue, pages, volume, corrigendumFor } = publicationInstance;
 
+  const fieldTexts = [];
+  if (volume) {
+    fieldTexts.push(`${t('references.volume')} ${volume}`);
+  }
+  if (issue) {
+    fieldTexts.push(`${t('references.issue')} ${issue}`);
+  }
+  if (pages.begin || pages.end) {
+    fieldTexts.push(`${t('references.pages')} ${pages.begin ?? '?'}-${pages.end ?? '?'}`);
+  }
+  if (articleNumber) {
+    fieldTexts.push(`${t('references.article_number')} ${articleNumber}`);
+  }
+
   return (
     <>
       <LabelContentRow minimal label={`${t('common:details')}:`}>
-        {volume && `${t('references.volume')} ${volume}`}
-        {issue && `, ${t('references.issue')} ${issue}`}
-        {pages?.begin && pages?.end && `, ${t('references.pages')} ${pages.begin}-${pages.end}`}
-        {articleNumber && `, ${t('references.article_number')} ${articleNumber}`}
+        {fieldTexts.join(', ')}
       </LabelContentRow>
       {type === JournalType.CORRIGENDUM && <OriginalArticleInfo originalArticleId={corrigendumFor} />}
     </>
@@ -31,9 +43,9 @@ export const PublicPublicationInstanceJournal: FC<{ publicationInstance: Journal
 
 const OriginalArticleInfo: FC<{ originalArticleId: string }> = ({ originalArticleId }) => {
   const { t } = useTranslation('registration');
-  const [originalArticleSearch, isLoadingOriginalArticleSearch] = useSearchRegistrations(
-    `identifier="${originalArticleId.split('/').pop()}"`
-  );
+  const [originalArticleSearch, isLoadingOriginalArticleSearch] = useSearchRegistrations({
+    properties: [{ fieldName: RegistrationFieldName.IDENTIFIER, value: originalArticleId.split('/').pop() ?? '' }],
+  });
 
   const originalArticle =
     originalArticleSearch && originalArticleSearch.hits.length === 1 ? originalArticleSearch.hits[0] : null;
@@ -47,6 +59,14 @@ const OriginalArticleInfo: FC<{ originalArticleId: string }> = ({ originalArticl
       )}
     </LabelContentRow>
   );
+};
+
+export const PublicPublicationInstanceBook: FC<{ publicationInstance: BookPublicationInstance }> = ({
+  publicationInstance,
+}) => {
+  const { pages } = publicationInstance;
+
+  return <DisplayPages pages={pages} />;
 };
 
 export const PublicPublicationInstanceDegree: FC<{ publicationInstance: DegreePublicationInstance }> = ({

@@ -1,4 +1,4 @@
-import React, { useState, FC } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 import styled from 'styled-components';
@@ -25,10 +25,9 @@ const StyledFileCard = styled.div`
 interface UploadRegistrationProps {
   expanded: boolean;
   onChange: (event: React.ChangeEvent<unknown>, isExpanded: boolean) => void;
-  openForm: () => void;
 }
 
-const UploadRegistration: FC<UploadRegistrationProps> = ({ expanded, onChange, openForm }) => {
+const UploadRegistration = ({ expanded, onChange }: UploadRegistrationProps) => {
   const { t } = useTranslation('registration');
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -46,7 +45,6 @@ const UploadRegistration: FC<UploadRegistrationProps> = ({ expanded, onChange, o
     };
     const registration = await createRegistration(registrationPayload);
     if (registration?.identifier) {
-      openForm();
       history.push(getRegistrationPath(registration.identifier), { isNewRegistration: true });
     } else {
       setIsLoading(false);

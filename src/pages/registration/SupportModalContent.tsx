@@ -22,7 +22,7 @@ export const SupportModalContent: FC<SupportModalContentProps> = ({ closeModal }
           // eslint-disable-next-line no-console
           console.log('Support Message:', message);
           closeModal();
-          // dispatch(setNotification(t('feedback:success.support_message_sent')));
+          // dispatch(setNotification(t('feedback:success.message_sent')));
         }}
         cancelAction={closeModal}
       />

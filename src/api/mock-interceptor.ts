@@ -1,35 +1,37 @@
 import Axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-
 import { Authority } from '../types/authority.types';
 import OrcidResponse from '../types/orcid.types';
+import { emptyRegistration } from '../types/registration.types';
 import { API_URL, ORCID_USER_INFO_URL } from '../utils/constants';
 import mockDoiLookupResponse from '../utils/testfiles/doi_lookup_response.json';
-import mockInstitutionResponse from '../utils/testfiles/institutions/institution_query.json';
 import mockNtnuResponse from '../utils/testfiles/institutions/institution_ntnu.json';
+import mockInstitutionResponse from '../utils/testfiles/institutions/institution_query.json';
 import mockNtnuSubunitResponse from '../utils/testfiles/institutions/institution_subunit_ntnu.json';
+import { mockSchoolOfSportDepartment } from '../utils/testfiles/institutions/school_of_sport_department';
 import mockAuthoritiesResponse from '../utils/testfiles/mock_authorities_response.json';
-import mockProjects from '../utils/testfiles/projects_real.json';
-import { mockRegistration, mockRegistrationsWithPendingDoiRequest } from '../utils/testfiles/mockRegistration';
-import mockMyRegistrations from '../utils/testfiles/my_registrations.json';
-import mockNsdPublisers from '../utils/testfiles/publishersFromNsd.json';
-import { mockCustomerInstitutions, mockCustomerInstitution } from '../utils/testfiles/mockCustomerInstitutions';
-import mockPublishedRegistrations from '../utils/testfiles/published_registrations.json';
-import { AuthorityApiPaths } from './authorityApi';
-import { InstitutionApiPaths } from './institutionApi';
-import { ProjectsApiPaths } from './projectApi';
-import { PublicationsApiPaths } from './registrationApi';
-import { PublicationChannelApiPaths } from './publicationChannelApi';
-import { FileApiPaths } from './fileApi';
-import { CustomerInstitutionApiPaths } from './customerInstitutionsApi';
-import { emptyRegistration } from '../types/registration.types';
 import { mockRoles } from '../utils/testfiles/mock_feide_user';
-import { RoleApiPaths } from './roleApi';
-import { DoiRequestApiPaths } from './doiRequestApi';
+import { mockCustomerInstitution, mockCustomerInstitutions } from '../utils/testfiles/mockCustomerInstitutions';
+import {
+  mockRegistrationsWithPendingDoiRequest,
+  mockRegistrationWithPendingDoiRequest,
+} from '../utils/testfiles/mockRegistration';
+import mockMyRegistrations from '../utils/testfiles/my_registrations.json';
+import mockProjects from '../utils/testfiles/projects_real.json';
+import mockPublishedRegistrations from '../utils/testfiles/published_registrations.json';
+import mockNsdPublisers from '../utils/testfiles/publishersFromNsd.json';
 import { mockSearchResults } from '../utils/testfiles/search_results';
 import { threeMockSearchResults } from '../utils/testfiles/three_search_results';
+import { AuthorityApiPaths } from './authorityApi';
+import { CustomerInstitutionApiPaths } from './customerInstitutionsApi';
+import { DoiRequestApiPaths } from './doiRequestApi';
+import { FileApiPaths } from './fileApi';
+import { InstitutionApiPaths } from './institutionApi';
+import { ProjectsApiPaths } from './projectApi';
+import { PublicationChannelApiPaths } from './publicationChannelApi';
+import { PublicationsApiPaths } from './registrationApi';
+import { RoleApiPaths } from './roleApi';
 import { SearchApiPaths } from './searchApi';
-import { mockSchoolOfSportDepartment } from '../utils/testfiles/institutions/school_of_sport_department';
 
 const mockOrcidResponse: OrcidResponse = {
   id: 'https://sandbox.orcid.org/0000-0001-2345-6789',
@@ -92,7 +94,7 @@ export const interceptRequestsOnMock = () => {
   mock
     .onGet(new RegExp(`${PublicationsApiPaths.PUBLICATION}/4327439`))
     .reply(200, { ...emptyRegistration, owner: 'tu@unit.no' });
-  mock.onGet(new RegExp(`${PublicationsApiPaths.PUBLICATION}/*`)).reply(200, mockRegistration);
+  mock.onGet(new RegExp(`${PublicationsApiPaths.PUBLICATION}/*`)).reply(200, mockRegistrationWithPendingDoiRequest);
 
   // lookup DOI
   mock.onPost(new RegExp(`${PublicationsApiPaths.DOI_LOOKUP}/*`)).reply(200, mockDoiLookupResponse);

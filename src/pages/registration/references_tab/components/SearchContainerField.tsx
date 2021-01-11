@@ -13,8 +13,11 @@ import { displayDate } from '../../../../utils/date-helpers';
 import useDebounce from '../../../../utils/hooks/useDebounce';
 import { API_URL } from '../../../../utils/constants';
 import { getRegistrationPath } from '../../../../utils/urlPaths';
-import { createSearchQuery } from '../../../../utils/searchHelpers';
-import { RegistrationSubtype } from '../../../../types/publicationFieldNames';
+import {
+  ReferenceFieldNames,
+  RegistrationFieldName,
+  RegistrationSubtype,
+} from '../../../../types/publicationFieldNames';
 
 interface SearchContainerFieldProps {
   fieldName: string;
@@ -28,13 +31,15 @@ const SearchContainerField = (props: SearchContainerFieldProps) => {
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearchTerm = useDebounce(searchTerm);
 
-  const [containerSearch, isLoadingContainerSearch] = useSearchRegistrations(
-    createSearchQuery(debouncedSearchTerm, props.searchSubtypes)
-  );
+  const [searchContainerOptions, isLoadingSearchContainerOptions] = useSearchRegistrations({
+    searchTerm: debouncedSearchTerm,
+    properties: [{ fieldName: ReferenceFieldNames.SUB_TYPE, value: props.searchSubtypes }],
+  });
 
-  const currentIriValue = getIn(values, props.fieldName);
-  const currentIdentifier = currentIriValue ? (currentIriValue.split('/').pop() as string) : '';
-  const [selectedContainer, isLoadingSelectedContainer] = useSearchRegistrations(`identifier="${currentIdentifier}"`);
+  const currentIdentifier = getIn(values, props.fieldName).split('/').pop() ?? '';
+  const [selectedContainer, isLoadingSelectedContainer] = useSearchRegistrations({
+    properties: [{ fieldName: RegistrationFieldName.IDENTIFIER, value: currentIdentifier }],
+  });
 
   // Show only selected value as option unless user are performing a new search
   const options =
@@ -43,7 +48,7 @@ const SearchContainerField = (props: SearchContainerFieldProps) => {
     selectedContainer.hits.length > 0 &&
     selectedContainer.hits[0].title === searchTerm
       ? selectedContainer.hits
-      : containerSearch?.hits) ?? [];
+      : searchContainerOptions?.hits) ?? [];
 
   return (
     <Field name={props.fieldName}>
@@ -65,7 +70,7 @@ const SearchContainerField = (props: SearchContainerFieldProps) => {
               setFieldValue(field.name, '');
             }
           }}
-          loading={isLoadingContainerSearch || isLoadingSelectedContainer}
+          loading={isLoadingSearchContainerOptions || isLoadingSelectedContainer}
           getOptionLabel={(option) => option.title}
           renderOption={(option, state) => (
             <StyledFlexColumn>
@@ -86,7 +91,7 @@ const SearchContainerField = (props: SearchContainerFieldProps) => {
               {...params}
               label={props.label}
               required
-              isLoading={isLoadingContainerSearch || isLoadingSelectedContainer}
+              isLoading={isLoadingSearchContainerOptions || isLoadingSelectedContainer}
               placeholder={props.placeholder}
               dataTestId="container-search-field"
               showSearchIcon

@@ -9,6 +9,7 @@ export enum PublicationType {
 export enum JournalType {
   ARTICLE = 'JournalArticle',
   SHORT_COMMUNICATION = 'JournalShortCommunication',
+  FEATURE_ARTICLE = 'FeatureArticle',
   LETTER = 'JournalLetter',
   REVIEW = 'JournalReview',
   LEADER = 'JournalLeader',
@@ -43,6 +44,10 @@ export type RegistrationSubtype = JournalType | ReportType | BookType | DegreeTy
 // Enums representing name of fields used by Formik
 export const contextTypeBaseFieldName = 'entityDescription.reference.publicationContext';
 export const instanceTypeBaseFieldName = 'entityDescription.reference.publicationInstance';
+
+export enum RegistrationFieldName {
+  IDENTIFIER = 'identifier',
+}
 
 export enum ReferenceFieldNames {
   ARTICLE_NUMBER = 'entityDescription.reference.publicationInstance.articleNumber',
@@ -101,6 +106,7 @@ export enum SpecificContributorFieldNames {
   AFFILIATIONS = 'affiliations',
   CORRESPONDING = 'correspondingAuthor',
   EMAIL = 'email',
+  ID = 'id',
   ROLE = 'role', // TODO
   SEQUENCE = 'sequence',
 }
