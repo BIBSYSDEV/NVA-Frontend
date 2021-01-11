@@ -14,7 +14,7 @@ import styled from 'styled-components';
 import deepmerge from 'deepmerge';
 import { CircularProgress } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useUppy } from '@uppy/react';
 
 import { emptyRegistration, Registration, RegistrationTab } from '../../types/registration.types';
@@ -30,8 +30,6 @@ import { RegistrationFormActions } from './RegistrationFormActions';
 import { userIsRegistrationOwner, userIsRegistrationCurator } from '../../utils/registration-helpers';
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import { createUppy } from '../../utils/uppy/uppy-config';
-import { setNotification } from '../../redux/actions/notificationActions';
-import { NotificationVariant } from '../../types/notification.types';
 
 const StyledRegistration = styled.div`
   width: 100%;
@@ -45,7 +43,6 @@ interface RegistrationFormProps {
 const RegistrationForm = ({ identifier, isNewRegistration }: RegistrationFormProps) => {
   const user = useSelector((store: RootStore) => store.user);
   const { t } = useTranslation('registration');
-  const dispatch = useDispatch();
   const history = useHistory();
   const uppy = useUppy(createUppy());
   const [registration, isLoadingRegistration, refetchRegistration] = useFetchRegistration(identifier);
@@ -53,12 +50,6 @@ const RegistrationForm = ({ identifier, isNewRegistration }: RegistrationFormPro
   const [tabNumber, setTabNumber] = useState(initialTabNumber ? +initialTabNumber : RegistrationTab.Description);
   const isValidOwner = userIsRegistrationOwner(user, registration);
   const isValidCurator = userIsRegistrationCurator(user, registration);
-
-  useEffect(() => {
-    if (!registration && !isLoadingRegistration) {
-      dispatch(setNotification(t('feedback:error.get_registration'), NotificationVariant.Error));
-    }
-  }, [dispatch, t, history, registration, isLoadingRegistration]);
 
   useEffect(() => {
     // Redirect to Landing Page if user should not be able to edit this registration
