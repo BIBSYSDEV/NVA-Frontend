@@ -8,7 +8,6 @@ import { BookType, ReferenceFieldNames } from '../../../../types/publicationFiel
 import IsbnListField from '../components/IsbnListField';
 import TotalPagesField from '../components/TotalPagesField';
 import { BookRegistration } from '../../../../types/registration.types';
-import { BookEntityDescription } from '../../../../types/publication_types/bookRegistration.types';
 import PeerReview from '../components/PeerReview';
 import NviValidation from '../components/NviValidation';
 import SeriesField from '../components/SeriesField';
@@ -45,7 +44,7 @@ const BookForm: FC = () => {
       publicationContext,
       publicationInstance: { peerReviewed, type },
     },
-  } = values.entityDescription as BookEntityDescription;
+  } = values.entityDescription;
 
   return (
     <>
