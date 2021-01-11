@@ -3,7 +3,7 @@ import { PublicationType, BookType } from '../publicationFieldNames';
 import { LanguageValues } from '../language.types';
 import { Contributor } from '../contributor.types';
 
-interface BookPublicationInstance {
+export interface BookPublicationInstance {
   type: BookType | '';
   pages: PagesMonograph | null;
   peerReviewed: boolean;
@@ -17,7 +17,7 @@ export const emptyBookPublicationInstance: BookPublicationInstance = {
   textbookContent: false,
 };
 
-interface BookPublicationContext {
+export interface BookPublicationContext {
   type: PublicationType | '';
   isbnList: string[];
   level: string | number | null;
