@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
@@ -25,10 +25,9 @@ const StyledTypography = styled(Typography)`
 interface LinkRegistrationProps {
   expanded: boolean;
   onChange: (event: React.ChangeEvent<unknown>, isExpanded: boolean) => void;
-  openForm: () => void;
 }
 
-const LinkRegistration: FC<LinkRegistrationProps> = ({ expanded, onChange, openForm }) => {
+const LinkRegistration = ({ expanded, onChange }: LinkRegistrationProps) => {
   const { t } = useTranslation('common');
   const [doi, setDoi] = useState<Doi | null>(null);
   const [noHit, setNoHit] = useState(false);
@@ -40,7 +39,6 @@ const LinkRegistration: FC<LinkRegistrationProps> = ({ expanded, onChange, openF
       return;
     }
     history.push(getRegistrationPath(doi.identifier), { isNewRegistration: true });
-    openForm();
   };
 
   const handleSearch = async (values: DoiFormValues) => {
