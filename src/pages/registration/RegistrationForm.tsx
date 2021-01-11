@@ -14,7 +14,7 @@ import styled from 'styled-components';
 import deepmerge from 'deepmerge';
 import { CircularProgress } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useUppy } from '@uppy/react';
 
 import { emptyRegistration, Registration, RegistrationTab } from '../../types/registration.types';
@@ -28,8 +28,10 @@ import { PageHeader } from '../../components/PageHeader';
 import Forbidden from '../errorpages/Forbidden';
 import { RegistrationFormActions } from './RegistrationFormActions';
 import { userIsRegistrationOwner, userIsRegistrationCurator } from '../../utils/registration-helpers';
-import { getRegistrationLandingPagePath, getRegistrationPath } from '../../utils/urlPaths';
+import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import { createUppy } from '../../utils/uppy/uppy-config';
+import { setNotification } from '../../redux/actions/notificationActions';
+import { NotificationVariant } from '../../types/notification.types';
 
 const StyledRegistration = styled.div`
   width: 100%;
@@ -43,6 +45,7 @@ interface RegistrationFormProps {
 const RegistrationForm = ({ identifier, isNewRegistration }: RegistrationFormProps) => {
   const user = useSelector((store: RootStore) => store.user);
   const { t } = useTranslation('registration');
+  const dispatch = useDispatch();
   const history = useHistory();
   const uppy = useUppy(createUppy());
   const [registration, isLoadingRegistration, refetchRegistration] = useFetchRegistration(identifier);
@@ -53,14 +56,14 @@ const RegistrationForm = ({ identifier, isNewRegistration }: RegistrationFormPro
 
   useEffect(() => {
     if (!registration && !isLoadingRegistration) {
-      history.replace(getRegistrationPath());
+      dispatch(setNotification(t('feedback:error.get_registration'), NotificationVariant.Error));
     }
-  }, [history, registration, isLoadingRegistration]);
+  }, [dispatch, t, history, registration, isLoadingRegistration]);
 
   useEffect(() => {
-    // Redirect to public page if user should not be able to edit this registration
+    // Redirect to Landing Page if user should not be able to edit this registration
     if (registration && !isValidOwner && !isValidCurator) {
-      history.push(getRegistrationLandingPagePath(registration.identifier));
+      history.replace(getRegistrationLandingPagePath(registration.identifier));
     }
   }, [history, registration, isValidOwner, isValidCurator]);
 
