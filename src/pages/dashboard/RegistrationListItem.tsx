@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 import Truncate from 'react-truncate';
 import { SearchRegistration } from '../../types/search.types';
 import { displayDate } from '../../utils/date-helpers';
+import { getRegistrationLandingPagePath, getUserPath } from '../../utils/urlPaths';
 
 const StyledContributors = styled.div`
   display: flex;
@@ -37,7 +38,7 @@ interface RegistrationListItemProps {
 
 const RegistrationListItem: FC<RegistrationListItemProps> = ({ registration }) => {
   const { t } = useTranslation('publicationTypes');
-  const registrationId = registration.id.split('/').pop();
+  const registrationId = registration.id.split('/').pop() as string;
 
   const focusedContributors = [...registration.contributors].splice(0, 5);
   const countRestContributors = registration.contributors.length - focusedContributors.length;
@@ -46,7 +47,7 @@ const RegistrationListItem: FC<RegistrationListItemProps> = ({ registration }) =
     <ListItem divider>
       <ListItemText disableTypography data-testid="result-list-item">
         <Typography variant="h4">
-          <MuiLink component={Link} to={`/registration/${registrationId}/public`}>
+          <MuiLink component={Link} to={getRegistrationLandingPagePath(registrationId)}>
             {registration.title}
           </MuiLink>
         </Typography>
@@ -54,7 +55,7 @@ const RegistrationListItem: FC<RegistrationListItemProps> = ({ registration }) =
           {focusedContributors.map((contributor, index) => (
             <Typography key={index}>
               {contributor.id ? (
-                <MuiLink component={Link} to={`/user?id=${encodeURIComponent(contributor.id)}`}>
+                <MuiLink component={Link} to={getUserPath(contributor.id)}>
                   {contributor.name}
                 </MuiLink>
               ) : (

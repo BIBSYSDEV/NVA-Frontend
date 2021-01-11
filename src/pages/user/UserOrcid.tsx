@@ -1,9 +1,8 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { RootStore } from '../../redux/reducers/rootReducer';
 import orcidIcon from '../../resources/images/orcid_logo.svg';
 import { ORCID_BASE_URL } from '../../utils/constants';
 import OrcidModalContent from './OrcidModalContent';
@@ -19,6 +18,7 @@ import Modal from '../../components/Modal';
 import { Link as MuiLink } from '@material-ui/core';
 import { StyledNormalTextPreWrapped } from '../../components/styled/Wrappers';
 import { useLocation } from 'react-router-dom';
+import { User } from '../../types/user.types';
 
 const StyledInformation = styled.div`
   margin-bottom: 1rem;
@@ -55,10 +55,13 @@ const StyledLabel = styled(Typography)`
   min-width: 6rem;
 `;
 
-const UserOrcid: FC = () => {
+interface UserOrcidProps {
+  user: User;
+}
+
+const UserOrcid = ({ user }: UserOrcidProps) => {
   const { t } = useTranslation('profile');
-  const authority = useSelector((state: RootStore) => state.user.authority);
-  const listOfOrcids = authority ? authority.orcids : [];
+  const listOfOrcids = user.authority ? user.authority.orcids : [];
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [isRemovingOrcid, setIsRemovingOrcid] = useState(false);
@@ -81,11 +84,11 @@ const UserOrcid: FC = () => {
   }, [location.hash, dispatch, t]);
 
   const removeOrcid = async (id: string) => {
-    if (!authority) {
+    if (!user.authority) {
       return;
     }
     setIsRemovingOrcid(true);
-    const updatedAuthority = await removeQualifierIdFromAuthority(authority.id, AuthorityQualifiers.ORCID, id);
+    const updatedAuthority = await removeQualifierIdFromAuthority(user.authority.id, AuthorityQualifiers.ORCID, id);
     if (updatedAuthority.error) {
       dispatch(setNotification(updatedAuthority.error, NotificationVariant.Error));
     } else if (updatedAuthority) {

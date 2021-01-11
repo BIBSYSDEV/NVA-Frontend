@@ -7,6 +7,7 @@ import Label from '../../components/Label';
 import NormalText from '../../components/NormalText';
 import { Link as RouterLink } from 'react-router-dom';
 import { CustomerInstitution } from '../../types/customerInstitution.types';
+import { getAdminInstitutionPath } from '../../utils/urlPaths';
 
 const StyledTableRow = styled(TableRow)`
   background-color: ${(props) => props.theme.palette.box.main};
@@ -59,7 +60,7 @@ const InstitutionList: FC<InstitutionListProps> = ({ institutions }) => {
                   color="primary"
                   component={RouterLink}
                   data-testid={`edit-institution-${institution.shortName}`}
-                  to={`/admin-institutions?id=${encodeURIComponent(institution.id)}`}>
+                  to={getAdminInstitutionPath(institution.id)}>
                   <NormalText>{t('edit')}</NormalText>
                 </Button>
               </TableCell>

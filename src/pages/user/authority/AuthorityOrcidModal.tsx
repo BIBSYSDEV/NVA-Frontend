@@ -1,9 +1,8 @@
-import React, { FC, useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useState } from 'react';
 
 import AuthorityModal from './AuthorityModal';
 import OrcidModal from './OrcidModal';
-import { RootStore } from '../../../redux/reducers/rootReducer';
+import { User } from '../../../types/user.types';
 
 enum ModalType {
   AUTHORITY = 'authority',
@@ -11,12 +10,15 @@ enum ModalType {
   ORCID = 'orcid',
 }
 
-const AuthorityOrcidModal: FC = () => {
-  const { authority } = useSelector((store: RootStore) => store.user);
-  const [openModal, setOpenModal] = useState(authority ? ModalType.NONE : ModalType.AUTHORITY);
+interface AuthorityOrcidModalProps {
+  user: User;
+}
+
+const AuthorityOrcidModal = ({ user }: AuthorityOrcidModalProps) => {
+  const [openModal, setOpenModal] = useState(user.authority ? ModalType.NONE : ModalType.AUTHORITY);
 
   const handleNextClick = () => {
-    if (authority && authority.orcids.length === 0) {
+    if (user.authority?.orcids.length === 0) {
       setOpenModal(ModalType.ORCID);
     } else {
       closeModal();
@@ -30,7 +32,7 @@ const AuthorityOrcidModal: FC = () => {
   return (
     <>
       {openModal === ModalType.AUTHORITY && (
-        <AuthorityModal authority={authority} closeModal={closeModal} handleNextClick={handleNextClick} />
+        <AuthorityModal user={user} closeModal={closeModal} handleNextClick={handleNextClick} />
       )}
       {openModal === ModalType.ORCID && <OrcidModal closeModal={closeModal} />}
     </>

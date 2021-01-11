@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
@@ -12,6 +12,7 @@ import { useDispatch } from 'react-redux';
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../types/notification.types';
 import { doiValidationSchema } from '../../../utils/validation/doiSearchValidation';
+import { getRegistrationPath } from '../../../utils/urlPaths';
 
 const StyledBody = styled.div`
   width: 100%;
@@ -24,10 +25,9 @@ const StyledTypography = styled(Typography)`
 interface LinkRegistrationProps {
   expanded: boolean;
   onChange: (event: React.ChangeEvent<unknown>, isExpanded: boolean) => void;
-  openForm: () => void;
 }
 
-const LinkRegistration: FC<LinkRegistrationProps> = ({ expanded, onChange, openForm }) => {
+const LinkRegistration = ({ expanded, onChange }: LinkRegistrationProps) => {
   const { t } = useTranslation('common');
   const [doi, setDoi] = useState<Doi | null>(null);
   const [noHit, setNoHit] = useState(false);
@@ -38,8 +38,7 @@ const LinkRegistration: FC<LinkRegistrationProps> = ({ expanded, onChange, openF
     if (!doi) {
       return;
     }
-    history.push(`/registration/${doi.identifier}`, { isNewRegistration: true });
-    openForm();
+    history.push(getRegistrationPath(doi.identifier), { isNewRegistration: true });
   };
 
   const handleSearch = async (values: DoiFormValues) => {

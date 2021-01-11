@@ -8,8 +8,8 @@ import { institutionReducer } from './institutionReducer';
 
 export interface RootStore {
   institutions: InstitutionState;
-  notification: Notification;
-  user: User;
+  notification: Notification | null;
+  user: User | null;
 }
 
 export default combineReducers({

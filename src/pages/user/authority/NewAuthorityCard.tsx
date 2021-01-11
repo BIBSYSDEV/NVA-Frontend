@@ -1,16 +1,16 @@
 import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-
 import { Button, Radio, CircularProgress } from '@material-ui/core';
+
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { setAuthorityData } from '../../../redux/actions/userActions';
-import { RootStore } from '../../../redux/reducers/rootReducer';
 import { createAuthority } from '../../../api/authorityApi';
 import { NotificationVariant } from '../../../types/notification.types';
 import { StyledProgressWrapper, StyledNormalTextPreWrapped } from '../../../components/styled/Wrappers';
 import Label from '../../../components/Label';
+import { User } from '../../../types/user.types';
 
 const StyledBoxContent = styled.div`
   display: grid;
@@ -59,12 +59,12 @@ const StyledCancelButton = styled(Button)`
 `;
 
 interface NewAuthorityCardProps {
+  user: User;
   onClickCancel: () => void;
 }
 
-const NewAuthorityCard: FC<NewAuthorityCardProps> = ({ onClickCancel }) => {
+const NewAuthorityCard: FC<NewAuthorityCardProps> = ({ onClickCancel, user }) => {
   const dispatch = useDispatch();
-  const user = useSelector((store: RootStore) => store.user);
   const [loading, setLoading] = useState(false);
   const { t } = useTranslation('profile');
   const hasMatchingAuthorities = user.possibleAuthorities.length > 0;

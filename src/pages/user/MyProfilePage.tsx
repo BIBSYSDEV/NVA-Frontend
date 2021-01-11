@@ -19,6 +19,7 @@ import { StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import { PageHeader } from '../../components/PageHeader';
+import { getUserPath, UrlPathTemplate } from '../../utils/urlPaths';
 
 const StyledUserPage = styled.div`
   display: grid;
@@ -48,7 +49,8 @@ const StyledButtonWrapper = styled(StyledRightAlignedWrapper)`
 
 const MyProfilePage: FC = () => {
   const { t } = useTranslation('profile');
-  const user = useSelector((state: RootStore) => state.user);
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const user = useSelector((store: RootStore) => store.user)!; // If user has been empty this route would already be blocked
   const location = useLocation();
   const dispatch = useDispatch();
   const history = useHistory();
@@ -57,7 +59,7 @@ const MyProfilePage: FC = () => {
     const orcidAccessToken = new URLSearchParams(location.hash.replace('#', '?')).get('access_token') || '';
     if (orcidAccessToken) {
       dispatch(getOrcidInfo(orcidAccessToken));
-      history.push('/my-profile');
+      history.push(UrlPathTemplate.MyProfile);
     }
   }, [dispatch, location.hash, history]);
 
@@ -90,7 +92,7 @@ const MyProfilePage: FC = () => {
             <Button
               color="primary"
               component={RouterLink}
-              to={`/user?id=${encodeURIComponent(user.authority.id)}`}
+              to={getUserPath(user.authority.id)}
               data-testid="public-profile-button">
               {t('workLists:go_to_public_profile')}
             </Button>
@@ -109,8 +111,8 @@ const MyProfilePage: FC = () => {
               <p data-testid="author-connected-info">{t('authority.connected_info')}</p>
             )}
           </Card>
-          <UserOrcid />
-          <UserInstitution />
+          <UserOrcid user={user} />
+          <UserInstitution user={user} />
         </StyledPrimaryUserInfo>
       </StyledUserPage>
     </>

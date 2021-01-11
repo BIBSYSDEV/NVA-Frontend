@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Link as MuiLink, Typography, Divider } from '@material-ui/core';
+import { UrlPathTemplate } from '../../utils/urlPaths';
 
 const StyledLogo = styled.div`
   display: flex;
@@ -19,7 +20,7 @@ const StyledDivider = styled(Divider)`
 
 const Logo: FC = () => (
   <StyledLogo data-testid="logo">
-    <MuiLink component={Link} to="/">
+    <MuiLink component={Link} to={UrlPathTemplate.Home}>
       <Typography color="textPrimary" variant="h5">
         NVA
       </Typography>

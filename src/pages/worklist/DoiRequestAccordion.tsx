@@ -1,14 +1,18 @@
-import React, { FC } from 'react';
-import { Accordion, AccordionSummary, AccordionDetails, Button } from '@material-ui/core';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import styled from 'styled-components';
-import { useTranslation } from 'react-i18next';
-
+import { Accordion, AccordionDetails, AccordionSummary, Button } from '@material-ui/core';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { updateDoiRequestWithMessage } from '../../api/doiRequestApi';
 import Label from '../../components/Label';
-import { Registration } from '../../types/registration.types';
-import MessageList from './MessageList';
 import { MessageForm } from '../../components/MessageForm';
+import { setNotification } from '../../redux/actions/notificationActions';
+import { NotificationVariant } from '../../types/notification.types';
+import useFetchRegistration from '../../utils/hooks/useFetchRegistration';
+import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
+import MessageList from './MessageList';
 
 const StyledAccordion = styled(Accordion)`
   width: 100%;
@@ -59,46 +63,51 @@ const StyledAccordionActionButtons = styled.div`
 `;
 
 interface DoiRequestAccordionProps {
-  registration: Registration;
+  identifier: string;
 }
 
-export const DoiRequestAccordion: FC<DoiRequestAccordionProps> = ({ registration }) => {
+export const DoiRequestAccordion = ({ identifier }: DoiRequestAccordionProps) => {
   const { t } = useTranslation('workLists');
-  const {
-    identifier,
-    owner,
-    entityDescription: { mainTitle },
-    doiRequest,
-  } = registration;
+  const dispatch = useDispatch();
+  const [isSendingMessage, setIsSendingMessage] = useState(false);
+  const [registration, , refetchRegistration] = useFetchRegistration(identifier);
 
-  if (!doiRequest) {
+  if (!registration?.doiRequest) {
     return null;
   }
+
+  const onClickSendMessage = async (message: string) => {
+    setIsSendingMessage(true);
+    const updatedDoiRequestWithMessage = await updateDoiRequestWithMessage(identifier, message);
+    if (updatedDoiRequestWithMessage) {
+      if (updatedDoiRequestWithMessage.error) {
+        dispatch(setNotification(t('feedback:error.message_failed'), NotificationVariant.Error));
+      } else {
+        dispatch(setNotification(t('feedback:success.message_sent'), NotificationVariant.Success));
+        refetchRegistration();
+      }
+      setIsSendingMessage(false);
+    }
+  };
 
   return (
     <StyledAccordion data-testid={`doi-request-${identifier}`}>
       <AccordionSummary expandIcon={<ExpandMoreIcon fontSize="large" />}>
-        <StyledStatus>{t(`doi_requests.status.${doiRequest.status}`)}</StyledStatus>
-        <StyledTitle>{mainTitle}</StyledTitle>
+        <StyledStatus>{t(`doi_requests.status.${registration?.doiRequest.status}`)}</StyledStatus>
+        <StyledTitle>{registration?.entityDescription?.mainTitle}</StyledTitle>
         <StyledOwner>
-          <Label>{owner}</Label>
-          {new Date(doiRequest.createdDate).toLocaleDateString()}
+          <Label>{registration?.owner}</Label>
+          {new Date(registration?.doiRequest.createdDate).toLocaleDateString()}
         </StyledOwner>
       </AccordionSummary>
       <AccordionDetails>
         <StyledMessages>
-          <MessageList messages={doiRequest.messages} />
+          <MessageList messages={registration?.doiRequest.messages} />
           <MessageForm
             confirmAction={async (message) => {
-              return new Promise((resolve) => {
-                setTimeout(() => {
-                  // TODO: Send message to backend
-                  // eslint-disable-next-line no-console
-                  console.log('Doi Message:', message);
-                  resolve(true);
-                }, 1000);
-              });
+              onClickSendMessage(message);
             }}
+            disabled={isSendingMessage}
           />
         </StyledMessages>
         <StyledAccordionActionButtons>
@@ -106,7 +115,7 @@ export const DoiRequestAccordion: FC<DoiRequestAccordionProps> = ({ registration
             data-testid={`go-to-registration-${identifier}`}
             variant="outlined"
             component={RouterLink}
-            to={`/registration/${identifier}/public`}>
+            to={getRegistrationLandingPagePath(identifier)}>
             {t('doi_requests.go_to_registration')}
           </Button>
           <Button variant="contained" color="primary" disabled>

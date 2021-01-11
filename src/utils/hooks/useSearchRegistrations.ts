@@ -10,7 +10,7 @@ import useCancelToken from './useCancelToken';
 const useSearchRegistrations = (
   searchTerm?: string,
   numberOfResults?: number,
-  searchAfter?: string
+  searchAfter?: number
 ): [SearchResult | undefined, boolean] => {
   const dispatch = useDispatch();
   const { t } = useTranslation('feedback');

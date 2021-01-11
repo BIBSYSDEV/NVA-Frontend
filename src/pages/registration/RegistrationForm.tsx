@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Form,
   Formik,
@@ -15,6 +15,7 @@ import deepmerge from 'deepmerge';
 import { CircularProgress } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { useUppy } from '@uppy/react';
 
 import { emptyRegistration, Registration, RegistrationTab } from '../../types/registration.types';
 import { RegistrationFormTabs } from './RegistrationFormTabs';
@@ -22,28 +23,28 @@ import RouteLeavingGuard from '../../components/RouteLeavingGuard';
 import { RegistrationFormContent } from './RegistrationFormContent';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import useFetchRegistration from '../../utils/hooks/useFetchRegistration';
-import useUppy from '../../utils/hooks/useUppy';
 import { registrationValidationSchema } from '../../utils/validation/registration/registrationValidation';
 import { PageHeader } from '../../components/PageHeader';
 import Forbidden from '../errorpages/Forbidden';
 import { RegistrationFormActions } from './RegistrationFormActions';
 import { userIsRegistrationOwner, userIsRegistrationCurator } from '../../utils/registration-helpers';
+import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
+import { createUppy } from '../../utils/uppy/uppy-config';
 
 const StyledRegistration = styled.div`
   width: 100%;
 `;
 
 interface RegistrationFormProps {
-  closeForm: () => void;
   identifier: string;
   isNewRegistration: boolean;
 }
 
-const RegistrationForm: FC<RegistrationFormProps> = ({ identifier, closeForm, isNewRegistration }) => {
+const RegistrationForm = ({ identifier, isNewRegistration }: RegistrationFormProps) => {
   const user = useSelector((store: RootStore) => store.user);
   const { t } = useTranslation('registration');
   const history = useHistory();
-  const uppy = useUppy();
+  const uppy = useUppy(createUppy());
   const [registration, isLoadingRegistration, refetchRegistration] = useFetchRegistration(identifier);
   const initialTabNumber = new URLSearchParams(history.location.search).get('tab');
   const [tabNumber, setTabNumber] = useState(initialTabNumber ? +initialTabNumber : RegistrationTab.Description);
@@ -51,15 +52,9 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier, closeForm, is
   const isValidCurator = userIsRegistrationCurator(user, registration);
 
   useEffect(() => {
-    if (!registration && !isLoadingRegistration) {
-      closeForm();
-    }
-  }, [closeForm, registration, isLoadingRegistration]);
-
-  useEffect(() => {
-    // Redirect to public page if user should not be able to edit this registration
+    // Redirect to Landing Page if user should not be able to edit this registration
     if (registration && !isValidOwner && !isValidCurator) {
-      history.push(`/registration/${registration.identifier}/public`);
+      history.replace(getRegistrationLandingPagePath(registration.identifier));
     }
   }, [history, registration, isValidOwner, isValidCurator]);
 

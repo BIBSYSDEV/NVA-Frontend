@@ -20,7 +20,7 @@ export enum Affiliation {
 
 export interface User {
   affiliations: Affiliation[];
-  authority: Authority | null;
+  authority?: Authority;
   createdDate?: string;
   cristinId?: string;
   email: string;

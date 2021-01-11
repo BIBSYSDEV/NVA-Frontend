@@ -1,16 +1,16 @@
 import * as Yup from 'yup';
-import { PublicationType } from '../../../types/publicationFieldNames';
 import { LanguageValues } from '../../../types/language.types';
+import { PublicationType } from '../../../types/publicationFieldNames';
 import { ErrorMessage } from '../errorMessage';
 import { contributorValidationSchema } from './contributorValidation';
-import {
-  journalReference,
-  bookReference,
-  reportReference,
-  degreeReference,
-  baseReference,
-} from './referenceValidation';
 import { fileValidationSchema } from './fileValidation';
+import {
+  baseReference,
+  bookReference,
+  degreeReference,
+  journalReference,
+  reportReference,
+} from './referenceValidation';
 
 export const registrationValidationSchema = Yup.object().shape({
   entityDescription: Yup.object().shape({
@@ -21,8 +21,12 @@ export const registrationValidationSchema = Yup.object().shape({
     npiSubjectHeading: Yup.string(),
     date: Yup.object().shape({
       year: Yup.number().required(ErrorMessage.REQUIRED),
-      month: Yup.number(),
-      day: Yup.number(),
+      month: Yup.number()
+        .nullable()
+        .transform((value: string, originalValue: string) => (originalValue === '' ? null : value)),
+      day: Yup.number()
+        .nullable()
+        .transform((value: string, originalValue: string) => (originalValue === '' ? null : value)),
     }),
     language: Yup.string().url().oneOf(Object.values(LanguageValues)),
     projects: Yup.array().of(Yup.object()), // TODO

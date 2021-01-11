@@ -8,6 +8,7 @@ export enum PublicationType {
 export enum JournalType {
   ARTICLE = 'JournalArticle',
   SHORT_COMMUNICATION = 'JournalShortCommunication',
+  FEATURE_ARTICLE = 'FeatureArticle',
   LETTER = 'JournalLetter',
   REVIEW = 'JournalReview',
   LEADER = 'JournalLeader',
