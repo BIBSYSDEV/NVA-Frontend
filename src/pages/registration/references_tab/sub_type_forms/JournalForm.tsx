@@ -9,7 +9,7 @@ import DoiField from '../components/DoiField';
 import NviValidation from '../components/NviValidation';
 import JournalField from '../components/JournalField';
 import PeerReview from '../components/PeerReview';
-import CorrigendumForField from '../components/CorrigendumForField';
+import SearchContainerField from '../components/SearchContainerField';
 
 const StyledArticleDetail = styled.div`
   display: grid;
@@ -38,7 +38,16 @@ const JournalForm = () => {
     <>
       <DoiField />
 
-      {publicationInstance.type === JournalType.CORRIGENDUM ? <CorrigendumForField /> : <JournalField />}
+      {publicationInstance.type === JournalType.CORRIGENDUM && (
+        <SearchContainerField
+          fieldName={ReferenceFieldNames.CORRIGENDUM_FOR}
+          searchSubtypes={[JournalType.ARTICLE, JournalType.SHORT_COMMUNICATION]}
+          label={t('references.original_article')}
+          placeholder={t('references.search_for_original_article')}
+        />
+      )}
+      {/* TODO: JournalField should be disabled for corrigendum and reflect value for original article (NP-1991) */}
+      <JournalField />
 
       <StyledArticleDetail>
         <Field name={ReferenceFieldNames.VOLUME}>
