@@ -14,9 +14,7 @@ export const searchRegistrations = async (
 ) => {
   const url = searchTerm
     ? `${SearchApiPaths.REGISTRATIONS}?query=${searchTerm}&results=${numberOfResults}&from=${searchAfter}`
-    : numberOfResults !== 10 || searchAfter !== 0
-    ? `${SearchApiPaths.REGISTRATIONS}?results=${numberOfResults}&from=${searchAfter}`
-    : SearchApiPaths.REGISTRATIONS;
+    : `${SearchApiPaths.REGISTRATIONS}?results=${numberOfResults}&from=${searchAfter}`;
   return await apiRequest<SearchResult>({
     url,
     cancelToken,
