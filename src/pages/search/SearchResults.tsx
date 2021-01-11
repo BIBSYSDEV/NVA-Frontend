@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { List, Typography } from '@material-ui/core';
@@ -14,7 +14,7 @@ interface SearchResultsProps {
   searchTerm?: string;
 }
 
-const SearchResults: FC<SearchResultsProps> = ({ searchResult, searchTerm }) => {
+const SearchResults = ({ searchResult, searchTerm }: SearchResultsProps) => {
   const { t } = useTranslation('common');
 
   const registrations = searchResult.hits;

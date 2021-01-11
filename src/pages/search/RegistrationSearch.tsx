@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TablePagination, Typography } from '@material-ui/core';
 import ListSkeleton from '../../components/ListSkeleton';
@@ -11,7 +11,7 @@ interface RegistrationSearchProps {
   noHitsText?: string;
 }
 
-const RegistrationSearch: FC<RegistrationSearchProps> = ({ searchTerm, noHitsText }) => {
+const RegistrationSearch = ({ searchTerm, noHitsText }: RegistrationSearchProps) => {
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[1]);
   const [page, setPage] = useState(0);
   const [searchResults, isLoadingSearch] = useSearchRegistrations(searchTerm, rowsPerPage, page * rowsPerPage);
