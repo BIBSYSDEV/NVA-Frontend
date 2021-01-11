@@ -11,12 +11,10 @@ const StyledSearchResults = styled.div`
 
 interface SearchResultsProps {
   searchResult: SearchResult;
-  rowsPerPage?: number;
   searchTerm?: string;
-  validPage?: number;
 }
 
-const SearchResults: FC<SearchResultsProps> = ({ searchResult, rowsPerPage = 10, searchTerm, validPage = 0 }) => {
+const SearchResults: FC<SearchResultsProps> = ({ searchResult, searchTerm }) => {
   const { t } = useTranslation('common');
 
   const registrations = searchResult.hits;
@@ -28,9 +26,9 @@ const SearchResults: FC<SearchResultsProps> = ({ searchResult, rowsPerPage = 10,
       )}
       <List>
         {registrations &&
-          registrations
-            .slice(validPage * rowsPerPage, validPage * rowsPerPage + rowsPerPage)
-            .map((registration) => <RegistrationListItem key={registration.id} registration={registration} />)}
+          registrations.map((registration) => (
+            <RegistrationListItem key={registration.id} registration={registration} />
+          ))}
       </List>
     </StyledSearchResults>
   );
