@@ -9,6 +9,7 @@ import { ReportPublicationInstance } from '../../types/publication_types/reportR
 import { PagesMonograph } from '../../types/registration.types';
 import { JournalType } from '../../types/publicationFieldNames';
 import useSearchRegistrations from '../../utils/hooks/useSearchRegistrations';
+import { BookPublicationInstance } from '../../types/publication_types/bookRegistration.types';
 
 export const PublicPublicationInstanceJournal: FC<{ publicationInstance: JournalPublicationInstance }> = ({
   publicationInstance,
@@ -58,6 +59,14 @@ const OriginalArticleInfo: FC<{ originalArticleId: string }> = ({ originalArticl
       )}
     </LabelContentRow>
   );
+};
+
+export const PublicPublicationInstanceBook: FC<{ publicationInstance: BookPublicationInstance }> = ({
+  publicationInstance,
+}) => {
+  const { pages } = publicationInstance;
+
+  return <DisplayPages pages={pages} />;
 };
 
 export const PublicPublicationInstanceDegree: FC<{ publicationInstance: DegreePublicationInstance }> = ({
