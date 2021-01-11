@@ -38,7 +38,7 @@ const SearchContainerField = (props: SearchContainerFieldProps) => {
 
   const currentIdentifier = getIn(values, props.fieldName).split('/').pop() ?? '';
   const [selectedContainer, isLoadingSelectedContainer] = useSearchRegistrations({
-    properties: [{ fieldName: RegistrationFieldName.Identifier, value: currentIdentifier }],
+    properties: [{ fieldName: RegistrationFieldName.IDENTIFIER, value: currentIdentifier }],
   });
 
   // Show only selected value as option unless user are performing a new search

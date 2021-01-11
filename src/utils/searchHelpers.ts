@@ -9,7 +9,7 @@ export interface SearchConfig {
   canMatchAnySubquery?: boolean; // Whether to use "OR" or "AND" operator for each subquery
 }
 
-// Since these Operators will be used in joins they must be enclosed by whitespace
+// Since these Operators will be used in joins they must be enclosed by whitespaces
 enum Operator {
   AND = ' AND ',
   OR = ' OR ',

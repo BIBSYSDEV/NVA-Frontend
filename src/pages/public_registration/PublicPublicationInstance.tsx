@@ -44,7 +44,7 @@ export const PublicPublicationInstanceJournal: FC<{ publicationInstance: Journal
 const OriginalArticleInfo: FC<{ originalArticleId: string }> = ({ originalArticleId }) => {
   const { t } = useTranslation('registration');
   const [originalArticleSearch, isLoadingOriginalArticleSearch] = useSearchRegistrations({
-    properties: [{ fieldName: RegistrationFieldName.Identifier, value: originalArticleId.split('/').pop() ?? '' }],
+    properties: [{ fieldName: RegistrationFieldName.IDENTIFIER, value: originalArticleId.split('/').pop() ?? '' }],
   });
 
   const originalArticle =

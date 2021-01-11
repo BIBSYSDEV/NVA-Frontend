@@ -41,7 +41,7 @@ export const contextTypeBaseFieldName = 'entityDescription.reference.publication
 export const instanceTypeBaseFieldName = 'entityDescription.reference.publicationInstance';
 
 export enum RegistrationFieldName {
-  Identifier = 'identifier',
+  IDENTIFIER = 'identifier',
 }
 
 export enum ReferenceFieldNames {
