@@ -1,5 +1,6 @@
 import { CancelToken } from 'axios';
 import { SearchResult } from '../types/search.types';
+import { ROWS_PER_PAGE_OPTIONS } from '../utils/constants';
 import { apiRequest } from './apiRequest';
 
 export enum SearchApiPaths {
@@ -8,11 +9,13 @@ export enum SearchApiPaths {
 
 export const searchRegistrations = async (
   searchTerm?: string,
-  numberOfResults?: number,
-  searchAfter?: string,
+  numberOfResults = ROWS_PER_PAGE_OPTIONS[1],
+  searchAfter = 0,
   cancelToken?: CancelToken
 ) => {
-  const url = searchTerm ? `${SearchApiPaths.REGISTRATIONS}?query=${searchTerm}` : SearchApiPaths.REGISTRATIONS;
+  const url = searchTerm
+    ? `${SearchApiPaths.REGISTRATIONS}?query=${searchTerm}&results=${numberOfResults}&from=${searchAfter}`
+    : `${SearchApiPaths.REGISTRATIONS}?results=${numberOfResults}&from=${searchAfter}`;
   return await apiRequest<SearchResult>({
     url,
     cancelToken,
