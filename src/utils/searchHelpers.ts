@@ -1,6 +1,6 @@
 interface PropertySearch {
   key: string;
-  value: string | string[]; // Can check for one of multiple values
+  value: string | string[]; // Can check for one or multiple values
 }
 interface SearchConfig {
   searchTerm?: string;
