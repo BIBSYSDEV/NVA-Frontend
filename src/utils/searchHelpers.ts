@@ -1,5 +1,5 @@
 interface PropertySearch {
-  key: string;
+  fieldName: string;
   value: string | string[]; // Can check for one or multiple values
 }
 interface SearchConfig {
@@ -14,7 +14,7 @@ const createSearchTermFilter = (searchTerm?: string) => (searchTerm ? `*${search
 const createPropertyFilter = (properties?: PropertySearch[], canMatchAnyProperty?: boolean) =>
   properties && properties.length > 0
     ? `(${properties
-        .map(({ key, value }) => `${key}="${Array.isArray(value) ? value.join('" OR "') : value}"`)
+        .map(({ fieldName, value }) => `${fieldName}="${Array.isArray(value) ? value.join('" OR "') : value}"`)
         .join(canMatchAnyProperty ? ' OR ' : ' AND ')})`
     : '';
 
