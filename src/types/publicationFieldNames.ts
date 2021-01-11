@@ -40,6 +40,10 @@ export type RegistrationSubtype = JournalType | ReportType | BookType | DegreeTy
 export const contextTypeBaseFieldName = 'entityDescription.reference.publicationContext';
 export const instanceTypeBaseFieldName = 'entityDescription.reference.publicationInstance';
 
+export enum RegistrationFieldName {
+  IDENTIFIER = 'identifier',
+}
+
 export enum ReferenceFieldNames {
   ARTICLE_NUMBER = 'entityDescription.reference.publicationInstance.articleNumber',
   DOI = 'entityDescription.reference.doi',
@@ -96,6 +100,7 @@ export enum SpecificContributorFieldNames {
   AFFILIATIONS = 'affiliations',
   CORRESPONDING = 'correspondingAuthor',
   EMAIL = 'email',
+  ID = 'id',
   ROLE = 'role', // TODO
   SEQUENCE = 'sequence',
 }

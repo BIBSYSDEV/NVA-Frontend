@@ -2,11 +2,17 @@ interface PropertySearch {
   fieldName: string;
   value: string | string[]; // Can check for one or multiple values
 }
-interface SearchConfig {
+export interface SearchConfig {
   searchTerm?: string;
   properties?: PropertySearch[];
   canMatchAnyProperty?: boolean; // Whether to use "OR" or "AND" operator for each property check
   canMatchAnySubquery?: boolean; // Whether to use "OR" or "AND" operator for each subquery
+}
+
+// Since these Operators will be used in joins they must be enclosed by whitespaces
+enum Operator {
+  AND = ' AND ',
+  OR = ' OR ',
 }
 
 const createSearchTermFilter = (searchTerm?: string) => (searchTerm ? `*${searchTerm}*` : '');
@@ -14,8 +20,10 @@ const createSearchTermFilter = (searchTerm?: string) => (searchTerm ? `*${search
 const createPropertyFilter = (properties?: PropertySearch[], canMatchAnyProperty?: boolean) =>
   properties && properties.length > 0
     ? `(${properties
-        .map(({ fieldName, value }) => `${fieldName}="${Array.isArray(value) ? value.join('" OR "') : value}"`)
-        .join(canMatchAnyProperty ? ' OR ' : ' AND ')})`
+        .map(
+          ({ fieldName, value }) => `${fieldName}="${Array.isArray(value) ? value.join(`"${Operator.OR}"`) : value}"`
+        )
+        .join(canMatchAnyProperty ? Operator.OR : Operator.AND)})`
     : '';
 
 export const createSearchQuery = (searchConfig: SearchConfig) => {
@@ -24,6 +32,6 @@ export const createSearchQuery = (searchConfig: SearchConfig) => {
 
   const searchQuery = [textSearch, propertySearch]
     .filter((search) => !!search)
-    .join(searchConfig.canMatchAnySubquery ? ' OR ' : ' AND ');
+    .join(searchConfig.canMatchAnySubquery ? Operator.OR : Operator.AND);
   return searchQuery;
 };
