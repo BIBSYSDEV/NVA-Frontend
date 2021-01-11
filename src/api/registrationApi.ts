@@ -4,7 +4,7 @@ import { Registration } from '../types/registration.types';
 import { RegistrationFileSet } from '../types/file.types';
 import { StatusCode } from '../utils/constants';
 import { getIdToken } from './userApi';
-import { authenticatedApiRequest } from './apiRequest';
+import { apiRequest, authenticatedApiRequest } from './apiRequest';
 
 export enum PublicationsApiPaths {
   PUBLICATION = '/publication',
@@ -70,19 +70,10 @@ export const getRegistrations = async (cancelToken?: CancelToken) => {
 
 export const getRegistration = async (id: string, cancelToken?: CancelToken) => {
   const url = `${PublicationsApiPaths.PUBLICATION}/${id}`;
-
-  try {
-    const response = await Axios.get(url, { cancelToken });
-    if (response.status === StatusCode.OK) {
-      return response.data;
-    } else {
-      return { error: i18n.t('feedback:error.get_registration') };
-    }
-  } catch (error) {
-    if (!Axios.isCancel(error)) {
-      return { error: i18n.t('feedback:error.get_registration') };
-    }
-  }
+  return apiRequest<Registration>({
+    url,
+    cancelToken,
+  });
 };
 
 export const publishRegistration = async (identifier: string) =>

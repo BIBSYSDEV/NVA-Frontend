@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Form,
   Formik,
@@ -36,12 +36,11 @@ const StyledRegistration = styled.div`
 `;
 
 interface RegistrationFormProps {
-  closeForm: () => void;
   identifier: string;
   isNewRegistration: boolean;
 }
 
-const RegistrationForm: FC<RegistrationFormProps> = ({ identifier, closeForm, isNewRegistration }) => {
+const RegistrationForm = ({ identifier, isNewRegistration }: RegistrationFormProps) => {
   const user = useSelector((store: RootStore) => store.user);
   const { t } = useTranslation('registration');
   const history = useHistory();
@@ -53,15 +52,9 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ identifier, closeForm, is
   const isValidCurator = userIsRegistrationCurator(user, registration);
 
   useEffect(() => {
-    if (!registration && !isLoadingRegistration) {
-      closeForm();
-    }
-  }, [closeForm, registration, isLoadingRegistration]);
-
-  useEffect(() => {
-    // Redirect to public page if user should not be able to edit this registration
+    // Redirect to Landing Page if user should not be able to edit this registration
     if (registration && !isValidOwner && !isValidCurator) {
-      history.push(getRegistrationLandingPagePath(registration.identifier));
+      history.replace(getRegistrationLandingPagePath(registration.identifier));
     }
   }, [history, registration, isValidOwner, isValidCurator]);
 
