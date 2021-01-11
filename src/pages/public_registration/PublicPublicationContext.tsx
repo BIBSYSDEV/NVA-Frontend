@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import { DegreePublicationContext } from '../../types/publication_types/degreeRegistration.types';
 import { ReportPublicationContext } from '../../types/publication_types/reportRegistration.types';
+import { BookPublicationContext } from '../../types/publication_types/bookRegistration.types';
 
 const StyledContainer = styled.div`
   display: flex;
@@ -36,6 +37,33 @@ export const PublicPublicationContextJournal: FC<{ publicationContext: JournalPu
       {onlineIssn && `${t('references.issn')} ${onlineIssn}`}
     </LabelContentRow>
   ) : null;
+};
+
+export const PublicPublicationContextBook = ({
+  publicationContext,
+}: {
+  publicationContext: BookPublicationContext;
+}) => {
+  const { t } = useTranslation('registration');
+  const { publisher, url, seriesTitle } = publicationContext;
+
+  return (
+    <>
+      {publisher && (
+        <LabelContentRow minimal multiple label={`${t('common:publisher')}:`}>
+          <StyledContainer>
+            <NormalText>{publisher}</NormalText>
+            {url && (
+              <Link href={url} target="_blank" rel="noopener noreferrer">
+                <StyledOpenInNewIcon aria-label={url} />
+              </Link>
+            )}
+          </StyledContainer>
+        </LabelContentRow>
+      )}
+      <DisplaySeriesTitle seriesTitle={seriesTitle} />
+    </>
+  );
 };
 
 export const PublicPublicationContextDegree: FC<{ publicationContext: DegreePublicationContext }> = ({

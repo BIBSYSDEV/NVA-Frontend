@@ -31,14 +31,14 @@ const SearchContainerField = (props: SearchContainerFieldProps) => {
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearchTerm = useDebounce(searchTerm);
 
-  const [containerOptions, isLoadingContainerOptions] = useSearchRegistrations({
+  const [searchContainerOptions, isLoadingSearchContainerOptions] = useSearchRegistrations({
     searchTerm: debouncedSearchTerm,
-    properties: [{ key: ReferenceFieldNames.SUB_TYPE, value: props.searchSubtypes }],
+    properties: [{ fieldName: ReferenceFieldNames.SUB_TYPE, value: props.searchSubtypes }],
   });
 
   const currentIdentifier = getIn(values, props.fieldName).split('/').pop() ?? '';
   const [selectedContainer, isLoadingSelectedContainer] = useSearchRegistrations({
-    properties: [{ key: RegistrationFieldName.Identifier, value: currentIdentifier }],
+    properties: [{ fieldName: RegistrationFieldName.Identifier, value: currentIdentifier }],
   });
 
   // Show only selected value as option unless user are performing a new search
@@ -48,7 +48,7 @@ const SearchContainerField = (props: SearchContainerFieldProps) => {
     selectedContainer.hits.length > 0 &&
     selectedContainer.hits[0].title === searchTerm
       ? selectedContainer.hits
-      : containerOptions?.hits) ?? [];
+      : searchContainerOptions?.hits) ?? [];
 
   return (
     <Field name={props.fieldName}>
@@ -70,7 +70,7 @@ const SearchContainerField = (props: SearchContainerFieldProps) => {
               setFieldValue(field.name, '');
             }
           }}
-          loading={isLoadingContainerOptions || isLoadingSelectedContainer}
+          loading={isLoadingSearchContainerOptions || isLoadingSelectedContainer}
           getOptionLabel={(option) => option.title}
           renderOption={(option, state) => (
             <StyledFlexColumn>
@@ -91,7 +91,7 @@ const SearchContainerField = (props: SearchContainerFieldProps) => {
               {...params}
               label={props.label}
               required
-              isLoading={isLoadingContainerOptions || isLoadingSelectedContainer}
+              isLoading={isLoadingSearchContainerOptions || isLoadingSelectedContainer}
               placeholder={props.placeholder}
               dataTestId="container-search-field"
               showSearchIcon

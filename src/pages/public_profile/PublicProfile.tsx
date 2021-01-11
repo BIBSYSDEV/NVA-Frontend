@@ -36,7 +36,9 @@ const PublicProfile: FC = () => {
 
   const [authority, isLoadingUser] = useFetchAuthority(arpId);
   const [registrations, isLoadingRegistrations] = useSearchRegistrations({
-    properties: [{ key: `${ContributorFieldNames.CONTRIBUTORS}.${SpecificContributorFieldNames.ID}`, value: arpId }],
+    properties: [
+      { fieldName: `${ContributorFieldNames.CONTRIBUTORS}.${SpecificContributorFieldNames.ID}`, value: arpId },
+    ],
   });
 
   return (

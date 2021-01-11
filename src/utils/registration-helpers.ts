@@ -4,6 +4,8 @@ import { User } from '../types/user.types';
 
 export const isJournal = (registration: Registration): boolean =>
   registration.entityDescription.reference.publicationContext.type === PublicationType.PUBLICATION_IN_JOURNAL;
+export const isBook = (registration: Registration): boolean =>
+  registration.entityDescription.reference.publicationContext.type === PublicationType.BOOK;
 export const isDegree = (registration: Registration): boolean =>
   registration.entityDescription.reference.publicationContext.type === PublicationType.DEGREE;
 export const isReport = (registration: Registration): boolean =>

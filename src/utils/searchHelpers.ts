@@ -1,6 +1,6 @@
 interface PropertySearch {
-  key: string;
-  value: string | string[]; // Can check for one of multiple values
+  fieldName: string;
+  value: string | string[]; // Can check for one or multiple values
 }
 export interface SearchConfig {
   searchTerm?: string;
@@ -20,7 +20,9 @@ const createSearchTermFilter = (searchTerm?: string) => (searchTerm ? `*${search
 const createPropertyFilter = (properties?: PropertySearch[], canMatchAnyProperty?: boolean) =>
   properties && properties.length > 0
     ? `(${properties
-        .map(({ key, value }) => `${key}="${Array.isArray(value) ? value.join(`"${Operator.OR}"`) : value}"`)
+        .map(
+          ({ fieldName, value }) => `${fieldName}="${Array.isArray(value) ? value.join(`"${Operator.OR}"`) : value}"`
+        )
         .join(canMatchAnyProperty ? Operator.OR : Operator.AND)})`
     : '';
 
