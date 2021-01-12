@@ -65,6 +65,7 @@ const Menu = ({ menuButtonLabel, handleLogout }: MenuProps) => {
         aria-haspopup="true"
         onClick={handleClickMenuAnchor}
         data-testid="menu"
+        disableFocusRipple
         endIcon={anchorEl ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}>
         <Typography noWrap>{menuButtonLabel}</Typography>
       </StyledMenuButton>
