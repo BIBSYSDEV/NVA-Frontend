@@ -19,14 +19,15 @@ const StyledAppBar = styled(AppBar)`
   grid-template-areas: 'logo shortcuts auth';
   grid-template-columns: 5rem auto auto;
   align-items: center;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  padding-left: 5%;
+  padding-right: 5%;
   min-height: 4rem;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
     grid-template-areas: 'menu logo auth';
-    grid-template-columns: 1fr 1fr 1fr;
+    padding-left: 1rem;
     padding-right: 1rem;
+    grid-template-columns: 1fr 1fr 1fr;
   }
 `;
 
