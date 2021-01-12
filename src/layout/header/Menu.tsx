@@ -82,56 +82,53 @@ const Menu = ({ menuButtonLabel, handleLogout }: MenuProps) => {
           vertical: 'bottom',
           horizontal: 'left',
         }}>
-        {user?.isCurator && (
-          <>
-            <StyledHeaderTypography>{t('profile:roles.curator')}</StyledHeaderTypography>
+        {user?.isCurator && [
+          <StyledHeaderTypography key="1">{t('profile:roles.curator')}</StyledHeaderTypography>,
+          <MenuItem
+            key="2"
+            component={Link}
+            to={UrlPathTemplate.Worklist}
+            data-testid="menu-my-worklist-button"
+            onClick={closeMenu}
+            disableGutters>
+            <StyledIndentedTypography>{t('workLists:my_worklist')}</StyledIndentedTypography>
+          </MenuItem>,
+          <Divider key="3" />,
+        ]}
+        {(user?.isAppAdmin || user?.isInstitutionAdmin) && [
+          <StyledHeaderTypography key="4">{t('common:admin')}</StyledHeaderTypography>,
+          user.isAppAdmin && (
             <MenuItem
+              key="5"
               component={Link}
-              to={UrlPathTemplate.Worklist}
-              data-testid="menu-my-worklist-button"
+              to={UrlPathTemplate.AdminInstitutions}
+              data-testid="menu-admin-institution-button"
               onClick={closeMenu}
               disableGutters>
-              <StyledIndentedTypography>{t('workLists:my_worklist')}</StyledIndentedTypography>
+              <StyledIndentedTypography>{t('common:institutions')}</StyledIndentedTypography>
             </MenuItem>
-            <Divider />
-          </>
-        )}
-        {(user?.isAppAdmin || user?.isInstitutionAdmin) && (
-          <>
-            <StyledHeaderTypography>{t('common:admin')}</StyledHeaderTypography>
-            {user.isAppAdmin && (
-              <MenuItem
-                component={Link}
-                to={UrlPathTemplate.AdminInstitutions}
-                data-testid="menu-admin-institution-button"
-                onClick={closeMenu}
-                disableGutters>
-                <StyledIndentedTypography>{t('common:institutions')}</StyledIndentedTypography>
-              </MenuItem>
-            )}
-            {user.isInstitutionAdmin && (
-              <>
-                <MenuItem
-                  component={Link}
-                  to={UrlPathTemplate.MyInstitution}
-                  data-testid="menu-admin-institution-button"
-                  onClick={closeMenu}
-                  disableGutters>
-                  <StyledIndentedTypography>{t('common:my_institution')}</StyledIndentedTypography>
-                </MenuItem>
-                <MenuItem
-                  component={Link}
-                  to={UrlPathTemplate.MyInstitutionUsers}
-                  data-testid="menu-admin-institution-users-button"
-                  onClick={closeMenu}
-                  disableGutters>
-                  <StyledIndentedTypography>{t('common:users')}</StyledIndentedTypography>
-                </MenuItem>
-              </>
-            )}
-            <Divider />
-          </>
-        )}
+          ),
+          user.isInstitutionAdmin && [
+            <MenuItem
+              key="6"
+              component={Link}
+              to={UrlPathTemplate.MyInstitution}
+              data-testid="menu-admin-institution-button"
+              onClick={closeMenu}
+              disableGutters>
+              <StyledIndentedTypography>{t('common:my_institution')}</StyledIndentedTypography>
+            </MenuItem>,
+            <MenuItem
+              component={Link}
+              to={UrlPathTemplate.MyInstitutionUsers}
+              data-testid="menu-admin-institution-users-button"
+              onClick={closeMenu}
+              disableGutters>
+              <StyledIndentedTypography>{t('common:users')}</StyledIndentedTypography>
+            </MenuItem>,
+          ],
+          <Divider key="8" />,
+        ]}
         <MenuItem
           component={Link}
           to={UrlPathTemplate.MyProfile}
