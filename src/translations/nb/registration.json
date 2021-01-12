@@ -99,7 +99,7 @@
     "chapter": {
       "info_anthology": "Antologien hvor kapittelet er publisert i må være publisert først",
       "published_in": "Publisert i",
-      "search_for_anthology": "Søk etter antalogien hvor kapittelet er publisert"
+      "search_for_anthology": "Søk etter antologien hvor kapittelet er publisert"
     },
     "is_book_a_textbook": "Er boken en lærebok?",
     "is_book_a_textbook_confirm": "Ja, boken er en lærebok",
