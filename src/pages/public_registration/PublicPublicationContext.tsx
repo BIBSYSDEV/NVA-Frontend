@@ -9,6 +9,8 @@ import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import { DegreePublicationContext } from '../../types/publication_types/degreeRegistration.types';
 import { ReportPublicationContext } from '../../types/publication_types/reportRegistration.types';
 import { BookPublicationContext } from '../../types/publication_types/bookRegistration.types';
+import { ChapterPublicationContext } from '../../types/publication_types/chapterRegistration.types';
+import ContainerLink from './ContainerLink';
 
 const StyledContainer = styled.div`
   display: flex;
@@ -115,6 +117,16 @@ export const PublicPublicationContextReport: FC<{ publicationContext: ReportPubl
       <DisplaySeriesTitle seriesTitle={seriesTitle} />
     </>
   );
+};
+
+export const PublicPublicationContextChapter = ({
+  publicationContext,
+}: {
+  publicationContext: ChapterPublicationContext;
+}) => {
+  const { t } = useTranslation('registration');
+  const { linkedContext } = publicationContext;
+  return <ContainerLink containerId={linkedContext} label={t('references.chapter.published_in')} />;
 };
 
 const DisplaySeriesTitle: FC<{ seriesTitle: string }> = ({ seriesTitle }) => {
