@@ -19,8 +19,7 @@ const StyledAppBar = styled(AppBar)`
   grid-template-areas: 'logo shortcuts auth';
   grid-template-columns: 5rem auto auto;
   align-items: center;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  padding: 0 1rem;
   min-height: 4rem;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
