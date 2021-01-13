@@ -18,6 +18,10 @@ const StyledTypography = styled(Typography)`
   margin: 1.5rem;
 `;
 
+const StyledRegistrationAccorion = styled(RegistrationAccordion)`
+  border-color: #0010a4; // TODO: theme?
+`;
+
 interface LinkRegistrationProps {
   expanded: boolean;
   onChange: (event: ChangeEvent<unknown>, isExpanded: boolean) => void;
@@ -58,7 +62,7 @@ const LinkRegistration = ({ expanded, onChange }: LinkRegistrationProps) => {
   };
 
   return (
-    <RegistrationAccordion
+    <StyledRegistrationAccorion
       headerLabel={t('registration:registration.start_with_link_to_resource')}
       icon={<LinkIcon />}
       expanded={expanded}
@@ -85,7 +89,7 @@ const LinkRegistration = ({ expanded, onChange }: LinkRegistrationProps) => {
           </>
         )}
       </>
-    </RegistrationAccordion>
+    </StyledRegistrationAccorion>
   );
 };
 

@@ -22,6 +22,10 @@ const StyledFileCard = styled.div`
   margin-top: 1rem;
 `;
 
+const StyledRegistrationAccorion = styled(RegistrationAccordion)`
+  border-color: #e99210; // TODO: theme?
+`;
+
 interface UploadRegistrationProps {
   expanded: boolean;
   onChange: (event: ChangeEvent<unknown>, isExpanded: boolean) => void;
@@ -53,7 +57,7 @@ const UploadRegistration = ({ expanded, onChange }: UploadRegistrationProps) => 
   };
 
   return (
-    <RegistrationAccordion
+    <StyledRegistrationAccorion
       dataTestId="new-registration-file"
       headerLabel={t('registration:registration.start_with_uploading_file')}
       icon={<CloudDownloadIcon />}
@@ -89,7 +93,7 @@ const UploadRegistration = ({ expanded, onChange }: UploadRegistrationProps) => 
           )}
         </>
       ) : null}
-    </RegistrationAccordion>
+    </StyledRegistrationAccorion>
   );
 };
 
