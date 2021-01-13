@@ -1,7 +1,8 @@
 import { Contributor } from '../contributor.types';
 import { LanguageValues } from '../language.types';
 import { ChapterType, PublicationType } from '../publicationFieldNames';
-import { BackendType, emptyPagesRange, PagesRange, RegistrationDate } from '../registration.types';
+import { BackendType, RegistrationDate } from '../registration.types';
+import { PagesRange, emptyPagesRange } from './pages.types';
 
 export interface ChapterPublicationInstance {
   type: ChapterType | '';

@@ -1,7 +1,8 @@
-import { BackendType, RegistrationDate, PagesMonograph, emptyPagesMonograph } from '../registration.types';
+import { BackendType, RegistrationDate } from '../registration.types';
 import { PublicationType, ReportType } from '../publicationFieldNames';
 import { LanguageValues } from '../language.types';
 import { Contributor } from '../contributor.types';
+import { PagesMonograph, emptyPagesMonograph } from './pages.types';
 
 export interface ReportPublicationInstance {
   type: ReportType | '';

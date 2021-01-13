@@ -128,26 +128,6 @@ export interface RegistrationDate extends BackendType {
   day: string;
 }
 
-export interface PagesRange extends BackendType {
-  begin: string;
-  end: string;
-}
-
-export interface PagesMonograph extends BackendType {
-  pages: string;
-}
-
-export const emptyPagesMonograph: PagesMonograph = {
-  type: BackendTypeNames.PAGES_MONOGRAPH,
-  pages: '',
-};
-
-export const emptyPagesRange: PagesRange = {
-  type: BackendTypeNames.PAGES_RANGE,
-  begin: '',
-  end: '',
-};
-
 export type RegistrationPreview = Pick<
   Registration & JournalEntityDescription,
   'identifier' | 'mainTitle' | 'createdDate' | 'status' | 'owner'

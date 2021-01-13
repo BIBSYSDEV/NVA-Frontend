@@ -6,10 +6,10 @@ import { JournalPublicationInstance } from '../../types/publication_types/journa
 import LabelContentRow from '../../components/LabelContentRow';
 import { DegreePublicationInstance } from '../../types/publication_types/degreeRegistration.types';
 import { ReportPublicationInstance } from '../../types/publication_types/reportRegistration.types';
-import { PagesMonograph } from '../../types/registration.types';
 import { JournalType, RegistrationFieldName } from '../../types/publicationFieldNames';
 import useSearchRegistrations from '../../utils/hooks/useSearchRegistrations';
 import { BookPublicationInstance } from '../../types/publication_types/bookRegistration.types';
+import { PagesMonograph } from '../../types/publication_types/pages.types';
 
 export const PublicPublicationInstanceJournal: FC<{ publicationInstance: JournalPublicationInstance }> = ({
   publicationInstance,
