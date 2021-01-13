@@ -15,8 +15,7 @@ const StyledMenu = styled.div`
 `;
 
 const StyledPaddedTypography = styled(Typography)`
-  padding-left: 1rem;
-  padding-right: 1rem;
+  padding: 0 1rem;
 `;
 
 const StyledHeaderTypography = styled(StyledPaddedTypography)`
