@@ -10,7 +10,7 @@ import { DegreePublicationContext } from '../../types/publication_types/degreeRe
 import { ReportPublicationContext } from '../../types/publication_types/reportRegistration.types';
 import { BookPublicationContext } from '../../types/publication_types/bookRegistration.types';
 import { ChapterPublicationContext } from '../../types/publication_types/chapterRegistration.types';
-import ContainerLink from './ContainerLink';
+import RegistrationSummary from './RegistrationSummary';
 
 const StyledContainer = styled.div`
   display: flex;
@@ -126,7 +126,11 @@ export const PublicPublicationContextChapter = ({
 }) => {
   const { t } = useTranslation('registration');
   const { linkedContext } = publicationContext;
-  return <ContainerLink containerId={linkedContext} label={t('references.chapter.published_in')} />;
+  return (
+    <LabelContentRow minimal label={`${t('references.chapter.published_in')}:`}>
+      <RegistrationSummary id={linkedContext} />
+    </LabelContentRow>
+  );
 };
 
 const DisplaySeriesTitle: FC<{ seriesTitle: string }> = ({ seriesTitle }) => {

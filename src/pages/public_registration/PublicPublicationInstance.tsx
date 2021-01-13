@@ -1,17 +1,14 @@
 import React, { FC } from 'react';
-import { Skeleton } from '@material-ui/lab';
 import { useTranslation } from 'react-i18next';
-import { Link } from '@material-ui/core';
 import { JournalPublicationInstance } from '../../types/publication_types/journalRegistration.types';
 import LabelContentRow from '../../components/LabelContentRow';
 import { DegreePublicationInstance } from '../../types/publication_types/degreeRegistration.types';
 import { ReportPublicationInstance } from '../../types/publication_types/reportRegistration.types';
 import { PagesMonograph } from '../../types/registration.types';
-import { JournalType, RegistrationFieldName } from '../../types/publicationFieldNames';
-import useSearchRegistrations from '../../utils/hooks/useSearchRegistrations';
+import { JournalType } from '../../types/publicationFieldNames';
 import { BookPublicationInstance } from '../../types/publication_types/bookRegistration.types';
 import { ChapterPublicationInstance } from '../../types/publication_types/chapterRegistration.types';
-import ContainerLink from './ContainerLink';
+import RegistrationSummary from './RegistrationSummary';
 
 export const PublicPublicationInstanceJournal: FC<{ publicationInstance: JournalPublicationInstance }> = ({
   publicationInstance,
@@ -39,7 +36,9 @@ export const PublicPublicationInstanceJournal: FC<{ publicationInstance: Journal
         {fieldTexts.join(', ')}
       </LabelContentRow>
       {type === JournalType.CORRIGENDUM && (
-        <ContainerLink containerId={corrigendumFor} label={t('references.original_article')} />
+        <LabelContentRow minimal label={`${t('references.original_article')}:`}>
+          <RegistrationSummary id={corrigendumFor} />
+        </LabelContentRow>
       )}
     </>
   );
