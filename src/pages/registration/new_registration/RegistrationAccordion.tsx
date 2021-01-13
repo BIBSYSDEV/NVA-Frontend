@@ -14,7 +14,10 @@ interface RegistrationAccordionProps {
 }
 
 const StyledRegistrationAccordion = styled(Accordion)`
-  margin-bottom: 2rem;
+  background: ${({ theme }) => theme.palette.background.default};
+  border-width: 4px;
+  border-color: #0010a4; // TODO
+
   @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
     max-width: 90vw;
   }
@@ -45,7 +48,7 @@ const RegistrationAccordion = ({
   dataTestId,
 }: RegistrationAccordionProps) => {
   return (
-    <StyledRegistrationAccordion expanded={expanded} onChange={onChange}>
+    <StyledRegistrationAccordion expanded={expanded} onChange={onChange} variant="outlined" square>
       <StyledAccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls={ariaControls} data-testid={dataTestId}>
         <StyledIcon>{icon}</StyledIcon>
         <Typography variant="h6">{headerLabel}</Typography>

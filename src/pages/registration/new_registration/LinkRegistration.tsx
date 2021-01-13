@@ -14,12 +14,8 @@ import { NotificationVariant } from '../../../types/notification.types';
 import { doiValidationSchema } from '../../../utils/validation/doiSearchValidation';
 import { getRegistrationPath } from '../../../utils/urlPaths';
 
-const StyledBody = styled.div`
-  width: 100%;
-`;
-
 const StyledTypography = styled(Typography)`
-  margin: 1.5rem 0;
+  margin: 1.5rem;
 `;
 
 interface LinkRegistrationProps {
@@ -69,7 +65,7 @@ const LinkRegistration = ({ expanded, onChange }: LinkRegistrationProps) => {
       onChange={onChange}
       ariaControls="registration-method-link"
       dataTestId="new-registration-link">
-      <StyledBody>
+      <>
         <Typography>{t('registration:registration.link_to_resource_description')}</Typography>
         <LinkRegistrationForm handleSearch={handleSearch} />
         {noHit && <Typography>{t('no_hits')}</Typography>}
@@ -88,7 +84,7 @@ const LinkRegistration = ({ expanded, onChange }: LinkRegistrationProps) => {
             </Button>
           </>
         )}
-      </StyledBody>
+      </>
     </RegistrationAccordion>
   );
 };

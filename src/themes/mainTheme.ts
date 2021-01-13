@@ -89,9 +89,6 @@ export default createMuiTheme({
         background: Colors.Panel,
       },
     },
-    MuiAccordionDetails: {
-      root: { background: Colors.Panel },
-    },
     MuiButton: {
       root: {
         textTransform: 'none',

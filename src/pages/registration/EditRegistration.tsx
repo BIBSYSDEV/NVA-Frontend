@@ -10,6 +10,10 @@ import { PageHeader } from '../../components/PageHeader';
 const StyledEditRegistration = styled.div`
   margin-top: 2rem;
   max-width: 55rem;
+
+  > :not(:last-child) {
+    margin-bottom: 2rem;
+  }
 `;
 
 enum PanelName {
