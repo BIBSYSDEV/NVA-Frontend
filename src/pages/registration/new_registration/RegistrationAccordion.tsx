@@ -4,7 +4,8 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import styled from 'styled-components';
 
 interface RegistrationAccordionProps {
-  headerLabel: string;
+  summaryTitle: string;
+  summaryDescription: string;
   icon: ReactNode;
   expanded: boolean;
   onChange: (event: ChangeEvent<unknown>, isExpanded: boolean) => void;
@@ -43,7 +44,8 @@ const StyledAccordionDetails = styled(AccordionDetails)`
 `;
 
 const RegistrationAccordion = ({
-  headerLabel,
+  summaryTitle,
+  summaryDescription,
   icon,
   expanded,
   onChange,
@@ -56,7 +58,10 @@ const RegistrationAccordion = ({
     <StyledAccordion expanded={expanded} onChange={onChange} variant="outlined" square {...props}>
       <StyledAccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls={ariaControls} data-testid={dataTestId}>
         <StyledIcon>{icon}</StyledIcon>
-        <Typography variant="h6">{headerLabel}</Typography>
+        <div>
+          <Typography variant="h2">{summaryTitle}</Typography>
+          <Typography>{summaryDescription}</Typography>
+        </div>
       </StyledAccordionSummary>
       <StyledAccordionDetails>{children}</StyledAccordionDetails>
     </StyledAccordion>

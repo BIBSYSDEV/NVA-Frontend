@@ -59,7 +59,8 @@ const UploadRegistration = ({ expanded, onChange }: UploadRegistrationProps) => 
   return (
     <StyledRegistrationAccorion
       dataTestId="new-registration-file"
-      headerLabel={t('registration:registration.start_with_uploading_file')}
+      summaryTitle={t('registration:registration.start_with_uploading_file_title')}
+      summaryDescription={t('registration:registration.start_with_uploading_file_description')}
       icon={<CloudDownloadIcon />}
       expanded={expanded}
       onChange={onChange}

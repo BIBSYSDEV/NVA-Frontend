@@ -93,8 +93,10 @@
     "link_to_resource_description": "DOI-link to article etc.",
     "no_published_registrations_yet": "There are no published registrations yet",
     "start_registration": "Start registration",
-    "start_with_link_to_resource": "Link to original version if the resource already has been published on the Internet with a DOI",
-    "start_with_uploading_file": "Upload file if the resource is to be published on the Internet for the first time"
+    "start_with_link_to_resource_description": "Link to original version if the resource already has been published on the Internet with a DOI",
+    "start_with_link_to_resource_title": "Start with link to original version",
+    "start_with_uploading_file_description": "Upload file if the resource is to be published on the Internet for the first time",
+    "start_with_uploading_file_title": "Start with uploading file"
   },
   "references": {
     "article_number": "Article number",

@@ -4,11 +4,12 @@ import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { Button, Typography } from '@material-ui/core';
 import LinkIcon from '@material-ui/icons/Link';
+import { useDispatch } from 'react-redux';
+
 import { getRegistrationByDoi } from '../../../api/registrationApi';
 import LinkRegistrationForm, { DoiFormValues } from './LinkRegistrationForm';
 import RegistrationAccordion from './RegistrationAccordion';
 import { Doi } from '../../../types/registration.types';
-import { useDispatch } from 'react-redux';
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../types/notification.types';
 import { doiValidationSchema } from '../../../utils/validation/doiSearchValidation';
@@ -63,7 +64,8 @@ const LinkRegistration = ({ expanded, onChange }: LinkRegistrationProps) => {
 
   return (
     <StyledRegistrationAccorion
-      headerLabel={t('registration:registration.start_with_link_to_resource')}
+      summaryTitle={t('registration:registration.start_with_link_to_resource_title')}
+      summaryDescription={t('registration:registration.start_with_link_to_resource_description')}
       icon={<LinkIcon />}
       expanded={expanded}
       onChange={onChange}
