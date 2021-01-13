@@ -60,7 +60,7 @@ const LinkRegistration = ({ expanded, onChange }: LinkRegistrationProps) => {
   return (
     <RegistrationAccordion
       headerLabel={t('registration:registration.start_with_link_to_resource')}
-      icon={<LinkIcon className="icon" />}
+      icon={<LinkIcon />}
       expanded={expanded}
       onChange={onChange}
       ariaControls="registration-method-link"

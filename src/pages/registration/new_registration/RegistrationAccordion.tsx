@@ -18,20 +18,25 @@ const StyledRegistrationAccordion = styled(Accordion)`
   border-width: 4px;
   border-color: #0010a4; // TODO
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
+  @media (max-width: ${({ theme }) => `${theme.breakpoints.values.md}px`}) {
     max-width: 90vw;
   }
 `;
 
 const StyledAccordionSummary = styled(AccordionSummary)`
-  min-height: 5rem;
-  align-items: center;
+  .MuiAccordionSummary-content {
+    align-items: center;
+  }
 `;
 
 const StyledIcon = styled.div`
-  display: inline-flex;
-  align-items: center;
   margin-right: 1rem;
+  .MuiSvgIcon-root {
+    font-size: 4rem;
+    @media (max-width: ${({ theme }) => `${theme.breakpoints.values.md}px`}) {
+      display: none;
+    }
+  }
 `;
 
 const StyledAccordionDetails = styled(AccordionDetails)`
