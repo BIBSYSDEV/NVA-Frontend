@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 import styled from 'styled-components';
@@ -24,7 +24,7 @@ const StyledFileCard = styled.div`
 
 interface UploadRegistrationProps {
   expanded: boolean;
-  onChange: (event: React.ChangeEvent<unknown>, isExpanded: boolean) => void;
+  onChange: (event: ChangeEvent<unknown>, isExpanded: boolean) => void;
 }
 
 const UploadRegistration = ({ expanded, onChange }: UploadRegistrationProps) => {

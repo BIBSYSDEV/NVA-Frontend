@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
@@ -24,7 +24,7 @@ const StyledTypography = styled(Typography)`
 
 interface LinkRegistrationProps {
   expanded: boolean;
-  onChange: (event: React.ChangeEvent<unknown>, isExpanded: boolean) => void;
+  onChange: (event: ChangeEvent<unknown>, isExpanded: boolean) => void;
 }
 
 const LinkRegistration = ({ expanded, onChange }: LinkRegistrationProps) => {

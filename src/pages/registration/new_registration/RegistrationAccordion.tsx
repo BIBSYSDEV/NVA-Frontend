@@ -1,18 +1,15 @@
-import React, { ReactNode, FC } from 'react';
-import Accordion from '@material-ui/core/Accordion';
-import AccordionDetails from '@material-ui/core/AccordionDetails';
-import AccordionSummary from '@material-ui/core/AccordionSummary';
+import React, { ReactNode, ChangeEvent } from 'react';
+import { Accordion, AccordionDetails, AccordionSummary, Typography } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import styled from 'styled-components';
-import { Typography } from '@material-ui/core';
 
 interface RegistrationAccordionProps {
   headerLabel: string;
   icon: ReactNode;
   expanded: boolean;
-  onChange: (event: React.ChangeEvent<unknown>, isExpanded: boolean) => void;
+  onChange: (event: ChangeEvent<unknown>, isExpanded: boolean) => void;
   ariaControls: string;
-  children?: ReactNode;
+  children: ReactNode;
   dataTestId?: string;
 }
 
@@ -38,7 +35,7 @@ const StyledAccordionDetails = styled(AccordionDetails)`
   flex-direction: column;
 `;
 
-const RegistrationAccordion: FC<RegistrationAccordionProps> = ({
+const RegistrationAccordion = ({
   headerLabel,
   icon,
   expanded,
@@ -46,7 +43,7 @@ const RegistrationAccordion: FC<RegistrationAccordionProps> = ({
   children,
   ariaControls,
   dataTestId,
-}) => {
+}: RegistrationAccordionProps) => {
   return (
     <StyledRegistrationAccordion expanded={expanded} onChange={onChange}>
       <StyledAccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls={ariaControls} data-testid={dataTestId}>
