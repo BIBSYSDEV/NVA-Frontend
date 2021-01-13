@@ -56,7 +56,10 @@ const RegistrationAccordion = ({
 }: RegistrationAccordionProps) => {
   return (
     <StyledAccordion expanded={expanded} onChange={onChange} variant="outlined" square {...props}>
-      <StyledAccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls={ariaControls} data-testid={dataTestId}>
+      <StyledAccordionSummary
+        expandIcon={<ExpandMoreIcon fontSize="large" />}
+        aria-controls={ariaControls}
+        data-testid={dataTestId}>
         <StyledIcon>{icon}</StyledIcon>
         <div>
           <Typography variant="h2">{summaryTitle}</Typography>

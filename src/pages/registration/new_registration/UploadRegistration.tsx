@@ -1,6 +1,6 @@
 import React, { useState, ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
-import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -61,7 +61,7 @@ const UploadRegistration = ({ expanded, onChange }: UploadRegistrationProps) => 
       dataTestId="new-registration-file"
       summaryTitle={t('registration:registration.start_with_uploading_file_title')}
       summaryDescription={t('registration:registration.start_with_uploading_file_description')}
-      icon={<CloudDownloadIcon />}
+      icon={<CloudUploadIcon />}
       expanded={expanded}
       onChange={onChange}
       ariaControls="registration-method-file">
