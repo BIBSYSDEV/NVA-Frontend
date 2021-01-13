@@ -26,6 +26,7 @@ const StyledAccordion = styled(Accordion)`
 const StyledAccordionSummary = styled(AccordionSummary)`
   .MuiAccordionSummary-content {
     align-items: center;
+    padding: 1rem 0;
   }
 `;
 
