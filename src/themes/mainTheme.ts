@@ -30,7 +30,7 @@ enum Color {
   Disabled = '#bbb',
   Header = '#ffd3d3',
   ErrorLight = '#EE7575',
-  ErrorMain = '#930A0A',
+  ErrorMain = '#C2363D',
   SuccessDark = '#008958',
   SuccessMain = '#08B677',
   Indicator = '#FFB546',
@@ -151,7 +151,7 @@ const theme = createMuiTheme({
     },
     MuiTabs: {
       indicator: {
-        backgroundColor: Color.Indicator,
+        backgroundColor: Color.SecondaryMain,
       },
     },
     MuiTextField: {
