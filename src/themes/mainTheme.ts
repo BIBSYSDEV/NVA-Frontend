@@ -1,20 +1,31 @@
 import { createMuiTheme } from '@material-ui/core';
+import { PaletteColor } from '@material-ui/core/styles/createPalette';
 import i18n from '../translations/i18n';
 import { getTranslatedLabelForDisplayedRows } from '../utils/pagination';
-import { merriweatherRegular, barlowRegular } from './fonts';
+import { barlowRegular, merriweatherRegular } from './fonts';
 
 // Extend Palette type to allow custom colors
 declare module '@material-ui/core/styles/createPalette' {
   interface Palette {
-    separator: PaletteColor;
     box: PaletteColor;
     danger: PaletteColor;
+    section: PaletteColor;
+    separator: PaletteColor;
   }
   interface PaletteOptions {
-    separator?: PaletteColorOptions;
     box?: PaletteColorOptions;
     danger?: PaletteColorOptions;
+    section?: PaletteColorOptions;
+    separator?: PaletteColorOptions;
   }
+}
+
+export enum BackgroundColors {
+  Black = '#222',
+  BlueMegaDark = '#02005B',
+  Blue = '#0010A4',
+  BlueLight = '#DFEDFE',
+  BlueMegaLight = '#F4F8FF',
 }
 
 enum Colors {
@@ -62,6 +73,12 @@ export default createMuiTheme({
     },
     background: {
       default: Colors.Background,
+    },
+    section: {
+      light: BackgroundColors.BlueLight,
+      main: BackgroundColors.Blue,
+      dark: BackgroundColors.BlueMegaDark,
+      contrastText: Colors.Background,
     },
   },
   typography: {
