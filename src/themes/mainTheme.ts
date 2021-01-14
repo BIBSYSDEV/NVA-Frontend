@@ -78,7 +78,6 @@ export default createMuiTheme({
       light: BackgroundColors.BlueLight,
       main: BackgroundColors.Blue,
       dark: BackgroundColors.BlueMegaDark,
-      contrastText: Colors.Background,
     },
   },
   typography: {
