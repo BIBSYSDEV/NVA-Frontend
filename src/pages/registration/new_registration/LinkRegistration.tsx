@@ -16,7 +16,7 @@ import { doiValidationSchema } from '../../../utils/validation/doiSearchValidati
 import { getRegistrationPath } from '../../../utils/urlPaths';
 
 const StyledTypography = styled(Typography)`
-  margin: 1.5rem;
+  margin: 1.5rem 0;
 `;
 
 const StyledRegistrationAccorion = styled(RegistrationAccordion)`
