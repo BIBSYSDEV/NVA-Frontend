@@ -2,7 +2,12 @@ import { Field, useFormikContext, FieldProps } from 'formik';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormControl, FormControlLabel, Radio, RadioGroup, Typography } from '@material-ui/core';
+import styled from 'styled-components';
 import { Registration } from '../../../../types/registration.types';
+
+const StyledPeerReview = styled.div`
+  margin-top: 1rem;
+`;
 
 interface PeerReviewProps {
   fieldName: string;
@@ -11,13 +16,12 @@ interface PeerReviewProps {
 
 const PeerReview: FC<PeerReviewProps> = ({ fieldName, label }) => {
   const { t } = useTranslation('registration');
-
   const { setFieldValue } = useFormikContext<Registration>();
 
   return (
     <Field name={fieldName}>
       {({ field: { name, value } }: FieldProps) => (
-        <>
+        <StyledPeerReview>
           <Typography variant="h5">{label}</Typography>
           <FormControl>
             <RadioGroup
@@ -33,7 +37,7 @@ const PeerReview: FC<PeerReviewProps> = ({ fieldName, label }) => {
               />
             </RadioGroup>
           </FormControl>
-        </>
+        </StyledPeerReview>
       )}
     </Field>
   );
