@@ -206,7 +206,6 @@ const AuthorCard: FC<AuthorCardProps> = ({ author, onMoveAuthor, onRemoveAuthorC
         </StyledInstitutionSection>
       </StyledContent>
       <StyledRemoveButton
-        color="default"
         variant="contained"
         data-testid={`button-remove-contributor-${author.identity.name}`}
         onClick={onRemoveAuthorClick}>
