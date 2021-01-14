@@ -1,5 +1,5 @@
 import React, { ReactNode, ChangeEvent } from 'react';
-import { Accordion, AccordionDetails, AccordionSummary, Typography } from '@material-ui/core';
+import { Accordion, AccordionDetails, AccordionSummary, Divider, Typography } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import styled from 'styled-components';
 
@@ -42,6 +42,7 @@ const StyledIcon = styled.div`
 
 const StyledAccordionDetails = styled(AccordionDetails)`
   flex-direction: column;
+  margin-top: 1rem;
 `;
 
 const RegistrationAccordion = ({
@@ -55,6 +56,7 @@ const RegistrationAccordion = ({
   dataTestId,
   ...props
 }: RegistrationAccordionProps) => {
+  // TODO: create own components for Summary, Details, and Actions?
   return (
     <StyledAccordion expanded={expanded} onChange={onChange} variant="outlined" square {...props}>
       <StyledAccordionSummary
@@ -67,6 +69,7 @@ const RegistrationAccordion = ({
           <Typography>{summaryDescription}</Typography>
         </div>
       </StyledAccordionSummary>
+      <Divider />
       <StyledAccordionDetails>{children}</StyledAccordionDetails>
     </StyledAccordion>
   );

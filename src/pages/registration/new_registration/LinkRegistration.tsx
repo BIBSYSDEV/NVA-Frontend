@@ -2,8 +2,9 @@ import React, { useState, ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
-import { Button, Typography } from '@material-ui/core';
+import { AccordionActions, Button, Typography } from '@material-ui/core';
 import LinkIcon from '@material-ui/icons/Link';
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import { useDispatch } from 'react-redux';
 
 import { getRegistrationByDoi } from '../../../api/registrationApi';
@@ -15,12 +16,12 @@ import { NotificationVariant } from '../../../types/notification.types';
 import { doiValidationSchema } from '../../../utils/validation/doiSearchValidation';
 import { getRegistrationPath } from '../../../utils/urlPaths';
 
-const StyledTypography = styled(Typography)`
-  margin: 1.5rem;
-`;
-
 const StyledRegistrationAccorion = styled(RegistrationAccordion)`
   border-color: #0010a4; // TODO: theme?
+`;
+
+const StyledResult = styled.div`
+  margin-top: 1rem;
 `;
 
 interface LinkRegistrationProps {
@@ -72,24 +73,27 @@ const LinkRegistration = ({ expanded, onChange }: LinkRegistrationProps) => {
       ariaControls="registration-method-link"
       dataTestId="new-registration-link">
       <>
-        <Typography>{t('registration:registration.link_to_resource_description')}</Typography>
         <LinkRegistrationForm handleSearch={handleSearch} />
-        {noHit && <Typography>{t('no_hits')}</Typography>}
-        {doi && (
-          <>
-            <StyledTypography variant="h6">
-              {t('registration')}: <b>{doi.title}</b>
-            </StyledTypography>
-            <Button
-              fullWidth
-              color="primary"
-              variant="contained"
-              onClick={createRegistration}
-              data-testid="registration-link-next-button">
-              {t('registration:registration.start_registration')}
-            </Button>
-          </>
-        )}
+        <StyledResult>
+          {noHit && <Typography>{t('no_hits')}</Typography>}
+          {doi && (
+            <>
+              <Typography variant="subtitle1">{t('registration')}:</Typography>
+              <Typography>{doi.title}</Typography>
+
+              <AccordionActions>
+                <Button
+                  endIcon={<ArrowForwardIcon fontSize="large" />}
+                  color="primary"
+                  variant="contained"
+                  onClick={createRegistration}
+                  data-testid="registration-link-next-button">
+                  {t('registration:registration.start_registration')}
+                </Button>
+              </AccordionActions>
+            </>
+          )}
+        </StyledResult>
       </>
     </StyledRegistrationAccorion>
   );
