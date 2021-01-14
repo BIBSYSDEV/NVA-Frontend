@@ -1,15 +1,14 @@
 import React, { FC } from 'react';
-import { Skeleton } from '@material-ui/lab';
 import { useTranslation } from 'react-i18next';
-import { Link } from '@material-ui/core';
 import { JournalPublicationInstance } from '../../types/publication_types/journalRegistration.types';
 import LabelContentRow from '../../components/LabelContentRow';
 import { DegreePublicationInstance } from '../../types/publication_types/degreeRegistration.types';
 import { ReportPublicationInstance } from '../../types/publication_types/reportRegistration.types';
-import { PagesMonograph } from '../../types/registration.types';
-import { JournalType, RegistrationFieldName } from '../../types/publicationFieldNames';
-import useSearchRegistrations from '../../utils/hooks/useSearchRegistrations';
+import { JournalType } from '../../types/publicationFieldNames';
 import { BookPublicationInstance } from '../../types/publication_types/bookRegistration.types';
+import { ChapterPublicationInstance } from '../../types/publication_types/chapterRegistration.types';
+import RegistrationSummary from './RegistrationSummary';
+import { PagesMonograph } from '../../types/publication_types/pages.types';
 
 export const PublicPublicationInstanceJournal: FC<{ publicationInstance: JournalPublicationInstance }> = ({
   publicationInstance,
@@ -36,28 +35,12 @@ export const PublicPublicationInstanceJournal: FC<{ publicationInstance: Journal
       <LabelContentRow minimal label={`${t('common:details')}:`}>
         {fieldTexts.join(', ')}
       </LabelContentRow>
-      {type === JournalType.CORRIGENDUM && <OriginalArticleInfo originalArticleId={corrigendumFor} />}
-    </>
-  );
-};
-
-const OriginalArticleInfo: FC<{ originalArticleId: string }> = ({ originalArticleId }) => {
-  const { t } = useTranslation('registration');
-  const [originalArticleSearch, isLoadingOriginalArticleSearch] = useSearchRegistrations({
-    properties: [{ fieldName: RegistrationFieldName.IDENTIFIER, value: originalArticleId.split('/').pop() ?? '' }],
-  });
-
-  const originalArticle =
-    originalArticleSearch && originalArticleSearch.hits.length === 1 ? originalArticleSearch.hits[0] : null;
-
-  return (
-    <LabelContentRow minimal label={`${t('references.original_article')}:`}>
-      {isLoadingOriginalArticleSearch ? (
-        <Skeleton width={400} />
-      ) : (
-        originalArticle && <Link href={`/registration/${originalArticle.id}/public`}>{originalArticle.title}</Link>
+      {type === JournalType.CORRIGENDUM && (
+        <LabelContentRow minimal label={`${t('references.original_article')}:`}>
+          <RegistrationSummary id={corrigendumFor} />
+        </LabelContentRow>
       )}
-    </LabelContentRow>
+    </>
   );
 };
 
@@ -83,6 +66,26 @@ export const PublicPublicationInstanceReport: FC<{ publicationInstance: ReportPu
   const { pages } = publicationInstance;
 
   return <DisplayPages pages={pages} />;
+};
+
+export const PublicPublicationInstanceChapter = ({
+  publicationInstance,
+}: {
+  publicationInstance: ChapterPublicationInstance;
+}) => {
+  const { t } = useTranslation('registration');
+  const { pages, peerReviewed } = publicationInstance;
+
+  return (
+    <>
+      <LabelContentRow minimal label={`${t('references.pages')}:`}>
+        {pages.begin ?? '?'}-{pages.end ?? '?'}
+      </LabelContentRow>
+      <LabelContentRow minimal label={`${t('references.peer_reviewed')}:`}>
+        {peerReviewed ? t('common:yes') : t('common:no')}
+      </LabelContentRow>
+    </>
+  );
 };
 
 const DisplayPages: FC<{ pages: PagesMonograph | null }> = ({ pages }) => {

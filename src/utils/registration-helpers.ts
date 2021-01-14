@@ -10,6 +10,8 @@ export const isDegree = (registration: Registration): boolean =>
   registration.entityDescription.reference.publicationContext.type === PublicationType.DEGREE;
 export const isReport = (registration: Registration): boolean =>
   registration.entityDescription.reference.publicationContext.type === PublicationType.REPORT;
+export const isChapter = (registration: Registration): boolean =>
+  registration.entityDescription.reference.publicationContext.type === PublicationType.CHAPTER;
 
 export const userIsRegistrationOwner = (user: User | null, registration?: Registration) =>
   !!user && !!registration && user.isCreator && user.id === registration.owner;
