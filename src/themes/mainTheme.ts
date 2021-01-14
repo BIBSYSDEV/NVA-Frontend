@@ -18,8 +18,10 @@ declare module '@material-ui/core/styles/createPalette' {
 }
 
 enum Colors {
-  Primary = '#284B63',
-  Secondary = '#ff5555',
+  Primary = '#0010A4',
+  SecondaryDark = '#E99210',
+  SecondaryLight = '#FFDAA2',
+  SecondaryMain = '#FFB546',
   Background = '#fff',
   Box = '#f5f5f5',
   Link = '#06f',
@@ -33,7 +35,7 @@ enum Colors {
   Indicator = '#FFB546',
 }
 
-export default createMuiTheme({
+const theme = createMuiTheme({
   breakpoints: {
     values: {
       xs: 0,
@@ -48,7 +50,9 @@ export default createMuiTheme({
       main: Colors.Primary,
     },
     secondary: {
-      main: Colors.Secondary,
+      light: Colors.SecondaryLight,
+      main: Colors.SecondaryMain,
+      dark: Colors.SecondaryDark,
     },
     separator: { main: Colors.Separator },
     box: {
@@ -157,6 +161,8 @@ export default createMuiTheme({
     },
   },
 });
+
+export default theme;
 
 // Default props in theme are not supported for components still in /lab
 export const autocompleteTranslationProps = {

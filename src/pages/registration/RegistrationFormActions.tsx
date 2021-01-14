@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import { Button } from '@material-ui/core';
+import { Button, Typography } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import SaveIcon from '@material-ui/icons/Save';
@@ -74,21 +74,23 @@ export const RegistrationFormActions: FC<RegistrationFormActionsProps> = ({
           {/* Left aligned buttons */}
           {tabNumber > RegistrationTab.Description && (
             <Button
-              color="primary"
+              color="secondary"
               variant="outlined"
               data-testid="button-previous-tab"
               startIcon={<ArrowBackIcon />}
               onClick={() => setTabNumber(tabNumber - 1)}>
-              {tabNumber === RegistrationTab.Reference && t('heading.description')}
-              {tabNumber === RegistrationTab.Contributors && t('heading.reference')}
-              {tabNumber === RegistrationTab.FilesAndLicenses && t('heading.contributors')}
+              <Typography variant="button">
+                {tabNumber === RegistrationTab.Reference && t('heading.description')}
+                {tabNumber === RegistrationTab.Contributors && t('heading.reference')}
+                {tabNumber === RegistrationTab.FilesAndLicenses && t('heading.contributors')}
+              </Typography>
             </Button>
           )}
         </div>
         <div>
           {/* Right aligned buttons */}
           <Button data-testid="open-support-button" variant="text" color="primary" onClick={toggleSupportModal}>
-            {t('common:support')}
+            <Typography variant="button">{t('common:support')}</Typography>
           </Button>
           {tabNumber < RegistrationTab.FilesAndLicenses ? (
             <>
@@ -102,27 +104,32 @@ export const RegistrationFormActions: FC<RegistrationFormActionsProps> = ({
                   // Set all fields with error to touched to ensure error messages are shown
                   setTouched(setNestedObjectValues(errors, true));
                 }}>
-                {values.status === RegistrationStatus.DRAFT ? t('save_draft') : t('common:save')}
+                <Typography variant="button">
+                  {values.status === RegistrationStatus.DRAFT ? t('save_draft') : t('common:save')}
+                </Typography>
               </ButtonWithProgress>
               <Button
-                color="primary"
+                color="secondary"
                 variant="contained"
                 data-testid="button-next-tab"
                 endIcon={<ArrowForwardIcon />}
                 onClick={() => setTabNumber(tabNumber + 1)}>
-                {tabNumber === RegistrationTab.Description && t('heading.reference')}
-                {tabNumber === RegistrationTab.Reference && t('heading.contributors')}
-                {tabNumber === RegistrationTab.Contributors && t('heading.files_and_license')}
+                <Typography variant="button">
+                  {tabNumber === RegistrationTab.Description && t('heading.reference')}
+                  {tabNumber === RegistrationTab.Reference && t('heading.contributors')}
+                  {tabNumber === RegistrationTab.Contributors && t('heading.files_and_license')}
+                </Typography>
               </Button>
             </>
           ) : (
             <ButtonWithProgress
-              variant={'outlined'}
+              color="secondary"
+              variant="contained"
               isLoading={isSaving}
               data-testid="button-save-registration"
               endIcon={<SaveIcon />}
               onClick={onClickSaveAndPresent}>
-              {t('common:save_and_present')}
+              <Typography variant="button">{t('common:save_and_present')}</Typography>
             </ButtonWithProgress>
           )}
         </div>

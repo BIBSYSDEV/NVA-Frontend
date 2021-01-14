@@ -61,7 +61,6 @@ const Menu = ({ menuButtonLabel, handleLogout }: MenuProps) => {
   return (
     <StyledMenu>
       <StyledMenuButton
-        color="primary"
         aria-controls="menu"
         aria-haspopup="true"
         onClick={handleClickMenuAnchor}

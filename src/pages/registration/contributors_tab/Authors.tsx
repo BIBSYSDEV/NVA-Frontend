@@ -114,9 +114,9 @@ const Authors: FC<AuthorsProps> = ({ push, replace }) => {
           setUnverifiedAuthor(null);
         }}
         variant="contained"
-        color="default"
+        color="primary"
+        startIcon={<StyledAddIcon />}
         data-testid="add-contributor">
-        <StyledAddIcon />
         <Typography variant="button">{t('contributors.add_author')}</Typography>
       </StyledAddAuthorButton>
       <AddContributorModal

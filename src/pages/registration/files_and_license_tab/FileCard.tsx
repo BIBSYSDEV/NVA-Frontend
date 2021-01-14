@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 import {
-  Button,
   Checkbox,
   FormControl,
   FormControlLabel,
@@ -26,6 +25,7 @@ import { Field, FieldProps, ErrorMessage } from 'formik';
 import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 import { getDateFnsLocale } from '../../../utils/date-helpers';
 import { datePickerTranslationProps } from '../../../themes/mainTheme';
+import DangerButton from '../../../components/DangerButton';
 
 const StyledDescription = styled(Typography)`
   font-style: italic;
@@ -222,10 +222,13 @@ const FileCard: FC<FileCardProps> = ({ file, removeFile, baseFieldName, toggleLi
       )}
 
       <StyledActions>
-        <Button variant="contained" color="secondary" data-testid="button-remove-file" onClick={removeFile}>
-          <DeleteIcon />
+        <DangerButton
+          variant="outlined"
+          data-testid="button-remove-file"
+          startIcon={<DeleteIcon />}
+          onClick={removeFile}>
           {t('common:remove')}
-        </Button>
+        </DangerButton>
       </StyledActions>
     </Card>
   );
