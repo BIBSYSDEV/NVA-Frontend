@@ -29,7 +29,7 @@ enum Colors {
   Panel = '#A9D8B8',
   Disabled = '#bbb',
   Danger = '#ff5555',
-  DangerLight = '#ffbbbb',
+  Header = '#ffd3d3',
   Indicator = '#FFB546',
 }
 
@@ -54,7 +54,7 @@ export default createMuiTheme({
     box: {
       main: Colors.Box,
     },
-    danger: { main: Colors.Danger, light: Colors.DangerLight },
+    danger: { main: Colors.Danger },
     text: {
       primary: Colors.PrimaryText,
       secondary: Colors.SecondaryText,
@@ -91,6 +91,9 @@ export default createMuiTheme({
     },
     MuiAccordionDetails: {
       root: { background: Colors.Panel },
+    },
+    MuiAppBar: {
+      root: { background: Colors.Header },
     },
     MuiButton: {
       root: {
