@@ -27,6 +27,10 @@ const StyledActionsContainer = styled.div`
   }
 `;
 
+const StyledBackButton = styled(Button)`
+  color: ${({ theme }) => theme.palette.text.primary};
+`;
+
 interface RegistrationFormActionsProps {
   tabNumber: RegistrationTab;
   setTabNumber: (newTab: RegistrationTab) => void;
@@ -73,7 +77,7 @@ export const RegistrationFormActions: FC<RegistrationFormActionsProps> = ({
         <div>
           {/* Left aligned buttons */}
           {tabNumber > RegistrationTab.Description && (
-            <Button
+            <StyledBackButton
               color="secondary"
               variant="outlined"
               data-testid="button-previous-tab"
@@ -84,7 +88,7 @@ export const RegistrationFormActions: FC<RegistrationFormActionsProps> = ({
                 {tabNumber === RegistrationTab.Contributors && t('heading.reference')}
                 {tabNumber === RegistrationTab.FilesAndLicenses && t('heading.contributors')}
               </Typography>
-            </Button>
+            </StyledBackButton>
           )}
         </div>
         <div>
