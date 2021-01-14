@@ -33,7 +33,6 @@ enum Color {
   ErrorMain = '#C2363D',
   SuccessDark = '#008958',
   SuccessMain = '#08B677',
-  Indicator = '#FFB546',
 }
 
 const theme = createMuiTheme({
@@ -147,11 +146,6 @@ const theme = createMuiTheme({
           color: Color.PrimaryText,
           fontWeight: 'bold',
         },
-      },
-    },
-    MuiTabs: {
-      indicator: {
-        backgroundColor: Color.SecondaryMain,
       },
     },
     MuiTextField: {

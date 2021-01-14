@@ -100,7 +100,7 @@ export const RegistrationFormTabs: FC<RegistrationFormTabsProps> = ({ setTabNumb
       onChange={(_, value) => setTabNumber(value)}
       scrollButtons="auto"
       textColor="primary"
-      indicatorColor="primary"
+      indicatorColor="secondary"
       value={tabNumber}
       variant="scrollable">
       <LinkTab
