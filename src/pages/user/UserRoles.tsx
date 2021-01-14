@@ -7,7 +7,7 @@ import IconLabelTextLine from '../../components/IconLabelTextLine';
 import { User } from '../../types/user.types';
 
 const StyledTypography = styled(Typography)`
-  color: ${({ theme }) => theme.palette.danger.main};
+  color: ${({ theme }) => theme.palette.error.main};
 `;
 
 interface UserRolesProps {

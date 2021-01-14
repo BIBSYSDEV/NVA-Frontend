@@ -8,12 +8,10 @@ declare module '@material-ui/core/styles/createPalette' {
   interface Palette {
     separator: PaletteColor;
     box: PaletteColor;
-    danger: PaletteColor;
   }
   interface PaletteOptions {
     separator?: PaletteColorOptions;
     box?: PaletteColorOptions;
-    danger?: PaletteColorOptions;
   }
 }
 // Colors: https://www.figma.com/file/3hggk6SX2ca81U8kwaZKFs/Farger-NVA
@@ -30,7 +28,6 @@ enum Color {
   SecondaryText = '#44515d',
   Panel = '#A9D8B8',
   Disabled = '#bbb',
-  Danger = '#ff5555',
   Header = '#ffd3d3',
   ErrorLight = '#EE7575',
   ErrorMain = '#930A0A',
@@ -63,9 +60,6 @@ const theme = createMuiTheme({
     },
     box: {
       main: Color.Box,
-    },
-    danger: {
-      main: Color.Danger,
     },
     error: {
       main: Color.ErrorMain,
@@ -167,7 +161,7 @@ const theme = createMuiTheme({
     },
     MuiFormLabel: {
       asterisk: {
-        color: Color.Danger,
+        color: Color.ErrorMain,
       },
     },
   },

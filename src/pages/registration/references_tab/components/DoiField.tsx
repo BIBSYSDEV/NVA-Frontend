@@ -9,7 +9,7 @@ import { ReferenceFieldNames } from '../../../../types/publicationFieldNames';
 import ConfirmDialog from '../../../../components/ConfirmDialog';
 
 const StyledClearIcon = styled(ClearIcon)`
-  color: ${({ theme }) => theme.palette.danger.main};
+  color: ${({ theme }) => theme.palette.error.main};
   cursor: pointer;
 `;
 
