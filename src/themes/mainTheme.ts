@@ -16,8 +16,8 @@ declare module '@material-ui/core/styles/createPalette' {
     danger?: PaletteColorOptions;
   }
 }
-
-enum Colors {
+// Colors: https://www.figma.com/file/3hggk6SX2ca81U8kwaZKFs/Farger-NVA
+enum Color {
   Primary = '#0010A4',
   SecondaryDark = '#E99210',
   SecondaryLight = '#FFDAA2',
@@ -32,6 +32,10 @@ enum Colors {
   Disabled = '#bbb',
   Danger = '#ff5555',
   Header = '#ffd3d3',
+  ErrorLight = '#EE7575',
+  ErrorMain = '#930A0A',
+  SuccessDark = '#008958',
+  SuccessMain = '#08B677',
   Indicator = '#FFB546',
 }
 
@@ -47,25 +51,37 @@ const theme = createMuiTheme({
   },
   palette: {
     primary: {
-      main: Colors.Primary,
+      main: Color.Primary,
     },
     secondary: {
-      light: Colors.SecondaryLight,
-      main: Colors.SecondaryMain,
-      dark: Colors.SecondaryDark,
+      light: Color.SecondaryLight,
+      main: Color.SecondaryMain,
+      dark: Color.SecondaryDark,
     },
-    separator: { main: Colors.Separator },
+    separator: {
+      main: Color.Separator,
+    },
     box: {
-      main: Colors.Box,
+      main: Color.Box,
     },
-    danger: { main: Colors.Danger },
+    danger: {
+      main: Color.Danger,
+    },
+    error: {
+      main: Color.ErrorMain,
+      light: Color.ErrorLight,
+    },
+    success: {
+      main: Color.SuccessMain,
+      dark: Color.SuccessDark,
+    },
     text: {
-      primary: Colors.PrimaryText,
-      secondary: Colors.SecondaryText,
-      disabled: Colors.Disabled,
+      primary: Color.PrimaryText,
+      secondary: Color.SecondaryText,
+      disabled: Color.Disabled,
     },
     background: {
-      default: Colors.Background,
+      default: Color.Background,
     },
   },
   typography: {
@@ -90,14 +106,14 @@ const theme = createMuiTheme({
   overrides: {
     MuiAccordion: {
       root: {
-        background: Colors.Panel,
+        background: Color.Panel,
       },
     },
     MuiAccordionDetails: {
-      root: { background: Colors.Panel },
+      root: { background: Color.Panel },
     },
     MuiAppBar: {
-      root: { background: Colors.Header },
+      root: { background: Color.Header },
     },
     MuiButton: {
       root: {
@@ -106,7 +122,7 @@ const theme = createMuiTheme({
     },
     MuiCard: {
       root: {
-        backgroundColor: Colors.Box,
+        backgroundColor: Color.Box,
       },
     },
     MuiCssBaseline: {
@@ -116,12 +132,12 @@ const theme = createMuiTheme({
     },
     MuiInputBase: {
       root: {
-        background: Colors.Background,
+        background: Color.Background,
       },
     },
     MuiLink: {
       root: {
-        color: Colors.Link,
+        color: Color.Link,
       },
     },
     MuiTab: {
@@ -134,14 +150,14 @@ const theme = createMuiTheme({
       },
       textColorPrimary: {
         '&$selected': {
-          color: Colors.PrimaryText,
+          color: Color.PrimaryText,
           fontWeight: 'bold',
         },
       },
     },
     MuiTabs: {
       indicator: {
-        backgroundColor: Colors.Indicator,
+        backgroundColor: Color.Indicator,
       },
     },
     MuiTextField: {
@@ -151,7 +167,7 @@ const theme = createMuiTheme({
     },
     MuiFormLabel: {
       asterisk: {
-        color: Colors.Danger,
+        color: Color.Danger,
       },
     },
   },
