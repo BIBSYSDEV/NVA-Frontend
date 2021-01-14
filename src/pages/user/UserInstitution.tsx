@@ -110,7 +110,7 @@ const UserInstitution = ({ user }: UserInstituionProps) => {
           <StyledRightAlignedWrapper>
             <Button
               variant="contained"
-              color="primary"
+              color="secondary"
               onClick={toggleUnitForm}
               disabled={!user.authority}
               data-testid="add-new-institution-button">

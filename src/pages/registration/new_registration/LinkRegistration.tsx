@@ -17,7 +17,7 @@ import { doiValidationSchema } from '../../../utils/validation/doiSearchValidati
 import { getRegistrationPath } from '../../../utils/urlPaths';
 
 const StyledRegistrationAccorion = styled(RegistrationAccordion)`
-  border-color: #0010a4; // TODO: theme?
+  border-color: ${({ theme }) => theme.palette.primary.main};
 `;
 
 const StyledResult = styled.div`

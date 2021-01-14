@@ -1,8 +1,4 @@
 {
-  "chapter": {
-    "anthology": "Publisert i",
-    "info": "Den antologien kapittelet er publisert i må være registrert først"
-  },
   "contributors": {
     "add_affiliation": "Legg til tilhørighet",
     "add_author": "Legg til forfatter",
@@ -101,6 +97,11 @@
     "article_number": "Artikkelnummer",
     "delete_doi_title": "Endre type?",
     "delete_doi_text": "Om du fjerner lenke til publikasjonen vil du endre fra registrering til publisering. Ønsker du å fortsette?",
+    "chapter": {
+      "info_anthology": "Antologien hvor kapittelet er publisert i må være publisert først",
+      "published_in": "Publisert i",
+      "search_for_anthology": "Søk etter antologien hvor kapittelet er publisert"
+    },
     "is_book_a_textbook": "Er boken en lærebok?",
     "is_book_a_textbook_confirm": "Ja, boken er en lærebok",
     "is_peer_reviewed": "Ja, den er fagfellevurdert",

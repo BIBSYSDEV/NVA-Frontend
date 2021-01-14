@@ -9,6 +9,7 @@ import { DegreeEntityDescription } from './publication_types/degreeRegistration.
 import { BookEntityDescription } from './publication_types/bookRegistration.types';
 import { ReportEntityDescription } from './publication_types/reportRegistration.types';
 import { BackendTypeNames } from './publication_types/commonRegistration.types';
+import { ChapterEntityDescription } from './publication_types/chapterRegistration.types';
 
 export enum RegistrationStatus {
   DELETED = 'DRAFT_FOR_DELETION',
@@ -97,7 +98,8 @@ export interface Registration extends BaseRegistration {
     | JournalEntityDescription
     | DegreeEntityDescription
     | BookEntityDescription
-    | ReportEntityDescription;
+    | ReportEntityDescription
+    | ChapterEntityDescription;
 }
 
 export interface JournalRegistration extends BaseRegistration {
@@ -116,25 +118,15 @@ export interface ReportRegistration extends BaseRegistration {
   entityDescription: ReportEntityDescription;
 }
 
+export interface ChapterRegistration extends BaseRegistration {
+  entityDescription: ChapterEntityDescription;
+}
+
 export interface RegistrationDate extends BackendType {
   year: string;
   month: string;
   day: string;
 }
-
-export interface PagesRange extends BackendType {
-  begin: string;
-  end: string;
-}
-
-export interface PagesMonograph extends BackendType {
-  pages: string;
-}
-
-export const emptyPagesMonograph: PagesMonograph = {
-  type: BackendTypeNames.PAGES_MONOGRAPH,
-  pages: '',
-};
 
 export type RegistrationPreview = Pick<
   Registration & JournalEntityDescription,

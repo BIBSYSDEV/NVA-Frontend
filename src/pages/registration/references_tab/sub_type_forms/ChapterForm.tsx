@@ -1,26 +1,25 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Field, FieldProps } from 'formik';
-import { TextField } from '@material-ui/core';
-import InfoIcon from '@material-ui/icons/Info';
+import { Field, FieldProps, useFormikContext } from 'formik';
 import styled from 'styled-components';
+import { TextField, Typography } from '@material-ui/core';
+import InfoIcon from '@material-ui/icons/Info';
 import RemoveIcon from '@material-ui/icons/Remove';
-import { ReferenceFieldNames } from '../../../../types/publicationFieldNames';
+import { BookType, ChapterType, ReferenceFieldNames } from '../../../../types/publicationFieldNames';
 import NviValidation from '../components/NviValidation';
 import DoiField from '../components/DoiField';
+import Card from '../../../../components/Card';
+import PeerReview from '../components/PeerReview';
+import SearchContainerField from '../components/SearchContainerField';
+import { ChapterRegistration } from '../../../../types/registration.types';
 
-const StyledInfoBox = styled.div`
+const StyledInfoCard = styled(Card)`
   margin-top: 1rem;
-  background-color: ${({ theme }) => theme.palette.background.default};
-  padding: 1rem 0;
   display: flex;
   align-items: center;
-`;
-
-const StyledIcon = styled(InfoIcon)`
-  color: ${({ theme }) => theme.palette.text.secondary};
-  margin: 1rem;
-  font-size: 2rem;
+  > :first-child {
+    margin-right: 1rem;
+  }
 `;
 
 const StyledPageNumberWrapper = styled.div`
@@ -40,21 +39,35 @@ const StyledPageNumberField = styled(TextField)`
   width: 10rem;
 `;
 
-const ChapterForm: React.FC = () => {
+const ChapterForm = () => {
   const { t } = useTranslation('registration');
+
+  const { values } = useFormikContext<ChapterRegistration>();
+  const {
+    reference: { publicationContext, publicationInstance },
+  } = values.entityDescription;
 
   return (
     <>
-      <StyledInfoBox>
-        <StyledIcon />
-        {t('chapter.info')}
-      </StyledInfoBox>
+      <StyledInfoCard>
+        <InfoIcon color="primary" fontSize="large" />
+        <Typography>{t('references.chapter.info_anthology')}</Typography>
+      </StyledInfoCard>
 
       <DoiField />
 
+      {publicationInstance.type === ChapterType.BOOK && (
+        <SearchContainerField
+          fieldName={ReferenceFieldNames.PUBLICATION_CONTEXT_LINKED_CONTEXT}
+          searchSubtypes={[BookType.ANTHOLOGY]}
+          label={t('references.chapter.published_in')}
+          placeholder={t('references.chapter.search_for_anthology')}
+        />
+      )}
+
       <StyledPageNumberWrapper>
         <Field name={ReferenceFieldNames.PAGES_FROM}>
-          {({ field }: FieldProps) => (
+          {({ field }: FieldProps<string>) => (
             <StyledPageNumberField
               variant="outlined"
               data-testid="chapter-pages-from"
@@ -64,11 +77,13 @@ const ChapterForm: React.FC = () => {
             />
           )}
         </Field>
+
         <StyledDashIconWrapper>
           <RemoveIcon />
         </StyledDashIconWrapper>
+
         <Field name={ReferenceFieldNames.PAGES_TO}>
-          {({ field }: FieldProps) => (
+          {({ field }: FieldProps<string>) => (
             <StyledPageNumberField
               data-testid="chapter-pages-to"
               variant="outlined"
@@ -80,7 +95,16 @@ const ChapterForm: React.FC = () => {
         </Field>
       </StyledPageNumberWrapper>
 
-      <NviValidation isPeerReviewed={true} isRated={true} dataTestId="nvi-chapter" />
+      {publicationInstance.type === ChapterType.BOOK && (
+        <>
+          <PeerReview fieldName={ReferenceFieldNames.PEER_REVIEW} label={t('references.peer_review')} />
+          <NviValidation
+            isPeerReviewed={!!publicationInstance.peerReviewed}
+            isRated={!!publicationContext?.level}
+            dataTestId="nvi-chapter"
+          />
+        </>
+      )}
     </>
   );
 };

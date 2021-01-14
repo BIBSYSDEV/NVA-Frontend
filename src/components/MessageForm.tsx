@@ -66,7 +66,7 @@ export const MessageForm = ({ confirmAction, cancelAction, disabled }: MessageFo
               disabled={disabled}
               type="submit"
               variant="contained"
-              color="primary"
+              color="secondary"
               isLoading={isSubmitting}>
               {t('common:send')}
             </ButtonWithProgress>

@@ -1,6 +1,13 @@
 import * as Yup from 'yup';
 import { ErrorMessage } from '../errorMessage';
-import { JournalType, BookType, ReportType, DegreeType, PublicationType } from '../../../types/publicationFieldNames';
+import {
+  JournalType,
+  BookType,
+  ReportType,
+  DegreeType,
+  PublicationType,
+  ChapterType,
+} from '../../../types/publicationFieldNames';
 
 export const isbnRegex = /^(97(8|9))?\d{9}(\d|X)$/g; // ISBN without hyphens
 
@@ -103,4 +110,18 @@ const degreePublicationContext = Yup.object().shape({
 export const degreeReference = baseReference.shape({
   publicationInstance: degreePublicationInstance,
   publicationContext: degreePublicationContext,
+});
+
+// Chapter
+const chapterPublicationInstance = Yup.object().shape({
+  type: Yup.string().oneOf(Object.values(ChapterType)).required(ErrorMessage.REQUIRED),
+});
+
+const chapterPublicationContext = Yup.object().shape({
+  linkedContext: publisherField,
+});
+
+export const chapterReference = baseReference.shape({
+  publicationInstance: chapterPublicationInstance,
+  publicationContext: chapterPublicationContext,
 });

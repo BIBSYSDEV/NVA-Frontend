@@ -114,6 +114,7 @@ export const DoiRequestAccordion = ({ identifier }: DoiRequestAccordionProps) =>
           <Button
             data-testid={`go-to-registration-${identifier}`}
             variant="outlined"
+            color="primary"
             component={RouterLink}
             to={getRegistrationLandingPagePath(identifier)}>
             {t('doi_requests.go_to_registration')}

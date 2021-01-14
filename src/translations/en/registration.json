@@ -1,8 +1,4 @@
 {
-  "chapter": {
-    "anthology": "Published in",
-    "info": "The anthology this chapter is published in must be registered in advance"
-  },
   "contributors": {
     "add_affiliation": "Add affiliation",
     "add_author": "Add author",
@@ -99,6 +95,11 @@
   },
   "references": {
     "article_number": "Article number",
+    "chapter": {
+      "info_anthology": "The anthology where this chapter is published in must be published in advance",
+      "published_in": "Published in",
+      "search_for_anthology": "Search for the anthology where the chapter is published"
+    },
     "delete_doi_title": "Change type?",
     "delete_doi_text": "Removing the link to the publication will change it from a registration to a new publication. Do you want to continue?",
     "is_book_a_textbook": "Is the book a textbook?",
