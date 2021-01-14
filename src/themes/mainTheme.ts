@@ -6,34 +6,34 @@ import { merriweatherRegular, barlowRegular } from './fonts';
 // Extend Palette type to allow custom colors
 declare module '@material-ui/core/styles/createPalette' {
   interface Palette {
-    separator: PaletteColor;
     box: PaletteColor;
-    danger: PaletteColor;
   }
   interface PaletteOptions {
-    separator?: PaletteColorOptions;
     box?: PaletteColorOptions;
-    danger?: PaletteColorOptions;
   }
 }
 
-enum Colors {
-  Primary = '#284B63',
-  Secondary = '#ff5555',
+// Colors: https://www.figma.com/file/3hggk6SX2ca81U8kwaZKFs/Farger-NVA
+enum Color {
+  Primary = '#0010A4',
+  SecondaryDark = '#E99210',
+  SecondaryLight = '#FFDAA2',
+  SecondaryMain = '#FFB546',
   Background = '#fff',
   Box = '#f5f5f5',
   Link = '#06f',
-  Separator = '#3d4349',
   PrimaryText = 'rgba(0, 0, 0, 0.87)',
   SecondaryText = '#44515d',
   Panel = '#A9D8B8',
   Disabled = '#bbb',
-  Danger = '#ff5555',
   Header = '#ffd3d3',
-  Indicator = '#FFB546',
+  ErrorLight = '#EE7575',
+  ErrorMain = '#C2363D',
+  SuccessDark = '#008958',
+  SuccessMain = '#08B677',
 }
 
-export default createMuiTheme({
+const theme = createMuiTheme({
   breakpoints: {
     values: {
       xs: 0,
@@ -45,23 +45,31 @@ export default createMuiTheme({
   },
   palette: {
     primary: {
-      main: Colors.Primary,
+      main: Color.Primary,
     },
     secondary: {
-      main: Colors.Secondary,
+      light: Color.SecondaryLight,
+      main: Color.SecondaryMain,
+      dark: Color.SecondaryDark,
     },
-    separator: { main: Colors.Separator },
     box: {
-      main: Colors.Box,
+      main: Color.Box,
     },
-    danger: { main: Colors.Danger },
+    error: {
+      main: Color.ErrorMain,
+      light: Color.ErrorLight,
+    },
+    success: {
+      main: Color.SuccessMain,
+      dark: Color.SuccessDark,
+    },
     text: {
-      primary: Colors.PrimaryText,
-      secondary: Colors.SecondaryText,
-      disabled: Colors.Disabled,
+      primary: Color.PrimaryText,
+      secondary: Color.SecondaryText,
+      disabled: Color.Disabled,
     },
     background: {
-      default: Colors.Background,
+      default: Color.Background,
     },
   },
   typography: {
@@ -86,14 +94,14 @@ export default createMuiTheme({
   overrides: {
     MuiAccordion: {
       root: {
-        background: Colors.Panel,
+        background: Color.Panel,
       },
     },
     MuiAccordionDetails: {
-      root: { background: Colors.Panel },
+      root: { background: Color.Panel },
     },
     MuiAppBar: {
-      root: { background: Colors.Header },
+      root: { background: Color.Header },
     },
     MuiButton: {
       root: {
@@ -102,7 +110,7 @@ export default createMuiTheme({
     },
     MuiCard: {
       root: {
-        backgroundColor: Colors.Box,
+        backgroundColor: Color.Box,
       },
     },
     MuiCssBaseline: {
@@ -112,12 +120,12 @@ export default createMuiTheme({
     },
     MuiInputBase: {
       root: {
-        background: Colors.Background,
+        background: Color.Background,
       },
     },
     MuiLink: {
       root: {
-        color: Colors.Link,
+        color: Color.Link,
       },
     },
     MuiTab: {
@@ -130,14 +138,9 @@ export default createMuiTheme({
       },
       textColorPrimary: {
         '&$selected': {
-          color: Colors.PrimaryText,
+          color: Color.PrimaryText,
           fontWeight: 'bold',
         },
-      },
-    },
-    MuiTabs: {
-      indicator: {
-        backgroundColor: Colors.Indicator,
       },
     },
     MuiTextField: {
@@ -147,7 +150,7 @@ export default createMuiTheme({
     },
     MuiFormLabel: {
       asterisk: {
-        color: Colors.Danger,
+        color: Color.ErrorMain,
       },
     },
   },
@@ -160,6 +163,8 @@ export default createMuiTheme({
     },
   },
 });
+
+export default theme;
 
 // Default props in theme are not supported for components still in /lab
 export const autocompleteTranslationProps = {

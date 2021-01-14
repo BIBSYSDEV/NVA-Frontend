@@ -30,10 +30,10 @@ const ConfirmDialog: FC<ConfirmDialogProps> = ({ children, open, title, onAccept
         <StyledDialogContentText>{children}</StyledDialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button data-testid="cancel-button" variant="contained" onClick={onCancel}>
+        <Button data-testid="cancel-button" color="primary" variant="outlined" onClick={onCancel}>
           {t('common:no')}
         </Button>
-        <ButtonWithProgress data-testid="accept-button" isLoading={isLoading} onClick={onAccept}>
+        <ButtonWithProgress data-testid="accept-button" color="secondary" isLoading={isLoading} onClick={onAccept}>
           {t('common:yes')}
         </ButtonWithProgress>
       </DialogActions>

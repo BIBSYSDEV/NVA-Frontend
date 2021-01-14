@@ -67,7 +67,6 @@ const Header = () => {
       {user?.isCreator && (
         <StyledShortcuts>
           <Button
-            color="primary"
             component={RouterLink}
             data-testid="new-registration"
             to={getRegistrationPath()}
@@ -75,7 +74,6 @@ const Header = () => {
             <Typography variant="button">{t('new_registration')}</Typography>
           </Button>
           <Button
-            color="primary"
             component={RouterLink}
             data-testid="my-registrations"
             to={UrlPathTemplate.MyRegistrations}
@@ -83,7 +81,6 @@ const Header = () => {
             <Typography variant="button">{t('workLists:my_registrations')}</Typography>
           </Button>
           <Button
-            color="primary"
             component={RouterLink}
             data-testid="my-messages"
             to={UrlPathTemplate.MyMessages}

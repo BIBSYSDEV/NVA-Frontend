@@ -9,7 +9,7 @@ const StyledTab = styled(Tab)`
 
 const StyledErrorIcon = styled(ErrorIcon)`
   margin-left: 0.3rem;
-  color: ${({ theme }) => theme.palette.danger.main};
+  color: ${({ theme }) => theme.palette.error.main};
 `;
 
 interface LinkTabProps extends TabProps {

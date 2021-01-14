@@ -23,6 +23,7 @@ import { useDispatch } from 'react-redux';
 import { NotificationVariant } from '../../types/notification.types';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { getRegistrationLandingPagePath, getRegistrationPath } from '../../utils/urlPaths';
+import DangerButton from '../../components/DangerButton';
 
 const StyledTableRow = styled(TableRow)`
   background-color: ${(props) => props.theme.palette.box.main};
@@ -131,8 +132,7 @@ const RegistrationList: FC<RegistrationListProps> = ({ registrations, refetchReg
                 </TableCell>
                 <TableCell>
                   {registration.status === RegistrationStatus.DRAFT && (
-                    <Button
-                      color="secondary"
+                    <DangerButton
                       variant="outlined"
                       data-testid={`delete-registration-${registration.identifier}`}
                       startIcon={<DeleteIcon />}
@@ -141,7 +141,7 @@ const RegistrationList: FC<RegistrationListProps> = ({ registrations, refetchReg
                         setShowDeleteModal(true);
                       }}>
                       {t('delete')}
-                    </Button>
+                    </DangerButton>
                   )}
                 </TableCell>
               </StyledTableRow>
