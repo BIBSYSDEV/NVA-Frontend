@@ -84,24 +84,24 @@ const Menu = ({ menuButtonLabel, handleLogout }: MenuProps) => {
         {user?.isCurator && [
           <StyledHeaderTypography key="1">{t('profile:roles.curator')}</StyledHeaderTypography>,
           <MenuItem
-            key="2"
+            key="menu-my-worklist-button"
+            data-testid="menu-my-worklist-button"
             component={Link}
             to={UrlPathTemplate.Worklist}
-            data-testid="menu-my-worklist-button"
             onClick={closeMenu}
             disableGutters>
             <StyledIndentedTypography>{t('workLists:my_worklist')}</StyledIndentedTypography>
           </MenuItem>,
-          <Divider key="3" />,
+          <Divider key="divider1" />,
         ]}
         {(user?.isAppAdmin || user?.isInstitutionAdmin) && [
           <StyledHeaderTypography key="4">{t('common:admin')}</StyledHeaderTypography>,
           user.isAppAdmin && (
             <MenuItem
-              key="5"
+              key="menu-admin-institutions-button"
+              data-testid="menu-admin-institutions-button"
               component={Link}
               to={UrlPathTemplate.AdminInstitutions}
-              data-testid="menu-admin-institution-button"
               onClick={closeMenu}
               disableGutters>
               <StyledIndentedTypography>{t('common:institutions')}</StyledIndentedTypography>
@@ -109,24 +109,25 @@ const Menu = ({ menuButtonLabel, handleLogout }: MenuProps) => {
           ),
           user.isInstitutionAdmin && [
             <MenuItem
-              key="6"
+              key="menu-admin-institution-button"
+              data-testid="menu-admin-institution-button"
               component={Link}
               to={UrlPathTemplate.MyInstitution}
-              data-testid="menu-admin-institution-button"
               onClick={closeMenu}
               disableGutters>
               <StyledIndentedTypography>{t('common:my_institution')}</StyledIndentedTypography>
             </MenuItem>,
             <MenuItem
+              key="menu-admin-institution-users-button"
+              data-testid="menu-admin-institution-users-button"
               component={Link}
               to={UrlPathTemplate.MyInstitutionUsers}
-              data-testid="menu-admin-institution-users-button"
               onClick={closeMenu}
               disableGutters>
               <StyledIndentedTypography>{t('common:users')}</StyledIndentedTypography>
             </MenuItem>,
           ],
-          <Divider key="8" />,
+          <Divider key="divider2" />,
         ]}
         <MenuItem
           component={Link}
