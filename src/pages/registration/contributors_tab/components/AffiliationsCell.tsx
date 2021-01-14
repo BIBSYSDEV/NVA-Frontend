@@ -26,9 +26,9 @@ const StyledCard = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 1rem;
-  border-bottom: 1px solid ${({ theme }) => theme.palette.separator.main};
+  border-bottom: 1px solid ${({ theme }) => theme.palette.divider};
   &:first-of-type {
-    border-top: 1px solid ${({ theme }) => theme.palette.separator.main};
+    border-top: 1px solid ${({ theme }) => theme.palette.divider};
   }
 `;
 

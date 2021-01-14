@@ -6,14 +6,13 @@ import { merriweatherRegular, barlowRegular } from './fonts';
 // Extend Palette type to allow custom colors
 declare module '@material-ui/core/styles/createPalette' {
   interface Palette {
-    separator: PaletteColor;
     box: PaletteColor;
   }
   interface PaletteOptions {
-    separator?: PaletteColorOptions;
     box?: PaletteColorOptions;
   }
 }
+
 // Colors: https://www.figma.com/file/3hggk6SX2ca81U8kwaZKFs/Farger-NVA
 enum Color {
   Primary = '#0010A4',
@@ -23,7 +22,6 @@ enum Color {
   Background = '#fff',
   Box = '#f5f5f5',
   Link = '#06f',
-  Separator = '#3d4349',
   PrimaryText = 'rgba(0, 0, 0, 0.87)',
   SecondaryText = '#44515d',
   Panel = '#A9D8B8',
@@ -53,9 +51,6 @@ const theme = createMuiTheme({
       light: Color.SecondaryLight,
       main: Color.SecondaryMain,
       dark: Color.SecondaryDark,
-    },
-    separator: {
-      main: Color.Separator,
     },
     box: {
       main: Color.Box,

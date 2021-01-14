@@ -13,9 +13,9 @@ const StyledLine = styled.div`
   }
   grid-template-areas: 'icon label .' 'text text text';
   grid-template-columns: auto 3fr;
-  border-bottom: 1px solid ${({ theme }) => theme.palette.separator.main};
+  border-bottom: 1px solid ${({ theme }) => theme.palette.divider};
   &:first-of-type {
-    border-top: 1px solid ${({ theme }) => theme.palette.separator.main};
+    border-top: 1px solid ${({ theme }) => theme.palette.divider};
   }
 `;
 
