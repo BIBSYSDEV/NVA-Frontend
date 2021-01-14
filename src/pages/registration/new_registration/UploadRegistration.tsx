@@ -23,7 +23,7 @@ const StyledFileCard = styled.div`
 `;
 
 const StyledRegistrationAccorion = styled(RegistrationAccordion)`
-  border-color: #e99210; // TODO: theme?
+  border-color: ${({ theme }) => theme.palette.secondary.main};
 `;
 
 interface UploadRegistrationProps {

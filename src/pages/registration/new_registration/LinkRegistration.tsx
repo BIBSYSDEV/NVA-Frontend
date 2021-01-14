@@ -20,7 +20,7 @@ const StyledTypography = styled(Typography)`
 `;
 
 const StyledRegistrationAccorion = styled(RegistrationAccordion)`
-  border-color: #0010a4; // TODO: theme?
+  border-color: ${({ theme }) => theme.palette.primary.main};
 `;
 
 interface LinkRegistrationProps {
