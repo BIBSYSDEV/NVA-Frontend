@@ -101,7 +101,11 @@ const CustomerInstitutionMetadataForm: FC<CustomerInstitutionMetadataFormProps> 
               dataTestId="customer-institution-feide-organization-id-input"
             />
             <StyledButtonContainer>
-              <ButtonWithProgress data-testid="customer-institution-save-button" isLoading={isSubmitting} type="submit">
+              <ButtonWithProgress
+                data-testid="customer-institution-save-button"
+                color="secondary"
+                isLoading={isSubmitting}
+                type="submit">
                 {editMode ? t('common:save') : t('common:create')}
               </ButtonWithProgress>
             </StyledButtonContainer>

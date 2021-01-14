@@ -19,18 +19,20 @@ import {
   JournalPublicationInstance,
 } from '../../types/publication_types/journalRegistration.types';
 import { PublicRegistrationStatusBar } from './PublicRegistrationStatusBar';
-import { isJournal, isDegree, isReport, isBook } from '../../utils/registration-helpers';
+import { isJournal, isDegree, isReport, isBook, isChapter } from '../../utils/registration-helpers';
 import {
   PublicPublicationInstanceJournal,
   PublicPublicationInstanceDegree,
   PublicPublicationInstanceReport,
   PublicPublicationInstanceBook,
+  PublicPublicationInstanceChapter,
 } from './PublicPublicationInstance';
 import {
   PublicPublicationContextJournal,
   PublicPublicationContextDegree,
   PublicPublicationContextReport,
   PublicPublicationContextBook,
+  PublicPublicationContextChapter,
 } from './PublicPublicationContext';
 import {
   DegreePublicationContext,
@@ -43,6 +45,10 @@ import {
 import PublicDoi from './PublicDoi';
 import deepmerge from 'deepmerge';
 import { BookPublicationContext, BookPublicationInstance } from '../../types/publication_types/bookRegistration.types';
+import {
+  ChapterPublicationContext,
+  ChapterPublicationInstance,
+} from '../../types/publication_types/chapterRegistration.types';
 
 const StyledContentWrapper = styled.div`
   display: flex;
@@ -177,6 +183,15 @@ const PublicRegistrationContent: FC<PublicRegistrationContentProps> = ({ registr
               />
               <PublicPublicationInstanceReport
                 publicationInstance={reference.publicationInstance as ReportPublicationInstance}
+              />
+            </>
+          ) : isChapter(registration) ? (
+            <>
+              <PublicPublicationContextChapter
+                publicationContext={reference.publicationContext as ChapterPublicationContext}
+              />
+              <PublicPublicationInstanceChapter
+                publicationInstance={reference.publicationInstance as ChapterPublicationInstance}
               />
             </>
           ) : null}

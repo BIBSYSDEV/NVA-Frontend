@@ -7,6 +7,7 @@ import { fileValidationSchema } from './fileValidation';
 import {
   baseReference,
   bookReference,
+  chapterReference,
   degreeReference,
   journalReference,
   reportReference,
@@ -47,6 +48,10 @@ export const registrationValidationSchema = Yup.object().shape({
       .when('$publicationContextType', {
         is: PublicationType.DEGREE,
         then: degreeReference,
+      })
+      .when('$publicationContextType', {
+        is: PublicationType.CHAPTER,
+        then: chapterReference,
       }),
   }),
   fileSet: Yup.object().shape({

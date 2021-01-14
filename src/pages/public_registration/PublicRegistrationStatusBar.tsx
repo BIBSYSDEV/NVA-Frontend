@@ -201,6 +201,7 @@ export const PublicRegistrationStatusBar: FC<PublicRegistrationContentProps> = (
           <ButtonWithProgress
             disabled={!!isLoading || !registrationIsValid}
             data-testid="button-publish-registration"
+            color="secondary"
             endIcon={<CloudUploadIcon />}
             onClick={onClickPublish}
             isLoading={isLoading === LoadingName.Publish}>
