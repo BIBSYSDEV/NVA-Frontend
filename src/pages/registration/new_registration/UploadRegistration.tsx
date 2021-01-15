@@ -84,10 +84,12 @@ const UploadRegistration = ({ expanded, onChange }: UploadRegistrationProps) => 
                     size: file.size,
                   }}
                   removeFile={() => {
+                    const fileId = uppy.getFiles().find((thisFile) => thisFile.response?.uploadURL === file.identifier)
+                      ?.id;
+                    fileId && uppy.removeFile(fileId);
                     setUploadedFiles(
                       uploadedFiles.filter((uploadedFile) => uploadedFile.identifier !== file.identifier)
                     );
-                    uppy.removeFile(file.identifier);
                   }}
                 />
               </StyledFileCard>
