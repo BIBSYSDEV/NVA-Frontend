@@ -1,6 +1,6 @@
 import React from 'react';
 import { createMuiTheme, MuiThemeProvider, Typography, TypographyProps } from '@material-ui/core';
-import { useTheme } from '@material-ui/core/styles';
+import theme from '../themes/mainTheme';
 
 // TODO: Remove this component when using MUI v5, as Typography will support custom colors
 // https://github.com/mui-org/material-ui/issues/13875
@@ -10,8 +10,6 @@ interface ContrastTypographyProps extends TypographyProps {
 }
 
 const ContrastTypography = ({ backgroundColor, ...rest }: ContrastTypographyProps) => {
-  const theme = useTheme();
-
   const contrastTextColor = theme.palette.getContrastText(backgroundColor);
 
   const contrastTheme = createMuiTheme({

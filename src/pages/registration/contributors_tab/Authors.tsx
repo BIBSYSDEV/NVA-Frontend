@@ -3,10 +3,8 @@ import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-
 import { Button, Typography } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/AddCircleOutlineSharp';
-
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { Authority } from '../../../types/authority.types';
 import { Contributor, emptyContributor, Identity, UnverifiedContributor } from '../../../types/contributor.types';
@@ -114,7 +112,7 @@ const Authors: FC<AuthorsProps> = ({ push, replace }) => {
           setUnverifiedAuthor(null);
         }}
         variant="contained"
-        color="primary"
+        color="secondary"
         startIcon={<StyledAddIcon />}
         data-testid="add-contributor">
         <Typography variant="button">{t('contributors.add_author')}</Typography>

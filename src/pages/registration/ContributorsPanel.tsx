@@ -2,16 +2,15 @@ import { ErrorMessage, FieldArray, FieldArrayRenderProps, useFormikContext } fro
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormHelperText } from '@material-ui/core';
-import { useTheme } from '@material-ui/core/styles';
 import BackgroundDiv from '../../components/BackgroundDiv';
 import ContrastTypography from '../../components/ContrastTypography';
+import theme from '../../themes/mainTheme';
 import { ContributorFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
 import Authors from './contributors_tab/Authors';
 
 const ContributorsPanel = () => {
   const { t } = useTranslation('registration');
-  const theme = useTheme();
   const {
     values: {
       entityDescription: { contributors },
