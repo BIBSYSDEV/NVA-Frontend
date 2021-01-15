@@ -1,6 +1,6 @@
 import React, { useState, ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
-import { AccordionActions, Typography } from '@material-ui/core';
+import { AccordionActions, AccordionDetails, AccordionSummary, Typography } from '@material-ui/core';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import styled from 'styled-components';
@@ -19,8 +19,6 @@ import FileUploader from '../files_and_license_tab/FileUploader';
 import { BackendTypeNames } from '../../../types/publication_types/commonRegistration.types';
 import { getRegistrationPath } from '../../../utils/urlPaths';
 import { createUppy } from '../../../utils/uppy/uppy-config';
-import RegistrationAccordionDetails from './RegistrationAccordionDetails';
-import { RegistrationAccordionSummary } from './RegistrationAccordionSummary';
 
 const StyledFileCard = styled.div`
   margin-top: 1rem;
@@ -61,16 +59,16 @@ const UploadRegistration = ({ expanded, onChange }: UploadRegistrationProps) => 
   };
 
   return (
-    <StyledRegistrationAccorion expanded={expanded} onChange={onChange}>
-      <RegistrationAccordionSummary
-        title={t('registration:registration.start_with_uploading_file_title')}
-        description={t('registration:registration.start_with_uploading_file_description')}
-        icon={<CloudUploadIcon />}
-        ariaControls="registration-method-file"
-        dataTestId="new-registration-file"
-      />
+    <StyledRegistrationAccorion data-testid="new-registration-file" expanded={expanded} onChange={onChange}>
+      <AccordionSummary>
+        <CloudUploadIcon />
+        <div>
+          <Typography variant="h2">{t('registration:registration.start_with_uploading_file_title')}</Typography>
+          <Typography>{t('registration:registration.start_with_uploading_file_description')}</Typography>
+        </div>
+      </AccordionSummary>
 
-      <RegistrationAccordionDetails>
+      <AccordionDetails>
         {uppy && (
           <>
             <FileUploader uppy={uppy} addFile={(newFile: File) => setUploadedFiles((files) => [newFile, ...files])} />
@@ -96,7 +94,8 @@ const UploadRegistration = ({ expanded, onChange }: UploadRegistrationProps) => 
             ))}
           </>
         )}
-      </RegistrationAccordionDetails>
+      </AccordionDetails>
+
       <AccordionActions>
         <ButtonWithProgress
           data-testid="registration-file-start-button"

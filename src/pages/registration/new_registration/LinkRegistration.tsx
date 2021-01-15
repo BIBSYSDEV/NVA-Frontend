@@ -2,7 +2,7 @@ import React, { useState, ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
-import { AccordionActions, Button, Typography } from '@material-ui/core';
+import { AccordionActions, AccordionDetails, AccordionSummary, Button, Typography } from '@material-ui/core';
 import LinkIcon from '@material-ui/icons/Link';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import { useDispatch } from 'react-redux';
@@ -15,8 +15,6 @@ import { setNotification } from '../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../types/notification.types';
 import { doiValidationSchema } from '../../../utils/validation/doiSearchValidation';
 import { getRegistrationPath } from '../../../utils/urlPaths';
-import { RegistrationAccordionSummary } from './RegistrationAccordionSummary';
-import RegistrationAccordionDetails from './RegistrationAccordionDetails';
 
 const StyledRegistrationAccorion = styled(RegistrationAccordion)`
   border-color: ${({ theme }) => theme.palette.primary.main};
@@ -62,16 +60,16 @@ const LinkRegistration = ({ expanded, onChange }: LinkRegistrationProps) => {
   };
 
   return (
-    <StyledRegistrationAccorion expanded={expanded} onChange={onChange}>
-      <RegistrationAccordionSummary
-        title={t('registration:registration.start_with_link_to_resource_title')}
-        description={t('registration:registration.start_with_link_to_resource_description')}
-        icon={<LinkIcon />}
-        ariaControls="registration-method-link"
-        dataTestId="new-registration-link"
-      />
+    <StyledRegistrationAccorion data-testid="new-registration-link" expanded={expanded} onChange={onChange}>
+      <AccordionSummary>
+        <LinkIcon />
+        <div>
+          <Typography variant="h2">{t('registration:registration.start_with_link_to_resource_title')}</Typography>
+          <Typography>{t('registration:registration.start_with_link_to_resource_description')}</Typography>
+        </div>
+      </AccordionSummary>
 
-      <RegistrationAccordionDetails>
+      <AccordionDetails>
         <LinkRegistrationForm handleSearch={handleSearch} />
         <div>
           {noHit && <Typography>{t('no_hits')}</Typography>}
@@ -82,7 +80,7 @@ const LinkRegistration = ({ expanded, onChange }: LinkRegistrationProps) => {
             </>
           )}
         </div>
-      </RegistrationAccordionDetails>
+      </AccordionDetails>
 
       <AccordionActions>
         <Button
