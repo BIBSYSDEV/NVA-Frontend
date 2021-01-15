@@ -15,13 +15,11 @@ import { setNotification } from '../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../types/notification.types';
 import { doiValidationSchema } from '../../../utils/validation/doiSearchValidation';
 import { getRegistrationPath } from '../../../utils/urlPaths';
+import { RegistrationAccordionSummary } from './RegistrationAccordionSummary';
+import RegistrationAccordionDetails from './RegistrationAccordionDetails';
 
 const StyledRegistrationAccorion = styled(RegistrationAccordion)`
   border-color: ${({ theme }) => theme.palette.primary.main};
-`;
-
-const StyledResult = styled.div`
-  margin-top: 1rem;
 `;
 
 interface LinkRegistrationProps {
@@ -64,37 +62,39 @@ const LinkRegistration = ({ expanded, onChange }: LinkRegistrationProps) => {
   };
 
   return (
-    <StyledRegistrationAccorion
-      summaryTitle={t('registration:registration.start_with_link_to_resource_title')}
-      summaryDescription={t('registration:registration.start_with_link_to_resource_description')}
-      icon={<LinkIcon />}
-      expanded={expanded}
-      onChange={onChange}
-      ariaControls="registration-method-link"
-      dataTestId="new-registration-link">
-      <>
+    <StyledRegistrationAccorion expanded={expanded} onChange={onChange}>
+      <RegistrationAccordionSummary
+        title={t('registration:registration.start_with_link_to_resource_title')}
+        description={t('registration:registration.start_with_link_to_resource_description')}
+        icon={<LinkIcon />}
+        ariaControls="registration-method-link"
+        dataTestId="new-registration-link"
+      />
+
+      <RegistrationAccordionDetails>
         <LinkRegistrationForm handleSearch={handleSearch} />
-        <StyledResult>
+        <div>
           {noHit && <Typography>{t('no_hits')}</Typography>}
           {doi && (
             <>
               <Typography variant="subtitle1">{t('registration')}:</Typography>
               <Typography>{doi.title}</Typography>
-
-              <AccordionActions>
-                <Button
-                  endIcon={<ArrowForwardIcon fontSize="large" />}
-                  color="primary"
-                  variant="contained"
-                  onClick={createRegistration}
-                  data-testid="registration-link-next-button">
-                  {t('registration:registration.start_registration')}
-                </Button>
-              </AccordionActions>
             </>
           )}
-        </StyledResult>
-      </>
+        </div>
+      </RegistrationAccordionDetails>
+
+      <AccordionActions>
+        <Button
+          data-testid="registration-link-next-button"
+          endIcon={<ArrowForwardIcon fontSize="large" />}
+          color="secondary"
+          variant="contained"
+          disabled={!doi}
+          onClick={createRegistration}>
+          <Typography variant="button">{t('registration:registration.start_registration')}</Typography>
+        </Button>
+      </AccordionActions>
     </StyledRegistrationAccorion>
   );
 };

@@ -2,7 +2,7 @@ import { Field, Formik, Form, FieldProps } from 'formik';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { TextField } from '@material-ui/core';
+import { TextField, Typography } from '@material-ui/core';
 import ButtonWithProgress from '../../../components/ButtonWithProgress';
 import { doiValidationSchema } from '../../../utils/validation/doiSearchValidation';
 
@@ -50,7 +50,7 @@ const LinkRegistrationForm = ({ handleSearch }: LinkRegistrationFormProps) => {
             )}
           </Field>
           <ButtonWithProgress data-testid="doi-search-button" isLoading={isSubmitting} type="submit">
-            {t('common:search')}
+            <Typography variant="button">{t('common:search')}</Typography>
           </ButtonWithProgress>
         </StyledForm>
       )}
