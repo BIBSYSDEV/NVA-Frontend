@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { AccordionActions, AccordionDetails, AccordionSummary, Button, Typography } from '@material-ui/core';
 import LinkIcon from '@material-ui/icons/Link';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import { useDispatch } from 'react-redux';
 
@@ -61,7 +62,7 @@ const LinkRegistration = ({ expanded, onChange }: LinkRegistrationProps) => {
 
   return (
     <StyledRegistrationAccorion data-testid="new-registration-link" expanded={expanded} onChange={onChange}>
-      <AccordionSummary>
+      <AccordionSummary expandIcon={<ExpandMoreIcon fontSize="large" />}>
         <LinkIcon />
         <div>
           <Typography variant="h2">{t('registration:registration.start_with_link_to_resource_title')}</Typography>
