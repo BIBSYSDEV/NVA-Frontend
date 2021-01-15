@@ -12,7 +12,7 @@ interface ContrastTypographyProps extends TypographyProps {
 const ContrastTypography = ({ backgroundColor, ...rest }: ContrastTypographyProps) => {
   const theme = useTheme();
 
-  const contrastTextColor = theme.palette.getContrastText(theme.palette.section.main);
+  const contrastTextColor = theme.palette.getContrastText(backgroundColor);
 
   const contrastTheme = createMuiTheme({
     ...theme,

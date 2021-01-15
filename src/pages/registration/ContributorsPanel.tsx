@@ -3,8 +3,8 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormHelperText } from '@material-ui/core';
 import { useTheme } from '@material-ui/core/styles';
+import BackgroundDiv from '../../components/BackgroundDiv';
 import ContrastTypography from '../../components/ContrastTypography';
-import Section from '../../components/Section';
 import { ContributorFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
 import Authors from './contributors_tab/Authors';
@@ -21,7 +21,7 @@ const ContributorsPanel = () => {
   const contributorsError = errors.entityDescription?.contributors;
 
   return (
-    <Section backgroundColor={theme.palette.section.main}>
+    <BackgroundDiv backgroundColor={theme.palette.section.main}>
       <ContrastTypography backgroundColor={theme.palette.section.main} variant="h2">
         {t('contributors.authors')}
       </ContrastTypography>
@@ -37,7 +37,7 @@ const ContributorsPanel = () => {
           </>
         )}
       </FieldArray>
-    </Section>
+    </BackgroundDiv>
   );
 };
 
