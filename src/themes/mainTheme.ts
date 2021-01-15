@@ -97,9 +97,6 @@ const theme = createMuiTheme({
         background: Color.Panel,
       },
     },
-    MuiAccordionDetails: {
-      root: { background: Color.Panel },
-    },
     MuiAppBar: {
       root: { background: Color.Header },
     },

@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
-import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -22,9 +22,13 @@ const StyledFileCard = styled.div`
   margin-top: 1rem;
 `;
 
+const StyledRegistrationAccorion = styled(RegistrationAccordion)`
+  border-color: ${({ theme }) => theme.palette.secondary.main};
+`;
+
 interface UploadRegistrationProps {
   expanded: boolean;
-  onChange: (event: React.ChangeEvent<unknown>, isExpanded: boolean) => void;
+  onChange: (event: ChangeEvent<unknown>, isExpanded: boolean) => void;
 }
 
 const UploadRegistration = ({ expanded, onChange }: UploadRegistrationProps) => {
@@ -53,10 +57,11 @@ const UploadRegistration = ({ expanded, onChange }: UploadRegistrationProps) => 
   };
 
   return (
-    <RegistrationAccordion
+    <StyledRegistrationAccorion
       dataTestId="new-registration-file"
-      headerLabel={t('registration:registration.start_with_uploading_file')}
-      icon={<CloudDownloadIcon />}
+      summaryTitle={t('registration:registration.start_with_uploading_file_title')}
+      summaryDescription={t('registration:registration.start_with_uploading_file_description')}
+      icon={<CloudUploadIcon />}
       expanded={expanded}
       onChange={onChange}
       ariaControls="registration-method-file">
@@ -89,7 +94,7 @@ const UploadRegistration = ({ expanded, onChange }: UploadRegistrationProps) => 
           )}
         </>
       ) : null}
-    </RegistrationAccordion>
+    </StyledRegistrationAccorion>
   );
 };
 
