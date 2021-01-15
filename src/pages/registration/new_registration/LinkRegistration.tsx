@@ -1,30 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { Button, Typography } from '@material-ui/core';
 import LinkIcon from '@material-ui/icons/Link';
+import { useDispatch } from 'react-redux';
+
 import { getRegistrationByDoi } from '../../../api/registrationApi';
 import LinkRegistrationForm, { DoiFormValues } from './LinkRegistrationForm';
 import RegistrationAccordion from './RegistrationAccordion';
 import { Doi } from '../../../types/registration.types';
-import { useDispatch } from 'react-redux';
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../types/notification.types';
 import { doiValidationSchema } from '../../../utils/validation/doiSearchValidation';
 import { getRegistrationPath } from '../../../utils/urlPaths';
 
-const StyledBody = styled.div`
-  width: 100%;
-`;
-
 const StyledTypography = styled(Typography)`
   margin: 1.5rem 0;
 `;
 
+const StyledRegistrationAccorion = styled(RegistrationAccordion)`
+  border-color: ${({ theme }) => theme.palette.primary.main};
+`;
+
 interface LinkRegistrationProps {
   expanded: boolean;
-  onChange: (event: React.ChangeEvent<unknown>, isExpanded: boolean) => void;
+  onChange: (event: ChangeEvent<unknown>, isExpanded: boolean) => void;
 }
 
 const LinkRegistration = ({ expanded, onChange }: LinkRegistrationProps) => {
@@ -62,14 +63,15 @@ const LinkRegistration = ({ expanded, onChange }: LinkRegistrationProps) => {
   };
 
   return (
-    <RegistrationAccordion
-      headerLabel={t('registration:registration.start_with_link_to_resource')}
-      icon={<LinkIcon className="icon" />}
+    <StyledRegistrationAccorion
+      summaryTitle={t('registration:registration.start_with_link_to_resource_title')}
+      summaryDescription={t('registration:registration.start_with_link_to_resource_description')}
+      icon={<LinkIcon />}
       expanded={expanded}
       onChange={onChange}
       ariaControls="registration-method-link"
       dataTestId="new-registration-link">
-      <StyledBody>
+      <>
         <Typography>{t('registration:registration.link_to_resource_description')}</Typography>
         <LinkRegistrationForm handleSearch={handleSearch} />
         {noHit && <Typography>{t('no_hits')}</Typography>}
@@ -88,8 +90,8 @@ const LinkRegistration = ({ expanded, onChange }: LinkRegistrationProps) => {
             </Button>
           </>
         )}
-      </StyledBody>
-    </RegistrationAccordion>
+      </>
+    </StyledRegistrationAccorion>
   );
 };
 

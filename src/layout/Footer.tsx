@@ -13,7 +13,7 @@ const StyledFooter = styled.div`
   grid-template-columns: 1fr 1fr 1fr;
   min-height: 3rem;
   align-items: center;
-  border-top: 2px solid ${({ theme }) => theme.palette.separator.main};
+  border-top: 2px solid ${({ theme }) => theme.palette.divider};
 `;
 
 const StyledLogoContainer = styled.div`

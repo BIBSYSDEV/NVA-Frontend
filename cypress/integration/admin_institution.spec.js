@@ -8,7 +8,7 @@ describe('User administers institutions ', () => {
     cy.setUserRolesInRedux([RoleName.APP_ADMIN]);
     // Open administer institutions page
     cy.get('[data-testid=menu]').click({ force: true });
-    cy.get('[data-testid=menu-admin-institution-button]').click({ force: true });
+    cy.get('[data-testid=menu-admin-institutions-button]').click({ force: true });
   });
 
   it('The User should be able to open admin page for institutions from the menu', () => {

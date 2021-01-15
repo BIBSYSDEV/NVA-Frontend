@@ -19,6 +19,7 @@ import { BackendTypeNames } from '../../../../types/publication_types/commonRegi
 import { SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
 import { Registration } from '../../../../types/registration.types';
 import { getMostSpecificUnit } from '../../../../utils/institutions-helpers';
+import DangerButton from '../../../../components/DangerButton';
 
 const StyledCard = styled.div`
   display: flex;
@@ -26,9 +27,9 @@ const StyledCard = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 1rem;
-  border-bottom: 1px solid ${({ theme }) => theme.palette.separator.main};
+  border-bottom: 1px solid ${({ theme }) => theme.palette.divider};
   &:first-of-type {
-    border-top: 1px solid ${({ theme }) => theme.palette.separator.main};
+    border-top: 1px solid ${({ theme }) => theme.palette.divider};
   }
 `;
 
@@ -93,14 +94,13 @@ const AffiliationsCell: FC<AffiliationsCellProps> = ({ affiliations, baseFieldNa
       {affiliations?.map((affiliation) => (
         <StyledCard key={affiliation.id}>
           <AffiliationHierarchy unitUri={affiliation.id} />
-          <Button
+          <DangerButton
             size="small"
-            color="secondary"
             data-testid={`button-remove-affiliation-${affiliation.id}`}
+            startIcon={<StyledDeleteIcon />}
             onClick={() => setAffiliationToRemove(affiliation)}>
-            <StyledDeleteIcon />
             <Typography variant="button">{t('common:remove')}</Typography>
-          </Button>
+          </DangerButton>
         </StyledCard>
       ))}
       <StyledAddButton

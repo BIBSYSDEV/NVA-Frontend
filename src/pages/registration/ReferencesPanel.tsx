@@ -14,6 +14,7 @@ import BookTypeForm from './references_tab/BookTypeForm';
 import DegreeTypeForm from './references_tab/DegreeTypeForm';
 import JournalTypeForm from './references_tab/JournalTypeForm';
 import ReportTypeForm from './references_tab/ReportTypeForm';
+import ChapterTypeForm from './references_tab/ChapterTypeForm';
 import Card from '../../components/Card';
 import SelectTypeField from './references_tab/components/SelectTypeField';
 import { emptyBookPublicationInstance } from '../../types/publication_types/bookRegistration.types';
@@ -21,6 +22,7 @@ import { emptyJournalPublicationInstance } from '../../types/publication_types/j
 import { emptyReportPublicationInstance } from '../../types/publication_types/reportRegistration.types';
 import { emptyDegreePublicationInstance } from '../../types/publication_types/degreeRegistration.types';
 import { StyledSelectWrapper } from '../../components/styled/Wrappers';
+import { emptyChapterPublicationInstance } from '../../types/publication_types/chapterRegistration.types';
 
 const StyledCard = styled(Card)`
   margin-top: 1rem;
@@ -47,6 +49,9 @@ const ReferencesPanel: FC = () => {
         break;
       case PublicationType.DEGREE:
         setFieldValue(instanceTypeBaseFieldName, emptyDegreePublicationInstance, false);
+        break;
+      case PublicationType.CHAPTER:
+        setFieldValue(instanceTypeBaseFieldName, emptyChapterPublicationInstance, false);
         break;
     }
     // Avoid showing potential errors instantly
@@ -86,6 +91,7 @@ const ReferencesPanel: FC = () => {
           {publicationContextType === PublicationType.BOOK && <BookTypeForm onChangeSubType={onChangeSubType} />}
           {publicationContextType === PublicationType.REPORT && <ReportTypeForm onChangeSubType={onChangeSubType} />}
           {publicationContextType === PublicationType.DEGREE && <DegreeTypeForm onChangeSubType={onChangeSubType} />}
+          {publicationContextType === PublicationType.CHAPTER && <ChapterTypeForm onChangeSubType={onChangeSubType} />}
           {publicationContextType === PublicationType.PUBLICATION_IN_JOURNAL && (
             <JournalTypeForm onChangeSubType={onChangeSubType} />
           )}
