@@ -61,8 +61,8 @@ const LinkRegistration = ({ expanded, onChange }: LinkRegistrationProps) => {
   };
 
   return (
-    <StyledRegistrationAccorion data-testid="new-registration-link" expanded={expanded} onChange={onChange}>
-      <AccordionSummary expandIcon={<ExpandMoreIcon fontSize="large" />}>
+    <StyledRegistrationAccorion expanded={expanded} onChange={onChange}>
+      <AccordionSummary data-testid="new-registration-link" expandIcon={<ExpandMoreIcon fontSize="large" />}>
         <LinkIcon />
         <div>
           <Typography variant="h2">{t('registration:registration.start_with_link_to_resource_title')}</Typography>

@@ -60,8 +60,8 @@ const UploadRegistration = ({ expanded, onChange }: UploadRegistrationProps) => 
   };
 
   return (
-    <StyledRegistrationAccorion data-testid="new-registration-file" expanded={expanded} onChange={onChange}>
-      <AccordionSummary expandIcon={<ExpandMoreIcon fontSize="large" />}>
+    <StyledRegistrationAccorion expanded={expanded} onChange={onChange}>
+      <AccordionSummary data-testid="new-registration-file" expandIcon={<ExpandMoreIcon fontSize="large" />}>
         <CloudUploadIcon />
         <div>
           <Typography variant="h2">{t('registration:registration.start_with_uploading_file_title')}</Typography>
