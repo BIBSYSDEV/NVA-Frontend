@@ -99,7 +99,7 @@ const AffiliationsCell: FC<AffiliationsCellProps> = ({ affiliations, baseFieldNa
             data-testid={`button-remove-affiliation-${affiliation.id}`}
             startIcon={<StyledDeleteIcon />}
             onClick={() => setAffiliationToRemove(affiliation)}>
-            <Typography variant="button">{t('common:remove')}</Typography>
+            {t('common:remove')}
           </DangerButton>
         </StyledCard>
       ))}
@@ -109,7 +109,7 @@ const AffiliationsCell: FC<AffiliationsCellProps> = ({ affiliations, baseFieldNa
         data-testid="button-add-affiliation"
         onClick={toggleAffiliationModal}>
         <StyledAddIcon />
-        <Typography variant="button">{t('contributors.add_affiliation')}</Typography>
+        {t('contributors.add_affiliation')}
       </StyledAddButton>
 
       {/* Modal for adding affiliation */}
