@@ -3,6 +3,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import { Button, DialogActions, TextField } from '@material-ui/core';
+import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import { ErrorMessage as ErrorMessageString } from '../utils/validation/errorMessage';
 import ButtonWithProgress from './ButtonWithProgress';
 
@@ -67,6 +68,7 @@ export const MessageForm = ({ confirmAction, cancelAction, disabled }: MessageFo
               type="submit"
               variant="contained"
               color="secondary"
+              endIcon={<MailOutlineIcon />}
               isLoading={isSubmitting}>
               {t('common:send')}
             </ButtonWithProgress>

@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { Form, Formik } from 'formik';
 import { useHistory } from 'react-router-dom';
+import SaveIcon from '@material-ui/icons/Save';
 
 import Card from '../../components/Card';
 import Heading from '../../components/Heading';
@@ -104,6 +105,7 @@ const CustomerInstitutionMetadataForm: FC<CustomerInstitutionMetadataFormProps> 
               <ButtonWithProgress
                 data-testid="customer-institution-save-button"
                 color="secondary"
+                startIcon={<SaveIcon />}
                 isLoading={isSubmitting}
                 type="submit">
                 {editMode ? t('common:save') : t('common:create')}

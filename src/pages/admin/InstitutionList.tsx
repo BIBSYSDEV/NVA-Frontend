@@ -1,11 +1,11 @@
 import React, { FC } from 'react';
-
 import styled from 'styled-components';
 import { Button, Table, TableBody, TableCell, TableHead, TableRow, TableContainer } from '@material-ui/core';
+import EditIcon from '@material-ui/icons/Edit';
+import { Link as RouterLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Label from '../../components/Label';
 import NormalText from '../../components/NormalText';
-import { Link as RouterLink } from 'react-router-dom';
 import { CustomerInstitution } from '../../types/customerInstitution.types';
 import { getAdminInstitutionPath } from '../../utils/urlPaths';
 
@@ -58,6 +58,8 @@ const InstitutionList: FC<InstitutionListProps> = ({ institutions }) => {
               <TableCell>
                 <Button
                   color="primary"
+                  variant="outlined"
+                  startIcon={<EditIcon />}
                   component={RouterLink}
                   data-testid={`edit-institution-${institution.shortName}`}
                   to={getAdminInstitutionPath(institution.id)}>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { Button, Typography } from '@material-ui/core';
+import AddIcon from '@material-ui/icons/Add';
 import {
   addQualifierIdForAuthority,
   AuthorityQualifiers,
@@ -113,6 +114,7 @@ const UserInstitution = ({ user }: UserInstituionProps) => {
               color="secondary"
               onClick={toggleUnitForm}
               disabled={!user.authority}
+              startIcon={<AddIcon />}
               data-testid="add-new-institution-button">
               {t('organization.add_institution')}
             </Button>
