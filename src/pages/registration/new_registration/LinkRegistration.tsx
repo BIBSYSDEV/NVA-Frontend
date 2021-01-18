@@ -72,15 +72,13 @@ const LinkRegistration = ({ expanded, onChange }: LinkRegistrationProps) => {
 
       <AccordionDetails>
         <LinkRegistrationForm handleSearch={handleSearch} />
-        <div>
-          {noHit && <Typography>{t('no_hits')}</Typography>}
-          {doi && (
-            <>
-              <Typography variant="subtitle1">{t('registration')}:</Typography>
-              <Typography>{doi.title}</Typography>
-            </>
-          )}
-        </div>
+        {noHit && <Typography>{t('no_hits')}</Typography>}
+        {doi && (
+          <>
+            <Typography variant="subtitle1">{t('registration')}:</Typography>
+            <Typography>{doi.title}</Typography>
+          </>
+        )}
       </AccordionDetails>
 
       <AccordionActions>

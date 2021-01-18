@@ -19,7 +19,7 @@ interface UploadedFileRowProps {
 const UploadedFileRow = ({ file, removeFile }: UploadedFileRowProps) => {
   const { t } = useTranslation('common');
   return (
-    <StyledFileRow>
+    <StyledFileRow data-testid="uploaded-file">
       <Typography>{file.name}</Typography>
       <DangerButton variant="outlined" startIcon={<RemoveCircleIcon />} onClick={removeFile}>
         {t('remove')}
