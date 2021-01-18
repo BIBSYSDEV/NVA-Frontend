@@ -83,7 +83,7 @@ const UploadRegistration = ({ expanded, onChange }: UploadRegistrationProps) => 
                     size: file.size,
                   }}
                   removeFile={() => {
-                    const fileId = uppy.getFiles().find((thisFile) => thisFile.response?.uploadURL === file.identifier)
+                    const fileId = uppy.getFiles().find((uppyFile) => uppyFile.response?.uploadURL === file.identifier)
                       ?.id;
                     fileId && uppy.removeFile(fileId);
                     setUploadedFiles(
