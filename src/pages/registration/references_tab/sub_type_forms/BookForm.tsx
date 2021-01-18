@@ -1,17 +1,19 @@
-import { Field, useFormikContext, FieldProps } from 'formik';
+import { Field, FieldProps, useFormikContext } from 'formik';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { Typography, FormControlLabel, Checkbox } from '@material-ui/core';
-import DoiField from '../components/DoiField';
+import { Checkbox, FormControlLabel, Typography } from '@material-ui/core';
+import BackgroundDiv from '../../../../components/BackgroundDiv';
+import theme from '../../../../themes/mainTheme';
 import { BookType, ReferenceFieldNames } from '../../../../types/publicationFieldNames';
-import IsbnListField from '../components/IsbnListField';
-import TotalPagesField from '../components/TotalPagesField';
 import { BookRegistration } from '../../../../types/registration.types';
-import PeerReview from '../components/PeerReview';
+import DoiField from '../components/DoiField';
+import IsbnListField from '../components/IsbnListField';
 import NviValidation from '../components/NviValidation';
-import SeriesField from '../components/SeriesField';
+import PeerReview from '../components/PeerReview';
 import PublisherField from '../components/PublisherField';
+import SeriesField from '../components/SeriesField';
+import TotalPagesField from '../components/TotalPagesField';
 
 const StyledSection = styled.div`
   display: grid;
@@ -48,41 +50,44 @@ const BookForm: FC = () => {
 
   return (
     <>
-      <DoiField />
+      <BackgroundDiv backgroundColor={theme.palette.section.main}>
+        <DoiField />
+        <PublisherField />
 
-      <PublisherField />
+        <StyledSection>
+          <IsbnListField />
+          <TotalPagesField />
+        </StyledSection>
+      </BackgroundDiv>
 
-      <StyledSection>
-        <IsbnListField />
-        <TotalPagesField />
-      </StyledSection>
-
-      <StyledSection>
-        <StyledPeerReview>
-          <PeerReview fieldName={ReferenceFieldNames.PEER_REVIEW} label={t('references.peer_review')} />
-        </StyledPeerReview>
-        <StyledTextBook>
-          <Typography variant="h5">{t('references.is_book_a_textbook')}</Typography>
-          <Field name={ReferenceFieldNames.TEXTBOOK_CONTENT}>
-            {({ field }: FieldProps) => (
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    data-testid="is-textbook-checkbox"
-                    color="primary"
-                    checked={field.value ?? false}
-                    {...field}
-                  />
-                }
-                label={t('references.is_book_a_textbook_confirm')}
-              />
-            )}
-          </Field>
-        </StyledTextBook>
-      </StyledSection>
+      <BackgroundDiv backgroundColor={theme.palette.section.dark}>
+        <StyledSection>
+          <StyledPeerReview>
+            <PeerReview fieldName={ReferenceFieldNames.PEER_REVIEW} label={t('references.peer_review')} />
+          </StyledPeerReview>
+          <StyledTextBook>
+            <Typography variant="h5">{t('references.is_book_a_textbook')}</Typography>
+            <Field name={ReferenceFieldNames.TEXTBOOK_CONTENT}>
+              {({ field }: FieldProps) => (
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      data-testid="is-textbook-checkbox"
+                      color="primary"
+                      checked={field.value ?? false}
+                      {...field}
+                    />
+                  }
+                  label={t('references.is_book_a_textbook_confirm')}
+                />
+              )}
+            </Field>
+          </StyledTextBook>
+        </StyledSection>
+      </BackgroundDiv>
 
       {(type === BookType.ANTHOLOGY || type === BookType.MONOGRAPH) && (
-        <>
+        <BackgroundDiv backgroundColor={theme.palette.sectionMega.dark}>
           <StyledTypography variant="h5">{t('references.series')}</StyledTypography>
           <Typography>{t('references.series_info')}</Typography>
           <SeriesField />
@@ -90,7 +95,7 @@ const BookForm: FC = () => {
           {type === BookType.MONOGRAPH && (
             <NviValidation isPeerReviewed={peerReviewed} isRated={!!publicationContext?.level} dataTestId="nvi_book" />
           )}
-        </>
+        </BackgroundDiv>
       )}
     </>
   );
