@@ -20,7 +20,7 @@ declare module '@material-ui/core/styles/createPalette' {
 
 export enum BackgroundColors {
   Black = '#222',
-  BlueMegaDark = '#02005B',
+  BlueDark = '#02005B',
   Blue = '#0010A4',
   BlueLight = '#DFEDFE',
   BlueMegaLight = '#F4F8FF',
@@ -87,12 +87,12 @@ const theme = createMuiTheme({
     section: {
       light: BackgroundColors.BlueLight,
       main: BackgroundColors.Blue,
-      dark: BackgroundColors.BlueMegaDark,
+      dark: BackgroundColors.BlueDark,
     },
     sectionMega: {
       light: BackgroundColors.BlueMegaLight,
       main: BackgroundColors.Blue,
-      dark: BackgroundColors.BlueMegaDark,
+      dark: BackgroundColors.Black,
     },
   },
   typography: {

@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import { MenuItem, TextField, Typography } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import BackgroundDiv from '../../components/BackgroundDiv';
-import ContrastTypography from '../../components/ContrastTypography';
 import theme from '../../themes/mainTheme';
 import { registrationLanguages } from '../../types/language.types';
 import { DescriptionFieldNames } from '../../types/publicationFieldNames';
@@ -156,10 +155,8 @@ const DescriptionPanel = () => {
           </Field>
         </DateAndLanguageWrapper>
       </BackgroundDiv>
-      <BackgroundDiv backgroundColor={theme.palette.sectionMega.dark}>
-        <ContrastTypography backgroundColor={theme.palette.sectionMega.dark} variant="h5">
-          {t('description.connect_project')}
-        </ContrastTypography>
+      <BackgroundDiv backgroundColor={theme.palette.section.dark}>
+        <Typography variant="h5">{t('description.connect_project')}</Typography>
         <ProjectsField />
       </BackgroundDiv>
     </>

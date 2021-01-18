@@ -1,9 +1,8 @@
 import { ErrorMessage, FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { FormHelperText } from '@material-ui/core';
+import { FormHelperText, Typography } from '@material-ui/core';
 import BackgroundDiv from '../../components/BackgroundDiv';
-import ContrastTypography from '../../components/ContrastTypography';
 import theme from '../../themes/mainTheme';
 import { ContributorFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
@@ -21,9 +20,7 @@ const ContributorsPanel = () => {
 
   return (
     <BackgroundDiv backgroundColor={theme.palette.section.main}>
-      <ContrastTypography backgroundColor={theme.palette.section.main} variant="h2">
-        {t('contributors.authors')}
-      </ContrastTypography>
+      <Typography variant="h2">{t('contributors.authors')}</Typography>
       <FieldArray name={ContributorFieldNames.CONTRIBUTORS}>
         {({ push, replace, name }: FieldArrayRenderProps) => (
           <>

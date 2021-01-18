@@ -5,8 +5,7 @@ import styled from 'styled-components';
 import DateFnsUtils from '@date-io/date-fns';
 import { Checkbox, FormControlLabel } from '@material-ui/core';
 import { DatePickerView, KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
-import ContrastTypography from '../../../components/ContrastTypography';
-import theme, { datePickerTranslationProps } from '../../../themes/mainTheme';
+import { datePickerTranslationProps } from '../../../themes/mainTheme';
 import { DescriptionFieldNames } from '../../../types/publicationFieldNames';
 import { Registration } from '../../../types/registration.types';
 import { getDateFnsLocale } from '../../../utils/date-helpers';
@@ -78,12 +77,10 @@ const DatePickerField: FC = () => {
         error={hasError}
         helperText={hasError && (!date ? ErrorMessage.REQUIRED : ErrorMessage.INVALID_FORMAT)}
       />
-      <ContrastTypography backgroundColor={theme.palette.section.main} variant="body1">
-        <StyledFormControlLabel
-          control={<Checkbox checked={yearOnly} onChange={toggleYearOnly} color="primary" />}
-          label={t('description.year_only')}
-        />
-      </ContrastTypography>
+      <StyledFormControlLabel
+        control={<Checkbox checked={yearOnly} onChange={toggleYearOnly} color="primary" />}
+        label={t('description.year_only')}
+      />
     </MuiPickersUtilsProvider>
   );
 };
