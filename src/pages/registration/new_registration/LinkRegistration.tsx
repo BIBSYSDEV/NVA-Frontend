@@ -91,7 +91,7 @@ const LinkRegistration = ({ expanded, onChange }: LinkRegistrationProps) => {
           variant="contained"
           disabled={!doi}
           onClick={createRegistration}>
-          <Typography variant="button">{t('registration:registration.start_registration')}</Typography>
+          {t('registration:registration.start_registration')}
         </Button>
       </AccordionActions>
     </StyledRegistrationAccorion>

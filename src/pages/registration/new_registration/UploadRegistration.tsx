@@ -101,7 +101,7 @@ const UploadRegistration = ({ expanded, onChange }: UploadRegistrationProps) => 
           isLoading={isLoading}
           disabled={uploadedFiles.length === 0}
           onClick={createRegistrationWithFiles}>
-          <Typography variant="button">{t('registration.start_registration')}</Typography>
+          {t('registration.start_registration')}
         </ButtonWithProgress>
       </AccordionActions>
     </StyledRegistrationAccorion>
