@@ -10,8 +10,7 @@ import { useDispatch } from 'react-redux';
 import { useUppy } from '@uppy/react';
 
 import RegistrationAccordion from './RegistrationAccordion';
-import { File, emptyFile } from '../../../types/file.types';
-import FileCard from '../files_and_license_tab/FileCard';
+import { File } from '../../../types/file.types';
 import { createRegistration } from '../../../api/registrationApi';
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../types/notification.types';
@@ -20,10 +19,7 @@ import FileUploader from '../files_and_license_tab/FileUploader';
 import { BackendTypeNames } from '../../../types/publication_types/commonRegistration.types';
 import { getRegistrationPath } from '../../../utils/urlPaths';
 import { createUppy } from '../../../utils/uppy/uppy-config';
-
-const StyledFileCard = styled.div`
-  margin-top: 1rem;
-`;
+import UploadedFileRow from './UploadedFileRow';
 
 const StyledRegistrationAccorion = styled(RegistrationAccordion)`
   border-color: ${({ theme }) => theme.palette.secondary.main};
@@ -73,26 +69,25 @@ const UploadRegistration = ({ expanded, onChange }: UploadRegistrationProps) => 
         {uppy && (
           <>
             <FileUploader uppy={uppy} addFile={(newFile: File) => setUploadedFiles((files) => [newFile, ...files])} />
-            {uploadedFiles.map((file) => (
-              <StyledFileCard key={file.identifier}>
-                <FileCard
-                  file={{
-                    ...emptyFile,
-                    identifier: file.identifier,
-                    name: file.name,
-                    size: file.size,
-                  }}
-                  removeFile={() => {
-                    const fileId = uppy.getFiles().find((uppyFile) => uppyFile.response?.uploadURL === file.identifier)
-                      ?.id;
-                    fileId && uppy.removeFile(fileId);
-                    setUploadedFiles(
-                      uploadedFiles.filter((uploadedFile) => uploadedFile.identifier !== file.identifier)
-                    );
-                  }}
-                />
-              </StyledFileCard>
-            ))}
+            {uploadedFiles.length > 0 && (
+              <>
+                <Typography variant="subtitle1">{t('files_and_license.files')}:</Typography>
+                {uploadedFiles.map((file) => (
+                  <UploadedFileRow
+                    key={file.identifier}
+                    file={file}
+                    removeFile={() => {
+                      const uppyFiles = uppy.getFiles();
+                      const uppyId = uppyFiles.find((uppyFile) => uppyFile.response?.uploadURL === file.identifier)?.id;
+                      uppyId && uppy.removeFile(uppyId);
+                      setUploadedFiles(
+                        uploadedFiles.filter((uploadedFile) => uploadedFile.identifier !== file.identifier)
+                      );
+                    }}
+                  />
+                ))}
+              </>
+            )}
           </>
         )}
       </AccordionDetails>
