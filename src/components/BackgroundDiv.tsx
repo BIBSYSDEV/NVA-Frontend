@@ -12,7 +12,6 @@ const StyledBackgroundDiv = styled(({ backgroundColor, ...rest }) => <div {...re
     padding: 1rem 2rem;
   }
   padding: 0.5rem;
-  margin-bottom: 1rem;
   ${({ backgroundColor }) => `background-color: ${backgroundColor}`}
 `;
 

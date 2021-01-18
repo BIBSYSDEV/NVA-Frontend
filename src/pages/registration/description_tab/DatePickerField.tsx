@@ -1,16 +1,16 @@
-import React, { useState, useEffect, FC } from 'react';
-import { useTranslation } from 'react-i18next';
-import { FormControlLabel, Checkbox } from '@material-ui/core';
-import styled from 'styled-components';
-import { KeyboardDatePicker, DatePickerView } from '@material-ui/pickers';
 import { useFormikContext } from 'formik';
+import React, { FC, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import styled from 'styled-components';
 import DateFnsUtils from '@date-io/date-fns';
-import { MuiPickersUtilsProvider } from '@material-ui/pickers';
-import { Registration } from '../../../types/registration.types';
+import { Checkbox, FormControlLabel } from '@material-ui/core';
+import { DatePickerView, KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
+import ContrastTypography from '../../../components/ContrastTypography';
+import theme, { datePickerTranslationProps } from '../../../themes/mainTheme';
 import { DescriptionFieldNames } from '../../../types/publicationFieldNames';
-import { ErrorMessage } from '../../../utils/validation/errorMessage';
+import { Registration } from '../../../types/registration.types';
 import { getDateFnsLocale } from '../../../utils/date-helpers';
-import { datePickerTranslationProps } from '../../../themes/mainTheme';
+import { ErrorMessage } from '../../../utils/validation/errorMessage';
 
 const StyledFormControlLabel = styled(FormControlLabel)`
   margin-left: 0.5rem;
@@ -78,10 +78,12 @@ const DatePickerField: FC = () => {
         error={hasError}
         helperText={hasError && (!date ? ErrorMessage.REQUIRED : ErrorMessage.INVALID_FORMAT)}
       />
-      <StyledFormControlLabel
-        control={<Checkbox checked={yearOnly} onChange={toggleYearOnly} color="primary" />}
-        label={t('description.year_only')}
-      />
+      <ContrastTypography backgroundColor={theme.palette.section.main} variant="body1">
+        <StyledFormControlLabel
+          control={<Checkbox checked={yearOnly} onChange={toggleYearOnly} color="primary" />}
+          label={t('description.year_only')}
+        />
+      </ContrastTypography>
     </MuiPickersUtilsProvider>
   );
 };
