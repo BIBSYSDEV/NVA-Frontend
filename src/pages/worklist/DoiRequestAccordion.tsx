@@ -102,7 +102,7 @@ export const DoiRequestAccordion = ({ identifier }: DoiRequestAccordionProps) =>
       </AccordionSummary>
       <AccordionDetails>
         <StyledMessages>
-          <MessageList messages={registration?.doiRequest.messages} />
+          {registration?.doiRequest.messages && <MessageList messages={registration?.doiRequest.messages} />}
           <MessageForm
             confirmAction={async (message) => {
               onClickSendMessage(message);
