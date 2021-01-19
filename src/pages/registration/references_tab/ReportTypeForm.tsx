@@ -1,10 +1,12 @@
 import { useFormikContext } from 'formik';
 import React, { FC } from 'react';
-import { ReportRegistration } from '../../../types/registration.types';
+import BackgroundDiv from '../../../components/BackgroundDiv';
+import { StyledSelectWrapper } from '../../../components/styled/Wrappers';
+import theme from '../../../themes/mainTheme';
 import { ReferenceFieldNames, ReportType } from '../../../types/publicationFieldNames';
+import { ReportRegistration } from '../../../types/registration.types';
 import SelectTypeField from './components/SelectTypeField';
 import ReportForm from './sub_type_forms/ReportForm';
-import { StyledSelectWrapper } from '../../../components/styled/Wrappers';
 
 interface ReportTypeFormProps {
   onChangeSubType: (type: string) => void;
@@ -16,13 +18,15 @@ const ReportTypeForm: FC<ReportTypeFormProps> = ({ onChangeSubType }) => {
 
   return (
     <>
-      <StyledSelectWrapper>
-        <SelectTypeField
-          fieldName={ReferenceFieldNames.SUB_TYPE}
-          onChangeType={onChangeSubType}
-          options={Object.values(ReportType)}
-        />
-      </StyledSelectWrapper>
+      <BackgroundDiv backgroundColor={theme.palette.section.light}>
+        <StyledSelectWrapper>
+          <SelectTypeField
+            fieldName={ReferenceFieldNames.SUB_TYPE}
+            onChangeType={onChangeSubType}
+            options={Object.values(ReportType)}
+          />
+        </StyledSelectWrapper>
+      </BackgroundDiv>
 
       {subType && <ReportForm />}
     </>
