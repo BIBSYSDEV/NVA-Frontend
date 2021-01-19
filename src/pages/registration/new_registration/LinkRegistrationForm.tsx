@@ -46,6 +46,8 @@ const LinkRegistrationForm = ({ handleSearch }: LinkRegistrationFormProps) => {
                 inputProps={{ 'data-testid': 'new-registration-link-input' }}
                 {...field}
                 error={!!error && touched}
+                InputLabelProps={{ shrink: true }}
+                placeholder="https://doi.org/10.1000/xyz123"
               />
             )}
           </Field>
