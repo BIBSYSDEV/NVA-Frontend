@@ -34,10 +34,6 @@ const StyledTextBook = styled.div`
   grid-area: text-book;
 `;
 
-const StyledTypography = styled(Typography)`
-  padding-top: 1.5rem;
-`;
-
 const BookForm: FC = () => {
   const { t } = useTranslation('registration');
   const { values } = useFormikContext<BookRegistration>();
@@ -88,7 +84,7 @@ const BookForm: FC = () => {
 
       {(type === BookType.ANTHOLOGY || type === BookType.MONOGRAPH) && (
         <BackgroundDiv backgroundColor={theme.palette.sectionMega.dark}>
-          <StyledTypography variant="h5">{t('references.series')}</StyledTypography>
+          <Typography variant="h5">{t('references.series')}</Typography>
           <Typography>{t('references.series_info')}</Typography>
           <SeriesField />
 
