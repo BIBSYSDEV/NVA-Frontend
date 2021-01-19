@@ -1,10 +1,12 @@
-import React from 'react';
 import { useFormikContext } from 'formik';
+import React from 'react';
+import BackgroundDiv from '../../../components/BackgroundDiv';
+import { StyledSelectWrapper } from '../../../components/styled/Wrappers';
+import theme from '../../../themes/mainTheme';
+import { ChapterType, ReferenceFieldNames } from '../../../types/publicationFieldNames';
+import { ChapterRegistration } from '../../../types/registration.types';
 import SelectTypeField from './components/SelectTypeField';
 import ChapterForm from './sub_type_forms/ChapterForm';
-import { StyledSelectWrapper } from '../../../components/styled/Wrappers';
-import { ChapterRegistration } from '../../../types/registration.types';
-import { ReferenceFieldNames, ChapterType } from '../../../types/publicationFieldNames';
 
 interface ChapterTypeFormProps {
   onChangeSubType: (type: string) => void;
@@ -16,13 +18,15 @@ const JournalTypeForm = (props: ChapterTypeFormProps) => {
 
   return (
     <>
-      <StyledSelectWrapper>
-        <SelectTypeField
-          fieldName={ReferenceFieldNames.SUB_TYPE}
-          onChangeType={props.onChangeSubType}
-          options={Object.values(ChapterType)}
-        />
-      </StyledSelectWrapper>
+      <BackgroundDiv backgroundColor={theme.palette.section.light}>
+        <StyledSelectWrapper>
+          <SelectTypeField
+            fieldName={ReferenceFieldNames.SUB_TYPE}
+            onChangeType={props.onChangeSubType}
+            options={Object.values(ChapterType)}
+          />
+        </StyledSelectWrapper>
+      </BackgroundDiv>
 
       {subtype && <ChapterForm />}
     </>

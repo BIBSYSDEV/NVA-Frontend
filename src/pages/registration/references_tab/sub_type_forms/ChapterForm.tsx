@@ -1,25 +1,22 @@
+import { Field, FieldProps, useFormikContext } from 'formik';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Field, FieldProps, useFormikContext } from 'formik';
 import styled from 'styled-components';
 import { TextField, Typography } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
 import RemoveIcon from '@material-ui/icons/Remove';
+import BackgroundDiv from '../../../../components/BackgroundDiv';
+import { StyledCenterAlignedContentWrapper } from '../../../../components/styled/Wrappers';
+import theme from '../../../../themes/mainTheme';
 import { BookType, ChapterType, ReferenceFieldNames } from '../../../../types/publicationFieldNames';
-import NviValidation from '../components/NviValidation';
+import { ChapterRegistration } from '../../../../types/registration.types';
 import DoiField from '../components/DoiField';
-import Card from '../../../../components/Card';
+import NviValidation from '../components/NviValidation';
 import PeerReview from '../components/PeerReview';
 import SearchContainerField from '../components/SearchContainerField';
-import { ChapterRegistration } from '../../../../types/registration.types';
 
-const StyledInfoCard = styled(Card)`
-  margin-top: 1rem;
-  display: flex;
-  align-items: center;
-  > :first-child {
-    margin-right: 1rem;
-  }
+const StyledDiv = styled(StyledCenterAlignedContentWrapper)`
+  gap: 1rem;
 `;
 
 const StyledPageNumberWrapper = styled.div`
@@ -49,61 +46,65 @@ const ChapterForm = () => {
 
   return (
     <>
-      <StyledInfoCard>
-        <InfoIcon color="primary" fontSize="large" />
-        <Typography>{t('references.chapter.info_anthology')}</Typography>
-      </StyledInfoCard>
+      <BackgroundDiv backgroundColor={theme.palette.section.main}>
+        <StyledDiv>
+          <InfoIcon color="primary" />
+          <Typography variant="body1">{t('references.chapter.info_anthology')}</Typography>
+        </StyledDiv>
 
-      <DoiField />
+        <DoiField />
+
+        {publicationInstance.type === ChapterType.BOOK && (
+          <SearchContainerField
+            fieldName={ReferenceFieldNames.PUBLICATION_CONTEXT_LINKED_CONTEXT}
+            searchSubtypes={[BookType.ANTHOLOGY]}
+            label={t('references.chapter.published_in')}
+            placeholder={t('references.chapter.search_for_anthology')}
+          />
+        )}
+      </BackgroundDiv>
+
+      <BackgroundDiv backgroundColor={theme.palette.section.dark}>
+        <StyledPageNumberWrapper>
+          <Field name={ReferenceFieldNames.PAGES_FROM}>
+            {({ field }: FieldProps<string>) => (
+              <StyledPageNumberField
+                variant="outlined"
+                data-testid="chapter-pages-from"
+                label={t('references.pages_from')}
+                {...field}
+                value={field.value ?? ''}
+              />
+            )}
+          </Field>
+
+          <StyledDashIconWrapper>
+            <RemoveIcon />
+          </StyledDashIconWrapper>
+
+          <Field name={ReferenceFieldNames.PAGES_TO}>
+            {({ field }: FieldProps<string>) => (
+              <StyledPageNumberField
+                data-testid="chapter-pages-to"
+                variant="outlined"
+                label={t('references.pages_to')}
+                {...field}
+                value={field.value ?? ''}
+              />
+            )}
+          </Field>
+        </StyledPageNumberWrapper>
+      </BackgroundDiv>
 
       {publicationInstance.type === ChapterType.BOOK && (
-        <SearchContainerField
-          fieldName={ReferenceFieldNames.PUBLICATION_CONTEXT_LINKED_CONTEXT}
-          searchSubtypes={[BookType.ANTHOLOGY]}
-          label={t('references.chapter.published_in')}
-          placeholder={t('references.chapter.search_for_anthology')}
-        />
-      )}
-
-      <StyledPageNumberWrapper>
-        <Field name={ReferenceFieldNames.PAGES_FROM}>
-          {({ field }: FieldProps<string>) => (
-            <StyledPageNumberField
-              variant="outlined"
-              data-testid="chapter-pages-from"
-              label={t('references.pages_from')}
-              {...field}
-              value={field.value ?? ''}
-            />
-          )}
-        </Field>
-
-        <StyledDashIconWrapper>
-          <RemoveIcon />
-        </StyledDashIconWrapper>
-
-        <Field name={ReferenceFieldNames.PAGES_TO}>
-          {({ field }: FieldProps<string>) => (
-            <StyledPageNumberField
-              data-testid="chapter-pages-to"
-              variant="outlined"
-              label={t('references.pages_to')}
-              {...field}
-              value={field.value ?? ''}
-            />
-          )}
-        </Field>
-      </StyledPageNumberWrapper>
-
-      {publicationInstance.type === ChapterType.BOOK && (
-        <>
+        <BackgroundDiv backgroundColor={theme.palette.sectionMega.dark}>
           <PeerReview fieldName={ReferenceFieldNames.PEER_REVIEW} label={t('references.peer_review')} />
           <NviValidation
             isPeerReviewed={!!publicationInstance.peerReviewed}
             isRated={!!publicationContext?.level}
             dataTestId="nvi-chapter"
           />
-        </>
+        </BackgroundDiv>
       )}
     </>
   );
