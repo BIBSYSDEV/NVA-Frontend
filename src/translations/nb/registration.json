@@ -86,7 +86,6 @@
   "registration": {
     "latest_registrations": "Nye registreringer",
     "link_to_resource": "DOI til ressurs",
-    "link_to_resource_description": "DOI-lenke til artikkel etc.",
     "no_published_registrations_yet": "Det finnes ingen publiserte registreringer enda",
     "start_registration": "Start registrering",
     "start_with_link_to_resource_description": "Lenke til original versjon hvis ressursen allerede er publisert på Internett med en DOI",
