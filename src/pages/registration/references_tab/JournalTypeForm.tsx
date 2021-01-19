@@ -1,5 +1,5 @@
 import { useFormikContext } from 'formik';
-import React, { FC } from 'react';
+import React from 'react';
 import BackgroundDiv from '../../../components/BackgroundDiv';
 import { StyledSelectWrapper } from '../../../components/styled/Wrappers';
 import theme from '../../../themes/mainTheme';
@@ -12,7 +12,7 @@ interface JournalTypeFormProps {
   onChangeSubType: (type: string) => void;
 }
 
-const JournalTypeForm: FC<JournalTypeFormProps> = ({ onChangeSubType }) => {
+const JournalTypeForm = ({ onChangeSubType }: JournalTypeFormProps) => {
   const { values } = useFormikContext<JournalRegistration>();
   const subType = values.entityDescription.reference.publicationInstance.type;
 

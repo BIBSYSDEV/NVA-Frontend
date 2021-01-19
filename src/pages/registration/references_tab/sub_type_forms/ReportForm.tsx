@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { Typography } from '@material-ui/core';
@@ -21,7 +21,7 @@ const StyledSection = styled.div`
   }
 `;
 
-const ReportForm: FC = () => {
+const ReportForm = () => {
   const { t } = useTranslation('registration');
 
   return (

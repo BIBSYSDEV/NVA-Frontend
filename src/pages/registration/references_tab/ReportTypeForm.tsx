@@ -1,5 +1,5 @@
 import { useFormikContext } from 'formik';
-import React, { FC } from 'react';
+import React from 'react';
 import BackgroundDiv from '../../../components/BackgroundDiv';
 import { StyledSelectWrapper } from '../../../components/styled/Wrappers';
 import theme from '../../../themes/mainTheme';
@@ -12,7 +12,7 @@ interface ReportTypeFormProps {
   onChangeSubType: (type: string) => void;
 }
 
-const ReportTypeForm: FC<ReportTypeFormProps> = ({ onChangeSubType }) => {
+const ReportTypeForm = ({ onChangeSubType }: ReportTypeFormProps) => {
   const { values } = useFormikContext<ReportRegistration>();
   const subType = values.entityDescription.reference.publicationInstance.type;
 

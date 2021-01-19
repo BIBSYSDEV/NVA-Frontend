@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Typography } from '@material-ui/core';
 import BackgroundDiv from '../../../../components/BackgroundDiv';
@@ -7,7 +7,7 @@ import DoiField from '../components/DoiField';
 import PublisherField from '../components/PublisherField';
 import SeriesField from '../components/SeriesField';
 
-const DegreeForm: FC = () => {
+const DegreeForm = () => {
   const { t } = useTranslation('registration');
 
   return (

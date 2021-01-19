@@ -12,7 +12,7 @@ interface ChapterTypeFormProps {
   onChangeSubType: (type: string) => void;
 }
 
-const JournalTypeForm = (props: ChapterTypeFormProps) => {
+const JournalTypeForm = ({ onChangeSubType }: ChapterTypeFormProps) => {
   const { values } = useFormikContext<ChapterRegistration>();
   const subtype = values.entityDescription.reference.publicationInstance.type;
 
@@ -22,7 +22,7 @@ const JournalTypeForm = (props: ChapterTypeFormProps) => {
         <StyledSelectWrapper>
           <SelectTypeField
             fieldName={ReferenceFieldNames.SUB_TYPE}
-            onChangeType={props.onChangeSubType}
+            onChangeType={onChangeSubType}
             options={Object.values(ChapterType)}
           />
         </StyledSelectWrapper>

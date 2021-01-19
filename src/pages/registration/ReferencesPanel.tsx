@@ -1,7 +1,5 @@
 import { useFormikContext } from 'formik';
-import React, { FC } from 'react';
-import { useTranslation } from 'react-i18next';
-
+import React from 'react';
 import BackgroundDiv from '../../components/BackgroundDiv';
 import { StyledSelectWrapper } from '../../components/styled/Wrappers';
 import theme from '../../themes/mainTheme';
@@ -24,8 +22,7 @@ import DegreeTypeForm from './references_tab/DegreeTypeForm';
 import JournalTypeForm from './references_tab/JournalTypeForm';
 import ReportTypeForm from './references_tab/ReportTypeForm';
 
-const ReferencesPanel: FC = () => {
-  const { t } = useTranslation('registration');
+const ReferencesPanel = () => {
   const { values, setTouched, setFieldValue, touched } = useFormikContext<Registration>();
   const publicationContextType = values.entityDescription.reference.publicationContext.type;
 

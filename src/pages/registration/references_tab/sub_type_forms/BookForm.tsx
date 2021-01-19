@@ -1,5 +1,5 @@
 import { Field, FieldProps, useFormikContext } from 'formik';
-import React, { FC } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { Checkbox, FormControlLabel, Typography } from '@material-ui/core';
@@ -34,7 +34,7 @@ const StyledTextBook = styled.div`
   grid-area: text-book;
 `;
 
-const BookForm: FC = () => {
+const BookForm = () => {
   const { t } = useTranslation('registration');
   const { values } = useFormikContext<BookRegistration>();
   const {
