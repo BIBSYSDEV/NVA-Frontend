@@ -74,7 +74,7 @@ interface DoiRequest {
   createdDate: string;
   modifiedDate: string;
   status: DoiRequestStatus;
-  messages: DoiRequestMessage[];
+  messages?: DoiRequestMessage[];
 }
 
 export interface RegistrationPublisher {

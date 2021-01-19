@@ -123,11 +123,6 @@ const theme = createMuiTheme({
     MuiAppBar: {
       root: { background: Color.Header },
     },
-    MuiButton: {
-      root: {
-        textTransform: 'none',
-      },
-    },
     MuiCard: {
       root: {
         backgroundColor: Color.Box,

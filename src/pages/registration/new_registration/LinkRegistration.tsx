@@ -2,8 +2,10 @@ import React, { useState, ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
-import { Button, Typography } from '@material-ui/core';
+import { AccordionActions, AccordionDetails, AccordionSummary, Button, Typography } from '@material-ui/core';
 import LinkIcon from '@material-ui/icons/Link';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import { useDispatch } from 'react-redux';
 
 import { getRegistrationByDoi } from '../../../api/registrationApi';
@@ -14,10 +16,6 @@ import { setNotification } from '../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../types/notification.types';
 import { doiValidationSchema } from '../../../utils/validation/doiSearchValidation';
 import { getRegistrationPath } from '../../../utils/urlPaths';
-
-const StyledTypography = styled(Typography)`
-  margin: 1.5rem 0;
-`;
 
 const StyledRegistrationAccorion = styled(RegistrationAccordion)`
   border-color: ${({ theme }) => theme.palette.primary.main};
@@ -63,34 +61,37 @@ const LinkRegistration = ({ expanded, onChange }: LinkRegistrationProps) => {
   };
 
   return (
-    <StyledRegistrationAccorion
-      summaryTitle={t('registration:registration.start_with_link_to_resource_title')}
-      summaryDescription={t('registration:registration.start_with_link_to_resource_description')}
-      icon={<LinkIcon />}
-      expanded={expanded}
-      onChange={onChange}
-      ariaControls="registration-method-link"
-      dataTestId="new-registration-link">
-      <>
-        <Typography>{t('registration:registration.link_to_resource_description')}</Typography>
+    <StyledRegistrationAccorion expanded={expanded} onChange={onChange}>
+      <AccordionSummary data-testid="new-registration-link" expandIcon={<ExpandMoreIcon fontSize="large" />}>
+        <LinkIcon />
+        <div>
+          <Typography variant="h2">{t('registration:registration.start_with_link_to_resource_title')}</Typography>
+          <Typography>{t('registration:registration.start_with_link_to_resource_description')}</Typography>
+        </div>
+      </AccordionSummary>
+
+      <AccordionDetails>
         <LinkRegistrationForm handleSearch={handleSearch} />
         {noHit && <Typography>{t('no_hits')}</Typography>}
         {doi && (
           <>
-            <StyledTypography variant="h6">
-              {t('registration')}: <b>{doi.title}</b>
-            </StyledTypography>
-            <Button
-              fullWidth
-              color="primary"
-              variant="contained"
-              onClick={createRegistration}
-              data-testid="registration-link-next-button">
-              {t('registration:registration.start_registration')}
-            </Button>
+            <Typography variant="subtitle1">{t('registration')}:</Typography>
+            <Typography>{doi.title}</Typography>
           </>
         )}
-      </>
+      </AccordionDetails>
+
+      <AccordionActions>
+        <Button
+          data-testid="registration-link-next-button"
+          endIcon={<ArrowForwardIcon fontSize="large" />}
+          color="secondary"
+          variant="contained"
+          disabled={!doi}
+          onClick={createRegistration}>
+          {t('registration:registration.start_registration')}
+        </Button>
+      </AccordionActions>
     </StyledRegistrationAccorion>
   );
 };

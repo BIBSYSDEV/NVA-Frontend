@@ -40,7 +40,7 @@ describe('Registration', () => {
     });
 
     cy.get('input[type=file]').uploadFile('img.jpg');
-    cy.get('[data-testid=uploaded-file-card]').should('be.visible');
+    cy.get('[data-testid=uploaded-file]').should('be.visible');
 
     cy.get('[data-testid=registration-file-start-button]').click({ force: true });
     cy.get('[data-testid=error-tab]').should('have.length', 0);

@@ -3,6 +3,7 @@ import { Formik, Form } from 'formik';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
+import SaveIcon from '@material-ui/icons/Save';
 
 import {
   emptyCustomerInstitution,
@@ -80,7 +81,9 @@ const MyCustomerInstitutionPage: FC = () => {
                 <StyledButtonContainer>
                   <ButtonWithProgress
                     data-testid="customer-institution-save-button"
+                    color="secondary"
                     isLoading={isSubmitting}
+                    startIcon={<SaveIcon />}
                     type="submit">
                     {t('common:save')}
                   </ButtonWithProgress>

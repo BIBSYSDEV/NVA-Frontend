@@ -209,7 +209,7 @@ const AuthorCard: FC<AuthorCardProps> = ({ author, onMoveAuthor, onRemoveAuthorC
         variant="contained"
         data-testid={`button-remove-contributor-${author.identity.name}`}
         onClick={onRemoveAuthorClick}>
-        <Typography variant="button">{t('contributors.remove_author')}</Typography>
+        {t('contributors.remove_author')}
       </StyledRemoveButton>
     </StyledAuthorCard>
   );
