@@ -29,6 +29,7 @@ const StyledIndentedTypography = styled(StyledPaddedTypography)`
 `;
 
 const StyledMenuButton = styled(Button)`
+  text-transform: none;
   @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
     display: none;
   }

@@ -5,6 +5,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { Accordion, AccordionDetails, AccordionSummary, Button } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import { updateDoiRequestWithMessage } from '../../api/doiRequestApi';
 import Label from '../../components/Label';
 import { MessageForm } from '../../components/MessageForm';
@@ -52,14 +53,6 @@ const StyledAccordionActionButtons = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-
-  button,
-  a {
-    width: 100%;
-    :last-child {
-      margin-top: 1rem;
-    }
-  }
 `;
 
 interface DoiRequestAccordionProps {
@@ -102,7 +95,7 @@ export const DoiRequestAccordion = ({ identifier }: DoiRequestAccordionProps) =>
       </AccordionSummary>
       <AccordionDetails>
         <StyledMessages>
-          <MessageList messages={registration?.doiRequest.messages} />
+          {registration?.doiRequest.messages && <MessageList messages={registration?.doiRequest.messages} />}
           <MessageForm
             confirmAction={async (message) => {
               onClickSendMessage(message);
@@ -115,12 +108,10 @@ export const DoiRequestAccordion = ({ identifier }: DoiRequestAccordionProps) =>
             data-testid={`go-to-registration-${identifier}`}
             variant="outlined"
             color="primary"
+            endIcon={<ArrowForwardIcon />}
             component={RouterLink}
             to={getRegistrationLandingPagePath(identifier)}>
             {t('doi_requests.go_to_registration')}
-          </Button>
-          <Button variant="contained" color="primary" disabled>
-            {t('doi_requests.archive')}
           </Button>
         </StyledAccordionActionButtons>
       </AccordionDetails>
