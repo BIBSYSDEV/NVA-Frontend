@@ -138,6 +138,11 @@ const theme = createMuiTheme({
         '@font-face': [merriweatherRegular, barlowRegular],
       },
     },
+    MuiFormHelperText: {
+      root: {
+        color: Color.Box,
+      },
+    },
     MuiInputBase: {
       root: {
         background: Color.Background,
