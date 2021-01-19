@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import { Button, Typography } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import SaveIcon from '@material-ui/icons/Save';
@@ -83,18 +83,16 @@ export const RegistrationFormActions: FC<RegistrationFormActionsProps> = ({
               data-testid="button-previous-tab"
               startIcon={<ArrowBackIcon />}
               onClick={() => setTabNumber(tabNumber - 1)}>
-              <Typography variant="button">
-                {tabNumber === RegistrationTab.Reference && t('heading.description')}
-                {tabNumber === RegistrationTab.Contributors && t('heading.reference')}
-                {tabNumber === RegistrationTab.FilesAndLicenses && t('heading.contributors')}
-              </Typography>
+              {tabNumber === RegistrationTab.Reference && t('heading.description')}
+              {tabNumber === RegistrationTab.Contributors && t('heading.reference')}
+              {tabNumber === RegistrationTab.FilesAndLicenses && t('heading.contributors')}
             </StyledBackButton>
           )}
         </div>
         <div>
           {/* Right aligned buttons */}
           <Button data-testid="open-support-button" variant="text" color="primary" onClick={toggleSupportModal}>
-            <Typography variant="button">{t('common:support')}</Typography>
+            {t('common:support')}
           </Button>
           {tabNumber < RegistrationTab.FilesAndLicenses ? (
             <>
@@ -108,9 +106,7 @@ export const RegistrationFormActions: FC<RegistrationFormActionsProps> = ({
                   // Set all fields with error to touched to ensure error messages are shown
                   setTouched(setNestedObjectValues(errors, true));
                 }}>
-                <Typography variant="button">
-                  {values.status === RegistrationStatus.DRAFT ? t('save_draft') : t('common:save')}
-                </Typography>
+                {values.status === RegistrationStatus.DRAFT ? t('save_draft') : t('common:save')}
               </ButtonWithProgress>
               <Button
                 color="secondary"
@@ -118,11 +114,9 @@ export const RegistrationFormActions: FC<RegistrationFormActionsProps> = ({
                 data-testid="button-next-tab"
                 endIcon={<ArrowForwardIcon />}
                 onClick={() => setTabNumber(tabNumber + 1)}>
-                <Typography variant="button">
-                  {tabNumber === RegistrationTab.Description && t('heading.reference')}
-                  {tabNumber === RegistrationTab.Reference && t('heading.contributors')}
-                  {tabNumber === RegistrationTab.Contributors && t('heading.files_and_license')}
-                </Typography>
+                {tabNumber === RegistrationTab.Description && t('heading.reference')}
+                {tabNumber === RegistrationTab.Reference && t('heading.contributors')}
+                {tabNumber === RegistrationTab.Contributors && t('heading.files_and_license')}
               </Button>
             </>
           ) : (
@@ -133,7 +127,7 @@ export const RegistrationFormActions: FC<RegistrationFormActionsProps> = ({
               data-testid="button-save-registration"
               endIcon={<SaveIcon />}
               onClick={onClickSaveAndPresent}>
-              <Typography variant="button">{t('common:save_and_present')}</Typography>
+              {t('common:save_and_present')}
             </ButtonWithProgress>
           )}
         </div>

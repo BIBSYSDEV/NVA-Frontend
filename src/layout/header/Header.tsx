@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Button, Typography, IconButton, AppBar } from '@material-ui/core';
+import { Button, IconButton, AppBar } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 import MailIcon from '@material-ui/icons/Mail';
@@ -71,21 +71,21 @@ const Header = () => {
             data-testid="new-registration"
             to={getRegistrationPath()}
             startIcon={<AddIcon />}>
-            <Typography variant="button">{t('new_registration')}</Typography>
+            {t('new_registration')}
           </Button>
           <Button
             component={RouterLink}
             data-testid="my-registrations"
             to={UrlPathTemplate.MyRegistrations}
             startIcon={<LibraryBooksIcon />}>
-            <Typography variant="button">{t('workLists:my_registrations')}</Typography>
+            {t('workLists:my_registrations')}
           </Button>
           <Button
             component={RouterLink}
             data-testid="my-messages"
             to={UrlPathTemplate.MyMessages}
             startIcon={<MailIcon />}>
-            <Typography variant="button">{t('workLists:my_messages')}</Typography>
+            {t('workLists:my_messages')}
           </Button>
         </StyledShortcuts>
       )}

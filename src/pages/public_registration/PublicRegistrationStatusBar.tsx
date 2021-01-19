@@ -5,8 +5,10 @@ import { Button, DialogActions, TextField, Typography } from '@material-ui/core'
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import WorkOutlineIcon from '@material-ui/icons/WorkOutline';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import EditIcon from '@material-ui/icons/Edit';
 import CloseIcon from '@material-ui/icons/Close';
 import CheckIcon from '@material-ui/icons/Check';
+import LocalOfferIcon from '@material-ui/icons/LocalOffer';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
@@ -156,6 +158,7 @@ export const PublicRegistrationStatusBar: FC<PublicRegistrationContentProps> = (
           <Button
             variant={registrationIsValid ? 'outlined' : 'contained'}
             color="primary"
+            endIcon={<EditIcon />}
             data-testid="button-edit-registration">
             {t('edit_registration')}
           </Button>
@@ -188,8 +191,9 @@ export const PublicRegistrationStatusBar: FC<PublicRegistrationContentProps> = (
 
         {!hasNvaDoi && (
           <ButtonWithProgress
-            variant={reference.doi ? 'outlined' : 'contained'}
+            variant={reference.doi || !isPublishedRegistration ? 'outlined' : 'contained'}
             color="primary"
+            endIcon={<LocalOfferIcon />}
             isLoading={isLoading === LoadingName.RequestDoi}
             data-testid="button-toggle-request-doi"
             onClick={() => (isPublishedRegistration ? toggleRequestDoiModal() : sendDoiRequest())}>

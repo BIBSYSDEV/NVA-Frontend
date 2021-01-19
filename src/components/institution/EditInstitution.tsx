@@ -3,6 +3,7 @@ import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { Button, CircularProgress, Typography } from '@material-ui/core';
+import SaveIcon from '@material-ui/icons/Save';
 import InstitutionSelector from '../../pages/user/institution/InstitutionSelector';
 import { FormikInstitutionUnit, FormikInstitutionUnitFieldNames } from '../../types/institution.types';
 import useFetchDepartment from '../../utils/hooks/useFetchDepartment';
@@ -68,13 +69,14 @@ const EditInstitution: FC<EditInstitutionProps> = ({ initialInstitutionId, onCan
                   variant="contained"
                   type="submit"
                   color="primary"
+                  startIcon={<SaveIcon />}
                   isLoading={isSubmitting}
                   disabled={isLoadingDepartment}
                   data-testid="institution-edit-button">
                   {t('save')}
                 </ButtonWithProgress>
 
-                <Button onClick={onCancel} data-testid="institution-cancel-button" variant="contained">
+                <Button onClick={onCancel} data-testid="institution-cancel-button" variant="text">
                   {t('cancel')}
                 </Button>
               </StyledButtonContainer>

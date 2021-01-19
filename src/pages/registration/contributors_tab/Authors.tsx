@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
-import { Button, Typography } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/AddCircleOutlineSharp';
 
 import { setNotification } from '../../../redux/actions/notificationActions';
@@ -117,7 +117,7 @@ const Authors: FC<AuthorsProps> = ({ push, replace }) => {
         color="primary"
         startIcon={<StyledAddIcon />}
         data-testid="add-contributor">
-        <Typography variant="button">{t('contributors.add_author')}</Typography>
+        {t('contributors.add_author')}
       </StyledAddAuthorButton>
       <AddContributorModal
         initialSearchTerm={unverifiedAuthor?.name}
