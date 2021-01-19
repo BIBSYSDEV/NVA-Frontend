@@ -1,7 +1,6 @@
 import { createMuiTheme } from '@material-ui/core';
 import i18n from '../translations/i18n';
 import { getTranslatedLabelForDisplayedRows } from '../utils/pagination';
-import { merriweatherRegular, barlowRegular } from './fonts';
 
 // Extend Palette type to allow custom colors
 declare module '@material-ui/core/styles/createPalette' {
@@ -31,6 +30,11 @@ enum Color {
   ErrorMain = '#C2363D',
   SuccessDark = '#008958',
   SuccessMain = '#08B677',
+}
+
+enum Font {
+  Barlow = 'Barlow,  sans-serif',
+  Merriweather = 'Merriweather, serif',
 }
 
 const theme = createMuiTheme({
@@ -73,22 +77,29 @@ const theme = createMuiTheme({
     },
   },
   typography: {
-    fontFamily: 'Barlow,  sans-serif',
+    fontFamily: Font.Barlow,
     h1: {
-      fontFamily: 'Merriweather, serif',
-      fontSize: '2.1rem',
+      fontFamily: Font.Merriweather,
+      fontSize: '3rem',
+      fontWeight: 400,
     },
     h2: {
-      fontFamily: 'Merriweather, serif',
-      fontSize: '1.8rem',
+      fontFamily: Font.Merriweather,
+      fontSize: '2.25rem',
+      fontWeight: 400,
     },
     h3: {
-      fontFamily: 'Merriweather, serif',
-      fontSize: '1.6rem',
+      fontFamily: Font.Merriweather,
+      fontSize: '1.5rem',
+      fontWeight: 400,
     },
     h4: {
-      fontFamily: 'Merriweather, serif',
-      fontSize: '1.4rem',
+      fontSize: '1.25rem',
+      fontWeight: 700,
+    },
+
+    subtitle2: {
+      fontWeight: 700,
     },
   },
   overrides: {
@@ -103,11 +114,6 @@ const theme = createMuiTheme({
     MuiCard: {
       root: {
         backgroundColor: Color.Box,
-      },
-    },
-    MuiCssBaseline: {
-      '@global': {
-        '@font-face': [merriweatherRegular, barlowRegular],
       },
     },
     MuiInputBase: {
