@@ -9,12 +9,11 @@ import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import { useDispatch } from 'react-redux';
 
 import { getRegistrationByDoi } from '../../../api/registrationApi';
-import LinkRegistrationForm, { DoiFormValues } from './LinkRegistrationForm';
+import LinkRegistrationForm from './LinkRegistrationForm';
 import RegistrationAccordion from './RegistrationAccordion';
 import { Doi } from '../../../types/registration.types';
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../types/notification.types';
-import { doiValidationSchema } from '../../../utils/validation/doiSearchValidation';
 import { getRegistrationPath } from '../../../utils/urlPaths';
 
 const StyledRegistrationAccorion = styled(RegistrationAccordion)`
@@ -40,16 +39,13 @@ const LinkRegistration = ({ expanded, onChange }: LinkRegistrationProps) => {
     history.push(getRegistrationPath(doi.identifier), { isNewRegistration: true });
   };
 
-  const handleSearch = async (values: DoiFormValues) => {
-    // Cast values according to validation schema to ensure doiUrl is trimmed
-    const trimmedValues = doiValidationSchema.cast(values);
-    const doiUrl = trimmedValues?.doiUrl as string;
-    const decodedDoiUrl = decodeURIComponent(doiUrl);
+  const handleSearch = async (doiUrl: string) => {
+    const ecodedDoiUrl = encodeURI(doiUrl);
 
     setNoHit(false);
     setDoi(null);
 
-    const doiRegistration = await getRegistrationByDoi(decodedDoiUrl);
+    const doiRegistration = await getRegistrationByDoi(ecodedDoiUrl);
     if (doiRegistration?.error) {
       setNoHit(true);
       dispatch(setNotification(t('feedback:error.get_doi'), NotificationVariant.Error));
