@@ -3,6 +3,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { TextField } from '@material-ui/core';
+import SearchIcon from '@material-ui/icons/Search';
 import ButtonWithProgress from '../../../components/ButtonWithProgress';
 import { doiValidationSchema } from '../../../utils/validation/doiSearchValidation';
 
@@ -22,6 +23,8 @@ export interface DoiFormValues {
 const emptyDoiFormValues: DoiFormValues = {
   doiUrl: '',
 };
+
+const doiUrlPlaceholder = 'https://doi.org/10.1000/xyz123';
 
 interface LinkRegistrationFormProps {
   handleSearch: (values: { doiUrl: string }) => void;
@@ -46,10 +49,16 @@ const LinkRegistrationForm = ({ handleSearch }: LinkRegistrationFormProps) => {
                 inputProps={{ 'data-testid': 'new-registration-link-input' }}
                 {...field}
                 error={!!error && touched}
+                InputLabelProps={{ shrink: true }}
+                placeholder={doiUrlPlaceholder}
               />
             )}
           </Field>
-          <ButtonWithProgress data-testid="doi-search-button" isLoading={isSubmitting} type="submit">
+          <ButtonWithProgress
+            data-testid="doi-search-button"
+            isLoading={isSubmitting}
+            type="submit"
+            endIcon={<SearchIcon />}>
             {t('common:search')}
           </ButtonWithProgress>
         </StyledForm>
