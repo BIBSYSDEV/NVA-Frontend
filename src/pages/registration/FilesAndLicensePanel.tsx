@@ -1,21 +1,21 @@
-import React, { useState, useEffect, useRef, FC } from 'react';
+import { ErrorMessage, FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
+import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { FieldArray, useFormikContext, ErrorMessage, FieldArrayRenderProps } from 'formik';
 import { FormHelperText, Typography } from '@material-ui/core';
 import { UppyFile } from '@uppy/core';
-import FileUploader from './files_and_license_tab/FileUploader';
-import FileCard from './files_and_license_tab/FileCard';
-import { Registration } from '../../types/registration.types';
+import BackgroundDiv from '../../components/BackgroundDiv';
 import Modal from '../../components/Modal';
-import { licenses, Uppy } from '../../types/file.types';
-import Card from '../../components/Card';
-import { FileFieldNames } from '../../types/publicationFieldNames';
+import theme from '../../themes/mainTheme';
+import { File, licenses, Uppy } from '../../types/file.types';
 import { NotificationVariant } from '../../types/notification.types';
+import { FileFieldNames } from '../../types/publicationFieldNames';
+import { Registration } from '../../types/registration.types';
 import { autoHideNotificationDuration } from '../../utils/constants';
-import { File } from '../../types/file.types';
+import FileCard from './files_and_license_tab/FileCard';
+import FileUploader from './files_and_license_tab/FileUploader';
 
-const StyledUploadedFiles = styled(Card)`
+const StyledBackgroundDiv = styled(BackgroundDiv)`
   display: flex;
   flex-direction: column;
 
@@ -33,7 +33,7 @@ interface FilesAndLicensePanelProps {
   uppy: Uppy;
 }
 
-const FilesAndLicensePanel: FC<FilesAndLicensePanelProps> = ({ uppy }) => {
+const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   const { t } = useTranslation('registration');
   const { values } = useFormikContext<Registration>();
   const [isLicenseModalOpen, setIsLicenseModalOpen] = useState(false);
@@ -74,8 +74,10 @@ const FilesAndLicensePanel: FC<FilesAndLicensePanelProps> = ({ uppy }) => {
         {({ name, remove, push }: FieldArrayRenderProps) => (
           <>
             {files.length > 0 && (
-              <StyledUploadedFiles>
-                <Typography variant="h2">{t('files_and_license.files')}</Typography>
+              <StyledBackgroundDiv backgroundColor={theme.palette.section.dark}>
+                <Typography color="primary" variant="h2">
+                  {t('files_and_license.files')}
+                </Typography>
                 {files.map((file, index) => (
                   <FileCard
                     key={index}
@@ -90,17 +92,17 @@ const FilesAndLicensePanel: FC<FilesAndLicensePanelProps> = ({ uppy }) => {
                     baseFieldName={`${name}[${index}]`}
                   />
                 ))}
-              </StyledUploadedFiles>
+              </StyledBackgroundDiv>
             )}
 
-            <Card>
+            <BackgroundDiv backgroundColor={theme.palette.section.dark}>
               <FileUploader uppy={uppy} addFile={(file) => push(file)} />
               {files.length === 0 && (
                 <FormHelperText error>
                   <ErrorMessage name={name} />
                 </FormHelperText>
               )}
-            </Card>
+            </BackgroundDiv>
           </>
         )}
       </FieldArray>

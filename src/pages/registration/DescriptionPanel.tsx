@@ -42,7 +42,6 @@ const DescriptionPanel = () => {
   return (
     <>
       <BackgroundDiv backgroundColor={theme.palette.sectionMega.light}>
-        <Typography variant="h2">{t('heading.description')}</Typography>
         <Field name={DescriptionFieldNames.TITLE}>
           {({ field, meta: { touched, error } }: FieldProps<string>) => (
             <TextField
