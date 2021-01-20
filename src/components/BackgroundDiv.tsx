@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import styled from 'styled-components';
-import ContrastTypography from './ContrastTypography';
+import ContrastContent from './ContrastContent';
 
 interface BakcgroundDivProps {
   backgroundColor: string;
@@ -18,7 +18,7 @@ const StyledBackgroundDiv = styled(({ backgroundColor, ...rest }) => <div {...re
 
 const BackgroundDiv = ({ children, ...props }: BakcgroundDivProps) => (
   <StyledBackgroundDiv {...props}>
-    <ContrastTypography backgroundColor={props.backgroundColor}>{children}</ContrastTypography>
+    <ContrastContent backgroundColor={props.backgroundColor}>{children}</ContrastContent>
   </StyledBackgroundDiv>
 );
 

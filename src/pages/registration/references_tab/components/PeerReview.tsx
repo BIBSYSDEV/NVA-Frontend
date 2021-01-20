@@ -17,18 +17,20 @@ const PeerReview = ({ fieldName, label }: PeerReviewProps) => {
     <Field name={fieldName}>
       {({ field: { name, value } }: FieldProps) => (
         <>
-          <Typography variant="h5">{label}</Typography>
+          <Typography variant="h5" color="primary">
+            {label}
+          </Typography>
           <FormControl>
             <RadioGroup
               value={value ? 'true' : 'false'}
               onChange={(event) => setFieldValue(name, event.target.value === 'true')}>
               <FormControlLabel
                 control={<Radio color="primary" data-testid="peer_review-true" value="true" />}
-                label={t('references.is_peer_reviewed')}
+                label={<Typography color="primary">{t('references.is_peer_reviewed')}</Typography>}
               />
               <FormControlLabel
                 control={<Radio color="primary" data-testid="peer_review-false" value="false" />}
-                label={t('references.is_not_peer_reviewed')}
+                label={<Typography color="primary">{t('references.is_not_peer_reviewed')}</Typography>}
               />
             </RadioGroup>
           </FormControl>

@@ -3,7 +3,7 @@ import React, { FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import DateFnsUtils from '@date-io/date-fns';
-import { Checkbox, FormControlLabel } from '@material-ui/core';
+import { Checkbox, FormControlLabel, Typography } from '@material-ui/core';
 import { DatePickerView, KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { datePickerTranslationProps } from '../../../themes/mainTheme';
 import { DescriptionFieldNames } from '../../../types/publicationFieldNames';
@@ -79,7 +79,7 @@ const DatePickerField: FC = () => {
       />
       <StyledFormControlLabel
         control={<Checkbox checked={yearOnly} onChange={toggleYearOnly} color="primary" />}
-        label={t('description.year_only')}
+        label={<Typography color="primary">{t('description.year_only')}</Typography>}
       />
     </MuiPickersUtilsProvider>
   );

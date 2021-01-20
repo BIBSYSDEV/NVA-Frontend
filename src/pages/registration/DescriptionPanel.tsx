@@ -156,7 +156,9 @@ const DescriptionPanel = () => {
         </DateAndLanguageWrapper>
       </BackgroundDiv>
       <BackgroundDiv backgroundColor={theme.palette.section.dark}>
-        <Typography variant="h5">{t('description.connect_project')}</Typography>
+        <Typography variant="h5" color="primary">
+          {t('description.connect_project')}
+        </Typography>
         <ProjectsField />
       </BackgroundDiv>
     </>
