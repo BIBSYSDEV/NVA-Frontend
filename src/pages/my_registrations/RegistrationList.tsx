@@ -82,13 +82,13 @@ const RegistrationList: FC<RegistrationListProps> = ({ registrations, refetchReg
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>
+              <TableCell data-testid="header-registration-title">
                 <StyledLabel variant="h6">{t('title')}</StyledLabel>
               </TableCell>
-              <TableCell>
+              <TableCell data-testid="header-registration-status">
                 <Typography variant="h6">{t('status')}</Typography>
               </TableCell>
-              <TableCell>
+              <TableCell data-testid="header-registration-created">
                 <Typography variant="h6">{t('created_date')}</Typography>
               </TableCell>
               <TableCell />
@@ -99,13 +99,13 @@ const RegistrationList: FC<RegistrationListProps> = ({ registrations, refetchReg
           <TableBody>
             {registrations.map((registration) => (
               <StyledTableRow key={registration.identifier}>
-                <TableCell component="th" scope="row">
+                <TableCell component="th" scope="row" data-testid={`registration-title-${registration.identifier}`}>
                   <Typography>{registration.mainTitle ?? <i>[{t('common:missing_title')}]</i>}</Typography>
                 </TableCell>
-                <TableCell>
+                <TableCell data-testid={`registration-status-${registration.identifier}`}>
                   <Typography>{t(`registration:status.${registration.status}`)}</Typography>
                 </TableCell>
-                <TableCell>
+                <TableCell data-testid={`registration-created-${registration.identifier}`}>
                   <Typography>{new Date(registration.createdDate).toLocaleString()}</Typography>
                 </TableCell>
                 <TableCell>
