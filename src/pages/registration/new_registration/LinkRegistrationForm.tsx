@@ -24,6 +24,8 @@ const emptyDoiFormValues: DoiFormValues = {
   doiUrl: '',
 };
 
+const doiUrlPlaceholder = 'https://doi.org/10.1000/xyz123';
+
 interface LinkRegistrationFormProps {
   handleSearch: (values: { doiUrl: string }) => void;
 }
@@ -48,7 +50,7 @@ const LinkRegistrationForm = ({ handleSearch }: LinkRegistrationFormProps) => {
                 {...field}
                 error={!!error && touched}
                 InputLabelProps={{ shrink: true }}
-                placeholder="https://doi.org/10.1000/xyz123"
+                placeholder={doiUrlPlaceholder}
               />
             )}
           </Field>
