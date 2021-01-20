@@ -19,7 +19,7 @@ const ContributorsPanel = () => {
   const contributorsError = errors.entityDescription?.contributors;
 
   return (
-    <BackgroundDiv backgroundColor={theme.palette.section.main}>
+    <BackgroundDiv backgroundColor={theme.palette.section.light}>
       <Typography variant="h2">{t('contributors.authors')}</Typography>
       <FieldArray name={ContributorFieldNames.CONTRIBUTORS}>
         {({ push, replace, name }: FieldArrayRenderProps) => (

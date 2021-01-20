@@ -15,19 +15,8 @@ import { Registration } from '../../../types/registration.types';
 import AddContributorModal from './AddContributorModal';
 import AuthorList from './components/AuthorList';
 
-const StyledAuthors = styled.div`
-  display: grid;
-  grid-template-areas: 'authors' 'add-author';
-`;
-
-const StyledAddAuthorButton = styled(Button)`
-  margin: 1rem;
-  border-radius: 0;
-  padding: 1rem 0;
-`;
-
-const StyledAddIcon = styled(AddIcon)`
-  margin-right: 0.5rem;
+const StyledButton = styled(Button)`
+  margin-left: 1rem;
 `;
 
 type AuthorsProps = Pick<FieldArrayRenderProps, 'push' | 'replace'>;
@@ -99,31 +88,31 @@ const Authors: FC<AuthorsProps> = ({ push, replace }) => {
   };
 
   return (
-    <StyledAuthors>
+    <>
       <AuthorList
         authors={orderedAuthors}
         onDelete={handleOnRemove}
         onMoveAuthor={handleMoveAuthor}
         openContributorModal={handleOpenContributorModal}
       />
-      <StyledAddAuthorButton
+      <StyledButton
         onClick={() => {
           setOpenContributorModal(true);
           setUnverifiedAuthor(null);
         }}
         variant="contained"
         color="secondary"
-        startIcon={<StyledAddIcon />}
+        startIcon={<AddIcon />}
         data-testid="add-contributor">
         {t('contributors.add_author')}
-      </StyledAddAuthorButton>
+      </StyledButton>
       <AddContributorModal
         initialSearchTerm={unverifiedAuthor?.name}
         open={openContributorModal}
         toggleModal={() => setOpenContributorModal(!openContributorModal)}
         onAuthorSelected={onAuthorSelected}
       />
-    </StyledAuthors>
+    </>
   );
 };
 
