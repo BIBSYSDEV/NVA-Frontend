@@ -139,11 +139,6 @@ const theme = createMuiTheme({
         backgroundColor: Color.Box,
       },
     },
-    MuiFormHelperText: {
-      root: {
-        color: Color.Box,
-      },
-    },
     MuiInputBase: {
       root: {
         background: Color.Background,

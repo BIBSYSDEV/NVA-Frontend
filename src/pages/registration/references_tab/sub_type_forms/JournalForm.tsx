@@ -107,7 +107,7 @@ const JournalForm = () => {
             )}
           </Field>
 
-          <StyledLabel>{t('references.or')}</StyledLabel>
+          <StyledLabel color="primary">{t('references.or')}</StyledLabel>
 
           <Field name={ReferenceFieldNames.ARTICLE_NUMBER}>
             {({ field, meta: { error, touched } }: FieldProps) => (
