@@ -35,16 +35,16 @@ interface LinkRegistrationFormProps {
 const LinkRegistrationForm = ({ handleSearch }: LinkRegistrationFormProps) => {
   const { t } = useTranslation('registration');
 
-  const onSubmit = async ({ doiUrl }: DoiFormValues, { setValues }: FormikHelpers<DoiFormValues>) => {
-    let newValue = doiUrl.trim().toLowerCase();
-    if (!isValidUrl(newValue)) {
-      const findDoi = doiRegExp.exec(newValue);
-      if (findDoi && findDoi.length > 0) {
-        newValue = `${doiUrlBase}${findDoi[0]}`;
+  const onSubmit = async (values: DoiFormValues, { setValues }: FormikHelpers<DoiFormValues>) => {
+    let doiUrl = values.doiUrl.trim().toLowerCase();
+    if (!isValidUrl(doiUrl)) {
+      const regexMatch = doiRegExp.exec(doiUrl);
+      if (regexMatch && regexMatch.length > 0) {
+        doiUrl = `${doiUrlBase}${regexMatch[0]}`;
       }
     }
-    setValues({ doiUrl: newValue });
-    await handleSearch(newValue);
+    setValues({ doiUrl });
+    await handleSearch(doiUrl);
   };
 
   return (
