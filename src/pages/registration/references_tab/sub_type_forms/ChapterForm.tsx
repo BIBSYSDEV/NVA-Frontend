@@ -49,7 +49,9 @@ const ChapterForm = () => {
       <BackgroundDiv backgroundColor={theme.palette.section.main}>
         <StyledDiv>
           <InfoIcon color="primary" />
-          <Typography variant="body1">{t('references.chapter.info_anthology')}</Typography>
+          <Typography color="primary" variant="body1">
+            {t('references.chapter.info_anthology')}
+          </Typography>
         </StyledDiv>
 
         <DoiField />
