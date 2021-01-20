@@ -40,12 +40,10 @@ const LinkRegistration = ({ expanded, onChange }: LinkRegistrationProps) => {
   };
 
   const handleSearch = async (doiUrl: string) => {
-    const ecodedDoiUrl = encodeURI(doiUrl);
-
     setNoHit(false);
     setDoi(null);
 
-    const doiRegistration = await getRegistrationByDoi(ecodedDoiUrl);
+    const doiRegistration = await getRegistrationByDoi(doiUrl);
     if (doiRegistration?.error) {
       setNoHit(true);
       dispatch(setNotification(t('feedback:error.get_doi'), NotificationVariant.Error));
