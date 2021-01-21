@@ -15,8 +15,8 @@ declare module '@material-ui/core/styles/createPalette' {
   }
 
   interface ExtendedPalette extends PaletteColor {
-    megaLight?: string;
-    megaDark?: string;
+    megaLight: string;
+    megaDark: string;
   }
 
   interface ExtendedPaletteOptions extends SimplePaletteColorOptions {
