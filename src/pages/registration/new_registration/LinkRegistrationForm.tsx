@@ -1,11 +1,11 @@
-import { Field, Formik, Form, FieldProps } from 'formik';
+import { Field, Formik, Form, FieldProps, FormikHelpers } from 'formik';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { TextField } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import ButtonWithProgress from '../../../components/ButtonWithProgress';
-import { doiValidationSchema } from '../../../utils/validation/doiSearchValidation';
+import { doiValidationSchema, isValidUrl } from '../../../utils/validation/doiSearchValidation';
 
 const StyledForm = styled(Form)`
   display: flex;
@@ -16,7 +16,7 @@ const StyledTextField = styled(TextField)`
   margin: 0 1rem 0 0;
 `;
 
-export interface DoiFormValues {
+interface DoiFormValues {
   doiUrl: string;
 }
 
@@ -24,17 +24,31 @@ const emptyDoiFormValues: DoiFormValues = {
   doiUrl: '',
 };
 
-const doiUrlPlaceholder = 'https://doi.org/10.1000/xyz123';
+const doiUrlBase = 'https://doi.org/';
+const doiUrlPlaceholder = `${doiUrlBase}10.1000/xyz123`;
+const doiRegExp = new RegExp('\\b(10[.][0-9]{4,}(?:[.][0-9]+)*/(?:(?!["&\'<>])\\S)+)\\b'); // https://stackoverflow.com/a/10324802
 
 interface LinkRegistrationFormProps {
-  handleSearch: (values: { doiUrl: string }) => void;
+  handleSearch: (doiUrl: string) => Promise<void>;
 }
 
 const LinkRegistrationForm = ({ handleSearch }: LinkRegistrationFormProps) => {
   const { t } = useTranslation('registration');
 
+  const onSubmit = async (values: DoiFormValues, { setValues }: FormikHelpers<DoiFormValues>) => {
+    let doiUrl = values.doiUrl.trim().toLowerCase();
+    if (!isValidUrl(doiUrl)) {
+      const regexMatch = doiRegExp.exec(doiUrl);
+      if (regexMatch && regexMatch.length > 0) {
+        doiUrl = `${doiUrlBase}${regexMatch[0]}`;
+      }
+    }
+    setValues({ doiUrl });
+    await handleSearch(doiUrl);
+  };
+
   return (
-    <Formik onSubmit={handleSearch} initialValues={emptyDoiFormValues} validationSchema={doiValidationSchema}>
+    <Formik onSubmit={onSubmit} initialValues={emptyDoiFormValues} validationSchema={doiValidationSchema}>
       {({ isSubmitting }) => (
         <StyledForm noValidate>
           <Field name="doiUrl">
