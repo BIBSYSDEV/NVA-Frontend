@@ -41,7 +41,7 @@ const DescriptionPanel = () => {
 
   return (
     <>
-      <BackgroundDiv backgroundColor={theme.palette.sectionMega.light}>
+      <BackgroundDiv backgroundColor={theme.palette.section.megaLight}>
         <Field name={DescriptionFieldNames.TITLE}>
           {({ field, meta: { touched, error } }: FieldProps<string>) => (
             <TextField

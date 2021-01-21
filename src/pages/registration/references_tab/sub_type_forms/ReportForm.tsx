@@ -38,7 +38,7 @@ const ReportForm = () => {
         </StyledSection>
       </BackgroundDiv>
 
-      <BackgroundDiv backgroundColor={theme.palette.sectionMega.dark}>
+      <BackgroundDiv backgroundColor={theme.palette.section.megaDark}>
         <Typography color="primary" variant="h5">
           {t('references.series')}
         </Typography>

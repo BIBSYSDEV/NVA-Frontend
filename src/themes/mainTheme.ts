@@ -1,5 +1,5 @@
 import { createMuiTheme } from '@material-ui/core';
-import { PaletteColor, PaletteColorOptions } from '@material-ui/core/styles/createPalette';
+import { PaletteColor, PaletteColorOptions, SimplePaletteColorOptions } from '@material-ui/core/styles/createPalette';
 import i18n from '../translations/i18n';
 import { getTranslatedLabelForDisplayedRows } from '../utils/pagination';
 
@@ -7,13 +7,21 @@ import { getTranslatedLabelForDisplayedRows } from '../utils/pagination';
 declare module '@material-ui/core/styles/createPalette' {
   interface Palette {
     box: PaletteColor;
-    section: PaletteColor;
-    sectionMega: PaletteColor;
+    section: ExtendedPalette;
   }
   interface PaletteOptions {
     box?: PaletteColorOptions;
-    section?: PaletteColorOptions;
-    sectionMega?: PaletteColorOptions;
+    section?: ExtendedPaletteOptions;
+  }
+
+  interface ExtendedPalette extends PaletteColor {
+    megaLight?: string;
+    megaDark?: string;
+  }
+
+  interface ExtendedPaletteOptions extends SimplePaletteColorOptions {
+    megaLight?: string;
+    megaDark?: string;
   }
 }
 
@@ -89,14 +97,11 @@ const theme = createMuiTheme({
       default: Color.Background,
     },
     section: {
+      megaLight: BackgroundColors.BlueMegaLight,
       light: BackgroundColors.BlueLight,
       main: BackgroundColors.Blue,
       dark: BackgroundColors.BlueDark,
-    },
-    sectionMega: {
-      light: BackgroundColors.BlueMegaLight,
-      main: BackgroundColors.Blue,
-      dark: BackgroundColors.Black,
+      megaDark: BackgroundColors.Black,
     },
   },
   typography: {

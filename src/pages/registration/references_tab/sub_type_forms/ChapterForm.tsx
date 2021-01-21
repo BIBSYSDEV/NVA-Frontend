@@ -99,7 +99,7 @@ const ChapterForm = () => {
       </BackgroundDiv>
 
       {publicationInstance.type === ChapterType.BOOK && (
-        <BackgroundDiv backgroundColor={theme.palette.sectionMega.dark}>
+        <BackgroundDiv backgroundColor={theme.palette.section.megaDark}>
           <PeerReview fieldName={ReferenceFieldNames.PEER_REVIEW} label={t('references.peer_review')} />
           <NviValidation
             isPeerReviewed={!!publicationInstance.peerReviewed}
