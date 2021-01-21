@@ -1,4 +1,5 @@
 import { createMuiTheme } from '@material-ui/core';
+import { PaletteColor, PaletteColorOptions, SimplePaletteColorOptions } from '@material-ui/core/styles/createPalette';
 import i18n from '../translations/i18n';
 import { getTranslatedLabelForDisplayedRows } from '../utils/pagination';
 
@@ -6,10 +7,30 @@ import { getTranslatedLabelForDisplayedRows } from '../utils/pagination';
 declare module '@material-ui/core/styles/createPalette' {
   interface Palette {
     box: PaletteColor;
+    section: ExtendedPalette;
   }
   interface PaletteOptions {
     box?: PaletteColorOptions;
+    section?: ExtendedPaletteOptions;
   }
+
+  interface ExtendedPalette extends PaletteColor {
+    megaLight: string;
+    megaDark: string;
+  }
+
+  interface ExtendedPaletteOptions extends SimplePaletteColorOptions {
+    megaLight?: string;
+    megaDark?: string;
+  }
+}
+
+export enum BackgroundColors {
+  Black = '#222',
+  BlueDark = '#02005B',
+  Blue = '#0010A4',
+  BlueLight = '#DFEDFE',
+  BlueMegaLight = '#F4F8FF',
 }
 
 // Colors: https://www.figma.com/file/3hggk6SX2ca81U8kwaZKFs/Farger-NVA
@@ -74,6 +95,13 @@ const theme = createMuiTheme({
     },
     background: {
       default: Color.Background,
+    },
+    section: {
+      megaLight: BackgroundColors.BlueMegaLight,
+      light: BackgroundColors.BlueLight,
+      main: BackgroundColors.Blue,
+      dark: BackgroundColors.BlueDark,
+      megaDark: BackgroundColors.Black,
     },
   },
   typography: {

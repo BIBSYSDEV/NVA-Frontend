@@ -1,10 +1,11 @@
+import { ErrorMessage, FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormHelperText, Typography } from '@material-ui/core';
-import { useFormikContext, FieldArray, ErrorMessage, FieldArrayRenderProps } from 'formik';
-import Card from '../../components/Card';
-import { Registration } from '../../types/registration.types';
+import BackgroundDiv from '../../components/BackgroundDiv';
+import theme from '../../themes/mainTheme';
 import { ContributorFieldNames } from '../../types/publicationFieldNames';
+import { Registration } from '../../types/registration.types';
 import Authors from './contributors_tab/Authors';
 
 const ContributorsPanel = () => {
@@ -18,7 +19,7 @@ const ContributorsPanel = () => {
   const contributorsError = errors.entityDescription?.contributors;
 
   return (
-    <Card>
+    <BackgroundDiv backgroundColor={theme.palette.section.light}>
       <Typography variant="h2">{t('contributors.authors')}</Typography>
       <FieldArray name={ContributorFieldNames.CONTRIBUTORS}>
         {({ push, replace, name }: FieldArrayRenderProps) => (
@@ -32,7 +33,7 @@ const ContributorsPanel = () => {
           </>
         )}
       </FieldArray>
-    </Card>
+    </BackgroundDiv>
   );
 };
 

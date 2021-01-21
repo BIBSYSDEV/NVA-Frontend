@@ -62,7 +62,7 @@ describe('User opens registration form and can see validation errors', () => {
     cy.get('[data-testid=journal-search-input]').click({ force: true }).type('test');
     cy.contains('testament').click({ force: true });
     cy.contains(ErrorMessage.REQUIRED).should('not.exist');
-    cy.get('.MuiAutocomplete-clearIndicator').click({ force: true });
+    cy.get('[data-testid=journal-search-input]').clear();
     cy.contains(ErrorMessage.REQUIRED).should('be.visible');
     cy.get('[data-testid=journal-search-input]').click({ force: true }).type('test');
     cy.contains('testament').click({ force: true });
@@ -230,9 +230,7 @@ describe('User opens registration form and can see validation errors', () => {
     cy.get('[data-testid=nav-tabpanel-contributors]').click({ force: true });
     cy.get('[data-testid=nav-tabpanel-files-and-license]').click({ force: true });
     cy.contains(ErrorMessage.REQUIRED).should('be.visible');
-    cy.get('[data-testid=uploaded-file-select-license]')
-      .parent()
-      .within(() => cy.get('.MuiSelect-root').click({ force: true }));
+    cy.get('[data-testid=uploaded-file-select-license]').click({ force: true }).type(' ');
     cy.get('[data-testid=license-item]').eq(0).click({ force: true });
     cy.contains(ErrorMessage.REQUIRED).should('not.exist');
 

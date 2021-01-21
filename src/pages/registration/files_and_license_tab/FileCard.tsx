@@ -1,5 +1,8 @@
-import React, { FC } from 'react';
+import { ErrorMessage, Field, FieldProps } from 'formik';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
+import DateFnsUtils from '@date-io/date-fns';
 import {
   Checkbox,
   FormControl,
@@ -13,19 +16,16 @@ import {
   TextField,
   Typography,
 } from '@material-ui/core';
-import { File, licenses, LicenseNames } from '../../../types/file.types';
-import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
-import DateFnsUtils from '@date-io/date-fns';
-import { useTranslation } from 'react-i18next';
-import Card from '../../../components/Card';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import HelpIcon from '@material-ui/icons/Help';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { Field, FieldProps, ErrorMessage } from 'formik';
+import HelpIcon from '@material-ui/icons/Help';
+import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
+import BackgroundDiv from '../../../components/BackgroundDiv';
+import DangerButton from '../../../components/DangerButton';
+import theme, { datePickerTranslationProps } from '../../../themes/mainTheme';
+import { File, LicenseNames, licenses } from '../../../types/file.types';
 import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 import { getDateFnsLocale } from '../../../utils/date-helpers';
-import { datePickerTranslationProps } from '../../../themes/mainTheme';
-import DangerButton from '../../../components/DangerButton';
 
 const StyledDescription = styled(Typography)`
   font-style: italic;
@@ -89,11 +89,11 @@ interface FileCardProps {
   toggleLicenseModal?: () => void;
 }
 
-const FileCard: FC<FileCardProps> = ({ file, removeFile, baseFieldName, toggleLicenseModal }) => {
+const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }: FileCardProps) => {
   const { t, i18n } = useTranslation('registration');
 
   return (
-    <Card data-testid="uploaded-file-card">
+    <BackgroundDiv backgroundColor={theme.palette.background.paper} data-testid="uploaded-file-card">
       <Typography variant="h5">{file.name}</Typography>
       <StyledDescription>
         {t('files_and_license.uploaded_size', { size: Math.round(file.size / 1000) })}
@@ -230,7 +230,7 @@ const FileCard: FC<FileCardProps> = ({ file, removeFile, baseFieldName, toggleLi
           {t('common:remove')}
         </DangerButton>
       </StyledActions>
-    </Card>
+    </BackgroundDiv>
   );
 };
 

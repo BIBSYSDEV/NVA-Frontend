@@ -4,7 +4,9 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { Button, Checkbox, FormControlLabel, TextField, Tooltip, Typography } from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/CheckCircleSharp';
+import DeleteIcon from '@material-ui/icons/RemoveCircleSharp';
 import WarningIcon from '@material-ui/icons/Warning';
+import DangerButton from '../../../../components/DangerButton';
 import { StyledRightAlignedWrapper } from '../../../../components/styled/Wrappers';
 import { Contributor, UnverifiedContributor } from '../../../../types/contributor.types';
 import { ContributorFieldNames, SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
@@ -95,7 +97,7 @@ const StyledInstitutionSection = styled.div`
   margin-top: 1rem;
 `;
 
-const StyledRemoveButton = styled(Button)`
+const StyledDangerButton = styled(DangerButton)`
   grid-area: remove-author;
   border-radius: 0;
 `;
@@ -205,12 +207,13 @@ const AuthorCard: FC<AuthorCardProps> = ({ author, onMoveAuthor, onRemoveAuthorC
           {author.identity && <AffiliationsCell affiliations={author.affiliations} baseFieldName={baseFieldName} />}
         </StyledInstitutionSection>
       </StyledContent>
-      <StyledRemoveButton
-        variant="contained"
+      <StyledDangerButton
         data-testid={`button-remove-contributor-${author.identity.name}`}
-        onClick={onRemoveAuthorClick}>
+        startIcon={<DeleteIcon />}
+        onClick={onRemoveAuthorClick}
+        variant="contained">
         {t('contributors.remove_author')}
-      </StyledRemoveButton>
+      </StyledDangerButton>
     </StyledAuthorCard>
   );
 };

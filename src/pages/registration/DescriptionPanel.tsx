@@ -1,15 +1,16 @@
-import { Field, useFormikContext, FieldProps, ErrorMessage } from 'formik';
+import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import React, { ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { MenuItem, TextField as MuiTextField, TextField, Typography } from '@material-ui/core';
+import { MenuItem, TextField, Typography } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import { Registration } from '../../types/registration.types';
-import DisciplineSearch from './description_tab/DisciplineSearch';
-import DatePickerField from './description_tab/DatePickerField';
+import BackgroundDiv from '../../components/BackgroundDiv';
+import theme from '../../themes/mainTheme';
 import { registrationLanguages } from '../../types/language.types';
-import Card from '../../components/Card';
 import { DescriptionFieldNames } from '../../types/publicationFieldNames';
+import { Registration } from '../../types/registration.types';
+import DatePickerField from './description_tab/DatePickerField';
+import DisciplineSearch from './description_tab/DisciplineSearch';
 import { ProjectsField } from './description_tab/projects_field';
 
 const NpiAndTagsWrapper = styled.div`
@@ -34,19 +35,13 @@ const DateAndLanguageWrapper = styled.div`
   }
 `;
 
-const StyledMainCard = styled(Card)`
-  display: grid;
-  gap: 1rem;
-`;
-
 const DescriptionPanel = () => {
   const { t } = useTranslation('registration');
   const { setFieldValue } = useFormikContext<Registration>();
 
   return (
     <>
-      <StyledMainCard>
-        <Typography variant="h2">{t('heading.description')}</Typography>
+      <BackgroundDiv backgroundColor={theme.palette.section.megaLight}>
         <Field name={DescriptionFieldNames.TITLE}>
           {({ field, meta: { touched, error } }: FieldProps<string>) => (
             <TextField
@@ -90,6 +85,8 @@ const DescriptionPanel = () => {
             />
           )}
         </Field>
+      </BackgroundDiv>
+      <BackgroundDiv backgroundColor={theme.palette.section.light}>
         <NpiAndTagsWrapper>
           <Field name={DescriptionFieldNames.NPI_SUBJECT_HEADING}>
             {({ field: { name, value } }: FieldProps<string>) => (
@@ -111,7 +108,7 @@ const DescriptionPanel = () => {
                 options={[]}
                 onChange={(_: ChangeEvent<unknown>, value: string[] | string) => setFieldValue(field.name, value)}
                 renderInput={(params) => (
-                  <MuiTextField
+                  <TextField
                     {...params}
                     data-testid="registration-tag-field"
                     label={t('description.keywords')}
@@ -132,7 +129,8 @@ const DescriptionPanel = () => {
             )}
           </Field>
         </NpiAndTagsWrapper>
-
+      </BackgroundDiv>
+      <BackgroundDiv backgroundColor={theme.palette.section.main}>
         <DateAndLanguageWrapper>
           <DatePickerField />
 
@@ -155,11 +153,13 @@ const DescriptionPanel = () => {
             )}
           </Field>
         </DateAndLanguageWrapper>
-      </StyledMainCard>
-      <Card>
-        <Typography variant="h5">{t('description.connect_project')}</Typography>
+      </BackgroundDiv>
+      <BackgroundDiv backgroundColor={theme.palette.section.dark}>
+        <Typography variant="h5" color="primary">
+          {t('description.connect_project')}
+        </Typography>
         <ProjectsField />
-      </Card>
+      </BackgroundDiv>
     </>
   );
 };

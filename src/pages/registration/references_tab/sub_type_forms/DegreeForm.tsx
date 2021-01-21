@@ -1,27 +1,29 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
 import { Typography } from '@material-ui/core';
+import BackgroundDiv from '../../../../components/BackgroundDiv';
+import theme from '../../../../themes/mainTheme';
 import DoiField from '../components/DoiField';
-import SeriesField from '../components/SeriesField';
 import PublisherField from '../components/PublisherField';
+import SeriesField from '../components/SeriesField';
 
-const StyledTypography = styled(Typography)`
-  padding-top: 1.5rem;
-`;
-
-const DegreeForm: FC = () => {
+const DegreeForm = () => {
   const { t } = useTranslation('registration');
 
   return (
     <>
-      <DoiField />
+      <BackgroundDiv backgroundColor={theme.palette.section.main}>
+        <DoiField />
+        <PublisherField />
+      </BackgroundDiv>
 
-      <PublisherField />
-
-      <StyledTypography variant="h5">{t('references.series')}</StyledTypography>
-      <Typography>{t('references.series_info')}</Typography>
-      <SeriesField />
+      <BackgroundDiv backgroundColor={theme.palette.section.dark}>
+        <Typography color="primary" variant="h5">
+          {t('references.series')}
+        </Typography>
+        <Typography color="primary">{t('references.series_info')}</Typography>
+        <SeriesField />
+      </BackgroundDiv>
     </>
   );
 };
