@@ -49,6 +49,7 @@ const AddContributorModal = ({ onAuthorSelected, toggleModal, open, initialSearc
         <>
           <AddContributorModalContent addAuthor={addAuthor} initialSearchTerm={initialSearchTerm} />
           <StyledRightAlignedWrapper>
+            <Button onClick={handleCloseModal}>{t('common:close')}</Button>
             <Button color="primary" data-testid="button-create-new-author" onClick={() => setCreateNewAuthor(true)}>
               {t('contributors.create_new_author')}
             </Button>
