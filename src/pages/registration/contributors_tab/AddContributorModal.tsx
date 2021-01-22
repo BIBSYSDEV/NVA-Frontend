@@ -3,9 +3,7 @@ import { useTranslation } from 'react-i18next';
 import Modal from '../../../components/Modal';
 import { Authority } from '../../../types/authority.types';
 import AddContributorModalContent from './components/AddContributorModalContent';
-import { Button } from '@material-ui/core';
 import CreateContributorModalContent from './components/CreateContributorModalContent';
-import { StyledRightAlignedWrapper } from '../../../components/styled/Wrappers';
 
 interface AddContributorModalProps {
   onAuthorSelected: (author: Authority) => void;
@@ -46,15 +44,12 @@ const AddContributorModal = ({ onAuthorSelected, toggleModal, open, initialSearc
       {createNewAuthor ? (
         <CreateContributorModalContent addAuthor={addAuthor} handleCloseModal={handleCloseModal} />
       ) : (
-        <>
-          <AddContributorModalContent addAuthor={addAuthor} initialSearchTerm={initialSearchTerm} />
-          <StyledRightAlignedWrapper>
-            <Button onClick={handleCloseModal}>{t('common:close')}</Button>
-            <Button color="primary" data-testid="button-create-new-author" onClick={() => setCreateNewAuthor(true)}>
-              {t('contributors.create_new_author')}
-            </Button>
-          </StyledRightAlignedWrapper>
-        </>
+        <AddContributorModalContent
+          addAuthor={addAuthor}
+          handleCloseModal={handleCloseModal}
+          openNewAuthorModal={() => setCreateNewAuthor(true)}
+          initialSearchTerm={initialSearchTerm}
+        />
       )}
     </Modal>
   );
