@@ -15,8 +15,8 @@ const StyledTableRow = styled(TableRow)`
 
 interface AuthorityListProps {
   authorities: Authority[];
-  searchTerm: string;
-  onSelectAuthority: (authority: Authority) => void;
+  searchTerm?: string;
+  onSelectAuthority?: (authority: Authority) => void;
   selectedArpId?: string;
 }
 
@@ -25,7 +25,7 @@ const AuthorityList = ({ authorities, searchTerm, onSelectAuthority, selectedArp
 
   return (
     <>
-      <Label>{t('search_summary', { count: authorities?.length ?? 0, searchTerm })}</Label>
+      {searchTerm && <Label>{t('search_summary', { count: authorities?.length ?? 0, searchTerm })}</Label>}
 
       <TableContainer>
         <Table size="small">
@@ -43,7 +43,7 @@ const AuthorityList = ({ authorities, searchTerm, onSelectAuthority, selectedArp
                 data-testid="author-radio-button"
                 key={authority.id}
                 hover
-                onClick={() => onSelectAuthority(authority)}
+                onClick={() => onSelectAuthority?.(authority)}
                 selected={authority.id === selectedArpId}>
                 <TableCell padding="checkbox">
                   <Radio checked={authority.id === selectedArpId} />
