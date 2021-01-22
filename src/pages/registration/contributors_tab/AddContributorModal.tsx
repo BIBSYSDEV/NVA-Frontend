@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Modal from '../../../components/Modal';
 import { Authority } from '../../../types/authority.types';
@@ -14,12 +14,7 @@ interface AddContributorModalProps {
   initialSearchTerm?: string;
 }
 
-const AddContributorModal: FC<AddContributorModalProps> = ({
-  onAuthorSelected,
-  toggleModal,
-  open,
-  initialSearchTerm,
-}) => {
+const AddContributorModal = ({ onAuthorSelected, toggleModal, open, initialSearchTerm }: AddContributorModalProps) => {
   const { t } = useTranslation('registration');
   const [createNewAuthor, setCreateNewAuthor] = useState(false);
 

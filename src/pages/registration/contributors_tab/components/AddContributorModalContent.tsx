@@ -2,6 +2,7 @@ import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { Button, CircularProgress, Typography } from '@material-ui/core';
+import AddIcon from '@material-ui/icons/AddCircleOutlineSharp';
 import SearchBar from '../../../../components/SearchBar';
 import { Authority } from '../../../../types/authority.types';
 import AuthorityList from '../../../user/authority/AuthorityList';
@@ -51,7 +52,8 @@ const AddContributorModalContent: FC<AddContributorModalContentProps> = ({ addAu
           )}
           <StyledButtonContainer>
             <Button
-              color="primary"
+              color="secondary"
+              startIcon={<AddIcon />}
               data-testid="connect-author-button"
               disabled={!selectedAuthor}
               onClick={() => selectedAuthor && addAuthor(selectedAuthor)}

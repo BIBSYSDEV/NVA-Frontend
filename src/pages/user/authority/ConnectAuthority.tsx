@@ -1,8 +1,9 @@
-import React, { FC, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { Button, DialogActions } from '@material-ui/core';
+import AddIcon from '@material-ui/icons/AddCircleOutlineSharp';
 
 import { addQualifierIdForAuthority, AuthorityQualifiers } from '../../../api/authorityApi';
 import { setAuthorityData } from '../../../redux/actions/userActions';
@@ -29,7 +30,7 @@ interface ConnectAuthorityProps {
   handleCloseModal: () => void;
 }
 
-export const ConnectAuthority: FC<ConnectAuthorityProps> = ({ user, handleCloseModal }) => {
+export const ConnectAuthority = ({ user, handleCloseModal }: ConnectAuthorityProps) => {
   const dispatch = useDispatch();
   const { t } = useTranslation('profile');
   const [selectedArpId, setSelectedArpId] = useState('');
@@ -93,8 +94,9 @@ export const ConnectAuthority: FC<ConnectAuthorityProps> = ({ user, handleCloseM
               </Button>
               <ButtonWithProgress
                 data-testid="connect-author-button"
-                color="primary"
+                color="secondary"
                 variant="contained"
+                startIcon={<AddIcon />}
                 size="large"
                 onClick={updateAuthorityForUser}
                 disabled={!selectedArpId || isUpdatingAuthority}
