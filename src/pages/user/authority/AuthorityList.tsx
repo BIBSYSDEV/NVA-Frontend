@@ -1,13 +1,12 @@
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
+import { Radio, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@material-ui/core';
+import { Skeleton } from '@material-ui/lab';
 
 import { Authority } from '../../../types/authority.types';
 import Label from '../../../components/Label';
-import { Radio, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core';
 import useFetchLastRegistrationFromAlma from '../../../utils/hooks/useFetchLastRegistration';
-import { Skeleton } from '@material-ui/lab';
-import Truncate from 'react-truncate';
 import AffiliationHierarchy from '../../../components/institution/AffiliationHierarchy';
 
 const StyledTableRow = styled(TableRow)`
@@ -29,7 +28,7 @@ const AuthorityList: FC<AuthorityListProps> = ({ authorities, searchTerm, onSele
       <Label>{t('search_summary', { count: authorities?.length ?? 0, searchTerm })}</Label>
 
       <TableContainer>
-        <Table>
+        <Table size="small">
           <TableHead>
             <TableRow>
               <TableCell padding="checkbox"></TableCell>
@@ -49,7 +48,9 @@ const AuthorityList: FC<AuthorityListProps> = ({ authorities, searchTerm, onSele
                 <TableCell padding="checkbox">
                   <Radio checked={authority.id === selectedArpId} />
                 </TableCell>
-                <TableCell>{authority.name}</TableCell>
+                <TableCell>
+                  <Typography>{authority.name}</Typography>
+                </TableCell>
                 <TableCell>
                   <LastAlmaRegistrationCell authority={authority} />
                 </TableCell>
@@ -87,7 +88,7 @@ const LastAlmaRegistrationCell = ({ authority }: LastAlmaRegistrationCellProps) 
       {isLoadingAlmaPublication ? (
         <Skeleton width="70%" />
       ) : almaPublication?.title ? (
-        <Truncate lines={2}>{almaPublication.title}</Truncate>
+        <Typography>{almaPublication.title}</Typography>
       ) : (
         <i>{t('authority.no_registrations_found')}</i>
       )}
