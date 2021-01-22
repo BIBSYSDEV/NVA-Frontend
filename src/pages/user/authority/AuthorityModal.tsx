@@ -43,6 +43,7 @@ const AuthorityModal: FC<AuthorityModalProps> = ({ closeModal, handleNextClick, 
         open={true}
         onClose={handleCloseModal}
         headingText={t('authority.connect_authority')}
+        fullWidth
         maxWidth="md">
         {user.authority ? (
           <>

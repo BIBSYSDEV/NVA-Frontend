@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { Radio, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@material-ui/core';
@@ -20,7 +20,7 @@ interface AuthorityListProps {
   selectedArpId?: string;
 }
 
-const AuthorityList: FC<AuthorityListProps> = ({ authorities, searchTerm, onSelectAuthority, selectedArpId }) => {
+const AuthorityList = ({ authorities, searchTerm, onSelectAuthority, selectedArpId }: AuthorityListProps) => {
   const { t } = useTranslation('common');
 
   return (
