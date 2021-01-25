@@ -14,6 +14,7 @@ const ContrastContent = ({ backgroundColor, children }: ContrastContentProps) =>
     ...theme,
     palette: {
       ...theme.palette,
+      type: 'dark',
       primary: { main: contrastTextColor },
     },
   });

@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react';
 import styled from 'styled-components';
+import { isBackgroundColorDark } from '../utils/theme-helpers';
 import ContrastContent from './ContrastContent';
 
 interface BakcgroundDivProps {
@@ -16,10 +17,14 @@ const StyledBackgroundDiv = styled(({ backgroundColor, ...rest }) => <div {...re
   ${({ backgroundColor }) => `background-color: ${backgroundColor}`}
 `;
 
-const BackgroundDiv = ({ children, ...props }: BakcgroundDivProps) => (
-  <StyledBackgroundDiv {...props}>
-    <ContrastContent backgroundColor={props.backgroundColor}>{children}</ContrastContent>
-  </StyledBackgroundDiv>
-);
+const BackgroundDiv = ({ children, ...props }: BakcgroundDivProps) => {
+  const darkMode = isBackgroundColorDark(props.backgroundColor);
+
+  return (
+    <StyledBackgroundDiv {...props}>
+      {darkMode ? <ContrastContent backgroundColor={props.backgroundColor}>{children}</ContrastContent> : children}
+    </StyledBackgroundDiv>
+  );
+};
 
 export default BackgroundDiv;
