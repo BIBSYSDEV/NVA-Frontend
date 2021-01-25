@@ -2,7 +2,7 @@ import { createMuiTheme } from '@material-ui/core';
 import { PaletteColor, PaletteColorOptions, SimplePaletteColorOptions } from '@material-ui/core/styles/createPalette';
 import i18n from '../translations/i18n';
 import { getTranslatedLabelForDisplayedRows } from '../utils/pagination';
-import { BackgroundColors, Color } from './colors';
+import { Color } from './colors';
 
 // Extend Palette type to allow custom colors
 declare module '@material-ui/core/styles/createPalette' {
@@ -43,7 +43,7 @@ const theme = createMuiTheme({
   },
   palette: {
     primary: {
-      main: Color.Primary,
+      main: Color.BlueMain,
     },
     secondary: {
       light: Color.SecondaryLight,
@@ -67,14 +67,14 @@ const theme = createMuiTheme({
       disabled: Color.Disabled,
     },
     background: {
-      default: Color.Background,
+      default: Color.White,
     },
     section: {
-      megaLight: BackgroundColors.BlueMegaLight,
-      light: BackgroundColors.BlueLight,
-      main: BackgroundColors.Blue,
-      dark: BackgroundColors.BlueDark,
-      megaDark: BackgroundColors.Black,
+      megaLight: Color.BlueMegaLight,
+      light: Color.BlueLight,
+      main: Color.BlueMain,
+      dark: Color.BlueDark,
+      megaDark: Color.Black,
     },
   },
   typography: {
@@ -119,7 +119,7 @@ const theme = createMuiTheme({
     },
     MuiInputBase: {
       root: {
-        background: Color.Background,
+        background: Color.White,
       },
     },
     MuiLink: {
@@ -152,9 +152,9 @@ const theme = createMuiTheme({
         color: Color.ErrorMain,
       },
       root: {
-        color: BackgroundColors.Black,
+        color: Color.Black,
         '&.Mui-focused': {
-          color: BackgroundColors.Black,
+          color: Color.Black,
         },
         '&.Mui-error': {
           color: Color.ErrorMain,
@@ -163,19 +163,20 @@ const theme = createMuiTheme({
     },
     MuiFilledInput: {
       root: {
-        backgroundColor: '#fff',
+        backgroundColor: Color.White,
         '&.Mui-focused': {
-          backgroundColor: '#fff',
+          backgroundColor: Color.White,
         },
         '&:hover': {
-          backgroundColor: '#fff',
+          backgroundColor: Color.White,
         },
       },
     },
     MuiFormHelperText: {
       root: {
+        color: Color.Black,
         '&.Mui-error': {
-          color: BackgroundColors.Black,
+          color: Color.Black,
           backgroundColor: Color.ErrorLight,
           margin: 0,
           padding: '0.25rem 0.75rem',
