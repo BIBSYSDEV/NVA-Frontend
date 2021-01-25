@@ -1,9 +1,10 @@
 // Colors: https://www.figma.com/file/3hggk6SX2ca81U8kwaZKFs/Farger-NVA
 export enum Color {
   Black = '#222',
-  BlueDark = '#02005B',
+  BlueMegaDark = '#02005B',
+  BlueDark = '#010880',
   BlueMain = '#0010A4',
-  BlueLight = '#DFEDFE',
+  BlueLight = '#E5EEFC',
   BlueMegaLight = '#F4F8FF',
   SecondaryDark = '#E99210',
   SecondaryLight = '#FFDAA2',

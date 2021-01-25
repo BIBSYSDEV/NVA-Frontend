@@ -74,7 +74,7 @@ const theme = createMuiTheme({
       light: Color.BlueLight,
       main: Color.BlueMain,
       dark: Color.BlueDark,
-      megaDark: Color.Black,
+      megaDark: Color.BlueMegaDark,
     },
   },
   typography: {
