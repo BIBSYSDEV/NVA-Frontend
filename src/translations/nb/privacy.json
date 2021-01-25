@@ -1,12 +1,12 @@
 {
   "about": {
-    "description": "Denne personvernerklæringen beskriver hvordan behandlingsansvarlig håndterer dine personopplysninger i tjenesten. Formålet med denne personvernerklæringen er å informere deg om hvilke personopplysninger som behandles, hvordan de behandles, hvem som er ansvarlig for behandlingen, hvilke rettigheter du har og hvem du kan kontakte.",
-    "heading": "Om denne personvernerklæringen"
+    "heading": "Om denne personvernerklæringen",
+    "paragraph": "Denne personvernerklæringen beskriver hvordan behandlingsansvarlig håndterer dine personopplysninger i tjenesten. Formålet med denne personvernerklæringen er å informere deg om hvilke personopplysninger som behandles, hvordan de behandles, hvem som er ansvarlig for behandlingen, hvilke rettigheter du har og hvem du kan kontakte."
   },
   "privacy_statement": "Personvernerklæring",
   "purpose": {
-    "description": "Tjenesten behandler ulike persontyper med følgende formål:",
     "heading": "Formålet med behandling av personopplysninger i tjenesten",
+    "paragraph": "Tjenesten behandler ulike persontyper med følgende formål:",
     "table": {
       "header": {
         "col0": "Typer",
@@ -39,14 +39,91 @@
       }
     }
   },
+  "registered_personal_data": {
+    "heading": "Registrerte personopplysninger, rettslig grunnlag og lagringstid",
+    "paragraph0": "Personopplysninger knyttet til brukerkonto i tjenesten krever samtykke som rettslig grunnlag, jamfør <0>Lov om behandling av personopplysninger (personopplysningsloven), GDPR artikkel 6</0> nr. 1 bokstav a.",
+    "paragraph1": "Registrerte personopplysninger om forfattere og andre personer knyttet til ressurs eller identifisert i ressurs dekkes av <0>Lov om behandling av personopplysninger (personopplysningsloven), GDPR artikkel 6</0> nr. 1 bokstav f - å utføre en oppgave av berettiget interesse. ",
+    "paragraph2": "Tjenesten tillater ikke behandling av sensitive personopplysninger. I de tilfeller brukere selv kan legge inn opplysninger i kommentarfelt og lignende, plikter brukeren å følge krav og retningslinjer for tjenesten. Det er ikke tillatt å registrere sensitive opplysninger om seg selv eller andre, eller å benytte tjenesten til injurierende adferd.",
+    "paragraph3": "Behandlingsansvarlig kan lagre opplysninger for statistiske formål, dersom dette er i samfunnets interesse, jf <0>Personopplysningsloven §8</0> og <1>GDPR artikkel 6</1> nr. 1 bokstav e.",
+    "paragraph4": "Følgende persondata behandles i tjenesten:",
+    "paragraph5": "Informasjonen om din aktivitet lagres for å kunne gi deg brukerstøtte og for å kunne si noe om den generelle bruken av tjenesten.",
+    "paragraph6": {
+      "intro": "Persondata blir lagret inntil en av følgende hendelser inntreffer:",
+      "bullet_point0": "Brukersamtykket trekkes tilbake",
+      "bullet_point1": "Formålet med behandling av personopplysninger er oppfylt",
+      "bullet_point2": "Behandlingsansvarlig beslutter å legge ned tjenesten"
+    },
+    "paragraph7": "Logg og backup av systemdata lagres inntil 1 år.",
+    "paragraph8": "Brukerinformasjon (unntatt logg) blir lagret i levetiden til en ressurs for brukere som registrerer innhold i NVA.",
+    "table": {
+      "header": {
+        "col0": "Opplysningstype",
+        "col2": "Kilde"
+      },
+      "other_user_data": {
+        "heading": "Andre persondata",
+        "row0": {
+          "col0": "Metadata for ressurs",
+          "col1": "Fullt navn og rolle for forfatter, redaktør, veileder og annen opphavsperson eller bidragsyter",
+          "col2": "Opprettet i NVA ved registrering eller overført fra ekstern datakilde"
+        },
+        "row1": {
+          "col0": "Persondata i selve ressursen",
+          "col1": "Personer identifisert i ressursen. Innhold i ressursen må kvalitetssikres av ansvarlig før publisering.",
+          "col2": "Ressursen er lastet opp i NVA ved registrering eller overført fra ekstern kilde"
+        }
+      },
+      "techincal_user_data": {
+        "heading": "Brukerdata av teknisk karakter",
+        "row0": {
+          "col0": "Systemidentiteter",
+          "col1": "Identiteter i tjenesten og integrerte systemer. Feide-id, Forfatter-id, ORCID iD",
+          "col2": "Feide, Felles autoritetsregister, ORCID"
+        },
+        "row1": {
+          "col0": "Systemroller og tilhørighet til organisasjon",
+          "col1": "Bruker tildeles roller i systemet for å gi tilpasset funksjonalitet og tilgang til tjenesten.",
+          "col2": "Tildelt i NVA, Feide"
+        },
+        "row2": {
+          "col0": "Sesjonsinformasjon og informasjonskapsler",
+          "col1": "Informasjon knyttet til brukers dialog med tjenesten. Nødvendig for å tilpasse funksjonalitet i tjenesten og for autentisering av brukere.",
+          "col2": "NVA, Feide"
+        },
+        "row3": {
+          "col0": "Logg",
+          "col1": "Logg over bruk av systemet knyttet til innlogget bruker og/eller ip-adresse. IP-adresse vil være registrert for anonyme brukere, noe som i enkelte tilfeller kan spores tilbake til en person. Formålet med logg er å ivareta sikkerhet og integritet i systemet, yte brukerstøtte, samt å analysere bruk av tjenesten. Opplysningene som samles inn inkluderer tidspunkt, bruker-id, ip-adresse, informasjon om nettleser og maskinvare, sesjonsinformasjon og annen informasjon som nettleser normalt avleverer.",
+          "col2": "Opprettet i NVA"
+        }
+      },
+      "user_data": {
+        "heading": "Brukerdata",
+        "row0": {
+          "col0": "Grunnleggende brukerdata",
+          "col1": "Fullt navn.",
+          "col2": "Feide"
+        },
+        "row1": {
+          "col0": "Kontaktinformasjon",
+          "col1": "E-postadresse tildelt ved egen organisasjon.",
+          "col2": "Feide"
+        },
+        "row2": {
+          "col0": "Profil",
+          "col1": "Brukers preferanser for bruk av tjenesten. Språkvalg, Institusjonstilhørighet",
+          "col2": "Innstillinger i NVA"
+        }
+      }
+    }
+  },
   "service_in_brief": {
-    "description0": "NVA er en tjeneste for å samle og gjøre tilgjengelig informasjon om, og resultater fra, norsk forskning. Institusjonen (den behandlingsansvarlige) registrer og vedlikeholder eget innhold i tjenesten og konfigurerer distribusjonsregler for publiserte ressurser (artikler, rapporter, datasett etc.). Tjenesten får også overført innhold tilhørende institusjonen fra andre datakilder. NVA tilgjengeliggjør institusjonens åpne innhold via åpne grensesnitt, med hensikt å gjøre dette kjent og søkbart for omverdenen og fremme indeksering i søkemotorer og søkeportaler.",
-    "description1": "NVA har støtte for utsatt publisering av ressurser. Det betyr at registreringen kan ferdigstilles slik at metadata om ressursen blir publisert, mens ressursen ikke blir åpent tilgjengelig før angitt dato.",
-    "description2": "Tjenesten tillater ikke behandling av sensitive personopplysninger.",
-    "heading": "Kort om tjenesten"
+    "heading": "Kort om tjenesten",
+    "paragraph0": "NVA er en tjeneste for å samle og gjøre tilgjengelig informasjon om, og resultater fra, norsk forskning. Institusjonen (den behandlingsansvarlige) registrer og vedlikeholder eget innhold i tjenesten og konfigurerer distribusjonsregler for publiserte ressurser (artikler, rapporter, datasett etc.). Tjenesten får også overført innhold tilhørende institusjonen fra andre datakilder. NVA tilgjengeliggjør institusjonens åpne innhold via åpne grensesnitt, med hensikt å gjøre dette kjent og søkbart for omverdenen og fremme indeksering i søkemotorer og søkeportaler.",
+    "paragraph1": "NVA har støtte for utsatt publisering av ressurser. Det betyr at registreringen kan ferdigstilles slik at metadata om ressursen blir publisert, mens ressursen ikke blir åpent tilgjengelig før angitt dato.",
+    "paragraph2": "Tjenesten tillater ikke behandling av sensitive personopplysninger."
   },
   "what_are_personal_data": {
-    "description": "Personopplysninger er alle former for data, informasjon, opplysninger og vurderinger som kan knyttes til deg som enkeltperson, jf. <0>personopplysningsloven § 2</0> og <1>GDPR artikkel 5</1> nr. 1. Det avgjørende for om en opplysning er en personopplysninger er om opplysningene kan knyttes til en konkret person. Opplysninger, som alene ikke kan knyttes til en enkeltperson, kan i tilfeller hvor opplysningen forekommer sammen med andre data utgjøre en personopplysning.",
-    "heading": "Hva er personopplysninger?"
+    "heading": "Hva er personopplysninger?",
+    "paragraph": "Personopplysninger er alle former for data, informasjon, opplysninger og vurderinger som kan knyttes til deg som enkeltperson, jf. <0>personopplysningsloven § 2</0> og <1>GDPR artikkel 5</1> nr. 1. Det avgjørende for om en opplysning er en personopplysninger er om opplysningene kan knyttes til en konkret person. Opplysninger, som alene ikke kan knyttes til en enkeltperson, kan i tilfeller hvor opplysningen forekommer sammen med andre data utgjøre en personopplysning."
   }
 }
