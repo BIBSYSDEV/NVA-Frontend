@@ -71,7 +71,7 @@ const ChapterForm = () => {
           <Field name={ReferenceFieldNames.PAGES_FROM}>
             {({ field }: FieldProps<string>) => (
               <StyledPageNumberField
-                variant="outlined"
+                variant="filled"
                 data-testid="chapter-pages-from"
                 label={t('references.pages_from')}
                 {...field}
@@ -88,7 +88,7 @@ const ChapterForm = () => {
             {({ field }: FieldProps<string>) => (
               <StyledPageNumberField
                 data-testid="chapter-pages-to"
-                variant="outlined"
+                variant="filled"
                 label={t('references.pages_to')}
                 {...field}
                 value={field.value ?? ''}
