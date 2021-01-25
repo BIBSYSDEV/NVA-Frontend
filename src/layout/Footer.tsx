@@ -38,12 +38,12 @@ const Footer: FC = () => {
       </StyledLogoContainer>
       <StyledPrivacyPolicyContainer>
         <MuiLink
-          aria-label={t('privacy_policy.heading')}
+          aria-label={t('privacy:privacy_statement')}
           color="primary"
           component={Link}
           to={UrlPathTemplate.PrivacyPolicy}
-          data-testid="privacy_policy_link">
-          {t('privacy_policy.heading')}
+          data-testid="privacy_statement_link">
+          {t('privacy:privacy_statement')}
         </MuiLink>
       </StyledPrivacyPolicyContainer>
     </StyledFooter>

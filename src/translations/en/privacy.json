@@ -1,0 +1,17 @@
+{
+  "about": {
+    "description": "This privacy statement describes how the data controller processes your personal data in the service. The purpose of this privacy statement is to inform you about what personal data we process, how it is processed, who is responsible for the processing, what your rights are and who you can contact.",
+    "heading": "About the privacy statement"
+  },
+  "privacy_statement": "Privacy statement",
+  "service_in_brief": {
+    "description0": "NVA is a service for collecting and making available information about, and results from, Norwegian research. The institution (the data controller) registers and maintains its own content in the service and configures distribution rules for published resources (articles, reports, data sets, etc.). The service also imports material affiliated to the institution from other data sources. NVA makes the institution's open material available via open interfaces for the purpose of making the content known and searchable for the public and promoting indexing in search engines and portals.",
+    "description1": "NVA supports postponed publication of resources. This means that the registration can be completed so that metadata about the resource is published, while the resource will not be openly available until the specified date.",
+    "description2": "The service does not allow processing of sensitive personal data.",
+    "heading": "The service in brief"
+  },
+  "what_are_personal_data": {
+    "description": "Personal data are all forms of data, information and assessments that can be linked to you as a person, cf. the <0>Personal Data Act Section 2</0> and the <1>GDPR Article 5(1)</1>. The decisive factor as to whether data constitutes personal data is whether it can be linked to a specific person. Data that, on its own, cannot be linked to an individual person may constitute personal data in cases where the data are found together with other data.",
+    "heading": "What are personal data?"
+  }
+}

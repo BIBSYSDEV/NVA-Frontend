@@ -1,0 +1,52 @@
+{
+  "about": {
+    "description": "Denne personvernerklæringen beskriver hvordan behandlingsansvarlig håndterer dine personopplysninger i tjenesten. Formålet med denne personvernerklæringen er å informere deg om hvilke personopplysninger som behandles, hvordan de behandles, hvem som er ansvarlig for behandlingen, hvilke rettigheter du har og hvem du kan kontakte.",
+    "heading": "Om denne personvernerklæringen"
+  },
+  "privacy_statement": "Personvernerklæring",
+  "purpose": {
+    "description": "Tjenesten behandler ulike persontyper med følgende formål:",
+    "heading": "Formålet med behandling av personopplysninger i tjenesten",
+    "table": {
+      "header": {
+        "col0": "Typer",
+        "col2": "Formål med registrering og behandling"
+      },
+      "row0": {
+        "col0": "Administrative brukere",
+        "col1": "Arkivadministrator, redaktør, kurator. Typisk ansatte ved institusjonen.",
+        "col2": "Administrasjon av tjenesten herunder vedlikehold av innhold og konfigurering av tilgang til funksjoner og til innhold. Administrative brukere må være registrert med identitet for å få rettigheter i tjenesten."
+      },
+      "row1": {
+        "col0": "Autentiserte brukere",
+        "col1": "Registrator. Personer med tilknytning til institusjonen som har logget på tjenesten.",
+        "col2": "Registrering av innhold i tjenesten. Brukere må være registrert med identitet og kobling til autoritetsregister for forfatter for å få rettigheter i tjenesten."
+      },
+      "row2": {
+        "col0": "Anonyme brukere",
+        "col1": "Personer eller tjenester som aksesserer tjenesten uten å logge på. IP-adresser vil registreres i logg.",
+        "col2": "Anonyme brukere gis tilgang til åpne ressurser i tjenesten. Tjenesten loggfører nødvendig informasjon for å hindre misbruk samt for å generere aggregert statistikk over bruk av ressursene."
+      },
+      "row3": {
+        "col0": "Bibliografiske data - personer knyttet til registrert ressurs",
+        "col1": "Forfatter, redaktør, veileder eller annen opphavsperson eller bidragsyter til ressurs registrert i tjenesten.",
+        "col2": "Katalogisering, kreditering og ansvarliggjøring av personene bak ressursen."
+      },
+      "row4": {
+        "col0": "Bibliografiske data – personer referert i ressursen",
+        "col1": "Personopplysninger referert gjennom innhold i publisert ressurs",
+        "col2": "Tilgjengeliggjøring av publisert ressurs. Innholdsansvarlig må sammen med behandlingsansvarlig sikre personvernet i ressursen før publisering i tjenesten."
+      }
+    }
+  },
+  "service_in_brief": {
+    "description0": "NVA er en tjeneste for å samle og gjøre tilgjengelig informasjon om, og resultater fra, norsk forskning. Institusjonen (den behandlingsansvarlige) registrer og vedlikeholder eget innhold i tjenesten og konfigurerer distribusjonsregler for publiserte ressurser (artikler, rapporter, datasett etc.). Tjenesten får også overført innhold tilhørende institusjonen fra andre datakilder. NVA tilgjengeliggjør institusjonens åpne innhold via åpne grensesnitt, med hensikt å gjøre dette kjent og søkbart for omverdenen og fremme indeksering i søkemotorer og søkeportaler.",
+    "description1": "NVA har støtte for utsatt publisering av ressurser. Det betyr at registreringen kan ferdigstilles slik at metadata om ressursen blir publisert, mens ressursen ikke blir åpent tilgjengelig før angitt dato.",
+    "description2": "Tjenesten tillater ikke behandling av sensitive personopplysninger.",
+    "heading": "Kort om tjenesten"
+  },
+  "what_are_personal_data": {
+    "description": "Personopplysninger er alle former for data, informasjon, opplysninger og vurderinger som kan knyttes til deg som enkeltperson, jf. <0>personopplysningsloven § 2</0> og <1>GDPR artikkel 5</1> nr. 1. Det avgjørende for om en opplysning er en personopplysninger er om opplysningene kan knyttes til en konkret person. Opplysninger, som alene ikke kan knyttes til en enkeltperson, kan i tilfeller hvor opplysningen forekommer sammen med andre data utgjøre en personopplysning.",
+    "heading": "Hva er personopplysninger?"
+  }
+}
