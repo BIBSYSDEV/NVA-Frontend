@@ -104,7 +104,7 @@ const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }: FileC
           <Field name={`${baseFieldName}.${SpecificFileFieldNames.ADMINISTRATIVE_AGREEMENT}`}>
             {({ field }: FieldProps) => (
               <FormControlLabel
-                control={<Checkbox color="primary" {...field} checked={field.value} />}
+                control={<Checkbox {...field} color="primary" checked={field.value} />}
                 label={t('files_and_license.administrative_contract')}
               />
             )}
@@ -142,7 +142,7 @@ const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }: FileC
                       <KeyboardDatePicker
                         {...datePickerTranslationProps}
                         data-testid="uploaded-file-embargo-date"
-                        inputVariant="outlined"
+                        inputVariant="filled"
                         label={t('files_and_license.embargo_date')}
                         {...field}
                         onChange={(value) => form.setFieldValue(field.name, value)}
@@ -180,7 +180,7 @@ const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }: FileC
                             ) : null;
                           },
                         }}
-                        variant="outlined"
+                        variant="filled"
                         value={field.value?.identifier || ''}
                         error={!!error && touched}
                         helperText={<ErrorMessage name={field.name} />}

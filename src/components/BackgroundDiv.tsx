@@ -2,6 +2,7 @@ import React, { ReactNode } from 'react';
 import styled from 'styled-components';
 import { MuiThemeProvider } from '@material-ui/core';
 import contrastTheme from '../themes/contrastTheme';
+import theme from '../themes/mainTheme';
 import { isBackgroundColorDark } from '../utils/theme-helpers';
 
 interface BakcgroundDivProps {
@@ -23,7 +24,11 @@ const BackgroundDiv = ({ children, ...props }: BakcgroundDivProps) => {
 
   return (
     <StyledBackgroundDiv {...props}>
-      {darkMode ? <MuiThemeProvider theme={contrastTheme}>{children}</MuiThemeProvider> : children}
+      {darkMode ? (
+        <MuiThemeProvider theme={contrastTheme}>{children}</MuiThemeProvider>
+      ) : (
+        <MuiThemeProvider theme={theme}>{children}</MuiThemeProvider>
+      )}
     </StyledBackgroundDiv>
   );
 };
