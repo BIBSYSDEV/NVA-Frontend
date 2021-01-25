@@ -1,24 +1,24 @@
-import React, { FC, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import Autocomplete from '@material-ui/lab/Autocomplete';
 import { Field, FieldProps } from 'formik';
-import { Typography, Chip } from '@material-ui/core';
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { getProjectTitle, convertToResearchProject, convertToCristinProject } from './helpers';
-import useFetchProjects from '../../../../utils/hooks/useFetchProjects';
-import { DescriptionFieldNames } from '../../../../types/publicationFieldNames';
-import { ResearchProject } from '../../../../types/project.types';
+import { Chip, Typography } from '@material-ui/core';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
-import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
 import EmphasizeSubstring from '../../../../components/EmphasizeSubstring';
+import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
 import { autocompleteTranslationProps } from '../../../../themes/mainTheme';
+import { ResearchProject } from '../../../../types/project.types';
+import { DescriptionFieldNames } from '../../../../types/publicationFieldNames';
 import useDebounce from '../../../../utils/hooks/useDebounce';
+import useFetchProjects from '../../../../utils/hooks/useFetchProjects';
+import { convertToCristinProject, convertToResearchProject, getProjectTitle } from './helpers';
 
 const StyledProjectChip = styled(Chip)`
   height: auto;
 `;
 
-export const ProjectsField: FC = () => {
+export const ProjectsField = () => {
   const { t } = useTranslation('registration');
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearchTerm = useDebounce(searchTerm);
@@ -77,6 +77,7 @@ export const ProjectsField: FC = () => {
           renderInput={(params) => (
             <AutocompleteTextField
               {...params}
+              label={t('description.project_association')}
               isLoading={isLoadingProjects}
               placeholder={t('description.search_for_project')}
               dataTestId="project-search-input"

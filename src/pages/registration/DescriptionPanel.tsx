@@ -49,7 +49,7 @@ const DescriptionPanel = () => {
               required
               data-testid="registration-title-field"
               inputProps={{ 'data-testid': 'registration-title-input' }}
-              variant="outlined"
+              variant="filled"
               fullWidth
               label={t('common:title')}
               error={touched && !!error}
@@ -63,7 +63,7 @@ const DescriptionPanel = () => {
               {...field}
               data-testid="registration-abstract-field"
               inputProps={{ 'data-testid': 'registration-abstract-input' }}
-              variant="outlined"
+              variant="filled"
               fullWidth
               multiline
               rows="4"
@@ -81,7 +81,7 @@ const DescriptionPanel = () => {
               multiline
               rows="4"
               fullWidth
-              variant="outlined"
+              variant="filled"
             />
           )}
         </Field>
@@ -113,7 +113,7 @@ const DescriptionPanel = () => {
                     data-testid="registration-tag-field"
                     label={t('description.keywords')}
                     helperText={t('description.keywords_helper')}
-                    variant="outlined"
+                    variant="filled"
                     fullWidth
                     onBlur={(event) => {
                       const value = event.target.value;
@@ -143,7 +143,7 @@ const DescriptionPanel = () => {
                 label={t('description.primary_language')}
                 placeholder={t('description.primary_language')}
                 select
-                variant="outlined">
+                variant="filled">
                 {registrationLanguages.map(({ id, value }) => (
                   <MenuItem value={value} key={id} data-testid={`registration-language-${id}`}>
                     {t(`languages:${id}`)}

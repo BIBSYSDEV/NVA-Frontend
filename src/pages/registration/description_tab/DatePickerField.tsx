@@ -1,5 +1,5 @@
 import { useFormikContext } from 'formik';
-import React, { FC, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import DateFnsUtils from '@date-io/date-fns';
@@ -16,7 +16,7 @@ const StyledFormControlLabel = styled(FormControlLabel)`
   height: 100%; /* Ensure this element is as high as the DatePicker for centering */
 `;
 
-const DatePickerField: FC = () => {
+const DatePickerField = () => {
   const { t, i18n } = useTranslation('registration');
   const { setFieldValue, values, errors, touched, setFieldTouched } = useFormikContext<Registration>();
   const { year, month, day } = values.entityDescription.date;
@@ -63,7 +63,7 @@ const DatePickerField: FC = () => {
       <KeyboardDatePicker
         {...datePickerTranslationProps}
         data-testid="date-published-field"
-        inputVariant="outlined"
+        inputVariant="filled"
         label={t('description.date_published')}
         required
         onChange={setDate}
