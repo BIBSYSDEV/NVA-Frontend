@@ -57,7 +57,7 @@ const JournalForm = () => {
             {({ field, meta: { error, touched } }: FieldProps) => (
               <TextField
                 data-testid="volume-field"
-                variant="outlined"
+                variant="filled"
                 label={t('references.volume')}
                 {...field}
                 error={touched && !!error}
@@ -70,7 +70,7 @@ const JournalForm = () => {
             {({ field, meta: { error, touched } }: FieldProps) => (
               <TextField
                 data-testid="issue-field"
-                variant="outlined"
+                variant="filled"
                 label={t('references.issue')}
                 {...field}
                 error={touched && !!error}
@@ -83,7 +83,7 @@ const JournalForm = () => {
             {({ field, meta: { error, touched } }: FieldProps) => (
               <TextField
                 data-testid="pages-from-field"
-                variant="outlined"
+                variant="filled"
                 label={t('references.pages_from')}
                 {...field}
                 value={field.value ?? ''}
@@ -97,7 +97,7 @@ const JournalForm = () => {
             {({ field, meta: { error, touched } }: FieldProps) => (
               <TextField
                 data-testid="pages-to-field"
-                variant="outlined"
+                variant="filled"
                 label={t('references.pages_to')}
                 {...field}
                 value={field.value ?? ''}
@@ -113,7 +113,7 @@ const JournalForm = () => {
             {({ field, meta: { error, touched } }: FieldProps) => (
               <TextField
                 data-testid="article-number-field"
-                variant="outlined"
+                variant="filled"
                 label={t('references.article_number')}
                 {...field}
                 error={touched && !!error}
