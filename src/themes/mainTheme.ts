@@ -2,6 +2,7 @@ import { createMuiTheme } from '@material-ui/core';
 import { PaletteColor, PaletteColorOptions, SimplePaletteColorOptions } from '@material-ui/core/styles/createPalette';
 import i18n from '../translations/i18n';
 import { getTranslatedLabelForDisplayedRows } from '../utils/pagination';
+import { BackgroundColors, Color } from './colors';
 
 // Extend Palette type to allow custom colors
 declare module '@material-ui/core/styles/createPalette' {
@@ -23,34 +24,6 @@ declare module '@material-ui/core/styles/createPalette' {
     megaLight?: string;
     megaDark?: string;
   }
-}
-
-export enum BackgroundColors {
-  Black = '#222',
-  BlueDark = '#02005B',
-  Blue = '#0010A4',
-  BlueLight = '#DFEDFE',
-  BlueMegaLight = '#F4F8FF',
-}
-
-// Colors: https://www.figma.com/file/3hggk6SX2ca81U8kwaZKFs/Farger-NVA
-enum Color {
-  Primary = '#0010A4',
-  SecondaryDark = '#E99210',
-  SecondaryLight = '#FFDAA2',
-  SecondaryMain = '#FFB546',
-  Background = '#fff',
-  Box = '#f5f5f5',
-  Link = '#06f',
-  PrimaryText = 'rgba(0, 0, 0, 0.87)',
-  SecondaryText = '#44515d',
-  Panel = '#A9D8B8',
-  Disabled = '#bbb',
-  Header = '#ffd3d3',
-  ErrorLight = '#EE7575',
-  ErrorMain = '#C2363D',
-  SuccessDark = '#008958',
-  SuccessMain = '#08B677',
 }
 
 enum Font {
@@ -177,6 +150,23 @@ const theme = createMuiTheme({
     MuiFormLabel: {
       asterisk: {
         color: Color.ErrorMain,
+      },
+      root: {
+        color: BackgroundColors.Black,
+        '&.Mui-focused': {
+          color: BackgroundColors.Black,
+        },
+      },
+    },
+    MuiFilledInput: {
+      root: {
+        backgroundColor: '#fff',
+        '&.Mui-focused': {
+          backgroundColor: '#fff',
+        },
+        '&:hover': {
+          backgroundColor: '#fff',
+        },
       },
     },
   },

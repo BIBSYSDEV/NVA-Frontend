@@ -1,0 +1,27 @@
+export enum BackgroundColors {
+  Black = '#222',
+  BlueDark = '#02005B',
+  Blue = '#0010A4',
+  BlueLight = '#DFEDFE',
+  BlueMegaLight = '#F4F8FF',
+}
+
+// Colors: https://www.figma.com/file/3hggk6SX2ca81U8kwaZKFs/Farger-NVA
+export enum Color {
+  Primary = '#0010A4',
+  SecondaryDark = '#E99210',
+  SecondaryLight = '#FFDAA2',
+  SecondaryMain = '#FFB546',
+  Background = '#fff',
+  Box = '#f5f5f5',
+  Link = '#06f',
+  PrimaryText = 'rgba(0, 0, 0, 0.87)',
+  SecondaryText = '#44515d',
+  Panel = '#A9D8B8',
+  Disabled = '#bbb',
+  Header = '#ffd3d3',
+  ErrorLight = '#EE7575',
+  ErrorMain = '#C2363D',
+  SuccessDark = '#008958',
+  SuccessMain = '#08B677',
+}
