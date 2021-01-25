@@ -7,6 +7,7 @@ import { PageHeader } from '../../components/PageHeader';
 
 const StyledPrivacyContainer = styled.div`
   display: block;
+  max-width: 90vw;
 
   table {
     margin-bottom: 1rem;
