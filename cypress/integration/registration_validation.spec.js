@@ -173,7 +173,6 @@ describe('User opens registration form and can see validation errors', () => {
     // Add author
     cy.get('[data-testid=add-contributor]').click({ force: true });
     cy.get('[data-testid=search-input]').click({ force: true }).type('test');
-    cy.get('[data-testid=search-button]').click({ force: true });
     cy.get('[data-testid=author-radio-button]').eq(0).click({ force: true });
     cy.get('[data-testid=connect-author-button]').click({ force: true });
     cy.contains(ErrorMessage.MISSING_CONTRIBUTOR).should('not.exist');
@@ -196,7 +195,6 @@ describe('User opens registration form and can see validation errors', () => {
     // Add author and set corresponding without setting email
     cy.get('[data-testid=add-contributor]').click({ force: true });
     cy.get('[data-testid=search-input]').click({ force: true }).type('test');
-    cy.get('[data-testid=search-button]').click({ force: true });
     cy.get('[data-testid=author-radio-button]').eq(1).click({ force: true });
     cy.get('[data-testid=connect-author-button]').click({ force: true });
     cy.get('[data-testid=author-corresponding-checkbox]').eq(1).click({ force: true });
