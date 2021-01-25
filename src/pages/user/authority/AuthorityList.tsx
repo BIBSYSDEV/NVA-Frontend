@@ -5,7 +5,6 @@ import { Radio, Table, TableBody, TableCell, TableContainer, TableHead, TableRow
 import { Skeleton } from '@material-ui/lab';
 
 import { Authority } from '../../../types/authority.types';
-import Label from '../../../components/Label';
 import useFetchLastRegistrationFromAlma from '../../../utils/hooks/useFetchLastRegistration';
 import AffiliationHierarchy from '../../../components/institution/AffiliationHierarchy';
 
@@ -25,7 +24,11 @@ const AuthorityList = ({ authorities, searchTerm, onSelectAuthority, selectedArp
 
   return (
     <>
-      {searchTerm && <Label>{t('search_summary', { count: authorities?.length ?? 0, searchTerm })}</Label>}
+      {searchTerm && (
+        <Typography variant="subtitle2">
+          {t('search_summary', { count: authorities?.length ?? 0, searchTerm })}:
+        </Typography>
+      )}
 
       <TableContainer>
         <Table size="small">

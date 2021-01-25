@@ -1,71 +1,90 @@
-import React, { FC, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { Button, CircularProgress, Typography } from '@material-ui/core';
+import { Button, CircularProgress, DialogActions, TextField, Typography } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/AddCircleOutlineSharp';
-import SearchBar from '../../../../components/SearchBar';
+import SearchIcon from '@material-ui/icons/Search';
 import { Authority } from '../../../../types/authority.types';
 import AuthorityList from '../../../user/authority/AuthorityList';
 import useFetchAuthorities from '../../../../utils/hooks/useFetchAuthorities';
-import { StyledProgressWrapper, StyledRightAlignedWrapper } from '../../../../components/styled/Wrappers';
+import { StyledProgressWrapper } from '../../../../components/styled/Wrappers';
+import useDebounce from '../../../../utils/hooks/useDebounce';
 
-const StyledButtonContainer = styled(StyledRightAlignedWrapper)`
-  margin: 1rem 0;
-`;
-
-const StyledSubHeading = styled(Typography)`
+const StyledTextField = styled(TextField)`
   margin-bottom: 1rem;
 `;
 
 interface AddContributorModalContentProps {
   addAuthor: (selectedAuthor: Authority) => void;
+  handleCloseModal: () => void;
+  openNewAuthorModal: () => void;
   initialSearchTerm?: string;
 }
 
-const AddContributorModalContent: FC<AddContributorModalContentProps> = ({ addAuthor, initialSearchTerm = '' }) => {
+const AddContributorModalContent = ({
+  addAuthor,
+  handleCloseModal,
+  openNewAuthorModal,
+  initialSearchTerm = '',
+}: AddContributorModalContentProps) => {
   const { t } = useTranslation('registration');
   const [selectedAuthor, setSelectedAuthor] = useState<Authority | null>(null);
   const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
-  const [authorities, isLoadingAuthorities] = useFetchAuthorities(searchTerm);
+  const debouncedSearchTerm = useDebounce(searchTerm);
+  const [authorities, isLoadingAuthorities] = useFetchAuthorities(debouncedSearchTerm);
 
   return (
     <>
       {initialSearchTerm && (
-        <StyledSubHeading variant="h6">
-          {t('registration:contributors.prefilled_name')}: {initialSearchTerm}
-        </StyledSubHeading>
+        <Typography variant="subtitle1">
+          {t('registration:contributors.prefilled_name')}: "{initialSearchTerm}"
+        </Typography>
       )}
-      <SearchBar handleSearch={(newSearchTerm) => setSearchTerm(newSearchTerm)} initialSearchTerm={initialSearchTerm} />
+      <StyledTextField
+        variant="outlined"
+        fullWidth
+        value={searchTerm}
+        onChange={(event) => setSearchTerm(event.target.value)}
+        autoFocus
+        placeholder={t('common:search_placeholder')}
+        label={t('common:search')}
+        inputProps={{ 'data-testid': 'search-input' }}
+        InputProps={{
+          startAdornment: <SearchIcon />,
+        }}
+      />
+
       {isLoadingAuthorities ? (
         <StyledProgressWrapper>
           <CircularProgress size={100} />
         </StyledProgressWrapper>
-      ) : authorities && authorities.length > 0 ? (
-        <>
-          {searchTerm && (
-            <AuthorityList
-              authorities={authorities}
-              selectedArpId={selectedAuthor?.id}
-              onSelectAuthority={setSelectedAuthor}
-              searchTerm={searchTerm}
-            />
-          )}
-          <StyledButtonContainer>
-            <Button
-              color="secondary"
-              startIcon={<AddIcon />}
-              data-testid="connect-author-button"
-              disabled={!selectedAuthor}
-              onClick={() => selectedAuthor && addAuthor(selectedAuthor)}
-              size="large"
-              variant="contained">
-              {t('common:add')}
-            </Button>
-          </StyledButtonContainer>
-        </>
+      ) : authorities && authorities.length > 0 && debouncedSearchTerm ? (
+        <AuthorityList
+          authorities={authorities}
+          selectedArpId={selectedAuthor?.id}
+          onSelectAuthority={setSelectedAuthor}
+          searchTerm={debouncedSearchTerm}
+        />
       ) : (
-        searchTerm && <Typography>{t('common:no_hits')}</Typography>
+        debouncedSearchTerm && <Typography>{t('common:no_hits')}</Typography>
       )}
+
+      <DialogActions>
+        <Button onClick={handleCloseModal}>{t('common:close')}</Button>
+        <Button color="primary" data-testid="button-create-new-author" onClick={openNewAuthorModal}>
+          {t('contributors.create_new_author')}
+        </Button>
+        <Button
+          color="secondary"
+          startIcon={<AddIcon />}
+          data-testid="connect-author-button"
+          disabled={!selectedAuthor}
+          onClick={() => selectedAuthor && addAuthor(selectedAuthor)}
+          size="large"
+          variant="contained">
+          {t('common:add')}
+        </Button>
+      </DialogActions>
     </>
   );
 };
