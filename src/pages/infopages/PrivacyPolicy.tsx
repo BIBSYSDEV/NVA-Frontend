@@ -52,7 +52,7 @@ const PrivacyPolicy = () => {
             <TableHead>
               <TableRow>
                 <TableCell>{t('purpose.table.header.col0')}</TableCell>
-                <TableCell>{t('common:description')}</TableCell>
+                <TableCell>{t('purpose.table.header.col1')}</TableCell>
                 <TableCell>{t('purpose.table.header.col2')}</TableCell>
               </TableRow>
             </TableHead>
@@ -102,7 +102,7 @@ const PrivacyPolicy = () => {
             <TableHead>
               <TableRow>
                 <TableCell>{t('registered_personal_data.table.header.col0')}</TableCell>
-                <TableCell>{t('common:description')}</TableCell>
+                <TableCell>{t('registered_personal_data.table.header.col1')}</TableCell>
                 <TableCell>{t('registered_personal_data.table.header.col2')}</TableCell>
               </TableRow>
             </TableHead>
@@ -124,7 +124,7 @@ const PrivacyPolicy = () => {
             <TableHead>
               <TableRow>
                 <TableCell>{t('registered_personal_data.table.header.col0')}</TableCell>
-                <TableCell>{t('common:description')}</TableCell>
+                <TableCell>{t('registered_personal_data.table.header.col1')}</TableCell>
                 <TableCell>{t('registered_personal_data.table.header.col2')}</TableCell>
               </TableRow>
             </TableHead>
@@ -146,7 +146,7 @@ const PrivacyPolicy = () => {
             <TableHead>
               <TableRow>
                 <TableCell>{t('registered_personal_data.table.header.col0')}</TableCell>
-                <TableCell>{t('common:description')}</TableCell>
+                <TableCell>{t('registered_personal_data.table.header.col1')}</TableCell>
                 <TableCell>{t('registered_personal_data.table.header.col2')}</TableCell>
               </TableRow>
             </TableHead>

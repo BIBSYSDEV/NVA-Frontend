@@ -84,6 +84,7 @@
     "table": {
       "header": {
         "col0": "Typer",
+        "col1": "Beskrivelse",
         "col2": "Formål med registrering og behandling"
       },
       "row0": {
@@ -132,6 +133,7 @@
     "table": {
       "header": {
         "col0": "Opplysningstype",
+        "col1": "Beskrivelse",
         "col2": "Kilde"
       },
       "other_user_data": {
@@ -198,6 +200,6 @@
   },
   "what_are_personal_data": {
     "heading": "Hva er personopplysninger?",
-    "paragraph": "Personopplysninger er alle former for data, informasjon, opplysninger og vurderinger som kan knyttes til deg som enkeltperson, jf. <0>personopplysningsloven § 2</0> og <1>GDPR artikkel 5</1> nr. 1. Det avgjørende for om en opplysning er en personopplysninger er om opplysningene kan knyttes til en konkret person. Opplysninger, som alene ikke kan knyttes til en enkeltperson, kan i tilfeller hvor opplysningen forekommer sammen med andre data utgjøre en personopplysning."
+    "paragraph": "Personopplysninger er alle former for data, informasjon, opplysninger og vurderinger som kan knyttes til deg som enkeltperson, jf. <0>personopplysningsloven § 2</0> og <1>GDPR artikkel 5</1> nr. 1. Det avgjørende for om en opplysning er en personopplysning er om opplysningene kan knyttes til en konkret person. Opplysninger, som alene ikke kan knyttes til en enkeltperson, kan i tilfeller hvor opplysningen forekommer sammen med andre data utgjøre en personopplysning."
   }
 }
