@@ -156,6 +156,9 @@ const theme = createMuiTheme({
         '&.Mui-focused': {
           color: BackgroundColors.Black,
         },
+        '&.Mui-error': {
+          color: Color.ErrorMain,
+        },
       },
     },
     MuiFilledInput: {
@@ -166,6 +169,16 @@ const theme = createMuiTheme({
         },
         '&:hover': {
           backgroundColor: '#fff',
+        },
+      },
+    },
+    MuiFormHelperText: {
+      root: {
+        '&.Mui-error': {
+          color: BackgroundColors.Black,
+          backgroundColor: Color.ErrorLight,
+          margin: 0,
+          padding: '0.25rem 0.75rem',
         },
       },
     },
