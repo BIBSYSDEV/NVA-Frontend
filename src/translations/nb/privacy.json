@@ -3,6 +3,80 @@
     "heading": "Om denne personvernerklæringen",
     "paragraph": "Denne personvernerklæringen beskriver hvordan behandlingsansvarlig håndterer dine personopplysninger i tjenesten. Formålet med denne personvernerklæringen er å informere deg om hvilke personopplysninger som behandles, hvordan de behandles, hvem som er ansvarlig for behandlingen, hvilke rettigheter du har og hvem du kan kontakte."
   },
+  "automatic_case_processing": {
+    "heading": "Automatisk saksbehandling",
+    "paragraph0": "Personopplysningene knyttet til systembrukere vil ikke være gjenstand for automatisert saksbehandling eller profilering.",
+    "paragraph1": "Åpne personopplysninger knyttet til ressurser registrert i tjenesten kan utsettes for profilering av andre tjenester som kopierer og/eller indekserer opplysninger i tjenesten, men profileres ikke som en del av tjenesten."
+  },
+  "disclosure_of_data": {
+    "heading": "Utlevering av dine personopplysninger til andre",
+    "paragraph0": "Utlevering eller eksport av data defineres som enhver avgivelse av data foruten til eget system/behandling eller til den registrerte selv eller noen som mottar data på dennes vegne.",
+    "paragraph1": "Personopplysninger knyttet til brukere overføres ikke til land utenfor EU/EØS.",
+    "paragraph2": "Tjenesten er driftet på servere innenfor EU/EØS.",
+    "paragraph3": {
+      "intro": "Dine personopplysninger blir utlevert til Unit som er leverandør av tjenesten, og til dennes underleverandører:",
+      "table": {
+        "header": {
+          "col0": "Underleverandør",
+          "col1": "Funksjon"
+        },
+        "row0": {
+          "col0": "Leverandør i rammeavtale for AWS gjennom GÉANT-samarbeidet",
+          "col1": "Skydrift og backup for Units direkte tjenester"
+        },
+        "row1": {
+          "col0": "Blue Safespring AB ",
+          "col1": "Skydrift og backup for Units direkte tjenester"
+        },
+        "row2": {
+          "col0": "UNINETT AS",
+          "col1": "Leverer Feide, for autentisering av brukere mot tjenestene"
+        }
+      }
+    },
+    "paragraph4": "Ansatte hos underleverandørene, som har behov for det i sin jobb, vil ha tilpasset tilgang til dine persondata for å kunne utføre stedlig vedlikehold, brukerstøtte og eventuell feilretting i tjenesten.",
+    "paragraph5": "Åpne personopplysninger knyttet til ressursene deles åpent med eksterne tjenester. Dette inkluderer søketjenester som Oria og OpenAIRE, samt søkemotorer som indekserer data via websidene - eksempelvis Google, Baidu, Bing med flere.",
+    "paragraph6": {
+      "intro": "Se følgende tabell for tjenestens integrasjoner:",
+      "table": {
+        "header": {
+          "col0": "Integrasjon",
+          "col1": "Formål",
+          "col2": "Tjeneste levert av"
+        },
+        "row0": {
+          "col0": "Feide",
+          "col1": "Informasjon for sikker innlogging av brukere.",
+          "col2": "UNINETT AS"
+        },
+        "row1": {
+          "col0": "Import av materiale til NVA fra eksterne tjenester",
+          "col1": "Registrering og publisering i NVA.",
+          "col2": "Kilder definert av behandlingsansvarlig"
+        },
+        "row2": {
+          "col0": "Eksport av metadata fra NVA til ekstern tjeneste",
+          "col1": "Eksport av metadata for ressurser til andre tjenester for presentasjon eller kryssregistrering. Eksempelvis Oria for å tilrettelegge for gjenfinning.",
+          "col2": "Unit for Oria. Kilder definert av behandlingsansvarlig."
+        },
+        "row3": {
+          "col0": "DOI og DataCite",
+          "col1": "Registrator kan be om tildeling av en Document Object Identifier (DOI) til en ressurs i NVA. Dette vil føre til at utvalgte metadata publiseres i DataCite - en kilde som regelmessig indekseres av søkemotorer. ",
+          "col2": "DataCite"
+        },
+        "row4": {
+          "col0": "Felles autoritetsregister",
+          "col1": "Etablere kobling til autoritetsregister for autorisering av forfatter, redaktør, veileder og annen opphavsperson eller bidragsyter som registreres i tjenesten. For å tilrettelegge for entydig registrering og gjenfinning.",
+          "col2": "Unit"
+        },
+        "row5": {
+          "col0": "ORCID",
+          "col1": "Etablere kobling til ORCID for autorisering av forfatter, redaktør, veileder og annen opphavsperson eller bidragsyter som registreres i tjenesten. For å tilrettelegge for entydig registrering og gjenfinning.",
+          "col2": "ORCID"
+        }
+      }
+    }
+  },
   "privacy_statement": "Personvernerklæring",
   "purpose": {
     "heading": "Formålet med behandling av personopplysninger i tjenesten",

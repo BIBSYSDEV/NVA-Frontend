@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { Trans, useTranslation } from 'react-i18next';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@material-ui/core';
-
 import { PageHeader } from '../../components/PageHeader';
 
 const StyledPrivacyContainer = styled.div`
@@ -174,6 +173,57 @@ const PrivacyPolicy = () => {
         </ul>
         <Typography paragraph>{t('registered_personal_data.paragraph7')}</Typography>
         <Typography paragraph>{t('registered_personal_data.paragraph8')}</Typography>
+
+        <Typography variant="h2">{t('automatic_case_processing.heading')}</Typography>
+        <Typography paragraph>{t('automatic_case_processing.paragraph0')}</Typography>
+        <Typography paragraph>{t('automatic_case_processing.paragraph1')}</Typography>
+
+        <Typography variant="h2">{t('disclosure_of_data.heading')}</Typography>
+        <Typography paragraph>{t('disclosure_of_data.paragraph0')}</Typography>
+        <Typography paragraph>{t('disclosure_of_data.paragraph1')}</Typography>
+        <Typography paragraph>{t('disclosure_of_data.paragraph2')}</Typography>
+        <Typography>{t('disclosure_of_data.paragraph3.intro')}</Typography>
+        <TableContainer>
+          <Table size="small">
+            <TableHead>
+              <TableRow>
+                <TableCell>{t('disclosure_of_data.paragraph3.table.header.col0')}</TableCell>
+                <TableCell>{t('disclosure_of_data.paragraph3.table.header.col1')}</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {[...Array(3)].map((_, index) => (
+                <TableRow key={index}>
+                  <TableCell>{t(`disclosure_of_data.paragraph3.table.row${index}.col0`)}</TableCell>
+                  <TableCell>{t(`disclosure_of_data.paragraph3.table.row${index}.col1`)}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <Typography paragraph>{t('disclosure_of_data.paragraph4')}</Typography>
+        <Typography paragraph>{t('disclosure_of_data.paragraph5')}</Typography>
+        <Typography>{t('disclosure_of_data.paragraph6.intro')}</Typography>
+        <TableContainer>
+          <Table size="small">
+            <TableHead>
+              <TableRow>
+                <TableCell>{t('disclosure_of_data.paragraph6.table.header.col0')}</TableCell>
+                <TableCell>{t('disclosure_of_data.paragraph6.table.header.col1')}</TableCell>
+                <TableCell>{t('disclosure_of_data.paragraph6.table.header.col2')}</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {[...Array(6)].map((_, index) => (
+                <TableRow key={index}>
+                  <TableCell>{t(`disclosure_of_data.paragraph6.table.row${index}.col0`)}</TableCell>
+                  <TableCell>{t(`disclosure_of_data.paragraph6.table.row${index}.col1`)}</TableCell>
+                  <TableCell>{t(`disclosure_of_data.paragraph6.table.row${index}.col2`)}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
       </StyledPrivacyContainer>
     </>
   );
