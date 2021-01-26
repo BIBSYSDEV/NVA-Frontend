@@ -3,19 +3,19 @@
   "description": {
     "heading": "Description",
     "paragraph0": {
-      "intro": "Med NVA får norske forskningsinstitusjoner en tjeneste for å:",
-      "bullet_point0": "Innfri krav om åpen tilgang til artikler og andre forskningsresultater gjennom deponering i et åpent forskningsarkiv",
-      "bullet_point1": "Selv publisere rapporter, studentoppgaver og annet materiale produsert ved institusjonen"
+      "intro": "With NVA, Norwegian research institutions get a service to:",
+      "bullet_point0": "Meet requirements for open access to articles and other research results through deposit in an open research archive",
+      "bullet_point1": "Publish reports, student theses and other material produced at the institution"
     },
-    "paragraph1": "NVA skal også utvikles til bruk ved rapportering av vitenskapelig publisering til Kunnskapsdepartementet og Helse- og omsorgsdepartementet (NVI-rapportering), og for andre forskningsadministrative oppgaver.",
-    "paragraph2": "Institusjonen er behandlingsansvarlig og registrer og vedlikeholder eget innhold i tjenesten og konfigurerer distribusjonsregler for publiserte ressurser (artikler, rapporter, datasett etc.). Tjenesten får også overført innhold fra andre datakilder.",
-    "paragraph3": "NVA har støtte for utsatt publisering av ressurser. Det betyr at en registrering kan ferdigstilles slik at metadata om ressursen blir publisert, mens ressursen ikke blir åpent tilgjengelig før angitt dato. Tjenesten tillater ikke behandling av sensitive personopplysninger.",
-    "paragraph4": "NVA vil tilgjengeliggjøre institusjonens åpne innhold via åpne grensesnitt, med hensikt å gjøre dette kjent og søkbart for omverdenen og fremme indeksering i søkemotorer og søkeportaler.",
-    "paragraph5": "Selv om NVA er etablert, er tjenesten er fortsatt under utvikling. Institusjoner som ikke har et åpent forskningsarkiv kan kontakte Unit (<0><0></0></0>) for å få ta i bruk NVA som pilotinstitusjon."
+    "paragraph1": "NVA will also be developed for use in reporting scientific publication to the Ministry of Education and Research and the Ministry of Health and Care Services (NVI reporting), and for other administrative tasks.",
+    "paragraph2": "The institution is responsible for the processing and registers and maintains its own content in the service and configures distribution rules for published resources (articles, reports, data sets, etc.). The service also receives content from other data sources.",
+    "paragraph3": "NVA supports postponed publication of resources. This means that a registration can be completed so that metadata about the resource is published, while the resource itself is not open until the specified date. The service does not allow the processing of sensitive personal data.",
+    "paragraph4": "NVA will make the institution's open content available via open interfaces, with the intention of making this known and searchable to the outside world and promoting indexing in search engines and search portals.",
+    "paragraph5": "Although NVA is established, the service is still under development. Institutions that do not have an open research archive can contact Unit (<0><0></0></0>) to use NVA as a pilot institution."
   },
   "order_information": {
     "heading": "Order information",
-    "paragraph0": "Tjenesten er under etablering og kun inviterte pilot-institusjoner kan ta den i bruk, i 2020. Alle institusjoner kan be om å bli å pilot-institusjoner, dokumenter bakgrunn for ønsket. Unit prioriterer institusjoner som ikke  har et etablert vitenarkiv og som har enkle behov for vitenarkiv. Institusjoner som bruker Cristin eller har et fungerende vitenarkiv bør vente til 2021 med å ta ibruk tjenesten (pga store overlappende manuelle arbeidsfunksjoner).",
+    "paragraph0": "The service is under development and only invited pilot institutions can use it. Any institution can ask to be included in the pilot program. Please elaborate why your institution wants to be included.",
     "paragraph1": "All institutions are welcome at <0><0></0></0> to give feedback to Unit. Please send your feedback via email to <1><0></0></1>."
   },
   "short_description": "NVA is a service that collects and presents information and results from Norwegian research."

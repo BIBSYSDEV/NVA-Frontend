@@ -33,9 +33,9 @@ const About = () => {
         <Typography paragraph>{t('description.paragraph4')}</Typography>
         <Typography paragraph>
           <Trans t={t} i18nKey="description.paragraph5">
-            <a target="_blank" rel="noreferrer" href="mailto:support@unit.no">
-              support@unit.no
-            </a>
+            <MuiLink href={`mailto:${ContactInformation.UNIT_SUPPORT_EMAIL}`} target="_blank" rel="noopener noreferrer">
+              {ContactInformation.UNIT_SUPPORT_EMAIL}
+            </MuiLink>
           </Trans>
         </Typography>
 
