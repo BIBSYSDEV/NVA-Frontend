@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import { Link as RouterLink } from 'react-router-dom';
 import styled from 'styled-components';
-import { Button, IconButton, AppBar } from '@material-ui/core';
+import { AppBar, Button, IconButton } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 import MailIcon from '@material-ui/icons/Mail';
 import MenuIcon from '@material-ui/icons/Menu';
-import { Link as RouterLink } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
+import { RootStore } from '../../redux/reducers/rootReducer';
+import { getRegistrationPath, UrlPathTemplate } from '../../utils/urlPaths';
 import Login from './Login';
 import Logo from './Logo';
-import { RootStore } from '../../redux/reducers/rootReducer';
 import MobileMenu from './MobileMenu';
-import { getRegistrationPath, UrlPathTemplate } from '../../utils/urlPaths';
 
 const StyledAppBar = styled(AppBar)`
   display: grid;
@@ -56,7 +56,7 @@ const Header = () => {
   };
 
   return (
-    <StyledAppBar position="static" color="inherit">
+    <StyledAppBar position="static" color="inherit" elevation={0}>
       <StyledBurgerMenu>
         <IconButton onClick={handleClick}>
           <MenuIcon />

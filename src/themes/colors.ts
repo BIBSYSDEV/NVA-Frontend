@@ -16,7 +16,7 @@ export enum Color {
   SecondaryText = '#44515d',
   Panel = '#A9D8B8',
   Disabled = '#bbb',
-  Header = '#ffd3d3',
+  Header = '#ffe7e7',
   ErrorLight = '#EE7575',
   ErrorMain = '#C2363D',
   SuccessDark = '#008958',
