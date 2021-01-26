@@ -119,7 +119,11 @@ const PublicRegistrationContent: FC<PublicRegistrationContentProps> = ({ registr
 
   return (
     <ContentPage>
-      <PublicRegistrationStatusBar registration={registration} refetchRegistration={refetchRegistration} />
+      <PublicRegistrationStatusBar
+        data-testid="public-registration-status"
+        registration={registration}
+        refetchRegistration={refetchRegistration}
+      />
       <Heading>{mainTitle}</Heading>
       {contributors && <PublicRegistrationAuthors contributors={contributors} />}
       <StyledContentWrapper>
