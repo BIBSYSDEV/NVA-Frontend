@@ -3,9 +3,9 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import DateFnsUtils from '@date-io/date-fns';
-import { Checkbox, FormControlLabel, Typography } from '@material-ui/core';
+import { Checkbox, FormControlLabel, MuiThemeProvider, Typography } from '@material-ui/core';
 import { DatePickerView, KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
-import { datePickerTranslationProps } from '../../../themes/mainTheme';
+import theme, { datePickerTranslationProps } from '../../../themes/mainTheme';
 import { DescriptionFieldNames } from '../../../types/publicationFieldNames';
 import { Registration } from '../../../types/registration.types';
 import { getDateFnsLocale } from '../../../utils/date-helpers';
@@ -60,23 +60,25 @@ const DatePickerField = () => {
 
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils} locale={getDateFnsLocale(i18n.language)}>
-      <KeyboardDatePicker
-        {...datePickerTranslationProps}
-        data-testid="date-published-field"
-        inputVariant="filled"
-        label={t('description.date_published')}
-        required
-        onChange={setDate}
-        views={views}
-        value={date}
-        autoOk
-        maxDate={`${new Date().getFullYear() + 5}-12-31`}
-        format={yearOnly ? 'yyyy' : 'dd.MM.yyyy'}
-        onBlur={setYearFieldTouched}
-        onClose={setYearFieldTouched}
-        error={hasError}
-        helperText={hasError && (!date ? ErrorMessage.REQUIRED : ErrorMessage.INVALID_FORMAT)}
-      />
+      <MuiThemeProvider theme={theme}>
+        <KeyboardDatePicker
+          {...datePickerTranslationProps}
+          data-testid="date-published-field"
+          inputVariant="filled"
+          label={t('description.date_published')}
+          required
+          onChange={setDate}
+          views={views}
+          value={date}
+          autoOk
+          maxDate={`${new Date().getFullYear() + 5}-12-31`}
+          format={yearOnly ? 'yyyy' : 'dd.MM.yyyy'}
+          onBlur={setYearFieldTouched}
+          onClose={setYearFieldTouched}
+          error={hasError}
+          helperText={hasError && (!date ? ErrorMessage.REQUIRED : ErrorMessage.INVALID_FORMAT)}
+        />
+      </MuiThemeProvider>
       <StyledFormControlLabel
         control={<Checkbox checked={yearOnly} onChange={toggleYearOnly} color="primary" />}
         label={<Typography color="primary">{t('description.year_only')}</Typography>}
