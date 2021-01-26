@@ -7,7 +7,6 @@ import { ContactInformation } from '../../utils/constants';
 
 const StyledAboutContainer = styled.div`
   display: block;
-
   ul {
     margin-top: 0;
   }
@@ -41,7 +40,7 @@ const About = () => {
 
         <Typography variant="h2">{t('order_information.heading')}</Typography>
         <Typography paragraph>{t('order_information.paragraph0')}</Typography>
-        <Typography>
+        <Typography paragraph>
           <Trans t={t} i18nKey="order_information.paragraph1">
             <MuiLink href={`https://${ContactInformation.NVA_TEST_WEBSITE}`} target="_blank" rel="noopener noreferrer">
               {ContactInformation.NVA_TEST_WEBSITE}

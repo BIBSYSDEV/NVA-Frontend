@@ -11,13 +11,13 @@ import Card from '../../components/Card';
 const StyledDashboard = styled.div`
   display: grid;
   grid-template-areas: 'description' 'search-bar';
-  grid-template-rows: auto auto auto;
+  grid-template-rows: auto auto;
   row-gap: 1rem;
   justify-items: center;
   width: 100%;
 `;
 
-const StyledDescription = styled.div`
+const StyledAbout = styled.div`
   grid-area: description;
 `;
 
@@ -38,14 +38,14 @@ const Dashboard = () => {
 
   return (
     <StyledDashboard>
-      <StyledDescription>
+      <StyledAbout>
         <Card>
           <Typography variant="subtitle1">{t('about:short_description')}</Typography>
-          <MuiLink component={Link} to={UrlPathTemplate.About} data-testid="description_read_more_link">
+          <MuiLink component={Link} to={UrlPathTemplate.About} data-testid="about_read_more_link">
             {t('common:read_more')}
           </MuiLink>
         </Card>
-      </StyledDescription>
+      </StyledAbout>
       <StyledSearchBarContainer>
         <SearchBar handleSearch={handleSearch} initialSearchTerm="" />
         <LatestRegistrations />
