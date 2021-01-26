@@ -1,6 +1,7 @@
 import i18n from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import { LanguageCodes } from '../types/language.types';
+
 import adminEn from './en/admin.json';
 import authorizationEn from './en/authorization.json';
 import commonEn from './en/common.json';
@@ -11,10 +12,12 @@ import infopagesEn from './en/infopages.json';
 import institutionEn from './en/institution.json';
 import languagesEn from './en/languages.json';
 import licensesEn from './en/licenses.json';
+import privacyEn from './en/privacy.json';
 import profileEn from './en/profile.json';
 import publicationTypesEn from './en/publicationTypes.json';
 import registrationEn from './en/registration.json';
 import workListsEn from './en/workLists.json';
+
 import adminNb from './nb/admin.json';
 import authorizationNb from './nb/authorization.json';
 import commonNb from './nb/common.json';
@@ -25,6 +28,7 @@ import infopagesNb from './nb/infopages.json';
 import institutionNb from './nb/institution.json';
 import languagesNb from './nb/languages.json';
 import licensesNb from './nb/licenses.json';
+import privacyNb from './nb/privacy.json';
 import profileNb from './nb/profile.json';
 import publicationTypesNb from './nb/publicationTypes.json';
 import registrationNb from './nb/registration.json';
@@ -45,6 +49,7 @@ i18n.use(LanguageDetector).init({
       institution: institutionEn,
       languages: languagesEn,
       licenses: licensesEn,
+      privacy: privacyEn,
       profile: profileEn,
       publicationTypes: publicationTypesEn,
       registration: registrationEn,
@@ -61,6 +66,7 @@ i18n.use(LanguageDetector).init({
       institution: institutionNb,
       languages: languagesNb,
       licenses: licensesNb,
+      privacy: privacyNb,
       profile: profileNb,
       publicationTypes: publicationTypesNb,
       registration: registrationNb,
