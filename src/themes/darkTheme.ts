@@ -1,17 +1,17 @@
 import { createMuiTheme } from '@material-ui/core';
 import { Color } from './colors';
-import theme from './mainTheme';
+import lightTheme from './lightTheme';
 
-const contrastTheme = createMuiTheme({
-  ...theme,
+const darkTheme = createMuiTheme({
+  ...lightTheme,
   palette: {
-    ...theme.palette,
+    ...lightTheme.palette,
     type: 'dark',
     primary: { main: Color.BlueMegaLight },
     error: { main: Color.ErrorLight },
   },
   overrides: {
-    ...theme.overrides,
+    ...lightTheme.overrides,
     MuiFilledInput: {
       root: {
         backgroundColor: Color.BlueMegaLight,
@@ -25,11 +25,11 @@ const contrastTheme = createMuiTheme({
     },
     MuiFormHelperText: {
       root: {
-        ...theme.overrides?.MuiFormHelperText?.root,
+        ...lightTheme.overrides?.MuiFormHelperText?.root,
         color: Color.BlueMegaLight,
       },
     },
   },
 });
 
-export default contrastTheme;
+export default darkTheme;

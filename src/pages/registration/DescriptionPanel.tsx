@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { MenuItem, TextField, Typography } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import BackgroundDiv from '../../components/BackgroundDiv';
-import theme from '../../themes/mainTheme';
+import lightTheme from '../../themes/lightTheme';
 import { registrationLanguages } from '../../types/language.types';
 import { DescriptionFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
@@ -41,7 +41,7 @@ const DescriptionPanel = () => {
 
   return (
     <>
-      <BackgroundDiv backgroundColor={theme.palette.section.megaLight}>
+      <BackgroundDiv backgroundColor={lightTheme.palette.section.megaLight}>
         <Field name={DescriptionFieldNames.TITLE}>
           {({ field, meta: { touched, error } }: FieldProps<string>) => (
             <TextField
@@ -86,7 +86,7 @@ const DescriptionPanel = () => {
           )}
         </Field>
       </BackgroundDiv>
-      <BackgroundDiv backgroundColor={theme.palette.section.light}>
+      <BackgroundDiv backgroundColor={lightTheme.palette.section.light}>
         <NpiAndTagsWrapper>
           <Field name={DescriptionFieldNames.NPI_SUBJECT_HEADING}>
             {({ field: { name, value } }: FieldProps<string>) => (
@@ -130,7 +130,7 @@ const DescriptionPanel = () => {
           </Field>
         </NpiAndTagsWrapper>
       </BackgroundDiv>
-      <BackgroundDiv backgroundColor={theme.palette.section.main}>
+      <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
         <DateAndLanguageWrapper>
           <DatePickerField />
 
@@ -154,7 +154,7 @@ const DescriptionPanel = () => {
           </Field>
         </DateAndLanguageWrapper>
       </BackgroundDiv>
-      <BackgroundDiv backgroundColor={theme.palette.section.dark}>
+      <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
         <Typography variant="h5" color="primary">
           {t('description.connect_project')}
         </Typography>

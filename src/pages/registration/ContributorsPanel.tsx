@@ -3,7 +3,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormHelperText, Typography } from '@material-ui/core';
 import BackgroundDiv from '../../components/BackgroundDiv';
-import theme from '../../themes/mainTheme';
+import lightTheme from '../../themes/lightTheme';
 import { ContributorFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
 import Authors from './contributors_tab/Authors';
@@ -20,7 +20,7 @@ const ContributorsPanel = () => {
 
   return (
     <>
-      <BackgroundDiv backgroundColor={theme.palette.section.main}>
+      <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
         <Typography variant="h2" color="primary">
           {t('contributors.authors')}
         </Typography>
@@ -29,7 +29,7 @@ const ContributorsPanel = () => {
         </FieldArray>
       </BackgroundDiv>
       {contributors.length === 0 && typeof contributorsError === 'string' && (
-        <BackgroundDiv backgroundColor={theme.palette.error.light}>
+        <BackgroundDiv backgroundColor={lightTheme.palette.error.light}>
           <FormHelperText error>
             <ErrorMessage name={ContributorFieldNames.CONTRIBUTORS} />
           </FormHelperText>

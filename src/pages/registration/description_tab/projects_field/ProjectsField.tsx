@@ -7,7 +7,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import EmphasizeSubstring from '../../../../components/EmphasizeSubstring';
 import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
-import { autocompleteTranslationProps } from '../../../../themes/mainTheme';
+import { autocompleteTranslationProps } from '../../../../themes/lightTheme';
 import { ResearchProject } from '../../../../types/project.types';
 import { DescriptionFieldNames } from '../../../../types/publicationFieldNames';
 import useDebounce from '../../../../utils/hooks/useDebounce';

@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { TextField, Typography } from '@material-ui/core';
 import BackgroundDiv from '../../../../components/BackgroundDiv';
-import theme from '../../../../themes/mainTheme';
+import lightTheme from '../../../../themes/lightTheme';
 import { JournalType, ReferenceFieldNames } from '../../../../types/publicationFieldNames';
 import { JournalRegistration } from '../../../../types/registration.types';
 import DoiField from '../components/DoiField';
@@ -38,7 +38,7 @@ const JournalForm = () => {
 
   return (
     <>
-      <BackgroundDiv backgroundColor={theme.palette.section.main}>
+      <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
         <DoiField />
 
         {publicationInstance.type === JournalType.CORRIGENDUM && (
@@ -126,7 +126,7 @@ const JournalForm = () => {
 
       {(publicationInstance.type === JournalType.ARTICLE ||
         publicationInstance.type === JournalType.SHORT_COMMUNICATION) && (
-        <BackgroundDiv backgroundColor={theme.palette.section.dark}>
+        <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
           <PeerReview fieldName={ReferenceFieldNames.PEER_REVIEW} label={t('references.peer_review')} />
           <NviValidation
             isPeerReviewed={publicationInstance.peerReviewed}

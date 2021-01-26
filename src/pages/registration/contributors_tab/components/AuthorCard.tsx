@@ -9,7 +9,7 @@ import WarningIcon from '@material-ui/icons/Warning';
 import BackgroundDiv from '../../../../components/BackgroundDiv';
 import DangerButton from '../../../../components/DangerButton';
 import { StyledRightAlignedWrapper } from '../../../../components/styled/Wrappers';
-import theme from '../../../../themes/mainTheme';
+import lightTheme from '../../../../themes/lightTheme';
 import { Contributor, UnverifiedContributor } from '../../../../types/contributor.types';
 import { ContributorFieldNames, SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
 import { Registration } from '../../../../types/registration.types';
@@ -114,7 +114,7 @@ const AuthorCard = ({ author, onMoveAuthor, onRemoveAuthorClick, openContributor
   const [emailValue, setEmailValue] = useState(values.entityDescription.contributors[index]?.email ?? '');
 
   return (
-    <StyledBackgroundDiv backgroundColor={theme.palette.section.megaLight}>
+    <StyledBackgroundDiv backgroundColor={lightTheme.palette.section.megaLight}>
       <StyledAuthorSection key={author.identity.id}>
         <StyledNameField variant="h5">{author.identity.name}</StyledNameField>
         <StyledVerifiedSection>

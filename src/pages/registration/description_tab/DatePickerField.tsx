@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import DateFnsUtils from '@date-io/date-fns';
 import { Checkbox, FormControlLabel, MuiThemeProvider, Typography } from '@material-ui/core';
 import { DatePickerView, KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
-import theme, { datePickerTranslationProps } from '../../../themes/mainTheme';
+import lightTheme, { datePickerTranslationProps } from '../../../themes/lightTheme';
 import { DescriptionFieldNames } from '../../../types/publicationFieldNames';
 import { Registration } from '../../../types/registration.types';
 import { getDateFnsLocale } from '../../../utils/date-helpers';
@@ -60,7 +60,7 @@ const DatePickerField = () => {
 
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils} locale={getDateFnsLocale(i18n.language)}>
-      <MuiThemeProvider theme={theme}>
+      <MuiThemeProvider theme={lightTheme}>
         <KeyboardDatePicker
           {...datePickerTranslationProps}
           data-testid="date-published-field"

@@ -6,7 +6,7 @@ import AddIcon from '@material-ui/icons/AddCircleOutlineSharp';
 import SearchIcon from '@material-ui/icons/Search';
 import BackgroundDiv from '../../../../components/BackgroundDiv';
 import { StyledProgressWrapper } from '../../../../components/styled/Wrappers';
-import theme from '../../../../themes/mainTheme';
+import lightTheme from '../../../../themes/lightTheme';
 import { Authority } from '../../../../types/authority.types';
 import useDebounce from '../../../../utils/hooks/useDebounce';
 import useFetchAuthorities from '../../../../utils/hooks/useFetchAuthorities';
@@ -40,7 +40,7 @@ const AddContributorModalContent = ({
   const [authorities, isLoadingAuthorities] = useFetchAuthorities(debouncedSearchTerm);
 
   return (
-    <StyledBackgroundDiv backgroundColor={theme.palette.background.paper}>
+    <StyledBackgroundDiv backgroundColor={lightTheme.palette.background.paper}>
       {initialSearchTerm && (
         <Typography variant="subtitle1">
           {t('registration:contributors.prefilled_name')}: "{initialSearchTerm}"

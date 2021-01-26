@@ -7,7 +7,7 @@ import InfoIcon from '@material-ui/icons/Info';
 import RemoveIcon from '@material-ui/icons/Remove';
 import BackgroundDiv from '../../../../components/BackgroundDiv';
 import { StyledCenterAlignedContentWrapper } from '../../../../components/styled/Wrappers';
-import theme from '../../../../themes/mainTheme';
+import lightTheme from '../../../../themes/lightTheme';
 import { BookType, ChapterType, ReferenceFieldNames } from '../../../../types/publicationFieldNames';
 import { ChapterRegistration } from '../../../../types/registration.types';
 import DoiField from '../components/DoiField';
@@ -46,7 +46,7 @@ const ChapterForm = () => {
 
   return (
     <>
-      <BackgroundDiv backgroundColor={theme.palette.section.main}>
+      <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
         <StyledDiv>
           <InfoIcon color="primary" />
           <Typography color="primary" variant="body1">
@@ -66,7 +66,7 @@ const ChapterForm = () => {
         )}
       </BackgroundDiv>
 
-      <BackgroundDiv backgroundColor={theme.palette.section.dark}>
+      <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
         <StyledPageNumberWrapper>
           <Field name={ReferenceFieldNames.PAGES_FROM}>
             {({ field }: FieldProps<string>) => (
@@ -99,7 +99,7 @@ const ChapterForm = () => {
       </BackgroundDiv>
 
       {publicationInstance.type === ChapterType.BOOK && (
-        <BackgroundDiv backgroundColor={theme.palette.section.megaDark}>
+        <BackgroundDiv backgroundColor={lightTheme.palette.section.megaDark}>
           <PeerReview fieldName={ReferenceFieldNames.PEER_REVIEW} label={t('references.peer_review')} />
           <NviValidation
             isPeerReviewed={!!publicationInstance.peerReviewed}
