@@ -1,8 +1,7 @@
 import React, { useState, FC } from 'react';
 import { Formik, Form, Field, FieldProps, FormikValues, ErrorMessage } from 'formik';
-import { Collapse, Button, TextField, CircularProgress } from '@material-ui/core';
+import { Collapse, Button, TextField, CircularProgress, DialogActions } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 
 import { emptyNewContributor } from '../../../../types/contributor.types';
@@ -16,10 +15,6 @@ import {
   StyledNormalTextPreWrapped,
 } from '../../../../components/styled/Wrappers';
 import { newContributorValidationSchema } from '../../../../utils/validation/newContributorValidation';
-
-const StyledButtonContainer = styled(StyledRightAlignedWrapper)`
-  margin-top: 1rem;
-`;
 
 interface CreateContributorModalContentProps {
   addAuthor: (author: Authority) => void;
@@ -94,7 +89,8 @@ const CreateContributorModalContent: FC<CreateContributorModalContentProps> = ({
                   />
                 )}
               </Field>
-              <StyledButtonContainer>
+              <DialogActions>
+                <Button onClick={handleCloseModal}>{t('common:close')}</Button>
                 <Button
                   data-testid="button-create-authority"
                   type="submit"
@@ -103,7 +99,7 @@ const CreateContributorModalContent: FC<CreateContributorModalContentProps> = ({
                   disabled={isSubmitting}>
                   {t('create_authority')}
                 </Button>
-              </StyledButtonContainer>
+              </DialogActions>
             </Form>
           )}
         </Formik>

@@ -28,7 +28,7 @@ declare module '@material-ui/core/styles/createPalette' {
 
 enum Font {
   Barlow = 'Barlow,  sans-serif',
-  Merriweather = 'Merriweather, serif',
+  Crimson = 'Crimson Text, serif',
 }
 
 const theme = createMuiTheme({
@@ -80,17 +80,17 @@ const theme = createMuiTheme({
   typography: {
     fontFamily: Font.Barlow,
     h1: {
-      fontFamily: Font.Merriweather,
+      fontFamily: Font.Crimson,
       fontSize: '3rem',
       fontWeight: 400,
     },
     h2: {
-      fontFamily: Font.Merriweather,
+      fontFamily: Font.Crimson,
       fontSize: '2.25rem',
       fontWeight: 400,
     },
     h3: {
-      fontFamily: Font.Merriweather,
+      fontFamily: Font.Crimson,
       fontSize: '1.5rem',
       fontWeight: 400,
     },

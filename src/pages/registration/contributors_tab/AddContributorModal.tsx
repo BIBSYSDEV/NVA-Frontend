@@ -1,11 +1,9 @@
-import React, { FC, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Modal from '../../../components/Modal';
 import { Authority } from '../../../types/authority.types';
 import AddContributorModalContent from './components/AddContributorModalContent';
-import { Button } from '@material-ui/core';
 import CreateContributorModalContent from './components/CreateContributorModalContent';
-import { StyledRightAlignedWrapper } from '../../../components/styled/Wrappers';
 
 interface AddContributorModalProps {
   onAuthorSelected: (author: Authority) => void;
@@ -14,12 +12,7 @@ interface AddContributorModalProps {
   initialSearchTerm?: string;
 }
 
-const AddContributorModal: FC<AddContributorModalProps> = ({
-  onAuthorSelected,
-  toggleModal,
-  open,
-  initialSearchTerm,
-}) => {
+const AddContributorModal = ({ onAuthorSelected, toggleModal, open, initialSearchTerm }: AddContributorModalProps) => {
   const { t } = useTranslation('registration');
   const [createNewAuthor, setCreateNewAuthor] = useState(false);
 
@@ -41,7 +34,7 @@ const AddContributorModal: FC<AddContributorModalProps> = ({
         createNewAuthor
           ? t('contributors.create_new_author')
           : initialSearchTerm
-          ? t('contributors.connect_author_identity')
+          ? t('contributors.verify_author')
           : t('contributors.add_author')
       }
       onClose={handleCloseModal}
@@ -51,14 +44,12 @@ const AddContributorModal: FC<AddContributorModalProps> = ({
       {createNewAuthor ? (
         <CreateContributorModalContent addAuthor={addAuthor} handleCloseModal={handleCloseModal} />
       ) : (
-        <>
-          <AddContributorModalContent addAuthor={addAuthor} initialSearchTerm={initialSearchTerm} />
-          <StyledRightAlignedWrapper>
-            <Button color="primary" data-testid="button-create-new-author" onClick={() => setCreateNewAuthor(true)}>
-              {t('contributors.create_new_author')}
-            </Button>
-          </StyledRightAlignedWrapper>
-        </>
+        <AddContributorModalContent
+          addAuthor={addAuthor}
+          handleCloseModal={handleCloseModal}
+          openNewAuthorModal={() => setCreateNewAuthor(true)}
+          initialSearchTerm={initialSearchTerm}
+        />
       )}
     </Modal>
   );
