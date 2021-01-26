@@ -5,6 +5,7 @@ import { LanguageCodes } from '../types/language.types';
 import adminEn from './en/admin.json';
 import authorizationEn from './en/authorization.json';
 import commonEn from './en/common.json';
+import descriptionEn from './en/description.json';
 import disciplinesEn from './en/disciplines.json';
 import feedbackEn from './en/feedback.json';
 import formikValuesEn from './en/formikValues.json';
@@ -21,6 +22,7 @@ import workListsEn from './en/workLists.json';
 import adminNb from './nb/admin.json';
 import authorizationNb from './nb/authorization.json';
 import commonNb from './nb/common.json';
+import descriptionNb from './nb/description.json';
 import disciplinesNb from './nb/disciplines.json';
 import feedbackNb from './nb/feedback.json';
 import formikValuesNb from './nb/formikValues.json';
@@ -42,6 +44,7 @@ i18n.use(LanguageDetector).init({
       admin: adminEn,
       authorization: authorizationEn,
       common: commonEn,
+      description: descriptionEn,
       disciplines: disciplinesEn,
       feedback: feedbackEn,
       formikValues: formikValuesEn,
@@ -59,6 +62,7 @@ i18n.use(LanguageDetector).init({
       admin: adminNb,
       authorization: authorizationNb,
       common: commonNb,
+      description: descriptionNb,
       disciplines: disciplinesNb,
       feedback: feedbackNb,
       formikValues: formikValuesNb,

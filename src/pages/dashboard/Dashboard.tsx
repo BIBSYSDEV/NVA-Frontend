@@ -1,7 +1,7 @@
-import React, { FC } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { Link, useHistory } from 'react-router-dom';
-import { Link as MuiLink } from '@material-ui/core';
+import { Link as MuiLink, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import LatestRegistrations from './LatestRegistrations';
 import SearchBar from '../../components/SearchBar';
@@ -9,8 +9,8 @@ import { getSearchPath, UrlPathTemplate } from '../../utils/urlPaths';
 
 const StyledDashboard = styled.div`
   display: grid;
-  grid-template-areas: 'search-bar' 'other-content';
-  grid-template-rows: auto auto;
+  grid-template-areas: 'description' 'search-bar' 'other-content';
+  grid-template-rows: auto auto auto;
   row-gap: 1rem;
   justify-items: center;
   width: 100%;
@@ -27,12 +27,16 @@ const StyledLinks = styled.div`
   }
 `;
 
+const StyledDescription = styled.div`
+  grid-area: description;
+`;
+
 const StyledSearchBarContainer = styled.div`
   grid-area: search-bar;
   width: 100%;
 `;
 
-const Dashboard: FC = () => {
+const Dashboard = () => {
   const { t } = useTranslation();
   const history = useHistory();
 
@@ -44,20 +48,18 @@ const Dashboard: FC = () => {
 
   return (
     <StyledDashboard>
+      <StyledDescription>
+        <Typography variant="subtitle1">{t('description:short_description')}</Typography>
+        <MuiLink component={Link} to={UrlPathTemplate.Description} data-testid="description_read_more_link">
+          {t('common:read_more')}
+        </MuiLink>
+      </StyledDescription>
       <StyledSearchBarContainer>
         <SearchBar handleSearch={handleSearch} initialSearchTerm="" />
         <LatestRegistrations />
       </StyledSearchBarContainer>
       <StyledOtherContent>
         <StyledLinks>
-          <MuiLink
-            aria-label={t('infopages:description.heading')}
-            color="primary"
-            component={Link}
-            to={UrlPathTemplate.Description}
-            data-testid="description_link">
-            {t('infopages:description.heading')}
-          </MuiLink>
           <MuiLink
             aria-label={t('infopages:order_information.heading')}
             color="primary"
