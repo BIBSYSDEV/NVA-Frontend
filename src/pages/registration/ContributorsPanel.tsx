@@ -29,11 +29,9 @@ const ContributorsPanel = () => {
         </FieldArray>
       </BackgroundDiv>
       {contributors.length === 0 && typeof contributorsError === 'string' && (
-        <BackgroundDiv backgroundColor={lightTheme.palette.error.light}>
-          <FormHelperText error>
-            <ErrorMessage name={ContributorFieldNames.CONTRIBUTORS} />
-          </FormHelperText>
-        </BackgroundDiv>
+        <FormHelperText error>
+          <ErrorMessage name={ContributorFieldNames.CONTRIBUTORS} />
+        </FormHelperText>
       )}
     </>
   );
