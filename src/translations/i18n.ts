@@ -2,10 +2,10 @@ import i18n from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import { LanguageCodes } from '../types/language.types';
 
+import aboutEn from './en/about.json';
 import adminEn from './en/admin.json';
 import authorizationEn from './en/authorization.json';
 import commonEn from './en/common.json';
-import descriptionEn from './en/description.json';
 import disciplinesEn from './en/disciplines.json';
 import feedbackEn from './en/feedback.json';
 import formikValuesEn from './en/formikValues.json';
@@ -19,10 +19,10 @@ import publicationTypesEn from './en/publicationTypes.json';
 import registrationEn from './en/registration.json';
 import workListsEn from './en/workLists.json';
 
+import aboutNb from './nb/about.json';
 import adminNb from './nb/admin.json';
 import authorizationNb from './nb/authorization.json';
 import commonNb from './nb/common.json';
-import descriptionNb from './nb/description.json';
 import disciplinesNb from './nb/disciplines.json';
 import feedbackNb from './nb/feedback.json';
 import formikValuesNb from './nb/formikValues.json';
@@ -41,10 +41,10 @@ export const fallbackLanguage = LanguageCodes.NORWEGIAN_BOKMAL;
 i18n.use(LanguageDetector).init({
   resources: {
     eng: {
+      about: aboutEn,
       admin: adminEn,
       authorization: authorizationEn,
       common: commonEn,
-      description: descriptionEn,
       disciplines: disciplinesEn,
       feedback: feedbackEn,
       formikValues: formikValuesEn,
@@ -59,10 +59,10 @@ i18n.use(LanguageDetector).init({
       workLists: workListsEn,
     },
     nob: {
+      about: aboutNb,
       admin: adminNb,
       authorization: authorizationNb,
       common: commonNb,
-      description: descriptionNb,
       disciplines: disciplinesNb,
       feedback: feedbackNb,
       formikValues: formikValuesNb,

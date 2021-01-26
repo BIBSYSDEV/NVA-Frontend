@@ -2,13 +2,13 @@ import React, { FC, Suspense, lazy } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import DelayedFallback from './components/DelayedFallback';
 import OrderInformation from './pages/infopages/OrderInformation';
-import Description from './pages/infopages/Description';
 import PrivacyPolicy from './pages/infopages/PrivacyPolicy';
 import { LoggedInRoute, CreatorRoute, CuratorRoute, InstitutionAdminRoute, AppAdminRoute } from './utils/routes/Routes';
 import { useSelector } from 'react-redux';
 import { RootStore } from './redux/reducers/rootReducer';
 import { UrlPathTemplate } from './utils/urlPaths';
 
+const About = lazy(() => import('./pages/infopages/About'));
 const Dashboard = lazy(() => import('./pages/dashboard/Dashboard'));
 const EditRegistration = lazy(() => import('./pages/registration/EditRegistration'));
 const MyRegistrations = lazy(() => import('./pages/my_registrations/MyRegistrations'));
@@ -31,7 +31,7 @@ const AppRoutes: FC = () => {
     <Suspense fallback={<DelayedFallback />}>
       <Switch>
         <Route exact path={UrlPathTemplate.Home} component={Dashboard} />
-        <Route exact path={UrlPathTemplate.Description} component={Description} />
+        <Route exact path={UrlPathTemplate.About} component={About} />
         <Route exact path={UrlPathTemplate.OrderInformation} component={OrderInformation} />
         <Route exact path={UrlPathTemplate.PrivacyPolicy} component={PrivacyPolicy} />
         <Route exact path={UrlPathTemplate.User} component={PublicProfile} />

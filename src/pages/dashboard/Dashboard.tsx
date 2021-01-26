@@ -50,7 +50,7 @@ const Dashboard = () => {
     <StyledDashboard>
       <StyledDescription>
         <Typography variant="subtitle1">{t('description:short_description')}</Typography>
-        <MuiLink component={Link} to={UrlPathTemplate.Description} data-testid="description_read_more_link">
+        <MuiLink component={Link} to={UrlPathTemplate.About} data-testid="description_read_more_link">
           {t('common:read_more')}
         </MuiLink>
       </StyledDescription>
