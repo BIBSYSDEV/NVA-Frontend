@@ -9,6 +9,10 @@ import { UrlPathTemplate } from '../utils/urlPaths';
 const StyledHeader = styled.div`
   width: 85vw;
   margin-bottom: 1rem;
+
+  @media (max-width: ${({ theme }) => `${theme.breakpoints.values.lg}px`}) {
+    width: 95vw;
+  }
 `;
 
 const StyledHeaderTitle = styled(Typography)`
@@ -40,7 +44,9 @@ export const PageHeader = ({ backPath, children }: PageHeaderProps) => {
       <Button data-testid="navigate-back-button" startIcon={<ArrowBackIcon />} variant="text" onClick={onBackClick}>
         {t('back')}
       </Button>
-      <StyledHeaderTitle variant="h1">{children}</StyledHeaderTitle>
+      <StyledHeaderTitle variant="h1" noWrap>
+        {children}
+      </StyledHeaderTitle>
     </StyledHeader>
   );
 };
