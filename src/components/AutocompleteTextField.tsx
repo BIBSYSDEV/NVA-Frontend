@@ -1,8 +1,8 @@
 import React, { FC } from 'react';
-import { TextField, CircularProgress, TextFieldProps } from '@material-ui/core';
-import { AutocompleteRenderInputParams } from '@material-ui/lab';
 import styled from 'styled-components';
+import { CircularProgress, TextField, TextFieldProps } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
+import { AutocompleteRenderInputParams } from '@material-ui/lab';
 
 const StyledSearchIcon = styled(SearchIcon)`
   margin-left: 0.5rem;
@@ -27,7 +27,7 @@ export const AutocompleteTextField: FC<AutocompleteTextFieldProps> = ({
 }) => (
   <TextField
     {...params}
-    variant="outlined"
+    variant="filled"
     fullWidth
     inputProps={{
       ...params.inputProps,

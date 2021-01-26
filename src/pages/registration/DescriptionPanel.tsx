@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { MenuItem, TextField, Typography } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import BackgroundDiv from '../../components/BackgroundDiv';
-import theme from '../../themes/mainTheme';
+import lightTheme from '../../themes/lightTheme';
 import { registrationLanguages } from '../../types/language.types';
 import { DescriptionFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
@@ -41,7 +41,7 @@ const DescriptionPanel = () => {
 
   return (
     <>
-      <BackgroundDiv backgroundColor={theme.palette.section.megaLight}>
+      <BackgroundDiv backgroundColor={lightTheme.palette.section.megaLight}>
         <Field name={DescriptionFieldNames.TITLE}>
           {({ field, meta: { touched, error } }: FieldProps<string>) => (
             <TextField
@@ -49,7 +49,7 @@ const DescriptionPanel = () => {
               required
               data-testid="registration-title-field"
               inputProps={{ 'data-testid': 'registration-title-input' }}
-              variant="outlined"
+              variant="filled"
               fullWidth
               label={t('common:title')}
               error={touched && !!error}
@@ -63,7 +63,7 @@ const DescriptionPanel = () => {
               {...field}
               data-testid="registration-abstract-field"
               inputProps={{ 'data-testid': 'registration-abstract-input' }}
-              variant="outlined"
+              variant="filled"
               fullWidth
               multiline
               rows="4"
@@ -81,12 +81,12 @@ const DescriptionPanel = () => {
               multiline
               rows="4"
               fullWidth
-              variant="outlined"
+              variant="filled"
             />
           )}
         </Field>
       </BackgroundDiv>
-      <BackgroundDiv backgroundColor={theme.palette.section.light}>
+      <BackgroundDiv backgroundColor={lightTheme.palette.section.light}>
         <NpiAndTagsWrapper>
           <Field name={DescriptionFieldNames.NPI_SUBJECT_HEADING}>
             {({ field: { name, value } }: FieldProps<string>) => (
@@ -113,7 +113,7 @@ const DescriptionPanel = () => {
                     data-testid="registration-tag-field"
                     label={t('description.keywords')}
                     helperText={t('description.keywords_helper')}
-                    variant="outlined"
+                    variant="filled"
                     fullWidth
                     onBlur={(event) => {
                       const value = event.target.value;
@@ -130,7 +130,7 @@ const DescriptionPanel = () => {
           </Field>
         </NpiAndTagsWrapper>
       </BackgroundDiv>
-      <BackgroundDiv backgroundColor={theme.palette.section.main}>
+      <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
         <DateAndLanguageWrapper>
           <DatePickerField />
 
@@ -143,7 +143,7 @@ const DescriptionPanel = () => {
                 label={t('description.primary_language')}
                 placeholder={t('description.primary_language')}
                 select
-                variant="outlined">
+                variant="filled">
                 {registrationLanguages.map(({ id, value }) => (
                   <MenuItem value={value} key={id} data-testid={`registration-language-${id}`}>
                     {t(`languages:${id}`)}
@@ -154,7 +154,7 @@ const DescriptionPanel = () => {
           </Field>
         </DateAndLanguageWrapper>
       </BackgroundDiv>
-      <BackgroundDiv backgroundColor={theme.palette.section.dark}>
+      <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
         <Typography variant="h5" color="primary">
           {t('description.connect_project')}
         </Typography>

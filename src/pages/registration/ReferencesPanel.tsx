@@ -2,7 +2,7 @@ import { useFormikContext } from 'formik';
 import React from 'react';
 import BackgroundDiv from '../../components/BackgroundDiv';
 import { StyledSelectWrapper } from '../../components/styled/Wrappers';
-import theme from '../../themes/mainTheme';
+import lightTheme from '../../themes/lightTheme';
 import { emptyBookPublicationInstance } from '../../types/publication_types/bookRegistration.types';
 import { emptyChapterPublicationInstance } from '../../types/publication_types/chapterRegistration.types';
 import { emptyDegreePublicationInstance } from '../../types/publication_types/degreeRegistration.types';
@@ -67,7 +67,7 @@ const ReferencesPanel = () => {
 
   return (
     <>
-      <BackgroundDiv backgroundColor={theme.palette.section.light}>
+      <BackgroundDiv backgroundColor={lightTheme.palette.section.light}>
         <StyledSelectWrapper>
           <SelectTypeField
             dataTestId="publication-context-type"

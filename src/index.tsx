@@ -3,14 +3,12 @@ import ReactDOM from 'react-dom';
 import { I18nextProvider } from 'react-i18next';
 import { Provider } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
-
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { StylesProvider, ThemeProvider as MUIThemeProvider } from '@material-ui/styles';
-
 import { interceptRequestsOnMock } from './api/mock-interceptor';
 import App from './App';
 import store from './redux/store';
-import mainTheme from './themes/mainTheme';
+import mainTheme from './themes/lightTheme';
 import i18n from './translations/i18n';
 import { USE_MOCK_DATA } from './utils/constants';
 

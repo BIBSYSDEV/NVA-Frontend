@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CircularProgress, TextField, TextFieldProps } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import { autocompleteTranslationProps } from '../../themes/mainTheme';
+import { autocompleteTranslationProps } from '../../themes/lightTheme';
 import { InstitutionUnitBase } from '../../types/institution.types';
 import { sortInstitutionsAlphabetically } from '../../utils/institutions-helpers';
 
