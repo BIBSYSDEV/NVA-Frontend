@@ -1,5 +1,5 @@
 import { FieldArrayRenderProps, move, useFormikContext } from 'formik';
-import React, { FC, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
@@ -16,12 +16,12 @@ import AddContributorModal from './AddContributorModal';
 import AuthorList from './components/AuthorList';
 
 const StyledButton = styled(Button)`
-  margin-left: 1rem;
+  margin: 1rem 0rem;
 `;
 
 type AuthorsProps = Pick<FieldArrayRenderProps, 'push' | 'replace'>;
 
-const Authors: FC<AuthorsProps> = ({ push, replace }) => {
+const Authors = ({ push, replace }: AuthorsProps) => {
   const { t } = useTranslation('registration');
   const dispatch = useDispatch();
   const { values, setFieldValue } = useFormikContext<Registration>();

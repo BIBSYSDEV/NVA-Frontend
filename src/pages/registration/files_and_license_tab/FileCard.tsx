@@ -93,7 +93,7 @@ const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }: FileC
   const { t, i18n } = useTranslation('registration');
 
   return (
-    <BackgroundDiv backgroundColor={theme.palette.background.paper} data-testid="uploaded-file-card">
+    <BackgroundDiv backgroundColor={theme.palette.section.megaLight} data-testid="uploaded-file-card">
       <Typography variant="h5">{file.name}</Typography>
       <StyledDescription>
         {t('files_and_license.uploaded_size', { size: Math.round(file.size / 1000) })}

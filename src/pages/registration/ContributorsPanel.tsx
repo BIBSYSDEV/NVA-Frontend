@@ -20,8 +20,10 @@ const ContributorsPanel = () => {
 
   return (
     <>
-      <BackgroundDiv backgroundColor={theme.palette.section.light}>
-        <Typography variant="h2">{t('contributors.authors')}</Typography>
+      <BackgroundDiv backgroundColor={theme.palette.section.main}>
+        <Typography variant="h2" color="primary">
+          {t('contributors.authors')}
+        </Typography>
         <FieldArray name={ContributorFieldNames.CONTRIBUTORS}>
           {({ push, replace }: FieldArrayRenderProps) => <Authors push={push} replace={replace} />}
         </FieldArray>
