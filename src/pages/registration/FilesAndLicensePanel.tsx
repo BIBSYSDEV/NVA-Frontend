@@ -6,7 +6,7 @@ import { FormHelperText, Typography } from '@material-ui/core';
 import { UppyFile } from '@uppy/core';
 import BackgroundDiv from '../../components/BackgroundDiv';
 import Modal from '../../components/Modal';
-import theme from '../../themes/mainTheme';
+import lightTheme from '../../themes/lightTheme';
 import { File, licenses, Uppy } from '../../types/file.types';
 import { NotificationVariant } from '../../types/notification.types';
 import { FileFieldNames } from '../../types/publicationFieldNames';
@@ -74,7 +74,7 @@ const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
         {({ name, remove, push }: FieldArrayRenderProps) => (
           <>
             {files.length > 0 && (
-              <StyledBackgroundDiv backgroundColor={theme.palette.section.dark}>
+              <StyledBackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
                 <Typography color="primary" variant="h2">
                   {t('files_and_license.files')}
                 </Typography>
@@ -95,7 +95,7 @@ const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
               </StyledBackgroundDiv>
             )}
 
-            <BackgroundDiv backgroundColor={theme.palette.section.dark}>
+            <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
               <FileUploader uppy={uppy} addFile={(file) => push(file)} />
               {files.length === 0 && (
                 <FormHelperText error>

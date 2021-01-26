@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { TextField, Typography } from '@material-ui/core';
 import BackgroundDiv from '../../../../components/BackgroundDiv';
-import theme from '../../../../themes/mainTheme';
+import lightTheme from '../../../../themes/lightTheme';
 import { JournalType, ReferenceFieldNames } from '../../../../types/publicationFieldNames';
 import { JournalRegistration } from '../../../../types/registration.types';
 import DoiField from '../components/DoiField';
@@ -38,7 +38,7 @@ const JournalForm = () => {
 
   return (
     <>
-      <BackgroundDiv backgroundColor={theme.palette.section.main}>
+      <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
         <DoiField />
 
         {publicationInstance.type === JournalType.CORRIGENDUM && (
@@ -57,7 +57,7 @@ const JournalForm = () => {
             {({ field, meta: { error, touched } }: FieldProps) => (
               <TextField
                 data-testid="volume-field"
-                variant="outlined"
+                variant="filled"
                 label={t('references.volume')}
                 {...field}
                 error={touched && !!error}
@@ -70,7 +70,7 @@ const JournalForm = () => {
             {({ field, meta: { error, touched } }: FieldProps) => (
               <TextField
                 data-testid="issue-field"
-                variant="outlined"
+                variant="filled"
                 label={t('references.issue')}
                 {...field}
                 error={touched && !!error}
@@ -83,7 +83,7 @@ const JournalForm = () => {
             {({ field, meta: { error, touched } }: FieldProps) => (
               <TextField
                 data-testid="pages-from-field"
-                variant="outlined"
+                variant="filled"
                 label={t('references.pages_from')}
                 {...field}
                 value={field.value ?? ''}
@@ -97,7 +97,7 @@ const JournalForm = () => {
             {({ field, meta: { error, touched } }: FieldProps) => (
               <TextField
                 data-testid="pages-to-field"
-                variant="outlined"
+                variant="filled"
                 label={t('references.pages_to')}
                 {...field}
                 value={field.value ?? ''}
@@ -113,7 +113,7 @@ const JournalForm = () => {
             {({ field, meta: { error, touched } }: FieldProps) => (
               <TextField
                 data-testid="article-number-field"
-                variant="outlined"
+                variant="filled"
                 label={t('references.article_number')}
                 {...field}
                 error={touched && !!error}
@@ -126,7 +126,7 @@ const JournalForm = () => {
 
       {(publicationInstance.type === JournalType.ARTICLE ||
         publicationInstance.type === JournalType.SHORT_COMMUNICATION) && (
-        <BackgroundDiv backgroundColor={theme.palette.section.dark}>
+        <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
           <PeerReview fieldName={ReferenceFieldNames.PEER_REVIEW} label={t('references.peer_review')} />
           <NviValidation
             isPeerReviewed={publicationInstance.peerReviewed}

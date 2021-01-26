@@ -2,6 +2,7 @@ import { createMuiTheme } from '@material-ui/core';
 import { PaletteColor, PaletteColorOptions, SimplePaletteColorOptions } from '@material-ui/core/styles/createPalette';
 import i18n from '../translations/i18n';
 import { getTranslatedLabelForDisplayedRows } from '../utils/pagination';
+import { Color } from './colors';
 
 // Extend Palette type to allow custom colors
 declare module '@material-ui/core/styles/createPalette' {
@@ -25,40 +26,12 @@ declare module '@material-ui/core/styles/createPalette' {
   }
 }
 
-export enum BackgroundColors {
-  Black = '#222',
-  BlueDark = '#02005B',
-  Blue = '#0010A4',
-  BlueLight = '#DFEDFE',
-  BlueMegaLight = '#F4F8FF',
-}
-
-// Colors: https://www.figma.com/file/3hggk6SX2ca81U8kwaZKFs/Farger-NVA
-enum Color {
-  Primary = '#0010A4',
-  SecondaryDark = '#E99210',
-  SecondaryLight = '#FFDAA2',
-  SecondaryMain = '#FFB546',
-  Background = '#fff',
-  Box = '#f5f5f5',
-  Link = '#06f',
-  PrimaryText = 'rgba(0, 0, 0, 0.87)',
-  SecondaryText = '#44515d',
-  Panel = '#A9D8B8',
-  Disabled = '#bbb',
-  Header = '#ffd3d3',
-  ErrorLight = '#EE7575',
-  ErrorMain = '#C2363D',
-  SuccessDark = '#008958',
-  SuccessMain = '#08B677',
-}
-
 enum Font {
   Barlow = 'Barlow,  sans-serif',
   Crimson = 'Crimson Text, serif',
 }
 
-const theme = createMuiTheme({
+const lightTheme = createMuiTheme({
   breakpoints: {
     values: {
       xs: 0,
@@ -70,7 +43,7 @@ const theme = createMuiTheme({
   },
   palette: {
     primary: {
-      main: Color.Primary,
+      main: Color.BlueMain,
     },
     secondary: {
       light: Color.SecondaryLight,
@@ -94,14 +67,14 @@ const theme = createMuiTheme({
       disabled: Color.Disabled,
     },
     background: {
-      default: Color.Background,
+      default: Color.White,
     },
     section: {
-      megaLight: BackgroundColors.BlueMegaLight,
-      light: BackgroundColors.BlueLight,
-      main: BackgroundColors.Blue,
-      dark: BackgroundColors.BlueDark,
-      megaDark: BackgroundColors.Black,
+      megaLight: Color.BlueMegaLight,
+      light: Color.BlueLight,
+      main: Color.BlueMain,
+      dark: Color.BlueDark,
+      megaDark: Color.BlueMegaDark,
     },
   },
   typography: {
@@ -146,7 +119,7 @@ const theme = createMuiTheme({
     },
     MuiInputBase: {
       root: {
-        background: Color.Background,
+        background: Color.White,
       },
     },
     MuiLink: {
@@ -178,6 +151,37 @@ const theme = createMuiTheme({
       asterisk: {
         color: Color.ErrorMain,
       },
+      root: {
+        color: Color.Black,
+        '&.Mui-focused': {
+          color: Color.Black,
+        },
+        '&.Mui-error': {
+          color: Color.ErrorMain,
+        },
+      },
+    },
+    MuiFilledInput: {
+      root: {
+        backgroundColor: Color.White,
+        '&.Mui-focused': {
+          backgroundColor: Color.White,
+        },
+        '&:hover': {
+          backgroundColor: Color.White,
+        },
+      },
+    },
+    MuiFormHelperText: {
+      root: {
+        color: Color.Black,
+        '&.Mui-error': {
+          color: Color.Black,
+          backgroundColor: Color.ErrorLight,
+          margin: 0,
+          padding: '0.25rem 0.75rem',
+        },
+      },
     },
   },
   props: {
@@ -190,7 +194,7 @@ const theme = createMuiTheme({
   },
 });
 
-export default theme;
+export default lightTheme;
 
 // Default props in theme are not supported for components still in /lab
 export const autocompleteTranslationProps = {

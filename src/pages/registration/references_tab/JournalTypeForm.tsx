@@ -2,7 +2,7 @@ import { useFormikContext } from 'formik';
 import React from 'react';
 import BackgroundDiv from '../../../components/BackgroundDiv';
 import { StyledSelectWrapper } from '../../../components/styled/Wrappers';
-import theme from '../../../themes/mainTheme';
+import lightTheme from '../../../themes/lightTheme';
 import { JournalType, ReferenceFieldNames } from '../../../types/publicationFieldNames';
 import { JournalRegistration } from '../../../types/registration.types';
 import SelectTypeField from './components/SelectTypeField';
@@ -18,7 +18,7 @@ const JournalTypeForm = ({ onChangeSubType }: JournalTypeFormProps) => {
 
   return (
     <>
-      <BackgroundDiv backgroundColor={theme.palette.section.light}>
+      <BackgroundDiv backgroundColor={lightTheme.palette.section.light}>
         <StyledSelectWrapper>
           <SelectTypeField
             fieldName={ReferenceFieldNames.SUB_TYPE}

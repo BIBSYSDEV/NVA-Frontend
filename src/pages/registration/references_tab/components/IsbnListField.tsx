@@ -1,16 +1,16 @@
-import React, { FC, ChangeEvent } from 'react';
 import { Field, FieldProps } from 'formik';
-import { Autocomplete } from '@material-ui/lab';
-import { TextField, Chip } from '@material-ui/core';
+import React, { ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { ReferenceFieldNames } from '../../../../types/publicationFieldNames';
+import { Chip, TextField } from '@material-ui/core';
+import { Autocomplete } from '@material-ui/lab';
 import { setNotification } from '../../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../../types/notification.types';
-import { isbnRegex } from '../../../../utils/validation/registration/referenceValidation';
+import { ReferenceFieldNames } from '../../../../types/publicationFieldNames';
 import { ErrorMessage } from '../../../../utils/validation/errorMessage';
+import { isbnRegex } from '../../../../utils/validation/registration/referenceValidation';
 
-const IsbnListField: FC = () => {
+const IsbnListField = () => {
   const { t } = useTranslation('registration');
   const dispatch = useDispatch();
 
@@ -52,7 +52,7 @@ const IsbnListField: FC = () => {
               data-testid="isbn-input"
               label={t('references.isbn')}
               helperText={t('references.isbn_helper')}
-              variant="outlined"
+              variant="filled"
               fullWidth
               error={!!error}
             />

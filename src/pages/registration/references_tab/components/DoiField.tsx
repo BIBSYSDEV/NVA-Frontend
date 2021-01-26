@@ -1,19 +1,19 @@
-import React, { FC, useState } from 'react';
 import { useFormikContext } from 'formik';
-import { TextField, InputAdornment, Typography } from '@material-ui/core';
-import styled from 'styled-components';
-import ClearIcon from '@material-ui/icons/Clear';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Registration } from '../../../../types/registration.types';
-import { ReferenceFieldNames } from '../../../../types/publicationFieldNames';
+import styled from 'styled-components';
+import { InputAdornment, TextField, Typography } from '@material-ui/core';
+import ClearIcon from '@material-ui/icons/Clear';
 import ConfirmDialog from '../../../../components/ConfirmDialog';
+import { ReferenceFieldNames } from '../../../../types/publicationFieldNames';
+import { Registration } from '../../../../types/registration.types';
 
 const StyledClearIcon = styled(ClearIcon)`
   color: ${({ theme }) => theme.palette.error.main};
   cursor: pointer;
 `;
 
-const DoiField: FC = () => {
+const DoiField = () => {
   const { t } = useTranslation('registration');
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
   const { setFieldValue, values } = useFormikContext<Registration>();
@@ -32,7 +32,7 @@ const DoiField: FC = () => {
   return doiUrl ? (
     <>
       <TextField
-        variant="outlined"
+        variant="filled"
         fullWidth
         label={t('registration.link_to_resource')}
         disabled

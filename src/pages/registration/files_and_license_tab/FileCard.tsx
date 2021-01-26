@@ -22,7 +22,7 @@ import HelpIcon from '@material-ui/icons/Help';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import BackgroundDiv from '../../../components/BackgroundDiv';
 import DangerButton from '../../../components/DangerButton';
-import theme, { datePickerTranslationProps } from '../../../themes/mainTheme';
+import lightTheme, { datePickerTranslationProps } from '../../../themes/lightTheme';
 import { File, LicenseNames, licenses } from '../../../types/file.types';
 import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 import { getDateFnsLocale } from '../../../utils/date-helpers';
@@ -93,7 +93,7 @@ const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }: FileC
   const { t, i18n } = useTranslation('registration');
 
   return (
-    <BackgroundDiv backgroundColor={theme.palette.background.paper} data-testid="uploaded-file-card">
+    <BackgroundDiv backgroundColor={lightTheme.palette.section.megaLight} data-testid="uploaded-file-card">
       <Typography variant="h5">{file.name}</Typography>
       <StyledDescription>
         {t('files_and_license.uploaded_size', { size: Math.round(file.size / 1000) })}
@@ -104,7 +104,7 @@ const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }: FileC
           <Field name={`${baseFieldName}.${SpecificFileFieldNames.ADMINISTRATIVE_AGREEMENT}`}>
             {({ field }: FieldProps) => (
               <FormControlLabel
-                control={<Checkbox color="primary" {...field} checked={field.value} />}
+                control={<Checkbox {...field} color="primary" checked={field.value} />}
                 label={t('files_and_license.administrative_contract')}
               />
             )}
@@ -142,7 +142,7 @@ const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }: FileC
                       <KeyboardDatePicker
                         {...datePickerTranslationProps}
                         data-testid="uploaded-file-embargo-date"
-                        inputVariant="outlined"
+                        inputVariant="filled"
                         label={t('files_and_license.embargo_date')}
                         {...field}
                         onChange={(value) => form.setFieldValue(field.name, value)}
@@ -180,7 +180,7 @@ const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }: FileC
                             ) : null;
                           },
                         }}
-                        variant="outlined"
+                        variant="filled"
                         value={field.value?.identifier || ''}
                         error={!!error && touched}
                         helperText={<ErrorMessage name={field.name} />}
