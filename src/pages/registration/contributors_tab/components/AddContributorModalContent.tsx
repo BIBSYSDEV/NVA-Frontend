@@ -4,14 +4,20 @@ import styled from 'styled-components';
 import { Button, CircularProgress, DialogActions, TextField, Typography } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/AddCircleOutlineSharp';
 import SearchIcon from '@material-ui/icons/Search';
-import { Authority } from '../../../../types/authority.types';
-import AuthorityList from '../../../user/authority/AuthorityList';
-import useFetchAuthorities from '../../../../utils/hooks/useFetchAuthorities';
+import BackgroundDiv from '../../../../components/BackgroundDiv';
 import { StyledProgressWrapper } from '../../../../components/styled/Wrappers';
+import lightTheme from '../../../../themes/lightTheme';
+import { Authority } from '../../../../types/authority.types';
 import useDebounce from '../../../../utils/hooks/useDebounce';
+import useFetchAuthorities from '../../../../utils/hooks/useFetchAuthorities';
+import AuthorityList from '../../../user/authority/AuthorityList';
 
 const StyledTextField = styled(TextField)`
   margin-bottom: 1rem;
+`;
+
+const StyledBackgroundDiv = styled(BackgroundDiv)`
+  padding: 0;
 `;
 
 interface AddContributorModalContentProps {
@@ -34,7 +40,7 @@ const AddContributorModalContent = ({
   const [authorities, isLoadingAuthorities] = useFetchAuthorities(debouncedSearchTerm);
 
   return (
-    <>
+    <StyledBackgroundDiv backgroundColor={lightTheme.palette.background.paper}>
       {initialSearchTerm && (
         <Typography variant="subtitle1">
           {t('registration:contributors.prefilled_name')}: "{initialSearchTerm}"
@@ -85,7 +91,7 @@ const AddContributorModalContent = ({
           {initialSearchTerm ? t('contributors.verify_author') : t('common:add')}
         </Button>
       </DialogActions>
-    </>
+    </StyledBackgroundDiv>
   );
 };
 

@@ -1,15 +1,15 @@
-import React, { FC } from 'react';
 import { getIn, useFormikContext } from 'formik';
-import { Typography, TextFieldProps } from '@material-ui/core';
-import { Autocomplete, AutocompleteProps } from '@material-ui/lab';
+import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
-import { PublicationTableNumber } from '../../../../utils/constants';
+import { TextFieldProps, Typography } from '@material-ui/core';
+import { Autocomplete, AutocompleteProps } from '@material-ui/lab';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
-import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
-import { Registration, Publisher } from '../../../../types/registration.types';
-import useFetchPublishers from '../../../../utils/hooks/useFetchPublishers';
 import EmphasizeSubstring from '../../../../components/EmphasizeSubstring';
-import { autocompleteTranslationProps } from '../../../../themes/mainTheme';
+import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
+import { autocompleteTranslationProps } from '../../../../themes/lightTheme';
+import { Publisher, Registration } from '../../../../types/registration.types';
+import { PublicationTableNumber } from '../../../../utils/constants';
+import useFetchPublishers from '../../../../utils/hooks/useFetchPublishers';
 
 interface PublicationChannelSearchProps
   extends Pick<TextFieldProps, 'label' | 'placeholder' | 'required'>,

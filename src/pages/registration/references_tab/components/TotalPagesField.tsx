@@ -1,9 +1,9 @@
-import React, { FC } from 'react';
-import { Field, FieldProps, ErrorMessage } from 'formik';
-import { ReferenceFieldNames } from '../../../../types/publicationFieldNames';
-import { TextField } from '@material-ui/core';
+import { ErrorMessage, Field, FieldProps } from 'formik';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
+import { TextField } from '@material-ui/core';
+import { ReferenceFieldNames } from '../../../../types/publicationFieldNames';
 
 const StyledTextField = styled(TextField)`
   display: inline;
@@ -12,7 +12,7 @@ const StyledTextField = styled(TextField)`
   }
 `;
 
-const TotalPagesField: FC = () => {
+const TotalPagesField = () => {
   const { t } = useTranslation('registration');
 
   return (
@@ -20,7 +20,7 @@ const TotalPagesField: FC = () => {
       {({ field, meta: { touched, error } }: FieldProps) => (
         <StyledTextField
           inputProps={{ 'data-testid': 'pages-input' }}
-          variant="outlined"
+          variant="filled"
           label={t('references.number_of_pages')}
           {...field}
           value={field.value ?? ''}

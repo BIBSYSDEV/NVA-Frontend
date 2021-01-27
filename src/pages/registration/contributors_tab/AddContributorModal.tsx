@@ -40,7 +40,8 @@ const AddContributorModal = ({ onAuthorSelected, toggleModal, open, initialSearc
       onClose={handleCloseModal}
       open={open}
       fullWidth
-      maxWidth="md">
+      maxWidth="md"
+      dataTestId="contributor-modal">
       {createNewAuthor ? (
         <CreateContributorModalContent addAuthor={addAuthor} handleCloseModal={handleCloseModal} />
       ) : (

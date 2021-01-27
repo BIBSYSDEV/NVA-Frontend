@@ -1,23 +1,23 @@
-import React, { useState } from 'react';
 import { Field, FieldProps, getIn, useFormikContext } from 'formik';
+import React, { useState } from 'react';
+import Truncate from 'react-truncate';
 import { Typography } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
-import Truncate from 'react-truncate';
-import { Registration } from '../../../../types/registration.types';
-import { autocompleteTranslationProps } from '../../../../themes/mainTheme';
-import useSearchRegistrations from '../../../../utils/hooks/useSearchRegistrations';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import EmphasizeSubstring from '../../../../components/EmphasizeSubstring';
 import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
-import { displayDate } from '../../../../utils/date-helpers';
-import useDebounce from '../../../../utils/hooks/useDebounce';
-import { API_URL } from '../../../../utils/constants';
-import { getRegistrationPath } from '../../../../utils/urlPaths';
+import { autocompleteTranslationProps } from '../../../../themes/lightTheme';
 import {
   ReferenceFieldNames,
   RegistrationFieldName,
   RegistrationSubtype,
 } from '../../../../types/publicationFieldNames';
+import { Registration } from '../../../../types/registration.types';
+import { API_URL } from '../../../../utils/constants';
+import { displayDate } from '../../../../utils/date-helpers';
+import useDebounce from '../../../../utils/hooks/useDebounce';
+import useSearchRegistrations from '../../../../utils/hooks/useSearchRegistrations';
+import { getRegistrationPath } from '../../../../utils/urlPaths';
 
 interface SearchContainerFieldProps {
   fieldName: string;

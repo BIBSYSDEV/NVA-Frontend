@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { Checkbox, FormControlLabel, Typography } from '@material-ui/core';
 import BackgroundDiv from '../../../../components/BackgroundDiv';
-import theme from '../../../../themes/mainTheme';
+import lightTheme from '../../../../themes/lightTheme';
 import { BookType, ReferenceFieldNames } from '../../../../types/publicationFieldNames';
 import { BookRegistration } from '../../../../types/registration.types';
 import DoiField from '../components/DoiField';
@@ -46,7 +46,7 @@ const BookForm = () => {
 
   return (
     <>
-      <BackgroundDiv backgroundColor={theme.palette.section.main}>
+      <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
         <DoiField />
         <PublisherField />
 
@@ -56,7 +56,7 @@ const BookForm = () => {
         </StyledSection>
       </BackgroundDiv>
 
-      <BackgroundDiv backgroundColor={theme.palette.section.dark}>
+      <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
         <StyledSection>
           <StyledPeerReview>
             <PeerReview fieldName={ReferenceFieldNames.PEER_REVIEW} label={t('references.peer_review')} />
@@ -85,7 +85,7 @@ const BookForm = () => {
       </BackgroundDiv>
 
       {(type === BookType.ANTHOLOGY || type === BookType.MONOGRAPH) && (
-        <BackgroundDiv backgroundColor={theme.palette.section.megaDark}>
+        <BackgroundDiv backgroundColor={lightTheme.palette.section.megaDark}>
           <Typography color="primary" variant="h5">
             {t('references.series')}
           </Typography>
