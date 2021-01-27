@@ -120,7 +120,6 @@ const PublicRegistrationContent: FC<PublicRegistrationContentProps> = ({ registr
   return (
     <ContentPage>
       <PublicRegistrationStatusBar
-        data-testid="public-registration-status"
         registration={registration}
         refetchRegistration={refetchRegistration}
       />
