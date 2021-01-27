@@ -161,7 +161,7 @@ const UserOrcid = ({ user }: UserOrcidProps) => {
             headingText={t('profile:orcid.create_or_connect')}
             onClose={toggleModal}
             open={openModal}
-            dataTestId="orcid-dialog">
+            dataTestId="orcid-modal">
             <OrcidModalContent />
           </Modal>
         </>

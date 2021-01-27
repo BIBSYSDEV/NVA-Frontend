@@ -41,7 +41,7 @@ const AddContributorModal = ({ onAuthorSelected, toggleModal, open, initialSearc
       open={open}
       fullWidth
       maxWidth="md"
-      dataTestId="contributor-dialog">
+      dataTestId="contributor-modal">
       {createNewAuthor ? (
         <CreateContributorModalContent addAuthor={addAuthor} handleCloseModal={handleCloseModal} />
       ) : (

@@ -219,7 +219,7 @@ export const PublicRegistrationStatusBar: FC<PublicRegistrationContentProps> = (
           open={openRequestDoiModal}
           onClose={toggleRequestDoiModal}
           headingText={t('public_page.request_doi')}
-          dataTestId="request-doi-dialog">
+          dataTestId="request-doi-modal">
           <Typography>{t('public_page.request_doi_description')}</Typography>
           <TextField
             variant="outlined"

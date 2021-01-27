@@ -137,7 +137,7 @@ export const RegistrationFormActions: FC<RegistrationFormActionsProps> = ({
         open={openSupportModal}
         onClose={toggleSupportModal}
         headingText={t('common:support')}
-        dataTestId="support-dialog">
+        dataTestId="support-modal">
         <SupportModalContent closeModal={toggleSupportModal} />
       </Modal>
     </>
