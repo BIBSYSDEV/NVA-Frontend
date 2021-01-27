@@ -139,7 +139,7 @@ export const PublicRegistrationStatusBar: FC<PublicRegistrationContentProps> = (
   const isPublishedRegistration = status === RegistrationStatus.PUBLISHED;
 
   return isOwner || isCurator ? (
-    <StyledStatusBar>
+    <StyledStatusBar data-testid="public-registration-status">
       <StyledStatusBarDescription>
         {isPublishedRegistration ? (
           <StyledPublishedStatusIcon fontSize="large" />
