@@ -110,7 +110,8 @@ const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
         headingText={t('files_and_license.licenses')}
         open={isLicenseModalOpen}
         onClose={toggleLicenseModal}
-        maxWidth="sm">
+        maxWidth="sm"
+        dataTestId="license-dialog">
         {licenses.map((license) => (
           <StyledLicenseDescription key={license.identifier}>
             <Typography variant="h6">{license.identifier}</Typography>
