@@ -1,0 +1,17 @@
+{
+  "about_heading": "Om NVA",
+  "description": {
+    "heading": "Beskrivelse",
+    "paragraph0": {
+      "intro": "Med NVA får norske forskningsinstitusjoner en tjeneste for å:",
+      "bullet_point0": "Innfri krav om åpen tilgang til artikler og andre forskningsresultater gjennom deponering i et åpent forskningsarkiv",
+      "bullet_point1": "Selv publisere rapporter, studentoppgaver og annet materiale produsert ved institusjonen"
+    },
+    "paragraph1": "NVA skal også utvikles til bruk ved rapportering av vitenskapelig publisering til Kunnskapsdepartementet og Helse- og omsorgsdepartementet (NVI-rapportering), og for andre forskningsadministrative oppgaver.",
+    "paragraph2": "Institusjonen er behandlingsansvarlig og registrer og vedlikeholder eget innhold i tjenesten og konfigurerer distribusjonsregler for publiserte ressurser (artikler, rapporter, datasett etc.). Tjenesten får også overført innhold fra andre datakilder.",
+    "paragraph3": "NVA har støtte for utsatt publisering av ressurser. Det betyr at en registrering kan ferdigstilles slik at metadata om ressursen blir publisert, mens ressursen ikke blir åpent tilgjengelig før angitt dato. Tjenesten tillater ikke behandling av sensitive personopplysninger.",
+    "paragraph4": "NVA vil tilgjengeliggjøre institusjonens åpne innhold via åpne grensesnitt, med hensikt å gjøre dette kjent og søkbart for omverdenen og fremme indeksering i søkemotorer og søkeportaler.",
+    "paragraph5": "Selv om NVA er etablert, er tjenesten er fortsatt under utvikling. Institusjoner som ikke har et åpent forskningsarkiv kan kontakte <0>Unit</0> for å få ta i bruk NVA som pilotinstitusjon."
+  },
+  "short_description": "NVA samler informasjon om norsk forskning og gjør forskningsresultater åpent tilgjengelige."
+}

@@ -1,6 +1,6 @@
 export enum UrlPathTemplate {
+  About = '/about',
   AdminInstitutions = '/admin-institutions',
-  Description = '/description',
   Home = '/',
   Logout = '/logout',
   MyInstitution = '/my-institution',
@@ -8,7 +8,6 @@ export enum UrlPathTemplate {
   MyMessages = '/my-messages',
   MyProfile = '/my-profile',
   MyRegistrations = '/my-registrations',
-  OrderInformation = '/order-information',
   PrivacyPolicy = '/privacy-policy',
   Registration = '/registration/:identifier?',
   RegistrationLandingPage = '/registration/:identifier/public',
