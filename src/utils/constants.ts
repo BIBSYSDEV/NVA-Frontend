@@ -29,8 +29,6 @@ export enum PublicationTableNumber {
 }
 
 export enum ContactInformation {
-  NVA_TEST_WEBSITE = 'test.nva.unit.no',
-  NVA_EMAIL = 'xxx@unit.no',
   UNIT_SUPPORT_EMAIL = 'support@unit.no',
 }
 

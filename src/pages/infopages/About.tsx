@@ -33,20 +33,7 @@ const About = () => {
         <Typography paragraph>
           <Trans t={t} i18nKey="description.paragraph5">
             <MuiLink href={`mailto:${ContactInformation.UNIT_SUPPORT_EMAIL}`} target="_blank" rel="noopener noreferrer">
-              {ContactInformation.UNIT_SUPPORT_EMAIL}
-            </MuiLink>
-          </Trans>
-        </Typography>
-
-        <Typography variant="h2">{t('order_information.heading')}</Typography>
-        <Typography paragraph>{t('order_information.paragraph0')}</Typography>
-        <Typography paragraph>
-          <Trans t={t} i18nKey="order_information.paragraph1">
-            <MuiLink href={`https://${ContactInformation.NVA_TEST_WEBSITE}`} target="_blank" rel="noopener noreferrer">
-              {ContactInformation.NVA_TEST_WEBSITE}
-            </MuiLink>
-            <MuiLink href={`mailto:${ContactInformation.NVA_EMAIL}`} target="_blank" rel="noopener noreferrer">
-              {ContactInformation.NVA_EMAIL}
+              (i18n content: support email)
             </MuiLink>
           </Trans>
         </Typography>
