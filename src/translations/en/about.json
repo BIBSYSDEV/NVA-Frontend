@@ -11,12 +11,7 @@
     "paragraph2": "The institution is responsible for the processing and registers and maintains its own content in the service and configures distribution rules for published resources (articles, reports, data sets, etc.). The service also receives content from other data sources.",
     "paragraph3": "NVA supports postponed publication of resources. This means that a registration can be completed so that metadata about the resource is published, while the resource itself is not open until the specified date. The service does not allow the processing of sensitive personal data.",
     "paragraph4": "NVA will make the institution's open content available via open interfaces, with the intention of making this known and searchable to the outside world and promoting indexing in search engines and search portals.",
-    "paragraph5": "Although NVA is established, the service is still under development. Institutions that do not have an open research archive can contact Unit (<0><0></0></0>) to use NVA as a pilot institution."
+    "paragraph5": "Although NVA is established, the service is still under development. Institutions that do not have an open research archive can contact <0>Unit</0> to use NVA as a pilot institution."
   },
-  "order_information": {
-    "heading": "Order information",
-    "paragraph0": "The service is under development and only invited pilot institutions can use it. Any institution can ask to be included in the pilot program. Please elaborate why your institution wants to be included.",
-    "paragraph1": "All institutions are welcome at <0><0></0></0> to give feedback to Unit. Please send your feedback via email to <1><0></0></1>."
-  },
-  "short_description": "NVA is a service that collects and presents information and results from Norwegian research."
+  "short_description": "NVA collects information about Norwegian research and makes research results openly available."
 }
