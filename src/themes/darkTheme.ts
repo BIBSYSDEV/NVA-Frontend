@@ -12,13 +12,6 @@ const darkTheme = createMuiTheme({
   },
   overrides: {
     ...lightTheme.overrides,
-    MuiFormLabel: {
-      root: {
-        '&.Mui-disabled': {
-          color: Color.Black,
-        },
-      },
-    },
     MuiFilledInput: {
       root: {
         backgroundColor: Color.BlueMegaLight,
@@ -46,6 +39,16 @@ const darkTheme = createMuiTheme({
       root: {
         ...lightTheme.overrides?.MuiFormHelperText?.root,
         color: Color.BlueMegaLight,
+      },
+    },
+    MuiFormLabel: {
+      root: {
+        '&.Mui-disabled': {
+          color: Color.Black,
+        },
+        '&.Mui-focused': {
+          color: Color.Black,
+        },
       },
     },
   },
