@@ -1,11 +1,12 @@
 import { FieldArrayRenderProps, move, useFormikContext } from 'formik';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { Button } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/AddCircleOutlineSharp';
 import { setNotification } from '../../../redux/actions/notificationActions';
+import lightTheme from '../../../themes/lightTheme';
 import { Authority } from '../../../types/authority.types';
 import { Contributor, emptyContributor, Identity, UnverifiedContributor } from '../../../types/contributor.types';
 import { NotificationVariant } from '../../../types/notification.types';
@@ -31,6 +32,13 @@ const Authors = ({ push, replace }: AuthorsProps) => {
   const [openContributorModal, setOpenContributorModal] = useState(false);
   const [unverifiedAuthor, setUnverifiedAuthor] = useState<UnverifiedContributor | null>(null);
   const orderedAuthors = contributors.map((contributor, index) => ({ ...contributor, sequence: index + 1 }));
+
+  const [width, setWidth] = useState(window.innerWidth);
+  const isMobile = width < lightTheme.breakpoints.values.md;
+
+  useEffect(() => {
+    window.addEventListener('resize', () => setWidth(window.innerWidth));
+  }, []);
 
   const handleOnRemove = (indexToRemove: number) => {
     const remainingAuthors = contributors
@@ -89,7 +97,7 @@ const Authors = ({ push, replace }: AuthorsProps) => {
 
   return (
     <>
-      {contributors.length >= 5 && (
+      {((isMobile && contributors.length >= 2) || (!isMobile && contributors.length >= 5)) && (
         <StyledButton
           onClick={() => {
             setOpenContributorModal(true);
