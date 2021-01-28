@@ -12,7 +12,7 @@ import { ORCID_BASE_URL } from '../../utils/constants';
 import NormalText from '../../components/NormalText';
 import useSearchRegistrations from '../../utils/hooks/useSearchRegistrations';
 import SearchResults from '../search/SearchResults';
-import { ContributorFieldNames, SpecificContributorFieldNames } from '../../types/publicationFieldNames';
+import { SearchFieldName } from '../../types/search.types';
 
 const StyledLine = styled.div`
   display: flex;
@@ -36,9 +36,7 @@ const PublicProfile: FC = () => {
 
   const [authority, isLoadingUser] = useFetchAuthority(arpId);
   const [registrations, isLoadingRegistrations] = useSearchRegistrations({
-    properties: [
-      { fieldName: `${ContributorFieldNames.CONTRIBUTORS}.${SpecificContributorFieldNames.ID}`, value: arpId },
-    ],
+    properties: [{ fieldName: SearchFieldName.ContributorId, value: arpId }],
   });
 
   return (

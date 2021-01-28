@@ -7,17 +7,14 @@ import { AutocompleteTextField } from '../../../../components/AutocompleteTextFi
 import EmphasizeSubstring from '../../../../components/EmphasizeSubstring';
 import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
 import { autocompleteTranslationProps } from '../../../../themes/lightTheme';
-import {
-  ReferenceFieldNames,
-  RegistrationFieldName,
-  RegistrationSubtype,
-} from '../../../../types/publicationFieldNames';
+import { RegistrationSubtype } from '../../../../types/publicationFieldNames';
 import { Registration } from '../../../../types/registration.types';
 import { API_URL } from '../../../../utils/constants';
 import { displayDate } from '../../../../utils/date-helpers';
 import useDebounce from '../../../../utils/hooks/useDebounce';
 import useSearchRegistrations from '../../../../utils/hooks/useSearchRegistrations';
 import { getRegistrationPath } from '../../../../utils/urlPaths';
+import { SearchFieldName } from '../../../../types/search.types';
 
 interface SearchContainerFieldProps {
   fieldName: string;
@@ -33,12 +30,12 @@ const SearchContainerField = (props: SearchContainerFieldProps) => {
 
   const [searchContainerOptions, isLoadingSearchContainerOptions] = useSearchRegistrations({
     searchTerm: debouncedSearchTerm,
-    properties: [{ fieldName: ReferenceFieldNames.SUB_TYPE, value: props.searchSubtypes }],
+    properties: [{ fieldName: SearchFieldName.Subtype, value: props.searchSubtypes }],
   });
 
   const currentIdentifier = getIn(values, props.fieldName)?.split('/').pop() ?? '';
   const [selectedContainer, isLoadingSelectedContainer] = useSearchRegistrations({
-    properties: [{ fieldName: RegistrationFieldName.IDENTIFIER, value: currentIdentifier }],
+    properties: [{ fieldName: SearchFieldName.Id, value: currentIdentifier }],
   });
 
   // Show only selected value as option unless user are performing a new search
