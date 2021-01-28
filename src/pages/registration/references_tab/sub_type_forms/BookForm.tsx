@@ -40,7 +40,7 @@ const BookForm = () => {
   const {
     reference: {
       publicationContext,
-      publicationInstance: { peerReviewed, type },
+      publicationInstance: { peerReviewed, textbookContent, type },
     },
   } = values.entityDescription;
 
@@ -93,7 +93,12 @@ const BookForm = () => {
           <SeriesField />
 
           {type === BookType.MONOGRAPH && (
-            <NviValidation isPeerReviewed={peerReviewed} isRated={!!publicationContext?.level} dataTestId="nvi_book" />
+            <NviValidation
+              isPeerReviewed={peerReviewed}
+              isRated={!!publicationContext?.level}
+              isTextbook={!!textbookContent}
+              dataTestId="nvi_book"
+            />
           )}
         </BackgroundDiv>
       )}
