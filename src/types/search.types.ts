@@ -24,6 +24,21 @@ export interface LatestRegistration {
   owner: string;
 }
 
+export type SearchPublicationContext = Partial<
+  JournalPublicationContext &
+    BookPublicationContext &
+    ReportPublicationContext &
+    DegreePublicationContext &
+    ChapterPublicationContext
+>;
+
+type SearchPublicationINstance = Partial<
+  JournalPublicationInstance &
+    BookPublicationInstance &
+    ReportPublicationInstance &
+    DegreePublicationInstance &
+    ChapterPublicationInstance
+>;
 export interface SearchRegistration {
   id: string;
   contributors: SearchResultContributor[];
@@ -34,20 +49,8 @@ export interface SearchRegistration {
   publicationDate: RegistrationDate;
   abstract?: string;
   reference?: {
-    publicationContext: Partial<
-      JournalPublicationContext &
-        BookPublicationContext &
-        ReportPublicationContext &
-        DegreePublicationContext &
-        ChapterPublicationContext
-    >;
-    publicationInstance: Partial<
-      JournalPublicationInstance &
-        BookPublicationInstance &
-        ReportPublicationInstance &
-        DegreePublicationInstance &
-        ChapterPublicationInstance
-    >;
+    publicationContext: SearchPublicationContext;
+    publicationInstance: SearchPublicationINstance;
   };
 }
 

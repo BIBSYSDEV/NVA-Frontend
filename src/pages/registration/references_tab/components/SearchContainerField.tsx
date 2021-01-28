@@ -15,7 +15,7 @@ import { displayDate } from '../../../../utils/date-helpers';
 import useDebounce from '../../../../utils/hooks/useDebounce';
 import useSearchRegistrations from '../../../../utils/hooks/useSearchRegistrations';
 import { getRegistrationPath } from '../../../../utils/urlPaths';
-import { SearchFieldName } from '../../../../types/search.types';
+import { SearchFieldName, SearchPublicationContext } from '../../../../types/search.types';
 
 interface SearchContainerFieldProps {
   fieldName: string;
@@ -25,7 +25,6 @@ interface SearchContainerFieldProps {
 }
 
 const SearchContainerField = (props: SearchContainerFieldProps) => {
-  const { t } = useTranslation('registration');
   const { values, setFieldValue, setFieldTouched } = useFormikContext<Registration>();
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearchTerm = useDebounce(searchTerm);
@@ -103,17 +102,40 @@ const SearchContainerField = (props: SearchContainerFieldProps) => {
         )}
       </Field>
       {selectedContainer?.reference?.publicationContext && (
-        <>
-          <Typography color="primary" variant="h2">
-            Informasjon om valgt artikkel:
-          </Typography>
-          <Typography color="primary">Tidsskrift: {selectedContainer?.reference?.publicationContext.title}</Typography>
-          <Typography color="primary">
-            Utgiver: {selectedContainer?.reference?.publicationContext.publisher} (
-            {selectedContainer?.reference?.publicationContext.onlineIssn}){' '}
-            <a href={selectedContainer?.reference?.publicationContext.url}>Link</a>
-          </Typography>
-        </>
+        <SelectedContainerSummary publicationContext={selectedContainer.reference.publicationContext} />
+      )}
+    </>
+  );
+};
+
+interface SelectedContainerSummaryProps {
+  publicationContext: SearchPublicationContext;
+}
+
+const SelectedContainerSummary = ({ publicationContext }: SelectedContainerSummaryProps) => {
+  const { t } = useTranslation('registration');
+  const { publisher, title, url, onlineIssn, printIssn } = publicationContext;
+  return (
+    <>
+      {title && (
+        <Typography color="primary">
+          {t('references.journal')}: {title}
+        </Typography>
+      )}
+      {publisher && (
+        <Typography color="primary">
+          {t('common:publisher')}: {publisher}
+        </Typography>
+      )}
+      {url && (
+        <Typography color="primary" component="a" href={url}>
+          {url}
+        </Typography>
+      )}
+      {(printIssn || onlineIssn) && (
+        <Typography color="primary">
+          {t('references.issn')}: {[printIssn, onlineIssn].filter((issn) => issn).join(', ')}
+        </Typography>
       )}
     </>
   );
