@@ -89,6 +89,19 @@ const Authors = ({ push, replace }: AuthorsProps) => {
 
   return (
     <>
+      {contributors.length >= 5 && (
+        <StyledButton
+          onClick={() => {
+            setOpenContributorModal(true);
+            setUnverifiedAuthor(null);
+          }}
+          variant="contained"
+          color="secondary"
+          startIcon={<AddIcon />}
+          data-testid="add-contributor">
+          {t('contributors.add_author')}
+        </StyledButton>
+      )}
       <AuthorList
         authors={orderedAuthors}
         onDelete={handleOnRemove}
