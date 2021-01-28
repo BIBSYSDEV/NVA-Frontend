@@ -1,17 +1,275 @@
 {
   "about": {
-    "description": "This privacy statement describes how the data controller processes your personal data in the service. The purpose of this privacy statement is to inform you about what personal data we process, how it is processed, who is responsible for the processing, what your rights are and who you can contact.",
-    "heading": "About the privacy statement"
+    "heading": "About the privacy statement",
+    "paragraph": "This privacy statement describes how the data controller processes your personal data in the service. The purpose of this privacy statement is to inform you about what personal data we process, how it is processed, who is responsible for the processing, what your rights are and who you can contact."
+  },
+  "automatic_case_processing": {
+    "heading": "Automatic case processing",
+    "paragraph0": "Personal data related to the system users will not be subject to automated case processing or profiling.",
+    "paragraph1": "Open personal data related to the resource can be subject to profiling by services that harvest information from NVA, but will not be profiled as part of the service."
+  },
+  "contact": {
+    "heading": "Contact",
+    "section0": {
+      "heading": "The data controller",
+      "paragraph": "The institution is the data controller for personal data in the service and is the primary contact for end users."
+    },
+    "section1": {
+      "heading": "The data processor",
+      "paragraph": "Unit develops and manages the service on behalf of the data controller and has the role of data processor."
+    },
+    "section2": {
+      "intro": "Unit user support's contact details",
+      "email": "Email: <0><0></0></0>",
+      "telephone": "Telephone: <0><0></0></0>"
+    }
+  },
+  "disclosure_of_data": {
+    "heading": "Disclosure of your personal data to third parties",
+    "paragraph0": "Disclosure or export of data is defined as all disclosure of data aside from to the service’s own system/processing or to the data subjects themselves, or to someone who receives data on their behalf.",
+    "paragraph1": "Personal data linked to users are not transferred to countries outside the EU/EEA.",
+    "paragraph2": "The service is run on servers in the EU/EEA.",
+    "paragraph3": {
+      "intro": "Your personal data will be disclosed to Unit, which is the service provider, and to its subcontractors:",
+      "table": {
+        "header": {
+          "col0": "Subcontractor",
+          "col1": "Function"
+        },
+        "row0": {
+          "col0": "Supplier in a framework agreement for AWS through the GÉANT collaboration",
+          "col1": "Cloud management and backup for Unit's direct services"
+        },
+        "row1": {
+          "col0": "Blue Safespring AB ",
+          "col1": "Cloud management and backup for Unit's direct services"
+        },
+        "row2": {
+          "col0": "UNINETT AS",
+          "col1": "Delivers Feide, for authentication of users of the services"
+        }
+      }
+    },
+    "paragraph4": "The subcontractors’ staff who need the personal data to perform their work will have adapted access in order to provide on-site maintenance, user support and any rectification of errors in the service.",
+    "paragraph5": "Open personal data linked to the resources are openly shared with external services. This includes search services such as Oria and OpenAIRE, as well as search engines such as Google, Baidu, Bing etc. that index data via the websites.",
+    "paragraph6": {
+      "intro": "See the following table for the service's integrations:",
+      "table": {
+        "header": {
+          "col0": "Integration",
+          "col1": "Purpose",
+          "col2": "Service provided by"
+        },
+        "row0": {
+          "col0": "Feide",
+          "col1": "Information for secure login of users.",
+          "col2": "UNINETT AS"
+        },
+        "row1": {
+          "col0": "Import of material to NAV from external services",
+          "col1": "Export of metadata for resources to other services for presentation or cross-registration. For example, Oria to facilitate retrieval.",
+          "col2": "Sources defined by the data controller"
+        },
+        "row2": {
+          "col0": "Export of metadata from NVA to external service",
+          "col1": "Export of metadata for resources to other services for presentation or cross-registration. For example, Oria to facilitate retrieval.",
+          "col2": "Unit for Oria Sources defined by the data controller"
+        },
+        "row3": {
+          "col0": "DOI and DataCite",
+          "col1": "The registrator can request the assignment of a Document Object Identifier (DOI) to a resource in NVA. This will cause selected metadata to be published in DataCite - a source that is regularly indexed by search engines.",
+          "col2": "DataCite"
+        },
+        "row4": {
+          "col0": "Felles autoritetsregister",
+          "col1": "Establish a link to the authority register for authorization of author, editor, supervisor and other creator or contributor registered in the service. To facilitate unambiguous registration and retrieval.",
+          "col2": "Unit"
+        },
+        "row5": {
+          "col0": "ORCID",
+          "col1": "Establish a link to ORCID for authorization of author, editor, supervisor and other creator or contributor registered in the service. To facilitate unambiguous registration and retrieval.",
+          "col2": "ORCID"
+        }
+      }
+    }
   },
   "privacy_statement": "Privacy statement",
+  "purpose": {
+    "heading": "The purpose of personal data processing in the service",
+    "paragraph": "The service processes different types of personal data for the following purposes:",
+    "table": {
+      "header": {
+        "col0": "Types",
+        "col1": "Description",
+        "col2": "Purpose of registration and processing"
+      },
+      "row0": {
+        "col0": "Administrative users",
+        "col1": "Archive administrator, Editor, Curator. Typically employees at the institution.",
+        "col2": "Administration of the service including maintenance of content and configuration of access to functions and content. Administrative users must be registered with their identity to acquire rights in the service."
+      },
+      "row1": {
+        "col0": "Authenticated users",
+        "col1": "Users who register material in the service. Persons associated with the institution who have logged on to the service.",
+        "col2": "Persons associated with the institution who have logged on to the service. Registration of material in the service. Authenticated users must be registered with their identity to acquire rights in the service."
+      },
+      "row2": {
+        "col0": "Anonymous users",
+        "col1": "Persons or services that access the service, identified by IP address and cookies.",
+        "col2": "The Anonymous user is granted access to open resources in the service. The service logs necessary information to avoid misuse of the service and to generate aggregated statistics of use of the resources."
+      },
+      "row3": {
+        "col0": "Persons linked to the registered resource",
+        "col1": "Author, editor, supervisor or other crator or contributor to a resource registered in the service.",
+        "col2": "Cataloguing, crediting and accountability of the persons behind the resource."
+      },
+      "row4": {
+        "col0": "Persons identified in the resource",
+        "col1": "Any persons and pertaining data in the published material.",
+        "col2": "Published material made available. The person responsible for content together with the data controller must ensure data protection in the resource before it is published in the service."
+      }
+    }
+  },
+  "registered_personal_data": {
+    "heading": "Registered personal data, legal grounds and storage time",
+    "paragraph0": "Personal data related to user accounts in the service requires consent as legal grounds, cf. the <0>Personal Data Act, and the GDPR Article 6</0>(1)(a)",
+    "paragraph1": "Registered personal data about authors and contact persons are covered by the <0>Personal Data Act, and the GDPR Article 6(1)</0>(f) – to perform a task on grounds of legitimate interests.",
+    "paragraph2": "The service does not allow processing of sensitive personal data. In the cases where the users themselves can write information in the comments field and similar, the user is obliged to meet the requirements and guidelines for the service. Users are not permitted to register sensitive personal data about themselves or others or to use the service for defamatory conduct.",
+    "paragraph3": "The data controller is entitled to store information for statistical purposes, if this is in the interests of society at large, cf. the <0>Personal Data Act Section 8</0> and the <1>GDPR Article 6</1>(1)(e)",
+    "paragraph4": "The following personal data are processed in the service:",
+    "paragraph5": "Information about your activity is stored in order to provide user support and to gain an impression of general use of the service.",
+    "paragraph6": {
+      "intro": "Personal data is stored until one of the following occurs:",
+      "bullet_point0": "User consent is withdrawn",
+      "bullet_point1": "The purpose of the personal data processing has been fulfilled",
+      "bullet_point2": "The data controller decides to discontinue the service"
+    },
+    "paragraph7": "Logs and backups of the system data are stored for up to one year.",
+    "paragraph8": "User information (except logs) is stored for the lifetime of the resource for users who register content in the service.",
+    "table": {
+      "header": {
+        "col0": "Type of data",
+        "col1": "Description",
+        "col2": "Source"
+      },
+      "other_user_data": {
+        "heading": "Other personal data",
+        "row0": {
+          "col0": "Metadata about the resource",
+          "col1": "Full name and role of author, editor, supervisor or other creator or contributor",
+          "col2": "Registered in NVA or imported from external source"
+        },
+        "row1": {
+          "col0": "Personal data in the resource itself",
+          "col1": "Arbitrary content that must be quality assured by the person responsible for publishing the resource.",
+          "col2": "The resource is uploaded in NVA during registration or imported from external source"
+        }
+      },
+      "techincal_user_data": {
+        "heading": "Technical user data",
+        "row0": {
+          "col0": "System identities",
+          "col1": "Identities in the service and integrated systems. Feide iD, Author iD, ORCID iD",
+          "col2": "Feide, Felles autoritesregister, ORCID"
+        },
+        "row1": {
+          "col0": "System roles and affiliation to the organisation",
+          "col1": "The user is assigned roles in the system in order to provide adapted functionality and access to the service.",
+          "col2": "Assigned in NVA, Feide"
+        },
+        "row2": {
+          "col0": "Session information and cookies",
+          "col1": "Information related to the user’s dialogue with the service. Necessary to adapt functionality in the service and to authenticate users.",
+          "col2": "NVA, Feide"
+        },
+        "row3": {
+          "col0": "Log",
+          "col1": "Log of system use related to the logged-in user and/or their IP address. IP addresses will be registered for anonymous users, which in certain cases can be traced back to a person. The purpose of logs is to ensure security and integrity in the system, provide user support and analyse use of the service. The data collected include time, user ID, IP address, information about browsers and hardware, session information and other information that browsers normally provide.",
+          "col2": "Set up in NVA"
+        }
+      },
+      "user_data": {
+        "heading": "User data",
+        "row0": {
+          "col0": "Basic user data",
+          "col1": "Full name.",
+          "col2": "Feide"
+        },
+        "row1": {
+          "col0": "Contact information",
+          "col1": "Email address assigned by the organisation.",
+          "col2": "Feide"
+        },
+        "row2": {
+          "col0": "Profile",
+          "col1": "User preferences for using the service. Language choice, Institutional affiliation.",
+          "col2": "Settings in NVA"
+        }
+      }
+    }
+  },
+  "security_for_personal_data": {
+    "heading": "Security in relation to your personal data",
+    "paragraph0": "Personal data processed in the service are secured by several measures. All transfers to and from the service related to user accounts are encrypted. The data processor conducts regular risk and vulnerability analyses and tests the security of the service to ensure your personal data are safe.",
+    "paragraph1": "The data controller is responsible for procedures that address data protection in connection with the publication of content."
+  },
   "service_in_brief": {
-    "description0": "NVA is a service for collecting and making available information about, and results from, Norwegian research. The institution (the data controller) registers and maintains its own content in the service and configures distribution rules for published resources (articles, reports, data sets, etc.). The service also imports material affiliated to the institution from other data sources. NVA makes the institution's open material available via open interfaces for the purpose of making the content known and searchable for the public and promoting indexing in search engines and portals.",
-    "description1": "NVA supports postponed publication of resources. This means that the registration can be completed so that metadata about the resource is published, while the resource will not be openly available until the specified date.",
-    "description2": "The service does not allow processing of sensitive personal data.",
-    "heading": "The service in brief"
+    "heading": "The service in brief",
+    "paragraph0": "NVA is a service for collecting and making available information about, and results from, Norwegian research. The institution (the data controller) registers and maintains its own content in the service and configures distribution rules for published resources (articles, reports, data sets, etc.). The service also imports material affiliated to the institution from other data sources. NVA makes the institution's open material available via open interfaces for the purpose of making the content known and searchable for the public and promoting indexing in search engines and portals.",
+    "paragraph1": "NVA supports postponed publication of resources. This means that the registration can be completed so that metadata about the resource is published, while the resource will not be openly available until the specified date.",
+    "paragraph2": "The service does not allow processing of sensitive personal data."
+  },
+  "your_rights": {
+    "heading": "Your rights",
+    "section0": {
+      "heading": "Right to information and access",
+      "paragraph0": "You have a right to receive information about how your personal data are processed in the service. This privacy statement has been produced to provide the information you have a right to receive. You also have a right to see/access your personal data that are registered in the service, and other personal data that are collected after you have actively logged in. You also have the right to request to receive a copy of your personal data.",
+      "paragraph1": "A self-service solution in the service where users can see their personal data after logging in allows users to exercise their right of access. If the service does not provide complete information via the self-service solution, users can send a written enquiry to the data controller’s user support to acquire access to more detailed information."
+    },
+    "section1": {
+      "heading": "Right to rectification",
+      "paragraph0": "You have a right to have inaccurate personal data about you rectified. You also have a right to have incomplete personal data about you supplemented. If you feel that the service shows inaccurate or incomplete personal data, please contact the data controller, stating the reason why the personal data are inaccurate or incomplete.",
+      "paragraph1": "Please note that there is a limited possibility of rectifying data that are distributed via open interfaces."
+    },
+    "section2": {
+      "heading": "Right to restriction of processing",
+      "paragraph0": {
+        "intro": "In certain cases, you may have a right to request restrictions on the processing of your personal data. Restricted processing means that the personal data will still be stored, but that other processing in the service is restricted. To request restricted processing of personal data, the conditions in the Personal Data Act and the <0>GDPR Article 18</0> must be met. You can request restricted processing",
+        "bullet_point0": "Pending the data controller rectifying inaccurate or incomplete personal data",
+        "bullet_point1": "If you have submitted an objection to the processing (see below for more details)",
+        "bullet_point2": "If the personal data are necessary to establish or defend a legal claim"
+      },
+      "paragraph1": "If restricted processing is granted, the data controller will notify you before the restriction is lifted."
+    },
+    "section3": {
+      "heading": "Right to erasure",
+      "paragraph0": "You have the right to demand that we erase personal data about you. If you would like your personal data to be erased, please contact the data controller. It is important that your request states why you want your personal data erased and, if possible, what personal data you wish to be erased.",
+      "paragraph1": "Please note that legislation provides exemptions from the right to erasure in some cases. This could be cases where we process personal data to fulfil a statutory duty or to address important social interests, such as archiving, research and statistics. In cases where the users themselves have registered content in the service, we are not able to erase user information without also erasing the registered content.",
+      "paragraph2": "Please note that there is also a limited possibility of erasing personal data that are distributed via open interfaces."
+    },
+    "section4": {
+      "heading": "Right to object",
+      "paragraph0": {
+        "intro": "You have a right to object to processing of your personal data on certain conditions defined in the <0>GDPR Article 21</0>. This applies if:",
+        "bullet_point0": "Legal grounds for the processing of personal data are based on legitimate interests, reasons of public interest or when exercising public authority",
+        "bullet_point1": "Processing of personal data entails direct marketing or profiling",
+        "bullet_point2": "Personal data are processed for scientific or historical research purposes or statistical purposes"
+      },
+      "paragraph1": "The service does not generally satisfy these conditions, with the exception of the processing of author information and in cases where personal data are used for statistical purposes. When personal data are used for statistical purposes, the data are anonymised.",
+      "paragraph2": {
+        "intro": "However, please note the following:",
+        "bullet_point0": "If there is a special need to stop the processing, for example if you have a need of protection, or a confidential address or similar, please contact the data controller",
+        "bullet_point1": "When you have consented to the processing of personal data, you have a right to withdraw your consent"
+      }
+    },
+    "section5": {
+      "heading": "Right to complain about the processing",
+      "paragraph0": "If you feel that we have not processed personal data in a correct or lawful manner, or if you feel that you have been unable to exercise your rights with us, you have a right to complain about the processing. See our contact details below.",
+      "paragraph1": "If we do not uphold your complaint, you have the possibility of filing a complaint with the Norwegian Data Protection Authority. The Data Protection Authority is responsible for ensuring that Norwegian enterprises comply with the provisions of the Personal Data Act and the GDPR in their processing of personal data."
+    }
   },
   "what_are_personal_data": {
-    "description": "Personal data are all forms of data, information and assessments that can be linked to you as a person, cf. the <0>Personal Data Act Section 2</0> and the <1>GDPR Article 5(1)</1>. The decisive factor as to whether data constitutes personal data is whether it can be linked to a specific person. Data that, on its own, cannot be linked to an individual person may constitute personal data in cases where the data are found together with other data.",
-    "heading": "What are personal data?"
+    "heading": "What are personal data?",
+    "paragraph": "Personal data are all forms of data, information and assessments that can be linked to you as a person, cf. the <0>Personal Data Act Section 2</0> and the <1>GDPR Article 5</1>(1). The decisive factor as to whether data constitutes personal data is whether it can be linked to a specific person. Data that, on its own, cannot be linked to an individual person may constitute personal data in cases where the data are found together with other data."
   }
 }
