@@ -29,7 +29,7 @@ const PublicDoi: FC<PublicDoiProps> = ({ registration }) => {
   const isDraftDoi = nvaDoi && !hasApprovedDoiRequest && canSeeDraftDoi;
 
   return doiToPresent ? (
-    <LabelContentRow data-testid="doi-presentation" minimal label={`${t('registration.link_to_resource')}:`}>
+    <LabelContentRow dataTestId="doi-presentation" minimal label={`${t('registration.link_to_resource')}:`}>
       <Link href={doiToPresent} target="_blank" rel="noopener noreferrer">
         {doiToPresent}
       </Link>
