@@ -132,7 +132,7 @@ const MyInstitutionUsersPage: FC = () => {
                 ? t('users.add_curator')
                 : t('users.add_editor')
             }
-            data-testid="add-role-modal">
+            dataTestId="add-role-modal">
             <AddRoleModalContent
               role={roleToAdd}
               users={users}

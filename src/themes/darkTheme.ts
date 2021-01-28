@@ -21,12 +21,34 @@ const darkTheme = createMuiTheme({
         '&:hover': {
           backgroundColor: Color.BlueMegaLight,
         },
+        '&.Mui-disabled': {
+          backgroundColor: 'rgba(255, 255, 255, 0.60)',
+          color: Color.Black,
+        },
+      },
+      underline: {
+        '&:hover:before': {
+          borderBottomColor: Color.BlueMegaLight,
+        },
+        '&.Mui-disabled:before': {
+          borderBottomStyle: 'none',
+        },
       },
     },
     MuiFormHelperText: {
       root: {
         ...lightTheme.overrides?.MuiFormHelperText?.root,
         color: Color.BlueMegaLight,
+      },
+    },
+    MuiFormLabel: {
+      root: {
+        '&.Mui-disabled': {
+          color: Color.Black,
+        },
+        '&.Mui-focused': {
+          color: Color.Black,
+        },
       },
     },
   },

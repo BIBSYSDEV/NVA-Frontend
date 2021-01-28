@@ -1,30 +1,24 @@
-import React, { FC } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { Link, useHistory } from 'react-router-dom';
-import { Link as MuiLink } from '@material-ui/core';
+import { Link as MuiLink, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import LatestRegistrations from './LatestRegistrations';
 import SearchBar from '../../components/SearchBar';
 import { getSearchPath, UrlPathTemplate } from '../../utils/urlPaths';
+import Card from '../../components/Card';
 
 const StyledDashboard = styled.div`
   display: grid;
-  grid-template-areas: 'search-bar' 'other-content';
+  grid-template-areas: 'description' 'search-bar';
   grid-template-rows: auto auto;
   row-gap: 1rem;
   justify-items: center;
   width: 100%;
 `;
 
-const StyledOtherContent = styled.div`
-  grid-area: other-content;
-  padding-bottom: 1.5rem;
-`;
-
-const StyledLinks = styled.div`
-  > * {
-    margin: 0.5rem;
-  }
+const StyledAbout = styled.div`
+  grid-area: description;
 `;
 
 const StyledSearchBarContainer = styled.div`
@@ -32,7 +26,7 @@ const StyledSearchBarContainer = styled.div`
   width: 100%;
 `;
 
-const Dashboard: FC = () => {
+const Dashboard = () => {
   const { t } = useTranslation();
   const history = useHistory();
 
@@ -44,30 +38,18 @@ const Dashboard: FC = () => {
 
   return (
     <StyledDashboard>
+      <StyledAbout>
+        <Card>
+          <Typography variant="subtitle1">{t('about:short_description')}</Typography>
+          <MuiLink component={Link} to={UrlPathTemplate.About} data-testid="about_read_more_link">
+            {t('common:read_more')}
+          </MuiLink>
+        </Card>
+      </StyledAbout>
       <StyledSearchBarContainer>
         <SearchBar handleSearch={handleSearch} initialSearchTerm="" />
         <LatestRegistrations />
       </StyledSearchBarContainer>
-      <StyledOtherContent>
-        <StyledLinks>
-          <MuiLink
-            aria-label={t('infopages:description.heading')}
-            color="primary"
-            component={Link}
-            to={UrlPathTemplate.Description}
-            data-testid="description_link">
-            {t('infopages:description.heading')}
-          </MuiLink>
-          <MuiLink
-            aria-label={t('infopages:order_information.heading')}
-            color="primary"
-            component={Link}
-            to={UrlPathTemplate.OrderInformation}
-            data-testid="order_information_link">
-            {t('infopages:order_information.heading')}
-          </MuiLink>
-        </StyledLinks>
-      </StyledOtherContent>
     </StyledDashboard>
   );
 };
