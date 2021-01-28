@@ -9,7 +9,7 @@ import EmphasizeSubstring from '../../../../components/EmphasizeSubstring';
 import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
 import { autocompleteTranslationProps } from '../../../../themes/lightTheme';
 import { RegistrationSubtype } from '../../../../types/publicationFieldNames';
-import { Registration } from '../../../../types/registration.types';
+import { levelMap, Registration } from '../../../../types/registration.types';
 import { API_URL } from '../../../../utils/constants';
 import { displayDate } from '../../../../utils/date-helpers';
 import useDebounce from '../../../../utils/hooks/useDebounce';
@@ -114,7 +114,9 @@ interface SelectedContainerSummaryProps {
 
 const SelectedContainerSummary = ({ publicationContext }: SelectedContainerSummaryProps) => {
   const { t } = useTranslation('registration');
-  const { publisher, title, url, onlineIssn, printIssn } = publicationContext;
+  const { publisher, title, url, onlineIssn, printIssn, level } = publicationContext;
+  const levelValue = level ? levelMap[level] : null;
+
   return (
     <>
       {title && (
@@ -130,6 +132,11 @@ const SelectedContainerSummary = ({ publicationContext }: SelectedContainerSumma
       {url && (
         <Typography color="primary" component="a" href={url}>
           {url}
+        </Typography>
+      )}
+      {levelValue && (
+        <Typography color="primary">
+          {t('references.level')}: {levelValue}
         </Typography>
       )}
       {(printIssn || onlineIssn) && (
