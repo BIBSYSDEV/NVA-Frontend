@@ -226,6 +226,7 @@ export const PublicRegistrationStatusBar: FC<PublicRegistrationContentProps> = (
             multiline
             rows="4"
             fullWidth
+            data-testid="request-doi-message"
             label={t('public_page.message_to_curator')}
             onChange={(event) => setMessageToCurator(event.target.value)}
           />
