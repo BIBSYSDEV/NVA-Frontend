@@ -32,6 +32,7 @@ const DoiField = () => {
   return doiUrl ? (
     <>
       <TextField
+        data-testid="doi-field"
         variant="filled"
         fullWidth
         label={t('registration.link_to_resource')}
