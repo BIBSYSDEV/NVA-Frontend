@@ -1,3 +1,4 @@
+import { BookPublicationContext, BookPublicationInstance } from './publication_types/bookRegistration.types';
 import { JournalPublicationContext, JournalPublicationInstance } from './publication_types/journalRegistration.types';
 import { RegistrationDate, RegistrationPublisher } from './registration.types';
 
@@ -30,7 +31,7 @@ export interface SearchRegistration {
   publicationDate: RegistrationDate;
   abstract?: string;
   reference?: {
-    publicationContext: JournalPublicationContext;
-    publicaitonInstance: JournalPublicationInstance;
+    publicationContext: JournalPublicationContext & BookPublicationContext;
+    publicaitonInstance: JournalPublicationInstance & BookPublicationInstance;
   };
 }

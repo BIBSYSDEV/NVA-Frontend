@@ -1,7 +1,7 @@
 import { Field, FieldProps, getIn, useFormikContext } from 'formik';
 import React, { useState } from 'react';
 import Truncate from 'react-truncate';
-import { TextField, Typography } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
 import { useTranslation } from 'react-i18next';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
@@ -105,15 +105,18 @@ const SearchContainerField = (props: SearchContainerFieldProps) => {
           />
         )}
       </Field>
-
-      {selectedContainer?.reference?.publicationContext.title && (
-        <TextField
-          disabled
-          fullWidth
-          variant="filled"
-          label={t('references.journal')}
-          value={selectedContainer.reference.publicationContext.title}
-        />
+      {selectedContainer?.reference?.publicationContext && (
+        <>
+          <Typography color="primary" variant="h2">
+            Informasjon om valgt artikkel:
+          </Typography>
+          <Typography color="primary">Tidsskrift: {selectedContainer?.reference?.publicationContext.title}</Typography>
+          <Typography color="primary">
+            Utgiver: {selectedContainer?.reference?.publicationContext.publisher} (
+            {selectedContainer?.reference?.publicationContext.onlineIssn}){' '}
+            <a href={selectedContainer?.reference?.publicationContext.url}>Link</a>
+          </Typography>
+        </>
       )}
     </>
   );
