@@ -160,7 +160,8 @@ const UserOrcid = ({ user }: UserOrcidProps) => {
             headingIcon={{ src: orcidIcon, alt: 'ORCID iD icon' }}
             headingText={t('profile:orcid.create_or_connect')}
             onClose={toggleModal}
-            open={openModal}>
+            open={openModal}
+            dataTestId="orcid-modal">
             <OrcidModalContent />
           </Modal>
         </>
