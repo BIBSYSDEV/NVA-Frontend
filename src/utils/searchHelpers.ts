@@ -21,7 +21,7 @@ const createPropertyFilter = (properties?: PropertySearch[], canMatchAnyProperty
   properties && properties.length > 0
     ? `(${properties
         .map(
-          ({ fieldName, value }) => `${fieldName}="${Array.isArray(value) ? value.join(`"${Operator.OR}"`) : value}"`
+          ({ fieldName, value }) => `${fieldName}:"${Array.isArray(value) ? value.join(`"${Operator.OR}"`) : value}"`
         )
         .join(canMatchAnyProperty ? Operator.OR : Operator.AND)})`
     : '';

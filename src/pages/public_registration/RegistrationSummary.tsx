@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from '@material-ui/core';
 import { Skeleton } from '@material-ui/lab';
-import { RegistrationFieldName } from '../../types/publicationFieldNames';
 import useSearchRegistrations from '../../utils/hooks/useSearchRegistrations';
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
+import { SearchFieldName } from '../../types/search.types';
 
 interface RegistrationSummaryProps {
   id: string;
@@ -11,7 +11,7 @@ interface RegistrationSummaryProps {
 
 const RegistrationSummary = ({ id }: RegistrationSummaryProps) => {
   const [searchContainer, isLoadingSearchContainer] = useSearchRegistrations({
-    properties: [{ fieldName: RegistrationFieldName.IDENTIFIER, value: id?.split('/').pop() ?? '' }],
+    properties: [{ fieldName: SearchFieldName.Id, value: id?.split('/').pop() ?? '' }],
   });
 
   const container = searchContainer && searchContainer.hits.length === 1 ? searchContainer.hits[0] : null;
