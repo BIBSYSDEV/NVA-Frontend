@@ -35,10 +35,11 @@ const Authors = ({ push, replace }: AuthorsProps) => {
 
   const [width, setWidth] = useState(window.innerWidth);
   const isMobile = width < lightTheme.breakpoints.values.md;
+  const handleResize = () => setWidth(window.innerWidth);
 
   useEffect(() => {
-    window.addEventListener('resize', () => setWidth(window.innerWidth));
-    return () => window.removeEventListener('resize', () => setWidth(window.innerWidth));
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   const handleOnRemove = (indexToRemove: number) => {
