@@ -21,8 +21,11 @@ import { SpecificContributorFieldNames } from '../../../../types/publicationFiel
 import { Registration } from '../../../../types/registration.types';
 import { getMostSpecificUnit } from '../../../../utils/institutions-helpers';
 
-const StyledCard = styled.div`
+const StyledAffiliationsCell = styled.div`
   grid-area: affiliation;
+`;
+
+const StyledCard = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -34,10 +37,11 @@ const StyledCard = styled.div`
   }
 `;
 
-const StyledAddAffiliationContainer = styled.div`
+const StyledAddAffiliationButton = styled(Button)`
   grid-area: add-affiliation;
   display: flex;
   justify-content: flex-start;
+  margin-top: 1rem;
 `;
 
 interface AffiliationsCellProps {
@@ -84,7 +88,7 @@ const AffiliationsCell: FC<AffiliationsCellProps> = ({ affiliations, baseFieldNa
   };
 
   return (
-    <>
+    <StyledAffiliationsCell>
       {affiliations?.map((affiliation) => (
         <StyledCard key={affiliation.id}>
           <AffiliationHierarchy unitUri={affiliation.id} />
@@ -97,16 +101,14 @@ const AffiliationsCell: FC<AffiliationsCellProps> = ({ affiliations, baseFieldNa
           </DangerButton>
         </StyledCard>
       ))}
-      <StyledAddAffiliationContainer>
-        <Button
-          size="small"
-          color="primary"
-          data-testid="button-add-affiliation"
-          startIcon={<AddIcon />}
-          onClick={toggleAffiliationModal}>
-          {t('contributors.add_affiliation')}
-        </Button>
-      </StyledAddAffiliationContainer>
+      <StyledAddAffiliationButton
+        size="small"
+        color="primary"
+        data-testid="button-add-affiliation"
+        startIcon={<AddIcon />}
+        onClick={toggleAffiliationModal}>
+        {t('contributors.add_affiliation')}
+      </StyledAddAffiliationButton>
 
       {/* Modal for adding affiliation */}
       <Modal
@@ -131,7 +133,7 @@ const AffiliationsCell: FC<AffiliationsCellProps> = ({ affiliations, baseFieldNa
         onCancel={() => setAffiliationToRemove(null)}>
         <Typography>{t('contributors.confirm_remove_affiliation_text')}</Typography>
       </ConfirmDialog>
-    </>
+    </StyledAffiliationsCell>
   );
 };
 

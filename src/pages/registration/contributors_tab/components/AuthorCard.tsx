@@ -26,7 +26,6 @@ const StyledCheckIcon = styled(CheckIcon)`
 const StyledBackgroundDiv = styled(BackgroundDiv)`
   display: grid;
   grid-template-areas: 'author author' 'affiliation affiliation' 'add-affiliation remove-author';
-  grid-row-gap: 1rem;
   margin-top: 1rem;
 `;
 
@@ -93,6 +92,7 @@ const StyledRemoveAuthorContainer = styled.div`
   grid-area: remove-author;
   display: flex;
   justify-content: flex-end;
+  margin-top: -2rem;
 `;
 
 const StyledTypography = styled(Typography)`
