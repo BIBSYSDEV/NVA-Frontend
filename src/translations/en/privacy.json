@@ -50,8 +50,8 @@
         }
       }
     },
-    "paragraph4": "The subcontractors’ staff who need the personal data to perform their work will have adapted access in order to provide on-site maintenance, user support and any rectification of errors in the service.",
-    "paragraph5": "Open personal data linked to the resources are openly shared with external services. This includes search services such as Oria and OpenAIRE, as well as search engines such as Google, Baidu, Bing etc. that index data via the websites.",
+    "paragraph4": "The subcontractors’ staff who need access to the personal data to perform their work will have adapted access in order to provide on-site maintenance, user support and any rectification of errors in the service.",
+    "paragraph5": "Open personal data linked to the resources are openly shared with external services. This includes search services such as Oria and OpenAIRE, as well as search engines such as Google, Baidu, Bing etc. whom index data via the websites.",
     "paragraph6": {
       "intro": "See the following table for the service's integrations:",
       "table": {
@@ -115,12 +115,12 @@
       },
       "row2": {
         "col0": "Anonymous users",
-        "col1": "Persons or services that access the service, identified by IP address and cookies.",
+        "col1": "Persons or services whom access the service, identified by IP address and cookies.",
         "col2": "The Anonymous user is granted access to open resources in the service. The service logs necessary information to avoid misuse of the service and to generate aggregated statistics of use of the resources."
       },
       "row3": {
         "col0": "Persons linked to the registered resource",
-        "col1": "Author, editor, supervisor or other crator or contributor to a resource registered in the service.",
+        "col1": "Author, editor, supervisor or other creator or contributor to a resource registered in the service.",
         "col2": "Cataloguing, crediting and accountability of the persons behind the resource."
       },
       "row4": {
@@ -210,12 +210,12 @@
   },
   "security_for_personal_data": {
     "heading": "Security in relation to your personal data",
-    "paragraph0": "Personal data processed in the service are secured by several measures. All transfers to and from the service related to user accounts are encrypted. The data processor conducts regular risk and vulnerability analyses and tests the security of the service to ensure your personal data are safe.",
+    "paragraph0": "Personal data processed in the service are secured by several measures. All transfers to and from the service related to user accounts are encrypted. The data processor conducts regular risk and vulnerability analyses and tests the security of the service to ensure that your personal data are safe.",
     "paragraph1": "The data controller is responsible for procedures that address data protection in connection with the publication of content."
   },
   "service_in_brief": {
     "heading": "The service in brief",
-    "paragraph0": "NVA is a service for collecting and making available information about, and results from, Norwegian research. The institution (the data controller) registers and maintains its own content in the service and configures distribution rules for published resources (articles, reports, data sets, etc.). The service also imports material affiliated to the institution from other data sources. NVA makes the institution's open material available via open interfaces for the purpose of making the content known and searchable for the public and promoting indexing in search engines and portals.",
+    "paragraph0": "NVA is a service for collecting and showing information about, and results from, Norwegian research. The institution (the data controller) registers and maintains its own content in the service and configures distribution rules for published resources (articles, reports, data sets, etc.). The service also imports material affiliated to the institution from other data sources. NVA makes the institution's open material available via open interfaces for the purpose of making the content known and searchable for the public and promoting indexing in search engines and portals.",
     "paragraph1": "NVA supports postponed publication of resources. This means that the registration can be completed so that metadata about the resource is published, while the resource will not be openly available until the specified date.",
     "paragraph2": "The service does not allow processing of sensitive personal data."
   },
@@ -258,7 +258,7 @@
       "paragraph1": "The service does not generally satisfy these conditions, with the exception of the processing of author information and in cases where personal data are used for statistical purposes. When personal data are used for statistical purposes, the data are anonymised.",
       "paragraph2": {
         "intro": "However, please note the following:",
-        "bullet_point0": "If there is a special need to stop the processing, for example if you have a need of protection, or a confidential address or similar, please contact the data controller",
+        "bullet_point0": "If there is a special need to stop the processing, for example if you have a need for protection, or a confidential address or similar, please contact the data controller",
         "bullet_point1": "When you have consented to the processing of personal data, you have a right to withdraw your consent"
       }
     },
