@@ -88,7 +88,7 @@ const AddContributorModalContent = ({
           onClick={() => selectedAuthor && addAuthor(selectedAuthor)}
           size="large"
           variant="contained">
-          {initialSearchTerm ? t('contributors.verify_author') : t('common:add')}
+          {initialSearchTerm ? t('contributors.verify_person') : t('common:add')}
         </Button>
       </DialogActions>
     </StyledBackgroundDiv>

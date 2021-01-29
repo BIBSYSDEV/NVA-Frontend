@@ -7,6 +7,7 @@ import { Button, Typography } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/AddCircleOutlineSharp';
 import DeleteIcon from '@material-ui/icons/RemoveCircleSharp';
 import ConfirmDialog from '../../../../components/ConfirmDialog';
+import DangerButton from '../../../../components/DangerButton';
 import AddInstitution from '../../../../components/institution/AddInstitution';
 import AffiliationHierarchy from '../../../../components/institution/AffiliationHierarchy';
 import Modal from '../../../../components/Modal';
@@ -19,7 +20,6 @@ import { BackendTypeNames } from '../../../../types/publication_types/commonRegi
 import { SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
 import { Registration } from '../../../../types/registration.types';
 import { getMostSpecificUnit } from '../../../../utils/institutions-helpers';
-import DangerButton from '../../../../components/DangerButton';
 
 const StyledCard = styled.div`
   display: flex;
@@ -99,7 +99,7 @@ const AffiliationsCell: FC<AffiliationsCellProps> = ({ affiliations, baseFieldNa
             data-testid={`button-remove-affiliation-${affiliation.id}`}
             startIcon={<StyledDeleteIcon />}
             onClick={() => setAffiliationToRemove(affiliation)}>
-            {t('common:remove')}
+            {t('contributors.remove_affiliation')}
           </DangerButton>
         </StyledCard>
       ))}

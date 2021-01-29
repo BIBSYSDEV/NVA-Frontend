@@ -123,7 +123,7 @@ const AuthorCard = ({ author, onMoveAuthor, onRemoveAuthorClick, openContributor
               <Tooltip title={t<string>('contributors.known_author_identity')}>
                 <StyledCheckIcon />
               </Tooltip>
-              <StyledTypography variant="body2">{t('contributors.verified_author')}</StyledTypography>
+              <StyledTypography variant="body2">{t('contributors.verified')}</StyledTypography>
             </>
           ) : (
             <>
@@ -134,7 +134,7 @@ const AuthorCard = ({ author, onMoveAuthor, onRemoveAuthorClick, openContributor
                 color="primary"
                 data-testid={`button-set-unverified-contributor-${author.identity.name}`}
                 onClick={() => openContributorModal({ name: author.identity.name, index })}>
-                {t('contributors.verify_author')}
+                {t('contributors.verify_person')}
               </StyledVerifiedButton>
             </>
           )}
