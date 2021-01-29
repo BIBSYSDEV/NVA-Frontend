@@ -5,9 +5,11 @@ import { RegistrationPreview } from '../../types/registration.types';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import useCancelToken from './useCancelToken';
+import { useTranslation } from 'react-i18next';
 
 const useFetchMyRegistrations = (): [RegistrationPreview[], boolean, () => void] => {
   const dispatch = useDispatch();
+  const { t } = useTranslation('feedback');
   const [registrations, setRegistrations] = useState<RegistrationPreview[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const cancelToken = useCancelToken();
@@ -17,13 +19,13 @@ const useFetchMyRegistrations = (): [RegistrationPreview[], boolean, () => void]
     const myRegistrations = await getMyRegistrations(cancelToken);
     if (myRegistrations) {
       if (myRegistrations.error) {
-        dispatch(setNotification(myRegistrations.error, NotificationVariant.Error));
+        dispatch(setNotification(t('feedback:error.get_registrations'), NotificationVariant.Error));
       } else {
-        setRegistrations(myRegistrations);
+        setRegistrations(myRegistrations.data?.publications ?? []);
       }
       setIsLoading(false);
     }
-  }, [dispatch, cancelToken]);
+  }, [dispatch, t, cancelToken]);
 
   useEffect(() => {
     fetchMyRegistrations();
