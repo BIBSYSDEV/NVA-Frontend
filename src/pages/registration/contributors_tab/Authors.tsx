@@ -38,6 +38,7 @@ const Authors = ({ push, replace }: AuthorsProps) => {
 
   useEffect(() => {
     window.addEventListener('resize', () => setWidth(window.innerWidth));
+    return () => window.removeEventListener('resize', () => setWidth(window.innerWidth));
   }, []);
 
   const handleOnRemove = (indexToRemove: number) => {
