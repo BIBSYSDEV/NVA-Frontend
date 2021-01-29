@@ -19,7 +19,6 @@ const About = () => {
     <>
       <PageHeader>{t('about_heading')}</PageHeader>
       <StyledAboutContainer>
-        <Typography variant="h2">{t('description.heading')}</Typography>
         <Typography>{t('description.paragraph0.intro')}</Typography>
         <ul>
           <Typography component="li">{t('description.paragraph0.bullet_point0')}</Typography>
