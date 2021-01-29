@@ -18,6 +18,7 @@ import AuthorList from './components/AuthorList';
 
 const StyledButton = styled(Button)`
   margin: 1rem 0rem;
+  border-radius: 1rem;
 `;
 
 type AuthorsProps = Pick<FieldArrayRenderProps, 'push' | 'replace'>;

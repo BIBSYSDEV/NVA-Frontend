@@ -16,7 +16,7 @@ import { Registration } from '../../../../types/registration.types';
 import AffiliationsCell from './AffiliationsCell';
 
 const StyledWarningIcon = styled(WarningIcon)`
-  color: ${({ theme }) => theme.palette.warning.main};
+  color: ${({ theme }) => theme.palette.primary.main};
 `;
 
 const StyledCheckIcon = styled(CheckIcon)`
@@ -25,7 +25,7 @@ const StyledCheckIcon = styled(CheckIcon)`
 
 const StyledBackgroundDiv = styled(BackgroundDiv)`
   display: grid;
-  grid-template-areas: 'author' 'institution' 'remove-author';
+  grid-template-areas: 'author author' 'affiliation affiliation' 'add-affiliation remove-author';
   grid-row-gap: 1rem;
   margin-top: 1rem;
 `;
@@ -85,14 +85,14 @@ const StyledEmailTextField = styled(TextField)`
   margin-left: 2rem;
 `;
 
-const StyledInstitutionSection = styled.div`
-  grid-area: institution;
-  margin-top: 1rem;
+const StyledDangerButton = styled(DangerButton)`
+  border-radius: 0;
 `;
 
-const StyledDangerButton = styled(DangerButton)`
+const StyledRemoveAuthorContainer = styled.div`
   grid-area: remove-author;
-  border-radius: 0;
+  display: flex;
+  justify-content: flex-end;
 `;
 
 const StyledTypography = styled(Typography)`
@@ -126,17 +126,18 @@ const AuthorCard = ({ author, onMoveAuthor, onRemoveAuthorClick, openContributor
               <StyledTypography variant="body2">{t('contributors.verified')}</StyledTypography>
             </>
           ) : (
-            <>
-              <Tooltip title={t<string>('contributors.unknown_author_identity')}>
-                <StyledWarningIcon />
-              </Tooltip>
-              <StyledVerifiedButton
-                color="primary"
-                data-testid={`button-set-unverified-contributor-${author.identity.name}`}
-                onClick={() => openContributorModal({ name: author.identity.name, index })}>
-                {t('contributors.verify_person')}
-              </StyledVerifiedButton>
-            </>
+            <StyledVerifiedButton
+              color="primary"
+              startIcon={
+                <Tooltip title={t<string>('contributors.unknown_author_identity')}>
+                  <StyledWarningIcon />
+                </Tooltip>
+              }
+              variant="outlined"
+              data-testid={`button-set-unverified-contributor-${author.identity.name}`}
+              onClick={() => openContributorModal({ name: author.identity.name, index })}>
+              {t('contributors.verify_person')}
+            </StyledVerifiedButton>
           )}
         </StyledVerifiedSection>
         <StyledRightAlignedWrapper>
@@ -195,16 +196,16 @@ const AuthorCard = ({ author, onMoveAuthor, onRemoveAuthorClick, openContributor
           )}
         </StyledCorrespondingWrapper>
       </StyledAuthorSection>
-      <StyledInstitutionSection>
-        {author.identity && <AffiliationsCell affiliations={author.affiliations} baseFieldName={baseFieldName} />}
-      </StyledInstitutionSection>
-      <StyledDangerButton
-        data-testid={`button-remove-contributor-${author.identity.name}`}
-        startIcon={<DeleteIcon />}
-        onClick={onRemoveAuthorClick}
-        variant="contained">
-        {t('contributors.remove_author')}
-      </StyledDangerButton>
+      {author.identity && <AffiliationsCell affiliations={author.affiliations} baseFieldName={baseFieldName} />}
+      <StyledRemoveAuthorContainer>
+        <StyledDangerButton
+          data-testid={`button-remove-contributor-${author.identity.name}`}
+          startIcon={<DeleteIcon />}
+          onClick={onRemoveAuthorClick}
+          variant="contained">
+          {t('contributors.remove_author')}
+        </StyledDangerButton>
+      </StyledRemoveAuthorContainer>
     </StyledBackgroundDiv>
   );
 };

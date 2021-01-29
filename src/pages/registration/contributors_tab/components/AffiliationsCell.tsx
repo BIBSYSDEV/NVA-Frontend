@@ -22,6 +22,7 @@ import { Registration } from '../../../../types/registration.types';
 import { getMostSpecificUnit } from '../../../../utils/institutions-helpers';
 
 const StyledCard = styled.div`
+  grid-area: affiliation;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -33,17 +34,10 @@ const StyledCard = styled.div`
   }
 `;
 
-const StyledDeleteIcon = styled(DeleteIcon)`
-  margin-right: 0.5rem;
-`;
-
-const StyledAddIcon = styled(AddIcon)`
-  margin-right: 0.5rem;
-`;
-
-const StyledAddButton = styled(Button)`
-  margin-top: 0.5rem;
-  margin-left: 0.5rem;
+const StyledAddAffiliationContainer = styled.div`
+  grid-area: add-affiliation;
+  display: flex;
+  justify-content: flex-start;
 `;
 
 interface AffiliationsCellProps {
@@ -97,20 +91,22 @@ const AffiliationsCell: FC<AffiliationsCellProps> = ({ affiliations, baseFieldNa
           <DangerButton
             size="small"
             data-testid={`button-remove-affiliation-${affiliation.id}`}
-            startIcon={<StyledDeleteIcon />}
+            startIcon={<DeleteIcon />}
             onClick={() => setAffiliationToRemove(affiliation)}>
             {t('contributors.remove_affiliation')}
           </DangerButton>
         </StyledCard>
       ))}
-      <StyledAddButton
-        size="small"
-        color="primary"
-        data-testid="button-add-affiliation"
-        onClick={toggleAffiliationModal}>
-        <StyledAddIcon />
-        {t('contributors.add_affiliation')}
-      </StyledAddButton>
+      <StyledAddAffiliationContainer>
+        <Button
+          size="small"
+          color="primary"
+          data-testid="button-add-affiliation"
+          startIcon={<AddIcon />}
+          onClick={toggleAffiliationModal}>
+          {t('contributors.add_affiliation')}
+        </Button>
+      </StyledAddAffiliationContainer>
 
       {/* Modal for adding affiliation */}
       <Modal
