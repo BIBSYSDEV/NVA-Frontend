@@ -19,7 +19,7 @@ import { NotificationVariant } from '../../../../types/notification.types';
 import { BackendTypeNames } from '../../../../types/publication_types/commonRegistration.types';
 import { SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
 import { Registration } from '../../../../types/registration.types';
-import { getMostSpecificUnit } from '../../../../utils/institutions-helpers';
+import { getAffiliationLabel, getMostSpecificUnit } from '../../../../utils/institutions-helpers';
 
 const StyledAffiliationsCell = styled.div`
   grid-area: affiliation;
@@ -92,9 +92,13 @@ const AffiliationsCell: FC<AffiliationsCellProps> = ({ affiliations, baseFieldNa
 
   return (
     <StyledAffiliationsCell>
-      {affiliations?.map((affiliation) => (
-        <StyledCard key={affiliation.id}>
-          <AffiliationHierarchy unitUri={affiliation.id} />
+      {affiliations?.map((affiliation, index) => (
+        <StyledCard key={affiliation.id ?? index}>
+          {affiliation.id ? (
+            <AffiliationHierarchy unitUri={affiliation.id} />
+          ) : (
+            affiliation.labels && <Typography>"{getAffiliationLabel(affiliation.labels)}"</Typography>
+          )}
           <DangerButton
             size="small"
             data-testid={`button-remove-affiliation-${affiliation.id}`}
