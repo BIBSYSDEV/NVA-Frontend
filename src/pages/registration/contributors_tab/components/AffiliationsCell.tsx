@@ -42,6 +42,9 @@ const StyledAddAffiliationButton = styled(Button)`
   display: flex;
   justify-content: flex-start;
   margin-top: 1rem;
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+    margin: 1rem 0;
+  }
 `;
 
 interface AffiliationsCellProps {

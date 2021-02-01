@@ -15,10 +15,6 @@ import { ContributorFieldNames, SpecificContributorFieldNames } from '../../../.
 import { Registration } from '../../../../types/registration.types';
 import AffiliationsCell from './AffiliationsCell';
 
-const StyledWarningIcon = styled(WarningIcon)`
-  color: ${({ theme }) => theme.palette.primary.main};
-`;
-
 const StyledCheckIcon = styled(CheckIcon)`
   color: ${({ theme }) => theme.palette.success.main};
 `;
@@ -26,6 +22,9 @@ const StyledCheckIcon = styled(CheckIcon)`
 const StyledBackgroundDiv = styled(BackgroundDiv)`
   display: grid;
   grid-template-areas: 'author author' 'affiliation affiliation' 'add-affiliation remove-author';
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+    grid-template-areas: 'author' 'affiliation' 'add-affiliation' 'remove-author';
+  }
   margin-top: 1rem;
 `;
 
@@ -33,6 +32,11 @@ const StyledAuthorSection = styled.div`
   grid-area: author;
   display: grid;
   grid-template-areas: 'name verified sequence' 'corresponding . .';
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+    grid-template-areas: 'name sequence' 'verified verified' 'corresponding corresponding';
+    grid-template-columns: auto 1fr;
+    grid-column-gap: 0;
+  }
   grid-template-columns: auto auto 1fr;
   grid-column-gap: 1rem;
   align-items: start;
@@ -45,6 +49,9 @@ const StyledSequenceField = styled(Field)`
 const StyledSequenceTextField = styled(TextField)`
   width: 3rem;
   margin: -1rem 1rem 0 0;
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+    margin: -1rem 0 0 1rem;
+  }
 `;
 
 const StyledNameField = styled(Typography)`
@@ -93,6 +100,9 @@ const StyledRemoveAuthorContainer = styled.div`
   display: flex;
   justify-content: flex-end;
   margin-top: -2rem;
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+    display: contents;
+  }
 `;
 
 const StyledTypography = styled(Typography)`
@@ -130,7 +140,7 @@ const AuthorCard = ({ author, onMoveAuthor, onRemoveAuthorClick, openContributor
               color="primary"
               startIcon={
                 <Tooltip title={t<string>('contributors.unknown_author_identity')}>
-                  <StyledWarningIcon />
+                  <WarningIcon />
                 </Tooltip>
               }
               variant="outlined"
