@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { Button, Checkbox, FormControlLabel, TextField, Tooltip, Typography } from '@material-ui/core';
+import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
+import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import CheckIcon from '@material-ui/icons/CheckCircleSharp';
 import DeleteIcon from '@material-ui/icons/RemoveCircleSharp';
 import WarningIcon from '@material-ui/icons/Warning';
@@ -15,18 +17,16 @@ import { ContributorFieldNames, SpecificContributorFieldNames } from '../../../.
 import { Registration } from '../../../../types/registration.types';
 import AffiliationsCell from './AffiliationsCell';
 
-const StyledWarningIcon = styled(WarningIcon)`
-  color: ${({ theme }) => theme.palette.warning.main};
-`;
-
 const StyledCheckIcon = styled(CheckIcon)`
   color: ${({ theme }) => theme.palette.success.main};
 `;
 
 const StyledBackgroundDiv = styled(BackgroundDiv)`
   display: grid;
-  grid-template-areas: 'author' 'institution' 'remove-author';
-  grid-row-gap: 1rem;
+  grid-template-areas: 'author author' 'affiliation affiliation' 'add-affiliation remove-author';
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+    grid-template-areas: 'author' 'affiliation' 'add-affiliation' 'remove-author';
+  }
   margin-top: 1rem;
 `;
 
@@ -34,6 +34,11 @@ const StyledAuthorSection = styled.div`
   grid-area: author;
   display: grid;
   grid-template-areas: 'name verified sequence' 'corresponding . .';
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+    grid-template-areas: 'name sequence' 'verified verified' 'corresponding corresponding';
+    grid-template-columns: auto 1fr;
+    grid-column-gap: 0;
+  }
   grid-template-columns: auto auto 1fr;
   grid-column-gap: 1rem;
   align-items: start;
@@ -46,6 +51,9 @@ const StyledSequenceField = styled(Field)`
 const StyledSequenceTextField = styled(TextField)`
   width: 3rem;
   margin: -1rem 1rem 0 0;
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+    margin: -1rem 0 0 1rem;
+  }
 `;
 
 const StyledNameField = styled(Typography)`
@@ -85,33 +93,55 @@ const StyledEmailTextField = styled(TextField)`
   margin-left: 2rem;
 `;
 
-const StyledInstitutionSection = styled.div`
-  grid-area: institution;
-  margin-top: 1rem;
+const StyledDangerButton = styled(DangerButton)`
+  border-radius: 0;
 `;
 
-const StyledDangerButton = styled(DangerButton)`
+const StyledRemoveAuthorContainer = styled.div`
   grid-area: remove-author;
-  border-radius: 0;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: -2rem;
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+    display: contents;
+  }
 `;
 
 const StyledTypography = styled(Typography)`
   padding: 0.5rem;
 `;
 
+const StyledArrowSection = styled.div`
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+    display: none;
+  }
+`;
+
+const StyledArrowButton = styled(Button)`
+  min-width: auto;
+`;
+
 interface AuthorCardProps {
   author: Contributor;
+  onArrowMove: (direction: 'up' | 'down') => void;
   onMoveAuthor: (event: React.ChangeEvent<any>) => void;
   onRemoveAuthorClick: () => void;
   openContributorModal: (unverifiedAuthor: UnverifiedContributor) => void;
 }
 
-const AuthorCard = ({ author, onMoveAuthor, onRemoveAuthorClick, openContributorModal }: AuthorCardProps) => {
+const AuthorCard = ({
+  author,
+  onArrowMove,
+  onMoveAuthor,
+  onRemoveAuthorClick,
+  openContributorModal,
+}: AuthorCardProps) => {
   const { t } = useTranslation('registration');
   const index = author.sequence - 1;
   const baseFieldName = `${ContributorFieldNames.CONTRIBUTORS}[${index}]`;
   const { values, setFieldValue } = useFormikContext<Registration>();
   const [emailValue, setEmailValue] = useState(values.entityDescription.contributors[index]?.email ?? '');
+  const contributorsLength = values.entityDescription.contributors.length - 1;
 
   return (
     <StyledBackgroundDiv backgroundColor={lightTheme.palette.section.megaLight}>
@@ -123,23 +153,36 @@ const AuthorCard = ({ author, onMoveAuthor, onRemoveAuthorClick, openContributor
               <Tooltip title={t<string>('contributors.known_author_identity')}>
                 <StyledCheckIcon />
               </Tooltip>
-              <StyledTypography variant="body2">{t('contributors.verified_author')}</StyledTypography>
+              <StyledTypography variant="body2">{t('contributors.verified')}</StyledTypography>
             </>
           ) : (
-            <>
-              <Tooltip title={t<string>('contributors.unknown_author_identity')}>
-                <StyledWarningIcon />
-              </Tooltip>
-              <StyledVerifiedButton
-                color="primary"
-                data-testid={`button-set-unverified-contributor-${author.identity.name}`}
-                onClick={() => openContributorModal({ name: author.identity.name, index })}>
-                {t('contributors.verify_author')}
-              </StyledVerifiedButton>
-            </>
+            <StyledVerifiedButton
+              color="primary"
+              startIcon={
+                <Tooltip title={t<string>('contributors.unknown_author_identity')}>
+                  <WarningIcon />
+                </Tooltip>
+              }
+              variant="outlined"
+              data-testid={`button-set-unverified-contributor-${author.identity.name}`}
+              onClick={() => openContributorModal({ name: author.identity.name, index })}>
+              {t('contributors.verify_person')}
+            </StyledVerifiedButton>
           )}
         </StyledVerifiedSection>
         <StyledRightAlignedWrapper>
+          <StyledArrowSection>
+            {index < contributorsLength && (
+              <StyledArrowButton color="secondary" onClick={() => onArrowMove('down')}>
+                <ArrowDownwardIcon />
+              </StyledArrowButton>
+            )}
+            {index !== 0 && (
+              <StyledArrowButton color="secondary" onClick={() => onArrowMove('up')}>
+                <ArrowUpwardIcon />
+              </StyledArrowButton>
+            )}
+          </StyledArrowSection>
           <StyledSequenceField name={`${baseFieldName}.${SpecificContributorFieldNames.SEQUENCE}`}>
             {({ field }: FieldProps) => (
               <StyledSequenceTextField
@@ -195,16 +238,16 @@ const AuthorCard = ({ author, onMoveAuthor, onRemoveAuthorClick, openContributor
           )}
         </StyledCorrespondingWrapper>
       </StyledAuthorSection>
-      <StyledInstitutionSection>
-        {author.identity && <AffiliationsCell affiliations={author.affiliations} baseFieldName={baseFieldName} />}
-      </StyledInstitutionSection>
-      <StyledDangerButton
-        data-testid={`button-remove-contributor-${author.identity.name}`}
-        startIcon={<DeleteIcon />}
-        onClick={onRemoveAuthorClick}
-        variant="contained">
-        {t('contributors.remove_author')}
-      </StyledDangerButton>
+      {author.identity && <AffiliationsCell affiliations={author.affiliations} baseFieldName={baseFieldName} />}
+      <StyledRemoveAuthorContainer>
+        <StyledDangerButton
+          data-testid={`button-remove-contributor-${author.identity.name}`}
+          startIcon={<DeleteIcon />}
+          onClick={onRemoveAuthorClick}
+          variant="contained">
+          {t('contributors.remove_author')}
+        </StyledDangerButton>
+      </StyledRemoveAuthorContainer>
     </StyledBackgroundDiv>
   );
 };

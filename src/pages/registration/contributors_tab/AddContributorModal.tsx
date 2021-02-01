@@ -34,7 +34,7 @@ const AddContributorModal = ({ onAuthorSelected, toggleModal, open, initialSearc
         createNewAuthor
           ? t('contributors.create_new_author')
           : initialSearchTerm
-          ? t('contributors.verify_author')
+          ? t('contributors.verify_person')
           : t('contributors.add_author')
       }
       onClose={handleCloseModal}

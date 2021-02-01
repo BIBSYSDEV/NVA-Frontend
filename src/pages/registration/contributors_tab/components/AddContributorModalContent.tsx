@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { Button, CircularProgress, DialogActions, TextField, Typography } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/AddCircleOutlineSharp';
 import SearchIcon from '@material-ui/icons/Search';
 import BackgroundDiv from '../../../../components/BackgroundDiv';
 import { StyledProgressWrapper } from '../../../../components/styled/Wrappers';
@@ -82,13 +81,12 @@ const AddContributorModalContent = ({
         </Button>
         <Button
           color="secondary"
-          startIcon={<AddIcon />}
           data-testid="connect-author-button"
           disabled={!selectedAuthor}
           onClick={() => selectedAuthor && addAuthor(selectedAuthor)}
           size="large"
           variant="contained">
-          {initialSearchTerm ? t('contributors.verify_author') : t('common:add')}
+          {initialSearchTerm ? t('contributors.verify_person') : t('common:add')}
         </Button>
       </DialogActions>
     </StyledBackgroundDiv>

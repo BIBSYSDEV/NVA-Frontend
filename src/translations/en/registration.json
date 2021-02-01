@@ -15,12 +15,13 @@
     "create_new_author": "Create new author",
     "known_author_identity": "Connected author identity",
     "prefilled_name": "Prefilled name",
+    "remove_affiliation": "Remove affiliation",
     "remove_author": "Remove author",
     "select_institution": "Select institution",
     "type": "Contributor type",
     "unknown_author_identity": "Unknown author identity",
-    "verify_author": "Verify author",
-    "verified_author": "Verified author"
+    "verify_person": "Verify person",
+    "verified": "Verified"
   },
   "description": {
     "abstract": "Abstract",

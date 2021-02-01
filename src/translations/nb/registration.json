@@ -15,12 +15,13 @@
     "create_new_author": "Opprett ny forfatter",
     "known_author_identity": "Har tilknyttet forfatteridentitet",
     "prefilled_name": "Forhåndsutfylt navn",
+    "remove_affiliation": "Fjern tilhørighet",
     "remove_author": "Fjern forfatter",
     "select_institution": "Velg institusjon",
     "type": "Bidragstype",
     "unknown_author_identity": "Mangler forfatteridentitet",
-    "verify_author": "Verifiser forfatter",
-    "verified_author": "Verifisert forfatter"
+    "verify_person": "Verifiser person",
+    "verified": "Verifisert"
   },
   "description": {
     "abstract": "Sammendrag",
