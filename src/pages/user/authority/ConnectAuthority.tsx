@@ -3,17 +3,15 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { Button, DialogActions } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/AddCircleOutlineSharp';
-
 import { addQualifierIdForAuthority, AuthorityQualifiers } from '../../../api/authorityApi';
-import { setAuthorityData } from '../../../redux/actions/userActions';
-import NewAuthorityCard from './NewAuthorityCard';
-import AuthorityList from './AuthorityList';
-import { StyledRightAlignedWrapper } from '../../../components/styled/Wrappers';
 import ButtonWithProgress from '../../../components/ButtonWithProgress';
-import { NotificationVariant } from '../../../types/notification.types';
+import { StyledRightAlignedWrapper } from '../../../components/styled/Wrappers';
 import { setNotification } from '../../../redux/actions/notificationActions';
+import { setAuthorityData } from '../../../redux/actions/userActions';
+import { NotificationVariant } from '../../../types/notification.types';
 import { User } from '../../../types/user.types';
+import AuthorityList from './AuthorityList';
+import NewAuthorityCard from './NewAuthorityCard';
 
 const StyledAuthorityContainer = styled.div`
   min-width: 20rem;
@@ -96,7 +94,6 @@ export const ConnectAuthority = ({ user, handleCloseModal }: ConnectAuthorityPro
                 data-testid="connect-author-button"
                 color="secondary"
                 variant="contained"
-                startIcon={<AddIcon />}
                 size="large"
                 onClick={updateAuthorityForUser}
                 disabled={!selectedArpId || isUpdatingAuthority}
