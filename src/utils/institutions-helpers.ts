@@ -1,5 +1,7 @@
-import { Contributor } from '../types/contributor.types';
+import i18n from '../translations/i18n';
+import { Contributor, Labels } from '../types/contributor.types';
 import { FormikInstitutionUnit, InstitutionUnitBase, RecursiveInstitutionUnit } from '../types/institution.types';
+import { LanguageCodes } from '../types/language.types';
 
 // Exclude institutions on any level (root, subunit, subunit of subunit, etc) that has a matching id in excludeIds
 export const filterInstitutions = (
@@ -23,15 +25,32 @@ export const getMostSpecificUnit = (values: FormikInstitutionUnit): InstitutionU
 };
 
 // Find distinct unit URIs for a set of contributors' affiliations
-export const getDistinctContributorUnits = (contributors: Contributor[]): string[] => [
-  ...new Set(
-    contributors
-      .map((contributor) => contributor.affiliations)
-      .flat()
-      .filter((unit) => unit)
-      .map((unit) => unit.id)
-  ),
-];
+export const getDistinctContributorUnits = (contributors: Contributor[]) => {
+  const unitIds = contributors
+    .flatMap((contributor) => contributor.affiliations)
+    .filter((affiliation) => affiliation?.id)
+    .map((unit) => unit.id) as string[];
+  return [...new Set(unitIds)];
+};
+
+// Map from three letter language to two ("nob" -> "no)
+export const getLanguageCodeForInstitution = () => {
+  const currentLanguage = i18n.language;
+  if (currentLanguage === LanguageCodes.NORWEGIAN_BOKMAL || currentLanguage === LanguageCodes.NORWEGIAN_NYNORSK) {
+    return 'nb';
+  } else {
+    return 'en';
+  }
+};
+
+// Get label based on selected language
+export const getAffiliationLabel = (labels: Labels) => {
+  const preferredLanguageCode = getLanguageCodeForInstitution();
+  if (Object.keys(labels).includes(preferredLanguageCode)) {
+    return labels[preferredLanguageCode];
+  }
+  return Object.values(labels)[0];
+};
 
 // Returns top-down unit names: ["Level1", "Level2", (etc.)]
 export const getUnitHierarchyNames = (

@@ -21,11 +21,13 @@ export interface Contributor extends BackendType {
   sequence: number;
 }
 
+export interface Labels {
+  [key: string]: string; // DOI lookup can give labels without id
+}
+
 export interface Institution extends BackendType {
-  id: string;
-  labels?: {
-    [key: string]: string;
-  };
+  id?: string;
+  labels?: Labels;
 }
 
 export const emptyContributor: Contributor = {

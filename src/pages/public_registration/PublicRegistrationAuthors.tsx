@@ -43,7 +43,8 @@ const PublicRegistrationAuthors: FC<PublicRegistrationAuthorsProps> = ({ contrib
             email,
           } = contributor;
           const affiliationIndexes = contributor.affiliations
-            ?.map((affiliation) => distinctUnits.indexOf(affiliation.id) + 1)
+            ?.map((affiliation) => affiliation.id && distinctUnits.indexOf(affiliation.id) + 1)
+            .filter((affiliationIndex) => affiliationIndex)
             .sort();
 
           return (
