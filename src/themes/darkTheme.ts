@@ -46,7 +46,7 @@ const darkTheme = createMuiTheme({
         '&.Mui-disabled': {
           color: Color.Black,
         },
-        '&.Mui-focused': {
+        '&.Mui-focused:not(.Mui-error)': {
           color: Color.Black,
         },
       },
