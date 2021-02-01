@@ -22,9 +22,10 @@ export interface Contributor extends BackendType {
 }
 
 export interface Labels {
-  [key: string]: string; // DOI lookup can give labels without id
+  [key: string]: string;
 }
 
+// DOI lookup can give labels without id for institutions, while user will add IDs.
 export interface Institution extends BackendType {
   id?: string;
   labels?: Labels;
