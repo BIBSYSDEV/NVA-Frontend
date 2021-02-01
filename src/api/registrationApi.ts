@@ -1,6 +1,6 @@
 import Axios, { CancelToken } from 'axios';
 import i18n from '../translations/i18n';
-import { Registration } from '../types/registration.types';
+import { Registration, RegistrationPreview } from '../types/registration.types';
 import { RegistrationFileSet } from '../types/file.types';
 import { StatusCode } from '../utils/constants';
 import { getIdToken } from './userApi';
@@ -82,27 +82,15 @@ export const publishRegistration = async (identifier: string) =>
     method: 'PUT',
   });
 
-export const getMyRegistrations = async (cancelToken?: CancelToken) => {
-  const url = PublicationsApiPaths.PUBLICATIONS_BY_OWNER;
-  try {
-    const idToken = await getIdToken();
-    const response = await Axios.get(url, {
-      headers: {
-        Authorization: `Bearer ${idToken}`,
-      },
-      cancelToken,
-    });
-    if (response.status === StatusCode.OK) {
-      return response.data.publications;
-    } else {
-      return { error: i18n.t('feedback:error.get_registrations') };
-    }
-  } catch (error) {
-    if (!Axios.isCancel(error)) {
-      return { error: i18n.t('feedback:error.get_registrations') };
-    }
-  }
-};
+interface MyRegistrationsResponse {
+  publications?: RegistrationPreview[]; // "publications" key is absent if user has no registrations
+}
+
+export const getMyRegistrations = async (cancelToken?: CancelToken) =>
+  authenticatedApiRequest<MyRegistrationsResponse>({
+    url: PublicationsApiPaths.PUBLICATIONS_BY_OWNER,
+    cancelToken,
+  });
 
 export const getRegistrationByDoi = async (doiUrl: string) => {
   try {
