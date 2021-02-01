@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { Button, Checkbox, FormControlLabel, TextField, Tooltip, Typography } from '@material-ui/core';
+import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
+import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import CheckIcon from '@material-ui/icons/CheckCircleSharp';
 import DeleteIcon from '@material-ui/icons/RemoveCircleSharp';
 import WarningIcon from '@material-ui/icons/Warning';
@@ -109,19 +111,37 @@ const StyledTypography = styled(Typography)`
   padding: 0.5rem;
 `;
 
+const StyledArrowSection = styled.div`
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+    display: none;
+  }
+`;
+
+const StyledArrowButton = styled(Button)`
+  min-width: auto;
+`;
+
 interface AuthorCardProps {
   author: Contributor;
+  onArrowMove: (direction: 'up' | 'down') => void;
   onMoveAuthor: (event: React.ChangeEvent<any>) => void;
   onRemoveAuthorClick: () => void;
   openContributorModal: (unverifiedAuthor: UnverifiedContributor) => void;
 }
 
-const AuthorCard = ({ author, onMoveAuthor, onRemoveAuthorClick, openContributorModal }: AuthorCardProps) => {
+const AuthorCard = ({
+  author,
+  onArrowMove,
+  onMoveAuthor,
+  onRemoveAuthorClick,
+  openContributorModal,
+}: AuthorCardProps) => {
   const { t } = useTranslation('registration');
   const index = author.sequence - 1;
   const baseFieldName = `${ContributorFieldNames.CONTRIBUTORS}[${index}]`;
   const { values, setFieldValue } = useFormikContext<Registration>();
   const [emailValue, setEmailValue] = useState(values.entityDescription.contributors[index]?.email ?? '');
+  const contributorsLength = values.entityDescription.contributors.length - 1;
 
   return (
     <StyledBackgroundDiv backgroundColor={lightTheme.palette.section.megaLight}>
@@ -151,6 +171,18 @@ const AuthorCard = ({ author, onMoveAuthor, onRemoveAuthorClick, openContributor
           )}
         </StyledVerifiedSection>
         <StyledRightAlignedWrapper>
+          <StyledArrowSection>
+            {index >= 0 && index < contributorsLength && (
+              <StyledArrowButton color="secondary" onClick={() => onArrowMove('down')}>
+                <ArrowDownwardIcon />
+              </StyledArrowButton>
+            )}
+            {index !== 0 && index <= contributorsLength && (
+              <StyledArrowButton color="secondary" onClick={() => onArrowMove('up')}>
+                <ArrowUpwardIcon />
+              </StyledArrowButton>
+            )}
+          </StyledArrowSection>
           <StyledSequenceField name={`${baseFieldName}.${SpecificContributorFieldNames.SEQUENCE}`}>
             {({ field }: FieldProps) => (
               <StyledSequenceTextField

@@ -1,8 +1,6 @@
 import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-
 import { Typography } from '@material-ui/core';
-
 import ConfirmDialog from '../../../../components/ConfirmDialog';
 import { Contributor, UnverifiedContributor } from '../../../../types/contributor.types';
 import AuthorCard from './AuthorCard';
@@ -29,6 +27,13 @@ const AuthorList: FC<AuthorListProps> = ({ authors, onDelete, onMoveAuthor, open
           author={author}
           key={author.identity.id || author.identity.name}
           onMoveAuthor={(event) => onMoveAuthor(event.target.value - 1, author.sequence - 1)}
+          onArrowMove={(direction: 'up' | 'down') => {
+            if (direction === 'up') {
+              onMoveAuthor(author.sequence - 2, author.sequence - 1);
+            } else {
+              onMoveAuthor(author.sequence, author.sequence - 1);
+            }
+          }}
           onRemoveAuthorClick={() => setAuthorToRemove(author)}
           openContributorModal={openContributorModal}
         />
