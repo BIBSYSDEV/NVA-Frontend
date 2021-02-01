@@ -172,12 +172,12 @@ const AuthorCard = ({
         </StyledVerifiedSection>
         <StyledRightAlignedWrapper>
           <StyledArrowSection>
-            {index >= 0 && index < contributorsLength && (
+            {index < contributorsLength && (
               <StyledArrowButton color="secondary" onClick={() => onArrowMove('down')}>
                 <ArrowDownwardIcon />
               </StyledArrowButton>
             )}
-            {index !== 0 && index <= contributorsLength && (
+            {index !== 0 && (
               <StyledArrowButton color="secondary" onClick={() => onArrowMove('up')}>
                 <ArrowUpwardIcon />
               </StyledArrowButton>
