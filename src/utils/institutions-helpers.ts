@@ -33,7 +33,7 @@ export const getDistinctContributorUnits = (contributors: Contributor[]) => {
   return [...new Set(unitIds)];
 };
 
-// Map from three letter language to two ("nob" -> "no)
+// Map from three letter language to two ("nob" -> "no")
 export const getLanguageCodeForInstitution = () => {
   const currentLanguage = i18n.language;
   if (currentLanguage === LanguageCodes.NORWEGIAN_BOKMAL || currentLanguage === LanguageCodes.NORWEGIAN_NYNORSK) {
