@@ -67,13 +67,6 @@ const StyledVerifiedSection = styled.div`
   align-items: center;
 `;
 
-const StyledVerifiedButton = styled(Button)`
-  text-decoration: underline;
-  &:hover {
-    text-decoration: underline;
-  }
-`;
-
 const StyledCorrespondingWrapper = styled.div`
   grid-area: corresponding;
   display: grid;
@@ -156,7 +149,7 @@ const AuthorCard = ({
               <StyledTypography variant="body2">{t('contributors.verified')}</StyledTypography>
             </>
           ) : (
-            <StyledVerifiedButton
+            <Button
               color="primary"
               startIcon={
                 <Tooltip title={t<string>('contributors.unknown_author_identity')}>
@@ -167,7 +160,7 @@ const AuthorCard = ({
               data-testid={`button-set-unverified-contributor-${author.identity.name}`}
               onClick={() => openContributorModal({ name: author.identity.name, index })}>
               {t('contributors.verify_person')}
-            </StyledVerifiedButton>
+            </Button>
           )}
         </StyledVerifiedSection>
         <StyledRightAlignedWrapper>

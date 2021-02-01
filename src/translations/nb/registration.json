@@ -20,6 +20,7 @@
     "select_institution": "Velg institusjon",
     "type": "Bidragstype",
     "unknown_author_identity": "Mangler forfatteridentitet",
+    "verify_affiliation": "Verifiser tilhørighet",
     "verify_person": "Verifiser person",
     "verified": "Verifisert"
   },

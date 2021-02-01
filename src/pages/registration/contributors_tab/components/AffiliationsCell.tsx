@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { Button, Typography } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/AddCircleOutlineSharp';
 import DeleteIcon from '@material-ui/icons/RemoveCircleSharp';
+import WarningIcon from '@material-ui/icons/Warning';
 import ConfirmDialog from '../../../../components/ConfirmDialog';
 import DangerButton from '../../../../components/DangerButton';
 import AddInstitution from '../../../../components/institution/AddInstitution';
@@ -14,7 +15,6 @@ import Modal from '../../../../components/Modal';
 import { setNotification } from '../../../../redux/actions/notificationActions';
 import { Institution } from '../../../../types/contributor.types';
 import { FormikInstitutionUnit } from '../../../../types/institution.types';
-import { LanguageCodes, registrationLanguages } from '../../../../types/language.types';
 import { NotificationVariant } from '../../../../types/notification.types';
 import { BackendTypeNames } from '../../../../types/publication_types/commonRegistration.types';
 import { SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
@@ -27,6 +27,7 @@ const StyledAffiliationsCell = styled.div`
 
 const StyledCard = styled.div`
   display: flex;
+  flex-wrap: wrap;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
@@ -58,8 +59,14 @@ const AffiliationsCell: FC<AffiliationsCellProps> = ({ affiliations, baseFieldNa
   const { values, setFieldValue } = useFormikContext<Registration>();
   const [openAffiliationModal, setOpenAffiliationModal] = useState(false);
   const [affiliationToRemove, setAffiliationToRemove] = useState<Institution | null>(null);
+  const [affiliationToVerify, setAffiliationToVerify] = useState('');
 
   const toggleAffiliationModal = () => setOpenAffiliationModal(!openAffiliationModal);
+
+  const verifyAffiliationOnClick = (affiliationString: string) => {
+    setAffiliationToVerify(affiliationString);
+    toggleAffiliationModal();
+  };
 
   const addAffiliation = (value: FormikInstitutionUnit) => {
     if (!value.unit) {
@@ -74,17 +81,13 @@ const AffiliationsCell: FC<AffiliationsCellProps> = ({ affiliations, baseFieldNa
       return;
     }
 
-    const labelKey =
-      registrationLanguages.find((language) => language.value === values.entityDescription.language)?.id ??
-      LanguageCodes.ENGLISH;
-
     const addedAffiliation: Institution = {
       type: BackendTypeNames.ORGANIZATION,
       id: mostSpecificUnit.id,
-      labels: {
-        [labelKey]: mostSpecificUnit.name,
-      },
     };
+
+    // TODO: replace label with id
+
     const newAffiliations = affiliations ? [...affiliations, addedAffiliation] : [addedAffiliation];
     setFieldValue(`${baseFieldName}.${SpecificContributorFieldNames.AFFILIATIONS}`, newAffiliations);
     toggleAffiliationModal();
@@ -97,7 +100,21 @@ const AffiliationsCell: FC<AffiliationsCellProps> = ({ affiliations, baseFieldNa
           {affiliation.id ? (
             <AffiliationHierarchy unitUri={affiliation.id} />
           ) : (
-            affiliation.labels && <Typography>"{getAffiliationLabel(affiliation.labels)}"</Typography>
+            affiliation.labels && (
+              <>
+                <Typography>"{getAffiliationLabel(affiliation.labels)}"</Typography>
+                <Button
+                  color="primary"
+                  startIcon={<WarningIcon />}
+                  variant="outlined"
+                  data-testid="button-set-unverified-affiliation"
+                  onClick={() =>
+                    affiliation.labels && verifyAffiliationOnClick(getAffiliationLabel(affiliation.labels))
+                  }>
+                  {t('contributors.verify_affiliation')}
+                </Button>
+              </>
+            )
           )}
           <DangerButton
             size="small"
@@ -120,9 +137,17 @@ const AffiliationsCell: FC<AffiliationsCellProps> = ({ affiliations, baseFieldNa
       {/* Modal for adding affiliation */}
       <Modal
         open={openAffiliationModal}
-        onClose={toggleAffiliationModal}
+        onClose={() => {
+          setAffiliationToVerify('');
+          toggleAffiliationModal();
+        }}
         headingText={t('contributors.select_institution')}
         dataTestId="affiliation-modal">
+        {affiliationToVerify && (
+          <Typography>
+            Verifiser tilhørighet for: <b>{affiliationToVerify}</b>
+          </Typography>
+        )}
         <AddInstitution onClose={toggleAffiliationModal} onSubmit={addAffiliation} />
       </Modal>
 
