@@ -67,12 +67,18 @@ export const mockRegistration: JournalRegistration = {
       },
       {
         type: BackendTypeNames.CONTRIBUTOR,
-        affiliations: [],
+        affiliations: [
+          {
+            type: BackendTypeNames.ORGANIZATION,
+            labels: {
+              en: 'My institution',
+            },
+          },
+        ],
         correspondingAuthor: false,
         email: '',
         identity: {
           type: BackendTypeNames.IDENTITY,
-          id: '901790000001',
           name: 'Osteloff, Oddny',
         },
         role: '',
