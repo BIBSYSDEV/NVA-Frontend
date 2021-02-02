@@ -42,7 +42,7 @@ const AddContributorModalContent = ({
     <StyledBackgroundDiv backgroundColor={lightTheme.palette.background.paper}>
       {initialSearchTerm && (
         <Typography variant="subtitle1">
-          {t('registration:contributors.prefilled_name')}: "{initialSearchTerm}"
+          {t('registration:contributors.prefilled_name')}: <b>{initialSearchTerm}</b>
         </Typography>
       )}
       <StyledTextField
