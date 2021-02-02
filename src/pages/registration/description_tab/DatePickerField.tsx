@@ -1,5 +1,5 @@
 import { useFormikContext } from 'formik';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import DateFnsUtils from '@date-io/date-fns';
@@ -33,23 +33,25 @@ const DatePickerField = () => {
   );
   const [yearOnly, setYearOnly] = useState(!!year && !month);
 
-  useEffect(() => {
-    // Extract data from date object
-    const updatedYear = date ? date.getFullYear() : NaN;
-    const updatedMonth = !yearOnly && date ? date.getMonth() + 1 : NaN;
-    const updatedDay = !yearOnly && date ? date.getDate() : NaN;
+  const updateDateValues = (newDate: Date | null, isYearOnly: boolean) => {
+    const updatedYear = newDate ? newDate.getFullYear() : '';
+    const updatedMonth = !isYearOnly && newDate ? newDate.getMonth() + 1 : '';
+    const updatedDay = !isYearOnly && newDate ? newDate.getDate() : '';
 
-    const updatedYearValue = !isNaN(updatedYear) ? updatedYear : '';
-    const updatedMonthValue = !isNaN(updatedMonth) ? updatedMonth : '';
-    const updatedDayValue = !isNaN(updatedDay) ? updatedDay : '';
+    setFieldValue(DescriptionFieldNames.PUBLICATION_YEAR, updatedYear);
+    setFieldValue(DescriptionFieldNames.PUBLICATION_MONTH, updatedMonth);
+    setFieldValue(DescriptionFieldNames.PUBLICATION_DAY, updatedDay);
+  };
 
-    setFieldValue(DescriptionFieldNames.PUBLICATION_YEAR, updatedYearValue);
-    setFieldValue(DescriptionFieldNames.PUBLICATION_MONTH, updatedMonthValue);
-    setFieldValue(DescriptionFieldNames.PUBLICATION_DAY, updatedDayValue);
-  }, [setFieldValue, date, yearOnly]);
+  const onChangeDate = (newDate: Date | null) => {
+    updateDateValues(newDate, yearOnly);
+    setDate(newDate);
+  };
 
   const toggleYearOnly = () => {
-    setYearOnly(!yearOnly);
+    const nextYearOnlyValue = !yearOnly;
+    updateDateValues(date, nextYearOnlyValue);
+    setYearOnly(nextYearOnlyValue);
   };
 
   const setYearFieldTouched = () => setFieldTouched(DescriptionFieldNames.PUBLICATION_YEAR);
@@ -67,7 +69,7 @@ const DatePickerField = () => {
           inputVariant="filled"
           label={t('description.date_published')}
           required
-          onChange={setDate}
+          onChange={onChangeDate}
           views={views}
           value={date}
           autoOk
