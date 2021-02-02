@@ -10,6 +10,7 @@ import { DescriptionFieldNames } from '../../../types/publicationFieldNames';
 import { Registration } from '../../../types/registration.types';
 import { getDateFnsLocale } from '../../../utils/date-helpers';
 import { ErrorMessage } from '../../../utils/validation/errorMessage';
+import { BackendTypeNames } from '../../../types/publication_types/commonRegistration.types';
 
 const StyledFormControlLabel = styled(FormControlLabel)`
   margin-left: 0.5rem;
@@ -33,14 +34,20 @@ const DatePickerField = () => {
   );
   const [yearOnly, setYearOnly] = useState(!!year && !month);
 
+  const setYearFieldTouched = () => setFieldTouched(DescriptionFieldNames.PUBLICATION_YEAR);
+
   const updateDateValues = (newDate: Date | null, isYearOnly: boolean) => {
     const updatedYear = newDate ? newDate.getFullYear() : '';
     const updatedMonth = !isYearOnly && newDate ? newDate.getMonth() + 1 : '';
     const updatedDay = !isYearOnly && newDate ? newDate.getDate() : '';
-
-    setFieldValue(DescriptionFieldNames.PUBLICATION_YEAR, updatedYear);
-    setFieldValue(DescriptionFieldNames.PUBLICATION_MONTH, updatedMonth);
-    setFieldValue(DescriptionFieldNames.PUBLICATION_DAY, updatedDay);
+    const updatedDate = {
+      type: BackendTypeNames.PUBLICATION_DATE,
+      year: updatedYear,
+      month: updatedMonth,
+      day: updatedDay,
+    };
+    setFieldValue(DescriptionFieldNames.DATE, updatedDate);
+    setYearFieldTouched();
   };
 
   const onChangeDate = (newDate: Date | null) => {
@@ -53,8 +60,6 @@ const DatePickerField = () => {
     updateDateValues(date, nextYearOnlyValue);
     setYearOnly(nextYearOnlyValue);
   };
-
-  const setYearFieldTouched = () => setFieldTouched(DescriptionFieldNames.PUBLICATION_YEAR);
 
   const views: DatePickerView[] = yearOnly ? ['year'] : ['year', 'month', 'date'];
 
