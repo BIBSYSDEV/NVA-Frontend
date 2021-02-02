@@ -87,7 +87,7 @@ const AffiliationsCell = ({ affiliations, authorName, baseFieldName }: Affiliati
       id: mostSpecificUnit.id,
     };
 
-    let updatedAffiliations = affiliations;
+    let updatedAffiliations = [...affiliations]; // Must spread affiliations in order to keep changes when switching tab
     if (affiliationToVerify) {
       // Verify affiliation
       const affiliationIndex = updatedAffiliations.findIndex(
