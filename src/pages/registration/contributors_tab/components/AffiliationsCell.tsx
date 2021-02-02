@@ -56,7 +56,7 @@ interface AffiliationsCellProps {
 const AffiliationsCell: FC<AffiliationsCellProps> = ({ affiliations, baseFieldName }) => {
   const { t } = useTranslation('registration');
   const disptach = useDispatch();
-  const { values, setFieldValue } = useFormikContext<Registration>();
+  const { setFieldValue } = useFormikContext<Registration>();
   const [openAffiliationModal, setOpenAffiliationModal] = useState(false);
   const [affiliationToRemove, setAffiliationToRemove] = useState<Institution | null>(null);
   const [affiliationToVerify, setAffiliationToVerify] = useState('');
@@ -86,10 +86,23 @@ const AffiliationsCell: FC<AffiliationsCellProps> = ({ affiliations, baseFieldNa
       id: mostSpecificUnit.id,
     };
 
-    // TODO: replace label with id
+    let updatedAffiliations = affiliations;
+    if (affiliationToVerify) {
+      // Verify affiliation
+      const affiliationIndex = updatedAffiliations.findIndex(
+        (affiliation) => affiliation.labels && getAffiliationLabel(affiliation.labels) === affiliationToVerify
+      );
+      updatedAffiliations[affiliationIndex] = addedAffiliation;
+    } else {
+      // Add new affiliation
+      if (updatedAffiliations) {
+        updatedAffiliations.push(addedAffiliation);
+      } else {
+        updatedAffiliations = [addedAffiliation];
+      }
+    }
 
-    const newAffiliations = affiliations ? [...affiliations, addedAffiliation] : [addedAffiliation];
-    setFieldValue(`${baseFieldName}.${SpecificContributorFieldNames.AFFILIATIONS}`, newAffiliations);
+    setFieldValue(`${baseFieldName}.${SpecificContributorFieldNames.AFFILIATIONS}`, updatedAffiliations);
     toggleAffiliationModal();
   };
 
