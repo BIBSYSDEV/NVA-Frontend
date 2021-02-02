@@ -231,7 +231,13 @@ const AuthorCard = ({
           )}
         </StyledCorrespondingWrapper>
       </StyledAuthorSection>
-      {author.identity && <AffiliationsCell affiliations={author.affiliations} baseFieldName={baseFieldName} />}
+      {author.identity && (
+        <AffiliationsCell
+          affiliations={author.affiliations}
+          authorName={author.identity.name}
+          baseFieldName={baseFieldName}
+        />
+      )}
       <StyledRemoveAuthorContainer>
         <StyledDangerButton
           data-testid={`button-remove-contributor-${author.identity.name}`}

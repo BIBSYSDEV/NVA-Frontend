@@ -1,5 +1,5 @@
 import { useFormikContext } from 'formik';
-import React, { FC, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
@@ -50,10 +50,11 @@ const StyledAddAffiliationButton = styled(Button)`
 
 interface AffiliationsCellProps {
   affiliations: Institution[];
+  authorName: string;
   baseFieldName: string;
 }
 
-const AffiliationsCell: FC<AffiliationsCellProps> = ({ affiliations, baseFieldName }) => {
+const AffiliationsCell = ({ affiliations, authorName, baseFieldName }: AffiliationsCellProps) => {
   const { t } = useTranslation('registration');
   const disptach = useDispatch();
   const { setFieldValue } = useFormikContext<Registration>();
@@ -156,12 +157,17 @@ const AffiliationsCell: FC<AffiliationsCellProps> = ({ affiliations, baseFieldNa
         }}
         headingText={t('contributors.select_institution')}
         dataTestId="affiliation-modal">
-        {affiliationToVerify && (
+        <>
           <Typography>
-            Verifiser tilhørighet for: <b>{affiliationToVerify}</b>
+            {t('common:name')}: <b>{authorName}</b>
           </Typography>
-        )}
-        <AddInstitution onClose={toggleAffiliationModal} onSubmit={addAffiliation} />
+          {affiliationToVerify && (
+            <Typography>
+              {t('contributors.prefilled_affiliation')}: <b>{affiliationToVerify}</b>
+            </Typography>
+          )}
+          <AddInstitution onClose={toggleAffiliationModal} onSubmit={addAffiliation} />
+        </>
       </Modal>
 
       {/* Confirm dialog for removing affiliation */}
