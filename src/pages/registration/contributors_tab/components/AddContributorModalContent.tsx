@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { Button, CircularProgress, DialogActions, TextField, Typography } from '@material-ui/core';
+import { Button, CircularProgress, TextField, Typography } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import BackgroundDiv from '../../../../components/BackgroundDiv';
 import { StyledProgressWrapper } from '../../../../components/styled/Wrappers';
@@ -17,6 +17,30 @@ const StyledTextField = styled(TextField)`
 
 const StyledBackgroundDiv = styled(BackgroundDiv)`
   padding: 0;
+`;
+
+const StyledDialogActions = styled.div`
+  display: grid;
+  grid-template-areas: 'close create verify';
+  justify-content: end;
+  gap: 1rem;
+  margin-top: 1rem;
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+    grid-template-areas: 'verify verify' 'close create';
+    justify-content: center;
+  }
+`;
+
+const StyledVerifyButton = styled(Button)`
+  grid-area: verify;
+`;
+
+const StyledCloseButton = styled(Button)`
+  grid-area: close;
+`;
+
+const StyledCreateButton = styled(Button)`
+  grid-area: create;
 `;
 
 interface AddContributorModalContentProps {
@@ -74,12 +98,8 @@ const AddContributorModalContent = ({
         debouncedSearchTerm && <Typography>{t('common:no_hits')}</Typography>
       )}
 
-      <DialogActions>
-        <Button onClick={handleCloseModal}>{t('common:close')}</Button>
-        <Button color="primary" data-testid="button-create-new-author" onClick={openNewAuthorModal}>
-          {t('contributors.create_new_author')}
-        </Button>
-        <Button
+      <StyledDialogActions>
+        <StyledVerifyButton
           color="secondary"
           data-testid="connect-author-button"
           disabled={!selectedAuthor}
@@ -87,8 +107,12 @@ const AddContributorModalContent = ({
           size="large"
           variant="contained">
           {initialSearchTerm ? t('contributors.verify_person') : t('common:add')}
-        </Button>
-      </DialogActions>
+        </StyledVerifyButton>
+        <StyledCloseButton onClick={handleCloseModal}>{t('common:close')}</StyledCloseButton>
+        <StyledCreateButton color="primary" data-testid="button-create-new-author" onClick={openNewAuthorModal}>
+          {t('contributors.create_new_author')}
+        </StyledCreateButton>
+      </StyledDialogActions>
     </StyledBackgroundDiv>
   );
 };
