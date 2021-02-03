@@ -1,19 +1,15 @@
 import React, { ReactNode } from 'react';
-import styled from 'styled-components';
-import { Typography, Button, TypographyProps } from '@material-ui/core';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom';
+import styled from 'styled-components';
+import { Button, Typography, TypographyProps } from '@material-ui/core';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { UrlPathTemplate } from '../utils/urlPaths';
 
 const StyledHeader = styled.div`
-  width: 85vw;
+  width: 100%;
   margin-bottom: 1rem;
   word-wrap: break-word;
-
-  @media (max-width: ${({ theme }) => `${theme.breakpoints.values.lg}px`}) {
-    width: 95vw;
-  }
 `;
 
 const StyledTypography = styled(Typography)`
