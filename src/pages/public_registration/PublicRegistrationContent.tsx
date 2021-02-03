@@ -1,5 +1,5 @@
 import React from 'react';
-import { Chip, Typography } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 import styled from 'styled-components';
 import { emptyRegistration, Registration } from '../../types/registration.types';
 import { useTranslation } from 'react-i18next';
@@ -46,10 +46,14 @@ import {
 import { RegistrationPageHeader } from '../../components/PageHeader';
 import BackgroundDiv from '../../components/BackgroundDiv';
 import lightTheme from '../../themes/lightTheme';
+import PublicSummaryContent from './PublicSummaryContent';
 
-const StyledTag = styled.div`
-  display: inline;
-  margin-right: 1rem;
+const StyledBackgroundDiv = styled(BackgroundDiv)`
+  padding: 2rem 5rem;
+
+  @media (max-width: ${({ theme }) => `${theme.breakpoints.values.sm}px`}) {
+    padding: 1rem 2rem;
+  }
 `;
 
 export interface PublicRegistrationContentProps {
@@ -63,16 +67,7 @@ const PublicRegistrationContent = ({ registration, refetchRegistration }: Public
   // Registration can lack some fields if it's newly created
   registration = deepmerge(emptyRegistration, registration);
 
-  const {
-    abstract,
-    contributors,
-    date,
-    description,
-    mainTitle,
-    npiSubjectHeading,
-    reference,
-    tags = [],
-  } = registration.entityDescription;
+  const { contributors, date, description, mainTitle, npiSubjectHeading, reference } = registration.entityDescription;
 
   return (
     <>
@@ -81,7 +76,7 @@ const PublicRegistrationContent = ({ registration, refetchRegistration }: Public
       <div>
         {contributors && <PublicRegistrationAuthors contributors={contributors} />}
 
-        <BackgroundDiv backgroundColor={lightTheme.palette.section.megaLight}>
+        <StyledBackgroundDiv backgroundColor={lightTheme.palette.section.megaLight}>
           <PublicDoi registration={registration} />
 
           {description && (
@@ -146,32 +141,19 @@ const PublicRegistrationContent = ({ registration, refetchRegistration }: Public
               {getNpiDiscipline(npiSubjectHeading)?.name}
             </LabelContentRow>
           )}
-        </BackgroundDiv>
+        </StyledBackgroundDiv>
 
-        <BackgroundDiv backgroundColor={lightTheme.palette.section.light}>
+        <StyledBackgroundDiv backgroundColor={lightTheme.palette.section.light}>
           {registration.fileSet?.files.map(
             (file) => !file.administrativeAgreement && <PublicRegistrationFile file={file} key={file.identifier} />
           )}
-        </BackgroundDiv>
+        </StyledBackgroundDiv>
 
-        <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
-          {abstract && (
-            <LabelContentRow minimal label={`${t('description.abstract')}:`}>
-              {abstract}
-            </LabelContentRow>
-          )}
-          {tags.length > 0 && (
-            <LabelContentRow minimal multiple label={`${t('description.keywords')}:`}>
-              {tags.map((tag) => (
-                <StyledTag key={tag}>
-                  <Chip label={tag} />
-                </StyledTag>
-              ))}
-            </LabelContentRow>
-          )}
-        </BackgroundDiv>
+        <StyledBackgroundDiv backgroundColor={lightTheme.palette.section.main}>
+          <PublicSummaryContent registration={registration} />
+        </StyledBackgroundDiv>
 
-        <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
+        <StyledBackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
           {registration.projects.length > 0 && (
             <LabelContentRow minimal label={`${t('description.project_association')}:`}>
               {registration.projects.map((project) => (
@@ -179,7 +161,7 @@ const PublicRegistrationContent = ({ registration, refetchRegistration }: Public
               ))}
             </LabelContentRow>
           )}
-        </BackgroundDiv>
+        </StyledBackgroundDiv>
       </div>
     </>
   );
