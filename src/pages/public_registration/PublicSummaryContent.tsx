@@ -9,7 +9,7 @@ const StyledSummaryContent = styled.div`
   display: grid;
   grid-template-areas: 'abstract tags';
   grid-template-columns: 4fr 1fr;
-  grid-column-gap: 1rem;
+  grid-column-gap: 2rem;
 
   @media (max-width: ${({ theme }) => `${theme.breakpoints.values.md}px`}) {
     grid-template-areas: 'abstract' 'tags';
