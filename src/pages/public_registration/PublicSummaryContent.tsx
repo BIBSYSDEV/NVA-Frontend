@@ -11,8 +11,9 @@ const StyledSummaryContent = styled.div`
   grid-template-columns: 4fr 1fr;
   grid-column-gap: 2rem;
 
-  @media (max-width: ${({ theme }) => `${theme.breakpoints.values.md}px`}) {
+  @media (max-width: ${({ theme }) => `${theme.breakpoints.values.sm}px`}) {
     grid-template-areas: 'abstract' 'tags';
+    grid-template-columns: 1fr;
     grid-row-gap: 1rem;
   }
 `;

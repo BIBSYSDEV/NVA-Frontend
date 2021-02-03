@@ -50,6 +50,10 @@ import PublicSummaryContent from './PublicSummaryContent';
 
 const StyledBackgroundDiv = styled(BackgroundDiv)`
   padding: 2rem 5rem;
+
+  @media (max-width: ${({ theme }) => `${theme.breakpoints.values.sm}px`}) {
+    padding: 1rem 2rem;
+  }
 `;
 
 export interface PublicRegistrationContentProps {
