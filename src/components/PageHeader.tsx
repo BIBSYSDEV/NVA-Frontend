@@ -9,6 +9,7 @@ import { UrlPathTemplate } from '../utils/urlPaths';
 const StyledHeader = styled.div`
   width: 85vw;
   margin-bottom: 1rem;
+  word-wrap: break-word;
 
   @media (max-width: ${({ theme }) => `${theme.breakpoints.values.lg}px`}) {
     width: 95vw;
