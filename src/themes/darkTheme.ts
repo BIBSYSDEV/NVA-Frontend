@@ -9,7 +9,6 @@ const darkTheme = createMuiTheme({
     type: 'dark',
     primary: { main: Color.BlueMegaLight },
     error: { main: Color.ErrorLight },
-    text: { primary: Color.BlueMegaLight },
   },
   overrides: {
     ...lightTheme.overrides,
@@ -55,7 +54,7 @@ const darkTheme = createMuiTheme({
   },
   props: {
     MuiTypography: {
-      color: 'textPrimary',
+      color: 'primary',
     },
   },
 });
