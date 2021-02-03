@@ -75,109 +75,113 @@ const PublicRegistrationContent = ({ registration, refetchRegistration }: Public
   } = registration.entityDescription;
 
   return (
-    <div>
+    <>
       <PublicRegistrationStatusBar registration={registration} refetchRegistration={refetchRegistration} />
       <RegistrationPageHeader>{mainTitle || `[${t('common:missing_title')}]`}</RegistrationPageHeader>
-      {contributors && <PublicRegistrationAuthors contributors={contributors} />}
+      <div>
+        {contributors && <PublicRegistrationAuthors contributors={contributors} />}
 
-      <BackgroundDiv backgroundColor={lightTheme.palette.section.megaLight}>
-        <PublicDoi registration={registration} />
+        <BackgroundDiv backgroundColor={lightTheme.palette.section.megaLight}>
+          <PublicDoi registration={registration} />
 
-        {description && (
-          <LabelContentRow minimal label={`${t('description.description')}:`}>
-            {description}
-          </LabelContentRow>
-        )}
-        {isJournal(registration) ? (
-          <>
-            <PublicPublicationContextJournal
-              publicationContext={reference.publicationContext as JournalPublicationContext}
-            />
-            <PublicPublicationInstanceJournal
-              publicationInstance={reference.publicationInstance as JournalPublicationInstance}
-            />
-          </>
-        ) : isBook(registration) ? (
-          <>
-            <PublicPublicationContextBook publicationContext={reference.publicationContext as BookPublicationContext} />
-            <PublicPublicationInstanceBook
-              publicationInstance={reference.publicationInstance as BookPublicationInstance}
-            />
-          </>
-        ) : isDegree(registration) ? (
-          <>
-            <PublicPublicationContextDegree
-              publicationContext={reference.publicationContext as DegreePublicationContext}
-            />
-            <PublicPublicationInstanceDegree
-              publicationInstance={reference.publicationInstance as DegreePublicationInstance}
-            />
-          </>
-        ) : isReport(registration) ? (
-          <>
-            <PublicPublicationContextReport
-              publicationContext={reference.publicationContext as ReportPublicationContext}
-            />
-            <PublicPublicationInstanceReport
-              publicationInstance={reference.publicationInstance as ReportPublicationInstance}
-            />
-          </>
-        ) : isChapter(registration) ? (
-          <>
-            <PublicPublicationContextChapter
-              publicationContext={reference.publicationContext as ChapterPublicationContext}
-            />
-            <PublicPublicationInstanceChapter
-              publicationInstance={reference.publicationInstance as ChapterPublicationInstance}
-            />
-          </>
-        ) : null}
+          {description && (
+            <LabelContentRow minimal label={`${t('description.description')}:`}>
+              {description}
+            </LabelContentRow>
+          )}
+          {isJournal(registration) ? (
+            <>
+              <PublicPublicationContextJournal
+                publicationContext={reference.publicationContext as JournalPublicationContext}
+              />
+              <PublicPublicationInstanceJournal
+                publicationInstance={reference.publicationInstance as JournalPublicationInstance}
+              />
+            </>
+          ) : isBook(registration) ? (
+            <>
+              <PublicPublicationContextBook
+                publicationContext={reference.publicationContext as BookPublicationContext}
+              />
+              <PublicPublicationInstanceBook
+                publicationInstance={reference.publicationInstance as BookPublicationInstance}
+              />
+            </>
+          ) : isDegree(registration) ? (
+            <>
+              <PublicPublicationContextDegree
+                publicationContext={reference.publicationContext as DegreePublicationContext}
+              />
+              <PublicPublicationInstanceDegree
+                publicationInstance={reference.publicationInstance as DegreePublicationInstance}
+              />
+            </>
+          ) : isReport(registration) ? (
+            <>
+              <PublicPublicationContextReport
+                publicationContext={reference.publicationContext as ReportPublicationContext}
+              />
+              <PublicPublicationInstanceReport
+                publicationInstance={reference.publicationInstance as ReportPublicationInstance}
+              />
+            </>
+          ) : isChapter(registration) ? (
+            <>
+              <PublicPublicationContextChapter
+                publicationContext={reference.publicationContext as ChapterPublicationContext}
+              />
+              <PublicPublicationInstanceChapter
+                publicationInstance={reference.publicationInstance as ChapterPublicationInstance}
+              />
+            </>
+          ) : null}
 
-        {date?.year && (
-          <LabelContentRow minimal label={`${t('description.date_published')}:`}>
-            {displayDate(date)}
-          </LabelContentRow>
-        )}
-        {npiSubjectHeading && (
-          <LabelContentRow minimal label={`${t('description.npi_disciplines')}:`}>
-            {getNpiDiscipline(npiSubjectHeading)?.name}
-          </LabelContentRow>
-        )}
-      </BackgroundDiv>
+          {date?.year && (
+            <LabelContentRow minimal label={`${t('description.date_published')}:`}>
+              {displayDate(date)}
+            </LabelContentRow>
+          )}
+          {npiSubjectHeading && (
+            <LabelContentRow minimal label={`${t('description.npi_disciplines')}:`}>
+              {getNpiDiscipline(npiSubjectHeading)?.name}
+            </LabelContentRow>
+          )}
+        </BackgroundDiv>
 
-      <BackgroundDiv backgroundColor={lightTheme.palette.section.light}>
-        {registration.fileSet?.files.map(
-          (file) => !file.administrativeAgreement && <PublicRegistrationFile file={file} key={file.identifier} />
-        )}
-      </BackgroundDiv>
+        <BackgroundDiv backgroundColor={lightTheme.palette.section.light}>
+          {registration.fileSet?.files.map(
+            (file) => !file.administrativeAgreement && <PublicRegistrationFile file={file} key={file.identifier} />
+          )}
+        </BackgroundDiv>
 
-      <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
-        {abstract && (
-          <LabelContentRow minimal label={`${t('description.abstract')}:`}>
-            {abstract}
-          </LabelContentRow>
-        )}
-        {tags.length > 0 && (
-          <LabelContentRow minimal multiple label={`${t('description.keywords')}:`}>
-            {tags.map((tag) => (
-              <StyledTag key={tag}>
-                <Chip label={tag} />
-              </StyledTag>
-            ))}
-          </LabelContentRow>
-        )}
-      </BackgroundDiv>
+        <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
+          {abstract && (
+            <LabelContentRow minimal label={`${t('description.abstract')}:`}>
+              {abstract}
+            </LabelContentRow>
+          )}
+          {tags.length > 0 && (
+            <LabelContentRow minimal multiple label={`${t('description.keywords')}:`}>
+              {tags.map((tag) => (
+                <StyledTag key={tag}>
+                  <Chip label={tag} />
+                </StyledTag>
+              ))}
+            </LabelContentRow>
+          )}
+        </BackgroundDiv>
 
-      <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
-        {registration.projects.length > 0 && (
-          <LabelContentRow minimal label={`${t('description.project_association')}:`}>
-            {registration.projects.map((project) => (
-              <Typography key={project.id}>{project.name}</Typography>
-            ))}
-          </LabelContentRow>
-        )}
-      </BackgroundDiv>
-    </div>
+        <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
+          {registration.projects.length > 0 && (
+            <LabelContentRow minimal label={`${t('description.project_association')}:`}>
+              {registration.projects.map((project) => (
+                <Typography key={project.id}>{project.name}</Typography>
+              ))}
+            </LabelContentRow>
+          )}
+        </BackgroundDiv>
+      </div>
+    </>
   );
 };
 
