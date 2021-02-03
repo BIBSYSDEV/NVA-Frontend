@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import LockIcon from '@material-ui/icons/Lock';
-import { licenses } from '../../types/file.types';
+import { File, licenses } from '../../types/file.types';
 import { downloadFile } from '../../api/fileApi';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -41,22 +41,7 @@ const StyledLicenseImg = styled.img`
 const StyledFilesContent = styled.div``;
 
 const PublicFilesContent = ({ registration }: PublicRegistrationContentProps) => {
-  const { identifier } = useParams<{ identifier: string }>();
   const { t } = useTranslation('common');
-  const dispatch = useDispatch();
-  const [isLoadingFile, setIsLoadingFile] = useState(false);
-  const [currentFileUrl, setCurrentFileUrl] = useState('');
-
-  const handleDownload = async (fileId: string) => {
-    setIsLoadingFile(true);
-    const file = await downloadFile(identifier, fileId);
-    if (!file || file?.error) {
-      dispatch(setNotification(file.error, NotificationVariant.Error));
-    } else {
-      setCurrentFileUrl(file);
-    }
-    setIsLoadingFile(false);
-  };
 
   const publiclyAvailableFiles = registration.fileSet.files.filter((file) => !file.administrativeAgreement);
 
@@ -78,60 +63,83 @@ const PublicFilesContent = ({ registration }: PublicRegistrationContentProps) =>
             </TableRow>
           </TableHead>
           <TableBody>
-            {publiclyAvailableFiles.map((file) => {
-              const licenseData = licenses.find((license) => license.identifier === file.license?.identifier);
-              const fileEmbargoDate = file.embargoDate ? new Date(file.embargoDate) : null;
-              return (
-                <TableRow key={file.identifier} hover>
-                  <StyledNameTableCell>{file.name}</StyledNameTableCell>
-                  <StyledTableCell>{Math.round(file.size / 1000)} kB</StyledTableCell>
-                  <StyledTableCell>
-                    {file.publisherAuthority
-                      ? t('registration:files_and_license.published_version')
-                      : t('registration:files_and_license.accepted_version')}
-                  </StyledTableCell>
-                  <StyledTableCell>
-                    <StyledLicenseImg
-                      onClick={() => window.open(licenseData?.link)}
-                      alt={file.license?.identifier}
-                      src={licenseData?.buttonImage}
-                    />
-                  </StyledTableCell>
-                  <StyledTableCell>
-                    {fileEmbargoDate && fileEmbargoDate > new Date() ? (
-                      <Typography>
-                        <LockIcon />
-                        {t('will_be_available')} {fileEmbargoDate.toLocaleDateString()}
-                      </Typography>
-                    ) : !currentFileUrl ? (
-                      <ButtonWithProgress
-                        data-testid="button-download-file"
-                        variant="contained"
-                        color="secondary"
-                        fullWidth
-                        endIcon={<CloudDownloadIcon />}
-                        isLoading={isLoadingFile}
-                        onClick={() => handleDownload(file.identifier)}>
-                        {t('download')}
-                      </ButtonWithProgress>
-                    ) : (
-                      <Button
-                        data-testid="button-open-file"
-                        variant="contained"
-                        color="secondary"
-                        endIcon={<OpenInNewIcon />}
-                        onClick={() => window.open(currentFileUrl)}>
-                        {t('open')}
-                      </Button>
-                    )}
-                  </StyledTableCell>
-                </TableRow>
-              );
-            })}
+            {publiclyAvailableFiles.map((file) => (
+              <FileRow file={file} />
+            ))}
           </TableBody>
         </Table>
       </TableContainer>
     </StyledFilesContent>
+  );
+};
+
+const FileRow = ({ file }: { file: File }) => {
+  const dispatch = useDispatch();
+  const { t } = useTranslation('common');
+  const { identifier } = useParams<{ identifier: string }>();
+  const [isLoadingFile, setIsLoadingFile] = useState(false);
+  const [currentFileUrl, setCurrentFileUrl] = useState('');
+
+  const handleDownload = async (fileId: string) => {
+    setIsLoadingFile(true);
+    const file = await downloadFile(identifier, fileId);
+    if (!file || file?.error) {
+      dispatch(setNotification(file.error, NotificationVariant.Error));
+    } else {
+      setCurrentFileUrl(file);
+    }
+    setIsLoadingFile(false);
+  };
+
+  const licenseData = licenses.find((license) => license.identifier === file.license?.identifier);
+  const fileEmbargoDate = file.embargoDate ? new Date(file.embargoDate) : null;
+
+  return (
+    <TableRow key={file.identifier} hover>
+      <StyledNameTableCell>{file.name}</StyledNameTableCell>
+      <StyledTableCell>{Math.round(file.size / 1000)} kB</StyledTableCell>
+      <StyledTableCell>
+        {file.publisherAuthority
+          ? t('registration:files_and_license.published_version')
+          : t('registration:files_and_license.accepted_version')}
+      </StyledTableCell>
+      <StyledTableCell>
+        <StyledLicenseImg
+          onClick={() => window.open(licenseData?.link)}
+          alt={file.license?.identifier}
+          src={licenseData?.buttonImage}
+        />
+      </StyledTableCell>
+      <StyledTableCell>
+        {fileEmbargoDate && fileEmbargoDate > new Date() ? (
+          <Typography>
+            <LockIcon />
+            {t('will_be_available')} {fileEmbargoDate.toLocaleDateString()}
+          </Typography>
+        ) : !currentFileUrl ? (
+          <ButtonWithProgress
+            data-testid="button-download-file"
+            variant="contained"
+            color="secondary"
+            fullWidth
+            endIcon={<CloudDownloadIcon />}
+            isLoading={isLoadingFile}
+            onClick={() => handleDownload(file.identifier)}>
+            {t('download')}
+          </ButtonWithProgress>
+        ) : (
+          <Button
+            data-testid="button-open-file"
+            variant="contained"
+            color="secondary"
+            fullWidth
+            endIcon={<OpenInNewIcon />}
+            onClick={() => window.open(currentFileUrl)}>
+            {t('open')}
+          </Button>
+        )}
+      </StyledTableCell>
+    </TableRow>
   );
 };
 
