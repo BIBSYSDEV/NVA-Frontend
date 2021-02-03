@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { emptyRegistration, Registration } from '../../types/registration.types';
 import { useTranslation } from 'react-i18next';
 import PublicRegistrationAuthors from './PublicRegistrationAuthors';
-import PublicRegistrationFile from './PublicRegistrationFile';
+import PublicFilesContent from './PublicFilesContent';
 import LabelContentRow from '../../components/LabelContentRow';
 import { getNpiDiscipline } from '../../utils/npiDisciplines';
 import { displayDate } from '../../utils/date-helpers';
@@ -147,7 +147,7 @@ const PublicRegistrationContent = ({ registration, refetchRegistration }: Public
         </StyledBackgroundDiv>
 
         <StyledBackgroundDiv backgroundColor={lightTheme.palette.section.light}>
-          <PublicRegistrationFile registration={registration} />
+          <PublicFilesContent registration={registration} />
         </StyledBackgroundDiv>
 
         <StyledBackgroundDiv backgroundColor={lightTheme.palette.section.main}>

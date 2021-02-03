@@ -40,7 +40,7 @@ const StyledLicenseImg = styled.img`
 
 const StyledFilesContent = styled.div``;
 
-const PublicRegistrationFile = ({ registration }: PublicRegistrationContentProps) => {
+const PublicFilesContent = ({ registration }: PublicRegistrationContentProps) => {
   const { identifier } = useParams<{ identifier: string }>();
   const { t } = useTranslation('common');
   const dispatch = useDispatch();
@@ -135,4 +135,4 @@ const PublicRegistrationFile = ({ registration }: PublicRegistrationContentProps
   );
 };
 
-export default PublicRegistrationFile;
+export default PublicFilesContent;
