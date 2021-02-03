@@ -54,6 +54,7 @@ const StyledBackgroundDiv = styled(BackgroundDiv)`
 
   @media (max-width: ${({ theme }) => `${theme.breakpoints.values.sm}px`}) {
     padding: 1rem 2rem;
+    max-width: 100vw;
   }
 `;
 
