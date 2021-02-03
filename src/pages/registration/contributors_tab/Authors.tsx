@@ -1,5 +1,5 @@
 import { FieldArrayRenderProps, move, useFormikContext } from 'formik';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
@@ -13,6 +13,7 @@ import { NotificationVariant } from '../../../types/notification.types';
 import { BackendTypeNames } from '../../../types/publication_types/commonRegistration.types';
 import { ContributorFieldNames } from '../../../types/publicationFieldNames';
 import { Registration } from '../../../types/registration.types';
+import useIsMobile from '../../../utils/hooks/useIsMobile';
 import AddContributorModal from './AddContributorModal';
 import AuthorList from './components/AuthorList';
 
@@ -33,15 +34,7 @@ const Authors = ({ push, replace }: AuthorsProps) => {
   const [openContributorModal, setOpenContributorModal] = useState(false);
   const [unverifiedAuthor, setUnverifiedAuthor] = useState<UnverifiedContributor | null>(null);
   const orderedAuthors = contributors.map((contributor, index) => ({ ...contributor, sequence: index + 1 }));
-
-  const [width, setWidth] = useState(window.innerWidth);
-  const isMobile = width < lightTheme.breakpoints.values.md;
-
-  useEffect(() => {
-    const handleResize = () => setWidth(window.innerWidth);
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  const isMobile = useIsMobile();
 
   const handleOnRemove = (indexToRemove: number) => {
     const remainingAuthors = contributors

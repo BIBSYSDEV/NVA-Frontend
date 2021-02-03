@@ -19,6 +19,7 @@ import { NotificationVariant } from '../../../../types/notification.types';
 import { BackendTypeNames } from '../../../../types/publication_types/commonRegistration.types';
 import { SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
 import { Registration } from '../../../../types/registration.types';
+import useIsMobile from '../../../../utils/hooks/useIsMobile';
 import { getAffiliationLabel, getMostSpecificUnit } from '../../../../utils/institutions-helpers';
 
 const StyledAffiliationsCell = styled.div`
@@ -61,6 +62,7 @@ const AffiliationsCell = ({ affiliations, authorName, baseFieldName }: Affiliati
   const [openAffiliationModal, setOpenAffiliationModal] = useState(false);
   const [affiliationToRemove, setAffiliationToRemove] = useState<Institution | null>(null);
   const [affiliationToVerify, setAffiliationToVerify] = useState('');
+  const isMobile = useIsMobile();
 
   const toggleAffiliationModal = () => setOpenAffiliationModal(!openAffiliationModal);
 
@@ -155,6 +157,8 @@ const AffiliationsCell = ({ affiliations, authorName, baseFieldName }: Affiliati
           setAffiliationToVerify('');
           toggleAffiliationModal();
         }}
+        maxWidth="sm"
+        fullWidth={isMobile}
         headingText={t('contributors.select_institution')}
         dataTestId="affiliation-modal">
         <>
