@@ -14,6 +14,7 @@ import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import ButtonWithProgress from '../../components/ButtonWithProgress';
 import { Button, Link, Typography } from '@material-ui/core';
+import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 
 const StyledFileIcon = styled(DescriptionIcon)`
   width: 100px;
@@ -37,19 +38,9 @@ const StyledNormalText = styled(NormalText)`
   padding: 1rem;
 `;
 
-const StyledSidebarCard = styled.div`
-  display: flex;
-  flex-direction: row;
-  padding: 1rem 0.5rem;
-  margin-bottom: 1rem;
-  text-align: center;
-`;
+const StyledFilesContent = styled.div``;
 
-interface PublicRegistrationFileProps {
-  file: File;
-}
-
-const PublicRegistrationFile: FC<PublicRegistrationFileProps> = ({ file }) => {
+const PublicRegistrationFile = ({ registration }: PublicRegistrationContentProps) => {
   const { identifier } = useParams<{ identifier: string }>();
   const { t } = useTranslation('common');
   const dispatch = useDispatch();
@@ -70,7 +61,11 @@ const PublicRegistrationFile: FC<PublicRegistrationFileProps> = ({ file }) => {
   const selectedLicense = licenses.find((license) => license.identifier === file.license?.identifier);
 
   return (
-    <StyledSidebarCard>
+    <StyledFilesContent>
+      <Typography variant="h4" component="h2" gutterBottom>
+        {t('registration:files_and_license.files')}
+      </Typography>
+
       <div>
         <StyledFileIcon />
         <NormalText>{file.name}</NormalText>
@@ -113,7 +108,7 @@ const PublicRegistrationFile: FC<PublicRegistrationFileProps> = ({ file }) => {
           <StyledNormalText>{selectedLicense.description}</StyledNormalText>
         </div>
       )}
-    </StyledSidebarCard>
+    </StyledFilesContent>
   );
 };
 

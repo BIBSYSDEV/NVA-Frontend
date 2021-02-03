@@ -58,10 +58,12 @@ const StyledBackgroundDiv = styled(BackgroundDiv)`
 
 export interface PublicRegistrationContentProps {
   registration: Registration;
+}
+export interface PublicRegistrationProps extends PublicRegistrationContentProps {
   refetchRegistration: () => void;
 }
 
-const PublicRegistrationContent = ({ registration, refetchRegistration }: PublicRegistrationContentProps) => {
+const PublicRegistrationContent = ({ registration, refetchRegistration }: PublicRegistrationProps) => {
   const { t } = useTranslation('registration');
 
   // Registration can lack some fields if it's newly created
@@ -144,9 +146,7 @@ const PublicRegistrationContent = ({ registration, refetchRegistration }: Public
         </StyledBackgroundDiv>
 
         <StyledBackgroundDiv backgroundColor={lightTheme.palette.section.light}>
-          {registration.fileSet?.files.map(
-            (file) => !file.administrativeAgreement && <PublicRegistrationFile file={file} key={file.identifier} />
-          )}
+          <PublicRegistrationFile registration={registration} />
         </StyledBackgroundDiv>
 
         <StyledBackgroundDiv backgroundColor={lightTheme.palette.section.main}>
