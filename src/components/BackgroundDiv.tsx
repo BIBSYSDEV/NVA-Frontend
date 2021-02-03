@@ -6,7 +6,7 @@ import lightTheme from '../themes/lightTheme';
 import { isBackgroundColorDark } from '../utils/theme-helpers';
 
 interface BakcgroundDivProps {
-  backgroundColor: string;
+  backgroundColor?: string;
   children?: ReactNode;
 }
 
@@ -20,7 +20,7 @@ const StyledBackgroundDiv = styled(({ backgroundColor, ...rest }) => <div {...re
 `;
 
 const BackgroundDiv = ({ children, ...props }: BakcgroundDivProps) => {
-  const darkMode = isBackgroundColorDark(props.backgroundColor);
+  const darkMode = props.backgroundColor && isBackgroundColorDark(props.backgroundColor);
 
   return (
     <StyledBackgroundDiv {...props}>

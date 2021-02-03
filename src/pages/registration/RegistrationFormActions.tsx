@@ -1,34 +1,55 @@
-import React, { FC, useState } from 'react';
 import { setNestedObjectValues, useFormikContext } from 'formik';
-import { useDispatch } from 'react-redux';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { Button } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import SaveIcon from '@material-ui/icons/Save';
-import ButtonWithProgress from '../../components/ButtonWithProgress';
-import { Registration, RegistrationStatus, RegistrationTab } from '../../types/registration.types';
-import Modal from '../../components/Modal';
-import { SupportModalContent } from './SupportModalContent';
 import { updateRegistration } from '../../api/registrationApi';
-import { NotificationVariant } from '../../types/notification.types';
+import ButtonWithProgress from '../../components/ButtonWithProgress';
+import Modal from '../../components/Modal';
 import { setNotification } from '../../redux/actions/notificationActions';
+import { NotificationVariant } from '../../types/notification.types';
+import { Registration, RegistrationStatus, RegistrationTab } from '../../types/registration.types';
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
+import { SupportModalContent } from './SupportModalContent';
 
 const StyledActionsContainer = styled.div`
   margin-bottom: 1rem;
-  display: flex;
-  justify-content: space-between;
-
-  > div > button:not(:last-child) {
-    margin-right: 0.5rem;
+  display: grid;
+  grid-template-areas: 'back-button support-button save-next-button';
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+    grid-template-areas: 'save-next-button save-next-button' 'back-button support-button';
+    row-gap: 1rem;
   }
+  grid-template-columns: 2fr auto auto;
+  column-gap: 1rem;
+`;
+
+const StyledBackButtonContainer = styled.div`
+  grid-area: back-button;
+`;
+
+const StyledSaveNextButtonsContainer = styled.div`
+  grid-area: save-next-button;
+  display: grid;
+  grid-template-areas: 'save-button next-button';
+  grid-column-gap: 1rem;
 `;
 
 const StyledBackButton = styled(Button)`
   color: ${({ theme }) => theme.palette.text.primary};
+`;
+
+const StyledSupportButtonContainer = styled.div`
+  grid-area: support-button;
+`;
+
+const StyledSaveAndPresentButtonContainer = styled.div`
+  grid-area: save-next-button;
 `;
 
 interface RegistrationFormActionsProps {
@@ -37,11 +58,11 @@ interface RegistrationFormActionsProps {
   refetchRegistration: () => void;
 }
 
-export const RegistrationFormActions: FC<RegistrationFormActionsProps> = ({
+export const RegistrationFormActions = ({
   tabNumber,
   setTabNumber,
   refetchRegistration,
-}) => {
+}: RegistrationFormActionsProps) => {
   const { t } = useTranslation('registration');
   const history = useHistory();
   const dispatch = useDispatch();
@@ -74,9 +95,8 @@ export const RegistrationFormActions: FC<RegistrationFormActionsProps> = ({
   return (
     <>
       <StyledActionsContainer>
-        <div>
-          {/* Left aligned buttons */}
-          {tabNumber > RegistrationTab.Description && (
+        {tabNumber > RegistrationTab.Description && (
+          <StyledBackButtonContainer>
             <StyledBackButton
               color="secondary"
               variant="outlined"
@@ -87,39 +107,40 @@ export const RegistrationFormActions: FC<RegistrationFormActionsProps> = ({
               {tabNumber === RegistrationTab.Contributors && t('heading.reference')}
               {tabNumber === RegistrationTab.FilesAndLicenses && t('heading.contributors')}
             </StyledBackButton>
-          )}
-        </div>
-        <div>
-          {/* Right aligned buttons */}
+          </StyledBackButtonContainer>
+        )}
+        <StyledSupportButtonContainer>
           <Button data-testid="open-support-button" variant="text" color="primary" onClick={toggleSupportModal}>
             {t('common:support')}
           </Button>
-          {tabNumber < RegistrationTab.FilesAndLicenses ? (
-            <>
-              <ButtonWithProgress
-                variant="outlined"
-                isLoading={isSaving}
-                data-testid="button-save-registration"
-                endIcon={<SaveIcon />}
-                onClick={async () => {
-                  await saveRegistration(values);
-                  // Set all fields with error to touched to ensure error messages are shown
-                  setTouched(setNestedObjectValues(errors, true));
-                }}>
-                {values.status === RegistrationStatus.DRAFT ? t('save_draft') : t('common:save')}
-              </ButtonWithProgress>
-              <Button
-                color="secondary"
-                variant="contained"
-                data-testid="button-next-tab"
-                endIcon={<ArrowForwardIcon />}
-                onClick={() => setTabNumber(tabNumber + 1)}>
-                {tabNumber === RegistrationTab.Description && t('heading.reference')}
-                {tabNumber === RegistrationTab.Reference && t('heading.contributors')}
-                {tabNumber === RegistrationTab.Contributors && t('heading.files_and_license')}
-              </Button>
-            </>
-          ) : (
+        </StyledSupportButtonContainer>
+        {tabNumber < RegistrationTab.FilesAndLicenses ? (
+          <StyledSaveNextButtonsContainer>
+            <ButtonWithProgress
+              variant="outlined"
+              isLoading={isSaving}
+              data-testid="button-save-registration"
+              endIcon={<SaveIcon />}
+              onClick={async () => {
+                await saveRegistration(values);
+                // Set all fields with error to touched to ensure error messages are shown
+                setTouched(setNestedObjectValues(errors, true));
+              }}>
+              {values.status === RegistrationStatus.DRAFT ? t('save_draft') : t('common:save')}
+            </ButtonWithProgress>
+            <Button
+              color="secondary"
+              variant="contained"
+              data-testid="button-next-tab"
+              endIcon={<ArrowForwardIcon />}
+              onClick={() => setTabNumber(tabNumber + 1)}>
+              {tabNumber === RegistrationTab.Description && t('heading.reference')}
+              {tabNumber === RegistrationTab.Reference && t('heading.contributors')}
+              {tabNumber === RegistrationTab.Contributors && t('heading.files_and_license')}
+            </Button>
+          </StyledSaveNextButtonsContainer>
+        ) : (
+          <StyledSaveAndPresentButtonContainer>
             <ButtonWithProgress
               color="secondary"
               variant="contained"
@@ -129,8 +150,8 @@ export const RegistrationFormActions: FC<RegistrationFormActionsProps> = ({
               onClick={onClickSaveAndPresent}>
               {t('common:save_and_present')}
             </ButtonWithProgress>
-          )}
-        </div>
+          </StyledSaveAndPresentButtonContainer>
+        )}
       </StyledActionsContainer>
 
       <Modal
