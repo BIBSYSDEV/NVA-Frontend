@@ -1,10 +1,9 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
-import { Link, IconButton } from '@material-ui/core';
+import { Link, IconButton, Typography } from '@material-ui/core';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 
 import { Contributor } from '../../types/contributor.types';
-import NormalText from '../../components/NormalText';
 import { getDistinctContributorUnits } from '../../utils/institutions-helpers';
 import OrcidLogo from '../../resources/images/orcid_logo.svg';
 import { ORCID_BASE_URL } from '../../utils/constants';
@@ -27,6 +26,10 @@ const StyedAffiliationWithIndex = styled.div`
   display: flex;
 `;
 
+const StyledPublicRegistrationAuthors = styled.div`
+  margin-bottom: 1rem;
+`;
+
 interface PublicRegistrationAuthorsProps {
   contributors: Contributor[];
 }
@@ -35,8 +38,8 @@ const PublicRegistrationAuthors: FC<PublicRegistrationAuthorsProps> = ({ contrib
   const distinctUnits = getDistinctContributorUnits(contributors);
 
   return (
-    <>
-      <NormalText>
+    <StyledPublicRegistrationAuthors>
+      <Typography>
         {contributors.map((contributor, index) => {
           const {
             identity: { id, name, orcId },
@@ -74,7 +77,7 @@ const PublicRegistrationAuthors: FC<PublicRegistrationAuthorsProps> = ({ contrib
             </StyledAuthor>
           );
         })}
-      </NormalText>
+      </Typography>
       <StyledAffiliationsContainer>
         {distinctUnits.map((unitUri, index) => (
           <StyedAffiliationWithIndex key={unitUri}>
@@ -83,7 +86,7 @@ const PublicRegistrationAuthors: FC<PublicRegistrationAuthorsProps> = ({ contrib
           </StyedAffiliationWithIndex>
         ))}
       </StyledAffiliationsContainer>
-    </>
+    </StyledPublicRegistrationAuthors>
   );
 };
 

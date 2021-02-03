@@ -52,6 +52,11 @@ const darkTheme = createMuiTheme({
       },
     },
   },
+  props: {
+    MuiTypography: {
+      color: 'primary',
+    },
+  },
 });
 
 export default darkTheme;
