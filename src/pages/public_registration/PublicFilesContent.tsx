@@ -24,7 +24,7 @@ import {
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 
 const StyledTableCell = styled(TableCell)`
-  min-width: 11rem;
+  min-width: 12rem;
   font-size: 1rem;
   word-wrap: break-word;
 `;
