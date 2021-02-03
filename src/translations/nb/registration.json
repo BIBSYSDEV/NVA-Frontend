@@ -60,6 +60,7 @@
     "conditions_for_using_file": "Betingelser for bruk av fil",
     "embargo_date": "Ikke åpent tilgjengelig før",
     "files": "Filer",
+    "license": "Lisens",
     "licenses": "Lisenser",
     "no_duplicates": "Kunne ikke legge til \"{{fileName}}\", siden en fil med samme navn allerede finnes",
     "publicly_available": "Offentlig tilgjengelig",

@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { Button, DialogActions, TextField, Typography } from '@material-ui/core';
@@ -14,7 +14,7 @@ import { Link } from 'react-router-dom';
 
 import { RootStore } from '../../redux/reducers/rootReducer';
 import Card from '../../components/Card';
-import { PublicRegistrationContentProps, PublicRegistrationProps } from './PublicRegistrationContent';
+import { PublicRegistrationProps } from './PublicRegistrationContent';
 import Modal from '../../components/Modal';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';

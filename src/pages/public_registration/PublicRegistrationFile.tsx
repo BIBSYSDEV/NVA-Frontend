@@ -1,11 +1,10 @@
-import React, { FC, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import DescriptionIcon from '@material-ui/icons/DescriptionOutlined';
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import LockIcon from '@material-ui/icons/Lock';
 import { File, licenses } from '../../types/file.types';
-import NormalText from '../../components/NormalText';
 import { downloadFile } from '../../api/fileApi';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -13,29 +12,29 @@ import { useDispatch } from 'react-redux';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import ButtonWithProgress from '../../components/ButtonWithProgress';
-import { Button, Link, Typography } from '@material-ui/core';
+import {
+  Button,
+  Card,
+  Link,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+} from '@material-ui/core';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 
-const StyledFileIcon = styled(DescriptionIcon)`
-  width: 100px;
-  height: 150px;
-  border: 1px solid ${({ theme }) => theme.palette.text.primary};
-  padding: 0.5rem;
+const StyledTableCell = styled(TableCell)`
+  min-width: 11rem;
+  font-size: 1rem;
+  word-wrap: break-word;
 `;
 
-const StyledButtonWithProgress = styled(ButtonWithProgress)`
-  margin: 1rem;
-`;
-
-const StyledButton = styled(Button)`
-  margin: 1rem;
-`;
-
-const StyledNormalText = styled(NormalText)`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1rem;
+const StyledNameTableCell = styled(StyledTableCell)`
+  font-weight: 700;
+  max-width: 35rem;
 `;
 
 const StyledFilesContent = styled.div``;
@@ -58,7 +57,7 @@ const PublicRegistrationFile = ({ registration }: PublicRegistrationContentProps
     setIsLoadingFile(false);
   };
 
-  const selectedLicense = licenses.find((license) => license.identifier === file.license?.identifier);
+  const publiclyAvailableFiles = registration.fileSet.files.filter((file) => !file.administrativeAgreement);
 
   return (
     <StyledFilesContent>
@@ -66,7 +65,52 @@ const PublicRegistrationFile = ({ registration }: PublicRegistrationContentProps
         {t('registration:files_and_license.files')}
       </Typography>
 
-      <div>
+      <TableContainer>
+        <Table size="small">
+          <TableHead>
+            <TableRow>
+              <StyledTableCell>{t('registration:files_and_license.title')}</StyledTableCell>
+              <StyledTableCell>{t('size')}</StyledTableCell>
+              <StyledTableCell>{t('version')}</StyledTableCell>
+              <StyledTableCell>{t('registration:files_and_license.license')}</StyledTableCell>
+              <StyledTableCell />
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {publiclyAvailableFiles.map((file) => (
+              <TableRow key={file.identifier} hover>
+                <StyledNameTableCell>{file.name}</StyledNameTableCell>
+                <StyledTableCell>{Math.round(file.size / 1000)} kB</StyledTableCell>
+                <StyledTableCell>
+                  {file.publisherAuthority
+                    ? t('registration:files_and_license.published_version')
+                    : t('registration:files_and_license.accepted_version')}
+                </StyledTableCell>
+                <StyledTableCell>
+                  <img
+                    alt={file.license?.identifier}
+                    src={licenses.find((license) => license.identifier === file.license?.identifier)?.buttonImage}
+                  />
+                </StyledTableCell>
+                <StyledTableCell>
+                  {file.embargoDate && new Date(file.embargoDate) > new Date() ? (
+                    <Typography>
+                      <LockIcon />
+                      {t('will_be_available')} {new Date(file.embargoDate).toLocaleDateString()}
+                    </Typography>
+                  ) : (
+                    <Button variant="contained" color="secondary" fullWidth endIcon={<CloudDownloadIcon />}>
+                      {t('download')}
+                    </Button>
+                  )}
+                </StyledTableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+
+      {/* <div>
         <StyledFileIcon />
         <NormalText>{file.name}</NormalText>
         {file.embargoDate && new Date(file.embargoDate) > new Date() ? (
@@ -107,7 +151,7 @@ const PublicRegistrationFile = ({ registration }: PublicRegistrationContentProps
           </Typography>
           <StyledNormalText>{selectedLicense.description}</StyledNormalText>
         </div>
-      )}
+      )} */}
     </StyledFilesContent>
   );
 };

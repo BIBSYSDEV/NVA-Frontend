@@ -2,7 +2,6 @@ import React from 'react';
 import { Chip, MuiThemeProvider, Typography } from '@material-ui/core';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
-import { Registration } from '../../types/registration.types';
 import lightTheme from '../../themes/lightTheme';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 

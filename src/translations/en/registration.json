@@ -60,6 +60,7 @@
     "conditions_for_using_file": "Conditions for using the file",
     "embargo_date": "Not openly available before",
     "files": "Files",
+    "license": "License",
     "licenses": "Licenses",
     "no_duplicates": "Cannot add \"{{fileName}}\", because a file with the same name already exists",
     "publicly_available": "Publicly available",
