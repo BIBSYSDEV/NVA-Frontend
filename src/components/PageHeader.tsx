@@ -1,6 +1,7 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
+import Truncate from 'react-truncate';
 import styled from 'styled-components';
 import { Button, Typography, TypographyProps } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
@@ -53,6 +54,20 @@ const StyledRegistrationPageHeader = styled(PageHeader)`
   font-style: italic;
 `;
 
-export const RegistrationPageHeader = (props: PageHeaderProps) => (
-  <StyledRegistrationPageHeader variant="h2" variantMapping={{ h2: 'h1' }} {...props} />
-);
+export const RegistrationPageHeader = (props: PageHeaderProps) => {
+  const [showFullText, setShowFullText] = useState(false);
+
+  const toggleFullText = () => setShowFullText(!showFullText);
+
+  return (
+    <StyledRegistrationPageHeader variant="h2" variantMapping={{ h2: 'h1' }} onClick={toggleFullText} {...props}>
+      {showFullText ? (
+        props.children
+      ) : (
+        <Truncate lines={2} ellipsis="...">
+          {props.children}
+        </Truncate>
+      )}
+    </StyledRegistrationPageHeader>
+  );
+};
