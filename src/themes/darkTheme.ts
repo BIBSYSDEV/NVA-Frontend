@@ -58,5 +58,5 @@ const darkTheme = createMuiTheme({
     },
   },
 });
-
+console.log(darkTheme);
 export default darkTheme;
