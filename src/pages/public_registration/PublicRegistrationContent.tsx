@@ -1,5 +1,5 @@
 import React from 'react';
-import { Chip, Typography } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 import styled from 'styled-components';
 import { emptyRegistration, Registration } from '../../types/registration.types';
 import { useTranslation } from 'react-i18next';
@@ -46,11 +46,7 @@ import {
 import { RegistrationPageHeader } from '../../components/PageHeader';
 import BackgroundDiv from '../../components/BackgroundDiv';
 import lightTheme from '../../themes/lightTheme';
-
-const StyledTag = styled.div`
-  display: inline;
-  margin-right: 1rem;
-`;
+import PublicSummaryContent from './PublicSummaryContent';
 
 export interface PublicRegistrationContentProps {
   registration: Registration;
@@ -63,16 +59,7 @@ const PublicRegistrationContent = ({ registration, refetchRegistration }: Public
   // Registration can lack some fields if it's newly created
   registration = deepmerge(emptyRegistration, registration);
 
-  const {
-    abstract,
-    contributors,
-    date,
-    description,
-    mainTitle,
-    npiSubjectHeading,
-    reference,
-    tags = [],
-  } = registration.entityDescription;
+  const { contributors, date, description, mainTitle, npiSubjectHeading, reference } = registration.entityDescription;
 
   return (
     <>
@@ -155,20 +142,7 @@ const PublicRegistrationContent = ({ registration, refetchRegistration }: Public
         </BackgroundDiv>
 
         <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
-          {abstract && (
-            <LabelContentRow minimal label={`${t('description.abstract')}:`}>
-              {abstract}
-            </LabelContentRow>
-          )}
-          {tags.length > 0 && (
-            <LabelContentRow minimal multiple label={`${t('description.keywords')}:`}>
-              {tags.map((tag) => (
-                <StyledTag key={tag}>
-                  <Chip label={tag} />
-                </StyledTag>
-              ))}
-            </LabelContentRow>
-          )}
+          <PublicSummaryContent registration={registration} />
         </BackgroundDiv>
 
         <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
