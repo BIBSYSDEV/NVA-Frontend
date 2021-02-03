@@ -1,5 +1,5 @@
 import { useFormikContext } from 'formik';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import DateFnsUtils from '@date-io/date-fns';
@@ -10,6 +10,7 @@ import { DescriptionFieldNames } from '../../../types/publicationFieldNames';
 import { Registration } from '../../../types/registration.types';
 import { getDateFnsLocale } from '../../../utils/date-helpers';
 import { ErrorMessage } from '../../../utils/validation/errorMessage';
+import { BackendTypeNames } from '../../../types/publication_types/commonRegistration.types';
 
 const StyledFormControlLabel = styled(FormControlLabel)`
   margin-left: 0.5rem;
@@ -33,26 +34,29 @@ const DatePickerField = () => {
   );
   const [yearOnly, setYearOnly] = useState(!!year && !month);
 
-  useEffect(() => {
-    // Extract data from date object
-    const updatedYear = date ? date.getFullYear() : NaN;
-    const updatedMonth = !yearOnly && date ? date.getMonth() + 1 : NaN;
-    const updatedDay = !yearOnly && date ? date.getDate() : NaN;
+  const setYearFieldTouched = () => setFieldTouched(DescriptionFieldNames.PUBLICATION_YEAR);
 
-    const updatedYearValue = !isNaN(updatedYear) ? updatedYear : '';
-    const updatedMonthValue = !isNaN(updatedMonth) ? updatedMonth : '';
-    const updatedDayValue = !isNaN(updatedDay) ? updatedDay : '';
-
-    setFieldValue(DescriptionFieldNames.PUBLICATION_YEAR, updatedYearValue);
-    setFieldValue(DescriptionFieldNames.PUBLICATION_MONTH, updatedMonthValue);
-    setFieldValue(DescriptionFieldNames.PUBLICATION_DAY, updatedDayValue);
-  }, [setFieldValue, date, yearOnly]);
-
-  const toggleYearOnly = () => {
-    setYearOnly(!yearOnly);
+  const updateDateValues = (newDate: Date | null, isYearOnly: boolean) => {
+    const updatedDate = {
+      type: BackendTypeNames.PUBLICATION_DATE,
+      year: newDate ? newDate.getFullYear() : '',
+      month: !isYearOnly && newDate ? newDate.getMonth() + 1 : '',
+      day: !isYearOnly && newDate ? newDate.getDate() : '',
+    };
+    setFieldValue(DescriptionFieldNames.DATE, updatedDate);
+    setYearFieldTouched();
   };
 
-  const setYearFieldTouched = () => setFieldTouched(DescriptionFieldNames.PUBLICATION_YEAR);
+  const onChangeDate = (newDate: Date | null) => {
+    updateDateValues(newDate, yearOnly);
+    setDate(newDate);
+  };
+
+  const toggleYearOnly = () => {
+    const nextYearOnlyValue = !yearOnly;
+    updateDateValues(date, nextYearOnlyValue);
+    setYearOnly(nextYearOnlyValue);
+  };
 
   const views: DatePickerView[] = yearOnly ? ['year'] : ['year', 'month', 'date'];
 
@@ -67,7 +71,7 @@ const DatePickerField = () => {
           inputVariant="filled"
           label={t('description.date_published')}
           required
-          onChange={setDate}
+          onChange={onChangeDate}
           views={views}
           value={date}
           autoOk
