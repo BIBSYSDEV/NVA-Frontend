@@ -37,6 +37,10 @@ const StyledNameTableCell = styled(StyledTableCell)`
   max-width: 35rem;
 `;
 
+const StyledLicenseImg = styled.img`
+  cursor: pointer;
+`;
+
 const StyledFilesContent = styled.div``;
 
 const PublicRegistrationFile = ({ registration }: PublicRegistrationContentProps) => {
@@ -77,42 +81,44 @@ const PublicRegistrationFile = ({ registration }: PublicRegistrationContentProps
             </TableRow>
           </TableHead>
           <TableBody>
-            {publiclyAvailableFiles.map((file) => (
-              <TableRow key={file.identifier} hover>
-                <StyledNameTableCell>{file.name}</StyledNameTableCell>
-                <StyledTableCell>{Math.round(file.size / 1000)} kB</StyledTableCell>
-                <StyledTableCell>
-                  {file.publisherAuthority
-                    ? t('registration:files_and_license.published_version')
-                    : t('registration:files_and_license.accepted_version')}
-                </StyledTableCell>
-                <StyledTableCell>
-                  <img
-                    alt={file.license?.identifier}
-                    src={licenses.find((license) => license.identifier === file.license?.identifier)?.buttonImage}
-                  />
-                </StyledTableCell>
-                <StyledTableCell>
-                  {file.embargoDate && new Date(file.embargoDate) > new Date() ? (
-                    <Typography>
-                      <LockIcon />
-                      {t('will_be_available')} {new Date(file.embargoDate).toLocaleDateString()}
-                    </Typography>
-                  ) : (
-                    <Button variant="contained" color="secondary" fullWidth endIcon={<CloudDownloadIcon />}>
-                      {t('download')}
-                    </Button>
-                  )}
-                </StyledTableCell>
-              </TableRow>
-            ))}
+            {publiclyAvailableFiles.map((file) => {
+              const licenseData = licenses.find((license) => license.identifier === file.license?.identifier);
+              return (
+                <TableRow key={file.identifier} hover>
+                  <StyledNameTableCell>{file.name}</StyledNameTableCell>
+                  <StyledTableCell>{Math.round(file.size / 1000)} kB</StyledTableCell>
+                  <StyledTableCell>
+                    {file.publisherAuthority
+                      ? t('registration:files_and_license.published_version')
+                      : t('registration:files_and_license.accepted_version')}
+                  </StyledTableCell>
+                  <StyledTableCell>
+                    <StyledLicenseImg
+                      onClick={() => window.open(licenseData?.link)}
+                      alt={file.license?.identifier}
+                      src={licenseData?.buttonImage}
+                    />
+                  </StyledTableCell>
+                  <StyledTableCell>
+                    {file.embargoDate && new Date(file.embargoDate) > new Date() ? (
+                      <Typography>
+                        <LockIcon />
+                        {t('will_be_available')} {new Date(file.embargoDate).toLocaleDateString()}
+                      </Typography>
+                    ) : (
+                      <Button variant="contained" color="secondary" fullWidth endIcon={<CloudDownloadIcon />}>
+                        {t('download')}
+                      </Button>
+                    )}
+                  </StyledTableCell>
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
       </TableContainer>
 
-      {/* <div>
-        <StyledFileIcon />
-        <NormalText>{file.name}</NormalText>
+      {/* <div>       
         {file.embargoDate && new Date(file.embargoDate) > new Date() ? (
           <StyledNormalText>
             <LockIcon />
