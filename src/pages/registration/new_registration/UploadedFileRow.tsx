@@ -21,7 +21,11 @@ const UploadedFileRow = ({ file, removeFile }: UploadedFileRowProps) => {
   return (
     <StyledFileRow data-testid="uploaded-file">
       <Typography>{file.name}</Typography>
-      <DangerButton variant="outlined" startIcon={<RemoveCircleIcon />} onClick={removeFile}>
+      <DangerButton
+        data-testid="button-remove-file"
+        variant="outlined"
+        startIcon={<RemoveCircleIcon />}
+        onClick={removeFile}>
         {t('remove')}
       </DangerButton>
     </StyledFileRow>
