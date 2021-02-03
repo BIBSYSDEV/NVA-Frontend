@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import DescriptionIcon from '@material-ui/icons/DescriptionOutlined';
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import LockIcon from '@material-ui/icons/Lock';
-import { File, licenses } from '../../types/file.types';
+import { licenses } from '../../types/file.types';
 import { downloadFile } from '../../api/fileApi';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -14,8 +13,6 @@ import { NotificationVariant } from '../../types/notification.types';
 import ButtonWithProgress from '../../components/ButtonWithProgress';
 import {
   Button,
-  Card,
-  Link,
   Table,
   TableBody,
   TableCell,
@@ -83,6 +80,7 @@ const PublicRegistrationFile = ({ registration }: PublicRegistrationContentProps
           <TableBody>
             {publiclyAvailableFiles.map((file) => {
               const licenseData = licenses.find((license) => license.identifier === file.license?.identifier);
+              const fileEmbargoDate = file.embargoDate ? new Date(file.embargoDate) : null;
               return (
                 <TableRow key={file.identifier} hover>
                   <StyledNameTableCell>{file.name}</StyledNameTableCell>
@@ -100,14 +98,30 @@ const PublicRegistrationFile = ({ registration }: PublicRegistrationContentProps
                     />
                   </StyledTableCell>
                   <StyledTableCell>
-                    {file.embargoDate && new Date(file.embargoDate) > new Date() ? (
+                    {fileEmbargoDate && fileEmbargoDate > new Date() ? (
                       <Typography>
                         <LockIcon />
-                        {t('will_be_available')} {new Date(file.embargoDate).toLocaleDateString()}
+                        {t('will_be_available')} {fileEmbargoDate.toLocaleDateString()}
                       </Typography>
-                    ) : (
-                      <Button variant="contained" color="secondary" fullWidth endIcon={<CloudDownloadIcon />}>
+                    ) : !currentFileUrl ? (
+                      <ButtonWithProgress
+                        data-testid="button-download-file"
+                        variant="contained"
+                        color="secondary"
+                        fullWidth
+                        endIcon={<CloudDownloadIcon />}
+                        isLoading={isLoadingFile}
+                        onClick={() => handleDownload(file.identifier)}>
                         {t('download')}
+                      </ButtonWithProgress>
+                    ) : (
+                      <Button
+                        data-testid="button-open-file"
+                        variant="contained"
+                        color="secondary"
+                        endIcon={<OpenInNewIcon />}
+                        onClick={() => window.open(currentFileUrl)}>
+                        {t('open')}
                       </Button>
                     )}
                   </StyledTableCell>
@@ -117,47 +131,6 @@ const PublicRegistrationFile = ({ registration }: PublicRegistrationContentProps
           </TableBody>
         </Table>
       </TableContainer>
-
-      {/* <div>       
-        {file.embargoDate && new Date(file.embargoDate) > new Date() ? (
-          <StyledNormalText>
-            <LockIcon />
-            {t('will_be_available')} {new Date(file.embargoDate).toLocaleDateString()}
-          </StyledNormalText>
-        ) : !currentFileUrl ? (
-          <StyledButtonWithProgress
-            isLoading={isLoadingFile}
-            endIcon={!isLoadingFile && <CloudDownloadIcon />}
-            data-testid="button-download-file"
-            onClick={() => handleDownload(file.identifier)}>
-            {t('download')}
-          </StyledButtonWithProgress>
-        ) : (
-          <StyledButton
-            variant="contained"
-            color="primary"
-            endIcon={<OpenInNewIcon />}
-            data-testid="button-open-file"
-            onClick={() => window.open(currentFileUrl)}>
-            {t('open')}
-          </StyledButton>
-        )}
-      </div>
-      {selectedLicense && (
-        <div>
-          <img src={selectedLicense.image} alt={selectedLicense.identifier} />
-          <Typography>
-            {selectedLicense.link ? (
-              <Link href={selectedLicense.link} target="_blank" rel="noopener noreferrer">
-                {selectedLicense.label}
-              </Link>
-            ) : (
-              selectedLicense.label
-            )}
-          </Typography>
-          <StyledNormalText>{selectedLicense.description}</StyledNormalText>
-        </div>
-      )} */}
     </StyledFilesContent>
   );
 };
