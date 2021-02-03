@@ -2,12 +2,10 @@ import React, { FC } from 'react';
 import { Link, Chip, Typography } from '@material-ui/core';
 import styled from 'styled-components';
 import { emptyRegistration, Registration } from '../../types/registration.types';
-import ContentPage from '../../components/ContentPage';
 import { useTranslation } from 'react-i18next';
 import PublicRegistrationAuthors from './PublicRegistrationAuthors';
 import PublicRegistrationFile from './PublicRegistrationFile';
 import Card from '../../components/Card';
-import Heading from '../../components/Heading';
 import LabelContentRow from '../../components/LabelContentRow';
 import Label from '../../components/Label';
 import { licenses } from '../../types/file.types';
@@ -49,6 +47,7 @@ import {
   ChapterPublicationContext,
   ChapterPublicationInstance,
 } from '../../types/publication_types/chapterRegistration.types';
+import { RegistrationPageHeader } from '../../components/PageHeader';
 
 const StyledContentWrapper = styled.div`
   display: flex;
@@ -118,9 +117,9 @@ const PublicRegistrationContent: FC<PublicRegistrationContentProps> = ({ registr
   const selectedLicense = licenses.find((license) => license.identifier === currentLicense?.identifier);
 
   return (
-    <ContentPage>
+    <div>
       <PublicRegistrationStatusBar registration={registration} refetchRegistration={refetchRegistration} />
-      <Heading>{mainTitle}</Heading>
+      <RegistrationPageHeader>{mainTitle || `[${t('common:missing_title')}]`}</RegistrationPageHeader>
       {contributors && <PublicRegistrationAuthors contributors={contributors} />}
       <StyledContentWrapper>
         {registration.fileSet?.files.map(
@@ -230,7 +229,7 @@ const PublicRegistrationContent: FC<PublicRegistrationContentProps> = ({ registr
           )}
         </StyledMainContent>
       </StyledContentWrapper>
-    </ContentPage>
+    </div>
   );
 };
 

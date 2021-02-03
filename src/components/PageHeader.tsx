@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import styled from 'styled-components';
-import { Typography, Button } from '@material-ui/core';
+import { Typography, Button, TypographyProps } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -15,17 +15,17 @@ const StyledHeader = styled.div`
   }
 `;
 
-const StyledHeaderTitle = styled(Typography)`
+const StyledTypography = styled(Typography)`
   border-bottom: 3px solid;
   padding-bottom: 0.5rem;
 `;
 
-interface PageHeaderProps {
+export interface PageHeaderProps extends TypographyProps {
   backPath?: string;
   children: ReactNode;
 }
 
-export const PageHeader = ({ backPath, children }: PageHeaderProps) => {
+export const PageHeader = ({ backPath, children, ...props }: PageHeaderProps) => {
   const { t } = useTranslation('common');
   const history = useHistory();
 
@@ -44,9 +44,18 @@ export const PageHeader = ({ backPath, children }: PageHeaderProps) => {
       <Button data-testid="navigate-back-button" startIcon={<ArrowBackIcon />} variant="text" onClick={onBackClick}>
         {t('back')}
       </Button>
-      <StyledHeaderTitle variant="h1" noWrap>
+      <StyledTypography variant="h1" {...props}>
         {children}
-      </StyledHeaderTitle>
+      </StyledTypography>
     </StyledHeader>
   );
 };
+
+const StyledRegistrationPageHeader = styled(PageHeader)`
+  font-weight: 700;
+  font-style: italic;
+`;
+
+export const RegistrationPageHeader = (props: PageHeaderProps) => (
+  <StyledRegistrationPageHeader variant="h2" variantMapping={{ h2: 'h1' }} {...props} />
+);
