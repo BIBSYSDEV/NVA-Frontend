@@ -27,8 +27,8 @@
   },
   "description": {
     "abstract": "Sammendrag",
-    "date_published": "Publiseringsdato",
     "connect_project": "Koble til prosjekt",
+    "date_published": "Publiseringsdato",
     "description": "Beskrivelse",
     "description_of_content": "Beskrivelse av innhold, hvis relevant",
     "financed_by": "Finansiert av",

@@ -27,8 +27,8 @@
   },
   "description": {
     "abstract": "Abstract",
-    "date_published": "Date published",
     "connect_project": "Connect to project",
+    "date_published": "Date published",
     "description": "Description",
     "description_of_content": "Description of content, if relevant",
     "financed_by": "Financed by",
