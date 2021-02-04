@@ -1,5 +1,4 @@
 import React from 'react';
-import { Typography } from '@material-ui/core';
 import styled from 'styled-components';
 import { emptyRegistration, Registration } from '../../types/registration.types';
 import { useTranslation } from 'react-i18next';
@@ -47,6 +46,7 @@ import { RegistrationPageHeader } from '../../components/PageHeader';
 import BackgroundDiv from '../../components/BackgroundDiv';
 import lightTheme from '../../themes/lightTheme';
 import PublicSummaryContent from './PublicSummaryContent';
+import PublicProjectsContent from './PublicProjectsContent';
 
 const StyledBackgroundDiv = styled(BackgroundDiv)`
   padding: 2rem 5rem;
@@ -155,13 +155,7 @@ const PublicRegistrationContent = ({ registration, refetchRegistration }: Public
         </StyledBackgroundDiv>
 
         <StyledBackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
-          {registration.projects.length > 0 && (
-            <LabelContentRow minimal label={`${t('description.project_association')}:`}>
-              {registration.projects.map((project) => (
-                <Typography key={project.id}>{project.name}</Typography>
-              ))}
-            </LabelContentRow>
-          )}
+          <PublicProjectsContent registration={registration} />
         </StyledBackgroundDiv>
       </div>
     </>
