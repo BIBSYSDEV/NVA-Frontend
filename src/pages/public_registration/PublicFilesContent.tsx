@@ -1,0 +1,145 @@
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
+import OpenInNewIcon from '@material-ui/icons/OpenInNew';
+import LockIcon from '@material-ui/icons/Lock';
+import { useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
+import {
+  Button,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+} from '@material-ui/core';
+import prettyBytes from 'pretty-bytes';
+import { File, licenses } from '../../types/file.types';
+import { downloadFile } from '../../api/fileApi';
+import { setNotification } from '../../redux/actions/notificationActions';
+import { NotificationVariant } from '../../types/notification.types';
+import ButtonWithProgress from '../../components/ButtonWithProgress';
+import { PublicRegistrationContentProps } from './PublicRegistrationContent';
+
+const StyledTableCell = styled(TableCell)`
+  font-size: 1rem;
+  word-wrap: break-word;
+`;
+
+const StyledNameTableCell = styled(StyledTableCell)`
+  min-width: 10rem;
+  font-weight: 700;
+  line-break: anywhere;
+`;
+
+const StyledLicenseImg = styled.img`
+  cursor: pointer;
+`;
+
+const PublicFilesContent = ({ registration }: PublicRegistrationContentProps) => {
+  const { t } = useTranslation('common');
+
+  const publiclyAvailableFiles = registration.fileSet.files.filter((file) => !file.administrativeAgreement);
+
+  return (
+    <>
+      <Typography variant="h4" component="h2" gutterBottom>
+        {t('registration:files_and_license.files')}
+      </Typography>
+
+      <TableContainer>
+        <Table size="small">
+          <TableHead>
+            <TableRow>
+              <StyledTableCell>{t('registration:files_and_license.title')}</StyledTableCell>
+              <StyledTableCell>{t('size')}</StyledTableCell>
+              <StyledTableCell>{t('version')}</StyledTableCell>
+              <StyledTableCell>{t('registration:files_and_license.license')}</StyledTableCell>
+              <StyledTableCell />
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {publiclyAvailableFiles.map((file) => (
+              <FileRow key={file.identifier} file={file} />
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </>
+  );
+};
+
+const FileRow = ({ file }: { file: File }) => {
+  const dispatch = useDispatch();
+  const { t } = useTranslation('common');
+  const { identifier } = useParams<{ identifier: string }>();
+  const [isLoadingFile, setIsLoadingFile] = useState(false);
+  const [currentFileUrl, setCurrentFileUrl] = useState('');
+
+  const handleDownload = async (fileId: string) => {
+    setIsLoadingFile(true);
+    const file = await downloadFile(identifier, fileId);
+    if (!file || file?.error) {
+      dispatch(setNotification(file.error, NotificationVariant.Error));
+    } else {
+      setCurrentFileUrl(file);
+    }
+    setIsLoadingFile(false);
+  };
+
+  const licenseData = licenses.find((license) => license.identifier === file.license?.identifier);
+  const fileEmbargoDate = file.embargoDate ? new Date(file.embargoDate) : null;
+
+  return (
+    <TableRow hover>
+      <StyledNameTableCell>{file.name}</StyledNameTableCell>
+      <StyledTableCell>{prettyBytes(file.size, { locale: true })}</StyledTableCell>
+      <StyledTableCell>
+        {file.publisherAuthority
+          ? t('registration:files_and_license.published_version')
+          : t('registration:files_and_license.accepted_version')}
+      </StyledTableCell>
+      <StyledTableCell>
+        <StyledLicenseImg
+          onClick={() => window.open(licenseData?.link)}
+          alt={file.license?.identifier}
+          src={licenseData?.buttonImage}
+        />
+      </StyledTableCell>
+      <StyledTableCell>
+        {fileEmbargoDate && fileEmbargoDate > new Date() ? (
+          <Typography>
+            <LockIcon />
+            {t('will_be_available')} {fileEmbargoDate.toLocaleDateString()}
+          </Typography>
+        ) : !currentFileUrl ? (
+          <ButtonWithProgress
+            data-testid="button-download-file"
+            variant="contained"
+            color="secondary"
+            fullWidth
+            endIcon={<CloudDownloadIcon />}
+            isLoading={isLoadingFile}
+            onClick={() => handleDownload(file.identifier)}>
+            {t('download')}
+          </ButtonWithProgress>
+        ) : (
+          <Button
+            data-testid="button-open-file"
+            variant="contained"
+            color="secondary"
+            fullWidth
+            endIcon={<OpenInNewIcon />}
+            onClick={() => window.open(currentFileUrl)}>
+            {t('open')}
+          </Button>
+        )}
+      </StyledTableCell>
+    </TableRow>
+  );
+};
+
+export default PublicFilesContent;
