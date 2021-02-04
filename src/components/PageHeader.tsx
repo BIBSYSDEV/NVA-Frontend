@@ -80,6 +80,6 @@ const StyledRegistrationPageHeader = styled(PageHeader)`
   font-style: italic;
 `;
 
-export const RegistrationPageHeader = (props: PageHeaderProps) => {
-  return <StyledRegistrationPageHeader variant="h2" variantMapping={{ h2: 'h1' }} {...props} />;
-};
+export const RegistrationPageHeader = (props: PageHeaderProps) => (
+  <StyledRegistrationPageHeader variant="h2" variantMapping={{ h2: 'h1' }} {...props} />
+);
