@@ -1,18 +1,12 @@
-import React, { FC } from 'react';
-import { Link, Chip, Typography } from '@material-ui/core';
+import React from 'react';
+import { Typography } from '@material-ui/core';
 import styled from 'styled-components';
 import { emptyRegistration, Registration } from '../../types/registration.types';
-import ContentPage from '../../components/ContentPage';
 import { useTranslation } from 'react-i18next';
 import PublicRegistrationAuthors from './PublicRegistrationAuthors';
 import PublicRegistrationFile from './PublicRegistrationFile';
-import Card from '../../components/Card';
-import Heading from '../../components/Heading';
 import LabelContentRow from '../../components/LabelContentRow';
-import Label from '../../components/Label';
-import { licenses } from '../../types/file.types';
 import { getNpiDiscipline } from '../../utils/npiDisciplines';
-import { StyledNormalTextPreWrapped } from '../../components/styled/Wrappers';
 import { displayDate } from '../../utils/date-helpers';
 import {
   JournalPublicationContext,
@@ -49,46 +43,17 @@ import {
   ChapterPublicationContext,
   ChapterPublicationInstance,
 } from '../../types/publication_types/chapterRegistration.types';
+import { RegistrationPageHeader } from '../../components/PageHeader';
+import BackgroundDiv from '../../components/BackgroundDiv';
+import lightTheme from '../../themes/lightTheme';
+import PublicSummaryContent from './PublicSummaryContent';
 
-const StyledContentWrapper = styled.div`
-  display: flex;
-  padding-top: 1rem;
+const StyledBackgroundDiv = styled(BackgroundDiv)`
+  padding: 2rem 5rem;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
-    flex-direction: column;
+  @media (max-width: ${({ theme }) => `${theme.breakpoints.values.sm}px`}) {
+    padding: 1rem 2rem;
   }
-`;
-
-const StyledMainContent = styled.div`
-  flex: 1;
-  padding: 1rem 2rem;
-`;
-
-const StyledLicenseCard = styled(Card)`
-  display: grid;
-  grid-template-areas: 'image label' 'image description';
-  column-gap: 1rem;
-  align-items: center;
-  justify-content: left;
-  margin: 0.5rem 0;
-  padding: 1rem;
-`;
-
-const StyledLicenseImage = styled.img`
-  grid-area: image;
-`;
-
-const StyledLicenseLabel = styled(Label)`
-  grid-area: label;
-`;
-
-const StyledNormalText = styled(StyledNormalTextPreWrapped)`
-  grid-area: description;
-`;
-
-const StyledTag = styled.div`
-  display: inline;
-  margin-right: 1rem;
 `;
 
 export interface PublicRegistrationContentProps {
@@ -96,59 +61,29 @@ export interface PublicRegistrationContentProps {
   refetchRegistration: () => void;
 }
 
-const PublicRegistrationContent: FC<PublicRegistrationContentProps> = ({ registration, refetchRegistration }) => {
+const PublicRegistrationContent = ({ registration, refetchRegistration }: PublicRegistrationContentProps) => {
   const { t } = useTranslation('registration');
 
   // Registration can lack some fields if it's newly created
   registration = deepmerge(emptyRegistration, registration);
 
-  const {
-    abstract,
-    contributors,
-    date,
-    description,
-    mainTitle,
-    npiSubjectHeading,
-    reference,
-    tags = [],
-  } = registration.entityDescription;
-
-  // Show only the license for the first file for now
-  const currentLicense = registration.fileSet?.files[0]?.license ?? null;
-  const selectedLicense = licenses.find((license) => license.identifier === currentLicense?.identifier);
+  const { contributors, date, description, mainTitle, npiSubjectHeading, reference } = registration.entityDescription;
 
   return (
-    <ContentPage>
+    <>
       <PublicRegistrationStatusBar registration={registration} refetchRegistration={refetchRegistration} />
-      <Heading>{mainTitle}</Heading>
-      {contributors && <PublicRegistrationAuthors contributors={contributors} />}
-      <StyledContentWrapper>
-        {registration.fileSet?.files.map(
-          (file) => !file.administrativeAgreement && <PublicRegistrationFile file={file} key={file.identifier} />
-        )}
-        <StyledMainContent>
+      <RegistrationPageHeader>{mainTitle || `[${t('common:missing_title')}]`}</RegistrationPageHeader>
+      <div>
+        {contributors && <PublicRegistrationAuthors contributors={contributors} />}
+
+        <StyledBackgroundDiv backgroundColor={lightTheme.palette.section.megaLight}>
           <PublicDoi registration={registration} />
 
-          {abstract && (
-            <LabelContentRow minimal label={`${t('description.abstract')}:`}>
-              {abstract}
-            </LabelContentRow>
-          )}
           {description && (
             <LabelContentRow minimal label={`${t('description.description')}:`}>
               {description}
             </LabelContentRow>
           )}
-          {tags.length > 0 && (
-            <LabelContentRow minimal multiple label={`${t('description.keywords')}:`}>
-              {tags.map((tag) => (
-                <StyledTag key={tag}>
-                  <Chip label={tag} />
-                </StyledTag>
-              ))}
-            </LabelContentRow>
-          )}
-
           {isJournal(registration) ? (
             <>
               <PublicPublicationContextJournal
@@ -206,21 +141,19 @@ const PublicRegistrationContent: FC<PublicRegistrationContentProps> = ({ registr
               {getNpiDiscipline(npiSubjectHeading)?.name}
             </LabelContentRow>
           )}
-          {selectedLicense && (
-            <StyledLicenseCard>
-              <StyledLicenseImage src={selectedLicense.image} alt={selectedLicense.identifier} />
-              <StyledLicenseLabel>
-                {selectedLicense.link ? (
-                  <Link href={selectedLicense.link} target="_blank" rel="noopener noreferrer">
-                    {selectedLicense.label}
-                  </Link>
-                ) : (
-                  selectedLicense.label
-                )}
-              </StyledLicenseLabel>
-              <StyledNormalText>{selectedLicense.description}</StyledNormalText>
-            </StyledLicenseCard>
+        </StyledBackgroundDiv>
+
+        <StyledBackgroundDiv backgroundColor={lightTheme.palette.section.light}>
+          {registration.fileSet?.files.map(
+            (file) => !file.administrativeAgreement && <PublicRegistrationFile file={file} key={file.identifier} />
           )}
+        </StyledBackgroundDiv>
+
+        <StyledBackgroundDiv backgroundColor={lightTheme.palette.section.main}>
+          <PublicSummaryContent registration={registration} />
+        </StyledBackgroundDiv>
+
+        <StyledBackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
           {registration.projects.length > 0 && (
             <LabelContentRow minimal label={`${t('description.project_association')}:`}>
               {registration.projects.map((project) => (
@@ -228,9 +161,9 @@ const PublicRegistrationContent: FC<PublicRegistrationContentProps> = ({ registr
               ))}
             </LabelContentRow>
           )}
-        </StyledMainContent>
-      </StyledContentWrapper>
-    </ContentPage>
+        </StyledBackgroundDiv>
+      </div>
+    </>
   );
 };
 

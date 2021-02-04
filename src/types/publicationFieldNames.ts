@@ -70,6 +70,7 @@ export enum ReferenceFieldNames {
 
 export enum DescriptionFieldNames {
   ABSTRACT = 'entityDescription.abstract',
+  DATE = 'entityDescription.date',
   DESCRIPTION = 'entityDescription.description',
   LANGUAGE = 'entityDescription.language',
   NPI_SUBJECT_HEADING = 'entityDescription.npiSubjectHeading',
