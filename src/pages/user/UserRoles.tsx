@@ -21,7 +21,7 @@ const UserRoles: FC<UserRolesProps> = ({ user }) => {
   return (
     <Card>
       <Typography variant="h5">{t('heading.roles')}</Typography>
-      {user.customerId ? (
+      {user.customerId && !user.customerId?.endsWith('/customer/None') ? (
         !isAppAdmin &&
         !isInstitutionAdmin &&
         !isEditor &&
