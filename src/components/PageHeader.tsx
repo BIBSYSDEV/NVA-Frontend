@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import TextTruncate from 'react-text-truncate';
@@ -18,16 +18,27 @@ const StyledHeader = styled.div`
 const StyledTypography = styled(Typography)`
   border-bottom: 3px solid;
   padding-bottom: 0.5rem;
+  cursor: pointer;
+`;
+
+const StyledButton = styled(Button)`
+  background-color: ${({ theme }) => theme.palette.section.light};
+  color: ${({ theme }) => theme.palette.section.megaDark};
+  padding: 0.2rem;
+  min-width: 0;
 `;
 
 export interface PageHeaderProps extends TypographyProps {
   backPath?: string;
-  children: ReactNode;
+  children: string;
 }
 
 export const PageHeader = ({ backPath, children, ...props }: PageHeaderProps) => {
   const { t } = useTranslation('common');
   const history = useHistory();
+  const [showFullText, setShowFullText] = useState(false);
+
+  const toggleFullText = () => setShowFullText(!showFullText);
 
   const onBackClick = () => {
     if (backPath) {
@@ -44,46 +55,31 @@ export const PageHeader = ({ backPath, children, ...props }: PageHeaderProps) =>
       <Button data-testid="navigate-back-button" startIcon={<ArrowBackIcon />} variant="text" onClick={onBackClick}>
         {t('back')}
       </Button>
-      <StyledTypography variant="h1" {...props}>
-        {children}
+      <StyledTypography variant="h1" {...props} onClick={toggleFullText}>
+        {showFullText ? (
+          children
+        ) : (
+          <TextTruncate
+            line={2}
+            truncateText="..."
+            text={children}
+            textTruncateChild={
+              <StyledButton variant="contained" onClick={toggleFullText}>
+                {showFullText ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+              </StyledButton>
+            }
+          />
+        )}
       </StyledTypography>
     </StyledHeader>
   );
 };
-
-const StyledButton = styled(Button)`
-  background-color: ${({ theme }) => theme.palette.section.light};
-  color: ${({ theme }) => theme.palette.section.megaDark};
-  padding: 0.2rem;
-  min-width: 0;
-`;
 
 const StyledRegistrationPageHeader = styled(PageHeader)`
   font-weight: 700;
   font-style: italic;
 `;
 
-export const RegistrationPageHeader = (props: { children: string }) => {
-  const [showFullText, setShowFullText] = useState(false);
-
-  const toggleFullText = () => setShowFullText(!showFullText);
-
-  return (
-    <StyledRegistrationPageHeader variant="h2" variantMapping={{ h2: 'h1' }} onClick={toggleFullText} {...props}>
-      {showFullText ? (
-        props.children
-      ) : (
-        <TextTruncate
-          line={2}
-          truncateText="..."
-          text={props.children}
-          textTruncateChild={
-            <StyledButton variant="contained" onClick={toggleFullText}>
-              {showFullText ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-            </StyledButton>
-          }
-        />
-      )}
-    </StyledRegistrationPageHeader>
-  );
+export const RegistrationPageHeader = (props: PageHeaderProps) => {
+  return <StyledRegistrationPageHeader variant="h2" variantMapping={{ h2: 'h1' }} {...props} />;
 };
