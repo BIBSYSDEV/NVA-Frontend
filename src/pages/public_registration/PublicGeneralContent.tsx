@@ -89,11 +89,6 @@ const PublicGeneralContent = ({ registration }: PublicRegistrationContentProps) 
         </>
       ) : null}
 
-      {date?.year && (
-        <LabelContentRow minimal label={`${t('description.date_published')}:`}>
-          {displayDate(date)}
-        </LabelContentRow>
-      )}
       {npiSubjectHeading && (
         <LabelContentRow minimal label={`${t('description.npi_disciplines')}:`}>
           {getNpiDiscipline(npiSubjectHeading)?.name}

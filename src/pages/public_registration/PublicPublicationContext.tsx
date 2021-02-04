@@ -30,6 +30,7 @@ export const PublicPublicationContextJournal = ({
 
   return title ? (
     <>
+      <Typography variant="h3">{t('references.journal')}</Typography>
       <Typography>{title}</Typography>
       {url && (
         <Typography component={Link} href={url} target="_blank" rel="noopener noreferrer">
