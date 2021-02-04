@@ -2,8 +2,8 @@ import React from 'react';
 import { Chip, MuiThemeProvider, Typography } from '@material-ui/core';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
-import { Registration } from '../../types/registration.types';
 import lightTheme from '../../themes/lightTheme';
+import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 
 const StyledSummaryContent = styled.div`
   display: grid;
@@ -40,10 +40,6 @@ const StyledTagsList = styled.div`
 const StyledChip = styled(Chip)`
   background: ${({ theme }) => theme.palette.section.light};
 `;
-
-export interface PublicRegistrationContentProps {
-  registration: Registration;
-}
 
 const PublicSummaryContent = ({ registration }: PublicRegistrationContentProps) => {
   const { t } = useTranslation('registration');
