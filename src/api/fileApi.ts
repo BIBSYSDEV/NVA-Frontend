@@ -1,9 +1,9 @@
 import Axios from 'axios';
-import { getIdToken } from './userApi';
 import { AwsS3Part } from '@uppy/aws-s3-multipart';
 import { UppyFile } from '@uppy/core';
 import i18n from '../translations/i18n';
 import { StatusCode } from '../utils/constants';
+import { getIdToken } from './userApi';
 
 export enum FileApiPaths {
   ABORT = '/upload/abort',
@@ -12,6 +12,7 @@ export enum FileApiPaths {
   DOWNLOAD = '/download',
   LIST_PARTS = '/upload/listparts',
   PREPARE = '/upload/prepare',
+  PUBLIC_DOWNLOAD = '/download/public',
 }
 
 export const downloadFile = async (registrationId: string, fileId: string) => {
@@ -25,7 +26,13 @@ export const downloadFile = async (registrationId: string, fileId: string) => {
       return { error: i18n.t('feedback:error.download_file') };
     }
   } catch {
-    return { error: i18n.t('feedback:error.download_file') };
+    const publicUrl = `${FileApiPaths.PUBLIC_DOWNLOAD}/${registrationId}/files/${fileId}`;
+    const response = await Axios.get(publicUrl);
+    if (response.status === StatusCode.OK) {
+      return response.data.presignedDownloadUrl;
+    } else {
+      return { error: i18n.t('feedback:error.download_file') };
+    }
   }
 };
 
