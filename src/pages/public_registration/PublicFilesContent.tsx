@@ -24,14 +24,14 @@ import {
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 
 const StyledTableCell = styled(TableCell)`
-  min-width: 12rem;
   font-size: 1rem;
   word-wrap: break-word;
 `;
 
 const StyledNameTableCell = styled(StyledTableCell)`
+  min-width: 10rem;
   font-weight: 700;
-  max-width: 35rem;
+  line-break: anywhere;
 `;
 
 const StyledLicenseImg = styled.img`
