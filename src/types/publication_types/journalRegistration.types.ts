@@ -18,7 +18,8 @@ export interface JournalPublicationInstance {
 export interface JournalPublicationContext {
   type: PublicationType | '';
   level: string | number | null;
-  onlineIssn: string;
+  onlineIssn?: string;
+  printIssn?: string;
   openAccess: boolean;
   peerReviewed: boolean;
   title: string;
