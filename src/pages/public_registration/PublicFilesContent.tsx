@@ -3,14 +3,9 @@ import styled from 'styled-components';
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import LockIcon from '@material-ui/icons/Lock';
-import { File, licenses } from '../../types/file.types';
-import { downloadFile } from '../../api/fileApi';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { setNotification } from '../../redux/actions/notificationActions';
-import { NotificationVariant } from '../../types/notification.types';
-import ButtonWithProgress from '../../components/ButtonWithProgress';
 import {
   Button,
   Table,
@@ -21,6 +16,11 @@ import {
   TableRow,
   Typography,
 } from '@material-ui/core';
+import { File, licenses } from '../../types/file.types';
+import { downloadFile } from '../../api/fileApi';
+import { setNotification } from '../../redux/actions/notificationActions';
+import { NotificationVariant } from '../../types/notification.types';
+import ButtonWithProgress from '../../components/ButtonWithProgress';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 
 const StyledTableCell = styled(TableCell)`
@@ -38,15 +38,13 @@ const StyledLicenseImg = styled.img`
   cursor: pointer;
 `;
 
-const StyledFilesContent = styled.div``;
-
 const PublicFilesContent = ({ registration }: PublicRegistrationContentProps) => {
   const { t } = useTranslation('common');
 
   const publiclyAvailableFiles = registration.fileSet.files.filter((file) => !file.administrativeAgreement);
 
   return (
-    <StyledFilesContent>
+    <>
       <Typography variant="h4" component="h2" gutterBottom>
         {t('registration:files_and_license.files')}
       </Typography>
@@ -64,12 +62,12 @@ const PublicFilesContent = ({ registration }: PublicRegistrationContentProps) =>
           </TableHead>
           <TableBody>
             {publiclyAvailableFiles.map((file) => (
-              <FileRow file={file} />
+              <FileRow key={file.identifier} file={file} />
             ))}
           </TableBody>
         </Table>
       </TableContainer>
-    </StyledFilesContent>
+    </>
   );
 };
 
@@ -95,7 +93,7 @@ const FileRow = ({ file }: { file: File }) => {
   const fileEmbargoDate = file.embargoDate ? new Date(file.embargoDate) : null;
 
   return (
-    <TableRow key={file.identifier} hover>
+    <TableRow hover>
       <StyledNameTableCell>{file.name}</StyledNameTableCell>
       <StyledTableCell>{Math.round(file.size / 1000)} kB</StyledTableCell>
       <StyledTableCell>
