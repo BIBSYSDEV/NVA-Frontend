@@ -26,7 +26,10 @@ const PublicProjectsContent = ({ registration }: PublicRegistrationContentProps)
               <Typography>
                 {project.name}
                 {project.grants && project.grants.length > 0 && (
-                  <span> ({project.grants.map((grant) => grant.source).join(', ')})</span>
+                  <span>
+                    {' '}
+                    ({t('description.financed_by')}: {project.grants.map((grant) => grant.source).join(', ')})
+                  </span>
                 )}
               </Typography>
             }
