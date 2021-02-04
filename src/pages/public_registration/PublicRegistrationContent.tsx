@@ -50,11 +50,10 @@ import PublicSummaryContent from './PublicSummaryContent';
 
 const StyledBackgroundDiv = styled(BackgroundDiv)`
   padding: 2rem 5rem;
-  max-width: 70vw;
+  max-width: 100vw;
 
   @media (max-width: ${({ theme }) => `${theme.breakpoints.values.md}px`}) {
     padding: 1rem 2rem;
-    max-width: 100vw;
   }
 `;
 
