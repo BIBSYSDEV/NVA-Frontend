@@ -67,7 +67,7 @@
     "published_version": "Published version",
     "select_version": "Select version",
     "title": "File name",
-    "uploaded_size": "Uploaded {{size}} kB"
+    "uploaded_size": "Uploaded {{size}}"
   },
   "heading": {
     "contributors": "Contributors",

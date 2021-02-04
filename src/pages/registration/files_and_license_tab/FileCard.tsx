@@ -26,6 +26,7 @@ import lightTheme, { datePickerTranslationProps } from '../../../themes/lightThe
 import { File, LicenseNames, licenses } from '../../../types/file.types';
 import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 import { getDateFnsLocale } from '../../../utils/date-helpers';
+import prettyBytes from 'pretty-bytes';
 
 const StyledDescription = styled(Typography)`
   font-style: italic;
@@ -96,7 +97,7 @@ const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }: FileC
     <BackgroundDiv backgroundColor={lightTheme.palette.section.megaLight} data-testid="uploaded-file-card">
       <Typography variant="h5">{file.name}</Typography>
       <StyledDescription>
-        {t('files_and_license.uploaded_size', { size: Math.round(file.size / 1000) })}
+        {t('files_and_license.uploaded_size', { size: prettyBytes(file.size, { locale: true }) })}
       </StyledDescription>
 
       {baseFieldName && (

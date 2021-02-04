@@ -67,7 +67,7 @@
     "published_version": "Publisert versjon",
     "select_version": "Velg versjon",
     "title": "Filnavn",
-    "uploaded_size": "Lastet opp {{size}} kB"
+    "uploaded_size": "Lastet opp {{size}}"
   },
   "heading": {
     "contributors": "Bidragsytere",

@@ -16,6 +16,7 @@ import {
   TableRow,
   Typography,
 } from '@material-ui/core';
+import prettyBytes from 'pretty-bytes';
 import { File, licenses } from '../../types/file.types';
 import { downloadFile } from '../../api/fileApi';
 import { setNotification } from '../../redux/actions/notificationActions';
@@ -95,7 +96,7 @@ const FileRow = ({ file }: { file: File }) => {
   return (
     <TableRow hover>
       <StyledNameTableCell>{file.name}</StyledNameTableCell>
-      <StyledTableCell>{Math.round(file.size / 1000)} kB</StyledTableCell>
+      <StyledTableCell>{prettyBytes(file.size, { locale: true })}</StyledTableCell>
       <StyledTableCell>
         {file.publisherAuthority
           ? t('registration:files_and_license.published_version')
