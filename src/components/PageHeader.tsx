@@ -55,7 +55,7 @@ export const PageHeader = ({ backPath, children, ...props }: PageHeaderProps) =>
       <Button data-testid="navigate-back-button" startIcon={<ArrowBackIcon />} variant="text" onClick={onBackClick}>
         {t('back')}
       </Button>
-      <StyledTypography variant="h1" {...props} onClick={toggleFullText}>
+      <StyledTypography variant="h1" onClick={toggleFullText} {...props}>
         {showFullText ? (
           children
         ) : (
