@@ -26,9 +26,10 @@ const MessageList: FC<MessageListProps> = ({ messages }) => (
     {messages.map((message) => (
       <Fragment key={message.timestamp}>
         <StyledAuthorTypography>
-          <b>{message.author}</b> ({new Date(message.timestamp).toLocaleDateString()}):
+          <b data-testid="message-author">{message.author}</b>{' '}
+          <span data-testid="message-timestamp">({new Date(message.timestamp).toLocaleDateString()})</span>:
         </StyledAuthorTypography>
-        <StyledTextTypography>{message.text}</StyledTextTypography>
+        <StyledTextTypography data-testid="message-text">{message.text}</StyledTextTypography>
       </Fragment>
     ))}
   </StyledMessagesContainer>
