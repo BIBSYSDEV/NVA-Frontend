@@ -72,20 +72,21 @@ const SearchContainerField = (props: SearchContainerFieldProps) => {
             }}
             loading={isLoadingSearchContainerOptions || isLoadingSelectedContainer}
             getOptionLabel={(option) => option.title}
-            renderOption={(option, state) => (
-              <StyledFlexColumn>
-                <Typography variant="subtitle1">
-                  <EmphasizeSubstring text={option.title} emphasized={state.inputValue} />
-                </Typography>
-                <Typography variant="body2" color="textSecondary">
-                  <TextTruncate line={1}>
-                    {option.publicationDate.year && displayDate(option.publicationDate)}
-                    {option.publicationDate.year && option.contributors.length > 0 && ' - '}
-                    {option.contributors.map((contributor) => contributor.name).join('; ')}
-                  </TextTruncate>
-                </Typography>
-              </StyledFlexColumn>
-            )}
+            renderOption={(option, state) => {
+              const optionDate = option.publicationDate.year && displayDate(option.publicationDate);
+              const optionContributors = option.contributors.map((contributor) => contributor.name).join('; ');
+              const optionText = [optionDate, optionContributors].filter((string) => string).join(' - ');
+              return (
+                <StyledFlexColumn>
+                  <Typography variant="subtitle1">
+                    <EmphasizeSubstring text={option.title} emphasized={state.inputValue} />
+                  </Typography>
+                  <Typography variant="body2" color="textSecondary">
+                    <TextTruncate line={1} truncateText="[...]" text={optionText} />
+                  </Typography>
+                </StyledFlexColumn>
+              );
+            }}
             renderInput={(params) => (
               <AutocompleteTextField
                 {...params}
