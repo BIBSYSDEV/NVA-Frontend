@@ -75,7 +75,7 @@ const SearchContainerField = (props: SearchContainerFieldProps) => {
             renderOption={(option, state) => {
               const optionDate = option.publicationDate.year && displayDate(option.publicationDate);
               const optionContributors = option.contributors.map((contributor) => contributor.name).join('; ');
-              const optionText = [optionDate, optionContributors].filter((info) => info).join(' - ');
+              const optionText = [optionDate, optionContributors].filter((string) => string).join(' - ');
               return (
                 <StyledFlexColumn>
                   <Typography variant="subtitle1">
