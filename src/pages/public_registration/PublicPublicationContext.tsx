@@ -7,10 +7,11 @@ import { ReportPublicationContext } from '../../types/publication_types/reportRe
 import { BookPublicationContext } from '../../types/publication_types/bookRegistration.types';
 import { ChapterPublicationContext } from '../../types/publication_types/chapterRegistration.types';
 import RegistrationSummary from './RegistrationSummary';
+import { levelMap } from '../../types/registration.types';
 
 export const PublicJournalContent = ({ publicationContext }: { publicationContext: JournalPublicationContext }) => {
   const { t } = useTranslation('registration');
-  const { onlineIssn, printIssn, title, url } = publicationContext;
+  const { onlineIssn, printIssn, title, url, level } = publicationContext;
 
   return title ? (
     <>
@@ -27,6 +28,7 @@ export const PublicJournalContent = ({ publicationContext }: { publicationContex
           {t('references.issn')}: {[onlineIssn, printIssn].filter((issn) => issn).join(', ')}
         </Typography>
       )}
+      <LevelContent level={level} />
     </>
   ) : null;
 };
@@ -34,10 +36,10 @@ export const PublicJournalContent = ({ publicationContext }: { publicationContex
 export const PublicPublisherContent = ({
   publicationContext,
 }: {
-  publicationContext: BookPublicationContext | DegreePublicationContext | ReportPublicationContext;
+  publicationContext: Partial<BookPublicationContext & DegreePublicationContext & ReportPublicationContext>;
 }) => {
   const { t } = useTranslation('registration');
-  const { publisher, url } = publicationContext;
+  const { publisher, url, level } = publicationContext;
 
   return publisher ? (
     <>
@@ -49,6 +51,7 @@ export const PublicPublisherContent = ({
       ) : (
         <Typography>{publisher}</Typography>
       )}
+      <LevelContent level={level} />
     </>
   ) : null;
 };
@@ -60,6 +63,7 @@ export const PublicPublicationContextChapter = ({
 }) => {
   const { t } = useTranslation('registration');
   const { linkedContext } = publicationContext;
+
   return (
     <>
       <Typography variant="h3">{t('references.chapter.published_in')}</Typography>
@@ -76,5 +80,15 @@ export const DisplaySeriesTitle = ({ seriesTitle }: { seriesTitle: string }) => 
       <Typography variant="h3">{t('references.series')}</Typography>
       <Typography>{seriesTitle}</Typography>
     </>
+  ) : null;
+};
+
+const LevelContent = ({ level }: { level?: string | number | null }) => {
+  const { t } = useTranslation('registration');
+  const levelValue = level ? levelMap[level] : null;
+  return levelValue ? (
+    <Typography>
+      {t('references.level')}: {levelValue}
+    </Typography>
   ) : null;
 };

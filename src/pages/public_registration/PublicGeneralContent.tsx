@@ -2,7 +2,6 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Typography } from '@material-ui/core';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
-import LabelContentRow from '../../components/LabelContentRow';
 import { BookPublicationContext, BookPublicationInstance } from '../../types/publication_types/bookRegistration.types';
 import {
   ChapterPublicationContext,
@@ -36,7 +35,34 @@ import {
   PublicPublicationInstanceDegree,
   PublicPublicationInstanceReport,
   PublicPublicationInstanceChapter,
+  PublicIsbnContent,
 } from './PublicPublicationInstance';
+import styled from 'styled-components';
+import { registrationLanguages } from '../../types/language.types';
+import RegistrationSummary from './RegistrationSummary';
+import { JournalType } from '../../types/publicationFieldNames';
+import { BookRegistration, ReportRegistration } from '../../types/registration.types';
+
+const StyledContent = styled.div`
+  display: grid;
+  grid-template-areas: 'group0 group1';
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 1rem;
+
+  @media (max-width: ${({ theme }) => `${theme.breakpoints.values.sm}px`}) {
+    grid-template-areas: 'group0' 'group1';
+    grid-template-columns: 1fr;
+    grid-row-gap: 1rem;
+  }
+`;
+
+const StyledGroup0 = styled.div`
+  grid-area: group0;
+`;
+
+const StyledGroup1 = styled.div`
+  grid-area: group1;
+`;
 
 const PublicGeneralContent = ({ registration }: PublicRegistrationContentProps) => {
   const { t } = useTranslation('registration');
@@ -44,59 +70,92 @@ const PublicGeneralContent = ({ registration }: PublicRegistrationContentProps) 
     date,
     description,
     npiSubjectHeading,
+    language,
     reference: { publicationContext, publicationInstance },
   } = registration.entityDescription;
 
   return (
-    <>
-      <Typography variant="h4" component="h2">
-        {t(`publicationTypes:${publicationInstance.type}`)}
-      </Typography>
-      <Typography>{displayDate(date)}</Typography>
+    <StyledContent>
+      <StyledGroup0>
+        <Typography variant="h4" component="h2">
+          {t(`publicationTypes:${publicationInstance.type}`)}
+        </Typography>
+        <Typography>{displayDate(date)}</Typography>
 
-      <PublicDoi registration={registration} />
+        <PublicDoi registration={registration} />
 
-      {description && (
-        <LabelContentRow minimal label={`${t('description.description')}:`}>
-          {description}
-        </LabelContentRow>
-      )}
-      {isJournal(registration) ? (
-        <>
-          <PublicJournalContent publicationContext={publicationContext as JournalPublicationContext} />
+        {language && (
+          <Typography>
+            {t('description.primary_language')}:{' '}
+            {t(`languages:${registrationLanguages.find((lang) => lang.value === language)?.id}`)}
+          </Typography>
+        )}
+        {npiSubjectHeading && (
+          <Typography>
+            {t('description.npi_disciplines')}: {getNpiDiscipline(npiSubjectHeading)?.name}
+          </Typography>
+        )}
+
+        {isJournal(registration) ? (
           <PublicPublicationInstanceJournal publicationInstance={publicationInstance as JournalPublicationInstance} />
-        </>
-      ) : isBook(registration) ? (
-        <>
-          <PublicPublisherContent publicationContext={publicationContext as BookPublicationContext} />
-          <DisplaySeriesTitle seriesTitle={(publicationContext as BookPublicationContext).seriesTitle} />
-          <PublicPublicationInstanceBook publicationInstance={publicationInstance as BookPublicationInstance} />
-        </>
-      ) : isDegree(registration) ? (
-        <>
-          <PublicPublisherContent publicationContext={publicationContext as DegreePublicationContext} />
-          <DisplaySeriesTitle seriesTitle={(publicationContext as DegreePublicationContext).seriesTitle} />
+        ) : isBook(registration) ? (
+          <>
+            <PublicPublicationInstanceBook publicationInstance={publicationInstance as BookPublicationInstance} />
+            <PublicIsbnContent
+              isbnList={(registration as BookRegistration).entityDescription.reference.publicationContext.isbnList}
+            />
+          </>
+        ) : isDegree(registration) ? (
           <PublicPublicationInstanceDegree publicationInstance={publicationInstance as DegreePublicationInstance} />
-        </>
-      ) : isReport(registration) ? (
-        <>
-          <PublicPublisherContent publicationContext={publicationContext as ReportPublicationContext} />
-          <DisplaySeriesTitle seriesTitle={(publicationContext as ReportPublicationContext).seriesTitle} />
-          <PublicPublicationInstanceReport publicationInstance={publicationInstance as ReportPublicationInstance} />
-        </>
-      ) : isChapter(registration) ? (
-        <>
-          <PublicPublicationContextChapter publicationContext={publicationContext as ChapterPublicationContext} />
+        ) : isReport(registration) ? (
+          <>
+            <PublicPublicationInstanceReport publicationInstance={publicationInstance as ReportPublicationInstance} />
+            <PublicIsbnContent
+              isbnList={(registration as ReportRegistration).entityDescription.reference.publicationContext.isbnList}
+            />
+          </>
+        ) : isChapter(registration) ? (
           <PublicPublicationInstanceChapter publicationInstance={publicationInstance as ChapterPublicationInstance} />
-        </>
-      ) : null}
+        ) : null}
 
-      {npiSubjectHeading && (
-        <LabelContentRow minimal label={`${t('description.npi_disciplines')}:`}>
-          {getNpiDiscipline(npiSubjectHeading)?.name}
-        </LabelContentRow>
-      )}
-    </>
+        {description && (
+          <Typography>
+            {t('description.description')}: {description}
+          </Typography>
+        )}
+      </StyledGroup0>
+
+      <StyledGroup1>
+        {isJournal(registration) ? (
+          <>
+            {publicationInstance.type === JournalType.CORRIGENDUM && (
+              <>
+                <Typography variant="h3">{t('references.original_article')}</Typography>
+                <RegistrationSummary id={(publicationInstance as JournalPublicationInstance).corrigendumFor} />
+              </>
+            )}
+            <PublicJournalContent publicationContext={publicationContext as JournalPublicationContext} />
+          </>
+        ) : isBook(registration) ? (
+          <>
+            <PublicPublisherContent publicationContext={publicationContext as BookPublicationContext} />
+            <DisplaySeriesTitle seriesTitle={(publicationContext as BookPublicationContext).seriesTitle} />
+          </>
+        ) : isDegree(registration) ? (
+          <>
+            <PublicPublisherContent publicationContext={publicationContext as DegreePublicationContext} />
+            <DisplaySeriesTitle seriesTitle={(publicationContext as DegreePublicationContext).seriesTitle} />
+          </>
+        ) : isReport(registration) ? (
+          <>
+            <PublicPublisherContent publicationContext={publicationContext as ReportPublicationContext} />
+            <DisplaySeriesTitle seriesTitle={(publicationContext as ReportPublicationContext).seriesTitle} />
+          </>
+        ) : isChapter(registration) ? (
+          <PublicPublicationContextChapter publicationContext={publicationContext as ChapterPublicationContext} />
+        ) : null}
+      </StyledGroup1>
+    </StyledContent>
   );
 };
 
