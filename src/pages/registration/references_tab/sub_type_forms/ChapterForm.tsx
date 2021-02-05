@@ -2,7 +2,7 @@ import { Field, FieldProps, useFormikContext } from 'formik';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { TextField, Typography } from '@material-ui/core';
+import { MuiThemeProvider, TextField, Typography } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
 import RemoveIcon from '@material-ui/icons/Remove';
 import BackgroundDiv from '../../../../components/BackgroundDiv';
@@ -49,9 +49,7 @@ const ChapterForm = () => {
       <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
         <StyledDiv>
           <InfoIcon color="primary" />
-          <Typography color="primary" variant="body1">
-            {t('references.chapter.info_anthology')}
-          </Typography>
+          <Typography variant="body1">{t('references.chapter.info_anthology')}</Typography>
         </StyledDiv>
 
         <DoiField />
@@ -70,43 +68,50 @@ const ChapterForm = () => {
         <StyledPageNumberWrapper>
           <Field name={ReferenceFieldNames.PAGES_FROM}>
             {({ field }: FieldProps<string>) => (
-              <StyledPageNumberField
-                variant="filled"
-                data-testid="chapter-pages-from"
-                label={t('references.pages_from')}
-                {...field}
-                value={field.value ?? ''}
-              />
+              <MuiThemeProvider theme={lightTheme}>
+                <StyledPageNumberField
+                  variant="filled"
+                  data-testid="chapter-pages-from"
+                  label={t('references.pages_from')}
+                  {...field}
+                  value={field.value ?? ''}
+                />
+              </MuiThemeProvider>
             )}
           </Field>
 
           <StyledDashIconWrapper>
-            <RemoveIcon />
+            <RemoveIcon color="primary" />
           </StyledDashIconWrapper>
 
           <Field name={ReferenceFieldNames.PAGES_TO}>
             {({ field }: FieldProps<string>) => (
-              <StyledPageNumberField
-                data-testid="chapter-pages-to"
-                variant="filled"
-                label={t('references.pages_to')}
-                {...field}
-                value={field.value ?? ''}
-              />
+              <MuiThemeProvider theme={lightTheme}>
+                <StyledPageNumberField
+                  data-testid="chapter-pages-to"
+                  variant="filled"
+                  label={t('references.pages_to')}
+                  {...field}
+                  value={field.value ?? ''}
+                />
+              </MuiThemeProvider>
             )}
           </Field>
         </StyledPageNumberWrapper>
       </BackgroundDiv>
 
       {publicationInstance.type === ChapterType.BOOK && (
-        <BackgroundDiv backgroundColor={lightTheme.palette.section.megaDark}>
-          <PeerReview fieldName={ReferenceFieldNames.PEER_REVIEW} label={t('references.peer_review')} />
+        <>
+          <BackgroundDiv backgroundColor={lightTheme.palette.section.megaDark}>
+            <PeerReview fieldName={ReferenceFieldNames.PEER_REVIEW} label={t('references.peer_review')} />
+          </BackgroundDiv>
+
           <NviValidation
             isPeerReviewed={!!publicationInstance.peerReviewed}
             isRated={!!publicationContext?.level}
             dataTestId="nvi-chapter"
           />
-        </BackgroundDiv>
+        </>
       )}
     </>
   );

@@ -2,7 +2,7 @@ import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import React, { ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { MenuItem, TextField, Typography } from '@material-ui/core';
+import { MenuItem, MuiThemeProvider, TextField, Typography } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import BackgroundDiv from '../../components/BackgroundDiv';
 import lightTheme from '../../themes/lightTheme';
@@ -136,20 +136,22 @@ const DescriptionPanel = () => {
 
           <Field name={DescriptionFieldNames.LANGUAGE}>
             {({ field }: FieldProps<string>) => (
-              <TextField
-                {...field}
-                data-testid="registration-language-field"
-                fullWidth
-                label={t('description.primary_language')}
-                placeholder={t('description.primary_language')}
-                select
-                variant="filled">
-                {registrationLanguages.map(({ id, value }) => (
-                  <MenuItem value={value} key={id} data-testid={`registration-language-${id}`}>
-                    {t(`languages:${id}`)}
-                  </MenuItem>
-                ))}
-              </TextField>
+              <MuiThemeProvider theme={lightTheme}>
+                <TextField
+                  {...field}
+                  data-testid="registration-language-field"
+                  fullWidth
+                  label={t('description.primary_language')}
+                  placeholder={t('description.primary_language')}
+                  select
+                  variant="filled">
+                  {registrationLanguages.map(({ id, value }) => (
+                    <MenuItem value={value} key={id} data-testid={`registration-language-${id}`}>
+                      {t(`languages:${id}`)}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              </MuiThemeProvider>
             )}
           </Field>
         </DateAndLanguageWrapper>
@@ -158,7 +160,9 @@ const DescriptionPanel = () => {
         <Typography variant="h5" color="primary">
           {t('description.connect_project')}
         </Typography>
-        <ProjectsField />
+        <MuiThemeProvider theme={lightTheme}>
+          <ProjectsField />
+        </MuiThemeProvider>
       </BackgroundDiv>
     </>
   );
