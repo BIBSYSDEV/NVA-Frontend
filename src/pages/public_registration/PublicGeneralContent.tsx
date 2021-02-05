@@ -25,11 +25,10 @@ import { getNpiDiscipline } from '../../utils/npiDisciplines';
 import { isJournal, isBook, isDegree, isReport, isChapter } from '../../utils/registration-helpers';
 import PublicDoi from './PublicDoi';
 import {
-  PublicPublicationContextJournal,
-  PublicPublicationContextBook,
-  PublicPublicationContextDegree,
-  PublicPublicationContextReport,
   PublicPublicationContextChapter,
+  PublicJournalContent,
+  PublicPublisherContent,
+  DisplaySeriesTitle,
 } from './PublicPublicationContext';
 import {
   PublicPublicationInstanceJournal,
@@ -64,22 +63,25 @@ const PublicGeneralContent = ({ registration }: PublicRegistrationContentProps) 
       )}
       {isJournal(registration) ? (
         <>
-          <PublicPublicationContextJournal publicationContext={publicationContext as JournalPublicationContext} />
+          <PublicJournalContent publicationContext={publicationContext as JournalPublicationContext} />
           <PublicPublicationInstanceJournal publicationInstance={publicationInstance as JournalPublicationInstance} />
         </>
       ) : isBook(registration) ? (
         <>
-          <PublicPublicationContextBook publicationContext={publicationContext as BookPublicationContext} />
+          <PublicPublisherContent publicationContext={publicationContext as BookPublicationContext} />
+          <DisplaySeriesTitle seriesTitle={(publicationContext as BookPublicationContext).seriesTitle} />
           <PublicPublicationInstanceBook publicationInstance={publicationInstance as BookPublicationInstance} />
         </>
       ) : isDegree(registration) ? (
         <>
-          <PublicPublicationContextDegree publicationContext={publicationContext as DegreePublicationContext} />
+          <PublicPublisherContent publicationContext={publicationContext as DegreePublicationContext} />
+          <DisplaySeriesTitle seriesTitle={(publicationContext as DegreePublicationContext).seriesTitle} />
           <PublicPublicationInstanceDegree publicationInstance={publicationInstance as DegreePublicationInstance} />
         </>
       ) : isReport(registration) ? (
         <>
-          <PublicPublicationContextReport publicationContext={publicationContext as ReportPublicationContext} />
+          <PublicPublisherContent publicationContext={publicationContext as ReportPublicationContext} />
+          <DisplaySeriesTitle seriesTitle={(publicationContext as ReportPublicationContext).seriesTitle} />
           <PublicPublicationInstanceReport publicationInstance={publicationInstance as ReportPublicationInstance} />
         </>
       ) : isChapter(registration) ? (

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from '@material-ui/core';
+import { Link, Typography } from '@material-ui/core';
 import { Skeleton } from '@material-ui/lab';
 import useSearchRegistrations from '../../utils/hooks/useSearchRegistrations';
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
@@ -19,7 +19,11 @@ const RegistrationSummary = ({ id }: RegistrationSummaryProps) => {
   return isLoadingSearchContainer ? (
     <Skeleton width={400} />
   ) : (
-    container && <Link href={getRegistrationLandingPagePath(container.id)}>{container.title}</Link>
+    container && (
+      <Typography component={Link} href={getRegistrationLandingPagePath(container.id)}>
+        {container.title}
+      </Typography>
+    )
   );
 };
 

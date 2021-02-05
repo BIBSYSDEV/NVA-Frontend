@@ -9,12 +9,15 @@ import { BookPublicationInstance } from '../../types/publication_types/bookRegis
 import { ChapterPublicationInstance } from '../../types/publication_types/chapterRegistration.types';
 import RegistrationSummary from './RegistrationSummary';
 import { PagesMonograph } from '../../types/publication_types/pages.types';
+import { Typography } from '@material-ui/core';
 
-export const PublicPublicationInstanceJournal: FC<{ publicationInstance: JournalPublicationInstance }> = ({
+export const PublicPublicationInstanceJournal = ({
   publicationInstance,
+}: {
+  publicationInstance: JournalPublicationInstance;
 }) => {
   const { t } = useTranslation('registration');
-  const { type, articleNumber, issue, pages, volume, corrigendumFor } = publicationInstance;
+  const { type, articleNumber, issue, pages, volume, corrigendumFor, peerReviewed } = publicationInstance;
 
   const fieldTexts = [];
   if (volume) {
@@ -32,13 +35,13 @@ export const PublicPublicationInstanceJournal: FC<{ publicationInstance: Journal
 
   return (
     <>
-      <LabelContentRow minimal label={`${t('common:details')}:`}>
-        {fieldTexts.join(', ')}
-      </LabelContentRow>
+      <Typography>{fieldTexts.join(', ')}</Typography>
+      {peerReviewed && <Typography>{t('references.peer_reviewed')}</Typography>}
       {type === JournalType.CORRIGENDUM && (
-        <LabelContentRow minimal label={`${t('references.original_article')}:`}>
+        <>
+          <Typography variant="h3">{t('references.original_article')}</Typography>
           <RegistrationSummary id={corrigendumFor} />
-        </LabelContentRow>
+        </>
       )}
     </>
   );
