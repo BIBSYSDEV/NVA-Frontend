@@ -86,9 +86,13 @@ export const DoiRequestAccordion = ({ identifier }: DoiRequestAccordionProps) =>
   return (
     <StyledAccordion data-testid={`doi-request-${identifier}`}>
       <AccordionSummary expandIcon={<ExpandMoreIcon fontSize="large" />}>
-        <StyledStatus>{t(`doi_requests.status.${registration?.doiRequest.status}`)}</StyledStatus>
-        <StyledTitle>{registration?.entityDescription?.mainTitle}</StyledTitle>
-        <StyledOwner>
+        <StyledStatus data-testid={`status-doi-request-${identifier}`}>
+          {t(`doi_requests.status.${registration?.doiRequest.status}`)}
+        </StyledStatus>
+        <StyledTitle data-testid={`title-doi-request-${identifier}`}>
+          {registration?.entityDescription?.mainTitle}
+        </StyledTitle>
+        <StyledOwner data-testid={`owner-doi-request-${identifier}`}>
           <Label>{registration?.owner}</Label>
           {new Date(registration?.doiRequest.createdDate).toLocaleDateString()}
         </StyledOwner>
