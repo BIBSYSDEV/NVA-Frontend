@@ -1,10 +1,9 @@
 import React from 'react';
-import { Typography } from '@material-ui/core';
 import styled from 'styled-components';
 import { emptyRegistration, Registration } from '../../types/registration.types';
 import { useTranslation } from 'react-i18next';
 import PublicRegistrationAuthors from './PublicRegistrationAuthors';
-import PublicRegistrationFile from './PublicRegistrationFile';
+import PublicFilesContent from './PublicFilesContent';
 import LabelContentRow from '../../components/LabelContentRow';
 import { getNpiDiscipline } from '../../utils/npiDisciplines';
 import { displayDate } from '../../utils/date-helpers';
@@ -47,21 +46,25 @@ import { RegistrationPageHeader } from '../../components/PageHeader';
 import BackgroundDiv from '../../components/BackgroundDiv';
 import lightTheme from '../../themes/lightTheme';
 import PublicSummaryContent from './PublicSummaryContent';
+import PublicProjectsContent from './PublicProjectsContent';
 
 const StyledBackgroundDiv = styled(BackgroundDiv)`
   padding: 2rem 5rem;
+  max-width: 100vw;
 
-  @media (max-width: ${({ theme }) => `${theme.breakpoints.values.sm}px`}) {
+  @media (max-width: ${({ theme }) => `${theme.breakpoints.values.md}px`}) {
     padding: 1rem 2rem;
   }
 `;
 
 export interface PublicRegistrationContentProps {
   registration: Registration;
+}
+export interface PublicRegistrationProps extends PublicRegistrationContentProps {
   refetchRegistration: () => void;
 }
 
-const PublicRegistrationContent = ({ registration, refetchRegistration }: PublicRegistrationContentProps) => {
+const PublicRegistrationContent = ({ registration, refetchRegistration }: PublicRegistrationProps) => {
   const { t } = useTranslation('registration');
 
   // Registration can lack some fields if it's newly created
@@ -144,9 +147,7 @@ const PublicRegistrationContent = ({ registration, refetchRegistration }: Public
         </StyledBackgroundDiv>
 
         <StyledBackgroundDiv backgroundColor={lightTheme.palette.section.light}>
-          {registration.fileSet?.files.map(
-            (file) => !file.administrativeAgreement && <PublicRegistrationFile file={file} key={file.identifier} />
-          )}
+          <PublicFilesContent registration={registration} />
         </StyledBackgroundDiv>
 
         <StyledBackgroundDiv backgroundColor={lightTheme.palette.section.main}>
@@ -154,13 +155,7 @@ const PublicRegistrationContent = ({ registration, refetchRegistration }: Public
         </StyledBackgroundDiv>
 
         <StyledBackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
-          {registration.projects.length > 0 && (
-            <LabelContentRow minimal label={`${t('description.project_association')}:`}>
-              {registration.projects.map((project) => (
-                <Typography key={project.id}>{project.name}</Typography>
-              ))}
-            </LabelContentRow>
-          )}
+          <PublicProjectsContent registration={registration} />
         </StyledBackgroundDiv>
       </div>
     </>

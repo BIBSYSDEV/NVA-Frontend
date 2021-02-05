@@ -27,8 +27,8 @@
   },
   "description": {
     "abstract": "Sammendrag",
-    "date_published": "Publiseringsdato",
     "connect_project": "Koble til prosjekt",
+    "date_published": "Publiseringsdato",
     "description": "Beskrivelse",
     "description_of_content": "Beskrivelse av innhold, hvis relevant",
     "financed_by": "Finansiert av",
@@ -60,13 +60,14 @@
     "conditions_for_using_file": "Betingelser for bruk av fil",
     "embargo_date": "Ikke åpent tilgjengelig før",
     "files": "Filer",
+    "license": "Lisens",
     "licenses": "Lisenser",
     "no_duplicates": "Kunne ikke legge til \"{{fileName}}\", siden en fil med samme navn allerede finnes",
     "publicly_available": "Offentlig tilgjengelig",
     "published_version": "Publisert versjon",
     "select_version": "Velg versjon",
     "title": "Filnavn",
-    "uploaded_size": "Lastet opp {{size}} kB"
+    "uploaded_size": "Lastet opp {{size}}"
   },
   "heading": {
     "contributors": "Bidragsytere",

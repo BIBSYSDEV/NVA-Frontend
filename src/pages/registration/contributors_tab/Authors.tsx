@@ -6,7 +6,6 @@ import styled from 'styled-components';
 import { Button } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/AddCircleOutlineSharp';
 import { setNotification } from '../../../redux/actions/notificationActions';
-import lightTheme from '../../../themes/lightTheme';
 import { Authority } from '../../../types/authority.types';
 import { Contributor, emptyContributor, Identity, UnverifiedContributor } from '../../../types/contributor.types';
 import { NotificationVariant } from '../../../types/notification.types';

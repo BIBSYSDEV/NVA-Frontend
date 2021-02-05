@@ -1,21 +1,21 @@
 import { Field, FieldProps, getIn, useFormikContext } from 'formik';
 import React, { useState } from 'react';
-import Truncate from 'react-truncate';
+import { useTranslation } from 'react-i18next';
+import TextTruncate from 'react-text-truncate';
 import { Typography } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
-import { useTranslation } from 'react-i18next';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import EmphasizeSubstring from '../../../../components/EmphasizeSubstring';
 import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
 import { autocompleteTranslationProps } from '../../../../themes/lightTheme';
 import { RegistrationSubtype } from '../../../../types/publicationFieldNames';
 import { levelMap, Registration } from '../../../../types/registration.types';
+import { SearchFieldName, SearchPublicationContext } from '../../../../types/search.types';
 import { API_URL } from '../../../../utils/constants';
 import { displayDate } from '../../../../utils/date-helpers';
 import useDebounce from '../../../../utils/hooks/useDebounce';
 import useSearchRegistrations from '../../../../utils/hooks/useSearchRegistrations';
 import { getRegistrationPath } from '../../../../utils/urlPaths';
-import { SearchFieldName, SearchPublicationContext } from '../../../../types/search.types';
 
 interface SearchContainerFieldProps {
   fieldName: string;
@@ -78,11 +78,11 @@ const SearchContainerField = (props: SearchContainerFieldProps) => {
                   <EmphasizeSubstring text={option.title} emphasized={state.inputValue} />
                 </Typography>
                 <Typography variant="body2" color="textSecondary">
-                  <Truncate lines={1}>
+                  <TextTruncate line={1}>
                     {option.publicationDate.year && displayDate(option.publicationDate)}
                     {option.publicationDate.year && option.contributors.length > 0 && ' - '}
                     {option.contributors.map((contributor) => contributor.name).join('; ')}
-                  </Truncate>
+                  </TextTruncate>
                 </Typography>
               </StyledFlexColumn>
             )}
