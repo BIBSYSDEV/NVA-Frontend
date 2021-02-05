@@ -61,7 +61,7 @@ export const PublicPublicationInstanceBook = ({
 
   return (
     <>
-      <DisplayPages pages={pages} />
+      <PublicTotalPagesContent pages={pages} />
       <PublicPeerReviewed peerReviewed={peerReviewed} />
       {textbookContent && <Typography>{t('references.text_book')}</Typography>}
     </>
@@ -75,7 +75,7 @@ export const PublicPublicationInstanceDegree = ({
 }) => {
   const { pages } = publicationInstance;
 
-  return <DisplayPages pages={pages} />;
+  return <PublicTotalPagesContent pages={pages} />;
 };
 
 export const PublicPublicationInstanceReport = ({
@@ -85,7 +85,7 @@ export const PublicPublicationInstanceReport = ({
 }) => {
   const { pages } = publicationInstance;
 
-  return <DisplayPages pages={pages} />;
+  return <PublicTotalPagesContent pages={pages} />;
 };
 
 export const PublicPublicationInstanceChapter = ({
@@ -104,7 +104,7 @@ export const PublicPublicationInstanceChapter = ({
   );
 };
 
-const DisplayPages = ({ pages }: { pages: PagesMonograph | null }) => {
+const PublicTotalPagesContent = ({ pages }: { pages: PagesMonograph | null }) => {
   const { t } = useTranslation('registration');
 
   return pages?.pages ? (

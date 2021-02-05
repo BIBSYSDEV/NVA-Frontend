@@ -24,10 +24,10 @@ import { getNpiDiscipline } from '../../utils/npiDisciplines';
 import { isJournal, isBook, isDegree, isReport, isChapter } from '../../utils/registration-helpers';
 import PublicDoi from './PublicDoi';
 import {
-  PublicPublicationContextChapter,
+  PublicLinkedContextContent,
   PublicJournalContent,
   PublicPublisherContent,
-  DisplaySeriesTitle,
+  PublicSeriesContent,
 } from './PublicPublicationContext';
 import {
   PublicPublicationInstanceJournal,
@@ -139,20 +139,20 @@ const PublicGeneralContent = ({ registration }: PublicRegistrationContentProps) 
         ) : isBook(registration) ? (
           <>
             <PublicPublisherContent publicationContext={publicationContext as BookPublicationContext} />
-            <DisplaySeriesTitle seriesTitle={(publicationContext as BookPublicationContext).seriesTitle} />
+            <PublicSeriesContent seriesTitle={(publicationContext as BookPublicationContext).seriesTitle} />
           </>
         ) : isDegree(registration) ? (
           <>
             <PublicPublisherContent publicationContext={publicationContext as DegreePublicationContext} />
-            <DisplaySeriesTitle seriesTitle={(publicationContext as DegreePublicationContext).seriesTitle} />
+            <PublicSeriesContent seriesTitle={(publicationContext as DegreePublicationContext).seriesTitle} />
           </>
         ) : isReport(registration) ? (
           <>
             <PublicPublisherContent publicationContext={publicationContext as ReportPublicationContext} />
-            <DisplaySeriesTitle seriesTitle={(publicationContext as ReportPublicationContext).seriesTitle} />
+            <PublicSeriesContent seriesTitle={(publicationContext as ReportPublicationContext).seriesTitle} />
           </>
         ) : isChapter(registration) ? (
-          <PublicPublicationContextChapter publicationContext={publicationContext as ChapterPublicationContext} />
+          <PublicLinkedContextContent publicationContext={publicationContext as ChapterPublicationContext} />
         ) : null}
       </StyledGroup1>
     </StyledContent>

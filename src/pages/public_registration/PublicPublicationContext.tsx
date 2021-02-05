@@ -28,7 +28,7 @@ export const PublicJournalContent = ({ publicationContext }: { publicationContex
           {t('references.issn')}: {[onlineIssn, printIssn].filter((issn) => issn).join(', ')}
         </Typography>
       )}
-      <LevelContent level={level} />
+      <PublicLevelContent level={level} />
     </>
   ) : null;
 };
@@ -51,12 +51,12 @@ export const PublicPublisherContent = ({
       ) : (
         <Typography>{publisher}</Typography>
       )}
-      <LevelContent level={level} />
+      <PublicLevelContent level={level} />
     </>
   ) : null;
 };
 
-export const PublicPublicationContextChapter = ({
+export const PublicLinkedContextContent = ({
   publicationContext,
 }: {
   publicationContext: ChapterPublicationContext;
@@ -72,7 +72,7 @@ export const PublicPublicationContextChapter = ({
   );
 };
 
-export const DisplaySeriesTitle = ({ seriesTitle }: { seriesTitle: string }) => {
+export const PublicSeriesContent = ({ seriesTitle }: { seriesTitle: string }) => {
   const { t } = useTranslation('registration');
 
   return seriesTitle ? (
@@ -83,7 +83,7 @@ export const DisplaySeriesTitle = ({ seriesTitle }: { seriesTitle: string }) => 
   ) : null;
 };
 
-const LevelContent = ({ level }: { level?: string | number | null }) => {
+const PublicLevelContent = ({ level }: { level?: string | number | null }) => {
   const { t } = useTranslation('registration');
   const levelValue = level ? levelMap[level] : null;
   return levelValue ? (
