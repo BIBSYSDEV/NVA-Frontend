@@ -1,38 +1,44 @@
-import React, { useEffect, useState } from 'react';
+import deepmerge from 'deepmerge';
 import {
   Form,
   Formik,
-  FormikProps,
-  yupToFormErrors,
-  validateYupSchema,
-  setNestedObjectValues,
-  FormikTouched,
   FormikErrors,
+  FormikProps,
+  FormikTouched,
+  setNestedObjectValues,
+  validateYupSchema,
+  yupToFormErrors,
 } from 'formik';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
-import deepmerge from 'deepmerge';
-import { CircularProgress } from '@material-ui/core';
-import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import styled from 'styled-components';
+import { CircularProgress } from '@material-ui/core';
 import { useUppy } from '@uppy/react';
-
-import { emptyRegistration, Registration, RegistrationTab } from '../../types/registration.types';
-import { RegistrationFormTabs } from './RegistrationFormTabs';
+import { RegistrationPageHeader } from '../../components/PageHeader';
 import RouteLeavingGuard from '../../components/RouteLeavingGuard';
-import { RegistrationFormContent } from './RegistrationFormContent';
 import { RootStore } from '../../redux/reducers/rootReducer';
+import { emptyRegistration, Registration, RegistrationTab } from '../../types/registration.types';
 import useFetchRegistration from '../../utils/hooks/useFetchRegistration';
+import { userIsRegistrationCurator, userIsRegistrationOwner } from '../../utils/registration-helpers';
+import { createUppy } from '../../utils/uppy/uppy-config';
+import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import { registrationValidationSchema } from '../../utils/validation/registration/registrationValidation';
-import { PageHeader } from '../../components/PageHeader';
 import Forbidden from '../errorpages/Forbidden';
 import { RegistrationFormActions } from './RegistrationFormActions';
-import { userIsRegistrationOwner, userIsRegistrationCurator } from '../../utils/registration-helpers';
-import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
-import { createUppy } from '../../utils/uppy/uppy-config';
+import { RegistrationFormContent } from './RegistrationFormContent';
+import { RegistrationFormTabs } from './RegistrationFormTabs';
 
 const StyledRegistration = styled.div`
   width: 100%;
+`;
+
+const StyledRegistrationPageHeader = styled(RegistrationPageHeader)`
+  padding: 0.5rem 4rem;
+  @media (max-width: ${({ theme }) => `${theme.breakpoints.values.sm}px`}) {
+    padding: 0;
+  }
 `;
 
 interface RegistrationFormProps {
@@ -82,37 +88,37 @@ const RegistrationForm = ({ identifier, isNewRegistration }: RegistrationFormPro
   ) : !isValidOwner && !isValidCurator ? (
     <Forbidden />
   ) : (
-    <>
-      <PageHeader>{t('edit_registration')}</PageHeader>
-      <StyledRegistration>
-        <Formik
-          enableReinitialize
-          initialValues={initialValues}
-          validate={validateForm}
-          initialErrors={intialErrors}
-          initialTouched={intialTouched}
-          onSubmit={() => {
-            /* Use custom save handler instead, since onSubmit will prevent saving if there are any errors */
-          }}>
-          {({ dirty }: FormikProps<Registration>) => (
-            <Form noValidate>
-              <RouteLeavingGuard
-                modalDescription={t('modal_unsaved_changes_description')}
-                modalHeading={t('modal_unsaved_changes_heading')}
-                shouldBlockNavigation={dirty}
-              />
-              <RegistrationFormTabs tabNumber={tabNumber} setTabNumber={setTabNumber} />
-              <RegistrationFormContent tabNumber={tabNumber} uppy={uppy} />
-              <RegistrationFormActions
-                tabNumber={tabNumber}
-                setTabNumber={setTabNumber}
-                refetchRegistration={refetchRegistration}
-              />
-            </Form>
-          )}
-        </Formik>
-      </StyledRegistration>
-    </>
+    <StyledRegistration>
+      <Formik
+        enableReinitialize
+        initialValues={initialValues}
+        validate={validateForm}
+        initialErrors={intialErrors}
+        initialTouched={intialTouched}
+        onSubmit={() => {
+          /* Use custom save handler instead, since onSubmit will prevent saving if there are any errors */
+        }}>
+        {({ dirty, values }: FormikProps<Registration>) => (
+          <Form noValidate>
+            <RouteLeavingGuard
+              modalDescription={t('modal_unsaved_changes_description')}
+              modalHeading={t('modal_unsaved_changes_heading')}
+              shouldBlockNavigation={dirty}
+            />
+            <StyledRegistrationPageHeader>
+              {values.entityDescription.mainTitle || `[${t('common:missing_title')}]`}
+            </StyledRegistrationPageHeader>
+            <RegistrationFormTabs tabNumber={tabNumber} setTabNumber={setTabNumber} />
+            <RegistrationFormContent tabNumber={tabNumber} uppy={uppy} />
+            <RegistrationFormActions
+              tabNumber={tabNumber}
+              setTabNumber={setTabNumber}
+              refetchRegistration={refetchRegistration}
+            />
+          </Form>
+        )}
+      </Formik>
+    </StyledRegistration>
   );
 };
 
