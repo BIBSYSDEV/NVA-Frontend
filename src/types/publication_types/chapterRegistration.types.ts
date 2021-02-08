@@ -7,7 +7,7 @@ import { PagesRange, emptyPagesRange } from './pages.types';
 export interface ChapterPublicationInstance {
   type: ChapterType | '';
   pages: PagesRange;
-  peerReviewed?: boolean;
+  peerReviewed: boolean;
 }
 
 export interface ChapterPublicationContext {
