@@ -1,4 +1,5 @@
 import { ErrorMessage, Field, FieldProps } from 'formik';
+import prettyBytes from 'pretty-bytes';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
@@ -26,7 +27,6 @@ import lightTheme, { datePickerTranslationProps } from '../../../themes/lightThe
 import { File, LicenseNames, licenses } from '../../../types/file.types';
 import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 import { getDateFnsLocale } from '../../../utils/date-helpers';
-import prettyBytes from 'pretty-bytes';
 
 const StyledDescription = styled(Typography)`
   font-style: italic;
@@ -83,6 +83,10 @@ const StyledActions = styled.div`
   margin-top: 1rem;
 `;
 
+const StyledTypography = styled(Typography)`
+  overflow-wrap: break-word;
+`;
+
 interface FileCardProps {
   file: File;
   removeFile: () => void;
@@ -95,7 +99,7 @@ const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }: FileC
 
   return (
     <BackgroundDiv backgroundColor={lightTheme.palette.section.megaLight} data-testid="uploaded-file-card">
-      <Typography variant="h5">{file.name}</Typography>
+      <StyledTypography variant="h5">{file.name}</StyledTypography>
       <StyledDescription>
         {t('files_and_license.uploaded_size', { size: prettyBytes(file.size, { locale: true }) })}
       </StyledDescription>
