@@ -1,5 +1,5 @@
 import { Registration } from '../types/registration.types';
-import { PublicationType } from '../types/publicationFieldNames';
+import { JournalType, PublicationType } from '../types/publicationFieldNames';
 import { User } from '../types/user.types';
 
 export const isJournal = (registration: Registration): boolean =>
@@ -18,3 +18,6 @@ export const userIsRegistrationOwner = (user: User | null, registration?: Regist
 
 export const userIsRegistrationCurator = (user: User | null, registration?: Registration) =>
   !!user && !!registration && user.isCurator && user.customerId === registration.publisher.id;
+
+export const isJournalTypeWithPeerReview = (type: string) =>
+  type === JournalType.ARTICLE || type === JournalType.SHORT_COMMUNICATION;
