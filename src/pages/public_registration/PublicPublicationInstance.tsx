@@ -1,20 +1,33 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Typography } from '@material-ui/core';
 import { JournalPublicationInstance } from '../../types/publication_types/journalRegistration.types';
-import LabelContentRow from '../../components/LabelContentRow';
 import { DegreePublicationInstance } from '../../types/publication_types/degreeRegistration.types';
 import { ReportPublicationInstance } from '../../types/publication_types/reportRegistration.types';
-import { JournalType } from '../../types/publicationFieldNames';
 import { BookPublicationInstance } from '../../types/publication_types/bookRegistration.types';
 import { ChapterPublicationInstance } from '../../types/publication_types/chapterRegistration.types';
-import RegistrationSummary from './RegistrationSummary';
-import { PagesMonograph } from '../../types/publication_types/pages.types';
+import { PagesMonograph, PagesRange } from '../../types/publication_types/pages.types';
+import i18n from '../../translations/i18n';
 
-export const PublicPublicationInstanceJournal: FC<{ publicationInstance: JournalPublicationInstance }> = ({
+const getPageInterval = (pages: PagesRange) => {
+  return pages.begin || pages.end
+    ? `${i18n.t('registration:references.pages')} ${pages.begin ?? '?'}-${pages.end ?? '?'}`
+    : '';
+};
+
+const PublicPeerReviewed = ({ peerReviewed }: { peerReviewed: boolean }) => {
+  const { t } = useTranslation('registration');
+  return peerReviewed ? <Typography>{t('references.peer_reviewed')}</Typography> : null;
+};
+
+export const PublicPublicationInstanceJournal = ({
   publicationInstance,
+}: {
+  publicationInstance: JournalPublicationInstance;
 }) => {
   const { t } = useTranslation('registration');
-  const { type, articleNumber, issue, pages, volume, corrigendumFor } = publicationInstance;
+  const { articleNumber, issue, pages, volume, peerReviewed } = publicationInstance;
+  const pagesInterval = getPageInterval(pages);
 
   const fieldTexts = [];
   if (volume) {
@@ -23,8 +36,8 @@ export const PublicPublicationInstanceJournal: FC<{ publicationInstance: Journal
   if (issue) {
     fieldTexts.push(`${t('references.issue')} ${issue}`);
   }
-  if (pages.begin || pages.end) {
-    fieldTexts.push(`${t('references.pages')} ${pages.begin ?? '?'}-${pages.end ?? '?'}`);
+  if (pagesInterval) {
+    fieldTexts.push(pagesInterval);
   }
   if (articleNumber) {
     fieldTexts.push(`${t('references.article_number')} ${articleNumber}`);
@@ -32,40 +45,47 @@ export const PublicPublicationInstanceJournal: FC<{ publicationInstance: Journal
 
   return (
     <>
-      <LabelContentRow minimal label={`${t('common:details')}:`}>
-        {fieldTexts.join(', ')}
-      </LabelContentRow>
-      {type === JournalType.CORRIGENDUM && (
-        <LabelContentRow minimal label={`${t('references.original_article')}:`}>
-          <RegistrationSummary id={corrigendumFor} />
-        </LabelContentRow>
-      )}
+      <Typography>{fieldTexts.join(', ')}</Typography>
+      <PublicPeerReviewed peerReviewed={peerReviewed} />
     </>
   );
 };
 
-export const PublicPublicationInstanceBook: FC<{ publicationInstance: BookPublicationInstance }> = ({
+export const PublicPublicationInstanceBook = ({
   publicationInstance,
+}: {
+  publicationInstance: BookPublicationInstance;
 }) => {
-  const { pages } = publicationInstance;
+  const { t } = useTranslation('registration');
+  const { pages, peerReviewed, textbookContent } = publicationInstance;
 
-  return <DisplayPages pages={pages} />;
+  return (
+    <>
+      <PublicTotalPagesContent pages={pages} />
+      <PublicPeerReviewed peerReviewed={peerReviewed} />
+      {textbookContent && <Typography>{t('references.text_book')}</Typography>}
+    </>
+  );
 };
 
-export const PublicPublicationInstanceDegree: FC<{ publicationInstance: DegreePublicationInstance }> = ({
+export const PublicPublicationInstanceDegree = ({
   publicationInstance,
+}: {
+  publicationInstance: DegreePublicationInstance;
 }) => {
   const { pages } = publicationInstance;
 
-  return <DisplayPages pages={pages} />;
+  return <PublicTotalPagesContent pages={pages} />;
 };
 
-export const PublicPublicationInstanceReport: FC<{ publicationInstance: ReportPublicationInstance }> = ({
+export const PublicPublicationInstanceReport = ({
   publicationInstance,
+}: {
+  publicationInstance: ReportPublicationInstance;
 }) => {
   const { pages } = publicationInstance;
 
-  return <DisplayPages pages={pages} />;
+  return <PublicTotalPagesContent pages={pages} />;
 };
 
 export const PublicPublicationInstanceChapter = ({
@@ -73,27 +93,32 @@ export const PublicPublicationInstanceChapter = ({
 }: {
   publicationInstance: ChapterPublicationInstance;
 }) => {
-  const { t } = useTranslation('registration');
   const { pages, peerReviewed } = publicationInstance;
+  const pagesInterval = getPageInterval(pages);
 
   return (
     <>
-      <LabelContentRow minimal label={`${t('references.pages')}:`}>
-        {pages.begin ?? '?'}-{pages.end ?? '?'}
-      </LabelContentRow>
-      <LabelContentRow minimal label={`${t('references.peer_reviewed')}:`}>
-        {peerReviewed ? t('common:yes') : t('common:no')}
-      </LabelContentRow>
+      {pagesInterval && <Typography>{pagesInterval}</Typography>}
+      <PublicPeerReviewed peerReviewed={peerReviewed} />
     </>
   );
 };
 
-const DisplayPages: FC<{ pages: PagesMonograph | null }> = ({ pages }) => {
+const PublicTotalPagesContent = ({ pages }: { pages: PagesMonograph | null }) => {
   const { t } = useTranslation('registration');
 
   return pages?.pages ? (
-    <LabelContentRow minimal label={`${t('common:details')}:`}>
+    <Typography>
       {t('references.number_of_pages')}: {pages.pages}
-    </LabelContentRow>
+    </Typography>
+  ) : null;
+};
+
+export const PublicIsbnContent = ({ isbnList }: { isbnList?: string[] }) => {
+  const { t } = useTranslation('registration');
+  return isbnList ? (
+    <Typography>
+      {t('references.isbn')}: {isbnList.join(', ')}
+    </Typography>
   ) : null;
 };
