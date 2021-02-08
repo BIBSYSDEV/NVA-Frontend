@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import Modal from '../../../components/Modal';
+import { RootStore } from '../../../redux/reducers/rootReducer';
 import { Authority } from '../../../types/authority.types';
 import AddContributorModalContent from './components/AddContributorModalContent';
 import CreateContributorModalContent from './components/CreateContributorModalContent';
@@ -15,10 +17,18 @@ interface AddContributorModalProps {
 const AddContributorModal = ({ onAuthorSelected, toggleModal, open, initialSearchTerm }: AddContributorModalProps) => {
   const { t } = useTranslation('registration');
   const [createNewAuthor, setCreateNewAuthor] = useState(false);
+  const user = useSelector((store: RootStore) => store.user);
 
   const addAuthor = (author: Authority) => {
     toggleModal();
     onAuthorSelected(author);
+  };
+
+  const addSelfAsAuthor = () => {
+    toggleModal();
+    if (user?.authority) {
+      onAuthorSelected(user.authority);
+    }
   };
 
   const handleCloseModal = () => {
@@ -47,6 +57,7 @@ const AddContributorModal = ({ onAuthorSelected, toggleModal, open, initialSearc
       ) : (
         <AddContributorModalContent
           addAuthor={addAuthor}
+          addSelfAsAuthor={addSelfAsAuthor}
           handleCloseModal={handleCloseModal}
           openNewAuthorModal={() => setCreateNewAuthor(true)}
           initialSearchTerm={initialSearchTerm}
