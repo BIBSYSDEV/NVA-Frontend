@@ -18,11 +18,13 @@ declare module '@material-ui/core/styles/createPalette' {
   interface ExtendedPalette extends PaletteColor {
     megaLight: string;
     megaDark: string;
+    black: string;
   }
 
   interface ExtendedPaletteOptions extends SimplePaletteColorOptions {
     megaLight?: string;
     megaDark?: string;
+    black?: string;
   }
 }
 
@@ -75,6 +77,7 @@ const lightTheme = createMuiTheme({
       main: Color.BlueMain,
       dark: Color.BlueDark,
       megaDark: Color.BlueMegaDark,
+      black: Color.Black,
     },
   },
   typography: {
@@ -185,6 +188,9 @@ const lightTheme = createMuiTheme({
     },
   },
   props: {
+    MuiTypography: {
+      color: 'textPrimary',
+    },
     MuiTablePagination: {
       labelRowsPerPage: i18n.t('common:table_pagination.rows_per_page'),
       labelDisplayedRows: ({ from, to, count }) => getTranslatedLabelForDisplayedRows(from, to, count),
