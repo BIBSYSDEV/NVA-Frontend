@@ -30,7 +30,9 @@ export const userReducer = (
         id: action.user['custom:feideId'],
         institution: action.user['custom:orgName'],
         cristinId: action.user['custom:cristinId'] ?? action.user.cristinId,
-        customerId: action.user['custom:customerId'],
+        customerId: action.user['custom:customerId']?.endsWith('/customer/None')
+          ? ''
+          : action.user['custom:customerId'],
         affiliations,
         givenName: action.user.given_name,
         familyName: action.user.family_name,
