@@ -85,7 +85,7 @@ const DatePickerField = () => {
       </MuiThemeProvider>
       <StyledFormControlLabel
         control={<Checkbox checked={yearOnly} onChange={toggleYearOnly} color="primary" />}
-        label={<Typography color="primary">{t('description.year_only')}</Typography>}
+        label={<Typography>{t('description.year_only')}</Typography>}
       />
     </MuiPickersUtilsProvider>
   );

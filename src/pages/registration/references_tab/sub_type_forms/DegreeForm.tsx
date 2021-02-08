@@ -18,10 +18,8 @@ const DegreeForm = () => {
       </BackgroundDiv>
 
       <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
-        <Typography color="primary" variant="h5">
-          {t('references.series')}
-        </Typography>
-        <Typography color="primary">{t('references.series_info')}</Typography>
+        <Typography variant="h5">{t('references.series')}</Typography>
+        <Typography>{t('references.series_info')}</Typography>
         <SeriesField />
       </BackgroundDiv>
     </>

@@ -62,9 +62,7 @@ const BookForm = () => {
             <PeerReview fieldName={ReferenceFieldNames.PEER_REVIEW} label={t('references.peer_review')} />
           </StyledPeerReview>
           <StyledTextBook>
-            <Typography color="primary" variant="h5">
-              {t('references.is_book_a_textbook')}
-            </Typography>
+            <Typography variant="h5">{t('references.is_book_a_textbook')}</Typography>
             <Field name={ReferenceFieldNames.TEXTBOOK_CONTENT}>
               {({ field }: FieldProps) => (
                 <FormControlLabel
@@ -76,7 +74,7 @@ const BookForm = () => {
                       {...field}
                     />
                   }
-                  label={<Typography color="primary">{t('references.is_book_a_textbook_confirm')}</Typography>}
+                  label={<Typography>{t('references.is_book_a_textbook_confirm')}</Typography>}
                 />
               )}
             </Field>
@@ -86,21 +84,18 @@ const BookForm = () => {
 
       {(type === BookType.ANTHOLOGY || type === BookType.MONOGRAPH) && (
         <BackgroundDiv backgroundColor={lightTheme.palette.section.megaDark}>
-          <Typography color="primary" variant="h5">
-            {t('references.series')}
-          </Typography>
-          <Typography color="primary">{t('references.series_info')}</Typography>
+          <Typography variant="h5">{t('references.series')}</Typography>
+          <Typography>{t('references.series_info')}</Typography>
           <SeriesField />
-
-          {type === BookType.MONOGRAPH && (
-            <NviValidation
-              isPeerReviewed={peerReviewed}
-              isRated={!!publicationContext?.level}
-              isTextbook={!!textbookContent}
-              dataTestId="nvi_book"
-            />
-          )}
         </BackgroundDiv>
+      )}
+      {type === BookType.MONOGRAPH && (
+        <NviValidation
+          isPeerReviewed={peerReviewed}
+          isRated={!!publicationContext?.level}
+          isTextbook={!!textbookContent}
+          dataTestId="nvi_book"
+        />
       )}
     </>
   );
