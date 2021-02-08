@@ -24,7 +24,7 @@ const darkTheme = createMuiTheme({
         },
         '&.Mui-disabled': {
           backgroundColor: 'rgba(255, 255, 255, 0.60)',
-          // color: Color.Black,
+          color: Color.Black,
         },
       },
       underline: {
@@ -53,13 +53,25 @@ const darkTheme = createMuiTheme({
       },
     },
     MuiInputBase: {
-      root: { color: Color.Black },
+      ...lightTheme.overrides?.MuiInputBase,
+      root: {
+        ...lightTheme.overrides?.MuiInputBase?.root,
+        color: Color.Black,
+      },
     },
     MuiInputLabel: {
-      root: { color: Color.Black },
+      ...lightTheme.overrides?.MuiInputLabel,
+      root: {
+        ...lightTheme.overrides?.MuiInputLabel?.root,
+        color: Color.Black,
+      },
     },
     MuiListItem: {
-      root: { color: Color.Black },
+      ...lightTheme.overrides?.MuiListItem,
+      root: {
+        ...lightTheme.overrides?.MuiListItem?.root,
+        color: Color.Black,
+      },
     },
   },
 });
