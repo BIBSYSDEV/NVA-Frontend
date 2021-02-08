@@ -1,12 +1,16 @@
+import { useFormikContext } from 'formik';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Button, CircularProgress, TextField, Typography } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import BackgroundDiv from '../../../../components/BackgroundDiv';
 import { StyledProgressWrapper } from '../../../../components/styled/Wrappers';
+import { RootStore } from '../../../../redux/reducers/rootReducer';
 import lightTheme from '../../../../themes/lightTheme';
 import { Authority } from '../../../../types/authority.types';
+import { Registration } from '../../../../types/registration.types';
 import useDebounce from '../../../../utils/hooks/useDebounce';
 import useFetchAuthorities from '../../../../utils/hooks/useFetchAuthorities';
 import AuthorityList from '../../../user/authority/AuthorityList';
@@ -21,12 +25,12 @@ const StyledBackgroundDiv = styled(BackgroundDiv)`
 
 const StyledDialogActions = styled.div`
   display: grid;
-  grid-template-areas: 'close create verify';
+  grid-template-areas: 'close create add-self verify';
   justify-content: end;
   gap: 1rem;
   margin-top: 1rem;
   @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-    grid-template-areas: 'verify verify' 'close create';
+    grid-template-areas: 'add-self verify' 'close create';
     justify-content: center;
   }
 `;
@@ -43,8 +47,13 @@ const StyledCreateButton = styled(Button)`
   grid-area: create;
 `;
 
+const StyledAddSelfButton = styled(Button)`
+  grid-area: add-self;
+`;
+
 interface AddContributorModalContentProps {
   addAuthor: (selectedAuthor: Authority) => void;
+  addSelfAsAuthor: () => void;
   handleCloseModal: () => void;
   openNewAuthorModal: () => void;
   initialSearchTerm?: string;
@@ -52,6 +61,7 @@ interface AddContributorModalContentProps {
 
 const AddContributorModalContent = ({
   addAuthor,
+  addSelfAsAuthor,
   handleCloseModal,
   openNewAuthorModal,
   initialSearchTerm = '',
@@ -61,6 +71,14 @@ const AddContributorModalContent = ({
   const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
   const debouncedSearchTerm = useDebounce(searchTerm);
   const [authorities, isLoadingAuthorities] = useFetchAuthorities(debouncedSearchTerm);
+  const user = useSelector((store: RootStore) => store.user);
+
+  const { values } = useFormikContext<Registration>();
+  const {
+    entityDescription: { contributors },
+  } = values;
+
+  const isSelfAddedAsAuthor = contributors.some((contributor) => contributor.identity.id === user?.authority?.id);
 
   return (
     <StyledBackgroundDiv backgroundColor={lightTheme.palette.background.paper}>
@@ -112,6 +130,11 @@ const AddContributorModalContent = ({
         <StyledCreateButton color="primary" data-testid="button-create-new-author" onClick={openNewAuthorModal}>
           {t('contributors.create_new_author')}
         </StyledCreateButton>
+        {!isSelfAddedAsAuthor && (
+          <StyledAddSelfButton color="primary" data-testid="button-add-self-author" onClick={addSelfAsAuthor}>
+            {t('contributors.add_self_as_author')}
+          </StyledAddSelfButton>
+        )}
       </StyledDialogActions>
     </StyledBackgroundDiv>
   );
