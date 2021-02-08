@@ -21,6 +21,7 @@ import SelectTypeField from './references_tab/components/SelectTypeField';
 import DegreeTypeForm from './references_tab/DegreeTypeForm';
 import JournalTypeForm from './references_tab/JournalTypeForm';
 import ReportTypeForm from './references_tab/ReportTypeForm';
+import { isJournalTypeWithPeerReview } from '../../utils/registration-helpers';
 
 const ReferencesPanel = () => {
   const { values, setTouched, setFieldValue, touched } = useFormikContext<Registration>();
@@ -58,11 +59,11 @@ const ReferencesPanel = () => {
   };
 
   const onChangeSubType = (newInstanceType: string) => {
-    setFieldValue(
-      instanceTypeBaseFieldName,
-      { ...values.entityDescription.reference.publicationInstance, type: newInstanceType },
-      false
-    );
+    const newValues = isJournalTypeWithPeerReview(newInstanceType)
+      ? { ...values.entityDescription.reference.publicationInstance, type: newInstanceType }
+      : { ...values.entityDescription.reference.publicationInstance, type: newInstanceType, peerReviewed: undefined };
+
+    setFieldValue(instanceTypeBaseFieldName, newValues, false);
   };
 
   return (
