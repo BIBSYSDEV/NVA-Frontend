@@ -130,7 +130,7 @@ const AddContributorModalContent = ({
         <StyledCreateButton color="primary" data-testid="button-create-new-author" onClick={openNewAuthorModal}>
           {t('contributors.create_new_author')}
         </StyledCreateButton>
-        {!isSelfAddedAsAuthor && (
+        {user?.authority && !isSelfAddedAsAuthor && (
           <StyledAddSelfButton color="primary" data-testid="button-add-self-author" onClick={addSelfAsAuthor}>
             {t('contributors.add_self_as_author')}
           </StyledAddSelfButton>
